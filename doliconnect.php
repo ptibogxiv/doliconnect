@@ -16,6 +16,13 @@
  * @copyright Copyright (c) 2017-2018, ptibogxiv.net
 **/
 
+$myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
+	'https://github.com/ptibogxiv/doliconnect/',
+	__FILE__,
+	'doliconnect'
+);
+$myUpdateChecker->getVcsApi()->enableReleaseAssets();
+
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
