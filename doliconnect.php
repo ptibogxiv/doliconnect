@@ -16,17 +16,18 @@
  * @copyright Copyright (c) 2017-2018, ptibogxiv.net
 **/
 
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}   
+
+require plugin_dir_path(__FILE__).'/update/plugin-update-checker.php';
 $myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
 	'https://github.com/ptibogxiv/doliconnect/',
 	__FILE__,
 	'doliconnect'
 );
 $myUpdateChecker->getVcsApi()->enableReleaseAssets();
-
-// Exit if accessed directly.
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
 
 require_once plugin_dir_path(__FILE__).'/functions/enqueues.php';
 require_once plugin_dir_path(__FILE__).'/functions/data-request.php';
