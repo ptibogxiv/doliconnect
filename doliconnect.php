@@ -1110,26 +1110,26 @@ elseif(isset($_POST['submitted'])) {
 
 }
 
-$contact="<div class='row'><div class='col-md-4'><div class='form-group'><h4>Siège social</h4>";
-$contact.=doliconst(MAIN_INFO_SOCIETE_ADDRESS);
-$contact.="<br />";
-$contact.=doliconst(MAIN_INFO_SOCIETE_ZIP);
-$contact.=" ";
-$contact.=doliconst(MAIN_INFO_SOCIETE_TOWN); 
-$contact.="</div></div><div class='col-md-8'><div id='content'>";
+echo "<div class='row'><div class='col-md-4'><div class='form-group'><h4>Siège social</h4>";
+echo doliconst(MAIN_INFO_SOCIETE_ADDRESS);
+echo "<br />";
+echo doliconst(MAIN_INFO_SOCIETE_ZIP);
+echo " ";
+echo doliconst(MAIN_INFO_SOCIETE_TOWN); 
+echo "</div></div><div class='col-md-8'><div id='content'>";
 if(isset($emailSent) && $emailSent == true) { 
-$contact.="<div class='alert alert-success'>
+echo "<div class='alert alert-success'>
 <p>Merci! Votre message a été envoyé avec succès.</p>
 </div>";
 } else { 
 if(isset($hasError) || isset($captchaError)) { 
-$contact.="<div class='alert alert-warning'>
+echo "<div class='alert alert-warning'>
 <a class='close' data-dismiss='alert'>x</a>
 <h4 class='alert-heading'>Sorry, an error occured.</h4>
 <p class='error'>Please try again!<p></div>";
 }
 
-$contact.="<form action='' id='reCaptchaForm' method='post' class='was-validated'>";
+echo "<form action='' id='doliconnect-contactform' method='post' class='was-validated'>";
 
 echo "<script>";
 ?>
@@ -1153,65 +1153,65 @@ form.submit();
 <?php
 echo "</script>";
 
-$contact.="<div class='card shadow-sm'><ul class='list-group list-group-flush'>
+echo "<div class='card shadow-sm'><ul class='list-group list-group-flush'>
 <li class='list-group-item'><div class='form-group'>
 <label class='control-label' for='contactName'><small>".__( 'Complete name', 'doliconnect' )."</small></label>
 <input class='form-control' type='text' name='contactName' autocomplete='off' id='contactName' value=";
-if (is_user_logged_in()){$contact.="'$current_user->user_lastname $current_user->user_firstname'";} else {$contact.="''";}
-if (is_user_logged_in()){$contact.=" readonly";} else {$contact.=" required";}
-$contact.="/>";
+if (is_user_logged_in()){echo "'$current_user->user_lastname $current_user->user_firstname'";} else {$contact.="''";}
+if (is_user_logged_in()){echo " readonly";} else {echo " required";}
+echo "/>";
 if($nameError != '') { 
-$contact.="<p><span class='error'>$nameError</span></p>";
+echo "<p><span class='error'>$nameError</span></p>";
 } 
-$contact.="</div>
+echo "</div>
 <div class='form-group'>
 <label class='control-label' for='email'><small>".__( 'Email', 'doliconnect' )."</small></label>
 <input class='form-control' type='email' name='email' autocomplete='off' id='email' value='$current_user->user_email'";
-if (is_user_logged_in()){$contact.=" readonly";} else {$contact.=" required";}
-$contact.="/>";
+if (is_user_logged_in()){echo " readonly";} else {echo " required";}
+echo "/>";
 if($emailError != '') {
-$contact.="<p><span class='error'>$emailError</span></p>";
+echo "<p><span class='error'>$emailError</span></p>";
 }
-$contact.="</div>
+echo "</div>
 <div class='form-group d-none'>
 <label class='control-label' for='email-control'><small>".__( 'Email', 'doliconnect' )."</small></label>
 <input class='form-control' type='email' name='email-control' autocomplete='off' id='email-control' ";
-$contact.="/>";
-$contact.="</div>";
+echo "/>";
+echo "</div>";
 
-$contact.="<div class='form-group'><label class='control-label' for='type'><small>".__( 'Type of request', 'doliconnect' )."</small></label>";
+echo "<div class='form-group'><label class='control-label' for='type'><small>".__( 'Type of request', 'doliconnect' )."</small></label>";
 $type = CallAPI("GET", "/setup/dictionary/ticket_types?sortfield=pos&sortorder=ASC&limit=100", null, MONTH_IN_SECONDS);
 
 if (isset($type)) { 
 $tp= __( 'Issue or problem', 'doliconnect' ).__( 'Commercial question', 'doliconnect' ).__( 'Change or enhancement request', 'doliconnect' ).__( 'Project', 'doliconnect' ).__( 'Other', 'doliconnect' );
-$contact.="<select class='custom-select' id='ticket_type'  name='ticket_type'>";
+echo "<select class='custom-select' id='ticket_type'  name='ticket_type'>";
 foreach ($type as $postv) {
-$contact.="<option value='".$postv->code."' ";
+echo "<option value='".$postv->code."' ";
 if ( $_GET['type']==$postv->code ) {
-$contact.="selected ";
+echo "selected ";
 } elseif ( $postv->use_default==1 ) {
-$contact.="selected ";}
-$contact.=">".__($postv->label, 'doliconnect' )."</option>";
+echo "selected ";}
+echo ">".__($postv->label, 'doliconnect' )."</option>";
 }
-$contact.="</select>";
+echo "</select>";
 }
-$contact.="</div>";
+echo "</div>";
 
-$contact.="<div class='form-group'>
+echo "<div class='form-group'>
 <label class='control-label' for='commentsText'><small>".__( 'Message', 'doliconnect' )."</small></label>
 <textarea class='form-control' name='comments' id='commentsText' rows='7' cols='20' required></textarea>";
 if ($commentError != '') { 
-$contact.="<p><span class='error'>$commentError</span></p>";
+echo "<p><span class='error'>$commentError</span></p>";
 }
 
 if (!is_user_logged_in()){
-$contact.= '</li><li class="list-group-item"><div class="custom-control custom-checkbox"><input id="rgpdinfo" class="custom-control-input form-control-sm" type="checkbox" name="rgpdinfo" value="ok" required><label class="custom-control-label w-100" for="rgpdinfo"><small class="form-text text-muted"> '.__( 'I agree to save my personnal informations in order to contact me', 'doliconnect' ).'</small></label></div>';  
+echo '</li><li class="list-group-item"><div class="custom-control custom-checkbox"><input id="rgpdinfo" class="custom-control-input form-control-sm" type="checkbox" name="rgpdinfo" value="ok" required><label class="custom-control-label w-100" for="rgpdinfo"><small class="form-text text-muted"> '.__( 'I agree to save my personnal informations in order to contact me', 'doliconnect' ).'</small></label></div>';  
 }
-$contact.="</li></ul>";
-$contact.="<div class='card-body'><button class='btn btn-primary btn-block' type='submit'><small>".__( 'Send', 'doliconnect' )."</small></button><input type='hidden' name='submitted' id='submitted' value='true' /></div></div></form></div></div>";
+echo "</li></ul>";
+echo "<div class='card-body'><button class='btn btn-primary btn-block' type='submit'><small>".__( 'Send', 'doliconnect' )."</small></button><input type='hidden' name='submitted' id='submitted' value='true' /></div></div></div></div></form>";
 } 
-$contact.="</div>";
-return $contact;                   
+echo "</div>";
+                   
 }
 add_shortcode('dolicontact', 'dolicontact_shortcode');
 // ********************************************************
