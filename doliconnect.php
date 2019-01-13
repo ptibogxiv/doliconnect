@@ -195,11 +195,11 @@ $user=get_current_user_id();
 $dolibarr = CallAPI("GET", "/doliconnector/".$user, null, HOUR_IN_SECONDS);
 
 if (defined("DOLIBUG")) {
-define('DOLIBARR', NULL);
+define('DOLIBARR', null);
 define('PRICE_LEVEL', 0);
 define('REMISE_PERCENT', 0);
-define('DOLIBARR_MEMBER', NULL);
-define('DOLIBARR_USER', NULL);
+define('DOLIBARR_MEMBER', null);
+define('DOLIBARR_USER', null);
 define('DOLICONNECT_CART', 0);
 define('DOLICONNECT_CART_ITEM', 0); 
 } else {  
@@ -229,11 +229,11 @@ define('DOLICONNECT_CART_ITEM', $dolibarr->fk_order_nb_item);
 } 
 
 } else {     
-define('DOLIBARR', NULL);
+define('DOLIBARR', null);
 define('PRICE_LEVEL', 0);
 define('REMISE_PERCENT', 0);
-define('DOLIBARR_MEMBER', NULL);
-define('DOLIBARR_USER', NULL);
+define('DOLIBARR_MEMBER', null);
+define('DOLIBARR_USER', null);
 define('DOLICONNECT_CART', 0);
 define('DOLICONNECT_CART_ITEM', 0);
 } 
@@ -309,7 +309,7 @@ add_filter( 'get_avatar' , 'my_custom_avatar' , 1 , 5 );
 function my_custom_avatar( $avatar, $id_or_email, $size, $default, $alt ) {
 global $wpdb;    
     $user = false;
-if (get_site_option('doliconnect_mode')=='one') {
+if (get_site_option('doliconnect_mode')=='one' && is_multisite() ) {
 switch_to_blog(1);
 }      
     if ( is_numeric( $id_or_email ) ) {
@@ -355,7 +355,7 @@ $avatar = "<img src='" . plugins_url( 'images/default.jpg', __FILE__ ) . "' ".$t
 $taille=" class='card-img' ";
 $avatar = "<img src='" . plugins_url( 'images/default.jpg', __FILE__ ) . "' ".$taille."  alt='avatar-default'>";
 }
-if (get_site_option('doliconnect_mode')=='one') {
+if ( get_site_option('doliconnect_mode')=='one' && is_multisite() ) {
 restore_current_blog();
 }
 return $avatar;
