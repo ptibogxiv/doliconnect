@@ -151,7 +151,7 @@ delete_site_option('dolibarr_entity');
 $link='https://www.ptibogxiv.net/?update_action=get_metadata&slug=doliconnect&license='.get_site_option('license_private_key');
 ?> 
 
-    <p>Please enter the license key for this product to activate it. You were given a license key when you purchased this item.</p>
+    <p><a href='https://github.com/ptibogxiv/doliconnector/releases' target='_blank'>Télécharger le module doliconnector</a> pour faire fonctionner ce module</p>
     <form action="" method="post">
         <table class="form-table" width="100%">
             <tr>
