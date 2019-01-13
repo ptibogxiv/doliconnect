@@ -3,7 +3,7 @@
  * Plugin Name: Doliconnect
  * Plugin URI: https://www.ptibogxiv.net
  * Description: Connect your Dolibarr (free ERP/CRM) to Wordpress. 
- * Version: 3.0.7
+ * Version: 3.0.8
  * Author: ptibogxiv
  * Author URI: https://www.ptibogxiv.net/en
  * Network: true
