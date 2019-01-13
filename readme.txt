@@ -3,8 +3,8 @@
 Contributors: ptibogxiv
 Tags: erp, crm, ecommerce, dolibarr, online, payment, interface, customer
 Requires at least: 4.9
-Tested up to: 5.0.1
-Stable tag: 4.9.8
+Tested up to: 5.0.4
+Stable tag: 5.0.3
 Requires PHP: 7.0
 Donate link: https://www.ptibogxiv.net
 
