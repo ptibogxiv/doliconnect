@@ -83,11 +83,11 @@ $const = CallAPI("GET", "/doliconnector/constante/".$constante, null, MONTH_IN_S
 return $const->value;
 }
 // ********************************************************
-if ( is_page(array(doliconnectid ('doliaccount'),doliconnectid ('dolicart')))) {
-if (!defined ('DONOTCACHEPAGE')) {
-define( 'DONOTCACHEPAGE', 1);
-}
-}
+//if ( is_page(array(doliconnectid ('doliaccount'),doliconnectid ('dolicart')))) {
+//if (!defined ('DONOTCACHEPAGE')) {
+//define( 'DONOTCACHEPAGE', 1);
+//}
+//}
 // ********************************************************
 function json_basic_auth_handler( $user ) {
 	global $wp_json_basic_auth_error;
@@ -123,7 +123,7 @@ function json_basic_auth_error( $error ) {
 	return $wp_json_basic_auth_error;
 }
 add_filter( 'rest_authentication_errors', 'json_basic_auth_error' );
-
+// ********************************************************
 function CallAPI($method = null, $link = null, $body = null, $delay = HOUR_IN_SECONDS) {
 global $wpdb;
 
@@ -133,6 +133,7 @@ $headers = array(
     );
 $url=get_site_option('dolibarr_public_url').'/api/index.php'.$link;
 
+if ( !empty(get_site_option('dolibarr_public_url'))) {
 if ( !empty( $link ) && ( false === ( $response = get_transient( $link ) ) || $method!='GET' || $delay <= 0 ) ) {
 
 $args = array(
@@ -163,8 +164,10 @@ delete_transient( $link );
 } elseif ( $delay <= 0 || ! in_array($http_code,array('200','404')) ) {
 delete_transient( $link );
 
-if (! in_array($http_code,array('200','404'))) {
+if (! in_array($http_code,array('200','404')) or !is_object( json_decode( wp_remote_retrieve_body( $request )) ) ) {
+
 define('DOLIBUG', 1);
+
 } elseif ( $delay != 0 ) {
 $delay = abs( $delay );
 set_transient( $link, wp_remote_retrieve_body( $request ), $delay);
@@ -178,9 +181,9 @@ set_transient( $link, wp_remote_retrieve_body( $request ), $delay );
 
 return json_decode( wp_remote_retrieve_body( $request ) );
 
-
 } else {
 return json_decode( $response );   
+}
 }
 
 }
@@ -189,12 +192,12 @@ add_action( 'admin_init', 'CallAPI', 5, 5);
 function dolibarr(){
 global $current_user;  
 
-if (is_user_logged_in()){ 
+if ( is_user_logged_in() ) { 
 $user=get_current_user_id(); 
 
 $dolibarr = CallAPI("GET", "/doliconnector/".$user, null, HOUR_IN_SECONDS);
 
-if (defined("DOLIBUG")) {
+if ( defined("DOLIBUG") || !is_object($dolibarr) ) {
 define('DOLIBARR', null);
 define('PRICE_LEVEL', 0);
 define('REMISE_PERCENT', 0);
@@ -203,10 +206,10 @@ define('DOLIBARR_USER', null);
 define('DOLICONNECT_CART', 0);
 define('DOLICONNECT_CART_ITEM', 0); 
 } else {  
-if ($dolibarr->fk_soc == 0) {
-if ($current_user->billing_type == 'phy'){
+if ( $dolibarr->fk_soc == 0 ) {
+if ( $current_user->billing_type == 'phy' ) {
 $name = $current_user->user_firstname." ".$current_user->user_lastname; }
-elseif ($current_user->billing_type == 'mor') {$name = $current_user->billing_company;}
+elseif ( $current_user->billing_type == 'mor' ) {$name = $current_user->billing_company;}
 $rdr = [
     'name'  => $name,
     'address' => $current_user->billing_address,    
@@ -390,7 +393,7 @@ date_default_timezone_set($tzstring);
 
 $entity = dolibarr_entity();
 $ID = $current_user->ID;
-$time = mktime();
+$time = current_time( 'timestamp', 1);
 
 echo "<div class='row'><div class='col-xs-12 col-sm-12 col-md-3'><div class='row'><div class='col-3 col-xs-4 col-sm-4 col-md-12 col-xl-12'><div class='card shadow-sm' style='width: 100%'>";
 echo get_avatar($ID);
@@ -402,9 +405,9 @@ echo "</ul>";
 
 echo "</div><br></div><div class='col-9 col-xs-8 col-sm-8 col-md-12 col-xl-12'>";
 
-if (is_user_logged_in()){
+if ( is_user_logged_in() ){
 
-if (defined("DOLIBUG")) {
+if ( defined("DOLIBUG") ) {
 
 echo "</div></div></div>";
 echo "<div class='col-xs-12 col-sm-12 col-md-9'>";

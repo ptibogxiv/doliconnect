@@ -1,6 +1,6 @@
 <?php
 
-//if (is_page(doliconnectid('doliaccount')) ){
+//if ( !empty(doliconnectid('doliaccount')) ) {
 $propal = CallAPI("GET", "/doliconnector/constante/MAIN_MODULE_PROPALE", null, MONTH_IN_SECONDS);
 $order = CallAPI("GET", "/doliconnector/constante/MAIN_MODULE_COMMANDE", null, MONTH_IN_SECONDS);
 $contract = CallAPI("GET", "/doliconnector/constante/MAIN_MODULE_CONTRAT", null, MONTH_IN_SECONDS);
@@ -23,7 +23,7 @@ global $wpdb,$current_user,$doliconnect;
 $ID = $current_user->ID;
 $delay = DAY_IN_SECONDS;
 
-if ($_POST["case"] == 'updateuser') {
+if ( $_POST["case"] == 'updateuser'  ) {
 wp_update_user( array( 'ID' => $ID, 'user_email' => sanitize_email($_POST['user_email'])));
 wp_update_user( array( 'ID' => $ID, 'nickname' => sanitize_user($_POST['user_nicename'])));
 wp_update_user( array( 'ID' => $ID, 'display_name' => ucfirst(strtolower($_POST['user_firstname']))." ".strtoupper($_POST['user_lastname'])));
@@ -47,7 +47,7 @@ update_usermeta( $ID, $wpdb->prefix.'doliextra_'.$label, $value);
 }
 do_action('wp_dolibarr_sync',constant("DOLIBARR"));
 
-if (isset($_GET['return'])) {
+if ( isset($_GET['return']) ) {
 wp_redirect(doliconnecturl('doliaccount').'?module='.$_GET['return']);
 exit;
 } else {
@@ -55,7 +55,7 @@ $msg .= "<div class='alert alert-success'><button type='button' class='close' da
 }
 }
 
-if (isset($_GET['return'])) {
+if ( isset($_GET['return']) ) {
 $url = esc_url( add_query_arg( 'return', $_GET['return'], $url) );
 }
 
@@ -133,7 +133,7 @@ function avatars_module($url){
 global $wpdb,$current_user;
 
 $ID = $current_user->ID;
-$time = current_time('timestamp');
+$time = current_time( 'timestamp', 1);
 
 require_once ABSPATH . WPINC . '/class-phpass.php';
 
@@ -635,7 +635,7 @@ echo doliloading('password');
 }
 add_action( 'user_doliconnect_password', 'password_module');
 //*****************************************************************************************
-if ( $propal->value == 1 ) {
+if ( is_object($propal) && $propal->value == 1 ) {
 add_action( 'compta_doliconnect_menu', 'propal_menu', 1, 1);
 add_action( 'compta_doliconnect_propal', 'propal_module' );
 }
@@ -778,7 +778,7 @@ echo "</div></small>";
 }
 }
 
-if ( $order->value == 1 ) {
+if ( is_object($order) && $order->value == 1 ) {
 add_action( 'compta_doliconnect_menu', 'order_menu', 2, 1);
 add_action( 'compta_doliconnect_order', 'order_module' );
 }
@@ -1094,7 +1094,7 @@ echo "</div></small>";
 }
 }
 
-if ( $contract->value == 1 && get_option('doliconnectbeta') =='1' ) {
+if ( is_object($contract) && $contract->value == 1 && get_option('doliconnectbeta') =='1' ) {
 add_action( 'compta_doliconnect_menu', 'contract_menu', 2, 1);
 add_action( 'compta_doliconnect_contract', 'contract_module' );
 }
@@ -1236,7 +1236,7 @@ echo "</div></small>";
 }
 }
 //*****************************************************************************************
-if ($member->value == '1') {
+if ( is_object($member) && $member->value == '1' ) {
 add_action( 'options_doliconnect_menu', 'membership_menu', 1, 1);
 add_action( 'options_doliconnect_membership', 'membership_module' );
 }
@@ -1383,7 +1383,7 @@ echo dolihelp('COM');
 echo "</div></small>";
 }
 
-if ($memberconsumption->value == '1') {
+if ( is_object($memberconsumption) && $memberconsumption->value == '1' ) {
 add_action( 'options_doliconnect_menu', 'membershipconsumption_menu', 2, 1);
 add_action( 'options_doliconnect_membershipconsumption', 'membershipconsumption_module' );
 }  
@@ -1435,7 +1435,7 @@ echo "</div></small>";
 
 //*****************************************************************************************
 
-if ( $help->value == '1' ) {
+if ( is_object($help) && $help->value == '1' ) {
 add_action( 'settings_doliconnect_menu', 'ticket_menu', 1, 1);
 add_action( 'settings_doliconnect_ticket', 'ticket_module');
 }
