@@ -30,7 +30,7 @@ function doliconnect_product_block() {
 		'doliconnect-product-block-script', // Handle.
 		plugins_url( 'block.js', __FILE__ ), // Block.js: We register the block here.
 		array( 'wp-blocks', 'wp-element', 'wp-i18n' ), // Dependencies, defined above.
-    VERSION.'beta'
+    'beta'
 	);
 
 	// Styles.
@@ -38,7 +38,7 @@ function doliconnect_product_block() {
 		'doliconnect-product-block-editor-style', // Handle.
 		plugins_url( 'editor.css', __FILE__ ), // Block editor CSS.
 		array( 'wp-edit-blocks' ), // Dependencies, defined above.
-    VERSION.'beta'
+    'beta'
 	);
   
 //	wp_register_style(

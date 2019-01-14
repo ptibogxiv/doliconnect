@@ -31,7 +31,7 @@ function doliconnect_admin_block() {
 		'doliconnect-admin-block-script', // Handle.
 		plugins_url( 'block.js', __FILE__ ), // Block.js: We register the block here.
 		array( 'wp-blocks', 'wp-element', 'wp-i18n' ), // Dependencies, defined above.
-    VERSION.'beta5'
+    'beta5'
 	);
 
 	// Styles.
@@ -39,7 +39,7 @@ function doliconnect_admin_block() {
 		'doliconnect-admin-block-editor-style', // Handle.
 		plugins_url( 'editor.css', __FILE__ ), // Block editor CSS.
 		array( 'wp-edit-blocks' ), // Dependencies, defined above.
-    VERSION.'beta5'
+    'beta5'
 	);
   
 	wp_register_style(

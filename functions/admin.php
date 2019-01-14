@@ -4,7 +4,7 @@ function doliconnect_admin_notice_error() {
 global $wpdb;
 
 $dolibarr = CallAPI("GET", "/status", null, 10 * MINUTE_IN_SECONDS);
-if (version_compare($dolibarr->success->dolibarr_version, '9.0.0', '<')) {
+if ( is_object($dolibarr) && version_compare($dolibarr->success->dolibarr_version, '9.0.0', '<') && !defined("DOLIBUG") ) {
 $class = 'notice notice-error ';  //is-dismissible
 $message = __( 'It seems that your version of Dolibarr and/or its plugins are not up to date!', 'doliconnect' );
 
@@ -109,7 +109,7 @@ echo "<br /><br /><input type='submit' name='activate_license' value='Mettre a j
 
 function doliconnect_network_page() {
     echo '<div class="wrap">';
-    echo '<h2>License Management</h2>';
+    echo '<h2>Key and settings</h2>';
 
 /*** License activate button was clicked ***/
     if (isset($_REQUEST['activate_license'])) {
@@ -151,15 +151,13 @@ delete_site_option('dolibarr_entity');
 $link='https://www.ptibogxiv.net/?update_action=get_metadata&slug=doliconnect&license='.get_site_option('license_private_key');
 ?> 
 
-    <p><a href='https://github.com/ptibogxiv/doliconnector/releases' target='_blank'>Télécharger le module doliconnector</a> pour faire fonctionner ce module</p>
+    <p><a href='https://github.com/ptibogxiv/doliconnector/releases' target='_blank'>Télécharger le module doliconnector</a> pour Dolibarr afin de faire fonctionner ce module</p>
     <form action="" method="post">
         <table class="form-table" width="100%">
             <tr>
                 <th style="width:150px;"><label for="license_private_key">License Doliconnect</label></th>
                 <td ><input class="regular-text" type="text" id="license_private_key" name="license_private_key" value="<?php if ( is_plugin_active( 'doliconnect-pro/doliconnect-pro.php' ) ) {
 echo get_option('license_private_key');?> " <?php } else { echo "";?>" disabled <?php } ?> > <b>PRO</b> 
-                <br />Status: <?php echo $infodoliconnect[status]; ?>
-                <br /><p class="text-success">Date de fin: <?php echo $infodoliconnect[datefin]; ?></p>
                 </td>
             </tr>
                       
@@ -172,14 +170,17 @@ echo get_option('license_private_key');?> " <?php } else { echo "";?>" disabled 
                 <th style="width:150px;"><label for="dolibarr_private_key">DOLIBARR REST API USER KEY</label></th>
                 <td ><input class="regular-text" type="text" id="dolibarr_private_key" name="dolibarr_private_key"  value="<?php echo get_site_option('dolibarr_private_key'); ?>" required></td>
             </tr>
-            <tr>
 <?php
 $infodoliconnect = CallAPI("GET", "/status", null, 5 * MINUTE_IN_SECONDS);
-?>                      
+?>          <tr>          
                 <th style="width:150px;"><label for="status">Status Dolibarr</label></th>
-                <td><p class="text-success">Status: <?php echo $infodoliconnect->success->code; ?></p>
+                <td>
+<?php if ( is_object($infodoliconnect) ) {
+?>                 
+                <p class="text-success">Status: <?php echo $infodoliconnect->success->code; ?></p>
                 <p class="text-success">Version: <?php echo $infodoliconnect->success->dolibarr_version; ?></p>
-                <p class="text-success">Access Locked: <?php echo $infodoliconnect->success->access_locked; ?></p></td>
+                <p class="text-success">Access Locked: <?php echo $infodoliconnect->success->access_locked; ?></p>
+<?php } else { ?><p class="text-danger">Offline</p><?php } ?></td>
             </tr>
             <tr>
                 <th style="width:150px;"><label for="doliconnect_mode">Doliconnect mode</label></th>
@@ -308,7 +309,7 @@ checked('1', get_option('doliconnectrestrict')); } else { ?> disabled <?php } ?>
             </tr>
             <tr>
                 <th style="width:150px;"><label for="doliconnect_ipkiosk">IP mode kiosque</label></th>
-                <td ><textarea rows="6" cols="75" name="doliconnect_ipkiosk" type="text" id="doliconnect_ipkiosk"><?php echo implode("\n",get_option('doliconnect_ipkiosk')); ?></textarea><br>IP actuelle: <?php echo $_SERVER['REMOTE_ADDR']; ?><br>mettre une IP par ligne sans virgule ni espace</td>
+                <td ><textarea rows="6" cols="75" name="doliconnect_ipkiosk" type="text" id="doliconnect_ipkiosk"><?php if ( ! empty(get_option('doliconnect_ipkiosk')) ) { echo implode("\n",get_option('doliconnect_ipkiosk'));} ?></textarea><br>IP actuelle: <?php echo $_SERVER['REMOTE_ADDR']; ?><br>mettre une IP par ligne sans virgule ni espace</td>
             </tr>
             <tr>
                 <th style="width:150px;"><label for="dolibarr_account">dolibarr_account</label></th>

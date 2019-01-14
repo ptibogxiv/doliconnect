@@ -179,12 +179,14 @@ function dolihelp($type) {
 
 $aide = CallAPI("GET", "/doliconnector/constante/MAIN_MODULE_TICKET", null, MONTH_IN_SECONDS);
 
-if ( is_user_logged_in() && $aide->value == 1 ) {
+if ( is_object($aide) && is_user_logged_in() && $aide->value == 1 ) {
 $arr_params = array( 'module' => 'ticket', 'type' => $type, 'create' => true); 
 $link=esc_url( add_query_arg( $arr_params, doliconnecturl('doliaccount')) ); 
 } elseif ( !empty(get_option('dolicontact')) ) {
 $arr_params = array( 'type' => $postorder->id, 'create' => true); 
 $link=esc_url( add_query_arg( $arr_params, doliconnecturl('dolicontact')) );
+} else {
+$link='#';
 }
 
 $help = "<a href='".$link."' role='button' title='".__( 'Help?', 'doliconnect' )."'><i class='fas fa-question-circle'></i> ".__( 'Need help?', 'doliconnect' )."</a>";
