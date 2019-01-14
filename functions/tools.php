@@ -86,6 +86,8 @@ return $loading;
 
 function doliconnect_loading() {
 
+doliconnect_enqueues();
+
 $input = array("primary", "secondary", "success", "warning", "danger", "info", "light", "dark"); //
 $rand_keys = array_rand($input, 4);
 
