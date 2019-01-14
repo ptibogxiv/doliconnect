@@ -1167,8 +1167,8 @@ echo "<div class='card shadow-sm'><ul class='list-group list-group-flush'>
 <li class='list-group-item'><div class='form-group'>
 <label class='control-label' for='contactName'><small>".__( 'Complete name', 'doliconnect' )."</small></label>
 <input class='form-control' type='text' name='contactName' autocomplete='off' id='contactName' value=";
-if (is_user_logged_in()){echo "'$current_user->user_lastname $current_user->user_firstname'";} else {$contact.="''";}
-if (is_user_logged_in()){echo " readonly";} else {echo " required";}
+if (is_user_logged_in()){ echo "'$current_user->user_lastname $current_user->user_firstname'"; } else { echo "''";}
+if (is_user_logged_in()){ echo " readonly";} else {echo " required"; }
 echo "/>";
 if($nameError != '') { 
 echo "<p><span class='error'>$nameError</span></p>";

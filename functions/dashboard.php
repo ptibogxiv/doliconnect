@@ -849,7 +849,7 @@ $vir = CallAPI("GET", "/doliconnector/constante/FACTURE_RIB_NUMBER", null, dolid
 $bank = CallAPI("GET", "/bankaccounts/".$vir->value, null, dolidelay(MONTH_IN_SECONDS, esc_attr($_GET["refresh"])));
 
 echo "<div class='alert alert-danger' role='alert'><p align='justify'>Merci d'effectuer un virement d'un montant de <b>".doliprice($orderfo->multicurrency_total_ttc?$orderfo->multicurrency_total_ttc:$orderfo->total_ttc,$orderfo->multicurrency_code)."</b> sous <b>15 jours</b> en rappelant votre référence <b>$ref</b> sur le compte suivant :</p><p><b>IBAN : $bank->iban</b>";
-if ( ! empty($bank->bic) ) { echo "<br><b>SWIFT/BIC : $bank->bic</b>";}
+if ( ! empty($bank->bic) ) { echo "<br><b>BIC/SWIFT : $bank->bic</b>";}
 echo "</p>$change</div>";
 } else {
 //echo "token:".$_POST['token']." /stripesource:".$_POST['stripeSource']." /modepayment:".$_POST['modepayment'];
