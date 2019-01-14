@@ -203,7 +203,7 @@ global $current_user;
 if ( is_user_logged_in() ) { 
 $user=get_current_user_id(); 
 
-$dolibarr = CallAPI("GET", "/doliconnector/".$user, null, dolidelay( HOUR_IN_SECONDS, true));
+$dolibarr = CallAPI("GET", "/doliconnector/".$user, null, dolidelay( HOUR_IN_SECONDS, false));
 
 if ( defined("DOLIBUG") || !is_object($dolibarr) ) {
 define('DOLIBARR', null);
