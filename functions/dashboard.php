@@ -434,10 +434,14 @@ echo "</h6><small class='text-muted'>$contact->address<br>$contact->zip $contact
 echo '</div></div></label></div></li>';
 $idcontact++;
 }}
+
 if ( count($listcontact) < 5 ) {
+
 echo "<li id='ContactForm' class='list-group-item list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>
 <input id='new_contact' onclick='ShowHideDiv()' class='custom-control-input' type='radio' name='contact' value='new_contact' ";
-if ( isset($listcontact->error) || $listcontact==null ) { echo " checked "; }
+
+if ( isset($listcontact->error) || $listcontact == null ) { echo " checked "; }
+
 echo " ><label class='custom-control-label w-100' for='new_contact'><div class='row'>";
 echo "<div class='col-3 col-md-2 col-xl-2 align-middle'>";
 echo "<center><i class='far fa-address-card fa-3x fa-fw'></i></center>";
@@ -452,7 +456,9 @@ echo "<div class='col-12 col-md-12'><label for='inputcivility'><small>".__( 'Ide
 <div class='input-group mb-2'><div class='input-group-prepend'><span class='input-group-text' id='identity'><i class='fas fa-user fa-fw'></i></span></div>";
 
 $civility = CallAPI("GET", "/setup/dictionary/civility?sortfield=code&sortorder=ASC&limit=100", null , MONTH_IN_SECONDS);
-if (isset($civility)) { 
+
+if ( isset($civility) ) { 
+
 echo "<select class='custom-select' id='identity'  name='billing_civility' required>";
 foreach ($civility as $postv) {
 
@@ -463,8 +469,11 @@ if ($postv->id=='0'){$form .= "disabled ";}
 echo ">$postv->label</option>";
 }
 echo "</select>";
+
 } else {
+
 echo "<input type='text' class='form-control' id='identity' placeholder='".__( 'Civility', 'doliconnect' )."' name='billing_civility' value='".$current_user->billing_civility."' autocomplete='off' required>";
+
 }
 
 echo "<input type='text' name='contact_firstname' class='form-control' placeholder='".__( 'Firstname', 'doliconnect' )."' value='".stripslashes(htmlspecialchars($current_user->user_firstname, ENT_QUOTES))."' required>
@@ -500,9 +509,8 @@ echo "</select>";
 } else {
 echo "<input type='text' class='form-control' id='inputcountry' placeholder='".__( 'Country', 'doliconnect' )."' name='billing_country' value='".$thirdparty->country."' autocomplete='off' required>";
 }
-echo "</div></div>";
+echo "</div></div></li>";
 
-echo '</li>';
 }
 echo "</ul><div class='card-body'>";
 if ( $listcontact != null ) {
