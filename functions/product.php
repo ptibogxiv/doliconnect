@@ -2,20 +2,20 @@
 
 function doliprice($montant,$currency = "EUR"){
 global $current_user; 
-if (is_null($currency)){$currency="EUR";}
-if (function_exists('pll_the_languages')) { 
+if ( is_null($currency) ) { $currency="EUR"; }
+if ( function_exists('pll_the_languages') ) { 
 $locale=pll_current_language('locale');
-} else { if ($current_user->locale==null){$locale=get_locale();} else {$locale=$current_user->locale;} }
+} else { if ( $current_user->locale == null ) { $locale=get_locale(); } else { $locale=$current_user->locale; } }
 $fmt = numfmt_create( $locale, NumberFormatter::CURRENCY );
 return numfmt_format_currency($fmt, $montant, $currency).$decimal;
 }
 
 function doliproductstock($product){
-if ( $product->stock_reel > $product->seuil_stock_alerte && $product->stock_reel > '10' && $product->type == '0'){$stock = "<span class='badge badge-pill badge-success'>".__( 'In stock', 'doliconnect' )."</span>";}
-elseif ( $product->stock_reel <= $billet->seuil_stock_alerte && $product->seuil_stock_alerte > '10' && $product->stock_reel > '10' && $product->type == '0')  {$stock = "<span class='badge badge-pill badge-warning'>".__( 'In stock', 'doliconnect' )."</span>";}
-elseif ( $product->stock_reel <= '10' && $product->stock_reel > '0' && $product->type == '0') { $stock = "<span class='badge badge-pill badge-danger'>".__( 'Limited stock', 'doliconnect' )."</span>";}
-elseif ( $product->tock_reel <= '0' && $product->stock_reel > '0'&& $product->type == '0') { $stock = "<span class='badge badge-pill badge-secondary'>Réapprovisionnement</span>";}
-elseif ( $product->stock_reel <= '0' && $product->type == '0') {$stock = "<span class='badge badge-pill badge-dark'>".__( 'Out of stock', 'doliconnect' )."</SPAN>";}
+if ( $product->stock_reel > $product->seuil_stock_alerte && $product->stock_reel > '10' && $product->type == '0' ) {$stock = "<span class='badge badge-pill badge-success'>".__( 'In stock', 'doliconnect' )."</span>";}
+elseif ( $product->stock_reel <= $billet->seuil_stock_alerte && $product->seuil_stock_alerte > '10' && $product->stock_reel > '10' && $product->type == '0' ) {$stock = "<span class='badge badge-pill badge-warning'>".__( 'In stock', 'doliconnect' )."</span>";}
+elseif ( $product->stock_reel <= '10' && $product->stock_reel > '0' && $product->type == '0' ) { $stock = "<span class='badge badge-pill badge-danger'>".__( 'Limited stock', 'doliconnect' )."</span>";}
+elseif ( $product->tock_reel <= '0' && $product->stock_reel > '0' && $product->type == '0' ) { $stock = "<span class='badge badge-pill badge-secondary'>".__( 'Replenishment', 'doliconnect' )."</span>";}
+elseif ( $product->stock_reel <= '0' && $product->type == '0' ) {$stock = "<span class='badge badge-pill badge-dark'>".__( 'Out of stock', 'doliconnect' )."</SPAN>";}
 else { $stock = "<span class='badge badge-pill badge-light'>".__( 'Available', 'doliconnect' )."</span>";}
 //$stock=$product[stock_reel];
 return $stock;
@@ -24,7 +24,7 @@ return $stock;
 function doliminicart($orderfo){
 $item = constant("DOLICONNECT_CART_ITEM");
 echo "<div class='card'><div class='card-header'>".__( 'Cart', 'doliconnect' )." - ".sprintf( _n( '%s item', '%s items', $item, 'doliconnect' ), $item)." <small>(<a href='".doliconnecturl('dolicart')."' >".__( 'update', 'doliconnect' )."</a>)</small></div><ul class='list-group list-group-flush'>";
-if ($orderfo->lines != null) {
+if ( $orderfo->lines != null ) {
 foreach ($orderfo->lines as $line) {
 
 //$product = CallAPI("GET", "/products/".$post->product_id, null, 0);
@@ -35,7 +35,7 @@ echo "<span class='text-muted'>".doliprice($line->multicurrency_total_ttc?$line-
 }
 }
 
-if (constant("REMISE_PERCENT")>0) { 
+if ( constant("REMISE_PERCENT") > 0 ) { 
 $remise_percent = ($total->prx*constant("REMISE_PERCENT"))/100;
 echo "<li class='list-group-item d-flex justify-content-between bg-light'>
               <div class='text-success'>
@@ -64,7 +64,7 @@ $date_start=null;
 $date_end=null;
 }
 
-if (constant("DOLICONNECT_CART")>0) {
+if ( constant("DOLICONNECT_CART") > 0 ) {
 $orderid=constant("DOLICONNECT_CART");
 } else {
 $rdr = [
@@ -106,9 +106,9 @@ $order = CallAPI("GET", "/orders/".$orderid, null, dolidelay($delay, true));
 $dolibarr = CallAPI("GET", "/doliconnector/".$current_user->ID, null, dolidelay($delay, true));
 return $addline;
 
-} elseif ($orderid > 0 && $line > 0) {
+} elseif ( $orderid > 0 && $line > 0 ) {
 
-if ($quantity < 1) {
+if ( $quantity < 1 ) {
 
 $deleteline = CallAPI("DELETE", "/orders/".$orderid."/lines/".$line, null, 0);
 $order = CallAPI("GET", "/orders/".$orderid, null, dolidelay($delay, true));
