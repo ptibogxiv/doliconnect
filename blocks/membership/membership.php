@@ -31,7 +31,7 @@ function doliconnect_membership_block() {
 		'doliconnect-membership-block-script', // Handle.
 		plugins_url( 'block.js', __FILE__ ), // Block.js: We register the block here.
 		array( 'wp-blocks', 'wp-element', 'wp-i18n' ), // Dependencies, defined above.
-    VERSION.'beta3'
+    'beta3'
 	);
 
 	// Styles.
@@ -39,7 +39,7 @@ function doliconnect_membership_block() {
 		'doliconnect-membership-block-editor-style', // Handle.
 		plugins_url( 'editor.css', __FILE__ ), // Block editor CSS.
 		array( 'wp-edit-blocks' ), // Dependencies, defined above.
-    VERSION.'beta3'
+    'beta3'
 	);
   
 	wp_register_style(
