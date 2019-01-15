@@ -14,25 +14,6 @@
 //.card-header {
 //  padding-bottom: 0;
 //}
-     
-.btn-circle {
-        width: 30px;
-        height: 30px;
-        text-align: center;
-        padding: 6px 0;
-        font-size: 12px;
-        line-height: 1.428571429;
-        border-radius: 15px;
-      }
-      
-.btn-circle.btn-lg {
-        width: 50px;
-        height: 50px;
-        padding: 13px 13px;
-        font-size: 18px;
-        line-height: 1.33;
-        border-radius: 25px;
-      } 
 
 .btn-social{position:relative;padding-left:44px;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.btn-social>:first-child{position:absolute;left:0;top:0;bottom:0;width:32px;line-height:34px;font-size:1.6em;text-align:center;border-right:1px solid rgba(0,0,0,0.2)}
 .btn-social.btn-lg{padding-left:61px}.btn-social.btn-lg>:first-child{line-height:45px;width:45px;font-size:1.8em}

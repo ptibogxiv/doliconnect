@@ -130,6 +130,7 @@ $headers = array(
         'DOLAPIENTITY' => dolibarr_entity(),
         'DOLAPIKEY' => get_site_option('dolibarr_private_key')
     );
+
 $url=get_site_option('dolibarr_public_url').'/api/index.php'.$link;
 
 if ( !empty(get_site_option('dolibarr_public_url')) && !empty(get_site_option('dolibarr_private_key')) ) {
