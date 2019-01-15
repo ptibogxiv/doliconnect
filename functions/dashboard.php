@@ -1777,8 +1777,6 @@ echo dolihelp('ISSUE');
 echo "</small></p>";
 echo "</form>";
 
-
-
 if ( get_option('doliconnectbeta')=='1' ) {
 echo '<div class="accordion" id="accordionExample">
 <div class="card shadow-sm"><ul class="list-group list-group-flush">
