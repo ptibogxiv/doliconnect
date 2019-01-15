@@ -342,7 +342,7 @@ echo get_avatar($ID);
 if ( is_user_logged_in() && !defined("DOLIBUG") ) {
 echo "<a href='".esc_url( add_query_arg( 'module', 'avatars', doliconnecturl('doliaccount')) )."' class='card-img-overlay'><div class='d-block d-sm-block d-xs-block d-md-none text-center'><i class='fas fa-camera'></i></div><div class='d-none d-md-block'><i class='fas fa-camera fa-2x'></i> ".__( 'Edit', 'doliconnect' )."</div></a>";
 }
-echo "<ul class='list-group list-group-flush'><a href='".esc_url(doliconnecturl('doliaccount'))."' class='list-group-item list-group-item-action'><center><div class='d-block d-sm-block d-xs-block d-md-none'><i class='fas fa-home'></i></div><div class='d-none d-md-block'><i class='fas fa-home'></i> ".__( 'Home', 'doliconnect' )."</div></center></a>";
+echo "<ul class='list-group list-group-flush'><a href='".esc_url( doliconnecturl('doliaccount') )."' class='list-group-item list-group-item-action'><center><div class='d-block d-sm-block d-xs-block d-md-none'><i class='fas fa-home'></i></div><div class='d-none d-md-block'><i class='fas fa-home'></i> ".__( 'Home', 'doliconnect' )."</div></center></a>";
 echo "</ul>";
 
 echo "</div><br></div><div class='col-9 col-xs-8 col-sm-8 col-md-12 col-xl-12'>";
@@ -406,7 +406,7 @@ echo "</div></div></div>";
 echo "<div class='col-xs-12 col-sm-12 col-md-9'>";
 do_action( 'settings_doliconnect_'.esc_attr($_GET['module']), esc_url( add_query_arg( 'module', esc_attr($_GET['module']), doliconnecturl('doliaccount')) ) ); 
 } else {
-wp_redirect(esc_url(doliconnecturl('doliaccount')));
+wp_redirect( esc_url(doliconnecturl('doliaccount')) );
 exit;
 }
 //****
