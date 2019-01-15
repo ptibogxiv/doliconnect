@@ -13,7 +13,7 @@
  * Domain Path: /languages
  *
  * @author ptibogxiv.net <support@ptibogxiv.net>
- * @copyright Copyright (c) 2017-2018, ptibogxiv.net
+ * @copyright Copyright (c) 2017-2019, ptibogxiv.net
 **/
 
 // Exit if accessed directly.
@@ -73,7 +73,6 @@ return get_option('dolibarr_entity');
 return get_current_blog_id();
 }
 }
-
 // ********************************************************
 function doliconst ($constante) {
 global $wpdb;
@@ -191,9 +190,7 @@ return json_decode( $response );
 if ( !defined("DOLIBUG") ) {
 define('DOLIBUG', 1);
 }
-
 }
-
 }
 add_action( 'admin_init', 'CallAPI', 5, 5); 
 // ********************************************************
@@ -251,69 +248,6 @@ define('DOLICONNECT_CART_ITEM', 0);
 
 }
 add_action( 'init', 'dolibarr', 10);
-// ********************************************************
-function dolilogin_shortcode($redirect_to){
-global $wpdb;
-$entity = get_current_blog_id();
-
-$is_valid = apply_filters('invisible_recaptcha', true);
-if( ! $is_valid )
-{
-$emailError = "Votre demande n'est pas autorisée";
-}
-
-if (!is_user_logged_in()) {
-echo "<div class='row'><div class='col-md-7 ml-md-auto mr-md-auto'>";
-
-if($_GET["login"]=='failed') { 
-$dllgn .="<div class='alert alert-danger'><h4 class='alert-heading'>".__( 'Oops', 'doliconnect' )."</h4><p>".__( 'There is no account for these login data or the email and/or the password are not correct.', 'doliconnect' )."</p></div>";
-}
-elseif(isset($_GET["success"])) { 
-$dllgn .="<div class='alert alert-success'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><p>Votre mot de passe a été changé avec succès !</p></div>";
-}
- 
-$dllgn .="<div id='login-form'><div class='card'><ul class='list-group list-group-flush'><li class='list-group-item'>";
-$dllgn .="<b>".get_option('doliaccountinfo')."</b>";
-$dllgn .= socialconnect(get_permalink());
-
-if (function_exists('secupress_get_module_option') && secupress_get_module_option('move-login_slug-login', $slug, 'users-login' )) {
-$login_url=site_url()."/".secupress_get_module_option('move-login_slug-login', $slug, 'users-login' ); 
-}else{
-$login_url=site_url()."/wp-login.php"; }
-
-if ( function_exists('dolikiosk') && ! empty(dolikiosk()) ) {
-$redirect_to=doliconnecturl('doliaccount');
-} else {
-if (trim($redirect_to) === ''){
-$redirect_to=esc_url(site_url());
-}else{
-$redirect_to=$redirect_to;} 
-}
-
-$dllgn .="<form id='payment-form' class='was-validated' id='loginform' name='loginform' action='$login_url' method='post'>";
-$dllgn .="<div class='form-group'><label for='inputemail'><small>".__( 'Email', 'doliconnect' )."</small></label>
-<div class='input-group mb-2 mr-sm-2'><div class='input-group-prepend'>
-<div class='input-group-text'><i class='fas fa-at fa-fw'></i></div></div>
-<input class='form-control' id='user_login' type='email' placeholder='".__( 'Enter your email', 'doliconnect' )."' name='log' value='' required autofocus>";
-$dllgn .="</div></div><div class='form-group'><label for='inputemail'><small>".__( 'Password', 'doliconnect' )."</small></label>
-<div class='input-group mb-2 mr-sm-2'><div class='input-group-prepend'>
-<div class='input-group-text'><i class='fas fa-key fa-fw'></i></div></div>
-<input class='form-control' id='user_pass' type='password' placeholder='".__( 'Enter your password', 'doliconnect' )."' name='pwd' value ='' required>";
-$dllgn .="</div></div>
-<div class='custom-control custom-checkbox my-1 mr-sm-2'>
-<input type='checkbox' class='custom-control-input' value='forever' id='rememberme' name='rememberme'";
-$dllgn .="><LABEL class='custom-control-label' for='rememberme'> ".__( 'Remember me', 'doliconnect' )."</LABEL><div class='float-right'><a href='".wp_lostpassword_url(get_permalink())."' role='button' title='".__( 'Forgot password?', 'doliconnect' )."'>".__( 'Forgot password?', 'doliconnect' )."</a></div></div>";
-$dllgn .="</li></ul><div class='card-body'><input type='hidden' value='$redirect_to' name='redirect_to'><button id='submit' class='btn btn-block btn-info' type='submit' name='submit' value='Submit'";
-$dllgn .="><B>".__( 'Login', 'doliconnect' )."</B></button></form>";
-$dllgn .="</div>";
-$dllgn .="</div>";
-//$dllgn .="<a class='btn btn-link' href='".wp_lostpassword_url(get_permalink())."' role='button' title='".__( 'Forgot password?', 'doliconnect' )."'>".__( 'Forgot password?', 'doliconnect' )."</a>";
-$dllgn .=doliloading('login');
-$dllgn .="</div></div></div>";
-}
-return $dllgn;
-} 
-add_shortcode('dolilogin', 'dolilogin_shortcode');
 // ********************************************************
 add_filter( 'get_avatar' , 'my_custom_avatar' , 1 , 5 );
 
@@ -1033,7 +967,7 @@ jQuery('#LoginForm').hide();
 jQuery('#doliloading-login').show(); 
 }
 <?php
-echo "</SCRIPT>";
+echo "</script>";
 echo "<div class='form-group'>
 <div class='input-group mb-2 mr-sm-2'><div class='input-group-prepend'>
 <div class='input-group-text'><i class='fas fa-at fa-fw'></i></div></div>
@@ -1044,8 +978,8 @@ echo "</div></div><div class='form-group'>
 <input class='form-control' id='user_pass' type='password' placeholder='".__( 'Password', 'doliconnect' )."' name='pwd' value ='' required>";
 echo "</div></div>";
 echo "<div><div class='float-left'><small>";
-if (((!is_multisite() && get_option( 'users_can_register' )) or (get_option('users_can_register') == '1' && (get_site_option( 'registration' ) == 'user' || get_site_option( 'registration' ) == 'all')))) {
-echo "<a href='".wp_registration_url(get_permalink())."' role='button' title='".__( 'Create an account', 'doliconnect' )."'>".__( 'Create an account', 'doliconnect' )."</a>";
+if ( ((!is_multisite() && get_option( 'users_can_register' )) or (get_option('users_can_register') == '1' && (get_site_option( 'registration' ) == 'user' || get_site_option( 'registration' ) == 'all'))) ) {
+echo "<a href='".wp_registration_url( get_permalink() )."' role='button' title='".__( 'Create an account', 'doliconnect' )."'>".__( 'Create an account', 'doliconnect' )."</a>";
 }
 //<input type='checkbox' class='custom-control-input' value='forever' id='remembermemodal' name='rememberme'>";
 //echo "<label class='custom-control-label' for='remembermemodal'> ".__( 'Remember me', 'doliconnect' )."</label>";
