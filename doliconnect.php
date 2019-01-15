@@ -720,7 +720,7 @@ wp_redirect(wp_login_url( get_permalink() )."?action=lostpassword&error=invalidk
 exit;
 }
 exit;
-}else {
+} else {
 $dolibarr = CallAPI("GET", "/doliconnector/".$user->ID, null, 0);
 if ($_POST["case"] == 'updatepwd'){
 $pwd = sanitize_text_field($_POST["pwd1"]);                                   
@@ -732,7 +732,7 @@ $update_user = wp_update_user( array (
 					'user_pass' => $pwd
 				)
 			);
-if ( $dolibarr->fk_user > '0' ){
+if ( $dolibarr->fk_user > '0' ) {
 $data = [
     'pass' => $pwd
 	];
@@ -744,7 +744,7 @@ $wpdb->update( $wpdb->users, array( 'user_activation_key' => '' ), array( 'user_
 wp_redirect(wp_login_url( get_permalink() )."?action=lostpassword&success");
 exit;
 }
-elseif ($pwd != $_POST["pwd2"]){
+elseif ( $pwd != $_POST["pwd2"] ) {
 $msg = "<div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><span class='fa fa-times-circle'></span> Les 2 nouveaux mots de passe saisis sont différents!</div>";
 }
 elseif (!preg_match("#.*^(?=.{8,20})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*$#", $pwd)){
@@ -753,7 +753,7 @@ $msg = "<div class='alert alert-danger'><button type='button' class='close' data
 }
  
 echo $msg."<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
-if ($dolibarr->fk_user > '0') {
+if ( $dolibarr->fk_user > '0') {
 echo "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".__( 'Your password will be synchronized with your Dolibarr account', 'doliconnect' )."</b></li>";
 } 
 echo "<li class='list-group-item'><h5 class='card-title'>".__( 'Change your password', 'doliconnect' )."</h5><form class='was-validated' id='fpwForm' action='' method='post'><input type='hidden' name='submitted' id='submitted' value='true' />
@@ -789,7 +789,7 @@ echo "</div>";
 
 }
 }
-} elseif (isset($_GET["provider"])) { 
+} elseif ( isset($_GET["provider"]) ) { 
 include( plugin_dir_path( __DIR__ ) . 'doliconnect-pro/hybridauth/src/autoload.php');
 include( plugin_dir_path( __DIR__ ) . 'doliconnect-pro/hybridauth/src/config.php');
 try{
@@ -882,7 +882,7 @@ $key_saved = $wpdb->update( $wpdb->users, array( 'user_activation_key' => $hashe
 $arr_params = array( 'rpw' => true, 'key' => $key, 'login' => $user->user_login);  
 $url = esc_url( add_query_arg( $arr_params, doliconnecturl('doliaccount')) );
 
-if ( true == $key_saved && DOLICONNECT_DEMO != $user->ID) {
+if ( true == $key_saved && DOLICONNECT_DEMO != $user->ID ) {
 			$sitename = get_option('blogname');
       $siteurl = get_option('siteurl');
       $subject = "[$sitename] ".__( 'Reset Password', 'doliconnect' );
@@ -900,9 +900,9 @@ $mail =  wp_mail($email, $subject, $body, $headers);
  }
 }
 
-if(isset($emailSent) && $emailSent == true) { 
+if ( isset($emailSent) && $emailSent == true ) { 
 echo "<div class='alert alert-success'><h4 class='alert-heading'>".__( 'Congratulations!', 'doliconnect' )."</h4><p>".__( 'A password reset link was sent to you by email. Please check your spam folder if you don\'t find it.', 'doliconnect' )."</p></div>";
-} elseif( isset($hasError) || isset($captchaError)) { 
+} elseif ( isset($hasError) || isset($captchaError) ) { 
 echo "<div class='alert alert-danger'><h4 class='alert-heading'>".__( 'Oops', 'doliconnect' )."</h4><p>$emailError</p></div>";
 }
 
@@ -980,9 +980,11 @@ echo "</div></div>";
 
 echo "<p class='font-weight-light' align='justify'>".__( 'Manage your account, your informations and much more via this secure client area.', 'doliconnect' )."</p></div></div></div>";
 echo "<div class='col-xs-12 col-sm-12 col-md-9'>";
-if(isset($emailSent) && $emailSent == true) { 
+
+if( isset($emailSent) && $emailSent == true ) { 
 echo "<div class='alert alert-success'><h4 class='alert-heading'>".__( 'Congratulations!', 'doliconnect' )."</h4><p>".__( 'A password reset link was sent to you by email. Please check your spam folder if you don\'t find it.', 'doliconnect' )."</p></div>";
 }
+
 if($_GET["login"]=='failed') { 
 echo "<div class='alert alert-danger'><h4 class='alert-heading'>".__( 'Oops', 'doliconnect' )."</h4><p>".__( 'There is no account for these login data or the email and/or the password are not correct.', 'doliconnect' )."</p></div>";
 }
@@ -996,7 +998,7 @@ echo '<a href="#" id="login-'.current_time('timestamp').'" data-toggle="modal" d
 if (((!is_multisite() && get_option( 'users_can_register' )) or (get_option('users_can_register')=='1' && (get_site_option( 'registration' ) == 'user' or get_site_option( 'registration' ) == 'all')))) 
 {
 echo '<div><div style="display:inline-block;width:46%;float:left"><hr width="90%" /></div><div style="display:inline-block;width: 8%;text-align: center;vertical-align:90%"><small class="text-muted">'.__( 'or', 'doliconnect' ).'</small></div><div style="display:inline-block;width:46%;float:right" ><hr width="90%"/></div></div>';
-echo '<a href="'.wp_registration_url(get_permalink()).'" id="login-'.current_time('timestamp').'" class="btn btn-block btn-primary my-2 my-sm-0" role="button">'.__("You don't have an account", 'doliconnect').'</a>';
+echo '<a href="'.wp_registration_url( get_permalink() ).'" id="login-'.current_time('timestamp').'" class="btn btn-block btn-primary my-2 my-sm-0" role="button">'.__("You don't have an account", 'doliconnect').'</a>';
 }
 
 } else {
@@ -1047,7 +1049,7 @@ echo "<a href='".wp_registration_url(get_permalink())."' role='button' title='".
 }
 //<input type='checkbox' class='custom-control-input' value='forever' id='remembermemodal' name='rememberme'>";
 //echo "<label class='custom-control-label' for='remembermemodal'> ".__( 'Remember me', 'doliconnect' )."</label>";
-echo "</div><div class='float-right'><a href='".wp_lostpassword_url(get_permalink())."' role='button' title='".__( 'Forgot password?', 'doliconnect' )."'>".__( 'Forgot password?', 'doliconnect' )."</a></small></div></div>"; 
+echo "</div><div class='float-right'><a href='".wp_lostpassword_url( get_permalink() )."' role='button' title='".__( 'Forgot password?', 'doliconnect' )."'>".__( 'Forgot password?', 'doliconnect' )."</a></small></div></div>"; 
 
 echo "</div></li><li class='list-group-item'><input type='hidden' value='$redirect_to' name='redirect_to'><button id='submit' class='btn btn-block btn-primary' type='submit' name='submit' value='Submit'";
 echo "><b>".__( 'Sign in', 'doliconnect' )."</b></button></form>";
@@ -1332,7 +1334,7 @@ return doliconnecturl('doliaccount');
 function account_login_fail( $username ) {
 $referrer = $_SERVER['HTTP_REFERER'];  
 if ( !empty($referrer) && !strstr($referrer,'wp-login') && !strstr($referrer,'wp-admin') ) {
-wp_redirect(doliconnecturl('doliaccount') . '?login=failed');  // let's append some information (login=failed) to the URL for the theme to use
+wp_redirect( esc_url( add_query_arg( 'login', 'failed', doliconnecturl('doliaccount')) ) );  // let's append some information (login=failed) to the URL for the theme to use
 exit;}
 }
 add_action( 'wp_login_failed', 'account_login_fail' );  // hook failed login
@@ -1386,7 +1388,7 @@ $entity=get_current_blog_id();
 if (is_user_logged_in()){ 
   echo "<a class='btn btn-block btn-warning' href='".doliconnecturl('doliaccount') . "?module=ticket&type=ISSUE&create' ><span class='fa fa-bug fa-fw'></span> ".__( 'Report a Bug', 'doliconnect' )."</a>";
 } else {
-  echo "<a class='btn btn-block btn-warning' href='".doliconnecturl('doliaccount') . "?type=ISSUE' ><span class='fa fa-bug fa-fw'></span> ".__( 'Report a Bug', 'doliconnect' )."</a>";
+  echo "<a class='btn btn-block btn-warning' href='".esc_url( add_query_arg( 'type', 'issue', doliconnecturl('dolicontact')) ) . "' ><span class='fa fa-bug fa-fw'></span> ".__( 'Report a Bug', 'doliconnect' )."</a>";
 } 
   echo $args['after_widget'];  
 }
