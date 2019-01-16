@@ -744,8 +744,8 @@ try{
  
     //Retrieve the user's profile
     $userProfile = $adapter->getUserProfile();
-if (!email_exists($userProfile->email)) {
-$emailError = "Aucun compte n'est associé à cette adresse email";
+if ( !email_exists($userProfile->email) ) {
+$emailError = __( 'No account seems to be linked to this email address', 'doliconnect' );
         $hasError = true;   
     } else {
 $user=get_user_by( 'email', $userProfile->email);    
@@ -794,7 +794,7 @@ catch(\Exception $e){
 echo "<p class='font-weight-light' align='justify'>".__( 'Manage your account, your informations and much more via this secure client area.', 'doliconnect' )."</p></div></div></div>";
 echo "<div class='col-xs-12 col-sm-12 col-md-9'>";
   
-if(isset($_POST['submitted'])) {
+if( isset($_POST['submitted']) ) {
 
     if( sanitize_email($_POST['user_email']) === '' )  {
         $emailError = __( 'A valid email is need to reset your password', 'doliconnect' );
