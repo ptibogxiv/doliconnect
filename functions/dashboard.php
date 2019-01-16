@@ -1758,18 +1758,17 @@ if ( constant("DOLIBARR") > '0' ) {
 $thirdparty = CallAPI("GET", "/thirdparties/".constant("DOLIBARR"), null, dolidelay( DAY_IN_SECONDS, esc_attr($_GET["refresh"])));
 }
 
-//if (get_option('doliconnectbeta')=='1') { 
+if ( !empty($thirdparty->multicurrency_code) ) { 
 echo "<li class='list-group-item'>";
 //echo $current_user->locale;
 echo "<div class='form-group'><label for='inputaddress'><small>".__( 'Default currency', 'doliconnect' )."</small></label>
 <div class='input-group'><div class='input-group-prepend'><span class='input-group-text'><i class='fas fa-money-bill-alt fa-fw'></i></span></div>";
 echo "<select class='form-control' id='multicurrency_code' name='multicurrency_code' onChange='demo()' >";
-echo "<option value='".$thirdparty->multicurrency_code."'>".doliprice(0,$thirdparty->multicurrency_code)." / ".$thirdparty->multicurrency_code."</option>";
+echo "<option value='".$thirdparty->multicurrency_code."'>".$thirdparty->multicurrency_code." / ".doliprice(0,$thirdparty->multicurrency_code)."</option>";
 echo "</select>";
 echo "</div></div>";
-//echo pll_default_language('locale');
 echo "<input type='hidden' name='case' value='updatesettings'></li>";
-//}
+}
 
 echo "</ul></div>";
 echo "<p class='text-right'><small>";
