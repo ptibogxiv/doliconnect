@@ -621,10 +621,9 @@ echo "<div class='custom-control custom-checkbox my-1 mr-sm-2'>
 <label class='custom-control-label' for='validation'> ".__( 'I read and accept the <a href="#" data-toggle="modal" data-target="#cgvumention">Terms & Conditions</a>.', 'doliconnect')."</label>
 <div class='invalid-feedback'>".__( 'This field is required.', 'doliconnect' )."</div></div></li>";
 echo "</ul><div class='card-body'><button class='btn btn-primary btn-block' type='submit'";
-if (get_option('users_can_register')=='1' && (get_site_option( 'registration' ) == 'user' or get_site_option( 'registration' ) == 'all') or (!is_multisite() && get_option( 'users_can_register' ))){
+if ( get_option('users_can_register')=='1' && ( get_site_option( 'registration' ) == 'user' || get_site_option( 'registration' ) == 'all' ) || ( !is_multisite() && get_option( 'users_can_register' )) ) {
 echo "";
-}
-else {echo " aria-disabled='true'  disabled";}
+} else { echo " aria-disabled='true'  disabled"; }
 echo "><b>".__( 'Create an account', 'doliconnect' )."</b></button></form>";
 }
 echo"</div></div>";
@@ -632,21 +631,21 @@ echo "<p class='text-right'><small>";
 echo dolihelp('ISSUE');
 echo "</small></p>";
 echo "</div></div>";
-if (get_option( 'wp_page_for_privacy_policy' )) {
+if ( get_option( 'wp_page_for_privacy_policy' ) ) {
 echo "<div class='modal fade' id='cgvumention' tabindex='-1' role='dialog' aria-labelledby='cgvumention' aria-hidden='true'><div class='modal-dialog modal-lg modal-dialog-centered' role='document'><div class='modal-content'><div class='modal-header'><h5 class='modal-title' id='cgvumentionLabel'>".__( 'Terms & Conditions', 'doliconnect')."</h5><button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>
 <div class='modal-body'>";
 echo apply_filters('the_content', get_post_field('post_content', get_option( 'wp_page_for_privacy_policy' ))); 
 echo "</div></div></div>";}
 
 echo "</div></div>";
-} elseif (!is_user_logged_in() && isset($_GET["rpw"])) {
+} elseif ( !is_user_logged_in() && isset($_GET["rpw"]) ) {
 echo "<p class='font-weight-light' align='justify'>".__( 'Manage your account, your informations, orders and much more via this secure client area.', 'doliconnect' )."</p></div></div></div>";
 echo "<div class='col-xs-12 col-sm-12 col-md-9'>";
-if (!$_GET["login"] or !$_GET["key"]) {
+if (!$_GET["login"] || !$_GET["key"]) {
 wp_redirect(wp_login_url( get_permalink() ));
 exit;
 } else {   
-$user = check_password_reset_key($_GET["key"], $_GET["login"] );
+$user = check_password_reset_key( esc_attr($_GET["key"]), esc_attr($_GET["login"]) );
 if ( ! $user || is_wp_error( $user ) ) {
 if ( $user && $user->get_error_code() === 'expired_key' ){
 wp_redirect(wp_login_url( get_permalink() )."?action=lostpassword&error=expiredkey");
@@ -728,7 +727,7 @@ echo "</div>";
 } elseif ( isset($_GET["provider"]) ) { 
 include( plugin_dir_path( __DIR__ ) . 'doliconnect-pro/includes/hybridauth/src/autoload.php');
 include( plugin_dir_path( __DIR__ ) . 'doliconnect-pro/includes/hybridauth/src/config.php');
-try{
+try {
     //Feed configuration array to Hybridauth
     $hybridauth = new Hybridauth\Hybridauth($config);
 
@@ -765,7 +764,7 @@ exit;
     //Disconnect the adapter 
     $adapter->disconnect();
 }
-catch(\Exception $e){
+catch(\Exception $e) {
         // In case we have errors 6 or 7, then we have to use Hybrid_Provider_Adapter::logout() to 
     // let hybridauth forget all about the user so we can try to authenticate again.
     // Display the recived error, 
@@ -917,7 +916,7 @@ echo "</div></div>";
 echo "<p class='font-weight-light' align='justify'>".__( 'Manage your account, your informations and much more via this secure client area.', 'doliconnect' )."</p></div></div></div>";
 echo "<div class='col-xs-12 col-sm-12 col-md-9'>";
 
-if( isset($emailSent) && $emailSent == true ) { 
+if ( isset($emailSent) && $emailSent == true ) { 
 echo "<div class='alert alert-success'><h4 class='alert-heading'>".__( 'Congratulations!', 'doliconnect' )."</h4><p>".__( 'A password reset link was sent to you by email. Please check your spam folder if you don\'t find it.', 'doliconnect' )."</p></div>";
 }
 
@@ -946,11 +945,11 @@ if (function_exists('socialconnect')) {
 socialconnect(get_permalink());
 }
 
-if (function_exists('secupress_get_module_option') && secupress_get_module_option('move-login_slug-login', $slug, 'users-login' )) {
+if ( function_exists('secupress_get_module_option') && secupress_get_module_option('move-login_slug-login', $slug, 'users-login' ) ) {
 $login_url=site_url()."/".secupress_get_module_option('move-login_slug-login', $slug, 'users-login' ); 
-}else{
+} else {
 $login_url=site_url()."/wp-login.php"; }
-if (isset($_GET["redirect_to"])) { $redirect_to=$_GET["redirect_to"]; } else {
+if ( isset($_GET["redirect_to"])) { $redirect_to=$_GET["redirect_to"]; } else {
 $redirect_to="//".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];} 
 echo "<form class='was-validated' id='LoginForm' action='$login_url' method='post'>";
 echo "<script>";

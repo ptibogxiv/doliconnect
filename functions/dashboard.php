@@ -11,7 +11,7 @@ $assiduity = CallAPI("GET", "/doliconnector/constante/MAIN_MODULE_ASSIDUITY", nu
 $help = CallAPI("GET", "/doliconnector/constante/MAIN_MODULE_TICKET", null, MONTH_IN_SECONDS);
 }
 
-function informations_menu($arg){
+function informations_menu($arg) {
 echo "<A href='".esc_url( add_query_arg( 'module', 'informations', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-action";
 if ($arg=='informations') { echo " active";}
 echo "'>".__( 'Personal informations', 'doliconnect' )."</a>";
