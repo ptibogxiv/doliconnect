@@ -12,7 +12,7 @@ $form .= "<input type='hidden' name='billing_type' value='phy'>";
 $form .= "<div class='col-12 col-md-12'><label for='inputcivility'><small>".__( 'Identity', 'doliconnect' )."</small></label>
 <div class='input-group mb-2'><div class='input-group-prepend'><span class='input-group-text' id='identity'><i class='fas fa-user fa-fw'></i></span></div>";
 
-$civility = CallAPI("GET", "/setup/dictionary/civility?sortfield=code&sortorder=ASC&limit=100", null , $delay);
+$civility = CallAPI("GET", "/setup/dictionary/civilities?sortfield=code&sortorder=ASC&limit=100&active=1", null , $delay);
 if ( isset($civility) ) { 
 $form .= "<select class='custom-select' id='identity'  name='billing_civility' required>";
 foreach ($civility as $postv ) {

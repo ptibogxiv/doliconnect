@@ -65,9 +65,9 @@ add_action('init', 'app_output_buffer');
 // ********************************************************
 function dolibarr_entity( $entity = null ) {
 
-if ( !get_site_option('dolibarr_entity') && get_site_option('doliconnect_mode') == 'one' ){
+if ( !get_site_option('dolibarr_entity') && get_site_option('doliconnect_mode') == 'one' ) {
 return 1;
-} elseif ( get_site_option('dolibarr_entity') && get_option('dolibarr_entity') ){
+} elseif ( get_site_option('dolibarr_entity') && get_option('dolibarr_entity') ) {
 return get_option('dolibarr_entity');
 } else {
 return get_current_blog_id();
@@ -83,7 +83,7 @@ $const = CallAPI("GET", "/doliconnector/constante/".$constante, null, MONTH_IN_S
 return $const->value;
 }
 // ********************************************************
-if (is_page(array(doliconnectid ('doliaccount'),doliconnectid ('dolicart')))) {
+if ( is_page(array(doliconnectid ('doliaccount'),doliconnectid ('dolicart'))) ) {
 if ( !defined ('DONOTCACHEPAGE') ) {
 define( 'DONOTCACHEPAGE', 1);
 }
@@ -294,11 +294,10 @@ if (isset($user->$nam) && NULL != $user->$nam) {
 $upload_dir = wp_upload_dir(); 
 $filename=$upload_dir['baseurl']."/doliconnect/".$user->data->ID."/".$user->$nam;
 $avatar = "<img src='$filename' ".$taille." alt='avatar-".$user->data->ID."'>";
-} 
-else { 
+} else { 
 $avatar = "<img src='" . plugins_url( 'images/default.jpg', __FILE__ ) . "' ".$taille."  alt='avatar-default'>";
 }               
-}else {
+} else {
 $taille=" class='card-img' ";
 $avatar = "<img src='" . plugins_url( 'images/default.jpg', __FILE__ ) . "' ".$taille."  alt='avatar-default'>";
 }
