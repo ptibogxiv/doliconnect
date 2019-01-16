@@ -63,18 +63,19 @@ ob_start();
 } 
 add_action('init', 'app_output_buffer');
 // ********************************************************
-function dolibarr_entity(){
-if (!get_site_option('dolibarr_entity') && get_site_option('doliconnect_mode')=='one'){
+function dolibarr_entity( $entity = null ) {
+
+if ( !get_site_option('dolibarr_entity') && get_site_option('doliconnect_mode') == 'one' ){
 return 1;
-}
-elseif (get_site_option('dolibarr_entity') && get_option('dolibarr_entity')){
+} elseif ( get_site_option('dolibarr_entity') && get_option('dolibarr_entity') ){
 return get_option('dolibarr_entity');
 } else {
 return get_current_blog_id();
 }
+
 }
 // ********************************************************
-function doliconst ($constante) {
+function doliconst( $constante ) {
 global $wpdb;
 
 $const = CallAPI("GET", "/doliconnector/constante/".$constante, null, MONTH_IN_SECONDS);
@@ -83,7 +84,7 @@ return $const->value;
 }
 // ********************************************************
 if (is_page(array(doliconnectid ('doliaccount'),doliconnectid ('dolicart')))) {
-if (!defined ('DONOTCACHEPAGE')) {
+if ( !defined ('DONOTCACHEPAGE') ) {
 define( 'DONOTCACHEPAGE', 1);
 }
 }
@@ -123,11 +124,11 @@ function json_basic_auth_error( $error ) {
 }
 add_filter( 'rest_authentication_errors', 'json_basic_auth_error' );
 // ********************************************************
-function CallAPI($method = null, $link = null, $body = null, $delay = HOUR_IN_SECONDS) {
+function CallAPI($method = null, $link = null, $body = null, $delay = HOUR_IN_SECONDS, $entity = null) {
 global $wpdb;
 
 $headers = array(
-        'DOLAPIENTITY' => dolibarr_entity(),
+        'DOLAPIENTITY' => dolibarr_entity($entity),
         'DOLAPIKEY' => get_site_option('dolibarr_private_key')
     );
 
@@ -286,7 +287,7 @@ $taille=" class='card-img-top' ";
 } else {
 $taille=" class='rounded-circle border border-white' height='{$size}' width='{$size}' ";   
 }
-$entity = dolibarr_entity();
+$entity = get_current_blog_id();
 $table_prefix = $wpdb->get_blog_prefix( $entity ); 
 $nam=$table_prefix."member_photo";
 if (isset($user->$nam) && NULL != $user->$nam) {
@@ -334,7 +335,6 @@ if ( empty($tzstring) ) { // Create a UTC+- zone if no timezone string exists
 //date_default_timezone_set( MY_TIMEZONE );
 date_default_timezone_set($tzstring);
 
-$entity = dolibarr_entity();
 $ID = $current_user->ID;
 $time = current_time( 'timestamp', 1);
 
