@@ -15,7 +15,7 @@ $form .= "<div class='col-12 col-md-12'><label for='inputcivility'><small>".__( 
 $civility = CallAPI("GET", "/setup/dictionary/civility?sortfield=code&sortorder=ASC&limit=100", null , $delay);
 if ( isset($civility->error) ) {
 $civility = CallAPI("GET", "/setup/dictionary/civilities?sortfield=code&sortorder=ASC&limit=100&active=1", null , $delay); 
-}
+} 
 
 if ( isset($civility) ) { 
 $form .= "<select class='custom-select' id='identity'  name='billing_civility' required>";
@@ -155,7 +155,7 @@ $up_dir = wp_upload_dir();
         mkdir($up_dir['basedir'].'/doliconnect/'.$ID, 0777, true);
     }
 $upload_dir = wp_upload_dir(); 
-$file=$upload_dir['basedir']."/doliconnect/".$ID."/".$fichier;
+$file=$upload_dir['basedir']."/doliconnect/".$ID."/".$doc->filename;
 file_put_contents($file, $decoded);
 
 if ( file_exists($file) ) {
