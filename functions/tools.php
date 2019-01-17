@@ -12,7 +12,11 @@ $form .= "<input type='hidden' name='billing_type' value='phy'>";
 $form .= "<div class='col-12 col-md-12'><label for='inputcivility'><small>".__( 'Identity', 'doliconnect' )."</small></label>
 <div class='input-group mb-2'><div class='input-group-prepend'><span class='input-group-text' id='identity'><i class='fas fa-user fa-fw'></i></span></div>";
 
-$civility = CallAPI("GET", "/setup/dictionary/civilities?sortfield=code&sortorder=ASC&limit=100&active=1", null , $delay);
+$civility = CallAPI("GET", "/setup/dictionary/civility?sortfield=code&sortorder=ASC&limit=100", null , $delay);
+if ( isset($civility->error) ) {
+$civility = CallAPI("GET", "/setup/dictionary/civilities?sortfield=code&sortorder=ASC&limit=100&active=1", null , $delay); 
+}
+
 if ( isset($civility) ) { 
 $form .= "<select class='custom-select' id='identity'  name='billing_civility' required>";
 foreach ($civility as $postv ) {
@@ -137,11 +141,13 @@ add_action('wp_login', 'Doliconnect_MailAlert', 10, 2);
 
 function dolidocdownload($type, $ref=null, $fichier=null, $url=null, $name=null) {
 global $wpdb;
-$ID = get_current_user_id();//$current_user->ID; 
-if ( $name == null ) { $name=$fichier; }
-if ( isset($_GET[download]) && isset($_GET[file]) ) {
-$doc = CallAPI("GET", "/documents/download?module_part=".$_GET[download]."&original_file=".$_GET[file], null, 0);
-//$doc = $doc;
+$ID = get_current_user_id();
+ 
+if ( $name == null ) { $name=$fichier; } 
+
+if ( isset($_GET["download"]) && $_GET["securekey"] == md5($ID.$type.$_GET["download"]) && $_GET["download"] == "$ref/$fichier") {
+
+$doc = CallAPI("GET", "/documents/download?module_part=$type&original_file=$ref/$fichier", null, 0);
 
 $decoded = base64_decode($doc->content);      
 $up_dir = wp_upload_dir();
@@ -149,32 +155,29 @@ $up_dir = wp_upload_dir();
         mkdir($up_dir['basedir'].'/doliconnect/'.$ID, 0777, true);
     }
 $upload_dir = wp_upload_dir(); 
-$file=$upload_dir['basedir']."/doliconnect/".$ID."/".$doc->filename;
+$file=$upload_dir['basedir']."/doliconnect/".$ID."/".$fichier;
 file_put_contents($file, $decoded);
 
 if ( file_exists($file) ) {
 header('Content-Description: File Transfer');
-header('Content-Type: application/octet-stream');
-header('Content-Disposition: attachment; filename='.basename($file));
+header('Content-Type: application/pdf');
+header('Content-Disposition: attachment; filename='.$doc->filename);
 header('Content-Transfer-Encoding: binary');
 header('Expires: 0');
 header('Cache-Control: must-revalidate');
 header('Pragma: public');
-header('Content-Length: ' . filesize($file));
+//header('Content-Length: '.$doc->filesize);
 ob_clean();
 flush();
-readfile($file);    
-//unlink($file);
+readfile($file);
+unlink($file);
 }
-} else {
-$doc = CallAPI("GET", "/documents/download?module_part=$type&original_file=$ref/$fichier", null, 0);
-//echo $doc;
-
-if ( isset($doc->content) ) {$doc = "<a class='btn btn-outline-secondary btn-block' href='".$url."&download=$type&file=".$ref."/".$fichier."' >$name <i class='fas fa-file-pdf' aria-hidden='true'></i></a>";
 
 }
-}
-return $doc;
+
+if ( isset($ref) && isset($fichier) ) { $document = "<a class='btn btn-outline-secondary btn-block' href='".esc_url( add_query_arg( array('download' => $ref."/".$fichier, 'securekey' => md5($ID.$type.$ref."/".$fichier)), $url) )."' >$name <i class='fas fa-file-pdf' aria-hidden='true'></i></a>"; }
+
+return $document;
 }
 
 function dolihelp($type) {

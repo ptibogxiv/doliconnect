@@ -942,14 +942,14 @@ echo "</li>";
 
 if ( $orderfo->last_main_doc != null ) {
 $doc = array_reverse(explode("/", $orderfo->last_main_doc)); 
-$document = dolidocdownload($doc[2],$doc[1],$doc[0],$url."&id=".$_GET['id']."&ref=".$orderfo->ref,__( 'Summary', 'doliconnect' ));
+$document_order = dolidocdownload($doc[2],$doc[1],$doc[0],$url."&id=".$_GET['id']."&ref=".$orderfo->ref,__( 'Summary', 'doliconnect' ));
 } 
     
 $fruits[$orderfo->date_commande.o] = array(
 "timestamp" => $orderfo->date_creation,
 "type" => __( 'Order', 'doliconnect' ),  
 "label" => $orderfo->ref,
-"document" => $document,
+"document" => $document_order,
 );
 
 $fac=$orderfo->linkedObjectsIds->facture;
@@ -976,14 +976,14 @@ $fruits[strtotime($pay->date).p] = array(
 
 if ( $invoice->last_main_doc != null ) {
 $doc = array_reverse(explode("/", $invoice->last_main_doc)); 
-$document=dolidocdownload($doc[2],$doc[1],$doc[0],$url."&id=".$_GET['id']."&ref=".$orderfo->ref,__( 'Invoice', 'doliconnect' ));
+$document_invoice=dolidocdownload($doc[2],$doc[1],$doc[0],$url."&id=".$_GET['id']."&ref=".$orderfo->ref,__( 'Invoice', 'doliconnect' ));
 }  
   
 $fruits[$invoice->date_creation.i] = array(
 "timestamp" => $invoice->date_creation,
 "type" => __( 'Invoice', 'doliconnect' ),  
 "label" => $invoice->ref,
-"document" => $document,
+"document" => $document_invoice,
 );  
 } 
 } 
