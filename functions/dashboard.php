@@ -2017,34 +2017,7 @@ endwhile;
 wp_reset_postdata();
 
 //echo generate_license();
-echo '<div class="btn-group d-flex" role="group" aria-label="Button group with nested dropdown">
-  <button type="button" class="btn btn-secondary w-100">1</button>
-  <button type="button" class="btn btn-secondary w-100">2</button>
 
-  <div class="btn-group w-100" role="group">
-    <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle w-100" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      Dropdown
-    </button>
-    <div class="dropdown-menu w-100" aria-labelledby="btnGroupDrop1">
-      <a class="dropdown-item w-100" href="#">Dropdown link</a>
-      <a class="dropdown-item w-100" href="#">Dropdown link</a>
-    </div>
-  </div>
-</div>';
-
-echo '<div class="row bg-dark"><div class="col-8" style="padding: 0;margin: 0"><div class="jumbotron jumbotron-fluid" style="margin: 0">
-  <div class="container">
-    <h1 class="display-4">Fluid jumbotron</h1>
-    <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
-  </div>
-</div>
-</div><div class="col-4 mh-100" style="padding: 0;margin: 0; height:100%"><div class="h-33 bg-warning" style="padding: 0;margin: 0">
-test
-</div><div class="h-33" style="padding: 0;margin: 0">
-test
-</div><div class="h-33" style="padding: 0;margin: 0">
-test
-</div></div>';
 }
 
 }

@@ -145,7 +145,7 @@ $ID = get_current_user_id();
  
 if ( $name == null ) { $name=$fichier; } 
 
-if ( isset($_GET["download"]) && $_GET["securekey"] == md5($ID.$type.$_GET["download"]) && $_GET["download"] == "$ref/$fichier") {
+if ( isset($_GET["download"]) && $_GET["securekey"] ==  hash('sha256', $ID.$type.$_GET["download"]) && $_GET["download"] == "$ref/$fichier") {
 
 $doc = CallAPI("GET", "/documents/download?module_part=$type&original_file=$ref/$fichier", null, 0);
 
@@ -175,7 +175,7 @@ unlink($file);
 
 }
 
-if ( isset($ref) && isset($fichier) ) { $document = "<a class='btn btn-outline-secondary btn-block' href='".esc_url( add_query_arg( array('download' => $ref."/".$fichier, 'securekey' => md5($ID.$type.$ref."/".$fichier)), $url) )."' >$name <i class='fas fa-file-pdf' aria-hidden='true'></i></a>"; }
+if ( isset($ref) && isset($fichier) ) { $document = "<a class='btn btn-outline-secondary btn-block' href='".esc_url( add_query_arg( array('download' => $ref."/".$fichier, 'securekey' => hash('sha256', $ID.$type.$ref."/".$fichier)), $url) )."' >$name <i class='fas fa-file-pdf' aria-hidden='true'></i></a>"; }
 
 return $document;
 }
