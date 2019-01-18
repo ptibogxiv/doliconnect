@@ -6,8 +6,7 @@ $order = CallAPI("GET", "/doliconnector/constante/MAIN_MODULE_COMMANDE", null, M
 $contract = CallAPI("GET", "/doliconnector/constante/MAIN_MODULE_CONTRAT", null, MONTH_IN_SECONDS);
 $member = CallAPI("GET", "/doliconnector/constante/MAIN_MODULE_ADHERENTSPLUS", null, MONTH_IN_SECONDS);
 $memberconsumption = CallAPI("GET", "/doliconnector/constante/ADHERENT_CONSUMPTION", null, MONTH_IN_SECONDS);
-$rewards = CallAPI("GET", "/doliconnector/constante/MAIN_MODULE_REWARDS", null, MONTH_IN_SECONDS);
-$assiduity = CallAPI("GET", "/doliconnector/constante/MAIN_MODULE_ASSIDUITY", null, MONTH_IN_SECONDS);
+$donation = CallAPI("GET", "/doliconnector/constante/MAIN_MODULE_DON", null, MONTH_IN_SECONDS);
 $help = CallAPI("GET", "/doliconnector/constante/MAIN_MODULE_TICKET", null, MONTH_IN_SECONDS);
 }
 
@@ -1443,6 +1442,37 @@ echo dolihelp('COM');
 echo "</div></small>";
 }
 
+if ( is_object($donation) && $donation->value == '1' && get_option('doliconnectbeta')=='1' ) {
+add_action( 'options_doliconnect_menu', 'donation_menu', 3, 1);
+add_action( 'options_doliconnect_donation', 'donation_module' );
+}  
+
+function donation_menu( $arg ) {
+echo "<a href='".esc_url( add_query_arg( 'module', 'donation', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-action";
+if ($arg=='donation') { echo " active";}
+echo "'>".__( 'Donation', 'doliconnect' )."</a>";
+}
+
+function donation_module( $url ) {
+global $wpdb,$current_user;
+$entity = get_current_blog_id();
+$ID = $current_user->ID;
+
+echo "<div class='card shadow-sm'>";
+
+
+echo "<ul class='list-group list-group-flush'><li class='list-group-item'>";
+
+echo "developpement en cours";
+
+echo "</li></ul></div>";
+
+echo "<small><div class='float-left'>";
+echo dolirefresh("/donation/".constant("DOLIBARR"), $url, $delay);
+echo "</div><div class='float-right'>";
+echo dolihelp('ISSUE');
+echo "</div></small>";
+}
 //*****************************************************************************************
 
 if ( is_object($help) && $help->value == '1' ) {
