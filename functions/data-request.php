@@ -1,14 +1,4 @@
 <?php
-/**
- * Data Request Handler.
- *
- * @link       http://jeanbaptisteaudras.com
- * @since      1.0
- *
- * @package    gdpr-data-request-form
- * @subpackage gdpr-data-request-form/includes
- * @prefix     gdrf_
- */
 
 function gdrf_data_request() {
 	$gdrf_error      = array();
