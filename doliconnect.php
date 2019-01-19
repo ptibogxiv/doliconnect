@@ -19,15 +19,15 @@
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
-}   
+}  
 
-require plugin_dir_path(__FILE__).'/update/plugin-update-checker.php';
-$myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
-	'https://github.com/ptibogxiv/doliconnect/',
-	__FILE__,
-	'doliconnect'
-);
-$myUpdateChecker->getVcsApi()->enableReleaseAssets();
+require_once plugin_dir_path( __FILE__ ) . 'lib/wp-package-updater/class-wp-package-updater.php';
+
+ $doliconnect_updater = new WP_Package_Updater(
+ 	'https://www.ptibogxiv.net',
+ 	wp_normalize_path( __FILE__ ),
+ 	wp_normalize_path( plugin_dir_path( __FILE__ ) )
+ );
 
 require_once plugin_dir_path(__FILE__).'/functions/enqueues.php';
 require_once plugin_dir_path(__FILE__).'/functions/data-request.php';
