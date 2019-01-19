@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }  
 
-require_once plugin_dir_path( __FILE__ ) . 'lib/wp-package-updater/class-wp-package-updater.php';
+require_once plugin_dir_path( __FILE__ ) . '/lib/wp-package-updater/class-wp-package-updater.php';
 
  $doliconnect_updater = new WP_Package_Updater(
  	'https://www.ptibogxiv.net',
