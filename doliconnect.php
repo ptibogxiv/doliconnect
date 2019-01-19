@@ -23,7 +23,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 require_once plugin_dir_path( __FILE__ ) . '/lib/wp-package-updater/class-wp-package-updater.php';
 
- $doliconnect_updater = new WP_Package_Updater(
+ $doliconnect = new WP_Package_Updater(
  	'https://www.ptibogxiv.net',
  	wp_normalize_path( __FILE__ ),
  	wp_normalize_path( plugin_dir_path( __FILE__ ) )
