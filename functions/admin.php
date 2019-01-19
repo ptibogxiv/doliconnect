@@ -114,9 +114,9 @@ function doliconnect_network_page() {
 /*** License activate button was clicked ***/
     if (isset($_REQUEST['activate_license'])) {
     
-if ( add_site_option( 'license_private_key', sanitize_text_field($_REQUEST['license_private_key'])) ) {
+if ( add_site_option( 'license_key_doliconnect-pro', sanitize_text_field($_REQUEST['license_key_doliconnect-pro'])) ) {
 } else {
-update_site_option('license_private_key', sanitize_text_field($_REQUEST['license_private_key'])); 
+update_site_option('license_key_doliconnect-pro', sanitize_text_field($_REQUEST['license_key_doliconnect-pro'])); 
 }
 if ( add_site_option( 'dolibarr_public_url', esc_url_raw($_REQUEST['dolibarr_public_url'])) ) {
 } else {
@@ -148,16 +148,16 @@ delete_site_option('dolibarr_entity');
 <div class="inside">
 
 <?php
-$link='https://www.ptibogxiv.net/?update_action=get_metadata&slug=doliconnect&license='.get_site_option('license_private_key');
+$link='https://www.ptibogxiv.net/?update_action=get_metadata&slug=doliconnect&license='.get_site_option('license_key_doliconnect-pro');
 ?> 
 
     <p><a href='https://github.com/ptibogxiv/doliconnector/releases' target='_blank'>Télécharger le module doliconnector</a> pour Dolibarr afin de faire fonctionner ce module</p>
     <form action="" method="post">
         <table class="form-table" width="100%">
             <tr>
-                <th style="width:150px;"><label for="license_private_key">License Doliconnect</label></th>
-                <td ><input class="regular-text" type="text" id="license_private_key" name="license_private_key" value="<?php if ( is_plugin_active( 'doliconnect-pro/doliconnect-pro.php' ) ) {
-echo get_option('license_private_key');?> " <?php } else { echo "";?>" disabled <?php } ?> > <b>PRO</b> 
+                <th style="width:150px;"><label for="license_key_doliconnect-pro">License Doliconnect</label></th>
+                <td ><input class="regular-text" type="text" id="license_key_doliconnect-pro" name="license_key_doliconnect-pro" value="<?php if ( is_plugin_active( 'doliconnect-pro/doliconnect-pro.php' ) ) {
+echo get_option('license_key_doliconnect-pro');?> " <?php } else { echo "";?>" disabled <?php } ?> > <b>PRO</b> 
                 </td>
             </tr>
                       
