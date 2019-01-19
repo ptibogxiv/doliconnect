@@ -726,8 +726,8 @@ echo "</div>";
 }
 }
 } elseif ( isset($_GET["provider"]) ) { 
-include( plugin_dir_path( __DIR__ ) . 'doliconnect-pro/includes/hybridauth/src/autoload.php');
-include( plugin_dir_path( __DIR__ ) . 'doliconnect-pro/includes/hybridauth/src/config.php');
+include( plugin_dir_path( __DIR__ ) . 'doliconnect-pro/lib/hybridauth/src/autoload.php');
+include( plugin_dir_path( __DIR__ ) . 'doliconnect-pro/lib/hybridauth/src/config.php');
 try {
     //Feed configuration array to Hybridauth
     $hybridauth = new Hybridauth\Hybridauth($config);
