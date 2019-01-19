@@ -1382,7 +1382,7 @@ class My_doliconnect_Membership extends WP_Widget {
 	public function __construct() {
 		$widget_ops = array( 
 			'classname' => 'my_doliconnect_membership',                               
-			'description' => 'lightbox adhésion',
+			'description' => 'lightbox adhesion',
       'customize_selective_refresh' => true,
 		);
 		parent::__construct( 'my_doliconnect_membership', 'Adhesion', $widget_ops );
