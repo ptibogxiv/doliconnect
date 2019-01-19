@@ -1442,7 +1442,7 @@ echo dolihelp('COM');
 echo "</div></small>";
 }
 
-if ( is_object($donation) && $donation->value == '1' && get_option('doliconnectbeta')=='1' ) {
+if ( is_object($donation) && $donation->value == '1' && ( get_option('doliconnectbeta')=='1' ) ) {
 add_action( 'options_doliconnect_menu', 'donation_menu', 3, 1);
 add_action( 'options_doliconnect_donation', 'donation_module' );
 }  
