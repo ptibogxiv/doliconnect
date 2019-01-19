@@ -308,6 +308,7 @@ return $avatar;
 }
 
 // ********************************************************
+
 function doliaccount_shortcode() {                                                                                                               
 global $wp_hasher,$current_user,$wpdb;
 require_once ABSPATH . WPINC . '/class-phpass.php';
@@ -1002,7 +1003,9 @@ echo "</div></div>";
 }
 }
 add_shortcode('doliaccount', 'doliaccount_shortcode');
+
 // ********************************************************
+
 function dolicontact_shortcode() { 
 global $wpdb,$current_user;
 
@@ -1161,7 +1164,9 @@ echo "</div>";
                    
 }
 add_shortcode('dolicontact', 'dolicontact_shortcode');
+
 // ********************************************************
+
 function update_synctodolibarr($dolibarr) {
 global $current_user,$wpdb;
 $entity = get_current_blog_id();
