@@ -1179,7 +1179,7 @@ echo "</li>";
 echo "</ul></div>";
 
 echo "<small><div class='float-left'>";
-echo dolirefresh("/contracts/".$_GET['id'],$url."&id=".$_GET['id']."&ref=".$_GET['ref'],$delay);
+echo dolirefresh("/contracts/".$_GET['id'], $url."&id=".$_GET['id']."&ref=".$_GET['ref'], $delay);
 echo "</div><div class='float-right'>";
 echo dolihelp('COM');
 echo "</div></small>";
@@ -1386,7 +1386,7 @@ echo "<li class='list-group-item list-group-item-light'><center>".__( 'No subscr
 echo  "</ul></div>";
 
 echo "<small><div class='float-left'>";
-echo dolirefresh("/adherentsplus/".constant("DOLIBARR_MEMBER"),$url,$delay);
+echo dolirefresh("/adherentsplus/".constant("DOLIBARR_MEMBER"), $url, $delay);
 echo "</div><div class='float-right'>";
 echo dolihelp('COM');
 echo "</div></small>";
