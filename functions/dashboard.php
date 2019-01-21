@@ -903,10 +903,10 @@ dolipaymentmodes($orderfo, $url, $url, dolidelay($delay, esc_attr($_GET["refresh
 } else {
 doligateway($orderfo->ref,$orderfo->multicurrency_total_ttc?$orderfo->multicurrency_total_ttc:$orderfo->total_ttc,$orderfo->multicurrency_code,$url.'&id='.$_GET['id'].'&ref='.$_GET['ref'],'full');
 echo doliloading('paymentmodes'); }
- 
+
 echo "</div></div></div></div>";
- 
 }
+//echo "<a href='".get_site_option('dolibarr_public_url')."/public/payment/newpayment.php?source=".$_GET['module']."&ref=".$_GET['ref']."&securekey=".sha1(md5('nw38LmcS3tgow7D1tGZGiBr56GPK059Q' . $_GET['module'] . $_GET['ref']))."&entity=".dolibarr_entity()."' target='_blank'>link to payment dolibarr</a>";
 echo "</div></div>";
 echo '<div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: '.$orderavancement.'%" aria-valuenow="'.$orderavancement.'" aria-valuemin="0" aria-valuemax="100"></div></div>';
 echo "<div class='w-auto text-muted d-none d-sm-block' ><div style='display:inline-block;width:20%'>".__( 'Order', 'doliconnect' )."</div><div style='display:inline-block;width:15%'>".__( 'Payment', 'doliconnect' )."</div><div style='display:inline-block;width:25%'>".__( 'Processing', 'doliconnect' )."</div><div style='display:inline-block;width:20%'>".__( 'Shipping', 'doliconnect' )."</div><div class='text-right' style='display:inline-block;width:20%'>".__( 'Delivery', 'doliconnect' )."</div></div>";
