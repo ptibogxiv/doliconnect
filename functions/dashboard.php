@@ -334,7 +334,7 @@ add_action( 'user_doliconnect_avatars', 'avatars_module');
 function contacts_menu($arg) {
 echo "<a href='".esc_url( add_query_arg( 'module', 'contacts', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-action";
 if ($arg=='contacts') { echo " active";}
-echo "'>".__( 'Address book', 'doliconnect' )."</a>";
+echo "'>".__( 'Manage address book', 'doliconnect' )."</a>";
 }
 add_action( 'user_doliconnect_menu', 'contacts_menu', 2, 1);
 
