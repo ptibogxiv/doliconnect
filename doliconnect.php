@@ -29,6 +29,8 @@ require_once plugin_dir_path( __FILE__ ) . 'lib/wp-package-updater/class-wp-pack
  	wp_normalize_path( plugin_dir_path( __FILE__ ) )
  );
 
+load_plugin_textdomain( 'doliconnect', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+
 require_once plugin_dir_path(__FILE__).'/functions/enqueues.php';
 require_once plugin_dir_path(__FILE__).'/functions/data-request.php';
 require_once plugin_dir_path(__FILE__).'/functions/tools.php';
@@ -36,7 +38,6 @@ require_once plugin_dir_path(__FILE__).'/functions/dashboard.php';
 require_once plugin_dir_path(__FILE__).'/functions/product.php';
 require_once plugin_dir_path(__FILE__).'/functions/admin.php'; 
 require_once plugin_dir_path(__FILE__).'/blocks/index.php';
-
 //include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 
 // ********************************************************

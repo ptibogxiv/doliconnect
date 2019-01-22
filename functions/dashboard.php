@@ -6,6 +6,7 @@ $order = CallAPI("GET", "/doliconnector/constante/MAIN_MODULE_COMMANDE", null, M
 $contract = CallAPI("GET", "/doliconnector/constante/MAIN_MODULE_CONTRAT", null, MONTH_IN_SECONDS);
 $member = CallAPI("GET", "/doliconnector/constante/MAIN_MODULE_ADHERENTSPLUS", null, MONTH_IN_SECONDS);
 $memberconsumption = CallAPI("GET", "/doliconnector/constante/ADHERENT_CONSUMPTION", null, MONTH_IN_SECONDS);
+$linkedmember = CallAPI("GET", "/doliconnector/constante/ADHERENT_LINKEDMEMBER", null, MONTH_IN_SECONDS);
 $donation = CallAPI("GET", "/doliconnector/constante/MAIN_MODULE_DON", null, MONTH_IN_SECONDS);
 $help = CallAPI("GET", "/doliconnector/constante/MAIN_MODULE_TICKET", null, MONTH_IN_SECONDS);
 }
@@ -1412,8 +1413,58 @@ echo dolihelp('COM');
 echo "</div></small>";
 }
 
+if ( is_object($linkedmember) && $linkedmember->value == '1' ) {
+add_action( 'options_doliconnect_menu', 'linkedmember_menu', 3, 1);
+add_action( 'options_doliconnect_linkedmember', 'linkedmember_module' );
+}  
+
+function linkedmember_menu( $arg ) {
+echo "<a href='".esc_url( add_query_arg( 'module', 'linkedmember', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-action";
+if ($arg=='linkedmember') { echo " active";}
+echo "'>".__( 'Linked members', 'doliconnect' )."</a>";
+}
+
+function linkedmember_module( $url ) {
+$delay = HOUR_IN_SECONDS;
+
+echo "<div class='card shadow-sm'><div class='card-body'>";
+echo "<b>".__( 'Next billing date', 'doliconnect' ).": </b> $datecommande<br>";
+
+echo "</div><ul class='list-group list-group-flush'>";
+
+if (constant("DOLIBARR_MEMBER") > 0) {
+$listconsumption = CallAPI("GET", "/adherentsplus/".constant("DOLIBARR_MEMBER")."/consumptions", null, dolidelay($delay, esc_attr($_GET["refresh"])));
+} 
+
+if ( !isset($listconsumption->error) && $listconsumption != null ) { 
+foreach ( $listconsumption as $consumption ) {                                                                                 
+$datec =  date_i18n('d/m/Y H:i', $consumption->date_creation);
+echo "<li class='list-group-item'><table width='100%'><tr><td>$datec</td><td>$consumption->label</td><td>";
+
+if ( !empty($consumption->value) ) {
+echo $consumption->value." ".$consumption->unit;
+} else {
+echo "x$consumption->qty";
+}
+
+echo "</td>";
+echo "<td class='text-right'><b>".doliprice($consumption->amount)."</b></td></tr></table><span></span></li>";
+}
+} else { 
+echo "<li class='list-group-item list-group-item-light'><center>".__( 'No consumption', 'doliconnect' )."</center></li>";
+}
+
+echo  "</ul></div>";
+
+echo "<small><div class='float-left'>";
+echo dolirefresh("/adherentsplus/".constant("DOLIBARR_MEMBER")."/consumptions",$url,$delay);
+echo "</div><div class='float-right'>";
+echo dolihelp('COM');
+echo "</div></small>";
+}
+
 if ( is_object($donation) && $donation->value == '1' && ( get_option('doliconnectbeta')=='1' ) ) {
-add_action( 'options_doliconnect_menu', 'donation_menu', 3, 1);
+add_action( 'options_doliconnect_menu', 'donation_menu', 4, 1);
 add_action( 'options_doliconnect_donation', 'donation_module' );
 }  
 

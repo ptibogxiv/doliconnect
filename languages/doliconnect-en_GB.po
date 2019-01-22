@@ -1,0 +1,1426 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Doliconnect\n"
+"POT-Creation-Date: 2018-09-26 13:30+0200\n"
+"PO-Revision-Date: 2018-09-26 13:34+0200\n"
+"Last-Translator: \n"
+"Language-Team: www.ptibogxiv.net\n"
+"Language: en_GB\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.1.1\n"
+"X-Poedit-Basepath: ../../plugins/doliconnect\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Poedit-WPHeader: doliconnect.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+
+#: blocks/membership/membership.php:64
+msgid "Individual"
+msgstr "Individual"
+
+#: blocks/membership/membership.php:65 functions/tools.php:29
+msgid "Company"
+msgstr "Company"
+
+#: blocks/membership/membership.php:94 blocks/membership/membership.php:136
+#: functions/product.php:89
+msgid "year"
+msgstr "year"
+
+#: blocks/membership/membership.php:97
+msgid "First subscription at"
+msgstr "First subscription at"
+
+#: blocks/membership/membership.php:99 blocks/membership/membership.php:118
+#: functions/membership.php:122 functions/membership.php:125
+#: functions/membership.php:126 functions/membership.php:130
+#: functions/membership.php:132
+msgid "Subscribe"
+msgstr "Subscribe"
+
+#: blocks/membership/membership.php:111 functions/membership.php:95
+msgid "then"
+msgstr "then"
+
+#: blocks/membership/membership.php:111 blocks/membership/membership.php:114
+#: functions/membership.php:95 functions/membership.php:98
+msgid "yearly"
+msgstr "yearly"
+
+#: blocks/membership/membership.php:137 functions/membership.php:104
+#: functions/product.php:158
+msgid "Contact us"
+msgstr "Contact us"
+
+#: blocks/product/product.php:70
+msgid "Product/Service not in sale"
+msgstr "Product/Service not in sale"
+
+#: doliconnect.php:248 doliconnect.php:800
+msgid "Welcome"
+msgstr "Product/Service not in sale"
+
+#: doliconnect.php:281 doliconnect.php:346 doliconnect.php:768
+#: doliconnect.php:832 doliconnect.php:1565 functions/tools.php:51
+#: templates/blogrestrict.php:85
+msgid "Email"
+msgstr "Email"
+
+#: doliconnect.php:285 doliconnect.php:350 doliconnect.php:836
+#: doliconnect.php:1757 templates/blogrestrict.php:89
+msgid "Password"
+msgstr "Password"
+
+#: doliconnect.php:290 doliconnect.php:357 doliconnect.php:840
+#: templates/blogrestrict.php:94
+msgid "Remember me"
+msgstr "Product/Service not in sale"
+
+#: doliconnect.php:293 doliconnect.php:793 doliconnect.php:842
+#: doliconnect.php:1787 templates/blogrestrict.php:97
+msgid "Sign in"
+msgstr "Sign in"
+
+#: doliconnect.php:297 doliconnect.php:772 doliconnect.php:774
+#: doliconnect.php:848 doliconnect.php:1716 doliconnect.php:1783
+msgid "Create an account"
+msgstr "Create an account"
+
+#: doliconnect.php:299 doliconnect.php:357 doliconnect.php:763
+#: doliconnect.php:850 doliconnect.php:1788
+msgid "Forgot password?"
+msgstr "Product/Service not in sale"
+
+#: doliconnect.php:300 doliconnect.php:776 doliconnect.php:1789
+#: functions/tools.php:152
+#, fuzzy
+#| msgid "Help"
+msgid "Help?"
+msgstr "Help"
+
+#: doliconnect.php:300 doliconnect.php:776 doliconnect.php:1789
+#: functions/tools.php:152
+msgid "Need help?"
+msgstr "Product/Service not in sale"
+
+#: doliconnect.php:328 doliconnect.php:732 doliconnect.php:786
+#: functions/dashboard.php:194
+msgid "Oops"
+msgstr "Product/Service not in sale"
+
+#: doliconnect.php:328 doliconnect.php:786
+msgid ""
+"There is no account for these login data or the email and/or the password "
+"are not correct."
+msgstr "Product/Service not in sale"
+
+#: doliconnect.php:349
+msgid "Enter your email"
+msgstr "Enter your email"
+
+#: doliconnect.php:353
+msgid "Enter your password"
+msgstr "Enter your password"
+
+#: doliconnect.php:359 doliconnect.php:772 functions/product.php:156
+#: functions/product.php:158
+msgid "Login"
+msgstr "Login"
+
+#: doliconnect.php:441
+msgid "Home"
+msgstr "Home"
+
+#: doliconnect.php:510 doliconnect.php:548 doliconnect.php:555
+msgid ""
+"Manage your account, your informations, orders and much more via this secure "
+"client area."
+msgstr ""
+"Manage your account, your informations, orders and much more via this secure "
+"client area."
+
+#: doliconnect.php:604 functions/dashboard.php:455
+msgid "Change your password"
+msgstr "Change your password"
+
+#: doliconnect.php:607 functions/dashboard.php:456 functions/dashboard.php:460
+msgid "New password"
+msgstr "New password"
+
+#: doliconnect.php:610
+msgid "Enter your new password"
+msgstr "Enter your new password"
+
+#: doliconnect.php:612 doliconnect.php:1762 functions/dashboard.php:458
+msgid ""
+"Your password must be between 8 and 20 characters, including at least 1 "
+"digit, 1 letter, 1 uppercase."
+msgstr ""
+"Your password must be between 8 and 20 characters, including at least 1 "
+"digit, 1 letter, 1 uppercase."
+
+#: doliconnect.php:617
+msgid "Confirm your new password"
+msgstr "Confirm your new password"
+
+#: doliconnect.php:618 functions/dashboard.php:268 functions/dashboard.php:462
+#: functions/dashboard.php:1435 functions/product.php:147
+msgid "Update"
+msgstr "Update"
+
+#: doliconnect.php:688 doliconnect.php:780
+msgid ""
+"Manage your account, your informations and much more via this secure client "
+"area."
+msgstr ""
+"Manage your account, your informations and much more via this secure client "
+"area."
+
+#: doliconnect.php:697
+msgid "No account seems to be linked to this email address"
+msgstr "No account seems to be linked to this email address"
+
+#: doliconnect.php:717
+msgid "Reset Password"
+msgstr "Reset Password"
+
+#: doliconnect.php:718
+msgid ""
+"A request to change your password has been made. You can change it via the "
+"single-use link below:"
+msgstr ""
+"A request to change your password has been made. You can change it via the "
+"single-use link below:"
+
+#: doliconnect.php:718
+msgid "If you have not made this request, please ignore this email."
+msgstr "If you have not made this request, please ignore this email."
+
+#: doliconnect.php:718
+#, php-format
+msgid "Your %s's team"
+msgstr "Your %s's team"
+
+#: doliconnect.php:730 doliconnect.php:783 doliconnect.php:1711
+#: functions/dashboard.php:198 functions/dashboard.php:290
+#: functions/dashboard.php:414 functions/dashboard.php:1008
+#: functions/dashboard.php:1222 functions/dashboard.php:1363
+msgid "Congratulations!"
+msgstr "Congratulations!"
+
+#: doliconnect.php:730 doliconnect.php:783
+msgid ""
+"A password reset link was sent to you by email. Please check your spam "
+"folder if you don't find it."
+msgstr ""
+"A password reset link was sent to you by email. Please check your spam "
+"folder if you don't find it."
+
+#: doliconnect.php:765
+msgid "Please enter the email address by which you registered your account."
+msgstr "Please enter the email address by which you registered your account."
+
+#: doliconnect.php:769 doliconnect.php:1777 functions/dashboard.php:455
+#: functions/dashboard.php:459 functions/dashboard.php:461
+#: functions/tools.php:49 functions/tools.php:50 functions/tools.php:51
+msgid "This field is required."
+msgstr "This field is required."
+
+#: doliconnect.php:769
+msgid "Submit"
+msgstr "Submit"
+
+#: doliconnect.php:793
+msgid "You have already an account"
+msgstr "You have already an account"
+
+#: doliconnect.php:796 functions/gateway.php:331 functions/tools.php:172
+msgid "or"
+msgstr "or"
+
+#: doliconnect.php:797
+msgid "You don't have an account"
+msgstr "You don't have an account"
+
+#: doliconnect.php:1077
+msgid "Informations"
+msgstr "Informations"
+
+#: doliconnect.php:1077 functions/product.php:26
+msgid "update"
+msgstr "update"
+
+#: doliconnect.php:1080
+msgid "Mrs"
+msgstr "Mrs"
+
+#: doliconnect.php:1083
+msgid "Mr"
+msgstr "Mr"
+
+#: doliconnect.php:1169
+msgid "Validate"
+msgstr "Validate"
+
+#: doliconnect.php:1203 doliconnect.php:1218 functions/dashboard.php:417
+#: functions/dashboard.php:420
+msgid "Oops!"
+msgstr "Oops!"
+
+#: doliconnect.php:1203 doliconnect.php:1218
+msgid "An error is occured. Please contact us."
+msgstr "An error is occured. Please contact us."
+
+#: doliconnect.php:1370
+msgid "Your basket is empty."
+msgstr "Your basket is empty."
+
+#: doliconnect.php:1372
+msgid "If you already have an account,"
+msgstr "If you already have an account,"
+
+#: doliconnect.php:1372
+msgid "log in"
+msgstr "log in"
+
+#: doliconnect.php:1372
+msgid "to see your basket."
+msgstr "to see your basket."
+
+#: doliconnect.php:1378 functions/dashboard.php:596 functions/dashboard.php:809
+msgid "Total excl. tax"
+msgstr "Total excl. tax"
+
+#: doliconnect.php:1379 functions/dashboard.php:597 functions/dashboard.php:810
+msgid "Total tax"
+msgstr "Total tax"
+
+#: doliconnect.php:1380 functions/dashboard.php:598 functions/dashboard.php:811
+msgid "Total incl. tax"
+msgstr "Total incl. tax"
+
+#: doliconnect.php:1404
+msgid "Continue shopping"
+msgstr "Continue shopping"
+
+#: doliconnect.php:1407
+msgid "Empty the basket"
+msgstr "Empty the basket"
+
+#: doliconnect.php:1410
+msgid "Process"
+msgstr "Process"
+
+#: doliconnect.php:1578 functions/dashboard.php:1252
+msgid "Issue or problem"
+msgstr "Issue or problem"
+
+#: doliconnect.php:1578 functions/dashboard.php:1252
+msgid "Commercial question"
+msgstr "Commercial question"
+
+#: doliconnect.php:1578 functions/dashboard.php:1252
+msgid "Change or enhancement request"
+msgstr "Change or enhancement request"
+
+#: doliconnect.php:1578 functions/dashboard.php:1252
+msgid "Project"
+msgstr "Project"
+
+#: doliconnect.php:1578 functions/dashboard.php:1252
+msgid "Other"
+msgstr "Autre"
+
+#: doliconnect.php:1600
+msgid "I agree to save my personnal informations in order to contact me"
+msgstr "I agree to save my personnal informations in order to contact me"
+
+#: doliconnect.php:1603 functions/dashboard.php:1199
+#: functions/dashboard.php:1301
+msgid "Send"
+msgstr "Send"
+
+#: doliconnect.php:1633
+msgid ""
+"This email address is already linked to an account. You can reactivate your "
+"account through this <a href='\".wp_lostpassword_url( get_permalink() ).\"' "
+"title='lost password'>form</a>."
+msgstr ""
+"This email address is already linked to an account. You can reactivate your "
+"account through this <a href='\".wp_lostpassword_url( get_permalink() ).\"' "
+"title='lost password'>form</a>."
+
+#: doliconnect.php:1646
+msgid "Registration confirmation"
+msgstr "Registration confirmation"
+
+#: doliconnect.php:1680
+#, php-format
+msgid "Thank you for your registration on %s."
+msgstr "Thank you for your registration on %s."
+
+#: doliconnect.php:1698
+msgid ""
+"To activate your account on and choose your password, please click on the "
+"following link"
+msgstr ""
+"To activate your account on and choose your password, please click on the "
+"following link"
+
+#: doliconnect.php:1711
+msgid ""
+"Your account was created and an account activation link was sent by email. "
+"Don't forget to look at your unwanted emails if you can't find our message."
+msgstr ""
+"Your account was created and an account activation link was sent by email. "
+"Don't forget to look at your unwanted emails if you can't find our message."
+
+#: doliconnect.php:1714
+msgid "Error!"
+msgstr "Error!"
+
+#: doliconnect.php:1740
+msgid "Create a personnal account"
+msgstr "Create a personnal account"
+
+#: doliconnect.php:1740
+msgid "Personnal account"
+msgstr "Personnal account"
+
+#: doliconnect.php:1743
+msgid "Create a pro/supplier account"
+msgstr "Create a pro/supplier account"
+
+#: doliconnect.php:1743
+msgid "Pro account"
+msgstr "Pro account"
+
+#: doliconnect.php:1760
+msgid "Choose your password"
+msgstr "Choose your password"
+
+#: doliconnect.php:1767 functions/dashboard.php:453
+msgid "Confirm your password"
+msgstr "Confirm your password"
+
+#: doliconnect.php:1773 functions/dashboard.php:1389
+msgid "I would like to receive the newsletter"
+msgstr "I would like to receive the newsletter"
+
+#: doliconnect.php:1776
+msgid ""
+"I read and accept the <a href=\"#\" data-toggle=\"modal\" data-target="
+"\"#cgvumention\">Terms & Conditions</a>."
+msgstr ""
+"I read and accept the <a href=\"#\" data-toggle=\"modal\" data-target="
+"\"#cgvumention\">Terms & Conditions</a>."
+
+#: doliconnect.php:1793
+msgid "Terms & Conditions"
+msgstr "Terms & Conditions"
+
+#: doliconnect.php:1992 doliconnect.php:1994
+msgid "Report a Bug"
+msgstr "Report a Bug"
+
+#: doliconnect.php:2005
+msgid "Offre d'emploi"
+msgstr "Offre d'emploi"
+
+#: doliconnect.php:2008 doliconnect.php:2107
+msgid "Title:"
+msgstr "Title:"
+
+#: doliconnect.php:2081 functions/dashboard.php:1063
+msgid "Pay my subscription"
+msgstr "Pay my subscription"
+
+#: functions/admin.php:9
+msgid ""
+"It seems that your version of Dolibarr and/or its plugins are not up to date!"
+msgstr "Product/Service not in sale"
+
+#: functions/admin.php:18 functions/admin.php:19 functions/admin.php:29
+#: functions/admin.php:30 functions/admin.php:225
+msgid "Doliconnect settings"
+msgstr "Doliconnect settings"
+
+#. Plugin Name of the plugin/theme
+#: functions/admin.php:18 functions/admin.php:24 functions/admin.php:29
+msgid "Doliconnect"
+msgstr "Doliconnect"
+
+#: functions/admin.php:314
+msgid "Anyone can register"
+msgstr "Anyone can register"
+
+#: functions/admin.php:329 functions/admin.php:345 functions/admin.php:356
+#: functions/admin.php:368 functions/admin.php:379 functions/admin.php:392
+#: functions/admin.php:404
+msgid "— Select —"
+msgstr "— Select —"
+
+#: functions/dashboard.php:16 functions/dashboard.php:1074
+msgid "Personal informations"
+msgstr "Personal informations"
+
+#: functions/dashboard.php:198
+msgid "Your informations have been updated."
+msgstr "Your informations have been updated."
+
+#: functions/dashboard.php:232
+msgid "Profile Picture"
+msgstr "Profile Picture"
+
+#: functions/dashboard.php:241
+msgid "Select a file"
+msgstr "Select a file"
+
+#: functions/dashboard.php:242
+msgid "Your avatar must be a .jpg/.jpeg file, <10Mo and 350x350pixels minimum."
+msgstr ""
+"Your avatar must be a .jpg/.jpeg file, <10Mo and 350x350pixels minimum."
+
+#: functions/dashboard.php:248
+msgid "Delete your picture"
+msgstr "Delete your picture"
+
+#: functions/dashboard.php:250
+msgid "About Yourself"
+msgstr "About Yourself"
+
+#: functions/dashboard.php:253 functions/dashboard.php:254
+msgid "Website"
+msgstr "Website"
+
+#: functions/dashboard.php:258 functions/dashboard.php:261
+#: functions/dashboard.php:264
+msgid "Username"
+msgstr "Username"
+
+#: functions/dashboard.php:281
+msgid "Address book"
+msgstr "Address book"
+
+#: functions/dashboard.php:290
+msgid "The contact has been added"
+msgstr "The contact has been added"
+
+#: functions/dashboard.php:361
+msgid "Add a new contact/address"
+msgstr "Add a new contact/address"
+
+#: functions/dashboard.php:361
+msgid "Alternatives contacts for order, billing, shipping, newsletter..."
+msgstr "Alternatives contacts for order, billing, shipping, newsletter..."
+
+#: functions/dashboard.php:370 functions/gateway.php:460
+msgid "Delete"
+msgstr "Delete"
+
+#: functions/dashboard.php:372
+msgid "Add contact"
+msgstr "Add contact"
+
+#: functions/dashboard.php:385
+msgid "Security & password"
+msgstr "Security & password"
+
+#: functions/dashboard.php:414
+msgid "Your password has been changed"
+msgstr "Your password has been changed"
+
+#: functions/dashboard.php:417
+msgid "Your actual password is incorrect"
+msgstr "Your actual password is incorrect"
+
+#: functions/dashboard.php:420
+msgid "The new passwords entered are different"
+msgstr "The new passwords entered are different"
+
+#: functions/dashboard.php:451
+msgid "Your password will be synchronized with your Dolibarr account"
+msgstr "Your password will be synchronized with your Dolibarr account"
+
+#: functions/dashboard.php:454
+msgid "Current password"
+msgstr "Current password"
+
+#: functions/dashboard.php:474 functions/dashboard.php:770
+msgid "Payment methods"
+msgstr "Payment methods"
+
+#: functions/dashboard.php:524
+msgid "Propals"
+msgstr "Propals"
+
+#: functions/dashboard.php:542
+msgid "Creation"
+msgstr "Creation"
+
+#: functions/dashboard.php:546
+msgid "Refused"
+msgstr "Refused"
+
+#: functions/dashboard.php:548 functions/dashboard.php:552
+#: functions/dashboard.php:568 functions/dashboard.php:691
+#: functions/dashboard.php:780
+msgid "Processing"
+msgstr "Processing"
+
+#: functions/dashboard.php:550
+msgid "Sign before"
+msgstr "Sign before"
+
+#: functions/dashboard.php:554 functions/dashboard.php:701
+msgid "Canceled"
+msgstr "Canceled"
+
+#: functions/dashboard.php:568 functions/dashboard.php:617
+msgid "Propal"
+msgstr "Propal"
+
+#: functions/dashboard.php:568 functions/dashboard.php:699
+msgid "Validation"
+msgstr "Validation"
+
+#: functions/dashboard.php:568
+msgid "Billing"
+msgstr "Billing"
+
+#: functions/dashboard.php:612 functions/dashboard.php:825
+msgid "Summary"
+msgstr "Summary"
+
+#: functions/dashboard.php:653
+msgid "No propal"
+msgstr "No propal"
+
+#: functions/dashboard.php:670
+msgid "Orders tracking"
+msgstr "Orders tracking"
+
+#: functions/dashboard.php:686
+msgid "Date of order"
+msgstr "Date of order"
+
+#: functions/dashboard.php:689
+msgid "Shipped"
+msgstr "Shipped"
+
+#: functions/dashboard.php:704
+msgid "Payment method"
+msgstr "Payment method"
+
+#: functions/dashboard.php:726
+msgid "Change your payment mode"
+msgstr "Change your payment mode"
+
+#: functions/dashboard.php:768 functions/gateway.php:465
+#: functions/membership.php:107 functions/membership.php:137
+msgid "Pay"
+msgstr "Pay"
+
+#: functions/dashboard.php:780 functions/dashboard.php:830
+msgid "Order"
+msgstr "Order"
+
+#: functions/dashboard.php:780 functions/dashboard.php:850
+msgid "Payment"
+msgstr "Payment"
+
+#: functions/dashboard.php:780
+msgid "Shipping"
+msgstr "Shipping"
+
+#: functions/dashboard.php:780
+msgid "Delivery"
+msgstr "Delivery"
+
+#: functions/dashboard.php:859 functions/dashboard.php:864
+msgid "Invoice"
+msgstr "Invoice"
+
+#: functions/dashboard.php:886
+msgid "of"
+msgstr "of"
+
+#: functions/dashboard.php:889
+msgid "size"
+msgstr "size"
+
+#: functions/dashboard.php:895
+msgid "Shipment"
+msgstr "Shipment"
+
+#: functions/dashboard.php:897
+msgid "Parcel"
+msgstr "Parcel"
+
+#: functions/dashboard.php:939
+msgid "No order"
+msgstr "No order"
+
+#: functions/dashboard.php:977
+msgid "Contracts tracking"
+msgstr "Contracts tracking"
+
+#: functions/dashboard.php:996
+msgid "Membership"
+msgstr "Membership"
+
+#: functions/dashboard.php:1008
+msgid "Your membership has been updated."
+msgstr "Your membership has been updated."
+
+#: functions/dashboard.php:1031
+msgid "Status"
+msgstr "Status"
+
+#: functions/dashboard.php:1033 functions/dashboard.php:1035
+msgid "Waiting payment"
+msgstr "Waiting payment"
+
+#: functions/dashboard.php:1035
+msgid "Active"
+msgstr "Active"
+
+#: functions/dashboard.php:1038
+msgid "Terminated"
+msgstr "Terminated"
+
+#: functions/dashboard.php:1040
+msgid "Waiting validation"
+msgstr "Waiting validation"
+
+#: functions/dashboard.php:1041
+msgid "No membership"
+msgstr "No membership"
+
+#: functions/dashboard.php:1043
+msgid "Type"
+msgstr "Type"
+
+#: functions/dashboard.php:1044
+msgid "End of membership"
+msgstr "End of membership"
+
+#: functions/dashboard.php:1049
+msgid "Commitment"
+msgstr "Commitment"
+
+#: functions/dashboard.php:1050
+msgid "no"
+msgstr "no"
+
+#: functions/dashboard.php:1057 functions/dashboard.php:1077
+msgid "Become a member"
+msgstr ""
+
+#: functions/dashboard.php:1060 functions/dashboard.php:1068
+msgid "Renew my subscription"
+msgstr ""
+
+#: functions/dashboard.php:1062
+msgid "Cancel my membership"
+msgstr ""
+
+#: functions/dashboard.php:1066
+msgid "Reactivate my subscription"
+msgstr ""
+
+#: functions/dashboard.php:1083 functions/membership.php:64
+#, php-format
+msgid "Renew from %s"
+msgstr "Renew from %s"
+
+#: functions/dashboard.php:1102
+msgid "to"
+msgstr "to"
+
+#: functions/dashboard.php:1107
+msgid "No subscription"
+msgstr ""
+
+#: functions/dashboard.php:1118
+msgid "Consumptions monitoring"
+msgstr ""
+
+#: functions/dashboard.php:1126
+msgid "Next billing date"
+msgstr ""
+
+#: functions/dashboard.php:1142
+msgid "Help"
+msgstr "Help"
+
+#: functions/dashboard.php:1159 functions/dashboard.php:1246
+msgid "Type and category"
+msgstr ""
+
+#: functions/dashboard.php:1160 functions/dashboard.php:1278
+msgid "Severity"
+msgstr ""
+
+#: functions/dashboard.php:1162 functions/dashboard.php:1322
+msgid "Deleted"
+msgstr ""
+
+#: functions/dashboard.php:1163 functions/dashboard.php:1323
+msgid "Closed"
+msgstr "Closed"
+
+#: functions/dashboard.php:1164 functions/dashboard.php:1324
+msgid "Waiting"
+msgstr "Waiting"
+
+#: functions/dashboard.php:1165
+msgid "In progress"
+msgstr "In progress"
+
+#: functions/dashboard.php:1166 functions/dashboard.php:1326
+msgid "Assigned"
+msgstr "Assigned"
+
+#: functions/dashboard.php:1167 functions/dashboard.php:1327
+msgid "Answered"
+msgstr "Answered"
+
+#: functions/dashboard.php:1168 functions/dashboard.php:1328
+msgid "Read"
+msgstr "Read"
+
+#: functions/dashboard.php:1169 functions/dashboard.php:1329
+msgid "Unread"
+msgstr "Unread"
+
+#: functions/dashboard.php:1173 functions/dashboard.php:1295
+msgid "Subject"
+msgstr "Subject"
+
+#: functions/dashboard.php:1174
+msgid "Initial message"
+msgstr ""
+
+#: functions/dashboard.php:1197
+msgid "New message"
+msgstr "New message"
+
+#: functions/dashboard.php:1222
+msgid "Your ticket has been submitted."
+msgstr ""
+
+#: functions/dashboard.php:1245 functions/dashboard.php:1311
+msgid "Open a new ticket"
+msgstr ""
+
+#: functions/dashboard.php:1283
+msgid "Critical / blocking"
+msgstr ""
+
+#: functions/dashboard.php:1283
+msgid "High"
+msgstr "High"
+
+#: functions/dashboard.php:1283
+msgid "Normal"
+msgstr "Normal"
+
+#: functions/dashboard.php:1283
+msgid "Low"
+msgstr "Low"
+
+#: functions/dashboard.php:1298
+msgid "Message"
+msgstr "Message"
+
+#: functions/dashboard.php:1325
+msgid "Progress"
+msgstr "Progress"
+
+#: functions/dashboard.php:1333
+msgid "No ticket"
+msgstr "No ticket"
+
+#: functions/dashboard.php:1343
+msgid "Settings"
+msgstr "Settings"
+
+#: functions/dashboard.php:1363
+msgid "Your settings have been updated."
+msgstr "Your settings have been updated."
+
+#: functions/dashboard.php:1393
+msgid "I would like to receive the offers of our partners"
+msgstr ""
+
+#: functions/dashboard.php:1398
+msgid "Approval of the Privacy Policy the"
+msgstr ""
+
+#: functions/dashboard.php:1403
+msgid "Default language"
+msgstr ""
+
+#: functions/dashboard.php:1407 functions/dashboard.php:1416
+msgid "Default / Browser language"
+msgstr ""
+
+#: functions/dashboard.php:1424
+msgid "Default currency"
+msgstr ""
+
+#: functions/dashboard.php:1427
+msgid "Euros - EUR/€"
+msgstr ""
+
+#: functions/dashboard.php:1587
+msgid "Privacy"
+msgstr ""
+
+#: functions/dashboard.php:1600
+msgid "Export your personal data"
+msgstr ""
+
+#: functions/dashboard.php:1600
+msgid "You will receive an email with a secure link to your data"
+msgstr ""
+
+#: functions/dashboard.php:1607
+msgid "Remove your personal data"
+msgstr ""
+
+#: functions/dashboard.php:1607
+msgid "Soon, you will be able to erase your account"
+msgstr ""
+
+#: functions/dashboard.php:1614
+msgid "Delete your account"
+msgstr ""
+
+#: functions/dashboard.php:1614
+msgid "Soon, you will be able to delete your account"
+msgstr ""
+
+#: functions/dashboard.php:1621
+msgid "Validate the request"
+msgstr ""
+
+#: functions/data-request.php:20
+msgid ""
+"The request can’t be processed on this website. This feature requires "
+"WordPress 4.9.6 at least."
+msgstr ""
+
+#: functions/data-request.php:26
+msgid ""
+"Security check failed, please refresh this page and try to submit the form "
+"again."
+msgstr ""
+
+#: functions/data-request.php:29
+msgid "This is not a valid email address."
+msgstr ""
+
+#: functions/data-request.php:32
+msgid ""
+"Request type invalid, please refresh this page and try to submit the form "
+"again."
+msgstr ""
+
+#: functions/data-request.php:36
+msgid "All fields are required."
+msgstr "All fields are required."
+
+#: functions/data-request.php:43
+msgid ""
+"Unable to initiate confirmation request. Please contact the administrator."
+msgstr ""
+
+#: functions/gateway.php:343
+msgid "Credit of"
+msgstr ""
+
+#: functions/gateway.php:345
+msgid "Debit of"
+msgstr ""
+
+#: functions/gateway.php:347
+msgid "Automatic use"
+msgstr ""
+
+#: functions/gateway.php:386
+msgid "Credit card"
+msgstr "Credit card"
+
+#: functions/gateway.php:390 functions/gateway.php:410
+msgid "Owner"
+msgstr "Owner"
+
+#: functions/gateway.php:391
+msgid "As on your credit card"
+msgstr ""
+
+#: functions/gateway.php:403
+msgid "SEPA direct debit"
+msgstr ""
+
+#: functions/gateway.php:408
+#, php-format
+msgid ""
+"By providing your IBAN and confirming this form, you are authorizing %s and "
+"Stripe, our payment service provider, to send instructions to your bank to "
+"debit your account and your bank to debit your account in accordance with "
+"those instructions. You are entitled to a refund from your bank under the "
+"terms and conditions of your agreement with your bank. A refund must be "
+"claimed within 8 weeks starting from the date on which your account was "
+"debited."
+msgstr ""
+
+#: functions/gateway.php:411
+msgid "As on your bank account"
+msgstr ""
+
+#: functions/gateway.php:425
+msgid "Pay with your Paypal account"
+msgstr ""
+
+#: functions/gateway.php:435
+msgid "Bank transfert"
+msgstr ""
+
+#: functions/gateway.php:435 functions/gateway.php:445
+msgid "Informations on your receipt"
+msgstr ""
+
+#: functions/gateway.php:445
+msgid "Check / Cash"
+msgstr ""
+
+#: functions/gateway.php:450
+msgid "Save this payment method"
+msgstr ""
+
+#: functions/gateway.php:451
+msgid "Set as default payment mode"
+msgstr ""
+
+#: functions/gateway.php:456
+msgid "Recharge"
+msgstr ""
+
+#: functions/gateway.php:457
+msgid "Add credit card"
+msgstr ""
+
+#: functions/gateway.php:458
+msgid "Add bank account"
+msgstr ""
+
+#: functions/gateway.php:462
+msgid "No gateway"
+msgstr ""
+
+#: functions/membership.php:53
+msgid "Subscription"
+msgstr "Subscription"
+
+#: functions/membership.php:55
+#, php-format
+msgid "Available from %s to %s"
+msgstr ""
+
+#: functions/membership.php:67
+msgid "An entry fee can be applied to you depending on the type"
+msgstr ""
+
+#: functions/membership.php:110 functions/membership.php:111
+#: functions/membership.php:115 functions/membership.php:117
+#: functions/membership.php:140 functions/membership.php:141
+msgid "Renew"
+msgstr ""
+
+#: functions/membership.php:145 functions/membership.php:150
+#: functions/membership.php:155 functions/membership.php:158
+#: functions/membership.php:159 functions/membership.php:163
+#: functions/membership.php:166
+msgid "Ask us"
+msgstr ""
+
+#: functions/membership.php:148
+msgid "Request submitted"
+msgstr ""
+
+#: functions/product.php:15 functions/product.php:16
+msgid "In stock"
+msgstr "In stock"
+
+#: functions/product.php:17
+msgid "Limited stock"
+msgstr ""
+
+#: functions/product.php:19
+msgid "Out of stock"
+msgstr "Out of stock"
+
+#: functions/product.php:20
+msgid "Available"
+msgstr "Available"
+
+#: functions/product.php:26
+msgid "Cart"
+msgstr "Cart"
+
+#: functions/product.php:32
+msgid "Quantity"
+msgstr "Quantity"
+
+#: functions/product.php:42
+msgid "Customer discount"
+msgstr ""
+
+#: functions/product.php:81
+msgid "for"
+msgstr "for"
+
+#: functions/product.php:83
+msgid "years"
+msgstr "years"
+
+#: functions/product.php:84
+msgid "months"
+msgstr "months"
+
+#: functions/product.php:85
+msgid "days"
+msgstr "days"
+
+#: functions/product.php:86
+msgid "hours"
+msgstr "timer"
+
+#: functions/product.php:87
+msgid "minutes"
+msgstr "minutter"
+
+#: functions/product.php:90
+msgid "month"
+msgstr "month"
+
+#: functions/product.php:91
+msgid "day"
+msgstr "day"
+
+#: functions/product.php:92
+msgid "hour"
+msgstr "hour"
+
+#: functions/product.php:93
+msgid "minute"
+msgstr "minute"
+
+#: functions/product.php:103 functions/product.php:111
+msgid "Price"
+msgstr "Price"
+
+#: functions/product.php:106
+msgid "You benefit from the rate"
+msgstr ""
+
+#: functions/product.php:149
+msgid "Add"
+msgstr "Add"
+
+#: functions/product.php:153
+msgid "Go to cart"
+msgstr ""
+
+#: functions/product.php:161 functions/tools.php:89
+msgid "Loading"
+msgstr ""
+
+#: functions/tools.php:34
+msgid "Identity"
+msgstr ""
+
+#: functions/tools.php:40
+msgid "Miss"
+msgstr ""
+
+#: functions/tools.php:44
+msgid "Mister"
+msgstr ""
+
+#: functions/tools.php:46
+msgid "Firstname"
+msgstr "Firstname"
+
+#: functions/tools.php:47
+msgid "Lastname"
+msgstr "Lastname"
+
+#: functions/tools.php:49
+msgid "Birthday"
+msgstr "Birthday"
+
+#: functions/tools.php:50
+msgid "Nickname"
+msgstr "Nickname"
+
+#: functions/tools.php:56 functions/tools.php:58
+msgid "Address"
+msgstr "Address"
+
+#: functions/tools.php:59 functions/tools.php:61
+msgid "Zipcode"
+msgstr "Zipcode"
+
+#: functions/tools.php:59 functions/tools.php:62
+msgid "Town"
+msgstr "Town"
+
+#: functions/tools.php:59 functions/tools.php:78
+msgid "Country"
+msgstr "Country"
+
+#: functions/tools.php:81
+msgid "Mobile"
+msgstr "Mobile"
+
+#: functions/tools.php:95
+msgid ""
+"Oops, our servers are unreachable. Thank you for coming back in a few "
+"minutes."
+msgstr ""
+
+#: functions/tools.php:168
+msgid "Sign in with"
+msgstr ""
+
+#: templates/blogrestrict.php:52
+msgid "This website is reserved only for users"
+msgstr ""
+
+#: templates/privacy.php:52
+msgid "Our Policy Privacy has been updated"
+msgstr ""
+
+#: templates/privacy.php:63
+msgid "I approve"
+msgstr ""
+
+#: templates/privacy.php:66
+msgid "I refuse"
+msgstr ""
+
+#: update/Puc/v4p3/Plugin/UpdateChecker.php:392
+#: update/Puc/v4p4/Plugin/Ui.php:128
+msgid "Check for updates"
+msgstr "Check for updates"
+
+#: update/Puc/v4p3/Plugin/UpdateChecker.php:429
+#: update/Puc/v4p4/Plugin/Ui.php:54
+msgid "View details"
+msgstr ""
+
+#: update/Puc/v4p3/Plugin/UpdateChecker.php:452
+#: update/Puc/v4p4/Plugin/Ui.php:77
+#, php-format
+msgid "More information about %s"
+msgstr ""
+
+#: update/Puc/v4p3/Plugin/UpdateChecker.php:514
+#: update/Puc/v4p4/Plugin/Ui.php:213
+#, php-format
+msgctxt "the plugin title"
+msgid "The %s plugin is up to date."
+msgstr ""
+
+#: update/Puc/v4p3/Plugin/UpdateChecker.php:516
+#: update/Puc/v4p4/Plugin/Ui.php:215
+#, php-format
+msgctxt "the plugin title"
+msgid "A new version of the %s plugin is available."
+msgstr ""
+
+#: update/Puc/v4p3/Plugin/UpdateChecker.php:518
+#: update/Puc/v4p4/Plugin/Ui.php:223
+#, php-format
+msgid "Unknown update checker status \"%s\""
+msgstr "Unknown update checker status \"%s\""
+
+#: update/Puc/v4p3/Vcs/PluginUpdateChecker.php:86
+#: update/Puc/v4p4/Vcs/PluginUpdateChecker.php:98
+msgid "There is no changelog available."
+msgstr "There is no changelog available."
+
+#: update/Puc/v4p4/Plugin/Ui.php:217
+#, php-format
+msgctxt "the plugin title"
+msgid "Could not determine if updates are available for %s."
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "https://www.ptibogxiv.net"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "The power of Dolibarr in Wordpress"
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "ptibogxiv"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "https://www.ptibogxiv.net/en"
+msgstr ""
+
+#~ msgid "Already connected"
+#~ msgstr "Already connected"
+
+#~ msgid "Restricted area"
+#~ msgstr "Restricted area"
+
+#~ msgid "Your cart #%s is reserved during"
+#~ msgstr "Your cart #%s is reserved during"
+
+#~ msgid "Description"
+#~ msgstr "Description"
+
+#~ msgid "Qty"
+#~ msgstr "Aantal"
+
+#~ msgid "Total"
+#~ msgstr "Total"
+
+#~ msgid "Orders"
+#~ msgstr "Orders"
+
+#~ msgid "Duration"
+#~ msgstr "Duration"
+
+#~ msgid "Ask"
+#~ msgstr "Ask"
+
+#~ msgid "Membershipconsumption"
+#~ msgstr "Membershipconsumption"
+
+#~ msgid "You will no longer benefit from membership-related services"
+#~ msgstr "You will no longer benefit from membership-related services"
+
+#~ msgid "Resiliate"
+#~ msgstr "Resiliate"
+
+#~ msgid "Subtotal"
+#~ msgstr "Subtotal"
+
+#~ msgid "Tax"
+#~ msgstr "Tax"
+
+#~ msgid "Credit/Debit"
+#~ msgstr "Credit/Debit"
+
+#~ msgid "Discount of"
+#~ msgstr "Discount of"
+
+#~ msgid "Ticket"
+#~ msgstr "Ticket"
+
+#~ msgid "At the first time"
+#~ msgstr "At the first time"
+
+#~ msgid "Billing unit"
+#~ msgstr "Billing unit"
+
+#~ msgid "Billing unit of"
+#~ msgstr "Billing unit of"
+
+#~ msgid "Sign up"
+#~ msgstr "Sign up"
+
+#~ msgid ""
+#~ "Your enquiry have been submitted. Check your email to validate your data "
+#~ "request."
+#~ msgstr ""
+#~ "Your enquiry have been submitted. Check your email to validate your data "
+#~ "request."
+
+#~ msgid "Some errors occurred:"
+#~ msgstr "Some errors occurred:"
+
+#~ msgid "Lost password?"
+#~ msgstr "Lost password?"
+
+#~ msgid "Lost password"
+#~ msgstr "Lost password"
+
+#~ msgid "Acceptance"
+#~ msgstr "Acceptance"
+
+#~ msgid "Order placed"
+#~ msgstr "Order placed"
+
+#~ msgid "Or"
+#~ msgstr "Or"
+
+#~ msgid "Prefered language"
+#~ msgstr "Prefered language"
+
+#~ msgid "Doliconnect (BETA)"
+#~ msgstr "Doliconnect (BETA)"
+
+#~ msgid "Connect with"
+#~ msgstr "Connect with"
+
+#~ msgid "Download"
+#~ msgstr "Download"
+
+#~ msgid "I subscribe at the newsletter"
+#~ msgstr "I subscribe at the newsletter"
+
+#~ msgid "Bank Owner"
+#~ msgstr "Bank Owner"
+
+#~ msgid "IBAN"
+#~ msgstr "IBAN"
+
+#~ msgid "Language"
+#~ msgstr "Language"
+
+#~ msgid "Workshops & training"
+#~ msgstr "Workshops & training"
+
+#~ msgid "Change your infos"
+#~ msgstr "Change your infos"
+
+#~ msgid "Add card"
+#~ msgstr "Add card"
+
+#~ msgid "Process the order"
+#~ msgstr "Process the order"
+
+#~ msgid "Our recommendations"
+#~ msgstr "Our recommendations"
+
+#~ msgid "Others products for you"
+#~ msgstr "Others products for you"
+
+#~ msgid "Civility"
+#~ msgstr "Civility"
+
+#~ msgid "Autoriser les nouvelles inscriptions au site."
+#~ msgstr "Autoriser les nouvelles inscriptions au site."
+
+#~ msgid "Season"
+#~ msgstr "Season"
+
+#~ msgid "Your email"
+#~ msgstr "Your email"
