@@ -533,7 +533,7 @@ add_action( 'user_doliconnect_contacts', 'contacts_module' );
 function password_menu( $arg ){
 echo "<a href='".esc_url( add_query_arg( 'module', 'password', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-action";
 if ($arg=='password') { echo " active";}
-echo "'>".__( 'Password', 'doliconnect' )."</a>";
+echo "'>".__( 'Modify the password', 'doliconnect' )."</a>";
 }
 add_action( 'user_doliconnect_menu', 'password_menu', 3, 1);
 
