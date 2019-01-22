@@ -120,7 +120,7 @@ add_action( 'wp_footer', 'doliconnect_loading' );
 
 function dolibug(){
 //header('Refresh: 180; URL='.esc_url(get_permalink()).'');
-$bug = '<div id="dolibug" ><br><br><br><br><br><center><div class="align-middle"><i class="fas fa-bug fa-3x fa-fw"></i><h4>'.__( 'Oops, our servers are unreachable. Thank you for coming back in a few minutes.', 'doliconnect' ).'</h4></div></center><br><br><br><br><br></div>';
+$bug = '<div id="dolibug" ><br><br><br><br><br><center><div class="align-middle"><i class="fas fa-bug fa-3x fa-fw"></i><h4>'.__( 'Oops, our servers are unreachable. Thank you for coming back in a few minutes.', 'doliconnect' ).'</h4><h6>'.__( 'Error code', 'doliconnect' ).' #'.constant("DOLIBUG").'</h6></div></center><br><br><br><br><br></div>';
 return $bug;
 }
 

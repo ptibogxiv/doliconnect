@@ -151,19 +151,19 @@ unlink($file);
 
 delete_usermeta( $ID, $nam,$current_user->$nam);
 
-if (constant("DOLIBARR_MEMBER")>0){
+if ( constant("DOLIBARR_MEMBER") > 0 ) {
 $data = [
     'photo' => ''
 	];
 $adherent = CallAPI("PUT", "/adherentsplus/".constant("DOLIBARR_MEMBER"), $data, DAY_IN_SECONDS);
 }
 
-} elseif ($_FILES['inputavatar']['tmp_name']!=NULL) {
+} elseif ( $_FILES['inputavatar']['tmp_name'] != null ) {
 $types = array('image/jpeg', 'image/jpg');
-if ($_FILES['inputavatar']['tmp_name']!=NULL){
+if ( $_FILES['inputavatar']['tmp_name'] != null ) {
 list($width, $height) = getimagesize($_FILES['inputavatar']['tmp_name']);
 }
-if (($width >= '350' && $height >= '350') && (isset($_FILES['inputavatar']['tmp_name'])) && (in_array($_FILES['inputavatar']['type'], $types)) && ($_FILES['inputavatar']['size'] <= 10000000)) {
+if ( ( $width >= '350' && $height >= '350' ) && ( isset($_FILES['inputavatar']['tmp_name'])) && (in_array($_FILES['inputavatar']['type'], $types)) && ($_FILES['inputavatar']['size'] <= 10000000)) {
 
 $upload_dir = wp_upload_dir();
 $nam=$wpdb->prefix."member_photo";

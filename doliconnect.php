@@ -174,7 +174,7 @@ delete_transient( $link );
 if (! in_array($http_code,array('200','404')) ) {
 
 if ( !defined("DOLIBUG") ) {
-define('DOLIBUG', 1);
+define('DOLIBUG', $http_code);
 }
 
 } elseif ( $delay != 0 ) {
@@ -202,7 +202,7 @@ define('DOLIBUG', 1);
 }
 add_action( 'admin_init', 'CallAPI', 5, 5); 
 // ********************************************************
-function dolibarr(){
+function dolibarr() {
 global $current_user;  
 
 if ( is_user_logged_in() ) { 
