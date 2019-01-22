@@ -12,9 +12,9 @@ $form .= "<input type='hidden' name='billing_type' value='phy'>";
 $form .= "<div class='col-12 col-md-12'><label for='inputcivility'><small>".__( 'Identity', 'doliconnect' )."</small></label>
 <div class='input-group mb-2'><div class='input-group-prepend'><span class='input-group-text' id='identity'><i class='fas fa-user fa-fw'></i></span></div>";
 
-$civility = CallAPI("GET", "/setup/dictionary/civility?sortfield=code&sortorder=ASC&limit=100", null , $delay);
+$civility = CallAPI("GET", "/setup/dictionary/civility?sortfield=code&sortorder=ASC&limit=100", null, $delay);
 if ( isset($civility->error) ) {
-$civility = CallAPI("GET", "/setup/dictionary/civilities?sortfield=code&sortorder=ASC&limit=100&active=1", null , $delay); 
+$civility = CallAPI("GET", "/setup/dictionary/civilities?sortfield=code&sortorder=ASC&limit=100&active=1", null, $delay); 
 } 
 
 if ( isset($civility) ) { 
@@ -24,7 +24,7 @@ foreach ($civility as $postv ) {
 $form .= "<option value='".$postv->code."' ";
 if ( $current_user->billing_civility == $postv->code && $current_user->billing_civility != null) {
 $form .= "selected ";}
-if ( $postv->id == '0' ) {$form .= "disabled ";}
+if ( $postv->id == '0' ) { $form .= "disabled "; }
 $form .= ">".$postv->label."</option>";
 }
 $form .= "</select>";
@@ -46,7 +46,7 @@ $form .= " required";
 $form .= "></div></div>";
 $form .= "</div></div>";
 $form .= "</li>";
-if ( (isset($_GET["pro"]) && !get_option('doliconnect_disablepro')) or $mode=='full' ) {
+if ( isset($_GET["pro"] && !get_option('doliconnect_disablepro')) || $mode == 'full' ) {
 $form .= "<li class='list-group-item'><div class='form-group'><div class='row'>";
 $form .= "<div class='col-12'><label for='inputaddress'><small>".__( 'Address', 'doliconnect' )."</small></label>
 <div class='input-group mb-2'><div class='input-group-prepend'><span class='input-group-text'><i class='fas fa-map-marked fa-fw'></i></span></div>
@@ -145,7 +145,7 @@ $ID = get_current_user_id();
  
 if ( $name == null ) { $name=$fichier; } 
 
-if ( isset($_GET["download"]) && $_GET["securekey"] ==  hash('sha256', $ID.$type.$_GET["download"]) && $_GET["download"] == "$ref/$fichier") {
+if ( isset($_GET["download"]) && $_GET["securekey"] ==  hash('sha256', $ID.$type.$_GET["download"]) && $_GET["download"] == "$ref/$fichier" ) {
 
 $doc = CallAPI("GET", "/documents/download?module_part=$type&original_file=$ref/$fichier", null, 0);
 
