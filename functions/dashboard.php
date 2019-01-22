@@ -1433,22 +1433,22 @@ echo "<b>".__( 'Next billing date', 'doliconnect' ).": </b> $datecommande<br>";
 echo "</div><ul class='list-group list-group-flush'>";
 
 if (constant("DOLIBARR_MEMBER") > 0) {
-$linkedmember= CallAPI("GET", "/adherentsplus/".constant("DOLIBARR_MEMBER")."/consumptions", null, dolidelay($delay, esc_attr($_GET["refresh"])));
+$linkedmember= CallAPI("GET", "/adherentsplus/".constant("DOLIBARR_MEMBER"), null, dolidelay($delay, esc_attr($_GET["refresh"])));
 } 
 
 if ( !isset($linkedmember->error) && $linkedmember != null ) { 
-foreach ( $linkedmember as $consumption ) {                                                                                 
-$datec =  date_i18n('d/m/Y H:i', $consumption->date_creation);
-echo "<li class='list-group-item'><table width='100%'><tr><td>$datec</td><td>$consumption->label</td><td>";
+foreach ( $linkedmember->linkedmembers as $member ) {                                                                                 
+$datec =  date_i18n('d/m/Y H:i', $member->date_creation);
+echo "<li class='list-group-item'><table width='100%'><tr><td>$datec</td><td>".$member->label."</td><td>";
 
-if ( !empty($consumption->value) ) {
-echo $consumption->value." ".$consumption->unit;
+if ( !empty($member->value) ) {
+echo $member->value." ".$member->unit;
 } else {
-echo "x$consumption->qty";
+echo "x".$member->qty;
 }
 
 echo "</td>";
-echo "<td class='text-right'><b>".doliprice($consumption->amount)."</b></td></tr></table><span></span></li>";
+echo "<td class='text-right'><b>".doliprice($member->amount)."</b></td></tr></table><span></span></li>";
 }
 } else { 
 echo "<li class='list-group-item list-group-item-light'><center>".__( 'No consumption', 'doliconnect' )."</center></li>";
@@ -1457,7 +1457,7 @@ echo "<li class='list-group-item list-group-item-light'><center>".__( 'No consum
 echo  "</ul></div>";
 
 echo "<small><div class='float-left'>";
-echo dolirefresh("/adherentsplus/".constant("DOLIBARR_MEMBER")."/consumptions",$url,$delay);
+echo dolirefresh("/adherentsplus/".constant("DOLIBARR_MEMBER"),$url,$delay);
 echo "</div><div class='float-right'>";
 echo dolihelp('COM');
 echo "</div></small>";
