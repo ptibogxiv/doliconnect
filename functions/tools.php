@@ -215,7 +215,7 @@ function dolirefresh( $origin, $url, $delay) {
 
 if ( get_option("_transient_timeout_".$origin) > 0 && is_user_logged_in() ) {
 
-$refresh = __( 'Updated', 'doliconnect' ).": ".date_i18n('d/m/Y - H:i', get_option("_transient_timeout_".$origin)-$delay, false)." <a href='".esc_url( add_query_arg( 'refresh', true, $url) )."'><i class='fas fa-sync'></i></a>";
+$refresh = __( 'Updated', 'doliconnect' ).": ".date_i18n('d/m/Y - H:i', get_option("_transient_timeout_".$origin)-$delay, false)." <a href='".esc_url( add_query_arg( 'refresh', true, $url) )."'><i class='fas fa-sync-alt'></i></a>";
 } else {
 $refresh = __( 'Updated', 'doliconnect' ).": ".date_i18n('d/m/Y - H:i', false, true);
 }

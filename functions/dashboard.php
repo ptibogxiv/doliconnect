@@ -830,9 +830,30 @@ if ( isset($orderinfo) ) {
 echo "<h3 class='text-right'>".$orderinfo."</h3>";
 }
 
-$ref="$orderfo->ref";
-if ( $orderfo->billed != 1 && $orderfo->statut > 0 && function_exists('dolipaymentmodes') ) {
-$change = "<small><a href='#' id='button-source-payment' data-toggle='modal' data-target='#orderonlinepay'><span class='fa fa-credit-card'></span> ".__( 'Change your payment mode', 'doliconnect' )."</a></small>";
+if ( $orderfo->billed != 1 && $orderfo->statut > 0 ) {
+
+if ( function_exists('dolipaymentmodes') ) {
+
+$change = "<small><a href='#' id='button-source-payment' data-toggle='modal' data-target='#orderonlinepay'><span class='fas fa-sync-alt'></span> ".__( 'Change your payment mode', 'doliconnect' )."</a></small>";
+
+echo "<div class='modal fade' id='orderonlinepay' tabindex='-1' role='dialog' aria-labelledby='orderonlinepayLabel' aria-hidden='true'  aria-hidden='true' data-backdrop='static' data-keyboard='false'>
+<div class='modal-dialog modal-dialog-centered' role='document'><div class='modal-content'><div class='modal-header border-0'><h4 class='modal-title border-0' id='orderonlinepayLabel'>".__( 'Payment methods', 'doliconnect' )."</h4>
+<button id='closemodalonlinepay' type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div><div class='modal-body'>";
+
+if ( !empty($orderfo->paymentintent) ) {
+dolipaymentmodes($orderfo, $url, $url, dolidelay($delay, esc_attr($_GET["refresh"])));
+} else {
+doligateway($orderfo->ref,$orderfo->multicurrency_total_ttc?$orderfo->multicurrency_total_ttc:$orderfo->total_ttc,$orderfo->multicurrency_code,$url.'&id='.$_GET['id'].'&ref='.$_GET['ref'],'full');
+echo doliloading('paymentmodes'); }
+
+echo "</div></div></div></div>";
+
+} else {
+
+$change = "<a href='".get_site_option('dolibarr_public_url')."/public/payment/newpayment.php?source=".esc_attr($_GET['module'])."&ref=".esc_attr($_GET['ref'])."&securekey=".sha1(md5('nw38LmcS3tgow7D1tGZGiBr56GPK059Q' . esc_attr($_GET['module']) . esc_attr($_GET['ref'])))."&entity=".dolibarr_entity()."' target='_blank'><span class='fa fa-credit-card'></span> ".__( 'Pay online', 'doliconnect' )."</a>";
+
+}
+
 if ( $orderfo->mode_reglement_code == 'CHQ' ) {
 $chq = CallAPI("GET", "/doliconnector/constante/FACTURE_CHQ_NUMBER", null, dolidelay(MONTH_IN_SECONDS, esc_attr($_GET["refresh"])));
 
@@ -848,62 +869,11 @@ echo "<div class='alert alert-danger' role='alert'><p align='justify'>Merci d'ef
 if ( ! empty($bank->bic) ) { echo "<br><b>BIC/SWIFT : $bank->bic</b>";}
 echo "</p>$change</div>";
 } else {
-//echo "token:".$_POST['token']." /stripesource:".$_POST['stripeSource']." /modepayment:".$_POST['modepayment'];
-if ( isset($_POST['token']) || $_POST['modepayment']=='src_newcard' || $_POST['modepayment']=='src_newbank' ) {
-if ( isset($_POST['token']) ) {
-$source=$_POST['token'];
-} else {
-$source=$_POST['stripeSource'];
-}
-
-if ( $_POST['savethesource']=='ok' ) {
-
-$src = [
-'token' => $_POST['stripeSource'],
-'default' => $_POST['setasdefault']
-];
-
-$addsource = CallAPI("POST", "/doliconnector/".constant("DOLIBARR")."/sources", $src, 0);
-}
-
-}
-else{
-$source=$_POST['modepayment'];
-}
-//echo "<br/>sourcefinal:".$source;
-if ( $source && ($_POST['modepayment'] !='src_vir' && $_POST['modepayment'] != 'src_chq') ) {
-$successurl=doliconnecturl('dolicart')."?validation&order=".$_GET['id'];
-$src = [
-    'source' => "".$source."",
-    'url' => "".$successurl.""
-	];
-$pay = CallAPI("POST", "/doliconnector/".constant("DOLIBARR")."/pay/order/".$_GET['id'], $src, 0);
-//echo $pay;
- 
-if ( $pay["statut"] == 'error' ) {
-echo "<center>erreur de paiement<br>$pay->message</center><br >";
-} else {
-header('Location: '.$pay->redirect_url);
-exit;
-}
-}
-
 echo "<button type='button' id='button-source-payment' class='btn btn-warning btn-block' data-toggle='modal' data-target='#orderonlinepay'><span class='fa fa-credit-card'></span> ".__( 'Pay', 'doliconnect' )."</button><br>";
 }
 
-echo "<div class='modal fade' id='orderonlinepay' tabindex='-1' role='dialog' aria-labelledby='orderonlinepayLabel' aria-hidden='true'  aria-hidden='true' data-backdrop='static' data-keyboard='false'>
-<div class='modal-dialog modal-dialog-centered' role='document'><div class='modal-content'><div class='modal-header border-0'><h4 class='modal-title border-0' id='orderonlinepayLabel'>".__( 'Payment methods', 'doliconnect' )."</h4>
-<button id='closemodalonlinepay' type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div><div class='modal-body'>";
-
-if ( !empty($orderfo->paymentintent) ) {
-dolipaymentmodes($orderfo, $url, $url, dolidelay($delay, esc_attr($_GET["refresh"])));
-} else {
-doligateway($orderfo->ref,$orderfo->multicurrency_total_ttc?$orderfo->multicurrency_total_ttc:$orderfo->total_ttc,$orderfo->multicurrency_code,$url.'&id='.$_GET['id'].'&ref='.$_GET['ref'],'full');
-echo doliloading('paymentmodes'); }
-
-echo "</div></div></div></div>";
 }
-//echo "<a href='".get_site_option('dolibarr_public_url')."/public/payment/newpayment.php?source=".$_GET['module']."&ref=".$_GET['ref']."&securekey=".sha1(md5('nw38LmcS3tgow7D1tGZGiBr56GPK059Q' . $_GET['module'] . $_GET['ref']))."&entity=".dolibarr_entity()."' target='_blank'>link to payment dolibarr</a>";
+
 echo "</div></div>";
 echo '<div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: '.$orderavancement.'%" aria-valuenow="'.$orderavancement.'" aria-valuemin="0" aria-valuemax="100"></div></div>';
 echo "<div class='w-auto text-muted d-none d-sm-block' ><div style='display:inline-block;width:20%'>".__( 'Order', 'doliconnect' )."</div><div style='display:inline-block;width:15%'>".__( 'Payment', 'doliconnect' )."</div><div style='display:inline-block;width:25%'>".__( 'Processing', 'doliconnect' )."</div><div style='display:inline-block;width:20%'>".__( 'Shipping', 'doliconnect' )."</div><div class='text-right' style='display:inline-block;width:20%'>".__( 'Delivery', 'doliconnect' )."</div></div>";
