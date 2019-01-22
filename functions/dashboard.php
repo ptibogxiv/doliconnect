@@ -565,14 +565,11 @@ $doliuser = CallAPI("PUT", "/users/".constant("DOLIBARR_USER"), $data, 0);
 }
 
 $msg = "<div class='alert alert-success'><h4 class='alert-heading'>".__( 'Congratulations!', 'doliconnect' )."</h4><p>".__( 'Your password has been changed', 'doliconnect' )."</p></div>";
-}
-elseif ( !$wp_hasher->CheckPassword($plain_password, $password_hashed) ) {
+} elseif ( !$wp_hasher->CheckPassword($plain_password, $password_hashed) ) {
 $msg = "<div class='alert alert-danger'><h4 class='alert-heading'>".__( 'Oops!', 'doliconnect' )."</h4><p>".__( 'Your actual password is incorrect', 'doliconnect' )."</p></div>";
-}
-elseif ($pwd != $_POST["pwd2"]){
+} elseif ( $pwd != $_POST["pwd2"] ) {
 $msg = "<div class='alert alert-danger'><h4 class='alert-heading'>".__( 'Oops!', 'doliconnect' )."</h4><p>".__( 'The new passwords entered are different', 'doliconnect' )."</p></div>";
-}
-elseif (!preg_match("#.*^(?=.{8,20})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*$#", $pwd)){
+} elseif ( !preg_match("#.*^(?=.{8,20})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*$#", $pwd) ) {
 $msg = "<div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><span class='fa fa-times-circle'></span> Votre nouveau mot de passe doit comporter entre 8 et 20 caractères dont au moins 1 chiffre, 1 lettre, 1 majuscule et 1 symbole.</div>";
 }
 }
@@ -1263,13 +1260,13 @@ $time = current_time( 'timestamp',1);
 $delay = DAY_IN_SECONDS;
 
 if ($_POST["update_membership"] && function_exists('dolimembership') ) {
-$adherent = dolimembership($_POST["update_membership"],$_POST["typeadherent"], dolidelay($delay, true));
+$adherent = dolimembership($_POST["update_membership"], $_POST["typeadherent"], dolidelay($delay, true));
 
 //if ($statut==1) {
 $msg = "<div class='alert alert-success' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><p><strong>".__( 'Congratulations!', 'doliconnect' )."</strong> ".__( 'Your membership has been updated.', 'doliconnect' )."</p></div>";
 //}
 
-if (($_POST["update_membership"]==4) && $_POST["cotisation"] && constant("DOLIBARR_MEMBER") > 0 && $_POST["timestamp_start"] > 0 && $_POST["timestamp_end"] > 0) {
+if ( ($_POST["update_membership"]==4) && $_POST["cotisation"] && constant("DOLIBARR_MEMBER") > 0 && $_POST["timestamp_start"] > 0 && $_POST["timestamp_end"] > 0 ) {
 
 $productadhesion = CallAPI("GET", "/doliconnector/constante/ADHERENT_PRODUCT_ID_FOR_SUBSCRIPTIONS", null, MONTH_IN_SECONDS);
 
@@ -1284,7 +1281,7 @@ $dolibarr = CallAPI("GET", "/doliconnector/".$ID, null, 0);
 
 echo $msg."<div class='card shadow-sm'><div class='card-body'><div class='row'><div class='col-12 col-md-5'>";
 
-if (!empty(constant("DOLIBARR_MEMBER")) && constant("DOLIBARR_MEMBER") > 0  && constant("DOLIBARR") > 0) { 
+if ( !empty(constant("DOLIBARR_MEMBER")) && constant("DOLIBARR_MEMBER") > 0  && constant("DOLIBARR") > 0 ) { 
 $adherent = CallAPI("GET", "/adherentsplus/".constant("DOLIBARR_MEMBER"), null, dolidelay($delay, esc_attr($_GET["refresh"])));
 }
 
@@ -1309,7 +1306,7 @@ $datefin =  date_i18n('d/m/Y', $adherent->datefin);
 echo  "$datefin"; }
 echo  "<br /><b>".__( 'Seniority', 'doliconnect' ).":</b> ";
 echo  "<br /><b>".__( 'Commitment', 'doliconnect' ).":</b> ";
-if ((current_time('timestamp') > $adherent->datecommitment) || null == $adherent->datecommitment) { echo  __( 'no', 'doliconnect' );
+if ( (current_time('timestamp') > $adherent->datecommitment) || null == $adherent->datecommitment ) { echo  __( 'no', 'doliconnect' );
 } else {
 $datefin =  date_i18n('d/m/Y', $adherent->datecommitment);
 echo  "$datefin"; }
@@ -1331,14 +1328,14 @@ window.setTimeout(function() {
 <?php
 echo "</script>";
 
-if ($adherent->datefin == null && $adherent->statut == '0') {echo  "<a href='#' id='subscribe-button2' class='btn btn text-white btn-warning btn-block' data-toggle='modal' data-target='#activatemember'><b>".__( 'Become a member', 'doliconnect' )."</b></a>";
+if ( $adherent->datefin == null && $adherent->statut == '0' ) {echo  "<a href='#' id='subscribe-button2' class='btn btn text-white btn-warning btn-block' data-toggle='modal' data-target='#activatemember'><b>".__( 'Become a member', 'doliconnect' )."</b></a>";
 } elseif ($adherent->statut == '1') {
 if ( $time > $adherent->next_subscription_renew && $adherent->datefin != null ) {
 echo "<a class='btn btn text-white btn-warning btn-block' data-toggle='modal' data-target='#activatemember'><b>".__( 'Renew my subscription', 'doliconnect' )."</b></a>";
 } elseif ( ( $adherent->datefin + 86400 ) > $time ) {
 echo  "<a href='#' id='subscribe-button2' class='btn btn text-white btn-warning btn-block' data-toggle='modal' data-target='#activatemember'><b>".__( 'Modify my subscription', 'doliconnect' )."</b></a>";
-}else {echo  "<button class='btn btn btn-danger btn-block' data-toggle='modal' data-target='#activatemember'><b>".__( 'Pay my subscription', 'doliconnect' )."</b></button>";}
-} elseif ( $adherent->statut == '0') {
+}else { echo  "<button class='btn btn btn-danger btn-block' data-toggle='modal' data-target='#activatemember'><b>".__( 'Pay my subscription', 'doliconnect' )."</b></button>";}
+} elseif ( $adherent->statut == '0' ) {
 if ( ( $adherent->datefin + 86400) > $time ) {
 echo "<form id='subscription-form' action='".doliconnecturl('doliaccount')."?module=membership' method='post'><input type='hidden' name='update_membership' value='4'><button id='resiliation-button' class='btn btn btn-warning btn-block' type='submit'><b>".__( 'Reactivate my subscription', 'doliconnect' )."</b></button></form>";
 } else {
@@ -1624,12 +1621,12 @@ echo "<div class='form-group'><label for='inputcivility'><small>".__( 'Severity'
 <div class='input-group mb-2'><div class='input-group-prepend'><span class='input-group-text' id='identity'><i class='fas fa-bug fa-fw'></i></span></div>";
 $severity = CallAPI("GET", "/setup/dictionary/ticket_severities?sortfield=pos&sortorder=ASC&limit=100", null, MONTH_IN_SECONDS);
 
-if (isset($severity)) { 
+if ( isset($severity) ) { 
 $sv= __( 'Critical / blocking', 'doliconnect' ).__( 'High', 'doliconnect' ).__( 'Normal', 'doliconnect' ).__( 'Low', 'doliconnect' );
 echo "<select class='custom-select' id='ticket_severity'  name='ticket_severity'>";
 foreach ( $severity as $postv ) {
 echo "<option value='".$postv->code."' ";
-if ( $postv->use_default ==1 ) {
+if ( $postv->use_default == 1 ) {
 echo "selected ";}
 echo ">".__($postv->label, 'doliconnect' )."</option>";
 }
@@ -1746,15 +1743,15 @@ this.form.submit();
 echo "</SCRIPT>";
 echo "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
 echo "<li class='list-group-item'><div class='custom-control custom-switch'><input type='checkbox' class='custom-control-input' name='loginmailalert' id='loginmailalert' ";
-if ( $current_user->loginmailalert == on ) { echo " checked"; }        
+if ( $current_user->loginmailalert == 'on' ) { echo " checked"; }        
 echo " onChange='demo()' ><label class='custom-control-label w-100' for='loginmailalert'> ".__( 'Receive a email notification at each connection', 'doliconnect' )."</label>
 </div></li>";
 echo "<li class='list-group-item'><div class='custom-control custom-switch'><input type='checkbox' class='custom-control-input' name='optin1' id='optin1' ";
-if ( $current_user->optin1 == on ) { echo " checked"; }        
+if ( $current_user->optin1 == 'on' ) { echo " checked"; }        
 echo " onChange='demo()' ><label class='custom-control-label w-100' for='optin1'> ".__( 'I would like to receive the newsletter', 'doliconnect' )."</label>
 </div></li>";
 echo "<li class='list-group-item'><div class='custom-control custom-switch'><input type='checkbox' class='custom-control-input' name='optin2' id='optin2' ";
-if ( $current_user->optin2 == on ) { echo " checked"; }        
+if ( $current_user->optin2 == 'on' ) { echo " checked"; }        
 echo " onChange='demo()' ><label class='custom-control-label w-100' for='optin2'> ".__( 'I would like to receive the offers of our partners', 'doliconnect' )."</label>
 </div></li>";
 $privacy=$wpdb->prefix."doliprivacy";
@@ -1767,7 +1764,7 @@ echo "<li class='list-group-item'>";
 //echo $current_user->locale;
 echo "<div class='form-group'><label for='inputaddress'><small>".__( 'Default language', 'doliconnect' )."</small></label>
 <div class='input-group'><div class='input-group-prepend'><span class='input-group-text'><i class='fas fa-language fa-fw'></i></span></div>";
-if (function_exists('pll_the_languages')) { 
+if ( function_exists('pll_the_languages') ) { 
 echo "<select class='form-control' id='locale' name='locale' onChange='demo()' >";
 echo "<option value=''>".__( 'Default / Browser language', 'doliconnect' )."</option>";
 $translations = pll_the_languages( array( 'raw' => 1 ) );
@@ -1975,14 +1972,14 @@ wp_reset_postdata();
 }
 add_action( 'settings_doliconnect_settings', 'settings_module' );
 
-function delete_menu($arg){
+function delete_menu($arg) {
 echo "<a href='".esc_url( add_query_arg( 'module', 'delete', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-action";
 if ($arg=='delete') { echo " active";}
 echo "'>".__( 'Privacy', 'doliconnect' )."</a>";
 }
 add_action( 'settings_doliconnect_menu', 'delete_menu', 3, 1);
 
-function delete_module($url){
+function delete_module($url) {
 global $current_user;
 echo "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
 if ( function_exists( 'wp_create_user_request' ) ) {
