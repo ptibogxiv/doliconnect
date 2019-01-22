@@ -1433,11 +1433,11 @@ echo "<b>".__( 'Next billing date', 'doliconnect' ).": </b> $datecommande<br>";
 echo "</div><ul class='list-group list-group-flush'>";
 
 if (constant("DOLIBARR_MEMBER") > 0) {
-$listconsumption = CallAPI("GET", "/adherentsplus/".constant("DOLIBARR_MEMBER")."/consumptions", null, dolidelay($delay, esc_attr($_GET["refresh"])));
+$linkedmember= CallAPI("GET", "/adherentsplus/".constant("DOLIBARR_MEMBER")."/consumptions", null, dolidelay($delay, esc_attr($_GET["refresh"])));
 } 
 
-if ( !isset($listconsumption->error) && $listconsumption != null ) { 
-foreach ( $listconsumption as $consumption ) {                                                                                 
+if ( !isset($linkedmember->error) && $linkedmember != null ) { 
+foreach ( $linkedmember as $consumption ) {                                                                                 
 $datec =  date_i18n('d/m/Y H:i', $consumption->date_creation);
 echo "<li class='list-group-item'><table width='100%'><tr><td>$datec</td><td>$consumption->label</td><td>";
 
