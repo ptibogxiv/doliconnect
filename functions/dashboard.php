@@ -1421,7 +1421,7 @@ add_action( 'options_doliconnect_linkedmember', 'linkedmember_module' );
 function linkedmember_menu( $arg ) {
 echo "<a href='".esc_url( add_query_arg( 'module', 'linkedmember', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-action";
 if ($arg=='linkedmember') { echo " active";}
-echo "'>".__( 'Linked members', 'doliconnect' )."</a>";
+echo "'>".__( 'Manage linked members', 'doliconnect' )."</a>";
 }
 
 function linkedmember_module( $url ) {
