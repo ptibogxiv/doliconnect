@@ -83,11 +83,17 @@ $const = CallAPI("GET", "/doliconnector/constante/".$constante, null, MONTH_IN_S
 return $const->value;
 }
 // ********************************************************
-if ( is_page(array(doliconnectid ('doliaccount'),doliconnectid ('dolicart'))) ) {
+function doliconnect_run() {
+$array=array();
+if ( !empty(doliconnectid('doliaccount')) ) { $array[]=doliconnectid('doliaccount'); }
+if ( !empty(doliconnectid('dolicart')) ) { $array[]=doliconnectid('dolicart'); }
+if ( !empty($array) && is_page( $array ) ) {
 if ( !defined ('DONOTCACHEPAGE') ) {
 define( 'DONOTCACHEPAGE', 1);
 }
 }
+}
+add_action( 'plugins_loaded', 'doliconnect_run', 10, 0 );
 // ********************************************************
 function json_basic_auth_handler( $user ) {
 	global $wp_json_basic_auth_error;
