@@ -17,7 +17,7 @@ echo "'>".__( 'Personal informations', 'doliconnect' )."</a>";
 }
 add_action( 'user_doliconnect_menu', 'informations_menu', 1, 1);
 
-function informations_module($url){
+function informations_module($url) {
 global $wpdb,$current_user,$doliconnect;
 $ID = $current_user->ID;
 $delay = DAY_IN_SECONDS;
@@ -88,7 +88,7 @@ echo "</script><div class='card shadow-sm'><ul class='list-group list-group-flus
 
 echo doliconnectuserform($thirdparty, dolidelay(MONTH_IN_SECONDS, esc_attr($_GET["refresh"]), true), 'full');
 
-if(has_action('mydoliconnectuserform')) {
+if( has_action('mydoliconnectuserform') ) {
 echo "<li class='list-group-item'>";
 do_action( 'mydoliconnectuserform');
 echo "</li>";
@@ -128,7 +128,7 @@ echo "</form>";
 }
 add_action( 'user_doliconnect_informations', 'informations_module');
 
-function avatars_module($url){
+function avatars_module($url) {
 global $wpdb,$current_user;
 
 $ID = $current_user->ID;
@@ -136,9 +136,9 @@ $time = current_time( 'timestamp', 1);
 
 require_once ABSPATH . WPINC . '/class-phpass.php';
 
-if ($_POST["case"] == 'updateavatar') {
+if ( $_POST["case"] == 'updateavatar' ) {
 
-if ($_POST['inputavatar']=='delete'){
+if ( $_POST['inputavatar']=='delete' ) {
 
 $upload_dir = wp_upload_dir();
 $nam=$wpdb->prefix."member_photo";
@@ -200,13 +200,13 @@ remove_filter('upload_dir', 'dolipropal_upload_dir');
 $filename=$upload_dir['basedir']."/doliconnect/".$ID."/avatar.jpg";
 $img = wp_get_image_editor($filename);
  
-if ( ! is_wp_error( $img )) {
+if ( ! is_wp_error( $img ) ) {
 $exif = exif_read_data($filename);               
 if ($exif[Orientation] == '8') {
 $img->rotate( 90 );
-} elseif ($exif[Orientation] == '3') {
+} elseif ( $exif[Orientation] == '3' ) {
 $img->rotate( 180 );
-} elseif ($exif[Orientation] == '6') {
+} elseif ( $exif[Orientation] == '6' ) {
 $img->rotate( -90 );
 } 
 
@@ -223,7 +223,7 @@ $img = wp_get_image_editor($filename2);
 $img->resize( 150, 150, true );
 $avatar2 = $img->generate_filename('150x150',$upload_dir['basedir']."/doliconnect/".$ID."/", NULL );
 $img->save($avatar2);
-if (file_exists($filename)){
+if ( file_exists($filename) ) {
 unlink($filename);
 }
 }
@@ -232,7 +232,7 @@ $minifile=$upload_dir['basedir']."/doliconnect/".$ID."/avatar-$time-72x72.jpg";
 $smallfile=$upload_dir['basedir']."/doliconnect/".$ID."/avatar-$time-150x150.jpg";
 $avatarfile=$upload_dir['basedir']."/doliconnect/".$ID."/avatar-$time.jpg";
 
-if (file_exists($avatarfile)) {
+if ( file_exists($avatarfile) ) {
 $imgData = base64_encode(file_get_contents("$avatarfile"));
 $datat = [
   'filename' => 'avatar.jpg',
@@ -245,7 +245,7 @@ $datat = [
 	];
 $photo = CallAPI("POST", "/documents/upload", $datat, 0);
 }
-if (file_exists($minifile)) {
+if ( file_exists($minifile) ) {
 $imgData = base64_encode(file_get_contents("$minifile"));
 $datat = [
   'filename' => 'avatar_mini.jpg',
@@ -257,7 +257,7 @@ $datat = [
 	];
 $photo = CallAPI("POST", "/documents/upload", $datat, 0);
 }
-if (file_exists($smallfile)) {
+if ( file_exists($smallfile) ) {
 $imgData = base64_encode(file_get_contents("$smallfile"));
 $datat = [
   'filename' => 'avatar_small.jpg',
@@ -271,7 +271,7 @@ $photo = CallAPI("POST", "/documents/upload", $datat, 0);
 }
 
  
-if (constant("DOLIBARR_MEMBER")>0){
+if ( constant("DOLIBARR_MEMBER") > 0 ) {
 $data = [
     'photo' => 'avatar.jpg'
 	];
@@ -310,14 +310,14 @@ echo "<label for='description'><small>".__( 'Profile Picture', 'doliconnect' )."
 $table_prefix = $wpdb->get_blog_prefix( $entity ); 
 $upload_dir = wp_upload_dir();
 $nam=$table_prefix."member_photo";
-if (NULL == $current_user->$nam && constant("DOLIBARR_MEMBER")) {
+if ( null == $current_user->$nam && constant("DOLIBARR_MEMBER") ) {
 //echo " required='required'";
 }
 echo " capture><label class='custom-file-label' for='customFile' data-browse='".__( 'Browse', 'doliconnect' )."'>".__( 'Select a file', 'doliconnect' )."</label></div></div>
 <small id='infoavatar' class='form-text text-muted text-justify'>".__( 'Your avatar must be a .jpg/.jpeg file, <10Mo and 350x350pixels minimum.', 'doliconnect' )."</SMALL>";
 echo "<div class='custom-control custom-checkbox my-1 mr-sm-2'>
     <input type='checkbox' class='custom-control-input' id='inputavatar' name='inputavatar' value='delete' ";
-if (NULL == $current_user->$nam) {
+if ( null == $current_user->$nam ) {
 echo " disabled='disabled'";
 }
 echo "><label class='custom-control-label' for='inputavatar'>".__( 'Delete your picture', 'doliconnect' )."</label></div></div>";
@@ -330,7 +330,7 @@ echo "</form>";
 }
 add_action( 'user_doliconnect_avatars', 'avatars_module');
 
-function contacts_menu($arg){
+function contacts_menu($arg) {
 echo "<a href='".esc_url( add_query_arg( 'module', 'contacts', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-action";
 if ($arg=='contacts') { echo " active";}
 echo "'>".__( 'Address book', 'doliconnect' )."</a>";
@@ -341,7 +341,7 @@ function contacts_module($url){
 global $current_user;
 $delay = WEEK_IN_SECONDS;
 
-if ($_POST['contact'] == 'new_contact'){
+if ( $_POST['contact'] == 'new_contact' ) {
 
 $data = [
     'firstname' => ucfirst(sanitize_user(strtolower($_POST['contact_firstname']))),
@@ -462,7 +462,7 @@ echo "<select class='custom-select' id='identity'  name='billing_civility' requi
 foreach ($civility as $postv) {
 
 echo "<option value='".$postv->code."' ";
-if ($current_user->billing_civility == $postv->code && $current_user->billing_civility!=NULL) {
+if ( $current_user->billing_civility == $postv->code && $current_user->billing_civility != null ) {
 echo "selected ";}
 if ($postv->id=='0'){$form .= "disabled ";}
 echo ">$postv->label</option>";
@@ -883,7 +883,7 @@ $src = [
 $pay = CallAPI("POST", "/doliconnector/".constant("DOLIBARR")."/pay/order/".$_GET['id'], $src, 0);
 //echo $pay;
  
-if ($pay["statut"]=='error'){
+if ( $pay["statut"] == 'error' ) {
 echo "<center>erreur de paiement<br>$pay->message</center><br >";
 } else {
 header('Location: '.$pay->redirect_url);
@@ -913,7 +913,7 @@ echo "<div class='w-auto text-muted d-none d-sm-block' ><div style='display:inli
 
 echo "</div><ul class='list-group list-group-flush'>";
  
-if ( $orderfo->lines != null) {
+if ( $orderfo->lines != null ) {
 foreach ( $orderfo->lines as $line ) {
 echo "<li class='list-group-item'>";     
 if ( $line->date_start != '' && $line->date_end != '' )
