@@ -840,10 +840,13 @@ echo "<div class='modal fade' id='orderonlinepay' tabindex='-1' role='dialog' ar
 <div class='modal-dialog modal-dialog-centered' role='document'><div class='modal-content'><div class='modal-header border-0'><h4 class='modal-title border-0' id='orderonlinepayLabel'>".__( 'Payment methods', 'doliconnect' )."</h4>
 <button id='closemodalonlinepay' type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div><div class='modal-body'>";
 
+$listsource = CallAPI("GET", "/doliconnector/".constant("DOLIBARR")."/sources", null, dolidelay($delay, $_GET["refresh"]));
+//echo $listsource;
+
 if ( !empty($orderfo->paymentintent) ) {
-dolipaymentmodes($orderfo, $url, $url, dolidelay($delay, esc_attr($_GET["refresh"])));
+dolipaymentmodes( $listsource, $orderfo, $url, $url);
 } else {
-doligateway($orderfo->ref,$orderfo->multicurrency_total_ttc?$orderfo->multicurrency_total_ttc:$orderfo->total_ttc,$orderfo->multicurrency_code,$url.'&id='.$_GET['id'].'&ref='.$_GET['ref'],'full');
+doligateway($listsource, $orderfo->ref, $orderfo->multicurrency_total_ttc?$orderfo->multicurrency_total_ttc:$orderfo->total_ttc, $orderfo->multicurrency_code, $url.'&id='.$_GET['id'].'&ref='.$_GET['ref'], 'full');
 echo doliloading('paymentmodes'); }
 
 echo "</div></div></div></div>";
