@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
 "POT-Creation-Date: 2018-09-26 13:30+0200\n"
-"PO-Revision-Date: 2018-09-26 13:34+0200\n"
+"PO-Revision-Date: 2019-01-22 20:33+0100\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: en_GB\n"
@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.1.1\n"
+"X-Generator: Poedit 2.2.1\n"
 "X-Poedit-Basepath: ../../plugins/doliconnect\n"
 "X-Poedit-Flags-xgettext: --add-comments=translators:\n"
 "X-Poedit-WPHeader: doliconnect.php\n"
@@ -100,10 +100,8 @@ msgstr "Product/Service not in sale"
 
 #: doliconnect.php:300 doliconnect.php:776 doliconnect.php:1789
 #: functions/tools.php:152
-#, fuzzy
-#| msgid "Help"
 msgid "Help?"
-msgstr "Help"
+msgstr "Help?"
 
 #: doliconnect.php:300 doliconnect.php:776 doliconnect.php:1789
 #: functions/tools.php:152
@@ -807,7 +805,7 @@ msgstr "Subject"
 
 #: functions/dashboard.php:1174
 msgid "Initial message"
-msgstr ""
+msgstr "Initial message"
 
 #: functions/dashboard.php:1197
 msgid "New message"
@@ -815,15 +813,15 @@ msgstr "New message"
 
 #: functions/dashboard.php:1222
 msgid "Your ticket has been submitted."
-msgstr ""
+msgstr "Your ticket has been submitted."
 
 #: functions/dashboard.php:1245 functions/dashboard.php:1311
 msgid "Open a new ticket"
-msgstr ""
+msgstr "Open a new ticket"
 
 #: functions/dashboard.php:1283
 msgid "Critical / blocking"
-msgstr ""
+msgstr "Critical / blocking"
 
 #: functions/dashboard.php:1283
 msgid "High"
@@ -883,7 +881,7 @@ msgstr ""
 
 #: functions/dashboard.php:1587
 msgid "Privacy"
-msgstr ""
+msgstr "Privacy"
 
 #: functions/dashboard.php:1600
 msgid "Export your personal data"
