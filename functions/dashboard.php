@@ -1438,17 +1438,11 @@ $linkedmember= CallAPI("GET", "/adherentsplus/".constant("DOLIBARR_MEMBER"), nul
 
 if ( !isset($linkedmember->error) && $linkedmember != null ) { 
 foreach ( $linkedmember->linkedmembers as $member ) {                                                                                 
-$datec =  date_i18n('d/m/Y H:i', $member->date_creation);
-echo "<li class='list-group-item'><table width='100%'><tr><td>$datec</td><td>".$member->label."</td><td>";
 
-if ( !empty($member->value) ) {
-echo $member->value." ".$member->unit;
-} else {
-echo "x".$member->qty;
-}
+echo "<li class='list-group-item'><table width='100%'><tr><td>".$member->id."</td><td>".$member->firstname."</td><td>".$member->lastname."</td><td>";
 
 echo "</td>";
-echo "<td class='text-right'><b>".doliprice($member->amount)."</b></td></tr></table><span></span></li>";
+echo "<td class='text-right'></td></tr></table><span></span></li>";
 }
 } else { 
 echo "<li class='list-group-item list-group-item-light'><center>".__( 'No consumption', 'doliconnect' )."</center></li>";
