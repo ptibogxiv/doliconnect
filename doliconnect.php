@@ -959,7 +959,7 @@ $login_url=site_url()."/".secupress_get_module_option('move-login_slug-login', $
 } else {
 $login_url=site_url()."/wp-login.php"; }
 if ( isset($_GET["redirect_to"])) { $redirect_to=$_GET["redirect_to"]; } else {
-$redirect_to="//".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];} 
+$redirect_to=$_SERVER['HTTP_REFERER'];} 
 echo "<form class='was-validated' id='LoginForm' action='$login_url' method='post'>";
 echo "<script>";
 ?>
