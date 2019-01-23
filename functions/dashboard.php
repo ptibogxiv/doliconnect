@@ -1233,7 +1233,7 @@ $ID = $current_user->ID;
 $time = current_time( 'timestamp',1);
 $delay = DAY_IN_SECONDS;
 
-if ($_POST["update_membership"] && function_exists('dolimembership') ) {
+if ( isset($_POST["update_membership"]) && function_exists('dolimembership') ) {
 $adherent = dolimembership($_POST["update_membership"], $_POST["typeadherent"], dolidelay($delay, true));
 
 //if ($statut==1) {
@@ -1253,7 +1253,9 @@ $dolibarr = CallAPI("GET", "/doliconnector/".$ID, null, 0);
 
 } 
 
-echo $msg."<div class='card shadow-sm'><div class='card-body'><div class='row'><div class='col-12 col-md-5'>";
+if ( isset($msg) ) { echo $msg; }
+
+echo "<div class='card shadow-sm'><div class='card-body'><div class='row'><div class='col-12 col-md-5'>";
 
 if ( !empty(constant("DOLIBARR_MEMBER")) && constant("DOLIBARR_MEMBER") > 0  && constant("DOLIBARR") > 0 ) { 
 $adherent = CallAPI("GET", "/adherentsplus/".constant("DOLIBARR_MEMBER"), null, dolidelay($delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
@@ -1378,7 +1380,7 @@ function membershipconsumption_module( $url ) {
 $delay = HOUR_IN_SECONDS;
 
 echo "<div class='card shadow-sm'><div class='card-body'>";
-echo "<b>".__( 'Next billing date', 'doliconnect' ).": </b> $datecommande<br>";
+echo "<b>".__( 'Next billing date', 'doliconnect' ).": </b> <br>";
 
 echo "</div><ul class='list-group list-group-flush'>";
 
@@ -1428,7 +1430,7 @@ function linkedmember_module( $url ) {
 $delay = HOUR_IN_SECONDS;
 
 echo "<div class='card shadow-sm'><div class='card-body'>";
-echo "<b>".__( 'Next billing date', 'doliconnect' ).": </b> $datecommande<br>";
+echo "<b>".__( 'Next billing date', 'doliconnect' ).": </b> <br>";
 
 echo "</div><ul class='list-group list-group-flush'>";
 
@@ -1504,12 +1506,12 @@ echo "'>".__( 'Help', 'doliconnect' )."</a>";
 function ticket_module( $url ) {
 $delay = HOUR_IN_SECONDS;
 
-if ($_GET['id']>0) {
-$ticket = CallAPI("GET", "/tickets/".$_GET['id'], null, dolidelay($delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+if ( isset($_GET['id']) && $_GET['id'] > 0 ) {
+$ticket = CallAPI("GET", "/tickets/".esc_attr($_GET['id']), null, dolidelay($delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 //echo $ticket;
 }
 
-if ( ($_GET['id'] != null ) && ($_GET['ref'] != null ) && ( constant("DOLIBARR") == $ticket->socid ) && ($_GET['ref'] == $ticket->ref ) ) {
+if ( isset($_GET['id']) && isset($_GET['ref']) && ( constant("DOLIBARR") == $ticket->socid ) && ($_GET['ref'] == $ticket->ref ) ) {
 echo "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>$ticket->ref</h5><div class='row'><div class='col-md-6'>";
 $dateticket =  date_i18n('d/m/Y', $ticket->datec);
 echo "<b>".__( 'Date of creation', 'doliconnect' ).": </b> $dateticket<br>";
@@ -1517,7 +1519,7 @@ echo "<b>".__( 'Type and category', 'doliconnect' ).": </b> ".__($ticket->type_l
 echo "<b>".__( 'Severity', 'doliconnect' ).": </b> ".__($ticket->severity_label, 'doliconnect' )."<br>";
 echo "</div><div class='col-md-6'><h3 class='text-right'>";
 if ( $ticket->fk_statut == 9 ) { echo "<span class='label label-default'>".__( 'Deleted', 'doliconnect' )."</span>"; }
-elseif ( $ticke->fk_statut == 8 ) { echo "<span class='label label-success'>".__( 'Closed', 'doliconnect' )."</span>"; }
+elseif ( $ticket->fk_statut == 8 ) { echo "<span class='label label-success'>".__( 'Closed', 'doliconnect' )."</span>"; }
 elseif ( $ticket->fk_statut == 6 ) { echo "<span class='label label-warning'>".__( 'Waiting', 'doliconnect' )."</span>"; }
 elseif ( $ticket->fk_statut == 5 ) { echo "<span class='label label-warning'>".__( 'In progress', 'doliconnect' )."</span>"; }
 elseif ( $ticket->fk_statut == 4 ) { echo "<span class='label label-warning'>".__( 'Assigned', 'doliconnect' )."</span>"; }
@@ -1558,14 +1560,14 @@ echo '<div class="form-group"><label for="ticketnewmessage"><small>'.__( 'New me
 echo doliloading('ticket');
 echo "</li>";
 }
-if ( $ticket->messages != null ) {
+if ( isset($ticket->messages) ) {
 foreach ( $ticket->messages as $msg ) {
 $datemsg =  date_i18n('d/m/Y - H:i', $msg->datec);  
 echo  "<li class='list-group-item'><b>$datemsg $msg->fk_user_action_string</b><br>$msg->message</li>";
 }} 
 echo "</ul></div>";
-} elseif (isset($_GET['create']))  {
-if ($_POST["case"] == 'createticket') {
+} elseif ( isset($_GET['create']) ) {
+if ( isset($_POST["case"]) && $_POST["case"] == 'createticket' ) {
 $rdr = [
     'fk_soc' => constant("DOLIBARR"),
     'type_code' => $_POST['ticket_type'],
@@ -1581,7 +1583,7 @@ if ( $ticketid > 0 ) {
 $msg = "<div class='alert alert-success' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><p><strong>".__( 'Congratulations!', 'doliconnect' )."</strong> ".__( 'Your ticket has been submitted.', 'doliconnect' )."</p></div>"; 
 } }
 echo "<form id='ticket-form' action='".$url."&create' method='post'>";
-echo $msg;
+if ( isset($msg) ) { echo $msg; }
 echo "<script>";
 ?>
 
@@ -1613,7 +1615,7 @@ $tp= __( 'Issue or problem', 'doliconnect' ).__( 'Commercial question', 'dolicon
 echo "<select class='custom-select' id='ticket_type'  name='ticket_type'>";
 foreach ($type as $postv) {
 echo "<option value='".$postv->code."' ";
-if ( $_GET['type'] == $postv->code ) {
+if ( isset($_GET['type']) && $_GET['type'] == $postv->code ) {
 echo "selected ";
 } elseif ( $postv->use_default == 1 ) {
 echo "selected ";}
@@ -1624,7 +1626,7 @@ echo "</select>";
 
 $cat = CallAPI("GET", "/setup/dictionary/ticket_categories?sortfield=pos&sortorder=ASC&limit=100", null, MONTH_IN_SECONDS);
 
-if (isset($cat)) { 
+if ( isset($cat) ) { 
 echo "<select class='custom-select' id='ticket_cat'  name='ticket_category'>";
 foreach ( $cat as $postv ) {
 echo "<option value='".$postv->code."' ";
@@ -1679,10 +1681,10 @@ foreach ($listticket as $postticket) {
 $arr_params = array( 'id' => $postticket->id, 'ref' => $postticket->ref);  
 $return = esc_url( add_query_arg( $arr_params, $url) );
 
-if ( $postticket->severity_code == BLOCKING ) { $color="text-danger"; } 
-elseif ( $postticket->severity_code == HIGH ) { $color="text-warning"; }
-elseif ( $postticket->severity_code == NORMAL ) { $color="text-success"; }
-elseif ( $postticket->severity_code == LOW ) { $color="text-info"; } else { $color="text-dark"; }
+if ( $postticket->severity_code == 'BLOCKING' ) { $color="text-danger"; } 
+elseif ( $postticket->severity_code == 'HIGH' ) { $color="text-warning"; }
+elseif ( $postticket->severity_code == 'NORMAL' ) { $color="text-success"; }
+elseif ( $postticket->severity_code == 'LOW' ) { $color="text-info"; } else { $color="text-dark"; }
 echo "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-action'><div><i class='fas fa-question-circle $color fa-3x fa-fw'></i></div><div><h6 class='my-0'>$postticket->subject</h6><small class='text-muted'>du ".date_i18n('d/m/Y', $postticket->datec)."</small></div><span class='text-center'>".__($postticket->type_label, 'doliconnect' )."<br/>".__($postticket->category_label, 'doliconnect' )."</span><span>";
 if ( $postticket->fk_statut == 9 ) { echo "<span class='label label-default'>".__( 'Deleted', 'doliconnect' )."</span>"; }
 elseif ( $postticket->fk_statut == 8 ) { echo "<span class='label label-success'>".__( 'Closed', 'doliconnect' )."</span>"; }
@@ -1718,7 +1720,7 @@ function settings_module($url) {
 global $wp,$wpdb,$current_user;
 $ID = $current_user->ID;
 
-if ( $_POST["case"] == 'updatesettings' ) {
+if ( isset($_POST["case"]) && $_POST["case"] == 'updatesettings' ) {
 update_usermeta( $ID, 'loginmailalert', sanitize_text_field($_POST['loginmailalert']) );
 update_usermeta( $ID, 'optin1', sanitize_text_field($_POST['optin1']) );
 update_usermeta( $ID, 'optin2', sanitize_text_field($_POST['optin2']) );
@@ -1736,7 +1738,7 @@ $thirparty = CallAPI("PUT", "/thirdparties/".constant("DOLIBARR"), $info, MONTH_
 }
 
 echo "<form id='settings-form' action='".$url."' method='post'>";
-echo $msg;
+if ( isset($msg) ) { echo $msg; }
 echo "<script>";
 ?>
 window.setTimeout(function() {
