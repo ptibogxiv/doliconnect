@@ -154,15 +154,15 @@ $args = array(
     'headers' => $headers
 ); 
 
-if ( $method=='POST' ) {
+if ( $method == 'POST' ) {
 $args['body'] = $body;
 delete_transient( $link );  
 $request = wp_remote_post( esc_url_raw($url), $args );
-} elseif ( $method=='PUT' ) {
+} elseif ( $method == 'PUT' ) {
 $args['body'] = $body;
 delete_transient( $link ); 
 $request = wp_remote_request( esc_url_raw($url), $args );
-} elseif ( $method=='DELETE' ) { 
+} elseif ( $method == 'DELETE' ) { 
 $request = wp_remote_request( esc_url_raw($url), $args );
 } else {
 $request = wp_remote_get( esc_url_raw($url), $args );
@@ -172,7 +172,7 @@ $http_code = wp_remote_retrieve_response_code( $request );
 
 if ( $method == 'DELETE' ) {
 delete_transient( $link ); 
-} elseif ( $delay <= 0 || ! in_array($http_code,array('200','404')) ) {
+} elseif ( $delay <= 0 || ! in_array( $http_code,array('200','404') ) ) {
 delete_transient( $link );
 
 if (! in_array($http_code,array('200','404')) ) {
