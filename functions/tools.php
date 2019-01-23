@@ -46,7 +46,7 @@ $form .= " required";
 $form .= "></div></div>";
 $form .= "</div></div>";
 $form .= "</li>";
-if ( ( null !== $_GET["pro"] && !get_option('doliconnect_disablepro') ) || $mode == 'full' ) {
+if ( ( isset($_GET["pro"]) && !get_option('doliconnect_disablepro') ) || $mode == 'full' ) {
 $form .= "<li class='list-group-item'><div class='form-group'><div class='row'>";
 $form .= "<div class='col-12'><label for='inputaddress'><small>".__( 'Address', 'doliconnect' )."</small></label>
 <div class='input-group mb-2'><div class='input-group-prepend'><span class='input-group-text'><i class='fas fa-map-marked fa-fw'></i></span></div>

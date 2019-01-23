@@ -23,7 +23,7 @@ global $wpdb,$current_user,$doliconnect;
 $ID = $current_user->ID;
 $delay = DAY_IN_SECONDS;
 
-if ( $_POST["case"] == 'updateuser'  ) {
+if ( isset($_POST["case"]) && $_POST["case"] == 'updateuser'  ) {
 wp_update_user( array( 'ID' => $ID, 'user_email' => sanitize_email($_POST['user_email'])));
 wp_update_user( array( 'ID' => $ID, 'nickname' => sanitize_user($_POST['user_nicename'])));
 wp_update_user( array( 'ID' => $ID, 'display_name' => ucfirst(strtolower($_POST['user_firstname']))." ".strtoupper($_POST['user_lastname'])));
@@ -60,11 +60,11 @@ $url = esc_url( add_query_arg( 'return', $_GET['return'], $url) );
 }
 
 if ( constant("DOLIBARR") > '0' ) {
-$thirdparty = CallAPI("GET", "/thirdparties/".constant("DOLIBARR"), null, dolidelay( $delay, esc_attr($_GET["refresh"])));  
+$thirdparty = CallAPI("GET", "/thirdparties/".constant("DOLIBARR"), null, dolidelay( $delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
 }
 
 echo "<form action='".$url."' id='informations-form' method='post' class='was-validated' enctype='multipart/form-data'><input type='hidden' name='case' value='updateuser'>";
-echo $msg;
+if ( isset($msg) ) { echo $msg; }
 echo "<script>";
 ?>
 
@@ -87,7 +87,7 @@ form.submit();
 <?php
 echo "</script><div class='card shadow-sm'><ul class='list-group list-group-flush'>";
 
-echo doliconnectuserform($thirdparty, dolidelay(MONTH_IN_SECONDS, esc_attr($_GET["refresh"]), true), 'full');
+echo doliconnectuserform($thirdparty, dolidelay(MONTH_IN_SECONDS, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'full');
 
 if( has_action('mydoliconnectuserform') ) {
 echo "<li class='list-group-item'>";
