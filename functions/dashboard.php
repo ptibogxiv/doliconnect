@@ -656,12 +656,12 @@ echo "'>".__( 'Propals tracking', 'doliconnect' )."</a>";
 function propal_module( $url ) {
 $delay = HOUR_IN_SECONDS;
 
-if ($_GET['id'] > 0){
+if ( isset($_GET['id']) && $_GET['id'] > 0 ) {
 $propalfo = CallAPI("GET", "/proposals/".$_GET['id'], null, dolidelay($delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 //echo $propalfo;
 }
 
-if ( ( $_GET['id'] != null ) && ( $_GET['ref'] != null ) && ( constant("DOLIBARR") == $propalfo->socid ) && ( $_GET['ref'] == $propalfo->ref ) && $propalfo->statut !=0 ) {
+if ( isset($_GET['id']) && isset($_GET['ref']) && ( constant("DOLIBARR") == $propalfo->socid ) && ( $_GET['ref'] == $propalfo->ref ) && $propalfo->statut !=0 ) {
 echo "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>$propalfo->ref</h5><div class='row'><div class='col-md-5'>";
 $datecreation =  date_i18n('d/m/Y', $propalfo->date_creation);
 $datevalidation =  date_i18n('d/m/Y', $propalfo->date_validation);
@@ -703,6 +703,8 @@ if ( $line->date_start != '' && $line->date_end !='' )
 $start = date_i18n('d/m/Y', $line->date_start);
 $end = date_i18n('d/m/Y', $line->date_end);
 $dates =" <i>(Du $start au $end)</i>";
+} else {
+$dates ="";
 }
 
 echo '<div class="w-100 justify-content-between"><div class="row"><div class="col-8 col-md-10"> 
@@ -726,17 +728,18 @@ $doc = array_reverse( explode("/", $propalfo->last_main_doc) );
 $document = dolidocdownload($doc[2],$doc[1],$doc[0],$url."&id=".$_GET['id']."&ref=".$propalfo->ref,__( 'Summary', 'doliconnect' ));
 } 
     
-$fruits[$propal->date_creation.p] = array(
+$fruits[$propalfo->date_creation.'p'] = array(
 "timestamp" => $propalfo->date_creation,
 "type" => __( 'Propal', 'doliconnect' ),  
 "label" => $propalfo->ref,
 "document" => $document,
+"description" => null,
 );
 
 sort($fruits, SORT_NUMERIC | SORT_FLAG_CASE);
 foreach ( $fruits as $key => $val ) {
-echo "<li class='list-group-item'><div class='row'><div class='col-6 col-md-3'>" . date_i18n('d/m/Y H:i', $val[timestamp]) . "</div><div class='col-6 col-md-2'>" . $val[type] . "</div>";
-echo "<div class='col-md-7'><h5>" . $val[label] . "</h5>" . $val[description] ."" . $val[document] ."</div></div></li>";
+echo "<li class='list-group-item'><div class='row'><div class='col-6 col-md-3'>" . date_i18n('d/m/Y H:i', $val['timestamp']) . "</div><div class='col-6 col-md-2'>" . $val['type'] . "</div>";
+echo "<div class='col-md-7'><h5>" . $val['label'] . "</h5>" . $val['description'] ."" . $val['document'] ."</div></div></li>";
 } 
 //var_dump($fruits);
 echo "</ul></div>";
@@ -751,7 +754,7 @@ echo "</div></small>";
 
 $delay = DAY_IN_SECONDS;
 
-if ( $_GET['pg'] ) { $page="&page=".$_GET['pg']; }
+if ( isset($_GET['pg']) ) { $page="&page=".$_GET['pg']; }
 
 $listpropal = CallAPI("GET", "/proposals?sortfield=t.rowid&sortorder=ASC&limit=8&thirdparty_ids=".constant("DOLIBARR")."&sqlfilters=(t.fk_statut!=0)", null, dolidelay($delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
@@ -799,12 +802,12 @@ echo "'>".__( 'Orders tracking', 'doliconnect' )."</a>";
 function order_module( $url ) {
 $delay = HOUR_IN_SECONDS;
 
-if ( $_GET['id']>0 ) {
+if ( isset($_GET['id']) && $_GET['id'] > 0 ) {
 $orderfo = CallAPI("GET", "/orders/".$_GET['id'], null, dolidelay($delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 //echo $orderfo;
 }
 
-if ( ( $_GET['id'] != null ) && ( $_GET['ref'] != null ) && (constant("DOLIBARR") == $orderfo->socid ) && ($_GET['ref'] == $orderfo->ref) && $orderfo->statut != 0 ) {
+if ( isset($_GET['id']) && isset($_GET['ref']) && (constant("DOLIBARR") == $orderfo->socid ) && ($_GET['ref'] == $orderfo->ref) && $orderfo->statut != 0 ) {
 echo "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>$orderfo->ref</h5><div class='row'><div class='col-md-5'>";
 $datecommande =  date_i18n('d/m/Y', $orderfo->date_creation);
 echo "<b>".__( 'Date of order', 'doliconnect' ).": </b> $datecommande<br>";
@@ -915,7 +918,7 @@ $doc = array_reverse(explode("/", $orderfo->last_main_doc));
 $document_order = dolidocdownload($doc[2],$doc[1],$doc[0],$url."&id=".$_GET['id']."&ref=".$orderfo->ref,__( 'Summary', 'doliconnect' ));
 } 
     
-$fruits[$orderfo->date_commande.o] = array(
+$fruits[$orderfo->date_commande.'o'] = array(
 "timestamp" => $orderfo->date_creation,
 "type" => __( 'Order', 'doliconnect' ),  
 "label" => $orderfo->ref,
@@ -935,7 +938,7 @@ $payment = CallAPI("GET", "/invoices/".$value."/payments", null, dolidelay($dela
 
 if ( $payment != null ) { 
 foreach ( $payment as $pay ) {
-$fruits[strtotime($pay->date).p] = array(
+$fruits[strtotime($pay->date).'p'] = array(
 "timestamp" => strtotime($pay->date),
 "type" => __( 'Payment', 'doliconnect' ),  
 "label" => "$pay->type de ".doliprice($pay->amount,$orderfo->multicurrency_code),
@@ -949,18 +952,18 @@ $doc = array_reverse(explode("/", $invoice->last_main_doc));
 $document_invoice=dolidocdownload($doc[2],$doc[1],$doc[0],$url."&id=".$_GET['id']."&ref=".$orderfo->ref,__( 'Invoice', 'doliconnect' ));
 }  
   
-$fruits[$invoice->date_creation.i] = array(
+$fruits[$invoice->date_creation.'i'] = array(
 "timestamp" => $invoice->date_creation,
 "type" => __( 'Invoice', 'doliconnect' ),  
 "label" => $invoice->ref,
 "document" => $document_invoice,
+"description" => null,
 );  
 } 
 } 
  
-$shipments=$orderfo->linkedObjectsIds->shipping;
-if ( $shipments != null ) {
-foreach ( $shipments as $s => $value ) {
+if ( isset($orderfo->linkedObjectsIds->shipping) ) {
+foreach ( $orderfo->linkedObjectsIds->shipping as $s => $value ) {
 
 if ($value > 0) {
 $ship = CallAPI("GET", "/shipments/".$value, null, dolidelay($delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
@@ -1000,8 +1003,8 @@ $fruits[$ship->date_creation] = array(
 
 sort($fruits, SORT_NUMERIC | SORT_FLAG_CASE);
 foreach ( $fruits as $key => $val ) {
-echo "<li class='list-group-item'><div class='row'><div class='col-6 col-md-3'>" . date_i18n('d/m/Y H:i', $val[timestamp]) . "</div><div class='col-6 col-md-2'>" . $val[type] . "</div>";
-echo "<div class='col-md-7'><h5>" . $val[label] . "</h5>" . $val[description] ."" . $val[document] ."</div></div></li>";
+echo "<li class='list-group-item'><div class='row'><div class='col-6 col-md-3'>" . date_i18n('d/m/Y H:i', $val['timestamp']) . "</div><div class='col-6 col-md-2'>" . $val['type'] . "</div>";
+echo "<div class='col-md-7'><h5>" . $val['label'] . "</h5>" . $val['description'] ."" . $val['document'] ."</div></div></li>";
 } 
 //var_dump($fruits);
 echo "</ul></div>";
@@ -1016,7 +1019,7 @@ echo "</div></small>";
 
 $delay = DAY_IN_SECONDS;
 
-if ($_GET['pg'] > 0) { $page="&page=".$_GET['pg'];}
+if ( isset($_GET['pg']) && $_GET['pg'] > 0) { $page="&page=".$_GET['pg'];}  else { $page=""; }
 
 $listorder = CallAPI("GET", "/orders?sortfield=t.rowid&sortorder=DESC&limit=8".$page."&thirdparty_ids=".constant("DOLIBARR")."&sqlfilters=(t.fk_statut!=0)", null, dolidelay($delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
