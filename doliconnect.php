@@ -145,7 +145,7 @@ $headers = array(
 $url=get_site_option('dolibarr_public_url').'/api/index.php'.$link;
 
 if ( !empty(get_site_option('dolibarr_public_url')) && !empty(get_site_option('dolibarr_private_key')) ) {
-if ( !empty( $link ) && ( false === ( $response = get_transient( $link ) ) || $method!='GET' || $delay <= 0 ) ) {
+if ( !empty( $link ) && ( false ===  get_transient( $link ) || $method!='GET' || $delay <= 0 ) ) {
 
 $args = array(
     'timeout' => '10',
@@ -195,7 +195,7 @@ set_transient( $link, wp_remote_retrieve_body( $request ), $delay );
 return json_decode( wp_remote_retrieve_body( $request ) );
 
 } else {
-return json_decode( $response );   
+return json_decode( get_transient( $link ) );   
 }
 } else {
 
