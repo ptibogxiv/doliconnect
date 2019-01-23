@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2019-01-22 20:27+0100\n"
-"PO-Revision-Date: 2019-01-22 20:29+0100\n"
+"POT-Creation-Date: 2019-01-22 22:34+0100\n"
+"PO-Revision-Date: 2019-01-22 22:34+0100\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_FR\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 2.2.1\n"
-"X-Poedit-Basepath: ..\n"
+"X-Poedit-Basepath: ../../plugins/doliconnect\n"
 "X-Poedit-Flags-xgettext: --add-comments=translators:\n"
 "X-Poedit-WPHeader: doliconnect.php\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -57,20 +57,20 @@ msgstr "Contactez-nous"
 msgid "Product/Service not in sale"
 msgstr "Produit/service non en vente"
 
-#: doliconnect.php:352
+#: doliconnect.php:351
 msgid "Edit"
 msgstr "Éditer"
 
-#: doliconnect.php:354
+#: doliconnect.php:353
 msgid "Home"
 msgstr "Accueil"
 
-#: doliconnect.php:426
+#: doliconnect.php:425
 #, php-format
 msgid "Hello %s"
 msgstr "Bonjour %s"
 
-#: doliconnect.php:426 doliconnect.php:464 doliconnect.php:651
+#: doliconnect.php:425 doliconnect.php:463 doliconnect.php:650
 msgid ""
 "Manage your account, your informations, orders and much more via this secure "
 "client area."
@@ -78,7 +78,7 @@ msgstr ""
 "Gérez votre compte, vos informations, vos commandes et bien plus encore via "
 "cette zone client sécurisée."
 
-#: doliconnect.php:487
+#: doliconnect.php:486
 msgid ""
 "This email address is already linked to an account. You can reactivate your "
 "account through this <a href='\".wp_lostpassword_url( get_permalink() ).\"' "
@@ -88,16 +88,16 @@ msgstr ""
 "compte via ce <a href = ' \". wp_lostpassword_url (get_permalink ()).\" "
 "'title = 'mot de passe perdu'> Form </a>."
 
-#: doliconnect.php:500
+#: doliconnect.php:499
 msgid "Registration confirmation"
 msgstr "Confirmation d'inscription"
 
-#: doliconnect.php:534
+#: doliconnect.php:533
 #, php-format
 msgid "Thank you for your registration on %s."
 msgstr "Merci de votre inscription sur %s."
 
-#: doliconnect.php:552
+#: doliconnect.php:551
 msgid ""
 "To activate your account on and choose your password, please click on the "
 "following link"
@@ -105,19 +105,19 @@ msgstr ""
 "Pour activer votre compte et choisir votre mot de passe, veuillez cliquer "
 "sur le lien suivant"
 
-#: doliconnect.php:555 doliconnect.php:833 functions/tools.php:134
+#: doliconnect.php:554 doliconnect.php:832 functions/tools.php:134
 #, php-format
 msgid "Your %s's team"
 msgstr "L'équipe de %s"
 
-#: doliconnect.php:565 doliconnect.php:848 doliconnect.php:929
+#: doliconnect.php:564 doliconnect.php:847 doliconnect.php:928
 #: functions/dashboard.php:54 functions/dashboard.php:287
 #: functions/dashboard.php:568 functions/dashboard.php:1240
 #: functions/dashboard.php:1587
 msgid "Congratulations!"
 msgstr "Félicitations!"
 
-#: doliconnect.php:565
+#: doliconnect.php:564
 msgid ""
 "Your account was created and an account activation link was sent by email. "
 "Don't forget to look at your unwanted emails if you can't find our message."
@@ -126,40 +126,40 @@ msgstr ""
 "email. N’oubliez pas de regarder vos courriels indésirables si vous ne "
 "trouvez pas notre message."
 
-#: doliconnect.php:568 doliconnect.php:850 doliconnect.php:933
+#: doliconnect.php:567 doliconnect.php:849 doliconnect.php:932
 #: functions/dashboard.php:283
 msgid "Oops"
 msgstr "Oups"
 
-#: doliconnect.php:570 doliconnect.php:636 doliconnect.php:992
+#: doliconnect.php:569 doliconnect.php:635 doliconnect.php:991
 msgid "Create an account"
 msgstr "Créer un compte"
 
-#: doliconnect.php:594
+#: doliconnect.php:593
 msgid "Create a personnal account"
 msgstr "Créer un compte personnel"
 
-#: doliconnect.php:594
+#: doliconnect.php:593
 msgid "Personnal account"
 msgstr "Compte personnel"
 
-#: doliconnect.php:597
+#: doliconnect.php:596
 msgid "Create a pro/supplier account"
 msgstr "Créer un compte pro / fournisseur"
 
-#: doliconnect.php:597
+#: doliconnect.php:596
 msgid "Pro account"
 msgstr "Compte pro"
 
-#: doliconnect.php:611 doliconnect.php:988 functions/dashboard.php:536
+#: doliconnect.php:610 doliconnect.php:987
 msgid "Password"
 msgstr "Mot de passe"
 
-#: doliconnect.php:614
+#: doliconnect.php:613
 msgid "Choose your password"
 msgstr "Choisissez votre mot de passe"
 
-#: doliconnect.php:616 doliconnect.php:715 functions/dashboard.php:623
+#: doliconnect.php:615 doliconnect.php:714 functions/dashboard.php:623
 msgid ""
 "Your password must be between 8 and 20 characters, including at least 1 "
 "digit, 1 letter, 1 uppercase."
@@ -167,15 +167,15 @@ msgstr ""
 "Votre mot de passe doit faire entre 8 et 20 caractères, incluant au moins un "
 "chiffre, une lettre, une majuscule."
 
-#: doliconnect.php:621
+#: doliconnect.php:620
 msgid "Confirm your password"
 msgstr "Confirmer votre mot de passe"
 
-#: doliconnect.php:627 functions/dashboard.php:1775
+#: doliconnect.php:626 functions/dashboard.php:1775
 msgid "I would like to receive the newsletter"
 msgstr "Je souhaite recevoir la newsletter"
 
-#: doliconnect.php:630
+#: doliconnect.php:629
 msgid ""
 "I read and accept the <a href=\"#\" data-toggle=\"modal\" data-target="
 "\"#cgvumention\">Terms & Conditions</a>."
@@ -183,46 +183,46 @@ msgstr ""
 "J'ai lu et j'accepte les <a href=\"#\" data-toggle=\"modal\" data-target="
 "\"#cgvumention\">Conditions Générales</a>."
 
-#: doliconnect.php:631 doliconnect.php:909 functions/dashboard.php:453
+#: doliconnect.php:630 doliconnect.php:908 functions/dashboard.php:453
 #: functions/dashboard.php:483 functions/dashboard.php:484
 #: functions/dashboard.php:624 functions/tools.php:7 functions/tools.php:37
 msgid "This field is required."
 msgstr "Ce champs est obligatoire."
 
-#: doliconnect.php:644
+#: doliconnect.php:643
 msgid "Terms & Conditions"
 msgstr "Conditions générales"
 
-#: doliconnect.php:701 functions/dashboard.php:604
+#: doliconnect.php:700 functions/dashboard.php:604
 msgid "Your password will be synchronized with your Dolibarr account"
 msgstr "Votre mot de passe sera synchronisé avec votre compte Dolibarr"
 
-#: doliconnect.php:703 functions/dashboard.php:615
+#: doliconnect.php:702 functions/dashboard.php:615
 msgid "Change your password"
 msgstr "Modifier votre mot de passe"
 
-#: doliconnect.php:704
+#: doliconnect.php:703
 msgid "New password"
 msgstr "Nouveau mot de passe"
 
-#: doliconnect.php:707
+#: doliconnect.php:706
 msgid "Enter your new password"
 msgstr "Saisir votre nouveau mot de passe"
 
-#: doliconnect.php:720
+#: doliconnect.php:719
 msgid "Confirm your new password"
 msgstr "Confirmer votre nouveau mot de passe"
 
-#: doliconnect.php:731 functions/dashboard.php:118 functions/dashboard.php:326
+#: doliconnect.php:730 functions/dashboard.php:118 functions/dashboard.php:326
 #: functions/dashboard.php:636
 msgid "Update"
 msgstr "Modifier"
 
-#: doliconnect.php:755 doliconnect.php:810
+#: doliconnect.php:754 doliconnect.php:809
 msgid "No account seems to be linked to this email address"
 msgstr "Aucun compte ne semble être lié à cet adresse email"
 
-#: doliconnect.php:801 doliconnect.php:925
+#: doliconnect.php:800 doliconnect.php:924
 msgid ""
 "Manage your account, your informations and much more via this secure client "
 "area."
@@ -230,15 +230,15 @@ msgstr ""
 "Gérez votre compte, vos informations et bien plus encore via cet espace "
 "client sécurisé."
 
-#: doliconnect.php:807
+#: doliconnect.php:806
 msgid "A valid email is need to reset your password"
 msgstr "Un email valide est nécessaire pour réinitialiser votre mot de passe"
 
-#: doliconnect.php:832
+#: doliconnect.php:831
 msgid "Reset Password"
 msgstr "Réinitialisation du mot de passe"
 
-#: doliconnect.php:833
+#: doliconnect.php:832
 msgid ""
 "A request to change your password has been made. You can change it via the "
 "single-use link below:"
@@ -246,17 +246,17 @@ msgstr ""
 "Une demande de modification de votre mot de passe a été faite. Vous pouvez "
 "le changer via le lien à utilisation unique ci-dessous:"
 
-#: doliconnect.php:833
+#: doliconnect.php:832
 msgid "If you have not made this request, please ignore this email."
 msgstr ""
 "Si vous n'êtes pas à l'origine de cette action, merci de ne pas tenir compte "
 "de cet e-mail."
 
-#: doliconnect.php:840
+#: doliconnect.php:839
 msgid "Reset password of this account is not permitted"
 msgstr "Réinitialiser le mot de passe de ce compte n'est pas autorisé"
 
-#: doliconnect.php:848 doliconnect.php:929
+#: doliconnect.php:847 doliconnect.php:928
 msgid ""
 "A password reset link was sent to you by email. Please check your spam "
 "folder if you don't find it."
@@ -264,26 +264,26 @@ msgstr ""
 "Un lien de réinitialisation du mot de passe vous a été envoyé par email. "
 "Pensez à regarder vos messages indésirables si vous ne le trouvez pas."
 
-#: doliconnect.php:904 doliconnect.php:996
+#: doliconnect.php:903 doliconnect.php:995
 msgid "Forgot password?"
 msgstr "Mot de passe oublié?"
 
-#: doliconnect.php:906
+#: doliconnect.php:905
 msgid "Please enter the email address by which you registered your account."
 msgstr ""
 "Veuillez entrer l'adresse e-mail avec laquelle vous avez enregistré votre "
 "compte."
 
-#: doliconnect.php:909 doliconnect.php:984 doliconnect.php:1126
-#: doliconnect.php:1135 functions/dashboard.php:484 functions/tools.php:40
+#: doliconnect.php:908 doliconnect.php:983 doliconnect.php:1125
+#: doliconnect.php:1134 functions/dashboard.php:484 functions/tools.php:40
 msgid "Email"
 msgstr "Adresse électronique"
 
-#: doliconnect.php:912
+#: doliconnect.php:911
 msgid "Submit"
 msgstr "Soumettre"
 
-#: doliconnect.php:933
+#: doliconnect.php:932
 msgid ""
 "There is no account for these login data or the email and/or the password "
 "are not correct."
@@ -291,82 +291,82 @@ msgstr ""
 "Il n'y a pas de compte pour ces données ou l'email et/ou le mot de passe ne "
 "sont pas corrects."
 
-#: doliconnect.php:941 doliconnect.php:999
+#: doliconnect.php:940 doliconnect.php:998
 msgid "Sign in"
 msgstr "Connexion"
 
-#: doliconnect.php:941
+#: doliconnect.php:940
 msgid "You have already an account"
 msgstr "Vous avez déjà un compte"
 
-#: doliconnect.php:944
+#: doliconnect.php:943
 msgid "or"
 msgstr "ou"
 
-#: doliconnect.php:945
+#: doliconnect.php:944
 msgid "You don't have an account"
 msgstr "Vous n'avez pas de compte"
 
-#: doliconnect.php:950
+#: doliconnect.php:949
 msgid "Welcome"
 msgstr "Bienvenue"
 
-#: doliconnect.php:1116
+#: doliconnect.php:1115
 msgid "Complete name"
 msgstr "Nom complet"
 
-#: doliconnect.php:1140
+#: doliconnect.php:1139
 msgid "Type of request"
 msgstr "Type de demande"
 
-#: doliconnect.php:1144 functions/dashboard.php:1618
+#: doliconnect.php:1143 functions/dashboard.php:1618
 msgid "Issue or problem"
 msgstr "Question ou problème"
 
-#: doliconnect.php:1144 functions/dashboard.php:1618
+#: doliconnect.php:1143 functions/dashboard.php:1618
 msgid "Commercial question"
 msgstr "Question commerciale"
 
-#: doliconnect.php:1144 functions/dashboard.php:1618
+#: doliconnect.php:1143 functions/dashboard.php:1618
 msgid "Change or enhancement request"
 msgstr "Modification ou amélioration"
 
-#: doliconnect.php:1144 functions/dashboard.php:1618
+#: doliconnect.php:1143 functions/dashboard.php:1618
 msgid "Project"
 msgstr "Projet"
 
-#: doliconnect.php:1144 functions/dashboard.php:1618
+#: doliconnect.php:1143 functions/dashboard.php:1618
 msgid "Other"
 msgstr "Autre"
 
-#: doliconnect.php:1159 functions/dashboard.php:1664
+#: doliconnect.php:1158 functions/dashboard.php:1664
 msgid "Message"
 msgstr "Message"
 
-#: doliconnect.php:1166
+#: doliconnect.php:1165
 msgid "I agree to save my personnal informations in order to contact me"
 msgstr ""
 "J'accepte que mes informations personnelles soient sauvegarder afin de me "
 "contacter"
 
-#: doliconnect.php:1169 functions/dashboard.php:1563
+#: doliconnect.php:1168 functions/dashboard.php:1563
 #: functions/dashboard.php:1667
 msgid "Send"
 msgstr "Envoyer"
 
-#: doliconnect.php:1337 doliconnect.php:1339
+#: doliconnect.php:1336 doliconnect.php:1338
 msgid "Report a Bug"
 msgstr "Signaler un bug"
 
-#: doliconnect.php:1350
+#: doliconnect.php:1349
 msgid "Offre d'emploi"
 msgstr "Offre d'emploi"
 
-#: doliconnect.php:1353 doliconnect.php:1452
+#: doliconnect.php:1352 doliconnect.php:1451
 msgid "Title:"
 msgstr "Titre:"
 
-#: doliconnect.php:1426 functions/dashboard.php:1311
+#: doliconnect.php:1425 functions/dashboard.php:1311
 msgid "Pay my subscription"
 msgstr "Payer mon adhésion"
 
@@ -440,8 +440,8 @@ msgid "Delete your picture"
 msgstr "Supprimer votre photo de profil"
 
 #: functions/dashboard.php:337
-msgid "Address book"
-msgstr "Carnet d'adresses"
+msgid "Manage address book"
+msgstr "Gérer le carnet d'adresses"
 
 #: functions/dashboard.php:448
 msgid "Add a new contact/address"
@@ -503,6 +503,10 @@ msgstr "Supprimer"
 #: functions/dashboard.php:519
 msgid "Add contact"
 msgstr "Ajouter un contact"
+
+#: functions/dashboard.php:536
+msgid "Modify the password"
+msgstr "Modifier le mot de passe"
 
 #: functions/dashboard.php:568
 msgid "Your password has been changed"
@@ -790,8 +794,8 @@ msgid "No consumption"
 msgstr "Pas de consommation"
 
 #: functions/dashboard.php:1424
-msgid "Linked members"
-msgstr "Membres liés"
+msgid "Manage linked members"
+msgstr "Gérer les membres liés"
 
 #: functions/dashboard.php:1474
 msgid "Donation"
@@ -1127,7 +1131,7 @@ msgstr "Désolé, vous n'êtes pas autorisé à accéder à cette page."
 
 #: lib/wp-package-updater/class-wp-package-updater.php:251
 msgid "Theme License - "
-msgstr ""
+msgstr "Licence du thème - "
 
 #: lib/wp-package-updater/class-wp-package-updater.php:406
 msgid ""
@@ -1598,9 +1602,6 @@ msgstr "https://www.ptibogxiv.net/fr"
 
 #~ msgid "Lost password?"
 #~ msgstr "Mot de passe oublié?"
-
-#~ msgid "Lost password"
-#~ msgstr "Mot de passe oublié"
 
 #~ msgid "Acceptance"
 #~ msgstr "Acceptation"
