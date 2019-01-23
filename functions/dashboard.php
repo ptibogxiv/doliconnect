@@ -137,7 +137,7 @@ $time = current_time( 'timestamp', 1);
 
 require_once ABSPATH . WPINC . '/class-phpass.php';
 
-if ( $_POST["case"] == 'updateavatar' ) {
+if ( isset($_POST["case"]) && $_POST["case"] == 'updateavatar' ) {
 
 if ( $_POST['inputavatar']=='delete' ) {
 
@@ -288,7 +288,7 @@ $msg .= "<div class='alert alert-success'><button type='button' class='close' da
 }
 
 echo "<form action='".$url."' id='avatar-form' method='post' class='was-validated' enctype='multipart/form-data'><input type='hidden' name='case' value='updateavatar'>";
-echo $msg;
+if ( isset($msg) ) { echo $msg; }
 echo "<script>";
 ?>
 
@@ -308,7 +308,7 @@ echo "<li class='list-group-item'>";
 echo "<label for='description'><small>".__( 'Profile Picture', 'doliconnect' )."</small></label><div class='form-group'>
 <div class='input-group mb-2'><div class='input-group-prepend'><span class='input-group-text'><i class='fas fa-camera fa-fw'></i></span></div><div class='custom-file'>
 <input type='file' name='inputavatar' class='custom-file-input' id='customFile' accept='image/*' ";
-$table_prefix = $wpdb->get_blog_prefix( $entity ); 
+$table_prefix = $wpdb->get_blog_prefix( get_current_blog_id() ); 
 $upload_dir = wp_upload_dir();
 $nam=$table_prefix."member_photo";
 if ( null == $current_user->$nam && constant("DOLIBARR_MEMBER") ) {
@@ -455,25 +455,23 @@ echo "<div class='col-12'><label for='inputnickname'><small>".__( 'Title/Job', '
 echo "<div class='col-12 col-md-12'><label for='inputcivility'><small>".__( 'Identity', 'doliconnect' )."</small></label>
 <div class='input-group mb-2'><div class='input-group-prepend'><span class='input-group-text' id='identity'><i class='fas fa-user fa-fw'></i></span></div>";
 
-$civility = CallAPI("GET", "/setup/dictionary/civility?sortfield=code&sortorder=ASC&limit=100", null , MONTH_IN_SECONDS);
+$civility = CallAPI("GET", "/setup/dictionary/civility?sortfield=code&sortorder=ASC&limit=100", null, $delay);
+if ( isset($civility->error) ) {
+$civility = CallAPI("GET", "/setup/dictionary/civilities?sortfield=code&sortorder=ASC&limit=100&active=1", null, $delay); 
+}
 
-if ( isset($civility) ) { 
-
+if ( isset($civility)  ) { 
 echo "<select class='custom-select' id='identity'  name='billing_civility' required>";
-foreach ($civility as $postv) {
+foreach ($civility as $postv ) {
 
 echo "<option value='".$postv->code."' ";
-if ( $current_user->billing_civility == $postv->code && $current_user->billing_civility != null ) {
+if ( $current_user->billing_civility == $postv->code && $current_user->billing_civility != null) {
 echo "selected ";}
-if ($postv->id=='0'){$form .= "disabled ";}
-echo ">$postv->label</option>";
+echo ">".$postv->label."</option>";
 }
 echo "</select>";
-
 } else {
-
 echo "<input type='text' class='form-control' id='identity' placeholder='".__( 'Civility', 'doliconnect' )."' name='billing_civility' value='".$current_user->billing_civility."' autocomplete='off' required>";
-
 }
 
 echo "<input type='text' name='contact_firstname' class='form-control' placeholder='".__( 'Firstname', 'doliconnect' )."' value='".stripslashes(htmlspecialchars($current_user->user_firstname, ENT_QUOTES))."' required>
