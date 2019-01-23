@@ -342,7 +342,7 @@ function contacts_module($url){
 global $current_user;
 $delay = WEEK_IN_SECONDS;
 
-if ( $_POST['contact'] == 'new_contact' ) {
+if ( isset ($_POST['contact']) && $_POST['contact'] == 'new_contact' ) {
 
 $data = [
     'firstname' => ucfirst(sanitize_user(strtolower($_POST['contact_firstname']))),
@@ -359,19 +359,19 @@ $data = [
 $contact = CallAPI("POST", "/contacts", $data, 0);
 $listcontact = CallAPI("GET", "/contacts?sortfield=t.rowid&sortorder=ASC&limit=100&thirdparty_ids=".constant("DOLIBARR"), null, dolidelay($delay, true));
 
-} elseif ($_POST['contact'] > 0 ) {
+} elseif ( isset ($_POST['contact']) && $_POST['contact'] > 0 ) {
 
 $delete = CallAPI("DELETE", "/contacts/".$_POST['contact'], null, HOUR_IN_SECONDS);
 $listcontact = CallAPI("GET", "/contacts?sortfield=t.rowid&sortorder=ASC&limit=100&thirdparty_ids=".constant("DOLIBARR"), null, dolidelay($delay, true));
 
 } else {
 
-$listcontact = CallAPI("GET", "/contacts?sortfield=t.rowid&sortorder=ASC&limit=100&thirdparty_ids=".constant("DOLIBARR"), null, dolidelay($delay, esc_attr($_GET["refresh"])));
+$listcontact = CallAPI("GET", "/contacts?sortfield=t.rowid&sortorder=ASC&limit=100&thirdparty_ids=".constant("DOLIBARR"), null, dolidelay($delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 }
 
 if ( constant("DOLIBARR") > 0 ) {
-$thirdparty = CallAPI("GET", "/thirdparties/".constant("DOLIBARR"), null, dolidelay( $delay, esc_attr($_GET["refresh"])));  
+$thirdparty = CallAPI("GET", "/thirdparties/".constant("DOLIBARR"), null, dolidelay( $delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
 }
 
 echo "<form role='form' action='$url' id='contact-form' method='post' novalidate>";
@@ -543,7 +543,7 @@ $ID = $current_user->ID;
 
 $msg = null;
 
-if ($_POST["case"] == 'updatepwd'){
+if ( isset($_POST["case"]) && $_POST["case"] == 'updatepwd' ) {
 $pwd = sanitize_text_field($_POST["pwd1"]);
 $pwd0 = sanitize_text_field($_POST["pwd0"]);
 $pwd2 = sanitize_text_field($_POST["pwd2"]);
@@ -657,7 +657,7 @@ function propal_module( $url ) {
 $delay = HOUR_IN_SECONDS;
 
 if ($_GET['id'] > 0){
-$propalfo = CallAPI("GET", "/proposals/".$_GET['id'], null, dolidelay($delay, esc_attr($_GET["refresh"])));
+$propalfo = CallAPI("GET", "/proposals/".$_GET['id'], null, dolidelay($delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 //echo $propalfo;
 }
 
@@ -753,7 +753,7 @@ $delay = DAY_IN_SECONDS;
 
 if ( $_GET['pg'] ) { $page="&page=".$_GET['pg']; }
 
-$listpropal = CallAPI("GET", "/proposals?sortfield=t.rowid&sortorder=ASC&limit=8&thirdparty_ids=".constant("DOLIBARR")."&sqlfilters=(t.fk_statut!=0)", null, dolidelay($delay, esc_attr($_GET["refresh"])));
+$listpropal = CallAPI("GET", "/proposals?sortfield=t.rowid&sortorder=ASC&limit=8&thirdparty_ids=".constant("DOLIBARR")."&sqlfilters=(t.fk_statut!=0)", null, dolidelay($delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 echo '<div class="card shadow-sm"><ul class="list-group list-group-flush">';  
 if ( !isset( $listpropal->error ) && $listpropal != null ) {
@@ -800,7 +800,7 @@ function order_module( $url ) {
 $delay = HOUR_IN_SECONDS;
 
 if ( $_GET['id']>0 ) {
-$orderfo = CallAPI("GET", "/orders/".$_GET['id'], null, dolidelay($delay, esc_attr($_GET["refresh"])));
+$orderfo = CallAPI("GET", "/orders/".$_GET['id'], null, dolidelay($delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 //echo $orderfo;
 }
 
@@ -841,7 +841,7 @@ echo "<div class='modal fade' id='orderonlinepay' tabindex='-1' role='dialog' ar
 <div class='modal-dialog modal-dialog-centered' role='document'><div class='modal-content'><div class='modal-header border-0'><h4 class='modal-title border-0' id='orderonlinepayLabel'>".__( 'Payment methods', 'doliconnect' )."</h4>
 <button id='closemodalonlinepay' type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div><div class='modal-body'>";
 
-$listsource = CallAPI("GET", "/doliconnector/".constant("DOLIBARR")."/sources", null, dolidelay($delay, $_GET["refresh"]));
+$listsource = CallAPI("GET", "/doliconnector/".constant("DOLIBARR")."/sources", null, dolidelay($delay, isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 //echo $listsource;
 
 if ( !empty($orderfo->paymentintent) ) {
@@ -859,15 +859,15 @@ $change = "<a href='".get_site_option('dolibarr_public_url')."/public/payment/ne
 }
 
 if ( $orderfo->mode_reglement_code == 'CHQ' ) {
-$chq = CallAPI("GET", "/doliconnector/constante/FACTURE_CHQ_NUMBER", null, dolidelay(MONTH_IN_SECONDS, esc_attr($_GET["refresh"])));
+$chq = CallAPI("GET", "/doliconnector/constante/FACTURE_CHQ_NUMBER", null, dolidelay(MONTH_IN_SECONDS, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
-$bank = CallAPI("GET", "/bankaccounts/".$chq->value, null, dolidelay(MONTH_IN_SECONDS, esc_attr($_GET["refresh"])));
+$bank = CallAPI("GET", "/bankaccounts/".$chq->value, null, dolidelay(MONTH_IN_SECONDS, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 echo "<div class='alert alert-danger' role='alert'><p align='justify'>Merci d'envoyer un chèque d'un montant de <b>".doliprice($orderfo->multicurrency_total_ttc?$orderfo->multicurrency_total_ttc:$orderfo->total_ttc,$orderfo->multicurrency_code)."</b> libellé à l'ordre de <b>$bank->proprio</b> sous <b>15 jours</b> en rappelant votre référence <b>$ref</b> à l'adresse suivante :</p><p><b>$bank->owner_address</b></p>$change</div>";
 } elseif ( $orderfo->mode_reglement_code == 'VIR' ) { 
-$vir = CallAPI("GET", "/doliconnector/constante/FACTURE_RIB_NUMBER", null, dolidelay(MONTH_IN_SECONDS, esc_attr($_GET["refresh"])));
+$vir = CallAPI("GET", "/doliconnector/constante/FACTURE_RIB_NUMBER", null, dolidelay(MONTH_IN_SECONDS, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
-$bank = CallAPI("GET", "/bankaccounts/".$vir->value, null, dolidelay(MONTH_IN_SECONDS, esc_attr($_GET["refresh"])));
+$bank = CallAPI("GET", "/bankaccounts/".$vir->value, null, dolidelay(MONTH_IN_SECONDS, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 echo "<div class='alert alert-danger' role='alert'><p align='justify'>Merci d'effectuer un virement d'un montant de <b>".doliprice($orderfo->multicurrency_total_ttc?$orderfo->multicurrency_total_ttc:$orderfo->total_ttc,$orderfo->multicurrency_code)."</b> sous <b>15 jours</b> en rappelant votre référence <b>$ref</b> sur le compte suivant :</p><p><b>IBAN : $bank->iban</b>";
 if ( ! empty($bank->bic) ) { echo "<br><b>BIC/SWIFT : $bank->bic</b>";}
@@ -927,9 +927,9 @@ if ( $fac != null ) {
 foreach ($fac as $f => $value) {
 
 if ($value > 0) {
-$invoice = CallAPI("GET", "/invoices/".$value, null, dolidelay($delay, esc_attr($_GET["refresh"])));
+$invoice = CallAPI("GET", "/invoices/".$value, null, dolidelay($delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 //echo $invoice;
-$payment = CallAPI("GET", "/invoices/".$value."/payments", null, dolidelay($delay, esc_attr($_GET["refresh"])));
+$payment = CallAPI("GET", "/invoices/".$value."/payments", null, dolidelay($delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 //echo $payment;
 }
 
@@ -963,7 +963,7 @@ if ( $shipments != null ) {
 foreach ( $shipments as $s => $value ) {
 
 if ($value > 0) {
-$ship = CallAPI("GET", "/shipments/".$value, null, dolidelay($delay, esc_attr($_GET["refresh"])));
+$ship = CallAPI("GET", "/shipments/".$value, null, dolidelay($delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 //echo $invoice;
 }
 
@@ -1018,7 +1018,7 @@ $delay = DAY_IN_SECONDS;
 
 if ($_GET['pg'] > 0) { $page="&page=".$_GET['pg'];}
 
-$listorder = CallAPI("GET", "/orders?sortfield=t.rowid&sortorder=DESC&limit=8".$page."&thirdparty_ids=".constant("DOLIBARR")."&sqlfilters=(t.fk_statut!=0)", null, dolidelay($delay, esc_attr($_GET["refresh"])));
+$listorder = CallAPI("GET", "/orders?sortfield=t.rowid&sortorder=DESC&limit=8".$page."&thirdparty_ids=".constant("DOLIBARR")."&sqlfilters=(t.fk_statut!=0)", null, dolidelay($delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 echo '<div class="card shadow-sm"><ul class="list-group list-group-flush">';
 if ( !isset($listorder->error ) && $listorder != null ) {
@@ -1089,7 +1089,7 @@ function contract_module( $url ) {
 $delay = HOUR_IN_SECONDS;
 
 if ( $_GET['id'] > 0 ) {
-$contractfo = CallAPI("GET", "/contracts/".$_GET['id'], null, dolidelay($delay, esc_attr($_GET["refresh"])));
+$contractfo = CallAPI("GET", "/contracts/".$_GET['id'], null, dolidelay($delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 //echo $contractfo;
 }
 
@@ -1160,7 +1160,7 @@ echo "</div></small>";
 $delay = DAY_IN_SECONDS;
 if ($_GET['pg']) { $page="&page=".$_GET['pg'];}
                                  
-$listcontract = CallAPI("GET", "/contracts?sortfield=t.rowid&sortorder=DESC&limit=8".$page."&thirdparty_ids=".constant("DOLIBARR"), null, dolidelay($delay, esc_attr($_GET["refresh"])));
+$listcontract = CallAPI("GET", "/contracts?sortfield=t.rowid&sortorder=DESC&limit=8".$page."&thirdparty_ids=".constant("DOLIBARR"), null, dolidelay($delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 echo '<div class="card shadow-sm"><ul class="list-group list-group-flush">';
 if ( !isset($listcontract->error) && $listcontract != null ) {
@@ -1256,7 +1256,7 @@ $dolibarr = CallAPI("GET", "/doliconnector/".$ID, null, 0);
 echo $msg."<div class='card shadow-sm'><div class='card-body'><div class='row'><div class='col-12 col-md-5'>";
 
 if ( !empty(constant("DOLIBARR_MEMBER")) && constant("DOLIBARR_MEMBER") > 0  && constant("DOLIBARR") > 0 ) { 
-$adherent = CallAPI("GET", "/adherentsplus/".constant("DOLIBARR_MEMBER"), null, dolidelay($delay, esc_attr($_GET["refresh"])));
+$adherent = CallAPI("GET", "/adherentsplus/".constant("DOLIBARR_MEMBER"), null, dolidelay($delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 }
 
 echo "<b>".__( 'Status', 'doliconnect' ).":</b> ";
@@ -1340,7 +1340,7 @@ do_action('mydoliconnectmemberform', $adherent);
 echo "</div><ul class='list-group list-group-flush'>";
 
 if (constant("DOLIBARR_MEMBER") > 0) {
-$listcotisation = CallAPI("GET", "/adherentsplus/".constant("DOLIBARR_MEMBER")."/subscriptions", null, dolidelay($delay, esc_attr($_GET["refresh"])));
+$listcotisation = CallAPI("GET", "/adherentsplus/".constant("DOLIBARR_MEMBER")."/subscriptions", null, dolidelay($delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 } 
 
 if ( !isset($listcotisation->error) && $listcotisation != null ) { 
@@ -1383,7 +1383,7 @@ echo "<b>".__( 'Next billing date', 'doliconnect' ).": </b> $datecommande<br>";
 echo "</div><ul class='list-group list-group-flush'>";
 
 if (constant("DOLIBARR_MEMBER") > 0) {
-$listconsumption = CallAPI("GET", "/adherentsplus/".constant("DOLIBARR_MEMBER")."/consumptions", null, dolidelay($delay, esc_attr($_GET["refresh"])));
+$listconsumption = CallAPI("GET", "/adherentsplus/".constant("DOLIBARR_MEMBER")."/consumptions", null, dolidelay($delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 } 
 
 if ( !isset($listconsumption->error) && $listconsumption != null ) { 
@@ -1433,7 +1433,7 @@ echo "<b>".__( 'Next billing date', 'doliconnect' ).": </b> $datecommande<br>";
 echo "</div><ul class='list-group list-group-flush'>";
 
 if (constant("DOLIBARR_MEMBER") > 0) {
-$linkedmember= CallAPI("GET", "/adherentsplus/".constant("DOLIBARR_MEMBER"), null, dolidelay($delay, esc_attr($_GET["refresh"])));
+$linkedmember= CallAPI("GET", "/adherentsplus/".constant("DOLIBARR_MEMBER"), null, dolidelay($delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 } 
 
 if ( !isset($linkedmember->error) && $linkedmember != null ) { 
@@ -1505,7 +1505,7 @@ function ticket_module( $url ) {
 $delay = HOUR_IN_SECONDS;
 
 if ($_GET['id']>0) {
-$ticket = CallAPI("GET", "/tickets/".$_GET['id'], null, dolidelay($delay, esc_attr($_GET["refresh"])));
+$ticket = CallAPI("GET", "/tickets/".$_GET['id'], null, dolidelay($delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 //echo $ticket;
 }
 
@@ -1666,7 +1666,7 @@ echo doliloading('ticket');
 } else {
 $delay = HOUR_IN_SECONDS;
 
-$listticket = CallAPI("GET", "/tickets?socid=".constant("DOLIBARR")."&sortfield=s.rowid&sortorder=DESC&limit=10", null, dolidelay($delay, esc_attr($_GET["refresh"])));
+$listticket = CallAPI("GET", "/tickets?socid=".constant("DOLIBARR")."&sortfield=s.rowid&sortorder=DESC&limit=10", null, dolidelay($delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 //echo $listticket;
 
 echo '<div class="card shadow-sm"><ul class="list-group list-group-flush">';
@@ -1800,7 +1800,7 @@ echo "</div></div>";
 echo "</li>";
 
 if ( constant("DOLIBARR") > '0' ) {
-$thirdparty = CallAPI("GET", "/thirdparties/".constant("DOLIBARR"), null, dolidelay( DAY_IN_SECONDS, esc_attr($_GET["refresh"])));
+$thirdparty = CallAPI("GET", "/thirdparties/".constant("DOLIBARR"), null, dolidelay( DAY_IN_SECONDS, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 }
 
 if ( !empty($thirdparty->multicurrency_code) ) { 
