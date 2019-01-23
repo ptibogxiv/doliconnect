@@ -28,8 +28,11 @@ require_once plugin_dir_path( __FILE__ ) . 'lib/wp-package-updater/class-wp-pack
  	wp_normalize_path( __FILE__ ),
  	wp_normalize_path( plugin_dir_path( __FILE__ ) )
  );
-
-load_plugin_textdomain( 'doliconnect', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+ 
+function doliconnect_textdomain() {
+    load_plugin_textdomain( 'doliconnect', false, basename( dirname( __FILE__ ) ) . '/languages/' );
+}
+add_action( 'plugins_loaded', 'doliconnect_textdomain' );
 
 require_once plugin_dir_path(__FILE__).'/functions/enqueues.php';
 require_once plugin_dir_path(__FILE__).'/functions/data-request.php';
