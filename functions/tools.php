@@ -15,16 +15,15 @@ $form .= "<div class='col-12 col-md-12'><label for='inputcivility'><small>".__( 
 $civility = CallAPI("GET", "/setup/dictionary/civility?sortfield=code&sortorder=ASC&limit=100", null, $delay);
 if ( isset($civility->error) ) {
 $civility = CallAPI("GET", "/setup/dictionary/civilities?sortfield=code&sortorder=ASC&limit=100&active=1", null, $delay); 
-} 
+}
 
-if ( isset($civility) ) { 
+if ( isset($civility)  ) { 
 $form .= "<select class='custom-select' id='identity'  name='billing_civility' required>";
 foreach ($civility as $postv ) {
 
 $form .= "<option value='".$postv->code."' ";
 if ( $current_user->billing_civility == $postv->code && $current_user->billing_civility != null) {
 $form .= "selected ";}
-if ( $postv->id == '0' ) { $form .= "disabled "; }
 $form .= ">".$postv->label."</option>";
 }
 $form .= "</select>";
@@ -38,7 +37,7 @@ $form .= "<input type='text' name='user_firstname' class='form-control' placehol
 $form .= "<div class='col-12'><label for='inputbirth'><small>".__( 'Birthday', 'doliconnect' )."</small></label><div class='input-group mb-2'><div class='input-group-prepend'><div class='input-group-text'><i class='fas fa-birthday-cake fa-fw'></i></div></div><input type='date' name='billing_birth' class='form-control' value='".$current_user->billing_birth."' id='inputbirth' placeholder='yyyy-mm-dd' autocomplete='off' required></div></div>";
 $form .= "<div class='col-12 col-md-5'><label for='inputnickname'><small>".__( 'Nickname', 'doliconnect' )."</small></label><div class='input-group mb-2'><div class='input-group-prepend'><div class='input-group-text'><i class='fas fa-user-secret fa-fw'></i></div></div><input type='text' class='form-control' id='inputnickname' placeholder='".__( 'Nickname', 'doliconnect' )."' name='user_nicename' value='".stripslashes(htmlspecialchars($current_user->nickname, ENT_QUOTES))."' autocomplete='off' required></div></div>";
 $form .= "<div class='col-12 col-md-7'><label for='inputemail'><small>".__( 'Email', 'doliconnect' )."</small></label><div class='input-group mb-2'><div class='input-group-prepend'><div class='input-group-text'><i class='fas fa-at fa-fw'></i></div></div><input type='email' class='form-control' id='inputemail' placeholder='email@example.com' name='user_email' value='".$current_user->user_email."' autocomplete='off' ";
-if ( DOLICONNECT_DEMO == $current_user->ID && is_user_logged_in() ) {
+if ( 'DOLICONNECT_DEMO' == $current_user->ID && is_user_logged_in() ) {
 $form .= " readonly";
 } else {
 $form .= " required";

@@ -538,7 +538,7 @@ echo "'>".__( 'Modify the password', 'doliconnect' )."</a>";
 add_action( 'user_doliconnect_menu', 'password_menu', 3, 1);
 
 function password_module( $url ){
-global $wp_hasher,$current_user;
+global $wp_hasher,$current_user,$DOLICONNECT_DEMO;
 $ID = $current_user->ID;
 
 $msg = null;
@@ -577,7 +577,7 @@ $msg = "<div class='alert alert-danger'><button type='button' class='close' data
 
 echo "<form class='was-validated' action='".$url."' id='payment-form' method='post'><input type='hidden' name='case' value='updatepwd'>";
 
-echo $msg;
+if ( isset($msg) ) { echo $msg; }
 
 echo "<script>";
 ?>
@@ -600,21 +600,21 @@ form.submit();
 
 <?php
 echo "</script><div class='card shadow-sm'><ul class='list-group list-group-flush'>";
-if (constant("DOLIBARR_USER") > '0') {
+if ( constant("DOLIBARR_USER") > '0' ) {
 echo "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".__( 'Your password will be synchronized with your Dolibarr account', 'doliconnect' )."</b></li>";
-} elseif  ( DOLICONNECT_DEMO == $ID ) {
+} elseif  ( 'DOLICONNECT_DEMO' == $ID ) {
 echo "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".__( 'Password cannot be modified in demo mode', 'doliconnect' )."</b></li>";
 } 
 echo '<li class="list-group-item"><div class="form-group"><div class="row"><div class="col-12"><label for="passwordHelpBlock1"><small>'.__( 'Confirm your current password', 'doliconnect' ).'</small></label>
 <div class="input-group mb-2"><div class="input-group-prepend"><div class="input-group-text"><i class="fas fa-key fa-fw"></i></div></div><input type="password" id="pwd0" name="pwd0" class="form-control" aria-describedby="passwordHelpBlock1" autocomplete="off" placeholder="'.__( 'Confirm your current password', 'doliconnect' ).'" ';
-if ( DOLICONNECT_DEMO == $ID ) {
+if ( 'DOLICONNECT_DEMO' == $ID ) {
 echo ' readonly';
 } else {
 echo ' required';
 }
 echo '></div></div></div></div><div class="form-group"><div class="row"><div class="col-12"><label for="passwordHelpBlock2"><small>'.__( 'Change your password', 'doliconnect' ).'</small></label>
 <div class="input-group mb-2"><div class="input-group-prepend"><div class="input-group-text"><i class="fas fa-key fa-fw"></i></div></div><input type="password" id="pwd1" name="pwd1" class="form-control" aria-describedby="passwordHelpBlock2" autocomplete="off" placeholder="'.__( 'Choose your new password', 'doliconnect' ).'" ';
-if ( DOLICONNECT_DEMO == $ID ) {
+if ( 'DOLICONNECT_DEMO' == $ID ) {
 echo ' readonly';
 } else {
 echo ' required';
@@ -623,14 +623,14 @@ echo '></div><small id="passwordHelpBlock3" class="form-text text-justify text-m
 '.__( 'Your password must be between 8 and 20 characters, including at least 1 digit, 1 letter, 1 uppercase.', 'doliconnect' ).'
 </small><div class="invalid-feedback">'.__( 'This field is required.', 'doliconnect' ).'</div></div></div><div class="row"><div class="col-12"><label for="passwordHelpBlock3"></label>';
 echo '<div class="input-group mb-2"><div class="input-group-prepend"><div class="input-group-text"><i class="fas fa-key fa-fw"></i></div></div><input type="password" id="pwd2" name="pwd2"  class="form-control" aria-describedby="passwordHelpBlock3" autocomplete="off" placeholder="'.__( 'Confirme your new password', 'doliconnect' ).'" ';
-if ( DOLICONNECT_DEMO == $ID ) {
+if ( 'DOLICONNECT_DEMO' == $ID ) {
 echo ' readonly';
 } else {
 echo ' required';
 }
 echo '></div></div></div></li>';
 echo "</ul><div class='card-body'><button class='btn btn-danger btn-block' type='submit' ";
-if ( DOLICONNECT_DEMO == $ID ) {
+if ( 'DOLICONNECT_DEMO' == $ID ) {
 echo ' disabled';
 }
 echo "><b>".__( 'Update', 'doliconnect' )."</b></button></div></div>";
@@ -923,6 +923,7 @@ $fruits[$orderfo->date_commande.'o'] = array(
 "type" => __( 'Order', 'doliconnect' ),  
 "label" => $orderfo->ref,
 "document" => $document_order,
+"description" => null,
 );
 
 $fac=$orderfo->linkedObjectsIds->facture;
@@ -943,6 +944,7 @@ $fruits[strtotime($pay->date).'p'] = array(
 "type" => __( 'Payment', 'doliconnect' ),  
 "label" => "$pay->type de ".doliprice($pay->amount,$orderfo->multicurrency_code),
 "description" => $pay->num,
+"document" => null,
 ); 
 }
 }
