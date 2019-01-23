@@ -46,7 +46,7 @@ require_once plugin_dir_path(__FILE__).'/blocks/index.php';
 // ********************************************************
 function doliconnecturl ($page) {
 global $wpdb;
-if (function_exists('pll_get_post')) { 
+if ( function_exists('pll_get_post') ) { 
 return esc_url(get_permalink(pll_get_post(get_option($page))));
 } else { 
 return esc_url(get_permalink(get_option($page)));
