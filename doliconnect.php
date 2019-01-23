@@ -1178,7 +1178,7 @@ add_shortcode('dolicontact', 'dolicontact_shortcode');
 function update_synctodolibarr($dolibarr) {
 global $current_user,$wpdb;
 $entity = get_current_blog_id();
-get_currentuserinfo();
+wp_get_current_user();
 
 $resultatsa = $wpdb->get_results(
 $wpdb->prepare(
@@ -1211,11 +1211,11 @@ $infomember = [
     'email' => $current_user->user_email,
     'phone' => $current_user->billing_phone,
     'birth' => $current_user->billing_birth,
-    'array_options' => $extrafields
+    'array_options' => isset($extrafields) ? $extrafields : null
 	]; 
 
 $adherent = CallAPI("PUT", "/adherentsplus/".constant("DOLIBARR_MEMBER"), $infomember, 0);
-update_usermeta( $current_user->ID, 'billing_birth', $current_user->billing_birth);
+update_user_meta( $current_user->ID, 'billing_birth', $current_user->billing_birth);
 }
 if ( constant("DOLIBARR") > 0 ) {
 $info = [
@@ -1228,7 +1228,7 @@ $info = [
     'email' => $current_user->user_email,
     'phone' => $current_user->billing_phone,
     'url' => $current_user->user_url,
-    'array_options' => $extrafields
+    'array_options' => isset($extrafields) ? $extrafields : null
 	];
 $thirparty = CallAPI("PUT", "/thirdparties/".constant("DOLIBARR"), $info, 0);
 }

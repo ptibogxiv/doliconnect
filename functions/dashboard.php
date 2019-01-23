@@ -30,19 +30,19 @@ wp_update_user( array( 'ID' => $ID, 'display_name' => ucfirst(strtolower($_POST[
 wp_update_user( array( 'ID' => $ID, 'first_name' => ucfirst(sanitize_user(strtolower($_POST['user_firstname'])))));
 wp_update_user( array( 'ID' => $ID, 'last_name' => strtoupper(sanitize_user($_POST['user_lastname']))));
 wp_update_user( array( 'ID' => $ID, 'description' => sanitize_textarea_field($_POST['description'])));
-update_usermeta( $ID, 'billing_civility', sanitize_text_field($_POST['billing_civility']));
-update_usermeta( $ID, 'billing_type', sanitize_text_field($_POST['billing_type']));
-update_usermeta( $ID, 'billing_company', sanitize_text_field($_POST['billing_company']));
-update_usermeta( $ID, 'billing_address', sanitize_textarea_field($_POST['billing_address']));
-update_usermeta( $ID, 'billing_zipcode', sanitize_text_field($_POST['billing_zipcode']));
-update_usermeta( $ID, 'billing_city', sanitize_text_field($_POST['billing_city']));
-update_usermeta( $ID, 'billing_country', sanitize_text_field($_POST['billing_country'] ));
-update_usermeta( $ID, 'billing_phone', sanitize_text_field($_POST['billing_phone'])); 
-update_usermeta( $ID, 'billing_birth', $_POST['billing_birth']);
-if ($_POST['array_options']) {
+update_user_meta( $ID, 'billing_civility', sanitize_text_field($_POST['billing_civility']));
+update_user_meta( $ID, 'billing_type', sanitize_text_field($_POST['billing_type']));
+if ( isset($_POST['billing_company']) ) { update_user_meta( $ID, 'billing_company', sanitize_text_field($_POST['billing_company'])); }
+update_user_meta( $ID, 'billing_address', sanitize_textarea_field($_POST['billing_address']));
+update_user_meta( $ID, 'billing_zipcode', sanitize_text_field($_POST['billing_zipcode']));
+update_user_meta( $ID, 'billing_city', sanitize_text_field($_POST['billing_city']));
+update_user_meta( $ID, 'billing_country', sanitize_text_field($_POST['billing_country'] ));
+update_user_meta( $ID, 'billing_phone', sanitize_text_field($_POST['billing_phone'])); 
+update_user_meta( $ID, 'billing_birth', $_POST['billing_birth']);
+if ( isset($_POST['array_options']) && $_POST['array_options'] ) {
 foreach ($_POST['array_options'] as $label => $value)
 {
-update_usermeta( $ID, $wpdb->prefix.'doliextra_'.$label, $value);
+update_user_meta( $ID, $wpdb->prefix.'doliextra_'.$label, $value);
 }
 }
 do_action('wp_dolibarr_sync',constant("DOLIBARR"));
@@ -51,7 +51,7 @@ if ( isset($_GET['return']) ) {
 wp_redirect(doliconnecturl('doliaccount').'?module='.$_GET['return']);
 exit;
 } else {
-$msg .= "<div class='alert alert-success'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><p><strong>".__( 'Congratulations!', 'doliconnect' )."</strong> ".__( 'Your informations have been updated.', 'doliconnect' )."</p></div>";
+$msg = "<div class='alert alert-success'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><p><strong>".__( 'Congratulations!', 'doliconnect' )."</strong> ".__( 'Your informations have been updated.', 'doliconnect' )."</p></div>";
 }
 }
 
@@ -214,7 +214,7 @@ $img->rotate( -90 );
 $img->resize( 350, 350, true );
 $avatar = $img->generate_filename($time,$upload_dir['basedir']."/doliconnect/".$ID."/", NULL );
 $img->save($avatar);
-update_usermeta( $_POST["userid"], $wpdb->prefix."member_photo","avatar-$time.jpg");
+update_user_meta( $_POST["userid"], $wpdb->prefix."member_photo","avatar-$time.jpg");
 $filename2=$upload_dir['basedir']."/doliconnect/".$ID."/avatar-$time.jpg";
 $img = wp_get_image_editor($filename2);
 $img->resize( 72, 72, true );
@@ -1724,11 +1724,11 @@ global $wp,$wpdb,$current_user;
 $ID = $current_user->ID;
 
 if ( isset($_POST["case"]) && $_POST["case"] == 'updatesettings' ) {
-update_usermeta( $ID, 'loginmailalert', sanitize_text_field($_POST['loginmailalert']) );
-update_usermeta( $ID, 'optin1', sanitize_text_field($_POST['optin1']) );
-update_usermeta( $ID, 'optin2', sanitize_text_field($_POST['optin2']) );
-if ( isset($_POST['locale']) ) { update_usermeta( $ID, 'locale', sanitize_text_field($_POST['locale']) ); }  
-//if (isset($_POST['multicurrency_code'])) {update_usermeta( $ID, 'multicurrency_code', sanitize_text_field($_POST['multicurrency_code']) );}
+update_user_meta( $ID, 'loginmailalert', sanitize_text_field($_POST['loginmailalert']) );
+update_user_meta( $ID, 'optin1', sanitize_text_field($_POST['optin1']) );
+update_user_meta( $ID, 'optin2', sanitize_text_field($_POST['optin2']) );
+if ( isset($_POST['locale']) ) { update_user_meta( $ID, 'locale', sanitize_text_field($_POST['locale']) ); }  
+//if (isset($_POST['multicurrency_code'])) {vupdate_user_meta( $ID, 'multicurrency_code', sanitize_text_field($_POST['multicurrency_code']) );v}
 
 if ( constant("DOLIBARR") > 0 ) {
 $info = [
