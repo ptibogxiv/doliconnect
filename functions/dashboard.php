@@ -1439,7 +1439,7 @@ $linkedmember= CallAPI("GET", "/adherentsplus/".constant("DOLIBARR_MEMBER"), nul
 if ( !isset($linkedmember->error) && $linkedmember != null ) { 
 foreach ( $linkedmember->linkedmembers as $member ) {                                                                                 
 
-echo "<li class='list-group-item'><table width='100%'><tr><td>".$member->id."</td><td>".$member->firstname."</td><td>".$member->lastname."</td><td>";
+echo "<li class='list-group-item'><table width='100%'><tr><td>".$member->id."</td><td>".$member->firstname."</td><td>".$member->lastname."</td><td>".$member->email."</td><td>";
 
 echo "</td>";
 echo "<td class='text-right'></td></tr></table><span></span></li>";
