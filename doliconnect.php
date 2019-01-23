@@ -229,12 +229,7 @@ $name = $current_user->user_firstname." ".$current_user->user_lastname; }
 elseif ( $current_user->billing_type == 'mor' ) {$name = $current_user->billing_company;}
 $rdr = [
     'name'  => $name,
-    'address' => $current_user->billing_address,    
-    'zip' => $current_user->billing_zipcode,
-    'town' => $current_user->billing_city,
-    'country_id' => $current_user->billing_country,
-    'email' => $current_user->user_email,
-    'phone' => $current_user->billing_phone,
+    'email' => $current_user->user_email
 	];
 $dolibarr = CallAPI("POST", "/doliconnector/".$user, $rdr, HOUR_IN_SECONDS);
 define('DOLIBARR', $dolibarr->fk_soc);
