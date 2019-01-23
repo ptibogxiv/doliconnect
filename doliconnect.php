@@ -224,9 +224,9 @@ define('DOLICONNECT_CART', 0);
 define('DOLICONNECT_CART_ITEM', 0); 
 } else {  
 if ( $dolibarr->fk_soc == 0 ) {
-if ( $current_user->billing_type == 'phy' ) {
+if ( $current_user->billing_type == 'mor' ) { $name = $current_user->billing_company;
+} else {
 $name = $current_user->user_firstname." ".$current_user->user_lastname; }
-elseif ( $current_user->billing_type == 'mor' ) {$name = $current_user->billing_company;}
 $rdr = [
     'name'  => $name,
     'email' => $current_user->user_email
