@@ -1,7 +1,7 @@
 === Doliconnect ===
 
 Contributors: ptibogxiv
-Tags: erp, crm, ecommerce, dolibarr, online, payment, interface, customer
+Tags: erp, crm, ecommerce, dolibarr, online, payment, interface, customer, subscription, membership
 Requires at least: 4.9
 Tested up to: 5.1.0
 Stable tag: 5.0.3
