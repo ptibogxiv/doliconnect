@@ -1519,6 +1519,18 @@ $ticket = CallAPI("GET", "/tickets/".esc_attr($_GET['id']), null, dolidelay($del
 }
 
 if ( isset($_GET['id']) && isset($_GET['ref']) && ( constant("DOLIBARR") == $ticket->socid ) && ($_GET['ref'] == $ticket->ref ) ) {
+
+if ( isset($_POST["case"]) && $_POST["case"] == 'messageticket' ) {
+$rdr = [
+    'message' => sanitize_textarea_field($_POST['ticket_newmessage']),
+	];                  
+$ticketid = CallAPI("POST", "tickets/newmessage", $rdr, dolidelay($delay, true));
+//echo $ticketid;
+
+if ( $ticketid > 0 ) {
+$msg = "<div class='alert alert-success' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><p><strong>".__( 'Congratulations!', 'doliconnect' )."</strong> ".__( 'Your message has been send.', 'doliconnect' )."</p></div>"; 
+} }
+
 echo "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>$ticket->ref</h5><div class='row'><div class='col-md-6'>";
 $dateticket =  date_i18n('d/m/Y', $ticket->datec);
 echo "<b>".__( 'Date of creation', 'doliconnect' ).": </b> $dateticket<br>";
@@ -1538,7 +1550,7 @@ echo '<BR/><div class="progress"><div class="progress-bar bg-success" role="prog
 echo "</div><ul class='list-group list-group-flush'>
 <li class='list-group-item'><h5 class='mb-1'>".__( 'Subject', 'doliconnect' ).": $ticket->subject</h5>
 <p class='mb-1'>".__( 'Initial message', 'doliconnect' ).": $ticket->message</p></li>";
-if ( $ticket->fk_statut < '8' && $ticket->fk_statut > '0' ) {
+if ( $ticket->fk_statut < '8' && $ticket->fk_statut > '0' && get_option('doliconnectbeta')=='1' ) {
 echo "<li class='list-group-item'>";
 echo '<form id="message-ticket-form" action="'.$url.'&id='.$ticket->id.'&ref='.$ticket->ref.'" method="post">';
 echo "<script>";
@@ -1561,9 +1573,9 @@ form.submit();
 
 <?php
 echo "</SCRIPT>";
-echo '<div class="form-group"><label for="ticketnewmessage"><small>'.__( 'New message', 'doliconnect' ).'</small></label>
-<div class="input-group mb-2"><div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-comment fa-fw"></i></span></div><textarea class="form-control" id="ticketnewmessage" rows="3"></textarea>
-</div></div><button class="btn btn-danger btn-block" type="submit"><b>'.__( 'Send', 'doliconnect' ).'</b></button></form>';
+echo '<div class="form-group"><label for="ticketnewmessage"><small>'.__( 'Response', 'doliconnect' ).'</small></label>
+<div class="input-group mb-2"><div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-comment fa-fw"></i></span></div><textarea class="form-control" name="ticket_newmessage" id="ticket_newmessage" rows="5"></textarea>
+</div></div><input type="hidden" name="case" value="messageticket"><button class="btn btn-danger btn-block" type="submit"><b>'.__( 'Send', 'doliconnect' ).'</b></button></form>';
 echo doliloading('ticket');
 echo "</li>";
 }
@@ -1574,6 +1586,7 @@ echo  "<li class='list-group-item'><b>$datemsg $msg->fk_user_action_string</b><b
 }} 
 echo "</ul></div>";
 } elseif ( isset($_GET['create']) ) {
+
 if ( isset($_POST["case"]) && $_POST["case"] == 'createticket' ) {
 $rdr = [
     'fk_soc' => constant("DOLIBARR"),
@@ -1589,6 +1602,7 @@ $ticketid = CallAPI("POST", "/tickets", $rdr, dolidelay($delay, true));
 if ( $ticketid > 0 ) {
 $msg = "<div class='alert alert-success' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><p><strong>".__( 'Congratulations!', 'doliconnect' )."</strong> ".__( 'Your ticket has been submitted.', 'doliconnect' )."</p></div>"; 
 } }
+
 echo "<form id='ticket-form' action='".$url."&create' method='post'>";
 if ( isset($msg) ) { echo $msg; }
 echo "<script>";
