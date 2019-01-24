@@ -487,7 +487,7 @@ if ( email_exists($_POST['user_email']) ) {
         $emailError = "".__( 'This email address is already linked to an account. You can reactivate your account through this <a href=\'".wp_lostpassword_url( get_permalink() )."\' title=\'lost password\'>form</a>.', 'doliconnect' )."";
         $hasError = true;
     } else {
-        $email = trim($_POST['user_email']);
+        $email = sanitize_email($_POST['user_email']);
     }
 
     if(!isset($hasError)) {
@@ -508,7 +508,7 @@ $password = wp_generate_password( 12, false );
 $first = ucfirst(sanitize_user($_POST['user_firstname']));
 $last = strtoupper(sanitize_user($_POST['user_lastname']));
 //$login = substr($_POST['user_firstname']).strtolower($_POST['user_lastname']);       
-$ID = wp_create_user(uniqid(), $password, sanitize_email($_POST['user_email']) );
+$ID = wp_create_user(uniqid(), $password, $email );
 $entity = get_current_blog_id();
 $role = 'subscriber';
 
@@ -520,16 +520,16 @@ wp_update_user( array( 'ID' => $ID, 'display_name' => ucfirst(strtolower($_POST[
 wp_update_user( array( 'ID' => $ID, 'first_name' => ucfirst(sanitize_user(strtolower($_POST['user_firstname'])))));
 wp_update_user( array( 'ID' => $ID, 'last_name' => strtoupper(sanitize_user($_POST['user_lastname']))));
 wp_update_user( array( 'ID' => $ID, 'description' => sanitize_textarea_field($_POST['description'])));
-update_usermeta( $ID, 'billing_civility', $_POST['billing_civility']);
-update_usermeta( $ID, 'billing_type', $_POST['billing_type']);
-update_usermeta( $ID, 'billing_company', sanitize_text_field($_POST['billing_company']));
-update_usermeta( $ID, 'billing_address', sanitize_textarea_field($_POST['billing_address']));
-update_usermeta( $ID, 'billing_zipcode', sanitize_text_field($_POST['billing_zipcode']));
-update_usermeta( $ID, 'billing_city', sanitize_text_field($_POST['billing_city']));
-update_usermeta( $ID, 'billing_country', $_POST['billing_country'] );
-update_usermeta( $ID, 'billing_phone', sanitize_text_field($_POST['billing_phone'])); 
-update_usermeta( $ID, 'billing_birth',$_POST['billing_birth']);
-update_usermeta( $ID, 'optin1', $_POST['optin1'] );
+update_user_meta( $ID, 'billing_civility', $_POST['billing_civility']);
+update_user_meta( $ID, 'billing_type', $_POST['billing_type']);
+update_user_meta( $ID, 'billing_company', sanitize_text_field($_POST['billing_company']));
+update_user_meta( $ID, 'billing_address', sanitize_textarea_field($_POST['billing_address']));
+update_user_meta( $ID, 'billing_zipcode', sanitize_text_field($_POST['billing_zipcode']));
+update_user_meta( $ID, 'billing_city', sanitize_text_field($_POST['billing_city']));
+update_user_meta( $ID, 'billing_country', $_POST['billing_country'] );
+update_user_meta( $ID, 'billing_phone', sanitize_text_field($_POST['billing_phone'])); 
+update_user_meta( $ID, 'billing_birth',$_POST['billing_birth']);
+update_user_meta( $ID, 'optin1', $_POST['optin1'] );
 
 $body = sprintf(__('Thank you for your registration on %s.', 'doliconnect'), $sitename);
 
