@@ -97,7 +97,7 @@ define( 'DONOTCACHEPAGE', 1);
 }
 }
 }
-add_action( 'plugins_loaded', 'doliconnect_run', 10, 0 );
+add_action( 'wp_head', 'doliconnect_run', 10, 0 );
 // ********************************************************
 function json_basic_auth_handler( $user ) {
 	global $wp_json_basic_auth_error;
