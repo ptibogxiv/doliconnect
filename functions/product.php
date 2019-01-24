@@ -33,36 +33,6 @@ else { $stock = "<span class='badge badge-pill badge-light'>".__( 'Available', '
 return $stock;
 }
 
-function doliminicart($orderfo){
-$item = constant("DOLICONNECT_CART_ITEM");
-echo "<div class='card'><div class='card-header'>".__( 'Cart', 'doliconnect' )." - ".sprintf( _n( '%s item', '%s items', $item, 'doliconnect' ), $item)." <small>(<a href='".doliconnecturl('dolicart')."' >".__( 'update', 'doliconnect' )."</a>)</small></div><ul class='list-group list-group-flush'>";
-if ( $orderfo->lines != null ) {
-foreach ($orderfo->lines as $line) {
-
-//$product = CallAPI("GET", "/products/".$post->product_id, null, 0);
-
-echo "<li class='list-group-item d-flex justify-content-between lh-condensed'><div><h6 class='my-0'>".$line->libelle."</h6><small class='text-muted'>".__( 'Quantity', 'doliconnect' ).": ".$line->qty."</small></div>";
-
-echo "<span class='text-muted'>".doliprice($line->multicurrency_total_ttc?$line->multicurrency_total_ttc:$line->total_ttc,$orderfo->multicurrency_code)."</span></li>";
-}
-}
-
-if ( constant("REMISE_PERCENT") > 0 ) { 
-$remise_percent = ($total->prx*constant("REMISE_PERCENT"))/100;
-echo "<li class='list-group-item d-flex justify-content-between bg-light'>
-              <div class='text-success'>
-                <h6 class='my-0'>".__( 'Customer discount', 'doliconnect' )."</h6>
-                <small>-".constant("REMISE_PERCENT")."%</small>
-              </div>
-              <span class='text-success'>-".doliprice($remise_percent,$orderfo->multicurrency_code)."</span></li>";
-} 
-$total=$subtotal-$remise_percent;            
-echo "<li class='list-group-item d-flex justify-content-between'>
-              <span>Total </span>
-              <strong>".doliprice($orderfo->multicurrency_total_ttc?$orderfo->multicurrency_total_ttc:$orderfo->total_ttc,$orderfo->multicurrency_code)."</strong></li>";
-echo "</ul></div><br>";
-}
-
 function addtodolibasket($product, $quantity, $price, $timestart = null, $timeend = null) {
 global $wpdb,$current_user;
 $delay=HOUR_IN_SECONDS;
