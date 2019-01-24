@@ -709,16 +709,16 @@ echo '<div class="w-100 justify-content-between"><div class="row"><div class="co
 <h6 class="mb-1">'.$line->libelle.'</h6>
 <p class="mb-1">'.$line->desc.'</p>
 <small>'.$dates.'</small>'; 
-echo '</div><div class="col-4 col-md-2 text-right"><h5 class="mb-1">'.doliprice($line->multicurrency_total_ttc?$line->multicurrency_total_ttc:$line->total_ttc,$propalfo->multicurrency_code).'</h5>';
+echo '</div><div class="col-4 col-md-2 text-right"><h5 class="mb-1">'.doliprice($line, 'ttc', isset($line->multicurrency_code) ? $line->multicurrency_code : null).'</h5>';
 echo '<h5 class="mb-1">x'.$line->qty.'</h5>'; 
 echo "</div></div></li>";
 }
 }
 
 echo "<li class='list-group-item list-group-item-info'>";
-echo "<b>".__( 'Total excl. tax', 'doliconnect').": ".doliprice($propalfo->multicurrency_total_ht?$propalfo->multicurrency_total_ht:$propalfo->total_ht,$propalfo->multicurrency_code)."</b><br />";
-echo "<b>".__( 'Total tax', 'doliconnect').": ".doliprice($propalfo->multicurrency_total_tva?$propalfo->multicurrency_total_tva:$propalfo->total_tva,$propalfo->multicurrency_code)."</b><br />";
-echo "<b>".__( 'Total incl. tax', 'doliconnect').": ".doliprice($propalfo->multicurrency_total_ttc?$propalfo->multicurrency_total_ttc:$propalfo->total_ttc,$propalfo->multicurrency_code)."</b>";
+echo "<b>".__( 'Total excl. tax', 'doliconnect').": ".doliprice($propalfo, 'ht', isset($propalfo->multicurrency_code) ? $propalfo->multicurrency_code : null)."</b><br />";
+echo "<b>".__( 'Total tax', 'doliconnect').": ".doliprice($propalfo, 'tva', isset($propalfo->multicurrency_code) ? $propalfo->multicurrency_code : null)."</b><br />";
+echo "<b>".__( 'Total incl. tax', 'doliconnect').": ".doliprice($propalfo, 'ttc', isset($propalfo->multicurrency_code) ? $propalfo->multicurrency_code : null)."</b>";
 echo "</li>";
 
 if ( $propalfo->last_main_doc != null ) {
@@ -763,7 +763,7 @@ foreach ( $listpropal as $postpropal ) {
 $arr_params = array( 'id' => $postpropal->id, 'ref' => $postpropal->ref);  
 $return = esc_url( add_query_arg( $arr_params, $url) );
                 
-echo "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-action'><div><i class='fa fa-shopping-bag fa-3x fa-fw'></i></div><div><h6 class='my-0'>$postpropal->ref</h6><small class='text-muted'>du ".date_i18n('d/m/Y', $postpropal->date_creation)."</small></div><span>".doliprice($postpropal->multicurrency_total_ttc?$postpropal->multicurrency_total_ttc:$postpropal->total_ttc,$postpropal->multicurrency_code)."</span><span>";
+echo "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-action'><div><i class='fa fa-shopping-bag fa-3x fa-fw'></i></div><div><h6 class='my-0'>$postpropal->ref</h6><small class='text-muted'>du ".date_i18n('d/m/Y', $postpropal->date_creation)."</small></div><span>".doliprice($postpropal, 'ttc', isset($postpropal->multicurrency_code) ? $postpropal->multicurrency_code : null)."</span><span>";
 if ( $postpropal->statut == 3 ) {
 if ( $postpropal->billed == 1 ) { echo "<span class='fa fa-check-circle fa-fw text-success'></span><span class='fa fa-eur fa-fw text-success'></span><span class='fa fa-truck fa-fw text-success'></span><span class='fa fa-file-text fa-fw text-success'></span>"; } 
 else { echo "<span class='fa fa-check-circle fa-fw text-success'></span><span class='fa fa-eur fa-fw text-success'></span><span class='fa fa-truck fa-fw text-success'></span><span class='fa fa-file-text fa-fw text-warning'></span>"; } }
@@ -899,16 +899,16 @@ echo '<div class="w-100 justify-content-between"><div class="row"><div class="co
 <h6 class="mb-1">'.$line->libelle.'</h6>
 <p class="mb-1">'.$line->description.'</p>
 <small>'.$dates.'</small>'; 
-echo '</div><div class="col-4 col-md-2 text-right"><h5 class="mb-1">'.doliprice($line->multicurrency_total_ttc?$line->multicurrency_total_ttc:$line->total_ttc,$orderfo->multicurrency_code).'</h5>';
+echo '</div><div class="col-4 col-md-2 text-right"><h5 class="mb-1">'.doliprice($line, 'ttc', isset($line->multicurrency_code) ? $line->multicurrency_code : null).'</h5>';
 echo '<h5 class="mb-1">x'.$line->qty.'</h5>'; 
 echo "</div></div></li>";
 }
 }
 
 echo "<li class='list-group-item list-group-item-info'>";
-echo "<b>".__( 'Total excl. tax', 'doliconnect').": ".doliprice($orderfo->multicurrency_total_ht?$orderfo->multicurrency_total_ht:$orderfo->total_ht,$orderfo->multicurrency_code)."</b><br />";
-echo "<b>".__( 'Total tax', 'doliconnect').": ".doliprice($orderfo->multicurrency_total_tva?$orderfo->multicurrency_total_tva:$orderfo->total_tva,$orderfo->multicurrency_code)."</b><br />";
-echo "<b>".__( 'Total incl. tax', 'doliconnect').": ".doliprice($orderfo->multicurrency_total_ttc?$orderfo->multicurrency_total_ttc:$orderfo->total_ttc,$orderfo->multicurrency_code)."</b>";
+echo "<b>".__( 'Total excl. tax', 'doliconnect').": ".doliprice($orderfo, 'ht', isset($orderfo->multicurrency_code) ? $orderfo->multicurrency_code : null)."</b><br />";
+echo "<b>".__( 'Total tax', 'doliconnect').": ".doliprice($orderfo, 'tva', isset($orderfo->multicurrency_code) ? $orderfo->multicurrency_code : null)."</b><br />";
+echo "<b>".__( 'Total incl. tax', 'doliconnect').": ".doliprice($orderfo, 'ttc', isset($orderfo->multicurrency_code) ? $orderfo->multicurrency_code : null)."</b>";
 echo "</li>";
 
 if ( $orderfo->last_main_doc != null ) {
@@ -940,7 +940,7 @@ foreach ( $payment as $pay ) {
 $fruits[strtotime($pay->date).'p'] = array(
 "timestamp" => strtotime($pay->date),
 "type" => __( 'Payment', 'doliconnect' ),  
-"label" => "$pay->type de ".doliprice($pay->amount,$orderfo->multicurrency_code),
+"label" => "$pay->type de ",//".doliprice($pay->amount,$orderfo->multicurrency_code),
 "description" => $pay->num,
 "document" => null,
 ); 
@@ -1030,7 +1030,7 @@ foreach ( $listorder as $postorder ) {
 $arr_params = array( 'id' => $postorder->id, 'ref' => $postorder->ref);  
 $return = esc_url( add_query_arg( $arr_params, $url) );
                                                                                                                                                       
-echo "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-action'><div><i class='fa fa-shopping-bag fa-3x fa-fw'></i></div><div><h6 class='my-0'>$postorder->ref</h6><small class='text-muted'>du ".date_i18n('d/m/Y', $postorder->date_commande)."</small></div><span>".doliprice($postorder->multicurrency_total_ttc?$postorder->multicurrency_total_ttc:$postorder->total_ttc,$postorder->multicurrency_code)."</span><span>";
+echo "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-action'><div><i class='fa fa-shopping-bag fa-3x fa-fw'></i></div><div><h6 class='my-0'>$postorder->ref</h6><small class='text-muted'>du ".date_i18n('d/m/Y', $postorder->date_commande)."</small></div><span>".doliprice($postorder, 'ttc', isset($postorder->multicurrency_code) ? $postorder->multicurrency_code : null)."</span><span>";
 if ( $postorder->statut > 0 ) { echo "<span class='fas fa-check-circle fa-fw text-success'></span> ";
 if ( $postorder->billed == 1 ) { echo "<span class='fas fa-money-bill-alt fa-fw text-success'></span> "; 
 if ( $postorder->statut > 1 ) { echo "<span class='fas fa-shipping-fast fa-fw text-success'></span> "; }
@@ -1091,26 +1091,27 @@ echo "'>".__( 'Contracts tracking', 'doliconnect' )."</a>";
 function contract_module( $url ) {
 $delay = HOUR_IN_SECONDS;
 
-if ( $_GET['id'] > 0 ) {
+if ( isset($_GET['id']) && $_GET['id'] > 0 ) {
 $contractfo = CallAPI("GET", "/contracts/".$_GET['id'], null, dolidelay($delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 //echo $contractfo;
 }
 
-if ( ($_GET['id'] != null ) && ( $_GET['ref'] != null ) && (constant("DOLIBARR") == $contractfo->socid) && ($_GET['ref'] == $contractfo->ref) ) {
+if ( isset($_GET['id']) && isset($_GET['ref']) && (constant("DOLIBARR") == $contractfo->socid) && ($_GET['ref'] == $contractfo->ref) ) {
 echo "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>$contractfo->ref</h5><div class='row'><div class='col-md-5'>";
 $datecontract =  date_i18n('d/m/Y', $contractfo->date_creation);
 echo "<b>".__( 'Date of creation', 'doliconnect' ).": </b> ".date_i18n('d/m/Y', $contractfo->date_creation)."<br>";
-if ( $orderfo->statut > 0 ) {
-if ( $orderfo->billed == 1 ) {
-if ( $orderfo->statut > 1 ) { $orderinfo=__( 'Shipped', 'doliconnect' ); 
-$orderavancement=100; }
-else { $orderinfo=__( 'Processing', 'doliconnect' );
-$contractavancement=40; }
-}
-else { $contractinfo=null;
-$contractinfo=null;
-$contractavancement=25;
-}
+if ( $contractfo->statut > 0 ) {
+//if ( $contractfo->billed == 1 ) {
+//if ( $contractfo->statut > 1 ) { $contractfo=__( 'Shipped', 'doliconnect' ); 
+//$orderavancement=100; }
+//else { $orderinfo=__( 'Processing', 'doliconnect' );
+//$contractavancement=40; }
+//}
+//else { $contractinfo=null;
+//$contractinfo=null;
+//$contractavancement=25;
+//}
+$contractavancement=0; 
 }
 elseif ( $contractfo->statut == 0 ) { $contractinfo=__( 'Validation', 'doliconnect' );
 $contractavancement=7; }
@@ -1137,16 +1138,16 @@ echo '<div class="w-100 justify-content-between"><div class="row"><div class="co
 <h6 class="mb-1">'.$line->product_label.'</h6>
 <p class="mb-1">'.$line->description.'</p>
 <small>'.$dates.'</small>'; 
-echo '</div><div class="col-4 col-md-2 text-right"><h5 class="mb-1">'.doliprice($line->multicurrency_total_ttc?$line->multicurrency_total_ttc:$line->total_ttc,$contractfo->multicurrency_code).'</h5>';
+echo '</div><div class="col-4 col-md-2 text-right"><h5 class="mb-1">'.doliprice($line, 'ttc', isset($line->multicurrency_code) ? $line->multicurrency_code : null).'</h5>';
 echo '<h5 class="mb-1">x'.$line->qty.'</h5>'; 
 echo "</div></div></li>";
 }
 }
 
 echo "<li class='list-group-item list-group-item-info'>";
-echo "<b>".__( 'Total excl. tax', 'doliconnect').": ".doliprice($contractfo->multicurrency_total_ht?$contractfo->multicurrency_total_ht:$contractfo->total_ht,$contractfo->multicurrency_code)."</b><br />";
-echo "<b>".__( 'Total tax', 'doliconnect').": ".doliprice($contractfo->multicurrency_total_tva?$contractfo->multicurrency_total_tva:$contractfo->total_tva,$contractfo->multicurrency_code)."</b><br />";
-echo "<b>".__( 'Total incl. tax', 'doliconnect').": ".doliprice($contractfo->multicurrency_total_ttc?$contractfo->multicurrency_total_ttc:$contractfo->total_ttc,$contractfo->multicurrency_code)."</b>";
+echo "<b>".__( 'Total excl. tax', 'doliconnect').": ".doliprice($contractfo, 'ht', isset($contractfo->multicurrency_code) ? $contractfo->multicurrency_code : null)."</b><br />";
+echo "<b>".__( 'Total tax', 'doliconnect').": ".doliprice($contractfo, 'tva',isset($postcontract->multicurrency_code) ? $contractfo->multicurrency_code : null)."</b><br />";
+echo "<b>".__( 'Total incl. tax', 'doliconnect').": ".doliprice($contractfo, 'ttc', isset($contractfo->multicurrency_code) ? $contractfo->multicurrency_code : null)."</b>";
 echo "</li>";
 
 //var_dump($fruits);
@@ -1161,7 +1162,7 @@ echo "</div></small>";
 } else {
 
 $delay = DAY_IN_SECONDS;
-if ($_GET['pg']) { $page="&page=".$_GET['pg'];}
+if ( isset($_GET['pg']) && $_GET['pg'] ) { $page="&page=".$_GET['pg'];} else { $page=""; }
                                  
 $listcontract = CallAPI("GET", "/contracts?sortfield=t.rowid&sortorder=DESC&limit=8".$page."&thirdparty_ids=".constant("DOLIBARR"), null, dolidelay($delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
@@ -1172,16 +1173,17 @@ foreach ($listcontract  as $postcontract) {
 $arr_params = array( 'id' => $postcontract->id, 'ref' => $postcontract->ref);  
 $return = esc_url( add_query_arg( $arr_params, $url) );
                                                                                                                                                       
-echo "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-action'><div><i class='fa fa-shopping-bag fa-3x fa-fw'></i></div><div><h6 class='my-0'>$postcontract->ref</h6><small class='text-muted'>du ".date_i18n('d/m/Y', $postcontract->date_creation)."</small></div><span>".doliprice($postcontract->multicurrency_total_ttc?$postcontract->multicurrency_total_ttc:$postcontract->total_ttc,$postcontract->multicurrency_code)."</span><span>";
+echo "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-action'><div><i class='fa fa-shopping-bag fa-3x fa-fw'></i></div><div><h6 class='my-0'>$postcontract->ref</h6><small class='text-muted'>du ".date_i18n('d/m/Y', $postcontract->date_creation)."</small></div><span>".doliprice($postcontract, 'ttc', isset($postcontract->multicurrency_code) ? $postcontract->multicurrency_code : null)."</span><span>";
 if ( $postcontract->statut > 0 ) {echo "<span class='fas fa-check-circle fa-fw text-success'></span> ";
-if ( $postcontract->billed == 1 ) { echo "<span class='fas fa-money-bill-alt fa-fw text-success'></span> "; 
-if ( $postcontract->statut > 1 ) { echo "<span class='fas fa-shipping-fast fa-fw text-success'></span> "; }
-else { echo "<span class='fas fa-shipping-fast fa-fw text-warning'></span> "; }
+//if ( $postcontract->billed == 1 ) { echo "<span class='fas fa-money-bill-alt fa-fw text-success'></span> "; 
+//if ( $postcontract->statut > 1 ) { echo "<span class='fas fa-shipping-fast fa-fw text-success'></span> "; }
+//else { echo "<span class='fas fa-shipping-fast fa-fw text-warning'></span> "; }
+//}
+//else { echo "<span class='fas fa-money-bill-alt fa-fw text-warning'></span> "; 
+//if ( $postcontract->statut > 1 ) { echo "<span class='fas fa-shipping-fast fa-fw text-success'></span> "; }
+//else { echo "<span class='fas fa-shipping-fast fa-fw text-danger'></span> "; }
+//}
 }
-else { echo "<span class='fas fa-money-bill-alt fa-fw text-warning'></span> "; 
-if ( $postcontract->statut > 1 ) { echo "<span class='fas fa-shipping-fast fa-fw text-success'></span> "; }
-else { echo "<span class='fas fa-shipping-fast fa-fw text-danger'></span> "; }
-}}
 elseif ( $postcontract->statut == 0 ) { echo "<span class='fas fa-check-circle fa-fw text-warning'></span> <span class='fas fa-money-bill-alt fa-fw text-danger'></span> <span class='fas fa-shipping-fast fa-fw text-danger'></span>";}
 elseif ( $postcontract->statut == -1 ) {echo "<span class='fas fa-check-circle fa-fw text-secondary'></span> <span class='fas fa-money-bill-alt fa-fw text-secondary'></span> <span class='fas fa-shipping-fast fa-fw text-secondary'></span>";}
 echo "</span></a>";
@@ -1477,6 +1479,8 @@ function donation_module( $url ) {
 global $wpdb,$current_user;
 $entity = get_current_blog_id();
 $ID = $current_user->ID;
+
+$delay = DAY_IN_SECONDS;
 
 echo "<div class='card shadow-sm'>";
 
