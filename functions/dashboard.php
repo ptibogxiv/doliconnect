@@ -940,7 +940,7 @@ foreach ( $payment as $pay ) {
 $fruits[strtotime($pay->date).'p'] = array(
 "timestamp" => strtotime($pay->date),
 "type" => __( 'Payment', 'doliconnect' ),  
-"label" => "$pay->type de ",//".doliprice($pay->amount,$orderfo->multicurrency_code),
+"label" => "$pay->type de ".doliprice($pay->amount, isset($orderfo->multicurrency_code) ? $orderfo->multicurrency_code : null),
 "description" => $pay->num,
 "document" => null,
 ); 
