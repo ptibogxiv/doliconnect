@@ -1550,7 +1550,7 @@ echo '<BR/><div class="progress"><div class="progress-bar bg-success" role="prog
 echo "</div><ul class='list-group list-group-flush'>
 <li class='list-group-item'><h5 class='mb-1'>".__( 'Subject', 'doliconnect' ).": $ticket->subject</h5>
 <p class='mb-1'>".__( 'Initial message', 'doliconnect' ).": $ticket->message</p></li>";
-if ( $ticket->fk_statut < '8' && $ticket->fk_statut > '0' && get_option('doliconnectbeta')=='1' ) {
+if ( $ticket->fk_statut < '8' && $ticket->fk_statut > '0' && !empty(get_option('doliconnectbeta')) ) {
 echo "<li class='list-group-item'>";
 echo '<form id="message-ticket-form" action="'.$url.'&id='.$ticket->id.'&ref='.$ticket->ref.'" method="post">';
 echo "<script>";
@@ -1844,7 +1844,7 @@ echo dolihelp('ISSUE');
 echo "</small></p>";
 echo "</form>";
 
-if ( get_option('doliconnectbeta')=='1' ) {
+if ( !empty(get_option('doliconnectbeta')) ) {
 echo '<div class="accordion" id="accordionExample">
 <div class="card shadow-sm"><ul class="list-group list-group-flush">
 <button id="headingOne" type="button" class="list-group-item list-group-item-action flex-column align-items-start" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
