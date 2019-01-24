@@ -69,7 +69,7 @@ $html .='</DIV>';
 $html .='<DIV class="col-12 col-md-8"><h5 class="card-title">'.$product->label.' '.doliproductstock($product).'</h5><P>'.$product->description.'</P>';
 
 if ( function_exists('dolibuttontocart') ) {
-$html .= dolibuttontocart($product,null,$attributes['showButtonToCart'],$attributes['hideDuration']);
+$html .= dolibuttontocart($product, null, $attributes['showButtonToCart'], isset($attributes['hideDuration']) ? $attributes['hideDuration'] : null);
 }
 
 $html .='</DIV></DIV>';
