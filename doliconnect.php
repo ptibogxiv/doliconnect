@@ -3,7 +3,7 @@
  * Plugin Name: Doliconnect
  * Plugin URI: https://www.ptibogxiv.net
  * Description: Connect your Dolibarr (free ERP/CRM) to Wordpress. 
- * Version: 3.1.0
+ * Version: 3.1.1
  * Author: ptibogxiv
  * Author URI: https://www.ptibogxiv.net/en
  * Network: true
@@ -1061,11 +1061,11 @@ elseif(isset($_POST['submitted'])) {
 }
 
 echo "<div class='row'><div class='col-md-4'><div class='form-group'><h4>Siège social</h4>";
-echo doliconst(MAIN_INFO_SOCIETE_ADDRESS);
+echo doliconst('MAIN_INFO_SOCIETE_ADDRESS');
 echo "<br />";
-echo doliconst(MAIN_INFO_SOCIETE_ZIP);
+echo doliconst('MAIN_INFO_SOCIETE_ZIP');
 echo " ";
-echo doliconst(MAIN_INFO_SOCIETE_TOWN); 
+echo doliconst('MAIN_INFO_SOCIETE_TOWN'); 
 echo "</div></div><div class='col-md-8'><div id='content'>";
 if(isset($emailSent) && $emailSent == true) { 
 echo "<div class='alert alert-success'>
