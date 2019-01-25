@@ -4,7 +4,7 @@ Contributors: ptibogxiv
 Tags: erp, crm, ecommerce, dolibarr, online, payment, interface, customer, subscription, membership, doliconnect
 Requires at least: 4.9
 Tested up to: 5.1.0
-Stable tag: 3.1.0
+Stable tag: 3.1.1
 Requires PHP: 7.0
 Donate link: https://www.ptibogxiv.net
 
@@ -48,8 +48,14 @@ This version fixes a security related bug.  Upgrade immediately.
 
 == Changelog ==
 
-= 1.X.X =
+= 3.1.0 =
+* First public version on wordpress.org
+
+= 3.0.X =
+* Release Candidate version
+
+= 2.X.X =
 * Beta version
- 
-= 0.X.X =
+
+= 1.X.X =
 * Alpha version
