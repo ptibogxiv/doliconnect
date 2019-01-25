@@ -55,12 +55,12 @@ doliconnect_enqueues();
 $html = "";
 
 if (is_user_logged_in() && constant("DOLIBARR_MEMBER") > 0){
-$adherent = CallAPI("GET", "/adherentsplus/".constant("DOLIBARR_MEMBER"), "", HOUR_IN_SECONDS);
+$adherent = callDoliApi("GET", "/adherentsplus/".constant("DOLIBARR_MEMBER"), "", HOUR_IN_SECONDS);
 }
 
-$typeadhesion = CallAPI("GET", "/adherentsplus/type?sortfield=t.price&sqlfilters=(t.family:=:'0')&sortorder=ASC", "", MONTH_IN_SECONDS);
+$typeadhesion = callDoliApi("GET", "/adherentsplus/type?sortfield=t.price&sqlfilters=(t.family:=:'0')&sortorder=ASC", "", MONTH_IN_SECONDS);
 
-$typeadhesionpro = CallAPI("GET", "/adherentsplus/type?sortfield=t.price&sqlfilters=(t.family:=:'1')&sortorder=ASC", "", MONTH_IN_SECONDS);
+$typeadhesionpro = callDoliApi("GET", "/adherentsplus/type?sortfield=t.price&sqlfilters=(t.family:=:'1')&sortorder=ASC", "", MONTH_IN_SECONDS);
 
 if ( $typeadhesionpro->error->code != '404' ) {
 $html .= '<center><ul class="nav nav-pills nav-justified" id="pills-tab" role="tablist">

@@ -74,7 +74,7 @@ return get_current_blog_id();
 function doliconst( $constante ) {
 global $wpdb;
 
-$const = CallAPI("GET", "/doliconnector/constante/".$constante, null, MONTH_IN_SECONDS);
+$const = callDoliApi("GET", "/doliconnector/constante/".$constante, null, MONTH_IN_SECONDS);
 
 return $const->value;
 }
@@ -126,7 +126,7 @@ function json_basic_auth_error( $error ) {
 }
 add_filter( 'rest_authentication_errors', 'json_basic_auth_error' );
 // ********************************************************
-function CallAPI($method = null, $link = null, $body = null, $delay = HOUR_IN_SECONDS, $entity = null) {
+function callDoliApi($method = null, $link = null, $body = null, $delay = HOUR_IN_SECONDS, $entity = null) {
 global $wpdb;
 
 $headers = array(
@@ -204,7 +204,7 @@ global $current_user;
 if ( is_user_logged_in() ) { 
 $user=get_current_user_id(); 
 
-$dolibarr = CallAPI("GET", "/doliconnector/".$user, null, dolidelay( HOUR_IN_SECONDS, false));
+$dolibarr = callDoliApi("GET", "/doliconnector/".$user, null, dolidelay( HOUR_IN_SECONDS, false));
 
 if ( defined("DOLIBUG") || !is_object($dolibarr) ) {
 define('DOLIBARR', null);
@@ -226,7 +226,7 @@ $rdr = [
     'name'  => $name,
     'email' => $current_user->user_email
 	];
-$dolibarr = CallAPI("POST", "/doliconnector/".$user, $rdr, HOUR_IN_SECONDS);
+$dolibarr = callDoliApi("POST", "/doliconnector/".$user, $rdr, HOUR_IN_SECONDS);
 define('DOLIBARR', $dolibarr->fk_soc);
 } else {   
 define('DOLIBARR', $dolibarr->fk_soc);}
@@ -657,7 +657,7 @@ exit;
 }
 exit;
 } else {
-$dolibarr = CallAPI("GET", "/doliconnector/".$user->ID, null, 0);
+$dolibarr = callDoliApi("GET", "/doliconnector/".$user->ID, null, 0);
 if ($_POST["case"] == 'updatepwd'){
 $pwd = sanitize_text_field($_POST["pwd1"]);                                   
 if ( ($_POST["pwd1"] == $_POST["pwd2"]) && (preg_match('/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,20}/', $pwd))) {  //"#.*^(?=.{8,20})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*$#"
@@ -672,7 +672,7 @@ if ( $dolibarr->fk_user > '0' ) {
 $data = [
     'pass' => $pwd
 	];
-$doliuser = CallAPI("PUT", "/users/".$dolibarr->fk_user, $data, 0);
+$doliuser = callDoliApi("PUT", "/users/".$dolibarr->fk_user, $data, 0);
 }
 
 //$msg = "<div class='alert alert-success'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><p>Votre mot de passe a été changé avec succès !</p></div>";
@@ -1130,7 +1130,7 @@ echo "/>";
 echo "</div>";
 
 echo "<div class='form-group'><label class='control-label' for='type'><small>".__( 'Type of request', 'doliconnect' )."</small></label>";
-$type = CallAPI("GET", "/setup/dictionary/ticket_types?sortfield=pos&sortorder=ASC&limit=100", null, MONTH_IN_SECONDS);
+$type = callDoliApi("GET", "/setup/dictionary/ticket_types?sortfield=pos&sortorder=ASC&limit=100", null, MONTH_IN_SECONDS);
 
 if (isset($type)) { 
 $tp= __( 'Issue or problem', 'doliconnect' ).__( 'Commercial question', 'doliconnect' ).__( 'Change or enhancement request', 'doliconnect' ).__( 'Project', 'doliconnect' ).__( 'Other', 'doliconnect' );
@@ -1206,7 +1206,7 @@ $infomember = [
     'array_options' => isset($extrafields) ? $extrafields : null
 	]; 
 
-$adherent = CallAPI("PUT", "/adherentsplus/".constant("DOLIBARR_MEMBER"), $infomember, 0);
+$adherent = callDoliApi("PUT", "/adherentsplus/".constant("DOLIBARR_MEMBER"), $infomember, 0);
 update_user_meta( $current_user->ID, 'billing_birth', $current_user->billing_birth);
 }
 if ( constant("DOLIBARR") > 0 ) {
@@ -1222,7 +1222,7 @@ $info = [
     'url' => $current_user->user_url,
     'array_options' => isset($extrafields) ? $extrafields : null
 	];
-$thirparty = CallAPI("PUT", "/thirdparties/".constant("DOLIBARR"), $info, 0);
+$thirparty = callDoliApi("PUT", "/thirdparties/".constant("DOLIBARR"), $info, 0);
 }
 
 }
@@ -1411,7 +1411,7 @@ echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] )
 $entity=get_current_blog_id();
 
 if (constant("DOLIBARR_MEMBER") > 0) {
-$adherent = CallAPI("GET", "/adherentsplus/".constant("DOLIBARR_MEMBER"), null);
+$adherent = callDoliApi("GET", "/adherentsplus/".constant("DOLIBARR_MEMBER"), null);
 }
  
 if ($adherent->statut == '1' && $adherent->datefin < current_time('timestamp')) {

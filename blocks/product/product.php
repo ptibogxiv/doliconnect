@@ -53,7 +53,7 @@ doliconnect_enqueues();
 
 $html = '<DIV class="card shadow-sm"><DIV class="card-body">';
 if ($attributes['productID']>0) {
-$product = CallAPI("GET", "/products/".$attributes['productID'], "");
+$product = callDoliApi("GET", "/products/".$attributes['productID'], "");
 //$html .= $product;
 
 if (defined("DOLIBUG")) {

@@ -12,9 +12,9 @@ $form .= "<input type='hidden' name='billing_type' value='phy'>";
 $form .= "<div class='col-12 col-md-12'><label for='inputcivility'><small>".__( 'Identity', 'doliconnect' )."</small></label>
 <div class='input-group mb-2'><div class='input-group-prepend'><span class='input-group-text' id='identity'><i class='fas fa-user fa-fw'></i></span></div>";
 
-$civility = CallAPI("GET", "/setup/dictionary/civility?sortfield=code&sortorder=ASC&limit=100", null, $delay);
+$civility = callDoliApi("GET", "/setup/dictionary/civility?sortfield=code&sortorder=ASC&limit=100", null, $delay);
 if ( isset($civility->error) ) {
-$civility = CallAPI("GET", "/setup/dictionary/civilities?sortfield=code&sortorder=ASC&limit=100&active=1", null, $delay); 
+$civility = callDoliApi("GET", "/setup/dictionary/civilities?sortfield=code&sortorder=ASC&limit=100&active=1", null, $delay); 
 }
 
 if ( isset($civility)  ) { 
@@ -55,7 +55,7 @@ $form .= "<div class='col-12'><label for='inputzipcode'><small>".__( 'Zipcode', 
 <input type='text' class='form-control' id='inputzipcode' placeholder='".__( 'Zipcode', 'doliconnect' )."' name='billing_zipcode' value='".$thirdparty->zip."' autocomplete='off' required>
 <input type='text' class='form-control' id='inputcity' placeholder='".__( 'Town', 'doliconnect' )."' name='billing_city' value='".$thirdparty->town."' autocomplete='off' required>";
 
-$pays = CallAPI("GET", "/setup/dictionary/countries?sortfield=favorite%2Clabel&sortorder=DESC%2CASC&limit=500", null , $delay);
+$pays = callDoliApi("GET", "/setup/dictionary/countries?sortfield=favorite%2Clabel&sortorder=DESC%2CASC&limit=500", null , $delay);
 
 if ( isset($pays) ) { 
 $form .= "<select class='custom-select' id='inputcountry'  name='billing_country' required>";
@@ -146,7 +146,7 @@ if ( $name == null ) { $name=$fichier; }
 
 if ( isset($_GET["download"]) && $_GET["securekey"] ==  hash('sha256', $ID.$type.$_GET["download"]) && $_GET["download"] == "$ref/$fichier" ) {
 
-$doc = CallAPI("GET", "/documents/download?module_part=$type&original_file=$ref/$fichier", null, 0);
+$doc = callDoliApi("GET", "/documents/download?module_part=$type&original_file=$ref/$fichier", null, 0);
 
 $decoded = base64_decode($doc->content);      
 $up_dir = wp_upload_dir();
@@ -181,7 +181,7 @@ return $document;
 
 function dolihelp($type) {
 
-$aide = CallAPI("GET", "/doliconnector/constante/MAIN_MODULE_TICKET", null, MONTH_IN_SECONDS);
+$aide = callDoliApi("GET", "/doliconnector/constante/MAIN_MODULE_TICKET", null, MONTH_IN_SECONDS);
 
 if ( is_object($aide) && is_user_logged_in() && $aide->value == 1 ) {
 $arr_params = array( 'module' => 'ticket', 'type' => $type, 'create' => true); 

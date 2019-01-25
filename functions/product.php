@@ -54,17 +54,17 @@ $rdr = [
     'date_commande'  => mktime(),
     'demand_reason_id' => 1,
 	];                  
-$order = CallAPI("POST", "/orders", $rdr, 0);
+$order = callDoliApi("POST", "/orders", $rdr, 0);
 $orderid=$order;
 define('DOLICONNECT_CART', $orderid);
 }
 
-$orderfo = CallAPI("GET", "/orders/".$orderid, null, dolidelay($delay, true));
+$orderfo = callDoliApi("GET", "/orders/".$orderid, null, dolidelay($delay, true));
 
 if ( $orderfo->lines != null ) {
 foreach ( $orderfo->lines as $ln ) {
 if ( $ln->fk_product == $product ) {
-//$deleteline = CallAPI("DELETE", "/orders/".$orderid."/lines/".$ln[id], null, 0);
+//$deleteline = callDoliApi("DELETE", "/orders/".$orderid."/lines/".$ln[id], null, 0);
 //$qty=$ln[qty];
 $line=$ln->id;
 }
@@ -73,7 +73,7 @@ $line=$ln->id;
 if (!$line > 0) {$line=null;}
 
 if ( $orderid > 0 && $quantity > 0 && is_null($line) ) {
-$prdt = CallAPI("GET", "/products/".$product, null, dolidelay($delay, true));
+$prdt = callDoliApi("GET", "/products/".$product, null, dolidelay($delay, true));
 $adln = [
     'fk_product' => $product,
     'desc' => $prdt->description,
@@ -83,22 +83,22 @@ $adln = [
     'remise_percent' => constant("REMISE_PERCENT"),
     'subprice' => $price
 	];                 
-$addline = CallAPI("POST", "/orders/".$orderid."/lines", $adln, 0);
-$order = CallAPI("GET", "/orders/".$orderid, null, dolidelay($delay, true));
-$dolibarr = CallAPI("GET", "/doliconnector/".$current_user->ID, null, dolidelay($delay, true));
+$addline = callDoliApi("POST", "/orders/".$orderid."/lines", $adln, 0);
+$order = callDoliApi("GET", "/orders/".$orderid, null, dolidelay($delay, true));
+$dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolidelay($delay, true));
 return $addline;
 
 } elseif ( $orderid > 0 && $line > 0 ) {
 
 if ( $quantity < 1 ) {
 
-$deleteline = CallAPI("DELETE", "/orders/".$orderid."/lines/".$line, null, 0);
-$order = CallAPI("GET", "/orders/".$orderid, null, dolidelay($delay, true));
-$dolibarr = CallAPI("GET", "/doliconnector/".$current_user->ID, null, dolidelay($delay, true));
+$deleteline = callDoliApi("DELETE", "/orders/".$orderid."/lines/".$line, null, 0);
+$order = callDoliApi("GET", "/orders/".$orderid, null, dolidelay($delay, true));
+$dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolidelay($delay, true));
 return $deleteline;
  
 } else {
-$prdt = CallAPI("GET", "/products/".$product, null, 0);
+$prdt = callDoliApi("GET", "/products/".$product, null, 0);
  $ln = [
     'desc' => $prdt->description,
     'date_start' => $date_start,
@@ -107,9 +107,9 @@ $prdt = CallAPI("GET", "/products/".$product, null, 0);
     'remise_percent' => constant("REMISE_PERCENT"),
     'subprice' => $price
 	];                  
-$updateline = CallAPI("PUT", "/orders/".$orderid."/lines/".$line, $ln, 0);
-$order = CallAPI("GET", "/orders/".$orderid, null, dolidelay($delay, true));
-$dolibarr = CallAPI("GET", "/doliconnector/".$current_user->ID, null, dolidelay($delay, true));
+$updateline = callDoliApi("PUT", "/orders/".$orderid."/lines/".$line, $ln, 0);
+$order = callDoliApi("GET", "/orders/".$orderid, null, dolidelay($delay, true));
+$dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolidelay($delay, true));
 return $updateline;
 
 }

@@ -3,7 +3,7 @@
 function doliconnect_admin_notice_error() {
 global $wpdb;
 
-$dolibarr = CallAPI("GET", "/status", null, 10 * MINUTE_IN_SECONDS);
+$dolibarr = callDoliApi("GET", "/status", null, 10 * MINUTE_IN_SECONDS);
 if ( is_object($dolibarr) && version_compare($dolibarr->success->dolibarr_version, '9.0.0', '<') && !defined("DOLIBUG") ) {
 $class = 'notice notice-error ';  //is-dismissible
 $message = __( 'It seems that your version of Dolibarr and/or its plugins are not up to date!', 'doliconnect' );
@@ -171,7 +171,7 @@ echo get_option('license_key_doliconnect-pro');?> " <?php } else { echo "";?>" d
                 <td ><input class="regular-text" type="text" id="dolibarr_private_key" name="dolibarr_private_key"  value="<?php echo get_site_option('dolibarr_private_key'); ?>" required></td>
             </tr>
 <?php
-$infodoliconnect = CallAPI("GET", "/status", null, 5 * MINUTE_IN_SECONDS);
+$infodoliconnect = callDoliApi("GET", "/status", null, 5 * MINUTE_IN_SECONDS);
 ?>          <tr>          
                 <th style="width:150px;"><label for="status">Status Dolibarr</label></th>
                 <td>
