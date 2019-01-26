@@ -48,6 +48,12 @@ This version fixes a security related bug.  Upgrade immediately.
 
 == Changelog ==
 
+= 3.1.2 =
+
+
+= 3.1.1 =
+* fix CSS and call Dolibarr api
+
 = 3.1.0 =
 * First public version on wordpress.org
 
