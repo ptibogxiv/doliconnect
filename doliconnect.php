@@ -196,7 +196,7 @@ define('DOLIBUG', 1);
 }
 }
 }
-add_action( 'admin_init', 'CallAPI', 5, 5); 
+add_action( 'admin_init', 'callDoliApi', 5, 5); 
 // ********************************************************
 function dolibarr() {
 global $current_user;  
