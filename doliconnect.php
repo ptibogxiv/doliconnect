@@ -340,6 +340,7 @@ $time = current_time( 'timestamp', 1);
 
 echo "<div class='row'><div class='col-xs-12 col-sm-12 col-md-3'><div class='row'><div class='col-3 col-xs-4 col-sm-4 col-md-12 col-xl-12'><div class='card shadow-sm' style='width: 100%'>";
 echo get_avatar($ID);
+
 if ( is_user_logged_in() && !defined("DOLIBUG") ) {
 echo "<a href='".esc_url( add_query_arg( 'module', 'avatars', doliconnecturl('doliaccount')) )."' class='card-img-overlay'><div class='d-block d-sm-block d-xs-block d-md-none text-center'><i class='fas fa-camera'></i></div><div class='d-none d-md-block'><i class='fas fa-camera fa-2x'></i> ".__( 'Edit', 'doliconnect' )."</div></a>";
 }
@@ -942,7 +943,7 @@ echo '<a href="'.wp_registration_url( get_permalink() ).'" id="login-'.current_t
 echo "<div id='loginmodal-form'><h5 class='card-title'>".__( 'Welcome', 'doliconnect' )."</h5>";
 echo "<b>".get_option('doliaccountinfo')."</b>";
 
-if (function_exists('socialconnect')) {
+if ( function_exists('socialconnect') ) {
 socialconnect(get_permalink());
 }
 
