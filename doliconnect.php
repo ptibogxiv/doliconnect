@@ -955,21 +955,7 @@ if ( isset($_GET["redirect_to"])) { $redirect_to=$_GET["redirect_to"]; } else {
 $redirect_to=$_SERVER['HTTP_REFERER'];} 
 echo "<form class='was-validated' id='LoginForm' action='$login_url' method='post'>";
 echo "<script>";
-?>
-var form = document.getElementById('loginmodal-form');
-form.addEventListener('submit', function(event) {
- $(document).ready(function(){
-    $(window).scrollTop(0);
-});
-loadingLoginModal();
-console.log("submit");
-form.submit();
-});
-function loadingLoginModal() {
-jQuery('#LoginForm').hide(); 
-jQuery('#doliloading-login').show(); 
-}
-<?php
+
 echo "</script>";
 echo "<div class='form-group'>
 <div class='input-group mb-2 mr-sm-2'><div class='input-group-prepend'>
