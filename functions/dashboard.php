@@ -826,7 +826,7 @@ $orderavancement=7; }
 elseif ( $orderfo->statut == -1 ) { $orderinfo=__( 'Canceled', 'doliconnect' );
 $orderavancement=0;  }
 
-echo "<b>".__( 'Payment method', 'doliconnect' ).":</b> $orderfo->mode_reglement<br><br></div><div class='col-md-7'>";
+echo "<b>".__( 'Payment method', 'doliconnect' ).":</b> ".__( $orderfo->mode_reglement, 'doliconnect-pro' )."<br><br></div><div class='col-md-7'>";
 
 if ( isset($orderinfo) ) {
 echo "<h3 class='text-right'>".$orderinfo."</h3>";
@@ -1354,7 +1354,7 @@ if ( !isset($listcotisation->error) && $listcotisation != null ) {
 foreach ( $listcotisation as $cotisation ) {                                                                                 
 $dated =  date_i18n('d/m/Y', $cotisation->dateh);
 $datef =  date_i18n('d/m/Y', $cotisation->datef);
-echo "<li class='list-group-item'><table width='100%'><tr><td>$cotisation->label</td><td>$dated ".__( 'to', 'doliconnect' )." $datef";
+echo "<li class='list-group-item'><table width='100%' border='0'><tr><td>$cotisation->label</td><td>$dated ".__( 'to', 'doliconnect' )." $datef";
 echo "</td><td class='text-right'><b>".doliprice($cotisation->amount)."</b></td></tr></table><span></span></li>";
 }
 }

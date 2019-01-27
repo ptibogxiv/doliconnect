@@ -4,9 +4,9 @@ Contributors: ptibogxiv
 Tags: erp, crm, ecommerce, dolibarr, payment, interface, customer, subscription, membership, doliconnect, dashboard
 Requires at least: 4.9
 Tested up to: 5.1.0
-Stable tag: 3.1.1
+Stable tag: 3.1.2
 Requires PHP: 7.0
-Donate link: https://www.ptibogxiv.net
+Donate link: https://www.paypal.me/ptibogxiv
 
 This plugin will synchronize your dolibarr's informations in a wordpress customer interface
 
@@ -49,7 +49,7 @@ This version fixes a security related bug.  Upgrade immediately.
 == Changelog ==
 
 = 3.1.2 =
-
+* clean code
 
 = 3.1.1 =
 * fix CSS and call Dolibarr api
