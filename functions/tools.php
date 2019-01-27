@@ -17,19 +17,26 @@ if ( isset($civility->error) ) {
 $civility = callDoliApi("GET", "/setup/dictionary/civilities?sortfield=code&sortorder=ASC&limit=100&active=1", null, $delay); 
 }
 
-if ( isset($civility)  ) { 
 $form .= "<select class='custom-select' id='identity'  name='billing_civility' required>";
+if ( isset($civility) && !defined("DOLIBUG") ) { 
 foreach ($civility as $postv ) {
 
 $form .= "<option value='".$postv->code."' ";
 if ( $current_user->billing_civility == $postv->code && $current_user->billing_civility != null) {
 $form .= "selected ";}
 $form .= ">".$postv->label."</option>";
+
+}} else {
+$form .= "<option value='MME' ";
+if ( $current_user->billing_civility == 'MME' && $current_user->billing_civility != null) {
+$form .= "selected ";}
+$form .= ">".__( 'Miss', 'doliconnect' )."</option>";
+$form .= "<option value='MR' ";
+if ( $current_user->billing_civility == 'MR' && $current_user->billing_civility != null) {
+$form .= "selected ";}
+$form .= ">".__( 'Mister', 'doliconnect' )."</option>";
 }
 $form .= "</select>";
-} else {
-$form .= "<input type='text' class='form-control' id='identity' placeholder='".__( 'Civility', 'doliconnect' )."' name='billing_civility' value='".$current_user->billing_civility."' autocomplete='off' required>";
-}
 
 $form .= "<input type='text' name='user_firstname' class='form-control' placeholder='".__( 'Firstname', 'doliconnect' )."' value='".stripslashes(htmlspecialchars($current_user->user_firstname, ENT_QUOTES))."' required>
 <input type='text' name='user_lastname' class='form-control' placeholder='".__( 'Lastname', 'doliconnect' )."' value='".stripslashes(htmlspecialchars($current_user->user_lastname, ENT_QUOTES))."' required>
