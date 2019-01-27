@@ -48,6 +48,10 @@ This version fixes a security related bug.  Upgrade immediately.
 
 == Changelog ==
 
+= 3.1.3 =
+* clean code
+* fix civility if Dolibarr < v9
+
 = 3.1.2 =
 * clean code
 
