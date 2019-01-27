@@ -18,8 +18,8 @@ $civility = callDoliApi("GET", "/setup/dictionary/civilities?sortfield=code&sort
 }
 
 $form .= "<select class='custom-select' id='identity'  name='billing_civility' required>";
-if ( isset($civility) && !defined("DOLIBUG") ) { 
-foreach ($civility as $postv ) {
+if ( !isset($civility->error ) && $civility != null ) { 
+foreach ( $civility as $postv ) {
 
 $form .= "<option value='".$postv->code."' ";
 if ( $current_user->billing_civility == $postv->code && $current_user->billing_civility != null) {
