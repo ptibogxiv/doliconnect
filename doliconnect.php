@@ -135,7 +135,7 @@ $headers = array(
         'DOLAPIKEY' => get_site_option('dolibarr_private_key')
     );
 
-$url=add_query_arg( 'disable_cache', true, get_site_option('dolibarr_public_url').'/api/index.php'.$link);
+$url=get_site_option('dolibarr_public_url').'/api/index.php'.$link;
 
 if ( !empty(get_site_option('dolibarr_public_url')) && !empty(get_site_option('dolibarr_private_key')) ) {
 if ( !empty( $link ) && ( false ===  get_transient( $link ) || $method!='GET' || $delay <= 0 ) ) {
