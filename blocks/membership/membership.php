@@ -93,7 +93,7 @@ $html .= '<center><ul class="nav nav-pills nav-justified" id="pills-tab" role="t
 $html .= '<div class="tab-content" id="pills-tabContent"><div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">';
       
 if ( !isset($typeadhesion->error) ) {
-if (count($typeadhesion)<4) {
+if ( count($typeadhesion) < 4 ) {
 $html .= '<div class="card-deck mb-3 text-center">';
 } else {
 $html .= '<table class="table table-striped"><tbody>';

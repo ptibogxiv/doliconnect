@@ -755,6 +755,15 @@ $orderfo = callDoliApi("GET", "/orders/".$_GET['id'], null, dolidelay($delay, es
 }
 
 if ( isset($_GET['id']) && isset($_GET['ref']) && (constant("DOLIBARR") == $orderfo->socid ) && ($_GET['ref'] == $orderfo->ref) && $orderfo->statut != 0 ) {
+
+if ( isset($_POST['token']) || isset($_POST['modepayment']) ) {
+
+$rdr = [
+    'mode_reglement_id' => $_POST['modepayment'],
+	];                  
+$orderfo = callDoliApi("PUT", "/orders/".$_GET['id'], $rdr, dolidelay($delay, true));
+}
+
 echo "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>$orderfo->ref</h5><div class='row'><div class='col-md-5'>";
 $datecommande =  date_i18n('d/m/Y', $orderfo->date_creation);
 echo "<b>".__( 'Date of order', 'doliconnect' ).": </b> $datecommande<br>";
