@@ -87,7 +87,7 @@ form.submit();
 <?php
 echo "</script><div class='card shadow-sm'><ul class='list-group list-group-flush'>";
 
-echo doliconnectuserform($thirdparty, dolidelay(MONTH_IN_SECONDS, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'full');
+echo doliconnectuserform( $thirdparty, dolidelay(MONTH_IN_SECONDS, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'full');
 
 if( has_action('mydoliconnectuserform') ) {
 echo "<li class='list-group-item'>";

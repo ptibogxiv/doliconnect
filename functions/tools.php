@@ -2,7 +2,7 @@
 function doliconnectuserform($object, $delay, $mode) {
 global $current_user;
 
-if ($mode != 'mini' ) {
+if ( $mode != 'mini' ) {
 $form = "<li class='list-group-item'>";
 } 
 $form .= "<div class='form-group'><div class='row'>";
@@ -60,9 +60,9 @@ $form .= "</li>";
 } 
 
 if ( ( isset($_GET["pro"]) && !get_option('doliconnect_disablepro') ) || $mode == 'full' || $mode == 'mini') {
-if ($mode != 'mini' ) {
-$form = "<li class='list-group-item'>";
-} 
+if ($mode != 'mini' ) {          
+$form .= "<li class='list-group-item'>";
+}
 $form .= "<div class='form-group'><div class='row'>";
 $form .= "<div class='col-12'><label for='inputaddress'><small>".__( 'Address', 'doliconnect' )."</small></label>
 <div class='input-group mb-2'><div class='input-group-prepend'><span class='input-group-text'><i class='fas fa-map-marked fa-fw'></i></span></div>
