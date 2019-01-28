@@ -437,7 +437,9 @@ $idcontact++;
 
 if ( count($listcontact) < 5 ) {
 
-echo "<li id='ContactForm' class='list-group-item list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>
+echo "<li id='ContactForm' class='list-group-item list-group-item-action flex-column align-items-start'>";
+
+echo "<div class='custom-control custom-radio'>
 <input id='new_contact' onclick='ShowHideDiv()' class='custom-control-input' type='radio' name='contact' value='new_contact' ";
 
 if ( isset($listcontact->error) || $listcontact == null ) { echo " checked "; }

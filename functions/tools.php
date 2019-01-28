@@ -1,8 +1,11 @@
 <?php
-function doliconnectuserform($thirdparty, $delay, $mode) {
+function doliconnectuserform($object, $delay, $mode) {
 global $current_user;
 
-$form = "<li class='list-group-item'><div class='form-group'><div class='row'>";
+if ($mode != 'contact' ) {
+$form = "<li class='list-group-item'>";
+} 
+$form .= "<div class='form-group'><div class='row'>";
 if ( $current_user->billing_type == 'mor' or (isset($_GET["pro"]) && !get_option('doliconnect_disablepro')) ) {
 $form .= "<input type='hidden' name='billing_type' value='mor'><div class='col-12'><label for='coordonnees'><small>".__( 'Company', 'doliconnect' )."</small></label><input type='text' class='form-control' id='inputcompany' placeholder='".__( 'Company', 'doliconnect' )."' name='billing_company' value='".$current_user->billing_company."' required><div class='invalid-tooltip'>".__( 'This field is required.', 'doliconnect' )."</div></div>";
 $form .= "</div></div></li><li class='list-group-item'><div class='form-group'><div class='row'>";
@@ -56,11 +59,11 @@ if ( ( isset($_GET["pro"]) && !get_option('doliconnect_disablepro') ) || $mode =
 $form .= "<li class='list-group-item'><div class='form-group'><div class='row'>";
 $form .= "<div class='col-12'><label for='inputaddress'><small>".__( 'Address', 'doliconnect' )."</small></label>
 <div class='input-group mb-2'><div class='input-group-prepend'><span class='input-group-text'><i class='fas fa-map-marked fa-fw'></i></span></div>
-<textarea id='inlineFormInputGroup'  name='billing_address' class='form-control' rows='3' placeholder='".__( 'Address', 'doliconnect' )."' required>".$thirdparty->address."</textarea></div></div>";
+<textarea id='inlineFormInputGroup'  name='billing_address' class='form-control' rows='3' placeholder='".__( 'Address', 'doliconnect' )."' required>".$object->address."</textarea></div></div>";
 $form .= "<div class='col-12'><label for='inputzipcode'><small>".__( 'Zipcode', 'doliconnect' )." / ".__( 'Town', 'doliconnect' )." / ".__( 'Country', 'doliconnect' )."</small></label>
 <div class='input-group mb-2'><div class='input-group-prepend'><span class='input-group-text' id='address'><i class='fas fa-map-marked fa-fw'></i></span></div>
-<input type='text' class='form-control' id='inputzipcode' placeholder='".__( 'Zipcode', 'doliconnect' )."' name='billing_zipcode' value='".$thirdparty->zip."' autocomplete='off' required>
-<input type='text' class='form-control' id='inputcity' placeholder='".__( 'Town', 'doliconnect' )."' name='billing_city' value='".$thirdparty->town."' autocomplete='off' required>";
+<input type='text' class='form-control' id='inputzipcode' placeholder='".__( 'Zipcode', 'doliconnect' )."' name='billing_zipcode' value='".$object->zip."' autocomplete='off' required>
+<input type='text' class='form-control' id='inputcity' placeholder='".__( 'Town', 'doliconnect' )."' name='billing_city' value='".$object->town."' autocomplete='off' required>";
 
 $pays = callDoliApi("GET", "/setup/dictionary/countries?sortfield=favorite%2Clabel&sortorder=DESC%2CASC&limit=500", null , $delay);
 
@@ -68,7 +71,7 @@ if ( isset($pays) ) {
 $form .= "<select class='custom-select' id='inputcountry'  name='billing_country' required>";
 foreach ( $pays as $postv ) {
 $form .= "<option value='".$postv->id."' ";
-if ( $thirdparty->country_id == $postv->id && $thirdparty->country_id != null ) {
+if ( $object->country_id == $postv->id && $object->country_id != null ) {
 $form .= "selected ";}
  if ( $postv->id == '0' ) {$form .= "disabled ";}
 $pays=$postv->label;
@@ -76,10 +79,10 @@ $form .= ">$pays</option>";
 }
 $form .= "</select>";
 } else {
-$form .= "<input type='text' class='form-control' id='inputcountry' placeholder='".__( 'Country', 'doliconnect' )."' name='billing_country' value='".$thirdparty->country_id."' autocomplete='off' required>";
+$form .= "<input type='text' class='form-control' id='inputcountry' placeholder='".__( 'Country', 'doliconnect' )."' name='billing_country' value='".$object->country_id."' autocomplete='off' required>";
 }
 $form .= "</div></div>";
-$form .= "<div class='col-12'><label for='inputmobile'><small>".__( 'Phone', 'doliconnect' )."</small></label><div class='input-group mb-2'><div class='input-group-prepend'><div class='input-group-text'><i class='fas fa-phone fa-fw'></i></div></div><input type='tel' class='form-control' id='inputmobile' placeholder='".__( 'Phone', 'doliconnect' )."' name='billing_phone' value='".$thirdparty->phone."' autocomplete='off'></div></div>";
+$form .= "<div class='col-12'><label for='inputmobile'><small>".__( 'Phone', 'doliconnect' )."</small></label><div class='input-group mb-2'><div class='input-group-prepend'><div class='input-group-text'><i class='fas fa-phone fa-fw'></i></div></div><input type='tel' class='form-control' id='inputmobile' placeholder='".__( 'Phone', 'doliconnect' )."' name='billing_phone' value='".$object->phone."' autocomplete='off'></div></div>";
 $form .= "</div></div></li>";
 }
 return $form;
