@@ -345,16 +345,18 @@ $delay = WEEK_IN_SECONDS;
 if ( isset ($_POST['contact']) && $_POST['contact'] == 'new_contact' ) {
 
 $data = [
-    'firstname' => ucfirst(sanitize_user(strtolower($_POST['contact_firstname']))),
-    'lastname' => strtoupper(sanitize_user($_POST['contact_lastname'])),
+    'civility_id'  => $_POST['billing_civility'],     
+    'firstname' => ucfirst(sanitize_user(strtolower($_POST['user_firstname']))),
+    'lastname' => strtoupper(sanitize_user($_POST['user_lastname'])),
     'socid' => constant("DOLIBARR"),
     'poste' => sanitize_textarea_field($_POST['contact_poste']), 
-    'address' => sanitize_textarea_field($_POST['contact_address']),    
-    'zip' => sanitize_text_field($_POST['contact_zip']),
-    'town' => sanitize_text_field($_POST['contact_town']),
-    'country_id' => sanitize_text_field($_POST['contact_country_id']),
-    'email' => sanitize_email($_POST['contact_email']),
-    'phone_pro' => sanitize_text_field($_POST['contact_phone'])
+    'address' => sanitize_textarea_field($_POST['billing_address']),    
+    'zip' => sanitize_text_field($_POST['billing_zipcode']),
+    'town' => sanitize_text_field($_POST['billing_city']),
+    'country_id' => sanitize_text_field($_POST['billing_country']),
+    'email' => sanitize_email($_POST['user_email']),
+    'birthday' => $_POST['billing_birth'],
+    'phone_pro' => sanitize_text_field($_POST['billing_phone'])
 	];
 $contact = callDoliApi("POST", "/contacts", $data, 0);
 $listcontact = callDoliApi("GET", "/contacts?sortfield=t.rowid&sortorder=ASC&limit=100&thirdparty_ids=".constant("DOLIBARR"), null, dolidelay($delay, true));
@@ -451,65 +453,9 @@ echo "</div><div class='col-9 col-md-10 col-xl-10 align-middle'><h6 class='my-0'
 echo '</div></div></label></div></li>';
 echo '<li class="list-group-item list-group-item-secondary" id="ContactAddForm" style="display: none">';
 
-echo "<div class='row'>";
-echo "<div class='col-12'><label for='inputnickname'><small>".__( 'Title/Job', 'doliconnect' )."</small></label><div class='input-group mb-2'><div class='input-group-prepend'><div class='input-group-text'><i class='fas fa-user-secret fa-fw'></i></div></div><input type='text' class='form-control' id='inputnickname' placeholder='".__( 'Title/Job', 'doliconnect' )."' name='contact_poste' value='' autocomplete='off' required><div class='invalid-feedback'>".__( 'This field is required.', 'doliconnect' )."</div></div></div>";
+echo doliconnectuserform($thirdparty, dolidelay(MONTH_IN_SECONDS, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'mini');
 
-echo "<div class='col-12 col-md-12'><label for='inputcivility'><small>".__( 'Identity', 'doliconnect' )."</small></label>
-<div class='input-group mb-2'><div class='input-group-prepend'><span class='input-group-text' id='identity'><i class='fas fa-user fa-fw'></i></span></div>";
-
-$civility = callDoliApi("GET", "/setup/dictionary/civility?sortfield=code&sortorder=ASC&limit=100", null, $delay);
-if ( isset($civility->error) ) {
-$civility = callDoliApi("GET", "/setup/dictionary/civilities?sortfield=code&sortorder=ASC&limit=100&active=1", null, $delay); 
-}
-
-if ( isset($civility)  ) { 
-echo "<select class='custom-select' id='identity'  name='billing_civility' required>";
-foreach ($civility as $postv ) {
-
-echo "<option value='".$postv->code."' ";
-if ( $current_user->billing_civility == $postv->code && $current_user->billing_civility != null) {
-echo "selected ";}
-echo ">".$postv->label."</option>";
-}
-echo "</select>";
-} else {
-echo "<input type='text' class='form-control' id='identity' placeholder='".__( 'Civility', 'doliconnect' )."' name='billing_civility' value='".$current_user->billing_civility."' autocomplete='off' required>";
-}
-
-echo "<input type='text' name='contact_firstname' class='form-control' placeholder='".__( 'Firstname', 'doliconnect' )."' value='".stripslashes(htmlspecialchars($current_user->user_firstname, ENT_QUOTES))."' required>
-<input type='text' name='contact_lastname' class='form-control' placeholder='".__( 'Lastname', 'doliconnect' )."' value='".stripslashes(htmlspecialchars($current_user->user_lastname, ENT_QUOTES))."' required>
-</div></div></div><div class='row'>";
-//echo "<div class='col-12'><label for='inputbirth'><small>".__( 'Birthday', 'doliconnect' )."</small></label><div class='input-group mb-2'><div class='input-group-prepend'><div class='input-group-text'><i class='fas fa-birthday-cake fa-fw'></i></div></div><input type='date' name='billing_birth' class='form-control' value='' id='inputbirth' placeholder='yyyy-mm-dd' autocomplete='off' required><div class='invalid-feedback'>".__( 'This field is required.', 'doliconnect' )."</div></div></div>";
-echo "<div class='col-12 col-md-5'><label for='inputphone'><small>".__( 'Phone', 'doliconnect' )."</small></label><div class='input-group mb-2'><div class='input-group-prepend'><div class='input-group-text'><i class='fas fa-phone fa-fw'></i></div></div><input type='text' class='form-control' id='inputphone' placeholder='".__( 'Phone', 'doliconnect' )."' name='contact_phone' value='".$thirdparty->phone."' autocomplete='off' required><div class='invalid-feedback'>".__( 'This field is required.', 'doliconnect' )."</div></div></div>";
-echo "<div class='col-12 col-md-7'><label for='inputemail'><small>".__( 'Email', 'doliconnect' )."</small></label><div class='input-group mb-2'><div class='input-group-prepend'><div class='input-group-text'><i class='fas fa-at fa-fw'></i></div></div><input type='email' class='form-control' id='inputemail' placeholder='email@example.com' name='contact_email' value='".$current_user->user_email."' autocomplete='off' required><div class='invalid-feedback'>".__( 'This field is required.', 'doliconnect' )."</div></div></div>";
-echo "</div>";
-
-echo "<div class='form-group'><div class='row'>";
-echo "<div class='col-12'><label for='inputaddress'><small>".__( 'Address', 'doliconnect' )."</small></label>
-<div class='input-group mb-2'><div class='input-group-prepend'><span class='input-group-text'><i class='fas fa-map-marked fa-fw'></i></span></div>
-<textarea id='inlineFormInputGroup'  name='contact_address' class='form-control' rows='3' placeholder='".__( 'Address', 'doliconnect' )."' required>".$thirdparty->address."</textarea></div></div>";
-echo "<div class='col-12'><label for='inputzipcode'><small>".__( 'Zipcode', 'doliconnect' )." / ".__( 'Town', 'doliconnect' )." / ".__( 'Country', 'doliconnect' )."</small></label>
-<div class='input-group mb-2'><div class='input-group-prepend'><span class='input-group-text' id='address'><i class='fas fa-map-marked fa-fw'></i></span></div>
-<input type='text' class='form-control' id='inputzipcode' placeholder='".__( 'Zipcode', 'doliconnect' )."' name='contact_zip' value='".$thirdparty->zip."' autocomplete='off' required>
-<input type='text' class='form-control' id='inputcity' placeholder='".__( 'Town', 'doliconnect' )."' name='contact_town' value='".stripslashes(htmlspecialchars($thirdparty->town, ENT_QUOTES))."' autocomplete='off' required>";
-
-$pays = callDoliApi("GET", "/setup/dictionary/countries?sortfield=favorite%2Clabel&sortorder=DESC%2CASC&limit=500", null, MONTH_IN_SECONDS);
-
-if ( isset($pays) ) { 
-echo "<select class='custom-select' id='inputcountry'  name='contact_country_id' required>";
-foreach ($pays as $postv) {
-echo "<option value='".$postv->id."' ";
-if ( $current_user->billing_country == $postv->id && $thirdparty->country_id != null ) {
-echo "selected ";}
- if ($postv->id=='0'){$form .= "disabled ";}
-$pays=$postv->label;
-echo ">$pays</option>";
-}
-echo "</select>";
-} else {
-echo "<input type='text' class='form-control' id='inputcountry' placeholder='".__( 'Country', 'doliconnect' )."' name='billing_country' value='".$thirdparty->country."' autocomplete='off' required>";
-}
-echo "</div></div></li>";
+echo "</li>";
 
 }
 echo "</ul><div class='card-body'>";

@@ -2,7 +2,7 @@
 function doliconnectuserform($object, $delay, $mode) {
 global $current_user;
 
-if ($mode != 'contact' ) {
+if ($mode != 'mini' ) {
 $form = "<li class='list-group-item'>";
 } 
 $form .= "<div class='form-group'><div class='row'>";
@@ -54,9 +54,16 @@ $form .= " required";
 }
 $form .= "></div></div>";
 $form .= "</div></div>";
+
+if ($mode != 'mini' ) {
 $form .= "</li>";
-if ( ( isset($_GET["pro"]) && !get_option('doliconnect_disablepro') ) || $mode == 'full' ) {
-$form .= "<li class='list-group-item'><div class='form-group'><div class='row'>";
+} 
+
+if ( ( isset($_GET["pro"]) && !get_option('doliconnect_disablepro') ) || $mode == 'full' || $mode == 'mini') {
+if ($mode != 'mini' ) {
+$form = "<li class='list-group-item'>";
+} 
+$form .= "<div class='form-group'><div class='row'>";
 $form .= "<div class='col-12'><label for='inputaddress'><small>".__( 'Address', 'doliconnect' )."</small></label>
 <div class='input-group mb-2'><div class='input-group-prepend'><span class='input-group-text'><i class='fas fa-map-marked fa-fw'></i></span></div>
 <textarea id='inlineFormInputGroup'  name='billing_address' class='form-control' rows='3' placeholder='".__( 'Address', 'doliconnect' )."' required>".$object->address."</textarea></div></div>";
@@ -83,7 +90,12 @@ $form .= "<input type='text' class='form-control' id='inputcountry' placeholder=
 }
 $form .= "</div></div>";
 $form .= "<div class='col-12'><label for='inputmobile'><small>".__( 'Phone', 'doliconnect' )."</small></label><div class='input-group mb-2'><div class='input-group-prepend'><div class='input-group-text'><i class='fas fa-phone fa-fw'></i></div></div><input type='tel' class='form-control' id='inputmobile' placeholder='".__( 'Phone', 'doliconnect' )."' name='billing_phone' value='".$object->phone."' autocomplete='off'></div></div>";
-$form .= "</div></div></li>";
+$form .= "</div></div>";
+
+if ($mode != 'mini' ) {
+$form .= "</li>";
+}
+ 
 }
 return $form;
 }
