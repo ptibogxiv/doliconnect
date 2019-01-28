@@ -2,9 +2,15 @@
 function doliconnectuserform($object, $delay, $mode) {
 global $current_user;
 
+$form="";
 if ( $mode != 'mini' ) {
 $form = "<li class='list-group-item'>";
-} 
+} else {
+$form = "<div class='form-group'><div class='row'>";
+$form .= "<div class='col-12'><label for='inputnickname'><small>".__( 'Title/Job', 'doliconnect' )."</small></label><div class='input-group mb-2'><div class='input-group-prepend'><div class='input-group-text'><i class='fas fa-user-secret fa-fw'></i></div></div><input type='text' class='form-control' id='inputnickname' placeholder='".__( 'Title/Job', 'doliconnect' )."' name='contact_poste' value='' autocomplete='off' required><div class='invalid-feedback'>".__( 'This field is required.', 'doliconnect' )."</div></div></div>";
+$form .= "</div></div>";
+}
+
 $form .= "<div class='form-group'><div class='row'>";
 if ( $current_user->billing_type == 'mor' or (isset($_GET["pro"]) && !get_option('doliconnect_disablepro')) ) {
 $form .= "<input type='hidden' name='billing_type' value='mor'><div class='col-12'><label for='coordonnees'><small>".__( 'Company', 'doliconnect' )."</small></label><input type='text' class='form-control' id='inputcompany' placeholder='".__( 'Company', 'doliconnect' )."' name='billing_company' value='".$current_user->billing_company."' required><div class='invalid-tooltip'>".__( 'This field is required.', 'doliconnect' )."</div></div>";
