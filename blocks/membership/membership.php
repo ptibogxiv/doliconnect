@@ -49,8 +49,29 @@ function doliconnect_membership_block() {
 	);  
 
 function doliconnect_membership_render_block( $attributes ) {
+$delay=MONTH_IN_SECONDS;
 
 doliconnect_enqueues(); 
+
+$current_offset = get_option('gmt_offset');
+$tzstring = get_option('timezone_string');
+$check_zone_info = true;
+// Remove old Etc mappings. Fallback to gmt_offset.
+if ( false !== strpos($tzstring,'Etc/GMT') )
+	$tzstring = '';
+
+if ( empty($tzstring) ) { // Create a UTC+- zone if no timezone string exists
+	$check_zone_info = false;
+	if ( 0 == $current_offset )
+		$tzstring = 'UTC+0';
+	elseif ($current_offset < 0)
+		$tzstring = 'UTC' . $current_offset;
+	else
+		$tzstring = 'UTC+' . $current_offset;
+}
+//define( 'MY_TIMEZONE', (get_option( 'timezone_string' ) ? get_option( 'timezone_string' ) : date_default_timezone_get() ) );
+//date_default_timezone_set( MY_TIMEZONE );
+date_default_timezone_set($tzstring);
 
 $html = "";
 
@@ -58,9 +79,9 @@ if (is_user_logged_in() && constant("DOLIBARR_MEMBER") > 0){
 $adherent = callDoliApi("GET", "/adherentsplus/".constant("DOLIBARR_MEMBER"), "", HOUR_IN_SECONDS);
 }
 
-$typeadhesion = callDoliApi("GET", "/adherentsplus/type?sortfield=t.price&sqlfilters=(t.family:=:'0')&sortorder=ASC", "", MONTH_IN_SECONDS);
+$typeadhesion = callDoliApi("GET", "/adherentsplus/type?sortfield=t.price&sqlfilters=(t.family:!=:'1')&sortorder=ASC", "", dolidelay(MONTH_IN_SECONDS, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true));
 
-$typeadhesionpro = callDoliApi("GET", "/adherentsplus/type?sortfield=t.price&sqlfilters=(t.family:=:'1')&sortorder=ASC", "", MONTH_IN_SECONDS);
+$typeadhesionpro = callDoliApi("GET", "/adherentsplus/type?sortfield=t.price&sqlfilters=(t.family:=:'1')&sortorder=ASC", "", dolidelay(MONTH_IN_SECONDS, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true));
 
 if ( $typeadhesionpro->error->code != '404' ) {
 $html .= '<center><ul class="nav nav-pills nav-justified" id="pills-tab" role="tablist">
@@ -91,7 +112,7 @@ $montantdata=($tx*$postadh->price)+$postadh->welcome;
 $montant1 = $postadh->price;
 $montant2 = $tx*$postadh->price;
 
-if (count($typeadhesion)<4) {
+if ( count($typeadhesion) < 4 ) {
 
 $html .= '<DIV class="card border'.$color.' mb-4 box-shadow"><div class="card-header"><h4 class="my-0 font-weight-normal">'.$postadh->label.'</h4></div><div class="card-body">'; 
 $html .= '<h1 class="card-title pricing-card-title">'.doliprice($postadh->price).'<small class="text-muted">/'.__( 'year', 'doliconnect' ).'</small></h1>';
@@ -156,9 +177,13 @@ $html .= '<div class="card-footer"><a href="'.doliconnecturl('dolicontact').'?ty
 $html .= '</div>';
 }
 $html .= '</div>';
-} 
-       
+}
+
 $html .= '</div></div>';
+$html .= "<small>";
+$html .= dolirefresh("/adherentsplus/type?sortfield=t.price&sqlfilters=(t.family:!=:'1')&sortorder=ASC", get_permalink(), $delay);
+$html .= "</small>"; 
+$html .= '';
 
 return $html;
 }
