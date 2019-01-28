@@ -431,7 +431,8 @@ if ( $idcontact=='1' ) { echo " checked "; }
 echo " ><label class='custom-control-label w-100' for='$contact->id'><div class='row'><div class='col-3 col-md-2 col-xl-2 align-middle'>";
 echo "<center><i class='fas fa-address-card fa-3x fa-fw'></i></center>";
 echo "</div><div class='col-9 col-md-10 col-xl-10 align-middle'><h6 class='my-0'>$contact->civility_code $contact->firstname $contact->lastname";
-if ( $contact->poste!=null ) {echo " / $contact->poste";}
+if ( !empty($contact->poste) ) {echo " / $contact->poste";}
+if ( !empty($contact->default) ) {echo " <i class='fas fa-star fa-1x fa-fw'></i>";}
 echo "</h6><small class='text-muted'>$contact->address<br>$contact->zip $contact->town - $contact->country<br>$contact->email $contact->phone_pro</small>";
 echo '</div></div></label></div></li>';
 $idcontact++;
