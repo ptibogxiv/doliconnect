@@ -47,6 +47,9 @@ This version fixes a security related bug.  Upgrade immediately.
 9. Personal Data Export as received by the user/visitor.
 
 == Changelog ==
+= 3.1.4 =
+* clean code
+* optimize contact form
 
 = 3.1.3 =
 * clean code
