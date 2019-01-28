@@ -7,7 +7,7 @@ if ( $mode != 'mini' ) {
 $form = "<li class='list-group-item'>";
 } else {
 $form = "<div class='form-group'><div class='row'>";
-$form .= "<div class='col-12'><label for='inputnickname'><small>".__( 'Title/Job', 'doliconnect' )."</small></label><div class='input-group mb-2'><div class='input-group-prepend'><div class='input-group-text'><i class='fas fa-user-secret fa-fw'></i></div></div><input type='text' class='form-control' id='inputnickname' placeholder='".__( 'Title/Job', 'doliconnect' )."' name='contact_poste' value='' autocomplete='off' required><div class='invalid-feedback'>".__( 'This field is required.', 'doliconnect' )."</div></div></div>";
+$form .= "<div class='col-12'><label for='inputnickname'><small>".__( 'Title/Job', 'doliconnect' )."</small></label><div class='input-group mb-2'><div class='input-group-prepend'><div class='input-group-text'><i class='fas fa-user-secret fa-fw'></i></div></div><input type='text' class='form-control' id='inputnickname' placeholder='".__( 'Title/Job', 'doliconnect' )."' name='contact_poste' value='' autocomplete='off' required></div><div class='invalid-tooltip'>".__( 'This field is required.', 'doliconnect' )."</div></div>";
 $form .= "</div></div>";
 }
 
@@ -49,7 +49,7 @@ $form .= "</select>";
 
 $form .= "<input type='text' name='user_firstname' class='form-control' placeholder='".__( 'Firstname', 'doliconnect' )."' value='".stripslashes(htmlspecialchars($current_user->user_firstname, ENT_QUOTES))."' required>
 <input type='text' name='user_lastname' class='form-control' placeholder='".__( 'Lastname', 'doliconnect' )."' value='".stripslashes(htmlspecialchars($current_user->user_lastname, ENT_QUOTES))."' required>
-<div class='invalid-tooltip'>".__( 'This field is required.', 'doliconnect' )."</div></div></div></div><div class='row'>";
+</div><div class='invalid-tooltip'>".__( 'This field is required.', 'doliconnect' )."</div></div></div><div class='row'>";
 $form .= "<div class='col-12'><label for='inputbirth'><small>".__( 'Birthday', 'doliconnect' )."</small></label><div class='input-group mb-2'><div class='input-group-prepend'><div class='input-group-text'><i class='fas fa-birthday-cake fa-fw'></i></div></div><input type='date' name='billing_birth' class='form-control' value='".$current_user->billing_birth."' id='inputbirth' placeholder='yyyy-mm-dd' autocomplete='off' required></div></div>";
 $form .= "<div class='col-12 col-md-5'><label for='inputnickname'><small>".__( 'Nickname', 'doliconnect' )."</small></label><div class='input-group mb-2'><div class='input-group-prepend'><div class='input-group-text'><i class='fas fa-user-secret fa-fw'></i></div></div><input type='text' class='form-control' id='inputnickname' placeholder='".__( 'Nickname', 'doliconnect' )."' name='user_nicename' value='".stripslashes(htmlspecialchars($current_user->nickname, ENT_QUOTES))."' autocomplete='off' required></div></div>";
 $form .= "<div class='col-12 col-md-7'><label for='inputemail'><small>".__( 'Email', 'doliconnect' )."</small></label><div class='input-group mb-2'><div class='input-group-prepend'><div class='input-group-text'><i class='fas fa-at fa-fw'></i></div></div><input type='email' class='form-control' id='inputemail' placeholder='email@example.com' name='user_email' value='".$current_user->user_email."' autocomplete='off' ";
