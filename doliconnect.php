@@ -3,7 +3,7 @@
  * Plugin Name: Doliconnect
  * Plugin URI: https://www.ptibogxiv.net
  * Description: Connect your Dolibarr (free ERP/CRM) to Wordpress. 
- * Version: 3.1.4
+ * Version: 3.1.5
  * Author: ptibogxiv
  * Author URI: https://www.ptibogxiv.net/en
  * Network: true
@@ -840,7 +840,7 @@ $mail =  wp_mail($email, $subject, $body, $headers);
 
 if ( isset($emailSent) && $emailSent == true ) { 
 echo "<div class='alert alert-success'><h4 class='alert-heading'>".__( 'Congratulations!', 'doliconnect' )."</h4><p>".__( 'A password reset link was sent to you by email. Please check your spam folder if you don\'t find it.', 'doliconnect' )."</p></div>";
-} elseif ( isset($hasError) || isset($captchaError) ) { 
+} elseif ( isset($hasError) || isset($emailError) ) { 
 echo "<div class='alert alert-danger'><h4 class='alert-heading'>".__( 'Oops', 'doliconnect' )."</h4><p>$emailError</p></div>";
 }
 
