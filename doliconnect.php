@@ -795,7 +795,7 @@ catch(\Exception $e) {
 echo "<p class='font-weight-light' align='justify'>".__( 'Manage your account, your informations and much more via this secure client area.', 'doliconnect' )."</p></div></div></div>";
 echo "<div class='col-xs-12 col-sm-12 col-md-9'>";
   
-if( isset($_POST['submitted']) ) {
+if( isset($_POST['user_email']) ) {
 
     if( sanitize_email($_POST['user_email']) === '' )  {
         $emailError = __( 'A valid email is need to reset your password', 'doliconnect' );
@@ -844,55 +844,27 @@ echo "<div class='alert alert-success'><h4 class='alert-heading'>".__( 'Congratu
 echo "<div class='alert alert-danger'><h4 class='alert-heading'>".__( 'Oops', 'doliconnect' )."</h4><p>$emailError</p></div>";
 }
 
-echo '<script src="https://www.google.com/recaptcha/api.js" async defer></script>';
-
-echo "<script>";
-?>
-window.setTimeout(function() {
-    $(".alert").fadeTo(500, 0).slideUp(500, function(){
-        $(this).remove(); 
-    });
-}, 5000);
-var form2 = document.getElementById('fpw-form');
-form2.addEventListener('submit', function(event) {
- $(document).ready(function(){
-    $(window).scrollTop(0);
-});
-jQuery('#fpw-form').hide(); 
-jQuery('#doliloading-fpw').show();
-console.log("submit");
-form2.submit();
-});
-<?php
-echo "</SCRIPT>";
-echo "<form id='fpw-form' action='' method='post' class='needs-validation' novalidate><input type='hidden' name='submitted' id='submitted' value='true' />";
+echo "<form id='fpw-form' action='' method='post' class='was-validated'><input type='hidden' name='submitted' id='submitted' value='true' />";
 echo $msg;
 echo'<script>';
 ?>
-window.setTimeout(function() {
-    $(".alert").fadeTo(500, 0).slideUp(500, function(){
-        $(this).remove(); 
+
+window.setTimeout(function () {
+    $(".alert-success").fadeTo(500, 0).slideUp(500, function () {
+        $(this).remove();
     });
 }, 5000);
-var form2 = document.getElementById('fpw-form');
-// Example starter JavaScript for disabling form submissions if there are invalid fields
-(function() {
-  'use strict';
-  window.addEventListener('load', function() {
-    // Fetch all the forms we want to apply custom Bootstrap validation styles to
-    var forms = document.getElementsByClassName('needs-validation');
-    // Loop over them and prevent submission
-    var validation = Array.prototype.filter.call(forms, function(form) {
-      form.addEventListener('submit', function(event) {
-        if (form.checkValidity() === false) {
-          event.preventDefault();
-          event.stopPropagation();
-        }
-        form.classList.add('was-validated');
-      }, false);
-    });
-  }, false);
-})();
+
+var fpwform = document.getElementById('fpw-form');
+fpwform.addEventListener('submit', function(event) {
+
+jQuery('#DoliconnectLoadingModal').modal('show');
+jQuery(window).scrollTop(0); 
+console.log("submit");
+form.submit();
+
+});
+
 <?php            
 echo '</script>'; 
 echo "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>".__( 'Forgot password?', 'doliconnect' )."</h5>";
@@ -900,10 +872,10 @@ echo "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>
 echo "<div class='form-group'><label for='inputemail'><small>".__( 'Please enter the email address by which you registered your account.', 'doliconnect' )."</small></label>
 <div class='input-group mb-2 mr-sm-2'><div class='input-group-prepend'>
 <div class='input-group-text'><i class='fas fa-at fa-fw'></i></div></div>
-<input class='form-control' id='user_email' type='email' placeholder='".__( 'Email', 'doliconnect' )."' name='user_email' value ='' required><DIV class='invalid-tooltip'>".__( 'This field is required.', 'doliconnect' )."</DIV>";
+<input class='form-control' id='user_email' type='email' placeholder='".__( 'Email', 'doliconnect' )."' name='user_email' value ='' required>";
 echo "</div></div></div>";
 echo "<ul class='list-group list-group-flush'><li class='list-group-item'>";
-echo "<button data-sitekey='".get_option('doliconnect_captcha_sitekey')."' data-callback='onSubmit' class='g-recaptcha btn btn-primary btn-block' type='submit'><b>".__( 'Submit', 'doliconnect' )."</b></button>";
+echo "<button class='btn btn-danger btn-block' type='submit'><b>".__( 'Submit', 'doliconnect' )."</b></button>";
 echo "</li></ul>";
 echo "</div>";
 
