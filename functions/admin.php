@@ -46,8 +46,20 @@ add_action( 'admin_menu', 'doliconnect_admin_page4' );
 function doliconnect_admin_page() {
 echo '<div class="wrap">';
 echo '<h2>Gestion des admins</h2>';
-$result = count_users();
+$result = count_users(); 
 echo 'There are ', $result['total_users'], ' total users';
+
+if ($_REQUEST['doliboard']) {
+foreach ( $_REQUEST['doliboard'] as $id => $value ) {
+echo " $id $value <br />";
+if ( $value == '0' ) { delete_user_meta($value,'doliboard_4');
+echo 'delete'; } else {
+update_user_meta($value,'doliboard_4', $i);}
+//if ($_REQUEST['doliboard_title_'.$i]) { update_option('doliboard_title_'.$i, $_REQUEST['doliboard_title_'.$i]); } 
+//if ($_REQUEST['doliboard_email_'.$i]) { update_option('doliboard_email_'.$i, $_REQUEST['doliboard_email_'.$i]); }
+}
+} 
+
 $total[]=0;
 foreach($result['avail_roles'] as $role => $count){
 if ($role == 'editor' OR $role == 'administrator') {$total[$role]=$count;}
@@ -55,7 +67,7 @@ if ($role == 'editor' OR $role == 'administrator') {$total[$role]=$count;}
 echo "<form action='' method='post'>";
 for($i=1;$i<=array_sum($total);$i++){ 
 echo "<br />$i ";
-if ($_REQUEST['doliboard_'.$i]) {update_usermeta($_REQUEST['doliboard_'.$i], 'doliboard_'.get_current_blog_id(), $i );}
+
 $usera = reset(
  get_users(
   array(
@@ -71,7 +83,7 @@ $USERID[$i]=$usera->ID;
 } 
 
 if ($i<=$total['administrator']){ echo "admin"; 
-echo "<SELECT name='doliboard_".$i."'>";
+echo "<SELECT name='doliboard[".$i."]'>";
 $args = array( 
 'blog_id'      => $GLOBALS['blog_id'],
 'role'         => 'administrator',
@@ -81,7 +93,7 @@ $args = array(
 );
 }
 elseif ($i>$total['administrator']){ echo "editeur";
-echo "<select name='doliboard_".$i."'>";
+echo "<select name='doliboard[".$i."]'>";
 $args = array( 
 'blog_id'      => $GLOBALS['blog_id'],
 'role'         => 'editor',
@@ -93,15 +105,14 @@ $args = array(
 $user_query = new WP_User_Query( $args );
 
 if ( ! empty( $user_query->results ) ) { 
-echo "<option value=''>no one</option>";
+echo "<option value='0'>no one</option>";
 foreach ( $user_query->results as $user ) {
 echo "<option value='".$user->ID."' ";
 if ($USERID[$i]==$user->ID) {echo " selected";}
 echo ">" . esc_html( $user->user_firstname ) . ' ' . esc_html( $user->user_lastname ) . "</option>";
 }}
 echo "</select>";
-if ($_REQUEST['doliboard_title_'.$i]) {update_option('doliboard_title_'.$i, $_REQUEST['doliboard_title_'.$i]);}
-if ($_REQUEST['doliboard_email_'.$i]) {update_option('doliboard_email_'.$i, $_REQUEST['doliboard_email_'.$i]);}
+
 echo "<input type='text' id='doliboard_title_".$i."' name='doliboard_title_".$i."'  value='".get_option('doliboard_title_'.$i.'')."' placeholder='Fonction'> <input type='text' id='doliboard_email_".$i."' name='doliboard_email_".$i."' placeholder='Email de fonction' value='".get_option('doliboard_email_'.$i.'')."' >";
 }
 echo "<br /><br /><input type='submit' name='activate_license' value='Mettre a jour' class='button-primary' /></form>";
