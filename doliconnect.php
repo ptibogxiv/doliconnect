@@ -926,10 +926,28 @@ $login_url=site_url()."/".secupress_get_module_option('move-login_slug-login', $
 $login_url=site_url()."/wp-login.php"; }
 if ( isset($_GET["redirect_to"])) { $redirect_to=$_GET["redirect_to"]; } else {
 $redirect_to=$_SERVER['HTTP_REFERER'];} 
-echo "<form class='was-validated' id='LoginForm' action='$login_url' method='post'>";
-echo "<script>";
+echo "<form class='was-validated' id='login-form' action='$login_url' method='post'>";
+echo'<script>';
+?>
 
-echo "</script>";
+window.setTimeout(function () {
+    $(".alert-success").fadeTo(500, 0).slideUp(500, function () {
+        $(this).remove();
+    });
+}, 5000);
+
+var loginform = document.getElementById('login-form');
+loginform.addEventListener('submit', function(event) {
+
+jQuery('#DoliconnectLoadingModal').modal('show');
+jQuery(window).scrollTop(0); 
+console.log("submit");
+form.submit();
+
+});
+
+<?php            
+echo '</script>'; 
 echo "<div class='form-group'>
 <div class='input-group mb-2 mr-sm-2'><div class='input-group-prepend'>
 <div class='input-group-text'><i class='fas fa-at fa-fw'></i></div></div>
