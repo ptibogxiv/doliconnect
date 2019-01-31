@@ -4,7 +4,7 @@ Contributors: ptibogxiv
 Tags: erp, crm, ecommerce, dolibarr, payment, interface, customer, subscription, membership, doliconnect, dashboard
 Requires at least: 4.9
 Tested up to: 5.1.0
-Stable tag: 3.1.5
+Stable tag: 3.1.6
 Requires PHP: 7.0
 Donate link: https://www.paypal.me/ptibogxiv
 
@@ -24,7 +24,7 @@ To install this plugin:
 Activate the plugin through the ‘Plugins’ screen in WordPress.
 Go to WordPress Admin > Settings > Doliconnect
 - BE CAREFUL, in multisite blog, there is a netword settings page too for keys and general settings!
-- Your dolibarr needs to have the Doliconnect module which can be freely downloaded on Dolistore or Github
+- Your dolibarr needs to have the Doliconnector module which can be freely downloaded on Dolistore or Github https://github.com/ptibogxiv/doliconnector/releases
 
 == Upgrade Notice ==
 
@@ -45,6 +45,11 @@ This version fixes a security related bug.  Upgrade immediately.
 7. Website owner can email user/visitor personal data.
 8. The user/visitor received an email with a download link.
 9. Personal Data Export as received by the user/visitor.
+
+== Changelog ==
+= 3.1.6 =
+* update readme
+* fix loader in login form
 
 == Changelog ==
 = 3.1.5 =
