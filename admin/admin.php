@@ -55,8 +55,8 @@ echo " $id $value <br />";
 if ( $value == '0' ) { delete_user_meta($value,'doliboard_4');
 echo 'delete'; } else {
 update_user_meta($value,'doliboard_4', $i);}
-//if ($_REQUEST['doliboard_title_'.$i]) { update_option('doliboard_title_'.$i, $_REQUEST['doliboard_title_'.$i]); } 
-//if ($_REQUEST['doliboard_email_'.$i]) { update_option('doliboard_email_'.$i, $_REQUEST['doliboard_email_'.$i]); }
+if ($_REQUEST['doliboard_title_'.$i]) { update_option('doliboard_title_'.$i, $_REQUEST['doliboard_title_'.$i]); } 
+if ($_REQUEST['doliboard_email_'.$i]) { update_option('doliboard_email_'.$i, $_REQUEST['doliboard_email_'.$i]); }
 }
 } 
 
