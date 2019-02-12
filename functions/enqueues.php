@@ -5,7 +5,7 @@ function doliconnect_enqueues() {
 if ( empty(get_theme_mod( 'ptibogxivtheme_css')) || get_theme_mod( 'ptibogxivtheme_css') == 'css' ) {
 $type='bootstrap';
 $css='css';
-$version='4.2.1'; 
+$version='4.3.0'; 
 } else {
 $type='bootswatch';
 $css=get_theme_mod( 'ptibogxivtheme_css');
