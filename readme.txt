@@ -4,7 +4,7 @@ Contributors: ptibogxiv
 Tags: erp, crm, ecommerce, dolibarr, payment, interface, customer, subscription, membership, doliconnect, dashboard
 Requires at least: 4.9
 Tested up to: 5.1.0
-Stable tag: 3.1.6
+Stable tag: 3.2.0
 Requires PHP: 7.0
 Donate link: https://www.paypal.me/ptibogxiv
 
@@ -47,8 +47,9 @@ This version fixes a security related bug.  Upgrade immediately.
 9. Personal Data Export as received by the user/visitor.
 
 == Changelog ==
-= 3.1.6 =
+= 3.2.0 =
 * update readme
+* bootstrap 4.3 & fontawesome 5.7.1
 * fix loader in login form
 
 == Changelog ==
