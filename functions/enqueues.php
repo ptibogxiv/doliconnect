@@ -2,17 +2,16 @@
 
 function doliconnect_enqueues() { 
 
+/* Styles */
 if ( empty(get_theme_mod( 'ptibogxivtheme_css')) || get_theme_mod( 'ptibogxivtheme_css') == 'css' ) {
-$type='bootstrap';
-$css='css';
-$version='4.3.0'; 
+$css='';
+$version='4.3.1'; 
 } else {
-$type='bootswatch';
-$css=get_theme_mod( 'ptibogxivtheme_css');
+$css='bootswatch/'.get_theme_mod( 'ptibogxivtheme_css').'/';
 $version='4.2.1';  
 }
 
-	wp_enqueue_style( 'bootstrap', plugins_url( 'doliconnect/includes/css/'.$type.'/'.$css.'/bootstrap.min.css'), array(), $version);
+	wp_enqueue_style( 'bootstrap', plugins_url( 'doliconnect/includes/css/'.$css.'bootstrap.min.css'), array(), $version);
   
 	wp_enqueue_script( 'bootstrap-js', plugins_url( 'doliconnect/includes/js/scripts.min.js'), array('jquery'), ' ', true );
 
