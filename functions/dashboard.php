@@ -604,46 +604,46 @@ function propal_module( $url ) {
 $delay = HOUR_IN_SECONDS;
 
 if ( isset($_GET['id']) && $_GET['id'] > 0 ) {
-$propalfo = callDoliApi("GET", "/proposals/".$_GET['id'], null, dolidelay($delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-//echo $propalfo;
+$proposalfo = callDoliApi("GET", "/proposals/".$_GET['id'], null, dolidelay($delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+//echo $proposalfo;
 }
 
-if ( isset($_GET['id']) && isset($_GET['ref']) && ( constant("DOLIBARR") == $propalfo->socid ) && ( $_GET['ref'] == $propalfo->ref ) && $propalfo->statut !=0 ) {
-echo "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>$propalfo->ref</h5><div class='row'><div class='col-md-5'>";
-$datecreation =  date_i18n('d/m/Y', $propalfo->date_creation);
-$datevalidation =  date_i18n('d/m/Y', $propalfo->date_validation);
-$datevalidite =  date_i18n('d/m/Y', $propalfo->fin_validite);
+if ( isset($_GET['id']) && isset($_GET['ref']) && ( constant("DOLIBARR") == $proposalfo->socid ) && ( $_GET['ref'] == $proposalfo->ref ) && $proposalfo->statut !=0 ) {
+echo "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>$proposalfo->ref</h5><div class='row'><div class='col-md-5'>";
+$datecreation =  date_i18n('d/m/Y', $proposalfo->date_creation);
+$datevalidation =  date_i18n('d/m/Y', $proposalfo->date_validation);
+$datevalidite =  date_i18n('d/m/Y', $proposalfo->fin_validite);
 echo "<b>".__( 'Date of creation', 'doliconnect' ).":</b> $datecreation<br>";
 //echo "<b>".__( 'Validation', 'doliconnect' )." : </b> $datevalidation<br>";
 echo "<b>Date de fin de validité:</b> $datevalidite";
 //echo "<b>".__( 'Status', 'doliconnect' )." : </b> ";
-if ( $propalfo->statut == 3 ) { $propalinfo=__( 'Refused', 'doliconnect' );
+if ( $proposalfo->statut == 3 ) { $propalinfo=__( 'Refused', 'doliconnect' );
 $propalavancement=0; }
-elseif ( $propalfo->statut == 2 ) { $propalinfo=__( 'Processing', 'doliconnect' );
+elseif ( $proposalfo->statut == 2 ) { $propalinfo=__( 'Processing', 'doliconnect' );
 $propalavancement=65; }
-elseif ( $propalfo->statut == 1 ) { $propalinfo=__( 'Sign before', 'doliconnect' )." ".$datevalidite;
+elseif ( $proposalfo->statut == 1 ) { $propalinfo=__( 'Sign before', 'doliconnect' )." ".$datevalidite;
 $propalavancement=42; }
-elseif ( $propalfo->statut == 0 ) { $propalinfo=__( 'Processing', 'doliconnect' );
+elseif ( $proposalfo->statut == 0 ) { $propalinfo=__( 'Processing', 'doliconnect' );
 $propalavancement=22; }
-elseif ( $propalfo->statut == -1 ) { $propalinfo=__( 'Canceled', 'doliconnect' );
+elseif ( $proposalfo->statut == -1 ) { $propalinfo=__( 'Canceled', 'doliconnect' );
 $propalavancement=0; }
 echo "<br><br>";
-//echo "<b>Moyen de paiement : </b> $propalfo[mode_reglement]<br>";
+//echo "<b>Moyen de paiement : </b> $proposalfo[mode_reglement]<br>";
 echo "</div><div class='col-md-7'>";
 
 if ( isset($propalinfo) ) {
 echo "<h3 class='text-right'>".$propalinfo."</h3>";
 }
 
-$TTC = number_format($propalfo->multicurrency_total_ttc, 2, ',', ' ');
-$currency = strtolower($propalfo->multicurrency_code);
+$TTC = number_format($proposalfo->multicurrency_total_ttc, 2, ',', ' ');
+$currency = strtolower($proposalfo->multicurrency_code);
 echo "</div></div>";
 echo '<div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: '.$propalavancement.'%" aria-valuenow="'.$propalavancement.'" aria-valuemin="0" aria-valuemax="100"></div></div>';
 echo "<div class='w-auto text-muted d-none d-sm-block' ><div style='display:inline-block;width:16%'>".__( 'Propal', 'doliconnect' )."</div><div style='display:inline-block;width:21%'>".__( 'Processing', 'doliconnect' )."</div><div style='display:inline-block;width:19%'>".__( 'Validation', 'doliconnect' )."</div><div style='display:inline-block;width:24%'>".__( 'Processing', 'doliconnect' )."</div><div class='text-right' style='display:inline-block;width:20%'>".__( 'Billing', 'doliconnect' )."</div></div>";
 echo "</div><ul class='list-group list-group-flush'>";
  
-if ( $propalfo->lines != null ) {
-foreach ( $propalfo->lines as $line ) {
+if ( $proposalfo->lines != null ) {
+foreach ( $proposalfo->lines as $line ) {
 echo "<li class='list-group-item'>";     
 if ( $line->date_start != '' && $line->date_end !='' )
 {
@@ -665,20 +665,20 @@ echo "</div></div></li>";
 }
 
 echo "<li class='list-group-item list-group-item-info'>";
-echo "<b>".__( 'Total excl. tax', 'doliconnect').": ".doliprice($propalfo, 'ht', isset($propalfo->multicurrency_code) ? $propalfo->multicurrency_code : null)."</b><br />";
-echo "<b>".__( 'Total tax', 'doliconnect').": ".doliprice($propalfo, 'tva', isset($propalfo->multicurrency_code) ? $propalfo->multicurrency_code : null)."</b><br />";
-echo "<b>".__( 'Total incl. tax', 'doliconnect').": ".doliprice($propalfo, 'ttc', isset($propalfo->multicurrency_code) ? $propalfo->multicurrency_code : null)."</b>";
+echo "<b>".__( 'Total excl. tax', 'doliconnect').": ".doliprice($proposalfo, 'ht', isset($proposalfo->multicurrency_code) ? $proposalfo->multicurrency_code : null)."</b><br />";
+echo "<b>".__( 'Total tax', 'doliconnect').": ".doliprice($proposalfo, 'tva', isset($proposalfo->multicurrency_code) ? $proposalfo->multicurrency_code : null)."</b><br />";
+echo "<b>".__( 'Total incl. tax', 'doliconnect').": ".doliprice($proposalfo, 'ttc', isset($proposalfo->multicurrency_code) ? $proposalfo->multicurrency_code : null)."</b>";
 echo "</li>";
 
-if ( $propalfo->last_main_doc != null ) {
-$doc = array_reverse( explode("/", $propalfo->last_main_doc) );      
-$document = dolidocdownload($doc[2],$doc[1],$doc[0],$url."&id=".$_GET['id']."&ref=".$propalfo->ref,__( 'Summary', 'doliconnect' ));
+if ( $proposalfo->last_main_doc != null ) {
+$doc = array_reverse( explode("/", $proposalfo->last_main_doc) );      
+$document = dolidocdownload($doc[2],$doc[1],$doc[0],$url."&id=".$_GET['id']."&ref=".$proposalfo->ref,__( 'Summary', 'doliconnect' ));
 } 
     
-$fruits[$propalfo->date_creation.'p'] = array(
-"timestamp" => $propalfo->date_creation,
+$fruits[$proposalfo->date_creation.'p'] = array(
+"timestamp" => $proposalfo->date_creation,
 "type" => __( 'Propal', 'doliconnect' ),  
-"label" => $propalfo->ref,
+"label" => $proposalfo->ref,
 "document" => $document,
 "description" => null,
 );
@@ -707,19 +707,19 @@ $listpropal = callDoliApi("GET", "/proposals?sortfield=t.rowid&sortorder=ASC&lim
 
 echo '<div class="card shadow-sm"><ul class="list-group list-group-flush">';  
 if ( !isset( $listpropal->error ) && $listpropal != null ) {
-foreach ( $listpropal as $postpropal ) { 
+foreach ( $listpropal as $postproposal ) { 
 
-$arr_params = array( 'id' => $postpropal->id, 'ref' => $postpropal->ref);  
+$arr_params = array( 'id' => $postproposal->id, 'ref' => $postproposal->ref);  
 $return = esc_url( add_query_arg( $arr_params, $url) );
                 
-echo "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-action'><div><i class='fa fa-shopping-bag fa-3x fa-fw'></i></div><div><h6 class='my-0'>$postpropal->ref</h6><small class='text-muted'>du ".date_i18n('d/m/Y', $postpropal->date_creation)."</small></div><span>".doliprice($postpropal, 'ttc', isset($postpropal->multicurrency_code) ? $postpropal->multicurrency_code : null)."</span><span>";
-if ( $postpropal->statut == 3 ) {
-if ( $postpropal->billed == 1 ) { echo "<span class='fa fa-check-circle fa-fw text-success'></span><span class='fa fa-eur fa-fw text-success'></span><span class='fa fa-truck fa-fw text-success'></span><span class='fa fa-file-text fa-fw text-success'></span>"; } 
+echo "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-action'><div><i class='fa fa-shopping-bag fa-3x fa-fw'></i></div><div><h6 class='my-0'>$postproposal->ref</h6><small class='text-muted'>du ".date_i18n('d/m/Y', $postproposal->date_creation)."</small></div><span>".doliprice($postproposal, 'ttc', isset($postproposal->multicurrency_code) ? $postproposal->multicurrency_code : null)."</span><span>";
+if ( $postproposal->statut == 3 ) {
+if ( $postproposal->billed == 1 ) { echo "<span class='fa fa-check-circle fa-fw text-success'></span><span class='fa fa-eur fa-fw text-success'></span><span class='fa fa-truck fa-fw text-success'></span><span class='fa fa-file-text fa-fw text-success'></span>"; } 
 else { echo "<span class='fa fa-check-circle fa-fw text-success'></span><span class='fa fa-eur fa-fw text-success'></span><span class='fa fa-truck fa-fw text-success'></span><span class='fa fa-file-text fa-fw text-warning'></span>"; } }
-elseif ( $postpropal->statut == 2 ) { echo "<span class='fa fa-check-circle fa-fw text-success'></span><span class='fa fa-eur fa-fw text-success'></span><span class='fa fa-truck fa-fw text-warning'></span><span class='fa fa-file-text fa-fw text-danger'></span>"; }
-elseif ( $postpropal->statut == 1 ) { echo "<span class='fa fa-check-circle fa-fw text-success'></span><span class='fa fa-eur fa-fw text-warning'></span><span class='fa fa-truck fa-fw text-danger'></span><span class='fa fa-file-text fa-fw text-danger'></span>"; }
-elseif ( $postpropal->statut == 0 ) { echo "<span class='fa fa-check-circle fa-fw text-warning'></span><span class='fa fa-eur fa-fw text-danger'></span><span class='fa fa-truck fa-fw text-danger'></span><span class='fa fa-file-text fa-fw text-danger'></span>"; }
-elseif ( $postpropal->statut == -1 ) { echo "<span class='fa fa-check-circle fa-fw text-secondary'></span><span class='fa fa-eur fa-fw text-secondary'></span><span class='fa fa-truck fa-fw text-secondary'></span><span class='fa fa-file-text fa-fw text-secondary'></span>"; }
+elseif ( $postproposal->statut == 2 ) { echo "<span class='fa fa-check-circle fa-fw text-success'></span><span class='fa fa-eur fa-fw text-success'></span><span class='fa fa-truck fa-fw text-warning'></span><span class='fa fa-file-text fa-fw text-danger'></span>"; }
+elseif ( $postproppsal->statut == 1 ) { echo "<span class='fa fa-check-circle fa-fw text-success'></span><span class='fa fa-eur fa-fw text-warning'></span><span class='fa fa-truck fa-fw text-danger'></span><span class='fa fa-file-text fa-fw text-danger'></span>"; }
+elseif ( $postproposal->statut == 0 ) { echo "<span class='fa fa-check-circle fa-fw text-warning'></span><span class='fa fa-eur fa-fw text-danger'></span><span class='fa fa-truck fa-fw text-danger'></span><span class='fa fa-file-text fa-fw text-danger'></span>"; }
+elseif ( $postproposal->statut == -1 ) { echo "<span class='fa fa-check-circle fa-fw text-secondary'></span><span class='fa fa-eur fa-fw text-secondary'></span><span class='fa fa-truck fa-fw text-secondary'></span><span class='fa fa-file-text fa-fw text-secondary'></span>"; }
 echo "</span></a>";
 }}
 else{
