@@ -1,7 +1,7 @@
 <?php
 
 if ( !defined("DOLIBUG") ) {
-$propal = callDoliApi("GET", "/doliconnector/constante/MAIN_MODULE_PROPALE", null, MONTH_IN_SECONDS);
+$proposal = callDoliApi("GET", "/doliconnector/constante/MAIN_MODULE_PROPALE", null, MONTH_IN_SECONDS);
 $order = callDoliApi("GET", "/doliconnector/constante/MAIN_MODULE_COMMANDE", null, MONTH_IN_SECONDS);
 $contract = callDoliApi("GET", "/doliconnector/constante/MAIN_MODULE_CONTRAT", null, MONTH_IN_SECONDS);
 $member = callDoliApi("GET", "/doliconnector/constante/MAIN_MODULE_ADHERENTSPLUS", null, MONTH_IN_SECONDS);
@@ -589,7 +589,7 @@ echo doliloading('password');
 }
 add_action( 'user_doliconnect_password', 'password_module');
 //*****************************************************************************************
-if ( is_object($propal) && $propal->value == 1 ) {
+if ( is_object($proposal) && $proposal->value == 1 ) {
 add_action( 'compta_doliconnect_menu', 'propal_menu', 1, 1);
 add_action( 'compta_doliconnect_propal', 'propal_module' );
 }
