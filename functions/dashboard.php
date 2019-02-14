@@ -21,6 +21,7 @@ add_action( 'user_doliconnect_menu', 'informations_menu', 1, 1);
 function informations_module($url) {
 global $wpdb,$current_user,$doliconnect;
 $ID = $current_user->ID;
+$request = "/thirdparties/".constant("DOLIBARR");
 $delay = DAY_IN_SECONDS;
 
 if ( isset($_POST["case"]) && $_POST["case"] == 'updateuser'  ) {
@@ -60,7 +61,7 @@ $url = esc_url( add_query_arg( 'return', $_GET['return'], $url) );
 }
 
 if ( constant("DOLIBARR") > '0' ) {
-$thirdparty = callDoliApi("GET", "/thirdparties/".constant("DOLIBARR"), null, dolidelay( $delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
+$thirdparty = callDoliApi("GET", $request, null, dolidelay( $delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
 }
 
 echo "<form action='".$url."' id='informations-form' method='post' class='was-validated' enctype='multipart/form-data'><input type='hidden' name='case' value='updateuser'>";
@@ -120,7 +121,7 @@ echo "</ul><div class='card-body'><input type='hidden' name='userid' value='$ID'
 echo "</div>";
 
 echo "<small><div class='float-left'>";
-echo dolirefresh("/thirdparties/".constant("DOLIBARR"),$url,$delay);
+echo dolirefresh($request, $url, $delay);
 echo "</div><div class='float-right'>";
 echo dolihelp('ISSUE');
 echo "</div></small>";
@@ -340,6 +341,8 @@ add_action( 'user_doliconnect_menu', 'contacts_menu', 2, 1);
 
 function contacts_module($url){
 global $current_user;
+
+$request = "/contacts?sortfield=t.rowid&sortorder=ASC&limit=100&thirdparty_ids=".constant("DOLIBARR")."&includecount=1";
 $delay = WEEK_IN_SECONDS;
 
 if ( isset ($_POST['contact']) && $_POST['contact'] == 'new_contact' ) {
@@ -359,16 +362,16 @@ $data = [
     'phone_pro' => sanitize_text_field($_POST['billing_phone'])
 	];
 $contact = callDoliApi("POST", "/contacts", $data, 0);
-$listcontact = callDoliApi("GET", "/contacts?sortfield=t.rowid&sortorder=ASC&limit=100&thirdparty_ids=".constant("DOLIBARR")."&includecount=1", null, dolidelay($delay, true));
+$listcontact = callDoliApi("GET", $request, null, dolidelay($delay, true));
 
 } elseif ( isset ($_POST['contact']) && $_POST['contact'] > 0 ) {
 
 $delete = callDoliApi("DELETE", "/contacts/".$_POST['contact'], null, HOUR_IN_SECONDS);
-$listcontact = callDoliApi("GET", "/contacts?sortfield=t.rowid&sortorder=ASC&limit=100&thirdparty_ids=".constant("DOLIBARR")."&includecount=1", null, dolidelay($delay, true));
+$listcontact = callDoliApi("GET", $request, null, dolidelay($delay, true));
 
 } else {
 
-$listcontact = callDoliApi("GET", "/contacts?sortfield=t.rowid&sortorder=ASC&limit=100&thirdparty_ids=".constant("DOLIBARR")."&includecount=1", null, dolidelay($delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$listcontact = callDoliApi("GET", $request, null, dolidelay($delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 }
 
@@ -425,6 +428,7 @@ echo "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
 if ( !isset($listcontact->error) && $listcontact != null ) {
 $idcontact=1;
 foreach ($listcontact as $contact) {
+$count=$contact->ref_facturation+$contact->ref_contrat+$contact->ref_commande+$contact->ref_propal;
 echo "<li class='list-group-item list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>
 <input id='$contact->id' onclick='ShowHideDiv()' class='custom-control-input' type='radio' name='contact' value='$contact->id' ";
 if ( $idcontact=='1' ) { echo " checked "; }
@@ -467,7 +471,7 @@ echo "<div id='SaveFormButton' style='display: none'><input type='hidden' name='
 echo "</div></div>";
 
 echo "<small><div class='float-left'>";
-echo dolirefresh("/contacts?sortfield=t.rowid&sortorder=ASC&limit=100&thirdparty_ids=".constant("DOLIBARR"),$url,$delay);
+echo dolirefresh($request, $url, $delay);
 echo "</div><div class='float-right'>";
 echo dolihelp('ISSUE');
 echo "</div></small>";
