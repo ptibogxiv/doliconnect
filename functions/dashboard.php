@@ -822,13 +822,13 @@ $chq = callDoliApi("GET", "/doliconnector/constante/FACTURE_CHQ_NUMBER", null, d
 
 $bank = callDoliApi("GET", "/bankaccounts/".$chq->value, null, dolidelay(MONTH_IN_SECONDS, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
-echo "<div class='alert alert-danger' role='alert'><p align='justify'>Merci d'envoyer un chèque d'un montant de <b>".doliprice($orderfo->multicurrency_total_ttc?$orderfo->multicurrency_total_ttc:$orderfo->total_ttc,$orderfo->multicurrency_code)."</b> libellé à l'ordre de <b>$bank->proprio</b> sous <b>15 jours</b> en rappelant votre référence <b>$ref</b> à l'adresse suivante :</p><p><b>$bank->owner_address</b></p>$change</div>";
+echo "<div class='alert alert-danger' role='alert'><p align='justify'>".sprintf( esc_html__( 'Please send your cheque in the amount of %1$s with reference %2$s to %3$s at the following address: %4$s', 'doliconnect' ), doliprice($orderfo->multicurrency_total_ttc?$orderfo->multicurrency_total_ttc:$orderfo->total_ttc,$orderfo->multicurrency_code), $bank->proprio, $orderfo->ref, $bank->owner_address )."</p>$change</div>";
 } elseif ( $orderfo->mode_reglement_code == 'VIR' ) { 
 $vir = callDoliApi("GET", "/doliconnector/constante/FACTURE_RIB_NUMBER", null, dolidelay(MONTH_IN_SECONDS, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 $bank = callDoliApi("GET", "/bankaccounts/".$vir->value, null, dolidelay(MONTH_IN_SECONDS, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
-echo "<div class='alert alert-danger' role='alert'><p align='justify'>Merci d'effectuer un virement d'un montant de <b>".doliprice($orderfo->multicurrency_total_ttc?$orderfo->multicurrency_total_ttc:$orderfo->total_ttc,$orderfo->multicurrency_code)."</b> sous <b>15 jours</b> en rappelant votre référence <b>$ref</b> sur le compte suivant :</p><p><b>IBAN : $bank->iban</b>";
+echo "<div class='alert alert-danger' role='alert'><p align='justify'>Merci d'effectuer un virement d'un montant de <b>".doliprice($orderfo->multicurrency_total_ttc?$orderfo->multicurrency_total_ttc:$orderfo->total_ttc,$orderfo->multicurrency_code)."</b> sous <b>15 jours</b> en rappelant votre référence <b>$orderfo->ref</b> sur le compte suivant :</p><p><b>IBAN : $bank->iban</b>";
 if ( ! empty($bank->bic) ) { echo "<br><b>BIC/SWIFT : $bank->bic</b>";}
 echo "</p>$change</div>";
 } else {
