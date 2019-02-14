@@ -1203,6 +1203,7 @@ function membership_module( $url ) {
 global $current_user;
 $ID = $current_user->ID;
 $time = current_time( 'timestamp',1);
+$request = "/adherentsplus/".constant("DOLIBARR_MEMBER");
 $delay = DAY_IN_SECONDS;
 
 if ( isset($_POST["update_membership"]) && function_exists('dolimembership') ) {
@@ -1230,7 +1231,7 @@ if ( isset($msg) ) { echo $msg; }
 echo "<div class='card shadow-sm'><div class='card-body'><div class='row'><div class='col-12 col-md-5'>";
 
 if ( !empty(constant("DOLIBARR_MEMBER")) && constant("DOLIBARR_MEMBER") > 0  && constant("DOLIBARR") > 0 ) { 
-$adherent = callDoliApi("GET", "/adherentsplus/".constant("DOLIBARR_MEMBER"), null, dolidelay($delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$adherent = callDoliApi("GET", $request, null, dolidelay($delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 }
 
 echo "<b>".__( 'Status', 'doliconnect' ).":</b> ";
@@ -1331,7 +1332,7 @@ echo "<li class='list-group-item list-group-item-light'><center>".__( 'No subscr
 echo  "</ul></div>";
 
 echo "<small><div class='float-left'>";
-echo dolirefresh("/adherentsplus/".constant("DOLIBARR_MEMBER"), $url, $delay);
+echo dolirefresh($request, $url, $delay);
 echo "</div><div class='float-right'>";
 echo dolihelp('COM');
 echo "</div></small>";
@@ -1349,6 +1350,7 @@ echo "'>".__( 'Consumptions monitoring', 'doliconnect' )."</a>";
 }
 
 function membershipconsumption_module( $url ) {
+$request = "/adherentsplus/".constant("DOLIBARR_MEMBER")."/consumptions";
 $delay = HOUR_IN_SECONDS;
 
 echo "<div class='card shadow-sm'><div class='card-body'>";
@@ -1357,7 +1359,7 @@ echo "<b>".__( 'Next billing date', 'doliconnect' ).": </b> <br>";
 echo "</div><ul class='list-group list-group-flush'>";
 
 if (constant("DOLIBARR_MEMBER") > 0) {
-$listconsumption = callDoliApi("GET", "/adherentsplus/".constant("DOLIBARR_MEMBER")."/consumptions", null, dolidelay($delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$listconsumption = callDoliApi("GET", $request, null, dolidelay($delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 } 
 
 if ( !isset($listconsumption->error) && $listconsumption != null ) { 
@@ -1381,7 +1383,7 @@ echo "<li class='list-group-item list-group-item-light'><center>".__( 'No consum
 echo  "</ul></div>";
 
 echo "<small><div class='float-left'>";
-echo dolirefresh("/adherentsplus/".constant("DOLIBARR_MEMBER")."/consumptions",$url,$delay);
+echo dolirefresh( $request, $url, $delay);
 echo "</div><div class='float-right'>";
 echo dolihelp('COM');
 echo "</div></small>";
@@ -1399,6 +1401,7 @@ echo "'>".__( 'Manage linked members', 'doliconnect' )."</a>";
 }
 
 function linkedmember_module( $url ) {
+$request = "/adherentsplus/".constant("DOLIBARR_MEMBER");
 $delay = HOUR_IN_SECONDS;
 
 echo "<div class='card shadow-sm'><div class='card-body'>";
@@ -1407,7 +1410,7 @@ echo "<b>".__( 'Next billing date', 'doliconnect' ).": </b> <br>";
 echo "</div><ul class='list-group list-group-flush'>";
 
 if (constant("DOLIBARR_MEMBER") > 0) {
-$linkedmember= callDoliApi("GET", "/adherentsplus/".constant("DOLIBARR_MEMBER"), null, dolidelay($delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$linkedmember= callDoliApi("GET", $request, null, dolidelay($delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 } 
 
 if ( !isset($linkedmember->error) && $linkedmember != null ) { 
@@ -1425,7 +1428,7 @@ echo "<li class='list-group-item list-group-item-light'><center>".__( 'No consum
 echo  "</ul></div>";
 
 echo "<small><div class='float-left'>";
-echo dolirefresh("/adherentsplus/".constant("DOLIBARR_MEMBER"),$url,$delay);
+echo dolirefresh($request, $url, $delay);
 echo "</div><div class='float-right'>";
 echo dolihelp('COM');
 echo "</div></small>";
@@ -1447,6 +1450,7 @@ global $wpdb,$current_user;
 $entity = get_current_blog_id();
 $ID = $current_user->ID;
 
+$request = "/donation/".constant("DOLIBARR");
 $delay = DAY_IN_SECONDS;
 
 echo "<div class='card shadow-sm'>";
@@ -1459,7 +1463,7 @@ echo "developpement en cours";
 echo "</li></ul></div>";
 
 echo "<small><div class='float-left'>";
-echo dolirefresh("/donation/".constant("DOLIBARR"), $url, $delay);
+echo dolirefresh($request, $url, $delay);
 echo "</div><div class='float-right'>";
 echo dolihelp('ISSUE');
 echo "</div></small>";
