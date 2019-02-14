@@ -594,17 +594,17 @@ echo doliloading('password');
 add_action( 'user_doliconnect_password', 'password_module');
 //*****************************************************************************************
 if ( is_object($proposal) && $proposal->value == 1 ) {
-add_action( 'compta_doliconnect_menu', 'propal_menu', 1, 1);
-add_action( 'compta_doliconnect_propal', 'propal_module' );
+add_action( 'compta_doliconnect_menu', 'proposal_menu', 1, 1);
+add_action( 'compta_doliconnect_proposal', 'proposal_module' );
 }
 
-function propal_menu( $arg ) {
-echo "<a href='".esc_url( add_query_arg( 'module', 'propal', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-action";
-if ($arg=='propal') { echo " active";}
+function proposal_menu( $arg ) {
+echo "<a href='".esc_url( add_query_arg( 'module', 'proposal', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-action";
+if ($arg=='proposal') { echo " active";}
 echo "'>".__( 'Propals tracking', 'doliconnect' )."</a>";
 }
 
-function propal_module( $url ) {
+function proposal_module( $url ) {
 $delay = HOUR_IN_SECONDS;
 
 if ( isset($_GET['id']) && $_GET['id'] > 0 ) {
