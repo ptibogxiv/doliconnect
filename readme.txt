@@ -47,7 +47,11 @@ This version fixes a security related bug.  Upgrade immediately.
 9. Personal Data Export as received by the user/visitor.
 
 == Changelog ==
-= 3.2.0 =
+= 3.2.1 =
+* update translation
+* bootstrap 4.3.1 & fontawesome 5.7.2
+
+* = 3.2.0 =
 * update readme
 * bootstrap 4.3 & fontawesome 5.7.1
 * fix loader in login form
