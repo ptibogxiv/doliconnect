@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2019-02-14 15:20+0100\n"
-"PO-Revision-Date: 2019-02-14 15:21+0100\n"
+"POT-Creation-Date: 2019-02-14 15:52+0100\n"
+"PO-Revision-Date: 2019-02-14 15:53+0100\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_FR\n"
@@ -596,6 +596,15 @@ msgid ""
 msgstr ""
 "Veuillez envoyer votre chèque d'un montant de %1$s avec la référence %2$s à "
 "%3$s à l'adresse suivante: %4$s"
+
+#: functions/dashboard.php:831
+#, php-format
+msgid ""
+"Please send your transfert in the amount of %1$s with reference %2$s at the "
+"following iban: %3$s"
+msgstr ""
+"Veuillez envoyer votre virement dans le montant de %1$s avec la référence "
+"%2$s à l'IBAN suivant: %3$s"
 
 #: functions/dashboard.php:835
 msgid "Pay"

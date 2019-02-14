@@ -766,7 +766,7 @@ $orderfo = callDoliApi("PUT", "/orders/".$_GET['id'], $rdr, dolidelay($delay, tr
 
 echo "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>$orderfo->ref</h5><div class='row'><div class='col-md-5'>";
 $datecommande =  date_i18n('d/m/Y', $orderfo->date_creation);
-echo "<b>".__( 'Date of order', 'doliconnect' ).": </b> $datecommande<br>";
+echo "<b>".__( 'Date of order', 'doliconnect' ).":</b> $datecommande<br>";
 if ( $orderfo->statut > 0 ) {
 if ( $orderfo->billed == 1 ) {
 if ( $orderfo->statut >1 ) { $orderinfo=__( 'Shipped', 'doliconnect' ); 
@@ -828,7 +828,7 @@ $vir = callDoliApi("GET", "/doliconnector/constante/FACTURE_RIB_NUMBER", null, d
 
 $bank = callDoliApi("GET", "/bankaccounts/".$vir->value, null, dolidelay(MONTH_IN_SECONDS, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
-echo "<div class='alert alert-danger' role='alert'><p align='justify'>Merci d'effectuer un virement d'un montant de <b>".doliprice($orderfo->multicurrency_total_ttc?$orderfo->multicurrency_total_ttc:$orderfo->total_ttc,$orderfo->multicurrency_code)."</b> sous <b>15 jours</b> en rappelant votre référence <b>$orderfo->ref</b> sur le compte suivant :</p><p><b>IBAN : $bank->iban</b>";
+echo "<div class='alert alert-danger' role='alert'><p align='justify'>".sprintf( esc_html__( 'Please send your transfert in the amount of %1$s with reference %2$s at the following iban: %3$s', 'doliconnect' ), doliprice($orderfo->multicurrency_total_ttc?$orderfo->multicurrency_total_ttc:$orderfo->total_ttc,$orderfo->multicurrency_code), $orderfo->ref, $bank->iban );
 if ( ! empty($bank->bic) ) { echo "<br><b>BIC/SWIFT : $bank->bic</b>";}
 echo "</p>$change</div>";
 } else {
