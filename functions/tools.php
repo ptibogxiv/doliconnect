@@ -166,7 +166,7 @@ $mail =  wp_mail($user->user_email, $subject, $body, $headers);
 }
 add_action('wp_login', 'Doliconnect_MailAlert', 10, 2);
 
-function dolidocdownload($type, $ref=null, $fichier=null, $url=null, $name=null) {
+function dolidocdownload($type, $ref=null, $fichier=null, $url=null, $name=null, $refresh = false) {
 global $wpdb;
 $ID = get_current_user_id();
  
@@ -174,7 +174,15 @@ if ( $name == null ) { $name=$fichier; }
 
 if ( isset($_GET["download"]) && $_GET["securekey"] ==  hash('sha256', $ID.$type.$_GET["download"]) && $_GET["download"] == "$ref/$fichier" ) {
 
+if ( !empty($refresh) ) {
+$rdr = [
+    'module_part'  => $type,
+    'original_file' => $ref.'/'.$fichier
+	];
+$doc = callDoliApi("PUT", "/documents/builddoc", $rdr, 0);
+} else {
 $doc = callDoliApi("GET", "/documents/download?module_part=$type&original_file=$ref/$fichier", null, 0);
+}
 
 $decoded = base64_decode($doc->content);      
 $up_dir = wp_upload_dir();
