@@ -49,7 +49,7 @@ This version fixes a security related bug.  Upgrade immediately.
 == Changelog ==
 = 3.2.2 =
 * clean code
-* ipdate bootswatch
+* update bootswatch
  
 = 3.2.1 =
 * update translation
