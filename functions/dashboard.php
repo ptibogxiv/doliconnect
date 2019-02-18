@@ -334,7 +334,7 @@ add_action( 'user_doliconnect_avatars', 'avatars_module');
 
 function contacts_menu($arg) {
 echo "<a href='".esc_url( add_query_arg( 'module', 'contacts', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-action";
-if ( $arg=='contacts' ) { echo " active";}
+if ( $arg == 'contacts' ) { echo " active"; }
 echo "'>".__( 'Manage address book', 'doliconnect' )."</a>";
 }
 add_action( 'user_doliconnect_menu', 'contacts_menu', 2, 1);
@@ -600,7 +600,7 @@ add_action( 'compta_doliconnect_proposal', 'proposal_module' );
 
 function proposal_menu( $arg ) {
 echo "<a href='".esc_url( add_query_arg( 'module', 'proposal', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-action";
-if ($arg=='proposal') { echo " active";}
+if ( $arg == 'proposal' ) { echo " active";}
 echo "'>".__( 'Propals tracking', 'doliconnect' )."</a>";
 }
 
@@ -749,7 +749,7 @@ add_action( 'compta_doliconnect_order', 'order_module' );
 
 function order_menu( $arg ) {
 echo "<a href='".esc_url( add_query_arg( 'module', 'order', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-action";
-if ($arg == 'order') { echo " active";}
+if ( $arg == 'order' ) { echo " active"; }
 echo "'>".__( 'Orders tracking', 'doliconnect' )."</a>";
 }
 
@@ -1053,7 +1053,7 @@ add_action( 'compta_doliconnect_contract', 'contract_module' );
 
 function contract_menu( $arg ) {
 echo "<a href='".esc_url( add_query_arg( 'module', 'contract', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-action";
-if ($arg=='contract') { echo " active";}
+if ( $arg == 'contract' ) { echo " active"; }
 echo "'>".__( 'Contracts tracking', 'doliconnect' )."</a>";
 }
 
