@@ -1,6 +1,6 @@
 <?php
 
-function doliprice($object, $mode = "ttc", $currency = "EUR"){
+function doliprice($object, $mode = "ttc", $currency = "EUR") {
 global $current_user; 
 
 if ( is_object($object) ) {
@@ -22,7 +22,7 @@ $fmt = numfmt_create( $locale, NumberFormatter::CURRENCY );
 return numfmt_format_currency($fmt, $montant, $currency);//.$decimal
 }
 
-function doliproductstock($product){
+function doliproductstock($product) {
 if ( $product->stock_reel > $product->seuil_stock_alerte && $product->stock_reel > '10' && $product->type == '0' ) {$stock = "<span class='badge badge-pill badge-success'>".__( 'In stock', 'doliconnect' )."</span>";}
 elseif ( $product->stock_reel <= $product->seuil_stock_alerte && $product->seuil_stock_alerte > '10' && $product->stock_reel > '10' && $product->type == '0' ) {$stock = "<span class='badge badge-pill badge-warning'>".__( 'In stock', 'doliconnect' )."</span>";}
 elseif ( $product->stock_reel <= '10' && $product->stock_reel > '0' && $product->type == '0' ) { $stock = "<span class='badge badge-pill badge-danger'>".__( 'Limited stock', 'doliconnect' )."</span>";}
