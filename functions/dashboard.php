@@ -334,7 +334,7 @@ add_action( 'user_doliconnect_avatars', 'avatars_module');
 
 function contacts_menu($arg) {
 echo "<a href='".esc_url( add_query_arg( 'module', 'contacts', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-action";
-if ($arg=='contacts') { echo " active";}
+if ( $arg=='contacts' ) { echo " active";}
 echo "'>".__( 'Manage address book', 'doliconnect' )."</a>";
 }
 add_action( 'user_doliconnect_menu', 'contacts_menu', 2, 1);
@@ -366,7 +366,7 @@ $listcontact = callDoliApi("GET", $request, null, dolidelay($delay, true));
 
 } elseif ( isset ($_POST['contact']) && $_POST['contact'] > 0 ) {
 
-$delete = callDoliApi("DELETE", "/contacts/".$_POST['contact'], null, HOUR_IN_SECONDS);
+$delete = callDoliApi("DELETE", "/contacts/".$_POST['contact'], null, 0);
 $listcontact = callDoliApi("GET", $request, null, dolidelay($delay, true));
 
 } else {
@@ -427,7 +427,7 @@ echo "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
 
 if ( !isset($listcontact->error) && $listcontact != null ) {
 $idcontact=1;
-foreach ($listcontact as $contact) {
+foreach ( $listcontact as $contact ) {
 $count=$contact->ref_facturation+$contact->ref_contrat+$contact->ref_commande+$contact->ref_propal;
 echo "<li class='list-group-item list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>
 <input id='$contact->id' onclick='ShowHideDiv()' class='custom-control-input' type='radio' name='contact' value='$contact->id' ";
@@ -435,8 +435,8 @@ if ( $idcontact=='1' ) { echo " checked "; }
 echo " ><label class='custom-control-label w-100' for='$contact->id'><div class='row'><div class='col-3 col-md-2 col-xl-2 align-middle'>";
 echo "<center><i class='fas fa-address-card fa-3x fa-fw'></i></center>";
 echo "</div><div class='col-9 col-md-10 col-xl-10 align-middle'><h6 class='my-0'>$contact->civility_code $contact->firstname $contact->lastname";
-if ( !empty($contact->poste) ) {echo " / $contact->poste";}
-if ( !empty($contact->default) ) {echo " <i class='fas fa-star fa-1x fa-fw'></i>";}
+if ( !empty($contact->poste) ) { echo " / $contact->poste"; }
+if ( !empty($contact->default) ) { echo " <i class='fas fa-star fa-1x fa-fw'></i>"; }
 echo "</h6><small class='text-muted'>$contact->address<br>$contact->zip $contact->town - $contact->country<br>$contact->email $contact->phone_pro</small>";
 echo '</div></div></label></div></li>';
 $idcontact++;
@@ -614,7 +614,7 @@ $proposalfo = callDoliApi("GET", $request, null, dolidelay($delay, esc_attr(isse
 //echo $proposalfo;
 }
 
-if ( isset($_GET['id']) && isset($_GET['ref']) && ( constant("DOLIBARR") == $proposalfo->socid ) && ( $_GET['ref'] == $proposalfo->ref ) && $proposalfo->statut !=0 ) {
+if ( !isset($proposalfo->error) && isset($_GET['id']) && isset($_GET['ref']) && ( constant("DOLIBARR") == $proposalfo->socid ) && ( $_GET['ref'] == $proposalfo->ref ) && $proposalfo->statut !=0 ) {
 echo "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>$proposalfo->ref</h5><div class='row'><div class='col-md-5'>";
 $datecreation =  date_i18n('d/m/Y', $proposalfo->date_creation);
 $datevalidation =  date_i18n('d/m/Y', $proposalfo->date_validation);
@@ -763,7 +763,7 @@ $orderfo = callDoliApi("GET", $request, null, dolidelay($delay, esc_attr(isset($
 //echo $orderfo;
 }
 
-if ( isset($_GET['id']) && isset($_GET['ref']) && (constant("DOLIBARR") == $orderfo->socid ) && ($_GET['ref'] == $orderfo->ref) && $orderfo->statut != 0 ) {
+if ( !isset($orderfo->error) && isset($_GET['id']) && isset($_GET['ref']) && (constant("DOLIBARR") == $orderfo->socid ) && ($_GET['ref'] == $orderfo->ref) && $orderfo->statut != 0 ) {
 
 if ( isset($_POST['token']) || isset($_POST['modepayment']) ) {
 
@@ -1067,7 +1067,7 @@ $contractfo = callDoliApi("GET", $request, null, dolidelay($delay, esc_attr(isse
 //echo $contractfo;
 }
 
-if ( isset($_GET['id']) && isset($_GET['ref']) && (constant("DOLIBARR") == $contractfo->socid) && ($_GET['ref'] == $contractfo->ref) ) {
+if ( !isset($contractfo->error) && isset($_GET['id']) && isset($_GET['id']) && isset($_GET['ref']) && (constant("DOLIBARR") == $contractfo->socid) && ($_GET['ref'] == $contractfo->ref) ) {
 echo "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>$contractfo->ref</h5><div class='row'><div class='col-md-5'>";
 $datecontract =  date_i18n('d/m/Y', $contractfo->date_creation);
 echo "<b>".__( 'Date of creation', 'doliconnect' ).": </b> ".date_i18n('d/m/Y', $contractfo->date_creation)."<br>";
