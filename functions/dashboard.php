@@ -605,10 +605,12 @@ echo "'>".__( 'Propals tracking', 'doliconnect' )."</a>";
 }
 
 function proposal_module( $url ) {
+
+$request = "/proposals/".esc_attr($_GET['id']);
 $delay = HOUR_IN_SECONDS;
 
 if ( isset($_GET['id']) && $_GET['id'] > 0 ) {
-$proposalfo = callDoliApi("GET", "/proposals/".$_GET['id'], null, dolidelay($delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$proposalfo = callDoliApi("GET", $request, null, dolidelay($delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 //echo $proposalfo;
 }
 
@@ -696,7 +698,7 @@ echo "<div class='col-md-7'><h5>" . $val['label'] . "</h5>" . $val['description'
 echo "</ul></div>";
 
 echo "<small><div class='float-left'>";
-echo dolirefresh("/proposals/".$_GET['id'],$url."&id=".$_GET['id']."&ref=".$_GET['ref'],$delay);
+echo dolirefresh($request, $url."&id=".$_GET['id']."&ref=".$_GET['ref'], $delay);
 echo "</div><div class='float-right'>";
 echo dolihelp('COM');
 echo "</div></small>";
@@ -752,10 +754,12 @@ echo "'>".__( 'Orders tracking', 'doliconnect' )."</a>";
 }
 
 function order_module( $url ) {
+
+$request = "/orders/".esc_attr($_GET['id']);
 $delay = HOUR_IN_SECONDS;
 
 if ( isset($_GET['id']) && $_GET['id'] > 0 ) {
-$orderfo = callDoliApi("GET", "/orders/".$_GET['id'], null, dolidelay($delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$orderfo = callDoliApi("GET", $request, null, dolidelay($delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 //echo $orderfo;
 }
 
@@ -974,7 +978,7 @@ echo "<div class='col-md-7'><h5>" . $val['label'] . "</h5>" . $val['description'
 echo "</ul></div>";
 
 echo "<small><div class='float-left'>";
-echo dolirefresh("/orders/".$_GET['id'],$url."&id=".$_GET['id']."&ref=".$_GET['ref'],$delay);
+echo dolirefresh($request , $url."&id=".$_GET['id']."&ref=".$_GET['ref'], $delay);
 echo "</div><div class='float-right'>";
 echo dolihelp('COM');
 echo "</div></small>";
@@ -1054,10 +1058,12 @@ echo "'>".__( 'Contracts tracking', 'doliconnect' )."</a>";
 }
 
 function contract_module( $url ) {
+
+$request = "/contracts/".esc_attr($_GET['id']); 
 $delay = HOUR_IN_SECONDS;
 
 if ( isset($_GET['id']) && $_GET['id'] > 0 ) {
-$contractfo = callDoliApi("GET", "/contracts/".$_GET['id'], null, dolidelay($delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$contractfo = callDoliApi("GET", $request, null, dolidelay($delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 //echo $contractfo;
 }
 
@@ -1119,7 +1125,7 @@ echo "</li>";
 echo "</ul></div>";
 
 echo "<small><div class='float-left'>";
-echo dolirefresh("/contracts/".$_GET['id'], $url."&id=".$_GET['id']."&ref=".$_GET['ref'], $delay);
+echo dolirefresh($request, $url."&id=".$_GET['id']."&ref=".$_GET['ref'], $delay);
 echo "</div><div class='float-right'>";
 echo dolihelp('COM');
 echo "</div></small>";
@@ -1482,10 +1488,12 @@ echo "'>".__( 'Help', 'doliconnect' )."</a>";
 }
 
 function ticket_module( $url ) {
+
+$request = "/tickets/".esc_attr($_GET['id']);
 $delay = HOUR_IN_SECONDS;
 
 if ( isset($_GET['id']) && $_GET['id'] > 0 ) {
-$ticket = callDoliApi("GET", "/tickets/".esc_attr($_GET['id']), null, dolidelay($delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$ticket = callDoliApi("GET", $request, null, dolidelay($delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 //echo $ticket;
 }
 
