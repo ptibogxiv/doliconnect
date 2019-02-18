@@ -61,7 +61,7 @@ $url = esc_url( add_query_arg( 'return', $_GET['return'], $url) );
 }
 
 if ( constant("DOLIBARR") > '0' ) {
-$thirdparty = callDoliApi("GET", $request, null, dolidelay( $delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
+$thirdparty = callDoliApi("GET", $request, null, dolidelay($delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
 }
 
 echo "<form action='".$url."' id='informations-form' method='post' class='was-validated' enctype='multipart/form-data'><input type='hidden' name='case' value='updateuser'>";
