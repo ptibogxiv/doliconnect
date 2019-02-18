@@ -978,7 +978,7 @@ echo "<div class='col-md-7'><h5>" . $val['label'] . "</h5>" . $val['description'
 echo "</ul></div>";
 
 echo "<small><div class='float-left'>";
-echo dolirefresh($request , $url."&id=".$_GET['id']."&ref=".$_GET['ref'], $delay);
+echo dolirefresh($request, $url."&id=".$_GET['id']."&ref=".$_GET['ref'], $delay);
 echo "</div><div class='float-right'>";
 echo dolihelp('COM');
 echo "</div></small>";
@@ -1483,7 +1483,7 @@ add_action( 'settings_doliconnect_ticket', 'ticket_module');
 
 function ticket_menu( $arg ) {
 echo "<a href='".esc_url( add_query_arg( 'module', 'ticket', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-action";
-if ($arg=='ticket') { echo " active";}
+if ( $arg == 'ticket' ) { echo " active"; }
 echo "'>".__( 'Help', 'doliconnect' )."</a>";
 }
 
@@ -1555,8 +1555,10 @@ echo "</SCRIPT>";
 echo '<div class="form-group"><label for="ticketnewmessage"><small>'.__( 'Response', 'doliconnect' ).'</small></label>
 <div class="input-group mb-2"><div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-comment fa-fw"></i></span></div><textarea class="form-control" name="ticket_newmessage" id="ticket_newmessage" rows="5"></textarea>
 </div></div><input type="hidden" name="case" value="messageticket"><button class="btn btn-danger btn-block" type="submit"><b>'.__( 'Send', 'doliconnect' ).'</b></button></form>';
+
 echo doliloading('ticket');
 echo "</li>";
+
 }
 if ( isset($ticket->messages) ) {
 foreach ( $ticket->messages as $msg ) {
@@ -1564,6 +1566,13 @@ $datemsg =  date_i18n('d/m/Y - H:i', $msg->datec);
 echo  "<li class='list-group-item'><b>$datemsg $msg->fk_user_action_string</b><br>$msg->message</li>";
 }} 
 echo "</ul></div>";
+
+echo "<small><div class='float-left'>"; 
+echo dolirefresh($request, $url."&id=".esc_attr($_GET['id'])."&ref=".esc_attr($_GET['ref']), $delay);
+echo "</div><div class='float-right'>";
+echo dolihelp('COM');
+echo "</div></small>";
+
 } elseif ( isset($_GET['create']) ) {
 
 if ( isset($_POST["case"]) && $_POST["case"] == 'createticket' ) {
@@ -1663,7 +1672,6 @@ echo "<div class='form-group'>
 echo "<div class='card-body'><input type='hidden' name='case' value='createticket'><button type='submit' class='btn btn-block btn-warning'><b>".__( 'Send', 'doliconnect' )."</b></button></div>";
 
 echo "</div></form>";
-echo doliloading('ticket');
 
 } else {
 
