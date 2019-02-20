@@ -594,17 +594,17 @@ echo doliloading('password');
 add_action( 'user_doliconnect_password', 'password_module');
 //*****************************************************************************************
 if ( is_object($proposal) && $proposal->value == 1 ) {
-add_action( 'compta_doliconnect_menu', 'proposal_menu', 1, 1);
-add_action( 'compta_doliconnect_proposal', 'proposal_module' );
+add_action( 'compta_doliconnect_menu', 'proposals_menu', 1, 1);
+add_action( 'compta_doliconnect_proposals', 'proposals_module' );
 }
 
-function proposal_menu( $arg ) {
-echo "<a href='".esc_url( add_query_arg( 'module', 'proposal', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-action";
-if ( $arg == 'proposal' ) { echo " active";}
+function proposals_menu( $arg ) {
+echo "<a href='".esc_url( add_query_arg( 'module', 'proposals', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-action";
+if ( $arg == 'proposals' ) { echo " active";}
 echo "'>".__( 'Propals tracking', 'doliconnect' )."</a>";
 }
 
-function proposal_module( $url ) {
+function proposals_module( $url ) {
 
 $request = "/proposals/".esc_attr($_GET['id']);
 $delay = HOUR_IN_SECONDS;
@@ -730,7 +730,7 @@ elseif ( $postproposal->statut == -1 ) { echo "<span class='fa fa-check-circle f
 echo "</span></a>";
 }}
 else{
-echo "<li class='list-group-item list-group-item-light'><center>".__( 'No propal', 'doliconnect' )."</center></li>";
+echo "<li class='list-group-item list-group-item-light'><center>".__( 'No proposal', 'doliconnect' )."</center></li>";
 }
 echo  "</ul></div>";
 
@@ -743,17 +743,17 @@ echo "</div></small>";
 }
 
 if ( is_object($order) && $order->value == 1 ) {
-add_action( 'compta_doliconnect_menu', 'order_menu', 2, 1);
-add_action( 'compta_doliconnect_order', 'order_module' );
+add_action( 'compta_doliconnect_menu', 'orders_menu', 2, 1);
+add_action( 'compta_doliconnect_orders', 'orders_module' );
 }
 
-function order_menu( $arg ) {
-echo "<a href='".esc_url( add_query_arg( 'module', 'order', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-action";
-if ( $arg == 'order' ) { echo " active"; }
+function orders_menu( $arg ) {
+echo "<a href='".esc_url( add_query_arg( 'module', 'orders', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-action";
+if ( $arg == 'orders' ) { echo " active"; }
 echo "'>".__( 'Orders tracking', 'doliconnect' )."</a>";
 }
 
-function order_module( $url ) {
+function orders_module( $url ) {
 
 $request = "/orders/".esc_attr($_GET['id']);
 $delay = HOUR_IN_SECONDS;
