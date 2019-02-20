@@ -123,7 +123,7 @@ $html .= "<h6>".__( 'First subscription at', 'doliconnect' )." ".doliprice($mont
 $html .= $postadh->note.'</div>';
 
 if ( function_exists('dolimembership_modal') ) {
-$html .= '<div class="card-footer"><a href="'.doliconnecturl('doliaccount').'?module=membership" role="button" class="btn btn-lg btn-block btn'.$color.'">'.__( 'Subscribe', 'doliconnect' ).'</a></div>';
+$html .= '<div class="card-footer"><a href="'.doliconnecturl('doliaccount').'?module=members" role="button" class="btn btn-lg btn-block btn'.$color.'">'.__( 'Subscribe', 'doliconnect' ).'</a></div>';
 }
 
 $html .= '</div>';
@@ -147,7 +147,7 @@ $html .= ")";
 $html .= "</small></b><br /><small class='text-justify text-muted '>".$postadh->note."</small></div>";
 
 if ( function_exists('dolimembership_modal') ) {
-$html .= '<div class="col-md-4"><a href="'.doliconnecturl('doliaccount').'?module=membership" role="button" class="btn btn-block btn'.$color.'">'.__( 'Subscribe', 'doliconnect' ).'</a></div>';
+$html .= '<div class="col-md-4"><a href="'.doliconnecturl('doliaccount').'?module=members" role="button" class="btn btn-block btn'.$color.'">'.__( 'Subscribe', 'doliconnect' ).'</a></div>';
 }
 
 $html .= "</div></td></tr>"; 

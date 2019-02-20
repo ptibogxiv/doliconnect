@@ -1481,17 +1481,17 @@ echo "</div></small>";
 //*****************************************************************************************
 
 if ( is_object($help) && $help->value == '1' ) {
-add_action( 'settings_doliconnect_menu', 'ticket_menu', 1, 1);
-add_action( 'settings_doliconnect_ticket', 'ticket_module');
+add_action( 'settings_doliconnect_menu', 'tickets_menu', 1, 1);
+add_action( 'settings_doliconnect_tickets', 'tickets_module');
 }
 
-function ticket_menu( $arg ) {
-echo "<a href='".esc_url( add_query_arg( 'module', 'ticket', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-action";
-if ( $arg == 'ticket' ) { echo " active"; }
+function tickets_menu( $arg ) {
+echo "<a href='".esc_url( add_query_arg( 'module', 'tickets', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-action";
+if ( $arg == 'tickets' ) { echo " active"; }
 echo "'>".__( 'Help', 'doliconnect' )."</a>";
 }
 
-function ticket_module( $url ) {
+function tickets_module( $url ) {
 
 $request = "/tickets/".esc_attr($_GET['id']);
 $delay = HOUR_IN_SECONDS;
@@ -1620,6 +1620,7 @@ echo "</SCRIPT>";
 echo "<div class='card shadow-sm'><ul class='list-group list-group-flush'><li class='list-group-item'><h5 class='card-title'>".__( 'Open a new ticket', 'doliconnect' )."</h5>";
 echo "<div class='form-group'><label for='inputcivility'><small>".__( 'Type and category', 'doliconnect' )."</small></label>
 <div class='input-group mb-2'><div class='input-group-prepend'><span class='input-group-text' id='identity'><i class='fas fa-info-circle fa-fw'></i></span></div>";
+
 $type = callDoliApi("GET", "/setup/dictionary/ticket_types?sortfield=pos&sortorder=ASC&limit=100", null, MONTH_IN_SECONDS);
 //echo $type;
 
@@ -1652,6 +1653,7 @@ echo "</select>";
 echo "</div></div>";
 echo "<div class='form-group'><label for='inputcivility'><small>".__( 'Severity', 'doliconnect' )."</small></label>
 <div class='input-group mb-2'><div class='input-group-prepend'><span class='input-group-text' id='identity'><i class='fas fa-bug fa-fw'></i></span></div>";
+
 $severity = callDoliApi("GET", "/setup/dictionary/ticket_severities?sortfield=pos&sortorder=ASC&limit=100", null, MONTH_IN_SECONDS);
 
 if ( isset($severity) ) { 
