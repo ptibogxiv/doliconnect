@@ -1051,17 +1051,17 @@ echo "</div></small>";
 }
 
 if ( is_object($contract) && $contract->value == 1 && get_option('doliconnectbeta') =='1' ) {
-add_action( 'compta_doliconnect_menu', 'contract_menu', 2, 1);
-add_action( 'compta_doliconnect_contract', 'contract_module' );
+add_action( 'compta_doliconnect_menu', 'contracts_menu', 2, 1);
+add_action( 'compta_doliconnect_contracts', 'contracts_module' );
 }
 
-function contract_menu( $arg ) {
-echo "<a href='".esc_url( add_query_arg( 'module', 'contract', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-action";
-if ( $arg == 'contract' ) { echo " active"; }
+function contracts_menu( $arg ) {
+echo "<a href='".esc_url( add_query_arg( 'module', 'contracts', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-action";
+if ( $arg == 'contracts' ) { echo " active"; }
 echo "'>".__( 'Contracts tracking', 'doliconnect' )."</a>";
 }
 
-function contract_module( $url ) {
+function contracts_module( $url ) {
 
 $request = "/contracts/".esc_attr($_GET['id']); 
 $delay = HOUR_IN_SECONDS;
