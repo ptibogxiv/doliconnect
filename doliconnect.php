@@ -1396,16 +1396,16 @@ $adherent = callDoliApi("GET", "/adherentsplus/".constant("DOLIBARR_MEMBER"), nu
 }
  
 if ($adherent->statut == '1' && $adherent->datefin < current_time('timestamp')) {
-echo "<A class='btn btn-block btn-success' href='".esc_url( add_query_arg( 'module', 'membership', doliconnecturl('doliaccount')) )."' >".__( 'Pay my subscription', 'doliconnect' )."</a>"; 
+echo "<A class='btn btn-block btn-success' href='".esc_url( add_query_arg( 'module', 'members', doliconnecturl('doliaccount')) )."' >".__( 'Pay my subscription', 'doliconnect' )."</a>"; 
 }
 elseif ($adherent->statut == '0') {
-echo "<a class='btn btn-block btn-info' href='".esc_url( add_query_arg( 'module', 'membership', doliconnecturl('doliaccount')) )."' >Adhérer</a>"; 
+echo "<a class='btn btn-block btn-info' href='".esc_url( add_query_arg( 'module', 'members', doliconnecturl('doliaccount')) )."' >Adhérer</a>"; 
 }
 elseif ($adherent->statut == '-1') {
-echo "<a class='btn btn-block btn-warning disabled' href='".esc_url( add_query_arg( 'module', 'membership', doliconnecturl('doliaccount')) )."' >Adhésion demandée</a>"; 
+echo "<a class='btn btn-block btn-warning disabled' href='".esc_url( add_query_arg( 'module', 'members', doliconnecturl('doliaccount')) )."' >Adhésion demandée</a>"; 
 }
 elseif (!$adherent->id > 0) {
-echo "<a class='btn btn-block btn-success' href='".esc_url( add_query_arg( 'module', 'membership', doliconnecturl('doliaccount')) )."' >Adhérer à l'association</a>"; 
+echo "<a class='btn btn-block btn-success' href='".esc_url( add_query_arg( 'module', 'members', doliconnecturl('doliaccount')) )."' >Adhérer à l'association</a>"; 
 }
 
 

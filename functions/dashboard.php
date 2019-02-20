@@ -1199,17 +1199,17 @@ echo "</div></small>";
 }
 //*****************************************************************************************
 if ( is_object($member) && $member->value == '1' ) {
-add_action( 'options_doliconnect_menu', 'membership_menu', 1, 1);
-add_action( 'options_doliconnect_membership', 'membership_module' );
+add_action( 'options_doliconnect_menu', 'members_menu', 1, 1);
+add_action( 'options_doliconnect_members', 'members_module' );
 }
 
-function membership_menu( $arg ) {
-echo "<a href='".esc_url( add_query_arg( 'module', 'membership', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-action";
-if ($arg=='membership') { echo " active";}
+function members_menu( $arg ) {
+echo "<a href='".esc_url( add_query_arg( 'module', 'members', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-action";
+if ($arg=='members') { echo " active";}
 echo "'>".__( 'Membership', 'doliconnect' )."</a>";
 }
 
-function membership_module( $url ) {
+function members_module( $url ) {
 global $current_user;
 $ID = $current_user->ID;
 $time = current_time( 'timestamp',1);
@@ -1296,7 +1296,7 @@ echo  "<a href='#' id='subscribe-button2' class='btn btn text-white btn-warning 
 }else { echo  "<button class='btn btn btn-danger btn-block' data-toggle='modal' data-target='#activatemember'><b>".__( 'Pay my subscription', 'doliconnect' )."</b></button>";}
 } elseif ( $adherent->statut == '0' ) {
 if ( ( $adherent->datefin + 86400) > $time ) {
-echo "<form id='subscription-form' action='".doliconnecturl('doliaccount')."?module=membership' method='post'><input type='hidden' name='update_membership' value='4'><button id='resiliation-button' class='btn btn btn-warning btn-block' type='submit'><b>".__( 'Reactivate my subscription', 'doliconnect' )."</b></button></form>";
+echo "<form id='subscription-form' action='".doliconnecturl('doliaccount')."?module=members' method='post'><input type='hidden' name='update_membership' value='4'><button id='resiliation-button' class='btn btn btn-warning btn-block' type='submit'><b>".__( 'Reactivate my subscription', 'doliconnect' )."</b></button></form>";
 } else {
 echo  "<a href='#' class='btn btn text-white btn-warning btn-block' data-toggle='modal' data-target='#activatemember'><b>".__( 'Renew my subscription', 'doliconnect' )."</b></a>";
 }
@@ -1305,7 +1305,7 @@ echo '<div class="clearfix"><div class="spinner-border float-left" role="status"
 <span class="sr-only">Loading...</span></div>'.__('Your request has been registered. You will be notified at validation.', 'doliconnect').'</div>';
 } else {
 if ( empty($current_user->billing_address) || empty($current_user->billing_zipcode) || empty($current_user->billing_city) || empty($current_user->billing_country) || empty($current_user->billing_birth) || empty($current_user->user_firstname) || empty($current_user->user_lastname) || empty($current_user->user_email)) {
-echo "Pour adhérer, tous les champs doivent être renseignés dans vos <a href='".esc_url( get_permalink(get_option('doliaccount')))."?module=informations&return=membership' class='alert-link'>".__( 'Personal informations', 'doliconnect' )."</a></div><div class='col-sm-6 col-md-7'>";
+echo "Pour adhérer, tous les champs doivent être renseignés dans vos <a href='".esc_url( get_permalink(get_option('doliaccount')))."?module=informations&return=members' class='alert-link'>".__( 'Personal informations', 'doliconnect' )."</a></div><div class='col-sm-6 col-md-7'>";
 } else { 
 echo "<a href='#' class='btn btn text-white btn-warning btn-block' data-toggle='modal' data-target='#activatemember'><b>".__( 'Become a member', 'doliconnect' )."</b></a>";
 }
