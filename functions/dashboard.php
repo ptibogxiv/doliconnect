@@ -379,7 +379,7 @@ if ( constant("DOLIBARR") > 0 ) {
 $thirdparty = callDoliApi("GET", "/thirdparties/".constant("DOLIBARR"), null, dolidelay( $delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
 }
 
-echo "<form role='form' action='$url' id='contact-form' method='post' novalidate>";
+echo "<form role='form' action='$url' id='contact-form' method='post' navalidate>";  //class='was-validated' enctype='multipart/form-data'
 
 echo "<script>";
 ?>
