@@ -84,9 +84,9 @@ if ( isset($pays) ) {
 $form .= "<select class='custom-select' id='inputcountry'  name='billing_country' required>";
 foreach ( $pays as $postv ) {
 $form .= "<option value='".$postv->id."' ";
-if ( $object->country_id == $postv->id && $object->country_id != null ) {
-$form .= "selected ";}
- if ( $postv->id == '0' ) {$form .= "disabled ";}
+if ( $object->country_id == $postv->id && $object->country_id != null && $postv->id != '0' ) {
+$form .= "selected ";
+} elseif ( $postv->id == '0' ) {$form .= "disabled ";}
 $pays=$postv->label;
 $form .= ">$pays</option>";
 }
