@@ -1444,18 +1444,18 @@ echo dolihelp('COM');
 echo "</div></small>";
 }
 
-if ( is_object($donation) && $donation->value == '1' && ( get_option('doliconnectbeta')=='1' ) ) {
+if ( is_object($donation) && $donation->value == '1' ) {
 add_action( 'options_doliconnect_menu', 'donation_menu', 4, 1);
 add_action( 'options_doliconnect_donation', 'donation_module' );
 }  
 
-function donation_menu( $arg ) {
-echo "<a href='".esc_url( add_query_arg( 'module', 'donation', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-action";
-if ($arg=='donation') { echo " active";}
+function donations_menu( $arg ) {
+echo "<a href='".esc_url( add_query_arg( 'module', 'donations', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-action";
+if ($arg=='donations') { echo " active";}
 echo "'>".__( 'Donation', 'doliconnect' )."</a>";
 }
 
-function donation_module( $url ) {
+function donations_module( $url ) {
 global $wpdb,$current_user;
 $entity = get_current_blog_id();
 $ID = $current_user->ID;
