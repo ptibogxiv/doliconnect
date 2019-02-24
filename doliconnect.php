@@ -3,7 +3,7 @@
  * Plugin Name: Doliconnect
  * Plugin URI: https://www.ptibogxiv.net
  * Description: Connect your Dolibarr (free ERP/CRM) to Wordpress. 
- * Version: 3.2.4
+ * Version: 3.3.0
  * Author: ptibogxiv
  * Author URI: https://www.ptibogxiv.net/en
  * Network: true
@@ -69,7 +69,7 @@ return get_option('dolibarr_entity');
 } else {
 return get_current_blog_id();
 }
-
+//return get_current_network_id();
 }
 // ********************************************************
 function doliconst( $constante ) {
@@ -314,8 +314,7 @@ return $avatar;
 // ********************************************************
 
 function doliaccount_shortcode() {                                                                                                               
-global $wp_hasher,$current_user,$wpdb;
-require_once ABSPATH . WPINC . '/class-phpass.php';
+global $current_user,$wpdb;
 
 doliconnect_enqueues();
 
@@ -461,7 +460,6 @@ echo "</div>";
 echo "<p class='font-weight-light' align='justify'>".__( 'Manage your account, your informations, orders and much more via this secure client area.', 'doliconnect' )."</p></div></div></div>";
 echo "<div class='col-xs-12 col-sm-12 col-md-9'>";
 
-global $wp_hasher,$wpdb;
 if ( is_user_logged_in() ) {
 wp_redirect(site_url());
 exit;
@@ -530,7 +528,7 @@ update_user_meta( $ID, 'optin1', $_POST['optin1'] );
 
 $body = sprintf(__('Thank you for your registration on %s.', 'doliconnect'), $sitename);
 
-if ( function_exists('dolikiosk') && ! empty(dolikiosk()) ) {
+if ( function_exists('dolikiosk') && ! empty(dolikiosk()) ) { 
 $user = get_user_by( 'id', $ID);   
 if( $user ) {
     wp_set_current_user( $ID, $user->user_login );
@@ -539,12 +537,13 @@ if( $user ) {
 } 
 wp_redirect(esc_url(home_url()));
 exit;   
-} else {
+} else { 
 $user=get_user_by( 'ID', $ID );     
-$key=get_password_reset_key($ID);
-$hashed = current_time('timestamp') . ':' . $wp_hasher->HashPassword($key);
-$key_saved = $wpdb->update( $wpdb->users, array( 'user_activation_key' => $hashed ), array( 'user_login' => $user->user_login ) );
-$url=doliconnecturl('doliaccount')."?rpw&key=$key&login=$user->user_login"; 
+$user = get_user_by( 'email', $email);   
+$key = get_password_reset_key($user);
+
+$arr_params = array( 'rpw' => true, 'key' => $key, 'login' => $user->user_login);  
+$url = esc_url( add_query_arg( $arr_params, doliconnecturl('doliaccount')) );
 
 $body .= "<br /><br />".__('To activate your account on and choose your password, please click on the following link', 'doliconnect').":<br /><br /><a href='".$url."'>".$url."</a>";
 }
@@ -815,15 +814,13 @@ if( isset($_POST['user_email']) ) {
             $emailTo = get_option('admin_email');
         }
         
-$user=get_user_by( 'email', $email);     
-$key=get_password_reset_key($user->ID);
-$hashed = current_time('timestamp') . ':' . $wp_hasher->HashPassword($key);
-$key_saved = $wpdb->update( $wpdb->users, array( 'user_activation_key' => $hashed ), array( 'user_login' => $user->user_login ) );
+$user = get_user_by( 'email', $email);   
+$key = get_password_reset_key($user);
 
 $arr_params = array( 'rpw' => true, 'key' => $key, 'login' => $user->user_login);  
 $url = esc_url( add_query_arg( $arr_params, doliconnecturl('doliaccount')) );
 
-if ( true == $key_saved && DOLICONNECT_DEMO != $user->ID ) {
+if ( !empty($key) && DOLICONNECT_DEMO != $user->ID ) { 
 			$sitename = get_option('blogname');
       $siteurl = get_option('siteurl');
       $subject = "[$sitename] ".__( 'Reset Password', 'doliconnect' );
@@ -1041,7 +1038,7 @@ elseif(isset($_POST['submitted'])) {
 
 }
 
-echo "<div class='row'><div class='col-md-4'><div class='form-group'><h4>Siège social</h4>";
+echo "<div class='row'><div class='col-md-4'><div class='form-group'><h4>Siege social</h4>";
 echo doliconst('MAIN_INFO_SOCIETE_ADDRESS');
 echo "<br />";
 echo doliconst('MAIN_INFO_SOCIETE_ZIP');
@@ -1050,7 +1047,7 @@ echo doliconst('MAIN_INFO_SOCIETE_TOWN');
 echo "</div></div><div class='col-md-8'><div id='content'>";
 if(isset($emailSent) && $emailSent == true) { 
 echo "<div class='alert alert-success'>
-<p>Merci! Votre message a été envoyé avec succès.</p>
+<p>Merci! Votre message a ete envoye avec succes.</p>
 </div>";
 } else { 
 if(isset($hasError) || isset($captchaError)) { 

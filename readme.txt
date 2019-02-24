@@ -2,9 +2,9 @@
 
 Contributors: ptibogxiv
 Tags: erp, crm, ecommerce, dolibarr, payment, interface, customer, subscription, membership, doliconnect, dashboard
-Requires at least: 4.9
+Requires at least: 5.1
 Tested up to: 5.1.0
-Stable tag: 3.2.4
+Stable tag: 3.3.0
 Requires PHP: 7.0
 Donate link: https://www.paypal.me/ptibogxiv
 
@@ -40,17 +40,15 @@ This version fixes a security related bug.  Upgrade immediately.
 2. Front-end form feature.
 3. Front-end form request succeed.
 4. Confirmation email sent to the user/visitor.
-5. Data requests screen updated in WordPress Admin.
-6. The user/visitor confirmed this Data Request.
-7. Website owner can email user/visitor personal data.
-8. The user/visitor received an email with a download link.
-9. Personal Data Export as received by the user/visitor.
 
 == Changelog ==
+= 3.2.5 =
+* fix password reset
+
 = 3.2.4 =
 * clean code & optimization
 * fix lang
-* 
+
 = 3.2.3 =
 * clean code
 * fix download main doc / regenerate
@@ -68,12 +66,10 @@ This version fixes a security related bug.  Upgrade immediately.
 * bootstrap 4.3 & fontawesome 5.7.1
 * fix loader in login form
 
-== Changelog ==
 = 3.1.5 =
 * clean code
 * fix forgotten password form
 
-== Changelog ==
 = 3.1.4 =
 * clean code
 * optimize contact form

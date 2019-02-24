@@ -137,10 +137,6 @@ if ( add_site_option( 'dolibarr_private_key', sanitize_text_field($_REQUEST['dol
 } else {
 update_site_option('dolibarr_private_key', sanitize_text_field($_REQUEST['dolibarr_private_key'])); 
 }
-if ( add_site_option( 'doliconnect_mode', sanitize_text_field($_REQUEST['doliconnect_mode'])) ) {
-} else {
-update_site_option('doliconnect_mode', sanitize_text_field($_REQUEST['doliconnect_mode']));
-}
 if ( add_site_option( 'doliconnect_login', sanitize_text_field($_REQUEST['doliconnect_login'])) ) {
 } else {
 update_site_option('doliconnect_login', sanitize_text_field($_REQUEST['doliconnect_login']));
@@ -193,14 +189,6 @@ $infodoliconnect = callDoliApi("GET", "/status", null, 5 * MINUTE_IN_SECONDS);
                 <p class="text-success">Access Locked: <?php echo $infodoliconnect->success->access_locked; ?></p>
 <?php } else { ?><p class="text-danger">Offline</p><?php } ?></td>
             </tr>
-<?php if ( is_multisite() ) { ?>
-            <tr>
-                <th style="width:150px;"><label for="doliconnect_mode">Doliconnect mode</label></th>
-                <td ><select id=doliconnect_mode" name="doliconnect_mode">
-                <option value="multi" <?php if (get_site_option('doliconnect_mode')=='multi') { ?>selected<?php } ?>> Multisite to multi Dolibarr</option>
-                <option value="one" <?php if (get_site_option('doliconnect_mode')=='one') { ?>selected<?php } ?>> Multisite to one Dolibarr</option>
-                </select></td>
-            </tr><?php } ?>
             <tr>
                 <th style="width:150px;"><label for="dolibarr_login">Wordpress Login Page</label></th>
                 <td ><?php echo site_url(); ?>/<input class="regular-text" type="text" id="dolibarr_login" name="doliconnect_login"  value="<?php echo get_site_option('doliconnect_login'); ?>" required><br>ex: wp-login.php (wordpress default)</td>
