@@ -1465,10 +1465,12 @@ $delay = HOUR_IN_SECONDS;
 
 if ( isset($_GET['id']) && $_GET['id'] > 0 ) {
 $donationfo = callDoliApi("GET", $request, null, dolidelay($delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-//echo $orderfo;
+//echo $donationfo;
 }
 
-if ( !isset($donationfo->error) && isset($_GET['id']) && isset($_GET['ref']) && (constant("DOLIBARR") == $orderfo->socid ) && ($_GET['ref'] == $donationfo->ref) && $donationfo->statut != 0 ) {
+if ( !isset($donationfo->error) && isset($_GET['id']) && isset($_GET['ref']) && (constant("DOLIBARR") == $donationfo->socid ) && ($_GET['ref'] == $donationfo->ref) && $donationfo->statut != 0 ) {
+
+
 
 } else {
 
