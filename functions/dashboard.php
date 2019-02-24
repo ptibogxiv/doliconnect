@@ -1476,7 +1476,7 @@ if ( !isset($donationfo->error) && isset($_GET['id']) && isset($_GET['ref']) && 
 
 if ( isset($_GET['pg']) ) { $page="&page=".$_GET['pg']; }
 
-$request= "/donations?sortfield=t.rowid&sortorder=DESC&limit=8".$page."&thirdparty_ids=".constant("DOLIBARR");//."&sqlfilters=(t.fk_statut!=0)"
+$request= "/donations?sortfield=t.rowid&sortorder=DESC&limit=8".$page."&thirdparty_ids=".constant("DOLIBARR")."&sqlfilters=(t.fk_statut!=0)";//
 $delay = DAY_IN_SECONDS;
 
 $listdonation = callDoliApi("GET", $request, null, dolidelay($delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
