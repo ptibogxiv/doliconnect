@@ -42,6 +42,9 @@ This version fixes a security related bug.  Upgrade immediately.
 4. Confirmation email sent to the user/visitor.
 
 == Changelog ==
+= 3.3.0 =
+* add support multi-network
+
 = 3.2.5 =
 * fix password reset
 
