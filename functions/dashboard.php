@@ -1460,6 +1460,18 @@ global $wpdb,$current_user;
 $entity = get_current_blog_id();
 $ID = $current_user->ID;
 
+$request = "/orders/".esc_attr($_GET['id']);
+$delay = HOUR_IN_SECONDS;
+
+if ( isset($_GET['id']) && $_GET['id'] > 0 ) {
+$donationfo = callDoliApi("GET", $request, null, dolidelay($delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+//echo $orderfo;
+}
+
+if ( !isset($donationfo->error) && isset($_GET['id']) && isset($_GET['ref']) && (constant("DOLIBARR") == $orderfo->socid ) && ($_GET['ref'] == $donationfo->ref) && $donationfo->statut != 0 ) {
+
+} else {
+
 if ( isset($_GET['pg']) ) { $page="&page=".$_GET['pg']; }
 
 $request= "/donations?sortfield=t.rowid&sortorder=DESC&limit=8".$page."&thirdparty_ids=".constant("DOLIBARR");//."&sqlfilters=(t.fk_statut!=0)"
@@ -1495,6 +1507,7 @@ echo dolirefresh($request, $url, $delay);
 echo "</div><div class='float-right'>";
 echo dolihelp('COM');
 echo "</div></small>";
+}
 }
 //*****************************************************************************************
 
