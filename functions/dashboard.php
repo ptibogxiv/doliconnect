@@ -1445,8 +1445,8 @@ echo "</div></small>";
 }
 
 if ( is_object($donation) && $donation->value == '1' ) {
-add_action( 'options_doliconnect_menu', 'donation_menu', 4, 1);
-add_action( 'options_doliconnect_donation', 'donation_module' );
+add_action( 'options_doliconnect_menu', 'donations_menu', 4, 1);
+add_action( 'options_doliconnect_donations', 'donations_module' );
 }  
 
 function donations_menu( $arg ) {
@@ -1460,7 +1460,7 @@ global $wpdb,$current_user;
 $entity = get_current_blog_id();
 $ID = $current_user->ID;
 
-$request = "/donation/".constant("DOLIBARR");
+$request = "/donations/".constant("DOLIBARR");
 $delay = DAY_IN_SECONDS;
 
 if ( isset($_GET['pg']) ) { $page="&page=".$_GET['pg']; }
@@ -1485,7 +1485,7 @@ elseif ( $postdonation->statut == -1 ) { echo "<span class='fa fa-check-circle f
 echo "</span></a>";
 }}
 else{
-echo "<li class='list-group-item list-group-item-light'><center>".__( 'No proposal', 'doliconnect' )."</center></li>";
+echo "<li class='list-group-item list-group-item-light'><center>".__( 'No donation', 'doliconnect' )."</center></li>";
 }
 echo  "</ul></div>";
 
