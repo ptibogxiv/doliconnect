@@ -1463,19 +1463,36 @@ $ID = $current_user->ID;
 $request = "/donation/".constant("DOLIBARR");
 $delay = DAY_IN_SECONDS;
 
-echo "<div class='card shadow-sm'>";
+if ( isset($_GET['pg']) ) { $page="&page=".$_GET['pg']; }
 
+$listdonation = callDoliApi("GET", $request, null, dolidelay($delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
-echo "<ul class='list-group list-group-flush'><li class='list-group-item'>";
+echo '<div class="card shadow-sm"><ul class="list-group list-group-flush">';  
+if ( !isset( $listdonation->error ) && $listdonation != null ) {
+foreach ( $listdonation as $postdonation ) { 
 
-echo "developpement en cours";
-
-echo "</li></ul></div>";
+$arr_params = array( 'id' => $postdonation->id, 'ref' => $postdonation->ref);  
+$return = esc_url( add_query_arg( $arr_params, $url) );
+                
+echo "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-action'><div><i class='fa fa-shopping-bag fa-3x fa-fw'></i></div><div><h6 class='my-0'>$postdonation->ref</h6><small class='text-muted'>du ".date_i18n('d/m/Y', $postdonation->date_creation)."</small></div><span>".doliprice($postdonation, 'ttc', isset($postdonation->multicurrency_code) ? $postdonation->multicurrency_code : null)."</span><span>";
+if ( $postdonation->statut == 3 ) {
+if ( $postdonation->billed == 1 ) { echo "<span class='fa fa-check-circle fa-fw text-success'></span><span class='fa fa-eur fa-fw text-success'></span><span class='fa fa-truck fa-fw text-success'></span><span class='fa fa-file-text fa-fw text-success'></span>"; } 
+else { echo "<span class='fa fa-check-circle fa-fw text-success'></span><span class='fa fa-eur fa-fw text-success'></span><span class='fa fa-truck fa-fw text-success'></span><span class='fa fa-file-text fa-fw text-warning'></span>"; } }
+elseif ( $postdonation->statut == 2 ) { echo "<span class='fa fa-check-circle fa-fw text-success'></span><span class='fa fa-eur fa-fw text-success'></span><span class='fa fa-truck fa-fw text-warning'></span><span class='fa fa-file-text fa-fw text-danger'></span>"; }
+elseif ( $postproppsal->statut == 1 ) { echo "<span class='fa fa-check-circle fa-fw text-success'></span><span class='fa fa-eur fa-fw text-warning'></span><span class='fa fa-truck fa-fw text-danger'></span><span class='fa fa-file-text fa-fw text-danger'></span>"; }
+elseif ( $postdonation->statut == 0 ) { echo "<span class='fa fa-check-circle fa-fw text-warning'></span><span class='fa fa-eur fa-fw text-danger'></span><span class='fa fa-truck fa-fw text-danger'></span><span class='fa fa-file-text fa-fw text-danger'></span>"; }
+elseif ( $postdonation->statut == -1 ) { echo "<span class='fa fa-check-circle fa-fw text-secondary'></span><span class='fa fa-eur fa-fw text-secondary'></span><span class='fa fa-truck fa-fw text-secondary'></span><span class='fa fa-file-text fa-fw text-secondary'></span>"; }
+echo "</span></a>";
+}}
+else{
+echo "<li class='list-group-item list-group-item-light'><center>".__( 'No proposal', 'doliconnect' )."</center></li>";
+}
+echo  "</ul></div>";
 
 echo "<small><div class='float-left'>";
 echo dolirefresh($request, $url, $delay);
 echo "</div><div class='float-right'>";
-echo dolihelp('ISSUE');
+echo dolihelp('COM');
 echo "</div></small>";
 }
 //*****************************************************************************************
