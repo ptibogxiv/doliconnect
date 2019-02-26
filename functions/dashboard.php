@@ -1573,6 +1573,13 @@ echo "</div></div></li>";
 echo "<li class='list-group-item list-group-item-info'>";
 echo "<b>".__( 'Amount', 'doliconnect').": ".doliprice($donationfo, 'amount', isset($donationfo->multicurrency_code) ? $donationfo->multicurrency_code : null)."</b>";
 echo "</li>";
+echo "</ul></div>";
+
+echo "<small><div class='float-left'>";
+echo dolirefresh($request, $url, $delay);
+echo "</div><div class='float-right'>";
+echo dolihelp('COM');
+echo "</div></small>";
 
 } else {
 
@@ -1604,7 +1611,7 @@ echo "</span></a>";
 else{
 echo "<li class='list-group-item list-group-item-light'><center>".__( 'No donation', 'doliconnect' )."</center></li>";
 }
-echo  "</ul></div>";
+echo "</ul></div>";
 
 echo "<small><div class='float-left'>";
 echo dolirefresh($request, $url, $delay);
