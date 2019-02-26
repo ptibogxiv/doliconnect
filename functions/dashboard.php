@@ -1460,7 +1460,7 @@ global $wpdb,$current_user;
 $entity = get_current_blog_id();
 $ID = $current_user->ID;
 
-$request = "/orders/".esc_attr($_GET['id']);
+$request = "/donations/".esc_attr($_GET['id']);
 $delay = HOUR_IN_SECONDS;
 
 if ( isset($_GET['id']) && $_GET['id'] > 0 ) {
