@@ -1470,7 +1470,109 @@ $donationfo = callDoliApi("GET", $request, null, dolidelay($delay, esc_attr(isse
 
 if ( !isset($donationfo->error) && isset($_GET['id']) && isset($_GET['ref']) && (constant("DOLIBARR") == $donationfo->socid ) && ($_GET['ref'] == $donationfo->ref) && $donationfo->statut != 0 ) {
 
+echo "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>$donationfo->ref</h5><div class='row'><div class='col-md-5'>";
+$datecommande =  date_i18n('d/m/Y', $donationfo->date_creation);
+echo "<b>".__( 'Date of order', 'doliconnect' ).":</b> $datecommande<br>";
+if ( $donationfo->statut > 0 ) {
+if ( $donationfo->billed == 1 ) {
+if ( $donationfo->statut >1 ) { $orderinfo=__( 'Shipped', 'doliconnect' ); 
+$orderavancement=100; }
+else { $orderinfo=__( 'Processing', 'doliconnect' );
+$orderavancement=40; }
+}
+else { $orderinfo=null;
+$orderinfo=null;
+$orderavancement=25;
+}
+}
+elseif ( $donationfo->statut == 0 ) { $orderinfo=__( 'Validation', 'doliconnect' );
+$orderavancement=7; }
+elseif ( $donationfo->statut == -1 ) { $orderinfo=__( 'Canceled', 'doliconnect' );
+$orderavancement=0;  }
 
+echo "<b>".__( 'Payment method', 'doliconnect' ).":</b> ".__( $donationfo->mode_reglement, 'doliconnect-pro' )."<br><br></div><div class='col-md-7'>";
+
+if ( isset($orderinfo) ) {
+echo "<h3 class='text-right'>".$orderinfo."</h3>";
+}
+
+if ( $donationfo->billed != 1 && $donationfo->statut > 0 ) {
+
+if ( function_exists('dolipaymentmodes') ) {
+
+$change = "<small><a href='#' id='button-source-payment' data-toggle='modal' data-target='#orderonlinepay'><span class='fas fa-sync-alt'></span> ".__( 'Change your payment mode', 'doliconnect' )."</a></small>";
+
+echo "<div class='modal fade' id='orderonlinepay' tabindex='-1' role='dialog' aria-labelledby='orderonlinepayLabel' aria-hidden='true'  aria-hidden='true' data-backdrop='static' data-keyboard='false'>
+<div class='modal-dialog modal-dialog-centered' role='document'><div class='modal-content'><div class='modal-header border-0'><h4 class='modal-title border-0' id='orderonlinepayLabel'>".__( 'Payment methods', 'doliconnect' )."</h4>
+<button id='closemodalonlinepay' type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div><div class='modal-body'>";
+
+$listsource = callDoliApi("GET", "/doliconnector/".constant("DOLIBARR")."/sources", null, dolidelay($delay, isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+//echo $listsource;
+
+if ( !empty($donationfo->paymentintent) ) {
+dolipaymentmodes( $listsource, $donationfo, $url, $url);
+} else {
+doligateway($listsource, $donationfo->ref, $donationfo->multicurrency_total_ttc?$donationfo->multicurrency_total_ttc:$donationfo->total_ttc, $donationfo->multicurrency_code, $url.'&id='.$_GET['id'].'&ref='.$_GET['ref'], 'full');
+echo doliloading('paymentmodes'); }
+
+echo "</div></div></div></div>";
+
+} else {
+
+$change = "<a href='".get_site_option('dolibarr_public_url')."/public/payment/newpayment.php?source=".esc_attr($_GET['module'])."&ref=".esc_attr($_GET['ref'])."&securekey=".sha1(md5('nw38LmcS3tgow7D1tGZGiBr56GPK059Q' . esc_attr($_GET['module']) . esc_attr($_GET['ref'])))."&entity=".dolibarr_entity()."' target='_blank'><span class='fa fa-credit-card'></span> ".__( 'Pay online', 'doliconnect' )."</a>";
+
+}
+
+if ( $donationfo->mode_reglement_code == 'CHQ' ) {
+$chq = callDoliApi("GET", "/doliconnector/constante/FACTURE_CHQ_NUMBER", null, dolidelay(MONTH_IN_SECONDS, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+
+$bank = callDoliApi("GET", "/bankaccounts/".$chq->value, null, dolidelay(MONTH_IN_SECONDS, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+
+echo "<div class='alert alert-danger' role='alert'><p align='justify'>".sprintf( __( 'Please send your cheque in the amount of <b>%1$s</b> with reference <b>%2$s</b> to <b>%3$s</b> at the following address', 'doliconnect' ), doliprice($donationfo->multicurrency_total_ttc?$donationfo->multicurrency_total_ttc:$donationfo->total_ttc,$donationfo->multicurrency_code), $donationfo->ref, $bank->proprio).":</p><p><b>$bank->owner_address</b></p>$change</div>";
+} elseif ( $donationfo->mode_reglement_code == 'VIR' ) { 
+$vir = callDoliApi("GET", "/doliconnector/constante/FACTURE_RIB_NUMBER", null, dolidelay(MONTH_IN_SECONDS, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+
+$bank = callDoliApi("GET", "/bankaccounts/".$vir->value, null, dolidelay(MONTH_IN_SECONDS, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+
+echo "<div class='alert alert-danger' role='alert'><p align='justify'>".sprintf( __( 'Please send your transfert in the amount of <b>%1$s</b> with reference <b>%2$s</b> at the following account', 'doliconnect' ), doliprice($donationfo->multicurrency_total_ttc?$donationfo->multicurrency_total_ttc:$donationfo->total_ttc,$donationfo->multicurrency_code), $donationfo->ref ).":";
+echo "<br><b>IBAN: $bank->iban</b>";
+if ( ! empty($bank->bic) ) { echo "<br><b>BIC/SWIFT: $bank->bic</b>";}
+echo "</p>$change</div>";
+} else {
+echo "<button type='button' id='button-source-payment' class='btn btn-warning btn-block' data-toggle='modal' data-target='#orderonlinepay'><span class='fa fa-credit-card'></span> ".__( 'Pay', 'doliconnect' )."</button><br>";
+}
+
+}
+
+echo "</div></div>";
+echo '<div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: '.$orderavancement.'%" aria-valuenow="'.$orderavancement.'" aria-valuemin="0" aria-valuemax="100"></div></div>';
+echo "<div class='w-auto text-muted d-none d-sm-block' ><div style='display:inline-block;width:20%'>".__( 'Order', 'doliconnect' )."</div><div style='display:inline-block;width:15%'>".__( 'Payment', 'doliconnect' )."</div><div style='display:inline-block;width:25%'>".__( 'Processing', 'doliconnect' )."</div><div style='display:inline-block;width:20%'>".__( 'Shipping', 'doliconnect' )."</div><div class='text-right' style='display:inline-block;width:20%'>".__( 'Delivery', 'doliconnect' )."</div></div>";
+
+echo "</div><ul class='list-group list-group-flush'>";
+ 
+if ( $donationfo->lines != null ) {
+foreach ( $donationfo->lines as $line ) {
+echo "<li class='list-group-item'>";     
+if ( $line->date_start != '' && $line->date_end != '' )
+{
+$start = date_i18n('d/m/Y', $line->date_start);
+$end = date_i18n('d/m/Y', $line->date_end);
+$dates =" <i>(Du $start au $end)</i>";
+}
+
+echo '<div class="w-100 justify-content-between"><div class="row"><div class="col-8 col-md-10"> 
+<h6 class="mb-1">'.$line->libelle.'</h6>
+<p class="mb-1">'.$line->description.'</p>
+<small>'.$dates.'</small>'; 
+echo '</div><div class="col-4 col-md-2 text-right"><h5 class="mb-1">'.doliprice($line, 'ttc', isset($line->multicurrency_code) ? $line->multicurrency_code : null).'</h5>';
+echo '<h5 class="mb-1">x'.$line->qty.'</h5>'; 
+echo "</div></div></li>";
+}
+}
+
+echo "<li class='list-group-item list-group-item-info'>";
+echo "<b>".__( 'Total incl. tax', 'doliconnect').": ".doliprice($donationfo, 'amount', isset($donationfo->multicurrency_code) ? $donationfo->multicurrency_code : null)."</b>";
+echo "</li>";
 
 } else {
 
