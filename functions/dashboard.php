@@ -1571,7 +1571,7 @@ echo "</div></div></li>";
 }
 
 echo "<li class='list-group-item list-group-item-info'>";
-echo "<b>".__( 'Total incl. tax', 'doliconnect').": ".doliprice($donationfo, 'amount', isset($donationfo->multicurrency_code) ? $donationfo->multicurrency_code : null)."</b>";
+echo "<b>".__( 'Amount', 'doliconnect').": ".doliprice($donationfo, 'amount', isset($donationfo->multicurrency_code) ? $donationfo->multicurrency_code : null)."</b>";
 echo "</li>";
 
 } else {
