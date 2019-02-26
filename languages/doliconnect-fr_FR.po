@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2019-02-24 19:55+0100\n"
-"PO-Revision-Date: 2019-02-24 19:56+0100\n"
+"POT-Creation-Date: 2019-02-26 18:51+0100\n"
+"PO-Revision-Date: 2019-02-26 18:51+0100\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_FR\n"
@@ -773,8 +773,8 @@ msgid "Manage linked members"
 msgstr "Gérer les membres liés"
 
 #: functions/dashboard.php:1455
-msgid "Donation"
-msgstr "Don"
+msgid "Donations tracking"
+msgstr "Suivi des dons"
 
 #: functions/dashboard.php:1503
 msgid "No donation"
@@ -1104,6 +1104,9 @@ msgstr "ptibogxiv"
 #. Author URI of the plugin/theme
 msgid "https://www.ptibogxiv.net/en"
 msgstr "https://www.ptibogxiv.net/fr"
+
+#~ msgid "Donation"
+#~ msgstr "Don"
 
 #~ msgid "Civility"
 #~ msgstr "Civilité"
