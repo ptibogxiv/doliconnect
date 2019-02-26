@@ -1452,7 +1452,7 @@ add_action( 'options_doliconnect_donations', 'donations_module' );
 function donations_menu( $arg ) {
 echo "<a href='".esc_url( add_query_arg( 'module', 'donations', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-action";
 if ($arg=='donations') { echo " active";}
-echo "'>".__( 'Donation', 'doliconnect' )."</a>";
+echo "'>".__( 'Donations tracking', 'doliconnect' )."</a>";
 }
 
 function donations_module( $url ) {
@@ -1489,7 +1489,7 @@ foreach ( $listdonation as $postdonation ) {
 $arr_params = array( 'id' => $postdonation->id, 'ref' => $postdonation->ref);  
 $return = esc_url( add_query_arg( $arr_params, $url) );
                 
-echo "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-action'><div><i class='fa fa-shopping-bag fa-3x fa-fw'></i></div><div><h6 class='my-0'>$postdonation->ref</h6><small class='text-muted'>du ".date_i18n('d/m/Y', $postdonation->date_creation)."</small></div><span>".doliprice($postdonation, 'ttc', isset($postdonation->multicurrency_code) ? $postdonation->multicurrency_code : null)."</span><span>";
+echo "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-action'><div><i class='fa fa-shopping-bag fa-3x fa-fw'></i></div><div><h6 class='my-0'>$postdonation->ref</h6><small class='text-muted'>du ".date_i18n('d/m/Y', $postdonation->date_creation)."</small></div><span>".doliprice($postdonation, '', isset($postdonation->multicurrency_code) ? $postdonation->multicurrency_code : null)."</span><span>";
 if ( $postdonation->statut == 3 ) {
 if ( $postdonation->billed == 1 ) { echo "<span class='fa fa-check-circle fa-fw text-success'></span><span class='fa fa-eur fa-fw text-success'></span><span class='fa fa-truck fa-fw text-success'></span><span class='fa fa-file-text fa-fw text-success'></span>"; } 
 else { echo "<span class='fa fa-check-circle fa-fw text-success'></span><span class='fa fa-eur fa-fw text-success'></span><span class='fa fa-truck fa-fw text-success'></span><span class='fa fa-file-text fa-fw text-warning'></span>"; } }
