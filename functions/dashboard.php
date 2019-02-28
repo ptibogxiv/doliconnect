@@ -1591,7 +1591,8 @@ $delay = DAY_IN_SECONDS;
 $listdonation = callDoliApi("GET", $request, null, dolidelay($delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 //print var_dump($listdonation);
 
-echo '<div class="card shadow-sm"><ul class="list-group list-group-flush">';  
+echo '<div class="card shadow-sm"><ul class="list-group list-group-flush">';
+echo '<a href="#" class="list-group-item lh-condensed list-group-item-action list-group-item-primary"><center><i class="fas fa-plus-circle"></i> '.__( 'New donation', 'doliconnect' ).'</center></a>';  
 if ( !isset( $listdonation->error ) && $listdonation != null ) {
 foreach ( $listdonation as $postdonation ) { 
 
@@ -1831,7 +1832,7 @@ $listticket = callDoliApi("GET", $request, null, dolidelay($delay, esc_attr(isse
 
 echo '<div class="card shadow-sm"><ul class="list-group list-group-flush">';
 //if ($help>0) {
-echo "<li class='list-group-item list-group-item-light'><a href='".$url."&create' class='btn btn-info btn-block'><b>".__( 'Open a new ticket', 'doliconnect' )."</b></a></li>";
+echo '<a href="'.$url.'&create" class="list-group-item lh-condensed list-group-item-action list-group-item-primary"><center><i class="fas fa-plus-circle"></i> '.__( 'New ticket', 'doliconnect' ).'</center></a>';  
 //}
 if ( !isset($listticket->error) && $listticket != null ) {
 foreach ($listticket as $postticket) {                                                                                 
