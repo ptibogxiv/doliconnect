@@ -267,7 +267,8 @@ delete_option('doliconnect_google');}
             update_option('doliconnect_social_github', sanitize_text_field($_REQUEST['doliconnect_social_github']));
             update_option('doliconnect_social_linkedin', sanitize_text_field($_REQUEST['doliconnect_social_linkedin']));
             update_option('doliconnect_social_skype', sanitize_text_field($_REQUEST['doliconnect_social_skype']));                        
-            update_option('dolicontact', sanitize_text_field($_REQUEST['dolicontact']));            
+            update_option('dolicontact', sanitize_text_field($_REQUEST['dolicontact']));
+            update_option('dolidonation', sanitize_text_field($_REQUEST['dolidonation']));            
             update_option('doliconnect_captcha_sitekey', sanitize_text_field($_REQUEST['doliconnect_captcha_sitekey']));   
             update_option('doliconnect_captcha_secretkey', sanitize_text_field(['doliconnect_captcha_secretkey']));
             update_option('doliconnect_facebook_key', sanitize_text_field($_REQUEST['doliconnect_facebook_key']));
@@ -369,7 +370,19 @@ checked('1', get_option('doliconnectrestrict')); } else { ?> disabled <?php } ?>
     'selected' => get_option('dolicontact') 
 );
            wp_dropdown_pages($args); ?> [dolicontact] </td>
-            </tr>              
+            </tr>
+            <tr>
+                <th style="width:150px;"><label for="dolibarr_contact">dolibarr_donation</label></th>
+                <td >
+           <?php 
+           $args = array(
+    'name' => 'dolicontact', 
+    'show_option_none' => __( '— Select —' ), 
+    'option_none_value' => '0', 
+    'selected' => get_option('dolidonation') 
+);
+           wp_dropdown_pages($args); ?> [dolidonation] </td>
+            </tr>                           
              <tr>
                 <th style="width:150px;"><label for="dolibarr_legacy">dolibarr_legacy</label></th>
                 <td ><?php 
