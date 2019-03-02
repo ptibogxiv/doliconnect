@@ -1592,7 +1592,7 @@ $listdonation = callDoliApi("GET", $request, null, dolidelay($delay, esc_attr(is
 //print var_dump($listdonation);
 
 echo '<div class="card shadow-sm"><ul class="list-group list-group-flush">';
-echo '<a href="#" class="list-group-item lh-condensed list-group-item-action list-group-item-primary disabled"><center><i class="fas fa-plus-circle"></i> '.__( 'New donation', 'doliconnect' ).'</center></a>';  
+echo '<a href="#" class="list-group-item lh-condensed list-group-item-action list-group-item-primary disabled"><center><i class="fas fa-plus-circle"></i> '.__( 'Donate', 'doliconnect' ).'</center></a>';  
 if ( !isset( $listdonation->error ) && $listdonation != null ) {
 foreach ( $listdonation as $postdonation ) { 
 
