@@ -38,18 +38,8 @@ wp_update_user( array( 'ID' => $ID, 'user_url' => sanitize_textarea_field($third
 update_user_meta( $ID, 'civility_id', sanitize_text_field($thirdparty['civility_id']));
 update_user_meta( $ID, 'billing_type', sanitize_text_field($thirdparty['morphy']));
 if ( isset($_POST['billing_company']) ) { update_user_meta( $ID, 'billing_company', sanitize_text_field($thirdparty['name'])); }
-//update_user_meta( $ID, 'billing_address', sanitize_textarea_field($thirdparty['address']));
-//update_user_meta( $ID, 'billing_zipcode', sanitize_text_field($thirdparty['zip']));
-//update_user_meta( $ID, 'billing_city', sanitize_text_field($thirdparty['town']));
-//update_user_meta( $ID, 'billing_country', sanitize_text_field($thirdparty['country_id'] ));
-//update_user_meta( $ID, 'billing_phone', sanitize_text_field($thirdparty['phone'])); 
 update_user_meta( $ID, 'billing_birth', $thirdparty['birth']);
-//if ( isset($thirdparty['array_options']) && $thirdparty['array_options'] ) {
-//foreach ($thirdparty['array_options'] as $label => $value)
-//{
-//update_user_meta( $ID, $wpdb->prefix.'doliextra_'.$label, $value);
-//}
-//}
+
 do_action('wp_dolibarr_sync', $thirdparty);
 
 if ( isset($_GET['return']) ) {
