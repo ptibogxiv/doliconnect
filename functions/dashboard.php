@@ -21,32 +21,36 @@ add_action( 'user_doliconnect_menu', 'informations_menu', 1, 1);
 function informations_module($url) {
 global $wpdb,$current_user,$doliconnect;
 $ID = $current_user->ID;
+
 $request = "/thirdparties/".constant("DOLIBARR");
 $delay = DAY_IN_SECONDS;
 
-if ( isset($_POST["case"]) && $_POST["case"] == 'updateuser'  ) {
-wp_update_user( array( 'ID' => $ID, 'user_email' => sanitize_email($_POST['user_email'])));
+$thirdparty=$_POST['thirdparty'];
+
+if ( isset($_POST["case"]) && $_POST["case"] == 'updateuser' ) {
+wp_update_user( array( 'ID' => $ID, 'user_email' => sanitize_email($thirdparty['email'])));
 wp_update_user( array( 'ID' => $ID, 'nickname' => sanitize_user($_POST['user_nicename'])));
-wp_update_user( array( 'ID' => $ID, 'display_name' => ucfirst(strtolower($_POST['user_firstname']))." ".strtoupper($_POST['user_lastname'])));
-wp_update_user( array( 'ID' => $ID, 'first_name' => ucfirst(sanitize_user(strtolower($_POST['user_firstname'])))));
-wp_update_user( array( 'ID' => $ID, 'last_name' => strtoupper(sanitize_user($_POST['user_lastname']))));
+wp_update_user( array( 'ID' => $ID, 'display_name' => ucfirst(strtolower($thirdparty['firstname']))." ".strtoupper($thirdparty['lastname'])));
+wp_update_user( array( 'ID' => $ID, 'first_name' => ucfirst(sanitize_user(strtolower($thirdparty['firstname'])))));
+wp_update_user( array( 'ID' => $ID, 'last_name' => strtoupper(sanitize_user($thirdparty['lastname']))));
 wp_update_user( array( 'ID' => $ID, 'description' => sanitize_textarea_field($_POST['description'])));
-update_user_meta( $ID, 'billing_civility', sanitize_text_field($_POST['billing_civility']));
-update_user_meta( $ID, 'billing_type', sanitize_text_field($_POST['billing_type']));
-if ( isset($_POST['billing_company']) ) { update_user_meta( $ID, 'billing_company', sanitize_text_field($_POST['billing_company'])); }
-update_user_meta( $ID, 'billing_address', sanitize_textarea_field($_POST['billing_address']));
-update_user_meta( $ID, 'billing_zipcode', sanitize_text_field($_POST['billing_zipcode']));
-update_user_meta( $ID, 'billing_city', sanitize_text_field($_POST['billing_city']));
-update_user_meta( $ID, 'billing_country', sanitize_text_field($_POST['billing_country'] ));
-update_user_meta( $ID, 'billing_phone', sanitize_text_field($_POST['billing_phone'])); 
-update_user_meta( $ID, 'billing_birth', $_POST['billing_birth']);
-if ( isset($_POST['array_options']) && $_POST['array_options'] ) {
-foreach ($_POST['array_options'] as $label => $value)
-{
-update_user_meta( $ID, $wpdb->prefix.'doliextra_'.$label, $value);
-}
-}
-do_action('wp_dolibarr_sync',constant("DOLIBARR"));
+wp_update_user( array( 'ID' => $ID, 'user_url' => sanitize_textarea_field($thirdparty['url'])));
+update_user_meta( $ID, 'civility_id', sanitize_text_field($thirdparty['civility_id']));
+update_user_meta( $ID, 'billing_type', sanitize_text_field($thirdparty['morphy']));
+if ( isset($_POST['billing_company']) ) { update_user_meta( $ID, 'billing_company', sanitize_text_field($thirdparty['name'])); }
+//update_user_meta( $ID, 'billing_address', sanitize_textarea_field($thirdparty['address']));
+//update_user_meta( $ID, 'billing_zipcode', sanitize_text_field($thirdparty['zip']));
+//update_user_meta( $ID, 'billing_city', sanitize_text_field($thirdparty['town']));
+//update_user_meta( $ID, 'billing_country', sanitize_text_field($thirdparty['country_id'] ));
+//update_user_meta( $ID, 'billing_phone', sanitize_text_field($thirdparty['phone'])); 
+update_user_meta( $ID, 'billing_birth', $thirdparty['birth']);
+//if ( isset($thirdparty['array_options']) && $thirdparty['array_options'] ) {
+//foreach ($thirdparty['array_options'] as $label => $value)
+//{
+//update_user_meta( $ID, $wpdb->prefix.'doliextra_'.$label, $value);
+//}
+//}
+do_action('wp_dolibarr_sync', $thirdparty);
 
 if ( isset($_GET['return']) ) {
 wp_redirect(doliconnecturl('doliaccount').'?module='.$_GET['return']);
@@ -92,7 +96,7 @@ echo doliconnectuserform( $thirdparty, dolidelay(MONTH_IN_SECONDS, esc_attr(isse
 
 if( has_action('mydoliconnectuserform') ) {
 echo "<li class='list-group-item'>";
-do_action( 'mydoliconnectuserform');
+do_action('mydoliconnectuserform', $thirdparty);
 echo "</li>";
 }
 
@@ -102,17 +106,17 @@ echo "<div class='form-group'>
 <textarea type='text' class='form-control' name='description' id='description' rows='3'>".$current_user->description."</textarea></div></div>";
 echo "<div class='form-group'>
 <label for='description'><small>".__( 'Website', 'doliconnect' )."</small></label><div class='input-group mb-2'><div class='input-group-prepend'><span class='input-group-text'><i class='fas fa-link fa-fw'></i></span></div>
-<input type='url' class='form-control' name='website' id='website' placeholder='".__( 'Website', 'doliconnect' )."' value='".stripslashes(htmlspecialchars($current_user->user_url, ENT_QUOTES))."'></div></div>";
+<input type='url' class='form-control' name='thirdparty[url]' id='website' placeholder='".__( 'Website', 'doliconnect' )."' value='".stripslashes(htmlspecialchars($thirdparty->url, ENT_QUOTES))."'></div></div>";
 echo "<div class='form-group'><div class='row'>
 <div class='col-12 col-md-4'><label for='inlineFormInputGroup'><small>Facebook</small></label>
 <div class='input-group mb-2'><div class='input-group-prepend'><div class='input-group-text'><i class='fab fa-facebook-f fa-fw'></i></div></div>
-<input type='text' name='facebook' class='form-control' id='inlineFormInputGroup' placeholder='".__( 'Username', 'doliconnect' )."' value='".stripslashes(htmlspecialchars($thirdparty->facebook, ENT_QUOTES))."'></div></div>
+<input type='text' name='thirdparty[facebook]' class='form-control' id='inlineFormInputGroup' placeholder='".__( 'Username', 'doliconnect' )."' value='".stripslashes(htmlspecialchars($thirdparty->facebook, ENT_QUOTES))."'></div></div>
 <div class='col-12 col-md-4'><label for='inlineFormInputGroup'><small>Twitter</small></label>
 <div class='input-group mb-2'><div class='input-group-prepend'><div class='input-group-text'><i class='fab fa-twitter fa-fw'></i></div></div>
-<input type='text' name='twitter' class='form-control' id='inlineFormInputGroup' placeholder='".__( 'Username', 'doliconnect' )."' value='".stripslashes(htmlspecialchars($thirdparty->twitter, ENT_QUOTES))."'></div></div>
+<input type='text' name='thirdparty[twitter]' class='form-control' id='inlineFormInputGroup' placeholder='".__( 'Username', 'doliconnect' )."' value='".stripslashes(htmlspecialchars($thirdparty->twitter, ENT_QUOTES))."'></div></div>
 <div class='col-12 col-md-4'><label for='inlineFormInputGroup'><small>Skype</small></label>
 <div class='input-group mb-2'><div class='input-group-prepend'><div class='input-group-text'><i class='fab fa-skype fa-fw'></i></div></div>
-<input type='text' name='linkedin' class='form-control' id='inlineFormInputGroup' placeholder='".__( 'Username', 'doliconnect' )."' value='".stripslashes(htmlspecialchars($thirdparty->skype, ENT_QUOTES))."'></div></div>
+<input type='text' name='thirdparty[skype]' class='form-control' id='inlineFormInputGroup' placeholder='".__( 'Username', 'doliconnect' )."' value='".stripslashes(htmlspecialchars($thirdparty->skype, ENT_QUOTES))."'></div></div>
 </div>
 </div>";
 echo "</li>";
@@ -1213,6 +1217,7 @@ function members_module( $url ) {
 global $current_user;
 $ID = $current_user->ID;
 $time = current_time( 'timestamp',1);
+
 $request = "/adherentsplus/".constant("DOLIBARR_MEMBER");
 $delay = DAY_IN_SECONDS;
 
@@ -1303,8 +1308,13 @@ echo  "<a href='#' class='btn btn text-white btn-warning btn-block' data-toggle=
 } elseif ( $adherent->statut == '-1' ) {
 echo '<div class="clearfix"><div class="spinner-border float-left" role="status">
 <span class="sr-only">Loading...</span></div>'.__('Your request has been registered. You will be notified at validation.', 'doliconnect').'</div>';
-} else {
-if ( empty($current_user->billing_address) || empty($current_user->billing_zipcode) || empty($current_user->billing_city) || empty($current_user->billing_country) || empty($current_user->billing_birth) || empty($current_user->user_firstname) || empty($current_user->user_lastname) || empty($current_user->user_email)) {
+} else { 
+
+if ( constant("DOLIBARR") > 0 ) {
+$thirdparty = callDoliApi("GET", "/thirdparties/".constant("DOLIBARR"), null, dolidelay( $delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
+}
+
+if ( empty($thirdparty->address) || empty($thirdparty->zip) || empty($thirdparty->town) || empty($thirdparty->country_id) || empty($current_user->billing_birth) || empty($current_user->user_firstname) || empty($current_user->user_lastname) || empty($current_user->user_email)) {
 echo "Pour adhérer, tous les champs doivent être renseignés dans vos <a href='".esc_url( get_permalink(get_option('doliaccount')))."?module=informations&return=members' class='alert-link'>".__( 'Personal informations', 'doliconnect' )."</a></div><div class='col-sm-6 col-md-7'>";
 } else { 
 echo "<a href='#' class='btn btn text-white btn-warning btn-block' data-toggle='modal' data-target='#activatemember'><b>".__( 'Become a member', 'doliconnect' )."</b></a>";

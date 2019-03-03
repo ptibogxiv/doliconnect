@@ -1145,62 +1145,61 @@ add_shortcode('dolicontact', 'dolicontact_shortcode');
 
 // ********************************************************
 
-function update_synctodolibarr($dolibarr) {
+function update_synctodolibarr($element) {
 global $current_user,$wpdb;
 $entity = get_current_blog_id();
 wp_get_current_user();
 
-$resultatsa = $wpdb->get_results(
-$wpdb->prepare(
-        "SELECT * FROM ".$wpdb->base_prefix."usermeta where user_id = %d and meta_key like '".$wpdb->prefix."doliextra_%' ",
-        $current_user->ID
-    )
-);
-foreach ($resultatsa as $posta) {
-$subject = $posta->meta_key ;
-$search = $wpdb->prefix."doliextra_";
-$key = str_replace($search, '', $subject) ;
-$value = $posta->meta_value;
-$extrafields[$key] = $value;
-}
+//$resultatsa = $wpdb->get_results(
+//$wpdb->prepare(
+//        "SELECT * FROM ".$wpdb->base_prefix."usermeta where user_id = %d and meta_key like '".$wpdb->prefix."doliextra_%' ",
+//        $current_user->ID
+//    )
+//);
+//foreach ($resultatsa as $posta) {
+//$subject = $posta->meta_key ;
+//$search = $wpdb->prefix."doliextra_";
+//$key = str_replace($search, '', $subject) ;
+//$value = $posta->meta_value;
+//$extrafields[$key] = $value;
+//}
 
 if ($current_user->billing_type == 'phy'){
 $name = $current_user->user_firstname." ".$current_user->user_lastname;}
 else {$name = $current_user->billing_company;}
 if (NULL!=constant("DOLIBARR_MEMBER")) {
-$infomember = [
-    'login'  => $current_user->user_login,
-    'morphy'  => $current_user->billing_type,
-    'civility_id'  => $current_user->billing_civility,            
-    'firstname'  => $current_user->user_firstname,
-    'lastname'  => $current_user->user_lastname,
-    'address' => $current_user->billing_address,
-    'zip' => $current_user->billing_zipcode,
-    'town' => $current_user->billing_city,
-    'country_id' => $current_user->billing_country,
-    'email' => $current_user->user_email,
-    'phone' => $current_user->billing_phone,
-    'birth' => $current_user->billing_birth,
-    'array_options' => isset($extrafields) ? $extrafields : null
-	]; 
-
-$adherent = callDoliApi("PUT", "/adherentsplus/".constant("DOLIBARR_MEMBER"), $infomember, 0);
-update_user_meta( $current_user->ID, 'billing_birth', $current_user->billing_birth);
+//$infomember = [
+//   'login'  => $current_user->user_login,
+//   'morphy'  => $current_user->billing_type,
+//    'civility_id'  => $current_user->billing_civility,            
+//    'firstname'  => $current_user->user_firstname,
+//    'lastname'  => $current_user->user_lastname,
+//    'address' => $current_user->billing_address,
+//    'zip' => $current_user->billing_zipcode,
+//    'town' => $current_user->billing_city,
+//    'country_id' => $current_user->billing_country,
+//    'email' => $current_user->user_email,
+//    'phone' => $current_user->billing_phone,
+//    'birth' => $current_user->billing_birth,
+//    'array_options' => isset($extrafields) ? $extrafields : null
+//	]; 
+$adherent = callDoliApi("PUT", "/adherentsplus/".constant("DOLIBARR_MEMBER"), $element, 0);
+//update_user_meta( $current_user->ID, 'billing_birth', $current_user->billing_birth);
 }
 if ( constant("DOLIBARR") > 0 ) {
-$info = [
-    'status' => 1,
-    'name'  => $name,
-    'address' => $current_user->billing_address,
-    'zip' => $current_user->billing_zipcode,
-    'town' => $current_user->billing_city,
-    'country_id' => $current_user->billing_country,
-    'email' => $current_user->user_email,
-    'phone' => $current_user->billing_phone,
-    'url' => $current_user->user_url,
-    'array_options' => isset($extrafields) ? $extrafields : null
-	];
-$thirparty = callDoliApi("PUT", "/thirdparties/".constant("DOLIBARR"), $info, 0);
+//$info = [
+//    'status' => 1,
+//    'name'  => $name,
+//    'address' => $current_user->billing_address,
+//    'zip' => $current_user->billing_zipcode,
+//    'town' => $current_user->billing_city,
+//    'country_id' => $current_user->billing_country,
+//    'email' => $current_user->user_email,
+//    'phone' => $current_user->billing_phone,
+//    'url' => $current_user->user_url,
+//    'array_options' => isset($extrafields) ? $extrafields : null
+//	];
+$thirparty = callDoliApi("PUT", "/thirdparties/".constant("DOLIBARR"), $element, 0);
 }
 
 }
