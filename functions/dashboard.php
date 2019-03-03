@@ -115,7 +115,7 @@ echo "</ul><div class='card-body'><input type='hidden' name='userid' value='$ID'
 echo "</div>";
 
 echo "<small><div class='float-left'>";
-echo dolirefresh($request, $url, $delay);
+echo dolirefresh($request, $url, $delay, $thirdparty);
 echo "</div><div class='float-right'>";
 echo dolihelp('ISSUE');
 echo "</div></small>";
