@@ -1707,7 +1707,7 @@ echo doliloading('ticket');
 echo "</li>";
 
 }
-if ( isset($$ticketfo->messages) ) {
+if ( isset($ticketfo->messages) ) {
 foreach ( $ticketfo->messages as $msg ) {
 $datemsg =  date_i18n('d/m/Y - H:i', $msg->datec);  
 echo  "<li class='list-group-item'><b>$datemsg $msg->fk_user_action_string</b><br>$msg->message</li>";
