@@ -665,13 +665,9 @@ $dolibarr = callDoliApi("GET", "/doliconnector/".$user->ID, null, 0);
 if ($_POST["case"] == 'updatepwd'){
 $pwd = sanitize_text_field($_POST["pwd1"]);                                   
 if ( ($_POST["pwd1"] == $_POST["pwd2"]) && (preg_match('/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,20}/', $pwd))) {  //"#.*^(?=.{8,20})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*$#"
-$hash = md5($pwd);
-//wp_set_password($pwd, $ID);
-$update_user = wp_update_user( array (
-					'ID' => $user->ID, 
-					'user_pass' => $pwd
-				)
-			);
+
+wp_set_password($pwd, $user->ID);
+
 if ( $dolibarr->fk_user > '0' ) {
 $data = [
     'pass' => $pwd

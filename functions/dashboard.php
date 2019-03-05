@@ -483,39 +483,32 @@ echo "'>".__( 'Modify the password', 'doliconnect' )."</a>";
 add_action( 'user_doliconnect_menu', 'password_menu', 3, 1);
 
 function password_module( $url ){
-global $wp_hasher,$current_user,$DOLICONNECT_DEMO;
+global $current_user,$DOLICONNECT_DEMO;
 $ID = $current_user->ID;
 
 $msg = null;
 
 if ( isset($_POST["case"]) && $_POST["case"] == 'updatepwd' ) {
-$pwd = sanitize_text_field($_POST["pwd1"]);
+$pwd1 = sanitize_text_field($_POST["pwd1"]);
 $pwd0 = sanitize_text_field($_POST["pwd0"]);
 $pwd2 = sanitize_text_field($_POST["pwd2"]);
-$wp_hasher = new PasswordHash(8, TRUE);
-$password_hashed = $current_user->user_pass ;
-$plain_password = $pwd0;
-if ( ($wp_hasher->CheckPassword($plain_password, $password_hashed)) && ($pwd == $pwd2) && (preg_match('/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,20}/', $pwd)) ) {
-$hash = md5($pwd);
-//wp_set_password($pwd, $ID);
-$update_user = wp_update_user( array (
-					'ID' => $ID, 
-					'user_pass' => $pwd
-				)
-			);
+
+if ( (wp_check_password( $pwd0, $current_user->user_pass, $current_user->ID ) ) && ($pwd1 == $pwd2) && (preg_match('/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,20}/', $pwd)) ) {
+wp_set_password($pwd1, $ID);
+
 if (constant("DOLIBARR_USER") > '0'){
 $data = [
-    'pass' => $pwd
+    'pass' => $pwd1
 	];
 $doliuser = callDoliApi("PUT", "/users/".constant("DOLIBARR_USER"), $data, 0);
 }
 
 $msg = "<div class='alert alert-success'><h4 class='alert-heading'>".__( 'Congratulations!', 'doliconnect' )."</h4><p>".__( 'Your password has been changed', 'doliconnect' )."</p></div>";
-} elseif ( !$wp_hasher->CheckPassword($plain_password, $password_hashed) ) {
+} elseif ( ! wp_check_password( $pwd0, $current_user->user_pass, $current_user->ID ) ) {
 $msg = "<div class='alert alert-danger'><h4 class='alert-heading'>".__( 'Oops!', 'doliconnect' )."</h4><p>".__( 'Your actual password is incorrect', 'doliconnect' )."</p></div>";
-} elseif ( $pwd != $_POST["pwd2"] ) {
+} elseif ( $pwd1 != $_POST["pwd2"] ) {
 $msg = "<div class='alert alert-danger'><h4 class='alert-heading'>".__( 'Oops!', 'doliconnect' )."</h4><p>".__( 'The new passwords entered are different', 'doliconnect' )."</p></div>";
-} elseif ( !preg_match("#.*^(?=.{8,20})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*$#", $pwd) ) {
+} elseif ( !preg_match("#.*^(?=.{8,20})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*$#", $pwd1) ) {
 $msg = "<div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><span class='fa fa-times-circle'></span> Votre nouveau mot de passe doit comporter entre 8 et 20 caractères dont au moins 1 chiffre, 1 lettre, 1 majuscule et 1 symbole.</div>";
 }
 }
