@@ -692,7 +692,7 @@ echo "<div class='col-md-7'><h5>" . $val['label'] . "</h5>" . $val['description'
 echo "</ul></div>";
 
 echo "<small><div class='float-left'>";
-echo dolirefresh($request, $url."&id=".$_GET['id']."&ref=".$_GET['ref'], $delay);
+echo dolirefresh($request, $url."&id=".$_GET['id']."&ref=".$_GET['ref'], $delay, $propalfo);
 echo "</div><div class='float-right'>";
 echo dolihelp('COM');
 echo "</div></small>";
@@ -976,7 +976,7 @@ echo "<div class='col-md-7'><h5>" . $val['label'] . "</h5>" . $val['description'
 echo "</ul></div>";
 
 echo "<small><div class='float-left'>";
-echo dolirefresh($request, $url."&id=".$_GET['id']."&ref=".$_GET['ref'], $delay);
+echo dolirefresh($request, $url."&id=".$_GET['id']."&ref=".$_GET['ref'], $delay, $orderfo);
 echo "</div><div class='float-right'>";
 echo dolihelp('COM');
 echo "</div></small>";
@@ -1123,7 +1123,7 @@ echo "</li>";
 echo "</ul></div>";
 
 echo "<small><div class='float-left'>";
-echo dolirefresh($request, $url."&id=".$_GET['id']."&ref=".$_GET['ref'], $delay);
+echo dolirefresh($request, $url."&id=".$_GET['id']."&ref=".$_GET['ref'], $delay, $contractfo);
 echo "</div><div class='float-right'>";
 echo dolihelp('COM');
 echo "</div></small>";
@@ -1342,7 +1342,7 @@ echo "<li class='list-group-item list-group-item-light'><center>".__( 'No subscr
 echo  "</ul></div>";
 
 echo "<small><div class='float-left'>";
-echo dolirefresh($request, $url, $delay);
+echo dolirefresh($request, $url, $delay, $adherent);
 echo "</div><div class='float-right'>";
 echo dolihelp('COM');
 echo "</div></small>";
@@ -1576,7 +1576,7 @@ echo "</li>";
 echo "</ul></div>";
 
 echo "<small><div class='float-left'>";
-echo dolirefresh($request, $url, $delay);
+echo dolirefresh($request, $url, $delay, $donationfo);
 echo "</div><div class='float-right'>";
 echo dolihelp('COM');
 echo "</div></small>";
@@ -1640,11 +1640,11 @@ $request = "/tickets/".esc_attr($_GET['id']);
 $delay = HOUR_IN_SECONDS;
 
 if ( isset($_GET['id']) && $_GET['id'] > 0 ) {
-$ticket = callDoliApi("GET", $request, null, dolidelay($delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$ticketfo = callDoliApi("GET", $request, null, dolidelay($delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 //echo $ticket;
 }
 
-if ( isset($_GET['id']) && isset($_GET['ref']) && ( constant("DOLIBARR") == $ticket->socid ) && ($_GET['ref'] == $ticket->ref ) ) {
+if ( isset($_GET['id']) && isset($_GET['ref']) && ( constant("DOLIBARR") == $ticketfo->socid ) && ($_GET['ref'] == $ticketfo->ref ) ) {
 
 if ( isset($_POST["case"]) && $_POST["case"] == 'messageticket' ) {
 $rdr = [
@@ -1657,28 +1657,28 @@ if ( $ticketid > 0 ) {
 $msg = "<div class='alert alert-success' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><p><strong>".__( 'Congratulations!', 'doliconnect' )."</strong> ".__( 'Your message has been send.', 'doliconnect' )."</p></div>"; 
 } }
 
-echo "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>$ticket->ref</h5><div class='row'><div class='col-md-6'>";
-$dateticket =  date_i18n('d/m/Y', $ticket->datec);
+echo "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>".$ticketfo->ref."</h5><div class='row'><div class='col-md-6'>";
+$dateticket =  date_i18n('d/m/Y', $ticketfo->datec);
 echo "<b>".__( 'Date of creation', 'doliconnect' ).": </b> $dateticket<br>";
-echo "<b>".__( 'Type and category', 'doliconnect' ).": </b> ".__($ticket->type_label, 'doliconnect' ).", ".__($ticket->category_label, 'doliconnect' )."<br>";
-echo "<b>".__( 'Severity', 'doliconnect' ).": </b> ".__($ticket->severity_label, 'doliconnect' )."<br>";
+echo "<b>".__( 'Type and category', 'doliconnect' ).": </b> ".__($ticketfo->type_label, 'doliconnect' ).", ".__($ticketfo->category_label, 'doliconnect' )."<br>";
+echo "<b>".__( 'Severity', 'doliconnect' ).": </b> ".__($ticketfo->severity_label, 'doliconnect' )."<br>";
 echo "</div><div class='col-md-6'><h3 class='text-right'>";
-if ( $ticket->fk_statut == 9 ) { echo "<span class='label label-default'>".__( 'Deleted', 'doliconnect' )."</span>"; }
-elseif ( $ticket->fk_statut == 8 ) { echo "<span class='label label-success'>".__( 'Closed', 'doliconnect' )."</span>"; }
-elseif ( $ticket->fk_statut == 6 ) { echo "<span class='label label-warning'>".__( 'Waiting', 'doliconnect' )."</span>"; }
-elseif ( $ticket->fk_statut == 5 ) { echo "<span class='label label-warning'>".__( 'In progress', 'doliconnect' )."</span>"; }
-elseif ( $ticket->fk_statut == 4 ) { echo "<span class='label label-warning'>".__( 'Assigned', 'doliconnect' )."</span>"; }
-elseif ( $ticket->fk_statut == 3 ) { echo "<span class='label label-warning'>".__( 'Answered', 'doliconnect' )."</span>"; }
-elseif ( $ticket->fk_statut == 1 ) { echo "<span class='label label-warning'>".__( 'Read', 'doliconnect' )."</span>"; }
-elseif ( $ticket->fk_statut == 0 ) { echo "<span class='label label-danger'>".__( 'Unread', 'doliconnect' )."</span>"; }
+if ( $ticketfo->fk_statut == 9 ) { echo "<span class='label label-default'>".__( 'Deleted', 'doliconnect' )."</span>"; }
+elseif ( $ticketfo->fk_statut == 8 ) { echo "<span class='label label-success'>".__( 'Closed', 'doliconnect' )."</span>"; }
+elseif ( $ticketfo->fk_statut == 6 ) { echo "<span class='label label-warning'>".__( 'Waiting', 'doliconnect' )."</span>"; }
+elseif ( $ticketfo->fk_statut == 5 ) { echo "<span class='label label-warning'>".__( 'In progress', 'doliconnect' )."</span>"; }
+elseif ( $ticketfo->fk_statut == 4 ) { echo "<span class='label label-warning'>".__( 'Assigned', 'doliconnect' )."</span>"; }
+elseif ( $ticketfo->fk_statut == 3 ) { echo "<span class='label label-warning'>".__( 'Answered', 'doliconnect' )."</span>"; }
+elseif ( $ticketfo->fk_statut == 1 ) { echo "<span class='label label-warning'>".__( 'Read', 'doliconnect' )."</span>"; }
+elseif ( $ticketfo->fk_statut == 0 ) { echo "<span class='label label-danger'>".__( 'Unread', 'doliconnect' )."</span>"; }
 echo "</h3></div></div>";
-echo '<BR/><div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: '.$ticket->progress.'%" aria-valuenow="'.$ticket->progress.'" aria-valuemin="0" aria-valuemax="100"></div></div>';
+echo '<BR/><div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: '.$ticketfo->progress.'%" aria-valuenow="'.$ticketfo->progress.'" aria-valuemin="0" aria-valuemax="100"></div></div>';
 echo "</div><ul class='list-group list-group-flush'>
-<li class='list-group-item'><h5 class='mb-1'>".__( 'Subject', 'doliconnect' ).": $ticket->subject</h5>
-<p class='mb-1'>".__( 'Initial message', 'doliconnect' ).": $ticket->message</p></li>";
-if ( $ticket->fk_statut < '8' && $ticket->fk_statut > '0' && !empty(get_option('doliconnectbeta')) ) {
+<li class='list-group-item'><h5 class='mb-1'>".__( 'Subject', 'doliconnect' ).": ".$ticketfo->subject."</h5>
+<p class='mb-1'>".__( 'Initial message', 'doliconnect' ).": ".$ticketfo->message."</p></li>";
+if ( $ticketfo->fk_statut < '8' && $ticketfo->fk_statut > '0' && !empty(get_option('doliconnectbeta')) ) {
 echo "<li class='list-group-item'>";
-echo '<form id="message-ticket-form" action="'.$url.'&id='.$ticket->id.'&ref='.$ticket->ref.'" method="post">';
+echo '<form id="message-ticket-form" action="'.$url.'&id='.$ticketfo->id.'&ref='.$ticketfo->ref.'" method="post">';
 echo "<script>";
 ?>
 
@@ -1707,15 +1707,15 @@ echo doliloading('ticket');
 echo "</li>";
 
 }
-if ( isset($ticket->messages) ) {
-foreach ( $ticket->messages as $msg ) {
+if ( isset($$ticketfo->messages) ) {
+foreach ( $ticketfo->messages as $msg ) {
 $datemsg =  date_i18n('d/m/Y - H:i', $msg->datec);  
 echo  "<li class='list-group-item'><b>$datemsg $msg->fk_user_action_string</b><br>$msg->message</li>";
 }} 
 echo "</ul></div>";
 
 echo "<small><div class='float-left'>"; 
-echo dolirefresh($request, $url."&id=".esc_attr($_GET['id'])."&ref=".esc_attr($_GET['ref']), $delay);
+echo dolirefresh($request, $url."&id=".esc_attr($_GET['id'])."&ref=".esc_attr($_GET['ref']), $delay, $ticketfo);
 echo "</div><div class='float-right'>";
 echo dolihelp('COM');
 echo "</div></small>";
