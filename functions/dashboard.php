@@ -340,20 +340,20 @@ $request = "/contacts?sortfield=t.rowid&sortorder=ASC&limit=100&thirdparty_ids="
 $delay = WEEK_IN_SECONDS;
 
 if ( isset ($_POST['contact']) && $_POST['contact'] == 'new_contact' ) {
-
+$contact=$_POST['thirdparty'];
 $data = [
-    'civility_id'  => $_POST['billing_civility'],     
-    'firstname' => ucfirst(sanitize_user(strtolower($_POST['user_firstname']))),
-    'lastname' => strtoupper(sanitize_user($_POST['user_lastname'])),
+    'civility_id'  => $contact['civility_id'],     
+    'firstname' => ucfirst(sanitize_user(strtolower($contact['firstname']))),
+    'lastname' => strtoupper(sanitize_user($contact['lastname'])),
     'socid' => constant("DOLIBARR"),
-    'poste' => sanitize_textarea_field($_POST['contact_poste']), 
-    'address' => sanitize_textarea_field($_POST['billing_address']),    
-    'zip' => sanitize_text_field($_POST['billing_zipcode']),
-    'town' => sanitize_text_field($_POST['billing_city']),
-    'country_id' => sanitize_text_field($_POST['billing_country']),
-    'email' => sanitize_email($_POST['user_email']),
-    'birthday' => $_POST['billing_birth'],
-    'phone_pro' => sanitize_text_field($_POST['billing_phone'])
+    'poste' => sanitize_textarea_field($contact['poste']), 
+    'address' => sanitize_textarea_field($contact['address']),    
+    'zip' => sanitize_text_field($contact['zip']),
+    'town' => sanitize_text_field($contact['town']),
+    'country_id' => sanitize_text_field($contact['country_id']),
+    'email' => sanitize_email($contact['email']),
+    'birthday' => $contact['birth'],
+    'phone_pro' => sanitize_text_field($contact['phone'])
 	];
 $contact = callDoliApi("POST", "/contacts", $data, 0);
 $listcontact = callDoliApi("GET", $request, null, dolidelay($delay, true));
