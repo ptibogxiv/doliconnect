@@ -51,9 +51,9 @@ $orderid=constant("DOLICONNECT_CART");
 } else {
 $rdr = [
     'socid' => constant("DOLIBARR"),
-    'date_commande'  => mktime(),
+    'date_commande' => mktime(),
     'demand_reason_id' => 1,
-    'module_source'  => 'doliconnect',
+    'module_source' => 'doliconnect',
     'pos_source' => 0,
 	];                  
 $order = callDoliApi("POST", "/orders", $rdr, 0);
