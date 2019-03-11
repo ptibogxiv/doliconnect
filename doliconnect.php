@@ -498,32 +498,24 @@ $password=$_POST['pwd1'];
 } else {
 $password = wp_generate_password( 12, false ); 
 }
-
-
-$first = ucfirst(sanitize_user($_POST['user_firstname']));
-$last = strtoupper(sanitize_user($_POST['user_lastname']));
-//$login = substr($_POST['user_firstname']).strtolower($_POST['user_lastname']);       
+      
 $ID = wp_create_user(uniqid(), $password, $email );
-$entity = get_current_blog_id();
+$thirdparty=$_POST['thirdparty'];
 $role = 'subscriber';
 
 if ( is_multisite() ) { 
 add_user_to_blog($entity,$ID,$role); }
-wp_update_user( array( 'ID' => $ID, 'user_email' => sanitize_email($_POST['user_email'])));
+wp_update_user( array( 'ID' => $ID, 'user_email' => sanitize_email($thirdparty['email'])));
 wp_update_user( array( 'ID' => $ID, 'nickname' => sanitize_user($_POST['user_nicename'])));
-wp_update_user( array( 'ID' => $ID, 'display_name' => ucfirst(strtolower($_POST['user_firstname']))." ".strtoupper($_POST['user_lastname'])));
-wp_update_user( array( 'ID' => $ID, 'first_name' => ucfirst(sanitize_user(strtolower($_POST['user_firstname'])))));
-wp_update_user( array( 'ID' => $ID, 'last_name' => strtoupper(sanitize_user($_POST['user_lastname']))));
+wp_update_user( array( 'ID' => $ID, 'display_name' => ucfirst(strtolower($thirdparty['firstname']))." ".strtoupper($thirdparty['lastname'])));
+wp_update_user( array( 'ID' => $ID, 'first_name' => ucfirst(sanitize_user(strtolower($thirdparty['firstname'])))));
+wp_update_user( array( 'ID' => $ID, 'last_name' => strtoupper(sanitize_user($thirdparty['lastname']))));
 wp_update_user( array( 'ID' => $ID, 'description' => sanitize_textarea_field($_POST['description'])));
-update_user_meta( $ID, 'billing_civility', $_POST['billing_civility']);
-update_user_meta( $ID, 'billing_type', $_POST['billing_type']);
-update_user_meta( $ID, 'billing_company', sanitize_text_field($_POST['billing_company']));
-update_user_meta( $ID, 'billing_address', sanitize_textarea_field($_POST['billing_address']));
-update_user_meta( $ID, 'billing_zipcode', sanitize_text_field($_POST['billing_zipcode']));
-update_user_meta( $ID, 'billing_city', sanitize_text_field($_POST['billing_city']));
-update_user_meta( $ID, 'billing_country', $_POST['billing_country'] );
-update_user_meta( $ID, 'billing_phone', sanitize_text_field($_POST['billing_phone'])); 
-update_user_meta( $ID, 'billing_birth',$_POST['billing_birth']);
+wp_update_user( array( 'ID' => $ID, 'user_url' => sanitize_textarea_field($thirdparty['url'])));
+update_user_meta( $ID, 'civility_id', sanitize_text_field($thirdparty['civility_id']));
+update_user_meta( $ID, 'billing_type', sanitize_text_field($thirdparty['morphy']));
+if ( isset($_POST['billing_company']) ) { update_user_meta( $ID, 'billing_company', sanitize_text_field($thirdparty['name'])); }
+update_user_meta( $ID, 'billing_birth', $thirdparty['birth']);
 update_user_meta( $ID, 'optin1', $_POST['optin1'] );
 
 $body = sprintf(__('Thank you for your registration on %s.', 'doliconnect'), $sitename);
