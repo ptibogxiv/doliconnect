@@ -88,6 +88,7 @@ $adln = [
 $addline = callDoliApi("POST", "/orders/".$orderid."/lines", $adln, 0);
 $order = callDoliApi("GET", "/orders/".$orderid, null, dolidelay($delay, true));
 $dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolidelay($delay, true));
+set_transient( 'doliconnect_cartlinelink_'.$line, esc_url(doliconnecturl('dolicart')), $delay );
 return $addline;
 
 } elseif ( $orderid > 0 && $line > 0 ) {
@@ -97,9 +98,12 @@ if ( $quantity < 1 ) {
 $deleteline = callDoliApi("DELETE", "/orders/".$orderid."/lines/".$line, null, 0);
 $order = callDoliApi("GET", "/orders/".$orderid, null, dolidelay($delay, true));
 $dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolidelay($delay, true));
+delete_transient( 'doliconnect_cartlinelink_'.$line );
+
 return $deleteline;
  
 } else {
+
 $prdt = callDoliApi("GET", "/products/".$product, null, 0);
  $ln = [
     'desc' => $prdt->description,
@@ -112,6 +116,7 @@ $prdt = callDoliApi("GET", "/products/".$product, null, 0);
 $updateline = callDoliApi("PUT", "/orders/".$orderid."/lines/".$line, $ln, 0);
 $order = callDoliApi("GET", "/orders/".$orderid, null, dolidelay($delay, true));
 $dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolidelay($delay, true));
+set_transient( 'doliconnect_cartlinelink_'.$line, esc_url(doliconnecturl('dolicart')), $delay );
 return $updateline;
 
 }
