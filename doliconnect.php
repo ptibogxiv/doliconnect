@@ -473,16 +473,14 @@ wp_redirect(esc_url(doliconnecturl('doliaccount')));
 exit;
 }
 
-$is_valid = apply_filters('invisible_recaptcha', true);
-if( ! $is_valid )
-{
-    // handle error here
-} elseif ( isset($_POST['submitted']) ) {
-if ( email_exists($_POST['user_email']) ) {
+if ( isset($_POST['submitted']) ) {
+$thirdparty=$_POST['thirdparty'];
+
+if ( email_exists($thirdparty['email']) ) {
         $emailError = "".__( 'This email address is already linked to an account. You can reactivate your account through this <a href=\'".wp_lostpassword_url( get_permalink() )."\' title=\'lost password\'>form</a>.', 'doliconnect' )."";
         $hasError = true;
     } else {
-        $email = sanitize_email($_POST['user_email']);
+        $email = sanitize_email($thirdparty['email']);
     }
 
     if(!isset($hasError)) {
@@ -500,7 +498,7 @@ $password = wp_generate_password( 12, false );
 }
       
 $ID = wp_create_user(uniqid(), $password, $email );
-$thirdparty=$_POST['thirdparty'];
+
 $role = 'subscriber';
 
 if ( is_multisite() ) { 
