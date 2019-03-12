@@ -1215,7 +1215,7 @@ if ( ($_POST["update_membership"]==4) && $_POST["cotisation"] && constant("DOLIB
 
 $productadhesion = callDoliApi("GET", "/doliconnector/constante/ADHERENT_PRODUCT_ID_FOR_SUBSCRIPTIONS", null, MONTH_IN_SECONDS);
 
-addtodolibasket($productadhesion->value, 1, $_POST["cotisation"], $_POST["timestamp_start"], $_POST["timestamp_end"]);
+addtodolibasket($productadhesion->value, 1, $_POST["cotisation"], $url, $_POST["timestamp_start"], $_POST["timestamp_end"]);
 wp_redirect(esc_url(doliconnecturl('dolicart')));
 exit;     
 } elseif ($_POST["update_membership"]==5 || $_POST["update_membership"]==1) {
