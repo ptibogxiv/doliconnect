@@ -1975,8 +1975,21 @@ echo dolihelp('ISSUE');
 echo "</small></p>";
 echo "</form>";
 
-if ( !empty(get_option('doliconnectbeta')) ) {
-echo '<div class="accordion" id="accordionExample">
+if ( !empty(get_option('doliconnectbeta')) ) { 
+
+echo '<style>';
+?>
+.blur{
+  -webkit-filter: blur(5px);
+  -moz-filter: blur(5px);
+  -o-filter: blur(5px);
+  -ms-filter: blur(5px);
+  filter: blur(5px);
+}
+<?php
+echo '</style>';
+
+echo '<div class="accordion blur" id="accordionExample">
 <div class="card shadow-sm"><ul class="list-group list-group-flush">
 <button id="headingOne" type="button" class="list-group-item list-group-item-action flex-column align-items-start" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
 Dapibus ac facilisis in
