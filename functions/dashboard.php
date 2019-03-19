@@ -373,7 +373,7 @@ if ( constant("DOLIBARR") > 0 ) {
 $thirdparty = callDoliApi("GET", "/thirdparties/".constant("DOLIBARR"), null, dolidelay( $delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
 }
 
-echo "<form role='form' action='$url' id='contact-form' method='post' navalidate>";  //class='was-validated' enctype='multipart/form-data'
+echo "<form role='form' action='$url' id='contact-form' method='post' novalidate>";  //class='was-validated' enctype='multipart/form-data'
 
 echo "<script>";
 ?>
@@ -424,14 +424,14 @@ $idcontact=1;
 foreach ( $listcontact as $contact ) {
 $count=$contact->ref_facturation+$contact->ref_contrat+$contact->ref_commande+$contact->ref_propal;
 echo "<li class='list-group-item list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>
-<input id='$contact->id' onclick='ShowHideDiv()' class='custom-control-input' type='radio' name='contact' value='$contact->id' ";
+<input id='".$contact->id."' onclick='ShowHideDiv()' class='custom-control-input' type='radio' name='contact' value='".$contact->id."' ";
 if ( $idcontact=='1' ) { echo " checked "; }
-echo " ><label class='custom-control-label w-100' for='$contact->id'><div class='row'><div class='col-3 col-md-2 col-xl-2 align-middle'>";
+echo " ><label class='custom-control-label w-100' for='".$contact->id."'><div class='row'><div class='col-3 col-md-2 col-xl-2 align-middle'>";
 echo "<center><i class='fas fa-address-card fa-3x fa-fw'></i></center>";
-echo "</div><div class='col-9 col-md-10 col-xl-10 align-middle'><h6 class='my-0'>$contact->civility_code $contact->firstname $contact->lastname";
-if ( !empty($contact->poste) ) { echo " / $contact->poste"; }
+echo "</div><div class='col-9 col-md-10 col-xl-10 align-middle'><h6 class='my-0'>".$contact->civility_code." ".$contact->firstname." ".$contact->lastname;
+if ( !empty($contact->poste) ) { echo " / ".$contact->poste; }
 if ( !empty($contact->default) ) { echo " <i class='fas fa-star fa-1x fa-fw'></i>"; }
-echo "</h6><small class='text-muted'>$contact->address<br>$contact->zip $contact->town - $contact->country<br>$contact->email $contact->phone_pro</small>";
+echo "</h6><small class='text-muted'>".$contact->address."<br>".$contact->zip." ".$contact->town." - ".$contact->country."<br>".$contact->email." ".$contact->phone_pro."</small>";
 echo '</div></div></label></div></li>';
 $idcontact++;
 }}
@@ -461,7 +461,7 @@ echo "</ul><div class='card-body'>";
 if ( $listcontact != null ) {
 echo "<div id='dvDelete'><button class='btn btn-danger btn-block' type='submit'><b>".__( 'Delete', 'doliconnect' )."</b></button></div>";
 } 
-echo "<div id='SaveFormButton' style='display: none'><input type='hidden' name='source' value='validation'><input type='hidden' name='cart' value='validation'><input type='hidden' name='info' value='validation'><button class='btn btn-warning btn-block' type='submit'><b>".__( 'Add contact', 'doliconnect' )."</b></button></div>";
+echo "<div id='SaveFormButton' style='display: none'><button class='btn btn-warning btn-block' type='submit'><b>".__( 'Add contact', 'doliconnect' )."</b></button></div>";
 echo "</div></div>";
 
 echo "<small><div class='float-left'>";
