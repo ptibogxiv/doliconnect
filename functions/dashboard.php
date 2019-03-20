@@ -427,49 +427,28 @@ if ( !empty($contact->poste) ) { echo "<br>".$contact->poste; }
 echo "</h6>";
 echo "<small class='text-muted'>".$contact->address."<br>".$contact->zip." ".$contact->town." - ".$contact->country."<br>".$contact->email." ".$contact->phone_pro."</small>";
 //echo "<form role='form' action='$url' id='contact-form-".$contact->id."' method='post' novalidate><input type='hidden' name='contact' value='".$contact->id."'>";
-echo "<div class='btn-group' role='group' aria-label='Basic example'><a class='btn btn-light text-primary' href='#' role='button'><i class='fas fa-edit fa-fw'></i></a>
+echo "<div class='btn-group-vertical' role='group' aria-label='Basic example'><a class='btn btn-light text-primary' href='#' role='button'><i class='fas fa-edit fa-fw'></i></a>
 <button name='delete_contact' value='".$contact->id."' class='btn btn-light text-danger' type='submit'><i class='fas fa-trash fa-fw'></i></button></div>";
 //echo "</form>";
 echo "</li>";
 }}
 
-//if ( !isset($listcontact->error) && $listcontact != null ) {
-//$idcontact=1;
-//foreach ( $listcontact as $contact ) {
-//$count=$contact->ref_facturation+$contact->ref_contrat+$contact->ref_commande+$contact->ref_propal;
-//echo "<li class='list-group-item list-group-item-action flex-column align-items-center'><div class='custom-control custom-radio'>
-//<input id='".$contact->id."' onclick='ShowHideDiv()' class='custom-control-input' type='radio' name='contact' value='".$contact->id."' ";
-//if ( $idcontact=='1' ) { echo " checked "; }
-//echo " ><label class='custom-control-label w-100' for='".$contact->id."'><div class='row'><div class='col-3 col-md-2 col-xl-2 align-middle'>";
-//echo "<center><i class='fas fa-address-card fa-3x fa-fw'></i></center>";
-//echo "</div><div class='col-9 col-md-10 col-xl-10 align-middle'><h6 class='my-0'>".$contact->civility_code." ".$contact->firstname." ".$contact->lastname ." ".$count;
-//if ( !empty($contact->poste) ) { echo " / ".$contact->poste; }
-//if ( !empty($contact->default) ) { echo " <i class='fas fa-star fa-1x fa-fw'></i>"; }
-//echo "</h6><small class='text-muted'>".$contact->address."<br>".$contact->zip." ".$contact->town." - ".$contact->country."<br>".$contact->email." ".$contact->phone_pro."</small>";
-//echo '</div></div></label></div></li>';
-//$idcontact++;
-//}}
-
 if ( count($listcontact) < 5 ) {
-echo '<button type="button" class="list-group-item lh-condensed list-group-item-action list-group-item-primary" data-toggle="modal" data-target="#exampleModalCenter"><center><i class="fas fa-plus-circle"></i> '.__( 'Add a new contact/address', 'doliconnect' ).'</center></button>';  
-
-//echo "<div class='card-body'>";
-//echo "<div id='SaveFormButton' style='display: none'><button class='btn btn-warning btn-block' type='submit'><b>".__( 'Add contact', 'doliconnect' )."</b></button></div>";
-//echo "</div></div>
-
+echo '<button type="button" class="list-group-item lh-condensed list-group-item-action list-group-item-primary" data-toggle="modal" data-target="#addcontactadress"><center><i class="fas fa-plus-circle"></i> '.__( 'Add a new contact/address', 'doliconnect' ).'</center></button>';
 }
+
 echo "</ul></div>";
 echo "</form>";
 
 if ( count($listcontact) < 5 ) {
-echo "<div class='modal fade' id='exampleModalCenter' tabindex='-1' role='dialog' aria-labelledby='exampleModalCenterTitle' aria-hidden='true'>
+echo "<div class='modal fade' id='addcontactadress' tabindex='-1' role='dialog' aria-labelledby='addcontactadressTitle' aria-hidden='true'>
 <div class='modal-dialog modal-dialog-centered' role='document'>
 <div class='modal-content'><div class='modal-header'>
-<h5 class='modal-title' id='exampleModalCenterTitle'>".__( 'Add a new contact/address', 'doliconnect' )."</h5><button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
-</div><div class='modal-body'>";
-echo "<form role='form' action='$url' id='contact-add-form' method='post' novalidate>";
+<h5 class='modal-title' id='addcontactadressTitle'>".__( 'Add a new contact/address', 'doliconnect' )."</h5><button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
+</div><div class='modal-body'><ul class='list-group list-group-flush'>";
+echo "<form class='was-validated' role='form' action='$url' id='contact-add-form' method='post'>";
 echo doliconnectuserform($thirdparty, dolidelay(MONTH_IN_SECONDS, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'mini');
-echo "</div>
+echo "</ul></div>
 <div class='modal-footer'><button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>
 <button name='add_contact' value='new_contact' class='btn btn-warning' type='submit'>".__( 'Add contact', 'doliconnect' )."</button></form></div>
 </div></div></div>";
@@ -548,7 +527,9 @@ form.submit();
 });
 
 <?php
-echo "</script><div class='card shadow-sm'><ul class='list-group list-group-flush'>";
+echo "</script>";
+
+echo "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
 if ( constant("DOLIBARR_USER") > '0' ) {
 echo "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".__( 'Your password will be synchronized with your Dolibarr account', 'doliconnect' )."</b></li>";
 } elseif  ( 'DOLICONNECT_DEMO' == $ID ) {
