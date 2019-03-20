@@ -378,6 +378,18 @@ $thirdparty = callDoliApi("GET", "/thirdparties/".constant("DOLIBARR"), null, do
 }
 
 echo "<form role='form' action='$url' id='contact-form' method='post' novalidate>";
+//$nonce = wp_create_nonce( 'my-nonce' );
+
+// This code would go in the target page.
+// We need to verify the nonce.
+//$nonce = $nonce;//$_REQUEST['_wpnonce'];
+//if ( ! wp_verify_nonce( $nonce, 'my-nonce' ) ) {
+    // This nonce is not valid.
+ //   die( 'Security check' ); 
+//} else {
+
+//echo $nonce;
+//}                        
 
 echo "<script>";
 ?>
@@ -451,24 +463,16 @@ echo "</form>";
 
 if ( count($listcontact) < 5 ) {
 echo "<div class='modal fade' id='exampleModalCenter' tabindex='-1' role='dialog' aria-labelledby='exampleModalCenterTitle' aria-hidden='true'>
-  <div class='modal-dialog modal-dialog-centered' role='document'>
-    <div class='modal-content'>
-      <div class='modal-header'>
-        <h5 class='modal-title' id='exampleModalCenterTitle'>Modal title</h5>
-        <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
-          <span aria-hidden='true'>&times;</span>
-        </button>
-      </div>
-      <div class='modal-body'>
-        ...
-      </div>
-      <div class='modal-footer'>
-        <button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>
-        <button type='button' class='btn btn-primary'>Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>";
+<div class='modal-dialog modal-dialog-centered' role='document'>
+<div class='modal-content'><div class='modal-header'>
+<h5 class='modal-title' id='exampleModalCenterTitle'>".__( 'Add a new contact/address', 'doliconnect' )."</h5><button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
+</div><div class='modal-body'>";
+echo "<form role='form' action='$url' id='contact-add-form' method='post' novalidate>";
+echo doliconnectuserform($thirdparty, dolidelay(MONTH_IN_SECONDS, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'mini');
+echo "</div>
+<div class='modal-footer'><button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>
+<button name='add_contact' value='new_contact' class='btn btn-warning' type='submit'>".__( 'Add contact', 'doliconnect' )."</button></form></div>
+</div></div></div>";
 }
 
 echo "<small><div class='float-left'>";
