@@ -418,23 +418,25 @@ echo "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
 
 if ( !isset($listcontact->error) && $listcontact != null ) {
 $idcontact=1;
-foreach ( $listcontact as $contact ) {
+foreach ( $listcontact as $contact ) { 
+
+if ( count($listcontact) < 5 ) {
+echo '<button type="button" class="list-group-item lh-condensed list-group-item-action list-group-item-primary" data-toggle="modal" data-target="#addcontactadress"><center><i class="fas fa-plus-circle"></i> '.__( 'Add a new contact/address', 'doliconnect' ).'</center></button>';
+}
+
 $count=$contact->ref_facturation+$contact->ref_contrat+$contact->ref_commande+$contact->ref_propal;
-echo "<li class='list-group-item list-group-item-action d-flex justify-content-between align-items-center'>";
+echo "<li class='list-group-item d-flex justify-content-between lh-condensed list-group-item-action'>";
 echo "<h6 class='my-0'>".$contact->civility_code." ".$contact->firstname." ".$contact->lastname;
 if ( !empty($contact->default) ) { echo " <i class='fas fa-star fa-1x fa-fw'></i>"; }
 if ( !empty($contact->poste) ) { echo "<br>".$contact->poste; }
 echo "</h6>";
 echo "<small class='text-muted'>".$contact->address."<br>".$contact->zip." ".$contact->town." - ".$contact->country."<br>".$contact->email." ".$contact->phone_pro."</small>";
-//echo "<form role='form' action='$url' id='contact-form-".$contact->id."' method='post' novalidate><input type='hidden' name='contact' value='".$contact->id."'>";
 echo "<div class='btn-group-vertical' role='group' aria-label='Basic example'><a class='btn btn-light text-primary' href='#' role='button'><i class='fas fa-edit fa-fw'></i></a>
 <button name='delete_contact' value='".$contact->id."' class='btn btn-light text-danger' type='submit'><i class='fas fa-trash fa-fw'></i></button></div>";
-//echo "</form>";
 echo "</li>";
 }}
-
-if ( count($listcontact) < 5 ) {
-echo '<button type="button" class="list-group-item lh-condensed list-group-item-action list-group-item-primary" data-toggle="modal" data-target="#addcontactadress"><center><i class="fas fa-plus-circle"></i> '.__( 'Add a new contact/address', 'doliconnect' ).'</center></button>';
+else{
+echo "<li class='list-group-item list-group-item-light'><center>".__( 'No contact', 'doliconnect' )."</center></li>";
 }
 
 echo "</ul></div>";
@@ -1843,6 +1845,7 @@ echo "</span></a>";
 else{
 echo "<li class='list-group-item list-group-item-light'><center>".__( 'No ticket', 'doliconnect' )."</center></li>";
 }
+
 echo  "</ul></div>";
 
 echo "<small><div class='float-left'>";
