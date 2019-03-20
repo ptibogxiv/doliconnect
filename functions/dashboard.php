@@ -336,33 +336,37 @@ add_action( 'user_doliconnect_menu', 'contacts_menu', 2, 1);
 function contacts_module($url){
 global $current_user;
 
-$request = "/contacts?sortfield=t.rowid&sortorder=ASC&limit=100&thirdparty_ids=".constant("DOLIBARR")."&includecount=1";
+$request = "/contacts?sortfield=t.rowid&sortorder=ASC&limit=100&thirdparty_ids=".constant("DOLIBARR")."&includecount=1&sqlfilters=t.statut=1";
 $delay = WEEK_IN_SECONDS;
 
-if ( isset ($_POST['contact']) && $_POST['contact'] == 'new_contact' ) {
-$contact=$_POST['thirdparty'];
+if ( isset ($_POST['add_contact']) && $_POST['add_contact'] == 'new_contact' ) {
+$contactv=$_POST['thirdparty'];
 $data = [
-    'civility_id'  => $contact['civility_id'],     
-    'firstname' => ucfirst(sanitize_user(strtolower($contact['firstname']))),
-    'lastname' => strtoupper(sanitize_user($contact['lastname'])),
+    'civility_id'  => $contactv['civility_id'],     
+    'firstname' => ucfirst(sanitize_user(strtolower($contactv['firstname']))),
+    'lastname' => strtoupper(sanitize_user($contactv['lastname'])),
     'socid' => constant("DOLIBARR"),
-    'poste' => sanitize_textarea_field($contact['poste']), 
-    'address' => sanitize_textarea_field($contact['address']),    
-    'zip' => sanitize_text_field($contact['zip']),
-    'town' => sanitize_text_field($contact['town']),
-    'country_id' => sanitize_text_field($contact['country_id']),
-    'email' => sanitize_email($contact['email']),
-    'birthday' => $contact['birth'],
-    'phone_pro' => sanitize_text_field($contact['phone'])
+    'poste' => sanitize_textarea_field($contactv['poste']), 
+    'address' => sanitize_textarea_field($contactv['address']),    
+    'zip' => sanitize_text_field($contactv['zip']),
+    'town' => sanitize_text_field($contactv['town']),
+    'country_id' => sanitize_text_field($contactv['country_id']),
+    'email' => sanitize_email($contactv['email']),
+    'birthday' => $contactv['birth'],
+    'phone_pro' => sanitize_text_field($contactv['phone'])
 	];
-$contact = callDoliApi("POST", "/contacts", $data, 0);
+$contactv = callDoliApi("POST", "/contacts", $data, 0);
 $listcontact = callDoliApi("GET", $request, null, dolidelay($delay, true));
 
-} elseif ( isset ($_POST['contact']) && $_POST['contact'] > 0 ) {
-
-$delete = callDoliApi("DELETE", "/contacts/".$_POST['contact'], null, 0);
+} elseif ( isset ($_POST['delete_contact']) && $_POST['delete_contact'] > 0 ) {
+$contactv = callDoliApi("GET", "/contacts/".$_POST['delete_contact'], null, 0);
+if ( $contactv->socid == constant("DOLIBARR") ) {
+// try deleting
+$delete = callDoliApi("DELETE", "/contacts/".$contactv->id, null, 0);
+} else {
+// fail deleting
+}
 $listcontact = callDoliApi("GET", $request, null, dolidelay($delay, true));
-
 } else {
 
 $listcontact = callDoliApi("GET", $request, null, dolidelay($delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
@@ -373,7 +377,7 @@ if ( constant("DOLIBARR") > 0 ) {
 $thirdparty = callDoliApi("GET", "/thirdparties/".constant("DOLIBARR"), null, dolidelay( $delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
 }
 
-echo "<form role='form' action='$url' id='contact-form' method='post' novalidate>";  //class='was-validated' enctype='multipart/form-data'
+echo "<form role='form' action='$url' id='contact-form' method='post' novalidate>";
 
 echo "<script>";
 ?>
@@ -384,24 +388,7 @@ window.setTimeout(function() {
     });
 }, 5000);
 
-var form = document.getElementById('contact-form');
-
-function ShowHideDiv() {
-var ContactForm = document.getElementById("ContactForm");
-if (ContactForm){
-if (new_contact.checked){
-document.getElementById("SaveFormButton").style.display = "block";
-document.getElementById("dvDelete").style.display = "none";
-document.getElementById("ContactAddForm").style.display = "block";
-} else {
-document.getElementById("SaveFormButton").style.display = "none";
-document.getElementById("dvDelete").style.display = "block";
-document.getElementById("ContactAddForm").style.display = "none";
-}
-}
-}
-
-window.onload=ShowHideDiv; 
+var form = document.getElementById('contact-form'); 
 
 form.addEventListener('submit', function(event) {
 
@@ -412,8 +399,6 @@ form.submit();
 
 });
 
-document.getElementById("SaveFormButton").style.display = "block";
-
 <?php
 echo "</script>";
 
@@ -423,46 +408,68 @@ if ( !isset($listcontact->error) && $listcontact != null ) {
 $idcontact=1;
 foreach ( $listcontact as $contact ) {
 $count=$contact->ref_facturation+$contact->ref_contrat+$contact->ref_commande+$contact->ref_propal;
-echo "<li class='list-group-item list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>
-<input id='".$contact->id."' onclick='ShowHideDiv()' class='custom-control-input' type='radio' name='contact' value='".$contact->id."' ";
-if ( $idcontact=='1' ) { echo " checked "; }
-echo " ><label class='custom-control-label w-100' for='".$contact->id."'><div class='row'><div class='col-3 col-md-2 col-xl-2 align-middle'>";
-echo "<center><i class='fas fa-address-card fa-3x fa-fw'></i></center>";
-echo "</div><div class='col-9 col-md-10 col-xl-10 align-middle'><h6 class='my-0'>".$contact->civility_code." ".$contact->firstname." ".$contact->lastname;
-if ( !empty($contact->poste) ) { echo " / ".$contact->poste; }
+echo "<li class='list-group-item list-group-item-action d-flex justify-content-between align-items-center'>";
+echo "<h6 class='my-0'>".$contact->civility_code." ".$contact->firstname." ".$contact->lastname;
 if ( !empty($contact->default) ) { echo " <i class='fas fa-star fa-1x fa-fw'></i>"; }
-echo "</h6><small class='text-muted'>".$contact->address."<br>".$contact->zip." ".$contact->town." - ".$contact->country."<br>".$contact->email." ".$contact->phone_pro."</small>";
-echo '</div></div></label></div></li>';
-$idcontact++;
+if ( !empty($contact->poste) ) { echo "<br>".$contact->poste; }
+echo "</h6>";
+echo "<small class='text-muted'>".$contact->address."<br>".$contact->zip." ".$contact->town." - ".$contact->country."<br>".$contact->email." ".$contact->phone_pro."</small>";
+//echo "<form role='form' action='$url' id='contact-form-".$contact->id."' method='post' novalidate><input type='hidden' name='contact' value='".$contact->id."'>";
+echo "<div class='btn-group' role='group' aria-label='Basic example'><a class='btn btn-light text-primary' href='#' role='button'><i class='fas fa-edit fa-fw'></i></a>
+<button name='delete_contact' value='".$contact->id."' class='btn btn-light text-danger' type='submit'><i class='fas fa-trash fa-fw'></i></button></div>";
+//echo "</form>";
+echo "</li>";
 }}
 
+//if ( !isset($listcontact->error) && $listcontact != null ) {
+//$idcontact=1;
+//foreach ( $listcontact as $contact ) {
+//$count=$contact->ref_facturation+$contact->ref_contrat+$contact->ref_commande+$contact->ref_propal;
+//echo "<li class='list-group-item list-group-item-action flex-column align-items-center'><div class='custom-control custom-radio'>
+//<input id='".$contact->id."' onclick='ShowHideDiv()' class='custom-control-input' type='radio' name='contact' value='".$contact->id."' ";
+//if ( $idcontact=='1' ) { echo " checked "; }
+//echo " ><label class='custom-control-label w-100' for='".$contact->id."'><div class='row'><div class='col-3 col-md-2 col-xl-2 align-middle'>";
+//echo "<center><i class='fas fa-address-card fa-3x fa-fw'></i></center>";
+//echo "</div><div class='col-9 col-md-10 col-xl-10 align-middle'><h6 class='my-0'>".$contact->civility_code." ".$contact->firstname." ".$contact->lastname ." ".$count;
+//if ( !empty($contact->poste) ) { echo " / ".$contact->poste; }
+//if ( !empty($contact->default) ) { echo " <i class='fas fa-star fa-1x fa-fw'></i>"; }
+//echo "</h6><small class='text-muted'>".$contact->address."<br>".$contact->zip." ".$contact->town." - ".$contact->country."<br>".$contact->email." ".$contact->phone_pro."</small>";
+//echo '</div></div></label></div></li>';
+//$idcontact++;
+//}}
+
 if ( count($listcontact) < 5 ) {
+echo '<button type="button" class="list-group-item lh-condensed list-group-item-action list-group-item-primary" data-toggle="modal" data-target="#exampleModalCenter"><center><i class="fas fa-plus-circle"></i> '.__( 'Add a new contact/address', 'doliconnect' ).'</center></button>';  
 
-echo "<li id='ContactForm' class='list-group-item list-group-item-action flex-column align-items-start'>";
-
-echo "<div class='custom-control custom-radio'>
-<input id='new_contact' onclick='ShowHideDiv()' class='custom-control-input' type='radio' name='contact' value='new_contact' ";
-
-if ( isset($listcontact->error) || $listcontact == null ) { echo " checked "; }
-
-echo " ><label class='custom-control-label w-100' for='new_contact'><div class='row'>";
-echo "<div class='col-3 col-md-2 col-xl-2 align-middle'>";
-echo "<center><i class='far fa-address-card fa-3x fa-fw'></i></center>";
-echo "</div><div class='col-9 col-md-10 col-xl-10 align-middle'><h6 class='my-0'>".__( 'Add a new contact/address', 'doliconnect' )."</h6><small class='text-muted'>".__( 'Alternatives contacts for order, billing, shipping, newsletter...', 'doliconnect' )."</small>";
-echo '</div></div></label></div></li>';
-echo '<li class="list-group-item list-group-item-secondary" id="ContactAddForm" style="display: none">';
-
-echo doliconnectuserform($thirdparty, dolidelay(MONTH_IN_SECONDS, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'mini');
-
-echo "</li>";
+//echo "<div class='card-body'>";
+//echo "<div id='SaveFormButton' style='display: none'><button class='btn btn-warning btn-block' type='submit'><b>".__( 'Add contact', 'doliconnect' )."</b></button></div>";
+//echo "</div></div>
 
 }
-echo "</ul><div class='card-body'>";
-if ( $listcontact != null ) {
-echo "<div id='dvDelete'><button class='btn btn-danger btn-block' type='submit'><b>".__( 'Delete', 'doliconnect' )."</b></button></div>";
-} 
-echo "<div id='SaveFormButton' style='display: none'><button class='btn btn-warning btn-block' type='submit'><b>".__( 'Add contact', 'doliconnect' )."</b></button></div>";
-echo "</div></div>";
+echo "</ul></div>";
+echo "</form>";
+
+if ( count($listcontact) < 5 ) {
+echo "<div class='modal fade' id='exampleModalCenter' tabindex='-1' role='dialog' aria-labelledby='exampleModalCenterTitle' aria-hidden='true'>
+  <div class='modal-dialog modal-dialog-centered' role='document'>
+    <div class='modal-content'>
+      <div class='modal-header'>
+        <h5 class='modal-title' id='exampleModalCenterTitle'>Modal title</h5>
+        <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+          <span aria-hidden='true'>&times;</span>
+        </button>
+      </div>
+      <div class='modal-body'>
+        ...
+      </div>
+      <div class='modal-footer'>
+        <button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>
+        <button type='button' class='btn btn-primary'>Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>";
+}
 
 echo "<small><div class='float-left'>";
 echo dolirefresh($request, $url, $delay);
@@ -470,7 +477,7 @@ echo "</div><div class='float-right'>";
 echo dolihelp('ISSUE');
 echo "</div></small>";
 
-echo "</form>";
+
 echo doliloading('contact');
 }
 add_action( 'user_doliconnect_contacts', 'contacts_module' );
@@ -1989,24 +1996,67 @@ echo '<style>';
 <?php
 echo '</style>';
 
-echo '<div class="accordion blur" id="accordionExample">
-<div class="card shadow-sm"><ul class="list-group list-group-flush">
-<button id="headingOne" type="button" class="list-group-item list-group-item-action flex-column align-items-start" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-Dapibus ac facilisis in
-</button>
-<li class="list-group-item list-group-item-action flex-column align-items-start" id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably heard of them accusamus labore sustainable VHS.
-Cras justo odio
-</li>
-  
-<button id="headingTwo" type="button" class="list-group-item list-group-item-action flex-column align-items-start collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-Dapibus ac facilisis in
-</button>
-<li class="list-group-item list-group-item-action flex-column align-items-start collapse" id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably heard of them accusamus labore sustainable VHS.
-Cras justo odio
-</li>
+echo '<ul class="list-group">
+  <li class="list-group-item d-flex justify-content-between align-items-center">
+    Cras justo odio
+    <span class="badge badge-primary badge-pill">14</span>
+  </li>
+  <li class="list-group-item d-flex justify-content-between align-items-center">
+    Dapibus ac facilisis in
+    <span class="badge badge-primary badge-pill">2</span>
+  </li>
+  <li class="list-group-item d-flex justify-content-between align-items-center">
+    Morbi leo risus
+    <div class="btn-group" role="group" aria-label="Basic example">
+  <a class="btn btn-primary" href="#" role="button">Link</a>
+  <a class="btn btn-primary" href="#" role="button">Link</a>
+</div>
+  </li>
+</ul>
+<div class="accordion" id="accordionExample">
+  <div class="card">
+    <div class="card-header" id="headingOne">
+      <h2 class="mb-0">
+        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          Collapsible Group Item #1
+        </button>
+      </h2>
+    </div>
 
+    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+      <div class="card-body">
+        collapse 1
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header" id="headingTwo">
+      <h2 class="mb-0">
+        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          Collapsible Group Item #2
+        </button>
+      </h2>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header" id="headingThree">
+      <h2 class="mb-0">
+        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+          Collapsible Group Item #3
+        </button>
+      </h2>
+    </div>
+    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+      <div class="card-body">
+         collapse 2
+      </div>
+    </div>
+    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+      <div class="card-body">
+        collapse 3
+      </div>
+    </div>
+  </div>
 </div>';
 
 
