@@ -14,12 +14,12 @@ $form .= "<label for='inputnickname'><small>".__( 'Public nickname', 'doliconnec
 
 if ( $current_user->billing_type == 'mor' or (isset($_GET["pro"]) && !get_option('doliconnect_disablepro')) ) {
 $form .= "<input type='hidden' name='thirdparty[morphy]' value='mor'><div class='col-12'><label for='coordonnees'><small>".__( 'Company', 'doliconnect' )."</small></label><input type='text' class='form-control' id='inputcompany' placeholder='".__( 'Company', 'doliconnect' )."' name='thirdparty[name]' value='".$current_user->billing_company."' required><div class='invalid-tooltip'>".__( 'This field is required.', 'doliconnect' )."</div></div>";
-$form .= "</div></div></li><li class='list-group-item'><div class='form-group'>";
+$form .= "</div></div></li><li class='list-group-item'>";
 } else {
 $form .= "<input type='hidden' name='thirdparty[morphy]' value='phy'></div></div>";
 }
 
-$form .= "<div class='form-row'><div class='form-group col-md-3'><label for='inputEmail4'><small>".__( 'Identity', 'doliconnect' )."</small></label>";
+$form .= "<div class='form-row'><div class='form-group col-md-3'><label for='inputCivility'><small>".__( 'Civility', 'doliconnect' )."</small></label>";
 $civility = callDoliApi("GET", "/setup/dictionary/civility?sortfield=code&sortorder=ASC&limit=100", null, $delay);
 if ( isset($civility->error) ) {
 $civility = callDoliApi("GET", "/setup/dictionary/civilities?sortfield=code&sortorder=ASC&limit=100&active=1", null, $delay); 
@@ -47,11 +47,11 @@ $form .= ">".__( 'Mister', 'doliconnect' )."</option>";
 $form .= "</select>";
 $form .= "</div>
     <div class='form-group col-md-4'>
-      <label for='inputEmail4'><small>".__( 'Identity', 'doliconnect' )."</small></label>
+      <label for='inputFirstname'><small>".__( 'Firstname', 'doliconnect' )."</small></label>
       <input type='text' name='thirdparty[firstname]' class='form-control' placeholder='".__( 'Firstname', 'doliconnect' )."' value='".stripslashes(htmlspecialchars($current_user->user_firstname, ENT_QUOTES))."' required>
     </div>
     <div class='form-group col-md-5'>
-      <label for='inputPassword4'><small>".__( 'Identity', 'doliconnect' )."</small></label>
+      <label for='inputLastname'><small>".__( 'Lastname', 'doliconnect' )."</small></label>
       <input type='text' name='thirdparty[lastname]' class='form-control' placeholder='".__( 'Lastname', 'doliconnect' )."' value='".stripslashes(htmlspecialchars($current_user->user_lastname, ENT_QUOTES))."' required>
     </div></div>";
 
@@ -63,20 +63,23 @@ $form .= " readonly";
 $form .= " required";
 }
 $form .= "></div></div>";
-$form .= "</div>";
 
 $form .= "</li>";
 
 if ( ( isset($_GET["pro"]) && !get_option('doliconnect_disablepro') ) || $mode == 'full' || $mode == 'mini') {       
-$form .= "<li class='list-group-item'><div class='form-group'><div class='row'>";
-$form .= "<div class='col-12'><label for='inputaddress'><small>".__( 'Address', 'doliconnect' )."</small></label>
-<div class='input-group mb-2'><div class='input-group-prepend'><span class='input-group-text'><i class='fas fa-map-marked fa-fw'></i></span></div>
+$form .= "<li class='list-group-item'>";
+ 
+$form .= "<div class='form-row'><div class='col-12'><label for='inputaddress'><small><i class='fas fa-map-marked fa-fw'></i> ".__( 'Address', 'doliconnect' )."</small></label>
 <textarea id='inlineFormInputGroup' name='thirdparty[address]' class='form-control' rows='3' placeholder='".__( 'Address', 'doliconnect' )."' required>".$object->address."</textarea></div></div>";
-$form .= "<div class='col-12'><label for='inputzipcode'><small>".__( 'Zipcode', 'doliconnect' )." / ".__( 'Town', 'doliconnect' )." / ".__( 'Country', 'doliconnect' )."</small></label>
-<div class='input-group mb-2'><div class='input-group-prepend'><span class='input-group-text' id='address'><i class='fas fa-map-marked fa-fw'></i></span></div>
-<input type='text' class='form-control' id='inputzipcode' placeholder='".__( 'Zipcode', 'doliconnect' )."' name='thirdparty[zip]' value='".$object->zip."' autocomplete='off' required>
-<input type='text' class='form-control' id='inputcity' placeholder='".__( 'Town', 'doliconnect' )."' name='thirdparty[town]' value='".$object->town."' autocomplete='off' required>";
 
+$form .= "<br><div class='form-row'>
+    <div class='form-group col-md-6'>
+      <input type='text' class='form-control' placeholder='".__( 'Town', 'doliconnect' )."' name='thirdparty[town]' value='".$object->town."' autocomplete='off' required>
+    </div>
+    <div class='form-group col'>
+      <input type='text' class='form-control' placeholder='".__( 'Zipcode', 'doliconnect' )."' name='thirdparty[zip]' value='".$object->zip."' autocomplete='off' required>
+    </div>
+    <div class='form-group col'>";
 $pays = callDoliApi("GET", "/setup/dictionary/countries?sortfield=favorite%2Clabel&sortorder=DESC%2CASC&limit=500", null , $delay);
 
 if ( isset($pays) ) { 
@@ -94,8 +97,9 @@ $form .= "</select>";
 $form .= "<input type='text' class='form-control' id='inputcountry' placeholder='".__( 'Country', 'doliconnect' )."' name='thirdparty[country_id]' value='".$object->country_id."' autocomplete='off' required>";
 }
 $form .= "</div></div>";
-$form .= "<div class='col-12'><label for='inputmobile'><small>".__( 'Phone', 'doliconnect' )."</small></label><div class='input-group mb-2'><div class='input-group-prepend'><div class='input-group-text'><i class='fas fa-phone fa-fw'></i></div></div><input type='tel' class='form-control' id='inputmobile' placeholder='".__( 'Phone', 'doliconnect' )."' name='thirdparty[phone]' value='".$object->phone."' autocomplete='off'></div></div>";
-$form .= "</div></div>";
+
+$form .= "<div class='form-row'><div class='col-12'><label for='inputmobile'><small>".__( 'Phone', 'doliconnect' )."</small></label><div class='input-group mb-2'><div class='input-group-prepend'><div class='input-group-text'><i class='fas fa-phone fa-fw'></i></div></div><input type='tel' class='form-control' id='inputmobile' placeholder='".__( 'Phone', 'doliconnect' )."' name='thirdparty[phone]' value='".$object->phone."' autocomplete='off'></div></div>";
+$form .= "</div>";
 
 $form .= "</li>";
  
