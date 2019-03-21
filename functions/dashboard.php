@@ -357,7 +357,9 @@ $data = [
 	];
 $contactv = callDoliApi("POST", "/contacts", $data, 0);
 $listcontact = callDoliApi("GET", $request, null, dolidelay($delay, true));
-
+if ( $contactv > 0 ) {
+$msg = "<div class='alert alert-success'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><p><strong>".__( 'Congratulations!', 'doliconnect' )."</strong> ".__( 'Your informations have been updated.', 'doliconnect' )."</p></div>";
+}
 } elseif ( isset ($_POST['delete_contact']) && $_POST['delete_contact'] > 0 ) {
 $contactv = callDoliApi("GET", "/contacts/".$_POST['delete_contact'], null, 0);
 if ( $contactv->socid == constant("DOLIBARR") ) {
@@ -433,9 +435,22 @@ if ( !empty($contact->default) ) { echo " <i class='fas fa-star fa-1x fa-fw' sty
 if ( !empty($contact->poste) ) { echo "<br>".$contact->poste; }
 echo "</h6>";
 echo "<small class='text-muted'>".$contact->address."<br>".$contact->zip." ".$contact->town." - ".$contact->country."<br>".$contact->email." ".$contact->phone_pro."</small>";
-echo "<div class='btn-group-vertical' role='group'><a class='btn btn-light text-primary' href='#' role='button'><i class='fas fa-edit fa-fw'></i></a>
+if (1 == 1) {
+echo "<div class='btn-group-vertical' role='group'><button type='button' class='btn btn-light text-primary' data-toggle='modal' data-target='#contact-".$contact->id."'><i class='fas fa-edit fa-fw'></i></a>
 <button name='delete_contact' value='".$contact->id."' class='btn btn-light text-danger' type='submit'><i class='fas fa-trash fa-fw'></i></button></div>";
+}
 echo "</li>";
+echo '<div class="modal fade" id="contact-'.$contact->id.'" tabindex="-1" role="dialog" aria-labelledby="contact-'.$contact->id.'Title" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="contact-'.$contact->id.'Title">'.__( 'Update contact', 'doliconnect' ).'</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button></div>
+      <div class="modal-body">';
+echo doliconnectuserform($contact, dolidelay(MONTH_IN_SECONDS, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'mini');      
+echo '</div></div></div></div>';
 }}
 else{
 echo "<li class='list-group-item list-group-item-light'><center>".__( 'No contact', 'doliconnect' )."</center></li>";

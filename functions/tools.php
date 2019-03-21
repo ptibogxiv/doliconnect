@@ -4,23 +4,22 @@ global $current_user;
 
 $form="";
 
-$form = "<li class='list-group-item'><div class='form-group'><div class='row'>";
+$form = "<li class='list-group-item'><div class='form-row'><div class='form-group col-12'>";
 
 if ( $mode == 'mini' ) {
-$form .= "<div class='col-12'><label for='inputnickname'><small>".__( 'Title/Job', 'doliconnect' )."</small></label><div class='input-group mb-2'><div class='input-group-prepend'><div class='input-group-text'><i class='fas fa-user-secret fa-fw'></i></div></div><input type='text' class='form-control' id='inputnickname' placeholder='".__( 'Title/Job', 'doliconnect' )."' name='thirdparty[poste]' value='' autocomplete='off' required></div><div class='invalid-tooltip'>".__( 'This field is required.', 'doliconnect' )."</div></div>";
+$form .= "<label for='inputnickname'><small>".__( 'Title/Job', 'doliconnect' )."</small></label><div class='input-group mb-2'><div class='input-group-prepend'><div class='input-group-text'><i class='fas fa-user-secret fa-fw'></i></div></div><input type='text' class='form-control' id='inputnickname' placeholder='".__( 'Title/Job', 'doliconnect' )."' name='thirdparty[poste]' value='".$object->poste."' autocomplete='off' required></div><div class='invalid-tooltip'>".__( 'This field is required.', 'doliconnect' )."</div>";
 } else {
-$form .= "<div class='col-12'><label for='inputnickname'><small>".__( 'Public nickname', 'doliconnect' )."</small></label><div class='input-group mb-2'><div class='input-group-prepend'><div class='input-group-text'><i class='fas fa-user-secret fa-fw'></i></div></div><input type='text' class='form-control' id='inputnickname' placeholder='".__( 'Nickname', 'doliconnect' )."' name='user_nicename' value='".stripslashes(htmlspecialchars($current_user->nickname, ENT_QUOTES))."' autocomplete='off' required></div><div class='invalid-tooltip'>".__( 'This field is required.', 'doliconnect' )."</div></div>";
+$form .= "<label for='inputnickname'><small>".__( 'Public nickname', 'doliconnect' )."</small></label><div class='input-group mb-2'><div class='input-group-prepend'><div class='input-group-text'><i class='fas fa-user-secret fa-fw'></i></div></div><input type='text' class='form-control' id='inputnickname' placeholder='".__( 'Nickname', 'doliconnect' )."' name='user_nicename' value='".stripslashes(htmlspecialchars($current_user->nickname, ENT_QUOTES))."' autocomplete='off' required></div><div class='invalid-tooltip'>".__( 'This field is required.', 'doliconnect' )."</div>";
 }
 
 if ( $current_user->billing_type == 'mor' or (isset($_GET["pro"]) && !get_option('doliconnect_disablepro')) ) {
 $form .= "<input type='hidden' name='thirdparty[morphy]' value='mor'><div class='col-12'><label for='coordonnees'><small>".__( 'Company', 'doliconnect' )."</small></label><input type='text' class='form-control' id='inputcompany' placeholder='".__( 'Company', 'doliconnect' )."' name='thirdparty[name]' value='".$current_user->billing_company."' required><div class='invalid-tooltip'>".__( 'This field is required.', 'doliconnect' )."</div></div>";
-$form .= "</div></div></li><li class='list-group-item'><div class='form-group'><div class='row'>";
+$form .= "</div></div></li><li class='list-group-item'><div class='form-group'>";
 } else {
-$form .= "<input type='hidden' name='thirdparty[morphy]' value='phy'>";
+$form .= "<input type='hidden' name='thirdparty[morphy]' value='phy'></div></div>";
 }
-$form .= "<div class='col-12 col-md-12'><label for='inputcivility'><small>".__( 'Identity', 'doliconnect' )."</small></label>
-<div class='input-group mb-2'><div class='input-group-prepend'><span class='input-group-text' id='identity'><i class='fas fa-user fa-fw'></i></span></div>";
 
+$form .= "<div class='form-row'><div class='form-group col-md-3'><label for='inputEmail4'><small>".__( 'Identity', 'doliconnect' )."</small></label>";
 $civility = callDoliApi("GET", "/setup/dictionary/civility?sortfield=code&sortorder=ASC&limit=100", null, $delay);
 if ( isset($civility->error) ) {
 $civility = callDoliApi("GET", "/setup/dictionary/civilities?sortfield=code&sortorder=ASC&limit=100&active=1", null, $delay); 
@@ -46,11 +45,17 @@ $form .= "selected ";}
 $form .= ">".__( 'Mister', 'doliconnect' )."</option>";
 }
 $form .= "</select>";
+$form .= "</div>
+    <div class='form-group col-md-4'>
+      <label for='inputEmail4'><small>".__( 'Identity', 'doliconnect' )."</small></label>
+      <input type='text' name='thirdparty[firstname]' class='form-control' placeholder='".__( 'Firstname', 'doliconnect' )."' value='".stripslashes(htmlspecialchars($current_user->user_firstname, ENT_QUOTES))."' required>
+    </div>
+    <div class='form-group col-md-5'>
+      <label for='inputPassword4'><small>".__( 'Identity', 'doliconnect' )."</small></label>
+      <input type='text' name='thirdparty[lastname]' class='form-control' placeholder='".__( 'Lastname', 'doliconnect' )."' value='".stripslashes(htmlspecialchars($current_user->user_lastname, ENT_QUOTES))."' required>
+    </div></div>";
 
-$form .= "<input type='text' name='thirdparty[firstname]' class='form-control' placeholder='".__( 'Firstname', 'doliconnect' )."' value='".stripslashes(htmlspecialchars($current_user->user_firstname, ENT_QUOTES))."' required>
-<input type='text' name='thirdparty[lastname]' class='form-control' placeholder='".__( 'Lastname', 'doliconnect' )."' value='".stripslashes(htmlspecialchars($current_user->user_lastname, ENT_QUOTES))."' required>
-</div><div class='invalid-tooltip'>".__( 'This field is required.', 'doliconnect' )."</div></div></div><div class='row'>";
-$form .= "<div class='col-12'><label for='inputbirth'><small>".__( 'Birthday', 'doliconnect' )."</small></label><div class='input-group mb-2'><div class='input-group-prepend'><div class='input-group-text'><i class='fas fa-birthday-cake fa-fw'></i></div></div><input type='date' name='thirdparty[birth]' class='form-control' value='".$current_user->billing_birth."' id='inputbirth' placeholder='yyyy-mm-dd' autocomplete='off' required></div></div>";
+$form .= "<div class='form-row'><div class='col-12'><label for='inputbirth'><small>".__( 'Birthday', 'doliconnect' )."</small></label><div class='input-group mb-2'><div class='input-group-prepend'><div class='input-group-text'><i class='fas fa-birthday-cake fa-fw'></i></div></div><input type='date' name='thirdparty[birth]' class='form-control' value='".$current_user->billing_birth."' id='inputbirth' placeholder='yyyy-mm-dd' autocomplete='off' required></div></div>";
 $form .= "<div class='col-12'><label for='inputemail'><small>".__( 'Email', 'doliconnect' )."</small></label><div class='input-group mb-2'><div class='input-group-prepend'><div class='input-group-text'><i class='fas fa-at fa-fw'></i></div></div><input type='email' class='form-control' id='inputemail' placeholder='email@example.com' name='thirdparty[email]' value='".$current_user->user_email."' autocomplete='off' ";
 if ( 'DOLICONNECT_DEMO' == $current_user->ID && is_user_logged_in() ) {
 $form .= " readonly";
@@ -58,7 +63,7 @@ $form .= " readonly";
 $form .= " required";
 }
 $form .= "></div></div>";
-$form .= "</div></div>";
+$form .= "</div>";
 
 $form .= "</li>";
 
