@@ -363,6 +363,9 @@ $contactv = callDoliApi("GET", "/contacts/".$_POST['delete_contact'], null, 0);
 if ( $contactv->socid == constant("DOLIBARR") ) {
 // try deleting
 $delete = callDoliApi("DELETE", "/contacts/".$contactv->id, null, 0);
+
+$msg = "<div class='alert alert-success'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><p><strong>".__( 'Congratulations!', 'doliconnect' )."</strong> ".__( 'Your informations have been updated.', 'doliconnect' )."</p></div>";
+
 } else {
 // fail deleting
 }
@@ -413,7 +416,7 @@ form.submit();
 
 <?php
 echo "</script>";
-
+if ( isset($msg) ) { echo $msg; }
 echo "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
 
 if ( count($listcontact) < 5 ) {
