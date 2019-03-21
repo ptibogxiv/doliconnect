@@ -426,12 +426,12 @@ echo '<button type="button" class="list-group-item lh-condensed list-group-item-
 
 $count=$contact->ref_facturation+$contact->ref_contrat+$contact->ref_commande+$contact->ref_propal;
 echo "<li class='list-group-item d-flex justify-content-between lh-condensed list-group-item-action'>";
-echo "<h6 class='my-0'>".$contact->civility_code." ".$contact->firstname." ".$contact->lastname;
-if ( !empty($contact->default) ) { echo " <i class='fas fa-star fa-1x fa-fw'></i>"; }
+echo "<div><i class='fas fa-address-card $color fa-3x fa-fw'></i></div><h6 class='my-0'>".$contact->civility_code." ".$contact->firstname." ".$contact->lastname;
+if ( !empty($contact->default) ) { echo " <i class='fas fa-star fa-1x fa-fw' style='color:Gold'></i>"; }
 if ( !empty($contact->poste) ) { echo "<br>".$contact->poste; }
 echo "</h6>";
 echo "<small class='text-muted'>".$contact->address."<br>".$contact->zip." ".$contact->town." - ".$contact->country."<br>".$contact->email." ".$contact->phone_pro."</small>";
-echo "<div class='btn-group-vertical' role='group' aria-label='Basic example'><a class='btn btn-light text-primary' href='#' role='button'><i class='fas fa-edit fa-fw'></i></a>
+echo "<div class='btn-group-vertical' role='group'><a class='btn btn-light text-primary' href='#' role='button'><i class='fas fa-edit fa-fw'></i></a>
 <button name='delete_contact' value='".$contact->id."' class='btn btn-light text-danger' type='submit'><i class='fas fa-trash fa-fw'></i></button></div>";
 echo "</li>";
 }}
