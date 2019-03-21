@@ -29,7 +29,7 @@ $form .= "<select class='custom-select' id='identity'  name='thirdparty[civility
 $form .= "<option value='' disabled ";
 if ( empty($object->civility_id) ) {
 $form .= "selected ";}
-$form .= ">".__( '-- Select --', 'doliconnect' )."</option>";
+$form .= ">".__( '- Select -', 'doliconnect' )."</option>";
 if ( !isset($civility->error ) && $civility != null ) { 
 foreach ( $civility as $postv ) {
 
@@ -93,7 +93,7 @@ $form .= "<select class='custom-select' id='inputcountry'  name='thirdparty[coun
 $form .= "<option value='' disabled ";
 if ( ! $object->country_id > 0 || $pays == 0) {
 $form .= "selected ";}
-$form .= ">".__( '-- Select --', 'doliconnect' )."</option>";
+$form .= ">".__( '- Select -', 'doliconnect' )."</option>";
 foreach ( $pays as $postv ) { 
 $form .= "<option value='".$postv->id."' ";
 if ( $object->country_id == $postv->id && $object->country_id != null && $postv->id != '0' ) {

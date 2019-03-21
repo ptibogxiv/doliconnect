@@ -317,7 +317,7 @@ checked('1', get_option('doliconnectrestrict')); } else { ?> disabled <?php } ?>
                 <td ><?php 
            $args = array(
     'name' => 'doliaccount', 
-    'show_option_none' => __( '— Select —' ), 
+    'show_option_none' => __( '- Select -', 'doliconnect' ), 
     'option_none_value' => '0', 
     'selected' => get_option('doliaccount') 
 );
@@ -334,7 +334,7 @@ checked('1', get_option('doliconnectrestrict')); } else { ?> disabled <?php } ?>
 <?php 
            $args = array(
     'name' => 'dolicart', 
-    'show_option_none' => __( '— Select —' ), 
+    'show_option_none' => __( '- Select -', 'doliconnect' ), 
     'option_none_value' => '0', 
     'selected' => get_option('dolicart') 
 );
@@ -350,7 +350,7 @@ checked('1', get_option('doliconnectrestrict')); } else { ?> disabled <?php } ?>
 <?php 
            $args = array(
     'name' => 'dolishop', 
-    'show_option_none' => __( '— Select —' ), 
+    'show_option_none' => __( '- Select -', 'doliconnect' ), 
     'option_none_value' => '0', 
     'selected' => get_option('dolishop') 
 );
@@ -365,7 +365,7 @@ checked('1', get_option('doliconnectrestrict')); } else { ?> disabled <?php } ?>
            <?php 
            $args = array(
     'name' => 'dolicontact', 
-    'show_option_none' => __( '— Select —' ), 
+    'show_option_none' => __( '- Select -', 'doliconnect' ), 
     'option_none_value' => '0', 
     'selected' => get_option('dolicontact') 
 );
@@ -377,7 +377,7 @@ checked('1', get_option('doliconnectrestrict')); } else { ?> disabled <?php } ?>
            <?php 
            $args = array(
     'name' => 'dolicontact', 
-    'show_option_none' => __( '— Select —' ), 
+    'show_option_none' => __( '- Select -', 'doliconnect' ), 
     'option_none_value' => '0', 
     'selected' => get_option('dolidonation') 
 );
@@ -388,7 +388,7 @@ checked('1', get_option('doliconnectrestrict')); } else { ?> disabled <?php } ?>
                 <td ><?php 
            $args = array(
     'name' => 'wp_page_for_privacy_policy', 
-    'show_option_none' => __( '— Select —' ), 
+    'show_option_none' => __( '- Select -', 'doliconnect' ), 
     'option_none_value' => '0', 
     'selected' => get_option( 'wp_page_for_privacy_policy' ) 
 );
@@ -401,7 +401,7 @@ if (is_plugin_active( 'doliconnect-ticket/doliconnect-ticket.php' ) ) { ?>
                 <td ><?php 
            $args = array(
     'name' => 'doliticket', 
-    'show_option_none' => __( '— Select —' ), 
+    'show_option_none' => __( '- Select -', 'doliconnect' ), 
     'option_none_value' => '0', 
     'selected' => get_option('doliticket') 
 );
@@ -413,7 +413,7 @@ if (is_plugin_active( 'doliconnect-classifieds/doliconnect-classifieds.php' ) ) 
                 <td ><?php 
            $args = array(
     'name' => 'doliclassifieds', 
-    'show_option_none' => __( '— Select —' ), 
+    'show_option_none' => __( '- Select -', 'doliconnect' ), 
     'option_none_value' => '0', 
     'selected' => get_option('doliclassifieds') 
 );

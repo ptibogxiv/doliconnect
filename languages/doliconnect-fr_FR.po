@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2019-03-21 21:53+0100\n"
-"PO-Revision-Date: 2019-03-21 21:54+0100\n"
+"POT-Creation-Date: 2019-03-21 22:08+0100\n"
+"PO-Revision-Date: 2019-03-21 22:09+0100\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_FR\n"
@@ -43,9 +43,10 @@ msgstr "Tout le monde peut enregistrer"
 
 #: admin/admin.php:320 admin/admin.php:337 admin/admin.php:353
 #: admin/admin.php:368 admin/admin.php:380 admin/admin.php:391
-#: admin/admin.php:404 admin/admin.php:416
-msgid "— Select —"
-msgstr "— Sélectionner —"
+#: admin/admin.php:404 admin/admin.php:416 functions/tools.php:32
+#: functions/tools.php:96
+msgid "- Select -"
+msgstr "- Sélectionner -"
 
 #: blocks/membership/membership.php:88
 msgid "Individual"
@@ -131,7 +132,7 @@ msgstr ""
 "Pour activer votre compte et choisir votre mot de passe, veuillez cliquer "
 "sur le lien suivant"
 
-#: doliconnect.php:551 doliconnect.php:822 functions/tools.php:165
+#: doliconnect.php:551 doliconnect.php:822 functions/tools.php:168
 #, php-format
 msgid "Your %s's team"
 msgstr "L'équipe de %s"
@@ -513,7 +514,7 @@ msgstr "Refusée"
 #: functions/dashboard.php:646 functions/dashboard.php:781
 #: functions/dashboard.php:850 functions/dashboard.php:1096
 #: functions/dashboard.php:1484 functions/dashboard.php:1553
-#: functions/tools.php:144
+#: functions/tools.php:147
 msgid "Processing"
 msgstr "Traitement"
 
@@ -1023,10 +1024,6 @@ msgstr "Pseudo"
 msgid "Civility"
 msgstr "Civilité"
 
-#: functions/tools.php:32
-msgid "-- Select --"
-msgstr "-- Sélectionner --"
-
 #: functions/tools.php:45
 msgid "Miss"
 msgstr "Madame"
@@ -1063,30 +1060,30 @@ msgstr "Ville"
 msgid "Zipcode"
 msgstr "Code postal"
 
-#: functions/tools.php:103
+#: functions/tools.php:106
 msgid "Country"
 msgstr "Pays"
 
-#: functions/tools.php:118
+#: functions/tools.php:121
 msgid "Loading"
 msgstr "Chargement"
 
-#: functions/tools.php:154
+#: functions/tools.php:157
 msgid ""
 "Oops, our servers are unreachable. Thank you for coming back in a few "
 "minutes."
 msgstr ""
 "Oups, nos serveurs sont injoignables. Merci de revenir dans quelques minutes."
 
-#: functions/tools.php:154
+#: functions/tools.php:157
 msgid "Error code"
 msgstr "Code d’erreur"
 
-#: functions/tools.php:164
+#: functions/tools.php:167
 msgid "Connection notification"
 msgstr "Notification de connexion"
 
-#: functions/tools.php:165
+#: functions/tools.php:168
 msgid ""
 "It appears that you have just logged on to our site from the following IP "
 "address:"
@@ -1094,22 +1091,22 @@ msgstr ""
 "Il semble que vous venez de vous connecter à notre site à partir de "
 "l'adresse IP suivante:"
 
-#: functions/tools.php:165
+#: functions/tools.php:168
 msgid ""
 "If you have not made this action, please change your password immediately."
 msgstr ""
 "Si vous n'avez pas fait cette action, s'il vous plaît changer votre mot de "
 "passe immédiatement."
 
-#: functions/tools.php:236
+#: functions/tools.php:239
 msgid "Help?"
 msgstr "Assistance?"
 
-#: functions/tools.php:236
+#: functions/tools.php:239
 msgid "Need help?"
 msgstr "Besoin d'aide?"
 
-#: functions/tools.php:255 functions/tools.php:257
+#: functions/tools.php:258 functions/tools.php:260
 msgid "Updated"
 msgstr "Modifié"
 
@@ -1128,6 +1125,9 @@ msgstr "ptibogxiv"
 #. Author URI of the plugin/theme
 msgid "https://www.ptibogxiv.net/en"
 msgstr "https://www.ptibogxiv.net/fr"
+
+#~ msgid "— Select —"
+#~ msgstr "— Sélectionner —"
 
 #~ msgid "Identity"
 #~ msgstr "Identité"
