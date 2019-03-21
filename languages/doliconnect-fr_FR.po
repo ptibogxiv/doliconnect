@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2019-03-21 21:07+0100\n"
-"PO-Revision-Date: 2019-03-21 21:08+0100\n"
+"POT-Creation-Date: 2019-03-21 21:53+0100\n"
+"PO-Revision-Date: 2019-03-21 21:54+0100\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_FR\n"
@@ -131,7 +131,7 @@ msgstr ""
 "Pour activer votre compte et choisir votre mot de passe, veuillez cliquer "
 "sur le lien suivant"
 
-#: doliconnect.php:551 doliconnect.php:822 functions/tools.php:162
+#: doliconnect.php:551 doliconnect.php:822 functions/tools.php:165
 #, php-format
 msgid "Your %s's team"
 msgstr "L'équipe de %s"
@@ -301,7 +301,7 @@ msgstr ""
 "compte."
 
 #: doliconnect.php:870 doliconnect.php:949 doliconnect.php:1091
-#: doliconnect.php:1100 functions/tools.php:59
+#: doliconnect.php:1100 functions/tools.php:63
 msgid "Email"
 msgstr "Adresse électronique"
 
@@ -513,7 +513,7 @@ msgstr "Refusée"
 #: functions/dashboard.php:646 functions/dashboard.php:781
 #: functions/dashboard.php:850 functions/dashboard.php:1096
 #: functions/dashboard.php:1484 functions/dashboard.php:1553
-#: functions/tools.php:141
+#: functions/tools.php:144
 msgid "Processing"
 msgstr "Traitement"
 
@@ -1023,66 +1023,70 @@ msgstr "Pseudo"
 msgid "Civility"
 msgstr "Civilité"
 
-#: functions/tools.php:41
+#: functions/tools.php:32
+msgid "-- Select --"
+msgstr "-- Sélectionner --"
+
+#: functions/tools.php:45
 msgid "Miss"
 msgstr "Madame"
 
-#: functions/tools.php:45
+#: functions/tools.php:49
 msgid "Mister"
 msgstr "Monsieur"
 
-#: functions/tools.php:50 functions/tools.php:51
+#: functions/tools.php:54 functions/tools.php:55
 msgid "Firstname"
 msgstr "Prénom"
 
-#: functions/tools.php:54 functions/tools.php:55
+#: functions/tools.php:58 functions/tools.php:59
 msgid "Lastname"
 msgstr "Nom"
 
-#: functions/tools.php:58
+#: functions/tools.php:62
 msgid "Birthday"
 msgstr "Date de naissance"
 
-#: functions/tools.php:72 functions/tools.php:73
-msgid "Address"
-msgstr "Adresse"
-
-#: functions/tools.php:77
-msgid "Town"
-msgstr "Ville"
-
-#: functions/tools.php:80
-msgid "Zipcode"
-msgstr "Code postal"
-
-#: functions/tools.php:97
-msgid "Country"
-msgstr "Pays"
-
-#: functions/tools.php:101
+#: functions/tools.php:71
 msgid "Phone"
 msgstr "Téléphone"
 
-#: functions/tools.php:115
+#: functions/tools.php:78 functions/tools.php:79
+msgid "Address"
+msgstr "Adresse"
+
+#: functions/tools.php:83
+msgid "Town"
+msgstr "Ville"
+
+#: functions/tools.php:86
+msgid "Zipcode"
+msgstr "Code postal"
+
+#: functions/tools.php:103
+msgid "Country"
+msgstr "Pays"
+
+#: functions/tools.php:118
 msgid "Loading"
 msgstr "Chargement"
 
-#: functions/tools.php:151
+#: functions/tools.php:154
 msgid ""
 "Oops, our servers are unreachable. Thank you for coming back in a few "
 "minutes."
 msgstr ""
 "Oups, nos serveurs sont injoignables. Merci de revenir dans quelques minutes."
 
-#: functions/tools.php:151
+#: functions/tools.php:154
 msgid "Error code"
 msgstr "Code d’erreur"
 
-#: functions/tools.php:161
+#: functions/tools.php:164
 msgid "Connection notification"
 msgstr "Notification de connexion"
 
-#: functions/tools.php:162
+#: functions/tools.php:165
 msgid ""
 "It appears that you have just logged on to our site from the following IP "
 "address:"
@@ -1090,22 +1094,22 @@ msgstr ""
 "Il semble que vous venez de vous connecter à notre site à partir de "
 "l'adresse IP suivante:"
 
-#: functions/tools.php:162
+#: functions/tools.php:165
 msgid ""
 "If you have not made this action, please change your password immediately."
 msgstr ""
 "Si vous n'avez pas fait cette action, s'il vous plaît changer votre mot de "
 "passe immédiatement."
 
-#: functions/tools.php:233
+#: functions/tools.php:236
 msgid "Help?"
 msgstr "Assistance?"
 
-#: functions/tools.php:233
+#: functions/tools.php:236
 msgid "Need help?"
 msgstr "Besoin d'aide?"
 
-#: functions/tools.php:252 functions/tools.php:254
+#: functions/tools.php:255 functions/tools.php:257
 msgid "Updated"
 msgstr "Modifié"
 

@@ -562,7 +562,7 @@ echo "<div class='alert alert-success'><h4 class='alert-heading'>".__( 'Congratu
 if ( isset($hasError) || isset($captchaError) ) {
 echo "<div class='alert alert-danger'><a class='close' data-dismiss='alert'>x</a><h4 class='alert-heading'>".__( 'Oops', 'doliconnect' )."</h4><p class='error'>$emailError<p></div>";
 }
-echo "<form  action='' method='post' class='needs-validation' novalidate><div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>".__( 'Create an account', 'doliconnect' )."</h5>";
+echo "<form  action='' method='post' class='was-validated'><div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>".__( 'Create an account', 'doliconnect' )."</h5>";
 echo "<script>";
 ?>
 // Example starter JavaScript for disabling form submissions if there are invalid fields
