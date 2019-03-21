@@ -55,14 +55,14 @@ $form .= "</div>
       <input type='text' name='thirdparty[lastname]' class='form-control' placeholder='".__( 'Lastname', 'doliconnect' )."' value='".stripslashes(htmlspecialchars($current_user->user_lastname, ENT_QUOTES))."' required>
     </div></div>";
 
-$form .= "<div class='form-row'><div class='col-12'><label for='inputbirth'><small>".__( 'Birthday', 'doliconnect' )."</small></label><div class='input-group mb-2'><div class='input-group-prepend'><div class='input-group-text'><i class='fas fa-birthday-cake fa-fw'></i></div></div><input type='date' name='thirdparty[birth]' class='form-control' value='".$current_user->billing_birth."' id='inputbirth' placeholder='yyyy-mm-dd' autocomplete='off' required></div></div>";
-$form .= "<div class='col-12'><label for='inputemail'><small>".__( 'Email', 'doliconnect' )."</small></label><div class='input-group mb-2'><div class='input-group-prepend'><div class='input-group-text'><i class='fas fa-at fa-fw'></i></div></div><input type='email' class='form-control' id='inputemail' placeholder='email@example.com' name='thirdparty[email]' value='".$current_user->user_email."' autocomplete='off' ";
+$form .= "<div class='form-row'><div class='col-12'><label for='inputbirth'><small>".__( 'Birthday', 'doliconnect' )."</small></label><div class='input-group mb-2'><div class='input-group-prepend'><div class='input-group-text'><i class='fas fa-birthday-cake fa-fw'></i></div></div><input type='date' name='thirdparty[birth]' class='form-control' value='".$current_user->billing_birth."' id='inputbirth' placeholder='yyyy-mm-dd' autocomplete='off' required></div></div></div>";
+$form .= "<div class='form-row'><div class='form-group col-12 col-md-8'><label for='inputemail'><small>".__( 'Email', 'doliconnect' )."</small></label><div class='input-group mb-2'><div class='input-group-prepend'><div class='input-group-text'><i class='fas fa-at fa-fw'></i></div></div><input type='email' class='form-control' id='inputemail' placeholder='email@example.com' name='thirdparty[email]' value='".$current_user->user_email."' autocomplete='off' ";
 if ( 'DOLICONNECT_DEMO' == $current_user->ID && is_user_logged_in() ) {
 $form .= " readonly";
 } else {
 $form .= " required";
 }
-$form .= "></div></div>";
+$form .= "></div></div><div class='form-group col-12 col-md-4'><label for='inputmobile'><small>".__( 'Phone', 'doliconnect' )."</small></label><div class='input-group mb-2'><div class='input-group-prepend'><div class='input-group-text'><i class='fas fa-phone fa-fw'></i></div></div><input type='tel' class='form-control' id='inputmobile' placeholder='".__( 'Phone', 'doliconnect' )."' name='thirdparty[phone]' value='".$object->phone."' autocomplete='off'></div></div>";
 
 $form .= "</li>";
 
