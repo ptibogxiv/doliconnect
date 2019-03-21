@@ -111,7 +111,7 @@ echo "<div class='form-group'><div class='row'>
 </div>";
 echo "</li>";
 echo "</ul><div class='card-body'><input type='hidden' name='userid' value='$ID'><button class='btn btn-danger btn-block' type='submit'><b>".__( 'Update', 'doliconnect' )."</b></button></div>";
-
+echo "</form>";
 echo "</div>";
 
 echo "<small><div class='float-left'>";
@@ -120,7 +120,6 @@ echo "</div><div class='float-right'>";
 echo dolihelp('ISSUE');
 echo "</div></small>";
 
-echo "</form>";
 }
 add_action( 'user_doliconnect_informations', 'informations_module');
 
@@ -418,7 +417,9 @@ form.submit();
 
 <?php
 echo "</script>";
+
 if ( isset($msg) ) { echo $msg; }
+
 echo "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
 
 if ( count($listcontact) < 5 ) {
@@ -479,8 +480,6 @@ echo "</div><div class='float-right'>";
 echo dolihelp('ISSUE');
 echo "</div></small>";
 
-
-echo doliloading('contact');
 }
 add_action( 'user_doliconnect_contacts', 'contacts_module' );
 
@@ -522,7 +521,7 @@ $msg = "<div class='alert alert-danger'><button type='button' class='close' data
 }
 }
 
-echo "<form class='was-validated' action='".$url."' id='payment-form' method='post'><input type='hidden' name='case' value='updatepwd'>";
+echo "<form class='was-validated' action='".$url."' id='password-form' method='post'><input type='hidden' name='case' value='updatepwd'>";
 
 if ( isset($msg) ) { echo $msg; }
 
@@ -535,7 +534,7 @@ $(".alert-success").fadeTo(500, 0).slideUp(500, function () {
     });
 }, 5000);
 
-var form = document.getElementById('payment-form');
+var form = document.getElementById('password-form');
 form.addEventListener('submit', function(event) {
 
 jQuery('#DoliconnectLoadingModal').modal('show');
@@ -583,11 +582,12 @@ if ( 'DOLICONNECT_DEMO' == $ID ) {
 echo ' disabled';
 }
 echo "><b>".__( 'Update', 'doliconnect' )."</b></button></div></div>";
+
 echo "<p class='text-right'><small>";
 echo dolihelp('ISSUE');
 echo "</small></p>";
 echo "</form>";
-echo doliloading('password');
+
 }
 add_action( 'user_doliconnect_password', 'password_module');
 //*****************************************************************************************

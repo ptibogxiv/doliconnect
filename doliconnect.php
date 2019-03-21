@@ -562,29 +562,31 @@ echo "<div class='alert alert-success'><h4 class='alert-heading'>".__( 'Congratu
 if ( isset($hasError) || isset($captchaError) ) {
 echo "<div class='alert alert-danger'><a class='close' data-dismiss='alert'>x</a><h4 class='alert-heading'>".__( 'Oops', 'doliconnect' )."</h4><p class='error'>$emailError<p></div>";
 }
-echo "<form  action='' method='post' class='was-validated'><div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>".__( 'Create an account', 'doliconnect' )."</h5>";
+echo "<form id='signin-form' method='post' class='was-validated'><div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>".__( 'Create an account', 'doliconnect' )."</h5>";
+
 echo "<script>";
 ?>
-// Example starter JavaScript for disabling form submissions if there are invalid fields
-(function() {
-  'use strict';
-  window.addEventListener('load', function() {
-    // Fetch all the forms we want to apply custom Bootstrap validation styles to
-    var forms = document.getElementsByClassName('needs-validation');
-    // Loop over them and prevent submission
-    var validation = Array.prototype.filter.call(forms, function(form) {
-      form.addEventListener('submit', function(event) {
-        if (form.checkValidity() === false) {
-          event.preventDefault();
-          event.stopPropagation();
-        }
-        form.classList.add('was-validated');
-      }, false);
+
+window.setTimeout(function() {
+    $(".alert").fadeTo(500, 0).slideUp(500, function(){
+        $(this).remove(); 
     });
-  }, false);
-})();
+}, 5000);
+
+var form = document.getElementById('signin-form'); 
+
+form.addEventListener('submit', function(event) {
+
+jQuery('#DoliconnectLoadingModal').modal('show');
+jQuery(window).scrollTop(0);
+console.log("submit");
+form.submit();
+
+});
+
 <?php
 echo "</script>";
+
 if ( isset($_GET["pro"]) && !get_option('doliconnect_disablepro') ) {
 echo "<a  href='".wp_registration_url(get_permalink())."' role='button' title='".__( 'Create a personnal account', 'doliconnect' )."'><small>(".__( 'Personnal account', 'doliconnect' )."?)</small></a>";                                                                                                                                                                                                                                                                                                                                     
 }
@@ -595,9 +597,9 @@ echo "<a  href='".wp_registration_url(get_permalink())."&pro' role='button' titl
 echo "</div><ul class='list-group list-group-flush'>";
 
 if ( function_exists('dolikiosk') && ! empty(dolikiosk()) ) {
-echo doliconnectuserform(null, dolidelay(MONTH_IN_SECONDS, esc_attr($_GET["refresh"]), true), 'full');
+echo doliconnectuserform(null, null, 'full');
 } else {
-echo doliconnectuserform(null, dolidelay(MONTH_IN_SECONDS, esc_attr($_GET["refresh"]), true), 'small');
+echo doliconnectuserform(null, null, 'small');
 }
 
 echo "<li class='list-group-item'><input type='hidden' name='submitted' id='submitted' value='true'>";
@@ -631,10 +633,12 @@ echo "";
 echo "><b>".__( 'Create an account', 'doliconnect' )."</b></button></form>";
 }
 echo"</div></div>";
+
 echo "<p class='text-right'><small>";
 echo dolihelp('ISSUE');
 echo "</small></p>";
 echo "</div></div>";
+
 if ( get_option( 'wp_page_for_privacy_policy' ) ) {
 echo "<div class='modal fade' id='cgvumention' tabindex='-1' role='dialog' aria-labelledby='cgvumention' aria-hidden='true'><div class='modal-dialog modal-lg modal-dialog-centered' role='document'><div class='modal-content'><div class='modal-header'><h5 class='modal-title' id='cgvumentionLabel'>".__( 'Terms & Conditions', 'doliconnect')."</h5><button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>
 <div class='modal-body'>";
@@ -642,7 +646,9 @@ echo apply_filters('the_content', get_post_field('post_content', get_option( 'wp
 echo "</div></div></div>";}
 
 echo "</div></div>";
+
 } elseif ( !is_user_logged_in() && isset($_GET["rpw"]) ) {
+
 echo "<p class='font-weight-light' align='justify'>".__( 'Manage your account, your informations, orders and much more via this secure client area.', 'doliconnect' )."</p></div></div></div>";
 echo "<div class='col-xs-12 col-sm-12 col-md-9'>";
 if (!$_GET["login"] || !$_GET["key"]) {
@@ -841,6 +847,7 @@ echo "<div class='alert alert-danger'><h4 class='alert-heading'>".__( 'Oops', 'd
 
 echo "<form id='fpw-form' action='' method='post' class='was-validated'><input type='hidden' name='submitted' id='submitted' value='true' />";
 echo $msg;
+
 echo'<script>';
 ?>
 
@@ -861,7 +868,8 @@ form.submit();
 });
 
 <?php            
-echo '</script>'; 
+echo '</script>';
+ 
 echo "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>".__( 'Forgot password?', 'doliconnect' )."</h5>";
 
 echo "<div class='form-group'><label for='inputemail'><small>".__( 'Please enter the email address by which you registered your account.', 'doliconnect' )."</small></label>
@@ -872,12 +880,11 @@ echo "</div></div></div>";
 echo "<ul class='list-group list-group-flush'><li class='list-group-item'>";
 echo "<button class='btn btn-danger btn-block' type='submit'><b>".__( 'Submit', 'doliconnect' )."</b></button>";
 echo "</li></ul>";
-echo "</div>";
+echo "</div></form>";
 
 echo "<p class='text-right'><small>";
 echo dolihelp('ISSUE');
-echo "</small></p></form>"; 
-echo doliloading('fpw');
+echo "</small></p>"; 
 
 echo "</div></div>";
 
@@ -920,8 +927,10 @@ $login_url=site_url()."/".secupress_get_module_option('move-login_slug-login', $
 } else {
 $login_url=site_url()."/wp-login.php"; }
 if ( isset($_GET["redirect_to"])) { $redirect_to=$_GET["redirect_to"]; } else {
-$redirect_to=$_SERVER['HTTP_REFERER'];} 
+$redirect_to=$_SERVER['HTTP_REFERER'];}
+ 
 echo "<form class='was-validated' id='login-form' action='$login_url' method='post'>";
+
 echo'<script>';
 ?>
 
@@ -942,7 +951,8 @@ form.submit();
 });
 
 <?php            
-echo '</script>'; 
+echo '</script>';
+ 
 echo "<div class='form-group'>
 <div class='input-group mb-2 mr-sm-2'><div class='input-group-prepend'>
 <div class='input-group-text'><i class='fas fa-at fa-fw'></i></div></div>
@@ -962,7 +972,6 @@ echo "</div><div class='float-right'><a href='".wp_lostpassword_url( get_permali
 
 echo "</div></li><li class='list-group-item'><input type='hidden' value='$redirect_to' name='redirect_to'><button id='submit' class='btn btn-block btn-primary' type='submit' name='submit' value='Submit'";
 echo "><b>".__( 'Sign in', 'doliconnect' )."</b></button></form>";
-echo doliloading('login');
 
 }
 
