@@ -354,6 +354,8 @@ echo "</div><br></div><div class='col-9 col-xs-8 col-sm-8 col-md-12 col-xl-12'>"
 
 if ( is_user_logged_in() ) {
 
+$thirdparty = callDoliApi("GET", "/thirdparties/".constant("DOLIBARR"), null, DAY_IN_SECONDS);
+
 if ( defined("DOLIBUG") ) {
 
 echo "</div></div></div>";
@@ -374,15 +376,15 @@ echo "</div><br>";
 echo "</div></div></div>";
 echo "<div class='col-xs-12 col-sm-12 col-md-9'>";
 do_action( 'user_doliconnect_'.esc_attr($_GET['module']), esc_url( add_query_arg( 'module', esc_attr($_GET['module']), doliconnecturl('doliaccount')) ) ); 
-} elseif ( has_action('compta_doliconnect_'.esc_attr($_GET['module'])) ) {
-if( has_action('compta_doliconnect_menu') ) {
+} elseif ( has_action('customer_doliconnect_'.esc_attr($_GET['module'])) && $thirdparty->client == '1' ) {
+if( has_action('customer_doliconnect_menu') ) {
 echo "<div class='list-group shadow-sm'>";
-do_action('compta_doliconnect_menu', esc_attr($_GET['module']));
+do_action('customer_doliconnect_menu', esc_attr($_GET['module']));
 echo "</div><br>";
 }
 echo "</div></div></div>";
 echo "<div class='col-xs-12 col-sm-12 col-md-9'>";
-do_action( 'compta_doliconnect_'.esc_attr($_GET['module']), esc_url( add_query_arg( 'module', esc_attr($_GET['module']), doliconnecturl('doliaccount')) ) ); 
+do_action( 'customer_doliconnect_'.esc_attr($_GET['module']), esc_url( add_query_arg( 'module', esc_attr($_GET['module']), doliconnecturl('doliaccount')) ) ); 
 } elseif ( has_action('options_doliconnect_'.esc_attr($_GET['module'])) ) {
 if ( has_action('options_doliconnect_menu') ) {
 echo "<div class='list-group shadow-sm'>";
@@ -427,15 +429,21 @@ do_action('user_doliconnect_menu');
 echo "</div><br>";
 }  
 
-if ( has_action('compta_doliconnect_menu') ) {
+if ( has_action('customer_doliconnect_menu') && $thirdparty->client == '1' ) {
 echo "<div class='list-group shadow-sm'>";
-do_action('compta_doliconnect_menu');
+do_action('customer_doliconnect_menu');
 echo "</div><br>";
 }
 
 if ( has_action('options_doliconnect_menu') ) {
 echo "<div class='list-group shadow-sm'>";
 do_action('options_doliconnect_menu');
+echo "</div><br>";
+}
+
+if ( has_action('supplier_doliconnect_menu') && $thirdparty->fournisseur == '1' ) {
+echo "<div class='list-group shadow-sm'>";
+do_action('supplier_doliconnect_menu');
 echo "</div><br>";
 }
 

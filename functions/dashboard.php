@@ -416,14 +416,13 @@ echo "</script>";
 
 echo "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
 
-if ( !isset($listcontact->error) && $listcontact != null ) {
-$idcontact=1;
-foreach ( $listcontact as $contact ) { 
-
 if ( count($listcontact) < 5 ) {
 echo '<button type="button" class="list-group-item lh-condensed list-group-item-action list-group-item-primary" data-toggle="modal" data-target="#addcontactadress"><center><i class="fas fa-plus-circle"></i> '.__( 'Add a new contact/address', 'doliconnect' ).'</center></button>';
 }
 
+if ( !isset($listcontact->error) && $listcontact != null ) {
+$idcontact=1;
+foreach ( $listcontact as $contact ) { 
 $count=$contact->ref_facturation+$contact->ref_contrat+$contact->ref_commande+$contact->ref_propal;
 echo "<li class='list-group-item d-flex justify-content-between lh-condensed list-group-item-action'>";
 echo "<div><i class='fas fa-address-card $color fa-3x fa-fw'></i></div><h6 class='my-0'>".$contact->civility_code." ".$contact->firstname." ".$contact->lastname;
@@ -575,8 +574,8 @@ echo doliloading('password');
 add_action( 'user_doliconnect_password', 'password_module');
 //*****************************************************************************************
 if ( is_object($proposal) && $proposal->value == 1 ) {
-add_action( 'compta_doliconnect_menu', 'proposals_menu', 1, 1);
-add_action( 'compta_doliconnect_proposals', 'proposals_module' );
+add_action( 'customer_doliconnect_menu', 'proposals_menu', 1, 1);
+add_action( 'customer_doliconnect_proposals', 'proposals_module' );
 }
 
 function proposals_menu( $arg ) {
@@ -724,8 +723,8 @@ echo "</div></small>";
 }
 
 if ( is_object($order) && $order->value == 1 ) {
-add_action( 'compta_doliconnect_menu', 'orders_menu', 2, 1);
-add_action( 'compta_doliconnect_orders', 'orders_module' );
+add_action( 'customer_doliconnect_menu', 'orders_menu', 2, 1);
+add_action( 'customer_doliconnect_orders', 'orders_module' );
 }
 
 function orders_menu( $arg ) {
@@ -1032,8 +1031,8 @@ echo "</div></small>";
 }
 
 if ( is_object($contract) && $contract->value == 1 && get_option('doliconnectbeta') =='1' ) {
-add_action( 'compta_doliconnect_menu', 'contracts_menu', 2, 1);
-add_action( 'compta_doliconnect_contracts', 'contracts_module' );
+add_action( 'customer_doliconnect_menu', 'contracts_menu', 2, 1);
+add_action( 'customer_doliconnect_contracts', 'contracts_module' );
 }
 
 function contracts_menu( $arg ) {
