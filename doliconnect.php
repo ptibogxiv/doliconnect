@@ -3,7 +3,7 @@
  * Plugin Name: Doliconnect
  * Plugin URI: https://www.ptibogxiv.net
  * Description: Connect your Dolibarr (free ERP/CRM) to Wordpress. 
- * Version: 3.3.2
+ * Version: 3.3.3
  * Author: ptibogxiv
  * Author URI: https://www.ptibogxiv.net/en
  * Network: true
@@ -564,6 +564,8 @@ echo "<div class='alert alert-danger'><a class='close' data-dismiss='alert'>x</a
 }
 echo "<form id='signin-form' method='post' class='was-validated'><div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>".__( 'Create an account', 'doliconnect' )."</h5>";
 
+if ( isset($msg) ) { echo $msg; }
+
 echo "<script>";
 ?>
 
@@ -637,6 +639,7 @@ echo"</div></div>";
 echo "<p class='text-right'><small>";
 echo dolihelp('ISSUE');
 echo "</small></p>";
+
 echo "</div></div>";
 
 if ( get_option( 'wp_page_for_privacy_policy' ) ) {
@@ -846,7 +849,8 @@ echo "<div class='alert alert-danger'><h4 class='alert-heading'>".__( 'Oops', 'd
 }
 
 echo "<form id='fpw-form' action='' method='post' class='was-validated'><input type='hidden' name='submitted' id='submitted' value='true' />";
-echo $msg;
+
+if ( isset($msg) ) { echo $msg; }
 
 echo'<script>';
 ?>
@@ -1062,6 +1066,8 @@ echo "<div class='alert alert-warning'>
 }
 
 echo "<form action='' id='doliconnect-contactform' method='post' class='was-validated'>";
+
+if ( isset($msg) ) { echo $msg; }
 
 echo "<script>";
 ?>
