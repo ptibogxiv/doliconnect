@@ -391,7 +391,7 @@ if ( constant("DOLIBARR") > 0 ) {
 $thirdparty = callDoliApi("GET", "/thirdparties/".constant("DOLIBARR"), null, dolidelay( $delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
 }
 
-echo "<form role='form' action='$url' id='contact-form' method='post' novalidate>";
+echo "<form role='form' action='$url' id='contact-form' method='post'>";
 //$nonce = wp_create_nonce( 'my-nonce' );
 
 // This code would go in the target page.
@@ -452,16 +452,11 @@ echo "<div class='btn-group-vertical' role='group'><button type='button' class='
 }
 echo "</li>";
 echo '<div class="modal fade" id="contact-'.$contact->id.'" tabindex="-1" role="dialog" aria-labelledby="contact-'.$contact->id.'Title" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="contact-'.$contact->id.'Title">'.__( 'Update contact', 'doliconnect' ).'</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button></div>
-      <div class="modal-body">';
+<div class="modal-dialog modal-dialog-centered" role="document"><div class="modal-content"><div class="modal-header">
+<h5 class="modal-title" id="contact-'.$contact->id.'Title">'.__( 'Update contact', 'doliconnect' ).'</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
+<div class="modal-body"><ul class="list-group list-group-flush">';
 echo doliconnectuserform($contact, dolidelay(MONTH_IN_SECONDS, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'mini');      
-echo '</div></div></div></div>';
+echo '</ul></div></div></div></div>';
 }}
 else{
 echo "<li class='list-group-item list-group-item-light'><center>".__( 'No contact', 'doliconnect' )."</center></li>";
