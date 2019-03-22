@@ -59,7 +59,9 @@ $thirdparty = callDoliApi("GET", $request, null, dolidelay($delay, esc_attr(isse
 }
 
 echo "<form action='".$url."' id='informations-form' method='post' class='was-validated' enctype='multipart/form-data'><input type='hidden' name='case' value='updateuser'>";
+
 if ( isset($msg) ) { echo $msg; }
+
 echo "<script>";
 ?>
 
@@ -80,7 +82,9 @@ form.submit();
 });
 
 <?php
-echo "</script><div class='card shadow-sm'><ul class='list-group list-group-flush'>";
+echo "</script>";
+
+echo "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
 
 echo doliconnectuserform( $thirdparty, dolidelay(MONTH_IN_SECONDS, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'full');
 
@@ -282,7 +286,9 @@ $msg .= "<div class='alert alert-success'><button type='button' class='close' da
 }
 
 echo "<form action='".$url."' id='avatar-form' method='post' class='was-validated' enctype='multipart/form-data'><input type='hidden' name='case' value='updateavatar'>";
+
 if ( isset($msg) ) { echo $msg; }
+
 echo "<script>";
 ?>
 
@@ -297,7 +303,9 @@ form.submit();
 });
 
 <?php
-echo "</script><div class='card shadow-sm'><ul class='list-group list-group-flush'>";
+echo "</script>";
+
+echo "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
 echo "<li class='list-group-item'>";
 echo "<label for='description'><small>".__( 'Profile Picture', 'doliconnect' )."</small></label><div class='form-group'>
 <div class='input-group mb-2'><div class='input-group-prepend'><span class='input-group-text'><i class='fas fa-camera fa-fw'></i></span></div><div class='custom-file'>
@@ -318,10 +326,12 @@ echo " disabled='disabled'";
 echo "><label class='custom-control-label' for='inputavatar'>".__( 'Delete your picture', 'doliconnect' )."</label></div></div>";
 echo "</li>";
 echo "</ul><div class='card-body'><input type='hidden' name='userid' value='$ID'><button class='btn btn-danger btn-block' type='submit'><b>".__( 'Update', 'doliconnect' )."</b></button></div></div>";
+
 echo "<p class='text-right'><small>";
 echo dolihelp('ISSUE');
 echo "</small></p>";
 echo "</form>";
+
 }
 add_action( 'user_doliconnect_avatars', 'avatars_module');
 
@@ -393,7 +403,9 @@ echo "<form role='form' action='$url' id='contact-form' method='post' novalidate
 //} else {
 
 //echo $nonce;
-//}                        
+//} 
+
+if ( isset($msg) ) { echo $msg; }                       
 
 echo "<script>";
 ?>
@@ -417,8 +429,6 @@ form.submit();
 
 <?php
 echo "</script>";
-
-if ( isset($msg) ) { echo $msg; }
 
 echo "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
 
@@ -545,7 +555,7 @@ form.submit();
 });
 
 <?php
-echo "</script>";
+echo "</script>"; 
 
 echo "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
 if ( constant("DOLIBARR_USER") > '0' ) {
@@ -737,6 +747,7 @@ echo dolirefresh($request, $url, $delay);
 echo "</div><div class='float-right'>";
 echo dolihelp('COM');
 echo "</div></small>";
+
 }
 }
 
@@ -1193,8 +1204,10 @@ echo dolirefresh($request, $url, $delay);
 echo "</div><div class='float-right'>";
 echo dolihelp('COM');
 echo "</div></small>";
+
 }
 }
+
 //*****************************************************************************************
 if ( is_object($member) && $member->value == '1' ) {
 add_action( 'options_doliconnect_menu', 'members_menu', 1, 1);
@@ -1350,6 +1363,7 @@ echo dolirefresh($request, $url, $delay, $adherent);
 echo "</div><div class='float-right'>";
 echo dolihelp('COM');
 echo "</div></small>";
+
 }
 
 if ( is_object($memberconsumption) && $memberconsumption->value == '1' ) {
@@ -1401,6 +1415,7 @@ echo dolirefresh( $request, $url, $delay);
 echo "</div><div class='float-right'>";
 echo dolihelp('COM');
 echo "</div></small>";
+
 }
 
 if ( is_object($linkedmember) && $linkedmember->value == '1' ) {
@@ -1446,6 +1461,7 @@ echo dolirefresh($request, $url, $delay);
 echo "</div><div class='float-right'>";
 echo dolihelp('COM');
 echo "</div></small>";
+
 }
 
 if ( is_object($donation) && $donation->value == '1' ) {
@@ -1623,6 +1639,7 @@ echo dolirefresh($request, $url, $delay);
 echo "</div><div class='float-right'>";
 echo dolihelp('COM');
 echo "</div></small>";
+
 }
 }
 //*****************************************************************************************
@@ -1686,6 +1703,8 @@ echo "<li class='list-group-item'>";
 
 echo '<form id="message-ticket-form" action="'.$url.'&id='.$ticketfo->id.'&ref='.$ticketfo->ref.'" method="post">';
 
+if ( isset($msg) ) { echo $msg; }
+
 echo "<script>";
 ?>
 
@@ -1746,7 +1765,9 @@ $msg = "<div class='alert alert-success' role='alert'><button type='button' clas
 } }
 
 echo "<form id='ticket-form' action='".$url."&create' method='post'>";
+
 if ( isset($msg) ) { echo $msg; }
+
 echo "<script>";
 ?>
 
@@ -1766,7 +1787,8 @@ form.submit();
 });
 
 <?php
-echo "</SCRIPT>";
+echo "</script>";
+
 echo "<div class='card shadow-sm'><ul class='list-group list-group-flush'><li class='list-group-item'><h5 class='card-title'>".__( 'Open a new ticket', 'doliconnect' )."</h5>";
 echo "<div class='form-group'><label for='inputcivility'><small>".__( 'Type and category', 'doliconnect' )."</small></label>
 <div class='input-group mb-2'><div class='input-group-prepend'><span class='input-group-text' id='identity'><i class='fas fa-info-circle fa-fw'></i></span></div>";
@@ -1873,6 +1895,7 @@ echo dolirefresh($request, $url, $delay);
 echo "</div><div class='float-right'>";
 echo dolihelp('COM');
 echo "</div></small>";
+
 }
 }
 
@@ -1901,11 +1924,12 @@ $info = [
 	];
 $thirparty = callDoliApi("PUT", "/thirdparties/".constant("DOLIBARR"), $info, MONTH_IN_SECONDS);
 }
-
 }
 
 echo "<form id='settings-form' action='".$url."' method='post'>";
+
 if ( isset($msg) ) { echo $msg; }
+
 echo "<script>";
 ?>
 window.setTimeout(function() {
@@ -1927,7 +1951,8 @@ this.form.submit();
 
 }
 <?php
-echo "</SCRIPT>";
+echo "</script>";
+
 echo "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
 echo "<li class='list-group-item'><div class='custom-control custom-switch'><input type='checkbox' class='custom-control-input' name='loginmailalert' id='loginmailalert' ";
 if ( $current_user->loginmailalert == 'on' ) { echo " checked"; }        
