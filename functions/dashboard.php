@@ -1680,9 +1680,12 @@ echo '<BR/><div class="progress"><div class="progress-bar bg-success" role="prog
 echo "</div><ul class='list-group list-group-flush'>
 <li class='list-group-item'><h5 class='mb-1'>".__( 'Subject', 'doliconnect' ).": ".$ticketfo->subject."</h5>
 <p class='mb-1'>".__( 'Initial message', 'doliconnect' ).": ".$ticketfo->message."</p></li>";
+
 if ( $ticketfo->fk_statut < '8' && $ticketfo->fk_statut > '0' && !empty(get_option('doliconnectbeta')) ) {
 echo "<li class='list-group-item'>";
+
 echo '<form id="message-ticket-form" action="'.$url.'&id='.$ticketfo->id.'&ref='.$ticketfo->ref.'" method="post">';
+
 echo "<script>";
 ?>
 
@@ -1702,15 +1705,15 @@ form.submit();
 });
 
 <?php
-echo "</SCRIPT>";
+echo "</script>";
+
 echo '<div class="form-group"><label for="ticketnewmessage"><small>'.__( 'Response', 'doliconnect' ).'</small></label>
 <div class="input-group mb-2"><div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-comment fa-fw"></i></span></div><textarea class="form-control" name="ticket_newmessage" id="ticket_newmessage" rows="5"></textarea>
 </div></div><input type="hidden" name="case" value="messageticket"><button class="btn btn-danger btn-block" type="submit"><b>'.__( 'Send', 'doliconnect' ).'</b></button></form>';
-
-echo doliloading('ticket');
 echo "</li>";
 
 }
+
 if ( isset($ticketfo->messages) ) {
 foreach ( $ticketfo->messages as $msg ) {
 $datemsg =  date_i18n('d/m/Y - H:i', $msg->datec);  
