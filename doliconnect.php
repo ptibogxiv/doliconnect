@@ -995,7 +995,7 @@ doliconnect_enqueues();
 
 if( ! empty($_POST['email-control']) )   //! $is_valid  || ! 
 {
-$emailError = "Votre demande n'est pas autorisée";
+$emailError = __( 'Your request is unsuccessful', 'doliconnect' );
 }
 elseif(isset($_POST['submitted'])) {
     if( sanitize_text_field($_POST['contactName']) === '' ) {
@@ -1033,7 +1033,7 @@ elseif(isset($_POST['submitted'])) {
         elseif (!isset($emailTo) || ($emailTo == '') ){
             $emailTo = get_option('admin_email');
         }
-        $subject = $_POST['type'];
+        $subject = "[".get_bloginfo( 'name' )."] ".$_POST['ticket_type'];
         $body = "Nom: $name <br />Email: $email <br />Message: $comments";
         $headers = array("Content-Type: text/html; charset=UTF-8'","From: $name <$email>"); 
         wp_mail($emailTo, $subject, $body, $headers);
@@ -1042,7 +1042,7 @@ elseif(isset($_POST['submitted'])) {
 
 }
 
-echo "<div class='row'><div class='col-md-4'><div class='form-group'><h4>Siege social</h4>";
+echo "<div class='row'><div class='col-md-4'><div class='form-group'><h4>".__( 'Address', 'doliconnect' )."</h4>";
 echo doliconst('MAIN_INFO_SOCIETE_ADDRESS');
 echo "<br />";
 echo doliconst('MAIN_INFO_SOCIETE_ZIP');
@@ -1051,13 +1051,13 @@ echo doliconst('MAIN_INFO_SOCIETE_TOWN');
 echo "</div></div><div class='col-md-8'><div id='content'>";
 if(isset($emailSent) && $emailSent == true) { 
 echo "<div class='alert alert-success'>
-<p>Merci! Votre message a ete envoye avec succes.</p>
+<p>".__( 'Your message is successful send!', 'doliconnect' )."</p>
 </div>";
 } else { 
 if(isset($hasError) || isset($captchaError)) { 
 echo "<div class='alert alert-warning'>
 <a class='close' data-dismiss='alert'>x</a>
-<h4 class='alert-heading'>Sorry, an error occured.</h4>
+<h4 class='alert-heading'>".__( 'Oops', 'doliconnect' )."</h4>
 <p class='error'>Please try again!<p></div>";
 }
 
