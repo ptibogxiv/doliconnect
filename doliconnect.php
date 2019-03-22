@@ -363,6 +363,13 @@ echo "<div class='col-xs-12 col-sm-12 col-md-9'>";
 echo dolibug();
 echo "</div></div>";
 
+} elseif ( $thirdparty->status != '1' ) {
+
+echo "</div></div></div>";
+echo "<div class='col-xs-12 col-sm-12 col-md-9'><div class='card shadow-sm'><div class='card-body'>";
+echo __( 'This account is inactivated. Please contact us for reactivate it.', 'doliconnect' );
+echo "</div></div></div></div>";
+
 } else { 
 
 if ( isset($_GET['module']) ) {
