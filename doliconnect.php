@@ -367,8 +367,10 @@ echo "</div></div>";
 
 echo "</div></div></div>";
 echo "<div class='col-xs-12 col-sm-12 col-md-9'><div class='card shadow-sm'><div class='card-body'>";
-echo '<br><br><br><br><br><center><div class="align-middle"><i class="fas fa-bug fa-3x fa-fw"></i><h4>'.__( 'This account is inactivated. Please contact us for reactivate it.', 'doliconnect' ).'</h4></div></center><br><br><br><br><br>';
+echo '<br><br><br><br><br><center><div class="align-middle"><i class="fas fa-bug fa-3x fa-fw"></i><h4>'.__( 'This account is closed. Please contact us for reopen it.', 'doliconnect' ).'</h4></div></center><br><br><br><br><br>';
 echo "</div></div></div></div>";
+
+$thirdparty = callDoliApi("GET", "/thirdparties/".constant("DOLIBARR"), null, -DAY_IN_SECONDS);
 
 } else { 
 
