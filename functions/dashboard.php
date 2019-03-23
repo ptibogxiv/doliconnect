@@ -102,15 +102,15 @@ echo "<div class='form-row'><div class='col'><label for='description'><small><i 
 echo "<div class='form-row'><div class='col'><label for='description'><small><i class='fas fa-link fa-fw'></i> ".__( 'Website', 'doliconnect' )."</small></label>
 <input type='url' class='form-control' name='thirdparty[url]' id='website' placeholder='".__( 'Website', 'doliconnect' )."' value='".stripslashes(htmlspecialchars($thirdparty->url, ENT_QUOTES))."'></div></div>";
 
-echo "<div class='form-row'><div class='row'>
+echo "<div class='form-row'>
 <div class='col'><label for='inlineFormInputGroup'><small><i class='fab fa-facebook-f fa-fw'></i> Facebook</small></label>
 <input type='text' name='thirdparty[facebook]' class='form-control' id='inlineFormInputGroup' placeholder='".__( 'Username', 'doliconnect' )."' value='".stripslashes(htmlspecialchars($thirdparty->facebook, ENT_QUOTES))."'></div>
 <div class='col'><label for='inlineFormInputGroup'><small><i class='fab fa-twitter fa-fw'></i> Twitter</small></label>
 <input type='text' name='thirdparty[twitter]' class='form-control' id='inlineFormInputGroup' placeholder='".__( 'Username', 'doliconnect' )."' value='".stripslashes(htmlspecialchars($thirdparty->twitter, ENT_QUOTES))."'></div>
 <div class='col'><label for='inlineFormInputGroup'><small><i class='fab fa-skype fa-fw'></i> Skype</small></label>
 <input type='text' name='thirdparty[skype]' class='form-control' id='inlineFormInputGroup' placeholder='".__( 'Username', 'doliconnect' )."' value='".stripslashes(htmlspecialchars($thirdparty->skype, ENT_QUOTES))."'></div>
-</div>
 </div>";
+
 echo "</li>";
 echo "</ul><div class='card-body'><input type='hidden' name='userid' value='$ID'><button class='btn btn-danger btn-block' type='submit'><b>".__( 'Update', 'doliconnect' )."</b></button></div>";
 echo "</form>";
