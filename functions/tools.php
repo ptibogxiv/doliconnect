@@ -2,7 +2,7 @@
 function doliconnectuserform($object, $delay, $mode) {
 global $current_user;
 
-$form = "<li class='list-group-item'><div class='form-row'><div class='form-group col-12'>";
+$form = "<li class='list-group-item'><div class='form-row'><div class='col-12'>";
 
 if ( $mode == 'mini' ) {
 $form .= "<label for='inputnickname'><small>".__( 'Title/Job', 'doliconnect' )."</small></label><div class='input-group mb-2'><div class='input-group-prepend'><div class='input-group-text'><i class='fas fa-user-secret fa-fw'></i></div></div><input type='text' class='form-control' id='inputnickname' placeholder='".__( 'Title/Job', 'doliconnect' )."' name='thirdparty[poste]' value='".$object->poste."' autocomplete='off' required></div><div class='invalid-tooltip'>".__( 'This field is required.', 'doliconnect' )."</div>";
@@ -69,7 +69,7 @@ $form .= " required";
 }
 $form .= "></div>";
 if ( ( isset($_GET["pro"]) && !get_option('doliconnect_disablepro') ) || $mode == 'full' || $mode == 'mini') {   
-$form .= "<div class='form-group col-12 col-md-5'><label for='inputmobile'><small><i class='fas fa-phone fa-fw'></i> ".__( 'Phone', 'doliconnect' )."</small></label><input type='tel' class='form-control' id='inputmobile' placeholder='".__( 'Phone', 'doliconnect' )."' name='thirdparty[phone]' value='".$object->phone."' autocomplete='off'></div>";
+$form .= "<div class='col-12 col-md-5'><label for='inputmobile'><small><i class='fas fa-phone fa-fw'></i> ".__( 'Phone', 'doliconnect' )."</small></label><input type='tel' class='form-control' id='inputmobile' placeholder='".__( 'Phone', 'doliconnect' )."' name='thirdparty[phone]' value='".$object->phone."' autocomplete='off'></div>";
 }
 $form .= "</div></li>";
 
