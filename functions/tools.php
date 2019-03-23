@@ -15,7 +15,7 @@ $form .= "</div></div></li><li class='list-group-item'>";
 $form .= "<input type='hidden' name='thirdparty[morphy]' value='phy'></div></div>";
 }
 
-$form .= "<div class='form-row'><div class='form-group col-4 col-md-3'><label for='inputCivility'><small><i class='fas fa-user'></i> ".__( 'Civility', 'doliconnect' )."</small></label>";
+$form .= "<div class='form-row'><div class='col-4 col-md-3'><label for='inputCivility'><small><i class='fas fa-user'></i> ".__( 'Civility', 'doliconnect' )."</small></label>";
 $civility = callDoliApi("GET", "/setup/dictionary/civility?sortfield=code&sortorder=ASC&limit=100", null, $delay);
 if ( isset($civility->error) ) {
 $civility = callDoliApi("GET", "/setup/dictionary/civilities?sortfield=code&sortorder=ASC&limit=100&active=1", null, $delay); 
@@ -46,19 +46,22 @@ $form .= ">".__( 'Mister', 'doliconnect' )."</option>";
 }
 $form .= "</select>";
 $form .= "</div>
-    <div class='form-group col-8 col-md-4'>
+    <div class='col-8 col-md-4'>
       <label for='inputFirstname'><small><i class='fas fa-user'></i> ".__( 'Firstname', 'doliconnect' )."</small></label>
       <input type='text' name='thirdparty[firstname]' class='form-control' placeholder='".__( 'Firstname', 'doliconnect' )."' value='".stripslashes(htmlspecialchars($current_user->user_firstname, ENT_QUOTES))."' required>
     </div>
-    <div class='form-group col-12 col-md-5'>
+    <div class='col-12 col-md-5'>
       <label for='inputLastname'><small><i class='fas fa-user'></i> ".__( 'Lastname', 'doliconnect' )."</small></label>
       <input type='text' name='thirdparty[lastname]' class='form-control' placeholder='".__( 'Lastname', 'doliconnect' )."' value='".stripslashes(htmlspecialchars($current_user->user_lastname, ENT_QUOTES))."' required>
     </div></div>";
 
-$form .= "<div class='form-row'><div class='col-12 col-md-5'><label for='inputbirth'><small><i class='fas fa-birthday-cake fa-fw'></i> ".__( 'Birthday', 'doliconnect' )."</small></label><input type='date' name='thirdparty[birth]' class='form-control' value='".$current_user->billing_birth."' id='inputbirth' placeholder='yyyy-mm-dd' autocomplete='off' required></div>";
-$form .= "<div class='col-12 col-md-7'><label for='inputnickname'><small><i class='fas fa-user-secret fa-fw'></i> ".__( 'Display name', 'doliconnect' )."</small></label><input type='text' class='form-control' id='inputnickname' placeholder='".__( 'Nickname', 'doliconnect' )."' name='user_nicename' value='".stripslashes(htmlspecialchars($current_user->nickname, ENT_QUOTES))."' autocomplete='off' required></div></div>";
+$form .= "<div class='form-row'><div class='col'><label for='inputbirth'><small><i class='fas fa-birthday-cake fa-fw'></i> ".__( 'Birthday', 'doliconnect' )."</small></label><input type='date' name='thirdparty[birth]' class='form-control' value='".$current_user->billing_birth."' id='inputbirth' placeholder='yyyy-mm-dd' autocomplete='off' required></div>";
+if ( $mode != 'mini' ) {
+$form .= "<div class='col-12 col-md-7'><label for='inputnickname'><small><i class='fas fa-user-secret fa-fw'></i> ".__( 'Display name', 'doliconnect' )."</small></label><input type='text' class='form-control' id='inputnickname' placeholder='".__( 'Nickname', 'doliconnect' )."' name='user_nicename' value='".stripslashes(htmlspecialchars($current_user->nickname, ENT_QUOTES))."' autocomplete='off' required></div>";
+}
+$form .= "</div>";
 
-$form .= "<div class='form-row'><div class='form-group col'><label for='inputemail'><small><i class='fas fa-at fa-fw'></i> ".__( 'Email', 'doliconnect' )."</small></label><input type='email' class='form-control' id='inputemail' placeholder='email@example.com' name='thirdparty[email]' value='".$current_user->user_email."' autocomplete='off' ";
+$form .= "<div class='form-row'><div class='col'><label for='inputemail'><small><i class='fas fa-at fa-fw'></i> ".__( 'Email', 'doliconnect' )."</small></label><input type='email' class='form-control' id='inputemail' placeholder='email@example.com' name='thirdparty[email]' value='".$current_user->user_email."' autocomplete='off' ";
 if ( 'DOLICONNECT_DEMO' == $current_user->ID && is_user_logged_in() ) {
 $form .= " readonly";
 } else {
@@ -76,14 +79,14 @@ $form .= "<li class='list-group-item'>";
 $form .= "<div class='form-row'><div class='col-12'><label for='inputaddress'><small><i class='fas fa-map-marked fa-fw'></i> ".__( 'Address', 'doliconnect' )."</small></label>
 <textarea id='inlineFormInputGroup' name='thirdparty[address]' class='form-control' rows='3' placeholder='".__( 'Address', 'doliconnect' )."' required>".$object->address."</textarea></div></div>";
 
-$form .= "<br><div class='form-row'>
-    <div class='form-group col-md-6'>
+$form .= "<div class='form-row'>
+    <div class='col-md-6'><label for='inputaddress'><small><i class='fas fa-map-marked fa-fw'></i> ".__( 'Town', 'doliconnect' )."</small></label>
       <input type='text' class='form-control' placeholder='".__( 'Town', 'doliconnect' )."' name='thirdparty[town]' value='".$object->town."' autocomplete='off' required>
     </div>
-    <div class='form-group col'>
+    <div class='col'><label for='inputaddress'><small><i class='fas fa-map-marked fa-fw'></i> ".__( 'Zipcode', 'doliconnect' )."</small></label>
       <input type='text' class='form-control' placeholder='".__( 'Zipcode', 'doliconnect' )."' name='thirdparty[zip]' value='".$object->zip."' autocomplete='off' required>
     </div>
-    <div class='form-group col'>";
+    <div class='col'><label for='inputaddress'><small><i class='fas fa-map-marked fa-fw'></i> ".__( 'Country', 'doliconnect' )."</small></label>";
 $pays = callDoliApi("GET", "/setup/dictionary/countries?sortfield=favorite%2Clabel&sortorder=DESC%2CASC&limit=500", null , $delay);
 
 if ( isset($pays) ) { 

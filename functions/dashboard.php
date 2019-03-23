@@ -467,7 +467,7 @@ echo "</form>";
 
 if ( count($listcontact) < 5 ) {
 echo "<div class='modal fade' id='addcontactadress' tabindex='-1' role='dialog' aria-labelledby='addcontactadressTitle' aria-hidden='true'>
-<div class='modal-dialog modal-dialog-centered' role='document'>
+<div class='modal-dialog modal-lg modal-dialog-centered' role='document'>
 <div class='modal-content'><div class='modal-header'>
 <h5 class='modal-title' id='addcontactadressTitle'>".__( 'Add a new contact/address', 'doliconnect' )."</h5><button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
 </div><div class='modal-body'><ul class='list-group list-group-flush'>";
