@@ -24,7 +24,7 @@ echo "</div></li><li class='list-group-item'>";
 echo "<input type='hidden' name='thirdparty[morphy]' value='phy'>";
 }
 
-echo "<div class='form-row'><div class='col-4 col-md-3'><label for='inputCivility'><small><i class='fas fa-user'></i> ".__( 'Civility', 'doliconnect' )."</small></label>";
+echo "<div class='form-row'><div class='col-12 col-md-3'><label for='inputCivility'><small><i class='fas fa-user'></i> ".__( 'Civility', 'doliconnect' )."</small></label>";
 $civility = callDoliApi("GET", "/setup/dictionary/civility?sortfield=code&sortorder=ASC&limit=100", null, $delay);
 if ( isset($civility->error) ) {
 $civility = callDoliApi("GET", "/setup/dictionary/civilities?sortfield=code&sortorder=ASC&limit=100&active=1", null, $delay); 
@@ -55,7 +55,7 @@ echo ">".__( 'Mister', 'doliconnect' )."</option>";
 }
 echo "</select>";
 echo "</div>
-    <div class='col-8 col-md-4'>
+    <div class='col-12 col-md-4'>
       <label for='inputFirstname'><small><i class='fas fa-user'></i> ".__( 'Firstname', 'doliconnect' )."</small></label>
       <input type='text' name='thirdparty[firstname]' class='form-control' placeholder='".__( 'Firstname', 'doliconnect' )."' value='".stripslashes(htmlspecialchars($current_user->user_firstname, ENT_QUOTES))."' required>
     </div>

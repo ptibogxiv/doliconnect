@@ -1401,6 +1401,7 @@ echo "'>".__( 'Manage linked members', 'doliconnect' )."</a>";
 }
 
 function linkedmember_module( $url ) {
+
 $request = "/adherentsplus/".constant("DOLIBARR_MEMBER");
 $delay = HOUR_IN_SECONDS;
 
@@ -1413,16 +1414,15 @@ if (constant("DOLIBARR_MEMBER") > 0) {
 $linkedmember= callDoliApi("GET", $request, null, dolidelay($delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 } 
 
-if ( !isset($linkedmember->error) && $linkedmember != null ) { 
+if ( !isset($linkedmember->error) && $linkedmember->linkedmembers != null ) { 
 foreach ( $linkedmember->linkedmembers as $member ) {                                                                                 
 
 echo "<li class='list-group-item'><table width='100%'><tr><td>".$member->id."</td><td>".$member->firstname."</td><td>".$member->lastname."</td><td>".$member->email."</td><td>";
-
 echo "</td>";
 echo "<td class='text-right'></td></tr></table><span></span></li>";
 }
 } else { 
-echo "<li class='list-group-item list-group-item-light'><center>".__( 'No consumption', 'doliconnect' )."</center></li>";
+echo "<li class='list-group-item list-group-item-light'><center>".__( 'No linked member', 'doliconnect' )."</center></li>";
 }
 
 echo  "</ul></div>";
