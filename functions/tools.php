@@ -133,6 +133,7 @@ echo "<div class='form-row'><div class='col'><label for='description'><small><i 
 echo "<div class='form-row'><div class='col'><label for='description'><small><i class='fas fa-link fa-fw'></i> ".__( 'Website', 'doliconnect' )."</small></label>
 <input type='url' class='form-control' name='thirdparty[url]' id='website' placeholder='".__( 'Website', 'doliconnect' )."' value='".stripslashes(htmlspecialchars($object->url, ENT_QUOTES))."'></div></div>";
 }
+
 echo "<div class='form-row'>";
 $facebook = callDoliApi("GET", "/doliconnector/constante/SOCIALNETWORKS_FACEBOOK", null, MONTH_IN_SECONDS);
 if ( is_object($facebook) && $facebook->value == 1 ) {
@@ -158,6 +159,8 @@ echo "</div>";
 
 echo "</li>";
 
+}
+
 if ( ! isset($object) ) {
 echo "<li class='list-group-item'><div class='form-row'><div class='custom-control custom-checkbox my-1 mr-sm-2'>
 <input type='checkbox' class='custom-control-input' value='1' id='optin1' name='optin1'>
@@ -177,7 +180,6 @@ echo "</li>";
 
 echo "</ul>";
  
-}
 //return $form;
 }
 //add_action( 'wp_loaded', 'doliconnectuserform', 10, 2);
