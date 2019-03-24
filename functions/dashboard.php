@@ -1405,7 +1405,7 @@ $request = "/adherentsplus/".constant("DOLIBARR_MEMBER");
 $delay = HOUR_IN_SECONDS;
 
 echo "<div class='card shadow-sm'><div class='card-body'>";
-echo "<b>".__( 'Next billing date', 'doliconnect' ).": </b> <br>";
+echo "<b>Liste des adhérents liés à ce compte</b><br>Merci de nous contacter pour la modifier";
 
 echo "</div><ul class='list-group list-group-flush'>";
 
