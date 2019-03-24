@@ -451,8 +451,7 @@ echo "<div class='modal fade' id='addcontactadress' tabindex='-1' role='dialog' 
 echo "<form class='was-validated' role='form' action='$url' id='contact-add-form' method='post'>";
 echo doliconnectuserform($thirdparty, dolidelay(MONTH_IN_SECONDS, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'mini');
 echo "</div>
-<div class='modal-footer'><button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>
-<button name='add_contact' value='new_contact' class='btn btn-warning' type='submit'>".__( 'Add contact', 'doliconnect' )."</button></form></div>
+<div class='modal-footer'><button name='add_contact' value='new_contact' class='btn btn-warning btn-block' type='submit'><b>".__( 'Add contact', 'doliconnect' )."</b></button></form></div>
 </div></div></div>";
 }
 
