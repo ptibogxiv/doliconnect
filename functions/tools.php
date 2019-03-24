@@ -110,6 +110,15 @@ echo "</div></div>";
 
 echo "</li>";
 
+if ( function_exists('dolikiosk') && ! isset($object) && ! empty(dolikiosk()) ) {
+echo "<li class='list-group-item'><div class='form-row'><div class='col'><label for='pwd1'><small><i class='fas fa-key fa-fw'></i> ".__( 'Password', 'doliconnect' )."</small></label>
+<input class='form-control' id='pwd1' type='password' name='pwd1' value ='' placeholder='".__( 'Choose your password', 'doliconnect' )."' autocomplete='off' required>
+<small id='pwd1' class='form-text text-justify text-muted'>".__( 'Your password must be between 8 and 20 characters, including at least 1 digit, 1 letter, 1 uppercase.', 'doliconnect' )."</small></div></div>
+<div class='form-row'><div class='col'><label for='pwd2'><small><i class='fas fa-key fa-fw'></i> ".__( 'Confirm your password', 'doliconnect' )."</small></label>
+<input class='form-control' id='pwd2' type='password' name='pwd2' value ='' placeholder='".__( 'Confirm your password', 'doliconnect' )."' autocomplete='off' required></div>";
+echo "</div></li>";
+}
+
 if( has_action('mydoliconnectuserform') ) {
 echo "<li class='list-group-item'>";
 do_action('mydoliconnectuserform', $object);
@@ -148,6 +157,16 @@ echo "<div class='col-12 col-md'><label for='inlineFormInputGroup'><small><i cla
 echo "</div>";
 
 echo "</li>";
+
+if ( ! isset($object) ) {
+echo "<li class='list-group-item'><div class='form-row'><div class='custom-control custom-checkbox my-1 mr-sm-2'>
+<input type='checkbox' class='custom-control-input' value='1' id='optin1' name='optin1'>
+<label class='custom-control-label' for='optin1'> ".__( 'I would like to receive the newsletter', 'doliconnect' )."</label></div></div>";
+echo "<div class='form-row'><div class='custom-control custom-checkbox my-1 mr-sm-2'>
+<input type='checkbox' class='custom-control-input' value='forever' id='validation' name='validation' required>
+<label class='custom-control-label' for='validation'> ".__( 'I read and accept the <a href="#" data-toggle="modal" data-target="#cgvumention">Terms & Conditions</a>.', 'doliconnect')."</label></div></div>";
+echo "</li>";
+}
 
 echo "</ul>";
  

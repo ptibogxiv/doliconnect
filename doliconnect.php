@@ -622,31 +622,7 @@ echo doliconnectuserform(null, null, 'full');
 echo doliconnectuserform(null, null, 'small');
 }
 
-echo "<ul class='list-group list-group-flush'><li class='list-group-item'><input type='hidden' name='submitted' id='submitted' value='true'>";
-
-if ( function_exists('dolikiosk') && ! empty(dolikiosk()) ) {
-echo "<div class='form-group'><label for='pwd1'><small>".__( 'Password', 'doliconnect' )."</small></label>
-<div class='input-group mb-2 mr-sm-2'><div class='input-group-prepend'>
-<div class='input-group-text'><i class='fas fa-key fa-fw'></i></div></div>
-<input class='form-control' id='pwd1' type='password' name='pwd1' value ='' placeholder='".__( 'Choose your password', 'doliconnect' )."' required='required'></div>
-<small id='pwd1' class='form-text text-justify text-muted'>
-".__( 'Your password must be between 8 and 20 characters, including at least 1 digit, 1 letter, 1 uppercase.', 'doliconnect' )."
-</small>
-<div class='form-group'><label for='pwd2'></label>
-<div class='input-group mb-2 mr-sm-2'><div class='input-group-prepend'>
-<div class='input-group-text'><i class='fas fa-key fa-fw'></i></div></div>
-<input class='form-control' id='pwd2' type='password' name='pwd2' value ='' placeholder='".__( 'Confirm your password', 'doliconnect' )."' required='required'></div>";
-echo "</li><li class='list-group-item'>";
-}
-
-echo "<div class='custom-control custom-checkbox my-1 mr-sm-2'>
-<input type='checkbox' class='custom-control-input' value='1' id='optin1' name='optin1'>
-<label class='custom-control-label' for='optin1'> ".__( 'I would like to receive the newsletter', 'doliconnect' )."</label></div>";
-echo "<div class='custom-control custom-checkbox my-1 mr-sm-2'>
-<input type='checkbox' class='custom-control-input' value='forever' id='validation' name='validation' required>
-<label class='custom-control-label' for='validation'> ".__( 'I read and accept the <a href="#" data-toggle="modal" data-target="#cgvumention">Terms & Conditions</a>.', 'doliconnect')."</label>
-<div class='invalid-feedback'>".__( 'This field is required.', 'doliconnect' )."</div></div></li>";
-echo "</ul><div class='card-body'><button class='btn btn-primary btn-block' type='submit'";
+echo "<div class='card-body'><input type='hidden' name='submitted' id='submitted' value='true'><button class='btn btn-primary btn-block' type='submit'";
 if ( get_option('users_can_register')=='1' && ( get_site_option( 'registration' ) == 'user' || get_site_option( 'registration' ) == 'all' ) || ( !is_multisite() && get_option( 'users_can_register' )) ) {
 echo "";
 } else { echo " aria-disabled='true'  disabled"; }
