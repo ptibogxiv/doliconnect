@@ -580,7 +580,7 @@ echo "<div class='alert alert-success'><h4 class='alert-heading'>".__( 'Congratu
 if ( isset($hasError) || isset($captchaError) ) {
 echo "<div class='alert alert-danger'><a class='close' data-dismiss='alert'>x</a><h4 class='alert-heading'>".__( 'Oops', 'doliconnect' )."</h4><p class='error'>$emailError<p></div>";
 }
-echo "<form id='signin-form' method='post' class='was-validated'><div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>".__( 'Create an account', 'doliconnect' )."</h5>";
+echo "<form id='signin-form' method='post' class='was-validated'>";
 
 if ( isset($msg) ) { echo $msg; }
 
@@ -607,14 +607,7 @@ form.submit();
 <?php
 echo "</script>";
 
-if ( isset($_GET["pro"]) && !get_option('doliconnect_disablepro') ) {
-echo "<a  href='".wp_registration_url(get_permalink())."' role='button' title='".__( 'Create a personnal account', 'doliconnect' )."'><small>(".__( 'Personnal account', 'doliconnect' )."?)</small></a>";                                                                                                                                                                                                                                                                                                                                     
-}
-elseif (!get_option('doliconnect_disablepro')) {
-echo "<a  href='".wp_registration_url(get_permalink())."&pro' role='button' title='".__( 'Create a pro/supplier account', 'doliconnect' )."'><small>(".__( 'Pro account', 'doliconnect' )."?)</small></a>";
-}
-
-echo "</div>";
+echo "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>".__( 'Create an account', 'doliconnect' )."</h5></div>";
 
 if ( function_exists('dolikiosk') && ! empty(dolikiosk()) ) {
 echo doliconnectuserform(null, null, 'full');

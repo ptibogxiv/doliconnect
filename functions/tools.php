@@ -4,6 +4,15 @@ global $current_user;
 
 echo "<ul class='list-group list-group-flush'><li class='list-group-item'>";
 
+if ( ! isset($object) && $mode != 'mini' ) {
+if ( isset($_GET["pro"]) && !get_option('doliconnect_disablepro') ) {
+echo "<a  href='".wp_registration_url(get_permalink())."' role='button' title='".__( 'Create a personnal account', 'doliconnect' )."'><small>(".__( 'Personnal account', 'doliconnect' )."?)</small></a>";                                                                                                                                                                                                                                                                                                                                     
+}
+elseif (!get_option('doliconnect_disablepro')) {
+echo "<a  href='".wp_registration_url(get_permalink())."&pro' role='button' title='".__( 'Create a pro/supplier account', 'doliconnect' )."'><small>(".__( 'Pro account', 'doliconnect' )."?)</small></a>";
+}
+}
+
 if ( $mode == 'mini' ) {
 echo "<div class='form-row'><div class='col-12'><label for='inputnickname'><small>".__( 'Title/Job', 'doliconnect' )."</small></label><div class='input-group mb-2'><div class='input-group-prepend'><div class='input-group-text'><i class='fas fa-user-secret fa-fw'></i></div></div><input type='text' class='form-control' id='inputnickname' placeholder='".__( 'Title/Job', 'doliconnect' )."' name='thirdparty[poste]' value='".$object->poste."' autocomplete='off' required></div><div class='invalid-tooltip'>".__( 'This field is required.', 'doliconnect' )."</div>";
 }
