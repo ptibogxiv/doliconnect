@@ -459,6 +459,15 @@ echo "<div class='btn-group-vertical' role='group'><button type='button' class='
 <button name='delete_contact' value='".$contact->id."' class='btn btn-light text-danger' type='submit'><i class='fas fa-trash fa-fw'></i></button></div>";
 }
 echo "</li>";
+}}
+else{
+echo "<li class='list-group-item list-group-item-light'><center>".__( 'No contact', 'doliconnect' )."</center></li>";
+}
+echo "</ul></div>";
+echo "</form>";
+
+if ( !isset($listcontact->error) && $listcontact != null ) {
+foreach ( $listcontact as $contact ) { 
 echo '<div class="modal fade" id="contact-'.$contact->id.'" tabindex="-1" role="dialog" aria-labelledby="contact-'.$contact->id.'Title" aria-hidden="true">
 <div class="modal-dialog modal-lg modal-dialog-centered" role="document"><div class="modal-content"><div class="modal-header">
 <h5 class="modal-title" id="contact-'.$contact->id.'Title">'.__( 'Update contact', 'doliconnect' ).'</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
@@ -466,12 +475,6 @@ echo '<div class="modal fade" id="contact-'.$contact->id.'" tabindex="-1" role="
 echo doliconnectuserform($contact, dolidelay(MONTH_IN_SECONDS, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'mini');      
 echo '</ul></div></div></div></div>';
 }}
-else{
-echo "<li class='list-group-item list-group-item-light'><center>".__( 'No contact', 'doliconnect' )."</center></li>";
-}
-
-echo "</ul></div>";
-echo "</form>";
 
 if ( count($listcontact) < 5 ) {
 echo "<div class='modal fade' id='addcontactadress' tabindex='-1' role='dialog' aria-labelledby='addcontactadressTitle' aria-hidden='true'>
