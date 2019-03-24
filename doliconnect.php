@@ -614,7 +614,7 @@ elseif (!get_option('doliconnect_disablepro')) {
 echo "<a  href='".wp_registration_url(get_permalink())."&pro' role='button' title='".__( 'Create a pro/supplier account', 'doliconnect' )."'><small>(".__( 'Pro account', 'doliconnect' )."?)</small></a>";
 }
 
-echo "</div><ul class='list-group list-group-flush'>";
+echo "</div>";
 
 if ( function_exists('dolikiosk') && ! empty(dolikiosk()) ) {
 echo doliconnectuserform(null, null, 'full');
@@ -622,7 +622,7 @@ echo doliconnectuserform(null, null, 'full');
 echo doliconnectuserform(null, null, 'small');
 }
 
-echo "<li class='list-group-item'><input type='hidden' name='submitted' id='submitted' value='true'>";
+echo "<ul class='list-group list-group-flush'><li class='list-group-item'><input type='hidden' name='submitted' id='submitted' value='true'>";
 
 if ( function_exists('dolikiosk') && ! empty(dolikiosk()) ) {
 echo "<div class='form-group'><label for='pwd1'><small>".__( 'Password', 'doliconnect' )."</small></label>

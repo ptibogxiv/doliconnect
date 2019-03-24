@@ -84,45 +84,11 @@ form.submit();
 <?php
 echo "</script>";
 
-echo "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
+echo "<div class='card shadow-sm'>";
 
 echo doliconnectuserform( $thirdparty, dolidelay(MONTH_IN_SECONDS, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'full');
 
-if( has_action('mydoliconnectuserform') ) {
-echo "<li class='list-group-item'>";
-do_action('mydoliconnectuserform', $thirdparty);
-echo "</li>";
-}
-
-echo "<li class='list-group-item'>";
-
-echo "<div class='form-row'><div class='col'><label for='description'><small><i class='fas fa-bullhorn fa-fw'></i> ".__( 'About Yourself', 'doliconnect' )."</small></label>
-<textarea type='text' class='form-control' name='description' id='description' rows='3' placeholder='".__( 'About Yourself', 'doliconnect' )."'>".$current_user->description."</textarea></div></div>";
-
-echo "<div class='form-row'><div class='col'><label for='description'><small><i class='fas fa-link fa-fw'></i> ".__( 'Website', 'doliconnect' )."</small></label>
-<input type='url' class='form-control' name='thirdparty[url]' id='website' placeholder='".__( 'Website', 'doliconnect' )."' value='".stripslashes(htmlspecialchars($thirdparty->url, ENT_QUOTES))."'></div></div>";
-
-echo "<div class='form-row'>";
-if ( isset($thirdparty->facebook) ) {
-echo "<div class='col-12 col-md'><label for='inlineFormInputGroup'><small><i class='fab fa-facebook-f fa-fw'></i> Facebook</small></label>
-<input type='text' name='thirdparty[facebook]' class='form-control' id='inlineFormInputGroup' placeholder='".__( 'Username', 'doliconnect' )."' value='".stripslashes(htmlspecialchars($thirdparty->facebook, ENT_QUOTES))."'></div>";
-}
-if ( isset($thirdparty->twitter) ) {
-echo "<div class='col-12 col-md'><label for='inlineFormInputGroup'><small><i class='fab fa-twitter fa-fw'></i> Twitter</small></label>
-<input type='text' name='thirdparty[twitter]' class='form-control' id='inlineFormInputGroup' placeholder='".__( 'Username', 'doliconnect' )."' value='".stripslashes(htmlspecialchars($thirdparty->twitter, ENT_QUOTES))."'></div>";
-}
-if ( isset($thirdparty->skype) ) {
-echo "<div class='col-12 col-md'><label for='inlineFormInputGroup'><small><i class='fab fa-skype fa-fw'></i> Skype</small></label>
-<input type='text' name='thirdparty[skype]' class='form-control' id='inlineFormInputGroup' placeholder='".__( 'Username', 'doliconnect' )."' value='".stripslashes(htmlspecialchars($thirdparty->skype, ENT_QUOTES))."'></div>";
-}
-if ( isset($thirdparty->linkedin) ) {
-echo "<div class='col-12 col-md'><label for='inlineFormInputGroup'><small><i class='fab fa-linkedin fa-fw'></i> Linkedin</small></label>
-<input type='text' name='thirdparty[linkedin]' class='form-control' id='inlineFormInputGroup' placeholder='".__( 'Username', 'doliconnect' )."' value='".stripslashes(htmlspecialchars($thirdparty->linkedin, ENT_QUOTES))."'></div>";
-}
-echo "</div>";
-
-echo "</li>";
-echo "</ul><div class='card-body'><input type='hidden' name='userid' value='$ID'><button class='btn btn-danger btn-block' type='submit'><b>".__( 'Update', 'doliconnect' )."</b></button></div>";
+echo "<div class='card-body'><input type='hidden' name='userid' value='$ID'><button class='btn btn-danger btn-block' type='submit'><b>".__( 'Update', 'doliconnect' )."</b></button></div>";
 echo "</form>";
 echo "</div>";
 
@@ -471,9 +437,9 @@ foreach ( $listcontact as $contact ) {
 echo '<div class="modal fade" id="contact-'.$contact->id.'" tabindex="-1" role="dialog" aria-labelledby="contact-'.$contact->id.'Title" aria-hidden="true">
 <div class="modal-dialog modal-lg modal-dialog-centered" role="document"><div class="modal-content"><div class="modal-header">
 <h5 class="modal-title" id="contact-'.$contact->id.'Title">'.__( 'Update contact', 'doliconnect' ).'</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
-<div class="modal-body"><ul class="list-group list-group-flush">';
+<div class="modal-body">';
 echo doliconnectuserform($contact, dolidelay(MONTH_IN_SECONDS, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'mini');      
-echo '</ul></div></div></div></div>';
+echo '</div></div></div></div>';
 }}
 
 if ( count($listcontact) < 5 ) {
@@ -481,10 +447,10 @@ echo "<div class='modal fade' id='addcontactadress' tabindex='-1' role='dialog' 
 <div class='modal-dialog modal-lg modal-dialog-centered' role='document'>
 <div class='modal-content'><div class='modal-header'>
 <h5 class='modal-title' id='addcontactadressTitle'>".__( 'Add a new contact/address', 'doliconnect' )."</h5><button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
-</div><div class='modal-body'><ul class='list-group list-group-flush'>";
+</div><div class='modal-body'>";
 echo "<form class='was-validated' role='form' action='$url' id='contact-add-form' method='post'>";
 echo doliconnectuserform($thirdparty, dolidelay(MONTH_IN_SECONDS, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'mini');
-echo "</ul></div>
+echo "</div>
 <div class='modal-footer'><button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>
 <button name='add_contact' value='new_contact' class='btn btn-warning' type='submit'>".__( 'Add contact', 'doliconnect' )."</button></form></div>
 </div></div></div>";
