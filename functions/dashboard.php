@@ -415,7 +415,7 @@ $idcontact=1;
 foreach ( $listcontact as $contact ) { 
 $count=$contact->ref_facturation+$contact->ref_contrat+$contact->ref_commande+$contact->ref_propal;
 echo "<li class='list-group-item d-flex justify-content-between lh-condensed list-group-item-action'>";
-echo "<div><i class='fas fa-address-card $color fa-3x fa-fw'></i></div><h6 class='my-0'>".$contact->civility_code." ".$contact->firstname." ".$contact->lastname;
+echo "<div class='d-none d-md-block'><i class='fas fa-address-card $color fa-3x fa-fw'></i></div><h6 class='my-0'>".$contact->civility_code." ".$contact->firstname." ".$contact->lastname;
 if ( !empty($contact->default) ) { echo " <i class='fas fa-star fa-1x fa-fw' style='color:Gold'></i>"; }
 if ( !empty($contact->poste) ) { echo "<br>".$contact->poste; }
 echo "</h6>";
