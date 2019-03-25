@@ -1441,9 +1441,11 @@ $linkedmember= callDoliApi("GET", $request, null, dolidelay($delay, esc_attr(iss
 if ( !isset($linkedmember->error) && $linkedmember->linkedmembers != null ) { 
 foreach ( $linkedmember->linkedmembers as $member ) {                                                                                 
 
-echo "<li class='list-group-item d-flex justify-content-between lh-condensed list-group-item-action'><table width='100%'><tr><td>".$member->id."</td><td>".$member->firstname."</td><td>".$member->lastname."</td><td>".$member->email."</td><td>";
-echo "</td>";
-echo "<td class='text-right'></td></tr></table><span></span>";
+echo "<li class='list-group-item d-flex justify-content-between lh-condensed list-group-item-action'>";
+echo "<div class='d-none d-md-block'><i class='fas fa-address-card $color fa-3x fa-fw'></i></div><h6 class='my-0'>".$member->civility_code." ".$member->firstname." ".$member->lastname;
+//if ( !empty($contact->poste) ) { echo "<br>".$contact->poste; }
+echo "</h6>";
+echo "<small class='text-muted'>".$member->address."<br>".$member->zip." ".$member->town." - ".$member->country."<br>".$member->email." ".$contact->phone_pro."</small>";
 echo "<div class='btn-group-vertical' role='group'><button type='button' class='btn btn-light text-primary' data-toggle='modal' data-target='#member-".$member->id."'><i class='fas fa-edit fa-fw'></i></a>
 <button name='unlink_member' value='".$member->id."' class='btn btn-light text-danger' type='submit' title='Unlink ".$member->firstname." ".$member->lastname."'><i class='fas fa-unlink'></i></button></div>";
 echo "</li>";
