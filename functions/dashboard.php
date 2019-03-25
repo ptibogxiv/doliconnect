@@ -89,8 +89,7 @@ echo "<div class='card shadow-sm'>";
 echo doliconnectuserform( $thirdparty, dolidelay(MONTH_IN_SECONDS, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'full');
 
 echo "<div class='card-body'><input type='hidden' name='userid' value='$ID'><button class='btn btn-danger btn-block' type='submit'><b>".__( 'Update', 'doliconnect' )."</b></button></div>";
-echo "</form>";
-echo "</div>";
+echo "</div></form>";
 
 echo "<small><div class='float-left'>";
 echo dolirefresh($request, $url, $delay, $thirdparty);
@@ -429,8 +428,7 @@ echo "</li>";
 else{
 echo "<li class='list-group-item list-group-item-light'><center>".__( 'No contact', 'doliconnect' )."</center></li>";
 }
-echo "</ul></div>";
-echo "</form>";
+echo "</ul></div></form>";
 
 if ( !isset($listcontact->error) && $listcontact != null ) {
 foreach ( $listcontact as $contact ) { 
@@ -1405,10 +1403,36 @@ function linkedmember_module( $url ) {
 $request = "/adherentsplus/".constant("DOLIBARR_MEMBER");
 $delay = HOUR_IN_SECONDS;
 
-echo "<div class='card shadow-sm'><div class='card-body'>";
-echo "<b>Liste des adhérents liés à ce compte</b><br>Merci de nous contacter pour la modifier";
+echo "<form role='form' action='$url' id='linkedmember-form' method='post'>"; 
 
-echo "</div><ul class='list-group list-group-flush'>";
+if ( isset($msg) ) { echo $msg; }                       
+
+echo "<script>";
+?>
+
+window.setTimeout(function() {
+    $(".alert").fadeTo(500, 0).slideUp(500, function(){
+        $(this).remove(); 
+    });
+}, 5000);
+
+var form = document.getElementById('linkedmember-form'); 
+
+form.addEventListener('submit', function(event) {
+
+jQuery('#DoliconnectLoadingModal').modal('show');
+jQuery(window).scrollTop(0);
+console.log("submit");
+form.submit();
+
+});
+
+<?php
+echo "</script>";
+
+echo "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
+
+echo "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>Merci de nous contacter pour ajouter un adhérent</b></li>";
 
 if (constant("DOLIBARR_MEMBER") > 0) {
 $linkedmember= callDoliApi("GET", $request, null, dolidelay($delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
@@ -1417,15 +1441,30 @@ $linkedmember= callDoliApi("GET", $request, null, dolidelay($delay, esc_attr(iss
 if ( !isset($linkedmember->error) && $linkedmember->linkedmembers != null ) { 
 foreach ( $linkedmember->linkedmembers as $member ) {                                                                                 
 
-echo "<li class='list-group-item'><table width='100%'><tr><td>".$member->id."</td><td>".$member->firstname."</td><td>".$member->lastname."</td><td>".$member->email."</td><td>";
+echo "<li class='list-group-item d-flex justify-content-between lh-condensed list-group-item-action'><table width='100%'><tr><td>".$member->id."</td><td>".$member->firstname."</td><td>".$member->lastname."</td><td>".$member->email."</td><td>";
 echo "</td>";
-echo "<td class='text-right'></td></tr></table><span></span></li>";
+echo "<td class='text-right'></td></tr></table><span></span>";
+echo "<div class='btn-group-vertical' role='group'><button type='button' class='btn btn-light text-primary' data-toggle='modal' data-target='#member-".$member->id."'><i class='fas fa-edit fa-fw'></i></a>
+<button name='unlink_member' value='".$member->id."' class='btn btn-light text-danger' type='submit' title='Unlink ".$member->firstname." ".$member->lastname."'><i class='fas fa-unlink'></i></button></div>";
+echo "</li>";
 }
 } else { 
 echo "<li class='list-group-item list-group-item-light'><center>".__( 'No linked member', 'doliconnect' )."</center></li>";
 }
 
-echo  "</ul></div>";
+//echo "<li class='list-group-item d-flex justify-content-between lh-condensed list-group-item-action'>";
+//echo "<div class='d-none d-md-block'><i class='fas fa-address-card $color fa-3x fa-fw'></i></div><h6 class='my-0'>".$contact->civility_code." ".$contact->firstname." ".$contact->lastname;
+//if ( !empty($contact->default) ) { echo " <i class='fas fa-star fa-1x fa-fw' style='color:Gold'></i>"; }
+//if ( !empty($contact->poste) ) { echo "<br>".$contact->poste; }
+//echo "</h6>";
+//echo "<small class='text-muted'>".$contact->address."<br>".$contact->zip." ".$contact->town." - ".$contact->country."<br>".$contact->email." ".$contact->phone_pro."</small>";
+//if (1 == 1) {
+//echo "<div class='btn-group-vertical' role='group'><button type='button' class='btn btn-light text-primary' data-toggle='modal' data-target='#contact-".$contact->id."'><i class='fas fa-edit fa-fw'></i></a>
+//<button name='delete_contact' value='".$contact->id."' class='btn btn-light text-danger' type='submit'><i class='fas fa-trash fa-fw'></i></button></div>";
+//}
+//echo "</li>";
+
+echo  "</ul></div></form>";
 
 echo "<small><div class='float-left'>";
 echo dolirefresh($request, $url, $delay);
