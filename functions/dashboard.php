@@ -298,12 +298,27 @@ echo " disabled='disabled'";
 }
 echo "><label class='custom-control-label' for='inputavatar'>".__( 'Delete your picture', 'doliconnect' )."</label></div></div>";
 echo "</li>";
-echo "</ul><div class='card-body'><input type='hidden' name='userid' value='$ID'><button class='btn btn-danger btn-block' type='submit'><b>".__( 'Update', 'doliconnect' )."</b></button></div></div>";
+echo "</ul><div class='card-body'><input type='hidden' name='userid' value='$ID'><button class='btn btn-danger btn-block' type='submit'><b>".__( 'Update', 'doliconnect' )."</b></button></div>";
+echo "</div></form>";
+
+echo '<div class="input-group">
+  <div class="input-group-prepend">
+    <div class="input-group-text">
+      <input type="radio" id="customRadio1" name="customRadio" aria-label="Radio button for following text input">
+    </div>
+  </div>
+  <input type="file" class="form-control" id="customFile">
+    <div class="input-group-prepend">
+    <div class="input-group-text">
+      <input type="radio" id="customRadio1" name="customRadio" aria-label="Radio button for following text input">
+    </div>
+  </div>
+  <input type="text" class="form-control" aria-label="Text input with radio button">
+</div>';
 
 echo "<p class='text-right'><small>";
 echo dolihelp('ISSUE');
 echo "</small></p>";
-echo "</form>";
 
 }
 add_action( 'user_doliconnect_avatars', 'avatars_module');
@@ -406,7 +421,7 @@ echo "</script>";
 echo "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
 
 if ( count($listcontact) < 5 ) {
-echo '<button type="button" class="list-group-item lh-condensed list-group-item-action list-group-item-primary" data-toggle="modal" data-target="#addcontactadress"><center><i class="fas fa-plus-circle"></i> '.__( 'Add a new contact/address', 'doliconnect' ).'</center></button>';
+echo '<button type="button" class="list-group-item lh-condensed list-group-item-action list-group-item-primary" data-toggle="modal" data-target="#addcontactadress"><center><i class="fas fa-plus-circle"></i> '.__( 'New contact', 'doliconnect' ).'</center></button>';
 }
 
 if ( !isset($listcontact->error) && $listcontact != null ) {
