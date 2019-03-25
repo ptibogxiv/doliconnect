@@ -16,13 +16,13 @@ echo "<a  href='".wp_registration_url(get_permalink())."&pro' role='button' titl
 echo "</div></div>";
 }
 
-if ( $mode == 'mini' ) {
-echo "<div class='form-row'><div class='col-12'><label for='inputnickname'><small>".__( 'Title/Job', 'doliconnect' )."</small></label><div class='input-group mb-2'><div class='input-group-prepend'><div class='input-group-text'><i class='fas fa-user-secret fa-fw'></i></div></div><input type='text' class='form-control' id='inputnickname' placeholder='".__( 'Title/Job', 'doliconnect' )."' name='thirdparty[poste]' value='".$object->poste."' autocomplete='off' required></div><div class='invalid-tooltip'>".__( 'This field is required.', 'doliconnect' )."</div>";
-}
+//if ( $mode == 'mini' ) {
+//echo "<div class='form-row'><div class='col-12'><label for='inputnickname'><small>".__( 'Title/Job', 'doliconnect' )."</small></label><input type='text' class='form-control' id='inputnickname' placeholder='".__( 'Title/Job', 'doliconnect' )."' name='thirdparty[poste]' value='".$object->poste."' autocomplete='off' required></div></div>";
+//}
 
 if ( $mode != 'mini' ) {
 if ( $current_user->billing_type == 'mor' or (isset($_GET["pro"]) && !get_option('doliconnect_disablepro')) ) {
-echo "<div class='form-row'><div class='col-12'><input type='hidden' name='thirdparty['morphy']' value='mor'><label for='coordonnees'><small><i class='fas fa-building'></i> ".__( 'Name of company', 'doliconnect' )."</small></label><input type='text' class='form-control' id='inputcompany' placeholder='".__( 'Name of company', 'doliconnect' )."' name='thirdparty[name]' value='".$current_user->billing_company."' required></div>";
+echo "<div class='form-row'><div class='col-12'><input type='hidden' name='thirdparty[morphy]' value='mor'><label for='coordonnees'><small><i class='fas fa-building'></i> ".__( 'Name of company', 'doliconnect' )."</small></label><input type='text' class='form-control' id='inputcompany' placeholder='".__( 'Name of company', 'doliconnect' )."' name='thirdparty[name]' value='".$current_user->billing_company."' required></div>";
 echo "</div></li><li class='list-group-item'>";
 } else {
 echo "<input type='hidden' name='thirdparty[morphy]' value='phy'>";
