@@ -5,23 +5,28 @@ global $current_user;
 echo "<ul class='list-group list-group-flush'><li class='list-group-item'>";
 
 if ( ! isset($object) && $mode != 'mini' ) {
+echo "<div class='form-row'><div class='col-12'>";
 if ( isset($_GET["pro"]) && !get_option('doliconnect_disablepro') ) {
 echo "<a  href='".wp_registration_url(get_permalink())."' role='button' title='".__( 'Create a personnal account', 'doliconnect' )."'><small>(".__( 'Personnal account', 'doliconnect' )."?)</small></a>";                                                                                                                                                                                                                                                                                                                                     
 }
 elseif (!get_option('doliconnect_disablepro')) {
 echo "<a  href='".wp_registration_url(get_permalink())."&pro' role='button' title='".__( 'Create a pro/supplier account', 'doliconnect' )."'><small>(".__( 'Pro account', 'doliconnect' )."?)</small></a>";
 }
+
+echo "</div></div>";
 }
 
 if ( $mode == 'mini' ) {
 echo "<div class='form-row'><div class='col-12'><label for='inputnickname'><small>".__( 'Title/Job', 'doliconnect' )."</small></label><div class='input-group mb-2'><div class='input-group-prepend'><div class='input-group-text'><i class='fas fa-user-secret fa-fw'></i></div></div><input type='text' class='form-control' id='inputnickname' placeholder='".__( 'Title/Job', 'doliconnect' )."' name='thirdparty[poste]' value='".$object->poste."' autocomplete='off' required></div><div class='invalid-tooltip'>".__( 'This field is required.', 'doliconnect' )."</div>";
 }
 
+if ( $mode != 'mini' ) {
 if ( $current_user->billing_type == 'mor' or (isset($_GET["pro"]) && !get_option('doliconnect_disablepro')) ) {
-echo "<div class='form-row'><div class='col-12'><input type='hidden' name='thirdparty[morphy]' value='mor'><label for='coordonnees'><small><i class='fas fa-building'></i> ".__( 'Name of company', 'doliconnect' )."</small></label><input type='text' class='form-control' id='inputcompany' placeholder='".__( 'Name of company', 'doliconnect' )."' name='thirdparty[name]' value='".$current_user->billing_company."' required></div>";
+echo "<div class='form-row'><div class='col-12'><input type='hidden' name='thirdparty['morphy']' value='mor'><label for='coordonnees'><small><i class='fas fa-building'></i> ".__( 'Name of company', 'doliconnect' )."</small></label><input type='text' class='form-control' id='inputcompany' placeholder='".__( 'Name of company', 'doliconnect' )."' name='thirdparty[name]' value='".$current_user->billing_company."' required></div>";
 echo "</div></li><li class='list-group-item'>";
 } else {
 echo "<input type='hidden' name='thirdparty[morphy]' value='phy'>";
+}
 }
 
 echo "<div class='form-row'><div class='col-12 col-md-3'><label for='inputCivility'><small><i class='fas fa-user'></i> ".__( 'Civility', 'doliconnect' )."</small></label>";
@@ -300,7 +305,7 @@ unlink($file);
 
 }
 
-if ( isset($ref) && isset($fichier) ) { $document = "<a class='btn btn-dark btn-sm btn-block' href='".esc_url( add_query_arg( array('download' => $ref."/".$fichier, 'securekey' => hash('sha256', $ID.$type.$ref."/".$fichier)), $url) )."' >$name <i class='fas fa-file-download'></i></i></a>"; }
+if ( isset($ref) && isset($fichier) ) { $document = "<a class='btn btn btn-outline-dark btn-sm btn-block' href='".esc_url( add_query_arg( array('download' => $ref."/".$fichier, 'securekey' => hash('sha256', $ID.$type.$ref."/".$fichier)), $url) )."' >$name <i class='fas fa-file-download'></i></i></a>"; }
 
 return $document;
 }
