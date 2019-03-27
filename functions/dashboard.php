@@ -1417,7 +1417,7 @@ echo "'>".__( 'Manage linked members', 'doliconnect' )."</a>";
 
 function linkedmember_module( $url ) {
 
-$request = "/adherentsplus/".constant("DOLIBARR_MEMBER");
+$request = "/adherentsplus/".constant("DOLIBARR_MEMBER")."/linkedmember";
 $delay = HOUR_IN_SECONDS;
 
 echo "<form role='form' action='$url' id='linkedmember-form' method='post'>"; 
@@ -1455,8 +1455,8 @@ if (constant("DOLIBARR_MEMBER") > 0) {
 $linkedmember= callDoliApi("GET", $request, null, dolidelay($delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 } 
 
-if ( !isset($linkedmember->error) && $linkedmember->linkedmembers != null ) { 
-foreach ( $linkedmember->linkedmembers as $member ) {                                                                                 
+if ( !isset($linkedmember->error) && $linkedmember != null ) { 
+foreach ( $linkedmember as $member ) {                                                                                 
 
 echo "<li class='list-group-item d-flex justify-content-between lh-condensed list-group-item-action'>";
 echo "<div class='d-none d-md-block'><i class='fas fa-address-card $color fa-3x fa-fw'></i></div><h6 class='my-0'>".$member->civility_code." ".$member->firstname." ".$member->lastname;
