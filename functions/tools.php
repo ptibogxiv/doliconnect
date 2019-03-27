@@ -305,7 +305,7 @@ unlink($file);
 
 }
 
-if ( isset($ref) && isset($fichier) ) { $document = "<a class='btn btn btn-outline-dark btn-sm btn-block' href='".esc_url( add_query_arg( array('download' => $ref."/".$fichier, 'securekey' => hash('sha256', $ID.$type.$ref."/".$fichier)), $url) )."' >$name <i class='fas fa-file-download'></i></i></a>"; }
+if ( isset($ref) && isset($fichier) ) { $document = "<a class='btn btn btn-outline-dark btn-sm btn-block' href='".esc_url( add_query_arg( array('download' => $ref."/".$fichier, 'securekey' => hash('sha256', $ID.$type.$ref."/".$fichier)), $url) )."' >$name <i class='fas fa-file-download'></i></a>"; }
 
 return $document;
 }
