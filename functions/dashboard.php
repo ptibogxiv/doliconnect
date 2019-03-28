@@ -337,7 +337,7 @@ $request = "/contacts?sortfield=t.rowid&sortorder=ASC&limit=100&thirdparty_ids="
 $delay = WEEK_IN_SECONDS;
 
 if ( isset ($_POST['add_contact']) && $_POST['add_contact'] == 'new_contact' ) {
-$contactv=$_POST['thirdparty'];
+$contactv=$_POST['thirdparty'][''.constant("DOLIBARR").''];
 $data = [
     'civility_id'  => $contactv['civility_id'],     
     'firstname' => ucfirst(sanitize_user(strtolower($contactv['firstname']))),
