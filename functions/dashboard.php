@@ -25,7 +25,7 @@ $ID = $current_user->ID;
 $request = "/thirdparties/".constant("DOLIBARR");
 $delay = DAY_IN_SECONDS;
 
-$thirdparty=$_POST['thirdparty'];
+$thirdparty=$_POST['thirdparty'][''.constant("DOLIBARR").''];
 
 if ( isset($_POST["case"]) && $_POST["case"] == 'updateuser' ) {
 wp_update_user( array( 'ID' => $ID, 'user_email' => sanitize_email($thirdparty['email'])));
