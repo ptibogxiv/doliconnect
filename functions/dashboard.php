@@ -369,6 +369,32 @@ $msg = "<div class='alert alert-success'><button type='button' class='close' dat
 // fail deleting
 }
 $listcontact = callDoliApi("GET", $request, null, dolidelay($delay, true));
+} elseif ( isset ($_POST['update_contact']) && $_POST['update_contact'] > 0 ) {
+$contactv=$_POST['thirdparty'][''.$_POST['update_contact'].''];
+$data = [
+    'civility_id'  => $contactv['civility_id'],     
+    'firstname' => ucfirst(sanitize_user(strtolower($contactv['firstname']))),
+    'lastname' => strtoupper(sanitize_user($contactv['lastname'])),
+    'socid' => constant("DOLIBARR"),
+    'poste' => sanitize_textarea_field($contactv['poste']), 
+    'address' => sanitize_textarea_field($contactv['address']),    
+    'zip' => sanitize_text_field($contactv['zip']),
+    'town' => sanitize_text_field($contactv['town']),
+    'country_id' => sanitize_text_field($contactv['country_id']),
+    'email' => sanitize_email($contactv['email']),
+    'birthday' => $contactv['birth'],
+    'phone_pro' => sanitize_text_field($contactv['phone'])
+	];
+$contactv = callDoliApi("PUT", "/contacts/".$_POST['update_contact'], $data, 0);
+if ( $contactv->socid == constant("DOLIBARR") ) {
+// try deleting
+
+$msg = "<div class='alert alert-success'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><p><strong>".__( 'Congratulations!', 'doliconnect' )."</strong> ".__( 'Your informations have been updated.', 'doliconnect' )."</p></div>";
+
+} else {
+// fail deleting
+}
+$listcontact = callDoliApi("GET", $request, null, dolidelay($delay, true));
 } else {
 
 $listcontact = callDoliApi("GET", $request, null, dolidelay($delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
@@ -454,7 +480,7 @@ echo '<div class="modal fade" id="contact-'.$contact->id.'" tabindex="-1" role="
 echo "<form class='was-validated' role='form' action='$url' id='contact-".$contact->id."-form' method='post'>";
 echo doliconnectuserform($contact, dolidelay(MONTH_IN_SECONDS, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'mini');      
 echo "</div>
-<div class='modal-footer'><button name='update_contact' value='".$contact->id."' class='btn btn-warning btn-block' type='submit' disabled><b>".__( 'Update contact', 'doliconnect' )."</b></button></form></div>
+<div class='modal-footer'><button name='update_contact' value='".$contact->id."' class='btn btn-warning btn-block' type='submit'><b>".__( 'Update contact', 'doliconnect' )."</b></button></form></div>
 </div></div></div>";
 }}
 

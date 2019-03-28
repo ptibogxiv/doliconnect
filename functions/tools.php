@@ -2,7 +2,7 @@
 function doliconnectuserform($object, $delay, $mode) {
 global $current_user;
 
-if (is_object($object) ) {
+if ( is_object($object) && $object->id > 0 ) {
 $idobject="[".$object->id."]";
 }
 
