@@ -451,6 +451,7 @@ echo '<div class="modal fade" id="contact-'.$contact->id.'" tabindex="-1" role="
 <div class="modal-dialog modal-lg modal-dialog-centered" role="document"><div class="modal-content"><div class="modal-header">
 <h5 class="modal-title" id="contact-'.$contact->id.'Title">'.__( 'Update contact', 'doliconnect' ).' "'.$contact->poste.'"</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
 <div class="modal-body">';
+echo "<form class='was-validated' role='form' action='$url' id='contact-".$contact->id."-form' method='post'>";
 echo doliconnectuserform($contact, dolidelay(MONTH_IN_SECONDS, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'mini');      
 echo "</div>
 <div class='modal-footer'><button name='update_contact' value='".$contact->id."' class='btn btn-warning btn-block' type='submit' disabled><b>".__( 'Update contact', 'doliconnect' )."</b></button></form></div>
