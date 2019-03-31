@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
 "POT-Creation-Date: 2019-03-28 16:13+0100\n"
-"PO-Revision-Date: 2019-03-28 16:13+0100\n"
+"PO-Revision-Date: 2019-03-31 22:21+0200\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_FR\n"
@@ -309,7 +309,7 @@ msgstr "Adresse"
 
 #: doliconnect.php:1039
 msgid "Your message is successful send!"
-msgstr "Votre message a été envoyé."
+msgstr "Votre message a été envoyé avec succès!"
 
 #: doliconnect.php:1077
 msgid "Complete name"

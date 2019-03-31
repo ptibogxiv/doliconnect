@@ -75,7 +75,7 @@ return get_current_blog_id();
 function doliconst( $constante ) {
 global $wpdb;
 
-$const = callDoliApi("GET", "/doliconnector/constante/".$constante, null, MONTH_IN_SECONDS);
+$const = callDoliApi("GET", "/doliconnector/constante/".$constante, null, dolidelay('constante'));
 
 return $const->value;
 }
@@ -1386,13 +1386,13 @@ if ($adherent->statut == '1' && $adherent->datefin < current_time('timestamp')) 
 echo "<A class='btn btn-block btn-success' href='".esc_url( add_query_arg( 'module', 'members', doliconnecturl('doliaccount')) )."' >".__( 'Pay my subscription', 'doliconnect' )."</a>"; 
 }
 elseif ($adherent->statut == '0') {
-echo "<a class='btn btn-block btn-info' href='".esc_url( add_query_arg( 'module', 'members', doliconnecturl('doliaccount')) )."' >Adhérer</a>"; 
+echo "<a class='btn btn-block btn-info' href='".esc_url( add_query_arg( 'module', 'members', doliconnecturl('doliaccount')) )."' >".__( 'Subscribe', 'doliconnect' )."</a>"; 
 }
 elseif ($adherent->statut == '-1') {
-echo "<a class='btn btn-block btn-warning disabled' href='".esc_url( add_query_arg( 'module', 'members', doliconnecturl('doliaccount')) )."' >Adhésion demandée</a>"; 
+echo "<a class='btn btn-block btn-warning disabled' href='".esc_url( add_query_arg( 'module', 'members', doliconnecturl('doliaccount')) )."' >".__( 'Membership', 'doliconnect' )."</a>";//requested 
 }
 elseif (!$adherent->id > 0) {
-echo "<a class='btn btn-block btn-success' href='".esc_url( add_query_arg( 'module', 'members', doliconnecturl('doliaccount')) )."' >Adhérer à l'association</a>"; 
+echo "<a class='btn btn-block btn-success' href='".esc_url( add_query_arg( 'module', 'members', doliconnecturl('doliaccount')) )."' >".__( 'Subscribe', 'doliconnect' )."</a>"; 
 }
 
 
