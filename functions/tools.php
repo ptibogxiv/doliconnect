@@ -339,11 +339,14 @@ if (! is_numeric($delay)) {
 
 if (false ===  get_site_option('doliconnect_delay_'.$delay) ) {
 
-if ($delay=='constante') { $delay = MONTH_IN_SECONDS; }
-elseif ($delay=='thirdparty') { $delay = DAY_IN_SECONDS; }
-elseif ($delay=='contact') { $delay = WEEK_IN_SECONDS; }
-elseif ($delay=='member') { $delay = DAY_IN_SECONDS; }
-
+if ($delay == 'constante') { $delay = MONTH_IN_SECONDS; }
+elseif ($delay == 'source') { $delay = WEEK_IN_SECONDS; }
+elseif ($delay == 'thirdparty') { $delay = DAY_IN_SECONDS; }
+elseif ($delay == 'contact') { $delay = WEEK_IN_SECONDS; }
+elseif ($delay == 'proposal') { $delay = HOUR_IN_SECONDS; }
+elseif ($delay == 'order') { $delay = HOUR_IN_SECONDS; }
+elseif ($delay == 'member') { $delay = DAY_IN_SECONDS; }
+elseif ($delay == 'ticket') { $delay = HOUR_IN_SECONDS; }
 } else {
 $delay = get_site_option('doliconnect_delay_'.$delay);
 }

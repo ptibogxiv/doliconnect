@@ -354,7 +354,7 @@ echo "</div><br></div><div class='col-9 col-xs-8 col-sm-8 col-md-12 col-xl-12'>"
 
 if ( is_user_logged_in() ) {
 
-$thirdparty = callDoliApi("GET", "/thirdparties/".constant("DOLIBARR"), null, DAY_IN_SECONDS);
+$thirdparty = callDoliApi("GET", "/thirdparties/".constant("DOLIBARR"), null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 if ( defined("DOLIBUG") ) {
 
@@ -370,7 +370,7 @@ echo "<div class='col-xs-12 col-sm-12 col-md-9'><div class='card shadow-sm'><div
 echo '<br><br><br><br><br><center><div class="align-middle"><i class="fas fa-bug fa-3x fa-fw"></i><h4>'.__( 'This account is closed. Please contact us for reopen it.', 'doliconnect' ).'</h4></div></center><br><br><br><br><br>';
 echo "</div></div></div></div>";
 
-$thirdparty = callDoliApi("GET", "/thirdparties/".constant("DOLIBARR"), null, -DAY_IN_SECONDS);
+$thirdparty = callDoliApi("GET", "/thirdparties/".constant("DOLIBARR"), null, dolidelay('thirdparty', true));
 
 } else { 
 
@@ -1099,7 +1099,7 @@ echo "/>";
 echo "</div>";
 
 echo "<div class='form-group'><label class='control-label' for='type'><small>".__( 'Type of request', 'doliconnect' )."</small></label>";
-$type = callDoliApi("GET", "/setup/dictionary/ticket_types?sortfield=pos&sortorder=ASC&limit=100", null, MONTH_IN_SECONDS);
+$type = callDoliApi("GET", "/setup/dictionary/ticket_types?sortfield=pos&sortorder=ASC&limit=100", null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 if (isset($type)) { 
 $tp= __( 'Issue or problem', 'doliconnect' ).__( 'Commercial question', 'doliconnect' ).__( 'Change or enhancement request', 'doliconnect' ).__( 'Project', 'doliconnect' ).__( 'Other', 'doliconnect' );
