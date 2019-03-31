@@ -18,21 +18,21 @@ If you like the plugin, feel free to rate it (on the right side of this page)! :
 
 == Installation ==
 
-To install this plugin:
+Installing "Doliconnect" can be done either by searching for "Dolibarr REST API" via the "Plugins > Add New" screen in your WordPress dashboard, or by using the following steps:
 
-- Install the plugin through the WordPress admin interface, or upload the plugin folder to /wp-content/plugins/ using FTP.
-Activate the plugin through the ‘Plugins’ screen in WordPress.
-Go to WordPress Admin > Settings > Doliconnect
-- BE CAREFUL, in multisite blog, there is a netword settings page too for keys and general settings!
-- Your dolibarr needs to have the Doliconnector module which can be freely downloaded on Dolistore or Github https://github.com/ptibogxiv/doliconnector/releases
+1. Download the plugin via WordPress.org
+2. Upload the ZIP file through the 'Plugins > Add New > Upload' screen in your WordPress dashboard
+3. Activate the plugin through the 'Plugins' menu in WordPress
 
-== Upgrade Notice ==
+Dolibarr configuration steps:
 
-= 1.0 =
-Upgrade notices describe the reason a user should upgrade.  No more than 300 characters.
+1. Activate the REST API for Dolibarr: go to menu _Home > Setup > Modules/Applications_ and activate the _API/Web services (REST server)_.
+2. Generate and copy a specific user API key with full/admin rights: go to menu _Home > Users & groups_, select your admin user in the list. Once on the User card, click the _Modify_ button and generate and copy the _Key for API_ (see screenshot). Click the _Save_ button.
+3. Your dolibarr needs to have the Doliconnector module which can be freely downloaded on Dolistore or Github https://github.com/ptibogxiv/doliconnector/releases
 
-= 0.5 =
-This version fixes a security related bug.  Upgrade immediately.
+WordPress configuration steps:
+1. Go to WordPress Admin > Settings > Doliconnect
+2. BE CAREFUL, in multisite blog, there is a netword settings page too for keys and general settings!
 
 == Screenshots ==
 
