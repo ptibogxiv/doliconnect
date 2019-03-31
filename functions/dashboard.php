@@ -1,14 +1,14 @@
 <?php
 
 if ( !defined("DOLIBUG") ) {
-$proposal = callDoliApi("GET", "/doliconnector/constante/MAIN_MODULE_PROPALE", null, MONTH_IN_SECONDS);
-$order = callDoliApi("GET", "/doliconnector/constante/MAIN_MODULE_COMMANDE", null, MONTH_IN_SECONDS);
-$contract = callDoliApi("GET", "/doliconnector/constante/MAIN_MODULE_CONTRAT", null, MONTH_IN_SECONDS);
-$member = callDoliApi("GET", "/doliconnector/constante/MAIN_MODULE_ADHERENTSPLUS", null, MONTH_IN_SECONDS);
-$memberconsumption = callDoliApi("GET", "/doliconnector/constante/ADHERENT_CONSUMPTION", null, MONTH_IN_SECONDS);
-$linkedmember = callDoliApi("GET", "/doliconnector/constante/ADHERENT_LINKEDMEMBER", null, MONTH_IN_SECONDS);
-$donation = callDoliApi("GET", "/doliconnector/constante/MAIN_MODULE_DON", null, MONTH_IN_SECONDS);
-$help = callDoliApi("GET", "/doliconnector/constante/MAIN_MODULE_TICKET", null, MONTH_IN_SECONDS);
+$proposal = callDoliApi("GET", "/doliconnector/constante/MAIN_MODULE_PROPALE", null, dolidelay('constante'));
+$order = callDoliApi("GET", "/doliconnector/constante/MAIN_MODULE_COMMANDE", null, dolidelay('constante'));
+$contract = callDoliApi("GET", "/doliconnector/constante/MAIN_MODULE_CONTRAT", null, dolidelay('constante'));
+$member = callDoliApi("GET", "/doliconnector/constante/MAIN_MODULE_ADHERENTSPLUS", null, dolidelay('constante'));
+$memberconsumption = callDoliApi("GET", "/doliconnector/constante/ADHERENT_CONSUMPTION", null, dolidelay('constante'));
+$linkedmember = callDoliApi("GET", "/doliconnector/constante/ADHERENT_LINKEDMEMBER", null, dolidelay('constante'));
+$donation = callDoliApi("GET", "/doliconnector/constante/MAIN_MODULE_DON", null, dolidelay('constante'));
+$help = callDoliApi("GET", "/doliconnector/constante/MAIN_MODULE_TICKET", null, dolidelay('constante'));
 }
 
 function informations_menu($arg) {
@@ -23,7 +23,6 @@ global $wpdb,$current_user,$doliconnect;
 $ID = $current_user->ID;
 
 $request = "/thirdparties/".constant("DOLIBARR");
-$delay = DAY_IN_SECONDS;
 
 $thirdparty=$_POST['thirdparty'][''.constant("DOLIBARR").''];
 
@@ -55,7 +54,7 @@ $url = esc_url( add_query_arg( 'return', $_GET['return'], $url) );
 }
 
 if ( constant("DOLIBARR") > '0' ) {
-$thirdparty = callDoliApi("GET", $request, null, dolidelay($delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
+$thirdparty = callDoliApi("GET", $request, null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
 }
 
 echo "<form action='".$url."' id='informations-form' method='post' class='was-validated' enctype='multipart/form-data'><input type='hidden' name='case' value='updateuser'>";
@@ -86,13 +85,13 @@ echo "</script>";
 
 echo "<div class='card shadow-sm'>";
 
-echo doliconnectuserform( $thirdparty, dolidelay(MONTH_IN_SECONDS, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'full');
+echo doliconnectuserform( $thirdparty, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'full');
 
 echo "<div class='card-body'><input type='hidden' name='userid' value='$ID'><button class='btn btn-danger btn-block' type='submit'><b>".__( 'Update', 'doliconnect' )."</b></button></div>";
 echo "</div></form>";
 
 echo "<small><div class='float-left'>";
-echo dolirefresh($request, $url, $delay, $thirdparty);
+echo dolirefresh($request, $url, dolidelay('thirdparty'), $thirdparty);
 echo "</div><div class='float-right'>";
 echo dolihelp('ISSUE');
 echo "</div></small>";
@@ -334,7 +333,6 @@ function contacts_module($url){
 global $current_user;
 
 $request = "/contacts?sortfield=t.rowid&sortorder=ASC&limit=100&thirdparty_ids=".constant("DOLIBARR")."&includecount=1&sqlfilters=t.statut=1";
-$delay = WEEK_IN_SECONDS;
 
 if ( isset ($_POST['add_contact']) && $_POST['add_contact'] == 'new_contact' ) {
 $contactv=$_POST['thirdparty'][''.constant("DOLIBARR").''];
@@ -353,7 +351,7 @@ $data = [
     'phone_pro' => sanitize_text_field($contactv['phone'])
 	];
 $contactv = callDoliApi("POST", "/contacts", $data, 0);
-$listcontact = callDoliApi("GET", $request, null, dolidelay($delay, true));
+$listcontact = callDoliApi("GET", $request, null, dolidelay('contact', true));
 if ( $contactv > 0 ) {
 $msg = "<div class='alert alert-success'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><p><strong>".__( 'Congratulations!', 'doliconnect' )."</strong> ".__( 'Your informations have been updated.', 'doliconnect' )."</p></div>";
 }
@@ -368,7 +366,7 @@ $msg = "<div class='alert alert-success'><button type='button' class='close' dat
 } else {
 // fail deleting
 }
-$listcontact = callDoliApi("GET", $request, null, dolidelay($delay, true));
+$listcontact = callDoliApi("GET", $request, null, dolidelay('contact', true));
 } elseif ( isset ($_POST['update_contact']) && $_POST['update_contact'] > 0 ) {
 $contactv=$_POST['thirdparty'][''.$_POST['update_contact'].''];
 $data = [
@@ -394,15 +392,15 @@ $msg = "<div class='alert alert-success'><button type='button' class='close' dat
 } else {
 // fail deleting
 }
-$listcontact = callDoliApi("GET", $request, null, dolidelay($delay, true));
+$listcontact = callDoliApi("GET", $request, null, dolidelay('contact', true));
 } else {
 
-$listcontact = callDoliApi("GET", $request, null, dolidelay($delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$listcontact = callDoliApi("GET", $request, null, dolidelay('contact', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 }
 
 if ( constant("DOLIBARR") > 0 ) {
-$thirdparty = callDoliApi("GET", "/thirdparties/".constant("DOLIBARR"), null, dolidelay( $delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
+$thirdparty = callDoliApi("GET", "/thirdparties/".constant("DOLIBARR"), null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
 }
 
 echo "<form role='form' action='$url' id='contact-form' method='post'>";
@@ -478,7 +476,7 @@ echo '<div class="modal fade" id="contact-'.$contact->id.'" tabindex="-1" role="
 <div class="modal-dialog modal-lg modal-dialog-centered" role="document"><div class="modal-content"><div class="modal-header">
 <h5 class="modal-title" id="contact-'.$contact->id.'Title"><input type="text" class="form-control" placeholder="'.__( 'Title/Job', 'doliconnect' ).'" name="thirdparty['.$contact->id.'][poste]" value="'.$contact->poste.'" autocomplete="off" required></h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
 <div class="modal-body">';
-echo doliconnectuserform($contact, dolidelay(MONTH_IN_SECONDS, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'mini');      
+echo doliconnectuserform($contact, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'mini');      
 echo "</div>
 <div class='modal-footer'><button name='update_contact' value='".$contact->id."' class='btn btn-warning btn-block' type='submit'><b>".__( 'Update contact', 'doliconnect' )."</b></button></form></div>
 </div></div></div>";
@@ -491,14 +489,14 @@ echo "<div class='modal fade' id='addcontactadress' tabindex='-1' role='dialog' 
 <h5 class='modal-title' id='addcontactadressTitle'>".__( 'Add a new contact/address', 'doliconnect' )."</h5><button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
 </div><div class='modal-body'>";
 echo "<form class='was-validated' role='form' action='$url' id='contact-add-form' method='post'>";
-echo doliconnectuserform($thirdparty, dolidelay(MONTH_IN_SECONDS, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'mini');
+echo doliconnectuserform($thirdparty, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'mini');
 echo "</div>
 <div class='modal-footer'><button name='add_contact' value='new_contact' class='btn btn-warning btn-block' type='submit'><b>".__( 'Add contact', 'doliconnect' )."</b></button></form></div>
 </div></div></div>";
 }
 
 echo "<small><div class='float-left'>";
-echo dolirefresh($request, $url, $delay);
+echo dolirefresh($request, $url, dolidelay('contact'));
 echo "</div><div class='float-right'>";
 echo dolihelp('ISSUE');
 echo "</div></small>";
@@ -849,15 +847,15 @@ $change = "<a href='".get_site_option('dolibarr_public_url')."/public/payment/ne
 }
 
 if ( $orderfo->mode_reglement_code == 'CHQ' ) {
-$chq = callDoliApi("GET", "/doliconnector/constante/FACTURE_CHQ_NUMBER", null, dolidelay(MONTH_IN_SECONDS, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$chq = callDoliApi("GET", "/doliconnector/constante/FACTURE_CHQ_NUMBER", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
-$bank = callDoliApi("GET", "/bankaccounts/".$chq->value, null, dolidelay(MONTH_IN_SECONDS, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$bank = callDoliApi("GET", "/bankaccounts/".$chq->value, null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 echo "<div class='alert alert-danger' role='alert'><p align='justify'>".sprintf( __( 'Please send your cheque in the amount of <b>%1$s</b> with reference <b>%2$s</b> to <b>%3$s</b> at the following address', 'doliconnect' ), doliprice($orderfo, 'ttc', isset($orderfo->multicurrency_code) ? $orderfo->multicurrency_code : null), $orderfo->ref, $bank->proprio).":</p><p><b>$bank->owner_address</b></p>$change</div>";
 } elseif ( $orderfo->mode_reglement_code == 'VIR' ) { 
-$vir = callDoliApi("GET", "/doliconnector/constante/FACTURE_RIB_NUMBER", null, dolidelay(MONTH_IN_SECONDS, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$vir = callDoliApi("GET", "/doliconnector/constante/FACTURE_RIB_NUMBER", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
-$bank = callDoliApi("GET", "/bankaccounts/".$vir->value, null, dolidelay(MONTH_IN_SECONDS, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$bank = callDoliApi("GET", "/bankaccounts/".$vir->value, null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 echo "<div class='alert alert-danger' role='alert'><p align='justify'>".sprintf( __( 'Please send your transfert in the amount of <b>%1$s</b> with reference <b>%2$s</b> at the following account', 'doliconnect' ), doliprice($orderfo, 'ttc', isset($orderfo->multicurrency_code) ? $orderfo->multicurrency_code : null), $orderfo->ref ).":";
 echo "<br><b>IBAN: $bank->iban</b>";
@@ -1250,7 +1248,7 @@ $msg = "<div class='alert alert-success' role='alert'><button type='button' clas
 
 if ( ($_POST["update_membership"]==4) && $_POST["cotisation"] && constant("DOLIBARR_MEMBER") > 0 && $_POST["timestamp_start"] > 0 && $_POST["timestamp_end"] > 0 ) {
 
-$productadhesion = callDoliApi("GET", "/doliconnector/constante/ADHERENT_PRODUCT_ID_FOR_SUBSCRIPTIONS", null, MONTH_IN_SECONDS);
+$productadhesion = callDoliApi("GET", "/doliconnector/constante/ADHERENT_PRODUCT_ID_FOR_SUBSCRIPTIONS", null, dolidelay('constante'));
 
 addtodolibasket($productadhesion->value, 1, $_POST["cotisation"], $url, $_POST["timestamp_start"], $_POST["timestamp_end"]);
 wp_redirect(esc_url(doliconnecturl('dolicart')));
@@ -1600,15 +1598,15 @@ $change = "<a href='".get_site_option('dolibarr_public_url')."/public/payment/ne
 }
 
 if ( $donationfo->mode_reglement_code == 'CHQ' ) {
-$chq = callDoliApi("GET", "/doliconnector/constante/FACTURE_CHQ_NUMBER", null, dolidelay(MONTH_IN_SECONDS, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$chq = callDoliApi("GET", "/doliconnector/constante/FACTURE_CHQ_NUMBER", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
-$bank = callDoliApi("GET", "/bankaccounts/".$chq->value, null, dolidelay(MONTH_IN_SECONDS, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$bank = callDoliApi("GET", "/bankaccounts/".$chq->value, null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 echo "<div class='alert alert-danger' role='alert'><p align='justify'>".sprintf( __( 'Please send your cheque in the amount of <b>%1$s</b> with reference <b>%2$s</b> to <b>%3$s</b> at the following address', 'doliconnect' ), doliprice($donationfo->multicurrency_total_ttc?$donationfo->multicurrency_total_ttc:$donationfo->total_ttc,$donationfo->multicurrency_code), $donationfo->ref, $bank->proprio).":</p><p><b>$bank->owner_address</b></p>$change</div>";
 } elseif ( $donationfo->mode_reglement_code == 'VIR' ) { 
-$vir = callDoliApi("GET", "/doliconnector/constante/FACTURE_RIB_NUMBER", null, dolidelay(MONTH_IN_SECONDS, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$vir = callDoliApi("GET", "/doliconnector/constante/FACTURE_RIB_NUMBER", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
-$bank = callDoliApi("GET", "/bankaccounts/".$vir->value, null, dolidelay(MONTH_IN_SECONDS, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$bank = callDoliApi("GET", "/bankaccounts/".$vir->value, null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 echo "<div class='alert alert-danger' role='alert'><p align='justify'>".sprintf( __( 'Please send your transfert in the amount of <b>%1$s</b> with reference <b>%2$s</b> at the following account', 'doliconnect' ), doliprice($donationfo->multicurrency_total_ttc?$donationfo->multicurrency_total_ttc:$donationfo->total_ttc,$donationfo->multicurrency_code), $donationfo->ref ).":";
 echo "<br><b>IBAN: $bank->iban</b>";

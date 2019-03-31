@@ -153,22 +153,22 @@ echo "<div class='form-row'><div class='col'><label for='description'><small><i 
 }
 
 echo "<div class='form-row'>";
-$facebook = callDoliApi("GET", "/doliconnector/constante/SOCIALNETWORKS_FACEBOOK", null, MONTH_IN_SECONDS);
+$facebook = callDoliApi("GET", "/doliconnector/constante/SOCIALNETWORKS_FACEBOOK", null, dolidelay('constante'));
 if ( is_object($facebook) && $facebook->value == 1 ) {
 echo "<div class='col-12 col-md'><label for='inlineFormInputGroup'><small><i class='fab fa-facebook-f fa-fw'></i> Facebook</small></label>
 <input type='text' name='thirdparty".$idobject."[facebook]' class='form-control' id='inlineFormInputGroup' placeholder='".__( 'Username', 'doliconnect' )."' value='".stripslashes(htmlspecialchars($object->facebook, ENT_QUOTES))."'></div>";
 }
-$twitter = callDoliApi("GET", "/doliconnector/constante/SOCIALNETWORKS_TWITTER", null, MONTH_IN_SECONDS);
+$twitter = callDoliApi("GET", "/doliconnector/constante/SOCIALNETWORKS_TWITTER", null, dolidelay('constante'));
 if ( is_object($twitter) && $twitter->value == 1 ) {
 echo "<div class='col-12 col-md'><label for='inlineFormInputGroup'><small><i class='fab fa-twitter fa-fw'></i> Twitter</small></label>
 <input type='text' name='thirdparty".$idobject."[twitter]' class='form-control' id='inlineFormInputGroup' placeholder='".__( 'Username', 'doliconnect' )."' value='".stripslashes(htmlspecialchars($object->twitter, ENT_QUOTES))."'></div>";
 }
-$skype = callDoliApi("GET", "/doliconnector/constante/SOCIALNETWORKS_SKYPE", null, MONTH_IN_SECONDS);
+$skype = callDoliApi("GET", "/doliconnector/constante/SOCIALNETWORKS_SKYPE", null, dolidelay('constante'));
 if ( is_object($skype) && $skype->value == 1 ) {
 echo "<div class='col-12 col-md'><label for='inlineFormInputGroup'><small><i class='fab fa-skype fa-fw'></i> Skype</small></label>
 <input type='text' name='thirdparty".$idobject."[skype]' class='form-control' id='inlineFormInputGroup' placeholder='".__( 'Username', 'doliconnect' )."' value='".stripslashes(htmlspecialchars($object->skype, ENT_QUOTES))."'></div>";
 }
-$linkedin = callDoliApi("GET", "/doliconnector/constante/SOCIALNETWORKS_LINKEDIN", null, MONTH_IN_SECONDS);
+$linkedin = callDoliApi("GET", "/doliconnector/constante/SOCIALNETWORKS_LINKEDIN", null, dolidelay('constante'));
 if ( is_object($linkedin) && $linkedin->value == 1 ) {
 echo "<div class='col-12 col-md'><label for='inlineFormInputGroup'><small><i class='fab fa-linkedin fa-fw'></i> Linkedin</small></label>
 <input type='text' name='thirdparty".$idobject."[linkedin]' class='form-control' id='inlineFormInputGroup' placeholder='".__( 'Username', 'doliconnect' )."' value='".stripslashes(htmlspecialchars($object->linkedin, ENT_QUOTES))."'></div>";
@@ -316,7 +316,7 @@ return $document;
 
 function dolihelp($type) {
 
-$aide = callDoliApi("GET", "/doliconnector/constante/MAIN_MODULE_TICKET", null, MONTH_IN_SECONDS);
+$aide = callDoliApi("GET", "/doliconnector/constante/MAIN_MODULE_TICKET", null, dolidelay('constante'));
 
 if ( is_object($aide) && is_user_logged_in() && $aide->value == 1 ) {
 $arr_params = array( 'module' => 'tickets', 'type' => $type, 'create' => true); 
@@ -333,7 +333,23 @@ $help = "<a href='".$link."' role='button' title='".__( 'Help?', 'doliconnect' )
 return $help;
 }
 
-function dolidelay($delay, $refresh = false, $protect = false) {
+function dolidelay($delay = null, $refresh = false, $protect = false) {
+
+if (! is_numeric($delay)) {
+
+if (false ===  get_site_option('doliconnect_delay_'.$delay) ) {
+
+if ($delay=='constante') { $delay = MONTH_IN_SECONDS; }
+elseif ($delay=='thirdparty') { $delay = DAY_IN_SECONDS; }
+elseif ($delay=='contact') { $delay = WEEK_IN_SECONDS; }
+elseif ($delay=='member') { $delay = DAY_IN_SECONDS; }
+
+} else {
+$delay = get_site_option('doliconnect_delay_'.$delay);
+}
+ 
+}
+
 $array = get_option('doliconnect_ipkiosk');
 if ( is_array($array) && in_array($_SERVER['REMOTE_ADDR'], $array) ) {
 $delay=0;
