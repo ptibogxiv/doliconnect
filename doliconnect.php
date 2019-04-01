@@ -359,9 +359,9 @@ $thirdparty = callDoliApi("GET", "/thirdparties/".constant("DOLIBARR"), null, do
 if ( defined("DOLIBUG") ) {
 
 echo "</div></div></div>";
-echo "<div class='col-xs-12 col-sm-12 col-md-9'>";
+echo "<div class='col-xs-12 col-sm-12 col-md-9'><div class='card shadow-sm'><div class='card-body'>";
 echo dolibug();
-echo "</div></div>";
+echo "</div></div></div></div>";
 
 } elseif ( $thirdparty->status != '1' ) {
 
