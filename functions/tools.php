@@ -376,7 +376,7 @@ $refresh = __( 'Updated', 'doliconnect' ).": ".date_i18n('d/m/Y - H:i', get_opti
 }
  
 if (is_user_logged_in() ) {
-$refresh .= " <a href='".esc_url( add_query_arg( 'refresh', true, $url) )."'><i class='fas fa-sync-alt'></i></a>";
+$refresh .= " <a href='".esc_url( add_query_arg( 'refresh', true, $url) )."' title='".__( 'Refresh', 'doliconnect' )."'><i class='fas fa-sync-alt'></i></a>";
 }
 
 return $refresh;
