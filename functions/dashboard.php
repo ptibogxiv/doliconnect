@@ -1080,10 +1080,9 @@ echo "'>".__( 'Contracts tracking', 'doliconnect' )."</a>";
 function contracts_module( $url ) {
 
 $request = "/contracts/".esc_attr($_GET['id']); 
-$delay = HOUR_IN_SECONDS;
 
 if ( isset($_GET['id']) && $_GET['id'] > 0 ) {
-$contractfo = callDoliApi("GET", $request, null, dolidelay($delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$contractfo = callDoliApi("GET", $request, null, dolidelay('contract', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 //echo $contractfo;
 }
 
@@ -1145,7 +1144,7 @@ echo "</li>";
 echo "</ul></div>";
 
 echo "<small><div class='float-left'>";
-echo dolirefresh($request, $url."&id=".$_GET['id']."&ref=".$_GET['ref'], $delay, $contractfo);
+echo dolirefresh($request, $url."&id=".$_GET['id']."&ref=".$_GET['ref'], dolidelay('contract'), $contractfo);
 echo "</div><div class='float-right'>";
 echo dolihelp('COM');
 echo "</div></small>";
@@ -1153,11 +1152,10 @@ echo "</div></small>";
 } else {
 
 $request = "/contracts?sortfield=t.rowid&sortorder=DESC&limit=8".$page."&thirdparty_ids=".constant("DOLIBARR");
-$delay = DAY_IN_SECONDS;
 
 if ( isset($_GET['pg']) && $_GET['pg'] ) { $page="&page=".$_GET['pg'];} else { $page=""; }
                                  
-$listcontract = callDoliApi("GET", $request, null, dolidelay($delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$listcontract = callDoliApi("GET", $request, null, dolidelay('contract', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 echo '<div class="card shadow-sm"><ul class="list-group list-group-flush">';
 if ( !isset($listcontract->error) && $listcontract != null ) {
@@ -1207,7 +1205,7 @@ echo  "</ul></div>";
 //</nav>';
 
 echo "<small><div class='float-left'>";
-echo dolirefresh($request, $url, $delay);
+echo dolirefresh($request, $url, dolidelay('contract'));
 echo "</div><div class='float-right'>";
 echo dolihelp('COM');
 echo "</div></small>";
@@ -1528,10 +1526,9 @@ $entity = get_current_blog_id();
 $ID = $current_user->ID;
 
 $request = "/donations/".esc_attr($_GET['id']);
-$delay = HOUR_IN_SECONDS;
 
 if ( isset($_GET['id']) && $_GET['id'] > 0 ) {
-$donationfo = callDoliApi("GET", $request, null, dolidelay($delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$donationfo = callDoliApi("GET", $request, null, dolidelay('donation', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 //echo $donationfo;
 }
 
@@ -1643,7 +1640,7 @@ echo "</li>";
 echo "</ul></div>";
 
 echo "<small><div class='float-left'>";
-echo dolirefresh($request, $url, $delay, $donationfo);
+echo dolirefresh($request, $url, dolidelay('donation'), $donationfo);
 echo "</div><div class='float-right'>";
 echo dolihelp('COM');
 echo "</div></small>";
@@ -1653,9 +1650,8 @@ echo "</div></small>";
 if ( isset($_GET['pg']) ) { $page="&page=".$_GET['pg']; }
 
 $request= "/donations?sortfield=t.rowid&sortorder=DESC&limit=8".$page."&thirdparty_ids=".constant("DOLIBARR")."&sqlfilters=(t.fk_statut!=0)";//
-$delay = DAY_IN_SECONDS;
 
-$listdonation = callDoliApi("GET", $request, null, dolidelay($delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$listdonation = callDoliApi("GET", $request, null, dolidelay('donation', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 //print var_dump($listdonation);
 
 echo '<div class="card shadow-sm"><ul class="list-group list-group-flush">';
@@ -1682,7 +1678,7 @@ echo "<li class='list-group-item list-group-item-light'><center>".__( 'No donati
 echo "</ul></div>";
 
 echo "<small><div class='float-left'>";
-echo dolirefresh($request, $url, $delay);
+echo dolirefresh($request, $url, dolidelay('donation'));
 echo "</div><div class='float-right'>";
 echo dolihelp('COM');
 echo "</div></small>";

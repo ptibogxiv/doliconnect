@@ -205,7 +205,7 @@ global $current_user;
 if ( is_user_logged_in() ) { 
 $user=get_current_user_id(); 
 
-$dolibarr = callDoliApi("GET", "/doliconnector/".$user, null, dolidelay( HOUR_IN_SECONDS, false));
+$dolibarr = callDoliApi("GET", "/doliconnector/".$user, null, dolidelay('doliconnector', false));
 
 if ( defined("DOLIBUG") || !is_object($dolibarr) ) {
 define('DOLIBARR', null);
@@ -228,7 +228,7 @@ $rdr = [
     'name'  => $name,
     'email' => $current_user->user_email
 	];
-$dolibarr = callDoliApi("POST", "/doliconnector/".$user, $rdr, HOUR_IN_SECONDS);
+$dolibarr = callDoliApi("POST", "/doliconnector/".$user, $rdr, dolidelay('doliconnector'));
 define('DOLIBARR', $dolibarr->fk_soc);
 } else {   
 define('DOLIBARR', $dolibarr->fk_soc);}
