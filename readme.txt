@@ -45,6 +45,8 @@ WordPress configuration steps:
  = 3.4.0 =
 * April update
 * new thirdparty / contact form
+* prepare transient duration manager
+* clean code
 
 = 3.3.4 =
 * clean code
