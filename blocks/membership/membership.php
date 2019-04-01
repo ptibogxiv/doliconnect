@@ -76,12 +76,12 @@ date_default_timezone_set($tzstring);
 $html = "";
 
 if (is_user_logged_in() && constant("DOLIBARR_MEMBER") > 0){
-$adherent = callDoliApi("GET", "/adherentsplus/".constant("DOLIBARR_MEMBER"), "", HOUR_IN_SECONDS);
+$adherent = callDoliApi("GET", "/adherentsplus/".constant("DOLIBARR_MEMBER"), null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true));
 }
 
-$typeadhesion = callDoliApi("GET", "/adherentsplus/type?sortfield=t.price&sqlfilters=(t.family:!=:'1')&sortorder=ASC", "", dolidelay(MONTH_IN_SECONDS, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true));
+$typeadhesion = callDoliApi("GET", "/adherentsplus/type?sortfield=t.price&sqlfilters=(t.family:!=:'1')&sortorder=ASC", null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true));
 
-$typeadhesionpro = callDoliApi("GET", "/adherentsplus/type?sortfield=t.price&sqlfilters=(t.family:=:'1')&sortorder=ASC", "", dolidelay(MONTH_IN_SECONDS, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true));
+$typeadhesionpro = callDoliApi("GET", "/adherentsplus/type?sortfield=t.price&sqlfilters=(t.family:=:'1')&sortorder=ASC", null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true));
 
 if ( $typeadhesionpro->error->code != '404' ) {
 $html .= '<center><ul class="nav nav-pills nav-justified" id="pills-tab" role="tablist">
