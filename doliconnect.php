@@ -255,6 +255,43 @@ define('DOLICONNECT_CART_ITEM', 0);
 }
 add_action( 'init', 'dolibarr', 10);
 // ********************************************************
+function doliconnector($current_user = null) {
+if (empty($current_user)) {
+global $current_user;
+}  
+
+$user = get_user_by('ID', $current_user->ID);
+
+if ( is_user_logged_in() || $user) { 
+//$user=get_current_user_id(); 
+
+$dolibarr = callDoliApi("GET", "/doliconnector/".$user->ID, null, dolidelay('doliconnector', false));
+
+if ( defined("DOLIBUG") || (is_object($dolibarr) && $dolibarr->fk_soc > 0 ) )  {
+
+return $dolibarr;
+ 
+} else {  
+
+if ( $current_user->billing_type == 'mor' ) { $name = $user->billing_company;
+} else {
+$name = $user->user_firstname." ".$user->user_lastname;
+} 
+
+$rdr = [
+    'name'  => $name,
+    'email' => $user->user_email
+	];
+$dolibarr = callDoliApi("POST", "/doliconnector/".$user->ID, $rdr, dolidelay('doliconnector'));
+
+return $dolibarr;
+
+}
+} else {     
+return null;
+} 
+}
+// ********************************************************
 add_filter( 'get_avatar' , 'my_custom_avatar' , 1 , 5 );
 
 function my_custom_avatar( $avatar, $id_or_email, $size, $default, $alt ) {
