@@ -392,7 +392,7 @@ checked('1', get_option('doliconnectrestrict')); } else { ?> disabled <?php } ?>
     'option_none_value' => '0', 
     'selected' => get_option( 'wp_page_for_privacy_policy' ) 
 );
-           wp_dropdown_pages($args); ?></td>
+           wp_dropdown_pages($args); ?> (set your default wordpress legacy page)</td>
             </tr>
 <?php            
 if (is_plugin_active( 'doliconnect-ticket/doliconnect-ticket.php' ) ) { ?>
