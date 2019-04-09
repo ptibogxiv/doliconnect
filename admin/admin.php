@@ -321,7 +321,7 @@ checked('1', get_option('doliconnectrestrict')); } else { ?> disabled <?php } ?>
     'option_none_value' => '0', 
     'selected' => get_option('doliaccount') 
 );
-           wp_dropdown_pages($args); ?> [doliaccount] [dolilogin]
+           wp_dropdown_pages($args); ?> [doliaccount]
 <br><br><textarea name="doliconnect_login_info" placeholder="message d'info sur la page de connexion" class="form-control" id="exampleFormControlTextarea1" rows="3" cols="75"><?php echo get_option('doliaccountinfo'); ?></textarea>           
 <br><br>Google captcha sitekey<input class="regular-text" type="text" id="dolibarr_login" name="doliconnect_captcha_sitekey"  value="<?php echo get_option('doliconnect_captcha_sitekey'); ?>" >           
 <br>Google captcha secretkey<input class="regular-text" type="text" id="dolibarr_login" name="doliconnect_captcha_secretkey"  value="<?php echo get_option('doliconnect_captcha_secretkey'); ?>" >     
@@ -392,7 +392,7 @@ checked('1', get_option('doliconnectrestrict')); } else { ?> disabled <?php } ?>
     'option_none_value' => '0', 
     'selected' => get_option( 'wp_page_for_privacy_policy' ) 
 );
-           wp_dropdown_pages($args); ?> [dolilegacy]</td>
+           wp_dropdown_pages($args); ?></td>
             </tr>
 <?php            
 if (is_plugin_active( 'doliconnect-ticket/doliconnect-ticket.php' ) ) { ?>
