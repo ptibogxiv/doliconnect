@@ -42,7 +42,10 @@ WordPress configuration steps:
 4. Confirmation email sent to the user/visitor.
 
 == Changelog ==
- = 3.4.0 =
+= 3.4.1 =
+* clean code
+
+= 3.4.0 =
 * April update
 * new thirdparty / contact form
 * prepare transient duration manager
