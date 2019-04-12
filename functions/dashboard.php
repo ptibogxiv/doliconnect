@@ -484,12 +484,12 @@ echo "</div>
 }}
 
 if ( count($listcontact) < 5 ) {
+echo "<form class='was-validated' role='form' action='$url' id='contact-add-form' method='post'>";
 echo "<div class='modal fade' id='addcontactadress' tabindex='-1' role='dialog' aria-labelledby='addcontactadressTitle' aria-hidden='true'>
 <div class='modal-dialog modal-lg modal-dialog-centered' role='document'>
 <div class='modal-content'><div class='modal-header'>
-<h5 class='modal-title' id='addcontactadressTitle'>".__( 'Add a new contact/address', 'doliconnect' )."</h5><button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
+<h5 class='modal-title' id='contact-".$contact->id."Title'><input type='text' class='form-control' placeholder='".__( 'Title/Job', 'doliconnect' )."' name='thirdparty[".$contact->id."][poste]' value='' autocomplete='off'></h5><button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
 </div><div class='modal-body'>";
-echo "<form class='was-validated' role='form' action='$url' id='contact-add-form' method='post'>";
 echo doliconnectuserform($thirdparty, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'mini');
 echo "</div>
 <div class='modal-footer'><button name='add_contact' value='new_contact' class='btn btn-warning btn-block' type='submit'><b>".__( 'Add contact', 'doliconnect' )."</b></button></form></div>
