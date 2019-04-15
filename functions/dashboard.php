@@ -37,7 +37,7 @@ wp_update_user( array( 'ID' => $ID, 'description' => sanitize_textarea_field($_P
 wp_update_user( array( 'ID' => $ID, 'user_url' => sanitize_textarea_field($thirdparty['url'])));
 update_user_meta( $ID, 'civility_id', sanitize_text_field($thirdparty['civility_id']));
 update_user_meta( $ID, 'billing_type', sanitize_text_field($thirdparty['morphy']));
-if ( isset($_POST['billing_company']) ) { update_user_meta( $ID, 'billing_company', sanitize_text_field($thirdparty['name'])); }
+if ( isset($thirdparty['name']) ) { update_user_meta( $ID, 'billing_company', sanitize_text_field($thirdparty['name'])); }
 update_user_meta( $ID, 'billing_birth', $thirdparty['birth']);
 
 do_action('wp_dolibarr_sync', $thirdparty);
@@ -2074,6 +2074,8 @@ echo '<style>';
 }
 <?php
 echo '</style>';
+
+echo var_dump(doliconnector($current_user));
 
 echo '<div class="accordion" id="accordionExample">
   <div class="card">

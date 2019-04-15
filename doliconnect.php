@@ -265,7 +265,7 @@ global $current_user;
 
 $user = get_user_by('ID', $current_user->ID);
 
-if ( is_user_logged_in() || $user) { 
+if ( $user) { 
 //$user=get_current_user_id(); 
 
 $dolibarr = callDoliApi("GET", "/doliconnector/".$user->ID, null, dolidelay('doliconnector', false));
@@ -274,28 +274,10 @@ if ( defined("DOLIBUG") || (is_object($dolibarr) && $dolibarr->fk_soc > 0 ) )  {
 
 return $dolibarr;
  
-} else {  
-
-if ( $current_user->billing_type == 'mor' ) { 
-if (!empty($current_user->billing_company)) { $name = $current_user->billing_company; }
-else { $name = $current_user->user_login; }
-} else {
-if (!empty($current_user->user_firstname) && !empty($current_user->user_lastname)) { $name = $current_user->user_firstname." ".$current_user->user_lastname; }
-else { $name = $current_user->user_login; }
-}
-
-$rdr = [
-    'name'  => $name,
-    'email' => $user->user_email
-	];
-$dolibarr = callDoliApi("POST", "/doliconnector/".$user->ID, $rdr, dolidelay('doliconnector'));
-
-return $dolibarr;
-
-}
-} else {     
-return null;
 } 
+
+}
+
 }
 // ********************************************************
 add_filter( 'get_avatar' , 'my_custom_avatar' , 1 , 5 );
@@ -580,7 +562,7 @@ wp_update_user( array( 'ID' => $ID, 'description' => sanitize_textarea_field($_P
 wp_update_user( array( 'ID' => $ID, 'user_url' => sanitize_textarea_field($thirdparty['url'])));
 update_user_meta( $ID, 'civility_id', sanitize_text_field($thirdparty['civility_id']));
 update_user_meta( $ID, 'billing_type', sanitize_text_field($thirdparty['morphy']));
-if ( isset($_POST['billing_company']) ) { update_user_meta( $ID, 'billing_company', sanitize_text_field($thirdparty['name'])); }
+if ( isset($thirdparty['name']) ) { update_user_meta( $ID, 'billing_company', sanitize_text_field($thirdparty['name'])); }
 update_user_meta( $ID, 'billing_birth', $thirdparty['birth']);
 update_user_meta( $ID, 'optin1', $_POST['optin1'] );
 
