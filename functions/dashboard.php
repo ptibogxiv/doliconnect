@@ -2075,7 +2075,7 @@ echo '<style>';
 <?php
 echo '</style>';
 
-echo var_dump(doliconnector($current_user));
+echo doliconnector($current_user, 'fk_soc');
 
 echo '<div class="accordion" id="accordionExample">
   <div class="card">

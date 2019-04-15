@@ -258,7 +258,7 @@ define('DOLICONNECT_CART_ITEM', 0);
 }
 add_action( 'init', 'dolibarr', 10);
 // ********************************************************
-function doliconnector($current_user = null) {
+function doliconnector($current_user = null, $value = null) {
 if (empty($current_user)) {
 global $current_user;
 }  
@@ -272,7 +272,12 @@ $dolibarr = callDoliApi("GET", "/doliconnector/".$user->ID, null, dolidelay('dol
 
 if ( defined("DOLIBUG") || (is_object($dolibarr) && $dolibarr->fk_soc > 0 ) )  {
 
+if (!empty($value)) {
+return $dolibarr->$value;
+} else {
 return $dolibarr;
+}
+
  
 } 
 
