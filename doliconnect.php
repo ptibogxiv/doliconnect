@@ -260,7 +260,7 @@ add_action( 'init', 'dolibarr', 10);
 // ********************************************************
 function doliconnector($current_user = null, $value = null) {
 if (empty($current_user)) {
-global $current_user;
+$current_user=get_current_user_id();
 }  
 
 $user = get_user_by('ID', $current_user->ID);
