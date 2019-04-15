@@ -219,9 +219,12 @@ define('DOLICONNECT_CART_ITEM', 0);
 } else {  
 if ( $dolibarr->fk_soc == 0 ) {
 
-if ( $current_user->billing_type == 'mor' ) { $name = $current_user->billing_company;
+if ( $current_user->billing_type == 'mor' ) { 
+if (!empty($current_user->billing_company)) { $name = $current_user->billing_company; }
+else { $name = $current_user->user_login; }
 } else {
-$name = $current_user->user_firstname." ".$current_user->user_lastname;
+if (!empty($current_user->user_firstname) && !empty($current_user->user_lastname)) { $name = $current_user->user_firstname." ".$current_user->user_lastname; }
+else { $name = $current_user->user_login; }
 } 
 
 $rdr = [
@@ -273,10 +276,13 @@ return $dolibarr;
  
 } else {  
 
-if ( $current_user->billing_type == 'mor' ) { $name = $user->billing_company;
+if ( $current_user->billing_type == 'mor' ) { 
+if (!empty($current_user->billing_company)) { $name = $current_user->billing_company; }
+else { $name = $current_user->user_login; }
 } else {
-$name = $user->user_firstname." ".$user->user_lastname;
-} 
+if (!empty($current_user->user_firstname) && !empty($current_user->user_lastname)) { $name = $current_user->user_firstname." ".$current_user->user_lastname; }
+else { $name = $current_user->user_login; }
+}
 
 $rdr = [
     'name'  => $name,
