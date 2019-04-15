@@ -584,7 +584,7 @@ if ( isset($_POST['billing_company']) ) { update_user_meta( $ID, 'billing_compan
 update_user_meta( $ID, 'billing_birth', $thirdparty['birth']);
 update_user_meta( $ID, 'optin1', $_POST['optin1'] );
 
-do_action('wp_dolibarr_sync', $thirdparty);
+//do_action('wp_dolibarr_sync', $thirdparty);
 
 $body = sprintf(__('Thank you for your registration on %s.', 'doliconnect'), $sitename);
 
