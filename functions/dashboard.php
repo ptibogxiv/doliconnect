@@ -20,6 +20,7 @@ add_action( 'user_doliconnect_menu', 'informations_menu', 1, 1);
 
 function informations_module($url) {
 global $wpdb,$current_user,$doliconnect;
+
 $ID = $current_user->ID;
 
 $request = "/thirdparties/".constant("DOLIBARR");

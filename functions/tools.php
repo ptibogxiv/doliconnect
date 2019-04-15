@@ -4,7 +4,8 @@ global $current_user;
 
 if ( is_object($object) && $object->id > 0 ) {
 $idobject="[".$object->id."]";
-}
+} 
+//else { $idobject="[0]"; }
 
 echo "<ul class='list-group list-group-flush'><li class='list-group-item'>";
 

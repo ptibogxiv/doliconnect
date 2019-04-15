@@ -543,7 +543,7 @@ exit;
 }
 
 if ( isset($_POST['submitted']) ) {
-$thirdparty=$_POST['thirdparty'];
+$thirdparty=$_POST['thirdparty'];//['0']
 
 if ( email_exists($thirdparty['email']) ) {
         $emailError = "".__( 'This email address is already linked to an account. You can reactivate your account through this <a href=\'".wp_lostpassword_url( get_permalink() )."\' title=\'lost password\'>form</a>.', 'doliconnect' )."";
@@ -570,8 +570,7 @@ $ID = wp_create_user(uniqid(), $password, $email );
 
 $role = 'subscriber';
 
-if ( is_multisite() ) { 
-add_user_to_blog($entity,$ID,$role); }
+if ( is_multisite() ) { add_user_to_blog($entity,$ID,$role); }
 wp_update_user( array( 'ID' => $ID, 'user_email' => sanitize_email($thirdparty['email'])));
 wp_update_user( array( 'ID' => $ID, 'nickname' => sanitize_user($_POST['user_nicename'])));
 wp_update_user( array( 'ID' => $ID, 'display_name' => ucfirst(strtolower($thirdparty['firstname']))." ".strtoupper($thirdparty['lastname'])));
