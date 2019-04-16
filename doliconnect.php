@@ -261,9 +261,11 @@ add_action( 'init', 'dolibarr', 10);
 function doliconnector($current_user = null, $value = null) {
 if (empty($current_user)) {
 $current_user=get_current_user_id();
-}  
+} else {
+$current_user=$current_user->ID;
+}
 
-$user = get_user_by('ID', $current_user->ID);
+$user = get_user_by('ID', $current_user);
 
 if ( $user) { 
 //$user=get_current_user_id(); 
@@ -273,7 +275,7 @@ $dolibarr = callDoliApi("GET", "/doliconnector/".$user->ID, null, dolidelay('dol
 if ( defined("DOLIBUG") || (is_object($dolibarr) && $dolibarr->fk_soc > 0 ) )  {
 
 if (!empty($value)) {
-return $dolibarr->$value;
+return 1;
 } else {
 return $dolibarr;
 }
