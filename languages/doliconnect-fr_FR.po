@@ -703,7 +703,7 @@ msgstr "aucun"
 
 #: functions/dashboard.php:1306 functions/dashboard.php:1331
 msgid "Become a member"
-msgstr "Devenir un membre"
+msgstr "Devenir membre"
 
 #: functions/dashboard.php:1309 functions/dashboard.php:1317
 msgid "Renew my subscription"
