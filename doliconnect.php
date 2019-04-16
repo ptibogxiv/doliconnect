@@ -258,7 +258,7 @@ define('DOLICONNECT_CART_ITEM', 0);
 }
 add_action( 'init', 'dolibarr', 10);
 // ********************************************************
-function doliconnector($current_user = null, $value = null) {
+function doliconnector($current_user = null, $value = null, $refresh = false) {
 if (empty($current_user)) {
 $current_user=get_current_user_id();
 } else {
@@ -270,7 +270,7 @@ $user = get_user_by('ID', $current_user);
 if ( $user ) { 
 //$user=get_current_user_id(); 
 
-$dolibarr = callDoliApi("GET", "/doliconnector/".$user->ID, null, dolidelay('doliconnector', false));
+$dolibarr = callDoliApi("GET", "/doliconnector/".$user->ID, null, dolidelay('doliconnector', $refresh));
 
 if ( defined("DOLIBUG") || (is_object($dolibarr) && $dolibarr->fk_soc > 0 ) )  {
 
