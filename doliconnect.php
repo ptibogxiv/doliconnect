@@ -346,7 +346,7 @@ return $avatar;
 // ********************************************************
 
 function doliaccount_shortcode() {                                                                                                               
-global $current_user,$wpdb;
+global $current_user, $wpdb;
 
 doliconnect_enqueues();
 
@@ -386,7 +386,7 @@ echo "</div><br></div><div class='col-9 col-xs-8 col-sm-8 col-md-12 col-xl-12'>"
 
 if ( is_user_logged_in() ) {
 
-$thirdparty = callDoliApi("GET", "/thirdparties/".constant("DOLIBARR"), null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 if ( defined("DOLIBUG") ) {
 
@@ -402,7 +402,7 @@ echo "<div class='col-xs-12 col-sm-12 col-md-9'><div class='card shadow-sm'><div
 echo '<br><br><br><br><br><center><div class="align-middle"><i class="fas fa-bug fa-3x fa-fw"></i><h4>'.__( 'This account is closed. Please contact us for reopen it.', 'doliconnect' ).'</h4></div></center><br><br><br><br><br>';
 echo "</div></div></div></div>";
 
-$thirdparty = callDoliApi("GET", "/thirdparties/".constant("DOLIBARR"), null, dolidelay('thirdparty', true));
+$thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty', true));
 
 } else { 
 
@@ -1189,7 +1189,7 @@ wp_get_current_user();
 if ($current_user->billing_type == 'phy'){
 $name = $current_user->user_firstname." ".$current_user->user_lastname;}
 else {$name = $current_user->billing_company;}
-if (NULL!=constant("DOLIBARR_MEMBER")) {
+if (NULL != doliconnector($current_user, 'fk_member')) {
 //$infomember = [
 //   'login'  => $current_user->user_login,
 //   'morphy'  => $current_user->billing_type,
@@ -1205,10 +1205,10 @@ if (NULL!=constant("DOLIBARR_MEMBER")) {
 //    'birth' => $current_user->billing_birth,
 //    'array_options' => isset($extrafields) ? $extrafields : null
 //	]; 
-$adherent = callDoliApi("PUT", "/adherentsplus/".constant("DOLIBARR_MEMBER"), $element, 0);
+$adherent = callDoliApi("PUT", "/adherentsplus/".doliconnector($current_user, 'fk_member'), $element, 0);
 //update_user_meta( $current_user->ID, 'billing_birth', $current_user->billing_birth);
 }
-if ( constant("DOLIBARR") > 0 ) {
+if ( doliconnector($current_user, 'fk_soc') > 0 ) {
 //$info = [
 //    'status' => 1,
 //    'name'  => $name,
@@ -1221,7 +1221,7 @@ if ( constant("DOLIBARR") > 0 ) {
 //    'url' => $current_user->user_url,
 //    'array_options' => isset($extrafields) ? $extrafields : null
 //	];
-$thirparty = callDoliApi("PUT", "/thirdparties/".constant("DOLIBARR"), $element, 0);
+$thirparty = callDoliApi("PUT", "/thirdparties/".doliconnector($current_user, 'fk_soc'), $element, 0);
 }
 
 }
@@ -1398,8 +1398,8 @@ class My_doliconnect_Membership extends WP_Widget {
 	 * @param array $args
 	 * @param array $instance
 	 */
-	public function widget( $args, $instance ) {
-global $current_user,$wpdb;
+public function widget( $args, $instance ) {
+global $current_user, $wpdb;
 		// outputs the content of the widget
     
   		echo $args['before_widget'];
@@ -1409,8 +1409,8 @@ echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] )
 
 $entity=get_current_blog_id();
 
-if (constant("DOLIBARR_MEMBER") > 0) {
-$adherent = callDoliApi("GET", "/adherentsplus/".constant("DOLIBARR_MEMBER"), null);
+if (doliconnector($current_user, 'fk_member') > 0) {
+$adherent = callDoliApi("GET", "/adherentsplus/".doliconnector($current_user, 'fk_member'), null);
 }
  
 if ($adherent->statut == '1' && $adherent->datefin < current_time('timestamp')) {
