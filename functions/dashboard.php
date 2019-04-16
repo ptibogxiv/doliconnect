@@ -23,9 +23,9 @@ global $wpdb,$current_user,$doliconnect;
 
 $ID = $current_user->ID;
 
-$request = "/thirdparties/".constant("DOLIBARR");
+$request = "/thirdparties/".doliconnector($current_user, 'fk_soc');
 
-$thirdparty=$_POST['thirdparty'][''.constant("DOLIBARR").''];
+$thirdparty=$_POST['thirdparty'][''.doliconnector($current_user, 'fk_soc').''];
 
 if ( isset($_POST["case"]) && $_POST["case"] == 'updateuser' ) {
 wp_update_user( array( 'ID' => $ID, 'user_email' => sanitize_email($thirdparty['email'])));
@@ -54,7 +54,7 @@ if ( isset($_GET['return']) ) {
 $url = esc_url( add_query_arg( 'return', $_GET['return'], $url) );
 }
 
-if ( constant("DOLIBARR") > '0' ) {
+if ( doliconnector($current_user, 'fk_soc') > '0' ) {
 $thirdparty = callDoliApi("GET", $request, null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
 }
 
@@ -333,15 +333,15 @@ add_action( 'user_doliconnect_menu', 'contacts_menu', 2, 1);
 function contacts_module($url){
 global $current_user;
 
-$request = "/contacts?sortfield=t.rowid&sortorder=ASC&limit=100&thirdparty_ids=".constant("DOLIBARR")."&includecount=1&sqlfilters=t.statut=1";
+$request = "/contacts?sortfield=t.rowid&sortorder=ASC&limit=100&thirdparty_ids=".doliconnector($current_user, 'fk_soc')."&includecount=1&sqlfilters=t.statut=1";
 
 if ( isset ($_POST['add_contact']) && $_POST['add_contact'] == 'new_contact' ) {
-$contactv=$_POST['thirdparty'][''.constant("DOLIBARR").''];
+$contactv=$_POST['thirdparty'][''.doliconnector($current_user, 'fk_soc').''];
 $data = [
     'civility_id'  => $contactv['civility_id'],     
     'firstname' => ucfirst(sanitize_user(strtolower($contactv['firstname']))),
     'lastname' => strtoupper(sanitize_user($contactv['lastname'])),
-    'socid' => constant("DOLIBARR"),
+    'socid' => doliconnector($current_user, 'fk_soc'),
     'poste' => sanitize_textarea_field($contactv['poste']), 
     'address' => sanitize_textarea_field($contactv['address']),    
     'zip' => sanitize_text_field($contactv['zip']),
@@ -358,7 +358,7 @@ $msg = "<div class='alert alert-success'><button type='button' class='close' dat
 }
 } elseif ( isset ($_POST['delete_contact']) && $_POST['delete_contact'] > 0 ) {
 $contactv = callDoliApi("GET", "/contacts/".$_POST['delete_contact'], null, 0);
-if ( $contactv->socid == constant("DOLIBARR") ) {
+if ( $contactv->socid == doliconnector($current_user, 'fk_soc') ) {
 // try deleting
 $delete = callDoliApi("DELETE", "/contacts/".$contactv->id, null, 0);
 
@@ -374,7 +374,7 @@ $data = [
     'civility_id'  => $contactv['civility_id'],     
     'firstname' => ucfirst(sanitize_user(strtolower($contactv['firstname']))),
     'lastname' => strtoupper(sanitize_user($contactv['lastname'])),
-    'socid' => constant("DOLIBARR"),
+    'socid' => doliconnector($current_user, 'fk_soc'),
     'poste' => sanitize_textarea_field($contactv['poste']), 
     'address' => sanitize_textarea_field($contactv['address']),    
     'zip' => sanitize_text_field($contactv['zip']),
@@ -385,7 +385,7 @@ $data = [
     'phone_pro' => sanitize_text_field($contactv['phone'])
 	];
 $contactv = callDoliApi("PUT", "/contacts/".$_POST['update_contact'], $data, 0);
-if ( $contactv->socid == constant("DOLIBARR") ) {
+if ( $contactv->socid == doliconnector($current_user, 'fk_soc') ) {
 // try deleting
 
 $msg = "<div class='alert alert-success'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><p><strong>".__( 'Congratulations!', 'doliconnect' )."</strong> ".__( 'Your informations have been updated.', 'doliconnect' )."</p></div>";
@@ -400,8 +400,8 @@ $listcontact = callDoliApi("GET", $request, null, dolidelay('contact', esc_attr(
 
 }
 
-if ( constant("DOLIBARR") > 0 ) {
-$thirdparty = callDoliApi("GET", "/thirdparties/".constant("DOLIBARR"), null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
+if ( doliconnector($current_user, 'fk_soc') > 0 ) {
+$thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
 }
 
 echo "<form role='form' action='$url' id='contact-form' method='post'>";

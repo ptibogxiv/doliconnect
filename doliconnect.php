@@ -267,7 +267,7 @@ $current_user=$current_user->ID;
 
 $user = get_user_by('ID', $current_user);
 
-if ( $user) { 
+if ( $user ) { 
 //$user=get_current_user_id(); 
 
 $dolibarr = callDoliApi("GET", "/doliconnector/".$user->ID, null, dolidelay('doliconnector', false));
@@ -275,7 +275,7 @@ $dolibarr = callDoliApi("GET", "/doliconnector/".$user->ID, null, dolidelay('dol
 if ( defined("DOLIBUG") || (is_object($dolibarr) && $dolibarr->fk_soc > 0 ) )  {
 
 if (!empty($value)) {
-return 1;
+return $dolibarr->$value;
 } else {
 return $dolibarr;
 }
