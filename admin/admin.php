@@ -251,8 +251,7 @@ delete_option('doliconnect_facebook');}
 if ($_REQUEST['doliconnect_google']>0){
 update_option('doliconnect_google', sanitize_text_field($_REQUEST['doliconnect_google']));
 }else {
-delete_option('doliconnect_google');}                       
-            update_option('dolicheckout', sanitize_text_field($_REQUEST['dolicheckout']));          
+delete_option('doliconnect_google');}                               
             update_option('doliaccount', sanitize_text_field($_REQUEST['doliaccount']));
             update_option('doliaccountinfo', sanitize_text_field($_REQUEST['doliconnect_login_info']));
             update_option('doliticket', sanitize_text_field($_REQUEST['doliticket']));
