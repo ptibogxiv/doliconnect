@@ -75,8 +75,8 @@ date_default_timezone_set($tzstring);
 
 $html = "";
 
-if (is_user_logged_in() && constant("DOLIBARR_MEMBER") > 0){
-$adherent = callDoliApi("GET", "/adherentsplus/".constant("DOLIBARR_MEMBER"), null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true));
+if (is_user_logged_in() && doliconnector($current_user, 'fk_member') > 0){
+$adherent = callDoliApi("GET", "/adherentsplus/".doliconnector($current_user, 'fk_member'), null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true));
 }
 
 $typeadhesion = callDoliApi("GET", "/adherentsplus/type?sortfield=t.price&sqlfilters=(t.family:!=:'1')&sortorder=ASC", null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true));
