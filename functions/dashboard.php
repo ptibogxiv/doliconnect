@@ -445,7 +445,16 @@ echo "</script>";
 
 echo "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
 
-if ( count($listcontact) < 5 ) {
+class myCounter implements Countable {
+	public function count() {
+		static $count = 0;
+		return ++$count;
+	}
+}
+ 
+$counter = new myCounter;
+
+if ( count($counter) < 5 ) {
 echo '<button type="button" class="list-group-item lh-condensed list-group-item-action list-group-item-primary" data-toggle="modal" data-target="#addcontactadress"><center><i class="fas fa-plus-circle"></i> '.__( 'New contact', 'doliconnect' ).'</center></button>';
 }
 
@@ -1233,7 +1242,6 @@ echo "'>".__( 'Membership', 'doliconnect' )."</a>";
 function members_module( $url ) {
 global $current_user;
 
-$ID = $current_user->ID;
 $time = current_time( 'timestamp',1);
 
 $request = "/adherentsplus/".doliconnector($current_user, 'fk_member');
@@ -1253,7 +1261,7 @@ addtodolibasket($productadhesion->value, 1, $_POST["cotisation"], $url, $_POST["
 wp_redirect(esc_url(doliconnecturl('dolicart')));
 exit;     
 } elseif ($_POST["update_membership"]==5 || $_POST["update_membership"]==1) {
-$dolibarr = callDoliApi("GET", "/doliconnector/".$ID, null, 0); 
+$dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, 0); 
 }
 
 } 
@@ -1262,7 +1270,7 @@ if ( isset($msg) ) { echo $msg; }
 
 echo "<div class='card shadow-sm'><div class='card-body'><div class='row'><div class='col-12 col-md-5'>";
 
-if ( !empty(doliconnector($current_user, 'fk_member')) && doliconnector($current_user, 'fk_member') > 0  && doliconnector($current_user, 'fk_soc') > 0 ) { 
+if ( !empty(doliconnector($current_user, 'fk_member')) && doliconnector($current_user, 'fk_member') > 0 && doliconnector($current_user, 'fk_soc') > 0 ) { 
 $adherent = callDoliApi("GET", $request, null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 }
 
