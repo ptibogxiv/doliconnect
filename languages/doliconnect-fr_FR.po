@@ -373,7 +373,7 @@ msgstr "Payer mon adhésion"
 
 #: doliconnect.php:1392 functions/dashboard.php:1225
 msgid "Membership"
-msgstr "Adhésion/Abonnement"
+msgstr "Adhésion / Abonnement"
 
 #: functions/dashboard.php:17 functions/dashboard.php:1329
 msgid "Personal informations"
@@ -1609,7 +1609,7 @@ msgstr "https://www.ptibogxiv.net/fr"
 #, fuzzy
 #~| msgid "Membership"
 #~ msgid "Membershipconsumption"
-#~ msgstr "Adhésion/Abonnement"
+#~ msgstr "Adhésion / Abonnement"
 
 #~ msgid "You will no longer benefit from membership-related services"
 #~ msgstr "Vous ne profiterez plus des services liés à l'adhésion"
