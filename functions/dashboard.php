@@ -1244,7 +1244,10 @@ global $current_user;
 
 $time = current_time( 'timestamp',1);
 
-$request = "/adherentsplus/".doliconnector($current_user, 'fk_member');
+$request = "/adherentsplus/".doliconnector($current_user, 'fk_member'); 
+
+$productadhesion = callDoliApi("GET", "/doliconnector/constante/ADHERENT_PRODUCT_ID_FOR_SUBSCRIPTIONS", null, dolidelay('constante'));
+$order = callDoliApi("GET", "/doliconnector/constante/MAIN_MODULE_COMMANDE", null, dolidelay('constante'));
 
 if ( isset($_POST["update_membership"]) && function_exists('dolimembership') ) {
 $adherent = dolimembership($_POST["update_membership"], $_POST["typeadherent"], dolidelay('member', true));
@@ -1254,8 +1257,6 @@ $msg = "<div class='alert alert-success' role='alert'><button type='button' clas
 //}
 
 if ( ($_POST["update_membership"]==4) && $_POST["cotisation"] && doliconnector($current_user, 'fk_member') > 0 && $_POST["timestamp_start"] > 0 && $_POST["timestamp_end"] > 0 ) {
-
-$productadhesion = callDoliApi("GET", "/doliconnector/constante/ADHERENT_PRODUCT_ID_FOR_SUBSCRIPTIONS", null, dolidelay('constante'));
 
 addtodolibasket($productadhesion->value, 1, $_POST["cotisation"], $url, $_POST["timestamp_start"], $_POST["timestamp_end"]);
 wp_redirect(esc_url(doliconnecturl('dolicart')));
@@ -1302,7 +1303,7 @@ echo  "$datefin"; }
 
 echo "</div><div class='col-12 col-md-7'>";
 
-if ( function_exists('dolimembership_modal') ) {
+if ( function_exists('dolimembership_modal') && is_object($order) && $order->value == 1 && !empty($productadhesion->value) ) {
 dolimembership_modal($adherent);
 
 echo "<script>";
