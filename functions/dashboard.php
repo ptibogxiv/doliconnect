@@ -493,7 +493,7 @@ echo "</div>
 </div></div></div>";
 }}
 
-if ( count($listcontact) < 5 ) {
+if ( count($counter) < 5 ) {
 echo "<form class='was-validated' role='form' action='$url' id='contact-add-form' method='post'>";
 echo "<div class='modal fade' id='addcontactadress' tabindex='-1' role='dialog' aria-labelledby='addcontactadressTitle' aria-hidden='true'>
 <div class='modal-dialog modal-lg modal-dialog-centered' role='document'>
