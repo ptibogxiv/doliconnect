@@ -1310,14 +1310,15 @@ dolimembership_modal($adherent);
 echo "<script>";
 ?>
 
-window.setTimeout(function() {
-    $(".alert").fadeTo(500, 0).slideUp(500, function(){
-        $(this).remove(); 
+window.setTimeout(function () {
+    $(".alert-success").fadeTo(500, 0).slideUp(500, function () {
+        $(this).remove();
     });
 }, 5000);
 
 <?php
 echo "</script>";
+
 
 if ( $adherent->datefin == null && $adherent->statut == '0' ) {echo  "<a href='#' id='subscribe-button2' class='btn btn text-white btn-warning btn-block' data-toggle='modal' data-target='#activatemember'><b>".__( 'Become a member', 'doliconnect' )."</b></a>";
 } elseif ($adherent->statut == '1') {
