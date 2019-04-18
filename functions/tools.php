@@ -77,7 +77,8 @@ echo "<div class='col-12 col-md-7'><label for='inputnickname'><small><i class='f
 echo "</div>";
 
 echo "<div class='form-row'><div class='col'><label for='inputemail'><small><i class='fas fa-at fa-fw'></i> ".__( 'Email', 'doliconnect' )."</small></label><input type='email' class='form-control' id='inputemail' placeholder='email@example.com' name='thirdparty".$idobject."[email]' value='".$current_user->user_email."' autocomplete='off' ";
-if ( DOLICONNECT_DEMO == $current_user->ID && is_user_logged_in() ) {
+
+if ( defined("DOLICONNECT_DEMO") == $current_user->ID && is_user_logged_in() ) {
 echo " readonly";
 } else {
 echo " required";
@@ -250,7 +251,7 @@ return $bug;
 function Doliconnect_MailAlert( $user_login, $user ) {
 global $wpdb;
 
-if ( $user->loginmailalert == 'on' && $user->ID != DOLICONNECT_DEMO ) {
+if ( $user->loginmailalert == 'on' && $user->ID != defined("DOLICONNECT_DEMO") ) {
 $sitename = get_option('blogname');
 $siteurl = get_option('siteurl');
 $subject = "[$sitename] ".__( 'Connection notification', 'doliconnect' );
