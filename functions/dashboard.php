@@ -485,7 +485,7 @@ foreach ( $listcontact as $contact ) {
 echo "<form class='was-validated' role='form' action='$url' id='contact-".$contact->id."-form' method='post'>";
 echo '<div class="modal fade" id="contact-'.$contact->id.'" tabindex="-1" role="dialog" aria-labelledby="contact-'.$contact->id.'Title" aria-hidden="true">
 <div class="modal-dialog modal-lg modal-dialog-centered" role="document"><div class="modal-content"><div class="modal-header">
-<h5 class="modal-title" id="contact-'.$contact->id.'Title">'.__( 'Update contact / address', 'doliconnect' ).'</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
+<h5 class="modal-title" id="contact-'.$contact->id.'Title">'.__( 'Update contact', 'doliconnect' ).'</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
 <div class="modal-body">';
 echo doliconnectuserform($contact, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'mini');      
 echo "</div>
@@ -498,7 +498,7 @@ echo "<form class='was-validated' role='form' action='$url' id='contact-add-form
 echo "<div class='modal fade' id='addcontactadress' tabindex='-1' role='dialog' aria-labelledby='addcontactadressTitle' aria-hidden='true'>
 <div class='modal-dialog modal-lg modal-dialog-centered' role='document'>
 <div class='modal-content'><div class='modal-header'>
-<h5 class='modal-title' id='contact-".$contact->id."Title'>".__( 'Add contact / address', 'doliconnect' )."</h5><button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
+<h5 class='modal-title' id='contact-".$contact->id."Title'>".__( 'Add contact', 'doliconnect' )."</h5><button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
 </div><div class='modal-body'>";
 echo doliconnectuserform($thirdparty, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'mini');
 echo "</div>
