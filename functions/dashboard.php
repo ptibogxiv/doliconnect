@@ -1257,12 +1257,12 @@ $adherent = dolimembership($_POST["update_membership"], $_POST["typeadherent"], 
 $msg = "<div class='alert alert-success' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><p><strong>".__( 'Congratulations!', 'doliconnect' )."</strong> ".__( 'Your membership has been updated.', 'doliconnect' )."</p></div>";
 //}
 
-if ( ($_POST["update_membership"]==4) && $_POST["cotisation"] && doliconnector($current_user, 'fk_member') > 0 && $_POST["timestamp_start"] > 0 && $_POST["timestamp_end"] > 0 ) {
+if ( ($_POST["update_membership"]==4) && isset($_POST["cotisation"]) && doliconnector($current_user, 'fk_member') > 0 && $_POST["timestamp_start"] > 0 && $_POST["timestamp_end"] > 0 ) {
 
 addtodolibasket($productadhesion->value, 1, $_POST["cotisation"], $url, $_POST["timestamp_start"], $_POST["timestamp_end"]);
 wp_redirect(esc_url(doliconnecturl('dolicart')));
 exit;     
-} elseif ($_POST["update_membership"]==5 || $_POST["update_membership"]==1) {
+} elseif ( $_POST["update_membership"]==5 || $_POST["update_membership"]==1 ) {
 $dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, 0); 
 }
 
