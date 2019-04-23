@@ -49,7 +49,7 @@ WordPress configuration steps:
 = 3.4.5 =
 * clean code
 * minor fix
-* compatibilit PHP 7.2
+* compatibility PHP 7.2
 
 = 3.4.4 =
 * clean code
