@@ -1972,7 +1972,7 @@ echo "'>".__( 'Settings & security', 'doliconnect' )."</a>";
 add_action( 'settings_doliconnect_menu', 'settings_menu', 2, 1);
 
 function settings_module($url) {
-global $wp, $wpdb, $current_user;
+global $wpdb, $current_user;
 
 $ID = $current_user->ID;
 
