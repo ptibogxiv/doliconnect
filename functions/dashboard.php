@@ -2072,10 +2072,10 @@ echo "<select class='form-control' id='multicurrency_code' name='multicurrency_c
 echo "<option value='".$thirdparty->multicurrency_code."'>".$thirdparty->multicurrency_code." / ".doliprice(0,$thirdparty->multicurrency_code)."</option>";
 echo "</select>";
 echo "</div></div>";
-echo "<input type='hidden' name='case' value='updatesettings'></li>";
+echo "</li>";
 }
 
-echo "</ul></div>";
+echo "<input type='hidden' name='case' value='updatesettings'></ul></div>";
 echo "<p class='text-right'><small>";
 echo dolihelp('ISSUE');
 echo "</small></p>";
