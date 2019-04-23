@@ -42,10 +42,14 @@ WordPress configuration steps:
 4. Confirmation email sent to the user/visitor.
 
 == Changelog ==
+= 3.4.6 =
+* clean code
+* minor fix
+
 = 3.4.5 =
 * clean code
 * minor fix
-* compatibilit yPHP 7.2
+* compatibilit PHP 7.2
 
 = 3.4.4 =
 * clean code
