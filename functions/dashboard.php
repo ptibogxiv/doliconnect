@@ -2151,6 +2151,7 @@ add_action( 'settings_doliconnect_menu', 'delete_menu', 3, 1);
 
 function delete_module($url) {
 global $current_user;
+
 echo "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
 if ( function_exists( 'wp_create_user_request' ) ) {
 echo "<form action='".esc_url( admin_url( 'admin-ajax.php' ) )."' method='post' id='gdrf-form'>";
