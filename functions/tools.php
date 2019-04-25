@@ -63,11 +63,11 @@ echo "</select>";
 echo "</div>
     <div class='col-12 col-md-4'>
       <label for='inputFirstname'><small><i class='fas fa-user'></i> ".__( 'Firstname', 'doliconnect' )."</small></label>
-      <input type='text' name='thirdparty".$idobject."[firstname]' class='form-control' placeholder='".__( 'Firstname', 'doliconnect' )."' value='".stripslashes(htmlspecialchars($current_user->user_firstname, ENT_QUOTES))."' required>
+      <input type='text' name='thirdparty".$idobject."[firstname]' class='form-control' placeholder='".__( 'Firstname', 'doliconnect' )."' value='".(isset($object->firstname) ? $object->firstname : stripslashes(htmlspecialchars($current_user->user_firstname, ENT_QUOTES)))."' required>
     </div>
     <div class='col-12 col-md-5'>
       <label for='inputLastname'><small><i class='fas fa-user'></i> ".__( 'Lastname', 'doliconnect' )."</small></label>
-      <input type='text' name='thirdparty".$idobject."[lastname]' class='form-control' placeholder='".__( 'Lastname', 'doliconnect' )."' value='".stripslashes(htmlspecialchars($current_user->user_lastname, ENT_QUOTES))."' required>
+      <input type='text' name='thirdparty".$idobject."[lastname]' class='form-control' placeholder='".__( 'Lastname', 'doliconnect' )."' value='".(isset($object->lastname) ? $object->lastname : stripslashes(htmlspecialchars($current_user->user_lastname, ENT_QUOTES)))."' required>
     </div></div>";
 
 echo "<div class='form-row'><div class='col'><label for='inputbirth'><small><i class='fas fa-birthday-cake fa-fw'></i> ".__( 'Birthday', 'doliconnect' )."</small></label><input type='date' name='thirdparty".$idobject."[birth]' class='form-control' value='".$current_user->billing_birth."' id='inputbirth' placeholder='yyyy-mm-dd' autocomplete='off' required></div>";
