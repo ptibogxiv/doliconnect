@@ -489,7 +489,7 @@ echo '<div class="modal fade" id="contact-'.$contact->id.'" tabindex="-1" role="
 <div class="modal-body">';
 echo doliconnectuserform($contact, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'mini');      
 echo "</div>
-<div class='modal-footer'><button name='update_contact' value='".$contact->id."' class='btn btn-warning btn-block' type='submit'><b>".__( 'Update contact', 'doliconnect' )."</b></button></form></div>
+<div class='modal-footer'><button name='update_contact' value='".$contact->id."' class='btn btn-warning btn-block' type='submit'><b>".__( 'Update', 'doliconnect' )."</b></button></form></div>
 </div></div></div>";
 }}
 
@@ -502,7 +502,7 @@ echo "<div class='modal fade' id='addcontactadress' tabindex='-1' role='dialog' 
 </div><div class='modal-body'>";
 echo doliconnectuserform($thirdparty, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'mini');
 echo "</div>
-<div class='modal-footer'><button name='add_contact' value='new_contact' class='btn btn-warning btn-block' type='submit'><b>".__( 'Add contact', 'doliconnect' )."</b></button></form></div>
+<div class='modal-footer'><button name='add_contact' value='new_contact' class='btn btn-warning btn-block' type='submit'><b>".__( 'Add', 'doliconnect' )."</b></button></form></div>
 </div></div></div>";
 }
 
@@ -1457,8 +1457,8 @@ global $current_user;
 $request = "/adherentsplus/".doliconnector($current_user, 'fk_member')."/linkedmember";
 
 if ( isset ($_POST['unlink_member']) && $_POST['unlink_member'] > 0 ) {
-//$contactv = callDoliApi("GET", "/adherentsplus/".esc_attr($_POST['unlink_member']), null, 0);
-//if ( $contactv->socid == doliconnector($current_user, 'fk_soc') ) {
+//$memberv = callDoliApi("GET", "/adherentsplus/".esc_attr($_POST['unlink_member']), null, 0);
+//if ( $memberv->socid == doliconnector($current_user, 'fk_soc') ) {
 // try deleting
 $delete = callDoliApi("DELETE", $request."/".esc_attr($_POST['unlink_member']), null, 0);
 
@@ -1468,6 +1468,39 @@ $msg = "<div class='alert alert-success'><button type='button' class='close' dat
 // fail deleting
 //}
 $linkedmember = callDoliApi("GET", $request, null, dolidelay('member', true));
+
+} elseif ( isset ($_POST['update_member']) && $_POST['update_member'] > 0 ) {
+
+$memberv=$_POST['thirdparty'][''.$_POST['update_member'].''];
+$data = [
+    'civility_id'  => $memberv['civility_id'],     
+    'firstname' => ucfirst(sanitize_user(strtolower($memberv['firstname']))),
+    'lastname' => strtoupper(sanitize_user($memberv['lastname'])),
+    //'socid' => doliconnector($current_user, 'fk_soc'),
+    'poste' => sanitize_textarea_field($memberv['poste']), 
+    'address' => sanitize_textarea_field($memberv['address']),    
+    'zip' => sanitize_text_field($memberv['zip']),
+    'town' => sanitize_text_field($memberv['town']),
+    'country_id' => sanitize_text_field($memberv['country_id']),
+    'email' => sanitize_email($memberv['email']),
+    'birth' => $memberv['birth'],
+    'phone_pro' => sanitize_text_field($memberv['phone'])
+	];
+$memberv = callDoliApi("PUT", "/adherentsplus/".esc_attr($_POST['update_member']), $data, dolidelay('member', true));
+//if ( $memberv->socid == doliconnector($current_user, 'fk_soc') ) {
+// try deleting
+
+$msg = "<div class='alert alert-success'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><p><strong>".__( 'Congratulations!', 'doliconnect' )."</strong> ".__( 'Your informations have been updated.', 'doliconnect' )."</p></div>";
+
+//} else {
+// fail deleting
+//}
+$linkedmember = callDoliApi("GET", $request, null, dolidelay('member', true));
+
+} elseif (doliconnector($current_user, 'fk_member') > 0) {
+
+$linkedmember= callDoliApi("GET", $request, null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+
 }
 
 echo "<form role='form' action='$url' id='linkedmember-form' method='post'>"; 
@@ -1499,11 +1532,7 @@ echo "</script>";
 
 echo "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
 
-echo "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>Merci de nous contacter pour ajouter un adhérent</b></li>";
-
-if (doliconnector($current_user, 'fk_member') > 0) {
-$linkedmember= callDoliApi("GET", $request, null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-} 
+echo "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>Merci de nous contacter pour ajouter un adhérent</b></li>"; 
 
 if ( !isset($linkedmember->error) && $linkedmember != null ) { 
 foreach ( $linkedmember as $member ) {                                                                                 
@@ -1516,22 +1545,21 @@ echo "<small class='text-muted'>".$member->address."<br>".$member->zip." ".$memb
 echo "<div class='btn-group-vertical' role='group'><button type='button' class='btn btn-light text-primary' data-toggle='modal' data-target='#member-".$member->id."'><i class='fas fa-edit fa-fw'></i></a>
 <button name='unlink_member' value='".$member->id."' class='btn btn-light text-danger' type='submit' title='Unlink ".$member->firstname." ".$member->lastname."'><i class='fas fa-unlink'></i></button></div>";
 echo "</li>";
-}
-} else { 
+}} else { 
 echo "<li class='list-group-item list-group-item-light'><center>".__( 'No linked member', 'doliconnect' )."</center></li>";
 }
 echo  "</ul></div></form>";
 
-if ( !isset($linkedmember->error) && $linkedmember != null ) {
-foreach ( $linkedmember as $member ) { 
-echo "<form class='was-validated' role='form' action='$url' id='member-".$member->rowid."-form' method='post'>";
-echo '<div class="modal fade" id="member-'.$member->id.'" tabindex="-1" role="dialog" aria-labelledby="member-'.$member->rowid.'Title" aria-hidden="true">
+if ( !isset($linkedmember->error) && $linkedmember != null ) { 
+foreach ( $linkedmember as $member ) {
+echo "<form class='was-validated' role='form' action='$url' id='member-".$member->id."-form' method='post'>";
+echo '<div class="modal fade" id="member-'.$member->id.'" tabindex="-1" role="dialog" aria-labelledby="member-'.$member->id.'Title" aria-hidden="true">
 <div class="modal-dialog modal-lg modal-dialog-centered" role="document"><div class="modal-content"><div class="modal-header">
 <h5 class="modal-title" id="member-'.$member->id.'Title">'.__( 'Update member', 'doliconnect' ).'</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
 <div class="modal-body">';
 echo doliconnectuserform($member, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'full');      
 echo "</div>
-<div class='modal-footer'><button name='update_contact' value='".$member->id."' class='btn btn-warning btn-block' type='submit'><b>".__( 'Update contact', 'doliconnect' )."</b></button></form></div>
+<div class='modal-footer'><button name='update_member' value='".$member->id."' class='btn btn-warning btn-block' type='submit'><b>".__( 'Update', 'doliconnect' )."</b></button></form></div>
 </div></div></div>";
 }}
 
