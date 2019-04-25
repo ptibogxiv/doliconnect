@@ -1456,6 +1456,20 @@ global $current_user;
 
 $request = "/adherentsplus/".doliconnector($current_user, 'fk_member')."/linkedmember";
 
+if ( isset ($_POST['unlink_member']) && $_POST['unlink_member'] > 0 ) {
+//$contactv = callDoliApi("GET", "/adherentsplus/".esc_attr($_POST['unlink_member']), null, 0);
+//if ( $contactv->socid == doliconnector($current_user, 'fk_soc') ) {
+// try deleting
+$delete = callDoliApi("DELETE", $request."/".esc_attr($_POST['unlink_member']), null, 0);
+
+$msg = "<div class='alert alert-success'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><p><strong>".__( 'Congratulations!', 'doliconnect' )."</strong> ".__( 'Your informations have been updated.', 'doliconnect' )."</p></div>";
+
+//} else {
+// fail deleting
+//}
+$linkedmember = callDoliApi("GET", $request, null, dolidelay('member', true));
+}
+
 echo "<form role='form' action='$url' id='linkedmember-form' method='post'>"; 
 
 if ( isset($msg) ) { echo $msg; }                       
@@ -1500,25 +1514,12 @@ echo "<div class='d-none d-md-block'><i class='fas fa-address-card $color fa-3x 
 echo "</h6>";
 echo "<small class='text-muted'>".$member->address."<br>".$member->zip." ".$member->town." - ".$member->country."<br>".$member->email." ".$contact->phone_pro."</small>";
 echo "<div class='btn-group-vertical' role='group'><button type='button' class='btn btn-light text-primary' data-toggle='modal' data-target='#member-".$member->id."'><i class='fas fa-edit fa-fw'></i></a>
-<button name='unlink_member' value='".$member->id."' class='btn btn-light text-danger' type='submit' title='Unlink ".$member->firstname." ".$member->lastname."'><i class='fas fa-unlink'></i></button></div>";
+<button name='unlink_member' value='".$member->rowid."' class='btn btn-light text-danger' type='submit' title='Unlink ".$member->firstname." ".$member->lastname."'><i class='fas fa-unlink'></i></button></div>";
 echo "</li>";
 }
 } else { 
 echo "<li class='list-group-item list-group-item-light'><center>".__( 'No linked member', 'doliconnect' )."</center></li>";
 }
-
-//echo "<li class='list-group-item d-flex justify-content-between lh-condensed list-group-item-action'>";
-//echo "<div class='d-none d-md-block'><i class='fas fa-address-card $color fa-3x fa-fw'></i></div><h6 class='my-0'>".$contact->civility_code." ".$contact->firstname." ".$contact->lastname;
-//if ( !empty($contact->default) ) { echo " <i class='fas fa-star fa-1x fa-fw' style='color:Gold'></i>"; }
-//if ( !empty($contact->poste) ) { echo "<br>".$contact->poste; }
-//echo "</h6>";
-//echo "<small class='text-muted'>".$contact->address."<br>".$contact->zip." ".$contact->town." - ".$contact->country."<br>".$contact->email." ".$contact->phone_pro."</small>";
-//if (1 == 1) {
-//echo "<div class='btn-group-vertical' role='group'><button type='button' class='btn btn-light text-primary' data-toggle='modal' data-target='#contact-".$contact->id."'><i class='fas fa-edit fa-fw'></i></a>
-//<button name='delete_contact' value='".$contact->id."' class='btn btn-light text-danger' type='submit'><i class='fas fa-trash fa-fw'></i></button></div>";
-//}
-//echo "</li>";
-
 echo  "</ul></div></form>";
 
 echo "<small><div class='float-left'>";
