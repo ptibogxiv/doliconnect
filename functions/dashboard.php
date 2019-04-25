@@ -1472,30 +1472,15 @@ $linkedmember = callDoliApi("GET", $request, null, dolidelay('member', true));
 } elseif ( isset ($_POST['update_member']) && $_POST['update_member'] > 0 ) {
 
 $memberv=$_POST['thirdparty'][''.$_POST['update_member'].''];
-$data = [
-    'civility_id'  => $memberv['civility_id'],     
-    'firstname' => ucfirst(sanitize_user(strtolower($memberv['firstname']))),
-    'lastname' => strtoupper(sanitize_user($memberv['lastname'])),
-    //'socid' => doliconnector($current_user, 'fk_soc'),
-    'poste' => sanitize_textarea_field($memberv['poste']), 
-    'address' => sanitize_textarea_field($memberv['address']),    
-    'zip' => sanitize_text_field($memberv['zip']),
-    'town' => sanitize_text_field($memberv['town']),
-    'country_id' => sanitize_text_field($memberv['country_id']),
-    'email' => sanitize_email($memberv['email']),
-    'birth' => $memberv['birth'],
-    'phone_pro' => sanitize_text_field($memberv['phone'])
-	];
-$memberv = callDoliApi("PUT", "/adherentsplus/".esc_attr($_POST['update_member']), $data, dolidelay('member', true));
-//if ( $memberv->socid == doliconnector($current_user, 'fk_soc') ) {
-// try deleting
 
-$msg = "<div class='alert alert-success'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><p><strong>".__( 'Congratulations!', 'doliconnect' )."</strong> ".__( 'Your informations have been updated.', 'doliconnect' )."</p></div>";
-
-//} else {
+$memberv = callDoliApi("PUT", "/adherentsplus/".esc_attr($_POST['update_member']), $memberv, dolidelay('member', true));
+if ( false === $memberv ) {
 // fail deleting
-//}
+
+} else {
+$msg = "<div class='alert alert-success'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><p><strong>".__( 'Congratulations!', 'doliconnect' )."</strong> ".__( 'Your informations have been updated.', 'doliconnect' )."</p></div>";
 $linkedmember = callDoliApi("GET", $request, null, dolidelay('member', true));
+}
 
 } elseif (doliconnector($current_user, 'fk_member') > 0) {
 
