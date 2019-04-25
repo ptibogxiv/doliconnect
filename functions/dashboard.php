@@ -1513,8 +1513,8 @@ echo "<div class='d-none d-md-block'><i class='fas fa-address-card $color fa-3x 
 //if ( !empty($contact->poste) ) { echo "<br>".$contact->poste; }
 echo "</h6>";
 echo "<small class='text-muted'>".$member->address."<br>".$member->zip." ".$member->town." - ".$member->country."<br>".$member->email." ".$member->phone_pro."</small>";
-echo "<div class='btn-group-vertical' role='group'><button type='button' class='btn btn-light text-primary' data-toggle='modal' data-target='#member-".$member->rowid."'><i class='fas fa-edit fa-fw'></i></a>
-<button name='unlink_member' value='".$member->rowid."' class='btn btn-light text-danger' type='submit' title='Unlink ".$member->firstname." ".$member->lastname."'><i class='fas fa-unlink'></i></button></div>";
+echo "<div class='btn-group-vertical' role='group'><button type='button' class='btn btn-light text-primary' data-toggle='modal' data-target='#member-".$member->id."'><i class='fas fa-edit fa-fw'></i></a>
+<button name='unlink_member' value='".$member->id."' class='btn btn-light text-danger' type='submit' title='Unlink ".$member->firstname." ".$member->lastname."'><i class='fas fa-unlink'></i></button></div>";
 echo "</li>";
 }
 } else { 
@@ -1525,13 +1525,13 @@ echo  "</ul></div></form>";
 if ( !isset($linkedmember->error) && $linkedmember != null ) {
 foreach ( $linkedmember as $member ) { 
 echo "<form class='was-validated' role='form' action='$url' id='member-".$member->rowid."-form' method='post'>";
-echo '<div class="modal fade" id="member-'.$member->rowid.'" tabindex="-1" role="dialog" aria-labelledby="member-'.$member->rowid.'Title" aria-hidden="true">
+echo '<div class="modal fade" id="member-'.$member->id.'" tabindex="-1" role="dialog" aria-labelledby="member-'.$member->rowid.'Title" aria-hidden="true">
 <div class="modal-dialog modal-lg modal-dialog-centered" role="document"><div class="modal-content"><div class="modal-header">
-<h5 class="modal-title" id="member-'.$member->rowid.'Title">'.__( 'Update member', 'doliconnect' ).'</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
+<h5 class="modal-title" id="member-'.$member->id.'Title">'.__( 'Update member', 'doliconnect' ).'</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
 <div class="modal-body">';
 echo doliconnectuserform($member, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'full');      
 echo "</div>
-<div class='modal-footer'><button name='update_contact' value='".$member->rowid."' class='btn btn-warning btn-block' type='submit'><b>".__( 'Update contact', 'doliconnect' )."</b></button></form></div>
+<div class='modal-footer'><button name='update_contact' value='".$member->id."' class='btn btn-warning btn-block' type='submit'><b>".__( 'Update contact', 'doliconnect' )."</b></button></form></div>
 </div></div></div>";
 }}
 
