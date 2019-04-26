@@ -70,7 +70,7 @@ echo "</div>
       <input type='text' name='".$idobject."[lastname]' class='form-control' placeholder='".__( 'Lastname', 'doliconnect' )."' value='".(isset($object->lastname) ? $object->lastname : stripslashes(htmlspecialchars($current_user->user_lastname, ENT_QUOTES)))."' required>
     </div></div>";
 
-$birth = date_i18n('d/m/Y', $object->birth);
+if ( !empty($object->birth) ) { $birth = date_i18n('Y-m-d', $object->birth); }
 echo "<div class='form-row'><div class='col'><label for='inputbirth'><small><i class='fas fa-birthday-cake fa-fw'></i> ".__( 'Birthday', 'doliconnect' )."</small></label><input type='date' name='".$idobject."[birth]' class='form-control' value='".(isset($birth) ? $birth : $current_user->billing_birth)."' id='inputbirth' placeholder='yyyy-mm-dd' autocomplete='off'";
 if ( $mode != 'contact' ) { echo " required"; } 
 echo "></div>";
