@@ -1471,7 +1471,7 @@ $linkedmember = callDoliApi("GET", $request, null, dolidelay('member', true));
 
 } elseif ( isset ($_POST['update_member']) && $_POST['update_member'] > 0 ) {
 
-$memberv=$_POST['thirdparty'][''.$_POST['update_member'].''];
+$memberv=$_POST['member'][''.$_POST['update_member'].''];
 
 $memberv = callDoliApi("PUT", "/adherentsplus/".esc_attr($_POST['update_member']), $memberv, dolidelay('member', true));
 if ( false === $memberv ) {
