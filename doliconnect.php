@@ -643,7 +643,7 @@ echo "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>
 if ( function_exists('dolikiosk') && ! empty(dolikiosk()) ) {
 echo doliconnectuserform(null, null, 'thirdparty');
 } else {
-echo doliconnectuserform(null, null, 'small');
+echo doliconnectuserform(null, null, 'thirdparty');
 }
 
 echo "<div class='card-body'><input type='hidden' name='submitted' id='submitted' value='true'><button class='btn btn-primary btn-block' type='submit'";
