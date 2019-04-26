@@ -336,7 +336,7 @@ global $current_user;
 $request = "/contacts?sortfield=t.rowid&sortorder=ASC&limit=100&thirdparty_ids=".doliconnector($current_user, 'fk_soc')."&includecount=1&sqlfilters=t.statut=1";
 
 if ( isset ($_POST['add_contact']) && $_POST['add_contact'] == 'new_contact' ) {
-$contactv=$_POST['thirdparty'][''.doliconnector($current_user, 'fk_soc').''];
+$contactv=$_POST['contact'][''.doliconnector($current_user, 'fk_soc').''];
 $data = [
     'civility_id'  => $contactv['civility_id'],     
     'firstname' => ucfirst(sanitize_user(strtolower($contactv['firstname']))),
@@ -369,7 +369,7 @@ $msg = "<div class='alert alert-success'><button type='button' class='close' dat
 }
 $listcontact = callDoliApi("GET", $request, null, dolidelay('contact', true));
 } elseif ( isset ($_POST['update_contact']) && $_POST['update_contact'] > 0 ) {
-$contactv=$_POST['thirdparty'][''.$_POST['update_contact'].''];
+$contactv=$_POST['contact'][''.$_POST['update_contact'].''];
 $data = [
     'civility_id'  => $contactv['civility_id'],     
     'firstname' => ucfirst(sanitize_user(strtolower($contactv['firstname']))),
@@ -487,7 +487,7 @@ echo '<div class="modal fade" id="contact-'.$contact->id.'" tabindex="-1" role="
 <div class="modal-dialog modal-lg modal-dialog-centered" role="document"><div class="modal-content"><div class="modal-header">
 <h5 class="modal-title" id="contact-'.$contact->id.'Title">'.__( 'Update contact', 'doliconnect' ).'</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
 <div class="modal-body">';
-echo doliconnectuserform($contact, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'mini');      
+echo doliconnectuserform($contact, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'contact');      
 echo "</div>
 <div class='modal-footer'><button name='update_contact' value='".$contact->id."' class='btn btn-warning btn-block' type='submit'><b>".__( 'Update', 'doliconnect' )."</b></button></form></div>
 </div></div></div>";
@@ -500,7 +500,7 @@ echo "<div class='modal fade' id='addcontactadress' tabindex='-1' role='dialog' 
 <div class='modal-content'><div class='modal-header'>
 <h5 class='modal-title' id='contact-".$contact->id."Title'>".__( 'Add contact', 'doliconnect' )."</h5><button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
 </div><div class='modal-body'>";
-echo doliconnectuserform($thirdparty, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'mini');
+echo doliconnectuserform($thirdparty, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'contact');
 echo "</div>
 <div class='modal-footer'><button name='add_contact' value='new_contact' class='btn btn-warning btn-block' type='submit'><b>".__( 'Add', 'doliconnect' )."</b></button></form></div>
 </div></div></div>";

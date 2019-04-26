@@ -9,7 +9,7 @@ else { $idobject=$mode; }
 
 echo "<ul class='list-group list-group-flush'><li class='list-group-item'>";
 
-if ( ! isset($object) && $mode != 'mini' ) {
+if ( ! isset($object) && $mode != 'contact' && $mode != 'member' ) {
 echo "<div class='form-row'><div class='col-12'>";
 if ( isset($_GET["pro"]) && !get_option('doliconnect_disablepro') ) {
 echo "<a  href='".wp_registration_url(get_permalink())."' role='button' title='".__( 'Create a personnal account', 'doliconnect' )."'><small>(".__( 'Personnal account', 'doliconnect' )."?)</small></a>";                                                                                                                                                                                                                                                                                                                                     
@@ -87,12 +87,12 @@ echo " readonly";
 echo " required";
 }
 echo "></div>";
-if ( ( isset($_GET["pro"]) && !get_option('doliconnect_disablepro') ) && $mode == 'thirdparty' || $mode == 'mini') {   
+if ( ( isset($_GET["pro"]) && !get_option('doliconnect_disablepro') ) && $mode == 'thirdparty' || $mode == 'contact') {   
 echo "<div class='col-12 col-md-5'><label for='inputmobile'><small><i class='fas fa-phone fa-fw'></i> ".__( 'Phone', 'doliconnect' )."</small></label><input type='tel' class='form-control' id='inputmobile' placeholder='".__( 'Phone', 'doliconnect' )."' name='".$idobject."[phone]' value='".$object->phone."' autocomplete='off'></div>";
 }
 echo "</div></li>";
 
-if ( ( isset($_GET["pro"]) && !get_option('doliconnect_disablepro') ) && $mode == 'thirdparty' || $mode == 'mini') {       
+if ( ( isset($_GET["pro"]) && !get_option('doliconnect_disablepro') ) && $mode == 'thirdparty' || $mode == 'contact') {       
 echo "<li class='list-group-item'>";
  
 echo "<div class='form-row'><div class='col-12'><label for='inputaddress'><small><i class='fas fa-map-marked fa-fw'></i> ".__( 'Address', 'doliconnect' )."</small></label>
