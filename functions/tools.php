@@ -75,7 +75,7 @@ echo "<div class='col-12 col-md-7'>";
 if ( $mode != 'contact' ) {
 echo "<label for='inputnickname'><small><i class='fas fa-user-secret fa-fw'></i> ".__( 'Display name', 'doliconnect' )."</small></label><input type='text' class='form-control' id='inputnickname' placeholder='".__( 'Nickname', 'doliconnect' )."' name='user_nicename' value='".stripslashes(htmlspecialchars($current_user->nickname, ENT_QUOTES))."' autocomplete='off' required>";
 } else {
-echo "<label for='inputnickname'><small><i class='fas fa-user-secret fa-fw'></i> ".__( 'Title / Job', 'doliconnect' )."</small></label><input type='text' class='form-control' id='inputtitle/job' placeholder='".__( 'Title / Job', 'doliconnect' )."' name='[".$object->id."][poste]' value='".stripslashes(htmlspecialchars($object->poste, ENT_QUOTES))."' autocomplete='off'>";
+echo "<label for='inputnickname'><small><i class='fas fa-user-secret fa-fw'></i> ".__( 'Title / Job', 'doliconnect' )."</small></label><input type='text' class='form-control' id='inputtitle/job' placeholder='".__( 'Title / Job', 'doliconnect' )."' name='".$idobject."[poste]' value='".stripslashes(htmlspecialchars($object->poste, ENT_QUOTES))."' autocomplete='off'>";
 }
 echo "</div></div>";
 
