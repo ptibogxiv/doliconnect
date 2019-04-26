@@ -641,7 +641,7 @@ echo "</script>";
 echo "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>".__( 'Create an account', 'doliconnect' )."</h5></div>";
 
 if ( function_exists('dolikiosk') && ! empty(dolikiosk()) ) {
-echo doliconnectuserform(null, null, 'full');
+echo doliconnectuserform(null, null, 'thirdparty');
 } else {
 echo doliconnectuserform(null, null, 'small');
 }

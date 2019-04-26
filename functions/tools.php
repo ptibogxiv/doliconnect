@@ -87,12 +87,12 @@ echo " readonly";
 echo " required";
 }
 echo "></div>";
-if ( ( isset($_GET["pro"]) && !get_option('doliconnect_disablepro') ) || $mode == 'full' || $mode == 'mini') {   
+if ( ( isset($_GET["pro"]) && !get_option('doliconnect_disablepro') ) || $mode == 'thirdparty' || $mode == 'mini') {   
 echo "<div class='col-12 col-md-5'><label for='inputmobile'><small><i class='fas fa-phone fa-fw'></i> ".__( 'Phone', 'doliconnect' )."</small></label><input type='tel' class='form-control' id='inputmobile' placeholder='".__( 'Phone', 'doliconnect' )."' name='thirdparty".$idobject."[phone]' value='".$object->phone."' autocomplete='off'></div>";
 }
 echo "</div></li>";
 
-if ( ( isset($_GET["pro"]) && !get_option('doliconnect_disablepro') ) || $mode == 'full' || $mode == 'mini') {       
+if ( ( isset($_GET["pro"]) && !get_option('doliconnect_disablepro') ) || $mode == 'thirdparty' || $mode == 'mini') {       
 echo "<li class='list-group-item'>";
  
 echo "<div class='form-row'><div class='col-12'><label for='inputaddress'><small><i class='fas fa-map-marked fa-fw'></i> ".__( 'Address', 'doliconnect' )."</small></label>
