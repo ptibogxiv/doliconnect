@@ -1386,7 +1386,7 @@ echo "</div></small>";
 
 }
 
-if ( is_object($memberconsumption) && $memberconsumption->value == '1' ) {
+if ( is_object($memberconsumption) && $memberconsumption->value == '1' && get_option('doliconnectbeta') =='1' ) {
 add_action( 'options_doliconnect_menu', 'membershipconsumption_menu', 2, 1);
 add_action( 'options_doliconnect_membershipconsumption', 'membershipconsumption_module' );
 }  
@@ -1555,7 +1555,7 @@ echo "</div></small>";
 
 }
 
-if ( is_object($donation) && $donation->value == '1' ) {
+if ( is_object($donation) && $donation->value == '1' && get_option('doliconnectbeta') =='1' ) {
 add_action( 'customer_doliconnect_menu', 'donations_menu', 5, 1);
 add_action( 'customer_doliconnect_donations', 'donations_module' );
 }  

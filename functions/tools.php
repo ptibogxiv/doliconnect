@@ -84,7 +84,7 @@ echo "</div></div>";
 
 echo "<div class='form-row'><div class='col'><label for='inputemail'><small><i class='fas fa-at fa-fw'></i> ".__( 'Email', 'doliconnect' )."</small></label><input type='email' class='form-control' id='inputemail' placeholder='email@example.com' name='".$idobject."[email]' value='".(isset($object->email) ? $object->email : $current_user->user_email)."' autocomplete='off' ";
 
-if ( defined("DOLICONNECT_DEMO") == $current_user->ID && is_user_logged_in() ) {
+if ( defined("DOLICONNECT_DEMO") == $current_user->ID && is_user_logged_in() && $mode == 'thirdparty' ) {
 echo " readonly";
 } else {
 echo " required";
