@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2019-04-27 13:55+0200\n"
-"PO-Revision-Date: 2019-04-27 13:57+0200\n"
+"POT-Creation-Date: 2019-04-27 14:00+0200\n"
+"PO-Revision-Date: 2019-04-27 14:00+0200\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_FR\n"
@@ -86,7 +86,7 @@ msgstr "Contactez-nous"
 msgid "Product/Service not in sale"
 msgstr "Produit/service non en vente"
 
-#: doliconnect.php:380 functions/dashboard.php:1530
+#: doliconnect.php:380 functions/dashboard.php:473 functions/dashboard.php:1530
 msgid "Edit"
 msgstr "Éditer"
 
@@ -417,6 +417,10 @@ msgstr "Gérer le carnet d'adresses"
 #: functions/dashboard.php:458
 msgid "New contact"
 msgstr "Nouveau contact"
+
+#: functions/dashboard.php:474
+msgid "Delete"
+msgstr "Supprimer"
 
 #: functions/dashboard.php:479
 msgid "No contact"
@@ -1194,9 +1198,6 @@ msgstr "https://www.ptibogxiv.net/fr"
 #~ msgid "Alternatives contacts for order, billing, shipping, newsletter..."
 #~ msgstr ""
 #~ "Contacts alternatifs pour commande, facturation, expédition, Newsletter..."
-
-#~ msgid "Delete"
-#~ msgstr "Supprimer"
 
 #~ msgid "New donation"
 #~ msgstr "Nouveau Don"
