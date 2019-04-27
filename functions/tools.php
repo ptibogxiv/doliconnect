@@ -148,7 +148,7 @@ echo "</li>";
 }
 
 echo "<li class='list-group-item'>";
-if ( $mode != 'mini' && $mode != 'member') {
+if ( $mode != 'contact' && $mode != 'member' ) {
 echo "<div class='form-row'><div class='col'><label for='description'><small><i class='fas fa-bullhorn fa-fw'></i> ".__( 'About Yourself', 'doliconnect' )."</small></label>
 <textarea type='text' class='form-control' name='description' id='description' rows='3' placeholder='".__( 'About Yourself', 'doliconnect' )."'>".$current_user->description."</textarea></div></div>";
 
