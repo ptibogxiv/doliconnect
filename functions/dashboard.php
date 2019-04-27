@@ -1227,7 +1227,7 @@ echo "</div></small>";
 }
 }
 
-if ( is_object($donation) && $donation->value == '1' && get_option('doliconnectbeta') =='1' && current_user_can('manage_options') ) {
+if ( is_object($donation) && $donation->value == '1' && get_option('doliconnectbeta') =='1' ) {
 add_action( 'customer_doliconnect_menu', 'donations_menu', 5, 1);
 add_action( 'customer_doliconnect_donations', 'donations_module' );
 }  
