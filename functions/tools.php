@@ -45,7 +45,7 @@ if ( !isset($civility->error ) && $civility != null ) {
 foreach ( $civility as $postv ) {
 
 echo "<option value='".$postv->code."' ";
-if ( $current_user->civility_id == $postv->code && $current_user->civility_id != null) {
+if ( (isset($object->civility_id) ? $object->civility_id : $current_user->civility_id) == $postv->code && (isset($object->civility_id) ? $object->civility_id : $current_user->civility_id) != null) {
 echo "selected ";}
 echo ">".$postv->label."</option>";
 
