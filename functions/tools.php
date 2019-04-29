@@ -378,7 +378,7 @@ if ( isset($element->date_modification) && !empty($element->date_modification) )
 $refresh = __( 'Updated', 'doliconnect' ).": ".date_i18n('d/m/Y - H:i', $element->date_modification, false);
 } elseif ( get_option("_transient_timeout_".$origin) > 0 ) {
 $refresh = __( 'Updated', 'doliconnect' ).": ".date_i18n('d/m/Y - H:i', get_option("_transient_timeout_".$origin)-$delay, false);
-} else {
+} elseif (is_user_logged_in() ) {
 $refresh = __( 'Refresh', 'doliconnect' );
 }
  
