@@ -174,7 +174,7 @@ echo "<div class='col-12 col-md'><label for='inlineFormInputGroup'><small><i cla
 }
 $linkedin = callDoliApi("GET", "/doliconnector/constante/SOCIALNETWORKS_LINKEDIN", null, $delay);
 if ( is_object($linkedin) && $linkedin->value == 1 ) {
-echo "<div class='col-12 col-md'><label for='inlineFormInputGroup'><small><i class='fab fa-linkedin fa-fw'></i> Linkedin</small></label>
+echo "<div class='col-12 col-md'><label for='inlineFormInputGroup'><small><i class='fab fa-linkedin-in'></i> Linkedin</small></label>
 <input type='text' name='".$idobject."[linkedin]' class='form-control' id='inlineFormInputGroup' placeholder='".__( 'Username', 'doliconnect' )."' value='".stripslashes(htmlspecialchars($object->linkedin, ENT_QUOTES))."'></div>";
 }
 echo "</div>";
