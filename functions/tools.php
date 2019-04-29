@@ -19,11 +19,22 @@ echo "<a  href='".wp_registration_url(get_permalink())."&pro' role='button' titl
 }
 
 echo "</div></div></li>";
+} elseif ( isset($object) && $mode == 'thirdparty' ) {
+echo "<li class='list-group-item'><div class='form-row'><div class='col-12'>";
+echo '<div class="custom-control custom-radio custom-control-inline">
+  <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input" required>
+  <label class="custom-control-label" for="customRadioInline1">Toggle this custom radio</label>
+</div>
+<div class="custom-control custom-radio custom-control-inline">
+  <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input" required>
+  <label class="custom-control-label" for="customRadioInline2">Or toggle this other custom radio</label>
+</div>';
+echo "</div></div></li>";
 }
 
-if ( isset($object) && $mode == 'thirdparty' ) {
+if ( $mode == 'thirdparty' ) {
 echo "<li class='list-group-item'>";
-if ( $current_user->billing_type == 'mor' || (isset($_GET["pro"]) && !get_option('doliconnect_disablepro')) ) {
+if ( $current_user->billing_type == 'mor' || ( isset($_GET["pro"]) && !get_option('doliconnect_disablepro') ) ) {
 echo "<div class='form-row'><div class='col-12'><input type='hidden' name='".$idobject."[morphy]' value='mor'><label for='coordonnees'><small><i class='fas fa-building'></i> ".__( 'Name of company', 'doliconnect' )."</small></label><input type='text' class='form-control' id='inputcompany' placeholder='".__( 'Name of company', 'doliconnect' )."' name='".$idobject."[name]' value='".$current_user->billing_company."' required></div></div>";
 } else {
 echo "<div class='form-row'><div class='col-12'><input type='hidden' name='".$idobject."[morphy]' value='phy'></div></div>";
