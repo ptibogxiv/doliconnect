@@ -26,7 +26,7 @@ if ( $current_user->billing_type == 'phy' || empty($current_user->billing_type) 
 echo " required><label class='custom-control-label' for='morphy1'>".__( 'Personnal account', 'doliconnect' )."</label>
 </div>
 <div class='custom-control custom-radio custom-control-inline'><input type='radio' id='morphy2' name='".$idobject."[morphy]' value='mor' class='custom-control-input'";
-if ( $current_user->billing_type == 'mor' ) { echo " checked"; }
+if ( $current_user->billing_type != 'phy' ) { echo " checked"; }
 echo " required><label class='custom-control-label' for='morphy2'>".__( 'Professionnal account', 'doliconnect' )."</label>
 </div>";
 echo "</div></div></li>";
@@ -34,7 +34,7 @@ echo "</div></div></li>";
 
 if ( $mode == 'thirdparty' ) {
 if ( $current_user->billing_type == 'mor' || ( isset($_GET["pro"]) && !get_option('doliconnect_disablepro') ) ) {
-echo "<li class='list-group-item'><div class='form-row'><div class='col-12'><input type='hidden' name='".$idobject."[morphy]' value='mor'><label for='coordonnees'><small><i class='fas fa-building'></i> ".__( 'Name of company', 'doliconnect' )."</small></label><input type='text' class='form-control' id='inputcompany' placeholder='".__( 'Name of company', 'doliconnect' )."' name='".$idobject."[name]' value='".$current_user->billing_company."' required></div></div></li>";
+echo "<li class='list-group-item'><div class='form-row'><div class='col-12'><label for='coordonnees'><small><i class='fas fa-building'></i> ".__( 'Name of company', 'doliconnect' )."</small></label><input type='text' class='form-control' id='inputcompany' placeholder='".__( 'Name of company', 'doliconnect' )."' name='".$idobject."[name]' value='".$current_user->billing_company."' required></div></div></li>";
 } 
 }
 
