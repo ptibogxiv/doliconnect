@@ -691,8 +691,8 @@ $dates ="";
 
 echo '<div class="w-100 justify-content-between"><div class="row"><div class="col-8 col-md-10"> 
 <h6 class="mb-1">'.$line->libelle.'</h6>
-<p class="mb-1">'.$line->desc.'</p>
-<small>'.$dates.'</small>'; 
+<small><p class="mb-1">'.$line->desc.'</p>
+<i>'.$dates.'</i></small>'; 
 echo '</div><div class="col-4 col-md-2 text-right"><h5 class="mb-1">'.doliprice($line, 'ttc', isset($line->multicurrency_code) ? $line->multicurrency_code : null).'</h5>';
 echo '<h5 class="mb-1">x'.$line->qty.'</h5>'; 
 echo "</div></div></li>";
@@ -895,8 +895,8 @@ $dates =" <i>(Du $start au $end)</i>";
 
 echo '<div class="w-100 justify-content-between"><div class="row"><div class="col-8 col-md-10"> 
 <h6 class="mb-1">'.$line->libelle.'</h6>
-<p class="mb-1">'.$line->description.'</p>
-<small>'.$dates.'</small>'; 
+<small><p class="mb-1">'.$line->desc.'</p>
+<i>'.$dates.'</i></small>'; 
 echo '</div><div class="col-4 col-md-2 text-right"><h5 class="mb-1">'.doliprice($line, 'ttc', isset($line->multicurrency_code) ? $line->multicurrency_code : null).'</h5>';
 echo '<h5 class="mb-1">x'.$line->qty.'</h5>'; 
 echo "</div></div></li>";
@@ -1140,8 +1140,8 @@ $dates =" <i>(Du $start au $end)</i>";
 
 echo '<div class="w-100 justify-content-between"><div class="row"><div class="col-8 col-md-10"> 
 <h6 class="mb-1">'.$line->product_label.'</h6>
-<p class="mb-1">'.$line->description.'</p>
-<small>'.$dates.'</small>'; 
+<small><p class="mb-1">'.$line->desc.'</p>
+<i>'.$dates.'</i></small>'; 
 echo '</div><div class="col-4 col-md-2 text-right"><h5 class="mb-1">'.doliprice($line, 'ttc', isset($line->multicurrency_code) ? $line->multicurrency_code : null).'</h5>';
 echo '<h5 class="mb-1">x'.$line->qty.'</h5>'; 
 echo "</div></div></li>";
