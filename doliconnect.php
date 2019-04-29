@@ -258,7 +258,7 @@ define('DOLICONNECT_CART_ITEM', 0);
 }
 add_action( 'init', 'dolibarr', 10);
 // ********************************************************
-function doliconnector($current_user = null, $value = null, $refresh = false) {
+function doliconnector($current_user = null, $value = null, $refresh = false, $thirdparty = null) {
 if (empty($current_user)) {
 $current_user=get_current_user_id();
 } else {
@@ -279,9 +279,31 @@ return $dolibarr->$value;
 } else {
 return $dolibarr;
 }
-
  
+} else {
+
+if ( $current_user->billing_type == 'mor' ) { 
+if (!empty($current_user->billing_company)) { $name = $current_user->billing_company; }
+else { $name = $current_user->user_login; }
+} else {
+if (!empty($current_user->user_firstname) && !empty($current_user->user_lastname)) { $name = $current_user->user_firstname." ".$current_user->user_lastname; }
+else { $name = $current_user->user_login; }
 } 
+
+$rdr = [
+    'name'  => $name,
+    'email' => $current_user->user_email
+	];
+
+$dolibarr = callDoliApi("POST", "/doliconnector/".$user, $thirdparty, dolidelay('doliconnector', true));
+
+if (!empty($value)) {
+return $dolibarr->$value;
+} else {
+return $dolibarr;
+}
+
+}
 
 }
 
@@ -579,7 +601,7 @@ if ( function_exists('dolikiosk') && ! empty(dolikiosk()) ) {
 $current_user = get_user_by( 'id', $ID);   
 if( $current_user ) {
 
-$dolibarr = doliconnector($current_user, 'fk_soc', true);
+$dolibarr = doliconnector($current_user, 'fk_soc', true, $thirdparty);
 do_action('wp_dolibarr_sync', $thirdparty);
 
     wp_set_current_user( $ID, $current_user->user_login );
