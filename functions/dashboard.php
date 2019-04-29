@@ -471,7 +471,8 @@ echo "<small class='text-muted'>".$contact->address."<br>".$contact->zip." ".$co
 if (1 == 1) {
 echo "<div class='col-4 col-xs-3 col-md-2 btn-group-vertical' role='group'>";
 echo "<button type='button' class='btn btn-light text-primary' data-toggle='modal' data-target='#contact-".$contact->id."' title='".__( 'Edit', 'doliconnect' )." ".$contact->firstname." ".$contact->lastname."'><i class='fas fa-edit fa-fw'></i></a>
-<button name='delete_contact' value='".$contact->id."' class='btn btn-light text-danger' type='submit' title='".__( 'Delete', 'doliconnect' )." ".$contact->firstname." ".$contact->lastname."'><i class='fas fa-trash fa-fw'></i></button></div>";
+<button name='delete_contact' value='".$contact->id."' class='btn btn-light text-danger' type='submit' title='".__( 'Delete', 'doliconnect' )." ".$contact->firstname." ".$contact->lastname."'><i class='fas fa-trash fa-fw'></i></button>";
+echo "</div>";
 }
 echo "</li>";
 }
@@ -1706,7 +1707,8 @@ echo "<small class='text-muted'>".$member->address."<br>".$member->zip." ".$memb
 if (1 == 1) {
 echo "<div class='col-4 col-xs-3 col-md-2 btn-group-vertical' role='group'>";
 echo "<button type='button' class='btn btn-light text-primary' data-toggle='modal' data-target='#member-".$member->id."' title='".__( 'Edit', 'doliconnect' )." ".$member->firstname." ".$member->lastname."'><i class='fas fa-edit fa-fw'></i></a>
-<button name='unlink_member' value='".$member->id."' class='btn btn-light text-danger' type='submit' title='".__( 'Unlink', 'doliconnect' )." ".$member->firstname." ".$member->lastname."'><i class='fas fa-unlink'></i></button></div>";
+<button name='unlink_member' value='".$member->id."' class='btn btn-light text-danger' type='submit' title='".__( 'Unlink', 'doliconnect' )." ".$member->firstname." ".$member->lastname."'><i class='fas fa-unlink'></i></button>";
+echo "</div>";
 }
 echo "</li>";
 }
