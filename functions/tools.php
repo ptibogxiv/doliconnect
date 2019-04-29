@@ -9,7 +9,7 @@ else { $idobject=$mode; }
 
 echo "<ul class='list-group list-group-flush'><li class='list-group-item'>";
 
-if ( ! isset($object) && $mode != 'contact' && $mode != 'member' ) {
+if ( ! isset($object) && $mode == 'thirdparty' ) {
 echo "<div class='form-row'><div class='col-12'>";
 if ( isset($_GET["pro"]) && !get_option('doliconnect_disablepro') ) {
 echo "<a  href='".wp_registration_url(get_permalink())."' role='button' title='".__( 'Create a personnal account', 'doliconnect' )."'><small>(".__( 'Personnal account', 'doliconnect' )."?)</small></a>";                                                                                                                                                                                                                                                                                                                                     
@@ -21,13 +21,14 @@ echo "<a  href='".wp_registration_url(get_permalink())."&pro' role='button' titl
 echo "</div></div>";
 }
 
-if ( $mode != 'mini' ) {
+if ( isset($object) && $mode == 'thirdparty' ) {
+echo "<div class='form-row'><div class='col-12'>";
 if ( $current_user->billing_type == 'mor' || (isset($_GET["pro"]) && !get_option('doliconnect_disablepro')) ) {
-echo "<div class='form-row'><div class='col-12'><input type='hidden' name='".$idobject."[morphy]' value='mor'><label for='coordonnees'><small><i class='fas fa-building'></i> ".__( 'Name of company', 'doliconnect' )."</small></label><input type='text' class='form-control' id='inputcompany' placeholder='".__( 'Name of company', 'doliconnect' )."' name='".$idobject."[name]' value='".$current_user->billing_company."' required></div>";
-echo "</div></li><li class='list-group-item'>";
+echo "<input type='hidden' name='".$idobject."[morphy]' value='mor'><label for='coordonnees'><small><i class='fas fa-building'></i> ".__( 'Name of company', 'doliconnect' )."</small></label><input type='text' class='form-control' id='inputcompany' placeholder='".__( 'Name of company', 'doliconnect' )."' name='".$idobject."[name]' value='".$current_user->billing_company."' required></div>";
 } else {
 echo "<input type='hidden' name='".$idobject."[morphy]' value='phy'>";
 }
+echo "</div></div>";
 }
 
 echo "<div class='form-row'><div class='col-12 col-md-3'><label for='inputCivility'><small><i class='fas fa-user'></i> ".__( 'Civility', 'doliconnect' )."</small></label>";
