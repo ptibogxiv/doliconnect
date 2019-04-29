@@ -463,13 +463,14 @@ $idcontact=1;
 foreach ( $listcontact as $contact ) { 
 $count=$contact->ref_facturation+$contact->ref_contrat+$contact->ref_commande+$contact->ref_propal;
 echo "<li class='list-group-item d-flex justify-content-between lh-condensed list-group-item-action'>";
-echo "<div class='d-none d-md-block'><i class='fas fa-address-card $color fa-3x fa-fw'></i></div><h6 class='my-0'>".($contact->civility ? $contact->civility : $contact->civility_code)." ".$contact->firstname." ".$contact->lastname;
+echo "<div class='d-none d-md-block col-md-2 col-lg-1'><i class='fas fa-address-card $color fa-3x fa-fw'></i></div><h6 class='my-0'>".($contact->civility ? $contact->civility : $contact->civility_code)." ".$contact->firstname." ".$contact->lastname;
 if ( !empty($contact->default) ) { echo " <i class='fas fa-star fa-1x fa-fw' style='color:Gold'></i>"; }
 if ( !empty($contact->poste) ) { echo "<br>".$contact->poste; }
 echo "</h6>";
 echo "<small class='text-muted'>".$contact->address."<br>".$contact->zip." ".$contact->town." - ".$contact->country."<br>".$contact->email." ".$contact->phone_pro."</small>";
 if (1 == 1) {
-echo "<div class='btn-group-vertical' role='group'><button type='button' class='btn btn-light text-primary' data-toggle='modal' data-target='#contact-".$contact->id."' title='".__( 'Edit', 'doliconnect' )." ".$contact->firstname." ".$contact->lastname."'><i class='fas fa-edit fa-fw'></i></a>
+echo "<div class='col-1 col-md-2 btn-group-vertical' role='group'>";
+echo "<button type='button' class='btn btn-light text-primary' data-toggle='modal' data-target='#contact-".$contact->id."' title='".__( 'Edit', 'doliconnect' )." ".$contact->firstname." ".$contact->lastname."'><i class='fas fa-edit fa-fw'></i></a>
 <button name='delete_contact' value='".$contact->id."' class='btn btn-light text-danger' type='submit' title='".__( 'Delete', 'doliconnect' )." ".$contact->firstname." ".$contact->lastname."'><i class='fas fa-trash fa-fw'></i></button></div>";
 }
 echo "</li>";
@@ -1698,12 +1699,15 @@ if ( !isset($linkedmember->error) && $linkedmember != null ) {
 foreach ( $linkedmember as $member ) {                                                                                 
 
 echo "<li class='list-group-item d-flex justify-content-between lh-condensed list-group-item-action'>";
-echo "<div class='d-none d-md-block'><i class='fas fa-address-card $color fa-3x fa-fw'></i></div><h6 class='my-0'>".($member->civility ? $member->civility : $member->civility_code)." ".$member->firstname." ".$member->lastname;
+echo "<div class='d-none d-md-block col-md-2 col-lg-1'><i class='fas fa-address-card $color fa-3x fa-fw'></i></div><h6 class='my-0'>".($member->civility ? $member->civility : $member->civility_code)." ".$member->firstname." ".$member->lastname;
 //if ( !empty($contact->poste) ) { echo "<br>".$contact->poste; }
 echo "</h6>";
 echo "<small class='text-muted'>".$member->address."<br>".$member->zip." ".$member->town." - ".$member->country."<br>".$member->email." ".$member->phone_pro."</small>";
-echo "<div class='btn-group-vertical' role='group'><button type='button' class='btn btn-light text-primary' data-toggle='modal' data-target='#member-".$member->id."' title='".__( 'Edit', 'doliconnect' )." ".$member->firstname." ".$member->lastname."'><i class='fas fa-edit fa-fw'></i></a>
+if (1 == 1) {
+echo "<div class='col-1 col-md-2 btn-group-vertical' role='group'>";
+echo "<button type='button' class='btn btn-light text-primary' data-toggle='modal' data-target='#member-".$member->id."' title='".__( 'Edit', 'doliconnect' )." ".$member->firstname." ".$member->lastname."'><i class='fas fa-edit fa-fw'></i></a>
 <button name='unlink_member' value='".$member->id."' class='btn btn-light text-danger' type='submit' title='".__( 'Unlink', 'doliconnect' )." ".$member->firstname." ".$member->lastname."'><i class='fas fa-unlink'></i></button></div>";
+}
 echo "</li>";
 }
 } else { 
