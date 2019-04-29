@@ -7,10 +7,10 @@ $idobject=$mode."[".$object->id."]";
 } 
 else { $idobject=$mode; }
 
-echo "<ul class='list-group list-group-flush'><li class='list-group-item'>";
+echo "<ul class='list-group list-group-flush'>";
 
 if ( ! isset($object) && $mode == 'thirdparty' ) {
-echo "<div class='form-row'><div class='col-12'>";
+echo "<li class='list-group-item'><div class='form-row'><div class='col-12'>";
 if ( isset($_GET["pro"]) && !get_option('doliconnect_disablepro') ) {
 echo "<a  href='".wp_registration_url(get_permalink())."' role='button' title='".__( 'Create a personnal account', 'doliconnect' )."'><small>(".__( 'Personnal account', 'doliconnect' )."?)</small></a>";                                                                                                                                                                                                                                                                                                                                     
 }
@@ -18,20 +18,20 @@ elseif (!get_option('doliconnect_disablepro')) {
 echo "<a  href='".wp_registration_url(get_permalink())."&pro' role='button' title='".__( 'Create a pro/supplier account', 'doliconnect' )."'><small>(".__( 'Pro account', 'doliconnect' )."?)</small></a>";
 }
 
-echo "</div></div>";
+echo "</div></div></li>";
 }
 
 if ( isset($object) && $mode == 'thirdparty' ) {
-echo "<div class='form-row'><div class='col-12'>";
+echo "<li class='list-group-item'>";
 if ( $current_user->billing_type == 'mor' || (isset($_GET["pro"]) && !get_option('doliconnect_disablepro')) ) {
-echo "<input type='hidden' name='".$idobject."[morphy]' value='mor'><label for='coordonnees'><small><i class='fas fa-building'></i> ".__( 'Name of company', 'doliconnect' )."</small></label><input type='text' class='form-control' id='inputcompany' placeholder='".__( 'Name of company', 'doliconnect' )."' name='".$idobject."[name]' value='".$current_user->billing_company."' required></div>";
+echo "<div class='form-row'><div class='col-12'><input type='hidden' name='".$idobject."[morphy]' value='mor'><label for='coordonnees'><small><i class='fas fa-building'></i> ".__( 'Name of company', 'doliconnect' )."</small></label><input type='text' class='form-control' id='inputcompany' placeholder='".__( 'Name of company', 'doliconnect' )."' name='".$idobject."[name]' value='".$current_user->billing_company."' required></div></div>";
 } else {
-echo "<input type='hidden' name='".$idobject."[morphy]' value='phy'>";
+echo "<div class='form-row'><div class='col-12'><input type='hidden' name='".$idobject."[morphy]' value='phy'></div></div>";
 }
-echo "</div></div>";
+echo "</li>";
 }
 
-echo "<div class='form-row'><div class='col-12 col-md-3'><label for='inputCivility'><small><i class='fas fa-user'></i> ".__( 'Civility', 'doliconnect' )."</small></label>";
+echo "<li class='list-group-item'><div class='form-row'><div class='col-12 col-md-3'><label for='inputCivility'><small><i class='fas fa-user'></i> ".__( 'Civility', 'doliconnect' )."</small></label>";
 $civility = callDoliApi("GET", "/setup/dictionary/civility?sortfield=code&sortorder=ASC&limit=100", null, $delay);
 if ( isset($civility->error) ) {
 $civility = callDoliApi("GET", "/setup/dictionary/civilities?sortfield=code&sortorder=ASC&limit=100&active=1", null, $delay); 
