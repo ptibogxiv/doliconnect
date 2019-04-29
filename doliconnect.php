@@ -573,25 +573,27 @@ if ( isset($thirdparty['name']) ) { update_user_meta( $ID, 'billing_company', sa
 update_user_meta( $ID, 'billing_birth', $thirdparty['birth']);
 update_user_meta( $ID, 'optin1', $_POST['optin1'] );
 
-//do_action('wp_dolibarr_sync', $thirdparty);
-
 $body = sprintf(__('Thank you for your registration on %s.', 'doliconnect'), $sitename);
 
 if ( function_exists('dolikiosk') && ! empty(dolikiosk()) ) { 
-$user = get_user_by( 'id', $ID);   
-if( $user ) {
-    wp_set_current_user( $ID, $user->user_login );
+$current_user = get_user_by( 'id', $ID);   
+if( $current_user ) {
+
+$dolibarr = doliconnector($current_user, 'fk_soc', true);
+do_action('wp_dolibarr_sync', $thirdparty);
+
+    wp_set_current_user( $ID, $current_user->user_login );
     wp_set_auth_cookie( $ID, false);
-    do_action( 'wp_login', $user->user_login );
+    do_action( 'wp_login', $current_user->user_login );
 } 
 wp_redirect(esc_url(home_url()));
 exit;   
 } else { 
 $user=get_user_by( 'ID', $ID );     
 $user = get_user_by( 'email', $email);   
-$key = get_password_reset_key($user);
+$key = get_password_reset_key($current_user);
 
-$arr_params = array( 'rpw' => true, 'key' => $key, 'login' => $user->user_login);  
+$arr_params = array( 'rpw' => true, 'key' => $key, 'login' => $current_user->user_login);  
 $url = esc_url( add_query_arg( $arr_params, doliconnecturl('doliaccount')) );
 
 $body .= "<br /><br />".__('To activate your account on and choose your password, please click on the following link', 'doliconnect').":<br /><br /><a href='".$url."'>".$url."</a>";
