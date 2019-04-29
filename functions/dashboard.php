@@ -473,8 +473,8 @@ echo "<div class='btn-group-vertical' role='group'><button type='button' class='
 <button name='delete_contact' value='".$contact->id."' class='btn btn-light text-danger' type='submit' title='".__( 'Delete', 'doliconnect' )." ".$contact->firstname." ".$contact->lastname."'><i class='fas fa-trash fa-fw'></i></button></div>";
 }
 echo "</li>";
-}}
-else{
+}
+} else {
 echo "<li class='list-group-item list-group-item-light'><center>".__( 'No contact', 'doliconnect' )."</center></li>";
 }
 echo "</ul></div></form>";
@@ -1705,7 +1705,8 @@ echo "<small class='text-muted'>".$member->address."<br>".$member->zip." ".$memb
 echo "<div class='btn-group-vertical' role='group'><button type='button' class='btn btn-light text-primary' data-toggle='modal' data-target='#member-".$member->id."' title='".__( 'Edit', 'doliconnect' )." ".$member->firstname." ".$member->lastname."'><i class='fas fa-edit fa-fw'></i></a>
 <button name='unlink_member' value='".$member->id."' class='btn btn-light text-danger' type='submit' title='".__( 'Unlink', 'doliconnect' )." ".$member->firstname." ".$member->lastname."'><i class='fas fa-unlink'></i></button></div>";
 echo "</li>";
-}} else { 
+}
+} else { 
 echo "<li class='list-group-item list-group-item-light'><center>".__( 'No linked member', 'doliconnect' )."</center></li>";
 }
 echo  "</ul></div></form>";
