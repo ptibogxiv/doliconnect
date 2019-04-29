@@ -469,7 +469,7 @@ if ( !empty($contact->poste) ) { echo "<br>".$contact->poste; }
 echo "</h6>";
 echo "<small class='text-muted'>".$contact->address."<br>".$contact->zip." ".$contact->town." - ".$contact->country."<br>".$contact->email." ".$contact->phone_pro."</small>";
 if (1 == 1) {
-echo "<div class='col-1 col-md-2 btn-group-vertical' role='group'>";
+echo "<div class='col-4 col-xs-3 col-md-2 btn-group-vertical' role='group'>";
 echo "<button type='button' class='btn btn-light text-primary' data-toggle='modal' data-target='#contact-".$contact->id."' title='".__( 'Edit', 'doliconnect' )." ".$contact->firstname." ".$contact->lastname."'><i class='fas fa-edit fa-fw'></i></a>
 <button name='delete_contact' value='".$contact->id."' class='btn btn-light text-danger' type='submit' title='".__( 'Delete', 'doliconnect' )." ".$contact->firstname." ".$contact->lastname."'><i class='fas fa-trash fa-fw'></i></button></div>";
 }
@@ -1704,7 +1704,7 @@ echo "<div class='d-none d-md-block col-md-2 col-lg-1'><i class='fas fa-address-
 echo "</h6>";
 echo "<small class='text-muted'>".$member->address."<br>".$member->zip." ".$member->town." - ".$member->country."<br>".$member->email." ".$member->phone_pro."</small>";
 if (1 == 1) {
-echo "<div class='col-1 col-md-2 btn-group-vertical' role='group'>";
+echo "<div class='col-4 col-xs-3 col-md-2 btn-group-vertical' role='group'>";
 echo "<button type='button' class='btn btn-light text-primary' data-toggle='modal' data-target='#member-".$member->id."' title='".__( 'Edit', 'doliconnect' )." ".$member->firstname." ".$member->lastname."'><i class='fas fa-edit fa-fw'></i></a>
 <button name='unlink_member' value='".$member->id."' class='btn btn-light text-danger' type='submit' title='".__( 'Unlink', 'doliconnect' )." ".$member->firstname." ".$member->lastname."'><i class='fas fa-unlink'></i></button></div>";
 }
