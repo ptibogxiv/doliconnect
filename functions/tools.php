@@ -22,7 +22,7 @@ echo "</div></div>";
 }
 
 if ( $mode != 'mini' ) {
-if ( $current_user->billing_type == 'mor' or (isset($_GET["pro"]) && !get_option('doliconnect_disablepro')) ) {
+if ( $current_user->billing_type == 'mor' || (isset($_GET["pro"]) && !get_option('doliconnect_disablepro')) ) {
 echo "<div class='form-row'><div class='col-12'><input type='hidden' name='".$idobject."[morphy]' value='mor'><label for='coordonnees'><small><i class='fas fa-building'></i> ".__( 'Name of company', 'doliconnect' )."</small></label><input type='text' class='form-control' id='inputcompany' placeholder='".__( 'Name of company', 'doliconnect' )."' name='".$idobject."[name]' value='".$current_user->billing_company."' required></div>";
 echo "</div></li><li class='list-group-item'>";
 } else {
@@ -90,12 +90,12 @@ echo " readonly";
 echo " required";
 }
 echo "></div>";
-if ( ( isset($_GET["pro"]) && !get_option('doliconnect_disablepro') ) || $mode == 'thirdparty' || $mode == 'contact' || $mode == 'member') {   
+if ( ( isset($_GET["pro"]) && !get_option('doliconnect_disablepro') ) || ( $mode == 'thirdparty' && isset($object) ) || ( $mode == 'contact' && isset($object) ) || ( $mode == 'member' && isset($object) ) ) {   
 echo "<div class='col-12 col-md-5'><label for='inputmobile'><small><i class='fas fa-phone fa-fw'></i> ".__( 'Phone', 'doliconnect' )."</small></label><input type='tel' class='form-control' id='inputmobile' placeholder='".__( 'Phone', 'doliconnect' )."' name='".$idobject."[phone]' value='".$object->phone."' autocomplete='off'></div>";
 }
 echo "</div></li>";
 
-if ( ( isset($_GET["pro"]) && !get_option('doliconnect_disablepro') ) || $mode == 'thirdparty' || $mode == 'contact' || $mode == 'member') {       
+if ( ( isset($_GET["pro"]) && !get_option('doliconnect_disablepro') ) || ( $mode == 'thirdparty' && isset($object) ) || ( $mode == 'contact' && isset($object) ) || ( $mode == 'member'  && isset($object) )) {       
 echo "<li class='list-group-item'>";
  
 echo "<div class='form-row'><div class='col-12'><label for='inputaddress'><small><i class='fas fa-map-marked fa-fw'></i> ".__( 'Address', 'doliconnect' )."</small></label>
