@@ -1426,7 +1426,7 @@ $productadhesion = callDoliApi("GET", "/doliconnector/constante/ADHERENT_PRODUCT
 $order = callDoliApi("GET", "/doliconnector/constante/MAIN_MODULE_COMMANDE", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 if ( isset($_POST["update_membership"]) && function_exists('dolimembership') ) {
-$adherent = dolimembership($_POST["update_membership"], $_POST["typeadherent"], dolidelay('member', true));
+$adherent = dolimembership($current_user, $_POST["update_membership"], $_POST["typeadherent"], dolidelay('member', true));
 
 //if ($statut==1) {
 $msg = "<div class='alert alert-success' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><p><strong>".__( 'Congratulations!', 'doliconnect' )."</strong> ".__( 'Your membership has been updated.', 'doliconnect' )."</p></div>";
