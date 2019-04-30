@@ -459,7 +459,6 @@ echo '<button type="button" class="list-group-item lh-condensed list-group-item-
 }
 
 if ( !isset($listcontact->error) && $listcontact != null ) {
-$idcontact=1;
 foreach ( $listcontact as $contact ) { 
 $count=$contact->ref_facturation+$contact->ref_contrat+$contact->ref_commande+$contact->ref_propal;
 echo "<li class='list-group-item d-flex justify-content-between lh-condensed list-group-item-action'>";
@@ -1698,7 +1697,6 @@ echo "<li class='list-group-item list-group-item-info'><i class='fas fa-info-cir
 
 if ( !isset($linkedmember->error) && $linkedmember != null ) { 
 foreach ( $linkedmember as $member ) {                                                                                 
-
 echo "<li class='list-group-item d-flex justify-content-between lh-condensed list-group-item-action'>";
 echo "<div class='d-none d-md-block col-md-2 col-lg-1'><i class='fas fa-address-card $color fa-3x fa-fw'></i></div><h6 class='my-0'>".($member->civility ? $member->civility : $member->civility_code)." ".$member->firstname." ".$member->lastname;
 //if ( !empty($contact->poste) ) { echo "<br>".$contact->poste; }
