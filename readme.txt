@@ -44,7 +44,7 @@ WordPress configuration steps:
 == Changelog ==
 = 3.5.0 =
 * clean code
-* minor fix
+* fix & revamp functions
 * upgrade lang
 
 = 3.4.7 =
