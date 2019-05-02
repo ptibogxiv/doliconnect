@@ -1481,7 +1481,7 @@ echo  "$datefin"; }
 echo "</div><div class='col-12 col-md-7'>";
 
 if ( function_exists('dolimembership_modal') && is_object($order) && $order->value == 1 && !empty($productadhesion->value) ) {
-dolimembership_modal($adherent, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+dolimembership_modal($current_user, $adherent, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 echo "<script>";
 ?>
