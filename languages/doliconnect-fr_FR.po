@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2019-05-02 12:11+0200\n"
-"PO-Revision-Date: 2019-05-02 12:22+0200\n"
+"POT-Creation-Date: 2019-05-02 12:25+0200\n"
+"PO-Revision-Date: 2019-05-02 12:28+0200\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_FR\n"
@@ -700,7 +700,7 @@ msgstr "Pas d'adhésion"
 msgid "nothing"
 msgstr "aucun"
 
-#: functions/dashboard.php:1468 functions/tools.php:23
+#: functions/dashboard.php:1468
 msgid "Type"
 msgstr "Type"
 
@@ -1020,6 +1020,10 @@ msgstr "Créer un compte pro / fournisseur"
 #: functions/tools.php:18
 msgid "Pro account"
 msgstr "Compte pro"
+
+#: functions/tools.php:23
+msgid "Type of account"
+msgstr "Type de compte"
 
 #: functions/tools.php:30
 msgid "Professionnal account"

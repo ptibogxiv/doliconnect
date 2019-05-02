@@ -20,7 +20,7 @@ echo "<a  href='".wp_registration_url(get_permalink())."&pro' role='button' titl
 
 echo "</div></div></li>";
 } elseif ( isset($object) && $mode == 'thirdparty' ) {
-echo "<li class='list-group-item'><div class='form-row'><div class='col-12'><div class='col-12 col-md-3'><label for='inputMorphy'><small><i class='fas fa-user'></i> ".__( 'Type', 'doliconnect' )."</small></label>";
+echo "<li class='list-group-item'><div class='form-row'><div class='col-12'><label for='inputMorphy'><small><i class='fas fa-user'></i> ".__( 'Type of account', 'doliconnect' )."</small></label><br>";
 echo "<div class='custom-control custom-radio custom-control-inline'><input type='radio' id='morphy1' name='".$idobject."[morphy]' value='phy' class='custom-control-input'";
 if ( $current_user->billing_type == 'phy' || empty($current_user->billing_type) ) { echo " checked"; }
 echo " required><label class='custom-control-label' for='morphy1'>".__( 'Personnal account', 'doliconnect' )."</label>
