@@ -42,6 +42,11 @@ WordPress configuration steps:
 4. Confirmation email sent to the user/visitor.
 
 == Changelog ==
+= 3.5.1 =
+* clean code
+* minor fix & change payment methods form
+* upgrade lang
+
 = 3.5.0 =
 * clean code
 * fix & revamp functions
