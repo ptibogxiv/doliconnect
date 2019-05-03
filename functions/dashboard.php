@@ -827,9 +827,9 @@ if ( function_exists('dolipaymentmodes') ) {
 
 $changepm = doliconnecturl('dolicart')."?pay&module=".esc_attr($_GET['module'])."&id=".esc_attr($_GET['id'])."&ref=".esc_attr($_GET['ref']);
 
-} else {
+} elseif ( isset($orderfo->public_payment_url) && !empty($orderfo->public_payment_url) ) {
 
-$changepm = get_site_option('dolibarr_public_url')."/public/payment/newpayment.php?source=".esc_attr($_GET['module'])."&ref=".esc_attr($_GET['ref'])."&securekey=".sha1(md5('nw38LmcS3tgow7D1tGZGiBr56GPK059Q' . esc_attr($_GET['module']) . esc_attr($_GET['ref'])))."&entity=".dolibarr_entity();
+$changepm = $orderfo->public_payment_url;
 
 }
 
