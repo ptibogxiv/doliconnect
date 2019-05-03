@@ -795,14 +795,6 @@ $orderfo = callDoliApi("GET", $request, null, dolidelay('order', esc_attr(isset(
 
 if ( !isset($orderfo->error) && isset($_GET['id']) && isset($_GET['ref']) && (doliconnector($current_user, 'fk_soc') == $orderfo->socid ) && ($_GET['ref'] == $orderfo->ref) && $orderfo->statut != 0 ) {
 
-if ( isset($_POST['token']) || isset($_POST['modepayment']) ) {
-
-$rdr = [
-    'mode_reglement_id' => $_POST['modepayment'],
-	];                  
-$orderfo = callDoliApi("PUT", "/orders/".$_GET['id'], $rdr, dolidelay('order', true));
-}
-
 echo "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>$orderfo->ref</h5><div class='row'><div class='col-md-5'>";
 $datecommande =  date_i18n('d/m/Y', $orderfo->date_creation);
 echo "<b>".__( 'Date of order', 'doliconnect' ).":</b> $datecommande<br>";
@@ -833,26 +825,11 @@ if ( $orderfo->billed != 1 && $orderfo->statut > 0 ) {
 
 if ( function_exists('dolipaymentmodes') ) {
 
-$change = "<small><a href='#' id='button-source-payment' data-toggle='modal' data-target='#orderonlinepay'><span class='fas fa-sync-alt'></span> ".__( 'Change your payment mode', 'doliconnect' )."</a></small>";
-
-echo "<div class='modal fade' id='orderonlinepay' tabindex='-1' role='dialog' aria-labelledby='orderonlinepayLabel' aria-hidden='true'  aria-hidden='true' data-backdrop='static' data-keyboard='false'>
-<div class='modal-dialog modal-dialog-centered' role='document'><div class='modal-content'><div class='modal-header border-0'><h4 class='modal-title border-0' id='orderonlinepayLabel'>".__( 'Payment methods', 'doliconnect' )."</h4>
-<button id='closemodalonlinepay' type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div><div class='modal-body'>";
-
-$listsource = callDoliApi("GET", "/doliconnector/".doliconnector($current_user, 'fk_soc')."/sources", null, dolidelay('source', isset($_GET["refresh"]) ? $_GET["refresh"] : null));
-//echo $listsource;
-
-if ( !empty($orderfo->paymentintent) ) {
-dolipaymentmodes( $listsource, $orderfo, $url, $url);
-} else {
-doligateway($listsource, $orderfo->ref, $orderfo->multicurrency_total_ttc?$orderfo->multicurrency_total_ttc:$orderfo->total_ttc, $orderfo->multicurrency_code, $url.'&id='.$_GET['id'].'&ref='.$_GET['ref'], 'full');
-echo doliloading('paymentmodes'); }
-
-echo "</div></div></div></div>";
+$changepm = doliconnecturl('dolicart')."?pay&module=".esc_attr($_GET['module'])."&id=".esc_attr($_GET['id'])."&ref=".esc_attr($_GET['ref']);
 
 } else {
 
-$change = "<a href='".get_site_option('dolibarr_public_url')."/public/payment/newpayment.php?source=".esc_attr($_GET['module'])."&ref=".esc_attr($_GET['ref'])."&securekey=".sha1(md5('nw38LmcS3tgow7D1tGZGiBr56GPK059Q' . esc_attr($_GET['module']) . esc_attr($_GET['ref'])))."&entity=".dolibarr_entity()."' target='_blank'><span class='fa fa-credit-card'></span> ".__( 'Pay online', 'doliconnect' )."</a>";
+$changepm = get_site_option('dolibarr_public_url')."/public/payment/newpayment.php?source=".esc_attr($_GET['module'])."&ref=".esc_attr($_GET['ref'])."&securekey=".sha1(md5('nw38LmcS3tgow7D1tGZGiBr56GPK059Q' . esc_attr($_GET['module']) . esc_attr($_GET['ref'])))."&entity=".dolibarr_entity();
 
 }
 
@@ -861,7 +838,8 @@ $chq = callDoliApi("GET", "/doliconnector/constante/FACTURE_CHQ_NUMBER", null, d
 
 $bank = callDoliApi("GET", "/bankaccounts/".$chq->value, null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
-echo "<div class='alert alert-danger' role='alert'><p align='justify'>".sprintf( __( 'Please send your cheque in the amount of <b>%1$s</b> with reference <b>%2$s</b> to <b>%3$s</b> at the following address', 'doliconnect' ), doliprice($orderfo, 'ttc', isset($orderfo->multicurrency_code) ? $orderfo->multicurrency_code : null), $orderfo->ref, $bank->proprio).":</p><p><b>$bank->owner_address</b></p>$change</div>";
+echo "<div class='alert alert-danger' role='alert'><p align='justify'>".sprintf( __( 'Please send your cheque in the amount of <b>%1$s</b> with reference <b>%2$s</b> to <b>%3$s</b> at the following address', 'doliconnect' ), doliprice($orderfo, 'ttc', isset($orderfo->multicurrency_code) ? $orderfo->multicurrency_code : null), $orderfo->ref, $bank->proprio).":</p>";
+echo "<p><b>$bank->owner_address</b></p><small><a href='$changepm' id='button-source-payment'><span class='fas fa-sync-alt'></span> ".__( 'Change your payment mode', 'doliconnect' )."</a></small></div>";
 } elseif ( $orderfo->mode_reglement_code == 'VIR' ) { 
 $vir = callDoliApi("GET", "/doliconnector/constante/FACTURE_RIB_NUMBER", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
@@ -871,7 +849,7 @@ echo "<div class='alert alert-danger' role='alert'><p align='justify'>".sprintf(
 echo "<br><b>".__( 'Bank', 'doliconnect' ).": $bank->bank</b>";
 echo "<br><b>IBAN: $bank->iban</b>";
 if ( ! empty($bank->bic) ) { echo "<br><b>BIC/SWIFT: $bank->bic</b>";}
-echo "</p>$change</div>";
+echo "</p><small><a href='$changepm' id='button-source-payment'><span class='fas fa-sync-alt'></span> ".__( 'Change your payment mode', 'doliconnect' )."</a></small></div>";
 } else {
 echo "<button type='button' id='button-source-payment' class='btn btn-warning btn-block' data-toggle='modal' data-target='#orderonlinepay'><span class='fa fa-credit-card'></span> ".__( 'Pay', 'doliconnect' )."</button><br>";
 }
