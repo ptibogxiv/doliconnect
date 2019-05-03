@@ -851,7 +851,7 @@ echo "<br><b>IBAN: $bank->iban</b>";
 if ( ! empty($bank->bic) ) { echo "<br><b>BIC/SWIFT: $bank->bic</b>";}
 echo "</p><small><a href='$changepm' id='button-source-payment'><span class='fas fa-sync-alt'></span> ".__( 'Change your payment mode', 'doliconnect' )."</a></small></div>";
 } else {
-echo "<button type='button' id='button-source-payment' class='btn btn-warning btn-block' data-toggle='modal' data-target='#orderonlinepay'><span class='fa fa-credit-card'></span> ".__( 'Pay', 'doliconnect' )."</button><br>";
+echo "<a href='$changepm' id='button-source-payment' class='btn btn-warning btn-block' role='button'><span class='fa fa-credit-card'></span> ".__( 'Pay', 'doliconnect' )."</a><br>";
 }
 
 }
