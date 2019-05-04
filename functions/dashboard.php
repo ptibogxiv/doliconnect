@@ -722,7 +722,7 @@ $fruits[$proposalfo->date_creation.'p'] = array(
 sort($fruits, SORT_NUMERIC | SORT_FLAG_CASE);
 foreach ( $fruits as $key => $val ) {
 echo "<li class='list-group-item'><div class='row'><div class='col-6 col-md-3'>" . date_i18n('d/m/Y H:i', $val['timestamp']) . "</div><div class='col-6 col-md-2'>" . $val['type'] . "</div>";
-echo "<div class='col-md-7'><h5>" . $val['label'] . "</h5>" . $val['description'] ."" . $val['document'] ."</div></div></li>";
+echo "<div class='col-md-7'><h6>" . $val['label'] . "</h6>" . $val['description'] ."" . $val['document'] ."</div></div></li>";
 } 
 //var_dump($fruits);
 echo "</ul></div>";
@@ -859,9 +859,9 @@ echo "<a href='$changepm' id='button-source-payment' class='btn btn-warning btn-
 echo "</div></div>"; 
 
 if (!empty($orderfo->contacts_ids) && is_array($orderfo->contacts_ids)) {
-echo "<div class='row'>";
+echo "<div class='card-group'>";
 foreach ($orderfo->contacts_ids as $contact) {
-echo "<div class='col'><div class='card'><div class='card-body'>This is some text within a card body. livraison contact</div></div></div>";
+echo "<div class='card'><div class='card-body'><h6>".$contact->libelle."</h6>".$contact->civility." ".$contact->firstname." ".$contact->lastname."<br>".$contact->address."<br>".$contact->zip."".$contact->town."</div></div>";
 }
 echo "</div><br>";
 }
@@ -994,7 +994,7 @@ $fruits[$ship->date_creation] = array(
 sort($fruits, SORT_NUMERIC | SORT_FLAG_CASE);
 foreach ( $fruits as $key => $val ) {
 echo "<li class='list-group-item'><div class='row'><div class='col-6 col-md-3'>" . date_i18n('d/m/Y H:i', $val['timestamp']) . "</div><div class='col-6 col-md-2'>" . $val['type'] . "</div>";
-echo "<div class='col-md-7'><h5>" . $val['label'] . "</h5>" . $val['description'] ."" . $val['document'] ."</div></div></li>";
+echo "<div class='col-md-7'><h6>" . $val['label'] . "</h6>" . $val['description'] ."" . $val['document'] ."</div></div></li>";
 } 
 //var_dump($fruits);
 echo "</ul></div>";
