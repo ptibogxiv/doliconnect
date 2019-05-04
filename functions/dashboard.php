@@ -856,7 +856,12 @@ echo "<a href='$changepm' id='button-source-payment' class='btn btn-warning btn-
 
 }
 
-echo "</div></div>";
+echo "</div></div>"; 
+
+if (!empty($orderfo->contacts_ids) && is_array($orderfo->contacts_ids)) {
+echo "<div class='row'><div class='col-auto'>livraison</div></div>";
+}
+
 echo '<div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: '.$orderavancement.'%" aria-valuenow="'.$orderavancement.'" aria-valuemin="0" aria-valuemax="100"></div></div>';
 echo "<div class='w-auto text-muted d-none d-sm-block' ><div style='display:inline-block;width:20%'>".__( 'Order', 'doliconnect' )."</div><div style='display:inline-block;width:15%'>".__( 'Payment', 'doliconnect' )."</div><div style='display:inline-block;width:25%'>".__( 'Processing', 'doliconnect' )."</div><div style='display:inline-block;width:20%'>".__( 'Shipping', 'doliconnect' )."</div><div class='text-right' style='display:inline-block;width:20%'>".__( 'Delivery', 'doliconnect' )."</div></div>";
 
