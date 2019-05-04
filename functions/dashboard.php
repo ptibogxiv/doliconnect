@@ -637,7 +637,7 @@ echo "'>".__( 'Propals tracking', 'doliconnect' )."</a>";
 function proposals_module( $url ) {
 global $current_user;
 
-$request = "/proposals/".esc_attr($_GET['id']);
+$request = "/proposals/".esc_attr($_GET['id'])."?contact_list=0";
 
 if ( isset($_GET['id']) && $_GET['id'] > 0 ) {
 $proposalfo = callDoliApi("GET", $request, null, dolidelay('proposal', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
@@ -786,7 +786,7 @@ echo "'>".__( 'Orders tracking', 'doliconnect' )."</a>";
 function orders_module( $url ) {
 global $current_user;
 
-$request = "/orders/".esc_attr($_GET['id']);
+$request = "/orders/".esc_attr($_GET['id'])."?contact_list=0";
 
 if ( isset($_GET['id']) && $_GET['id'] > 0 ) {
 $orderfo = callDoliApi("GET", $request, null, dolidelay('order', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
@@ -1072,7 +1072,7 @@ echo "'>".__( 'Contracts tracking', 'doliconnect' )."</a>";
 function contracts_module( $url ) {
 global $current_user;
 
-$request = "/contracts/".esc_attr($_GET['id']); 
+$request = "/contracts/".esc_attr($_GET['id'])."?contact_list=0";
 
 if ( isset($_GET['id']) && $_GET['id'] > 0 ) {
 $contractfo = callDoliApi("GET", $request, null, dolidelay('contract', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
