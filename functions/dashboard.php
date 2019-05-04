@@ -701,8 +701,8 @@ echo "</div></div></li>";
 }
 
 echo "<li class='list-group-item list-group-item-info'>";
-echo "<b>".__( 'Total excl. tax', 'doliconnect').": ".doliprice($proposalfo, 'ht', isset($proposalfo->multicurrency_code) ? $proposalfo->multicurrency_code : null)."</b><br />";
-echo "<b>".__( 'Total tax', 'doliconnect').": ".doliprice($proposalfo, 'tva', isset($proposalfo->multicurrency_code) ? $proposalfo->multicurrency_code : null)."</b><br />";
+echo "<b>".__( 'Total excl. tax', 'doliconnect').": ".doliprice($proposalfo, 'ht', isset($proposalfo->multicurrency_code) ? $proposalfo->multicurrency_code : null)."</b><br>";
+echo "<b>".__( 'Total tax', 'doliconnect').": ".doliprice($proposalfo, 'tva', isset($proposalfo->multicurrency_code) ? $proposalfo->multicurrency_code : null)."</b><br>";
 echo "<b>".__( 'Total incl. tax', 'doliconnect').": ".doliprice($proposalfo, 'ttc', isset($proposalfo->multicurrency_code) ? $proposalfo->multicurrency_code : null)."</b>";
 echo "</li>";
 
@@ -859,7 +859,11 @@ echo "<a href='$changepm' id='button-source-payment' class='btn btn-warning btn-
 echo "</div></div>"; 
 
 if (!empty($orderfo->contacts_ids) && is_array($orderfo->contacts_ids)) {
-echo "<div class='row'><div class='col-auto'>livraison</div></div>";
+echo "<div class='row'>";
+foreach ($orderfo->contacts_ids as $contact) {
+echo "<div class='col'><div class='card'><div class='card-body'>This is some text within a card body. livraison contact</div></div></div>";
+}
+echo "</div><br>";
 }
 
 echo '<div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: '.$orderavancement.'%" aria-valuenow="'.$orderavancement.'" aria-valuemin="0" aria-valuemax="100"></div></div>';
@@ -888,8 +892,8 @@ echo "</div></div></li>";
 }
 
 echo "<li class='list-group-item list-group-item-info'>";
-echo "<b>".__( 'Total excl. tax', 'doliconnect').": ".doliprice($orderfo, 'ht', isset($orderfo->multicurrency_code) ? $orderfo->multicurrency_code : null)."</b><br />";
-echo "<b>".__( 'Total tax', 'doliconnect').": ".doliprice($orderfo, 'tva', isset($orderfo->multicurrency_code) ? $orderfo->multicurrency_code : null)."</b><br />";
+echo "<b>".__( 'Total excl. tax', 'doliconnect').": ".doliprice($orderfo, 'ht', isset($orderfo->multicurrency_code) ? $orderfo->multicurrency_code : null)."</b><br>";
+echo "<b>".__( 'Total tax', 'doliconnect').": ".doliprice($orderfo, 'tva', isset($orderfo->multicurrency_code) ? $orderfo->multicurrency_code : null)."</b><br>";
 echo "<b>".__( 'Total incl. tax', 'doliconnect').": ".doliprice($orderfo, 'ttc', isset($orderfo->multicurrency_code) ? $orderfo->multicurrency_code : null)."</b>";
 echo "</li>";
 
@@ -1041,7 +1045,7 @@ echo "</div><div class='float-right'>";
 echo dolihelp('COM');
 echo "</div></small>";
 
-//echo '<br /><nav aria-label="Page navigation example">
+//echo '<br><nav aria-label="Page navigation example">
 //  <ul class="pagination">
 //  <li class="page-item disabled">
 //      <a class="page-link" href="#" aria-label="Previous">
@@ -1133,8 +1137,8 @@ echo "</div></div></li>";
 }
 
 echo "<li class='list-group-item list-group-item-info'>";
-echo "<b>".__( 'Total excl. tax', 'doliconnect').": ".doliprice($contractfo, 'ht', isset($contractfo->multicurrency_code) ? $contractfo->multicurrency_code : null)."</b><br />";
-echo "<b>".__( 'Total tax', 'doliconnect').": ".doliprice($contractfo, 'tva',isset($postcontract->multicurrency_code) ? $contractfo->multicurrency_code : null)."</b><br />";
+echo "<b>".__( 'Total excl. tax', 'doliconnect').": ".doliprice($contractfo, 'ht', isset($contractfo->multicurrency_code) ? $contractfo->multicurrency_code : null)."</b><br>";
+echo "<b>".__( 'Total tax', 'doliconnect').": ".doliprice($contractfo, 'tva',isset($postcontract->multicurrency_code) ? $contractfo->multicurrency_code : null)."</b><br>";
 echo "<b>".__( 'Total incl. tax', 'doliconnect').": ".doliprice($contractfo, 'ttc', isset($contractfo->multicurrency_code) ? $contractfo->multicurrency_code : null)."</b>";
 echo "</li>";
 
@@ -1182,7 +1186,7 @@ echo "<li class='list-group-item list-group-item-light'><center>".__( 'No contra
 }
 echo  "</ul></div>";
 
-//echo '<br /><nav aria-label="Page navigation example">
+//echo '<br><nav aria-label="Page navigation example">
 //  <ul class="pagination">
 //    <li class="page-item disabled">
 //      <a class="page-link" href="#" aria-label="Previous">
@@ -1446,14 +1450,14 @@ echo  "<span class='badge badge-dark'>".__( 'Terminated', 'doliconnect' )."</spa
 elseif ( $adherent->statut == '-1' ) {
 echo  "<span class='badge badge-warning'>".__( 'Waiting validation', 'doliconnect' )."</span>";}
 else {echo  "<span class='badge badge-dark'>".__( 'No membership', 'doliconnect' )."</span>";}
-echo  "<br />";
+echo  "<br>";
 $type=(! empty($adherent->type) ? $adherent->type : __( 'nothing', 'doliconnect' ));
-echo  "<b>".__( 'Type', 'doliconnect' ).":</b> ".$type."<br />";
+echo  "<b>".__( 'Type', 'doliconnect' ).":</b> ".$type."<br>";
 echo  "<b>".__( 'End of membership', 'doliconnect' ).":</b> ";
 if ( $adherent->datefin == null ) { echo  "***";
 } else { echo  date_i18n('d/m/Y', $adherent->datefin); }
-echo  "<br /><b>".__( 'Seniority', 'doliconnect' ).":</b> ";
-echo  "<br /><b>".__( 'Commitment', 'doliconnect' ).":</b> ";
+echo  "<br><b>".__( 'Seniority', 'doliconnect' ).":</b> ";
+echo  "<br><b>".__( 'Commitment', 'doliconnect' ).":</b> ";
 if ( (current_time('timestamp') > $adherent->datecommitment) || null == $adherent->datecommitment ) { echo  __( 'no', 'doliconnect' );
 } else {
 $datefin =  date_i18n('d/m/Y', $adherent->datecommitment);
