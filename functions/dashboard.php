@@ -646,10 +646,8 @@ $proposalfo = callDoliApi("GET", $request, null, dolidelay('proposal', esc_attr(
 
 if ( !isset($proposalfo->error) && isset($_GET['id']) && isset($_GET['ref']) && ( doliconnector($current_user, 'fk_soc') == $proposalfo->socid ) && ( $_GET['ref'] == $proposalfo->ref ) && $proposalfo->statut !=0 ) {
 echo "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>$proposalfo->ref</h5><div class='row'><div class='col-md-5'>";
-$datecreation =  date_i18n('d/m/Y', $proposalfo->date_creation);
 $datevalidation =  date_i18n('d/m/Y', $proposalfo->date_validation);
-$datevalidite =  date_i18n('d/m/Y', $proposalfo->fin_validite);
-echo "<b>".__( 'Date of creation', 'doliconnect' ).":</b> $datecreation<br>";
+echo "<b>".__( 'Date of creation', 'doliconnect' ).":</b> ".date_i18n('d/m/Y', $proposalfo->date_creation)."<br>";
 //echo "<b>".__( 'Validation', 'doliconnect' )." : </b> $datevalidation<br>";
 echo "<b>Date de fin de validité:</b> $datevalidite";
 //echo "<b>".__( 'Status', 'doliconnect' )." : </b> ";
@@ -657,7 +655,7 @@ if ( $proposalfo->statut == 3 ) { $propalinfo=__( 'Refused', 'doliconnect' );
 $propalavancement=0; }
 elseif ( $proposalfo->statut == 2 ) { $propalinfo=__( 'Processing', 'doliconnect' );
 $propalavancement=65; }
-elseif ( $proposalfo->statut == 1 ) { $propalinfo=__( 'Sign before', 'doliconnect' )." ".$datevalidite;
+elseif ( $proposalfo->statut == 1 ) { $propalinfo=__( 'Sign before', 'doliconnect' )." ".date_i18n('d/m/Y', $proposalfo->fin_validite);
 $propalavancement=42; }
 elseif ( $proposalfo->statut == 0 ) { $propalinfo=__( 'Processing', 'doliconnect' );
 $propalavancement=22; }
@@ -796,8 +794,7 @@ $orderfo = callDoliApi("GET", $request, null, dolidelay('order', esc_attr(isset(
 if ( !isset($orderfo->error) && isset($_GET['id']) && isset($_GET['ref']) && (doliconnector($current_user, 'fk_soc') == $orderfo->socid ) && ($_GET['ref'] == $orderfo->ref) && $orderfo->statut != 0 ) {
 
 echo "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>$orderfo->ref</h5><div class='row'><div class='col-md-5'>";
-$datecommande =  date_i18n('d/m/Y', $orderfo->date_creation);
-echo "<b>".__( 'Date of order', 'doliconnect' ).":</b> $datecommande<br>";
+echo "<b>".__( 'Date of order', 'doliconnect' ).":</b> ".date_i18n('d/m/Y', $orderfo->date_creation)."<br>";
 if ( $orderfo->statut > 0 ) {
 if ( $orderfo->billed == 1 ) {
 if ( $orderfo->statut >1 ) { $orderinfo=__( 'Shipped', 'doliconnect' ); 
@@ -1090,7 +1087,6 @@ $contractfo = callDoliApi("GET", $request, null, dolidelay('contract', esc_attr(
 
 if ( !isset($contractfo->error) && isset($_GET['id']) && isset($_GET['id']) && isset($_GET['ref']) && (doliconnector($current_user, 'fk_soc') == $contractfo->socid) && ($_GET['ref'] == $contractfo->ref) ) {
 echo "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>$contractfo->ref</h5><div class='row'><div class='col-md-5'>";
-$datecontract =  date_i18n('d/m/Y', $contractfo->date_creation);
 echo "<b>".__( 'Date of creation', 'doliconnect' ).": </b> ".date_i18n('d/m/Y', $contractfo->date_creation)."<br>";
 if ( $contractfo->statut > 0 ) {
 //if ( $contractfo->billed == 1 ) {
