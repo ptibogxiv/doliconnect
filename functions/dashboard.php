@@ -699,9 +699,7 @@ echo "</div></div></li>";
 }
 
 echo "<li class='list-group-item list-group-item-info'>";
-echo "<b>".__( 'Total excl. tax', 'doliconnect').": ".doliprice($proposalfo, 'ht', isset($proposalfo->multicurrency_code) ? $proposalfo->multicurrency_code : null)."</b><br>";
-echo "<b>".__( 'Total tax', 'doliconnect').": ".doliprice($proposalfo, 'tva', isset($proposalfo->multicurrency_code) ? $proposalfo->multicurrency_code : null)."</b><br>";
-echo "<b>".__( 'Total incl. tax', 'doliconnect').": ".doliprice($proposalfo, 'ttc', isset($proposalfo->multicurrency_code) ? $proposalfo->multicurrency_code : null)."</b>";
+echo dolitotal($proposalfo);
 echo "</li>";
 
 if ( $proposalfo->last_main_doc != null ) {
@@ -751,7 +749,7 @@ if ( $postproposal->statut == 3 ) {
 if ( $postproposal->billed == 1 ) { echo "<span class='fa fa-check-circle fa-fw text-success'></span><span class='fa fa-eur fa-fw text-success'></span><span class='fa fa-truck fa-fw text-success'></span><span class='fa fa-file-text fa-fw text-success'></span>"; } 
 else { echo "<span class='fa fa-check-circle fa-fw text-success'></span><span class='fa fa-eur fa-fw text-success'></span><span class='fa fa-truck fa-fw text-success'></span><span class='fa fa-file-text fa-fw text-warning'></span>"; } }
 elseif ( $postproposal->statut == 2 ) { echo "<span class='fa fa-check-circle fa-fw text-success'></span><span class='fa fa-eur fa-fw text-success'></span><span class='fa fa-truck fa-fw text-warning'></span><span class='fa fa-file-text fa-fw text-danger'></span>"; }
-elseif ( $postproppsal->statut == 1 ) { echo "<span class='fa fa-check-circle fa-fw text-success'></span><span class='fa fa-eur fa-fw text-warning'></span><span class='fa fa-truck fa-fw text-danger'></span><span class='fa fa-file-text fa-fw text-danger'></span>"; }
+elseif ( $postproposal->statut == 1 ) { echo "<span class='fa fa-check-circle fa-fw text-success'></span><span class='fa fa-eur fa-fw text-warning'></span><span class='fa fa-truck fa-fw text-danger'></span><span class='fa fa-file-text fa-fw text-danger'></span>"; }
 elseif ( $postproposal->statut == 0 ) { echo "<span class='fa fa-check-circle fa-fw text-warning'></span><span class='fa fa-eur fa-fw text-danger'></span><span class='fa fa-truck fa-fw text-danger'></span><span class='fa fa-file-text fa-fw text-danger'></span>"; }
 elseif ( $postproposal->statut == -1 ) { echo "<span class='fa fa-check-circle fa-fw text-secondary'></span><span class='fa fa-eur fa-fw text-secondary'></span><span class='fa fa-truck fa-fw text-secondary'></span><span class='fa fa-file-text fa-fw text-secondary'></span>"; }
 echo "</span></a>";
@@ -889,9 +887,7 @@ echo "</div></div></li>";
 }
 
 echo "<li class='list-group-item list-group-item-info'>";
-echo "<b>".__( 'Total excl. tax', 'doliconnect').": ".doliprice($orderfo, 'ht', isset($orderfo->multicurrency_code) ? $orderfo->multicurrency_code : null)."</b><br>";
-echo "<b>".__( 'Total tax', 'doliconnect').": ".doliprice($orderfo, 'tva', isset($orderfo->multicurrency_code) ? $orderfo->multicurrency_code : null)."</b><br>";
-echo "<b>".__( 'Total incl. tax', 'doliconnect').": ".doliprice($orderfo, 'ttc', isset($orderfo->multicurrency_code) ? $orderfo->multicurrency_code : null)."</b>";
+echo dolitotal($orderfo);
 echo "</li>";
 
 if ( $orderfo->last_main_doc != null ) {
@@ -1133,9 +1129,7 @@ echo "</div></div></li>";
 }
 
 echo "<li class='list-group-item list-group-item-info'>";
-echo "<b>".__( 'Total excl. tax', 'doliconnect').": ".doliprice($contractfo, 'ht', isset($contractfo->multicurrency_code) ? $contractfo->multicurrency_code : null)."</b><br>";
-echo "<b>".__( 'Total tax', 'doliconnect').": ".doliprice($contractfo, 'tva',isset($postcontract->multicurrency_code) ? $contractfo->multicurrency_code : null)."</b><br>";
-echo "<b>".__( 'Total incl. tax', 'doliconnect').": ".doliprice($contractfo, 'ttc', isset($contractfo->multicurrency_code) ? $contractfo->multicurrency_code : null)."</b>";
+echo dolitotal($contractfo);
 echo "</li>";
 
 //var_dump($fruits);
