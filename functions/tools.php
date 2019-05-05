@@ -413,4 +413,27 @@ $total .="<b>".__( 'Total incl. tax', 'doliconnect').": ".doliprice($object, 'tt
 return $total;
 }
 
+function doliline($object) {
+if ( $object->lines != null ) {
+foreach ( $object->lines as $line ) {
+$doliline .= "<li class='list-group-item'>";     
+if ( $line->date_start != '' && $line->date_end != '' )
+{
+$start = date_i18n('d/m/Y', $line->date_start);
+$end = date_i18n('d/m/Y', $line->date_end);
+$dates =" <i>(Du $start au $end)</i>";
+}
+
+$doliline .= '<div class="w-100 justify-content-between"><div class="row"><div class="col-8 col-md-10"> 
+<h6 class="mb-1">'.$line->libelle.'</h6>
+<small><p class="mb-1">'.$line->desc.'</p>
+<i>'.$dates.'</i></small>'; 
+$doliline .= '</div><div class="col-4 col-md-2 text-right"><h5 class="mb-1">'.doliprice($line, 'ttc', isset($line->multicurrency_code) ? $line->multicurrency_code : null).'</h5>';
+$doliline .= '<h5 class="mb-1">x'.$line->qty.'</h5>'; 
+$doliline .= "</div></div></li>";
+}
+}
+return $doliline;
+}
+
 ?>

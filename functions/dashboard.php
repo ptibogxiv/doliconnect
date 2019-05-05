@@ -676,27 +676,7 @@ echo '<div class="progress"><div class="progress-bar bg-success" role="progressb
 echo "<div class='w-auto text-muted d-none d-sm-block' ><div style='display:inline-block;width:16%'>".__( 'Propal', 'doliconnect' )."</div><div style='display:inline-block;width:21%'>".__( 'Processing', 'doliconnect' )."</div><div style='display:inline-block;width:19%'>".__( 'Validation', 'doliconnect' )."</div><div style='display:inline-block;width:24%'>".__( 'Processing', 'doliconnect' )."</div><div class='text-right' style='display:inline-block;width:20%'>".__( 'Billing', 'doliconnect' )."</div></div>";
 echo "</div><ul class='list-group list-group-flush'>";
  
-if ( $proposalfo->lines != null ) {
-foreach ( $proposalfo->lines as $line ) {
-echo "<li class='list-group-item'>";     
-if ( $line->date_start != '' && $line->date_end !='' )
-{
-$start = date_i18n('d/m/Y', $line->date_start);
-$end = date_i18n('d/m/Y', $line->date_end);
-$dates =" <i>(Du $start au $end)</i>";
-} else {
-$dates ="";
-}
-
-echo '<div class="w-100 justify-content-between"><div class="row"><div class="col-8 col-md-10"> 
-<h6 class="mb-1">'.$line->libelle.'</h6>
-<small><p class="mb-1">'.$line->desc.'</p>
-<i>'.$dates.'</i></small>'; 
-echo '</div><div class="col-4 col-md-2 text-right"><h5 class="mb-1">'.doliprice($line, 'ttc', isset($line->multicurrency_code) ? $line->multicurrency_code : null).'</h5>';
-echo '<h5 class="mb-1">x'.$line->qty.'</h5>'; 
-echo "</div></div></li>";
-}
-}
+echo doliline($proposalfo);
 
 echo "<li class='list-group-item list-group-item-info'>";
 echo dolitotal($proposalfo);
@@ -866,25 +846,7 @@ echo "<div class='w-auto text-muted d-none d-sm-block' ><div style='display:inli
 
 echo "</div><ul class='list-group list-group-flush'>";
  
-if ( $orderfo->lines != null ) {
-foreach ( $orderfo->lines as $line ) {
-echo "<li class='list-group-item'>";     
-if ( $line->date_start != '' && $line->date_end != '' )
-{
-$start = date_i18n('d/m/Y', $line->date_start);
-$end = date_i18n('d/m/Y', $line->date_end);
-$dates =" <i>(Du $start au $end)</i>";
-}
-
-echo '<div class="w-100 justify-content-between"><div class="row"><div class="col-8 col-md-10"> 
-<h6 class="mb-1">'.$line->libelle.'</h6>
-<small><p class="mb-1">'.$line->desc.'</p>
-<i>'.$dates.'</i></small>'; 
-echo '</div><div class="col-4 col-md-2 text-right"><h5 class="mb-1">'.doliprice($line, 'ttc', isset($line->multicurrency_code) ? $line->multicurrency_code : null).'</h5>';
-echo '<h5 class="mb-1">x'.$line->qty.'</h5>'; 
-echo "</div></div></li>";
-}
-}
+echo doliline($orderfo);
 
 echo "<li class='list-group-item list-group-item-info'>";
 echo dolitotal($orderfo);
@@ -1108,25 +1070,7 @@ echo "<div class='w-auto text-muted d-none d-sm-block' ><div style='display:inli
 
 echo "</div><ul class='list-group list-group-flush'>";
 
-if ( $contractfo->lines != null ) {
-foreach ($contractfo->lines as $line) {
-echo "<li class='list-group-item'>";     
-if ( $line->date_start != '' && $line->date_end != '' )
-{
-$start = date_i18n('d/m/Y', $line->date_start);
-$end = date_i18n('d/m/Y', $line->date_end);
-$dates =" <i>(Du $start au $end)</i>";
-}
-
-echo '<div class="w-100 justify-content-between"><div class="row"><div class="col-8 col-md-10"> 
-<h6 class="mb-1">'.$line->product_label.'</h6>
-<small><p class="mb-1">'.$line->desc.'</p>
-<i>'.$dates.'</i></small>'; 
-echo '</div><div class="col-4 col-md-2 text-right"><h5 class="mb-1">'.doliprice($line, 'ttc', isset($line->multicurrency_code) ? $line->multicurrency_code : null).'</h5>';
-echo '<h5 class="mb-1">x'.$line->qty.'</h5>'; 
-echo "</div></div></li>";
-}
-}
+echo doliline($contractfo);
 
 echo "<li class='list-group-item list-group-item-info'>";
 echo dolitotal($contractfo);
