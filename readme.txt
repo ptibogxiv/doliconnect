@@ -12,7 +12,9 @@ This plugin will synchronize your dolibarr's informations in a wordpress custome
 
 == Description ==
 
-Use this plugin to greatly improve relations with yours customers. No Woocommerce or another e-shop need! 
+Use this plugin to greatly improve relations with yours customers. No Woocommerce or another e-shop need!
+
+Compatibility with Dolibarr v8, v9 & v10. 
 
 If you like the plugin, feel free to rate it (on the right side of this page)! :)
 
@@ -42,6 +44,11 @@ WordPress configuration steps:
 4. Confirmation email sent to the user/visitor.
 
 == Changelog ==
+= 3.5.2 =
+* clean code
+* minor fix
+* upgrade lang
+
 = 3.5.1 =
 * clean code
 * minor fix & change payment methods form
