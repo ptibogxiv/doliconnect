@@ -423,7 +423,7 @@ $start = date_i18n('d/m/Y', $line->date_start);
 $end = date_i18n('d/m/Y', $line->date_end);
 $dates =" <i>(Du $start au $end)</i>";
 }
-$doliline .= '<div class="w-100 justify-content-between"><div class="row"><div class="col-8 col-md-10"> 
+$doliline .= '<div class="w-100 justify-content-between"><div class="row"><div class="col"> 
 <h6 class="mb-1">'.$line->libelle.'</h6>
 <small><p class="mb-1">'.$line->description.'</p>
 <i>'.$dates.'</i></small></div>';
