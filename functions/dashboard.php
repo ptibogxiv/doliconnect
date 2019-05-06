@@ -899,11 +899,11 @@ $document_invoice = dolidocdownload($doc[2], $doc[1], $doc[0], $url."&id=".$_GET
 $document_invoice = dolidocdownload('invoice', $invoice->ref, $invoice->ref.'.pdf', $url."&id=".$_GET['id']."&ref=".$orderfo->ref, __( 'Invoice', 'doliconnect' ), true);
 }
 
-if ( function_exists('dolipaymentmodes') ) {
+if ( $invoice->paye != 1 && $invoice->resteapayer != 0 && function_exists('dolipaymentmodes') ) {
 
 $payment_invoice = "<a href='".doliconnecturl('dolicart')."?pay&module=invoices&id=".esc_attr($_GET['id'])."&ref=".esc_attr($_GET['ref'])."' id='button-source-payment' class='btn btn-warning btn-block' role='button'><span class='fa fa-credit-card'></span> ".__( 'Pay', 'doliconnect' )."</a><br>";
 
-} elseif ( isset($orderfo->public_payment_url) && !empty($orderfo->public_payment_url) ) {
+} elseif ( $invoice->paye != 1 && $invoice->resteapayer != 0 &&  isset($orderfo->public_payment_url) && !empty($orderfo->public_payment_url) ) {
 
 $payment_invoice = "<a href='".$orderfo->public_payment_url."' id='button-source-payment' class='btn btn-warning btn-block' role='button'><span class='fa fa-credit-card'></span> ".__( 'Pay', 'doliconnect' )."</a><br>";
 
