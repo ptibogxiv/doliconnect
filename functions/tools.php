@@ -414,8 +414,6 @@ return $total;
 }
 
 function doliline($object) {
-$remise=0;
-$subprice=0;
 if ( $object->lines != null ) {
 foreach ( $object->lines as $line ) {
 $doliline .= "<li class='list-group-item'>";     
