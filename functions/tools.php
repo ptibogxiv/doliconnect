@@ -428,7 +428,7 @@ $doliline .= '<div class="w-100 justify-content-between"><div class="row"><div c
 <h6 class="mb-1">'.$line->libelle.'</h6>
 <small><p class="mb-1">'.$line->desc.'</p>
 <i>'.$dates.'</i></small>'; 
-$doliline .= '</div><div class="col-4 col-md-2 text-right"><h5 class="mb-1">'.doliprice($line, 'ttc', isset($line->multicurrency_code) ? $line->multicurrency_code : null).'</h5>';
+$doliline .= '</div><div class="col-4 col-md-2 text-right"><h5 class="mb-1">'.doliprice($line, 'subprice', isset($line->multicurrency_code) ? $line->multicurrency_code : null).'</h5>';
 $doliline .= '<h5 class="mb-1">x'.$line->qty.'</h5>'; 
 $doliline .= "</div></div></li>";
 }
