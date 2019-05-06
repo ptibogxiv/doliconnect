@@ -414,6 +414,8 @@ return $total;
 }
 
 function doliline($object) {
+$remise=0;
+$subprice=0;
 if ( $object->lines != null ) {
 foreach ( $object->lines as $line ) {
 $doliline .= "<li class='list-group-item'>";     
@@ -423,7 +425,6 @@ $start = date_i18n('d/m/Y', $line->date_start);
 $end = date_i18n('d/m/Y', $line->date_end);
 $dates =" <i>(Du $start au $end)</i>";
 }
-
 $doliline .= '<div class="w-100 justify-content-between"><div class="row"><div class="col-8 col-md-10"> 
 <h6 class="mb-1">'.$line->libelle.'</h6>
 <small><p class="mb-1">'.$line->desc.'</p>
