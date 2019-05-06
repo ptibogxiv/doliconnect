@@ -19,7 +19,7 @@ echo "'>".__( 'Personal informations', 'doliconnect' )."</a>";
 add_action( 'user_doliconnect_menu', 'informations_menu', 1, 1);
 
 function informations_module($url) {
-global $wpdb,$current_user,$doliconnect;
+global $wpdb,$current_user;
 
 $ID = $current_user->ID;
 
@@ -1353,7 +1353,7 @@ echo "'>".__( 'Membership', 'doliconnect' )."</a>";
 }
 
 function members_module( $url ) {
-global $current_user;
+global $wpdb,$current_user;
 
 $time = current_time( 'timestamp',1);
 
