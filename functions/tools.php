@@ -413,7 +413,7 @@ $total .="<b>".__( 'Total incl. tax', 'doliconnect').": ".doliprice($object, 'tt
 return $total;
 }
 
-function doliline($object) {
+function doliline($object, $mode = null) {
 if ( $object->lines != null ) {
 foreach ( $object->lines as $line ) {
 $doliline .= "<li class='list-group-item'>";     
@@ -426,12 +426,60 @@ $dates =" <i>(Du $start au $end)</i>";
 $doliline .= '<div class="w-100 justify-content-between"><div class="row"><div class="col-8 col-md-10"> 
 <h6 class="mb-1">'.$line->libelle.'</h6>
 <small><p class="mb-1">'.$line->desc.'</p>
-<i>'.$dates.'</i></small>'; 
-$doliline .= '</div><div class="col-4 col-md-2 text-right"><h5 class="mb-1">'.doliprice($line, 'subprice', isset($line->multicurrency_code) ? $line->multicurrency_code : null).'</h5>';
-$doliline .= '<h5 class="mb-1">x'.$line->qty.'</h5>'; 
+<i>'.$dates.'</i></small></div>';
+
+if ( $object->statut == 0 && !empty($mode)) {
+if ( $line->fk_product > 0 ) {
+$product = callDoliApi("GET", "/products/".$line->fk_product, null, 0);
+}
+$doliline .= '<div class="col d-none d-md-block col-md-2 text-right">'.doliproductstock($product).'</div>';
+}
+
+$doliline .= '<div class="col-4 col-md-2 text-right"><h5 class="mb-1">'.doliprice($line, 'subprice', isset($line->multicurrency_code) ? $line->multicurrency_code : null).'</h5>';
+
+if ( $object->statut == 0 && !empty($mode)) {
+$doliline .= "<input type='hidden' name='updateorderproduct[".$product->id."][product]' value='$product->id'><input type='hidden' name='updateorderproduct[".$product->id."][line]' value='$line->id'><input type='hidden' name='updateorderproduct[".$product->id."][price]' value='$line->subprice'>";
+$doliline .= "<input type='hidden' name='updateorderproduct[".$product->id."][date_start]' value='$line->date_start'><input type='hidden' name='updateorderproduct[".$product->id."][date_end]' value='$line->date_end'>";
+$doliline .= "<select class='form-control' name='updateorderproduct[".$product->id."][qty]' onchange='submit()'>";
+if ( ($product->stock_reel-$line->qty > '0' && $product->type == '0') ) {
+if ( $product->stock_reel-$line->qty >= '10' || (is_object($stock) && $stock->value != 1) ) {
+$m2 = 10;
+} elseif ($product->stock_reel>$line->qty) {
+$m2 = $product->stock_reel;
+} else { $m2 = $line->qty; }
+} else {
+if ($line->qty>1){$m2=$line->qty;}
+else {$m2 = 1;}
+}
+	for($i=0;$i<=$m2;$i++){
+		if ($i==$line->qty){
+$doliline .= "<option value='$i' selected='selected'>$i</option>";
+		}else{
+$doliline .= "<option value='$i' >$i</option>";
+		}
+	}
+$doliline .= "</select>";
+} else {
+$doliline .= '<h5 class="mb-1">x'.$line->qty.'</h5>';
+}
+
 $doliline .= "</div></div></li>";
 }
+} else {
+echo "<li class='list-group-item list-group-item-light'><br><br><br><br><br><center><h5>".__( 'Your basket is empty.', 'doliconnect-pro' )."</h5><br/><small>".dolihelp('COM')."</small></center>";
+if ( !is_user_logged_in() ) {
+echo '<center>'.__( 'If you already have an account,', 'doliconnect-pro' ).' ';
+
+if ( get_option('doliloginmodal') == '1' ) {
+       
+echo '<a href="#" data-toggle="modal" data-target="#DoliconnectLogin" data-dismiss="modal" title="'.__('Sign in', 'ptibogxivtheme').'" role="button">'.__( 'log in', 'doliconnect-pro' ).'</a> ';
+} else {
+echo "<a href='".wp_login_url( doliconnecturl('dolicart') )."?redirect_to=".doliconnecturl('dolicart')."' >".__( 'log in', 'doliconnect-pro' ).'</a> ';
 }
+echo __( 'to see your basket.', 'doliconnect-pro' ).'</center>';
+}
+echo "<br><br><br><br><br></li>";
+} 
 return $doliline;
 }
 
