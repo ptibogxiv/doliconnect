@@ -425,7 +425,7 @@ $dates =" <i>(Du $start au $end)</i>";
 }
 $doliline .= '<div class="w-100 justify-content-between"><div class="row"><div class="col-8 col-md-10"> 
 <h6 class="mb-1">'.$line->libelle.'</h6>
-<small><p class="mb-1">'.$line->desc.'</p>
+<small><p class="mb-1">'.$line->description.'</p>
 <i>'.$dates.'</i></small></div>';
 
 if ( $object->statut == 0 && !empty($mode)) {
