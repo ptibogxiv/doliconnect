@@ -874,7 +874,7 @@ if ( $fac != null ) {
 foreach ($fac as $f => $value) {
 
 if ($value > 0) {
-$invoice = callDoliApi("GET", "/invoices/".$value, null, dolidelay('order', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$invoice = callDoliApi("GET", "/invoices/".$value."?contact_list=0", null, dolidelay('order', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 //echo $invoice;
 $payment = callDoliApi("GET", "/invoices/".$value."/payments", null, dolidelay('order', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 //echo $payment;
