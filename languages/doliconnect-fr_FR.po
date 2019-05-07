@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2019-05-07 16:33+0200\n"
-"PO-Revision-Date: 2019-05-07 16:34+0200\n"
+"POT-Creation-Date: 2019-05-07 16:50+0200\n"
+"PO-Revision-Date: 2019-05-07 16:50+0200\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_FR\n"
@@ -66,7 +66,7 @@ msgid "First subscription at"
 msgstr "Première souscription à"
 
 #: blocks/membership/membership.php:126 blocks/membership/membership.php:150
-#: doliconnect.php:1445 doliconnect.php:1451
+#: doliconnect.php:1447 doliconnect.php:1453
 msgid "Subscribe"
 msgstr "Souscrire"
 
@@ -143,7 +143,7 @@ msgstr ""
 msgid "Your %s's team"
 msgstr "L'équipe de %s"
 
-#: doliconnect.php:633 doliconnect.php:883 doliconnect.php:938
+#: doliconnect.php:633 doliconnect.php:883 doliconnect.php:940
 #: functions/dashboard.php:52 functions/dashboard.php:261
 #: functions/dashboard.php:360 functions/dashboard.php:368
 #: functions/dashboard.php:394 functions/dashboard.php:549
@@ -162,12 +162,12 @@ msgstr ""
 "email. N’oubliez pas de regarder vos courriels indésirables si vous ne "
 "trouvez pas notre message."
 
-#: doliconnect.php:636 doliconnect.php:885 doliconnect.php:942
-#: doliconnect.php:1101 functions/dashboard.php:257
+#: doliconnect.php:636 doliconnect.php:885 doliconnect.php:887
+#: doliconnect.php:944 doliconnect.php:1103 functions/dashboard.php:257
 msgid "Oops"
 msgstr "Oups"
 
-#: doliconnect.php:665 doliconnect.php:677 doliconnect.php:1008
+#: doliconnect.php:665 doliconnect.php:677 doliconnect.php:1010
 msgid "Create an account"
 msgstr "Créer un compte"
 
@@ -209,7 +209,7 @@ msgstr "Modifier"
 msgid "No account seems to be linked to this email address"
 msgstr "Aucun compte ne semble être lié à cet adresse email"
 
-#: doliconnect.php:837 doliconnect.php:934
+#: doliconnect.php:837 doliconnect.php:936
 msgid ""
 "Manage your account, your informations and much more via this secure client "
 "area."
@@ -243,7 +243,7 @@ msgstr ""
 "Si vous n'êtes pas à l'origine de cette action, merci de ne pas tenir compte "
 "de cet e-mail."
 
-#: doliconnect.php:883 doliconnect.php:938
+#: doliconnect.php:883 doliconnect.php:940
 msgid ""
 "A password reset link was sent to you by email. Please check your spam "
 "folder if you don't find it."
@@ -251,26 +251,30 @@ msgstr ""
 "Un lien de réinitialisation du mot de passe vous a été envoyé par email. "
 "Pensez à regarder vos messages indésirables si vous ne le trouvez pas."
 
-#: doliconnect.php:914 doliconnect.php:1012
+#: doliconnect.php:887
+msgid "A problem occurred. Please retry later!"
+msgstr "Un problème s’est produit. Veuillez réessayer plus tard!"
+
+#: doliconnect.php:916 doliconnect.php:1014
 msgid "Forgot password?"
 msgstr "Mot de passe oublié?"
 
-#: doliconnect.php:916
+#: doliconnect.php:918
 msgid "Please enter the email address by which you registered your account."
 msgstr ""
 "Veuillez entrer l'adresse e-mail avec laquelle vous avez enregistré votre "
 "compte."
 
-#: doliconnect.php:919 doliconnect.php:1000 doliconnect.php:1143
-#: doliconnect.php:1152 functions/tools.php:95
+#: doliconnect.php:921 doliconnect.php:1002 doliconnect.php:1145
+#: doliconnect.php:1154 functions/tools.php:95
 msgid "Email"
 msgstr "Adresse électronique"
 
-#: doliconnect.php:922
+#: doliconnect.php:924
 msgid "Submit"
 msgstr "Soumettre"
 
-#: doliconnect.php:942
+#: doliconnect.php:944
 msgid ""
 "There is no account for these login data or the email and/or the password "
 "are not correct."
@@ -278,102 +282,102 @@ msgstr ""
 "Il n'y a pas de compte pour ces données ou l'email et/ou le mot de passe ne "
 "sont pas corrects."
 
-#: doliconnect.php:950 doliconnect.php:1015 functions/tools.php:477
+#: doliconnect.php:952 doliconnect.php:1017 functions/tools.php:477
 msgid "Sign in"
 msgstr "Connexion"
 
-#: doliconnect.php:950
+#: doliconnect.php:952
 msgid "You have already an account"
 msgstr "Vous avez déjà un compte"
 
-#: doliconnect.php:953
+#: doliconnect.php:955
 msgid "or"
 msgstr "ou"
 
-#: doliconnect.php:954
+#: doliconnect.php:956
 msgid "You don't have an account"
 msgstr "Vous n'avez pas de compte"
 
-#: doliconnect.php:959
+#: doliconnect.php:961
 msgid "Welcome"
 msgstr "Bienvenue"
 
-#: doliconnect.php:1004 functions/tools.php:146
+#: doliconnect.php:1006 functions/tools.php:146
 msgid "Password"
 msgstr "Mot de passe"
 
-#: doliconnect.php:1039
+#: doliconnect.php:1041
 msgid "Your request is unsuccessful"
 msgstr "Votre demande est infructueuse"
 
-#: doliconnect.php:1086 functions/tools.php:111 functions/tools.php:112
+#: doliconnect.php:1088 functions/tools.php:111 functions/tools.php:112
 msgid "Address"
 msgstr "Adresse"
 
-#: doliconnect.php:1095
+#: doliconnect.php:1097
 msgid "Your message is successful send!"
 msgstr "Votre message a été envoyé avec succès!"
 
-#: doliconnect.php:1133
+#: doliconnect.php:1135
 msgid "Complete name"
 msgstr "Nom complet"
 
-#: doliconnect.php:1157
+#: doliconnect.php:1159
 msgid "Type of request"
 msgstr "Type de demande"
 
-#: doliconnect.php:1161 functions/dashboard.php:1830
+#: doliconnect.php:1163 functions/dashboard.php:1830
 msgid "Issue or problem"
 msgstr "Question ou problème"
 
-#: doliconnect.php:1161 functions/dashboard.php:1830
+#: doliconnect.php:1163 functions/dashboard.php:1830
 msgid "Commercial question"
 msgstr "Question commerciale"
 
-#: doliconnect.php:1161 functions/dashboard.php:1830
+#: doliconnect.php:1163 functions/dashboard.php:1830
 msgid "Change or enhancement request"
 msgstr "Modification ou amélioration"
 
-#: doliconnect.php:1161 functions/dashboard.php:1830
+#: doliconnect.php:1163 functions/dashboard.php:1830
 msgid "Project"
 msgstr "Projet"
 
-#: doliconnect.php:1161 functions/dashboard.php:1830
+#: doliconnect.php:1163 functions/dashboard.php:1830
 msgid "Other"
 msgstr "Autre"
 
-#: doliconnect.php:1176 functions/dashboard.php:1880
+#: doliconnect.php:1178 functions/dashboard.php:1880
 msgid "Message"
 msgstr "Message"
 
-#: doliconnect.php:1183
+#: doliconnect.php:1185
 msgid "I agree to save my personnal informations in order to contact me"
 msgstr ""
 "J'accepte que mes informations personnelles soient sauvegarder afin de me "
 "contacter"
 
-#: doliconnect.php:1186 functions/dashboard.php:1761
+#: doliconnect.php:1188 functions/dashboard.php:1761
 #: functions/dashboard.php:1883
 msgid "Send"
 msgstr "Envoyer"
 
-#: doliconnect.php:1353 doliconnect.php:1355
+#: doliconnect.php:1355 doliconnect.php:1357
 msgid "Report a Bug"
 msgstr "Signaler un bug"
 
-#: doliconnect.php:1366
+#: doliconnect.php:1368
 msgid "Offre d'emploi"
 msgstr "Offre d'emploi"
 
-#: doliconnect.php:1369 doliconnect.php:1468
+#: doliconnect.php:1371 doliconnect.php:1470
 msgid "Title:"
 msgstr "Titre:"
 
-#: doliconnect.php:1442 functions/dashboard.php:1442
+#: doliconnect.php:1444 functions/dashboard.php:1442
 msgid "Pay my subscription"
 msgstr "Payer mon adhésion"
 
-#: doliconnect.php:1448 functions/dashboard.php:1355
+#: doliconnect.php:1450 functions/dashboard.php:1355
 msgid "Membership"
 msgstr "Adhésion / Abonnement"
 
