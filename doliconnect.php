@@ -887,7 +887,7 @@ echo "<div class='alert alert-danger'><h4 class='alert-heading'>".__( 'Oops', 'd
 echo "<div class='alert alert-warning'><h4 class='alert-heading'>".__( 'Oops', 'doliconnect' )."</h4><p>".__( 'A problem occurred. Please retry later!', 'doliconnect' )."</p></div>";
 }
 
-echo "<form id='fpw-form' action='' method='post' class='was-validated'><input type='hidden' name='submitted' id='submitted' value='true' />";
+echo "<form id='fpw-form' action='".doliconnecturl('doliaccount')."?fpw' method='post' class='was-validated'><input type='hidden' name='submitted' id='submitted' value='true' />";
 
 if ( isset($msg) ) { echo $msg; }
 
