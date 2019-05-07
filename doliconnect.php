@@ -843,7 +843,7 @@ if( isset($_POST['user_email']) ) {
         $emailError = __( 'A valid email is need to reset your password', 'doliconnect' );
         $hasError = true;
     } elseif ( !email_exists(sanitize_email($_POST['user_email'])) ) {
-        $emailError = __( 'No account seems to be linked to this email address', 'doliconnect' );
+        $emailError = __( 'Reset password is not permitted', 'doliconnect' );
         $hasError = true;   
     }
     else {
@@ -861,7 +861,7 @@ $arr_params = array( 'rpw' => true, 'key' => $key, 'login' => $user->user_login)
 $url = esc_url( add_query_arg( $arr_params, doliconnecturl('doliaccount')) );
 
 if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $user->ID ) {
-      $emailError = __( 'Reset password of this account is not permitted', 'doliconnect' );
+      $emailError = __( 'Reset password is not permitted', 'doliconnect' );
       $emailSent = false;	
       
  } elseif ( !empty($key) ) { 
