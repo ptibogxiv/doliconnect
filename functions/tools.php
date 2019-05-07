@@ -9,7 +9,7 @@ else { $idobject=$mode; }
 
 echo "<ul class='list-group list-group-flush'>";
 
-if ( ! isset($object) && $mode == 'thirdparty' ) {
+if ( ! isset($object) && $mode == 'thirdparty' && !get_option('doliconnect_disablepro') ) {
 echo "<li class='list-group-item'><div class='form-row'><div class='col-12'>";
 if ( isset($_GET["pro"]) && !get_option('doliconnect_disablepro') ) {
 echo "<a  href='".wp_registration_url(get_permalink())."' role='button' title='".__( 'Create a personnal account', 'doliconnect' )."'><small>(".__( 'Personnal account', 'doliconnect' )."?)</small></a>";                                                                                                                                                                                                                                                                                                                                     
@@ -30,6 +30,8 @@ if ( $current_user->billing_type != 'phy' ) { echo " checked"; }
 echo " required><label class='custom-control-label' for='morphy2'>".__( 'Professionnal account', 'doliconnect' )."</label>
 </div>";
 echo "</div></div></li>";
+} elseif ( $mode == 'thirdparty' ) {
+echo "<input type='hidden' id='morphy' name='".$idobject."[morphy]' value='phy'>";
 }
 
 if ( $mode == 'thirdparty' ) {
@@ -59,11 +61,11 @@ echo ">".$postv->label."</option>";
 
 }} else {
 echo "<option value='MME' ";
-if ( $current_user->civility_id == 'MME') {
+if ( $current_user->civility_id == 'MME' && $object->civility_id != null) {
 echo "selected ";}
 echo ">".__( 'Miss', 'doliconnect' )."</option>";
 echo "<option value='MR' ";
-if ( $current_user->civility_id == 'MR') {
+if ( $current_user->civility_id == 'MR' && $object->civility_id != null) {
 echo "selected ";}
 echo ">".__( 'Mister', 'doliconnect' )."</option>";
 }
