@@ -1,5 +1,5 @@
 <?php
-function doliconnectuserform($object, $delay, $mode) {
+function doliconnectuserform($object, $delay, $mode, $display = null) {
 global $current_user;
 
 if ( is_object($object) && $object->id > 0 ) {
@@ -7,10 +7,12 @@ $idobject=$mode."[".$object->id."]";
 } 
 else { $idobject=$mode; }
 
-echo "<ul class='list-group list-group-flush'>";
+echo "<ul class='list-group list-group-flush'><li class='list-group-item'>";
 
-if ( ! isset($object) && $mode == 'thirdparty' && !get_option('doliconnect_disablepro') ) {
-echo "<li class='list-group-item'><div class='form-row'><div class='col-12'>";
+if ( $display == 'cart' ) {
+echo "<input type='hidden' id='morphy' name='".$idobject."[morphy]' value='".$current_user->billing_type."'>";
+} elseif ( ! isset($object) && $mode == 'thirdparty' && !get_option('doliconnect_disablepro') ) {
+echo "<div class='form-row'><div class='col-12'>";
 if ( isset($_GET["pro"]) && !get_option('doliconnect_disablepro') ) {
 echo "<a  href='".wp_registration_url(get_permalink())."' role='button' title='".__( 'Create a personnal account', 'doliconnect' )."'><small>(".__( 'Personnal account', 'doliconnect' )."?)</small></a>";                                                                                                                                                                                                                                                                                                                                     
 }
@@ -18,9 +20,9 @@ elseif (!get_option('doliconnect_disablepro')) {
 echo "<a  href='".wp_registration_url(get_permalink())."&pro' role='button' title='".__( 'Create a pro/supplier account', 'doliconnect' )."'><small>(".__( 'Pro account', 'doliconnect' )."?)</small></a>";
 }
 
-echo "</div></div></li>";
+echo "</div></div></li><li class='list-group-item'>";
 } elseif ( isset($object) && $mode == 'thirdparty' ) {
-echo "<li class='list-group-item'><div class='form-row'><div class='col-12'><label for='inputMorphy'><small><i class='fas fa-user'></i> ".__( 'Type of account', 'doliconnect' )."</small></label><br>";
+echo "<div class='form-row'><div class='col-12'><label for='inputMorphy'><small><i class='fas fa-user'></i> ".__( 'Type of account', 'doliconnect' )."</small></label><br>";
 echo "<div class='custom-control custom-radio custom-control-inline'><input type='radio' id='morphy1' name='".$idobject."[morphy]' value='phy' class='custom-control-input'";
 if ( $current_user->billing_type == 'phy' || empty($current_user->billing_type) ) { echo " checked"; }
 echo " required><label class='custom-control-label' for='morphy1'>".__( 'Personnal account', 'doliconnect' )."</label>
@@ -29,18 +31,18 @@ echo " required><label class='custom-control-label' for='morphy1'>".__( 'Personn
 if ( $current_user->billing_type != 'phy' ) { echo " checked"; }
 echo " required><label class='custom-control-label' for='morphy2'>".__( 'Professionnal account', 'doliconnect' )."</label>
 </div>";
-echo "</div></div></li>";
+echo "</div></div></li><li class='list-group-item'>";
 } elseif ( $mode == 'thirdparty' ) {
 echo "<input type='hidden' id='morphy' name='".$idobject."[morphy]' value='phy'>";
 }
 
 if ( $mode == 'thirdparty' ) {
 if ( $current_user->billing_type == 'mor' || ( isset($_GET["pro"]) && !get_option('doliconnect_disablepro') ) ) {
-echo "<li class='list-group-item'><div class='form-row'><div class='col-12'><label for='coordonnees'><small><i class='fas fa-building'></i> ".__( 'Name of company', 'doliconnect' )."</small></label><input type='text' class='form-control' id='inputcompany' placeholder='".__( 'Name of company', 'doliconnect' )."' name='".$idobject."[name]' value='".$current_user->billing_company."' required></div></div></li>";
+echo "<div class='form-row'><div class='col-12'><label for='coordonnees'><small><i class='fas fa-building'></i> ".__( 'Name of company', 'doliconnect' )."</small></label><input type='text' class='form-control' id='inputcompany' placeholder='".__( 'Name of company', 'doliconnect' )."' name='".$idobject."[name]' value='".$current_user->billing_company."' required></div></div></li><li class='list-group-item'>";
 } 
 }
 
-echo "<li class='list-group-item'><div class='form-row'><div class='col-12 col-md-3'><label for='inputCivility'><small><i class='fas fa-user'></i> ".__( 'Civility', 'doliconnect' )."</small></label>";
+echo "<div class='form-row'><div class='col-12 col-md-3'><label for='inputCivility'><small><i class='fas fa-user'></i> ".__( 'Civility', 'doliconnect' )."</small></label>";
 $civility = callDoliApi("GET", "/setup/dictionary/civility?sortfield=code&sortorder=ASC&limit=100", null, $delay);
 if ( isset($civility->error) ) {
 $civility = callDoliApi("GET", "/setup/dictionary/civilities?sortfield=code&sortorder=ASC&limit=100&active=1", null, $delay); 
@@ -158,7 +160,7 @@ echo "</li>";
 }
 
 echo "<li class='list-group-item'>";
-if ( $mode != 'contact' && $mode != 'member' ) {
+if ( $mode != 'contact' && $mode != 'member' && $display != 'cart' ) {
 echo "<div class='form-row'><div class='col'><label for='description'><small><i class='fas fa-bullhorn fa-fw'></i> ".__( 'About Yourself', 'doliconnect' )."</small></label>
 <textarea type='text' class='form-control' name='description' id='description' rows='3' placeholder='".__( 'About Yourself', 'doliconnect' )."'>".$current_user->description."</textarea></div></div>";
 
@@ -166,6 +168,7 @@ echo "<div class='form-row'><div class='col'><label for='description'><small><i 
 <input type='url' class='form-control' name='".$idobject."[url]' id='website' placeholder='".__( 'Website', 'doliconnect' )."' value='".stripslashes(htmlspecialchars($object->url, ENT_QUOTES))."'></div></div>";
 }
 
+if ( $display != 'cart' ) {
 echo "<div class='form-row'>";
 $facebook = callDoliApi("GET", "/doliconnector/constante/SOCIALNETWORKS_FACEBOOK", null, $delay);
 if ( is_object($facebook) && $facebook->value == 1 ) {
@@ -188,6 +191,7 @@ echo "<div class='col-12 col-md'><label for='inlineFormInputGroup'><small><i cla
 <input type='text' name='".$idobject."[linkedin]' class='form-control' id='inlineFormInputGroup' placeholder='".__( 'Username', 'doliconnect' )."' value='".stripslashes(htmlspecialchars($object->linkedin, ENT_QUOTES))."'></div>";
 }
 echo "</div>";
+}
 
 echo "</li>";
 
