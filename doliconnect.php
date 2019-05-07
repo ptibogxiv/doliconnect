@@ -873,8 +873,7 @@ if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $user-
 $headers = array('Content-Type: text/html; charset=UTF-8');
 $mail =  wp_mail($email, $subject, $body, $headers);
 
-				if( $mail )
-					$emailSent = true;		
+				if( $mail ) { $emailSent = true; } else { $emailSent = false; }		
 }
        
 }
@@ -884,7 +883,7 @@ if ( isset($emailSent) && $emailSent == true ) {
 echo "<div class='alert alert-success'><h4 class='alert-heading'>".__( 'Congratulations!', 'doliconnect' )."</h4><p>".__( 'A password reset link was sent to you by email. Please check your spam folder if you don\'t find it.', 'doliconnect' )."</p></div>";
 } elseif ( isset($hasError) || isset($emailError) ) { 
 echo "<div class='alert alert-danger'><h4 class='alert-heading'>".__( 'Oops', 'doliconnect' )."</h4><p>$emailError</p></div>";
-} else {
+} elseif ( isset($emailSent) && $emailSent != true ) {
 echo "<div class='alert alert-warning'><h4 class='alert-heading'>".__( 'Oops', 'doliconnect' )."</h4><p>".__( 'A problem occurred. Please retry later!', 'doliconnect' )."</p></div>";
 }
 
