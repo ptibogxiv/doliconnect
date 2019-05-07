@@ -635,6 +635,7 @@ echo "<div class='alert alert-success'><h4 class='alert-heading'>".__( 'Congratu
 if ( isset($hasError) || isset($captchaError) ) {
 echo "<div class='alert alert-danger'><a class='close' data-dismiss='alert'>x</a><h4 class='alert-heading'>".__( 'Oops', 'doliconnect' )."</h4><p class='error'>$emailError<p></div>";
 }
+}
 echo "<form id='signin-form' action='".doliconnecturl('doliaccount')."?signup' role='form' method='post' class='was-validated'>";
 
 if ( isset($msg) ) { echo $msg; }
@@ -675,7 +676,7 @@ if ( get_option('users_can_register')=='1' && ( get_site_option( 'registration' 
 echo "";
 } else { echo " aria-disabled='true'  disabled"; }
 echo "><b>".__( 'Create an account', 'doliconnect' )."</b></button></form>";
-}
+
 echo"</div></div>";
 
 echo "<p class='text-right'><small>";
