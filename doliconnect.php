@@ -741,7 +741,7 @@ echo "<li class='list-group-item'><h5 class='card-title'>".__( 'Change your pass
 <div class='input-group mb-2 mr-sm-2'><div class='input-group-prepend'>
 <div class='input-group-text'><i class='fas fa-key fa-fw'></i></div></div>
 <input class='form-control' id='pwd1' type='password' name='pwd1' value ='' placeholder='".__( 'Enter your new password', 'doliconnect' )."' ";
-if ( ''.constant("DOLICONNECT_DEMO").'' == $user->ID ) {
+if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $user->ID ) {
 echo ' readonly';
 } else {
 echo ' required';
@@ -754,14 +754,14 @@ echo "></div>
 <div class='input-group mb-2 mr-sm-2'><div class='input-group-prepend'>
 <div class='input-group-text'><i class='fas fa-key fa-fw'></i></div></div>
 <input class='form-control' id='pwd2' type='password' name='pwd2' value ='' placeholder='".__( 'Confirm your new password', 'doliconnect' )."' ";
-if ( ''.constant("DOLICONNECT_DEMO").'' == $user->ID ) {
+if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $user->ID ) {
 echo ' readonly';
 } else {
 echo ' required';
 }
 echo "></div>
 </div></div></li><li class='list-group-item'><input type='hidden' name='case' value ='updatepwd'><button class='btn btn-danger btn-block' type='submit' ";
-if ( ''.constant("DOLICONNECT_DEMO").'' == $user->ID ) {
+if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $user->ID ) {
 echo ' disabled';
 }
 echo "><b>".__( 'Update', 'doliconnect' )."</b></button></form></li></ul>";
@@ -860,7 +860,7 @@ $key = get_password_reset_key($user);
 $arr_params = array( 'rpw' => true, 'key' => $key, 'login' => $user->user_login);  
 $url = esc_url( add_query_arg( $arr_params, doliconnecturl('doliaccount')) );
 
-if ( !empty($key) && ''.constant("DOLICONNECT_DEMO").'' != $user->ID ) { 
+if ( !empty($key) && (!defined("DOLICONNECT_DEMO") || (defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' != $user->ID)) ) { 
 			$sitename = get_option('blogname');
       $siteurl = get_option('siteurl');
       $subject = "[$sitename] ".__( 'Reset Password', 'doliconnect' );
