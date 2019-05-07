@@ -554,7 +554,7 @@ exit;
 }
 
 if ( isset($_POST['submitted']) ) {
-$thirdparty=$_POST['thirdparty'];//['0']
+$thirdparty=$_POST['thirdparty'];
 
 if ( email_exists($thirdparty['email']) ) {
         $emailError = "".__( 'This email address is already linked to an account. You can reactivate your account through this <a href=\'".wp_lostpassword_url( get_permalink() )."\' title=\'lost password\'>form</a>.', 'doliconnect' )."";
@@ -587,8 +587,8 @@ wp_update_user( array( 'ID' => $ID, 'nickname' => sanitize_user($_POST['user_nic
 wp_update_user( array( 'ID' => $ID, 'display_name' => ucfirst(strtolower($thirdparty['firstname']))." ".strtoupper($thirdparty['lastname'])));
 wp_update_user( array( 'ID' => $ID, 'first_name' => ucfirst(sanitize_user(strtolower($thirdparty['firstname'])))));
 wp_update_user( array( 'ID' => $ID, 'last_name' => strtoupper(sanitize_user($thirdparty['lastname']))));
-wp_update_user( array( 'ID' => $ID, 'description' => sanitize_textarea_field($_POST['description'])));
-wp_update_user( array( 'ID' => $ID, 'user_url' => sanitize_textarea_field($thirdparty['url'])));
+//wp_update_user( array( 'ID' => $ID, 'description' => sanitize_textarea_field($_POST['description'])));
+//wp_update_user( array( 'ID' => $ID, 'user_url' => sanitize_textarea_field($thirdparty['url'])));
 update_user_meta( $ID, 'civility_id', sanitize_text_field($thirdparty['civility_id']));
 update_user_meta( $ID, 'billing_type', sanitize_text_field($thirdparty['morphy']));
 if ( isset($thirdparty['name']) ) { update_user_meta( $ID, 'billing_company', sanitize_text_field($thirdparty['name'])); }
@@ -597,22 +597,22 @@ update_user_meta( $ID, 'optin1', $_POST['optin1'] );
 
 $body = sprintf(__('Thank you for your registration on %s.', 'doliconnect'), $sitename);
 
-if ( function_exists('dolikiosk') && ! empty(dolikiosk()) ) { 
-$current_user = get_user_by( 'id', $ID);   
-if( $current_user ) {
+$current_user = get_user_by( 'ID', $ID);
+ 
+if ( function_exists('dolikiosk') && ! empty(dolikiosk()) && $current_user ) {  
 
 $dolibarr = doliconnector($current_user, 'fk_soc', true, $thirdparty);
 do_action('wp_dolibarr_sync', $thirdparty);
 
-    wp_set_current_user( $ID, $current_user->user_login );
-    wp_set_auth_cookie( $ID, false);
-    do_action( 'wp_login', $current_user->user_login );
-} 
-wp_redirect(esc_url(home_url()));
-exit;   
+wp_set_current_user( $ID, $current_user->user_login );
+wp_set_auth_cookie( $ID, false);
+do_action( 'wp_login', $current_user->user_login );
+
+//wp_redirect(esc_url(home_url()));
+//exit;   
 } else { 
-$user=get_user_by( 'ID', $ID );     
-$user = get_user_by( 'email', $email);   
+//$user=get_user_by( 'ID', $ID );     
+//$user = get_user_by( 'email', $email);   
 $key = get_password_reset_key($current_user);
 
 $arr_params = array( 'rpw' => true, 'key' => $key, 'login' => $current_user->user_login);  
@@ -635,7 +635,7 @@ echo "<div class='alert alert-success'><h4 class='alert-heading'>".__( 'Congratu
 if ( isset($hasError) || isset($captchaError) ) {
 echo "<div class='alert alert-danger'><a class='close' data-dismiss='alert'>x</a><h4 class='alert-heading'>".__( 'Oops', 'doliconnect' )."</h4><p class='error'>$emailError<p></div>";
 }
-echo "<form id='signin-form' method='post' class='was-validated'>";
+echo "<form id='signin-form' action='".doliconnecturl('doliaccount')."?signup' role='form' method='post' class='was-validated'>";
 
 if ( isset($msg) ) { echo $msg; }
 
