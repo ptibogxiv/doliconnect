@@ -59,11 +59,11 @@ echo ">".$postv->label."</option>";
 
 }} else {
 echo "<option value='MME' ";
-if ( $current_user->civility_id == 'MME' && $object->civility_id != null) {
+if ( $current_user->civility_id == 'MME') {
 echo "selected ";}
 echo ">".__( 'Miss', 'doliconnect' )."</option>";
 echo "<option value='MR' ";
-if ( $current_user->civility_id == 'MR' && $object->civility_id != null) {
+if ( $current_user->civility_id == 'MR') {
 echo "selected ";}
 echo ">".__( 'Mister', 'doliconnect' )."</option>";
 }
