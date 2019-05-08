@@ -903,7 +903,7 @@ $document_invoice = dolidocdownload('invoice', $invoice->ref, $invoice->ref.'.pd
 
 if ( $invoice->paye != 1 && $invoice->resteapayer != 0 && function_exists('dolipaymentmodes') ) {
 
-$payment_invoice = "<a href='".doliconnecturl('dolicart')."?pay&module=invoices&id=".esc_attr($_GET['id'])."&ref=".esc_attr($_GET['ref'])."' id='button-source-payment' class='btn btn-warning btn-block' role='button'><span class='fa fa-credit-card'></span> ".__( 'Pay', 'doliconnect' )."</a><br>";
+$payment_invoice = "<a href='".doliconnecturl('dolicart')."?pay&module=invoices&id=".$invoice->id."&ref=".$invoice->ref."' id='button-source-payment' class='btn btn-warning btn-block' role='button'><span class='fa fa-credit-card'></span> ".__( 'Pay', 'doliconnect' )."</a><br>";
 
 } elseif ( $invoice->paye != 1 && $invoice->resteapayer != 0 &&  isset($orderfo->public_payment_url) && !empty($orderfo->public_payment_url) ) {
 
