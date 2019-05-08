@@ -487,7 +487,7 @@ if ( !isset($listcontact->error) && $listcontact != null ) {
 foreach ( $listcontact as $contact ) { 
 echo "<form class='was-validated' role='form' action='$url' id='contact-".$contact->id."-form' method='post'>";
 echo '<div class="modal fade" id="contact-'.$contact->id.'" tabindex="-1" role="dialog" aria-labelledby="contact-'.$contact->id.'Title" aria-hidden="true">
-<div class="modal-dialog modal-lg modal-dialog-centered" role="document"><div class="modal-content"><div class="modal-header">
+<div class="modal-dialog modal-lg modal-dialog-centered" role="document"><div class="modal-content border-0"><div class="modal-header border-0">
 <h5 class="modal-title" id="contact-'.$contact->id.'Title">'.__( 'Update contact', 'doliconnect' ).'</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
 <div class="modal-body">';
 echo doliconnectuserform($contact, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'contact');      
@@ -499,8 +499,7 @@ echo "</div>
 if ( count($counter) < 5 ) {
 echo "<form class='was-validated' role='form' action='$url' id='contact-add-form' method='post'>";
 echo "<div class='modal fade' id='addcontactadress' tabindex='-1' role='dialog' aria-labelledby='addcontactadressTitle' aria-hidden='true'>
-<div class='modal-dialog modal-lg modal-dialog-centered' role='document'>
-<div class='modal-content'><div class='modal-header'>
+<div class='modal-dialog modal-lg modal-dialog-centered' role='document'><div class='modal-content border-0'><div class='modal-header border-0'>
 <h5 class='modal-title' id='addcontactadressTitle'>".__( 'New contact', 'doliconnect' )."</h5><button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
 </div><div class='modal-body'>";
 echo doliconnectuserform($thirdparty, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'contact');
@@ -1656,7 +1655,7 @@ if ( !isset($linkedmember->error) && $linkedmember != null ) {
 foreach ( $linkedmember as $member ) {
 echo "<form class='was-validated' role='form' action='$url' id='member-".$member->id."-form' method='post'>";
 echo '<div class="modal fade" id="member-'.$member->id.'" tabindex="-1" role="dialog" aria-labelledby="member-'.$member->id.'Title" aria-hidden="true">
-<div class="modal-dialog modal-lg modal-dialog-centered" role="document"><div class="modal-content"><div class="modal-header">
+<div class="modal-dialog modal-lg modal-dialog-centered" role="document"><div class="modal-content border-0"><div class="modal-header border-0">
 <h5 class="modal-title" id="member-'.$member->id.'Title">'.__( 'Update member', 'doliconnect' ).'</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
 <div class="modal-body">';
 echo doliconnectuserform($member, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'member');      
