@@ -15,7 +15,7 @@ $version='4.3.1';
   
 	wp_enqueue_script( 'bootstrap-js', plugins_url( 'doliconnect/includes/js/scripts.min.js'), array('jquery'), ' ', true );
 
-	wp_enqueue_script( 'font-awesome', '//use.fontawesome.com/releases/v5.8.1/js/all.js', array(), '5.8.1' );
+	wp_enqueue_script( 'font-awesome', '//use.fontawesome.com/releases/v5.8.2/js/all.js', array(), '5.8.2' );
   
   wp_enqueue_style( 'bootstrap-social', plugins_url( 'doliconnect/includes/css/bootstrap-social.css'), array(), $version); 
 
