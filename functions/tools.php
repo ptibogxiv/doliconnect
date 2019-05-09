@@ -420,7 +420,8 @@ return $total;
 }
 
 function doliline($object, $mode = null) {
-if ( $object->lines != null ) {
+global $current_user;
+if ( $object->lines != null && (doliconnector($current_user, 'fk_soc') == $object->socid) ) {
 foreach ( $object->lines as $line ) {
 $doliline .= "<li class='list-group-item'>";     
 if ( $line->date_start != '' && $line->date_end != '' )
@@ -472,17 +473,17 @@ $doliline .= '<h5 class="mb-1">x'.$line->qty.'</h5>';
 $doliline .= "</div></div></li>";
 }
 } else {
-echo "<li class='list-group-item list-group-item-light'><br><br><br><br><br><center><h5>".__( 'Your basket is empty.', 'doliconnect-pro' )."</h5><br/><small>".dolihelp('COM')."</small></center>";
+echo "<li class='list-group-item list-group-item-light'><br><br><br><br><br><center><h5>".__( 'Your basket is empty.', 'doliconnect' )."</h5><br/><small>".dolihelp('COM')."</small></center>";
 if ( !is_user_logged_in() ) {
-echo '<center>'.__( 'If you already have an account,', 'doliconnect-pro' ).' ';
+echo '<center>'.__( 'If you already have an account,', 'doliconnect' ).' ';
 
 if ( get_option('doliloginmodal') == '1' ) {
        
-echo '<a href="#" data-toggle="modal" data-target="#DoliconnectLogin" data-dismiss="modal" title="'.__('Sign in', 'ptibogxivtheme').'" role="button">'.__( 'log in', 'doliconnect-pro' ).'</a> ';
+echo '<a href="#" data-toggle="modal" data-target="#DoliconnectLogin" data-dismiss="modal" title="'.__('Sign in', 'ptibogxivtheme').'" role="button">'.__( 'log in', 'doliconnect' ).'</a> ';
 } else {
-echo "<a href='".wp_login_url( doliconnecturl('dolicart') )."?redirect_to=".doliconnecturl('dolicart')."' >".__( 'log in', 'doliconnect-pro' ).'</a> ';
+echo "<a href='".wp_login_url( doliconnecturl('dolicart') )."?redirect_to=".doliconnecturl('dolicart')."' >".__( 'log in', 'doliconnect' ).'</a> ';
 }
-echo __( 'to see your basket.', 'doliconnect-pro' ).'</center>';
+echo __( 'to see your basket.', 'doliconnect' ).'</center>';
 }
 echo "<br><br><br><br><br></li>";
 } 
