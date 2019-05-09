@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2019-05-08 23:25+0200\n"
-"PO-Revision-Date: 2019-05-08 23:26+0200\n"
+"POT-Creation-Date: 2019-05-09 11:41+0200\n"
+"PO-Revision-Date: 2019-05-09 11:42+0200\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_FR\n"
@@ -282,7 +282,7 @@ msgstr ""
 "Il n'y a pas de compte pour ces données ou l'email et/ou le mot de passe ne "
 "sont pas corrects."
 
-#: doliconnect.php:952 doliconnect.php:1017 functions/tools.php:481
+#: doliconnect.php:952 doliconnect.php:1017 functions/tools.php:482
 msgid "Sign in"
 msgstr "Connexion"
 
@@ -1171,19 +1171,19 @@ msgstr "Total TVA"
 msgid "Total incl. tax"
 msgstr "Total Taxes Comprises"
 
-#: functions/tools.php:475
+#: functions/tools.php:476
 msgid "Your basket is empty."
 msgstr "Votre panier est vide."
 
-#: functions/tools.php:477
+#: functions/tools.php:478
 msgid "If you already have an account,"
 msgstr "Si vous disposez déjà d'un compte,"
 
-#: functions/tools.php:481 functions/tools.php:483
+#: functions/tools.php:482 functions/tools.php:484
 msgid "log in"
 msgstr "connectez-vous"
 
-#: functions/tools.php:485
+#: functions/tools.php:486
 msgid "to see your basket."
 msgstr "pour voir votre panier."
 
