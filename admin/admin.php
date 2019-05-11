@@ -340,7 +340,7 @@ checked('1', get_option('doliconnectrestrict')); } else { ?> disabled <?php } ?>
            wp_dropdown_pages($args); ?>
 <?php } else { ?>
 <select name="dolicart" type="checkbox" id="dolicart" value="0" disabled><option> --- </option></select>
-<?php } ?> [dolicart] <b>PRO</b></td>
+<?php } ?> <b>PRO</b></td>
             </tr>
             <tr>
                 <th style="width:150px;"><label for="dolibarr_shop">dolibarr_shop</label></th>
@@ -356,7 +356,7 @@ checked('1', get_option('doliconnectrestrict')); } else { ?> disabled <?php } ?>
            wp_dropdown_pages($args); ?>
 <?php } else { ?>
 <select name="dolishop" type="checkbox" id="dolishop" value="0" disabled><option> --- </option></select>
-<?php } ?> [dolishop] <b>PRO</b></td>
+<?php } ?> <b>PRO</b></td>
             </tr>            
             <tr>
                 <th style="width:150px;"><label for="dolibarr_contact">dolibarr_contact</label></th>
