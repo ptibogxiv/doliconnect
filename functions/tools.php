@@ -413,7 +413,6 @@ return false;
 }
 
 function doliloaderscript() {
-echo "<script>";
 ?>
 
 window.setTimeout(function () {
@@ -433,7 +432,6 @@ form.submit();
 });
 
 <?php
-echo "</script>";
 }
 
 function dolitotal($object) {

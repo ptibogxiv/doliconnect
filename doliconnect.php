@@ -1111,7 +1111,7 @@ $content .= "<form action='' id='doliconnect-contactform' method='post' class='w
 
 if ( isset($msg) ) { echo $msg; }
 
-$content .= doliloaderscript();
+//$content .= "<script>".doliloaderscript()."</script>";
 
 $content .= "<div class='card shadow-sm'><ul class='list-group list-group-flush'>
 <li class='list-group-item'><div class='form-group'>
