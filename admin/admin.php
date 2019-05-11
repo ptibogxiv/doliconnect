@@ -368,7 +368,7 @@ checked('1', get_option('doliconnectrestrict')); } else { ?> disabled <?php } ?>
     'option_none_value' => '0', 
     'selected' => get_option('dolicontact') 
 );
-           wp_dropdown_pages($args); ?> [dolicontact] </td>
+           wp_dropdown_pages($args); ?> </td>
             </tr>                           
              <tr>
                 <th style="width:150px;"><label for="dolibarr_legacy">dolibarr_legacy</label></th>
