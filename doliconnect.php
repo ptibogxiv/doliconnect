@@ -940,7 +940,7 @@ if ( isset($emailSent) && $emailSent == true ) {
 echo "<div class='alert alert-success'><h4 class='alert-heading'>".__( 'Congratulations!', 'doliconnect' )."</h4><p>".__( 'A password reset link was sent to you by email. Please check your spam folder if you don\'t find it.', 'doliconnect' )."</p></div>";
 }
 
-if($_GET["login"]=='failed') { 
+if( isset($_GET["login"]) && $_GET["login"] == 'failed' ) { 
 echo "<div class='alert alert-danger'><h4 class='alert-heading'>".__( 'Oops', 'doliconnect' )."</h4><p>".__( 'There is no account for these login data or the email and/or the password are not correct.', 'doliconnect' )."</p></div>";
 }
 echo "<div class='card shadow-sm'><ul class='list-group list-group-flush'><li class='list-group-item'>";
