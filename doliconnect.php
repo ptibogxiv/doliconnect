@@ -1031,7 +1031,10 @@ add_shortcode('doliaccount', 'doliaccount_shortcode');
 
 // ********************************************************
 
-function dolicontact_shortcode() { 
+// ********************************************************
+function dolicontact_display($content) {
+
+if ( doliconnectid('dolicontact') == get_the_ID() ) {
 global $wpdb,$current_user;
 
 doliconnect_enqueues();
@@ -1085,30 +1088,30 @@ elseif(isset($_POST['submitted'])) {
 
 }
 
-echo "<div class='row'><div class='col-md-4'><div class='form-group'><h4>".__( 'Address', 'doliconnect' )."</h4>";
+$content .= "<div class='row'><div class='col-md-4'><div class='form-group'><h4>".__( 'Address', 'doliconnect' )."</h4>";
 echo doliconst('MAIN_INFO_SOCIETE_ADDRESS');
-echo "<br />";
+$content .= "<br />";
 echo doliconst('MAIN_INFO_SOCIETE_ZIP');
-echo " ";
+$content .= " ";
 echo doliconst('MAIN_INFO_SOCIETE_TOWN'); 
-echo "</div></div><div class='col-md-8'><div id='content'>";
+$content .= "</div></div><div class='col-md-8'><div id='content'>";
 if(isset($emailSent) && $emailSent == true) { 
-echo "<div class='alert alert-success'>
+$content .= "<div class='alert alert-success'>
 <p>".__( 'Your message is successful send!', 'doliconnect' )."</p>
 </div>";
 } else { 
 if(isset($hasError) || isset($captchaError)) { 
-echo "<div class='alert alert-warning'>
+$content .= "<div class='alert alert-warning'>
 <a class='close' data-dismiss='alert'>x</a>
 <h4 class='alert-heading'>".__( 'Oops', 'doliconnect' )."</h4>
 <p class='error'>Please try again!<p></div>";
 }
 
-echo "<form action='' id='doliconnect-contactform' method='post' class='was-validated'>";
+$content .= "<form action='' id='doliconnect-contactform' method='post' class='was-validated'>";
 
 if ( isset($msg) ) { echo $msg; }
 
-echo "<script>";
+$content .= "<script>";
 ?>
 
 window.setTimeout(function () {
@@ -1128,70 +1131,75 @@ form.submit();
 });
 
 <?php
-echo "</script>";
+$content .= "</script>";
 
-echo "<div class='card shadow-sm'><ul class='list-group list-group-flush'>
+$content .= "<div class='card shadow-sm'><ul class='list-group list-group-flush'>
 <li class='list-group-item'><div class='form-group'>
 <label class='control-label' for='contactName'><small>".__( 'Complete name', 'doliconnect' )."</small></label>
 <input class='form-control' type='text' name='contactName' autocomplete='off' id='contactName' value=";
-if (is_user_logged_in()){ echo "'$current_user->user_lastname $current_user->user_firstname'"; } else { echo "''";}
-if (is_user_logged_in()){ echo " readonly";} else {echo " required"; }
-echo "/>";
+if (is_user_logged_in()){ $content .= "'$current_user->user_lastname $current_user->user_firstname'"; } else { $content .= "''";}
+if (is_user_logged_in()){ $content .= " readonly";} else {$content .= " required"; }
+$content .= "/>";
 if($nameError != '') { 
-echo "<p><span class='error'>$nameError</span></p>";
+$content .= "<p><span class='error'>$nameError</span></p>";
 } 
-echo "</div>
+$content .= "</div>
 <div class='form-group'>
 <label class='control-label' for='email'><small>".__( 'Email', 'doliconnect' )."</small></label>
 <input class='form-control' type='email' name='email' autocomplete='off' id='email' value='$current_user->user_email'";
-if (is_user_logged_in()){echo " readonly";} else {echo " required";}
-echo "/>";
+if (is_user_logged_in()){$content .= " readonly";} else {$content .= " required";}
+$content .= "/>";
 if($emailError != '') {
-echo "<p><span class='error'>$emailError</span></p>";
+$content .= "<p><span class='error'>$emailError</span></p>";
 }
-echo "</div>
+$content .= "</div>
 <div class='form-group d-none'>
 <label class='control-label' for='email-control'><small>".__( 'Email', 'doliconnect' )."</small></label>
 <input class='form-control' type='email' name='email-control' autocomplete='off' id='email-control' ";
-echo "/>";
-echo "</div>";
+$content .= "/>";
+$content .= "</div>";
 
-echo "<div class='form-group'><label class='control-label' for='type'><small>".__( 'Type of request', 'doliconnect' )."</small></label>";
+$content .= "<div class='form-group'><label class='control-label' for='type'><small>".__( 'Type of request', 'doliconnect' )."</small></label>";
 $type = callDoliApi("GET", "/setup/dictionary/ticket_types?sortfield=pos&sortorder=ASC&limit=100", null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 if (isset($type)) { 
 $tp= __( 'Issue or problem', 'doliconnect' ).__( 'Commercial question', 'doliconnect' ).__( 'Change or enhancement request', 'doliconnect' ).__( 'Project', 'doliconnect' ).__( 'Other', 'doliconnect' );
-echo "<select class='custom-select' id='ticket_type'  name='ticket_type'>";
+$content .= "<select class='custom-select' id='ticket_type'  name='ticket_type'>";
 foreach ($type as $postv) {
-echo "<option value='".$postv->code."' ";
+$content .= "<option value='".$postv->code."' ";
 if ( $_GET['type']==$postv->code ) {
-echo "selected ";
+$content .= "selected ";
 } elseif ( $postv->use_default==1 ) {
-echo "selected ";}
-echo ">".__($postv->label, 'doliconnect' )."</option>";
+$content .= "selected ";}
+$content .= ">".__($postv->label, 'doliconnect' )."</option>";
 }
-echo "</select>";
+$content .= "</select>";
 }
-echo "</div>";
+$content .= "</div>";
 
-echo "<div class='form-group'>
+$content .= "<div class='form-group'>
 <label class='control-label' for='commentsText'><small>".__( 'Message', 'doliconnect' )."</small></label>
 <textarea class='form-control' name='comments' id='commentsText' rows='7' cols='20' required></textarea>";
 if ($commentError != '') { 
-echo "<p><span class='error'>$commentError</span></p>";
+$content .= "<p><span class='error'>$commentError</span></p>";
 }
 
 if (!is_user_logged_in()){
 echo '</li><li class="list-group-item"><div class="custom-control custom-checkbox"><input id="rgpdinfo" class="custom-control-input form-control-sm" type="checkbox" name="rgpdinfo" value="ok" required><label class="custom-control-label w-100" for="rgpdinfo"><small class="form-text text-muted"> '.__( 'I agree to save my personnal informations in order to contact me', 'doliconnect' ).'</small></label></div>';  
 }
-echo "</li></ul>";
-echo "<div class='card-body'><button class='btn btn-primary btn-block' type='submit'><b>".__( 'Send', 'doliconnect' )."</b></button><input type='hidden' name='submitted' id='submitted' value='true' /></div></div></div></div></form>";
+$content .= "</li></ul>";
+$content .= "<div class='card-body'><button class='btn btn-primary btn-block' type='submit'><b>".__( 'Send', 'doliconnect' )."</b></button><input type='hidden' name='submitted' id='submitted' value='true' /></div></div></div></div></form>";
 } 
-echo "</div>";
-                   
-}
-add_shortcode('dolicontact', 'dolicontact_shortcode');
+$content .= "</div>";
 
+return $content;
+} else {
+return $content;
+}
+
+}
+
+add_filter( 'the_content', 'dolicontact_display', 10, 1);
 // ********************************************************
 
 function update_synctodolibarr($element) {
