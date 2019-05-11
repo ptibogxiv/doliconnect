@@ -1321,6 +1321,8 @@ wp_redirect(esc_url(doliconnecturl('dolicart')));
 exit;     
 } elseif ( $_POST["update_membership"]==5 || $_POST["update_membership"]==1 ) {
 $dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, 0); 
+wp_redirect(esc_url($url));
+exit; 
 }
 
 } 
@@ -1379,11 +1381,11 @@ if ( $adherent->datefin == null && $adherent->statut == '0' ) {echo  "<a href='#
 } elseif ($adherent->statut == '1') {
 if ( $time > $adherent->next_subscription_renew && $adherent->datefin != null ) {
 echo "<button class='btn btn text-white btn-warning btn-block' data-toggle='modal' data-target='#activatemember'><b>".__( 'Renew my subscription', 'doliconnect' )."</b></button>";
-} elseif ( ( $adherent->datefin + 86400 ) > $time ) {
+} elseif ( intval(86400+(!empty($adherent->datefin)?$adherent->datefin:0)) > $time ) {
 echo  "<button id='subscribe-button2' class='btn btn text-white btn-warning btn-block' data-toggle='modal' data-target='#activatemember'><b>".__( 'Modify my subscription', 'doliconnect' )."</b></button>";
-}else { echo  "<button class='btn btn btn-danger btn-block' data-toggle='modal' data-target='#activatemember'><b>".__( 'Pay my subscription', 'doliconnect' )."</b></button>";}
+} else { echo  "<button class='btn btn btn-danger btn-block' data-toggle='modal' data-target='#activatemember'><b>".__( 'Pay my subscription', 'doliconnect' )."</b></button>";}
 } elseif ( $adherent->statut == '0' ) {
-if ( ( $adherent->datefin + 86400) > $time ) {
+if ( intval(86400+(!empty($adherent->datefin)?$adherent->datefin:0)) > $time ) {
 echo "<form id='subscription-form' action='".doliconnecturl('doliaccount')."?module=members' method='post'><input type='hidden' name='update_membership' value='4'><button id='resiliation-button' class='btn btn btn-warning btn-block' type='submit'><b>".__( 'Reactivate my subscription', 'doliconnect' )."</b></button></form>";
 } else {
 echo  "<button class='btn btn text-white btn-warning btn-block' data-toggle='modal' data-target='#activatemember'><b>".__( 'Renew my subscription', 'doliconnect' )."</b></button>";
