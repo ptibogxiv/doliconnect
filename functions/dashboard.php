@@ -466,7 +466,7 @@ if ( !isset($listcontact->error) && $listcontact != null ) {
 foreach ( $listcontact as $contact ) { 
 $count=$contact->ref_facturation+$contact->ref_contrat+$contact->ref_commande+$contact->ref_propal;
 echo "<li class='list-group-item d-flex justify-content-between lh-condensed list-group-item-action'>";
-echo "<div class='d-none d-md-block col-md-2 col-lg-1'><i class='fas fa-address-card $color fa-3x fa-fw'></i></div><h6 class='my-0'>".($contact->civility ? $contact->civility : $contact->civility_code)." ".$contact->firstname." ".$contact->lastname;
+echo "<div class='d-none d-md-block col-md-2 col-lg-1'><i class='fas fa-address-card fa-3x fa-fw'></i></div><h6 class='my-0'>".($contact->civility ? $contact->civility : $contact->civility_code)." ".$contact->firstname." ".$contact->lastname;
 if ( !empty($contact->default) ) { echo " <i class='fas fa-star fa-1x fa-fw' style='color:Gold'></i>"; }
 if ( !empty($contact->poste) ) { echo "<br>".$contact->poste; }
 echo "</h6>";
@@ -640,9 +640,10 @@ echo "'>".__( 'Propals tracking', 'doliconnect' )."</a>";
 function proposals_module( $url ) {
 global $current_user;
 
+if ( isset($_GET['id']) && $_GET['id'] > 0 ) {
+
 $request = "/proposals/".esc_attr($_GET['id'])."?contact_list=0";
 
-if ( isset($_GET['id']) && $_GET['id'] > 0 ) {
 $proposalfo = callDoliApi("GET", $request, null, dolidelay('proposal', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 //echo $proposalfo;
 }
@@ -767,9 +768,10 @@ echo "'>".__( 'Orders tracking', 'doliconnect' )."</a>";
 function orders_module( $url ) {
 global $current_user;
 
+if ( isset($_GET['id']) && $_GET['id'] > 0 ) { 
+
 $request = "/orders/".esc_attr($_GET['id'])."?contact_list=0";
 
-if ( isset($_GET['id']) && $_GET['id'] > 0 ) {
 $orderfo = callDoliApi("GET", $request, null, dolidelay('order', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 //echo $orderfo;
 }
@@ -979,7 +981,7 @@ echo "</div></small>";
 
 } else {
 
-$request= "/orders?sortfield=t.rowid&sortorder=DESC&limit=8".$page."&thirdparty_ids=".doliconnector($current_user, 'fk_soc')."&sqlfilters=(t.fk_statut!=0)";
+$request= "/orders?sortfield=t.rowid&sortorder=DESC&limit=8&thirdparty_ids=".doliconnector($current_user, 'fk_soc')."&sqlfilters=(t.fk_statut!=0)"; //".$page."
 
 if ( isset($_GET['pg']) && $_GET['pg'] > 0) { $page="&page=".$_GET['pg'];}  else { $page=""; }
 
@@ -1053,9 +1055,10 @@ echo "'>".__( 'Contracts tracking', 'doliconnect' )."</a>";
 function contracts_module( $url ) {
 global $current_user;
 
+if ( isset($_GET['id']) && $_GET['id'] > 0 ) {  
+
 $request = "/contracts/".esc_attr($_GET['id'])."?contact_list=0";
 
-if ( isset($_GET['id']) && $_GET['id'] > 0 ) {
 $contractfo = callDoliApi("GET", $request, null, dolidelay('contract', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 //echo $contractfo;
 }
@@ -1105,7 +1108,7 @@ echo "</div></small>";
 
 } else {
 
-$request = "/contracts?sortfield=t.rowid&sortorder=DESC&limit=8".$page."&thirdparty_ids=".doliconnector($current_user, 'fk_soc');
+$request = "/contracts?sortfield=t.rowid&sortorder=DESC&limit=8&thirdparty_ids=".doliconnector($current_user, 'fk_soc'); //".$page."
 
 if ( isset($_GET['pg']) && $_GET['pg'] ) { $page="&page=".$_GET['pg'];} else { $page=""; }
                                  
