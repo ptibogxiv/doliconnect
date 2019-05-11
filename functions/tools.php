@@ -443,6 +443,9 @@ return $total;
 
 function doliline($object, $mode = null) {
 global $current_user;
+
+$doliline=null;
+
 if ( $object->lines != null && (doliconnector($current_user, 'fk_soc') == $object->socid) ) {
 foreach ( $object->lines as $line ) {
 $doliline .= "<li class='list-group-item'>";     
@@ -452,10 +455,11 @@ $start = date_i18n('d/m/Y', $line->date_start);
 $end = date_i18n('d/m/Y', $line->date_end);
 $dates =" <i>(Du $start au $end)</i>";
 }
+
 $doliline .= '<div class="w-100 justify-content-between"><div class="row"><div class="col"> 
 <h6 class="mb-1">'.$line->libelle.'</h6>
 <small><p class="mb-1">'.$line->description.'</p>
-<i>'.$dates.'</i></small></div>';
+<i>'.(isset($dates) ? $dates : null).'</i></small></div>';
 
 if ( $object->statut == 0 && !empty($mode)) {
 if ( $line->fk_product > 0 ) {
