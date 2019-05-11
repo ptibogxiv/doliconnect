@@ -1089,11 +1089,11 @@ elseif(isset($_POST['submitted'])) {
 }
 
 $content .= "<div class='row'><div class='col-md-4'><div class='form-group'><h4>".__( 'Address', 'doliconnect' )."</h4>";
-echo doliconst('MAIN_INFO_SOCIETE_ADDRESS');
+$content .= doliconst('MAIN_INFO_SOCIETE_ADDRESS');
 $content .= "<br />";
-echo doliconst('MAIN_INFO_SOCIETE_ZIP');
+$content .= doliconst('MAIN_INFO_SOCIETE_ZIP');
 $content .= " ";
-echo doliconst('MAIN_INFO_SOCIETE_TOWN'); 
+$content .= doliconst('MAIN_INFO_SOCIETE_TOWN'); 
 $content .= "</div></div><div class='col-md-8'><div id='content'>";
 if(isset($emailSent) && $emailSent == true) { 
 $content .= "<div class='alert alert-success'>
@@ -1111,27 +1111,7 @@ $content .= "<form action='' id='doliconnect-contactform' method='post' class='w
 
 if ( isset($msg) ) { echo $msg; }
 
-$content .= "<script>";
-?>
-
-window.setTimeout(function () {
-    $(".alert-success").fadeTo(500, 0).slideUp(500, function () {
-        $(this).remove();
-    });
-}, 5000);
-
-var form = document.getElementById('doliconnect-contactform');
-form.addEventListener('submit', function(event) {
-
-jQuery('#DoliconnectLoadingModal').modal('show');
-jQuery(window).scrollTop(0); 
-console.log("submit");
-form.submit();
-
-});
-
-<?php
-$content .= "</script>";
+$content .= doliloaderscript();
 
 $content .= "<div class='card shadow-sm'><ul class='list-group list-group-flush'>
 <li class='list-group-item'><div class='form-group'>

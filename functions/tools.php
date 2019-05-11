@@ -412,6 +412,30 @@ return false;
 }
 }
 
+function doliloaderscript() {
+echo "<script>";
+?>
+
+window.setTimeout(function () {
+    $(".alert-success").fadeTo(500, 0).slideUp(500, function () {
+        $(this).remove();
+    });
+}, 5000);
+
+var form = document.getElementById('doliconnect-contactform');
+form.addEventListener('submit', function(event) {
+
+jQuery('#DoliconnectLoadingModal').modal('show');
+jQuery(window).scrollTop(0); 
+console.log("submit");
+form.submit();
+
+});
+
+<?php
+echo "</script>";
+}
+
 function dolitotal($object) {
 $total = "<b>".__( 'Total excl. tax', 'doliconnect').": ".doliprice($object, 'ht', isset($object->multicurrency_code) ? $object->multicurrency_code : null)."</b><br>";
 $total .= "<b>".__( 'Total tax', 'doliconnect').": ".doliprice($object, 'tva', isset($object->multicurrency_code) ? $object->multicurrency_code : null)."</b><br>";
