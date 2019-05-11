@@ -25,9 +25,10 @@ $ID = $current_user->ID;
 
 $request = "/thirdparties/".doliconnector($current_user, 'fk_soc');
 
+if ( isset($_POST["case"]) && $_POST["case"] == 'updateuser' ) {
+ 
 $thirdparty=$_POST['thirdparty'][''.doliconnector($current_user, 'fk_soc').''];
 
-if ( isset($_POST["case"]) && $_POST["case"] == 'updateuser' ) {
 if ( $thirdparty['morphy'] == 'phy' ) {
 $thirdparty['name'] = ucfirst(strtolower($thirdparty['firstname']))." ".strtoupper($thirdparty['lastname']);
 } 
