@@ -652,8 +652,8 @@ if ( !isset($proposalfo->error) && isset($_GET['id']) && isset($_GET['ref']) && 
 echo "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>$proposalfo->ref</h5><div class='row'><div class='col-md-5'>";
 $datevalidation =  date_i18n('d/m/Y', $proposalfo->date_validation);
 echo "<b>".__( 'Date of creation', 'doliconnect' ).":</b> ".date_i18n('d/m/Y', $proposalfo->date_creation)."<br>";
-//echo "<b>".__( 'Validation', 'doliconnect' )." : </b> $datevalidation<br>";
-echo "<b>Date de fin de validité:</b> $datevalidite";
+echo "<b>".__( 'Validation', 'doliconnect' )." : </b> $datevalidation<br>";
+//echo "<b>Date de fin de validité:</b> $datevalidite";
 //echo "<b>".__( 'Status', 'doliconnect' )." : </b> ";
 if ( $proposalfo->statut == 3 ) { $propalinfo=__( 'Refused', 'doliconnect' );
 $propalavancement=0; }
@@ -710,7 +710,7 @@ echo "<div class='col-md-7'><h6>" . $val['label'] . "</h6>" . $val['description'
 echo "</ul></div>";
 
 echo "<small><div class='float-left'>";
-echo dolirefresh($request, $url."&id=".$_GET['id']."&ref=".$_GET['ref'], dolidelay('proposal'), $propalfo);
+echo dolirefresh($request, $url."&id=".$_GET['id']."&ref=".$_GET['ref'], dolidelay('proposal'), $proposalfo);
 echo "</div><div class='float-right'>";
 echo dolihelp('COM');
 echo "</div></small>";
@@ -843,7 +843,8 @@ echo "</div></div>";
 if (!empty($orderfo->contacts_ids) && is_array($orderfo->contacts_ids)) {
 echo "<div class='card-group'>";
 foreach ($orderfo->contacts_ids as $contact) {
-echo "<div class='card'><div class='card-body'><h6>".$contact->libelle."</h6>".$contact->civility." ".$contact->firstname." ".$contact->lastname."<br>".$contact->address."<br>".$contact->zip."".$contact->town."</div></div>";
+echo "<div class='card'><div class='card-body'><h6>".$contact->libelle."</h6>".$contact->civility." ".$contact->firstname." ".$contact->lastname;//<br>".$contact->address."<br>".$contact->zip."".$contact->town.
+echo "</div></div>";
 }
 echo "</div><br>";
 }
@@ -874,8 +875,7 @@ $fruits[$orderfo->date_commande.'o'] = array(
 "description" => null,
 );
 
-$fac=$orderfo->linkedObjectsIds->facture;
-if ( $fac != null ) {
+if ( isset($orderfo->linkedObjectsIds->facture) && $orderfo->linkedObjectsIds->facture != null ) {
 foreach ($fac as $f => $value) {
 
 if ($value > 0) {
@@ -1638,10 +1638,10 @@ echo "<li class='list-group-item list-group-item-info'><i class='fas fa-info-cir
 if ( !isset($linkedmember->error) && $linkedmember != null ) { 
 foreach ( $linkedmember as $member ) {                                                                                 
 echo "<li class='list-group-item d-flex justify-content-between lh-condensed list-group-item-action'>";
-echo "<div class='d-none d-md-block col-md-2 col-lg-1'><i class='fas fa-address-card $color fa-3x fa-fw'></i></div><h6 class='my-0'>".($member->civility ? $member->civility : $member->civility_code)." ".$member->firstname." ".$member->lastname;
+echo "<div class='d-none d-md-block col-md-2 col-lg-1'><i class='fas fa-address-card fa-3x fa-fw'></i></div><h6 class='my-0'>".($member->civility ? $member->civility : $member->civility_code)." ".$member->firstname." ".$member->lastname;
 //if ( !empty($contact->poste) ) { echo "<br>".$contact->poste; }
 echo "</h6>";
-echo "<small class='text-muted'>".$member->address."<br>".$member->zip." ".$member->town." - ".$member->country."<br>".$member->email." ".$member->phone_pro."</small>";
+echo "<small class='text-muted'>".$member->address."<br>".$member->zip." ".$member->town." - ".$member->country."<br>".$member->email." ".$member->phone."</small>";
 if (1 == 1) {
 echo "<div class='col-4 col-sm-3 col-md-2 btn-group-vertical' role='group'>";
 echo "<button type='button' class='btn btn-light text-primary' data-toggle='modal' data-target='#member-".$member->id."' title='".__( 'Edit', 'doliconnect' )." ".$member->firstname." ".$member->lastname."'><i class='fas fa-edit fa-fw'></i></a>
@@ -1691,9 +1691,10 @@ echo "'>".__( 'Help', 'doliconnect' )."</a>";
 function tickets_module( $url ) {
 global $current_user;
 
+if ( isset($_GET['id']) && $_GET['id'] > 0 ) {  
+
 $request = "/tickets/".esc_attr($_GET['id']);
 
-if ( isset($_GET['id']) && $_GET['id'] > 0 ) {
 $ticketfo = callDoliApi("GET", $request, null, dolidelay('ticket', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 //echo $ticket;
 }
