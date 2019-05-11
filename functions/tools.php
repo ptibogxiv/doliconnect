@@ -159,8 +159,10 @@ do_action('mydoliconnectuserform', $object);
 echo "</li>";
 }
 
+if ( $display != 'cart' ) {
 echo "<li class='list-group-item'>";
-if ( $mode != 'contact' && $mode != 'member' && $display != 'cart' ) {
+
+if ( $mode != 'contact' && $mode != 'member') {
 echo "<div class='form-row'><div class='col'><label for='description'><small><i class='fas fa-bullhorn fa-fw'></i> ".__( 'About Yourself', 'doliconnect' )."</small></label>
 <textarea type='text' class='form-control' name='description' id='description' rows='3' placeholder='".__( 'About Yourself', 'doliconnect' )."'>".$current_user->description."</textarea></div></div>";
 
@@ -168,7 +170,6 @@ echo "<div class='form-row'><div class='col'><label for='description'><small><i 
 <input type='url' class='form-control' name='".$idobject."[url]' id='website' placeholder='".__( 'Website', 'doliconnect' )."' value='".stripslashes(htmlspecialchars((isset($object->url) ? $object->url : null), ENT_QUOTES))."'></div></div>";
 }
 
-if ( $display != 'cart' ) {
 echo "<div class='form-row'>";
 $facebook = callDoliApi("GET", "/doliconnector/constante/SOCIALNETWORKS_FACEBOOK", null, $delay);
 if ( is_object($facebook) && $facebook->value == 1 ) {
@@ -190,10 +191,9 @@ if ( is_object($linkedin) && $linkedin->value == 1 ) {
 echo "<div class='col-12 col-md'><label for='inlineFormInputGroup'><small><i class='fab fa-linkedin-in fa-fw'></i> Linkedin</small></label>
 <input type='text' name='".$idobject."[linkedin]' class='form-control' id='inlineFormInputGroup' placeholder='".__( 'Username', 'doliconnect' )."' value='".stripslashes(htmlspecialchars((isset($object->linkedin) ? $object->linkedin : null), ENT_QUOTES))."'></div>";
 }
-echo "</div>";
-}
-
+echo "</div>"; 
 echo "</li>";
+}
 
 }
 
