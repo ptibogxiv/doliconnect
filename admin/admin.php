@@ -219,44 +219,44 @@ echo '<h2>'.__( 'Doliconnect settings', 'doliconnect' ).'</h2>';
 
     if (isset($_REQUEST['doliconnect_settings'])) {            
             update_option('dolicart', sanitize_text_field($_REQUEST['dolicart']));
-if ($_REQUEST['users_can_register']==1){
+if (isset($_REQUEST['users_can_register']) && $_REQUEST['users_can_register']==1){
 update_option('users_can_register', sanitize_text_field($_REQUEST['users_can_register']));
 }else {
 delete_option('users_can_register');}
-if ($_REQUEST['doliloginmodal']==1){
+if (isset($_REQUEST['doliloginmodal']) && $_REQUEST['doliloginmodal']==1){
 update_option('doliloginmodal', sanitize_text_field($_REQUEST['doliloginmodal']));
 }else {
 delete_option('doliloginmodal');}
-if ($_REQUEST['doliconnectbeta']==1){
+if (isset($_REQUEST['doliconnectbeta']) && $_REQUEST['doliconnectbeta']==1){
 update_option('doliconnectbeta', sanitize_text_field($_REQUEST['doliconnectbeta']));
 }else {
 delete_option('doliconnectbeta');}
-if ($_REQUEST['doliconnectrestrict']==1){
+if (isset($_REQUEST['doliconnectrestrict']) && $_REQUEST['doliconnectrestrict']==1){
 update_option('doliconnectrestrict', sanitize_text_field($_REQUEST['doliconnectrestrict']));
 }else {
 delete_option('doliconnectrestrict');}
 if (get_site_option('dolibarr_entity')=='1' && is_super_admin()) { 
-if ($_REQUEST['dolibarr_entity'] > 0 ){
+if (isset($_REQUEST['dolibarr_entity']) && $_REQUEST['dolibarr_entity'] > 0 ){
 update_option('dolibarr_entity', sanitize_text_field($_REQUEST['dolibarr_entity']));
 }else {
 delete_option('dolibarr_entity');} 
 }
-if ($_REQUEST['doliconnect_disablepro']>0){
+if (isset($_REQUEST['doliconnect_disablepro']) && $_REQUEST['doliconnect_disablepro']>0){
 update_option('doliconnect_disablepro', sanitize_text_field($_REQUEST['doliconnect_disablepro']));
 }else {
 delete_option('doliconnect_disablepro');} 
-if ($_REQUEST['doliconnect_facebook']>0){
+if (isset($_REQUEST['doliconnect_facebook']) && $_REQUEST['doliconnect_facebook']>0){
 update_option('doliconnect_facebook', sanitize_text_field($_REQUEST['doliconnect_facebook']));
 }else {
 delete_option('doliconnect_facebook');} 
-if ($_REQUEST['doliconnect_google']>0){
+if (isset($_REQUEST['doliconnect_google']) && $_REQUEST['doliconnect_google']>0){
 update_option('doliconnect_google', sanitize_text_field($_REQUEST['doliconnect_google']));
 }else {
 delete_option('doliconnect_google');}                               
             update_option('doliaccount', sanitize_text_field($_REQUEST['doliaccount']));
             update_option('doliaccountinfo', sanitize_text_field($_REQUEST['doliconnect_login_info']));
-            update_option('doliticket', sanitize_text_field($_REQUEST['doliticket']));
-            update_option('doliclassifieds', sanitize_text_field($_REQUEST['doliclassifieds'])); 
+            if (isset($_REQUEST['doliticket'])) update_option('doliticket', sanitize_text_field($_REQUEST['doliticket']));
+            if (isset($_REQUEST['doliclassifieds'])) update_option('doliclassifieds', sanitize_text_field($_REQUEST['doliclassifieds'])); 
             update_option('doliconnect_ipkiosk', array_values(array_filter(array_map('trim', explode(PHP_EOL, $_REQUEST['doliconnect_ipkiosk'])))));             
             update_option('wp_page_for_privacy_policy', sanitize_text_field($_REQUEST['wp_page_for_privacy_policy']));
             update_option('dolishop', sanitize_text_field($_REQUEST['dolishop']));             
