@@ -770,7 +770,7 @@ echo "</div>";
 
 }
 }
-} elseif ( isset($_GET["provider"]) ) { 
+} elseif ( isset($_GET["provider"]) && $_GET["provider"] != null ) { 
 include( plugin_dir_path( __DIR__ ) . 'doliconnect-pro/lib/hybridauth/src/autoload.php');
 include( plugin_dir_path( __DIR__ ) . 'doliconnect-pro/lib/hybridauth/src/config.php');
 try {
