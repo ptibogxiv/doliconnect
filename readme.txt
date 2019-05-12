@@ -14,9 +14,11 @@ This plugin will synchronize your dolibarr's informations in a wordpress custome
 
 Use this plugin to greatly improve relations with yours customers. No Woocommerce or another e-shop need!
 
-Compatibility with Dolibarr v8, v9 & v10. 
+Compatibility with Dolibarr v8 (until june 2019), v9 (until september 2019) & v10. Dolibarr 10 will be need for Strong Customer Authorization and 3Dsecure 2 compliance for all european's customer  
 
 If you like the plugin, feel free to rate it (on the right side of this page)! :)
+
+You can test it live on https://demo.ptibogxiv.net
 
 == Installation ==
 
