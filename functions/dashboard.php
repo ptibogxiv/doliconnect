@@ -1352,7 +1352,8 @@ echo  "<b>".__( 'Type', 'doliconnect' ).":</b> ".$type."<br>";
 echo  "<b>".__( 'End of membership', 'doliconnect' ).":</b> ";
 if ( $adherent->datefin == null ) { echo  "***";
 } else { echo  date_i18n('d/m/Y', $adherent->datefin); }
-echo  "<br><b>".__( 'Seniority', 'doliconnect' ).":</b> ";
+if ( isset($adherent->license) &&  null != $adherent->license ) echo "<br><b>".__( 'License', 'doliconnect' ).":</b> ".$adherent->license;
+//echo  "<br><b>".__( 'Seniority', 'doliconnect' ).":</b> ";
 echo  "<br><b>".__( 'Commitment', 'doliconnect' ).":</b> ";
 if ( (current_time('timestamp') > $adherent->datecommitment) || null == $adherent->datecommitment ) { echo  __( 'no', 'doliconnect' );
 } else {
