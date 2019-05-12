@@ -32,7 +32,7 @@ Dolibarr configuration steps:
 
 1. Activate the REST API for Dolibarr: go to menu _Home > Setup > Modules/Applications_ and activate the _API/Web services (REST server)_.
 2. Generate and copy a specific user API key with full/admin rights: go to menu _Home > Users & groups_, select your admin user in the list. Once on the User card, click the _Modify_ button and generate and copy the _Key for API_ (see screenshot). Click the _Save_ button.
-3. Your dolibarr needs to have the Doliconnector module which can be freely downloaded on Dolistore or Github https://github.com/ptibogxiv/doliconnector/releases
+3. Your dolibarr needs to have the Doliconnector module which can be freely downloaded on Dolistore or Github https://github.com/ptibogxiv/doliconnector/releases minimum version 9.0.4
 
 WordPress configuration steps:
 1. Go to WordPress Admin > Settings > Doliconnect
@@ -49,6 +49,7 @@ WordPress configuration steps:
  = 3.6 0 =
 * debug ++++ & clean code
 * upgrade font-awesome 5.8.2
+* Require an update of Doliconnector to 9.0.4
 
  = 3.5.6 =
 * debug & clean code
