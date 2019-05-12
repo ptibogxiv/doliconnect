@@ -1511,7 +1511,7 @@ echo "'>".__( 'Manage linked members', 'doliconnect' )."</a>";
 function linkedmember_module( $url ) {
 global $current_user;
 
-$request = "/adherentsplus/".doliconnector($current_user, 'fk_member')."/linkedmember";
+$request = "/adherentsplus/".doliconnector($current_user, 'fk_member')."/linkedmembers";
 
 if ( isset ($_POST['unlink_member']) && $_POST['unlink_member'] > 0 ) {
 //$memberv = callDoliApi("GET", "/adherentsplus/".esc_attr($_POST['unlink_member']), null, 0);
