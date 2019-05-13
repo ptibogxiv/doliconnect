@@ -559,25 +559,25 @@ $thirdparty=$_POST['thirdparty'];
 if ( email_exists($thirdparty['email']) ) {
         $emailError = "".__( 'This email address is already linked to an account. You can reactivate your account through this <a href=\'".wp_lostpassword_url( get_permalink() )."\' title=\'lost password\'>form</a>.', 'doliconnect' )."";
         $hasError = true;
-    } else {
+        } else {
         $email = sanitize_email($thirdparty['email']);
-    }
+        }
 
 if ( $thirdparty['firstname'] == $_POST['user_nicename'] && $thirdparty['firstname'] == $thirdparty['lastname']) {
         $emailError = "".__( 'Create this account is not permitted', 'doliconnect' )."";       
         $hasError = true;
-}
+        }
 
     if(!isset($hasError)) {
         $emailTo = get_option('tz_email');
-        if (!isset($emailTo) || ($emailTo == '') ){
-            $emailTo = get_option('admin_email');
+        if (!isset($emailTo) || ($emailTo == '') ) {
+        $emailTo = get_option('admin_email');
         }
 
 $sitename = get_option('blogname');
 $subject = "[".$sitename."] ".__( 'Registration confirmation', 'doliconnect' )."";
-if ( !empty($_POST['pwd1']) && $_POST['pwd1']==$_POST['pwd2'] ) {
-$password=$_POST['pwd1'];
+if ( !empty($_POST['pwd1']) && $_POST['pwd1'] == $_POST['pwd2'] ) {
+$password=sanitize_text_field($_POST['pwd1']);
 } else {
 $password = wp_generate_password( 12, false ); 
 }
