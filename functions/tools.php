@@ -14,10 +14,10 @@ echo "<input type='hidden' id='morphy' name='".$idobject."[morphy]' value='".$cu
 } elseif ( ! isset($object) && $mode == 'thirdparty' && !get_option('doliconnect_disablepro') ) {
 echo "<div class='form-row'><div class='col-12'>";
 if ( isset($_GET["pro"]) && !get_option('doliconnect_disablepro') ) {
-echo "<a  href='".wp_registration_url(get_permalink())."' role='button' title='".__( 'Create a personnal account', 'doliconnect' )."'><small>(".__( 'Personnal account', 'doliconnect' )."?)</small></a>";                                                                                                                                                                                                                                                                                                                                     
+echo "<a  href='".wp_registration_url(get_permalink())."' role='button' title='".__( 'Create a personnal account', 'doliconnect' )."'><small>(".__( 'Create a personnal account', 'doliconnect' )."?)</small></a>";                                                                                                                                                                                                                                                                                                                                     
 }
 elseif (!get_option('doliconnect_disablepro')) {
-echo "<a  href='".wp_registration_url(get_permalink())."&pro' role='button' title='".__( 'Create a pro/supplier account', 'doliconnect' )."'><small>(".__( 'Pro account', 'doliconnect' )."?)</small></a>";
+echo "<a  href='".wp_registration_url(get_permalink())."&pro' role='button' title='".__( 'Create a enterprise / supplier account', 'doliconnect' )."'><small>(".__( 'Create a enterprise / supplier account', 'doliconnect' )."?)</small></a>";
 }
 
 echo "</div></div></li><li class='list-group-item'>";
@@ -29,7 +29,7 @@ echo " required><label class='custom-control-label' for='morphy1'>".__( 'Personn
 </div>
 <div class='custom-control custom-radio custom-control-inline'><input type='radio' id='morphy2' name='".$idobject."[morphy]' value='mor' class='custom-control-input'";
 if ( $current_user->billing_type != 'phy' ) { echo " checked"; }
-echo " required><label class='custom-control-label' for='morphy2'>".__( 'Professionnal account', 'doliconnect' )."</label>
+echo " required><label class='custom-control-label' for='morphy2'>".__( 'Entreprise account', 'doliconnect' )."</label>
 </div>";
 echo "</div></div></li><li class='list-group-item'>";
 } elseif ( $mode == 'thirdparty' ) {
