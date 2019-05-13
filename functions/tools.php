@@ -446,7 +446,7 @@ jQuery('#Footer<?php print $idform; ?>').hide();
 jQuery('#<?php print $idform; ?>').hide(); 
 jQuery('#doliloading-<?php print $idform; ?>').show(); 
 console.log("submit");
-formmodallogin.submit();
+form.submit();
 });
 
 <?php

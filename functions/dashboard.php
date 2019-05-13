@@ -457,15 +457,22 @@ print "</div>
 }}
 
 if ( count($counter) < 5 ) {
-print "<form class='was-validated' role='form' action='$url' id='contact-add-form' method='post'>";
+
 print "<div class='modal fade' id='addcontactadress' tabindex='-1' role='dialog' aria-labelledby='addcontactadressTitle' aria-hidden='true' data-backdrop='static' data-keyboard='false'>
 <div class='modal-dialog modal-lg modal-dialog-centered' role='document'><div class='modal-content border-0'><div class='modal-header border-0'>
-<h5 class='modal-title' id='addcontactadressTitle'>".__( 'New contact', 'doliconnect' )."</h5><button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
-</div><div class='modal-body'>";
+<h5 class='modal-title' id='addcontactadressTitle'>".__( 'New contact', 'doliconnect' )."</h5><button id='Closeaddcontact-form' type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
+</div><div class='modal-body'><div id='addcontact-form'>";
+
+print "<form class='was-validated' role='form' action='$url' name='addcontact-form' method='post'><div id='addcontact-form'>";
+
+print dolimodalloaderscript('addcontact-form');
+
 print doliconnectuserform($thirdparty, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'contact');
-print "</div>
-<div class='modal-footer'><button name='add_contact' value='new_contact' class='btn btn-warning btn-block' type='submit'><b>".__( 'Add', 'doliconnect' )."</b></button></form></div>
-</div></div></div>";
+
+print doliloading('addcontact-form');
+
+print "</div><div id='Footeraddcontact-form' class='modal-footer'><button name='add_contact' value='new_contact' class='btn btn-warning btn-block' type='submit'><b>".__( 'Add', 'doliconnect' )."</b></button></form></div>
+</div></div></div></div>";
 }
 
 print "<small><div class='float-left'>";
