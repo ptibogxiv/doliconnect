@@ -1034,7 +1034,7 @@ add_shortcode('doliaccount', 'doliaccount_shortcode');
 // ********************************************************
 function dolicontact_display($content) {
 
-if ( doliconnectid('dolicontact') == get_the_ID() ) {
+if ( doliconnectid('dolicontact') == get_the_ID() && !isset($_GET['action']) && !isset($_GET['edit']) ) {
 global $wpdb,$current_user;
 
 doliconnect_enqueues();
