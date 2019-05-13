@@ -434,6 +434,25 @@ form.submit();
 print "</script>";
 }
 
+function dolimodalloaderscript($idform) {
+print "<script>";
+?>
+
+var form = document.getElementById('<?php print $idform; ?>');
+form.addEventListener('submit', function(event) { 
+jQuery(window).scrollTop(0);
+jQuery('#Close<?php print $idform; ?>').hide(); 
+jQuery('#Footer<?php print $idform; ?>').hide();
+jQuery('#<?php print $idform; ?>').hide(); 
+jQuery('#doliloading-<?php print $idform; ?>').show(); 
+console.log("submit");
+formmodallogin.submit();
+});
+
+<?php
+print "</script>";
+}
+
 function dolitotal($object) {
 $total = "<b>".__( 'Total excl. tax', 'doliconnect').": ".doliprice($object, 'ht', isset($object->multicurrency_code) ? $object->multicurrency_code : null)."</b><br>";
 $total .= "<b>".__( 'Total tax', 'doliconnect').": ".doliprice($object, 'tva', isset($object->multicurrency_code) ? $object->multicurrency_code : null)."</b><br>";
