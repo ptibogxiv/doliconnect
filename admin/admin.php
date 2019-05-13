@@ -392,7 +392,7 @@ if (is_plugin_active( 'doliconnect-ticket/doliconnect-ticket.php' ) ) { ?>
     'option_none_value' => '0', 
     'selected' => get_option('doliticket') 
 );
-           wp_dropdown_pages($args); ?> [doliticket]</td>
+           wp_dropdown_pages($args); ?></td>
             </tr> 
 <?php }            
 if (is_plugin_active( 'doliconnect-classifieds/doliconnect-classifieds.php' ) ) { ?>                        <tr>
@@ -404,7 +404,7 @@ if (is_plugin_active( 'doliconnect-classifieds/doliconnect-classifieds.php' ) ) 
     'option_none_value' => '0', 
     'selected' => get_option('doliclassifieds') 
 );
-           wp_dropdown_pages($args); ?> [doliclassifieds]</td>
+           wp_dropdown_pages($args); ?></td>
             </tr>
 <?php } ?> 
         <tr>
