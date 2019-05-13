@@ -235,25 +235,15 @@ doliconnect_enqueues();
 $input = array("primary", "secondary", "success", "warning", "danger", "info", "light", "dark"); //
 $rand_keys = array_rand($input, 4);
 
-echo '<div id="DoliconnectLoadingModal" class="modal fade bd-example-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" data-show="true" data-backdrop="static" data-keyboard="false">
+print '<div id="DoliconnectLoadingModal" class="modal fade bd-example-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" data-show="true" data-backdrop="static" data-keyboard="false">
 <div class="modal-dialog modal-dialog-centered modal">
 <div class="text-center text-light w-100">
-<div class="spinner-grow text-'.$input[$rand_keys[0]].'" role="status">
-  <span class="sr-only">Loading...</span>
-</div>
-<div class="spinner-grow text-'.$input[$rand_keys[1]].'" role="status">
-  <span class="sr-only">Loading...</span>
-</div>
-<div class="spinner-grow text-'.$input[$rand_keys[2]].'" role="status">
-  <span class="sr-only">Loading...</span>
-</div>
-<div class="spinner-grow text-'.$input[$rand_keys[3]].'" role="status">
-  <span class="sr-only">Loading...</span>
-</div>
+<div class="spinner-grow text-'.$input[$rand_keys[0]].'" role="status"><span class="sr-only">Loading...</span></div>
+<div class="spinner-grow text-'.$input[$rand_keys[1]].'" role="status"><span class="sr-only">Loading...</span></div>
+<div class="spinner-grow text-'.$input[$rand_keys[2]].'" role="status"><span class="sr-only">Loading...</span></div>
+<div class="spinner-grow text-'.$input[$rand_keys[3]].'" role="status"><span class="sr-only">Loading...</span></div>
 <h4>'.__( 'Processing', 'doliconnect' ).'</h4>
-</div>
-  </div>
-</div>';
+</div></div></div>';
 
 }
 add_action( 'wp_footer', 'doliconnect_loading' );
@@ -518,19 +508,19 @@ $doliline .= '<h5 class="mb-1">x'.$line->qty.'</h5>';
 $doliline .= "</div></div></li>";
 }
 } else {
-echo "<li class='list-group-item list-group-item-light'><br><br><br><br><br><center><h5>".__( 'Your basket is empty.', 'doliconnect' )."</h5><br/><small>".dolihelp('COM')."</small></center>";
+$doliline .= "<li class='list-group-item list-group-item-light'><br><br><br><br><br><center><h5>".__( 'Your basket is empty.', 'doliconnect' )."</h5><br/><small>".dolihelp('COM')."</small></center>";
 if ( !is_user_logged_in() ) {
-echo '<center>'.__( 'If you already have an account,', 'doliconnect' ).' ';
+$doliline .= '<center>'.__( 'If you already have an account,', 'doliconnect' ).' ';
 
 if ( get_option('doliloginmodal') == '1' ) {
        
-echo '<a href="#" data-toggle="modal" data-target="#DoliconnectLogin" data-dismiss="modal" title="'.__('Sign in', 'ptibogxivtheme').'" role="button">'.__( 'log in', 'doliconnect' ).'</a> ';
+$doliline .= '<a href="#" data-toggle="modal" data-target="#DoliconnectLogin" data-dismiss="modal" title="'.__('Sign in', 'ptibogxivtheme').'" role="button">'.__( 'log in', 'doliconnect' ).'</a> ';
 } else {
-echo "<a href='".wp_login_url( doliconnecturl('dolicart') )."?redirect_to=".doliconnecturl('dolicart')."' >".__( 'log in', 'doliconnect' ).'</a> ';
+$doliline .= "<a href='".wp_login_url( doliconnecturl('dolicart') )."?redirect_to=".doliconnecturl('dolicart')."' >".__( 'log in', 'doliconnect' ).'</a> ';
 }
-echo __( 'to see your basket.', 'doliconnect' ).'</center>';
+$doliline .= __( 'to see your basket.', 'doliconnect' ).'</center>';
 }
-echo "<br><br><br><br><br></li>";
+$doliline .= "<br><br><br><br><br></li>";
 } 
 return $doliline;
 }
