@@ -1961,8 +1961,8 @@ echo "<option value=''>".__( 'Default / Browser language', 'doliconnect' )."</op
 $translations = pll_the_languages( array( 'raw' => 1 ) );
 foreach ($translations as $key => $value) {
 echo "<option value='".str_replace("-","_",$value[locale])."' ";
-if  ( $current_user->locale == str_replace("-","_",$value[locale]) ) {echo " selected";}
-echo ">".$value[name]."</option>";
+if  ( $current_user->locale == str_replace("-","_",$value['locale']) ) {echo " selected";}
+echo ">".$value['name']."</option>";
 }
 echo "</select>";
 } else {
