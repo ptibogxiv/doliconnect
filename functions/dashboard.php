@@ -463,16 +463,16 @@ print "<div class='modal fade' id='addcontactadress' tabindex='-1' role='dialog'
 <h5 class='modal-title' id='addcontactadressTitle'>".__( 'New contact', 'doliconnect' )."</h5><button id='Closeaddcontact-form' type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
 </div><div class='modal-body'><div id='addcontact-form'>";
 
-print "<form class='was-validated' role='form' action='$url' name='addcontact-form' method='post'><div id='addcontact-form'>";
+print "<form class='was-validated' role='form' action='$url' name='addcontact-form' method='post'>";
 
 print dolimodalloaderscript('addcontact-form');
 
 print doliconnectuserform($thirdparty, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'contact');
 
-print doliloading('addcontact-form');
+print "</div>".doliloading('addcontact-form');
 
 print "</div><div id='Footeraddcontact-form' class='modal-footer'><button name='add_contact' value='new_contact' class='btn btn-warning btn-block' type='submit'><b>".__( 'Add', 'doliconnect' )."</b></button></form></div>
-</div></div></div></div>";
+</div></div></div>";
 }
 
 print "<small><div class='float-left'>";
