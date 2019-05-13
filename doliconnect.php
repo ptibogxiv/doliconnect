@@ -563,6 +563,11 @@ if ( email_exists($thirdparty['email']) ) {
         $email = sanitize_email($thirdparty['email']);
     }
 
+if ( $thirdparty['firstname'] == $_POST['user_nicename'] && $thirdparty['firstname'] == $thirdparty['lastname']) {
+        $emailError = "".__( 'Create this account is not permitted', 'doliconnect' )."";       
+        $hasError = true;
+}
+
     if(!isset($hasError)) {
         $emailTo = get_option('tz_email');
         if (!isset($emailTo) || ($emailTo == '') ){
