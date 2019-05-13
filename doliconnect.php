@@ -395,16 +395,16 @@ date_default_timezone_set($tzstring);
 $ID = $current_user->ID;
 $time = current_time( 'timestamp', 1);
 
-echo "<div class='row'><div class='col-xs-12 col-sm-12 col-md-3'><div class='row'><div class='col-3 col-xs-4 col-sm-4 col-md-12 col-xl-12'><div class='card shadow-sm' style='width: 100%'>";
-echo get_avatar($ID);
+print "<div class='row'><div class='col-xs-12 col-sm-12 col-md-3'><div class='row'><div class='col-3 col-xs-4 col-sm-4 col-md-12 col-xl-12'><div class='card shadow-sm' style='width: 100%'>";
+print get_avatar($ID);
 
 if ( is_user_logged_in() && !defined("DOLIBUG") ) {
-echo "<a href='".esc_url( add_query_arg( 'module', 'avatars', doliconnecturl('doliaccount')) )."' class='card-img-overlay'><div class='d-block d-sm-block d-xs-block d-md-none text-center'><i class='fas fa-camera'></i></div><div class='d-none d-md-block'><i class='fas fa-camera fa-2x'></i> ".__( 'Edit', 'doliconnect' )."</div></a>";
+print "<a href='".esc_url( add_query_arg( 'module', 'avatars', doliconnecturl('doliaccount')) )."' class='card-img-overlay'><div class='d-block d-sm-block d-xs-block d-md-none text-center'><i class='fas fa-camera'></i></div><div class='d-none d-md-block'><i class='fas fa-camera fa-2x'></i> ".__( 'Edit', 'doliconnect' )."</div></a>";
 }
-echo "<ul class='list-group list-group-flush'><a href='".esc_url( doliconnecturl('doliaccount') )."' class='list-group-item list-group-item-action'><center><div class='d-block d-sm-block d-xs-block d-md-none'><i class='fas fa-home'></i></div><div class='d-none d-md-block'><i class='fas fa-home'></i> ".__( 'Home', 'doliconnect' )."</div></center></a>";
-echo "</ul>";
+print "<ul class='list-group list-group-flush'><a href='".esc_url( doliconnecturl('doliaccount') )."' class='list-group-item list-group-item-action'><center><div class='d-block d-sm-block d-xs-block d-md-none'><i class='fas fa-home'></i></div><div class='d-none d-md-block'><i class='fas fa-home'></i> ".__( 'Home', 'doliconnect' )."</div></center></a>";
+print "</ul>";
 
-echo "</div><br></div><div class='col-9 col-xs-8 col-sm-8 col-md-12 col-xl-12'>";
+print "</div><br></div><div class='col-9 col-xs-8 col-sm-8 col-md-12 col-xl-12'>";
 
 if ( is_user_logged_in() ) {
 
@@ -412,17 +412,17 @@ $thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, '
 
 if ( defined("DOLIBUG") ) {
 
-echo "</div></div></div>";
-echo "<div class='col-xs-12 col-sm-12 col-md-9'><div class='card shadow-sm'><div class='card-body'>";
-echo dolibug();
-echo "</div></div></div></div>";
+print "</div></div></div>";
+print "<div class='col-xs-12 col-sm-12 col-md-9'><div class='card shadow-sm'><div class='card-body'>";
+print dolibug();
+print "</div></div></div></div>";
 
 } elseif ( $thirdparty->status != '1' ) {
 
-echo "</div></div></div>";
-echo "<div class='col-xs-12 col-sm-12 col-md-9'><div class='card shadow-sm'><div class='card-body'>";
-echo '<br><br><br><br><br><center><div class="align-middle"><i class="fas fa-bug fa-3x fa-fw"></i><h4>'.__( 'This account is closed. Please contact us for reopen it.', 'doliconnect' ).'</h4></div></center><br><br><br><br><br>';
-echo "</div></div></div></div>";
+print "</div></div></div>";
+print "<div class='col-xs-12 col-sm-12 col-md-9'><div class='card shadow-sm'><div class='card-body'>";
+print '<br><br><br><br><br><center><div class="align-middle"><i class="fas fa-bug fa-3x fa-fw"></i><h4>'.__( 'This account is closed. Please contact us for reopen it.', 'doliconnect' ).'</h4></div></center><br><br><br><br><br>';
+print "</div></div></div></div>";
 
 $thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty', true));
 
@@ -432,113 +432,113 @@ if ( isset($_GET['module']) ) {
 //****
 if ( has_action('user_doliconnect_'.esc_attr($_GET['module'])) ) {
 if ( has_action('user_doliconnect_menu') ) {
-echo "<div class='list-group shadow-sm'>";
+print "<div class='list-group shadow-sm'>";
 do_action('user_doliconnect_menu', esc_attr($_GET['module']));
-echo "</div><br>";
+print "</div><br>";
 }
-echo "</div></div></div>";
-echo "<div class='col-xs-12 col-sm-12 col-md-9'>";
+print "</div></div></div>";
+print "<div class='col-xs-12 col-sm-12 col-md-9'>";
 do_action( 'user_doliconnect_'.esc_attr($_GET['module']), esc_url( add_query_arg( 'module', esc_attr($_GET['module']), doliconnecturl('doliaccount')) ) ); 
 } elseif ( has_action('customer_doliconnect_'.esc_attr($_GET['module'])) && $thirdparty->client == '1' ) {
 if( has_action('customer_doliconnect_menu') ) {
-echo "<div class='list-group shadow-sm'>";
+print "<div class='list-group shadow-sm'>";
 do_action('customer_doliconnect_menu', esc_attr($_GET['module']));
-echo "</div><br>";
+print "</div><br>";
 }
-echo "</div></div></div>";
-echo "<div class='col-xs-12 col-sm-12 col-md-9'>";
+print "</div></div></div>";
+print "<div class='col-xs-12 col-sm-12 col-md-9'>";
 do_action( 'customer_doliconnect_'.esc_attr($_GET['module']), esc_url( add_query_arg( 'module', esc_attr($_GET['module']), doliconnecturl('doliaccount')) ) ); 
 } elseif ( has_action('options_doliconnect_'.esc_attr($_GET['module'])) ) {
 if ( has_action('options_doliconnect_menu') ) {
-echo "<div class='list-group shadow-sm'>";
+print "<div class='list-group shadow-sm'>";
 do_action('options_doliconnect_menu', esc_attr($_GET['module']));
-echo "</div><br>";
+print "</div><br>";
 }
-echo "</div></div></div>";
-echo "<div class='col-xs-12 col-sm-12 col-md-9'>";
+print "</div></div></div>";
+print "<div class='col-xs-12 col-sm-12 col-md-9'>";
 do_action( 'options_doliconnect_'.esc_attr($_GET['module']), esc_url( add_query_arg( 'module', esc_attr($_GET['module']), doliconnecturl('doliaccount')) ) ); 
 } elseif ( has_action('supplier_doliconnect_'.esc_attr($_GET['module'])) && $thirdparty->fournisseur == '1' && get_option('doliconnectbeta')=='1' ) {
 if ( has_action('supplier_doliconnect_menu') ) {
-echo "<div class='list-group shadow-sm'>";
+print "<div class='list-group shadow-sm'>";
 do_action('supplier_doliconnect_menu', esc_attr($_GET['module']));
-echo "</div><br>";
+print "</div><br>";
 }
-echo "</div></div></div>";
-echo "<div class='col-xs-12 col-sm-12 col-md-9'>";
+print "</div></div></div>";
+print "<div class='col-xs-12 col-sm-12 col-md-9'>";
 do_action( 'supplier_doliconnect_'.esc_attr($_GET['module']), esc_url( add_query_arg( 'module', esc_attr($_GET['module']), doliconnecturl('doliaccount')) ) ); 
 } elseif ( has_action('my_doliconnect_'.esc_attr($_GET['module'])) ) {
 if ( has_action('my_doliconnect_menu') ) {
-echo "<div class='list-group shadow-sm'>";
+print "<div class='list-group shadow-sm'>";
 do_action('my_doliconnect_menu', esc_attr($_GET['module']));
-echo "</div><br>";
+print "</div><br>";
 }
-echo "</div></div></div>";
-echo "<div class='col-xs-12 col-sm-12 col-md-9'>";
+print "</div></div></div>";
+print "<div class='col-xs-12 col-sm-12 col-md-9'>";
 do_action( 'my_doliconnect_'.esc_attr($_GET['module']),esc_url( add_query_arg( 'module', esc_attr($_GET['module']), doliconnecturl('doliaccount')) ) ); 
 } elseif ( has_action('settings_doliconnect_'.esc_attr($_GET['module'])) ) {
 if ( has_action('settings_doliconnect_menu') ) {
-echo "<div class='list-group shadow-sm'>";
+print "<div class='list-group shadow-sm'>";
 do_action('settings_doliconnect_menu', esc_attr($_GET['module']));
-echo "</div><br>";
+print "</div><br>";
 }
-echo "</div></div></div>";
-echo "<div class='col-xs-12 col-sm-12 col-md-9'>";
+print "</div></div></div>";
+print "<div class='col-xs-12 col-sm-12 col-md-9'>";
 do_action( 'settings_doliconnect_'.esc_attr($_GET['module']), esc_url( add_query_arg( 'module', esc_attr($_GET['module']), doliconnecturl('doliaccount')) ) ); 
 } else {
 wp_redirect( esc_url(doliconnecturl('doliaccount')) );
 exit;
 }
 //****
-echo "</div>";
+print "</div>";
 
 } else {
 
-echo "<p class='font-weight-light' align='justify'><h5>".sprintf(__('Hello %s', 'doliconnect'), $current_user->first_name)."</h5>".__( 'Manage your account, your informations, orders and much more via this secure client area.', 'doliconnect' )."</p></div></div></div>";
-echo "<div class='col-xs-12 col-sm-12 col-md-9'>";
+print "<p class='font-weight-light' align='justify'><h5>".sprintf(__('Hello %s', 'doliconnect'), $current_user->first_name)."</h5>".__( 'Manage your account, your informations, orders and much more via this secure client area.', 'doliconnect' )."</p></div></div></div>";
+print "<div class='col-xs-12 col-sm-12 col-md-9'>";
 if ( has_action('user_doliconnect_menu') ) {
-echo "<div class='list-group shadow-sm'>";
+print "<div class='list-group shadow-sm'>";
 do_action('user_doliconnect_menu');
-echo "</div><br>";
+print "</div><br>";
 }  
 
 if ( has_action('customer_doliconnect_menu') && $thirdparty->client == '1' ) {
-echo "<div class='list-group shadow-sm'>";
+print "<div class='list-group shadow-sm'>";
 do_action('customer_doliconnect_menu');
-echo "</div><br>";
+print "</div><br>";
 }
 
 if ( has_action('options_doliconnect_menu') ) {
-echo "<div class='list-group shadow-sm'>";
+print "<div class='list-group shadow-sm'>";
 do_action('options_doliconnect_menu');
-echo "</div><br>";
+print "</div><br>";
 }
 
 if ( has_action('supplier_doliconnect_menu') && $thirdparty->fournisseur == '1' && get_option('doliconnectbeta')=='1' ) {
-echo "<div class='list-group shadow-sm'>";
+print "<div class='list-group shadow-sm'>";
 do_action('supplier_doliconnect_menu');
-echo "</div><br>";
+print "</div><br>";
 }
 
 if ( has_action('my_doliconnect_menu') ) {
-echo "<div class='list-group shadow-sm'>";
+print "<div class='list-group shadow-sm'>";
 do_action('my_doliconnect_menu');
-echo "</div><br>";
+print "</div><br>";
 }
 
 if ( has_action('settings_doliconnect_menu') ) {
-echo "<div class='list-group shadow-sm'>";
+print "<div class='list-group shadow-sm'>";
 do_action('settings_doliconnect_menu');
-echo "</div><br>";
+print "</div><br>";
 }
 
-echo "</div>";
+print "</div>";
 }
 // fin de sous page
-echo "</div>";
+print "</div>";
 }
 } elseif ( !is_user_logged_in() && isset($_GET["signup"]) ) {
-echo "<p class='font-weight-light' align='justify'>".__( 'Manage your account, your informations, orders and much more via this secure client area.', 'doliconnect' )."</p></div></div></div>";
-echo "<div class='col-xs-12 col-sm-12 col-md-9'>";
+print "<p class='font-weight-light' align='justify'>".__( 'Manage your account, your informations, orders and much more via this secure client area.', 'doliconnect' )."</p></div></div></div>";
+print "<div class='col-xs-12 col-sm-12 col-md-9'>";
 
 if ( is_user_logged_in() ) {
 wp_redirect(site_url());
@@ -630,17 +630,17 @@ $emailSent = true;
 }
 
 if ( isset($emailSent) && $emailSent == true ) { 
-echo "<div class='alert alert-success'><h4 class='alert-heading'>".__( 'Congratulations!', 'doliconnect' )."</h4><p>".__( 'Your account was created and an account activation link was sent by email. Don\'t forget to look at your unwanted emails if you can\'t find our message.', 'doliconnect' )."</p></div>"; 
+print "<div class='alert alert-success'><h4 class='alert-heading'>".__( 'Congratulations!', 'doliconnect' )."</h4><p>".__( 'Your account was created and an account activation link was sent by email. Don\'t forget to look at your unwanted emails if you can\'t find our message.', 'doliconnect' )."</p></div>"; 
 } else {
 if ( isset($hasError) || isset($captchaError) ) {
-echo "<div class='alert alert-danger'><a class='close' data-dismiss='alert'>x</a><h4 class='alert-heading'>".__( 'Oops', 'doliconnect' )."</h4><p class='error'>$emailError<p></div>";
+print "<div class='alert alert-danger'><a class='close' data-dismiss='alert'>x</a><h4 class='alert-heading'>".__( 'Oops', 'doliconnect' )."</h4><p class='error'>$emailError<p></div>";
 }
 }
-echo "<form id='signin-form' action='".doliconnecturl('doliaccount')."?signup' role='form' method='post' class='was-validated'>";
+print "<form id='signin-form' action='".doliconnecturl('doliaccount')."?signup' role='form' method='post' class='was-validated'>";
 
-if ( isset($msg) ) { echo $msg; }
+if ( isset($msg) ) { print $msg; }
 
-echo "<script>";
+print "<script>";
 ?>
 
 window.setTimeout(function() {
@@ -661,36 +661,36 @@ form.submit();
 });
 
 <?php
-echo "</script>";
+print "</script>";
 
-echo "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>".__( 'Create an account', 'doliconnect' )."</h5></div>";
+print "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>".__( 'Create an account', 'doliconnect' )."</h5></div>";
 
 if ( function_exists('dolikiosk') && ! empty(dolikiosk()) ) {
-echo doliconnectuserform(null, null, 'thirdparty');
+print doliconnectuserform(null, null, 'thirdparty');
 } else {
-echo doliconnectuserform(null, null, 'thirdparty');
+print doliconnectuserform(null, null, 'thirdparty');
 }
 
-echo "<div class='card-body'><input type='hidden' name='submitted' id='submitted' value='true'><button class='btn btn-primary btn-block' type='submit'";
+print "<div class='card-body'><input type='hidden' name='submitted' id='submitted' value='true'><button class='btn btn-primary btn-block' type='submit'";
 if ( get_option('users_can_register')=='1' && ( get_site_option( 'registration' ) == 'user' || get_site_option( 'registration' ) == 'all' ) || ( !is_multisite() && get_option( 'users_can_register' )) ) {
-echo "";
-} else { echo " aria-disabled='true'  disabled"; }
-echo "><b>".__( 'Create an account', 'doliconnect' )."</b></button></form>";
+print "";
+} else { print " aria-disabled='true'  disabled"; }
+print "><b>".__( 'Create an account', 'doliconnect' )."</b></button></form>";
 
 echo"</div></div>";
 
-echo "<p class='text-right'><small>";
-echo dolihelp('ISSUE');
-echo "</small></p>";
+print "<p class='text-right'><small>";
+print dolihelp('ISSUE');
+print "</small></p>";
 
-echo "</div></div>";
+print "</div></div>";
 
-echo "</div></div>";
+print "</div></div>";
 
 } elseif ( !is_user_logged_in() && isset($_GET["rpw"]) ) {
 
-echo "<p class='font-weight-light' align='justify'>".__( 'Manage your account, your informations, orders and much more via this secure client area.', 'doliconnect' )."</p></div></div></div>";
-echo "<div class='col-xs-12 col-sm-12 col-md-9'>";
+print "<p class='font-weight-light' align='justify'>".__( 'Manage your account, your informations, orders and much more via this secure client area.', 'doliconnect' )."</p></div></div></div>";
+print "<div class='col-xs-12 col-sm-12 col-md-9'>";
 if (!$_GET["login"] || !$_GET["key"]) {
 wp_redirect(wp_login_url( get_permalink() ));
 exit;
@@ -733,21 +733,21 @@ $msg = "<div class='alert alert-danger'><button type='button' class='close' data
 }
 }
  
-echo $msg."<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
+print $msg."<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
 if ( $dolibarr->fk_user > '0') {
-echo "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".__( 'Your password will be synchronized with your Dolibarr account', 'doliconnect' )."</b></li>";
+print "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".__( 'Your password will be synchronized with your Dolibarr account', 'doliconnect' )."</b></li>";
 } 
-echo "<li class='list-group-item'><h5 class='card-title'>".__( 'Change your password', 'doliconnect' )."</h5><form class='was-validated' id='fpwForm' action='' method='post'><input type='hidden' name='submitted' id='submitted' value='true' />
+print "<li class='list-group-item'><h5 class='card-title'>".__( 'Change your password', 'doliconnect' )."</h5><form class='was-validated' id='fpwForm' action='' method='post'><input type='hidden' name='submitted' id='submitted' value='true' />
 <div class='form-group'><label for='pwd1'><small>".__( 'New password', 'doliconnect' )."</small></label>
 <div class='input-group mb-2 mr-sm-2'><div class='input-group-prepend'>
 <div class='input-group-text'><i class='fas fa-key fa-fw'></i></div></div>
 <input class='form-control' id='pwd1' type='password' name='pwd1' value ='' placeholder='".__( 'Enter your new password', 'doliconnect' )."' ";
 if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $user->ID ) {
-echo ' readonly';
+print ' readonly';
 } else {
-echo ' required';
+print ' required';
 }
-echo "></div>
+print "></div>
 <small id='pwd1' class='form-text text-justify text-muted'>
 ".__( 'Your password must be between 8 and 20 characters, including at least 1 digit, 1 letter, 1 uppercase.', 'doliconnect' )."
 </small>
@@ -756,17 +756,17 @@ echo "></div>
 <div class='input-group-text'><i class='fas fa-key fa-fw'></i></div></div>
 <input class='form-control' id='pwd2' type='password' name='pwd2' value ='' placeholder='".__( 'Confirm your new password', 'doliconnect' )."' ";
 if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $user->ID ) {
-echo ' readonly';
+print ' readonly';
 } else {
-echo ' required';
+print ' required';
 }
-echo "></div>
+print "></div>
 </div></div></li><li class='list-group-item'><input type='hidden' name='case' value ='updatepwd'><button class='btn btn-danger btn-block' type='submit' ";
 if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $user->ID ) {
-echo ' disabled';
+print ' disabled';
 }
-echo "><b>".__( 'Update', 'doliconnect' )."</b></button></form></li></ul>";
-echo "</div>";
+print "><b>".__( 'Update', 'doliconnect' )."</b></button></form></li></ul>";
+print "</div>";
 
 }
 }
@@ -816,27 +816,27 @@ catch(\Exception $e) {
     // Display the recived error, 
     // to know more please refer to Exceptions handling section on the userguide
     switch( $e->getCode() ){ 
-        case 0 : echo "Unspecified error."; break;
-        case 1 : echo "Hybriauth configuration error."; break;
-        case 2 : echo "Provider not properly configured."; break;
-        case 3 : echo "Unknown or disabled provider."; break;
-        case 4 : echo "Missing provider application credentials."; break;
-        case 5 : echo "Authentication failed. " 
+        case 0 : print "Unspecified error."; break;
+        case 1 : print "Hybriauth configuration error."; break;
+        case 2 : print "Provider not properly configured."; break;
+        case 3 : print "Unknown or disabled provider."; break;
+        case 4 : print "Missing provider application credentials."; break;
+        case 5 : print "Authentication failed. " 
                   . "The user has canceled the authentication or the provider refused the connection."; 
-        case 6 : echo "User profile request failed. Most likely the user is not connected "
+        case 6 : print "User profile request failed. Most likely the user is not connected "
                   . "to the provider and he should to authenticate again."; 
                $adapter->logout(); 
                break;
-        case 7 : echo "User not connected to the provider."; 
+        case 7 : print "User not connected to the provider."; 
                $adapter->logout(); 
                break;
     } 
-    echo "<br /><br /><b>Original error message:</b> " . $e->getMessage();
-//echo "<hr /><h3>Trace</h3> <pre>" . $e->getTraceAsString() . "</pre>";  
+    print "<br /><br /><b>Original error message:</b> " . $e->getMessage();
+//print "<hr /><h3>Trace</h3> <pre>" . $e->getTraceAsString() . "</pre>";  
 }
 } elseif ( !is_user_logged_in() && isset($_GET["fpw"]) ) { 
-echo "<p class='font-weight-light' align='justify'>".__( 'Manage your account, your informations and much more via this secure client area.', 'doliconnect' )."</p></div></div></div>";
-echo "<div class='col-xs-12 col-sm-12 col-md-9'>";
+print "<p class='font-weight-light' align='justify'>".__( 'Manage your account, your informations and much more via this secure client area.', 'doliconnect' )."</p></div></div></div>";
+print "<div class='col-xs-12 col-sm-12 col-md-9'>";
   
 if( isset($_POST['user_email']) ) {
 
@@ -880,16 +880,16 @@ $mail =  wp_mail($email, $subject, $body, $headers);
 }
 
 if ( isset($emailSent) && $emailSent == true ) { 
-echo "<div class='alert alert-success'><h4 class='alert-heading'>".__( 'Congratulations!', 'doliconnect' )."</h4><p>".__( 'A password reset link was sent to you by email. Please check your spam folder if you don\'t find it.', 'doliconnect' )."</p></div>";
+print "<div class='alert alert-success'><h4 class='alert-heading'>".__( 'Congratulations!', 'doliconnect' )."</h4><p>".__( 'A password reset link was sent to you by email. Please check your spam folder if you don\'t find it.', 'doliconnect' )."</p></div>";
 } elseif ( isset($hasError) || isset($emailError) ) { 
-echo "<div class='alert alert-danger'><h4 class='alert-heading'>".__( 'Oops', 'doliconnect' )."</h4><p>$emailError</p></div>";
+print "<div class='alert alert-danger'><h4 class='alert-heading'>".__( 'Oops', 'doliconnect' )."</h4><p>$emailError</p></div>";
 } elseif ( isset($emailSent) && $emailSent != true ) {
-echo "<div class='alert alert-warning'><h4 class='alert-heading'>".__( 'Oops', 'doliconnect' )."</h4><p>".__( 'A problem occurred. Please retry later!', 'doliconnect' )."</p></div>";
+print "<div class='alert alert-warning'><h4 class='alert-heading'>".__( 'Oops', 'doliconnect' )."</h4><p>".__( 'A problem occurred. Please retry later!', 'doliconnect' )."</p></div>";
 }
 
-echo "<form id='fpw-form' action='".doliconnecturl('doliaccount')."?fpw' method='post' class='was-validated'><input type='hidden' name='submitted' id='submitted' value='true' />";
+print "<form id='fpw-form' action='".doliconnecturl('doliaccount')."?fpw' method='post' class='was-validated'><input type='hidden' name='submitted' id='submitted' value='true' />";
 
-if ( isset($msg) ) { echo $msg; }
+if ( isset($msg) ) { print $msg; }
 
 echo'<script>';
 ?>
@@ -911,55 +911,55 @@ form.submit();
 });
 
 <?php            
-echo '</script>';
+print '</script>';
  
-echo "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>".__( 'Forgot password?', 'doliconnect' )."</h5>";
+print "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>".__( 'Forgot password?', 'doliconnect' )."</h5>";
 
-echo "<div class='form-group'><label for='inputemail'><small>".__( 'Please enter the email address by which you registered your account.', 'doliconnect' )."</small></label>
+print "<div class='form-group'><label for='inputemail'><small>".__( 'Please enter the email address by which you registered your account.', 'doliconnect' )."</small></label>
 <div class='input-group mb-2 mr-sm-2'><div class='input-group-prepend'>
 <div class='input-group-text'><i class='fas fa-at fa-fw'></i></div></div>
 <input class='form-control' id='user_email' type='email' placeholder='".__( 'Email', 'doliconnect' )."' name='user_email' value ='' required>";
-echo "</div></div></div>";
-echo "<ul class='list-group list-group-flush'><li class='list-group-item'>";
-echo "<button class='btn btn-danger btn-block' type='submit'><b>".__( 'Submit', 'doliconnect' )."</b></button>";
-echo "</li></ul>";
-echo "</div></form>";
+print "</div></div></div>";
+print "<ul class='list-group list-group-flush'><li class='list-group-item'>";
+print "<button class='btn btn-danger btn-block' type='submit'><b>".__( 'Submit', 'doliconnect' )."</b></button>";
+print "</li></ul>";
+print "</div></form>";
 
-echo "<p class='text-right'><small>";
-echo dolihelp('ISSUE');
-echo "</small></p>"; 
+print "<p class='text-right'><small>";
+print dolihelp('ISSUE');
+print "</small></p>"; 
 
-echo "</div></div>";
+print "</div></div>";
 
 } else {
 
-echo "<p class='font-weight-light' align='justify'>".__( 'Manage your account, your informations and much more via this secure client area.', 'doliconnect' )."</p></div></div></div>";
-echo "<div class='col-xs-12 col-sm-12 col-md-9'>";
+print "<p class='font-weight-light' align='justify'>".__( 'Manage your account, your informations and much more via this secure client area.', 'doliconnect' )."</p></div></div></div>";
+print "<div class='col-xs-12 col-sm-12 col-md-9'>";
 
 if ( isset($emailSent) && $emailSent == true ) { 
-echo "<div class='alert alert-success'><h4 class='alert-heading'>".__( 'Congratulations!', 'doliconnect' )."</h4><p>".__( 'A password reset link was sent to you by email. Please check your spam folder if you don\'t find it.', 'doliconnect' )."</p></div>";
+print "<div class='alert alert-success'><h4 class='alert-heading'>".__( 'Congratulations!', 'doliconnect' )."</h4><p>".__( 'A password reset link was sent to you by email. Please check your spam folder if you don\'t find it.', 'doliconnect' )."</p></div>";
 }
 
 if( isset($_GET["login"]) && $_GET["login"] == 'failed' ) { 
-echo "<div class='alert alert-danger'><h4 class='alert-heading'>".__( 'Oops', 'doliconnect' )."</h4><p>".__( 'There is no account for these login data or the email and/or the password are not correct.', 'doliconnect' )."</p></div>";
+print "<div class='alert alert-danger'><h4 class='alert-heading'>".__( 'Oops', 'doliconnect' )."</h4><p>".__( 'There is no account for these login data or the email and/or the password are not correct.', 'doliconnect' )."</p></div>";
 }
-echo "<div class='card shadow-sm'><ul class='list-group list-group-flush'><li class='list-group-item'>";
+print "<div class='card shadow-sm'><ul class='list-group list-group-flush'><li class='list-group-item'>";
 
 if ( function_exists('doliconnect_modal') && get_option('doliloginmodal') == '1' ) {
 
-echo "<center><i class='fas fa-user-lock fa-fw fa-10x'></i><br><br>";
-//echo "<h2>".__( 'Restricted area', 'doliconnect' )."</h2></center>";
-echo '<a href="#" id="login-'.current_time('timestamp').'" data-toggle="modal" data-target="#DoliconnectLogin" data-dismiss="modal" title="'.__('Sign in', 'doliconnect').'" class="btn btn-block btn-primary my-2 my-sm-0" role="button">'.__('You have already an account', 'doliconnect').'</a>';
+print "<center><i class='fas fa-user-lock fa-fw fa-10x'></i><br><br>";
+//print "<h2>".__( 'Restricted area', 'doliconnect' )."</h2></center>";
+print '<a href="#" id="login-'.current_time('timestamp').'" data-toggle="modal" data-target="#DoliconnectLogin" data-dismiss="modal" title="'.__('Sign in', 'doliconnect').'" class="btn btn-block btn-primary my-2 my-sm-0" role="button">'.__('You have already an account', 'doliconnect').'</a>';
 if (((!is_multisite() && get_option( 'users_can_register' )) or (get_option('users_can_register')=='1' && (get_site_option( 'registration' ) == 'user' or get_site_option( 'registration' ) == 'all')))) 
 {
-echo '<div><div style="display:inline-block;width:46%;float:left"><hr width="90%" /></div><div style="display:inline-block;width: 8%;text-align: center;vertical-align:90%"><small class="text-muted">'.__( 'or', 'doliconnect' ).'</small></div><div style="display:inline-block;width:46%;float:right" ><hr width="90%"/></div></div>';
-echo '<a href="'.wp_registration_url( get_permalink() ).'" id="login-'.current_time('timestamp').'" class="btn btn-block btn-primary my-2 my-sm-0" role="button">'.__("You don't have an account", 'doliconnect').'</a>';
+print '<div><div style="display:inline-block;width:46%;float:left"><hr width="90%" /></div><div style="display:inline-block;width: 8%;text-align: center;vertical-align:90%"><small class="text-muted">'.__( 'or', 'doliconnect' ).'</small></div><div style="display:inline-block;width:46%;float:right" ><hr width="90%"/></div></div>';
+print '<a href="'.wp_registration_url( get_permalink() ).'" id="login-'.current_time('timestamp').'" class="btn btn-block btn-primary my-2 my-sm-0" role="button">'.__("You don't have an account", 'doliconnect').'</a>';
 }
 
 } else {
 
-echo "<div id='loginmodal-form'><h5 class='card-title'>".__( 'Welcome', 'doliconnect' )."</h5>";
-echo "<b>".get_option('doliaccountinfo')."</b>";
+print "<div id='loginmodal-form'><h5 class='card-title'>".__( 'Welcome', 'doliconnect' )."</h5>";
+print "<b>".get_option('doliaccountinfo')."</b>";
 
 if ( function_exists('socialconnect') ) {
 socialconnect(get_permalink());
@@ -972,7 +972,7 @@ $login_url=site_url()."/wp-login.php"; }
 if ( isset($_GET["redirect_to"])) { $redirect_to=$_GET["redirect_to"]; } else {
 $redirect_to=$_SERVER['HTTP_REFERER'];}
  
-echo "<form class='was-validated' id='login-form' action='$login_url' method='post'>";
+print "<form class='was-validated' id='login-form' action='$login_url' method='post'>";
 
 echo'<script>';
 ?>
@@ -994,37 +994,37 @@ form.submit();
 });
 
 <?php            
-echo '</script>';
+print '</script>';
  
-echo "<div class='form-group'>
+print "<div class='form-group'>
 <div class='input-group mb-2 mr-sm-2'><div class='input-group-prepend'>
 <div class='input-group-text'><i class='fas fa-at fa-fw'></i></div></div>
 <input class='form-control' id='user_login' type='email' placeholder='".__( 'Email', 'doliconnect' )."' name='log' value='' required autofocus>";
-echo "</div></div><div class='form-group'>
+print "</div></div><div class='form-group'>
 <div class='input-group mb-2 mr-sm-2'><div class='input-group-prepend'>
 <div class='input-group-text'><i class='fas fa-key fa-fw'></i></div></div>
 <input class='form-control' id='user_pass' type='password' placeholder='".__( 'Password', 'doliconnect' )."' name='pwd' value ='' required>";
-echo "</div></div>";
-echo "<div><div class='float-left'><small>";
+print "</div></div>";
+print "<div><div class='float-left'><small>";
 if ( ((!is_multisite() && get_option( 'users_can_register' )) || (get_option('users_can_register') == '1' && (get_site_option( 'registration' ) == 'user' || get_site_option( 'registration' ) == 'all'))) ) {
-echo "<a href='".wp_registration_url( get_permalink() )."' role='button' title='".__( 'Create an account', 'doliconnect' )."'>".__( 'Create an account', 'doliconnect' )."</a>";
+print "<a href='".wp_registration_url( get_permalink() )."' role='button' title='".__( 'Create an account', 'doliconnect' )."'>".__( 'Create an account', 'doliconnect' )."</a>";
 }
 //<input type='checkbox' class='custom-control-input' value='forever' id='remembermemodal' name='rememberme'>";
-//echo "<label class='custom-control-label' for='remembermemodal'> ".__( 'Remember me', 'doliconnect' )."</label>";
-echo "</div><div class='float-right'><a href='".wp_lostpassword_url( get_permalink() )."' role='button' title='".__( 'Forgot password?', 'doliconnect' )."'>".__( 'Forgot password?', 'doliconnect' )."</a></small></div></div>"; 
+//print "<label class='custom-control-label' for='remembermemodal'> ".__( 'Remember me', 'doliconnect' )."</label>";
+print "</div><div class='float-right'><a href='".wp_lostpassword_url( get_permalink() )."' role='button' title='".__( 'Forgot password?', 'doliconnect' )."'>".__( 'Forgot password?', 'doliconnect' )."</a></small></div></div>"; 
 
-echo "</div></li><li class='list-group-item'><input type='hidden' value='$redirect_to' name='redirect_to'><button id='submit' class='btn btn-block btn-primary' type='submit' name='submit' value='Submit'";
-echo "><b>".__( 'Sign in', 'doliconnect' )."</b></button></form>";
+print "</div></li><li class='list-group-item'><input type='hidden' value='$redirect_to' name='redirect_to'><button id='submit' class='btn btn-block btn-primary' type='submit' name='submit' value='Submit'";
+print "><b>".__( 'Sign in', 'doliconnect' )."</b></button></form>";
 
 }
 
-echo "</li></lu></div>";
+print "</li></lu></div>";
 
-echo "<p class='text-right'><small>";
-echo dolihelp('ISSUE');
-echo "</small></p>";
+print "<p class='text-right'><small>";
+print dolihelp('ISSUE');
+print "</small></p>";
 
-echo "</div></div>";
+print "</div></div>";
 }
 }
 add_shortcode('doliaccount', 'doliaccount_shortcode');
@@ -1330,20 +1330,20 @@ class My_doliconnect extends WP_Widget {
 public function widget( $args, $instance ) {
 global $wpdb;
 		
-echo $args['before_widget'];
+print $args['before_widget'];
 if ( ! empty( $instance['title'] ) ) {
-  echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ) . $args['after_title'];
+  print $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ) . $args['after_title'];
 }
 
 $time=current_time('timestamp');
 $entity=get_current_blog_id();
 
 if (is_user_logged_in()){ 
-  echo "<a class='btn btn-block btn-warning' href='".doliconnecturl('doliaccount') . "?module=ticket&type=ISSUE&create' ><span class='fa fa-bug fa-fw'></span> ".__( 'Report a Bug', 'doliconnect' )."</a>";
+  print "<a class='btn btn-block btn-warning' href='".doliconnecturl('doliaccount') . "?module=ticket&type=ISSUE&create' ><span class='fa fa-bug fa-fw'></span> ".__( 'Report a Bug', 'doliconnect' )."</a>";
 } else {
-  echo "<a class='btn btn-block btn-warning' href='".esc_url( add_query_arg( 'type', 'issue', doliconnecturl('dolicontact')) ) . "' ><span class='fa fa-bug fa-fw'></span> ".__( 'Report a Bug', 'doliconnect' )."</a>";
+  print "<a class='btn btn-block btn-warning' href='".esc_url( add_query_arg( 'type', 'issue', doliconnecturl('dolicontact')) ) . "' ><span class='fa fa-bug fa-fw'></span> ".__( 'Report a Bug', 'doliconnect' )."</a>";
 } 
-  echo $args['after_widget'];  
+  print $args['after_widget'];  
 }
 
 	/**
@@ -1355,8 +1355,8 @@ if (is_user_logged_in()){
 		$title = ! empty( $instance['title'] ) ? $instance['title'] : esc_html__( 'Offre d\'emploi', 'text_domain' );
 		?>
 		<p>
-		<label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php esc_attr_e( 'Title:', 'text_domain' ); ?></label> 
-		<input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
+		<label for="<?php print esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php esc_attr_e( 'Title:', 'text_domain' ); ?></label> 
+		<input class="widefat" id="<?php print esc_attr( $this->get_field_id( 'title' ) ); ?>" name="<?php print esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text" value="<?php print esc_attr( $title ); ?>">
 		</p>
 		<?php 
 	}
@@ -1416,9 +1416,9 @@ public function widget( $args, $instance ) {
 global $current_user, $wpdb;
 		// outputs the content of the widget
     
-  		echo $args['before_widget'];
+  		print $args['before_widget'];
 		if ( ! empty( $instance['title'] ) ) {
-echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ) . $args['after_title'];
+print $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ) . $args['after_title'];
 		}
 
 $entity=get_current_blog_id();
@@ -1428,20 +1428,20 @@ $adherent = callDoliApi("GET", "/adherentsplus/".doliconnector($current_user, 'f
 }
  
 if ($adherent->statut == '1' && $adherent->datefin < current_time('timestamp')) {
-echo "<A class='btn btn-block btn-success' href='".esc_url( add_query_arg( 'module', 'members', doliconnecturl('doliaccount')) )."' >".__( 'Pay my subscription', 'doliconnect' )."</a>"; 
+print "<A class='btn btn-block btn-success' href='".esc_url( add_query_arg( 'module', 'members', doliconnecturl('doliaccount')) )."' >".__( 'Pay my subscription', 'doliconnect' )."</a>"; 
 }
 elseif ($adherent->statut == '0') {
-echo "<a class='btn btn-block btn-info' href='".esc_url( add_query_arg( 'module', 'members', doliconnecturl('doliaccount')) )."' >".__( 'Subscribe', 'doliconnect' )."</a>"; 
+print "<a class='btn btn-block btn-info' href='".esc_url( add_query_arg( 'module', 'members', doliconnecturl('doliaccount')) )."' >".__( 'Subscribe', 'doliconnect' )."</a>"; 
 }
 elseif ($adherent->statut == '-1') {
-echo "<a class='btn btn-block btn-warning disabled' href='".esc_url( add_query_arg( 'module', 'members', doliconnecturl('doliaccount')) )."' >".__( 'Membership', 'doliconnect' )."</a>";//requested 
+print "<a class='btn btn-block btn-warning disabled' href='".esc_url( add_query_arg( 'module', 'members', doliconnecturl('doliaccount')) )."' >".__( 'Membership', 'doliconnect' )."</a>";//requested 
 }
 elseif (!$adherent->id > 0) {
-echo "<a class='btn btn-block btn-success' href='".esc_url( add_query_arg( 'module', 'members', doliconnecturl('doliaccount')) )."' >".__( 'Subscribe', 'doliconnect' )."</a>"; 
+print "<a class='btn btn-block btn-success' href='".esc_url( add_query_arg( 'module', 'members', doliconnecturl('doliaccount')) )."' >".__( 'Subscribe', 'doliconnect' )."</a>"; 
 }
 
 
-echo $args['after_widget'];  
+print $args['after_widget'];  
     
 	}
 
@@ -1454,8 +1454,8 @@ echo $args['after_widget'];
 		$title = '';
 		?>
 		<p>
-		<label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php esc_attr_e( 'Title:', 'text_domain' ); ?></label> 
-		<input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
+		<label for="<?php print esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php esc_attr_e( 'Title:', 'text_domain' ); ?></label> 
+		<input class="widefat" id="<?php print esc_attr( $this->get_field_id( 'title' ) ); ?>" name="<?php print esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text" value="<?php print esc_attr( $title ); ?>">
 		</p>
 		<?php 
 	}

@@ -1785,11 +1785,32 @@ $thirparty = callDoliApi("PUT", "/thirdparties/".doliconnector($current_user, 'f
 }
 }
 
-print "<form id='doliconnect-settingsform' action='".$url."' method='post'>";
+print "<form id='settings-form' action='".$url."' method='post'>";
 
 if ( isset($msg) ) { print $msg; }
 
-print doliloaderscript('doliconnect-settingsform'); 
+print "<script>";
+?>
+window.setTimeout(function() {
+    $(".alert").fadeTo(500, 0).slideUp(500, function(){
+        $(this).remove(); 
+    });
+}, 5000);
+
+var form = document.getElementById('settings-form');
+form.addEventListener('submit', function(event) {
+
+form.submit();
+});
+
+function demo(){
+ 
+jQuery('#DoliconnectLoadingModal').modal('show'); 
+this.form.submit();
+
+}
+<?php
+print "</script>";
 
 print "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
 print "<li class='list-group-item'><div class='custom-control custom-switch'><input type='checkbox' class='custom-control-input' name='loginmailalert' id='loginmailalert' ";
