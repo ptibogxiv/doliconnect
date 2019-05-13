@@ -636,32 +636,11 @@ if ( isset($hasError) || isset($captchaError) ) {
 print "<div class='alert alert-danger'><a class='close' data-dismiss='alert'>x</a><h4 class='alert-heading'>".__( 'Oops', 'doliconnect' )."</h4><p class='error'>$emailError<p></div>";
 }
 }
-print "<form id='signin-form' action='".doliconnecturl('doliaccount')."?signup' role='form' method='post' class='was-validated'>";
+print "<form id='doliconnect-signinform' action='".doliconnecturl('doliaccount')."?signup' role='form' method='post' class='was-validated'>";
 
 if ( isset($msg) ) { print $msg; }
 
-print "<script>";
-?>
-
-window.setTimeout(function() {
-    $(".alert").fadeTo(500, 0).slideUp(500, function(){
-        $(this).remove(); 
-    });
-}, 5000);
-
-var form = document.getElementById('signin-form'); 
-
-form.addEventListener('submit', function(event) {
-
-jQuery('#DoliconnectLoadingModal').modal('show');
-jQuery(window).scrollTop(0);
-console.log("submit");
-form.submit();
-
-});
-
-<?php
-print "</script>";
+print doliloaderscript('doliconnect-signinform'); 
 
 print "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>".__( 'Create an account', 'doliconnect' )."</h5></div>";
 
@@ -887,31 +866,11 @@ print "<div class='alert alert-danger'><h4 class='alert-heading'>".__( 'Oops', '
 print "<div class='alert alert-warning'><h4 class='alert-heading'>".__( 'Oops', 'doliconnect' )."</h4><p>".__( 'A problem occurred. Please retry later!', 'doliconnect' )."</p></div>";
 }
 
-print "<form id='fpw-form' action='".doliconnecturl('doliaccount')."?fpw' method='post' class='was-validated'><input type='hidden' name='submitted' id='submitted' value='true' />";
+print "<form id='doliconnect-fpwform' action='".doliconnecturl('doliaccount')."?fpw' method='post' class='was-validated'><input type='hidden' name='submitted' id='submitted' value='true' />";
 
 if ( isset($msg) ) { print $msg; }
 
-echo'<script>';
-?>
-
-window.setTimeout(function () {
-    $(".alert-success").fadeTo(500, 0).slideUp(500, function () {
-        $(this).remove();
-    });
-}, 5000);
-
-var fpwform = document.getElementById('fpw-form');
-fpwform.addEventListener('submit', function(event) {
-
-jQuery('#DoliconnectLoadingModal').modal('show');
-jQuery(window).scrollTop(0); 
-console.log("submit");
-form.submit();
-
-});
-
-<?php            
-print '</script>';
+print doliloaderscript('doliconnect-fpwform'); 
  
 print "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>".__( 'Forgot password?', 'doliconnect' )."</h5>";
 
@@ -972,29 +931,9 @@ $login_url=site_url()."/wp-login.php"; }
 if ( isset($_GET["redirect_to"])) { $redirect_to=$_GET["redirect_to"]; } else {
 $redirect_to=$_SERVER['HTTP_REFERER'];}
  
-print "<form class='was-validated' id='login-form' action='$login_url' method='post'>";
+print "<form class='was-validated' id='doliconnect-loginform' action='$login_url' method='post'>";
 
-echo'<script>';
-?>
-
-window.setTimeout(function () {
-    $(".alert-success").fadeTo(500, 0).slideUp(500, function () {
-        $(this).remove();
-    });
-}, 5000);
-
-var loginform = document.getElementById('login-form');
-loginform.addEventListener('submit', function(event) {
-
-jQuery('#DoliconnectLoadingModal').modal('show');
-jQuery(window).scrollTop(0); 
-console.log("submit");
-form.submit();
-
-});
-
-<?php            
-print '</script>';
+print doliloaderscript('doliconnect-loginform'); 
  
 print "<div class='form-group'>
 <div class='input-group mb-2 mr-sm-2'><div class='input-group-prepend'>
@@ -1028,8 +967,6 @@ print "</div></div>";
 }
 }
 add_shortcode('doliaccount', 'doliaccount_shortcode');
-
-// ********************************************************
 
 // ********************************************************
 function dolicontact_display($content) {
