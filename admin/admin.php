@@ -160,13 +160,13 @@ $link='https://www.ptibogxiv.net/?update_action=get_metadata&slug=doliconnect&li
 ?> 
 
 <?php
-$versiondoli = callDoliApi("GET", "/status", null, 5 * MINUTE_IN_SECONDS);
+$dolibarr = callDoliApi("GET", "/status", null, 5 * MINUTE_IN_SECONDS);
 $versiondoli = explode("-", $dolibarr->success->dolibarr_version);
 //if ( is_object($dolibarr) && version_compare($versiondoli[0], '10.0.0') >= 0 )
 ?>
 
     <p>Version Dolibarr <a href='https://sourceforge.net/projects/dolibarr/files/Dolibarr%20ERP-CRM/9.0.0/' target='_blank'>9.0.0</a> minimum - <a href='https://sourceforge.net/projects/dolibarr/files/Dolibarr%20ERP-CRM/9.0.3/' target='_blank'>9.0.3</a> recommandée - votre version est <?php echo $versiondoli[0]; ?></p>
-    <p>Doliconnector 9.0.4 <a href='https://github.com/ptibogxiv/doliconnector/releases' target='_blank'>Télécharger</a> pour Dolibarr afin de faire fonctionner ce module</p>
+    <p>Doliconnector 9.0.4 requis à <a href='https://github.com/ptibogxiv/doliconnector/releases' target='_blank'>télécharger ici</a> pour lier WordPress à Dolibarr</p>
     <form action="" method="post">
         <table class="form-table" width="100%">
             <tr>
@@ -185,16 +185,14 @@ echo get_option('license_key_doliconnect-pro');?> " <?php } else { echo "";?>" d
                 <th style="width:150px;"><label for="dolibarr_private_key">DOLIBARR REST API USER KEY</label></th>
                 <td ><input class="regular-text" type="text" id="dolibarr_private_key" name="dolibarr_private_key"  value="<?php echo get_site_option('dolibarr_private_key'); ?>" required></td>
             </tr>
-<?php
-$versiondoli= callDoliApi("GET", "/status", null, 5 * MINUTE_IN_SECONDS);
-?>          <tr>          
+            <tr>          
                 <th style="width:150px;"><label for="status">Status Dolibarr</label></th>
                 <td>
-<?php if ( is_object($versiondoli) ) {
+<?php if ( is_object($dolibarr) ) {
 ?>                 
-                <p class="text-success">Status: <?php echo $versiondoli->success->code; ?></p>
-                <p class="text-success">Version: <?php echo $versiondoli->success->dolibarr_version; ?></p>
-                <p class="text-success">Access Locked: <?php echo $versiondoli->success->access_locked; ?></p>
+                <p class="text-success">Status: <?php echo $dolibarr->success->code; ?></p>
+                <p class="text-success">Version: <?php echo $dolibarr->success->dolibarr_version; ?></p>
+                <p class="text-success">Access Locked: <?php echo $dolibarr->success->access_locked; ?></p>
 <?php } else { ?><p class="text-danger">Offline</p><?php } ?></td>
             </tr>
             <tr>
