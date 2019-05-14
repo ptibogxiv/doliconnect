@@ -972,9 +972,6 @@ print "</div></div>";
 }
 }
 add_shortcode('doliaccount', 'doliaccount_shortcode');
-
-// ********************************************************
-
 // ********************************************************
 function dolicontact_display($content) {
 
