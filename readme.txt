@@ -49,7 +49,7 @@ WordPress configuration steps:
  = 3.6.0 =
 * debug ++++ & clean code
 * upgrade font-awesome 5.8.2
-* Require an update of Doliconnector to 9.0.4
+* Require an update of Doliconnector to 9.0.4 <https://github.com/ptibogxiv/doliconnector/archive/9.0.4.zip>
 * no more need shortcodes for include doliconnect content
 
  = 3.5.6 =
