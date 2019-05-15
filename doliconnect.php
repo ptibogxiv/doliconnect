@@ -1070,7 +1070,7 @@ print "</div>
 <label class='control-label' for='email'><small>".__( 'Email', 'doliconnect' )."</small></label>
 <input class='form-control' type='email' name='email' autocomplete='off' id='email' value='$current_user->user_email'";
 if ( is_user_logged_in() ){ print " readonly"; } else { print " required"; }
-print "/>";
+print ">";
 if($emailError != '') {
 print "<p><span class='error'>$emailError</span></p>";
 }
