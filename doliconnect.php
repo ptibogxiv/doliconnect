@@ -984,15 +984,15 @@ if( ! empty($_POST['email-control']) )   //! $is_valid  || !
 {
 $emailError = __( 'Your request is unsuccessful', 'doliconnect' );
 }
-elseif(isset($_POST['submitted'])) {
-    if( sanitize_text_field($_POST['contactName']) === '' ) {
+elseif ( isset($_POST['submitted']) ) {
+    if ( sanitize_text_field($_POST['contactName']) === '' ) {
         $nameError = 'Please enter your name.';
         $hasError = true;
     } else {
         $name = sanitize_text_field($_POST['contactName']);
     }
 
-    if( sanitize_email($_POST['email']) === '' )  {
+    if ( sanitize_email($_POST['email']) === '' )  {
         $emailError = 'Please enter your email address.';
         $hasError = true;
     } else if (!preg_match("/^[[:alnum:]][a-z0-9_.-]*@[a-z0-9.-]+\.[a-z]{2,4}$/i", sanitize_email($_POST['email']))) {
@@ -1011,13 +1011,13 @@ elseif(isset($_POST['submitted'])) {
 
     }
 
-    if(!isset($hasError)) {
+    if ( !isset($hasError) ) {
         $emailTo = get_option('tz_email');
         $user=get_userdata( $_GET['user'] ); 
         
-        if (isset($_GET['user']) && $user == true && $_GET['type']==EMAIL){
+        if ( isset($_GET['user']) && $user == true && $_GET['type'] == 'EMAIL' ) {
         $emailTo = $user->user_email;}
-        elseif (!isset($emailTo) || ($emailTo == '') ){
+        elseif (!isset($emailTo) || ($emailTo == '') ) {
             $emailTo = get_option('admin_email');
         }
         $subject = "[".get_bloginfo( 'name' )."] ".$_POST['ticket_type'];
@@ -1029,93 +1029,94 @@ elseif(isset($_POST['submitted'])) {
 
 }
 
-print "<div class='row'><div class='col-md-4'><div class='form-group'><h4>".__( 'Address', 'doliconnect' )."</h4>";
-print doliconst('MAIN_INFO_SOCIETE_ADDRESS');
-print "<br />";
-print doliconst('MAIN_INFO_SOCIETE_ZIP');
-print " ";
-print doliconst('MAIN_INFO_SOCIETE_TOWN'); 
-print "</div></div><div class='col-md-8'><div id='content'>";
-if( isset($emailSent) && $emailSent == true ) { 
+$content .= "<div class='row'><div class='col-md-4'><div class='form-group'><h4>".__( 'Address', 'doliconnect' )."</h4>";
+$content .= doliconst('MAIN_INFO_SOCIETE_ADDRESS');
+$content .= "<br />";
+$content .= doliconst('MAIN_INFO_SOCIETE_ZIP');
+$content .= " ";
+$content .= doliconst('MAIN_INFO_SOCIETE_TOWN'); 
+$content .= "</div></div><div class='col-md-8'><div id='content'>";
+if ( isset($emailSent) && $emailSent == true ) { 
 $msg = "<div class='alert alert-success'>
 <p>".__( 'Your message is successful send!', 'doliconnect' )."</p>
 </div>";
-} 
-elseif( isset($hasError) || isset($captchaError) ) { 
+} elseif ( isset($hasError) || isset($captchaError) ) { 
 $msg = "<div class='alert alert-warning'>
 <a class='close' data-dismiss='alert'>x</a>
 <h4 class='alert-heading'>".__( 'Oops', 'doliconnect' )."</h4>
 <p class='error'>Please try again!<p></div>";
 }
 
-print "<form action='' id='doliconnect-contactform' method='post' class='was-validated'>";
+$content .= "<form action='' id='doliconnect-contactform' method='post' class='was-validated'>";
 
-if ( isset($msg) ) { print $msg; }
+if ( isset($msg) ) { $content .= $msg; }
 
-print doliloaderscript('doliconnect-contactform');
+$content .= doliloaderscript('doliconnect-contactform');
 
-print "<div class='card shadow-sm'><ul class='list-group list-group-flush'>
+$content .= "<div class='card shadow-sm'><ul class='list-group list-group-flush'>
 <li class='list-group-item'><div class='form-group'>
 <label class='control-label' for='contactName'><small>".__( 'Complete name', 'doliconnect' )."</small></label>
 <input class='form-control' type='text' name='contactName' autocomplete='off' id='contactName' value='";
-if ( is_user_logged_in() ) { print $current_user->user_lastname." ".$current_user->user_firstname; } else { print "";}
-print "'";
-if ( is_user_logged_in() ) { print " readonly";} else { print " required"; }
-print ">";
-if($nameError != '') { 
-print "<p><span class='error'>$nameError</span></p>";
+if ( is_user_logged_in() ) { $content .= $current_user->user_lastname." ".$current_user->user_firstname; } else { print ""; }
+$content .= "'";
+if ( is_user_logged_in() ) { $content .= " readonly";} else { $content .= " required"; }
+$content .= ">";
+if ($nameError != '') { 
+$content .= "<p><span class='error'>$nameError</span></p>";
 } 
-print "</div>
-<div class='form-group'>
+$content .= "</div><div class='form-group'>
 <label class='control-label' for='email'><small>".__( 'Email', 'doliconnect' )."</small></label>
 <input class='form-control' type='email' name='email' autocomplete='off' id='email' value='$current_user->user_email'";
-if ( is_user_logged_in() ){ print " readonly"; } else { print " required"; }
-print ">";
-if($emailError != '') {
-print "<p><span class='error'>$emailError</span></p>";
+if ( is_user_logged_in() ){ $content .= " readonly"; } else { $content .= " required"; }
+$content .= ">";
+if ($emailError != '') {
+$content .= "<p><span class='error'>$emailError</span></p>";
 }
-print "</div>
-<div class='form-group d-none'>
+$content .= "</div><div class='form-group d-none'>
 <label class='control-label' for='email-control'><small>".__( 'Email', 'doliconnect' )."</small></label>
 <input class='form-control' type='email' name='email-control' autocomplete='off' id='email-control' ";
-print "/>";
-print "</div>";
+$content .= "/>";
+$content .= "</div>";
 
-print "<div class='form-group'><label class='control-label' for='type'><small>".__( 'Type of request', 'doliconnect' )."</small></label>";
+$content .= "<div class='form-group'><label class='control-label' for='type'><small>".__( 'Type of request', 'doliconnect' )."</small></label>";
 $type = callDoliApi("GET", "/setup/dictionary/ticket_types?sortfield=pos&sortorder=ASC&limit=100", null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
-if (isset($type)) { 
+if ( isset($type) ) { 
 $tp= __( 'Issue or problem', 'doliconnect' ).__( 'Commercial question', 'doliconnect' ).__( 'Change or enhancement request', 'doliconnect' ).__( 'Project', 'doliconnect' ).__( 'Other', 'doliconnect' );
-print "<select class='custom-select' id='ticket_type'  name='ticket_type'>";
-foreach ($type as $postv) {
-print "<option value='".$postv->code."' ";
-if ( $_GET['type']==$postv->code ) {
-print "selected ";
-} elseif ( $postv->use_default==1 ) {
-print "selected ";}
-print ">".__($postv->label, 'doliconnect' )."</option>";
+$content .= "<select class='custom-select' id='ticket_type'  name='ticket_type'>";
+foreach ( $type as $postv ) {
+$content .= "<option value='".$postv->code."' ";
+if ( $_GET['type'] == $postv->code ) {
+$content .= "selected ";
+} elseif ( $postv->use_default == 1 ) {
+$content .= "selected ";}
+$content .= ">".__($postv->label, 'doliconnect' )."</option>";
 }
-print "</select>";
+$content .= "</select>";
 }
-print "</div>";
+$content .= "</div>";
 
-print "<div class='form-group'>
+$content .= "<div class='form-group'>
 <label class='control-label' for='commentsText'><small>".__( 'Message', 'doliconnect' )."</small></label>
 <textarea class='form-control' name='comments' id='commentsText' rows='7' cols='20' required></textarea>";
-if ($commentError != '') { 
-print "<p><span class='error'>$commentError</span></p>";
+if ( $commentError != '' ) { 
+$content .= "<p><span class='error'>$commentError</span></p>";
 }
 
-if (!is_user_logged_in()){
-print '</li><li class="list-group-item"><div class="custom-control custom-checkbox"><input id="rgpdinfo" class="custom-control-input form-control-sm" type="checkbox" name="rgpdinfo" value="ok" required><label class="custom-control-label w-100" for="rgpdinfo"><small class="form-text text-muted"> '.__( 'I agree to save my personnal informations in order to contact me', 'doliconnect' ).'</small></label></div>';  
+if ( !is_user_logged_in() ) {
+$content .= '</li><li class="list-group-item"><div class="custom-control custom-checkbox"><input id="rgpdinfo" class="custom-control-input form-control-sm" type="checkbox" name="rgpdinfo" value="ok" required><label class="custom-control-label w-100" for="rgpdinfo"><small class="form-text text-muted"> '.__( 'I agree to save my personnal informations in order to contact me', 'doliconnect' ).'</small></label></div>';  
 }
-print "</li></ul>";
-print "<div class='card-body'><button class='btn btn-primary btn-block' type='submit'><b>".__( 'Send', 'doliconnect' )."</b></button><input type='hidden' name='submitted' id='submitted' value='true' /></div></div></div></div></form>";
+$content .= "</li></ul>";
+$content .= "<div class='card-body'><button class='btn btn-primary btn-block' type='submit'><b>".__( 'Send', 'doliconnect' )."</b></button><input type='hidden' name='submitted' id='submitted' value='true' /></div></div></div></div></form>";
 
-print "</div>";
+$content .= "</div>";
+
+return $content;
 
 } else {
+
 return $content;
+
 }
 
 }
