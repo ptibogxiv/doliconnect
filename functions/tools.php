@@ -279,6 +279,8 @@ $ID = get_current_user_id();
  
 if ( $name == null ) { $name=$fichier; } 
 
+$doc = callDoliApi("GET", "/documents/download?module_part=$type&original_file=$ref/$fichier", null, 0);
+
 if ( isset($_GET["download"]) && $_GET["securekey"] ==  hash('sha256', $ID.$type.$_GET["download"]) && $_GET["download"] == "$ref/$fichier" ) {
 
 if ( !empty($refresh) ) {
@@ -317,7 +319,7 @@ unlink($file);
 
 }
 
-if ( isset($ref) && isset($fichier) ) { $document = "<a class='btn btn btn-outline-dark btn-sm btn-block' href='".esc_url( add_query_arg( array('download' => $ref."/".$fichier, 'securekey' => hash('sha256', $ID.$type.$ref."/".$fichier)), $url) )."' >$name <i class='fas fa-file-download'></i></a>"; }
+if ( isset($ref) && isset($fichier) && isset($doc->content) ) { $document = "<a class='btn btn btn-outline-dark btn-sm btn-block' href='".esc_url( add_query_arg( array('download' => $ref."/".$fichier, 'securekey' => hash('sha256', $ID.$type.$ref."/".$fichier)), $url) )."' >$name <i class='fas fa-file-download'></i></a>"; }
 
 return $document;
 }
