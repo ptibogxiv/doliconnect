@@ -410,7 +410,7 @@ $loader .= 'window.setTimeout(function () {
     });
 }, 5000);';
 
-//$loader .= "var form = document.getElementById('"<?php $loader .= $idform; php>"');
+$loader .= 'var form = document.getElementById("'.$idform.'");';
 $loader .= 'form.addEventListener("submit", function(event) {
 jQuery("#DoliconnectLoadingModal").modal("show");
 jQuery(window).scrollTop(0); 
