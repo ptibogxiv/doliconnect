@@ -1059,8 +1059,9 @@ print "<div class='card shadow-sm'><ul class='list-group list-group-flush'>
 <label class='control-label' for='contactName'><small>".__( 'Complete name', 'doliconnect' )."</small></label>
 <input class='form-control' type='text' name='contactName' autocomplete='off' id='contactName' value='";
 if ( is_user_logged_in() ) { print $current_user->user_lastname." ".$current_user->user_firstname; } else { print "";}
+print "'";
 if ( is_user_logged_in() ) { print " readonly";} else { print " required"; }
-print "'/>";
+print ">";
 if($nameError != '') { 
 print "<p><span class='error'>$nameError</span></p>";
 } 
