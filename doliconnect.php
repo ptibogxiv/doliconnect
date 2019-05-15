@@ -996,7 +996,7 @@ add_shortcode('doliaccount', 'doliaccount_shortcode');
 function dolicontact_display($content) {
 global $current_user;
 
-if ( in_the_loop() && is_main_query() && is_page(doliconnectid('dolicontact')) ) {
+if ( in_the_loop() && is_main_query() && is_page(doliconnectid('dolicontact')) && !empty(doliconnectid('dolicontact')) ) {
 
 doliconnect_enqueues();
 
