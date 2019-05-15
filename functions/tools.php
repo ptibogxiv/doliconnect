@@ -403,25 +403,22 @@ return false;
 }
 
 function doliloaderscript($idform) {
-print "<script>";
-?>
-window.setTimeout(function () {
+$loader = "<script>";
+$loader .= 'window.setTimeout(function () {
     $(".alert-success").fadeTo(500, 0).slideUp(500, function () {
         $(this).remove();
     });
-}, 5000);
+}, 5000);';
 
-var form = document.getElementById('<?php print $idform; ?>');
-form.addEventListener('submit', function(event) {
-
-jQuery('#DoliconnectLoadingModal').modal('show');
+//$loader .= "var form = document.getElementById('"<?php $loader .= $idform; php>"');
+$loader .= 'form.addEventListener("submit", function(event) {
+jQuery("#DoliconnectLoadingModal").modal("show");
 jQuery(window).scrollTop(0); 
 console.log("submit");
 form.submit();
-
-});
-<?php
-print "</script>";
+});';
+$loader .= "</script>";
+return $loader;
 }
 
 function dolimodalloaderscript($idform) {
