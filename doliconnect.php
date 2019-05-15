@@ -974,7 +974,7 @@ print "</div></div>";
 add_shortcode('doliaccount', 'doliaccount_shortcode');
 // ********************************************************
 function dolicontact_display($content) {
-global $wpdb,$current_user;
+global $current_user;
 
 if ( doliconnectid('dolicontact') > 0 && doliconnectid('dolicontact') == get_the_ID() && !isset($_GET['action']) && !isset($_GET['edit']) ) {
 
@@ -1057,10 +1057,10 @@ print doliloaderscript('doliconnect-contactform');
 print "<div class='card shadow-sm'><ul class='list-group list-group-flush'>
 <li class='list-group-item'><div class='form-group'>
 <label class='control-label' for='contactName'><small>".__( 'Complete name', 'doliconnect' )."</small></label>
-<input class='form-control' type='text' name='contactName' autocomplete='off' id='contactName' value=";
-if ( is_user_logged_in() ) { print "'$current_user->user_lastname $current_user->user_firstname'"; } else { print "''";}
+<input class='form-control' type='text' name='contactName' autocomplete='off' id='contactName' value='";
+if ( is_user_logged_in() ) { print $current_user->user_lastname." ".$current_user->user_firstname; } else { print "";}
 if ( is_user_logged_in() ) { print " readonly";} else { print " required"; }
-print "/>";
+print "'/>";
 if($nameError != '') { 
 print "<p><span class='error'>$nameError</span></p>";
 } 
