@@ -661,7 +661,7 @@ print "";
 } else { print " aria-disabled='true'  disabled"; }
 print "><b>".__( 'Create an account', 'doliconnect' )."</b></button></form>";
 
-echo"</div></div>";
+print "</div></div>";
 
 print "<p class='text-right'><small>";
 print dolihelp('ISSUE');
@@ -1037,12 +1037,12 @@ print " ";
 print doliconst('MAIN_INFO_SOCIETE_TOWN'); 
 print "</div></div><div class='col-md-8'><div id='content'>";
 if( isset($emailSent) && $emailSent == true ) { 
-print "<div class='alert alert-success'>
+$msg = "<div class='alert alert-success'>
 <p>".__( 'Your message is successful send!', 'doliconnect' )."</p>
 </div>";
-} else { 
-if( isset($hasError) || isset($captchaError) ) { 
-print "<div class='alert alert-warning'>
+} 
+elseif( isset($hasError) || isset($captchaError) ) { 
+$msg = "<div class='alert alert-warning'>
 <a class='close' data-dismiss='alert'>x</a>
 <h4 class='alert-heading'>".__( 'Oops', 'doliconnect' )."</h4>
 <p class='error'>Please try again!<p></div>";
@@ -1110,7 +1110,7 @@ print '</li><li class="list-group-item"><div class="custom-control custom-checkb
 }
 print "</li></ul>";
 print "<div class='card-body'><button class='btn btn-primary btn-block' type='submit'><b>".__( 'Send', 'doliconnect' )."</b></button><input type='hidden' name='submitted' id='submitted' value='true' /></div></div></div></div></form>";
-} 
+
 print "</div>";
 
 } else {
