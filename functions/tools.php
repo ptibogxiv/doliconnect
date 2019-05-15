@@ -7,72 +7,72 @@ $idobject=$mode."[".$object->id."]";
 } 
 else { $idobject=$mode; }
 
-echo "<ul class='list-group list-group-flush'><li class='list-group-item'>";
+$form = "<ul class='list-group list-group-flush'><li class='list-group-item'>";
 
 if ( $display == 'cart' ) {
-echo "<input type='hidden' id='morphy' name='".$idobject."[morphy]' value='".$current_user->billing_type."'>";
+$form .= "<input type='hidden' id='morphy' name='".$idobject."[morphy]' value='".$current_user->billing_type."'>";
 } elseif ( ! isset($object) && $mode == 'thirdparty' && !get_option('doliconnect_disablepro') ) {
-echo "<div class='form-row'><div class='col-12'>";
+$form .= "<div class='form-row'><div class='col-12'>";
 if ( isset($_GET["pro"]) && !get_option('doliconnect_disablepro') ) {
-echo "<a  href='".wp_registration_url(get_permalink())."' role='button' title='".__( 'Create a personnal account', 'doliconnect' )."'><small>(".__( 'Create a personnal account', 'doliconnect' )."?)</small></a>";                                                                                                                                                                                                                                                                                                                                     
+$form .= "<a  href='".wp_registration_url(get_permalink())."' role='button' title='".__( 'Create a personnal account', 'doliconnect' )."'><small>(".__( 'Create a personnal account', 'doliconnect' )."?)</small></a>";                                                                                                                                                                                                                                                                                                                                     
 }
 elseif (!get_option('doliconnect_disablepro')) {
-echo "<a  href='".wp_registration_url(get_permalink())."&pro' role='button' title='".__( 'Create a enterprise / supplier account', 'doliconnect' )."'><small>(".__( 'Create a enterprise / supplier account', 'doliconnect' )."?)</small></a>";
+$form .= "<a  href='".wp_registration_url(get_permalink())."&pro' role='button' title='".__( 'Create a enterprise / supplier account', 'doliconnect' )."'><small>(".__( 'Create a enterprise / supplier account', 'doliconnect' )."?)</small></a>";
 }
 
-echo "</div></div></li><li class='list-group-item'>";
+$form .= "</div></div></li><li class='list-group-item'>";
 } elseif ( isset($object) && $mode == 'thirdparty' ) {
-echo "<div class='form-row'><div class='col-12'><label for='inputMorphy'><small><i class='fas fa-user'></i> ".__( 'Type of account', 'doliconnect' )."</small></label><br>";
-echo "<div class='custom-control custom-radio custom-control-inline'><input type='radio' id='morphy1' name='".$idobject."[morphy]' value='phy' class='custom-control-input'";
-if ( $current_user->billing_type == 'phy' || empty($current_user->billing_type) ) { echo " checked"; }
-echo " required><label class='custom-control-label' for='morphy1'>".__( 'Personnal account', 'doliconnect' )."</label>
+$form .= "<div class='form-row'><div class='col-12'><label for='inputMorphy'><small><i class='fas fa-user'></i> ".__( 'Type of account', 'doliconnect' )."</small></label><br>";
+$form .= "<div class='custom-control custom-radio custom-control-inline'><input type='radio' id='morphy1' name='".$idobject."[morphy]' value='phy' class='custom-control-input'";
+if ( $current_user->billing_type == 'phy' || empty($current_user->billing_type) ) { $form .= " checked"; }
+$form .= " required><label class='custom-control-label' for='morphy1'>".__( 'Personnal account', 'doliconnect' )."</label>
 </div>
 <div class='custom-control custom-radio custom-control-inline'><input type='radio' id='morphy2' name='".$idobject."[morphy]' value='mor' class='custom-control-input'";
-if ( $current_user->billing_type != 'phy' ) { echo " checked"; }
-echo " required><label class='custom-control-label' for='morphy2'>".__( 'Entreprise account', 'doliconnect' )."</label>
+if ( $current_user->billing_type != 'phy' ) { $form .= " checked"; }
+$form .= " required><label class='custom-control-label' for='morphy2'>".__( 'Entreprise account', 'doliconnect' )."</label>
 </div>";
-echo "</div></div></li><li class='list-group-item'>";
+$form .= "</div></div></li><li class='list-group-item'>";
 } elseif ( $mode == 'thirdparty' ) {
-echo "<input type='hidden' id='morphy' name='".$idobject."[morphy]' value='phy'>";
+$form .= "<input type='hidden' id='morphy' name='".$idobject."[morphy]' value='phy'>";
 }
 
 if ( $mode == 'thirdparty' ) {
 if ( $current_user->billing_type == 'mor' || ( isset($_GET["pro"]) && !get_option('doliconnect_disablepro') ) ) {
-echo "<div class='form-row'><div class='col-12'><label for='coordonnees'><small><i class='fas fa-building'></i> ".__( 'Name of company', 'doliconnect' )."</small></label><input type='text' class='form-control' id='inputcompany' placeholder='".__( 'Name of company', 'doliconnect' )."' name='".$idobject."[name]' value='".$current_user->billing_company."' required></div></div></li><li class='list-group-item'>";
+$form .= "<div class='form-row'><div class='col-12'><label for='coordonnees'><small><i class='fas fa-building'></i> ".__( 'Name of company', 'doliconnect' )."</small></label><input type='text' class='form-control' id='inputcompany' placeholder='".__( 'Name of company', 'doliconnect' )."' name='".$idobject."[name]' value='".$current_user->billing_company."' required></div></div></li><li class='list-group-item'>";
 } 
 }
 
-echo "<div class='form-row'><div class='col-12 col-md-3'><label for='inputCivility'><small><i class='fas fa-user'></i> ".__( 'Civility', 'doliconnect' )."</small></label>";
+$form .= "<div class='form-row'><div class='col-12 col-md-3'><label for='inputCivility'><small><i class='fas fa-user'></i> ".__( 'Civility', 'doliconnect' )."</small></label>";
 $civility = callDoliApi("GET", "/setup/dictionary/civility?sortfield=code&sortorder=ASC&limit=100", null, $delay);
 if ( isset($civility->error) ) {
 $civility = callDoliApi("GET", "/setup/dictionary/civilities?sortfield=code&sortorder=ASC&limit=100&active=1", null, $delay); 
 }
 
-echo "<select class='custom-select' id='identity'  name='".$idobject."[civility_id]' required>";
-echo "<option value='' disabled ";
+$form .= "<select class='custom-select' id='identity'  name='".$idobject."[civility_id]' required>";
+$form .= "<option value='' disabled ";
 if ( empty($object->civility_id) ) {
-echo "selected ";}
-echo ">".__( '- Select -', 'doliconnect' )."</option>";
+$form .= "selected ";}
+$form .= ">".__( '- Select -', 'doliconnect' )."</option>";
 if ( !isset($civility->error ) && $civility != null ) { 
 foreach ( $civility as $postv ) {
 
-echo "<option value='".$postv->code."' ";
+$form .= "<option value='".$postv->code."' ";
 if ( (isset($object->civility_id) ? $object->civility_id : $current_user->civility_id) == $postv->code && (isset($object->civility_id) ? $object->civility_id : $current_user->civility_id) != null) {
-echo "selected ";}
-echo ">".$postv->label."</option>";
+$form .= "selected ";}
+$form .= ">".$postv->label."</option>";
 
 }} else {
-echo "<option value='MME' ";
+$form .= "<option value='MME' ";
 if ( $current_user->civility_id == 'MME' && $object->civility_id != null) {
-echo "selected ";}
-echo ">".__( 'Miss', 'doliconnect' )."</option>";
-echo "<option value='MR' ";
+$form .= "selected ";}
+$form .= ">".__( 'Miss', 'doliconnect' )."</option>";
+$form .= "<option value='MR' ";
 if ( $current_user->civility_id == 'MR' && $object->civility_id != null) {
-echo "selected ";}
-echo ">".__( 'Mister', 'doliconnect' )."</option>";
+$form .= "selected ";}
+$form .= ">".__( 'Mister', 'doliconnect' )."</option>";
 }
-echo "</select>";
-echo "</div>
+$form .= "</select>";
+$form .= "</div>
     <div class='col-12 col-md-4'>
       <label for='inputFirstname'><small><i class='fas fa-user'></i> ".__( 'Firstname', 'doliconnect' )."</small></label>
       <input type='text' name='".$idobject."[firstname]' class='form-control' placeholder='".__( 'Firstname', 'doliconnect' )."' value='".(isset($object->firstname) ? $object->firstname : stripslashes(htmlspecialchars($current_user->user_firstname, ENT_QUOTES)))."' required>
@@ -83,37 +83,37 @@ echo "</div>
     </div></div>";
 
 if ( !empty($object->birth) ) { $birth = date_i18n('Y-m-d', $object->birth); }
-echo "<div class='form-row'><div class='col'><label for='inputbirth'><small><i class='fas fa-birthday-cake fa-fw'></i> ".__( 'Birthday', 'doliconnect' )."</small></label><input type='date' name='".$idobject."[birth]' class='form-control' value='".(isset($birth) ? $birth : $current_user->billing_birth)."' id='inputbirth' placeholder='yyyy-mm-dd' autocomplete='off'";
-if ( $mode != 'contact' ) { echo " required"; } 
-echo "></div>";
-echo "<div class='col-12 col-md-7'>";
+$form .= "<div class='form-row'><div class='col'><label for='inputbirth'><small><i class='fas fa-birthday-cake fa-fw'></i> ".__( 'Birthday', 'doliconnect' )."</small></label><input type='date' name='".$idobject."[birth]' class='form-control' value='".(isset($birth) ? $birth : $current_user->billing_birth)."' id='inputbirth' placeholder='yyyy-mm-dd' autocomplete='off'";
+if ( $mode != 'contact' ) { $form .= " required"; } 
+$form .= "></div>";
+$form .= "<div class='col-12 col-md-7'>";
 if ( $mode != 'contact' ) {
-echo "<label for='inputnickname'><small><i class='fas fa-user-secret fa-fw'></i> ".__( 'Display name', 'doliconnect' )."</small></label><input type='text' class='form-control' id='inputnickname' placeholder='".__( 'Nickname', 'doliconnect' )."' name='user_nicename' value='".stripslashes(htmlspecialchars($current_user->nickname, ENT_QUOTES))."' autocomplete='off' required >";
+$form .= "<label for='inputnickname'><small><i class='fas fa-user-secret fa-fw'></i> ".__( 'Display name', 'doliconnect' )."</small></label><input type='text' class='form-control' id='inputnickname' placeholder='".__( 'Nickname', 'doliconnect' )."' name='user_nicename' value='".stripslashes(htmlspecialchars($current_user->nickname, ENT_QUOTES))."' autocomplete='off' required >";
 } else {
-echo "<label for='inputnickname'><small><i class='fas fa-user-secret fa-fw'></i> ".__( 'Title / Job', 'doliconnect' )."</small></label><input type='text' class='form-control' id='inputtitle/job' placeholder='".__( 'Title / Job', 'doliconnect' )."' name='".$idobject."[poste]' value='".stripslashes(htmlspecialchars(isset($object->poste) ? $object->poste : null, ENT_QUOTES))."' autocomplete='off'>";
+$form .= "<label for='inputnickname'><small><i class='fas fa-user-secret fa-fw'></i> ".__( 'Title / Job', 'doliconnect' )."</small></label><input type='text' class='form-control' id='inputtitle/job' placeholder='".__( 'Title / Job', 'doliconnect' )."' name='".$idobject."[poste]' value='".stripslashes(htmlspecialchars(isset($object->poste) ? $object->poste : null, ENT_QUOTES))."' autocomplete='off'>";
 }
-echo "</div></div>";
+$form .= "</div></div>";
 
-echo "<div class='form-row'><div class='col'><label for='inputemail'><small><i class='fas fa-at fa-fw'></i> ".__( 'Email', 'doliconnect' )."</small></label><input type='email' class='form-control' id='inputemail' placeholder='email@example.com' name='".$idobject."[email]' value='".(isset($object->email) ? $object->email : $current_user->user_email)."' autocomplete='off' ";
+$form .= "<div class='form-row'><div class='col'><label for='inputemail'><small><i class='fas fa-at fa-fw'></i> ".__( 'Email', 'doliconnect' )."</small></label><input type='email' class='form-control' id='inputemail' placeholder='email@example.com' name='".$idobject."[email]' value='".(isset($object->email) ? $object->email : $current_user->user_email)."' autocomplete='off' ";
 
 if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $current_user->ID && is_user_logged_in() && $mode == 'thirdparty' ) {
-echo " readonly";
+$form .= " readonly";
 } else {
-echo " required";
+$form .= " required";
 }
-echo "></div>";
+$form .= "></div>";
 if ( ( isset($_GET["pro"]) && !get_option('doliconnect_disablepro') ) || ( $mode == 'thirdparty' && isset($object) ) || ( $mode == 'contact' && isset($object) ) || ( $mode == 'member' && isset($object) ) ) {   
-echo "<div class='col-12 col-md-5'><label for='inputmobile'><small><i class='fas fa-phone fa-fw'></i> ".__( 'Phone', 'doliconnect' )."</small></label><input type='tel' class='form-control' id='inputmobile' placeholder='".__( 'Phone', 'doliconnect' )."' name='".$idobject."[phone]' value='".(isset($object->phone) ? $object->phone : null)."' autocomplete='off'></div>";
+$form .= "<div class='col-12 col-md-5'><label for='inputmobile'><small><i class='fas fa-phone fa-fw'></i> ".__( 'Phone', 'doliconnect' )."</small></label><input type='tel' class='form-control' id='inputmobile' placeholder='".__( 'Phone', 'doliconnect' )."' name='".$idobject."[phone]' value='".(isset($object->phone) ? $object->phone : null)."' autocomplete='off'></div>";
 }
-echo "</div></li>";
+$form .= "</div></li>";
 
 if ( ( isset($_GET["pro"]) && !get_option('doliconnect_disablepro') ) || ( $mode == 'thirdparty' && isset($object) ) || ( $mode == 'contact' && isset($object) ) || ( $mode == 'member'  && isset($object) )) {       
-echo "<li class='list-group-item'>";
+$form .= "<li class='list-group-item'>";
  
-echo "<div class='form-row'><div class='col-12'><label for='inputaddress'><small><i class='fas fa-map-marked fa-fw'></i> ".__( 'Address', 'doliconnect' )."</small></label>
+$form .= "<div class='form-row'><div class='col-12'><label for='inputaddress'><small><i class='fas fa-map-marked fa-fw'></i> ".__( 'Address', 'doliconnect' )."</small></label>
 <textarea id='inlineFormInputGroup' name='".$idobject."[address]' class='form-control' rows='3' placeholder='".__( 'Address', 'doliconnect' )."' required>".(isset($object->address) ? $object->address : null)."</textarea></div></div>";
 
-echo "<div class='form-row'>
+$form .= "<div class='form-row'>
     <div class='col-md-6'><label for='inputaddress'><small><i class='fas fa-map-marked fa-fw'></i> ".__( 'Town', 'doliconnect' )."</small></label>
       <input type='text' class='form-control' placeholder='".__( 'Town', 'doliconnect' )."' name='".$idobject."[town]' value='".(isset($object->town) ? $object->town : null)."' autocomplete='off' required>
     </div>
@@ -124,99 +124,99 @@ echo "<div class='form-row'>
 $pays = callDoliApi("GET", "/setup/dictionary/countries?sortfield=favorite%2Clabel&sortorder=DESC%2CASC&limit=500", null , $delay);
 
 if ( isset($pays) ) { 
-echo "<select class='custom-select' id='inputcountry'  name='".$idobject."[country_id]' required>";
-echo "<option value='' disabled ";
+$form .= "<select class='custom-select' id='inputcountry'  name='".$idobject."[country_id]' required>";
+$form .= "<option value='' disabled ";
 if ( !isset($object->country_id) && ! $object->country_id > 0 || $pays == 0) {
-echo "selected ";}
-echo ">".__( '- Select -', 'doliconnect' )."</option>";
+$form .= "selected ";}
+$form .= ">".__( '- Select -', 'doliconnect' )."</option>";
 foreach ( $pays as $postv ) { 
-echo "<option value='".$postv->id."' ";
+$form .= "<option value='".$postv->id."' ";
 if ( isset($object->country_id) && $object->country_id == $postv->id && $object->country_id != null && $postv->id != '0' ) {
-echo "selected ";
-} elseif ( $postv->id == '0' ) { echo "disabled "; }
-echo ">".$postv->label."</option>";
+$form .= "selected ";
+} elseif ( $postv->id == '0' ) { $form .= "disabled "; }
+$form .= ">".$postv->label."</option>";
 }
-echo "</select>";
+$form .= "</select>";
 } else {
-echo "<input type='text' class='form-control' id='inputcountry' placeholder='".__( 'Country', 'doliconnect' )."' name='".$idobject."[country_id]' value='".$object->country_id."' autocomplete='off' required>";
+$form .= "<input type='text' class='form-control' id='inputcountry' placeholder='".__( 'Country', 'doliconnect' )."' name='".$idobject."[country_id]' value='".$object->country_id."' autocomplete='off' required>";
 }
-echo "</div></div>";
+$form .= "</div></div>";
 
-echo "</li>";
+$form .= "</li>";
 
 if ( function_exists('dolikiosk') && ! isset($object) && ! empty(dolikiosk()) ) {
-echo "<li class='list-group-item'><div class='form-row'><div class='col'><label for='pwd1'><small><i class='fas fa-key fa-fw'></i> ".__( 'Password', 'doliconnect' )."</small></label>
+$form .= "<li class='list-group-item'><div class='form-row'><div class='col'><label for='pwd1'><small><i class='fas fa-key fa-fw'></i> ".__( 'Password', 'doliconnect' )."</small></label>
 <input class='form-control' id='pwd1' type='password' name='pwd1' value ='' placeholder='".__( 'Choose your password', 'doliconnect' )."' autocomplete='off' required>
 <small id='pwd1' class='form-text text-justify text-muted'>".__( 'Your password must be between 8 and 20 characters, including at least 1 digit, 1 letter, 1 uppercase.', 'doliconnect' )."</small></div></div>
 <div class='form-row'><div class='col'><label for='pwd2'><small><i class='fas fa-key fa-fw'></i> ".__( 'Confirm your password', 'doliconnect' )."</small></label>
 <input class='form-control' id='pwd2' type='password' name='pwd2' value ='' placeholder='".__( 'Confirm your password', 'doliconnect' )."' autocomplete='off' required></div>";
-echo "</div></li>";
+$form .= "</div></li>";
 }
 
 if( has_action('mydoliconnectuserform') ) {
-echo "<li class='list-group-item'>";
+$form .= "<li class='list-group-item'>";
 do_action('mydoliconnectuserform', $object);
-echo "</li>";
+$form .= "</li>";
 }
 
 if ( $display != 'cart' ) {
-echo "<li class='list-group-item'>";
+$form .= "<li class='list-group-item'>";
 
 if ( $mode != 'contact' && $mode != 'member') {
-echo "<div class='form-row'><div class='col'><label for='description'><small><i class='fas fa-bullhorn fa-fw'></i> ".__( 'About Yourself', 'doliconnect' )."</small></label>
+$form .= "<div class='form-row'><div class='col'><label for='description'><small><i class='fas fa-bullhorn fa-fw'></i> ".__( 'About Yourself', 'doliconnect' )."</small></label>
 <textarea type='text' class='form-control' name='description' id='description' rows='3' placeholder='".__( 'About Yourself', 'doliconnect' )."'>".$current_user->description."</textarea></div></div>";
 
-echo "<div class='form-row'><div class='col'><label for='description'><small><i class='fas fa-link fa-fw'></i> ".__( 'Website', 'doliconnect' )."</small></label>
+$form .= "<div class='form-row'><div class='col'><label for='description'><small><i class='fas fa-link fa-fw'></i> ".__( 'Website', 'doliconnect' )."</small></label>
 <input type='url' class='form-control' name='".$idobject."[url]' id='website' placeholder='".__( 'Website', 'doliconnect' )."' value='".stripslashes(htmlspecialchars((isset($object->url) ? $object->url : null), ENT_QUOTES))."'></div></div>";
 }
 
-echo "<div class='form-row'>";
+$form .= "<div class='form-row'>";
 $facebook = callDoliApi("GET", "/doliconnector/constante/SOCIALNETWORKS_FACEBOOK", null, $delay);
 if ( is_object($facebook) && $facebook->value == 1 ) {
-echo "<div class='col-12 col-md'><label for='inlineFormInputGroup'><small><i class='fab fa-facebook-f fa-fw'></i> Facebook</small></label>
+$form .= "<div class='col-12 col-md'><label for='inlineFormInputGroup'><small><i class='fab fa-facebook-f fa-fw'></i> Facebook</small></label>
 <input type='text' name='".$idobject."[facebook]' class='form-control' id='inlineFormInputGroup' placeholder='".__( 'Username', 'doliconnect' )."' value='".stripslashes(htmlspecialchars((isset($object->facebook) ? $object->facebook : null), ENT_QUOTES))."'></div>";
 }
 $twitter = callDoliApi("GET", "/doliconnector/constante/SOCIALNETWORKS_TWITTER", null, $delay);
 if ( is_object($twitter) && $twitter->value == 1 ) {
-echo "<div class='col-12 col-md'><label for='inlineFormInputGroup'><small><i class='fab fa-twitter fa-fw'></i> Twitter</small></label>
+$form .= "<div class='col-12 col-md'><label for='inlineFormInputGroup'><small><i class='fab fa-twitter fa-fw'></i> Twitter</small></label>
 <input type='text' name='".$idobject."[twitter]' class='form-control' id='inlineFormInputGroup' placeholder='".__( 'Username', 'doliconnect' )."' value='".stripslashes(htmlspecialchars((isset($object->twitter) ? $object->twitter : null), ENT_QUOTES))."'></div>";
 }
 $skype = callDoliApi("GET", "/doliconnector/constante/SOCIALNETWORKS_SKYPE", null, $delay);
 if ( is_object($skype) && $skype->value == 1 ) {
-echo "<div class='col-12 col-md'><label for='inlineFormInputGroup'><small><i class='fab fa-skype fa-fw'></i> Skype</small></label>
+$form .= "<div class='col-12 col-md'><label for='inlineFormInputGroup'><small><i class='fab fa-skype fa-fw'></i> Skype</small></label>
 <input type='text' name='".$idobject."[skype]' class='form-control' id='inlineFormInputGroup' placeholder='".__( 'Username', 'doliconnect' )."' value='".stripslashes(htmlspecialchars((isset($object->skype) ? $object->skype : null), ENT_QUOTES))."'></div>";
 }
 $linkedin = callDoliApi("GET", "/doliconnector/constante/SOCIALNETWORKS_LINKEDIN", null, $delay);
 if ( is_object($linkedin) && $linkedin->value == 1 ) {
-echo "<div class='col-12 col-md'><label for='inlineFormInputGroup'><small><i class='fab fa-linkedin-in fa-fw'></i> Linkedin</small></label>
+$form .= "<div class='col-12 col-md'><label for='inlineFormInputGroup'><small><i class='fab fa-linkedin-in fa-fw'></i> Linkedin</small></label>
 <input type='text' name='".$idobject."[linkedin]' class='form-control' id='inlineFormInputGroup' placeholder='".__( 'Username', 'doliconnect' )."' value='".stripslashes(htmlspecialchars((isset($object->linkedin) ? $object->linkedin : null), ENT_QUOTES))."'></div>";
 }
-echo "</div>"; 
-echo "</li>";
+$form .= "</div>"; 
+$form .= "</li>";
 }
 
 }
 
 if ( ! isset($object) ) {
-echo "<li class='list-group-item'><div class='form-row'><div class='custom-control custom-checkbox my-1 mr-sm-2'>
+$form .= "<li class='list-group-item'><div class='form-row'><div class='custom-control custom-checkbox my-1 mr-sm-2'>
 <input type='checkbox' class='custom-control-input' value='1' id='optin1' name='optin1'>
 <label class='custom-control-label' for='optin1'> ".__( 'I would like to receive the newsletter', 'doliconnect' )."</label></div></div>";
-echo "<div class='form-row'><div class='custom-control custom-checkbox my-1 mr-sm-2'>
+$form .= "<div class='form-row'><div class='custom-control custom-checkbox my-1 mr-sm-2'>
 <input type='checkbox' class='custom-control-input' value='forever' id='validation' name='validation' required>
 <label class='custom-control-label' for='validation'> ".__( 'I read and accept the <a href="#" data-toggle="modal" data-target="#cgvumention">Terms & Conditions</a>.', 'doliconnect')."</label></div></div>";
 
 if ( get_option( 'wp_page_for_privacy_policy' ) ) {
-echo "<div class='modal fade' id='cgvumention' tabindex='-1' role='dialog' aria-labelledby='cgvumention' aria-hidden='true'><div class='modal-dialog modal-lg modal-dialog-centered' role='document'><div class='modal-content'><div class='modal-header'><h5 class='modal-title' id='cgvumentionLabel'>".__( 'Terms & Conditions', 'doliconnect')."</h5><button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>
+$form .= "<div class='modal fade' id='cgvumention' tabindex='-1' role='dialog' aria-labelledby='cgvumention' aria-hidden='true'><div class='modal-dialog modal-lg modal-dialog-centered' role='document'><div class='modal-content'><div class='modal-header'><h5 class='modal-title' id='cgvumentionLabel'>".__( 'Terms & Conditions', 'doliconnect')."</h5><button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>
 <div class='modal-body'>";
-echo apply_filters('the_content', get_post_field('post_content', get_option( 'wp_page_for_privacy_policy' ))); 
-echo "</div></div></div>";}
+$form .= apply_filters('the_content', get_post_field('post_content', get_option( 'wp_page_for_privacy_policy' ))); 
+$form .= "</div></div></div>";}
 
-echo "</li>";
+$form .= "</li>";
 }
 
-echo "</ul>";
+$form .= "</ul>";
  
-//return $form;
+return $form;
 }
 //add_action( 'wp_loaded', 'doliconnectuserform', 10, 2);
 
