@@ -1119,7 +1119,8 @@ return $content;
 
 }
 
-add_filter( 'the_content', 'dolicontact_display', 10, 1);
+add_filter( 'the_content', 'dolicontact_display');
+
 // ********************************************************
 
 function update_synctodolibarr($element) {
