@@ -404,6 +404,7 @@ return false;
 
 function doliloaderscript($idform) {
 $loader = "<script>";
+
 $loader .= 'window.setTimeout(function () {
     $(".alert-success").fadeTo(500, 0).slideUp(500, function () {
         $(this).remove();
@@ -418,26 +419,26 @@ console.log("submit");
 form.submit();
 });';
 $loader .= "</script>";
+
 return $loader;
 }
 
 function dolimodalloaderscript($idform) {
-print "<script>";
-?>
-
-var form = document.getElementById('<?php print $idform; ?>');
-form.addEventListener('submit', function(event) { 
+$loader = "<script>";
+$loader .= 'var form = document.getElementById("'.$idform.'");';
+$loader .= 'form.addEventListener("submit", function(event) {
+form.addEventListener("submit", function(event) { 
 jQuery(window).scrollTop(0);
-jQuery('#Close<?php print $idform; ?>').hide(); 
-jQuery('#Footer<?php print $idform; ?>').hide();
-jQuery('#<?php print $idform; ?>').hide(); 
-jQuery('#doliloading-<?php print $idform; ?>').show(); 
+jQuery("#Close'.$idform.'").hide(); 
+jQuery("#Footer'.$idform.'").hide();
+jQuery("#'.$idform.'").hide(); 
+jQuery("#doliloading-'.$idform.'").show(); 
 console.log("submit");
 form.submit();
-});
+});';
 
-<?php
-print "</script>";
+$loader .= "</script>";
+return $loader;
 }
 
 function dolitotal($object) {
