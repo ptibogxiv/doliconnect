@@ -242,25 +242,11 @@ $msg .= "<div class='alert alert-warning'><button type='button' class='close' da
 $msg .= "<div class='alert alert-success'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><p><strong>".__( 'Congratulations!', 'doliconnect' )."</strong> ".__( 'Your informations have been updated.', 'doliconnect' )."</p></div>";   
 }
 
-print "<form action='".$url."' id='avatar-form' method='post' class='was-validated' enctype='multipart/form-data'><input type='hidden' name='case' value='updateavatar'>";
+print "<form action='".$url."' id='doliconnect-avatarform' method='post' class='was-validated' enctype='multipart/form-data'><input type='hidden' name='case' value='updateavatar'>";
 
 if ( isset($msg) ) { print $msg; }
 
-print "<script>";
-?>
-
-var form = document.getElementById('avatar-form');
-form.addEventListener('submit', function(event) {
-
-jQuery('#DoliconnectLoadingModal').modal('show');
-jQuery(window).scrollTop(0);  
-console.log("submit");
-form.submit();
-
-});
-
-<?php
-print "</script>";
+print doliloaderscript('doliconnect-avatarform');
 
 print "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
 print "<li class='list-group-item'>";
@@ -1317,18 +1303,7 @@ print "</div><div class='col-12 col-md-7'>";
 if ( function_exists('dolimembership_modal') && is_object($order) && $order->value == 1 && !empty($productadhesion->value) ) {
 dolimembership_modal($current_user, $adherent, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
-print "<script>";
-?>
-
-window.setTimeout(function () {
-    $(".alert-success").fadeTo(500, 0).slideUp(500, function () {
-        $(this).remove();
-    });
-}, 5000);
-
-<?php
-print "</script>";
-
+//print doliloaderscript('doliconnect-memberform');
 
 if ( $adherent->datefin == null && $adherent->statut == '0' ) {print  "<a href='#' id='subscribe-button2' class='btn btn text-white btn-warning btn-block' data-toggle='modal' data-target='#activatemember'><b>".__( 'Become a member', 'doliconnect' )."</b></a>";
 } elseif ($adherent->statut == '1') {
@@ -1809,26 +1784,20 @@ print "<form id='settings-form' action='".$url."' method='post'>";
 if ( isset($msg) ) { print $msg; }
 
 print "<script>";
-?>
-window.setTimeout(function() {
+print 'window.setTimeout(function() {
     $(".alert").fadeTo(500, 0).slideUp(500, function(){
         $(this).remove(); 
     });
-}, 5000);
-
-var form = document.getElementById('settings-form');
-form.addEventListener('submit', function(event) {
-
+}, 5000);';
+print 'var form = document.getElementById("settings-form");
+form.addEventListener("submit", function(event) {
 form.submit();
-});
+});';
 
-function demo(){
- 
-jQuery('#DoliconnectLoadingModal').modal('show'); 
+print 'function demo(){
+jQuery("#DoliconnectLoadingModal".modal("show"); 
 this.form.submit();
-
-}
-<?php
+}';
 print "</script>";
 
 print "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
