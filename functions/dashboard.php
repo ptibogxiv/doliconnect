@@ -1793,9 +1793,8 @@ print 'var form = document.getElementById("settings-form");
 form.addEventListener("submit", function(event) {
 form.submit();
 });';
-
 print 'function demo(){
-jQuery("#DoliconnectLoadingModal".modal("show"); 
+jQuery("#DoliconnectLoadingModal").modal("show");
 this.form.submit();
 }';
 print "</script>";
