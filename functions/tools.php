@@ -185,7 +185,6 @@ $form .= "<div class='col-12 col-md'><label for='inlineFormInputGroup'><small><i
 $form .= "</div>"; 
 $form .= "</li>";
 }
-
 }
 
 if ( function_exists('dolikiosk') && ! isset($object) && ! empty(dolikiosk()) && $mode == 'thirdparty' ) {
@@ -213,7 +212,6 @@ $form .= "</div></div></div>";}
 
 $form .= "</li>";
 }
-
 $form .= "</ul>";
  
 return $form;
