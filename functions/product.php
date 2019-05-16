@@ -23,7 +23,6 @@ return numfmt_format_currency($fmt, $montant, $currency);//.$decimal
 }
 
 function doliproductstock($product) {
-
 $stock = callDoliApi("GET", "/doliconnector/constante/MAIN_MODULE_STOCK", null, dolidelay('constante'));
 
 if ( $product->stock_reel > $product->seuil_stock_alerte && $product->stock_reel > '10' && $product->type == '0' && is_object($stock) && $stock->value == 1 ) {$stock = "<span class='badge badge-pill badge-success'>".__( 'In stock', 'doliconnect' )."</span>";}
