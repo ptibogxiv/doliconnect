@@ -597,8 +597,6 @@ wp_update_user( array( 'ID' => $ID, 'nickname' => sanitize_user($_POST['user_nic
 wp_update_user( array( 'ID' => $ID, 'display_name' => ucfirst(strtolower($thirdparty['firstname']))." ".strtoupper($thirdparty['lastname'])));
 wp_update_user( array( 'ID' => $ID, 'first_name' => ucfirst(sanitize_user(strtolower($thirdparty['firstname'])))));
 wp_update_user( array( 'ID' => $ID, 'last_name' => strtoupper(sanitize_user($thirdparty['lastname']))));
-//wp_update_user( array( 'ID' => $ID, 'description' => sanitize_textarea_field($_POST['description'])));
-//wp_update_user( array( 'ID' => $ID, 'user_url' => sanitize_textarea_field($thirdparty['url'])));
 update_user_meta( $ID, 'civility_id', sanitize_text_field($thirdparty['civility_id']));
 update_user_meta( $ID, 'billing_type', sanitize_text_field($thirdparty['morphy']));
 if ( isset($thirdparty['name']) ) { update_user_meta( $ID, 'billing_company', sanitize_text_field($thirdparty['name'])); }
@@ -766,9 +764,6 @@ try {
     //Feed configuration array to Hybridauth
     $hybridauth = new Hybridauth\Hybridauth($config);
 
-    //Then we can proceed and sign in with Twitter as an example. If you want to use a diffirent provider, 
-    //simply replace 'Twitter' with 'Google' or 'Facebook'.
-
     //Attempt to authenticate users with a provider by name
     $adapter = $hybridauth->authenticate($_GET["provider"]); 
 
@@ -800,7 +795,7 @@ exit;
     $adapter->disconnect();
 }
 catch(\Exception $e) {
-        // In case we have errors 6 or 7, then we have to use Hybrid_Provider_Adapter::logout() to 
+    // In case we have errors 6 or 7, then we have to use Hybrid_Provider_Adapter::logout() to 
     // let hybridauth forget all about the user so we can try to authenticate again.
     // Display the recived error, 
     // to know more please refer to Exceptions handling section on the userguide
