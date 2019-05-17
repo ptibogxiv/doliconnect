@@ -563,7 +563,42 @@ print "</form>";
 
 }
 add_action( 'user_doliconnect_password', 'password_module');
+
 //*****************************************************************************************
+
+if ( get_option('doliconnectbeta') =='1' ) { //is_object($memberconsumption) && $memberconsumption->value == '1' && 
+add_action( 'customer_doliconnect_menu', 'wishlist_menu', 0, 1);
+add_action( 'customer_doliconnect_wishlist', 'wishlist_module' );
+}  
+
+function wishlist_menu( $arg ) {
+print "<a href='".esc_url( add_query_arg( 'module', 'wishlist', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-action";
+if ($arg=='wishlist') { print " active";}
+print "'>".__( 'Wish list', 'doliconnect' )."</a>";
+}
+
+function wishlist_module( $url ) {
+global $current_user;
+
+$request = "/adherentsplus/".doliconnector($current_user, 'fk_member')."/consumptions";
+
+print "<div class='card shadow-sm'><div class='card-body'>";
+print "<b>".__( 'Next billing date', 'doliconnect' ).": </b> <br>";
+
+print "</div><ul class='list-group list-group-flush'>";
+
+
+
+print  "</ul></div>";
+
+print "<small><div class='float-left'>";
+print dolirefresh( $request, $url, dolidelay('member'));
+print "</div><div class='float-right'>";
+print dolihelp('COM');
+print "</div></small>";
+
+}
+
 if ( is_object($proposal) && $proposal->value == 1 ) {
 add_action( 'customer_doliconnect_menu', 'proposals_menu', 1, 1);
 add_action( 'customer_doliconnect_proposals', 'proposals_module' );
