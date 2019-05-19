@@ -377,16 +377,25 @@ return $delay;
 }
 
 function dolirefresh( $origin, $url, $delay, $element = null) {
+
+$refresh = "<script>";
+$refresh .= 'function refreshloader(){
+jQuery("#DoliconnectLoadingModal").modal("show");
+jQuery(window).scrollTop(0); 
+this.form.submit();
+}';
+$refresh .= "</script>";
+
 if ( isset($element->date_modification) && !empty($element->date_modification) ) {
-$refresh = __( 'Updated', 'doliconnect' ).": ".date_i18n('d/m/Y - H:i', $element->date_modification, false);
+$refresh .= __( 'Updated', 'doliconnect' ).": ".date_i18n('d/m/Y - H:i', $element->date_modification, false);
 } elseif ( get_option("_transient_timeout_".$origin) > 0 ) {
-$refresh = __( 'Updated', 'doliconnect' ).": ".date_i18n('d/m/Y - H:i', get_option("_transient_timeout_".$origin)-$delay, false);
+$refresh .= __( 'Updated', 'doliconnect' ).": ".date_i18n('d/m/Y - H:i', get_option("_transient_timeout_".$origin)-$delay, false);
 } elseif (is_user_logged_in() ) {
-$refresh = __( 'Refresh', 'doliconnect' );
+$refresh .= __( 'Refresh', 'doliconnect' );
 }
  
 if (is_user_logged_in() ) {
-$refresh .= " <a href='".esc_url( add_query_arg( 'refresh', true, $url) )."' title='".__( 'Refresh', 'doliconnect' )."'><i class='fas fa-sync-alt'></i></a>";
+$refresh .= " <a onClick='refreshloader()' href='".esc_url( add_query_arg( 'refresh', true, $url) )."' title='".__( 'Refresh', 'doliconnect' )."'><i class='fas fa-sync-alt'></i></a>";
 }
 
 return $refresh;
