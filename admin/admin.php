@@ -3,7 +3,7 @@
 function doliconnect_admin_notice_error() {
 global $wpdb;
 
-$dolibarr = callDoliApi("GET", "/status", null, 10 * MINUTE_IN_SECONDS);
+$dolibarr = callDoliApi("GET", "/status", null, dolidelay('dolibarr'));
 $versiondoli = explode("-", $dolibarr->success->dolibarr_version);
 if ( is_object($dolibarr) && version_compare($versiondoli[0], '9.0.0') < 0 && !defined("DOLIBUG") ) {
 $class = 'notice notice-error ';  //is-dismissible
