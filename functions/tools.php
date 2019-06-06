@@ -449,6 +449,15 @@ form.submit();
 print "</script>";
 }
 
+function doliaddress($object) {
+$address = "<h6 class='my-0'>".($object->civility ? $object->civility : $object->civility_code)." ".$object->firstname." ".$object->lastname;
+if ( !empty($object->default) ) { $address .= " <i class='fas fa-star fa-1x fa-fw' style='color:Gold'></i>"; }
+if ( !empty($object->poste) ) { $address .= "<br>".$object->poste; }
+$address .= "</h6>";
+$address .= "<small class='text-muted'>".$object->address."<br>".$object->zip." ".$object->town." - ".$object->country."<br>".$object->email." ".$object->phone_pro."</small>";
+retunr $address;
+}
+
 function dolitotal($object) {
 $total = "<b>".__( 'Total excl. tax', 'doliconnect').": ".doliprice($object, 'ht', isset($object->multicurrency_code) ? $object->multicurrency_code : null)."</b><br>";
 $total .= "<b>".__( 'Total tax', 'doliconnect').": ".doliprice($object, 'tva', isset($object->multicurrency_code) ? $object->multicurrency_code : null)."</b><br>";

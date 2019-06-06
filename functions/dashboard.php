@@ -411,11 +411,8 @@ if ( !isset($listcontact->error) && $listcontact != null ) {
 foreach ( $listcontact as $contact ) { 
 $count=$contact->ref_facturation+$contact->ref_contrat+$contact->ref_commande+$contact->ref_propal;
 print "<li class='list-group-item d-flex justify-content-between lh-condensed list-group-item-action'>";
-print "<div class='d-none d-md-block col-md-2 col-lg-1'><i class='fas fa-address-card fa-3x fa-fw'></i></div><h6 class='my-0'>".($contact->civility ? $contact->civility : $contact->civility_code)." ".$contact->firstname." ".$contact->lastname;
-if ( !empty($contact->default) ) { print " <i class='fas fa-star fa-1x fa-fw' style='color:Gold'></i>"; }
-if ( !empty($contact->poste) ) { print "<br>".$contact->poste; }
-print "</h6>";
-print "<small class='text-muted'>".$contact->address."<br>".$contact->zip." ".$contact->town." - ".$contact->country."<br>".$contact->email." ".$contact->phone_pro."</small>";
+print "<div class='d-none d-md-block col-md-2 col-lg-1'><i class='fas fa-address-card fa-3x fa-fw'></i></div>";
+print doliaddress($contact);
 if (1 == 1) {
 print "<div class='col-4 col-sm-3 col-md-2 btn-group-vertical' role='group'>";
 print "<button type='button' class='btn btn-light text-primary' data-toggle='modal' data-target='#contact-".$contact->id."' title='".__( 'Edit', 'doliconnect' )." ".$contact->firstname." ".$contact->lastname."'><i class='fas fa-edit fa-fw'></i></a>
