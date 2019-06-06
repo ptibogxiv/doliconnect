@@ -813,7 +813,9 @@ print "</div></div>";
 if (!empty($orderfo->contacts_ids) && is_array($orderfo->contacts_ids)) {
 print "<div class='card-group'>";
 foreach ($orderfo->contacts_ids as $contact) {
-print "<div class='card'><div class='card-body'><h6>".$contact->libelle."</h6>".$contact->civility." ".$contact->firstname." ".$contact->lastname;//<br>".$contact->address."<br>".$contact->zip."".$contact->town.
+print "<div class='card'><div class='card-body'><h6>".$contact->libelle."</h6>";
+print doliaddress($contact);
+//.$contact->civility." ".$contact->firstname." ".$contact->lastname;//<br>".$contact->address."<br>".$contact->zip."".$contact->town.
 print "</div></div>";
 }
 print "</div><br>";
