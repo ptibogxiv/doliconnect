@@ -455,7 +455,7 @@ if ( !empty($object->default) ) { $address .= " <i class='fas fa-star fa-1x fa-f
 if ( !empty($object->poste) ) { $address .= "<br>".$object->poste; }
 $address .= "</h6>";
 $address .= "<small class='text-muted'>".$object->address."<br>".$object->zip." ".$object->town." - ".$object->country."<br>".$object->email." ".$object->phone_pro."</small>";
-retunr $address;
+return $address;
 }
 
 function dolitotal($object) {
