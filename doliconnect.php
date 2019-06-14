@@ -672,8 +672,6 @@ print "</small></p>";
 
 print "</div></div>";
 
-print "</div></div>";
-
 } elseif ( !is_user_logged_in() && isset($_GET["rpw"]) ) {
 
 print "<p class='font-weight-light' align='justify'>".__( 'Manage your account, your informations, orders and much more via this secure client area.', 'doliconnect' )."</p></div></div></div>";
