@@ -577,19 +577,25 @@ print "'>".__( 'Wish list', 'doliconnect' )."</a>";
 function wishlist_module( $url ) {
 global $current_user;
 
-$request = "/adherentsplus/".doliconnector($current_user, 'fk_member')."/consumptions";
+$request = "/wishlist/".doliconnector($current_user, 'fk_soc');
+$proposalfo = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
-print "<div class='card shadow-sm'><div class='card-body'>";
-print "";
+print "<form role='form' action='".$url."' id='doliconnect-wishlistform' method='post'>";
 
-print "</div><ul class='list-group list-group-flush'>";
+print doliloaderscript('doliconnect-wishlistform');
+
+print "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
 
 
 
-print  "</ul></div>";
+print  "</ul><div class='card-body'>";
+
+print "<button type='submit' name='dolicart' value='validation' class='btn btn-warning w-100' role='button' aria-pressed='true'><b>".__( 'Order', 'doliconnect-pro' )."</b></button>";
+
+print "</div></div></form>";
 
 print "<small><div class='float-left'>";
-print dolirefresh( $request, $url, dolidelay('member'));
+print dolirefresh( $request, $url, dolidelay('product'));
 print "</div><div class='float-right'>";
 print dolihelp('COM');
 print "</div></small>";
