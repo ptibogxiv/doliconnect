@@ -121,7 +121,14 @@ print "<div class='form-row'>
       <input type='text' class='form-control' placeholder='".__( 'Zipcode', 'doliconnect' )."' name='".$idobject."[zip]' value='".(isset($object->zip) ? $object->zip : null)."' autocomplete='off' required>
     </div>
     <div class='col'><label for='inputaddress'><small><i class='fas fa-map-marked fa-fw'></i> ".__( 'Country', 'doliconnect' )."</small></label>";
-$pays = callDoliApi("GET", "/setup/dictionary/countries?sortfield=favorite%2Clabel&sortorder=DESC%2CASC&limit=500", null , $delay);
+
+if ( function_exists('pll_the_languages') ) { 
+$lang = pll_current_language('locale');
+} else {
+$lang = $current_user->locale;
+}
+
+$pays = callDoliApi("GET", "/setup/dictionary/countries?sortfield=favorite%2Clabel&sortorder=DESC%2CASC&limit=400&lang=".$lang, null , $delay);
 
 if ( isset($pays) ) { 
 print "<select class='custom-select' id='inputcountry'  name='".$idobject."[country_id]' required>";
