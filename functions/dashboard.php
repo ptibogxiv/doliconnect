@@ -816,15 +816,17 @@ print "<a href='$changepm' id='button-source-payment' class='btn btn-warning btn
 
 print "</div></div>"; 
 
-if (!empty($orderfo->contacts_ids) && is_array($orderfo->contacts_ids)) {
+$thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+
 print "<div class='card-group'>";
+if (!empty($orderfo->contacts_ids) && is_array($orderfo->contacts_ids)) {
+
 foreach ($orderfo->contacts_ids as $contact) {
 if ('BILLING' == $contact->code) {
 print "<div class='card'><div class='card-body'><h6>".__( 'Billing address', 'doliconnect' )."</h6><small class='text-muted'>";
 print dolicontact($contact->id, $_GET["refresh"]);
 print "</small></div></div>";
 } else {
-$thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 print "<div class='card'><div class='card-body'><h6>".__( 'Billing address', 'doliconnect' )."</h6><small class='text-muted'>";
 print doliaddress($thirdparty, $_GET["refresh"]);
 print "</small></div></div>";
@@ -834,14 +836,18 @@ print "<div class='card'><div class='card-body'><h6>".__( 'Shipping address', 'd
 print dolicontact($contact->id, $_GET["refresh"]);
 print "</small></div></div>";
 } else {
-$thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 print "<div class='card'><div class='card-body'><h6>".__( 'Shipping address', 'doliconnect' )."</h6><small class='text-muted'>";
 print doliaddress($thirdparty, $_GET["refresh"]);
 print "</small></div></div>";
 }
 }
-print "</div><br>";
+
+} else {
+print "<div class='card'><div class='card-body'><h6>".__( 'Billing and shipping address', 'doliconnect' )."</h6><small class='text-muted'>";
+print doliaddress($thirdparty, $_GET["refresh"]);
+print "</small></div></div>";
 }
+print "</div><br>";
 
 print '<div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: '.$orderavancement.'%" aria-valuenow="'.$orderavancement.'" aria-valuemin="0" aria-valuemax="100"></div></div>';
 print "<div class='w-auto text-muted d-none d-sm-block' ><div style='display:inline-block;width:20%'>".__( 'Order', 'doliconnect' )."</div><div style='display:inline-block;width:15%'>".__( 'Payment', 'doliconnect' )."</div><div style='display:inline-block;width:25%'>".__( 'Processing', 'doliconnect' )."</div><div style='display:inline-block;width:20%'>".__( 'Shipping', 'doliconnect' )."</div><div class='text-right' style='display:inline-block;width:20%'>".__( 'Delivery', 'doliconnect' )."</div></div>";
