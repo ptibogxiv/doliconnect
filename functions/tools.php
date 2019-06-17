@@ -450,11 +450,15 @@ print "</script>";
 }
 
 function doliaddress($object) {
+if ( !empty($object->name) ) {
+$address = "<h6 class='my-0'>".$object->name;
+} else {
 $address = "<h6 class='my-0'>".($object->civility ? $object->civility : $object->civility_code)." ".$object->firstname." ".$object->lastname;
+}
 if ( !empty($object->default) ) { $address .= " <i class='fas fa-star fa-1x fa-fw' style='color:Gold'></i>"; }
 if ( !empty($object->poste) ) { $address .= "<br>".$object->poste; }
 $address .= "</h6>";
-$address .= "<small class='text-muted'>".$object->address."<br>".$object->zip." ".$object->town." - ".$object->country."<br>".$object->email." - ".$object->phone_pro."</small>";
+$address .= "<small class='text-muted'>".$object->address."<br>".$object->zip." ".$object->town." - ".$object->country."<br>".$object->email." - ".(isset($object->phone) ? $object->phone : $object->phone_pro)."</small>";
 return $address;
 }
 
