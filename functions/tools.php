@@ -460,10 +460,10 @@ return $address;
 
 function dolicontact($id, $refresh = false) {
 $object = callDoliApi("GET", "/contacts/".$id, null, dolidelay('contact', esc_attr(isset($refresh) ? $refresh : null)));  
-$address = "<h6 class='my-0'>".($object->civility ? $object->civility : $object->civility_code)." ".$object->firstname." ".$object->lastname;
+$address = "<b>".($object->civility ? $object->civility : $object->civility_code)." ".$object->firstname." ".$object->lastname;
 if ( !empty($object->default) ) { $address .= " <i class='fas fa-star fa-1x fa-fw' style='color:Gold'></i>"; }
-if ( !empty($object->poste) ) { $address .= "<br>".$object->poste; }
-$address .= "</h6>";
+if ( !empty($object->poste) ) { $address .= ", ".$object->poste; }
+$address .= "</b>";
 $address .= "<small class='text-muted'>".$object->address."<br>".$object->zip." ".$object->town." - ".$object->country."<br>".$object->email." - ".$object->phone_pro."</small>";
 return $address;
 }

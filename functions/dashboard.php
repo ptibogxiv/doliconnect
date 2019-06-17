@@ -819,9 +819,9 @@ print "</div></div>";
 if (!empty($orderfo->contacts_ids) && is_array($orderfo->contacts_ids)) {
 print "<div class='card-group'>";
 foreach ($orderfo->contacts_ids as $contact) {
-print "<div class='card'><div class='card-body'><h6>".$contact->libelle."</h6>";
-print dolicontact($contact->id, $_GET["refresh"]); //.$contact->civility." ".$contact->firstname." ".$contact->lastname;//<br>".$contact->address."<br>".$contact->zip."".$contact->town.
-print "</div></div>";
+print "<div class='card'><div class='card-body'><small><h6>".$contact->libelle."</h6>";
+print dolicontact($contact->id, $_GET["refresh"]);
+print "</small></div></div>";
 }
 print "</div><br>";
 }
