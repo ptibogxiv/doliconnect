@@ -103,7 +103,7 @@ print " required";
 }
 print "></div>";
 if ( ( isset($_GET["pro"]) && !get_option('doliconnect_disablepro') ) || ( $mode == 'thirdparty' && isset($object) ) || ( $mode == 'contact' && isset($object) ) || ( $mode == 'member' && isset($object) ) ) {   
-print "<div class='col-12 col-md-5'><label for='inputmobile'><small><i class='fas fa-phone fa-fw'></i> ".__( 'Phone', 'doliconnect' )."</small></label><input type='tel' class='form-control' id='inputmobile' placeholder='".__( 'Phone', 'doliconnect' )."' name='".$idobject."[phone]' value='".(isset($object->phone) ? $object->phone : null)."' autocomplete='off'></div>";
+print "<div class='col-12 col-md-5'><label for='inputmobile'><small><i class='fas fa-phone fa-fw'></i> ".__( 'Phone', 'doliconnect' )."</small></label><input type='tel' class='form-control' id='inputmobile' placeholder='".__( 'Phone', 'doliconnect' )."' name='".$idobject."[phone]' value='".(isset($object->phone) ? $object->phone : $object->phone_pro)."' autocomplete='off'></div>";
 }
 print "</div></li>";
 
