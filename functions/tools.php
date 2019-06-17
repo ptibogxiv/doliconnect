@@ -463,7 +463,7 @@ $object = callDoliApi("GET", "/contacts/".$id, null, dolidelay('contact', esc_at
 $address = "<b>".($object->civility ? $object->civility : $object->civility_code)." ".$object->firstname." ".$object->lastname;
 if ( !empty($object->default) ) { $address .= " <i class='fas fa-star fa-1x fa-fw' style='color:Gold'></i>"; }
 if ( !empty($object->poste) ) { $address .= ", ".$object->poste; }
-$address .= "</b>";
+$address .= "</b><br>";
 $address .= "<small class='text-muted'>".$object->address."<br>".$object->zip." ".$object->town." - ".$object->country."<br>".$object->email." - ".$object->phone_pro."</small>";
 return $address;
 }
