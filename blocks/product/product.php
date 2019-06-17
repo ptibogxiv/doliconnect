@@ -59,25 +59,31 @@ $product = callDoliApi("GET", "/products/".$attributes['productID'], null, dolid
 if (defined("DOLIBUG")) {
 $html .=dolibug();
 } else    if ($product->id>0 && $product->status==1) {
-$html .='<DIV class="row">';
-$html .='<DIV class="col-12 d-block d-sm-block d-xs-block d-md-none">';
+$html .='<div class="row">';
+$html .='<div class="col-12 d-block d-sm-block d-xs-block d-md-none">';
 $html .=wp_get_attachment_image( $attributes['mediaID'], "ptibogxiv_large", "", array( "class" => "img-fluid" ) );
-$html .='</DIV>';
-$html .='<DIV class="col-md-4 d-none d-md-block">';
+$html .='</div>';
+$html .='<div class="col-md-4 d-none d-md-block">';
 $html .=wp_get_attachment_image( $attributes['mediaID'], "ptibogxiv_square", "", array( "class" => "img-fluid" ) );
-$html .='</DIV>';
-$html .='<DIV class="col-12 col-md-8"><h5 class="card-title">'.$product->label.' '.doliproductstock($product).'</h5><P>'.$product->description.'</P>';
+$html .='</div>';
+
+if ( function_exists('pll_the_languages') ) { 
+$lang = pll_current_language('locale');
+$html .='<div class="col-12 col-md-8"><h5 class="card-title">'.($product->multilangs->$lang->label ? $product->multilangs->$lang->label : $product->label).' '.doliproductstock($product).'</h5><p>'.($product->multilangs->$lang->description ? $product->multilangs->$lang->description : $product->description).'</p>';
+} else {
+$html .='<div class="col-12 col-md-8"><h5 class="card-title">'.$product->label.' '.doliproductstock($product).'</h5><p>'.$product->description.'</p>';
+}
 
 if ( function_exists('dolibuttontocart') ) {
 $html .= dolibuttontocart($product, null, $attributes['showButtonToCart'], isset($attributes['hideDuration']) ? $attributes['hideDuration'] : null);
 }
 
-$html .='</DIV></DIV>';
+$html .='</div></div>';
 } else {
-$html .='<CENTER>'.__( 'Product/Service not in sale', 'doliconnect' ).'</CENTER>';
+$html .='<center>'.__( 'Product/Service not in sale', 'doliconnect' ).'</center>';
 } 
 }
-$html .='</DIV></DIV><BR/>';
+$html .='</div></div><BR/>';
 return $html;
 }
 
