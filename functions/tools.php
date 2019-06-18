@@ -40,13 +40,17 @@ if ( $mode == 'member' ) {
 print "<div class='form-row'><div class='col-12'><label for='coordonnees'><small><i class='fas fa-user-tag fa-fw'></i> ".__( 'Type', 'doliconnect' )."</small></label><select class='custom-select' id='typeid'  name='".$idobject."[typeid]' required>";
 $typeadhesion = callDoliApi("GET", "/adherentsplus/type?sortfield=t.libelle&sortorder=ASC&sqlfilters=(t.morphy%3A=%3A'')%20or%20(t.morphy%3Ais%3Anull)%20or%20(t.morphy%3A%3D%3A'".$object->morphy."')", null, $delay);
 //print $typeadhesion;
+print "<option value='' disabled ";
+if ( empty($object->typeid) ) {
+print "selected ";}
+print ">".__( '- Select -', 'doliconnect' )."</option>";
 if ( !isset($typeadhesion->error) ) {
 foreach ($typeadhesion as $postadh) {
 print "<option value ='".$postadh->id."' ";
 if ( isset($object->typeid) && $object->typeid == $postadh->id && $object->typeid != null ) {
 print "selected ";
 } elseif ( $postadh->family == '1' ) { print "disabled "; }
-print ">".$postadh->label."</option>";
+print ">".$postadh->label." <small class='text-justify text-muted '>".$postadh->note."</small></option>";
 }}
 print "</select></div></div></li><li class='list-group-item'>";
 }
