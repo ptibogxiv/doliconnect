@@ -464,6 +464,7 @@ $address = "<b><i class='fas fa-building fa-fw'></i> ".($object->civility ? $obj
 }
 if ( !empty($object->default) ) { $address .= " <i class='fas fa-star fa-1x fa-fw' style='color:Gold'></i>"; }
 if ( !empty($object->poste) ) { $address .= "<br>".$object->poste; }
+if ( !empty($object->type) ) { $address .= "<br>".$object->type; }
 $address .= "</b><br>";
 $address .= "<small class='text-muted'>".$object->address."<br>".$object->zip." ".$object->town." - ".$object->country."<br>".$object->email." - ".(isset($object->phone) ? $object->phone : $object->phone_pro)."</small>";
 return $address;
