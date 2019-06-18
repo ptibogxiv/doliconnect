@@ -22,7 +22,7 @@ print "<a href='".wp_registration_url(get_permalink())."&pro' role='button' titl
 
 print "</div></div></li><li class='list-group-item'>";
 } elseif ( isset($object) && ( $mode == 'thirdparty' ) ) { //|| $mode == 'member'
-print "<div class='form-row'><div class='col-12'><label for='inputMorphy'><small><i class='fas fa-user fa-fw'></i> ".__( 'Type of account', 'doliconnect' )."</small></label><br>";
+print "<div class='form-row'><div class='col-12'><label for='inputMorphy'><small><i class='fas fa-user-tag fa-fw'></i> ".__( 'Type of account', 'doliconnect' )."</small></label><br>";
 print "<div class='custom-control custom-radio custom-control-inline'><input type='radio' id='morphy1' name='".$idobject."[morphy]' value='phy' class='custom-control-input'";
 if ( $current_user->billing_type == 'phy' || empty($current_user->billing_type) ) { print " checked"; }
 print " required><label class='custom-control-label' for='morphy1'>".__( 'Personnal account', 'doliconnect' )."</label>
