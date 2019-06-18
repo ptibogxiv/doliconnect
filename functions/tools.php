@@ -49,7 +49,7 @@ foreach ($typeadhesion as $postadh) {
 print "<option value ='".$postadh->id."' ";
 if ( isset($object->typeid) && $object->typeid == $postadh->id && $object->typeid != null ) {
 print "selected ";
-} elseif ( $postadh->family == '1' ) { print "disabled "; }
+} elseif ( $postadh->family == '1' || $postadh->automatic_renew != '1' || $postadh->automatic != '1' ) { print "disabled "; }
 print ">".$postadh->label;
 if ( ! empty($postadh->note) ) { print ", ".$postadh->note; }
 $tx=1;
