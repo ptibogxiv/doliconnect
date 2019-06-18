@@ -79,7 +79,9 @@ if (is_user_logged_in() && doliconnector($current_user, 'fk_member') > 0){
 $adherent = callDoliApi("GET", "/adherentsplus/".doliconnector($current_user, 'fk_member'), null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true));
 }
 
-$typeadhesion = callDoliApi("GET", "/adherentsplus/type?sortfield=t.libelle&sortorder=ASC&sqlfilters=(t.morphy%3A=%3A'')%20or%20(t.morphy%3Ais%3Anull)%20or%20(t.morphy%3A%3D%3A'phy')", null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true));
+$request = "/adherentsplus/type?sortfield=t.libelle&sortorder=ASC&sqlfilters=(t.morphy%3A=%3A'')%20or%20(t.morphy%3Ais%3Anull)%20or%20(t.morphy%3A%3D%3A'phy')";
+
+$typeadhesion = callDoliApi("GET", $request, null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true));
 
 $typeadhesionpro = callDoliApi("GET", "/adherentsplus/type?sortfield=t.libelle&sortorder=ASC&sqlfilters=(t.morphy%3A=%3A'')%20or%20(t.morphy%3Ais%3Anull)%20or%20(t.morphy%3A%3D%3A'mor')", null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true));
 
@@ -180,10 +182,18 @@ $html .= '</div>';
 }
 
 $html .= '</div></div>';
-$html .= "<small>";
-$html .= dolirefresh("/adherentsplus/type?sortfield=t.price&sqlfilters=(t.family:!=:'1')&sortorder=ASC", get_permalink(), $delay);
-$html .= "</small>"; 
-$html .= '';
+
+//$html .= "<small>";
+//$html .= dolirefresh("/adherentsplus/type?sortfield=t.price&sqlfilters=(t.family:!=:'1')&sortorder=ASC", get_permalink(), $delay);
+//$html .= "</small>";
+
+$html .= "<small><div class='float-left'>";
+$html .= dolirefresh($request, $url, dolidelay('thirdparty'), $thirdparty);
+$html .= "</div><div class='float-right'>";
+$html .= dolihelp('ISSUE');
+$html .= "</div></small>";
+ 
+$html .= '<br>';
 
 return $html;
 }
