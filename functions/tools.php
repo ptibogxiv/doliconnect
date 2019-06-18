@@ -37,9 +37,18 @@ print "<input type='hidden' id='morphy' name='".$idobject."[morphy]' value='phy'
 }
 
 if ( $mode == 'member' ) {
-print "<div class='form-row'><div class='col-12'><label for='coordonnees'><small><i class='fas fa-user-tag fa-fw'></i> ".__( 'Type', 'doliconnect' )."</small></label>";
-
-print "</div></div></li><li class='list-group-item'>";
+print "<div class='form-row'><div class='col-12'><label for='coordonnees'><small><i class='fas fa-user-tag fa-fw'></i> ".__( 'Type', 'doliconnect' )."</small></label><select class='custom-select' id='typeid'  name='".$idobject."[typeid]' required>";
+$typeadhesion = callDoliApi("GET", "/adherentsplus/type?sortfield=t.libelle&sortorder=ASC&sqlfilters=(t.morphy%3A=%3A'')%20or%20(t.morphy%3Ais%3Anull)%20or%20(t.morphy%3A%3D%3A'".$current_user->billing_type."')", null, $delay);
+//print $typeadhesion;
+if ( !isset($typeadhesion->error) ) {
+foreach ($typeadhesion as $postadh) {
+print "<option value ='".$postadh->id."' ";
+if ( isset($object->typeid) && $object->typeid == $postadh->id && $object->typeid != null ) {
+print "selected ";
+} elseif ( $postadh->id == '0' ) { print "disabled "; }
+print ">".$postadh->label."</option>";
+}}
+print "</select></div></div></li><li class='list-group-item'>";
 }
 
 if ( $mode == 'thirdparty' ) {
