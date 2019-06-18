@@ -51,7 +51,7 @@ if ( isset($object->typeid) && $object->typeid == $postadh->id && $object->typei
 print "selected ";
 } elseif ( $postadh->family == '1' ) { print "disabled "; }
 print ">".$postadh->label;
-if ( isset($postadh->note) ) { print ", ".$postadh->note; }
+if ( ! empty($postadh->note) ) { print ", ".$postadh->note; }
 print "</option>";
 }}
 print "</select></div></div></li><li class='list-group-item'>";
