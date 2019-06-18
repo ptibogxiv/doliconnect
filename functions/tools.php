@@ -52,6 +52,16 @@ print "selected ";
 } elseif ( $postadh->family == '1' ) { print "disabled "; }
 print ">".$postadh->label;
 if ( ! empty($postadh->note) ) { print ", ".$postadh->note; }
+$tx=1;
+if ( ( ($postadh->welcome > '0') && ($object->datefin == null )) || (($postadh->welcome > '0') && (current_time( 'timestamp',1) > $object->next_subscription_valid) && (current_time( 'timestamp',1) > $object->datefin) && $object->next_subscription_valid != $object->datefin ) ) { 
+print " (";
+print doliprice(($tx*$postadh->price)+$postadh->welcome)." ";
+print __( 'then', 'doliconnect-pro' )." ".doliprice($postadh->price)." ".__( 'yearly', 'doliconnect-pro' ).")"; 
+} else {
+print " (".doliprice($postadh->price);
+print " ".__( 'yearly', 'doliconnect-pro' ).")";
+} 
+
 print "</option>";
 }}
 print "</select></div></div></li><li class='list-group-item'>";
