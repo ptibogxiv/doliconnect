@@ -50,7 +50,7 @@ print "<option value ='".$postadh->id."' ";
 if ( isset($object->typeid) && $object->typeid == $postadh->id && $object->typeid != null ) {
 print "selected ";
 } elseif ( $postadh->family == '1' ) { print "disabled "; }
-print ">".$postadh->label." <small class='text-justify text-muted '>".$postadh->note."</small></option>";
+print ">".$postadh->label.", ".$postadh->note."</option>";
 }}
 print "</select></div></div></li><li class='list-group-item'>";
 }
