@@ -14,15 +14,15 @@ print "<input type='hidden' id='morphy' name='".$idobject."[morphy]' value='".$c
 } elseif ( ! isset($object) && $mode == 'thirdparty' && !get_option('doliconnect_disablepro') ) {
 print "<div class='form-row'><div class='col-12'>";
 if ( isset($_GET["pro"]) && !get_option('doliconnect_disablepro') ) {
-print "<a  href='".wp_registration_url(get_permalink())."' role='button' title='".__( 'Create a personnal account', 'doliconnect' )."'><small>(".__( 'Create a personnal account', 'doliconnect' )."?)</small></a>";                                                                                                                                                                                                                                                                                                                                     
+print "<a href='".wp_registration_url(get_permalink())."' role='button' title='".__( 'Create a personnal account', 'doliconnect' )."'><small>(".__( 'Create a personnal account', 'doliconnect' )."?)</small></a>";                                                                                                                                                                                                                                                                                                                                     
 }
 elseif (!get_option('doliconnect_disablepro')) {
-print "<a  href='".wp_registration_url(get_permalink())."&pro' role='button' title='".__( 'Create a enterprise / supplier account', 'doliconnect' )."'><small>(".__( 'Create a enterprise / supplier account', 'doliconnect' )."?)</small></a>";
+print "<a href='".wp_registration_url(get_permalink())."&pro' role='button' title='".__( 'Create a enterprise / supplier account', 'doliconnect' )."'><small>(".__( 'Create a enterprise / supplier account', 'doliconnect' )."?)</small></a>";
 }
 
 print "</div></div></li><li class='list-group-item'>";
 } elseif ( isset($object) && $mode == 'thirdparty' ) {
-print "<div class='form-row'><div class='col-12'><label for='inputMorphy'><small><i class='fas fa-user'></i> ".__( 'Type of account', 'doliconnect' )."</small></label><br>";
+print "<div class='form-row'><div class='col-12'><label for='inputMorphy'><small><i class='fas fa-user fa-fw'></i> ".__( 'Type of account', 'doliconnect' )."</small></label><br>";
 print "<div class='custom-control custom-radio custom-control-inline'><input type='radio' id='morphy1' name='".$idobject."[morphy]' value='phy' class='custom-control-input'";
 if ( $current_user->billing_type == 'phy' || empty($current_user->billing_type) ) { print " checked"; }
 print " required><label class='custom-control-label' for='morphy1'>".__( 'Personnal account', 'doliconnect' )."</label>
@@ -36,13 +36,19 @@ print "</div></div></li><li class='list-group-item'>";
 print "<input type='hidden' id='morphy' name='".$idobject."[morphy]' value='phy'>";
 }
 
+if ( $mode == 'member' ) {
+print "<div class='form-row'><div class='col-12'><label for='coordonnees'><small><i class='fas fa-user-tag fa-fw'></i> ".__( 'Type', 'doliconnect' )."</small></label>";
+
+print "</div></div></li><li class='list-group-item'>";
+}
+
 if ( $mode == 'thirdparty' ) {
 if ( $current_user->billing_type == 'mor' || ( isset($_GET["pro"]) && !get_option('doliconnect_disablepro') ) ) {
-print "<div class='form-row'><div class='col-12'><label for='coordonnees'><small><i class='fas fa-building'></i> ".__( 'Name of company', 'doliconnect' )."</small></label><input type='text' class='form-control' id='inputcompany' placeholder='".__( 'Name of company', 'doliconnect' )."' name='".$idobject."[name]' value='".$current_user->billing_company."' required></div></div></li><li class='list-group-item'>";
+print "<div class='form-row'><div class='col-12'><label for='coordonnees'><small><i class='fas fa-building fa-fw'></i> ".__( 'Name of company', 'doliconnect' )."</small></label><input type='text' class='form-control' id='inputcompany' placeholder='".__( 'Name of company', 'doliconnect' )."' name='".$idobject."[name]' value='".$current_user->billing_company."' required></div></div></li><li class='list-group-item'>";
 } 
 }
 
-print "<div class='form-row'><div class='col-12 col-md-3'><label for='inputCivility'><small><i class='fas fa-user'></i> ".__( 'Civility', 'doliconnect' )."</small></label>";
+print "<div class='form-row'><div class='col-12 col-md-3'><label for='inputCivility'><small><i class='fas fa-user fa-fw'></i> ".__( 'Civility', 'doliconnect' )."</small></label>";
 $civility = callDoliApi("GET", "/setup/dictionary/civility?sortfield=code&sortorder=ASC&limit=100", null, $delay);
 if ( isset($civility->error) ) {
 $civility = callDoliApi("GET", "/setup/dictionary/civilities?sortfield=code&sortorder=ASC&limit=100&active=1", null, $delay); 
@@ -74,11 +80,11 @@ print ">".__( 'Mister', 'doliconnect' )."</option>";
 print "</select>";
 print "</div>
     <div class='col-12 col-md-4'>
-      <label for='inputFirstname'><small><i class='fas fa-user'></i> ".__( 'Firstname', 'doliconnect' )."</small></label>
+      <label for='inputFirstname'><small><i class='fas fa-user fa-fw'></i> ".__( 'Firstname', 'doliconnect' )."</small></label>
       <input type='text' name='".$idobject."[firstname]' class='form-control' placeholder='".__( 'Firstname', 'doliconnect' )."' value='".(isset($object->firstname) ? $object->firstname : stripslashes(htmlspecialchars($current_user->user_firstname, ENT_QUOTES)))."' required>
     </div>
     <div class='col-12 col-md-5'>
-      <label for='inputLastname'><small><i class='fas fa-user'></i> ".__( 'Lastname', 'doliconnect' )."</small></label>
+      <label for='inputLastname'><small><i class='fas fa-user fa-fw'></i> ".__( 'Lastname', 'doliconnect' )."</small></label>
       <input type='text' name='".$idobject."[lastname]' class='form-control' placeholder='".__( 'Lastname', 'doliconnect' )."' value='".(isset($object->lastname) ? $object->lastname : stripslashes(htmlspecialchars($current_user->user_lastname, ENT_QUOTES)))."' required>
     </div></div>";
 
