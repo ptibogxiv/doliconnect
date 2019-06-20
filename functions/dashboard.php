@@ -1541,7 +1541,9 @@ print doliloaderscript('doliconnect-linkedmembersform');
 
 print "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
 
-print "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".__( 'Please contact us to add/link a member', 'doliconnect' )."</b></li>"; 
+print '<button type="button" class="list-group-item lh-condensed list-group-item-action list-group-item-primary" data-toggle="modal" data-target="#addmember"><center><i class="fas fa-plus-circle"></i> '.__( 'New linked member', 'doliconnect' ).'</center></button>';
+
+print "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".__( 'Please contact us to link a pre-existing member', 'doliconnect' )."</b></li>"; 
 
 if ( !isset($linkedmember->error) && $linkedmember != null ) { 
 foreach ( $linkedmember as $member ) {                                                                                 
