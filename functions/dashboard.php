@@ -235,7 +235,7 @@ $adherent = callDoliApi("PUT", "/adherentsplus/".doliconnector($current_user, 'f
 }
 
 } else {
-$msg .= "<div class='alert alert-warning'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><p><strong>".__( 'Oops', 'doliconnect' )."</strong> Votre photo n'a pu être chargée. Elle doit obligatoirement être au format .jpg et faire moins de 10 Mo. Taille minimum requise 350x350 pixels.</p></div>";
+$msg = dolialert ('warning', "Votre photo n'a pu être chargée. Elle doit obligatoirement être au format .jpg et faire moins de 10 Mo. Taille minimum requise 350x350 pixels.");
 }
 }
 
@@ -501,11 +501,11 @@ $doliuser = callDoliApi("PUT", "/users/".doliconnector($current_user, 'fk_user')
 
 $msg = dolialert ('success', __( 'Your informations have been updated.', 'doliconnect' ));
 } elseif ( ! wp_check_password( $pwd0, $current_user->user_pass, $current_user->ID ) ) {
-$msg = "<div class='alert alert-danger'><h4 class='alert-heading'>".__( 'Oops!', 'doliconnect' )."</h4><p>".__( 'Your actual password is incorrect', 'doliconnect' )."</p></div>";
+$msg = dolialert ('danger', __( 'Your actual password is incorrect', 'doliconnect' ));
 } elseif ( $pwd1 != $_POST["pwd2"] ) {
-$msg = "<div class='alert alert-danger'><h4 class='alert-heading'>".__( 'Oops!', 'doliconnect' )."</h4><p>".__( 'The new passwords entered are different', 'doliconnect' )."</p></div>";
+$msg = dolialert ('danger', __( 'The new passwords entered are different', 'doliconnect' ));
 } elseif ( !preg_match("#.*^(?=.{8,20})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*$#", $pwd1) ) {
-$msg = "<div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><span class='fa fa-times-circle'></span> Votre nouveau mot de passe doit comporter entre 8 et 20 caractères dont au moins 1 chiffre, 1 lettre, 1 majuscule et 1 symbole.</div>";
+$msg = dolialert ('danger', __( 'Your password must be between 8 and 20 characters, including at least 1 digit, 1 letter, 1 uppercase.', 'doliconnect' ));
 }
 }
 
@@ -1309,7 +1309,7 @@ if ( isset($_POST["update_membership"]) && function_exists('dolimembership') ) {
 $adherent = dolimembership($current_user, $_POST["update_membership"], $_POST["typeadherent"], dolidelay('member', true));
 
 //if ($statut==1) {
-$msg = "<div class='alert alert-success' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><p><strong>".__( 'Congratulations!', 'doliconnect' )."</strong> ".__( 'Your membership has been updated.', 'doliconnect' )."</p></div>";
+$msg = dolialert ('success', __( 'Your membership has been updated.', 'doliconnect' ));
 //}
 
 if ( ($_POST["update_membership"]==4) && isset($_POST["cotisation"]) && doliconnector($current_user, 'fk_member') > 0 && $_POST["timestamp_start"] > 0 && $_POST["timestamp_end"] > 0 ) {
@@ -1621,7 +1621,7 @@ $ticketid = callDoliApi("POST", "tickets/newmessage", $rdr, dolidelay('ticket', 
 //print $ticketid;
 
 if ( $ticketid > 0 ) {
-$msg = "<div class='alert alert-success' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><p><strong>".__( 'Congratulations!', 'doliconnect' )."</strong> ".__( 'Your message has been send.', 'doliconnect' )."</p></div>"; 
+$msg = dolialert ('success', __( 'Your message has been send.', 'doliconnect' ));
 } }
 
 print "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>".$ticketfo->ref."</h5><div class='row'><div class='col-md-6'>";
@@ -1688,7 +1688,7 @@ $ticketid = callDoliApi("POST", "/tickets", $rdr, dolidelay('ticket', true));
 //print $ticketid;
 
 if ( $ticketid > 0 ) {
-$msg = "<div class='alert alert-success' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><p><strong>".__( 'Congratulations!', 'doliconnect' )."</strong> ".__( 'Your ticket has been submitted.', 'doliconnect' )."</p></div>"; 
+$msg = dolialert ('success', __( 'Your ticket has been submitted.', 'doliconnect' ));
 } }
 
 print "<form class='was-validated' id='doliconnect-newticketform' action='".$url."&create' method='post'>";
