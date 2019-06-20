@@ -1507,7 +1507,7 @@ if ( isset ($_POST['unlink_member']) && $_POST['unlink_member'] > 0 ) {
 // try deleting
 $delete = callDoliApi("DELETE", $request."/".esc_attr($_POST['unlink_member']), null, 0);
 
-$msg = "<div class='alert alert-success'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><p><strong>".__( 'Congratulations!', 'doliconnect' )."</strong> ".__( 'Your informations have been updated.', 'doliconnect' )."</p></div>";
+$msg = dolialert ('success', __( 'Your informations have been updated.', 'doliconnect' ));
 
 //} else {
 // fail deleting
@@ -1523,7 +1523,7 @@ if ( false === $memberv ) {
 // fail deleting
 
 } else {
-$msg = "<div class='alert alert-success'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><p><strong>".__( 'Congratulations!', 'doliconnect' )."</strong> ".__( 'Your informations have been updated.', 'doliconnect' )."</p></div>";
+$msg = dolialert ('success', __( 'Your informations have been updated.', 'doliconnect' ));
 $linkedmember = callDoliApi("GET", $request, null, dolidelay('member', true));
 }
 
