@@ -449,6 +449,13 @@ return false;
 }
 }
 
+function dolialert ($type = 'success', $msg) { //__( 'Oops!', 'doliconnect' )
+$alert ='<div class="alert alert-'.$type.' alert-dismissible fade show" role="alert">
+<strong>'.__( 'Congratulations!', 'doliconnect' ).'</strong> '.$msg.'
+<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>';
+return $alert;
+}
+
 function doliloaderscript($idform) {
 $loader = "<script>";
 $loader .= 'window.setTimeout(function () {
@@ -471,7 +478,6 @@ return $loader;
 function dolimodalloaderscript($idform) {
 print "<script>";
 ?>
-
 var form = document.getElementById('<?php print $idform; ?>');
 form.addEventListener('submit', function(event) { 
 jQuery(window).scrollTop(0);
@@ -482,7 +488,6 @@ jQuery('#doliloading-<?php print $idform; ?>').show();
 console.log("submit");
 form.submit();
 });
-
 <?php
 print "</script>";
 }

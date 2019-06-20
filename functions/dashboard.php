@@ -50,7 +50,7 @@ if ( isset($_GET['return']) ) {
 wp_redirect(doliconnecturl('doliaccount').'?module='.$_GET['return']);
 exit;
 } else {
-$msg = "<div class='alert alert-success'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><p><strong>".__( 'Congratulations!', 'doliconnect' )."</strong> ".__( 'Your informations have been updated.', 'doliconnect' )."</p></div>";
+$msg = dolialert ('success', __( 'Your informations have been updated.', 'doliconnect' ));
 }
 }
 
@@ -239,7 +239,7 @@ $msg .= "<div class='alert alert-warning'><button type='button' class='close' da
 }
 }
 
-$msg .= "<div class='alert alert-success'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><p><strong>".__( 'Congratulations!', 'doliconnect' )."</strong> ".__( 'Your informations have been updated.', 'doliconnect' )."</p></div>";   
+$msg = dolialert ('success', __( 'Your informations have been updated.', 'doliconnect' ));
 }
 
 print "<form action='".$url."' id='doliconnect-avatarform' method='post' class='was-validated' enctype='multipart/form-data'><input type='hidden' name='case' value='updateavatar'>";
@@ -324,7 +324,7 @@ $data = [
 $contactv = callDoliApi("POST", "/contacts", $data, 0);
 $listcontact = callDoliApi("GET", $request, null, dolidelay('contact', true));
 if ( $contactv > 0 ) {
-$msg = "<div class='alert alert-success'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><p><strong>".__( 'Congratulations!', 'doliconnect' )."</strong> ".__( 'Your informations have been updated.', 'doliconnect' )."</p></div>";
+$msg = dolialert ('success', __( 'Your informations have been updated.', 'doliconnect' ));
 }
 } elseif ( isset ($_POST['delete_contact']) && $_POST['delete_contact'] > 0 ) {
 $contactv = callDoliApi("GET", "/contacts/".$_POST['delete_contact'], null, 0);
@@ -332,7 +332,7 @@ if ( $contactv->socid == doliconnector($current_user, 'fk_soc') ) {
 // try deleting
 $delete = callDoliApi("DELETE", "/contacts/".$contactv->id, null, 0);
 
-$msg = "<div class='alert alert-success'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><p><strong>".__( 'Congratulations!', 'doliconnect' )."</strong> ".__( 'Your informations have been updated.', 'doliconnect' )."</p></div>";
+$msg = dolialert ('success', __( 'Your informations have been updated.', 'doliconnect' ));
 
 } else {
 // fail deleting
@@ -357,9 +357,7 @@ $data = [
 $contactv = callDoliApi("PUT", "/contacts/".$_POST['update_contact'], $data, 0);
 if ( $contactv->socid == doliconnector($current_user, 'fk_soc') ) {
 // try deleting
-
-$msg = "<div class='alert alert-success'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><p><strong>".__( 'Congratulations!', 'doliconnect' )."</strong> ".__( 'Your informations have been updated.', 'doliconnect' )."</p></div>";
-
+$msg = dolialert ('success', __( 'Your informations have been updated.', 'doliconnect' ));
 } else {
 // fail deleting
 }
@@ -501,7 +499,7 @@ $data = [
 $doliuser = callDoliApi("PUT", "/users/".doliconnector($current_user, 'fk_user'), $data, 0);
 }
 
-$msg = "<div class='alert alert-success'><h4 class='alert-heading'>".__( 'Congratulations!', 'doliconnect' )."</h4><p>".__( 'Your password has been changed', 'doliconnect' )."</p></div>";
+$msg = dolialert ('success', __( 'Your informations have been updated.', 'doliconnect' ));
 } elseif ( ! wp_check_password( $pwd0, $current_user->user_pass, $current_user->ID ) ) {
 $msg = "<div class='alert alert-danger'><h4 class='alert-heading'>".__( 'Oops!', 'doliconnect' )."</h4><p>".__( 'Your actual password is incorrect', 'doliconnect' )."</p></div>";
 } elseif ( $pwd1 != $_POST["pwd2"] ) {
