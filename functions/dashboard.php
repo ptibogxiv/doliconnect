@@ -29,6 +29,8 @@ if ( isset($_POST["case"]) && $_POST["case"] == 'updateuser' ) {
  
 $thirdparty=$_POST['thirdparty'][''.doliconnector($current_user, 'fk_soc').''];
 
+$thirdparty['tva_intra'] =strtoupper(sanitize_user($thirdparty['tva_intra']));
+
 if ( $thirdparty['morphy'] == 'phy' ) {
 $thirdparty['name'] = ucfirst(strtolower($thirdparty['firstname']))." ".strtoupper($thirdparty['lastname']);
 } 
