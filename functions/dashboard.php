@@ -29,9 +29,11 @@ if ( isset($_POST["case"]) && $_POST["case"] == 'updateuser' ) {
  
 $thirdparty=$_POST['thirdparty'][''.doliconnector($current_user, 'fk_soc').''];
 
+if ( $thirdparty['morphy'] == 'mor' ) {
 $thirdparty['tva_intra'] =strtoupper(sanitize_user($thirdparty['tva_intra']));
+} else { $thirdparty['tva_intra'] = ''; }
 
-if ( $thirdparty['morphy'] == 'phy' ) {
+if ( $thirdparty['morphy'] != 'mor' ) {
 $thirdparty['name'] = ucfirst(strtolower($thirdparty['firstname']))." ".strtoupper($thirdparty['lastname']);
 } 
 wp_update_user( array( 'ID' => $ID, 'user_email' => sanitize_email($thirdparty['email'])));
