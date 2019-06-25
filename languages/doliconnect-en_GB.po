@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
 "POT-Creation-Date: 2018-09-26 13:30+0200\n"
-"PO-Revision-Date: 2019-01-22 20:33+0100\n"
+"PO-Revision-Date: 2019-06-25 11:43+0200\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: en_GB\n"
@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 2.2.3\n"
 "X-Poedit-Basepath: ../../plugins/doliconnect\n"
 "X-Poedit-Flags-xgettext: --add-comments=translators:\n"
 "X-Poedit-WPHeader: doliconnect.php\n"
@@ -65,7 +65,7 @@ msgstr "Product/Service not in sale"
 
 #: doliconnect.php:248 doliconnect.php:800
 msgid "Welcome"
-msgstr "Product/Service not in sale"
+msgstr "Welcome"
 
 #: doliconnect.php:281 doliconnect.php:346 doliconnect.php:768
 #: doliconnect.php:832 doliconnect.php:1565 functions/tools.php:51
@@ -81,7 +81,7 @@ msgstr "Password"
 #: doliconnect.php:290 doliconnect.php:357 doliconnect.php:840
 #: templates/blogrestrict.php:94
 msgid "Remember me"
-msgstr "Product/Service not in sale"
+msgstr "Remember me"
 
 #: doliconnect.php:293 doliconnect.php:793 doliconnect.php:842
 #: doliconnect.php:1787 templates/blogrestrict.php:97
@@ -96,7 +96,7 @@ msgstr "Create an account"
 #: doliconnect.php:299 doliconnect.php:357 doliconnect.php:763
 #: doliconnect.php:850 doliconnect.php:1788
 msgid "Forgot password?"
-msgstr "Product/Service not in sale"
+msgstr "Forgot password?"
 
 #: doliconnect.php:300 doliconnect.php:776 doliconnect.php:1789
 #: functions/tools.php:152
@@ -106,18 +106,20 @@ msgstr "Help?"
 #: doliconnect.php:300 doliconnect.php:776 doliconnect.php:1789
 #: functions/tools.php:152
 msgid "Need help?"
-msgstr "Product/Service not in sale"
+msgstr "Need help?"
 
 #: doliconnect.php:328 doliconnect.php:732 doliconnect.php:786
 #: functions/dashboard.php:194
 msgid "Oops"
-msgstr "Product/Service not in sale"
+msgstr "Oops"
 
 #: doliconnect.php:328 doliconnect.php:786
 msgid ""
 "There is no account for these login data or the email and/or the password "
 "are not correct."
-msgstr "Product/Service not in sale"
+msgstr ""
+"There is no account for these login data or the email and/or the password "
+"are not correct."
 
 #: doliconnect.php:349
 msgid "Enter your email"
@@ -443,7 +445,8 @@ msgstr "Pay my subscription"
 #: functions/admin.php:9
 msgid ""
 "It seems that your version of Dolibarr and/or its plugins are not up to date!"
-msgstr "Product/Service not in sale"
+msgstr ""
+"It seems that your version of Dolibarr and/or its plugins are not up to date!"
 
 #: functions/admin.php:18 functions/admin.php:19 functions/admin.php:29
 #: functions/admin.php:30 functions/admin.php:225
