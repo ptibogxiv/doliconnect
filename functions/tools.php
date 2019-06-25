@@ -538,10 +538,19 @@ $end = date_i18n('d/m/Y', $line->date_end);
 $dates =" <i>(Du $start au $end)</i>";
 }
 
+if ( function_exists('pll_the_languages') ) { 
+$lang = pll_current_language('locale');
 $doliline .= '<div class="w-100 justify-content-between"><div class="row"><div class="col"> 
-<h6 class="mb-1">'.$line->libelle.'</h6>
+<h6 class="mb-1">'.($line->multilangs->$lang->label ? $line->multilangs->$lang->label : $line->product_label).'</h6>
+<small><p class="mb-1">'.($line->multilangs->$lang->description ? $line->multilangs->$lang->description : $line->description).'</p>
+<i>'.(isset($dates) ? $dates : null).'</i></small></div>';
+
+} else {
+$doliline .= '<div class="w-100 justify-content-between"><div class="row"><div class="col"> 
+<h6 class="mb-1">'.$line->product_label.'</h6>
 <small><p class="mb-1">'.$line->description.'</p>
 <i>'.(isset($dates) ? $dates : null).'</i></small></div>';
+}
 
 if ( $object->statut == 0 && !empty($mode)) {
 if ( $line->fk_product > 0 ) {
