@@ -547,7 +547,7 @@ $doliline .= '<div class="w-100 justify-content-between"><div class="row"><div c
 
 } else {
 $doliline .= '<div class="w-100 justify-content-between"><div class="row"><div class="col"> 
-<h6 class="mb-1">'.$line->product_label.'</h6>
+<h6 class="mb-1">'.($line->fk_product ? $line->product_label : $line->custom_label).'</h6>
 <small><p class="mb-1">'.$line->description.'</p>
 <i>'.(isset($dates) ? $dates : null).'</i></small></div>';
 }
