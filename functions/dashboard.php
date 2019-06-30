@@ -12,7 +12,7 @@ $help = callDoliApi("GET", "/doliconnector/constante/MAIN_MODULE_TICKET", null, 
 }
 
 function informations_menu($arg) {
-print "<A href='".esc_url( add_query_arg( 'module', 'informations', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-action";
+print "<a href='".esc_url( add_query_arg( 'module', 'informations', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-action";
 if ($arg=='informations') { print " active";}
 print "'>".__( 'Personal informations', 'doliconnect' )."</a>";
 }
