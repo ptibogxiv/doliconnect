@@ -924,7 +924,7 @@ print "<div id='loginmodal-form'><h5 class='card-title'>".__( 'Welcome', 'dolico
 print "<b>".get_option('doliaccountinfo')."</b>";
 
 if ( function_exists('socialconnect') ) {
-socialconnect(get_permalink());
+print socialconnect(get_permalink());
 }
 
 if ( function_exists('secupress_get_module_option') && secupress_get_module_option('move-login_slug-login', $slug, 'users-login' ) ) {
