@@ -293,7 +293,7 @@ $bug .='</div></center><br><br><br><br></div>';
 return $bug;
 }
 
-function Doliconnect_MailAlert( $user_login, $user ) {
+function Doliconnect_MailAlert($user) {
 global $wpdb;
 
 if ( $user->loginmailalert == 'on' && $user->ID != ''.constant("DOLICONNECT_DEMO").'' ) {
@@ -306,7 +306,7 @@ $mail =  wp_mail($user->user_email, $subject, $body, $headers);
 }
 
 }
-add_action('wp_login', 'Doliconnect_MailAlert', 10, 2);
+add_action('wp_login', 'Doliconnect_MailAlert', 10, 1);
 
 function dolidocdownload($type, $ref=null, $fichier=null, $url=null, $name=null, $refresh = false) {
 global $wpdb;
