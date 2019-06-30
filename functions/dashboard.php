@@ -1828,9 +1828,9 @@ global $wpdb, $current_user;
 $ID = $current_user->ID;
 
 if ( isset($_POST["case"]) && $_POST["case"] == 'updatesettings' ) {
-update_user_meta( $ID, 'loginmailalert', sanitize_text_field($_POST['loginmailalert']) );
-update_user_meta( $ID, 'optin1', sanitize_text_field($_POST['optin1']) );
-update_user_meta( $ID, 'optin2', sanitize_text_field($_POST['optin2']) );
+if ( isset($_POST['loginmailalert'])) { update_user_meta( $ID, 'loginmailalert', sanitize_text_field($_POST['loginmailalert']) ); } else { delete_user_meta($ID, 'loginmailalert'); }
+if ( isset($_POST['optin1'])) { update_user_meta( $ID, 'optin1', sanitize_text_field($_POST['optin1']) ); } else { delete_user_meta($ID, 'optin1'); }
+if ( isset($_POST['optin2'])) { update_user_meta( $ID, 'optin2', sanitize_text_field($_POST['optin2']) ); } else { delete_user_meta($ID, 'optin2'); }
 if ( isset($_POST['locale']) ) { update_user_meta( $ID, 'locale', sanitize_text_field($_POST['locale']) ); }  
 //if (isset($_POST['multicurrency_code'])) {vupdate_user_meta( $ID, 'multicurrency_code', sanitize_text_field($_POST['multicurrency_code']) );v}
 
