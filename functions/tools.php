@@ -1,4 +1,10 @@
 <?php
+
+function dolimenu($name, $traduction, $right, $content) {
+
+
+}
+
 function doliconnectuserform($object, $delay, $mode, $display = null) {
 global $current_user;
 
