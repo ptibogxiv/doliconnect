@@ -1138,6 +1138,45 @@ add_filter( 'the_content', 'dolicontact_display');
 
 // ********************************************************
 
+function dolidonation_display($content) {
+
+if ( in_the_loop() && is_main_query() && is_page(doliconnectid('dolidonation')) && !empty(doliconnectid('dolidonation')) ) {
+
+doliconnect_enqueues();
+
+$shop = callDoliApi("GET", "/doliconnector/constante/DOLICONNECT_CATSHOP", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+//$content .= $shop;
+
+if ( defined("DOLIBUG") ) {
+
+$content .= dolibug();
+
+} else { 
+print "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
+
+}
+$content .= "</ul></div>";
+
+$content .= "<small><div class='float-left'>";
+$content .= dolirefresh($request, $url, dolidelay('constant'));
+$content .= "</div><div class='float-right'>";
+$content .= dolihelp('COM');
+$content .= "</div></small>";
+
+return $content;
+
+} else {
+
+return $content;
+
+}
+
+}
+
+add_filter( 'the_content', 'dolidonation_display');
+
+// ********************************************************
+
 function update_synctodolibarr($element) {
 global $current_user,$wpdb;
 $entity = get_current_blog_id();

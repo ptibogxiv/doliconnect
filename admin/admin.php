@@ -222,8 +222,7 @@ echo '<h2>'.__( 'Doliconnect settings', 'doliconnect' ).'</h2>';
 	<div class="inside">
 <?php
 
-    if (isset($_REQUEST['doliconnect_settings'])) {            
-            update_option('dolicart', sanitize_text_field($_REQUEST['dolicart']));
+if (isset($_REQUEST['doliconnect_settings'])) {            
 if (isset($_REQUEST['users_can_register']) && $_REQUEST['users_can_register']==1){
 update_option('users_can_register', sanitize_text_field($_REQUEST['users_can_register']));
 }else {
@@ -260,6 +259,8 @@ update_option('doliconnect_google', sanitize_text_field($_REQUEST['doliconnect_g
 delete_option('doliconnect_google');}                               
             update_option('doliaccount', sanitize_text_field($_REQUEST['doliaccount']));
             update_option('doliaccountinfo', sanitize_text_field($_REQUEST['doliconnect_login_info']));
+            if (isset($_REQUEST['dolicart'])) update_option('dolicart', sanitize_text_field($_REQUEST['dolicart']));
+            if (isset($_REQUEST['dolidonation'])) update_option('dolidonation', sanitize_text_field($_REQUEST['dolidonation']));
             if (isset($_REQUEST['doliticket'])) update_option('doliticket', sanitize_text_field($_REQUEST['doliticket']));
             if (isset($_REQUEST['doliclassifieds'])) update_option('doliclassifieds', sanitize_text_field($_REQUEST['doliclassifieds'])); 
             update_option('doliconnect_ipkiosk', array_values(array_filter(array_map('trim', explode(PHP_EOL, $_REQUEST['doliconnect_ipkiosk'])))));             
@@ -376,7 +377,7 @@ checked('1', get_option('doliconnectrestrict')); } else { ?> disabled <?php } ?>
 );
            wp_dropdown_pages($args); ?>
 <?php } else { ?>
-<select name="dolishop" type="checkbox" id="dolidonation" value="0" disabled><option> --- </option></select>
+<select name="dolidonation" type="checkbox" id="dolidonation" value="0" disabled><option> --- </option></select>
 <?php } ?> <b>PRO</b></td>
             </tr>                          
             <tr>
