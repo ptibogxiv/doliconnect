@@ -5,7 +5,7 @@ global $wpdb;
 
 $dolibarr = callDoliApi("GET", "/status", null, dolidelay('dolibarr'));
 $versiondoli = explode("-", $dolibarr->success->dolibarr_version);
-if ( is_object($dolibarr) && version_compare($versiondoli[0], '9.0.4') < 0 && !defined("DOLIBUG") ) {
+if ( is_object($dolibarr) && version_compare($versiondoli[0], '10.0.0') < 0 && !defined("DOLIBUG") ) {
 $class = 'notice notice-error ';  //is-dismissible
 $message = __( 'It seems that your version of Dolibarr and/or its plugins are not up to date!', 'doliconnect' );
 
