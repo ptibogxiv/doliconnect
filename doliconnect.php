@@ -1154,7 +1154,20 @@ $content .= dolibug();
 } elseif (empty($donation->value)) {
 $content .= dolibug('Module inactif');
 } elseif (is_user_logged_in())  {
-$content .= "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
+
+if ( doliconnector($current_user, 'fk_soc') > '0') {
+$thirdparty = callDoliApi("GET", $request, null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
+}
+
+print "<form action='".$url."' id='doliconnect-donationform' method='post' class='was-validated' enctype='multipart/form-data'><input type='hidden' name='case' value='updateuser'>";
+
+if ( isset($msg) ) { print $msg; }
+
+$content .= doliloaderscript('doliconnect-donationform');
+
+$content .= "<div class='card shadow-sm'>";
+
+$content .= doliconnectuserform( $thirdparty, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'thirdparty');
 
 $content .= "</ul></div>";
 
