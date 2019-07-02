@@ -5,7 +5,7 @@ function dolimenu($name, $traduction, $right, $content) {
 
 }
 
-function doliconnectuserform($object, $delay, $mode, $display = null) {
+function doliconnectuserform($object, $delay, $mode) {
 global $current_user;
 
 if ( is_object($object) && $object->id > 0 ) {
@@ -15,9 +15,7 @@ else { $idobject=$mode; }
 
 print "<ul class='list-group list-group-flush'><li class='list-group-item'>";
 
-if ( $display == 'cart' ) {
-print "<input type='hidden' id='morphy' name='".$idobject."[morphy]' value='".$current_user->billing_type."'>";
-} elseif ( ! isset($object) && $mode == 'thirdparty' && !get_option('doliconnect_disablepro') ) {
+if ( ! isset($object) && $mode == 'thirdparty' && !get_option('doliconnect_disablepro') ) {
 print "<div class='form-row'><div class='col-12'>";
 if ( isset($_GET["pro"]) && !get_option('doliconnect_disablepro') ) {
 print "<a href='".wp_registration_url(get_permalink())."' role='button' title='".__( 'Create a personnal account', 'doliconnect' )."'><small>(".__( 'Create a personnal account', 'doliconnect' )."?)</small></a>";                                                                                                                                                                                                                                                                                                                                     
