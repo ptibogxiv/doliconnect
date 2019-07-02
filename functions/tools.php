@@ -12,10 +12,10 @@ if ( is_object($object) && $object->id > 0 ) {
 $idobject=$mode."[".$object->id."]";
 } else { $idobject=$mode; }
 
-$form .= "<ul class='list-group list-group-flush'><li class='list-group-item'>";
+$form .= "<ul class='list-group list-group-flush'>";
 
 if ( ! isset($object) && $mode == 'thirdparty' && !get_option('doliconnect_disablepro') ) {
-$form .= "<div class='form-row'><div class='col-12'>";
+$form .= "<li class='list-group-item'><div class='form-row'><div class='col-12'>";
 if ( isset($_GET["pro"]) && !get_option('doliconnect_disablepro') ) {
 $form .= "<a href='".wp_registration_url(get_permalink())."' role='button' title='".__( 'Create a personnal account', 'doliconnect' )."'><small>(".__( 'Create a personnal account', 'doliconnect' )."?)</small></a>";                                                                                                                                                                                                                                                                                                                                     
 }
@@ -25,7 +25,7 @@ $form .= "<a href='".wp_registration_url(get_permalink())."&pro' role='button' t
 
 $form .= "</div></div></li><li class='list-group-item'>";
 } elseif ( isset($object) && ( $mode == 'thirdparty' ) && !get_option('doliconnect_disablepro') ) { //|| $mode == 'member'
-$form .= "<div class='form-row'><div class='col-12'><label for='inputMorphy'><small><i class='fas fa-user-tag fa-fw'></i> ".__( 'Type of account', 'doliconnect' )."</small></label><br>";
+$form .= "<li class='list-group-item'><div class='form-row'><div class='col-12'><label for='inputMorphy'><small><i class='fas fa-user-tag fa-fw'></i> ".__( 'Type of account', 'doliconnect' )."</small></label><br>";
 $form .= "<div class='custom-control custom-radio custom-control-inline'><input type='radio' id='morphy1' name='".$idobject."[morphy]' value='phy' class='custom-control-input'";
 if ( $current_user->billing_type != 'mor' || empty($current_user->billing_type) ) { $form .= " checked"; }
 $form .= " required><label class='custom-control-label' for='morphy1'>".__( 'Personnal account', 'doliconnect' )."</label>
@@ -36,7 +36,9 @@ $form .= " required><label class='custom-control-label' for='morphy2'>".__( 'Ent
 </div>";
 $form .= "</div></div></li><li class='list-group-item'>";
 } elseif ( $mode == 'thirdparty' ) { //|| $mode == 'member'
-$form .= "<input type='hidden' id='morphy' name='".$idobject."[morphy]' value='phy'>";
+$form .= "<li class='list-group-item'><input type='hidden' id='morphy' name='".$idobject."[morphy]' value='phy'>";
+} else {
+$form .= "<li class='list-group-item'>";
 }
 
 if ( $mode == 'member' ) {
