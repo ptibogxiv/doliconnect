@@ -292,11 +292,11 @@ add_action( 'wp_footer', 'doliconnect_loading' );
 function dolibug($msg = null) {
 //header('Refresh: 180; URL='.esc_url(get_permalink()).'');
 $bug = '<div id="dolibug" ><br><br><br><br><center><div class="align-middle"><i class="fas fa-bug fa-3x fa-fw"></i><h4>';
-if ( ! empty(constant("DOLIBUG")) ) {
+if ( ! empty($msg) ) {
 $bug .= $msg;
 } else { $bug .= __( 'Oops, our servers are unreachable. Thank you for coming back in a few minutes.', 'doliconnect'); }
 $bug .= '</h4>';
-if ( ! empty(constant("DOLIBUG")) ) {
+if ( defined("DOLIBUG") && ! empty(constant("DOLIBUG")) ) {
 $bug .= '<h6>'.__( 'Error code', 'doliconnect').' #'.constant("DOLIBUG").'</h6>';
 }
 $bug .='</div></center><br><br><br><br></div>';
