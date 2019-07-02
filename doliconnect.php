@@ -1153,7 +1153,7 @@ if ( defined("DOLIBUG") ) {
 $content .= dolibug();
 
 } elseif (empty($donation->value)) {
-$content .= dolibug('Module inactif');
+$content .= dolibug(__( 'Inactive module on Dolibarr', 'doliconnect' ));
 } elseif (is_user_logged_in())  {
 
 if ( doliconnector($current_user, 'fk_soc') > '0') {
