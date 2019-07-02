@@ -10,8 +10,7 @@ global $current_user;
 
 if ( is_object($object) && $object->id > 0 ) {
 $idobject=$mode."[".$object->id."]";
-} 
-else { $idobject=$mode; }
+} else { $idobject=$mode; }
 
 print "<ul class='list-group list-group-flush'><li class='list-group-item'>";
 
@@ -188,7 +187,7 @@ print "</div></div>";
 
 print "</li>";
 
-if( has_action('mydoliconnectuserform') ) {
+if( has_action('mydoliconnectuserform') && !in_array($mode, array('donation')) ) {
 print "<li class='list-group-item'>";
 do_action('mydoliconnectuserform', $object);
 print "</li>";
@@ -197,7 +196,7 @@ print "</li>";
 if ( !in_array($mode, array('donation')) ) {
 print "<li class='list-group-item'>";
 
-if ( $mode != 'contact' && $mode != 'member') {
+if ( !in_array($mode, array('contact', 'member')) ) {
 print "<div class='form-row'><div class='col'><label for='description'><small><i class='fas fa-bullhorn fa-fw'></i> ".__( 'About Yourself', 'doliconnect' )."</small></label>
 <textarea type='text' class='form-control' name='description' id='description' rows='3' placeholder='".__( 'About Yourself', 'doliconnect' )."'>".$current_user->description."</textarea></div></div>";
 
@@ -229,6 +228,7 @@ print "<div class='col-12 col-md'><label for='inlineFormInputGroup'><small><i cl
 print "</div>"; 
 print "</li>";
 }
+
 }
 
 if ( function_exists('dolikiosk') && ! isset($object) && ! empty(dolikiosk()) && $mode == 'thirdparty' ) {
@@ -253,9 +253,9 @@ print "<div class='modal fade' id='cgvumention' tabindex='-1' role='dialog' aria
 <div class='modal-body'>";
 print apply_filters('the_content', get_post_field('post_content', get_option( 'wp_page_for_privacy_policy' ))); 
 print "</div></div></div>";}
-
 print "</li>";
 }
+
 print "</ul>";
  
 }

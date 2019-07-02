@@ -1161,7 +1161,7 @@ $request = "/thirdparties/".doliconnector($current_user, 'fk_soc');
 $thirdparty = callDoliApi("GET", $request, null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
 }
 
-$content .= "<form action='".doliconnecturl('dolidonation')."' id='doliconnect-donationform' method='post' class='was-validated' enctype='multipart/form-data'><input type='hidden' name='case' value='updateuser'>";
+$content .= "<form action='".doliconnecturl('dolidonation')."' id='doliconnect-donationform' method='post' class='was-validated' enctype='multipart/form-data'>";
 
 if ( isset($msg) ) { print $msg; }
 
@@ -1171,7 +1171,9 @@ $content .= "<div class='card shadow-sm'>";
 
 $content .= doliconnectuserform( $thirdparty, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'donation');
 
-$content .= "</div>";
+$content .= "<div class='card-body'><input type='hidden' name='userid' value='$ID'><button class='btn btn-danger btn-block' type='submit'><b>".__( 'Update', 'doliconnect' )."</b></button></div>";
+
+$content .="</div></form>";
 
 $content .= "<small><div class='float-left'>";
 $content .= dolirefresh($request, doliconnecturl('dolidonation'), dolidelay('constante'));
