@@ -1139,6 +1139,7 @@ add_filter( 'the_content', 'dolicontact_display');
 // ********************************************************
 
 function dolidonation_display($content) {
+global $current_user;
 
 if ( in_the_loop() && is_main_query() && is_page(doliconnectid('dolidonation')) && !empty(doliconnectid('dolidonation')) ) {
 
