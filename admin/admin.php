@@ -362,7 +362,23 @@ checked('1', get_option('doliconnectrestrict')); } else { ?> disabled <?php } ?>
 <?php } else { ?>
 <select name="dolishop" type="checkbox" id="dolishop" value="0" disabled><option> --- </option></select>
 <?php } ?> <b>PRO</b></td>
-            </tr>            
+            </tr> 
+            <tr>
+                <th style="width:150px;"><label for="dolibarr_shop">dolibarr_donation</label></th>
+                <td >
+<?php if ( is_plugin_active( 'doliconnect-pro/doliconnect-pro.php' ) ) { ?>
+<?php 
+           $args = array(
+    'name' => 'dolidonation', 
+    'show_option_none' => __( '- Select -', 'doliconnect' ), 
+    'option_none_value' => '0', 
+    'selected' => get_option('dolidonation') 
+);
+           wp_dropdown_pages($args); ?>
+<?php } else { ?>
+<select name="dolishop" type="checkbox" id="dolidonation" value="0" disabled><option> --- </option></select>
+<?php } ?> <b>PRO</b></td>
+            </tr>                          
             <tr>
                 <th style="width:150px;"><label for="dolibarr_contact">dolibarr_contact</label></th>
                 <td >
