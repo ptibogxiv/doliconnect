@@ -1169,7 +1169,7 @@ $content .= doliloaderscript('doliconnect-donationform');
 
 $content .= "<div class='card shadow-sm'>";
 
-$content .= doliconnectuserform( $thirdparty, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'contact');
+$content .= doliconnectuserform( $thirdparty, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'donation');
 
 $content .= "</div>";
 
