@@ -1144,17 +1144,18 @@ if ( in_the_loop() && is_main_query() && is_page(doliconnectid('dolidonation')) 
 
 doliconnect_enqueues();
 
-$shop = callDoliApi("GET", "/doliconnector/constante/DOLICONNECT_CATSHOP", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$donation = callDoliApi("GET", "/doliconnector/constante/MAIN_MODULE_DON", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 //$content .= $shop;
 
 if ( defined("DOLIBUG") ) {
 
 $content .= dolibug();
 
-} else { 
-print "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
+} elseif (empty($donation->value)) {
+$content .= dolibug('Module inactif');
+} elseif (is_user_logged_in())  {
+$content .= "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
 
-}
 $content .= "</ul></div>";
 
 $content .= "<small><div class='float-left'>";
@@ -1162,6 +1163,7 @@ $content .= dolirefresh($request, $url, dolidelay('constant'));
 $content .= "</div><div class='float-right'>";
 $content .= dolihelp('COM');
 $content .= "</div></small>";
+}
 
 return $content;
 
