@@ -12,7 +12,7 @@ if ( is_object($object) && $object->id > 0 ) {
 $idobject=$mode."[".$object->id."]";
 } else { $idobject=$mode; }
 
-$form .= "<ul class='list-group list-group-flush'>";
+$form = "<ul class='list-group list-group-flush'>";
 
 if ( ! isset($object) && $mode == 'thirdparty' && !get_option('doliconnect_disablepro') ) {
 $form .= "<li class='list-group-item'><div class='form-row'><div class='col-12'>";
