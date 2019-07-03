@@ -434,7 +434,7 @@ foreach ( $listcontact as $contact ) {
 print '<div class="modal fade" id="contact-'.$contact->id.'" tabindex="-1" role="dialog" aria-labelledby="contact-'.$contact->id.'Title" aria-hidden="true" data-backdrop="static" data-keyboard="false">
 <div class="modal-dialog modal-lg modal-dialog-centered" role="document"><div class="modal-content border-0"><div class="modal-header border-0">
 <h5 class="modal-title" id="contact-'.$contact->id.'Title">'.__( 'Update contact', 'doliconnect' ).'</h5><button id="Closecontact'.$contact->id.'-form" type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
-<div class="modal-body"><div id="contact'.$contact->id.'-form">';
+<div id="contact'.$contact->id.'-form">';
 print "<form class='was-validated' role='form' action='$url' name='contact".$contact->id."-form' method='post'>";
 
 print dolimodalloaderscript('contact'.$contact->id.'-form');
@@ -443,7 +443,7 @@ print doliconnectuserform($contact, dolidelay('constante', esc_attr(isset($_GET[
 
 print "</div>".doliloading('contact'.$contact->id.'-form');
       
-print "</div><div id='Footercontact".$contact->id."-form' class='modal-footer'><button name='update_contact' value='".$contact->id."' class='btn btn-warning btn-block' type='submit'><b>".__( 'Update', 'doliconnect' )."</b></button></form></div>
+print "<div id='Footercontact".$contact->id."-form' class='modal-footer'><button name='update_contact' value='".$contact->id."' class='btn btn-warning btn-block' type='submit'><b>".__( 'Update', 'doliconnect' )."</b></button></form></div>
 </div></div></div>";
 }}
 
@@ -452,7 +452,7 @@ if ( count($counter) < 5 ) {
 print "<div class='modal fade' id='addcontactadress' tabindex='-1' role='dialog' aria-labelledby='addcontactadressTitle' aria-hidden='true' data-backdrop='static' data-keyboard='false'>
 <div class='modal-dialog modal-lg modal-dialog-centered' role='document'><div class='modal-content border-0'><div class='modal-header border-0'>
 <h5 class='modal-title' id='addcontactadressTitle'>".__( 'New contact', 'doliconnect' )."</h5><button id='Closeaddcontact-form' type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
-</div><div class='modal-body'><div id='addcontact-form'>";
+</div><div id='addcontact-form'>";
 
 print "<form class='was-validated' role='form' action='$url' name='addcontact-form' method='post'>";
 
@@ -462,7 +462,7 @@ print doliconnectuserform($thirdparty, dolidelay('constante', esc_attr(isset($_G
 
 print "</div>".doliloading('addcontact-form');
 
-print "</div><div id='Footeraddcontact-form' class='modal-footer'><button name='add_contact' value='new_contact' class='btn btn-warning btn-block' type='submit'><b>".__( 'Add', 'doliconnect' )."</b></button></form></div>
+print "<div id='Footeraddcontact-form' class='modal-footer'><button name='add_contact' value='new_contact' class='btn btn-warning btn-block' type='submit'><b>".__( 'Add', 'doliconnect' )."</b></button></form></div>
 </div></div></div>";
 }
 
@@ -1573,7 +1573,7 @@ foreach ( $linkedmember as $member ) {
 print '<div class="modal fade" id="member-'.$member->id.'" tabindex="-1" role="dialog" aria-labelledby="member-'.$member->id.'Title" aria-hidden="true" data-backdrop="static" data-keyboard="false">
 <div class="modal-dialog modal-lg modal-dialog-centered" role="document"><div class="modal-content border-0"><div class="modal-header border-0">
 <h5 class="modal-title" id="member-'.$member->id.'Title">'.__( 'Update member', 'doliconnect' ).'</h5><button id="Closemember'.$member->id.'-form" type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
-<div class="modal-body"><div id="member'.$member->id.'-form">';
+<div id="member'.$member->id.'-form">';
 print "<form class='was-validated' role='form' action='$url' id='member-".$member->id."-form' method='post'>";
 
 print dolimodalloaderscript('member'.$member->id.'-form');
@@ -1582,7 +1582,7 @@ print doliconnectuserform($member, dolidelay('constante', esc_attr(isset($_GET["
 
 print "</div>".doliloading('member'.$member->id.'-form');
      
-print "</div><div id='Footermember".$member->id."-form' class='modal-footer'><button name='update_member' value='".$member->id."' class='btn btn-warning btn-block' type='submit'><b>".__( 'Update', 'doliconnect' )."</b></button></form></div>
+print "<div id='Footermember".$member->id."-form' class='modal-footer'><button name='update_member' value='".$member->id."' class='btn btn-warning btn-block' type='submit'><b>".__( 'Update', 'doliconnect' )."</b></button></form></div>
 </div></div></div>";
 }}
 
