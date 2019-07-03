@@ -9,8 +9,10 @@ if ( isset($object->$mode) ) { $montant=$object->$mode;
 } else {
 $total='total_'.$mode;
 $montant=$object->$total;
-} } else {
+} } elseif (!empty($object)) {
 $montant=$object;
+} else {
+$montant=0;
 }
 
 //$$objet->multicurrency_code
