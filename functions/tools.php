@@ -14,7 +14,7 @@ $idobject=$mode."[".$object->id."]";
 
 $form = "<ul class='list-group list-group-flush'>";
 
-if ( ! isset($object) && $mode == 'thirdparty' && !get_option('doliconnect_disablepro') ) {
+if ( ! isset($object) && in_array($mode, array('thirdparty')) && !get_option('doliconnect_disablepro') ) {
 $form .= "<li class='list-group-item'><div class='form-row'><div class='col-12'>";
 if ( isset($_GET["pro"]) && !get_option('doliconnect_disablepro') ) {
 $form .= "<a href='".wp_registration_url(get_permalink())."' role='button' title='".__( 'Create a personnal account', 'doliconnect' )."'><small>(".__( 'Create a personnal account', 'doliconnect' )."?)</small></a>";                                                                                                                                                                                                                                                                                                                                     
@@ -24,7 +24,7 @@ $form .= "<a href='".wp_registration_url(get_permalink())."&pro' role='button' t
 }
 
 $form .= "</div></div></li><li class='list-group-item'>";
-} elseif ( isset($object) && ( $mode == 'thirdparty' ) && !get_option('doliconnect_disablepro') ) { //|| $mode == 'member'
+} elseif ( isset($object) && in_array($mode, array('thirdparty')) && !get_option('doliconnect_disablepro') ) { //|| $mode == 'member'
 $form .= "<li class='list-group-item'><div class='form-row'><div class='col-12'><label for='inputMorphy'><small><i class='fas fa-user-tag fa-fw'></i> ".__( 'Type of account', 'doliconnect' )."</small></label><br>";
 $form .= "<div class='custom-control custom-radio custom-control-inline'><input type='radio' id='morphy1' name='".$idobject."[morphy]' value='phy' class='custom-control-input'";
 if ( $current_user->billing_type != 'mor' || empty($current_user->billing_type) ) { $form .= " checked"; }
@@ -35,13 +35,13 @@ if ( $current_user->billing_type == 'mor' ) { $form .= " checked"; }
 $form .= " required><label class='custom-control-label' for='morphy2'>".__( 'Entreprise account', 'doliconnect' )."</label>
 </div>";
 $form .= "</div></div></li><li class='list-group-item'>";
-} elseif ( $mode == 'thirdparty' ) { //|| $mode == 'member'
+} elseif ( in_array($mode, array('thirdparty')) ) { //|| $mode == 'member'
 $form .= "<li class='list-group-item'><input type='hidden' id='morphy' name='".$idobject."[morphy]' value='phy'>";
 } else {
 $form .= "<li class='list-group-item'>";
 }
 
-if ( $mode == 'member' ) {
+if ( in_array($mode, array('member')) ) {
 $form .= "<div class='form-row'><div class='col-12'><label for='coordonnees'><small><i class='fas fa-user-tag fa-fw'></i> ".__( 'Type', 'doliconnect' )."</small></label><select class='custom-select' id='typeid'  name='".$idobject."[typeid]' required>";
 $typeadhesion = callDoliApi("GET", "/adherentsplus/type?sortfield=t.libelle&sortorder=ASC&sqlfilters=(t.morphy%3A=%3A'')%20or%20(t.morphy%3Ais%3Anull)%20or%20(t.morphy%3A%3D%3A'".$object->morphy."')", null, $delay);
 //$form .= $typeadhesion;
@@ -118,7 +118,7 @@ $form .= "</div>
       <input type='text' name='".$idobject."[lastname]' class='form-control' placeholder='".__( 'Lastname', 'doliconnect' )."' value='".(isset($object->lastname) ? $object->lastname : stripslashes(htmlspecialchars($current_user->user_lastname, ENT_QUOTES)))."' required>
     </div></div>";
 
-if ($mode != 'donation') {
+if ( !in_array($mode, array('donation')) ) {
 if ( !empty($object->birth) ) { $birth = date_i18n('Y-m-d', $object->birth); }
 $form .= "<div class='form-row'><div class='col'><label for='inputbirth'><small><i class='fas fa-birthday-cake fa-fw'></i> ".__( 'Birthday', 'doliconnect' )."</small></label><input type='date' name='".$idobject."[birth]' class='form-control' value='".(isset($birth) ? $birth : $current_user->billing_birth)."' id='inputbirth' placeholder='yyyy-mm-dd' autocomplete='off'";
 if ( $mode != 'contact' ) { $form .= " required"; } 
@@ -134,7 +134,7 @@ $form .= "</div></div>";
 
 $form .= "<div class='form-row'><div class='col'><label for='inputemail'><small><i class='fas fa-at fa-fw'></i> ".__( 'Email', 'doliconnect' )."</small></label><input type='email' class='form-control' id='inputemail' placeholder='email@example.com' name='".$idobject."[email]' value='".(isset($object->email) ? $object->email : $current_user->user_email)."' autocomplete='off' ";
 
-if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $current_user->ID && is_user_logged_in() && $mode == 'thirdparty' ) {
+if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $current_user->ID && is_user_logged_in() && in_array($mode, array('thirdparty')) ) {
 $form .= " readonly";
 } else {
 $form .= " required";
@@ -515,7 +515,7 @@ if ( !empty($object->default) ) { $address .= " <i class='fas fa-star fa-1x fa-f
 if ( !empty($object->poste) ) { $address .= "<br>".$object->poste; }
 if ( !empty($object->type) ) { $address .= "<br>".$object->type; }
 $address .= "</b><br>";
-$address .= "<small class='text-muted'>".$object->address."<br>".$object->zip." ".$object->town." - ".$object->country."<br>".$object->email." - ".(isset($object->phone) ? $object->phone : $object->phone_pro)."</small>";
+$address .= "<small class='text-muted'>".$object->address.", ".$object->zip." ".$object->town." - ".$object->country."<br>".$object->email." - ".(isset($object->phone) ? $object->phone : $object->phone_pro)."</small>";
 return $address;
 }
 
@@ -525,7 +525,7 @@ $address = "<b><i class='fas fa-address-book fa-fw'></i> ".($object->civility ? 
 if ( !empty($object->default) ) { $address .= " <i class='fas fa-star fa-1x fa-fw' style='color:Gold'></i>"; }
 if ( !empty($object->poste) ) { $address .= ", ".$object->poste; }
 $address .= "</b><br>";
-$address .= "<small class='text-muted'>".$object->address."<br>".$object->zip." ".$object->town." - ".$object->country."<br>".$object->email." - ".$object->phone_pro."</small>";
+$address .= "<small class='text-muted'>".$object->address.", ".$object->zip." ".$object->town." - ".$object->country."<br>".$object->email." - ".$object->phone_pro."</small>";
 return $address;
 }
 
