@@ -1184,6 +1184,29 @@ $content .= "<div class='card-body'>";
 
 $content .= "<h5><i class='fas fa-donate fa-fw'></i> Don hors ligne</h5>";
 
+//if ( $object->mode_reglement_code == 'CHQ') {
+
+$chq = callDoliApi("GET", "/doliconnector/constante/FACTURE_CHQ_NUMBER", null, dolidelay('constante'));
+
+$bank = callDoliApi("GET", "/bankaccounts/".$chq->value, null, dolidelay('constante'));
+
+$content .= "<div class='alert alert-info' role='alert'><p align='justify'>".sprintf( __( 'Please send your cheque in the amount of <b>%1$s</b> with reference <b>%2$s</b> to <b>%3$s</b> at the following address', 'doliconnect-pro' ), $TTC, $bank->proprio, $object->ref ).":</p><p><b>$bank->owner_address</b></p></div>";
+
+//} 
+//if ($object->mode_reglement_code == 'VIR') {
+
+$vir = callDoliApi("GET", "/doliconnector/constante/FACTURE_RIB_NUMBER", null, dolidelay('constante'));
+
+$bank = callDoliApi("GET", "/bankaccounts/".$vir->value, null, dolidelay('constante'));
+
+$content .= "<div class='alert alert-info' role='alert'><p align='justify'>".sprintf( __( 'Please send your transfert in the amount of <b>%1$s</b> with reference <b>%2$s</b> at the following account', 'doliconnect-pro' ), $TTC, $object->ref ).":";
+$content .= "<br><b>".__( 'Bank', 'doliconnect-pro' ).": $bank->bank</b>";
+$content .= "<br><b>IBAN: $bank->iban</b>";
+if ( ! empty($bank->bic) ) { print "<br><b>BIC/SWIFT : $bank->bic</b>";}
+$content .= "</p></div>";
+
+//}
+
 if (! empty($art200->value) || ! empty($art238->value) || ! empty($art835->value)) {
 $content .= "<h6>Exonérations fiscales</h6>";
 if (! empty($art200->value)) {
