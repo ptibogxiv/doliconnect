@@ -1174,6 +1174,18 @@ $content .= doliloaderscript('doliconnect-donationform');
 
 $content .= "<div class='card shadow-sm'>";
 
+if (isset($_GET["create"])) {
+$content .= doliconnectuserform( $thirdparty, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'donation');
+
+$content .= "<div class='card-body'><input type='hidden' name='userid' value='$ID'><button class='btn btn-danger btn-block' type='submit'><b>".__( 'Update', 'doliconnect')."</b></button></div>";
+
+} else {
+$content .= "<div class='card-body'>"; 
+
+$content .= "<h5><i class='fas fa-donate fa-fw'></i> Don hors ligne</h5>";
+
+if (! empty($art200->value) || ! empty($art238->value) || ! empty($art835->value)) {
+$content .= "<h6>Exonérations fiscales</h6>";
 if (! empty($art200->value)) {
 $content .= __( 'DonationArt200', 'doliconnect');
 }
@@ -1185,10 +1197,9 @@ $content .= __( 'DonationArt238', 'doliconnect');
 if (! empty($art835->value)) {
 $content .= __( 'DonationArt835', 'doliconnect');
 }
-
-$content .= doliconnectuserform( $thirdparty, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'donation');
-
-$content .= "<div class='card-body'><input type='hidden' name='userid' value='$ID'><button class='btn btn-danger btn-block' type='submit'><b>".__( 'Update', 'doliconnect')."</b></button></div>";
+}
+$content .= "</div>";
+}
 
 $content .="</div></form>";
 
