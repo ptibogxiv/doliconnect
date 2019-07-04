@@ -1148,6 +1148,7 @@ doliconnect_enqueues();
 $donation = callDoliApi("GET", "/doliconnector/constante/MAIN_MODULE_DON", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 $art200 = callDoliApi("GET", "/doliconnector/constante/DONATION_ART200", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 $art238 = callDoliApi("GET", "/doliconnector/constante/DONATION_ART238", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$art835 = callDoliApi("GET", "/doliconnector/constante/DONATION_ART835", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 //$content .= $shop;
 
 if ( defined("DOLIBUG") ) {
@@ -1179,6 +1180,10 @@ $content .= __( 'DonationArt200', 'doliconnect');
 
 if (! empty($art238->value)) {
 $content .= __( 'DonationArt238', 'doliconnect');
+}
+
+if (! empty($art835->value)) {
+$content .= __( 'DonationArt835', 'doliconnect');
 }
 
 $content .= doliconnectuserform( $thirdparty, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'donation');

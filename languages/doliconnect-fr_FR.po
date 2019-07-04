@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2019-07-04 13:33+0200\n"
-"PO-Revision-Date: 2019-07-04 13:37+0200\n"
+"POT-Creation-Date: 2019-07-04 13:46+0200\n"
+"PO-Revision-Date: 2019-07-04 13:49+0200\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_FR\n"
@@ -66,7 +66,7 @@ msgid "First subscription at"
 msgstr "Première souscription à"
 
 #: blocks/membership/membership.php:128 blocks/membership/membership.php:152
-#: doliconnect.php:1461 doliconnect.php:1467
+#: doliconnect.php:1466 doliconnect.php:1472
 msgid "Subscribe"
 msgstr "Souscrire"
 
@@ -200,7 +200,7 @@ msgstr ""
 msgid "Confirm your new password"
 msgstr "Confirmer votre nouveau mot de passe"
 
-#: doliconnect.php:753 doliconnect.php:1186 functions/dashboard.php:79
+#: doliconnect.php:753 doliconnect.php:1191 functions/dashboard.php:79
 #: functions/dashboard.php:275 functions/dashboard.php:446
 #: functions/dashboard.php:556 functions/dashboard.php:1585
 msgid "Update"
@@ -362,11 +362,11 @@ msgstr ""
 msgid "Send"
 msgstr "Envoyer"
 
-#: doliconnect.php:1159
+#: doliconnect.php:1160
 msgid "Inactive module on Dolibarr"
 msgstr "Module inactif sur Dolibarr"
 
-#: doliconnect.php:1177
+#: doliconnect.php:1178
 msgid "DonationArt200"
 msgstr ""
 "Particuliers, votre don vous donne droit à une déduction fiscale de 66% dans "
@@ -376,7 +376,7 @@ msgstr ""
 "sur les cinq années suivantes. Vous bénéficierez de la réduction d’impôt "
 "dans les mêmes conditions. (Art. 200 du Code général des impôts)"
 
-#: doliconnect.php:1181
+#: doliconnect.php:1182
 msgid "DonationArt238"
 msgstr ""
 "Entreprises, votre don vous donne droit à une déduction fiscale de 60% dans "
@@ -386,23 +386,34 @@ msgstr ""
 "sur les cinq années suivantes. Vous bénéficierez de la réduction d’impôt "
 "dans les mêmes conditions. (Art. 238 du Code général des impôts)"
 
-#: doliconnect.php:1369 doliconnect.php:1371
+#: doliconnect.php:1186
+msgid "DonationArt835"
+msgstr ""
+"Si vous êtes redevable de l’Impôt sur la Fortune Immobilière, vous "
+"bénéficiez d’une réduction de votre IFI égale à 75 % du montant de votre "
+"don, dans la limite de 50 000 euros. Attention la fraction de don ayant "
+"donné lieu à réduction d’IFI, ne peut ouvrir droit, parallèlement, à "
+"réduction d’impôt sur le revenu. Lorsque le don est éligible aux deux "
+"dispositifs, le donateur pourra choisir l’un ou l’autre ou bien décider de "
+"ventiler son don. (Art. 2835 du Code général des impôts)"
+
+#: doliconnect.php:1374 doliconnect.php:1376
 msgid "Report a Bug"
 msgstr "Signaler un bug"
 
-#: doliconnect.php:1382
+#: doliconnect.php:1387
 msgid "Offre d'emploi"
 msgstr "Offre d'emploi"
 
-#: doliconnect.php:1385 doliconnect.php:1484
+#: doliconnect.php:1390 doliconnect.php:1489
 msgid "Title:"
 msgstr "Titre:"
 
-#: doliconnect.php:1458 functions/dashboard.php:1378
+#: doliconnect.php:1463 functions/dashboard.php:1378
 msgid "Pay my subscription"
 msgstr "Payer mon adhésion"
 
-#: doliconnect.php:1464 functions/dashboard.php:1299
+#: doliconnect.php:1469 functions/dashboard.php:1299
 msgid "Membership"
 msgstr "Adhésion / Abonnement"
 
