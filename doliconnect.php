@@ -1206,9 +1206,8 @@ if ( ! empty($bank->bic) ) { $content .= "<br><b>BIC/SWIFT : $bank->bic</b>";}
 $content .= "</p></div>";
 
 //}
-
+$content .= "<h5><i class='fas fa-donate fa-fw'></i> ".__( 'Tax exemptions', 'doliconnect-pro' )."</h5>";
 if (! empty($art200->value) || ! empty($art238->value) || ! empty($art835->value)) {
-$content .= "<h6>Exonérations fiscales</h6>";
 if (! empty($art200->value)) {
 $content .= __( 'DonationArt200', 'doliconnect');
 }
@@ -1220,6 +1219,8 @@ $content .= __( 'DonationArt238', 'doliconnect');
 if (! empty($art835->value)) {
 $content .= __( 'DonationArt835', 'doliconnect');
 }
+} else {
+$content .= "vous ne bénéficierez pas a priori d'exonerations fiscales";
 }
 $content .= "</div>";
 }
