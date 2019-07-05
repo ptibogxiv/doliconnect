@@ -1220,7 +1220,7 @@ if (! empty($art835->value)) {
 $content .= __( 'DonationArt835', 'doliconnect');
 }
 } else {
-$content .= "vous ne bénéficierez pas a priori d'exonerations fiscales";
+$content .= __( "You shouldn't have some tax exemptions", 'doliconnect');
 }
 $content .= "</div>";
 }
