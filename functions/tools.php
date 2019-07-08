@@ -191,7 +191,7 @@ $form .= "</li>";
 
 if( has_action('mydoliconnectuserform') && !in_array($mode, array('donation')) ) {
 $form .= "<li class='list-group-item'>";
-do_action('mydoliconnectuserform', $object);
+$form .= do_action('mydoliconnectuserform', $object);
 $form .= "</li>";
 }
 
