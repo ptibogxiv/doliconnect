@@ -367,13 +367,10 @@ return $avatar;
 
 // ********************************************************
 
-//function doliaccount_display($content) {
-//global $wpdb, $current_user;
-
-//if ( in_the_loop() && is_main_query() && is_page(doliconnectid('doliaccount')) ) {
-
-function doliaccount_shortcode() {                                                                                                               
+function doliaccount_display($content) {
 global $wpdb, $current_user;
+
+if ( in_the_loop() && is_main_query() && is_page(doliconnectid('doliaccount')) && !empty(doliconnectid('doliaccount')) ) {
 
 doliconnect_enqueues();
 
@@ -969,20 +966,15 @@ print "</small></p>";
 print "</div></div>";
 }
 
-//return $content;
+} else {
+
+print $content;
 
 }
-add_shortcode('doliaccount', 'doliaccount_shortcode');
 
-//} else {
+}
 
-//return $content;
-
-//}
-
-//}
-
-//add_filter( 'the_content', 'doliaccount_display');
+add_filter( 'the_content', 'doliaccount_display');
 
 // ********************************************************
 
