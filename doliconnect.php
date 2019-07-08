@@ -1054,7 +1054,7 @@ $msg = "<div class='alert alert-warning'>
 
 print "<form action='' id='doliconnect-contactform' method='post' class='was-validated'>";
 
-if ( isset($msg) ) { $content .= $msg; }
+if ( isset($msg) ) { print $msg; }
 
 print doliloaderscript('doliconnect-contactform');
 
@@ -1139,16 +1139,16 @@ $donation = callDoliApi("GET", "/doliconnector/constante/MAIN_MODULE_DON", null,
 $art200 = callDoliApi("GET", "/doliconnector/constante/DONATION_ART200", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 $art238 = callDoliApi("GET", "/doliconnector/constante/DONATION_ART238", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 $art835 = callDoliApi("GET", "/doliconnector/constante/DONATION_ART835", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-//$content .= $shop;
+//print $shop;
 
 if ( defined("DOLIBUG") ) {
 
-$content .= dolibug();
+print dolibug();
 
 } elseif (empty($donation->value)) {
-$content .= "<div class='card shadow-sm'><div class='card-body'>";
-$content .= dolibug(__( 'Inactive module on Dolibarr', 'doliconnect'));
-$content .= "</div></div>";
+print "<div class='card shadow-sm'><div class='card-body'>";
+print dolibug(__( 'Inactive module on Dolibarr', 'doliconnect'));
+print "</div></div>";
 } elseif (is_user_logged_in())  {
 
 if ( doliconnector($current_user, 'fk_soc') > '0') {
@@ -1156,23 +1156,23 @@ $request = "/thirdparties/".doliconnector($current_user, 'fk_soc');
 $thirdparty = callDoliApi("GET", $request, null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
 }
 
-$content .= "<form action='".doliconnecturl('dolidonation')."' id='doliconnect-donationform' method='post' class='was-validated' enctype='multipart/form-data'>";
+print "<form action='".doliconnecturl('dolidonation')."' id='doliconnect-donationform' method='post' class='was-validated' enctype='multipart/form-data'>";
 
 if ( isset($msg) ) { print $msg; }
 
-$content .= doliloaderscript('doliconnect-donationform');
+print doliloaderscript('doliconnect-donationform');
 
-$content .= "<div class='card shadow-sm'>";
+print "<div class='card shadow-sm'>";
 
 if (isset($_GET["create"])) {
-$content .= doliconnectuserform( $thirdparty, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'donation');
+print doliconnectuserform( $thirdparty, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'donation');
 
-$content .= "<div class='card-body'><input type='hidden' name='userid' value='$ID'><button class='btn btn-danger btn-block' type='submit'><b>".__( 'Update', 'doliconnect')."</b></button></div>";
+print "<div class='card-body'><input type='hidden' name='userid' value='$ID'><button class='btn btn-danger btn-block' type='submit'><b>".__( 'Update', 'doliconnect')."</b></button></div>";
 
 } else {
-$content .= "<div class='card-body'>"; 
+print "<div class='card-body'>"; 
 
-$content .= "<h5><i class='fas fa-donate fa-fw'></i> Don hors ligne</h5>";
+print "<h5><i class='fas fa-donate fa-fw'></i> Don hors ligne</h5>";
 
 //if ( $object->mode_reglement_code == 'CHQ') {
 
@@ -1180,7 +1180,7 @@ $chq = callDoliApi("GET", "/doliconnector/constante/FACTURE_CHQ_NUMBER", null, d
 
 $bank = callDoliApi("GET", "/bankaccounts/".$chq->value, null, dolidelay('constante'));
 
-$content .= "<div class='alert alert-info' role='alert'><p align='justify'>".sprintf( __( 'Please send your cheque in the amount of <b>%1$s</b> with reference <b>%2$s</b> to <b>%3$s</b> at the following address', 'doliconnect-pro' ), $TTC, $bank->proprio, $object->ref ).":</p><p><b>$bank->owner_address</b></p></div>";
+print "<div class='alert alert-info' role='alert'><p align='justify'>".sprintf( __( 'Please send your cheque in the amount of <b>%1$s</b> with reference <b>%2$s</b> to <b>%3$s</b> at the following address', 'doliconnect-pro' ), $TTC, $bank->proprio, $object->ref ).":</p><p><b>$bank->owner_address</b></p></div>";
 
 //} 
 //if ($object->mode_reglement_code == 'VIR') {
@@ -1189,46 +1189,45 @@ $vir = callDoliApi("GET", "/doliconnector/constante/FACTURE_RIB_NUMBER", null, d
 
 $bank = callDoliApi("GET", "/bankaccounts/".$vir->value, null, dolidelay('constante'));
 
-$content .= "<div class='alert alert-info' role='alert'><p align='justify'>".sprintf( __( 'Please send your transfert in the amount of <b>%1$s</b> with reference <b>%2$s</b> at the following account', 'doliconnect-pro' ), $TTC, $object->ref ).":";
-$content .= "<br><b>".__( 'Bank', 'doliconnect-pro' ).": $bank->bank</b>";
-$content .= "<br><b>IBAN: $bank->iban</b>";
-if ( ! empty($bank->bic) ) { $content .= "<br><b>BIC/SWIFT : $bank->bic</b>";}
-$content .= "</p></div>";
+print "<div class='alert alert-info' role='alert'><p align='justify'>".sprintf( __( 'Please send your transfert in the amount of <b>%1$s</b> with reference <b>%2$s</b> at the following account', 'doliconnect-pro' ), $TTC, $object->ref ).":";
+print "<br><b>".__( 'Bank', 'doliconnect-pro' ).": $bank->bank</b>";
+print "<br><b>IBAN: $bank->iban</b>";
+if ( ! empty($bank->bic) ) { print "<br><b>BIC/SWIFT : $bank->bic</b>";}
+print "</p></div>";
 
 //}
-$content .= "<h5><i class='fas fa-donate fa-fw'></i> ".__( 'Tax exemptions', 'doliconnect-pro' )."</h5>";
+print "<h5><i class='fas fa-donate fa-fw'></i> ".__( 'Tax exemptions', 'doliconnect-pro' )."</h5>";
 if (! empty($art200->value) || ! empty($art238->value) || ! empty($art835->value)) {
 if (! empty($art200->value)) {
-$content .= __( 'DonationArt200', 'doliconnect');
+print  __( 'DonationArt200', 'doliconnect');
 }
 
 if (! empty($art238->value)) {
-$content .= __( 'DonationArt238', 'doliconnect');
+print __( 'DonationArt238', 'doliconnect');
 }
 
 if (! empty($art835->value)) {
-$content .= __( 'DonationArt835', 'doliconnect');
+print __( 'DonationArt835', 'doliconnect');
 }
 } else {
-$content .= __( "You shouldn't have some tax exemptions", 'doliconnect');
+print __( "You shouldn't have some tax exemptions", 'doliconnect');
 }
-$content .= "</div>";
-}
-
-$content .="</div></form>";
-
-$content .= "<small><div class='float-left'>";
-$content .= dolirefresh($request, doliconnecturl('dolidonation'), dolidelay('constante'));
-$content .= "</div><div class='float-right'>";
-$content .= dolihelp('COM');
-$content .= "</div></small>";
+print "</div>";
 }
 
-return $content;
+print "</div></form>";
+
+print "<small><div class='float-left'>";
+print dolirefresh($request, doliconnecturl('dolidonation'), dolidelay('constante'));
+print "</div><div class='float-right'>";
+print dolihelp('COM');
+print "</div></small>";
+}
+
 
 } else {
 
-return $content;
+print $content;
 
 }
 
