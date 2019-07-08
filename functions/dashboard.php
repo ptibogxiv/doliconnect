@@ -413,7 +413,6 @@ if ( !isset($listcontact->error) && $listcontact != null ) {
 foreach ( $listcontact as $contact ) { 
 $count=$contact->ref_facturation+$contact->ref_contrat+$contact->ref_commande+$contact->ref_propal;
 print "<li class='list-group-item d-flex justify-content-between lh-condensed list-group-item-action'>";
-print "<div class='d-none d-md-block col-md-2 col-lg-1'><i class='fas fa-address-card fa-3x fa-fw'></i></div>";
 print doliaddress($contact);
 if (1 == 1) {
 print "<div class='col-4 col-sm-3 col-md-2 btn-group-vertical' role='group'>";
