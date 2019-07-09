@@ -17,10 +17,10 @@ print "<ul class='list-group list-group-flush'>";
 if ( ! isset($object) && in_array($mode, array('thirdparty')) && !get_option('doliconnect_disablepro') ) {
 print "<li class='list-group-item'><div class='form-row'><div class='col-12'>";
 if ( isset($_GET["pro"]) && !get_option('doliconnect_disablepro') ) {
-print "<a href='".wp_registration_url(get_permalink())."' role='button' title='".__( 'Create a personnal account', 'doliconnect' )."'><small>(".__( 'Create a personnal account', 'doliconnect' )."?)</small></a>";                                                                                                                                                                                                                                                                                                                                     
+print "<a href='".wp_registration_url(get_permalink())."&morphy=phy' role='button' title='".__( 'Create a personnal account', 'doliconnect' )."'><small>(".__( 'Create a personnal account', 'doliconnect' )."?)</small></a>";                                                                                                                                                                                                                                                                                                                                     
 }
 elseif (!get_option('doliconnect_disablepro')) {
-print "<a href='".wp_registration_url(get_permalink())."&pro' role='button' title='".__( 'Create a enterprise / supplier account', 'doliconnect' )."'><small>(".__( 'Create a enterprise / supplier account', 'doliconnect' )."?)</small></a>";
+print "<a href='".wp_registration_url(get_permalink())."&morphy=mor' role='button' title='".__( 'Create a enterprise / supplier account', 'doliconnect' )."'><small>(".__( 'Create a enterprise / supplier account', 'doliconnect' )."?)</small></a>";
 }
 
 print "</div></div></li><li class='list-group-item'>";
@@ -140,12 +140,12 @@ print " readonly";
 print " required";
 }
 print "></div>";
-if ( ( !is_user_logged_in() && ((isset($_GET["pro"]) && !get_option('doliconnect_disablepro')) || (function_exists('dolikiosk') && ! empty(dolikiosk())) ) && in_array($mode, array('thirdparty'))) || (is_user_logged_in() && in_array($mode, array('thirdparty','contact','member','donation'))) ) {
+if ( ( !is_user_logged_in() && ((isset($_GET["morphy"])&& $_GET["morphy"] == "mor" && !get_option('doliconnect_disablepro')) || (function_exists('dolikiosk') && ! empty(dolikiosk())) ) && in_array($mode, array('thirdparty'))) || (is_user_logged_in() && in_array($mode, array('thirdparty','contact','member','donation'))) ) {
 print "<div class='col-12 col-md-5'><label for='inputmobile'><small><i class='fas fa-phone fa-fw'></i> ".__( 'Phone', 'doliconnect' )."</small></label><input type='tel' class='form-control' id='inputmobile' placeholder='".__( 'Phone', 'doliconnect' )."' name='".$idobject."[phone]' value='".(isset($object->phone) ? $object->phone : $object->phone_pro)."' autocomplete='off'></div>";
 }
 print "</div></li>";
 
-if ( ( !is_user_logged_in() && ((isset($_GET["pro"]) && !get_option('doliconnect_disablepro')) || (function_exists('dolikiosk') && ! empty(dolikiosk())) ) && in_array($mode, array('thirdparty'))) || (is_user_logged_in() && in_array($mode, array('thirdparty','contact','member','donation'))) ) {       
+if ( ( !is_user_logged_in() && ((isset($_GET["morphy"])&& $_GET["morphy"] == "mor" && !get_option('doliconnect_disablepro')) || (function_exists('dolikiosk') && ! empty(dolikiosk())) ) && in_array($mode, array('thirdparty'))) || (is_user_logged_in() && in_array($mode, array('thirdparty','contact','member','donation'))) ) {       
 print "<li class='list-group-item'>";
  
 print "<div class='form-row'><div class='col-12'><label for='inputaddress'><small><i class='fas fa-map-marked fa-fw'></i> ".__( 'Address', 'doliconnect' )."</small></label>
