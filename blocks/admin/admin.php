@@ -49,9 +49,11 @@ function doliconnect_admin_block() {
 	);
 
 function doliconnect_admin_render_block( $attributes ) {
+
 $a = shortcode_atts( array(
 'col' => 'col'
-), $atts );
+), $attributes );
+
 $args = array( 
 'blog_id'      => $GLOBALS['blog_id'],
 'role'         => 'administrator',
@@ -65,9 +67,9 @@ $html = "<DIV class='row'>";
 if ( ! empty( $user_query->results ) ) {
 foreach ( $user_query->results as $user ) {
 $html .= "<DIV class='";
-if($a[col]=='3'){
+if($a['col']=='3'){
 $html .= "col-12 col-md-6 col-lg-4";
-}else{$html .= "col-12 col-md-6 col-lg-6";}
+} else { $html .= "col-12 col-md-6 col-lg-6"; }
 
 
 $order1="doliboard_".get_current_blog_id();
