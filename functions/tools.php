@@ -140,12 +140,12 @@ print " readonly";
 print " required";
 }
 print "></div>";
-if ( ( isset($_GET["pro"]) && !get_option('doliconnect_disablepro') ) || $mode == 'donation' || ( $mode == 'thirdparty' && isset($object) ) || ( $mode == 'contact' && isset($object) ) || ( $mode == 'member' && isset($object) ) ) {   
+if ( ( isset($_GET["pro"]) && !get_option('doliconnect_disablepro') && $mode == 'thirdparty' && isset($object) ) || $mode == 'donation' || ( $mode == 'contact' && isset($object) ) || ( $mode == 'member' && isset($object) ) ) {   
 print "<div class='col-12 col-md-5'><label for='inputmobile'><small><i class='fas fa-phone fa-fw'></i> ".__( 'Phone', 'doliconnect' )."</small></label><input type='tel' class='form-control' id='inputmobile' placeholder='".__( 'Phone', 'doliconnect' )."' name='".$idobject."[phone]' value='".(isset($object->phone) ? $object->phone : $object->phone_pro)."' autocomplete='off'></div>";
 }
 print "</div></li>";
 
-if ( ( isset($_GET["pro"]) && !get_option('doliconnect_disablepro') ) || $mode == 'donation' || ( $mode == 'thirdparty' && isset($object) ) || ( $mode == 'contact' && isset($object) ) || ( $mode == 'member'  && isset($object) )) {       
+if ( ( isset($_GET["pro"]) && !get_option('doliconnect_disablepro') && $mode == 'thirdparty' && isset($object)) || $mode == 'donation' || ( $mode == 'contact' && isset($object) ) || ( $mode == 'member'  && isset($object) )) {       
 print "<li class='list-group-item'>";
  
 print "<div class='form-row'><div class='col-12'><label for='inputaddress'><small><i class='fas fa-map-marked fa-fw'></i> ".__( 'Address', 'doliconnect' )."</small></label>
