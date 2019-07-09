@@ -242,7 +242,7 @@ print "<li class='list-group-item'><div class='form-row'><div class='col'><label
 print "</div></li>";
 }
 
-if ( ! isset($object) ) {
+if ( !is_user_logged_in() && in_array($mode, array('thirdparty')) ) {
 print "<li class='list-group-item'><div class='form-row'><div class='custom-control custom-checkbox my-1 mr-sm-2'>
 <input type='checkbox' class='custom-control-input' value='1' id='optin1' name='optin1'>
 <label class='custom-control-label' for='optin1'> ".__( 'I would like to receive the newsletter', 'doliconnect' )."</label></div></div>";
@@ -253,7 +253,7 @@ print "<div class='form-row'><div class='custom-control custom-checkbox my-1 mr-
 if ( get_option( 'wp_page_for_privacy_policy' ) ) {
 print "<div class='modal fade' id='cgvumention' tabindex='-1' role='dialog' aria-labelledby='cgvumention' aria-hidden='true'><div class='modal-dialog modal-lg modal-dialog-centered' role='document'><div class='modal-content'><div class='modal-header'><h5 class='modal-title' id='cgvumentionLabel'>".__( 'Terms & Conditions', 'doliconnect')."</h5><button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>
 <div class='modal-body'>";
-print apply_filters('the_content', get_post_field('post_content', get_option( 'wp_page_for_privacy_policy' ))); 
+//print apply_filters('the_content', get_post_field('post_content', get_option( 'wp_page_for_privacy_policy' ))); 
 print "</div></div></div>";}
 print "</li>";
 }
