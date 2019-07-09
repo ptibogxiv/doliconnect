@@ -49,6 +49,8 @@ function doliconnect_membership_block() {
 	);  
 
 function doliconnect_membership_render_block( $attributes ) {
+global $current_user;
+
 $delay=MONTH_IN_SECONDS;
 
 doliconnect_enqueues(); 
@@ -85,7 +87,7 @@ $typeadhesion = callDoliApi("GET", $request, null, dolidelay('member', esc_attr(
 
 $typeadhesionpro = callDoliApi("GET", "/adherentsplus/type?sortfield=t.libelle&sortorder=ASC&sqlfilters=(t.morphy%3A=%3A'')%20or%20(t.morphy%3Ais%3Anull)%20or%20(t.morphy%3A%3D%3A'mor')", null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true));
 
-if ( $typeadhesionpro->error->code != '404' ) {
+if ( isset($typeadhesionpro->error) && $typeadhesionpro->error->code != '404' ) {
 $html .= '<center><ul class="nav nav-pills nav-justified" id="pills-tab" role="tablist">
 <li class="nav-item"><a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">'.__( 'Individual', 'doliconnect' ).'</a></li>
 <li class="nav-item"><a class="nav-link" id="pills-group-tab" data-toggle="pill" href="#pills-group" role="tab" aria-controls="pills-group" aria-selected="false">'.__( 'Company', 'doliconnect' ).'</a></li>
@@ -183,12 +185,8 @@ $html .= '</div>';
 
 $html .= '</div></div>';
 
-//$html .= "<small>";
-//$html .= dolirefresh("/adherentsplus/type?sortfield=t.price&sqlfilters=(t.family:!=:'1')&sortorder=ASC", get_permalink(), $delay);
-//$html .= "</small>";
-
 $html .= "<small><div class='float-left'>";
-$html .= dolirefresh($request, $url, dolidelay('thirdparty'), $thirdparty);
+$html .= dolirefresh($request, get_permalink(), dolidelay('thirdparty'), $typeadhesion);
 $html .= "</div><div class='float-right'>";
 $html .= dolihelp('ISSUE');
 $html .= "</div></small>";
