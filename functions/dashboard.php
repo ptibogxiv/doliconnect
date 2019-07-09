@@ -1551,7 +1551,6 @@ print "<li class='list-group-item list-group-item-info'><i class='fas fa-info-ci
 if ( !isset($linkedmember->error) && $linkedmember != null ) { 
 foreach ( $linkedmember as $member ) {                                                                                 
 print "<li class='list-group-item d-flex justify-content-between lh-condensed list-group-item-action'>";
-print "<div class='d-none d-md-block col-md-2 col-lg-1'><i class='fas fa-address-card fa-3x fa-fw'></i></div>";
 print doliaddress($member);
 if (1 == 1) {
 print "<div class='col-4 col-sm-3 col-md-2 btn-group-vertical' role='group'>";
