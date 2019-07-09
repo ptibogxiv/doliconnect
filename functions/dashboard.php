@@ -1407,7 +1407,9 @@ print "</div></div>";
 if ($adherent->ref != $adherent->id ) { 
 print "<label for='license'><small>N° de licence</small></label><div class='input-group mb-2'><div class='input-group-prepend'><div class='input-group-text'><i class='fas fa-key fa-fw'></i></div></div><input class='form-control' type='text' value='".$adherent->ref."' readonly></div>";
 }
-do_action('mydoliconnectmemberform', $adherent);
+if( has_action('mydoliconnectmemberform') ) {
+print do_action('mydoliconnectmemberform', $adherent);
+}
 print "</div><ul class='list-group list-group-flush'>";
 
 if (doliconnector($current_user, 'fk_member') > 0) {
