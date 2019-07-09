@@ -556,7 +556,8 @@ exit;
 }
 
 if ( isset($_POST['submitted']) ) {
-$thirdparty=$_POST['thirdparty'];
+
+$thirdparty=$_POST['thirdparty']['0'];
 
 if ( email_exists($thirdparty['email']) ) {
         $emailError = "".__( 'This email address is already linked to an account. You can reactivate your account through this <a href=\'".wp_lostpassword_url( get_permalink() )."\' title=\'lost password\'>form</a>.', 'doliconnect' )."";
