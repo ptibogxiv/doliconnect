@@ -649,11 +649,8 @@ print doliloaderscript('doliconnect-signinform');
 
 print "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>".__( 'Create an account', 'doliconnect' )."</h5></div>";
 
-if ( function_exists('dolikiosk') && ! empty(dolikiosk()) ) {
-print doliconnectuserform(null, null, 'thirdparty');
-} else {
-print doliconnectuserform(null, null, 'thirdparty');
-}
+$thirdparty['id']="0";
+print doliconnectuserform($thirdparty, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'thirdparty');
 
 print "<div class='card-body'><input type='hidden' name='submitted' id='submitted' value='true'><button class='btn btn-primary btn-block' type='submit'";
 if ( get_option('users_can_register')=='1' && ( get_site_option( 'registration' ) == 'user' || get_site_option( 'registration' ) == 'all' ) || ( !is_multisite() && get_option( 'users_can_register' )) ) {
