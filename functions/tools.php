@@ -24,7 +24,7 @@ print "<a href='".wp_registration_url(get_permalink())."&morphy=mor' role='butto
 }
 
 print "</div></div></li><li class='list-group-item'>";
-} elseif ( isset($object) && in_array($mode, array('thirdparty')) && !get_option('doliconnect_disablepro') ) { //|| $mode == 'member'
+} elseif ( is_object($object) && in_array($mode, array('thirdparty')) && !get_option('doliconnect_disablepro') ) { //|| $mode == 'member'
 print "<li class='list-group-item'><div class='form-row'><div class='col-12'><label for='inputMorphy'><small><i class='fas fa-user-tag fa-fw'></i> ".__( 'Type of account', 'doliconnect' )."</small></label><br>";
 print "<div class='custom-control custom-radio custom-control-inline'><input type='radio' id='morphy1' name='".$idobject."[morphy]' value='phy' class='custom-control-input'";
 if ( $current_user->billing_type != 'mor' || empty($current_user->billing_type) ) { print " checked"; }
@@ -233,7 +233,7 @@ print "</li>";
 
 }
 
-if ( function_exists('dolikiosk') && ! isset($object) && ! empty(dolikiosk()) && $mode == 'thirdparty' ) {
+if ( function_exists('dolikiosk') && ! is_object($object) && ! empty(dolikiosk()) && $mode == 'thirdparty' ) {
 print "<li class='list-group-item'><div class='form-row'><div class='col'><label for='pwd1'><small><i class='fas fa-key fa-fw'></i> ".__( 'Password', 'doliconnect' )."</small></label>
 <input class='form-control' id='pwd1' type='password' name='pwd1' value ='' placeholder='".__( 'Choose your password', 'doliconnect' )."' autocomplete='off' required>
 <small id='pwd1' class='form-text text-justify text-muted'>".__( 'Your password must be between 8 and 20 characters, including at least 1 digit, 1 letter, 1 uppercase.', 'doliconnect' )."</small></div></div>
@@ -242,7 +242,7 @@ print "<li class='list-group-item'><div class='form-row'><div class='col'><label
 print "</div></li>";
 }
 
-if ( ! isset($object) ) {
+if ( ! is_object($object) ) {
 print "<li class='list-group-item'><div class='form-row'><div class='custom-control custom-checkbox my-1 mr-sm-2'>
 <input type='checkbox' class='custom-control-input' value='1' id='optin1' name='optin1'>
 <label class='custom-control-label' for='optin1'> ".__( 'I would like to receive the newsletter', 'doliconnect' )."</label></div></div>";
