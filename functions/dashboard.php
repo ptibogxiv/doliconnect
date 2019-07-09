@@ -825,27 +825,27 @@ if (!empty($orderfo->contacts_ids) && is_array($orderfo->contacts_ids)) {
 foreach ($orderfo->contacts_ids as $contact) {
 if ('BILLING' == $contact->code) {
 print "<div class='card'><div class='card-body'><h6>".__( 'Billing address', 'doliconnect' )."</h6><small class='text-muted'>";
-print dolicontact($contact->id, $_GET["refresh"]);
+print dolicontact($contact->id, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 print "</small></div></div>";
 } else {
 print "<div class='card'><div class='card-body'><h6>".__( 'Billing address', 'doliconnect' )."</h6><small class='text-muted'>";
-print doliaddress($thirdparty, $_GET["refresh"]);
+print doliaddress($thirdparty, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 print "</small></div></div>";
 }
 if ('SHIPPING' == $contact->code) {
 print "<div class='card'><div class='card-body'><h6>".__( 'Shipping address', 'doliconnect' )."</h6><small class='text-muted'>";
-print dolicontact($contact->id, $_GET["refresh"]);
+print dolicontact($contact->id, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 print "</small></div></div>";
 } else {
 print "<div class='card'><div class='card-body'><h6>".__( 'Shipping address', 'doliconnect' )."</h6><small class='text-muted'>";
-print doliaddress($thirdparty, $_GET["refresh"]);
+print doliaddress($thirdparty, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 print "</small></div></div>";
 }
 }
 
 } else {
 print "<div class='card'><div class='card-body'><h6>".__( 'Billing and shipping address', 'doliconnect' )."</h6><small class='text-muted'>";
-print doliaddress($thirdparty, $_GET["refresh"]);
+print doliaddress($thirdparty, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 print "</small></div></div>";
 }
 print "</div><br>";
