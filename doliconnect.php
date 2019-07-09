@@ -719,8 +719,12 @@ print $msg."<div class='card shadow-sm'><ul class='list-group list-group-flush'>
 if ( $dolibarr->fk_user > '0') {
 print "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".__( 'Your password will be synchronized with your Dolibarr account', 'doliconnect' )."</b></li>";
 } 
-print "<li class='list-group-item'><h5 class='card-title'>".__( 'Change your password', 'doliconnect' )."</h5><form class='was-validated' id='fpwForm' action='' method='post'><input type='hidden' name='submitted' id='submitted' value='true' />
-<div class='form-group'><label for='pwd1'><small>".__( 'New password', 'doliconnect' )."</small></label>
+print "<li class='list-group-item'><h5 class='card-title'>".__( 'Change your password', 'doliconnect' )."</h5>
+<form class='was-validated' id='doliconnect-rpwform' action='' method='post'><input type='hidden' name='submitted' id='submitted' value='true' />";
+
+print doliloaderscript('doliconnect-rpwform'); 
+
+print "<div class='form-group'><label for='pwd1'><small>".__( 'New password', 'doliconnect' )."</small></label>
 <div class='input-group mb-2 mr-sm-2'><div class='input-group-prepend'>
 <div class='input-group-text'><i class='fas fa-key fa-fw'></i></div></div>
 <input class='form-control' id='pwd1' type='password' name='pwd1' value ='' placeholder='".__( 'Enter your new password', 'doliconnect' )."' ";
