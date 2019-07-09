@@ -968,7 +968,7 @@ print "</div></div>";
 
 } else {
 
-print $content;
+return $content;
 
 }
 
@@ -1066,17 +1066,11 @@ if ( is_user_logged_in() ) { print $current_user->user_lastname." ".$current_use
 print "'";
 if ( is_user_logged_in() ) { print " readonly";} else { print " required"; }
 print ">";
-if ($nameError != '') { 
-print "<p><span class='error'>$nameError</span></p>";
-} 
 print "</div><div class='form-group'>
 <label class='control-label' for='email'><small>".__( 'Email', 'doliconnect')."</small></label>
 <input class='form-control' type='email' name='email' autocomplete='off' id='email' value='$current_user->user_email'";
 if ( is_user_logged_in() ){ print " readonly"; } else { print " required"; }
 print ">";
-if ($emailError != '') {
-print "<p><span class='error'>$emailError</span></p>";
-}
 print "</div><div class='form-group d-none'>
 <label class='control-label' for='email-control'><small>".__( 'Email', 'doliconnect')."</small></label>
 <input class='form-control' type='email' name='email-control' autocomplete='off' id='email-control' ";
@@ -1101,12 +1095,8 @@ print "</select>";
 }
 print "</div>";
 
-print "<div class='form-group'>
-<label class='control-label' for='commentsText'><small>".__( 'Message', 'doliconnect')."</small></label>
+print "<div class='form-group'><label class='control-label' for='commentsText'><small>".__( 'Message', 'doliconnect')."</small></label>
 <textarea class='form-control' name='comments' id='commentsText' rows='7' cols='20' required></textarea>";
-if ( $commentError != '' ) { 
-print "<p><span class='error'>$commentError</span></p>";
-}
 
 if ( !is_user_logged_in() ) {
 print '</li><li class="list-group-item"><div class="custom-control custom-checkbox"><input id="rgpdinfo" class="custom-control-input form-control-sm" type="checkbox" name="rgpdinfo" value="ok" required><label class="custom-control-label w-100" for="rgpdinfo"><small class="form-text text-muted"> '.__( 'I agree to save my personnal informations in order to contact me', 'doliconnect').'</small></label></div>';  
@@ -1118,7 +1108,7 @@ print "</div>";
 
 } else {
 
-print $content;
+return $content;
 
 }
 
@@ -1227,7 +1217,7 @@ print "</div></small>";
 
 } else {
 
-print $content;
+return $content;
 
 }
 
