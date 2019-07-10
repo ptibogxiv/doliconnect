@@ -1256,7 +1256,9 @@ $listdonation = callDoliApi("GET", $request, null, dolidelay('donation', esc_att
 //print var_dump($listdonation);
 
 print '<div class="card shadow-sm"><ul class="list-group list-group-flush">';
-print '<a href="'.doliconnecturl('dolidonation').'" class="list-group-item lh-condensed list-group-item-action list-group-item-primary';
+print '<a href="';
+if ( empty(doliconnectid('dolidonation'))) { print "#"; } else { print doliconnecturl('dolidonation'); }
+print '" class="list-group-item lh-condensed list-group-item-action list-group-item-primary';
 if ( empty(doliconnectid('dolidonation'))) { print "disabled"; }
 print '"><center><i class="fas fa-plus-circle"></i> '.__( 'Donate', 'doliconnect' ).'</center></a>';  
 if ( !isset( $listdonation->error ) && $listdonation != null ) {
