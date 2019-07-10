@@ -37,20 +37,24 @@ require_once plugin_dir_path(__FILE__).'/blocks/index.php';
 //include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 
 // ********************************************************
-function doliconnecturl ($page) {
+function doliconnecturl($page) {
 global $wpdb;
 if ( function_exists('pll_get_post') ) { 
 return esc_url(get_permalink(pll_get_post(get_option($page))));
-} else { 
+} elseif( function_exists('wpml_object_id') ) {
+return esc_url(get_permalink(apply_filters( 'wpml_object_id', $page, 'page', true)));
+} else {
 return esc_url(get_permalink(get_option($page)));
 }  
 }
 
-function doliconnectid ($page) {
+function doliconnectid($page) {
 global $wpdb;
 if (function_exists('pll_get_post')) { 
 return pll_get_post(get_option($page));
-} else { 
+} elseif( function_exists('wpml_object_id') ) {
+return apply_filters( 'wpml_object_id', $page, 'page', true);
+} else {
 return get_option($page);
 }  
 }
