@@ -1187,11 +1187,11 @@ $bank = callDoliApi("GET", "/bankaccounts/".$vir->value, null, dolidelay('consta
 print "<div class='alert alert-info' role='alert'><p align='justify'>".sprintf( __( 'Please send your transfert in the amount of <b>%1$s</b> with reference <b>%2$s</b> at the following account', 'doliconnect-pro' ), $TTC, $object->ref ).":";
 print "<br><b>".__( 'Bank', 'doliconnect-pro' ).": $bank->bank</b>";
 print "<br><b>IBAN: $bank->iban</b>";
-if ( ! empty($bank->bic) ) { print "<br><b>BIC/SWIFT : $bank->bic</b>";}
+if ( ! empty($bank->bic) ) { print "<br><b>BIC/SWIFT: $bank->bic</b>";}
 print "</p></div>";
 
 //}
-print "<h5><i class='fas fa-donate fa-fw'></i> ".__( 'Tax exemptions', 'doliconnect-pro' )."</h5>";
+print "<h5><i class='fas fa-donate fa-fw'></i> ".__( 'Tax exemptions', 'doliconnect' )."</h5>";
 if (! empty($art200->value) || ! empty($art238->value) || ! empty($art835->value)) {
 if (! empty($art200->value)) {
 print  __( 'DonationArt200', 'doliconnect');
@@ -1205,7 +1205,7 @@ if (! empty($art835->value)) {
 print __( 'DonationArt835', 'doliconnect');
 }
 } else {
-print __( "You shouldn't have some tax exemptions", 'doliconnect');
+print __( "You should't have tax exemptions", 'doliconnect');
 }
 print "</div>";
 }
