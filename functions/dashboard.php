@@ -1255,12 +1255,10 @@ $request= "/donations?sortfield=t.rowid&sortorder=DESC&limit=8&thirdparty_ids=".
 $listdonation = callDoliApi("GET", $request, null, dolidelay('donation', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 //print var_dump($listdonation);
 
-print '<div class="card shadow-sm"><ul class="list-group list-group-flush">';
-print '<a href="';
-if ( empty(doliconnectid('dolidonation'))) { print "#"; } else { print doliconnecturl('dolidonation'); }
-print '" class="list-group-item lh-condensed list-group-item-action list-group-item-primary';
-if ( empty(doliconnectid('dolidonation'))) { print "disabled"; }
-print '"><center><i class="fas fa-plus-circle"></i> '.__( 'Donate', 'doliconnect' ).'</center></a>';  
+print '<div class="card shadow-sm"><ul class="list-group list-group-flush">'; 
+if ( !empty(doliconnectid('dolidonation'))) {
+print '<a href="'.doliconnecturl('dolidonation').'" class="list-group-item lh-condensed list-group-item-action list-group-item-primary "><center><i class="fas fa-plus-circle"></i> '.__( 'Donate', 'doliconnect' ).'</center></a>';  
+}
 if ( !isset( $listdonation->error ) && $listdonation != null ) {
 foreach ( $listdonation as $postdonation ) { 
 
