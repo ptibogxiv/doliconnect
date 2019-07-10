@@ -4,7 +4,7 @@ Contributors: ptibogxiv
 Tags: erp, crm, ecommerce, dolibarr, payment, interface, customer, subscription, membership, doliconnect, dashboard
 Requires at least: 5.0
 Tested up to: 5.3
-Stable tag: 3.6.7
+Stable tag: 3.7.0
 Requires PHP: 7.0
 Donate link: https://www.paypal.me/ptibogxiv
 
@@ -46,10 +46,17 @@ WordPress configuration steps:
 4. Confirmation email sent to the user/visitor.
 
 == Changelog ==
+ = 3.7.0 =
+* fix & clean code
+* prepare dolibarr v10
+* WIP donation page
+* no more need shortcodes for doliconnect's pages
+* Due to EU's rules, you 'll need dolibarr 10 for online payment from september 2019
+
  = 3.6.7 =
 * fix & clean code
 * prepare dolibarr v10
-* introduce dolialert fucntion
+* introduce dolialert function
 
  = 3.6.6 =
 * fix & clean code
