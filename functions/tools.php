@@ -253,6 +253,8 @@ print "<div class='form-row'><div class='custom-control custom-checkbox my-1 mr-
 if ( get_option( 'wp_page_for_privacy_policy' ) ) {
 print "<div class='modal fade' id='cgvumention' tabindex='-1' role='dialog' aria-labelledby='cgvumention' aria-hidden='true'><div class='modal-dialog modal-lg modal-dialog-centered' role='document'><div class='modal-content'><div class='modal-header'><h5 class='modal-title' id='cgvumentionLabel'>".__( 'Terms & Conditions', 'doliconnect')."</h5><button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>
 <div class='modal-body'>";
+$post = get_post(get_option( 'wp_page_for_privacy_policy' ));
+print $post->post_content;
 //print apply_filters('the_content', get_post_field('post_content', get_option( 'wp_page_for_privacy_policy' )));
 //print get_the_content( 'Read more', '', get_option( 'wp_page_for_privacy_policy' )); 
 print "</div></div></div>";}
