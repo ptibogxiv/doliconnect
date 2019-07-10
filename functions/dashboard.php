@@ -275,21 +275,6 @@ print "</li>";
 print "</ul><div class='card-body'><input type='hidden' name='userid' value='$ID'><button class='btn btn-danger btn-block' type='submit'><b>".__( 'Update', 'doliconnect' )."</b></button></div>";
 print "</div></form>";
 
-print '<div class="input-group">
-  <div class="input-group-prepend">
-    <div class="input-group-text">
-      <input type="radio" id="customRadio1" name="customRadio" aria-label="Radio button for following text input">
-    </div>
-  </div>
-  <input type="file" class="form-control" id="customFile">
-    <div class="input-group-prepend">
-    <div class="input-group-text">
-      <input type="radio" id="customRadio1" name="customRadio" aria-label="Radio button for following text input">
-    </div>
-  </div>
-  <input type="text" class="form-control" aria-label="Text input with radio button">
-</div>';
-
 print "<p class='text-right'><small>";
 print dolihelp('ISSUE');
 print "</small></p>";
