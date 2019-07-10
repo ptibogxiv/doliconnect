@@ -41,8 +41,8 @@ function doliconnecturl($page) {
 global $wpdb;
 if ( function_exists('pll_get_post') ) { 
 return esc_url(get_permalink(pll_get_post(get_option($page))));
-} elseif( function_exists('wpml_object_id') ) {
-return esc_url(get_permalink(apply_filters( 'wpml_object_id', $page, 'page', true)));
+} elseif ( function_exists('wpml_object_id') ) {
+return esc_url(get_permalink(apply_filters( 'wpml_object_id', get_option($page), 'page', true)));
 } else {
 return esc_url(get_permalink(get_option($page)));
 }  
@@ -52,8 +52,8 @@ function doliconnectid($page) {
 global $wpdb;
 if (function_exists('pll_get_post')) { 
 return pll_get_post(get_option($page));
-} elseif( function_exists('wpml_object_id') ) {
-return apply_filters( 'wpml_object_id', $page, 'page', true);
+} elseif ( function_exists('wpml_object_id') ) {
+return apply_filters( 'wpml_object_id', get_option($page), 'page', true);
 } else {
 return get_option($page);
 }  
