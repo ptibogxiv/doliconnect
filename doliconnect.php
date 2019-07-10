@@ -1194,7 +1194,7 @@ print "</p></div>";
 print "<h5><i class='fas fa-donate fa-fw'></i> ".__( 'Tax exemptions', 'doliconnect' )."</h5>";
 if (! empty($art200->value) || ! empty($art238->value) || ! empty($art835->value)) {
 if (! empty($art200->value)) {
-print  __( 'DonationArt200', 'doliconnect');
+print __( 'DonationArt200', 'doliconnect');
 }
 
 if (! empty($art238->value)) {
