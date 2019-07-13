@@ -606,7 +606,7 @@ update_user_meta( $ID, 'civility_id', sanitize_text_field($thirdparty['civility_
 update_user_meta( $ID, 'billing_type', sanitize_text_field($thirdparty['morphy']));
 if ( isset($thirdparty['name']) ) { update_user_meta( $ID, 'billing_company', sanitize_text_field($thirdparty['name'])); }
 update_user_meta( $ID, 'billing_birth', $thirdparty['birth']);
-update_user_meta( $ID, 'optin1', $_POST['optin1'] );
+if ( isset($_POST['optin1']) ) { update_user_meta( $ID, 'optin1', $_POST['optin1'] ); }
 
 $body = sprintf(__('Thank you for your registration on %s.', 'doliconnect'), $sitename);
 
