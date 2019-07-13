@@ -593,7 +593,10 @@ $ID = wp_create_user(uniqid(), $password, $email );
 
 $role = 'subscriber';
 
-if ( is_multisite() ) { add_user_to_blog($entity,$ID,$role); }
+if ( is_multisite() ) {
+$entity = dolibarr_entity(); 
+add_user_to_blog($entity,$ID,$role);
+}
 wp_update_user( array( 'ID' => $ID, 'user_email' => sanitize_email($thirdparty['email'])));
 wp_update_user( array( 'ID' => $ID, 'nickname' => sanitize_user($_POST['user_nicename'])));
 wp_update_user( array( 'ID' => $ID, 'display_name' => ucfirst(strtolower($thirdparty['firstname']))." ".strtoupper($thirdparty['lastname'])));
