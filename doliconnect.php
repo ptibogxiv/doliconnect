@@ -1389,7 +1389,6 @@ if ( ! empty( $instance['title'] ) ) {
 }
 
 $time=current_time('timestamp');
-$entity=get_current_blog_id();
 
 if (is_user_logged_in()){ 
   print "<a class='btn btn-block btn-warning' href='".doliconnecturl('doliaccount') . "?module=ticket&type=ISSUE&create' ><span class='fa fa-bug fa-fw'></span> ".__( 'Report a Bug', 'doliconnect' )."</a>";
@@ -1473,8 +1472,6 @@ global $current_user, $wpdb;
 		if ( ! empty( $instance['title'] ) ) {
 print $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ) . $args['after_title'];
 		}
-
-$entity=get_current_blog_id();
 
 if (doliconnector($current_user, 'fk_member') > 0) {
 $adherent = callDoliApi("GET", "/adherentsplus/".doliconnector($current_user, 'fk_member'), null);
