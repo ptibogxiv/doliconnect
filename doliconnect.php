@@ -286,7 +286,7 @@ return $dolibarr;
  
 } else {
 
-if ( $current_user->billing_type == 'mor' ) { 
+if ( isset($current_user->billing_type) && $current_user->billing_type == 'mor' ) { 
 if (!empty($current_user->billing_company)) { $name = $current_user->billing_company; }
 else { $name = $current_user->user_login; }
 } else {
@@ -614,12 +614,12 @@ $user = get_user_by( 'ID', $ID);
  
 if ( function_exists('dolikiosk') && ! empty(dolikiosk()) && $user ) {  
 
-$dolibarr = doliconnector($user, 'fk_soc', true, $thirdparty);
-do_action('wp_dolibarr_sync', $thirdparty);
+//$dolibarr = doliconnector($user, 'fk_soc', true, $thirdparty);
+//do_action('wp_dolibarr_sync', $thirdparty);
 
-wp_set_current_user( $ID, $user->user_login );
-wp_set_auth_cookie( $ID, false);
-do_action( 'wp_login', $user->user_login );
+//wp_set_current_user( $ID, $user->user_login );
+//wp_set_auth_cookie( $ID, false);
+//do_action( 'wp_login', $user->user_login );
 
 //wp_redirect(esc_url(home_url()));
 //exit;   
