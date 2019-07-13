@@ -46,7 +46,7 @@ WordPress configuration steps:
 4. Confirmation email sent to the user/visitor.
 
 == Changelog ==
- = 3.7.0 =
+ = 3.7.1 =
 * fix & clean code kiosk mode
 * WIP support WPML
 
