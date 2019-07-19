@@ -967,11 +967,12 @@ print "</div><div class='float-right'><a href='".wp_lostpassword_url( get_permal
 print "</div></li><li class='list-group-item'><input type='hidden' value='$redirect_to' name='redirect_to'><button id='submit' class='btn btn-block btn-primary' type='submit' name='submit' value='Submit'";
 print "><b>".__( 'Sign in', 'doliconnect' )."</b></button></form>";
 
+do_action( 'login_footer' );
 }
 
 print "</li></lu></div>";
 
-do_action( 'login_footer' );
+
 
 print "<p class='text-right'><small>";
 print dolihelp('ISSUE');
