@@ -274,8 +274,6 @@ delete_option('doliconnect_google');}
             update_option('doliconnect_social_linkedin', sanitize_text_field($_REQUEST['doliconnect_social_linkedin']));
             update_option('doliconnect_social_skype', sanitize_text_field($_REQUEST['doliconnect_social_skype']));                        
             update_option('dolicontact', sanitize_text_field($_REQUEST['dolicontact']));          
-            update_option('doliconnect_captcha_sitekey', sanitize_text_field($_REQUEST['doliconnect_captcha_sitekey']));   
-            update_option('doliconnect_captcha_secretkey', sanitize_text_field(['doliconnect_captcha_secretkey']));
             update_option('doliconnect_facebook_key', sanitize_text_field($_REQUEST['doliconnect_facebook_key']));
             update_option('doliconnect_facebook_secret', sanitize_text_field($_REQUEST['doliconnect_facebook_secret']));     
             update_option('doliconnect_google_key', sanitize_text_field($_REQUEST['doliconnect_google_key']));
@@ -327,9 +325,7 @@ checked('1', get_option('doliconnectrestrict')); } else { ?> disabled <?php } ?>
     'selected' => get_option('doliaccount') 
 );
            wp_dropdown_pages($args); ?>
-<br><br><textarea name="doliconnect_login_info" placeholder="message d'info sur la page de connexion" class="form-control" id="exampleFormControlTextarea1" rows="3" cols="75"><?php echo get_option('doliaccountinfo'); ?></textarea>           
-<br><br>Google captcha sitekey<input class="regular-text" type="text" id="dolibarr_login" name="doliconnect_captcha_sitekey"  value="<?php echo get_option('doliconnect_captcha_sitekey'); ?>" >           
-<br>Google captcha secretkey<input class="regular-text" type="text" id="dolibarr_login" name="doliconnect_captcha_secretkey"  value="<?php echo get_option('doliconnect_captcha_secretkey'); ?>" >     
+<br><br><textarea name="doliconnect_login_info" placeholder="message d'info sur la page de connexion" class="form-control" id="exampleFormControlTextarea1" rows="3" cols="75"><?php echo get_option('doliaccountinfo'); ?></textarea>   
            </td>
             </tr>
             <tr>
