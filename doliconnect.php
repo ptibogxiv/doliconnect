@@ -926,6 +926,8 @@ print '<a href="'.wp_registration_url( get_permalink() ).'" id="login-'.current_
 
 } else {
 
+do_action( 'login_head' );
+
 print "<div id='loginmodal-form'><h5 class='card-title'>".__( 'Welcome', 'doliconnect' )."</h5>";
 print "<b>".get_option('doliaccountinfo')."</b>";
 
@@ -968,6 +970,7 @@ print "</div></li><li class='list-group-item'><input type='hidden' value='$redir
 print "><b>".__( 'Sign in', 'doliconnect' )."</b></button></form>";
 
 do_action( 'login_footer' );
+
 }
 
 print "</li></lu></div>";
