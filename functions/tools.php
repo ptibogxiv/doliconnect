@@ -245,6 +245,13 @@ print "</div></li>";
 }
 
 if ( !is_user_logged_in() && in_array($mode, array('thirdparty')) ) {
+
+if( has_action('register_form') ) {
+print "<li class='list-group-item'>";
+print do_action( 'register_form' );
+print "</li>";
+}
+
 print "<li class='list-group-item'><div class='form-row'><div class='custom-control custom-checkbox my-1 mr-sm-2'>
 <input type='checkbox' class='custom-control-input' value='1' id='optin1' name='optin1'>
 <label class='custom-control-label' for='optin1'> ".__( 'I would like to receive the newsletter', 'doliconnect' )."</label></div></div>";
