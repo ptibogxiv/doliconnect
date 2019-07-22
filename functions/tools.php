@@ -16,7 +16,7 @@ print "<ul class='list-group list-group-flush'>";
 
 if ( ! isset($object) && in_array($mode, array('thirdparty')) && !get_option('doliconnect_disablepro') ) {
 print "<li class='list-group-item'><div class='form-row'><div class='col-12'>";
-if ( isset($_GET["pro"]) && !get_option('doliconnect_disablepro') ) {
+if ( isset($_GET["morphy"]) && $_GET["morphy"] == 'mor' && !get_option('doliconnect_disablepro') ) {
 print "<a href='".wp_registration_url(get_permalink())."&morphy=phy' role='button' title='".__( 'Create a personnal account', 'doliconnect' )."'><small>(".__( 'Create a personnal account', 'doliconnect' )."?)</small></a>";                                                                                                                                                                                                                                                                                                                                     
 print "<input type='hidden' id='morphy' name='".$idobject."[morphy]' value='mor'>";
 }
