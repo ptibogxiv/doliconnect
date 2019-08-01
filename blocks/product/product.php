@@ -67,12 +67,7 @@ $html .='<div class="col-md-4 d-none d-md-block">';
 $html .=wp_get_attachment_image( $attributes['mediaID'], "ptibogxiv_square", "", array( "class" => "img-fluid" ) );
 $html .='</div>';
 
-if ( function_exists('pll_the_languages') ) { 
-$lang = pll_current_language('locale');
-$html .='<div class="col-12 col-md-8"><h5 class="card-title">'.($product->multilangs->$lang->label ? $product->multilangs->$lang->label : $product->label).' '.doliproductstock($product).'</h5><p>'.($product->multilangs->$lang->description ? $product->multilangs->$lang->description : $product->description).'</p>';
-} else {
-$html .='<div class="col-12 col-md-8"><h5 class="card-title">'.$product->label.' '.doliproductstock($product).'</h5><p>'.$product->description.'</p>';
-}
+$html .='<div class="col-12 col-md-8"><h5 class="card-title">'.doliproduct($product, 'label').' '.doliproductstock($product).'</h5><p>'.doliproduct($product, 'description').'</p>';
 
 if ( function_exists('dolibuttontocart') ) {
 $html .= dolibuttontocart($product, null, $attributes['showButtonToCart'], isset($attributes['hideDuration']) ? $attributes['hideDuration'] : null);
