@@ -577,7 +577,20 @@ foreach ( $wishlist as $wish ) {
 $arr_params = array( 'id' => $postproposal->id, 'ref' => $postproposal->ref);  
 $return = esc_url( add_query_arg( $arr_params, $url) );
                 
-print "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-action'><div><i class='fa fa-shopping-bag fa-3x fa-fw'></i></div><div><h6 class='my-0'>".$wish->label."</h6><small class='text-muted'>du ".date_i18n('d/m/Y', $postproposal->date_creation)."</small></div><span>".doliprice($postproposal, 'ttc', isset($postproposal->multicurrency_code) ? $postproposal->multicurrency_code : null)."</span><span>";
+print "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-action'><div><i class='fa fa-shopping-bag fa-3x fa-fw'></i></div><div><h6 class='my-0'>";
+
+if ( function_exists('pll_the_languages') ) { 
+$lang = pll_current_language('locale');
+print "<td><b>".($wish->multilangs->$lang->label ? $wish->multilangs->$lang->label : $wish->label)."</b> ";
+print doliproductstock($product);
+print "<br />".($wish->multilangs->$lang->description ? $wish->multilangs->$lang->description : $wish->description)."</td>";
+} else {
+print "<td><b>".$wish->label."</b> ";
+print doliproductstock($wish);
+print "<br />".$wish->description."</td>";
+}
+
+print "</h6><small class='text-muted'>du ".date_i18n('d/m/Y', $postproposal->date_creation)."</small></div><span>".doliprice($postproposal, 'ttc', isset($postproposal->multicurrency_code) ? $postproposal->multicurrency_code : null)."</span><span>";
 if ( $postproposal->statut == 3 ) {
 if ( $postproposal->billed == 1 ) { print "<span class='fa fa-check-circle fa-fw text-success'></span><span class='fa fa-eur fa-fw text-success'></span><span class='fa fa-truck fa-fw text-success'></span><span class='fa fa-file-text fa-fw text-success'></span>"; } 
 else { print "<span class='fa fa-check-circle fa-fw text-success'></span><span class='fa fa-eur fa-fw text-success'></span><span class='fa fa-truck fa-fw text-success'></span><span class='fa fa-file-text fa-fw text-warning'></span>"; } }
