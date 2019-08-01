@@ -579,16 +579,9 @@ $return = esc_url( add_query_arg( $arr_params, $url) );
                 
 print "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-action'><div><i class='fa fa-shopping-bag fa-3x fa-fw'></i></div><div><h6 class='my-0'>";
 
-if ( function_exists('pll_the_languages') ) { 
-$lang = pll_current_language('locale');
-print "<td><b>".($wish->multilangs->$lang->label ? $wish->multilangs->$lang->label : $wish->label)."</b> ";
+print "<td><b>".doliproduct($wish, 'label')."</b> ";
 print doliproductstock($product);
-print "<br />".($wish->multilangs->$lang->description ? $wish->multilangs->$lang->description : $wish->description)."</td>";
-} else {
-print "<td><b>".$wish->label."</b> ";
-print doliproductstock($wish);
-print "<br />".$wish->description."</td>";
-}
+print "<br />".doliproduct($wish, 'description')."</td>";
 
 print "</h6><small class='text-muted'>du ".date_i18n('d/m/Y', $postproposal->date_creation)."</small></div><span>".doliprice($postproposal, 'ttc', isset($postproposal->multicurrency_code) ? $postproposal->multicurrency_code : null)."</span><span>";
 if ( $postproposal->statut == 3 ) {

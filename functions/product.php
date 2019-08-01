@@ -1,5 +1,14 @@
 <?php
 
+function doliproduct($object, $value) {
+if ( function_exists('pll_the_languages') ) { 
+$lang = pll_current_language('locale');
+return $object->multilangs->$lang->$value ? $object->multilangs->$lang->$value : $object->$value;
+} else {
+return $object->$value;
+}
+}
+
 function doliprice($object, $mode = "ttc", $currency = "EUR") {
 global $current_user; 
 
