@@ -165,8 +165,8 @@ $versiondoli = explode("-", $dolibarr->success->dolibarr_version);
 //if ( is_object($dolibarr) && version_compare($versiondoli[0], '10.0.0') >= 0 )
 ?>
 
-    <p>Version Dolibarr <a href='https://sourceforge.net/projects/dolibarr/files/Dolibarr%20ERP-CRM/9.0.4/' target='_blank'>9.0.4</a> minimum - <a href='https://sourceforge.net/projects/dolibarr/files/Dolibarr%20ERP-CRM/10.0.0/' target='_blank'>10.0.0</a> recommandée - votre version est <?php echo $versiondoli[0]; ?></p>
-    <p>Doliconnector 9.0.4 requis à <a href='https://github.com/ptibogxiv/doliconnector/releases' target='_blank'>télécharger ici</a> pour lier WordPress à Dolibarr</p>
+    <p>Version Dolibarr <a href='https://sourceforge.net/projects/dolibarr/files/Dolibarr%20ERP-CRM/10.0.0/' target='_blank'>10.0.0</a> minimum - <a href='https://sourceforge.net/projects/dolibarr/files/Dolibarr%20ERP-CRM/10.0.0/' target='_blank'>10.0.0</a> recommandée - votre version est <?php echo $versiondoli[0]; ?></p>
+    <p>Doliconnector 10.0.0 requis à <a href='https://github.com/ptibogxiv/doliconnector/releases' target='_blank'>télécharger ici</a> pour lier WordPress à Dolibarr</p>
     <form action="" method="post">
         <table class="form-table" width="100%">
             <tr>
