@@ -1665,14 +1665,14 @@ print "</div><ul class='list-group list-group-flush'>
 if ( $ticketfo->fk_statut < '8' && $ticketfo->fk_statut > '0' && !empty(get_option('doliconnectbeta')) ) {
 print "<li class='list-group-item'>";
 
-print '<form id="doliconnect-msgticketform" action="'.$url.'&id='.$ticketfo->id.'&ref='.$ticketfo->ref.'" method="post">';
+print '<form id="doliconnect-msgticketform" action="'.$url.'&id='.$ticketfo->id.'&ref='.$ticketfo->ref.'" method="post" class="was-validated">';
 
 if ( isset($msg) ) { print $msg; }
 
 print doliloaderscript('doliconnect-msgticketform'); 
 
 print '<div class="form-group"><label for="ticketnewmessage"><small>'.__( 'Response', 'doliconnect' ).'</small></label>
-<div class="input-group mb-2"><div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-comment fa-fw"></i></span></div><textarea class="form-control" name="ticket_newmessage" id="ticket_newmessage" rows="5"></textarea>
+<div class="input-group mb-2"><div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-comment fa-fw"></i></span></div><textarea class="form-control" name="ticket_newmessage" id="ticket_newmessage" rows="5" required></textarea>
 </div></div><input type="hidden" name="case" value="messageticket"><button class="btn btn-danger btn-block" type="submit"><b>'.__( 'Send', 'doliconnect' ).'</b></button></form>';
 print "</li>";
 
