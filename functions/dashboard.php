@@ -1630,7 +1630,7 @@ if ( isset($_GET['id']) && isset($_GET['ref']) && ( doliconnector($current_user,
 
 if ( isset($_POST["case"]) && $_POST["case"] == 'messageticket' ) {
 $rdr = [
-    'track_id' => sanitize_textarea_field($_POST['ticket_track_id']),
+    'track_id' => $ticketfo->track_id,
     'message' => sanitize_textarea_field($_POST['ticket_newmessage']),
 	];                  
 $ticketid = callDoliApi("POST", "/tickets/newmessage", $rdr, dolidelay('ticket', true));
@@ -1638,6 +1638,8 @@ $ticketid = callDoliApi("POST", "/tickets/newmessage", $rdr, dolidelay('ticket',
 
 if ( $ticketid > 0 ) {
 $msg = dolialert ('success', __( 'Your message has been send.', 'doliconnect' ));
+$ticketfo = callDoliApi("GET", $request, null, dolidelay('ticket', true));
+//print $ticket;
 } }
 
 print "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>".$ticketfo->ref."</h5><div class='row'><div class='col-md-6'>";
@@ -1671,7 +1673,7 @@ print doliloaderscript('doliconnect-msgticketform');
 
 print '<div class="form-group"><label for="ticketnewmessage"><small>'.__( 'Response', 'doliconnect' ).'</small></label>
 <div class="input-group mb-2"><div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-comment fa-fw"></i></span></div><textarea class="form-control" name="ticket_newmessage" id="ticket_newmessage" rows="5"></textarea>
-</div></div><input type="hidden" name="ticket_track_id" value="'.$ticketfo->track_id.'"><input type="hidden" name="case" value="messageticket"><button class="btn btn-danger btn-block" type="submit"><b>'.__( 'Send', 'doliconnect' ).'</b></button></form>';
+</div></div><input type="hidden" name="case" value="messageticket"><button class="btn btn-danger btn-block" type="submit"><b>'.__( 'Send', 'doliconnect' ).'</b></button></form>';
 print "</li>";
 
 }
