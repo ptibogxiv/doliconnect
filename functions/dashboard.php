@@ -1630,9 +1630,10 @@ if ( isset($_GET['id']) && isset($_GET['ref']) && ( doliconnector($current_user,
 
 if ( isset($_POST["case"]) && $_POST["case"] == 'messageticket' ) {
 $rdr = [
+    'track_id' => sanitize_textarea_field($_POST['ticket_track_id']),
     'message' => sanitize_textarea_field($_POST['ticket_newmessage']),
 	];                  
-$ticketid = callDoliApi("POST", "tickets/newmessage", $rdr, dolidelay('ticket', true));
+$ticketid = callDoliApi("POST", "/tickets/newmessage", $rdr, dolidelay('ticket', true));
 //print $ticketid;
 
 if ( $ticketid > 0 ) {
@@ -1670,7 +1671,7 @@ print doliloaderscript('doliconnect-msgticketform');
 
 print '<div class="form-group"><label for="ticketnewmessage"><small>'.__( 'Response', 'doliconnect' ).'</small></label>
 <div class="input-group mb-2"><div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-comment fa-fw"></i></span></div><textarea class="form-control" name="ticket_newmessage" id="ticket_newmessage" rows="5"></textarea>
-</div></div><input type="hidden" name="case" value="messageticket"><button class="btn btn-danger btn-block" type="submit"><b>'.__( 'Send', 'doliconnect' ).'</b></button></form>';
+</div></div><input type="hidden" name="ticket_track_id" value="'.$ticketfo->track_id.'"><input type="hidden" name="case" value="messageticket"><button class="btn btn-danger btn-block" type="submit"><b>'.__( 'Send', 'doliconnect' ).'</b></button></form>';
 print "</li>";
 
 }
@@ -1779,7 +1780,7 @@ print "</div></form>";
 
 } else {
 
-$request = "/tickets?socid=".doliconnector($current_user, 'fk_soc')."&sortfield=s.rowid&sortorder=DESC&limit=10";
+$request = "/tickets?socid=".doliconnector($current_user, 'fk_soc')."&sortfield=t.rowid&sortorder=DESC&limit=10";
 
 $listticket = callDoliApi("GET", $request, null, dolidelay('ticket', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 //print $listticket;
