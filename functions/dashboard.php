@@ -579,19 +579,15 @@ $return = esc_url( add_query_arg( $arr_params, $url) );
                 
 print "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-action'><div><i class='fa fa-shopping-bag fa-3x fa-fw'></i></div><div><h6 class='my-0'>";
 
-print "<td><b>".doliproduct($wish, 'label')."</b> ";
-print doliproductstock($product);
-print "<br />".doliproduct($wish, 'description')."</td>";
+print "<b>".doliproduct($wish, 'label')."</b> ".doliproductstock($product);
 
-print "</h6><small class='text-muted'>du ".date_i18n('d/m/Y', $postproposal->date_creation)."</small></div><span>".doliprice($postproposal, 'ttc', isset($postproposal->multicurrency_code) ? $postproposal->multicurrency_code : null)."</span><span>";
-if ( $postproposal->statut == 3 ) {
-if ( $postproposal->billed == 1 ) { print "<span class='fa fa-check-circle fa-fw text-success'></span><span class='fa fa-eur fa-fw text-success'></span><span class='fa fa-truck fa-fw text-success'></span><span class='fa fa-file-text fa-fw text-success'></span>"; } 
-else { print "<span class='fa fa-check-circle fa-fw text-success'></span><span class='fa fa-eur fa-fw text-success'></span><span class='fa fa-truck fa-fw text-success'></span><span class='fa fa-file-text fa-fw text-warning'></span>"; } }
-elseif ( $postproposal->statut == 2 ) { print "<span class='fa fa-check-circle fa-fw text-success'></span><span class='fa fa-eur fa-fw text-success'></span><span class='fa fa-truck fa-fw text-warning'></span><span class='fa fa-file-text fa-fw text-danger'></span>"; }
-elseif ( $postproposal->statut == 1 ) { print "<span class='fa fa-check-circle fa-fw text-success'></span><span class='fa fa-eur fa-fw text-warning'></span><span class='fa fa-truck fa-fw text-danger'></span><span class='fa fa-file-text fa-fw text-danger'></span>"; }
-elseif ( $postproposal->statut == 0 ) { print "<span class='fa fa-check-circle fa-fw text-warning'></span><span class='fa fa-eur fa-fw text-danger'></span><span class='fa fa-truck fa-fw text-danger'></span><span class='fa fa-file-text fa-fw text-danger'></span>"; }
-elseif ( $postproposal->statut == -1 ) { print "<span class='fa fa-check-circle fa-fw text-secondary'></span><span class='fa fa-eur fa-fw text-secondary'></span><span class='fa fa-truck fa-fw text-secondary'></span><span class='fa fa-file-text fa-fw text-secondary'></span>"; }
-print "</span></a>";
+print "</h6></div><span>".$wish->qty."</span>";
+if (1 == 1) {
+print "<div class='col-4 col-sm-3 col-md-2 btn-group-vertical' role='group'>";
+print "<button name='delete_wish' value='".$wish->id."' class='btn btn-light text-danger' type='submit' title='".__( 'Delete', 'doliconnect' )." ".$member->firstname." ".$member->lastname."'><i class='fas fa-trash'></i></button>";
+print "</div>";
+}
+print "</a>";
 }}
 else{
 print "<li class='list-group-item list-group-item-light'><center>".__( 'No product', 'doliconnect' )."</center></li>";
