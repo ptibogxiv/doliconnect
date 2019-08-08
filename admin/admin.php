@@ -245,10 +245,6 @@ update_option('dolibarr_entity', sanitize_text_field($_REQUEST['dolibarr_entity'
 }else {
 delete_option('dolibarr_entity');} 
 }
-if (isset($_REQUEST['doliconnect_disablepro']) && $_REQUEST['doliconnect_disablepro']>0){
-update_option('doliconnect_disablepro', sanitize_text_field($_REQUEST['doliconnect_disablepro']));
-}else {
-delete_option('doliconnect_disablepro');} 
 if (isset($_REQUEST['doliconnect_facebook']) && $_REQUEST['doliconnect_facebook']>0){
 update_option('doliconnect_facebook', sanitize_text_field($_REQUEST['doliconnect_facebook']));
 }else {
@@ -258,7 +254,8 @@ update_option('doliconnect_google', sanitize_text_field($_REQUEST['doliconnect_g
 }else {
 delete_option('doliconnect_google');}                               
             update_option('doliaccount', sanitize_text_field($_REQUEST['doliaccount']));
-            update_option('doliaccountinfo', sanitize_text_field($_REQUEST['doliconnect_login_info']));
+            update_option('doliconnect_disablepro', sanitize_text_field($_REQUEST['doliconnect_disablepro']));
+            update_option('doliconnect_social_facebook', sanitize_text_field($_REQUEST['doliconnect_social_facebook']));
             if (isset($_REQUEST['dolicart'])) update_option('dolicart', sanitize_text_field($_REQUEST['dolicart']));
             if (isset($_REQUEST['dolidonation'])) update_option('dolidonation', sanitize_text_field($_REQUEST['dolidonation']));
             if (isset($_REQUEST['doliticket'])) update_option('doliticket', sanitize_text_field($_REQUEST['doliticket']));
@@ -310,9 +307,9 @@ checked('1', get_option('doliconnectrestrict')); } else { ?> disabled <?php } ?>
             <tr>
                 <th style="width:150px;"><label for="doliconnect_disablepro">dolibarr_disableperso/pro</label></th>
                 <td ><select name="doliconnect_disablepro" type="checkbox" id="doliconnect_disablepro">
-                <option value="0" <?php checked('O', get_option('doliconnect_disablepro'));?>>Perso & Pro</option>
-                <option value="1" <?php checked('phy', get_option('doliconnect_disablepro'));?>>Only Perso</option>
-                <option value="2" <?php checked('mor', get_option('doliconnect_disablepro'));?>>Only PRO</option>
+                <option value="0" <?php selected('O', get_option('doliconnect_disablepro'));?>>Perso & Pro</option>
+                <option value="phy" <?php selected('phy', get_option('doliconnect_disablepro'));?>>Only Perso</option>
+                <option value="mor" <?php selected('mor', get_option('doliconnect_disablepro'));?>>Only PRO</option>
                 </select>
                 </td>
             </tr>
