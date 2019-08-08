@@ -308,8 +308,13 @@ checked('1', get_option('doliconnectrestrict')); } else { ?> disabled <?php } ?>
                 <td ><input name="users_can_register" type="checkbox" id="users_can_register" value="1" <?php checked('1', get_option('users_can_register')); ?> /> <?php _e('Anyone can register') ?></td>
             </tr>
             <tr>
-                <th style="width:150px;"><label for="doliconnect_disablepro">dolibarr_disablepro</label></th>
-                <td ><input name="doliconnect_disablepro" type="checkbox" id="doliconnect_disablepro" value="1" <?php checked('1', get_option('doliconnect_disablepro')); ?> /> disable pro account form</td>
+                <th style="width:150px;"><label for="doliconnect_disablepro">dolibarr_disableperso/pro</label></th>
+                <td ><select name="doliconnect_disablepro" type="checkbox" id="doliconnect_disablepro">
+                <option value="0" <?php checked('O', get_option('doliconnect_disablepro'));?>>Perso & Pro</option>
+                <option value="1" <?php checked('phy', get_option('doliconnect_disablepro'));?>>Only Perso</option>
+                <option value="2" <?php checked('mor', get_option('doliconnect_disablepro'));?>>Only PRO</option>
+                </select>
+                </td>
             </tr>
             <tr>
                 <th style="width:150px;"><label for="doliconnect_ipkiosk">IP mode kiosque</label></th>
