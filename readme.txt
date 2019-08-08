@@ -51,6 +51,7 @@ WordPress configuration steps:
 * WIP payment intent for Stripe
 * WIP wishlist
 * better support multilang with polylang for products & categories
+* better restrict signup pro, perso or both
 
  = 3.7.2 =
 * fix & clean code
