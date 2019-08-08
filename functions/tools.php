@@ -14,7 +14,7 @@ $idobject=$mode."[".$object->id."]";
 
 print "<ul class='list-group list-group-flush'>";
 
-if ( ! isset($object) && in_array($mode, array('thirdparty')) ) {
+if ( ! isset($object) && in_array($mode, array('thirdparty')) && empty(get_option('doliconnect_disablepro')) ) {
 print "<li class='list-group-item'><div class='form-row'><div class='col-12'>";
 if ( isset($_GET["morphy"]) && $_GET["morphy"] == 'mor' && get_option('doliconnect_disablepro') != 'mor' ) {
 print "<a href='".wp_registration_url(get_permalink())."&morphy=phy' role='button' title='".__( 'Create a personnal account', 'doliconnect' )."'><small>(".__( 'Create a personnal account', 'doliconnect' )."?)</small></a>";                                                                                                                                                                                                                                                                                                                                     
@@ -24,7 +24,6 @@ elseif (get_option('doliconnect_disablepro') != 'phy') {
 print "<a href='".wp_registration_url(get_permalink())."&morphy=mor' role='button' title='".__( 'Create a enterprise / supplier account', 'doliconnect' )."'><small>(".__( 'Create a enterprise / supplier account', 'doliconnect' )."?)</small></a>";
 print "<input type='hidden' id='morphy' name='".$idobject."[morphy]' value='phy'>";
 }
-
 print "</div></div></li><li class='list-group-item'>";
 } elseif ( isset($object) && in_array($mode, array('thirdparty')) && empty(get_option('doliconnect_disablepro')) ) { //|| $mode == 'member'
 print "<li class='list-group-item'><div class='form-row'><div class='col-12'><label for='inputMorphy'><small><i class='fas fa-user-tag fa-fw'></i> ".__( 'Type of account', 'doliconnect' )."</small></label><br>";
