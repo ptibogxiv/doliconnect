@@ -119,10 +119,15 @@ $montant2 = $tx*$postadh->price;
 if ( count($typeadhesion) < 4 ) {
 
 $html .= '<DIV class="card border'.$color.' mb-4 box-shadow"><div class="card-header"><h4 class="my-0 font-weight-normal">'.$postadh->label.'</h4></div><div class="card-body">'; 
-$html .= '<h1 class="card-title pricing-card-title">'.doliprice($postadh->price).'<small class="text-muted">/'.__( 'year', 'doliconnect' ).'</small></h1>';
+$html .= '<h1 class="card-title pricing-card-title">'.doliprice($postadh->price).'<small class="text-muted">/';
+if (! empty ($postadh->duration_value)) { $html .= doliduration($postadh); }
+else {
+$html .= __( 'year', 'doliconnect');
+}
+$html .= '</small></h1>';
 
 if ( (($postadh->welcome > '0') && ($adherent->datefin == null )) or (($postadh->welcome > '0') && (current_time( 'timestamp',1) > $renewadherent) && (current_time( 'timestamp',1) > $adherent->datefin)) ) {          
-$html .= "<h6>".__( 'First subscription at', 'doliconnect' )." ".doliprice($montantdata)."</h6>"; 
+$html .= "<small>".__( 'First subscription at', 'doliconnect' )." ".doliprice($montantdata)."</small>"; 
 }   
 $html .= $postadh->note.'</div>';
 
@@ -173,8 +178,17 @@ if ( !isset($typeadhesionpro->error) ) {
 $html .= '<div class="card-deck mb-3 text-center">';
 foreach ( $typeadhesionpro as $postadh ) {
 $html .= '<div class="card border-info mb-4 box-shadow"><div class="card-header"><h4 class="my-0 font-weight-normal">'.$postadh->label.'</h4></div><div class="card-body">
-<h1 class="card-title pricing-card-title">'.doliprice($postadh->price).'<small class="text-muted">/'.__( 'year', 'doliconnect' ).'</small></h1>
-'.$postadh->note.'</div>';
+<h1 class="card-title pricing-card-title">'.doliprice($postadh->price).'<small class="text-muted">/';
+if (! empty ($postadh->duration_value)) { $html .= doliduration($postadh); }
+else {
+$html .= __( 'year', 'doliconnect' );
+}
+$html .= '</small></h1>';
+
+if ( (($postadh->welcome > '0') && ($adherent->datefin == null )) or (($postadh->welcome > '0') && (current_time( 'timestamp',1) > $renewadherent) && (current_time( 'timestamp',1) > $adherent->datefin)) ) {          
+$html .= "<small>".__( 'First subscription at', 'doliconnect' )." ".doliprice($montantdata)."</small>"; 
+}   
+$html .= $postadh->note.'</div>';
 
 if ( function_exists('dolimembership_modal') ) {
 $html .= '<div class="card-footer"><a href="'.doliconnecturl('dolicontact').'?type=COM" role="button" class="btn btn-lg btn-block btn-info">'.__( 'Contact us', 'doliconnect' ).'</a></div>';
