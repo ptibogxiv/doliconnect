@@ -138,7 +138,9 @@ $html .= "<tr><td><div class='row'><div class='col-md-8'><b>";
 if ( $postadh->family == '1' ) {
 $html .= "<i class='fas fa-users fa-fw'></i> ";
 }else{$html .= "<i class='fas fa-user fa-fw'></i> ";}
-$html .= $postadh->label." <small>";
+$html .= $postadh->label;
+if (! empty ($postadh->duration_value)) $html .= " - ".doliduration($postadh);
+$html .= " <small>";
 if ((($postadh->welcome > '0') && ($adherent->datefin == null )) or (($postadh->welcome > '0') && (current_time( 'timestamp',1) > $renewadherent) && (current_time( 'timestamp',1) > $adherent->datefin))) { 
 $html .= "(";
 $html .= doliprice($montantdata)." ";
