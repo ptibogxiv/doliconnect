@@ -57,7 +57,9 @@ if ( isset($object->typeid) && $object->typeid == $postadh->id && $object->typei
 print "selected ";
 } elseif ( $postadh->family == '1' || $postadh->automatic_renew != '1' || $postadh->automatic != '1' ) { print "disabled "; }
 print ">".$postadh->label;
-if ( ! empty($postadh->note) ) { print ", ".$postadh->note; }
+if (! empty ($postadh->duration_value)) print " - ".doliduration($postadh);
+print " ";
+//if ( ! empty($postadh->note) ) { print ", ".$postadh->note; }
 $tx=1;
 if ( ( ($postadh->welcome > '0') && ($object->datefin == null )) || (($postadh->welcome > '0') && (current_time( 'timestamp',1) > $object->next_subscription_valid) && (current_time( 'timestamp',1) > $object->datefin) && $object->next_subscription_valid != $object->datefin ) ) { 
 print " (";
