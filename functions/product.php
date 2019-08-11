@@ -39,13 +39,13 @@ $stock = callDoliApi("GET", "/doliconnector/constante/MAIN_MODULE_STOCK", null, 
 $minstock = min($product->stock_reel, $product->stock_theorique);
 $maxstock = max($product->stock_reel, $product->stock_theorique);
 
-if ( $product->type != '0' ) {
+if ( empty($stock->value) || $product->type != '0' ) {
 $stock = "<span class='badge badge-pill badge-light'>".__( 'Available', 'doliconnect' )."</span>"; 
 } else {
-if ( $minstock > '0' && $minstock > $product->seuil_stock_alerte && is_object($stock) && $stock->value == 1 ) { $stock = "<span class='badge badge-pill badge-success'>".__( 'In stock', 'doliconnect' )."</span>"; }
-elseif ( $minstock > '0' && $minstock <= $product->seuil_stock_alerte && is_object($stock) && $stock->value == 1 ) { $stock = "<span class='badge badge-pill badge-danger'>".__( 'Limited stock', 'doliconnect' )."</span>"; }
-elseif ( $minstock <= '0' && $product->stock_theorique > '0' && is_object($stock) && $stock->value == 1 ) { $stock = "<span class='badge badge-pill badge-secondary'>".__( 'Replenishment', 'doliconnect' )."</span>"; }
-elseif ( $maxstock <='0' && $product->type == '0' && is_object($stock) && $stock->value == 1 ) { $stock = "<span class='badge badge-pill badge-dark'>".__( 'Out of stock', 'doliconnect' )."</SPAN>"; }
+if ( $minstock > '0' && $minstock > $product->seuil_stock_alerte && is_object($stock) ) { $stock = "<span class='badge badge-pill badge-success'>".__( 'In stock', 'doliconnect' )."</span>"; }
+elseif ( $minstock > '0' && $minstock <= $product->seuil_stock_alerte && is_object($stock) ) { $stock = "<span class='badge badge-pill badge-danger'>".__( 'Limited stock', 'doliconnect' )."</span>"; }
+elseif ( $minstock <= '0' && $product->stock_theorique > '0' && is_object($stock) ) { $stock = "<span class='badge badge-pill badge-secondary'>".__( 'Replenishment', 'doliconnect' )."</span>"; }
+elseif ( $maxstock <='0' && $product->type == '0' && is_object($stock) ) { $stock = "<span class='badge badge-pill badge-dark'>".__( 'Out of stock', 'doliconnect' )."</SPAN>"; }
 }
 
 return $stock;

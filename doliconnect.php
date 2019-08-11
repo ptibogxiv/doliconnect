@@ -1088,7 +1088,7 @@ print ">";
 print "</div><div class='form-group'>
 <label class='control-label' for='email'><small>".__( 'Email', 'doliconnect')."</small></label>
 <input class='form-control' type='email' name='email' autocomplete='off' id='email' value='$current_user->user_email'";
-if ( is_user_logged_in() ){ print " readonly"; } else { print " required"; }
+if ( is_user_logged_in() ) { print " readonly"; } else { print " required"; }
 print ">";
 print "</div><div class='form-group d-none'>
 <label class='control-label' for='email-control'><small>".__( 'Email', 'doliconnect')."</small></label>
