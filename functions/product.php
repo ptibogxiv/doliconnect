@@ -36,8 +36,9 @@ return numfmt_format_currency($fmt, $montant, $currency);//.$decimal
 function doliproductstock($product) {
 
 $enablestock = callDoliApi("GET", "/doliconnector/constante/MAIN_MODULE_STOCK", null, dolidelay('constante'));
-//$stockservices = callDoliApi("GET", "/doliconnector/constante/STOCK_SUPPORTS_SERVICES", null, dolidelay('constante'));
+$stockservices = callDoliApi("GET", "/doliconnector/constante/STOCK_SUPPORTS_SERVICES", null, dolidelay('constante'));
 
+// to do fix dolibarr for send stock_theorique in API
 //$minstock = min(array($product->stock_reel, $product->stock_theorique));
 //$maxstock = max(array($product->stock_reel, $product->stock_theorique));
 $minstock = $product->stock_reel;
