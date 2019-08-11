@@ -349,7 +349,6 @@ checked('1', get_option('doliconnectrestrict')); } else { ?> disabled <?php } ?>
             <tr>
                 <th style="width:150px;"><label for="dolibarr_shop">dolibarr_shop</label></th>
                 <td >
-<?php if ( is_plugin_active( 'doliconnect-pro/doliconnect-pro.php' ) ) { ?>
 <?php 
            $args = array(
     'name' => 'dolishop', 
@@ -358,9 +357,7 @@ checked('1', get_option('doliconnectrestrict')); } else { ?> disabled <?php } ?>
     'selected' => get_option('dolishop') 
 );
            wp_dropdown_pages($args); ?>
-<?php } else { ?>
-<select name="dolishop" type="checkbox" id="dolishop" value="0" disabled><option> --- </option></select>
-<?php } ?> <b>PRO</b></td>
+<b>Add to cart functionnality only with PRO</b></td>
             </tr> 
             <tr>
                 <th style="width:150px;"><label for="dolibarr_shop">dolibarr_donation</label></th>
