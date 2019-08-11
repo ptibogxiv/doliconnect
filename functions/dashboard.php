@@ -549,7 +549,7 @@ add_action( 'user_doliconnect_password', 'password_module');
 
 //*****************************************************************************************
 
-if ( get_option('doliconnectbeta') =='1' ) { //is_object($memberconsumption) && $memberconsumption->value == '1' && 
+if (  get_option('doliconnectbeta') =='1' ) {  //is_object($wishlist) && $wishlist->value == '1' &&
 add_action( 'customer_doliconnect_menu', 'wishlist_menu', 0, 1);
 add_action( 'customer_doliconnect_wishlist', 'wishlist_module' );
 }  
@@ -594,7 +594,7 @@ print "<li class='list-group-item list-group-item-light'><center>".__( 'No produ
 }
 print  "</ul><div class='card-body'>";
 
-print "<button type='submit' name='dolicart' value='validation' class='btn btn-warning w-100' role='button' aria-pressed='true'><b>".__( 'Order', 'doliconnect-pro' )."</b></button>";
+print "<button type='submit' name='dolicart' value='validation' class='btn btn-warning w-100' role='button' aria-pressed='true'><b>".__( 'Order', 'doliconnect' )."</b></button>";
 
 print "</div></div></form>";
 
