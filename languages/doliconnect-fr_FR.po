@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2019-08-09 11:44+0200\n"
-"PO-Revision-Date: 2019-08-09 14:00+0200\n"
+"POT-Creation-Date: 2019-08-11 15:03+0200\n"
+"PO-Revision-Date: 2019-08-11 15:04+0200\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_FR\n"
@@ -57,30 +57,30 @@ msgstr "Particulier"
 msgid "Company"
 msgstr "Société"
 
-#: blocks/membership/membership.php:122 blocks/membership/membership.php:176
+#: blocks/membership/membership.php:125 blocks/membership/membership.php:184
 #: functions/tools.php:645
 msgid "year"
 msgstr "an"
 
-#: blocks/membership/membership.php:125
+#: blocks/membership/membership.php:130 blocks/membership/membership.php:189
 msgid "First subscription at"
 msgstr "Première souscription à"
 
-#: blocks/membership/membership.php:130 blocks/membership/membership.php:156
+#: blocks/membership/membership.php:135 blocks/membership/membership.php:161
 #: doliconnect.php:1496 doliconnect.php:1502
 msgid "Subscribe"
 msgstr "Souscrire"
 
-#: blocks/membership/membership.php:147 functions/tools.php:65
+#: blocks/membership/membership.php:152 functions/tools.php:65
 msgid "then"
 msgstr "puis"
 
-#: blocks/membership/membership.php:147 blocks/membership/membership.php:150
+#: blocks/membership/membership.php:152 blocks/membership/membership.php:155
 #: functions/tools.php:65 functions/tools.php:68
 msgid "yearly"
 msgstr "par an"
 
-#: blocks/membership/membership.php:180
+#: blocks/membership/membership.php:194
 msgid "Contact us"
 msgstr "Contactez-nous"
 
@@ -1031,25 +1031,25 @@ msgstr ""
 "Impossible d'initier la demande de confirmation. S'il vous plaît contacter "
 "l'administrateur."
 
-#: functions/product.php:39 functions/product.php:40
+#: functions/product.php:45
+msgid "Available"
+msgstr "Disponible"
+
+#: functions/product.php:47
 msgid "In stock"
 msgstr "En stock"
 
-#: functions/product.php:41
+#: functions/product.php:48
 msgid "Limited stock"
 msgstr "Stock limité"
 
-#: functions/product.php:42
+#: functions/product.php:49
 msgid "Replenishment"
-msgstr "Reconstitution"
+msgstr "Réapprovisionnement"
 
-#: functions/product.php:43
+#: functions/product.php:50
 msgid "Out of stock"
 msgstr "Rupture de stock"
-
-#: functions/product.php:44
-msgid "Available"
-msgstr "Disponible"
 
 #: functions/tools.php:20
 msgid "Create a personnal account"
