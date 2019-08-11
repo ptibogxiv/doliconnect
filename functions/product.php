@@ -37,11 +37,12 @@ function doliproductstock($product) {
 $stock = callDoliApi("GET", "/doliconnector/constante/MAIN_MODULE_STOCK", null, dolidelay('constante'));
 
 $minstock = min($product->stock_reel, product->stock_theorique);
+$maxstock = max($product->stock_reel, product->stock_theorique);
 
 if ( $minstock > $product->seuil_stock_alerte && $product->stock_reel > '0' && $product->type == '0' && is_object($stock) && $stock->value == 1 ) { $stock = "<span class='badge badge-pill badge-success'>".__( 'In stock', 'doliconnect' )."</span>"; }
 elseif ( $minstock <= $product->seuil_stock_alerte && $minstock > '0' && $product->type == '0' && is_object($stock) && $stock->value == 1 ) { $stock = "<span class='badge badge-pill badge-danger'>".__( 'Limited stock', 'doliconnect' )."</span>"; }
-elseif ( $product->stock_reel <= '0' && $product->stock_theorique >'0' && $product->type == '0' && is_object($stock) && $stock->value == 1 ) { $stock = "<span class='badge badge-pill badge-secondary'>".__( 'Replenishment', 'doliconnect' )."</span>"; }
-elseif ( $product->stock_reel <= '0' && $product->stock_reel <='0' && $product->type == '0' && is_object($stock) && $stock->value == 1 ) { $stock = "<span class='badge badge-pill badge-dark'>".__( 'Out of stock', 'doliconnect' )."</SPAN>"; }
+elseif ( $product->stock_reel <= '0' && $product->stock_theorique > '0' && $product->type == '0' && is_object($stock) && $stock->value == 1 ) { $stock = "<span class='badge badge-pill badge-secondary'>".__( 'Replenishment', 'doliconnect' )."</span>"; }
+elseif ( $maxstock <='0' && $product->type == '0' && is_object($stock) && $stock->value == 1 ) { $stock = "<span class='badge badge-pill badge-dark'>".__( 'Out of stock', 'doliconnect' )."</SPAN>"; }
 else { $stock = "<span class='badge badge-pill badge-light'>".__( 'Available', 'doliconnect' )."</span>"; }
 //$stock=$product[stock_reel];
 return $stock;
