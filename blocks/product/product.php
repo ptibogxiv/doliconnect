@@ -67,7 +67,7 @@ $html .='<div class="col-md-4 d-none d-md-block">';
 $html .=wp_get_attachment_image( $attributes['mediaID'], "ptibogxiv_square", "", array( "class" => "img-fluid" ) );
 $html .='</div>';
 
-$html .='<div class="col-12 col-md-8"><h5 class="card-title">'.doliproduct($product, 'label').' '.doliproductstock($product).'</h5><p>'.doliproduct($product, 'description').'</p>';
+$html .='<div class="col-12 col-md-8"><h5 class="card-title">'.doliproduct($product, 'label').'<br>'.doliproductstock($product).'</h5><p>'.doliproduct($product, 'description').'</p>';
 
 if ( function_exists('dolibuttontocart') ) {
 $html .= dolibuttontocart($product, null, $attributes['showButtonToCart'], isset($attributes['hideDuration']) ? $attributes['hideDuration'] : null);
