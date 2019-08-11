@@ -55,6 +55,8 @@ $html = '<DIV class="card shadow-sm"><DIV class="card-body">';
 if ($attributes['productID']>0) {
 $product = callDoliApi("GET", "/products/".$attributes['productID']."?includestockdata=1", null, dolidelay('product'));
 //$html .= $product;
+$documents = callDoliApi("GET", "/documents?modulepart=product&id=".$product->id, null, dolidelay('product'));
+//$html .= $documents;
 
 if (defined("DOLIBUG")) {
 $html .=dolibug();
