@@ -579,7 +579,7 @@ $doliline .= '<div class="w-100 justify-content-between"><div class="row"><div c
 
 if ( $object->statut == 0 && !empty($mode)) {
 if ( $line->fk_product > 0 ) {
-$product = callDoliApi("GET", "/products/".$line->fk_product, null, 0);
+$product = callDoliApi("GET", "/products/".$line->fk_product."?includestockdata=1", null, 0);
 }
 $doliline .= '<div class="col d-none d-md-block col-md-2 text-right">'.doliproductstock($product).'</div>';
 }

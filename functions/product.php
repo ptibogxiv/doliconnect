@@ -38,11 +38,9 @@ function doliproductstock($product) {
 $enablestock = callDoliApi("GET", "/doliconnector/constante/MAIN_MODULE_STOCK", null, dolidelay('constante'));
 $stockservices = callDoliApi("GET", "/doliconnector/constante/STOCK_SUPPORTS_SERVICES", null, dolidelay('constante'));
 
-// to do fix dolibarr for send stock_theorique in API
-//$minstock = min(array($product->stock_reel, $product->stock_theorique));
-//$maxstock = max(array($product->stock_reel, $product->stock_theorique));
-$minstock = $product->stock_reel;
-$maxstock = $product->stock_reel;
+
+$minstock = min(array($product->stock_reel, $product->stock_theorique));
+$maxstock = max(array($product->stock_reel, $product->stock_theorique));
 
 if ( ! is_object($product) || empty($enablestock->value) || ($product->type != '0' && ! is_object($stockservices->value)) ) {
 $stock = "<span class='badge badge-pill badge-light'>".__( 'Available', 'doliconnect' )."</span>"; 
