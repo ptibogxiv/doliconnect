@@ -38,7 +38,6 @@ function doliproductstock($product) {
 $enablestock = callDoliApi("GET", "/doliconnector/constante/MAIN_MODULE_STOCK", null, dolidelay('constante'));
 $stockservices = callDoliApi("GET", "/doliconnector/constante/STOCK_SUPPORTS_SERVICES", null, dolidelay('constante'));
 
-
 $minstock = min(array($product->stock_reel, $product->stock_theorique));
 $maxstock = max(array($product->stock_reel, $product->stock_theorique));
 
