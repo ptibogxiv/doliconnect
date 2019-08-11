@@ -35,11 +35,12 @@ return numfmt_format_currency($fmt, $montant, $currency);//.$decimal
 
 function doliproductstock($product) {
 $stock = callDoliApi("GET", "/doliconnector/constante/MAIN_MODULE_STOCK", null, dolidelay('constante'));
+$stockservices = callDoliApi("GET", "/doliconnector/constante/STOCK_SUPPORTS_SERVICES", null, dolidelay('constante'));
 
 $minstock = min($product->stock_reel, $product->stock_theorique);
 $maxstock = max($product->stock_reel, $product->stock_theorique);
 
-if ( empty($stock->value) || $product->type != '0' ) {
+if ( empty($stock->value) || ($product->type != '0' && empty($stockservices->value)) ) {
 $stock = "<span class='badge badge-pill badge-light'>".__( 'Available', 'doliconnect' )."</span>"; 
 } else {
 if ( $minstock > '0' && $minstock > $product->seuil_stock_alerte && is_object($stock) ) { $stock = "<span class='badge badge-pill badge-success'>".__( 'In stock', 'doliconnect' )."</span>"; }
