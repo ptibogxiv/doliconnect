@@ -566,6 +566,21 @@ global $current_user;
 $request = "/wishlist?sortorder=DESC&limit=100";
 $wishlist = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
+if ( isset ($_POST['delete_wish']) && $_POST['delete_wish'] > 0 ) {
+//$memberv = callDoliApi("GET", "/adherentsplus/".esc_attr($_POST['unlink_member']), null, 0);
+//if ( $memberv->socid == doliconnector($current_user, 'fk_soc') ) {
+// try deleting
+$delete = callDoliApi("DELETE", "/wishlist/".esc_attr($_POST['delete_wish']), null, 0);
+
+$msg = dolialert ('success', __( 'Your informations have been updated.', 'doliconnect' ));
+
+//} else {
+// fail deleting
+//}
+$wishlist = callDoliApi("GET", $request, null, dolidelay('product', true));
+
+}
+
 print "<form role='form' action='".$url."' id='doliconnect-wishlistform' method='post'>";
 
 print doliloaderscript('doliconnect-wishlistform');
