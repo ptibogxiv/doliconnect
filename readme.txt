@@ -46,7 +46,7 @@ WordPress configuration steps:
 4. Confirmation email sent to the user/visitor.
 
 == Changelog ==
- = 3.8.1 =
+ = 3.8.2 =
 * fix & clean code
 * Compatibility with Dolibarr 10.0.1
 
