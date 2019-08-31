@@ -294,10 +294,25 @@ checked('1', get_option('doliloginmodal')); } else { ?> disabled <?php } ?> > <b
                 <td ><input name="doliconnectrestrict" type="checkbox" id="doliconnectrestrict" value="1" <?php if ( is_plugin_active( 'doliconnect-pro/doliconnect-pro.php' ) ) {
 checked('1', get_option('doliconnectrestrict')); } else { ?> disabled <?php } ?> > <b>PRO</b></td>
             </tr>               
-<?php if (get_site_option('dolibarr_entity')=='1' && is_super_admin()) { ?>                  
+<?php if (get_site_option('dolibarr_entity')=='1' && is_super_admin()) { ?>
+<?php
+$multicompany = callDoliApi("GET", "/multicompany?sortfield=t.rowid&sortorder=ASC", null, 30 * MINUTE_IN_SECONDS);
+?>                  
             <tr>
                 <th style="width:150px;"><label for="dolibarr_register">Personnaliser l'entite Dolibarr</label></th>
-                <td ><input class="regular-text" name="dolibarr_entity" type="text" id="dolibarr_entity" value="<?php echo get_option('dolibarr_entity'); ?>"></td>
+                <td>
+<select class='custom-select' id='dolibarr_entity'  name='dolibarr_entity'>
+<?php
+foreach ( $multicompany as $company ) {
+echo "<option value='".$company->id."' ";
+if ( get_site_option('dolibarr_entity') == $company->id ) {
+echo "selected ";
+} elseif ( $company->id == get_current_blog_id() ) {
+echo "selected ";}
+echo ">".$company->label."</option>";
+} ?>
+</select>
+                </td>
             </tr>
 <?php } ?>              
             <tr>
