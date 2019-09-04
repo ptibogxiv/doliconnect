@@ -1251,14 +1251,14 @@ global $wpdb,$current_user;
 
 $time = current_time( 'timestamp',1);
 
-$request = "/adherentsplus/".doliconnector($current_user, 'fk_member'); 
+$request = "/adherentsplus/".doliconnector($current_user, 'fk_member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)); 
 
 $productadhesion = callDoliApi("GET", "/doliconnector/constante/ADHERENT_PRODUCT_ID_FOR_SUBSCRIPTIONS", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 $order = callDoliApi("GET", "/doliconnector/constante/MAIN_MODULE_COMMANDE", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 if ( isset($_POST["update_membership"]) && function_exists('dolimembership') ) {
 $adherent = dolimembership($current_user, $_POST["update_membership"], $_POST["typeadherent"], dolidelay('member', true));
-
+$request = "/adherentsplus/".doliconnector($current_user, 'fk_member', true); 
 //if ($statut==1) {
 $msg = dolialert ('success', __( 'Your membership has been updated.', 'doliconnect' ));
 //}

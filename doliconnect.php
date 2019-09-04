@@ -30,7 +30,7 @@ add_action( 'plugins_loaded', 'doliconnect_textdomain' );
 require_once plugin_dir_path(__FILE__).'/functions/enqueues.php';
 require_once plugin_dir_path(__FILE__).'/functions/data-request.php';
 require_once plugin_dir_path(__FILE__).'/functions/tools.php';
-require_once plugin_dir_path(__FILE__).'/functions/dashboard.php';
+require_once plugin_dir_path(__FILE__).'/dashboard/dashboard.php';
 require_once plugin_dir_path(__FILE__).'/functions/product.php';
 require_once plugin_dir_path(__FILE__).'/admin/admin.php'; 
 require_once plugin_dir_path(__FILE__).'/blocks/index.php';
