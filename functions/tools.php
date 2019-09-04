@@ -317,20 +317,20 @@ $bug .='</div></center><br><br><br><br></div>';
 return $bug;
 }
 
-//  function your_function( $user_login, $user ) {
-//global $wpdb;
-//
-//if ( $user->loginmailalert == 'on'  ) { //&& $user->ID != ''.constant("DOLICONNECT_DEMO").''
-//$sitename = get_option('blogname');
-//$siteurl = get_option('siteurl');
-//$subject = "[$sitename] ".__( 'Connection notification', 'doliconnect' );
-//$body = __( 'It appears that you have just logged on to our site from the following IP address:', 'doliconnect' )."<br /><br />".$_SERVER['REMOTE_ADDR']."<br /><br />".__( 'If you have not made this action, please change your password immediately.', 'doliconnect' )."<br /><br />".sprintf(__('Your %s\'s team', 'doliconnect'), $sitename)."<br />$siteurl";				
-//$headers = array('Content-Type: text/html; charset=UTF-8');
-//$mail =  wp_mail($user->user_email, $subject, $body, $headers);
-//}
-//
-//}
-//add_action('wp_login', 'Doliconnect_MailAlert', 10, 2);
+function Doliconnect_MailAlert( $user_login, $user) {
+global $wpdb;
+
+if ( $user->loginmailalert == 'on'  ) { //&& $user->ID != ''.constant("DOLICONNECT_DEMO").''
+$sitename = get_option('blogname');
+$siteurl = get_option('siteurl');
+$subject = "[$sitename] ".__( 'Connection notification', 'doliconnect' );
+$body = __( 'It appears that you have just logged on to our site the following IP address:', 'doliconnect' )."<br /><br />".$_SERVER['REMOTE_ADDR']."<br /><br />".__( 'If you have not made this action, please change your password immediately.', 'doliconnect' )."<br /><br />".sprintf(__('Your %s\'s team', 'doliconnect'), $sitename)."<br />$siteurl";				
+$headers = array('Content-Type: text/html; charset=UTF-8');
+$mail =  wp_mail($user->user_email, $subject, $body, $headers);
+}
+
+}
+add_action('wp_login', 'Doliconnect_MailAlert', 10, 2);
 
 function dolidocdownload($type, $ref=null, $fichier=null, $url=null, $name=null, $refresh = false) {
 global $wpdb;
