@@ -349,10 +349,21 @@ $doc = callDoliApi("GET", "/documents/download?module_part=$type&original_file=$
 if ( isset($_GET["download"]) && $_GET["securekey"] ==  hash('sha256', $ID.$type.$_GET["download"]) && $_GET["download"] == "$ref/$fichier" ) {
 
 if ( !empty($refresh) ) {
+$dolibarr = callDoliApi("GET", "/status", null, dolidelay('dolibarr'));
+$versiondoli = explode("-", $dolibarr->success->dolibarr_version);
+if ( is_object($dolibarr) && version_compare($versiondoli[0], '11.0.0') >= 0 ) {
+$rdr = [
+    'modulepart'  => $type,
+    'originalfile' => $ref.'/'.$fichier,
+    //'doctemplate'  => $type,
+    //'langcode' => '',
+	];
+} else {
 $rdr = [
     'module_part'  => $type,
     'original_file' => $ref.'/'.$fichier
 	];
+}
 $doc = callDoliApi("PUT", "/documents/builddoc", $rdr, 0);
 } else {
 $dolibarr = callDoliApi("GET", "/status", null, dolidelay('dolibarr'));
