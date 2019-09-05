@@ -312,6 +312,7 @@ $bug .= $msg;
 $bug .= '</h4>';
 if ( defined("DOLIBUG") && ! empty(constant("DOLIBUG")) ) {
 $bug .= '<h6>'.__( 'Error code', 'doliconnect').' #'.constant("DOLIBUG").'</h6>';
+$bug .= '<h6>'.$msg.'</h6>';
 }
 $bug .='</div></center><br><br><br><br></div>';
 return $bug;

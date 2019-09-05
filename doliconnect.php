@@ -420,7 +420,7 @@ if ( defined("DOLIBUG") ) {
 
 print "</div></div></div>";
 print "<div class='col-xs-12 col-sm-12 col-md-9'><div class='card shadow-sm'><div class='card-body'>";
-print dolibug();
+print dolibug($thirdparty->error->message);
 print "</div></div></div></div>";
 
 } elseif ( $thirdparty->status != '1' ) {
