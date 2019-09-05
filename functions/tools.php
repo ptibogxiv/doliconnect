@@ -349,7 +349,13 @@ $rdr = [
 	];
 $doc = callDoliApi("PUT", "/documents/builddoc", $rdr, 0);
 } else {
+$dolibarr = callDoliApi("GET", "/status", null, dolidelay('dolibarr'));
+$versiondoli = explode("-", $dolibarr->success->dolibarr_version);
+if ( is_object($dolibarr) && version_compare($versiondoli[0], '11.0.0') >= 0 ) {
+$doc = callDoliApi("GET", "/documents/download?modulepart=$type&original_file=$ref/$fichier", null, 0);
+} else {
 $doc = callDoliApi("GET", "/documents/download?module_part=$type&original_file=$ref/$fichier", null, 0);
+}
 }
 
 $decoded = base64_decode($doc->content);      
