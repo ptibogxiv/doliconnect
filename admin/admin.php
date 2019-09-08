@@ -296,7 +296,7 @@ checked('1', get_option('doliconnectrestrict')); } else { ?> disabled <?php } ?>
             </tr>               
 <?php if (get_site_option('dolibarr_entity')=='1' && is_super_admin()) { ?>
 <?php
-$multicompany = callDoliApi("GET", "/multicompany?sortfield=t.rowid&sortorder=ASC", null, 30 * MINUTE_IN_SECONDS);
+$multicompany = callDoliApi("GET", "/multicompany?sortfield=t.rowid&sortorder=ASC", null, 30 * MINUTE_IN_SECONDS, 1);
 ?>                  
             <tr>
                 <th style="width:150px;"><label for="dolibarr_register">Personnaliser l'entite Dolibarr</label></th>
@@ -307,7 +307,7 @@ foreach ( $multicompany as $company ) {
 echo "<option value='".$company->id."' ";
 if ( get_site_option('dolibarr_entity') == $company->id ) {
 echo "selected ";
-} elseif ( $company->id == get_current_blog_id() ) {
+} elseif ( $company->id == (!empty(get_option('dolibarr_entity'))?get_option('dolibarr_entity'):get_current_blog_id()) ) {
 echo "selected ";}
 echo ">".$company->label."</option>";
 } ?>
