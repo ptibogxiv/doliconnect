@@ -294,14 +294,13 @@ checked('1', get_option('doliloginmodal')); } else { ?> disabled <?php } ?> > <b
                 <td ><input name="doliconnectrestrict" type="checkbox" id="doliconnectrestrict" value="1" <?php if ( is_plugin_active( 'doliconnect-pro/doliconnect-pro.php' ) ) {
 checked('1', get_option('doliconnectrestrict')); } else { ?> disabled <?php } ?> > <b>PRO</b></td>
             </tr>               
-<?php if (get_site_option('dolibarr_entity')=='1' && is_super_admin()) { ?>
 <?php
 $multicompany = callDoliApi("GET", "/multicompany?sortfield=t.rowid&sortorder=ASC", null, 30 * MINUTE_IN_SECONDS, 1);
 ?>                  
             <tr>
                 <th style="width:150px;"><label for="dolibarr_register">Personnaliser l'entite Dolibarr</label></th>
                 <td>
-<select class='custom-select' id='dolibarr_entity'  name='dolibarr_entity'>
+<select class='custom-select' id='dolibarr_entity'  name='dolibarr_entity' <?php if (!get_site_option('dolibarr_entity')=='1' && !is_super_admin()) { echo 'disabled'; } ?> >
 <?php
 foreach ( $multicompany as $company ) {
 echo "<option value='".$company->id."' ";
@@ -313,8 +312,7 @@ echo ">".$company->label."</option>";
 } ?>
 </select>
                 </td>
-            </tr>
-<?php } ?>              
+            </tr>             
             <tr>
                 <th style="width:150px;"><label for="dolibarr_register">dolibarr_register</label></th>
                 <td ><input name="users_can_register" type="checkbox" id="users_can_register" value="1" <?php checked('1', get_option('users_can_register')); ?> /> <?php _e('Anyone can register') ?></td>
