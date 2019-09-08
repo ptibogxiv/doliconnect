@@ -298,9 +298,9 @@ checked('1', get_option('doliconnectrestrict')); } else { ?> disabled <?php } ?>
 $multicompany = callDoliApi("GET", "/multicompany?sortfield=t.rowid&sortorder=ASC", null, 30 * MINUTE_IN_SECONDS, 1);
 ?>                  
             <tr>
-                <th style="width:150px;"><label for="dolibarr_register">Personnaliser l'entite Dolibarr</label></th>
+                <th style="width:150px;"><label for="dolibarr_register">Entite Dolibarr</label></th>
                 <td>
-<select class='custom-select' id='dolibarr_entity'  name='dolibarr_entity' <?php if (!get_site_option('dolibarr_entity')=='1' && !is_super_admin()) { echo 'disabled'; } ?> >
+<select class='custom-select' id='dolibarr_entity'  name='dolibarr_entity' <?php if (empty(get_site_option('dolibarr_entity')) || !is_super_admin()) { echo 'disabled'; } ?> >
 <?php
 foreach ( $multicompany as $company ) {
 echo "<option value='".$company->id."' ";
