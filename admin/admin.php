@@ -300,7 +300,7 @@ $multicompany = callDoliApi("GET", "/multicompany?sortfield=t.rowid&sortorder=AS
             <tr>
                 <th style="width:150px;"><label for="dolibarr_register">Entite Dolibarr</label></th>
                 <td>
-<?php if ( !isset($resultatsc ->error) && $resultatsc != null ) { ?>
+<?php if ( !isset($multicompany->error) && $multicompany != null ) { ?>
 <select class='custom-select' id='dolibarr_entity'  name='dolibarr_entity' <?php if (empty(get_site_option('dolibarr_entity')) || !is_super_admin()) { echo 'disabled'; } ?> >
 <?php
 foreach ( $multicompany as $company ) {

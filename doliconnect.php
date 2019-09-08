@@ -1159,7 +1159,7 @@ $request = "/categories?sortfield=t.rowid&sortorder=ASC&limit=100&type=product&s
 
 $resultatsc = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
-if ( !isset($resultatsc ->error) && $resultatsc != null ) {
+if ( !isset($resultatsc->error) && $resultatsc != null ) {
 foreach ($resultatsc as $categorie) {
 
 print "<a href='".esc_url( add_query_arg( 'category', $categorie->id, doliconnecturl('dolishop')) )."' class='list-group-item list-group-item-action'>".doliproduct($categorie, 'label')."<br />".doliproduct($categorie, 'description')."</a>"; 
