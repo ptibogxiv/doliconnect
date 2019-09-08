@@ -300,6 +300,7 @@ $multicompany = callDoliApi("GET", "/multicompany?sortfield=t.rowid&sortorder=AS
             <tr>
                 <th style="width:150px;"><label for="dolibarr_register">Entite Dolibarr</label></th>
                 <td>
+<?php if ( !isset($resultatsc ->error) && $resultatsc != null ) { ?>
 <select class='custom-select' id='dolibarr_entity'  name='dolibarr_entity' <?php if (empty(get_site_option('dolibarr_entity')) || !is_super_admin()) { echo 'disabled'; } ?> >
 <?php
 foreach ( $multicompany as $company ) {
@@ -309,6 +310,9 @@ echo "selected ";
 } elseif ( $company->id == (!empty(get_option('dolibarr_entity'))?get_option('dolibarr_entity'):get_current_blog_id()) ) {
 echo "selected ";}
 echo ">".$company->label."</option>";
+} 
+} else {
+echo "Il semble que n'avez pas le module multicompany";
 } ?>
 </select>
                 </td>
