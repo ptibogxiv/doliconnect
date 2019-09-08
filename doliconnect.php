@@ -66,8 +66,8 @@ add_action('init', 'app_output_buffer');
 // ********************************************************
 function dolibarr_entity( $entity = null ) {
 
-if ( !get_site_option('dolibarr_entity') && get_site_option('doliconnect_mode') == 'one' ) {
-return 1;
+if ( !empty($entity) ) {
+return $entity;
 } elseif ( get_site_option('dolibarr_entity') && get_option('dolibarr_entity') ) {
 return get_option('dolibarr_entity');
 } else {
