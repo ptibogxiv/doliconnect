@@ -510,7 +510,7 @@ do_action('options_doliconnect_menu');
 print "</div><br>";
 }
 
-if ( has_action('supplier_doliconnect_menu') && $thirdparty->fournisseur == '1' && get_option('doliconnectbeta')=='1' ) {
+if ( has_action('supplier_doliconnect_menu') && $thirdparty->fournisseur == '1' ) {
 print "<div class='list-group shadow-sm'>";
 do_action('supplier_doliconnect_menu');
 print "</div><br>";
