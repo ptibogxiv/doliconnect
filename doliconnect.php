@@ -463,7 +463,7 @@ print "</div><br>";
 print "</div></div></div>";
 print "<div class='col-xs-12 col-sm-12 col-md-9'>";
 do_action( 'options_doliconnect_'.esc_attr($_GET['module']), esc_url( add_query_arg( 'module', esc_attr($_GET['module']), doliconnecturl('doliaccount')) ) ); 
-} elseif ( has_action('supplier_doliconnect_'.esc_attr($_GET['module'])) && $thirdparty->fournisseur == '1' && get_option('doliconnectbeta')=='1' ) {
+} elseif ( has_action('supplier_doliconnect_'.esc_attr($_GET['module'])) && $thirdparty->fournisseur == '1' ) {
 if ( has_action('supplier_doliconnect_menu') ) {
 print "<div class='list-group shadow-sm'>";
 do_action('supplier_doliconnect_menu', esc_attr($_GET['module']));
