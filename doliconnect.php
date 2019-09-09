@@ -516,12 +516,6 @@ do_action('supplier_doliconnect_menu');
 print "</div><br>";
 }
 
-if ( has_action('my_doliconnect_menu') ) {
-print "<div class='list-group shadow-sm'>";
-do_action('my_doliconnect_menu');
-print "</div><br>";
-}
-
 if ( has_action('settings_doliconnect_menu') ) {
 print "<div class='list-group shadow-sm'>";
 do_action('settings_doliconnect_menu');
