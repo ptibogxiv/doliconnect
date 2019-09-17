@@ -477,7 +477,7 @@ $pwd1 = sanitize_text_field($_POST["pwd1"]);
 $pwd0 = sanitize_text_field($_POST["pwd0"]);
 $pwd2 = sanitize_text_field($_POST["pwd2"]);
 
-if ( (wp_check_password( $pwd0, $current_user->user_pass, $current_user->ID ) ) && ($pwd1 == $pwd2) && (preg_match('/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,20}/', $pwd)) ) {
+if ( (wp_check_password( $pwd0, $current_user->user_pass, $current_user->ID ) ) && ($pwd1 == $pwd2) && (preg_match('/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,20}/', $pwd1)) ) {
 wp_set_password($pwd1, $ID);
 
 if (doliconnector($current_user, 'fk_user') > '0'){
