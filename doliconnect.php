@@ -264,7 +264,7 @@ add_action( 'init', 'dolibarr', 10);
 // ********************************************************
 function doliconnector($current_user = null, $value = null, $refresh = false, $thirdparty = null) {
 
-if (empty($current_user)) {
+if ( empty($current_user) ) {
 $current_user = wp_get_current_user();
 }
 
