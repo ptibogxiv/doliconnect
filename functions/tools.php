@@ -659,7 +659,7 @@ return $doliline;
 }
 
 function doliduration($object) {
-if ( !is_null($object->duration_unit) && '0' < ($object->duration_value)) {
+if ( !is_null($object->duration_unit) && 0 < ($object->duration_value)) {
 $duration = $object->duration_value.' ';
 if ( $object->duration_value > 1 ) {
 if ( $object->duration_unit == 'y' ) { $duration .=__( 'years', 'doliconnect' ); }
@@ -679,6 +679,8 @@ if ( $object->duration_unit == 'i' ) {
 $altdurvalue=60/$object->duration_value; 
 }
 
+} else {
+$duration = '';
 }
 return $duration;
 }
