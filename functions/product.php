@@ -1,12 +1,14 @@
 <?php
 
 function doliproduct($object, $value) {
-if ( function_exists('pll_the_languages') && is_object($object->multilangs) ) { 
+
+if ( function_exists('pll_the_languages') ) { 
 $lang = pll_current_language('locale');
-return $object->multilangs->$lang->$value ? $object->multilangs->$lang->$value : $object->$value;
+return isset($object->multilangs->$lang->$value) ? $object->multilangs->$lang->$value : $object->$value;
 } else {
 return $object->$value;
 }
+
 }
 
 function doliprice($object, $mode = "ttc", $currency = "EUR") {
@@ -38,12 +40,13 @@ function doliproductstock($product) {
 $enablestock = callDoliApi("GET", "/doliconnector/constante/MAIN_MODULE_STOCK", null, dolidelay('constante'));
 $stockservices = callDoliApi("GET", "/doliconnector/constante/STOCK_SUPPORTS_SERVICES", null, dolidelay('constante'));
 
-$minstock = min(array($product->stock_reel, $product->stock_theorique));
-$maxstock = max(array($product->stock_reel, $product->stock_theorique));
-
 if ( ! is_object($product) || empty($enablestock->value) || ($product->type != '0' && ! is_object($stockservices->value)) ) {
 $stock = "<span class='badge badge-pill badge-light'>".__( 'Available', 'doliconnect' )."</span>"; 
 } else {
+
+$minstock = min(array($product->stock_reel, $product->stock_theorique));
+$maxstock = max(array($product->stock_reel, $product->stock_theorique));
+
 if ( $maxstock <='0' ) { $stock = "<span class='badge badge-pill badge-dark'>".__( 'Out of stock', 'doliconnect' )."</SPAN>"; }
 elseif ( $minstock < '0' && $maxstock > '0' ) { $stock = "<span class='badge badge-pill badge-secondary'>".__( 'Replenishment', 'doliconnect' )."</span>"; }
 elseif ( $minstock >= '0' && $maxstock <= $product->seuil_stock_alerte ) { $stock = "<span class='badge badge-pill badge-danger'>".__( 'Limited stock', 'doliconnect' )."</span>"; }
