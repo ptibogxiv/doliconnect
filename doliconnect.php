@@ -263,22 +263,18 @@ define('DOLICONNECT_CART_ITEM', 0);
 add_action( 'init', 'dolibarr', 10);
 // ********************************************************
 function doliconnector($current_user = null, $value = null, $refresh = false, $thirdparty = null) {
+
 if (empty($current_user)) {
-$current_user=get_current_user_id();
-} else {
-$current_user=$current_user->ID;
+$current_user = wp_get_current_user();
 }
 
-$user = get_user_by('ID', $current_user);
+if ( $current_user ) { 
 
-if ( $user ) { 
-//$user=get_current_user_id(); 
-
-$dolibarr = callDoliApi("GET", "/doliconnector/".$user->ID, null, dolidelay('doliconnector', $refresh));
+$dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolidelay('doliconnector', $refresh));
 
 if ( defined("DOLIBUG") || (is_object($dolibarr) && ! empty($dolibarr->fk_soc) ) )  {
 
-if (!empty($value)) {
+if ( ! empty($value) ) {
 return $dolibarr->$value;
 } else {
 return $dolibarr;
@@ -290,7 +286,7 @@ if ( isset($current_user->billing_type) && $current_user->billing_type == 'mor' 
 if (!empty($current_user->billing_company)) { $name = $current_user->billing_company; }
 else { $name = $current_user->user_login; }
 } else {
-if (!empty($current_user->user_firstname) && !empty($current_user->user_lastname)) { $name = $current_user->user_firstname." ".$current_user->user_lastname; }
+if ( ! empty($current_user->user_firstname) && ! empty($current_user->user_lastname) ) { $name = $current_user->user_firstname." ".$current_user->user_lastname; }
 else { $name = $current_user->user_login; }
 } 
 
@@ -299,9 +295,9 @@ $rdr = [
     'email' => $current_user->user_email
 	];
 
-$dolibarr = callDoliApi("POST", "/doliconnector/".$user, $thirdparty, dolidelay('doliconnector', true));
+$dolibarr = callDoliApi("POST", "/doliconnector/".$current_user->ID, $thirdparty, dolidelay('doliconnector', true));
 
-if (!empty($value)) {
+if ( ! empty($value) ) {
 return $dolibarr->$value;
 } else {
 return $dolibarr;
