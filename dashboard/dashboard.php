@@ -98,7 +98,7 @@ require_once ABSPATH . WPINC . '/class-phpass.php';
 
 if ( isset($_POST["case"]) && $_POST["case"] == 'updateavatar' ) {
 
-if ( $_POST['inputavatar']=='delete' ) {
+if ( isset($_POST['inputavatar']) && $_POST['inputavatar'] == 'delete' ) {
 
 $upload_dir = wp_upload_dir();
 $nam=$wpdb->prefix."member_photo";
@@ -162,11 +162,11 @@ $img = wp_get_image_editor($filename);
  
 if ( ! is_wp_error( $img ) ) {
 $exif = exif_read_data($filename);               
-if ($exif[Orientation] == '8') {
+if ( isset($exif['Orientation']) && $exif['Orientation'] == '8') {
 $img->rotate( 90 );
-} elseif ( $exif[Orientation] == '3' ) {
+} elseif ( isset($exif['Orientation']) && $exif['Orientation'] == '3' ) {
 $img->rotate( 180 );
-} elseif ( $exif[Orientation] == '6' ) {
+} elseif ( isset($exif['Orientation']) && $exif['Orientation'] == '6' ) {
 $img->rotate( -90 );
 } 
 
