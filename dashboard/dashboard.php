@@ -1817,25 +1817,25 @@ print "</script>";
 print "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
 print "<li class='list-group-item'><div class='custom-control custom-switch'><input type='checkbox' class='custom-control-input' name='loginmailalert' id='loginmailalert' ";
 if ( $current_user->loginmailalert == 'on' ) { print " checked"; }        
-print " onChange='demo()' ><label class='custom-control-label w-100' for='loginmailalert'> ".__( 'Receive a email notification at each connection', 'doliconnect' )."</label>
+print " onChange='demo()' ><label class='custom-control-label w-100' for='loginmailalert'> ".__( 'Receive a email notification at each connection', 'doliconnect')."</label>
 </div></li>";
 print "<li class='list-group-item'><div class='custom-control custom-switch'><input type='checkbox' class='custom-control-input' name='optin1' id='optin1' ";
 if ( $current_user->optin1 == 'on' ) { print " checked"; }        
-print " onChange='demo()' ><label class='custom-control-label w-100' for='optin1'> ".__( 'I would like to receive the newsletter', 'doliconnect' )."</label>
+print " onChange='demo()' ><label class='custom-control-label w-100' for='optin1'> ".__( 'I would like to receive the newsletter', 'doliconnect')."</label>
 </div></li>";
 print "<li class='list-group-item'><div class='custom-control custom-switch'><input type='checkbox' class='custom-control-input' name='optin2' id='optin2' ";
 if ( $current_user->optin2 == 'on' ) { print " checked"; }        
-print " onChange='demo()' ><label class='custom-control-label w-100' for='optin2'> ".__( 'I would like to receive the offers of our partners', 'doliconnect' )."</label>
+print " onChange='demo()' ><label class='custom-control-label w-100' for='optin2'> ".__( 'I would like to receive the offers of our partners', 'doliconnect')."</label>
 </div></li>";
 $privacy=$wpdb->prefix."doliprivacy";
 if ( $current_user->$privacy ) {
 print "<li class='list-group-item'>";
-print "".__( 'Approval of the Privacy Policy the', 'doliconnect' )." ".date_i18n( get_option( 'date_format' ).', '.get_option('time_format'), $current_user->$privacy, false);
+print "".__( 'Approval of the Privacy Policy the', 'doliconnect')." ".date_i18n( get_option( 'date_format' ).', '.get_option('time_format'), $current_user->$privacy, false);
 print "</li>";
 }
 print "<li class='list-group-item'>";
 //print $current_user->locale;
-print "<div class='form-group'><label for='inputaddress'><small>".__( 'Default language', 'doliconnect' )."</small></label>
+print "<div class='form-group'><label for='inputaddress'><small>".__( 'Default language', 'doliconnect')."</small></label>
 <div class='input-group'><div class='input-group-prepend'><span class='input-group-text'><i class='fas fa-language fa-fw'></i></span></div>";
 if ( function_exists('pll_the_languages') ) { 
 print "<select class='form-control' id='locale' name='locale' onChange='demo()' >";
@@ -1848,7 +1848,7 @@ print ">".$value['name']."</option>";
 }
 print "</select>";
 } else {
-print "<input class='form-control' type='text' value='".__( 'Default / Browser language', 'doliconnect' )."' readonly>";
+print "<input class='form-control' type='text' value='".__( 'Default / Browser language', 'doliconnect')."' readonly>";
 }
 print "</div></div>";
 //print pll_default_language('locale');
@@ -1863,7 +1863,7 @@ $currencies = callDoliApi("GET", "/setup/dictionary/currencies?multicurrency=1&s
  
 print "<li class='list-group-item'>";
 //print $current_user->locale;
-print "<div class='form-group'><label for='inputaddress'><small>".__( 'Default currency', 'doliconnect' )."</small></label>
+print "<div class='form-group'><label for='inputaddress'><small>".__( 'Default currency', 'doliconnect')."</small></label>
 <div class='input-group'><div class='input-group-prepend'><span class='input-group-text'><i class='fas fa-money-bill-alt fa-fw'></i></span></div>";
 print "<select class='form-control' id='multicurrency_code' name='multicurrency_code' onChange='demo()' ";
 if ( is_object($multicurrency) && empty($multicurrency->value) ) { print " disabled"; }
