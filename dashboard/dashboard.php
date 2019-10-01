@@ -1879,12 +1879,14 @@ print "<option value='".$thirdparty->multicurrency_code."' selected>".$thirdpart
 print "</select>";
 print "</div></div>";
 print "</li>";
+print "</form>";
 
 print "<input type='hidden' name='case' value='updatesettings'></ul></div>";
-print "<p class='text-right'><small>";
+print "<small><div class='float-left'>";
+print dolirefresh( "/thirdparties/".doliconnector($current_user, 'fk_soc'), $url, dolidelay('member'));
+print "</div><div class='float-right'>";
 print dolihelp('ISSUE');
-print "</small></p>";
-print "</form>";
+print "</div></small>";
 
 if ( !empty(get_option('doliconnectbeta')) ) { 
 
