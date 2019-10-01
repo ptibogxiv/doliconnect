@@ -63,17 +63,17 @@ $html .=dolibug();
 } else    if ($product->id>0 && $product->status==1) {
 $html .='<div class="row">';
 $html .='<div class="col-12 d-block d-sm-block d-xs-block d-md-none">';
-$html .=wp_get_attachment_image( $attributes['mediaID'], "ptibogxiv_large", "", array( "class" => "img-fluid" ) );
+//$html .=wp_get_attachment_image( $attributes['mediaID'], "ptibogxiv_large", "", array( "class" => "img-fluid" ) );
 $html .='</div>';
 $html .='<div class="col-md-4 d-none d-md-block">';
-$html .=wp_get_attachment_image( $attributes['mediaID'], "ptibogxiv_square", "", array( "class" => "img-fluid" ) );
+//$html .=wp_get_attachment_image( $attributes['mediaID'], "ptibogxiv_square", "", array( "class" => "img-fluid" ) );
 $html .='</div>';
 
 $html .='<div class="col-12 col-md-8"><h5 class="card-title"><b>'.doliproduct($product, 'label')."</b> ";
-print doliproductstock($product);
-print "<br><small>".__( 'Ref.', 'doliconnect').": ".$product->ref;
-if ( !empty($product->barcode) ) { print " / ".__( 'Code', 'doliconnect').": ".$product->barcode; }
-print "</small><p>".doliproduct($product, 'description')."</p>";
+$html .=doliproductstock($product);
+$html .="<br><small>".__( 'Ref.', 'doliconnect').": ".$product->ref;
+if ( !empty($product->barcode) ) { $html .=" / ".__( 'Code', 'doliconnect').": ".$product->barcode; }
+$html .="</small><p>".doliproduct($product, 'description')."</p>";
 
 if ( function_exists('dolibuttontocart') ) {
 $html .= dolibuttontocart($product, null, $attributes['showButtonToCart'], isset($attributes['hideDuration']) ? $attributes['hideDuration'] : null);
