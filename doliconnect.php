@@ -600,7 +600,7 @@ if ( function_exists('dolikiosk') && ! empty(dolikiosk()) && $user ) {
 
 //wp_set_current_user( $ID, $user->user_login );
 //wp_set_auth_cookie( $ID, false);
-//do_action( 'wp_login', $user->user_login );
+//do_action( 'wp_login', $user->user_login, $user);
 
 //wp_redirect(esc_url(home_url()));
 //exit;   
@@ -767,7 +767,7 @@ if (wp_validate_auth_cookie()==FALSE)
 {
     wp_set_auth_cookie($user->ID, true, true);
 }   
-do_action( 'wp_login', '<USERNAME>' ); 
+do_action('wp_login', $user->user_login, $user); 
 
 $adapter->disconnect();     
 wp_redirect(esc_url(home_url()));

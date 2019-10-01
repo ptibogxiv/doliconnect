@@ -319,7 +319,6 @@ return $bug;
 }
 
 function Doliconnect_MailAlert( $user_login, $user) {
-global $wpdb;
 
 if ( $user->loginmailalert == 'on'  ) { //&& $user->ID != ''.constant("DOLICONNECT_DEMO").''
 $sitename = get_option('blogname');
