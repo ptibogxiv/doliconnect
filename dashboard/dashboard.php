@@ -109,7 +109,7 @@ if(is_file($file))
 unlink($file); 
 }
 
-delete_usermeta( $ID, $nam,$current_user->$nam);
+delete_user_meta( $ID, $nam,$current_user->$nam);
 
 if ( doliconnector($current_user, 'fk_member') > 0 ) {
 $data = [
