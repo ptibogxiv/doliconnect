@@ -1858,25 +1858,27 @@ if ( doliconnector($current_user, 'fk_soc') > 0 ) {
 $thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 }
 
-if ( !empty($thirdparty->multicurrency_code) ) {
-
+$multicurrency = callDoliApi("GET", "/doliconnector/constante/MAIN_MODULE_MULTICURRENCY", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 $currencies = callDoliApi("GET", "/setup/dictionary/currencies?multicurrency=1&sortfield=code_iso&sortorder=ASC&limit=100&active=1", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
  
 print "<li class='list-group-item'>";
 //print $current_user->locale;
 print "<div class='form-group'><label for='inputaddress'><small>".__( 'Default currency', 'doliconnect' )."</small></label>
 <div class='input-group'><div class='input-group-prepend'><span class='input-group-text'><i class='fas fa-money-bill-alt fa-fw'></i></span></div>";
-print "<select class='form-control' id='multicurrency_code' name='multicurrency_code' onChange='demo()' >";
-if ( !isset( $currencies->error ) && $currencies != null ) {
+print "<select class='form-control' id='multicurrency_code' name='multicurrency_code' onChange='demo()' ";
+if ( is_object($multicurrency) && empty($multicurrency->value) ) { print " disabled"; }
+print ">";
+if ( !isset( $currencies->error ) && $currencies != null && is_object($multicurrency) && $multicurrency->value == 1 ) {
 foreach ( $currencies as $currency ) { 
 print "<option value='".$currency->code_iso."' ";
 if ( $currency->code_iso == $thirdparty->multicurrency_code ) { print " selected"; }
-print ">".$currency->label." / ".doliprice('1.99', null, $currency->code_iso)."</option>";
-}}
+print ">".$currency->code_iso." / ".doliprice(1.99*$currency->rate, null, $currency->code_iso)."</option>";
+}} else {
+print "<option value='".$thirdparty->multicurrency_code."' selected>".$thirdparty->multicurrency_code." / ".doliprice('1.99', null, $thirdparty->multicurrency_code)."</option>";
+}
 print "</select>";
 print "</div></div>";
 print "</li>";
-}
 
 print "<input type='hidden' name='case' value='updatesettings'></ul></div>";
 print "<p class='text-right'><small>";
