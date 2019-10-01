@@ -1858,13 +1858,21 @@ if ( doliconnector($current_user, 'fk_soc') > 0 ) {
 $thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 }
 
-if ( !empty($thirdparty->multicurrency_code) ) { 
+if ( !empty($thirdparty->multicurrency_code) ) {
+
+$currencies = callDoliApi("GET", "/setup/dictionary/currencies?multicurrency=1&sortfield=code_iso&sortorder=ASC&limit=100&active=1", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+ 
 print "<li class='list-group-item'>";
 //print $current_user->locale;
 print "<div class='form-group'><label for='inputaddress'><small>".__( 'Default currency', 'doliconnect' )."</small></label>
 <div class='input-group'><div class='input-group-prepend'><span class='input-group-text'><i class='fas fa-money-bill-alt fa-fw'></i></span></div>";
 print "<select class='form-control' id='multicurrency_code' name='multicurrency_code' onChange='demo()' >";
-print "<option value='".$thirdparty->multicurrency_code."'>".$thirdparty->multicurrency_code." / ".doliprice(0,$thirdparty->multicurrency_code)."</option>";
+if ( !isset( $currencies->error ) && $currencies != null ) {
+foreach ( $currencies as $currency ) { 
+print "<option value='".$currency->code_iso."' ";
+if ( $currency->code_iso == $thirdparty->multicurrency_code ) { print " selected"; }
+print ">".$currency->label." / ".doliprice('1.99', null, $currency->code_iso)."</option>";
+}}
 print "</select>";
 print "</div></div>";
 print "</li>";
