@@ -1178,7 +1178,7 @@ print "<td><b>".doliproduct($product, 'label')."</b> ";
 print doliproductstock($product);
 print "<br><small>".__( 'Ref.', 'doliconnect').": ".$product->ref;
 if ( !empty($product->barcode) ) { print " / ".__( 'Code', 'doliconnect').": ".$product->barcode; }
-print "</small><br>".doliproduct($product, 'description')."</td>";
+print "</small><p>".doliproduct($product, 'description')."</p></td>";
 
 print "<td width='300px'><center>";
 if (function_exists('dolibuttontocart')) {
