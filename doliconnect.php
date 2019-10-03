@@ -298,7 +298,7 @@ $rdr = [
 $dolibarr = callDoliApi("POST", "/doliconnector/".$current_user->ID, $thirdparty, dolidelay('doliconnector', true));
 
 if ( ! empty($value) ) {
-return $dolibarr->$value;
+return (isset($dolibarr->$value) ? $dolibarr->$value : null );
 } else {
 return $dolibarr;
 }
