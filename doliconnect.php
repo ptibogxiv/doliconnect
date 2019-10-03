@@ -1176,8 +1176,8 @@ print "<tr class='table-light'><td><center><i class='fa fa-plus-circle fa-2x fa-
 
 print "<td><b>".doliproduct($product, 'label')."</b> ";
 print doliproductstock($product);
-print "<br><small>".__( 'Ref.', 'doliconnect').": ".$product->ref;
-if ( !empty($product->barcode) ) { print " / ".__( 'Code', 'doliconnect').": ".$product->barcode; }
+print "<br><small>".__( 'Reference', 'doliconnect').": ".$product->ref;
+if ( !empty($product->barcode) ) { print " / ".__( 'Barcode', 'doliconnect').": ".$product->barcode; }
 print "</small><p>".doliproduct($product, 'description')."</p></td>";
 
 print "<td width='300px'><center>";
