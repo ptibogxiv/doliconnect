@@ -485,7 +485,7 @@ $refresh .= __( 'Refresh', 'doliconnect' );
 }
  
 if (is_user_logged_in() ) {
-$refresh .= " <a onClick='refreshloader()' href='".esc_url( add_query_arg( 'refresh', true, $url."?".$_SERVER["QUERY_STRING"]) )."' title='".__( 'Refresh', 'doliconnect' )."'><i class='fas fa-sync-alt'></i></a>";
+$refresh .= " <a onClick='refreshloader()' href='".esc_url( add_query_arg( 'refresh', true, $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']) )."' title='".__( 'Refresh', 'doliconnect' )."'><i class='fas fa-sync-alt'></i></a>";
 }
 
 return $refresh;
