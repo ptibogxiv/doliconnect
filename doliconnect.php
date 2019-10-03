@@ -1162,7 +1162,7 @@ addtodolibasket(esc_attr($_GET['product']), esc_attr($_POST['product_update'][$_
 wp_redirect( esc_url( add_query_arg( 'category', $_GET['category'], doliconnecturl('dolishop')) ) );
 exit;
 }
-print "<table class='table' width='100%'>";
+print "<li class='list-group-item list-group-item-action'><table width='100%'>";
 
 $request = "/products?sortfield=t.label&sortorder=ASC&category=".$_GET['category']."&sqlfilters=(t.tosell=1)";
 
@@ -1172,7 +1172,7 @@ $resultatso = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(i
 if ( !isset($resultatso->error) && $resultatso != null ) {
 foreach ($resultatso as $product) {
 $product = callDoliApi("GET", "/products/".$product->id."?includestockdata=1", null, 0);
-print "<tr class='table-light'><td><center><i class='fa fa-plus-circle fa-2x fa-fw'></i></center></td>";
+print "<tr><td><center><i class='fa fa-plus-circle fa-2x fa-fw'></i></center></td>";
 
 print "<td><b>".doliproduct($product, 'label')."</b> ";
 print doliproductstock($product);
@@ -1190,7 +1190,7 @@ print "</center></td></tr>";
 wp_redirect(esc_url(get_permalink()));
 exit;
 }
-print "</tbody></table>";
+print "</tbody></table></li>";
 }
 }
 print "</ul></div>";
