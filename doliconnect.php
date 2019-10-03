@@ -1196,7 +1196,7 @@ print "<br><small>".__( 'Reference', 'doliconnect').": ".$product->ref;
 if ( !empty($product->barcode) ) { print " / ".__( 'Barcode', 'doliconnect').": ".$product->barcode; }
 print "</small><p>".doliproduct($product, 'description')."</p></td>";
 
-print "<td width='300px'><center>";
+print "<td width='250px'><center>";
 if (function_exists('dolibuttontocart')) {
 print dolibuttontocart($product, esc_attr($_GET['category']), 1);
 }
