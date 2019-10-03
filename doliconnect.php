@@ -1163,21 +1163,24 @@ wp_redirect( esc_url( add_query_arg( 'category', $_GET['category'], doliconnectu
 exit;
 }
 
-$category = callDoliApi("GET", "/categories/".esc_attr($_GET['category']), null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-print "<li class='list-group-item list-group-item-action'>".doliproduct($category, 'label')."<br />".doliproduct($category, 'description')."</li>"; 
+$category = callDoliApi("GET", "/categories/".esc_attr(isset($_GET["subcategory"]) ? $_GET["subcategory"] : $_GET["category"]), null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+print "<li class='list-group-item'>".doliproduct($category, 'label')."<br />".doliproduct($category, 'description')."</li>"; 
 
-$request = "/categories?sortfield=t.rowid&sortorder=ASC&limit=100&type=product&sqlfilters=(t.fk_parent='".esc_attr($_GET['category'])."')";
+$request = "/categories?sortfield=t.rowid&sortorder=ASC&limit=100&type=product&sqlfilters=(t.fk_parent='".esc_attr(isset($_GET["subcategory"]) ? $_GET["subcategory"] : $_GET["category"])."')";
 
 $resultatsc = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 if ( !isset($resultatsc->error) && $resultatsc != null ) {
 foreach ($resultatsc as $categorie) {
 
-print "<a href='".esc_url( add_query_arg( 'category', $categorie->id, doliconnecturl('dolishop')) )."' class='list-group-item list-group-item-action'>".doliproduct($categorie, 'label')."<br />".doliproduct($categorie, 'description')."</a>"; 
+$arr_params = array( 'category' => $_GET['category'], 'subcategory' => $categorie->id);  
+$return = esc_url( add_query_arg( $arr_params, doliconnecturl('dolishop')) );
+
+print "<a href='".$return."' class='list-group-item list-group-item-action'>".doliproduct($categorie, 'label')."<br />".doliproduct($categorie, 'description')."</a>"; 
 
 }}
 
-$request = "/products?sortfield=t.label&sortorder=ASC&category=".esc_attr($_GET['category'])."&sqlfilters=(t.tosell=1)";
+$request = "/products?sortfield=t.label&sortorder=ASC&category=".esc_attr(isset($_GET["subcategory"]) ? $_GET["subcategory"] : $_GET["category"])."&sqlfilters=(t.tosell=1)";
 
 $resultatso = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 //print $resultatso;
