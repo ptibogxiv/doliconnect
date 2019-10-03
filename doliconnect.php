@@ -1203,7 +1203,7 @@ print dolibuttontocart($product, esc_attr($_GET['category']), 1);
 print "</center></td></tr></table></li>"; 
 }
 } else {
-print "<li class='list-group-item list-group-item-light'><center>".__( 'No product', 'doliconnect' )."</center></li>";
+print "<li class='list-group-item list-group-item-light'><center>".__( 'No product', 'doliconnect')."</center></li>";
 }
 
 }

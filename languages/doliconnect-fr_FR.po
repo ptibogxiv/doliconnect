@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2019-10-03 16:50+0200\n"
-"PO-Revision-Date: 2019-10-03 16:50+0200\n"
+"POT-Creation-Date: 2019-10-03 17:28+0200\n"
+"PO-Revision-Date: 2019-10-03 17:28+0200\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_FR\n"
@@ -67,7 +67,7 @@ msgid "First subscription at"
 msgstr "Première souscription à"
 
 #: blocks/membership/membership.php:135 blocks/membership/membership.php:161
-#: doliconnect.php:1584 doliconnect.php:1590
+#: doliconnect.php:1587 doliconnect.php:1593
 msgid "Subscribe"
 msgstr "Souscrire"
 
@@ -109,7 +109,7 @@ msgstr "Vos informations ont été mises à jour."
 
 #: dashboard/dashboard.php:80 dashboard/dashboard.php:276
 #: dashboard/dashboard.php:431 dashboard/dashboard.php:541
-#: dashboard/dashboard.php:1534 doliconnect.php:740 doliconnect.php:1267
+#: dashboard/dashboard.php:1534 doliconnect.php:740 doliconnect.php:1270
 msgid "Update"
 msgstr "Modifier"
 
@@ -279,7 +279,7 @@ msgstr "Expédiée"
 msgid "Payment method"
 msgstr "Mode de paiement"
 
-#: dashboard/dashboard.php:747 doliconnect.php:1280
+#: dashboard/dashboard.php:747 doliconnect.php:1283
 #, php-format
 msgid ""
 "Please send your cheque in the amount of <b>%1$s</b> with reference <b>%2$s</"
@@ -292,7 +292,7 @@ msgstr ""
 msgid "Change your payment mode"
 msgstr "Changez votre mode de paiement"
 
-#: dashboard/dashboard.php:754 doliconnect.php:1289
+#: dashboard/dashboard.php:754 doliconnect.php:1292
 #, php-format
 msgid ""
 "Please send your transfert in the amount of <b>%1$s</b> with reference <b>"
@@ -301,7 +301,7 @@ msgstr ""
 "Veuillez envoyer votre virement au montant de <b>%1$s</b> avec la référence "
 "<b>%2$s</b> sur le compte suivant"
 
-#: dashboard/dashboard.php:755 doliconnect.php:1290
+#: dashboard/dashboard.php:755 doliconnect.php:1293
 msgid "Bank"
 msgstr "Banque"
 
@@ -395,7 +395,7 @@ msgstr "Faire un don"
 msgid "No donation"
 msgstr "Aucun don"
 
-#: dashboard/dashboard.php:1247 doliconnect.php:1587
+#: dashboard/dashboard.php:1247 doliconnect.php:1590
 msgid "Membership"
 msgstr "Adhésion / Abonnement"
 
@@ -463,7 +463,7 @@ msgstr "Renouveler mon abonnement"
 msgid "Modify my subscription"
 msgstr "Modifier mon abonnement"
 
-#: dashboard/dashboard.php:1326 doliconnect.php:1581
+#: dashboard/dashboard.php:1326 doliconnect.php:1584
 msgid "Pay my subscription"
 msgstr "Payer mon adhésion"
 
@@ -936,23 +936,27 @@ msgstr ""
 "J'accepte que mes informations personnelles soient sauvegarder afin de me "
 "contacter"
 
-#: doliconnect.php:1191
+#: doliconnect.php:1195
 msgid "Reference"
 msgstr "Référence"
 
-#: doliconnect.php:1192
+#: doliconnect.php:1196
 msgid "Barcode"
 msgstr "Code barre"
 
-#: doliconnect.php:1247
+#: doliconnect.php:1206
+msgid "No product"
+msgstr "Aucun produit"
+
+#: doliconnect.php:1250
 msgid "Inactive module on Dolibarr"
 msgstr "Module inactif sur Dolibarr"
 
-#: doliconnect.php:1296
+#: doliconnect.php:1299
 msgid "Tax exemptions"
 msgstr "Exonérations fiscales"
 
-#: doliconnect.php:1299
+#: doliconnect.php:1302
 msgid "DonationArt200"
 msgstr ""
 "Particuliers, votre don vous donne droit à une déduction fiscale de 66% dans "
@@ -962,7 +966,7 @@ msgstr ""
 "sur les cinq années suivantes. Vous bénéficierez de la réduction d’impôt "
 "dans les mêmes conditions. (Art. 200 du Code général des impôts)"
 
-#: doliconnect.php:1303
+#: doliconnect.php:1306
 msgid "DonationArt238"
 msgstr ""
 "Entreprises, votre don vous donne droit à une déduction fiscale de 60% dans "
@@ -972,7 +976,7 @@ msgstr ""
 "sur les cinq années suivantes. Vous bénéficierez de la réduction d’impôt "
 "dans les mêmes conditions. (Art. 238 du Code général des impôts)"
 
-#: doliconnect.php:1307
+#: doliconnect.php:1310
 msgid "DonationArt835"
 msgstr ""
 "Si vous êtes redevable de l’Impôt sur la Fortune Immobilière, vous "
@@ -983,19 +987,19 @@ msgstr ""
 "dispositifs, le donateur pourra choisir l’un ou l’autre ou bien décider de "
 "ventiler son don. (Art. 2835 du Code général des impôts)"
 
-#: doliconnect.php:1310
+#: doliconnect.php:1313
 msgid "You should't have tax exemptions"
 msgstr "Vous ne devriez pas avoir d'exonérations fiscales"
 
-#: doliconnect.php:1494 doliconnect.php:1496
+#: doliconnect.php:1497 doliconnect.php:1499
 msgid "Report a Bug"
 msgstr "Signaler un bug"
 
-#: doliconnect.php:1507
+#: doliconnect.php:1510
 msgid "Offre d'emploi"
 msgstr "Offre d'emploi"
 
-#: doliconnect.php:1510 doliconnect.php:1607
+#: doliconnect.php:1513 doliconnect.php:1610
 msgid "Title:"
 msgstr "Titre:"
 
@@ -1306,9 +1310,6 @@ msgstr "https://www.ptibogxiv.net/fr"
 
 #~ msgid "Wish list"
 #~ msgstr "Liste de souhaits"
-
-#~ msgid "No product"
-#~ msgstr "Aucun produit"
 
 #~ msgid "Your password has been changed"
 #~ msgstr "Votre mot de passe a bien été modifié"
