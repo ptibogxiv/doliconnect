@@ -610,7 +610,7 @@ $product = callDoliApi("GET", "/products/".$line->fk_product."?includestockdata=
 $doliline .= '<div class="col d-none d-md-block col-md-2 text-right">'.doliproductstock($product).'</div>';
 }
 
-$doliline .= '<div class="col-4 col-md-2 text-right"><h5 class="mb-1">'.doliprice($line, 'subprice', isset($line->multicurrency_code) ? $line->multicurrency_code : null).'</h5>';
+$doliline .= '<div class="col-4 col-md-2 text-right"><h5 class="mb-1">'.doliprice($line, 'total_ttc', isset($line->multicurrency_code) ? $line->multicurrency_code : null).'</h5>';
 
 if ( $object->statut == 0 && !empty($mode)) {
 $doliline .= "<input type='hidden' name='updateorderproduct[".$line->fk_product."][product]' value='".$line->fk_product."'><input type='hidden' name='updateorderproduct[".$line->fk_product."][line]' value='".$line->id."'><input type='hidden' name='updateorderproduct[".$line->fk_product."][price]' value='".$line->subprice."'>";
