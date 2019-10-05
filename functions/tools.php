@@ -615,7 +615,7 @@ $doliline .= '<div class="col-4 col-md-2 text-right"><h5 class="mb-1">'.dolipric
 
 if ( $object->statut == 0 && !empty($mode)) {
 $doliline .= "<input type='hidden' name='updateorderproduct[".$line->fk_product."][product]' value='".$line->fk_product."'><input type='hidden' name='updateorderproduct[".$line->fk_product."][line]' value='".$line->id."'><input type='hidden' name='updateorderproduct[".$line->fk_product."][price]' value='".$line->subprice."'>";
-$doliline .= "<input type='hidden' name='updateorderproduct[".$line->fk_product."][date_start]' value='".$line->date_start."'><input type='hidden' name='updateorderproduct[".$line->fk_product."][date_end]' value='".$line->date_end."'>";
+$doliline .= "<input type='hidden' name='updateorderproduct[".$line->fk_product."][remise_percent]' value='".$line->remise_percent."'><input type='hidden' name='updateorderproduct[".$line->fk_product."][date_start]' value='".$line->date_start."'><input type='hidden' name='updateorderproduct[".$line->fk_product."][date_end]' value='".$line->date_end."'>";
 $doliline .= "<select class='form-control' name='updateorderproduct[".$line->fk_product."][qty]' onchange='submit()'>";
 if ( ($product->stock_reel-$line->qty > '0' && $product->type == '0') ) {
 if ( $product->stock_reel-$line->qty >= '10' || (is_object($stock) && $stock->value != 1) ) {
