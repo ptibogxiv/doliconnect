@@ -1196,11 +1196,12 @@ print "<br><small>".__( 'Reference', 'doliconnect').": ".$product->ref;
 if ( !empty($product->barcode) ) { print " / ".__( 'Barcode', 'doliconnect').": ".$product->barcode; }
 print "</small><p>".doliproduct($product, 'description')."</p></td>";
 
+if (function_exists('dolibuttontocart') && ! empty(doliconnectid('dolicart')) ) { 
 print "<td width='250px'><center>";
-if (function_exists('dolibuttontocart')) {
 print dolibuttontocart($product, esc_attr($_GET['category']), 1);
+print "</center></td>";
 }
-print "</center></td></tr></table></li>"; 
+print "</tr></table></li>"; 
 }
 } else {
 print "<li class='list-group-item list-group-item-light'><center>".__( 'No product', 'doliconnect')."</center></li>";
