@@ -71,8 +71,8 @@ $html .= '</div>';
 
 $html .= '<div class="col-12 col-md-8"><h5 class="card-title"><b>'.doliproduct($product, 'label')."</b> ";
 $html .= doliproductstock($product);
-$html .= "<br><small>".__( 'Ref.', 'doliconnect').": ".$product->ref;
-if ( !empty($product->barcode) ) { $html .= " / ".__( 'Code', 'doliconnect').": ".$product->barcode; }
+$html .= "<br><small>".__( 'Reference', 'doliconnect').": ".$product->ref;
+if ( !empty($product->barcode) ) { $html .= " / ".__( 'Barcode', 'doliconnect').": ".$product->barcode; }
 $html .= "</small><p>".doliproduct($product, 'description')."</p>";
 
 if ( function_exists('dolibuttontocart') && ! empty(doliconnectid('dolicart')) ) { 
