@@ -1866,6 +1866,7 @@ $thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, '
 }
 
 $multicurrency = callDoliApi("GET", "/doliconnector/constante/MAIN_MODULE_MULTICURRENCY", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$monnaie = callDoliApi("GET", "/doliconnector/constante/MAIN_MONNAIE", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 $currencies = callDoliApi("GET", "/setup/dictionary/currencies?multicurrency=1&sortfield=code_iso&sortorder=ASC&limit=100&active=1", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
  
 print "<li class='list-group-item'>";
@@ -1873,7 +1874,7 @@ print "<li class='list-group-item'>";
 print "<div class='form-group'><label for='inputaddress'><small>".__( 'Default currency', 'doliconnect')."</small></label>
 <div class='input-group'><div class='input-group-prepend'><span class='input-group-text'><i class='fas fa-money-bill-alt fa-fw'></i></span></div>";
 print "<select class='form-control' id='multicurrency_code' name='multicurrency_code' onChange='demo()' ";
-if ( is_object($multicurrency) && empty($multicurrency->value) && !doliversion('11.0.0')) { print " disabled"; }
+if ( (is_object($multicurrency) && empty($multicurrency->value)) || !doliversion('11.0.0') ) { print " disabled"; }
 print ">";
 if ( !isset( $currencies->error ) && $currencies != null && is_object($multicurrency) && $multicurrency->value == 1 && doliversion('11.0.0')) {
 foreach ( $currencies as $currency ) { 
@@ -1881,7 +1882,8 @@ print "<option value='".$currency->code_iso."' ";
 if ( $currency->code_iso == $thirdparty->multicurrency_code ) { print " selected"; }
 print ">".$currency->code_iso." / ".doliprice(1.99*$currency->rate, null, $currency->code_iso)."</option>";
 }} else {
-print "<option value='".$thirdparty->multicurrency_code."' selected>".$thirdparty->multicurrency_code." / ".doliprice('1.99', null, $thirdparty->multicurrency_code)."</option>";
+$cur = (!empty($thirdparty->multicurrency_code) ? $thirdparty->multicurrency_code : $monnaie->value );
+print "<option value='".$cur."' selected>".$cur." / ".doliprice('1.99', null, $cur)."</option>";
 }
 print "</select>";
 print "</div></div>";
