@@ -11,7 +11,7 @@ return $object->$value;
 
 }
 
-function doliprice($object, $mode = "ttc", $currency = "EUR") {
+function doliprice($object, $mode = "ttc", $currency = null) {
 global $current_user; 
 
 if ( is_object($object) ) {
@@ -27,7 +27,7 @@ $montant=0;
 }
 
 //$$objet->multicurrency_code
-if ( is_null($currency) ) { $currency="EUR"; }
+if ( is_null($currency) ) { $currency = strtoupper(callDoliApi("GET", "/doliconnector/constante/MAIN_MONNAIE", null, dolidelay('constante'))->value); }
 if ( function_exists('pll_the_languages') ) { 
 $locale=pll_current_language('locale');
 } else { if ( $current_user->locale == null ) { $locale=get_locale(); } else { $locale=$current_user->locale; } }
