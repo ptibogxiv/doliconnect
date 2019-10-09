@@ -402,7 +402,7 @@ print "<li class='list-group-item d-flex justify-content-between lh-condensed li
 print doliaddress($contact);
 if (1 == 1) {
 
-if ( isset($contact->roles) && $contact->roles != null ) {
+if ( doliversion('11.0.0') && isset($contact->roles) && $contact->roles != null ) {
 foreach ( $contact->roles as $role ) { 
 print $role->label;
 }}

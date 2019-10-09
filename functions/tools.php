@@ -5,6 +5,16 @@ function dolimenu($name, $traduction, $right, $content) {
 
 }
 
+function doliversion($version) {
+$ret = false;
+$dolibarr = callDoliApi("GET", "/status", null, dolidelay('dolibarr'));
+$versiondoli = explode("-", $dolibarr->success->dolibarr_version);
+if ( is_object($dolibarr) && version_compare($versiondoli[0], $version) >= 0 ) {
+$ret = true;
+}
+return $ret;
+}
+
 function doliconnectuserform($object, $delay, $mode) {
 global $current_user;
 
