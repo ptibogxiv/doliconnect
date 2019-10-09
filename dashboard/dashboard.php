@@ -1873,9 +1873,9 @@ print "<li class='list-group-item'>";
 print "<div class='form-group'><label for='inputaddress'><small>".__( 'Default currency', 'doliconnect')."</small></label>
 <div class='input-group'><div class='input-group-prepend'><span class='input-group-text'><i class='fas fa-money-bill-alt fa-fw'></i></span></div>";
 print "<select class='form-control' id='multicurrency_code' name='multicurrency_code' onChange='demo()' ";
-if ( is_object($multicurrency) && empty($multicurrency->value) ) { print " disabled"; }
+if ( is_object($multicurrency) && empty($multicurrency->value) && !doliversion('11.0.0')) { print " disabled"; }
 print ">";
-if ( !isset( $currencies->error ) && $currencies != null && is_object($multicurrency) && $multicurrency->value == 1 ) {
+if ( !isset( $currencies->error ) && $currencies != null && is_object($multicurrency) && $multicurrency->value == 1 && doliversion('11.0.0')) {
 foreach ( $currencies as $currency ) { 
 print "<option value='".$currency->code_iso."' ";
 if ( $currency->code_iso == $thirdparty->multicurrency_code ) { print " selected"; }
