@@ -18,19 +18,19 @@ if ( is_object($object) ) {
 $total='multicurrency_total_'.$mode;
 if ( isset($object->$mode) ) { $montant=$object->$mode;
 } else {
-$total='total_'.$mode;
-$montant=$object->$total;
+$total = 'total_'.$mode;
+$montant = $object->$total;
 } } elseif (!empty($object)) {
-$montant=$object;
+$montant = $object;
 } else {
-$montant=0;
+$montant = 0;
 }
 
 //$$objet->multicurrency_code
 if ( is_null($currency) ) { $currency = strtoupper(callDoliApi("GET", "/doliconnector/constante/MAIN_MONNAIE", null, dolidelay('constante'))->value); }
 if ( function_exists('pll_the_languages') ) { 
-$locale=pll_current_language('locale');
-} else { if ( $current_user->locale == null ) { $locale=get_locale(); } else { $locale=$current_user->locale; } }
+$locale = pll_current_language('locale');
+} else { if ( $current_user->locale == null ) { $locale = get_locale(); } else { $locale = $current_user->locale; } }
 $fmt = numfmt_create( $locale, NumberFormatter::CURRENCY );
 return numfmt_format_currency($fmt, $montant, $currency);//.$decimal
 }
