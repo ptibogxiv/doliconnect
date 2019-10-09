@@ -401,6 +401,12 @@ $count=$contact->ref_facturation+$contact->ref_contrat+$contact->ref_commande+$c
 print "<li class='list-group-item d-flex justify-content-between lh-condensed list-group-item-action'>";
 print doliaddress($contact);
 if (1 == 1) {
+
+if ( isset($contact->roles) && $contact->roles != null ) {
+foreach ( $contact->roles as $role ) { 
+print $role->label;
+}}
+
 print "<div class='col-4 col-sm-3 col-md-2 btn-group-vertical' role='group'>";
 print "<button type='button' class='btn btn-light text-primary' data-toggle='modal' data-target='#contact-".$contact->id."' title='".__( 'Edit', 'doliconnect' )." ".$contact->firstname." ".$contact->lastname."'><i class='fas fa-edit fa-fw'></i></a>
 <button name='delete_contact' value='".$contact->id."' class='btn btn-light text-danger' type='submit' title='".__( 'Delete', 'doliconnect' )." ".$contact->firstname." ".$contact->lastname."'><i class='fas fa-trash fa-fw'></i></button>";
