@@ -180,7 +180,7 @@ $lang = pll_current_language('locale');
 $lang = $current_user->locale;
 }
 
-$pays = callDoliApi("GET", "/setup/dictionary/countries?sortfield=favorite%2Clabel&sortorder=DESC%2CASC&limit=400&lang=".$lang, null , $delay);
+$pays = callDoliApi("GET", "/setup/dictionary/countries?sortfield=favorite%2Clabel&sortorder=DESC%2CASC&limit=400&lang=".$lang, null, $delay);
 
 if ( isset($pays) ) { 
 print "<select class='custom-select' id='inputcountry'  name='".$idobject."[country_id]' required>";
@@ -210,13 +210,22 @@ print "</li>";
 }
 
 if ( in_array($mode, array('contact')) && doliversion('11.0.0') ) {
+
+$contact_types = callDoliApi("GET", "/setup/dictionary/contact_types?sortfield=code&sortorder=ASC&limit=100&active=1", null, $delay);
+
 print "<li class='list-group-item'>";
-foreach ( $object->roles as $role ) { 
+if ( !isset($contact_types->error ) && $contact_types != null ) {
+foreach ( $contact_types as $contacttype ) {
 print "<div class='custom-control custom-checkbox'>
-  <input type='checkbox' class='custom-control-input' id='".$role->code."'>
-  <label class='custom-control-label' for='".$role->code."'>".$role->label."</label>
+  <input type='checkbox' class='custom-control-input' id='".$contacttype->rowid."'>
+  <label class='custom-control-label' for='".$contacttype->rowid."'>".$contacttype->label."</label>
 </div>";
+}} else {
+foreach ( $object->roles as $role ) { 
+print "<div class='custom-control custom-checkbox'>".$role->label."</div>";
 }
+}
+
 print "</li>";
 }
 
