@@ -209,6 +209,14 @@ print do_action('mydoliconnectuserform', $object);
 print "</li>";
 }
 
+if ( in_array($mode, array('contact')) && doliversion('11.0.0') && isset($object->roles) ) {
+print "<li class='list-group-item'>";
+foreach ( $object->roles as $role ) { 
+print $role->label;
+}
+print "</li>";
+}
+
 if ( !in_array($mode, array('donation')) ) {
 print "<li class='list-group-item'>";
 
