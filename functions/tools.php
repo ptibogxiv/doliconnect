@@ -212,7 +212,10 @@ print "</li>";
 if ( in_array($mode, array('contact')) && doliversion('11.0.0') ) {
 print "<li class='list-group-item'>";
 foreach ( $object->roles as $role ) { 
-print $role->label;
+print "<div class='custom-control custom-checkbox'>
+  <input type='checkbox' class='custom-control-input' id='".$role->code."'>
+  <label class='custom-control-label' for='".$role->code."'>".$role->label."</label>
+</div>";
 }
 print "</li>";
 }
