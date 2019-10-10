@@ -217,7 +217,7 @@ print "<li class='list-group-item'>";
 if ( !isset($contact_types->error ) && $contact_types != null ) {
 $type = array();
 
-if ( isset($object->roles) ) {
+if ( isset($object->roles) && $object->roles != null ) {
 foreach ( $object->roles as $role ) {
 $type[] .= $role->id; 
 }}
