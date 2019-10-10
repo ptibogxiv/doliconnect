@@ -211,7 +211,7 @@ print "</li>";
 
 if ( in_array($mode, array('contact')) && doliversion('11.0.0') ) {
 
-$contact_types = callDoliApi("GET", "/setup/dictionary/contact_types?sortfield=code&sortorder=ASC&limit=100&active=1&sqlfilters=(t.source%3A%3D%3A'external')%20AND%20(t.element%3A%3D%3A'commande')&", null, $delay);
+$contact_types = callDoliApi("GET", "/setup/dictionary/contact_types?sortfield=code&sortorder=ASC&limit=100&active=1&sqlfilters=(t.source%3A%3D%3A'external')%20AND%20(t.element%3A%3D%3A'commande')", null, $delay);//%20OR%20(t.element%3A%3D%3A'propal')
 
 print "<li class='list-group-item'>";
 if ( !isset($contact_types->error ) && $contact_types != null ) {
