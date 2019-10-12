@@ -713,4 +713,43 @@ $duration = '';
 return $duration;
 }
 
+function doliconnect_langs($arg) {
+global $current_user;
+
+if (function_exists('pll_the_languages')) {       
+
+print '<div class="modal fade" id="DoliconnectSelectLang" tabindex="-1" role="dialog" aria-labelledby="DoliconnectSelectLangLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+<div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+<div class="modal-content border-0"><div class="modal-header border-0">
+<h5 class="modal-title" id="DoliconnectSelectLangLabel">'.__('Change language', 'doliconnect').'</h5><button id="closemodalSelectLang" type="button" class="close" data-dismiss="modal" aria-label="Close">
+<span aria-hidden="true">&times;</span></button></div>';
+ 
+print '<script>';
+?>
+function loadingSelectLangModal() {
+jQuery("#closemodalSelectLang").hide();
+jQuery("#SelectLangmodal-form").hide();
+jQuery("#loadingSelectLang").show();  
+}
+<?php
+print '</script>';
+
+print '<div class="modal-body"><div class="card" id="SelectLangmodal-form"><ul class="list-group list-group-flush">';
+$translations = pll_the_languages( array( 'raw' => 1 ) );
+foreach ($translations as $key => $value) {
+print "<a href='".$value['url']."?".$_SERVER["QUERY_STRING"]."' onclick='loadingSelectLangModal()' class='list-group-item list-group-item-action list-group-item-light'>
+<img src='".$value['flag']."' class='img-fluid' alt='".$value['name']."'> ".$value['name'];
+if ( $value['current_lang'] == true ) { print " <i class='fas fa-language fa-fw'></i>"; }
+print "</a>";
+}      
+
+print '</ul></div>
+<div id="loadingSelectLang" style="display:none"><br><br><br><center><div class="align-middle"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div><h4>'.__('Loading', 'doliconnect').'</h4></div></center><br><br><br></div>
+</div></div></div></div>';
+
+}    
+
+}
+add_action( 'wp_footer', 'doliconnect_langs', 10, 1);
+
 ?>
