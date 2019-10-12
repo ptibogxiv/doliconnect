@@ -635,7 +635,7 @@ if ( $object->statut == 0 && !empty($mode)) {
 if ( $line->fk_product > 0 ) {
 $product = callDoliApi("GET", "/products/".$line->fk_product."?includestockdata=1", null, 0);
 }
-$doliline .= '<div class="col d-none d-md-block col-md-2 text-right">'.doliproductstock($product).'</div>';
+$doliline .= '<div class="col d-none d-md-block col-md-2 text-right"><center>'.doliproductstock($product).'</center></div>';
 }
 
 $doliline .= '<div class="col-4 col-md-2 text-right"><h5 class="mb-1">'.doliprice($line, 'total_ttc', isset($line->multicurrency_code) ? $line->multicurrency_code : null).'</h5>';
