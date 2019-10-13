@@ -456,19 +456,13 @@ if (is_plugin_active( 'doliconnect-classifieds/doliconnect-classifieds.php' ) ) 
         </tr>
         <tr>
             <th style="width:100px;"><label for="doliconnect_sociallogin">Social login</label></th>
-            <td><input name="doliconnect_facebook" type="checkbox" id="doliconnect_facebook" value="1" <?php if ( is_plugin_active( 'doliconnect-pro/doliconnect-pro.php' ) ) {
-checked('1', get_option('doliconnect_facebook')); } else { ?> disabled <?php } ?> /> Facebook <b>PRO</b><br>
-            Key<input class="regular-text" type="text" id="doliconnect_facebook_key" name="doliconnect_facebook_key"  value="<?php if ( is_plugin_active( 'doliconnect-pro/doliconnect-pro.php' ) ) {
-echo get_option('doliconnect_facebook_key');?> " <?php } else { echo "";?>" disabled <?php } ?> ><br> 
-            Secret<input class="regular-text" type="text" id="doliconnect_facebook_secret" name="doliconnect_facebook_secret"  value="<?php if ( is_plugin_active( 'doliconnect-pro/doliconnect-pro.php' ) ) {
-echo get_option('doliconnect_facebook_secret');?> " <?php } else { echo "";?>" disabled <?php } ?> ><br> 
+            <td><input name="doliconnect_facebook" type="checkbox" id="doliconnect_facebook" value="1" <?php checked('1', get_option('doliconnect_facebook')); ?> /> Facebook<br>
+            Key<input class="regular-text" type="text" id="doliconnect_facebook_key" name="doliconnect_facebook_key"  value="<?php echo get_option('doliconnect_facebook_key'); ?>"><br> 
+            Secret<input class="regular-text" type="text" id="doliconnect_facebook_secret" name="doliconnect_facebook_secret"  value="<?php  echo get_option('doliconnect_facebook_secret'); ?>"><br> 
 
-            <input name="doliconnect_google" type="checkbox" id="doliconnect_google" value="1" <?php if ( is_plugin_active( 'doliconnect-pro/doliconnect-pro.php' ) ) {
-checked('1', get_option('doliconnect_google')); } else { ?> disabled <?php } ?> /> Google <b>PRO</b><br>      
-            Key<input class="regular-text" type="text" id="doliconnect_google_key" name="doliconnect_google_key" value="<?php if ( is_plugin_active( 'doliconnect-pro/doliconnect-pro.php' ) ) {
-echo get_option('doliconnect_google_key');?> " <?php } else { echo "";?>" disabled <?php } ?> ><br> 
-            Secret<input class="regular-text" type="text" id="doliconnect_google_secret" name="doliconnect_google_secret"  value="<?php if ( is_plugin_active( 'doliconnect-pro/doliconnect-pro.php' ) ) {
-echo get_option('doliconnect_google_secret');?> " <?php } else { echo "";?>" disabled <?php } ?> ><br>  
+            <input name="doliconnect_google" type="checkbox" id="doliconnect_google" value="1" <?php checked('1', get_option('doliconnect_google')); ?> /> Google<br>      
+            Key<input class="regular-text" type="text" id="doliconnect_google_key" name="doliconnect_google_key" value="<?php echo get_option('doliconnect_google_key'); ?>"><br> 
+            Secret<input class="regular-text" type="text" id="doliconnect_google_secret" name="doliconnect_google_secret"  value="<?php echo get_option('doliconnect_google_secret'); ?>"><br>  
            
             </td>
         </tr>     
