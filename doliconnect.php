@@ -1191,8 +1191,10 @@ foreach ($resultatso as $product) {
 $product = callDoliApi("GET", "/products/".$product->id."?includestockdata=1", null, 0);
 print "<li class='list-group-item'><table width='100%' style='border:0px'><tr><td style='border:0px'><center><i class='fa fa-cube fa-fw fa-2x'></i></center></td>";
 
-print "<td style='border:0px'><b>".doliproduct($product, 'label')."</b> ";
-print doliproductstock($product);
+print "<td style='border:0px'><b>".doliproduct($product, 'label')."</b>";
+if ( ! empty(doliconnectid('dolicart')) ) { 
+print " ".doliproductstock($product);
+}
 print "<br><small>".__( 'Reference', 'doliconnect').": ".$product->ref;
 if ( !empty($product->barcode) ) { print " / ".__( 'Barcode', 'doliconnect').": ".$product->barcode; }
 print "</small><p>".doliproduct($product, 'description')."</p></td>";
