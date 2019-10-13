@@ -1137,7 +1137,7 @@ print "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
 if ( !isset($_GET['category']) ) {
 if ( $shop->value != null ) {
 
-$request = "/categories?sortfield=t.rowid&sortorder=ASC&limit=100&type=product&sqlfilters=(t.fk_parent='".esc_attr($shop->value)."')";
+$request = "/categories?sortfield=t.label&sortorder=ASC&limit=100&type=product&sqlfilters=(t.fk_parent='".esc_attr($shop->value)."')";
 
 $resultatsc = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
