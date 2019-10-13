@@ -1188,16 +1188,16 @@ $resultatso = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(i
 if ( !isset($resultatso->error) && $resultatso != null ) {
 foreach ($resultatso as $product) {
 $product = callDoliApi("GET", "/products/".$product->id."?includestockdata=1", null, 0);
-print "<li class='list-group-item'><table width='100%' style='border:0px'><tr><td><center><i class='fa fa-cube fa-fw fa-2x'></i></center></td>";
+print "<li class='list-group-item'><table width='100%' style='border:0px'><tr><td style='border:0px'><center><i class='fa fa-cube fa-fw fa-2x'></i></center></td>";
 
-print "<td><b>".doliproduct($product, 'label')."</b> ";
+print "<td style='border:0px'><b>".doliproduct($product, 'label')."</b> ";
 print doliproductstock($product);
 print "<br><small>".__( 'Reference', 'doliconnect').": ".$product->ref;
 if ( !empty($product->barcode) ) { print " / ".__( 'Barcode', 'doliconnect').": ".$product->barcode; }
 print "</small><p>".doliproduct($product, 'description')."</p></td>";
 
 if (function_exists('dolibuttontocart') && ! empty(doliconnectid('dolicart')) ) { 
-print "<td width='250px'><center>";
+print "<td width='250px' style='border:0px'><center>";
 print dolibuttontocart($product, esc_attr($_GET['category']), 1);
 print "</center></td>";
 }
