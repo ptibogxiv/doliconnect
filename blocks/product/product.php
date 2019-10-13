@@ -69,8 +69,10 @@ $html .= '<div class="col-md-4 d-none d-md-block">';
 //$html .= wp_get_attachment_image( $attributes['mediaID'], "ptibogxiv_square", "", array( "class" => "img-fluid" ) );
 $html .= '</div>';
 
-$html .= '<div class="col-12 col-md-8"><h5 class="card-title"><b>'.doliproduct($product, 'label')."</b> ";
-$html .= doliproductstock($product);
+$html .= '<div class="col-12 col-md-8"><h5 class="card-title"><b>'.doliproduct($product, 'label')."</b>";
+if ( ! empty(doliconnectid('dolicart')) ) { 
+$html .= " ".doliproductstock($product);
+}
 $html .= "<br><small>".__( 'Reference', 'doliconnect').": ".$product->ref;
 if ( !empty($product->barcode) ) { $html .= " / ".__( 'Barcode', 'doliconnect').": ".$product->barcode; }
 $html .= "</small><p>".doliproduct($product, 'description')."</p>";
