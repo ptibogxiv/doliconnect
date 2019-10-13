@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
 "POT-Creation-Date: 2019-10-13 16:11+0200\n"
-"PO-Revision-Date: 2019-10-13 16:18+0200\n"
+"PO-Revision-Date: 2019-10-13 19:15+0200\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_FR\n"
@@ -90,7 +90,7 @@ msgstr "Référence"
 
 #: blocks/product/product.php:75 doliconnect.php:1197
 msgid "Barcode"
-msgstr "Code barre"
+msgstr "Code-barre"
 
 #: blocks/product/product.php:84
 msgid "Product/Service not in sale"
