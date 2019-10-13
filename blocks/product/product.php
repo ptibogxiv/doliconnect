@@ -78,7 +78,7 @@ if ( !empty($product->barcode) ) { $html .= " / ".__( 'Barcode', 'doliconnect').
 $html .= "</small><p>".doliproduct($product, 'description')."</p>";
 
 if ( function_exists('dolibuttontocart') && ! empty(doliconnectid('dolicart')) ) { 
-$html .= dolibuttontocart($product, null, $attributes['showButtonToCart'], isset($attributes['hideDuration']) ? $attributes['hideDuration'] : null);
+$html .= dolibuttontocart($product, null, isset($attributes['showButtonToCart']) ? $attributes['showButtonToCart'] : null, isset($attributes['hideDuration']) ? $attributes['hideDuration'] : null);
 }
 
 $html .= '</div></div>';
