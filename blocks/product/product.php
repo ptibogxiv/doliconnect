@@ -62,10 +62,10 @@ if (defined("DOLIBUG")) {
 $html .=dolibug();
 } else    if ( $product->id>0 && $product->status == 1 ) {
 $html .= '<div class="row">';
-$html .= '<div class="col-12 d-block d-sm-block d-xs-block d-md-none">';
+$html .= '<div class="col-12 d-block d-sm-block d-xs-block d-md-none"><center><i class="fa fa-cube fa-fw fa-5x"></i></center>';
 //$html .= wp_get_attachment_image( $attributes['mediaID'], "ptibogxiv_large", "", array( "class" => "img-fluid" ) );
 $html .= '</div>';
-$html .= '<div class="col-md-4 d-none d-md-block">';
+$html .= '<div class="col-md-4 d-none d-md-block"><center><i class="fa fa-cube fa-fw fa-5x"></i></center>';
 //$html .= wp_get_attachment_image( $attributes['mediaID'], "ptibogxiv_square", "", array( "class" => "img-fluid" ) );
 $html .= '</div>';
 
