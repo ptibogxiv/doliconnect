@@ -18,8 +18,8 @@ return $ret;
 function socialconnect( $url ) {
 $connect = null;
 
-include( plugin_dir_path( __DIR__ ) . 'doliconnect/lib/hybridauth/src/autoload.php');
-include( plugin_dir_path( __DIR__ ) . 'doliconnect/lib/hybridauth/src/config.php');
+include( plugin_dir_path( __DIR__ ) . 'lib/hybridauth/src/autoload.php');
+include( plugin_dir_path( __DIR__ ) . 'lib/hybridauth/src/config.php');
 
 $hybridauth = new Hybridauth\Hybridauth($config);
 $adapters = $hybridauth->getConnectedAdapters();
@@ -740,7 +740,6 @@ return $duration;
 }
 
 function doliconnect_langs($arg) {
-global $current_user;
 
 if (function_exists('pll_the_languages')) {       
 
