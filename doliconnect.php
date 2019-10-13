@@ -1188,7 +1188,7 @@ $resultatso = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(i
 
 if ( !isset($resultatso->error) && $resultatso != null ) {
 foreach ($resultatso as $product) {
-$product = callDoliApi("GET", "/products/".$product->id."?includestockdata=1", null, 0);
+$product = callDoliApi("GET", "/products/".$product->id."?includestockdata=1", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 print "<li class='list-group-item'><table width='100%' style='border:0px'><tr><td style='border:0px'><center><i class='fa fa-cube fa-fw fa-2x'></i></center></td>";
 
 print "<td style='border:0px'><b>".doliproduct($product, 'label')."</b>";
