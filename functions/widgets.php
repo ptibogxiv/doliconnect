@@ -12,7 +12,7 @@ class My_doliconnect extends WP_Widget {
 			'description' => 'Soumission de bug',
       'customize_selective_refresh' => true,
 		);
-		parent::__construct( 'my_doliconnect', 'SOS Bug', $widget_ops );
+		parent::__construct( 'my_doliconnect', 'SOS Bug (Doliconnect)', $widget_ops );
 	}
 
 	/**
@@ -96,7 +96,7 @@ class My_doliconnect_Membership extends WP_Widget {
 			'description' => 'lightbox adhesion',
       'customize_selective_refresh' => true,
 		);
-		parent::__construct( 'my_doliconnect_membership', 'Adhesion', $widget_ops );
+		parent::__construct( 'my_doliconnect_membership', 'Adhesion (Doliconnect)', $widget_ops );
 	}
 
 	/**
@@ -193,7 +193,7 @@ class Doliconnect_Changelang extends WP_Widget {
 			'description' => 'Modal for change lang',
       'customize_selective_refresh' => true,
 		);
-		parent::__construct( 'Doliconnect_Changelang', 'ChangeLang', $widget_ops );
+		parent::__construct( 'Doliconnect_Changelang', __('Change language', 'doliconnect').' (Doliconnect)', $widget_ops );
 	}
 
 	/**
