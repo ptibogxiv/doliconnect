@@ -2078,6 +2078,7 @@ print "<li class='list-group-item'><div class='custom-control custom-switch'><in
 if ( $current_user->loginmailalert == 'on' ) { print " checked"; }        
 print " onChange='demo()' ><label class='custom-control-label w-100' for='loginmailalert'> ".__( 'Receive a email notification at each connection', 'doliconnect')."</label>
 </div></li>";
+if ( get_option('doliconnectbeta') =='1' ) {
 print "<li class='list-group-item'><div class='custom-control custom-switch'><input type='checkbox' class='custom-control-input' name='optin1' id='optin1' ";
 if ( $current_user->optin1 == 'on' ) { print " checked"; }        
 print " onChange='demo()' ><label class='custom-control-label w-100' for='optin1'> ".__( 'I would like to receive the newsletter', 'doliconnect')."</label>
@@ -2086,6 +2087,7 @@ print "<li class='list-group-item'><div class='custom-control custom-switch'><in
 if ( $current_user->optin2 == 'on' ) { print " checked"; }        
 print " onChange='demo()' ><label class='custom-control-label w-100' for='optin2'> ".__( 'I would like to receive the offers of our partners', 'doliconnect')."</label>
 </div></li>";
+}
 $privacy=$wpdb->prefix."doliprivacy";
 if ( $current_user->$privacy ) {
 print "<li class='list-group-item'>";
