@@ -30,16 +30,14 @@ function doliconnect_membership_block() {
 	wp_register_script(
 		'doliconnect-membership-block-script', // Handle.
 		plugins_url( 'block.js', __FILE__ ), // Block.js: We register the block here.
-		array( 'wp-blocks', 'wp-element', 'wp-i18n' ), // Dependencies, defined above.
-    'beta3'
+		array( 'wp-blocks', 'wp-element', 'wp-i18n' ) // Dependencies, defined above.
 	);
 
 	// Styles.
 	wp_register_style(
 		'doliconnect-membership-block-editor-style', // Handle.
 		plugins_url( 'editor.css', __FILE__ ), // Block editor CSS.
-		array( 'wp-edit-blocks' ), // Dependencies, defined above.
-    'beta3'
+		array( 'wp-edit-blocks' ) // Dependencies, defined above.
 	);
   
 	wp_register_style(
