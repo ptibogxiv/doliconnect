@@ -2090,9 +2090,9 @@ print " onChange='demo()'><label class='custom-control-label w-100' for='optin2'
 }
 $privacy=$wpdb->prefix."doliprivacy";
 if ( $current_user->$privacy ) {
-print "<li class='list-group-item'><div class='custom-control'>";
-print "<i class='far fa-calendar-check fa-fw'></i><label class='custom-control-label w-100' for='optin1'> ".__( 'Approval of the Privacy Policy the', 'doliconnect')." ".date_i18n( get_option( 'date_format' ).' - '.get_option('time_format'), $current_user->$privacy, false)."</label>";
-print "</div></li>";
+print "<li class='list-group-item'>";
+print "".__( 'Approval of the Privacy Policy the', 'doliconnect')." ".date_i18n( get_option( 'date_format' ).' - '.get_option('time_format'), $current_user->$privacy, false)."";
+print "</li>";
 }
 print "<li class='list-group-item'>";
 //print $current_user->locale;
