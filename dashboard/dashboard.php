@@ -2091,7 +2091,7 @@ print " onChange='demo()' ><label class='custom-control-label w-100' for='optin2
 $privacy=$wpdb->prefix."doliprivacy";
 if ( $current_user->$privacy ) {
 print "<li class='list-group-item'>";
-print "".__( 'Approval of the Privacy Policy the', 'doliconnect')." ".date_i18n( get_option( 'date_format' ).', '.get_option('time_format'), $current_user->$privacy, false);
+print "".__( 'Approval of the Privacy Policy the', 'doliconnect')." ".date_i18n( get_option( 'date_format' ).' - '.get_option('time_format'), $current_user->$privacy, false);
 print "</li>";
 }
 print "<li class='list-group-item'>";
