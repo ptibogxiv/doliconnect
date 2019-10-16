@@ -1,0 +1,62 @@
+/**
+ * ----------------------------------------------------------------------------
+ * Editor CSS
+ * ----------------------------------------------------------------------------
+ */
+
+.wp-block-doliconnect-thirdparty-block ul,
+.wp-block-doliconnect-thirdparty-block li {
+	list-style: none;
+	margin: 0; padding: 0;
+}
+.wp-block-doliconnect-thirdparty-block {
+	display: flex;
+	align-items: stretch;
+	background-color: #ffffff;
+	box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.12);
+}
+.wp-block-doliconnect-thirdparty-block .doliconnect-thirdparty-image {
+	display: flex;
+	align-items: center;
+}
+.wp-block-doliconnect-thirdparty-block .doliconnect-thirdparty-image.image-inactive {
+	background: #f4f4f4;
+	width: 40%;
+	border: 1px solid #dddddd;
+}
+.wp-block-doliconnect-thirdparty-block .doliconnect-thirdparty-image.image-active {
+	background-size: cover;
+	background-position: center;
+	max-width: 40%;
+}
+.wp-block-doliconnect-thirdparty-block .doliconnect-thirdparty-image button {
+	margin: 0 auto;
+}
+.wp-block-doliconnect-thirdparty-block .doliconnect-thirdparty-image button.image-button {
+	line-height: 0;
+	padding: 0px;
+}
+.wp-block-doliconnect-thirdparty-block .doliconnect-thirdparty-image button.image-button img {
+	opacity: 0;
+	margin: 0;
+}
+.wp-block-doliconnect-thirdparty-block .doliconnect-thirdparty-content {
+	width: 60%;
+	align-self: center;
+	padding: 18px;
+	box-sizing: border-box;
+}
+.wp-block-doliconnect-thirdparty-block .doliconnect-thirdparty-social {
+	margin-top: 12px;
+}
+.wp-block-doliconnect-thirdparty-block .doliconnect-thirdparty-social .social-link {
+	color: rgba(0, 0, 0, 0.24);
+	padding: 6px 12px;
+	border-left: 1px solid rgba(0, 0, 0, 0.12);
+}
+.wp-block-doliconnect-thirdparty-block .doliconnect-thirdparty-social .social-link:hover {
+	color: rgba(0, 0, 0, 1);
+}
+.wp-block-doliconnect-thirdparty-block .doliconnect-thirdparty-social .social-link:first-child {
+	border: none;
+}

@@ -10,7 +10,7 @@
 	registerBlockType( 'doliconnect/admin-block', { // The name of our block. Must be a string with prefix. Example: my-plugin/my-custom-block.
 		title: i18n.__( 'List admins'), // The title of our block.
 		description: i18n.__( 'A block for displaying admins.' ), // The description of our block.
-		icon: 'businessman', // Dashicon icon for our block. Custom icons can be added using inline SVGs.
+		icon: 'admin-users', // Dashicon icon for our block. Custom icons can be added using inline SVGs.
 		category: 'widgets', // The category of the block.
 		attributes: { // Necessary for saving block content.
 			productID: {
