@@ -10,10 +10,11 @@ $ret = false;
 $dolibarr = callDoliApi("GET", "/status", null, dolidelay('dolibarr'));
 $versiondoli = explode("-", $dolibarr->success->dolibarr_version);
 if ( is_object($dolibarr) && version_compare($versiondoli[0], $version) >= 0 ) {
-$ret = true;
+$ret = $versiondoli[0];
 }
 return $ret;
 }
+add_action( 'admin_init', 'doliversion', 5, 1); 
 
 function socialconnect( $url ) {
 $connect = null;

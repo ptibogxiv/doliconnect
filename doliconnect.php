@@ -76,6 +76,7 @@ return get_current_blog_id();
 }
 //return get_current_network_id();
 }
+add_action( 'admin_init', 'dolibarr_entity', 5); 
 // ********************************************************
 function doliconst( $constante ) {
 global $wpdb;

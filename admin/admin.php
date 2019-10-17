@@ -1,11 +1,8 @@
 <?php
 
 function doliconnect_admin_notice_error() {
-global $wpdb;
 
-$dolibarr = callDoliApi("GET", "/status", null, dolidelay('dolibarr'));
-if ( is_object($dolibarr) && isset($dolibarr->success) ) { $versiondoli = explode("-", $dolibarr->success->dolibarr_version); }
-if ( is_object($dolibarr) && version_compare($versiondoli[0], '10.0.2') < 0 && !defined("DOLIBUG") ) {
+if ( ! doliversion('10.0.2') ) {
 $class = 'notice notice-error ';  //is-dismissible
 $message = __( 'It seems that your version of Dolibarr and/or its plugins are not up to date!', 'doliconnect' );
 
@@ -161,11 +158,9 @@ $link='https://www.ptibogxiv.net/?update_action=get_metadata&slug=doliconnect&li
 
 <?php
 $dolibarr = callDoliApi("GET", "/status", null, 5 * MINUTE_IN_SECONDS);
-$versiondoli = explode("-", $dolibarr->success->dolibarr_version);
-//if ( is_object($dolibarr) && version_compare($versiondoli[0], '10.0.0') >= 0 )
 ?>
 
-    <p>Version Dolibarr <a href='https://sourceforge.net/projects/dolibarr/files/Dolibarr%20ERP-CRM/10.0.0/' target='_blank'>10.0.0</a> minimum - <a href='https://sourceforge.net/projects/dolibarr/files/Dolibarr%20ERP-CRM/10.0.2/' target='_blank'>10.0.2</a> recommandée - votre version est <?php echo $versiondoli[0]; ?></p>
+    <p>Version Dolibarr <a href='https://sourceforge.net/projects/dolibarr/files/Dolibarr%20ERP-CRM/10.0.0/' target='_blank'>10.0.0</a> minimum - <a href='https://sourceforge.net/projects/dolibarr/files/Dolibarr%20ERP-CRM/10.0.2/' target='_blank'>10.0.2</a> recommandée - votre version est <?php echo doliversion('10.0.2'); ?></p>
     <p>Doliconnector 10.0.2 requis à <a href='https://github.com/ptibogxiv/doliconnector/releases' target='_blank'>télécharger ici</a> pour lier WordPress à Dolibarr</p>
     <form action="" method="post">
         <table class="form-table" width="100%">
