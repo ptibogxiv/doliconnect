@@ -77,8 +77,8 @@ $html .= "<br><small>".__( 'Reference', 'doliconnect').": ".$product->ref;
 if ( !empty($product->barcode) ) { $html .= " / ".__( 'Barcode', 'doliconnect').": ".$product->barcode; }
 $html .= "</small><p>".doliproduct($product, 'description')."</p>";
 
-if ( function_exists('dolibuttontocart') && ! empty(doliconnectid('dolicart')) ) { 
-$html .= dolibuttontocart($product, null, isset($attributes['showButtonToCart']) ? $attributes['showButtonToCart'] : null, isset($attributes['hideDuration']) ? $attributes['hideDuration'] : null);
+if ( ! empty(doliconnectid('dolicart')) ) { 
+$html .= doliproducttocart($product, null, isset($attributes['showButtonToCart']) ? $attributes['showButtonToCart'] : null, isset($attributes['hideDuration']) ? $attributes['hideDuration'] : null);
 }
 
 $html .= '</div></div>';

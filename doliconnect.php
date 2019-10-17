@@ -1206,7 +1206,7 @@ print "</small><p>".doliproduct($product, 'description')."</p></td>";
 
 if ( ! empty(doliconnectid('dolicart')) ) { 
 print "<td width='250px' style='border:0px'><center>";
-print dolibuttontocart($product, esc_attr($_GET['category']), 1);
+print doliproducttocart($product, esc_attr($_GET['category']), 1);
 print "</center></td>";
 }
 print "</tr></table></li>"; 
