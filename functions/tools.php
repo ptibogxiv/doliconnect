@@ -713,6 +713,11 @@ $doliline .= "<br><br><br><br><br></li>";
 return $doliline;
 }
 
+function doliunit($scale, $type, $refresh = null) {
+$unit = callDoliApi("GET", "/setup/dictionary/units?sortfield=rowid&sortorder=ASC&limit=1&active=1&sqlfilters=(t.scale%3A%3D%3A'".$scale."')%20AND%20(t.unit_type%3A%3D%3A'".$type."')", null, dolidelay('constante', $refresh));
+return $unit[0]->short_label;
+}
+
 function doliduration($object) {
 if ( !is_null($object->duration_unit) && 0 < ($object->duration_value)) {
 $duration = $object->duration_value.' ';
