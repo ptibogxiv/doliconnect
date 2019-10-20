@@ -398,9 +398,7 @@ $ID = get_current_user_id();
  
 if ( $name == null ) { $name=$fichier; } 
 
-$dolibarr = callDoliApi("GET", "/status", null, dolidelay('dolibarr'));
-$versiondoli = explode("-", $dolibarr->success->dolibarr_version);
-if ( is_object($dolibarr) && version_compare($versiondoli[0], '11.0.0') >= 0 ) {
+if ( doliversion('11.0.0') ) {
 $doc = callDoliApi("GET", "/documents/download?modulepart=$type&original_file=$ref/$fichier", null, 0);
 } else {
 $doc = callDoliApi("GET", "/documents/download?module_part=$type&original_file=$ref/$fichier", null, 0);
@@ -409,9 +407,7 @@ $doc = callDoliApi("GET", "/documents/download?module_part=$type&original_file=$
 if ( isset($_GET["download"]) && $_GET["securekey"] ==  hash('sha256', $ID.$type.$_GET["download"]) && $_GET["download"] == "$ref/$fichier" ) {
 
 if ( !empty($refresh) ) {
-$dolibarr = callDoliApi("GET", "/status", null, dolidelay('dolibarr'));
-$versiondoli = explode("-", $dolibarr->success->dolibarr_version);
-if ( is_object($dolibarr) && version_compare($versiondoli[0], '11.0.0') >= 0 ) {
+if ( doliversion('11.0.0') ) {
 $rdr = [
     'modulepart'  => $type,
     'originalfile' => $ref.'/'.$fichier,
@@ -426,9 +422,7 @@ $rdr = [
 }
 $doc = callDoliApi("PUT", "/documents/builddoc", $rdr, 0);
 } else {
-$dolibarr = callDoliApi("GET", "/status", null, dolidelay('dolibarr'));
-$versiondoli = explode("-", $dolibarr->success->dolibarr_version);
-if ( is_object($dolibarr) && version_compare($versiondoli[0], '11.0.0') >= 0 ) {
+if ( doliversion('11.0.0') ) {
 $doc = callDoliApi("GET", "/documents/download?modulepart=$type&original_file=$ref/$fichier", null, 0);
 } else {
 $doc = callDoliApi("GET", "/documents/download?module_part=$type&original_file=$ref/$fichier", null, 0);
