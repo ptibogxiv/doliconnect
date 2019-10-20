@@ -1148,7 +1148,7 @@ $lnship .="</ul>";
 if ( $ship->trueWeight != null ) {
 $poids=" ".__( 'of', 'doliconnect' )." ".$ship->trueWeight."kg";
 } else {$poids='';}
-if ( $ship->trueSize !=null ) {
+if ( $ship->trueSize != null && $ship->trueSize != 'xx' ) {
 $dimensions=" - ".__( 'size', 'doliconnect' )." ".$ship->trueSize."m";
 } else  {$dimensions=''; }
 //$doc = array_reverse(explode("/", $ship['last_main_doc']));      
