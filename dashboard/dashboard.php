@@ -1146,16 +1146,19 @@ $lnship .="<li>".$sline->qty_shipped."x ".$sline->libelle."</li>";
 }
 $lnship .="</ul>";
 if ( $ship->trueWeight != null ) {
-$poids=" ".__( 'of', 'doliconnect' )." ".$ship->trueWeight." ".doliunit($ship->weight_units, 'weight');
-} else {$poids='';}
+$poids = " ".__( 'of', 'doliconnect' )." ".$ship->trueWeight." ".doliunit($ship->weight_units, 'weight');
+} else { $poids = ''; }
 if ( $ship->trueSize != null && $ship->trueSize != 'xx' ) {
-$dimensions=" - ".__( 'size', 'doliconnect' )." ".$ship->trueSize." ".doliunit($ship->size_units, 'size');
-} else  {$dimensions=''; }
+$dimensions = " - ".__( 'size', 'doliconnect' )." ".$ship->trueSize." ".doliunit($ship->size_units, 'size');
+} else  { $dimensions = ''; }
 if ( $ship->statut > 0 ) {
+if ( $ship->trueWeight != null ) {
+$datedelivery = "<br>".__( 'Estimated delivery', 'doliconnect' ).": ".date_i18n( get_option( 'date_format' ), $ship->date_delivery, false);
+} else { $datedelivery = ''; }
 $fruits[$ship->date_creation] = array(
 "timestamp" => $ship->date_creation,
 "type" => __( 'Shipment', 'doliconnect' ),  
-"label" => $ship->ref." ".$ship->tracking_url."<br>".__( 'Estimated delivery', 'doliconnect' ).": ".date_i18n( get_option( 'date_format' ), $ship->date_delivery, false),
+"label" => $ship->ref." ".$ship->tracking_url.$datedelivery,
 "description" => "<small>".$lnship.__( 'Parcel', 'doliconnect' )." ".$ship->shipping_method.$poids.$dimensions."</small>",
 );
 } else {
