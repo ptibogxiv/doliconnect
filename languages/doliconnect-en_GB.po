@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
 "POT-Creation-Date: 2019-10-13 16:53+0200\n"
-"PO-Revision-Date: 2019-10-13 16:55+0200\n"
+"PO-Revision-Date: 2019-10-21 00:42+0200\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: en_GB\n"
@@ -46,10 +46,8 @@ msgstr "Anyone can register"
 #: admin/admin.php:426 admin/admin.php:438 dashboard/dashboard.php:1926
 #: dashboard/dashboard.php:1942 dashboard/dashboard.php:1960
 #: functions/tools.php:84 functions/tools.php:127 functions/tools.php:212
-#, fuzzy
-#| msgid "— Select —"
 msgid "- Select -"
-msgstr "— Select —"
+msgstr "- Select -"
 
 #: blocks/membership/membership.php:92
 msgid "Individual"
@@ -137,16 +135,12 @@ msgid "Delete your picture"
 msgstr "Delete your picture"
 
 #: dashboard/dashboard.php:289
-#, fuzzy
-#| msgid "Address book"
 msgid "Manage address book"
-msgstr "Address book"
+msgstr "Manage address book"
 
 #: dashboard/dashboard.php:395 dashboard/dashboard.php:445
-#, fuzzy
-#| msgid "Add contact"
 msgid "New contact"
-msgstr "Add contact"
+msgstr "New contact"
 
 #: dashboard/dashboard.php:411 dashboard/dashboard.php:1766 doliconnect.php:405
 msgid "Edit"
@@ -157,26 +151,20 @@ msgid "Delete"
 msgstr "Delete"
 
 #: dashboard/dashboard.php:418
-#, fuzzy
-#| msgid "Add contact"
 msgid "No contact"
-msgstr "Contact us"
+msgstr "No contact"
 
 #: dashboard/dashboard.php:427
-#, fuzzy
-#| msgid "Add contact"
 msgid "Update contact"
-msgstr "Add contact"
+msgstr "Update contact"
 
 #: dashboard/dashboard.php:456 dashboard/dashboard.php:696
 msgid "Add"
 msgstr "Add"
 
 #: dashboard/dashboard.php:472
-#, fuzzy
-#| msgid "Lost password"
 msgid "Modify the password"
-msgstr "Lost password"
+msgstr "Modify the password"
 
 #: dashboard/dashboard.php:499
 msgid "Your actual password is incorrect"
@@ -200,35 +188,28 @@ msgid "Your password will be synchronized with your Dolibarr account"
 msgstr "Your password will be synchronized with your Dolibarr account"
 
 #: dashboard/dashboard.php:517
-#, fuzzy
 msgid "Password cannot be modified in demo mode"
 msgstr "Password cannot be modified in demo mode"
 
 #: dashboard/dashboard.php:519 dashboard/dashboard.php:520
-#, fuzzy
-#| msgid "Confirm your new password"
 msgid "Confirm your current password"
-msgstr "Confirm your new password"
+msgstr "Confirm your current password"
 
 #: dashboard/dashboard.php:526 doliconnect.php:709
 msgid "Change your password"
 msgstr "Change your password"
 
 #: dashboard/dashboard.php:527
-#, fuzzy
-#| msgid "Choose your password"
 msgid "Choose your new password"
-msgstr "Choose your password"
+msgstr "Choose your new password"
 
 #: dashboard/dashboard.php:535
 msgid "This field is required."
 msgstr "This field is required."
 
 #: dashboard/dashboard.php:536
-#, fuzzy
-#| msgid "Confirm your new password"
 msgid "Confirme your new password"
-msgstr "Confirm your new password"
+msgstr "Confirme your new password"
 
 #: dashboard/dashboard.php:573
 msgid "Manage payment methods"
@@ -614,41 +595,32 @@ msgid "Please contact us to link a pre-existing member"
 msgstr "Please contact us to link a pre-existing member"
 
 #: dashboard/dashboard.php:1767
-#, fuzzy
 msgid "Unlink"
-msgstr "Dissocier"
+msgstr "Unlink"
 
 #: dashboard/dashboard.php:1773
-#, fuzzy
-#| msgid "No membership"
 msgid "No linked member"
-msgstr "No membership"
+msgstr "No linked member"
 
 #: dashboard/dashboard.php:1782
-#, fuzzy
-#| msgid "Update"
 msgid "Update member"
-msgstr "Update"
+msgstr "Update member"
 
 #: dashboard/dashboard.php:1813
 msgid "Help"
 msgstr "Help"
 
 #: dashboard/dashboard.php:1838
-#, fuzzy
-#| msgid "Your membership has been updated."
 msgid "Your message has been send."
 msgstr "Your membership has been updated."
 
 #: dashboard/dashboard.php:1846 dashboard/dashboard.php:1917
-#, fuzzy
 msgid "Type and category"
 msgstr "Type and category"
 
 #: dashboard/dashboard.php:1847 dashboard/dashboard.php:1952
-#, fuzzy
 msgid "Severity"
-msgstr "{} Gravité {}"
+msgstr "Severity"
 
 #: dashboard/dashboard.php:1849 dashboard/dashboard.php:2003
 msgid "Deleted"
@@ -691,9 +663,8 @@ msgid "Initial message"
 msgstr "Initial message"
 
 #: dashboard/dashboard.php:1872
-#, fuzzy
 msgid "Response"
-msgstr "Réponse"
+msgstr "Response"
 
 #: dashboard/dashboard.php:1874
 msgid "Answer"
@@ -764,12 +735,10 @@ msgid "No ticket"
 msgstr "No ticket"
 
 #: dashboard/dashboard.php:2031
-#, fuzzy
 msgid "Settings & security"
 msgstr "Settings & security"
 
 #: dashboard/dashboard.php:2079
-#, fuzzy
 msgid "Receive a email notification at each connection"
 msgstr "Receive a email notification at each connection"
 
@@ -778,7 +747,6 @@ msgid "I would like to receive the newsletter"
 msgstr "I would like to receive the newsletter"
 
 #: dashboard/dashboard.php:2087
-#, fuzzy
 msgid "I would like to receive the offers of our partners"
 msgstr "I would like to receive the offers of our partners"
 
@@ -788,17 +756,14 @@ msgid "Approval of the Privacy Policy the"
 msgstr "Approval of the Privacy Policy the"
 
 #: dashboard/dashboard.php:2097
-#, fuzzy
 msgid "Default language"
-msgstr "Mặc định"
+msgstr "Default language"
 
 #: dashboard/dashboard.php:2101 dashboard/dashboard.php:2110
-#, fuzzy
 msgid "Default / Browser language"
 msgstr "Default / Browser language"
 
 #: dashboard/dashboard.php:2126
-#, fuzzy
 msgid "Default currency"
 msgstr "Default currency"
 
@@ -837,7 +802,6 @@ msgid "Soon, you will be able to delete your account"
 msgstr "Soon, you will be able to delete your account"
 
 #: dashboard/dashboard.php:2251
-#, fuzzy
 msgid "Validate the request"
 msgstr "Validate the request"
 
@@ -846,10 +810,8 @@ msgid "Home"
 msgstr "Home"
 
 #: doliconnect.php:427
-#, fuzzy
-#| msgid "An error is occured. Please contact us."
 msgid "This account is closed. Please contact us for reopen it."
-msgstr "An error is occured. Please contact us."
+msgstr "This account is closed. Please contact us for reopen it."
 
 #: doliconnect.php:490
 #, php-format
@@ -875,7 +837,6 @@ msgstr ""
 "title='lost password'>form</a>."
 
 #: doliconnect.php:556
-#, fuzzy
 msgid "Create this account is not permitted"
 msgstr "Create this account is not permitted"
 
@@ -948,12 +909,10 @@ msgstr ""
 "area."
 
 #: doliconnect.php:814
-#, fuzzy
 msgid "A valid email is need to reset your password"
 msgstr "A valid email is need to reset your password"
 
 #: doliconnect.php:817 doliconnect.php:835
-#, fuzzy
 msgid "Reset password is not permitted"
 msgstr "Reset password is not permitted"
 
@@ -982,10 +941,8 @@ msgstr ""
 "folder if you don't find it."
 
 #: doliconnect.php:857
-#, fuzzy
-#| msgid "An error is occured. Please contact us."
 msgid "A problem occurred. Please retry later!"
-msgstr "An error is occured. Please contact us."
+msgstr "A problem occurred. Please retry later!"
 
 #: doliconnect.php:866 doliconnect.php:949
 msgid "Forgot password?"
@@ -1119,9 +1076,8 @@ msgstr ""
 "again."
 
 #: functions/data-request.php:19
-#, fuzzy
 msgid "This is not a valid email address."
-msgstr "er ikki ein gyldug Email adressa"
+msgstr "This is not a valid email address."
 
 #: functions/data-request.php:22
 #, fuzzy
@@ -1196,9 +1152,8 @@ msgid "Entreprise account"
 msgstr "Create an account"
 
 #: functions/tools.php:111
-#, fuzzy
 msgid "Name of company"
-msgstr "Name of company _____________________________________"
+msgstr "Name of company"
 
 #: functions/tools.php:112
 #, fuzzy
@@ -1300,7 +1255,7 @@ msgstr "Terms & Conditions"
 
 #: functions/tools.php:341 functions/tools.php:769
 msgid "Loading"
-msgstr "加载中...."
+msgstr "Loading"
 
 #: functions/tools.php:370
 #, fuzzy
@@ -1312,10 +1267,8 @@ msgstr ""
 "minutes."
 
 #: functions/tools.php:373
-#, fuzzy
-#| msgid "Error!"
 msgid "Error code"
-msgstr "Error!"
+msgstr "Error code"
 
 #: functions/tools.php:385
 #, fuzzy
