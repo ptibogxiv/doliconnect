@@ -1151,13 +1151,11 @@ $poids=" ".__( 'of', 'doliconnect' )." ".$ship->trueWeight." ".doliunit($ship->w
 if ( $ship->trueSize != null && $ship->trueSize != 'xx' ) {
 $dimensions=" - ".__( 'size', 'doliconnect' )." ".$ship->trueSize." ".doliunit($ship->size_units, 'size');
 } else  {$dimensions=''; }
-//$doc = array_reverse(explode("/", $ship['last_main_doc']));      
-//dolidocdownload($doc[2],$doc[1],$doc[0],$url."&id=".$_GET['id']."&ref=".$orderfo['ref'],__( 'Shipment', 'doliconnect' ));
 if ( $ship->statut > 0 ) {
 $fruits[$ship->date_creation] = array(
 "timestamp" => $ship->date_creation,
 "type" => __( 'Shipment', 'doliconnect' ),  
-"label" => $ship->ref." ".$ship->tracking_url,
+"label" => $ship->ref." ".$ship->tracking_url."<br>".__( 'Estimated delivery', 'doliconnect' ).": ".date_i18n( get_option( 'date_format' ), $ship->date_delivery, false),
 "description" => "<small>".$lnship.__( 'Parcel', 'doliconnect' )." ".$ship->shipping_method.$poids.$dimensions."</small>",
 );
 } else {
