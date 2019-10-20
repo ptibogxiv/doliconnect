@@ -1147,11 +1147,11 @@ $lnship .="<li>".$sline->qty_shipped."x ".$sline->libelle."</li>";
 $lnship .="</ul>";
 if ( $ship->trueWeight != null ) {
 $weight = callDoliApi("GET", "/setup/dictionary/units?sortfield=rowid&sortorder=ASC&limit=1&active=1&sqlfilters=(t.scale%3A%3D%3A'".$ship->weight_units."')%20AND%20(t.unit_type%3A%3D%3A'weight')", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-$poids=" ".__( 'of', 'doliconnect' )." ".$ship->trueWeight." ".var_dump($weight['']->short_label);
+$poids=" ".__( 'of', 'doliconnect' )." ".$ship->trueWeight." ".$weight[0]->short_label;
 } else {$poids='';}
 if ( $ship->trueSize != null && $ship->trueSize != 'xx' ) {
 $size = callDoliApi("GET", "/setup/dictionary/units?sortfield=rowid&sortorder=ASC&limit=1&active=1&sqlfilters=(t.scale%3A%3D%3A'".$ship->size_units."')%20AND%20(t.unit_type%3A%3D%3A'size')", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-$dimensions=" - ".__( 'size', 'doliconnect' )." ".$ship->trueSize." ".$size->short_label;
+$dimensions=" - ".__( 'size', 'doliconnect' )." ".$ship->trueSize." ".$size[0]->short_label;
 } else  {$dimensions=''; }
 //$doc = array_reverse(explode("/", $ship['last_main_doc']));      
 //dolidocdownload($doc[2],$doc[1],$doc[0],$url."&id=".$_GET['id']."&ref=".$orderfo['ref'],__( 'Shipment', 'doliconnect' ));
