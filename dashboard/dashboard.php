@@ -1160,6 +1160,7 @@ $fruits[$ship->date_creation] = array(
 "type" => __( 'Shipment', 'doliconnect' ),  
 "label" => $ship->ref." ".$ship->tracking_url.$datedelivery,
 "description" => "<small>".$lnship.__( 'Parcel', 'doliconnect' )." ".$ship->shipping_method.$poids.$dimensions."</small>",
+"document" => null,
 );
 } else {
 $fruits[$ship->date_creation] = array(
@@ -1167,6 +1168,7 @@ $fruits[$ship->date_creation] = array(
 "type" => __( 'Shipment', 'doliconnect' ),  
 "label" => __( 'Packaging in progress', 'doliconnect' ),
 "description" => null,
+"document" => null,
 );
 }
  } 
@@ -1175,7 +1177,7 @@ $fruits[$ship->date_creation] = array(
 sort($fruits, SORT_NUMERIC | SORT_FLAG_CASE);
 foreach ( $fruits as $key => $val ) {
 print "<li class='list-group-item'><div class='row'><div class='col-6 col-md-3'>" . date_i18n('d/m/Y H:i', $val['timestamp']) . "</div><div class='col-6 col-md-2'>" . $val['type'] . "</div>";
-print "<div class='col-md-7'><h6>".$val['label']."</h6>".$val['description']."</div></div></li>";
+print "<div class='col-md-7'><h6>".$val['label']."</h6>" . $val['description'] ."" . $val['document'] ."</div></div></li>";
 } 
 //var_dump($fruits);
 print "</ul></div>";
