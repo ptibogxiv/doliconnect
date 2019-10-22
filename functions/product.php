@@ -191,4 +191,56 @@ $button .= '<div id="product-add-loading-'.$product->id.'" style="display:none">
 $button .= "</div>";
 return $button;
 }
+
+function dolisummarycart($object) {
+global $current_user;
+
+$remise=0;
+$subprice=0;
+$qty=0;
+
+if ( $object->lines != null ) {
+$list = null;
+foreach ($object->lines as $line) {
+//$product = callDoliApi("GET", "/products/".$post->product_id."?includestockdata=1", null, 0);
+$list .= "<li class='list-group-item d-flex justify-content-between lh-condensed'><div><h6 class='my-0'>".$line->libelle."</h6><small class='text-muted'>".__( 'Quantity', 'doliconnect-pro' ).": ".$line->qty."</small></div>";
+$remise+=$line->subprice-$line->total_ht;
+$subprice+=$line->subprice;
+$qty+=$line->qty;
+$list .= "<span class='text-muted'>".doliprice($line, 'total_ttc',isset($object->multicurrency_code) ? $object->multicurrency_code : null)."</span></li>";
+}
+}
+
+$cart = "<div class='card'><div class='card-header'>".__( 'Cart', 'doliconnect-pro' )." - ".sprintf( _n( '%s item', '%s items', $qty, 'doliconnect-pro' ), $qty);
+if ( !isset($object->resteapayer) && $object->statut == 0 ) { $cart .= " <small>(<a href='".doliconnecturl('dolicart')."' >".__( 'update', 'doliconnect-pro' )."</a>)</small>"; }
+$cart .= "</div><ul class='list-group list-group-flush'>";
+$cart .= $list;
+
+if ( doliconnector($current_user, 'remise_percent') > 0 && $remise > 0 ) { 
+$remise_percent = (0*doliconnector($current_user, 'remise_percent'))/100;
+$cart .= "<li class='list-group-item d-flex justify-content-between bg-light'>
+<div class='text-success'><small class='my-0'>".__( 'Discount', 'doliconnect-pro' )."</small>";
+//$cart .= "<br><small>-".number_format(100*$remise/$subprice, 0)." %</small>";
+$cart .= "</div><small class='text-success'>-".doliprice($remise, null, isset($object->multicurrency_code) ? $object->multicurrency_code : null)."</small></li>";
+}
+
+$cart .= "<li class='list-group-item d-flex justify-content-between bg-light'>";
+$cart .= "<small>".__( 'VAT', 'doliconnect-pro' )."</small>";
+$cart .= "<small>".doliprice($object, 'tva', isset($object->multicurrency_code) ? $object->multicurrency_code : null)."</small></li>";
+
+//$total=$subtotal-$remise_percent;            
+$cart .= "<li class='list-group-item d-flex justify-content-between'>";
+if ( isset($object->resteapayer) ) { 
+$cart .= "<span>".__( 'Already paid', 'doliconnect-pro' )."</span>";
+$cart .= "<strong>".doliprice($object->total_ttc-$object->resteapayer, null, isset($object->multicurrency_code) ? $object->multicurrency_code : null)."</strong></li>";
+$cart .= "<li class='list-group-item d-flex justify-content-between'>";
+$cart .= "<span>".__( 'Remains to be paid', 'doliconnect-pro' )."</span>";
+$cart .= "<strong>".doliprice($object->resteapayer, null, isset($object->multicurrency_code) ? $object->multicurrency_code : null)."</strong></li>";
+} else {
+$cart .= "<span>".__( 'Total to pay', 'doliconnect-pro' )."</span>";
+$cart .= "<strong>".doliprice($object, 'ttc', isset($object->multicurrency_code) ? $object->multicurrency_code : null)."</strong></li>";
+}
+$cart .= "</ul></div><br>";
+return $cart;
+}
 ?>
