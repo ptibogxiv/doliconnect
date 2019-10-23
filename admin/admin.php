@@ -139,7 +139,7 @@ if ( add_site_option( 'doliconnect_login', sanitize_text_field($_REQUEST['dolico
 } else {
 update_site_option('doliconnect_login', sanitize_text_field($_REQUEST['doliconnect_login']));
 }       
-if ( add_site_option( 'dolibarr_entity', sanitize_text_field($_REQUEST['dolibarr_entity'])) ) {
+if ( isset($_REQUEST['dolibarr_entity']) && update_site_option( 'dolibarr_entity', sanitize_text_field($_REQUEST['dolibarr_entity'])) ) {
 } else {
 delete_site_option('dolibarr_entity');
 }
