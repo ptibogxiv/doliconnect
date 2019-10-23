@@ -237,12 +237,6 @@ if (isset($_REQUEST['doliconnectrestrict']) && $_REQUEST['doliconnectrestrict']=
 update_option('doliconnectrestrict', sanitize_text_field($_REQUEST['doliconnectrestrict']));
 }else {
 delete_option('doliconnectrestrict');}
-if (get_site_option('dolibarr_entity')=='1' && is_super_admin()) { 
-if (isset($_REQUEST['dolibarr_entity']) && $_REQUEST['dolibarr_entity'] > 0 ){
-update_option('dolibarr_entity', sanitize_text_field($_REQUEST['dolibarr_entity']));
-}else {
-delete_option('dolibarr_entity');} 
-}
 if (isset($_REQUEST['doliconnect_facebook']) && $_REQUEST['doliconnect_facebook']>0){
 update_option('doliconnect_facebook', sanitize_text_field($_REQUEST['doliconnect_facebook']));
 }else {
@@ -253,7 +247,7 @@ update_option('doliconnect_google', sanitize_text_field($_REQUEST['doliconnect_g
 delete_option('doliconnect_google');}                               
             update_option('doliaccount', sanitize_text_field($_REQUEST['doliaccount']));
             update_option('doliconnect_disablepro', sanitize_text_field($_REQUEST['doliconnect_disablepro']));
-            update_option('doliconnect_social_facebook', sanitize_text_field($_REQUEST['doliconnect_social_facebook']));
+            if (isset($_REQUEST['dolibarr_entity'])) update_option('dolibarr_entity', sanitize_text_field($_REQUEST['dolibarr_entity']));
             if (isset($_REQUEST['dolicart'])) update_option('dolicart', sanitize_text_field($_REQUEST['dolicart']));
             if (isset($_REQUEST['dolidonation'])) update_option('dolidonation', sanitize_text_field($_REQUEST['dolidonation']));
             if (isset($_REQUEST['doliticket'])) update_option('doliticket', sanitize_text_field($_REQUEST['doliticket']));
@@ -303,14 +297,14 @@ $multicompany = callDoliApi("GET", "/multicompany?sortfield=t.rowid&sortorder=AS
 <?php
 foreach ( $multicompany as $company ) {
 echo "<option value='".$company->id."' ";
-if ( get_site_option('dolibarr_entity') == $company->id ) {
+if ( get_option('dolibarr_entity') == $company->id ) {
 echo "selected ";
 } elseif ( $company->id == (!empty(get_option('dolibarr_entity'))?get_option('dolibarr_entity'):get_current_blog_id()) ) {
 echo "selected ";}
 echo ">".$company->label."</option>";
 } 
-} else {
-echo "Il semble que n'avez pas le module multicompany";
+} elseif ( !empty(get_site_option('dolibarr_entity')) ) {
+echo "<input id='dolibarr_entity'  name='dolibarr_entity' type='text' value='".(!empty(get_option('dolibarr_entity'))?get_option('dolibarr_entity'):get_current_blog_id())."'> Il semble que n'avez pas le module multicompany ";
 } ?>
 </select>
                 </td>
