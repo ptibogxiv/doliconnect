@@ -209,11 +209,11 @@ if ( ! empty( $instance['title'] ) ) {
 print $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ) . $args['after_title'];
 }
 
-if ( function_exists('doliconnecturl') && doliconnectid('doliaccount') > 0 ) { 
+if ( doliconnectid('doliaccount') > 0 ) { 
 print '<a href="'.doliconnecturl('doliaccount').'" title="'.__('My account', 'doliconnect').'"><i class="fas fa-user-circle fa-fw fa-2x"></i></a>';
 } 
 
-if ( function_exists('doliconnecturl') && doliconnectid('dolicart') > 0 ) { 
+if ( doliconnectid('dolicart') > 0 ) { 
 print '<a href="'.doliconnecturl('dolicart').'" title="'.__('Basket', 'doliconnect').'"><span class="fa-layers fa-fw fa-2x">
 <i class="fas fa-shopping-bag"></i><span class="fa-layers-counter fa-lg" style="background:Tomato">'.doliconnector( null, 'fk_order_nb_item').'</span></span></a>';  
 } 
