@@ -309,7 +309,9 @@ $resultatsc = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(i
 if ( !isset($resultatsc->error) && $resultatsc != null ) {
 foreach ($resultatsc as $categorie) {
 
-print "<a href='".esc_url( add_query_arg( 'category', $categorie->id, doliconnecturl('dolishop')) )."' class='list-group-item list-group-item-action'>".doliproduct($categorie, 'label')."</a>"; //."<br />".doliproduct($categorie, 'description')
+print "<a href='".esc_url( add_query_arg( 'category', $categorie->id, doliconnecturl('dolishop')) )."' class='list-group-item list-group-item-action";
+if ( $categorie->id == $_GET['category'] ) { print " active"; }
+print "'>".doliproduct($categorie, 'label')."</a>"; //."<br />".doliproduct($categorie, 'description')
 
 if ( isset($_GET['category']) && $categorie->id == $_GET['category'] ) {
 $request = "/categories?sortfield=t.label&sortorder=ASC&limit=100&type=product&sqlfilters=(t.fk_parent='".esc_attr(isset($_GET["subcategory"]) ? $_GET["subcategory"] : $_GET["category"])."')";
@@ -322,7 +324,9 @@ foreach ($resultatsc as $categorie) {
 $arr_params = array( 'category' => $_GET['category'], 'subcategory' => $categorie->id);  
 $return = esc_url( add_query_arg( $arr_params, doliconnecturl('dolishop')) );
 
-print "<a href='".$return."' class='list-group-item list-group-item-action'>".doliproduct($categorie, 'label')."</a>"; 
+print "<a href='".$return."' class='list-group-item list-group-item-action";
+if ( $categorie->id == $_GET['subcategory'] ) { print " active"; }
+print "'>".doliproduct($categorie, 'label')."</a>"; 
 }
 
 }}
