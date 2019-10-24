@@ -45,10 +45,10 @@ if (is_user_logged_in()){
 	 * @param array $instance The widget options
 	 */
 	public function form( $instance ) {
-		$title = ! empty( $instance['title'] ) ? $instance['title'] : esc_html__( 'Offre d\'emploi', 'text_domain' );
+		$title = ! empty( $instance['title'] ) ? $instance['title'] : esc_html__( 'Offre d\'emploi', 'doliconnect' );
 		?>
 		<p>
-		<label for="<?php print esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php esc_attr_e( 'Title:', 'text_domain' ); ?></label> 
+		<label for="<?php print esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php esc_attr_e( 'Title:', 'doliconnect' ); ?></label> 
 		<input class="widefat" id="<?php print esc_attr( $this->get_field_id( 'title' ) ); ?>" name="<?php print esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text" value="<?php print esc_attr( $title ); ?>">
 		</p>
 		<?php 
@@ -145,7 +145,7 @@ print $args['after_widget'];
 		$title = '';
 		?>
 		<p>
-		<label for="<?php print esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php esc_attr_e( 'Title:', 'text_domain' ); ?></label> 
+		<label for="<?php print esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php esc_attr_e( 'Title:', 'doliconnect' ); ?></label> 
 		<input class="widefat" id="<?php print esc_attr( $this->get_field_id( 'title' ) ); ?>" name="<?php print esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text" value="<?php print esc_attr( $title ); ?>">
 		</p>
 		<?php 
@@ -180,6 +180,87 @@ print $args['after_widget'];
 
 add_action( 'widgets_init', function(){
 	register_widget( 'My_doliconnect_Membership' );
+});
+
+class Doliconnect_DoliMenu extends WP_Widget {
+
+	/**
+	 * Sets up the widgets name etc
+	 */
+	public function __construct() {
+		$widget_ops = array( 
+			'classname' => 'Doliconnect_DoliMenu',                               
+			'description' => 'Menu for account and cart',
+      'customize_selective_refresh' => true,
+		);
+		parent::__construct( 'Doliconnect_DoliMenu', __('Account & Cart menu', 'doliconnect').' (Doliconnect)', $widget_ops );
+	}
+
+	/**
+	 * Outputs the content of the widget
+	 *
+	 * @param array $args
+	 * @param array $instance
+	 */
+public function widget( $args, $instance ) {
+global $current_user, $wpdb;
+		// outputs the content of the widget
+    
+print $args['before_widget'];
+if ( ! empty( $instance['title'] ) ) {
+print $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ) . $args['after_title'];
+}
+
+
+
+print $args['after_widget'];  
+    
+	}
+
+	/**
+	 * Outputs the options form on admin
+	 *
+	 * @param array $instance The widget options
+	 */
+	public function form( $instance ) {
+		$title = '';
+		?>
+		<p>
+		<label for="<?php print esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php esc_attr_e( 'Title:', 'doliconnect' ); ?></label> 
+		<input class="widefat" id="<?php print esc_attr( $this->get_field_id( 'title' ) ); ?>" name="<?php print esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text" value="<?php print esc_attr( $title ); ?>">
+		</p>
+		<?php 
+	}
+
+	/**
+	 * Processing widget options on save
+	 *
+	 * @param array $new_instance The new options
+	 * @param array $old_instance The previous options
+	 *
+	 * @return array
+	 */
+/**
+	 * Sanitize widget form values as they are saved.
+	 *
+	 * @see WP_Widget::update()
+	 *
+	 * @param array $new_instance Values just sent to be saved.
+	 * @param array $old_instance Previously saved values from database.
+	 *
+	 * @return array Updated safe values to be saved.
+	 */
+	public function update( $new_instance, $old_instance ) {
+		$instance = array();
+		$instance['title'] = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
+
+		return $instance;
+	}
+
+}
+
+add_action( 'widgets_init', function(){
+	register_widget( 'Doliconnect_DoliMenu' );
 });
 
 class Doliconnect_Changelang extends WP_Widget {
@@ -228,7 +309,7 @@ print $args['after_widget'];
 		$title = '';
 		?>
 		<p>
-		<label for="<?php print esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php esc_attr_e( 'Title:', 'text_domain' ); ?></label> 
+		<label for="<?php print esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php esc_attr_e( 'Title:', 'doliconnect' ); ?></label> 
 		<input class="widefat" id="<?php print esc_attr( $this->get_field_id( 'title' ) ); ?>" name="<?php print esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text" value="<?php print esc_attr( $title ); ?>">
 		</p>
 		<?php 
