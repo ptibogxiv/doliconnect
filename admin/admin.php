@@ -342,22 +342,6 @@ echo "<input id='dolibarr_entity'  name='dolibarr_entity' type='text' value='".(
            </td>
             </tr>
             <tr>
-                <th style="width:150px;"><label for="dolibarr_cart">dolibarr_cart</label></th>
-                <td >
-<?php if ( is_plugin_active( 'doliconnect-pro/doliconnect-pro.php' ) ) { ?>
-<?php 
-           $args = array(
-    'name' => 'dolicart', 
-    'show_option_none' => __( '- Select -', 'doliconnect' ), 
-    'option_none_value' => '0', 
-    'selected' => get_option('dolicart') 
-);
-           wp_dropdown_pages($args); ?>
-<?php } else { ?>
-<select name="dolicart" type="checkbox" id="dolicart" value="0" disabled><option> --- </option></select>
-<?php } ?> <b>PRO</b></td>
-            </tr>
-            <tr>
                 <th style="width:150px;"><label for="dolibarr_shop">dolibarr_shop</label></th>
                 <td >
 <?php 
@@ -367,9 +351,20 @@ echo "<input id='dolibarr_entity'  name='dolibarr_entity' type='text' value='".(
     'option_none_value' => '0', 
     'selected' => get_option('dolishop') 
 );
-           wp_dropdown_pages($args); ?>
-<b>Add to cart functionnality only with PRO</b></td>
+           wp_dropdown_pages($args); ?></td>
             </tr> 
+            <tr>
+                <th style="width:150px;"><label for="dolibarr_cart">dolibarr_cart</label></th>
+                <td >
+<?php 
+           $args = array(
+    'name' => 'dolicart', 
+    'show_option_none' => __( '- Select -', 'doliconnect' ), 
+    'option_none_value' => '0', 
+    'selected' => get_option('dolicart') 
+);
+           wp_dropdown_pages($args); ?></td>
+            </tr>
             <tr>
                 <th style="width:150px;"><label for="dolibarr_shop">dolibarr_donation</label></th>
                 <td >
