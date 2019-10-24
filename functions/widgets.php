@@ -45,7 +45,7 @@ if (is_user_logged_in()){
 	 * @param array $instance The widget options
 	 */
 	public function form( $instance ) {
-		$title = ! empty( $instance['title'] ) ? $instance['title'] : esc_html__( 'Offre d\'emploi', 'doliconnect' );
+		$title = '';
 		?>
 		<p>
 		<label for="<?php print esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php esc_attr_e( 'Title:', 'doliconnect' ); ?></label> 
