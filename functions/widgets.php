@@ -190,10 +190,10 @@ class Doliconnect_DoliMenu extends WP_Widget {
 	public function __construct() {
 		$widget_ops = array( 
 			'classname' => 'Doliconnect_DoliMenu',                               
-			'description' => 'Menu for account and cart',
+			'description' => 'Links to account and cart',
       'customize_selective_refresh' => true,
 		);
-		parent::__construct( 'Doliconnect_DoliMenu', __('Account & Cart menu', 'doliconnect').' (Doliconnect)', $widget_ops );
+		parent::__construct( 'Doliconnect_DoliMenu', __('Account & Cart', 'doliconnect').' (Doliconnect)', $widget_ops );
 	}
 
 	/**
@@ -203,8 +203,6 @@ class Doliconnect_DoliMenu extends WP_Widget {
 	 * @param array $instance
 	 */
 public function widget( $args, $instance ) {
-global $current_user, $wpdb;
-		// outputs the content of the widget
     
 print $args['before_widget'];
 if ( ! empty( $instance['title'] ) ) {
@@ -270,6 +268,93 @@ add_action( 'widgets_init', function(){
 	register_widget( 'Doliconnect_DoliMenu' );
 });
 
+class Doliconnect_DoliShop extends WP_Widget {
+
+	/**
+	 * Sets up the widgets name etc
+	 */
+	public function __construct() {
+		$widget_ops = array( 
+			'classname' => 'Doliconnect_DoliShop',                               
+			'description' => 'List of product\'s categories',
+      'customize_selective_refresh' => true,
+		);
+		parent::__construct( 'Doliconnect_DoliShop', __('Category of products', 'doliconnect').' (Doliconnect)', $widget_ops );
+	}
+
+	/**
+	 * Outputs the content of the widget
+	 *
+	 * @param array $args
+	 * @param array $instance
+	 */
+public function widget( $args, $instance ) {
+
+if ( is_page(doliconnectid('dolishop')) && !empty(doliconnectid('dolishop')) ) {   
+print $args['before_widget'];
+if ( ! empty( $instance['title'] ) ) {
+print $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ) . $args['after_title'];
+}
+
+if ( function_exists('doliconnecturl') && doliconnectid('doliaccount') > 0 ) { 
+print '<a href="'.doliconnecturl('doliaccount').'" title="'.__('My account', 'doliconnect').'"><i class="fas fa-user-circle fa-fw fa-2x"></i></a>';
+} 
+
+if ( function_exists('doliconnecturl') && doliconnectid('dolicart') > 0 ) { 
+print '<a href="'.doliconnecturl('dolicart').'" title="'.__('Basket', 'doliconnect').'"><span class="fa-layers fa-fw fa-2x">
+<i class="fas fa-shopping-bag"></i><span class="fa-layers-counter fa-lg" style="background:Tomato">'.doliconnector( null, 'fk_order_nb_item').'</span></span></a>';  
+} 
+
+print $args['after_widget'];  
+}    
+	}
+
+	/**
+	 * Outputs the options form on admin
+	 *
+	 * @param array $instance The widget options
+	 */
+	public function form( $instance ) {
+		$title = '';
+		?>
+		<p>
+		<label for="<?php print esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php esc_attr_e( 'Title:', 'doliconnect' ); ?></label> 
+		<input class="widefat" id="<?php print esc_attr( $this->get_field_id( 'title' ) ); ?>" name="<?php print esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text" value="<?php print esc_attr( $title ); ?>">
+		</p>
+		<?php 
+	}
+
+	/**
+	 * Processing widget options on save
+	 *
+	 * @param array $new_instance The new options
+	 * @param array $old_instance The previous options
+	 *
+	 * @return array
+	 */
+/**
+	 * Sanitize widget form values as they are saved.
+	 *
+	 * @see WP_Widget::update()
+	 *
+	 * @param array $new_instance Values just sent to be saved.
+	 * @param array $old_instance Previously saved values from database.
+	 *
+	 * @return array Updated safe values to be saved.
+	 */
+	public function update( $new_instance, $old_instance ) {
+		$instance = array();
+		$instance['title'] = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
+
+		return $instance;
+	}
+
+}
+
+add_action( 'widgets_init', function(){
+	register_widget( 'Doliconnect_DoliShop' );
+});
+
 class Doliconnect_Changelang extends WP_Widget {
 
 	/**
@@ -291,9 +376,7 @@ class Doliconnect_Changelang extends WP_Widget {
 	 * @param array $instance
 	 */
 public function widget( $args, $instance ) {
-global $current_user, $wpdb;
-		// outputs the content of the widget
-    
+  
 print $args['before_widget'];
 if ( ! empty( $instance['title'] ) ) {
 print $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ) . $args['after_title'];
