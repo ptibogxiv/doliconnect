@@ -290,19 +290,28 @@ class Doliconnect_DoliShop extends WP_Widget {
 	 */
 public function widget( $args, $instance ) {
 
-if ( is_page(doliconnectid('dolishop')) && !empty(doliconnectid('dolishop')) ) {   
+if ( is_page(doliconnectid('dolishop')) && !empty(doliconnectid('dolishop')) ) { 
+  
 print $args['before_widget'];
 if ( ! empty( $instance['title'] ) ) {
 print $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ) . $args['after_title'];
 }
 
-if ( function_exists('doliconnecturl') && doliconnectid('doliaccount') > 0 ) { 
-print '<a href="'.doliconnecturl('doliaccount').'" title="'.__('My account', 'doliconnect').'"><i class="fas fa-user-circle fa-fw fa-2x"></i></a>';
-} 
+$shop = callDoliApi("GET", "/doliconnector/constante/DOLICONNECT_CATSHOP", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+//print $shop;
 
-if ( function_exists('doliconnecturl') && doliconnectid('dolicart') > 0 ) { 
-print '<a href="'.doliconnecturl('dolicart').'" title="'.__('Basket', 'doliconnect').'"><span class="fa-layers fa-fw fa-2x">
-<i class="fas fa-shopping-bag"></i><span class="fa-layers-counter fa-lg" style="background:Tomato">'.doliconnector( null, 'fk_order_nb_item').'</span></span></a>';  
+if ( $shop->value != null ) {
+
+$request = "/categories?sortfield=t.label&sortorder=ASC&limit=100&type=product&sqlfilters=(t.fk_parent='".esc_attr($shop->value)."')";
+
+$resultatsc = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+
+if ( !isset($resultatsc->error) && $resultatsc != null ) {
+foreach ($resultatsc as $categorie) {
+
+print "<a href='".esc_url( add_query_arg( 'category', $categorie->id, doliconnecturl('dolishop')) )."' class='list-group-item list-group-item-action'>".doliproduct($categorie, 'label')."</a>"; //."<br />".doliproduct($categorie, 'description')
+
+}}
 } 
 
 print $args['after_widget'];  
