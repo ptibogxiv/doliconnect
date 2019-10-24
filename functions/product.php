@@ -144,7 +144,7 @@ $button .= ">";
 if ( ($product->stock_reel-$qty > '0' && $product->type == '0') ) {
 if ( $product->stock_reel-$qty >= '10' || (is_object($enablestock) && $enablestock->value != 1) ) {
 $m2 = 10;
-} elseif ( $product->stock_reel > $line->qty ) {
+} elseif ( $product->stock_reel > $qty ) {
 $m2 = $product->stock_reel;
 } else { $m2 = $qty; }
 } else {
