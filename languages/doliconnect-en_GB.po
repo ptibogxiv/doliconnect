@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2019-10-25 15:44+0200\n"
-"PO-Revision-Date: 2019-10-25 15:48+0200\n"
+"POT-Creation-Date: 2019-10-25 16:33+0200\n"
+"PO-Revision-Date: 2019-10-25 16:34+0200\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: en_GB\n"
@@ -117,8 +117,8 @@ msgstr "Your informations have been updated."
 #: dashboard/dashboard.php:80 dashboard/dashboard.php:276
 #: dashboard/dashboard.php:437 dashboard/dashboard.php:547
 #: dashboard/dashboard.php:1795 dashboard/templates.php:373
-#: dashboard/templates.php:910 dashboard/templates.php:1393
-#: dashboard/templates.php:1412 functions/product.php:165
+#: dashboard/templates.php:910 dashboard/templates.php:1388
+#: dashboard/templates.php:1407 functions/product.php:165
 msgid "Update"
 msgstr "Update"
 
@@ -395,19 +395,18 @@ msgid "Pay"
 msgstr "Pay"
 
 #: dashboard/dashboard.php:1032 dashboard/dashboard.php:1036
-#: dashboard/templates.php:1251 dashboard/templates.php:1255
-#: dashboard/templates.php:1382 dashboard/templates.php:1403
+#: dashboard/templates.php:1255 dashboard/templates.php:1377
+#: dashboard/templates.php:1398
 msgid "Billing address"
 msgstr "Billing address"
 
 #: dashboard/dashboard.php:1041 dashboard/dashboard.php:1045
-#: dashboard/templates.php:1260 dashboard/templates.php:1264
-#: dashboard/templates.php:1417
+#: dashboard/templates.php:1259 dashboard/templates.php:1412
 msgid "Shipping address"
 msgstr "Endereço de entrega"
 
-#: dashboard/dashboard.php:1052 dashboard/templates.php:1271
-#: dashboard/templates.php:1405
+#: dashboard/dashboard.php:1052 dashboard/templates.php:1266
+#: dashboard/templates.php:1400
 msgid "Billing and shipping address"
 msgstr "Billing and shipping address"
 
@@ -741,7 +740,7 @@ msgid "Low"
 msgstr "Low"
 
 #: dashboard/dashboard.php:1977 dashboard/templates.php:731
-#: dashboard/templates.php:1277 dashboard/templates.php:1450
+#: dashboard/templates.php:1272 dashboard/templates.php:1445
 msgid "Message"
 msgstr "Message"
 
@@ -1130,43 +1129,48 @@ msgstr "Contactos"
 msgid "update"
 msgstr "update"
 
-#: dashboard/templates.php:1421
+#: dashboard/templates.php:1249
+#, fuzzy
+msgid "Customer's Address"
+msgstr "Indirizzo Cliente"
+
+#: dashboard/templates.php:1416
 #, fuzzy
 msgid "Same address that billing"
 msgstr "Same address that billing"
 
-#: dashboard/templates.php:1447
+#: dashboard/templates.php:1442
 #, fuzzy, php-format
 #| msgid "Register payment methods needs Dolibarr %s but your version is %s"
 msgid "Add shipping contact needs Dolibarr %s but your version is %s"
 msgstr "Register payment methods needs Dolibarr %s but your version is %s"
 
-#: dashboard/templates.php:1451
+#: dashboard/templates.php:1446
 #, fuzzy
 msgid "Enter a message here that you want to send us about your order"
 msgstr "Enter a message here that you want to send us about your order"
 
-#: dashboard/templates.php:1454
+#: dashboard/templates.php:1449
 msgid "Validate"
 msgstr "Validate"
 
-#: dashboard/templates.php:1492 dashboard/templates.php:1508
+#: dashboard/templates.php:1487 dashboard/templates.php:1503
 msgid "Oops!"
 msgstr "Oops!"
 
-#: dashboard/templates.php:1492 dashboard/templates.php:1508
+#: dashboard/templates.php:1487 dashboard/templates.php:1503
 msgid "An error is occured. Please contact us!"
 msgstr "An error is occured. Please contact us!"
 
-#: dashboard/templates.php:1558
+#: dashboard/templates.php:1553
 msgid "Continue shopping"
 msgstr "Continue shopping"
 
-#: dashboard/templates.php:1562
+#: dashboard/templates.php:1557
 msgid "Empty the basket"
 msgstr "Empty the basket"
 
-#: dashboard/templates.php:1565
+#: dashboard/templates.php:1560
 msgid "Process"
 msgstr "Process"
 
