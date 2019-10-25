@@ -38,7 +38,7 @@ $connect .= '<div><div style="display:inline-block;width:46%;float:left"><hr wid
 return $connect;
 }
 
-function doliconnectuserform($object, $delay, $mode) {
+function doliuserform($object, $delay, $mode) {
 global $current_user;
 
 if ( is_object($object) && $object->id > 0 ) {

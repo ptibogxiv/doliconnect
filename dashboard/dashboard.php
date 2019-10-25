@@ -75,7 +75,7 @@ print doliloaderscript('doliconnect-infosform');
 
 print "<div class='card shadow-sm'>";
 
-print doliconnectuserform( $thirdparty, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'thirdparty');
+print doliuserform( $thirdparty, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'thirdparty');
 
 print "<div class='card-body'><input type='hidden' name='userid' value='$ID'><button class='btn btn-danger btn-block' type='submit'><b>".__( 'Update', 'doliconnect' )."</b></button></div>";
 print "</div></form>";
@@ -430,7 +430,7 @@ print "<form class='was-validated' role='form' action='$url' name='contact".$con
 
 print dolimodalloaderscript('contact'.$contact->id.'-form');
 
-print doliconnectuserform($contact, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'contact');
+print doliuserform($contact, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'contact');
 
 print "</div>".doliloading('contact'.$contact->id.'-form');
       
@@ -449,7 +449,7 @@ print "<form class='was-validated' role='form' action='$url' name='addcontact-fo
 
 print dolimodalloaderscript('addcontact-form');
 
-print doliconnectuserform($thirdparty, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'contact');
+print doliuserform($thirdparty, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'contact');
 
 print "</div>".doliloading('addcontact-form');
 
@@ -1788,7 +1788,7 @@ print "<form class='was-validated' role='form' action='$url' id='member-".$membe
 
 print dolimodalloaderscript('member'.$member->id.'-form');
 
-print doliconnectuserform($member, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'member'); 
+print doliuserform($member, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'member'); 
 
 print "</div>".doliloading('member'.$member->id.'-form');
      
