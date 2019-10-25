@@ -977,7 +977,7 @@ add_filter( 'the_content', 'dolidonation_display');
 
  // ********************************************************
  
-function dolicart_display($content) {
+function dolicart2_display($content) {
 global $wpdb, $current_user;
 
 if ( in_the_loop() && is_main_query() && is_page(doliconnectid('dolicart')) && !empty(doliconnectid('dolicart')) )  {
@@ -1587,5 +1587,5 @@ return $content;
 
 }
 
-add_filter( 'the_content', 'dolicart_display');
+add_filter( 'the_content', 'dolicart2_display');
 ?>
