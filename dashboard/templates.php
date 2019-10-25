@@ -790,7 +790,7 @@ print "<a href='".esc_url( add_query_arg( 'category', $catoption->value, dolicon
 } else {
 
 if ( isset($_GET['product']) ) {
-addtodolibasket(esc_attr($_GET['product']), esc_attr($_POST['product_update'][$_GET['product']]['qty']), esc_attr($_POST['product_update'][$_GET['product']]['price']));
+doliaddtocart(esc_attr($_GET['product']), esc_attr($_POST['product_update'][$_GET['product']]['qty']), esc_attr($_POST['product_update'][$_GET['product']]['price']));
 //print $_POST['product_update'][$_GET['product']][product];
 wp_redirect( esc_url( add_query_arg( 'category', $_GET['category'], doliconnecturl('dolishop')) ) );
 exit;
@@ -1495,7 +1495,7 @@ print "<div class='alert alert-warning' role='alert'><p><strong>".__( 'Oops!', '
  
 if ( isset($_POST['updateorderproduct']) ) {
 foreach ( $_POST['updateorderproduct'] as $productupdate ) {
-$result = addtodolibasket($productupdate['product'], $productupdate['qty'], $productupdate['price'], $productupdate['remise_percent'], $productupdate['date_start'], $productupdate['date_end']);
+$result = doliaddtocart($productupdate['product'], $productupdate['qty'], $productupdate['price'], $productupdate['remise_percent'], $productupdate['date_start'], $productupdate['date_end']);
 //print var_dump($_POST['updateorderproduct']);
 if (1==1) {
 if (doliconnector($current_user, 'fk_order') > 0) {

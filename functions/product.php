@@ -192,6 +192,104 @@ $button .= "</div>";
 return $button;
 }
 
+function doliaddtocart($product, $quantity = null, $price = null, $remise_percent = null, $timestart = null, $timeend = null, $url = null) {
+global $current_user;
+
+if (!is_null($timestart) && $timestart > 0 ) {
+$date_start=strftime('%Y-%m-%d 00:00:00', $timestart);
+} else {
+$date_start=null;
+}
+
+if ( !is_null($timeend) && $timeend > 0 ) {
+$date_end=strftime('%Y-%m-%d 00:00:00', $timeend);
+} else {
+$date_end=null;
+}
+
+if ( empty(doliconnector($current_user, 'fk_order', true)) ) {
+$thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty'));
+$rdr = [
+    'socid' => doliconnector($current_user, 'fk_soc'),
+    'date_commande' => mktime(),
+    'demand_reason_id' => 1,
+    'cond_reglement_id' => $thirdparty->cond_reglement_id,
+    'module_source' => 'doliconnect',
+    'pos_source' => get_current_blog_id(),
+	];                  
+$order = callDoliApi("POST", "/orders", $rdr, 0);
+}
+
+$orderfo = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order', true)."?contact_list=0", null, dolidelay('order', true));
+
+if ( $orderfo->lines != null ) {
+foreach ( $orderfo->lines as $ln ) {
+if ( $ln->fk_product == $product ) {
+//$deleteline = callDoliApi("DELETE", "/orders/".$orderid."/lines/".$ln[id], null, 0);
+//$qty=$ln[qty];
+$line=$ln->id;
+}
+}}
+
+if (!$line > 0) { $line=null; }
+
+if ( doliconnector($current_user, 'fk_order') > 0 && $quantity > 0 && is_null($line) ) {
+$prdt = callDoliApi("GET", "/products/".$product."?includestockdata=1", null, dolidelay('product', true));
+$adln = [
+    'fk_product' => $product,
+    'desc' => $prdt->description,
+    'date_start' => $date_start,
+    'date_end' => $date_end,
+    'qty' => $quantity,
+    'tva_tx' => $prdt->tva_tx, 
+    'remise_percent' => isset($remise_percent) ? $remise_percent : doliconnector($current_user, 'remise_percent'),
+    'subprice' => $price
+	];                 
+$addline = callDoliApi("POST", "/orders/".doliconnector($current_user, 'fk_order')."/lines", $adln, 0);
+$order = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order', true)."?contact_list=0", null, dolidelay('order', true));
+$dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolidelay('doliconnector', true));
+if ( !empty($url) ) {
+set_transient( 'doliconnect_cartlinelink_'.$addline, esc_url($url), dolidelay(MONTH_IN_SECONDS, true));
+}
+return $addline;
+
+} elseif ( doliconnector($current_user, 'fk_order') > 0 && $line > 0 ) {
+
+if ( $quantity < 1 ) {
+
+$deleteline = callDoliApi("DELETE", "/orders/".doliconnector($current_user, 'fk_order')."/lines/".$line, null, 0);
+$order = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order', true)."?contact_list=0", null, dolidelay('order', true));
+$dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolidelay('doliconnector', true));
+delete_transient( 'doliconnect_cartlinelink_'.$line );
+
+return $deleteline;
+ 
+} else {
+
+$prdt = callDoliApi("GET", "/products/".$product."?includestockdata=1", null, dolidelay('product', true));
+ $ln = [
+    'desc' => $prdt->description,
+    'date_start' => $date_start,
+    'date_end' => $date_end,
+    'qty' => $quantity,
+    'tva_tx' => $prdt->tva_tx, 
+    'remise_percent' => isset($remise_percent) ? $remise_percent : doliconnector($current_user, 'remise_percent'),
+    'subprice' => $price
+	];                  
+$updateline = callDoliApi("PUT", "/orders/".doliconnector($current_user, 'fk_order')."/lines/".$line, $ln, 0);
+$order = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order', true)."?contact_list=0", null, dolidelay('order', true));
+$dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolidelay('doliconnector', true));
+if ( !empty($url) ) {
+set_transient( 'doliconnect_cartlinelink_'.$line, esc_url($url), dolidelay(MONTH_IN_SECONDS, true));
+} else {
+delete_transient( 'doliconnect_cartlinelink_'.$line );
+}
+return $updateline;
+
+}
+}
+}
+
 function dolisummarycart($object) {
 global $current_user;
 
