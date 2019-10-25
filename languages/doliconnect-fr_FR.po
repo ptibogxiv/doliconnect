@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2019-10-25 15:41+0200\n"
-"PO-Revision-Date: 2019-10-25 15:41+0200\n"
+"POT-Creation-Date: 2019-10-25 16:21+0200\n"
+"PO-Revision-Date: 2019-10-25 16:21+0200\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_FR\n"
@@ -117,8 +117,8 @@ msgstr "Vos informations ont été mises à jour."
 #: dashboard/dashboard.php:80 dashboard/dashboard.php:276
 #: dashboard/dashboard.php:437 dashboard/dashboard.php:547
 #: dashboard/dashboard.php:1795 dashboard/templates.php:373
-#: dashboard/templates.php:910 dashboard/templates.php:1393
-#: dashboard/templates.php:1412 functions/product.php:165
+#: dashboard/templates.php:910 dashboard/templates.php:1388
+#: dashboard/templates.php:1407 functions/product.php:165
 msgid "Update"
 msgstr "Modifier"
 
@@ -398,19 +398,18 @@ msgid "Pay"
 msgstr "Payer"
 
 #: dashboard/dashboard.php:1032 dashboard/dashboard.php:1036
-#: dashboard/templates.php:1251 dashboard/templates.php:1255
-#: dashboard/templates.php:1382 dashboard/templates.php:1403
+#: dashboard/templates.php:1255 dashboard/templates.php:1377
+#: dashboard/templates.php:1398
 msgid "Billing address"
 msgstr "Adresse de facturation"
 
 #: dashboard/dashboard.php:1041 dashboard/dashboard.php:1045
-#: dashboard/templates.php:1260 dashboard/templates.php:1264
-#: dashboard/templates.php:1417
+#: dashboard/templates.php:1259 dashboard/templates.php:1412
 msgid "Shipping address"
 msgstr "Adresse d’expédition"
 
-#: dashboard/dashboard.php:1052 dashboard/templates.php:1271
-#: dashboard/templates.php:1405
+#: dashboard/dashboard.php:1052 dashboard/templates.php:1266
+#: dashboard/templates.php:1400
 msgid "Billing and shipping address"
 msgstr "Adresse de facturation et d'expédition"
 
@@ -730,7 +729,7 @@ msgid "Low"
 msgstr "Faible"
 
 #: dashboard/dashboard.php:1977 dashboard/templates.php:731
-#: dashboard/templates.php:1277 dashboard/templates.php:1450
+#: dashboard/templates.php:1272 dashboard/templates.php:1445
 msgid "Message"
 msgstr "Message"
 
@@ -1118,43 +1117,47 @@ msgstr "Contacts"
 msgid "update"
 msgstr "modifier"
 
-#: dashboard/templates.php:1421
+#: dashboard/templates.php:1249
+msgid "Customer's Address"
+msgstr "Adresse du client"
+
+#: dashboard/templates.php:1416
 msgid "Same address that billing"
 msgstr "Même adresse que la facturation"
 
-#: dashboard/templates.php:1447
+#: dashboard/templates.php:1442
 #, php-format
 msgid "Add shipping contact needs Dolibarr %s but your version is %s"
 msgstr ""
 "Ajouter un contact d'expédition a besoin de Dolibarr %s mais votre version "
 "est %s"
 
-#: dashboard/templates.php:1451
+#: dashboard/templates.php:1446
 msgid "Enter a message here that you want to send us about your order"
 msgstr ""
 "Entrez un message ici que vous voulez nous envoyer au sujet de votre commande"
 
-#: dashboard/templates.php:1454
+#: dashboard/templates.php:1449
 msgid "Validate"
 msgstr "Valider"
 
-#: dashboard/templates.php:1492 dashboard/templates.php:1508
+#: dashboard/templates.php:1487 dashboard/templates.php:1503
 msgid "Oops!"
 msgstr "Oups!"
 
-#: dashboard/templates.php:1492 dashboard/templates.php:1508
+#: dashboard/templates.php:1487 dashboard/templates.php:1503
 msgid "An error is occured. Please contact us!"
 msgstr "Une erreur s'est produite. Veuillez nous contacter!"
 
-#: dashboard/templates.php:1558
+#: dashboard/templates.php:1553
 msgid "Continue shopping"
 msgstr "Continuer vos achats"
 
-#: dashboard/templates.php:1562
+#: dashboard/templates.php:1557
 msgid "Empty the basket"
 msgstr "Vider le panier"
 
-#: dashboard/templates.php:1565
+#: dashboard/templates.php:1560
 msgid "Process"
 msgstr "Finaliser"
 
@@ -1561,6 +1564,9 @@ msgstr "ptibogxiv"
 msgid "https://www.ptibogxiv.net/en"
 msgstr "https://www.ptibogxiv.net/fr"
 
+#~ msgid "Thirdparty's Address"
+#~ msgstr "Adresse du tiers"
+
 #~ msgid "Offre d'emploi"
 #~ msgstr "Offre d'emploi"
 
@@ -1609,9 +1615,6 @@ msgstr "https://www.ptibogxiv.net/fr"
 
 #~ msgid "New message"
 #~ msgstr "Nouveau message"
-
-#~ msgid "Customer discount"
-#~ msgstr "Remise client"
 
 #~ msgid "Check for updates"
 #~ msgstr "Vérifier les mises à jour"
