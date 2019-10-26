@@ -1926,7 +1926,9 @@ $type = callDoliApi("GET", "/setup/dictionary/ticket_types?sortfield=pos&sortord
 
 if ( isset($type) ) { 
 print "<select class='custom-select' id='ticket_type'  name='ticket_type'>";
+if ( count($type) > 1 ) {
 print "<option value='' disabled selected >".__( '- Select -', 'doliconnect')."</option>";
+}
 foreach ($type as $postv) {
 print "<option value='".$postv->code."' ";
 if ( isset($_GET['type']) && $_GET['type'] == $postv->code ) {
@@ -1942,7 +1944,9 @@ $cat = callDoliApi("GET", "/setup/dictionary/ticket_categories?sortfield=pos&sor
 
 if ( isset($cat) ) { 
 print "<select class='custom-select' id='ticket_cat'  name='ticket_category'>";
+if ( count($cat) > 1 ) {
 print "<option value='' disabled selected >".__( '- Select -', 'doliconnect')."</option>";
+}
 foreach ( $cat as $postv ) {
 print "<option value='".$postv->code."' ";
 if ( $postv->use_default == 1 ) {
@@ -1959,7 +1963,9 @@ $severity = callDoliApi("GET", "/setup/dictionary/ticket_severities?sortfield=po
 
 if ( isset($severity) ) { 
 print "<select class='custom-select' id='ticket_severity'  name='ticket_severity'>";
+if ( count($severity) > 1 ) {
 print "<option value='' disabled selected >".__( '- Select -', 'doliconnect')."</option>";
+}
 foreach ( $severity as $postv ) {
 print "<option value='".$postv->code."' ";
 if ( $postv->use_default == 1 ) {
