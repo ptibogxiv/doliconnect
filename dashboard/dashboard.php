@@ -1933,7 +1933,7 @@ if ( isset($_GET['type']) && $_GET['type'] == $postv->code ) {
 print "selected ";
 } elseif ( $postv->use_default == 1 ) {
 print "selected ";}
-print ">".__($postv->label, 'doliconnect')."</option>";
+print ">".$postv->label."</option>";
 }
 print "</select>";
 }
@@ -1947,7 +1947,7 @@ foreach ( $cat as $postv ) {
 print "<option value='".$postv->code."' ";
 if ( $postv->use_default == 1 ) {
 print "selected ";}
-print ">".__($postv->label, 'doliconnect')."</option>";
+print ">".$postv->label."</option>";
 }
 print "</select>";
 } 
@@ -1964,7 +1964,7 @@ foreach ( $severity as $postv ) {
 print "<option value='".$postv->code."' ";
 if ( $postv->use_default == 1 ) {
 print "selected ";}
-print ">".__($postv->label, 'doliconnect' )."</option>";
+print ">".$postv->label."</option>";
 }
 print "</select>";
 }
