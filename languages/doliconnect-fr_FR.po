@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2019-10-25 16:21+0200\n"
-"PO-Revision-Date: 2019-10-25 16:21+0200\n"
+"POT-Creation-Date: 2019-10-26 16:13+0200\n"
+"PO-Revision-Date: 2019-10-26 16:28+0200\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_FR\n"
@@ -43,9 +43,10 @@ msgstr "Tout le monde peut enregistrer"
 
 #: admin/admin.php:336 admin/admin.php:350 admin/admin.php:362
 #: admin/admin.php:375 admin/admin.php:390 admin/admin.php:401
-#: admin/admin.php:414 admin/admin.php:426 dashboard/dashboard.php:1929
-#: dashboard/dashboard.php:1945 dashboard/dashboard.php:1963
-#: functions/tools.php:85 functions/tools.php:128 functions/tools.php:213
+#: admin/admin.php:414 admin/admin.php:426 dashboard/dashboard.php:1930
+#: dashboard/dashboard.php:1946 dashboard/dashboard.php:1964
+#: dashboard/dashboard.php:1984 functions/tools.php:85 functions/tools.php:128
+#: functions/tools.php:213
 msgid "- Select -"
 msgstr "- Sélectionner -"
 
@@ -628,23 +629,23 @@ msgstr "Assistance"
 msgid "Your message has been send."
 msgstr "Votre message a été envoyé."
 
-#: dashboard/dashboard.php:1849 dashboard/dashboard.php:1920
+#: dashboard/dashboard.php:1849 dashboard/dashboard.php:1921
 msgid "Type and category"
 msgstr "Type et catégorie"
 
-#: dashboard/dashboard.php:1850 dashboard/dashboard.php:1955
+#: dashboard/dashboard.php:1850 dashboard/dashboard.php:1956
 msgid "Severity"
 msgstr "Sévérité"
 
-#: dashboard/dashboard.php:1852 dashboard/dashboard.php:2006
+#: dashboard/dashboard.php:1852 dashboard/dashboard.php:2026
 msgid "Deleted"
 msgstr "Supprimé"
 
-#: dashboard/dashboard.php:1853 dashboard/dashboard.php:2007
+#: dashboard/dashboard.php:1853 dashboard/dashboard.php:2027
 msgid "Closed"
 msgstr "Fermé"
 
-#: dashboard/dashboard.php:1854 dashboard/dashboard.php:2008
+#: dashboard/dashboard.php:1854 dashboard/dashboard.php:2028
 msgid "Waiting"
 msgstr "En attente"
 
@@ -652,23 +653,23 @@ msgstr "En attente"
 msgid "In progress"
 msgstr "En progression"
 
-#: dashboard/dashboard.php:1856 dashboard/dashboard.php:2010
+#: dashboard/dashboard.php:1856 dashboard/dashboard.php:2030
 msgid "Assigned"
 msgstr "Affecté"
 
-#: dashboard/dashboard.php:1857 dashboard/dashboard.php:2011
+#: dashboard/dashboard.php:1857 dashboard/dashboard.php:2031
 msgid "Answered"
 msgstr "Répondu"
 
-#: dashboard/dashboard.php:1858 dashboard/dashboard.php:2012
+#: dashboard/dashboard.php:1858 dashboard/dashboard.php:2032
 msgid "Read"
 msgstr "Lu"
 
-#: dashboard/dashboard.php:1859 dashboard/dashboard.php:2013
+#: dashboard/dashboard.php:1859 dashboard/dashboard.php:2033
 msgid "Unread"
 msgstr "Non lu"
 
-#: dashboard/dashboard.php:1863 dashboard/dashboard.php:1974
+#: dashboard/dashboard.php:1863 dashboard/dashboard.php:1994
 msgid "Subject"
 msgstr "Sujet"
 
@@ -684,132 +685,136 @@ msgstr "Réponse"
 msgid "Answer"
 msgstr "Répondre"
 
-#: dashboard/dashboard.php:1910
+#: dashboard/dashboard.php:1911
 msgid "Your ticket has been submitted."
 msgstr "Votre ticket a été soumis."
 
-#: dashboard/dashboard.php:1919
+#: dashboard/dashboard.php:1920
 msgid "Open a new ticket"
 msgstr "Ouvrir un nouveau ticket"
 
-#: dashboard/dashboard.php:1927 dashboard/templates.php:717
+#: dashboard/dashboard.php:1928 dashboard/templates.php:717
 msgid "Issue or problem"
 msgstr "Question ou problème"
 
-#: dashboard/dashboard.php:1927 dashboard/templates.php:717
+#: dashboard/dashboard.php:1928 dashboard/templates.php:717
 msgid "Commercial question"
 msgstr "Question commerciale"
 
-#: dashboard/dashboard.php:1927 dashboard/templates.php:717
+#: dashboard/dashboard.php:1928 dashboard/templates.php:717
 msgid "Change or enhancement request"
 msgstr "Modification ou amélioration"
 
-#: dashboard/dashboard.php:1927 dashboard/templates.php:717
+#: dashboard/dashboard.php:1928 dashboard/templates.php:717
 msgid "Project"
 msgstr "Projet"
 
-#: dashboard/dashboard.php:1927 dashboard/templates.php:717
+#: dashboard/dashboard.php:1928 dashboard/templates.php:717
 msgid "Other"
 msgstr "Autre"
 
-#: dashboard/dashboard.php:1961
+#: dashboard/dashboard.php:1962
 msgid "Critical / blocking"
 msgstr "Critique / bloquant"
 
-#: dashboard/dashboard.php:1961
+#: dashboard/dashboard.php:1962
 msgid "High"
 msgstr "Élevé"
 
-#: dashboard/dashboard.php:1961
+#: dashboard/dashboard.php:1962
 msgid "Normal"
 msgstr "Normal"
 
-#: dashboard/dashboard.php:1961
+#: dashboard/dashboard.php:1962
 msgid "Low"
 msgstr "Faible"
 
-#: dashboard/dashboard.php:1977 dashboard/templates.php:731
+#: dashboard/dashboard.php:1976
+msgid "Sales representative"
+msgstr "Commercial"
+
+#: dashboard/dashboard.php:1997 dashboard/templates.php:731
 #: dashboard/templates.php:1272 dashboard/templates.php:1445
 msgid "Message"
 msgstr "Message"
 
-#: dashboard/dashboard.php:1980 dashboard/templates.php:738
+#: dashboard/dashboard.php:2000 dashboard/templates.php:738
 msgid "Send"
 msgstr "Envoyer"
 
-#: dashboard/dashboard.php:1993
+#: dashboard/dashboard.php:2013
 msgid "New ticket"
 msgstr "Nouveau ticket"
 
-#: dashboard/dashboard.php:2009
+#: dashboard/dashboard.php:2029
 msgid "Progress"
 msgstr "Progression"
 
-#: dashboard/dashboard.php:2017
+#: dashboard/dashboard.php:2037
 msgid "No ticket"
 msgstr "Aucun ticket"
 
-#: dashboard/dashboard.php:2034
+#: dashboard/dashboard.php:2054
 msgid "Settings & security"
 msgstr "Paramètres et sécurité"
 
-#: dashboard/dashboard.php:2082
+#: dashboard/dashboard.php:2102
 msgid "Receive a email notification at each connection"
 msgstr "Recevoir une notification par email à chaque connexion"
 
-#: dashboard/dashboard.php:2087 functions/tools.php:318
+#: dashboard/dashboard.php:2107 functions/tools.php:318
 msgid "I would like to receive the newsletter"
 msgstr "Je souhaite recevoir la newsletter"
 
-#: dashboard/dashboard.php:2091
+#: dashboard/dashboard.php:2111
 msgid "I would like to receive the offers of our partners"
 msgstr "Je souhaite recevoir les offres des partenaires"
 
-#: dashboard/dashboard.php:2097
+#: dashboard/dashboard.php:2117
 msgid "Approval of the Privacy Policy the"
 msgstr "Approbation de la politique de confidentialité le"
 
-#: dashboard/dashboard.php:2102
+#: dashboard/dashboard.php:2122
 msgid "Default language"
 msgstr "Langue par défaut"
 
-#: dashboard/dashboard.php:2106 dashboard/dashboard.php:2115
+#: dashboard/dashboard.php:2126 dashboard/dashboard.php:2135
 msgid "Default / Browser language"
 msgstr "Langue par défaut / navigateur"
 
-#: dashboard/dashboard.php:2131
+#: dashboard/dashboard.php:2151
 msgid "Default currency"
 msgstr "Monnaie par défaut"
 
-#: dashboard/dashboard.php:2221
+#: dashboard/dashboard.php:2241
 msgid "Privacy"
 msgstr "Confidentialité"
 
-#: dashboard/dashboard.php:2235
+#: dashboard/dashboard.php:2255
 msgid "Export your personal data"
 msgstr "Exporter vos données personnelles"
 
-#: dashboard/dashboard.php:2235
+#: dashboard/dashboard.php:2255
 msgid "You will receive an email with a secure link to your data"
 msgstr "Vous recevrez un email avec un lien sécurisé vers vos données"
 
-#: dashboard/dashboard.php:2242
+#: dashboard/dashboard.php:2262
 msgid "Remove your personal data"
 msgstr "Retirer vos données personnelles"
 
-#: dashboard/dashboard.php:2242
+#: dashboard/dashboard.php:2262
 msgid "Soon, you will be able to erase your account"
 msgstr "Bientôt, vous pourrez effacer votre compte"
 
-#: dashboard/dashboard.php:2249
+#: dashboard/dashboard.php:2269
 msgid "Delete your account"
 msgstr "Supprimer votre compte"
 
-#: dashboard/dashboard.php:2249
+#: dashboard/dashboard.php:2269
 msgid "Soon, you will be able to delete your account"
 msgstr "Bientôt, vous pourrez supprimer votre compte"
 
-#: dashboard/dashboard.php:2256
+#: dashboard/dashboard.php:2276
 msgid "Validate the request"
 msgstr "Valider la demande"
 
