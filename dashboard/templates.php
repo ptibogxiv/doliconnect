@@ -711,18 +711,21 @@ print "/>";
 print "</div>";
 
 print "<div class='form-group'><label class='control-label' for='type'><small>".__( 'Type of request', 'doliconnect')."</small></label>";
-$type = callDoliApi("GET", "/setup/dictionary/ticket_types?sortfield=pos&sortorder=ASC&limit=100", null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$type = callDoliApi("GET", "/setup/dictionary/ticket_types?sortfield=pos&sortorder=ASC&limit=100", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+//print $type;
 
 if ( isset($type) ) { 
-$tp= __( 'Issue or problem', 'doliconnect').__( 'Commercial question', 'doliconnect').__( 'Change or enhancement request', 'doliconnect').__( 'Project', 'doliconnect').__( 'Other', 'doliconnect');
 print "<select class='custom-select' id='ticket_type'  name='ticket_type'>";
-foreach ( $type as $postv ) {
+if ( count($type) > 1 ) {
+print "<option value='' disabled selected >".__( '- Select -', 'doliconnect')."</option>";
+}
+foreach ($type as $postv) {
 print "<option value='".$postv->code."' ";
-if ( $_GET['type'] == $postv->code ) {
+if ( isset($_GET['type']) && $_GET['type'] == $postv->code ) {
 print "selected ";
 } elseif ( $postv->use_default == 1 ) {
 print "selected ";}
-print ">".__($postv->label, 'doliconnect')."</option>";
+print ">".$postv->label."</option>";
 }
 print "</select>";
 }
