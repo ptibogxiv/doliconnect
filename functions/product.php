@@ -41,7 +41,7 @@ $enablestock = callDoliApi("GET", "/doliconnector/constante/MAIN_MODULE_STOCK", 
 $stockservices = callDoliApi("GET", "/doliconnector/constante/STOCK_SUPPORTS_SERVICES", null, dolidelay('constante'));
 
 if ( ! is_object($product) || empty($enablestock->value) || ($product->type != '0' && ! is_object($stockservices->value)) ) {
-$stock = "<span class='badge badge-pill badge-success'>".__( 'Available', 'doliconnect' )."</span>"; 
+$stock = "<span class='badge badge-pill badge-success'>".__( 'Available', 'doliconnect')."</span>"; 
 } else {
 
 $minstock = min(array($product->stock_reel, $product->stock_theorique));
