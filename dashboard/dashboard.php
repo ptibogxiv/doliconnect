@@ -1858,7 +1858,7 @@ elseif ( $ticketfo->fk_statut == 3 ) { print "<span class='label label-warning'>
 elseif ( $ticketfo->fk_statut == 1 ) { print "<span class='label label-warning'>".__( 'Read', 'doliconnect' )."</span>"; }
 elseif ( $ticketfo->fk_statut == 0 ) { print "<span class='label label-danger'>".__( 'Unread', 'doliconnect' )."</span>"; }
 print "</h3></div></div>";
-print '<BR/><div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: '.$ticketfo->progress.'%" aria-valuenow="'.$ticketfo->progress.'" aria-valuemin="0" aria-valuemax="100"></div></div>';
+print '<br><div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: '.$ticketfo->progress.'%" aria-valuenow="'.$ticketfo->progress.'" aria-valuemin="0" aria-valuemax="100"></div></div>';
 print "</div><ul class='list-group list-group-flush'>
 <li class='list-group-item'><h5 class='mb-1'>".__( 'Subject', 'doliconnect' ).": ".$ticketfo->subject."</h5>
 <p class='mb-1'>".__( 'Initial message', 'doliconnect' ).": ".$ticketfo->message."</p></li>";
@@ -1925,7 +1925,6 @@ $type = callDoliApi("GET", "/setup/dictionary/ticket_types?sortfield=pos&sortord
 //print $type;
 
 if ( isset($type) ) { 
-$tp= __( 'Issue or problem', 'doliconnect').__( 'Commercial question', 'doliconnect').__( 'Change or enhancement request', 'doliconnect').__( 'Project', 'doliconnect').__( 'Other', 'doliconnect');
 print "<select class='custom-select' id='ticket_type'  name='ticket_type'>";
 print "<option value='' disabled selected >".__( '- Select -', 'doliconnect')."</option>";
 foreach ($type as $postv) {
@@ -1959,7 +1958,6 @@ print "<div class='form-group'><label for='inputcivility'><small>".__( 'Severity
 $severity = callDoliApi("GET", "/setup/dictionary/ticket_severities?sortfield=pos&sortorder=ASC&limit=100", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 if ( isset($severity) ) { 
-$sv= __( 'Critical / blocking', 'doliconnect' ).__( 'High', 'doliconnect').__( 'Normal', 'doliconnect').__( 'Low', 'doliconnect');
 print "<select class='custom-select' id='ticket_severity'  name='ticket_severity'>";
 print "<option value='' disabled selected >".__( '- Select -', 'doliconnect')."</option>";
 foreach ( $severity as $postv ) {
