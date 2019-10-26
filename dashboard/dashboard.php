@@ -1973,17 +1973,22 @@ print "</select>";
 print "</div></div>";
 
 if ( doliversion('11.0.0') ) {
+print "<div class='form-group'><label for='inputcivility'><small>".__( 'Representatives', 'doliconnect')."</small></label>
+<div class='input-group mb-2'><div class='input-group-prepend'><span class='input-group-text' id='identity'><i class='fas fa-bug fa-fw'></i></span></div>";
 $representatives = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc')."/representatives?mode=0", null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
 //print $type;
 
 if ( !isset($representatives->error) && $representatives != null ) {
 print "<select class='custom-select' id='fk_user_assign'  name='fk_user_assign' required>";
+if ( count($representatives) > 1 ) {
 print "<option value='' disabled selected >".__( '- Select -', 'doliconnect')."</option>";
+}
 foreach ($representatives as $postv) {
 print "<option value='".$postv->id."' >".$postv->firstname." ".$postv->lastname." ".$postv->job."</option>";
 }
 print "</select>";
 }
+print "</div></div>";
 }
 
 print "<div class='form-group'><label for='ticket_subject'><small>".__( 'Subject', 'doliconnect' )."</small></label><div class='input-group mb-2'><div class='input-group-prepend'><div class='input-group-text'><i class='fas fa-bullhorn fa-fw'></i></div></div><input type='text' class='form-control' id='ticket_subject' name='ticket_subject' value='' autocomplete='off' required></div></div>";
