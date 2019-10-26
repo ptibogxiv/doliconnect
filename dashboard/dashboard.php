@@ -1974,7 +1974,7 @@ print "</div></div>";
 
 if ( doliversion('11.0.0') ) {
 print "<div class='form-group'><label for='inputcivility'><small>".__( 'Representatives', 'doliconnect')."</small></label>
-<div class='input-group mb-2'><div class='input-group-prepend'><span class='input-group-text' id='identity'><i class='fas fa-bug fa-fw'></i></span></div>";
+<div class='input-group mb-2'><div class='input-group-prepend'><span class='input-group-text' id='identity'><i class='fas fa-user-tie fa-fw'></i></span></div>";
 $representatives = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc')."/representatives?mode=0", null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
 //print $type;
 
