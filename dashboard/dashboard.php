@@ -570,7 +570,7 @@ return apply_filters( 'doliconnect_paymentmethods_lock', null);
 function paymentmethods_menu( $arg ) {
 print "<a href='".esc_url( add_query_arg( 'module', 'paymentmethods', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-action";
 if ($arg=='paymentmethods') { print " active";}
-print "'>".__( 'Manage payment methods', 'doliconnect-pro')."</a>";
+print "'>".__( 'Manage payment methods', 'doliconnect')."</a>";
 }
 
 function paymentmethods_module( $url ) {
@@ -584,7 +584,7 @@ $data = [
 
 $gateway = callDoliApi("PUT", "/doliconnector/".doliconnector($current_user, 'fk_soc')."/paymentmethods/".sanitize_text_field($_POST['default_paymentmethod']), $data, dolidelay( 0, true));
 $gateway = callDoliApi("GET", "/doliconnector/".doliconnector($current_user, 'fk_soc')."/paymentmethods", null, dolidelay('paymentmethods', true));
-$msg = dolialert ('success', __( 'You changed your default payment method', 'doliconnect-pro' ));
+$msg = dolialert ('success', __( 'You changed your default payment method', 'doliconnect' ));
 } elseif ( isset($_POST['delete_paymentmethod']) ) {
 
 $gateway = callDoliApi("DELETE", "/doliconnector/".doliconnector($current_user, 'fk_soc')."/paymentmethods/".sanitize_text_field($_POST['delete_paymentmethod']), null, dolidelay( 0, true));
@@ -598,7 +598,7 @@ $data = [
 
 $gateway = callDoliApi("POST", "/doliconnector/".doliconnector($current_user, 'fk_soc')."/paymentmethods/".sanitize_text_field($_POST['add_paymentmethod']), $data, dolidelay( 0, true));
 $gateway = callDoliApi("GET", "/doliconnector/".doliconnector($current_user, 'fk_soc')."/paymentmethods", null, dolidelay('paymentmethods', true));
-$msg = dolialert ('success', __( 'You have a new payment method', 'doliconnect-pro' ));
+$msg = dolialert ('success', __( 'You have a new payment method', 'doliconnect' ));
 } 
 
 $listpaymentmethods = callDoliApi("GET", "/doliconnector/".doliconnector($current_user, 'fk_soc')."/paymentmethods", null, dolidelay('paymentmethods', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
@@ -620,13 +620,13 @@ print doliloaderscript('paymentmethods-form');
 print "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
 
 if (empty($listpaymentmethods->stripe)) {
-print "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".__( "Stripe's in sandbox mode", 'doliconnect-pro')."</b></li>";
+print "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".__( "Stripe's in sandbox mode", 'doliconnect')."</b></li>";
 }
 
 if ( doliversion('10.0.0') ) {
-print '<button id="ButtonAddPaymentMethod" type="button" class="list-group-item lh-condensed list-group-item-action list-group-item-primary" data-toggle="modal" data-target="#addsource" ><center><i class="fas fa-plus-circle"></i> '.__( 'New payment method', 'doliconnect-pro' ).'</center></button>';
+print '<button id="ButtonAddPaymentMethod" type="button" class="list-group-item lh-condensed list-group-item-action list-group-item-primary" data-toggle="modal" data-target="#addsource" ><center><i class="fas fa-plus-circle"></i> '.__( 'New payment method', 'doliconnect' ).'</center></button>';
 } elseif ( current_user_can( 'administrator' ) ) {
-print "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".sprintf( esc_html__( "Register payment methods needs Dolibarr %s but your version is %s", 'doliconnect-pro'), '10.0.0',$versiondoli[0])."</b></li>";
+print "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".sprintf( esc_html__( "Register payment methods needs Dolibarr %s but your version is %s", 'doliconnect'), '10.0.0',$versiondoli[0])."</b></li>";
 }
 
 //SAVED SOURCES 
@@ -648,9 +648,9 @@ else {print 'class="fab fa-cc-amex fa-3x fa-fw"';}
 print '></i></center>';
 print "</div><div class='col-8 col-sm-7 col-md-6 col-lg-7'><h6 class='my-0'>";
 if ( $method->type == 'sepa_debit' ) {
-print __( 'Account', 'doliconnect-pro' ).' '.$method->reference.'<small> <a href="'.$method->mandate_url.'" title="'.__( 'Mandate', 'doliconnect-pro' ).' '.$method->mandate_reference.'" target="_blank"><i class="fas fa-info-circle"></i></a></small>';
+print __( 'Account', 'doliconnect' ).' '.$method->reference.'<small> <a href="'.$method->mandate_url.'" title="'.__( 'Mandate', 'doliconnect' ).' '.$method->mandate_reference.'" target="_blank"><i class="fas fa-info-circle"></i></a></small>';
 } else {
-print __( 'Card', 'doliconnect-pro' ).' '.$method->reference;
+print __( 'Card', 'doliconnect' ).' '.$method->reference;
 }
 if ( !empty($method->expiration) ) { print " - ".date("m/Y", strtotime($method->expiration.'/1')); }
 print "</h6><small class='text-muted'>".$method->holder."</small></div>";
@@ -660,11 +660,11 @@ print "</div>";
 
 print "<div class='col-4 col-sm-3 col-md-2 btn-group-vertical' role='group'>";
 if ( !empty($method->default_source) ) { 
-print "<button class='btn btn-light' title='".__( 'Favorite', 'doliconnect-pro' )."' disabled><i class='fas fa-star fa-1x fa-fw' style='color:Gold'></i></button>";
+print "<button class='btn btn-light' title='".__( 'Favorite', 'doliconnect' )."' disabled><i class='fas fa-star fa-1x fa-fw' style='color:Gold'></i></button>";
 } elseif ( (current_time( 'timestamp', 1) >= strtotime($method->expiration.'/1')) || ! preg_match('/pm_/', $method->id) ) {
-print "<button class='btn btn-light' title='".__( 'Can not be set as favorite', 'doliconnect-pro' )."' disabled><i class='fas fa-ban fa-1x fa-fw'></i></button>";
+print "<button class='btn btn-light' title='".__( 'Can not be set as favorite', 'doliconnect' )."' disabled><i class='fas fa-ban fa-1x fa-fw'></i></button>";
 } else {
-print "<button name='default_paymentmethod' value='".$method->id."' class='btn btn-light' type='submit' title='".__( 'Set as favorite', 'doliconnect-pro' )."'><i class='far fa-star fa-1x fa-fw'></i></button>";
+print "<button name='default_paymentmethod' value='".$method->id."' class='btn btn-light' type='submit' title='".__( 'Set as favorite', 'doliconnect' )."'><i class='far fa-star fa-1x fa-fw'></i></button>";
 }
 print "<button name='delete_paymentmethod' value='".$method->id."' class='btn btn-light text-danger' type='submit' title='".__( 'Delete', 'doliconnect' )."'><i class='fas fa-trash fa-fw'></i></button>";
 print "</div></li>";
@@ -672,7 +672,7 @@ print "</div></li>";
 print "</li>";
 
 } else {
-print "<li class='list-group-item list-group-item-light'><center>".__( 'No payment method', 'doliconnect-pro' )."</center></li>";
+print "<li class='list-group-item list-group-item-light'><center>".__( 'No payment method', 'doliconnect' )."</center></li>";
 }
 print "</ul></div></form>";
 
@@ -680,16 +680,16 @@ if ( $i < 5 && doliversion('10.0.0') ) {
 
 print "<div class='modal fade' id='addsource' tabindex='-1' role='dialog' aria-labelledby='addsourceTitle' aria-hidden='true' data-backdrop='static' data-keyboard='false'>
 <div class='modal-dialog modal-dialog-centered' role='document'><div class='modal-content border-0'><div class='modal-header border-0'>
-<h5 class='modal-title' id='addsourceTitle'>".__( 'New payment method', 'doliconnect-pro' )."</h5><button id='CloseAddPaymentMethod' type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
+<h5 class='modal-title' id='addsourceTitle'>".__( 'New payment method', 'doliconnect' )."</h5><button id='CloseAddPaymentMethod' type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
 </div><div id='BodyAddPaymentMethod'><ul class='list-group list-group-flush'><li class='list-group-item'>"; 
 print "<form role='form' action='$url' id='newpaymentmethod-form' method='post'>";
-print '<input id="cardholder-name" name="cardholder-name" value="" type="text" class="form-control" placeholder="'.__( 'Owner as on your card', 'doliconnect-pro' ).'" autocomplete="off" required>
+print '<input id="cardholder-name" name="cardholder-name" value="" type="text" class="form-control" placeholder="'.__( 'Owner as on your card', 'doliconnect' ).'" autocomplete="off" required>
 <label for="card-element"></label>
 <div class="form-control" id="card-element"><!-- a Stripe Element will be inserted here. --></div>
 <div id="card-errors" role="alert"></div>';
 print "</li><li class='list-group-item'><small><div class='custom-control custom-checkbox my-1 mr-sm-2'><input type='checkbox' class='custom-control-input' value='1' id='default' name='default'";
 if (empty($i)) { print " checked disabled"; }
-print "><label class='custom-control-label' for='default'> ".__( 'Set as default payment mode', 'doliconnect-pro' )."</label></div>";
+print "><label class='custom-control-label' for='default'> ".__( 'Set as default payment mode', 'doliconnect' )."</label></div>";
 if (empty($i)) { print "<input type='hidden' name='default' value='1'>"; }
 print '</small></li></ul></div>';
 print doliloading('addnewpaymentmethod');
@@ -759,7 +759,7 @@ jQuery("#BodyAddPaymentMethod").show();
 jQuery("#doliloading-addnewpaymentmethod").hide();         
 				console.log("Field Card holder is empty");
 				var displayError = document.getElementById("card-errors");
-				displayError.textContent = "'.__( "We need an owner as on your card.", "doliconnect-pro").'";
+				displayError.textContent = "'.__( "We need an owner as on your card.", "doliconnect").'";
         	}
         else
         	{
@@ -779,7 +779,7 @@ jQuery("#BodyAddPaymentMethod").show();
 jQuery("#doliloading-addnewpaymentmethod").hide(); 
 console.log("Error occured when adding card");
 var displayError = document.getElementById("card-errors");
-displayError.textContent = "'.__( "Your card number seems to be wrong.", "doliconnect-pro").'";    
+displayError.textContent = "'.__( "Your card number seems to be wrong.", "doliconnect").'";    
   } else {
 	      var hiddenInput = document.createElement("input");
 	      hiddenInput.setAttribute("type", "hidden");
@@ -979,7 +979,7 @@ $orderavancement=7; }
 elseif ( $orderfo->statut == -1 ) { $orderinfo=__( 'Canceled', 'doliconnect' );
 $orderavancement=0;  }
 
-print "<b>".__( 'Payment method', 'doliconnect' ).":</b> ".__( $orderfo->mode_reglement, 'doliconnect-pro' )."<br><br></div><div class='col-md-7'>";
+print "<b>".__( 'Payment method', 'doliconnect' ).":</b> ".__( $orderfo->mode_reglement, 'doliconnect' )."<br><br></div><div class='col-md-7'>";
 
 if ( isset($orderinfo) ) {
 print "<h3 class='text-right'>".$orderinfo."</h3>";
@@ -1409,7 +1409,7 @@ print "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'
 $datecommande =  date_i18n('d/m/Y', $donationfo->date_creation);
 print "<b>".__( 'Date of order', 'doliconnect' ).":</b> $datecommande<br>";
 
-print "<b>".__( 'Payment method', 'doliconnect' ).":</b> ".__( $donationfo->mode_reglement, 'doliconnect-pro' )."<br><br></div><div class='col-md-7'>";
+print "<b>".__( 'Payment method', 'doliconnect' ).":</b> ".__( $donationfo->mode_reglement, 'doliconnect' )."<br><br></div><div class='col-md-7'>";
 
 if ( isset($orderinfo) ) {
 print "<h3 class='text-right'>".$orderinfo."</h3>";
