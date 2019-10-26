@@ -1895,8 +1895,9 @@ print "</div></small>";
 } elseif ( isset($_GET['create']) ) {
 
 if ( isset($_POST["case"]) && $_POST["case"] == 'createticket' ) {
-$rdr = [
+$rdr = [        
     'fk_soc' => doliconnector($current_user, 'fk_soc'),
+    'fk_user_assign' => $_POST['fk_user_assign'],
     'type_code' => $_POST['ticket_type'],
     'category_code' => $_POST['ticket_category'],
     'severity_code' => $_POST['ticket_severity'],
@@ -1907,7 +1908,7 @@ $ticketid = callDoliApi("POST", "/tickets", $rdr, dolidelay('ticket', true));
 //print $ticketid;
 
 if ( $ticketid > 0 ) {
-$msg = dolialert ('success', __( 'Your ticket has been submitted.', 'doliconnect' ));
+$msg = dolialert ('success', __( 'Your ticket has been submitted.', 'doliconnect'));
 } }
 
 print "<form class='was-validated' id='doliconnect-newticketform' action='".$url."&create' method='post'>";
@@ -1916,24 +1917,24 @@ if ( isset($msg) ) { print $msg; }
 
 print doliloaderscript('doliconnect-newticketform'); 
 
-print "<div class='card shadow-sm'><ul class='list-group list-group-flush'><li class='list-group-item'><h5 class='card-title'>".__( 'Open a new ticket', 'doliconnect' )."</h5>";
-print "<div class='form-group'><label for='inputcivility'><small>".__( 'Type and category', 'doliconnect' )."</small></label>
+print "<div class='card shadow-sm'><ul class='list-group list-group-flush'><li class='list-group-item'><h5 class='card-title'>".__( 'Open a new ticket', 'doliconnect')."</h5>";
+print "<div class='form-group'><label for='inputcivility'><small>".__( 'Type and category', 'doliconnect')."</small></label>
 <div class='input-group mb-2'><div class='input-group-prepend'><span class='input-group-text' id='identity'><i class='fas fa-info-circle fa-fw'></i></span></div>";
 
 $type = callDoliApi("GET", "/setup/dictionary/ticket_types?sortfield=pos&sortorder=ASC&limit=100", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 //print $type;
 
 if ( isset($type) ) { 
-$tp= __( 'Issue or problem', 'doliconnect' ).__( 'Commercial question', 'doliconnect' ).__( 'Change or enhancement request', 'doliconnect' ).__( 'Project', 'doliconnect' ).__( 'Other', 'doliconnect' );
+$tp= __( 'Issue or problem', 'doliconnect').__( 'Commercial question', 'doliconnect').__( 'Change or enhancement request', 'doliconnect').__( 'Project', 'doliconnect').__( 'Other', 'doliconnect');
 print "<select class='custom-select' id='ticket_type'  name='ticket_type'>";
-print "<option value='' disabled selected >".__( '- Select -', 'doliconnect' )."</option>";
+print "<option value='' disabled selected >".__( '- Select -', 'doliconnect')."</option>";
 foreach ($type as $postv) {
 print "<option value='".$postv->code."' ";
 if ( isset($_GET['type']) && $_GET['type'] == $postv->code ) {
 print "selected ";
 } elseif ( $postv->use_default == 1 ) {
 print "selected ";}
-print ">".__($postv->label, 'doliconnect' )."</option>";
+print ">".__($postv->label, 'doliconnect')."</option>";
 }
 print "</select>";
 }
@@ -1942,25 +1943,25 @@ $cat = callDoliApi("GET", "/setup/dictionary/ticket_categories?sortfield=pos&sor
 
 if ( isset($cat) ) { 
 print "<select class='custom-select' id='ticket_cat'  name='ticket_category'>";
-print "<option value='' disabled selected >".__( '- Select -', 'doliconnect' )."</option>";
+print "<option value='' disabled selected >".__( '- Select -', 'doliconnect')."</option>";
 foreach ( $cat as $postv ) {
 print "<option value='".$postv->code."' ";
 if ( $postv->use_default == 1 ) {
 print "selected ";}
-print ">".__($postv->label, 'doliconnect' )."</option>";
+print ">".__($postv->label, 'doliconnect')."</option>";
 }
 print "</select>";
 } 
 print "</div></div>";
-print "<div class='form-group'><label for='inputcivility'><small>".__( 'Severity', 'doliconnect' )."</small></label>
+print "<div class='form-group'><label for='inputcivility'><small>".__( 'Severity', 'doliconnect')."</small></label>
 <div class='input-group mb-2'><div class='input-group-prepend'><span class='input-group-text' id='identity'><i class='fas fa-bug fa-fw'></i></span></div>";
 
 $severity = callDoliApi("GET", "/setup/dictionary/ticket_severities?sortfield=pos&sortorder=ASC&limit=100", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 if ( isset($severity) ) { 
-$sv= __( 'Critical / blocking', 'doliconnect' ).__( 'High', 'doliconnect' ).__( 'Normal', 'doliconnect' ).__( 'Low', 'doliconnect' );
+$sv= __( 'Critical / blocking', 'doliconnect' ).__( 'High', 'doliconnect').__( 'Normal', 'doliconnect').__( 'Low', 'doliconnect');
 print "<select class='custom-select' id='ticket_severity'  name='ticket_severity'>";
-print "<option value='' disabled selected >".__( '- Select -', 'doliconnect' )."</option>";
+print "<option value='' disabled selected >".__( '- Select -', 'doliconnect')."</option>";
 foreach ( $severity as $postv ) {
 print "<option value='".$postv->code."' ";
 if ( $postv->use_default == 1 ) {
@@ -1971,13 +1972,27 @@ print "</select>";
 }
 print "</div></div>";
 
+if ( doliversion('11.0.0') ) {
+$representatives = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc')."/representatives?mode=0", null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
+//print $type;
+
+if ( !isset($representatives->error) && $representatives != null ) {
+print "<select class='custom-select' id='fk_user_assign'  name='fk_user_assign' required>";
+print "<option value='' disabled selected >".__( '- Select -', 'doliconnect')."</option>";
+foreach ($representatives as $postv) {
+print "<option value='".$postv->id."' >".$postv->firstname." ".$postv->lastname." ".$postv->job."</option>";
+}
+print "</select>";
+}
+}
+
 print "<div class='form-group'><label for='ticket_subject'><small>".__( 'Subject', 'doliconnect' )."</small></label><div class='input-group mb-2'><div class='input-group-prepend'><div class='input-group-text'><i class='fas fa-bullhorn fa-fw'></i></div></div><input type='text' class='form-control' id='ticket_subject' name='ticket_subject' value='' autocomplete='off' required></div></div>";
 
 print "<div class='form-group'>
 <label for='description'><small>".__( 'Message', 'doliconnect' )."</small></label><div class='input-group mb-2'><div class='input-group-prepend'><span class='input-group-text'><i class='fas fa-file-alt fa-fw'></i></span></div>
 <textarea type='text' class='form-control' name='ticket_message' id='ticket_message' rows='8' required></textarea></div></div></li></ul>";
 
-print "<div class='card-body'><input type='hidden' name='case' value='createticket'><button type='submit' class='btn btn-block btn-warning'><b>".__( 'Send', 'doliconnect' )."</b></button></div>";
+print "<div class='card-body'><input type='hidden' name='case' value='createticket'><button type='submit' class='btn btn-block btn-warning'><b>".__( 'Send', 'doliconnect')."</b></button></div>";
 
 print "</div></form>";
 
