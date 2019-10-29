@@ -249,13 +249,14 @@ delete_option('doliconnect_google');}
             update_option('doliaccount', sanitize_text_field($_REQUEST['doliaccount']));
             update_option('doliconnect_disablepro', sanitize_text_field($_REQUEST['doliconnect_disablepro']));
             if (isset($_REQUEST['dolibarr_entity'])) update_option('dolibarr_entity', sanitize_text_field($_REQUEST['dolibarr_entity']));
-            if (isset($_REQUEST['dolicart'])) update_option('dolicart', sanitize_text_field($_REQUEST['dolicart']));
+            update_option('dolicart', sanitize_text_field($_REQUEST['dolicart']));
             if (isset($_REQUEST['dolidonation'])) update_option('dolidonation', sanitize_text_field($_REQUEST['dolidonation']));
             if (isset($_REQUEST['doliticket'])) update_option('doliticket', sanitize_text_field($_REQUEST['doliticket']));
             if (isset($_REQUEST['doliclassifieds'])) update_option('doliclassifieds', sanitize_text_field($_REQUEST['doliclassifieds'])); 
             update_option('doliconnect_ipkiosk', array_values(array_filter(array_map('trim', explode(PHP_EOL, $_REQUEST['doliconnect_ipkiosk'])))));             
             update_option('wp_page_for_privacy_policy', sanitize_text_field($_REQUEST['wp_page_for_privacy_policy']));
-            update_option('dolishop', sanitize_text_field($_REQUEST['dolishop']));             
+            update_option('dolishop', sanitize_text_field($_REQUEST['dolishop']));
+            update_option('dolisupplier', sanitize_text_field($_REQUEST['dolisupplier']));             
             update_option('doliconnect_social_facebook', sanitize_text_field($_REQUEST['doliconnect_social_facebook']));
             update_option('doliconnect_social_twitter', sanitize_text_field($_REQUEST['doliconnect_social_twitter']));
             update_option('doliconnect_social_instagram', sanitize_text_field($_REQUEST['doliconnect_social_instagram']));
@@ -350,6 +351,18 @@ echo "<input id='dolibarr_entity'  name='dolibarr_entity' type='text' value='".(
     'show_option_none' => __( '- Select -', 'doliconnect' ), 
     'option_none_value' => '0', 
     'selected' => get_option('dolishop') 
+);
+           wp_dropdown_pages($args); ?></td>
+            </tr> 
+            <tr>
+                <th style="width:150px;"><label for="dolibarr_shop">dolibarr_supplier</label></th>
+                <td >
+<?php 
+           $args = array(
+    'name' => 'dolisupplier', 
+    'show_option_none' => __( '- Select -', 'doliconnect' ), 
+    'option_none_value' => '0', 
+    'selected' => get_option('dolisupplier') 
 );
            wp_dropdown_pages($args); ?></td>
             </tr> 
