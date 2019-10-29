@@ -772,7 +772,7 @@ print "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
 
 if ( !isset($thirdparty->error) && isset($_GET['supplier']) && isset($thirdparty->id) && ($_GET['supplier'] == $thirdparty->id) && $thirdparty->status == 1 && $thirdparty->fournisseur == 1 ) {
 
-
+print "<li class='list-group-item'>".$thirdparty->name."</li>"; 
 
 } else {
 
