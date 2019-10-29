@@ -774,6 +774,22 @@ if ( !isset($thirdparty->error) && isset($_GET['supplier']) && isset($thirdparty
 
 print "<li class='list-group-item'>".$thirdparty->name."</li>"; 
 
+$request = "/products/purchase_prices?sortfield=t.ref&sortorder=ASC&limit=100&supplier=".esc_attr($_GET["supplier"]);
+
+$resultatsc = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+
+if ( !isset($resultatsc->error) && $resultatsc != null ) {
+foreach ($resultatsc as $product) {
+
+$arr_params = array( 'product' => $product->id);  
+$return = esc_url( add_query_arg( $arr_params, doliconnecturl('dolishop')) );
+
+print "<a href='".$return."' class='list-group-item list-group-item-action'>".doliproduct($product, 'label')."<br><small>".doliproduct($product, 'description')."</small></a>"; 
+
+}} else {
+print "<li class='list-group-item list-group-item-light'><center>".__( 'No product', 'doliconnect')."</center></li>";
+}
+
 } else {
 
 $request = "/thirdparties?sortfield=t.rowid&sortorder=ASC&limit=100&mode=4&sqlfilters=(t.status%3A%3D%3A'1')";
