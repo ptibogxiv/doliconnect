@@ -784,7 +784,7 @@ foreach ($resultatsc as $product) {
 $arr_params = array( 'product' => $product->id);  
 $return = esc_url( add_query_arg( $arr_params, doliconnecturl('dolishop')) );
 
-print "<a href='".$return."' class='list-group-item list-group-item-action'>".doliproduct($product, 'label')." ".doliproductstock($product)."<br><small>".doliproduct($product, 'description')."</small></a>"; 
+print "<li class='list-group-item d-flex justify-content-between lh-condensed list-group-item-action'><div class='d-none d-md-block col-md-2 col-lg-1'><center><i class='fa fa-cube fa-fw fa-2x'></i></center></div><div class='col-12 col-sm-10 col-md-10 col-lg-11'><h6 class='my-0'>".doliproduct($product, 'label')." ".doliproductstock($product)."</h6><small class='text-muted'>".doliproduct($product, 'description')."</small></div></li>"; 
 
 }} else {
 print "<li class='list-group-item list-group-item-light'><center>".__( 'No product', 'doliconnect')."</center></li>";
