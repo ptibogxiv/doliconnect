@@ -772,17 +772,17 @@ print "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
 if ( !isset($_GET['category']) ) {
 if ( $shop->value != null ) {
 
-$request = "/thirdparties?sortfield=t.rowid&sortorder=ASC&limit=100&mode=4";
+$request = "/thirdparties?sortfield=t.rowid&sortorder=ASC&limit=100&mode=4&sqlfilters=(t.status%3A%3D%3A'1')";
 
 $resultatsc = callDoliApi("GET", $request, null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 if ( !isset($resultatsc->error) && $resultatsc != null ) {
-foreach ($resultatsc as $categorie) {
+foreach ($resultatsc as $supplier) {
 
-print "<a href='".esc_url( add_query_arg( 'category', $categorie->id, doliconnecturl('dolishop')) )."' class='list-group-item list-group-item-action'></a>";
+print "<a href='".esc_url( add_query_arg( 'supplier', $supplier->id, doliconnecturl('dolisupplier')) )."' class='list-group-item list-group-item-action'>".$supplier->name."</a>";
 
 }}
-}
+
 
 }
 print "</ul></div>";
@@ -794,7 +794,7 @@ print dolihelp('COM');
 print "</div></small>";
 
 }
-} else {
+}} else {
 
 return $content;
 
