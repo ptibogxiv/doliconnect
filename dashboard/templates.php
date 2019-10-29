@@ -760,17 +760,21 @@ if ( in_the_loop() && is_main_query() && is_page(doliconnectid('dolisupplier')) 
 
 doliconnect_enqueues();
 
-$shop = callDoliApi("GET", "/doliconnector/constante/DOLICONNECT_CATSHOP", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-//print $shop;
+if ( isset($_GET['supplier']) && $_GET['supplier'] > 0 ) { 
+ 
+$request = "/thirdparties/".esc_attr($_GET['supplier']);
 
-if ( defined("DOLIBUG") ) {
+$thirdparty = callDoliApi("GET", $request, null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+//print $thirdparty;
+}
 
-print dolibug();
-
-} else { 
 print "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
-if ( !isset($_GET['category']) ) {
-if ( $shop->value != null ) {
+
+if ( !isset($thirdparty->error) && isset($_GET['supplier']) && isset($thirdparty->id) && ($_GET['supplier'] == $thirdparty->id) && $thirdparty->status == 1 && $thirdparty->fournisseur == 1 ) {
+
+
+
+} else {
 
 $request = "/thirdparties?sortfield=t.rowid&sortorder=ASC&limit=100&mode=4&sqlfilters=(t.status%3A%3D%3A'1')";
 
@@ -783,8 +787,8 @@ print "<a href='".esc_url( add_query_arg( 'supplier', $supplier->id, doliconnect
 
 }}
 
+} 
 
-}
 print "</ul></div>";
 
 print "<small><div class='float-left'>";
@@ -793,8 +797,7 @@ print "</div><div class='float-right'>";
 print dolihelp('COM');
 print "</div></small>";
 
-}
-}} else {
+} else {
 
 return $content;
 
