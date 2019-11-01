@@ -19,8 +19,8 @@ add_action( 'admin_init', 'doliversion', 5, 1);
 function socialconnect( $url ) {
 $connect = null;
 
-include( plugin_dir_path( __DIR__ ) . 'doliconnect/includes/hybridauth/src/autoload.php');
-include( plugin_dir_path( __DIR__ ) . 'doliconnect/includes/hybridauth/src/config.php');
+include( plugin_dir_path( __DIR__ ) . 'includes/hybridauth/src/autoload.php');
+include( plugin_dir_path( __DIR__ ) . 'includes/hybridauth/src/config.php');
 
 $hybridauth = new Hybridauth\Hybridauth($config);
 $adapters = $hybridauth->getConnectedAdapters();
