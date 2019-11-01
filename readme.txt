@@ -49,7 +49,7 @@ WordPress configuration steps:
  = 3.11.0 =
 * fix & clean code
 * work on end of doliconnect PRO -> all in free module without support or addon
-* new widgets for doliconnect
+* new widgets, new pages for doliconnect
 
  = 3.10.8 =
 * fix & clean code
