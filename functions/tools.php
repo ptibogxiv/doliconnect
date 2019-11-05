@@ -270,6 +270,8 @@ print "<div class='form-row'><div class='col'><label for='description'><small><i
 }
 
 print "<div class='form-row'>";
+if ( doliversion('11.0.0') ) { 
+} else {
 $facebook = callDoliApi("GET", "/doliconnector/constante/SOCIALNETWORKS_FACEBOOK", null, $delay);
 if ( is_object($facebook) && $facebook->value == 1 ) {
 print "<div class='col-12 col-md'><label for='inlineFormInputGroup'><small><i class='fab fa-facebook-f fa-fw'></i> Facebook</small></label>
@@ -289,6 +291,7 @@ $linkedin = callDoliApi("GET", "/doliconnector/constante/SOCIALNETWORKS_LINKEDIN
 if ( is_object($linkedin) && $linkedin->value == 1 ) {
 print "<div class='col-12 col-md'><label for='inlineFormInputGroup'><small><i class='fab fa-linkedin-in fa-fw'></i> Linkedin</small></label>
 <input type='text' name='".$idobject."[linkedin]' class='form-control' id='inlineFormInputGroup' placeholder='".__( 'Username', 'doliconnect' )."' value='".stripslashes(htmlspecialchars((isset($object->linkedin) ? $object->linkedin : null), ENT_QUOTES))."'></div>";
+}
 }
 print "</div>"; 
 print "</li>";
