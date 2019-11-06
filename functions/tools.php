@@ -274,14 +274,15 @@ if ( doliversion('11.0.0') ) {
 $socialnetworks = callDoliApi("GET", "/setup/dictionary/socialnetworks", null, $delay);
 if ( isset($socialnetworks) ) { 
 foreach ( $socialnetworks as $social ) { 
+$code = $social->code;
 print "<div class='col-12 col-md-4'><label for='inlineFormInputGroup'><small><i class='fab fa-".$social->code." fa-fw'></i> ".$social->label."</small></label>
-<input type='text' name='".$idobject."[".$social->code."]' class='form-control' id='inlineFormInputGroup' placeholder='".__( 'Username', 'doliconnect' )."' value=''></div>";
+<input type='text' name='".$idobject."[socialnetworks][".$social->code."]' class='form-control' id='inlineFormInputGroup' placeholder='".__( 'Username', 'doliconnect' )."' value='".stripslashes(htmlspecialchars((isset($object->socialnetworks->$code) ? $object->socialnetworks->$code : null), ENT_QUOTES))."'></div>";
 }}
 
 } else {
 $facebook = callDoliApi("GET", "/doliconnector/constante/SOCIALNETWORKS_FACEBOOK", null, $delay);
 if ( is_object($facebook) && $facebook->value == 1 ) {
-print "<div class='col-12 col-md'><label for='inlineFormInputGroup'><small><i class='fab fa-facebook-f fa-fw'></i> Facebook</small></label>
+print "<div class='col-12 col-md'><label for='inlineFormInputGroup'><small><i class='fab fa-facebook fa-fw'></i> Facebook</small></label>
 <input type='text' name='".$idobject."[facebook]' class='form-control' id='inlineFormInputGroup' placeholder='".__( 'Username', 'doliconnect' )."' value='".stripslashes(htmlspecialchars((isset($object->facebook) ? $object->facebook : null), ENT_QUOTES))."'></div>";
 }
 $twitter = callDoliApi("GET", "/doliconnector/constante/SOCIALNETWORKS_TWITTER", null, $delay);
