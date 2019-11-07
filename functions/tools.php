@@ -272,7 +272,7 @@ print "<div class='form-row'><div class='col'><label for='description'><small><i
 print "<div class='form-row'>";
 if ( doliversion('11.0.0') ) { 
 $socialnetworks = callDoliApi("GET", "/setup/dictionary/socialnetworks", null, $delay);
-if ( isset($socialnetworks) && !isset($socialnetworks->error) && $socialnetworks != null  ) { 
+if ( isset($socialnetworks) && !isset($socialnetworks->error) ) { 
 foreach ( $socialnetworks as $social ) { 
 $code = $social->code;
 print "<div class='col-12 col-md-4'><label for='inlineFormInputGroup'><small><i class='fab fa-".$social->code." fa-fw'></i> ".$social->label."</small></label>
