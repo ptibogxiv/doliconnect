@@ -375,20 +375,6 @@ global $current_user,$wpdb;
 $entity = get_current_blog_id();
 wp_get_current_user();
 
-//$resultatsa = $wpdb->get_results(
-//$wpdb->prepare(
-//        "SELECT * FROM ".$wpdb->base_prefix."usermeta where user_id = %d and meta_key like '".$wpdb->prefix."doliextra_%' ",
-//        $current_user->ID
-//    )
-//);
-//foreach ($resultatsa as $posta) {
-//$subject = $posta->meta_key ;
-//$search = $wpdb->prefix."doliextra_";
-//$key = str_replace($search, '', $subject) ;
-//$value = $posta->meta_value;
-//$extrafields[$key] = $value;
-//}
-
 if ($current_user->billing_type == 'phy'){
 $name = $current_user->user_firstname." ".$current_user->user_lastname;}
 else {$name = $current_user->billing_company;}
