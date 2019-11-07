@@ -269,17 +269,24 @@ print "<div class='form-row'><div class='col'><label for='description'><small><i
 <input type='url' class='form-control' name='".$idobject."[url]' id='website' placeholder='".__( 'Website', 'doliconnect' )."' value='".stripslashes(htmlspecialchars((isset($object->url) ? $object->url : null), ENT_QUOTES))."'></div></div>";
 }
 
-print "<div class='form-row'>";
+print "</li>";
+}
+
+
 if ( doliversion('11.0.0') ) { 
 $socialnetworks = callDoliApi("GET", "/setup/dictionary/socialnetworks", null, $delay);
 if ( !isset($socialnetworks->error) && $socialnetworks != null ) { 
+print "<li class='list-group-item'><div class='form-row'>";
 foreach ( $socialnetworks as $social ) { 
 $code = $social->code;
 print "<div class='col-12 col-md-4'><label for='inlineFormInputGroup'><small><i class='fab fa-".$social->code." fa-fw'></i> ".$social->label."</small></label>
 <input type='text' name='".$idobject."[socialnetworks][".$social->code."]' class='form-control' id='inlineFormInputGroup' placeholder='".__( 'Username', 'doliconnect' )."' value='".stripslashes(htmlspecialchars((isset($object->socialnetworks->$code) ? $object->socialnetworks->$code : null), ENT_QUOTES))."'></div>";
-}}
+}
+print "</div></li>";
+}
 
-} else {
+} else { 
+print "<div class='form-row'>";
 $facebook = callDoliApi("GET", "/doliconnector/constante/SOCIALNETWORKS_FACEBOOK", null, $delay);
 if ( is_object($facebook) && $facebook->value == 1 ) {
 print "<div class='col-12 col-md'><label for='inlineFormInputGroup'><small><i class='fab fa-facebook fa-fw'></i> Facebook</small></label>
@@ -300,9 +307,7 @@ if ( is_object($linkedin) && $linkedin->value == 1 ) {
 print "<div class='col-12 col-md'><label for='inlineFormInputGroup'><small><i class='fab fa-linkedin-in fa-fw'></i> Linkedin</small></label>
 <input type='text' name='".$idobject."[linkedin]' class='form-control' id='inlineFormInputGroup' placeholder='".__( 'Username', 'doliconnect' )."' value='".stripslashes(htmlspecialchars((isset($object->linkedin) ? $object->linkedin : null), ENT_QUOTES))."'></div>";
 }
-}
-print "</div>"; 
-print "</li>";
+print "</div></li>";
 }
 
 }
