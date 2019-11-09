@@ -258,7 +258,7 @@ print "<div class='custom-control custom-checkbox'>".$role->label."</div>";
 print "</li>";
 }
 
-if ( !in_array($mode, array('donation')) ) {
+if ( !in_array($mode, array('contact', 'donation')) ) {
 print "<li class='list-group-item'>";
 
 if ( !in_array($mode, array('contact', 'member')) ) {
