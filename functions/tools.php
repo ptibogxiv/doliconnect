@@ -249,10 +249,8 @@ foreach ( $contact_types as $contacttype ) {
 print "<div class='custom-control custom-checkbox'><input type='checkbox' class='custom-control-input' name='".$idobject."[roles][id]' value='".$contacttype->rowid."' id='".$idobject."[roles][".$contacttype->rowid."]' ";
 if ( isset($object->roles) && $object->roles != null && in_array($contacttype->rowid, $type)) { print " checked"; }
 print "><label class='custom-control-label' for='".$idobject."[roles][".$contacttype->rowid."]'>".$contacttype->label."</label></div>";
-}} else {
-foreach ( $object->roles as $role ) { 
-print "<div class='custom-control custom-checkbox'>".$role->label."</div>";
-}
+}}
+ 
 }
 
 print "</li>";
