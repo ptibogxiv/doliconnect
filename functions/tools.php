@@ -238,16 +238,16 @@ $contact_types = callDoliApi("GET", "/setup/dictionary/contact_types?sortfield=c
 
 print "<li class='list-group-item'>";
 if ( !isset($contact_types->error ) && $contact_types != null ) {
-$type = array();
+$typecontact = array();
 
 if ( isset($object->roles) && $object->roles != null ) {
 foreach ( $object->roles as $role ) {
-$type[] .= $role->id; 
+$typecontact[] .= $role->id; 
 }}
 
-foreach ( $contact_types as $contacttype ) {
-print "<div class='custom-control custom-checkbox'><input type='checkbox' class='custom-control-input' name='".$idobject."[roles][id]' value='".$contacttype->rowid."' id='".$idobject."[roles][".$contacttype->rowid."]' ";
-if ( isset($object->roles) && $object->roles != null && in_array($contacttype->rowid, $type)) { print " checked"; }
+foreach ( $contact_types as $contacttype ) {                                                           //name='".$idobject."[roles][id]'
+print "<div class='custom-control custom-checkbox'><input type='checkbox' class='custom-control-input'  value='".$contacttype->rowid."' id='".$idobject."[roles][".$contacttype->rowid."]' ";
+if ( isset($object->roles) && $object->roles != null && in_array($contacttype->rowid, $typecontact)) { print " checked"; }
 print "><label class='custom-control-label' for='".$idobject."[roles][".$contacttype->rowid."]'>".$contacttype->label."</label></div>";
 }
  
