@@ -284,7 +284,7 @@ print "</div></li>";
 }
 
 } else { 
-print "<div class='form-row'>";
+print "<li class='list-group-item'><div class='form-row'>";
 $facebook = callDoliApi("GET", "/doliconnector/constante/SOCIALNETWORKS_FACEBOOK", null, $delay);
 if ( is_object($facebook) && $facebook->value == 1 ) {
 print "<div class='col-12 col-md'><label for='inlineFormInputGroup'><small><i class='fab fa-facebook fa-fw'></i> Facebook</small></label>
