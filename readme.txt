@@ -4,7 +4,7 @@ Contributors: ptibogxiv
 Tags: erp, crm, ecommerce, dolibarr, payment, interface, customer, subscription, membership, doliconnect, dashboard, paypal, stripe, doliconnect, invoice, order, donation
 Requires at least: 5.0
 Tested up to: 5.3
-Stable tag: 3.11.1
+Stable tag: 3.11.2
 Requires PHP: 7.0
 Donate link: https://www.paypal.me/ptibogxiv
 
@@ -46,6 +46,9 @@ WordPress configuration steps:
 4. Confirmation email sent to the user/visitor.
 
 == Changelog ==
+ = 3.11.2 =
+* fix & clean code
+
  = 3.11.1 =
 * fix & clean code
 
