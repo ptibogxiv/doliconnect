@@ -444,7 +444,7 @@ $paymentmethod .= "<center><i class='fas fa-credit-card fa-3x fa-fw'></i></cente
 $paymentmethod .= "</label></div></li>";
 
 $paymentmethod .= '<li class="list-group-item list-group-item-secondary" id="CardForm" style="display: none"><form action="'.$url.'" >'; //onchange="ShowHideDiv()"
-$paymentmethod .= '<input id="cardholder-name" name="cardholder-name" value="" type="text" class="form-control" placeholder="'.__( 'Owner as on your credit card', 'doliconnect' ).'" autocomplete="off" required>
+$paymentmethod .= '<input id="cardholder-name" name="cardholder-name" value="" type="text" class="form-control" placeholder="'.__( 'Owner', 'doliconnect' ).'" autocomplete="off" required>
 <label for="card-element"></label>
 <div class="form-control" id="card-element"><!-- a Stripe Element will be inserted here. --></div>
 <div id="card-errors" role="alert"></div>';
@@ -464,7 +464,7 @@ $paymentmethod .= "<p class='text-justify'>";
 $blogname=get_bloginfo('name');
 $paymentmethod .= '<small>'.sprintf( esc_html__( 'By providing your IBAN and confirming this form, you are authorizing %s and Stripe, our payment service provider, to send instructions to your bank to debit your account and your bank to debit your account in accordance with those instructions. You are entitled to a refund from your bank under the terms and conditions of your agreement with your bank. A refund must be claimed within 8 weeks starting from the date on which your account was debited.', 'doliconnect' ), $blogname).'</small>';
 $paymentmethod .= "</p>";
-$paymentmethod .= '<input id="ibanholder-name" name="ibanholder-name" value="" type="text" class="form-control" placeholder="'.__( 'Owner as on your bank account', 'doliconnect' ).'" autocomplete="off">
+$paymentmethod .= '<input id="ibanholder-name" name="ibanholder-name" value="" type="text" class="form-control" placeholder="'.__( 'Owner', 'doliconnect' ).'" autocomplete="off">
 <label for="iban-element"></label>
 <div class="form-control" id="iban-element"><!-- A Stripe Element will be inserted here. --></div>';
 $paymentmethod .= '<div id="bank-name"></div>';

@@ -743,6 +743,7 @@ print 'var options = {
 };';
 
 // Create an instance of Elements
+print 'function refreshStripe() {';
 print 'var elements = stripe.elements();';
 print 'var cardElement = elements.create("card", options);';
 print 'cardElement.mount("#card-element");';
@@ -819,6 +820,11 @@ jQuery("#newpaymentmethod-form").submit();
 });         
           }
 });';
+
+print '}
+window.onload = refreshStripe;
+';
+
 print "</script>";
 
 }
