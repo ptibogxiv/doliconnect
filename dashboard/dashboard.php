@@ -666,7 +666,11 @@ print "<button class='btn btn-light' title='".__( 'Can not be set as favorite', 
 } else {
 print "<button name='default_paymentmethod' value='".$method->id."' class='btn btn-light' type='submit' title='".__( 'Set as favorite', 'doliconnect')."'><i class='far fa-star fa-1x fa-fw'></i></button>";
 }
+if ( empty($method->default_source) ) {
 print "<button name='delete_paymentmethod' value='".$method->id."' class='btn btn-light text-danger' type='submit' title='".__( 'Delete', 'doliconnect')."'><i class='fas fa-trash fa-fw'></i></button>";
+} else {
+print "<button class='btn btn-light' title='".__( 'Can not be delete as favorite', 'doliconnect' )."' disabled><i class='fas fa-trash fa-fw'></i></button>";
+}
 print "</div></li>";
 }
 print "</li>";
