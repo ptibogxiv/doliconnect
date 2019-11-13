@@ -593,7 +593,7 @@ $gateway = callDoliApi("GET", "/doliconnector/".doliconnector($current_user, 'fk
 } elseif ( isset($_POST['add_paymentmethod'])  ) {
 
 $data = [
-'default' => $_POST['default']?$_POST['default']:0,
+'default' => isset($_POST['default'])?$_POST['default']:0,
 ];
 
 $gateway = callDoliApi("POST", "/doliconnector/".doliconnector($current_user, 'fk_soc')."/paymentmethods/".sanitize_text_field($_POST['add_paymentmethod']), $data, dolidelay( 0, true));
