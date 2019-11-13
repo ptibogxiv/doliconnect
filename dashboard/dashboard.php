@@ -688,7 +688,7 @@ print "<div class='modal fade' id='addsource' tabindex='-1' role='dialog' aria-l
 </div><div id='BodyAddPaymentMethod'><ul class='list-group list-group-flush'><li class='list-group-item'>";
 print "<nav><div class='nav nav-tabs' id='nav-tab' role='tablist'>";
 print "<a class='nav-item nav-link active' id='nav-card-tab' data-toggle='tab' href='#nav-card' role='tab' aria-controls='nav-card' aria-selected='true'>".__( 'Card', 'doliconnect')."</a>";
-print "<a class='nav-item nav-link' id='nav-sdd-tab' data-toggle='tab' href='#nav-sdd' role='tab' aria-controls='nav-sdd' aria-selected='false'>".__( 'SEPA Direct Debit', 'doliconnect')."</a>";
+print "<a class='nav-item nav-link' id='nav-iban-tab' data-toggle='tab' href='#nav-iban' role='tab' aria-controls='nav-iban' aria-selected='false'>".__( 'IBAN', 'doliconnect')."</a>";
 print "</div></nav><br>";
 print "<form role='form' action='$url' id='newpaymentmethod-form' method='post'>";
 print "<div class='tab-content' id='nav-tabContent'><div class='tab-pane fade show active' id='nav-card' role='tabpanel' aria-labelledby='nav-card-tab'>";
@@ -697,12 +697,12 @@ print '<input id="cardholder-name" name="cardholder-name" value="" type="text" c
 <div class="form-control" id="card-element"><!-- a Stripe Element will be inserted here. --></div>
 <div id="card-errors" role="alert"></div>';
 print "</div>";
-print "<div class='tab-pane fade' id='nav-sdd' role='tabpanel' aria-labelledby='nav-sdd-tab'>";
+print "<div class='tab-pane fade' id='nav-iban' role='tabpanel' aria-labelledby='nav-iban-tab'>";
 print "<p class='text-justify'>";
 $blogname=get_bloginfo('name');
 print '<small>'.sprintf( esc_html__( 'By providing your IBAN and confirming this form, you are authorizing %s and Stripe, our payment service provider, to send instructions to your bank to debit your account and your bank to debit your account in accordance with those instructions. You are entitled to a refund from your bank under the terms and conditions of your agreement with your bank. A refund must be claimed within 8 weeks starting from the date on which your account was debited.', 'doliconnect'), $blogname).'</small>';
 print "</p>";
-print '<input id="ibanholder_name" name="ibanholder-name" value="" type="text" class="form-control" placeholder="'.__( 'Owner', 'doliconnect').'" autocomplete="off" required>
+print '<input id="ibanholder-name" name="ibanholder-name" value="" type="text" class="form-control" placeholder="'.__( 'Owner', 'doliconnect').'" autocomplete="off" required>
 <label for="iban-element"></label>
 <div class="form-control" id="iban-element"><!-- a Stripe Element will be inserted here. --></div>
 <div id="iban-errors" role="alert"></div>';
@@ -770,11 +770,11 @@ cardElement.addEventListener("change", function(event) {
 // Handle form submission
 print 'var cardholderName = document.getElementById("cardholder-name");';
 print 'var ibanholderName = document.getElementById("ibanholder-name");';
-print 'var cardButton = document.getElementById("buttontoaddcard");';
+print 'var AddButton = document.getElementById("buttontoaddcard");';
 print 'var form = document.getElementById("newpaymentmethod-form");';
 
-// Actions
-print 'cardButton.addEventListener("click", function(event) {
+// Actions for add card
+print 'AddButton.addEventListener("click", function(event) {
 console.log("We click on buttontoaddcard");
 event.preventDefault();
 jQuery("#CloseAddPaymentMethod").hide();
@@ -790,6 +790,58 @@ jQuery("#doliloading-addnewpaymentmethod").hide();
 				console.log("Field Card holder is empty");
 				var displayError = document.getElementById("card-errors");
 				displayError.textContent = "'.__( "We need an owner as on your card.", "doliconnect").'";
+        	}
+        else
+        	{
+        stripe.createPaymentMethod(
+  "card",
+  cardElement, {
+  billing_details: {
+    name: cardholderName.value
+  },
+}
+).then(function(result) {
+  if (result.error) {
+    // Show error in payment form
+jQuery("#CloseAddPaymentMethod").show();
+jQuery("#FooterAddPaymentMethod").show();
+jQuery("#BodyAddPaymentMethod").show();   
+jQuery("#doliloading-addnewpaymentmethod").hide(); 
+console.log("Error occured when adding card");
+var displayError = document.getElementById("card-errors");
+displayError.textContent = "'.__( "Your card number seems to be wrong.", "doliconnect").'";    
+  } else {
+	      var hiddenInput = document.createElement("input");
+	      hiddenInput.setAttribute("type", "hidden");
+	      hiddenInput.setAttribute("name", "add_paymentmethod");
+	      hiddenInput.setAttribute("value", result.paymentMethod.id);
+	      form.appendChild(hiddenInput); 
+
+jQuery(window).scrollTop(0);
+console.log("submit");
+jQuery("#newpaymentmethod-form").submit();  
+  }
+});         
+          }
+});';
+
+// Actions for add iban
+print 'AddButton.addEventListener("click", function(event) {
+console.log("We click on buttontoaddcard");
+event.preventDefault();
+jQuery("#CloseAddPaymentMethod").hide();
+jQuery("#FooterAddPaymentMethod").hide();
+jQuery("#BodyAddPaymentMethod").hide();   
+jQuery("#doliloading-addnewpaymentmethod").show();
+        if (ibanholderName.value == "")
+        	{
+jQuery("#CloseAddPaymentMethod").show();
+jQuery("#FooterAddPaymentMethod").show();
+jQuery("#BodyAddPaymentMethod").show();   
+jQuery("#doliloading-addnewpaymentmethod").hide();         
+				console.log("Field Card holder is empty");
+				var displayError = document.getElementById("iban-errors");
+				displayError.textContent = "'.__( "We need an owner as on your account.", "doliconnect").'";
         	}
         else
         	{
