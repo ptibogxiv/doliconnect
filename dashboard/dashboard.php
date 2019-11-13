@@ -661,12 +661,12 @@ print "</div>";
 print "<div class='col-4 col-sm-3 col-md-2 btn-group-vertical' role='group'>";
 if ( !empty($method->default_source) ) { 
 print "<button class='btn btn-light' title='".__( 'Favorite', 'doliconnect' )."' disabled><i class='fas fa-star fa-1x fa-fw' style='color:Gold'></i></button>";
-} elseif ( (current_time( 'timestamp', 1) >= strtotime($method->expiration.'/1')) || ! preg_match('/pm_/', $method->id) ) {
+} elseif ( (current_time( 'timestamp', 1) >= strtotime($method->expiration.'/1') && $method->type == 'card' ) || ! preg_match('/pm_/', $method->id) ) {
 print "<button class='btn btn-light' title='".__( 'Can not be set as favorite', 'doliconnect' )."' disabled><i class='fas fa-ban fa-1x fa-fw'></i></button>";
 } else {
-print "<button name='default_paymentmethod' value='".$method->id."' class='btn btn-light' type='submit' title='".__( 'Set as favorite', 'doliconnect' )."'><i class='far fa-star fa-1x fa-fw'></i></button>";
+print "<button name='default_paymentmethod' value='".$method->id."' class='btn btn-light' type='submit' title='".__( 'Set as favorite', 'doliconnect')."'><i class='far fa-star fa-1x fa-fw'></i></button>";
 }
-print "<button name='delete_paymentmethod' value='".$method->id."' class='btn btn-light text-danger' type='submit' title='".__( 'Delete', 'doliconnect' )."'><i class='fas fa-trash fa-fw'></i></button>";
+print "<button name='delete_paymentmethod' value='".$method->id."' class='btn btn-light text-danger' type='submit' title='".__( 'Delete', 'doliconnect')."'><i class='fas fa-trash fa-fw'></i></button>";
 print "</div></li>";
 }
 print "</li>";
@@ -681,15 +681,31 @@ if ( $i < 5 && doliversion('10.0.0') ) {
 print "<div class='modal fade' id='addsource' tabindex='-1' role='dialog' aria-labelledby='addsourceTitle' aria-hidden='true' data-backdrop='static' data-keyboard='false'>
 <div class='modal-dialog modal-dialog-centered' role='document'><div class='modal-content border-0'><div class='modal-header border-0'>
 <h5 class='modal-title' id='addsourceTitle'>".__( 'New payment method', 'doliconnect' )."</h5><button id='CloseAddPaymentMethod' type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
-</div><div id='BodyAddPaymentMethod'><ul class='list-group list-group-flush'><li class='list-group-item'>"; 
+</div><div id='BodyAddPaymentMethod'><ul class='list-group list-group-flush'><li class='list-group-item'>";
+print "<nav><div class='nav nav-tabs' id='nav-tab' role='tablist'>";
+print "<a class='nav-item nav-link active' id='nav-card-tab' data-toggle='tab' href='#nav-card' role='tab' aria-controls='nav-card' aria-selected='true'>".__( 'Card', 'doliconnect')."</a>";
+print "<a class='nav-item nav-link' id='nav-sdd-tab' data-toggle='tab' href='#nav-sdd' role='tab' aria-controls='nav-sdd' aria-selected='false'>".__( 'SEPA Direct Debit', 'doliconnect')."</a>";
+print "</div></nav><br>";
 print "<form role='form' action='$url' id='newpaymentmethod-form' method='post'>";
-print '<input id="cardholder-name" name="cardholder-name" value="" type="text" class="form-control" placeholder="'.__( 'Owner as on your card', 'doliconnect' ).'" autocomplete="off" required>
+print "<div class='tab-content' id='nav-tabContent'><div class='tab-pane fade show active' id='nav-card' role='tabpanel' aria-labelledby='nav-card-tab'>";
+print '<input id="cardholder-name" name="cardholder-name" value="" type="text" class="form-control" placeholder="'.__( 'Owner', 'doliconnect').'" autocomplete="off" required>
 <label for="card-element"></label>
 <div class="form-control" id="card-element"><!-- a Stripe Element will be inserted here. --></div>
 <div id="card-errors" role="alert"></div>';
+print "</div>";
+print "<div class='tab-pane fade' id='nav-sdd' role='tabpanel' aria-labelledby='nav-sdd-tab'>";
+print "<p class='text-justify'>";
+$blogname=get_bloginfo('name');
+print '<small>'.sprintf( esc_html__( 'By providing your IBAN and confirming this form, you are authorizing %s and Stripe, our payment service provider, to send instructions to your bank to debit your account and your bank to debit your account in accordance with those instructions. You are entitled to a refund from your bank under the terms and conditions of your agreement with your bank. A refund must be claimed within 8 weeks starting from the date on which your account was debited.', 'doliconnect'), $blogname).'</small>';
+print "</p>";
+print '<input id="ibanholder_name" name="ibanholder-name" value="" type="text" class="form-control" placeholder="'.__( 'Owner', 'doliconnect').'" autocomplete="off" required>
+<label for="iban-element"></label>
+<div class="form-control" id="iban-element"><!-- a Stripe Element will be inserted here. --></div>
+<div id="iban-errors" role="alert"></div>';
+print "</div></div>";
 print "</li><li class='list-group-item'><small><div class='custom-control custom-checkbox my-1 mr-sm-2'><input type='checkbox' class='custom-control-input' value='1' id='default' name='default'";
 if (empty($i)) { print " checked disabled"; }
-print "><label class='custom-control-label' for='default'> ".__( 'Set as default payment mode', 'doliconnect' )."</label></div>";
+print "><label class='custom-control-label' for='default'> ".__( 'Set as default payment mode', 'doliconnect')."</label></div>";
 if (empty($i)) { print "<input type='hidden' name='default' value='1'>"; }
 print '</small></li></ul></div>';
 print doliloading('addnewpaymentmethod');
@@ -720,10 +736,18 @@ print 'var style = {
   }
 };'; 
 
+print 'var options = {
+  style: style,
+  supportedCountries: ["SEPA"],
+  placeholderCountry: "'.$listpaymentmethods->cus_countrycode.'",
+};';
+
 // Create an instance of Elements
 print 'var elements = stripe.elements();';
-print 'var cardElement = elements.create("card", {style: style});';
+print 'var cardElement = elements.create("card", options);';
 print 'cardElement.mount("#card-element");';
+print 'var iban = elements.create("iban", options);';
+print 'iban.mount("#iban-element");';
 
 // Handle real-time validation errors from the card Element.
 print 'var displayError = document.getElementById("card-errors");
