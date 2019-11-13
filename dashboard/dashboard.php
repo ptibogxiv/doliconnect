@@ -749,8 +749,8 @@ print 'function refreshStripe() {';
 print 'var elements = stripe.elements();';  
 print 'var cardElement = elements.create("card", options);';
 print 'cardElement.mount("#card-element");';
-print 'var iban = elements.create("iban", options);';
-print 'iban.mount("#iban-element");';
+print 'var ibanElement = elements.create("iban", options);';
+print 'ibanElement.mount("#iban-element");';
 
 // Handle real-time validation errors from the card Element.
 print 'var displayError = document.getElementById("error-message");
@@ -844,10 +844,11 @@ jQuery("#doliloading-addnewpaymentmethod").hide();
         else
         	{
         stripe.createPaymentMethod(
-  "card",
-  cardElement, {
+  "sepa_debit",
+  ibanElement, {
   billing_details: {
-    name: cardholderName.value
+    name: ibanholderName.value,
+    email: "support@ptibogxiv.net"
   },
 }
 ).then(function(result) {
