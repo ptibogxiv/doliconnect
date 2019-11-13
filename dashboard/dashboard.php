@@ -764,6 +764,7 @@ cardElement.addEventListener("change", function(event) {
 
 // Handle form submission
 print 'var cardholderName = document.getElementById("cardholder-name");';
+print 'var ibanholderName = document.getElementById("ibanholder-name");';
 print 'var cardButton = document.getElementById("buttontoaddcard");';
 print 'var form = document.getElementById("newpaymentmethod-form");';
 
