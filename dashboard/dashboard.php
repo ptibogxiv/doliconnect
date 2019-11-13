@@ -694,8 +694,7 @@ print "<form role='form' action='$url' id='newpaymentmethod-form' method='post'>
 print "<div class='tab-content' id='nav-tabContent'><div class='tab-pane fade show active' id='nav-card' role='tabpanel' aria-labelledby='nav-card-tab'>";
 print '<input id="cardholder-name" name="cardholder-name" value="" type="text" class="form-control" placeholder="'.__( 'Owner', 'doliconnect').'" autocomplete="off" required>
 <label for="card-element"></label>
-<div class="form-control" id="card-element"><!-- a Stripe Element will be inserted here. --></div>
-<div id="card-errors" role="alert"></div>';
+<div class="form-control" id="card-element"><!-- a Stripe Element will be inserted here. --></div>';
 print "</div>";
 print "<div class='tab-pane fade' id='nav-iban' role='tabpanel' aria-labelledby='nav-iban-tab'>";
 print "<p class='text-justify'>";
@@ -704,9 +703,8 @@ print '<small>'.sprintf( esc_html__( 'By providing your IBAN and confirming this
 print "</p>";
 print '<input id="ibanholder-name" name="ibanholder-name" value="" type="text" class="form-control" placeholder="'.__( 'Owner', 'doliconnect').'" autocomplete="off" required>
 <label for="iban-element"></label>
-<div class="form-control" id="iban-element"><!-- a Stripe Element will be inserted here. --></div>
-<div id="iban-errors" role="alert"></div>';
-print "</div></div>";
+<div class="form-control" id="iban-element"><!-- a Stripe Element will be inserted here. --></div>';
+print "</div></div><div id='error-message' role='alert'></div>";
 print "</li><li class='list-group-item'><small><div class='custom-control custom-checkbox my-1 mr-sm-2'><input type='checkbox' class='custom-control-input' value='1' id='default' name='default'";
 if (empty($i)) { print " checked disabled"; }
 print "><label class='custom-control-label' for='default'> ".__( 'Set as default payment mode', 'doliconnect')."</label></div>";
@@ -755,7 +753,7 @@ print 'var iban = elements.create("iban", options);';
 print 'iban.mount("#iban-element");';
 
 // Handle real-time validation errors from the card Element.
-print 'var displayError = document.getElementById("card-errors");
+print 'var displayError = document.getElementById("error-message");
 displayError.textContent = "";
 cardElement.addEventListener("change", function(event) {
   if (event.error) {
@@ -788,7 +786,7 @@ jQuery("#FooterAddPaymentMethod").show();
 jQuery("#BodyAddPaymentMethod").show();   
 jQuery("#doliloading-addnewpaymentmethod").hide();         
 				console.log("Field Card holder is empty");
-				var displayError = document.getElementById("card-errors");
+				var displayError = document.getElementById("error-message");
 				displayError.textContent = "'.__( "We need an owner as on your card.", "doliconnect").'";
         	}
         else
@@ -808,7 +806,7 @@ jQuery("#FooterAddPaymentMethod").show();
 jQuery("#BodyAddPaymentMethod").show();   
 jQuery("#doliloading-addnewpaymentmethod").hide(); 
 console.log("Error occured when adding card");
-var displayError = document.getElementById("card-errors");
+var displayError = document.getElementById("error-message");
 displayError.textContent = "'.__( "Your card number seems to be wrong.", "doliconnect").'";    
   } else {
 	      var hiddenInput = document.createElement("input");
@@ -840,7 +838,7 @@ jQuery("#FooterAddPaymentMethod").show();
 jQuery("#BodyAddPaymentMethod").show();   
 jQuery("#doliloading-addnewpaymentmethod").hide();         
 				console.log("Field Card holder is empty");
-				var displayError = document.getElementById("iban-errors");
+				var displayError = document.getElementById("error-message");
 				displayError.textContent = "'.__( "We need an owner as on your account.", "doliconnect").'";
         	}
         else
@@ -860,7 +858,7 @@ jQuery("#FooterAddPaymentMethod").show();
 jQuery("#BodyAddPaymentMethod").show();   
 jQuery("#doliloading-addnewpaymentmethod").hide(); 
 console.log("Error occured when adding card");
-var displayError = document.getElementById("card-errors");
+var displayError = document.getElementById("error-message");
 displayError.textContent = "'.__( "Your card number seems to be wrong.", "doliconnect").'";    
   } else {
 	      var hiddenInput = document.createElement("input");
