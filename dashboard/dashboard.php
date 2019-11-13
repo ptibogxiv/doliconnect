@@ -744,7 +744,7 @@ print 'var options = {
 
 // Create an instance of Elements
 print 'function refreshStripe() {';
-print 'var elements = stripe.elements();';
+print 'var elements = stripe.elements();';  
 print 'var cardElement = elements.create("card", options);';
 print 'cardElement.mount("#card-element");';
 print 'var iban = elements.create("iban", options);';
@@ -822,8 +822,10 @@ jQuery("#newpaymentmethod-form").submit();
 });';
 
 print '}
-window.onload = refreshStripe;
-';
+window.onload = refreshStripe;';
+print 'jQuery("#nav-tab").on("show.bs.tab", function (e) {
+refreshStripe();
+})';
 
 print "</script>";
 
