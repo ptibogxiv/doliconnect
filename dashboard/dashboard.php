@@ -619,21 +619,29 @@ print doliloaderscript('paymentmethods-form');
 
 print "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
 
+class myCounter implements Countable {
+	public function count() {
+		static $count = 0;
+		return ++$count;
+	}
+}
+ 
+$counter = new myCounter;
+
 if (empty($listpaymentmethods->stripe)) {
 print "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".__( "Stripe's in sandbox mode", 'doliconnect')."</b></li>";
 }
 
-if ( doliversion('10.0.0') && (!empty($listpaymentmethods->card) || ! empty($listpaymentmethods->sepa_direct_debit)) ) {
+if ( doliversion('10.0.0') && (!empty($listpaymentmethods->card) || ! empty($listpaymentmethods->sepa_direct_debit)) && count($counter) < 5 ) {
 print '<button id="ButtonAddPaymentMethod" type="button" class="list-group-item lh-condensed list-group-item-action list-group-item-primary" data-toggle="modal" data-target="#addsource" ><center><i class="fas fa-plus-circle"></i> '.__( 'New payment method', 'doliconnect' ).'</center></button>';
-} elseif ( current_user_can( 'administrator' ) ) {
-print "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".sprintf( esc_html__( "Register payment methods needs Dolibarr %s but your version is %s", 'doliconnect'), '10.0.0',$versiondoli[0])."</b></li>";
+} elseif ( ! doliversion('10.0.0') ) {
+print "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".sprintf( esc_html__( "Register payment methods needs Dolibarr %s but your version is %s", 'doliconnect'), '10.0.0', doliversion('10.0.0'))."</b></li>";
 }
 
 //SAVED SOURCES 
-$i=0;
 if ( $listpaymentmethods->paymentmethods != null ) {
 foreach ( $listpaymentmethods->paymentmethods as $method ) {
-$i++;                                                                                                                       
+                                                                                                                      
 print "<li class='list-group-item d-flex justify-content-between lh-condensed list-group-item-action'>";
 print "<div class='d-none d-md-block col-md-2 col-lg-1'><i ";
 if ( $method->type == 'sepa_debit' ) {
@@ -666,7 +674,7 @@ print "<button class='btn btn-light' title='".__( 'Can not be set as favorite', 
 } else {
 print "<button name='default_paymentmethod' value='".$method->id."' class='btn btn-light' type='submit' title='".__( 'Set as favorite', 'doliconnect')."'><i class='far fa-star fa-1x fa-fw'></i></button>";
 }
-if ( empty($method->default_source) ) {
+if ( empty($method->default_source) || count($counter) == 1 ) {
 print "<button name='delete_paymentmethod' value='".$method->id."' class='btn btn-light text-danger' type='submit' title='".__( 'Delete', 'doliconnect')."'><i class='fas fa-trash fa-fw'></i></button>";
 } else {
 print "<button class='btn btn-light' title='".__( 'Can not be delete as favorite', 'doliconnect')."' disabled><i class='fas fa-trash fa-fw'></i></button>";
@@ -680,7 +688,7 @@ print "<li class='list-group-item list-group-item-light'><center>".__( 'No payme
 }
 print "</ul></div></form>";
 
-if ( $i < 5 && doliversion('10.0.0') ) {
+if ( count($counter) < 5 && doliversion('10.0.0') ) {
 
 print "<div class='modal fade' id='addsource' tabindex='-1' role='dialog' aria-labelledby='addsourceTitle' aria-hidden='true' data-backdrop='static' data-keyboard='false'>
 <div class='modal-dialog modal-dialog-centered' role='document'><div class='modal-content border-0'><div class='modal-header border-0'>
