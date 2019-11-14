@@ -415,7 +415,7 @@ print "</div>";
 print "</li>";
 }
 } else {
-print "<li class='list-group-item list-group-item-light'><center>".__( 'No contact', 'doliconnect' )."</center></li>";
+print "<li class='list-group-item list-group-item-light'><center>".__( 'No contact', 'doliconnect')."</center></li>";
 }
 print "</ul></div></form>";
 
@@ -424,7 +424,7 @@ foreach ( $listcontact as $contact ) {
 
 print '<div class="modal fade" id="contact-'.$contact->id.'" tabindex="-1" role="dialog" aria-labelledby="contact-'.$contact->id.'Title" aria-hidden="true" data-backdrop="static" data-keyboard="false">
 <div class="modal-dialog modal-lg modal-dialog-centered" role="document"><div class="modal-content border-0"><div class="modal-header border-0">
-<h5 class="modal-title" id="contact-'.$contact->id.'Title">'.__( 'Update contact', 'doliconnect' ).'</h5><button id="Closecontact'.$contact->id.'-form" type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
+<h5 class="modal-title" id="contact-'.$contact->id.'Title">'.__( 'Update contact', 'doliconnect').'</h5><button id="Closecontact'.$contact->id.'-form" type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
 <div id="contact'.$contact->id.'-form">';
 print "<form class='was-validated' role='form' action='$url' name='contact".$contact->id."-form' method='post'>";
 
@@ -623,7 +623,7 @@ if (empty($listpaymentmethods->stripe)) {
 print "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".__( "Stripe's in sandbox mode", 'doliconnect')."</b></li>";
 }
 
-if ( doliversion('10.0.0') ) {
+if ( doliversion('10.0.0') && (!empty($listpaymentmethods->card) || ! empty($listpaymentmethods->sepa_direct_debit)) ) {
 print '<button id="ButtonAddPaymentMethod" type="button" class="list-group-item lh-condensed list-group-item-action list-group-item-primary" data-toggle="modal" data-target="#addsource" ><center><i class="fas fa-plus-circle"></i> '.__( 'New payment method', 'doliconnect' ).'</center></button>';
 } elseif ( current_user_can( 'administrator' ) ) {
 print "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".sprintf( esc_html__( "Register payment methods needs Dolibarr %s but your version is %s", 'doliconnect'), '10.0.0',$versiondoli[0])."</b></li>";
@@ -648,9 +648,9 @@ else {print 'class="fab fa-cc-amex fa-3x fa-fw"';}
 print '></i></center>';
 print "</div><div class='col-8 col-sm-7 col-md-6 col-lg-7'><h6 class='my-0'>";
 if ( $method->type == 'sepa_debit' ) {
-print __( 'Account', 'doliconnect' ).' '.$method->reference.'<small> <a href="'.$method->mandate_url.'" title="'.__( 'Mandate', 'doliconnect' ).' '.$method->mandate_reference.'" target="_blank"><i class="fas fa-info-circle"></i></a></small>';
+print __( 'Account', 'doliconnect').' '.$method->reference.'<small> <a href="'.$method->mandate_url.'" title="'.__( 'Mandate', 'doliconnect').' '.$method->mandate_reference.'" target="_blank"><i class="fas fa-info-circle"></i></a></small>';
 } else {
-print __( 'Card', 'doliconnect' ).' '.$method->reference;
+print __( 'Card', 'doliconnect').' '.$method->reference;
 }
 if ( !empty($method->expiration) ) { print " - ".date("m/Y", strtotime($method->expiration.'/1')); }
 print "</h6><small class='text-muted'>".$method->holder."</small></div>";
@@ -660,7 +660,7 @@ print "</div>";
 
 print "<div class='col-4 col-sm-3 col-md-2 btn-group-vertical' role='group'>";
 if ( !empty($method->default_source) ) { 
-print "<button class='btn btn-light' title='".__( 'Favorite', 'doliconnect' )."' disabled><i class='fas fa-star fa-1x fa-fw' style='color:Gold'></i></button>";
+print "<button class='btn btn-light' title='".__( 'Favorite', 'doliconnect')."' disabled><i class='fas fa-star fa-1x fa-fw' style='color:Gold'></i></button>";
 } elseif ( (current_time( 'timestamp', 1) >= strtotime($method->expiration.'/1') && $method->type == 'card' ) || ! preg_match('/pm_/', $method->id) ) {
 print "<button class='btn btn-light' title='".__( 'Can not be set as favorite', 'doliconnect' )."' disabled><i class='fas fa-ban fa-1x fa-fw'></i></button>";
 } else {
@@ -669,14 +669,14 @@ print "<button name='default_paymentmethod' value='".$method->id."' class='btn b
 if ( empty($method->default_source) ) {
 print "<button name='delete_paymentmethod' value='".$method->id."' class='btn btn-light text-danger' type='submit' title='".__( 'Delete', 'doliconnect')."'><i class='fas fa-trash fa-fw'></i></button>";
 } else {
-print "<button class='btn btn-light' title='".__( 'Can not be delete as favorite', 'doliconnect' )."' disabled><i class='fas fa-trash fa-fw'></i></button>";
+print "<button class='btn btn-light' title='".__( 'Can not be delete as favorite', 'doliconnect')."' disabled><i class='fas fa-trash fa-fw'></i></button>";
 }
 print "</div></li>";
 }
 print "</li>";
 
 } else {
-print "<li class='list-group-item list-group-item-light'><center>".__( 'No payment method', 'doliconnect' )."</center></li>";
+print "<li class='list-group-item list-group-item-light'><center>".__( 'No payment method', 'doliconnect')."</center></li>";
 }
 print "</ul></div></form>";
 
@@ -711,7 +711,7 @@ print "><label class='custom-control-label' for='default'> ".__( 'Set as default
 if (empty($i)) { print "<input type='hidden' name='default' value='1'>"; }
 print '</small></li></ul></div>';
 print doliloading('addnewpaymentmethod');
-print "<div id='FooterAddPaymentMethod' class='modal-footer'><button name='add_card' id='buttontoaddcard' value='add_card' class='btn btn-warning btn-block' type='submit' title='".__( 'Add', 'doliconnect' )."'><b>".__( 'Add', 'doliconnect' )."</b></button></form>";
+print "<div id='FooterAddPaymentMethod' class='modal-footer'><button name='add_card' id='buttontoaddcard' value='add_card' class='btn btn-warning btn-block' type='submit' title='".__( 'Add', 'doliconnect')."'><b>".__( 'Add', 'doliconnect')."</b></button></form>";
 print "</div></div></div></div>";
 
 print "<script>";
@@ -745,7 +745,8 @@ print 'var options = {
 };';
 
 // Create an instance of Elements
-print 'function refreshStripe() {';
+print 'function refreshStripe() {'; 
+
 print 'var elements = stripe.elements();';  
 print 'var cardElement = elements.create("card", options);';
 print 'cardElement.mount("#card-element");';
