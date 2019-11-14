@@ -639,9 +639,10 @@ print "<li class='list-group-item list-group-item-info'><i class='fas fa-info-ci
 }
 
 //SAVED SOURCES 
+$i=0;
 if ( $listpaymentmethods->paymentmethods != null ) {
 foreach ( $listpaymentmethods->paymentmethods as $method ) {
-                                                                                                                      
+$i++;                                                                                                                       
 print "<li class='list-group-item d-flex justify-content-between lh-condensed list-group-item-action'>";
 print "<div class='d-none d-md-block col-md-2 col-lg-1'><i ";
 if ( $method->type == 'sepa_debit' ) {
