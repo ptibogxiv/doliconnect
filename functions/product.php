@@ -104,7 +104,7 @@ $altdurvalue=60/$product->duration_value;
 
 }
 
-if ( !empty($product->multiprices_ttc) ) {
+if ( callDoliApi("GET", "PRODUIT_MULTIPRICES", null, dolidelay('constante')) && !empty($product->multiprices_ttc) ) {
 $lvl=doliconnector($current_user, 'price_level');
 $count=1;
 //$button .=$lvl;
@@ -119,11 +119,19 @@ $button .= '<small class="float-right">'.__( 'You benefit from the rate', 'dolic
 $count++; 
 }
 } else {
+if ( !empty(callDoliApi("GET", "/doliconnector/constante/PRODUIT_CUSTOMER_PRICES", null, dolidelay('constante'))->value) ) {
+$product2 = callDoliApi("GET", "/products/".$product->id."/selling_multiprices/per_customer?thirdparty_id=".doliconnector($current_user, 'fk_soc'), null, dolidelay('product'));
+}
+if ( !empty(callDoliApi("GET", "/doliconnector/constante/PRODUIT_CUSTOMER_PRICES", null, dolidelay('constante'))->value) && !isset($product2->error) && $product2 != null ) {
+foreach ( $product2 as $pdt2 ) {
+$button .= '<h5 class="mb-1 text-right">'.__( 'Price', 'doliconnect' ).': <s>'.doliprice( $product->price_ttc, $currency).'</s> '.doliprice( $pdt2->price_ttc, $currency);
+}
+} else {
 $button .= '<h5 class="mb-1 text-right">'.__( 'Price', 'doliconnect' ).': '.doliprice( $product->price_ttc, $currency);
+}
 if ( empty($time) && isset($product->duration) ) { $button .=' '.doliduration($product); } 
 $button .= '</h5>';
 if ( !empty($altdurvalue) ) { $button .= "<h6 class='mb-1 text-right'>soit ".doliprice( $altdurvalue*$product->price_ttc, $currency)." par ".__( 'hour', 'doliconnect' )."</h6>"; } 
-
 }
 
 if (doliconnector($current_user, 'price_level') > 0){
