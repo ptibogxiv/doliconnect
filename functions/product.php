@@ -129,14 +129,14 @@ $product2 = callDoliApi("GET", "/products/".$product->id."/selling_multiprices/p
 }
 if ( !empty(callDoliApi("GET", "/doliconnector/constante/PRODUIT_CUSTOMER_PRICES", null, dolidelay('constante'))->value) && !isset($product2->error) && $product2 != null ) {
 foreach ( $product2 as $pdt2 ) {
-$price_min_ttc=$pdt2->price_min_ttc;
-$price_ttc=$pdt2->price_ttc;
+$price_min_ttc=$pdt2->price_min;
+$price_ttc=$pdt2->price;
 $button .= '<h5 class="mb-1 text-right">'.__( 'Price', 'doliconnect' ).': <s>'.doliprice( $product->price_ttc, $currency).'</s> '.doliprice( $pdt2->price_ttc, $currency);
 }
 } else {
-$price_min_ttc=$product->price_min_ttc;
-$price_ttc=$product->price_ttc;
-$button .= '<h5 class="mb-1 text-right">'.__( 'Price', 'doliconnect' ).': '.doliprice( $price_ttc, $currency);
+$price_min_ttc=$product->price_min;
+$price_ttc=$product->price;
+$button .= '<h5 class="mb-1 text-right">'.__( 'Price', 'doliconnect' ).': '.doliprice( $product->price_ttc, $currency);
 }
 if ( empty($time) && isset($product->duration) ) { $button .=' '.doliduration($product); } 
 $button .= '</h5>';
