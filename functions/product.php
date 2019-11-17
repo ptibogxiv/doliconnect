@@ -120,8 +120,8 @@ $count++;
 }
 if (doliconnector($current_user, 'price_level') > 0) {
 $level=doliconnector($current_user, 'price_level');
-$price_min_ttc=$product->multiprices_min_ttc->$level;
-$price_ttc=$product->multiprices_ttc->$level;
+$price_min_ttc=$product->multiprices_min->$level;
+$price_ttc=$product->multiprices->$level;
 }
 } else {
 if ( !empty(callDoliApi("GET", "/doliconnector/constante/PRODUIT_CUSTOMER_PRICES", null, dolidelay('constante'))->value) ) {
@@ -192,7 +192,7 @@ $button .= "<div class='input-group'><a class='btn btn-block btn-info' href='".d
 }
 
 if ( !empty(doliconnector($current_user, 'remise_percent')) ) { $button .= "<small>".sprintf( esc_html__( 'you get %u %% discount', 'doliconnect'), doliconnector($current_user, 'remise_percent'))."</small>"; }
-$button .= "</form>";
+$button .= "<input type='hidden' name='product_update[".$product->id."][price]' value='".$price_ttc."'></form>";
 $button .= '<div id="product-add-loading-'.$product->id.'" style="display:none">'.doliprice($price_ttc).'<button class="btn btn-secondary btn-block" disabled><i class="fas fa-spinner fa-pulse fa-1x fa-fw"></i> '.__( 'Loading', 'doliconnect').'</button></div>';
 $button .= "</div>";
 return $button;
