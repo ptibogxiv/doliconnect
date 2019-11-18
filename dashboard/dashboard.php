@@ -608,17 +608,7 @@ $listpaymentmethods = callDoliApi("GET", $request, null, dolidelay('paymentmetho
 
 doliconnect_enqueues();
 
-$lock = dolipaymentmodes_lock();
-
-print "<form role='form' action='$url' id='paymentmethods-form' method='post'>";
-
-if ( isset($msg) ) { print $msg; }
-
-print "<script src='https://js.stripe.com/v3/'></script>";
-
-print doliloaderscript('paymentmethods-form');
-
-print "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
+$lock = dolipaymentmodes_lock(); 
 
 class myCounter implements Countable {
 	public function count() {
@@ -628,6 +618,46 @@ class myCounter implements Countable {
 }
  
 $counter = new myCounter;
+
+if (isset($_GET['action']) && $_GET['action'] == 'create') {
+print "<div class='card shadow-sm'><ul class='list-group list-group-flush'><li class='list-group-item'>";
+print "<nav><div class='nav nav-tabs' id='nav-tab' role='tablist'>";
+print "<a class='nav-item nav-link active' id='nav-card-tab' data-toggle='tab' href='#nav-card' role='tab' aria-controls='nav-card' aria-selected='true'>".__( 'Card', 'doliconnect')."</a>";
+print "<a class='nav-item nav-link' id='nav-iban-tab' data-toggle='tab' href='#nav-iban' role='tab' aria-controls='nav-iban' aria-selected='false'>".__( 'IBAN', 'doliconnect')."</a>";
+print "</div></nav><br>";
+print "<form role='form' action='$url' id='newpaymentmethod-form' method='post'>";
+print "<div class='tab-content' id='nav-tabContent'><div class='tab-pane fade show active' id='nav-card' role='tabpanel' aria-labelledby='nav-card-tab'>";
+print '<input id="cardholder-name" name="cardholder-name" value="" type="text" class="form-control" placeholder="'.__( 'Owner', 'doliconnect').'" autocomplete="off" required>
+<label for="card-element"></label>
+<div class="form-control" id="card-element"><!-- a Stripe Element will be inserted here. --></div>';
+print "</div>";
+print "<div class='tab-pane fade' id='nav-iban' role='tabpanel' aria-labelledby='nav-iban-tab'>";
+print "<p class='text-justify'>";
+$blogname=get_bloginfo('name');
+print '<small>'.sprintf( esc_html__( 'By providing your IBAN and confirming this form, you are authorizing %s and Stripe, our payment service provider, to send instructions to your bank to debit your account and your bank to debit your account in accordance with those instructions. You are entitled to a refund from your bank under the terms and conditions of your agreement with your bank. A refund must be claimed within 8 weeks starting from the date on which your account was debited.', 'doliconnect'), $blogname).'</small>';
+print "</p>";
+print '<input id="ibanholder-name" name="ibanholder-name" value="" type="text" class="form-control" placeholder="'.__( 'Owner', 'doliconnect').'" autocomplete="off" required>
+<label for="iban-element"></label>
+<div class="form-control" id="iban-element"><!-- a Stripe Element will be inserted here. --></div>';
+print "</div></div><div id='error-message' role='alert'></div>";
+print "</li><li class='list-group-item'><small><div class='custom-control custom-checkbox my-1 mr-sm-2'><input type='checkbox' class='custom-control-input' value='1' id='default' name='default'";
+if (empty($i)) { print " checked disabled"; }
+print "><label class='custom-control-label' for='default'> ".__( 'Set as default payment mode', 'doliconnect')."</label></div>";
+if (empty($i)) { print "<input type='hidden' name='default' value='1'>"; }
+print '</small></li></ul>';
+print doliloading('addnewpaymentmethod');
+print "<div id='FooterAddPaymentMethod' class='modal-footer'><button name='add_card' id='buttontoaddcard' value='add_card' class='btn btn-warning btn-block' type='submit' title='".__( 'Add', 'doliconnect')."'><b>".__( 'Add', 'doliconnect')."</b></button></div>";
+print "</div>";
+} else {
+print "<form role='form' action='$url' id='paymentmethods-form' method='post'>";
+
+if ( isset($msg) ) { print $msg; }
+
+print "<script src='https://js.stripe.com/v3/'></script>";
+
+print doliloaderscript('paymentmethods-form');
+
+print "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
 
 if (empty($listpaymentmethods->stripe)) {
 print "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".__( "Stripe's in sandbox mode", 'doliconnect')."</b></li>";
@@ -894,6 +924,7 @@ refreshStripe();
 })';
 
 print "</script>";
+}
 
 }
 
