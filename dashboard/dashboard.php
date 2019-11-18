@@ -702,9 +702,24 @@ print 'var cardholderName = document.getElementById("cardholder-name");';
 if ( $listpaymentmethods->sepa_direct_debit ) { 
 print 'var ibanholderName = document.getElementById("ibanholder-name");'; 
 }
-print '
-var default_pm = "0";
-';
+print 'function defaultpm(choice){
+  this.value = choice;
+}
+
+if($("#default").is(":checked")) {
+var default_pm = new defaultpm("1").value;
+        } else {
+var default_pm = new defaultpm("0").value;
+        }
+alert(default_pm);
+$("#default").on("change", function() {
+if($("#default").is(":checked")) {
+var default_pm = new defaultpm("1").value;
+        } else {
+var default_pm = new defaultpm("0").value;
+        }
+alert(default_pm);     
+});';
 print 'var AddButton = document.getElementById("buttontopaymentintent");';
 print 'var clientSecret = "'.$listpaymentmethods->stripe_client_secret.'";';
 
