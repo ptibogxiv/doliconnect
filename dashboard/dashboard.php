@@ -649,9 +649,9 @@ print "</div>";
 }
 print "</div><div id='error-message' role='alert'><!-- a Stripe Message will be inserted here. --></div>";
 print "</li><li class='list-group-item'><small><div class='custom-control custom-checkbox my-1 mr-sm-2'><input type='checkbox' class='custom-control-input' value='1' id='default' name='default'";
-if (empty($i)) { print " checked disabled"; }
+//if (empty($i)) { print " checked disabled"; }
 print "><label class='custom-control-label' for='default'> ".__( 'Set as default payment mode', 'doliconnect')."</label></div>";
-if (empty($i)) { print "<input type='hidden' name='default' value='1'>"; }
+//if (empty($i)) { print "<input type='hidden' name='default' value='1'>"; }
 print '</small></li></ul>';
 print "<div class='card-body'><button id='buttontopaymentintent' class='btn btn-warning btn-block' title='".__( 'Add', 'doliconnect')."'><b>".__( 'Add', 'doliconnect')."</b></button></div>";
 print "</div>";
