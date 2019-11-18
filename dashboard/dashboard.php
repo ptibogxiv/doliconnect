@@ -785,12 +785,12 @@ print doliloaderscript('paymentmethods-form');
 
 print "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
 
-if (empty($listpaymentmethods->stripe)) {
+if ( isset($listpaymentmethods->stripe) && empty($listpaymentmethods->stripe)) {
 print "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".__( "Stripe's in sandbox mode", 'doliconnect')."</b></li>";
 }
 
 if ( doliversion('10.0.0') && (!empty($listpaymentmethods->card) || ! empty($listpaymentmethods->sepa_direct_debit)) && count($counter) < 5 ) {
-print '<button id="ButtonAddPaymentMethod" type="button" class="list-group-item lh-condensed list-group-item-action list-group-item-primary" data-toggle="modal" data-target="#addsource" ><center><i class="fas fa-plus-circle"></i> '.__( 'New payment method', 'doliconnect' ).'</center></button>';
+print '<a href="'.$url.'&action=create" id="ButtonAddPaymentMethod" class="list-group-item lh-condensed list-group-item-action list-group-item-primary" ><center><i class="fas fa-plus-circle"></i> '.__( 'New payment method', 'doliconnect' ).'</center></a>';
 } elseif ( ! doliversion('10.0.0') ) {
 print "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".sprintf( esc_html__( "Register payment methods needs Dolibarr %s but your version is %s", 'doliconnect'), '10.0.0', doliversion('10.0.0'))."</b></li>";
 }
