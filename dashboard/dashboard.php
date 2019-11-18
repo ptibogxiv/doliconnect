@@ -697,10 +697,18 @@ print 'var ibanElement = elements.create("iban", options);';
 print 'ibanElement.mount("#iban-element");';  
 }
 
+// Handle form submission
+print 'var cardholderName = document.getElementById("cardholder-name");';
+if ( $listpaymentmethods->sepa_direct_debit ) { 
+print 'var ibanholderName = document.getElementById("ibanholder-name");'; 
+}   
+print 'var AddButton = document.getElementById("buttontopaymentintent");';
+print 'var clientSecret = "'.$listpaymentmethods->stripe_client_secret.'";';
+
 // Handle real-time validation errors from the card Element.
 print 'var displayError = document.getElementById("error-message");
-displayError.textContent = "";
-cardElement.addEventListener("change", function(event) {
+displayError.textContent = "";';
+print 'cardElement.addEventListener("change", function(event) {
   if (event.error) {
     console.log("Show event error");
     displayError.textContent = event.error.message;
@@ -710,14 +718,16 @@ cardElement.addEventListener("change", function(event) {
     document.getElementById("buttontopaymentintent").disabled = false; 
   }
 });';
-
-// Handle form submission
-print 'var cardholderName = document.getElementById("cardholder-name");';
-if ( $listpaymentmethods->sepa_direct_debit ) { 
-print 'var ibanholderName = document.getElementById("ibanholder-name");'; 
-}   
-print 'var AddButton = document.getElementById("buttontopaymentintent");';
-print 'var clientSecret = "'.$listpaymentmethods->stripe_client_secret.'";';
+print 'cardholderName.addEventListener("change", function(event) {
+  if (event.error) {
+    console.log("Show event error");
+    displayError.textContent = event.error.message;
+  } else {
+    console.log("Reset error message");
+    displayError.textContent = "";
+    document.getElementById("buttontopaymentintent").disabled = false; 
+  }
+});';
 
 // Payment method action
 print 'AddButton.addEventListener("click", function(event) {
