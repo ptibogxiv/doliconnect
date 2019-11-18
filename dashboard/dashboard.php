@@ -584,12 +584,12 @@ $data = [
 'default' => 1
 ];
 
-$gateway = callDoliApi("PUT", "/doliconnector/".doliconnector($current_user, 'fk_soc')."/paymentmethods/".sanitize_text_field($_POST['default_paymentmethod']), $data, dolidelay( 0, true));
+$gateway = callDoliApi("PUT", $request."/".sanitize_text_field($_POST['default_paymentmethod']), $data, dolidelay( 0, true));
 $gateway = callDoliApi("GET", $request, null, dolidelay('paymentmethods', true));
 $msg = dolialert ('success', __( 'You changed your default payment method', 'doliconnect' ));
 } elseif ( isset($_POST['delete_paymentmethod']) ) {
 
-$gateway = callDoliApi("DELETE", "/doliconnector/".doliconnector($current_user, 'fk_soc')."/paymentmethods/".sanitize_text_field($_POST['delete_paymentmethod']), null, dolidelay( 0, true));
+$gateway = callDoliApi("DELETE", $request."/".sanitize_text_field($_POST['delete_paymentmethod']), null, dolidelay( 0, true));
 $gateway = callDoliApi("GET", $request, null, dolidelay('paymentmethods', true));
 
 } elseif ( isset($_POST['add_paymentmethod'])  ) {
@@ -598,14 +598,13 @@ $data = [
 'default' => isset($_POST['default'])?$_POST['default']:0,
 ];
 
-$gateway = callDoliApi("POST", "/doliconnector/".doliconnector($current_user, 'fk_soc')."/paymentmethods/".sanitize_text_field($_POST['add_paymentmethod']), $data, dolidelay( 0, true));
+$gateway = callDoliApi("POST", $request."/".sanitize_text_field($_POST['add_paymentmethod']), $data, dolidelay( 0, true));
 $gateway = callDoliApi("GET", $request, null, dolidelay('paymentmethods', true));
 $msg = dolialert ('success', __( 'You have a new payment method', 'doliconnect' ));
 } 
 
-$listpaymentmethods = callDoliApi("GET", "/doliconnector/".doliconnector($current_user, 'fk_soc')."/paymentmethods", null, dolidelay('paymentmethods', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$listpaymentmethods = callDoliApi("GET", $request, null, dolidelay('paymentmethods', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 //print $listsource;
-
 
 doliconnect_enqueues();
 
