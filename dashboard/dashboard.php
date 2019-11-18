@@ -647,7 +647,7 @@ print '<small>'.sprintf( esc_html__( 'By providing your IBAN and confirming this
 print "</p>";
 print "</div>";
 }
-print "</div><div id='error-message' role='alert'><!-- a Stripe Message will be inserted here. --></div>";
+print "</div><div id='bank-name'><!-- a Stripe Message will be inserted here. --></div><div id='error-message' role='alert'><!-- a Stripe Message will be inserted here. --></div>";
 print "</li><li class='list-group-item'><small><div class='custom-control custom-checkbox my-1 mr-sm-2'><input type='checkbox' class='custom-control-input' id='default' name='default' value='1' ";
 //if (empty($i)) { print " checked disabled"; }
 print "><label class='custom-control-label' for='default'> ".__( 'Set as default payment mode', 'doliconnect')."</label></div>";
@@ -710,25 +710,52 @@ print 'var clientSecret = "'.$listpaymentmethods->stripe_client_secret.'";';
 print 'var displayError = document.getElementById("error-message");
 displayError.textContent = "";';
 print 'cardElement.addEventListener("change", function(event) {
-  if (event.error) {
-    console.log("Show event error");
-    displayError.textContent = event.error.message;
-  } else {
+  // Handle real-time validation errors from the card Element.
     console.log("Reset error message");
+  if (event.error) {
+    displayError.textContent = event.error.message;
+    displayError.classList.add("visible");
+    document.getElementById("buttontopaymentintent").disabled = true;
+  } else {
     displayError.textContent = "";
-    document.getElementById("buttontopaymentintent").disabled = false; 
+    displayError.classList.remove("visible");
+    document.getElementById("buttontopaymentintent").disabled = false;
   }
 });';
 print 'cardholderName.addEventListener("change", function(event) {
-  if (event.error) {
-    console.log("Show event error");
-    displayError.textContent = event.error.message;
-  } else {
     console.log("Reset error message");
     displayError.textContent = "";
     document.getElementById("buttontopaymentintent").disabled = false; 
+});';
+if ( $listpaymentmethods->sepa_direct_debit ) { 
+print 'ibanElement.addEventListener("change", function(event) {
+  // Handle real-time validation errors from the iban Element.
+    console.log("Reset error message");
+    displayError.textContent = "";
+  if (event.error) {
+    displayError.textContent = event.error.message;
+    displayError.classList.add("visible");
+    document.getElementById("buttontopaymentintent").disabled = true;
+  } else {
+    displayError.textContent = "";
+    displayError.classList.remove("visible");
+    document.getElementById("buttontopaymentintent").disabled = false;
+  }
+
+  // Display bank name corresponding to IBAN, if available.
+  if (event.bankName) {
+    bankName.textContent = event.bankName;
+    bankName.classList.add("visible");
+  } else {
+    bankName.classList.remove("visible");
   }
 });';
+print 'ibanholderName.addEventListener("change", function(event) {
+    console.log("Reset error message");
+    displayError.textContent = "";
+    document.getElementById("buttontopaymentintent").disabled = false; 
+});';
+}
 
 // Payment method action
 print 'AddButton.addEventListener("click", function(event) {
