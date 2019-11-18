@@ -621,7 +621,8 @@ $counter = new myCounter;
 
 print "<script src='https://js.stripe.com/v3/'></script>";
 
-if ( doliversion('11.0.0') && isset($_GET['action']) && $_GET['action'] == 'create') { 
+if ( doliversion('11.0.0') && isset($_GET['action']) && $_GET['action'] == 'create') {
+print doliloaderscript('paymentmethods-form'); 
 print "<div class='card shadow-sm'>";
 print "<div class='card-header'>";
 print "<nav><div class='nav nav-tabs card-header-tabs' id='nav-tabs' role='tablist'>";
@@ -648,7 +649,7 @@ print '<small>'.sprintf( esc_html__( 'By providing your IBAN and confirming this
 print "</p>";
 print "</div>";
 }
-print "</div><div id='error-message' role='alert'></div>";
+print "</div><div id='error-message' role='alert'><!-- a Stripe Message will be inserted here. --></div>";
 print "</li><li class='list-group-item'><small><div class='custom-control custom-checkbox my-1 mr-sm-2'><input type='checkbox' class='custom-control-input' value='1' id='default' name='default'";
 if (empty($i)) { print " checked disabled"; }
 print "><label class='custom-control-label' for='default'> ".__( 'Set as default payment mode', 'doliconnect')."</label></div>";
@@ -688,7 +689,7 @@ print 'var options = {
 };';
 
 // Create an instance of Elements
-print 'function refreshStripe() {'; 
+//print 'function refreshStripe() {'; 
 
 print 'var elements = stripe.elements();';  
 print 'var cardElement = elements.create("card", options);';
@@ -729,6 +730,8 @@ jQuery("#DoliconnectLoadingModal").modal("show");
   ).then(function(result) {
     if (result.error) {
       // Display error.message in your UI.
+var displayError = document.getElementById("error-message");
+displayError.textContent = "'.__( "Your card number seems to be wrong.", "doliconnect").'";    
     } else {
       // The setup has succeeded. Display a success message.
     }
@@ -736,11 +739,11 @@ jQuery("#DoliconnectLoadingModal").modal("show");
 });';
 
 
-print '}
-window.onload = refreshStripe;';
-print 'jQuery("#nav-tab").on("show.bs.tab", function (e) {
-refreshStripe();
-});';
+//print '}
+//window.onload = refreshStripe;';
+//print 'jQuery("#nav-tabs").on("show.bs.tab", function (e) {
+//refreshStripe();
+//});';
 
 print "</script>";
 
