@@ -626,7 +626,9 @@ print "<div class='card shadow-sm'>";
 print "<div class='card-header'>";
 print "<nav><div class='nav nav-tabs card-header-tabs' id='nav-tabs' role='tablist'>";
 print "<a class='nav-item nav-link active' id='nav-card-tab' data-toggle='tab' href='#nav-card' role='tab' aria-controls='nav-card' aria-selected='true'>".__( 'Card', 'doliconnect')."</a>";
+if ( $listpaymentmethods->sepa_direct_debit ) {
 print "<a class='nav-item nav-link' id='nav-iban-tab' data-toggle='tab' href='#nav-iban' role='tab' aria-controls='nav-iban' aria-selected='false'>".__( 'IBAN', 'doliconnect')."</a>";
+}
 print "</div></nav>";
 print "</div>";
 print "<ul class='list-group list-group-flush'><li class='list-group-item'>";
@@ -635,8 +637,8 @@ print '<input id="cardholder-name" name="cardholder-name" value="" type="text" c
 <label for="card-element"></label>
 <div class="form-control" id="card-element"><!-- a Stripe Element will be inserted here. --></div>';
 print "</div>";
+if ( $listpaymentmethods->sepa_direct_debit ) {
 print "<div class='tab-pane fade' id='nav-iban' role='tabpanel' aria-labelledby='nav-iban-tab'>";
-
 print '<input id="ibanholder-name" name="ibanholder-name" value="" type="text" class="form-control" placeholder="'.__( 'Owner', 'doliconnect').'" autocomplete="off" required>
 <label for="iban-element"></label>
 <div class="form-control" id="iban-element"><!-- a Stripe Element will be inserted here. --></div>';
@@ -644,7 +646,9 @@ print "<p class='text-justify'>";
 $blogname=get_bloginfo('name');
 print '<small>'.sprintf( esc_html__( 'By providing your IBAN and confirming this form, you are authorizing %s and Stripe, our payment service provider, to send instructions to your bank to debit your account and your bank to debit your account in accordance with those instructions. You are entitled to a refund from your bank under the terms and conditions of your agreement with your bank. A refund must be claimed within 8 weeks starting from the date on which your account was debited.', 'doliconnect'), $blogname).'</small>';
 print "</p>";
-print "</div></div><div id='error-message' role='alert'></div>";
+print "</div>";
+}
+print "</div><div id='error-message' role='alert'></div>";
 print "</li><li class='list-group-item'><small><div class='custom-control custom-checkbox my-1 mr-sm-2'><input type='checkbox' class='custom-control-input' value='1' id='default' name='default'";
 if (empty($i)) { print " checked disabled"; }
 print "><label class='custom-control-label' for='default'> ".__( 'Set as default payment mode', 'doliconnect')."</label></div>";
