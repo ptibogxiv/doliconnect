@@ -648,7 +648,7 @@ print "</p>";
 print "</div>";
 }
 print "</div><div id='error-message' role='alert'><!-- a Stripe Message will be inserted here. --></div>";
-print "</li><li class='list-group-item'><small><div class='custom-control custom-checkbox my-1 mr-sm-2'><input type='checkbox' class='custom-control-input' id='default' name='default' value='1',";
+print "</li><li class='list-group-item'><small><div class='custom-control custom-checkbox my-1 mr-sm-2'><input type='checkbox' class='custom-control-input' id='default' name='default' value='1' ";
 //if (empty($i)) { print " checked disabled"; }
 print "><label class='custom-control-label' for='default'> ".__( 'Set as default payment mode', 'doliconnect')."</label></div>";
 //if (empty($i)) { print "<input type='hidden' name='default' value='1'>"; }
@@ -701,7 +701,7 @@ print 'ibanElement.mount("#iban-element");';
 print 'var cardholderName = document.getElementById("cardholder-name");';
 if ( $listpaymentmethods->sepa_direct_debit ) { 
 print 'var ibanholderName = document.getElementById("ibanholder-name");'; 
-} 
+}
 print 'var AddButton = document.getElementById("buttontopaymentintent");';
 print 'var clientSecret = "'.$listpaymentmethods->stripe_client_secret.'";';
 
