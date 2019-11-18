@@ -711,14 +711,14 @@ var default_pm = new defaultpm("1").value;
         } else {
 var default_pm = new defaultpm("0").value;
         }
-alert(default_pm);
+//alert(default_pm);
 $("#default").on("change", function() {
 if($("#default").is(":checked")) {
 var default_pm = new defaultpm("1").value;
         } else {
 var default_pm = new defaultpm("0").value;
         }
-alert(default_pm);     
+//alert(default_pm);     
 });';
 print 'var AddButton = document.getElementById("buttontopaymentintent");';
 print 'var clientSecret = "'.$listpaymentmethods->stripe_client_secret.'";';
