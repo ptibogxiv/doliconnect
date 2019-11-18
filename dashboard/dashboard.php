@@ -702,7 +702,9 @@ print 'var cardholderName = document.getElementById("cardholder-name");';
 if ( $listpaymentmethods->sepa_direct_debit ) { 
 print 'var ibanholderName = document.getElementById("ibanholder-name");'; 
 }
-print 'var default_pm = jQuery("#default").val();';
+print '
+var default_pm = "0";
+';
 print 'var AddButton = document.getElementById("buttontopaymentintent");';
 print 'var clientSecret = "'.$listpaymentmethods->stripe_client_secret.'";';
 
