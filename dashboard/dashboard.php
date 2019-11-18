@@ -632,13 +632,13 @@ print "</div></nav>";
 print "</div>";
 print "<ul class='list-group list-group-flush'><li class='list-group-item'>";
 print "<div class='tab-content' id='nav-tabContent'><div class='tab-pane fade show active' id='nav-card' role='tabpanel' aria-labelledby='nav-card-tab'>";
-print '<input id="cardholder-name" name="cardholder-name" value="" type="text" class="form-control" placeholder="'.__( 'Owner', 'doliconnect').'" autocomplete="off" required>
+print '<input id="cardholder-name" name="cardholder-name" value="" type="text" class="form-control" placeholder="'.__( "Card's owner", 'doliconnect').'" autocomplete="off" required>
 <label for="card-element"></label>
 <div class="form-control" id="card-element"><!-- a Stripe Element will be inserted here. --></div>';
 print "</div>";
 if ( $listpaymentmethods->sepa_direct_debit ) {
 print "<div class='tab-pane fade' id='nav-iban' role='tabpanel' aria-labelledby='nav-iban-tab'>";
-print '<input id="ibanholder-name" name="ibanholder-name" value="" type="text" class="form-control" placeholder="'.__( 'Owner', 'doliconnect').'" autocomplete="off" required>
+print '<input id="ibanholder-name" name="ibanholder-name" value="" type="text" class="form-control" placeholder="'.__( "Bank's owner", 'doliconnect').'" autocomplete="off" required>
 <label for="iban-element"></label>
 <div class="form-control" id="iban-element"><!-- a Stripe Element will be inserted here. --></div>';
 print "<p class='text-justify'>";
