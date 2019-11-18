@@ -586,13 +586,13 @@ $data = [
 
 $gateway = callDoliApi("PUT", $request."/".sanitize_text_field($_POST['default_paymentmethod']), $data, dolidelay( 0, true));
 $gateway = callDoliApi("GET", $request, null, dolidelay('paymentmethods', true));
-$msg = dolialert ('success', __( 'You changed your default payment method', 'doliconnect' ));
+$msg = dolialert ('success', __( 'You changed your default payment method', 'doliconnect'));
 } elseif ( isset($_POST['delete_paymentmethod']) ) {
 
 $gateway = callDoliApi("DELETE", $request."/".sanitize_text_field($_POST['delete_paymentmethod']), null, dolidelay( 0, true));
 $gateway = callDoliApi("GET", $request, null, dolidelay('paymentmethods', true));
 
-} elseif ( isset($_POST['add_paymentmethod'])  ) {
+} elseif ( isset($_POST['add_paymentmethod']) ) {
 
 $data = [
 'default' => isset($_POST['default'])?$_POST['default']:0,
@@ -600,7 +600,7 @@ $data = [
 
 $gateway = callDoliApi("POST", $request."/".sanitize_text_field($_POST['add_paymentmethod']), $data, dolidelay( 0, true));
 $gateway = callDoliApi("GET", $request, null, dolidelay('paymentmethods', true));
-$msg = dolialert ('success', __( 'You have a new payment method', 'doliconnect' ));
+$msg = dolialert ('success', __( 'You have a new payment method', 'doliconnect'));
 } 
 
 $listpaymentmethods = callDoliApi("GET", $request, null, dolidelay('paymentmethods', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
@@ -754,7 +754,6 @@ displayError.textContent = "'.__( "Your card number seems to be wrong.", "dolico
       // The setup has succeeded. Display a success message.
 jQuery("#DoliconnectLoadingModal").modal("show");
 var form = document.createElement("form");
-form.setAttribute("action", "'.$url.'");
 form.setAttribute("method", "post");
 form.setAttribute("type", "hidden");
 form.setAttribute("name", "add_paymentmethod");
