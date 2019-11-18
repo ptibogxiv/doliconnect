@@ -978,7 +978,7 @@ jQuery("#doliloading-addnewpaymentmethod").hide();
   ibanElement, {
   billing_details: {
     name: ibanholderName.value,
-    email: "support@ptibogxiv.net"
+    email: "'.$listpaymentmethods->cus_email.'"
   },
 }
 ).then(function(result) {
