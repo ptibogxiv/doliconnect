@@ -654,7 +654,7 @@ if (empty($i)) { print " checked disabled"; }
 print "><label class='custom-control-label' for='default'> ".__( 'Set as default payment mode', 'doliconnect')."</label></div>";
 if (empty($i)) { print "<input type='hidden' name='default' value='1'>"; }
 print '</small></li></ul>';
-print "<div id='FooterAddPaymentMethod' class='modal-footer'><button name='add_card' id='buttontoaddcard' value='add_card' class='btn btn-warning btn-block' type='submit' title='".__( 'Add', 'doliconnect')."'><b>".__( 'Add', 'doliconnect')."</b></button></div>";
+print "<div id='FooterAddPaymentMethod' class='modal-footer'><button id='buttontoaddcard' class='btn btn-warning btn-block' title='".__( 'Add', 'doliconnect')."'><b>".__( 'Add', 'doliconnect')."</b></button></div>";
 print "</div>";
 
 print "<script>";
@@ -717,7 +717,7 @@ print 'var clientSecret = '.$listpaymentmethods->stripe_client_secret.';';
 
 // Payment method action
 print 'AddButton.addEventListener("click", function(ev) {
-
+jQuery("#DoliconnectLoadingModal").modal("show");
   stripe.confirmCardSetup(
     clientSecret,
     {
