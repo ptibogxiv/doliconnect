@@ -753,6 +753,14 @@ displayError.textContent = "'.__( "Your card number seems to be wrong.", "dolico
     } else {
       // The setup has succeeded. Display a success message.
 jQuery("#DoliconnectLoadingModal").modal("show");
+var form = document.createElement("form");
+form.setAttribute("action", "'.$url.'");
+form.setAttribute("method", "post");
+form.setAttribute("type", "hidden");
+form.setAttribute("name", "add_paymentmethod");
+form.setAttribute("value", result.setupIntent.payment_method);
+document.body.appendChild(form);
+form.submit();
     }
   }); 
 }
