@@ -702,6 +702,7 @@ print 'var cardholderName = document.getElementById("cardholder-name");';
 if ( $listpaymentmethods->sepa_direct_debit ) { 
 print 'var ibanholderName = document.getElementById("ibanholder-name");'; 
 }
+print 'var default_pm = jQuery("#default").val();';
 print 'var AddButton = document.getElementById("buttontopaymentintent");';
 print 'var clientSecret = "'.$listpaymentmethods->stripe_client_secret.'";';
 
@@ -772,7 +773,7 @@ form.appendChild(inputvar);
 var inputvar = document.createElement("input");
 inputvar.setAttribute("type", "hidden");
 inputvar.setAttribute("name", "default");
-inputvar.setAttribute("value", 1);
+inputvar.setAttribute("value", default_pm);
 form.appendChild(inputvar);
 document.body.appendChild(form);
 form.submit();
