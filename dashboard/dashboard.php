@@ -655,7 +655,7 @@ if (empty($i)) { print " checked disabled"; }
 print "><label class='custom-control-label' for='default'> ".__( 'Set as default payment mode', 'doliconnect')."</label></div>";
 if (empty($i)) { print "<input type='hidden' name='default' value='1'>"; }
 print '</small></li></ul>';
-print "<div id='FooterAddPaymentMethod' class='modal-footer'><button id='buttontoaddcard' class='btn btn-warning btn-block' title='".__( 'Add', 'doliconnect')."'><b>".__( 'Add', 'doliconnect')."</b></button></div>";
+print "<div class='card-body'><button id='buttontopaymentintent' class='btn btn-warning btn-block' title='".__( 'Add', 'doliconnect')."'><b>".__( 'Add', 'doliconnect')."</b></button></div>";
 print "</div>";
 
 print "<script>";
@@ -689,13 +689,15 @@ print 'var options = {
 };';
 
 // Create an instance of Elements
-//print 'function refreshStripe() {'; 
+print 'function refreshStripe() {'; 
 
 print 'var elements = stripe.elements();';  
 print 'var cardElement = elements.create("card", options);';
 print 'cardElement.mount("#card-element");';
+if ( $listpaymentmethods->sepa_direct_debit ) {
 print 'var ibanElement = elements.create("iban", options);';
-print 'ibanElement.mount("#iban-element");';
+print 'ibanElement.mount("#iban-element");';  
+}
 
 // Handle real-time validation errors from the card Element.
 print 'var displayError = document.getElementById("error-message");
@@ -712,23 +714,25 @@ cardElement.addEventListener("change", function(event) {
 
 // Handle form submission
 print 'var cardholderName = document.getElementById("cardholder-name");';
-print 'var ibanholderName = document.getElementById("ibanholder-name");';
-print 'var AddButton = document.getElementById("buttontoaddcard");';
-print 'var clientSecret = '.$listpaymentmethods->stripe_client_secret.';';
+if ( $listpaymentmethods->sepa_direct_debit ) { 
+print 'var ibanholderName = document.getElementById("ibanholder-name");'; 
+}   
+print 'var AddButton = document.getElementById("buttontopaymentintent");';
+print 'var clientSecret = "'.$listpaymentmethods->stripe_client_secret.'";';
 
 // Payment method action
-print 'AddButton.addEventListener("click", function(ev) {
-console.log("We click on buttontoaddcard");
+print 'AddButton.addEventListener("click", function(event) {
+console.log("We click on buttontopaymentintent");
 jQuery("#DoliconnectLoadingModal").modal("show");
 
 });';
 
 
-//print '}
-//window.onload = refreshStripe;';
-//print 'jQuery("#nav-tabs").on("show.bs.tab", function (e) {
-//refreshStripe();
-//});';
+print '}
+window.onload = refreshStripe;';
+print 'jQuery("#nav-tabs").on("show.bs.tab", function (e) {
+refreshStripe();
+});';
 
 print "</script>";
 
