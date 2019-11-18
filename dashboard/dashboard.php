@@ -624,7 +624,7 @@ print "<script src='https://js.stripe.com/v3/'></script>";
 if ( doliversion('11.0.0') && isset($_GET['action']) && $_GET['action'] == 'create') { 
 print "<div class='card shadow-sm'>";
 print "<div class='card-header'>";
-print "<nav><div class='nav nav-tabs card-header-tabs' id='nav-tab' role='tablist'>";
+print "<nav><div class='nav nav-tabs card-header-tabs' id='nav-tabs' role='tablist'>";
 print "<a class='nav-item nav-link active' id='nav-card-tab' data-toggle='tab' href='#nav-card' role='tab' aria-controls='nav-card' aria-selected='true'>".__( 'Card', 'doliconnect')."</a>";
 print "<a class='nav-item nav-link' id='nav-iban-tab' data-toggle='tab' href='#nav-iban' role='tab' aria-controls='nav-iban' aria-selected='false'>".__( 'IBAN', 'doliconnect')."</a>";
 print "</div></nav>";
@@ -684,7 +684,7 @@ print 'var options = {
 };';
 
 // Create an instance of Elements
-//print 'function refreshStripe() {'; 
+print 'function refreshStripe() {'; 
 
 print 'var elements = stripe.elements();';  
 print 'var cardElement = elements.create("card", options);';
@@ -711,6 +711,7 @@ print 'var ibanholderName = document.getElementById("ibanholder-name");';
 print 'var AddButton = document.getElementById("buttontoaddcard");';
 print 'var clientSecret = '.$listpaymentmethods->stripe_client_secret.';';
 
+// Payment method action
 print 'AddButton.addEventListener("click", function(ev) {
 
   stripe.confirmCardSetup(
@@ -731,11 +732,11 @@ print 'AddButton.addEventListener("click", function(ev) {
 });';
 
 
-//print '}
-//window.onload = refreshStripe;';
-//print 'jQuery("#nav-tab").on("show.bs.tab", function (e) {
-//refreshStripe();
-//})';
+print '}
+window.onload = refreshStripe;';
+print 'jQuery("#nav-tab").on("show.bs.tab", function (e) {
+refreshStripe();
+});';
 
 print "</script>";
 
