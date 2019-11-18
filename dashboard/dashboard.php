@@ -709,6 +709,7 @@ cardElement.addEventListener("change", function(event) {
   } else {
     console.log("Reset error message");
     displayError.textContent = "";
+    document.getElementById("buttontopaymentintent").disabled = false; 
   }
 });';
 
