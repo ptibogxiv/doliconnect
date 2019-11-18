@@ -620,8 +620,7 @@ class myCounter implements Countable {
 $counter = new myCounter;
 
 if ( doliversion('11.0.0') && isset($_GET['action']) && $_GET['action'] == 'create') { 
-print "<script src='https://js.stripe.com/v3/'></script>";
-print doliloaderscript('paymentmethods-form'); 
+print "<script src='https://js.stripe.com/v3/'></script>"; 
 print "<div class='card shadow-sm'>";
 print "<div class='card-header'>";
 print "<nav><div class='nav nav-tabs card-header-tabs' id='nav-tabs' role='tablist'>";
