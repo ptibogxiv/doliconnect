@@ -723,8 +723,38 @@ print 'var clientSecret = "'.$listpaymentmethods->stripe_client_secret.'";';
 // Payment method action
 print 'AddButton.addEventListener("click", function(event) {
 console.log("We click on buttontopaymentintent");
+document.getElementById("buttontopaymentintent").disabled = true; 
+        if (cardholderName.value == "")
+        	{        
+				console.log("Field Card holder is empty");
+				var displayError = document.getElementById("error-message");
+				displayError.textContent = "'.__( "We need an owner as on your card.", "doliconnect").'";
+        document.getElementById("buttontopaymentintent").disabled = false; 
+        jQuery("#DoliconnectLoadingModal").modal("hide");   
+        	}
+        else
+        	{
+  stripe.confirmCardSetup(
+    clientSecret,
+    {
+      payment_method: {
+        card: cardElement,
+        billing_details: {name: cardholderName.value}
+      }
+    }
+  ).then(function(result) {
+    if (result.error) {
+      // Display error.message
+jQuery("#DoliconnectLoadingModal").modal("hide");
+console.log("Error occured when adding card");
+var displayError = document.getElementById("error-message");
+displayError.textContent = "'.__( "Your card number seems to be wrong.", "doliconnect").'";    
+    } else {
+      // The setup has succeeded. Display a success message.
 jQuery("#DoliconnectLoadingModal").modal("show");
-
+    }
+  }); 
+}
 });';
 
 
