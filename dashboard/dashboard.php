@@ -718,24 +718,9 @@ print 'var clientSecret = '.$listpaymentmethods->stripe_client_secret.';';
 
 // Payment method action
 print 'AddButton.addEventListener("click", function(ev) {
+console.log("We click on buttontoaddcard");
 jQuery("#DoliconnectLoadingModal").modal("show");
-  stripe.confirmCardSetup(
-    clientSecret,
-    {
-      payment_method: {
-        card: cardElement,
-        billing_details: {name: cardholderName.value}
-      }
-    }
-  ).then(function(result) {
-    if (result.error) {
-      // Display error.message in your UI.
-var displayError = document.getElementById("error-message");
-displayError.textContent = "'.__( "Your card number seems to be wrong.", "doliconnect").'";    
-    } else {
-      // The setup has succeeded. Display a success message.
-    }
-  });
+
 });';
 
 
