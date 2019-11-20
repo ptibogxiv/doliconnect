@@ -721,8 +721,8 @@ var default_pm = new defaultpm("0").value;
 //alert(default_pm);     
 });';
 
-print 'var test = jQuery(".nav-tabs .active").text();
-alert(test);';
+//print 'var test = jQuery(".nav-tabs .active").text();
+//alert(test);';
 
 print 'var AddButton = document.getElementById("buttontopaymentintent");';
 print 'var clientSecret = "'.$listpaymentmethods->stripe_client_secret.'";';
