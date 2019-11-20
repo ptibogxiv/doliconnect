@@ -830,8 +830,18 @@ ibanButton.disabled = true;
         	}
         else
         	{
-          
-          
+  stripe.confirmSepaDebitSetup(
+    clientSecret,
+    {
+      payment_method: {
+        sepa_debit: ibanElement,
+        billing_details: {
+          name: ibanholderName.value,
+          email: 'support@ptibogxiv.net'
+        }
+      }
+    }
+  );
           }
 });
               //alert('2');
