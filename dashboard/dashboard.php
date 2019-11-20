@@ -637,7 +637,7 @@ print "<p class='text-justify'>";
 print "</p>";
 print "<button id='cardButton' class='btn btn-warning btn-block' title='".__( 'Add', 'doliconnect')."'><b>".__( 'Add', 'doliconnect')."</b></button>";
 print '</div></div></div>';
-if ( isset($listpaymentmethods->sepa_direct_debit) && !empty($listpaymentmethods->sepa_direct_debit) && get_option('doliconnectbeta')=='1' && current_user_can( 'administrator' )) {
+if ( isset($listpaymentmethods->sepa_direct_debit) && !empty($listpaymentmethods->sepa_direct_debit) ) {
 print '<div class="custom-control custom-radio">
 <input type="radio" id="iban" name="paymentmode" class="custom-control-input" data-toggle="collapse" data-parent="#accordion" href="#iban">
 <label class="custom-control-label" for="iban">IBAN</label>
