@@ -747,7 +747,8 @@ print 'cardholderName.addEventListener("change", function(event) {
 });';
 
 if ( $listpaymentmethods->sepa_direct_debit && get_option('doliconnectbeta')=='1' && current_user_can( 'administrator' ) ) { 
-print 'ibanElement.addEventListener("change", function(event) {
+print 'jQuery("#nav-iban-tab").click(function(){
+ibanElement.addEventListener("change", function(event) {
   // Handle real-time validation errors from the iban Element.
     console.log("Reset error message");
     displayError.textContent = "";
@@ -773,6 +774,7 @@ print 'ibanholderName.addEventListener("change", function(event) {
     console.log("Reset error message");
     displayError.textContent = "";
     document.getElementById("buttontopaymentintent").disabled = false; 
+});
 });';
 }
 
