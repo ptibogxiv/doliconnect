@@ -619,13 +619,88 @@ class myCounter implements Countable {
  
 $counter = new myCounter;
 
-if ( doliversion('11.0.0') && isset($_GET['action']) && $_GET['action'] == 'create') { 
+if ( doliversion('11.0.0') && isset($_GET['action']) && $_GET['action'] == 'create') {
+
+print '<div class="bs-example"><input class="radio" id="collapseOne" type="radio" name="group1" value="1" data-toggle="collapse" data-parent="#accordion" href="#collapseOne"> Carte bancaire<br>';
+if ( isset($listpaymentmethods->sepa_direct_debit) && !empty($listpaymentmethods->sepa_direct_debit) && get_option('doliconnectbeta')=='1' && current_user_can( 'administrator' )) {
+print '<input class="radio" id="collapseTwo" type="radio" name="group1" value="2" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"> IBAN<br>';
+}
+if ( isset($listpaymentmethods->ideal) && !empty($listpaymentmethods->ideal) && get_option('doliconnectbeta')=='1' && current_user_can( 'administrator' )) {
+print '<input class="radio" id="collapseThree" type="radio" name="group1" value="3" data-toggle="collapse" data-parent="#accordion" href="#collapseThree"> iDEAL<br>';
+}
+
+print '<div class="panel-group" id="accordion">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    1. What is HTML?
+                </h4>
+            </div>
+            <div id="collapseOnePanel" class="panel-collapse collapse in">
+                <div class="panel-body">
+                    <p>HTML stands for HyperText Markup Language. HTML is the main markup language for describing the structure of Web pages. <a href="http://www.tutorialrepublic.com/html-tutorial/" target="_blank">Learn more.</a></p>
+                </div>
+            </div>
+        </div>';
+if ( isset($listpaymentmethods->sepa_direct_debit) && !empty($listpaymentmethods->sepa_direct_debit) && get_option('doliconnectbeta')=='1' && current_user_can( 'administrator' )) {
+print '<div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+2. What is Bootstrap?
+                </h4>
+            </div>
+            <div id="collapseTwoPanel" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <p>Bootstrap is a powerful front-end framework for faster and easier web development. It is a collection of CSS and HTML conventions. <a href="http://www.tutorialrepublic.com/twitter-bootstrap-tutorial/" target="_blank">Learn more.</a></p>
+                </div>
+            </div>
+        </div>';
+}
+if ( isset($listpaymentmethods->ideal) && !empty($listpaymentmethods->ideal) && get_option('doliconnectbeta')=='1' && current_user_can( 'administrator' )) {
+print '<div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    3. What is CSS?
+                </h4>
+            </div>
+            <div id="collapseThreePanel" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <p>CSS stands for Cascading Style Sheet. CSS allows you to specify various style properties for a given HTML element such as colors, backgrounds, fonts etc. <a href="http://www.tutorialrepublic.com/css-tutorial/" target="_blank">Learn more.</a></p>
+                </div>
+            </div>
+        </div>
+    </div>';
+    }
+print '</div>';
+
+print "<script>jQuery('#collapseOne,#collapseTwo,#collapseThree').on('click', function (e) {
+          e.stopPropagation();
+          if(this.id == 'collapseOne'){
+              jQuery('#collapseTwoPanel').collapse('hide');
+              jQuery('#collapseThreePanel').collapse('hide');
+              jQuery('#collapseOnePanel').collapse('show');
+              alert('1');
+          }else if(this.id ==  'collapseTwo'){
+              jQuery('#collapseOnePanel').collapse('hide');
+              jQuery('#collapseThreePanel').collapse('hide');
+              jQuery('#collapseTwoPanel').collapse('show');
+              alert('2');
+          }else if(this.id ==  'collapseThree'){
+              jQuery('#collapseOnePanel').collapse('hide');
+              jQuery('#collapseTwoPanel').collapse('hide');
+              jQuery('#collapseThreePanel').collapse('show');
+              alert('3');
+          }
+        })</script>";
+
+
+ 
 print "<script src='https://js.stripe.com/v3/'></script>"; 
 print "<div class='card shadow-sm'>";
 print "<div class='card-header'>";
 print "<nav><div class='nav nav-tabs card-header-tabs' id='nav-tabs' role='tablist'>";
 print "<a class='nav-item nav-link active' id='nav-card-tab' data-toggle='tab' href='#nav-card' role='tab' aria-controls='nav-card' aria-selected='true'>".__( 'Card', 'doliconnect')."</a>";
-if ( $listpaymentmethods->sepa_direct_debit && get_option('doliconnectbeta')=='1' && current_user_can( 'administrator' ) ) {
+if ( isset($listpaymentmethods->sepa_direct_debit) && !empty($listpaymentmethods->sepa_direct_debit) && get_option('doliconnectbeta')=='1' && current_user_can( 'administrator' ) ) {
 print "<a class='nav-item nav-link' id='nav-iban-tab' data-toggle='tab' href='#nav-iban' role='tab' aria-controls='nav-iban' aria-selected='false'>".__( 'IBAN', 'doliconnect')."</a>";
 }
 print "</div></nav>";
@@ -636,7 +711,7 @@ print '<input id="cardholder-name" name="cardholder-name" value="" type="text" c
 <label for="card-element"></label>
 <div class="form-control" id="card-element"><!-- a Stripe Element will be inserted here. --></div>';
 print "</div>";
-if ( $listpaymentmethods->sepa_direct_debit && get_option('doliconnectbeta')=='1' && current_user_can( 'administrator' )) {
+if ( isset($listpaymentmethods->sepa_direct_debit) && !empty($listpaymentmethods->sepa_direct_debit) && get_option('doliconnectbeta')=='1' && current_user_can( 'administrator' )) {
 print "<div class='tab-pane fade' id='nav-iban' role='tabpanel' aria-labelledby='nav-iban-tab'>";
 print '<input id="ibanholder-name" name="ibanholder-name" value="" type="text" class="form-control" placeholder="'.__( "Bank's owner", 'doliconnect').'" autocomplete="off" required>
 <label for="iban-element"></label>
