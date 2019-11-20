@@ -620,118 +620,59 @@ class myCounter implements Countable {
 $counter = new myCounter;
 
 if ( doliversion('11.0.0') && isset($_GET['action']) && $_GET['action'] == 'create') {
-
-print '<div class="bs-example"><input class="radio" id="collapseOne" type="radio" name="group1" value="1" data-toggle="collapse" data-parent="#accordion" href="#collapseOne"> Carte bancaire<br>';
-if ( isset($listpaymentmethods->sepa_direct_debit) && !empty($listpaymentmethods->sepa_direct_debit) && get_option('doliconnectbeta')=='1' && current_user_can( 'administrator' )) {
-print '<input class="radio" id="collapseTwo" type="radio" name="group1" value="2" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"> IBAN<br>';
-}
-if ( isset($listpaymentmethods->ideal) && !empty($listpaymentmethods->ideal) && get_option('doliconnectbeta')=='1' && current_user_can( 'administrator' )) {
-print '<input class="radio" id="collapseThree" type="radio" name="group1" value="3" data-toggle="collapse" data-parent="#accordion" href="#collapseThree"> iDEAL<br>';
-}
-
-print '<div class="panel-group" id="accordion">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    1. What is HTML?
-                </h4>
-            </div>
-            <div id="collapseOnePanel" class="panel-collapse collapse in">
-                <div class="panel-body">
-                    <p>HTML stands for HyperText Markup Language. HTML is the main markup language for describing the structure of Web pages. <a href="http://www.tutorialrepublic.com/html-tutorial/" target="_blank">Learn more.</a></p>
-                </div>
-            </div>
-        </div>';
-if ( isset($listpaymentmethods->sepa_direct_debit) && !empty($listpaymentmethods->sepa_direct_debit) && get_option('doliconnectbeta')=='1' && current_user_can( 'administrator' )) {
-print '<div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-2. What is Bootstrap?
-                </h4>
-            </div>
-            <div id="collapseTwoPanel" class="panel-collapse collapse">
-                <div class="panel-body">
-                    <p>Bootstrap is a powerful front-end framework for faster and easier web development. It is a collection of CSS and HTML conventions. <a href="http://www.tutorialrepublic.com/twitter-bootstrap-tutorial/" target="_blank">Learn more.</a></p>
-                </div>
-            </div>
-        </div>';
-}
-if ( isset($listpaymentmethods->ideal) && !empty($listpaymentmethods->ideal) && get_option('doliconnectbeta')=='1' && current_user_can( 'administrator' )) {
-print '<div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    3. What is CSS?
-                </h4>
-            </div>
-            <div id="collapseThreePanel" class="panel-collapse collapse">
-                <div class="panel-body">
-                    <p>CSS stands for Cascading Style Sheet. CSS allows you to specify various style properties for a given HTML element such as colors, backgrounds, fonts etc. <a href="http://www.tutorialrepublic.com/css-tutorial/" target="_blank">Learn more.</a></p>
-                </div>
-            </div>
-        </div>
-    </div>';
-    }
-print '</div>';
-
-print "<script>jQuery('#collapseOne,#collapseTwo,#collapseThree').on('click', function (e) {
-          e.stopPropagation();
-          if(this.id == 'collapseOne'){
-              jQuery('#collapseTwoPanel').collapse('hide');
-              jQuery('#collapseThreePanel').collapse('hide');
-              jQuery('#collapseOnePanel').collapse('show');
-              alert('1');
-          }else if(this.id ==  'collapseTwo'){
-              jQuery('#collapseOnePanel').collapse('hide');
-              jQuery('#collapseThreePanel').collapse('hide');
-              jQuery('#collapseTwoPanel').collapse('show');
-              alert('2');
-          }else if(this.id ==  'collapseThree'){
-              jQuery('#collapseOnePanel').collapse('hide');
-              jQuery('#collapseTwoPanel').collapse('hide');
-              jQuery('#collapseThreePanel').collapse('show');
-              alert('3');
-          }
-        })</script>";
-
-
- 
 print "<script src='https://js.stripe.com/v3/'></script>"; 
-print "<div class='card shadow-sm'>";
-print "<div class='card-header'>";
-print "<nav><div class='nav nav-tabs card-header-tabs' id='nav-tabs' role='tablist'>";
-print "<a class='nav-item nav-link active' id='nav-card-tab' data-toggle='tab' href='#nav-card' role='tab' aria-controls='nav-card' aria-selected='true'>".__( 'Card', 'doliconnect')."</a>";
-if ( isset($listpaymentmethods->sepa_direct_debit) && !empty($listpaymentmethods->sepa_direct_debit) && get_option('doliconnectbeta')=='1' && current_user_can( 'administrator' ) ) {
-print "<a class='nav-item nav-link' id='nav-iban-tab' data-toggle='tab' href='#nav-iban' role='tab' aria-controls='nav-iban' aria-selected='false'>".__( 'IBAN', 'doliconnect')."</a>";
+print '<div class="custom-control custom-radio">
+<input type="radio" id="card" name="paymentmode" class="custom-control-input" data-toggle="collapse" data-parent="#accordion" href="#card">
+<label class="custom-control-label" for="card">Carte bancaire</label>
+</div>';
+if ( isset($listpaymentmethods->sepa_direct_debit) && !empty($listpaymentmethods->sepa_direct_debit) && get_option('doliconnectbeta')=='1' && current_user_can( 'administrator' )) {
+print '<div class="custom-control custom-radio">
+<input type="radio" id="iban" name="paymentmode" class="custom-control-input" data-toggle="collapse" data-parent="#accordion" href="#iban">
+<label class="custom-control-label" for="iban">IBAN</label>
+</div>';
 }
-print "</div></nav>";
-print "</div>";
-print "<ul class='list-group list-group-flush'><li class='list-group-item'>";
-print "<div class='tab-content' id='nav-tabContent'><div class='tab-pane fade show active' id='nav-card' role='tabpanel' aria-labelledby='nav-card-tab'>";
+if ( isset($listpaymentmethods->ideal) && !empty($listpaymentmethods->ideal) && get_option('doliconnectbeta')=='1' && current_user_can( 'administrator' )) {
+print '<div class="custom-control custom-radio">
+<input type="radio" id="ideal" name="paymentmode" class="custom-control-input" data-toggle="collapse" data-parent="#accordion" href="#ideal">
+<label class="custom-control-label" for="iban">iDEAL</label>
+</div>';
+}
+
+print '<div class="panel-group" id="accordion">';
+print '<div class="panel panel-default"><div class="panel-heading">
+<h4 class="panel-title">1. Carte bancaire</h4>
+</div><div id="cardPanel" class="panel-collapse collapse in"><div class="panel-body">';
 print '<input id="cardholder-name" name="cardholder-name" value="" type="text" class="form-control" placeholder="'.__( "Card's owner", 'doliconnect').'" autocomplete="off" required>
 <label for="card-element"></label>
 <div class="form-control" id="card-element"><!-- a Stripe Element will be inserted here. --></div>';
-print "</div>";
+print "<button id='cardButton' class='btn btn-warning btn-block' title='".__( 'Add', 'doliconnect')."'><b>".__( 'Add', 'doliconnect')."</b></button>";
+print '</div></div></div>';
 if ( isset($listpaymentmethods->sepa_direct_debit) && !empty($listpaymentmethods->sepa_direct_debit) && get_option('doliconnectbeta')=='1' && current_user_can( 'administrator' )) {
-print "<div class='tab-pane fade' id='nav-iban' role='tabpanel' aria-labelledby='nav-iban-tab'>";
+print '<div class="panel panel-default"><div class="panel-heading">
+<h4 class="panel-title">2. IBAN</h4>
+</div><div id="ibanPanel" class="panel-collapse collapse"><div class="panel-body">';
 print '<input id="ibanholder-name" name="ibanholder-name" value="" type="text" class="form-control" placeholder="'.__( "Bank's owner", 'doliconnect').'" autocomplete="off" required>
 <label for="iban-element"></label>
 <div class="form-control" id="iban-element"><!-- a Stripe Element will be inserted here. --></div>';
 print "<p class='text-justify'>";
 $blogname=get_bloginfo('name');
 print '<small>'.sprintf( esc_html__( 'By providing your IBAN and confirming this form, you are authorizing %s and Stripe, our payment service provider, to send instructions to your bank to debit your account and your bank to debit your account in accordance with those instructions. You are entitled to a refund from your bank under the terms and conditions of your agreement with your bank. A refund must be claimed within 8 weeks starting from the date on which your account was debited.', 'doliconnect'), $blogname).'</small>';
-print "</p>";
-print "</div>";
+print "</p><div id='bank-name'><!-- a Stripe Message will be inserted here. --></div>";
+print "<button id='ibanButton' class='btn btn-warning btn-block' title='".__( 'Add', 'doliconnect')."'><b>".__( 'Add', 'doliconnect')."</b></button>";
+print '</div></div></div>';
 }
-print "</div><div id='bank-name'><!-- a Stripe Message will be inserted here. --></div><div id='error-message' role='alert'><!-- a Stripe Message will be inserted here. --></div>";
-print "</li><li class='list-group-item'><small><div class='custom-control custom-checkbox my-1 mr-sm-2'><input type='checkbox' class='custom-control-input' id='default' name='default' value='1' ";
-//if (empty($i)) { print " checked disabled"; }
-print "><label class='custom-control-label' for='default'> ".__( 'Set as default payment mode', 'doliconnect')."</label></div>";
-//if (empty($i)) { print "<input type='hidden' name='default' value='1'>"; }
-print '</small></li></ul>';
-print "<div class='card-body'><button id='buttontopaymentintent' class='btn btn-warning btn-block' title='".__( 'Add', 'doliconnect')."'><b>".__( 'Add', 'doliconnect')."</b></button></div>";
-print "</div>";
+if ( isset($listpaymentmethods->ideal) && !empty($listpaymentmethods->ideal) && get_option('doliconnectbeta')=='1' && current_user_can( 'administrator' )) {
+print '<div class="panel panel-default"><div class="panel-heading">
+<h4 class="panel-title">3. iDEAL</h4>
+</div><div id="idealPanel" class="panel-collapse collapse"><div class="panel-body">';
+// insert iDEAL form here
+print '</div></div></div>';
+}
+print '</div>';
+print "<div id='error-message' role='alert'><!-- a Stripe Message will be inserted here. --></div>";
 
 print "<script>";
+
 if ( $listpaymentmethods->code_account != null ) {
 print "var stripe = Stripe('".$listpaymentmethods->publishable_key."', {
   stripeAccount: '".$listpaymentmethods->code_account."'
@@ -739,6 +680,7 @@ print "var stripe = Stripe('".$listpaymentmethods->publishable_key."', {
 } else {
 print "var stripe = Stripe('".$listpaymentmethods->publishable_key."');";
 }
+
 print 'var style = {
   base: {
     color: "#32325d",
@@ -759,23 +701,193 @@ print 'var options = {
   style: style,
   supportedCountries: ["SEPA"],
   placeholderCountry: "'.$listpaymentmethods->cus_countrycode.'",
-};'; 
+};';
+
+print "jQuery('#card,#iban,#ideal').on('click', function (e) {
+          e.stopPropagation();
+var elements = stripe.elements(); 
+var clientSecret = '".$listpaymentmethods->stripe_client_secret."';
+var displayError = document.getElementById('error-message');
+displayError.textContent = ''; 
+          if(this.id == 'card'){
+var cardElement = elements.create('card', options);
+cardElement.mount('#card-element');
+var cardholderName = document.getElementById('cardholder-name');
+var cardButton = document.getElementById('cardButton');
+cardElement.addEventListener('change', function(event) {
+  // Handle real-time validation errors from the card Element.
+    console.log('Reset error message');
+    displayError.textContent = '';
+  if (event.error) {
+    displayError.textContent = event.error.message;
+    displayError.classList.add('visible');
+    cardButton.disabled = true;
+  } else {
+    displayError.textContent = '';
+    displayError.classList.remove('visible');
+    cardButton.disabled = false;
+  }
+});
+              jQuery('#ibanPanel').collapse('hide');
+              jQuery('#idealPanel').collapse('hide');
+              jQuery('#cardPanel').collapse('show');
+cardholderName.addEventListener('change', function(event) {
+    console.log('Reset error message');
+    displayError.textContent = '';
+    cardButton.disabled = false; 
+});
+cardButton.addEventListener('click', function(event) {
+console.log('We click on cardButton');
+cardButton.disabled = true; 
+        if (cardholderName.value == '')
+        	{        
+				console.log('Field Card holder is empty');
+				displayError.textContent = 'We need an owner as on your card';
+        cardButton.disabled = false; 
+        jQuery('#DoliconnectLoadingModal').modal('hide');   
+        	}
+        else
+        	{
+  stripe.confirmCardSetup(
+    clientSecret,
+    {
+      payment_method: {
+        card: cardElement,
+        billing_details: {name: cardholderName.value}
+      }
+    }
+  ).then(function(result) {
+    if (result.error) {
+      // Display error.message
+jQuery('#DoliconnectLoadingModal').modal('hide');
+console.log('Error occured when adding card');
+displayError.textContent = 'Your card number seems to be wrong';    
+    } else {
+      // The setup has succeeded. Display a success message.
+jQuery('#DoliconnectLoadingModal').modal('show');
+var form = document.createElement('form');
+form.setAttribute('action', '".$url."');
+form.setAttribute('method', 'post');
+var inputvar = document.createElement('input');
+inputvar.setAttribute('type', 'hidden');
+inputvar.setAttribute('name', 'add_paymentmethod');
+inputvar.setAttribute('value', result.setupIntent.payment_method);
+form.appendChild(inputvar);
+document.body.appendChild(form);
+form.submit();
+    }
+  }); 
+          }
+});
+              //alert('1');
+          }else if(this.id == 'iban'){
+var ibanElement = elements.create('iban', options);
+ibanElement.mount('#iban-element'); 
+var ibanholderName = document.getElementById('ibanholder-name');
+var ibanButton = document.getElementById('ibanButton'); 
+var bankName = document.getElementById('bank-name');
+bankName.textContent = '';
+ibanElement.addEventListener('change', function(event) {
+  // Handle real-time validation errors from the iban Element.
+    console.log('Reset error message');
+    displayError.textContent = '';
+    bankName.textContent = '';
+  if (event.error) {
+    displayError.textContent = event.error.message;
+    displayError.classList.add('visible');
+    ibanButton.disabled = true;
+  } else {
+    displayError.textContent = '';
+    displayError.classList.remove('visible');
+    ibanButton.disabled = false;
+  }
+
+  // Display bank name corresponding to IBAN, if available.
+  if (event.bankName) {
+    bankName.textContent = event.bankName;
+    bankName.classList.add('visible');
+  } else {
+    bankName.classList.remove('visible');
+  }
+});
+              jQuery('#cardPanel').collapse('hide');
+              jQuery('#idealPanel').collapse('hide');
+              jQuery('#ibanPanel').collapse('show');
+ibanholderName.addEventListener('change', function(event) {
+    console.log('Reset error message');
+    displayError.textContent = '';
+    ibanButton.disabled = false; 
+});
+ibanButton.addEventListener('click', function(event) {
+console.log('We click on ibanButton');
+ibanButton.disabled = true; 
+        if (ibanholderName.value == '')
+        	{        
+				console.log('Field iban holder is empty');
+				displayError.textContent = 'We need an owner as on your account';
+        ibanButton.disabled = false; 
+        jQuery('#DoliconnectLoadingModal').modal('hide');   
+        	}
+        else
+        	{
+          
+          
+          }
+});
+              //alert('2');
+          }else if(this.id == 'ideal'){
+              jQuery('#cardPanel').collapse('hide');
+              jQuery('#ibanPanel').collapse('hide');
+              jQuery('#idealPanel').collapse('show');
+              //alert('3');
+          }
+        })</script>";
+
+
+print "<div class='card shadow-sm'>";
+print "<div class='card-header'>";
+print "<nav><div class='nav nav-tabs card-header-tabs' id='nav-tabs' role='tablist'>";
+print "<a class='nav-item nav-link active' id='nav-card-tab' data-toggle='tab' href='#nav-card' role='tab' aria-controls='nav-card' aria-selected='true'>".__( 'Card', 'doliconnect')."</a>";
+if ( isset($listpaymentmethods->sepa_direct_debit) && !empty($listpaymentmethods->sepa_direct_debit) && get_option('doliconnectbeta')=='1' && current_user_can( 'administrator' ) ) {
+print "<a class='nav-item nav-link' id='nav-iban-tab' data-toggle='tab' href='#nav-iban' role='tab' aria-controls='nav-iban' aria-selected='false'>".__( 'IBAN', 'doliconnect')."</a>";
+}
+print "</div></nav>";
+print "</div>";
+print "<ul class='list-group list-group-flush'><li class='list-group-item'>";
+print "<div class='tab-content' id='nav-tabContent'><div class='tab-pane fade show active' id='nav-card' role='tabpanel' aria-labelledby='nav-card-tab'>";
+
+
+
+print "</div>";
+if ( isset($listpaymentmethods->sepa_direct_debit) && !empty($listpaymentmethods->sepa_direct_debit) && get_option('doliconnectbeta')=='1' && current_user_can( 'administrator' )) {
+print "<div class='tab-pane fade' id='nav-iban' role='tabpanel' aria-labelledby='nav-iban-tab'>";
+
+
+
+print "</div>";
+}
+
+print "</div></li><li class='list-group-item'><small><div class='custom-control custom-checkbox my-1 mr-sm-2'><input type='checkbox' class='custom-control-input' id='default' name='default' value='1' ";
+//if (empty($i)) { print " checked disabled"; }
+print "><label class='custom-control-label' for='default'> ".__( 'Set as default payment mode', 'doliconnect')."</label></div>";
+//if (empty($i)) { print "<input type='hidden' name='default' value='1'>"; }
+print '</small></li></ul>';
+print "<div class='card-body'></div>";
+print "</div>";
+
+print "<script>"; 
 
 // Create an instance of Elements
 print 'function refreshStripe() {'; 
-
-print 'var elements = stripe.elements();';  
-print 'var cardElement = elements.create("card", options);';
-print 'cardElement.mount("#card-element");';
+ 
 if ( $listpaymentmethods->sepa_direct_debit ) {
-print 'var ibanElement = elements.create("iban", options);';
-print 'ibanElement.mount("#iban-element");';  
+
 }
 
 // Handle form submission
-print 'var cardholderName = document.getElementById("cardholder-name");';
+
 if ( $listpaymentmethods->sepa_direct_debit && get_option('doliconnectbeta')=='1' && current_user_can( 'administrator' )) { 
-print 'var ibanholderName = document.getElementById("ibanholder-name");'; 
+print ''; 
 }
 print 'function defaultpm(choice){
   this.value = choice;
@@ -799,115 +911,21 @@ var default_pm = new defaultpm("0").value;
 //print 'var test = jQuery(".nav-tabs .active").text();
 //alert(test);';
 
-print 'var AddButton = document.getElementById("buttontopaymentintent");';
-print 'var clientSecret = "'.$listpaymentmethods->stripe_client_secret.'";';
+
+
 
 // Handle real-time validation errors from the card Element.
-print 'var displayError = document.getElementById("error-message");
-displayError.textContent = "";';
+print '';
 
-print 'cardElement.addEventListener("change", function(event) {
-  // Handle real-time validation errors from the card Element.
-    console.log("Reset error message");
-  if (event.error) {
-    displayError.textContent = event.error.message;
-    displayError.classList.add("visible");
-    document.getElementById("buttontopaymentintent").disabled = true;
-  } else {
-    displayError.textContent = "";
-    displayError.classList.remove("visible");
-    document.getElementById("buttontopaymentintent").disabled = false;
-  }
-});';
-print 'cardholderName.addEventListener("change", function(event) {
-    console.log("Reset error message");
-    displayError.textContent = "";
-    document.getElementById("buttontopaymentintent").disabled = false; 
-});';
+print '';
+print '';
 
 if ( $listpaymentmethods->sepa_direct_debit && get_option('doliconnectbeta')=='1' && current_user_can( 'administrator' ) ) { 
-print 'jQuery("#nav-iban-tab").click(function(){
-ibanElement.addEventListener("change", function(event) {
-  // Handle real-time validation errors from the iban Element.
-    console.log("Reset error message");
-    displayError.textContent = "";
-  if (event.error) {
-    displayError.textContent = event.error.message;
-    displayError.classList.add("visible");
-    document.getElementById("buttontopaymentintent").disabled = true;
-  } else {
-    displayError.textContent = "";
-    displayError.classList.remove("visible");
-    document.getElementById("buttontopaymentintent").disabled = false;
-  }
 
-  // Display bank name corresponding to IBAN, if available.
-  if (event.bankName) {
-    bankName.textContent = event.bankName;
-    bankName.classList.add("visible");
-  } else {
-    bankName.classList.remove("visible");
-  }
-});';
-print 'ibanholderName.addEventListener("change", function(event) {
-    console.log("Reset error message");
-    displayError.textContent = "";
-    document.getElementById("buttontopaymentintent").disabled = false; 
-});
-});';
 }
 
 // Payment method action
-print 'AddButton.addEventListener("click", function(event) {
-console.log("We click on buttontopaymentintent");
-document.getElementById("buttontopaymentintent").disabled = true; 
-        if (cardholderName.value == "")
-        	{        
-				console.log("Field Card holder is empty");
-				var displayError = document.getElementById("error-message");
-				displayError.textContent = "'.__( "We need an owner as on your card.", "doliconnect").'";
-        document.getElementById("buttontopaymentintent").disabled = false; 
-        jQuery("#DoliconnectLoadingModal").modal("hide");   
-        	}
-        else
-        	{
-  stripe.confirmCardSetup(
-    clientSecret,
-    {
-      payment_method: {
-        card: cardElement,
-        billing_details: {name: cardholderName.value}
-      }
-    }
-  ).then(function(result) {
-    if (result.error) {
-      // Display error.message
-jQuery("#DoliconnectLoadingModal").modal("hide");
-console.log("Error occured when adding card");
-var displayError = document.getElementById("error-message");
-displayError.textContent = "'.__( "Your card number seems to be wrong.", "doliconnect").'";    
-    } else {
-      // The setup has succeeded. Display a success message.
-jQuery("#DoliconnectLoadingModal").modal("show");
-var form = document.createElement("form");
-form.setAttribute("action", "'.$url.'");
-form.setAttribute("method", "post");
-var inputvar = document.createElement("input");
-inputvar.setAttribute("type", "hidden");
-inputvar.setAttribute("name", "add_paymentmethod");
-inputvar.setAttribute("value", result.setupIntent.payment_method);
-form.appendChild(inputvar);
-var inputvar = document.createElement("input");
-inputvar.setAttribute("type", "hidden");
-inputvar.setAttribute("name", "default");
-inputvar.setAttribute("value", default_pm);
-form.appendChild(inputvar);
-document.body.appendChild(form);
-form.submit();
-    }
-  }); 
-}
-});';
+print '';
 
 
 print '}
