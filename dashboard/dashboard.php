@@ -744,7 +744,7 @@ cardButton.disabled = true;
         if (cardholderName.value == '')
         	{        
 				console.log('Field Card holder is empty');
-				displayError.textContent = 'We need an owner as on your card';
+				displayError.textContent = '".__( 'We need an owner as on your card', 'doliconnect')."';
         cardButton.disabled = false; 
         jQuery('#DoliconnectLoadingModal').modal('hide');   
         	}
@@ -763,7 +763,7 @@ cardButton.disabled = true;
       // Display error.message
 jQuery('#DoliconnectLoadingModal').modal('hide');
 console.log('Error occured when adding card');
-displayError.textContent = 'Your card number seems to be wrong';    
+displayError.textContent = '".__( 'Your card number seems to be wrong', 'doliconnect')."';    
     } else {
       // The setup has succeeded. Display a success message.
 jQuery('#DoliconnectLoadingModal').modal('show');
@@ -826,7 +826,7 @@ ibanButton.disabled = true;
         if (ibanholderName.value == '')
         	{        
 				console.log('Field iban holder is empty');
-				displayError.textContent = 'We need an owner as on your account';
+				displayError.textContent = '".__( 'We need an owner as on your account', 'doliconnect')."';
         ibanButton.disabled = false; 
         jQuery('#DoliconnectLoadingModal').modal('hide');   
         	}
@@ -848,7 +848,7 @@ ibanButton.disabled = true;
       // Display error.message
 jQuery('#DoliconnectLoadingModal').modal('hide');
 console.log('Error occured when adding card');
-displayError.textContent = 'Your iban number seems to be wrong';    
+displayError.textContent = '".__( 'We need an owner as on your account', 'doliconnect')."';    
     } else {
       // The setup has succeeded. Display a success message.
 jQuery('#DoliconnectLoadingModal').modal('show');
@@ -867,7 +867,7 @@ form.submit();
           }
 });
               //alert('2');
-          }else if(this.id == 'ideal'){
+          }else if(this.id == 'ideal'){ 
               jQuery('#cardPanel').collapse('hide');
               jQuery('#ibanPanel').collapse('hide');
               jQuery('#idealPanel').collapse('show');
