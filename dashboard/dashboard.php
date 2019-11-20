@@ -645,6 +645,8 @@ print '<div class="panel panel-default"><div class="panel-heading">
 print '<input id="cardholder-name" name="cardholder-name" value="" type="text" class="form-control" placeholder="'.__( "Card's owner", 'doliconnect').'" autocomplete="off" required>
 <label for="card-element"></label>
 <div class="form-control" id="card-element"><!-- a Stripe Element will be inserted here. --></div>';
+print "<p class='text-justify'>";
+print "</p>";
 print "<button id='cardButton' class='btn btn-warning btn-block' title='".__( 'Add', 'doliconnect')."'><b>".__( 'Add', 'doliconnect')."</b></button>";
 print '</div></div></div>';
 if ( isset($listpaymentmethods->sepa_direct_debit) && !empty($listpaymentmethods->sepa_direct_debit) && get_option('doliconnectbeta')=='1' && current_user_can( 'administrator' )) {
