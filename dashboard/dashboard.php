@@ -622,29 +622,25 @@ $counter = new myCounter;
 if ( doliversion('11.0.0') && isset($_GET['action']) && $_GET['action'] == 'create') {
 print "<script src='https://js.stripe.com/v3/'></script>"; 
 
-print '<div class="panel-group" id="accordion">';
-print '<div class="custom-control custom-radio">
+print '<div class="card shadow-sm"><ul class="list-group list-group-flush panel-group" id="accordion">';
+print '<li class="list-group-item list-group-item-action flex-column align-items-start"><div class="custom-control custom-radio">
 <input type="radio" id="card" name="paymentmode" class="custom-control-input" data-toggle="collapse" data-parent="#accordion" href="#card">
 <label class="custom-control-label" for="card">Carte bancaire</label>
-</div>';
-print '<div class="panel panel-default"><div id="cardPanel" class="panel-collapse collapse in"><div class="panel-body">';
-print "<p class='text-justify'>";
-print "</p>";
+</div></li>';
+print '<li id="cardPanel" class="list-group-item list-group-item-secondary panel-collapse collapse in"><div class="panel-body">';
 print '<input id="cardholder-name" name="cardholder-name" value="" type="text" class="form-control" placeholder="'.__( "Card's owner", 'doliconnect').'" autocomplete="off" required>
 <label for="card-element"></label>
 <div class="form-control" id="card-element"><!-- a Stripe Element will be inserted here. --></div>';
 print "<p class='text-justify'>";
 print "</p>";
 print "<button id='cardButton' class='btn btn-warning btn-block' title='".__( 'Add', 'doliconnect')."'><b>".__( 'Add', 'doliconnect')."</b></button>";
-print '</div></div></div>';
+print '</div></li>';
 if ( isset($listpaymentmethods->sepa_direct_debit) && !empty($listpaymentmethods->sepa_direct_debit) ) {
-print '<div class="custom-control custom-radio">
+print '<li class="list-group-item list-group-item-action flex-column align-items-start"><div class="custom-control custom-radio">
 <input type="radio" id="iban" name="paymentmode" class="custom-control-input" data-toggle="collapse" data-parent="#accordion" href="#iban">
 <label class="custom-control-label" for="iban">IBAN</label>
-</div>';
-print '<div class="panel panel-default"><div id="ibanPanel" class="panel-collapse collapse"><div class="panel-body">';
-print "<p class='text-justify'>";
-print "</p>";
+</div></li>';
+print '<li id="ibanPanel" class="list-group-item list-group-item-secondary panel-collapse collapse"><div class="panel-body">';
 print '<input id="ibanholder-name" name="ibanholder-name" value="" type="text" class="form-control" placeholder="'.__( "Bank's owner", 'doliconnect').'" autocomplete="off" required>
 <label for="iban-element"></label>
 <div class="form-control" id="iban-element"><!-- a Stripe Element will be inserted here. --></div>';
@@ -653,20 +649,20 @@ $blogname=get_bloginfo('name');
 print '<small>'.sprintf( esc_html__( 'By providing your IBAN and confirming this form, you are authorizing %s and Stripe, our payment service provider, to send instructions to your bank to debit your account and your bank to debit your account in accordance with those instructions. You are entitled to a refund from your bank under the terms and conditions of your agreement with your bank. A refund must be claimed within 8 weeks starting from the date on which your account was debited.', 'doliconnect'), $blogname).'</small>';
 print "</p><div id='bank-name'><!-- a Stripe Message will be inserted here. --></div>";
 print "<button id='ibanButton' class='btn btn-warning btn-block' title='".__( 'Add', 'doliconnect')."'><b>".__( 'Add', 'doliconnect')."</b></button>";
-print '</div></div></div>';
+print '</div></li>';
 }
 if ( isset($listpaymentmethods->ideal) && !empty($listpaymentmethods->ideal) && get_option('doliconnectbeta')=='1' && current_user_can( 'administrator' )) {
-print '<div class="custom-control custom-radio">
+print '<li class="list-group-item list-group-item-action flex-column align-items-start"><div class="custom-control custom-radio">
 <input type="radio" id="ideal" name="paymentmode" class="custom-control-input" data-toggle="collapse" data-parent="#accordion" href="#ideal">
 <label class="custom-control-label" for="iban">iDEAL</label>
-</div>';
+</div></li>';
 print '<div class="panel panel-default"><div class="panel-heading">
 <h4 class="panel-title">3. iDEAL</h4>
-</div><div id="idealPanel" class="panel-collapse collapse"><div class="panel-body">';
-// insert iDEAL form here
-print '</div></div></div>';
+</div><li id="idealPanel" class="list-group-item list-group-item-secondary panel-collapse collapse"><div class="panel-body">';
+// ideal form
+print '</div></li>';
 }
-print '</div>';
+print '</ul></div>';
 print "<div id='error-message' role='alert'><!-- a Stripe Message will be inserted here. --></div>";
 
 print "<script>";
