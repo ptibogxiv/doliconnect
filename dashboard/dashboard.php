@@ -617,11 +617,17 @@ class myCounter implements Countable {
  
 $counter = new myCounter;
 
-if ( doliversion('11.0.0') && isset($_GET['action']) && $_GET['action'] == 'create') {
-print "<script src='https://js.stripe.com/v3/'></script>"; 
+print "<script src='https://js.stripe.com/v3/'></script>";
 
-print '<div class="card shadow-sm"><ul class="list-group list-group-flush panel-group" id="accordion">';
+if ( isset($msg) ) { print $msg; }
+ 
+
+
+print '<div class="card shadow-sm">';
 if ( $listpaymentmethods->paymentmethods != null ) {
+print "<form role='form' action='$url' id='paymentmethods-form' method='post'>";
+print doliloaderscript('paymentmethods-form');
+print '<ul class="list-group list-group-flush panel-group" id="accordion">';
 foreach ( $listpaymentmethods->paymentmethods as $method ) {                                                                                                                      
 print "<li class='list-group-item d-flex justify-content-between lh-condensed list-group-item-action'>";
 print "<div class='d-none d-md-block col-md-2 col-lg-1'><i ";
@@ -662,7 +668,7 @@ print "<button class='btn btn-light' title='".__( 'Can not be delete as favorite
 }
 print "</div></li>";
 }
-print "</li>";
+print "</form>";
 
 } else {
 print "<li class='list-group-item list-group-item-light'><center>".__( 'No payment method', 'doliconnect')."</center></li>";
@@ -918,78 +924,6 @@ print "<small><div class='custom-control custom-checkbox my-1 mr-sm-2'><input ty
 print "><label class='custom-control-label' for='default'> ".__( 'Set as default payment mode', 'doliconnect')."</label></div>";
 //if (empty($i)) { print "<input type='hidden' name='default' value='1'>"; }
 print '</small>';
-
-
-} else {
-print "<form role='form' action='$url' id='paymentmethods-form' method='post'>";
-
-if ( isset($msg) ) { print $msg; }
-
-print doliloaderscript('paymentmethods-form');
-
-print "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
-
-if ( isset($listpaymentmethods->stripe) && empty($listpaymentmethods->stripe)) {
-print "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".__( "Stripe's in sandbox mode", 'doliconnect')."</b></li>";
-}
-
-if ( doliversion('10.0.0') && (!empty($listpaymentmethods->card) || ! empty($listpaymentmethods->sepa_direct_debit)) && count($counter) < 5 ) {
-print '<a href="'.$url.'&action=create" id="ButtonAddPaymentMethod" class="list-group-item lh-condensed list-group-item-action list-group-item-primary" ><center><i class="fas fa-plus-circle"></i> '.__( 'New payment method', 'doliconnect' ).'</center></a>';
-} elseif ( ! doliversion('10.0.0') ) {
-print "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".sprintf( esc_html__( "Register payment methods needs Dolibarr %s but your version is %s", 'doliconnect'), '10.0.0', doliversion('10.0.0'))."</b></li>";
-}
-
-//SAVED SOURCES 
-$i=0;
-if ( $listpaymentmethods->paymentmethods != null ) {
-foreach ( $listpaymentmethods->paymentmethods as $method ) {
-$i++;                                                                                                                       
-print "<li class='list-group-item d-flex justify-content-between lh-condensed list-group-item-action'>";
-print "<div class='d-none d-md-block col-md-2 col-lg-1'><i ";
-if ( $method->type == 'sepa_debit' ) {
-print 'class="fas fa-university fa-3x fa-fw" style="color:DarkGrey"';
-} else {
-
-if ( $method->brand == 'visa' ) { print 'class="fab fa-cc-visa fa-3x fa-fw" style="color:#172274"'; }
-else if ( $method->brand == 'mastercard' ) { print 'class="fab fa-cc-mastercard fa-3x fa-fw" style="color:#FF5F01"'; }
-else if ( $method->brand == 'amex' ) { print 'class="fab fa-cc-amex fa-3x fa-fw" style="color:#2E78BF"'; }
-else {print 'class="fab fa-cc-amex fa-3x fa-fw"';}
-}
-print '></i></center>';
-print "</div><div class='col-8 col-sm-7 col-md-6 col-lg-7'><h6 class='my-0'>";
-if ( $method->type == 'sepa_debit' ) {
-print __( 'Account', 'doliconnect').' '.$method->reference.'<small> <a href="'.$method->mandate_url.'" title="'.__( 'Mandate', 'doliconnect').' '.$method->mandate_reference.'" target="_blank"><i class="fas fa-info-circle"></i></a></small>';
-} else {
-print __( 'Card', 'doliconnect').' '.$method->reference;
-}
-if ( !empty($method->expiration) ) { print " - ".date("m/Y", strtotime($method->expiration.'/1')); }
-print "</h6><small class='text-muted'>".$method->holder."</small></div>";
-print "<div class='d-none d-md-block col-md-2 align-middle text-right'>";
-print "<img src='".plugins_url('doliconnect/images/flag/'.strtolower($method->country).'.png')."' class='img-fluid' alt='$method->country'>";
-print "</div>";
-
-print "<div class='col-4 col-sm-3 col-md-2 btn-group-vertical' role='group'>";
-if ( !empty($method->default_source) ) { 
-print "<button class='btn btn-light' title='".__( 'Favorite', 'doliconnect')."' disabled><i class='fas fa-star fa-1x fa-fw' style='color:Gold'></i></button>";
-} elseif ( (current_time( 'timestamp', 1) >= strtotime($method->expiration.'/1') && $method->type == 'card' ) || ! preg_match('/pm_/', $method->id) ) {
-print "<button class='btn btn-light' title='".__( 'Can not be set as favorite', 'doliconnect' )."' disabled><i class='fas fa-ban fa-1x fa-fw'></i></button>";
-} else {
-print "<button name='default_paymentmethod' value='".$method->id."' class='btn btn-light' type='submit' title='".__( 'Set as favorite', 'doliconnect')."'><i class='far fa-star fa-1x fa-fw'></i></button>";
-}
-if ( empty($method->default_source) || count($counter) == 1 ) {
-print "<button name='delete_paymentmethod' value='".$method->id."' class='btn btn-light text-danger' type='submit' title='".__( 'Delete', 'doliconnect')."'><i class='fas fa-trash fa-fw'></i></button>";
-} else {
-print "<button class='btn btn-light' title='".__( 'Can not be delete as favorite', 'doliconnect')."' disabled><i class='fas fa-trash fa-fw'></i></button>";
-}
-print "</div></li>";
-}
-print "</li>";
-
-} else {
-print "<li class='list-group-item list-group-item-light'><center>".__( 'No payment method', 'doliconnect')."</center></li>";
-}
-print "</ul></div></form>";
-}
 
 print "<small><div class='float-left'>";
 print dolirefresh($request, $url, dolidelay('paymentmethods'));
