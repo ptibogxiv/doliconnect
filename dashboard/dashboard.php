@@ -720,6 +720,20 @@ var default_pm = new defaultpm("0").value;
         }
 //alert(default_pm);     
 });';
+
+print '$(document).ready(function(){
+// Handling data-toggle manually
+    $(".nav-tabs a").click(function(){
+        $(this).tab("show");
+    });
+// The on tab shown event
+    $(".nav-tabs a").on("shown.bs.tab", function (e) {
+        var current_tab = e.target;
+        var previous_tab = e.relatedTarget;
+        alert("Hello from the other siiiiiide! " + current_tab);
+    });
+});';
+
 print 'var AddButton = document.getElementById("buttontopaymentintent");';
 print 'var clientSecret = "'.$listpaymentmethods->stripe_client_secret.'";';
 
