@@ -625,7 +625,7 @@ print "<div class='card shadow-sm'>";
 print "<div class='card-header'>";
 print "<nav><div class='nav nav-tabs card-header-tabs' id='nav-tabs' role='tablist'>";
 print "<a class='nav-item nav-link active' id='nav-card-tab' data-toggle='tab' href='#nav-card' role='tab' aria-controls='nav-card' aria-selected='true'>".__( 'Card', 'doliconnect')."</a>";
-if ( $listpaymentmethods->sepa_direct_debit ) {
+if ( $listpaymentmethods->sepa_direct_debit && get_option('doliconnectbeta')=='1' && current_user_can( 'administrator' ) ) {
 print "<a class='nav-item nav-link' id='nav-iban-tab' data-toggle='tab' href='#nav-iban' role='tab' aria-controls='nav-iban' aria-selected='false'>".__( 'IBAN', 'doliconnect')."</a>";
 }
 print "</div></nav>";
@@ -636,7 +636,7 @@ print '<input id="cardholder-name" name="cardholder-name" value="" type="text" c
 <label for="card-element"></label>
 <div class="form-control" id="card-element"><!-- a Stripe Element will be inserted here. --></div>';
 print "</div>";
-if ( $listpaymentmethods->sepa_direct_debit ) {
+if ( $listpaymentmethods->sepa_direct_debit && get_option('doliconnectbeta')=='1' && current_user_can( 'administrator' )) {
 print "<div class='tab-pane fade' id='nav-iban' role='tabpanel' aria-labelledby='nav-iban-tab'>";
 print '<input id="ibanholder-name" name="ibanholder-name" value="" type="text" class="form-control" placeholder="'.__( "Bank's owner", 'doliconnect').'" autocomplete="off" required>
 <label for="iban-element"></label>
@@ -699,7 +699,7 @@ print 'ibanElement.mount("#iban-element");';
 
 // Handle form submission
 print 'var cardholderName = document.getElementById("cardholder-name");';
-if ( $listpaymentmethods->sepa_direct_debit ) { 
+if ( $listpaymentmethods->sepa_direct_debit && get_option('doliconnectbeta')=='1' && current_user_can( 'administrator' )) { 
 print 'var ibanholderName = document.getElementById("ibanholder-name");'; 
 }
 print 'function defaultpm(choice){
@@ -726,6 +726,7 @@ print 'var clientSecret = "'.$listpaymentmethods->stripe_client_secret.'";';
 // Handle real-time validation errors from the card Element.
 print 'var displayError = document.getElementById("error-message");
 displayError.textContent = "";';
+
 print 'cardElement.addEventListener("change", function(event) {
   // Handle real-time validation errors from the card Element.
     console.log("Reset error message");
@@ -744,7 +745,8 @@ print 'cardholderName.addEventListener("change", function(event) {
     displayError.textContent = "";
     document.getElementById("buttontopaymentintent").disabled = false; 
 });';
-if ( $listpaymentmethods->sepa_direct_debit ) { 
+
+if ( $listpaymentmethods->sepa_direct_debit && get_option('doliconnectbeta')=='1' && current_user_can( 'administrator' ) ) { 
 print 'ibanElement.addEventListener("change", function(event) {
   // Handle real-time validation errors from the iban Element.
     console.log("Reset error message");
