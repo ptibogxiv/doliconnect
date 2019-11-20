@@ -875,37 +875,12 @@ form.submit();
           }
         })</script>";
 
-
-print "<div class='card shadow-sm'>";
-print "<div class='card-header'>";
-print "<nav><div class='nav nav-tabs card-header-tabs' id='nav-tabs' role='tablist'>";
-print "<a class='nav-item nav-link active' id='nav-card-tab' data-toggle='tab' href='#nav-card' role='tab' aria-controls='nav-card' aria-selected='true'>".__( 'Card', 'doliconnect')."</a>";
-if ( isset($listpaymentmethods->sepa_direct_debit) && !empty($listpaymentmethods->sepa_direct_debit) && get_option('doliconnectbeta')=='1' && current_user_can( 'administrator' ) ) {
-print "<a class='nav-item nav-link' id='nav-iban-tab' data-toggle='tab' href='#nav-iban' role='tab' aria-controls='nav-iban' aria-selected='false'>".__( 'IBAN', 'doliconnect')."</a>";
-}
-print "</div></nav>";
-print "</div>";
-print "<ul class='list-group list-group-flush'><li class='list-group-item'>";
-print "<div class='tab-content' id='nav-tabContent'><div class='tab-pane fade show active' id='nav-card' role='tabpanel' aria-labelledby='nav-card-tab'>";
-
-
-
-print "</div>";
-if ( isset($listpaymentmethods->sepa_direct_debit) && !empty($listpaymentmethods->sepa_direct_debit) && get_option('doliconnectbeta')=='1' && current_user_can( 'administrator' )) {
-print "<div class='tab-pane fade' id='nav-iban' role='tabpanel' aria-labelledby='nav-iban-tab'>";
-
-
-
-print "</div>";
-}
-
-print "</div></li><li class='list-group-item'><small><div class='custom-control custom-checkbox my-1 mr-sm-2'><input type='checkbox' class='custom-control-input' id='default' name='default' value='1' ";
+print "<small><div class='custom-control custom-checkbox my-1 mr-sm-2'><input type='checkbox' class='custom-control-input' id='default' name='default' value='1' ";
 //if (empty($i)) { print " checked disabled"; }
 print "><label class='custom-control-label' for='default'> ".__( 'Set as default payment mode', 'doliconnect')."</label></div>";
 //if (empty($i)) { print "<input type='hidden' name='default' value='1'>"; }
-print '</small></li></ul>';
-print "<div class='card-body'></div>";
-print "</div>";
+print '</small>';
+
 
 } else {
 print "<form role='form' action='$url' id='paymentmethods-form' method='post'>";
