@@ -905,67 +905,6 @@ print '</small></li></ul>';
 print "<div class='card-body'></div>";
 print "</div>";
 
-print "<script>"; 
-
-// Create an instance of Elements
-print 'function refreshStripe() {'; 
- 
-if ( $listpaymentmethods->sepa_direct_debit ) {
-
-}
-
-// Handle form submission
-
-if ( $listpaymentmethods->sepa_direct_debit && get_option('doliconnectbeta')=='1' && current_user_can( 'administrator' )) { 
-print ''; 
-}
-print 'function defaultpm(choice){
-  this.value = choice;
-}
-
-if($("#default").is(":checked")) {
-var default_pm = new defaultpm("1").value;
-        } else {
-var default_pm = new defaultpm("0").value;
-        }
-//alert(default_pm);
-$("#default").on("change", function() {
-if($("#default").is(":checked")) {
-var default_pm = new defaultpm("1").value;
-        } else {
-var default_pm = new defaultpm("0").value;
-        }
-//alert(default_pm);     
-});';
-
-//print 'var test = jQuery(".nav-tabs .active").text();
-//alert(test);';
-
-
-
-
-// Handle real-time validation errors from the card Element.
-print '';
-
-print '';
-print '';
-
-if ( $listpaymentmethods->sepa_direct_debit && get_option('doliconnectbeta')=='1' && current_user_can( 'administrator' ) ) { 
-
-}
-
-// Payment method action
-print '';
-
-
-print '}
-window.onload = refreshStripe;';
-print 'jQuery("#nav-tabs").on("show.bs.tab", function (e) {
-refreshStripe();
-});';
-
-print "</script>";
-
 } else {
 print "<form role='form' action='$url' id='paymentmethods-form' method='post'>";
 
