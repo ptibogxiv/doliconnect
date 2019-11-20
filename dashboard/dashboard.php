@@ -628,6 +628,8 @@ print '<div class="custom-control custom-radio">
 <label class="custom-control-label" for="card">Carte bancaire</label>
 </div>';
 print '<div class="panel panel-default"><div id="cardPanel" class="panel-collapse collapse in"><div class="panel-body">';
+print "<p class='text-justify'>";
+print "</p>";
 print '<input id="cardholder-name" name="cardholder-name" value="" type="text" class="form-control" placeholder="'.__( "Card's owner", 'doliconnect').'" autocomplete="off" required>
 <label for="card-element"></label>
 <div class="form-control" id="card-element"><!-- a Stripe Element will be inserted here. --></div>';
@@ -641,6 +643,8 @@ print '<div class="custom-control custom-radio">
 <label class="custom-control-label" for="iban">IBAN</label>
 </div>';
 print '<div class="panel panel-default"><div id="ibanPanel" class="panel-collapse collapse"><div class="panel-body">';
+print "<p class='text-justify'>";
+print "</p>";
 print '<input id="ibanholder-name" name="ibanholder-name" value="" type="text" class="form-control" placeholder="'.__( "Bank's owner", 'doliconnect').'" autocomplete="off" required>
 <label for="iban-element"></label>
 <div class="form-control" id="iban-element"><!-- a Stripe Element will be inserted here. --></div>';
