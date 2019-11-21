@@ -629,8 +629,10 @@ if ( isset($listpaymentmethods->stripe) && empty($listpaymentmethods->stripe) ) 
 print "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".__( "Stripe's in sandbox mode", 'doliconnect')."</b></li>";
 }
 if ( $listpaymentmethods->paymentmethods != null ) {
-$i=0;
-foreach ( $listpaymentmethods->paymentmethods as $method ) {                                                                                                                      
+$i = 0;
+$pm = array();
+foreach ( $listpaymentmethods->paymentmethods as $method ) {
+$pm[] .= "".$method->id."Panel";                                                                                                                      
 print "<li class='list-group-item list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>";
 print '<input onclick="ShowHideDivPM(\''.$method->id.'\')" type="radio" id="'.$method->id.'" name="paymentmode" value="'.$method->id.'" class="custom-control-input" data-toggle="collapse" data-parent="#accordion" href="#'.$method->id.'" ';
 if ( date('Y/n') >= $method->expiration && !empty($object) && !empty($method->expiration) ) { print " disabled "; }
@@ -660,8 +662,8 @@ print "<img src='".plugins_url('doliconnect/images/flag/'.strtolower($method->co
 print "</div></div></label></div></li>";
 print '<li id="'.$method->id.'Panel" class="list-group-item list-group-item-secondary panel-collapse collapse"><div class="panel-body">';
 print '<div class="btn-group btn-block" role="group" aria-label="actions buttons">
-<button type="button" onclick="DefaultPM(\''.$method->id.'\')" class="btn btn-secondary">Favori</button>
-<button type="button" onclick="DeletePM(\''.$method->id.'\')" class="btn btn-secondary">Supprimer</button>
+<button type="button" onclick="DefaultPM(\''.$method->id.'\')" class="btn btn-warning">Favori</button>
+<button type="button" onclick="DeletePM(\''.$method->id.'\')" class="btn btn-danger">Supprimer</button>
 </div>';
 print '</div></li>';
 $i++;
@@ -719,7 +721,7 @@ print "</div><div class='float-right'>";
 print dolihelp('ISSUE');
 print "</div></small>";
 print '</div></div>';
-print "<div id='error-message' role='alert'><!-- a Stripe Message will be inserted here. --></div>";
+print "<div id='error-message' role='alert'><!-- a Stripe Message will be inserted here. --></div>".var_dump($pm);
 
 print "<script>";
 
