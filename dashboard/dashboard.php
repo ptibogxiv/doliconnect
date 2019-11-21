@@ -479,6 +479,11 @@ global $current_user;
 $ID = $current_user->ID;
 
 $msg = null;
+ 
+if (doliconnector($current_user, 'fk_user') > '0'){  
+$request = "/users/".doliconnector($current_user, 'fk_user');
+$doliuser = callDoliApi("GET", $request , null, dolidelay('thirdparty'));
+}
 
 if ( isset($_POST["case"]) && $_POST["case"] == 'updatepwd' ) {
 $pwd1 = sanitize_text_field($_POST["pwd1"]);
@@ -492,7 +497,7 @@ if (doliconnector($current_user, 'fk_user') > '0'){
 $data = [
     'pass' => $pwd1
 	];
-$doliuser = callDoliApi("PUT", "/users/".doliconnector($current_user, 'fk_user'), $data, 0);
+$doliuser = callDoliApi("PUT", $request , $data, 0);
 }
 
 $msg = dolialert ('success', __( 'Your informations have been updated.', 'doliconnect' ));
@@ -545,12 +550,13 @@ print "</ul><div class='card-body'><button class='btn btn-danger btn-block' type
 if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $ID ) {
 print ' disabled';
 }
-print "><b>".__( 'Update', 'doliconnect' )."</b></button></div></div>";
-
-print "<p class='text-right'><small>";
+print "><b>".__( 'Update', 'doliconnect' )."</b></button></div><div class='card-footer text-muted'>";
+print "<small><div class='float-left'>";
+if ( $request ) print dolirefresh($request, $url, dolidelay('thirdparty'));
+print "</div><div class='float-right'>";
 print dolihelp('ISSUE');
-print "</small></p>";
-print "</form>";
+print "</div></small>";
+print '</div></div>';
 
 }
 add_action( 'user_doliconnect_password', 'password_module');
@@ -721,7 +727,7 @@ print "</div><div class='float-right'>";
 print dolihelp('ISSUE');
 print "</div></small>";
 print '</div></div>';
-print "<div id='error-message' role='alert'><!-- a Stripe Message will be inserted here. --></div>".var_dump($pm);
+print "<div id='error-message' role='alert'><!-- a Stripe Message will be inserted here. --></div>";
 
 print "<script>";
 
@@ -748,6 +754,14 @@ print 'var style = {
     iconColor: "#fa755a"
   }
 };'; 
+
+print 'var displayError = document.getElementById("error-message");
+var cars = ["BMW", "Volvo", "Mini"];
+var x;
+
+for (x of cars) {
+  document.write(x + "<br >");
+}';
 
 print 'var options = {
   style: style,
