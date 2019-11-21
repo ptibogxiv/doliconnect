@@ -990,11 +990,11 @@ form.submit();
                  
 print "</script>";
 
-print "<small><div class='custom-control custom-checkbox my-1 mr-sm-2'><input type='checkbox' class='custom-control-input' id='default' name='default' value='1' ";
+//print "<small><div class='custom-control custom-checkbox my-1 mr-sm-2'><input type='checkbox' class='custom-control-input' id='default' name='default' value='1' ";
 //if (empty($i)) { print " checked disabled"; }
-print "><label class='custom-control-label' for='default'> ".__( 'Set as default payment mode', 'doliconnect')."</label></div>";
+//print "><label class='custom-control-label' for='default'> ".__( 'Set as default payment mode', 'doliconnect')."</label></div>";
 //if (empty($i)) { print "<input type='hidden' name='default' value='1'>"; }
-print '</small>';
+//print '</small>';
 
 
 
