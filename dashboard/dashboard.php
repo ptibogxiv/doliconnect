@@ -642,7 +642,7 @@ else if ( $method->brand == 'amex' ) { print 'class="fab fa-cc-amex fa-3x fa-fw"
 else { print 'class="fab fa-cc-amex fa-3x fa-fw"';}
 }
 print '></i></center>';
-print '</div><div class="col-9 col-sm-7 col-md-8 col-xl-8 align-middle"><h6 class="my-0">';
+print '</div><div class="col-9 col-sm-7 col-md-8 col-xl-8 align-middle"><h6 class="my-0">'.$method->id.' ';
 if ( $method->type == 'sepa_debit' ) {
 print __( 'Account', 'doliconnect' ).' '.$method->reference.'<small> <a href="'.$method->mandate_url.'" title="'.__( 'Mandate', 'doliconnect' ).' '.$method->mandate_reference.'" target="_blank"><i class="fas fa-info-circle"></i></a></small>';
 } else {
@@ -653,6 +653,12 @@ print "</h6><small class='text-muted'>".$method->holder."</small></div>";
 print "<div class='d-none d-sm-block col-2 align-middle text-right'>";
 print "<img src='".plugins_url('doliconnect/images/flag/'.strtolower($method->country).'.png')."' class='img-fluid' alt='".$method->country."'>";
 print "</div></div></label></div></li>";
+print '<li id="'.$method->id.'Panel" class="list-group-item list-group-item-secondary panel-collapse collapse"><div class="panel-body">';
+
+print "<p class='text-justify'>";
+print "</p>";
+
+print '</div></li>';
 }} else {
 print '<li class="list-group-item list-group-item-light flex-column align-items-start"><div class="custom-control custom-radio">
 <input onclick="ShowHideDivPM()" type="radio" id="none" name="paymentmode" class="custom-control-input" data-toggle="collapse" data-parent="#accordion" href="#none" checked>
@@ -665,7 +671,7 @@ print '<li class="list-group-item list-group-item-action flex-column align-items
 <label class="custom-control-label w-100" for="card"><div class="row"><div class="col-3 col-md-2 col-xl-2 align-middle">
 <center><i class="fas fa-credit-card fa-3x fa-fw"></i></center></div><div class="col-9 col-md-10 col-xl-10 align-middle"><h6 class="my-0">'.__( 'Credit card', 'doliconnect' ).'</h6><small class="text-muted">Visa, MasterCard, Amex...</small></div></div></label>
 </div></li>';
-print '<li id="cardPanel" class="list-group-item list-group-item-secondary panel-collapse collapse in"><div class="panel-body">';
+print '<li id="cardPanel" class="list-group-item list-group-item-secondary panel-collapse collapse"><div class="panel-body">';
 print '<input id="cardholder-name" name="cardholder-name" value="" type="text" class="form-control" placeholder="'.__( "Card's owner", 'doliconnect').'" autocomplete="off" required>
 <label for="card-element"></label>
 <div class="form-control" id="card-element"><!-- a Stripe Element will be inserted here. --></div>';
@@ -904,11 +910,11 @@ form.submit();
               //alert('3');
           }
         })
-function ShowHideDivPM() {
+function ShowHideDivPM(pm = 0) {
               jQuery('#cardPanel').collapse('hide');
               jQuery('#ibanPanel').collapse('hide');
               jQuery('#idealPanel').collapse('hide');
-              //alert(this.id);
+              //alert('value: ' + pm + '');
         }";        
 print "</script>";
 
