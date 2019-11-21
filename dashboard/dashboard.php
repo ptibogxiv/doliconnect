@@ -2183,6 +2183,8 @@ foreach ($representatives as $postv) {
 print "<option value='".$postv->id."' >".$postv->firstname." ".$postv->lastname." ".$postv->job."</option>";
 }
 print "</select>";
+} else {
+print "<select class='custom-select' id='fk_user_assign' name='fk_user_assign' disabled></select>";
 }
 print "</div></div>";
 }
