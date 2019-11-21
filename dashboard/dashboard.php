@@ -627,7 +627,7 @@ print '<div class="card shadow-sm"><ul class="list-group list-group-flush panel-
 if ( $listpaymentmethods->paymentmethods != null ) {
 foreach ( $listpaymentmethods->paymentmethods as $method ) {                                                                                                                      
 print "<li class='list-group-item list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>
-<input onclick='ShowHideDivPM(".$method->id.")' type='radio' id='".$method->id."' name='paymentmode' class='custom-control-input' data-toggle='collapse' data-parent='#accordion' href='#".$method->id."' ";
+<input onclick='ShowHideDivPM()' type='radio' id='".$method->id."' name='paymentmode' class='custom-control-input' data-toggle='collapse' data-parent='#accordion' href='#".$method->id."' ";
 if ( date('Y/n') >= $method->expiration && !empty($object) && !empty($method->expiration) ) { print " disabled "; }
 //elseif ( $i == 1 || !empty($method->default_source) ) { print " checked "; }
 print " ><label class='custom-control-label w-100' for='".$method->id."'><div class='row'><div class='col-3 col-md-2 col-xl-2 align-middle'>";
@@ -899,12 +899,12 @@ form.submit();
               jQuery('#idealPanel').collapse('show');
               //alert('3');
           }
-        })";
-print "function ShowHideDivPM(pm) {
+        })
+function ShowHideDivPM() {
               jQuery('#cardPanel').collapse('hide');
               jQuery('#ibanPanel').collapse('hide');
               jQuery('#idealPanel').collapse('hide');
-              //alert(pm);
+              //alert();
         }";        
 print "</script>";
 
