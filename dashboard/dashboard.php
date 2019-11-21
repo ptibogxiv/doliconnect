@@ -1944,7 +1944,14 @@ print "</li>";
 } else { 
 print "<li class='list-group-item list-group-item-light'><center>".__( 'No linked member', 'doliconnect' )."</center></li>";
 }
-print  "</ul></div></form>";
+print  "</form>";
+print '</ul><div class="card-footer text-muted">';
+print "<small><div class='float-left'>";
+print dolirefresh($request, $url, dolidelay('member'));
+print "</div><div class='float-right'>";
+print dolihelp('ISSUE');
+print "</div></small>";
+print '</div></div>';
 
 if ( !isset($linkedmember->error) && $linkedmember != null ) { 
 foreach ( $linkedmember as $member ) {
@@ -1964,12 +1971,6 @@ print "</div>".doliloading('member'.$member->id.'-form');
 print "<div id='Footermember".$member->id."-form' class='modal-footer'><button name='update_member' value='".$member->id."' class='btn btn-warning btn-block' type='submit'><b>".__( 'Update', 'doliconnect' )."</b></button></form></div>
 </div></div></div>";
 }}
-
-print "<small><div class='float-left'>";
-print dolirefresh($request, $url, dolidelay('member'));
-print "</div><div class='float-right'>";
-print dolihelp('COM');
-print "</div></small>";
 
 }
 //*****************************************************************************************
@@ -2053,13 +2054,13 @@ foreach ( $ticketfo->messages as $msg ) {
 $datemsg =  date_i18n('d/m/Y - H:i', $msg->datec);  
 print  "<li class='list-group-item'><b>$datemsg $msg->fk_user_action_string</b><br>$msg->message</li>";
 }} 
-print "</ul></div>";
-
-print "<small><div class='float-left'>"; 
-print dolirefresh($request, $url."&id=".esc_attr($_GET['id'])."&ref=".esc_attr($_GET['ref']), dolidelay('ticket'), $ticketfo);
+print '</ul><div class="card-footer text-muted">';
+print "<small><div class='float-left'>";
+print dolirefresh($request, $url, dolidelay('ticket'), $ticketfo);
 print "</div><div class='float-right'>";
-print dolihelp('COM');
+print dolihelp('ISSUE');
 print "</div></small>";
+print '</div></div>';
 
 } elseif ( isset($_GET['create']) ) {
 
@@ -2210,13 +2211,13 @@ else{
 print "<li class='list-group-item list-group-item-light'><center>".__( 'No ticket', 'doliconnect' )."</center></li>";
 }
 
-print  "</ul></div>";
-
+print '</ul><div class="card-footer text-muted">';
 print "<small><div class='float-left'>";
 print dolirefresh($request, $url, dolidelay('ticket'));
 print "</div><div class='float-right'>";
-print dolihelp('COM');
+print dolihelp('ISSUE');
 print "</div></small>";
+print '</div></div>';
 
 }
 }
