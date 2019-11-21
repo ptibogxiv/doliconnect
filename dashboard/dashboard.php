@@ -711,7 +711,13 @@ print '<li id="idealPanel" class="list-group-item list-group-item-secondary pane
 // ideal form
 print '</div></li>';
 }
-print '</ul></div>';
+print '</ul><div class="card-footer text-muted">';
+print "<small><div class='float-left'>";
+print dolirefresh($request, $url, dolidelay('paymentmethods'));
+print "</div><div class='float-right'>";
+print dolihelp('ISSUE');
+print "</div></small>";
+print '</div></div>';
 print "<div id='error-message' role='alert'><!-- a Stripe Message will be inserted here. --></div>";
 
 print "<script>";
@@ -960,11 +966,7 @@ print "><label class='custom-control-label' for='default'> ".__( 'Set as default
 //if (empty($i)) { print "<input type='hidden' name='default' value='1'>"; }
 print '</small>';
 
-print "<small><div class='float-left'>";
-print dolirefresh($request, $url, dolidelay('paymentmethods'));
-print "</div><div class='float-right'>";
-print dolihelp('ISSUE');
-print "</div></small>";
+
 
 }
 

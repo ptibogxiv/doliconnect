@@ -544,15 +544,15 @@ this.form.submit();
 $refresh .= "</script>";
 
 if ( isset($element->date_modification) && !empty($element->date_modification) ) {
-$refresh .= __( 'Last modified', 'doliconnect' ).": ".date_i18n( get_option( 'date_format' ).' - '.get_option('time_format'), $element->date_modification, false);
+$refresh .= "<i class='fas fa-database'></i> ".date_i18n( get_option( 'date_format' ).' - '.get_option('time_format'), $element->date_modification, false);
 } elseif ( get_option("_transient_timeout_".$origin) > 0 ) {
-$refresh .= __( 'Last modified', 'doliconnect' ).": ".date_i18n( get_option( 'date_format' ).' - '.get_option('time_format'), get_option("_transient_timeout_".$origin)-$delay, false);
+$refresh .= "<i class='fas fa-database'></i> ".date_i18n( get_option( 'date_format' ).' - '.get_option('time_format'), get_option("_transient_timeout_".$origin)-$delay, false);
 } elseif (is_user_logged_in() ) {
 $refresh .= __( 'Refresh', 'doliconnect' );
 }
  
 if (is_user_logged_in() ) {
-$refresh .= " <a onClick='refreshloader()' href='".esc_url( add_query_arg( 'refresh', true, $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']) )."' title='".__( 'Refresh', 'doliconnect' )."'><i class='fas fa-sync-alt'></i></a>";
+$refresh .= " <a onClick='refreshloader()' href='".esc_url( add_query_arg( 'refresh', true, $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']) )."' title='".__( 'Refresh datas', 'doliconnect' )."'><i class='fas fa-sync-alt'></i></a>";
 }
 
 return $refresh;
