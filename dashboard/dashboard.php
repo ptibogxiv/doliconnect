@@ -631,7 +631,7 @@ if ( $listpaymentmethods->paymentmethods != null ) {
 $i=0;
 foreach ( $listpaymentmethods->paymentmethods as $method ) {                                                                                                                      
 print "<li class='list-group-item list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>";
-print "<input onclick='ShowHideDivPM(isEven(".$i."));' type='radio' id='".$method->id."' name='paymentmode' value='".$method->id."' class='custom-control-input' data-toggle='collapse' data-parent='#accordion' href='#".$method->id."' ";
+print '<input onclick="ShowHideDivPM(\''.$method->id.'\')" type="radio" id="'.$method->id.'" name="paymentmode" value="'.$method->id.'" class="custom-control-input" data-toggle="collapse" data-parent="#accordion" href="#'.$method->id.'" ';
 if ( date('Y/n') >= $method->expiration && !empty($object) && !empty($method->expiration) ) { print " disabled "; }
 elseif ( !empty($method->default_source) ) { print " checked "; }
 print " ><label class='custom-control-label w-100' for='".$method->id."'><div class='row'><div class='col-3 col-md-2 col-xl-2 align-middle'>";
@@ -918,12 +918,13 @@ form.submit();
 function isEven(num) {
   return num;
 }
-function ShowHideDivPM(pm = 0) {
+function ShowHideDivPM(pm) {
               var displayError = document.getElementById('error-message');
               displayError.textContent = '';
               jQuery('#cardPanel').collapse('hide');
               jQuery('#ibanPanel').collapse('hide');
               jQuery('#idealPanel').collapse('hide');
+              //jQuery('#' + pm + 'Panel').collapse('show');
               displayError.textContent = pm;
         }";        
 print "</script>";
