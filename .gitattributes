@@ -1,2 +1,4 @@
+/.wordpress-org export-ignore
+/.github export-ignore
 # Auto detect text files and perform LF normalization
 * text=auto
