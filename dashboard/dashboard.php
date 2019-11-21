@@ -899,8 +899,8 @@ form.submit();
               jQuery('#idealPanel').collapse('show');
               //alert('3');
           }
-        })
-function ShowHideDivPM(pm) {
+        })";
+print "function ShowHideDivPM(pm) {
               jQuery('#cardPanel').collapse('hide');
               jQuery('#ibanPanel').collapse('hide');
               jQuery('#idealPanel').collapse('hide');
