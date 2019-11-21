@@ -622,7 +622,7 @@ print "<script src='https://js.stripe.com/v3/'></script>";
 
 if ( isset($msg) ) { print $msg; }
  
-
+print doliloaderscript('doliconnect-paymentmethodsform');
 
 print '<div class="card shadow-sm"><ul class="list-group list-group-flush panel-group" id="accordion">';
 if ( isset($listpaymentmethods->stripe) && empty($listpaymentmethods->stripe) ) {
@@ -818,6 +818,7 @@ jQuery('#DoliconnectLoadingModal').modal('show');
 var form = document.createElement('form');
 form.setAttribute('action', '".$url."');
 form.setAttribute('method', 'post');
+form.setAttribute('id', 'doliconnect-paymentmethodsform');
 var inputvar = document.createElement('input');
 inputvar.setAttribute('type', 'hidden');
 inputvar.setAttribute('name', 'add_paymentmethod');
@@ -903,6 +904,7 @@ jQuery('#DoliconnectLoadingModal').modal('show');
 var form = document.createElement('form');
 form.setAttribute('action', '".$url."');
 form.setAttribute('method', 'post');
+form.setAttribute('id', 'doliconnect-paymentmethodsform');
 var inputvar = document.createElement('input');
 inputvar.setAttribute('type', 'hidden');
 inputvar.setAttribute('name', 'add_paymentmethod');
@@ -938,6 +940,7 @@ jQuery('#DoliconnectLoadingModal').modal('show');
 var form = document.createElement('form');
 form.setAttribute('action', '".$url."');
 form.setAttribute('method', 'post');
+form.setAttribute('id', 'doliconnect-paymentmethodsform');
 var inputvar = document.createElement('input');
 inputvar.setAttribute('type', 'hidden');
 inputvar.setAttribute('name', 'default_paymentmethod');
@@ -951,6 +954,7 @@ jQuery('#DoliconnectLoadingModal').modal('show');
 var form = document.createElement('form');
 form.setAttribute('action', '".$url."');
 form.setAttribute('method', 'post');
+form.setAttribute('id', 'doliconnect-paymentmethodsform');
 var inputvar = document.createElement('input');
 inputvar.setAttribute('type', 'hidden');
 inputvar.setAttribute('name', 'delete_paymentmethod');
