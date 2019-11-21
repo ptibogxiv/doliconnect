@@ -638,7 +638,7 @@ if ( $listpaymentmethods->paymentmethods != null ) {
 $i = 0;
 $pm = array();
 foreach ( $listpaymentmethods->paymentmethods as $method ) {
-$pm[] .= "".$method->id."Panel";                                                                                                                      
+$pm[] .= "".$method->id."";                                                                                                                      
 print "<li class='list-group-item list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>";
 print '<input onclick="ShowHideDivPM(\''.$method->id.'\')" type="radio" id="'.$method->id.'" name="paymentmode" value="'.$method->id.'" class="custom-control-input" data-toggle="collapse" data-parent="#accordion" href="#'.$method->id.'" ';
 if ( date('Y/n') >= $method->expiration && !empty($object) && !empty($method->expiration) ) { print " disabled "; }
@@ -755,14 +755,6 @@ print 'var style = {
   }
 };'; 
 
-print 'var displayError = document.getElementById("error-message");
-var cars = ["BMW", "Volvo", "Mini"];
-var x;
-
-for (x of cars) {
-  document.write(x + "<br >");
-}';
-
 print 'var options = {
   style: style,
   supportedCountries: ["SEPA"],
@@ -774,7 +766,12 @@ print "jQuery('#card,#iban,#ideal').on('click', function (e) {
 var elements = stripe.elements(); 
 var clientSecret = '".$listpaymentmethods->stripe_client_secret."';
 var displayError = document.getElementById('error-message');
-displayError.textContent = ''; 
+displayError.textContent = '';
+var listpm = ".json_encode($pm).";
+var mpx;
+for (mpx of listpm) {
+jQuery('#' + mpx + 'Panel').collapse('hide');
+} 
           if(this.id == 'card'){
 var cardElement = elements.create('card', options);
 cardElement.mount('#card-element');
@@ -940,17 +937,25 @@ form.submit();
               //alert('3');
           }
         })
+        
 function isEven(num) {
   return num;
 }
+
 function ShowHideDivPM(pm) {
               var displayError = document.getElementById('error-message');
               displayError.textContent = '';
+var listpm = ".json_encode($pm).";
+var mpx;
+for (mpx of listpm) {
+jQuery('#' + mpx + 'Panel').collapse('hide');
+}
               jQuery('#cardPanel').collapse('hide');
               jQuery('#ibanPanel').collapse('hide');
               jQuery('#idealPanel').collapse('hide');
               jQuery('#' + pm + 'Panel').collapse('show');
         }
+        
 function DefaultPM(pm) {
 jQuery('#DoliconnectLoadingModal').modal('show');
 var form = document.createElement('form');
@@ -978,7 +983,8 @@ inputvar.setAttribute('value', pm);
 form.appendChild(inputvar);
 document.body.appendChild(form);
 form.submit();
-        }";         
+        }";    
+                 
 print "</script>";
 
 print "<small><div class='custom-control custom-checkbox my-1 mr-sm-2'><input type='checkbox' class='custom-control-input' id='default' name='default' value='1' ";
