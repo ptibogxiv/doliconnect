@@ -634,9 +634,10 @@ print '<div class="card shadow-sm"><ul class="list-group list-group-flush panel-
 if ( isset($listpaymentmethods->stripe) && empty($listpaymentmethods->stripe) ) {
 print "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".__( "Stripe's in sandbox mode", 'doliconnect')."</b></li>";
 }
+ 
+$pm = array();
 if ( $listpaymentmethods->paymentmethods != null ) {
 $i = 0;
-$pm = array();
 foreach ( $listpaymentmethods->paymentmethods as $method ) {
 $pm[] .= "".$method->id."";                                                                                                                      
 print "<li class='list-group-item list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>";
@@ -677,7 +678,7 @@ print '</div></li>';
 $i++;
 }} else {
 print '<li class="list-group-item list-group-item-light flex-column align-items-start"><div class="custom-control custom-radio">
-<input onclick="ShowHideDivPM()" type="radio" id="none" name="paymentmode" value="0" class="custom-control-input" data-toggle="collapse" data-parent="#accordion" href="#none" checked>
+<input onclick="ShowHideDivPM(\'0\')" type="radio" id="none" name="paymentmode" value="0" class="custom-control-input" data-toggle="collapse" data-parent="#accordion" href="#none" checked>
 <label class="custom-control-label w-100" for="none"><div class="row"><div class="col-3 col-md-2 col-xl-2 align-middle">
 <center><i class="fas fa-border-none fa-3x fa-fw"></i></center></div><div class="col-9 col-md-10 col-xl-10 align-middle"><h6 class="my-0">'.__( 'No payment method', 'doliconnect').'</h6><small class="text-muted"></small></div></div></label>
 </div></li>';
