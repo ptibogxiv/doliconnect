@@ -898,11 +898,6 @@ form.submit();
               jQuery('#ibanPanel').collapse('hide');
               jQuery('#idealPanel').collapse('show');
               //alert('3');
-          }else { 
-              jQuery('#cardPanel').collapse('hide');
-              jQuery('#ibanPanel').collapse('hide');
-              jQuery('#idealPanel').collapse('hide');
-              alert('4');
           }
         })</script>";
 
