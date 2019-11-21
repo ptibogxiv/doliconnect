@@ -1058,13 +1058,13 @@ print "<li class='list-group-item'><div class='row'><div class='col-6 col-md-3'>
 print "<div class='col-md-7'><h6>" . $val['label'] . "</h6>" . $val['description'] ."" . $val['document'] ."</div></div></li>";
 } 
 //var_dump($fruits);
-print "</ul></div>";
-
+print '</ul><div class="card-footer text-muted">';
 print "<small><div class='float-left'>";
-print dolirefresh($request, $url."&id=".$_GET['id']."&ref=".$_GET['ref'], dolidelay('proposal'), $proposalfo);
+print dolirefresh($request, $url, dolidelay('proposal'), $proposalfo);
 print "</div><div class='float-right'>";
-print dolihelp('COM');
+print dolihelp('ISSUE');
 print "</div></small>";
+print '</div></div>';
 
 } else {
 
@@ -1094,13 +1094,13 @@ print "</span></a>";
 else{
 print "<li class='list-group-item list-group-item-light'><center>".__( 'No proposal', 'doliconnect' )."</center></li>";
 }
-print  "</ul></div>";
-
+print '</ul><div class="card-footer text-muted">';
 print "<small><div class='float-left'>";
 print dolirefresh($request, $url, dolidelay('proposal'));
 print "</div><div class='float-right'>";
-print dolihelp('COM');
+print dolihelp('ISSUE');
 print "</div></small>";
+print '</div></div>';
 
 }
 }
@@ -1349,13 +1349,13 @@ print "<li class='list-group-item'><div class='row'><div class='col-6 col-md-3'>
 print "<div class='col-md-7'><h6>".$val['label']."</h6>" . $val['description'] ."" . $val['document'] ."</div></div></li>";
 } 
 //var_dump($fruits);
-print "</ul></div>";
-
+print '</ul><div class="card-footer text-muted">';
 print "<small><div class='float-left'>";
-print dolirefresh($request, $url."&id=".$_GET['id']."&ref=".$_GET['ref'], dolidelay('order'), $orderfo);
+print dolirefresh($request, $url, dolidelay('order'), $orderfo);
 print "</div><div class='float-right'>";
-print dolihelp('COM');
+print dolihelp('ISSUE');
 print "</div></small>";
+print '</div></div>';
 
 } else {
 
@@ -1389,13 +1389,13 @@ print "</span></a>";
 else{
 print "<li class='list-group-item list-group-item-light'><center>".__( 'No order', 'doliconnect' )."</center></li>";
 }
-print  "</ul></div>";
-
+print '</ul><div class="card-footer text-muted">';
 print "<small><div class='float-left'>";
 print dolirefresh($request, $url, dolidelay('order'));
 print "</div><div class='float-right'>";
-print dolihelp('COM');
+print dolihelp('ISSUE');
 print "</div></small>";
+print '</div></div>';
 
 //print '<br><nav aria-label="Page navigation example">
 //  <ul class="pagination">
@@ -1476,13 +1476,13 @@ print dolitotal($contractfo);
 print "</li>";
 
 //var_dump($fruits);
-print "</ul></div>";
-
+print '</ul><div class="card-footer text-muted">';
 print "<small><div class='float-left'>";
-print dolirefresh($request, $url."&id=".$_GET['id']."&ref=".$_GET['ref'], dolidelay('contract'), $contractfo);
+print dolirefresh($request, $url, dolidelay('contract'), $contractfo);
 print "</div><div class='float-right'>";
-print dolihelp('COM');
+print dolihelp('ISSUE');
 print "</div></small>";
+print '</div></div>';
 
 } else {
 
@@ -1517,7 +1517,13 @@ print "</span></a>";
 else{
 print "<li class='list-group-item list-group-item-light'><center>".__( 'No contract', 'doliconnect' )."</center></li>";
 }
-print  "</ul></div>";
+print '</ul><div class="card-footer text-muted">';
+print "<small><div class='float-left'>";
+print dolirefresh($request, $url, dolidelay('contract'));
+print "</div><div class='float-right'>";
+print dolihelp('ISSUE');
+print "</div></small>";
+print '</div></div>';
 
 //print '<br><nav aria-label="Page navigation example">
 //  <ul class="pagination">
@@ -1538,12 +1544,6 @@ print  "</ul></div>";
 //    </li>
 //  </ul>
 //</nav>';
-
-print "<small><div class='float-left'>";
-print dolirefresh($request, $url, dolidelay('contract'));
-print "</div><div class='float-right'>";
-print dolihelp('COM');
-print "</div></small>";
 
 }
 }
@@ -1655,13 +1655,13 @@ print "</span></a>";
 else{
 print "<li class='list-group-item list-group-item-light'><center>".__( 'No donation', 'doliconnect' )."</center></li>";
 }
-print "</ul></div>";
-
+print '</ul><div class="card-footer text-muted">';
 print "<small><div class='float-left'>";
 print dolirefresh($request, $url, dolidelay('donation'));
 print "</div><div class='float-right'>";
-print dolihelp('COM');
+print dolihelp('ISSUE');
 print "</div></small>";
+print '</div></div>';
 
 }
 }
@@ -1806,13 +1806,13 @@ print "</td><td class='text-right'><b>".doliprice($cotisation->amount)."</b></td
 else { 
 print "<li class='list-group-item list-group-item-light'><center>".__( 'No subscription', 'doliconnect' )."</center></li>";
 }
-print  "</ul></div>";
-
+print '</ul><div class="card-footer text-muted">';
 print "<small><div class='float-left'>";
 print dolirefresh($request, $url, dolidelay('member'), $adherent);
 print "</div><div class='float-right'>";
-print dolihelp('COM');
+print dolihelp('ISSUE');
 print "</div></small>";
+print '</div></div>';
 
 }
 
@@ -1859,13 +1859,13 @@ print "<td class='text-right'><b>".doliprice($consumption->amount)."</b></td></t
 print "<li class='list-group-item list-group-item-light'><center>".__( 'No consumption', 'doliconnect' )."</center></li>";
 }
 
-print  "</ul></div>";
-
+print '</ul><div class="card-footer text-muted">';
 print "<small><div class='float-left'>";
 print dolirefresh( $request, $url, dolidelay('member'));
 print "</div><div class='float-right'>";
-print dolihelp('COM');
+print dolihelp('ISSUE');
 print "</div></small>";
+print '</div></div>';
 
 }
 
@@ -2338,14 +2338,13 @@ print "<option value='".$cur."' selected>".$cur." / ".doliprice('1.99', null, $c
 print "</select>";
 print "</div></div>";
 print "</li>";
-print "</form>";
-
-print "<input type='hidden' name='case' value='updatesettings'></ul></div>";
+print '</ul><input type="hidden" name="case" value="updatesettings"></form><div class="card-footer text-muted">';
 print "<small><div class='float-left'>";
 print dolirefresh( "/thirdparties/".doliconnector($current_user, 'fk_soc'), $url, dolidelay('member'));
 print "</div><div class='float-right'>";
 print dolihelp('ISSUE');
 print "</div></small>";
+print '</div></div>';
 
 if ( !empty(get_option('doliconnectbeta')) ) { 
 
