@@ -642,7 +642,7 @@ else if ( $method->brand == 'amex' ) { print 'class="fab fa-cc-amex fa-3x fa-fw"
 else { print 'class="fab fa-cc-amex fa-3x fa-fw"';}
 }
 print '></i></center>';
-print '</div><div class="col-9 col-sm-7 col-md-8 col-xl-8 align-middle"><h6 class="my-0">'.$method->id.' ';
+print '</div><div class="col-9 col-sm-7 col-md-8 col-xl-8 align-middle"><h6 class="my-0">';
 if ( $method->type == 'sepa_debit' ) {
 print __( 'Account', 'doliconnect' ).' '.$method->reference.'<small> <a href="'.$method->mandate_url.'" title="'.__( 'Mandate', 'doliconnect' ).' '.$method->mandate_reference.'" target="_blank"><i class="fas fa-info-circle"></i></a></small>';
 } else {
