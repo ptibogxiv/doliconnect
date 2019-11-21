@@ -1944,7 +1944,7 @@ print "</li>";
 } else { 
 print "<li class='list-group-item list-group-item-light'><center>".__( 'No linked member', 'doliconnect' )."</center></li>";
 }
-print  "</form>";
+print "</form>";
 print '</ul><div class="card-footer text-muted">';
 print "<small><div class='float-left'>";
 print dolirefresh($request, $url, dolidelay('member'));
