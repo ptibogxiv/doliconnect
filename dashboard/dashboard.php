@@ -628,9 +628,10 @@ if ( isset($listpaymentmethods->stripe) && empty($listpaymentmethods->stripe) ) 
 print "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".__( "Stripe's in sandbox mode", 'doliconnect')."</b></li>";
 }
 if ( $listpaymentmethods->paymentmethods != null ) {
+$i=0;
 foreach ( $listpaymentmethods->paymentmethods as $method ) {                                                                                                                      
 print "<li class='list-group-item list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>";
-print "<input onclick='ShowHideDivPM(isEven(".$method->id."));' type='radio' id='".$method->id."' name='paymentmode' class='custom-control-input' data-toggle='collapse' data-parent='#accordion' href='#".$method->id."' ";
+print "<input onclick='ShowHideDivPM(isEven(".$i."));' type='radio' id='".$method->id."' name='paymentmode' value='".$method->id."' class='custom-control-input' data-toggle='collapse' data-parent='#accordion' href='#".$method->id."' ";
 if ( date('Y/n') >= $method->expiration && !empty($object) && !empty($method->expiration) ) { print " disabled "; }
 elseif ( !empty($method->default_source) ) { print " checked "; }
 print " ><label class='custom-control-label w-100' for='".$method->id."'><div class='row'><div class='col-3 col-md-2 col-xl-2 align-middle'>";
@@ -662,15 +663,16 @@ print "<p class='text-justify'>";
 print "</p>";
 
 print '</div></li>';
+$i++;
 }} else {
 print '<li class="list-group-item list-group-item-light flex-column align-items-start"><div class="custom-control custom-radio">
-<input onclick="ShowHideDivPM()" type="radio" id="none" name="paymentmode" class="custom-control-input" data-toggle="collapse" data-parent="#accordion" href="#none" checked>
+<input onclick="ShowHideDivPM()" type="radio" id="none" name="paymentmode" value="0" class="custom-control-input" data-toggle="collapse" data-parent="#accordion" href="#none" checked>
 <label class="custom-control-label w-100" for="none"><div class="row"><div class="col-3 col-md-2 col-xl-2 align-middle">
 <center><i class="fas fa-border-none fa-3x fa-fw"></i></center></div><div class="col-9 col-md-10 col-xl-10 align-middle"><h6 class="my-0">'.__( 'No payment method', 'doliconnect').'</h6><small class="text-muted"></small></div></div></label>
 </div></li>';
 }
 print '<li class="list-group-item list-group-item-action flex-column align-items-start"><div class="custom-control custom-radio">
-<input type="radio" id="card" name="paymentmode" class="custom-control-input" data-toggle="collapse" data-parent="#accordion" href="#card">
+<input type="radio" id="card" name="paymentmode" value="card" class="custom-control-input" data-toggle="collapse" data-parent="#accordion" href="#card">
 <label class="custom-control-label w-100" for="card"><div class="row"><div class="col-3 col-md-2 col-xl-2 align-middle">
 <center><i class="fas fa-credit-card fa-3x fa-fw"></i></center></div><div class="col-9 col-md-10 col-xl-10 align-middle"><h6 class="my-0">'.__( 'Credit card', 'doliconnect' ).'</h6><small class="text-muted">Visa, MasterCard, Amex...</small></div></div></label>
 </div></li>';
@@ -684,7 +686,7 @@ print "<button id='cardButton' class='btn btn-warning btn-block' title='".__( 'A
 print '</div></li>';
 if ( isset($listpaymentmethods->sepa_direct_debit) && !empty($listpaymentmethods->sepa_direct_debit) ) {
 print '<li class="list-group-item list-group-item-action flex-column align-items-start"><div class="custom-control custom-radio">
-<input type="radio" id="iban" name="paymentmode" class="custom-control-input" data-toggle="collapse" data-parent="#accordion" href="#iban">
+<input type="radio" id="iban" name="paymentmode" value="iban" class="custom-control-input" data-toggle="collapse" data-parent="#accordion" href="#iban">
 <label class="custom-control-label w-100" for="iban"><div class="row"><div class="col-3 col-md-2 col-xl-2 align-middle">
 <center><i class="fas fa-university fa-3x fa-fw"></i></center></div><div class="col-9 col-md-10 col-xl-10 align-middle"><h6 class="my-0">'.__( 'IBAN', 'doliconnect' ).'</h6><small class="text-muted">Via SEPA Direct Debit</small></div></div></label>
 </div></li>';
@@ -701,7 +703,7 @@ print '</div></li>';
 }
 if ( isset($listpaymentmethods->ideal) && !empty($listpaymentmethods->ideal) && get_option('doliconnectbeta')=='1' && current_user_can( 'administrator' )) {
 print '<li class="list-group-item list-group-item-action flex-column align-items-start"><div class="custom-control custom-radio">
-<input type="radio" id="ideal" name="paymentmode" class="custom-control-input" data-toggle="collapse" data-parent="#accordion" href="#ideal">
+<input type="radio" id="ideal" name="paymentmode" value="ideal" class="custom-control-input" data-toggle="collapse" data-parent="#accordion" href="#ideal">
 <label class="custom-control-label w-100" for="ideal"><div class="row"><div class="col-3 col-md-2 col-xl-2 align-middle">
 <center><i class="fas fa-university fa-3x fa-fw"></i></center></div><div class="col-9 col-md-10 col-xl-10 align-middle"><h6 class="my-0">'.__( 'iDEAL', 'doliconnect' ).'</h6><small class="text-muted">iDEAL PAYMENT</small></div></div></label>
 </div></li>';
@@ -922,7 +924,7 @@ function ShowHideDivPM(pm = 0) {
               jQuery('#cardPanel').collapse('hide');
               jQuery('#ibanPanel').collapse('hide');
               jQuery('#idealPanel').collapse('hide');
-              //displayError.textContent = pm;
+              displayError.textContent = pm;
         }";        
 print "</script>";
 
