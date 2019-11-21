@@ -654,7 +654,11 @@ print "<div class='d-none d-sm-block col-2 align-middle text-right'>";
 print "<img src='".plugins_url('doliconnect/images/flag/'.strtolower($method->country).'.png')."' class='img-fluid' alt='".$method->country."'>";
 print "</div></div></label></div></li>";
 }} else {
-print "<li class='list-group-item list-group-item-light'><center>".__( 'No payment method', 'doliconnect')."</center></li>";
+print '<li class="list-group-item list-group-item-light flex-column align-items-start"><div class="custom-control custom-radio">
+<input onclick="ShowHideDivPM()" type="radio" id="none" name="paymentmode" class="custom-control-input" data-toggle="collapse" data-parent="#accordion" href="#none" checked>
+<label class="custom-control-label w-100" for="none"><div class="row"><div class="col-3 col-md-2 col-xl-2 align-middle">
+<center><i class="fas fa-border-none fa-3x fa-fw"></i></center></div><div class="col-9 col-md-10 col-xl-10 align-middle"><h6 class="my-0">'.__( 'No payment method', 'doliconnect').'</h6><small class="text-muted"></small></div></div></label>
+</div></li>';
 }
 print '<li class="list-group-item list-group-item-action flex-column align-items-start"><div class="custom-control custom-radio">
 <input type="radio" id="card" name="paymentmode" class="custom-control-input" data-toggle="collapse" data-parent="#accordion" href="#card">
