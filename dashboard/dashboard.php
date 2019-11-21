@@ -624,6 +624,9 @@ if ( isset($msg) ) { print $msg; }
 
 
 print '<div class="card shadow-sm"><ul class="list-group list-group-flush panel-group" id="accordion">';
+if ( isset($listpaymentmethods->stripe) && empty($listpaymentmethods->stripe) ) {
+print "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".__( "Stripe's in sandbox mode", 'doliconnect')."</b></li>";
+}
 if ( $listpaymentmethods->paymentmethods != null ) {
 foreach ( $listpaymentmethods->paymentmethods as $method ) {                                                                                                                      
 print "<li class='list-group-item list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>";
