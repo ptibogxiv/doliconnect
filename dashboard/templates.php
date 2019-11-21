@@ -1051,7 +1051,7 @@ add_filter( 'the_content', 'dolidonation_display');
 
  // ********************************************************
  
-function dolicart2_display($content) {
+function dolicart_display($content) {
 global $wpdb, $current_user;
 
 if ( in_the_loop() && is_main_query() && is_page(doliconnectid('dolicart')) && !empty(doliconnectid('dolicart')) )  {
@@ -1522,14 +1522,14 @@ print "<li class='list-group-item'><h6>".__( 'Message', 'doliconnect' )."</h6><s
 print "<textarea class='form-control' id='note_public' name='note_public' rows='3' placeholder='".__( 'Enter a message here that you want to send us about your order', 'doliconnect' )."'>".$object->note_public."</textarea>";
 print "</small></li></ul>";
 
-print "<div class='card-body'><input type='hidden' name='info' value='validation'><input type='hidden' name='dolicart' value='validation'><center><button class='btn btn-warning btn-block' type='submit'><b>".__( 'Validate', 'doliconnect' )."</b></button></center></div></div></form>";
-print "</div></div>";
-
+print "<div class='card-body'><input type='hidden' name='info' value='validation'><input type='hidden' name='dolicart' value='validation'><center><button class='btn btn-warning btn-block' type='submit'><b>".__( 'Validate', 'doliconnect' )."</b></button></center></div></form>";
+print '<div class="card-footer text-muted">';
 print "<small><div class='float-left'>";
-print dolirefresh( $request, doliconnecturl('dolicart')."?info", dolidelay('cart'));
+print dolirefresh($request, get_permalink(), dolidelay('cart'));
 print "</div><div class='float-right'>";
 print dolihelp('ISSUE');
 print "</div></small>";
+print '</div></div>';
 
 } else {
 
@@ -1665,5 +1665,5 @@ return $content;
 
 }
 
-add_filter( 'the_content', 'dolicart2_display');
+add_filter( 'the_content', 'dolicart_display');
 ?>
