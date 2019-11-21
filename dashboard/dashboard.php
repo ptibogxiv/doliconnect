@@ -880,7 +880,7 @@ ibanButton.disabled = true;
         sepa_debit: ibanElement,
         billing_details: {
           name: ibanholderName.value,
-          email: 'support@ptibogxiv.net'
+          email: '".$listpaymentmethods->cus_email."'
         }
       }
     }
