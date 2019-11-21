@@ -2180,7 +2180,9 @@ if ( count($representatives) > 1 ) {
 print "<option value='' disabled selected >".__( '- Select -', 'doliconnect')."</option>";
 }
 foreach ($representatives as $postv) {
-print "<option value='".$postv->id."' >".$postv->firstname." ".$postv->lastname." ".$postv->job."</option>";
+print "<option value='".$postv->id."' >".$postv->firstname." ".$postv->lastname;
+if (!empty($postv->job)) print ", ".$postv->job;
+print "</option>";
 }
 print "</select>";
 } else {
