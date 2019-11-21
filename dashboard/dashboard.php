@@ -623,14 +623,15 @@ if ( isset($msg) ) { print $msg; }
  
 
 
-print '<div class="card shadow-sm">';
+print '<div class="card shadow-sm"><ul class="list-group list-group-flush panel-group" id="accordion">';
 if ( $listpaymentmethods->paymentmethods != null ) {
-print "<form role='form' action='$url' id='paymentmethods-form' method='post'>";
-print doliloaderscript('paymentmethods-form');
-print '<ul class="list-group list-group-flush panel-group" id="accordion">';
 foreach ( $listpaymentmethods->paymentmethods as $method ) {                                                                                                                      
-print "<li class='list-group-item d-flex justify-content-between lh-condensed list-group-item-action'>";
-print "<div class='d-none d-md-block col-md-2 col-lg-1'><i ";
+print "<li class='list-group-item list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>
+<input type='radio' id='".$method->id."' name='paymentmode' class='custom-control-input' data-toggle='collapse' data-parent='#accordion' href='#".$method->id."' ";
+if ( date('Y/n') >= $method->expiration && !empty($object) && !empty($method->expiration) ) { print " disabled "; }
+//elseif ( $i == 1 || !empty($method->default_source) ) { print " checked "; }
+print " ><label class='custom-control-label w-100' for='".$method->id."'><div class='row'><div class='col-3 col-md-2 col-xl-2 align-middle'>";
+print '<center><i ';
 if ( $method->type == 'sepa_debit' ) {
 print 'class="fas fa-university fa-3x fa-fw" style="color:DarkGrey"';
 } else {
@@ -638,39 +639,21 @@ print 'class="fas fa-university fa-3x fa-fw" style="color:DarkGrey"';
 if ( $method->brand == 'visa' ) { print 'class="fab fa-cc-visa fa-3x fa-fw" style="color:#172274"'; }
 else if ( $method->brand == 'mastercard' ) { print 'class="fab fa-cc-mastercard fa-3x fa-fw" style="color:#FF5F01"'; }
 else if ( $method->brand == 'amex' ) { print 'class="fab fa-cc-amex fa-3x fa-fw" style="color:#2E78BF"'; }
-else {print 'class="fab fa-cc-amex fa-3x fa-fw"';}
+else { print 'class="fab fa-cc-amex fa-3x fa-fw"';}
 }
 print '></i></center>';
-print "</div><div class='col-8 col-sm-7 col-md-6 col-lg-7'><h6 class='my-0'>";
+print '</div><div class="col-9 col-sm-7 col-md-8 col-xl-8 align-middle"><h6 class="my-0">';
 if ( $method->type == 'sepa_debit' ) {
-print __( 'Account', 'doliconnect').' '.$method->reference.'<small> <a href="'.$method->mandate_url.'" title="'.__( 'Mandate', 'doliconnect').' '.$method->mandate_reference.'" target="_blank"><i class="fas fa-info-circle"></i></a></small>';
+print __( 'Account', 'doliconnect' ).' '.$method->reference.'<small> <a href="'.$method->mandate_url.'" title="'.__( 'Mandate', 'doliconnect' ).' '.$method->mandate_reference.'" target="_blank"><i class="fas fa-info-circle"></i></a></small>';
 } else {
-print __( 'Card', 'doliconnect').' '.$method->reference;
+print __( 'Card', 'doliconnect' ).' '.$method->reference;
 }
 if ( !empty($method->expiration) ) { print " - ".date("m/Y", strtotime($method->expiration.'/1')); }
 print "</h6><small class='text-muted'>".$method->holder."</small></div>";
-print "<div class='d-none d-md-block col-md-2 align-middle text-right'>";
-print "<img src='".plugins_url('doliconnect/images/flag/'.strtolower($method->country).'.png')."' class='img-fluid' alt='$method->country'>";
-print "</div>";
-
-print "<div class='col-4 col-sm-3 col-md-2 btn-group-vertical' role='group'>";
-if ( !empty($method->default_source) ) { 
-print "<button class='btn btn-light' title='".__( 'Favorite', 'doliconnect')."' disabled><i class='fas fa-star fa-1x fa-fw' style='color:Gold'></i></button>";
-} elseif ( (current_time( 'timestamp', 1) >= strtotime($method->expiration.'/1') && $method->type == 'card' ) || ! preg_match('/pm_/', $method->id) ) {
-print "<button class='btn btn-light' title='".__( 'Can not be set as favorite', 'doliconnect' )."' disabled><i class='fas fa-ban fa-1x fa-fw'></i></button>";
-} else {
-print "<button name='default_paymentmethod' value='".$method->id."' class='btn btn-light' type='submit' title='".__( 'Set as favorite', 'doliconnect')."'><i class='far fa-star fa-1x fa-fw'></i></button>";
-}
-if ( empty($method->default_source) || count($counter) == 1 ) {
-print "<button name='delete_paymentmethod' value='".$method->id."' class='btn btn-light text-danger' type='submit' title='".__( 'Delete', 'doliconnect')."'><i class='fas fa-trash fa-fw'></i></button>";
-} else {
-print "<button class='btn btn-light' title='".__( 'Can not be delete as favorite', 'doliconnect')."' disabled><i class='fas fa-trash fa-fw'></i></button>";
-}
-print "</div></li>";
-}
-print "</form>";
-
-} else {
+print "<div class='d-none d-sm-block col-2 align-middle text-right'>";
+print "<img src='".plugins_url('doliconnect/images/flag/'.strtolower($method->country).'.png')."' class='img-fluid' alt='".$method->country."'>";
+print "</div></div></label></div></li>";
+}} else {
 print "<li class='list-group-item list-group-item-light'><center>".__( 'No payment method', 'doliconnect')."</center></li>";
 }
 print '<li class="list-group-item list-group-item-action flex-column align-items-start"><div class="custom-control custom-radio">
@@ -706,11 +689,10 @@ print '</div></li>';
 if ( isset($listpaymentmethods->ideal) && !empty($listpaymentmethods->ideal) && get_option('doliconnectbeta')=='1' && current_user_can( 'administrator' )) {
 print '<li class="list-group-item list-group-item-action flex-column align-items-start"><div class="custom-control custom-radio">
 <input type="radio" id="ideal" name="paymentmode" class="custom-control-input" data-toggle="collapse" data-parent="#accordion" href="#ideal">
-<label class="custom-control-label" for="iban">iDEAL</label>
+<label class="custom-control-label w-100" for="ideal"><div class="row"><div class="col-3 col-md-2 col-xl-2 align-middle">
+<center><i class="fas fa-university fa-3x fa-fw"></i></center></div><div class="col-9 col-md-10 col-xl-10 align-middle"><h6 class="my-0">'.__( 'iDEAL', 'doliconnect' ).'</h6><small class="text-muted">iDEAL PAYMENT</small></div></div></label>
 </div></li>';
-print '<div class="panel panel-default"><div class="panel-heading">
-<h4 class="panel-title">3. iDEAL</h4>
-</div><li id="idealPanel" class="list-group-item list-group-item-secondary panel-collapse collapse"><div class="panel-body">';
+print '<li id="idealPanel" class="list-group-item list-group-item-secondary panel-collapse collapse"><div class="panel-body">';
 // ideal form
 print '</div></li>';
 }
@@ -916,6 +898,11 @@ form.submit();
               jQuery('#ibanPanel').collapse('hide');
               jQuery('#idealPanel').collapse('show');
               //alert('3');
+          }else { 
+              jQuery('#cardPanel').collapse('hide');
+              jQuery('#ibanPanel').collapse('hide');
+              jQuery('#idealPanel').collapse('hide');
+              alert('4');
           }
         })</script>";
 
