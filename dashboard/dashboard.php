@@ -78,13 +78,13 @@ print "<div class='card shadow-sm'>";
 print doliuserform( $thirdparty, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'thirdparty');
 
 print "<div class='card-body'><input type='hidden' name='userid' value='$ID'><button class='btn btn-danger btn-block' type='submit'><b>".__( 'Update', 'doliconnect' )."</b></button></div>";
-print "</div></form>";
-
+print '<div class="card-footer text-muted">';
 print "<small><div class='float-left'>";
 print dolirefresh($request, $url, dolidelay('thirdparty'), $thirdparty);
 print "</div><div class='float-right'>";
 print dolihelp('ISSUE');
 print "</div></small>";
+print '</div></div></form>';
 
 }
 add_action( 'user_doliconnect_informations', 'informations_module');
@@ -417,7 +417,14 @@ print "</li>";
 } else {
 print "<li class='list-group-item list-group-item-light'><center>".__( 'No contact', 'doliconnect')."</center></li>";
 }
-print "</ul></div></form>";
+
+print '</ul><div class="card-footer text-muted">';
+print "<small><div class='float-left'>";
+print dolirefresh($request, $url, dolidelay('contact'));
+print "</div><div class='float-right'>";
+print dolihelp('ISSUE');
+print "</div></small>";
+print '</div></div></form>';
 
 if ( !isset($listcontact->error) && $listcontact != null ) {
 foreach ( $listcontact as $contact ) { 
@@ -456,12 +463,6 @@ print "</div>".doliloading('addcontact-form');
 print "<div id='Footeraddcontact-form' class='modal-footer'><button name='add_contact' value='new_contact' class='btn btn-warning btn-block' type='submit'><b>".__( 'Add', 'doliconnect' )."</b></button></form></div>
 </div></div></div>";
 }
-
-print "<small><div class='float-left'>";
-print dolirefresh($request, $url, dolidelay('contact'));
-print "</div><div class='float-right'>";
-print dolihelp('ISSUE');
-print "</div></small>";
 
 }
 add_action( 'user_doliconnect_contacts', 'contacts_module' );
