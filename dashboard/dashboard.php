@@ -761,17 +761,21 @@ print 'var options = {
   placeholderCountry: "'.$listpaymentmethods->cus_countrycode.'",
 };';
 
+print "function HideDivPM(controle = null) {
+var listpm = ".json_encode($pm).";
+var mpx;
+for (mpx of listpm) {
+if (mpx != controle) jQuery('#' + mpx + 'Panel').collapse('hide');
+}
+}";
+
 print "jQuery('#card,#iban,#ideal').on('click', function (e) {
           e.stopPropagation();
 var elements = stripe.elements(); 
 var clientSecret = '".$listpaymentmethods->stripe_client_secret."';
 var displayError = document.getElementById('error-message');
 displayError.textContent = '';
-var listpm = ".json_encode($pm).";
-var mpx;
-for (mpx of listpm) {
-jQuery('#' + mpx + 'Panel').collapse('hide');
-} 
+HideDivPM(this.id);
           if(this.id == 'card'){
 var cardElement = elements.create('card', options);
 cardElement.mount('#card-element');
@@ -945,11 +949,7 @@ function isEven(num) {
 function ShowHideDivPM(pm) {
               var displayError = document.getElementById('error-message');
               displayError.textContent = '';
-var listpm = ".json_encode($pm).";
-var mpx;
-for (mpx of listpm) {
-jQuery('#' + mpx + 'Panel').collapse('hide');
-}
+              HideDivPM(pm);
               jQuery('#cardPanel').collapse('hide');
               jQuery('#ibanPanel').collapse('hide');
               jQuery('#idealPanel').collapse('hide');
