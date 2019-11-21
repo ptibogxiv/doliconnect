@@ -658,10 +658,10 @@ print "<div class='d-none d-sm-block col-2 align-middle text-right'>";
 print "<img src='".plugins_url('doliconnect/images/flag/'.strtolower($method->country).'.png')."' class='img-fluid' alt='".$method->country."'>";
 print "</div></div></label></div></li>";
 print '<li id="'.$method->id.'Panel" class="list-group-item list-group-item-secondary panel-collapse collapse"><div class="panel-body">';
-
-print "<p class='text-justify'>";
-print "</p>";
-
+print '<div class="btn-group btn-block" role="group" aria-label="actions buttons">
+<button type="button" onclick="DefaultPM(\''.$method->id.'\')" class="btn btn-secondary">Favori</button>
+<button type="button" onclick="DeletePM(\''.$method->id.'\')" class="btn btn-secondary">Supprimer</button>
+</div>';
 print '</div></li>';
 $i++;
 }} else {
@@ -924,9 +924,34 @@ function ShowHideDivPM(pm) {
               jQuery('#cardPanel').collapse('hide');
               jQuery('#ibanPanel').collapse('hide');
               jQuery('#idealPanel').collapse('hide');
-              //jQuery('#' + pm + 'Panel').collapse('show');
-              displayError.textContent = pm;
-        }";        
+              jQuery('#' + pm + 'Panel').collapse('show');
+        }
+function DefaultPM(pm) {
+jQuery('#DoliconnectLoadingModal').modal('show');
+var form = document.createElement('form');
+form.setAttribute('action', '".$url."');
+form.setAttribute('method', 'post');
+var inputvar = document.createElement('input');
+inputvar.setAttribute('type', 'hidden');
+inputvar.setAttribute('name', 'default_paymentmethod');
+inputvar.setAttribute('value', pm);
+form.appendChild(inputvar);
+document.body.appendChild(form);
+form.submit();
+        }
+function DeletePM(pm) {
+jQuery('#DoliconnectLoadingModal').modal('show');
+var form = document.createElement('form');
+form.setAttribute('action', '".$url."');
+form.setAttribute('method', 'post');
+var inputvar = document.createElement('input');
+inputvar.setAttribute('type', 'hidden');
+inputvar.setAttribute('name', 'delete_paymentmethod');
+inputvar.setAttribute('value', pm);
+form.appendChild(inputvar);
+document.body.appendChild(form);
+form.submit();
+        }";         
 print "</script>";
 
 print "<small><div class='custom-control custom-checkbox my-1 mr-sm-2'><input type='checkbox' class='custom-control-input' id='default' name='default' value='1' ";
