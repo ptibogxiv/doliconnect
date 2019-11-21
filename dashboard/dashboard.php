@@ -629,7 +629,7 @@ foreach ( $listpaymentmethods->paymentmethods as $method ) {
 print "<li class='list-group-item list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>
 <input onclick='ShowHideDivPM()' type='radio' id='".$method->id."' name='paymentmode' class='custom-control-input' data-toggle='collapse' data-parent='#accordion' href='#".$method->id."' ";
 if ( date('Y/n') >= $method->expiration && !empty($object) && !empty($method->expiration) ) { print " disabled "; }
-//elseif ( $i == 1 || !empty($method->default_source) ) { print " checked "; }
+elseif ( !empty($method->default_source) ) { print " checked "; }
 print " ><label class='custom-control-label w-100' for='".$method->id."'><div class='row'><div class='col-3 col-md-2 col-xl-2 align-middle'>";
 print '<center><i ';
 if ( $method->type == 'sepa_debit' ) {
@@ -908,7 +908,6 @@ function ShowHideDivPM() {
               jQuery('#cardPanel').collapse('hide');
               jQuery('#ibanPanel').collapse('hide');
               jQuery('#idealPanel').collapse('hide');
-              //alert();
         }";        
 print "</script>";
 
