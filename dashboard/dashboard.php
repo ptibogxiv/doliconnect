@@ -668,7 +668,9 @@ print "<img src='".plugins_url('doliconnect/images/flag/'.strtolower($method->co
 print "</div></div></label></div></li>";
 print '<li id="'.$method->id.'Panel" class="list-group-item list-group-item-secondary panel-collapse collapse"><div class="panel-body">';
 print '<div class="btn-group btn-block" role="group" aria-label="actions buttons">
-<button type="button" onclick="DefaultPM(\''.$method->id.'\')" class="btn btn-warning">Favori</button>
+<button type="button" onclick="DefaultPM(\''.$method->id.'\')" class="btn btn-warning"';
+if ( !empty($method->default_source) ) { print " disabled"; }
+print '>Favori</button>
 <button type="button" onclick="DeletePM(\''.$method->id.'\')" class="btn btn-danger">Supprimer</button>
 </div>';
 print '</div></li>';
