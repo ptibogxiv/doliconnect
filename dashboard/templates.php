@@ -1645,13 +1645,15 @@ print "</div>";
 print "</div>";
 }
 
-print "</form></div>"; 
+print "</form>"; 
 
+print '<div class="card-footer text-muted">';
 print "<small><div class='float-left'>";
 print dolirefresh($request, doliconnecturl('dolicart'), dolidelay('cart'));
 print "</div><div class='float-right'>";
-print dolihelp('COM');
+print dolihelp('ISSUE');
 print "</div></small>";
+
 }
 }
 
