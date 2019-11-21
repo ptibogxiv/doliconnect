@@ -2464,12 +2464,17 @@ print "<input type='hidden' name='action' value='gdrf_data_request'><input type=
 <input type='hidden' name='gdrf_data_nonce' id='gdrf_data_nonce' value='".wp_create_nonce( 'gdrf_nonce' )."' >";
 print "<button id='gdrf-submit-button' class='btn btn-danger btn-block' type='submit'><b>".__( 'Validate the request', 'doliconnect' )."</b></button></div></form>";
 } else {
-print "</ul>";
+
 } 
-print "</div>";  
-print "<p class='text-right'><small>";
+print '</ul><div class="card-footer text-muted">';
+print "<small><div class='float-left'>";
+
+print "</div><div class='float-right'>";
 print dolihelp('ISSUE');
-print "</small></p>";
+print "</div></small>";
+print '</div></div>';
+print "</div>";  
+
 }
 add_action( 'settings_doliconnect_delete', 'delete_module' );
 ?>
