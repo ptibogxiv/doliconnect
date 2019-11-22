@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2019-11-22 16:11+0100\n"
-"PO-Revision-Date: 2019-11-22 16:12+0100\n"
+"POT-Creation-Date: 2019-11-22 16:27+0100\n"
+"PO-Revision-Date: 2019-11-22 16:27+0100\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_FR\n"
@@ -1478,10 +1478,6 @@ msgstr "Aucun mode de paiement"
 msgid "Credit/debit card"
 msgstr "Carte de crédit/débit"
 
-#: functions/tools.php:885
-msgid "Credit or debit"
-msgstr "Crédit ou débit"
-
 #: functions/tools.php:888
 msgid "Card's owner"
 msgstr "Titulaire de la carte"
@@ -1581,6 +1577,9 @@ msgstr "ptibogxiv"
 #. Author URI of the plugin/theme
 msgid "https://www.ptibogxiv.net/en"
 msgstr "https://www.ptibogxiv.net/fr"
+
+#~ msgid "Credit or debit"
+#~ msgstr "Crédit ou débit"
 
 #~ msgid "Set as default payment mode"
 #~ msgstr "Définir comme mode de paiement par défaut"

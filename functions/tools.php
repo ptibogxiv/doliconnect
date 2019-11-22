@@ -1183,10 +1183,6 @@ form.submit();
               //alert('4');
           }
         })
-        
-function isEven(num) {
-  return num;
-}
 
 function ShowHideDivPM(pm) {
               var displayError = document.getElementById('error-message');
@@ -1212,6 +1208,7 @@ form.appendChild(inputvar);
 document.body.appendChild(form);
 form.submit();
         }
+
 function DeletePM(pm) {
 jQuery('#DoliconnectLoadingModal').modal('show');
 var form = document.createElement('form');
@@ -1225,7 +1222,12 @@ inputvar.setAttribute('value', pm);
 form.appendChild(inputvar);
 document.body.appendChild(form);
 form.submit();
-        }";    
+        }
+        
+function PayPM(pm) {
+jQuery('#DoliconnectLoadingModal').modal('show');
+        }
+";    
                  
 $paymentmethods .="</script>";
 
