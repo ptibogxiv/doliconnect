@@ -1354,9 +1354,7 @@ $paymentmethods = callDoliApi("GET", "/doliconnector/".doliconnector($current_us
 //print $listsource;
 
 if ( current_user_can( 'administrator' ) && get_option('doliconnectbeta') =='1' ) {
-$paymentintent = callDoliApi("GET", "/doliconnector/paymentintent/".substr($module, 0, -1)."/".$object->id, null, dolidelay('paymentmethods',  esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-//print $listsource;
-print dolilistpaymentmodes($paymentintent, $paymentmethods, $object, doliconnecturl('dolicart')."?pay", doliconnecturl('dolicart')."?pay");
+print dolipaymentmethods($object, doliconnecturl('dolicart')."?pay", doliconnecturl('dolicart')."?pay", esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 } elseif ( function_exists('doligateway') ) {
 if ( isset($_GET["ref"]) && $object->statut != 0 ) { $ref = $object->ref; } else { $ref= 'commande #'.$object->id; }
 if ( isset($object->remaintopay) ) { 

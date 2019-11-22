@@ -791,4 +791,135 @@ print '</ul></div>
 }
 add_action( 'wp_footer', 'doliconnect_langs', 10, 1);
 
+function dolipaymentmethods($object = null, $url = null, $refresh = false) {
+global $current_user;
+
+$request = "/doliconnector/".doliconnector($current_user, 'fk_soc')."/paymentmethods";
+
+$listpaymentmethods = callDoliApi("GET", $request, null, dolidelay('paymentmethods', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+//print $listsource;
+
+$lock = dolipaymentmodes_lock(); 
+
+class myCounter implements Countable {
+	public function count() {
+		static $count = 0;
+		return ++$count;
+	}
+}
+ 
+$counter = new myCounter;
+
+$paymentmethods ="<script src='https://js.stripe.com/v3/'></script>";
+
+if ( isset($msg) ) { $paymentmethods .=$msg; }
+ 
+$paymentmethods .=doliloaderscript('doliconnect-paymentmethodsform');
+
+$paymentmethods .='<div class="card shadow-sm"><ul class="list-group list-group-flush panel-group" id="accordion">';
+if ( isset($listpaymentmethods->stripe) && empty($listpaymentmethods->stripe) ) {
+$paymentmethods .="<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".__( "Stripe's in sandbox mode", 'doliconnect')."</b></li>";
+}
+ 
+$pm = array();
+if ( $listpaymentmethods->paymentmethods != null ) {
+$i = 0;
+foreach ( $listpaymentmethods->paymentmethods as $method ) {
+$pm[] .= "".$method->id."";                                                                                                                      
+$paymentmethods .="<li class='list-group-item list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>";
+$paymentmethods .='<input onclick="ShowHideDivPM(\''.$method->id.'\')" type="radio" id="'.$method->id.'" name="paymentmode" value="'.$method->id.'" class="custom-control-input" data-toggle="collapse" data-parent="#accordion" href="#'.$method->id.'" ';
+if ( date('Y/n') >= $method->expiration && !empty($object) && !empty($method->expiration) ) { $paymentmethods .=" disabled "; }
+elseif ( !empty($method->default_source) ) { $paymentmethods .=" checked "; }
+$paymentmethods .=" ><label class='custom-control-label w-100' for='".$method->id."'><div class='row'><div class='col-3 col-md-2 col-xl-2 align-middle'>";
+$paymentmethods .='<center><i ';
+if ( $method->type == 'sepa_debit' ) {
+$paymentmethods .='class="fas fa-university fa-3x fa-fw" style="color:DarkGrey"';
+} else {
+
+if ( $method->brand == 'visa' ) { $paymentmethods .='class="fab fa-cc-visa fa-3x fa-fw" style="color:#172274"'; }
+else if ( $method->brand == 'mastercard' ) { $paymentmethods .='class="fab fa-cc-mastercard fa-3x fa-fw" style="color:#FF5F01"'; }
+else if ( $method->brand == 'amex' ) { $paymentmethods .='class="fab fa-cc-amex fa-3x fa-fw" style="color:#2E78BF"'; }
+else { $paymentmethods .='class="fab fa-cc-amex fa-3x fa-fw"';}
+}
+$paymentmethods .='></i></center>';
+$paymentmethods .='</div><div class="col-9 col-sm-7 col-md-8 col-xl-8 align-middle"><h6 class="my-0">';
+if ( $method->type == 'sepa_debit' ) {
+$paymentmethods .=__( 'Account', 'doliconnect' ).' '.$method->reference.'<small> <a href="'.$method->mandate_url.'" title="'.__( 'Mandate', 'doliconnect' ).' '.$method->mandate_reference.'" target="_blank"><i class="fas fa-info-circle"></i></a></small>';
+} else {
+$paymentmethods .=__( 'Card', 'doliconnect' ).' '.$method->reference;
+}
+if ( !empty($method->expiration) ) { $paymentmethods .=" - ".date("m/Y", strtotime($method->expiration.'/1')); }
+$paymentmethods .="</h6><small class='text-muted'>".$method->holder."</small></div>";
+$paymentmethods .="<div class='d-none d-sm-block col-2 align-middle text-right'>";
+$paymentmethods .="<img src='".plugins_url('doliconnect/images/flag/'.strtolower($method->country).'.png')."' class='img-fluid' alt='".$method->country."'>";
+$paymentmethods .="</div></div></label></div></li>";
+$paymentmethods .='<li id="'.$method->id.'Panel" class="list-group-item list-group-item-secondary panel-collapse collapse"><div class="panel-body">';
+$paymentmethods .='<div class="btn-group btn-block" role="group" aria-label="actions buttons">
+<button type="button" onclick="DefaultPM(\''.$method->id.'\')" class="btn btn-warning"';
+if ( !empty($method->default_source) ) { $paymentmethods .=" disabled"; }
+$paymentmethods .='>Favori</button>
+<button type="button" onclick="DeletePM(\''.$method->id.'\')" class="btn btn-danger">Supprimer</button>
+</div>';
+$paymentmethods .='</div></li>';
+$i++;
+}} else {
+$paymentmethods .='<li class="list-group-item list-group-item-light flex-column align-items-start"><div class="custom-control custom-radio">
+<input onclick="ShowHideDivPM(\'0\')" type="radio" id="none" name="paymentmode" value="0" class="custom-control-input" data-toggle="collapse" data-parent="#accordion" href="#none" checked>
+<label class="custom-control-label w-100" for="none"><div class="row"><div class="col-3 col-md-2 col-xl-2 align-middle">
+<center><i class="fas fa-border-none fa-3x fa-fw"></i></center></div><div class="col-9 col-md-10 col-xl-10 align-middle"><h6 class="my-0">'.__( 'No payment method', 'doliconnect').'</h6><small class="text-muted"></small></div></div></label>
+</div></li>';
+}
+$paymentmethods .='<li class="list-group-item list-group-item-action flex-column align-items-start"><div class="custom-control custom-radio">
+<input type="radio" id="card" name="paymentmode" value="card" class="custom-control-input" data-toggle="collapse" data-parent="#accordion" href="#card">
+<label class="custom-control-label w-100" for="card"><div class="row"><div class="col-3 col-md-2 col-xl-2 align-middle">
+<center><i class="fas fa-credit-card fa-3x fa-fw"></i></center></div><div class="col-9 col-md-10 col-xl-10 align-middle"><h6 class="my-0">'.__( 'Credit card', 'doliconnect' ).'</h6><small class="text-muted">'.__( 'Credit or debit', 'doliconnect' ).'</small></div></div></label>
+</div></li>';
+$paymentmethods .='<li id="cardPanel" class="list-group-item list-group-item-secondary panel-collapse collapse"><div class="panel-body">';
+$paymentmethods .='<input id="cardholder-name" name="cardholder-name" value="" type="text" class="form-control" placeholder="'.__( "Card's owner", 'doliconnect').'" autocomplete="off" required>
+<label for="card-element"></label>
+<div class="form-control" id="card-element"><!-- a Stripe Element will be inserted here. --></div>';
+$paymentmethods .="<p class='text-justify'>";
+$paymentmethods .="</p>";
+$paymentmethods .="<button id='cardButton' class='btn btn-warning btn-block' title='".__( 'Add', 'doliconnect')."'><b>".__( 'Add', 'doliconnect')."</b></button>";
+$paymentmethods .='</div></li>';
+if ( isset($listpaymentmethods->sepa_direct_debit) && !empty($listpaymentmethods->sepa_direct_debit) ) {
+$paymentmethods .='<li class="list-group-item list-group-item-action flex-column align-items-start"><div class="custom-control custom-radio">
+<input type="radio" id="iban" name="paymentmode" value="iban" class="custom-control-input" data-toggle="collapse" data-parent="#accordion" href="#iban">
+<label class="custom-control-label w-100" for="iban"><div class="row"><div class="col-3 col-md-2 col-xl-2 align-middle">
+<center><i class="fas fa-university fa-3x fa-fw"></i></center></div><div class="col-9 col-md-10 col-xl-10 align-middle"><h6 class="my-0">'.__( 'IBAN', 'doliconnect' ).'</h6><small class="text-muted">Via SEPA Direct Debit</small></div></div></label>
+</div></li>';
+$paymentmethods .='<li id="ibanPanel" class="list-group-item list-group-item-secondary panel-collapse collapse"><div class="panel-body">';
+$paymentmethods .='<input id="ibanholder-name" name="ibanholder-name" value="" type="text" class="form-control" placeholder="'.__( "Bank's owner", 'doliconnect').'" autocomplete="off" required>
+<label for="iban-element"></label>
+<div class="form-control" id="iban-element"><!-- a Stripe Element will be inserted here. --></div>';
+$paymentmethods .="<p class='text-justify'>";
+$blogname=get_bloginfo('name');
+$paymentmethods .='<small>'.sprintf( esc_html__( 'By providing your IBAN and confirming this form, you are authorizing %s and Stripe, our payment service provider, to send instructions to your bank to debit your account and your bank to debit your account in accordance with those instructions. You are entitled to a refund from your bank under the terms and conditions of your agreement with your bank. A refund must be claimed within 8 weeks starting from the date on which your account was debited.', 'doliconnect'), $blogname).'</small>';
+$paymentmethods .="</p><div id='bank-name'><!-- a Stripe Message will be inserted here. --></div>";
+$paymentmethods .="<button id='ibanButton' class='btn btn-warning btn-block' title='".__( 'Add', 'doliconnect')."'><b>".__( 'Add', 'doliconnect')."</b></button>";
+$paymentmethods .='</div></li>';
+}
+if ( isset($listpaymentmethods->ideal) && !empty($listpaymentmethods->ideal) && get_option('doliconnectbeta')=='1' && current_user_can( 'administrator' )) {
+$paymentmethods .='<li class="list-group-item list-group-item-action flex-column align-items-start"><div class="custom-control custom-radio">
+<input type="radio" id="ideal" name="paymentmode" value="ideal" class="custom-control-input" data-toggle="collapse" data-parent="#accordion" href="#ideal">
+<label class="custom-control-label w-100" for="ideal"><div class="row"><div class="col-3 col-md-2 col-xl-2 align-middle">
+<center><i class="fas fa-university fa-3x fa-fw"></i></center></div><div class="col-9 col-md-10 col-xl-10 align-middle"><h6 class="my-0">'.__( 'iDEAL', 'doliconnect' ).'</h6><small class="text-muted">iDEAL PAYMENT</small></div></div></label>
+</div></li>';
+$paymentmethods .='<li id="idealPanel" class="list-group-item list-group-item-secondary panel-collapse collapse"><div class="panel-body">';
+// ideal form
+$paymentmethods .='</div></li>';
+}
+$paymentmethods .='</ul><div class="card-footer text-muted">';
+$paymentmethods .="<small><div class='float-left'>";
+$paymentmethods .=dolirefresh($request, $url, dolidelay('paymentmethods'));
+$paymentmethods .="</div><div class='float-right'>";
+$paymentmethods .=dolihelp('ISSUE');
+$paymentmethods .="</div></small>";
+$paymentmethods .='</div></div>';
+$paymentmethods .="<div id='error-message' role='alert'><!-- a Stripe Message will be inserted here. --></div>";
+
+
+return $paymentmethods;
+}
+
 ?>
