@@ -891,7 +891,7 @@ $paymentmethods .='<input id="cardholder-name" name="cardholder-name" value="" t
 $paymentmethods .="<p class='text-justify'>";
 $paymentmethods .="</p>";
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
-$paymentmethods .='<button id="cardButton" class="btn btn-danger btn-block" ><b>'.__( 'Pay', 'doliconnect' )." ".doliprice($object, 'ttc', $currency).'</b></button>';
+$paymentmethods .='<button id="cardPayButton" class="btn btn-danger btn-block" ><b>'.__( 'Pay', 'doliconnect' )." ".doliprice($object, 'ttc', $currency).'</b></button>';
 } else {
 $paymentmethods .="<button id='cardButton' class='btn btn-warning btn-block' title='".__( 'Add', 'doliconnect')."'><b>".__( 'Add', 'doliconnect')."</b></button>";
 }
@@ -937,7 +937,11 @@ $paymentmethods .= " href='#vir'><label class='custom-control-label w-100' for='
 $paymentmethods .= '<center><i class="fas fa-university fa-3x fa-fw" style="color:DarkGrey"></i></center>';
 $paymentmethods .= "</div><div class='col-9 col-md-10 col-xl-10 align-middle'><h6 class='my-0'>".__( 'Transfer', 'doliconnect' )."</h6><small class='text-muted'>".__( 'See your receipt', 'doliconnect' )."</small>";
 $paymentmethods .= '</div></div></label></div></li>';
-}
+if ( !empty($module) && is_object($object) && isset($object->id) ) {
+$paymentmethods .='<li id="virPanel" class="list-group-item list-group-item-secondary panel-collapse collapse"><div class="panel-body">';
+$paymentmethods .='<button type="button" onclick="PayPM(\'vir\')" class="btn btn-danger btn-block"><b>'.__( 'Pay', 'doliconnect' )." ".doliprice($object, 'ttc', $currency).'</b></button>';
+$paymentmethods .='</div></li>';
+}}
 if ( isset($listpaymentmethods->CHQ) && $listpaymentmethods->CHQ != null ) {
 $paymentmethods .= "<li class='list-group-item list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>
 <input type='radio' id='chq' name='paymentmode' value='chq' class='custom-control-input' data-toggle='collapse' data-parent='#accordion' ";
@@ -946,7 +950,11 @@ $paymentmethods .= " href='#chq'><label class='custom-control-label w-100' for='
 $paymentmethods .= '<center><i class="fas fa-money-check fa-3x fa-fw" style="color:Tan"></i></center>';
 $paymentmethods .= "</div><div class='col-9 col-md-10 col-xl-10 align-middle'><h6 class='my-0'>".__( 'Check', 'doliconnect' )."</h6><small class='text-muted'>".__( 'See your receipt', 'doliconnect' )."</small>";
 $paymentmethods .= '</div></div></label></div></li>';
-}
+if ( !empty($module) && is_object($object) && isset($object->id) ) {
+$paymentmethods .='<li id="chqPanel" class="list-group-item list-group-item-secondary panel-collapse collapse"><div class="panel-body">';
+$paymentmethods .='<button type="button" onclick="PayPM(\'chq\')" class="btn btn-danger btn-block"><b>'.__( 'Pay', 'doliconnect' )." ".doliprice($object, 'ttc', $currency).'</b></button>';
+$paymentmethods .='</div></li>';
+}}
 if ( ! empty(dolikiosk()) ) {
 $paymentmethod .= "<li class='list-group-item list-group-item-action flex-column align-items-startt'><div class='custom-control custom-radio'>
 <input type='radio' id='liq' name='paymentmode' value='liq' class='custom-control-input' data-toggle='collapse' data-parent='#accordion' ";
@@ -1035,6 +1043,8 @@ cardElement.addEventListener('change', function(event) {
               jQuery('#ibanPanel').collapse('hide');
               jQuery('#idealPanel').collapse('hide');
               jQuery('#cardPanel').collapse('show');
+              jQuery('#virPanel').collapse('hide');
+              jQuery('#chqPanel').collapse('hide');
 cardholderName.addEventListener('change', function(event) {
     console.log('Reset error message');
     displayError.textContent = '';
@@ -1118,6 +1128,8 @@ ibanElement.addEventListener('change', function(event) {
               jQuery('#cardPanel').collapse('hide');
               jQuery('#idealPanel').collapse('hide');
               jQuery('#ibanPanel').collapse('show');
+              jQuery('#virPanel').collapse('hide');
+              jQuery('#chqPanel').collapse('hide');
 ibanholderName.addEventListener('change', function(event) {
     console.log('Reset error message');
     displayError.textContent = '';
@@ -1174,12 +1186,31 @@ form.submit();
           }else if(this.id == 'ideal'){ 
               jQuery('#cardPanel').collapse('hide');
               jQuery('#ibanPanel').collapse('hide');
+              jQuery('#virPanel').collapse('hide');
+              jQuery('#chqPanel').collapse('hide');
               jQuery('#idealPanel').collapse('show');
               //alert('3');
+          }else if(this.id == 'vir'){               
+              jQuery('#cardPanel').collapse('hide');
+              jQuery('#ibanPanel').collapse('hide');
+              jQuery('#idealPanel').collapse('hide');
+              jQuery('#chqPanel').collapse('hide');
+              jQuery('#virPanel').collapse('show');
+              //alert('3');
+          }else if(this.id == 'chq'){
+
+              jQuery('#cardPanel').collapse('hide');
+              jQuery('#ibanPanel').collapse('hide');
+              jQuery('#idealPanel').collapse('hide');
+              jQuery('#virPanel').collapse('hide');
+              jQuery('#chqPanel').collapse('show'); 
+              //alert('3');   
           }else {
               jQuery('#cardPanel').collapse('hide');
               jQuery('#ibanPanel').collapse('hide');
               jQuery('#idealPanel').collapse('hide');
+              jQuery('#virPanel').collapse('hide');
+              jQuery('#chqPanel').collapse('hide');
               //alert('4');
           }
         })
@@ -1191,6 +1222,8 @@ function ShowHideDivPM(pm) {
               jQuery('#cardPanel').collapse('hide');
               jQuery('#ibanPanel').collapse('hide');
               jQuery('#idealPanel').collapse('hide');
+              jQuery('#virPanel').collapse('hide');
+              jQuery('#chqPanel').collapse('hide');
               jQuery('#' + pm + 'Panel').collapse('show');
         }
         
