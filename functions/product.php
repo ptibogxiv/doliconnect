@@ -507,26 +507,6 @@ $paymentmethod .= "</div><div class='col-9 col-md-10 col-xl-10 align-middle'><h6
 $paymentmethod .= '</div></div></label></div></li>';
 }
 
-if ( isset($listpaymentmethods->RIB) && $listpaymentmethods->RIB != null ) {
-$paymentmethod .= "<li id='VirForm' class='list-group-item list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>
-<input id='src_vir' onclick='ShowHideDiv()' class='custom-control-input' type='radio' name='modepayment' value='VIR' ";
-if ( $listpaymentmethods->paymentmethods == null && empty($listpaymentmethods->card) ) { $paymentmethod .= " checked"; }
-$paymentmethod .= " ><label class='custom-control-label w-100' for='src_vir'><div class='row'><div class='col-3 col-md-2 col-xl-2 align-middle'>";
-$paymentmethod .= '<center><i class="fas fa-university fa-3x fa-fw" style="color:DarkGrey"></i></center>';
-$paymentmethod .= "</div><div class='col-9 col-md-10 col-xl-10 align-middle'><h6 class='my-0'>".__( 'Transfer', 'doliconnect' )."</h6><small class='text-muted'>".__( 'See your receipt', 'doliconnect' )."</small>";
-$paymentmethod .= '</div></div></label></div></li>';
-}
-
-if ( isset($listpaymentmethods->CHQ) && $listpaymentmethods->CHQ != null ) {
-$paymentmethod .= "<li id='ChqForm' class='list-group-item list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>
-<input id='src_chq' onclick='ShowHideDiv()' class='custom-control-input' type='radio' name='modepayment' value='CHQ' ";
-if ( $listpaymentmethods->paymentmethods == null && $listpaymentmethods->card != 1 && $listpaymentmethods->RIB == null ) { $paymentmethod .= " checked"; }
-$paymentmethod .= " ><label class='custom-control-label w-100' for='src_chq'><div class='row'><div class='col-3 col-md-2 col-xl-2 align-middle'>";
-$paymentmethod .= '<center><i class="fas fa-money-check fa-3x fa-fw" style="color:Tan"></i></center>';
-$paymentmethod .= "</div><div class='col-9 col-md-10 col-xl-10 align-middle'><h6 class='my-0'>".__( 'Check', 'doliconnect' )."</h6><small class='text-muted'>".__( 'See your receipt', 'doliconnect' )."</small>";
-$paymentmethod .= '</div></div></label></div></li>';
-} 
-
 if ( ! empty(dolikiosk()) ) {
 $paymentmethod .= "<li id='LiqForm' class='list-group-item list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>
 <input id='src_liq' onclick='ShowHideDiv()' class='custom-control-input' type='radio' name='modepayment' value='LIQ' ";
