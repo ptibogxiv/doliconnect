@@ -279,13 +279,16 @@ print "";
 } else { print " aria-disabled='true'  disabled"; }
 print "><b>".__( 'Create an account', 'doliconnect' )."</b></button></form>";
 
-print "</div></div>";
+print "</div>";
+print '<div class="card-footer text-muted">';
+print "<small><div class='float-left'>";
+
+print "</div><div class='float-right'>";
+print dolihelp('ISSUE');
+print "</div></small>";
+print '</div></div></form>';
 
 do_action( 'login_footer' );
-
-print "<p class='text-right'><small>";
-print dolihelp('ISSUE');
-print "</small></p>";
 
 print "</div></div>";
 
@@ -505,11 +508,14 @@ print "</div></div></div>";
 print "<ul class='list-group list-group-flush'><li class='list-group-item'>";
 print "<button class='btn btn-danger btn-block' type='submit'><b>".__( 'Submit', 'doliconnect' )."</b></button>";
 print "</li></ul>";
-print "</div></form>";
 
-print "<p class='text-right'><small>";
+print '<div class="card-footer text-muted">';
+print "<small><div class='float-left'>";
+
+print "</div><div class='float-right'>";
 print dolihelp('ISSUE');
-print "</small></p>"; 
+print "</div></small>";
+print '</div></div></form>';
 
 print "</div></div>";
 
@@ -587,13 +593,14 @@ do_action( 'login_footer' );
 
 }
 
-print "</li></lu></div>";
+print "</li></lu>";
+print '<div class="card-footer text-muted">';
+print "<small><div class='float-left'>";
 
-
-
-print "<p class='text-right'><small>";
+print "</div><div class='float-right'>";
 print dolihelp('ISSUE');
-print "</small></p>";
+print "</div></small>";
+print '</div></div></form>';
 
 print "</div></div>";
 
