@@ -1198,7 +1198,6 @@ form.submit();
               jQuery('#virPanel').collapse('show');
               //alert('3');
           }else if(this.id == 'chq'){
-
               jQuery('#cardPanel').collapse('hide');
               jQuery('#ibanPanel').collapse('hide');
               jQuery('#idealPanel').collapse('hide');
