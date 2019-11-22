@@ -490,7 +490,7 @@ $link=esc_url( add_query_arg( $arr_params, doliconnecturl('dolicontact')));
 $link='#';
 }
 
-$help = "<a href='".$link."' role='button' title='".__( 'Help?', 'doliconnect')."'><i class='fas fa-question-circle'></i> ".__( 'Need help?', 'doliconnect')."</a>";
+$help = "<a href='".$link."' role='button' title='".__( 'Help?', 'doliconnect')."'><div class='d-block d-sm-block d-xs-block d-md-none'><i class='fas fa-question-circle'></i></div><div class='d-none d-md-block'><i class='fas fa-question-circle'></i> ".__( 'Need help?', 'doliconnect')."</div></a>";
 
 return $help;
 }
