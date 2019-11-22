@@ -791,10 +791,14 @@ print '</ul></div>
 }
 add_action( 'wp_footer', 'doliconnect_langs', 10, 1);
 
-function dolipaymentmethods($object = null, $url = null, $refresh = false) {
+function dolipaymentmethods($object = null, $module = null, $url = null, $refresh = false) {
 global $current_user;
 
 $request = "/doliconnector/".doliconnector($current_user, 'fk_soc')."/paymentmethods";
+ 
+if ( !empty($module) && is_object($object) ) {
+$request .= "?type=".$module."&rowid=".$object->id;
+}
 
 $listpaymentmethods = callDoliApi("GET", $request, null, dolidelay('paymentmethods', $refresh));
 //print $listsource;
