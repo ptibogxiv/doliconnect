@@ -930,7 +930,7 @@ $paymentmethods .='</div></li>';
 
 //offline payment methods
 if ( isset($listpaymentmethods->RIB) && $listpaymentmethods->RIB != null ) {
-$paymentmethods .= "<li id='VirForm' class='list-group-item list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>
+$paymentmethods .= "<li class='list-group-item list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>
 <input type='radio' id='vir' name='paymentmode' value='vir' class='custom-control-input' data-toggle='collapse' data-parent='#accordion' ";
 if ( $listpaymentmethods->paymentmethods == null && empty($listpaymentmethods->card) ) { $paymentmethods .= " checked"; }
 $paymentmethods .= " href='#vir'><label class='custom-control-label w-100' for='vir'><div class='row'><div class='col-3 col-md-2 col-xl-2 align-middle'>";
@@ -939,7 +939,7 @@ $paymentmethods .= "</div><div class='col-9 col-md-10 col-xl-10 align-middle'><h
 $paymentmethods .= '</div></div></label></div></li>';
 }
 if ( isset($listpaymentmethods->CHQ) && $listpaymentmethods->CHQ != null ) {
-$paymentmethods .= "<li id='ChqForm' class='list-group-item list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>
+$paymentmethods .= "<li class='list-group-item list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>
 <input type='radio' id='chq' name='paymentmode' value='chq' class='custom-control-input' data-toggle='collapse' data-parent='#accordion' ";
 if ( $listpaymentmethods->paymentmethods == null && $listpaymentmethods->card != 1 && $listpaymentmethods->RIB == null ) { $paymentmethods .= " checked"; }
 $paymentmethods .= " href='#chq'><label class='custom-control-label w-100' for='chq'><div class='row'><div class='col-3 col-md-2 col-xl-2 align-middle'>";
@@ -948,7 +948,7 @@ $paymentmethods .= "</div><div class='col-9 col-md-10 col-xl-10 align-middle'><h
 $paymentmethods .= '</div></div></label></div></li>';
 }
 if ( ! empty(dolikiosk()) ) {
-$paymentmethod .= "<li id='LiqForm' class='list-group-item list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>
+$paymentmethod .= "<li class='list-group-item list-group-item-action flex-column align-items-startt'><div class='custom-control custom-radio'>
 <input type='radio' id='liq' name='paymentmode' value='liq' class='custom-control-input' data-toggle='collapse' data-parent='#accordion' ";
 if ( $listpaymentmethods->paymentmethods == null && empty($listpaymentmethods->card) && $listpaymentmethods->CHQ == null && $listpaymentmethods->RIB == null ) { $paymentmethods .= " checked"; }
 $paymentmethods .= " href='#liq'><label class='custom-control-label w-100' for='liq'><div class='row'><div class='col-3 col-md-2 col-xl-2 align-middle'>";
