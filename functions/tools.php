@@ -924,7 +924,7 @@ $paymentmethods .='<li class="list-group-item list-group-item-action flex-column
 <center><i class="fas fa-university fa-3x fa-fw"></i></center></div><div class="col-9 col-md-10 col-xl-10 align-middle"><h6 class="my-0">'.__( 'iDEAL', 'doliconnect' ).'</h6><small class="text-muted">iDEAL PAYMENT</small></div></div></label>
 </div></li>';
 $paymentmethods .='<li id="idealPanel" class="list-group-item list-group-item-secondary panel-collapse collapse"><div class="panel-body">';
-// ideal form
+// ideal form here
 $paymentmethods .='</div></li>';
 }
 $paymentmethods .='</ul><div class="card-footer text-muted">';
