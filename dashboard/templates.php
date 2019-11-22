@@ -1376,12 +1376,6 @@ print __( "Soon, you'll be able to pay online", "doliconnect");
 
 print "</div></div>";
 
-print "<small><div class='float-left'>";
-print dolirefresh( $request, doliconnecturl('dolicart')."?pay", dolidelay('cart'));
-print "</div><div class='float-right'>";
-print dolihelp('ISSUE');
-print "</div></small>";
-
 } elseif ( isset($_GET['info']) && doliconnector($current_user, 'fk_order_nb_item') > 0 && $object->socid == doliconnector($current_user, 'fk_soc')) {
 
 if ( isset($_GET['info']) && !isset($_GET['pay']) && !isset($_GET['validation']) && isset($_POST['update_thirdparty']) && $_POST['update_thirdparty'] == 'validation' ) {
