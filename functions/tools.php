@@ -874,7 +874,7 @@ $paymentmethods .='</div></li>';
 $i++;
 }} else {
 $paymentmethods .='<li class="list-group-item list-group-item-light flex-column align-items-start"><div class="custom-control custom-radio">
-<input onclick="ShowHideDivPM(\'0\')" type="radio" id="none" name="paymentmode" value="0" class="custom-control-input" data-toggle="collapse" data-parent="#accordion" href="#none" checked>
+<input type="radio" id="none" name="paymentmode" value="none" class="custom-control-input" data-toggle="collapse" data-parent="#accordion" href="#none" checked>
 <label class="custom-control-label w-100" for="none"><div class="row"><div class="col-3 col-md-2 col-xl-2 align-middle">
 <center><i class="fas fa-border-none fa-3x fa-fw"></i></center></div><div class="col-9 col-md-10 col-xl-10 align-middle"><h6 class="my-0">'.__( 'No payment method', 'doliconnect').'</h6><small class="text-muted"></small></div></div></label>
 </div></li>';
@@ -1006,7 +1006,7 @@ if (mpx != controle) jQuery('#' + mpx + 'Panel').collapse('hide');
 }
 }";
 
-$paymentmethods .="jQuery('#card,#iban,#ideal,#vir,#chq,#liq').on('click', function (e) {
+$paymentmethods .="jQuery('#none,#card,#iban,#ideal,#vir,#chq,#liq').on('click', function (e) {
           e.stopPropagation();
 var elements = stripe.elements(); 
 var clientSecret = '".$listpaymentmethods->stripe_client_secret."';
