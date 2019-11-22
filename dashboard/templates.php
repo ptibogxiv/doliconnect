@@ -1350,11 +1350,10 @@ print "</small></li>";
 
 print "</ul></div></div><div class='col-12 col-md-8'>";
 
-$paymentmethods = callDoliApi("GET", "/doliconnector/".doliconnector($current_user, 'fk_soc')."/paymentmethods", null, dolidelay('paymentmethods',  esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-//print $listsource;
-
 if ( current_user_can( 'administrator' ) && get_option('doliconnectbeta') =='1' ) {
-print dolipaymentmethods($object, doliconnecturl('dolicart')."?pay", esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+///$paymentintent = callDoliApi("GET", "/doliconnector/paymentintent/".substr($module, 0, -1)."/".$object->id, null, dolidelay('paymentmethods',  esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+//print $listsource;
+print dolipaymentmodes($paymentintent, $paymentmethods, $object, doliconnecturl('dolicart')."?pay", doliconnecturl('dolicart')."?pay");
 } elseif ( function_exists('doligateway') ) {
 if ( isset($_GET["ref"]) && $object->statut != 0 ) { $ref = $object->ref; } else { $ref= 'commande #'.$object->id; }
 if ( isset($object->remaintopay) ) { 
@@ -1362,6 +1361,8 @@ $montant=$object->remaintopay;
 } else { 
 $montant=$object->multicurrency_total_ttc?$object->multicurrency_total_ttc:$object->total_ttc;
 }
+$paymentmethods = callDoliApi("GET", "/doliconnector/".doliconnector($current_user, 'fk_soc')."/paymentmethods", null, dolidelay('paymentmethods',  esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+//print $listsource;
 doligateway($paymentmethods, $ref, $montant, $object->multicurrency_code, doliconnecturl('dolicart')."?pay", 'full');
 print doliloading('paymentmodes');
 } else {
