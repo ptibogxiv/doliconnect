@@ -1357,19 +1357,8 @@ print "</small></li>";
 
 print "</ul></div></div><div class='col-12 col-md-8'>";
 
-if ( current_user_can( 'administrator' ) && get_option('doliconnectbeta') =='1' ) {
+if ( doliversion('10.0.0') ) {
 print dolipaymentmethods($object, substr($module, 0, -1), doliconnecturl('dolicart')."?pay", esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
-} elseif ( function_exists('doligateway') ) {
-if ( isset($_GET["ref"]) && $object->statut != 0 ) { $ref = $object->ref; } else { $ref= 'commande #'.$object->id; }
-if ( isset($object->remaintopay) ) { 
-$montant=$object->remaintopay;
-} else { 
-$montant=$object->multicurrency_total_ttc?$object->multicurrency_total_ttc:$object->total_ttc;
-}
-$paymentmethods = callDoliApi("GET", "/doliconnector/".doliconnector($current_user, 'fk_soc')."/paymentmethods", null, dolidelay('paymentmethods',  esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-//print $listsource;
-doligateway($paymentmethods, $ref, $montant, $object->multicurrency_code, doliconnecturl('dolicart')."?pay", 'full');
-print doliloading('paymentmodes');
 } else {
 print __( "Soon, you'll be able to pay online", "doliconnect");
 }
@@ -1513,7 +1502,7 @@ print '</label></div>';
 print "</small></li>";
 
 } elseif ( current_user_can( 'administrator' ) ) {
-print "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".sprintf( esc_html__( "Add shipping contact needs Dolibarr %s but your version is %s", 'doliconnect'), '10.0.0',$versiondoli[0])."</b></li>";
+print "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".sprintf( esc_html__( "Add shipping contact needs Dolibarr %s but your version is %s", 'doliconnect'), '10.0.0', doliversion('10.0.0'))."</b></li>";
 }
 
 print "<li class='list-group-item'><h6>".__( 'Message', 'doliconnect' )."</h6><small class='text-muted'>";
