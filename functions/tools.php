@@ -890,7 +890,11 @@ $paymentmethods .='<input id="cardholder-name" name="cardholder-name" value="" t
 <div class="form-control" id="card-element"><!-- a Stripe Element will be inserted here. --></div>';
 $paymentmethods .="<p class='text-justify'>";
 $paymentmethods .="</p>";
+if ( !empty($module) && is_object($object) && isset($object->id) ) {
+$paymentmethods .='<button id="cardButton" class="btn btn-danger btn-block" ><b>'.__( 'Pay', 'doliconnect' )." ".doliprice($object, 'ttc', $currency).'</b></button>';
+} else {
 $paymentmethods .="<button id='cardButton' class='btn btn-warning btn-block' title='".__( 'Add', 'doliconnect')."'><b>".__( 'Add', 'doliconnect')."</b></button>";
+}
 $paymentmethods .='</div></li>';
 if ( isset($listpaymentmethods->sepa_direct_debit) && !empty($listpaymentmethods->sepa_direct_debit) ) {
 $paymentmethods .='<li class="list-group-item list-group-item-action flex-column align-items-start"><div class="custom-control custom-radio">
@@ -906,7 +910,11 @@ $paymentmethods .="<p class='text-justify'>";
 $blogname=get_bloginfo('name');
 $paymentmethods .='<small>'.sprintf( esc_html__( 'By providing your IBAN and confirming this form, you are authorizing %s and Stripe, our payment service provider, to send instructions to your bank to debit your account and your bank to debit your account in accordance with those instructions. You are entitled to a refund from your bank under the terms and conditions of your agreement with your bank. A refund must be claimed within 8 weeks starting from the date on which your account was debited.', 'doliconnect'), $blogname).'</small>';
 $paymentmethods .="</p><div id='bank-name'><!-- a Stripe Message will be inserted here. --></div>";
+if ( !empty($module) && is_object($object) && isset($object->id) ) {
+$paymentmethods .='<button id="ibanPayButton" class="btn btn-danger btn-block" ><b>'.__( 'Pay', 'doliconnect' )." ".doliprice($object, 'ttc', $currency).'</b></button>';
+} else {
 $paymentmethods .="<button id='ibanButton' class='btn btn-warning btn-block' title='".__( 'Add', 'doliconnect')."'><b>".__( 'Add', 'doliconnect')."</b></button>";
+}
 $paymentmethods .='</div></li>';
 }
 if ( isset($listpaymentmethods->ideal) && !empty($listpaymentmethods->ideal) && get_option('doliconnectbeta')=='1' && current_user_can( 'administrator' )) {
