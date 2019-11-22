@@ -796,8 +796,10 @@ global $current_user;
 
 $request = "/doliconnector/".doliconnector($current_user, 'fk_soc')."/paymentmethods";
  
-if ( !empty($module) && is_object($object) ) {
+if ( !empty($module) && is_object($object) && isset($object->id) ) {
 $request .= "?type=".$module."&rowid=".$object->id;
+$currency=strtolower($object->multicurrency_code?$object->multicurrency_code:'eur');  
+$stripeAmount=($object->multicurrency_total_ttc?$object->multicurrency_total_ttc:$object->total_ttc)*100;
 }
 
 $listpaymentmethods = callDoliApi("GET", $request, null, dolidelay('paymentmethods', $refresh));
@@ -858,12 +860,16 @@ $paymentmethods .="<div class='d-none d-sm-block col-2 align-middle text-right'>
 $paymentmethods .="<img src='".plugins_url('doliconnect/images/flag/'.strtolower($method->country).'.png')."' class='img-fluid' alt='".$method->country."'>";
 $paymentmethods .="</div></div></label></div></li>";
 $paymentmethods .='<li id="'.$method->id.'Panel" class="list-group-item list-group-item-secondary panel-collapse collapse"><div class="panel-body">';
-$paymentmethods .='<div class="btn-group btn-block" role="group" aria-label="actions buttons">
-<button type="button" onclick="DefaultPM(\''.$method->id.'\')" class="btn btn-warning"';
+$paymentmethods .='<div class="btn-group btn-block" role="group" aria-label="actions buttons">';
+if ( !empty($module) && is_object($object) && isset($object->id) ) {
+$paymentmethods .='<button type="button" onclick="PayPM(\''.$method->id.'\')" class="btn btn-danger"><b>'.__( 'Pay', 'doliconnect' )." ".doliprice($object, 'ttc', $currency).'</b></button>';
+} else {
+$paymentmethods .='<button type="button" onclick="DefaultPM(\''.$method->id.'\')" class="btn btn-warning"';
 if ( !empty($method->default_source) ) { $paymentmethods .=" disabled"; }
-$paymentmethods .='>Favori</button>
-<button type="button" onclick="DeletePM(\''.$method->id.'\')" class="btn btn-danger">Supprimer</button>
-</div>';
+$paymentmethods .='><b>Favori</b></button>
+<button type="button" onclick="DeletePM(\''.$method->id.'\')" class="btn btn-danger"><b>Supprimer</b></button>';
+}
+$paymentmethods .='</div>';
 $paymentmethods .='</div></li>';
 $i++;
 }} else {
