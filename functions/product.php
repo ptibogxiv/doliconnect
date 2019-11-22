@@ -404,79 +404,6 @@ $paymentmethod .= '</div></div></label></div></li>';
 //}
 }
 
-//SAVED SOURCES
-if ( $listpaymentmethods->paymentmethods != null ) {
-$i=0;    
-foreach ( $listpaymentmethods->paymentmethods as $method ) {
-$i++;                                                                                                                         
-$paymentmethod .= "<li class='list-group-item list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>
-<input id='$method->id' onclick='ShowHideDiv()' class='custom-control-input' type='radio' name='modepayment' value='$method->id' ";
-if ( date('Y/n') >= $method->expiration && !empty($object) && !empty($method->expiration) ) { $paymentmethod .= " disabled "; }
-elseif ( $i == 1 || !empty($method->default_source) ) { $paymentmethod .= " checked "; }
-$paymentmethod .= " ><label class='custom-control-label w-100' for='$method->id'><div class='row'><div class='col-3 col-md-2 col-xl-2 align-middle'>";
-$paymentmethod .= '<center><i ';
-if ( $method->type == 'sepa_debit' ) {
-$paymentmethod .= 'class="fas fa-university fa-3x fa-fw" style="color:DarkGrey"';
-} else {
-
-if ( $method->brand == 'visa' ) { $paymentmethod .= 'class="fab fa-cc-visa fa-3x fa-fw" style="color:#172274"'; }
-else if ( $method->brand == 'mastercard' ) { $paymentmethod .= 'class="fab fa-cc-mastercard fa-3x fa-fw" style="color:#FF5F01"'; }
-else if ( $method->brand == 'amex' ) { $paymentmethod .= 'class="fab fa-cc-amex fa-3x fa-fw" style="color:#2E78BF"'; }
-else { $paymentmethod .= 'class="fab fa-cc-amex fa-3x fa-fw"';}
-}
-$paymentmethod .= '></i></center>';
-$paymentmethod .= '</div><div class="col-9 col-sm-7 col-md-8 col-xl-8 align-middle"><h6 class="my-0">';
-if ( $method->type == 'sepa_debit' ) {
-$paymentmethod .= __( 'Account', 'doliconnect' ).' '.$method->reference.'<small> <a href="'.$method->mandate_url.'" title="'.__( 'Mandate', 'doliconnect' ).' '.$method->mandate_reference.'" target="_blank"><i class="fas fa-info-circle"></i></a></small>';
-} else {
-$paymentmethod .= __( 'Card', 'doliconnect' ).' '.$method->reference;
-}
-if ( !empty($method->expiration) ) { $paymentmethod .= " - ".date("m/Y", strtotime($method->expiration.'/1')); }
-$paymentmethod .= "</h6><small class='text-muted'>".$method->holder."</small></div>";
-$paymentmethod .= "<div class='d-none d-sm-block col-2 align-middle text-right'>";
-$paymentmethod .= "<img src='".plugins_url('doliconnect/images/flag/'.strtolower($method->country).'.png')."' class='img-fluid' alt='$method->country'>";
-//print "<div class='btn-group-vertical' role='group'><a class='btn btn-light text-primary' href='#' role='button'><i class='fas fa-edit fa-fw'></i></a>
-//<button name='delete_source' value='".$method->id."' class='btn btn-light text-danger' type='submit'><i class='fas fa-trash fa-fw'></i></button></div>";
-$paymentmethod .= "</div></div></label></div></li>";
-} }
-
-//NEW CARD
-if ( $i < 5 && !empty($listpaymentmethods->card) ) {      
-$paymentmethod .= "<li class='list-group-item list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>
-<input id='CdDbt' onclick='ShowHideDiv()' class='custom-control-input' type='radio' name='modepayment' value='src_newcard' ";
-if ( empty($i) && empty($listpaymentmethods->paymentmethods) ) { $paymentmethod .= " checked"; }
-$paymentmethod .= "><label class='custom-control-label w-100' for='CdDbt'><div class='row'><div class='col-3 col-md-2 col-xl-2 align-middle'>";
-$paymentmethod .= "<center><i class='fas fa-credit-card fa-3x fa-fw'></i></center></div><div class='col-9 col-md-10 col-xl-10 align-middle'><h6 class='my-0'>".__( 'Credit card', 'doliconnect' )."</h6><small class='text-muted'>Visa, MasterCard, Amex...</small></div></div>";
-$paymentmethod .= "</label></div></li>";
-
-$paymentmethod .= '<li class="list-group-item list-group-item-secondary" id="CardForm" style="display: none"><form action="'.$url.'" >'; //onchange="ShowHideDiv()"
-$paymentmethod .= '<input id="cardholder-name" name="cardholder-name" value="" type="text" class="form-control" placeholder="'.__( 'Owner', 'doliconnect' ).'" autocomplete="off" required>
-<label for="card-element"></label>
-<div class="form-control" id="card-element"><!-- a Stripe Element will be inserted here. --></div>
-<div id="card-errors" role="alert"></div>';
-$paymentmethod .= '</form></li>';
-}
-
-//NEW SEPA DIRECT DEBIT
-if ( $i < 5 && !empty($listpaymentmethods->sepa_direct_debit) ) {    
-$paymentmethod .= "<li class='list-group-item list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>
-<input id='BkDbt' onclick='ShowHideDiv()' class='custom-control-input' type='radio' name='modepayment' value='src_newbank' ";
-//if ($listsource["sources"]==null) {print " checked";}
-$paymentmethod .= " ><label class='custom-control-label w-100' for='BkDbt'><div class='row'><div class='col-3 col-md-2 col-xl-2 align-middle'>";
-$paymentmethod .= "<center><i class='fas fa-university fa-3x fa-fw'></i></center></div><div class='col-9 col-md-10 col-xl-10 align-middle'><h6 class='my-0'>".__( 'Bank transfer', 'doliconnect' )."</h6><small class='text-muted'>".__( 'Via SEPA Direct Debit', 'doliconnect' )."</small>";
-$paymentmethod .= '</div></div></label></div></li>';
-$paymentmethod .= '<li class="list-group-item list-group-item-secondary" id="BankForm" style="display: none">';
-$paymentmethod .= "<p class='text-justify'>";
-$blogname=get_bloginfo('name');
-$paymentmethod .= '<small>'.sprintf( esc_html__( 'By providing your IBAN and confirming this form, you are authorizing %s and Stripe, our payment service provider, to send instructions to your bank to debit your account and your bank to debit your account in accordance with those instructions. You are entitled to a refund from your bank under the terms and conditions of your agreement with your bank. A refund must be claimed within 8 weeks starting from the date on which your account was debited.', 'doliconnect' ), $blogname).'</small>';
-$paymentmethod .= "</p>";
-$paymentmethod .= '<input id="ibanholder-name" name="ibanholder-name" value="" type="text" class="form-control" placeholder="'.__( 'Owner', 'doliconnect' ).'" autocomplete="off">
-<label for="iban-element"></label>
-<div class="form-control" id="iban-element"><!-- A Stripe Element will be inserted here. --></div>';
-$paymentmethod .= '<div id="bank-name"></div>';
-$paymentmethod .= '<div id="iban-errors" role="alert"></div>';
-$paymentmethod .= '</li>';
-}
 
 //PAYMENT REQUEST API
 if ( ! empty($object) && get_option('doliconnectbeta')=='1' && !empty($listpaymentmethods->payment_request_api) ) {  
@@ -504,16 +431,6 @@ $paymentmethod .= "<li id='PaypalForm' class='list-group-item list-group-item-ac
 $paymentmethod .= " ><label class='custom-control-label w-100' for='src_paypal'><div class='row'><div class='col-3 col-md-2 col-xl-2 align-middle'>";
 $paymentmethod .= '<center><i class="fab fa-paypal fa-3x fa-fw" style="color:#2997D8"></i></center>';
 $paymentmethod .= "</div><div class='col-9 col-md-10 col-xl-10 align-middle'><h6 class='my-0'>PayPal</h6><small class='text-muted'>".__( 'Redirect to Paypal', 'doliconnect' )."</small>";
-$paymentmethod .= '</div></div></label></div></li>';
-}
-
-if ( ! empty(dolikiosk()) ) {
-$paymentmethod .= "<li id='LiqForm' class='list-group-item list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>
-<input id='src_liq' onclick='ShowHideDiv()' class='custom-control-input' type='radio' name='modepayment' value='LIQ' ";
-if ( $listpaymentmethods->paymentmethods == null && empty($listpaymentmethods->card) && $listpaymentmethods->CHQ == null && $listpaymentmethods->RIB == null ) { $paymentmethod .= " checked"; }
-$paymentmethod .= " ><label class='custom-control-label w-100' for='src_liq'><div class='row'><div class='col-3 col-md-2 col-xl-2 align-middle'>";
-$paymentmethod .= '<center><i class="fas fa-money-bill-alt fa-3x fa-fw" style="color:#85bb65"></i></center>';
-$paymentmethod .= "</div><div class='col-9 col-md-10 col-xl-10 align-middle'><h6 class='my-0'>".__( 'Cash', 'doliconnect' )."</h6><small class='text-muted'>".__( 'Go to reception desk', 'doliconnect' )."</small>";
 $paymentmethod .= '</div></div></label></div></li>';
 }
 
