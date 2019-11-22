@@ -931,27 +931,27 @@ $paymentmethods .='</div></li>';
 //offline payment methods
 if ( isset($listpaymentmethods->RIB) && $listpaymentmethods->RIB != null ) {
 $paymentmethods .= "<li id='VirForm' class='list-group-item list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>
-<input type='radio' id='vir' name='paymentmode' onclick='ShowHideDivPM(\"0\")' class='custom-control-input' value='vir' ";
+<input type='radio' id='vir' name='paymentmode' class='custom-control-input' value='vir' ";
 if ( $listpaymentmethods->paymentmethods == null && empty($listpaymentmethods->card) ) { $paymentmethods .= " checked"; }
-$paymentmethods .= " ><label class='custom-control-label w-100' for='vir'><div class='row'><div class='col-3 col-md-2 col-xl-2 align-middle'>";
+$paymentmethods .= " href='#vir'><label class='custom-control-label w-100' for='vir'><div class='row'><div class='col-3 col-md-2 col-xl-2 align-middle'>";
 $paymentmethods .= '<center><i class="fas fa-university fa-3x fa-fw" style="color:DarkGrey"></i></center>';
 $paymentmethods .= "</div><div class='col-9 col-md-10 col-xl-10 align-middle'><h6 class='my-0'>".__( 'Transfer', 'doliconnect' )."</h6><small class='text-muted'>".__( 'See your receipt', 'doliconnect' )."</small>";
 $paymentmethods .= '</div></div></label></div></li>';
 }
 if ( isset($listpaymentmethods->CHQ) && $listpaymentmethods->CHQ != null ) {
 $paymentmethods .= "<li id='ChqForm' class='list-group-item list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>
-<input type='radio' id='chq' name='paymentmode' onclick='ShowHideDivPM(\"0\")' class='custom-control-input' value='chq' ";
+<input type='radio' id='chq' name='paymentmode' class='custom-control-input' value='chq' ";
 if ( $listpaymentmethods->paymentmethods == null && $listpaymentmethods->card != 1 && $listpaymentmethods->RIB == null ) { $paymentmethods .= " checked"; }
-$paymentmethods .= " ><label class='custom-control-label w-100' for='chq'><div class='row'><div class='col-3 col-md-2 col-xl-2 align-middle'>";
+$paymentmethods .= " href='#chq'><label class='custom-control-label w-100' for='chq'><div class='row'><div class='col-3 col-md-2 col-xl-2 align-middle'>";
 $paymentmethods .= '<center><i class="fas fa-money-check fa-3x fa-fw" style="color:Tan"></i></center>';
 $paymentmethods .= "</div><div class='col-9 col-md-10 col-xl-10 align-middle'><h6 class='my-0'>".__( 'Check', 'doliconnect' )."</h6><small class='text-muted'>".__( 'See your receipt', 'doliconnect' )."</small>";
 $paymentmethods .= '</div></div></label></div></li>';
 }
 if ( ! empty(dolikiosk()) ) {
 $paymentmethod .= "<li id='LiqForm' class='list-group-item list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>
-<input type='radio' id='liq' name='paymentmode' onclick='ShowHideDivPM(\"0\")' class='custom-control-input' value='liq' ";
+<input type='radio' id='liq' name='paymentmode' class='custom-control-input' value='liq' ";
 if ( $listpaymentmethods->paymentmethods == null && empty($listpaymentmethods->card) && $listpaymentmethods->CHQ == null && $listpaymentmethods->RIB == null ) { $paymentmethods .= " checked"; }
-$paymentmethods .= " ><label class='custom-control-label w-100' for='liq'><div class='row'><div class='col-3 col-md-2 col-xl-2 align-middle'>";
+$paymentmethods .= " href='#liq'><label class='custom-control-label w-100' for='liq'><div class='row'><div class='col-3 col-md-2 col-xl-2 align-middle'>";
 $paymentmethods .= '<center><i class="fas fa-money-bill-alt fa-3x fa-fw" style="color:#85bb65"></i></center>';
 $paymentmethods .= "</div><div class='col-9 col-md-10 col-xl-10 align-middle'><h6 class='my-0'>".__( 'Cash', 'doliconnect' )."</h6><small class='text-muted'>".__( 'Go to reception desk', 'doliconnect' )."</small>";
 $paymentmethods .= '</div></div></label></div></li>';
@@ -1006,7 +1006,7 @@ if (mpx != controle) jQuery('#' + mpx + 'Panel').collapse('hide');
 }
 }";
 
-$paymentmethods .="jQuery('#card,#iban,#ideal').on('click', function (e) {
+$paymentmethods .="jQuery('#card,#iban,#ideal,#vir,#chq,#liq').on('click', function (e) {
           e.stopPropagation();
 var elements = stripe.elements(); 
 var clientSecret = '".$listpaymentmethods->stripe_client_secret."';
@@ -1176,6 +1176,11 @@ form.submit();
               jQuery('#ibanPanel').collapse('hide');
               jQuery('#idealPanel').collapse('show');
               //alert('3');
+          }else {
+              jQuery('#cardPanel').collapse('hide');
+              jQuery('#ibanPanel').collapse('hide');
+              jQuery('#idealPanel').collapse('hide');
+              //alert('4');
           }
         })
         
