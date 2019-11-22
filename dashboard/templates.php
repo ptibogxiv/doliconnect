@@ -1351,7 +1351,7 @@ print "</small></li>";
 print "</ul></div></div><div class='col-12 col-md-8'>";
 
 if ( current_user_can( 'administrator' ) && get_option('doliconnectbeta') =='1' ) {
-print dolipaymentmodes($object, substr($module, 0, -1), doliconnecturl('dolicart')."?pay", esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+print dolipaymentmethods($object, substr($module, 0, -1), doliconnecturl('dolicart')."?pay", esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 } elseif ( function_exists('doligateway') ) {
 if ( isset($_GET["ref"]) && $object->statut != 0 ) { $ref = $object->ref; } else { $ref= 'commande #'.$object->id; }
 if ( isset($object->remaintopay) ) { 
