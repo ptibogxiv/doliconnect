@@ -462,27 +462,6 @@ $paymentmethod .= "</div></small>";
 
 $paymentmethod .= "</div>";
 
-$paymentmethod .= '<div id="payment-success" class="card text-white bg-success" style="display: none">
-  <div class="card-body">
-    <h5 class="card-title">Success Payment</h5>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the cards content.</p>
-  </div>
-</div>';
-$paymentmethod .= '<div id="payment-waiting" class="card text-white bg-warning" style="display: none">
-  <div class="card-body">
-    <h5 class="card-title">Waiting Payment</h5>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the cards content.</p>
-  </div>
-</div>';
-$paymentmethod .= '<div id="payment-error" class="card text-white bg-danger" style="display: none">
-  <div class="card-body">
-    <h5 class="card-title">Error Payment</h5>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the cards content.</p>
-  </div>
-</div>';
-
-$paymentmethod .= doliloading('payment');  
-
 $paymentmethod .= "<script>";
 if ( $listpaymentmethods->code_account != null ) {
 $paymentmethod .= "var stripe = Stripe('".$listpaymentmethods->publishable_key."', {
