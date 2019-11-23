@@ -892,11 +892,11 @@ $blogname=get_bloginfo('name');
 $paymentmethods .= '<small>'.sprintf( esc_html__( 'By providing your card and confirming this form, you are authorizing %s and Stripe, our payment service provider, to send instructions to the financial institution that issued your card to take payments from your card account in accordance with those instructions. You are entitled to a refund from your financial institution under the terms and conditions of your agreement with your financial institution. A refund must be claimed within 90 days starting from the date on which your card was debited.', 'doliconnect'), $blogname).'</small>';
 $paymentmethods .= "</p>";
 $paymentmethods .= '<p><div class="custom-control custom-radio custom-control-inline">
-  <input type="radio" id="cardDefault0" name="cardDefault" class="custom-control-input" checked>
+  <input type="radio" id="cardDefault0" name="cardDefault" value="0"  class="custom-control-input" checked>
   <label class="custom-control-label" for="cardDefault0">'.__( "Save", 'doliconnect').'</label>
 </div>
 <div class="custom-control custom-radio custom-control-inline">
-  <input type="radio" id="cardDefault1" name="cardDefault" class="custom-control-input">
+  <input type="radio" id="cardDefault1" name="cardDefault" value="1" class="custom-control-input">
   <label class="custom-control-label" for="cardDefault1">'.__( "Save as default", 'doliconnect').'</label>
 </div></p>';
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
@@ -920,6 +920,14 @@ $paymentmethods .="<p class='text-justify'>";
 $blogname=get_bloginfo('name');
 $paymentmethods .='<small>'.sprintf( esc_html__( 'By providing your IBAN and confirming this form, you are authorizing %s and Stripe, our payment service provider, to send instructions to your bank to debit your account and your bank to debit your account in accordance with those instructions. You are entitled to a refund from your bank under the terms and conditions of your agreement with your bank. A refund must be claimed within 8 weeks starting from the date on which your account was debited.', 'doliconnect'), $blogname).'</small>';
 $paymentmethods .="</p><div id='bank-name'><!-- a Stripe Message will be inserted here. --></div>";
+$paymentmethods .= '<p><div class="custom-control custom-radio custom-control-inline">
+  <input type="radio" id="ibanDefault0" name="ibanDefault" value="0" class="custom-control-input" checked>
+  <label class="custom-control-label" for="ibanDefault0">'.__( "Save", 'doliconnect').'</label>
+</div>
+<div class="custom-control custom-radio custom-control-inline">
+  <input type="radio" id="ibanDefault1" name="ibanDefault" value="1" class="custom-control-input">
+  <label class="custom-control-label" for="ibanDefault1">'.__( "Save as default", 'doliconnect').'</label>
+</div></p>';
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
 $paymentmethods .='<button id="ibanPayButton" class="btn btn-danger btn-block" ><b>'.__( 'Pay', 'doliconnect' )." ".doliprice($object, 'ttc', $currency).'</b></button>';
 } else {
