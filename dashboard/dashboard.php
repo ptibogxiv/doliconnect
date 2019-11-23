@@ -610,7 +610,7 @@ $gateway = callDoliApi("GET", $request, null, dolidelay('paymentmethods', true))
 $msg = dolialert ('success', __( 'You have a new payment method', 'doliconnect'));
 } 
 
-print dolipaymentmethods(null, $url, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+print dolipaymentmethods(null, null, $url, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 
 //print "<small><div class='custom-control custom-checkbox my-1 mr-sm-2'><input type='checkbox' class='custom-control-input' id='default' name='default' value='1' ";
 //if (empty($i)) { print " checked disabled"; }
