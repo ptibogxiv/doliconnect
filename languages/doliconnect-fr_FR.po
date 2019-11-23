@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2019-11-22 17:54+0100\n"
-"PO-Revision-Date: 2019-11-22 17:55+0100\n"
+"POT-Creation-Date: 2019-11-23 12:57+0100\n"
+"PO-Revision-Date: 2019-11-23 12:58+0100\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_FR\n"
@@ -21,7 +21,7 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 
-#: admin/admin.php:7
+#: admin/admin.php:7 dashboard/templates.php:1363
 msgid ""
 "It seems that your version of Dolibarr and/or its plugins are not up to date!"
 msgstr ""
@@ -113,8 +113,8 @@ msgstr "Vos informations ont été mises à jour."
 #: dashboard/dashboard.php:80 dashboard/dashboard.php:276
 #: dashboard/dashboard.php:444 dashboard/dashboard.php:553
 #: dashboard/dashboard.php:1616 dashboard/templates.php:376
-#: dashboard/templates.php:991 dashboard/templates.php:1462
-#: dashboard/templates.php:1481 functions/product.php:171
+#: dashboard/templates.php:991 dashboard/templates.php:1451
+#: dashboard/templates.php:1470 functions/product.php:171
 msgid "Update"
 msgstr "Modifier"
 
@@ -166,7 +166,7 @@ msgid "Update contact"
 msgstr "Mettre à jour le contact"
 
 #: dashboard/dashboard.php:463 functions/product.php:173
-#: functions/tools.php:896 functions/tools.php:916
+#: functions/tools.php:898 functions/tools.php:918
 msgid "Add"
 msgstr "Ajouter"
 
@@ -330,24 +330,24 @@ msgid "Bank"
 msgstr "Banque"
 
 #: dashboard/dashboard.php:832 dashboard/dashboard.php:929
-#: dashboard/dashboard.php:933 functions/tools.php:865 functions/tools.php:894
-#: functions/tools.php:914 functions/tools.php:942 functions/tools.php:955
+#: dashboard/dashboard.php:933 functions/tools.php:865 functions/tools.php:896
+#: functions/tools.php:916 functions/tools.php:946 functions/tools.php:959
 msgid "Pay"
 msgstr "Payer"
 
 #: dashboard/dashboard.php:846 dashboard/dashboard.php:850
-#: dashboard/templates.php:1336 dashboard/templates.php:1451
-#: dashboard/templates.php:1472
+#: dashboard/templates.php:1336 dashboard/templates.php:1440
+#: dashboard/templates.php:1461
 msgid "Billing address"
 msgstr "Adresse de facturation"
 
 #: dashboard/dashboard.php:855 dashboard/dashboard.php:859
-#: dashboard/templates.php:1340 dashboard/templates.php:1486
+#: dashboard/templates.php:1340 dashboard/templates.php:1475
 msgid "Shipping address"
 msgstr "Adresse d’expédition"
 
 #: dashboard/dashboard.php:866 dashboard/templates.php:1347
-#: dashboard/templates.php:1474
+#: dashboard/templates.php:1463
 msgid "Billing and shipping address"
 msgstr "Adresse de facturation et d'expédition"
 
@@ -635,7 +635,7 @@ msgid "Sales representative"
 msgstr "Commercial"
 
 #: dashboard/dashboard.php:1820 dashboard/templates.php:741
-#: dashboard/templates.php:1353 dashboard/templates.php:1519
+#: dashboard/templates.php:1353 dashboard/templates.php:1508
 msgid "Message"
 msgstr "Message"
 
@@ -1027,47 +1027,43 @@ msgstr "modifier"
 msgid "Customer's Address"
 msgstr "Adresse du client"
 
-#: dashboard/templates.php:1374
-msgid "Soon, you'll be able to pay online"
-msgstr "Bientôt, vous serez en mesure de payer en ligne"
-
-#: dashboard/templates.php:1490
+#: dashboard/templates.php:1479
 msgid "Same address that billing"
 msgstr "Même adresse que la facturation"
 
-#: dashboard/templates.php:1516
+#: dashboard/templates.php:1505
 #, php-format
 msgid "Add shipping contact needs Dolibarr %s but your version is %s"
 msgstr ""
 "Ajouter un contact d'expédition a besoin de Dolibarr %s mais votre version "
 "est %s"
 
-#: dashboard/templates.php:1520
+#: dashboard/templates.php:1509
 msgid "Enter a message here that you want to send us about your order"
 msgstr ""
 "Entrez un message ici que vous voulez nous envoyer au sujet de votre commande"
 
-#: dashboard/templates.php:1523
+#: dashboard/templates.php:1512
 msgid "Validate"
 msgstr "Valider"
 
-#: dashboard/templates.php:1561 dashboard/templates.php:1577
+#: dashboard/templates.php:1550 dashboard/templates.php:1566
 msgid "Oops!"
 msgstr "Oups!"
 
-#: dashboard/templates.php:1561 dashboard/templates.php:1577
+#: dashboard/templates.php:1550 dashboard/templates.php:1566
 msgid "An error is occured. Please contact us!"
 msgstr "Une erreur s'est produite. Veuillez nous contacter!"
 
-#: dashboard/templates.php:1627
+#: dashboard/templates.php:1616
 msgid "Continue shopping"
 msgstr "Continuer vos achats"
 
-#: dashboard/templates.php:1631
+#: dashboard/templates.php:1620
 msgid "Empty the basket"
 msgstr "Vider le panier"
 
-#: dashboard/templates.php:1634
+#: dashboard/templates.php:1623
 msgid "Process"
 msgstr "Finaliser"
 
@@ -1482,15 +1478,43 @@ msgstr "Carte de crédit/débit"
 msgid "Card's owner"
 msgstr "Titulaire de la carte"
 
-#: functions/tools.php:903
+#: functions/tools.php:893
+#, fuzzy, php-format
+#| msgid ""
+#| "By providing your card and confirming this form, you are authorizing %s "
+#| "and Stripe, our payment service provider, to send instructions to the "
+#| "financial institution that issued your card to take payments from your "
+#| "card account in accordance with those instructions. You are entitled to a "
+#| "refund from your financial institution under the terms and conditions of "
+#| "your agreement with your financial institution. A refund must be claimed "
+#| "within 90 dayss starting from the date on which your card was debited."
+msgid ""
+"By providing your card and confirming this form, you are authorizing %s and "
+"Stripe, our payment service provider, to send instructions to the financial "
+"institution that issued your card to take payments from your card account in "
+"accordance with those instructions. You are entitled to a refund from your "
+"financial institution under the terms and conditions of your agreement with "
+"your financial institution. A refund must be claimed within 90 days starting "
+"from the date on which your card was debited."
+msgstr ""
+"En fournissant votre carte et en confirmant ce formulaire, vous autorisez %s "
+"et Stripe, notre fournisseur de services de paiement, à envoyer des "
+"instructions à l'institution financière qui a émis votre carte pour prendre "
+"les paiements de votre compte de carte conformément à ces instructions. Vous "
+"avez droit à un remboursement de votre institution financière dans les "
+"termes et conditions de votre accord avec votre institution financière. Un "
+"remboursement doit être demandé dans les 90 jours à partir de la date à "
+"laquelle votre carte a été débitée."
+
+#: functions/tools.php:905
 msgid "Bank account"
 msgstr "Compte bancaire"
 
-#: functions/tools.php:906
+#: functions/tools.php:908 functions/tools.php:929
 msgid "Bank's owner"
 msgstr "Titulaire du compte"
 
-#: functions/tools.php:911
+#: functions/tools.php:913
 #, php-format
 msgid ""
 "By providing your IBAN and confirming this form, you are authorizing %s and "
@@ -1509,27 +1533,27 @@ msgstr ""
 "avec votre banque. Un remboursement doit être réclamé dans les 8 semaines à "
 "compter de la date à laquelle votre compte a été débité."
 
-#: functions/tools.php:924
+#: functions/tools.php:926
 msgid "iDEAL"
 msgstr "iDEAL"
 
-#: functions/tools.php:938
+#: functions/tools.php:942
 msgid "Transfer"
 msgstr "Virement bancaire"
 
-#: functions/tools.php:938 functions/tools.php:951
+#: functions/tools.php:942 functions/tools.php:955
 msgid "See your receipt"
 msgstr "Voir votre reçu"
 
-#: functions/tools.php:951
+#: functions/tools.php:955
 msgid "Check"
 msgstr "Chèque"
 
-#: functions/tools.php:964
+#: functions/tools.php:968
 msgid "Cash"
 msgstr "Espèces"
 
-#: functions/tools.php:964
+#: functions/tools.php:968
 msgid "Go to reception desk"
 msgstr "Aller à la réception"
 
@@ -1577,6 +1601,9 @@ msgstr "ptibogxiv"
 #. Author URI of the plugin/theme
 msgid "https://www.ptibogxiv.net/en"
 msgstr "https://www.ptibogxiv.net/fr"
+
+#~ msgid "Soon, you'll be able to pay online"
+#~ msgstr "Bientôt, vous serez en mesure de payer en ligne"
 
 #~ msgid "VAT"
 #~ msgstr "TVA"
