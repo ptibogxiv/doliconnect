@@ -823,7 +823,7 @@ if ( isset($msg) ) { $paymentmethods .=$msg; }
 $paymentmethods .=doliloaderscript('doliconnect-paymentmethodsform');
 
 $paymentmethods .='<div class="card shadow-sm"><ul class="list-group list-group-flush panel-group" id="accordion">';
-if ( isset($listpaymentmethods->stripe) && empty($listpaymentmethods->stripe) ) {
+if ( isset($listpaymentmethods->stripe) && empty($listpaymentmethods->stripe->live) ) {
 $paymentmethods .="<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".__( "Stripe's in sandbox mode", 'doliconnect')."</b></li>";
 }
  
@@ -898,7 +898,7 @@ $paymentmethods .='<button id="cardPayButton" class="btn btn-danger btn-block" >
 $paymentmethods .="<button id='cardButton' class='btn btn-warning btn-block' title='".__( 'Add', 'doliconnect')."'><b>".__( 'Add', 'doliconnect')."</b></button>";
 }
 $paymentmethods .='</div></li>';
-if ( isset($listpaymentmethods->sepa_direct_debit) && !empty($listpaymentmethods->sepa_direct_debit) ) {
+if ( isset($listpaymentmethods->stripe) && in_array('sepa_direct_debit', $listpaymentmethods->stripe->type) ) {
 $paymentmethods .='<li class="list-group-item list-group-item-action flex-column align-items-start"><div class="custom-control custom-radio">
 <input type="radio" id="iban" name="paymentmode" value="iban" class="custom-control-input" data-toggle="collapse" data-parent="#accordion" href="#iban">
 <label class="custom-control-label w-100" for="iban"><div class="row"><div class="col-3 col-md-2 col-xl-2 align-middle">
@@ -919,7 +919,7 @@ $paymentmethods .="<button id='ibanButton' class='btn btn-warning btn-block' tit
 }
 $paymentmethods .='</div></li>';
 }
-if ( isset($listpaymentmethods->ideal) && !empty($listpaymentmethods->ideal) && !empty($module) && is_object($object) && isset($object->id) && get_option('doliconnectbeta')=='1' && current_user_can( 'administrator' )) {
+if ( isset($listpaymentmethods->stripe) && in_array('ideal', $listpaymentmethods->stripe->type) && !empty($module) && is_object($object) && isset($object->id) && get_option('doliconnectbeta')=='1' && current_user_can( 'administrator' )) {
 $paymentmethods .='<li class="list-group-item list-group-item-action flex-column align-items-start"><div class="custom-control custom-radio">
 <input type="radio" id="ideal" name="paymentmode" value="ideal" class="custom-control-input" data-toggle="collapse" data-parent="#accordion" href="#ideal">
 <label class="custom-control-label w-100" for="ideal"><div class="row"><div class="col-3 col-md-2 col-xl-2 align-middle">
