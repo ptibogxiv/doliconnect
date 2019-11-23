@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2019-11-23 20:49+0100\n"
-"PO-Revision-Date: 2019-11-23 20:50+0100\n"
+"POT-Creation-Date: 2019-11-23 20:56+0100\n"
+"PO-Revision-Date: 2019-11-23 20:56+0100\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_FR\n"
@@ -166,7 +166,7 @@ msgid "Update contact"
 msgstr "Mettre à jour le contact"
 
 #: dashboard/dashboard.php:463 functions/product.php:173
-#: functions/tools.php:905 functions/tools.php:926
+#: functions/tools.php:905 functions/tools.php:934
 msgid "Add"
 msgstr "Ajouter"
 
@@ -228,9 +228,13 @@ msgstr "Gérer les modes de paiement"
 msgid "You changed your default payment method"
 msgstr "Vous avez modifié votre mode de paiement par défaut"
 
+#: dashboard/dashboard.php:599
+msgid "You deleted a payment method"
+msgstr "Vous avez supprimé un mode de paiement"
+
 #: dashboard/dashboard.php:608
-msgid "You have a new payment method"
-msgstr "Vous avez un nouveau mode de paiement"
+msgid "You added a new payment method"
+msgstr "Vous avez ajouté un nouveau mode de paiement"
 
 #: dashboard/dashboard.php:633
 msgid "Propals tracking"
@@ -331,8 +335,8 @@ msgstr "Banque"
 
 #: dashboard/dashboard.php:832 dashboard/dashboard.php:929
 #: dashboard/dashboard.php:933 functions/tools.php:863 functions/tools.php:903
-#: functions/tools.php:924 functions/tools.php:942 functions/tools.php:957
-#: functions/tools.php:970
+#: functions/tools.php:932 functions/tools.php:950 functions/tools.php:965
+#: functions/tools.php:978
 msgid "Pay"
 msgstr "Payer"
 
@@ -1499,11 +1503,11 @@ msgstr ""
 "remboursement doit être demandé dans les 90 jours à partir de la date à "
 "laquelle votre carte a été débitée."
 
-#: functions/tools.php:896
+#: functions/tools.php:896 functions/tools.php:925
 msgid "Save"
 msgstr "Enregistrer"
 
-#: functions/tools.php:900
+#: functions/tools.php:900 functions/tools.php:929
 msgid "Save as default"
 msgstr "Enregistrer par défaut"
 
@@ -1511,7 +1515,7 @@ msgstr "Enregistrer par défaut"
 msgid "Bank account"
 msgstr "Compte bancaire"
 
-#: functions/tools.php:916 functions/tools.php:937
+#: functions/tools.php:916 functions/tools.php:945
 msgid "Bank's owner"
 msgstr "Titulaire du compte"
 
@@ -1534,27 +1538,27 @@ msgstr ""
 "avec votre banque. Un remboursement doit être réclamé dans les 8 semaines à "
 "compter de la date à laquelle votre compte a été débité."
 
-#: functions/tools.php:934
+#: functions/tools.php:942
 msgid "iDEAL"
 msgstr "iDEAL"
 
-#: functions/tools.php:953
+#: functions/tools.php:961
 msgid "Transfer"
 msgstr "Virement bancaire"
 
-#: functions/tools.php:953 functions/tools.php:966
+#: functions/tools.php:961 functions/tools.php:974
 msgid "See your receipt"
 msgstr "Voir votre reçu"
 
-#: functions/tools.php:966
+#: functions/tools.php:974
 msgid "Check"
 msgstr "Chèque"
 
-#: functions/tools.php:979
+#: functions/tools.php:987
 msgid "Cash"
 msgstr "Espèces"
 
-#: functions/tools.php:979
+#: functions/tools.php:987
 msgid "Go to reception desk"
 msgstr "Aller à la réception"
 
