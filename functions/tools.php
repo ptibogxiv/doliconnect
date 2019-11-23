@@ -816,11 +816,9 @@ class myCounter implements Countable {
  
 $counter = new myCounter;
 
-$paymentmethods ="<script src='https://js.stripe.com/v3/'></script>";
-
-if ( isset($msg) ) { $paymentmethods .=$msg; }
+$paymentmethods = "<script src='https://js.stripe.com/v3/'></script>";
  
-$paymentmethods .=doliloaderscript('doliconnect-paymentmethodsform');
+$paymentmethods .= doliloaderscript('doliconnect-paymentmethodsform');
 
 $paymentmethods .='<div class="card shadow-sm"><ul class="list-group list-group-flush panel-group" id="accordion">';
 if ( isset($listpaymentmethods->stripe) && empty($listpaymentmethods->stripe->live) ) {

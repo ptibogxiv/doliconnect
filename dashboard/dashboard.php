@@ -477,8 +477,6 @@ add_action( 'user_doliconnect_menu', 'password_menu', 3, 1);
 function password_module( $url ){
 global $current_user;
 $ID = $current_user->ID;
-
-$msg = null;
  
 if (doliconnector($current_user, 'fk_user') > '0'){  
 $request = "/users/".doliconnector($current_user, 'fk_user');
@@ -609,6 +607,8 @@ $gateway = callDoliApi("POST", $request."/".sanitize_text_field($_POST['add_paym
 $gateway = callDoliApi("GET", $request, null, dolidelay('paymentmethods', true));
 $msg = dolialert ('success', __( 'You have a new payment method', 'doliconnect'));
 } 
+
+if ( isset($msg) ) { print $msg; }
 
 print dolipaymentmethods(null, null, $url, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 
