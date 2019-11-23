@@ -986,11 +986,11 @@ $paymentmethods .="<div id='error-message' role='alert'><!-- a Stripe Message wi
 $paymentmethods .="<script>";
 
 if ( $listpaymentmethods->code_account != null ) {
-$paymentmethods .="var stripe = Stripe('".$listpaymentmethods->publishable_key."', {
+$paymentmethods .="var stripe = Stripe('".$listpaymentmethods->stripe->publishable_key."', {
   stripeAccount: '".$listpaymentmethods->code_account."'
 });";
 } else {
-$paymentmethods .="var stripe = Stripe('".$listpaymentmethods->publishable_key."');";
+$paymentmethods .="var stripe = Stripe('".$listpaymentmethods->stripe->publishable_key."');";
 }
 
 $paymentmethods .='var style = {
@@ -1026,7 +1026,7 @@ if (mpx != controle) jQuery('#' + mpx + 'Panel').collapse('hide');
 $paymentmethods .="jQuery('#none,#card,#iban,#ideal,#vir,#chq,#liq').on('click', function (e) {
           e.stopPropagation();
 var elements = stripe.elements(); 
-var clientSecret = '".$listpaymentmethods->stripe_client_secret."';
+var clientSecret = '".$listpaymentmethods->stripe->client_secret."';
 var displayError = document.getElementById('error-message');
 displayError.textContent = '';
 HideDivPM(this.id);
