@@ -987,7 +987,7 @@ $paymentmethods .="<script>";
 
 if ( $listpaymentmethods->code_account != null ) {
 $paymentmethods .="var stripe = Stripe('".$listpaymentmethods->stripe->publishable_key."', {
-  stripeAccount: '".$listpaymentmethods->code_account."'
+  stripeAccount: '".$listpaymentmethods->stripe->account."'
 });";
 } else {
 $paymentmethods .="var stripe = Stripe('".$listpaymentmethods->stripe->publishable_key."');";
