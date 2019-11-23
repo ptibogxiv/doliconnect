@@ -924,7 +924,9 @@ $paymentmethods .='<li class="list-group-item list-group-item-action flex-column
 <center><i class="fas fa-university fa-3x fa-fw"></i></center></div><div class="col-9 col-md-10 col-xl-10 align-middle"><h6 class="my-0">'.__( 'iDEAL', 'doliconnect' ).'</h6><small class="text-muted">iDEAL PAYMENT</small></div></div></label>
 </div></li>';
 $paymentmethods .='<li id="idealPanel" class="list-group-item list-group-item-secondary panel-collapse collapse"><div class="panel-body">';
-// ideal form here
+$paymentmethods .='<input id="idealholder-name" name="idealholder-name" value="" type="text" class="form-control" placeholder="'.__( "Bank's owner", 'doliconnect').'" autocomplete="off" required>
+<label for="ideal-element"></label>
+<div class="form-control" id="ideal-element"><!-- a Stripe Element will be inserted here. --></div>';
 $paymentmethods .='</div></li>';
 }
 
@@ -1183,7 +1185,10 @@ form.submit();
           }
 });
               //alert('2');
-          }else if(this.id == 'ideal'){ 
+          }else if(this.id == 'ideal'){
+var idealElement = elements.create('idealBank', options);
+idealElement.mount('#ideal-element'); 
+var idealholderName = document.getElementById('idealholder-name');
               jQuery('#cardPanel').collapse('hide');
               jQuery('#ibanPanel').collapse('hide');
               jQuery('#virPanel').collapse('hide');
