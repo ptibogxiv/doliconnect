@@ -865,7 +865,7 @@ $paymentmethods .='<button type="button" onclick="PayPM(\''.$method->id.'\')" cl
 $paymentmethods .='<button type="button" onclick="DefaultPM(\''.$method->id.'\')" class="btn btn-warning"';
 if ( !empty($method->default_source) ) { $paymentmethods .=" disabled"; }
 $paymentmethods .='><b>Favori</b></button>
-<button type="button" onclick="DeletePM(\''.$method->id.'\')" class="btn btn-danger"><b>Supprimer</b></button>';
+<button type="button" onclick="DeletePM(\''.$method->id.'\')" class="btn btn-danger"><b>'.__( 'Delete', 'doliconnect' ).'</b></button>';
 }
 $paymentmethods .='</div>';
 $paymentmethods .='</div></li>';
@@ -878,19 +878,27 @@ $paymentmethods .='<li class="list-group-item list-group-item-light flex-column 
 </div></li>';
 }
 if ( isset($listpaymentmethods->stripe) && in_array('card', $listpaymentmethods->stripe->types) ) {
-$paymentmethods .='<li class="list-group-item list-group-item-action flex-column align-items-start"><div class="custom-control custom-radio">
+$paymentmethods .= '<li class="list-group-item list-group-item-action flex-column align-items-start"><div class="custom-control custom-radio">
 <input type="radio" id="card" name="paymentmode" value="card" class="custom-control-input" data-toggle="collapse" data-parent="#accordion" href="#card">
 <label class="custom-control-label w-100" for="card"><div class="row"><div class="col-3 col-md-2 col-xl-2 align-middle">
 <center><i class="fas fa-credit-card fa-3x fa-fw"></i></center></div><div class="col-9 col-md-10 col-xl-10 align-middle"><h6 class="my-0">'.__( 'Credit/debit card', 'doliconnect' ).'</h6><small class="text-muted">Visa, Mastercard, Amex...</small></div></div></label>
 </div></li>';
-$paymentmethods .='<li id="cardPanel" class="list-group-item list-group-item-secondary panel-collapse collapse"><div class="panel-body">';
-$paymentmethods .='<input id="cardholder-name" name="cardholder-name" value="" type="text" class="form-control" placeholder="'.__( "Card's owner", 'doliconnect').'" autocomplete="off" required>
+$paymentmethods .= '<li id="cardPanel" class="list-group-item list-group-item-secondary panel-collapse collapse"><div class="panel-body">';
+$paymentmethods .= '<input id="cardholder-name" name="cardholder-name" value="" type="text" class="form-control" placeholder="'.__( "Card's owner", 'doliconnect').'" autocomplete="off" required>
 <label for="card-element"></label>
 <div class="form-control" id="card-element"><!-- a Stripe Element will be inserted here. --></div>';
-$paymentmethods .="<p class='text-justify'>";
+$paymentmethods .= "<p class='text-justify'>";
 $blogname=get_bloginfo('name');
-$paymentmethods .='<small>'.sprintf( esc_html__( 'By providing your card and confirming this form, you are authorizing %s and Stripe, our payment service provider, to send instructions to the financial institution that issued your card to take payments from your card account in accordance with those instructions. You are entitled to a refund from your financial institution under the terms and conditions of your agreement with your financial institution. A refund must be claimed within 90 days starting from the date on which your card was debited.', 'doliconnect'), $blogname).'</small>';
-$paymentmethods .="</p>";
+$paymentmethods .= '<small>'.sprintf( esc_html__( 'By providing your card and confirming this form, you are authorizing %s and Stripe, our payment service provider, to send instructions to the financial institution that issued your card to take payments from your card account in accordance with those instructions. You are entitled to a refund from your financial institution under the terms and conditions of your agreement with your financial institution. A refund must be claimed within 90 days starting from the date on which your card was debited.', 'doliconnect'), $blogname).'</small>';
+$paymentmethods .= "</p>";
+$paymentmethods .= '<p><div class="custom-control custom-radio custom-control-inline">
+  <input type="radio" id="cardDefault0" name="cardDefault" class="custom-control-input" checked>
+  <label class="custom-control-label" for="cardDefault0">'.__( "Save", 'doliconnect').'</label>
+</div>
+<div class="custom-control custom-radio custom-control-inline">
+  <input type="radio" id="cardDefault1" name="cardDefault" class="custom-control-input">
+  <label class="custom-control-label" for="cardDefault1">'.__( "Save as default", 'doliconnect').'</label>
+</div></p>';
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
 $paymentmethods .='<button id="cardPayButton" class="btn btn-danger btn-block" ><b>'.__( 'Pay', 'doliconnect' )." ".doliprice($object, 'ttc', $currency).'</b></button>';
 } else {
