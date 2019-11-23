@@ -985,7 +985,7 @@ $paymentmethods .="<div id='error-message' role='alert'><!-- a Stripe Message wi
 
 $paymentmethods .="<script>";
 
-if ( $listpaymentmethods->code_account != null ) {
+if ( !empty($listpaymentmethods->stripe->account) ) {
 $paymentmethods .="var stripe = Stripe('".$listpaymentmethods->stripe->publishable_key."', {
   stripeAccount: '".$listpaymentmethods->stripe->account."'
 });";
