@@ -828,9 +828,9 @@ $paymentmethods .="<li class='list-group-item list-group-item-info'><i class='fa
 }
  
 $pm = array();
-if ( $listpaymentmethods->paymentmethods != null ) {
+if ( $listpaymentmethods->payment_methods != null ) {
 $i = 0;
-foreach ( $listpaymentmethods->paymentmethods as $method ) {
+foreach ( $listpaymentmethods->payment_methods as $method ) {
 $pm[] .= "".$method->id."";                                                                                                                      
 $paymentmethods .="<li class='list-group-item list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>";
 $paymentmethods .='<input onclick="ShowHideDivPM(\''.$method->id.'\')" type="radio" id="'.$method->id.'" name="paymentmode" value="'.$method->id.'" class="custom-control-input" data-toggle="collapse" data-parent="#accordion" href="#'.$method->id.'" ';
@@ -941,7 +941,7 @@ $paymentmethods .='</div></li>';
 if ( isset($listpaymentmethods->RIB) && $listpaymentmethods->RIB != null ) {
 $paymentmethods .= "<li class='list-group-item list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>
 <input type='radio' id='vir' name='paymentmode' value='vir' class='custom-control-input' data-toggle='collapse' data-parent='#accordion' ";
-if ( $listpaymentmethods->paymentmethods == null && empty($listpaymentmethods->card) ) { $paymentmethods .= " checked"; }
+if ( $listpaymentmethods->payment_methods == null && empty($listpaymentmethods->card) ) { $paymentmethods .= " checked"; }
 $paymentmethods .= " href='#vir'><label class='custom-control-label w-100' for='vir'><div class='row'><div class='col-3 col-md-2 col-xl-2 align-middle'>";
 $paymentmethods .= '<center><i class="fas fa-university fa-3x fa-fw" style="color:DarkGrey"></i></center>';
 $paymentmethods .= "</div><div class='col-9 col-md-10 col-xl-10 align-middle'><h6 class='my-0'>".__( 'Transfer', 'doliconnect' )."</h6><small class='text-muted'>".__( 'See your receipt', 'doliconnect' )."</small>";
@@ -954,7 +954,7 @@ $paymentmethods .='</div></li>';
 if ( isset($listpaymentmethods->CHQ) && $listpaymentmethods->CHQ != null ) {
 $paymentmethods .= "<li class='list-group-item list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>
 <input type='radio' id='chq' name='paymentmode' value='chq' class='custom-control-input' data-toggle='collapse' data-parent='#accordion' ";
-if ( $listpaymentmethods->paymentmethods == null && $listpaymentmethods->card != 1 && $listpaymentmethods->RIB == null ) { $paymentmethods .= " checked"; }
+if ( $listpaymentmethods->payment_methods == null && $listpaymentmethods->card != 1 && $listpaymentmethods->RIB == null ) { $paymentmethods .= " checked"; }
 $paymentmethods .= " href='#chq'><label class='custom-control-label w-100' for='chq'><div class='row'><div class='col-3 col-md-2 col-xl-2 align-middle'>";
 $paymentmethods .= '<center><i class="fas fa-money-check fa-3x fa-fw" style="color:Tan"></i></center>';
 $paymentmethods .= "</div><div class='col-9 col-md-10 col-xl-10 align-middle'><h6 class='my-0'>".__( 'Check', 'doliconnect' )."</h6><small class='text-muted'>".__( 'See your receipt', 'doliconnect' )."</small>";
@@ -967,7 +967,7 @@ $paymentmethods .='</div></li>';
 if ( ! empty(dolikiosk()) ) {
 $paymentmethod .= "<li class='list-group-item list-group-item-action flex-column align-items-startt'><div class='custom-control custom-radio'>
 <input type='radio' id='liq' name='paymentmode' value='liq' class='custom-control-input' data-toggle='collapse' data-parent='#accordion' ";
-if ( $listpaymentmethods->paymentmethods == null && empty($listpaymentmethods->card) && $listpaymentmethods->CHQ == null && $listpaymentmethods->RIB == null ) { $paymentmethods .= " checked"; }
+if ( $listpaymentmethods->payment_methods == null && empty($listpaymentmethods->card) && $listpaymentmethods->CHQ == null && $listpaymentmethods->RIB == null ) { $paymentmethods .= " checked"; }
 $paymentmethods .= " href='#liq'><label class='custom-control-label w-100' for='liq'><div class='row'><div class='col-3 col-md-2 col-xl-2 align-middle'>";
 $paymentmethods .= '<center><i class="fas fa-money-bill-alt fa-3x fa-fw" style="color:#85bb65"></i></center>';
 $paymentmethods .= "</div><div class='col-9 col-md-10 col-xl-10 align-middle'><h6 class='my-0'>".__( 'Cash', 'doliconnect' )."</h6><small class='text-muted'>".__( 'Go to reception desk', 'doliconnect' )."</small>";
