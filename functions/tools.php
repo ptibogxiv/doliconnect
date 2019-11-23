@@ -919,7 +919,7 @@ $paymentmethods .="<button id='ibanButton' class='btn btn-warning btn-block' tit
 }
 $paymentmethods .='</div></li>';
 }
-if ( isset($listpaymentmethods->ideal) && !empty($listpaymentmethods->ideal) && get_option('doliconnectbeta')=='1' && current_user_can( 'administrator' )) {
+if ( isset($listpaymentmethods->ideal) && !empty($listpaymentmethods->ideal) && !empty($module) && is_object($object) && isset($object->id) && get_option('doliconnectbeta')=='1' && current_user_can( 'administrator' )) {
 $paymentmethods .='<li class="list-group-item list-group-item-action flex-column align-items-start"><div class="custom-control custom-radio">
 <input type="radio" id="ideal" name="paymentmode" value="ideal" class="custom-control-input" data-toggle="collapse" data-parent="#accordion" href="#ideal">
 <label class="custom-control-label w-100" for="ideal"><div class="row"><div class="col-3 col-md-2 col-xl-2 align-middle">
@@ -929,6 +929,9 @@ $paymentmethods .='<li id="idealPanel" class="list-group-item list-group-item-se
 $paymentmethods .='<input id="idealholder-name" name="idealholder-name" value="" type="text" class="form-control" placeholder="'.__( "Bank's owner", 'doliconnect').'" autocomplete="off" required>
 <label for="ideal-element"></label>
 <div class="form-control" id="ideal-element"><!-- a Stripe Element will be inserted here. --></div>';
+$paymentmethods .="<p class='text-justify'>";
+$paymentmethods .="</p>";
+$paymentmethods .='<button id="idealPayButton" class="btn btn-danger btn-block" ><b>'.__( 'Pay', 'doliconnect' )." ".doliprice($object, 'ttc', $currency).'</b></button>';
 $paymentmethods .='</div></li>';
 }
 
