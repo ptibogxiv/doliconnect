@@ -891,7 +891,7 @@ $paymentmethods .='<input id="cardholder-name" name="cardholder-name" value="" t
 $paymentmethods .="<p class='text-justify'>";
 $blogname=get_bloginfo('name');
 $paymentmethods .='<small>'.sprintf( esc_html__( 'By providing your card and confirming this form, you are authorizing %s and Stripe, our payment service provider, to send instructions to the financial institution that issued your card to take payments from your card account in accordance with those instructions. You are entitled to a refund from your financial institution under the terms and conditions of your agreement with your financial institution. A refund must be claimed within 90 days starting from the date on which your card was debited.', 'doliconnect'), $blogname).'</small>';
-$paymentmethods .="</p><div id='bank-name'>";
+$paymentmethods .="</p>";
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
 $paymentmethods .='<button id="cardPayButton" class="btn btn-danger btn-block" ><b>'.__( 'Pay', 'doliconnect' )." ".doliprice($object, 'ttc', $currency).'</b></button>';
 } else {
