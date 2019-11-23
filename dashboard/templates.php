@@ -1358,7 +1358,7 @@ print "</small></li>";
 print "</ul></div></div><div class='col-12 col-md-8'>";
 
 if ( doliversion('10.0.0') ) {
-print dolipaymentmethods($object, substr($module, 0, -1), doliconnecturl('dolicart')."?pay", esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+print dolipaymentmethods($object, substr($module, 0, -1), doliconnecturl('dolicart')."?pay", true);
 } else {
 print __( "It seems that your version of Dolibarr and/or its plugins are not up to date!", "doliconnect");
 }
