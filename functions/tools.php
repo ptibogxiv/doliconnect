@@ -504,7 +504,7 @@ if (false ===  get_site_option('doliconnect_delay_'.$delay) ) {
 if ($delay == 'constante') { $delay = MONTH_IN_SECONDS; }
 elseif ($delay == 'dolibarr') { $delay = HOUR_IN_SECONDS; }
 elseif ($delay == 'doliconnector') { $delay = HOUR_IN_SECONDS; }
-elseif ($delay == 'payment_methods') { $delay = WEEK_IN_SECONDS; }
+elseif ($delay == 'paymentmethods') { $delay = WEEK_IN_SECONDS; }
 elseif ($delay == 'thirdparty') { $delay = DAY_IN_SECONDS; }
 elseif ($delay == 'contact') { $delay = WEEK_IN_SECONDS; }
 elseif ($delay == 'proposal') { $delay = HOUR_IN_SECONDS; }
@@ -802,7 +802,7 @@ $currency=strtolower($object->multicurrency_code?$object->multicurrency_code:'eu
 $stripeAmount=($object->multicurrency_total_ttc?$object->multicurrency_total_ttc:$object->total_ttc)*100;
 }
 
-$listpaymentmethods = callDoliApi("GET", $request, null, dolidelay('payment_methods', $refresh));
+$listpaymentmethods = callDoliApi("GET", $request, null, dolidelay('paymentmethods', $refresh));
 //print $listsource;
 
 $lock = dolipaymentmodes_lock(); 
@@ -1012,7 +1012,7 @@ $paymentmethods .='var style = {
 $paymentmethods .='var options = {
   style: style,
   supportedCountries: ["SEPA"],
-  placeholderCountry: "'.$listpaymentmethods->cus_countrycode.'",
+  placeholderCountry: "'.$listpaymentmethods->thirdparty->countrycode.'",
 };';
 
 $paymentmethods .="function HideDivPM(controle = null) {
@@ -1163,7 +1163,7 @@ ibanButton.disabled = true;
         sepa_debit: ibanElement,
         billing_details: {
           name: ibanholderName.value,
-          email: '".$listpaymentmethods->cus_email."'
+          email: '".$listpaymentmethods->thirdparty->email."'
         }
       }
     }

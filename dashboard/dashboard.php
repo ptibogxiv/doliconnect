@@ -592,12 +592,12 @@ $data = [
 ];
 
 $gateway = callDoliApi("PUT", $request."/".sanitize_text_field($_POST['default_paymentmethod']), $data, dolidelay( 0, true));
-$gateway = callDoliApi("GET", $request, null, dolidelay('payment_methods', true));
+$gateway = callDoliApi("GET", $request, null, dolidelay('paymentmethods', true));
 $msg = dolialert ('success', __( 'You changed your default payment method', 'doliconnect'));
 } elseif ( isset($_POST['delete_paymentmethod']) ) {
 
 $gateway = callDoliApi("DELETE", $request."/".sanitize_text_field($_POST['delete_paymentmethod']), null, dolidelay( 0, true));
-$gateway = callDoliApi("GET", $request, null, dolidelay('payment_methods', true));
+$gateway = callDoliApi("GET", $request, null, dolidelay('paymentmethods', true));
 
 } elseif ( isset($_POST['add_paymentmethod']) ) {
 
@@ -606,7 +606,7 @@ $data = [
 ];
 
 $gateway = callDoliApi("POST", $request."/".sanitize_text_field($_POST['add_paymentmethod']), $data, dolidelay( 0, true));
-$gateway = callDoliApi("GET", $request, null, dolidelay('payment_methods', true));
+$gateway = callDoliApi("GET", $request, null, dolidelay('paymentmethods', true));
 $msg = dolialert ('success', __( 'You have a new payment method', 'doliconnect'));
 } 
 
