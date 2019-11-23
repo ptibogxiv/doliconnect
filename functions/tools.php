@@ -879,7 +879,7 @@ $paymentmethods .='<li class="list-group-item list-group-item-light flex-column 
 <center><i class="fas fa-border-none fa-3x fa-fw"></i></center></div><div class="col-9 col-md-10 col-xl-10 align-middle"><h6 class="my-0">'.__( 'No payment method', 'doliconnect').'</h6><small class="text-muted"></small></div></div></label>
 </div></li>';
 }
-if ( isset($listpaymentmethods->stripe) && in_array('card', $listpaymentmethods->stripe->type) ) {
+if ( isset($listpaymentmethods->stripe) && in_array('card', $listpaymentmethods->stripe->types) ) {
 $paymentmethods .='<li class="list-group-item list-group-item-action flex-column align-items-start"><div class="custom-control custom-radio">
 <input type="radio" id="card" name="paymentmode" value="card" class="custom-control-input" data-toggle="collapse" data-parent="#accordion" href="#card">
 <label class="custom-control-label w-100" for="card"><div class="row"><div class="col-3 col-md-2 col-xl-2 align-middle">
@@ -900,7 +900,7 @@ $paymentmethods .="<button id='cardButton' class='btn btn-warning btn-block' tit
 }
 $paymentmethods .='</div></li>';
 }
-if ( isset($listpaymentmethods->stripe) && in_array('sepa_debit', $listpaymentmethods->stripe->type) ) {
+if ( isset($listpaymentmethods->stripe) && in_array('sepa_debit', $listpaymentmethods->stripe->types) ) {
 $paymentmethods .='<li class="list-group-item list-group-item-action flex-column align-items-start"><div class="custom-control custom-radio">
 <input type="radio" id="iban" name="paymentmode" value="iban" class="custom-control-input" data-toggle="collapse" data-parent="#accordion" href="#iban">
 <label class="custom-control-label w-100" for="iban"><div class="row"><div class="col-3 col-md-2 col-xl-2 align-middle">
@@ -921,7 +921,7 @@ $paymentmethods .="<button id='ibanButton' class='btn btn-warning btn-block' tit
 }
 $paymentmethods .='</div></li>';
 }
-if ( isset($listpaymentmethods->stripe) && in_array('ideal', $listpaymentmethods->stripe->type) && !empty($module) && is_object($object) && isset($object->id) ) {
+if ( isset($listpaymentmethods->stripe) && in_array('ideal', $listpaymentmethods->stripe->types) && !empty($module) && is_object($object) && isset($object->id) ) {
 $paymentmethods .='<li class="list-group-item list-group-item-action flex-column align-items-start"><div class="custom-control custom-radio">
 <input type="radio" id="ideal" name="paymentmode" value="ideal" class="custom-control-input" data-toggle="collapse" data-parent="#accordion" href="#ideal">
 <label class="custom-control-label w-100" for="ideal"><div class="row"><div class="col-3 col-md-2 col-xl-2 align-middle">
