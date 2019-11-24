@@ -471,7 +471,7 @@ class GDRF_Widget extends WP_Widget {
 
 		parent::__construct(
 			'gdrf-widget',
-			'GDPR Data Request Form'
+			'GDPR Data Request (Doliconnect)'
 		);
 
 		add_action(
