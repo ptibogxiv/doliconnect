@@ -499,6 +499,7 @@ class GDRF_Widget extends WP_Widget {
 				$params['request_type'] = 'remove';
 			}
 		}
+    		$params['widget'] = true;
 		echo gdrf_data_request_form( $params );
 
 	}
