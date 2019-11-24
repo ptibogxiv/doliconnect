@@ -874,14 +874,14 @@ $i++;
 $paymentmethods .='<li class="list-group-item list-group-item-light flex-column align-items-start"><div class="custom-control custom-radio">
 <input type="radio" id="none" name="paymentmode" value="none" class="custom-control-input" data-toggle="collapse" data-parent="#accordion" href="#none" checked>
 <label class="custom-control-label w-100" for="none"><div class="row"><div class="col-3 col-md-2 col-xl-2 align-middle">
-<center><i class="fas fa-border-none fa-3x fa-fw"></i></center></div><div class="col-9 col-md-10 col-xl-10 align-middle"><h6 class="my-0">'.__( 'No payment method', 'doliconnect').'</h6><small class="text-muted"></small></div></div></label>
+<center><i class="fas fa-border-none fa-3x fa-fw"></i></center></div><div class="col-auto align-middle"><h6 class="my-0">'.__( 'No payment method', 'doliconnect').'</h6><small class="text-muted"></small></div></div></label>
 </div></li>';
 }
 if ( isset($listpaymentmethods->stripe) && in_array('card', $listpaymentmethods->stripe->types) ) {
 $paymentmethods .= '<li class="list-group-item list-group-item-action flex-column align-items-start"><div class="custom-control custom-radio">
 <input type="radio" id="card" name="paymentmode" value="card" class="custom-control-input" data-toggle="collapse" data-parent="#accordion" href="#card">
 <label class="custom-control-label w-100" for="card"><div class="row"><div class="col-3 col-md-2 col-xl-2 align-middle">
-<center><i class="fas fa-credit-card fa-3x fa-fw"></i></center></div><div class="col-9 col-md-10 col-xl-10 align-middle"><h6 class="my-0">'.__( 'Credit/debit card', 'doliconnect' ).'</h6><small class="text-muted">Visa, Mastercard, Amex...</small></div></div></label>
+<center><i class="fas fa-credit-card fa-3x fa-fw"></i></center></div><div class="col-auto align-middle"><h6 class="my-0">'.__( 'Credit/debit card', 'doliconnect' ).'</h6><small class="text-muted">Visa, Mastercard, Amex...</small></div></div></label>
 </div></li>';
 $paymentmethods .= '<li id="cardPanel" class="list-group-item list-group-item-secondary panel-collapse collapse"><div class="panel-body">';
 $paymentmethods .= '<input id="cardholder-name" name="cardholder-name" value="" type="text" class="form-control" placeholder="'.__( "Card's owner", 'doliconnect').'" autocomplete="off" required>
@@ -910,7 +910,7 @@ if ( isset($listpaymentmethods->stripe) && in_array('sepa_debit', $listpaymentme
 $paymentmethods .='<li class="list-group-item list-group-item-action flex-column align-items-start"><div class="custom-control custom-radio">
 <input type="radio" id="iban" name="paymentmode" value="iban" class="custom-control-input" data-toggle="collapse" data-parent="#accordion" href="#iban">
 <label class="custom-control-label w-100" for="iban"><div class="row"><div class="col-3 col-md-2 col-xl-2 align-middle">
-<center><i class="fas fa-university fa-3x fa-fw"></i></center></div><div class="col-9 col-md-10 col-xl-10 align-middle"><h6 class="my-0">'.__( 'Bank account', 'doliconnect' ).'</h6><small class="text-muted">Via SEPA Direct Debit</small></div></div></label>
+<center><i class="fas fa-university fa-3x fa-fw"></i></center></div><div class="col-auto align-middle"><h6 class="my-0">'.__( 'Bank account', 'doliconnect' ).'</h6><small class="text-muted">Via SEPA Direct Debit</small></div></div></label>
 </div></li>';
 $paymentmethods .='<li id="ibanPanel" class="list-group-item list-group-item-secondary panel-collapse collapse"><div class="panel-body">';
 $paymentmethods .='<input id="ibanholder-name" name="ibanholder-name" value="" type="text" class="form-control" placeholder="'.__( "Bank's owner", 'doliconnect').'" autocomplete="off" required>
@@ -939,7 +939,7 @@ if ( isset($listpaymentmethods->stripe) && in_array('ideal', $listpaymentmethods
 $paymentmethods .='<li class="list-group-item list-group-item-action flex-column align-items-start"><div class="custom-control custom-radio">
 <input type="radio" id="ideal" name="paymentmode" value="ideal" class="custom-control-input" data-toggle="collapse" data-parent="#accordion" href="#ideal">
 <label class="custom-control-label w-100" for="ideal"><div class="row"><div class="col-3 col-md-2 col-xl-2 align-middle">
-<center><i class="fas fa-university fa-3x fa-fw"></i></center></div><div class="col-9 col-md-10 col-xl-10 align-middle"><h6 class="my-0">'.__( 'iDEAL', 'doliconnect' ).'</h6><small class="text-muted">iDEAL PAYMENT</small></div></div></label>
+<center><i class="fas fa-university fa-3x fa-fw"></i></center></div><div class="col-auto align-middle"><h6 class="my-0">'.__( 'iDEAL', 'doliconnect' ).'</h6><small class="text-muted">iDEAL PAYMENT</small></div></div></label>
 </div></li>';
 $paymentmethods .='<li id="idealPanel" class="list-group-item list-group-item-secondary panel-collapse collapse"><div class="panel-body">';
 $paymentmethods .='<input id="idealholder-name" name="idealholder-name" value="" type="text" class="form-control" placeholder="'.__( "Bank's owner", 'doliconnect').'" autocomplete="off" required>
@@ -958,7 +958,7 @@ $paymentmethods .= "<li class='list-group-item list-group-item-action flex-colum
 if ( $listpaymentmethods->payment_methods == null && empty($listpaymentmethods->card) ) { $paymentmethods .= " checked"; }
 $paymentmethods .= " href='#vir'><label class='custom-control-label w-100' for='vir'><div class='row'><div class='col-3 col-md-2 col-xl-2 align-middle'>";
 $paymentmethods .= '<center><i class="fas fa-university fa-3x fa-fw" style="color:DarkGrey"></i></center>';
-$paymentmethods .= "</div><div class='col-9 col-md-10 col-xl-10 align-middle'><h6 class='my-0'>".__( 'Transfer', 'doliconnect' )."</h6><small class='text-muted'>".__( 'See your receipt', 'doliconnect' )."</small>";
+$paymentmethods .= "</div><div class='col-auto align-middle'><h6 class='my-0'>".__( 'Transfer', 'doliconnect' )."</h6><small class='text-muted'>".__( 'See your receipt', 'doliconnect' )."</small>";
 $paymentmethods .= '</div></div></label></div></li>';
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
 $paymentmethods .='<li id="virPanel" class="list-group-item list-group-item-secondary panel-collapse collapse"><div class="panel-body">';
@@ -971,7 +971,7 @@ $paymentmethods .= "<li class='list-group-item list-group-item-action flex-colum
 if ( $listpaymentmethods->payment_methods == null && $listpaymentmethods->card != 1 && $listpaymentmethods->RIB == null ) { $paymentmethods .= " checked"; }
 $paymentmethods .= " href='#chq'><label class='custom-control-label w-100' for='chq'><div class='row'><div class='col-3 col-md-2 col-xl-2 align-middle'>";
 $paymentmethods .= '<center><i class="fas fa-money-check fa-3x fa-fw" style="color:Tan"></i></center>';
-$paymentmethods .= "</div><div class='col-9 col-md-10 col-xl-10 align-middle'><h6 class='my-0'>".__( 'Check', 'doliconnect' )."</h6><small class='text-muted'>".__( 'See your receipt', 'doliconnect' )."</small>";
+$paymentmethods .= "</div><div class='col-auto align-middle'><h6 class='my-0'>".__( 'Check', 'doliconnect' )."</h6><small class='text-muted'>".__( 'See your receipt', 'doliconnect' )."</small>";
 $paymentmethods .= '</div></div></label></div></li>';
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
 $paymentmethods .='<li id="chqPanel" class="list-group-item list-group-item-secondary panel-collapse collapse"><div class="panel-body">';
@@ -984,7 +984,7 @@ $paymentmethod .= "<li class='list-group-item list-group-item-action flex-column
 if ( $listpaymentmethods->payment_methods == null && empty($listpaymentmethods->card) && $listpaymentmethods->CHQ == null && $listpaymentmethods->RIB == null ) { $paymentmethods .= " checked"; }
 $paymentmethods .= " href='#liq'><label class='custom-control-label w-100' for='liq'><div class='row'><div class='col-3 col-md-2 col-xl-2 align-middle'>";
 $paymentmethods .= '<center><i class="fas fa-money-bill-alt fa-3x fa-fw" style="color:#85bb65"></i></center>';
-$paymentmethods .= "</div><div class='col-9 col-md-10 col-xl-10 align-middle'><h6 class='my-0'>".__( 'Cash', 'doliconnect' )."</h6><small class='text-muted'>".__( 'Go to reception desk', 'doliconnect' )."</small>";
+$paymentmethods .= "</div><div class='col-auto align-middle'><h6 class='my-0'>".__( 'Cash', 'doliconnect' )."</h6><small class='text-muted'>".__( 'Go to reception desk', 'doliconnect' )."</small>";
 $paymentmethods .= '</div></div></label></div></li>';
 }
 
