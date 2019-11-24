@@ -47,7 +47,7 @@ echo '<h2>Gestion des admins</h2>';
 $result = count_users(); 
 echo 'There are ', $result['total_users'], ' total users';
 
-if ($_REQUEST['doliboard']) {
+if (isset($_REQUEST['doliboard'])) {
 foreach ( $_REQUEST['doliboard'] as $id => $value ) {
 echo " $id $value <br />";
 if ( $value == '0' ) { delete_user_meta($value,'doliboard_4');
@@ -69,7 +69,7 @@ echo "<br />$i ";
 $usera = reset(
  get_users(
   array(
-   'meta_key' => 'doliboard_'.get_current_blog_id(),
+   'meta_key' => 'doliboard_'.get_current_blog_id().'',
    'meta_value' => ''.$i.'',
    'number' => 1,
    'count_total' => false
