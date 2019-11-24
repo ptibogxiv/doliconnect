@@ -1304,12 +1304,12 @@ global $current_user;
 	// Default strings
 	$defaults = array(
 		'form_id'              => 'gdrf-form',
-		'label_select_request' => esc_html__( 'Select your request:', 'gdpr-data-request-form' ),
-		'label_select_export'  => esc_html__( 'Export Personal Data', 'gdpr-data-request-form' ),
-		'label_select_remove'  => esc_html__( 'Remove Personal Data', 'gdpr-data-request-form' ),
-		'label_input_email'    => esc_html__( 'Your email address (required)', 'gdpr-data-request-form' ),
-		'label_input_captcha'  => esc_html__( 'Human verification (required):', 'gdpr-data-request-form' ),
-		'value_submit'         => esc_html__( 'Send Request', 'gdpr-data-request-form' ),
+		'label_select_request' => esc_html__( 'Select your request:', 'doliconnect'),
+		'label_select_export'  => esc_html__( 'Export Personal Data', 'doliconnect'),
+		'label_select_remove'  => esc_html__( 'Remove Personal Data', 'doliconnect'),
+		'label_input_email'    => esc_html__( 'Your email address (required)', 'doliconnect'),
+		'label_input_captcha'  => esc_html__( 'Human verification (required):', 'doliconnect'),
+		'value_submit'         => esc_html__( 'Send Request', 'doliconnect'),
 		'request_type'         => 'both',
 	);
 
@@ -1385,7 +1385,7 @@ global $current_user;
 		return ob_get_clean();
 	} else {
 		// Display error message
-		return esc_html__( 'This plugin requires WordPress 4.9.6.', 'gdpr-data-request-form' );
+		return esc_html__( 'This plugin requires WordPress 4.9.6.', 'doliconnect');
 	}
 
 }

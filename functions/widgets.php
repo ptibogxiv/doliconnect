@@ -511,19 +511,19 @@ class GDRF_Widget extends WP_Widget {
 		?>
 
 		<p>
-			<label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php esc_html_e( 'Optional widget title:', 'gdpr-data-request-form' ); ?></label>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php esc_html_e( 'Optional widget title:', 'doliconnect'); ?></label>
 			<input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
 		</p>
 		<p>
-			<label for="<?php echo esc_attr( $this->get_field_id( 'text' ) ); ?>"><?php esc_html_e( 'Optional widget description:', 'gdpr-data-request-form' ); ?></label>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'text' ) ); ?>"><?php esc_html_e( 'Optional widget description:', 'doliconnect'); ?></label>
 			<textarea class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'text' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'text' ) ); ?>" type="text" cols="30" rows="10"><?php echo esc_attr( $text ); ?></textarea>
 		</p>
 		<p>
-			<label for="<?php echo esc_attr( $this->get_field_id( 'request_type' ) ); ?>"><?php echo esc_attr( 'Request type:', 'gdpr-data-request-form' ); ?></label>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'request_type' ) ); ?>"><?php echo esc_attr( 'Request type:', 'doliconnect'); ?></label>
 			<select name="<?php echo esc_attr( $this->get_field_name( 'request_type' ) ); ?>" id="<?php echo esc_attr( $this->get_field_id( 'request_type' ) ); ?>">
-				<option value="both" <?php selected( $request_type, 'both' ); ?>><?php esc_attr_e( 'Both Export and Remove', 'gdpr-data-request-form' ); ?></option>
-				<option value="export" <?php selected( $request_type, 'export' ); ?>><?php esc_attr_e( 'Data Export form only', 'gdpr-data-request-form' ); ?></option>
-				<option value="remove" <?php selected( $request_type, 'remove' ); ?>><?php esc_attr_e( 'Data Remove form only', 'gdpr-data-request-form' ); ?></option>
+				<option value="both" <?php selected( $request_type, 'both' ); ?>><?php esc_attr_e( 'Both Export and Remove', 'doliconnect'); ?></option>
+				<option value="export" <?php selected( $request_type, 'export' ); ?>><?php esc_attr_e( 'Data Export form only', 'doliconnect'); ?></option>
+				<option value="remove" <?php selected( $request_type, 'remove' ); ?>><?php esc_attr_e( 'Data Remove form only', 'doliconnect'); ?></option>
 			</select>
 		</p>
 
