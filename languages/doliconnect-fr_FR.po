@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2019-11-23 20:56+0100\n"
-"PO-Revision-Date: 2019-11-23 20:56+0100\n"
+"POT-Creation-Date: 2019-11-24 16:18+0100\n"
+"PO-Revision-Date: 2019-11-24 16:20+0100\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_FR\n"
@@ -696,34 +696,6 @@ msgstr "Monnaie par défaut"
 msgid "Privacy"
 msgstr "Confidentialité"
 
-#: dashboard/dashboard.php:2077
-msgid "Export your personal data"
-msgstr "Exporter vos données personnelles"
-
-#: dashboard/dashboard.php:2077
-msgid "You will receive an email with a secure link to your data"
-msgstr "Vous recevrez un email avec un lien sécurisé vers vos données"
-
-#: dashboard/dashboard.php:2084
-msgid "Remove your personal data"
-msgstr "Retirer vos données personnelles"
-
-#: dashboard/dashboard.php:2084
-msgid "Soon, you will be able to erase your account"
-msgstr "Bientôt, vous pourrez effacer votre compte"
-
-#: dashboard/dashboard.php:2091
-msgid "Delete your account"
-msgstr "Supprimer votre compte"
-
-#: dashboard/dashboard.php:2091
-msgid "Soon, you will be able to delete your account"
-msgstr "Bientôt, vous pourrez supprimer votre compte"
-
-#: dashboard/dashboard.php:2098
-msgid "Validate the request"
-msgstr "Valider la demande"
-
 #: dashboard/templates.php:39
 msgid "Home"
 msgstr "Accueil"
@@ -1072,7 +1044,7 @@ msgstr "Vider le panier"
 msgid "Process"
 msgstr "Finaliser"
 
-#: functions/data-request.php:10
+#: functions/data-request.php:24
 msgid ""
 "The request can’t be processed on this website. This feature requires "
 "WordPress 4.9.6 at least."
@@ -1080,7 +1052,7 @@ msgstr ""
 "La demande ne peut pas être traitée sur ce site. Cette fonctionnalité "
 "nécessite WordPress 4.9.6 au moins."
 
-#: functions/data-request.php:16
+#: functions/data-request.php:30
 msgid ""
 "Security check failed, please refresh this page and try to submit the form "
 "again."
@@ -1088,11 +1060,16 @@ msgstr ""
 "La vérification de la sécurité a échoué. Actualisez la page et essayez à "
 "nouveau."
 
-#: functions/data-request.php:19
+#: functions/data-request.php:33
 msgid "This is not a valid email address."
 msgstr "Ceci n'est pas une adresse e-mail valide."
 
-#: functions/data-request.php:22
+#: functions/data-request.php:36
+msgid "Security check failed, invalid human verification field."
+msgstr ""
+"La vérification de sécurité a échoué, champ de vérification humaine invalide."
+
+#: functions/data-request.php:39
 msgid ""
 "Request type invalid, please refresh this page and try to submit the form "
 "again."
@@ -1100,16 +1077,28 @@ msgstr ""
 "Type de demande invalide, veuillez rafraîchir cette page et essayer de "
 "soumettre à nouveau le formulaire."
 
-#: functions/data-request.php:26
+#: functions/data-request.php:43
 msgid "All fields are required."
 msgstr "Tous les champs sont obligatoires."
 
-#: functions/data-request.php:33
+#: functions/data-request.php:50
 msgid ""
 "Unable to initiate confirmation request. Please contact the administrator."
 msgstr ""
 "Impossible d'initier la demande de confirmation. S'il vous plaît contacter "
 "l'administrateur."
+
+#: functions/enqueues.php:8
+msgid ""
+"Your enquiry have been submitted. Check your email to validate your data "
+"request."
+msgstr ""
+"Votre enquête ont été présentés. Vérifiez votre adresse email pour valider "
+"votre demande de données."
+
+#: functions/enqueues.php:9
+msgid "Some errors occurred:"
+msgstr "Quelques erreurs sont survenues :"
 
 #: functions/product.php:44
 msgid "Available"
@@ -1562,6 +1551,62 @@ msgstr "Espèces"
 msgid "Go to reception desk"
 msgstr "Aller à la réception"
 
+#: functions/tools.php:1307
+msgid "Select your request:"
+msgstr "Sélectionnez votre demande :"
+
+#: functions/tools.php:1308
+msgid "Export Personal Data"
+msgstr "Exporter vos données personnelles"
+
+#: functions/tools.php:1309
+msgid "Remove Personal Data"
+msgstr "Supprimer vos données personnelles"
+
+#: functions/tools.php:1310
+msgid "Your email address (required)"
+msgstr "Votre adresse e-mail (requise)"
+
+#: functions/tools.php:1311
+msgid "Human verification (required):"
+msgstr "Vérification humaine (requise) :"
+
+#: functions/tools.php:1312
+msgid "Send Request"
+msgstr "Envoyer la demande"
+
+#: functions/tools.php:1339
+msgid "Export your data"
+msgstr "Exportez vos données"
+
+#: functions/tools.php:1339
+msgid "You will receive an email with a secure link to your data"
+msgstr "Vous recevrez un email avec un lien sécurisé vers vos données"
+
+#: functions/tools.php:1345
+msgid "Erase your data"
+msgstr "Effacer vos données"
+
+#: functions/tools.php:1345
+msgid "Soon, you will be able to erase your account"
+msgstr "Bientôt, vous pourrez effacer votre compte"
+
+#: functions/tools.php:1351
+msgid "Delete your account"
+msgstr "Supprimer votre compte"
+
+#: functions/tools.php:1351
+msgid "Soon, you will be able to delete your account"
+msgstr "Bientôt, vous pourrez supprimer votre compte"
+
+#: functions/tools.php:1374
+msgid "Validate the request"
+msgstr "Valider la demande"
+
+#: functions/tools.php:1388
+msgid "This plugin requires WordPress 4.9.6."
+msgstr "Ce plugin nécessite WordPress 4.9.6."
+
 #: functions/widgets.php:35 functions/widgets.php:37
 msgid "Report a Bug"
 msgstr "Signaler un bug"
@@ -1590,6 +1635,26 @@ msgstr "Catégorie de produits"
 #: functions/widgets.php:415
 msgid "Choose language"
 msgstr "Choisir la langue"
+
+#: functions/widgets.php:514
+msgid "Optional widget title:"
+msgstr "Titre de widget optionnel:"
+
+#: functions/widgets.php:518
+msgid "Optional widget description:"
+msgstr "Description de widget facultative :"
+
+#: functions/widgets.php:524
+msgid "Both Export and Remove"
+msgstr "À la fois exporter et supprimer"
+
+#: functions/widgets.php:525
+msgid "Data Export form only"
+msgstr "Formulaire d'exportation de données seulement"
+
+#: functions/widgets.php:526
+msgid "Data Remove form only"
+msgstr "Formulaire de suppression de données uniquement"
 
 #. Plugin URI of the plugin/theme
 msgid "https://www.ptibogxiv.net"
@@ -2068,13 +2133,6 @@ msgstr "https://www.ptibogxiv.net/fr"
 
 #~ msgid "Sign up"
 #~ msgstr "S'inscrire"
-
-#~ msgid ""
-#~ "Your enquiry have been submitted. Check your email to validate your data "
-#~ "request."
-#~ msgstr ""
-#~ "Votre enquête ont été présentés. Vérifiez votre adresse email pour "
-#~ "valider votre demande de données."
 
 #~ msgid "Lost password?"
 #~ msgstr "Mot de passe oublié?"
