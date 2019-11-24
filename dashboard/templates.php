@@ -279,16 +279,13 @@ print "";
 } else { print " aria-disabled='true'  disabled"; }
 print "><b>".__( 'Create an account', 'doliconnect' )."</b></button></form>";
 
-print "</div>";
-print '<div class="card-footer text-muted">';
-print "<small><div class='float-left'>";
-
-print "</div><div class='float-right'>";
-print dolihelp('ISSUE');
-print "</div></small>";
-print '</div></div></form>';
+print "</div></div>";
 
 do_action( 'login_footer' );
+
+print "<p class='text-right'><small>";
+print dolihelp('ISSUE');
+print "</small></p>";
 
 print "</div></div>";
 
@@ -312,7 +309,7 @@ exit;
 exit;
 } else {
 $dolibarr = callDoliApi("GET", "/doliconnector/".$user->ID, null, 0);
-if (isset($_POST["case"]) && $_POST["case"] == 'updatepwd'){
+if ($_POST["case"] == 'updatepwd'){
 $pwd = sanitize_text_field($_POST["pwd1"]);                                   
 if ( ($_POST["pwd1"] == $_POST["pwd2"]) && (preg_match('/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,20}/', $pwd))) {  //"#.*^(?=.{8,20})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*$#"
 
@@ -337,12 +334,8 @@ $msg = "<div class='alert alert-danger'><button type='button' class='close' data
 }
 }
  
-if ( isset($msg) ) { print $msg; }
-
-print "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
-if ($dolibarr->fk_user > '0'){  
-$request = "/users/".$dolibarr->fk_user;
-$doliuser = callDoliApi("GET", $request , null, dolidelay('thirdparty'));
+print $msg."<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
+if ( $dolibarr->fk_user > '0') {
 print "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".__( 'Your password will be synchronized with your Dolibarr account', 'doliconnect' )."</b></li>";
 } 
 print "<li class='list-group-item'><h5 class='card-title'>".__( 'Change your password', 'doliconnect' )."</h5>
@@ -378,13 +371,7 @@ if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $user-
 print ' disabled';
 }
 print "><b>".__( 'Update', 'doliconnect' )."</b></button></form></li></ul>";
-print "<div class='card-footer text-muted'>";
-print "<small><div class='float-left'>";
-if ( $request ) print dolirefresh($request, null, dolidelay('thirdparty'));
-print "</div><div class='float-right'>";
-print dolihelp('ISSUE');
-print "</div></small>";
-print '</div></div>';
+print "</div>";
 
 }
 }
@@ -518,14 +505,11 @@ print "</div></div></div>";
 print "<ul class='list-group list-group-flush'><li class='list-group-item'>";
 print "<button class='btn btn-danger btn-block' type='submit'><b>".__( 'Submit', 'doliconnect' )."</b></button>";
 print "</li></ul>";
+print "</div></form>";
 
-print '<div class="card-footer text-muted">';
-print "<small><div class='float-left'>";
-
-print "</div><div class='float-right'>";
+print "<p class='text-right'><small>";
 print dolihelp('ISSUE');
-print "</div></small>";
-print '</div></div></form>';
+print "</small></p>"; 
 
 print "</div></div>";
 
@@ -603,14 +587,13 @@ do_action( 'login_footer' );
 
 }
 
-print "</li></lu>";
-print '<div class="card-footer text-muted">';
-print "<small><div class='float-left'>";
+print "</li></lu></div>";
 
-print "</div><div class='float-right'>";
+
+
+print "<p class='text-right'><small>";
 print dolihelp('ISSUE');
-print "</div></small>";
-print '</div></div></form>';
+print "</small></p>";
 
 print "</div></div>";
 
@@ -822,13 +805,13 @@ print "<a href='".esc_url( add_query_arg( 'supplier', $supplier->id, doliconnect
 
 } 
 
-print '</ul><div class="card-footer text-muted">';
+print "</ul></div>";
+
 print "<small><div class='float-left'>";
 print dolirefresh($request, get_permalink(), dolidelay('product'));
 print "</div><div class='float-right'>";
-print dolihelp('ISSUE');
+print dolihelp('COM');
 print "</div></small>";
-print '</div></div>';
 
 } else {
 
@@ -939,13 +922,13 @@ print "<li class='list-group-item list-group-item-light'><center>".__( 'No produ
 
 }
 }
-print '</ul><div class="card-footer text-muted">';
+print "</ul></div>";
+
 print "<small><div class='float-left'>";
 print dolirefresh($request, get_permalink(), dolidelay('product'));
 print "</div><div class='float-right'>";
-print dolihelp('ISSUE');
+print dolihelp('COM');
 print "</div></small>";
-print '</div></div>';
 
 } else {
 
@@ -1068,7 +1051,7 @@ add_filter( 'the_content', 'dolidonation_display');
 
  // ********************************************************
  
-function dolicart_display($content) {
+function dolicart2_display($content) {
 global $wpdb, $current_user;
 
 if ( in_the_loop() && is_main_query() && is_page(doliconnectid('dolicart')) && !empty(doliconnectid('dolicart')) )  {
@@ -1367,13 +1350,33 @@ print "</small></li>";
 
 print "</ul></div></div><div class='col-12 col-md-8'>";
 
-if ( doliversion('10.0.0') ) {
-print dolipaymentmethods($object, substr($module, 0, -1), doliconnecturl('dolicart')."?pay", true);
+$paymentmethods = callDoliApi("GET", "/doliconnector/".doliconnector($current_user, 'fk_soc')."/paymentmethods", null, dolidelay('paymentmethods',  esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+//print $listsource;
+
+if ( current_user_can( 'administrator' ) && get_option('doliconnectbeta') =='1' ) {
+$paymentintent = callDoliApi("GET", "/doliconnector/paymentintent/".substr($module, 0, -1)."/".$object->id, null, dolidelay('paymentmethods',  esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+//print $listsource;
+print dolilistpaymentmodes($paymentintent, $paymentmethods, $object, doliconnecturl('dolicart')."?pay", doliconnecturl('dolicart')."?pay");
+} elseif ( function_exists('doligateway') ) {
+if ( isset($_GET["ref"]) && $object->statut != 0 ) { $ref = $object->ref; } else { $ref= 'commande #'.$object->id; }
+if ( isset($object->remaintopay) ) { 
+$montant=$object->remaintopay;
+} else { 
+$montant=$object->multicurrency_total_ttc?$object->multicurrency_total_ttc:$object->total_ttc;
+}
+doligateway($paymentmethods, $ref, $montant, $object->multicurrency_code, doliconnecturl('dolicart')."?pay", 'full');
+print doliloading('paymentmodes');
 } else {
-print __( "It seems that your version of Dolibarr and/or its plugins are not up to date!", "doliconnect");
+print __( "Soon, you'll be able to pay online", "doliconnect");
 }
 
 print "</div></div>";
+
+print "<small><div class='float-left'>";
+print dolirefresh( $request, doliconnecturl('dolicart')."?pay", dolidelay('cart'));
+print "</div><div class='float-right'>";
+print dolihelp('ISSUE');
+print "</div></small>";
 
 } elseif ( isset($_GET['info']) && doliconnector($current_user, 'fk_order_nb_item') > 0 && $object->socid == doliconnector($current_user, 'fk_soc')) {
 
@@ -1512,21 +1515,21 @@ print '</label></div>';
 print "</small></li>";
 
 } elseif ( current_user_can( 'administrator' ) ) {
-print "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".sprintf( esc_html__( "Add shipping contact needs Dolibarr %s but your version is %s", 'doliconnect'), '10.0.0', doliversion('10.0.0'))."</b></li>";
+print "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".sprintf( esc_html__( "Add shipping contact needs Dolibarr %s but your version is %s", 'doliconnect'), '10.0.0',$versiondoli[0])."</b></li>";
 }
 
 print "<li class='list-group-item'><h6>".__( 'Message', 'doliconnect' )."</h6><small class='text-muted'>";
 print "<textarea class='form-control' id='note_public' name='note_public' rows='3' placeholder='".__( 'Enter a message here that you want to send us about your order', 'doliconnect' )."'>".$object->note_public."</textarea>";
 print "</small></li></ul>";
 
-print "<div class='card-body'><input type='hidden' name='info' value='validation'><input type='hidden' name='dolicart' value='validation'><center><button class='btn btn-warning btn-block' type='submit'><b>".__( 'Validate', 'doliconnect' )."</b></button></center></div></form>";
-print '<div class="card-footer text-muted">';
+print "<div class='card-body'><input type='hidden' name='info' value='validation'><input type='hidden' name='dolicart' value='validation'><center><button class='btn btn-warning btn-block' type='submit'><b>".__( 'Validate', 'doliconnect' )."</b></button></center></div></div></form>";
+print "</div></div>";
+
 print "<small><div class='float-left'>";
-print dolirefresh($request, get_permalink(), dolidelay('cart'));
+print dolirefresh( $request, doliconnecturl('dolicart')."?info", dolidelay('cart'));
 print "</div><div class='float-right'>";
 print dolihelp('ISSUE');
 print "</div></small>";
-print '</div></div>';
 
 } else {
 
@@ -1642,15 +1645,13 @@ print "</div>";
 print "</div>";
 }
 
-print "</form>"; 
+print "</form></div>"; 
 
-print '<div class="card-footer text-muted">';
 print "<small><div class='float-left'>";
 print dolirefresh($request, doliconnecturl('dolicart'), dolidelay('cart'));
 print "</div><div class='float-right'>";
-print dolihelp('ISSUE');
+print dolihelp('COM');
 print "</div></small>";
-
 }
 }
 
@@ -1662,5 +1663,5 @@ return $content;
 
 }
 
-add_filter( 'the_content', 'dolicart_display');
+add_filter( 'the_content', 'dolicart2_display');
 ?>

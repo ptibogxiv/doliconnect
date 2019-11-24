@@ -104,7 +104,7 @@ $altdurvalue=60/$product->duration_value;
 
 }
 
-if ( callDoliApi("GET", "PRODUIT_MULTIPRICES", null, dolidelay('constante')) && !empty($product->multiprices_ttc) ) {
+if ( !empty($product->multiprices_ttc) ) {
 $lvl=doliconnector($current_user, 'price_level');
 $count=1;
 //$button .=$lvl;
@@ -118,30 +118,24 @@ $button .= '<small class="float-right">'.__( 'You benefit from the rate', 'dolic
 }
 $count++; 
 }
-if (doliconnector($current_user, 'price_level') > 0) {
-$level=doliconnector($current_user, 'price_level');
-$price_min_ttc=$product->multiprices_min->$level;
-$price_ttc=$product->multiprices->$level;
-}
 } else {
-if ( !empty(callDoliApi("GET", "/doliconnector/constante/PRODUIT_CUSTOMER_PRICES", null, dolidelay('constante'))->value) ) {
-$product2 = callDoliApi("GET", "/products/".$product->id."/selling_multiprices/per_customer?thirdparty_id=".doliconnector($current_user, 'fk_soc'), null, dolidelay('product'));
-}
-if ( !empty(callDoliApi("GET", "/doliconnector/constante/PRODUIT_CUSTOMER_PRICES", null, dolidelay('constante'))->value) && !isset($product2->error) && $product2 != null ) {
-foreach ( $product2 as $pdt2 ) {
-$price_min_ttc=$pdt2->price_min;
-$price_ttc=$pdt2->price;
-$button .= '<h5 class="mb-1 text-right">'.__( 'Price', 'doliconnect' ).': <s>'.doliprice( $product->price_ttc, $currency).'</s> '.doliprice( $pdt2->price_ttc, $currency);
-}
-} else {
-$price_min_ttc=$product->price_min;
-$price_ttc=$product->price;
 $button .= '<h5 class="mb-1 text-right">'.__( 'Price', 'doliconnect' ).': '.doliprice( $product->price_ttc, $currency);
-}
 if ( empty($time) && isset($product->duration) ) { $button .=' '.doliduration($product); } 
 $button .= '</h5>';
 if ( !empty($altdurvalue) ) { $button .= "<h6 class='mb-1 text-right'>soit ".doliprice( $altdurvalue*$product->price_ttc, $currency)." par ".__( 'hour', 'doliconnect' )."</h6>"; } 
+
 }
+
+if (doliconnector($current_user, 'price_level') > 0){
+$level=doliconnector($current_user, 'price_level');
+$price_min_ttc=$product->multiprices_min_ttc->$level;
+$price_ttc=$product->multiprices_ttc->$level;
+}
+else {
+$price_min_ttc=$product->price_min_ttc;
+$price_ttc=$product->price_ttc;
+}
+//$button .=doliprice($price_ttc);
 
 if ( is_user_logged_in() && $add==1 && is_object($order) && $order->value == 1 && doliconnectid('dolicart') > 0 ) {
 $button .= "<div class='input-group'><select class='form-control' name='product_update[".$product->id."][qty]' ";
@@ -192,7 +186,7 @@ $button .= "<div class='input-group'><a class='btn btn-block btn-info' href='".d
 }
 
 if ( !empty(doliconnector($current_user, 'remise_percent')) ) { $button .= "<small>".sprintf( esc_html__( 'you get %u %% discount', 'doliconnect'), doliconnector($current_user, 'remise_percent'))."</small>"; }
-$button .= "<input type='hidden' name='product_update[".$product->id."][price]' value='".$price_ttc."'></form>";
+$button .= "<input type='hidden' name='product_update[".$product->id."][price]' value='$price_ttc'></form>";
 $button .= '<div id="product-add-loading-'.$product->id.'" style="display:none">'.doliprice($price_ttc).'<button class="btn btn-secondary btn-block" disabled><i class="fas fa-spinner fa-pulse fa-1x fa-fw"></i> '.__( 'Loading', 'doliconnect').'</button></div>';
 $button .= "</div>";
 return $button;
@@ -323,13 +317,13 @@ $cart .= $list;
 if ( doliconnector($current_user, 'remise_percent') > 0 && $remise > 0 ) { 
 $remise_percent = (0*doliconnector($current_user, 'remise_percent'))/100;
 $cart .= "<li class='list-group-item d-flex justify-content-between bg-light'>
-<div class='text-success'><small class='my-0'>".__( 'including Discount', 'doliconnect' )."</small>";
+<div class='text-success'><small class='my-0'>".__( 'Discount', 'doliconnect' )."</small>";
 //$cart .= "<br><small>-".number_format(100*$remise/$subprice, 0)." %</small>";
 $cart .= "</div><small class='text-success'>-".doliprice($remise, null, isset($object->multicurrency_code) ? $object->multicurrency_code : null)."</small></li>";
 }
 
 $cart .= "<li class='list-group-item d-flex justify-content-between bg-light'>";
-$cart .= "<small>".__( 'including VAT', 'doliconnect' )."</small>";
+$cart .= "<small>".__( 'VAT', 'doliconnect' )."</small>";
 $cart .= "<small>".doliprice($object, 'tva', isset($object->multicurrency_code) ? $object->multicurrency_code : null)."</small></li>";
 
 //$total=$subtotal-$remise_percent;            
@@ -362,6 +356,17 @@ $currency=strtolower('eur');
 $stripeAmount=0;
 }
 
+//$lock = dolipaymentmodes_lock();
+
+$paymentmethod = "<script src='https://js.stripe.com/v3/'></script>";
+
+$paymentmethod .= "<div id='payment-errors' class='alert alert-danger' role='alert' style='display: none'></div>";
+
+$paymentmethod .= "<div id='payment-form'><div class='card shadow-sm'><ul class='list-group list-group-flush'>";
+
+if (empty($listpaymentmethods->stripe)) {
+$paymentmethod .= "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".__( "Stripe's in sandbox mode", 'doliconnect')."</b></li>";
+}
 
 if ( empty($object) ) { //$  &&  ( listsource->discount != 0 || $listsource->discount_product != null )
 $paymentmethod .= "<li id='DiscountForm' class='list-group-item list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>
@@ -393,6 +398,80 @@ $paymentmethod .= '</div></div></label></div></li>';
 //}
 }
 
+//SAVED SOURCES
+if ( $listpaymentmethods->paymentmethods != null ) {
+$i=0;    
+foreach ( $listpaymentmethods->paymentmethods as $method ) {
+$i++;                                                                                                                         
+$paymentmethod .= "<li class='list-group-item list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>
+<input id='$method->id' onclick='ShowHideDiv()' class='custom-control-input' type='radio' name='modepayment' value='$method->id' ";
+if ( date('Y/n') >= $method->expiration && !empty($object) && !empty($method->expiration) ) { $paymentmethod .= " disabled "; }
+elseif ( $i == 1 || !empty($method->default_source) ) { $paymentmethod .= " checked "; }
+$paymentmethod .= " ><label class='custom-control-label w-100' for='$method->id'><div class='row'><div class='col-3 col-md-2 col-xl-2 align-middle'>";
+$paymentmethod .= '<center><i ';
+if ( $method->type == 'sepa_debit' ) {
+$paymentmethod .= 'class="fas fa-university fa-3x fa-fw" style="color:DarkGrey"';
+} else {
+
+if ( $method->brand == 'visa' ) { $paymentmethod .= 'class="fab fa-cc-visa fa-3x fa-fw" style="color:#172274"'; }
+else if ( $method->brand == 'mastercard' ) { $paymentmethod .= 'class="fab fa-cc-mastercard fa-3x fa-fw" style="color:#FF5F01"'; }
+else if ( $method->brand == 'amex' ) { $paymentmethod .= 'class="fab fa-cc-amex fa-3x fa-fw" style="color:#2E78BF"'; }
+else { $paymentmethod .= 'class="fab fa-cc-amex fa-3x fa-fw"';}
+}
+$paymentmethod .= '></i></center>';
+$paymentmethod .= '</div><div class="col-9 col-sm-7 col-md-8 col-xl-8 align-middle"><h6 class="my-0">';
+if ( $method->type == 'sepa_debit' ) {
+$paymentmethod .= __( 'Account', 'doliconnect' ).' '.$method->reference.'<small> <a href="'.$method->mandate_url.'" title="'.__( 'Mandate', 'doliconnect' ).' '.$method->mandate_reference.'" target="_blank"><i class="fas fa-info-circle"></i></a></small>';
+} else {
+$paymentmethod .= __( 'Card', 'doliconnect' ).' '.$method->reference;
+}
+if ( !empty($method->expiration) ) { $paymentmethod .= " - ".date("m/Y", strtotime($method->expiration.'/1')); }
+$paymentmethod .= "</h6><small class='text-muted'>".$method->holder."</small></div>";
+$paymentmethod .= "<div class='d-none d-sm-block col-2 align-middle text-right'>";
+$paymentmethod .= "<img src='".plugins_url('doliconnect/images/flag/'.strtolower($method->country).'.png')."' class='img-fluid' alt='$method->country'>";
+//print "<div class='btn-group-vertical' role='group'><a class='btn btn-light text-primary' href='#' role='button'><i class='fas fa-edit fa-fw'></i></a>
+//<button name='delete_source' value='".$method->id."' class='btn btn-light text-danger' type='submit'><i class='fas fa-trash fa-fw'></i></button></div>";
+$paymentmethod .= "</div></div></label></div></li>";
+} }
+
+//NEW CARD
+if ( $i < 5 && $listpaymentmethods->code_client != null && !empty($listpaymentmethods->card) ) {      
+$paymentmethod .= "<li class='list-group-item list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>
+<input id='CdDbt' onclick='ShowHideDiv()' class='custom-control-input' type='radio' name='modepayment' value='src_newcard' ";
+if ( empty($i) && empty($listpaymentmethods->paymentmethods) ) { $paymentmethod .= " checked"; }
+$paymentmethod .= "><label class='custom-control-label w-100' for='CdDbt'><div class='row'><div class='col-3 col-md-2 col-xl-2 align-middle'>";
+$paymentmethod .= "<center><i class='fas fa-credit-card fa-3x fa-fw'></i></center></div><div class='col-9 col-md-10 col-xl-10 align-middle'><h6 class='my-0'>".__( 'Credit card', 'doliconnect' )."</h6><small class='text-muted'>Visa, MasterCard, Amex...</small></div></div>";
+$paymentmethod .= "</label></div></li>";
+
+$paymentmethod .= '<li class="list-group-item list-group-item-secondary" id="CardForm" style="display: none"><form action="'.$url.'" >'; //onchange="ShowHideDiv()"
+$paymentmethod .= '<input id="cardholder-name" name="cardholder-name" value="" type="text" class="form-control" placeholder="'.__( 'Owner as on your credit card', 'doliconnect' ).'" autocomplete="off" required>
+<label for="card-element"></label>
+<div class="form-control" id="card-element"><!-- a Stripe Element will be inserted here. --></div>
+<div id="card-errors" role="alert"></div>';
+$paymentmethod .= '</form></li>';
+}
+
+//NEW SEPA DIRECT DEBIT
+if ( $i < 5 && $listpaymentmethods->code_client != null && !empty($listpaymentmethods->sepa_direct_debit) ) {    
+$paymentmethod .= "<li class='list-group-item list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>
+<input id='BkDbt' onclick='ShowHideDiv()' class='custom-control-input' type='radio' name='modepayment' value='src_newbank' ";
+//if ($listsource["sources"]==null) {print " checked";}
+$paymentmethod .= " ><label class='custom-control-label w-100' for='BkDbt'><div class='row'><div class='col-3 col-md-2 col-xl-2 align-middle'>";
+$paymentmethod .= "<center><i class='fas fa-university fa-3x fa-fw'></i></center></div><div class='col-9 col-md-10 col-xl-10 align-middle'><h6 class='my-0'>".__( 'Bank transfer', 'doliconnect' )."</h6><small class='text-muted'>".__( 'Via SEPA Direct Debit', 'doliconnect' )."</small>";
+$paymentmethod .= '</div></div></label></div></li>';
+$paymentmethod .= '<li class="list-group-item list-group-item-secondary" id="BankForm" style="display: none">';
+$paymentmethod .= "<p class='text-justify'>";
+$blogname=get_bloginfo('name');
+$paymentmethod .= '<small>'.sprintf( esc_html__( 'By providing your IBAN and confirming this form, you are authorizing %s and Stripe, our payment service provider, to send instructions to your bank to debit your account and your bank to debit your account in accordance with those instructions. You are entitled to a refund from your bank under the terms and conditions of your agreement with your bank. A refund must be claimed within 8 weeks starting from the date on which your account was debited.', 'doliconnect' ), $blogname).'</small>';
+$paymentmethod .= "</p>";
+$paymentmethod .= '<input id="ibanholder-name" name="ibanholder-name" value="" type="text" class="form-control" placeholder="'.__( 'Owner as on your bank account', 'doliconnect' ).'" autocomplete="off">
+<label for="iban-element"></label>
+<div class="form-control" id="iban-element"><!-- A Stripe Element will be inserted here. --></div>';
+$paymentmethod .= '<div id="bank-name"></div>';
+$paymentmethod .= '<div id="iban-errors" role="alert"></div>';
+$paymentmethod .= '</li>';
+}
+
 //PAYMENT REQUEST API
 if ( ! empty($object) && get_option('doliconnectbeta')=='1' && !empty($listpaymentmethods->payment_request_api) ) {  
 $paymentmethod .= "<li id='PraForm' class='list-group-item list-group-item-action flex-column align-items-start' style='display: none'><div class='custom-control custom-radio'>
@@ -422,6 +501,262 @@ $paymentmethod .= "</div><div class='col-9 col-md-10 col-xl-10 align-middle'><h6
 $paymentmethod .= '</div></div></label></div></li>';
 }
 
+if ( isset($listpaymentmethods->RIB) && $listpaymentmethods->RIB != null ) {
+$paymentmethod .= "<li id='VirForm' class='list-group-item list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>
+<input id='src_vir' onclick='ShowHideDiv()' class='custom-control-input' type='radio' name='modepayment' value='VIR' ";
+if ( $listpaymentmethods->paymentmethods == null && empty($listpaymentmethods->card) ) { $paymentmethod .= " checked"; }
+$paymentmethod .= " ><label class='custom-control-label w-100' for='src_vir'><div class='row'><div class='col-3 col-md-2 col-xl-2 align-middle'>";
+$paymentmethod .= '<center><i class="fas fa-university fa-3x fa-fw" style="color:DarkGrey"></i></center>';
+$paymentmethod .= "</div><div class='col-9 col-md-10 col-xl-10 align-middle'><h6 class='my-0'>".__( 'Transfer', 'doliconnect' )."</h6><small class='text-muted'>".__( 'See your receipt', 'doliconnect' )."</small>";
+$paymentmethod .= '</div></div></label></div></li>';
 }
+
+if ( isset($listpaymentmethods->CHQ) && $listpaymentmethods->CHQ != null ) {
+$paymentmethod .= "<li id='ChqForm' class='list-group-item list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>
+<input id='src_chq' onclick='ShowHideDiv()' class='custom-control-input' type='radio' name='modepayment' value='CHQ' ";
+if ( $listpaymentmethods->paymentmethods == null && $listpaymentmethods->card != 1 && $listpaymentmethods->RIB == null ) { $paymentmethod .= " checked"; }
+$paymentmethod .= " ><label class='custom-control-label w-100' for='src_chq'><div class='row'><div class='col-3 col-md-2 col-xl-2 align-middle'>";
+$paymentmethod .= '<center><i class="fas fa-money-check fa-3x fa-fw" style="color:Tan"></i></center>';
+$paymentmethod .= "</div><div class='col-9 col-md-10 col-xl-10 align-middle'><h6 class='my-0'>".__( 'Check', 'doliconnect' )."</h6><small class='text-muted'>".__( 'See your receipt', 'doliconnect' )."</small>";
+$paymentmethod .= '</div></div></label></div></li>';
+} 
+
+if ( ! empty(dolikiosk()) ) {
+$paymentmethod .= "<li id='LiqForm' class='list-group-item list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>
+<input id='src_liq' onclick='ShowHideDiv()' class='custom-control-input' type='radio' name='modepayment' value='LIQ' ";
+if ( $listpaymentmethods->paymentmethods == null && empty($listpaymentmethods->card) && $listpaymentmethods->CHQ == null && $listpaymentmethods->RIB == null ) { $paymentmethod .= " checked"; }
+$paymentmethod .= " ><label class='custom-control-label w-100' for='src_liq'><div class='row'><div class='col-3 col-md-2 col-xl-2 align-middle'>";
+$paymentmethod .= '<center><i class="fas fa-money-bill-alt fa-3x fa-fw" style="color:#85bb65"></i></center>';
+$paymentmethod .= "</div><div class='col-9 col-md-10 col-xl-10 align-middle'><h6 class='my-0'>".__( 'Cash', 'doliconnect' )."</h6><small class='text-muted'>".__( 'Go to reception desk', 'doliconnect' )."</small>";
+$paymentmethod .= '</div></div></label></div></li>';
+}
+
+}
+
+// save new source button
+$paymentmethod .= "<li id='SaveFormButton' class='list-group-item list-group-item-action flex-column align-items-start'  style='display: none'>";
+if ( ! empty($object) ) { $paymentmethod .= '<div class="custom-control custom-checkbox"><input id="savethesource" class="custom-control-input form-control-sm" type="checkbox" name="savethesource" value="1" ><label class="custom-control-label w-100" for="savethesource"><small class="form-text text-muted"> '.__( 'Save this payment method', 'doliconnect' ).'</small></label></div>';}
+else { $paymentmethod .= '<div class="custom-control custom-checkbox"><input id="savethesource" type="hidden" name="savethesource" value="1"><input id="setasdefault" class="custom-control-input form-control-sm" type="checkbox" name="setasdefault" value="1" checked><label class="custom-control-label w-100" for="setasdefault"><small class="form-text text-muted"> '.__( 'Set as default mode', 'doliconnect' ).'</small></label></div>';}
+$paymentmethod .= "</li>";
+
+$paymentmethod .= "</ul><div class='card-body'>";
+
+if ( $listpaymentmethods->paymentmethods == null ) { $paymentmethod .= "<input type='hidden' name='defaultsource' value='nosavedsource'>"; }  
+
+$paymentmethod .= "<input type='hidden' name='source' value='validation'><input type='hidden' name='cart' value='validation'><input type='hidden' name='info' value='validation'>";
+$paymentmethod .= "<div id='payment-request-button'><!-- A Stripe Element will be inserted here. --></div>";
+$paymentmethod .= "<button id='pay-Button' class='btn btn-danger btn-block' type='submit'><b>".__( 'Pay', 'doliconnect' )." ".doliprice($object, 'ttc',$currency)."</b></button>";
+
+$paymentmethod .= "</div></div>";
+
+if ( empty($object) ) {
+$paymentmethod .= "<small><div class='float-left'>";
+$paymentmethod .= dolirefresh($request, $url, dolidelay('paymentmethods'));
+$paymentmethod .= "</div><div class='float-right'>";
+$paymentmethod .= dolihelp('ISSUE');
+$paymentmethod .= "</div></small>";
+}
+
+$paymentmethod .= "</div>";
+
+$paymentmethod .= '<div id="payment-success" class="card text-white bg-success" style="display: none">
+  <div class="card-body">
+    <h5 class="card-title">Success Payment</h5>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the cards content.</p>
+  </div>
+</div>';
+$paymentmethod .= '<div id="payment-waiting" class="card text-white bg-warning" style="display: none">
+  <div class="card-body">
+    <h5 class="card-title">Waiting Payment</h5>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the cards content.</p>
+  </div>
+</div>';
+$paymentmethod .= '<div id="payment-error" class="card text-white bg-danger" style="display: none">
+  <div class="card-body">
+    <h5 class="card-title">Error Payment</h5>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the cards content.</p>
+  </div>
+</div>';
+
+$paymentmethod .= doliloading('payment');  
+
+$paymentmethod .= "<script>";
+if ( $listpaymentmethods->code_account != null ) {
+$paymentmethod .= "var stripe = Stripe('".$listpaymentmethods->publishable_key."', {
+  stripeAccount: '".$listpaymentmethods->code_account."'
+});";
+} else {
+$paymentmethod .= "var stripe = Stripe('".$listpaymentmethods->publishable_key."');";
+}
+$paymentmethod .= 'var style = {
+  base: {
+    color: "#32325d",
+    lineHeight: "18px",
+    fontSmoothing: "antialiased",
+    fontSize: "16px",
+    "::placeholder": {
+      color: "#aab7c4"
+    }
+  },
+  invalid: {
+    color: "#fa755a",
+    iconColor: "#fa755a"
+  }
+};';
+
+//VARIABLES
+$paymentmethod .= '//VARIABLES
+var CdDbt = document.getElementById("CdDbt");
+var BkDbt = document.getElementById("BkDbt");  
+var discount = document.getElementById("discount");
+
+var src_chq = document.getElementById("src_chq");
+var src_vir = document.getElementById("src_vir");
+var src_liq = document.getElementById("src_liq");
+var src_pra = document.getElementById("src_pra");
+
+var montant = '.($object->total_ttc*100).';
+var currency = "'.strtolower(isset($object->multicurrency_code) ? $object->multicurrency_code : 'EUR').'";
+';
+
+$paymentmethod .= 'function ShowHideDiv() {
+//CARD
+if ( CdDbt && CdDbt.checked ) {
+// Create an instance of Elements
+var elements = stripe.elements();
+var cardElement = elements.create("card", {style: style});
+cardElement.mount("#card-element");';
+
+// Handle real-time validation errors from the card Element.
+$paymentmethod .= 'var cardholderName = document.getElementById("cardholder-name");
+cardholderName.value = "";
+var displayError = document.getElementById("card-errors");
+displayError.textContent = "";
+cardElement.addEventListener("change", function(event) {
+document.getElementById("pay-Button").disabled = false;
+  if (event.error) {
+    console.log("Show event error");
+    displayError.textContent = event.error.message;
+  } else {
+    console.log("Reset error message");
+    displayError.textContent = "";
+  }
+});
+
+
+}';
+
+$paymentmethod .= '
+if (CdDbt) {
+document.getElementById("CardForm").style.display = CdDbt.checked ? "block" : "none";
+}
+
+if (src_pra && src_pra.checked) {
+  document.getElementById("pay-Button").style.display = "none";
+  document.getElementById("payment-request-button").style.display = "block";
+} else {
+  document.getElementById("pay-Button").style.display = "block";
+  document.getElementById("payment-request-button").style.display = "none";
+}
+
+var payButton = document.getElementById("pay-Button");
+var clientSecret = "'.$paymentintent->stripe->client_secret.'";
+
+payButton.addEventListener("click", function(ev) {
+console.log("We click on buttontoaddcard");
+event.preventDefault();
+document.getElementById("pay-Button").disabled = true; 
+        if (cardholderName.value == "")
+        	{        
+				console.log("Field Card holder is empty");
+				var displayError = document.getElementById("card-errors");
+				displayError.textContent = "'.__( "We need an owner as on your card.", "doliconnect").'";
+        document.getElementById("pay-Button").disabled = false;    
+        	}
+        else
+        	{
+  stripe.handleCardPayment(
+    clientSecret, cardElement, {
+      payment_method_data: {
+        billing_details: {name: cardholderName}
+      }
+    }
+  ).then(function(result) {
+    if (result.error) {
+    // Show error in payment form
+jQuery("#DoliconnectLoadingModal").modal("hide");
+console.log("Error occured when adding card");
+var displayError = document.getElementById("card-errors");
+displayError.textContent = "'.__( "Your card number seems to be wrong.", "doliconnect").'";    
+    } else {
+      // The payment has succeeded. Display a success message.
+    }
+  }); 
+}
+});
+
+}
+window.onload=ShowHideDiv;
+';
+
+//PAYMENT REQUEST API
+$paymentmethod .= '
+var paymentRequest = stripe.paymentRequest({
+  country: "FR",
+  currency: currency,
+  total: {
+    label: "Demo total",
+    amount: montant,
+  },
+});
+//requestPayerName: true,
+//requestPayerEmail: true,
+
+var elements = stripe.elements();
+var prButton = elements.create("paymentRequestButton", {
+  paymentRequest: paymentRequest,
+});
+
+// Check the availability of the Payment Request API first.
+paymentRequest.canMakePayment().then(function(result) {
+  if (result) {
+    prButton.mount("#payment-request-button");
+    document.getElementById("payment-request-button").style.display = "none";
+    document.getElementById("PraForm").style.display = "block";
+  } else {
+    document.getElementById("payment-request-button").style.display = "none";
+    document.getElementById("PraForm").style.display = "none";
+  }
+});
+
+paymentRequest.on("paymentmethod", function(ev) {
+  stripe.confirmPaymentIntent(clientSecret, {
+    payment_method: ev.paymentMethod.id,
+  }).then(function(confirmResult) {
+    if (confirmResult.error) {
+      // Report to the browser that the payment failed, prompting it to
+      // re-show the payment interface, or show an error message and close
+      // the payment interface.
+      ev.complete("fail");
+    } else {
+      // Report to the browser that the confirmation was successful, prompting
+      // it to close the browser payment method collection interface.
+      ev.complete("success");
+      // Let Stripe.js handle the rest of the payment flow.
+      stripe.handleCardPayment(clientSecret).then(function(result) {
+        if (result.error) {
+          // The payment failed -- ask your customer for a new payment method.
+        } else {
+          // The payment has succeeded.
+        }
+      });
+    }
+  });
+});
+';
+
+$paymentmethod .= "</script>";
+
+return $paymentmethod;
 }
 ?>
