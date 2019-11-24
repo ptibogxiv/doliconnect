@@ -25,30 +25,13 @@
 
 
 function doliconnect_admin_block() {
-
-	// Scripts.
 	wp_register_script(
-		'doliconnect-admin-block-script', // Handle.
-		plugins_url( 'block.js', __FILE__ ), // Block.js: We register the block here.
-		array( 'wp-blocks', 'wp-element', 'wp-i18n' ), // Dependencies, defined above.
-    'beta5'
+		'doliconnect-admin-block-script',
+		plugins_url( 'block.js', __FILE__ ),
+		array( 'wp-blocks', 'wp-element', 'wp-i18n' ),
 	);
 
-	// Styles.
-	wp_register_style(
-		'doliconnect-admin-block-editor-style', // Handle.
-		plugins_url( 'editor.css', __FILE__ ), // Block editor CSS.
-		array( 'wp-edit-blocks' ), // Dependencies, defined above.
-    'beta5'
-	);
-  
-	wp_register_style(
-		'doliconnect-admin-block-frontend-style', // Handle.
-		plugins_url( 'style.css', __FILE__ ), // Block editor CSS.
-		array( 'wp-edit-blocks' ) // Dependency to include the CSS after it.
-	);
-
-function doliconnect_admin_render_block( $attributes ) {
+function doliconnect_admin_render_block( $attributes=  null ) {
 
 $args = array( 
 'blog_id'      => $GLOBALS['blog_id'],
@@ -130,8 +113,6 @@ return $html;
 	register_block_type( 'doliconnect/admin-block', array(
     'render_callback' => 'doliconnect_admin_render_block',
 		'editor_script' => 'doliconnect-admin-block-script',
-		'editor_style' => 'doliconnect-admin-block-editor-style',
-		'style' => 'doliconnect-admin-block-frontend-style',
 	) );
 
 } // End function organic_profile_block().
