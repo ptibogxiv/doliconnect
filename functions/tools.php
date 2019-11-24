@@ -1342,7 +1342,7 @@ global $current_user;
 <input id='gdrf-data-type-remove' class='custom-control-input' type='radio' name='gdrf_data_type' value='remove_personal_data' disabled>
 <label class='custom-control-label w-100' for='gdrf-data-type-remove'><div class='row'><div class='col-3 col-md-2 col-xl-2 align-middle'>
 <center><i class='fas fa-eraser fa-3x fa-fw'></i></center>
-</div><div class='col-auto align-middle'><h6 class='my-0'><?php echo __( 'Export your personal data', 'doliconnect' ); ?></h6><small class='text-muted'><?php echo __( 'You will receive an email with a secure link to your data', 'doliconnect' ); ?></small>
+</div><div class='col-auto align-middle'><h6 class='my-0'><?php echo __( 'Remove your personal data', 'doliconnect' ); ?></h6><small class='text-muted'><?php echo __( 'Soon, you will be able to erase your account', 'doliconnect' ); ?></small>
 </div></div></label></div></li>
 <li class='list-group-item list-group-item-action flex-column align-items-start disabled'><div class='custom-control custom-radio'>
 <input id='gdrf-data-type-delete' class='custom-control-input' type='radio' name='gdrf_data_type' value='delete_personal_data' disabled>
