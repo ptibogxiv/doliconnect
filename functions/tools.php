@@ -1292,4 +1292,102 @@ $paymentmethods .="</script>";
 return $paymentmethods;
 }
 
+function gdrf_data_request_form( $args = array() ) {
+global $current_user;
+
+	wp_enqueue_script( 'gdrf-public-scripts' );
+ 
+	// Captcha
+	$number_one = wp_rand( 1, 9 );
+	$number_two = wp_rand( 1, 9 );
+
+	// Default strings
+	$defaults = array(
+		'form_id'              => 'gdrf-form',
+		'label_select_request' => esc_html__( 'Select your request:', 'gdpr-data-request-form' ),
+		'label_select_export'  => esc_html__( 'Export Personal Data', 'gdpr-data-request-form' ),
+		'label_select_remove'  => esc_html__( 'Remove Personal Data', 'gdpr-data-request-form' ),
+		'label_input_email'    => esc_html__( 'Your email address (required)', 'gdpr-data-request-form' ),
+		'label_input_captcha'  => esc_html__( 'Human verification (required):', 'gdpr-data-request-form' ),
+		'value_submit'         => esc_html__( 'Send Request', 'gdpr-data-request-form' ),
+		'request_type'         => 'both',
+	);
+
+	// Filter string array
+	$args = wp_parse_args( $args, array_merge( $defaults, apply_filters( 'privacy_data_request_form_defaults', $defaults ) ) );
+
+	// Check is 4.9.6 Core function wp_create_user_request() exists
+	if ( function_exists( 'wp_create_user_request' ) ) {
+
+		// Display the form
+		ob_start();
+		?>
+		<form action="<?php echo esc_url( admin_url( 'admin-ajax.php' ) ); ?>" method="post" id="<?php echo $args['form_id']; ?>">
+			<input type="hidden" name="action" value="gdrf_data_request" />
+			<input type="hidden" name="gdrf_data_human_key" id="gdrf_data_human_key" value="<?php echo $number_one . '000' . $number_two; ?>" />
+			<input type="hidden" name="gdrf_data_nonce" id="gdrf_data_nonce" value="<?php echo wp_create_nonce( 'gdrf_nonce' ); ?>" />
+    <div class="card shadow-sm"><ul class="list-group list-group-flush">
+		<?php if ( 'export' === $args['request_type'] ) : ?>
+			<input type="hidden" name="gdrf_data_type" value="export_personal_data" id="gdrf-data-type-export" />
+		<?php elseif ( 'remove' === $args['request_type'] ) : ?>
+			<input type="hidden" name="gdrf_data_type" value="remove_personal_data" id="gdrf-data-type-remove" />
+		<?php else : ?>
+<li class='list-group-item list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>
+<input id='gdrf-data-type-export' class='custom-control-input' type='radio' name='gdrf_data_type' value='export_personal_data' checked>
+<label class='custom-control-label w-100' for='gdrf-data-type-export'><div class='row'><div class='col-3 col-md-2 col-xl-2 align-middle'>
+<center><i class='fas fa-download fa-3x fa-fw'></i></center>
+</div><div class='col-auto align-middle'><h6 class='my-0'><?php echo __( 'Export your personal data', 'doliconnect' ); ?></h6><small class='text-muted'><?php echo __( 'You will receive an email with a secure link to your data', 'doliconnect' ); ?></small>
+</div></div></label></div></li>
+<li class='list-group-item list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>
+<input id='gdrf-data-type-remove' class='custom-control-input' type='radio' name='gdrf_data_type' value='remove_personal_data' disabled>
+<label class='custom-control-label w-100' for='gdrf-data-type-remove'><div class='row'><div class='col-3 col-md-2 col-xl-2 align-middle'>
+<center><i class='fas fa-eraser fa-3x fa-fw'></i></center>
+</div><div class='col-auto align-middle'><h6 class='my-0'><?php echo __( 'Export your personal data', 'doliconnect' ); ?></h6><small class='text-muted'><?php echo __( 'You will receive an email with a secure link to your data', 'doliconnect' ); ?></small>
+</div></div></label></div></li>
+<li class='list-group-item list-group-item-action flex-column align-items-start disabled'><div class='custom-control custom-radio'>
+<input id='gdrf-data-type-delete' class='custom-control-input' type='radio' name='gdrf_data_type' value='delete_personal_data' disabled>
+<label class='custom-control-label w-100' for='gdrf-data-type-delete'><div class='row'><div class='col-3 col-md-2 col-xl-2 align-middle'>
+<center><i class='fas fa-trash fa-3x fa-fw'></i></center>
+</div><div class='col-auto align-middle'><h6 class='my-0'><?php echo __( 'Delete your account', 'doliconnect' ); ?></h6><small class='text-muted'><?php echo __( 'Soon, you will be able to delete your account', 'doliconnect' ); ?></small>
+</div></div></label></div></li>
+		<?php endif; ?>
+    
+    <?php if ( empty($current_user->user_email) ) : ?>
+<li class='list-group-item list-group-item-action flex-column align-items-start'>
+		<label for="gdrf_data_email">
+			<?php echo esc_html( $args['label_input_email'] ); ?>
+		</label>
+				<input type="email" id="gdrf_data_email" name="gdrf_data_email" required />
+</li>
+		<?php else : ?>
+      <input type='hidden' id='gdrf_data_email' name='gdrf_data_email' value='<?php echo $current_user->user_email; ?>'>
+		<?php endif; ?>
+       	<li class='list-group-item list-group-item-action flex-column align-items-start'>
+				<label for="gdrf_data_human">
+					<?php echo esc_html( $args['label_input_captcha'] ); ?>   
+					<?php echo $number_one . ' + ' . $number_two . ' = ?'; ?>
+				</label>
+				<input type="text" id="gdrf_data_human" name="gdrf_data_human" required />
+			</li>
+      </ul>
+			<div class="card-body">
+        <input id="gdrf-submit-button" class="btn btn-danger btn-block" type="submit" value="<?php echo __( 'Validate the request', 'doliconnect' ); ?>"/>
+      </div>
+<div class="card-footer text-muted">
+<small><div class='float-left'>
+</div><div class='float-right'>
+<?php echo dolihelp('ISSUE'); ?>
+</div></small>
+</div></div>
+      
+		</form>
+		<?php
+		return ob_get_clean();
+	} else {
+		// Display error message
+		return esc_html__( 'This plugin requires WordPress 4.9.6.', 'gdpr-data-request-form' );
+	}
+
+}
+
 ?>
