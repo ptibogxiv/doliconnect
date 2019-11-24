@@ -1,0 +1,10 @@
+{
+  "name": "doliconnect",
+  "license": "GPL-3.0-or-later",
+  "description": "Interface Dolibarr with Wordpress via Doliconnect",
+  "author": "ptibogxiv",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ptibogxiv/doliconnect"
+  },
+}
