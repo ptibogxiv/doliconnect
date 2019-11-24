@@ -979,7 +979,7 @@ $paymentmethods .='<button type="button" onclick="PayPM(\'chq\')" class="btn btn
 $paymentmethods .='</div></li>';
 }}
 if ( ! empty(dolikiosk()) ) {
-$paymentmethod .= "<li class='list-group-item list-group-item-action flex-column align-items-startt'><div class='custom-control custom-radio'>
+$paymentmethods .= "<li class='list-group-item list-group-item-action flex-column align-items-startt'><div class='custom-control custom-radio'>
 <input type='radio' id='liq' name='paymentmode' value='liq' class='custom-control-input' data-toggle='collapse' data-parent='#accordion' ";
 if ( $listpaymentmethods->payment_methods == null && empty($listpaymentmethods->card) && $listpaymentmethods->CHQ == null && $listpaymentmethods->RIB == null ) { $paymentmethods .= " checked"; }
 $paymentmethods .= " href='#liq'><label class='custom-control-label w-100' for='liq'><div class='row'><div class='col-3 col-md-2 col-xl-2 align-middle'>";
