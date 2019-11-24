@@ -5,8 +5,8 @@ function enqueue_scripts_gdrf_public() {
 	wp_register_script( 'gdrf-public-scripts', plugins_url( 'doliconnect/includes/js/gdrf-public.js'), array( 'jquery' ), '', false );
 	$translations = array(
 		'gdrf_ajax_url' => esc_url( admin_url( 'admin-ajax.php' ) ),
-		'gdrf_success'  => __( 'Your enquiry have been submitted. Check your email to validate your data request.', 'gdpr-data-request-form' ),
-		'gdrf_errors'   => __( 'Some errors occurred:', 'gdpr-data-request-form' ),
+		'gdrf_success'  => __( 'Your enquiry have been submitted. Check your email to validate your data request.', 'doliconnect'),
+		'gdrf_errors'   => __( 'Some errors occurred:', 'doliconnect'),
 	);
 	wp_localize_script( 'gdrf-public-scripts', 'gdrf_localize', $translations );
 }
