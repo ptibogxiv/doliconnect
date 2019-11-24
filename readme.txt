@@ -46,9 +46,10 @@ WordPress configuration steps:
 4. Confirmation email sent to the user/visitor.
 
 == Changelog ==
- = 3.11.3 =
+ = 3.11.3 & 3.11.4 =
 * fix & clean code
 * update to wordpress 5.4
+* automation github to SVN wordpress
 
  = 3.11.2 =
 * fix & clean code
