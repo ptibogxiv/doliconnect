@@ -1,5 +1,16 @@
 <?php
 
+//add_action( 'wp_enqueue_scripts', 'enqueue_scripts_gdrf_public' );
+function enqueue_scripts_gdrf_public2() {
+	wp_register_script( 'gdrf-public-scripts', plugins_url( 'gdpr-data-request-form/js/gdrf-public.js'), array( 'jquery' ), '', false );
+	$translations = array(
+		'gdrf_ajax_url' => esc_url( admin_url( 'admin-ajax.php' ) ),
+		'gdrf_success'  => __( 'Your enquiry have been submitted. Check your email to validate your data request.', 'gdpr-data-request-form' ),
+		'gdrf_errors'   => __( 'Some errors occurred:', 'gdpr-data-request-form' ),
+	);
+	wp_localize_script( 'gdrf-public-scripts', 'gdrf_localize', $translations );
+} 
+
 function doliconnect_enqueues() { 
 
 /* Styles */
@@ -19,6 +30,6 @@ $version='4.3.1';
   
   wp_enqueue_style( 'bootstrap-social', plugins_url( 'doliconnect/includes/css/bootstrap-social.css'), array(), $version); 
 
-} 
+}
 
 ?>

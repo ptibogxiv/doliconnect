@@ -2057,57 +2057,27 @@ function generate_license($suffix = null) {
 }
 add_action( 'settings_doliconnect_settings', 'settings_module' );
 
-function delete_menu($arg) {
-print "<a href='".esc_url( add_query_arg( 'module', 'delete', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-action";
-if ($arg=='delete') { print " active";}
+function gdpr_menu($arg) {
+print "<a href='".esc_url( add_query_arg( 'module', 'gdpr', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-action";
+if ($arg=='gdpr') { print " active";}
 print "'>".__( 'Privacy', 'doliconnect' )."</a>";
 }
-add_action( 'settings_doliconnect_menu', 'delete_menu', 3, 1);
-
-function delete_module($url) {
+add_action( 'settings_doliconnect_menu', 'gdpr_menu', 3, 1);
+add_action( 'settings_doliconnect_gdpr', 'gdpr_module' );
+ 
+function gdpr_module($url) {
 global $current_user;
 
-print "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
-if ( function_exists( 'wp_create_user_request' ) ) {
-print "<form action='".esc_url( admin_url( 'admin-ajax.php' ) )."' method='post' id='gdrf-form'>";
-print "<li class='list-group-item list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>
-<input id='export_personal_data' onclick='ShowHideDiv()' class='custom-control-input' type='radio' name='gdrf_data_type' value='export_personal_data' checked>";
-print "<label class='custom-control-label w-100' for='export_personal_data'><div class='row'><div class='col-3 col-md-2 col-xl-2 align-middle'>";
-print "<center><i class='fas fa-download fa-3x fa-fw'></i></center>";
-print "</div><div class='col-9 col-md-10 col-xl-10 align-middle'><h6 class='my-0'>".__( 'Export your personal data', 'doliconnect' )."</h6><small class='text-muted'>".__( 'You will receive an email with a secure link to your data', 'doliconnect' )."</small>";
-print '</div></div></label></div></li>';
-
-print "<li class='list-group-item list-group-item-action flex-column align-items-start disabled'><div class='custom-control custom-radio'>
-<input id='remove_personal_data' onclick='ShowHideDiv()' class='custom-control-input' type='radio' name='gdrf_data_type' value='remove_personal_data' disabled>";
-print "<label class='custom-control-label w-100' for='remove_personal_data'><div class='row'><div class='col-3 col-md-2 col-xl-2 align-middle'>";
-print "<center><i class='fas fa-eraser fa-3x fa-fw'></i></center>";
-print "</div><div class='col-9 col-md-10 col-xl-10 align-middle'><h6 class='my-0'>".__( 'Remove your personal data', 'doliconnect' )."</h6><small class='text-muted'>".__( 'Soon, you will be able to erase your account', 'doliconnect' )."</small>";
-print '</div></div></label></div></li>';
-
-print "<li class='list-group-item list-group-item-action flex-column align-items-start disabled'><div class='custom-control custom-radio'>
-<input id='remove_personal_data' onclick='ShowHideDiv()' class='custom-control-input' type='radio' name='gdrf_data_type' value='delete_personal_data' disabled>";
-print "<label class='custom-control-label w-100' for='remove_personal_data'><div class='row'><div class='col-3 col-md-2 col-xl-2 align-middle'>";
-print "<center><i class='fas fa-trash fa-3x fa-fw'></i></center>";
-print "</div><div class='col-9 col-md-10 col-xl-10 align-middle'><h6 class='my-0'>".__( 'Delete your account', 'doliconnect' )."</h6><small class='text-muted'>".__( 'Soon, you will be able to delete your account', 'doliconnect' )."</small>";
-print '</div></div></label></div></li>';
-
-print "</ul>";
-print "<div class='card-body'>";
-print "<input type='hidden' name='action' value='gdrf_data_request'><input type='hidden' id='gdrf_data_email' name='gdrf_data_email' value='".$current_user->user_email."'>
-<input type='hidden' name='gdrf_data_nonce' id='gdrf_data_nonce' value='".wp_create_nonce( 'gdrf_nonce' )."' >";
-print "<button id='gdrf-submit-button' class='btn btn-danger btn-block' type='submit'><b>".__( 'Validate the request', 'doliconnect' )."</b></button></div></form>";
-} else {
-
-} 
-print '</ul><div class="card-footer text-muted">';
-print "<small><div class='float-left'>";
-
-print "</div><div class='float-right'>";
-print dolihelp('ISSUE');
-print "</div></small>";
-print '</div></div>';
-print "</div>";  
+		$params = array();
+		if ( isset( $instance['request_type'] ) ) {
+			if ( 'export' === $instance['request_type'] ) {
+				$params['request_type'] = 'export';
+			} elseif ( 'remove' === $instance['request_type'] ) {
+				$params['request_type'] = 'remove';
+			}
+		}
+		print gdrf_data_request_form( $params ); 
 
 }
-add_action( 'settings_doliconnect_delete', 'delete_module' );
+
 ?>
