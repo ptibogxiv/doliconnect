@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2019-11-24 16:18+0100\n"
-"PO-Revision-Date: 2019-11-24 16:20+0100\n"
+"POT-Creation-Date: 2019-11-24 16:46+0100\n"
+"PO-Revision-Date: 2019-11-24 16:47+0100\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_FR\n"
@@ -1460,6 +1460,10 @@ msgstr "Mandat"
 msgid "Card"
 msgstr "Carte"
 
+#: functions/tools.php:867
+msgid "Favourite"
+msgstr "Favori"
+
 #: functions/tools.php:877
 msgid "No payment method"
 msgstr "Aucun mode de paiement"
@@ -1497,8 +1501,8 @@ msgid "Save"
 msgstr "Enregistrer"
 
 #: functions/tools.php:900 functions/tools.php:929
-msgid "Save as default"
-msgstr "Enregistrer par défaut"
+msgid "Save as favourite"
+msgstr "Enregistrer comme favori"
 
 #: functions/tools.php:913
 msgid "Bank account"
@@ -1672,6 +1676,9 @@ msgstr "ptibogxiv"
 msgid "https://www.ptibogxiv.net/en"
 msgstr "https://www.ptibogxiv.net/fr"
 
+#~ msgid "Save as default"
+#~ msgstr "Enregistrer par défaut"
+
 #~ msgid "Soon, you'll be able to pay online"
 #~ msgstr "Bientôt, vous serez en mesure de payer en ligne"
 
@@ -1723,14 +1730,8 @@ msgstr "https://www.ptibogxiv.net/fr"
 #~ "Enregistrer des modes de paiement nécessite Dolibarr %s mais votre "
 #~ "version est %s"
 
-#~ msgid "Favorite"
-#~ msgstr "Favori"
-
 #~ msgid "Can not be set as favorite"
 #~ msgstr "Ne peut pas être défini comme favori"
-
-#~ msgid "Set as favorite"
-#~ msgstr "Définir comme favori"
 
 #~ msgid "Can not be delete as favorite"
 #~ msgstr "Ne peut pas être défini comme favori"

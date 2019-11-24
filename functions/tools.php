@@ -864,7 +864,7 @@ $paymentmethods .='<button type="button" onclick="PayPM(\''.$method->id.'\')" cl
 } else {
 $paymentmethods .='<button type="button" onclick="DefaultPM(\''.$method->id.'\')" class="btn btn-warning"';
 if ( !empty($method->default_source) ) { $paymentmethods .=" disabled"; }
-$paymentmethods .='><b>Favori</b></button>
+$paymentmethods .='><b>'.__( "Favourite", 'doliconnect').'</b></button>
 <button type="button" onclick="DeletePM(\''.$method->id.'\')" class="btn btn-danger"><b>'.__( 'Delete', 'doliconnect' ).'</b></button>';
 }
 $paymentmethods .='</div>';
@@ -897,7 +897,7 @@ $paymentmethods .= '<p><div class="custom-control custom-radio custom-control-in
 </div>
 <div class="custom-control custom-radio custom-control-inline">
   <input type="radio" id="cardDefault1" name="cardDefault" value="1" class="custom-control-input">
-  <label class="custom-control-label" for="cardDefault1">'.__( "Save as default", 'doliconnect').'</label>
+  <label class="custom-control-label" for="cardDefault1">'.__( "Save as favourite", 'doliconnect').'</label>
 </div></p>';
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
 $paymentmethods .='<button id="cardPayButton" class="btn btn-danger btn-block" ><b>'.__( 'Pay', 'doliconnect' )." ".doliprice($object, 'ttc', $currency).'</b></button>';
@@ -926,7 +926,7 @@ $paymentmethods .= '<p><div class="custom-control custom-radio custom-control-in
 </div>
 <div class="custom-control custom-radio custom-control-inline">
   <input type="radio" id="ibanDefault1" name="ibanDefault" value="1" class="custom-control-input">
-  <label class="custom-control-label" for="ibanDefault1">'.__( "Save as default", 'doliconnect').'</label>
+  <label class="custom-control-label" for="ibanDefault1">'.__( "Save as favourite", 'doliconnect').'</label>
 </div></p>';
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
 $paymentmethods .='<button id="ibanPayButton" class="btn btn-danger btn-block" ><b>'.__( 'Pay', 'doliconnect' )." ".doliprice($object, 'ttc', $currency).'</b></button>';
