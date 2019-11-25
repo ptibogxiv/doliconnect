@@ -82,7 +82,7 @@ function admin_block_init() {
 			'admin-block',
 			plugins_url( 'block.js', __FILE__ ),
 			array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-components' ),
-      'beta2'
+      'beta3'
 		);
 		register_block_type(
 			'doliconnect/admin-block',
