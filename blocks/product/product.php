@@ -24,7 +24,7 @@ $content .= " ".doliproductstock($product);
 }
 $content .= "</h5><small>".__( 'Reference', 'doliconnect').": ".$product->ref;
 if ( !empty($product->barcode) ) { $content .= " / ".__( 'Barcode', 'doliconnect').": ".$product->barcode; }
-$content .= "</small><br><br><p>".doliproduct($product, 'description')."</p>";
+$content .= "</small><br><p>".doliproduct($product, 'description')."</p>";
 if ( ! empty(doliconnectid('dolicart')) ) { 
 $content .= doliproducttocart($product, null, isset($attributes['showButtonToCart']) ? $attributes['showButtonToCart'] : null, isset($attributes['hideDuration']) ? $attributes['hideDuration'] : null);
 }
