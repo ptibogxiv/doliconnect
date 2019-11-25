@@ -9,7 +9,7 @@
 	var SelectControl = components.SelectControl;
 	var PanelBody = components.PanelBody;
 
-	registerBlockType( 'gdpr/data-request-form', {
+	registerBlockType( 'doliconnect/gdpr-data-request', {
 		title: __( 'Privacy Data Request Form', 'gdpr-data-request-form' ),
 		icon: 'id-alt',
 		category: 'widgets',
