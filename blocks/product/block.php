@@ -4,9 +4,9 @@ function doliconnect_product_block_render( $attributes, $content ) {
 doliconnect_enqueues();
 $content = '<DIV class="card shadow-sm"><DIV class="card-body">';
 if (isset($attributes['productID']) && $attributes['productID']>0) {
-$product = callDoliApi("GET", "/products/".$attributes['productID']."?includestockdata=1", null, dolidelay('product'));
+$product = callDoliApi("GET", "/products/".$attributes['productID']."?includestockdata=1", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 //$content .= $product;
-$documents = callDoliApi("GET", "/documents?modulepart=product&id=".$product->id, null, dolidelay('product'));
+$documents = callDoliApi("GET", "/documents?modulepart=product&id=".$product->id, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 //$content .= $documents;
 if (defined("DOLIBUG")) {
 $content .= dolibug();
