@@ -10,10 +10,10 @@
 	var PanelBody = components.PanelBody;
 
 	registerBlockType( 'doliconnect/data-request-form', {
-		title: __( 'Privacy Data Request Form', 'gdpr-data-request-form' ),
+		title: __( 'Privacy Data Request Form', 'doliconnect' ),
 		icon: 'id-alt',
 		category: 'widgets',
-		keywords: [ __( 'form', 'gdpr-data-request-form' ), __( 'data', 'gdpr-data-request-form' ), __( 'request', 'gdpr-data-request-form' ) ],
+		keywords: [ __( 'form', 'doliconnect' ), __( 'data', 'doliconnect' ), __( 'request', 'doliconnect' ) ],
 		attributes: {
 			request_type: {
 				type: 'string'
@@ -45,7 +45,7 @@
 								fontSize: '2em'
 							}
 						},
-						__( 'Privacy Data request form', 'gdpr-data-request-form'  )
+						__( 'Privacy Data request form', 'doliconnect'  )
 					),
 					el(
 						'p', { 
@@ -55,7 +55,7 @@
 								paddingRight: '2em'
 							}
 						},
-						__( 'This block displays a Privacy Data Request Form.', 'gdpr-data-request-form' ),
+						__( 'This block displays a Privacy Data Request Form.', 'doliconnect' ),
 					),
 					el(
 						'p', { 
@@ -65,7 +65,7 @@
 								paddingRight: '2em'
 							}
 						},
-						__( 'By default, the form shows both export and remove Data Request options (it’s up to the visitor). You can set it either to "both", "export" or "remove".', 'gdpr-data-request-form' ),
+						__( 'By default, the form shows both export and remove Data Request options (it’s up to the visitor). You can set it either to "both", "export" or "remove".', 'doliconnect' ),
 					),
 					el(
 						'div', { 
@@ -82,16 +82,16 @@
 									display: 'block'
 								}
 							},
-							__( 'Request type:', 'gdpr-data-request-form' ),
+							__( 'Request type:', 'doliconnect' ),
 						),
 						el(
 							SelectControl, { 
 								className: 'data-request-form-select',
 								'name': 'data-request-form-select',
 								options: [
-									{ label: __( 'Both Export and Remove', 'gdpr-data-request-form' ), value: 'both' },
-									{ label: __( 'Data Export form only', 'gdpr-data-request-form' ), value: 'export' },
-									{ label: __( 'Data Remove form only', 'gdpr-data-request-form' ), value: 'remove' },
+									{ label: __( 'Both Export and Remove', 'doliconnect' ), value: 'both' },
+									{ label: __( 'Data Export form only', 'doliconnect' ), value: 'export' },
+									{ label: __( 'Data Remove form only', 'doliconnect' ), value: 'remove' },
 								],
 								onChange: ( value ) => {
 									props.setAttributes( { request_type: value } );
