@@ -11,7 +11,7 @@
 		title: i18n.__( 'Product'), // The title of our block.
 		description: i18n.__( 'A block for displaying dolibarr product.' ), // The description of our block.
 		icon: 'store', // Dashicon icon for our block. Custom icons can be added using inline SVGs.
-		category: 'common', // The category of the block.
+		category: 'widgets', // The category of the block.
 		attributes: { // Necessary for saving block content.
 			productID: {
 				type: 'text',
