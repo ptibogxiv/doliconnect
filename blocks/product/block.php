@@ -30,22 +30,7 @@ function doliconnect_product_block() {
 		'doliconnect-product-block-script', // Handle.
 		plugins_url( 'block.js', __FILE__ ), // Block.js: We register the block here.
 		array( 'wp-blocks', 'wp-element', 'wp-i18n' ), // Dependencies, defined above.
-    'beta'
 	);
-
-	// Styles.
-	wp_register_style(
-		'doliconnect-product-block-editor-style', // Handle.
-		plugins_url( 'editor.css', __FILE__ ), // Block editor CSS.
-		array( 'wp-edit-blocks' ), // Dependencies, defined above.
-    'beta'
-	);
-  
-//	wp_register_style(
-//		'doliconnect-product-block-frontend-style', // Handle.
-//		plugins_url( 'style.css', __FILE__ ), // Block editor CSS.
-//		array( 'wp-edit-blocks' ) // Dependency to include the CSS after it.
-//	); 
 
 function doliconnect_product_render_block( $attributes ) {
 
