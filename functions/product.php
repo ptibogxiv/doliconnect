@@ -114,7 +114,7 @@ $button .= '<h5 class="mb-1 text-right">'.__( 'Price', 'doliconnect' ).': '.doli
 if ( empty($time) ) { $button .=' '.doliduration($product); }
 $button .= '</h5>';
 if ( !empty($altdurvalue) ) { $button .= "<h6 class='mb-1 text-right'>soit ".doliprice( $altdurvalue*$price, $currency)." par ".__( 'hour', 'doliconnect' )."</h6>"; } 
-$button .= '<small class="float-right">'.__( 'You benefit from the rate', 'doliconnect' ).' '.doliconst(PRODUIT_MULTIPRICES_LABEL.$level).'</small>';
+$button .= '<small class="float-right">'.__( 'You benefit from the rate', 'doliconnect' ).' '.doliconst('PRODUIT_MULTIPRICES_LABEL'.$level).'</small>';
 }
 $count++; 
 }
