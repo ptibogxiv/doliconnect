@@ -3,7 +3,7 @@
 function product_block_render( $attributes, $content ) {
 doliconnect_enqueues();
 $content = '<DIV class="card shadow-sm"><DIV class="card-body">';
-if ($attributes['productID']>0) {
+if (isset($attributes['productID']) && $attributes['productID']>0) {
 $product = callDoliApi("GET", "/products/".$attributes['productID']."?includestockdata=1", null, dolidelay('product'));
 //$content .= $product;
 $documents = callDoliApi("GET", "/documents?modulepart=product&id=".$product->id, null, dolidelay('product'));
