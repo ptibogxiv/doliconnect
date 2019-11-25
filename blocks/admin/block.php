@@ -1,6 +1,6 @@
 <?php
 
-function doliconnect_admin_render_block( $attributes =  null, $content) {
+function doliconnect_admin_block_render( $attributes, $content ) {
 
 $args = array( 
 'blog_id'      => $GLOBALS['blog_id'],
@@ -76,7 +76,7 @@ $html .= "</DIV></DIV></DIV><DIV class='card-footer'><H6>" . esc_html( $user->us
 $html .= "</DIV>";
 return $html;
 }
-function admin_block_init() {
+function doliconnect_admin_block_init() {
 	if ( function_exists( 'register_block_type' ) ) {
 		wp_register_script(
 			'admin-block',
@@ -88,9 +88,9 @@ function admin_block_init() {
 			'doliconnect/admin-block',
 			array(
 				'editor_script'   => 'admin-block',
-				'render_callback' => 'admin_block_render',
+				'render_callback' => 'doliconnect_admin_block_render',
 			)
 		);
 	}
 }
-add_action( 'init', 'admin_block_init' );
+add_action( 'init', 'doliconnect_admin_block_init' );

@@ -1,6 +1,6 @@
 <?php
 
-function gdrf_block_render( $attributes, $content ) {
+function doliconnect_gdpr_block_render( $attributes, $content ) {
 	$args = array();
 	if ( isset( $attributes['request_type'] ) ) {
 		if ( 'export' === $attributes['request_type'] ) {
@@ -12,7 +12,7 @@ function gdrf_block_render( $attributes, $content ) {
 	$content = '<div class="gdpr-data-request-block">' . gdrf_data_request_form( $args ) . '</div>';
 	return $content;
 }
-function gdrf_block_init() {
+function doliconnect_gdpr_block_init() {
 	if ( function_exists( 'register_block_type' ) ) {
 		wp_register_script(
 			'data-request-form',
@@ -24,7 +24,7 @@ function gdrf_block_init() {
 			'doliconnect/data-request-form',
 			array(
 				'editor_script'   => 'data-request-form',
-				'render_callback' => 'gdrf_block_render',
+				'render_callback' => 'doliconnect_gdpr_block_render',
 				'attributes'      => array(
 					'request_type' => array(
 						'type' => 'string',
@@ -34,4 +34,4 @@ function gdrf_block_init() {
 		);
 	}
 }
-add_action( 'init', 'gdrf_block_init' );
+add_action( 'init', 'doliconnect_gdpr_block_init' );

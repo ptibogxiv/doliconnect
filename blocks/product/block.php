@@ -1,6 +1,6 @@
 <?php
 
-function product_block_render( $attributes, $content ) {
+function doliconnect_product_block_render( $attributes, $content ) {
 doliconnect_enqueues();
 $content = '<DIV class="card shadow-sm"><DIV class="card-body">';
 if (isset($attributes['productID']) && $attributes['productID']>0) {
@@ -38,7 +38,7 @@ $content .= '<center>'.__( 'No product', 'doliconnect' ).'</center>';
 $content .= '</div></div>';
 return $content;
 }
-function product_block_init() {
+function doliconnect_product_block_init() {
 	if ( function_exists( 'register_block_type' ) ) {
 		wp_register_script(
 			'product-block',
@@ -50,7 +50,7 @@ function product_block_init() {
 			'doliconnect/product-block',
 			array(
 				'editor_script'   => 'product-block',
-				'render_callback' => 'product_block_render',
+				'render_callback' => 'doliconnect_product_block_render',
 				'attributes'      => array(
 					'request_type' => array(
 						'type' => 'string',
@@ -60,4 +60,4 @@ function product_block_init() {
 		);
 	}
 }
-add_action( 'init', 'product_block_init' );
+add_action( 'init', 'doliconnect_product_block_init' );
