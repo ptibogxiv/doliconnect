@@ -1,19 +1,5 @@
 <?php
 /**
- * BLOCK: admin
- *
- * Gutenberg Custom admin Block assets.
- *
- * @since   1.0.0
- * @package OPB
- */
-
-// Exit if accessed directly.
-// if ( ! defined( 'ABSPATH' ) ) {
-// 	exit;
-// }
-
-/**
  * Enqueue the block's assets for the editor.
  *
  * `wp-blocks`: Includes block type registration and related functions.
@@ -30,6 +16,12 @@ function doliconnect_admin_block() {
 		plugins_url( 'block.js', __FILE__ ),
 		array( 'wp-blocks', 'wp-element', 'wp-i18n' ),
 	);
+
+	register_block_type( 'doliconnect/admin-block', array(
+    'render_callback' => 'doliconnect_admin_render_block',
+		'editor_script' => 'doliconnect-admin-block-script',
+    )
+  );
 
 function doliconnect_admin_render_block( $attributes=  null ) {
 
@@ -108,12 +100,7 @@ $html .= "</DIV>";
 return $html;
 }
 
-	// Here we actually register the block with WP, again using our namespacing
-	// We also specify the editor script to be used in the Gutenberg interface
-	register_block_type( 'doliconnect/admin-block', array(
-    'render_callback' => 'doliconnect_admin_render_block',
-		'editor_script' => 'doliconnect-admin-block-script',
-	) );
+
 
 } // End function organic_profile_block().
 

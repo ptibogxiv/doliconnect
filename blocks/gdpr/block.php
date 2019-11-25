@@ -31,7 +31,7 @@ function gdrf_block_init() {
 		);
 
 		register_block_type(
-			'gdpr/data-request-form',
+			'doliconnect/gdpr-data-request',
 			array(
 				'editor_script'   => 'data-request-form',
 				'render_callback' => 'gdrf_block_render',
