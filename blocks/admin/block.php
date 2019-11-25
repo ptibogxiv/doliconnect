@@ -1,29 +1,6 @@
 <?php
-/**
- * Enqueue the block's assets for the editor.
- *
- * `wp-blocks`: Includes block type registration and related functions.
- * `wp-element`: Includes the WordPress Element abstraction for describing the structure of your blocks.
- * `wp-i18n`: To internationalize the block's text.
- *
- * @since 1.0.0
- */
 
-
-function doliconnect_admin_block() {
-	wp_register_script(
-		'doliconnect-admin-block-script',
-		plugins_url( 'block.js', __FILE__ ),
-		array( 'wp-blocks', 'wp-element', 'wp-i18n' ),
-	);
-
-	register_block_type( 'doliconnect/admin-block', array(
-    'render_callback' => 'doliconnect_admin_render_block',
-		'editor_script' => 'doliconnect-admin-block-script',
-    )
-  );
-
-function doliconnect_admin_render_block( $attributes=  null ) {
+function doliconnect_admin_render_block( $attributes =  null, $content) {
 
 $args = array( 
 'blog_id'      => $GLOBALS['blog_id'],
@@ -99,10 +76,21 @@ $html .= "</DIV></DIV></DIV><DIV class='card-footer'><H6>" . esc_html( $user->us
 $html .= "</DIV>";
 return $html;
 }
-
-
-
-} // End function organic_profile_block().
-
-// Hook: Editor assets.
-add_action( 'init', 'doliconnect_admin_block' );
+function admin_block_init() {
+	if ( function_exists( 'register_block_type' ) ) {
+		wp_register_script(
+			'admin-block',
+			plugins_url( 'block.js', __FILE__ ),
+			array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-components' ),
+      'beta2'
+		);
+		register_block_type(
+			'doliconnect/admin-block',
+			array(
+				'editor_script'   => 'admin-block',
+				'render_callback' => 'admin_block_render',
+			)
+		);
+	}
+}
+add_action( 'init', 'admin_block_init' );
