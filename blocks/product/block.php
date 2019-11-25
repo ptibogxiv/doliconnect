@@ -35,7 +35,14 @@ $content .= '<center>'.__( 'Product/Service not in sale', 'doliconnect' ).'</cen
 } else {
 $content .= '<center>'.__( 'No product', 'doliconnect' ).'</center>';
 }
-$content .= '</div></div>';
+$content .= '</div>';
+$content .= '<div class="card-footer text-muted">';
+$content .= "<small><div class='float-left'>";
+$content .= dolirefresh("/products/".$attributes['productID']."?includestockdata=1", null, dolidelay('thirdparty'));
+$content .= "</div><div class='float-right'>";
+$content .= dolihelp('ISSUE');
+$content .= "</div></small>";
+$content .= '</div></div></form>';
 return $content;
 }
 function doliconnect_product_block_init() {
@@ -44,7 +51,7 @@ function doliconnect_product_block_init() {
 			'product-block',
 			plugins_url( 'block.js', __FILE__ ),
 			array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-components' ),
-      'beta8'
+      'beta11'
 		);
 		register_block_type(
 			'doliconnect/product-block',

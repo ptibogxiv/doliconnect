@@ -73,7 +73,6 @@
 		},
 
 save: function() {
-        // Rendering in PHP
         return null;
     },
 	} );
