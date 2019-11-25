@@ -45,17 +45,7 @@
 								fontSize: '2em'
 							}
 						},
-						__( 'Privacy Data request form', 'doliconnect'  )
-					),
-					el(
-						'p', { 
-							className: 'data-request-form-label',
-							style: {
-								paddingLeft: '2em',
-								paddingRight: '2em'
-							}
-						},
-						__( 'This block displays a Privacy Data Request Form.', 'doliconnect' ),
+						__( 'Product\'s card', 'doliconnect'  )
 					),
 					el(
 						'p', { 
