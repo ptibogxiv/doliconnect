@@ -1362,7 +1362,7 @@ global $current_user;
 		<?php endif; ?>
 <div class='col-auto align-middle'><h6 class='my-0'><?php echo __( 'Erase your data', 'doliconnect' ); ?></h6><small class='text-muted'><?php echo __( 'Soon, you will be able to erase your account', 'doliconnect' ); ?></small>
 </div></div></label></div></li>
-<li class='list-group-item list-group-item-action flex-column align-items-start disabled'><div class='custom-control custom-radio'>
+<li class='list-group-item list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>
 <input id='gdrf-data-type-delete' class='custom-control-input' type='radio' name='gdrf_data_type' value='delete_personal_data' disabled>
 <label class='custom-control-label w-100' for='gdrf-data-type-delete'><div class='row'>
 		<?php if ( !isset($args['widget']) ) : ?>
