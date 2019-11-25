@@ -1,106 +1,86 @@
-( function (blocks, editor, components, i18n, element ) {
-
-	const { __ } = wp.i18n;
-	var el = wp.element.createElement;
+( function( editor, components, i18n, element ) {
+	var el = element.createElement;
 	var registerBlockType = wp.blocks.registerBlockType;
-	var BlockControls = wp.blocks.BlockControls;
-	var InspectorControls = wp.blocks.InspectorControls;
-	var TextControl = components.TextControl;
-	var SelectControl = components.SelectControl;
-	var PanelBody = components.PanelBody;
+	var BlockControls = wp.editor.BlockControls;
+	var InspectorControls = wp.editor.InspectorControls;
+	var TextControl = wp.components.TextControl;
+  var ToggleControl = wp.components.ToggleControl;
+  var ServerSideRender = wp.components.ServerSideRender;
 
-	registerBlockType( 'doliconnect/product-block', {
-		title: __( 'Product card', 'doliconnect' ),
-		icon: 'store',
-		category: 'widgets',
-		keywords: [ __( 'form', 'doliconnect' ), __( 'data', 'doliconnect' ), __( 'request', 'doliconnect' ) ],
-		attributes: {
-			request_type: {
-				type: 'string'
+	registerBlockType( 'doliconnect/product-block', { // The name of our block. Must be a string with prefix. Example: my-plugin/my-custom-block.
+		title: i18n.__( 'Product'), // The title of our block.
+		description: i18n.__( 'A block for displaying dolibarr product.' ), // The description of our block.
+		icon: 'store', // Dashicon icon for our block. Custom icons can be added using inline SVGs.
+		category: 'common', // The category of the block.
+		attributes: { // Necessary for saving block content.
+			productID: {
+				type: 'text',
 			},
+      showButtonToCart: {
+        type: 'boolean',
+        default: false,
+      }, 
+      hideDuration: {
+        type: 'boolean',
+        default: false,
+      },
 		},
+
 		edit: function( props ) {
 
 			var attributes = props.attributes;
-			var request_type = props.attributes.request_type;
+			var productID = props.attributes.productID;
+			var showButtonToCart = props.attributes.showButtonToCart;
+      var hideDuration = props.attributes.hideDuration;
 
 			return [
-				el(
-					'div', {
-						className: 'data-request-form-wrapper',
-						style: {
-							fontStyle: 'italic',
-							color: '#333333',
-							backgroundColor: '#eaeaea',
-							paddingTop: '1em',
-							paddingBottom: '1.5em',
-							marginBottom: '0'
-						}
+				el( InspectorControls, { key: 'inspector' }, // Display the block options in the inspector panel.
+					el( components.PanelBody, {
+						title: i18n.__( 'Social Media Links' ),
+						className: 'block-social-links',
+						initialOpen: true,
 					},
-					el(
-						'p', { 
-							className: 'data-request-form-label',
-							style: {
-								textAlign: 'center',
-								fontSize: '2em'
-							}
-						},
-						__( 'Product\'s card', 'doliconnect'  )
-					),
-					el(
-						'p', { 
-							className: 'data-request-form-label',
-							style: {
-								paddingLeft: '2em',
-								paddingRight: '2em'
-							}
-						},
-						__( 'By default, the form shows both export and remove Data', 'doliconnect' ),
-					),
-					el(
-						'div', { 
-							className: 'data-request-form-p',
-							style: {
-								paddingLeft: '2em',
-								paddingRight: '2em'
-							}
-						},
-						el(
-							'label', { 
-								'for': 'data-request-form-select',
-								style: {
-									display: 'block'
-								}
+						el( 'p', {}, i18n.__( 'Add links to your social media profiles.' ) ),
+						el( TextControl, {
+							type: 'text',
+							label: i18n.__( 'Product ID' ),
+							value: productID,
+							onChange: function( newProduct ) {
+								props.setAttributes( { productID: newProduct } );
 							},
-							__( 'Request type:', 'doliconnect' ),
-						),
-						el(
-							SelectControl, { 
-								className: 'data-request-form-select',
-								'name': 'data-request-form-select',
-								options: [
-									{ label: __( 'Both Export and Remove', 'doliconnect' ), value: 'both' },
-									{ label: __( 'Data Export form only', 'doliconnect' ), value: 'export' },
-									{ label: __( 'Data Remove form only', 'doliconnect' ), value: 'remove' },
-								],
-								onChange: ( value ) => {
-									props.setAttributes( { request_type: value } );
-								},
-								value: props.attributes.request_type
+						} ),
+            el( ToggleControl, {
+              label: i18n.__( 'Add to cart' ),
+              checked: showButtonToCart,
+              onChange: function onChange() {
+              props.setAttributes({ showButtonToCart: !showButtonToCart });
 							},
-						)
-					)
+						} ),
+            el( ToggleControl, {
+              label: i18n.__( 'Hide duration' ),
+              checked: hideDuration,
+              onChange: function onChange() {
+              props.setAttributes({ hideDuration: !hideDuration });
+							},
+						} ),            
+				 	),
 				),
-			]
+        el(ServerSideRender, {
+                block: "doliconnect/product-block",
+                attributes:  props.attributes
+            })
+			];
 		},
-		save: function() {
-			return null;
-		}
+
+save: function() {
+        // Rendering in PHP
+        return null;
+    },
 	} );
-}(
-	window.wp.blocks,
+
+} )(
 	window.wp.editor,
 	window.wp.components,
 	window.wp.i18n,
-	window.wp.element
-) );
+	window.wp.element,
+);

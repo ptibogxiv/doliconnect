@@ -44,7 +44,7 @@ function doliconnect_product_block_init() {
 			'product-block',
 			plugins_url( 'block.js', __FILE__ ),
 			array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-components' ),
-      'beta4'
+      'beta7'
 		);
 		register_block_type(
 			'doliconnect/product-block',
