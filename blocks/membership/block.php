@@ -34,20 +34,6 @@ function doliconnect_membership_block() {
     'beta3'
 	);
 
-	// Styles.
-	wp_register_style(
-		'doliconnect-membership-block-editor-style', // Handle.
-		plugins_url( 'editor.css', __FILE__ ), // Block editor CSS.
-		array( 'wp-edit-blocks' ), // Dependencies, defined above.
-    'beta3'
-	);
-  
-	wp_register_style(
-		'doliconnect-membership-block-frontend-style', // Handle.
-		plugins_url( 'style.css', __FILE__ ), // Block editor CSS.
-		array( 'wp-edit-blocks' ) // Dependency to include the CSS after it.
-	);  
-
 function doliconnect_membership_render_block( $attributes ) {
 global $current_user;
 
@@ -212,13 +198,15 @@ $html .= '<br>';
 return $html;
 }
 
-	// Here we actually register the block with WP, again using our namespacing
 	// We also specify the editor script to be used in the Gutenberg interface
 	register_block_type( 'doliconnect/membership-block', array(
-    'render_callback' => 'doliconnect_membership_render_block',
-		'editor_script' => 'doliconnect-membership-block-script',
-		'editor_style' => 'doliconnect-membership-block-editor-style',
-		'style' => 'doliconnect-membership-block-frontend-style',
+				'render_callback' => 'doliconnect_membership_render_block',
+				'editor_script'   => 'doliconnect-membership-block-script',
+				'attributes'      => array(
+					'request_type' => array(
+						'type' => 'string',
+					),
+				),
 	) );
 
 } // End function organic_profile_block().
