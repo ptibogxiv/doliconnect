@@ -8,7 +8,7 @@ Stable tag: 3.11.2
 Requires PHP: 7.0
 Donate link: https://www.paypal.me/ptibogxiv
 
-This plugin will interface your dolibarr with a wordpress customer interface
+This plugin will interface your Dolibarr with a customer interface in you wordpress
 
 == Description ==
 
