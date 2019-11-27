@@ -352,7 +352,6 @@ print "</ul>";
 function doliloading($id=loading) {
 $loading = '<div id="doliloading-'.$id.'" style="display:none"><br><br><br><br><center><div class="align-middle">';
 $loading .= '<div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div>'; 
-//$loading .= '<i class="fas fa-spinner fa-pulse fa-3x fa-fw"></i>';
 $loading .= '<h4>'.__( 'Loading', 'doliconnect' ).'</h4></div></center><br><br><br><br></div>';
 return $loading;
 }
@@ -361,16 +360,10 @@ function doliconnect_loading() {
 
 doliconnect_enqueues();
 
-$input = array("primary", "secondary", "success", "warning", "danger", "info", "light", "dark"); //
-$rand_keys = array_rand($input, 4);
-
 print '<div id="DoliconnectLoadingModal" class="modal fade bd-example-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" data-show="true" data-backdrop="static" data-keyboard="false">
 <div class="modal-dialog modal-dialog-centered modal">
 <div class="text-center text-light w-100">
-<div class="spinner-grow text-'.$input[$rand_keys[0]].'" role="status"><span class="sr-only">Loading...</span></div>
-<div class="spinner-grow text-'.$input[$rand_keys[1]].'" role="status"><span class="sr-only">Loading...</span></div>
-<div class="spinner-grow text-'.$input[$rand_keys[2]].'" role="status"><span class="sr-only">Loading...</span></div>
-<div class="spinner-grow text-'.$input[$rand_keys[3]].'" role="status"><span class="sr-only">Loading...</span></div>
+<div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div>
 <h4>'.__( 'Processing', 'doliconnect' ).'</h4>
 </div></div></div>';
 
