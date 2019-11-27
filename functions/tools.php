@@ -1096,7 +1096,7 @@ cardButton.disabled = true;
       // Display error.message
 jQuery('#DoliconnectLoadingModal').modal('hide');
 console.log('Error occured when adding card');
-displayError.textContent = 'Your card number seems to be wrong';    
+displayError.textContent = result.error.message;    
     } else {
       // The setup has succeeded. Display a success message.
 jQuery('#DoliconnectLoadingModal').modal('show');
@@ -1189,7 +1189,7 @@ ibanButton.disabled = true;
       // Display error.message
 jQuery('#DoliconnectLoadingModal').modal('hide');
 console.log('Error occured when adding card');
-displayError.textContent = 'We need an owner as on your account';    
+displayError.textContent = result.error.message;    
     } else {
       // The setup has succeeded. Display a success message.
 jQuery('#DoliconnectLoadingModal').modal('show');
