@@ -1047,6 +1047,7 @@ var cardElement = elements.create('card', options);
 cardElement.mount('#card-element');
 var cardholderName = document.getElementById('cardholder-name');
 var cardButton = document.getElementById('cardButton');
+var cardPayButton = document.getElementById('cardPayButton');
 cardElement.addEventListener('change', function(event) {
   // Handle real-time validation errors from the card Element.
     console.log('Reset error message');
@@ -1054,11 +1055,11 @@ cardElement.addEventListener('change', function(event) {
   if (event.error) {
     displayError.textContent = event.error.message;
     displayError.classList.add('visible');
-    cardButton.disabled = true;
+    //cardButton.disabled = true;
   } else {
     displayError.textContent = '';
     displayError.classList.remove('visible');
-    cardButton.disabled = false;
+    //cardButton.disabled = false;
   }
 });
               jQuery('#ibanPanel').collapse('hide');
@@ -1069,8 +1070,9 @@ cardElement.addEventListener('change', function(event) {
 cardholderName.addEventListener('change', function(event) {
     console.log('Reset error message');
     displayError.textContent = '';
-    cardButton.disabled = false; 
+    //cardButton.disabled = false; 
 });
+if (cardButton) {
 cardButton.addEventListener('click', function(event) {
 console.log('We click on cardButton');
 cardButton.disabled = true; 
@@ -1120,6 +1122,58 @@ form.submit();
   }); 
           }
 });
+}
+if (cardPayButton) {
+cardPayButton.addEventListener('click', function(event) {
+console.log('We click on cardButton');
+cardPayButton.disabled = true; 
+        if (cardholderName.value == '')
+        	{        
+				console.log('Field Card holder is empty');
+				displayError.textContent = 'We need an owner as on your card';
+        cardPayButton.disabled = false; 
+        jQuery('#DoliconnectLoadingModal').modal('hide');   
+        	}
+        else
+        	{
+  stripe.confirmCardPayment(
+    clientSecret,
+    {
+      payment_method: {
+        card: cardElement,
+        billing_details: {name: cardholderName.value}
+      }
+    }
+  ).then(function(result) {
+    if (result.error) {
+      // Display error.message
+jQuery('#DoliconnectLoadingModal').modal('hide');
+console.log('Error occured when adding card');
+displayError.textContent = result.error.message;    
+    } else {
+      // The setup has succeeded. Display a success message.
+jQuery('#DoliconnectLoadingModal').modal('show');
+var form = document.createElement('form');
+form.setAttribute('action', '".$url."');
+form.setAttribute('method', 'post');
+form.setAttribute('id', 'doliconnect-paymentmethodsform');
+var inputvar = document.createElement('input');
+inputvar.setAttribute('type', 'hidden');
+inputvar.setAttribute('name', 'add_paymentmethod');
+inputvar.setAttribute('value', result.setupIntent.payment_method);
+form.appendChild(inputvar);
+var inputvar = document.createElement('input');
+inputvar.setAttribute('type', 'hidden');
+inputvar.setAttribute('name', 'default');
+inputvar.setAttribute('value', jQuery('input:radio[name=cardDefault]:checked').val());
+form.appendChild(inputvar);
+document.body.appendChild(form);
+form.submit();
+    }
+  }); 
+          }
+});
+}
               //alert('1');
           }else if(this.id == 'iban'){
 var ibanElement = elements.create('iban', options);
