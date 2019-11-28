@@ -1217,6 +1217,7 @@ ibanholderName.addEventListener('change', function(event) {
     displayError.textContent = '';
     ibanButton.disabled = false; 
 });
+if (ibanButton) {
 ibanButton.addEventListener('click', function(event) {
 console.log('We click on ibanButton');
 ibanButton.disabled = true; 
@@ -1269,6 +1270,61 @@ form.submit();
   }); 
           }
 });
+}
+if (ibanPayButton) {
+ibanPayButton.addEventListener('click', function(event) {
+console.log('We click on ibanButton');
+ibanPayButton.disabled = true; 
+        if (ibanholderName.value == '')
+        	{        
+				console.log('Field iban holder is empty');
+				displayError.textContent = 'We need an owner as on your account';
+        ibanPayButton.disabled = false; 
+        jQuery('#DoliconnectLoadingModal').modal('hide');   
+        	}
+        else
+        	{
+  stripe.confirmSepaDebitPayment(
+    clientSecret,
+    {
+      payment_method: {
+        sepa_debit: ibanElement,
+        billing_details: {
+          name: ibanholderName.value,
+          email: '".$listpaymentmethods->thirdparty->email."'
+        }
+      }
+    }
+  ).then(function(result) {
+    if (result.error) {
+      // Display error.message
+jQuery('#DoliconnectLoadingModal').modal('hide');
+console.log('Error occured when adding card');
+displayError.textContent = result.error.message;    
+    } else {
+      // The setup has succeeded. Display a success message.
+jQuery('#DoliconnectLoadingModal').modal('show');
+var form = document.createElement('form');
+form.setAttribute('action', '".$url."');
+form.setAttribute('method', 'post');
+form.setAttribute('id', 'doliconnect-paymentmethodsform');
+var inputvar = document.createElement('input');
+inputvar.setAttribute('type', 'hidden');
+inputvar.setAttribute('name', 'add_paymentmethod');
+inputvar.setAttribute('value', result.setupIntent.payment_method);
+form.appendChild(inputvar);
+var inputvar = document.createElement('input');
+inputvar.setAttribute('type', 'hidden');
+inputvar.setAttribute('name', 'default');
+inputvar.setAttribute('value', jQuery('input:radio[name=ibanDefault]:checked').val());
+form.appendChild(inputvar);
+document.body.appendChild(form);
+form.submit();
+    }
+  }); 
+          }
+});
+}
               //alert('2');
           }else if(this.id == 'ideal'){
 var idealElement = elements.create('idealBank', options);
