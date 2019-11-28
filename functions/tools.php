@@ -1175,7 +1175,7 @@ form.submit();
           }
 });
 }
-              //alert('1');
+              //alert('card');
           }else if(this.id == 'iban'){
 var ibanElement = elements.create('iban', options);
 ibanElement.mount('#iban-element'); 
@@ -1326,7 +1326,7 @@ form.submit();
           }
 });
 }
-              //alert('2');
+              //alert('iban');
           }else if(this.id == 'ideal'){
 var idealElement = elements.create('idealBank', options);
 idealElement.mount('#ideal-element'); 
@@ -1336,21 +1336,21 @@ var idealholderName = document.getElementById('idealholder-name');
               jQuery('#virPanel').collapse('hide');
               jQuery('#chqPanel').collapse('hide');
               jQuery('#idealPanel').collapse('show');
-              //alert('3');
+              //alert('ideal');
           }else if(this.id == 'vir'){               
               jQuery('#cardPanel').collapse('hide');
               jQuery('#ibanPanel').collapse('hide');
               jQuery('#idealPanel').collapse('hide');
               jQuery('#chqPanel').collapse('hide');
               jQuery('#virPanel').collapse('show');
-              //alert('3');
+              //alert('vir');
           }else if(this.id == 'chq'){
               jQuery('#cardPanel').collapse('hide');
               jQuery('#ibanPanel').collapse('hide');
               jQuery('#idealPanel').collapse('hide');
               jQuery('#virPanel').collapse('hide');
               jQuery('#chqPanel').collapse('show'); 
-              //alert('3');   
+              //alert('chq');   
           }else {
               jQuery('#cardPanel').collapse('hide');
               jQuery('#ibanPanel').collapse('hide');
