@@ -851,12 +851,15 @@ doliconnect_enqueues();
 $shop = callDoliApi("GET", "/doliconnector/constante/DOLICONNECT_CATSHOP", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 //print $shop;
 
-if ( defined("DOLIBUG") ) {
+print "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
 
-print dolibug();
+if ( defined("DOLIBUG") || !is_array($shop) ) {
+
+print "<li class='list-group-item list-group-item-white'>";
+print dolibug(isset($shop->error->message)?$shop->error->message:$shop);
+print "</li>";
 
 } else { 
-print "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
 if ( !isset($_GET['category']) ) {
 if ( $shop->value != null ) {
 
