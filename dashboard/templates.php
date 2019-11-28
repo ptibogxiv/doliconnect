@@ -685,11 +685,11 @@ elseif ( isset($_POST['submitted']) ) {
 }
 
 print "<div class='row'><div class='col-md-4'><div class='form-group'><h4>".__( 'Address', 'doliconnect')."</h4>";
-print doliconst('MAIN_INFO_SOCIETE_ADDRESS');
-print "<br />";
-print doliconst('MAIN_INFO_SOCIETE_ZIP');
-print " ";
-print doliconst('MAIN_INFO_SOCIETE_TOWN'); 
+$company = callDoliApi("GET", "/setup/company", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+print  $company->name.'<br>';
+print  $company->address.'<br>';
+print  $company->zip.' '.$company->town.'<br>';
+print  $company->country;
 print "</div></div><div class='col-md-8'><div id='content'>";
 if ( isset($emailSent) && $emailSent == true ) { 
 $msg = "<div class='alert alert-success'>
