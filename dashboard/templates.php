@@ -45,7 +45,7 @@ if ( is_user_logged_in() ) {
 
 $thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
-if ( defined("DOLIBUG") || !is_array($thirdparty) ) {
+if ( defined("DOLIBUG") ) {
 
 print "</div></div></div>";
 print "<div class='col-xs-12 col-sm-12 col-md-9'><div class='card shadow-sm'><div class='card-body'>";
@@ -853,8 +853,8 @@ $shop = callDoliApi("GET", "/doliconnector/constante/DOLICONNECT_CATSHOP", null,
 
 print "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
 
-if ( defined("DOLIBUG") || !is_array($shop) ) {
-
+if ( defined("DOLIBUG")) {
+$request = null;
 print "<li class='list-group-item list-group-item-white'>";
 print dolibug(isset($shop->error->message)?$shop->error->message:$shop);
 print "</li>";
