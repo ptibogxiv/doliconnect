@@ -19,7 +19,7 @@ $content .= '<div class="col-md-4 d-none d-md-block"><center><i class="fa fa-cub
 //$content .= wp_get_attachment_image( $attributes['mediaID'], "ptibogxiv_square", "", array( "class" => "img-fluid" ) );
 $content .= '</div>';
 $content .= '<div class="col-12 col-md-8"><h5 class="card-title"><b>'.doliproduct($product, 'label')."</b>";
-if ( ! empty(doliconnectid('dolicart')) ) { 
+if ( ! empty(doliconnectid('dolicart')) && !isset($attributes['hideStock']) ) { 
 $content .= " ".doliproductstock($product);
 }
 $content .= "</h5><small>".__( 'Reference', 'doliconnect').": ".$product->ref."</small>";
@@ -51,7 +51,7 @@ function doliconnect_product_block_init() {
 			'product-block',
 			plugins_url( 'block.js', __FILE__ ),
 			array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-components' ),
-      'beta11'
+      'beta12'
 		);
 		register_block_type(
 			'doliconnect/product-block',

@@ -24,6 +24,10 @@
         type: 'boolean',
         default: false,
       },
+      hideStock: {
+        type: 'boolean',
+        default: false,
+      },
 		},
 
 		edit: function( props ) {
@@ -32,6 +36,7 @@
 			var productID = props.attributes.productID;
 			var showButtonToCart = props.attributes.showButtonToCart;
       var hideDuration = props.attributes.hideDuration;
+      var hideStock = props.attributes.hideStock;
 
 			return [
 				el( InspectorControls, { key: 'inspector' }, // Display the block options in the inspector panel.
@@ -62,7 +67,14 @@
               onChange: function onChange() {
               props.setAttributes({ hideDuration: !hideDuration });
 							},
-						} ),            
+						} ), 
+            el( ToggleControl, {
+              label: i18n.__( 'Hide stock' ),
+              checked: hideStock,
+              onChange: function onChange() {
+              props.setAttributes({ hideStock: !hideStock });
+							},
+						} ),         
 				 	),
 				),
         el(ServerSideRender, {
