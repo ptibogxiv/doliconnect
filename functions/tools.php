@@ -1046,6 +1046,7 @@ HideDivPM(this.id);
 var cardElement = elements.create('card', options);
 cardElement.mount('#card-element');
 var cardholderName = document.getElementById('cardholder-name');
+cardholderName.value = '';
 var cardButton = document.getElementById('cardButton');
 var cardPayButton = document.getElementById('cardPayButton');
 cardElement.addEventListener('change', function(event) {
@@ -1179,6 +1180,7 @@ form.submit();
 var ibanElement = elements.create('iban', options);
 ibanElement.mount('#iban-element'); 
 var ibanholderName = document.getElementById('ibanholder-name');
+ibanholderName.value = '';
 var ibanButton = document.getElementById('ibanButton'); 
 var bankName = document.getElementById('bank-name');
 bankName.textContent = '';
