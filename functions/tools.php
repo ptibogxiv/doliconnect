@@ -858,7 +858,7 @@ if ( !empty($module) && is_object($object) && isset($object->id) ) {
 if ( $method->type == 'card' ) {
 $paymentmethods .='<button type="button" onclick="PayCardPM(\''.$method->id.'\')" class="btn btn-danger"><b>'.__( 'Pay', 'doliconnect' )." ".doliprice($object, 'ttc', $currency).'</b></button>';
 } elseif ( $method->type == 'sepa_debit' ) {
-$paymentmethods .='<button type="button" onclick="PayIbanPM(\''.$method->id.'\')" class="btn btn-danger"><b>'.__( 'Pay', 'doliconnect' )." ".doliprice($object, 'ttc', $currency).'</b></button>';
+$paymentmethods .='<button type="button" onclick="PaySepaDebitPM(\''.$method->id.'\')" class="btn btn-danger"><b>'.__( 'Pay', 'doliconnect' )." ".doliprice($object, 'ttc', $currency).'</b></button>';
 }
 } else {
 $paymentmethods .='<button type="button" onclick="DefaultPM(\''.$method->id.'\')" class="btn btn-warning"';
@@ -1440,11 +1440,11 @@ form.submit();
   }); 
 }
 
-function PayIbanPM(pm) {
+function PaySepaDebitPM(pm) {
 var clientSecret = '".$listpaymentmethods->stripe->client_secret."';
 var displayError = document.getElementById('error-message');
 displayError.textContent = '';
-  stripe.confirmIbanPayment(
+  stripe.confirmSepaDebitPayment(
     clientSecret,
     {
       payment_method: pm
