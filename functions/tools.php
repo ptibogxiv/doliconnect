@@ -855,7 +855,7 @@ $paymentmethods .="</div></div></label></div></li>";
 $paymentmethods .='<li id="'.$method->id.'Panel" class="list-group-item list-group-item-secondary panel-collapse collapse"><div class="panel-body">';
 $paymentmethods .='<div class="btn-group btn-block" role="group" aria-label="actions buttons">';
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
-if ( $method->type == 'sepa_debit' ) {
+if ( $method->type == 'card' ) {
 $paymentmethods .='<button type="button" onclick="PayCardPM(\''.$method->id.'\')" class="btn btn-danger"><b>'.__( 'Pay', 'doliconnect' )." ".doliprice($object, 'ttc', $currency).'</b></button>';
 } elseif ( $method->type == 'sepa_debit' ) {
 $paymentmethods .='<button type="button" onclick="PayIbanPM(\''.$method->id.'\')" class="btn btn-danger"><b>'.__( 'Pay', 'doliconnect' )." ".doliprice($object, 'ttc', $currency).'</b></button>';
