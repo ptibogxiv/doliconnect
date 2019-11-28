@@ -855,7 +855,11 @@ $paymentmethods .="</div></div></label></div></li>";
 $paymentmethods .='<li id="'.$method->id.'Panel" class="list-group-item list-group-item-secondary panel-collapse collapse"><div class="panel-body">';
 $paymentmethods .='<div class="btn-group btn-block" role="group" aria-label="actions buttons">';
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
+if ( $method->type == 'sepa_debit' ) {
 $paymentmethods .='<button type="button" onclick="PayCardPM(\''.$method->id.'\')" class="btn btn-danger"><b>'.__( 'Pay', 'doliconnect' )." ".doliprice($object, 'ttc', $currency).'</b></button>';
+} elseif ( $method->type == 'sepa_debit' ) {
+$paymentmethods .='<button type="button" onclick="PayIbanPM(\''.$method->id.'\')" class="btn btn-danger"><b>'.__( 'Pay', 'doliconnect' )." ".doliprice($object, 'ttc', $currency).'</b></button>';
+}
 } else {
 $paymentmethods .='<button type="button" onclick="DefaultPM(\''.$method->id.'\')" class="btn btn-warning"';
 if ( !empty($method->default_source) ) { $paymentmethods .=" disabled"; }
@@ -1435,7 +1439,39 @@ form.submit();
     }
   }); 
 }
-";    
+
+function PayIbanPM(pm) {
+var clientSecret = '".$listpaymentmethods->stripe->client_secret."';
+var displayError = document.getElementById('error-message');
+displayError.textContent = '';
+  stripe.confirmIbanPayment(
+    clientSecret,
+    {
+      payment_method: pm
+    }
+  ).then(function(result) {
+    if (result.error) {
+      // Display error.message
+jQuery('#DoliconnectLoadingModal').modal('hide');
+console.log('Error occured when adding card');
+displayError.textContent = result.error.message;    
+    } else {
+      // The setup has succeeded. Display a success message.
+jQuery('#DoliconnectLoadingModal').modal('show');
+var form = document.createElement('form');
+form.setAttribute('action', '".$url."');
+form.setAttribute('method', 'post');
+form.setAttribute('id', 'doliconnect-paymentmethodsform');
+var inputvar = document.createElement('input');
+inputvar.setAttribute('type', 'hidden');
+inputvar.setAttribute('name', 'paymentmethod');
+inputvar.setAttribute('value', pm);
+form.appendChild(inputvar);
+document.body.appendChild(form);
+form.submit();
+    }
+  }); 
+}";    
                  
 $paymentmethods .="</script>";
 
