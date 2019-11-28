@@ -1427,19 +1427,14 @@ form.setAttribute('method', 'post');
 form.setAttribute('id', 'doliconnect-paymentmethodsform');
 var inputvar = document.createElement('input');
 inputvar.setAttribute('type', 'hidden');
-inputvar.setAttribute('name', 'add_paymentmethod');
-inputvar.setAttribute('value', result.setupIntent.payment_method);
-form.appendChild(inputvar);
-var inputvar = document.createElement('input');
-inputvar.setAttribute('type', 'hidden');
-inputvar.setAttribute('name', 'default');
-inputvar.setAttribute('value', jQuery('input:radio[name=cardDefault]:checked').val());
+inputvar.setAttribute('name', 'paymentmethod');
+inputvar.setAttribute('value', pm);
 form.appendChild(inputvar);
 document.body.appendChild(form);
 form.submit();
     }
   }); 
-        }
+}
 ";    
                  
 $paymentmethods .="</script>";
