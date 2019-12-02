@@ -39,7 +39,13 @@
       var hideStock = props.attributes.hideStock;
 
 			return [
-				el( InspectorControls, { key: 'inspector' }, // Display the block options in the inspector panel.
+			el( 'div', { className: 'components-block-description' },
+        el(ServerSideRender, {
+          block: "doliconnect/product-block",
+					attributes: props.attributes
+				} ),
+			),
+			el( InspectorControls, { key: 'inspector' }, // Display the block options in the inspector panel.
 					el( components.PanelBody, {
 						title: i18n.__( 'Social Media Links' ),
 						className: 'block-social-links',
@@ -57,41 +63,39 @@
             el( ToggleControl, {
               label: i18n.__( 'Add to cart' ),
               checked: showButtonToCart,
-              onChange: function onChange() {
+              onChange: function onChange( showButtonToCart ) {
               props.setAttributes({ showButtonToCart: !showButtonToCart });
 							},
 						} ),
             el( ToggleControl, {
               label: i18n.__( 'Hide duration' ),
               checked: hideDuration,
-              onChange: function onChange() {
+              onChange: function onChange( hideDuration ) {
               props.setAttributes({ hideDuration: !hideDuration });
 							},
 						} ), 
             el( ToggleControl, {
               label: i18n.__( 'Hide stock' ),
               checked: hideStock,
-              onChange: function onChange() {
+              onChange: function onChange( hideStock ) {
               props.setAttributes({ hideStock: !hideStock });
 							},
-						} ),         
-				 	),
-				),
-        el(ServerSideRender, {
-                block: "doliconnect/product-block",
-                attributes:  props.attributes
-            })
+						} )         
+				)
+			),
 			];
 		},
 
-save: function() {
-        return null;
-    },
-	} );
+	save: () => {
+		return null
+	}
 
-} )(
+})
+
+})(
+	window.wp.blocks,
 	window.wp.editor,
 	window.wp.components,
 	window.wp.i18n,
-	window.wp.element,
+	window.wp.element
 );

@@ -59,12 +59,12 @@ function doliconnect_product_block_init() {
 				'editor_script'   => 'product-block',
 				'render_callback' => 'doliconnect_product_block_render',
 				'attributes'      => array(
-					'request_type' => array(
-						'type' => 'string',
-					),
-				),
-			)
-		);
-	}
+          'productID' => array( 'type' => 'string' ),
+          'showButtonToCart' => array( 'type' => 'boolean' ),
+          'hideDuration' => array( 'type' => 'boolean' ),
+          'hideStock' => array( 'type' => 'boolean' ),
+		),
+	) );
+}
 }
 add_action( 'init', 'doliconnect_product_block_init' );
