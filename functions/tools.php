@@ -831,7 +831,7 @@ $paymentmethods .= "<li class='list-group-item list-group-item-action flex-colum
 $paymentmethods .= '<input onclick="ShowHideDivPM(\''.$method->id.'\')" type="radio" id="'.$method->id.'" name="paymentmode" value="'.$method->id.'" class="custom-control-input" data-toggle="collapse" data-parent="#accordion" href="#'.$method->id.'" ';
 if ( (!empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id != $method->id ) || (date('Y/n') >= $method->expiration && !empty($object) && !empty($method->expiration)) ) { $paymentmethods .=" disabled "; }
 elseif ( !empty($method->default_source) ) { $paymentmethods .=" checked "; }
-$paymentmethods .= " ><label class='custom-control-label w-100' for='".$method->id."'><div class='row'><div class='col-3 col-md-2 col-xl-2 align-middle'>";
+$paymentmethods .= " ><label class='custom-control-label w-100' for='".$method->id."'><div class='row'><div class='col-2 col-sm-3 col-md-2 col-xl-2 align-middle'>";
 $paymentmethods .= '<center><i ';
 if ( $method->type == 'sepa_debit' ) {
 $paymentmethods .= 'class="fas fa-university fa-3x fa-fw" style="color:DarkGrey"';
@@ -843,7 +843,7 @@ else if ( $method->brand == 'amex' ) { $paymentmethods .= 'class="fab fa-cc-amex
 else { $paymentmethods .= 'class="fab fa-cc-amex fa-3x fa-fw"';}
 }
 $paymentmethods .= '></i></center>';
-$paymentmethods .= '</div><div class="col-9 col-sm-7 col-md-8 col-xl-8 align-middle"><h6 class="my-0">';
+$paymentmethods .= '</div><div class="col-10 col-sm-9 col-sm-7 col-md-8 col-xl-8 align-middle"><h6 class="my-0">';
 if ( $method->type == 'sepa_debit' ) {
 $paymentmethods .= __( 'Account', 'doliconnect' ).' '.$method->reference.'<small> <a href="'.$method->mandate_url.'" title="'.__( 'Mandate', 'doliconnect' ).' '.$method->mandate_reference.'" target="_blank"><i class="fas fa-info-circle"></i></a></small>';
 } else {
@@ -877,14 +877,14 @@ $i++;
 }} else {
 $paymentmethods .= '<li class="list-group-item list-group-item-light flex-column align-items-start"><div class="custom-control custom-radio">
 <input type="radio" id="none" name="paymentmode" value="none" class="custom-control-input" data-toggle="collapse" data-parent="#accordion" href="#none" checked>
-<label class="custom-control-label w-100" for="none"><div class="row"><div class="col-3 col-md-2 col-xl-2 align-middle">
+<label class="custom-control-label w-100" for="none"><div class="row"><div class="col-2 col-sm-3 col-md-2 col-xl-2 align-middle">
 <center><i class="fas fa-border-none fa-3x fa-fw"></i></center></div><div class="col-auto align-middle"><h6 class="my-0">'.__( 'No payment method', 'doliconnect').'</h6><small class="text-muted"></small></div></div></label>
 </div></li>';
 }
 if ( $countPM < 5 && isset($listpaymentmethods->stripe) && in_array('card', $listpaymentmethods->stripe->types) && empty($thirdparty->mode_reglement_id) ) {
 $paymentmethods .= '<li class="list-group-item list-group-item-action flex-column align-items-start"><div class="custom-control custom-radio">
 <input type="radio" id="card" name="paymentmode" value="card" class="custom-control-input" data-toggle="collapse" data-parent="#accordion" href="#card">
-<label class="custom-control-label w-100" for="card"><div class="row"><div class="col-3 col-md-2 col-xl-2 align-middle">
+<label class="custom-control-label w-100" for="card"><div class="row"><div class="col-2 col-sm-3 col-md-2 col-xl-2 align-middle">
 <center><i class="fas fa-credit-card fa-3x fa-fw"></i></center></div><div class="col-auto align-middle"><h6 class="my-0">'.__( 'Credit/debit card', 'doliconnect' ).'</h6><small class="text-muted">Visa, Mastercard, Amex...</small></div></div></label>
 </div></li>';
 $paymentmethods .= '<li id="cardPanel" class="list-group-item list-group-item-secondary panel-collapse collapse"><div class="panel-body">';
@@ -924,7 +924,7 @@ $paymentmethods .='</div></li>';
 if ( $countPM < 5 && isset($listpaymentmethods->stripe) && in_array('sepa_debit', $listpaymentmethods->stripe->types) && empty($thirdparty->mode_reglement_id) ) {
 $paymentmethods .= '<li class="list-group-item list-group-item-action flex-column align-items-start"><div class="custom-control custom-radio">
 <input type="radio" id="iban" name="paymentmode" value="iban" class="custom-control-input" data-toggle="collapse" data-parent="#accordion" href="#iban">
-<label class="custom-control-label w-100" for="iban"><div class="row"><div class="col-3 col-md-2 col-xl-2 align-middle">
+<label class="custom-control-label w-100" for="iban"><div class="row"><div class="col-2 col-sm-3 col-md-2 col-xl-2 align-middle">
 <center><i class="fas fa-university fa-3x fa-fw"></i></center></div><div class="col-auto align-middle"><h6 class="my-0">'.__( 'Bank account', 'doliconnect' ).'</h6><small class="text-muted">Via SEPA Direct Debit</small></div></div></label>
 </div></li>';
 $paymentmethods .= '<li id="ibanPanel" class="list-group-item list-group-item-secondary panel-collapse collapse"><div class="panel-body">';
@@ -964,7 +964,7 @@ $paymentmethods .='</div></li>';
 if ( isset($listpaymentmethods->stripe) && in_array('ideal', $listpaymentmethods->stripe->types) && !empty($module) && is_object($object) && isset($object->id) && empty($thirdparty->mode_reglement_id) ) {
 $paymentmethods .='<li class="list-group-item list-group-item-action flex-column align-items-start"><div class="custom-control custom-radio">
 <input type="radio" id="ideal" name="paymentmode" value="ideal" class="custom-control-input" data-toggle="collapse" data-parent="#accordion" href="#ideal">
-<label class="custom-control-label w-100" for="ideal"><div class="row"><div class="col-3 col-md-2 col-xl-2 align-middle">
+<label class="custom-control-label w-100" for="ideal"><div class="row"><div class="col-2 col-sm-3 col-md-2 col-xl-2 align-middle">
 <center><i class="fas fa-university fa-3x fa-fw"></i></center></div><div class="col-auto align-middle"><h6 class="my-0">'.__( 'iDEAL', 'doliconnect' ).'</h6><small class="text-muted">iDEAL PAYMENT</small></div></div></label>
 </div></li>';
 $paymentmethods .='<li id="idealPanel" class="list-group-item list-group-item-secondary panel-collapse collapse"><div class="panel-body">';
@@ -983,7 +983,7 @@ $paymentmethods .= "<li class='list-group-item list-group-item-action flex-colum
 <input type='radio' id='vir' name='paymentmode' value='vir' class='custom-control-input' data-toggle='collapse' data-parent='#accordion' ";
 if ( !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id != '2' ) { $paymentmethods .=" disabled "; }
 elseif ( (!empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id == '2') || $listpaymentmethods->payment_methods == null && !in_array('card', $listpaymentmethods->stripe->types) ) { $paymentmethods .= " checked"; }
-$paymentmethods .= " href='#vir'><label class='custom-control-label w-100' for='vir'><div class='row'><div class='col-3 col-md-2 col-xl-2 align-middle'>";
+$paymentmethods .= " href='#vir'><label class='custom-control-label w-100' for='vir'><div class='row'><div class='col-2 col-sm-3 col-md-2 col-xl-2 align-middle'>";
 $paymentmethods .= '<center><i class="fas fa-university fa-3x fa-fw" style="color:DarkGrey"></i></center>';
 $paymentmethods .= "</div><div class='col-auto align-middle'><h6 class='my-0'>".__( 'Transfer', 'doliconnect' )."</h6><small class='text-muted'>".__( 'See your receipt', 'doliconnect' )."</small>";
 $paymentmethods .= '</div></div></label></div></li>';
@@ -997,7 +997,7 @@ $paymentmethods .= "<li class='list-group-item list-group-item-action flex-colum
 <input type='radio' id='chq' name='paymentmode' value='chq' class='custom-control-input' data-toggle='collapse' data-parent='#accordion' ";
 if ( !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id != '7' ) { $paymentmethods .=" disabled "; }
 elseif ( (!empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id == '7') || $listpaymentmethods->payment_methods == null && !in_array('card', $listpaymentmethods->stripe->types) && $listpaymentmethods->RIB == null ) { $paymentmethods .= " checked"; }
-$paymentmethods .= " href='#chq'><label class='custom-control-label w-100' for='chq'><div class='row'><div class='col-3 col-md-2 col-xl-2 align-middle'>";
+$paymentmethods .= " href='#chq'><label class='custom-control-label w-100' for='chq'><div class='row'><div class='col-2 col-sm-3 col-md-2 col-xl-2 align-middle'>";
 $paymentmethods .= '<center><i class="fas fa-money-check fa-3x fa-fw" style="color:Tan"></i></center>';
 $paymentmethods .= "</div><div class='col-auto align-middle'><h6 class='my-0'>".__( 'Check', 'doliconnect' )."</h6><small class='text-muted'>".__( 'See your receipt', 'doliconnect' )."</small>";
 $paymentmethods .= '</div></div></label></div></li>';
@@ -1011,7 +1011,7 @@ $paymentmethods .= "<li class='list-group-item list-group-item-action flex-colum
 <input type='radio' id='liq' name='paymentmode' value='liq' class='custom-control-input' data-toggle='collapse' data-parent='#accordion' ";
 if ( !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id != '4' ) { $paymentmethods .=" disabled "; }
 elseif ( (!empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id == '4') || ($listpaymentmethods->payment_methods == null && !in_array('card', $listpaymentmethods->stripe->types) && $listpaymentmethods->CHQ == null && $listpaymentmethods->RIB == null) ) { $paymentmethods .= " checked"; }
-$paymentmethods .= " href='#liq'><label class='custom-control-label w-100' for='liq'><div class='row'><div class='col-3 col-md-2 col-xl-2 align-middle'>";
+$paymentmethods .= " href='#liq'><label class='custom-control-label w-100' for='liq'><div class='row'><div class='col-2 col-sm-3 col-md-2 col-xl-2 align-middle'>";
 $paymentmethods .= '<center><i class="fas fa-money-bill-alt fa-3x fa-fw" style="color:#85bb65"></i></center>';
 $paymentmethods .= "</div><div class='col-auto align-middle'><h6 class='my-0'>".__( 'Cash', 'doliconnect' )."</h6><small class='text-muted'>".__( 'Go to reception desk', 'doliconnect' )."</small>";
 $paymentmethods .= '</div></div></label></div></li>';
