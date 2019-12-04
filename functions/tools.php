@@ -843,13 +843,14 @@ else if ( $method->brand == 'amex' ) { $paymentmethods .= 'class="fab fa-cc-amex
 else { $paymentmethods .= 'class="fab fa-cc-amex fa-3x fa-fw"';}
 }
 $paymentmethods .= '></i></center>';
-$paymentmethods .='</div><div class="col-9 col-sm-7 col-md-8 col-xl-8 align-middle"><h6 class="my-0">';
+$paymentmethods .= '</div><div class="col-9 col-sm-7 col-md-8 col-xl-8 align-middle"><h6 class="my-0">';
 if ( $method->type == 'sepa_debit' ) {
 $paymentmethods .= __( 'Account', 'doliconnect' ).' '.$method->reference.'<small> <a href="'.$method->mandate_url.'" title="'.__( 'Mandate', 'doliconnect' ).' '.$method->mandate_reference.'" target="_blank"><i class="fas fa-info-circle"></i></a></small>';
 } else {
 $paymentmethods .= __( 'Card', 'doliconnect' ).' '.$method->reference;
 }
 if ( !empty($method->expiration) ) { $paymentmethods .=" - ".date("m/Y", strtotime($method->expiration.'/1')); }
+if ( $method->default_source ) { $paymentmethods .= " <i class='fas fa-star fa-fw' style='color:Gold' ></i>"; }
 $paymentmethods .= "</h6><small class='text-muted'>".$method->holder."</small></div>";
 $paymentmethods .= "<div class='d-none d-sm-block col-2 align-middle text-right'>";
 $paymentmethods .= "<span class='flag-icon flag-icon-".strtolower($method->country)."'>";
