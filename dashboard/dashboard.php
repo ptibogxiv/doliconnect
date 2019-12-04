@@ -824,7 +824,7 @@ print "<a href='#' id='button-source-payment' class='btn btn-warning btn-block' 
 
 }
 
-print "</div></div>"; 
+print "</span></div></div>"; 
 
 $thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 

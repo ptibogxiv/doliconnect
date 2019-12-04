@@ -848,12 +848,12 @@ $paymentmethods .=__( 'Account', 'doliconnect' ).' '.$method->reference.'<small>
 $paymentmethods .=__( 'Card', 'doliconnect' ).' '.$method->reference;
 }
 if ( !empty($method->expiration) ) { $paymentmethods .=" - ".date("m/Y", strtotime($method->expiration.'/1')); }
-$paymentmethods .="</h6><small class='text-muted'>".$method->holder."</small></div>";
-$paymentmethods .="<div class='d-none d-sm-block col-2 align-middle text-right'>";
-$paymentmethods .="<img src='".plugins_url('doliconnect/images/flag/'.strtolower($method->country).'.png')."' class='img-fluid' alt='".$method->country."'>";
-$paymentmethods .="</div></div></label></div></li>";
-$paymentmethods .='<li id="'.$method->id.'Panel" class="list-group-item list-group-item-secondary panel-collapse collapse"><div class="panel-body">';
-$paymentmethods .='<div class="btn-group btn-block" role="group" aria-label="actions buttons">';
+$paymentmethods .= "</h6><small class='text-muted'>".$method->holder."</small></div>";
+$paymentmethods .= "<div class='d-none d-sm-block col-2 align-middle text-right'>";
+$paymentmethods .= "<span class='flag-icon flag-icon-".strtolower($method->country)."'>";
+$paymentmethods .= "</div></div></label></div></li>";
+$paymentmethods .= '<li id="'.$method->id.'Panel" class="list-group-item list-group-item-secondary panel-collapse collapse"><div class="panel-body">';
+$paymentmethods .= '<div class="btn-group btn-block" role="group" aria-label="actions buttons">';
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
 if ( $method->type == 'card' ) {
 $paymentmethods .='<button type="button" onclick="PayCardPM(\''.$method->id.'\')" class="btn btn-danger"><b>'.__( 'Pay', 'doliconnect' )." ".doliprice($object, 'ttc', $currency).'</b></button>';

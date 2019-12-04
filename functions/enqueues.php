@@ -29,7 +29,8 @@ $version='4.4.1';
 	wp_enqueue_script( 'fontawesome', '//use.fontawesome.com/releases/v5.11.2/js/all.js', array(), '5.11.2' );
   
   wp_enqueue_style( 'bootstrap-social', plugins_url( 'doliconnect/includes/css/bootstrap-social.css'), array(), $version); 
-
+  
+  wp_enqueue_style( 'flag-icon-css', plugins_url( 'doliconnect/includes/flag-icon-css/css/flag-icon.css'), array(), '3.4.5'); 
 }
 
 ?>
