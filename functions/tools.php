@@ -831,7 +831,7 @@ $paymentmethods .= "<li class='list-group-item list-group-item-action flex-colum
 $paymentmethods .= '<input onclick="ShowHideDivPM(\''.$method->id.'\')" type="radio" id="'.$method->id.'" name="paymentmode" value="'.$method->id.'" class="custom-control-input" data-toggle="collapse" data-parent="#accordion" href="#'.$method->id.'" ';
 if ( (!empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id != $method->id ) || (date('Y/n') >= $method->expiration && !empty($object) && !empty($method->expiration)) ) { $paymentmethods .=" disabled "; }
 elseif ( !empty($method->default_source) ) { $paymentmethods .=" checked "; }
-$paymentmethods .= " ><label class='custom-control-label w-100' for='".$method->id."'><div class='row'><div class='col-2 col-sm-3 col-md-2 col-xl-2 align-middle'>";
+$paymentmethods .= " ><label class='custom-control-label w-100' for='".$method->id."'><div class='row'><div class='col-3 col-md-2 col-xl-2 align-middle'>";
 $paymentmethods .= '<center><i ';
 if ( $method->type == 'sepa_debit' ) {
 $paymentmethods .= 'class="fas fa-university fa-3x fa-fw" style="color:DarkGrey"';
@@ -843,7 +843,7 @@ else if ( $method->brand == 'amex' ) { $paymentmethods .= 'class="fab fa-cc-amex
 else { $paymentmethods .= 'class="fab fa-cc-amex fa-3x fa-fw"';}
 }
 $paymentmethods .= '></i></center>';
-$paymentmethods .= '</div><div class="col-10 col-sm-9 col-sm-7 col-md-8 col-xl-8 align-middle"><h6 class="my-0">';
+$paymentmethods .= '</div><div class="col-9 col-sm-7 col-md-8 col-xl-8 align-middle"><h6 class="my-0">';
 if ( $method->type == 'sepa_debit' ) {
 $paymentmethods .= __( 'Account', 'doliconnect' ).' '.$method->reference.'<small> <a href="'.$method->mandate_url.'" title="'.__( 'Mandate', 'doliconnect' ).' '.$method->mandate_reference.'" target="_blank"><i class="fas fa-info-circle"></i></a></small>';
 } else {
@@ -877,7 +877,7 @@ $i++;
 }} else {
 $paymentmethods .= '<li class="list-group-item list-group-item-light flex-column align-items-start"><div class="custom-control custom-radio">
 <input type="radio" id="none" name="paymentmode" value="none" class="custom-control-input" data-toggle="collapse" data-parent="#accordion" href="#none" checked>
-<label class="custom-control-label w-100" for="none"><div class="row"><div class="col-2 col-sm-3 col-md-2 col-xl-2 align-middle">
+<label class="custom-control-label w-100" for="none"><div class="row"><div class="col-3 col-md-2 col-xl-2 align-middle">
 <center><i class="fas fa-border-none fa-3x fa-fw"></i></center></div><div class="col-auto align-middle"><h6 class="my-0">'.__( 'No payment method', 'doliconnect').'</h6><small class="text-muted"></small></div></div></label>
 </div></li>';
 }
