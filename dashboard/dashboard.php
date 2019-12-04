@@ -795,14 +795,10 @@ print "<h3 class='text-right'>".$orderinfo."</h3>";
 
 if ( $orderfo->billed != 1 && $orderfo->statut > 0 ) {
 
-if ( function_exists('dolipaymentmodes') ) {
-
-$changepm = doliconnecturl('dolicart')."?pay&module=".esc_attr($_GET['module'])."&id=".esc_attr($_GET['id'])."&ref=".esc_attr($_GET['ref']);
-
-} elseif ( isset($orderfo->public_payment_url) && !empty($orderfo->public_payment_url) ) {
-
-$changepm = $orderfo->public_payment_url;
-
+if ( doliversion('11.0.0') ) {
+print dolipaymentmethods($orderfo, substr($_GET['module'], 0, -1), doliconnecturl('dolicart')."?validation", true);
+} else {
+print __( "It seems that your version of Dolibarr and/or its plugins are not up to date!", "doliconnect");
 }
 
 if ( $orderfo->mode_reglement_code == 'CHQ' ) {
@@ -821,9 +817,9 @@ print "<div class='alert alert-danger' role='alert'><p align='justify'>".sprintf
 print "<br><b>".__( 'Bank', 'doliconnect' ).": $bank->bank</b>";
 print "<br><b>IBAN: $bank->iban</b>";
 if ( ! empty($bank->bic) ) { print "<br><b>BIC/SWIFT: $bank->bic</b>";}
-print "</p><small><a href='$changepm' id='button-source-payment'><span class='fas fa-sync-alt'></span> ".__( 'Change your payment mode', 'doliconnect' )."</a></small></div>";
+print "</p><small><a href='#' id='button-source-payment'><span class='fas fa-sync-alt'></span> ".__( 'Change your payment mode', 'doliconnect' )."</a></small></div>";
 } else {
-print "<a href='$changepm' id='button-source-payment' class='btn btn-warning btn-block' role='button'><span class='fa fa-credit-card'></span> ".__( 'Pay', 'doliconnect' )."</a><br>";
+print "<a href='#' id='button-source-payment' class='btn btn-warning btn-block' role='button'><span class='fa fa-credit-card'></span> ".__( 'Pay', 'doliconnect' )."</a><br>";
 }
 
 }
