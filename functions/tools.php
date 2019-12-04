@@ -770,7 +770,7 @@ print '<div class="modal-body"><div class="card" id="SelectLangmodal-form"><ul c
 $translations = pll_the_languages( array( 'raw' => 1 ) );
 foreach ($translations as $key => $value) {
 print "<a href='".$value['url']."?".$_SERVER["QUERY_STRING"]."' onclick='loadingSelectLangModal()' class='list-group-item list-group-item-action list-group-item-light'>
-<span class='flag-icon flag-icon-".strtolower($value['slug'])."'></span> ".$value['name'];
+<span class='flag-icon flag-icon-".strtolower(substr($value['slug'], -2))."'></span> ".$value['name'];
 if ( $value['current_lang'] == true ) { print " <i class='fas fa-language fa-fw'></i>"; }
 print "</a>";
 }      
