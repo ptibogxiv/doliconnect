@@ -382,16 +382,9 @@ print doliloaderscript('doliconnect-contactform');
 
 print "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
 
-class myCounter implements Countable {
-	public function count() {
-		static $count = 0;
-		return ++$count;
-	}
-}
- 
-$counter = new myCounter;
+$countContact = count($listcontact);
 
-if ( count($counter) < 5 ) {
+if ( $countContact < 5 ) {
 print '<button type="button" class="list-group-item lh-condensed list-group-item-action list-group-item-primary" data-toggle="modal" data-target="#addcontactadress"><center><i class="fas fa-plus-circle"></i> '.__( 'New contact', 'doliconnect' ).'</center></button>';
 }
 
@@ -404,7 +397,7 @@ if (1 == 1) {
 
 if ( doliversion('11.0.0') && isset($contact->roles) && $contact->roles != null ) {
 foreach ( $contact->roles as $role ) { 
-print $role->label;
+//print $role->label;
 }}
 
 print "<div class='col-4 col-sm-3 col-md-2 btn-group-vertical' role='group'>";
@@ -445,7 +438,7 @@ print "<div id='Footercontact".$contact->id."-form' class='modal-footer'><button
 </div></div></div>";
 }}
 
-if ( count($counter) < 5 ) {
+if ( $countContact < 5 ) {
 
 print "<div class='modal fade' id='addcontactadress' tabindex='-1' role='dialog' aria-labelledby='addcontactadressTitle' aria-hidden='true' data-backdrop='static' data-keyboard='false'>
 <div class='modal-dialog modal-lg modal-dialog-centered' role='document'><div class='modal-content border-0'><div class='modal-header border-0'>

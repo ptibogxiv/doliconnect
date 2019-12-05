@@ -244,9 +244,8 @@ if ( isset($object->roles) && $object->roles != null ) {
 foreach ( $object->roles as $role ) {
 $typecontact[] .= $role->id; 
 }}
-
 foreach ( $contact_types as $contacttype ) {                                                           //name='".$idobject."[roles][id]'
-print "<div class='custom-control custom-checkbox'><input type='checkbox' class='custom-control-input'  value='".$contacttype->rowid."' id='".$idobject."[roles][".$contacttype->rowid."]' ";
+print "<div class='custom-control custom-checkbox'><input type='checkbox' class='custom-control-input' value='".$contacttype->rowid."' id='".$idobject."[roles][".$contacttype->rowid."]' ";
 if ( isset($object->roles) && $object->roles != null && in_array($contacttype->rowid, $typecontact)) { print " checked"; }
 print "><label class='custom-control-label' for='".$idobject."[roles][".$contacttype->rowid."]'>".$contacttype->label."</label></div>";
 }
@@ -801,15 +800,6 @@ $thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, '
 //print $thirdparty;
 
 $lock = dolipaymentmodes_lock(); 
-
-class myCounter implements Countable {
-	public function count() {
-		static $count = 0;
-		return ++$count;
-	}
-}
- 
-$counter = new myCounter;
 
 $paymentmethods = "<script src='https://js.stripe.com/v3/'></script>";
  
