@@ -1165,7 +1165,7 @@ wp_safe_redirect(esc_url(doliconnecturl('dolicart')));
 exit;
 }
 
-print "<div class='card shadow-sm' id='cart-form'><div class='card-body'><center><h2>".__( 'Your order has been registered', 'doliconnect' )."</h2>".__( 'Reference', 'doliconnect' ).": ".$object->ref."<br />".__( 'Payment method', 'doliconnect' ).": $object->mode_reglement<br /><br />";
+print "<div class='card shadow-sm' id='cart-form'><div class='card-body'><center><h2>".__( 'Your order has been registered', 'doliconnect' )."</h2>".__( 'Reference', 'doliconnect' ).": ".$object->ref."<br />".__( 'Payment method', 'doliconnect' ).": ".$object->mode_reglement."<br /><br />";
 $TTC = doliprice($object, 'ttc', isset($object->multicurrency_code) ? $object->multicurrency_code : null);
 
 if ( $object->statut == '1' && !isset($_GET['error']) ) {
@@ -1197,7 +1197,7 @@ print "</p>";
 } else {
 print "<div class='alert alert-danger' role='alert'><p>".__( 'An error is occurred', 'doliconnect' )."</p>";
 }
-print "<br /><a href='".doliconnecturl('doliaccount')."?module=orders&id=".$_GET['id']."&ref=".$object->ref;
+print "<br /><a href='".doliconnecturl('doliaccount')."?module=orders&id=".$object->id."&ref=".$object->ref;
 print "' class='btn btn-primary'>".__( 'See my order', 'doliconnect' )."</a></center></div></div></div>";
 
 } elseif ( isset($_GET['pay']) && ((doliconnector($current_user, 'fk_order_nb_item') > 0 && $object->statut == 0 && !isset($_GET['module']) ) || ( ($_GET['module'] == 'orders' && $object->billed != 1 ) || ($_GET['module'] == 'invoices' && $object->paye != 1) )) && $object->socid == doliconnector($current_user, 'fk_soc') ) {
