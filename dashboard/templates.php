@@ -1302,7 +1302,7 @@ $data = [
 $object = callDoliApi("PUT", "/".$module."/".$object->id, $data, dolidelay('order', true));
 }
 
-wp_safe_redirect(doliconnecturl('dolicart').'?pay');
+wp_safe_redirect(wp_nonce_url(doliconnecturl('dolicart').'?pay', 'valid_cart', 'cart'));
 exit;
                                    
 } elseif ( !$object->id > 0 && $object->lines == null ) {
@@ -1438,7 +1438,7 @@ print "<table width='100%' style='border: none'><tr style='border: none'><td wid
 </div></td></tr></table><br>";
 
 if ( isset($_POST['dolicart']) && $_POST['dolicart'] == 'validation' && !isset($_GET['user']) && !isset($_GET['pay']) && !isset($_GET['validation']) && $object->lines != null ) {
-wp_safe_redirect(doliconnecturl('dolicart').'?info');
+wp_safe_redirect(wp_nonce_url(doliconnecturl('dolicart').'?info', 'valid_cart', 'cart'));
 exit;                                   
 } elseif ( isset($_POST['dolicart']) && $_POST['dolicart'] == 'purge' ) {
 $orderdelete = callDoliApi("DELETE", "/".$module."/".doliconnector($current_user, 'fk_order'), null);
