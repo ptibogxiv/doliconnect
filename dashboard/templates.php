@@ -1302,7 +1302,7 @@ $data = [
 $object = callDoliApi("PUT", "/".$module."/".$object->id, $data, dolidelay('order', true));
 }
 
-wp_safe_redirect(wp_nonce_url(doliconnecturl('dolicart').'?pay', 'valid_cart', 'cart'));
+wp_safe_redirect(wp_nonce_url(doliconnecturl('dolicart').'?pay', 'valid_dolicart', 'cart'));
 exit;
                                    
 } elseif ( !$object->id > 0 && $object->lines == null ) {
@@ -1417,7 +1417,7 @@ print dolirefresh($request, get_permalink(), dolidelay('cart'));
 print "</div><div class='float-right'>";
 print dolihelp('ISSUE');
 print "</div></small>";
-print '</div></div>';
+print '</div></div>'.wp_verify_nonce( $_GET['cart'], 'valid_dolicart');
 
 } else {
 
@@ -1438,7 +1438,7 @@ print "<table width='100%' style='border: none'><tr style='border: none'><td wid
 </div></td></tr></table><br>";
 
 if ( isset($_POST['dolicart']) && $_POST['dolicart'] == 'validation' && !isset($_GET['user']) && !isset($_GET['pay']) && !isset($_GET['validation']) && $object->lines != null ) {
-wp_safe_redirect(wp_nonce_url(doliconnecturl('dolicart').'?info', 'valid_cart', 'cart'));
+wp_safe_redirect(wp_nonce_url(doliconnecturl('dolicart').'?info', 'valid_dolicart', 'cart'));
 exit;                                   
 } elseif ( isset($_POST['dolicart']) && $_POST['dolicart'] == 'purge' ) {
 $orderdelete = callDoliApi("DELETE", "/".$module."/".doliconnector($current_user, 'fk_order'), null);
@@ -1533,14 +1533,14 @@ print "</div>";
 print "</div>";
 }
 
-print "</form>"; 
+print "</form>";                     
 
 print '<div class="card-footer text-muted">';
 print "<small><div class='float-left'>";
 print dolirefresh($request, doliconnecturl('dolicart'), dolidelay('cart'));
 print "</div><div class='float-right'>";
 print dolihelp('ISSUE');
-print "</div></small>";
+print "</div></small>".wp_verify_nonce(  '00b21926a9', 'valid_dolicart' );
 
 }
 }
