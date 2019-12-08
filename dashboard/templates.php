@@ -1436,9 +1436,13 @@ print "<table width='100%' style='border: none'><tr style='border: none'><td wid
 </div></td><td width='50px' style='border: none'><div class='fa-3x'>
 <i class='fas fa-check fa-fw text-dark' data-fa-transform='shrink-3.5' data-fa-mask='fas fa-circle' ></i>
 </div></td></tr></table><br>";
+
+if ( isset($object) && is_object($object) && $object->id > 0 ) {
 $nonce = wp_create_nonce( 'valid_dolicart-'.$object->id );
 $arr_params = array( 'cart' => $nonce, 'step' => 'info');  
 $return = add_query_arg( $arr_params, doliconnecturl('dolicart'));
+}
+
 
 if ( isset($_POST['dolicart']) && $_POST['dolicart'] == 'purge' ) {
 $orderdelete = callDoliApi("DELETE", "/".$module."/".doliconnector($current_user, 'fk_order'), null);
