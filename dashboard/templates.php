@@ -1200,7 +1200,7 @@ print "<div class='alert alert-danger' role='alert'><p>".__( 'An error is occurr
 print "<br /><a href='".doliconnecturl('doliaccount')."?module=orders&id=".$object->id."&ref=".$object->ref;
 print "' class='btn btn-primary'>".__( 'See my order', 'doliconnect' )."</a></center></div></div></div>";
 
-} elseif ( isset($_GET['pay']) && ((doliconnector($current_user, 'fk_order_nb_item') > 0 && $object->statut == 0 && !isset($_GET['module']) ) || ( ($_GET['module'] == 'orders' && $object->billed != 1 ) || ($_GET['module'] == 'invoices' && $object->paye != 1) )) && $object->socid == doliconnector($current_user, 'fk_soc') ) {
+} elseif ( isset($_GET['step']) && $_GET['step'] == 'payment' && isset($_GET['cart']) && wp_verify_nonce( $_GET['cart'], 'valid_dolicart') && ( (doliconnector($current_user, 'fk_order_nb_item') > 0 && $object->statut == 0 && !isset($_GET['module']) ) || ( ($_GET['module'] == 'orders' && $object->billed != 1 ) || ($_GET['module'] == 'invoices' && $object->paye != 1) )) && $object->socid == doliconnector($current_user, 'fk_soc') ) {
 
 print "<table width='100%' style='border: none'><tr style='border: none'><td width='50px' style='border: none'><div class='fa-3x'>
 <i class='fas fa-shopping-bag fa-fw text-success' data-fa-transform='shrink-3.5' data-fa-mask='fas fa-circle' ></i>
@@ -1289,7 +1289,7 @@ update_user_meta( $ID, 'billing_birth', $thirdparty['birth']);
 
 do_action('wp_dolibarr_sync', $thirdparty);
                                    
-} elseif ( isset($_POST['info']) && $_POST['info'] == 'validation' && !isset($_GET['pay']) && !isset($_GET['validation']) ) {
+} elseif ( isset($_POST['info']) && $_POST['info'] == 'validation' ) {
 
 if ($_POST['contact_shipping']) {
 $order_shipping= callDoliApi("POST", "/".$module."/".$object->id."/contact/".$_POST['contact_shipping']."/SHIPPING", null, dolidelay('order', true));
@@ -1302,7 +1302,7 @@ $data = [
 $object = callDoliApi("PUT", "/".$module."/".$object->id, $data, dolidelay('order', true));
 }
 
-wp_safe_redirect(wp_nonce_url(doliconnecturl('dolicart').'?pay', 'valid_dolicart', 'cart'));
+wp_safe_redirect(doliconnecturl('dolicart').'?cart='.$_GET['cart'].'&step=payment');
 exit;
                                    
 } elseif ( !$object->id > 0 && $object->lines == null ) {
@@ -1440,10 +1440,7 @@ $nonce = wp_create_nonce( 'valid_dolicart' );
 $arr_params = array( 'cart' => $nonce, 'step' => 'info');  
 $return = add_query_arg( $arr_params, doliconnecturl('dolicart'));
 
-if ( isset($_POST['dolicart']) && $_POST['dolicart'] == 'validation' && !isset($_GET['user']) && !isset($_GET['pay']) && !isset($_GET['validation']) && $object->lines != null ) {
-wp_redirect($return);
-exit;                                   
-} elseif ( isset($_POST['dolicart']) && $_POST['dolicart'] == 'purge' ) {
+if ( isset($_POST['dolicart']) && $_POST['dolicart'] == 'purge' ) {
 $orderdelete = callDoliApi("DELETE", "/".$module."/".doliconnector($current_user, 'fk_order'), null);
 $dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolidelay('doliconnector'), true);
 if (1==1) {
@@ -1524,7 +1521,7 @@ if ( $object->lines != null && $object->statut == 0 ) {
 print "<div class='col-12 col-md'><button type='button' name='purgdolicart' value='purge' class='btn btn-outline-secondary w-100' role='button' aria-pressed='true'><b>".__( 'Empty the basket', 'doliconnect')."</b></button></div>";
 }
 if ( $object->lines != null ) {
-print "<div class='col-12 col-md'><button type='button' onclick='DefaultPM(\"".$nonce."\")' class='btn btn-warning w-100' role='button' aria-pressed='true'><b>".__( 'Process', 'doliconnect')."</b></button></div>";
+print "<div class='col-12 col-md'><button type='button' onclick='ValidDoliCart(\"".$nonce."\")' class='btn btn-warning w-100' role='button' aria-pressed='true'><b>".__( 'Process', 'doliconnect')."</b></button></div>";
 } 
 }
 print "</div>";
@@ -1537,15 +1534,15 @@ print "</div>";
 }
 
 print "<script>";
-print "function DefaultPM(nonce) {
+print "function ValidDoliCart(nonce) {
 jQuery('#DoliconnectLoadingModal').modal('show');
 var form = document.createElement('form');
 form.setAttribute('action', '".$return."');
 form.setAttribute('method', 'post');
-form.setAttribute('id', 'doliconnect-paymentmethodsform');
+form.setAttribute('id', 'doliconnect-cartform');
 var inputvar = document.createElement('input');
 inputvar.setAttribute('type', 'hidden');
-inputvar.setAttribute('name', 'paymentmethod');
+inputvar.setAttribute('name', 'dolichecknonce');
 inputvar.setAttribute('value', nonce);
 form.appendChild(inputvar);
 document.body.appendChild(form);
