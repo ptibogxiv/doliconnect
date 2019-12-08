@@ -1465,20 +1465,12 @@ if ( isset($_POST['updateorderproduct']) ) {
 foreach ( $_POST['updateorderproduct'] as $productupdate ) {
 $result = doliaddtocart($productupdate['product'], $productupdate['qty'], $productupdate['price'], $productupdate['remise_percent'], $productupdate['date_start'], $productupdate['date_end']);
 //print var_dump($_POST['updateorderproduct']);
-if (1==1) {
-if (doliconnector($current_user, 'fk_order') > 0) {
+}
+doliconnector($current_user, 'fk_order', true);
 $object = callDoliApi("GET", $request, null, dolidelay('cart'), true);
-//print $object;
+wp_safe_redirect(doliconnecturl('dolicart'));
+exit;
 }
-//wp_safe_redirect(esc_url(get_permalink()));
-//exit;
-} else {
-print "<div class='alert alert-warning' role='alert'><p><strong>".__( 'Oops!', 'doliconnect' )."</strong> ".__( 'An error is occured. Please contact us!', 'doliconnect' )."</p></div>"; 
-}
-}
-}
-
-
 
 if ( isset($object) && is_object($object) ) {
 $timeout=$object->date_modification-current_time('timestamp',1)+1200;
