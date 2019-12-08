@@ -1449,7 +1449,7 @@ $arr_params = array( 'cart' => $nonce, 'step' => 'info');
 $return = add_query_arg( $arr_params, doliconnecturl('dolicart'));
 }
 
-if ( isset($_POST['dolicart']) && $_POST['dolicart'] == 'purge' ) {
+if ( isset($_POST['dolicart']) && $_POST['dolicart'] == 'purge' && wp_verify_nonce( $_POST['dolichecknonce'], 'valid_dolicart-'.$object->id)) {
 $orderdelete = callDoliApi("DELETE", "/".$module."/".doliconnector($current_user, 'fk_order'), null);
 $dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolidelay('doliconnector'), true);
 if (1==1) {
@@ -1543,7 +1543,7 @@ print "</div>";
 }
 
 print "<script>";
-print "function ValidDoliCart(nonce) {
+print "function DeleteDoliCart(nonce) {
 jQuery('#DoliconnectLoadingModal').modal('show');
 var form = document.createElement('form');
 form.setAttribute('action', '".doliconnecturl('dolicart')."');
@@ -1553,6 +1553,11 @@ var inputvar = document.createElement('input');
 inputvar.setAttribute('type', 'hidden');
 inputvar.setAttribute('name', 'dolicart');
 inputvar.setAttribute('value', 'purge');
+form.appendChild(inputvar);
+var inputvar = document.createElement('input');
+inputvar.setAttribute('type', 'hidden');
+inputvar.setAttribute('name', 'dolichecknonce');
+inputvar.setAttribute('value', nonce);
 form.appendChild(inputvar);
 document.body.appendChild(form);
 form.submit();
