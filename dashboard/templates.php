@@ -1266,9 +1266,9 @@ print __( "It seems that your version of Dolibarr and/or its plugins are not up 
 
 print "</div></div>";
 
-} elseif ( isset($_GET['info']) && doliconnector($current_user, 'fk_order_nb_item') > 0 && $object->socid == doliconnector($current_user, 'fk_soc')) {
+} elseif ( isset($_GET['step']) && $_GET['step'] == 'info' && doliconnector($current_user, 'fk_order_nb_item') > 0 && $object->socid == doliconnector($current_user, 'fk_soc')) {
 
-if ( isset($_GET['info']) && !isset($_GET['pay']) && !isset($_GET['validation']) && isset($_POST['update_thirdparty']) && $_POST['update_thirdparty'] == 'validation' ) {
+if ( isset($_POST['update_thirdparty']) && $_POST['update_thirdparty'] == 'validation' ) {
 
 $thirdparty=$_POST['contact'][''.doliconnector($current_user, 'fk_soc').''];
 $ID = $current_user->ID;
@@ -1436,9 +1436,12 @@ print "<table width='100%' style='border: none'><tr style='border: none'><td wid
 </div></td><td width='50px' style='border: none'><div class='fa-3x'>
 <i class='fas fa-check fa-fw text-dark' data-fa-transform='shrink-3.5' data-fa-mask='fas fa-circle' ></i>
 </div></td></tr></table><br>";
+$nonce = wp_create_nonce( 'valid_dolicart' );
+$arr_params = array( 'cart' => $nonce, 'step' => 'info');  
+$return = esc_url( add_query_arg( $arr_params, doliconnecturl('dolicart')) );
 
 if ( isset($_POST['dolicart']) && $_POST['dolicart'] == 'validation' && !isset($_GET['user']) && !isset($_GET['pay']) && !isset($_GET['validation']) && $object->lines != null ) {
-wp_safe_redirect(wp_nonce_url(doliconnecturl('dolicart').'?info', 'valid_dolicart', 'cart'));
+wp_redirect($return);
 exit;                                   
 } elseif ( isset($_POST['dolicart']) && $_POST['dolicart'] == 'purge' ) {
 $orderdelete = callDoliApi("DELETE", "/".$module."/".doliconnector($current_user, 'fk_order'), null);
@@ -1510,7 +1513,7 @@ print "</li>";
 }
 
 print "</ul>";
-
+print "</form>";  
 if ( get_option('dolishop') || (!get_option('dolishop') && isset($object) && $object->lines != null) ) {
 print "<div class='card-body'><div class='row'>";
 if ( get_option('dolishop') ) {
@@ -1518,10 +1521,10 @@ print "<div class='col-12 col-md'><a href='".doliconnecturl('dolishop')."' class
 } 
 if ( isset($object) && is_object($object) && $object->lines != null && (doliconnector($current_user, 'fk_soc') == $object->socid) ) { 
 if ( $object->lines != null && $object->statut == 0 ) {
-print "<div class='col-12 col-md'><button type='submit' name='dolicart' value='purge' class='btn btn-outline-secondary w-100' role='button' aria-pressed='true'><b>".__( 'Empty the basket', 'doliconnect')."</b></button></div>";
+print "<div class='col-12 col-md'><button type='button' name='dolicart' value='purge' class='btn btn-outline-secondary w-100' role='button' aria-pressed='true'><b>".__( 'Empty the basket', 'doliconnect')."</b></button></div>";
 }
 if ( $object->lines != null ) {
-print "<div class='col-12 col-md'><button type='submit' name='dolicart' value='validation' class='btn btn-warning w-100' role='button' aria-pressed='true'><b>".__( 'Process', 'doliconnect')."</b></button></div>";
+print "<div class='col-12 col-md'><button type='button' name='dolicart' value='validation' class='btn btn-warning w-100' role='button' aria-pressed='true'><b>".__( 'Process', 'doliconnect')."</b></button></div>";
 } 
 }
 print "</div>";
@@ -1533,14 +1536,14 @@ print "</div>";
 print "</div>";
 }
 
-print "</form>";                     
+                   
 
 print '<div class="card-footer text-muted">';
 print "<small><div class='float-left'>";
 print dolirefresh($request, doliconnecturl('dolicart'), dolidelay('cart'));
 print "</div><div class='float-right'>";
 print dolihelp('ISSUE');
-print "</div></small>".wp_verify_nonce(  '00b21926a9', 'valid_dolicart' );
+print "</div></small>";
 
 }
 }
