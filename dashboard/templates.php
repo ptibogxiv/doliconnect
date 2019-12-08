@@ -1266,7 +1266,7 @@ print __( "It seems that your version of Dolibarr and/or its plugins are not up 
 
 print "</div></div>";
 
-} elseif ( isset($_GET['step']) && $_GET['step'] == 'info' && doliconnector($current_user, 'fk_order_nb_item') > 0 && $object->socid == doliconnector($current_user, 'fk_soc')) {
+} elseif ( isset($_GET['step']) && $_GET['step'] == 'info' && isset($_GET['cart']) && wp_verify_nonce( $_GET['cart'], 'valid_dolicart') && doliconnector($current_user, 'fk_order_nb_item') > 0 && $object->socid == doliconnector($current_user, 'fk_soc')) {
 
 if ( isset($_POST['update_thirdparty']) && $_POST['update_thirdparty'] == 'validation' ) {
 
@@ -1289,7 +1289,7 @@ update_user_meta( $ID, 'billing_birth', $thirdparty['birth']);
 
 do_action('wp_dolibarr_sync', $thirdparty);
                                    
-} elseif ( isset($_GET['info']) && isset($_POST['info']) && $_POST['info'] == 'validation' && !isset($_GET['pay']) && !isset($_GET['validation']) ) {
+} elseif ( isset($_POST['info']) && $_POST['info'] == 'validation' && !isset($_GET['pay']) && !isset($_GET['validation']) ) {
 
 if ($_POST['contact_shipping']) {
 $order_shipping= callDoliApi("POST", "/".$module."/".$object->id."/contact/".$_POST['contact_shipping']."/SHIPPING", null, dolidelay('order', true));
@@ -1417,7 +1417,7 @@ print dolirefresh($request, get_permalink(), dolidelay('cart'));
 print "</div><div class='float-right'>";
 print dolihelp('ISSUE');
 print "</div></small>";
-print '</div></div>'.wp_verify_nonce( $_GET['cart'], 'valid_dolicart');
+print '</div></div>';
 
 } else {
 
@@ -1438,7 +1438,7 @@ print "<table width='100%' style='border: none'><tr style='border: none'><td wid
 </div></td></tr></table><br>";
 $nonce = wp_create_nonce( 'valid_dolicart' );
 $arr_params = array( 'cart' => $nonce, 'step' => 'info');  
-$return = esc_url( add_query_arg( $arr_params, doliconnecturl('dolicart')) );
+$return = add_query_arg( $arr_params, doliconnecturl('dolicart'));
 
 if ( isset($_POST['dolicart']) && $_POST['dolicart'] == 'validation' && !isset($_GET['user']) && !isset($_GET['pay']) && !isset($_GET['validation']) && $object->lines != null ) {
 wp_redirect($return);
@@ -1521,10 +1521,10 @@ print "<div class='col-12 col-md'><a href='".doliconnecturl('dolishop')."' class
 } 
 if ( isset($object) && is_object($object) && $object->lines != null && (doliconnector($current_user, 'fk_soc') == $object->socid) ) { 
 if ( $object->lines != null && $object->statut == 0 ) {
-print "<div class='col-12 col-md'><button type='button' name='dolicart' value='purge' class='btn btn-outline-secondary w-100' role='button' aria-pressed='true'><b>".__( 'Empty the basket', 'doliconnect')."</b></button></div>";
+print "<div class='col-12 col-md'><button type='button' name='purgdolicart' value='purge' class='btn btn-outline-secondary w-100' role='button' aria-pressed='true'><b>".__( 'Empty the basket', 'doliconnect')."</b></button></div>";
 }
 if ( $object->lines != null ) {
-print "<div class='col-12 col-md'><button type='button' name='dolicart' value='validation' class='btn btn-warning w-100' role='button' aria-pressed='true'><b>".__( 'Process', 'doliconnect')."</b></button></div>";
+print "<div class='col-12 col-md'><button type='button' onclick='DefaultPM(\"".$nonce."\")' class='btn btn-warning w-100' role='button' aria-pressed='true'><b>".__( 'Process', 'doliconnect')."</b></button></div>";
 } 
 }
 print "</div>";
@@ -1536,8 +1536,23 @@ print "</div>";
 print "</div>";
 }
 
-                   
-
+print "<script>";
+print "function DefaultPM(nonce) {
+jQuery('#DoliconnectLoadingModal').modal('show');
+var form = document.createElement('form');
+form.setAttribute('action', '".$return."');
+form.setAttribute('method', 'post');
+form.setAttribute('id', 'doliconnect-paymentmethodsform');
+var inputvar = document.createElement('input');
+inputvar.setAttribute('type', 'hidden');
+inputvar.setAttribute('name', 'paymentmethod');
+inputvar.setAttribute('value', nonce);
+form.appendChild(inputvar);
+document.body.appendChild(form);
+form.submit();
+        }";                  
+print "</script>";
+  
 print '<div class="card-footer text-muted">';
 print "<small><div class='float-left'>";
 print dolirefresh($request, doliconnecturl('dolicart'), dolidelay('cart'));
