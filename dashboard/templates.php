@@ -1200,7 +1200,7 @@ print "<div class='alert alert-danger' role='alert'><p>".__( 'An error is occurr
 print "<br /><a href='".doliconnecturl('doliaccount')."?module=orders&id=".$object->id."&ref=".$object->ref;
 print "' class='btn btn-primary'>".__( 'See my order', 'doliconnect' )."</a></center></div></div></div>";
 
-} elseif ( isset($_GET['step']) && $_GET['step'] == 'payment' && isset($_GET['cart']) && wp_verify_nonce( $_GET['cart'], 'valid_dolicart-'.$object->id) && ( (doliconnector($current_user, 'fk_order_nb_item') > 0 && $object->statut == 0 && !isset($_GET['module']) ) || ( ($_GET['module'] == 'orders' && $object->billed != 1 ) || ($_GET['module'] == 'invoices' && $object->paye != 1) )) && $object->socid == doliconnector($current_user, 'fk_soc') ) {
+} elseif ( isset($_GET['step']) && $_GET['step'] == 'payment' && isset($_GET['cart']) && wp_verify_nonce( $_GET['cart'], 'valid_dolicart-'.$object->id) && ( (doliconnector($current_user, 'fk_order_nb_item') > 0 && $object->statut == 0 && !isset($_GET['module']) && !isset($_GET['id']) ) || ( ($_GET['module'] == 'orders' && $object->billed != 1 ) || ($_GET['module'] == 'invoices' && $object->paye != 1) )) && $object->socid == doliconnector($current_user, 'fk_soc') ) {
 
 print "<table width='100%' style='border: none'><tr style='border: none'><td width='50px' style='border: none'><div class='fa-3x'>
 <i class='fas fa-shopping-bag fa-fw text-success' data-fa-transform='shrink-3.5' data-fa-mask='fas fa-circle' ></i>
