@@ -1449,7 +1449,7 @@ $arr_params = array( 'cart' => $nonce, 'step' => 'info');
 $return = add_query_arg( $arr_params, doliconnecturl('dolicart'));
 }
 
-if ( isset($_POST['dolicart']) && $_POST['dolicart'] == 'purge' && wp_verify_nonce( $_POST['dolichecknonce'], 'valid_dolicart-'.$object->id)) {
+if ( isset($_POST['dolicart']) && $_POST['dolicart'] == 'purge' && wp_verify_nonce( $_POST['dolichecknonce'], 'valid_dolicart-'.$object->id) ) {
 $orderdelete = callDoliApi("DELETE", "/".$module."/".doliconnector($current_user, 'fk_order'), null);
 $dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolidelay('doliconnector'), true);
 if (1==1) {
@@ -1461,7 +1461,7 @@ print "<div class='alert alert-warning' role='alert'><p><strong>".__( 'Oops!', '
 }
 }
  
-if ( isset($_POST['updateorderproduct']) ) {
+if ( isset($_POST['updateorderproduct']) && wp_verify_nonce( $_POST['dolichecknonce'], 'valid_dolicart-'.$object->id)) {
 foreach ( $_POST['updateorderproduct'] as $productupdate ) {
 $result = doliaddtocart($productupdate['product'], $productupdate['qty'], $productupdate['price'], $productupdate['remise_percent'], $productupdate['date_start'], $productupdate['date_end']);
 //print var_dump($_POST['updateorderproduct']);
@@ -1511,7 +1511,7 @@ print "</li>";
 }
 
 print "</ul>";
-print "</form>";  
+print wp_nonce_field( 'valid_dolicart-'.$object->id, 'dolichecknonce' )."</form>";  
 if ( get_option('dolishop') || (!get_option('dolishop') && isset($object) && $object->lines != null) ) {
 print "<div class='card-body'><div class='row'>";
 if ( get_option('dolishop') ) {
