@@ -1535,6 +1535,11 @@ print "</div>";
 }
 
 print "<script>";
+print "function ChangeDoliCart() {
+jQuery('#DoliconnectLoadingModal').modal('show');
+var form = document.getElementById('doliconnect-basecartform');
+form.submit();
+        }"; 
 print "function DeleteDoliCart(nonce) {
 jQuery('#DoliconnectLoadingModal').modal('show');
 var form = document.createElement('form');
