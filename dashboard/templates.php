@@ -1341,7 +1341,7 @@ print "<div class='modal fade' id='updatethirdparty' tabindex='-1' role='dialog'
 <h5 class='modal-title' id='updatethirdpartyTitle'>".__( 'Billing address', 'doliconnect' )."</h5><button id='Closeupdatethirdparty-form' type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
 </div><div id='updatethirdparty-form'>";
 
-print "<form class='was-validated' role='form' action='".doliconnecturl('dolicart')."?info' name='updatethirdparty-form' method='post'>"; 
+print "<form class='was-validated' role='form' action='".doliconnecturl('dolicart')."?cart=".$_GET['cart']."&step=info' name='updatethirdparty-form' method='post'>"; 
 
 print dolimodalloaderscript('updatethirdparty-form');
 
@@ -1352,7 +1352,7 @@ print "</div>".doliloading('updatethirdparty-form');
 print "<div id='Footerupdatethirdparty-form' class='modal-footer'><button name='update_thirdparty' value='validation' class='btn btn-warning btn-block' type='submit'><b>".__( 'Update', 'doliconnect' )."</b></button></form></div>
 </div></div></div>";
 
-print "<form role='form' action='".doliconnecturl('dolicart')."?info' id ='doliconnect-infoscartform' method='post'>"; //class='was-validated'
+print "<form role='form' action='".doliconnecturl('dolicart')."?cart=".$_GET['cart']."&step=info' id ='doliconnect-infoscartform' method='post'>"; //class='was-validated'
 
 print doliloaderscript('doliconnect-infoscartform');
 
