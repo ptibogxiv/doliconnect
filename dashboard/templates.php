@@ -1267,7 +1267,7 @@ print __( "It seems that your version of Dolibarr and/or its plugins are not up 
 
 print "</div></div>";
 
-} elseif ( isset($_GET['step']) && $_GET['step'] == 'info' && isset($_GET['cart']) && wp_verify_nonce( $_GET['cart'], 'valid_dolicart-'.$object->id) && doliconnector($current_user, 'fk_order_nb_item') > 0 && $object->socid == doliconnector($current_user, 'fk_soc') && !isset($object->resteapayer) && $object->statut == 0 ) {
+} elseif ( isset($_GET['step']) && $_GET['step'] == 'info' && isset($_GET['cart']) && wp_verify_nonce( $_GET['cart'], 'valid_dolicart-'.$object->id) && isset($_POST['dolichecknonce']) && $_GET['cart'] == $_POST['dolichecknonce'] && doliconnector($current_user, 'fk_order_nb_item') > 0 && $object->socid == doliconnector($current_user, 'fk_soc') && !isset($object->resteapayer) && $object->statut == 0 ) {
 
 if ( isset($_POST['update_thirdparty']) && $_POST['update_thirdparty'] == 'validation' ) {
 
@@ -1411,7 +1411,7 @@ print "<li class='list-group-item'><h6>".__( 'Message', 'doliconnect' )."</h6><s
 print "<textarea class='form-control' id='note_public' name='note_public' rows='3' placeholder='".__( 'Enter a message here that you want to send us about your order', 'doliconnect' )."'>".$object->note_public."</textarea>";
 print "</small></li></ul>";
 
-print "<div class='card-body'><input type='hidden' name='info' value='validation'><input type='hidden' name='dolicart' value='validation'><center><button class='btn btn-warning btn-block' type='submit'><b>".__( 'Validate', 'doliconnect' )."</b></button></center></div></form>";
+print "<div class='card-body'>".wp_nonce_field( 'valid_dolicart-'.$object->id, 'dolichecknonce' )."<input type='hidden' name='info' value='validation'><input type='hidden' name='dolicart' value='validation'><center><button class='btn btn-warning btn-block' type='submit'><b>".__( 'Validate', 'doliconnect' )."</b></button></center></div></form>";
 print '<div class="card-footer text-muted">';
 print "<small><div class='float-left'>";
 print dolirefresh($request, get_permalink(), dolidelay('cart'));
