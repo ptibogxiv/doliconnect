@@ -1126,7 +1126,7 @@ print "</div></div>";
 
 } else {
 
-if ( isset($_GET['validation']) && ((doliconnector($current_user, 'fk_order_nb_item') > 0 && $object->statut == 0 && !isset($_GET['module']) ) || ( ($_GET['module'] == 'orders' && $object->billed != 1 ) || ($_GET['module'] == 'invoices' && $object->paye != 1) )) && $object->socid == doliconnector($current_user, 'fk_soc') ) {
+if ( isset($_GET['step']) && $_GET['step'] == 'validation' && isset($_GET['cart']) && wp_verify_nonce( $_GET['cart'], 'valid_dolicart-'.$object->id) && ((doliconnector($current_user, 'fk_order_nb_item') > 0 && $object->statut == 0 && !isset($_GET['module']) ) || ( ($_GET['module'] == 'orders' && $object->billed != 1 ) || ($_GET['module'] == 'invoices' && $object->paye != 1) )) && $object->socid == doliconnector($current_user, 'fk_soc') ) {
 
 //$object = callDoliApi("GET", "/".$module."/".$_GET['id']."?contact_list=0", null, dolidelay('cart', true));
 
@@ -1200,7 +1200,7 @@ print "<div class='alert alert-danger' role='alert'><p>".__( 'An error is occurr
 print "<br /><a href='".doliconnecturl('doliaccount')."?module=orders&id=".$object->id."&ref=".$object->ref;
 print "' class='btn btn-primary'>".__( 'See my order', 'doliconnect' )."</a></center></div></div></div>";
 
-} elseif ( isset($_GET['step']) && $_GET['step'] == 'payment' && isset($_GET['cart']) && wp_verify_nonce( $_GET['cart'], 'valid_dolicart') && ( (doliconnector($current_user, 'fk_order_nb_item') > 0 && $object->statut == 0 && !isset($_GET['module']) ) || ( ($_GET['module'] == 'orders' && $object->billed != 1 ) || ($_GET['module'] == 'invoices' && $object->paye != 1) )) && $object->socid == doliconnector($current_user, 'fk_soc') ) {
+} elseif ( isset($_GET['step']) && $_GET['step'] == 'payment' && isset($_GET['cart']) && wp_verify_nonce( $_GET['cart'], 'valid_dolicart-'.$object->id) && ( (doliconnector($current_user, 'fk_order_nb_item') > 0 && $object->statut == 0 && !isset($_GET['module']) ) || ( ($_GET['module'] == 'orders' && $object->billed != 1 ) || ($_GET['module'] == 'invoices' && $object->paye != 1) )) && $object->socid == doliconnector($current_user, 'fk_soc') ) {
 
 print "<table width='100%' style='border: none'><tr style='border: none'><td width='50px' style='border: none'><div class='fa-3x'>
 <i class='fas fa-shopping-bag fa-fw text-success' data-fa-transform='shrink-3.5' data-fa-mask='fas fa-circle' ></i>
@@ -1259,14 +1259,14 @@ print "</small></li>";
 print "</ul></div></div><div class='col-12 col-md-8'>";
 
 if ( doliversion('11.0.0') ) {
-print dolipaymentmethods($object, substr($module, 0, -1), doliconnecturl('dolicart')."?validation", true);
+print dolipaymentmethods($object, substr($module, 0, -1), doliconnecturl('dolicart')."?cart=".$_GET['cart']."&step=validation", true);
 } else {
 print __( "It seems that your version of Dolibarr and/or its plugins are not up to date!", "doliconnect");
 }
 
 print "</div></div>";
 
-} elseif ( isset($_GET['step']) && $_GET['step'] == 'info' && isset($_GET['cart']) && wp_verify_nonce( $_GET['cart'], 'valid_dolicart') && doliconnector($current_user, 'fk_order_nb_item') > 0 && $object->socid == doliconnector($current_user, 'fk_soc')) {
+} elseif ( isset($_GET['step']) && $_GET['step'] == 'info' && isset($_GET['cart']) && wp_verify_nonce( $_GET['cart'], 'valid_dolicart-'.$object->id) && doliconnector($current_user, 'fk_order_nb_item') > 0 && $object->socid == doliconnector($current_user, 'fk_soc')) {
 
 if ( isset($_POST['update_thirdparty']) && $_POST['update_thirdparty'] == 'validation' ) {
 
@@ -1436,7 +1436,7 @@ print "<table width='100%' style='border: none'><tr style='border: none'><td wid
 </div></td><td width='50px' style='border: none'><div class='fa-3x'>
 <i class='fas fa-check fa-fw text-dark' data-fa-transform='shrink-3.5' data-fa-mask='fas fa-circle' ></i>
 </div></td></tr></table><br>";
-$nonce = wp_create_nonce( 'valid_dolicart' );
+$nonce = wp_create_nonce( 'valid_dolicart-'.$object->id );
 $arr_params = array( 'cart' => $nonce, 'step' => 'info');  
 $return = add_query_arg( $arr_params, doliconnecturl('dolicart'));
 
