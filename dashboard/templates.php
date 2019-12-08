@@ -1506,13 +1506,13 @@ print doliline($object, 'cart');
 
 if ( isset($object) && is_object($object) && (doliconnector($current_user, 'fk_soc') == $object->socid) ) {
 print "<li class='list-group-item list-group-item-info'>";
-print wp_nonce_field( 'valid_dolicart-'.$object->id, 'dolichecknonce' )."</form>";  
+print wp_nonce_field( 'valid_dolicart-'.$object->id, 'dolichecknonce' );  
 print dolitotal($object);
 print "</li>";
 }
 
 print "</ul>";
-
+print "</form>";  
 if ( get_option('dolishop') || (!get_option('dolishop') && isset($object) && $object->lines != null) ) {
 print "<div class='card-body'><div class='row'>";
 if ( get_option('dolishop') ) {
