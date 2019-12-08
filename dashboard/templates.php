@@ -1221,7 +1221,7 @@ print "<table width='100%' style='border: none'><tr style='border: none'><td wid
 print "<div class='row'><div class='col-12 col-md-4  d-none d-sm-none d-md-block'>";
 print dolisummarycart($object);
 print "<div class='card'><div class='card-header'>".__( 'Contacts', 'doliconnect' );
-if ( !isset($object->resteapayer) && $object->statut == 0 ) { print " <small>(<a href='".doliconnecturl('dolicart')."?info' >".__( 'update', 'doliconnect' )."</a>)</small>"; }
+if ( !isset($object->resteapayer) && $object->statut == 0 ) { print " <small>(<a href='".doliconnecturl('dolicart')."?cart=".$_GET['cart']."&step=info' >".__( 'update', 'doliconnect' )."</a>)</small>"; }
 print "</div><ul class='list-group list-group-flush'>";
 
 $thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
