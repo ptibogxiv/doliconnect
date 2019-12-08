@@ -1449,7 +1449,6 @@ $arr_params = array( 'cart' => $nonce, 'step' => 'info');
 $return = add_query_arg( $arr_params, doliconnecturl('dolicart'));
 }
 
-
 if ( isset($_POST['dolicart']) && $_POST['dolicart'] == 'purge' ) {
 $orderdelete = callDoliApi("DELETE", "/".$module."/".doliconnector($current_user, 'fk_order'), null);
 $dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolidelay('doliconnector'), true);
@@ -1528,7 +1527,7 @@ print "<div class='col-12 col-md'><a href='".doliconnecturl('dolishop')."' class
 } 
 if ( isset($object) && is_object($object) && $object->lines != null && (doliconnector($current_user, 'fk_soc') == $object->socid) ) { 
 if ( $object->lines != null && $object->statut == 0 ) {
-print "<div class='col-12 col-md'><button type='button' name='purgdolicart' value='purge' class='btn btn-outline-secondary w-100' role='button' aria-pressed='true'><b>".__( 'Empty the basket', 'doliconnect')."</b></button></div>";
+print "<div class='col-12 col-md'><button type='button' onclick='DeleteDoliCart(\"".$nonce."\")' class='btn btn-outline-secondary w-100' role='button' aria-pressed='true'><b>".__( 'Empty the basket', 'doliconnect')."</b></button></div>";
 }
 if ( $object->lines != null ) {
 print "<div class='col-12 col-md'><button type='button' onclick='ValidDoliCart(\"".$nonce."\")' class='btn btn-warning w-100' role='button' aria-pressed='true'><b>".__( 'Process', 'doliconnect')."</b></button></div>";
@@ -1544,6 +1543,20 @@ print "</div>";
 }
 
 print "<script>";
+print "function ValidDoliCart(nonce) {
+jQuery('#DoliconnectLoadingModal').modal('show');
+var form = document.createElement('form');
+form.setAttribute('action', '".doliconnecturl('dolicart')."');
+form.setAttribute('method', 'post');
+form.setAttribute('id', 'doliconnect-cartform');
+var inputvar = document.createElement('input');
+inputvar.setAttribute('type', 'hidden');
+inputvar.setAttribute('name', 'dolicart');
+inputvar.setAttribute('value', 'purge');
+form.appendChild(inputvar);
+document.body.appendChild(form);
+form.submit();
+        }"; 
 print "function ValidDoliCart(nonce) {
 jQuery('#DoliconnectLoadingModal').modal('show');
 var form = document.createElement('form');
