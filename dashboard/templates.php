@@ -1220,9 +1220,10 @@ print "<table width='100%' style='border: none'><tr style='border: none'><td wid
 
 print "<div class='row'><div class='col-12 col-md-4  d-none d-sm-none d-md-block'>";
 print dolisummarycart($object);
-print "<div class='card'><div class='card-header'>".__( 'Contacts', 'doliconnect' );
-if ( !isset($object->resteapayer) && $object->statut == 0 ) { print " <small>(<a href='".doliconnecturl('dolicart')."?cart=".$_GET['cart']."&step=info' >".__( 'update', 'doliconnect' )."</a>)</small>"; }
-print "</div><ul class='list-group list-group-flush'>";
+print "<div class='card'><div class='card-header'>".__( 'Contacts', 'doliconnect' )."  <small>(";
+if ( !isset($object->resteapayer) && $object->statut == 0 ) { print "<a href='".doliconnecturl('dolicart')."?cart=".$_GET['cart']."&step=info' >".__( 'update', 'doliconnect' )."</a>"; }
+else { print ".__( 'unchangeable', 'doliconnect' )."; }
+print ")</small></div><ul class='list-group list-group-flush'>";
 
 $thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
@@ -1266,7 +1267,7 @@ print __( "It seems that your version of Dolibarr and/or its plugins are not up 
 
 print "</div></div>";
 
-} elseif ( isset($_GET['step']) && $_GET['step'] == 'info' && isset($_GET['cart']) && wp_verify_nonce( $_GET['cart'], 'valid_dolicart-'.$object->id) && doliconnector($current_user, 'fk_order_nb_item') > 0 && $object->socid == doliconnector($current_user, 'fk_soc')) {
+} elseif ( isset($_GET['step']) && $_GET['step'] == 'info' && isset($_GET['cart']) && wp_verify_nonce( $_GET['cart'], 'valid_dolicart-'.$object->id) && doliconnector($current_user, 'fk_order_nb_item') > 0 && $object->socid == doliconnector($current_user, 'fk_soc') && !isset($object->resteapayer) && $object->statut == 0 ) {
 
 if ( isset($_POST['update_thirdparty']) && $_POST['update_thirdparty'] == 'validation' ) {
 
