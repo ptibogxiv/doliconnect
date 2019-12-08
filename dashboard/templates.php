@@ -1422,6 +1422,11 @@ print '</div></div>';
 
 } else {
 
+if ( isset($_GET['step']) || isset($_GET['cart']) || isset($_GET['id']) || isset($_GET['module']) ) {
+wp_safe_redirect(doliconnecturl('dolicart'));
+exit;
+} 
+
 print "<table width='100%' style='border: none'><tr style='border: none'><td width='50px' style='border: none'><div class='fa-3x'>
 <i class='fas fa-shopping-bag fa-fw text-warning' data-fa-transform='shrink-3.5' data-fa-mask='fas fa-circle' ></i>
 </div></td><td style='border: none'><div class='progress'>
