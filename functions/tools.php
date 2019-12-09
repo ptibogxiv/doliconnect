@@ -626,11 +626,12 @@ $address .= "<small class='text-muted'>".$object->address.", ".$object->zip." ".
 return $address;
 }
 
-function dolitotal($object) {
-$total = "<b>".__( 'Total excl. tax', 'doliconnect').": ".doliprice($object, 'ht', isset($object->multicurrency_code) ? $object->multicurrency_code : null)."</b><br>";
-$total .= "<b>".__( 'Total VAT', 'doliconnect').": ".doliprice($object, 'tva', isset($object->multicurrency_code) ? $object->multicurrency_code : null)."</b><br>";
-$total .= "<b>".__( 'Total incl. tax', 'doliconnect').": ".doliprice($object, 'ttc', isset($object->multicurrency_code) ? $object->multicurrency_code : null)."</b><br>";
-if ( ! empty($object->cond_reglement_id) ) { $total .= "<b>".__( 'Terms of the settlement', 'doliconnect').":</b> ".$object->cond_reglement; }
+function dolitotal($object) { 
+$total = "<li class='list-group-item  list-group-item-light'><b>".__( 'Total excl. tax', 'doliconnect').": ".doliprice($object, 'ht', isset($object->multicurrency_code) ? $object->multicurrency_code : null)."</b></li>";
+$total .= "<li class='list-group-item  list-group-item-light'><b>".__( 'Total VAT', 'doliconnect').": ".doliprice($object, 'tva', isset($object->multicurrency_code) ? $object->multicurrency_code : null)."</b></li>";
+$total .= "<li class='list-group-item  list-group-item-light'><b>".__( 'Total incl. tax', 'doliconnect').": ".doliprice($object, 'ttc', isset($object->multicurrency_code) ? $object->multicurrency_code : null)."</b></li>";
+//if ( ! empty($object->cond_reglement_id) ) { $total .= "<b>".__( 'Terms of the settlement', 'doliconnect').":</b> ".$object->cond_reglement; }
+//$total .= "</li>";
 return $total;
 }
 
@@ -641,7 +642,7 @@ $doliline=null;
 
 if ( isset($object) && is_object($object) && $object->lines != null && (doliconnector($current_user, 'fk_soc') == $object->socid) ) {
 foreach ( $object->lines as $line ) {
-$doliline .= "<li class='list-group-item'>";     
+$doliline .= "<li class='list-group-item list-group-item-light'>";     
 if ( $line->date_start != '' && $line->date_end != '' )
 {
 $start = date_i18n('d/m/Y', $line->date_start);

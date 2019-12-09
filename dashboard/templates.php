@@ -36,7 +36,7 @@ print get_avatar($ID);
 if ( is_user_logged_in() && !defined("DOLIBUG") ) {
 print "<a href='".esc_url( add_query_arg( 'module', 'avatars', doliconnecturl('doliaccount')) )."' class='card-img-overlay'><div class='d-block d-sm-block d-xs-block d-md-none text-center'><i class='fas fa-camera'></i></div><div class='d-none d-md-block'><i class='fas fa-camera fa-2x'></i> ".__( 'Edit', 'doliconnect' )."</div></a>";
 }
-print "<ul class='list-group list-group-flush'><a href='".esc_url( doliconnecturl('doliaccount') )."' class='list-group-item list-group-item-action'><center><div class='d-block d-sm-block d-xs-block d-md-none'><i class='fas fa-home'></i></div><div class='d-none d-md-block'><i class='fas fa-home'></i> ".__( 'Home', 'doliconnect' )."</div></center></a>";
+print "<ul class='list-group list-group-flush'><a href='".esc_url( doliconnecturl('doliaccount') )."' class='list-group-item list-group-item-light list-group-item-action'><center><div class='d-block d-sm-block d-xs-block d-md-none'><i class='fas fa-home'></i></div><div class='d-none d-md-block'><i class='fas fa-home'></i> ".__( 'Home', 'doliconnect' )."</div></center></a>";
 print "</ul>";
 
 print "</div><br></div><div class='col-9 col-xs-8 col-sm-8 col-md-12 col-xl-12'>";
@@ -1505,13 +1505,11 @@ print "<div class='card shadow-sm' id='cart-form'><ul class='list-group list-gro
 print doliline($object, 'cart');
 
 if ( isset($object) && is_object($object) && (doliconnector($current_user, 'fk_soc') == $object->socid) ) {
-print "<li class='list-group-item list-group-item-info'>";
-print wp_nonce_field( 'valid_dolicart-'.$object->id, 'dolichecknonce' );  
 print dolitotal($object);
-print "</li>";
 }
 
 print "</ul>";
+print wp_nonce_field( 'valid_dolicart-'.$object->id, 'dolichecknonce' );  
 print "</form>";  
 if ( get_option('dolishop') || (!get_option('dolishop') && isset($object) && $object->lines != null) ) {
 print "<div class='card-body'><div class='row'>";

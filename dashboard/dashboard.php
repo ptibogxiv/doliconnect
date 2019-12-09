@@ -12,7 +12,7 @@ $help = callDoliApi("GET", "/doliconnector/constante/MAIN_MODULE_TICKET", null, 
 }
 
 function informations_menu($arg) {
-print "<a href='".esc_url( add_query_arg( 'module', 'informations', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-action";
+print "<a href='".esc_url( add_query_arg( 'module', 'informations', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
 if ($arg=='informations') { print " active";}
 print "'>".__( 'Personal informations', 'doliconnect' )."</a>";
 }
@@ -284,7 +284,7 @@ print "</small></p>";
 add_action( 'user_doliconnect_avatars', 'avatars_module');
 
 function contacts_menu($arg) {
-print "<a href='".esc_url( add_query_arg( 'module', 'contacts', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-action";
+print "<a href='".esc_url( add_query_arg( 'module', 'contacts', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
 if ( $arg == 'contacts' ) { print " active"; }
 print "'>".__( 'Manage address book', 'doliconnect' )."</a>";
 }
@@ -461,7 +461,7 @@ print "<div id='Footeraddcontact-form' class='modal-footer'><button name='add_co
 add_action( 'user_doliconnect_contacts', 'contacts_module' );
 
 function password_menu( $arg ){
-print "<a href='".esc_url( add_query_arg( 'module', 'password', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-action";
+print "<a href='".esc_url( add_query_arg( 'module', 'password', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
 if ($arg=='password') { print " active";}
 print "'>".__( 'Modify the password', 'doliconnect' )."</a>";
 }
@@ -566,7 +566,7 @@ return apply_filters( 'doliconnect_paymentmethods_lock', null);
 //add_filter( 'doliconnect_paymentmodes_lock', 'example_callback', 10, 1);
 
 function paymentmethods_menu( $arg ) {
-print "<a href='".esc_url( add_query_arg( 'module', 'paymentmethods', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-action";
+print "<a href='".esc_url( add_query_arg( 'module', 'paymentmethods', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
 if ($arg=='paymentmethods') { print " active";}
 print "'>".__( 'Manage payment methods', 'doliconnect')."</a>";
 }
@@ -615,7 +615,7 @@ add_action( 'customer_doliconnect_proposals', 'proposals_module' );
 }
 
 function proposals_menu( $arg ) {
-print "<a href='".esc_url( add_query_arg( 'module', 'proposals', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-action";
+print "<a href='".esc_url( add_query_arg( 'module', 'proposals', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
 if ( $arg == 'proposals' ) { print " active";}
 print "'>".__( 'Propals tracking', 'doliconnect' )."</a>";
 }
@@ -743,7 +743,7 @@ add_action( 'customer_doliconnect_orders', 'orders_module' );
 }
 
 function orders_menu( $arg ) {
-print "<a href='".esc_url( add_query_arg( 'module', 'orders', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-action";
+print "<a href='".esc_url( add_query_arg( 'module', 'orders', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
 if ( $arg == 'orders' ) { print " active"; }
 print "'>".__( 'Orders tracking', 'doliconnect' )."</a>";
 }
@@ -1053,7 +1053,7 @@ add_action( 'customer_doliconnect_contracts', 'contracts_module' );
 }
 
 function contracts_menu( $arg ) {
-print "<a href='".esc_url( add_query_arg( 'module', 'contracts', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-action";
+print "<a href='".esc_url( add_query_arg( 'module', 'contracts', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
 if ( $arg == 'contracts' ) { print " active"; }
 print "'>".__( 'Contracts tracking', 'doliconnect' )."</a>";
 }
@@ -1182,7 +1182,7 @@ add_action( 'customer_doliconnect_donations', 'donations_module' );
 }  
 
 function donations_menu( $arg ) {
-print "<a href='".esc_url( add_query_arg( 'module', 'donations', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-action";
+print "<a href='".esc_url( add_query_arg( 'module', 'donations', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
 if ($arg=='donations') { print " active";}
 print "'>".__( 'Donations tracking', 'doliconnect' )."</a>";
 }
@@ -1300,7 +1300,7 @@ add_action( 'options_doliconnect_members', 'members_module' );
 }
 
 function members_menu( $arg ) {
-print "<a href='".esc_url( add_query_arg( 'module', 'members', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-action";
+print "<a href='".esc_url( add_query_arg( 'module', 'members', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
 if ($arg=='members') { print " active";}
 print "'>".__( 'Membership', 'doliconnect' )."</a>";
 }
@@ -1450,7 +1450,7 @@ add_action( 'options_doliconnect_membershipconsumption', 'membershipconsumption_
 }  
 
 function membershipconsumption_menu( $arg ) {
-print "<a href='".esc_url( add_query_arg( 'module', 'membershipconsumption', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-action";
+print "<a href='".esc_url( add_query_arg( 'module', 'membershipconsumption', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
 if ($arg=='membershipconsumption') { print " active";}
 print "'>".__( 'Consumptions monitoring', 'doliconnect' )."</a>";
 }
@@ -1503,7 +1503,7 @@ add_action( 'options_doliconnect_linkedmember', 'linkedmember_module' );
 }  
 
 function linkedmember_menu( $arg ) {
-print "<a href='".esc_url( add_query_arg( 'module', 'linkedmember', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-action";
+print "<a href='".esc_url( add_query_arg( 'module', 'linkedmember', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
 if ($arg=='linkedmember') { print " active";}
 print "'>".__( 'Manage linked members', 'doliconnect' )."</a>";
 }
@@ -1609,7 +1609,7 @@ add_action( 'settings_doliconnect_tickets', 'tickets_module');
 }
 
 function tickets_menu( $arg ) {
-print "<a href='".esc_url( add_query_arg( 'module', 'tickets', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-action";
+print "<a href='".esc_url( add_query_arg( 'module', 'tickets', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
 if ( $arg == 'tickets' ) { print " active"; }
 print "'>".__( 'Help', 'doliconnect' )."</a>";
 }
@@ -1855,7 +1855,7 @@ print '</div></div>';
 }
 
 function settings_menu($arg) {
-print "<a href='".esc_url( add_query_arg( 'module', 'settings', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-action";
+print "<a href='".esc_url( add_query_arg( 'module', 'settings', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
 if ($arg=='settings') { print " active"; }
 print "'>".__( 'Settings & security', 'doliconnect' )."</a>";
 }
@@ -2041,7 +2041,7 @@ function generate_license($suffix = null) {
 add_action( 'settings_doliconnect_settings', 'settings_module' );
 
 function gdpr_menu($arg) {
-print "<a href='".esc_url( add_query_arg( 'module', 'gdpr', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-action";
+print "<a href='".esc_url( add_query_arg( 'module', 'gdpr', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
 if ($arg=='gdpr') { print " active";}
 print "'>".__( 'Privacy', 'doliconnect' )."</a>";
 }
