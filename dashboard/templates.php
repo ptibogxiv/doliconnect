@@ -1229,30 +1229,30 @@ $thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, '
 
 if (!empty($object->contacts_ids) && is_array($object->contacts_ids)) {
 
-print "<li class='list-group-item'><h6>".__( "Customer's Address", "doliconnect")."</h6><small class='text-muted'>";
+print "<li class='list-group-item list-group-item-light'><h6>".__( "Customer's Address", "doliconnect")."</h6><small class='text-muted'>";
 print doliaddress($thirdparty, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 print "</small></li>";
 
 foreach ($object->contacts_ids as $contact) {
 if ('BILLING' == $contact->code) {
-print "<li class='list-group-item'><h6>".__( "Billing address", "doliconnect")."</h6><small class='text-muted'>";
+print "<li class='list-group-item list-group-item-light'><h6>".__( "Billing address", "doliconnect")."</h6><small class='text-muted'>";
 print dolicontact($contact->id, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 print "</small></li>";
 } elseif ('SHIPPING' == $contact->code) {
-print "<li class='list-group-item'><h6>".__( "Shipping address", "doliconnect")."</h6><small class='text-muted'>";
+print "<li class='list-group-item list-group-item-light'><h6>".__( "Shipping address", "doliconnect")."</h6><small class='text-muted'>";
 print dolicontact($contact->id, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 print "</small></li>";
 } 
 }
 
 } else {
-print "<li class='list-group-item'><h6>".__( 'Billing and shipping address', 'doliconnect')."</h6><small class='text-muted'>";
+print "<li class='list-group-item list-group-item-light'><h6>".__( 'Billing and shipping address', 'doliconnect')."</h6><small class='text-muted'>";
 print doliaddress($thirdparty, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 print "</small></li>";
 }
 
 if ( ! empty($object->note_public) ) {
-print "<li class='list-group-item'><h6>".__( 'Message', 'doliconnect' )."</h6><small class='text-muted'>";
+print "<li class='list-group-item list-group-item-light'><h6>".__( 'Message', 'doliconnect' )."</h6><small class='text-muted'>";
 print $object->note_public;
 print "</small></li>";
 }

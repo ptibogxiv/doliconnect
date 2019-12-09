@@ -307,7 +307,7 @@ if ( $object->lines != null ) {
 $list = null;
 foreach ($object->lines as $line) {
 //$product = callDoliApi("GET", "/products/".$post->product_id."?includestockdata=1", null, 0);
-$list .= "<li class='list-group-item d-flex justify-content-between lh-condensed'><div><h6 class='my-0'>".$line->libelle."</h6><small class='text-muted'>".__( 'Quantity', 'doliconnect' ).": ".$line->qty."</small></div>";
+$list .= "<li class='list-group-item list-group-item-light d-flex justify-content-between lh-condensed'><div><h6 class='my-0'>".$line->libelle."</h6><small class='text-muted'>".__( 'Quantity', 'doliconnect' ).": ".$line->qty."</small></div>";
 $remise+=$line->subprice-$line->total_ht;
 $subprice+=$line->subprice;
 $qty+=$line->qty;
@@ -334,11 +334,11 @@ $cart .= "<small>".__( 'including VAT', 'doliconnect' )."</small>";
 $cart .= "<small>".doliprice($object, 'tva', isset($object->multicurrency_code) ? $object->multicurrency_code : null)."</small></li>";
 
 //$total=$subtotal-$remise_percent;            
-$cart .= "<li class='list-group-item d-flex justify-content-between'>";
+$cart .= "<li class='list-group-item list-group-item-primary d-flex justify-content-between'>";
 if ( isset($object->resteapayer) ) { 
 $cart .= "<span>".__( 'Already paid', 'doliconnect' )."</span>";
 $cart .= "<strong>".doliprice($object->total_ttc-$object->resteapayer, null, isset($object->multicurrency_code) ? $object->multicurrency_code : null)."</strong></li>";
-$cart .= "<li class='list-group-item d-flex justify-content-between'>";
+$cart .= "<li class='list-group-item list-group-item-primary d-flex justify-content-between'>";
 $cart .= "<span>".__( 'Remains to be paid', 'doliconnect' )."</span>";
 $cart .= "<strong>".doliprice($object->resteapayer, null, isset($object->multicurrency_code) ? $object->multicurrency_code : null)."</strong></li>";
 } else {

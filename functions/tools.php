@@ -627,9 +627,9 @@ return $address;
 }
 
 function dolitotal($object) { 
-$total = "<li class='list-group-item  list-group-item-light'><b>".__( 'Total excl. tax', 'doliconnect').": ".doliprice($object, 'ht', isset($object->multicurrency_code) ? $object->multicurrency_code : null)."</b></li>";
-$total .= "<li class='list-group-item  list-group-item-light'><b>".__( 'Total VAT', 'doliconnect').": ".doliprice($object, 'tva', isset($object->multicurrency_code) ? $object->multicurrency_code : null)."</b></li>";
-$total .= "<li class='list-group-item  list-group-item-light'><b>".__( 'Total incl. tax', 'doliconnect').": ".doliprice($object, 'ttc', isset($object->multicurrency_code) ? $object->multicurrency_code : null)."</b></li>";
+$total = "<li class='list-group-item bg-light'><b>".__( 'Total excl. tax', 'doliconnect').": ".doliprice($object, 'ht', isset($object->multicurrency_code) ? $object->multicurrency_code : null)."</b></li>";
+$total .= "<li class='list-group-item bg-light'><b>".__( 'Total VAT', 'doliconnect').": ".doliprice($object, 'tva', isset($object->multicurrency_code) ? $object->multicurrency_code : null)."</b></li>";
+$total .= "<li class='list-group-item list-group-item-primary'><b>".__( 'Total incl. tax', 'doliconnect').": ".doliprice($object, 'ttc', isset($object->multicurrency_code) ? $object->multicurrency_code : null)."</b></li>";
 //if ( ! empty($object->cond_reglement_id) ) { $total .= "<b>".__( 'Terms of the settlement', 'doliconnect').":</b> ".$object->cond_reglement; }
 //$total .= "</li>";
 return $total;
@@ -769,7 +769,7 @@ print '</script>';
 print '<div class="modal-body"><div class="card" id="SelectLangmodal-form"><ul class="list-group list-group-flush">';
 $translations = pll_the_languages( array( 'raw' => 1 ) );
 foreach ($translations as $key => $value) {
-print "<a href='".$value['url']."?".$_SERVER["QUERY_STRING"]."' onclick='loadingSelectLangModal()' class='list-group-item list-group-item-action list-group-item-light'>
+print "<a href='".$value['url']."?".$_SERVER["QUERY_STRING"]."' onclick='loadingSelectLangModal()' class='list-group-item list-group-item-light list-group-item-action list-group-item-light'>
 <span class='flag-icon flag-icon-".strtolower(substr($value['slug'], -2))."'></span> ".$value['name'];
 if ( $value['current_lang'] == true ) { print " <i class='fas fa-language fa-fw'></i>"; }
 print "</a>";
@@ -818,7 +818,7 @@ if ( $listpaymentmethods->payment_methods != null ) {
 $i = 0;
 foreach ( $listpaymentmethods->payment_methods as $method ) {
 $pm[] .= "".$method->id."";                                                                                                                      
-$paymentmethods .= "<li class='list-group-item list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>";
+$paymentmethods .= "<li class='list-group-item list-group-item-light list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>";
 $paymentmethods .= '<input onclick="ShowHideDivPM(\''.$method->id.'\')" type="radio" id="'.$method->id.'" name="paymentmode" value="'.$method->id.'" class="custom-control-input" data-toggle="collapse" data-parent="#accordion" href="#'.$method->id.'" ';
 if ( (!empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id != $method->id ) || (date('Y/n') >= $method->expiration && !empty($object) && !empty($method->expiration)) ) { $paymentmethods .=" disabled "; }
 elseif ( !empty($method->default_source) ) { $paymentmethods .=" checked "; }
@@ -873,7 +873,7 @@ $paymentmethods .= '<li class="list-group-item list-group-item-light flex-column
 </div></li>';
 }
 if ( $countPM < 5 && isset($listpaymentmethods->stripe) && in_array('card', $listpaymentmethods->stripe->types) && empty($thirdparty->mode_reglement_id) ) {
-$paymentmethods .= '<li class="list-group-item list-group-item-action flex-column align-items-start"><div class="custom-control custom-radio">
+$paymentmethods .= '<li class="list-group-item list-group-item-light list-group-item-action flex-column align-items-start"><div class="custom-control custom-radio">
 <input type="radio" id="card" name="paymentmode" value="card" class="custom-control-input" data-toggle="collapse" data-parent="#accordion" href="#card">
 <label class="custom-control-label w-100" for="card"><div class="row"><div class="col-3 col-md-2 col-xl-2 align-middle">
 <center><i class="fas fa-credit-card fa-3x fa-fw"></i></center></div><div class="col-auto align-middle"><h6 class="my-0">'.__( 'Credit/debit card', 'doliconnect' ).'</h6><small class="text-muted">Visa, Mastercard, Amex...</small></div></div></label>
@@ -913,7 +913,7 @@ $paymentmethods .="<button id='cardButton' class='btn btn-warning btn-block' tit
 $paymentmethods .='</div></li>';
 }
 if ( $countPM < 5 && isset($listpaymentmethods->stripe) && in_array('sepa_debit', $listpaymentmethods->stripe->types) && empty($thirdparty->mode_reglement_id) ) {
-$paymentmethods .= '<li class="list-group-item list-group-item-action flex-column align-items-start"><div class="custom-control custom-radio">
+$paymentmethods .= '<li class="list-group-item list-group-item-light list-group-item-action flex-column align-items-start"><div class="custom-control custom-radio">
 <input type="radio" id="iban" name="paymentmode" value="iban" class="custom-control-input" data-toggle="collapse" data-parent="#accordion" href="#iban">
 <label class="custom-control-label w-100" for="iban"><div class="row"><div class="col-3 col-md-2 col-xl-2 align-middle">
 <center><i class="fas fa-university fa-3x fa-fw"></i></center></div><div class="col-auto align-middle"><h6 class="my-0">'.__( 'Bank account', 'doliconnect' ).'</h6><small class="text-muted">Via SEPA Direct Debit</small></div></div></label>
@@ -953,7 +953,7 @@ $paymentmethods .="<button id='ibanButton' class='btn btn-warning btn-block' tit
 $paymentmethods .='</div></li>';
 }
 if ( isset($listpaymentmethods->stripe) && in_array('ideal', $listpaymentmethods->stripe->types) && !empty($module) && is_object($object) && isset($object->id) && empty($thirdparty->mode_reglement_id) ) {
-$paymentmethods .='<li class="list-group-item list-group-item-action flex-column align-items-start"><div class="custom-control custom-radio">
+$paymentmethods .='<li class="list-group-item list-group-item-light list-group-item-action flex-column align-items-start"><div class="custom-control custom-radio">
 <input type="radio" id="ideal" name="paymentmode" value="ideal" class="custom-control-input" data-toggle="collapse" data-parent="#accordion" href="#ideal">
 <label class="custom-control-label w-100" for="ideal"><div class="row"><div class="col-3 col-md-2 col-xl-2 align-middle">
 <center><i class="fas fa-university fa-3x fa-fw"></i></center></div><div class="col-auto align-middle"><h6 class="my-0">'.__( 'iDEAL', 'doliconnect' ).'</h6><small class="text-muted">iDEAL PAYMENT</small></div></div></label>
@@ -970,7 +970,7 @@ $paymentmethods .='</div></li>';
 
 //offline payment methods
 if ( isset($listpaymentmethods->RIB) && $listpaymentmethods->RIB != null ) {
-$paymentmethods .= "<li class='list-group-item list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>
+$paymentmethods .= "<li class='list-group-item list-group-item-light list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>
 <input type='radio' id='vir' name='paymentmode' value='vir' class='custom-control-input' data-toggle='collapse' data-parent='#accordion' ";
 if ( !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id != '2' ) { $paymentmethods .=" disabled "; }
 elseif ( (!empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id == '2') || $listpaymentmethods->payment_methods == null && !in_array('card', $listpaymentmethods->stripe->types) ) { $paymentmethods .= " checked"; }
@@ -984,7 +984,7 @@ $paymentmethods .='<button type="button" onclick="PayPM(\'vir\')" class="btn btn
 $paymentmethods .='</div></li>';
 }}
 if ( isset($listpaymentmethods->CHQ) && $listpaymentmethods->CHQ != null ) {
-$paymentmethods .= "<li class='list-group-item list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>
+$paymentmethods .= "<li class='list-group-item list-group-item-light list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>
 <input type='radio' id='chq' name='paymentmode' value='chq' class='custom-control-input' data-toggle='collapse' data-parent='#accordion' ";
 if ( !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id != '7' ) { $paymentmethods .=" disabled "; }
 elseif ( (!empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id == '7') || $listpaymentmethods->payment_methods == null && !in_array('card', $listpaymentmethods->stripe->types) && $listpaymentmethods->RIB == null ) { $paymentmethods .= " checked"; }
@@ -998,7 +998,7 @@ $paymentmethods .='<button type="button" onclick="PayPM(\'chq\')" class="btn btn
 $paymentmethods .='</div></li>';
 }}
 if ( ! empty(dolikiosk()) ) {
-$paymentmethods .= "<li class='list-group-item list-group-item-action flex-column align-items-startt'><div class='custom-control custom-radio'>
+$paymentmethods .= "<li class='list-group-item list-group-item-light list-group-item-action flex-column align-items-startt'><div class='custom-control custom-radio'>
 <input type='radio' id='liq' name='paymentmode' value='liq' class='custom-control-input' data-toggle='collapse' data-parent='#accordion' ";
 if ( !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id != '4' ) { $paymentmethods .=" disabled "; }
 elseif ( (!empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id == '4') || ($listpaymentmethods->payment_methods == null && !in_array('card', $listpaymentmethods->stripe->types) && $listpaymentmethods->CHQ == null && $listpaymentmethods->RIB == null) ) { $paymentmethods .= " checked"; }
@@ -1536,7 +1536,7 @@ global $current_user;
 		<?php elseif ( 'remove' === $args['request_type'] ) : ?>
 			<input type="hidden" name="gdrf_data_type" value="remove_personal_data" id="gdrf-data-type-remove" />
 		<?php else : ?>
-<li class='list-group-item list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>
+<li class='list-group-item list-group-item-light list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>
 <input id='gdrf-data-type-export' class='custom-control-input' type='radio' name='gdrf_data_type' value='export_personal_data' checked>
 <label class='custom-control-label w-100' for='gdrf-data-type-export'><div class='row'>
 		<?php if ( !isset($args['widget']) ) : ?>
@@ -1546,7 +1546,7 @@ global $current_user;
 		<?php endif; ?>
 <div class='col-auto align-middle'><h6 class='my-0'><?php echo __( 'Export your data', 'doliconnect' ); ?></h6><small class='text-muted'><?php echo __( 'You will receive an email with a secure link to your data', 'doliconnect' ); ?></small>
 </div></div></label></div></li>
-<li class='list-group-item list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>
+<li class='list-group-item list-group-item-light list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>
 <input id='gdrf-data-type-remove' class='custom-control-input' type='radio' name='gdrf_data_type' value='remove_personal_data' disabled>
 <label class='custom-control-label w-100' for='gdrf-data-type-remove'><div class='row'>
 		<?php if ( !isset($args['widget']) ) : ?>
@@ -1556,7 +1556,7 @@ global $current_user;
 		<?php endif; ?>
 <div class='col-auto align-middle'><h6 class='my-0'><?php echo __( 'Erase your data', 'doliconnect' ); ?></h6><small class='text-muted'><?php echo __( 'Soon, you will be able to erase your account', 'doliconnect' ); ?></small>
 </div></div></label></div></li>
-<li class='list-group-item list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>
+<li class='list-group-item list-group-item-light list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>
 <input id='gdrf-data-type-delete' class='custom-control-input' type='radio' name='gdrf_data_type' value='delete_personal_data' disabled>
 <label class='custom-control-label w-100' for='gdrf-data-type-delete'><div class='row'>
 		<?php if ( !isset($args['widget']) ) : ?>
@@ -1569,7 +1569,7 @@ global $current_user;
 		<?php endif; ?>
     
     <?php if ( empty($current_user->user_email) ) : ?>
-<li class='list-group-item list-group-item-action flex-column align-items-start'>
+<li class='list-group-item list-group-item-light list-group-item-action flex-column align-items-start'>
 		<label for="gdrf_data_email">
 			<?php echo esc_html( $args['label_input_email'] ); ?>
 		</label>
@@ -1578,7 +1578,7 @@ global $current_user;
 		<?php else : ?>
       <input type='hidden' id='gdrf_data_email' name='gdrf_data_email' value='<?php echo $current_user->user_email; ?>'>
 		<?php endif; ?>
-       	<li class='list-group-item list-group-item-action flex-column align-items-start'>
+       	<li class='list-group-item list-group-item-light list-group-item-action flex-column align-items-start'>
 				<label for="gdrf_data_human">
 					<?php echo esc_html( $args['label_input_captcha'] ); ?>   
 					<?php echo $number_one . ' + ' . $number_two . ' = ?'; ?>
