@@ -1512,25 +1512,19 @@ print "</ul>";
 print wp_nonce_field( 'valid_dolicart-'.$object->id, 'dolichecknonce' );  
 print "</form>";  
 if ( get_option('dolishop') || (!get_option('dolishop') && isset($object) && $object->lines != null) ) {
-print "<div class='card-body'><div class='row'>";
+print "<div class='card-body'><ul class='list-group list-group-horizontal-sm'>";
 if ( get_option('dolishop') ) {
-print "<div class='col-12 col-md'><a href='".doliconnecturl('dolishop')."' class='btn btn-outline-info w-100' role='button' aria-pressed='true'><b>".__( 'Continue shopping', 'doliconnect')."</b></a></div>";
+print "<a href='".doliconnecturl('dolishop')."' class='list-group-item list-group-item-action flex-fill'><center><b>".__( 'Continue shopping', 'doliconnect')."</b></center></a>";
 } 
 if ( isset($object) && is_object($object) && $object->lines != null && (doliconnector($current_user, 'fk_soc') == $object->socid) ) { 
 if ( $object->lines != null && $object->statut == 0 ) {
-print "<div class='col-12 col-md'><button type='button' onclick='DeleteDoliCart(\"".$nonce."\")' class='btn btn-outline-secondary w-100' role='button' aria-pressed='true'><b>".__( 'Empty the basket', 'doliconnect')."</b></button></div>";
+print "<button type='button' onclick='DeleteDoliCart(\"".$nonce."\")' class='list-group-item list-group-item-action flex-fill' role='button' aria-pressed='true'><center><b>".__( 'Empty the basket', 'doliconnect')."</b></center></button>";
 }
 if ( $object->lines != null ) {
-print "<div class='col-12 col-md'><button type='button' onclick='ValidDoliCart(\"".$nonce."\")' class='btn btn-warning w-100' role='button' aria-pressed='true'><b>".__( 'Process', 'doliconnect')."</b></button></div>";
-} 
+print "<button type='button' onclick='ValidDoliCart(\"".$nonce."\")' class='list-group-item list-group-item-action list-group-item-warning flex-fill' role='button' aria-pressed='true'><center><b>".__( 'Process', 'doliconnect')."</b></center></button>";
 }
-print "</div>";
-//print "<ul class='list-group list-group-horizontal-lg mw-100'>
-//<a href='".doliconnecturl('dolishop')."' class='list-group-item list-group-item-info list-group-item-action' role='button' aria-pressed='true'><b>".__( 'Continue shopping', 'doliconnect')."</b></a>
-//<button type='button' type='submit' name='dolicart' value='purge' class='list-group-item list-group-item-secondary list-group-item-action' role='button' aria-pressed='true'><b>".__( 'Empty the basket', 'doliconnect')."</b></button>
-//<button type='button' type='submit' name='dolicart' value='validation' class='list-group-item list-group-item-warning list-group-item-action' role='button' aria-pressed='true'><b>".__( 'Process', 'doliconnect')."</b></button>
-//</ul>";
-print "</div>";
+}
+print "</ul></div>";
 }
 
 print "<script>";
