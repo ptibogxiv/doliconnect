@@ -667,9 +667,7 @@ print "</div><ul class='list-group list-group-flush'>";
  
 print doliline($proposalfo);
 
-print "<li class='list-group-item list-group-item-info'>";
 print dolitotal($proposalfo);
-print "</li>";
 
 if ( $proposalfo->last_main_doc != null ) {
 $doc = array_reverse( explode("/", $proposalfo->last_main_doc) );      
@@ -859,9 +857,7 @@ print "</div><ul class='list-group list-group-flush'>";
  
 print doliline($orderfo);
 
-print "<li class='list-group-item list-group-item-info'>";
 print dolitotal($orderfo);
-print "</li>";
 
 if ( $orderfo->last_main_doc != null ) {
 $doc = array_reverse(explode("/", $orderfo->last_main_doc)); 
@@ -1099,9 +1095,7 @@ print "</div><ul class='list-group list-group-flush'>";
 
 print doliline($contractfo);
 
-print "<li class='list-group-item list-group-item-info'>";
 print dolitotal($contractfo);
-print "</li>";
 
 //var_dump($fruits);
 print '</ul><div class="card-footer text-muted">';
