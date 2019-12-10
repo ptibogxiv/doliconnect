@@ -671,7 +671,7 @@ print dolitotal($proposalfo);
 
 if ( $proposalfo->last_main_doc != null ) {
 $doc = array_reverse( explode("/", $proposalfo->last_main_doc) );      
-$document = dolidocdownload($doc[2],$doc[1],$doc[0],$url."&id=".$_GET['id']."&ref=".$proposalfo->ref,__( 'Summary', 'doliconnect' ));
+$document = dolidocdownload($doc[2], $doc[1], $doc[0], $url."&id=".$proposalfo->id."&ref=".$proposalfo->ref."&security=".$_GET['security'], __( 'Summary', 'doliconnect' ));
 } 
     
 $fruits[$proposalfo->date_creation.'p'] = array(
