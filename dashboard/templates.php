@@ -1521,7 +1521,7 @@ if ( $object->lines != null && $object->statut == 0 ) {
 print "<button type='button' onclick='DeleteDoliCart(\"".$nonce."\")' class='list-group-item list-group-item-action flex-fill' role='button' aria-pressed='true'><center><b>".__( 'Empty the basket', 'doliconnect')."</b></center></button>";
 }
 if ( $object->lines != null ) {
-print "<button type='button' onclick='ValidDoliCart(\"".$nonce."\")' class='list-group-item list-group-item-action list-group-item-warning flex-fill' role='button' aria-pressed='true'><center><b>".__( 'Process', 'doliconnect')."</b></center></button>";
+print "<button type='button' onclick='ValidDoliCart(\"".$nonce."\")' class='list-group-item list-group-item-action list-group-item-warning flex-fill ' role='button' aria-pressed='true'><center><b>".__( 'Process', 'doliconnect')."</b></center></button>";
 }
 }
 print "</ul></div>";
