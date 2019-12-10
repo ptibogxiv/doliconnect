@@ -631,7 +631,7 @@ $proposalfo = callDoliApi("GET", $request, null, dolidelay('proposal', esc_attr(
 //print $proposalfo;
 }
 
-if ( !isset($proposalfo->error) && isset($_GET['id']) && isset($_GET['ref']) && ( doliconnector($current_user, 'fk_soc') == $proposalfo->socid ) && ( $_GET['ref'] == $proposalfo->ref ) && $proposalfo->statut !=0 ) {
+if ( !isset($proposalfo->error) && isset($_GET['id']) && isset($_GET['ref']) && ( doliconnector($current_user, 'fk_soc') == $proposalfo->socid ) && ( $_GET['ref'] == $proposalfo->ref ) && $proposalfo->statut != 0 && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doliproposal-'.$proposalfo->id.'-'.$proposalfo->ref)) {
 print "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>$proposalfo->ref</h5><div class='row'><div class='col-md-5'>";
 $datevalidation =  date_i18n('d/m/Y', $proposalfo->date_validation);
 print "<b>".__( 'Date of creation', 'doliconnect' ).":</b> ".date_i18n('d/m/Y', $proposalfo->date_creation)."<br>";
@@ -707,8 +707,8 @@ $listpropal = callDoliApi("GET", $request, null, dolidelay('proposal', esc_attr(
 print '<div class="card shadow-sm"><ul class="list-group list-group-flush">';  
 if ( !isset( $listpropal->error ) && $listpropal != null ) {
 foreach ( $listpropal as $postproposal ) { 
-
-$arr_params = array( 'id' => $postproposal->id, 'ref' => $postproposal->ref);  
+$nonce = wp_create_nonce( 'doliproposal-'. $postorder->id.'-'.$postorder->ref);
+$arr_params = array( 'id' => $postproposal->id, 'ref' => $postproposal->ref, 'security' => $nonce);  
 $return = esc_url( add_query_arg( $arr_params, $url) );
                 
 print "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'><div><i class='fa fa-shopping-bag fa-3x fa-fw'></i></div><div><h6 class='my-0'>".$postproposal->ref."</h6><small class='text-muted'>du ".date_i18n('d/m/Y', $postproposal->date_creation)."</small></div><span>".doliprice($postproposal, 'ttc', isset($postproposal->multicurrency_code) ? $postproposal->multicurrency_code : null)."</span><span>";
@@ -757,7 +757,7 @@ $orderfo = callDoliApi("GET", $request, null, dolidelay('order', esc_attr(isset(
 //print $orderfo;
 }
 
-if ( !isset($orderfo->error) && isset($_GET['id']) && isset($_GET['ref']) && (doliconnector($current_user, 'fk_soc') == $orderfo->socid ) && ($_GET['ref'] == $orderfo->ref) && $orderfo->statut != 0 ) {
+if ( !isset($orderfo->error) && isset($_GET['id']) && isset($_GET['ref']) && (doliconnector($current_user, 'fk_soc') == $orderfo->socid ) && ($_GET['ref'] == $orderfo->ref) && $orderfo->statut != 0 && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doliorder-'.$orderfo->id.'-'.$orderfo->ref)) {
 
 print "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>$orderfo->ref</h5><div class='row'><div class='col-md-5'>";
 print "<b>".__( 'Date of order', 'doliconnect' ).":</b> ".date_i18n('d/m/Y', $orderfo->date_creation)."<br>";
@@ -992,8 +992,8 @@ $listorder = callDoliApi("GET", $request, null, dolidelay('order', esc_attr(isse
 print '<div class="card shadow-sm"><ul class="list-group list-group-flush">';
 if ( !isset($listorder->error ) && $listorder != null ) {
 foreach ( $listorder as $postorder ) {
-
-$arr_params = array( 'id' => $postorder->id, 'ref' => $postorder->ref);  
+$nonce = wp_create_nonce( 'doliorder-'. $postorder->id.'-'.$postorder->ref);
+$arr_params = array( 'id' => $postorder->id, 'ref' => $postorder->ref, 'security' => $nonce);  
 $return = esc_url( add_query_arg( $arr_params, $url) );
                                                                                                                                                       
 print "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'><div><i class='fa fa-file-invoice fa-3x fa-fw'></i></div><div><h6 class='my-0'>".$postorder->ref."</h6><small class='text-muted'>du ".date_i18n('d/m/Y', $postorder->date_commande)."</small></div><span>".doliprice($postorder, 'ttc', isset($postorder->multicurrency_code) ? $postorder->multicurrency_code : null)."</span><span>";
