@@ -1065,7 +1065,7 @@ $contractfo = callDoliApi("GET", $request, null, dolidelay('contract', esc_attr(
 //print $contractfo;
 }
 
-if ( !isset($contractfo->error) && isset($_GET['id']) && isset($_GET['id']) && isset($_GET['ref']) && (doliconnector($current_user, 'fk_soc') == $contractfo->socid) && ($_GET['ref'] == $contractfo->ref) ) {
+if ( !isset($contractfo->error) && isset($_GET['id']) && isset($_GET['id']) && isset($_GET['ref']) && (doliconnector($current_user, 'fk_soc') == $contractfo->socid) && ($_GET['ref'] == $contractfo->ref) && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doliorder-'.$contractfo->id.'-'.$contractfo->ref)) {
 print "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>$contractfo->ref</h5><div class='row'><div class='col-md-5'>";
 print "<b>".__( 'Date of creation', 'doliconnect' ).": </b> ".date_i18n('d/m/Y', $contractfo->date_creation)."<br>";
 if ( $contractfo->statut > 0 ) {
@@ -1117,8 +1117,8 @@ $listcontract = callDoliApi("GET", $request, null, dolidelay('contract', esc_att
 print '<div class="card shadow-sm"><ul class="list-group list-group-flush">';
 if ( !isset($listcontract->error) && $listcontract != null ) {
 foreach ($listcontract  as $postcontract) {                                                                                 
-
-$arr_params = array( 'id' => $postcontract->id, 'ref' => $postcontract->ref);  
+$nonce = wp_create_nonce( 'doliorder-'. $postcontract->id.'-'.$postcontract->ref);
+$arr_params = array( 'id' => $postcontract->id, 'ref' => $postcontract->ref, 'security' => $nonce);  
 $return = esc_url( add_query_arg( $arr_params, $url) );
                                                                                                                                                       
 print "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'><div><i class='fa fa-file-contract fa-3x fa-fw'></i></div><div><h6 class='my-0'>".$postcontract->ref."</h6><small class='text-muted'>du ".date_i18n('d/m/Y', $postcontract->date_creation)."</small></div><span>".doliprice($postcontract, 'ttc', isset($postcontract->multicurrency_code) ? $postcontract->multicurrency_code : null)."</span><span>";
