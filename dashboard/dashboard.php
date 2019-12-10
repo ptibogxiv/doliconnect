@@ -1106,7 +1106,7 @@ $fruits[$contractfo->date_creation.'p'] = array(
 "timestamp" => $contractfo->date_creation,
 "type" => __( 'contract', 'doliconnect' ),  
 "label" => $contractfo->ref,
-//"document" => $document,
+"document" => "",
 "description" => null,
 );
 
