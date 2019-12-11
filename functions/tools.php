@@ -1494,15 +1494,23 @@ form.submit();
   }); 
 }";
 
-$paymentmethods .= 'var paymentRequest = stripe.paymentRequest({
+if ( !empty($module) && is_object($object) && isset($object->id) ) {
+$paymentmethods .= 'stripe.retrievePaymentIntent(
+  "'.$listpaymentmethods->stripe->client_secret.'"
+).then(function(result) {
+if (result.error) { 
+// Display error.message
+} else {
+// The setup has succeeded. Display PRA button.
+var paymentRequest = stripe.paymentRequest({
   country: "'.$listpaymentmethods->thirdparty->countrycode.'",
-  currency: "usd",
+  currency: result.paymentIntent.currency,
   total: {
     label: "Demo total",
-    amount: 1000,
+    amount: result.paymentIntent.amount,
   },
-  requestPayerName: true,
-  requestPayerEmail: true,
+  requestPayerName: false,
+  requestPayerEmail: false,
 });
 var elements = stripe.elements();
 var prButton = elements.create("paymentRequestButton", {
@@ -1519,7 +1527,9 @@ paymentRequest.canMakePayment().then(function(result) {
     jQuery("#else").hide();
   }
 });
+}});
 ';   
+}
                  
 $paymentmethods .= "</script>";
 
