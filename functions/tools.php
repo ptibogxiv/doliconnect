@@ -806,9 +806,12 @@ $paymentmethods = "<script src='https://js.stripe.com/v3/'></script>";
  
 $paymentmethods .= doliloaderscript('doliconnect-paymentmethodsform');
 
-$paymentmethods .='<div class="card shadow-sm"><ul class="list-group list-group-flush panel-group" id="accordion">';
+$paymentmethods .= "<div id='payment-request-button'><!-- A Stripe Element will be inserted here. --></div>
+<div id='else' style='display: none' ><br><div style='display:inline-block;width:46%;float:left'><hr width='90%' /></div><div style='display:inline-block;width: 8%;text-align: center;vertical-align:90%'><small class='text-muted'>".__( 'or', 'doliconnect-pro' )."</small></div><div style='display:inline-block;width:46%;float:right' ><hr width='90%'/></div><br></div>";
+
+$paymentmethods .= '<div class="card shadow-sm"><ul class="list-group list-group-flush panel-group" id="accordion">';
 if ( isset($listpaymentmethods->stripe) && empty($listpaymentmethods->stripe->live) ) {
-$paymentmethods .="<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".__( "Stripe's in sandbox mode", 'doliconnect')."</b></li>";
+$paymentmethods .= "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".__( "Stripe's in sandbox mode", 'doliconnect')."</b></li>";
 }
 
 $countPM = count(get_object_vars($listpaymentmethods->payment_methods));
