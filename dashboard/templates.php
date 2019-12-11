@@ -1505,11 +1505,11 @@ print "<div class='card shadow-sm' id='cart-form'><ul class='list-group list-gro
 print doliline($object, 'cart');
 
 if ( isset($object) && is_object($object) && (doliconnector($current_user, 'fk_soc') == $object->socid) ) {
-print dolitotal($object);
+print dolitotal($object);  
+print wp_nonce_field( 'valid_dolicart-'.$object->id, 'dolichecknonce' );  
 }
 
 print "</ul>";
-print wp_nonce_field( 'valid_dolicart-'.$object->id, 'dolichecknonce' );  
 print "</form>";  
 if ( get_option('dolishop') || (!get_option('dolishop') && isset($object) && $object->lines != null) ) {
 print "<div class='card-body'><ul class='list-group list-group-horizontal-sm'>";
