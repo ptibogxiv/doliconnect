@@ -1492,9 +1492,36 @@ document.body.appendChild(form);
 form.submit();
     }
   }); 
-}";    
+}";
+
+$paymentmethods .= 'var paymentRequest = stripe.paymentRequest({
+  country: "'.$listpaymentmethods->thirdparty->countrycode.'",
+  currency: "usd",
+  total: {
+    label: "Demo total",
+    amount: 1000,
+  },
+  requestPayerName: true,
+  requestPayerEmail: true,
+});
+var elements = stripe.elements();
+var prButton = elements.create("paymentRequestButton", {
+  paymentRequest: paymentRequest,
+});
+
+// Check the availability of the Payment Request API first.
+paymentRequest.canMakePayment().then(function(result) {
+  if (result) {
+    jQuery("#else").show();
+    prButton.mount("#payment-request-button");
+  } else {
+    document.getElementById("payment-request-button").style.display = "none";
+    jQuery("#else").hide();
+  }
+});
+';   
                  
-$paymentmethods .="</script>";
+$paymentmethods .= "</script>";
 
 return $paymentmethods;
 }
