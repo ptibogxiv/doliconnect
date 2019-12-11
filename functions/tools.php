@@ -1495,8 +1495,10 @@ form.submit();
 }";
 
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
-$paymentmethods .= 'stripe.retrievePaymentIntent(
-  "'.$listpaymentmethods->stripe->client_secret.'"
+$paymentmethods .= '
+var clientSecret = "'.$listpaymentmethods->stripe->client_secret.'";
+stripe.retrievePaymentIntent(
+  clientSecret
 ).then(function(result) {
 if (result.error) { 
 // Display error.message
@@ -1527,8 +1529,37 @@ paymentRequest.canMakePayment().then(function(result) {
     jQuery("#else").hide();
   }
 });
-}});
-';   
+
+// Confirm payment
+paymentRequest.on("paymentmethod", function(ev) {
+  // Confirm the PaymentIntent without handling potential next actions (yet).
+  stripe.confirmCardPayment(
+    clientSecret,
+    {payment_method: ev.paymentMethod.id},
+    {handleActions: false}
+  ).then(function(result) {
+    if (result.error) {
+      // Display error.message
+displayError.textContent = result.error.message;    
+    } else {
+      // The setup has succeeded. Display a success message.
+jQuery("#DoliconnectLoadingModal").modal("show");
+var form = document.createElement("form");
+form.setAttribute("action", "'.$url.'");
+form.setAttribute("method", "post");
+form.setAttribute("id", "doliconnect-paymentmethodsform");
+var inputvar = document.createElement("input");
+inputvar.setAttribute("type", "hidden");
+inputvar.setAttribute("name", "paymentmethod");
+inputvar.setAttribute("value", ev.paymentMethod.id);
+form.appendChild(inputvar);
+document.body.appendChild(form);
+form.submit();
+    }
+  }); 
+});
+
+}});';   
 }
                  
 $paymentmethods .= "</script>";
