@@ -317,7 +317,7 @@ $list .= "<span class='text-muted'>".doliprice($line, 'total_ttc',isset($object-
 
 $cart = "<div class='card'><div class='card-header'>".__( 'Cart', 'doliconnect' )." - ".sprintf( _n( '%s item', '%s items', $qty, 'doliconnect' ), $qty)." <small>(";
 if ( !isset($object->resteapayer) && $object->statut == 0 ) { $cart .= "<a href='".doliconnecturl('dolicart')."' >".__( 'update', 'doliconnect' )."</a>"; }
-else { $cart .= ".__( 'unchangeable, please contact us', 'doliconnect' )."; }
+else { $cart .= __( 'unchangeable, please contact us', 'doliconnect' ); }
 $cart .= ")</small></div><ul class='list-group list-group-flush'>";
 $cart .= $list;
 
