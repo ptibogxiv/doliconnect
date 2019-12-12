@@ -759,7 +759,7 @@ $orderfo = callDoliApi("GET", $request, null, dolidelay('order', esc_attr(isset(
 
 if ( !isset($orderfo->error) && isset($_GET['id']) && isset($_GET['ref']) && (doliconnector($current_user, 'fk_soc') == $orderfo->socid ) && ($_GET['ref'] == $orderfo->ref) && $orderfo->statut != 0 && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doliorder-'.$orderfo->id.'-'.$orderfo->ref)) {
 
-print "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>$orderfo->ref</h5><div class='row'><div class='col-md-5'>";
+print "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>$orderfo->ref</h5><div class='row'><div class='col-md-6'>";
 print "<b>".__( 'Date of order', 'doliconnect' ).":</b> ".date_i18n('d/m/Y', $orderfo->date_creation)."<br>";
 if ( $orderfo->statut > 0 ) {
 if ( $orderfo->billed == 1 ) {
@@ -778,7 +778,7 @@ $orderavancement=7; }
 elseif ( $orderfo->statut == -1 ) { $orderinfo=__( 'Canceled', 'doliconnect' );
 $orderavancement=0;  }
 
-print "<b>".__( 'Payment method', 'doliconnect' ).":</b> ".__( $orderfo->mode_reglement, 'doliconnect' )."<br><br></div><div class='col-md-7'>";
+print "<b>".__( 'Payment method', 'doliconnect' ).":</b> ".__( $orderfo->mode_reglement, 'doliconnect' )."<br><br></div><div class='col-md-6'>";
 
 if ( isset($orderinfo) ) {
 print "<h3 class='text-right'>".$orderinfo."</h3>";
