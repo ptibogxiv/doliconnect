@@ -786,12 +786,6 @@ print "<h3 class='text-right'>".$orderinfo."</h3>";
 
 if ( $orderfo->billed != 1 && $orderfo->statut > 0 ) {
 
-if ( doliversion('11.0.0') ) {
-print dolipaymentmethods($orderfo, substr($_GET['module'], 0, -1), doliconnecturl('dolicart')."?validation", true);
-} else {
-print __( "It seems that your version of Dolibarr and/or its plugins are not up to date!", "doliconnect");
-}
-
 if ( $orderfo->mode_reglement_code == 'CHQ' ) {
 $chq = callDoliApi("GET", "/doliconnector/constante/FACTURE_CHQ_NUMBER", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
