@@ -804,9 +804,27 @@ print "<br><b>IBAN: $bank->iban</b>";
 if ( ! empty($bank->bic) ) { print "<br><b>BIC/SWIFT: $bank->bic</b>";}
 print "</p><small><a href='#' id='button-source-payment'><span class='fas fa-sync-alt'></span> ".__( 'Change your payment mode', 'doliconnect' )."</a></small></div>";
 } else {
-print "<button id='button-source-payment' class='btn btn-warning btn-block' role='button'><span class='fa fa-credit-card'></span> ".__( 'Pay', 'doliconnect' )."</button>";
+$nonce = wp_create_nonce( 'valid_dolicart-'.$orderfo->id );
+$arr_params = array( 'cart' => $nonce, 'step' => 'payment', 'module' => $_GET["module"], 'id' => $orderfo->id,'ref' => $orderfo->ref);  
+$return = add_query_arg( $arr_params, doliconnecturl('dolicart'));
+print "<button type='button' onclick='ValidDoliCart(\"".wp_create_nonce( 'valid_dolicart-'.$orderfo->id )."\")' id='button-source-payment' class='btn btn-warning btn-block' ><span class='fa fa-credit-card'></span> ".__( 'Pay', 'doliconnect' )."</button>";
 }
-
+print "<script>";
+print "function ValidDoliCart(nonce) {
+jQuery('#DoliconnectLoadingModal').modal('show');
+var form = document.createElement('form');
+form.setAttribute('action', '".$return."');
+form.setAttribute('method', 'post');
+form.setAttribute('id', 'doliconnect-cartform');
+var inputvar = document.createElement('input');
+inputvar.setAttribute('type', 'hidden');
+inputvar.setAttribute('name', 'dolichecknonce');
+inputvar.setAttribute('value', nonce);
+form.appendChild(inputvar);
+document.body.appendChild(form);
+form.submit();
+        }";                  
+print "</script>";
 }
 
 print "<br></div></div>"; 
