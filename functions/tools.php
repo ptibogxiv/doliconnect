@@ -959,7 +959,7 @@ if ( isset($listpaymentmethods->stripe) && in_array('ideal', $listpaymentmethods
 $paymentmethods .='<li class="list-group-item list-group-item-light list-group-item-action flex-column align-items-start"><div class="custom-control custom-radio">
 <input type="radio" id="ideal" name="paymentmode" value="ideal" class="custom-control-input" data-toggle="collapse" data-parent="#accordion" href="#ideal">
 <label class="custom-control-label w-100" for="ideal"><div class="row"><div class="col-3 col-md-2 col-xl-2 align-middle">
-<center><i class="fab fa-ideal fa-3x fa-fw"></i></center></div><div class="col-auto align-middle"><h6 class="my-0">'.__( 'iDEAL', 'doliconnect' ).'</h6><small class="text-muted">iDEAL PAYMENT</small></div></div></label>
+<center><i class="fab fa-ideal fa-3x fa-fw" style="color:#CC0066"></i></center></div><div class="col-auto align-middle"><h6 class="my-0">'.__( 'iDEAL', 'doliconnect' ).'</h6><small class="text-muted">iDEAL PAYMENT</small></div></div></label>
 </div></li>';
 $paymentmethods .='<li id="idealPanel" class="list-group-item list-group-item-secondary panel-collapse collapse"><div class="panel-body">';
 $paymentmethods .='<input id="idealholder-name" name="idealholder-name" value="" type="text" class="form-control" placeholder="'.__( "Bank's owner", 'doliconnect').'" autocomplete="off" required>
