@@ -1273,19 +1273,19 @@ if ( isset($_POST['update_thirdparty']) && $_POST['update_thirdparty'] == 'valid
 
 $thirdparty=$_POST['contact'][''.doliconnector($current_user, 'fk_soc').''];
 $ID = $current_user->ID;
-if ( $thirdparty['morphy'] == 'phy' ) {
+if ( isset($thirdparty['morphy']) && $thirdparty['morphy'] == 'phy' ) {
 $thirdparty['name'] = ucfirst(strtolower($thirdparty['firstname']))." ".strtoupper($thirdparty['lastname']);
 } 
 wp_update_user( array( 'ID' => $ID, 'user_email' => sanitize_email($thirdparty['email'])));
-wp_update_user( array( 'ID' => $ID, 'nickname' => sanitize_user($_POST['user_nicename'])));
-wp_update_user( array( 'ID' => $ID, 'display_name' => sanitize_user($thirdparty['name'])));
+if (isset($_POST['user_nicename'])) wp_update_user( array( 'ID' => $ID, 'nickname' => sanitize_user($_POST['user_nicename'])));
+if (isset($_POST['name'])) wp_update_user( array( 'ID' => $ID, 'display_name' => sanitize_user($thirdparty['name'])));
 wp_update_user( array( 'ID' => $ID, 'first_name' => ucfirst(sanitize_user(strtolower($thirdparty['firstname'])))));
 wp_update_user( array( 'ID' => $ID, 'last_name' => strtoupper(sanitize_user($thirdparty['lastname']))));
-wp_update_user( array( 'ID' => $ID, 'description' => sanitize_textarea_field($_POST['description'])));
-wp_update_user( array( 'ID' => $ID, 'user_url' => sanitize_textarea_field($thirdparty['url'])));
+if (isset($_POST['description'])) wp_update_user( array( 'ID' => $ID, 'description' => sanitize_textarea_field($_POST['description'])));
+if (isset($_POST['url'])) wp_update_user( array( 'ID' => $ID, 'user_url' => sanitize_textarea_field($thirdparty['url'])));
 update_user_meta( $ID, 'civility_id', sanitize_text_field($thirdparty['civility_id']));
-update_user_meta( $ID, 'billing_type', sanitize_text_field($thirdparty['morphy']));
-if ( $thirdparty['morphy'] == 'mor' ) { update_user_meta( $ID, 'billing_company', sanitize_text_field($thirdparty['name'])); }
+if (isset($_POST['morphy'])) update_user_meta( $ID, 'billing_type', sanitize_text_field($thirdparty['morphy']));
+if ( isset($_POST['morphy']) && $thirdparty['morphy'] == 'mor' ) { update_user_meta( $ID, 'billing_company', sanitize_text_field($thirdparty['name'])); }
 update_user_meta( $ID, 'billing_birth', $thirdparty['birth']);
 
 do_action('wp_dolibarr_sync', $thirdparty);
@@ -1349,7 +1349,7 @@ print dolimodalloaderscript('updatethirdparty-form');
 print doliuserform( $thirdparty, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'contact');
 
 print "</div>".doliloading('updatethirdparty-form');
-
+print wp_nonce_field( 'valid_dolicart-'.$object->id, 'dolichecknonce' );  
 print "<div id='Footerupdatethirdparty-form' class='modal-footer'><button name='update_thirdparty' value='validation' class='btn btn-warning btn-block' type='submit'><b>".__( 'Update', 'doliconnect' )."</b></button></form></div>
 </div></div></div>";
 
