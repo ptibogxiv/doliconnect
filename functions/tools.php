@@ -1497,8 +1497,8 @@ form.submit();
 }";
 
 if ( isset($listpaymentmethods->stripe) && in_array('payment_request_api', $listpaymentmethods->stripe->types) && !empty($module) && is_object($object) && isset($object->id) && empty($thirdparty->mode_reglement_id) ) {
-$paymentmethods .= '
-var clientSecret = "'.$listpaymentmethods->stripe->client_secret.'";
+$paymentmethods .= "
+var clientSecret = '".$listpaymentmethods->stripe->client_secret."';
 stripe.retrievePaymentIntent(
   clientSecret
 ).then(function(result) {
@@ -1507,33 +1507,33 @@ if (result.error) {
 } else {
 // The setup has succeeded. Display PRA button.
 var paymentRequest = stripe.paymentRequest({
-  country: "'.$listpaymentmethods->thirdparty->countrycode.'",
+  country: '".$listpaymentmethods->thirdparty->countrycode."',
   currency: result.paymentIntent.currency,
   total: {
-    label: "Demo total",
+    label: 'Demo total',
     amount: result.paymentIntent.amount,
   },
   requestPayerName: false,
   requestPayerEmail: false,
 });
 var elements = stripe.elements();
-var prButton = elements.create("paymentRequestButton", {
+var prButton = elements.create('paymentRequestButton', {
   paymentRequest: paymentRequest,
 });
 
 // Check the availability of the Payment Request API first.
 paymentRequest.canMakePayment().then(function(result) {
   if (result) {
-    jQuery("#else").show();
-    prButton.mount("#payment-request-button");
+    jQuery('#else').show();
+    prButton.mount('#payment-request-button');
   } else {
-    document.getElementById("payment-request-button").style.display = "none";
-    jQuery("#else").hide();
+    document.getElementById('payment-request-button').style.display = 'none';
+    jQuery('#else').hide();
   }
 });
 
 // Confirm payment
-paymentRequest.on("paymentmethod", function(ev) {
+paymentRequest.on('paymentmethod', function(ev) {
   // Confirm the PaymentIntent without handling potential next actions (yet).
   stripe.confirmCardPayment(
     clientSecret,
@@ -1545,15 +1545,15 @@ paymentRequest.on("paymentmethod", function(ev) {
 displayError.textContent = result.error.message;    
     } else {
       // The setup has succeeded. Display a success message.
-jQuery("#DoliconnectLoadingModal").modal("show");
-var form = document.createElement("form");
-form.setAttribute("action", "'.$url.'");
-form.setAttribute("method", "post");
-form.setAttribute("id", "doliconnect-paymentmethodsform");
-var inputvar = document.createElement("input");
-inputvar.setAttribute("type", "hidden");
-inputvar.setAttribute("name", "paymentmethod");
-inputvar.setAttribute("value", ev.paymentMethod.id);
+jQuery('#DoliconnectLoadingModal').modal('show');
+var form = document.createElement('form');
+form.setAttribute('action', '".$url."');
+form.setAttribute('method', 'post');
+form.setAttribute('id', 'doliconnect-paymentmethodsform');
+var inputvar = document.createElement('input';
+inputvar.setAttribute('type', 'hidden');
+inputvar.setAttribute('name', 'add_paymentmethod');
+inputvar.setAttribute('value', result.paymentIntent.payment_method);
 form.appendChild(inputvar);
 document.body.appendChild(form);
 form.submit();
@@ -1561,7 +1561,7 @@ form.submit();
   }); 
 });
 
-}});';   
+}});";   
 }
                  
 $paymentmethods .= "</script>";
