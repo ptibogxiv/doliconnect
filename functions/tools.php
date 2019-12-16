@@ -806,8 +806,10 @@ $paymentmethods = "<script src='https://js.stripe.com/v3/'></script>";
  
 $paymentmethods .= doliloaderscript('doliconnect-paymentmethodsform');
 
+if ( isset($listpaymentmethods->stripe) && in_array('payment_request_api', $listpaymentmethods->stripe->types) && !empty($module) && is_object($object) && isset($object->id) && empty($thirdparty->mode_reglement_id) ) {
 $paymentmethods .= "<div id='payment-request-button'><!-- A Stripe Element will be inserted here. --></div>
 <div id='else' style='display: none' ><br><div style='display:inline-block;width:46%;float:left'><hr width='90%' /></div><div style='display:inline-block;width: 8%;text-align: center;vertical-align:90%'><small class='text-muted'>".__( 'or', 'doliconnect-pro' )."</small></div><div style='display:inline-block;width:46%;float:right' ><hr width='90%'/></div><br></div>";
+}
 
 $paymentmethods .= '<div class="card shadow-sm"><ul class="list-group list-group-flush panel-group" id="accordion">';
 if ( isset($listpaymentmethods->stripe) && empty($listpaymentmethods->stripe->live) ) {
@@ -1494,7 +1496,7 @@ form.submit();
   }); 
 }";
 
-if ( !empty($module) && is_object($object) && isset($object->id) ) {
+if ( isset($listpaymentmethods->stripe) && in_array('payment_request_api', $listpaymentmethods->stripe->types) && !empty($module) && is_object($object) && isset($object->id) && empty($thirdparty->mode_reglement_id) ) {
 $paymentmethods .= '
 var clientSecret = "'.$listpaymentmethods->stripe->client_secret.'";
 stripe.retrievePaymentIntent(
