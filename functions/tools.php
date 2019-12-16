@@ -1499,6 +1499,7 @@ form.submit();
 if ( isset($listpaymentmethods->stripe) && in_array('payment_request_api', $listpaymentmethods->stripe->types) && !empty($module) && is_object($object) && isset($object->id) && empty($thirdparty->mode_reglement_id) ) {
 $paymentmethods .= "
 var clientSecret = '".$listpaymentmethods->stripe->client_secret."';
+
 stripe.retrievePaymentIntent(
   clientSecret
 ).then(function(result) {
@@ -1561,7 +1562,8 @@ form.submit();
   }); 
 });
 
-}});";   
+}});
+";   
 }
                  
 $paymentmethods .= "</script>";
