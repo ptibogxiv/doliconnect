@@ -7,10 +7,12 @@ function dolimenu($name, $traduction, $right, $content) {
 
 function doliversion($version) {
 $ret = false;
+if (!empty(get_site_option('dolibarr_public_url')) && !empty(get_site_option('dolibarr_private_key'))) {
 $dolibarr = callDoliApi("GET", "/status", null, dolidelay('dolibarr'));
 $versiondoli = explode("-", $dolibarr->success->dolibarr_version);
 if ( is_object($dolibarr) && version_compare($versiondoli[0], $version) >= 0 ) {
 $ret = $versiondoli[0];
+}
 }
 return $ret;
 }
