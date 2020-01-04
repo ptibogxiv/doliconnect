@@ -411,7 +411,9 @@ print "</li>";
 print "<li class='list-group-item list-group-item-light'><center>".__( 'No contact', 'doliconnect')."</center></li>";
 }
 
-print '</ul><div class="card-footer text-muted">';
+print '</ul>';
+print "<div class='card-body'></div>";
+print '<div class="card-footer text-muted">';
 print "<small><div class='float-left'>";
 print dolirefresh($request, $url, dolidelay('contact'));
 print "</div><div class='float-right'>";
@@ -724,7 +726,7 @@ print "</span></a>";
 else{
 print "<li class='list-group-item list-group-item-light'><center>".__( 'No proposal', 'doliconnect' )."</center></li>";
 }
-print '</ul><div class="card-footer text-muted">';
+print '</ul><div class="card-body"></div><div class="card-footer text-muted">';
 print "<small><div class='float-left'>";
 print dolirefresh($request, $url, dolidelay('proposal'));
 print "</div><div class='float-right'>";
@@ -1025,7 +1027,7 @@ print "</span></a>";
 else{
 print "<li class='list-group-item list-group-item-light'><center>".__( 'No order', 'doliconnect' )."</center></li>";
 }
-print '</ul><div class="card-footer text-muted">';
+print '</ul><div class="card-body"></div><div class="card-footer text-muted">';
 print "<small><div class='float-left'>";
 print dolirefresh($request, $url, dolidelay('order'));
 print "</div><div class='float-right'>";
@@ -1170,7 +1172,7 @@ print "</span></a>";
 else{
 print "<li class='list-group-item list-group-item-light'><center>".__( 'No contract', 'doliconnect' )."</center></li>";
 }
-print '</ul><div class="card-footer text-muted">';
+print '</ul><div class="card-body"></div><div class="card-footer text-muted">';
 print "<small><div class='float-left'>";
 print dolirefresh($request, $url, dolidelay('contract'));
 print "</div><div class='float-right'>";
@@ -1308,7 +1310,7 @@ print "</span></a>";
 else{
 print "<li class='list-group-item list-group-item-light'><center>".__( 'No donation', 'doliconnect' )."</center></li>";
 }
-print '</ul><div class="card-footer text-muted">';
+print '</ul><div class="card-body"></div><div class="card-footer text-muted">';
 print "<small><div class='float-left'>";
 print dolirefresh($request, $url, dolidelay('donation'));
 print "</div><div class='float-right'>";
@@ -1459,7 +1461,7 @@ print "</td><td class='text-right'><b>".doliprice($cotisation->amount)."</b></td
 else { 
 print "<li class='list-group-item list-group-item-light'><center>".__( 'No subscription', 'doliconnect' )."</center></li>";
 }
-print '</ul><div class="card-footer text-muted">';
+print '</ul><div class="card-body"></div><div class="card-footer text-muted">';
 print "<small><div class='float-left'>";
 print dolirefresh($request, $url, dolidelay('member'), $adherent);
 print "</div><div class='float-right'>";
@@ -1512,7 +1514,7 @@ print "<td class='text-right'><b>".doliprice($consumption->amount)."</b></td></t
 print "<li class='list-group-item list-group-item-light'><center>".__( 'No consumption', 'doliconnect' )."</center></li>";
 }
 
-print '</ul><div class="card-footer text-muted">';
+print '</ul><div class="card-body"></div><div class="card-footer text-muted">';
 print "<small><div class='float-left'>";
 print dolirefresh( $request, $url, dolidelay('member'));
 print "</div><div class='float-right'>";
@@ -1598,7 +1600,7 @@ print "</li>";
 print "<li class='list-group-item list-group-item-light'><center>".__( 'No linked member', 'doliconnect' )."</center></li>";
 }
 print "</form>";
-print '</ul><div class="card-footer text-muted">';
+print '</ul><div class="card-body"></div><div class="card-footer text-muted">';
 print "<small><div class='float-left'>";
 print dolirefresh($request, $url, dolidelay('member'));
 print "</div><div class='float-right'>";
@@ -1996,7 +1998,8 @@ print "<option value='".$cur."' selected>".$cur." / ".doliprice('1.99', null, $c
 print "</select>";
 print "</div></div>";
 print "</li>";
-print '</ul><input type="hidden" name="case" value="updatesettings"></form><div class="card-footer text-muted">';
+print "<div class='card-body'></div>";
+print '</ul><div class="card-footer text-muted"><input type="hidden" name="case" value="updatesettings"></form>';
 print "<small><div class='float-left'>";
 print dolirefresh( "/thirdparties/".doliconnector($current_user, 'fk_soc'), $url, dolidelay('member'));
 print "</div><div class='float-right'>";

@@ -1653,7 +1653,9 @@ global $current_user;
 				<input type="email" id="gdrf_data_email" name="gdrf_data_email" required />
 </li>
 		<?php else : ?>
+      <li class='list-group-item list-group-item-light list-group-item-action flex-column align-items-start'>
       <input type='hidden' id='gdrf_data_email' name='gdrf_data_email' value='<?php echo $current_user->user_email; ?>'>
+      </li>
 		<?php endif; ?>
        	<li class='list-group-item list-group-item-light list-group-item-action flex-column align-items-start'>
 				<label for="gdrf_data_human">
