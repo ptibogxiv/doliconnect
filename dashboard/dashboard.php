@@ -1870,7 +1870,7 @@ else{
 print "<li class='list-group-item list-group-item-light'><center>".__( 'No ticket', 'doliconnect' )."</center></li>";
 }
 
-print '</ul><div class="card-footer text-muted">';
+print '</ul><div class="card-body"></div><div class="card-footer text-muted">';
 print "<small><div class='float-left'>";
 print dolirefresh($request, $url, dolidelay('ticket'));
 print "</div><div class='float-right'>";
