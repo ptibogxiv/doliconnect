@@ -37,6 +37,13 @@ WordPress configuration steps:
 1. Go to WordPress Admin > Settings > Doliconnect
 2. BE CAREFUL, in multisite blog, there is a netword settings page too for keys and general settings!
 
+== Frequently Asked Questions ==
+
+= Dolibarr compatibility =
+
+Doliconnect v4.x -> Dolibarr 11.x
+Doliconnect v3.x -> Dolibarr 10.x
+
 == Screenshots ==
 
 1. Shortcode integration.
