@@ -45,6 +45,12 @@ WordPress configuration steps:
 3. Front-end form request succeed.
 4. Confirmation email sent to the user/visitor.
 
+== Credits ==
+
+We would like to thank this contributors and plugins:
+
+[gdpr-data-request-form](https://wordpress.org/plugins/gdpr-data-request-form/ "gdpr-data-request-form")
+
 == Changelog ==
  = 3.12.0 =
 * fix compatibility with dolibarr 10.0.6
