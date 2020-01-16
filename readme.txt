@@ -49,12 +49,16 @@ WordPress configuration steps:
  = 3.12.0 =
 * fix compatibilité with dolibarr 10.0.6
 
-
- = 3.11.3 & 3.11.4 =
+ = 3.11.5 =
 * fix & clean code
 * fix product block
 
- = 3.11.3 & 3.11.4 =
+ = 3.11.4 =
+* fix & clean code
+* update to wordpress 5.4
+* automation github to SVN wordpress
+
+ = 3.11.3 =
 * fix & clean code
 * update to wordpress 5.4
 * automation github to SVN wordpress
