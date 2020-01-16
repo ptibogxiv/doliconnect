@@ -1,6 +1,6 @@
 === Doliconnect ===
 
-Contributors: ptibogxiv
+Contributors: ptibogxiv, audrasjb
 Tags: erp, crm, ecommerce, dolibarr, payment, interface, customer, subscription, membership, doliconnect, dashboard, paypal, stripe, doliconnect, invoice, order, donation
 Requires at least: 5.0
 Tested up to: 5.4
