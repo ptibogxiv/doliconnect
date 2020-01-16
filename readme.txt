@@ -8,7 +8,7 @@ Stable tag: 4.0.0
 Requires PHP: 7.0
 Donate link: https://www.paypal.me/ptibogxiv
 
-This plugin will interface your Dolibarr with a customer interface in you wordpress
+This plugin will interface your Dolibarr within a customer interface in WordPress
 
 == Description ==
 
@@ -45,7 +45,31 @@ WordPress configuration steps:
 3. Front-end form request succeed.
 4. Confirmation email sent to the user/visitor.
 
+== Credits ==
+
+We would like to thank this contributors and plugins:
+
+[gdpr-data-request-form](https://wordpress.org/plugins/gdpr-data-request-form/ "gdpr-data-request-form")
+
+
 == Changelog ==
+ = 3.12.0 =
+* fix compatibility with dolibarr 10.0.6
+
+ = 3.11.5 =
+* fix & clean code
+* fix product block
+
+ = 3.11.4 =
+* fix & clean code
+* update to wordpress 5.4
+* automation github to SVN wordpress
+
+ = 3.11.3 =
+* fix & clean code
+* update to wordpress 5.4
+* automation github to SVN wordpress
+
  = 3.11.2 =
 * fix & clean code
 

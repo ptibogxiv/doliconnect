@@ -10,7 +10,7 @@
  * @prefix     gdrf_
  */
 
-function gdrf_data_request() {
+function doli_gdrf_data_request() {
 	$gdrf_error     = array();
 	$gdrf_type      = esc_html( filter_input( INPUT_POST, 'gdrf_data_type', FILTER_SANITIZE_STRING ) );
 	$gdrf_email     = sanitize_email( $_POST['gdrf_data_email'] );
@@ -58,5 +58,5 @@ function gdrf_data_request() {
 	die();
 }
 
-add_action( 'wp_ajax_gdrf_data_request', 'gdrf_data_request' );
-add_action( 'wp_ajax_nopriv_gdrf_data_request', 'gdrf_data_request' );
+add_action( 'wp_ajax_doli_gdrf_data_request', 'doli_gdrf_data_request' );
+add_action( 'wp_ajax_nopriv_doli_gdrf_data_request', 'doli_gdrf_data_request' );
