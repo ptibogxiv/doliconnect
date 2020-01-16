@@ -47,7 +47,7 @@ WordPress configuration steps:
 
 == Changelog ==
  = 3.12.0 =
-* fix compatibilité with dolibarr 10.0.6
+* fix compatibility with dolibarr 10.0.6
 
  = 3.11.5 =
 * fix & clean code
