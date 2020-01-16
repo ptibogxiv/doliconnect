@@ -22,11 +22,10 @@ You can test it live on [https://demo.ptibogxiv.net](https://demo.ptibogxiv.net)
 
 == Installation ==
 
-Installing "Doliconnect" can be done either by searching for "Dolibarr REST API" via the "Plugins > Add New" screen in your WordPress dashboard, or by using the following steps:
-
 1. Download the plugin via WordPress.org
 2. Upload the ZIP file through the 'Plugins > Add New > Upload' screen in your WordPress dashboard
 3. Activate the plugin through the 'Plugins' menu in WordPress
+4. Navigate to “Doliconnect, follow the instructions and complete settings.
 
 Dolibarr configuration steps:
 
