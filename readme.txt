@@ -1,7 +1,7 @@
 === Doliconnect ===
 
 Contributors: ptibogxiv, audrasjb
-Tags: erp, crm, ecommerce, dolibarr, payment, interface, customer, subscription, membership, doliconnect, dashboard, paypal, stripe, doliconnect, invoice, order, donation, GDPR, RGPD, LGPD
+Tags: erp, crm, ecommerce, dolibarr, payment, interface, customer, subscription, membership, doliconnect, dashboard, paypal, stripe, doliconnect, invoice, order, donation, GDPR, RGPD, LGPD, CCPA
 Requires at least: 5.0
 Tested up to: 5.4
 Stable tag: 4.0.0
