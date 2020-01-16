@@ -18,7 +18,7 @@ Compatibility with Dolibarr v8 (until june 2019), v9 (until september 2019) & v1
 
 If you like the plugin, feel free to rate it (on the right side of this page)! :)
 
-You can test it live on https://demo.ptibogxiv.net
+You can test it live on [https://demo.ptibogxiv.net](https://demo.ptibogxiv.net "https://demo.ptibogxiv.net")
 
 == Installation ==
 
