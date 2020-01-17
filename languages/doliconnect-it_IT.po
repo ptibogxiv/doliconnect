@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
 "POT-Creation-Date: 2019-12-06 13:25+0100\n"
-"PO-Revision-Date: 2019-12-06 13:26+0100\n"
+"PO-Revision-Date: 2020-01-17 15:12+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it_IT\n"
@@ -115,7 +115,6 @@ msgstr ""
 "impostarlo su \"entrambi\", \"esportare\" o \"rimuovere\"."
 
 #: blocks/gdpr/block.js:85
-#, fuzzy
 msgid "Request type:"
 msgstr "Tipo di richiesta:"
 
@@ -225,7 +224,7 @@ msgstr "Prodotto/Servizio non in vendita"
 #: dashboard/templates.php:940
 #, fuzzy
 msgid "No product"
-msgstr "Nessun prodotto"
+msgstr "Prodotto"
 
 #: blocks/profile/block.js:13
 #, fuzzy
@@ -266,9 +265,8 @@ msgid "Write a brief desc"
 msgstr "Scrivi un breve desc"
 
 #: dashboard/dashboard.php:17 dashboard/dashboard.php:1401
-#, fuzzy
 msgid "Personal informations"
-msgstr "Informazioni personali"
+msgstr "Dati personali"
 
 #: dashboard/dashboard.php:58 dashboard/dashboard.php:247
 #: dashboard/dashboard.php:317 dashboard/dashboard.php:325
@@ -316,7 +314,6 @@ msgid "Manage address book"
 msgstr "Gestire la rubrica"
 
 #: dashboard/dashboard.php:388 dashboard/dashboard.php:445
-#, fuzzy
 msgid "New contact"
 msgstr "Nuovo contatto"
 
@@ -332,7 +329,7 @@ msgstr "Elimina"
 #: dashboard/dashboard.php:411
 #, fuzzy
 msgid "No contact"
-msgstr "Nessun contatto"
+msgstr "Contattaci"
 
 #: dashboard/dashboard.php:427
 #, fuzzy
@@ -430,7 +427,6 @@ msgstr "Monitoraggio Propals"
 
 #: dashboard/dashboard.php:637 dashboard/dashboard.php:1074
 #: dashboard/dashboard.php:1646
-#, fuzzy
 msgid "Date of creation"
 msgstr "Data di creazione"
 
@@ -440,7 +436,6 @@ msgid "Validation"
 msgstr "Convalida"
 
 #: dashboard/dashboard.php:641
-#, fuzzy
 msgid "Refused"
 msgstr "Rifiutato"
 
@@ -596,7 +591,6 @@ msgid "Shipment"
 msgstr "Spedizione"
 
 #: dashboard/dashboard.php:959
-#, fuzzy
 msgid "Parcel"
 msgstr "Pacco"
 
@@ -667,7 +661,7 @@ msgstr "Convalida in attesa"
 #: dashboard/dashboard.php:1356
 #, fuzzy
 msgid "No membership"
-msgstr "Nessun abbonamento"
+msgstr "Abbonamento"
 
 #: dashboard/dashboard.php:1358
 msgid "nothing"
@@ -687,9 +681,8 @@ msgid "License"
 msgstr "Licenza"
 
 #: dashboard/dashboard.php:1365
-#, fuzzy
 msgid "Commitment"
-msgstr "Impegno"
+msgstr "Commitment"
 
 #: dashboard/dashboard.php:1366
 msgid "no"
@@ -745,9 +738,8 @@ msgid "Consumptions monitoring"
 msgstr "Monitoraggio dei consumi"
 
 #: dashboard/dashboard.php:1464
-#, fuzzy
 msgid "Next billing date"
-msgstr "Prossima data di fatturazione"
+msgstr "Data di fatturazione successiva"
 
 #: dashboard/dashboard.php:1487
 #, fuzzy
@@ -798,7 +790,6 @@ msgid "Type and category"
 msgstr "Tipo e categoria"
 
 #: dashboard/dashboard.php:1648 dashboard/dashboard.php:1757
-#, fuzzy
 msgid "Severity"
 msgstr "Gravità"
 
@@ -862,9 +853,8 @@ msgid "Open a new ticket"
 msgstr "Apri un nuovo biglietto"
 
 #: dashboard/dashboard.php:1778
-#, fuzzy
 msgid "Sales representative"
-msgstr "Rappresentante"
+msgstr "Tuángòu"
 
 #: dashboard/dashboard.php:1803 dashboard/templates.php:751
 #: dashboard/templates.php:1254 dashboard/templates.php:1409
@@ -900,9 +890,8 @@ msgid "Receive a email notification at each connection"
 msgstr "Ricevere una notifica e-mail a ogni connessione"
 
 #: dashboard/dashboard.php:1913 functions/tools.php:331
-#, fuzzy
 msgid "I would like to receive the newsletter"
-msgstr "Desidero ricevere la newsletter"
+msgstr "Desidero ricevere la lettera informativa"
 
 #: dashboard/dashboard.php:1917
 #, fuzzy
@@ -915,7 +904,6 @@ msgid "Approval of the Privacy Policy the"
 msgstr "Approvazione dell'Informativa sulla privacy"
 
 #: dashboard/dashboard.php:1928
-#, fuzzy
 msgid "Default language"
 msgstr "Lingua predefinita"
 
@@ -957,7 +945,6 @@ msgstr ""
 "tramite questa area clienti sicura."
 
 #: dashboard/templates.php:181
-#, fuzzy
 msgid ""
 "This email address is already linked to an account. You can reactivate your "
 "account through this <a href='\".wp_lostpassword_url( get_permalink() ).\"' "
@@ -973,7 +960,6 @@ msgid "Create this account is not permitted"
 msgstr "Crea questo account non è consentito"
 
 #: dashboard/templates.php:199
-#, fuzzy
 msgid "Registration confirmation"
 msgstr "Conferma di registrazione"
 
@@ -1031,9 +1017,8 @@ msgid "Enter your new password"
 msgstr "Inserisci la tua nuova Password"
 
 #: dashboard/templates.php:369
-#, fuzzy
 msgid "Confirm your new password"
-msgstr "Confermare la nuova password"
+msgstr "Conferma la nuova password"
 
 #: dashboard/templates.php:407
 #, fuzzy
@@ -1161,7 +1146,6 @@ msgid "Your message is successful send!"
 msgstr "Il tuo messaggio ha esito positivo invia!"
 
 #: dashboard/templates.php:713
-#, fuzzy
 msgid "Complete name"
 msgstr "Nome completo"
 
@@ -1180,9 +1164,8 @@ msgid "Inactive module on Dolibarr"
 msgstr "Modulo inattivo su Dolibarr"
 
 #: dashboard/templates.php:1033
-#, fuzzy
 msgid "Tax exemptions"
-msgstr "Esenzioni fiscali"
+msgstr "Riduzioni d'imposta"
 
 #: dashboard/templates.php:1036
 #, fuzzy
@@ -1341,9 +1324,8 @@ msgstr ""
 "tua richiesta di dati."
 
 #: functions/enqueues.php:9
-#, fuzzy
 msgid "Some errors occurred:"
-msgstr "Si sono verificati alcuni errori:"
+msgstr "Si sono verificati degli errori:"
 
 #: functions/product.php:44
 msgid "Available"
@@ -1354,9 +1336,8 @@ msgid "Out of stock"
 msgstr "Esaurito"
 
 #: functions/product.php:51
-#, fuzzy
 msgid "Replenishment"
-msgstr "Rifornimento"
+msgstr "Reintegro"
 
 #: functions/product.php:52
 #, fuzzy
@@ -1424,7 +1405,6 @@ msgid "including Discount"
 msgstr "incluso lo sconto"
 
 #: functions/product.php:332
-#, fuzzy
 msgid "including VAT"
 msgstr "IVA inclusa"
 
@@ -1438,7 +1418,6 @@ msgid "Remains to be paid"
 msgstr "Resta da pagare"
 
 #: functions/product.php:344
-#, fuzzy
 msgid "Total to pay"
 msgstr "Totale da pagare"
 
@@ -1453,13 +1432,12 @@ msgid "Debit of"
 msgstr "Addebito di"
 
 #: functions/product.php:378
-#, fuzzy
 msgid "Soon available"
 msgstr "Presto disponibile"
 
 #: functions/product.php:408
 msgid "Apple Pay"
-msgstr "Stato pagamento:"
+msgstr "Apple Pay"
 
 #: functions/product.php:409
 #, fuzzy
@@ -1486,7 +1464,6 @@ msgid "Create a enterprise / supplier account"
 msgstr "Creare un conto impresa/fornitore"
 
 #: functions/tools.php:62
-#, fuzzy
 msgid "Type of account"
 msgstr "Tipo di conto"
 
@@ -1501,7 +1478,6 @@ msgid "Entreprise account"
 msgstr "Account di Partecipanti"
 
 #: functions/tools.php:112
-#, fuzzy
 msgid "Name of company"
 msgstr "Nome della società"
 
@@ -1581,7 +1557,6 @@ msgid "Username"
 msgstr "Nome utente"
 
 #: functions/tools.php:314
-#, fuzzy
 msgid "Choose your password"
 msgstr "Scegli la password"
 
@@ -1653,7 +1628,6 @@ msgid "Refresh datas"
 msgstr "Aggiornare i dati"
 
 #: functions/tools.php:630
-#, fuzzy
 msgid "Total excl. tax"
 msgstr "Totale IVA esc."
 
@@ -1671,9 +1645,8 @@ msgid "Terms of the settlement"
 msgstr "Termini dell'accordo"
 
 #: functions/tools.php:699
-#, fuzzy
 msgid "Your basket is empty."
-msgstr "Il tuo cestino è vuoto."
+msgstr "Il Carrello è vuoto."
 
 #: functions/tools.php:701
 #, fuzzy
@@ -1740,19 +1713,17 @@ msgid "Card"
 msgstr "Carta"
 
 #: functions/tools.php:859
-#, fuzzy
 msgid "Favourite"
-msgstr "favorito"
+msgstr "Preferito"
 
 #: functions/tools.php:871
 #, fuzzy
 msgid "No payment method"
-msgstr "Nessun metodo di pagamento"
+msgstr "Metodo di pagamento"
 
 #: functions/tools.php:878
-#, fuzzy
 msgid "Credit/debit card"
-msgstr "Carta di credito/debito"
+msgstr "Carta di credito/ debito"
 
 #: functions/tools.php:881
 #, fuzzy
@@ -1823,9 +1794,8 @@ msgstr ""
 "data in cui è stato effettuato l'addebito sul tuo account."
 
 #: functions/tools.php:958
-#, fuzzy
 msgid "iDEAL"
-msgstr "Ideale"
+msgstr "iDEAL"
 
 #: functions/tools.php:978
 msgid "Transfer"
@@ -1877,9 +1847,8 @@ msgid "Send Request"
 msgstr "Invia Richiesta"
 
 #: functions/tools.php:1546
-#, fuzzy
 msgid "Export your data"
-msgstr "Esportare i dati"
+msgstr "Esportazione dei dati"
 
 #: functions/tools.php:1546
 #, fuzzy
@@ -1897,7 +1866,6 @@ msgid "Soon, you will be able to erase your account"
 msgstr "Presto, sarai in grado di cancellare il tuo account"
 
 #: functions/tools.php:1566
-#, fuzzy
 msgid "Delete your account"
 msgstr "Eliminare l'account"
 
@@ -1939,17 +1907,14 @@ msgid "Basket"
 msgstr "Carrello"
 
 #: functions/widgets.php:282
-#, fuzzy
 msgid "Category of products"
-msgstr "Categoria di prodotti"
+msgstr "Categorìe dei prodotti"
 
 #: functions/widgets.php:398
-#, fuzzy
 msgid "Change language"
 msgstr "Cambia lingua"
 
 #: functions/widgets.php:415
-#, fuzzy
 msgid "Choose language"
 msgstr "Scegli la lingua"
 
