@@ -603,14 +603,14 @@ do_action( 'login_footer' );
 
 }
 
-print "</li></lu>";
-print '<div class="card-footer text-muted">';
+print "</li></lu><div class='card-body'>";
+print "</div><div class='card-footer text-muted'>";
 print "<small><div class='float-left'>";
 
 print "</div><div class='float-right'>";
 print dolihelp('ISSUE');
 print "</div></small>";
-print '</div></div></form>';
+print "</div></div></form>";
 
 print "</div></div>";
 
