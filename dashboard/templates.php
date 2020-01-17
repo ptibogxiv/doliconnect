@@ -540,11 +540,11 @@ print "<div class='alert alert-success'><h4 class='alert-heading'>".__( 'Congrat
 if( isset($_GET["login"]) && $_GET["login"] == 'failed' ) { 
 print "<div class='alert alert-danger'><h4 class='alert-heading'>".__( 'Oops', 'doliconnect' )."</h4><p>".__( 'There is no account for these login data or the email and/or the password are not correct.', 'doliconnect' )."</p></div>";
 }
-print "<div class='card shadow-sm'><ul class='list-group list-group-flush'><li class='list-group-item'>";
+print "<div class='card shadow-sm'>";
 
 if ( function_exists('doliconnect_modal') && get_option('doliloginmodal') == '1' ) {
 
-print "<center><i class='fas fa-user-lock fa-fw fa-10x'></i><br><br>";
+print "<ul class='list-group list-group-flush'><li class='list-group-item'><center><i class='fas fa-user-lock fa-fw fa-10x'></i><br><br>";
 //print "<h2>".__( 'Restricted area', 'doliconnect' )."</h2></center>";
 print "</li></lu><div class='card-body'>";
 print '<a href="#" id="login-'.current_time('timestamp').'" data-toggle="modal" data-target="#DoliconnectLogin" data-dismiss="modal" title="'.__('Sign in', 'doliconnect').'" class="btn btn-block btn-primary my-2 my-sm-0" role="button">'.__('You have already an account', 'doliconnect').'</a>';
@@ -558,8 +558,8 @@ print '<a href="'.wp_registration_url( get_permalink() ).'" id="login-'.current_
 
 do_action( 'login_head' );
 
-print "<div id='loginmodal-form'><h5 class='card-title'>".__( 'Welcome', 'doliconnect' )."</h5>";
-print "<b>".get_option('doliaccountinfo')."</b>";
+print "<div class='card-body'><h5 class='card-title'>".__( 'Welcome', 'doliconnect' )."</h5>";
+print "<b>".get_option('doliaccountinfo')."</b></div>";
 
 if ( function_exists('socialconnect') ) {
 print socialconnect(get_permalink());
@@ -573,7 +573,7 @@ if ( isset($_GET["redirect_to"])) { $redirect_to=$_GET["redirect_to"]; } else {
 $redirect_to=$_SERVER['HTTP_REFERER'];}
  
 print "<form class='was-validated' id='doliconnect-loginform' action='$login_url' method='post'>";
-
+print "<ul class='list-group list-group-flush'><li class='list-group-item'>";
 print doliloaderscript('doliconnect-loginform'); 
  
 print "<div class='form-group'>
@@ -587,16 +587,17 @@ print "</div></div><div class='form-group'>
 print "</div></div>";
 
 do_action( 'login_form' );
-print "</li></lu><div class='card-body'>";
-print "<div><div class='float-left'><small>";
+
+print "</li><li class='list-group-item'><div><small><div class='float-left'>";
 if ( ((!is_multisite() && get_option( 'users_can_register' )) || (get_option('users_can_register') == '1' && (get_site_option( 'registration' ) == 'user' || get_site_option( 'registration' ) == 'all'))) ) {
 print "<a href='".wp_registration_url( get_permalink() )."' role='button' title='".__( 'Create an account', 'doliconnect' )."'>".__( 'Create an account', 'doliconnect' )."</a>";
 }
 //<input type='checkbox' class='custom-control-input' value='forever' id='remembermemodal' name='rememberme'>";
 //print "<label class='custom-control-label' for='remembermemodal'> ".__( 'Remember me', 'doliconnect' )."</label>";
-print "</div><div class='float-right'><a href='".wp_lostpassword_url( get_permalink() )."' role='button' title='".__( 'Forgot password?', 'doliconnect' )."'>".__( 'Forgot password?', 'doliconnect' )."</a></small></div></div>"; 
+print "</div><div class='float-right'><a href='".wp_lostpassword_url( get_permalink() )."' role='button' title='".__( 'Forgot password?', 'doliconnect' )."'>".__( 'Forgot password?', 'doliconnect' )."</a></div></small></div>"; 
+print "</li></lu><div class='card-body'>";
 
-print "</div></li><li class='list-group-item'><input type='hidden' value='$redirect_to' name='redirect_to'><button id='submit' class='btn btn-block btn-primary' type='submit' name='submit' value='Submit'";
+print "<input type='hidden' value='$redirect_to' name='redirect_to'><button id='submit' class='btn btn-block btn-primary' type='submit' name='submit' value='Submit'";
 print "><b>".__( 'Sign in', 'doliconnect' )."</b></button></form>";
 
 do_action( 'login_footer' );
