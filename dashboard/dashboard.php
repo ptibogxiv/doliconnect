@@ -198,8 +198,7 @@ $imgData = base64_encode(file_get_contents("$avatarfile"));
 $datat = [
   'filename' => 'avatar.jpg',
   'modulepart' => 'member',
-  'ref' => doliconnector($current_user, 'fk_member'),
-  'subdir' => 'photos',
+  'subdir' => doliconnector($current_user, 'fk_member').'/photos',
   'filecontent' => $imgData,
   'fileencoding' => 'base64',
   'overwriteifexists'=> 1
@@ -231,7 +230,6 @@ $datat = [
 $photo = callDoliApi("POST", "/documents/upload", $datat, 0);
 }
 
- 
 if ( doliconnector($current_user, 'fk_member') > 0 ) {
 $data = [
     'photo' => 'avatar.jpg'
