@@ -274,11 +274,13 @@ print " disabled='disabled'";
 print "><label class='custom-control-label' for='inputavatar'>".__( 'Delete your picture', 'doliconnect' )."</label></div></div>";
 print "</li>";
 print "</ul><div class='card-body'><input type='hidden' name='userid' value='$ID'><button class='btn btn-danger btn-block' type='submit'><b>".__( 'Update', 'doliconnect' )."</b></button></div>";
-print "</div></form>";
-
-print "<p class='text-right'><small>";
+print '<div class="card-footer text-muted">';
+print "<small><div class='float-left'>";
+//print dolirefresh($request, $url, dolidelay('thirdparty'), $thirdparty);
+print "</div><div class='float-right'>";
 print dolihelp('ISSUE');
-print "</small></p>";
+print "</div></small>";
+print '</div></div></form>';
 
 }
 add_action( 'user_doliconnect_avatars', 'avatars_module');
