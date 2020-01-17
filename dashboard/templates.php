@@ -508,24 +508,23 @@ if ( isset($msg) ) { print $msg; }
 
 print doliloaderscript('doliconnect-fpwform'); 
  
-print "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>".__( 'Forgot password?', 'doliconnect' )."</h5>";
-
+print "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>".__( 'Forgot password?', 'doliconnect' )."</h5></div>";
+print "<ul class='list-group list-group-flush'><li class='list-group-item'>";
 print "<div class='form-group'><label for='inputemail'><small>".__( 'Please enter the email address by which you registered your account.', 'doliconnect' )."</small></label>
 <div class='input-group mb-2 mr-sm-2'><div class='input-group-prepend'>
 <div class='input-group-text'><i class='fas fa-at fa-fw'></i></div></div>
 <input class='form-control' id='user_email' type='email' placeholder='".__( 'Email', 'doliconnect' )."' name='user_email' value ='' required>";
-print "</div></div></div>";
-print "<ul class='list-group list-group-flush'><li class='list-group-item'>";
-print "<button class='btn btn-danger btn-block' type='submit'><b>".__( 'Submit', 'doliconnect' )."</b></button>";
-print "</li></ul>";
+print "</div></div>";
 
-print '<div class="card-footer text-muted">';
+print "</li></lu><div class='card-body'>";
+print "<button class='btn btn-danger btn-block' type='submit'><b>".__( 'Submit', 'doliconnect' )."</b></button>";
+print "</div><div class='card-footer text-muted'>";
 print "<small><div class='float-left'>";
 
 print "</div><div class='float-right'>";
 print dolihelp('ISSUE');
 print "</div></small>";
-print '</div></div></form>';
+print "</div></div></form>";
 
 print "</div></div>";
 
