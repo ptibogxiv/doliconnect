@@ -546,6 +546,7 @@ if ( function_exists('doliconnect_modal') && get_option('doliloginmodal') == '1'
 
 print "<center><i class='fas fa-user-lock fa-fw fa-10x'></i><br><br>";
 //print "<h2>".__( 'Restricted area', 'doliconnect' )."</h2></center>";
+print "</li></lu><div class='card-body'>";
 print '<a href="#" id="login-'.current_time('timestamp').'" data-toggle="modal" data-target="#DoliconnectLogin" data-dismiss="modal" title="'.__('Sign in', 'doliconnect').'" class="btn btn-block btn-primary my-2 my-sm-0" role="button">'.__('You have already an account', 'doliconnect').'</a>';
 if (((!is_multisite() && get_option( 'users_can_register' )) or (get_option('users_can_register')=='1' && (get_site_option( 'registration' ) == 'user' or get_site_option( 'registration' ) == 'all')))) 
 {
@@ -586,7 +587,7 @@ print "</div></div><div class='form-group'>
 print "</div></div>";
 
 do_action( 'login_form' );
-
+print "</li></lu><div class='card-body'>";
 print "<div><div class='float-left'><small>";
 if ( ((!is_multisite() && get_option( 'users_can_register' )) || (get_option('users_can_register') == '1' && (get_site_option( 'registration' ) == 'user' || get_site_option( 'registration' ) == 'all'))) ) {
 print "<a href='".wp_registration_url( get_permalink() )."' role='button' title='".__( 'Create an account', 'doliconnect' )."'>".__( 'Create an account', 'doliconnect' )."</a>";
@@ -602,7 +603,6 @@ do_action( 'login_footer' );
 
 }
 
-print "</li></lu><div class='card-body'>";
 print "</div><div class='card-footer text-muted'>";
 print "<small><div class='float-left'>";
 
