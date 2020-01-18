@@ -942,7 +942,8 @@ print "<li class='list-group-item list-group-item-light'><center>".__( 'No produ
 
 }
 }
-print '</ul><div class="card-footer text-muted">';
+print '</ul><div class="card-body">';
+print '</div><div class="card-footer text-muted">';
 print "<small><div class='float-left'>";
 print dolirefresh($request, get_permalink(), dolidelay('product'));
 print "</div><div class='float-right'>";
