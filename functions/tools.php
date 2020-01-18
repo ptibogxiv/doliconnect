@@ -1036,6 +1036,7 @@ $paymentmethods .= '</div></div></label></div></li>';
 }
 
 $paymentmethods .= "</ul><div class='card-body'>";
+$paymentmethods .= "<div id='error-message' role='alert'><!-- a Stripe Message will be inserted here. --></div>";
 $paymentmethods .= "</div><div class='card-footer text-muted'>";
 $paymentmethods .= "<small><div class='float-left'>";
 $paymentmethods .= dolirefresh($request, $url, dolidelay('paymentmethods'));
@@ -1043,7 +1044,6 @@ $paymentmethods .= "</div><div class='float-right'>";
 $paymentmethods .= dolihelp('ISSUE');
 $paymentmethods .= "</div></small>";
 $paymentmethods .= "</div></div>";
-$paymentmethods .= "<div id='error-message' role='alert'><!-- a Stripe Message will be inserted here. --></div>";
 
 $paymentmethods .="<script>";
 
