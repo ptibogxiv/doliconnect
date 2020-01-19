@@ -24,7 +24,7 @@ $version='4.4.1';
 
 	wp_enqueue_style( 'bootstrap-css', plugins_url( 'doliconnect/includes/bootstrap/css/'.$css.'bootstrap.min.css'), array(), $version);
   
-	//wp_enqueue_script( 'bootstrap-js', plugins_url( 'doliconnect/includes/bootstrap/js/bootstrap.min.js'), array('jquery'), ' ', true );
+	wp_enqueue_script( 'bootstrap-js', plugins_url( 'doliconnect/includes/bootstrap/js/bootstrap.min.js'), array('jquery'), ' ', true);
   
   wp_register_script( 'font-awesome', '//use.fontawesome.com/releases/v5.12.0/js/all.js', array(), '5.12.0' );
 	wp_enqueue_script( 'font-awesome' );
