@@ -470,7 +470,7 @@ class DOLIGDRF_Widget extends WP_Widget {
 	function __construct() {
 
 		parent::__construct(
-			'gdrf-widget',
+			'doligdrf-widget',
 			'GDPR Data Request (Doliconnect)'
 		);
 
