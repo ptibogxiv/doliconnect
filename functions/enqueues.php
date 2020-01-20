@@ -1,7 +1,7 @@
 <?php
 
-add_action( 'wp_enqueue_scripts', 'enqueue_scripts_gdrf_public' );
-function enqueue_scripts_gdrf_public() {
+add_action( 'wp_enqueue_scripts', 'enqueue_scripts_doli_gdrf_public' );
+function enqueue_scripts_doli_gdrf_public() {
 	wp_register_script( 'gdrf-public-scripts', plugins_url( 'doliconnect/includes/js/gdrf-public.js'), array( 'jquery' ), '', false );
 	$translations = array(
 		'gdrf_ajax_url' => esc_url( admin_url( 'admin-ajax.php' ) ),

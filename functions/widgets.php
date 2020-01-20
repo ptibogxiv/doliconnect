@@ -465,7 +465,7 @@ add_action( 'widgets_init', function(){
 	register_widget( 'Doliconnect_Changelang' );
 });
 
-class GDRF_Widget extends WP_Widget {
+class DOLIGDRF_Widget extends WP_Widget {
 
 	function __construct() {
 
@@ -477,7 +477,7 @@ class GDRF_Widget extends WP_Widget {
 		add_action(
 			'widgets_init',
 			function() {
-				register_widget( 'GDRF_Widget' );
+				register_widget( 'DOLIGDRF_Widget' );
 			}
 		);
 
@@ -543,6 +543,6 @@ class GDRF_Widget extends WP_Widget {
 
 	}
 }
-$gdrf_widget = new GDRF_Widget();
+$gdrf_widget = new DOLIGDRF_Widget();
 
 ?>
