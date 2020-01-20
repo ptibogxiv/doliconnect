@@ -1594,7 +1594,7 @@ $paymentmethods .= "</script>";
 return $paymentmethods;
 }
 
-function gdrf_data_request_form( $args = array() ) {
+function doli_gdrf_data_request_form( $args = array() ) {
 global $current_user;
 
 	wp_enqueue_script( 'gdrf-public-scripts' );
@@ -1625,7 +1625,7 @@ global $current_user;
 		ob_start();
 		?>
 		<form action="<?php echo esc_url( admin_url( 'admin-ajax.php' ) ); ?>" method="post" id="<?php echo $args['form_id']; ?>">
-			<input type="hidden" name="action" value="gdrf_data_request" />
+			<input type="hidden" name="action" value="doli_gdrf_data_request" />
 			<input type="hidden" name="gdrf_data_human_key" id="gdrf_data_human_key" value="<?php echo $number_one . '000' . $number_two; ?>" />
 			<input type="hidden" name="gdrf_data_nonce" id="gdrf_data_nonce" value="<?php echo wp_create_nonce( 'gdrf_nonce' ); ?>" />
     <div class="card shadow-sm"><ul class="list-group list-group-flush">

@@ -9,7 +9,7 @@ function doliconnect_gdpr_block_render( $attributes, $content ) {
 			$args['request_type'] = 'remove';
 		}
 	}
-	$content = '<div class="gdpr-data-request-block">' . gdrf_data_request_form( $args ) . '</div>';
+	$content = '<div class="gdpr-data-request-block">' . doli_gdrf_data_request_form( $args ) . '</div>';
 	return $content;
 }
 function doliconnect_gdpr_block_init() {
