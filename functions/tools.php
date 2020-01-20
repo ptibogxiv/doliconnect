@@ -1671,11 +1671,23 @@ global $current_user;
 		<label for="gdrf_data_email">
 			<?php echo esc_html( $args['label_input_email'] ); ?>
 		</label>
-				<input class='form-control' type='email' id='gdrf_data_email' name='gdrf_data_email' required />
+      <div class='input-group'>
+        <div class='input-group-prepend'>
+          <span class='input-group-text' id='gdrf_data_emailPrepend'><i class='fas fa-at fa-fw'></i></span>
+        </div>
+        <input class='form-control' type='email' id='gdrf_data_email' aria-describedby='gdrf_data_emailPrepend' name='gdrf_data_email' required>
+      </div>
 </li>
 		<?php else : ?>
       <li class='list-group-item list-group-item-light list-group-item-action flex-column align-items-start'>
-      <input class='form-control' type='email' id='gdrf_data_email' name='gdrf_data_email' value='<?php echo $current_user->user_email; ?>' readonly>
+      <label for='gdrf_data_email'><?php echo esc_html( $args['label_input_email'] ); ?></label>
+      <div class='input-group'>
+        <div class='input-group-prepend'>
+          <span class='input-group-text' id='gdrf_data_emailPrepend'><i class='fas fa-at fa-fw'></i></span>
+        </div>
+        <input class='form-control' type='email' id='gdrf_data_email' aria-describedby='gdrf_data_emailPrepend' name='gdrf_data_email' value='<?php echo $current_user->user_email; ?>' readonly>
+      </div>
+
       </li>
 		<?php endif; ?>
        	<li class='list-group-item list-group-item-light list-group-item-action flex-column align-items-start'>
