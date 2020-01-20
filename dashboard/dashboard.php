@@ -382,7 +382,11 @@ print doliloaderscript('doliconnect-contactform');
 
 print "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
 
-$countContact = count($listcontact);
+if (empty($listpaymentmethods->payment_methods)) {
+$countContact = 0;
+} else {
+$countContact = count(get_object_vars($listcontact));
+}
 
 if ( $countContact < 5 ) {
 print '<button type="button" class="list-group-item lh-condensed list-group-item-action list-group-item-primary" data-toggle="modal" data-target="#addcontactadress"><center><i class="fas fa-plus-circle"></i> '.__( 'New contact', 'doliconnect' ).'</center></button>';
