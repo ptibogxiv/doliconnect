@@ -2087,7 +2087,7 @@ global $current_user;
 				$params['request_type'] = 'remove';
 			}
 		}
-		print gdrf_data_request_form( $params ); 
+		print doli_gdrf_data_request_form( $params ); 
 
 }
 
