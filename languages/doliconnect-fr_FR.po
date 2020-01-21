@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2020-01-21 13:51+0100\n"
-"PO-Revision-Date: 2020-01-21 13:52+0100\n"
+"POT-Creation-Date: 2020-01-21 14:25+0100\n"
+"PO-Revision-Date: 2020-01-21 14:27+0100\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_FR\n"
@@ -19,7 +19,7 @@ msgstr ""
 "esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
 "_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
 "X-Poedit-SearchPath-0: .\n"
-"X-Poedit-SearchPathExcluded-0: *.js\n"
+"X-Poedit-SearchPathExcluded-0: includes\n"
 
 #: admin/admin.php:7 dashboard/templates.php:1267
 msgid ""
@@ -50,6 +50,84 @@ msgstr "Tout le monde peut enregistrer"
 #: functions/tools.php:215
 msgid "- Select -"
 msgstr "- Sélectionner -"
+
+#: blocks/admin/block.js:11
+msgid "List of admins"
+msgstr "Liste des administrateurs"
+
+#: blocks/admin/block.js:12
+msgid "A block for displaying list of admins."
+msgstr "Un bloc pour afficher la liste des admins."
+
+#: blocks/admin/block.js:25 blocks/product/block.js:50
+#: blocks/profile/block.js:108
+msgid "Social Media Links"
+msgstr "Liens des réseaux sociaux"
+
+#: blocks/admin/block.js:29 blocks/product/block.js:54
+#: blocks/profile/block.js:112
+msgid "Add links to your social media profiles."
+msgstr "Ajoutez des liens à vos profils de médias sociaux."
+
+#: blocks/gdpr/block.js:13
+msgid "Privacy Data Request Form"
+msgstr "Formulaire de demande de données de confidentialité"
+
+#: blocks/gdpr/block.js:16
+msgid "form"
+msgstr "Formulaire"
+
+#: blocks/gdpr/block.js:16
+msgid "data"
+msgstr "données"
+
+#: blocks/gdpr/block.js:16
+msgid "request"
+msgstr "demande"
+
+#: blocks/gdpr/block.js:48
+msgid "Privacy Data request form"
+msgstr "Formulaire de demande de données de confidentialité"
+
+#: blocks/gdpr/block.js:58
+msgid "This block displays a Privacy Data Request Form."
+msgstr ""
+"Ce bloc affiche un formulaire de demande de données de confidentialité."
+
+#: blocks/gdpr/block.js:68
+msgid ""
+"By default, the form shows both export and remove Data Request options (it’s "
+"up to the visitor). You can set it either to \"both\", \"export\" or \"remove"
+"\"."
+msgstr ""
+"Par défaut, le formulaire affiche à la fois l'exportation et supprimer les "
+"options de demande de données (c'est au visiteur). Vous pouvez le définir "
+"soit à \"les deux\", \"exporter\" ou \"supprimer\"."
+
+#: blocks/gdpr/block.js:85
+msgid "Request type:"
+msgstr "Type de demande :"
+
+#: blocks/gdpr/block.js:92 functions/widgets.php:525
+msgid "Both Export and Remove"
+msgstr "À la fois exporter et supprimer"
+
+#: blocks/gdpr/block.js:93 functions/widgets.php:526
+msgid "Data Export form only"
+msgstr "Formulaire d'exportation de données seulement"
+
+#: blocks/gdpr/block.js:94 functions/widgets.php:527
+msgid "Data Remove form only"
+msgstr "Formulaire de suppression de données uniquement"
+
+#: blocks/membership/block.js:9 dashboard/dashboard.php:1336
+#: functions/widgets.php:128
+msgid "Membership"
+msgstr "Adhésion / Abonnement"
+
+#: blocks/membership/block.js:10
+msgid "A block for displaying membership."
+msgstr "Un bloc pour afficher l'adhésion."
 
 #: blocks/membership/block.php:78
 msgid "Individual"
@@ -86,6 +164,30 @@ msgstr "par an"
 msgid "Contact us"
 msgstr "Contactez-nous"
 
+#: blocks/product/block.js:11 blocks/profile/block.js:12
+msgid "Product"
+msgstr "Produit"
+
+#: blocks/product/block.js:12
+msgid "A block for displaying dolibarr product."
+msgstr "Un bloc pour l'affichage du produit dolibarr."
+
+#: blocks/product/block.js:57
+msgid "Product ID"
+msgstr "ID produit"
+
+#: blocks/product/block.js:64
+msgid "Add to cart"
+msgstr "Ajouter au panier"
+
+#: blocks/product/block.js:71
+msgid "Hide duration"
+msgstr "Masquer la durée"
+
+#: blocks/product/block.js:78
+msgid "Hide stock"
+msgstr "Masquer le stock"
+
 #: blocks/product/block.php:25 dashboard/templates.php:929
 #: dashboard/templates.php:1170 dashboard/templates.php:1196
 msgid "Reference"
@@ -103,6 +205,42 @@ msgstr "Produit/service non en vente"
 #: dashboard/templates.php:941
 msgid "No product"
 msgstr "Aucun produit"
+
+#: blocks/profile/block.js:13
+msgid "A custom block for displaying dolibarr product."
+msgstr "Un bloc personnalisé pour l'affichage du produit dolibarr."
+
+#: blocks/profile/block.js:115
+msgid "Facebook URL"
+msgstr "URL Facebook"
+
+#: blocks/profile/block.js:123
+msgid "Twitter URL"
+msgstr "URL Twitter"
+
+#: blocks/profile/block.js:131
+msgid "Instagram URL"
+msgstr "URL Instagram"
+
+#: blocks/profile/block.js:139
+msgid "LinkedIn URL"
+msgstr "URL LinkedIn"
+
+#: blocks/profile/block.js:147
+msgid "Email Address"
+msgstr "Adresse e-mail"
+
+#: blocks/profile/block.js:169
+msgid "Upload Image"
+msgstr "Télécharger une image"
+
+#: blocks/profile/block.js:188
+msgid "Subtitle"
+msgstr "Sous-titre"
+
+#: blocks/profile/block.js:198
+msgid "Write a brief desc"
+msgstr "Écrire un bref desc"
 
 #: dashboard/dashboard.php:17 dashboard/dashboard.php:1432
 msgid "Personal informations"
@@ -441,10 +579,6 @@ msgstr "Faire un don"
 #: dashboard/dashboard.php:1315
 msgid "No donation"
 msgstr "Aucun don"
-
-#: dashboard/dashboard.php:1336 functions/widgets.php:128
-msgid "Membership"
-msgstr "Adhésion / Abonnement"
 
 #: dashboard/dashboard.php:1353
 msgid "Your membership has been updated."
@@ -1657,18 +1791,6 @@ msgstr "Titre de widget optionnel:"
 msgid "Optional widget description:"
 msgstr "Description de widget facultative :"
 
-#: functions/widgets.php:525
-msgid "Both Export and Remove"
-msgstr "À la fois exporter et supprimer"
-
-#: functions/widgets.php:526
-msgid "Data Export form only"
-msgstr "Formulaire d'exportation de données seulement"
-
-#: functions/widgets.php:527
-msgid "Data Remove form only"
-msgstr "Formulaire de suppression de données uniquement"
-
 #. Plugin URI of the plugin/theme
 msgid "https://www.ptibogxiv.net"
 msgstr "https://www.ptibogxiv.net/fr"
@@ -1835,9 +1957,6 @@ msgstr "https://www.ptibogxiv.net/fr"
 #~ msgid "Alternatives contacts for order, billing, shipping, newsletter..."
 #~ msgstr ""
 #~ "Contacts alternatifs pour commande, facturation, expédition, Newsletter..."
-
-#~ msgid "New donation"
-#~ msgstr "Nouveau Don"
 
 #~ msgid "New message"
 #~ msgstr "Nouveau message"
@@ -2067,9 +2186,6 @@ msgstr "https://www.ptibogxiv.net/fr"
 #~ msgid "Ask us"
 #~ msgstr "Nous demander"
 
-#~ msgid "Request submitted"
-#~ msgstr "Demande soumise"
-
 #~ msgid "Mobile"
 #~ msgstr "Téléphone"
 
@@ -2128,9 +2244,6 @@ msgstr "https://www.ptibogxiv.net/fr"
 
 #~ msgid "Resiliate"
 #~ msgstr "Résilier"
-
-#~ msgid "Subtotal"
-#~ msgstr "Sous-total"
 
 #~ msgid "Tax"
 #~ msgstr "Taxe"
