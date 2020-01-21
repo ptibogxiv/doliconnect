@@ -59,6 +59,15 @@ We would like to thank this contributors and plugins:
 [gdpr-data-request-form](https://wordpress.org/plugins/gdpr-data-request-form/ "gdpr-data-request-form")
 
 == Changelog ==
+ = 4.0.1 =
+* fix pre-release
+
+ = 4.0.0 =
+* pre-release
+
+ = 3.12.1 =
+* fix readme and credit
+
  = 3.12.0 =
 * fix compatibility with dolibarr 10.0.6
 
