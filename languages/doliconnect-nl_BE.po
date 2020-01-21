@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2020-01-21 13:58+0100\n"
-"PO-Revision-Date: 2020-01-21 13:59+0100\n"
+"POT-Creation-Date: 2020-01-21 14:33+0100\n"
+"PO-Revision-Date: 2020-01-21 14:33+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: nl_BE\n"
@@ -19,7 +19,7 @@ msgstr ""
 "esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
 "_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
 "X-Poedit-SearchPath-0: .\n"
-"X-Poedit-SearchPathExcluded-0: *.js\n"
+"X-Poedit-SearchPathExcluded-0: includes\n"
 
 #: admin/admin.php:7 dashboard/templates.php:1267
 #, fuzzy
@@ -55,6 +55,97 @@ msgstr "Iedereen kan zich inschrijven"
 #: functions/tools.php:215
 msgid "- Select -"
 msgstr "- Kies -"
+
+#: blocks/admin/block.js:11
+#, fuzzy
+msgid "List of admins"
+msgstr "Lijst met beheerders"
+
+#: blocks/admin/block.js:12
+#, fuzzy
+msgid "A block for displaying list of admins."
+msgstr "Een blok voor het weergeven van de lijst met beheerders."
+
+#: blocks/admin/block.js:25 blocks/product/block.js:50
+#: blocks/profile/block.js:108
+#, fuzzy
+msgid "Social Media Links"
+msgstr "Social Media links"
+
+#: blocks/admin/block.js:29 blocks/product/block.js:54
+#: blocks/profile/block.js:112
+#, fuzzy
+msgid "Add links to your social media profiles."
+msgstr "Voeg links toe aan je Social media profielen."
+
+#: blocks/gdpr/block.js:13
+#, fuzzy
+msgid "Privacy Data Request Form"
+msgstr "Aanvraagformulier privacygegevens"
+
+#: blocks/gdpr/block.js:16
+msgid "form"
+msgstr "Formulier"
+
+#: blocks/gdpr/block.js:16
+msgid "data"
+msgstr "Gegevens"
+
+#: blocks/gdpr/block.js:16
+msgid "request"
+msgstr "Verzoek"
+
+#: blocks/gdpr/block.js:48
+#, fuzzy
+msgid "Privacy Data request form"
+msgstr "Aanvraagformulier privacygegevens"
+
+#: blocks/gdpr/block.js:58
+#, fuzzy
+msgid "This block displays a Privacy Data Request Form."
+msgstr ""
+"In dit blok wordt een aanvraagformulier voor privacygegevens weergegeven."
+
+#: blocks/gdpr/block.js:68
+#, fuzzy
+msgid ""
+"By default, the form shows both export and remove Data Request options (it’s "
+"up to the visitor). You can set it either to \"both\", \"export\" or \"remove"
+"\"."
+msgstr ""
+"Standaard toont het formulier zowel export-als Verwijder gegevensaanvraag "
+"opties (het is aan de bezoeker). U deze instellen op beide, exporteren of "
+"verwijderen."
+
+#: blocks/gdpr/block.js:85
+#, fuzzy
+msgid "Request type:"
+msgstr "Type aanvraag:"
+
+#: blocks/gdpr/block.js:92 functions/widgets.php:525
+#, fuzzy
+msgid "Both Export and Remove"
+msgstr "Zowel exporteren als verwijderen"
+
+#: blocks/gdpr/block.js:93 functions/widgets.php:526
+#, fuzzy
+msgid "Data Export form only"
+msgstr "Alleen gegevens export formulier"
+
+#: blocks/gdpr/block.js:94 functions/widgets.php:527
+#, fuzzy
+msgid "Data Remove form only"
+msgstr "Alleen formuliergegevens verwijderen"
+
+#: blocks/membership/block.js:9 dashboard/dashboard.php:1336
+#: functions/widgets.php:128
+msgid "Membership"
+msgstr "Lidmaatschap"
+
+#: blocks/membership/block.js:10
+#, fuzzy
+msgid "A block for displaying membership."
+msgstr "Een blok voor het weergeven van lidmaatschap."
 
 #: blocks/membership/block.php:78
 msgid "Individual"
@@ -92,6 +183,34 @@ msgstr "Jaarlijkse"
 msgid "Contact us"
 msgstr "Contacteer ons"
 
+#: blocks/product/block.js:11 blocks/profile/block.js:12
+msgid "Product"
+msgstr "Product"
+
+#: blocks/product/block.js:12
+#, fuzzy
+msgid "A block for displaying dolibarr product."
+msgstr "Een blok voor het weergeven van Dolibarr-product."
+
+#: blocks/product/block.js:57
+#, fuzzy
+msgid "Product ID"
+msgstr "Product-ID"
+
+#: blocks/product/block.js:64
+msgid "Add to cart"
+msgstr "Aan winkelwagen toevoegen"
+
+#: blocks/product/block.js:71
+#, fuzzy
+msgid "Hide duration"
+msgstr "Duur verbergen"
+
+#: blocks/product/block.js:78
+#, fuzzy
+msgid "Hide stock"
+msgstr "Verberg voorraad"
+
 #: blocks/product/block.php:25 dashboard/templates.php:929
 #: dashboard/templates.php:1170 dashboard/templates.php:1196
 msgid "Reference"
@@ -111,6 +230,44 @@ msgstr "Product/dienst niet in verkoop"
 #, fuzzy
 msgid "No product"
 msgstr "Product"
+
+#: blocks/profile/block.js:13
+#, fuzzy
+msgid "A custom block for displaying dolibarr product."
+msgstr "Een aangepast blok voor het weergeven van Dolibarr-product."
+
+#: blocks/profile/block.js:115
+msgid "Facebook URL"
+msgstr "Facebook URL"
+
+#: blocks/profile/block.js:123
+msgid "Twitter URL"
+msgstr "Twitter URL"
+
+#: blocks/profile/block.js:131
+msgid "Instagram URL"
+msgstr "Instagram URL"
+
+#: blocks/profile/block.js:139
+msgid "LinkedIn URL"
+msgstr "LinkedIn URL"
+
+#: blocks/profile/block.js:147
+msgid "Email Address"
+msgstr "Email adres"
+
+#: blocks/profile/block.js:169
+msgid "Upload Image"
+msgstr "Afbeelding uploaden"
+
+#: blocks/profile/block.js:188
+msgid "Subtitle"
+msgstr "Ondertitel"
+
+#: blocks/profile/block.js:198
+#, fuzzy
+msgid "Write a brief desc"
+msgstr "Schrijf een korte desc"
 
 #: dashboard/dashboard.php:17 dashboard/dashboard.php:1432
 #, fuzzy
@@ -490,10 +647,6 @@ msgstr "Doneren"
 #, fuzzy
 msgid "No donation"
 msgstr "Geen donatie"
-
-#: dashboard/dashboard.php:1336 functions/widgets.php:128
-msgid "Membership"
-msgstr "Lidmaatschap"
 
 #: dashboard/dashboard.php:1353
 #, fuzzy
@@ -1848,21 +2001,6 @@ msgstr "Optionele widget titel:"
 msgid "Optional widget description:"
 msgstr "Optionele widget beschrijving:"
 
-#: functions/widgets.php:525
-#, fuzzy
-msgid "Both Export and Remove"
-msgstr "Zowel exporteren als verwijderen"
-
-#: functions/widgets.php:526
-#, fuzzy
-msgid "Data Export form only"
-msgstr "Alleen gegevens export formulier"
-
-#: functions/widgets.php:527
-#, fuzzy
-msgid "Data Remove form only"
-msgstr "Alleen formuliergegevens verwijderen"
-
 #. Plugin URI of the plugin/theme
 #, fuzzy
 msgid "https://www.ptibogxiv.net"
@@ -1882,113 +2020,6 @@ msgstr "ptibogxiv"
 #, fuzzy
 msgid "https://www.ptibogxiv.net/en"
 msgstr "https://www.ptibogxiv.net/en"
-
-#, fuzzy
-#~ msgid "List of admins"
-#~ msgstr "Lijst met beheerders"
-
-#, fuzzy
-#~ msgid "A block for displaying list of admins."
-#~ msgstr "Een blok voor het weergeven van de lijst met beheerders."
-
-#, fuzzy
-#~ msgid "Social Media Links"
-#~ msgstr "Social Media links"
-
-#, fuzzy
-#~ msgid "Add links to your social media profiles."
-#~ msgstr "Voeg links toe aan je Social media profielen."
-
-#, fuzzy
-#~ msgid "Privacy Data Request Form"
-#~ msgstr "Aanvraagformulier privacygegevens"
-
-#~ msgid "form"
-#~ msgstr "Formulier"
-
-#~ msgid "data"
-#~ msgstr "Gegevens"
-
-#~ msgid "request"
-#~ msgstr "Verzoek"
-
-#, fuzzy
-#~ msgid "Privacy Data request form"
-#~ msgstr "Aanvraagformulier privacygegevens"
-
-#, fuzzy
-#~ msgid "This block displays a Privacy Data Request Form."
-#~ msgstr ""
-#~ "In dit blok wordt een aanvraagformulier voor privacygegevens weergegeven."
-
-#, fuzzy
-#~ msgid ""
-#~ "By default, the form shows both export and remove Data Request options "
-#~ "(it’s up to the visitor). You can set it either to \"both\", \"export\" "
-#~ "or \"remove\"."
-#~ msgstr ""
-#~ "Standaard toont het formulier zowel export-als Verwijder gegevensaanvraag "
-#~ "opties (het is aan de bezoeker). U deze instellen op beide, exporteren of "
-#~ "verwijderen."
-
-#, fuzzy
-#~ msgid "Request type:"
-#~ msgstr "Type aanvraag:"
-
-#, fuzzy
-#~ msgid "A block for displaying membership."
-#~ msgstr "Een blok voor het weergeven van lidmaatschap."
-
-#~ msgid "Product"
-#~ msgstr "Product"
-
-#, fuzzy
-#~ msgid "A block for displaying dolibarr product."
-#~ msgstr "Een blok voor het weergeven van Dolibarr-product."
-
-#, fuzzy
-#~ msgid "Product ID"
-#~ msgstr "Product-ID"
-
-#~ msgid "Add to cart"
-#~ msgstr "Aan winkelwagen toevoegen"
-
-#, fuzzy
-#~ msgid "Hide duration"
-#~ msgstr "Duur verbergen"
-
-#, fuzzy
-#~ msgid "Hide stock"
-#~ msgstr "Verberg voorraad"
-
-#, fuzzy
-#~ msgid "A custom block for displaying dolibarr product."
-#~ msgstr "Een aangepast blok voor het weergeven van Dolibarr-product."
-
-#~ msgid "Facebook URL"
-#~ msgstr "Facebook URL"
-
-#~ msgid "Twitter URL"
-#~ msgstr "Twitter URL"
-
-#~ msgid "Instagram URL"
-#~ msgstr "Instagram URL"
-
-#~ msgid "LinkedIn URL"
-#~ msgstr "LinkedIn URL"
-
-#~ msgid "Email Address"
-#~ msgstr "Email adres"
-
-#~ msgid "Upload Image"
-#~ msgstr "Afbeelding uploaden"
-
-#~ msgid "Subtitle"
-#~ msgstr "Ondertitel"
-
-#, fuzzy
-#~ msgid "Write a brief desc"
-#~ msgstr "Schrijf een korte desc"
 
 #, fuzzy
 #~ msgid "Terms of the settlement"

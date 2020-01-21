@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2020-01-21 14:02+0100\n"
-"PO-Revision-Date: 2020-01-21 14:02+0100\n"
+"POT-Creation-Date: 2020-01-21 14:30+0100\n"
+"PO-Revision-Date: 2020-01-21 14:31+0100\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: de_DE\n"
@@ -19,7 +19,7 @@ msgstr ""
 "esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
 "_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
 "X-Poedit-SearchPath-0: .\n"
-"X-Poedit-SearchPathExcluded-0: *.js\n"
+"X-Poedit-SearchPathExcluded-0: includes\n"
 
 #: admin/admin.php:7 dashboard/templates.php:1267
 msgid ""
@@ -51,6 +51,95 @@ msgstr "Jeder kann sich registrieren"
 #: functions/tools.php:215
 msgid "- Select -"
 msgstr "- Auswählen -"
+
+#: blocks/admin/block.js:11
+#, fuzzy
+msgid "List of admins"
+msgstr "Liste der Administratoren"
+
+#: blocks/admin/block.js:12
+#, fuzzy
+msgid "A block for displaying list of admins."
+msgstr "Ein Block zum Anzeigen der Liste der Administratoren."
+
+#: blocks/admin/block.js:25 blocks/product/block.js:50
+#: blocks/profile/block.js:108
+msgid "Social Media Links"
+msgstr "Social Media Links"
+
+#: blocks/admin/block.js:29 blocks/product/block.js:54
+#: blocks/profile/block.js:112
+#, fuzzy
+msgid "Add links to your social media profiles."
+msgstr "Fügen Sie Links zu Ihren Social-Media-Profilen hinzu."
+
+#: blocks/gdpr/block.js:13
+#, fuzzy
+msgid "Privacy Data Request Form"
+msgstr "Formular für die Datenanforderung"
+
+#: blocks/gdpr/block.js:16
+msgid "form"
+msgstr "Formular"
+
+#: blocks/gdpr/block.js:16
+msgid "data"
+msgstr "Daten"
+
+#: blocks/gdpr/block.js:16
+msgid "request"
+msgstr "Anfordern"
+
+#: blocks/gdpr/block.js:48
+#, fuzzy
+msgid "Privacy Data request form"
+msgstr "Datenschutzanfrageformular"
+
+#: blocks/gdpr/block.js:58
+#, fuzzy
+msgid "This block displays a Privacy Data Request Form."
+msgstr ""
+"Dieser Block zeigt ein Formular für die Anforderung von Datenschutzdaten an."
+
+#: blocks/gdpr/block.js:68
+#, fuzzy
+msgid ""
+"By default, the form shows both export and remove Data Request options (it’s "
+"up to the visitor). You can set it either to \"both\", \"export\" or \"remove"
+"\"."
+msgstr ""
+"Standardmäßig zeigt das Formular sowohl Export- als auch -optionen zum "
+"Entfernen von Datenanforderungsoptionen an (es liegt am Besucher). Sie "
+"können es entweder auf \"beide\", \"exportieren\" oder \"entfernen\" setzen."
+
+#: blocks/gdpr/block.js:85
+msgid "Request type:"
+msgstr "Anforderungstyp:"
+
+#: blocks/gdpr/block.js:92 functions/widgets.php:525
+#, fuzzy
+msgid "Both Export and Remove"
+msgstr "Sowohl exportieren als auch entfernen"
+
+#: blocks/gdpr/block.js:93 functions/widgets.php:526
+#, fuzzy
+msgid "Data Export form only"
+msgstr "Nur Datenexportformular"
+
+#: blocks/gdpr/block.js:94 functions/widgets.php:527
+#, fuzzy
+msgid "Data Remove form only"
+msgstr "Nur Formular entfernen"
+
+#: blocks/membership/block.js:9 dashboard/dashboard.php:1336
+#: functions/widgets.php:128
+msgid "Membership"
+msgstr "Mitgliedschaft"
+
+#: blocks/membership/block.js:10
+#, fuzzy
+msgid "A block for displaying membership."
+msgstr "Ein Block zum Anzeigen der Mitgliedschaft."
 
 #: blocks/membership/block.php:78
 msgid "Individual"
@@ -87,6 +176,35 @@ msgstr "jährlich"
 msgid "Contact us"
 msgstr "Kontaktieren Sie uns"
 
+#: blocks/product/block.js:11 blocks/profile/block.js:12
+msgid "Product"
+msgstr "Produkt"
+
+#: blocks/product/block.js:12
+#, fuzzy
+msgid "A block for displaying dolibarr product."
+msgstr "Ein Block zur Anzeige des dolibarr-Produkts."
+
+#: blocks/product/block.js:57
+msgid "Product ID"
+msgstr "Produkt-ID"
+
+#: blocks/product/block.js:64
+msgid "Add to cart"
+msgstr "In den Warenkorb"
+
+#: blocks/product/block.js:71
+#, fuzzy
+#| msgid "Duration"
+msgid "Hide duration"
+msgstr "Dauer"
+
+#: blocks/product/block.js:78
+#, fuzzy
+#| msgid "Limited stock"
+msgid "Hide stock"
+msgstr "Begrenzter Bestand verfügbar"
+
 #: blocks/product/block.php:25 dashboard/templates.php:929
 #: dashboard/templates.php:1170 dashboard/templates.php:1196
 msgid "Reference"
@@ -103,7 +221,47 @@ msgstr "Produkt/Service nicht im Verkauf"
 #: blocks/product/block.php:36 dashboard/templates.php:807
 #: dashboard/templates.php:941
 msgid "No product"
-msgstr "kein Produkt"
+msgstr "Kein Produkt"
+
+#: blocks/profile/block.js:13
+#, fuzzy
+msgid "A custom block for displaying dolibarr product."
+msgstr "Ein benutzerdefinierter Block zum Anzeigen des dolibarr-Produkts."
+
+#: blocks/profile/block.js:115
+msgid "Facebook URL"
+msgstr "Facebook URL"
+
+#: blocks/profile/block.js:123
+msgid "Twitter URL"
+msgstr "Twitter URL"
+
+#: blocks/profile/block.js:131
+msgid "Instagram URL"
+msgstr "Instagram URL"
+
+#: blocks/profile/block.js:139
+msgid "LinkedIn URL"
+msgstr "LinkedIn URL"
+
+#: blocks/profile/block.js:147
+#, fuzzy
+#| msgid "Address"
+msgid "Email Address"
+msgstr "Kein Konto scheint mit dieser E-Mail-Adresse verknüpft zu sein"
+
+#: blocks/profile/block.js:169
+msgid "Upload Image"
+msgstr "Bild hochladen"
+
+#: blocks/profile/block.js:188
+msgid "Subtitle"
+msgstr "Untertitel"
+
+#: blocks/profile/block.js:198
+#, fuzzy
+msgid "Write a brief desc"
+msgstr "Schreiben Sie einen kurzen desc"
 
 #: dashboard/dashboard.php:17 dashboard/dashboard.php:1432
 msgid "Personal informations"
@@ -473,10 +631,6 @@ msgstr "Spenden"
 #, fuzzy
 msgid "No donation"
 msgstr "Keine Spende"
-
-#: dashboard/dashboard.php:1336 functions/widgets.php:128
-msgid "Membership"
-msgstr "Mitgliedschaft"
 
 #: dashboard/dashboard.php:1353
 msgid "Your membership has been updated."
@@ -1793,21 +1947,6 @@ msgstr "Optionaler Widget-Titel:"
 msgid "Optional widget description:"
 msgstr "Optionale Widget-Beschreibung:"
 
-#: functions/widgets.php:525
-#, fuzzy
-msgid "Both Export and Remove"
-msgstr "Sowohl exportieren als auch entfernen"
-
-#: functions/widgets.php:526
-#, fuzzy
-msgid "Data Export form only"
-msgstr "Nur Datenexportformular"
-
-#: functions/widgets.php:527
-#, fuzzy
-msgid "Data Remove form only"
-msgstr "Nur Formular entfernen"
-
 #. Plugin URI of the plugin/theme
 msgid "https://www.ptibogxiv.net"
 msgstr "https://www.ptibogxiv.net/de"
@@ -2024,9 +2163,6 @@ msgstr "https://www.ptibogxiv.net/de"
 #~ msgid "Ask us"
 #~ msgstr "Uns Fragen"
 
-#~ msgid "Request submitted"
-#~ msgstr "Anfrage versendet"
-
 #~ msgid "for"
 #~ msgstr "für"
 
@@ -2101,12 +2237,6 @@ msgstr "https://www.ptibogxiv.net/de"
 #~ msgid "Manage your account"
 #~ msgstr "Ihr Konto verwalten"
 
-#~ msgid "Duration"
-#~ msgstr "Dauer"
-
-#~ msgid "Add to cart"
-#~ msgstr "In den Warenkorb"
-
 #~ msgid "You will no longer benefit from membership-related services"
 #~ msgstr ""
 #~ "Sie profitieren nicht mehr von den mit der Mitgliedschaft verbundenen "
@@ -2117,6 +2247,3 @@ msgstr "https://www.ptibogxiv.net/de"
 
 #~ msgid "Ask"
 #~ msgstr "Fragen"
-
-#~ msgid "Subtotal"
-#~ msgstr "Zwischensumme"
