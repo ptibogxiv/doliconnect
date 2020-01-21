@@ -713,7 +713,7 @@ $listpropal = callDoliApi("GET", $request, null, dolidelay('proposal', esc_attr(
 print '<div class="card shadow-sm"><ul class="list-group list-group-flush">';  
 if ( !isset( $listpropal->error ) && $listpropal != null ) {
 foreach ( $listpropal as $postproposal ) { 
-$nonce = wp_create_nonce( 'doliproposal-'. $postorder->id.'-'.$postorder->ref);
+$nonce = wp_create_nonce( 'doliproposal-'. $postproposal->id.'-'.$postproposal->ref);
 $arr_params = array( 'id' => $postproposal->id, 'ref' => $postproposal->ref, 'security' => $nonce);  
 $return = esc_url( add_query_arg( $arr_params, $url) );
                 
