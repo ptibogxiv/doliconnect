@@ -1131,6 +1131,8 @@ print "</div></div>";
 if ( isset($_GET['step']) && $_GET['step'] == 'validation' && isset($_GET['cart']) && wp_verify_nonce( $_GET['cart'], 'valid_dolicart-'.$object->id) && ((doliconnector($current_user, 'fk_order_nb_item') > 0 && $object->statut == 0 && !isset($_GET['module']) ) || ( ($_GET['module'] == 'orders' && $object->billed != 1 ) || ($_GET['module'] == 'invoices' && $object->paye != 1) )) && $object->socid == doliconnector($current_user, 'fk_soc') ) {
 
 //$object = callDoliApi("GET", "/".$module."/".$_GET['id']."?contact_list=0", null, dolidelay('cart', true));
+$pay = callDoliApi("GET", "/doliconnector/".doliconnector($current_user, 'fk_soc')."/pay/".$module."/".$_GET['id'], null, 0);
+print $pay;
 
 print "<table width='100%' style='border: none'><tr style='border: none'><td width='50px' style='border: none'><div class='fa-3x'>
 <i class='fas fa-shopping-bag fa-fw text-success' data-fa-transform='shrink-3.5' data-fa-mask='fas fa-circle' ></i>
@@ -1151,10 +1153,10 @@ if ( $object->billed == 1 && $object->statut > 0 ) {
 print "text-success";
 }
 elseif ( $object->statut > -1 ) {
-print "text-warning";
+print "text-danger";
 }
 else {
-print "text-danger";
+print "text-warning";
 }
 
 print "' data-fa-transform='shrink-3.5' data-fa-mask='fas fa-circle' ></i>
