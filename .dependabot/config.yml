@@ -1,0 +1,6 @@
+version: 1
+
+update_configs:
+  - package_manager: "php:composer"
+    directory: "/includes"
+    update_schedule: "live"
