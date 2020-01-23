@@ -637,7 +637,7 @@ $proposalfo = callDoliApi("GET", $request, null, dolidelay('proposal', esc_attr(
 //print $proposalfo;
 }
 
-if ( !isset($proposalfo->error) && isset($_GET['id']) && isset($_GET['ref']) && ( doliconnector($current_user, 'fk_soc') == $proposalfo->socid ) && ( $_GET['ref'] == $proposalfo->ref ) && $proposalfo->statut != 0 && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doliproposal-'.$proposalfo->id.'-'.$proposalfo->ref)) {
+if ( !isset($proposalfo->error) && isset($_GET['id']) && isset($_GET['ref']) && ( doliconnector($current_user, 'fk_soc') == $proposalfo->socid ) && ( $_GET['ref'] == $proposalfo->ref ) && $proposalfo->statut != 0 && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doli-proposals-'.$proposalfo->id.'-'.$proposalfo->ref)) {
 print "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>$proposalfo->ref</h5><div class='row'><div class='col-md-5'>";
 $datevalidation =  date_i18n('d/m/Y', $proposalfo->date_validation);
 print "<b>".__( 'Date of creation', 'doliconnect' ).":</b> ".date_i18n('d/m/Y', $proposalfo->date_creation)."<br>";
@@ -713,7 +713,7 @@ $listpropal = callDoliApi("GET", $request, null, dolidelay('proposal', esc_attr(
 print '<div class="card shadow-sm"><ul class="list-group list-group-flush">';  
 if ( !isset( $listpropal->error ) && $listpropal != null ) {
 foreach ( $listpropal as $postproposal ) { 
-$nonce = wp_create_nonce( 'doliproposal-'. $postproposal->id.'-'.$postproposal->ref);
+$nonce = wp_create_nonce( 'doli-proposals-'. $postproposal->id.'-'.$postproposal->ref);
 $arr_params = array( 'id' => $postproposal->id, 'ref' => $postproposal->ref, 'security' => $nonce);  
 $return = esc_url( add_query_arg( $arr_params, $url) );
                 
@@ -763,7 +763,7 @@ $orderfo = callDoliApi("GET", $request, null, dolidelay('order', esc_attr(isset(
 //print $orderfo;
 }
 
-if ( !isset($orderfo->error) && isset($_GET['id']) && isset($_GET['ref']) && (doliconnector($current_user, 'fk_soc') == $orderfo->socid ) && ($_GET['ref'] == $orderfo->ref) && $orderfo->statut != 0 && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doliorder-'.$orderfo->id.'-'.$orderfo->ref)) {
+if ( !isset($orderfo->error) && isset($_GET['id']) && isset($_GET['ref']) && (doliconnector($current_user, 'fk_soc') == $orderfo->socid ) && ($_GET['ref'] == $orderfo->ref) && $orderfo->statut != 0 && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doli-orders-'.$orderfo->id.'-'.$orderfo->ref)) {
 
 print "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>$orderfo->ref</h5><div class='row'><div class='col-md-6'>";
 print "<b>".__( 'Date of order', 'doliconnect' ).":</b> ".date_i18n('d/m/Y', $orderfo->date_creation)."<br>";
@@ -1010,7 +1010,7 @@ $listorder = callDoliApi("GET", $request, null, dolidelay('order', esc_attr(isse
 print '<div class="card shadow-sm"><ul class="list-group list-group-flush">';
 if ( !isset($listorder->error ) && $listorder != null ) {
 foreach ( $listorder as $postorder ) {
-$nonce = wp_create_nonce( 'doliorder-'. $postorder->id.'-'.$postorder->ref);
+$nonce = wp_create_nonce( 'doli-orders-'. $postorder->id.'-'.$postorder->ref);
 $arr_params = array( 'id' => $postorder->id, 'ref' => $postorder->ref, 'security' => $nonce);  
 $return = esc_url( add_query_arg( $arr_params, $url) );
                                                                                                                                                       
@@ -1083,7 +1083,7 @@ $contractfo = callDoliApi("GET", $request, null, dolidelay('contract', esc_attr(
 //print $contractfo;
 }
 
-if ( !isset($contractfo->error) && isset($_GET['id']) && isset($_GET['id']) && isset($_GET['ref']) && (doliconnector($current_user, 'fk_soc') == $contractfo->socid) && ($_GET['ref'] == $contractfo->ref) && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doliorder-'.$contractfo->id.'-'.$contractfo->ref)) {
+if ( !isset($contractfo->error) && isset($_GET['id']) && isset($_GET['id']) && isset($_GET['ref']) && (doliconnector($current_user, 'fk_soc') == $contractfo->socid) && ($_GET['ref'] == $contractfo->ref) && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doli-contracts-'.$contractfo->id.'-'.$contractfo->ref)) {
 print "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>$contractfo->ref</h5><div class='row'><div class='col-md-5'>";
 print "<b>".__( 'Date of creation', 'doliconnect' ).": </b> ".date_i18n('d/m/Y', $contractfo->date_creation)."<br>";
 if ( $contractfo->statut > 0 ) {
@@ -1154,7 +1154,7 @@ $listcontract = callDoliApi("GET", $request, null, dolidelay('contract', esc_att
 print '<div class="card shadow-sm"><ul class="list-group list-group-flush">';
 if ( !isset($listcontract->error) && $listcontract != null ) {
 foreach ($listcontract  as $postcontract) {                                                                                 
-$nonce = wp_create_nonce( 'doliorder-'. $postcontract->id.'-'.$postcontract->ref);
+$nonce = wp_create_nonce( 'doli-contracts-'. $postcontract->id.'-'.$postcontract->ref);
 $arr_params = array( 'id' => $postcontract->id, 'ref' => $postcontract->ref, 'security' => $nonce);  
 $return = esc_url( add_query_arg( $arr_params, $url) );
                                                                                                                                                       
