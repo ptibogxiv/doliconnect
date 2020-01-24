@@ -18,7 +18,7 @@ function doliconnect_gdpr_block_init() {
 			'data-request-form',
 			plugins_url( 'block.js', __FILE__ ),
 			array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-components' ),
-      'beta2'
+      
 		);
 		register_block_type(
 			'doliconnect/data-request-form',
