@@ -847,7 +847,8 @@ else { $paymentmethods .= 'class="fab fa-cc-amex fa-3x fa-fw"';}
 $paymentmethods .= '></i></center>';
 $paymentmethods .= '</div><div class="col-9 col-sm-7 col-md-8 col-xl-8 align-middle"><h6 class="my-0">';
 if ( $method->type == 'sepa_debit' ) {
-$paymentmethods .= __( 'Account', 'doliconnect' ).' '.$method->reference.'<small> <a href="'.$method->mandate_url.'" title="'.__( 'Mandate', 'doliconnect' ).' '.$method->mandate_reference.'" target="_blank"><i class="fas fa-info-circle"></i></a></small>';
+$paymentmethods .= __( 'Account', 'doliconnect' ).' '.$method->reference;
+//$paymentmethods .= '<small> <a href="'.$method->mandate_url.'" title="'.__( 'Mandate', 'doliconnect' ).' '.$method->mandate_reference.'" target="_blank"><i class="fas fa-info-circle"></i></a></small>';
 } else {
 $paymentmethods .= __( 'Card', 'doliconnect' ).' '.$method->reference;
 }
