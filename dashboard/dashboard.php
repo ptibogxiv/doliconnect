@@ -793,21 +793,19 @@ print "<h3 class='text-right'>".$orderinfo."</h3>";
 if ( $orderfo->billed != 1 && $orderfo->statut > 0 ) {
 
 if ( $orderfo->mode_reglement_code == 'CHQ' ) {
-$chq = callDoliApi("GET", "/doliconnector/constante/FACTURE_CHQ_NUMBER", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
-$bank = callDoliApi("GET", "/bankaccounts/".$chq->value, null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$listpaymentmethods = callDoliApi("GET", "/doliconnector/".doliconnector($current_user, 'fk_soc')."/paymentmethods", null, dolidelay('paymentmethods', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
-print "<div class='alert alert-danger' role='alert'><p align='justify'>".sprintf( __( 'Please send your cheque in the amount of <b>%1$s</b> with reference <b>%2$s</b> to <b>%3$s</b> at the following address', 'doliconnect' ), doliprice($orderfo, 'ttc', isset($orderfo->multicurrency_code) ? $orderfo->multicurrency_code : null), $orderfo->ref, $bank->proprio).":</p>";
-print "<p><b>$bank->owner_address</b></p><small><a href='$changepm' id='button-source-payment'><span class='fas fa-sync-alt'></span> ".__( 'Change your payment mode', 'doliconnect' )."</a></small></div>";
+print "<div class='alert alert-danger' role='alert'><p align='justify'>".sprintf( __( 'Please send your cheque in the amount of <b>%1$s</b> with reference <b>%2$s</b> to <b>%3$s</b> at the following address', 'doliconnect' ), doliprice($orderfo, 'ttc', isset($orderfo->multicurrency_code) ? $orderfo->multicurrency_code : null), $orderfo->ref, $listpaymentmethods->CHQ->proprio).":</p>";
+print "<p><b>".$listpaymentmethods->CHQ->owner_address."</b></p><small><a href='$changepm' id='button-source-payment'><span class='fas fa-sync-alt'></span> ".__( 'Change your payment mode', 'doliconnect' )."</a></small></div>";
 } elseif ( $orderfo->mode_reglement_code == 'VIR' ) { 
-$vir = callDoliApi("GET", "/doliconnector/constante/FACTURE_RIB_NUMBER", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
-$bank = callDoliApi("GET", "/bankaccounts/".$vir->value, null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$listpaymentmethods = callDoliApi("GET", "/doliconnector/".doliconnector($current_user, 'fk_soc')."/paymentmethods", null, dolidelay('paymentmethods', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 print "<div class='alert alert-danger' role='alert'><p align='justify'>".sprintf( __( 'Please send your transfert in the amount of <b>%1$s</b> with reference <b>%2$s</b> at the following account', 'doliconnect' ), doliprice($orderfo, 'ttc', isset($orderfo->multicurrency_code) ? $orderfo->multicurrency_code : null), $orderfo->ref ).":";
-print "<br><b>".__( 'Bank', 'doliconnect' ).": $bank->bank</b>";
-print "<br><b>IBAN: $bank->iban</b>";
-if ( ! empty($bank->bic) ) { print "<br><b>BIC/SWIFT: $bank->bic</b>";}
+print "<br><b>".__( 'Bank', 'doliconnect' ).": ".$listpaymentmethods->VIR->bank."</b>";
+print "<br><b>IBAN: ".$listpaymentmethods->VIR->iban."</b>";
+if ( ! empty($listpaymentmethods->VIR->bic) ) { print "<br><b>BIC/SWIFT : ".$listpaymentmethods->VIR->bic."</b>";}
 print "</p><small><a href='#' id='button-source-payment'><span class='fas fa-sync-alt'></span> ".__( 'Change your payment mode', 'doliconnect' )."</a></small></div>";
 } else {
 $nonce = wp_create_nonce( 'valid_dolicart-'.$orderfo->id );
