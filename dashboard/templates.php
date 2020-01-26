@@ -1138,7 +1138,7 @@ $data = [
 $payinfo = callDoliApi("POST", "/doliconnector/pay/".$module."/".$object->id, $data, 0);
 //print var_dump($payinfo);
   
-doliconnector($current_user, 'fk_order', true);
+doliconnector($current_user, 'fk_order', 0);
 $object = callDoliApi("GET", "/".$module."/".$object->id."?contact_list=0", null, dolidelay('cart', true));
 
 print "<table width='100%' style='border: none'><tr style='border: none'><td width='50px' style='border: none'><div class='fa-3x'>
