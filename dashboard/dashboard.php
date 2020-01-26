@@ -779,12 +779,15 @@ $orderinfo=null;
 $orderavancement=25;
 }
 }
-elseif ( $orderfo->statut == 0 ) { $orderinfo=__( 'Validation', 'doliconnect' );
+elseif ( $orderfo->statut == 0 ) { $orderinfo=__( 'Validation', 'doliconnect');
 $orderavancement=7; }
-elseif ( $orderfo->statut == -1 ) { $orderinfo=__( 'Canceled', 'doliconnect' );
+elseif ( $orderfo->statut == -1 ) { $orderinfo=__( 'Canceled', 'doliconnect');
 $orderavancement=0;  }
 
-print "<b>".__( 'Payment method', 'doliconnect' ).":</b> ".__( $orderfo->mode_reglement, 'doliconnect' )."<br><br></div><div class='col-md-6'>";
+print "<b>".__( 'Payment method', 'doliconnect').":</b> ".$orderfo->mode_reglement."<br>";
+print "<b>".__( 'Payment term', 'doliconnect').":</b> ".$orderfo->cond_reglement."<br>";
+
+print "<br></div><div class='col-md-6'>";
 
 if ( isset($orderinfo) ) {
 print "<h3 class='text-right'>".$orderinfo."</h3>";

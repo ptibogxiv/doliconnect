@@ -1034,7 +1034,11 @@ $paymentmethods .= " href='#liq'><label class='custom-control-label w-100' for='
 $paymentmethods .= '<center><i class="fas fa-money-bill-alt fa-3x fa-fw" style="color:#85bb65"></i></center>';
 $paymentmethods .= "</div><div class='col-auto align-middle'><h6 class='my-0'>".__( 'Cash', 'doliconnect' )."</h6><small class='text-muted'>".__( 'Go to reception desk', 'doliconnect' )."</small>";
 $paymentmethods .= '</div></div></label></div></li>';
-}
+if ( !empty($module) && is_object($object) && isset($object->id) ) {
+$paymentmethods .='<li id="virPanel" class="list-group-item list-group-item-secondary panel-collapse collapse"><div class="panel-body">';
+$paymentmethods .='<button type="button" onclick="PayPM(\'4\')" class="btn btn-danger btn-block"><b>'.__( 'Pay', 'doliconnect' )." ".doliprice($object, 'ttc', $currency).'</b></button>';
+$paymentmethods .='</div></li>';
+}}
 
 $paymentmethods .= "</ul><div class='card-body'>";
 $paymentmethods .= "<div id='error-message' role='alert'><!-- a Stripe Message will be inserted here. --></div>";
