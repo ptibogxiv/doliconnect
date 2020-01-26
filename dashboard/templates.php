@@ -1282,7 +1282,10 @@ print "</small></li>";
 print "</ul></div></div><div class='col-12 col-md-8'>";
 
 if ( doliversion('11.0.0') ) {
-print dolipaymentmethods($object, substr($module, 0, -1), doliconnecturl('dolicart')."?cart=".$_GET['cart']."&step=validation", true);
+$nonce = wp_create_nonce( 'valid_dolicart-'. $object->id);
+$arr_params = array('step' => 'validation', 'module' => $module, 'id' => $object->id, 'ref' => $object->ref, 'cart' => $nonce);  
+$return = add_query_arg( $arr_params, doliconnecturl('dolicart'));
+print dolipaymentmethods($object, substr($module, 0, -1), $return, true);
 } else {
 print __( "It seems that your version of Dolibarr and/or its plugins are not up to date!", "doliconnect");
 }
