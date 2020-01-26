@@ -997,7 +997,7 @@ $paymentmethods .='</div></li>';
 }
 
 //offline payment methods
-if ( isset($listpaymentmethods->RIB) && $listpaymentmethods->RIB != null ) {
+if ( isset($listpaymentmethods->VIR) && $listpaymentmethods->VIR != null ) {
 $paymentmethods .= "<li class='list-group-item list-group-item-light list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>
 <input type='radio' id='vir' name='paymentmode' value='vir' class='custom-control-input' data-toggle='collapse' data-parent='#accordion' ";
 if ( !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id != '2' ) { $paymentmethods .=" disabled "; }
