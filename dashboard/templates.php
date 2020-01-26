@@ -1206,14 +1206,14 @@ print "</p>";
 }
 
 $nonce = wp_create_nonce( 'doli-'.$module.'-'. $object->id.'-'.$object->id);
-$arr_params = array( 'id' => $object->id, 'ref' => $object->id, 'security' => $nonce);  
+$arr_params = array('module' => $module, 'id' => $object->id, 'ref' => $object->id, 'security' => $nonce);  
 $return = esc_url( add_query_arg( $arr_params, doliconnecturl('doliaccount')) );
 print "<br /><a href='".$return."' class='btn btn-primary'>".__( 'Return', 'doliconnect')."</a>";
 
 } else {
 
 $nonce = wp_create_nonce( 'doli-'.$module.'-'. $object->id.'-'.$object->id);
-$arr_params = array( 'id' => $object->id, 'ref' => $object->id, 'security' => $nonce);  
+$arr_params = array('module' => $module, 'id' => $object->id, 'ref' => $object->id, 'security' => $nonce);  
 $return = esc_url( add_query_arg( $arr_params, doliconnecturl('doliaccount')) );
 
 print "<div class='alert alert-danger' role='alert'><p>".__( 'An error is occurred', 'doliconnect')."</p>";
