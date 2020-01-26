@@ -784,8 +784,8 @@ $orderavancement=7; }
 elseif ( $orderfo->statut == -1 ) { $orderinfo=__( 'Canceled', 'doliconnect');
 $orderavancement=0;  }
 
-print "<b>".__( 'Payment method', 'doliconnect').":</b> ".$orderfo->mode_reglement."<br>";
-print "<b>".__( 'Payment term', 'doliconnect').":</b> ".$orderfo->cond_reglement."<br>";
+print "<b>".__( 'Payment method', 'doliconnect').":</b> ".$orderfo->mode_reglement_code."<br>";
+print "<b>".__( 'Payment term', 'doliconnect').":</b> ".$orderfo->cond_reglement_code."<br>";
 
 print "<br></div><div class='col-md-6'>";
 
