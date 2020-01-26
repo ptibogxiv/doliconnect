@@ -1281,7 +1281,7 @@ print "</small></li>";
 print "</ul></div></div><div class='col-12 col-md-8'>";
 
 if ( doliversion('11.0.0') ) {
-print dolipaymentmethods($object, substr($module, 0, -1), doliconnecturl('dolicart')."?cart=".wp_nonce_field( 'valid_dolicart-'.$object->id, 'dolichecknonce' )."&step=validation", true);
+print dolipaymentmethods($object, substr($module, 0, -1), doliconnecturl('dolicart')."?cart=".$_GET['cart']."&step=validation", true);
 } else {
 print __( "It seems that your version of Dolibarr and/or its plugins are not up to date!", "doliconnect");
 }
