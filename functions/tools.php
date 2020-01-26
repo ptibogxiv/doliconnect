@@ -1008,7 +1008,7 @@ $paymentmethods .= "</div><div class='col-auto align-middle'><h6 class='my-0'>".
 $paymentmethods .= '</div></div></label></div></li>';
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
 $paymentmethods .='<li id="virPanel" class="list-group-item list-group-item-secondary panel-collapse collapse"><div class="panel-body">';
-$paymentmethods .='<button type="button" onclick="PayPM(\'2\')" class="btn btn-danger btn-block"><b>'.__( 'Pay', 'doliconnect' )." ".doliprice($object, 'ttc', $currency).'</b></button>';
+$paymentmethods .='<button type="button" onclick="PayPM(\'VIR\')" class="btn btn-danger btn-block"><b>'.__( 'Pay', 'doliconnect' )." ".doliprice($object, 'ttc', $currency).'</b></button>';
 $paymentmethods .='</div></li>';
 }}
 if ( isset($listpaymentmethods->CHQ) && $listpaymentmethods->CHQ != null ) {
@@ -1022,21 +1022,21 @@ $paymentmethods .= "</div><div class='col-auto align-middle'><h6 class='my-0'>".
 $paymentmethods .= '</div></div></label></div></li>';
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
 $paymentmethods .='<li id="chqPanel" class="list-group-item list-group-item-secondary panel-collapse collapse"><div class="panel-body">';
-$paymentmethods .='<button type="button" onclick="PayPM(\'7\')" class="btn btn-danger btn-block"><b>'.__( 'Pay', 'doliconnect' )." ".doliprice($object, 'ttc', $currency).'</b></button>';
+$paymentmethods .='<button type="button" onclick="PayPM(\'CHQ\')" class="btn btn-danger btn-block"><b>'.__( 'Pay', 'doliconnect' )." ".doliprice($object, 'ttc', $currency).'</b></button>';
 $paymentmethods .='</div></li>';
 }}
 if ( ! empty(dolikiosk()) ) {
 $paymentmethods .= "<li class='list-group-item list-group-item-light list-group-item-action flex-column align-items-startt'><div class='custom-control custom-radio'>
 <input type='radio' id='liq' name='paymentmode' value='liq' class='custom-control-input' data-toggle='collapse' data-parent='#accordion' ";
-if ( !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id != '4' ) { $paymentmethods .=" disabled "; }
-elseif ( (!empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id == '4') || ($listpaymentmethods->payment_methods == null && !in_array('card', $listpaymentmethods->stripe->types) && $listpaymentmethods->CHQ == null && $listpaymentmethods->RIB == null) ) { $paymentmethods .= " checked"; }
+if ( !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_code != 'LIQ' ) { $paymentmethods .=" disabled "; }
+elseif ( (!empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_code == 'LIQ') || ($listpaymentmethods->payment_methods == null && !in_array('card', $listpaymentmethods->stripe->types) && $listpaymentmethods->CHQ == null && $listpaymentmethods->RIB == null) ) { $paymentmethods .= " checked"; }
 $paymentmethods .= " href='#liq'><label class='custom-control-label w-100' for='liq'><div class='row'><div class='col-3 col-md-2 col-xl-2 align-middle'>";
 $paymentmethods .= '<center><i class="fas fa-money-bill-alt fa-3x fa-fw" style="color:#85bb65"></i></center>';
 $paymentmethods .= "</div><div class='col-auto align-middle'><h6 class='my-0'>".__( 'Cash', 'doliconnect' )."</h6><small class='text-muted'>".__( 'Go to reception desk', 'doliconnect' )."</small>";
 $paymentmethods .= '</div></div></label></div></li>';
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
 $paymentmethods .='<li id="virPanel" class="list-group-item list-group-item-secondary panel-collapse collapse"><div class="panel-body">';
-$paymentmethods .='<button type="button" onclick="PayPM(\'4\')" class="btn btn-danger btn-block"><b>'.__( 'Pay', 'doliconnect' )." ".doliprice($object, 'ttc', $currency).'</b></button>';
+$paymentmethods .='<button type="button" onclick="PayPM(\'LIQ\')" class="btn btn-danger btn-block"><b>'.__( 'Pay', 'doliconnect' )." ".doliprice($object, 'ttc', $currency).'</b></button>';
 $paymentmethods .='</div></li>';
 }}
 
