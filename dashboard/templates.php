@@ -1179,7 +1179,7 @@ print "' data-fa-transform='shrink-3.5' data-fa-mask='fas fa-circle' ></i>
 //exit;
 //}
 
-print "<div class='card shadow-sm' id='cart-form'><div class='card-body'><center><h2>".__( 'Your order has been registered', 'doliconnect' )."</h2>".__( 'Reference', 'doliconnect' ).": ".$object->ref."<br />".__( 'Payment method', 'doliconnect' ).": ".$object->mode_reglement."<br /><br />";
+print "<div class='card shadow-sm' id='cart-form'><div class='card-body'><center><h2>".__( 'Your order has been registered', 'doliconnect' )."</h2>".__( 'Reference', 'doliconnect' ).": ".$object->ref."<br />".__( 'Payment method', 'doliconnect' ).": ".$object->mode_reglement_code."<br /><br />";
 $TTC = doliprice($object, 'ttc', isset($object->multicurrency_code) ? $object->multicurrency_code : null);
 
 if ( $object->statut == '1' && !isset($_GET['error']) ) {
