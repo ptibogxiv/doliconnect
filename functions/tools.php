@@ -1038,6 +1038,21 @@ $paymentmethods .= '</div></div></label></div></li>';
 
 $paymentmethods .= "</ul><div class='card-body'>";
 $paymentmethods .= "<div id='error-message' role='alert'><!-- a Stripe Message will be inserted here. --></div>";
+if (get_option('doliconnectbeta') =='1') {
+$paymentmethods .= '<div class="custom-control custom-checkbox">
+  <input type="checkbox" class="custom-control-input" id="checkBox1" ">
+  <label class="custom-control-label" for="checkBox1">I approve CGV</label>
+</div>';
+$paymentmethods .= "<script>";
+$paymentmethods .= "
+      $(document).ready(function() { 
+       $('#checkBox1').click(function() {
+         $('input[name=paymentmode]').attr('disabled', !$('input[name=paymentmode]').attr('disabled'));
+       }); 
+      }); 
+ ";
+$paymentmethods .= "</script>"; 
+}
 $paymentmethods .= "</div><div class='card-footer text-muted'>";
 $paymentmethods .= "<small><div class='float-left'>";
 $paymentmethods .= dolirefresh($request, $url, dolidelay('paymentmethods'));
@@ -1211,6 +1226,11 @@ form.setAttribute('method', 'post');
 form.setAttribute('id', 'doliconnect-paymentmethodsform');
 var inputvar = document.createElement('input');
 inputvar.setAttribute('type', 'hidden');
+inputvar.setAttribute('name', 'paymentintent');
+inputvar.setAttribute('value', result.paymentIntent.id);
+form.appendChild(inputvar);
+var inputvar = document.createElement('input');
+inputvar.setAttribute('type', 'hidden');
 inputvar.setAttribute('name', 'paymentmethod');
 inputvar.setAttribute('value', result.paymentIntent.payment_method);
 form.appendChild(inputvar);
@@ -1360,6 +1380,11 @@ var form = document.createElement('form');
 form.setAttribute('action', '".$url."');
 form.setAttribute('method', 'post');
 form.setAttribute('id', 'doliconnect-paymentmethodsform');
+var inputvar = document.createElement('input');
+inputvar.setAttribute('type', 'hidden');
+inputvar.setAttribute('name', 'paymentintent');
+inputvar.setAttribute('value', result.paymentIntent.id);
+form.appendChild(inputvar);
 var inputvar = document.createElement('input');
 inputvar.setAttribute('type', 'hidden');
 inputvar.setAttribute('name', 'paymentmethod');
