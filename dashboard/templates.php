@@ -1133,7 +1133,7 @@ if ( isset($_GET['step']) && $_GET['step'] == 'validation' && isset($_GET['cart'
 $data = [
   'paymentintent' => $_POST['paymentintent'],
   'paymentmethod' => $_POST['paymentmethod'],
-  'save' => $_POST['default'],
+  'save' => isset($_POST['default']) ? $_POST['default'] : 0 ,
 	];
 $payinfo = callDoliApi("POST", "/doliconnector/pay/".$module."/".$object->id, $data, 0);
 //print var_dump($payinfo);  
