@@ -1479,6 +1479,27 @@ document.body.appendChild(form);
 form.submit();
         }
         
+function PayPM(pm) {
+// The setup has succeeded. Display a success message.
+jQuery('#DoliconnectLoadingModal').modal('show');
+var form = document.createElement('form');
+form.setAttribute('action', '".$url."');
+form.setAttribute('method', 'post');
+form.setAttribute('id', 'doliconnect-paymentmethodsform');
+var inputvar = document.createElement('input');
+inputvar.setAttribute('type', 'hidden');
+inputvar.setAttribute('name', 'paymentintent');
+inputvar.setAttribute('value', null);
+form.appendChild(inputvar);
+var inputvar = document.createElement('input');
+inputvar.setAttribute('type', 'hidden');
+inputvar.setAttribute('name', 'paymentmethod');
+inputvar.setAttribute('value', pm);
+form.appendChild(inputvar);
+document.body.appendChild(form);
+form.submit();
+}    
+        
 function PayCardPM(pm) {
 var clientSecret = '".$listpaymentmethods->stripe->client_secret."';
 var displayError = document.getElementById('error-message');
@@ -1510,6 +1531,11 @@ var inputvar = document.createElement('input');
 inputvar.setAttribute('type', 'hidden');
 inputvar.setAttribute('name', 'paymentmethod');
 inputvar.setAttribute('value', pm);
+form.appendChild(inputvar);
+var inputvar = document.createElement('input');
+inputvar.setAttribute('type', 'hidden');
+inputvar.setAttribute('name', 'default');
+inputvar.setAttribute('value', jQuery('input:radio[name=cardDefault]:checked').val());
 form.appendChild(inputvar);
 document.body.appendChild(form);
 form.submit();
@@ -1548,6 +1574,11 @@ var inputvar = document.createElement('input');
 inputvar.setAttribute('type', 'hidden');
 inputvar.setAttribute('name', 'paymentmethod');
 inputvar.setAttribute('value', pm);
+form.appendChild(inputvar);
+var inputvar = document.createElement('input');
+inputvar.setAttribute('type', 'hidden');
+inputvar.setAttribute('name', 'default');
+inputvar.setAttribute('value', jQuery('input:radio[name=ibanDefault]:checked').val());
 form.appendChild(inputvar);
 document.body.appendChild(form);
 form.submit();
