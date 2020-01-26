@@ -1191,7 +1191,7 @@ print "<div class='alert alert-info' role='alert'><p align='justify'>".sprintf( 
 
 } elseif ($object->mode_reglement_code == 'VIR') {
 
-$listpaymentmethods = callDoliApi("GET", "/doliconnector/".doliconnector($current_user, 'fk_soc')."/paymentmethods", null, dolidelay('paymentmethods', $refresh));
+$listpaymentmethods = callDoliApi("GET", "/doliconnector/".doliconnector($current_user, 'fk_soc')."/paymentmethods", null, dolidelay('paymentmethods', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 print "<div class='alert alert-info' role='alert'><p align='justify'>".sprintf( __( 'Please send your transfert in the amount of <b>%1$s</b> with reference <b>%2$s</b> at the following account', 'doliconnect' ), $TTC, $object->ref ).":";
 print "<br><b>".__( 'Bank', 'doliconnect' ).": ".$listpaymentmethods->VIR->bank."</b>";
