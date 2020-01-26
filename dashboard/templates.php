@@ -1130,12 +1130,15 @@ print "</div></div>";
 
 if ( isset($_GET['step']) && $_GET['step'] == 'validation' && isset($_GET['cart']) && wp_verify_nonce( $_GET['cart'], 'valid_dolicart-'.$object->id) && ((doliconnector($current_user, 'fk_order_nb_item') > 0 && $object->statut == 0 && !isset($_GET['module']) ) || ( ($_GET['module'] == 'orders' && $object->billed != 1 ) || ($_GET['module'] == 'invoices' && $object->paye != 1) )) && $object->socid == doliconnector($current_user, 'fk_soc') ) {
 
-//$object = callDoliApi("GET", "/".$module."/".$_GET['id']."?contact_list=0", null, dolidelay('cart', true));
 $data = [
-  'source' => 'pm_1G3l7sK034Aqz8l5qURIND0V',
+  'paymentintent' => $_POST['paymentintent'],
+  'paymentmethod' => $_POST['paymentmethod'],
+  'save' => $_POST['default'],
 	];
-$pay = callDoliApi("GET", "/doliconnector/".doliconnector($current_user, 'fk_soc')."/pay/".$module."/".$object->id, $data, 0);
-print $pay;
+$payinfo = callDoliApi("POST", "/doliconnector/pay/".$module."/".$object->id, $data, 0);
+//print var_dump($payinfo);  
+
+$object = callDoliApi("GET", "/".$module."/".$object->id."?contact_list=0", null, dolidelay('cart', true));
 
 print "<table width='100%' style='border: none'><tr style='border: none'><td width='50px' style='border: none'><div class='fa-3x'>
 <i class='fas fa-shopping-bag fa-fw text-success' data-fa-transform='shrink-3.5' data-fa-mask='fas fa-circle' ></i>
@@ -1152,10 +1155,13 @@ print "<table width='100%' style='border: none'><tr style='border: none'><td wid
 </div></td><td width='50px' style='border: none'><div class='fa-3x'>
 <i class='fas fa-check fa-fw ";
 
-if ( $object->billed == 1 && $object->statut > 0 ) {
+if ( $payinfo->status == 'succeeded' ) {
 print "text-success";
 }
-elseif ( $object->statut > -1 ) {
+elseif ( $payinfo->status == 'processing' ) {
+print "text-warning";
+}
+elseif ( $payinfo->status == 'requires_confirmation' ) {
 print "text-danger";
 }
 else {
@@ -1165,12 +1171,12 @@ print "text-warning";
 print "' data-fa-transform='shrink-3.5' data-fa-mask='fas fa-circle' ></i>
 </div></td></tr></table><br>"; 
 
-if ( ( !isset($object->id) ) || (doliconnector($current_user, 'fk_soc') != $object->socid) ) {
+//if ( ( !isset($object->id) ) || (doliconnector($current_user, 'fk_soc') != $object->socid) ) {
 //$order = callDoliApi("GET", "/".$module."/".$object->id."?contact_list=0", null, 0);
 //$dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, 0);
 //wp_safe_redirect(esc_url(doliconnecturl('dolicart')));
 //exit;
-}
+//}
 
 print "<div class='card shadow-sm' id='cart-form'><div class='card-body'><center><h2>".__( 'Your order has been registered', 'doliconnect' )."</h2>".__( 'Reference', 'doliconnect' ).": ".$object->ref."<br />".__( 'Payment method', 'doliconnect' ).": ".$object->mode_reglement."<br /><br />";
 $TTC = doliprice($object, 'ttc', isset($object->multicurrency_code) ? $object->multicurrency_code : null);
@@ -1178,22 +1184,18 @@ $TTC = doliprice($object, 'ttc', isset($object->multicurrency_code) ? $object->m
 if ( $object->statut == '1' && !isset($_GET['error']) ) {
 if ( $object->mode_reglement_code == 'CHQ') {
 
-$chq = callDoliApi("GET", "/doliconnector/constante/FACTURE_CHQ_NUMBER", null, dolidelay('constante'));
+$listpaymentmethods = callDoliApi("GET", "/doliconnector/".doliconnector($current_user, 'fk_soc')."/paymentmethods?type=".$module."&rowid=".$object->id, null, dolidelay('paymentmethods', $refresh));
 
-$bank = callDoliApi("GET", "/bankaccounts/".$chq->value, null, dolidelay('constante'));
-
-print "<div class='alert alert-info' role='alert'><p align='justify'>".sprintf( __( 'Please send your cheque in the amount of <b>%1$s</b> with reference <b>%2$s</b> to <b>%3$s</b> at the following address', 'doliconnect' ), $TTC, $bank->proprio, $object->ref ).":</p><p><b>$bank->owner_address</b></p>";
+print "<div class='alert alert-info' role='alert'><p align='justify'>".sprintf( __( 'Please send your cheque in the amount of <b>%1$s</b> with reference <b>%2$s</b> to <b>%3$s</b> at the following address', 'doliconnect' ), $TTC, $listpaymentmethods->CHQ->proprio, $object->ref ).":</p><p><b>".$listpaymentmethods->CHQ->owner_address."</b></p>";
 
 } elseif ($object->mode_reglement_code == 'VIR') {
 
-$vir = callDoliApi("GET", "/doliconnector/constante/FACTURE_RIB_NUMBER", null, dolidelay('constante'));
-
-$bank = callDoliApi("GET", "/bankaccounts/".$vir->value, null, dolidelay('constante'));
+$listpaymentmethods = callDoliApi("GET", "/doliconnector/".doliconnector($current_user, 'fk_soc')."/paymentmethods", null, dolidelay('paymentmethods', $refresh));
 
 print "<div class='alert alert-info' role='alert'><p align='justify'>".sprintf( __( 'Please send your transfert in the amount of <b>%1$s</b> with reference <b>%2$s</b> at the following account', 'doliconnect' ), $TTC, $object->ref ).":";
-print "<br><b>".__( 'Bank', 'doliconnect' ).": $bank->bank</b>";
-print "<br><b>IBAN: $bank->iban</b>";
-if ( ! empty($bank->bic) ) { print "<br><b>BIC/SWIFT : $bank->bic</b>";}
+print "<br><b>".__( 'Bank', 'doliconnect' ).": ".$listpaymentmethods->VIR->bank."</b>";
+print "<br><b>IBAN: ".$listpaymentmethods->VIR->iban."</b>";
+if ( ! empty($listpaymentmethods->VIR->bic) ) { print "<br><b>BIC/SWIFT : ".$listpaymentmethods->VIR->bic."</b>";}
 print "</p>";
 
 } elseif ($object->mode_reglement_id == '6') {
@@ -1201,11 +1203,18 @@ print "<div class='alert alert-success' role='alert'><p>".__( 'Your payment has 
 if (isset($_GET['charge'])) "<br>".__( 'Reference', 'doliconnect' ).": ".$_GET['charge'];
 print "</p>";
 }
+
+$nonce = wp_create_nonce( 'doli-'.$module.'-'. $object->id.'-'.$object->id);
+$arr_params = array( 'id' => $object->id, 'ref' => $object->id, 'security' => $nonce);  
+$return = esc_url( add_query_arg( $arr_params, doliconnecturl('doliaccount')) );
+print "<br /><a href='".$return."' class='btn btn-primary'>".__( 'Return', 'doliconnect')."</a>";
+
 } else {
-print "<div class='alert alert-danger' role='alert'><p>".__( 'An error is occurred', 'doliconnect' )."</p>";
+print "<div class='alert alert-danger' role='alert'><p>".__( 'An error is occurred', 'doliconnect')."</p>";
+print "<br /><a href='".$return."' class='btn btn-primary'>".__( 'View my receipt', 'doliconnect')."</a>";
 }
-print "<br /><a href='".doliconnecturl('doliaccount')."?module=orders&id=".$object->id."&ref=".$object->ref;
-print "' class='btn btn-primary'>".__( 'See my order', 'doliconnect' )."</a></center></div></div></div>";
+
+print "</div></div></div>";
 
 } elseif ( isset($_GET['step']) && $_GET['step'] == 'payment' && isset($_GET['cart']) && wp_verify_nonce( $_GET['cart'], 'valid_dolicart-'.$object->id) && ( (doliconnector($current_user, 'fk_order_nb_item') > 0 && $object->statut == 0 && !isset($_GET['module']) && !isset($_GET['id'])) || ( ($_GET['module'] == 'orders' && $object->billed != 1 ) || ($_GET['module'] == 'invoices' && $object->paye != 1) )) && $object->socid == doliconnector($current_user, 'fk_soc') ) {
 
@@ -1267,7 +1276,7 @@ print "</small></li>";
 print "</ul></div></div><div class='col-12 col-md-8'>";
 
 if ( doliversion('11.0.0') ) {
-print dolipaymentmethods($object, substr($module, 0, -1), doliconnecturl('dolicart')."?cart=".$_GET['cart']."&step=validation", true);
+print dolipaymentmethods($object, substr($module, 0, -1), doliconnecturl('dolicart')."?cart=".wp_nonce_field( 'valid_dolicart-'.$object->id, 'dolichecknonce' )."&step=validation", true);
 } else {
 print __( "It seems that your version of Dolibarr and/or its plugins are not up to date!", "doliconnect");
 }
