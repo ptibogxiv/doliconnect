@@ -1008,7 +1008,7 @@ $paymentmethods .= "</div><div class='col-auto align-middle'><h6 class='my-0'>".
 $paymentmethods .= '</div></div></label></div></li>';
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
 $paymentmethods .='<li id="virPanel" class="list-group-item list-group-item-secondary panel-collapse collapse"><div class="panel-body">';
-$paymentmethods .='<button type="button" onclick="PayPM(\'vir\')" class="btn btn-danger btn-block"><b>'.__( 'Pay', 'doliconnect' )." ".doliprice($object, 'ttc', $currency).'</b></button>';
+$paymentmethods .='<button type="button" onclick="PayPM(\'2\')" class="btn btn-danger btn-block"><b>'.__( 'Pay', 'doliconnect' )." ".doliprice($object, 'ttc', $currency).'</b></button>';
 $paymentmethods .='</div></li>';
 }}
 if ( isset($listpaymentmethods->CHQ) && $listpaymentmethods->CHQ != null ) {
@@ -1022,7 +1022,7 @@ $paymentmethods .= "</div><div class='col-auto align-middle'><h6 class='my-0'>".
 $paymentmethods .= '</div></div></label></div></li>';
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
 $paymentmethods .='<li id="chqPanel" class="list-group-item list-group-item-secondary panel-collapse collapse"><div class="panel-body">';
-$paymentmethods .='<button type="button" onclick="PayPM(\'chq\')" class="btn btn-danger btn-block"><b>'.__( 'Pay', 'doliconnect' )." ".doliprice($object, 'ttc', $currency).'</b></button>';
+$paymentmethods .='<button type="button" onclick="PayPM(\'7\')" class="btn btn-danger btn-block"><b>'.__( 'Pay', 'doliconnect' )." ".doliprice($object, 'ttc', $currency).'</b></button>';
 $paymentmethods .='</div></li>';
 }}
 if ( ! empty(dolikiosk()) ) {
