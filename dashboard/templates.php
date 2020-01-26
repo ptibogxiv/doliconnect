@@ -1136,8 +1136,9 @@ $data = [
   'save' => isset($_POST['default']) ? $_POST['default'] : 0 ,
 	];
 $payinfo = callDoliApi("POST", "/doliconnector/pay/".$module."/".$object->id, $data, 0);
-//print var_dump($payinfo);  
-
+//print var_dump($payinfo);
+  
+doliconnector($current_user, 'fk_order', true);
 $object = callDoliApi("GET", "/".$module."/".$object->id."?contact_list=0", null, dolidelay('cart', true));
 
 print "<table width='100%' style='border: none'><tr style='border: none'><td width='50px' style='border: none'><div class='fa-3x'>
@@ -1472,7 +1473,7 @@ $return = add_query_arg( $arr_params, doliconnecturl('dolicart'));
 
 if ( isset($_POST['dolicart']) && $_POST['dolicart'] == 'purge' && wp_verify_nonce( $_POST['dolichecknonce'], 'valid_dolicart-'.$object->id) ) {
 $orderdelete = callDoliApi("DELETE", "/".$module."/".doliconnector($current_user, 'fk_order'), null);
-$dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolidelay('doliconnector'), true);
+$dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolidelay('doliconnector', true));
 if (1==1) {
 doliconnector($current_user, 'fk_order', true);
 wp_safe_redirect(doliconnecturl('dolicart'));
@@ -1488,7 +1489,7 @@ $result = doliaddtocart($productupdate['product'], $productupdate['qty'], $produ
 //print var_dump($_POST['updateorderproduct']);
 }
 doliconnector($current_user, 'fk_order', true);
-$object = callDoliApi("GET", $request, null, dolidelay('cart'), true);
+$object = callDoliApi("GET", $request, null, dolidelay('cart', true));
 wp_safe_redirect(doliconnecturl('dolicart'));
 exit;
 }
