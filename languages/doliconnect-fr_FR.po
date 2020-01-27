@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2020-01-26 18:50+0100\n"
-"PO-Revision-Date: 2020-01-26 18:51+0100\n"
+"POT-Creation-Date: 2020-01-27 15:56+0100\n"
+"PO-Revision-Date: 2020-01-27 15:56+0100\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_FR\n"
@@ -75,7 +75,7 @@ msgstr "Formulaire de demande de données de confidentialité"
 
 #: blocks/gdpr/block.js:16
 msgid "form"
-msgstr "Formulaire"
+msgstr "formulaire"
 
 #: blocks/gdpr/block.js:16
 msgid "data"
@@ -1698,59 +1698,59 @@ msgstr "Espèces"
 msgid "Go to reception desk"
 msgstr "Aller à la réception"
 
-#: functions/tools.php:1680
+#: functions/tools.php:1685
 msgid "Select your request:"
 msgstr "Sélectionnez votre demande :"
 
-#: functions/tools.php:1681
+#: functions/tools.php:1686
 msgid "Export Personal Data"
 msgstr "Exporter vos données personnelles"
 
-#: functions/tools.php:1682
+#: functions/tools.php:1687
 msgid "Remove Personal Data"
 msgstr "Supprimer vos données personnelles"
 
-#: functions/tools.php:1683
+#: functions/tools.php:1688
 msgid "Your email address (required)"
 msgstr "Votre adresse e-mail (requise)"
 
-#: functions/tools.php:1684
+#: functions/tools.php:1689
 msgid "Human verification (required):"
 msgstr "Vérification humaine (requise) :"
 
-#: functions/tools.php:1685
+#: functions/tools.php:1690
 msgid "Send Request"
 msgstr "Envoyer la demande"
 
-#: functions/tools.php:1716
+#: functions/tools.php:1721
 msgid "Export your data"
 msgstr "Exportez vos données"
 
-#: functions/tools.php:1716
+#: functions/tools.php:1721
 msgid "You will receive an email with a secure link to your data"
 msgstr "Vous recevrez un email avec un lien sécurisé vers vos données"
 
-#: functions/tools.php:1726
+#: functions/tools.php:1731
 msgid "Erase your data"
 msgstr "Effacer vos données"
 
-#: functions/tools.php:1726
+#: functions/tools.php:1731
 msgid "Soon, you will be able to erase your account"
 msgstr "Bientôt, vous pourrez effacer votre compte"
 
-#: functions/tools.php:1736
+#: functions/tools.php:1741
 msgid "Delete your account"
 msgstr "Supprimer votre compte"
 
-#: functions/tools.php:1736
+#: functions/tools.php:1741
 msgid "Soon, you will be able to delete your account"
 msgstr "Bientôt, vous pourrez supprimer votre compte"
 
-#: functions/tools.php:1773
+#: functions/tools.php:1778
 msgid "Validate the request"
 msgstr "Valider la demande"
 
-#: functions/tools.php:1787
+#: functions/tools.php:1792
 msgid "This plugin requires WordPress 4.9.6."
 msgstr "Ce plugin nécessite WordPress 4.9.6."
 
