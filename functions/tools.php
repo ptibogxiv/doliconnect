@@ -333,7 +333,7 @@ print "<li class='list-group-item'><div class='form-row'><div class='custom-cont
 <label class='custom-control-label' for='optin1'> ".__( 'I would like to receive the newsletter', 'doliconnect' )."</label></div></div>";
 print "<div class='form-row'><div class='custom-control custom-checkbox my-1 mr-sm-2'>
 <input type='checkbox' class='custom-control-input' value='forever' id='validation' name='validation' required>
-<label class='custom-control-label' for='validation'> ".__( 'I read and accept the <a href="#" data-toggle="modal" data-target="#cgvumention">Terms & Conditions</a>.', 'doliconnect')."</label></div></div>";
+<label class='custom-control-label' for='validation'>".__( 'I read and accept the <a href="#" data-toggle="modal" data-target="#cgvumention">Terms & Conditions</a>.', 'doliconnect')."</label></div></div>";
 
 if ( get_option( 'wp_page_for_privacy_policy' ) ) {
 print "<div class='modal fade' id='cgvumention' tabindex='-1' role='dialog' aria-labelledby='cgvumention' aria-hidden='true'><div class='modal-dialog modal-lg modal-dialog-centered' role='document'><div class='modal-content'><div class='modal-header'><h5 class='modal-title' id='cgvumentionLabel'>".__( 'Terms & Conditions', 'doliconnect')."</h5><button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>
@@ -1044,7 +1044,7 @@ $paymentmethods .= "<div id='error-message' role='alert'><!-- a Stripe Message w
 if (isset($object) && get_option('doliconnectbeta') =='1') {
 $paymentmethods .= '<div class="custom-control custom-checkbox">
   <input type="checkbox" class="custom-control-input" id="checkBox1" ">
-  <label class="custom-control-label" for="checkBox1">I approve CGV</label>
+  <label class="custom-control-label" for="checkBox1">'.__( 'I read and accept the <a href="#" data-toggle="modal" data-target="#cgvumention">Terms & Conditions</a>.', 'doliconnect').'</label>
 </div>';
 $paymentmethods .= "<script>";
 $paymentmethods .= "
