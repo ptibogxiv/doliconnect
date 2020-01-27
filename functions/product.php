@@ -86,7 +86,7 @@ $ln=null;
 
 $button .="<form id='product-add-form-$product->id' role='form' action='".doliconnecturl('dolishop')."?category=".$category."&product=".$product->id."#prod-".$product->id."'  method='post'>";
 
-$button .= doliloaderscript('product-add-form-'.$product->id.'');
+$button .= doliloaderscript('product-add-form-'.$product->id.'', false);
 
 $button .="<input type='hidden' name='product_update' value='$product->id'><input type='hidden' name='product_update[".$product->id."][product]' value='$product->id'>";
 $button .="<script type='text/javascript' language='javascript'>";

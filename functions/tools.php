@@ -568,7 +568,7 @@ $alert ='<div class="alert alert-'.$type.' alert-dismissible fade show" role="al
 return $alert;
 }
 
-function doliloaderscript($idform) {
+function doliloaderscript($idform, $scrolltop = true) {
 $loader = "<script>";
 $loader .= 'window.setTimeout(function () {
     $(".alert-success").fadeTo(500, 0).slideUp(500, function () {
@@ -578,9 +578,9 @@ $loader .= 'window.setTimeout(function () {
 
 $loader .= 'var form = document.getElementById("'.$idform.'");';
 $loader .= 'form.addEventListener("submit", function(event) {
-jQuery("#DoliconnectLoadingModal").modal("show");
-jQuery(window).scrollTop(0); 
-console.log("submit");
+jQuery("#DoliconnectLoadingModal").modal("show");';
+if (!empty($scrolltop)) $loader .= 'jQuery(window).scrollTop(0);'; 
+$loader .= 'console.log("submit");
 form.submit();
 });';
 $loader .= "</script>";
