@@ -59,7 +59,7 @@ We would like to thank this contributors and plugins:
 [gdpr-data-request-form](https://wordpress.org/plugins/gdpr-data-request-form/ "gdpr-data-request-form")
 
 == Changelog ==
- = 4.0.6 =
+ = 4.0.7 =
 * fix pre-release
 
  = 4.0.6 =
