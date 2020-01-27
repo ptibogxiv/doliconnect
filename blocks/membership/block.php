@@ -30,9 +30,8 @@ function doliconnect_membership_block() {
 	wp_register_script(
 		'doliconnect-membership-block-script', // Handle.
 		plugins_url( 'block.js', __FILE__ ), // Block.js: We register the block here.
-		array( 'wp-blocks', 'wp-element', 'wp-i18n' ), // Dependencies, defined above.
-    'rc1'
-	);
+		array( 'wp-blocks', 'wp-element', 'wp-i18n' )
+    );
 
 function doliconnect_membership_render_block( $attributes ) {
 global $current_user;
