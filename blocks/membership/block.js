@@ -17,7 +17,7 @@ var el = wp.element.createElement,
 
 			return [
         el(ServerSideRender, {
-                block: "doliconnect/product-block",
+                block: "doliconnect/membership-block",
                 attributes:  props.attributes
             })
 			];

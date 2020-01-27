@@ -48,14 +48,15 @@ return $content;
 function doliconnect_product_block_init() {
 	if ( function_exists( 'register_block_type' ) ) {
 		wp_register_script(
-			'product-block',
+			'doliconnect-product-block-script',
 			plugins_url( 'block.js', __FILE__ ),
-			array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-components' )
+			array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-components' ),
+      'rc1'
 		);
 		register_block_type(
 			'doliconnect/product-block',
 			array(
-				'editor_script'   => 'product-block',
+				'editor_script'   => 'doliconnect-product-block-script',
 				'render_callback' => 'doliconnect_product_block_render',
 				'attributes'      => array(
           'productID' => array( 'type' => 'string' ),

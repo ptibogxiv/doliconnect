@@ -31,7 +31,7 @@ function doliconnect_membership_block() {
 		'doliconnect-membership-block-script', // Handle.
 		plugins_url( 'block.js', __FILE__ ), // Block.js: We register the block here.
 		array( 'wp-blocks', 'wp-element', 'wp-i18n' ), // Dependencies, defined above.
-    'beta3'
+    'rc1'
 	);
 
 function doliconnect_membership_render_block( $attributes ) {
