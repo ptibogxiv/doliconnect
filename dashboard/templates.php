@@ -1112,7 +1112,7 @@ $module='orders';
 }
 
 //if ( doliconnector($current_user, 'fk_order') > 0 ) {
-$object = callDoliApi("GET", $request, null, dolidelay('cart'), true);
+$object = callDoliApi("GET", $request, null, dolidelay('cart', true));
 //print var_dump($object);
 //}
 
