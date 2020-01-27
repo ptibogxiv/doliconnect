@@ -45,7 +45,7 @@
 								fontSize: '2em'
 							}
 						},
-						__( 'Privacy Data request form', 'doliconnect'  )
+						__( 'Privacy Data request form', 'doliconnect')
 					),
 					el(
 						'p', { 
@@ -55,7 +55,7 @@
 								paddingRight: '2em'
 							}
 						},
-						__( 'This block displays a Privacy Data Request Form.', 'doliconnect' ),
+						__( 'This block displays a Privacy Data Request Form.', 'doliconnect'),
 					),
 					el(
 						'p', { 
@@ -65,7 +65,7 @@
 								paddingRight: '2em'
 							}
 						},
-						__( 'By default, the form shows both export and remove Data Request options (it’s up to the visitor). You can set it either to "both", "export" or "remove".', 'doliconnect' ),
+						__( 'By default, the form shows both export and remove Data Request options (it’s up to the visitor). You can set it either to "both", "export" or "remove".', 'doliconnect'),
 					),
 					el(
 						'div', { 
