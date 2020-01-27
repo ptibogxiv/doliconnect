@@ -84,7 +84,7 @@ $qty=null;
 $ln=null;
 }
 
-$button .="<form id='product-add-form-$product->id' role='form' action='".doliconnecturl('dolishop')."?category=".$category."&product=".$product->id."'  method='post'>";
+$button .="<form id='product-add-form-$product->id' role='form' action='".doliconnecturl('dolishop')."?category=".$category."&product=".$product->id."#prod-".$product->id."'  method='post'>";
 
 $button .= doliloaderscript('product-add-form-'.$product->id.'');
 
