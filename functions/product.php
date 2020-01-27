@@ -84,7 +84,9 @@ $qty=null;
 $ln=null;
 }
 
-$button .="<form id='product-add-form-$product->id' role='form' action='".doliconnecturl('dolishop')."?category=".$category."&product=".$product->id."#prod-".$product->id."'  method='post'>";
+$arr_params = array( 'category' => $category, 'product' => $product->id.'#prod-'.$product->id);  
+$return = add_query_arg( $arr_params, doliconnecturl('dolishop'));
+$button .="<form id='product-add-form-$product->id' role='form' action='".$return."'  method='post'>";
 
 $button .= doliloaderscript('product-add-form-'.$product->id.'', false);
 
