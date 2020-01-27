@@ -10,10 +10,10 @@
 	var PanelBody = components.PanelBody;
 
 	registerBlockType( 'doliconnect/data-request-form', {
-		title: __( 'Privacy Data Request Form', 'doliconnect' ),
+		title: __( 'Privacy Data Request Form', 'doliconnect'),
 		icon: 'id-alt',
 		category: 'widgets',
-		keywords: [ __( 'form', 'doliconnect' ), __( 'data', 'doliconnect' ), __( 'request', 'doliconnect' ) ],
+		keywords: [ __( 'form', 'doliconnect'), __( 'data', 'doliconnect'), __( 'request', 'doliconnect') ],
 		attributes: {
 			request_type: {
 				type: 'string'

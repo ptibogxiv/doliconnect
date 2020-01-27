@@ -8,8 +8,8 @@
   var ServerSideRender = wp.components.ServerSideRender;
 
 	registerBlockType( 'doliconnect/admin-block', { // The name of our block. Must be a string with prefix. Example: my-plugin/my-custom-block.
-		title: i18n.__( 'List of admins', 'doliconnect' ),
-		description: i18n.__( 'A block for displaying list of admins.', 'doliconnect' ),
+		title: i18n.__( 'List of admins', 'doliconnect'),
+		description: i18n.__( 'A block for displaying list of admins.', 'doliconnect'),
 		icon: 'admin-users', // Dashicon icon for our block. Custom icons can be added using inline SVGs.
 		category: 'widgets', // The category of the block.
 		attributes: { // Necessary for saving block content.
@@ -26,7 +26,7 @@
 						className: 'block-social-links',
 						initialOpen: true,
 					},
-						el( 'p', {}, i18n.__( 'Add links to your social media profiles.', 'doliconnect' ) ),
+						el( 'p', {}, i18n.__( 'Add links to your social media profiles.', 'doliconnect') ),
 				 	),
 				),
         el(ServerSideRender, {
