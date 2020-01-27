@@ -62,6 +62,9 @@ We would like to thank this contributors and plugins:
  = 4.0.6 =
 * fix pre-release
 
+ = 4.0.6 =
+* fix pre-release
+
  = 4.0.5 =
 * fix pre-release
 
