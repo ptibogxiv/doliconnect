@@ -755,7 +755,7 @@ if ( !is_user_logged_in() ) {
 print '</li><li class="list-group-item"><div class="custom-control custom-checkbox"><input id="rgpdinfo" class="custom-control-input form-control-sm" type="checkbox" name="rgpdinfo" value="ok" required><label class="custom-control-label w-100" for="rgpdinfo"><small class="form-text text-muted"> '.__( 'I agree to save my personnal informations in order to contact me', 'doliconnect').'</small></label></div>';  
 }
 print "</li></ul>";
-print "<div class='card-body'><button class='btn btn-primary btn-block' type='submit'><b>".__( 'Send', 'doliconnect')."</b></button><input type='hidden' name='submitted' id='submitted' value='true' /></div></div></div></div></form>";
+print "<div class='card-body'><button class='btn btn-primary btn-block' type='submit'>".__( 'Send', 'doliconnect')."</button><input type='hidden' name='submitted' id='submitted' value='true' /></div></div></div></div></form>";
 
 print "</div>";
 
