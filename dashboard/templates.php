@@ -1323,7 +1323,7 @@ $order_shipping= callDoliApi("POST", "/".$module."/".$object->id."/contact/".$_P
 
 if ( isset($_POST['note_public']) && $_POST['note_public'] != $object->note_public) {
 $data = [
-    'note_public' => $_POST['note_public']
+    'note_public' => isset($_POST['AddMessage']) ? $_POST['note_public'] : '',
 	];
 $object = callDoliApi("PUT", "/".$module."/".$object->id, $data, dolidelay('order', true));
 }
@@ -1432,12 +1432,17 @@ print "</small></li>";
 print "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".sprintf( esc_html__( "Add shipping contact needs Dolibarr %s but your version is %s", 'doliconnect'), '10.0.0', doliversion('10.0.0'))."</b></li>";
 }
 
-print "<li class='list-group-item'><h6>".__( 'Message', 'doliconnect' )."</h6><small class='text-muted'>";
+print "<li class='list-group-item'><h6>".__( 'Message', 'doliconnect' )."</h6>";
+print '<div class="custom-control custom-checkbox">
+<input type="checkbox" class="custom-control-input" id="AddMessage" name="AddMessage" data-toggle="collapse" data-target="#collapseMessage" aria-expanded="false" aria-controls="collapseMessage">
+<label class="custom-control-label" for="AddMessage">'.__( 'Add a message', 'doliconnect' ).'</label></div>';
+print "<div class='collapse' id='collapseMessage'>";
 print "<textarea class='form-control' id='note_public' name='note_public' rows='3' placeholder='".__( 'Enter a message here that you want to send us about your order', 'doliconnect' )."'>".$object->note_public."</textarea>";
-print "</small></li></ul>";
+print "</div>";
+print "</li></ul>";
 
 print "<div class='card-body'>".wp_nonce_field( 'valid_dolicart-'.$object->id, 'dolichecknonce' )."<input type='hidden' name='info' value='validation'><input type='hidden' name='dolicart' value='validation'><center><button class='btn btn-warning btn-block' type='submit'><b>".__( 'Validate', 'doliconnect' )."</b></button></center></div></form>";
-print '<div class="card-footer text-muted">';
+print "<div class='card-footer text-muted'>";
 print "<small><div class='float-left'>";
 print dolirefresh($request, get_permalink(), dolidelay('cart'));
 print "</div><div class='float-right'>";
