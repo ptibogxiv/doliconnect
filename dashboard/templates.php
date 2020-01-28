@@ -1441,7 +1441,7 @@ print "<textarea class='form-control' id='note_public' name='note_public' rows='
 print "</div>";
 print "</li></ul>";
 
-print "<div class='card-body'>".wp_nonce_field( 'valid_dolicart-'.$object->id, 'dolichecknonce' )."<input type='hidden' name='info' value='validation'><input type='hidden' name='dolicart' value='validation'><center><button class='btn btn-warning btn-block' type='submit'><b>".__( 'Validate', 'doliconnect' )."</b></button></center></div></form>";
+print "<div class='card-body'>".wp_nonce_field( 'valid_dolicart-'.$object->id, 'dolichecknonce' )."<input type='hidden' name='info' value='validation'><input type='hidden' name='dolicart' value='validation'><center><button class='btn btn-warning btn-block' type='submit'>".__( 'Validate', 'doliconnect' )."</button></center></div></form>";
 print "<div class='card-footer text-muted'>";
 print "<small><div class='float-left'>";
 print dolirefresh($request, get_permalink(), dolidelay('cart'));
