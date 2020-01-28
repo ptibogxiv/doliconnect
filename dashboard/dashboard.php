@@ -1703,7 +1703,7 @@ print doliloaderscript('doliconnect-msgticketform');
 
 print '<div class="form-group"><label for="ticketnewmessage"><small>'.__( 'Response', 'doliconnect' ).'</small></label>
 <div class="input-group mb-2"><div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-comment fa-fw"></i></span></div><textarea class="form-control" name="ticket_newmessage" id="ticket_newmessage" rows="5" required></textarea>
-</div></div><input type="hidden" name="case" value="messageticket"><button class="btn btn-danger btn-block" type="submit"><b>'.__( 'Answer', 'doliconnect' ).'</b></button></form>';
+</div></div><input type="hidden" name="case" value="messageticket"><button class="btn btn-danger btn-block" type="submit">'.__( 'Answer', 'doliconnect' ).'</button></form>';
 print "</li>";
 
 }
