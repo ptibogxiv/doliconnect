@@ -319,7 +319,7 @@ $list .= "<span class='text-muted'>".doliprice($line, 'total_ttc',isset($object-
 
 $cart = "<div class='card'><div class='card-header'>".__( 'Cart', 'doliconnect' )." - ".sprintf( _n( '%s item', '%s items', $qty, 'doliconnect' ), $qty)." <small>(";
 if ( !isset($object->resteapayer) && $object->statut == 0 ) { $cart .= "<a href='".doliconnecturl('dolicart')."' >".__( 'update', 'doliconnect' )."</a>"; }
-else { $cart .= __( 'unchangeable, please contact us', 'doliconnect' ); }
+else { $cart .= __( 'unchangeable', 'doliconnect' ); }
 $cart .= ")</small></div><ul class='list-group list-group-flush'>";
 $cart .= $list;
 
@@ -352,49 +352,6 @@ return $cart;
 }
 
 function dolilistpaymentmodes($paymentintent, $listpaymentmethods, $object, $redirect, $url) {
-global $current_user;
-
-$request = "/doliconnector/".doliconnector($current_user, 'fk_soc')."/paymentmethods";
-doliconnect_enqueues();
-
-if ( isset($object) ) { 
-$currency=strtolower($object->multicurrency_code?$object->multicurrency_code:'eur');  
-$stripeAmount=($object->multicurrency_total_ttc?$object->multicurrency_total_ttc:$object->total_ttc)*100;
-} else {
-$currency=strtolower('eur');
-$stripeAmount=0;
-}
-
-
-if ( empty($object) ) { //$  &&  ( listsource->discount != 0 || $listsource->discount_product != null )
-$paymentmethod .= "<li id='DiscountForm' class='list-group-item list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>
-<input id='discount' onclick='ShowHideDiv()' class='custom-control-input' type='radio' name='modepayment' value='discount' ";
-if ( !empty($object) && !current_user_can( 'administrator' ) ) { $paymentmethod .= " disabled "; }
-$paymentmethod .= " ><label class='custom-control-label w-100' for='discount'><div class='row'><div class='col-3 col-md-2 col-xl-2 align-middle'>";
-$paymentmethod .= "<center><i class='fas fa-piggy-bank fa-3x fa-fw' style='color:HotPink'></i></center>";
-$paymentmethod .= "</div><div class='col-9 col-md-10 col-xl-10 align-middle'><h6 class='my-0'>";
-if ( $listpaymentmethods->discount >= 0 ) {
-$paymentmethod .= __( 'Credit of', 'doliconnect' );
-} else {
-$paymentmethod .= __( 'Debit of', 'doliconnect' );
-}
-$paymentmethod .= " ".doliprice($listpaymentmethods->discount)."</h6><small class='text-muted'>".__( 'Soon available', 'doliconnect' )."</small>";
-$paymentmethod .= '</div></div></label></div></li>';
-//if ( empty($object) && get_option('doliconnectbeta')=='1' && current_user_can( 'administrator' )){
-//print '<li class="list-group-item list-group-item-secondary" id="Recharge" style="display: none">';
-//print 'Prochainement, vous pourrez recharger votre compte!';
-//print '<div class="input-group mb-3">
-//  <div class="input-group-prepend">
-//    <span class="input-group-text">$</span>
-//  </div>
-//  <input type="num" class="form-control" aria-label="Amount (to the nearest dollar)">
-//  <div class="input-group-append">
-//    <span class="input-group-text">.00</span>
-//  </div>
-//</div>';
-//print '</li>';
-//}
-}
 
 //PAYMENT REQUEST API
 if ( ! empty($object) && get_option('doliconnectbeta')=='1' && !empty($listpaymentmethods->payment_request_api) ) {  
