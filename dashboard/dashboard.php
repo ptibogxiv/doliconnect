@@ -578,7 +578,7 @@ print "'>".__( 'Manage payment methods', 'doliconnect')."</a>";
 }
 
 function paymentmethods_module( $url ) {
-global $wpdb,$current_user;
+global $wpdb, $current_user;
 
 $request = "/doliconnector/".doliconnector($current_user, 'fk_soc')."/paymentmethods";
 
