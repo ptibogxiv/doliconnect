@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2020-01-28 14:20+0100\n"
-"PO-Revision-Date: 2020-01-28 14:22+0100\n"
+"POT-Creation-Date: 2020-01-28 15:15+0100\n"
+"PO-Revision-Date: 2020-01-28 15:16+0100\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_FR\n"
@@ -1587,6 +1587,10 @@ msgstr "Choisissez votre pays ou région"
 #: functions/tools.php:817
 msgid "Stripe's in sandbox mode"
 msgstr "Stripe est en mode bac à sable"
+
+#: functions/tools.php:817
+msgid "Link to Test card numbers"
+msgstr "Lien vers les numéros de carte de test"
 
 #: functions/tools.php:849
 msgid "Account"
