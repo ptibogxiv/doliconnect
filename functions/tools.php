@@ -1729,6 +1729,7 @@ global $current_user;
 		<?php endif; ?>
 <div class='col-auto align-middle'><h6 class='my-0'><?php echo __( 'Erase your data', 'doliconnect' ); ?></h6><small class='text-muted'><?php echo __( 'Soon, you will be able to erase your account', 'doliconnect' ); ?></small>
 </div></div></label></div></li>
+<?php if (get_option('doliconnectbeta') =='1') { ?>
 <li class='list-group-item list-group-item-light list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>
 <input id='gdrf-data-type-delete' class='custom-control-input' type='radio' name='gdrf_data_type' value='delete_personal_data' disabled>
 <label class='custom-control-label w-100' for='gdrf-data-type-delete'><div class='row'>
@@ -1739,7 +1740,7 @@ global $current_user;
 		<?php endif; ?>
 <div class='col-auto align-middle'><h6 class='my-0'><?php echo __( 'Delete your account', 'doliconnect' ); ?></h6><small class='text-muted'><?php echo __( 'Soon, you will be able to delete your account', 'doliconnect' ); ?></small>
 </div></div></label></div></li>
-		<?php endif; ?>
+		<?php } endif; ?>
     
     <?php if ( empty($current_user->user_email) ) : ?>
 <li class='list-group-item list-group-item-light list-group-item-action flex-column align-items-start'>
