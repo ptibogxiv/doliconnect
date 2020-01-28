@@ -817,6 +817,10 @@ if ( isset($listpaymentmethods->stripe) && empty($listpaymentmethods->stripe->li
 $paymentmethods .= "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".__( "Stripe's in sandbox mode", 'doliconnect')."</b> <small>(<a href='https://stripe.com/docs/testing#cards' target='_blank' rel='noopener'>".__( "Link to Test card numbers", 'doliconnect')."</a>)</small></li>";
 }
 
+if (!empty($thirdparty->cond_reglement_id)) {
+$paymentmethods .= "<li class='list-group-item list-group-item-light list-group-item-action flex-column align-items-start'>".$thirdparty->cond_reglement_id."</li>";
+}
+
 if (empty($listpaymentmethods->payment_methods)) {
 $countPM = 0;
 } else {
