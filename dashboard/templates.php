@@ -1403,7 +1403,7 @@ print "<li class='list-group-item'><h6>".__( 'Shipping address', 'doliconnect' )
 
 print '<div class="custom-control custom-radio">
 <input type="radio" id="shipping-0" name="contact_shipping" class="custom-control-input" value="" checked>
-<label class="custom-control-label" for="shipping0">'.__( "Same address that billing", "doliconnect").'</label>
+<label class="custom-control-label" for="shipping-0">'.__( "Same address that billing", "doliconnect").'</label>
 </div>';
 
 $listcontact = callDoliApi("GET", "/contacts?sortfield=t.rowid&sortorder=ASC&limit=100&thirdparty_ids=".doliconnector($current_user, 'fk_soc')."&includecount=1&sqlfilters=t.statut=1", null, dolidelay('contact', true));
