@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
 "POT-Creation-Date: 2020-01-28 15:15+0100\n"
-"PO-Revision-Date: 2020-01-28 15:16+0100\n"
+"PO-Revision-Date: 2020-01-28 15:34+0100\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_FR\n"
@@ -1065,7 +1065,7 @@ msgstr "Type de demande"
 #: dashboard/templates.php:755
 msgid "I agree to save my personnal informations in order to contact me"
 msgstr ""
-"J'accepte que mes informations personnelles soient sauvegarder afin de me "
+"J'accepte que mes informations personnelles soient sauvegardées afin de me "
 "contacter"
 
 #: dashboard/templates.php:986
