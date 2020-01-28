@@ -1402,7 +1402,7 @@ if ( doliversion('10.0.0') ) {
 print "<li class='list-group-item'><h6>".__( 'Shipping address', 'doliconnect' )."</h6><small class='text-muted'>";
 
 print '<div class="custom-control custom-radio">
-<input type="radio" id="shipping0" name="contact_shipping" class="custom-control-input" value="" checked>
+<input type="radio" id="shipping-0" name="contact_shipping" class="custom-control-input" value="" checked>
 <label class="custom-control-label" for="shipping0">'.__( "Same address that billing", "doliconnect").'</label>
 </div>';
 
@@ -1419,9 +1419,9 @@ $contactshipping = $contact->id;
 }
 if ( !isset($listcontact->error) && $listcontact != null ) {
 foreach ( $listcontact as $contact ) {
-print '<div class="custom-control custom-radio"><input type="radio" id="customRadio2" name="contact_shipping" class="custom-control-input" value="'.$contact->id.'" ';
+print '<div class="custom-control custom-radio"><input type="radio" id="shipping-'.$contact->id.'" name="contact_shipping" class="custom-control-input" value="'.$contact->id.'" ';
 if ( !empty($contact->default) || $contactshipping == $contact->id ) { print "checked"; }
-print '><label class="custom-control-label" for="customRadio2">';
+print '><label class="custom-control-label" for="shipping-'.$contact->id.'">';
 print dolicontact($contact->id, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 print '</label></div>';
 }
