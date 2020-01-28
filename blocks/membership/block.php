@@ -117,7 +117,7 @@ $html .= "<small>".__( 'First subscription at', 'doliconnect' )." ".doliprice($m
 $html .= $postadh->note.'</div>';
 
 if ( function_exists('dolimembership_modal') ) {
-$html .= '<div class="card-footer"><a href="'.doliconnecturl('doliaccount').'?module=members" role="button" class="btn btn-lg btn-block btn'.$color.'">'.__( 'Subscribe', 'doliconnect' ).'</a></div>';
+$html .= '<div class="card-footer"><a href="'.doliconnecturl('doliaccount').'?module=members" role="button" class="btn btn-block btn'.$color.'">'.__( 'Subscribe', 'doliconnect' ).'</a></div>';
 }
 
 $html .= '</div>';
