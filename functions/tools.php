@@ -249,7 +249,7 @@ $typecontact[] .= $role->id;
 foreach ( $contact_types as $contacttype ) {                                                           //name='".$idobject."[roles][id]'
 print "<div class='custom-control custom-checkbox'><input type='checkbox' class='custom-control-input' value='".$contacttype->rowid."' id='".$idobject."[roles][".$contacttype->rowid."]' ";
 if ( isset($object->roles) && $object->roles != null && in_array($contacttype->rowid, $typecontact)) { print " checked"; }
-print "><label class='custom-control-label' for='".$idobject."[roles][".$contacttype->rowid."]'>".$contacttype->label."</label></div>";
+print " disabled><label class='custom-control-label' for='".$idobject."[roles][".$contacttype->rowid."]'>".$contacttype->label."</label></div>";
 }
  
 }
