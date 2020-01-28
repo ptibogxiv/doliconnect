@@ -818,7 +818,7 @@ $paymentmethods .= "<li class='list-group-item list-group-item-info'><i class='f
 }
 
 if (!empty($thirdparty->cond_reglement_id)) {
-$paymentmethods .= "<li class='list-group-item list-group-item-light list-group-item-action flex-column align-items-start'>".$thirdparty->cond_reglement_id."</li>";
+$paymentmethods .= "<li class='list-group-item list-group-item-light list-group-item-action flex-column align-items-start'><b>".__( 'Payment term', 'doliconnect').":</b> ".$thirdparty->cond_reglement_id."</li>";
 }
 
 if (empty($listpaymentmethods->payment_methods)) {
