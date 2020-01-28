@@ -861,17 +861,17 @@ $paymentmethods .= '<li id="'.$method->id.'Panel" class="list-group-item list-gr
 $paymentmethods .= '<div class="btn-group btn-block" role="group" aria-label="actions buttons">';
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
 if ( $method->type == 'card' ) {
-$paymentmethods .= '<button type="button" onclick="PayCardPM(\''.$method->id.'\')" class="btn btn-danger"><b>'.__( 'Pay', 'doliconnect' )." ".doliprice($object, 'ttc', $currency).'</b></button>';
+$paymentmethods .= '<button type="button" onclick="PayCardPM(\''.$method->id.'\')" class="btn btn-danger">'.__( 'Pay', 'doliconnect' )." ".doliprice($object, 'ttc', $currency).'</button>';
 } elseif ( $method->type == 'sepa_debit' ) {
-$paymentmethods .= '<button type="button" onclick="PaySepaDebitPM(\''.$method->id.'\')" class="btn btn-danger"><b>'.__( 'Pay', 'doliconnect' )." ".doliprice($object, 'ttc', $currency).'</b></button>';
+$paymentmethods .= '<button type="button" onclick="PaySepaDebitPM(\''.$method->id.'\')" class="btn btn-danger">'.__( 'Pay', 'doliconnect' )." ".doliprice($object, 'ttc', $currency).'</button>';
 }
 } else {
 $paymentmethods .= '<button type="button" onclick="DefaultPM(\''.$method->id.'\')" class="btn btn-warning"';
 if ( !empty($method->default_source) ) { $paymentmethods .= " disabled"; }
-$paymentmethods .= '><b>'.__( "Favourite", 'doliconnect').'</b></button>
+$paymentmethods .= '>'.__( "Favourite", 'doliconnect').'</button>
 <button type="button" onclick="DeletePM(\''.$method->id.'\')" class="btn btn-danger"';
 if ( !empty($method->default_source) && $countPM > 1 ) { $paymentmethods .= " disabled"; }
-$paymentmethods .= '><b>'.__( 'Delete', 'doliconnect' ).'</b></button>';
+$paymentmethods .= '>'.__( 'Delete', 'doliconnect' ).'</button>';
 }
 $paymentmethods .= '</div>';
 $paymentmethods .= '</div></li>';
@@ -925,9 +925,9 @@ $paymentmethods .= ' checked';
 $paymentmethods .= '><label class="custom-control-label" for="cardDefault2">'.__( "Save as favourite", 'doliconnect').'</label>
 </div></p>';
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
-$paymentmethods .='<button id="cardPayButton" class="btn btn-danger btn-block" ><b>'.__( 'Pay', 'doliconnect' )." ".doliprice($object, 'ttc', $currency).'</b></button>';
+$paymentmethods .='<button id="cardPayButton" class="btn btn-danger btn-block" >'.__( 'Pay', 'doliconnect' )." ".doliprice($object, 'ttc', $currency).'</button>';
 } else {
-$paymentmethods .="<button id='cardButton' class='btn btn-warning btn-block' title='".__( 'Add', 'doliconnect')."'><b>".__( 'Add', 'doliconnect')."</b></button>";
+$paymentmethods .="<button id='cardButton' class='btn btn-warning btn-block' title='".__( 'Add', 'doliconnect')."'>".__( 'Add', 'doliconnect')."</button>";
 }
 $paymentmethods .='</div></li>';
 }
@@ -973,9 +973,9 @@ $paymentmethods .= ' checked';
 $paymentmethods .= '><label class="custom-control-label" for="ibanDefault1">'.__( "Save as favourite", 'doliconnect').'</label>
 </div></p>';
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
-$paymentmethods .='<button id="ibanPayButton" class="btn btn-danger btn-block" ><b>'.__( 'Pay', 'doliconnect' )." ".doliprice($object, 'ttc', $currency).'</b></button>';
+$paymentmethods .='<button id="ibanPayButton" class="btn btn-danger btn-block" >'.__( 'Pay', 'doliconnect' )." ".doliprice($object, 'ttc', $currency).'</button>';
 } else {
-$paymentmethods .="<button id='ibanButton' class='btn btn-warning btn-block' title='".__( 'Add', 'doliconnect')."'><b>".__( 'Add', 'doliconnect')."</b></button>";
+$paymentmethods .="<button id='ibanButton' class='btn btn-warning btn-block' title='".__( 'Add', 'doliconnect')."'>".__( 'Add', 'doliconnect')."</button>";
 }
 $paymentmethods .='</div></li>';
 }
@@ -991,7 +991,7 @@ $paymentmethods .='<input id="idealholder-name" name="idealholder-name" value=""
 <div class="form-control" id="ideal-element"><!-- a Stripe Element will be inserted here. --></div>';
 $paymentmethods .="<p class='text-justify'>";
 $paymentmethods .="</p>";
-$paymentmethods .='<button id="idealPayButton" class="btn btn-danger btn-block" ><b>'.__( 'Pay', 'doliconnect' )." ".doliprice($object, 'ttc', $currency).'</b></button>';
+$paymentmethods .='<button id="idealPayButton" class="btn btn-danger btn-block" >'.__( 'Pay', 'doliconnect' )." ".doliprice($object, 'ttc', $currency).'</button>';
 $paymentmethods .='</div></li>';
 }
 
@@ -1007,7 +1007,7 @@ $paymentmethods .= "</div><div class='col-auto align-middle'><h6 class='my-0'>".
 $paymentmethods .= '</div></div></label></div></li>';
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
 $paymentmethods .='<li id="virPanel" class="list-group-item list-group-item-secondary panel-collapse collapse"><div class="panel-body">';
-$paymentmethods .='<button type="button" onclick="PayPM(\'VIR\')" class="btn btn-danger btn-block"><b>'.__( 'Pay', 'doliconnect' )." ".doliprice($object, 'ttc', $currency).'</b></button>';
+$paymentmethods .='<button type="button" onclick="PayPM(\'VIR\')" class="btn btn-danger btn-block">'.__( 'Pay', 'doliconnect' )." ".doliprice($object, 'ttc', $currency).'</button>';
 $paymentmethods .='</div></li>';
 }}
 if ( isset($listpaymentmethods->CHQ) && $listpaymentmethods->CHQ != null ) {
@@ -1021,7 +1021,7 @@ $paymentmethods .= "</div><div class='col-auto align-middle'><h6 class='my-0'>".
 $paymentmethods .= '</div></div></label></div></li>';
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
 $paymentmethods .='<li id="chqPanel" class="list-group-item list-group-item-secondary panel-collapse collapse"><div class="panel-body">';
-$paymentmethods .='<button type="button" onclick="PayPM(\'CHQ\')" class="btn btn-danger btn-block"><b>'.__( 'Pay', 'doliconnect' )." ".doliprice($object, 'ttc', $currency).'</b></button>';
+$paymentmethods .='<button type="button" onclick="PayPM(\'CHQ\')" class="btn btn-danger btn-block">'.__( 'Pay', 'doliconnect' )." ".doliprice($object, 'ttc', $currency).'</button>';
 $paymentmethods .='</div></li>';
 }}
 if ( ! empty(dolikiosk()) ) {
@@ -1035,7 +1035,7 @@ $paymentmethods .= "</div><div class='col-auto align-middle'><h6 class='my-0'>".
 $paymentmethods .= '</div></div></label></div></li>';
 if (!empty($module) && is_object($object) && isset($object->id)) {
 $paymentmethods .='<li id="virPanel" class="list-group-item list-group-item-secondary panel-collapse collapse"><div class="panel-body">';
-$paymentmethods .='<button type="button" onclick="PayPM(\'LIQ\')" class="btn btn-danger btn-block"><b>'.__( 'Pay', 'doliconnect' )." ".doliprice($object, 'ttc', $currency).'</b></button>';
+$paymentmethods .='<button type="button" onclick="PayPM(\'LIQ\')" class="btn btn-danger btn-block">'.__( 'Pay', 'doliconnect' )." ".doliprice($object, 'ttc', $currency).'</button>';
 $paymentmethods .='</div></li>';
 }}
 

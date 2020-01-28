@@ -77,7 +77,7 @@ print "<div class='card shadow-sm'>";
 
 print doliuserform( $thirdparty, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'thirdparty');
 
-print "<div class='card-body'><input type='hidden' name='userid' value='$ID'><button class='btn btn-danger btn-block' type='submit'><b>".__( 'Update', 'doliconnect' )."</b></button></div>";
+print "<div class='card-body'><input type='hidden' name='userid' value='$ID'><button class='btn btn-danger btn-block' type='submit'>".__( 'Update', 'doliconnect' )."</button></div>";
 print '<div class="card-footer text-muted">';
 print "<small><div class='float-left'>";
 print dolirefresh($request, $url, dolidelay('thirdparty'), $thirdparty);
@@ -271,7 +271,7 @@ print " disabled='disabled'";
 }
 print "><label class='custom-control-label' for='inputavatar'>".__( 'Delete your picture', 'doliconnect' )."</label></div></div>";
 print "</li>";
-print "</ul><div class='card-body'><input type='hidden' name='userid' value='$ID'><button class='btn btn-danger btn-block' type='submit'><b>".__( 'Update', 'doliconnect' )."</b></button></div>";
+print "</ul><div class='card-body'><input type='hidden' name='userid' value='$ID'><button class='btn btn-danger btn-block' type='submit'>".__( 'Update', 'doliconnect' )."</button></div>";
 print '<div class="card-footer text-muted">';
 print "<small><div class='float-left'>";
 //print dolirefresh($request, $url, dolidelay('thirdparty'), $thirdparty);
@@ -440,7 +440,7 @@ print doliuserform($contact, dolidelay('constante', esc_attr(isset($_GET["refres
 
 print "</div>".doliloading('contact'.$contact->id.'-form');
       
-print "<div id='Footercontact".$contact->id."-form' class='modal-footer'><button name='update_contact' value='".$contact->id."' class='btn btn-warning btn-block' type='submit'><b>".__( 'Update', 'doliconnect' )."</b></button></form></div>
+print "<div id='Footercontact".$contact->id."-form' class='modal-footer'><button name='update_contact' value='".$contact->id."' class='btn btn-warning btn-block' type='submit'>".__( 'Update', 'doliconnect' )."</button></form></div>
 </div></div></div>";
 }}
 
@@ -459,7 +459,7 @@ print doliuserform($thirdparty, dolidelay('constante', esc_attr(isset($_GET["ref
 
 print "</div>".doliloading('addcontact-form');
 
-print "<div id='Footeraddcontact-form' class='modal-footer'><button name='add_contact' value='new_contact' class='btn btn-warning btn-block' type='submit'><b>".__( 'Add', 'doliconnect' )."</b></button></form></div>
+print "<div id='Footeraddcontact-form' class='modal-footer'><button name='add_contact' value='new_contact' class='btn btn-warning btn-block' type='submit'>".__( 'Add', 'doliconnect' )."</button></form></div>
 </div></div></div>";
 }
 
@@ -547,7 +547,7 @@ print "</ul><div class='card-body'><button class='btn btn-danger btn-block' type
 if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $ID ) {
 print ' disabled';
 }
-print "><b>".__( 'Update', 'doliconnect' )."</b></button></div><div class='card-footer text-muted'>";
+print ">".__( 'Update', 'doliconnect' )."</button></div><div class='card-footer text-muted'>";
 print "<small><div class='float-left'>";
 if ( $request ) print dolirefresh($request, $url, dolidelay('thirdparty'));
 print "</div><div class='float-right'>";
@@ -1409,15 +1409,15 @@ dolimembership_modal($current_user, $adherent, dolidelay('member', esc_attr(isse
 if ( $adherent->datefin == null && $adherent->statut == '0' ) {print  "<a href='#' id='subscribe-button2' class='btn btn text-white btn-warning btn-block' data-toggle='modal' data-target='#activatemember'><b>".__( 'Become a member', 'doliconnect' )."</b></a>";
 } elseif ($adherent->statut == '1') {
 if ( $time > $adherent->next_subscription_renew && $adherent->datefin != null ) {
-print "<button class='btn btn text-white btn-warning btn-block' data-toggle='modal' data-target='#activatemember'><b>".__( 'Renew my subscription', 'doliconnect' )."</b></button>";
+print "<button class='btn btn text-white btn-warning btn-block' data-toggle='modal' data-target='#activatemember'>".__( 'Renew my subscription', 'doliconnect' )."</button>";
 } elseif ( intval(86400+(!empty($adherent->datefin)?$adherent->datefin:0)) > $time ) {
-print  "<button id='subscribe-button2' class='btn btn text-white btn-warning btn-block' data-toggle='modal' data-target='#activatemember'><b>".__( 'Modify my subscription', 'doliconnect' )."</b></button>";
-} else { print  "<button class='btn btn btn-danger btn-block' data-toggle='modal' data-target='#activatemember'><b>".__( 'Pay my subscription', 'doliconnect' )."</b></button>";}
+print  "<button id='subscribe-button2' class='btn btn text-white btn-warning btn-block' data-toggle='modal' data-target='#activatemember'>".__( 'Modify my subscription', 'doliconnect' )."</button>";
+} else { print  "<button class='btn btn btn-danger btn-block' data-toggle='modal' data-target='#activatemember'>".__( 'Pay my subscription', 'doliconnect' )."</button>";}
 } elseif ( $adherent->statut == '0' ) {
 if ( intval(86400+(!empty($adherent->datefin)?$adherent->datefin:0)) > $time ) {
 print "<form id='subscription-form' action='".doliconnecturl('doliaccount')."?module=members' method='post'><input type='hidden' name='update_membership' value='4'><button id='resiliation-button' class='btn btn btn-warning btn-block' type='submit'><b>".__( 'Reactivate my subscription', 'doliconnect' )."</b></button></form>";
 } else {
-print  "<button class='btn btn text-white btn-warning btn-block' data-toggle='modal' data-target='#activatemember'><b>".__( 'Renew my subscription', 'doliconnect' )."</b></button>";
+print  "<button class='btn btn text-white btn-warning btn-block' data-toggle='modal' data-target='#activatemember'>".__( 'Renew my subscription', 'doliconnect' )."</button>";
 }
 } elseif ( $adherent->statut == '-1' ) {
 print '<div class="clearfix"><div class="spinner-border float-left" role="status">
@@ -1431,7 +1431,7 @@ $thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, '
 if ( empty($thirdparty->address) || empty($thirdparty->zip) || empty($thirdparty->town) || empty($thirdparty->country_id) || empty($current_user->billing_type) || empty($current_user->billing_birth) || empty($current_user->user_firstname) || empty($current_user->user_lastname) || empty($current_user->user_email)) {
 print "Pour adhérer, tous les champs doivent être renseignés dans vos <a href='".esc_url( get_permalink(get_option('doliaccount')))."?module=informations&return=members' class='alert-link'>".__( 'Personal informations', 'doliconnect' )."</a></div><div class='col-sm-6 col-md-7'>";
 } else { 
-print "<button class='btn btn text-white btn-warning btn-block' data-toggle='modal' data-target='#activatemember'><b>".__( 'Become a member', 'doliconnect' )."</b></button>";
+print "<button class='btn btn text-white btn-warning btn-block' data-toggle='modal' data-target='#activatemember'>".__( 'Become a member', 'doliconnect' )."</button>";
 }
 }
 
@@ -1627,7 +1627,7 @@ print doliuserform($member, dolidelay('constante', esc_attr(isset($_GET["refresh
 
 print "</div>".doliloading('member'.$member->id.'-form');
      
-print "<div id='Footermember".$member->id."-form' class='modal-footer'><button name='update_member' value='".$member->id."' class='btn btn-warning btn-block' type='submit'><b>".__( 'Update', 'doliconnect' )."</b></button></form></div>
+print "<div id='Footermember".$member->id."-form' class='modal-footer'><button name='update_member' value='".$member->id."' class='btn btn-warning btn-block' type='submit'>".__( 'Update', 'doliconnect' )."</button></form></div>
 </div></div></div>";
 }}
 
@@ -1834,7 +1834,7 @@ print "<div class='form-group'>
 <label for='description'><small>".__( 'Message', 'doliconnect' )."</small></label><div class='input-group mb-2'><div class='input-group-prepend'><span class='input-group-text'><i class='fas fa-file-alt fa-fw'></i></span></div>
 <textarea type='text' class='form-control' name='ticket_message' id='ticket_message' rows='8' required></textarea></div></div></li></ul>";
 
-print "<div class='card-body'><input type='hidden' name='case' value='createticket'><button type='submit' class='btn btn-block btn-warning'><b>".__( 'Send', 'doliconnect')."</b></button></div>";
+print "<div class='card-body'><input type='hidden' name='case' value='createticket'><button type='submit' class='btn btn-block btn-warning'>".__( 'Send', 'doliconnect')."</button></div>";
 
 print "</div></form>";
 
