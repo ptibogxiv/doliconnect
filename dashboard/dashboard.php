@@ -1099,9 +1099,9 @@ if ( $contractfo->statut > 0 ) {
 //}
 $contractavancement=0; 
 }
-elseif ( $contractfo->statut == 0 ) { $contractinfo=__( 'Validation', 'doliconnect' );
+elseif ( $contractfo->statut == 0 ) { $contractinfo=__( 'Validation', 'doliconnect');
 $contractavancement=7; }
-elseif ( $contractfo->statut == -1) { $contractinfo=__( 'Canceled', 'doliconnect' );
+elseif ( $contractfo->statut == -1) { $contractinfo=__( 'Canceled', 'doliconnect');
 $contractavancement=0; }
 
 print "</div></div>";
@@ -1117,7 +1117,7 @@ print dolitotal($contractfo);
 
 if ( $contractfo->last_main_doc != null ) {
 $doc = array_reverse( explode("/", $contractfo->last_main_doc) );      
-$document = dolidocdownload($doc[2], $doc[1], $doc[0], __( 'Summary', 'doliconnect' ));
+$document = dolidocdownload($doc[2], $doc[1], $doc[0], __( 'Summary', 'doliconnect'));
 } 
     
 $fruits[$contractfo->date_creation.'p'] = array(

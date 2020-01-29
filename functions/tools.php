@@ -391,7 +391,7 @@ if ( $user->loginmailalert == 'on'  ) { //&& $user->ID != ''.constant("DOLICONNE
 $sitename = get_option('blogname');
 $siteurl = get_option('siteurl');
 $subject = "[$sitename] ".__( 'Connection notification', 'doliconnect' );
-$body = __( 'It appears that you have just logged on to our site the following IP address:', 'doliconnect' )."<br /><br />".$_SERVER['REMOTE_ADDR']."<br /><br />".__( 'If you have not made this action, please change your password immediately.', 'doliconnect' )."<br /><br />".sprintf(__('Your %s\'s team', 'doliconnect'), $sitename)."<br />$siteurl";				
+$body = __( 'It appears that you have just logged on to our site the following IP address:', 'doliconnect')."<br /><br />".$_SERVER['REMOTE_ADDR']."<br /><br />".__( 'If you have not made this action, please change your password immediately.', 'doliconnect')."<br /><br />".sprintf(__('Your %s\'s team', 'doliconnect'), $sitename)."<br />$siteurl";				
 $headers = array('Content-Type: text/html; charset=UTF-8');
 $mail =  wp_mail($user->user_email, $subject, $body, $headers);
 }
@@ -418,7 +418,7 @@ $filename = explode(".", $doc->filename)[0];
 $document = '<button type="button" class="btn btn btn-outline-dark btn-sm btn-block" data-toggle="modal" data-target=".modal-'.$filename.'">'.$name.' <i class="fas fa-file-download"></i></button>';
 $document .= '<div class="modal fade modal-'.$filename.'" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 <div class="modal-dialog modal-dialog-centered modal-lg" role="document"><div class="modal-content"><div class="modal-header">
-<h5 class="modal-title" id="exampleModalCenterTitle"><a href="'.$data.'" download="'.$doc->filename.'">'.$filename.'</a></h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="modal-body">';
+<h5 class="modal-title" id="exampleModalCenterTitle"><a href="'.$data.'" download="'.$doc->filename.'">'.__( 'Download', 'doliconnect').' '.$filename.'</a></h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="modal-body">';
 $document .= '<iframe class="pdfjs-viewer" style="width:100%;height:70vh" src="'.plugins_url("doliconnect/includes/pdfjs/web/viewer.html").'?file=" id="pdfjsframe-'.$filename.'"></iframe>
 <script>
 document.getElementById("pdfjsframe-'.$filename.'").onload = function() {
