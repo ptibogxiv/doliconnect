@@ -399,71 +399,33 @@ $mail =  wp_mail($user->user_email, $subject, $body, $headers);
 }
 add_action('wp_login', 'Doliconnect_MailAlert', 10, 2);
 
-function dolidocdownload($type, $ref=null, $fichier=null, $url=null, $name=null, $refresh = false) {
+function dolidocdownload($type, $ref=null, $fichier=null, $name=null, $refresh = false) {
 global $wpdb;
-$ID = get_current_user_id();
  
 if ( $name == null ) { $name=$fichier; } 
 
 if ( doliversion('11.0.0') ) {
-$doc = callDoliApi("GET", "/documents/download?modulepart=$type&original_file=$ref/$fichier", null, 0);
+$doc = callDoliApi("GET", "/documents/download?modulepart=".$type."&original_file=".$ref."/".$fichier, null, 0);
 } else {
-$doc = callDoliApi("GET", "/documents/download?module_part=$type&original_file=$ref/$fichier", null, 0);
+$doc = callDoliApi("GET", "/documents/download?module_part=".$type."&original_file=".$ref."/".$fichier, null, 0);
 }
-
-if ( isset($_GET["download"]) && $_GET["securekey"] ==  hash('sha256', $ID.$type.$_GET["download"]) && $_GET["download"] == "$ref/$fichier" ) {
-
-if ( !empty($refresh) ) {
-if ( doliversion('11.0.0') ) {
-$rdr = [
-    'modulepart'  => $type,
-    'originalfile' => $ref.'/'.$fichier,
-    //'doctemplate'  => $type,
-    //'langcode' => '',
-	];
-} else {
-$rdr = [
-    'module_part'  => $type,
-    'original_file' => $ref.'/'.$fichier
-	];
-}
-$doc = callDoliApi("PUT", "/documents/builddoc", $rdr, 0);
-} else {
-if ( doliversion('11.0.0') ) {
-$doc = callDoliApi("GET", "/documents/download?modulepart=$type&original_file=$ref/$fichier", null, 0);
-} else {
-$doc = callDoliApi("GET", "/documents/download?module_part=$type&original_file=$ref/$fichier", null, 0);
-}
-} 
-
-$decoded = base64_decode($doc->content);      
-$up_dir = wp_upload_dir();
-    if (!file_exists($up_dir['basedir'].'/doliconnect/'.$ID)) {
-        mkdir($up_dir['basedir'].'/doliconnect/'.$ID, 0777, true);
-    }
-$upload_dir = wp_upload_dir(); 
-$file=$upload_dir['basedir']."/doliconnect/".$ID."/".$doc->filename;
-file_put_contents($file, $decoded);
-
-if ( file_exists($file) ) {
-header('Content-Description: File Transfer');
-header('Content-Type: application/pdf');
-header('Content-Disposition: attachment; filename='.$doc->filename);
-header('Content-Transfer-Encoding: binary');
-header('Expires: 0');
-header('Cache-Control: must-revalidate');
-header('Pragma: public');
-//header('Content-Length: '.$doc->filesize);
-ob_clean();
-flush();
-readfile($file);
-unlink($file);
-}
-
-}
+//print var_dump($doc);
 
 if ( isset($ref) && isset($fichier) && isset($doc->content) ) { 
-$document = "<a class='btn btn btn-outline-dark btn-sm btn-block' href='".esc_url( add_query_arg( array('download' => $ref."/".$fichier, 'securekey' => hash('sha256', $ID.$type.$ref."/".$fichier)), $url) )."' download='".$fichier."'>$name <i class='fas fa-file-download'></i></a>";
+
+$data = "data:application/pdf;".$doc->encoding.",".$doc->content;
+$filename = explode(".", $doc->filename)[0];
+$document = '<button type="button" class="btn btn btn-outline-dark btn-sm btn-block" data-toggle="modal" data-target=".modal-'.$filename.'">'.$name.' <i class="fas fa-file-download"></i></button>';
+$document .= '<div class="modal fade modal-'.$filename.'" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered modal-lg" role="document"><div class="modal-content"><div class="modal-header">
+<h5 class="modal-title" id="exampleModalCenterTitle"><a href="'.$data.'" download="'.$doc->filename.'">'.$filename.'</a></h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="modal-body">';
+$document .= '<iframe class="pdfjs-viewer" style="width:100%;height:70vh" src="'.plugins_url("doliconnect/includes/pdfjs/web/viewer.html").'?file=" id="pdfjsframe-'.$filename.'"></iframe>
+<script>
+document.getElementById("pdfjsframe-'.$filename.'").onload = function() {
+document.getElementById("pdfjsframe-'.$filename.'").contentWindow.PDFViewerApplication.open("'.$data.'");
+};
+</script>';
+$document .= '</div></div></div></div>';
 } else { $document = "no document"; }
 
 return $document;
@@ -800,6 +762,9 @@ $listpaymentmethods = callDoliApi("GET", $request, null, dolidelay('paymentmetho
 //print $listpaymentmethods;
 $thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty', $refresh)); 
 //print $thirdparty;
+
+$paymenterm = callDoliApi("GET", "/setup/dictionary/payment_terms?sortfield=rowid&sortorder=ASC&limit=100&active=1&sqlfilters=(t.rowid%3A%3D%3A'".$thirdparty->cond_reglement_id."')", null, dolidelay('constante', $refresh)); 
+//print var_dump($paymenterm[0]);
 
 $lock = dolipaymentmodes_lock(); 
 

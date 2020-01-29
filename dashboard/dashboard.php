@@ -677,7 +677,7 @@ print dolitotal($proposalfo);
 
 if ( $proposalfo->last_main_doc != null ) {
 $doc = array_reverse( explode("/", $proposalfo->last_main_doc) );      
-$document = dolidocdownload($doc[2], $doc[1], $doc[0], $url."&id=".$proposalfo->id."&ref=".$proposalfo->ref."&security=".$_GET['security'], __( 'Summary', 'doliconnect' ));
+$document = dolidocdownload($doc[2], $doc[1], $doc[0], __( 'Summary', 'doliconnect' ));
 } 
     
 $fruits[$proposalfo->date_creation.'p'] = array(
@@ -879,9 +879,9 @@ print dolitotal($orderfo);
 
 if ( $orderfo->last_main_doc != null ) {
 $doc = array_reverse(explode("/", $orderfo->last_main_doc)); 
-$document_order = dolidocdownload($doc[2], $doc[1], $doc[0], $url."&id=".$orderfo->id."&ref=".$orderfo->ref."&security=".$_GET['security'], __( 'Summary', 'doliconnect' ));
+$document_order = dolidocdownload($doc[2], $doc[1], $doc[0], __( 'Summary', 'doliconnect' ));
 } else {
-$document_order = dolidocdownload('order', $orderfo->ref, $orderfo->ref.'.pdf', $url."&id=".$orderfo->id."&ref=".$orderfo->ref."&security=".$_GET['security'], __( 'Summary', 'doliconnect' ), true);
+$document_order = dolidocdownload('order', $orderfo->ref, $orderfo->ref.'.pdf', __( 'Summary', 'doliconnect' ), true);
 } 
     
 $fruits[$orderfo->date_commande.'o'] = array(
@@ -916,9 +916,9 @@ $fruits[strtotime($pay->date).'p'] = array(
 
 if ( $invoice->last_main_doc != null ) {
 $doc = array_reverse(explode("/", $invoice->last_main_doc)); 
-$document_invoice = dolidocdownload($doc[2], $doc[1], $doc[0], $url."&id=".$orderfo->id."&ref=".$orderfo->ref."&security=".$_GET['security'], __( 'Invoice', 'doliconnect' ));
+$document_invoice = dolidocdownload($doc[2], $doc[1], $doc[0], __( 'Invoice', 'doliconnect' ));
 } else {
-$document_invoice = dolidocdownload('invoice', $invoice->ref, $invoice->ref.'.pdf', $url."&id=".$orderfo->id."&ref=".$orderfo->ref."&security=".$_GET['security'], __( 'Invoice', 'doliconnect' ), true);
+$document_invoice = dolidocdownload('invoice', $invoice->ref, $invoice->ref.'.pdf', __( 'Invoice', 'doliconnect' ), true);
 }
 
 if ( $invoice->paye != 1 && $invoice->remaintopay != 0 && function_exists('dolipaymentmodes') ) {
@@ -1117,7 +1117,7 @@ print dolitotal($contractfo);
 
 if ( $contractfo->last_main_doc != null ) {
 $doc = array_reverse( explode("/", $contractfo->last_main_doc) );      
-$document = dolidocdownload($doc[2], $doc[1], $doc[0], $url."&id=".$contractfo->id."&ref=".$contractfo->ref."&security=".$_GET['security'], __( 'Summary', 'doliconnect' ));
+$document = dolidocdownload($doc[2], $doc[1], $doc[0], __( 'Summary', 'doliconnect' ));
 } 
     
 $fruits[$contractfo->date_creation.'p'] = array(
