@@ -1061,7 +1061,7 @@ print '</div></div>';
 }
 }
 
-if ( is_object($contract) && $contract->value == 1 && get_option('doliconnectbeta') =='1' ) {
+if ( is_object($contract) && $contract->value == 1 && get_option('doliconnectbeta') == '1' ) {
 add_action( 'customer_doliconnect_menu', 'contracts_menu', 2, 1);
 add_action( 'customer_doliconnect_contracts', 'contracts_module' );
 }
@@ -1475,7 +1475,7 @@ print '</div></div>';
 
 }
 
-if ( is_object($memberconsumption) && $memberconsumption->value == '1' && get_option('doliconnectbeta') =='1' ) {
+if ( is_object($memberconsumption) && $memberconsumption->value == '1' && get_option('doliconnectbeta') == '1' ) {
 add_action( 'options_doliconnect_menu', 'membershipconsumption_menu', 2, 1);
 add_action( 'options_doliconnect_membershipconsumption', 'membershipconsumption_module' );
 }  
@@ -1938,7 +1938,7 @@ print "<li class='list-group-item'><div class='custom-control custom-switch'><in
 if ( $current_user->loginmailalert == 'on' ) { print " checked"; }        
 print " onChange='demo()'><label class='custom-control-label w-100' for='loginmailalert'> ".__( 'Receive a email notification at each connection', 'doliconnect')."</label>
 </div></li>";
-if ( get_option('doliconnectbeta') =='1' ) {
+if ( get_option('doliconnectbeta') == '1' ) {
 print "<li class='list-group-item'><div class='custom-control custom-switch'><input type='checkbox' class='custom-control-input' name='optin1' id='optin1' ";
 if ( $current_user->optin1 == 'on' ) { print " checked"; }        
 print " onChange='demo()'><label class='custom-control-label w-100' for='optin1'> ".__( 'I would like to receive the newsletter', 'doliconnect')."</label>

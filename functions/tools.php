@@ -415,6 +415,8 @@ if ( isset($ref) && isset($fichier) && isset($doc->content) ) {
 
 $data = "data:application/pdf;".$doc->encoding.",".$doc->content;
 $filename = explode(".", $doc->filename)[0];
+
+if (get_option('doliconnectbeta') == '1') {
 $document = '<button type="button" class="btn btn btn-outline-dark btn-sm btn-block" data-toggle="modal" data-target=".modal-'.$filename.'">'.$name.' <i class="fas fa-file-download"></i></button>';
 $document .= '<div class="modal fade modal-'.$filename.'" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 <div class="modal-dialog modal-dialog-centered modal-lg" role="document"><div class="modal-content"><div class="modal-header">
@@ -426,6 +428,9 @@ document.getElementById("pdfjsframe-'.$filename.'").contentWindow.PDFViewerAppli
 };
 </script>';
 $document .= '</div></div></div></div>';
+} else {
+$document = '<a href="'.$data.'" class="btn btn btn-outline-dark btn-sm btn-block" download="'.$doc->filename.'">'.$name.' <i class="fas fa-file-download"></i></a>';
+}
 } else { $document = "no document"; }
 
 return $document;
