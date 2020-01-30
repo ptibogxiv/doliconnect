@@ -940,7 +940,7 @@ $paymentmethods .= '<div class="custom-control custom-radio custom-control-inlin
   <label class="custom-control-label" for="ibanDefault1">'.__( "Save", 'doliconnect').'</label>
 </div>';} else {
 $paymentmethods .= '<div class="custom-control custom-radio custom-control-inline">
-  <input type="radio" id="ibanDefault0" name="ibanDefault" value="0"  class="custom-control-input""';
+  <input type="radio" id="ibanDefault0" name="ibanDefault" value="0"  class="custom-control-input"';
 if (empty($countPM)) {
 $paymentmethods .= ' disabled'; 
 } else {
