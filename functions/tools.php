@@ -864,7 +864,7 @@ $i++;
 $paymentmethods .= '<li class="list-group-item list-group-item-light flex-column align-items-start"><div class="custom-control custom-radio">
 <input type="radio" id="none" name="paymentmode" value="none" class="custom-control-input" data-toggle="collapse" data-parent="#accordion" href="#none" checked>
 <label class="custom-control-label w-100" for="none"><div class="row"><div class="col-3 col-md-2 col-xl-2 align-middle">
-<center><i class="fas fa-border-none fa-3x fa-fw"></i></center></div><div class="col-auto align-middle"><h6 class="my-0">'.__( 'No saved payment method', 'doliconnect').'</h6><small class="text-muted"></small></div></div></label>
+<center><i class="fas fa-border-none fa-3x fa-fw"></i></center></div><div class="col-auto align-middle"><h6 class="my-0">'.__( 'No registered payment method', 'doliconnect').'</h6><small class="text-muted"></small></div></div></label>
 </div></li>';
 }
 if ( $countPM < 5 && isset($listpaymentmethods->stripe) && in_array('card', $listpaymentmethods->stripe->types) && empty($thirdparty->mode_reglement_id) ) {
