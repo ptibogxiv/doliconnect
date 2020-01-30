@@ -156,10 +156,11 @@ print "</div>";
 // fin de sous page
 print "</div>";
 }
-} else {
-if ( isset($_GET["action"]) && $_GET["action"] == 'confirmaction' ) {
+} else { 
 print "<p class='font-weight-light' align='justify'>".__( 'Manage your account, your informations, orders and much more via this secure client area.', 'doliconnect' )."</p></div></div></div>";
 print "<div class='col-xs-12 col-sm-12 col-md-9'>";
+if ( isset($_GET["action"]) && $_GET["action"] == 'confirmaction' ) {
+
 		if ( ! isset( $_GET['request_id'] ) ) {
 			$msg = __( 'Missing request ID.' );
 		}
@@ -182,10 +183,7 @@ print $message;
 //}
 }
 
-print "</div></div>";
 } elseif ( isset($_GET["action"]) && $_GET["action"] == 'signup' ) {
-print "<p class='font-weight-light' align='justify'>".__( 'Manage your account, your informations, orders and much more via this secure client area.', 'doliconnect' )."</p></div></div></div>";
-print "<div class='col-xs-12 col-sm-12 col-md-9'>";
 
 if ( is_user_logged_in() ) {
 wp_redirect(site_url());
@@ -317,12 +315,8 @@ print '</div></div></form>';
 
 do_action( 'login_footer' );
 
-print "</div></div>";
-
 } elseif ( isset($_GET["action"]) && $_GET["action"] == 'rpw' ) {
 
-print "<p class='font-weight-light' align='justify'>".__( 'Manage your account, your informations, orders and much more via this secure client area.', 'doliconnect' )."</p></div></div></div>";
-print "<div class='col-xs-12 col-sm-12 col-md-9'>";
 if (!$_GET["login"] || !$_GET["key"]) {
 wp_redirect(wp_login_url( get_permalink() ));
 exit;
@@ -411,10 +405,9 @@ if ( $request ) print dolirefresh($request, null, dolidelay('thirdparty'));
 print "</div><div class='float-right'>";
 print dolihelp('ISSUE');
 print "</div></small>";
-print '</div></div>';
 
-}
-}
+}}
+
 } elseif ( isset($_GET["provider"]) && $_GET["provider"] != null ) { 
 include( plugin_dir_path( __DIR__ ) . 'includes/hybridauth/src/autoload.php');
 include( plugin_dir_path( __DIR__ ) . 'includes/hybridauth/src/config.php');
@@ -477,8 +470,6 @@ catch(\Exception $e) {
 //print "<hr /><h3>Trace</h3> <pre>" . $e->getTraceAsString() . "</pre>";  
 }
 } elseif ( isset($_GET["action"]) && $_GET["action"] == 'fpw' ) { 
-print "<p class='font-weight-light' align='justify'>".__( 'Manage your account, your informations and much more via this secure client area.', 'doliconnect' )."</p></div></div></div>";
-print "<div class='col-xs-12 col-sm-12 col-md-9'>";
   
 if( isset($_POST['user_email']) ) {
 
@@ -553,12 +544,7 @@ print dolihelp('ISSUE');
 print "</div></small>";
 print "</div></div></form>";
 
-print "</div></div>";
-
 } else {
-
-print "<p class='font-weight-light' align='justify'>".__( 'Manage your account, your informations and much more via this secure client area.', 'doliconnect' )."</p></div></div></div>";
-print "<div class='col-xs-12 col-sm-12 col-md-9'>";
 
 if ( isset($emailSent) && $emailSent == true ) { 
 print "<div class='alert alert-success'><h4 class='alert-heading'>".__( 'Congratulations!', 'doliconnect' )."</h4><p>".__( 'A password reset link was sent to you by email. Please check your spam folder if you don\'t find it.', 'doliconnect' )."</p></div>";
@@ -639,9 +625,11 @@ print dolihelp('ISSUE');
 print "</div></small>";
 print "</div></div></form>";
 
-print "</div></div>";
 
-} }
+
+}
+print "</div></div>";
+}
 
 } else {
 
