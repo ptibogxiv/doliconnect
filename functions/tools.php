@@ -1241,8 +1241,8 @@ var ibanholderName = document.getElementById('ibanholder-name');
 ibanholderName.value = '';
 var ibanButton = document.getElementById('ibanButton'); 
 var ibanPayButton = document.getElementById('ibanPayButton'); 
-var bankName = document.getElementById('bank-name');
-bankName.textContent = '';
+//var bankName = document.getElementById('bank-name');
+//bankName.textContent = '';
 ibanElement.addEventListener('change', function(event) {
   // Handle real-time validation errors from the iban Element.
     console.log('Reset error message');
