@@ -788,7 +788,17 @@ $paymentmethods .= "<li class='list-group-item list-group-item-info'><i class='f
 }
 
 if (!empty($thirdparty->cond_reglement_id)) {
-$paymentmethods .= "<li class='list-group-item list-group-item-light list-group-item-action flex-column align-items-start'><b>".__( 'Payment term', 'doliconnect').":</b> ".$thirdparty->cond_reglement_id."</li>";
+$paymentmethods .= "<li class='list-group-item list-group-item-light list-group-item-action flex-column align-items-start'><b>".__( 'Payment term', 'doliconnect').":</b> ";
+if ($paymenterm[0]->type_cdr == 1) {
+$paymentmethods .= sprintf( _n( '%s day', '%s days', $paymenterm[0]->nbjour, 'doliconnect'), $paymenterm[0]->nbjour);
+$paymentmethods .= ", ".__( 'end of month', 'doliconnect');
+} elseif ($paymenterm[0]->type_cdr == 2) {
+$paymentmethods .= sprintf( _n( '%s day', '%s days', $paymenterm[0]->nbjour, 'doliconnect'), $paymenterm[0]->nbjour);
+$paymentmethods .= " ".__( 'the of month', 'doliconnect');
+} else {
+$paymentmethods .= sprintf( _n( '%s day', '%s days', $paymenterm[0]->nbjour, 'doliconnect'), $paymenterm[0]->nbjour);
+}
+$paymentmethods .= "</li>";
 }
 
 if (empty($listpaymentmethods->payment_methods)) {
