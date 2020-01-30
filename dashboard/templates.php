@@ -288,7 +288,7 @@ if ( isset($hasError) || isset($captchaError) ) {
 print "<div class='alert alert-danger'><a class='close' data-dismiss='alert'>x</a><h4 class='alert-heading'>".__( 'Oops', 'doliconnect' )."</h4><p class='error'>$emailError<p></div>";
 }
 }
-print "<form id='doliconnect-signinform' action='".doliconnecturl('doliaccount')."?signup' role='form' method='post' class='was-validated'>";
+print "<form id='doliconnect-signinform' action='".doliconnecturl('doliaccount')."?action=signup' role='form' method='post' class='was-validated'>";
 
 if ( isset($msg) ) { print $msg; }
 
@@ -367,7 +367,7 @@ $doliuser = callDoliApi("GET", $request , null, dolidelay('thirdparty'));
 print "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".__( 'Your password will be synchronized with your Dolibarr account', 'doliconnect' )."</b></li>";
 } 
 print "<li class='list-group-item'><h5 class='card-title'>".__( 'Change your password', 'doliconnect' )."</h5>
-<form class='was-validated' id='doliconnect-rpwform' action='' method='post'><input type='hidden' name='submitted' id='submitted' value='true' />";
+<form class='was-validated' id='doliconnect-rpwform' action='".doliconnecturl('doliaccount')."?action=rpw' method='post'><input type='hidden' name='submitted' id='submitted' value='true' />";
 
 print doliloaderscript('doliconnect-rpwform'); 
 
@@ -520,7 +520,7 @@ print "<div class='alert alert-danger'><h4 class='alert-heading'>".__( 'Oops', '
 print "<div class='alert alert-warning'><h4 class='alert-heading'>".__( 'Oops', 'doliconnect' )."</h4><p>".__( 'A problem occurred. Please retry later!', 'doliconnect' )."</p></div>";
 }
 
-print "<form id='doliconnect-fpwform' action='".doliconnecturl('doliaccount')."?fpw' method='post' class='was-validated'><input type='hidden' name='submitted' id='submitted' value='true' />";
+print "<form id='doliconnect-fpwform' action='".doliconnecturl('doliaccount')."?action=fpw' method='post' class='was-validated'><input type='hidden' name='submitted' id='submitted' value='true' />";
 
 if ( isset($msg) ) { print $msg; }
 
