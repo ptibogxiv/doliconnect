@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2020-01-30 18:08+0100\n"
-"PO-Revision-Date: 2020-01-30 18:09+0100\n"
+"POT-Creation-Date: 2020-01-30 20:44+0100\n"
+"PO-Revision-Date: 2020-01-30 20:44+0100\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_FR\n"
@@ -1624,8 +1624,8 @@ msgid "Favourite"
 msgstr "Favori"
 
 #: functions/tools.php:867
-msgid "No payment method"
-msgstr "Aucun mode de paiement"
+msgid "No registered payment method"
+msgstr "Pas de mode de paiement enregistré"
 
 #: functions/tools.php:874
 msgid "Credit/debit card"
