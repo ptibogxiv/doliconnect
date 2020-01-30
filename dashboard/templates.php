@@ -156,7 +156,34 @@ print "</div>";
 // fin de sous page
 print "</div>";
 }
-} elseif ( !is_user_logged_in() && isset($_GET["signup"]) ) {
+} else {
+if ( isset($_GET["action"]) && $_GET["action"] == 'confirmaction' ) {
+print "<p class='font-weight-light' align='justify'>".__( 'Manage your account, your informations, orders and much more via this secure client area.', 'doliconnect' )."</p></div></div></div>";
+print "<div class='col-xs-12 col-sm-12 col-md-9'>";
+		if ( ! isset( $_GET['request_id'] ) ) {
+			$msg = __( 'Missing request ID.' );
+		}
+
+		if ( ! isset( $_GET['confirm_key'] ) ) {
+			$msg = __( 'Missing confirm key.' );
+		}   
+    
+    if ( isset($msg) ) { print $msg; }    
+
+if ( isset( $_GET['request_id'] ) && isset( $_GET['confirm_key'] ) ) {
+		$request_id = (int) $_GET['request_id'];
+		$key        = sanitize_text_field( wp_unslash( $_GET['confirm_key'] ) );
+		$result     = wp_validate_user_request_key( $request_id, $key );
+
+//if ( !is_wp_error( $result ) ) {
+do_action( 'user_request_action_confirmed', $request_id );
+$message = _wp_privacy_account_request_confirmed_message( $request_id );
+print $message;
+//}
+}
+
+print "</div></div>";
+} elseif ( isset($_GET["signup"]) ) {
 print "<p class='font-weight-light' align='justify'>".__( 'Manage your account, your informations, orders and much more via this secure client area.', 'doliconnect' )."</p></div></div></div>";
 print "<div class='col-xs-12 col-sm-12 col-md-9'>";
 
@@ -292,7 +319,7 @@ do_action( 'login_footer' );
 
 print "</div></div>";
 
-} elseif ( !is_user_logged_in() && isset($_GET["rpw"]) ) {
+} elseif ( isset($_GET["rpw"]) ) {
 
 print "<p class='font-weight-light' align='justify'>".__( 'Manage your account, your informations, orders and much more via this secure client area.', 'doliconnect' )."</p></div></div></div>";
 print "<div class='col-xs-12 col-sm-12 col-md-9'>";
@@ -449,7 +476,7 @@ catch(\Exception $e) {
     print "<br /><br /><b>Original error message:</b> " . $e->getMessage();
 //print "<hr /><h3>Trace</h3> <pre>" . $e->getTraceAsString() . "</pre>";  
 }
-} elseif ( !is_user_logged_in() && isset($_GET["fpw"]) ) { 
+} elseif ( isset($_GET["fpw"]) ) { 
 print "<p class='font-weight-light' align='justify'>".__( 'Manage your account, your informations and much more via this secure client area.', 'doliconnect' )."</p></div></div></div>";
 print "<div class='col-xs-12 col-sm-12 col-md-9'>";
   
@@ -614,7 +641,7 @@ print "</div></div></form>";
 
 print "</div></div>";
 
-}
+} }
 
 } else {
 
