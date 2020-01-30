@@ -1704,14 +1704,14 @@ global $current_user;
 <div class='col-auto align-middle'><h6 class='my-0'><?php echo __( 'Export your data', 'doliconnect' ); ?></h6><small class='text-muted'><?php echo __( 'You will receive an email with a secure link to your data', 'doliconnect' ); ?></small>
 </div></div></label></div></li>
 <li class='list-group-item list-group-item-light list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>
-<input id='gdrf-data-type-remove' class='custom-control-input' type='radio' name='gdrf_data_type' value='remove_personal_data' disabled>
+<input id='gdrf-data-type-remove' class='custom-control-input' type='radio' name='gdrf_data_type' value='remove_personal_data'>
 <label class='custom-control-label w-100' for='gdrf-data-type-remove'><div class='row'>
 		<?php if ( !isset($args['widget']) ) : ?>
 <div class='d-none d-sm-block col-sm-3 col-md-2 align-middle'>
 <center><i class='fas fa-eraser fa-3x fa-fw'></i></center>
 </div>
 		<?php endif; ?>
-<div class='col-auto align-middle'><h6 class='my-0'><?php echo __( 'Erase your data', 'doliconnect' ); ?></h6><small class='text-muted'><?php echo __( 'Soon, you will be able to erase your account', 'doliconnect' ); ?></small>
+<div class='col-auto align-middle'><h6 class='my-0'><?php echo __( 'Erase your data', 'doliconnect' ); ?></h6><small class='text-muted'><?php echo __( 'You will receive an email with a secure link to confirm the deletion', 'doliconnect' ); ?></small>
 </div></div></label></div></li>
 <?php if (get_option('doliconnectbeta') =='1') { ?>
 <li class='list-group-item list-group-item-light list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>
