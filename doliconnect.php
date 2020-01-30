@@ -439,12 +439,12 @@ return false;
 }
 
 function my_register_page( $register_url ) {
-return doliconnecturl('doliaccount') . '?signup';
+return doliconnecturl('doliaccount') . '?action=signup';
 }
 add_filter( 'register_url', 'my_register_page' );
 
 function my_lost_password_page( $lostpassword_url ) {
-return doliconnecturl('doliaccount') . '?fpw';
+return doliconnecturl('doliaccount') . '?action=fpw';
 }
 if (get_option('doliaccount')) {
 add_filter( 'lostpassword_url', 'my_lost_password_page', 10, 2 );}

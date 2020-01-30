@@ -183,7 +183,7 @@ print $message;
 }
 
 print "</div></div>";
-} elseif ( isset($_GET["signup"]) ) {
+} elseif ( isset($_GET["action"]) && $_GET["action"] == 'signup' ) {
 print "<p class='font-weight-light' align='justify'>".__( 'Manage your account, your informations, orders and much more via this secure client area.', 'doliconnect' )."</p></div></div></div>";
 print "<div class='col-xs-12 col-sm-12 col-md-9'>";
 
@@ -319,7 +319,7 @@ do_action( 'login_footer' );
 
 print "</div></div>";
 
-} elseif ( isset($_GET["rpw"]) ) {
+} elseif ( isset($_GET["action"]) && $_GET["action"] == 'rpw' ) {
 
 print "<p class='font-weight-light' align='justify'>".__( 'Manage your account, your informations, orders and much more via this secure client area.', 'doliconnect' )."</p></div></div></div>";
 print "<div class='col-xs-12 col-sm-12 col-md-9'>";
@@ -476,7 +476,7 @@ catch(\Exception $e) {
     print "<br /><br /><b>Original error message:</b> " . $e->getMessage();
 //print "<hr /><h3>Trace</h3> <pre>" . $e->getTraceAsString() . "</pre>";  
 }
-} elseif ( isset($_GET["fpw"]) ) { 
+} elseif ( isset($_GET["action"]) && $_GET["action"] == 'fpw' ) { 
 print "<p class='font-weight-light' align='justify'>".__( 'Manage your account, your informations and much more via this secure client area.', 'doliconnect' )."</p></div></div></div>";
 print "<div class='col-xs-12 col-sm-12 col-md-9'>";
   
@@ -500,7 +500,7 @@ if( isset($_POST['user_email']) ) {
 $user = get_user_by( 'email', $email);   
 $key = get_password_reset_key($user);
 
-$arr_params = array( 'rpw' => true, 'key' => $key, 'login' => $user->user_login);  
+$arr_params = array( 'action' => 'rpw', 'key' => $key, 'login' => $user->user_login);  
 $url = esc_url( add_query_arg( $arr_params, doliconnecturl('doliaccount')) );
 
 if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $user->ID ) {
