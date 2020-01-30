@@ -794,7 +794,7 @@ $paymentmethods .= sprintf( _n( '%s day', '%s days', $paymenterm[0]->nbjour, 'do
 $paymentmethods .= ", ".__( 'end of month', 'doliconnect');
 } elseif ($paymenterm[0]->type_cdr == 2) {
 $paymentmethods .= sprintf( _n( '%s day', '%s days', $paymenterm[0]->nbjour, 'doliconnect'), $paymenterm[0]->nbjour);
-$paymentmethods .= " ".__( 'the of month', 'doliconnect');
+$paymentmethods .= ", ".sprintf( __( 'the %s of month', 'doliconnect'), $paymenterm[0]->decalage);
 } else {
 $paymentmethods .= sprintf( _n( '%s day', '%s days', $paymenterm[0]->nbjour, 'doliconnect'), $paymenterm[0]->nbjour);
 }
