@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2020-01-28 14:38+0100\n"
-"PO-Revision-Date: 2020-01-28 14:46+0100\n"
+"POT-Creation-Date: 2020-01-30 14:39+0100\n"
+"PO-Revision-Date: 2020-01-30 14:40+0100\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: de_DE\n"
@@ -150,7 +150,7 @@ msgid "Company"
 msgstr "Firma"
 
 #: blocks/membership/block.php:110 blocks/membership/block.php:169
-#: functions/tools.php:733
+#: functions/tools.php:700
 msgid "year"
 msgstr "Jahr"
 
@@ -317,7 +317,7 @@ msgstr "Neue Kontakt"
 msgid "Edit"
 msgstr "Bearbeiten"
 
-#: dashboard/dashboard.php:409 functions/tools.php:874
+#: dashboard/dashboard.php:409 functions/tools.php:858
 msgid "Delete"
 msgstr "Löschen"
 
@@ -332,7 +332,7 @@ msgid "Update contact"
 msgstr "Kontaktdaten aktualisieren"
 
 #: dashboard/dashboard.php:462 functions/product.php:175
-#: functions/tools.php:930 functions/tools.php:978
+#: functions/tools.php:914 functions/tools.php:962
 msgid "Add"
 msgstr "Hinzufügen"
 
@@ -489,11 +489,9 @@ msgstr "Versandt"
 msgid "Payment method"
 msgstr "Zahlungsmethode"
 
-#: dashboard/dashboard.php:788
-#, fuzzy
-#| msgid "Payment"
+#: dashboard/dashboard.php:788 functions/tools.php:791
 msgid "Payment term"
-msgstr "Zahlung"
+msgstr "Zahlungsziel"
 
 #: dashboard/dashboard.php:804 dashboard/templates.php:1019
 #: dashboard/templates.php:1190
@@ -526,9 +524,9 @@ msgid "Bank"
 msgstr "Wie auf Ihrem Bankkonto"
 
 #: dashboard/dashboard.php:816 dashboard/dashboard.php:926
-#: dashboard/dashboard.php:930 functions/tools.php:864 functions/tools.php:866
-#: functions/tools.php:928 functions/tools.php:976 functions/tools.php:994
-#: functions/tools.php:1010 functions/tools.php:1024 functions/tools.php:1038
+#: dashboard/dashboard.php:930 functions/tools.php:848 functions/tools.php:850
+#: functions/tools.php:912 functions/tools.php:960 functions/tools.php:978
+#: functions/tools.php:994 functions/tools.php:1008 functions/tools.php:1022
 msgid "Pay"
 msgstr "Bezahlen"
 
@@ -672,7 +670,7 @@ msgstr "Mitgliedschaft"
 msgid "nothing"
 msgstr "nichts"
 
-#: dashboard/dashboard.php:1390 functions/tools.php:81 functions/tools.php:614
+#: dashboard/dashboard.php:1390 functions/tools.php:81 functions/tools.php:581
 msgid "Type"
 msgstr "Typ"
 
@@ -982,7 +980,7 @@ msgid "Your %s's team"
 msgstr "Ihr %s-Team"
 
 #: dashboard/templates.php:260 dashboard/templates.php:498
-#: dashboard/templates.php:537 functions/tools.php:565
+#: dashboard/templates.php:537 functions/tools.php:532
 msgid "Congratulations!"
 msgstr "Glückwunsch!"
 
@@ -1098,7 +1096,7 @@ msgstr ""
 "Passwort sind nicht korrekt."
 
 #: dashboard/templates.php:550 dashboard/templates.php:601
-#: functions/product.php:186 functions/tools.php:707
+#: functions/product.php:186 functions/tools.php:674
 msgid "Sign in"
 msgstr "Anmelden"
 
@@ -1106,7 +1104,7 @@ msgstr "Anmelden"
 msgid "You have already an account"
 msgstr "Sie haben bereits ein Konto"
 
-#: dashboard/templates.php:553 functions/tools.php:37 functions/tools.php:812
+#: dashboard/templates.php:553 functions/tools.php:37 functions/tools.php:782
 msgid "or"
 msgstr "oder"
 
@@ -1206,7 +1204,7 @@ msgstr "Es ist ein Fehler aufgetreten."
 
 #: dashboard/templates.php:1220
 msgid "Return"
-msgstr ""
+msgstr "Zurück"
 
 #: dashboard/templates.php:1245
 msgid "Contacts"
@@ -1238,10 +1236,8 @@ msgstr ""
 "ist %s"
 
 #: dashboard/templates.php:1438
-#, fuzzy
-#| msgid "New message"
 msgid "Add a message"
-msgstr "Neue Nachricht"
+msgstr "Eine Nachricht hinzufügen"
 
 #: dashboard/templates.php:1440
 #, fuzzy
@@ -1358,7 +1354,7 @@ msgstr "Auf Lager"
 msgid "Price"
 msgstr "Preis"
 
-#: functions/product.php:118 functions/product.php:145 functions/tools.php:736
+#: functions/product.php:118 functions/product.php:145 functions/tools.php:703
 msgid "hour"
 msgstr "Stunde"
 
@@ -1371,8 +1367,8 @@ msgstr "Sie profitieren von der Rate"
 msgid "Go to cart"
 msgstr "Zum Warenkorb gehen"
 
-#: functions/product.php:186 functions/product.php:188 functions/tools.php:707
-#: functions/tools.php:709
+#: functions/product.php:186 functions/product.php:188 functions/tools.php:674
+#: functions/tools.php:676
 msgid "log in"
 msgstr "anmelden"
 
@@ -1385,7 +1381,7 @@ msgstr "Anmelden"
 msgid "you get %u %% discount"
 msgstr "Sie erhalten %u %% Rabatt"
 
-#: functions/product.php:198 functions/tools.php:356 functions/tools.php:780
+#: functions/product.php:198 functions/tools.php:356 functions/tools.php:747
 msgid "Loading"
 msgstr "Laden"
 
@@ -1405,8 +1401,9 @@ msgstr[0] "%s Artikel"
 msgstr[1] "%s Artikel"
 
 #: functions/product.php:322
+#, fuzzy
 msgid "unchangeable"
-msgstr ""
+msgstr "Unveränderlich"
 
 #: functions/product.php:329
 #, fuzzy
@@ -1568,7 +1565,7 @@ msgstr ""
 msgid "Confirm your password"
 msgstr "Bestätige dein Passwort"
 
-#: functions/tools.php:336 functions/tools.php:1047
+#: functions/tools.php:336 functions/tools.php:1031
 #, fuzzy
 #| msgid ""
 #| "I read and accept the <A href=\"#\" data-toggle=\"modal\" data-target="
@@ -1622,122 +1619,148 @@ msgstr ""
 "Wenn Sie diese Anfrage nicht gestellt haben, ignorieren Sie bitte diese E-"
 "Mail."
 
-#: functions/tools.php:486
+#: functions/tools.php:423
+msgid "Download"
+msgstr "Download"
+
+#: functions/tools.php:453
 msgid "Help?"
 msgstr "Hilfe?"
 
-#: functions/tools.php:486
+#: functions/tools.php:453
 msgid "Need help?"
 msgstr "Brauchen Sie Hilfe?"
 
-#: functions/tools.php:544
+#: functions/tools.php:511
 msgid "Refresh"
 msgstr "Aktualisieren"
 
-#: functions/tools.php:548
+#: functions/tools.php:515
 #, fuzzy
 #| msgid "Refresh"
 msgid "Refresh datas"
 msgstr "Aktualisieren"
 
-#: functions/tools.php:631
+#: functions/tools.php:598
 msgid "Total excl. tax"
 msgstr "Total ohne Steuern"
 
-#: functions/tools.php:632
+#: functions/tools.php:599
 msgid "Total VAT"
 msgstr "MwSt. insgesamt"
 
-#: functions/tools.php:633
+#: functions/tools.php:600
 msgid "Total incl. tax"
 msgstr "Gesamt inkl. Steuer"
 
-#: functions/tools.php:701
+#: functions/tools.php:668
 msgid "Your basket is empty."
 msgstr "Ihr Warenkorb ist leer."
 
-#: functions/tools.php:703
+#: functions/tools.php:670
 msgid "If you already have an account,"
 msgstr "Wenn Sie bereits ein Konto haben,"
 
-#: functions/tools.php:711
+#: functions/tools.php:678
 msgid "to see your basket."
 msgstr "um Ihren Warenkorb zu sehen."
 
-#: functions/tools.php:727
+#: functions/tools.php:694
 msgid "years"
 msgstr "Jahre"
 
-#: functions/tools.php:728
+#: functions/tools.php:695
 msgid "months"
 msgstr "Monate"
 
-#: functions/tools.php:729
+#: functions/tools.php:696
 msgid "days"
 msgstr "Tage"
 
-#: functions/tools.php:730
+#: functions/tools.php:697
 msgid "hours"
 msgstr "Stunden"
 
-#: functions/tools.php:731
+#: functions/tools.php:698
 msgid "minutes"
 msgstr "Minuten"
 
-#: functions/tools.php:734
+#: functions/tools.php:701
 msgid "month"
 msgstr "Monat"
 
-#: functions/tools.php:735
+#: functions/tools.php:702
 msgid "day"
 msgstr "Tag"
 
-#: functions/tools.php:737
+#: functions/tools.php:704
 msgid "minute"
 msgstr "Minute"
 
-#: functions/tools.php:757
+#: functions/tools.php:724
 #, fuzzy
 #| msgid "Choose your new password"
 msgid "Choose your country or region"
 msgstr "Wählen Sie Ihr neues Passwort"
 
-#: functions/tools.php:817
+#: functions/tools.php:787
 #, fuzzy
 msgid "Stripe's in sandbox mode"
 msgstr "Stripe es im Sandbox-Modus"
 
-#: functions/tools.php:849
+#: functions/tools.php:787
+#, fuzzy
+msgid "Link to Test card numbers"
+msgstr "Link zu Testkartennummern"
+
+#: functions/tools.php:793 functions/tools.php:796 functions/tools.php:799
+#, php-format
+msgid "%s day"
+msgid_plural "%s days"
+msgstr[0] "%s Tag"
+msgstr[1] "%s Tage"
+
+#: functions/tools.php:794
+#, fuzzy
+msgid "end of month"
+msgstr "Ende des Monats"
+
+#: functions/tools.php:797
+#, fuzzy, php-format
+msgid "the %s of month"
+msgstr "%s des Monats"
+
+#: functions/tools.php:833
 #, fuzzy
 #| msgid "Pro account"
 msgid "Account"
 msgstr "Erstellen eines Pro/Lieferantenkontos"
 
-#: functions/tools.php:852
+#: functions/tools.php:836
 #, fuzzy
 msgid "Card"
 msgstr "Kredit- oder Debitkarte"
 
-#: functions/tools.php:871
+#: functions/tools.php:855
 msgid "Favourite"
 msgstr "Favorit"
 
-#: functions/tools.php:883
+#: functions/tools.php:867
 #, fuzzy
 #| msgid "Payment method"
 msgid "No payment method"
 msgstr "Zahlungsmethode"
 
-#: functions/tools.php:890
+#: functions/tools.php:874
 msgid "Credit/debit card"
 msgstr "Kredit- oder Debitkarte"
 
-#: functions/tools.php:893
+#: functions/tools.php:877
 #, fuzzy
 msgid "Card's owner"
 msgstr "Besitzer der Karte"
 
-#: functions/tools.php:898
+#: functions/tools.php:882
 #, fuzzy, php-format
 #| msgid ""
 #| "By providing your IBAN and confirming this form, you are authorizing %s "
@@ -1763,34 +1786,34 @@ msgstr ""
 "und Bedingungen Ihrer Bank. Eine Rückerstattung muss innerhalb von 8 Wochen "
 "ab dem Tag, an dem Ihr Konto belastet wurde, in Anspruch genommen werden."
 
-#: functions/tools.php:904 functions/tools.php:952
+#: functions/tools.php:888 functions/tools.php:936
 #, fuzzy
 msgid "Not save"
 msgstr "Nicht sparen"
 
-#: functions/tools.php:908 functions/tools.php:917 functions/tools.php:956
-#: functions/tools.php:965
+#: functions/tools.php:892 functions/tools.php:901 functions/tools.php:940
+#: functions/tools.php:949
 msgid "Save"
 msgstr "Speichern"
 
-#: functions/tools.php:925 functions/tools.php:973
+#: functions/tools.php:909 functions/tools.php:957
 #, fuzzy
 msgid "Save as favourite"
 msgstr "Als Favorit gesetzt"
 
-#: functions/tools.php:938
+#: functions/tools.php:922
 #, fuzzy
 #| msgid "Add bank account"
 msgid "Bank account"
 msgstr "Bankkonto hinzufügen"
 
-#: functions/tools.php:941 functions/tools.php:989
+#: functions/tools.php:925 functions/tools.php:973
 #, fuzzy
 #| msgid "Bank transfer"
 msgid "Bank's owner"
 msgstr "Banküberweisung"
 
-#: functions/tools.php:946
+#: functions/tools.php:930
 #, fuzzy, php-format
 #| msgid ""
 #| "By providing your IBAN and confirming this form, you are authorizing %s "
@@ -1815,92 +1838,92 @@ msgstr ""
 "und Bedingungen Ihrer Bank. Eine Rückerstattung muss innerhalb von 8 Wochen "
 "ab dem Tag, an dem Ihr Konto belastet wurde, in Anspruch genommen werden."
 
-#: functions/tools.php:986
+#: functions/tools.php:970
 msgid "iDEAL"
 msgstr "iDEAL"
 
-#: functions/tools.php:1006
+#: functions/tools.php:990
 msgid "Transfer"
 msgstr "Transfer"
 
-#: functions/tools.php:1006 functions/tools.php:1020
+#: functions/tools.php:990 functions/tools.php:1004
 #, fuzzy
 msgid "See your receipt"
 msgstr "Sehen Sie Ihre Quittung"
 
-#: functions/tools.php:1020
+#: functions/tools.php:1004
 msgid "Check"
 msgstr "Prüfen"
 
-#: functions/tools.php:1034
+#: functions/tools.php:1018
 msgid "Cash"
 msgstr "Barzahlung"
 
-#: functions/tools.php:1034
+#: functions/tools.php:1018
 #, fuzzy
 msgid "Go to reception desk"
 msgstr "Zur Rezeption"
 
-#: functions/tools.php:1684
+#: functions/tools.php:1668
 msgid "Select your request:"
 msgstr "Wählen Sie Ihre Anfrage aus:"
 
-#: functions/tools.php:1685
+#: functions/tools.php:1669
 msgid "Export Personal Data"
 msgstr "Personenbezogene Daten exportieren"
 
-#: functions/tools.php:1686
+#: functions/tools.php:1670
 #, fuzzy
 #| msgid "Remove your personal data"
 msgid "Remove Personal Data"
 msgstr "Entfernen Sie Ihre persönlichen Daten"
 
-#: functions/tools.php:1687
+#: functions/tools.php:1671
 #, fuzzy
 #| msgid "All fields are required."
 msgid "Your email address (required)"
 msgstr "Alle Felder sind erforderlich."
 
-#: functions/tools.php:1688
+#: functions/tools.php:1672
 #, fuzzy
 msgid "Human verification (required):"
 msgstr "Menschliche Verifizierung (erforderlich):"
 
-#: functions/tools.php:1689
+#: functions/tools.php:1673
 msgid "Send Request"
 msgstr "Anfrage senden"
 
-#: functions/tools.php:1720
+#: functions/tools.php:1704
 msgid "Export your data"
 msgstr "Exportieren Sie Ihre Daten"
 
-#: functions/tools.php:1720
+#: functions/tools.php:1704
 msgid "You will receive an email with a secure link to your data"
 msgstr "Sie erhalten eine E-Mail mit einem sicheren Link zu Ihren Daten"
 
-#: functions/tools.php:1730
+#: functions/tools.php:1714
 #, fuzzy
 #| msgid "Export your personal data"
 msgid "Erase your data"
 msgstr "Exportieren Sie Ihre persönlichen Daten"
 
-#: functions/tools.php:1730
+#: functions/tools.php:1714
 msgid "Soon, you will be able to erase your account"
 msgstr "Bald werden Sie in der Lage sein, Ihr Konto zu löschen"
 
-#: functions/tools.php:1740
+#: functions/tools.php:1725
 msgid "Delete your account"
 msgstr "Löschen Sie Ihr Konto"
 
-#: functions/tools.php:1740
+#: functions/tools.php:1725
 msgid "Soon, you will be able to delete your account"
 msgstr "Bald können Sie Ihr Konto löschen"
 
-#: functions/tools.php:1777
+#: functions/tools.php:1762
 msgid "Validate the request"
 msgstr "Bestätigen Sie die Anfrage"
 
-#: functions/tools.php:1791
+#: functions/tools.php:1776
 #, fuzzy
 msgid "This plugin requires WordPress 4.9.6."
 msgstr "Dieses Plugin erfordert WordPress 4.9.6."
