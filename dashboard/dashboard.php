@@ -14,7 +14,7 @@ $help = callDoliApi("GET", "/doliconnector/constante/MAIN_MODULE_TICKET", null, 
 function informations_menu($arg) {
 print "<a href='".esc_url( add_query_arg( 'module', 'informations', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
 if ($arg=='informations') { print " active";}
-print "'>".__( 'Personal informations', 'doliconnect' )."</a>";
+print "'>".__( 'Personal informations', 'doliconnect')."</a>";
 }
 add_action( 'user_doliconnect_menu', 'informations_menu', 1, 1);
 
@@ -55,7 +55,7 @@ if ( isset($_GET['return']) ) {
 wp_redirect(doliconnecturl('doliaccount').'?module='.$_GET['return']);
 exit;
 } else {
-$msg = dolialert ('success', __( 'Your informations have been updated.', 'doliconnect' ));
+$msg = dolialert ('success', __( 'Your informations have been updated.', 'doliconnect'));
 }
 }
 
@@ -77,7 +77,7 @@ print "<div class='card shadow-sm'>";
 
 print doliuserform( $thirdparty, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'thirdparty');
 
-print "<div class='card-body'><input type='hidden' name='userid' value='$ID'><button class='btn btn-danger btn-block' type='submit'>".__( 'Update', 'doliconnect' )."</button></div>";
+print "<div class='card-body'><input type='hidden' name='userid' value='$ID'><button class='btn btn-danger btn-block' type='submit'>".__( 'Update', 'doliconnect')."</button></div>";
 print '<div class="card-footer text-muted">';
 print "<small><div class='float-left'>";
 print dolirefresh($request, $url, dolidelay('thirdparty'), $thirdparty);
@@ -242,7 +242,7 @@ $msg = dolialert ('warning', "Votre photo n'a pu être chargée. Elle doit oblig
 }
 }
 
-$msg = dolialert ('success', __( 'Your informations have been updated.', 'doliconnect' ));
+$msg = dolialert ('success', __( 'Your informations have been updated.', 'doliconnect'));
 }
 
 print "<form action='".$url."' id='doliconnect-avatarform' method='post' class='was-validated' enctype='multipart/form-data'><input type='hidden' name='case' value='updateavatar'>";
@@ -253,7 +253,7 @@ print doliloaderscript('doliconnect-avatarform');
 
 print "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
 print "<li class='list-group-item'>";
-print "<label for='description'><small>".__( 'Profile Picture', 'doliconnect' )."</small></label><div class='form-group'>
+print "<label for='description'><small>".__( 'Profile Picture', 'doliconnect')."</small></label><div class='form-group'>
 <div class='input-group mb-2'><div class='input-group-prepend'><span class='input-group-text'><i class='fas fa-camera fa-fw'></i></span></div><div class='custom-file'>
 <input type='file' name='inputavatar' class='custom-file-input' id='customFile' accept='image/*' ";
 $table_prefix = $wpdb->get_blog_prefix( get_current_blog_id() ); 
@@ -262,16 +262,16 @@ $nam=$table_prefix."member_photo";
 if ( null == $current_user->$nam && doliconnector($current_user, 'fk_member') ) {
 //print " required='required'";
 }
-print " capture><label class='custom-file-label' for='customFile' data-browse='".__( 'Browse', 'doliconnect' )."'>".__( 'Select a file', 'doliconnect' )."</label></div></div>
-<small id='infoavatar' class='form-text text-muted text-justify'>".__( 'Your avatar must be a .jpg/.jpeg file, <10Mo and 350x350pixels minimum.', 'doliconnect' )."</SMALL>";
+print " capture><label class='custom-file-label' for='customFile' data-browse='".__( 'Browse', 'doliconnect')."'>".__( 'Select a file', 'doliconnect')."</label></div></div>
+<small id='infoavatar' class='form-text text-muted text-justify'>".__( 'Your avatar must be a .jpg/.jpeg file, <10Mo and 350x350pixels minimum.', 'doliconnect')."</SMALL>";
 print "<div class='custom-control custom-checkbox my-1 mr-sm-2'>
     <input type='checkbox' class='custom-control-input' id='inputavatar' name='inputavatar' value='delete' ";
 if ( null == $current_user->$nam ) {
 print " disabled='disabled'";
 }
-print "><label class='custom-control-label' for='inputavatar'>".__( 'Delete your picture', 'doliconnect' )."</label></div></div>";
+print "><label class='custom-control-label' for='inputavatar'>".__( 'Delete your picture', 'doliconnect')."</label></div></div>";
 print "</li>";
-print "</ul><div class='card-body'><input type='hidden' name='userid' value='$ID'><button class='btn btn-danger btn-block' type='submit'>".__( 'Update', 'doliconnect' )."</button></div>";
+print "</ul><div class='card-body'><input type='hidden' name='userid' value='$ID'><button class='btn btn-danger btn-block' type='submit'>".__( 'Update', 'doliconnect')."</button></div>";
 print '<div class="card-footer text-muted">';
 print "<small><div class='float-left'>";
 //print dolirefresh($request, $url, dolidelay('thirdparty'), $thirdparty);
@@ -286,7 +286,7 @@ add_action( 'user_doliconnect_avatars', 'avatars_module');
 function contacts_menu($arg) {
 print "<a href='".esc_url( add_query_arg( 'module', 'contacts', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
 if ( $arg == 'contacts' ) { print " active"; }
-print "'>".__( 'Manage address book', 'doliconnect' )."</a>";
+print "'>".__( 'Manage address book', 'doliconnect')."</a>";
 }
 add_action( 'user_doliconnect_menu', 'contacts_menu', 2, 1);
 
@@ -314,7 +314,7 @@ $data = [
 $contactv = callDoliApi("POST", "/contacts", $data, 0);
 $listcontact = callDoliApi("GET", $request, null, dolidelay('contact', true));
 if ( $contactv > 0 ) {
-$msg = dolialert ('success', __( 'Your informations have been updated.', 'doliconnect' ));
+$msg = dolialert ('success', __( 'Your informations have been updated.', 'doliconnect'));
 }
 } elseif ( isset ($_POST['delete_contact']) && $_POST['delete_contact'] > 0 ) {
 $contactv = callDoliApi("GET", "/contacts/".$_POST['delete_contact'], null, 0);
@@ -322,7 +322,7 @@ if ( $contactv->socid == doliconnector($current_user, 'fk_soc') ) {
 // try deleting
 $delete = callDoliApi("DELETE", "/contacts/".$contactv->id, null, 0);
 
-$msg = dolialert ('success', __( 'Your informations have been updated.', 'doliconnect' ));
+$msg = dolialert ('success', __( 'Your informations have been updated.', 'doliconnect'));
 
 } else {
 // fail deleting
@@ -347,7 +347,7 @@ $data = [
 $contactv = callDoliApi("PUT", "/contacts/".$_POST['update_contact'], $data, 0);
 if ( $contactv->socid == doliconnector($current_user, 'fk_soc') ) {
 // try deleting
-$msg = dolialert ('success', __( 'Your informations have been updated.', 'doliconnect' ));
+$msg = dolialert ('success', __( 'Your informations have been updated.', 'doliconnect'));
 } else {
 // fail deleting
 }
@@ -389,7 +389,7 @@ $countContact = count(get_object_vars($listcontact));
 }
 
 if ( $countContact < 5 ) {
-print '<button type="button" class="list-group-item lh-condensed list-group-item-action list-group-item-primary" data-toggle="modal" data-target="#addcontactadress"><center><i class="fas fa-plus-circle"></i> '.__( 'New contact', 'doliconnect' ).'</center></button>';
+print '<button type="button" class="list-group-item lh-condensed list-group-item-action list-group-item-primary" data-toggle="modal" data-target="#addcontactadress"><center><i class="fas fa-plus-circle"></i> '.__( 'New contact', 'doliconnect').'</center></button>';
 }
 
 if ( !isset($listcontact->error) && $listcontact != null ) {
@@ -405,8 +405,8 @@ foreach ( $contact->roles as $role ) {
 }}
 
 print "<div class='col-4 col-sm-3 col-md-2 btn-group-vertical' role='group'>";
-print "<button type='button' class='btn btn-light text-primary' data-toggle='modal' data-target='#contact-".$contact->id."' title='".__( 'Edit', 'doliconnect' )." ".$contact->firstname." ".$contact->lastname."'><i class='fas fa-edit fa-fw'></i></a>
-<button name='delete_contact' value='".$contact->id."' class='btn btn-light text-danger' type='submit' title='".__( 'Delete', 'doliconnect' )." ".$contact->firstname." ".$contact->lastname."'><i class='fas fa-trash fa-fw'></i></button>";
+print "<button type='button' class='btn btn-light text-primary' data-toggle='modal' data-target='#contact-".$contact->id."' title='".__( 'Edit', 'doliconnect')." ".$contact->firstname." ".$contact->lastname."'><i class='fas fa-edit fa-fw'></i></a>
+<button name='delete_contact' value='".$contact->id."' class='btn btn-light text-danger' type='submit' title='".__( 'Delete', 'doliconnect')." ".$contact->firstname." ".$contact->lastname."'><i class='fas fa-trash fa-fw'></i></button>";
 print "</div>";
 }
 print "</li>";
@@ -440,7 +440,7 @@ print doliuserform($contact, dolidelay('constante', esc_attr(isset($_GET["refres
 
 print "</div>".doliloading('contact'.$contact->id.'-form');
       
-print "<div id='Footercontact".$contact->id."-form' class='modal-footer'><button name='update_contact' value='".$contact->id."' class='btn btn-warning btn-block' type='submit'>".__( 'Update', 'doliconnect' )."</button></form></div>
+print "<div id='Footercontact".$contact->id."-form' class='modal-footer'><button name='update_contact' value='".$contact->id."' class='btn btn-warning btn-block' type='submit'>".__( 'Update', 'doliconnect')."</button></form></div>
 </div></div></div>";
 }}
 
@@ -448,7 +448,7 @@ if ( $countContact < 5 ) {
 
 print "<div class='modal fade' id='addcontactadress' tabindex='-1' role='dialog' aria-labelledby='addcontactadressTitle' aria-hidden='true' data-backdrop='static' data-keyboard='false'>
 <div class='modal-dialog modal-lg modal-dialog-centered' role='document'><div class='modal-content border-0'><div class='modal-header border-0'>
-<h5 class='modal-title' id='addcontactadressTitle'>".__( 'New contact', 'doliconnect' )."</h5><button id='Closeaddcontact-form' type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
+<h5 class='modal-title' id='addcontactadressTitle'>".__( 'New contact', 'doliconnect')."</h5><button id='Closeaddcontact-form' type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
 </div><div id='addcontact-form'>";
 
 print "<form class='was-validated' role='form' action='$url' name='addcontact-form' method='post'>";
@@ -459,7 +459,7 @@ print doliuserform($thirdparty, dolidelay('constante', esc_attr(isset($_GET["ref
 
 print "</div>".doliloading('addcontact-form');
 
-print "<div id='Footeraddcontact-form' class='modal-footer'><button name='add_contact' value='new_contact' class='btn btn-warning btn-block' type='submit'>".__( 'Add', 'doliconnect' )."</button></form></div>
+print "<div id='Footeraddcontact-form' class='modal-footer'><button name='add_contact' value='new_contact' class='btn btn-warning btn-block' type='submit'>".__( 'Add', 'doliconnect')."</button></form></div>
 </div></div></div>";
 }
 
@@ -469,7 +469,7 @@ add_action( 'user_doliconnect_contacts', 'contacts_module' );
 function password_menu( $arg ){
 print "<a href='".esc_url( add_query_arg( 'module', 'password', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
 if ($arg=='password') { print " active";}
-print "'>".__( 'Modify the password', 'doliconnect' )."</a>";
+print "'>".__( 'Modify the password', 'doliconnect')."</a>";
 }
 add_action( 'user_doliconnect_menu', 'password_menu', 3, 1);
 
@@ -497,13 +497,13 @@ $data = [
 $doliuser = callDoliApi("PUT", $request , $data, 0);
 }
 
-$msg = dolialert ('success', __( 'Your informations have been updated.', 'doliconnect' ));
+$msg = dolialert ('success', __( 'Your informations have been updated.', 'doliconnect'));
 } elseif ( ! wp_check_password( $pwd0, $current_user->user_pass, $current_user->ID ) ) {
-$msg = dolialert ('danger', __( 'Your actual password is incorrect', 'doliconnect' ));
+$msg = dolialert ('danger', __( 'Your actual password is incorrect', 'doliconnect'));
 } elseif ( $pwd1 != $_POST["pwd2"] ) {
-$msg = dolialert ('danger', __( 'The new passwords entered are different', 'doliconnect' ));
+$msg = dolialert ('danger', __( 'The new passwords entered are different', 'doliconnect'));
 } elseif ( !preg_match("#.*^(?=.{8,20})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*$#", $pwd1) ) {
-$msg = dolialert ('danger', __( 'Your password must be between 8 and 20 characters, including at least 1 digit, 1 letter, 1 uppercase.', 'doliconnect' ));
+$msg = dolialert ('danger', __( 'Your password must be between 8 and 20 characters, including at least 1 digit, 1 letter, 1 uppercase.', 'doliconnect'));
 }
 }
 
@@ -515,28 +515,28 @@ print doliloaderscript('doliconnect-passwordform');
 
 print "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
 if ( doliconnector($current_user, 'fk_user') > '0' ) {
-print "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".__( 'Your password will be synchronized with your Dolibarr account', 'doliconnect' )."</b></li>";
+print "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".__( 'Your password will be synchronized with your Dolibarr account', 'doliconnect')."</b></li>";
 } elseif  ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $ID ) {
-print "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".__( 'Password cannot be modified in demo mode', 'doliconnect' )."</b></li>";
+print "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".__( 'Password cannot be modified in demo mode', 'doliconnect')."</b></li>";
 } 
-print '<li class="list-group-item"><div class="form-group"><div class="row"><div class="col-12"><label for="passwordHelpBlock1"><small>'.__( 'Confirm your current password', 'doliconnect' ).'</small></label>
-<div class="input-group mb-2"><div class="input-group-prepend"><div class="input-group-text"><i class="fas fa-key fa-fw"></i></div></div><input type="password" id="pwd0" name="pwd0" class="form-control" aria-describedby="passwordHelpBlock1" autocomplete="off" placeholder="'.__( 'Confirm your current password', 'doliconnect' ).'" ';
+print '<li class="list-group-item"><div class="form-group"><div class="row"><div class="col-12"><label for="passwordHelpBlock1"><small>'.__( 'Confirm your current password', 'doliconnect').'</small></label>
+<div class="input-group mb-2"><div class="input-group-prepend"><div class="input-group-text"><i class="fas fa-key fa-fw"></i></div></div><input type="password" id="pwd0" name="pwd0" class="form-control" aria-describedby="passwordHelpBlock1" autocomplete="off" placeholder="'.__( 'Confirm your current password', 'doliconnect').'" ';
 if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $ID ) {
 print ' readonly';
 } else {
 print ' required';
 }
-print '></div></div></div></div><div class="form-group"><div class="row"><div class="col-12"><label for="passwordHelpBlock2"><small>'.__( 'Change your password', 'doliconnect' ).'</small></label>
-<div class="input-group mb-2"><div class="input-group-prepend"><div class="input-group-text"><i class="fas fa-key fa-fw"></i></div></div><input type="password" id="pwd1" name="pwd1" class="form-control" aria-describedby="passwordHelpBlock2" autocomplete="off" placeholder="'.__( 'Choose your new password', 'doliconnect' ).'" ';
+print '></div></div></div></div><div class="form-group"><div class="row"><div class="col-12"><label for="passwordHelpBlock2"><small>'.__( 'Change your password', 'doliconnect').'</small></label>
+<div class="input-group mb-2"><div class="input-group-prepend"><div class="input-group-text"><i class="fas fa-key fa-fw"></i></div></div><input type="password" id="pwd1" name="pwd1" class="form-control" aria-describedby="passwordHelpBlock2" autocomplete="off" placeholder="'.__( 'Choose your new password', 'doliconnect').'" ';
 if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $ID ) {
 print ' readonly';
 } else {
 print ' required';
 }
 print '></div><small id="passwordHelpBlock3" class="form-text text-justify text-muted">
-'.__( 'Your password must be between 8 and 20 characters, including at least 1 digit, 1 letter, 1 uppercase.', 'doliconnect' ).'
-</small><div class="invalid-feedback">'.__( 'This field is required.', 'doliconnect' ).'</div></div></div><div class="row"><div class="col-12"><label for="passwordHelpBlock3"></label>';
-print '<div class="input-group mb-2"><div class="input-group-prepend"><div class="input-group-text"><i class="fas fa-key fa-fw"></i></div></div><input type="password" id="pwd2" name="pwd2"  class="form-control" aria-describedby="passwordHelpBlock3" autocomplete="off" placeholder="'.__( 'Confirme your new password', 'doliconnect' ).'" ';
+'.__( 'Your password must be between 8 and 20 characters, including at least 1 digit, 1 letter, 1 uppercase.', 'doliconnect').'
+</small><div class="invalid-feedback">'.__( 'This field is required.', 'doliconnect').'</div></div></div><div class="row"><div class="col-12"><label for="passwordHelpBlock3"></label>';
+print '<div class="input-group mb-2"><div class="input-group-prepend"><div class="input-group-text"><i class="fas fa-key fa-fw"></i></div></div><input type="password" id="pwd2" name="pwd2"  class="form-control" aria-describedby="passwordHelpBlock3" autocomplete="off" placeholder="'.__( 'Confirme your new password', 'doliconnect').'" ';
 if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $ID ) {
 print ' readonly';
 } else {
@@ -547,7 +547,7 @@ print "</ul><div class='card-body'><button class='btn btn-danger btn-block' type
 if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $ID ) {
 print ' disabled';
 }
-print ">".__( 'Update', 'doliconnect' )."</button></div><div class='card-footer text-muted'>";
+print ">".__( 'Update', 'doliconnect')."</button></div><div class='card-footer text-muted'>";
 print "<small><div class='float-left'>";
 if ( $request ) print dolirefresh($request, $url, dolidelay('thirdparty'));
 print "</div><div class='float-right'>";
@@ -623,7 +623,7 @@ add_action( 'customer_doliconnect_proposals', 'proposals_module' );
 function proposals_menu( $arg ) {
 print "<a href='".esc_url( add_query_arg( 'module', 'proposals', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
 if ( $arg == 'proposals' ) { print " active";}
-print "'>".__( 'Propals tracking', 'doliconnect' )."</a>";
+print "'>".__( 'Propals tracking', 'doliconnect')."</a>";
 }
 
 function proposals_module( $url ) {
@@ -640,19 +640,19 @@ $proposalfo = callDoliApi("GET", $request, null, dolidelay('proposal', esc_attr(
 if ( !isset($proposalfo->error) && isset($_GET['id']) && isset($_GET['ref']) && ( doliconnector($current_user, 'fk_soc') == $proposalfo->socid ) && ( $_GET['ref'] == $proposalfo->ref ) && $proposalfo->statut != 0 && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doli-proposals-'.$proposalfo->id.'-'.$proposalfo->ref)) {
 print "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>$proposalfo->ref</h5><div class='row'><div class='col-md-5'>";
 $datevalidation =  date_i18n('d/m/Y', $proposalfo->date_validation);
-print "<b>".__( 'Date of creation', 'doliconnect' ).":</b> ".date_i18n('d/m/Y', $proposalfo->date_creation)."<br>";
-print "<b>".__( 'Validation', 'doliconnect' )." : </b> $datevalidation<br>";
+print "<b>".__( 'Date of creation', 'doliconnect').":</b> ".date_i18n('d/m/Y', $proposalfo->date_creation)."<br>";
+print "<b>".__( 'Validation', 'doliconnect')." : </b> $datevalidation<br>";
 //print "<b>Date de fin de validité:</b> $datevalidite";
-//print "<b>".__( 'Status', 'doliconnect' )." : </b> ";
-if ( $proposalfo->statut == 3 ) { $propalinfo=__( 'Refused', 'doliconnect' );
+//print "<b>".__( 'Status', 'doliconnect')." : </b> ";
+if ( $proposalfo->statut == 3 ) { $propalinfo=__( 'Refused', 'doliconnect');
 $propalavancement=0; }
-elseif ( $proposalfo->statut == 2 ) { $propalinfo=__( 'Processing', 'doliconnect' );
+elseif ( $proposalfo->statut == 2 ) { $propalinfo=__( 'Processing', 'doliconnect');
 $propalavancement=65; }
-elseif ( $proposalfo->statut == 1 ) { $propalinfo=__( 'Sign before', 'doliconnect' )." ".date_i18n('d/m/Y', $proposalfo->fin_validite);
+elseif ( $proposalfo->statut == 1 ) { $propalinfo=__( 'Sign before', 'doliconnect')." ".date_i18n('d/m/Y', $proposalfo->fin_validite);
 $propalavancement=42; }
-elseif ( $proposalfo->statut == 0 ) { $propalinfo=__( 'Processing', 'doliconnect' );
+elseif ( $proposalfo->statut == 0 ) { $propalinfo=__( 'Processing', 'doliconnect');
 $propalavancement=22; }
-elseif ( $proposalfo->statut == -1 ) { $propalinfo=__( 'Canceled', 'doliconnect' );
+elseif ( $proposalfo->statut == -1 ) { $propalinfo=__( 'Canceled', 'doliconnect');
 $propalavancement=0; }
 print "<br><br>";
 //print "<b>Moyen de paiement : </b> $proposalfo[mode_reglement]<br>";
@@ -667,7 +667,7 @@ $currency = strtolower($proposalfo->multicurrency_code);
 print "</div></div>";
 
 print '<div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: '.$propalavancement.'%" aria-valuenow="'.$propalavancement.'" aria-valuemin="0" aria-valuemax="100"></div></div>';
-print "<div class='w-auto text-muted d-none d-sm-block' ><div style='display:inline-block;width:16%'>".__( 'Propal', 'doliconnect' )."</div><div style='display:inline-block;width:21%'>".__( 'Processing', 'doliconnect' )."</div><div style='display:inline-block;width:19%'>".__( 'Validation', 'doliconnect' )."</div><div style='display:inline-block;width:24%'>".__( 'Processing', 'doliconnect' )."</div><div class='text-right' style='display:inline-block;width:20%'>".__( 'Billing', 'doliconnect' )."</div></div>";
+print "<div class='w-auto text-muted d-none d-sm-block' ><div style='display:inline-block;width:16%'>".__( 'Propal', 'doliconnect')."</div><div style='display:inline-block;width:21%'>".__( 'Processing', 'doliconnect')."</div><div style='display:inline-block;width:19%'>".__( 'Validation', 'doliconnect')."</div><div style='display:inline-block;width:24%'>".__( 'Processing', 'doliconnect')."</div><div class='text-right' style='display:inline-block;width:20%'>".__( 'Billing', 'doliconnect')."</div></div>";
 
 print "</div><ul class='list-group list-group-flush'>";
  
@@ -677,12 +677,12 @@ print dolitotal($proposalfo);
 
 if ( $proposalfo->last_main_doc != null ) {
 $doc = array_reverse( explode("/", $proposalfo->last_main_doc) );      
-$document = dolidocdownload($doc[2], $doc[1], $doc[0], __( 'Summary', 'doliconnect' ));
+$document = dolidocdownload($doc[2], $doc[1], $doc[0], __( 'Summary', 'doliconnect'));
 } 
     
 $fruits[$proposalfo->date_creation.'p'] = array(
 "timestamp" => $proposalfo->date_creation,
-"type" => __( 'Propal', 'doliconnect' ),  
+"type" => __( 'Propal', 'doliconnect'),  
 "label" => $proposalfo->ref,
 "document" => $document,
 "description" => null,
@@ -728,7 +728,7 @@ elseif ( $postproposal->statut == -1 ) { print "<span class='fa fa-check-circle 
 print "</span></a>";
 }}
 else{
-print "<li class='list-group-item list-group-item-light'><center>".__( 'No proposal', 'doliconnect' )."</center></li>";
+print "<li class='list-group-item list-group-item-light'><center>".__( 'No proposal', 'doliconnect')."</center></li>";
 }
 print '</ul><div class="card-body"></div><div class="card-footer text-muted">';
 print "<small><div class='float-left'>";
@@ -749,7 +749,7 @@ add_action( 'customer_doliconnect_orders', 'orders_module' );
 function orders_menu( $arg ) {
 print "<a href='".esc_url( add_query_arg( 'module', 'orders', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
 if ( $arg == 'orders' ) { print " active"; }
-print "'>".__( 'Orders tracking', 'doliconnect' )."</a>";
+print "'>".__( 'Orders tracking', 'doliconnect')."</a>";
 }
 
 function orders_module( $url ) {
@@ -766,12 +766,12 @@ $orderfo = callDoliApi("GET", $request, null, dolidelay('order', esc_attr(isset(
 if ( !isset($orderfo->error) && isset($_GET['id']) && isset($_GET['ref']) && (doliconnector($current_user, 'fk_soc') == $orderfo->socid ) && ($_GET['ref'] == $orderfo->ref) && $orderfo->statut != 0 && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doli-orders-'.$orderfo->id.'-'.$orderfo->ref)) {
 
 print "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>$orderfo->ref</h5><div class='row'><div class='col-md-6'>";
-print "<b>".__( 'Date of order', 'doliconnect' ).":</b> ".date_i18n('d/m/Y', $orderfo->date_creation)."<br>";
+print "<b>".__( 'Date of order', 'doliconnect').":</b> ".date_i18n('d/m/Y', $orderfo->date_creation)."<br>";
 if ( $orderfo->statut > 0 ) {
 if ( $orderfo->billed == 1 ) {
-if ( $orderfo->statut >1 ) { $orderinfo=__( 'Shipped', 'doliconnect' ); 
+if ( $orderfo->statut >1 ) { $orderinfo=__( 'Shipped', 'doliconnect'); 
 $orderavancement=100; }
-else { $orderinfo=__( 'Processing', 'doliconnect' );
+else { $orderinfo=__( 'Processing', 'doliconnect');
 $orderavancement=40; }
 }
 else { $orderinfo=null;
@@ -801,19 +801,19 @@ if ( $orderfo->mode_reglement_code == 'CHQ' ) {
 
 $listpaymentmethods = callDoliApi("GET", "/doliconnector/".doliconnector($current_user, 'fk_soc')."/paymentmethods?type=order&rowid=".$orderfo->id, null, dolidelay('paymentmethods', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
-print "<div class='alert alert-danger' role='alert'><p align='justify'>".sprintf( __( 'Please send your cheque in the amount of <b>%1$s</b> with reference <b>%2$s</b> to <b>%3$s</b> at the following address', 'doliconnect' ), doliprice($orderfo, 'ttc', isset($orderfo->multicurrency_code) ? $orderfo->multicurrency_code : null), $orderfo->ref, $listpaymentmethods->CHQ->proprio).":</p>";                                                                                                                                                                                                                                                                                                                                      
-print "<p><b>".$listpaymentmethods->CHQ->owner_address."</b></p><button class='btn btn-link btn-sm' onclick='ValidDoliCart(\"".wp_create_nonce( 'valid_dolicart-'.$orderfo->id )."\")' id='button-source-payment'><small><span class='fas fa-sync-alt'></span> ".__( 'Change your payment mode', 'doliconnect' )."</small></button></div>";
+print "<div class='alert alert-danger' role='alert'><p align='justify'>".sprintf( __( 'Please send your cheque in the amount of <b>%1$s</b> with reference <b>%2$s</b> to <b>%3$s</b> at the following address', 'doliconnect'), doliprice($orderfo, 'ttc', isset($orderfo->multicurrency_code) ? $orderfo->multicurrency_code : null), $orderfo->ref, $listpaymentmethods->CHQ->proprio).":</p>";                                                                                                                                                                                                                                                                                                                                      
+print "<p><b>".$listpaymentmethods->CHQ->owner_address."</b></p><button class='btn btn-link btn-sm' onclick='ValidDoliCart(\"".wp_create_nonce( 'valid_dolicart-'.$orderfo->id )."\")' id='button-source-payment'><small><span class='fas fa-sync-alt'></span> ".__( 'Change your payment mode', 'doliconnect')."</small></button></div>";
 } elseif ( $orderfo->mode_reglement_code == 'VIR' ) { 
 
 $listpaymentmethods = callDoliApi("GET", "/doliconnector/".doliconnector($current_user, 'fk_soc')."/paymentmethods", null, dolidelay('paymentmethods', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
-print "<div class='alert alert-danger' role='alert'><p align='justify'>".sprintf( __( 'Please send your transfert in the amount of <b>%1$s</b> with reference <b>%2$s</b> at the following account', 'doliconnect' ), doliprice($orderfo, 'ttc', isset($orderfo->multicurrency_code) ? $orderfo->multicurrency_code : null), $orderfo->ref ).":";
-print "<br><b>".__( 'Bank', 'doliconnect' ).": ".$listpaymentmethods->VIR->bank."</b>";
+print "<div class='alert alert-danger' role='alert'><p align='justify'>".sprintf( __( 'Please send your transfert in the amount of <b>%1$s</b> with reference <b>%2$s</b> at the following account', 'doliconnect'), doliprice($orderfo, 'ttc', isset($orderfo->multicurrency_code) ? $orderfo->multicurrency_code : null), $orderfo->ref ).":";
+print "<br><b>".__( 'Bank', 'doliconnect').": ".$listpaymentmethods->VIR->bank."</b>";
 print "<br><b>IBAN: ".$listpaymentmethods->VIR->iban."</b>";
 if ( ! empty($listpaymentmethods->VIR->bic) ) { print "<br><b>BIC/SWIFT : ".$listpaymentmethods->VIR->bic."</b>";}
-print "</p><button class='btn btn-link btn-sm' onclick='ValidDoliCart(\"".wp_create_nonce( 'valid_dolicart-'.$orderfo->id )."\")' id='button-source-payment'><small><span class='fas fa-sync-alt'></span> ".__( 'Change your payment mode', 'doliconnect' )."</small></button></div>";
+print "</p><button class='btn btn-link btn-sm' onclick='ValidDoliCart(\"".wp_create_nonce( 'valid_dolicart-'.$orderfo->id )."\")' id='button-source-payment'><small><span class='fas fa-sync-alt'></span> ".__( 'Change your payment mode', 'doliconnect')."</small></button></div>";
 } else {
-print "<button type='button' onclick='ValidDoliCart(\"".wp_create_nonce( 'valid_dolicart-'.$orderfo->id )."\")' id='button-source-payment' class='btn btn-warning btn-block' ><span class='fa fa-credit-card'></span> ".__( 'Pay', 'doliconnect' )."</button>";
+print "<button type='button' onclick='ValidDoliCart(\"".wp_create_nonce( 'valid_dolicart-'.$orderfo->id )."\")' id='button-source-payment' class='btn btn-warning btn-block' ><span class='fa fa-credit-card'></span> ".__( 'Pay', 'doliconnect')."</button>";
 }
 print "<script>";
 print "function ValidDoliCart(nonce) {
@@ -842,34 +842,34 @@ if (!empty($orderfo->contacts_ids) && is_array($orderfo->contacts_ids)) {
 
 foreach ($orderfo->contacts_ids as $contact) {
 if ('BILLING' == $contact->code) {
-print "<div class='card'><div class='card-body'><h6>".__( 'Billing address', 'doliconnect' )."</h6><small class='text-muted'>";
+print "<div class='card'><div class='card-body'><h6>".__( 'Billing address', 'doliconnect')."</h6><small class='text-muted'>";
 print dolicontact($contact->id, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 print "</small></div></div>";
 } else {
-print "<div class='card'><div class='card-body'><h6>".__( 'Billing address', 'doliconnect' )."</h6><small class='text-muted'>";
+print "<div class='card'><div class='card-body'><h6>".__( 'Billing address', 'doliconnect')."</h6><small class='text-muted'>";
 print doliaddress($thirdparty, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 print "</small></div></div>";
 }
 if ('SHIPPING' == $contact->code) {
-print "<div class='card'><div class='card-body'><h6>".__( 'Shipping address', 'doliconnect' )."</h6><small class='text-muted'>";
+print "<div class='card'><div class='card-body'><h6>".__( 'Shipping address', 'doliconnect')."</h6><small class='text-muted'>";
 print dolicontact($contact->id, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 print "</small></div></div>";
 } else {
-print "<div class='card'><div class='card-body'><h6>".__( 'Shipping address', 'doliconnect' )."</h6><small class='text-muted'>";
+print "<div class='card'><div class='card-body'><h6>".__( 'Shipping address', 'doliconnect')."</h6><small class='text-muted'>";
 print doliaddress($thirdparty, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 print "</small></div></div>";
 }
 }
 
 } else {
-print "<div class='card'><div class='card-body'><h6>".__( 'Billing and shipping address', 'doliconnect' )."</h6><small class='text-muted'>";
+print "<div class='card'><div class='card-body'><h6>".__( 'Billing and shipping address', 'doliconnect')."</h6><small class='text-muted'>";
 print doliaddress($thirdparty, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 print "</small></div></div>";
 }
 print "</div><br>";
 
 print '<div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: '.$orderavancement.'%" aria-valuenow="'.$orderavancement.'" aria-valuemin="0" aria-valuemax="100"></div></div>';
-print "<div class='w-auto text-muted d-none d-sm-block' ><div style='display:inline-block;width:20%'>".__( 'Order', 'doliconnect' )."</div><div style='display:inline-block;width:15%'>".__( 'Payment', 'doliconnect' )."</div><div style='display:inline-block;width:25%'>".__( 'Processing', 'doliconnect' )."</div><div style='display:inline-block;width:20%'>".__( 'Shipping', 'doliconnect' )."</div><div class='text-right' style='display:inline-block;width:20%'>".__( 'Delivery', 'doliconnect' )."</div></div>";
+print "<div class='w-auto text-muted d-none d-sm-block' ><div style='display:inline-block;width:20%'>".__( 'Order', 'doliconnect')."</div><div style='display:inline-block;width:15%'>".__( 'Payment', 'doliconnect')."</div><div style='display:inline-block;width:25%'>".__( 'Processing', 'doliconnect')."</div><div style='display:inline-block;width:20%'>".__( 'Shipping', 'doliconnect')."</div><div class='text-right' style='display:inline-block;width:20%'>".__( 'Delivery', 'doliconnect')."</div></div>";
 
 print "</div><ul class='list-group list-group-flush'>";
  
@@ -879,14 +879,14 @@ print dolitotal($orderfo);
 
 if ( $orderfo->last_main_doc != null ) {
 $doc = array_reverse(explode("/", $orderfo->last_main_doc)); 
-$document_order = dolidocdownload($doc[2], $doc[1], $doc[0], __( 'Summary', 'doliconnect' ));
+$document_order = dolidocdownload($doc[2], $doc[1], $doc[0], __( 'Summary', 'doliconnect'));
 } else {
-$document_order = dolidocdownload('order', $orderfo->ref, $orderfo->ref.'.pdf', __( 'Summary', 'doliconnect' ), true);
+$document_order = dolidocdownload('order', $orderfo->ref, $orderfo->ref.'.pdf', __( 'Summary', 'doliconnect'), true);
 } 
     
 $fruits[$orderfo->date_commande.'o'] = array(
 "timestamp" => $orderfo->date_creation,
-"type" => __( 'Order', 'doliconnect' ),  
+"type" => __( 'Order', 'doliconnect'),  
 "label" => $orderfo->ref,
 "document" => $document_order,
 "description" => null,
@@ -906,7 +906,7 @@ if ( $payment != null ) {
 foreach ( $payment as $pay ) {
 $fruits[strtotime($pay->date).'p'] = array(
 "timestamp" => strtotime($pay->date),
-"type" => __( 'Payment', 'doliconnect' ),  
+"type" => __( 'Payment', 'doliconnect'),  
 "label" => "$pay->type de ".doliprice($pay->amount, isset($orderfo->multicurrency_code) ? $orderfo->multicurrency_code : null),
 "description" => $pay->num,
 "document" => null,
@@ -916,18 +916,18 @@ $fruits[strtotime($pay->date).'p'] = array(
 
 if ( $invoice->last_main_doc != null ) {
 $doc = array_reverse(explode("/", $invoice->last_main_doc)); 
-$document_invoice = dolidocdownload($doc[2], $doc[1], $doc[0], __( 'Invoice', 'doliconnect' ));
+$document_invoice = dolidocdownload($doc[2], $doc[1], $doc[0], __( 'Invoice', 'doliconnect'));
 } else {
-$document_invoice = dolidocdownload('invoice', $invoice->ref, $invoice->ref.'.pdf', __( 'Invoice', 'doliconnect' ), true);
+$document_invoice = dolidocdownload('invoice', $invoice->ref, $invoice->ref.'.pdf', __( 'Invoice', 'doliconnect'), true);
 }
 
 if ( $invoice->paye != 1 && $invoice->remaintopay != 0 && function_exists('dolipaymentmodes') ) {
 
-$payment_invoice = "<a href='".doliconnecturl('dolicart')."?pay&module=invoices&id=".$invoice->id."&ref=".$invoice->ref."' id='button-source-payment' class='btn btn-warning btn-block' role='button'><span class='fa fa-credit-card'></span> ".__( 'Pay', 'doliconnect' )."</a><br>";
+$payment_invoice = "<a href='".doliconnecturl('dolicart')."?pay&module=invoices&id=".$invoice->id."&ref=".$invoice->ref."' id='button-source-payment' class='btn btn-warning btn-block' role='button'><span class='fa fa-credit-card'></span> ".__( 'Pay', 'doliconnect')."</a><br>";
 
 } elseif ( $invoice->paye != 1 && $invoice->remaintopay != 0 &&  isset($orderfo->public_payment_url) && !empty($orderfo->public_payment_url) ) {
 
-$payment_invoice = "<a href='".$orderfo->public_payment_url."' id='button-source-payment' class='btn btn-warning btn-block' role='button'><span class='fa fa-credit-card'></span> ".__( 'Pay', 'doliconnect' )."</a><br>";
+$payment_invoice = "<a href='".$orderfo->public_payment_url."' id='button-source-payment' class='btn btn-warning btn-block' role='button'><span class='fa fa-credit-card'></span> ".__( 'Pay', 'doliconnect')."</a><br>";
 
 } else {
 $payment_invoice = null;
@@ -935,7 +935,7 @@ $payment_invoice = null;
   
 $fruits[$invoice->date_creation.'i'] = array(
 "timestamp" => $invoice->date_creation,
-"type" => __( 'Invoice', 'doliconnect' ),  
+"type" => __( 'Invoice', 'doliconnect'),  
 "label" => $invoice->ref,
 "document" => $document_invoice,
 "description" => $payment_invoice,
@@ -957,27 +957,27 @@ $lnship .="<li>".$sline->qty_shipped."x ".$sline->libelle."</li>";
 }
 $lnship .="</ul>";
 if ( $ship->trueWeight != null ) {
-$poids = " ".__( 'of', 'doliconnect' )." ".$ship->trueWeight." ".doliunit($ship->weight_units, 'weight');
+$poids = " ".__( 'of', 'doliconnect')." ".$ship->trueWeight." ".doliunit($ship->weight_units, 'weight');
 } else { $poids = ''; }
 if ( $ship->trueSize != null && $ship->trueSize != 'xx' ) {
-$dimensions = " - ".__( 'size', 'doliconnect' )." ".$ship->trueSize." ".doliunit($ship->size_units, 'size');
+$dimensions = " - ".__( 'size', 'doliconnect')." ".$ship->trueSize." ".doliunit($ship->size_units, 'size');
 } else  { $dimensions = ''; }
 if ( $ship->statut > 0 ) {
 if ( $ship->trueWeight != null ) {
-$datedelivery = "<br>".__( 'Estimated delivery', 'doliconnect' ).": ".date_i18n( get_option( 'date_format' ), $ship->date_delivery, false);
+$datedelivery = "<br>".__( 'Estimated delivery', 'doliconnect').": ".date_i18n( get_option( 'date_format' ), $ship->date_delivery, false);
 } else { $datedelivery = ''; }
 $fruits[$ship->date_creation] = array(
 "timestamp" => $ship->date_creation,
-"type" => __( 'Shipment', 'doliconnect' ),  
+"type" => __( 'Shipment', 'doliconnect'),  
 "label" => $ship->ref." ".$ship->tracking_url.$datedelivery,
-"description" => "<small>".$lnship.__( 'Parcel', 'doliconnect' )." ".$ship->shipping_method.$poids.$dimensions."</small>",
+"description" => "<small>".$lnship.__( 'Parcel', 'doliconnect')." ".$ship->shipping_method.$poids.$dimensions."</small>",
 "document" => null,
 );
 } else {
 $fruits[$ship->date_creation] = array(
 "timestamp" => $ship->date_creation,
-"type" => __( 'Shipment', 'doliconnect' ),  
-"label" => __( 'Packaging in progress', 'doliconnect' ),
+"type" => __( 'Shipment', 'doliconnect'),  
+"label" => __( 'Packaging in progress', 'doliconnect'),
 "description" => null,
 "document" => null,
 );
@@ -1029,7 +1029,7 @@ elseif ( $postorder->statut == -1 ) { print "<span class='fas fa-check-circle fa
 print "</span></a>";
 }}
 else{
-print "<li class='list-group-item list-group-item-light'><center>".__( 'No order', 'doliconnect' )."</center></li>";
+print "<li class='list-group-item list-group-item-light'><center>".__( 'No order', 'doliconnect')."</center></li>";
 }
 print '</ul><div class="card-body"></div><div class="card-footer text-muted">';
 print "<small><div class='float-left'>";
@@ -1069,7 +1069,7 @@ add_action( 'customer_doliconnect_contracts', 'contracts_module' );
 function contracts_menu( $arg ) {
 print "<a href='".esc_url( add_query_arg( 'module', 'contracts', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
 if ( $arg == 'contracts' ) { print " active"; }
-print "'>".__( 'Contracts tracking', 'doliconnect' )."</a>";
+print "'>".__( 'Contracts tracking', 'doliconnect')."</a>";
 }
 
 function contracts_module( $url ) {
@@ -1085,12 +1085,12 @@ $contractfo = callDoliApi("GET", $request, null, dolidelay('contract', esc_attr(
 
 if ( !isset($contractfo->error) && isset($_GET['id']) && isset($_GET['id']) && isset($_GET['ref']) && (doliconnector($current_user, 'fk_soc') == $contractfo->socid) && ($_GET['ref'] == $contractfo->ref) && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doli-contracts-'.$contractfo->id.'-'.$contractfo->ref)) {
 print "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>$contractfo->ref</h5><div class='row'><div class='col-md-5'>";
-print "<b>".__( 'Date of creation', 'doliconnect' ).": </b> ".date_i18n('d/m/Y', $contractfo->date_creation)."<br>";
+print "<b>".__( 'Date of creation', 'doliconnect').": </b> ".date_i18n('d/m/Y', $contractfo->date_creation)."<br>";
 if ( $contractfo->statut > 0 ) {
 //if ( $contractfo->billed == 1 ) {
-//if ( $contractfo->statut > 1 ) { $contractfo=__( 'Shipped', 'doliconnect' ); 
+//if ( $contractfo->statut > 1 ) { $contractfo=__( 'Shipped', 'doliconnect'); 
 //$orderavancement=100; }
-//else { $orderinfo=__( 'Processing', 'doliconnect' );
+//else { $orderinfo=__( 'Processing', 'doliconnect');
 //$contractavancement=40; }
 //}
 //else { $contractinfo=null;
@@ -1107,7 +1107,7 @@ $contractavancement=0; }
 print "</div></div>";
 
 print '<div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: '.$contractavancement.'%" aria-valuenow="'.$contractavancement.'" aria-valuemin="0" aria-valuemax="100"></div></div>';
-print "<div class='w-auto text-muted d-none d-sm-block' ><div style='display:inline-block;width:20%'>".__( 'Order', 'doliconnect' )."</div><div style='display:inline-block;width:15%'>".__( 'Payment', 'doliconnect' )."</div><div style='display:inline-block;width:25%'>".__( 'Processing', 'doliconnect' )."</div><div style='display:inline-block;width:20%'>".__( 'Shipping', 'doliconnect' )."</div><div class='text-right' style='display:inline-block;width:20%'>".__( 'Delivery', 'doliconnect' )."</div></div>";
+print "<div class='w-auto text-muted d-none d-sm-block' ><div style='display:inline-block;width:20%'>".__( 'Order', 'doliconnect')."</div><div style='display:inline-block;width:15%'>".__( 'Payment', 'doliconnect')."</div><div style='display:inline-block;width:25%'>".__( 'Processing', 'doliconnect')."</div><div style='display:inline-block;width:20%'>".__( 'Shipping', 'doliconnect')."</div><div class='text-right' style='display:inline-block;width:20%'>".__( 'Delivery', 'doliconnect')."</div></div>";
 
 print "</div><ul class='list-group list-group-flush'>";
 
@@ -1122,7 +1122,7 @@ $document = dolidocdownload($doc[2], $doc[1], $doc[0], __( 'Summary', 'doliconne
     
 $fruits[$contractfo->date_creation.'p'] = array(
 "timestamp" => $contractfo->date_creation,
-"type" => __( 'contract', 'doliconnect' ),  
+"type" => __( 'contract', 'doliconnect'),  
 "label" => $contractfo->ref,
 "document" => "",
 "description" => null,
@@ -1174,7 +1174,7 @@ elseif ( $postcontract->statut == -1 ) {print "<span class='fas fa-check-circle 
 print "</span></a>";
 }}
 else{
-print "<li class='list-group-item list-group-item-light'><center>".__( 'No contract', 'doliconnect' )."</center></li>";
+print "<li class='list-group-item list-group-item-light'><center>".__( 'No contract', 'doliconnect')."</center></li>";
 }
 print '</ul><div class="card-body"></div><div class="card-footer text-muted">';
 print "<small><div class='float-left'>";
@@ -1215,7 +1215,7 @@ add_action( 'customer_doliconnect_donations', 'donations_module' );
 function donations_menu( $arg ) {
 print "<a href='".esc_url( add_query_arg( 'module', 'donations', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
 if ($arg=='donations') { print " active";}
-print "'>".__( 'Donations tracking', 'doliconnect' )."</a>";
+print "'>".__( 'Donations tracking', 'doliconnect')."</a>";
 }
 
 function donations_module( $url ) {
@@ -1235,9 +1235,9 @@ if ( !isset($donationfo->error) && isset($_GET['id']) && isset($_GET['ref']) && 
 
 print "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>$donationfo->ref</h5><div class='row'><div class='col-md-5'>";
 $datecommande =  date_i18n('d/m/Y', $donationfo->date_creation);
-print "<b>".__( 'Date of order', 'doliconnect' ).":</b> $datecommande<br>";
+print "<b>".__( 'Date of order', 'doliconnect').":</b> $datecommande<br>";
 
-print "<b>".__( 'Payment method', 'doliconnect' ).":</b> ".__( $donationfo->mode_reglement, 'doliconnect' )."<br><br></div><div class='col-md-7'>";
+print "<b>".__( 'Payment method', 'doliconnect').":</b> ".__( $donationfo->mode_reglement, 'doliconnect')."<br><br></div><div class='col-md-7'>";
 
 if ( isset($orderinfo) ) {
 print "<h3 class='text-right'>".$orderinfo."</h3>";
@@ -1247,7 +1247,7 @@ $orderavancement=100;
 
 print "</div></div>";
 print '<div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: '.$orderavancement.'%" aria-valuenow="'.$orderavancement.'" aria-valuemin="0" aria-valuemax="100"></div></div>';
-print "<div class='w-auto text-muted d-none d-sm-block' ><div style='display:inline-block;width:20%'>".__( 'Order', 'doliconnect' )."</div><div style='display:inline-block;width:15%'>".__( 'Payment', 'doliconnect' )."</div><div style='display:inline-block;width:25%'>".__( 'Processing', 'doliconnect' )."</div><div style='display:inline-block;width:20%'>".__( 'Shipping', 'doliconnect' )."</div><div class='text-right' style='display:inline-block;width:20%'>".__( 'Delivery', 'doliconnect' )."</div></div>";
+print "<div class='w-auto text-muted d-none d-sm-block' ><div style='display:inline-block;width:20%'>".__( 'Order', 'doliconnect')."</div><div style='display:inline-block;width:15%'>".__( 'Payment', 'doliconnect')."</div><div style='display:inline-block;width:25%'>".__( 'Processing', 'doliconnect')."</div><div style='display:inline-block;width:20%'>".__( 'Shipping', 'doliconnect')."</div><div class='text-right' style='display:inline-block;width:20%'>".__( 'Delivery', 'doliconnect')."</div></div>";
 
 print "</div><ul class='list-group list-group-flush'>";
  
@@ -1293,7 +1293,7 @@ $listdonation = callDoliApi("GET", $request, null, dolidelay('donation', esc_att
 
 print '<div class="card shadow-sm"><ul class="list-group list-group-flush">'; 
 if ( !empty(doliconnectid('dolidonation'))) {
-print '<a href="'.doliconnecturl('dolidonation').'" class="list-group-item lh-condensed list-group-item-action list-group-item-primary "><center><i class="fas fa-plus-circle"></i> '.__( 'Donate', 'doliconnect' ).'</center></a>';  
+print '<a href="'.doliconnecturl('dolidonation').'" class="list-group-item lh-condensed list-group-item-action list-group-item-primary "><center><i class="fas fa-plus-circle"></i> '.__( 'Donate', 'doliconnect').'</center></a>';  
 }
 if ( !isset( $listdonation->error ) && $listdonation != null ) {
 foreach ( $listdonation as $postdonation ) { 
@@ -1312,7 +1312,7 @@ elseif ( $postdonation->statut == -1 ) { print "<span class='fa fa-check-circle 
 print "</span></a>";
 }}
 else{
-print "<li class='list-group-item list-group-item-light'><center>".__( 'No donation', 'doliconnect' )."</center></li>";
+print "<li class='list-group-item list-group-item-light'><center>".__( 'No donation', 'doliconnect')."</center></li>";
 }
 print '</ul><div class="card-body"></div><div class="card-footer text-muted">';
 print "<small><div class='float-left'>";
@@ -1333,7 +1333,7 @@ add_action( 'options_doliconnect_members', 'members_module' );
 function members_menu( $arg ) {
 print "<a href='".esc_url( add_query_arg( 'module', 'members', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
 if ($arg=='members') { print " active";}
-print "'>".__( 'Membership', 'doliconnect' )."</a>";
+print "'>".__( 'Membership', 'doliconnect')."</a>";
 }
 
 function members_module( $url ) {
@@ -1350,7 +1350,7 @@ if ( isset($_POST["update_membership"]) && function_exists('dolimembership') ) {
 $adherent = dolimembership($current_user, $_POST["update_membership"], $_POST["typeadherent"], dolidelay('member', true));
 $request = "/adherentsplus/".doliconnector($current_user, 'fk_member', true); 
 //if ($statut==1) {
-$msg = dolialert ('success', __( 'Your membership has been updated.', 'doliconnect' ));
+$msg = dolialert ('success', __( 'Your membership has been updated.', 'doliconnect'));
 //}
 
 if ( ($_POST["update_membership"]==4) && isset($_POST["cotisation"]) && doliconnector($current_user, 'fk_member') > 0 && $_POST["timestamp_start"] > 0 && $_POST["timestamp_end"] > 0 ) {
@@ -1374,27 +1374,27 @@ if ( !empty(doliconnector($current_user, 'fk_member')) && doliconnector($current
 $adherent = callDoliApi("GET", $request, null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 }
 
-print "<b>".__( 'Status', 'doliconnect' ).":</b> ";
+print "<b>".__( 'Status', 'doliconnect').":</b> ";
 if ( $adherent->statut == '1') {
-if  ($adherent->datefin == null ) { print  "<span class='badge badge-danger'>".__( 'Waiting payment', 'doliconnect' )."</span>";}
+if  ($adherent->datefin == null ) { print  "<span class='badge badge-danger'>".__( 'Waiting payment', 'doliconnect')."</span>";}
 else {
-if ( $adherent->datefin+86400>$time){ print  "<span class='badge badge-success'>".__( 'Active', 'doliconnect' )."</span>"; } else { print  "<span class='badge badge-danger'>".__( 'Waiting payment', 'doliconnect' )."</span>";}
+if ( $adherent->datefin+86400>$time){ print  "<span class='badge badge-success'>".__( 'Active', 'doliconnect')."</span>"; } else { print  "<span class='badge badge-danger'>".__( 'Waiting payment', 'doliconnect')."</span>";}
 }}
 elseif ( $adherent->statut == '0' ) {
-print  "<span class='badge badge-dark'>".__( 'Terminated', 'doliconnect' )."</span>";}
+print  "<span class='badge badge-dark'>".__( 'Terminated', 'doliconnect')."</span>";}
 elseif ( $adherent->statut == '-1' ) {
-print  "<span class='badge badge-warning'>".__( 'Waiting validation', 'doliconnect' )."</span>";}
-else {print  "<span class='badge badge-dark'>".__( 'No membership', 'doliconnect' )."</span>";}
+print  "<span class='badge badge-warning'>".__( 'Waiting validation', 'doliconnect')."</span>";}
+else {print  "<span class='badge badge-dark'>".__( 'No membership', 'doliconnect')."</span>";}
 print  "<br>";
-$type=(! empty($adherent->type) ? $adherent->type : __( 'nothing', 'doliconnect' ));
-print  "<b>".__( 'Type', 'doliconnect' ).":</b> ".$type."<br>";
-print  "<b>".__( 'End of membership', 'doliconnect' ).":</b> ";
+$type=(! empty($adherent->type) ? $adherent->type : __( 'nothing', 'doliconnect'));
+print  "<b>".__( 'Type', 'doliconnect').":</b> ".$type."<br>";
+print  "<b>".__( 'End of membership', 'doliconnect').":</b> ";
 if ( $adherent->datefin == null ) { print  "***";
 } else { print  date_i18n('d/m/Y', $adherent->datefin); }
-if ( isset($adherent->license) &&  null != $adherent->license ) print "<br><b>".__( 'License', 'doliconnect' ).":</b> ".$adherent->license;
-//print  "<br><b>".__( 'Seniority', 'doliconnect' ).":</b> ";
-print  "<br><b>".__( 'Commitment', 'doliconnect' ).":</b> ";
-if ( (current_time('timestamp') > $adherent->datecommitment) || null == $adherent->datecommitment ) { print  __( 'no', 'doliconnect' );
+if ( isset($adherent->license) &&  null != $adherent->license ) print "<br><b>".__( 'License', 'doliconnect').":</b> ".$adherent->license;
+//print  "<br><b>".__( 'Seniority', 'doliconnect').":</b> ";
+print  "<br><b>".__( 'Commitment', 'doliconnect').":</b> ";
+if ( (current_time('timestamp') > $adherent->datecommitment) || null == $adherent->datecommitment ) { print  __( 'no', 'doliconnect');
 } else {
 $datefin =  date_i18n('d/m/Y', $adherent->datecommitment);
 print  "$datefin"; }
@@ -1406,18 +1406,18 @@ dolimembership_modal($current_user, $adherent, dolidelay('member', esc_attr(isse
 
 //print doliloaderscript('doliconnect-memberform');
 
-if ( $adherent->datefin == null && $adherent->statut == '0' ) {print  "<a href='#' id='subscribe-button2' class='btn btn text-white btn-warning btn-block' data-toggle='modal' data-target='#activatemember'><b>".__( 'Become a member', 'doliconnect' )."</b></a>";
+if ( $adherent->datefin == null && $adherent->statut == '0' ) {print  "<a href='#' id='subscribe-button2' class='btn btn text-white btn-warning btn-block' data-toggle='modal' data-target='#activatemember'><b>".__( 'Become a member', 'doliconnect')."</b></a>";
 } elseif ($adherent->statut == '1') {
 if ( $time > $adherent->next_subscription_renew && $adherent->datefin != null ) {
-print "<button class='btn btn text-white btn-warning btn-block' data-toggle='modal' data-target='#activatemember'>".__( 'Renew my subscription', 'doliconnect' )."</button>";
+print "<button class='btn btn text-white btn-warning btn-block' data-toggle='modal' data-target='#activatemember'>".__( 'Renew my subscription', 'doliconnect')."</button>";
 } elseif ( intval(86400+(!empty($adherent->datefin)?$adherent->datefin:0)) > $time ) {
-print  "<button id='subscribe-button2' class='btn btn text-white btn-warning btn-block' data-toggle='modal' data-target='#activatemember'>".__( 'Modify my subscription', 'doliconnect' )."</button>";
-} else { print  "<button class='btn btn btn-danger btn-block' data-toggle='modal' data-target='#activatemember'>".__( 'Pay my subscription', 'doliconnect' )."</button>";}
+print  "<button id='subscribe-button2' class='btn btn text-white btn-warning btn-block' data-toggle='modal' data-target='#activatemember'>".__( 'Modify my subscription', 'doliconnect')."</button>";
+} else { print  "<button class='btn btn btn-danger btn-block' data-toggle='modal' data-target='#activatemember'>".__( 'Pay my subscription', 'doliconnect')."</button>";}
 } elseif ( $adherent->statut == '0' ) {
 if ( intval(86400+(!empty($adherent->datefin)?$adherent->datefin:0)) > $time ) {
-print "<form id='subscription-form' action='".doliconnecturl('doliaccount')."?module=members' method='post'><input type='hidden' name='update_membership' value='4'><button id='resiliation-button' class='btn btn btn-warning btn-block' type='submit'><b>".__( 'Reactivate my subscription', 'doliconnect' )."</b></button></form>";
+print "<form id='subscription-form' action='".doliconnecturl('doliaccount')."?module=members' method='post'><input type='hidden' name='update_membership' value='4'><button id='resiliation-button' class='btn btn btn-warning btn-block' type='submit'><b>".__( 'Reactivate my subscription', 'doliconnect')."</b></button></form>";
 } else {
-print  "<button class='btn btn text-white btn-warning btn-block' data-toggle='modal' data-target='#activatemember'>".__( 'Renew my subscription', 'doliconnect' )."</button>";
+print  "<button class='btn btn text-white btn-warning btn-block' data-toggle='modal' data-target='#activatemember'>".__( 'Renew my subscription', 'doliconnect')."</button>";
 }
 } elseif ( $adherent->statut == '-1' ) {
 print '<div class="clearfix"><div class="spinner-border float-left" role="status">
@@ -1429,9 +1429,9 @@ $thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, '
 }
 
 if ( empty($thirdparty->address) || empty($thirdparty->zip) || empty($thirdparty->town) || empty($thirdparty->country_id) || empty($current_user->billing_type) || empty($current_user->billing_birth) || empty($current_user->user_firstname) || empty($current_user->user_lastname) || empty($current_user->user_email)) {
-print "Pour adhérer, tous les champs doivent être renseignés dans vos <a href='".esc_url( get_permalink(get_option('doliaccount')))."?module=informations&return=members' class='alert-link'>".__( 'Personal informations', 'doliconnect' )."</a></div><div class='col-sm-6 col-md-7'>";
+print "Pour adhérer, tous les champs doivent être renseignés dans vos <a href='".esc_url( get_permalink(get_option('doliaccount')))."?module=informations&return=members' class='alert-link'>".__( 'Personal informations', 'doliconnect')."</a></div><div class='col-sm-6 col-md-7'>";
 } else { 
-print "<button class='btn btn text-white btn-warning btn-block' data-toggle='modal' data-target='#activatemember'>".__( 'Become a member', 'doliconnect' )."</button>";
+print "<button class='btn btn text-white btn-warning btn-block' data-toggle='modal' data-target='#activatemember'>".__( 'Become a member', 'doliconnect')."</button>";
 }
 }
 
@@ -1458,12 +1458,12 @@ if ( !isset($listcotisation->error) && $listcotisation != null ) {
 foreach ( $listcotisation as $cotisation ) {                                                                                 
 $dated =  date_i18n('d/m/Y', $cotisation->dateh);
 $datef =  date_i18n('d/m/Y', $cotisation->datef);
-print "<li class='list-group-item'><table width='100%' border='0'><tr><td>$cotisation->label</td><td>$dated ".__( 'to', 'doliconnect' )." $datef";
+print "<li class='list-group-item'><table width='100%' border='0'><tr><td>$cotisation->label</td><td>$dated ".__( 'to', 'doliconnect')." $datef";
 print "</td><td class='text-right'><b>".doliprice($cotisation->amount)."</b></td></tr></table><span></span></li>";
 }
 }
 else { 
-print "<li class='list-group-item list-group-item-light'><center>".__( 'No subscription', 'doliconnect' )."</center></li>";
+print "<li class='list-group-item list-group-item-light'><center>".__( 'No subscription', 'doliconnect')."</center></li>";
 }
 print '</ul><div class="card-body"></div><div class="card-footer text-muted">';
 print "<small><div class='float-left'>";
@@ -1483,7 +1483,7 @@ add_action( 'options_doliconnect_membershipconsumption', 'membershipconsumption_
 function membershipconsumption_menu( $arg ) {
 print "<a href='".esc_url( add_query_arg( 'module', 'membershipconsumption', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
 if ($arg=='membershipconsumption') { print " active";}
-print "'>".__( 'Consumptions monitoring', 'doliconnect' )."</a>";
+print "'>".__( 'Consumptions monitoring', 'doliconnect')."</a>";
 }
 
 function membershipconsumption_module( $url ) {
@@ -1492,7 +1492,7 @@ global $current_user;
 $request = "/adherentsplus/".doliconnector($current_user, 'fk_member')."/consumptions";
 
 print "<div class='card shadow-sm'><div class='card-body'>";
-print "<b>".__( 'Next billing date', 'doliconnect' ).": </b> <br>";
+print "<b>".__( 'Next billing date', 'doliconnect').": </b> <br>";
 
 print "</div><ul class='list-group list-group-flush'>";
 
@@ -1515,7 +1515,7 @@ print "</td>";
 print "<td class='text-right'><b>".doliprice($consumption->amount)."</b></td></tr></table><span></span></li>";
 }
 } else { 
-print "<li class='list-group-item list-group-item-light'><center>".__( 'No consumption', 'doliconnect' )."</center></li>";
+print "<li class='list-group-item list-group-item-light'><center>".__( 'No consumption', 'doliconnect')."</center></li>";
 }
 
 print '</ul><div class="card-body"></div><div class="card-footer text-muted">';
@@ -1536,7 +1536,7 @@ add_action( 'options_doliconnect_linkedmember', 'linkedmember_module' );
 function linkedmember_menu( $arg ) {
 print "<a href='".esc_url( add_query_arg( 'module', 'linkedmember', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
 if ($arg=='linkedmember') { print " active";}
-print "'>".__( 'Manage linked members', 'doliconnect' )."</a>";
+print "'>".__( 'Manage linked members', 'doliconnect')."</a>";
 }
 
 function linkedmember_module( $url ) {
@@ -1550,7 +1550,7 @@ if ( isset ($_POST['unlink_member']) && $_POST['unlink_member'] > 0 ) {
 // try deleting
 $delete = callDoliApi("DELETE", $request."/".esc_attr($_POST['unlink_member']), null, 0);
 
-$msg = dolialert ('success', __( 'Your informations have been updated.', 'doliconnect' ));
+$msg = dolialert ('success', __( 'Your informations have been updated.', 'doliconnect'));
 
 //} else {
 // fail deleting
@@ -1566,7 +1566,7 @@ if ( false === $memberv ) {
 // fail deleting
 
 } else {
-$msg = dolialert ('success', __( 'Your informations have been updated.', 'doliconnect' ));
+$msg = dolialert ('success', __( 'Your informations have been updated.', 'doliconnect'));
 $linkedmember = callDoliApi("GET", $request, null, dolidelay('member', true));
 }
 
@@ -1584,9 +1584,9 @@ print doliloaderscript('doliconnect-linkedmembersform');
 
 print "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
 
-print '<button type="button" class="list-group-item lh-condensed list-group-item-action list-group-item-primary" data-toggle="modal" data-target="#addmember"><center><i class="fas fa-plus-circle"></i> '.__( 'New linked member', 'doliconnect' ).'</center></button>';
+print '<button type="button" class="list-group-item lh-condensed list-group-item-action list-group-item-primary" data-toggle="modal" data-target="#addmember"><center><i class="fas fa-plus-circle"></i> '.__( 'New linked member', 'doliconnect').'</center></button>';
 
-print "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".__( 'Please contact us to link a pre-existing member', 'doliconnect' )."</b></li>"; 
+print "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".__( 'Please contact us to link a pre-existing member', 'doliconnect')."</b></li>"; 
 
 if ( !isset($linkedmember->error) && $linkedmember != null ) { 
 foreach ( $linkedmember as $member ) {                                                                                 
@@ -1594,14 +1594,14 @@ print "<li class='list-group-item d-flex justify-content-between lh-condensed li
 print doliaddress($member);
 if (1 == 1) {
 print "<div class='col-4 col-sm-3 col-md-2 btn-group-vertical' role='group'>";
-print "<button type='button' class='btn btn-light text-primary' data-toggle='modal' data-target='#member-".$member->id."' title='".__( 'Edit', 'doliconnect' )." ".$member->firstname." ".$member->lastname."'><i class='fas fa-edit fa-fw'></i></a>
-<button name='unlink_member' value='".$member->id."' class='btn btn-light text-danger' type='submit' title='".__( 'Unlink', 'doliconnect' )." ".$member->firstname." ".$member->lastname."'><i class='fas fa-unlink'></i></button>";
+print "<button type='button' class='btn btn-light text-primary' data-toggle='modal' data-target='#member-".$member->id."' title='".__( 'Edit', 'doliconnect')." ".$member->firstname." ".$member->lastname."'><i class='fas fa-edit fa-fw'></i></a>
+<button name='unlink_member' value='".$member->id."' class='btn btn-light text-danger' type='submit' title='".__( 'Unlink', 'doliconnect')." ".$member->firstname." ".$member->lastname."'><i class='fas fa-unlink'></i></button>";
 print "</div>";
 }
 print "</li>";
 }
 } else { 
-print "<li class='list-group-item list-group-item-light'><center>".__( 'No linked member', 'doliconnect' )."</center></li>";
+print "<li class='list-group-item list-group-item-light'><center>".__( 'No linked member', 'doliconnect')."</center></li>";
 }
 print "</form>";
 print '</ul><div class="card-body"></div><div class="card-footer text-muted">';
@@ -1617,7 +1617,7 @@ foreach ( $linkedmember as $member ) {
 
 print '<div class="modal fade" id="member-'.$member->id.'" tabindex="-1" role="dialog" aria-labelledby="member-'.$member->id.'Title" aria-hidden="true" data-backdrop="static" data-keyboard="false">
 <div class="modal-dialog modal-lg modal-dialog-centered" role="document"><div class="modal-content border-0"><div class="modal-header border-0">
-<h5 class="modal-title" id="member-'.$member->id.'Title">'.__( 'Update member', 'doliconnect' ).'</h5><button id="Closemember'.$member->id.'-form" type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
+<h5 class="modal-title" id="member-'.$member->id.'Title">'.__( 'Update member', 'doliconnect').'</h5><button id="Closemember'.$member->id.'-form" type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
 <div id="member'.$member->id.'-form">';
 print "<form class='was-validated' role='form' action='$url' id='member-".$member->id."-form' method='post'>";
 
@@ -1627,7 +1627,7 @@ print doliuserform($member, dolidelay('constante', esc_attr(isset($_GET["refresh
 
 print "</div>".doliloading('member'.$member->id.'-form');
      
-print "<div id='Footermember".$member->id."-form' class='modal-footer'><button name='update_member' value='".$member->id."' class='btn btn-warning btn-block' type='submit'>".__( 'Update', 'doliconnect' )."</button></form></div>
+print "<div id='Footermember".$member->id."-form' class='modal-footer'><button name='update_member' value='".$member->id."' class='btn btn-warning btn-block' type='submit'>".__( 'Update', 'doliconnect')."</button></form></div>
 </div></div></div>";
 }}
 
@@ -1642,7 +1642,7 @@ add_action( 'settings_doliconnect_tickets', 'tickets_module');
 function tickets_menu( $arg ) {
 print "<a href='".esc_url( add_query_arg( 'module', 'tickets', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
 if ( $arg == 'tickets' ) { print " active"; }
-print "'>".__( 'Help', 'doliconnect' )."</a>";
+print "'>".__( 'Help', 'doliconnect')."</a>";
 }
 
 function tickets_module( $url ) {
@@ -1667,30 +1667,30 @@ $ticketid = callDoliApi("POST", "/tickets/newmessage", $rdr, dolidelay('ticket',
 //print $ticketid;
 
 if ( $ticketid > 0 ) {
-$msg = dolialert ('success', __( 'Your message has been send.', 'doliconnect' ));
+$msg = dolialert ('success', __( 'Your message has been send.', 'doliconnect'));
 $ticketfo = callDoliApi("GET", $request, null, dolidelay('ticket', true));
 //print $ticket;
 } }
 
 print "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>".$ticketfo->ref."</h5><div class='row'><div class='col-md-6'>";
 $dateticket =  date_i18n('d/m/Y', $ticketfo->datec);
-print "<b>".__( 'Date of creation', 'doliconnect' ).": </b> $dateticket<br>";
-print "<b>".__( 'Type and category', 'doliconnect' ).": </b> ".__($ticketfo->type_label, 'doliconnect' ).", ".__($ticketfo->category_label, 'doliconnect' )."<br>";
-print "<b>".__( 'Severity', 'doliconnect' ).": </b> ".__($ticketfo->severity_label, 'doliconnect' )."<br>";
+print "<b>".__( 'Date of creation', 'doliconnect').": </b> $dateticket<br>";
+print "<b>".__( 'Type and category', 'doliconnect').": </b> ".__($ticketfo->type_label, 'doliconnect').", ".__($ticketfo->category_label, 'doliconnect')."<br>";
+print "<b>".__( 'Severity', 'doliconnect').": </b> ".__($ticketfo->severity_label, 'doliconnect')."<br>";
 print "</div><div class='col-md-6'><h3 class='text-right'>";
-if ( $ticketfo->fk_statut == 9 ) { print "<span class='label label-default'>".__( 'Deleted', 'doliconnect' )."</span>"; }
-elseif ( $ticketfo->fk_statut == 8 ) { print "<span class='label label-success'>".__( 'Closed', 'doliconnect' )."</span>"; }
-elseif ( $ticketfo->fk_statut == 6 ) { print "<span class='label label-warning'>".__( 'Waiting', 'doliconnect' )."</span>"; }
-elseif ( $ticketfo->fk_statut == 5 ) { print "<span class='label label-warning'>".__( 'In progress', 'doliconnect' )."</span>"; }
-elseif ( $ticketfo->fk_statut == 4 ) { print "<span class='label label-warning'>".__( 'Assigned', 'doliconnect' )."</span>"; }
-elseif ( $ticketfo->fk_statut == 3 ) { print "<span class='label label-warning'>".__( 'Answered', 'doliconnect' )."</span>"; }
-elseif ( $ticketfo->fk_statut == 1 ) { print "<span class='label label-warning'>".__( 'Read', 'doliconnect' )."</span>"; }
-elseif ( $ticketfo->fk_statut == 0 ) { print "<span class='label label-danger'>".__( 'Unread', 'doliconnect' )."</span>"; }
+if ( $ticketfo->fk_statut == 9 ) { print "<span class='label label-default'>".__( 'Deleted', 'doliconnect')."</span>"; }
+elseif ( $ticketfo->fk_statut == 8 ) { print "<span class='label label-success'>".__( 'Closed', 'doliconnect')."</span>"; }
+elseif ( $ticketfo->fk_statut == 6 ) { print "<span class='label label-warning'>".__( 'Waiting', 'doliconnect')."</span>"; }
+elseif ( $ticketfo->fk_statut == 5 ) { print "<span class='label label-warning'>".__( 'In progress', 'doliconnect')."</span>"; }
+elseif ( $ticketfo->fk_statut == 4 ) { print "<span class='label label-warning'>".__( 'Assigned', 'doliconnect')."</span>"; }
+elseif ( $ticketfo->fk_statut == 3 ) { print "<span class='label label-warning'>".__( 'Answered', 'doliconnect')."</span>"; }
+elseif ( $ticketfo->fk_statut == 1 ) { print "<span class='label label-warning'>".__( 'Read', 'doliconnect')."</span>"; }
+elseif ( $ticketfo->fk_statut == 0 ) { print "<span class='label label-danger'>".__( 'Unread', 'doliconnect')."</span>"; }
 print "</h3></div></div>";
 print '<br><div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: '.$ticketfo->progress.'%" aria-valuenow="'.$ticketfo->progress.'" aria-valuemin="0" aria-valuemax="100"></div></div>';
 print "</div><ul class='list-group list-group-flush'>
-<li class='list-group-item'><h5 class='mb-1'>".__( 'Subject', 'doliconnect' ).": ".$ticketfo->subject."</h5>
-<p class='mb-1'>".__( 'Initial message', 'doliconnect' ).": ".$ticketfo->message."</p></li>";
+<li class='list-group-item'><h5 class='mb-1'>".__( 'Subject', 'doliconnect').": ".$ticketfo->subject."</h5>
+<p class='mb-1'>".__( 'Initial message', 'doliconnect').": ".$ticketfo->message."</p></li>";
 
 if ( $ticketfo->fk_statut < '8' && $ticketfo->fk_statut > '0' && !empty(get_option('doliconnectbeta')) ) {
 print "<li class='list-group-item'>";
@@ -1701,9 +1701,9 @@ if ( isset($msg) ) { print $msg; }
 
 print doliloaderscript('doliconnect-msgticketform'); 
 
-print '<div class="form-group"><label for="ticketnewmessage"><small>'.__( 'Response', 'doliconnect' ).'</small></label>
+print '<div class="form-group"><label for="ticketnewmessage"><small>'.__( 'Response', 'doliconnect').'</small></label>
 <div class="input-group mb-2"><div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-comment fa-fw"></i></span></div><textarea class="form-control" name="ticket_newmessage" id="ticket_newmessage" rows="5" required></textarea>
-</div></div><input type="hidden" name="case" value="messageticket"><button class="btn btn-danger btn-block" type="submit">'.__( 'Answer', 'doliconnect' ).'</button></form>';
+</div></div><input type="hidden" name="case" value="messageticket"><button class="btn btn-danger btn-block" type="submit">'.__( 'Answer', 'doliconnect').'</button></form>';
 print "</li>";
 
 }
@@ -1828,10 +1828,10 @@ print "<select class='custom-select' id='fk_user_assign' name='fk_user_assign' d
 print "</div></div>";
 }
 
-print "<div class='form-group'><label for='ticket_subject'><small>".__( 'Subject', 'doliconnect' )."</small></label><div class='input-group mb-2'><div class='input-group-prepend'><div class='input-group-text'><i class='fas fa-bullhorn fa-fw'></i></div></div><input type='text' class='form-control' id='ticket_subject' name='ticket_subject' value='' autocomplete='off' required></div></div>";
+print "<div class='form-group'><label for='ticket_subject'><small>".__( 'Subject', 'doliconnect')."</small></label><div class='input-group mb-2'><div class='input-group-prepend'><div class='input-group-text'><i class='fas fa-bullhorn fa-fw'></i></div></div><input type='text' class='form-control' id='ticket_subject' name='ticket_subject' value='' autocomplete='off' required></div></div>";
 
 print "<div class='form-group'>
-<label for='description'><small>".__( 'Message', 'doliconnect' )."</small></label><div class='input-group mb-2'><div class='input-group-prepend'><span class='input-group-text'><i class='fas fa-file-alt fa-fw'></i></span></div>
+<label for='description'><small>".__( 'Message', 'doliconnect')."</small></label><div class='input-group mb-2'><div class='input-group-prepend'><span class='input-group-text'><i class='fas fa-file-alt fa-fw'></i></span></div>
 <textarea type='text' class='form-control' name='ticket_message' id='ticket_message' rows='8' required></textarea></div></div></li></ul>";
 
 print "<div class='card-body'><input type='hidden' name='case' value='createticket'><button type='submit' class='btn btn-block btn-warning'>".__( 'Send', 'doliconnect')."</button></div>";
@@ -1847,7 +1847,7 @@ $listticket = callDoliApi("GET", $request, null, dolidelay('ticket', esc_attr(is
 
 print '<div class="card shadow-sm"><ul class="list-group list-group-flush">';
 //if ($help>0) {
-print '<a href="'.$url.'&create" class="list-group-item lh-condensed list-group-item-action list-group-item-primary"><center><i class="fas fa-plus-circle"></i> '.__( 'New ticket', 'doliconnect' ).'</center></a>';  
+print '<a href="'.$url.'&create" class="list-group-item lh-condensed list-group-item-action list-group-item-primary"><center><i class="fas fa-plus-circle"></i> '.__( 'New ticket', 'doliconnect').'</center></a>';  
 //}
 if ( !isset($listticket->error) && $listticket != null ) {
 foreach ($listticket as $postticket) {                                                                                 
@@ -1859,19 +1859,19 @@ if ( $postticket->severity_code == 'BLOCKING' ) { $color="text-danger"; }
 elseif ( $postticket->severity_code == 'HIGH' ) { $color="text-warning"; }
 elseif ( $postticket->severity_code == 'NORMAL' ) { $color="text-success"; }
 elseif ( $postticket->severity_code == 'LOW' ) { $color="text-info"; } else { $color="text-dark"; }
-print "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'><div><i class='fas fa-question-circle $color fa-3x fa-fw'></i></div><div><h6 class='my-0'>$postticket->subject</h6><small class='text-muted'>du ".date_i18n('d/m/Y', $postticket->datec)."</small></div><span class='text-center'>".__($postticket->type_label, 'doliconnect' )."<br/>".__($postticket->category_label, 'doliconnect' )."</span><span>";
-if ( $postticket->fk_statut == 9 ) { print "<span class='label label-default'>".__( 'Deleted', 'doliconnect' )."</span>"; }
-elseif ( $postticket->fk_statut == 8 ) { print "<span class='label label-success'>".__( 'Closed', 'doliconnect' )."</span>"; }
-elseif ( $postticket->fk_statut == 6 ) { print "<span class='label label-warning'>".__( 'Waiting', 'doliconnect' )."</span>"; }
-elseif ( $postticket->fk_statut == 5 ) { print "<span class='label label-warning'>".__( 'Progress', 'doliconnect' )."</span>"; }
-elseif ( $postticket->fk_statut == 4 ) { print "<span class='label label-warning'>".__( 'Assigned', 'doliconnect' )."</span>"; }
-elseif ( $postticket->fk_statut == 3 ) { print "<span class='label label-warning'>".__( 'Answered', 'doliconnect' )."</span>"; }
-elseif ( $postticket->fk_statut == 1 ) { print "<span class='label label-warning'>".__( 'Read', 'doliconnect' )."</span>"; }
-elseif ( $postticket->fk_statut == 0 ) { print "<span class='label label-danger'>".__( 'Unread', 'doliconnect' )."</span>"; }
+print "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'><div><i class='fas fa-question-circle $color fa-3x fa-fw'></i></div><div><h6 class='my-0'>$postticket->subject</h6><small class='text-muted'>du ".date_i18n('d/m/Y', $postticket->datec)."</small></div><span class='text-center'>".__($postticket->type_label, 'doliconnect')."<br/>".__($postticket->category_label, 'doliconnect')."</span><span>";
+if ( $postticket->fk_statut == 9 ) { print "<span class='label label-default'>".__( 'Deleted', 'doliconnect')."</span>"; }
+elseif ( $postticket->fk_statut == 8 ) { print "<span class='label label-success'>".__( 'Closed', 'doliconnect')."</span>"; }
+elseif ( $postticket->fk_statut == 6 ) { print "<span class='label label-warning'>".__( 'Waiting', 'doliconnect')."</span>"; }
+elseif ( $postticket->fk_statut == 5 ) { print "<span class='label label-warning'>".__( 'Progress', 'doliconnect')."</span>"; }
+elseif ( $postticket->fk_statut == 4 ) { print "<span class='label label-warning'>".__( 'Assigned', 'doliconnect')."</span>"; }
+elseif ( $postticket->fk_statut == 3 ) { print "<span class='label label-warning'>".__( 'Answered', 'doliconnect')."</span>"; }
+elseif ( $postticket->fk_statut == 1 ) { print "<span class='label label-warning'>".__( 'Read', 'doliconnect')."</span>"; }
+elseif ( $postticket->fk_statut == 0 ) { print "<span class='label label-danger'>".__( 'Unread', 'doliconnect')."</span>"; }
 print "</span></a>";
 }}
 else{
-print "<li class='list-group-item list-group-item-light'><center>".__( 'No ticket', 'doliconnect' )."</center></li>";
+print "<li class='list-group-item list-group-item-light'><center>".__( 'No ticket', 'doliconnect')."</center></li>";
 }
 
 print '</ul><div class="card-body"></div><div class="card-footer text-muted">';
@@ -1888,7 +1888,7 @@ print '</div></div>';
 function settings_menu($arg) {
 print "<a href='".esc_url( add_query_arg( 'module', 'settings', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
 if ($arg=='settings') { print " active"; }
-print "'>".__( 'Settings & security', 'doliconnect' )."</a>";
+print "'>".__( 'Settings & security', 'doliconnect')."</a>";
 }
 add_action( 'settings_doliconnect_menu', 'settings_menu', 2, 1);
 
@@ -1960,7 +1960,7 @@ print "<div class='form-group'><label for='inputaddress'><small>".__( 'Default l
 <div class='input-group'><div class='input-group-prepend'><span class='input-group-text'><i class='fas fa-language fa-fw'></i></span></div>";
 if ( function_exists('pll_the_languages') ) { 
 print "<select class='form-control' id='locale' name='locale' onChange='demo()' >";
-print "<option value=''>".__( 'Default / Browser language', 'doliconnect' )."</option>";
+print "<option value=''>".__( 'Default / Browser language', 'doliconnect')."</option>";
 $translations = pll_the_languages( array( 'raw' => 1 ) );
 foreach ($translations as $key => $value) {
 print "<option value='".str_replace("-","_",$value[locale])."' ";
@@ -2075,7 +2075,7 @@ add_action( 'settings_doliconnect_settings', 'settings_module' );
 function gdpr_menu($arg) {
 print "<a href='".esc_url( add_query_arg( 'module', 'gdpr', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
 if ($arg=='gdpr') { print " active";}
-print "'>".__( 'Privacy', 'doliconnect' )."</a>";
+print "'>".__( 'Privacy', 'doliconnect')."</a>";
 }
 add_action( 'settings_doliconnect_menu', 'gdpr_menu', 3, 1);
 add_action( 'settings_doliconnect_gdpr', 'gdpr_module' );

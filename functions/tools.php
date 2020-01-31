@@ -528,9 +528,16 @@ return false;
 }
 
 function dolialert($type, $msg) { //__( 'Oops!', 'doliconnect' )
-$alert ='<div class="alert alert-'.$type.' alert-dismissible fade show" role="alert">
-<strong>'.__( 'Congratulations!', 'doliconnect' ).'</strong> '.$msg.'
-<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>';
+$alert = '<div class="alert alert-'.$type.' alert-dismissible fade show" role="alert">';
+if ($type == 'success') {
+$alert .= '<strong>'.__( 'Congratulations!', 'doliconnect' ).'</strong>';
+} elseif ($type == 'warning') {
+$alert .= '<strong>'.__( 'Be carefull', 'doliconnect' ).'</strong>';
+} else {
+$alert .= '<strong>'.__( 'Oops', 'doliconnect' ).'</strong>';
+}
+$alert .= ' '.$msg;
+$alert .= '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>';
 return $alert;
 }
 
