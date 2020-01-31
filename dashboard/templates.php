@@ -545,8 +545,16 @@ print "</div></div></form>";
 
 } else {
 
-if( isset($_GET["login"]) && $_GET["login"] == 'failed' ) { 
+if ( isset($_GET["login"]) && $_GET["login"] == 'failed' ) { 
 print dolialert('danger', __( 'There is no account for these login data or the email and/or the password are not correct.', 'doliconnect'));
+} elseif ( isset($_GET["action"]) && $_GET["action"] == 'lostpassword') {
+if( isset($_GET["success"]) ) { 
+print dolialert('success', __( 'Your password have been updated.', 'doliconnect'));
+} elseif( isset($_GET["error"]) && $_GET["error"] == 'expiredkey' ) { 
+print dolialert('danger', __( 'The security key is expired!', 'doliconnect'));
+} elseif( isset($_GET["error"]) && $_GET["error"] == 'invalidkey' ) { 
+print dolialert('danger', __( 'The security key is invalid!', 'doliconnect'));
+}
 }
 
 print "<div class='card shadow-sm'>";

@@ -497,19 +497,17 @@ $data = [
 $doliuser = callDoliApi("PUT", $request , $data, 0);
 }
 
-$msg = dolialert ('success', __( 'Your informations have been updated.', 'doliconnect'));
+print dolialert('success', __( 'Your password have been updated.', 'doliconnect'));
 } elseif ( ! wp_check_password( $pwd0, $current_user->user_pass, $current_user->ID ) ) {
-$msg = dolialert ('danger', __( 'Your actual password is incorrect', 'doliconnect'));
+print dolialert('danger', __( 'Your actual password is incorrect', 'doliconnect'));
 } elseif ( $pwd1 != $_POST["pwd2"] ) {
-$msg = dolialert ('danger', __( 'The new passwords entered are different', 'doliconnect'));
+print dolialert('danger', __( 'The new passwords entered are different', 'doliconnect'));
 } elseif ( !preg_match("#.*^(?=.{8,20})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*$#", $pwd1) ) {
-$msg = dolialert ('danger', __( 'Your password must be between 8 and 20 characters, including at least 1 digit, 1 letter, 1 uppercase.', 'doliconnect'));
+print dolialert('danger', __( 'Your password must be between 8 and 20 characters, including at least 1 digit, 1 letter, 1 uppercase.', 'doliconnect'));
 }
 }
 
 print "<form class='was-validated' action='".$url."' id='doliconnect-passwordform' method='post'><input type='hidden' name='case' value='updatepwd'>";
-
-if ( isset($msg) ) { print $msg; }
 
 print doliloaderscript('doliconnect-passwordform'); 
 
