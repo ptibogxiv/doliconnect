@@ -1094,8 +1094,8 @@ if (!empty($module) && is_object($object) && isset($object->id) && preg_match('/
 $paymentmethods .= "stripe.retrievePaymentIntent('".$listpaymentmethods->stripe->client_secret."').then(function(result) {
     if (result.error) { 
     } else {
-    if (result.paymentIntent.status == 'succeeded') {
-    window.location = '".$url."';
+    if (result.paymentIntent.status == 'succeeded' || result.paymentIntent.status == 'processing' || result.paymentIntent.status == 'canceled' ) {
+    window.location = '".$url."?step=validation';
     }
     }
   });";
