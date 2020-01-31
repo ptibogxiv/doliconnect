@@ -367,7 +367,7 @@ $doliuser = callDoliApi("GET", $request , null, dolidelay('thirdparty'));
 print "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".__( 'Your password will be synchronized with your Dolibarr account', 'doliconnect' )."</b></li>";
 } 
 print "<li class='list-group-item'><h5 class='card-title'>".__( 'Change your password', 'doliconnect' )."</h5>
-<form class='was-validated' id='doliconnect-rpwform' action='".doliconnecturl('doliaccount')."?action=rpw' method='post'><input type='hidden' name='submitted' id='submitted' value='true' />";
+<form class='was-validated' id='doliconnect-rpwform' action='' method='post'><input type='hidden' name='submitted' id='submitted' value='true' />";
 
 print doliloaderscript('doliconnect-rpwform'); 
 
@@ -394,11 +394,11 @@ print ' readonly';
 print ' required';
 }
 print "></div>
-</div></div></li><li class='list-group-item'><input type='hidden' name='case' value ='updatepwd'><button class='btn btn-danger btn-block' type='submit' ";
+</div></div></li></ul><div class='card-body'><input type='hidden' name='case' value ='updatepwd'><button class='btn btn-danger btn-block' type='submit' ";
 if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $user->ID ) {
 print ' disabled';
 }
-print "><b>".__( 'Update', 'doliconnect' )."</b></button></form></li></ul>";
+print "><b>".__( 'Update', 'doliconnect' )."</b></button></form></div>";
 print "<div class='card-footer text-muted'>";
 print "<small><div class='float-left'>";
 if ( $request ) print dolirefresh($request, null, dolidelay('thirdparty'));
