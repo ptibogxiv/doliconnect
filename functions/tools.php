@@ -909,11 +909,11 @@ $paymentmethods .= ' checked';
 $paymentmethods .= '><label class="custom-control-label" for="cardDefault2">'.__( "Save as favourite", 'doliconnect').'</label>
 </div></p>';
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
-$paymentmethods .='<button id="cardPayButton" class="btn btn-danger btn-block" >'.__( 'Pay', 'doliconnect' )." ".doliprice($object, 'ttc', $currency).'</button>';
+$paymentmethods .= '<button id="cardPayButton" class="btn btn-danger btn-block" >'.__( 'Pay', 'doliconnect' )." ".doliprice($object, 'ttc', $currency).'</button>';
 } else {
-$paymentmethods .="<button id='cardButton' class='btn btn-warning btn-block' title='".__( 'Add', 'doliconnect')."'>".__( 'Add', 'doliconnect')."</button>";
+$paymentmethods .= "<button id='cardButton' class='btn btn-warning btn-block' title='".__( 'Add', 'doliconnect')."'>".__( 'Add', 'doliconnect')."</button>";
 }
-$paymentmethods .='</div></li>';
+$paymentmethods .= '</div></li>';
 }
 if ( $countPM < 5 && isset($listpaymentmethods->stripe) && in_array('sepa_debit', $listpaymentmethods->stripe->types) && empty($thirdparty->mode_reglement_id) ) {
 $paymentmethods .= '<li class="list-group-item list-group-item-light list-group-item-action flex-column align-items-start"><div class="custom-control custom-radio">
@@ -957,11 +957,11 @@ $paymentmethods .= ' checked';
 $paymentmethods .= '><label class="custom-control-label" for="ibanDefault1">'.__( "Save as favourite", 'doliconnect').'</label>
 </div></p>';
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
-$paymentmethods .='<button id="ibanPayButton" class="btn btn-danger btn-block" >'.__( 'Pay', 'doliconnect' )." ".doliprice($object, 'ttc', $currency).'</button>';
+$paymentmethods .= '<button id="ibanPayButton" class="btn btn-danger btn-block" >'.__( 'Pay', 'doliconnect' )." ".doliprice($object, 'ttc', $currency).'</button>';
 } else {
-$paymentmethods .="<button id='ibanButton' class='btn btn-warning btn-block' title='".__( 'Add', 'doliconnect')."'>".__( 'Add', 'doliconnect')."</button>";
+$paymentmethods .= "<button id='ibanButton' class='btn btn-warning btn-block' title='".__( 'Add', 'doliconnect')."'>".__( 'Add', 'doliconnect')."</button>";
 }
-$paymentmethods .='</div></li>';
+$paymentmethods .= '</div></li>';
 }
 if ( isset($listpaymentmethods->stripe) && in_array('ideal', $listpaymentmethods->stripe->types) && !empty($module) && is_object($object) && isset($object->id) && empty($thirdparty->mode_reglement_id) ) {
 $paymentmethods .='<li class="list-group-item list-group-item-light list-group-item-action flex-column align-items-start"><div class="custom-control custom-radio">
@@ -969,14 +969,14 @@ $paymentmethods .='<li class="list-group-item list-group-item-light list-group-i
 <label class="custom-control-label w-100" for="ideal"><div class="row"><div class="col-3 col-md-2 col-xl-2 align-middle">
 <center><i class="fab fa-ideal fa-3x fa-fw" style="color:#CC0066"></i></center></div><div class="col-auto align-middle"><h6 class="my-0">'.__( 'iDEAL', 'doliconnect' ).'</h6><small class="text-muted">iDEAL PAYMENT</small></div></div></label>
 </div></li>';
-$paymentmethods .='<li id="idealPanel" class="list-group-item list-group-item-secondary panel-collapse collapse"><div class="panel-body">';
-$paymentmethods .='<input id="idealholder-name" name="idealholder-name" value="" type="text" class="form-control" placeholder="'.__( "Bank's owner", 'doliconnect').'" autocomplete="off" required>
+$paymentmethods .= '<li id="idealPanel" class="list-group-item list-group-item-secondary panel-collapse collapse"><div class="panel-body">';
+$paymentmethods .= '<input id="idealholder-name" name="idealholder-name" value="" type="text" class="form-control" placeholder="'.__( "Bank's owner", 'doliconnect').'" autocomplete="off" required>
 <label for="ideal-element"></label>
 <div class="form-control" id="ideal-element"><!-- a Stripe Element will be inserted here. --></div>';
-$paymentmethods .="<p class='text-justify'>";
-$paymentmethods .="</p>";
-$paymentmethods .='<button id="idealPayButton" class="btn btn-danger btn-block" >'.__( 'Pay', 'doliconnect' )." ".doliprice($object, 'ttc', $currency).'</button>';
-$paymentmethods .='</div></li>';
+$paymentmethods .= "<p class='text-justify'>";
+$paymentmethods .= "</p>";
+$paymentmethods .= '<button id="idealPayButton" class="btn btn-danger btn-block" >'.__( 'Pay', 'doliconnect' )." ".doliprice($object, 'ttc', $currency).'</button>';
+$paymentmethods .= '</div></li>';
 }
 
 //offline payment methods
@@ -991,9 +991,9 @@ $paymentmethods .= '<center><i class="fas fa-university fa-3x fa-fw" style="colo
 $paymentmethods .= "</div><div class='col-auto align-middle'><h6 class='my-0'>".__( 'Transfer', 'doliconnect' )."</h6><small class='text-muted'>".__( 'See your receipt', 'doliconnect' )."</small>";
 $paymentmethods .= '</div></div></label></div></li>';
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
-$paymentmethods .='<li id="virPanel" class="list-group-item list-group-item-secondary panel-collapse collapse"><div class="panel-body">';
-$paymentmethods .='<button type="button" onclick="PayPM(\'VIR\')" class="btn btn-danger btn-block">'.__( 'Pay', 'doliconnect' )." ".doliprice($object, 'ttc', $currency).'</button>';
-$paymentmethods .='</div></li>';
+$paymentmethods .= '<li id="virPanel" class="list-group-item list-group-item-secondary panel-collapse collapse"><div class="panel-body">';
+$paymentmethods .= '<button type="button" onclick="PayPM(\'VIR\')" class="btn btn-danger btn-block">'.__( 'Pay', 'doliconnect' )." ".doliprice($object, 'ttc', $currency).'</button>';
+$paymentmethods .= '</div></li>';
 }}
 if ( isset($listpaymentmethods->CHQ) && $listpaymentmethods->CHQ != null ) {
 $paymentmethods .= "<li class='list-group-item list-group-item-light list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>
@@ -1006,9 +1006,9 @@ $paymentmethods .= '<center><i class="fas fa-money-check fa-3x fa-fw" style="col
 $paymentmethods .= "</div><div class='col-auto align-middle'><h6 class='my-0'>".__( 'Check', 'doliconnect' )."</h6><small class='text-muted'>".__( 'See your receipt', 'doliconnect' )."</small>";
 $paymentmethods .= '</div></div></label></div></li>';
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
-$paymentmethods .='<li id="chqPanel" class="list-group-item list-group-item-secondary panel-collapse collapse"><div class="panel-body">';
-$paymentmethods .='<button type="button" onclick="PayPM(\'CHQ\')" class="btn btn-danger btn-block">'.__( 'Pay', 'doliconnect' )." ".doliprice($object, 'ttc', $currency).'</button>';
-$paymentmethods .='</div></li>';
+$paymentmethods .= '<li id="chqPanel" class="list-group-item list-group-item-secondary panel-collapse collapse"><div class="panel-body">';
+$paymentmethods .= '<button type="button" onclick="PayPM(\'CHQ\')" class="btn btn-danger btn-block">'.__( 'Pay', 'doliconnect' )." ".doliprice($object, 'ttc', $currency).'</button>';
+$paymentmethods .= '</div></li>';
 }}
 if ( ! empty(dolikiosk()) ) {
 $paymentmethods .= "<li class='list-group-item list-group-item-light list-group-item-action flex-column align-items-startt'><div class='custom-control custom-radio'>
@@ -1050,17 +1050,17 @@ $paymentmethods .= dolihelp('ISSUE');
 $paymentmethods .= "</div></small>";
 $paymentmethods .= "</div></div>";
 
-$paymentmethods .="<script>";
+$paymentmethods .= "<script>";
 
 if ( !empty($listpaymentmethods->stripe->account) ) {
-$paymentmethods .="var stripe = Stripe('".$listpaymentmethods->stripe->publishable_key."', {
+$paymentmethods .= "var stripe = Stripe('".$listpaymentmethods->stripe->publishable_key."', {
   stripeAccount: '".$listpaymentmethods->stripe->account."'
 });";
 } else {
-$paymentmethods .="var stripe = Stripe('".$listpaymentmethods->stripe->publishable_key."');";
+$paymentmethods .= "var stripe = Stripe('".$listpaymentmethods->stripe->publishable_key."');";
 }
 
-$paymentmethods .='var style = {
+$paymentmethods .= 'var style = {
   base: {
     color: "#32325d",
     lineHeight: "18px",
@@ -1076,21 +1076,29 @@ $paymentmethods .='var style = {
   }
 };'; 
 
-$paymentmethods .='var options = {
+$paymentmethods .= 'var options = {
   style: style,
   supportedCountries: ["SEPA"],
   placeholderCountry: "'.$listpaymentmethods->thirdparty->countrycode.'",
 };';
 
-$paymentmethods .="function HideDivPM(controle = null) {
+$paymentmethods .= "function HideDivPM(controle = null) {
 var listpm = ".json_encode($pm).";
 var mpx;
 for (mpx of listpm) {
 if (mpx != controle) jQuery('#' + mpx + 'Panel').collapse('hide');
 }
-}";
+}";   
 
-$paymentmethods .="jQuery('#none,#card,#iban,#ideal,#vir,#chq,#liq').on('click', function (e) {
+if (!empty($module) && is_object($object) && isset($object->id)) {
+$paymentmethods .= "stripe.retrievePaymentIntent('".$listpaymentmethods->stripe->client_secret."'
+
+).then(function(result) {
+    // Handle result.error or result.paymentIntent
+  });";
+}
+
+$paymentmethods .= "jQuery('#none,#card,#iban,#ideal,#vir,#chq,#liq').on('click', function (e) {
           e.stopPropagation();
 var elements = stripe.elements(); 
 var clientSecret = '".$listpaymentmethods->stripe->client_secret."';
