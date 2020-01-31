@@ -1090,11 +1090,12 @@ if (mpx != controle) jQuery('#' + mpx + 'Panel').collapse('hide');
 }
 }";   
 
-if (!empty($module) && is_object($object) && isset($object->id)) {
-$paymentmethods .= "stripe.retrievePaymentIntent('".$listpaymentmethods->stripe->client_secret."'
-
-).then(function(result) {
-    // Handle result.error or result.paymentIntent
+if (!empty($module) && is_object($object) && isset($object->id) && preg_match('/pi_/', $listpaymentmethods->stripe->client_secret)) {
+$paymentmethods .= "stripe.retrievePaymentIntent('".$listpaymentmethods->stripe->client_secret."').then(function(result) {
+    if (result.error) { 
+    } elseif (result.paymentIntent.status == 'succeeded' ) {
+    window.location = '".$url."';
+    }
   });";
 }
 

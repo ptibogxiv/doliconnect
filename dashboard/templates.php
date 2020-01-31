@@ -1146,8 +1146,8 @@ print "</div></div>";
 if ( isset($_GET['step']) && $_GET['step'] == 'validation' && isset($_GET['cart']) && wp_verify_nonce( $_GET['cart'], 'valid_dolicart-'.$object->id) && ((doliconnector($current_user, 'fk_order_nb_item') > 0 && $object->statut == 0 && !isset($_GET['module']) ) || ( ($_GET['module'] == 'orders' && $object->billed != 1 ) || ($_GET['module'] == 'invoices' && $object->paye != 1) )) && $object->socid == doliconnector($current_user, 'fk_soc') ) {
 
 $data = [
-  'paymentintent' => $_POST['paymentintent'],
-  'paymentmethod' => $_POST['paymentmethod'],
+  'paymentintent' => isset($_POST['paymentintent']) ? $_POST['paymentintent'] : null,
+  'paymentmethod' => isset($_POST['paymentmethod']) ? $_POST['paymentmethod'] : null,
   'save' => isset($_POST['default']) ? $_POST['default'] : 0 ,
 	];
 $payinfo = callDoliApi("POST", "/doliconnector/pay/".$module."/".$object->id, $data, 0);
