@@ -1121,7 +1121,7 @@ $order = callDoliApi("GET", "/doliconnector/constante/MAIN_MODULE_COMMANDE", nul
 if ( isset($_GET['module']) && ($_GET['module'] == 'orders' || $_GET['module'] == 'invoices') && isset($_GET['id']) && isset($_GET['ref']) ) {
 $request = "/".esc_attr($_GET['module'])."/".esc_attr($_GET['id'])."?contact_list=0";
 $module=esc_attr($_GET['module']);
-} else {
+} elseif (doliconnector($current_user, 'fk_order') > 0) {
 $request = "/orders/".doliconnector($current_user, 'fk_order')."?contact_list=0";
 $module='orders';
 }
