@@ -983,8 +983,9 @@ $paymentmethods .='</div></li>';
 if ( isset($listpaymentmethods->VIR) && $listpaymentmethods->VIR != null ) {
 $paymentmethods .= "<li class='list-group-item list-group-item-light list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>
 <input type='radio' id='vir' name='paymentmode' value='vir' class='custom-control-input' data-toggle='collapse' data-parent='#accordion' ";
-if ( !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_code != 'VIR' ) { $paymentmethods .=" disabled "; }
-elseif ( (!empty($thirdparty->mode_reglement_id) && $thirdparty->mmode_reglement_code != 'VIR') || ($listpaymentmethods->payment_methods == null && !in_array('card', $listpaymentmethods->stripe->types)) || (isset($object) && $object->mode_reglement_code == 'VIR') ) { $paymentmethods .= " checked"; }
+//if ( !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_code != 'VIR' ) { $paymentmethods .=" disabled "; }
+//else
+if ( (!empty($thirdparty->mode_reglement_id) && $thirdparty->mmode_reglement_code != 'VIR') || ($listpaymentmethods->payment_methods == null && !in_array('card', $listpaymentmethods->stripe->types)) || (isset($object) && $object->mode_reglement_code == 'VIR') ) { $paymentmethods .= " checked"; }
 $paymentmethods .= " href='#vir'><label class='custom-control-label w-100' for='vir'><div class='row'><div class='col-3 col-md-2 col-xl-2 align-middle'>";
 $paymentmethods .= '<center><i class="fas fa-university fa-3x fa-fw" style="color:DarkGrey"></i></center>';
 $paymentmethods .= "</div><div class='col-auto align-middle'><h6 class='my-0'>".__( 'Transfer', 'doliconnect' )."</h6><small class='text-muted'>".__( 'See your receipt', 'doliconnect' )."</small>";
@@ -997,8 +998,9 @@ $paymentmethods .='</div></li>';
 if ( isset($listpaymentmethods->CHQ) && $listpaymentmethods->CHQ != null ) {
 $paymentmethods .= "<li class='list-group-item list-group-item-light list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>
 <input type='radio' id='chq' name='paymentmode' value='chq' class='custom-control-input' data-toggle='collapse' data-parent='#accordion' ";
-if ( !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_code != 'CHQ' ) { $paymentmethods .=" disabled "; }
-elseif ( (!empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_code == 'CHQ') || ($listpaymentmethods->payment_methods == null && !in_array('card', $listpaymentmethods->stripe->types) && $listpaymentmethods->RIB == null) || (isset($object) && $object->mode_reglement_code == 'CHQ') ) { $paymentmethods .= " checked"; }
+//if ( !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_code != 'CHQ' ) { $paymentmethods .=" disabled "; }
+//else
+if ( (!empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_code == 'CHQ') || ($listpaymentmethods->payment_methods == null && !in_array('card', $listpaymentmethods->stripe->types) && $listpaymentmethods->RIB == null) || (isset($object) && $object->mode_reglement_code == 'CHQ') ) { $paymentmethods .= " checked"; }
 $paymentmethods .= " href='#chq'><label class='custom-control-label w-100' for='chq'><div class='row'><div class='col-3 col-md-2 col-xl-2 align-middle'>";
 $paymentmethods .= '<center><i class="fas fa-money-check fa-3x fa-fw" style="color:Tan"></i></center>';
 $paymentmethods .= "</div><div class='col-auto align-middle'><h6 class='my-0'>".__( 'Check', 'doliconnect' )."</h6><small class='text-muted'>".__( 'See your receipt', 'doliconnect' )."</small>";
