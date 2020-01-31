@@ -136,10 +136,10 @@ if(is_file($file))
 unlink($file); 
 }}
 
-if ( ! function_exists( 'wp_handle_upload' ) ) require_once( ABSPATH . 'wp-admin/includes/file.php' );
+if ( ! function_exists( 'wp_handle_upload' ) ) require_once( ABSPATH . 'wp-admin/includes/file.php');
 $uploadedfile = $_FILES['inputavatar'];
    
-add_filter('wp_handle_upload_prefilter', 'custom_upload_filter' );
+add_filter('wp_handle_upload_prefilter', 'custom_upload_filter');
 function custom_upload_filter( $file ){
 
     $file['name'] = "avatar.jpg";
@@ -363,14 +363,14 @@ $thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, '
 }
 
 print "<form role='form' action='$url' id='doliconnect-contactform' method='post'>";
-//$nonce = wp_create_nonce( 'my-nonce' );
+//$nonce = wp_create_nonce( 'my-nonce');
 
 // This code would go in the target page.
 // We need to verify the nonce.
 //$nonce = $nonce;//$_REQUEST['_wpnonce'];
 //if ( ! wp_verify_nonce( $nonce, 'my-nonce' ) ) {
     // This nonce is not valid.
- //   die( 'Security check' ); 
+ //   die( 'Security check'); 
 //} else {
 
 //print $nonce;
@@ -464,7 +464,7 @@ print "<div id='Footeraddcontact-form' class='modal-footer'><button name='add_co
 }
 
 }
-add_action( 'user_doliconnect_contacts', 'contacts_module' );
+add_action( 'user_doliconnect_contacts', 'contacts_module');
 
 function password_menu( $arg ){
 print "<a href='".esc_url( add_query_arg( 'module', 'password', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
@@ -617,7 +617,7 @@ print dolipaymentmethods(null, null, $url, esc_attr(isset($_GET["refresh"]) ? $_
 
 if ( is_object($proposal) && $proposal->value == 1 ) {
 add_action( 'customer_doliconnect_menu', 'proposals_menu', 1, 1);
-add_action( 'customer_doliconnect_proposals', 'proposals_module' );
+add_action( 'customer_doliconnect_proposals', 'proposals_module');
 }
 
 function proposals_menu( $arg ) {
@@ -743,7 +743,7 @@ print '</div></div>';
 
 if ( is_object($order) && $order->value == 1 ) {
 add_action( 'customer_doliconnect_menu', 'orders_menu', 2, 1);
-add_action( 'customer_doliconnect_orders', 'orders_module' );
+add_action( 'customer_doliconnect_orders', 'orders_module');
 }
 
 function orders_menu( $arg ) {
@@ -1063,7 +1063,7 @@ print '</div></div>';
 
 if ( is_object($contract) && $contract->value == 1 && get_option('doliconnectbeta') == '1' ) {
 add_action( 'customer_doliconnect_menu', 'contracts_menu', 2, 1);
-add_action( 'customer_doliconnect_contracts', 'contracts_module' );
+add_action( 'customer_doliconnect_contracts', 'contracts_module');
 }
 
 function contracts_menu( $arg ) {
@@ -1209,7 +1209,7 @@ print '</div></div>';
 
 if ( is_object($donation) && $donation->value == '1' ) {
 add_action( 'customer_doliconnect_menu', 'donations_menu', 5, 1);
-add_action( 'customer_doliconnect_donations', 'donations_module' );
+add_action( 'customer_doliconnect_donations', 'donations_module');
 }  
 
 function donations_menu( $arg ) {
@@ -1327,7 +1327,7 @@ print '</div></div>';
 //*****************************************************************************************
 if ( is_object($member) && $member->value == '1' ) {
 add_action( 'options_doliconnect_menu', 'members_menu', 1, 1);
-add_action( 'options_doliconnect_members', 'members_module' );
+add_action( 'options_doliconnect_members', 'members_module');
 }
 
 function members_menu( $arg ) {
@@ -1477,7 +1477,7 @@ print '</div></div>';
 
 if ( is_object($memberconsumption) && $memberconsumption->value == '1' && get_option('doliconnectbeta') == '1' ) {
 add_action( 'options_doliconnect_menu', 'membershipconsumption_menu', 2, 1);
-add_action( 'options_doliconnect_membershipconsumption', 'membershipconsumption_module' );
+add_action( 'options_doliconnect_membershipconsumption', 'membershipconsumption_module');
 }  
 
 function membershipconsumption_menu( $arg ) {
@@ -1530,7 +1530,7 @@ print '</div></div>';
 
 if ( is_object($linkedmember) && $linkedmember->value == '1' ) {
 add_action( 'options_doliconnect_menu', 'linkedmember_menu', 3, 1);
-add_action( 'options_doliconnect_linkedmember', 'linkedmember_module' );
+add_action( 'options_doliconnect_linkedmember', 'linkedmember_module');
 }  
 
 function linkedmember_menu( $arg ) {
@@ -2070,7 +2070,7 @@ function generate_license($suffix = null) {
 }
 
 }
-add_action( 'settings_doliconnect_settings', 'settings_module' );
+add_action( 'settings_doliconnect_settings', 'settings_module');
 
 function gdpr_menu($arg) {
 print "<a href='".esc_url( add_query_arg( 'module', 'gdpr', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
@@ -2078,7 +2078,7 @@ if ($arg=='gdpr') { print " active";}
 print "'>".__( 'Privacy', 'doliconnect')."</a>";
 }
 add_action( 'settings_doliconnect_menu', 'gdpr_menu', 3, 1);
-add_action( 'settings_doliconnect_gdpr', 'gdpr_module' );
+add_action( 'settings_doliconnect_gdpr', 'gdpr_module');
  
 function gdpr_module($url) {
 global $current_user;

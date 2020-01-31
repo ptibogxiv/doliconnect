@@ -162,11 +162,11 @@ print "<div class='col-xs-12 col-sm-12 col-md-9'>";
 if ( isset($_GET["action"]) && $_GET["action"] == 'confirmaction' ) {
 
 		if ( ! isset( $_GET['request_id'] ) ) {
-			$msg = __( 'Missing request ID.' );
+			$msg = __( 'Missing request ID.');
 		}
 
 		if ( ! isset( $_GET['confirm_key'] ) ) {
-			$msg = __( 'Missing confirm key.' );
+			$msg = __( 'Missing confirm key.');
 		}   
     
     if ( isset($msg) ) { print $msg; }    
@@ -314,7 +314,7 @@ print dolihelp('ISSUE');
 print "</div></small>";
 print '</div></div></form>';
 
-do_action( 'login_footer' );
+do_action( 'login_footer');
 
 } elseif ( isset($_GET["action"]) && $_GET["action"] == 'rpw' ) {
 
@@ -565,7 +565,7 @@ print '<a href="'.wp_registration_url( get_permalink() ).'" id="login-'.current_
 
 } else {
 
-do_action( 'login_head' );
+do_action( 'login_head');
 
 print "<div class='card-body'><h5 class='card-title'>".__( 'Welcome', 'doliconnect')."</h5>";
 print "<b>".get_option('doliaccountinfo')."</b></div>";
@@ -575,7 +575,7 @@ print socialconnect(get_permalink());
 }
 
 if ( function_exists('secupress_get_module_option') && secupress_get_module_option('move-login_slug-login', $slug, 'users-login' ) ) {
-$login_url=site_url()."/".secupress_get_module_option('move-login_slug-login', $slug, 'users-login' ); 
+$login_url=site_url()."/".secupress_get_module_option('move-login_slug-login', $slug, 'users-login'); 
 } else {
 $login_url=site_url()."/wp-login.php"; }
 if ( isset($_GET["redirect_to"])) { $redirect_to=$_GET["redirect_to"]; } else {
@@ -595,7 +595,7 @@ print "</div></div><div class='form-group'>
 <input class='form-control' id='user_pass' type='password' placeholder='".__( 'Password', 'doliconnect')."' name='pwd' value ='' required>";
 print "</div></div>";
 
-do_action( 'login_form' );
+do_action( 'login_form');
 
 print "</li><li class='list-group-item'><div><small><div class='float-left'>";
 if ( ((!is_multisite() && get_option( 'users_can_register' )) || (get_option('users_can_register') == '1' && (get_site_option( 'registration' ) == 'user' || get_site_option( 'registration' ) == 'all'))) ) {
@@ -609,7 +609,7 @@ print "</li></lu><div class='card-body'>";
 print "<input type='hidden' value='$redirect_to' name='redirect_to'><button id='submit' class='btn btn-block btn-primary' type='submit' name='submit' value='Submit'";
 print "><b>".__( 'Sign in', 'doliconnect')."</b></button></form>";
 
-do_action( 'login_footer' );
+do_action( 'login_footer');
 
 }
 
@@ -1381,7 +1381,7 @@ print dolimodalloaderscript('updatethirdparty-form');
 print doliuserform( $thirdparty, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'contact');
 
 print "</div>".doliloading('updatethirdparty-form');
-print wp_nonce_field( 'valid_dolicart-'.$object->id, 'dolichecknonce' );  
+print wp_nonce_field( 'valid_dolicart-'.$object->id, 'dolichecknonce');  
 print "<div id='Footerupdatethirdparty-form' class='modal-footer'><button name='update_thirdparty' value='validation' class='btn btn-warning btn-block' type='submit'><b>".__( 'Update', 'doliconnect')."</b></button></form></div>
 </div></div></div>";
 
@@ -1543,7 +1543,7 @@ print doliline($object, 'cart');
 
 if ( isset($object) && is_object($object) && (doliconnector($current_user, 'fk_soc') == $object->socid) ) {
 print dolitotal($object);  
-print wp_nonce_field( 'valid_dolicart-'.$object->id, 'dolichecknonce' );  
+print wp_nonce_field( 'valid_dolicart-'.$object->id, 'dolichecknonce');  
 }
 
 print "</ul>";
