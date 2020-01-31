@@ -1124,6 +1124,9 @@ $module=esc_attr($_GET['module']);
 } elseif (doliconnector($current_user, 'fk_order') > 0) {
 $request = "/orders/".doliconnector($current_user, 'fk_order')."?contact_list=0";
 $module='orders';
+} else {
+$request = "/orders/";
+$module='orders';
 }
 
 //if ( doliconnector($current_user, 'fk_order') > 0 ) {
@@ -1133,7 +1136,7 @@ $object = callDoliApi("GET", $request, null, dolidelay('cart', true));
 
 if ( defined("DOLIBUG") ) {
 
-print dolibug();
+print dolibug($object->error->message);
 
 } elseif ( is_object($order) && $order->value != 1 ) {
 
