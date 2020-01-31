@@ -513,11 +513,11 @@ $mail =  wp_mail($email, $subject, $body, $headers);
 }
 
 if ( isset($emailSent) && $emailSent == true ) { 
-print "<div class='alert alert-success'><h4 class='alert-heading'>".__( 'Congratulations!', 'doliconnect' )."</h4><p>".__( 'A password reset link was sent to you by email. Please check your spam folder if you don\'t find it.', 'doliconnect' )."</p></div>";
+print dolialert('success', __( 'A password reset link was sent to you by email. Please check your spam folder if you don\'t find it.', 'doliconnect' ));
 } elseif ( isset($hasError) || isset($emailError) ) { 
-print "<div class='alert alert-danger'><h4 class='alert-heading'>".__( 'Oops', 'doliconnect' )."</h4><p>$emailError</p></div>";
+print dolialert('danger', $emailError);
 } elseif ( isset($emailSent) && $emailSent != true ) {
-print "<div class='alert alert-warning'><h4 class='alert-heading'>".__( 'Oops', 'doliconnect' )."</h4><p>".__( 'A problem occurred. Please retry later!', 'doliconnect' )."</p></div>";
+print dolialert('warning', __( 'A problem occurred. Please retry later!', 'doliconnect' ));
 }
 
 print "<form id='doliconnect-fpwform' action='".doliconnecturl('doliaccount')."?action=fpw' method='post' class='was-validated'><input type='hidden' name='submitted' id='submitted' value='true' />";
@@ -546,13 +546,10 @@ print "</div></div></form>";
 
 } else {
 
-if ( isset($emailSent) && $emailSent == true ) { 
-print "<div class='alert alert-success'><h4 class='alert-heading'>".__( 'Congratulations!', 'doliconnect' )."</h4><p>".__( 'A password reset link was sent to you by email. Please check your spam folder if you don\'t find it.', 'doliconnect' )."</p></div>";
+if( isset($_GET["login"]) && $_GET["login"] == 'failed' ) { 
+print dolialert('danger', __( 'There is no account for these login data or the email and/or the password are not correct.', 'doliconnect' ));
 }
 
-if( isset($_GET["login"]) && $_GET["login"] == 'failed' ) { 
-print "<div class='alert alert-danger'><h4 class='alert-heading'>".__( 'Oops', 'doliconnect' )."</h4><p>".__( 'There is no account for these login data or the email and/or the password are not correct.', 'doliconnect' )."</p></div>";
-}
 print "<div class='card shadow-sm'>";
 
 if ( function_exists('doliconnect_modal') && get_option('doliloginmodal') == '1' ) {
