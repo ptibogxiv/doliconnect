@@ -267,7 +267,7 @@ if ( function_exists('dolikiosk') && ! empty(dolikiosk()) && $user ) {
 //$user = get_user_by( 'email', $email);   
 $key = get_password_reset_key($user);
 
-$arr_params = array( 'rpw' => true, 'key' => $key, 'login' => $user->user_login);  
+$arr_params = array( 'action' => 'rpw', 'key' => $key, 'login' => $user->user_login);  
 $url = esc_url( add_query_arg( $arr_params, doliconnecturl('doliaccount')) );
 
 $body .= "<br /><br />".__('To activate your account on and choose your password, please click on the following link', 'doliconnect').":<br /><br /><a href='".$url."'>".$url."</a>";
@@ -543,18 +543,20 @@ print dolihelp('ISSUE');
 print "</div></small>";
 print "</div></div></form>";
 
+} elseif ( isset($_GET["action"]) && $_GET["action"] == 'lostpassword' ) {
+
+if( isset($_GET["success"]) ) { 
+print dolialert('success', __( 'Your password have been updated.', 'doliconnect'));
+} elseif ( isset($_GET["error"]) && $_GET["error"] == 'expiredkey' ) { 
+print dolialert('danger', __( 'The security key is expired!', 'doliconnect'));
+} elseif ( isset($_GET["error"]) && $_GET["error"] == 'invalidkey' ) { 
+print dolialert('danger', __( 'The security key is invalid!', 'doliconnect'));
+}
+
 } else {
 
 if ( isset($_GET["login"]) && $_GET["login"] == 'failed' ) { 
 print dolialert('danger', __( 'There is no account for these login data or the email and/or the password are not correct.', 'doliconnect'));
-} elseif ( isset($_GET["action"]) && $_GET["action"] == 'lostpassword') {
-if( isset($_GET["success"]) ) { 
-print dolialert('success', __( 'Your password have been updated.', 'doliconnect'));
-} elseif( isset($_GET["error"]) && $_GET["error"] == 'expiredkey' ) { 
-print dolialert('danger', __( 'The security key is expired!', 'doliconnect'));
-} elseif( isset($_GET["error"]) && $_GET["error"] == 'invalidkey' ) { 
-print dolialert('danger', __( 'The security key is invalid!', 'doliconnect'));
-}
 }
 
 print "<div class='card shadow-sm'>";
