@@ -325,10 +325,12 @@ exit;
 $user = check_password_reset_key( esc_attr($_GET["key"]), esc_attr($_GET["login"]) );
 if ( ! $user || is_wp_error( $user ) ) {
 if ( $user && $user->get_error_code() === 'expired_key' ){
-wp_redirect(wp_login_url( get_permalink() )."?action=lostpassword&error=expiredkey");
+$arr_params = array( 'action' => 'lostpassword', 'error' => 'expiredkey');  
+wp_redirect(esc_url( add_query_arg( $arr_params, wp_login_url( get_permalink() )) ));
 exit;
 }else{
-wp_redirect(wp_login_url( get_permalink() )."?action=lostpassword&error=invalidkey");
+$arr_params = array( 'action' => 'lostpassword', 'error' => 'invalidkey');  
+wp_redirect(esc_url( add_query_arg( $arr_params, wp_login_url( get_permalink() )) ));
 exit;
 }
 exit;
@@ -348,7 +350,8 @@ $doliuser = callDoliApi("PUT", "/users/".$dolibarr->fk_user, $data, 0);
 }
 
 $wpdb->update( $wpdb->users, array( 'user_activation_key' => '' ), array( 'user_login' => $user->user_login ) );
-wp_redirect(wp_login_url( get_permalink() )."?action=lostpassword&success");
+$arr_params = array( 'action' => 'lostpassword', 'success' => true);  
+wp_redirect(esc_url( add_query_arg( $arr_params, wp_login_url( get_permalink() )) ));
 exit;
 }
 elseif ( $pwd != $_POST["pwd2"] ) {
