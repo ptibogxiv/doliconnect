@@ -444,7 +444,7 @@ return doliconnecturl('doliaccount') . '?action=signup';
 add_filter( 'register_url', 'my_register_page' );
 
 function my_lost_password_page( $lostpassword_url ) {
-return doliconnecturl('doliaccount') . '?action=fpw';
+return esc_url( add_query_arg( 'action', 'fpw', doliconnecturl('doliaccount')) ); 
 }
 if (get_option('doliaccount')) {
 add_filter( 'lostpassword_url', 'my_lost_password_page', 10, 2 );}
@@ -464,7 +464,7 @@ return doliconnecturl('doliaccount');
 function account_login_fail( $username ) {
 $referrer = $_SERVER['HTTP_REFERER'];  
 if ( !empty($referrer) && !strstr($referrer,'wp-login') && !strstr($referrer,'wp-admin') ) {
-wp_redirect( esc_url( add_query_arg( 'login', 'failed', doliconnecturl('doliaccount')) ) );  // let's append some information (login=failed) to the URL for the theme to use
+wp_redirect( esc_url( add_query_arg( 'login', 'failed', doliconnecturl('doliaccount')) ) );
 exit;}
 }
 add_action( 'wp_login_failed', 'account_login_fail' );  // hook failed login
