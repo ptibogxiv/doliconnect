@@ -1388,7 +1388,7 @@ $type=(! empty($adherent->type) ? $adherent->type : __( 'nothing', 'doliconnect'
 print  "<b>".__( 'Type', 'doliconnect').":</b> ".$type."<br>";
 print  "<b>".__( 'End of membership', 'doliconnect').":</b> ";
 if ( $adherent->datefin == null ) { print  "***";
-} else { print  date_i18n('d/m/Y', $adherent->datefin); }
+} else { print  wp_date('d/m/Y', $adherent->datefin); }
 if ( isset($adherent->license) &&  null != $adherent->license ) print "<br><b>".__( 'License', 'doliconnect').":</b> ".$adherent->license;
 //print  "<br><b>".__( 'Seniority', 'doliconnect').":</b> ";
 print  "<br><b>".__( 'Commitment', 'doliconnect').":</b> ";
@@ -1454,8 +1454,8 @@ $listcotisation = callDoliApi("GET", "/adherentsplus/".doliconnector($current_us
 
 if ( !isset($listcotisation->error) && $listcotisation != null ) { 
 foreach ( $listcotisation as $cotisation ) {                                                                                 
-$dated =  date_i18n('d/m/Y', $cotisation->dateh);
-$datef =  date_i18n('d/m/Y', $cotisation->datef);
+$dated =  wp_date('d/m/Y', $cotisation->dateh);
+$datef =  wp_date('d/m/Y', $cotisation->datef);
 print "<li class='list-group-item'><table width='100%' border='0'><tr><td>$cotisation->label</td><td>$dated ".__( 'to', 'doliconnect')." $datef";
 print "</td><td class='text-right'><b>".doliprice($cotisation->amount)."</b></td></tr></table><span></span></li>";
 }

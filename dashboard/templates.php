@@ -1539,7 +1539,7 @@ $timeout=$object->date_modification-current_time('timestamp',1)+1200;
 //print "</script>";
 //header('Refresh: 120; URL='.esc_url(get_permalink()).'');
 //header('Refresh: '.$timeout.'; URL='.esc_url(get_permalink()).'');
-//print date_i18n('d/m/Y H:i', $object[date_modification]);
+//print wp_date('d/m/Y H:i', $object[date_modification]);
 }
 
 $stock = callDoliApi("GET", "/doliconnector/constante/MAIN_MODULE_STOCK", null, dolidelay('constante'));

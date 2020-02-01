@@ -158,7 +158,7 @@ print "</div>
     </div></div>";
 
 if ( !in_array($mode, array('donation')) ) {
-if ( !empty($object->birth) ) { $birth = date_i18n('Y-m-d', $object->birth); }
+if ( !empty($object->birth) ) { $birth = wp_date('Y-m-d', $object->birth); }
 print "<div class='form-row'><div class='col'><label for='inputbirth'><small><i class='fas fa-birthday-cake fa-fw'></i> ".__( 'Birthday', 'doliconnect')."</small></label><input type='date' name='".$idobject."[birth]' class='form-control' value='".(isset($birth) ? $birth : $current_user->billing_birth)."' id='inputbirth' placeholder='yyyy-mm-dd' autocomplete='off'";
 if ( $mode != 'contact' ) { print " required"; } 
 print "></div>";
@@ -504,9 +504,9 @@ this.form.submit();
 $refresh .= "</script>";
 
 if ( isset($element->date_modification) && !empty($element->date_modification) ) {
-$refresh .= "<i class='fas fa-database'></i> ".date_i18n( get_option( 'date_format' ).' - '.get_option('time_format'), $element->date_modification, false);
+$refresh .= "<i class='fas fa-database'></i> ".wp_date( get_option( 'date_format' ).' - '.get_option('time_format'), $element->date_modification, false);
 } elseif ( get_option("_transient_timeout_".$origin) > 0 ) {
-$refresh .= "<i class='fas fa-database'></i> ".date_i18n( get_option( 'date_format' ).' - '.get_option('time_format'), get_option("_transient_timeout_".$origin)-$delay, false);
+$refresh .= "<i class='fas fa-database'></i> ".wp_date( get_option( 'date_format' ).' - '.get_option('time_format'), get_option("_transient_timeout_".$origin)-$delay, false);
 } elseif (is_user_logged_in() ) {
 $refresh .= __( 'Refresh', 'doliconnect');
 }
@@ -620,8 +620,8 @@ foreach ( $object->lines as $line ) {
 $doliline .= "<li class='list-group-item list-group-item-light'>";     
 if ( $line->date_start != '' && $line->date_end != '' )
 {
-$start = date_i18n('d/m/Y', $line->date_start);
-$end = date_i18n('d/m/Y', $line->date_end);
+$start = wp_date('d/m/Y', $line->date_start);
+$end = wp_date('d/m/Y', $line->date_end);
 $dates =" <i>(Du $start au $end)</i>";
 }
 
