@@ -637,8 +637,8 @@ $proposalfo = callDoliApi("GET", $request, null, dolidelay('proposal', esc_attr(
 
 if ( !isset($proposalfo->error) && isset($_GET['id']) && isset($_GET['ref']) && ( doliconnector($current_user, 'fk_soc') == $proposalfo->socid ) && ( $_GET['ref'] == $proposalfo->ref ) && $proposalfo->statut != 0 && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doli-proposals-'.$proposalfo->id.'-'.$proposalfo->ref)) {
 print "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>$proposalfo->ref</h5><div class='row'><div class='col-md-5'>";
-$datevalidation =  date_i18n('d/m/Y', $proposalfo->date_validation);
-print "<b>".__( 'Date of creation', 'doliconnect').":</b> ".date_i18n('d/m/Y', $proposalfo->date_creation)."<br>";
+$datevalidation =  wp_date('d/m/Y', $proposalfo->date_validation);
+print "<b>".__( 'Date of creation', 'doliconnect').":</b> ".wp_date('d/m/Y', $proposalfo->date_creation)."<br>";
 print "<b>".__( 'Validation', 'doliconnect')." : </b> $datevalidation<br>";
 //print "<b>Date de fin de validité:</b> $datevalidite";
 //print "<b>".__( 'Status', 'doliconnect')." : </b> ";
@@ -646,7 +646,7 @@ if ( $proposalfo->statut == 3 ) { $propalinfo=__( 'Refused', 'doliconnect');
 $propalavancement=0; }
 elseif ( $proposalfo->statut == 2 ) { $propalinfo=__( 'Processing', 'doliconnect');
 $propalavancement=65; }
-elseif ( $proposalfo->statut == 1 ) { $propalinfo=__( 'Sign before', 'doliconnect')." ".date_i18n('d/m/Y', $proposalfo->fin_validite);
+elseif ( $proposalfo->statut == 1 ) { $propalinfo=__( 'Sign before', 'doliconnect')." ".wp_date('d/m/Y', $proposalfo->fin_validite);
 $propalavancement=42; }
 elseif ( $proposalfo->statut == 0 ) { $propalinfo=__( 'Processing', 'doliconnect');
 $propalavancement=22; }
@@ -688,7 +688,7 @@ $fruits[$proposalfo->date_creation.'p'] = array(
 
 sort($fruits, SORT_NUMERIC | SORT_FLAG_CASE);
 foreach ( $fruits as $key => $val ) {
-print "<li class='list-group-item'><div class='row'><div class='col-6 col-md-3'>" . date_i18n('d/m/Y H:i', $val['timestamp']) . "</div><div class='col-6 col-md-2'>" . $val['type'] . "</div>";
+print "<li class='list-group-item'><div class='row'><div class='col-6 col-md-3'>" . wp_date('d/m/Y H:i', $val['timestamp']) . "</div><div class='col-6 col-md-2'>" . $val['type'] . "</div>";
 print "<div class='col-md-7'><h6>" . $val['label'] . "</h6>" . $val['description'] ."" . $val['document'] ."</div></div></li>";
 } 
 //var_dump($fruits);
@@ -715,7 +715,7 @@ $nonce = wp_create_nonce( 'doli-proposals-'. $postproposal->id.'-'.$postproposal
 $arr_params = array( 'id' => $postproposal->id, 'ref' => $postproposal->ref, 'security' => $nonce);  
 $return = esc_url( add_query_arg( $arr_params, $url) );
                 
-print "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'><div><i class='fa fa-shopping-bag fa-3x fa-fw'></i></div><div><h6 class='my-0'>".$postproposal->ref."</h6><small class='text-muted'>du ".date_i18n('d/m/Y', $postproposal->date_creation)."</small></div><span>".doliprice($postproposal, 'ttc', isset($postproposal->multicurrency_code) ? $postproposal->multicurrency_code : null)."</span><span>";
+print "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'><div><i class='fa fa-shopping-bag fa-3x fa-fw'></i></div><div><h6 class='my-0'>".$postproposal->ref."</h6><small class='text-muted'>du ".wp_date('d/m/Y', $postproposal->date_creation)."</small></div><span>".doliprice($postproposal, 'ttc', isset($postproposal->multicurrency_code) ? $postproposal->multicurrency_code : null)."</span><span>";
 if ( $postproposal->statut == 3 ) {
 if ( $postproposal->billed == 1 ) { print "<span class='fa fa-check-circle fa-fw text-success'></span><span class='fa fa-eur fa-fw text-success'></span><span class='fa fa-truck fa-fw text-success'></span><span class='fa fa-file-text fa-fw text-success'></span>"; } 
 else { print "<span class='fa fa-check-circle fa-fw text-success'></span><span class='fa fa-eur fa-fw text-success'></span><span class='fa fa-truck fa-fw text-success'></span><span class='fa fa-file-text fa-fw text-warning'></span>"; } }
@@ -764,7 +764,7 @@ $orderfo = callDoliApi("GET", $request, null, dolidelay('order', esc_attr(isset(
 if ( !isset($orderfo->error) && isset($_GET['id']) && isset($_GET['ref']) && (doliconnector($current_user, 'fk_soc') == $orderfo->socid ) && ($_GET['ref'] == $orderfo->ref) && $orderfo->statut != 0 && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doli-orders-'.$orderfo->id.'-'.$orderfo->ref)) {
 
 print "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>$orderfo->ref</h5><div class='row'><div class='col-md-6'>";
-print "<b>".__( 'Date of order', 'doliconnect').":</b> ".date_i18n('d/m/Y', $orderfo->date_creation)."<br>";
+print "<b>".__( 'Date of order', 'doliconnect').":</b> ".wp_date('d/m/Y', $orderfo->date_creation)."<br>";
 if ( $orderfo->statut > 0 ) {
 if ( $orderfo->billed == 1 ) {
 if ( $orderfo->statut >1 ) { $orderinfo=__( 'Shipped', 'doliconnect'); 
@@ -962,7 +962,7 @@ $dimensions = " - ".__( 'size', 'doliconnect')." ".$ship->trueSize." ".doliunit(
 } else  { $dimensions = ''; }
 if ( $ship->statut > 0 ) {
 if ( $ship->trueWeight != null ) {
-$datedelivery = "<br>".__( 'Estimated delivery', 'doliconnect').": ".date_i18n( get_option( 'date_format' ), $ship->date_delivery, false);
+$datedelivery = "<br>".__( 'Estimated delivery', 'doliconnect').": ".wp_date( get_option( 'date_format' ), $ship->date_delivery, false);
 } else { $datedelivery = ''; }
 $fruits[$ship->date_creation] = array(
 "timestamp" => $ship->date_creation,
@@ -985,7 +985,7 @@ $fruits[$ship->date_creation] = array(
 
 sort($fruits, SORT_NUMERIC | SORT_FLAG_CASE);
 foreach ( $fruits as $key => $val ) {
-print "<li class='list-group-item'><div class='row'><div class='col-6 col-md-3'>" . date_i18n('d/m/Y H:i', $val['timestamp']) . "</div><div class='col-6 col-md-2'>" . $val['type'] . "</div>";
+print "<li class='list-group-item'><div class='row'><div class='col-6 col-md-3'>" . wp_date('d/m/Y H:i', $val['timestamp']) . "</div><div class='col-6 col-md-2'>" . $val['type'] . "</div>";
 print "<div class='col-md-7'><h6>".$val['label']."</h6>" . $val['description'] ."" . $val['document'] ."</div></div></li>";
 } 
 //var_dump($fruits);
@@ -1012,7 +1012,7 @@ $nonce = wp_create_nonce( 'doli-orders-'. $postorder->id.'-'.$postorder->ref);
 $arr_params = array( 'id' => $postorder->id, 'ref' => $postorder->ref, 'security' => $nonce);  
 $return = esc_url( add_query_arg( $arr_params, $url) );
                                                                                                                                                       
-print "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'><div><i class='fa fa-file-invoice fa-3x fa-fw'></i></div><div><h6 class='my-0'>".$postorder->ref."</h6><small class='text-muted'>du ".date_i18n('d/m/Y', $postorder->date_commande)."</small></div><span>".doliprice($postorder, 'ttc', isset($postorder->multicurrency_code) ? $postorder->multicurrency_code : null)."</span><span>";
+print "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'><div><i class='fa fa-file-invoice fa-3x fa-fw'></i></div><div><h6 class='my-0'>".$postorder->ref."</h6><small class='text-muted'>du ".wp_date('d/m/Y', $postorder->date_commande)."</small></div><span>".doliprice($postorder, 'ttc', isset($postorder->multicurrency_code) ? $postorder->multicurrency_code : null)."</span><span>";
 if ( $postorder->statut > 0 ) { print "<span class='fas fa-check-circle fa-fw text-success'></span> ";
 if ( $postorder->billed == 1 ) { print "<span class='fas fa-money-bill-alt fa-fw text-success'></span> "; 
 if ( $postorder->statut > 1 ) { print "<span class='fas fa-dolly fa-fw text-success'></span> "; }
@@ -1083,7 +1083,7 @@ $contractfo = callDoliApi("GET", $request, null, dolidelay('contract', esc_attr(
 
 if ( !isset($contractfo->error) && isset($_GET['id']) && isset($_GET['id']) && isset($_GET['ref']) && (doliconnector($current_user, 'fk_soc') == $contractfo->socid) && ($_GET['ref'] == $contractfo->ref) && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doli-contracts-'.$contractfo->id.'-'.$contractfo->ref)) {
 print "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>$contractfo->ref</h5><div class='row'><div class='col-md-5'>";
-print "<b>".__( 'Date of creation', 'doliconnect').": </b> ".date_i18n('d/m/Y', $contractfo->date_creation)."<br>";
+print "<b>".__( 'Date of creation', 'doliconnect').": </b> ".wp_date('d/m/Y', $contractfo->date_creation)."<br>";
 if ( $contractfo->statut > 0 ) {
 //if ( $contractfo->billed == 1 ) {
 //if ( $contractfo->statut > 1 ) { $contractfo=__( 'Shipped', 'doliconnect'); 
@@ -1128,7 +1128,7 @@ $fruits[$contractfo->date_creation.'p'] = array(
 
 sort($fruits, SORT_NUMERIC | SORT_FLAG_CASE);
 foreach ( $fruits as $key => $val ) {
-print "<li class='list-group-item'><div class='row'><div class='col-6 col-md-3'>" . date_i18n('d/m/Y H:i', $val['timestamp']) . "</div><div class='col-6 col-md-2'>" . $val['type'] . "</div>";
+print "<li class='list-group-item'><div class='row'><div class='col-6 col-md-3'>" . wp_date('d/m/Y H:i', $val['timestamp']) . "</div><div class='col-6 col-md-2'>" . $val['type'] . "</div>";
 print "<div class='col-md-7'><h6>" . $val['label'] . "</h6>" . $val['description'] ."" . $val['document'] ."</div></div></li>";
 } 
 
@@ -1156,7 +1156,7 @@ $nonce = wp_create_nonce( 'doli-contracts-'. $postcontract->id.'-'.$postcontract
 $arr_params = array( 'id' => $postcontract->id, 'ref' => $postcontract->ref, 'security' => $nonce);  
 $return = esc_url( add_query_arg( $arr_params, $url) );
                                                                                                                                                       
-print "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'><div><i class='fa fa-file-contract fa-3x fa-fw'></i></div><div><h6 class='my-0'>".$postcontract->ref."</h6><small class='text-muted'>du ".date_i18n('d/m/Y', $postcontract->date_creation)."</small></div><span>".doliprice($postcontract, 'ttc', isset($postcontract->multicurrency_code) ? $postcontract->multicurrency_code : null)."</span><span>";
+print "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'><div><i class='fa fa-file-contract fa-3x fa-fw'></i></div><div><h6 class='my-0'>".$postcontract->ref."</h6><small class='text-muted'>du ".wp_date('d/m/Y', $postcontract->date_creation)."</small></div><span>".doliprice($postcontract, 'ttc', isset($postcontract->multicurrency_code) ? $postcontract->multicurrency_code : null)."</span><span>";
 if ( $postcontract->statut > 0 ) {print "<span class='fas fa-check-circle fa-fw text-success'></span> ";
 //if ( $postcontract->billed == 1 ) { print "<span class='fas fa-money-bill-alt fa-fw text-success'></span> "; 
 //if ( $postcontract->statut > 1 ) { print "<span class='fas fa-shipping-fast fa-fw text-success'></span> "; }
@@ -1232,7 +1232,7 @@ $donationfo = callDoliApi("GET", $request, null, dolidelay('donation', esc_attr(
 if ( !isset($donationfo->error) && isset($_GET['id']) && isset($_GET['ref']) && (doliconnector($current_user, 'fk_soc') == $donationfo->socid ) && ($_GET['ref'] == $donationfo->ref) && $donationfo->statut != 0 ) {
 
 print "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>$donationfo->ref</h5><div class='row'><div class='col-md-5'>";
-$datecommande =  date_i18n('d/m/Y', $donationfo->date_creation);
+$datecommande =  wp_date('d/m/Y', $donationfo->date_creation);
 print "<b>".__( 'Date of order', 'doliconnect').":</b> $datecommande<br>";
 
 print "<b>".__( 'Payment method', 'doliconnect').":</b> ".__( $donationfo->mode_reglement, 'doliconnect')."<br><br></div><div class='col-md-7'>";
@@ -1254,8 +1254,8 @@ foreach ( $donationfo->lines as $line ) {
 print "<li class='list-group-item'>";     
 if ( $line->date_start != '' && $line->date_end != '' )
 {
-$start = date_i18n('d/m/Y', $line->date_start);
-$end = date_i18n('d/m/Y', $line->date_end);
+$start = wp_date('d/m/Y', $line->date_start);
+$end = wp_date('d/m/Y', $line->date_end);
 $dates =" <i>(Du $start au $end)</i>";
 }
 
@@ -1299,7 +1299,7 @@ foreach ( $listdonation as $postdonation ) {
 $arr_params = array( 'id' => $postdonation->id, 'ref' => $postdonation->ref);  
 $return = esc_url( add_query_arg( $arr_params, $url) );
                 
-print "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'><div><i class='fa fa-donate fa-3x fa-fw'></i></div><div><h6 class='my-0'>".$postdonation->ref."</h6><small class='text-muted'>du ".date_i18n('d/m/Y', $postdonation->date_creation)."</small></div><span>".doliprice($postdonation, 'amount', isset($postdonation->multicurrency_code) ? $postdonation->multicurrency_code : null)."</span><span>";
+print "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'><div><i class='fa fa-donate fa-3x fa-fw'></i></div><div><h6 class='my-0'>".$postdonation->ref."</h6><small class='text-muted'>du ".wp_date('d/m/Y', $postdonation->date_creation)."</small></div><span>".doliprice($postdonation, 'amount', isset($postdonation->multicurrency_code) ? $postdonation->multicurrency_code : null)."</span><span>";
 if ( $postdonation->statut == 3 ) {
 if ( $postdonation->billed == 1 ) { print "<span class='fa fa-check-circle fa-fw text-success'></span><span class='fa fa-eur fa-fw text-success'></span><span class='fa fa-truck fa-fw text-success'></span><span class='fa fa-file-text fa-fw text-success'></span>"; } 
 else { print "<span class='fa fa-check-circle fa-fw text-success'></span><span class='fa fa-eur fa-fw text-success'></span><span class='fa fa-truck fa-fw text-success'></span><span class='fa fa-file-text fa-fw text-warning'></span>"; } }
@@ -1394,7 +1394,7 @@ if ( isset($adherent->license) &&  null != $adherent->license ) print "<br><b>".
 print  "<br><b>".__( 'Commitment', 'doliconnect').":</b> ";
 if ( (current_time('timestamp') > $adherent->datecommitment) || null == $adherent->datecommitment ) { print  __( 'no', 'doliconnect');
 } else {
-$datefin =  date_i18n('d/m/Y', $adherent->datecommitment);
+$datefin =  wp_date('d/m/Y', $adherent->datecommitment);
 print  "$datefin"; }
 
 print "</div><div class='col-12 col-md-7'>";
@@ -1435,7 +1435,7 @@ print "<button class='btn btn text-white btn-warning btn-block' data-toggle='mod
 
 
 if ( $adherent->datefin != null && $adherent->statut == 1 && $adherent->datefin > $adherent->next_subscription_renew && $adherent->next_subscription_renew > current_time( 'timestamp',1) ) {
-print "<center><small>".sprintf(__('Renew from %s', 'doliconnect'), date_i18n('d/m/Y', $adherent->next_subscription_renew))."</small></center>";
+print "<center><small>".sprintf(__('Renew from %s', 'doliconnect'), wp_date('d/m/Y', $adherent->next_subscription_renew))."</small></center>";
 }
 }
 
@@ -1500,7 +1500,7 @@ $listconsumption = callDoliApi("GET", $request, null, dolidelay('member', esc_at
 
 if ( !isset($listconsumption->error) && $listconsumption != null ) { 
 foreach ( $listconsumption as $consumption ) {                                                                                 
-$datec =  date_i18n('d/m/Y H:i', $consumption->date_creation);
+$datec =  wp_date('d/m/Y H:i', $consumption->date_creation);
 print "<li class='list-group-item'><table width='100%'><tr><td>$datec</td><td>$consumption->label</td><td>";
 
 if ( !empty($consumption->value) ) {
@@ -1671,7 +1671,7 @@ $ticketfo = callDoliApi("GET", $request, null, dolidelay('ticket', true));
 } }
 
 print "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>".$ticketfo->ref."</h5><div class='row'><div class='col-md-6'>";
-$dateticket =  date_i18n('d/m/Y', $ticketfo->datec);
+$dateticket =  wp_date('d/m/Y', $ticketfo->datec);
 print "<b>".__( 'Date of creation', 'doliconnect').": </b> $dateticket<br>";
 print "<b>".__( 'Type and category', 'doliconnect').": </b> ".__($ticketfo->type_label, 'doliconnect').", ".__($ticketfo->category_label, 'doliconnect')."<br>";
 print "<b>".__( 'Severity', 'doliconnect').": </b> ".__($ticketfo->severity_label, 'doliconnect')."<br>";
@@ -1708,7 +1708,7 @@ print "</li>";
 
 if ( isset($ticketfo->messages) ) {
 foreach ( $ticketfo->messages as $msg ) {
-$datemsg =  date_i18n('d/m/Y - H:i', $msg->datec);  
+$datemsg =  wp_date('d/m/Y - H:i', $msg->datec);  
 print  "<li class='list-group-item'><b>$datemsg $msg->fk_user_action_string</b><br>$msg->message</li>";
 }} 
 print '</ul><div class="card-footer text-muted">';
@@ -1857,7 +1857,7 @@ if ( $postticket->severity_code == 'BLOCKING' ) { $color="text-danger"; }
 elseif ( $postticket->severity_code == 'HIGH' ) { $color="text-warning"; }
 elseif ( $postticket->severity_code == 'NORMAL' ) { $color="text-success"; }
 elseif ( $postticket->severity_code == 'LOW' ) { $color="text-info"; } else { $color="text-dark"; }
-print "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'><div><i class='fas fa-question-circle $color fa-3x fa-fw'></i></div><div><h6 class='my-0'>$postticket->subject</h6><small class='text-muted'>du ".date_i18n('d/m/Y', $postticket->datec)."</small></div><span class='text-center'>".__($postticket->type_label, 'doliconnect')."<br/>".__($postticket->category_label, 'doliconnect')."</span><span>";
+print "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'><div><i class='fas fa-question-circle $color fa-3x fa-fw'></i></div><div><h6 class='my-0'>$postticket->subject</h6><small class='text-muted'>du ".wp_date('d/m/Y', $postticket->datec)."</small></div><span class='text-center'>".__($postticket->type_label, 'doliconnect')."<br/>".__($postticket->category_label, 'doliconnect')."</span><span>";
 if ( $postticket->fk_statut == 9 ) { print "<span class='label label-default'>".__( 'Deleted', 'doliconnect')."</span>"; }
 elseif ( $postticket->fk_statut == 8 ) { print "<span class='label label-success'>".__( 'Closed', 'doliconnect')."</span>"; }
 elseif ( $postticket->fk_statut == 6 ) { print "<span class='label label-warning'>".__( 'Waiting', 'doliconnect')."</span>"; }
@@ -1949,7 +1949,7 @@ print " onChange='demo()'><label class='custom-control-label w-100' for='optin2'
 $privacy=$wpdb->prefix."doliprivacy";
 if ( $current_user->$privacy ) {
 print "<li class='list-group-item'>";
-print "".__( 'Approval of the Privacy Policy the', 'doliconnect')." ".date_i18n( get_option( 'date_format' ).' - '.get_option('time_format'), $current_user->$privacy, false)."";
+print "".__( 'Approval of the Privacy Policy the', 'doliconnect')." ".wp_date( get_option( 'date_format' ).' - '.get_option('time_format'), $current_user->$privacy, false)."";
 print "</li>";
 }
 print "<li class='list-group-item'>";
