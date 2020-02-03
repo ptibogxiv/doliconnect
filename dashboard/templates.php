@@ -162,7 +162,7 @@ print "<div class='col-xs-12 col-sm-12 col-md-9'>";
 if ( isset($_GET["action"]) && $_GET["action"] == 'confirmaction' ) {
 
 		if ( ! isset( $_GET['request_id'] ) ) {
-			print = __( 'Missing request ID.');
+			print __( 'Missing request ID.');
 		}
 
 		if ( ! isset( $_GET['confirm_key'] ) ) {
