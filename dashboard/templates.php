@@ -261,8 +261,6 @@ if ( function_exists('dolikiosk') && ! empty(dolikiosk()) && $user ) {
 //wp_redirect(esc_url(home_url()));
 //exit;   
 } else { 
-//$user=get_user_by( 'ID', $ID );     
-//$user = get_user_by( 'email', $email);   
 $key = get_password_reset_key($user);
 
 $arr_params = array( 'action' => 'rpw', 'key' => $key, 'login' => $user->user_login);  
