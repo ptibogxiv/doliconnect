@@ -55,7 +55,7 @@ if ( isset($_GET['return']) ) {
 wp_redirect(doliconnecturl('doliaccount').'?module='.$_GET['return']);
 exit;
 } else {
-$msg = dolialert ('success', __( 'Your informations have been updated.', 'doliconnect'));
+print dolialert ('success', __( 'Your informations have been updated.', 'doliconnect'));
 }
 }
 
@@ -68,8 +68,6 @@ $thirdparty = callDoliApi("GET", $request, null, dolidelay('thirdparty', esc_att
 }
 
 print "<form action='".$url."' id='doliconnect-infosform' method='post' class='was-validated' enctype='multipart/form-data'><input type='hidden' name='case' value='updateuser'>";
-
-if ( isset($msg) ) { print $msg; }
 
 print doliloaderscript('doliconnect-infosform');
 
@@ -238,16 +236,14 @@ $adherent = callDoliApi("PUT", "/adherentsplus/".doliconnector($current_user, 'f
 }
 
 } else {
-$msg = dolialert ('warning', "Votre photo n'a pu être chargée. Elle doit obligatoirement être au format .jpg et faire moins de 10 Mo. Taille minimum requise 350x350 pixels.");
+print dolialert ('warning', "Votre photo n'a pu être chargée. Elle doit obligatoirement être au format .jpg et faire moins de 10 Mo. Taille minimum requise 350x350 pixels.");
 }
 }
 
-$msg = dolialert ('success', __( 'Your informations have been updated.', 'doliconnect'));
+print dolialert ('success', __( 'Your informations have been updated.', 'doliconnect'));
 }
 
 print "<form action='".$url."' id='doliconnect-avatarform' method='post' class='was-validated' enctype='multipart/form-data'><input type='hidden' name='case' value='updateavatar'>";
-
-if ( isset($msg) ) { print $msg; }
 
 print doliloaderscript('doliconnect-avatarform');
 
@@ -314,7 +310,7 @@ $data = [
 $contactv = callDoliApi("POST", "/contacts", $data, 0);
 $listcontact = callDoliApi("GET", $request, null, dolidelay('contact', true));
 if ( $contactv > 0 ) {
-$msg = dolialert ('success', __( 'Your informations have been updated.', 'doliconnect'));
+print dolialert ('success', __( 'Your informations have been updated.', 'doliconnect'));
 }
 } elseif ( isset ($_POST['delete_contact']) && $_POST['delete_contact'] > 0 ) {
 $contactv = callDoliApi("GET", "/contacts/".$_POST['delete_contact'], null, 0);
@@ -322,7 +318,7 @@ if ( $contactv->socid == doliconnector($current_user, 'fk_soc') ) {
 // try deleting
 $delete = callDoliApi("DELETE", "/contacts/".$contactv->id, null, 0);
 
-$msg = dolialert ('success', __( 'Your informations have been updated.', 'doliconnect'));
+print dolialert ('success', __( 'Your informations have been updated.', 'doliconnect'));
 
 } else {
 // fail deleting
@@ -347,7 +343,7 @@ $data = [
 $contactv = callDoliApi("PUT", "/contacts/".$_POST['update_contact'], $data, 0);
 if ( $contactv->socid == doliconnector($current_user, 'fk_soc') ) {
 // try deleting
-$msg = dolialert ('success', __( 'Your informations have been updated.', 'doliconnect'));
+print dolialert ('success', __( 'Your informations have been updated.', 'doliconnect'));
 } else {
 // fail deleting
 }
@@ -374,9 +370,7 @@ print "<form role='form' action='$url' id='doliconnect-contactform' method='post
 //} else {
 
 //print $nonce;
-//} 
-
-if ( isset($msg) ) { print $msg; }                       
+//}                    
 
 print doliloaderscript('doliconnect-contactform');
 
@@ -588,12 +582,12 @@ $data = [
 
 $gateway = callDoliApi("PUT", $request."/".sanitize_text_field($_POST['default_paymentmethod']), $data, dolidelay( 0, true));
 $gateway = callDoliApi("GET", $request, null, dolidelay('paymentmethods', true));
-$msg = dolialert ('success', __( 'You changed your default payment method', 'doliconnect'));
+print dolialert ('success', __( 'You changed your default payment method', 'doliconnect'));
 } elseif ( isset($_POST['delete_paymentmethod']) ) {
 
 $gateway = callDoliApi("DELETE", $request."/".sanitize_text_field($_POST['delete_paymentmethod']), null, dolidelay( 0, true));
 $gateway = callDoliApi("GET", $request, null, dolidelay('paymentmethods', true));
-$msg = dolialert ('success', __( 'You deleted a payment method', 'doliconnect'));
+print dolialert ('success', __( 'You deleted a payment method', 'doliconnect'));
 } elseif ( isset($_POST['add_paymentmethod']) ) {
 
 $data = [
@@ -602,10 +596,8 @@ $data = [
 
 $gateway = callDoliApi("POST", $request."/".sanitize_text_field($_POST['add_paymentmethod']), $data, dolidelay( 0, true));
 $gateway = callDoliApi("GET", $request, null, dolidelay('paymentmethods', true));
-$msg = dolialert ('success', __( 'You added a new payment method', 'doliconnect'));
-} 
-
-if ( isset($msg) ) { print $msg; }
+print dolialert ('success', __( 'You added a new payment method', 'doliconnect'));
+}
 
 print dolipaymentmethods(null, null, $url, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 
@@ -1348,7 +1340,7 @@ if ( isset($_POST["update_membership"]) && function_exists('dolimembership') ) {
 $adherent = dolimembership($current_user, $_POST["update_membership"], $_POST["typeadherent"], dolidelay('member', true));
 $request = "/adherentsplus/".doliconnector($current_user, 'fk_member', true); 
 //if ($statut==1) {
-$msg = dolialert ('success', __( 'Your membership has been updated.', 'doliconnect'));
+print dolialert ('success', __( 'Your membership has been updated.', 'doliconnect'));
 //}
 
 if ( ($_POST["update_membership"]==4) && isset($_POST["cotisation"]) && doliconnector($current_user, 'fk_member') > 0 && $_POST["timestamp_start"] > 0 && $_POST["timestamp_end"] > 0 ) {
@@ -1363,8 +1355,6 @@ exit;
 }
 
 } 
-
-if ( isset($msg) ) { print $msg; }
 
 print "<div class='card shadow-sm'><div class='card-body'><div class='row'><div class='col-12 col-md-5'>";
 
@@ -1548,7 +1538,7 @@ if ( isset ($_POST['unlink_member']) && $_POST['unlink_member'] > 0 ) {
 // try deleting
 $delete = callDoliApi("DELETE", $request."/".esc_attr($_POST['unlink_member']), null, 0);
 
-$msg = dolialert ('success', __( 'Your informations have been updated.', 'doliconnect'));
+print dolialert ('success', __( 'Your informations have been updated.', 'doliconnect'));
 
 //} else {
 // fail deleting
@@ -1564,7 +1554,7 @@ if ( false === $memberv ) {
 // fail deleting
 
 } else {
-$msg = dolialert ('success', __( 'Your informations have been updated.', 'doliconnect'));
+print dolialert ('success', __( 'Your informations have been updated.', 'doliconnect'));
 $linkedmember = callDoliApi("GET", $request, null, dolidelay('member', true));
 }
 
@@ -1574,9 +1564,7 @@ $linkedmember= callDoliApi("GET", $request, null, dolidelay('member', esc_attr(i
 
 }
 
-print "<form role='form' action='$url' id='doliconnect-linkedmembersform' method='post'>"; 
-
-if ( isset($msg) ) { print $msg; }                       
+print "<form role='form' action='$url' id='doliconnect-linkedmembersform' method='post'>";                      
 
 print doliloaderscript('doliconnect-linkedmembersform'); 
 
@@ -1665,7 +1653,7 @@ $ticketid = callDoliApi("POST", "/tickets/newmessage", $rdr, dolidelay('ticket',
 //print $ticketid;
 
 if ( $ticketid > 0 ) {
-$msg = dolialert ('success', __( 'Your message has been send.', 'doliconnect'));
+print dolialert ('success', __( 'Your message has been send.', 'doliconnect'));
 $ticketfo = callDoliApi("GET", $request, null, dolidelay('ticket', true));
 //print $ticket;
 } }
@@ -1694,8 +1682,6 @@ if ( $ticketfo->fk_statut < '8' && $ticketfo->fk_statut > '0' && !empty(get_opti
 print "<li class='list-group-item'>";
 
 print '<form id="doliconnect-msgticketform" action="'.$url.'&id='.$ticketfo->id.'&ref='.$ticketfo->ref.'" method="post" class="was-validated">';
-
-if ( isset($msg) ) { print $msg; }
 
 print doliloaderscript('doliconnect-msgticketform'); 
 
@@ -1735,12 +1721,10 @@ $ticketid = callDoliApi("POST", "/tickets", $rdr, dolidelay('ticket', true));
 //print $ticketid;
 
 if ( $ticketid > 0 ) {
-$msg = dolialert ('success', __( 'Your ticket has been submitted.', 'doliconnect'));
+print dolialert ('success', __( 'Your ticket has been submitted.', 'doliconnect'));
 } }
 
 print "<form class='was-validated' id='doliconnect-newticketform' action='".$url."&create' method='post'>";
-
-if ( isset($msg) ) { print $msg; }
 
 print doliloaderscript('doliconnect-newticketform'); 
 
@@ -1912,8 +1896,6 @@ $thirparty = callDoliApi("PUT", "/thirdparties/".doliconnector($current_user, 'f
 }
 
 print "<form id='settings-form' action='".$url."' method='post'>";
-
-if ( isset($msg) ) { print $msg; }
 
 print "<script>";
 print 'window.setTimeout(function() {
