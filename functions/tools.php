@@ -1027,7 +1027,7 @@ $paymentmethods .= '<center><i class="fas fa-money-bill-alt fa-3x fa-fw" style="
 $paymentmethods .= "</div><div class='col-auto align-middle'><h6 class='my-0'>".__( 'Cash', 'doliconnect')."</h6><small class='text-muted'>".__( 'Go to reception desk', 'doliconnect')."</small>";
 $paymentmethods .= '</div></div></label></div></li>';
 if (!empty($module) && is_object($object) && isset($object->id)) {
-$paymentmethods .='<li id="virPanel" class="list-group-item list-group-item-secondary panel-collapse collapse"><div class="panel-body">';
+$paymentmethods .='<li id="liqPanel" class="list-group-item list-group-item-secondary panel-collapse collapse"><div class="panel-body">';
 $paymentmethods .='<button type="button" onclick="PayPM(\'LIQ\')" class="btn btn-danger btn-block">'.__( 'Pay', 'doliconnect')." ".doliprice($object, 'ttc', $currency).'</button>';
 $paymentmethods .='</div></li>';
 }}
@@ -1141,6 +1141,7 @@ cardElement.addEventListener('change', function(event) {
               jQuery('#cardPanel').collapse('show');
               jQuery('#virPanel').collapse('hide');
               jQuery('#chqPanel').collapse('hide');
+              jQuery('#liqPanel').collapse('hide'); 
 cardholderName.addEventListener('change', function(event) {
     console.log('Reset error message');
     displayError.textContent = '';
@@ -1291,6 +1292,7 @@ ibanElement.addEventListener('change', function(event) {
               jQuery('#ibanPanel').collapse('show');
               jQuery('#virPanel').collapse('hide');
               jQuery('#chqPanel').collapse('hide');
+              jQuery('#liqPanel').collapse('hide'); 
 ibanholderName.addEventListener('change', function(event) {
     console.log('Reset error message');
     displayError.textContent = '';
@@ -1419,6 +1421,7 @@ var idealholderName = document.getElementById('idealholder-name');
               jQuery('#virPanel').collapse('hide');
               jQuery('#chqPanel').collapse('hide');
               jQuery('#idealPanel').collapse('show');
+              jQuery('#liqPanel').collapse('hide'); 
               //alert('ideal');
           }else if(this.id == 'vir'){               
               jQuery('#cardPanel').collapse('hide');
@@ -1426,13 +1429,23 @@ var idealholderName = document.getElementById('idealholder-name');
               jQuery('#idealPanel').collapse('hide');
               jQuery('#chqPanel').collapse('hide');
               jQuery('#virPanel').collapse('show');
+              jQuery('#liqPanel').collapse('hide'); 
               //alert('vir');
           }else if(this.id == 'chq'){
               jQuery('#cardPanel').collapse('hide');
               jQuery('#ibanPanel').collapse('hide');
               jQuery('#idealPanel').collapse('hide');
               jQuery('#virPanel').collapse('hide');
-              jQuery('#chqPanel').collapse('show'); 
+              jQuery('#chqPanel').collapse('show');
+              jQuery('#liqPanel').collapse('hide'); 
+              //alert('chq'); 
+          }else if(this.id == 'liq'){
+              jQuery('#cardPanel').collapse('hide');
+              jQuery('#ibanPanel').collapse('hide');
+              jQuery('#idealPanel').collapse('hide');
+              jQuery('#virPanel').collapse('hide');
+              jQuery('#chqPanel').collapse('hide'); 
+              jQuery('#liqPanel').collapse('show'); 
               //alert('chq');   
           }else {
               jQuery('#cardPanel').collapse('hide');
@@ -1440,6 +1453,7 @@ var idealholderName = document.getElementById('idealholder-name');
               jQuery('#idealPanel').collapse('hide');
               jQuery('#virPanel').collapse('hide');
               jQuery('#chqPanel').collapse('hide');
+              jQuery('#liqPanel').collapse('hide'); 
               //alert('4');
           }
         })
@@ -1453,6 +1467,7 @@ function ShowHideDivPM(pm) {
               jQuery('#idealPanel').collapse('hide');
               jQuery('#virPanel').collapse('hide');
               jQuery('#chqPanel').collapse('hide');
+              jQuery('#liqPanel').collapse('hide'); 
               jQuery('#' + pm + 'Panel').collapse('show');
         }
         
