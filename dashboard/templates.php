@@ -1229,6 +1229,10 @@ if (isset($_GET['charge'])) "<br>".__( 'Reference', 'doliconnect').": ".$_GET['c
 print "</p>";
 }
 
+if ( ! empty(dolikiosk()) ) {
+print "<br><p><b>".__( 'or go to reception desk', 'doliconnect')."</b></p>";
+}
+
 $nonce = wp_create_nonce( 'doli-'.$module.'-'. $object->id.'-'.$object->ref);
 $arr_params = array('module' => $module, 'id' => $object->id, 'ref' => $object->ref, 'security' => $nonce);  
 $return = esc_url( add_query_arg( $arr_params, doliconnecturl('doliaccount')) );
