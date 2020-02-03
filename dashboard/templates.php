@@ -237,11 +237,11 @@ add_user_to_blog($entity,$ID,$role);
  
 wp_update_user( array( 'ID' => $ID, 'user_email' => sanitize_email($thirdparty['email'])));
 wp_update_user( array( 'ID' => $ID, 'nickname' => sanitize_user($_POST['user_nicename'])));
-wp_update_user( array( 'ID' => $ID, 'display_name' => sanitize_user($thirdparty['name'])));
+if ( isset($thirdparty['name'])) wp_update_user( array( 'ID' => $ID, 'display_name' => sanitize_user($thirdparty['name'])));
 wp_update_user( array( 'ID' => $ID, 'first_name' => ucfirst(sanitize_user(strtolower($thirdparty['firstname'])))));
 wp_update_user( array( 'ID' => $ID, 'last_name' => strtoupper(sanitize_user($thirdparty['lastname']))));
-if ($_POST['description']) wp_update_user( array( 'ID' => $ID, 'description' => sanitize_textarea_field($_POST['description'])));
-if ($thirdparty['url']) wp_update_user( array( 'ID' => $ID, 'user_url' => sanitize_textarea_field($thirdparty['url'])));
+if ( isset($_POST['description'])) wp_update_user( array( 'ID' => $ID, 'description' => sanitize_textarea_field($_POST['description'])));
+if ( isset($thirdparty['url'])) wp_update_user( array( 'ID' => $ID, 'user_url' => sanitize_textarea_field($thirdparty['url'])));
 update_user_meta( $ID, 'civility_id', sanitize_text_field($thirdparty['civility_id']));
 update_user_meta( $ID, 'billing_type', sanitize_text_field($thirdparty['morphy']));
 if ( $thirdparty['morphy'] == 'mor' ) { update_user_meta( $ID, 'billing_company', sanitize_text_field($thirdparty['name'])); }
@@ -254,7 +254,7 @@ $user = get_user_by( 'ID', $ID);
  
 if ( function_exists('dolikiosk') && ! empty(dolikiosk()) && $user ) {  
 
-$dolibarrid = doliconnector($user, 'fk_soc', true, $thirdparty);
+$dolibarr = callDoliApi("POST", "/doliconnector/".$ID, $thirdparty, dolidelay('doliconnector', true));
 do_action('wp_dolibarr_sync', $thirdparty);
 
 //wp_set_current_user( $ID, $user->user_login );

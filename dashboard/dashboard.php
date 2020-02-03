@@ -39,7 +39,7 @@ $thirdparty['name'] = ucfirst(strtolower($thirdparty['firstname']))." ".strtoupp
 
 wp_update_user( array( 'ID' => $ID, 'user_email' => sanitize_email($thirdparty['email'])));
 wp_update_user( array( 'ID' => $ID, 'nickname' => sanitize_user($_POST['user_nicename'])));
-wp_update_user( array( 'ID' => $ID, 'display_name' => sanitize_user($thirdparty['name'])));
+if (isset($thirdparty['name'])) wp_update_user( array( 'ID' => $ID, 'display_name' => sanitize_user($thirdparty['name'])));
 wp_update_user( array( 'ID' => $ID, 'first_name' => ucfirst(sanitize_user(strtolower($thirdparty['firstname'])))));
 wp_update_user( array( 'ID' => $ID, 'last_name' => strtoupper(sanitize_user($thirdparty['lastname']))));
 wp_update_user( array( 'ID' => $ID, 'description' => sanitize_textarea_field($_POST['description'])));

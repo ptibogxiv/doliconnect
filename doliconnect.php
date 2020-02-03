@@ -287,19 +287,6 @@ return $dolibarr;
  
 } else {
 
-if ( isset($current_user->billing_type) && $current_user->billing_type == 'mor' ) { 
-if (!empty($current_user->billing_company)) { $name = $current_user->billing_company; }
-else { $name = $current_user->user_login; }
-} else {
-if ( ! empty($current_user->user_firstname) && ! empty($current_user->user_lastname) ) { $name = $current_user->user_firstname." ".$current_user->user_lastname; }
-else { $name = $current_user->user_login; }
-} 
-
-$rdr = [
-    'name'  => $name,
-    'email' => $current_user->user_email
-	];
-
 $dolibarr = callDoliApi("POST", "/doliconnector/".$current_user->ID, $thirdparty, dolidelay('doliconnector', true));
 
 if ( ! empty($value) ) {
@@ -373,45 +360,18 @@ return $avatar;
 // ********************************************************
 
 function update_synctodolibarr($element) {
-global $current_user,$wpdb;
+global $current_user;
 $entity = get_current_blog_id();
 wp_get_current_user();
 
 if ($current_user->billing_type == 'phy'){
 $name = $current_user->user_firstname." ".$current_user->user_lastname;}
 else {$name = $current_user->billing_company;}
-if (NULL != doliconnector($current_user, 'fk_member')) {
-//$infomember = [
-//   'login'  => $current_user->user_login,
-//   'morphy'  => $current_user->billing_type,
-//    'civility_id'  => $current_user->billing_civility,            
-//    'firstname'  => $current_user->user_firstname,
-//    'lastname'  => $current_user->user_lastname,
-//    'address' => $current_user->billing_address,
-//    'zip' => $current_user->billing_zipcode,
-//    'town' => $current_user->billing_city,
-//    'country_id' => $current_user->billing_country,
-//    'email' => $current_user->user_email,
-//    'phone' => $current_user->billing_phone,
-//    'birth' => $current_user->billing_birth,
-//    'array_options' => isset($extrafields) ? $extrafields : null
-//	]; 
+if (NULL != doliconnector($current_user, 'fk_member')) { 
 $adherent = callDoliApi("PUT", "/adherentsplus/".doliconnector($current_user, 'fk_member'), $element, 0);
 //update_user_meta( $current_user->ID, 'billing_birth', $current_user->billing_birth);
 }
 if ( doliconnector($current_user, 'fk_soc') > 0 ) {
-//$info = [
-//    'status' => 1,
-//    'name'  => $name,
-//    'address' => $current_user->billing_address,
-//    'zip' => $current_user->billing_zipcode,
-//    'town' => $current_user->billing_city,
-//    'country_id' => $current_user->billing_country,
-//    'email' => $current_user->user_email,
-//    'phone' => $current_user->billing_phone,
-//    'url' => $current_user->user_url,
-//    'array_options' => isset($extrafields) ? $extrafields : null
-//	];
 $thirparty = callDoliApi("PUT", "/thirdparties/".doliconnector($current_user, 'fk_soc'), $element, 0);
 }
 
