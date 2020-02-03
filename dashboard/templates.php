@@ -270,10 +270,10 @@ $key = get_password_reset_key($user);
 $arr_params = array( 'action' => 'rpw', 'key' => $key, 'login' => $user->user_login);  
 $url = esc_url( add_query_arg( $arr_params, doliconnecturl('doliaccount')) );
 
-$body .= "<br /><br />".__('To activate your account on and choose your password, please click on the following link', 'doliconnect').":<br /><br /><a href='".$url."'>".$url."</a>";
+$body .= "<br><br>".__('To activate your account on and choose your password, please click on the following link', 'doliconnect').":<br /><br /><a href='".$url."'>".$url."</a>";
 }
 
-$body .= "<br /><br />".sprintf(__("Your %s's team", 'doliconnect'), $sitename)."<br />".get_option('siteurl');
+$body .= "<br><br>".sprintf(__("Your %s's team", 'doliconnect'), $sitename)."<br>".get_option('siteurl');
 $headers = array('Content-Type: text/html; charset=UTF-8'); 
 wp_mail($email, $subject, $body, $headers);
 $emailSent = true;
