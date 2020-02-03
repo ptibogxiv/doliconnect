@@ -234,6 +234,14 @@ if ( is_multisite() ) {
 $entity = dolibarr_entity(); 
 add_user_to_blog($entity,$ID,$role);
 }
+
+if ( $thirdparty['morphy'] == 'mor' ) {
+$thirdparty['tva_intra'] =strtoupper(sanitize_user($thirdparty['tva_intra']));
+} else { $thirdparty['tva_intra'] = ''; }
+
+if ( $thirdparty['morphy'] != 'mor' && get_option('doliconnect_disablepro') != 'mor' ) {
+$thirdparty['name'] = ucfirst(strtolower($thirdparty['firstname']))." ".strtoupper($thirdparty['lastname']);
+}
  
 wp_update_user( array( 'ID' => $ID, 'user_email' => sanitize_email($thirdparty['email'])));
 wp_update_user( array( 'ID' => $ID, 'nickname' => sanitize_user($_POST['user_nicename'])));
