@@ -305,7 +305,7 @@ $remise=0;
 $subprice=0;
 $qty=0;
 
-if ( $object->lines != null ) {
+if ( isset($object->lines) && $object->lines != null ) {
 $list = null;
 foreach ($object->lines as $line) {
 //$product = callDoliApi("GET", "/products/".$post->product_id."?includestockdata=1", null, 0);
