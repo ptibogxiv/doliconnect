@@ -615,7 +615,7 @@ global $current_user;
 
 $doliline=null;
 
-if ( isset($object) && is_object($object) && $object->lines != null && (doliconnector($current_user, 'fk_soc') == $object->socid) ) {
+if ( isset($object) && is_object($object) && isset($object->lines) && $object->lines != null && (doliconnector($current_user, 'fk_soc') == $object->socid) ) {
 foreach ( $object->lines as $line ) {
 $doliline .= "<li class='list-group-item list-group-item-light'>";     
 if ( $line->date_start != '' && $line->date_end != '' )

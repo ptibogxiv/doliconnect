@@ -1207,7 +1207,13 @@ print "<div class='card shadow-sm' id='cart-form'><div class='card-body'><center
 $TTC = doliprice($object, 'ttc', isset($object->multicurrency_code) ? $object->multicurrency_code : null);
 
 if ( $object->statut == '1' && !isset($_GET['error']) ) {
-if ( $object->mode_reglement_code == 'CHQ') {
+if (!empty($object->billed) || !empty($object->paid)) {
+
+print "<div class='alert alert-success' role='alert'><p>".__( 'Your payment has been registered', 'doliconnect');
+if (isset($_GET['charge'])) "<br>".__( 'Reference', 'doliconnect').": ".$_GET['charge'];
+print "</p>";
+
+} elseif ( $object->mode_reglement_code == 'CHQ') {
 
 $listpaymentmethods = callDoliApi("GET", "/doliconnector/".doliconnector($current_user, 'fk_soc')."/paymentmethods", null, dolidelay('paymentmethods', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
@@ -1223,13 +1229,9 @@ print "<br><b>IBAN: ".$listpaymentmethods->VIR->iban."</b>";
 if ( ! empty($listpaymentmethods->VIR->bic) ) { print "<br><b>BIC/SWIFT : ".$listpaymentmethods->VIR->bic."</b>";}
 print "</p>";
 
-} elseif ($object->mode_reglement_id == '6') {
-print "<div class='alert alert-success' role='alert'><p>".__( 'Your payment has been registered', 'doliconnect');
-if (isset($_GET['charge'])) "<br>".__( 'Reference', 'doliconnect').": ".$_GET['charge'];
-print "</p>";
 }
 
-if ( ! empty(dolikiosk()) ) {
+if ( (! empty(dolikiosk()) && empty($object->billed) && empty($object->paid) ) || $object->mode_reglement_code == 'LIQ') {
 print "<br><p><b>".__( 'or go to reception desk', 'doliconnect')."</b></p>";
 }
 
@@ -1501,7 +1503,7 @@ print "<table width='100%' style='border: none'><tr style='border: none'><td wid
 <i class='fas fa-check fa-fw text-dark' data-fa-transform='shrink-3.5' data-fa-mask='fas fa-circle' ></i>
 </div></td></tr></table><br>";
 
-if ( isset($object) && is_object($object) && $object->id > 0 ) {
+if ( isset($object) && is_object($object) && isset($object->id) && $object->id > 0 ) {
 $nonce = wp_create_nonce( 'valid_dolicart-'.$object->id );
 $arr_params = array( 'cart' => $nonce, 'step' => 'info');  
 $return = add_query_arg( $arr_params, doliconnecturl('dolicart'));
@@ -1530,7 +1532,7 @@ wp_safe_redirect(doliconnecturl('dolicart'));
 exit;
 }
 
-if ( isset($object) && is_object($object) ) {
+if ( isset($object) && is_object($object) && isset($object->date_modification)) {
 $timeout=$object->date_modification-current_time('timestamp',1)+1200;
 //print "<script>";
 //var tmp=<?php print ($timeout)*10;
@@ -1562,7 +1564,7 @@ print "<div class='card shadow-sm' id='cart-form'><ul class='list-group list-gro
 
 print doliline($object, 'cart');
 
-if ( isset($object) && is_object($object) && (doliconnector($current_user, 'fk_soc') == $object->socid) ) {
+if ( isset($object) && is_object($object) && isset($object->socid) &&(doliconnector($current_user, 'fk_soc') == $object->socid) ) {
 print dolitotal($object);  
 print wp_nonce_field( 'valid_dolicart-'.$object->id, 'dolichecknonce');  
 }
@@ -1574,7 +1576,7 @@ print "<div class='card-body'><ul class='list-group list-group-horizontal-sm'>";
 if ( get_option('dolishop') ) {
 print "<a href='".doliconnecturl('dolishop')."' class='list-group-item list-group-item-action flex-fill'><center><b>".__( 'Continue shopping', 'doliconnect')."</b></center></a>";
 } 
-if ( isset($object) && is_object($object) && $object->lines != null && (doliconnector($current_user, 'fk_soc') == $object->socid) ) { 
+if ( isset($object) && is_object($object) && isset($object->lines) && $object->lines != null && (doliconnector($current_user, 'fk_soc') == $object->socid) ) { 
 if ( $object->lines != null && $object->statut == 0 ) {
 print "<button type='button' onclick='DeleteDoliCart(\"".$nonce."\")' class='list-group-item list-group-item-action flex-fill' role='button' aria-pressed='true'><center><b>".__( 'Empty the basket', 'doliconnect')."</b></center></button>";
 }
