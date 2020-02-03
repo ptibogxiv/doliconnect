@@ -1129,7 +1129,7 @@ $module=esc_attr($_GET['module']);
 $request = "/orders/".doliconnector($current_user, 'fk_order')."?contact_list=0";
 $module='orders';
 } else {
-$request = "/orders/";
+$request = "/orders/-1";
 $module='orders';
 }
 
