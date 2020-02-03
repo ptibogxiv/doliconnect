@@ -233,7 +233,7 @@ $role = 'subscriber';
 if ( is_multisite() ) {
 $entity = dolibarr_entity(); 
 add_user_to_blog($entity,$ID,$role);
-}
+} 
 
 if ( $thirdparty['morphy'] == 'mor' ) {
 $thirdparty['tva_intra'] =strtoupper(sanitize_user($thirdparty['tva_intra']));
@@ -241,7 +241,7 @@ $thirdparty['tva_intra'] =strtoupper(sanitize_user($thirdparty['tva_intra']));
 
 if ( $thirdparty['morphy'] != 'mor' && get_option('doliconnect_disablepro') != 'mor' ) {
 $thirdparty['name'] = ucfirst(strtolower($thirdparty['firstname']))." ".strtoupper($thirdparty['lastname']);
-}
+} 
  
 wp_update_user( array( 'ID' => $ID, 'user_email' => sanitize_email($thirdparty['email'])));
 wp_update_user( array( 'ID' => $ID, 'nickname' => sanitize_user($_POST['user_nicename'])));
@@ -262,7 +262,7 @@ $user = get_user_by( 'ID', $ID);
  
 if ( function_exists('dolikiosk') && ! empty(dolikiosk()) && $user ) {  
 
-$dolibarr = callDoliApi("POST", "/doliconnector/".$ID, $thirdparty, dolidelay('doliconnector', true));
+print $dolibarrid = doliconnector($user, 'fk_soc', true, $thirdparty);
 do_action('wp_dolibarr_sync', $thirdparty);
 
 //wp_set_current_user( $ID, $user->user_login );
