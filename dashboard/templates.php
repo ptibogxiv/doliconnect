@@ -277,7 +277,7 @@ $emailSent = true;
 }
 }
 
-if ( function_exists('dolikiosk') && ! empty(dolikiosk()) && $user && isset($emailSent) && $emailSent == true ) { 
+if ( function_exists('dolikiosk') && ! empty(dolikiosk()) && isset($user) && isset($emailSent) && $emailSent == true ) { 
 print dolialert('success', __( 'Your account was created. Now, you are connected', 'doliconnect'));
 } elseif ( isset($emailSent) && $emailSent == true ) { 
 print dolialert('success', __( 'Your account was created and an account activation link was sent by email. Don\'t forget to look at your unwanted emails if you can\'t find our message.', 'doliconnect'));
