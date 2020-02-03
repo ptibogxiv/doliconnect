@@ -270,7 +270,7 @@ $key = get_password_reset_key($user);
 $arr_params = array( 'action' => 'rpw', 'key' => $key, 'login' => $user->user_login);  
 $url = esc_url( add_query_arg( $arr_params, doliconnecturl('doliaccount')) );
 
-$body .= "<br><br>".__('To activate your account on and choose your password, please click on the following link', 'doliconnect').":<br /><br /><a href='".$url."'>".$url."</a>";
+$body .= "<br><br>".__('To activate your account on and choose your password, please click on the following link', 'doliconnect').":<br><br><a href='".$url."'>".$url."</a>";
 }
 
 $body .= "<br><br>".sprintf(__("Your %s's team", 'doliconnect'), $sitename)."<br>".get_option('siteurl');
@@ -468,7 +468,7 @@ catch(\Exception $e) {
                $adapter->logout(); 
                break;
     } 
-    print "<br /><br /><b>Original error message:</b> " . $e->getMessage();
+    print "<br><br><b>Original error message:</b> " . $e->getMessage();
 //print "<hr /><h3>Trace</h3> <pre>" . $e->getTraceAsString() . "</pre>";  
 }
 } elseif ( isset($_GET["action"]) && $_GET["action"] == 'fpw' ) { 
@@ -504,7 +504,7 @@ if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $user-
 			$sitename = get_option('blogname');
       $siteurl = get_option('siteurl');
       $subject = "[$sitename] ".__( 'Reset Password', 'doliconnect');
-      $body = __( 'A request to change your password has been made. You can change it via the single-use link below:', 'doliconnect')."<br /><br /><a href='".$url."'>".$url."</a><br /><br />".__( 'If you have not made this request, please ignore this email.', 'doliconnect')."<br /><br />".sprintf(__('Your %s\'s team', 'doliconnect'), $sitename)."<br />$siteurl";				
+      $body = __( 'A request to change your password has been made. You can change it via the single-use link below:', 'doliconnect')."<br><br><a href='".$url."'>".$url."</a><br><br>".__( 'If you have not made this request, please ignore this email.', 'doliconnect')."<br><br>".sprintf(__('Your %s\'s team', 'doliconnect'), $sitename)."<br>$siteurl";				
 $headers = array('Content-Type: text/html; charset=UTF-8');
 $mail =  wp_mail($email, $subject, $body, $headers);
 
@@ -702,7 +702,7 @@ elseif ( isset($_POST['submitted']) ) {
             $emailTo = get_option('admin_email');
         }
         $subject = "[".get_bloginfo( 'name' )."] ".$_POST['ticket_type'];
-        $body = "Nom: $name <br />Email: $email <br />Message: $comments";
+        $body = "Nom: $name <br>Email: $email <br>Message: $comments";
         $headers = array("Content-Type: text/html; charset=UTF-8'","From: $name <$email>"); 
         wp_mail($emailTo, $subject, $body, $headers);
         $emailSent = true;
@@ -890,7 +890,7 @@ $resultatsc = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(i
 if ( !isset($resultatsc->error) && $resultatsc != null ) {
 foreach ($resultatsc as $categorie) {
 
-print "<a href='".esc_url( add_query_arg( 'category', $categorie->id, doliconnecturl('dolishop')) )."' class='list-group-item list-group-item-action'>".doliproduct($categorie, 'label')."</a>"; //."<br />".doliproduct($categorie, 'description')
+print "<a href='".esc_url( add_query_arg( 'category', $categorie->id, doliconnecturl('dolishop')) )."' class='list-group-item list-group-item-action'>".doliproduct($categorie, 'label')."</a>"; //."<br>".doliproduct($categorie, 'description')
 
 }}
 }
@@ -1201,7 +1201,7 @@ print "' data-fa-transform='shrink-3.5' data-fa-mask='fas fa-circle' ></i>
 //exit;
 //}
 
-print "<div class='card shadow-sm' id='cart-form'><div class='card-body'><center><h2>".__( 'Your order has been registered', 'doliconnect')."</h2>".__( 'Reference', 'doliconnect').": ".$object->ref."<br />".__( 'Payment method', 'doliconnect').": ".$object->mode_reglement_code."<br /><br />";
+print "<div class='card shadow-sm' id='cart-form'><div class='card-body'><center><h2>".__( 'Your order has been registered', 'doliconnect')."</h2>".__( 'Reference', 'doliconnect').": ".$object->ref."<br>".__( 'Payment method', 'doliconnect').": ".$object->mode_reglement_code."<br><br>";
 $TTC = doliprice($object, 'ttc', isset($object->multicurrency_code) ? $object->multicurrency_code : null);
 
 if ( $object->statut == '1' && !isset($_GET['error']) ) {
@@ -1230,7 +1230,7 @@ print "</p>";
 $nonce = wp_create_nonce( 'doli-'.$module.'-'. $object->id.'-'.$object->ref);
 $arr_params = array('module' => $module, 'id' => $object->id, 'ref' => $object->ref, 'security' => $nonce);  
 $return = esc_url( add_query_arg( $arr_params, doliconnecturl('doliaccount')) );
-print "<br /><a href='".$return."' class='btn btn-primary'>".__( 'View my receipt', 'doliconnect')."</a>";
+print "<br><a href='".$return."' class='btn btn-primary'>".__( 'View my receipt', 'doliconnect')."</a>";
 
 } else {
 
@@ -1239,7 +1239,7 @@ $arr_params = array('module' => $module, 'id' => $object->id, 'ref' => $object->
 $return = esc_url( add_query_arg( $arr_params, doliconnecturl('doliaccount')) );
 
 print "<div class='alert alert-danger' role='alert'><p>".__( 'An error is occurred', 'doliconnect')."</p>";
-print "<br /><a href='".$return."' class='btn btn-primary'>".__( 'Return', 'doliconnect')."</a>";
+print "<br><a href='".$return."' class='btn btn-primary'>".__( 'Return', 'doliconnect')."</a>";
 }
 
 print "</div></div></div>";
