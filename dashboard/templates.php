@@ -293,8 +293,6 @@ print dolialert('danger', $emailError);
 
 print "<form id='doliconnect-signinform' action='".doliconnecturl('doliaccount')."?action=signup' role='form' method='post' class='was-validated'>";
 
-if ( isset($msg) ) { print $msg; }
-
 print doliloaderscript('doliconnect-signinform'); 
 
 print "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>".__( 'Create an account', 'doliconnect')."</h5></div>";
@@ -525,8 +523,6 @@ print dolialert('warning', __( 'A problem occurred. Please retry later!', 'dolic
 }
 
 print "<form id='doliconnect-fpwform' action='".doliconnecturl('doliaccount')."?action=fpw' method='post' class='was-validated'><input type='hidden' name='submitted' id='submitted' value='true' />";
-
-if ( isset($msg) ) { print $msg; }
 
 print doliloaderscript('doliconnect-fpwform'); 
  
@@ -1014,8 +1010,6 @@ $thirdparty = callDoliApi("GET", $request, null, dolidelay('thirdparty', esc_att
 }
 
 print "<form action='".doliconnecturl('dolidonation')."' id='doliconnect-donationform' method='post' class='was-validated' enctype='multipart/form-data'>";
-
-if ( isset($msg) ) { print $msg; }
 
 print doliloaderscript('doliconnect-donationform');
 
