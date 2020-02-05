@@ -78,7 +78,7 @@ print doliuserform( $thirdparty, dolidelay('constante', esc_attr(isset($_GET["re
 print "<div class='card-body'><input type='hidden' name='userid' value='$ID'><button class='btn btn-danger btn-block' type='submit'>".__( 'Update', 'doliconnect')."</button></div>";
 print '<div class="card-footer text-muted">';
 print "<small><div class='float-left'>";
-print dolirefresh($request, $url, dolidelay('thirdparty'), $thirdparty);
+if ( isset($request) ) print dolirefresh($request, $url, dolidelay('thirdparty'), $thirdparty);
 print "</div><div class='float-right'>";
 print dolihelp('ISSUE');
 print "</div></small>";
@@ -270,7 +270,7 @@ print "</li>";
 print "</ul><div class='card-body'><input type='hidden' name='userid' value='$ID'><button class='btn btn-danger btn-block' type='submit'>".__( 'Update', 'doliconnect')."</button></div>";
 print '<div class="card-footer text-muted">';
 print "<small><div class='float-left'>";
-//print dolirefresh($request, $url, dolidelay('thirdparty'), $thirdparty);
+if ( isset($request) ) print dolirefresh($request, $url, dolidelay('thirdparty'), $thirdparty);
 print "</div><div class='float-right'>";
 print dolihelp('ISSUE');
 print "</div></small>";
@@ -413,7 +413,7 @@ print '</ul>';
 print "<div class='card-body'></div>";
 print '<div class="card-footer text-muted">';
 print "<small><div class='float-left'>";
-print dolirefresh($request, $url, dolidelay('contact'));
+if ( isset($request) ) print dolirefresh($request, $url, dolidelay('contact'));
 print "</div><div class='float-right'>";
 print dolihelp('ISSUE');
 print "</div></small>";
@@ -541,7 +541,7 @@ print ' disabled';
 }
 print ">".__( 'Update', 'doliconnect')."</button></div><div class='card-footer text-muted'>";
 print "<small><div class='float-left'>";
-if ( $request ) print dolirefresh($request, $url, dolidelay('thirdparty'));
+if ( isset($request) ) print dolirefresh($request, $url, dolidelay('thirdparty'));
 print "</div><div class='float-right'>";
 print dolihelp('ISSUE');
 print "</div></small>";
@@ -686,7 +686,7 @@ print "<div class='col-md-7'><h6>" . $val['label'] . "</h6>" . $val['description
 //var_dump($fruits);
 print '</ul><div class="card-body"></div><div class="card-footer text-muted">';
 print "<small><div class='float-left'>";
-print dolirefresh($request, $url, dolidelay('proposal'), $proposalfo);
+if ( isset($request) ) print dolirefresh($request, $url, dolidelay('proposal'), $proposalfo);
 print "</div><div class='float-right'>";
 print dolihelp('ISSUE');
 print "</div></small>";
@@ -722,7 +722,7 @@ print "<li class='list-group-item list-group-item-light'><center>".__( 'No propo
 }
 print '</ul><div class="card-body"></div><div class="card-footer text-muted">';
 print "<small><div class='float-left'>";
-print dolirefresh($request, $url, dolidelay('proposal'));
+if ( isset($request) ) print dolirefresh($request, $url, dolidelay('proposal'));
 print "</div><div class='float-right'>";
 print dolihelp('ISSUE');
 print "</div></small>";
@@ -983,7 +983,7 @@ print "<div class='col-md-7'><h6>".$val['label']."</h6>" . $val['description'] .
 //var_dump($fruits);
 print '</ul><div class="card-body"></div><div class="card-footer text-muted">';
 print "<small><div class='float-left'>";
-print dolirefresh($request, $url, dolidelay('order'), $orderfo);
+if ( isset($request) ) print dolirefresh($request, $url, dolidelay('order'), $orderfo);
 print "</div><div class='float-right'>";
 print dolihelp('ISSUE');
 print "</div></small>";
@@ -1023,7 +1023,7 @@ print "<li class='list-group-item list-group-item-light'><center>".__( 'No order
 }
 print '</ul><div class="card-body"></div><div class="card-footer text-muted">';
 print "<small><div class='float-left'>";
-print dolirefresh($request, $url, dolidelay('order'));
+if ( isset($request) ) print dolirefresh($request, $url, dolidelay('order'));
 print "</div><div class='float-right'>";
 print dolihelp('ISSUE');
 print "</div></small>";
@@ -1127,7 +1127,7 @@ print "<div class='col-md-7'><h6>" . $val['label'] . "</h6>" . $val['description
 //var_dump($fruits);
 print '</ul><div class="card-body"></div><div class="card-footer text-muted">';
 print "<small><div class='float-left'>";
-print dolirefresh($request, $url, dolidelay('contract'), $contractfo);
+if ( isset($request) ) print dolirefresh($request, $url, dolidelay('contract'), $contractfo);
 print "</div><div class='float-right'>";
 print dolihelp('ISSUE');
 print "</div></small>";
@@ -1168,7 +1168,7 @@ print "<li class='list-group-item list-group-item-light'><center>".__( 'No contr
 }
 print '</ul><div class="card-body"></div><div class="card-footer text-muted">';
 print "<small><div class='float-left'>";
-print dolirefresh($request, $url, dolidelay('contract'));
+if ( isset($request) ) print dolirefresh($request, $url, dolidelay('contract'));
 print "</div><div class='float-right'>";
 print dolihelp('ISSUE');
 print "</div></small>";
@@ -1267,7 +1267,7 @@ print "</li>";
 print "</ul></div>";
 
 print "<small><div class='float-left'>";
-print dolirefresh($request, $url, dolidelay('donation'), $donationfo);
+if ( isset($request) ) print dolirefresh($request, $url, dolidelay('donation'), $donationfo);
 print "</div><div class='float-right'>";
 print dolihelp('COM');
 print "</div></small>";
@@ -1306,7 +1306,7 @@ print "<li class='list-group-item list-group-item-light'><center>".__( 'No donat
 }
 print '</ul><div class="card-body"></div><div class="card-footer text-muted">';
 print "<small><div class='float-left'>";
-print dolirefresh($request, $url, dolidelay('donation'));
+if ( isset($request) ) print dolirefresh($request, $url, dolidelay('donation'));
 print "</div><div class='float-right'>";
 print dolihelp('ISSUE');
 print "</div></small>";
@@ -1455,7 +1455,7 @@ print "<li class='list-group-item list-group-item-light'><center>".__( 'No subsc
 }
 print '</ul><div class="card-body"></div><div class="card-footer text-muted">';
 print "<small><div class='float-left'>";
-print dolirefresh($request, $url, dolidelay('member'), $adherent);
+if ( isset($request) ) print dolirefresh($request, $url, dolidelay('member'), $adherent);
 print "</div><div class='float-right'>";
 print dolihelp('ISSUE');
 print "</div></small>";
@@ -1508,7 +1508,7 @@ print "<li class='list-group-item list-group-item-light'><center>".__( 'No consu
 
 print '</ul><div class="card-body"></div><div class="card-footer text-muted">';
 print "<small><div class='float-left'>";
-print dolirefresh( $request, $url, dolidelay('member'));
+if ( isset($request) ) print dolirefresh($request, $url, dolidelay('member'));
 print "</div><div class='float-right'>";
 print dolihelp('ISSUE');
 print "</div></small>";
@@ -1592,7 +1592,7 @@ print "<li class='list-group-item list-group-item-light'><center>".__( 'No linke
 print "</form>";
 print '</ul><div class="card-body"></div><div class="card-footer text-muted">';
 print "<small><div class='float-left'>";
-print dolirefresh($request, $url, dolidelay('member'));
+if ( isset($request) ) print dolirefresh($request, $url, dolidelay('member'));
 print "</div><div class='float-right'>";
 print dolihelp('ISSUE');
 print "</div></small>";
@@ -1699,7 +1699,7 @@ print  "<li class='list-group-item'><b>$datemsg $msg->fk_user_action_string</b><
 }} 
 print '</ul><div class="card-footer text-muted">';
 print "<small><div class='float-left'>";
-print dolirefresh($request, $url, dolidelay('ticket'), $ticketfo);
+if ( isset($request) ) print dolirefresh($request, $url, dolidelay('ticket'), $ticketfo);
 print "</div><div class='float-right'>";
 print dolihelp('ISSUE');
 print "</div></small>";
@@ -1858,7 +1858,7 @@ print "<li class='list-group-item list-group-item-light'><center>".__( 'No ticke
 
 print '</ul><div class="card-body"></div><div class="card-footer text-muted">';
 print "<small><div class='float-left'>";
-print dolirefresh($request, $url, dolidelay('ticket'));
+if ( isset($request) ) print dolirefresh($request, $url, dolidelay('ticket'));
 print "</div><div class='float-right'>";
 print dolihelp('ISSUE');
 print "</div></small>";
