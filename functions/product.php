@@ -48,7 +48,7 @@ $minstock = min(array($product->stock_theorique,$product->stock_reel));
 $maxstock = max(array($product->stock_theorique,$product->stock_reel));
 
 if ( $maxstock <= 0 || (isset($product->array_options->options_packaging) && $maxstock <= $product->array_options->options_packaging ) ) { $stock = "<span class='badge badge-pill badge-dark'>".__( 'Out of stock', 'doliconnect')."</SPAN>"; }  
-elseif ( $minstock < 0 && $maxstock > 0 && $product->stock_theorique > $product->stock_reel ) { $stock = "<span class='badge badge-pill badge-secondary'>".__( 'Replenishment', 'doliconnect')."</span>"; }
+elseif ( ($minstock <= 0 || (isset($product->array_options->options_packaging) && $product->stock_reel < $product->array_options->options_packaging)) && $maxstock >= 0 && $product->stock_theorique > $product->stock_reel ) { $stock = "<span class='badge badge-pill badge-secondary'>".__( 'Replenishment', 'doliconnect')."</span>"; }
 elseif ( $minstock >= 0 && $maxstock <= $product->seuil_stock_alerte ) { $stock = "<span class='badge badge-pill badge-danger'>".__( 'Limited stock', 'doliconnect')."</span>"; } 
 else { $stock = "<span class='badge badge-pill badge-success'>".__( 'In stock', 'doliconnect')."</span>"; }
 }
@@ -126,7 +126,7 @@ $price_min_ttc=$product->multiprices_min->$level;
 $price_ttc=$product->multiprices->$level;
 }
 } else {
-if ( !empty(callDoliApi("GET", "/doliconnector/constante/PRODUIT_CUSTOMER_PRICES", null, dolidelay('constante'))->value) ) {
+if ( !empty(callDoliApi("GET", "/doliconnector/constante/PRODUIT_CUSTOMER_PRICES", null, dolidelay('constante'))->value) && $current_user) {
 $product2 = callDoliApi("GET", "/products/".$product->id."/selling_multiprices/per_customer?thirdparty_id=".doliconnector($current_user, 'fk_soc'), null, dolidelay('product'));
 }
 if ( !empty(callDoliApi("GET", "/doliconnector/constante/PRODUIT_CUSTOMER_PRICES", null, dolidelay('constante'))->value) && !isset($product2->error) && $product2 != null ) {

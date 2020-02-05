@@ -667,18 +667,18 @@ $step = $product->array_options->options_packaging;
 } else {
 $step = 1;
 }
+if ($m2 < $step)  { $doliline .= "<OPTION value='0' >x 0</OPTION>"; }
 foreach (range(0, $m2, $step) as $number) {
 		if ( $number == $line->qty ) {
 $doliline .= "<OPTION value='$number' selected='selected'>x ".$number."</OPTION>";
 		} else {
 $doliline .= "<OPTION value='$number' >x ".$number."</OPTION>";
 		}
-	}
+	} 
 $doliline .= "</select>";
 } else {
 $doliline .= '<h5 class="mb-1">x'.$line->qty.'</h5>';
 }
-
 $doliline .= "</div></div></li>";
 }
 } else {
