@@ -669,9 +669,9 @@ $step = 1;
 }
 foreach (range(0, $m2, $step) as $number) {
 		if ( $number == $line->qty ) {
-$doliline .= "<OPTION value='$number' selected='selected'>x $number</OPTION>";
+$doliline .= "<OPTION value='$number' selected='selected'>x ".$number."</OPTION>";
 		} else {
-$doliline .= "<OPTION value='$number' >x $number</OPTION>";
+$doliline .= "<OPTION value='$number' >x ".$number."</OPTION>";
 		}
 	}
 $doliline .= "</select>";

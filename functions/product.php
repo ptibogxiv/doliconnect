@@ -171,9 +171,9 @@ $step = 1;
 }
 foreach (range(0, $m2, $step) as $number) {
 		if ( $number == $qty ) {
-$button .= "<OPTION value='$number' selected='selected'>$number</OPTION>";
+$button .= "<OPTION value='$number' selected='selected'>x ".$number."</OPTION>";
 		} else {
-$button .= "<OPTION value='$number' >$number</OPTION>";
+$button .= "<OPTION value='$number' >x ".$number."</OPTION>";
 		}
 	}
 $button .= "</SELECT><DIV class='input-group-append'><BUTTON class='btn btn-outline-secondary' type='submit' ";
