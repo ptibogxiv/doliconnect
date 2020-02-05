@@ -86,14 +86,14 @@ $ln=null;
 
 $arr_params = array( 'category' => $category, 'product' => $product->id.'#prod-'.$product->id);  
 $return = add_query_arg( $arr_params, doliconnecturl('dolishop'));
-$button .="<form id='product-add-form-$product->id' role='form' action='".$return."'  method='post'>";
+$button .= "<form id='product-add-form-".$product->id."' role='form' action='".$return."'  method='post'>";
 
 $button .= doliloaderscript('product-add-form-'.$product->id.'', false);
 
-$button .="<input type='hidden' name='product_update' value='$product->id'><input type='hidden' name='product_update[".$product->id."][product]' value='$product->id'>";
-$button .="<script type='text/javascript' language='javascript'>";
+$button .= "<input type='hidden' name='product_update' value='$product->id'><input type='hidden' name='product_update[".$product->id."][product]' value='$product->id'>";
+$button .= "<script>";
 
-$button .="</script>";
+$button .= "</script>";
 
 
 $currency=isset($orderfo->multicurrency_code)?$orderfo->multicurrency_code:'eur';
@@ -198,7 +198,7 @@ $button .= '<div class="input-group"><a href="#" data-toggle="modal" class="btn 
 $button .= "<div class='input-group'><a href='".wp_login_url( get_permalink() )."?redirect_to=".get_permalink()."' class='btn btn-block btn-outline-secondary' >".__( 'log in', 'doliconnect').'</a></div>';
 }
 
-//$button .="<div class='input-group'><a class='btn btn-block btn-outline-secondary' href='".$loginurl."' role='button' title='".__( 'Login', 'doliconnect')."'>".__( 'Login', 'doliconnect')."</a></div>";
+//$button .= "<div class='input-group'><a class='btn btn-block btn-outline-secondary' href='".$loginurl."' role='button' title='".__( 'Login', 'doliconnect')."'>".__( 'Login', 'doliconnect')."</a></div>";
 } else {
 $button .= "<div class='input-group'><a class='btn btn-block btn-info' href='".doliconnecturl('dolicontact')."?type=COM' role='button' title='".__( 'Login', 'doliconnect')."'>".__( 'Contact us', 'doliconnect')."</a></div>";
 }
