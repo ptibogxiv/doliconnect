@@ -647,9 +647,13 @@ if ( $object->statut == 0 && !empty($mode)) {
 $doliline .= "<input type='hidden' name='updateorderproduct[".$line->fk_product."][product]' value='".$line->fk_product."'><input type='hidden' name='updateorderproduct[".$line->fk_product."][line]' value='".$line->id."'><input type='hidden' name='updateorderproduct[".$line->fk_product."][price]' value='".$line->subprice."'>";
 $doliline .= "<input type='hidden' name='updateorderproduct[".$line->fk_product."][remise_percent]' value='".$line->remise_percent."'><input type='hidden' name='updateorderproduct[".$line->fk_product."][date_start]' value='".$line->date_start."'><input type='hidden' name='updateorderproduct[".$line->fk_product."][date_end]' value='".$line->date_end."'>";
 $doliline .= "<select class='form-control form-control-sm' name='updateorderproduct[".$line->fk_product."][qty]' onchange='ChangeDoliCart();'>";
-if ( ($product->stock_reel-$line->qty > '0' && $product->type == '0') ) {
-if ( $product->stock_reel-$line->qty >= '10' || (isset($stock) && is_object($stock) && $stock->value != 1) ) {
+if ( ($product->stock_reel-$line->qty > 0 && $product->type == '0') ) {
+if ( $product->stock_reel-$line->qty >= 10 || (isset($stock) && is_object($stock) && $stock->value != 1) ) {
+if (isset($product->array_options->options_packaging) && !empty($product->array_options->options_packaging)) {
+$m2 = 10*$product->array_options->options_packaging;
+} else {
 $m2 = 10;
+}
 } elseif ($product->stock_reel>$line->qty) {
 $m2 = $product->stock_reel;
 } else { $m2 = $line->qty; }
@@ -657,11 +661,16 @@ $m2 = $product->stock_reel;
 if ($line->qty>1){$m2=$line->qty;}
 else {$m2 = 1;}
 }
-	for($i=0;$i<=$m2;$i++){
-		if ($i==$line->qty){
-$doliline .= "<option value='$i' selected='selected'>$i</option>";
-		}else{
-$doliline .= "<option value='$i' >$i</option>";
+if (isset($product->array_options->options_packaging) && !empty($product->array_options->options_packaging)) {
+$step = $product->array_options->options_packaging;
+} else {
+$step = 1;
+}
+foreach (range(0, $m2, $step) as $number) {
+		if ( $number == $line->qty ) {
+$doliline .= "<OPTION value='$number' selected='selected'>x $number</OPTION>";
+		} else {
+$doliline .= "<OPTION value='$number' >x $number</OPTION>";
 		}
 	}
 $doliline .= "</select>";

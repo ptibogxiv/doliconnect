@@ -149,9 +149,13 @@ if ( is_user_logged_in() && $add==1 && is_object($order) && $order->value == 1 &
 $button .= "<div class='input-group'><select class='form-control' name='product_update[".$product->id."][qty]' ";
 if ( empty($product->stock_reel) && $product->type == '0' && (is_object($enablestock) && $enablestock->value == 1)) { $button .= " disabled"; }
 $button .= ">";
-if ( ($product->stock_reel-$qty > '0' && $product->type == '0') ) {
-if ( $product->stock_reel-$qty >= '10' || (is_object($enablestock) && $enablestock->value != 1) ) {
+if ( ($product->stock_reel-$qty > 0 && $product->type == '0') ) {
+if ( $product->stock_reel-$qty >= 10 || (is_object($enablestock) && $enablestock->value != 1) ) {
+if (isset($product->array_options->options_packaging) && !empty($product->array_options->options_packaging)) {
+$m2 = 10*$product->array_options->options_packaging;
+} else {
 $m2 = 10;
+}
 } elseif ( $product->stock_reel > $qty ) {
 $m2 = $product->stock_reel;
 } else { $m2 = $qty; }
@@ -159,11 +163,16 @@ $m2 = $product->stock_reel;
 if ( isset($line) && $line->qty > 1 ) { $m2 = $qty; }
 else { $m2 = 1; }
 }
-for ( $i=0;$i<=$m2;$i++ ) {
-		if ( $i == $qty ) {
-$button .= "<OPTION value='$i' selected='selected'>$i</OPTION>";
+if (isset($product->array_options->options_packaging) && !empty($product->array_options->options_packaging)) {
+$step = $product->array_options->options_packaging;
+} else {
+$step = 1;
+}
+foreach (range(0, $m2, $step) as $number) {
+		if ( $number == $qty ) {
+$button .= "<OPTION value='$number' selected='selected'>$number</OPTION>";
 		} else {
-$button .= "<OPTION value='$i' >$i</OPTION>";
+$button .= "<OPTION value='$number' >$number</OPTION>";
 		}
 	}
 $button .= "</SELECT><DIV class='input-group-append'><BUTTON class='btn btn-outline-secondary' type='submit' ";
