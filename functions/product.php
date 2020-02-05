@@ -150,12 +150,13 @@ $button .= "<div class='input-group'><select class='form-control' name='product_
 if ( empty($product->stock_reel) && $product->type == '0' && (is_object($enablestock) && $enablestock->value == 1)) { $button .= " disabled"; }
 $button .= ">";
 if ( ($product->stock_reel-$qty > 0 && $product->type == '0') ) {
-if ( $product->stock_reel-$qty >= 10 || (is_object($enablestock) && $enablestock->value != 1) ) {
 if (isset($product->array_options->options_packaging) && !empty($product->array_options->options_packaging)) {
-$m2 = 10*$product->array_options->options_packaging;
+$m1 = 10*$product->array_options->options_packaging;
 } else {
-$m2 = 10;
+$m1 = 10;
 }
+if ( $product->stock_reel-$qty >= $m1 || (is_object($enablestock) && $enablestock->value != 1) ) {
+$m2 = $m1;
 } elseif ( $product->stock_reel > $qty ) {
 $m2 = $product->stock_reel;
 } else { $m2 = $qty; }

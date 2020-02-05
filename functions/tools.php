@@ -648,12 +648,13 @@ $doliline .= "<input type='hidden' name='updateorderproduct[".$line->fk_product.
 $doliline .= "<input type='hidden' name='updateorderproduct[".$line->fk_product."][remise_percent]' value='".$line->remise_percent."'><input type='hidden' name='updateorderproduct[".$line->fk_product."][date_start]' value='".$line->date_start."'><input type='hidden' name='updateorderproduct[".$line->fk_product."][date_end]' value='".$line->date_end."'>";
 $doliline .= "<select class='form-control form-control-sm' name='updateorderproduct[".$line->fk_product."][qty]' onchange='ChangeDoliCart();'>";
 if ( ($product->stock_reel-$line->qty > 0 && $product->type == '0') ) {
-if ( $product->stock_reel-$line->qty >= 10 || (isset($stock) && is_object($stock) && $stock->value != 1) ) {
 if (isset($product->array_options->options_packaging) && !empty($product->array_options->options_packaging)) {
-$m2 = 10*$product->array_options->options_packaging;
+$m1 = 10*$product->array_options->options_packaging;
 } else {
-$m2 = 10;
+$m1 = 10;
 }
+if ( $product->stock_reel-$line->qty >= $m1 || (isset($stock) && is_object($stock) && $stock->value != 1) ) {
+$m2 = $m1;
 } elseif ($product->stock_reel>$line->qty) {
 $m2 = $product->stock_reel;
 } else { $m2 = $line->qty; }
