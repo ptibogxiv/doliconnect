@@ -1002,7 +1002,7 @@ $paymentmethods .= "<li class='list-group-item list-group-item-light list-group-
 <input type='radio' id='vir' name='paymentmode' value='vir' class='custom-control-input' data-toggle='collapse' data-parent='#accordion' ";
 //if ( !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_code != 'VIR' ) { $paymentmethods .=" disabled "; }
 //else
-if ( (!empty($thirdparty->mode_reglement_id) && $thirdparty->mmode_reglement_code != 'VIR') || ($listpaymentmethods->payment_methods == null && !in_array('card', $listpaymentmethods->stripe->types)) || (isset($object) && $object->mode_reglement_code == 'VIR') ) { $paymentmethods .= " checked"; }
+if ( (!empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_code != 'VIR') || ($listpaymentmethods->payment_methods == null && !empty($listpaymentmethods->stripe) && !in_array('card', $listpaymentmethods->stripe->types)) || (isset($object) && $object->mode_reglement_code == 'VIR') ) { $paymentmethods .= " checked"; }
 $paymentmethods .= " href='#vir'><label class='custom-control-label w-100' for='vir'><div class='row'><div class='col-3 col-md-2 col-xl-2 align-middle'>";
 $paymentmethods .= '<center><i class="fas fa-university fa-3x fa-fw" style="color:DarkGrey"></i></center>';
 $paymentmethods .= "</div><div class='col-auto align-middle'><h6 class='my-0'>".__( 'Transfer', 'doliconnect')."</h6><small class='text-muted'>".__( 'See your receipt', 'doliconnect')."</small>";
@@ -1069,11 +1069,11 @@ $paymentmethods .= "</div></div>";
 
 $paymentmethods .= "<script>";
 
-if ( !empty($listpaymentmethods->stripe->account) ) {
+if ( !empty($listpaymentmethods->stripe->account) && isset($listpaymentmethods->stripe->publishable_key) ) {
 $paymentmethods .= "var stripe = Stripe('".$listpaymentmethods->stripe->publishable_key."', {
   stripeAccount: '".$listpaymentmethods->stripe->account."'
 });";
-} else {
+} elseif ( isset($listpaymentmethods->stripe->publishable_key) ) {
 $paymentmethods .= "var stripe = Stripe('".$listpaymentmethods->stripe->publishable_key."');";
 }
 
@@ -1105,8 +1105,10 @@ var mpx;
 for (mpx of listpm) {
 if (mpx != controle) jQuery('#' + mpx + 'Panel').collapse('hide');
 }
-}";   
+}"; 
 
+  
+if ( !empty($listpaymentmethods->stripe) ) {
 if (!empty($module) && is_object($object) && isset($object->id) && preg_match('/pi_/', $listpaymentmethods->stripe->client_secret)) {
 $paymentmethods .= "stripe.retrievePaymentIntent('".$listpaymentmethods->stripe->client_secret."').then(function(result) {
     if (result.error) { 
@@ -1691,6 +1693,7 @@ form.submit();
 
 }});
 ";   
+}
 }
                  
 $paymentmethods .= "</script>";
