@@ -47,7 +47,7 @@ $stock = "<span class='badge badge-pill badge-success'>".__( 'Available', 'dolic
 $minstock = min(array($product->stock_theorique,$product->stock_reel));
 $maxstock = max(array($product->stock_theorique,$product->stock_reel));
 
-if ( $maxstock <= 0 ) { $stock = "<span class='badge badge-pill badge-dark'>".__( 'Out of stock', 'doliconnect')."</SPAN>"; }  
+if ( $maxstock <= 0 || (isset($product->array_options->options_packaging) && $maxstock <= $product->array_options->options_packaging ) ) { $stock = "<span class='badge badge-pill badge-dark'>".__( 'Out of stock', 'doliconnect')."</SPAN>"; }  
 elseif ( $minstock < 0 && $maxstock > 0 && $product->stock_theorique > $product->stock_reel ) { $stock = "<span class='badge badge-pill badge-secondary'>".__( 'Replenishment', 'doliconnect')."</span>"; }
 elseif ( $minstock >= 0 && $maxstock <= $product->seuil_stock_alerte ) { $stock = "<span class='badge badge-pill badge-danger'>".__( 'Limited stock', 'doliconnect')."</span>"; } 
 else { $stock = "<span class='badge badge-pill badge-success'>".__( 'In stock', 'doliconnect')."</span>"; }
@@ -146,9 +146,6 @@ if ( !empty($altdurvalue) ) { $button .= "<h6 class='mb-1 text-right'>soit ".dol
 }
 
 if ( is_user_logged_in() && $add==1 && is_object($order) && $order->value == 1 && doliconnectid('dolicart') > 0 ) {
-$button .= "<div class='input-group'><select class='form-control' name='product_update[".$product->id."][qty]' ";
-if ( empty($product->stock_reel) && $product->type == '0' && (is_object($enablestock) && $enablestock->value == 1)) { $button .= " disabled"; }
-$button .= ">";
 if ( ($product->stock_reel-$qty > 0 && $product->type == '0') ) {
 if (isset($product->array_options->options_packaging) && !empty($product->array_options->options_packaging)) {
 $m1 = 10*$product->array_options->options_packaging;
@@ -169,6 +166,10 @@ $step = $product->array_options->options_packaging;
 } else {
 $step = 1;
 }
+$button .= "<div class='input-group'><select class='form-control' name='product_update[".$product->id."][qty]' ";
+if ( ( empty($product->stock_reel) || $m2 < $step) && $product->type == '0' && (is_object($enablestock) && $enablestock->value == 1)) { $button .= " disabled"; }
+$button .= ">";
+if ($m2 < $step)  { $button .= "<OPTION value='0' >x 0</OPTION>"; }
 foreach (range(0, $m2, $step) as $number) {
 		if ( $number == $qty ) {
 $button .= "<OPTION value='$number' selected='selected'>x ".$number."</OPTION>";
@@ -177,7 +178,7 @@ $button .= "<OPTION value='$number' >x ".$number."</OPTION>";
 		}
 	}
 $button .= "</SELECT><DIV class='input-group-append'><BUTTON class='btn btn-outline-secondary' type='submit' ";
-if ( empty($product->stock_reel) && $product->type == '0' && (is_object($enablestock) && $enablestock->value == 1)) { $button .= " disabled"; }
+if ( ( empty($product->stock_reel) || $m2 < $step) && $product->type == '0' && (is_object($enablestock) && $enablestock->value == 1)) { $button .= " disabled"; }
 $button .= ">";
 if ( $qty > 0 ) {
 $button .= __( 'Update', 'doliconnect')."";
