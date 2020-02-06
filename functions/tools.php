@@ -1107,8 +1107,6 @@ if (mpx != controle) jQuery('#' + mpx + 'Panel').collapse('hide');
 }
 }"; 
 
-  
-if ( !empty($listpaymentmethods->stripe) ) {
 if (!empty($module) && is_object($object) && isset($object->id) && preg_match('/pi_/', $listpaymentmethods->stripe->client_secret)) {
 $paymentmethods .= "stripe.retrievePaymentIntent('".$listpaymentmethods->stripe->client_secret."').then(function(result) {
     if (result.error) { 
@@ -1122,9 +1120,11 @@ $paymentmethods .= "stripe.retrievePaymentIntent('".$listpaymentmethods->stripe-
 
 $paymentmethods .= "jQuery('#none,#card,#iban,#ideal,#vir,#chq,#liq').on('click', function (e) {
           e.stopPropagation();
-var elements = stripe.elements(); 
-var clientSecret = '".$listpaymentmethods->stripe->client_secret."';
-var displayError = document.getElementById('error-message');
+var elements = stripe.elements();";
+if (!empty($listpaymentmethods->stripe->client_secret)) { 
+$paymentmethods .= "var clientSecret = '".$listpaymentmethods->stripe->client_secret."';";
+}
+$paymentmethods .= "var displayError = document.getElementById('error-message');
 displayError.textContent = '';
 HideDivPM(this.id);
           if(this.id == 'card'){
@@ -1534,9 +1534,11 @@ document.body.appendChild(form);
 form.submit();
 }    
         
-function PayCardPM(pm) {
-var clientSecret = '".$listpaymentmethods->stripe->client_secret."';
-var displayError = document.getElementById('error-message');
+function PayCardPM(pm) {";
+if (!empty($listpaymentmethods->stripe->client_secret)) { 
+$paymentmethods .= "var clientSecret = '".$listpaymentmethods->stripe->client_secret."';";
+}
+$paymentmethods .= "var displayError = document.getElementById('error-message');
 displayError.textContent = '';
   stripe.confirmCardPayment(
     clientSecret,
@@ -1577,9 +1579,11 @@ form.submit();
   }); 
 }
 
-function PaySepaDebitPM(pm) {
-var clientSecret = '".$listpaymentmethods->stripe->client_secret."';
-var displayError = document.getElementById('error-message');
+function PaySepaDebitPM(pm) {";
+if (!empty($listpaymentmethods->stripe->client_secret)) { 
+$paymentmethods .= "var clientSecret = '".$listpaymentmethods->stripe->client_secret."';";
+}
+$paymentmethods .= "var displayError = document.getElementById('error-message');
 displayError.textContent = '';
   stripe.confirmSepaDebitPayment(
     clientSecret,
@@ -1694,7 +1698,7 @@ form.submit();
 }});
 ";   
 }
-}
+
                  
 $paymentmethods .= "</script>";
 
