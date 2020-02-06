@@ -939,12 +939,12 @@ foreach ( $orderfo->linkedObjectsIds->shipping as $s => $value ) {
 
 if ($value > 0) {
 $ship = callDoliApi("GET", "/shipments/".$value, null, dolidelay('order', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-//print $invoice;
+//print var_dump($ship);
 }
 
 $lnship ="<ul>";
 foreach ( $ship->lines as $sline ) {
-$lnship .="<li>".$sline->qty_shipped."x ".$sline->libelle."</li>";
+$lnship .="<li>".$sline->qty_shipped."/".$sline->qty_shipped." ".$sline->libelle."</li>";
 }
 $lnship .="</ul>";
 if ( $ship->trueWeight != null ) {
@@ -954,7 +954,7 @@ if ( $ship->trueSize != null && $ship->trueSize != 'xx' ) {
 $dimensions = " - ".__( 'size', 'doliconnect')." ".$ship->trueSize." ".doliunit($ship->size_units, 'size');
 } else  { $dimensions = ''; }
 if ( $ship->statut > 0 ) {
-if ( $ship->trueWeight != null ) {
+if ( !empty($ship->date_delivery) ) {
 $datedelivery = "<br>".__( 'Estimated delivery', 'doliconnect').": ".wp_date( get_option( 'date_format' ), $ship->date_delivery, false);
 } else { $datedelivery = ''; }
 $fruits[$ship->date_creation] = array(
