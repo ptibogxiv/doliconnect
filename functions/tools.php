@@ -830,7 +830,6 @@ $countPM = count(get_object_vars($listpaymentmethods->payment_methods));
 
 $pm = array();
 if ( $listpaymentmethods->payment_methods != null ) {
-$i = 0;
 foreach ( $listpaymentmethods->payment_methods as $method ) {
 $pm[] .= "".$method->id."";                                                                                                                      
 $paymentmethods .= "<li class='list-group-item list-group-item-light list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>";
@@ -878,7 +877,6 @@ $paymentmethods .= '>'.__( 'Delete', 'doliconnect').'</button>';
 }
 $paymentmethods .= '</div>';
 $paymentmethods .= '</div></li>';
-$i++;
 }} else {
 $paymentmethods .= '<li class="list-group-item list-group-item-light flex-column align-items-start"><div class="custom-control custom-radio">
 <input type="radio" id="none" name="paymentmode" value="none" class="custom-control-input" data-toggle="collapse" data-parent="#accordion" href="#none" checked>
