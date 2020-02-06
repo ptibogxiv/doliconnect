@@ -117,6 +117,32 @@ exit;
 //****
 print "</div>";
 
+} elseif ( isset($_GET["action"]) && $_GET["action"] == 'confirmaction' ) {
+print "<p class='font-weight-light' align='justify'><h5>".sprintf(__('Hello %s', 'doliconnect'), $current_user->first_name)."</h5>".__( 'Manage your account, your informations, orders and much more via this secure client area.', 'doliconnect')."</p></div></div></div>";
+print "<div class='col-xs-12 col-sm-12 col-md-9'>";
+print "<div class='card shadow-sm'><div class='card-body'>";
+		if ( ! isset( $_GET['request_id'] ) ) {
+			print __( 'Missing request ID.');
+		}
+
+		if ( ! isset( $_GET['confirm_key'] ) ) {
+			print __( 'Missing confirm key.');
+		}   
+
+if ( isset( $_GET['request_id'] ) && isset( $_GET['confirm_key'] ) ) {
+		$request_id = (int) $_GET['request_id'];
+		$key        = sanitize_text_field( wp_unslash( $_GET['confirm_key'] ) );
+		$result     = wp_validate_user_request_key( $request_id, $key );
+
+//if ( !is_wp_error( $result ) ) {
+do_action( 'user_request_action_confirmed', $request_id );
+$message = _wp_privacy_account_request_confirmed_message( $request_id );
+print $message;
+//}
+}
+
+print "</div></div></div>";
+
 } else {
 
 print "<p class='font-weight-light' align='justify'><h5>".sprintf(__('Hello %s', 'doliconnect'), $current_user->first_name)."</h5>".__( 'Manage your account, your informations, orders and much more via this secure client area.', 'doliconnect')."</p></div></div></div>";
@@ -159,6 +185,7 @@ print "</div>";
 } else { 
 print "<p class='font-weight-light' align='justify'>".__( 'Manage your account, your informations, orders and much more via this secure client area.', 'doliconnect')."</p></div></div></div>";
 print "<div class='col-xs-12 col-sm-12 col-md-9'>";
+print "<div class='card shadow-sm'><div class='card-body'>";
 if ( isset($_GET["action"]) && $_GET["action"] == 'confirmaction' ) {
 
 		if ( ! isset( $_GET['request_id'] ) ) {
@@ -180,7 +207,7 @@ $message = _wp_privacy_account_request_confirmed_message( $request_id );
 print $message;
 //}
 }
-
+print "</div></div>";
 } elseif ( isset($_GET["action"]) && $_GET["action"] == 'signup' ) {
 
 if ( is_user_logged_in() ) {
