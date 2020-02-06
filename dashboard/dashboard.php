@@ -832,25 +832,26 @@ if (!empty($orderfo->contacts_ids) && is_array($orderfo->contacts_ids)) {
 
 foreach ($orderfo->contacts_ids as $contact) {
 if ('BILLING' == $contact->code) {
-print "<div class='card'><div class='card-body'><h6>".__( 'Billing address', 'doliconnect')."</h6><small class='text-muted'>";
-print dolicontact($contact->id, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
-print "</small></div></div>";
-} else {
-print "<div class='card'><div class='card-body'><h6>".__( 'Billing address', 'doliconnect')."</h6><small class='text-muted'>";
-print doliaddress($thirdparty, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
-print "</small></div></div>";
+$billingcard = dolicontact($contact->id, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 }
 if ('SHIPPING' == $contact->code) {
-print "<div class='card'><div class='card-body'><h6>".__( 'Shipping address', 'doliconnect')."</h6><small class='text-muted'>";
-print dolicontact($contact->id, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
-print "</small></div></div>";
+$shippingcard = dolicontact($contact->id, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+}
+}
+print "<div class='card'><div class='card-body'><h6>".__( 'Billing address', 'doliconnect')."</h6><small class='text-muted'>";
+if (isset($billingcard) && !empty($billingcard)) {
+print $billingcard;
 } else {
-print "<div class='card'><div class='card-body'><h6>".__( 'Shipping address', 'doliconnect')."</h6><small class='text-muted'>";
 print doliaddress($thirdparty, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+}
 print "</small></div></div>";
+print "<div class='card'><div class='card-body'><h6>".__( 'Shipping address', 'doliconnect')."</h6><small class='text-muted'>";
+if (isset($shippingcard) && !empty($shippingcard)) {
+print $shippingcard;
+} else {
+print doliaddress($thirdparty, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 }
-}
-
+print "</small></div></div>";
 } else {
 print "<div class='card'><div class='card-body'><h6>".__( 'Billing and shipping address', 'doliconnect')."</h6><small class='text-muted'>";
 print doliaddress($thirdparty, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
