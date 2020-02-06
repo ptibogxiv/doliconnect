@@ -877,7 +877,7 @@ $paymentmethods .= '>'.__( 'Delete', 'doliconnect').'</button>';
 }
 $paymentmethods .= '</div>';
 $paymentmethods .= '</div></li>';
-}} else {
+}} elseif (isset($listpaymentmethods->stripe)) {
 $paymentmethods .= '<li class="list-group-item list-group-item-light flex-column align-items-start"><div class="custom-control custom-radio">
 <input type="radio" id="none" name="paymentmode" value="none" class="custom-control-input" data-toggle="collapse" data-parent="#accordion" href="#none" checked>
 <label class="custom-control-label w-100" for="none"><div class="row"><div class="col-3 col-md-2 col-xl-2 align-middle">
