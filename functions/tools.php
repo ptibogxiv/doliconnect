@@ -817,7 +817,6 @@ $paymentmethods .= "<li class='list-group-item list-group-item-info'><i class='f
 }
 
 if (!empty($thirdparty->cond_reglement_id)) { 
-
 $paymentmethods .= "<li class='list-group-item list-group-item-light list-group-item-action flex-column align-items-start'><b>".__( 'Payment term', 'doliconnect').":</b> ";
 $paymentmethods .= dolipaymentterm($thirdparty->cond_reglement_id);
 $paymentmethods .= "</li>";
@@ -836,7 +835,7 @@ foreach ( $listpaymentmethods->payment_methods as $method ) {
 $pm[] .= "".$method->id."";                                                                                                                      
 $paymentmethods .= "<li class='list-group-item list-group-item-light list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>";
 $paymentmethods .= '<input onclick="ShowHideDivPM(\''.$method->id.'\')" type="radio" id="'.$method->id.'" name="paymentmode" value="'.$method->id.'" class="custom-control-input" data-toggle="collapse" data-parent="#accordion" href="#'.$method->id.'" ';
-if ( (!empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id != $method->id ) || (date('Y/n') >= $method->expiration && !empty($object) && !empty($method->expiration)) ) { $paymentmethods .=" disabled "; }
+if ( (!empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id != $method->id && !empty($module) && is_object($object) && isset($object->id)) || (date('Y/n') >= $method->expiration && !empty($object) && !empty($method->expiration)) ) { $paymentmethods .=" disabled "; }
 elseif ( !empty($method->default_source) ) { $paymentmethods .=" checked "; }
 $paymentmethods .= " ><label class='custom-control-label w-100' for='".$method->id."'><div class='row'><div class='col-3 col-md-2 col-xl-2 align-middle'>";
 $paymentmethods .= '<center><i ';
