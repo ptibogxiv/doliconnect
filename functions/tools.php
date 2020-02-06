@@ -840,18 +840,14 @@ if ( (!empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id !
 elseif ( !empty($method->default_source) ) { $paymentmethods .=" checked "; }
 $paymentmethods .= " ><label class='custom-control-label w-100' for='".$method->id."'><div class='row'><div class='col-3 col-md-2 col-xl-2 align-middle'>";
 $paymentmethods .= '<center><i ';
-if ( $method->type == 'sepa_debit' ) {
-$paymentmethods .= 'class="fas fa-university fa-3x fa-fw" style="color:DarkGrey"';
-} else {
-
-if ( $method->brand == 'visa' ) { $paymentmethods .= 'class="fab fa-cc-visa fa-3x fa-fw" style="color:#172274"'; }
+if ( $method->type == 'sepa_debit' || $method->type == 'PRE' ) { $paymentmethods .= 'class="fas fa-university fa-3x fa-fw" style="color:DarkGrey"'; } 
+elseif ( $method->brand == 'visa' ) { $paymentmethods .= 'class="fab fa-cc-visa fa-3x fa-fw" style="color:#172274"'; }
 else if ( $method->brand == 'mastercard' ) { $paymentmethods .= 'class="fab fa-cc-mastercard fa-3x fa-fw" style="color:#FF5F01"'; }
 else if ( $method->brand == 'amex' ) { $paymentmethods .= 'class="fab fa-cc-amex fa-3x fa-fw" style="color:#2E78BF"'; }
-else { $paymentmethods .= 'class="fab fa-cc-amex fa-3x fa-fw"';}
-}
+else { $paymentmethods .= 'class="fab fa-credit-card fa-3x fa-fw"';}
 $paymentmethods .= '></i></center>';
 $paymentmethods .= '</div><div class="col-9 col-sm-7 col-md-8 col-xl-8 align-middle"><h6 class="my-0">';
-if ( $method->type == 'sepa_debit' ) {
+if ( $method->type == 'sepa_debit' || $method->type == 'PRE' ) {
 $paymentmethods .= __( 'Account', 'doliconnect').' '.$method->reference;
 //$paymentmethods .= '<small> <a href="'.$method->mandate_url.'" title="'.__( 'Mandate', 'doliconnect').' '.$method->mandate_reference.'" target="_blank"><i class="fas fa-info-circle"></i></a></small>';
 } else {
