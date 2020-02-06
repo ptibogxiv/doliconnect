@@ -731,6 +731,21 @@ $duration = '';
 return $duration;
 }
 
+function dolipaymentterm($id, $refresh = false) {
+$paymenterm = callDoliApi("GET", "/setup/dictionary/payment_terms?sortfield=rowid&sortorder=ASC&limit=100&active=1&sqlfilters=(t.rowid%3A%3D%3A'".$id."')", null, dolidelay('constante', $refresh)); 
+//print var_dump($paymenterm[0]);
+if ($paymenterm[0]->type_cdr == 1) {
+$term = sprintf( _n( '%s day', '%s days', $paymenterm[0]->nbjour, 'doliconnect'), $paymenterm[0]->nbjour);
+$term .= ", ".__( 'end of month', 'doliconnect');
+} elseif ($paymenterm[0]->type_cdr == 2) {
+$term = sprintf( _n( '%s day', '%s days', $paymenterm[0]->nbjour, 'doliconnect'), $paymenterm[0]->nbjour);
+$term .= ", ".sprintf( __( 'the %s of month', 'doliconnect'), $paymenterm[0]->decalage);
+} else {
+$term = sprintf( _n( '%s day', '%s days', $paymenterm[0]->nbjour, 'doliconnect'), $paymenterm[0]->nbjour);
+}
+return $term;
+}
+
 function doliconnect_langs($arg) {
 
 if (function_exists('pll_the_languages')) {       
@@ -785,9 +800,6 @@ $listpaymentmethods = callDoliApi("GET", $request, null, dolidelay('paymentmetho
 $thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty', $refresh)); 
 //print $thirdparty;
 
-$paymenterm = callDoliApi("GET", "/setup/dictionary/payment_terms?sortfield=rowid&sortorder=ASC&limit=100&active=1&sqlfilters=(t.rowid%3A%3D%3A'".$thirdparty->cond_reglement_id."')", null, dolidelay('constante', $refresh)); 
-//print var_dump($paymenterm[0]);
-
 $lock = dolipaymentmodes_lock(); 
 
 $paymentmethods = "<script src='https://js.stripe.com/v3/'></script>";
@@ -804,17 +816,10 @@ if ( isset($listpaymentmethods->stripe) && empty($listpaymentmethods->stripe->li
 $paymentmethods .= "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".__( "Stripe's in sandbox mode", 'doliconnect')."</b> <small>(<a href='https://stripe.com/docs/testing#cards' target='_blank' rel='noopener'>".__( "Link to Test card numbers", 'doliconnect')."</a>)</small></li>";
 }
 
-if (!empty($thirdparty->cond_reglement_id)) {
+if (!empty($thirdparty->cond_reglement_id)) { 
+
 $paymentmethods .= "<li class='list-group-item list-group-item-light list-group-item-action flex-column align-items-start'><b>".__( 'Payment term', 'doliconnect').":</b> ";
-if ($paymenterm[0]->type_cdr == 1) {
-$paymentmethods .= sprintf( _n( '%s day', '%s days', $paymenterm[0]->nbjour, 'doliconnect'), $paymenterm[0]->nbjour);
-$paymentmethods .= ", ".__( 'end of month', 'doliconnect');
-} elseif ($paymenterm[0]->type_cdr == 2) {
-$paymentmethods .= sprintf( _n( '%s day', '%s days', $paymenterm[0]->nbjour, 'doliconnect'), $paymenterm[0]->nbjour);
-$paymentmethods .= ", ".sprintf( __( 'the %s of month', 'doliconnect'), $paymenterm[0]->decalage);
-} else {
-$paymentmethods .= sprintf( _n( '%s day', '%s days', $paymenterm[0]->nbjour, 'doliconnect'), $paymenterm[0]->nbjour);
-}
+$paymentmethods .= dolipaymentterm($thirdparty->cond_reglement_id);
 $paymentmethods .= "</li>";
 }
 
