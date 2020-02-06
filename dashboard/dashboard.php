@@ -376,10 +376,10 @@ print doliloaderscript('doliconnect-contactform');
 
 print "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
 
-if (empty($listpaymentmethods->payment_methods)) {
+if (empty($listcontact)) {
 $countContact = 0;
 } else {
-$countContact = count(get_object_vars($listcontact));
+$countContact = count($listcontact);
 }
 
 if ( $countContact < 5 ) {
