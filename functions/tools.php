@@ -838,7 +838,7 @@ if ( (!empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id !
 elseif ( !empty($method->default_source) ) { $paymentmethods .=" checked "; }
 $paymentmethods .= " ><label class='custom-control-label w-100' for='".$method->id."'><div class='row'><div class='col-3 col-md-2 col-xl-2 align-middle'>";
 $paymentmethods .= '<center><i ';
-if ( $method->type == 'sepa_debit' || $method->type == 'PRE' ) { $paymentmethods .= 'class="fas fa-university fa-3x fa-fw" style="color:DarkGrey"'; } 
+if ( $method->type == 'sepa_debit' || $method->type == 'PRE' || $method->type == 'VIR' ) { $paymentmethods .= 'class="fas fa-university fa-3x fa-fw" style="color:DarkGrey"'; } 
 elseif ( $method->brand == 'visa' ) { $paymentmethods .= 'class="fab fa-cc-visa fa-3x fa-fw" style="color:#172274"'; }
 else if ( $method->brand == 'mastercard' ) { $paymentmethods .= 'class="fab fa-cc-mastercard fa-3x fa-fw" style="color:#FF5F01"'; }
 else if ( $method->brand == 'amex' ) { $paymentmethods .= 'class="fab fa-cc-amex fa-3x fa-fw" style="color:#2E78BF"'; }
