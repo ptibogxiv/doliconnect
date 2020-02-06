@@ -1119,8 +1119,10 @@ $paymentmethods .= "stripe.retrievePaymentIntent('".$listpaymentmethods->stripe-
 }
 
 $paymentmethods .= "jQuery('#none,#card,#iban,#ideal,#vir,#chq,#liq').on('click', function (e) {
-          e.stopPropagation();
-var elements = stripe.elements();";
+          e.stopPropagation();";
+if ( isset($listpaymentmethods->stripe->publishable_key) ) {
+$paymentmethods .= "var elements = stripe.elements();";
+}
 if (!empty($listpaymentmethods->stripe->client_secret)) { 
 $paymentmethods .= "var clientSecret = '".$listpaymentmethods->stripe->client_secret."';";
 }
