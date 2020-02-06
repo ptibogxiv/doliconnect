@@ -273,7 +273,7 @@ print "</li>";
 
 
 if ( doliversion('11.0.0') ) { 
-$socialnetworks = callDoliApi("GET", "/setup/dictionary/socialnetworks", null, $delay);
+$socialnetworks = callDoliApi("GET", "/setup/dictionary/socialnetworks?sortfield=rowid&sortorder=ASC&limit=100&active=1", null, $delay);
 if ( !isset($socialnetworks->error) && $socialnetworks != null ) { 
 print "<li class='list-group-item'><div class='form-row'>";
 foreach ( $socialnetworks as $social ) { 
