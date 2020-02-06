@@ -1107,7 +1107,7 @@ if (mpx != controle) jQuery('#' + mpx + 'Panel').collapse('hide');
 }
 }"; 
 
-if (!empty($module) && is_object($object) && isset($object->id) && preg_match('/pi_/', $listpaymentmethods->stripe->client_secret)) {
+if (!empty($module) && is_object($object) && isset($object->id) && !empty($listpaymentmethods->stripe->client_secret) && preg_match('/pi_/', $listpaymentmethods->stripe->client_secret)) {
 $paymentmethods .= "stripe.retrievePaymentIntent('".$listpaymentmethods->stripe->client_secret."').then(function(result) {
     if (result.error) { 
     } else {
