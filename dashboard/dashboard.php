@@ -376,7 +376,7 @@ print doliloaderscript('doliconnect-contactform');
 
 print "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
 
-if (empty($listcontact)) {
+if (empty($listcontact) || isset($listcontact->error)) {
 $countContact = 0;
 } else {
 $countContact = count($listcontact);
