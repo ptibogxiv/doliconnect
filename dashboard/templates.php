@@ -183,7 +183,7 @@ print "</div>";
 print "</div>";
 }
 } else { 
-print "<p class='font-weight-light' align='justify'>".__( 'Manage your account, your informations, orders and much more via this secure client area.', 'doliconnect')."</p>";
+//print "<p class='font-weight-light' align='justify'>".__( 'Manage your account, your informations, orders and much more via this secure client area.', 'doliconnect')."</p>";
 print "</div></div></div>";
 print "<div class='col-xs-12 col-sm-12 col-md-9'>";
 print "<div class='card shadow-sm'><div class='card-body'>";
