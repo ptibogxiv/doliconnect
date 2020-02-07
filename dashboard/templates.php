@@ -1,9 +1,9 @@
 <?php
 
-function doliaccount_display($content) {
+function doliaccount_display($content, $controle = false) {
 global $wpdb, $current_user;
 
-if ( in_the_loop() && is_main_query() && is_page(doliconnectid('doliaccount')) && !empty(doliconnectid('doliaccount')) ) {
+if ( (in_the_loop() && is_main_query() && is_page(doliconnectid('doliaccount')) && !empty(doliconnectid('doliaccount')) ) || ( (!is_user_logged_in() && !empty(get_option('doliconnectrestrict')) && !is_page(doliconnectid('doliaccount')) && !empty($controle) ) || (!is_user_member_of_blog( $current_user->ID, get_current_blog_id()) && !empty(get_option('doliconnectrestrict')) && !is_page(doliconnectid('doliaccount')) && !empty($controle) ) )) {
 
 doliconnect_enqueues();
 
@@ -183,7 +183,8 @@ print "</div>";
 print "</div>";
 }
 } else { 
-print "<p class='font-weight-light' align='justify'>".__( 'Manage your account, your informations, orders and much more via this secure client area.', 'doliconnect')."</p></div></div></div>";
+print "<p class='font-weight-light' align='justify'>".__( 'Manage your account, your informations, orders and much more via this secure client area.', 'doliconnect')."</p>";
+print "</div></div></div>";
 print "<div class='col-xs-12 col-sm-12 col-md-9'>";
 print "<div class='card shadow-sm'><div class='card-body'>";
 if ( isset($_GET["action"]) && $_GET["action"] == 'confirmaction' ) {
@@ -682,7 +683,7 @@ return $content;
 
 }
 
-add_filter( 'the_content', 'doliaccount_display');
+add_filter( 'the_content', 'doliaccount_display', 10, 2);
 
 // ********************************************************
 
