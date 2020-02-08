@@ -399,7 +399,7 @@ $mail =  wp_mail($user->user_email, $subject, $body, $headers);
 }
 add_action('wp_login', 'Doliconnect_MailAlert', 10, 2);
 
-function dolidocdownload($type, $ref=null, $fichier=null, $name=null, $refresh = false) {
+function dolidocdownload($type, $ref=null, $fichier=null, $name=null, $refresh = false, $style = 'btn-outline-dark btn-sm btn-block') {
 global $wpdb;
  
 if ( $name == null ) { $name=$fichier; } 
@@ -429,10 +429,10 @@ document.getElementById("pdfjsframe-'.$filename.'").contentWindow.PDFViewerAppli
 </script>';
 $document .= '</div></div></div></div>';
 } else {
-$document = '<a href="'.$data.'" class="btn btn-outline-dark btn-sm btn-block" download="'.$doc->filename.'">'.$name.' <i class="fas fa-file-download"></i></a>';
+$document = '<a href="'.$data.'" class="btn '.$style.'" download="'.$doc->filename.'">'.$name.' <i class="fas fa-file-download"></i></a>';
 }
 } else {
-$document = '<button class="btn btn-link" disabled>'.$name.' <i class="fas fa-file-download"></i></button>';
+$document = '<button class="btn '.$style.'" disabled>'.$name.' <i class="fas fa-file-download"></i></button>';
 }
 
 return $document;
@@ -1050,7 +1050,7 @@ $paymentmethods .= "<div id='error-message' role='alert'><!-- a Stripe Message w
 if (isset($object)) {
 $paymentmethods .= '<div class="custom-control custom-checkbox">
   <input type="checkbox" class="custom-control-input" id="checkBox1" ">
-  <label class="custom-control-label" for="checkBox1">'.sprintf( __( 'I read and accept the %s', 'doliconnect'), dolidocdownload('', '', '', __( 'Terms & Conditions', 'doliconnect'))).'</label>
+  <label class="custom-control-label" for="checkBox1">'.sprintf( __( 'I read and accept the %s', 'doliconnect'), dolidocdownload('', '', '', __( 'Terms & Conditions', 'doliconnect'), false, 'btn-link')).'</label>
 </div>';
 $paymentmethods .= "<script>";
 $paymentmethods .= "jQuery(document).ready(function() { 
@@ -1060,7 +1060,7 @@ jQuery('input[name=paymentmode]').attr('disabled', !jQuery('input[name=paymentmo
 });"; 
 $paymentmethods .= "</script>"; 
 } else {
-$paymentmethods .= sprintf( __( 'Read the %s', 'doliconnect'), dolidocdownload('', '', '', __( 'Terms & Conditions', 'doliconnect')));
+$paymentmethods .= sprintf( __( 'Read the %s', 'doliconnect'), dolidocdownload('', '', '', __( 'Terms & Conditions', 'doliconnect'), false, 'btn-link'));
 $paymentmethods .= "<script>";
 $paymentmethods .= "jQuery(document).ready(function() { 
 jQuery('input[name=paymentmode]').attr('disabled', !jQuery('input[name=paymentmode]').attr('disabled'));
