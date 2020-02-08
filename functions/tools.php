@@ -845,7 +845,7 @@ else if ( $method->brand == 'amex' ) { $paymentmethods .= 'class="fab fa-cc-amex
 else { $paymentmethods .= 'class="fab fa-credit-card fa-3x fa-fw"';}
 $paymentmethods .= '></i></center>';
 $paymentmethods .= '</div><div class="col-9 col-sm-7 col-md-8 col-xl-8 align-middle"><h6 class="my-0">';
-if ( $method->type == 'sepa_debit' || $method->type == 'PRE' ) {
+if ( $method->type == 'sepa_debit' || $method->type == 'PRE' || $method->type == 'VIR' ) {
 $paymentmethods .= __( 'Account', 'doliconnect').' '.$method->reference;
 //$paymentmethods .= '<small> <a href="'.$method->mandate_url.'" title="'.__( 'Mandate', 'doliconnect').' '.$method->mandate_reference.'" target="_blank"><i class="fas fa-info-circle"></i></a></small>';
 } else {
