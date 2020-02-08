@@ -432,7 +432,7 @@ $document .= '</div></div></div></div>';
 $document = '<a href="'.$data.'" class="btn btn-outline-dark btn-sm btn-block" download="'.$doc->filename.'">'.$name.' <i class="fas fa-file-download"></i></a>';
 }
 } else {
-$document = '<button class="btn btn-link btn-sm " disabled>'.$name.' <i class="fas fa-file-download"></i></button>';
+$document = '<button class="btn btn-link" disabled>'.$name.' <i class="fas fa-file-download"></i></button>';
 }
 
 return $document;
