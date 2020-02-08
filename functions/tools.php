@@ -429,9 +429,11 @@ document.getElementById("pdfjsframe-'.$filename.'").contentWindow.PDFViewerAppli
 </script>';
 $document .= '</div></div></div></div>';
 } else {
-$document = '<a href="'.$data.'" class="btn btn btn-outline-dark btn-sm btn-block" download="'.$doc->filename.'">'.$name.' <i class="fas fa-file-download"></i></a>';
+$document = '<a href="'.$data.'" class="btn btn-outline-dark btn-sm btn-block" download="'.$doc->filename.'">'.$name.' <i class="fas fa-file-download"></i></a>';
 }
-} else { $document = "no document"; }
+} else {
+$document = '<button class="btn btn-link btn-sm " disabled>'.$name.' <i class="fas fa-file-download"></i></button>';
+}
 
 return $document;
 }
@@ -1045,23 +1047,26 @@ $paymentmethods .='</div></li>';
 $paymentmethods .= "</ul><div class='card-body'>";
 $paymentmethods .= "<div id='error-message' role='alert'><!-- a Stripe Message will be inserted here. --></div>";
 
+if (isset($object)) {
 $paymentmethods .= '<div class="custom-control custom-checkbox">
   <input type="checkbox" class="custom-control-input" id="checkBox1" ">
-  <label class="custom-control-label" for="checkBox1">'.__( 'I read and accept the <a href="#" data-toggle="modal" data-target="#cgvumention">Terms & Conditions</a>.', 'doliconnect').'</label>
+  <label class="custom-control-label" for="checkBox1">'.sprintf( __( 'I read and accept the %s', 'doliconnect'), dolidocdownload('', '', '', __( 'Terms & Conditions', 'doliconnect')));.'</label>
 </div>';
 $paymentmethods .= "<script>";
-if (isset($object)) {
 $paymentmethods .= "jQuery(document).ready(function() { 
 jQuery('#checkBox1').click(function() {
 jQuery('input[name=paymentmode]').attr('disabled', !jQuery('input[name=paymentmode]').attr('disabled'));
 }); 
 });"; 
+$paymentmethods .= "</script>"; 
 } else {
+$paymentmethods .= sprintf( __( 'Read the %s', 'doliconnect'), dolidocdownload('', '', '', __( 'Terms & Conditions', 'doliconnect')));
+$paymentmethods .= "<script>";
 $paymentmethods .= "jQuery(document).ready(function() { 
 jQuery('input[name=paymentmode]').attr('disabled', !jQuery('input[name=paymentmode]').attr('disabled'));
 });"; 
-}
 $paymentmethods .= "</script>"; 
+}
 
 $paymentmethods .= "</div><div class='card-footer text-muted'>";
 $paymentmethods .= "<small><div class='float-left'>";
