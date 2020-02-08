@@ -1050,7 +1050,7 @@ $paymentmethods .= "<div id='error-message' role='alert'><!-- a Stripe Message w
 if (isset($object)) {
 $paymentmethods .= '<div class="custom-control custom-checkbox">
   <input type="checkbox" class="custom-control-input" id="checkBox1" ">
-  <label class="custom-control-label" for="checkBox1">'.sprintf( __( 'I read and accept the %s', 'doliconnect'), dolidocdownload('', '', '', __( 'Terms & Conditions', 'doliconnect')));.'</label>
+  <label class="custom-control-label" for="checkBox1">'.sprintf( __( 'I read and accept the %s', 'doliconnect'), dolidocdownload('', '', '', __( 'Terms & Conditions', 'doliconnect'))).'</label>
 </div>';
 $paymentmethods .= "<script>";
 $paymentmethods .= "jQuery(document).ready(function() { 
