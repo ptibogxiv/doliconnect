@@ -168,7 +168,7 @@ $dolibarr = callDoliApi("GET", "/status", null, 5 * MINUTE_IN_SECONDS);
             <tr>
                 <th style="width:150px;"><label for="license_key_doliconnect-pro">License Doliconnect</label></th>
                 <td ><input class="regular-text" type="text" id="license_key_doliconnect-pro" name="license_key_doliconnect-pro" value="<?php if ( is_plugin_active( 'doliconnect-pro/doliconnect-pro.php' ) ) {
-echo get_option('license_key_doliconnect-pro');?> " <?php } else { echo "";?>" disabled <?php } ?> > <b>PRO</b> 
+echo get_site_option('license_key_doliconnect-pro');?> " <?php } else { echo "";?>" disabled <?php } ?> > <b>PRO</b> 
                 </td>
             </tr>
                       
