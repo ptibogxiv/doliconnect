@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
 "POT-Creation-Date: 2020-01-31 17:54+0100\n"
-"PO-Revision-Date: 2020-01-31 17:54+0100\n"
+"PO-Revision-Date: 2020-02-08 12:02+0100\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: es\n"
@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.2.4\n"
+"X-Generator: Poedit 2.3\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-Flags-xgettext: --add-comments=translators:\n"
 "X-Poedit-WPHeader: doliconnect.php\n"
@@ -69,7 +69,6 @@ msgid "Add links to your social media profiles."
 msgstr "Añade enlaces a tus perfiles de redes sociales."
 
 #: blocks/gdpr/block.js:13
-#, fuzzy
 msgid "Privacy Data Request Form"
 msgstr "Formulario de solicitud de datos de privacidad"
 
@@ -78,30 +77,24 @@ msgid "form"
 msgstr "formulario"
 
 #: blocks/gdpr/block.js:16
-#, fuzzy
 msgid "data"
 msgstr ""
 "No hay una cuenta para estos datos de inicio de sesión o el correo "
 "electrónico y / o la contraseña no son correctos."
 
 #: blocks/gdpr/block.js:16
-#, fuzzy
-#| msgid "Type of request"
 msgid "request"
 msgstr "Su solicitud no tiene éxito"
 
 #: blocks/gdpr/block.js:48
-#, fuzzy
 msgid "Privacy Data request form"
 msgstr "Formulario de solicitud de datos de privacidad"
 
 #: blocks/gdpr/block.js:58
-#, fuzzy
 msgid "This block displays a Privacy Data Request Form."
 msgstr "Este bloque muestra un formulario de solicitud de datos de privacidad."
 
 #: blocks/gdpr/block.js:68
-#, fuzzy
 msgid ""
 "By default, the form shows both export and remove Data Request options (it’s "
 "up to the visitor). You can set it either to \"both\", \"export\" or \"remove"
@@ -133,7 +126,6 @@ msgid "Membership"
 msgstr "Membresía"
 
 #: blocks/membership/block.js:10
-#, fuzzy
 msgid "A block for displaying membership."
 msgstr "Un bloque para mostrar la pertenencia."
 
@@ -173,13 +165,10 @@ msgid "Contact us"
 msgstr "Contáctenos"
 
 #: blocks/product/block.js:11 blocks/profile/block.js:12
-#, fuzzy
-#| msgid "No product"
 msgid "Product"
 msgstr "Ningún producto"
 
 #: blocks/product/block.js:12
-#, fuzzy
 msgid "A block for displaying dolibarr product."
 msgstr "Un bloque para mostrar el producto dolibarr."
 
@@ -192,14 +181,10 @@ msgid "Add to cart"
 msgstr "Añadir a la cesta"
 
 #: blocks/product/block.js:71
-#, fuzzy
-#| msgid "Validation"
 msgid "Hide duration"
 msgstr "Validación"
 
 #: blocks/product/block.js:78
-#, fuzzy
-#| msgid "Limited stock"
 msgid "Hide stock"
 msgstr "Stock limitado"
 
@@ -222,7 +207,6 @@ msgid "No product"
 msgstr "Ningún producto"
 
 #: blocks/profile/block.js:13
-#, fuzzy
 msgid "A custom block for displaying dolibarr product."
 msgstr "Un bloque personalizado para mostrar el producto dolibarr."
 
@@ -243,8 +227,6 @@ msgid "LinkedIn URL"
 msgstr "URL de LinkedIn"
 
 #: blocks/profile/block.js:147
-#, fuzzy
-#| msgid "Address"
 msgid "Email Address"
 msgstr "Tu correo electrónico"
 
@@ -257,7 +239,6 @@ msgid "Subtitle"
 msgstr "Subtítulo"
 
 #: blocks/profile/block.js:198
-#, fuzzy
 msgid "Write a brief desc"
 msgstr "Escribe un breve desc"
 
@@ -336,8 +317,6 @@ msgid "Modify the password"
 msgstr "Modificar la contraseña"
 
 #: dashboard/dashboard.php:500 dashboard/templates.php:552
-#, fuzzy
-#| msgid "Your settings have been updated."
 msgid "Your password have been updated."
 msgstr "Sus configuraciones han sido actualizadas."
 
@@ -585,8 +564,6 @@ msgid "Contracts tracking"
 msgstr "Seguimiento de contratos"
 
 #: dashboard/dashboard.php:1123
-#, fuzzy
-#| msgid "No contract"
 msgid "contract"
 msgstr "Sin contrato"
 
@@ -898,7 +875,6 @@ msgid "Missing request ID."
 msgstr "Falta el ID de la solicitud."
 
 #: dashboard/templates.php:169
-#, fuzzy
 msgid "Missing confirm key."
 msgstr "Falta la clave de confirmación."
 
@@ -1038,12 +1014,10 @@ msgstr ""
 "electrónico y / o la contraseña no son correctos."
 
 #: dashboard/templates.php:554
-#, fuzzy
 msgid "The security key is expired!"
 msgstr "¡La clave de seguridad ha caducado!"
 
 #: dashboard/templates.php:556
-#, fuzzy
 msgid "The security key is invalid!"
 msgstr "¡La clave de seguridad no es válida!"
 
@@ -1137,8 +1111,6 @@ msgid "Your payment has been registered"
 msgstr "Su pago ha sido registrado"
 
 #: dashboard/templates.php:1226
-#, fuzzy
-#| msgid "See your receipt"
 msgid "View my receipt"
 msgstr "Ver su recibo"
 
@@ -1159,7 +1131,6 @@ msgid "update"
 msgstr "actualizar"
 
 #: dashboard/templates.php:1262
-#, fuzzy
 msgid "unchangeable, please contact us"
 msgstr "inmutable, por favor contáctenos"
 
@@ -1333,7 +1304,6 @@ msgstr[0] "%s artículo"
 msgstr[1] "%s artículos"
 
 #: functions/product.php:322
-#, fuzzy
 msgid "unchangeable"
 msgstr "Inmutable"
 
@@ -1544,7 +1514,6 @@ msgid "Congratulations!"
 msgstr "¡Enhorabuena!"
 
 #: functions/tools.php:535
-#, fuzzy
 msgid "Be carefull"
 msgstr "Tenga cuidado"
 
@@ -1617,7 +1586,6 @@ msgid "Stripe's in sandbox mode"
 msgstr "Stripe está en modo sandbox"
 
 #: functions/tools.php:794
-#, fuzzy
 msgid "Link to Test card numbers"
 msgstr "Enlace a números de tarjetas de prueba"
 
@@ -1633,9 +1601,9 @@ msgid "end of month"
 msgstr "Diario Oficial de la Unión Europea"
 
 #: functions/tools.php:804
-#, fuzzy, php-format
+#, php-format
 msgid "the %s of month"
-msgstr "el porcentaje del mes"
+msgstr "%s del mes"
 
 #: functions/tools.php:840
 msgid "Account"
@@ -1650,8 +1618,6 @@ msgid "Favourite"
 msgstr "Favorito"
 
 #: functions/tools.php:874
-#, fuzzy
-#| msgid "No payment method"
 msgid "No registered payment method"
 msgstr "Sin método de pago"
 
@@ -1664,15 +1630,7 @@ msgid "Card's owner"
 msgstr "Propietario de la tarjeta"
 
 #: functions/tools.php:889
-#, fuzzy, php-format
-#| msgid ""
-#| "By providing your card and confirming this form, you are authorizing %s "
-#| "and Stripe, our payment service provider, to send instructions to the "
-#| "financial institution that issued your card to take payments from your "
-#| "card account in accordance with those instructions. You are entitled to a "
-#| "refund from your financial institution under the terms and conditions of "
-#| "your agreement with your financial institution. A refund must be claimed "
-#| "within 90 days starting from the date on which your card was debited."
+#, php-format
 msgid ""
 "By providing your card and confirming this form, you are authorizing %s and "
 "Stripe, our payment service provider, to send instructions to the financial "
@@ -1713,15 +1671,7 @@ msgid "Bank's owner"
 msgstr "Propietario del banco"
 
 #: functions/tools.php:937
-#, fuzzy, php-format
-#| msgid ""
-#| "By providing your IBAN and confirming this form, you are authorizing %s "
-#| "and Stripe, our payment service provider, to send instructions to your "
-#| "bank to debit your account and your bank to debit your account in "
-#| "accordance with those instructions. You are entitled to a refund from "
-#| "your bank under the terms and conditions of your agreement with your "
-#| "bank. A refund must be claimed within 8 weeks starting from the date on "
-#| "which your account was debited."
+#, php-format
 msgid ""
 "By providing your IBAN and confirming this form, you are authorizing %s and "
 "Stripe, our payment service provider, to send instructions to your bank to "
@@ -1799,8 +1749,6 @@ msgid "Erase your data"
 msgstr "Borra tus datos"
 
 #: functions/tools.php:1734
-#, fuzzy
-#| msgid "You will receive an email with a secure link to your data"
 msgid "You will receive an email with a secure link to confirm the deletion"
 msgstr "Recibirá un correo electrónico con un enlace seguro a sus datos"
 

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
 "POT-Creation-Date: 2020-01-31 17:55+0100\n"
-"PO-Revision-Date: 2020-01-31 17:55+0100\n"
+"PO-Revision-Date: 2020-02-08 12:05+0100\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: en_GB\n"
@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.2.4\n"
+"X-Generator: Poedit 2.3\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-Flags-xgettext: --add-comments=translators:\n"
 "X-Poedit-WPHeader: doliconnect.php\n"
@@ -179,8 +179,6 @@ msgid "Modify the password"
 msgstr "Modify the password"
 
 #: dashboard/dashboard.php:500 dashboard/templates.php:552
-#, fuzzy
-#| msgid "Your settings have been updated."
 msgid "Your password have been updated."
 msgstr "Your settings have been updated."
 
@@ -315,8 +313,6 @@ msgid "Payment method"
 msgstr "Payment method"
 
 #: dashboard/dashboard.php:786 functions/tools.php:798
-#, fuzzy
-#| msgid "Payment"
 msgid "Payment term"
 msgstr "Payment"
 
@@ -737,12 +733,10 @@ msgstr ""
 "client area."
 
 #: dashboard/templates.php:165
-#, fuzzy
 msgid "Missing request ID."
 msgstr "Missing request ID."
 
 #: dashboard/templates.php:169
-#, fuzzy
 msgid "Missing confirm key."
 msgstr "Missing confirm key."
 
@@ -875,12 +869,10 @@ msgstr ""
 "are not correct."
 
 #: dashboard/templates.php:554
-#, fuzzy
 msgid "The security key is expired!"
 msgstr "The security key is expired!"
 
 #: dashboard/templates.php:556
-#, fuzzy
 msgid "The security key is invalid!"
 msgstr "The security key is invalid!"
 
@@ -922,7 +914,6 @@ msgid "Your message is successful send!"
 msgstr "Your message is successful send!"
 
 #: dashboard/templates.php:716
-#, fuzzy
 msgid "Please try again!"
 msgstr "Por favor tente novamente."
 
@@ -1164,7 +1155,6 @@ msgstr[0] "%s item"
 msgstr[1] "%s items"
 
 #: functions/product.php:322
-#, fuzzy
 msgid "unchangeable"
 msgstr "unchangeable"
 
@@ -1374,7 +1364,6 @@ msgid "Congratulations!"
 msgstr "Congratulations!"
 
 #: functions/tools.php:535
-#, fuzzy
 msgid "Be carefull"
 msgstr "Be carefull"
 
@@ -1447,7 +1436,6 @@ msgid "Stripe's in sandbox mode"
 msgstr "Stripe's in sandbox mode"
 
 #: functions/tools.php:794
-#, fuzzy
 msgid "Link to Test card numbers"
 msgstr "Link to Test card numbers"
 
@@ -1459,12 +1447,11 @@ msgstr[0] "%s день"
 msgstr[1] "%s дней"
 
 #: functions/tools.php:801
-#, fuzzy
 msgid "end of month"
 msgstr "end of month"
 
 #: functions/tools.php:804
-#, fuzzy, php-format
+#, php-format
 msgid "the %s of month"
 msgstr "the %s of month"
 
@@ -1481,8 +1468,6 @@ msgid "Favourite"
 msgstr "Favourite"
 
 #: functions/tools.php:874
-#, fuzzy
-#| msgid "No payment method"
 msgid "No registered payment method"
 msgstr "No payment method"
 
@@ -1612,8 +1597,6 @@ msgid "Erase your data"
 msgstr "Erase your data"
 
 #: functions/tools.php:1734
-#, fuzzy
-#| msgid "You will receive an email with a secure link to your data"
 msgid "You will receive an email with a secure link to confirm the deletion"
 msgstr "You will receive an email with a secure link to your data"
 

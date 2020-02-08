@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
 "POT-Creation-Date: 2020-01-31 17:55+0100\n"
-"PO-Revision-Date: 2020-01-31 17:55+0100\n"
+"PO-Revision-Date: 2020-02-08 12:04+0100\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: de_DE\n"
@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.2.4\n"
+"X-Generator: Poedit 2.3\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-Flags-xgettext: --add-comments=translators:\n"
 "X-Poedit-WPHeader: doliconnect.php\n"
@@ -53,12 +53,10 @@ msgid "- Select -"
 msgstr "- Auswählen -"
 
 #: blocks/admin/block.js:11
-#, fuzzy
 msgid "List of admins"
 msgstr "Liste der Administratoren"
 
 #: blocks/admin/block.js:12
-#, fuzzy
 msgid "A block for displaying list of admins."
 msgstr "Ein Block zum Anzeigen der Liste der Administratoren."
 
@@ -69,12 +67,10 @@ msgstr "Social Media Links"
 
 #: blocks/admin/block.js:29 blocks/product/block.js:54
 #: blocks/profile/block.js:112
-#, fuzzy
 msgid "Add links to your social media profiles."
 msgstr "Fügen Sie Links zu Ihren Social-Media-Profilen hinzu."
 
 #: blocks/gdpr/block.js:13
-#, fuzzy
 msgid "Privacy Data Request Form"
 msgstr "Formular für die Datenanforderung"
 
@@ -91,18 +87,15 @@ msgid "request"
 msgstr "Anfordern"
 
 #: blocks/gdpr/block.js:48
-#, fuzzy
 msgid "Privacy Data request form"
 msgstr "Datenschutzanfrageformular"
 
 #: blocks/gdpr/block.js:58
-#, fuzzy
 msgid "This block displays a Privacy Data Request Form."
 msgstr ""
 "Dieser Block zeigt ein Formular für die Anforderung von Datenschutzdaten an."
 
 #: blocks/gdpr/block.js:68
-#, fuzzy
 msgid ""
 "By default, the form shows both export and remove Data Request options (it’s "
 "up to the visitor). You can set it either to \"both\", \"export\" or \"remove"
@@ -117,17 +110,14 @@ msgid "Request type:"
 msgstr "Anforderungstyp:"
 
 #: blocks/gdpr/block.js:92 functions/widgets.php:525
-#, fuzzy
 msgid "Both Export and Remove"
 msgstr "Sowohl exportieren als auch entfernen"
 
 #: blocks/gdpr/block.js:93 functions/widgets.php:526
-#, fuzzy
 msgid "Data Export form only"
 msgstr "Nur Datenexportformular"
 
 #: blocks/gdpr/block.js:94 functions/widgets.php:527
-#, fuzzy
 msgid "Data Remove form only"
 msgstr "Nur Formular entfernen"
 
@@ -137,7 +127,6 @@ msgid "Membership"
 msgstr "Mitgliedschaft"
 
 #: blocks/membership/block.js:10
-#, fuzzy
 msgid "A block for displaying membership."
 msgstr "Ein Block zum Anzeigen der Mitgliedschaft."
 
@@ -181,7 +170,6 @@ msgid "Product"
 msgstr "Produkt"
 
 #: blocks/product/block.js:12
-#, fuzzy
 msgid "A block for displaying dolibarr product."
 msgstr "Ein Block zur Anzeige des dolibarr-Produkts."
 
@@ -194,14 +182,10 @@ msgid "Add to cart"
 msgstr "In den Warenkorb"
 
 #: blocks/product/block.js:71
-#, fuzzy
-#| msgid "Duration"
 msgid "Hide duration"
 msgstr "Dauer"
 
 #: blocks/product/block.js:78
-#, fuzzy
-#| msgid "Limited stock"
 msgid "Hide stock"
 msgstr "Begrenzter Bestand verfügbar"
 
@@ -224,7 +208,6 @@ msgid "No product"
 msgstr "Kein Produkt"
 
 #: blocks/profile/block.js:13
-#, fuzzy
 msgid "A custom block for displaying dolibarr product."
 msgstr "Ein benutzerdefinierter Block zum Anzeigen des dolibarr-Produkts."
 
@@ -245,8 +228,6 @@ msgid "LinkedIn URL"
 msgstr "LinkedIn URL"
 
 #: blocks/profile/block.js:147
-#, fuzzy
-#| msgid "Address"
 msgid "Email Address"
 msgstr "Kein Konto scheint mit dieser E-Mail-Adresse verknüpft zu sein"
 
@@ -259,7 +240,6 @@ msgid "Subtitle"
 msgstr "Untertitel"
 
 #: blocks/profile/block.js:198
-#, fuzzy
 msgid "Write a brief desc"
 msgstr "Schreiben Sie einen kurzen desc"
 
@@ -304,7 +284,6 @@ msgid "Delete your picture"
 msgstr "Löschen Sie Ihr Bild"
 
 #: dashboard/dashboard.php:289
-#, fuzzy
 msgid "Manage address book"
 msgstr "Adressbuch verwalten"
 
@@ -322,8 +301,6 @@ msgid "Delete"
 msgstr "Löschen"
 
 #: dashboard/dashboard.php:415
-#, fuzzy
-#| msgid "Contact us"
 msgid "No contact"
 msgstr "Kontaktieren Sie uns"
 
@@ -337,14 +314,10 @@ msgid "Add"
 msgstr "Hinzufügen"
 
 #: dashboard/dashboard.php:472
-#, fuzzy
-#| msgid "New password"
 msgid "Modify the password"
 msgstr "Neues Passwort"
 
 #: dashboard/dashboard.php:500 dashboard/templates.php:552
-#, fuzzy
-#| msgid "Your settings have been updated."
 msgid "Your password have been updated."
 msgstr "Ihre Einstellungen wurden aktualisiert."
 
@@ -371,13 +344,10 @@ msgid "Your password will be synchronized with your Dolibarr account"
 msgstr "Ihr Passwort wird mit Ihrem Dolibarr-Konto synchronisiert"
 
 #: dashboard/dashboard.php:518
-#, fuzzy
 msgid "Password cannot be modified in demo mode"
 msgstr "Passwort kann im Demomodus nicht geändert werden"
 
 #: dashboard/dashboard.php:520 dashboard/dashboard.php:521
-#, fuzzy
-#| msgid "Confirm your new password"
 msgid "Confirm your current password"
 msgstr "Bitte bestätigen Sie Ihr neues Passwort"
 
@@ -394,38 +364,26 @@ msgid "This field is required."
 msgstr "Dies ist ein Pflichtfeld."
 
 #: dashboard/dashboard.php:537
-#, fuzzy
-#| msgid "Confirm your new password"
 msgid "Confirme your new password"
 msgstr "Bitte bestätigen Sie Ihr neues Passwort"
 
 #: dashboard/dashboard.php:575
-#, fuzzy
-#| msgid "Payment methods"
 msgid "Manage payment methods"
 msgstr "Zahlungsarten"
 
 #: dashboard/dashboard.php:591
-#, fuzzy
-#| msgid "Change your payment mode"
 msgid "You changed your default payment method"
 msgstr "Ändern Sie Ihren Zahlungsmodus"
 
 #: dashboard/dashboard.php:596
-#, fuzzy
-#| msgid "Save this payment method"
 msgid "You deleted a payment method"
 msgstr "Diese Zahlungsmethode speichern"
 
 #: dashboard/dashboard.php:605
-#, fuzzy
-#| msgid "Save this payment method"
 msgid "You added a new payment method"
 msgstr "Diese Zahlungsmethode speichern"
 
 #: dashboard/dashboard.php:624
-#, fuzzy
-#| msgid "Orders tracking"
 msgid "Propals tracking"
 msgstr "Bestellungen"
 
@@ -473,8 +431,6 @@ msgid "Summary"
 msgstr "Zusammenfassung"
 
 #: dashboard/dashboard.php:729
-#, fuzzy
-#| msgid "No propal"
 msgid "No proposal"
 msgstr "Kein Propal"
 
@@ -501,13 +457,13 @@ msgstr "Zahlungsziel"
 
 #: dashboard/dashboard.php:802 dashboard/templates.php:1031
 #: dashboard/templates.php:1205
-#, fuzzy, php-format
+#, php-format
 msgid ""
 "Please send your cheque in the amount of <b>%1$s</b> with reference <b>%2$s</"
 "b> to <b>%3$s</b> at the following address"
 msgstr ""
-"Bitte senden Sie Ihren Scheck in Höhe von <b>%1 s</b> mit der Referenz <b>%2 "
-"s</b> an <b>%3 s</b> unter der folgenden Adresse"
+"Bitte senden Sie Ihren Scheck in Höhe von <b>%1$s</b> mit der Referenz <b>"
+"%2$s</b> an <b>%3$s</b> unter der folgenden Adresse"
 
 #: dashboard/dashboard.php:803 dashboard/dashboard.php:812
 msgid "Change your payment mode"
@@ -515,17 +471,16 @@ msgstr "Ändern Sie Ihren Zahlungsmodus"
 
 #: dashboard/dashboard.php:808 dashboard/templates.php:1040
 #: dashboard/templates.php:1211
-#, fuzzy, php-format
+#, php-format
 msgid ""
 "Please send your transfert in the amount of <b>%1$s</b> with reference <b>"
 "%2$s</b> at the following account"
 msgstr ""
-"Bitte senden Sie Ihre Überweisung in Höhe von <b>%1 s</b> mit Referenz <b>%2 "
-"s</b> auf dem folgenden Konto"
+"Bitte senden Sie Ihre Überweisung in Höhe von <b>%1$s</b> mit Referenz <b>"
+"%2$s</b> auf dem folgenden Konto"
 
 #: dashboard/dashboard.php:809 dashboard/templates.php:1041
 #: dashboard/templates.php:1212
-#, fuzzy
 msgid "Bank"
 msgstr "Wie auf Ihrem Bankkonto"
 
@@ -598,8 +553,6 @@ msgid "Parcel"
 msgstr "Paket"
 
 #: dashboard/dashboard.php:978
-#, fuzzy
-#| msgid "In progress"
 msgid "Packaging in progress"
 msgstr "In Arbeit"
 
@@ -608,14 +561,10 @@ msgid "No order"
 msgstr "Keine Sortierung"
 
 #: dashboard/dashboard.php:1070
-#, fuzzy
-#| msgid "Orders tracking"
 msgid "Contracts tracking"
 msgstr "Bestellungen"
 
 #: dashboard/dashboard.php:1123
-#, fuzzy
-#| msgid "No contract"
 msgid "contract"
 msgstr "Keine Vertragsbindung"
 
@@ -624,8 +573,6 @@ msgid "No contract"
 msgstr "Keine Vertragsbindung"
 
 #: dashboard/dashboard.php:1216
-#, fuzzy
-#| msgid "Consumptions monitoring"
 msgid "Donations tracking"
 msgstr "Verbrauchs Überwachung"
 
@@ -638,7 +585,6 @@ msgid "Donate"
 msgstr "Spenden"
 
 #: dashboard/dashboard.php:1313
-#, fuzzy
 msgid "No donation"
 msgstr "Keine Spende"
 
@@ -667,8 +613,6 @@ msgid "Waiting validation"
 msgstr "Warte Validierung"
 
 #: dashboard/dashboard.php:1385
-#, fuzzy
-#| msgid "End of membership"
 msgid "No membership"
 msgstr "Mitgliedschaft"
 
@@ -705,8 +649,6 @@ msgid "Renew my subscription"
 msgstr "Mein Abonnement erneuern"
 
 #: dashboard/dashboard.php:1412
-#, fuzzy
-#| msgid "Pay my subscription"
 msgid "Modify my subscription"
 msgstr "Mein Abonnement bezahlen"
 
@@ -719,7 +661,6 @@ msgid "Reactivate my subscription"
 msgstr "Mein Abonnement reaktivieren"
 
 #: dashboard/dashboard.php:1422
-#, fuzzy
 msgid "Your request has been registered. You will be notified at validation."
 msgstr ""
 "Ihre Anfrage wurde registriert. Sie werden bei der Validierung "
@@ -747,23 +688,18 @@ msgid "Next billing date"
 msgstr "Nächsten Abrechnungstermin"
 
 #: dashboard/dashboard.php:1516
-#, fuzzy
-#| msgid "No subscription"
 msgid "No consumption"
 msgstr "Verbrauchs Überwachung"
 
 #: dashboard/dashboard.php:1537
-#, fuzzy
 msgid "Manage linked members"
 msgstr "Verwalten verknüpfter Mitglieder"
 
 #: dashboard/dashboard.php:1585
-#, fuzzy
 msgid "New linked member"
 msgstr "Neues verknüpftes Mitglied"
 
 #: dashboard/dashboard.php:1587
-#, fuzzy
 msgid "Please contact us to link a pre-existing member"
 msgstr ""
 "Bitte kontaktieren Sie uns, um ein bereits bestehendes Mitglied zu verlinken"
@@ -773,7 +709,6 @@ msgid "Unlink"
 msgstr "Trennen"
 
 #: dashboard/dashboard.php:1602
-#, fuzzy
 msgid "No linked member"
 msgstr "Kein verknüpftes Mitglied"
 
@@ -786,8 +721,6 @@ msgid "Help"
 msgstr "Hilfe"
 
 #: dashboard/dashboard.php:1668
-#, fuzzy
-#| msgid "Your membership has been updated."
 msgid "Your message has been send."
 msgstr "Ihre Mitgliedschaft wurde aktualisiert."
 
@@ -881,12 +814,10 @@ msgid "No ticket"
 msgstr "Keine Ticket"
 
 #: dashboard/dashboard.php:1889
-#, fuzzy
 msgid "Settings & security"
 msgstr "Einstellungen & Sicherheit"
 
 #: dashboard/dashboard.php:1937
-#, fuzzy
 msgid "Receive a email notification at each connection"
 msgstr "Erhalten einer E-Mail-Benachrichtigung bei jeder Verbindung"
 
@@ -923,8 +854,6 @@ msgid "Home"
 msgstr "Startseite"
 
 #: dashboard/templates.php:59
-#, fuzzy
-#| msgid "An error is occured. Please contact us."
 msgid "This account is closed. Please contact us for reopen it."
 msgstr "Ein Fehler ist aufgetreten. Bitte kontaktieren Sie uns."
 
@@ -946,16 +875,10 @@ msgid "Missing request ID."
 msgstr "Fehlende Anfrage ID."
 
 #: dashboard/templates.php:169
-#, fuzzy
 msgid "Missing confirm key."
 msgstr "Fehlender Bestätigungsschlüssel."
 
 #: dashboard/templates.php:206
-#, fuzzy
-#| msgid ""
-#| "This email address is already linked to an account. You can reactivate "
-#| "your account through this <A href='\"."
-#| "wp_lostpassword_url( get_permalink() ).\"' title='lost password'>form</A>."
 msgid ""
 "This email address is already linked to an account. You can reactivate your "
 "account through this <a href='\".wp_lostpassword_url( get_permalink() ).\"' "
@@ -966,7 +889,6 @@ msgstr ""
 "aktivieren.\"' title='lost password'>form</A>."
 
 #: dashboard/templates.php:213
-#, fuzzy
 msgid "Create this account is not permitted"
 msgstr "Erstellen dieses Kontos ist nicht zulässig"
 
@@ -1024,12 +946,10 @@ msgid "No account seems to be linked to this email address"
 msgstr "Kein Konto scheint mit dieser E-Mail-Adresse verknüpft zu sein"
 
 #: dashboard/templates.php:476
-#, fuzzy
 msgid "A valid email is need to reset your password"
 msgstr "Eine gültige E-Mail muss Ihr Kennwort zurücksetzen"
 
 #: dashboard/templates.php:479 dashboard/templates.php:497
-#, fuzzy
 msgid "Reset password is not permitted"
 msgstr "Zurücksetzen des Kennworts ist nicht zulässig"
 
@@ -1091,12 +1011,10 @@ msgstr ""
 "Passwort sind nicht korrekt."
 
 #: dashboard/templates.php:554
-#, fuzzy
 msgid "The security key is expired!"
 msgstr "Der Sicherheitsschlüssel ist abgelaufen!"
 
 #: dashboard/templates.php:556
-#, fuzzy
 msgid "The security key is invalid!"
 msgstr "Der Sicherheitsschlüssel ist ungültig!"
 
@@ -1126,7 +1044,6 @@ msgid "Password"
 msgstr "Passwort"
 
 #: dashboard/templates.php:659
-#, fuzzy
 msgid "Your request is unsuccessful"
 msgstr "Ihre Anfrage ist nicht erfolgreich"
 
@@ -1135,7 +1052,6 @@ msgid "Address"
 msgstr "Adresse"
 
 #: dashboard/templates.php:714
-#, fuzzy
 msgid "Your message is successful send!"
 msgstr "Ihre Nachricht ist erfolgreich senden!"
 
@@ -1148,7 +1064,6 @@ msgid "Complete name"
 msgstr "Vollständiger Name"
 
 #: dashboard/templates.php:742
-#, fuzzy
 msgid "Type of request"
 msgstr "Art der Anforderung"
 
@@ -1159,7 +1074,6 @@ msgstr ""
 "kontaktieren"
 
 #: dashboard/templates.php:998
-#, fuzzy
 msgid "Inactive module on Dolibarr"
 msgstr "Inaktives Modul auf Dolibarr"
 
@@ -1168,33 +1082,26 @@ msgid "Tax exemptions"
 msgstr "Steuer- ermäßigungen"
 
 #: dashboard/templates.php:1050
-#, fuzzy
 msgid "DonationArt200"
 msgstr "SpendeArt200"
 
 #: dashboard/templates.php:1054
-#, fuzzy
 msgid "DonationArt238"
 msgstr "SpendeArt238"
 
 #: dashboard/templates.php:1058
-#, fuzzy
 msgid "DonationArt835"
 msgstr "SpendeArt835"
 
 #: dashboard/templates.php:1061
-#, fuzzy
 msgid "You should't have tax exemptions"
 msgstr "Sie sollten keine Steuerbefreiungen haben"
 
 #: dashboard/templates.php:1141
-#, fuzzy
 msgid "Oops, Order's module is not available"
 msgstr "Oops, Modul des Ordens ist nicht verfügbar"
 
 #: dashboard/templates.php:1197
-#, fuzzy
-#| msgid "Your password has been changed"
 msgid "Your order has been registered"
 msgstr "Ihr Passwort wurde geändert"
 
@@ -1203,7 +1110,6 @@ msgid "Your payment has been registered"
 msgstr "Ihre Zahlung wurde registriert"
 
 #: dashboard/templates.php:1226
-#, fuzzy
 msgid "View my receipt"
 msgstr "Sehen Sie Ihre Quittung"
 
@@ -1224,7 +1130,6 @@ msgid "update"
 msgstr "aktualisieren"
 
 #: dashboard/templates.php:1262
-#, fuzzy
 msgid "unchangeable, please contact us"
 msgstr "unveränderlich, kontaktieren Sie uns bitte"
 
@@ -1233,12 +1138,11 @@ msgid "Customer's Address"
 msgstr "Kundenanschrift"
 
 #: dashboard/templates.php:1421
-#, fuzzy
 msgid "Same address that billing"
 msgstr "Gleiche Adresse wie die Abrechnung"
 
 #: dashboard/templates.php:1447
-#, fuzzy, php-format
+#, php-format
 msgid "Add shipping contact needs Dolibarr %s but your version is %s"
 msgstr ""
 "Registrieren von Zahlungsmethoden benötigt Dolibarr %s, aber Ihre Version "
@@ -1249,7 +1153,6 @@ msgid "Add a message"
 msgstr "Eine Nachricht hinzufügen"
 
 #: dashboard/templates.php:1455
-#, fuzzy
 msgid "Enter a message here that you want to send us about your order"
 msgstr ""
 "Geben Sie hier eine Nachricht ein, die Sie uns über Ihre Bestellung senden "
@@ -1296,7 +1199,6 @@ msgid "This is not a valid email address."
 msgstr "Ceci n'est pas une adresse email valide."
 
 #: functions/data-request.php:36
-#, fuzzy
 msgid "Security check failed, invalid human verification field."
 msgstr ""
 "Sicherheitsüberprüfung fehlgeschlagen, ungültiges menschliches "
@@ -1322,7 +1224,6 @@ msgstr ""
 "Sie den Administrator."
 
 #: functions/enqueues.php:8
-#, fuzzy
 msgid ""
 "Your enquiry have been submitted. Check your email to validate your data "
 "request."
@@ -1364,7 +1265,6 @@ msgid "hour"
 msgstr "Stunde"
 
 #: functions/product.php:119
-#, fuzzy
 msgid "You benefit from the rate"
 msgstr "Sie profitieren von der Rate"
 
@@ -1382,7 +1282,7 @@ msgid "Login"
 msgstr "Anmelden"
 
 #: functions/product.php:196
-#, fuzzy, php-format
+#, php-format
 msgid "you get %u %% discount"
 msgstr "Sie erhalten %u %% Rabatt"
 
@@ -1406,13 +1306,10 @@ msgstr[0] "%s Artikel"
 msgstr[1] "%s Artikel"
 
 #: functions/product.php:322
-#, fuzzy
 msgid "unchangeable"
 msgstr "Unveränderlich"
 
 #: functions/product.php:329
-#, fuzzy
-#| msgid "Discount"
 msgid "including Discount"
 msgstr "Rabatt"
 
@@ -1425,7 +1322,6 @@ msgid "Already paid"
 msgstr "Bereits bezahlt"
 
 #: functions/product.php:344
-#, fuzzy
 msgid "Remains to be paid"
 msgstr "Bleibt zu zahlen"
 
@@ -1438,12 +1334,10 @@ msgid "Apple Pay"
 msgstr "Apple Pay"
 
 #: functions/product.php:369
-#, fuzzy
 msgid "Pay in one clic"
 msgstr "Bezahlen Sie in einem clic"
 
 #: functions/product.php:381
-#, fuzzy
 msgid "Redirect to Paypal"
 msgstr "Umleitung zu Paypal"
 
@@ -1456,14 +1350,10 @@ msgid "Create a personnal account"
 msgstr "Persönliches Konto erstellen"
 
 #: functions/tools.php:59
-#, fuzzy
-#| msgid "Create a pro/supplier account"
 msgid "Create a enterprise / supplier account"
 msgstr "Erstellen eines Pro/Lieferantenkontos"
 
 #: functions/tools.php:64
-#, fuzzy
-#| msgid "Pro account"
 msgid "Type of account"
 msgstr "Pro-Konto"
 
@@ -1472,8 +1362,6 @@ msgid "Personnal account"
 msgstr "Persönliches Konto"
 
 #: functions/tools.php:71
-#, fuzzy
-#| msgid "Create an account"
 msgid "Entreprise account"
 msgstr "Konto erstellen"
 
@@ -1482,8 +1370,6 @@ msgid "Name of company"
 msgstr "Name des Unternehmens"
 
 #: functions/tools.php:115
-#, fuzzy
-#| msgid "Processing"
 msgid "Professional ID"
 msgstr "In Bearbeitung"
 
@@ -1492,7 +1378,6 @@ msgid "VAT number"
 msgstr "MwSt-Nummer"
 
 #: functions/tools.php:120
-#, fuzzy
 msgid "Civility"
 msgstr "Höflichkeit"
 
@@ -1525,7 +1410,6 @@ msgid "Nickname"
 msgstr "Spitzname"
 
 #: functions/tools.php:169
-#, fuzzy
 msgid "Title / Job"
 msgstr "Titel / Job"
 
@@ -1559,8 +1443,6 @@ msgid "Username"
 msgstr "Benutzername"
 
 #: functions/tools.php:316
-#, fuzzy
-#| msgid "Change your password"
 msgid "Choose your password"
 msgstr ""
 "Um Ihr Konto bei %s zu aktivieren und Ihr Passwort zu wählen, klicken Sie "
@@ -1571,10 +1453,6 @@ msgid "Confirm your password"
 msgstr "Bestätige dein Passwort"
 
 #: functions/tools.php:336 functions/tools.php:1040
-#, fuzzy
-#| msgid ""
-#| "I read and accept the <A href=\"#\" data-toggle=\"modal\" data-target="
-#| "\"#cgvumention\">Terms & Conditions</A>."
 msgid ""
 "I read and accept the <a href=\"#\" data-toggle=\"modal\" data-target="
 "\"#cgvumention\">Terms & Conditions</a>."
@@ -1587,10 +1465,6 @@ msgid "Terms & Conditions"
 msgstr "Allgemeine Geschäftsbedingungen"
 
 #: functions/tools.php:379
-#, fuzzy
-#| msgid ""
-#| "Oops, our servers are unreachable. Thank you for coming back in a few "
-#| "minutes."
 msgid ""
 "Oops, our servers are unreachable.<br>Thank you for coming back in a few "
 "minutes."
@@ -1603,12 +1477,10 @@ msgid "Error code"
 msgstr "Fehlercode"
 
 #: functions/tools.php:393
-#, fuzzy
 msgid "Connection notification"
 msgstr "Verbindungsbenachrichtigung"
 
 #: functions/tools.php:394
-#, fuzzy
 msgid ""
 "It appears that you have just logged on to our site the following IP address:"
 msgstr ""
@@ -1616,8 +1488,6 @@ msgstr ""
 "angemeldet haben:"
 
 #: functions/tools.php:394
-#, fuzzy
-#| msgid "If you have not made this request, please ignore this email."
 msgid ""
 "If you have not made this action, please change your password immediately."
 msgstr ""
@@ -1641,8 +1511,6 @@ msgid "Refresh"
 msgstr "Aktualisieren"
 
 #: functions/tools.php:515
-#, fuzzy
-#| msgid "Refresh"
 msgid "Refresh datas"
 msgstr "Aktualisieren"
 
@@ -1651,7 +1519,6 @@ msgid "Congratulations!"
 msgstr "Glückwunsch!"
 
 #: functions/tools.php:535
-#, fuzzy
 msgid "Be carefull"
 msgstr "Seien Sie vorsichtig"
 
@@ -1716,18 +1583,14 @@ msgid "minute"
 msgstr "Minute"
 
 #: functions/tools.php:731
-#, fuzzy
-#| msgid "Choose your new password"
 msgid "Choose your country or region"
 msgstr "Wählen Sie Ihr neues Passwort"
 
 #: functions/tools.php:794
-#, fuzzy
 msgid "Stripe's in sandbox mode"
 msgstr "Stripe es im Sandbox-Modus"
 
 #: functions/tools.php:794
-#, fuzzy
 msgid "Link to Test card numbers"
 msgstr "Link zu Testkartennummern"
 
@@ -1739,23 +1602,19 @@ msgstr[0] "%s Tag"
 msgstr[1] "%s Tage"
 
 #: functions/tools.php:801
-#, fuzzy
 msgid "end of month"
 msgstr "Ende des Monats"
 
 #: functions/tools.php:804
-#, fuzzy, php-format
+#, php-format
 msgid "the %s of month"
 msgstr "%s des Monats"
 
 #: functions/tools.php:840
-#, fuzzy
-#| msgid "Pro account"
 msgid "Account"
 msgstr "Erstellen eines Pro/Lieferantenkontos"
 
 #: functions/tools.php:843
-#, fuzzy
 msgid "Card"
 msgstr "Kredit- oder Debitkarte"
 
@@ -1764,8 +1623,6 @@ msgid "Favourite"
 msgstr "Favorit"
 
 #: functions/tools.php:874
-#, fuzzy
-#| msgid "Payment method"
 msgid "No registered payment method"
 msgstr "Zahlungsmethode"
 
@@ -1774,20 +1631,11 @@ msgid "Credit/debit card"
 msgstr "Kredit- oder Debitkarte"
 
 #: functions/tools.php:884
-#, fuzzy
 msgid "Card's owner"
 msgstr "Besitzer der Karte"
 
 #: functions/tools.php:889
-#, fuzzy, php-format
-#| msgid ""
-#| "By providing your IBAN and confirming this form, you are authorizing %s "
-#| "and Stripe, our payment service provider, to send instructions to your "
-#| "bank to debit your account and your bank to debit your account in "
-#| "accordance with those instructions. You are entitled to a refund from "
-#| "your bank under the terms and conditions of your agreement with your "
-#| "bank. A refund must be claimed within 8 weeks starting from the date on "
-#| "which your account was debited."
+#, php-format
 msgid ""
 "By providing your card and confirming this form, you are authorizing %s and "
 "Stripe, our payment service provider, to send instructions to the financial "
@@ -1805,7 +1653,6 @@ msgstr ""
 "ab dem Tag, an dem Ihr Konto belastet wurde, in Anspruch genommen werden."
 
 #: functions/tools.php:895 functions/tools.php:943
-#, fuzzy
 msgid "Not save"
 msgstr "Nicht sparen"
 
@@ -1815,32 +1662,19 @@ msgid "Save"
 msgstr "Speichern"
 
 #: functions/tools.php:916 functions/tools.php:964
-#, fuzzy
 msgid "Save as favourite"
 msgstr "Als Favorit gesetzt"
 
 #: functions/tools.php:929
-#, fuzzy
-#| msgid "Add bank account"
 msgid "Bank account"
 msgstr "Bankkonto hinzufügen"
 
 #: functions/tools.php:932 functions/tools.php:980
-#, fuzzy
-#| msgid "Bank transfer"
 msgid "Bank's owner"
 msgstr "Banküberweisung"
 
 #: functions/tools.php:937
-#, fuzzy, php-format
-#| msgid ""
-#| "By providing your IBAN and confirming this form, you are authorizing %s "
-#| "and Stripe, our payment service provider, to send instructions to your "
-#| "bank to debit your account and your bank to debit your account in "
-#| "accordance with those instructions. You are entitled to a refund from "
-#| "your bank under the terms and conditions of your agreement with your "
-#| "bank. A refund must be claimed within 8 weeks starting from the date on "
-#| "which your account was debited."
+#, php-format
 msgid ""
 "By providing your IBAN and confirming this form, you are authorizing %s and "
 "Stripe, our payment service provider, to send instructions to your bank to "
@@ -1865,7 +1699,6 @@ msgid "Transfer"
 msgstr "Transfer"
 
 #: functions/tools.php:998 functions/tools.php:1013
-#, fuzzy
 msgid "See your receipt"
 msgstr "Sehen Sie Ihre Quittung"
 
@@ -1878,7 +1711,6 @@ msgid "Cash"
 msgstr "Barzahlung"
 
 #: functions/tools.php:1027
-#, fuzzy
 msgid "Go to reception desk"
 msgstr "Zur Rezeption"
 
@@ -1891,19 +1723,14 @@ msgid "Export Personal Data"
 msgstr "Personenbezogene Daten exportieren"
 
 #: functions/tools.php:1690
-#, fuzzy
-#| msgid "Remove your personal data"
 msgid "Remove Personal Data"
 msgstr "Entfernen Sie Ihre persönlichen Daten"
 
 #: functions/tools.php:1691
-#, fuzzy
-#| msgid "All fields are required."
 msgid "Your email address (required)"
 msgstr "Alle Felder sind erforderlich."
 
 #: functions/tools.php:1692
-#, fuzzy
 msgid "Human verification (required):"
 msgstr "Menschliche Verifizierung (erforderlich):"
 
@@ -1920,14 +1747,10 @@ msgid "You will receive an email with a secure link to your data"
 msgstr "Sie erhalten eine E-Mail mit einem sicheren Link zu Ihren Daten"
 
 #: functions/tools.php:1734
-#, fuzzy
-#| msgid "Export your personal data"
 msgid "Erase your data"
 msgstr "Exportieren Sie Ihre persönlichen Daten"
 
 #: functions/tools.php:1734
-#, fuzzy
-#| msgid "You will receive an email with a secure link to your data"
 msgid "You will receive an email with a secure link to confirm the deletion"
 msgstr "Sie erhalten eine E-Mail mit einem sicheren Link zu Ihren Daten"
 
@@ -1944,7 +1767,6 @@ msgid "Validate the request"
 msgstr "Bestätigen Sie die Anfrage"
 
 #: functions/tools.php:1796
-#, fuzzy
 msgid "This plugin requires WordPress 4.9.6."
 msgstr "Dieses Plugin erfordert WordPress 4.9.6."
 
@@ -1982,12 +1804,10 @@ msgid "Choose language"
 msgstr "Sprache wählen"
 
 #: functions/widgets.php:515
-#, fuzzy
 msgid "Optional widget title:"
 msgstr "Optionaler Widget-Titel:"
 
 #: functions/widgets.php:519
-#, fuzzy
 msgid "Optional widget description:"
 msgstr "Optionale Widget-Beschreibung:"
 
@@ -1996,7 +1816,6 @@ msgid "https://www.ptibogxiv.net"
 msgstr "https://www.ptibogxiv.net/de"
 
 #. Description of the plugin/theme
-#, fuzzy
 msgid "Connect your Dolibarr (free ERP/CRM) to Wordpress."
 msgstr "Verbinden Sie Ihren Dolibarr (kostenloses ERP/CRM) mit Wordpress."
 
