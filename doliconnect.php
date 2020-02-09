@@ -347,6 +347,23 @@ $avatar = "<img src='$filename' ".$taille." alt='avatar-".$user->data->ID."'>";
 } else { 
 $avatar = "<img src='" . plugins_url( 'images/default.jpg', __FILE__ ) . "' ".$taille."  alt='avatar-default'>";
 }               
+} elseif ( !is_user_logged_in() && !empty(get_option('doliconnectrestrict')) ) {
+$taille=" class='card-img' ";
+    $custom_logo_id = get_theme_mod( 'custom_logo' );
+    if ( $custom_logo_id ) {
+        $custom_logo_attr = array(
+            'class' => 'card-img',
+        );
+
+        $image_alt = get_post_meta( $custom_logo_id, '_wp_attachment_image_alt', true );
+        if ( empty( $image_alt ) ) {
+            $custom_logo_attr['alt'] = get_bloginfo( 'name', 'display' );
+        }
+ 
+        $avatar = wp_get_attachment_image( $custom_logo_id, 'full', false, $custom_logo_attr );
+    } elseif ( is_customize_preview() ) {
+        $avatar = "<img src='" . plugins_url( 'images/default.jpg', __FILE__ ) . "' ".$taille."  alt='avatar-default'>";
+    }
 } else {
 $taille=" class='card-img' ";
 $avatar = "<img src='" . plugins_url( 'images/default.jpg', __FILE__ ) . "' ".$taille."  alt='avatar-default'>";
