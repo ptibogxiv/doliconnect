@@ -809,6 +809,7 @@ $paymentmethods = "<script src='https://js.stripe.com/v3/'></script>";
 $paymentmethods .= doliloaderscript('doliconnect-paymentmethodsform');
 
 if ( isset($listpaymentmethods->stripe) && in_array('payment_request_api', $listpaymentmethods->stripe->types) && !empty($module) && is_object($object) && isset($object->id) && empty($thirdparty->mode_reglement_id) ) {
+$paymentmethods .= "<div id='pra-error-message' role='alert'><!-- a Stripe Message will be inserted here. --></div>";
 $paymentmethods .= "<div id='payment-request-button'><!-- A Stripe Element will be inserted here. --></div>
 <div id='else' style='display: none' ><br><div style='display:inline-block;width:46%;float:left'><hr width='90%' /></div><div style='display:inline-block;width: 8%;text-align: center;vertical-align:90%'><small class='text-muted'>".__( 'or', 'doliconnect-pro' )."</small></div><div style='display:inline-block;width:46%;float:right' ><hr width='90%'/></div><br></div>";
 }
@@ -1047,7 +1048,6 @@ $paymentmethods .='</div></li>';
 }}
 
 $paymentmethods .= "</ul><div class='card-body'>";
-$paymentmethods .= "<div id='error-message' role='alert'><!-- a Stripe Message will be inserted here. --></div>";
 
 if (isset($object)) {
 $paymentmethods .= '<div class="custom-control custom-checkbox">
@@ -1137,9 +1137,7 @@ $paymentmethods .= "var elements = stripe.elements();";
 if (!empty($listpaymentmethods->stripe->client_secret)) { 
 $paymentmethods .= "var clientSecret = '".$listpaymentmethods->stripe->client_secret."';";
 }
-$paymentmethods .= "var displayError = document.getElementById('error-message');
-displayError.textContent = '';
-HideDivPM(this.id);
+$paymentmethods .= "HideDivPM(this.id);
           if(this.id == 'card'){
 var cardElement = elements.create('card', options);
 cardElement.mount('#card-element');
@@ -1490,8 +1488,8 @@ var idealholderName = document.getElementById('idealholder-name');
         })
 
 function ShowHideDivPM(pm) {
-              var displayError = document.getElementById( pm + '-error-message');
-              displayError.textContent = '';
+              var displayPmError = document.getElementById( pm + '-error-message');
+              displayPmError.textContent = '';
               HideDivPM(pm);
               jQuery('#cardPanel').collapse('hide');
               jQuery('#ibanPanel').collapse('hide');
@@ -1646,12 +1644,14 @@ form.submit();
 if ( isset($listpaymentmethods->stripe) && in_array('payment_request_api', $listpaymentmethods->stripe->types) && !empty($module) && is_object($object) && isset($object->id) && empty($thirdparty->mode_reglement_id) ) {
 $paymentmethods .= "
 var clientSecret = '".$listpaymentmethods->stripe->client_secret."';
-
+var displayError = document.getElementById('pra-error-message');
+displayError.textContent = '';
 stripe.retrievePaymentIntent(
   clientSecret
 ).then(function(result) {
 if (result.error) { 
 // Display error.message
+displayError.textContent = result.error.message;
 } else {
 // The setup has succeeded. Display PRA button.
 var paymentRequest = stripe.paymentRequest({
@@ -1690,7 +1690,7 @@ paymentRequest.on('paymentmethod', function(ev) {
   ).then(function(result) {
     if (result.error) {
       // Display error.message
-displayError.textContent = result.error.message;    
+displayError.textContent = result.error.message;  
     } else {
       // The setup has succeeded. Display a success message.
 jQuery('#DoliconnectLoadingModal').modal('show');
