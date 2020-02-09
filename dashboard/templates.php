@@ -30,7 +30,7 @@ date_default_timezone_set($tzstring);
 $ID = $current_user->ID;
 $time = current_time( 'timestamp', 1);
 
-print "<div class='row'><div class='col-xs-12 col-sm-12 col-md-3'><div class='row'><div class='col-3 col-xs-4 col-sm-4 col-md-12 col-xl-12'><div class='card shadow-sm' style='width: 100%'>";
+print "<div class='row'><div class='col-xs-12 col-sm-12 col-md-3'><div class='row'><div class='col-auto'><div class='card shadow-sm' style='width: 100%'>";
 print get_avatar($ID);
 
 if ( is_user_logged_in() && !defined("DOLIBUG") ) {
