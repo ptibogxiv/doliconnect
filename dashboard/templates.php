@@ -983,7 +983,7 @@ if ( !empty($product->barcode) ) { print " / ".__( 'Barcode', 'doliconnect').": 
 print "</small><p>".doliproduct($product, 'description')."</p></td>";
 
 if ( ! empty(doliconnectid('dolicart')) ) { 
-print "<td width='250px' style='border:0px'><center>";
+print "<td width='200px' style='border:0px'><center>";
 print doliproducttocart($product, esc_attr($_GET['category']), 1);
 print "</center></td>";
 }
