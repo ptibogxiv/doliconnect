@@ -1490,7 +1490,7 @@ var idealholderName = document.getElementById('idealholder-name');
         })
 
 function ShowHideDivPM(pm) {
-              var displayError = document.getElementById('error-message');
+              var displayError = document.getElementById( pm + '-error-message');
               displayError.textContent = '';
               HideDivPM(pm);
               jQuery('#cardPanel').collapse('hide');
