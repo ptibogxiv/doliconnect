@@ -860,6 +860,7 @@ $paymentmethods .= "<div class='d-none d-sm-block col-2 align-middle text-right'
 $paymentmethods .= "<span class='flag-icon flag-icon-".strtolower($method->country)."'>";
 $paymentmethods .= "</div></div></label></div></li>";
 $paymentmethods .= '<li id="'.$method->id.'Panel" class="list-group-item list-group-item-secondary panel-collapse collapse"><div class="panel-body">';
+$paymentmethods .= "<div id='".$method->id."-error-message' class='text-danger' role='alert'><!-- a Stripe Message will be inserted here. --></div>";
 $paymentmethods .= '<div class="btn-group btn-block" role="group" aria-label="actions buttons">';
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
 if ( $method->type == 'card' ) {
@@ -1556,8 +1557,8 @@ function PayCardPM(pm) {";
 if (!empty($listpaymentmethods->stripe->client_secret)) { 
 $paymentmethods .= "var clientSecret = '".$listpaymentmethods->stripe->client_secret."';";
 }
-$paymentmethods .= "var displayCardError = document.getElementById('error-message');
-displayError.textContent = '';
+$paymentmethods .= "var displayCardError = document.getElementById( pm + '-error-message');
+displayCardError.textContent = '';
   stripe.confirmCardPayment(
     clientSecret,
     {
@@ -1568,7 +1569,7 @@ displayError.textContent = '';
       // Display error.message
 jQuery('#DoliconnectLoadingModal').modal('hide');
 console.log('Error occured when adding card');
-displayError.textContent = result.error.message;    
+displayCardError.textContent = result.error.message;    
     } else {
       // The setup has succeeded. Display a success message.
 jQuery('#DoliconnectLoadingModal').modal('show');
@@ -1601,8 +1602,8 @@ function PaySepaDebitPM(pm) {";
 if (!empty($listpaymentmethods->stripe->client_secret)) { 
 $paymentmethods .= "var clientSecret = '".$listpaymentmethods->stripe->client_secret."';";
 }
-$paymentmethods .= "var displayError = document.getElementById('error-message');
-displayError.textContent = '';
+$paymentmethods .= "var displayIbanError = document.getElementById( pm + '-error-message');
+displayIbanError.textContent = '';
   stripe.confirmSepaDebitPayment(
     clientSecret,
     {
@@ -1613,7 +1614,7 @@ displayError.textContent = '';
       // Display error.message
 jQuery('#DoliconnectLoadingModal').modal('hide');
 console.log('Error occured when adding card');
-displayError.textContent = result.error.message;    
+displayIbanError.textContent = result.error.message;    
     } else {
       // The setup has succeeded. Display a success message.
 jQuery('#DoliconnectLoadingModal').modal('show');
