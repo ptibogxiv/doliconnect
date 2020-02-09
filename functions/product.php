@@ -63,7 +63,7 @@ $order = callDoliApi("GET", "/doliconnector/constante/MAIN_MODULE_COMMANDE", nul
 $enablestock = callDoliApi("GET", "/doliconnector/constante/MAIN_MODULE_STOCK", null, dolidelay('constante'));
 $stockservices = callDoliApi("GET", "/doliconnector/constante/STOCK_SUPPORTS_SERVICES", null, dolidelay('constante'));
 
-$button = "<div class='jumbotron'>";
+$button = "";
 
 if (doliconnector($current_user, 'fk_order') > 0) {
 $orderfo = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order'), null, 0);
@@ -107,24 +107,32 @@ $altdurvalue=60/$product->duration_value;
 }
 
 if ( callDoliApi("GET", "/doliconnector/constante/PRODUIT_MULTIPRICES", null, dolidelay('constante')) && !empty($product->multiprices_ttc) ) {
+$button .= '<table class="table table-striped"><tbody>';
 $lvl=doliconnector($current_user, 'price_level');
-$count=1;
+//$count=1;
 //$button .=$lvl;
 foreach ( $product->multiprices_ttc as $level => $price ) {
-if ( (empty(doliconnector($current_user, 'price_level')) && $level == 1 ) || doliconnector($current_user, 'price_level') == $level ) {
-$button .= '<h5 class="mb-1 text-right">'.__( 'Price', 'doliconnect').': '.doliprice( $price, $currency);
+$button .= '<tr>';   
+//if ( (empty(doliconnector($current_user, 'price_level')) && $level == 1 ) || doliconnector($current_user, 'price_level') == $level ) {
+$button .= '<td>'.__( 'Price', 'doliconnect').' '.$level.' - '.doliconst('PRODUIT_MULTIPRICES_LABEL'.$level).'</td>';
+$button .= '<td class="text-right">'.doliprice( $price, $currency).'</td>';
 if ( empty($time) ) { $button .=' '.doliduration($product); }
 $button .= '</h5>';
 if ( !empty($altdurvalue) ) { $button .= "<h6 class='mb-1 text-right'>soit ".doliprice( $altdurvalue*$price, $currency)." par ".__( 'hour', 'doliconnect')."</h6>"; } 
-$button .= '<small class="float-right">'.__( 'You benefit from the rate', 'doliconnect').' '.doliconst('PRODUIT_MULTIPRICES_LABEL'.$level).'</small>';
+//$button .= '<small class="float-right">'.__( 'You benefit from the rate', 'doliconnect').' '.doliconst('PRODUIT_MULTIPRICES_LABEL'.$level).'</small>';
+//}
+//$count++;
+$button .= '</tr>'; 
 }
-$count++; 
-}
-if (doliconnector($current_user, 'price_level') > 0) {
+if (!empty(doliconnector($current_user, 'price_level'))) {
 $level=doliconnector($current_user, 'price_level');
 $price_min_ttc=$product->multiprices_min->$level;
 $price_ttc=$product->multiprices->$level;
+} else {
+$level=1;
+$price_ttc=$product->multiprices->$level;
 }
+$button .= '</tbody></table>';
 } else {
 if ( !empty(callDoliApi("GET", "/doliconnector/constante/PRODUIT_CUSTOMER_PRICES", null, dolidelay('constante'))->value) && doliconnector($current_user, 'fk_soc') > 0 ) {
 $product2 = callDoliApi("GET", "/products/".$product->id."/selling_multiprices/per_customer?thirdparty_id=".doliconnector($current_user, 'fk_soc'), null, dolidelay('product'));
@@ -207,7 +215,7 @@ $button .= "<div class='input-group'><a class='btn btn-block btn-info' href='".d
 if ( !empty(doliconnector($current_user, 'remise_percent')) ) { $button .= "<small>".sprintf( esc_html__( 'you get %u %% discount', 'doliconnect'), doliconnector($current_user, 'remise_percent'))."</small>"; }
 $button .= "<input type='hidden' name='product_update[".$product->id."][price]' value='".$price_ttc."'></form>";
 $button .= '<div id="product-add-loading-'.$product->id.'" style="display:none">'.doliprice($price_ttc).'<button class="btn btn-secondary btn-block" disabled><i class="fas fa-spinner fa-pulse fa-1x fa-fw"></i> '.__( 'Loading', 'doliconnect').'</button></div>';
-$button .= "</div>";
+$button .= "";
 return $button;
 }
 

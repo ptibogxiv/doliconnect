@@ -10,39 +10,41 @@ $documents = callDoliApi("GET", "/documents?modulepart=product&id=".$product->id
 //$content .= $documents;
 if (defined("DOLIBUG")) {
 $content .= dolibug();
-} else    if ( $product->id>0 && $product->status == 1 ) {
-$content .= '<div class="row">';
+} elseif ( $product->id>0 && $product->status == 1 ) {
+$content .= "<div class='row'>";
 $content .= '<div class="col-12 d-block d-sm-block d-xs-block d-md-none"><center><i class="fa fa-cube fa-fw fa-5x"></i></center>';
 //$content .= wp_get_attachment_image( $attributes['mediaID'], "ptibogxiv_large", "", array( "class" => "img-fluid" ) );
-$content .= '</div>';
+$content .= "</div>";
 $content .= '<div class="col-md-4 d-none d-md-block"><center><i class="fa fa-cube fa-fw fa-5x"></i></center>';
 //$content .= wp_get_attachment_image( $attributes['mediaID'], "ptibogxiv_square", "", array( "class" => "img-fluid" ) );
-$content .= '</div>';
-$content .= '<div class="col-12 col-md-8"><h5 class="card-title"><b>'.doliproduct($product, 'label')."</b>";
+$content .= "</div>";
+$content .= "<div class='col-12 col-md-8'><h5 class='card-title'><b>".doliproduct($product, 'label')."</b>";
 if ( ! empty(doliconnectid('dolicart')) && !isset($attributes['hideStock']) ) { 
 $content .= " ".doliproductstock($product);
 }
 $content .= "</h5><small>".__( 'Reference', 'doliconnect').": ".$product->ref."</small>";
 if ( !empty($product->barcode) ) { $content .= "<br><small>".__( 'Barcode', 'doliconnect').": ".$product->barcode."</small>"; }
 $content .= "<br><br><p>".doliproduct($product, 'description')."</p>";
+$content .= "<div class='jumbotron'>";
 if ( ! empty(doliconnectid('dolicart')) ) { 
 $content .= doliproducttocart($product, null, isset($attributes['showButtonToCart']) ? $attributes['showButtonToCart'] : 0, isset($attributes['hideDuration']) ? $attributes['hideDuration'] : 0);
 }
-$content .= '</div></div>';
+$content .= "</div></div>";
 } else {
-$content .= '<center>'.__( 'Product/Service not in sale', 'doliconnect' ).'</center>';
+$content .= "<center>".__( 'Product/Service not in sale', 'doliconnect' )."</center>";
 } 
+$content .= "</div>";
 } else {
-$content .= '<center>'.__( 'No product', 'doliconnect' ).'</center>';
+$content .= "<center>".__( 'No product', 'doliconnect' )."</center>";
 }
-$content .= '</div>';
-$content .= '<div class="card-footer text-muted">';
+$content .= "</div>";
+$content .= "<div class='card-footer text-muted'>";
 $content .= "<small><div class='float-left'>";
 $content .= dolirefresh("/products/".$attributes['productID']."?includestockdata=1", null, dolidelay('thirdparty'));
 $content .= "</div><div class='float-right'>";
 $content .= dolihelp('ISSUE');
 $content .= "</div></small>";
-$content .= '</div></div></form>';
+$content .= "</div></div></form>";
 return $content;
 }
 function doliconnect_product_block_init() {
