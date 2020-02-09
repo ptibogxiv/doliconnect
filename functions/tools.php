@@ -432,7 +432,7 @@ $document .= '</div></div></div></div>';
 $document = '<a href="'.$data.'" role="button" class="btn '.$style.'" download="'.$doc->filename.'">'.$name.' <i class="fas fa-file-download"></i></a>';
 }
 } else {
-$document = '<a href="#" role="button" class="btn '.$style.'" disabled>'.$name.' <i class="fas fa-file-download"></i></a>';
+$document = '<button class="btn '.$style.'" disabled>'.$name.' <i class="fas fa-file-download"></i></button>';
 }
 
 return $document;
@@ -1060,7 +1060,7 @@ jQuery('input[name=paymentmode]').attr('disabled', !jQuery('input[name=paymentmo
 });"; 
 $paymentmethods .= "</script>"; 
 } else {
-$paymentmethods .= sprintf( __( 'Read the %s', 'doliconnect'), dolidocdownload('', '', '', __( 'Terms & Conditions', 'doliconnect'), false, 'btn-link'));
+$paymentmethods .= "".sprintf( __( 'Read the %s', 'doliconnect'), dolidocdownload('', '', '', __( 'Terms & Conditions', 'doliconnect'), false, 'btn-link btn-sm'))."";
 $paymentmethods .= "<script>";
 $paymentmethods .= "jQuery(document).ready(function() { 
 jQuery('input[name=paymentmode]').attr('disabled', !jQuery('input[name=paymentmode]').attr('disabled'));
