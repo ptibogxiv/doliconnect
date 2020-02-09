@@ -896,9 +896,9 @@ $paymentmethods .= '<li id="cardPanel" class="list-group-item list-group-item-se
 $paymentmethods .= '<input id="cardholder-name" name="cardholder-name" value="" type="text" class="form-control" placeholder="'.__( "Card's owner", 'doliconnect').'" autocomplete="off" required>
 <label for="card-element"></label>
 <div class="form-control" id="card-element"><!-- a Stripe Element will be inserted here. --></div>';
+$paymentmethods .= "<div id='card-error-message' class='text-danger' role='alert'><!-- a Stripe Message will be inserted here. --></div>";
 $paymentmethods .= "<p class='text-justify'>";
-$blogname=get_bloginfo('name');
-$paymentmethods .= '<small>'.sprintf( esc_html__( 'By providing your card and confirming this form, you are authorizing %s and Stripe, our payment service provider, to send instructions to the financial institution that issued your card to take payments from your card account in accordance with those instructions. You are entitled to a refund from your financial institution under the terms and conditions of your agreement with it. A refund must be claimed within 90 days starting from the date on which your card was debited.', 'doliconnect'), $blogname).'</small>';
+$paymentmethods .= '<small>'.sprintf( esc_html__( 'By providing your card and confirming this form, you are authorizing %s and Stripe, our payment service provider, to send instructions to the financial institution that issued your card to take payments from your card account in accordance with those instructions. You are entitled to a refund from your financial institution under the terms and conditions of your agreement with it. A refund must be claimed within 90 days starting from the date on which your card was debited.', 'doliconnect'), get_bloginfo('name')).'</small>';
 $paymentmethods .= "</p>";
 $paymentmethods .= '<p>';
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
@@ -944,9 +944,10 @@ $paymentmethods .= '<li id="ibanPanel" class="list-group-item list-group-item-se
 $paymentmethods .= '<input id="ibanholder-name" name="ibanholder-name" value="" type="text" class="form-control" placeholder="'.__( "Bank's owner", 'doliconnect').'" autocomplete="off" required>
 <label for="iban-element"></label>
 <div class="form-control" id="iban-element"><!-- a Stripe Element will be inserted here. --></div>';
+$paymentmethods .= "<div id='bank-name' role='alert'><!-- a Stripe Message will be inserted here. --></div>";
+$paymentmethods .= "<div id='iban-error-message' class='text-danger' role='alert'><!-- a Stripe Message will be inserted here. --></div>";
 $paymentmethods .= "<p class='text-justify'>";
-$blogname=get_bloginfo('name');
-$paymentmethods .= '<small>'.sprintf( esc_html__( 'By providing your IBAN and confirming this form, you are authorizing %s and Stripe, our payment service provider, to send instructions to your bank to debit your account and your bank to debit your account in accordance with those instructions. You are entitled to a refund from your bank under the terms and conditions of your agreement with it. A refund must be claimed within 8 weeks starting from the date on which your account was debited.', 'doliconnect'), $blogname).'</small>';
+$paymentmethods .= '<small>'.sprintf( esc_html__( 'By providing your IBAN and confirming this form, you are authorizing %s and Stripe, our payment service provider, to send instructions to your bank to debit your account and your bank to debit your account in accordance with those instructions. You are entitled to a refund from your bank under the terms and conditions of your agreement with it. A refund must be claimed within 8 weeks starting from the date on which your account was debited.', 'doliconnect'), get_bloginfo('name')).'</small>';
 $paymentmethods .= "</p><div id='bank-name'><!-- a Stripe Message will be inserted here. --></div>";
 $paymentmethods .= '<p>';
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
@@ -1145,17 +1146,19 @@ var cardholderName = document.getElementById('cardholder-name');
 cardholderName.value = '';
 var cardButton = document.getElementById('cardButton');
 var cardPayButton = document.getElementById('cardPayButton');
+var displayCardError = document.getElementById('card-error-message');
+displayCardError.textContent = '';
 cardElement.addEventListener('change', function(event) {
   // Handle real-time validation errors from the card Element.
     console.log('Reset error message');
-    displayError.textContent = '';
+    displayCardError.textContent = '';
   if (event.error) {
-    displayError.textContent = event.error.message;
-    displayError.classList.add('visible');
+    displayCardError.textContent = event.error.message;
+    displayCardError.classList.add('visible');
     //cardButton.disabled = true;
   } else {
-    displayError.textContent = '';
-    displayError.classList.remove('visible');
+    displayCardError.textContent = '';
+    displayCardError.classList.remove('visible');
     //cardButton.disabled = false;
   }
 });
@@ -1167,7 +1170,7 @@ cardElement.addEventListener('change', function(event) {
               jQuery('#liqPanel').collapse('hide'); 
 cardholderName.addEventListener('change', function(event) {
     console.log('Reset error message');
-    displayError.textContent = '';
+    displayCardError.textContent = '';
     //cardButton.disabled = false; 
 });
 if (cardButton) {
@@ -1177,7 +1180,7 @@ cardButton.disabled = true;
         if (cardholderName.value == '')
         	{        
 				console.log('Field Card holder is empty');
-				displayError.textContent = 'We need an owner as on your card';
+				displayCardError.textContent = 'We need an owner as on your card';
         cardButton.disabled = false; 
         jQuery('#DoliconnectLoadingModal').modal('hide');   
         	}
@@ -1196,7 +1199,7 @@ cardButton.disabled = true;
       // Display error.message
 jQuery('#DoliconnectLoadingModal').modal('hide');
 console.log('Error occured when adding card');
-displayError.textContent = result.error.message;    
+displayCardError.textContent = result.error.message;    
     } else {
       // The setup has succeeded. Display a success message.
 jQuery('#DoliconnectLoadingModal').modal('show');
@@ -1228,7 +1231,7 @@ cardPayButton.disabled = true;
         if (cardholderName.value == '')
         	{        
 				console.log('Field Card holder is empty');
-				displayError.textContent = 'We need an owner as on your card';
+				displayCardError.textContent = 'We need an owner as on your card';
         cardPayButton.disabled = false; 
         jQuery('#DoliconnectLoadingModal').modal('hide');   
         	}
@@ -1247,7 +1250,7 @@ cardPayButton.disabled = true;
       // Display error.message
 jQuery('#DoliconnectLoadingModal').modal('hide');
 console.log('Error occured when adding card');
-displayError.textContent = result.error.message;    
+displayCardError.textContent = result.error.message;    
     } else {
       // The setup has succeeded. Display a success message.
 jQuery('#DoliconnectLoadingModal').modal('show');
@@ -1284,21 +1287,24 @@ ibanElement.mount('#iban-element');
 var ibanholderName = document.getElementById('ibanholder-name');
 ibanholderName.value = '';
 var ibanButton = document.getElementById('ibanButton'); 
-var ibanPayButton = document.getElementById('ibanPayButton'); 
-//var bankName = document.getElementById('bank-name');
-//bankName.textContent = '';
+var ibanPayButton = document.getElementById('ibanPayButton');
+var displayIbanError = document.getElementById('iban-error-message');
+displayIbanError.textContent = ''; 
+var bankName = document.getElementById('bank-name');
+bankName.textContent = '';
 ibanElement.addEventListener('change', function(event) {
   // Handle real-time validation errors from the iban Element.
     console.log('Reset error message');
-    displayError.textContent = '';
+    displayIbanError.textContent = '';
     bankName.textContent = '';
   if (event.error) {
-    displayError.textContent = event.error.message;
-    displayError.classList.add('visible');
+    bankName.textContent = '';
+    displayIbanError.textContent = event.error.message;
+    displayIbanError.classList.add('visible');
     ibanButton.disabled = true;
   } else {
-    displayError.textContent = '';
-    displayError.classList.remove('visible');
+    displayIbanError.textContent = '';
+    displayIbanError.classList.remove('visible');
     ibanButton.disabled = false;
   }
 
@@ -1307,6 +1313,7 @@ ibanElement.addEventListener('change', function(event) {
     bankName.textContent = event.bankName;
     bankName.classList.add('visible');
   } else {
+    bankName.textContent = '';
     bankName.classList.remove('visible');
   }
 });
@@ -1318,7 +1325,7 @@ ibanElement.addEventListener('change', function(event) {
               jQuery('#liqPanel').collapse('hide'); 
 ibanholderName.addEventListener('change', function(event) {
     console.log('Reset error message');
-    displayError.textContent = '';
+    displayIbanError.textContent = '';
     ibanButton.disabled = false; 
 });
 if (ibanButton) {
@@ -1328,7 +1335,7 @@ ibanButton.disabled = true;
         if (ibanholderName.value == '')
         	{        
 				console.log('Field iban holder is empty');
-				displayError.textContent = 'We need an owner as on your account';
+				displayIbanError.textContent = 'We need an owner as on your account';
         ibanButton.disabled = false; 
         jQuery('#DoliconnectLoadingModal').modal('hide');   
         	}
@@ -1350,7 +1357,7 @@ ibanButton.disabled = true;
       // Display error.message
 jQuery('#DoliconnectLoadingModal').modal('hide');
 console.log('Error occured when adding card');
-displayError.textContent = result.error.message;    
+displayIbanError.textContent = result.error.message;    
     } else {
       // The setup has succeeded. Display a success message.
 jQuery('#DoliconnectLoadingModal').modal('show');
@@ -1382,7 +1389,7 @@ ibanPayButton.disabled = true;
         if (ibanholderName.value == '')
         	{        
 				console.log('Field iban holder is empty');
-				displayError.textContent = 'We need an owner as on your account';
+				displayIbanError.textContent = 'We need an owner as on your account';
         ibanPayButton.disabled = false; 
         jQuery('#DoliconnectLoadingModal').modal('hide');   
         	}
@@ -1404,7 +1411,7 @@ ibanPayButton.disabled = true;
       // Display error.message
 jQuery('#DoliconnectLoadingModal').modal('hide');
 console.log('Error occured when adding card');
-displayError.textContent = result.error.message;    
+displayIbanError.textContent = result.error.message;    
     } else {
       // The setup has succeeded. Display a success message.
 jQuery('#DoliconnectLoadingModal').modal('show');
@@ -1549,7 +1556,7 @@ function PayCardPM(pm) {";
 if (!empty($listpaymentmethods->stripe->client_secret)) { 
 $paymentmethods .= "var clientSecret = '".$listpaymentmethods->stripe->client_secret."';";
 }
-$paymentmethods .= "var displayError = document.getElementById('error-message');
+$paymentmethods .= "var displayCardError = document.getElementById('error-message');
 displayError.textContent = '';
   stripe.confirmCardPayment(
     clientSecret,
