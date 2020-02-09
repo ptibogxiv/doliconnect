@@ -950,7 +950,7 @@ $paymentmethods .= "<div id='bank-name' role='alert'><!-- a Stripe Message will 
 $paymentmethods .= "<div id='iban-error-message' class='text-danger' role='alert'><!-- a Stripe Message will be inserted here. --></div>";
 $paymentmethods .= "<p class='text-justify'>";
 $paymentmethods .= '<small>'.sprintf( esc_html__( 'By providing your IBAN and confirming this form, you are authorizing %s and Stripe, our payment service provider, to send instructions to your bank to debit your account and your bank to debit your account in accordance with those instructions. You are entitled to a refund from your bank under the terms and conditions of your agreement with it. A refund must be claimed within 8 weeks starting from the date on which your account was debited.', 'doliconnect'), get_bloginfo('name')).'</small>';
-$paymentmethods .= "</p><div id='bank-name'><!-- a Stripe Message will be inserted here. --></div>";
+$paymentmethods .= "</p>";
 $paymentmethods .= '<p>';
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
 $paymentmethods .= '<div class="custom-control custom-radio custom-control-inline">
@@ -1297,7 +1297,6 @@ ibanElement.addEventListener('change', function(event) {
     displayIbanError.textContent = '';
     bankName.textContent = '';
   if (event.error) {
-    bankName.textContent = '';
     displayIbanError.textContent = event.error.message;
     displayIbanError.classList.add('visible');
     ibanButton.disabled = true;
@@ -1306,7 +1305,6 @@ ibanElement.addEventListener('change', function(event) {
     displayIbanError.classList.remove('visible');
     ibanButton.disabled = false;
   }
-
   // Display bank name corresponding to IBAN, if available.
   if (event.bankName) {
     bankName.textContent = event.bankName;
