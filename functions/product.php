@@ -106,7 +106,7 @@ $altdurvalue=60/$product->duration_value;
 
 }
 
-if ( callDoliApi("GET", "/doliconnector/constante/PRODUIT_MULTIPRICES", null, dolidelay('constante')) && !empty($product->multiprices_ttc) ) {
+if ( !empty(callDoliApi("GET", "/doliconnector/constante/PRODUIT_MULTIPRICES", null, dolidelay('constante'))->value) && !empty($product->multiprices_ttc) ) {
 $button .= '<table class="table table-sm table-striped"><tbody>';
 $lvl=doliconnector($current_user, 'price_level');
 //$count=1;
