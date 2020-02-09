@@ -429,10 +429,10 @@ document.getElementById("pdfjsframe-'.$filename.'").contentWindow.PDFViewerAppli
 </script>';
 $document .= '</div></div></div></div>';
 } else {
-$document = '<a href="'.$data.'" class="btn '.$style.'" download="'.$doc->filename.'">'.$name.' <i class="fas fa-file-download"></i></a>';
+$document = '<a href="'.$data.'" role="button" class="btn '.$style.'" download="'.$doc->filename.'">'.$name.' <i class="fas fa-file-download"></i></a>';
 }
 } else {
-$document = '<button class="btn '.$style.'" disabled>'.$name.' <i class="fas fa-file-download"></i></button>';
+$document = '<a href="#" role="button" class="btn '.$style.'" disabled>'.$name.' <i class="fas fa-file-download"></i></a>';
 }
 
 return $document;
