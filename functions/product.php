@@ -109,19 +109,19 @@ $altdurvalue=60/$product->duration_value;
 if ( !empty(callDoliApi("GET", "/doliconnector/constante/PRODUIT_MULTIPRICES", null, dolidelay('constante'))->value) && !empty($product->multiprices_ttc) ) {
 $button .= '<table class="table table-sm table-striped"><tbody>';
 $lvl=doliconnector($current_user, 'price_level');
-//$count=1;
 //$button .=$lvl;
 foreach ( $product->multiprices_ttc as $level => $price ) {
-$button .= '<tr>';   
-//if ( (empty(doliconnector($current_user, 'price_level')) && $level == 1 ) || doliconnector($current_user, 'price_level') == $level ) {
+$button .= '<tr';
+if ( (empty(doliconnector($current_user, 'price_level')) && $level == 1 ) || doliconnector($current_user, 'price_level') == $level ) {
+$button .= ' class="table-primary"';  
+}
+$button .= '>';   
 $button .= '<td>'.__( 'Price', 'doliconnect').' '.$level.' - '.doliconst('PRODUIT_MULTIPRICES_LABEL'.$level).'</td>';
 $button .= '<td class="text-right">'.doliprice( $price, $currency);
 if ( empty($time) && !empty($product->duration_value) ) { $button .='/'.doliduration($product); }
 $button .= '</td>';
 if ( !empty($altdurvalue) ) { $button .= "<td class='text-right'>soit ".doliprice( $altdurvalue*$price, $currency)." par ".__( 'hour', 'doliconnect')."</td>"; } 
 //$button .= '<small class="float-right">'.__( 'You benefit from the rate', 'doliconnect').' '.doliconst('PRODUIT_MULTIPRICES_LABEL'.$level).'</small>';
-//}
-//$count++;
 $button .= '</tr>'; 
 }
 if (!empty(doliconnector($current_user, 'price_level'))) {
