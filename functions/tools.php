@@ -1002,7 +1002,7 @@ $paymentmethods .= '</div></li>';
 }
 
 //offline payment methods
-if ( isset($listpaymentmethods->VIR) && $listpaymentmethods->VIR != null ) {
+if ( isset($listpaymentmethods->VIR) && !empty($listpaymentmethods->VIR) ) {
 $paymentmethods .= "<li class='list-group-item list-group-item-light list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>
 <input type='radio' id='vir' name='paymentmode' value='vir' class='custom-control-input' data-toggle='collapse' data-parent='#accordion' ";
 //if ( !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_code != 'VIR' ) { $paymentmethods .=" disabled "; }
@@ -1017,7 +1017,7 @@ $paymentmethods .= '<li id="virPanel" class="list-group-item list-group-item-sec
 $paymentmethods .= '<button type="button" onclick="PayPM(\'VIR\')" class="btn btn-danger btn-block">'.__( 'Pay', 'doliconnect')." ".doliprice($object, 'ttc', $currency).'</button>';
 $paymentmethods .= '</div></li>';
 }}
-if ( isset($listpaymentmethods->CHQ) && $listpaymentmethods->CHQ != null ) {
+if ( isset($listpaymentmethods->CHQ) && !empty($listpaymentmethods->CHQ) ) {
 $paymentmethods .= "<li class='list-group-item list-group-item-light list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>
 <input type='radio' id='chq' name='paymentmode' value='chq' class='custom-control-input' data-toggle='collapse' data-parent='#accordion' ";
 //if ( !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_code != 'CHQ' ) { $paymentmethods .=" disabled "; }
