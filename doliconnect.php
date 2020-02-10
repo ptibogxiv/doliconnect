@@ -14,7 +14,7 @@
  * Donate link: https://www.paypal.me/ptibogxiv
  *   
  * @author ptibogxiv.net <support@ptibogxiv.net>
- * @copyright Copyright (c) 2017-2019, ptibogxiv.net
+ * @copyright Copyright (c) 2017-2020, ptibogxiv.net
 **/
 
 // Exit if accessed directly.
