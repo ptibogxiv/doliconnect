@@ -360,7 +360,7 @@ $taille=" class='card-img' ";
             $custom_logo_attr['alt'] = get_bloginfo( 'name', 'display' );
         }
  
-        $avatar = wp_get_attachment_image( $custom_logo_id, 'full', false, $custom_logo_attr );
+        $avatar = wp_get_attachment_image( $custom_logo_id, 'medium_large', false, $custom_logo_attr );
     } elseif ( is_customize_preview() ) {
         $avatar = "<img src='" . plugins_url( 'images/default.jpg', __FILE__ ) . "' ".$taille."  alt='avatar-default'>";
     }
