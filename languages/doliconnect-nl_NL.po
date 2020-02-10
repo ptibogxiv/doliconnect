@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2020-02-09 16:09+0100\n"
-"PO-Revision-Date: 2020-02-09 16:09+0100\n"
+"POT-Creation-Date: 2020-02-11 00:04+0100\n"
+"PO-Revision-Date: 2020-02-11 00:04+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: nl_NL\n"
@@ -1601,8 +1601,8 @@ msgid "the %s of month"
 msgstr "de %s van de maand"
 
 #: functions/tools.php:758
-msgid "Choose your country or region"
-msgstr "Kies uw land of regio"
+msgid "Choose your language"
+msgstr "Kies uw taal"
 
 #: functions/tools.php:819
 msgid "Stripe's in sandbox mode"
@@ -1836,6 +1836,9 @@ msgstr "ptibogxiv"
 #. Author URI of the plugin/theme
 msgid "https://www.ptibogxiv.net/en"
 msgstr "https://www.ptibogxiv.net/en"
+
+#~ msgid "Choose your country or region"
+#~ msgstr "Kies uw land of regio"
 
 #~ msgid "You benefit from the rate"
 #~ msgstr "U profiteert van het tarief"
