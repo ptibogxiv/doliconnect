@@ -416,7 +416,7 @@ return false;
 }
 
 function my_register_page( $register_url ) {
-return doliconnecturl('doliaccount') . '?action=signup';
+return esc_url( add_query_arg( 'action', 'signup', doliconnecturl('doliaccount')) ); 
 }
 add_filter( 'register_url', 'my_register_page' );
 
