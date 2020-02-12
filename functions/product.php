@@ -187,6 +187,7 @@ $button .= "<div class='input-group'><select class='form-control' name='product_
 if ( ( empty($product->stock_reel) || $m2 < $step) && $product->type == '0' && (is_object($enablestock) && $enablestock->value == 1)) { $button .= " disabled"; }
 $button .= ">";
 if ($m2 < $step)  { $button .= "<OPTION value='0' >x 0</OPTION>"; }
+if (!empty($m2) && $m2 >= $step) {
 foreach (range(0, $m2, $step) as $number) {
 		if ( $number == $qty ) {
 $button .= "<OPTION value='$number' selected='selected'>x ".$number."</OPTION>";
@@ -194,6 +195,7 @@ $button .= "<OPTION value='$number' selected='selected'>x ".$number."</OPTION>";
 $button .= "<OPTION value='$number' >x ".$number."</OPTION>";
 		}
 	}
+}
 $button .= "</SELECT><DIV class='input-group-append'><BUTTON class='btn btn-outline-secondary' type='submit' ";
 if ( ( empty($product->stock_reel) || $m2 < $step) && $product->type == '0' && (is_object($enablestock) && $enablestock->value == 1)) { $button .= " disabled"; }
 $button .= ">";
