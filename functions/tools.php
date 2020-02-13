@@ -908,11 +908,11 @@ $paymentmethods .= '<p>';
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
 $paymentmethods .= '<div class="custom-control custom-radio custom-control-inline">
   <input type="radio" id="cardDefault0" name="cardDefault" value="0"  class="custom-control-input" checked>
-  <label class="custom-control-label" for="cardDefault0">'.__( "Not save", 'doliconnect').'</label>
+  <label class="custom-control-label text-muted" for="cardDefault0">'.__( "Not save", 'doliconnect').'</label>
 </div>
 <div class="custom-control custom-radio custom-control-inline">
   <input type="radio" id="cardDefault1" name="cardDefault" value="1"  class="custom-control-input">
-  <label class="custom-control-label" for="cardDefault1">'.__( "Save", 'doliconnect').'</label>
+  <label class="custom-control-label text-muted" for="cardDefault1">'.__( "Save", 'doliconnect').'</label>
 </div>';} else {
 $paymentmethods .= '<div class="custom-control custom-radio custom-control-inline">
   <input type="radio" id="cardDefault0" name="cardDefault" value="0"  class="custom-control-input"';
@@ -921,7 +921,7 @@ $paymentmethods .= ' disabled';
 } else {
 $paymentmethods .= ' checked';
 } 
-$paymentmethods .= '><label class="custom-control-label" for="cardDefault0">'.__( "Save", 'doliconnect').'</label>
+$paymentmethods .= '><label class="custom-control-label text-muted" for="cardDefault0">'.__( "Save", 'doliconnect').'</label>
 </div>';
 }
 $paymentmethods .= '<div class="custom-control custom-radio custom-control-inline">
@@ -929,7 +929,7 @@ $paymentmethods .= '<div class="custom-control custom-radio custom-control-inlin
 if (empty($countPM)) {
 $paymentmethods .= ' checked'; 
 } 
-$paymentmethods .= '><label class="custom-control-label" for="cardDefault2">'.__( "Save as favourite", 'doliconnect').'</label>
+$paymentmethods .= '><label class="custom-control-label text-muted" for="cardDefault2">'.__( "Save as favourite", 'doliconnect').'</label>
 </div></p>';
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
 $paymentmethods .= '<button id="cardPayButton" class="btn btn-danger btn-block" >'.__( 'Pay', 'doliconnect')." ".doliprice($object, 'ttc', $currency).'</button>';
@@ -957,20 +957,20 @@ $paymentmethods .= '<p>';
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
 $paymentmethods .= '<div class="custom-control custom-radio custom-control-inline">
   <input type="radio" id="ibanDefault0" name="ibanDefault" value="0"  class="custom-control-input" checked>
-  <label class="custom-control-label" for="ibanDefault0">'.__( "Not save", 'doliconnect').'</label>
+  <label class="custom-control-label text-muted" for="ibanDefault0">'.__( "Not save", 'doliconnect').'</label>
 </div>
 <div class="custom-control custom-radio custom-control-inline">
   <input type="radio" id="ibanDefault1" name="ibanDefault" value="1"  class="custom-control-input">
-  <label class="custom-control-label" for="ibanDefault1">'.__( "Save", 'doliconnect').'</label>
+  <label class="custom-control-label text-muted" for="ibanDefault1">'.__( "Save", 'doliconnect').'</label>
 </div>';} else {
-$paymentmethods .= '<div class="custom-control custom-radio custom-control-inline">
+$paymentmethods .= '<div class="custom-control custom-radio custom-control-inline ">
   <input type="radio" id="ibanDefault0" name="ibanDefault" value="0"  class="custom-control-input"';
 if (empty($countPM)) {
 $paymentmethods .= ' disabled'; 
 } else {
 $paymentmethods .= ' checked';
 } 
-$paymentmethods .= '><label class="custom-control-label" for="ibanDefault0">'.__( "Save", 'doliconnect').'</label>
+$paymentmethods .= '><label class="custom-control-label text-muted" for="ibanDefault0">'.__( "Save", 'doliconnect').'</label>
 </div>';
 }
 $paymentmethods .= '<div class="custom-control custom-radio custom-control-inline">
@@ -978,7 +978,7 @@ $paymentmethods .= '<div class="custom-control custom-radio custom-control-inlin
 if (empty($countPM)) {
 $paymentmethods .= ' checked'; 
 } 
-$paymentmethods .= '><label class="custom-control-label" for="ibanDefault1">'.__( "Save as favourite", 'doliconnect').'</label>
+$paymentmethods .= '><label class="custom-control-label text-muted" for="ibanDefault1">'.__( "Save as favourite", 'doliconnect').'</label>
 </div></p>';
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
 $paymentmethods .= '<button id="ibanPayButton" class="btn btn-danger btn-block" >'.__( 'Pay', 'doliconnect')." ".doliprice($object, 'ttc', $currency).'</button>';
