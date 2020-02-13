@@ -1049,7 +1049,7 @@ $paymentmethods .='<button type="button" onclick="PayPM(\'LIQ\')" class="btn btn
 $paymentmethods .='</div></li>';
 }}
 
-$paymentmethods .= "</ul><div class='card-body'>";
+$paymentmethods .= "</ul><div class='card-body text-muted'>";
 
 if (isset($object)) {
 $paymentmethods .= '<div class="custom-control custom-checkbox">
