@@ -303,9 +303,9 @@ return $dolibarr;
 
 // ********************************************************
 
-add_filter( 'pll_custom_flag', 'pll_custom_flag', 10, 2 );
+add_filter( 'pll_custom_flag', 'dolipll_custom_flag', 10, 2 );
  
-function pll_custom_flag( $flag, $code ) {
+function dolipll_custom_flag( $flag, $code ) {
     $flag['url']    = "https://demo.ptibogxiv.net/wp-content/plugins/doliconnect/includes/flag-icon-css/flags/4x3/{$code}.svg";
     $flag['width']  = 24;
     $flag['height'] = 18;
