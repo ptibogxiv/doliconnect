@@ -307,8 +307,8 @@ add_filter( 'pll_custom_flag', 'pll_custom_flag', 10, 2 );
  
 function pll_custom_flag( $flag, $code ) {
     $flag['url']    = "https://demo.ptibogxiv.net/wp-content/plugins/doliconnect/includes/flag-icon-css/flags/4x3/{$code}.svg";
-    $flag['width']  = 32;
-    $flag['height'] = 22;
+    $flag['width']  = 24;
+    $flag['height'] = 18;
     return $flag;
 }
 
