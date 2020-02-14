@@ -300,7 +300,20 @@ return $dolibarr;
 }
 
 }
+
 // ********************************************************
+
+add_filter( 'pll_custom_flag', 'pll_custom_flag', 10, 2 );
+ 
+function pll_custom_flag( $flag, $code ) {
+    $flag['url']    = "https://demo.ptibogxiv.net/wp-content/plugins/doliconnect/includes/flag-icon-css/flags/4x3/{$code}.svg";
+    $flag['width']  = 32;
+    $flag['height'] = 22;
+    return $flag;
+}
+
+// ********************************************************
+
 add_filter( 'get_avatar' , 'my_custom_avatar' , 1 , 5 );
 
 function my_custom_avatar( $avatar, $id_or_email, $size, $default, $alt ) {
