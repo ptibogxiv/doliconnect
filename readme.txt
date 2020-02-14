@@ -4,7 +4,7 @@ Contributors: ptibogxiv, audrasjb
 Tags: erp, crm, ecommerce, dolibarr, payment, interface, customer, subscription, membership, doliconnect, dashboard, paypal, stripe, doliconnect, invoice, order, donation, GDPR, RGPD, LGPD, CCPA
 Requires at least: 5.0
 Tested up to: 5.4
-Stable tag: 4.2.6
+Stable tag: 4.2.7
 Requires PHP: 7.0
 License: GPL v3 or later
 Donate link: https://www.paypal.me/ptibogxiv
@@ -57,6 +57,11 @@ We would like to thank this contributors and plugins:
 [gdpr-data-request-form](https://wordpress.org/plugins/gdpr-data-request-form/ "gdpr-data-request-form")
 
 == Changelog ==
+  = 4.2.7 =
+* support of Dolibarr 11.0.1
+* need upgrade to doliconnector 11.0.1
+* fix & clean code
+
   = 4.2.6 =
 * fix & clean code
 * 
