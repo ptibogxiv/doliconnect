@@ -1,10 +1,5 @@
 <?php
 
-if ( !defined("DOLIBUG") ) {
-$memberconsumption = callDoliApi("GET", "/doliconnector/constante/ADHERENT_CONSUMPTION", null, dolidelay('constante'));
-$linkedmember = callDoliApi("GET", "/doliconnector/constante/ADHERENT_LINKEDMEMBER", null, dolidelay('constante'));
-}
-
 function informations_menu($arg) {
 print "<a href='".esc_url( add_query_arg( 'module', 'informations', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
 if ($arg=='informations') { print " active";}
@@ -1460,7 +1455,7 @@ print '</div></div>';
 
 }
 
-if ( is_object($memberconsumption) && $memberconsumption->value == '1' && get_option('doliconnectbeta') == '1' ) {
+if ( !empty(doliconst('ADHERENT_CONSUMPTION')) && get_option('doliconnectbeta') == '1' ) {
 add_action( 'options_doliconnect_menu', 'membershipconsumption_menu', 2, 1);
 add_action( 'options_doliconnect_membershipconsumption', 'membershipconsumption_module');
 }  
@@ -1513,7 +1508,7 @@ print '</div></div>';
 
 }
 
-if ( is_object($linkedmember) && $linkedmember->value == '1' ) {
+if ( !empty(doliconst('ADHERENT_LINKEDMEMBER')) ) {
 add_action( 'options_doliconnect_menu', 'linkedmember_menu', 3, 1);
 add_action( 'options_doliconnect_linkedmember', 'linkedmember_module');
 }  
