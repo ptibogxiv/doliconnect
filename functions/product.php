@@ -37,10 +37,7 @@ return numfmt_format_currency($fmt, $montant, $currency);//.$decimal
 
 function doliproductstock($product) {
 
-$enablestock = callDoliApi("GET", "/doliconnector/constante/MAIN_MODULE_STOCK", null, dolidelay('constante'));
-$stockservices = callDoliApi("GET", "/doliconnector/constante/STOCK_SUPPORTS_SERVICES", null, dolidelay('constante'));
-
-if ( ! is_object($product) || empty($enablestock->value) || ($product->type != '0' && ! is_object($stockservices->value)) ) {
+if ( ! is_object($product) || empty(doliconst('MAIN_MODULE_STOCK')) || ($product->type != '0' && empty(doliconst('STOCK_SUPPORTS_SERVICES')) )) {
 $stock = "<span class='badge badge-pill badge-success'>".__( 'Available', 'doliconnect')."</span>"; 
 } else {
 
@@ -58,10 +55,6 @@ return $stock;
 
 function doliproducttocart($product, $category=0, $add=0, $time=0) {
 global $current_user;
-
-$order = callDoliApi("GET", "/doliconnector/constante/MAIN_MODULE_COMMANDE", null, dolidelay('constante'));
-$enablestock = callDoliApi("GET", "/doliconnector/constante/MAIN_MODULE_STOCK", null, dolidelay('constante'));
-$stockservices = callDoliApi("GET", "/doliconnector/constante/STOCK_SUPPORTS_SERVICES", null, dolidelay('constante'));
 
 $button = "";
 
@@ -162,14 +155,14 @@ $price_ttc=$product->price;
 $button .= '</tbody></table>';
 }
 
-if ( is_user_logged_in() && $add==1 && is_object($order) && $order->value == 1 && doliconnectid('dolicart') > 0 ) {
+if ( is_user_logged_in() && $add == 1 && !empty(doliconst('MAIN_MODULE_COMMANDE')) && doliconnectid('dolicart') > 0 ) {
 if ( ($product->stock_reel-$qty > 0 && $product->type == '0') ) {
 if (isset($product->array_options->options_packaging) && !empty($product->array_options->options_packaging)) {
 $m1 = 10*$product->array_options->options_packaging;
 } else {
 $m1 = 10;
 }
-if ( $product->stock_reel-$qty >= $m1 || (is_object($enablestock) && $enablestock->value != 1) ) {
+if ( $product->stock_reel-$qty >= $m1 || empty(doliconst('MAIN_MODULE_STOCK')) ) {
 $m2 = $m1;
 } elseif ( $product->stock_reel > $qty ) {
 $m2 = $product->stock_reel;
@@ -184,7 +177,7 @@ $step = $product->array_options->options_packaging;
 $step = 1;
 }
 $button .= "<div class='input-group'><select class='form-control' name='product_update[".$product->id."][qty]' ";
-if ( ( empty($product->stock_reel) || $m2 < $step) && $product->type == '0' && (is_object($enablestock) && $enablestock->value == 1)) { $button .= " disabled"; }
+if ( ( empty($product->stock_reel) || $m2 < $step) && $product->type == '0' && !empty(doliconst('MAIN_MODULE_STOCK')) ) { $button .= " disabled"; }
 $button .= ">";
 if ($m2 < $step)  { $button .= "<OPTION value='0' >x 0</OPTION>"; }
 if (!empty($m2) && $m2 >= $step) {
@@ -197,7 +190,7 @@ $button .= "<OPTION value='$number' >x ".$number."</OPTION>";
 	}
 }
 $button .= "</SELECT><DIV class='input-group-append'><BUTTON class='btn btn-outline-secondary' type='submit' ";
-if ( ( empty($product->stock_reel) || $m2 < $step) && $product->type == '0' && (is_object($enablestock) && $enablestock->value == 1)) { $button .= " disabled"; }
+if ( ( empty($product->stock_reel) || $m2 < $step) && $product->type == '0' && !empty(doliconst('MAIN_MODULE_STOCK')) ) { $button .= " disabled"; }
 $button .= ">";
 if ( $qty > 0 ) {
 $button .= __( 'Update', 'doliconnect')."";
