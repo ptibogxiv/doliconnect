@@ -645,7 +645,7 @@ $doliline .= '<div class="col d-none d-md-block col-md-2 text-right"><center>'.d
 
 $doliline .= '<div class="col-4 col-md-2 text-right"><h5 class="mb-1">'.doliprice($line, 'total_ttc', isset($line->multicurrency_code) ? $line->multicurrency_code : null).'</h5>';
 
-if ( $object->statut == 0 && !empty($mode)) {
+if ( $object->statut == 0 && !empty($mode) && doliconst('FRAIS_DE_PORT_ID_SERVICE_TO_USE') != $line->fk_product ) {
 $doliline .= "<input type='hidden' name='updateorderproduct[".$line->fk_product."][product]' value='".$line->fk_product."'><input type='hidden' name='updateorderproduct[".$line->fk_product."][line]' value='".$line->id."'><input type='hidden' name='updateorderproduct[".$line->fk_product."][price]' value='".$line->subprice."'>";
 $doliline .= "<input type='hidden' name='updateorderproduct[".$line->fk_product."][remise_percent]' value='".$line->remise_percent."'><input type='hidden' name='updateorderproduct[".$line->fk_product."][date_start]' value='".$line->date_start."'><input type='hidden' name='updateorderproduct[".$line->fk_product."][date_end]' value='".$line->date_end."'>";
 $doliline .= "<select class='form-control form-control-sm' name='updateorderproduct[".$line->fk_product."][qty]' onchange='ChangeDoliCart();'>";
@@ -1735,7 +1735,6 @@ global $current_user;
 
 	// Default strings
 	$defaults = array(
-		'form_id'              => 'gdrf-form',
 		'label_select_request' => esc_html__( 'Select your request:', 'doliconnect'),
 		'label_select_export'  => esc_html__( 'Export Personal Data', 'doliconnect'),
 		'label_select_remove'  => esc_html__( 'Remove Personal Data', 'doliconnect'),
@@ -1754,7 +1753,7 @@ global $current_user;
 		// Display the form
 		ob_start();
 		?>
-		<form action="<?php echo esc_url( admin_url( 'admin-ajax.php' ) ); ?>" method="post" id="<?php echo $args['form_id']; ?>">
+		<form action="<?php echo esc_url( admin_url( 'admin-ajax.php' ) ); ?>" method="post" id="gdrf-form">
 			<input type="hidden" name="action" value="doli_gdrf_data_request" />
 			<input type="hidden" name="gdrf_data_human_key" id="gdrf_data_human_key" value="<?php echo $number_one . '000' . $number_two; ?>" />
 			<input type="hidden" name="gdrf_data_nonce" id="gdrf_data_nonce" value="<?php echo wp_create_nonce( 'gdrf_nonce'); ?>" />
