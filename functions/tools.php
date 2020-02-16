@@ -645,7 +645,7 @@ $doliline .= '<div class="col d-none d-md-block col-md-2 text-right"><center>'.d
 
 $doliline .= '<div class="col-4 col-md-2 text-right"><h5 class="mb-1">'.doliprice($line, 'total_ttc', isset($line->multicurrency_code) ? $line->multicurrency_code : null).'</h5>';
 
-if ( $object->statut == 0 && !empty($mode) && doliconst('FRAIS_DE_PORT_ID_SERVICE_TO_USE') != $line->fk_product ) {
+if ( $object->statut == 0 && !empty($mode) ) { //doliconst('FRAIS_DE_PORT_ID_SERVICE_TO_USE') != $line->fk_product 
 $doliline .= "<input type='hidden' name='updateorderproduct[".$line->fk_product."][product]' value='".$line->fk_product."'><input type='hidden' name='updateorderproduct[".$line->fk_product."][line]' value='".$line->id."'><input type='hidden' name='updateorderproduct[".$line->fk_product."][price]' value='".$line->subprice."'>";
 $doliline .= "<input type='hidden' name='updateorderproduct[".$line->fk_product."][remise_percent]' value='".$line->remise_percent."'><input type='hidden' name='updateorderproduct[".$line->fk_product."][date_start]' value='".$line->date_start."'><input type='hidden' name='updateorderproduct[".$line->fk_product."][date_end]' value='".$line->date_end."'>";
 $doliline .= "<select class='form-control form-control-sm' name='updateorderproduct[".$line->fk_product."][qty]' onchange='ChangeDoliCart();'>";
