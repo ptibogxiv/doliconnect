@@ -1023,7 +1023,6 @@ if ( in_the_loop() && is_main_query() && is_page(doliconnectid('dolidonation')) 
 
 doliconnect_enqueues();
 
-$donation = callDoliApi("GET", "/doliconnector/constante/MAIN_MODULE_DON", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 $art200 = callDoliApi("GET", "/doliconnector/constante/DONATION_ART200", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 $art238 = callDoliApi("GET", "/doliconnector/constante/DONATION_ART238", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 $art835 = callDoliApi("GET", "/doliconnector/constante/DONATION_ART835", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
@@ -1033,7 +1032,7 @@ if ( defined("DOLIBUG") ) {
 
 print dolibug();
 
-} elseif (empty($donation->value)) {
+} elseif ( empty(doliconst('MAIN_MODULE_COMMANDE')) ) {
 print "<div class='card shadow-sm'><div class='card-body'>";
 print dolibug(__( 'Inactive module on Dolibarr', 'doliconnect'));
 print "</div></div>";
@@ -1132,8 +1131,6 @@ doliconnect_enqueues();
 
 $time = current_time( 'timestamp', 1);
 
-$order = callDoliApi("GET", "/doliconnector/constante/MAIN_MODULE_COMMANDE", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-
 if ( isset($_GET['module']) && ($_GET['module'] == 'orders' || $_GET['module'] == 'invoices') && isset($_GET['id']) && isset($_GET['ref']) ) {
 $request = "/".esc_attr($_GET['module'])."/".esc_attr($_GET['id'])."?contact_list=0";
 $module=esc_attr($_GET['module']);
@@ -1154,7 +1151,7 @@ if ( defined("DOLIBUG") ) {
 
 print dolibug($object->error->message);
 
-} elseif ( is_object($order) && $order->value != 1 ) {
+} elseif ( empty(doliconst('MAIN_MODULE_COMMANDE', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))) ) {
 
 print "<div class='card shadow-sm'><div class='card-body'>";
 print dolibug(__( "Oops, Order's module is not available", "doliconnect"));
