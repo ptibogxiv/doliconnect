@@ -81,10 +81,10 @@ return get_current_blog_id();
 }
 add_action( 'admin_init', 'dolibarr_entity', 5); 
 // ********************************************************
-function doliconst( $constante ) {
+function doliconst( $constante, $refresh = null ) {
 global $wpdb;
 
-$const = callDoliApi("GET", "/doliconnector/constante/".$constante, null, dolidelay('constante'));
+$const = callDoliApi("GET", "/doliconnector/constante/".$constante, null, dolidelay('constante', $refresh));
 
 return $const->value;
 }
