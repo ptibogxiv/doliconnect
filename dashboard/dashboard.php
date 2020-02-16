@@ -1326,7 +1326,6 @@ $time = current_time( 'timestamp',1);
 $request = "/adherentsplus/".doliconnector($current_user, 'fk_member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)); 
 
 $productadhesion = callDoliApi("GET", "/doliconnector/constante/ADHERENT_PRODUCT_ID_FOR_SUBSCRIPTIONS", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-$order = callDoliApi("GET", "/doliconnector/constante/MAIN_MODULE_COMMANDE", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 if ( isset($_POST["update_membership"]) && function_exists('dolimembership') ) {
 $adherent = dolimembership($current_user, $_POST["update_membership"], $_POST["typeadherent"], dolidelay('member', true));
@@ -1381,7 +1380,7 @@ print  "$datefin"; }
 
 print "</div><div class='col-12 col-md-7'>";
 
-if ( function_exists('dolimembership_modal') && is_object($order) && $order->value == 1 && !empty($productadhesion->value) ) {
+if ( function_exists('dolimembership_modal') && !empty(doliconst('MAIN_MODULE_COMMANDE')) && !empty($productadhesion->value) ) {
 dolimembership_modal($current_user, $adherent, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 //print doliloaderscript('doliconnect-memberform');
