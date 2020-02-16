@@ -1,14 +1,8 @@
 <?php
 
 if ( !defined("DOLIBUG") ) {
-$proposal = callDoliApi("GET", "/doliconnector/constante/MAIN_MODULE_PROPALE", null, dolidelay('constante'));
-$order = callDoliApi("GET", "/doliconnector/constante/MAIN_MODULE_COMMANDE", null, dolidelay('constante'));
-$contract = callDoliApi("GET", "/doliconnector/constante/MAIN_MODULE_CONTRAT", null, dolidelay('constante'));
-$member = callDoliApi("GET", "/doliconnector/constante/MAIN_MODULE_ADHERENTSPLUS", null, dolidelay('constante'));
 $memberconsumption = callDoliApi("GET", "/doliconnector/constante/ADHERENT_CONSUMPTION", null, dolidelay('constante'));
 $linkedmember = callDoliApi("GET", "/doliconnector/constante/ADHERENT_LINKEDMEMBER", null, dolidelay('constante'));
-$donation = callDoliApi("GET", "/doliconnector/constante/MAIN_MODULE_DON", null, dolidelay('constante'));
-$help = callDoliApi("GET", "/doliconnector/constante/MAIN_MODULE_TICKET", null, dolidelay('constante'));
 }
 
 function informations_menu($arg) {
@@ -605,7 +599,7 @@ print dolipaymentmethods(null, null, $url, esc_attr(isset($_GET["refresh"]) ? $_
 
 //*****************************************************************************************
 
-if ( is_object($proposal) && $proposal->value == 1 ) {
+if ( !empty(doliconst('MAIN_MODULE_PROPALE')) ) {
 add_action( 'customer_doliconnect_menu', 'proposals_menu', 1, 1);
 add_action( 'customer_doliconnect_proposals', 'proposals_module');
 }
@@ -731,7 +725,7 @@ print '</div></div>';
 }
 }
 
-if ( is_object($order) && $order->value == 1 ) {
+if ( !empty(doliconst('MAIN_MODULE_COMMANDE')) ) {
 add_action( 'customer_doliconnect_menu', 'orders_menu', 2, 1);
 add_action( 'customer_doliconnect_orders', 'orders_module');
 }
@@ -1052,7 +1046,7 @@ print '</div></div>';
 }
 }
 
-if ( is_object($contract) && $contract->value == 1 && get_option('doliconnectbeta') == '1' ) {
+if ( !empty(doliconst('MAIN_MODULE_CONTRAT')) && get_option('doliconnectbeta') == '1' ) {
 add_action( 'customer_doliconnect_menu', 'contracts_menu', 2, 1);
 add_action( 'customer_doliconnect_contracts', 'contracts_module');
 }
@@ -1198,7 +1192,7 @@ print '</div></div>';
 }
 }
 
-if ( is_object($donation) && $donation->value == '1' ) {
+if ( !empty(doliconst('MAIN_MODULE_DON')) ) {
 add_action( 'customer_doliconnect_menu', 'donations_menu', 5, 1);
 add_action( 'customer_doliconnect_donations', 'donations_module');
 }  
@@ -1315,8 +1309,10 @@ print '</div></div>';
 
 }
 }
+
 //*****************************************************************************************
-if ( is_object($member) && $member->value == '1' ) {
+
+if ( !empty(doliconst('MAIN_MODULE_ADHERENTSPLUS')) ) {
 add_action( 'options_doliconnect_menu', 'members_menu', 1, 1);
 add_action( 'options_doliconnect_members', 'members_module');
 }
@@ -1619,9 +1615,10 @@ print "<div id='Footermember".$member->id."-form' class='modal-footer'><button n
 }}
 
 }
+
 //*****************************************************************************************
 
-if ( is_object($help) && $help->value == '1' ) {
+if ( !empty(doliconst('MAIN_MODULE_TICKET')) ) {
 add_action( 'settings_doliconnect_menu', 'tickets_menu', 1, 1);
 add_action( 'settings_doliconnect_tickets', 'tickets_module');
 }
