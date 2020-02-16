@@ -219,7 +219,7 @@ $button .= "<div class='input-group'><a class='btn btn-block btn-info' href='".d
 if ( !empty(doliconnector($current_user, 'remise_percent')) ) { $button .= "<small>".sprintf( esc_html__( 'you get %u %% discount', 'doliconnect'), doliconnector($current_user, 'remise_percent'))."</small>"; }
 $button .= "<input type='hidden' name='product_update[".$product->id."][price]' value='".$price_ttc."'></form>";
 $button .= '<div id="product-add-loading-'.$product->id.'" style="display:none">'.doliprice($price_ttc).'<button class="btn btn-secondary btn-block" disabled><i class="fas fa-spinner fa-pulse fa-1x fa-fw"></i> '.__( 'Loading', 'doliconnect').'</button></div>';
-$button .= "";
+
 return $button;
 }
 
