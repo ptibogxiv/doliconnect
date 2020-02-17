@@ -1850,9 +1850,11 @@ global $current_user;
 function doliconnect_addtocart($product, $category=0, $add=0, $time=0) {
 global $current_user;
 
-wp_enqueue_script( 'doliaddtocart-scripts');
+//wp_enqueue_script( 'doliaddtocart-scripts');
 
-$button = "<form id='product-form' method='post'>";//product-add-form-".$product->id."
+
+
+$button = "<form class='product-add-form-".$product->id."' method='post' action='".admin_url('admin-ajax.php')."'>";//product-add-form-".$product->id."
 $button .= "<input type='hidden' name='action' value='dolicontact_form'>";
 $button .= "<input type='hidden' name='gdrf_data_email' value='support@ptibogxiv.net'>";
 $button .= "<input type='hidden' name='gdrf_data_human_key' value='60006'>";
@@ -1860,7 +1862,19 @@ $button .= "<input type='hidden' name='gdrf_data_type' value='export_personal_da
 $button .= "<input type='hidden' name='gdrf_data_nonce' value='".wp_create_nonce( 'gdrf_nonce')."'>";
 
 $button .= "<script>";
-
+$button .= 'jQuery(document).ready(function($) {
+	
+	$(".product-add-form-'.$product->id.'").on("submit", function(e) {
+		e.preventDefault();
+ 
+		var $form = $(this);
+ 
+		$.post($form.attr("action"), $form.serialize(), function(datad) {
+			alert("This is data returned from the server " + datad.data);
+		}, "json");
+	});
+ 
+});';
 $button .= "</script>";
 
 if (doliconnector($current_user, 'fk_order') > 0) {

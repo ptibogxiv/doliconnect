@@ -8,7 +8,7 @@
 
 			event.preventDefault();
 
-			var data = $( this ).serialize();
+			var data = $(this).serialize();
 
 			$( '.product-errors' ).remove();
 			$( '.product-success' ).remove();
