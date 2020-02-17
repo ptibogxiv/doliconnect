@@ -1899,7 +1899,7 @@ print 'var form = document.getElementById("settings-form");
 form.addEventListener("submit", function(event) {
 form.submit();
 });';
-print 'function demo(){
+print 'function Dolisettings(){
 jQuery("#DoliconnectLoadingModal").modal("show");
 this.form.submit();
 }';
@@ -1908,16 +1908,16 @@ print "</script>";
 print "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
 print "<li class='list-group-item'><div class='custom-control custom-switch'><input type='checkbox' class='custom-control-input' name='loginmailalert' id='loginmailalert' ";
 if ( $current_user->loginmailalert == 'on' ) { print " checked"; }        
-print " onChange='demo()'><label class='custom-control-label w-100' for='loginmailalert'> ".__( 'Receive a email notification at each connection', 'doliconnect')."</label>
+print " onChange='Dolisettings()'><label class='custom-control-label w-100' for='loginmailalert'> ".__( 'Receive a email notification at each connection', 'doliconnect')."</label>
 </div></li>";
 if ( get_option('doliconnectbeta') == '1' ) {
 print "<li class='list-group-item'><div class='custom-control custom-switch'><input type='checkbox' class='custom-control-input' name='optin1' id='optin1' ";
 if ( $current_user->optin1 == 'on' ) { print " checked"; }        
-print " onChange='demo()'><label class='custom-control-label w-100' for='optin1'> ".__( 'I would like to receive the newsletter', 'doliconnect')."</label>
+print " onChange='Dolisettings()'><label class='custom-control-label w-100' for='optin1'> ".__( 'I would like to receive the newsletter', 'doliconnect')."</label>
 </div></li>";
 print "<li class='list-group-item'><div class='custom-control custom-switch'><input type='checkbox' class='custom-control-input' name='optin2' id='optin2' ";
 if ( $current_user->optin2 == 'on' ) { print " checked"; }        
-print " onChange='demo()'><label class='custom-control-label w-100' for='optin2'> ".__( 'I would like to receive the offers of our partners', 'doliconnect')."</label>
+print " onChange='Dolisettings()'><label class='custom-control-label w-100' for='optin2'> ".__( 'I would like to receive the offers of our partners', 'doliconnect')."</label>
 </div></li>";
 }
 $privacy=$wpdb->prefix."doliprivacy";
@@ -1931,7 +1931,7 @@ print "<li class='list-group-item'>";
 print "<div class='form-group'><label for='inputaddress'><small>".__( 'Default language', 'doliconnect')."</small></label>
 <div class='input-group'><div class='input-group-prepend'><span class='input-group-text'><i class='fas fa-language fa-fw'></i></span></div>";
 if ( function_exists('pll_the_languages') ) { 
-print "<select class='form-control' id='locale' name='locale' onChange='demo()' >";
+print "<select class='form-control' id='locale' name='locale' onChange='Dolisettings()' >";
 print "<option value=''>".__( 'Default / Browser language', 'doliconnect')."</option>";
 $translations = pll_the_languages( array( 'raw' => 1 ) );
 foreach ($translations as $key => $value) {
@@ -1958,7 +1958,7 @@ print "<li class='list-group-item'>";
 //print $current_user->locale;
 print "<div class='form-group'><label for='inputaddress'><small>".__( 'Default currency', 'doliconnect')."</small></label>
 <div class='input-group'><div class='input-group-prepend'><span class='input-group-text'><i class='fas fa-money-bill-alt fa-fw'></i></span></div>";
-print "<select class='form-control' id='multicurrency_code' name='multicurrency_code' onChange='demo()' ";
+print "<select class='form-control' id='multicurrency_code' name='multicurrency_code' onChange='Dolisettings()' ";
 if ( !empty(doliconst('MAIN_MODULE_MULTICURRENCY', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))) || !doliversion('11.0.0') ) { print " disabled"; }
 print ">";
 if ( !isset( $currencies->error ) && $currencies != null && !empty(doliconst('MAIN_MODULE_MULTICURRENCY', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))) && doliversion('11.0.0')) {
