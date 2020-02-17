@@ -1,8 +1,10 @@
 <?php
 
 function doliconnect_product_block_render( $attributes, $content ) {
+
 doliconnect_enqueues();
-$content = '<DIV class="card shadow-sm"><DIV class="card-body">';
+
+$content = '<div class="card shadow-sm"><DIV class="card-body">';
 if (isset($attributes['productID']) && $attributes['productID']>0) {
 $product = callDoliApi("GET", "/products/".$attributes['productID']."?includestockdata=1", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 //$content .= $product;
@@ -45,7 +47,7 @@ $content .= dolirefresh("/products/".$attributes['productID']."?includestockdata
 $content .= "</div><div class='float-right'>";
 $content .= dolihelp('ISSUE');
 $content .= "</div></small>";
-$content .= "</div></div></form>";
+$content .= "</div></div>";
 return $content;
 }
 function doliconnect_product_block_init() {
