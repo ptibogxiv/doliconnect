@@ -1847,12 +1847,25 @@ global $current_user;
 
 }
 
+add_action('wp_ajax_contact_form', 'dolicontact_form');
+add_action('wp_ajax_nopriv_contact_form', 'dolicontact_form');
+
+function dolicontact_form()
+{
+$data = array(
+'data' => 'error test',
+
+);
+return wp_send_json($data);
+    
+}
+
 function doliconnect_addtocart($product, $category=0, $add=0, $time=0) {
 global $current_user;
 
 wp_enqueue_script( 'doliaddtocart-scripts');
 
-$button = "<form action='".esc_url( admin_url( 'admin-ajax.php' ) )."' id='addproduct-form' method='post'>";//product-add-form-".$product->id."
+$button = "<form action='".esc_url( admin_url( 'admin-ajax.php' ) )."' id='product-form' method='post'>";//product-add-form-".$product->id."
 $button .= "<input type='hidden' name='action' value='doli_gdrf_data_request'>";
 $button .= "<input type='hidden' name='gdrf_data_email' value='support@ptibogxiv.net'>";
 $button .= "<input type='hidden' name='gdrf_data_human_key' value='60006'>";
@@ -1878,12 +1891,9 @@ $qty=null;
 $ln=null;
 }
 
-$button .= doliloaderscript('product-add-form-'.$product->id.'', false);
+//$button .= doliloaderscript('product-add-form-'.$product->id.'', false);
 
 $button .= "<input type='hidden' name='product_update' value='$product->id'><input type='hidden' name='product_update[".$product->id."][product]' value='$product->id'>";
-$button .= "<script>";
-
-$button .= "</script>";
 
 $currency=isset($orderfo->multicurrency_code)?$orderfo->multicurrency_code:'eur';
 
@@ -1986,7 +1996,7 @@ $button .= "<option value='$number' >x ".$number."</option>";
 		}
 	}
 }
-$button .= "</select><div class='input-group-append'><button class='btn btn-warning' type='submit' value='submit'><i class='fas fa-cart-plus fa-inverse fa-fw'></i></button></div></div>";
+$button .= "</select><div class='input-group-append'><button id='my-button' class='btn btn-warning' type='submit' value='submit'><i class='fas fa-cart-plus fa-inverse fa-fw'></i></button></div></div>";
 
 if ( $qty > 0 ) {
 $button .= "<br /><div class='input-group'><a class='btn btn-block btn-warning' href='".doliconnecturl('dolicart')."' role='button' title='".__( 'Go to cart', 'doliconnect')."'>".__( 'Go to cart', 'doliconnect')."</a></div>";

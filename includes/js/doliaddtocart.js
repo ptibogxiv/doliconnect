@@ -3,7 +3,8 @@
 
 	jQuery(document).ready(function() {
 
-		$( '#addproduct-form' ).on( 'submit', function( event ) {
+		$( '#product-form' ).on( 'submit', function( event ) {
+    
 
 			event.preventDefault();
 
@@ -18,12 +19,12 @@
 				data: data,
 				success: function( response ) {
 					if ( 'success' !== response.data ) {
-						$( '#gdrf-form' ).append( '<div class="gdrf-errors" style="display:none;">' + gdrf_localize.gdrf_errors + '<br />' + response.data + '</div>' );
+						$( '#product-form' ).append( '<div class="gdrf-errors" style="display:none;">' + gdrf_errors + '<br />' + response.data + '</div>' );
 						$( '.gdrf-errors' ).slideDown();
 					} else {
-						$( '#gdrf-form' ).append( '<div class="gdrf-success" style="display:none;">' + gdrf_localize.gdrf_success + '</div>' );
+						$( '#product-form' ).append( '<div class="gdrf-success" style="display:none;">' + gdrf_success + '<br />' + response.data + '</div>' );
 						$( '.gdrf-success' ).slideDown();
-					}
+					}                  
 				}
 			});
 		});
