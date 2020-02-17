@@ -11,6 +11,17 @@ function enqueue_scripts_doli_gdrf_public() {
 	wp_localize_script( 'gdrf-public-scripts', 'gdrf_localize', $translations );
 }
 
+add_action( 'wp_enqueue_scripts', 'enqueue_scripts_doliaddtocart' );
+function enqueue_scripts_doliaddtocart() {
+	wp_register_script( 'doliaddtocart-scripts', plugins_url( 'doliconnect/includes/js/doliaddtocart.js'), array( 'jquery' ), '', false );
+	$translations = array(
+		'gdrf_ajax_url' => esc_url( admin_url( 'admin-ajax.php' ) ),
+		'gdrf_success'  => __( 'Your enquiry have been submitted. Check your email to validate your data request.', 'doliconnect'),
+		'gdrf_errors'   => __( 'Some errors occurred:', 'doliconnect'),
+	);
+	wp_localize_script( 'doliaddtocart-scripts', 'gdrf_localize', $translations );
+}
+
 function doliconnect_enqueues() { 
 
 /* Styles */
