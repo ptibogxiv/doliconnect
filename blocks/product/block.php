@@ -4,7 +4,7 @@ function doliconnect_product_block_render( $attributes, $content ) {
 
 doliconnect_enqueues();
 
-$content = '<div class="card shadow-sm"><DIV class="card-body">';
+$content = '<div class="card shadow-sm"><div class="card-body">';
 if (isset($attributes['productID']) && $attributes['productID']>0) {
 $product = callDoliApi("GET", "/products/".$attributes['productID']."?includestockdata=1", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 //$content .= $product;
