@@ -1898,9 +1898,23 @@ $altdurvalue=60/$product->duration_value;
 }
 
 if ( !empty(callDoliApi("GET", "/doliconnector/constante/PRODUIT_MULTIPRICES", null, dolidelay('constante'))->value) && !empty($product->multiprices_ttc) ) {
-$button .= '<table class="table table-sm table-striped"><tbody>';
 $lvl=doliconnector($current_user, 'price_level');
 //$button .=$lvl;
+
+if (!empty(doliconnector($current_user, 'price_level'))) {
+$level=doliconnector($current_user, 'price_level');
+$price_min_ttc=$product->multiprices_min->$level;
+$price_ttc=$product->multiprices->$level;
+} else {
+$level=1;
+$price_ttc=$product->multiprices->$level;
+}
+
+if (isset($add) && $add == 2) {
+$button .= '<table class="table table-sm"><tbody>'; 
+$button .= '<tr><td class="text-right">'.doliprice( $product->multiprices_ttc->$level, $currency)."</td></tr>";
+} else {
+$button .= '<table class="table table-sm table-striped"><tbody>';
 foreach ( $product->multiprices_ttc as $level => $price ) {
 $button .= '<tr';
 if ( (empty(doliconnector($current_user, 'price_level')) && $level == 1 ) || doliconnector($current_user, 'price_level') == $level ) {
@@ -1915,14 +1929,8 @@ if ( !empty($altdurvalue) ) { $button .= "<td class='text-right'>soit ".dolipric
 //$button .= '<small class="float-right">'.__( 'You benefit from the rate', 'doliconnect').' '.doliconst('PRODUIT_MULTIPRICES_LABEL'.$level).'</small>';
 $button .= '</tr>'; 
 }
-if (!empty(doliconnector($current_user, 'price_level'))) {
-$level=doliconnector($current_user, 'price_level');
-$price_min_ttc=$product->multiprices_min->$level;
-$price_ttc=$product->multiprices->$level;
-} else {
-$level=1;
-$price_ttc=$product->multiprices->$level;
 }
+
 $button .= '</tbody></table>';
 } else {
 $button .= '<table class="table table-sm table-striped"><tbody>';
