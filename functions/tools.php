@@ -1856,7 +1856,8 @@ global $current_user;
 
 $button = "<form class='product-add-form-".$product->id."' method='post' action='".admin_url('admin-ajax.php')."'>";//product-add-form-".$product->id."
 $button .= "<input type='hidden' name='action' value='dolicontact_form'>";
-$button .= "<input type='hidden' name='gdrf_data_nonce' value='".wp_create_nonce( 'gdrf_nonce')."'>";
+$button .= "<input type='hidden' name='product-add-nonce' value='".wp_create_nonce( 'product-add-nonce-'.$product->id)."'>";
+//$button .= "<input type='hidden' name='product_update[".$product->id."][product]' value='".$product->id."'>";
 
 $button .= "<script>";
 $button .= 'jQuery(document).ready(function($) {
@@ -1892,10 +1893,6 @@ if (!isset($qty) ) {
 $qty=null;
 $ln=null;
 }
-
-//$button .= doliloaderscript('product-add-form-'.$product->id.'', false);
-
-$button .= "<input type='hidden' name='product_update' value='$product->id'><input type='hidden' name='product_update[".$product->id."][product]' value='$product->id'>";
 
 $currency=isset($orderfo->multicurrency_code)?$orderfo->multicurrency_code:'eur';
 
@@ -1985,7 +1982,7 @@ $step = $product->array_options->options_packaging;
 } else {
 $step = 1;
 }
-$button .= "<div class='input-group mb-3'><select class='form-control' id='select' name='gdrf_data_human' ";
+$button .= "<div class='input-group mb-3'><select class='form-control' id='select' name='product-add-qty' ";
 if ( ( empty($product->stock_reel) || $m2 < $step) && $product->type == '0' && !empty(doliconst('MAIN_MODULE_STOCK')) ) { $button .= " disabled"; }
 $button .= ">";
 if ($m2 < $step)  { $button .= "<OPTION value='0' >x 0</OPTION>"; }
