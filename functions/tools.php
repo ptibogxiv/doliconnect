@@ -1852,7 +1852,7 @@ global $current_user;
 
 wp_enqueue_script( 'doliaddtocart-scripts');
 
-$button = "<form action='".esc_url( admin_url( 'admin-ajax.php' ) )."' id='gdrf-form' method='post'>";//product-add-form-".$product->id."
+$button = "<form action='".esc_url( admin_url( 'admin-ajax.php' ) )."' id='addproduct-form' method='post'>";//product-add-form-".$product->id."
 $button .= "<input type='hidden' name='action' value='doli_gdrf_data_request'>";
 $button .= "<input type='hidden' name='gdrf_data_email' value='support@ptibogxiv.net'>";
 $button .= "<input type='hidden' name='gdrf_data_human_key' value='60006'>";

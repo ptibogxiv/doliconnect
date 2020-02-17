@@ -3,7 +3,7 @@
 
 	jQuery(document).ready(function() {
 
-		$( '#gdrf-form' ).on( 'submit', function( event ) {
+		$( '#addproduct-form' ).on( 'submit', function( event ) {
 
 			event.preventDefault();
 
