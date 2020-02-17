@@ -1880,7 +1880,7 @@ if ( isset($_POST['locale']) ) { update_user_meta( $ID, 'locale', sanitize_text_
 
 if ( doliconnector($current_user, 'fk_soc') > 0 ) {
 $info = array();
-if (isset($_POST['locale'])) $info['default_lang'] .= sanitize_text_field($_POST['locale']);
+if (isset($_POST['locale']) && !empty($_POST['locale'])) $info['default_lang'] .= sanitize_text_field($_POST['locale']);
 if (isset($_POST['multicurrency_code'])) $info['multicurrency_code'] .= sanitize_text_field($_POST['multicurrency_code']);
 $thirparty = callDoliApi("PUT", "/thirdparties/".doliconnector($current_user, 'fk_soc'), $info, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 }
