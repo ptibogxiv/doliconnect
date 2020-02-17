@@ -1853,7 +1853,6 @@ global $current_user;
 $button = "<form class='product-add-form-".$product->id."' method='post' action='".admin_url('admin-ajax.php')."'>";//product-add-form-".$product->id."
 $button .= "<input type='hidden' name='action' value='dolicontact_form'>";
 $button .= "<input type='hidden' name='product-add-nonce' value='".wp_create_nonce( 'product-add-nonce-'.$product->id)."'>";
-//$button .= "<input type='hidden' name='product_update[".$product->id."][product]' value='".$product->id."'>";
 
 $button .= "<script>";
 $button .= 'jQuery(document).ready(function($) {
@@ -2012,7 +2011,7 @@ $button .= "<div class='input-group'><a class='btn btn-block btn-info' href='".d
 }
 
 if ( !empty(doliconnector($current_user, 'remise_percent')) ) { $button .= "<small>".sprintf( esc_html__( 'you get %u %% discount', 'doliconnect'), doliconnector($current_user, 'remise_percent'))."</small>"; }
-$button .= "<input type='hidden' name='product_update[".$product->id."][price]' value='".$price_ttc."'>";
+$button .= "<input type='hidden' name='product-add-price' value='".$price_ttc."'>";
 $button .= '<div id="product-add-loading-'.$product->id.'" style="display:none">'.doliprice($price_ttc).'<button class="btn btn-secondary btn-block" disabled><i class="fas fa-spinner fa-pulse fa-1x fa-fw"></i> '.__( 'Loading', 'doliconnect').'</button></div>';
 
 

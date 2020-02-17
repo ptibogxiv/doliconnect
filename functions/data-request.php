@@ -64,7 +64,8 @@ add_action('wp_ajax_nopriv_dolicontact_form', 'dolicontact_form');
 
 function dolicontact_form()
 {
+global $current_user;
 
-wp_send_json_success( esc_html( filter_input( INPUT_POST, 'product-add-qty', FILTER_SANITIZE_STRING ) ) );
+wp_send_json_success( esc_html( filter_input( INPUT_POST, 'product-add-price', FILTER_SANITIZE_STRING ) ) );
 die();    
 }
