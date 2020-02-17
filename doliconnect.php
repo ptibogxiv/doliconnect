@@ -66,7 +66,7 @@ return get_option($page);
 //function app_output_buffer() {
 //ob_start();
 //} 
-///add_action('init', 'app_output_buffer');
+//add_action('init', 'app_output_buffer');
 // ********************************************************
 function dolibarr_entity( $entity = null ) {
 
