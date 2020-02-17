@@ -1974,7 +1974,7 @@ $step = $product->array_options->options_packaging;
 } else {
 $step = 1;
 }
-$button .= "<div class='input-group mb-3'><select class='form-control' id='select' name='gdrf_data_human' onChange='ChangeDoliCart();' ";
+$button .= "<div class='input-group mb-3'><select class='form-control' id='select' name='gdrf_data_human' ";
 if ( ( empty($product->stock_reel) || $m2 < $step) && $product->type == '0' && !empty(doliconst('MAIN_MODULE_STOCK')) ) { $button .= " disabled"; }
 $button .= ">";
 if ($m2 < $step)  { $button .= "<OPTION value='0' >x 0</OPTION>"; }
