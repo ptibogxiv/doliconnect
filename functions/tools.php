@@ -1956,7 +1956,7 @@ $price_ttc=$product->price;
 $button .= '</tbody></table>';
 }
 
-if ( is_user_logged_in() && $add == 1 && !empty(doliconst('MAIN_MODULE_COMMANDE')) && doliconnectid('dolicart') > 0 ) {
+if ( is_user_logged_in() && !empty($add) && !empty(doliconst('MAIN_MODULE_COMMANDE')) && doliconnectid('dolicart') > 0 ) {
 if ( ($product->stock_reel-$qty > 0 && $product->type == '0') ) {
 if (isset($product->array_options->options_packaging) && !empty($product->array_options->options_packaging)) {
 $m1 = 10*$product->array_options->options_packaging;
