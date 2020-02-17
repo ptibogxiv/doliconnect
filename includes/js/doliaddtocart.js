@@ -3,7 +3,7 @@
 
 	jQuery(document).ready(function() {
 
-		$( '#product-form' ).on( 'submit', function( event ) {
+		$( '#gdrf-form' ).on( 'submit', function( event ) {
     
 
 			event.preventDefault();
@@ -19,10 +19,10 @@
 				data: data,
 				success: function( response ) {
 					if ( 'success' !== response.data ) {
-						$( '#product-form' ).append( '<div class="gdrf-errors" style="display:none;">' + gdrf_errors + '<br />' + response.data + '</div>' );
+						$( '#gdrf-form' ).append( '<div class="gdrf-errors" style="display:none;">' + gdrf_errors + '<br />' + response.data + '</div>' );
 						$( '.gdrf-errors' ).slideDown();
 					} else {
-						$( '#product-form' ).append( '<div class="gdrf-success" style="display:none;">' + gdrf_success + '<br />' + response.data + '</div>' );
+						$( '#gdrf-form' ).append( '<div class="gdrf-success" style="display:none;">' + gdrf_success + '<br />' + response.data + '</div>' );
 						$( '.gdrf-success' ).slideDown();
 					}                  
 				}
