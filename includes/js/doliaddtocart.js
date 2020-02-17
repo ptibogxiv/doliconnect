@@ -10,8 +10,8 @@
 
 			var data = $( this ).serialize();
 
-			$( '.gdrf-errors' ).remove();
-			$( '.gdrf-success' ).remove();
+			$( '.product-errors' ).remove();
+			$( '.product-success' ).remove();
 
 			$.ajax({
 				url: gdrf_localize.gdrf_ajax_url,
@@ -19,11 +19,11 @@
 				data: data,
 				success: function( response ) {
 					if ( 'success' !== response.data ) {
-						$( '#product-form' ).append( '<div class="gdrf-errors" style="display:none;">test:<br />' + response.data + '</div>' );
-						$( '.gdrf-errors' ).slideDown();
+						$( '#product-form' ).append( '<div class="product-errors" style="display:none;">test:<br />' + response.data + '</div>' );
+						$( '.product-errors' ).slideDown();
 					} else {
-						$( '#product-form' ).append( '<div class="gdrf-success" style="display:none;">test:<br />' + response.data + '</div>' );
-						$( '.gdrf-success' ).slideDown();
+						$( '#product-form' ).append( '<div class="product-success" style="display:none;">test:<br />' + response.data + '</div>' );
+						$( '.product-success' ).slideDown();
 					}             
 				}      
 			});
