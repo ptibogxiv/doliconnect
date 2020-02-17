@@ -1856,15 +1856,12 @@ global $current_user;
 
 $button = "<form class='product-add-form-".$product->id."' method='post' action='".admin_url('admin-ajax.php')."'>";//product-add-form-".$product->id."
 $button .= "<input type='hidden' name='action' value='dolicontact_form'>";
-$button .= "<input type='hidden' name='gdrf_data_email' value='support@ptibogxiv.net'>";
-$button .= "<input type='hidden' name='gdrf_data_human_key' value='60006'>";
-$button .= "<input type='hidden' name='gdrf_data_type' value='export_personal_data'>";
 $button .= "<input type='hidden' name='gdrf_data_nonce' value='".wp_create_nonce( 'gdrf_nonce')."'>";
 
 $button .= "<script>";
 $button .= 'jQuery(document).ready(function($) {
 	
-	$(".product-add-form-'.$product->id.'").on("submit", function(e) {
+	jQuery(".product-add-form-'.$product->id.'").on("submit", function(e) {
 		e.preventDefault();
  
 		var $form = $(this);

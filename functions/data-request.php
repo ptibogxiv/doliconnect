@@ -64,7 +64,7 @@ add_action('wp_ajax_nopriv_dolicontact_form', 'dolicontact_form');
 
 function dolicontact_form()
 {
-//wp_mail('support@ptibogxiv.net', 'test', 'test email cart');
-wp_send_json_success( 'success' );
-	die();    
+
+wp_send_json_success( esc_html( filter_input( INPUT_POST, 'gdrf_data_nonce', FILTER_SANITIZE_STRING ) ) );
+die();    
 }
