@@ -1847,30 +1847,21 @@ global $current_user;
 
 }
 
-add_action('wp_ajax_contact_form', 'dolicontact_form');
-add_action('wp_ajax_nopriv_contact_form', 'dolicontact_form');
-
-function dolicontact_form()
-{
-$data = array(
-'data' => 'error test',
-
-);
-return wp_send_json($data);
-    
-}
-
 function doliconnect_addtocart($product, $category=0, $add=0, $time=0) {
 global $current_user;
 
 wp_enqueue_script( 'doliaddtocart-scripts');
 
 $button = "<form id='gdrf-form' method='post'>";//product-add-form-".$product->id."
-$button .= "<input type='hidden' name='action' value='doli_gdrf_data_request'>";
+$button .= "<input type='hidden' name='action' value='dolicontact_form'>";
 $button .= "<input type='hidden' name='gdrf_data_email' value='support@ptibogxiv.net'>";
 $button .= "<input type='hidden' name='gdrf_data_human_key' value='60006'>";
 $button .= "<input type='hidden' name='gdrf_data_type' value='export_personal_data'>";
 $button .= "<input type='hidden' name='gdrf_data_nonce' value='".wp_create_nonce( 'gdrf_nonce')."'>";
+
+$button .= "<script>";
+
+$button .= "</script>";
 
 if (doliconnector($current_user, 'fk_order') > 0) {
 $orderfo = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order'), null, 0);

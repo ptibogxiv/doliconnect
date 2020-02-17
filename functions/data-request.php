@@ -5,9 +5,6 @@
  * @link       http://jeanbaptisteaudras.com
  * @since      1.0
  *
- * @package    gdpr-data-request-form
- * @subpackage gdpr-data-request-form/includes
- * @prefix     gdrf_
  */
 
 function doli_gdrf_data_request() {
@@ -60,3 +57,13 @@ function doli_gdrf_data_request() {
 
 add_action( 'wp_ajax_doli_gdrf_data_request', 'doli_gdrf_data_request' );
 add_action( 'wp_ajax_nopriv_doli_gdrf_data_request', 'doli_gdrf_data_request' );
+
+
+add_action('wp_ajax_dolicontact_form', 'dolicontact_form');
+add_action('wp_ajax_nopriv_dolicontact_form', 'dolicontact_form');
+
+function dolicontact_form()
+{
+wp_send_json_success( 'success' );
+	die();    
+}
