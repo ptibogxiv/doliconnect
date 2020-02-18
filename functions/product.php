@@ -36,10 +36,10 @@ return numfmt_format_currency($fmt, $montant, $currency);//.$decimal
 }
 
 function doliconnect_image($module, $object, $mode = null, $refresh = null) {
-$img =  callDoliApi("GET", "/documents?modulepart=".$module."&id=".$object->id, null, dolidelay('product', $refresh));
+$img =  callDoliApi("GET", "/documents?modulepart=".$module."&id=".$object->id, null, dolidelay('document', $refresh));
 //print var_dump($img);
 if ( !isset($img->error) && $img != null ) {
-$imgj =  callDoliApi("GET", "/documents/download?modulepart=product&original_file=".$img[0]->level1name."/".$img[0]->relativename, null, dolidelay('product', $refresh));
+$imgj =  callDoliApi("GET", "/documents/download?modulepart=product&original_file=".$img[0]->level1name."/".$img[0]->relativename, null, 0);
 //print var_dump($imgj);
 $imgj = (array) $imgj; 
 if (is_array($imgj) && $imgj['content-type'] == 'image/jpeg') {
