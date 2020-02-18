@@ -66,6 +66,6 @@ function dolicontact_form()
 {
 global $current_user;
 
-wp_send_json_success( esc_html( filter_input( INPUT_POST, 'product-add-price', FILTER_SANITIZE_STRING ) ) );
+wp_send_json_success( trim($_POST['product-add-price']) );
 die();    
 }
