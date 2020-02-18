@@ -41,9 +41,10 @@ $img =  callDoliApi("GET", "/documents?modulepart=".$module."&id=".$object->id, 
 if ( !isset($img->error) && $img != null ) {
 $imgj =  callDoliApi("GET", "/documents/download?modulepart=product&original_file=".$img[0]->level1name."/".$img[0]->relativename, null, dolidelay('product', $refresh));
 //print var_dump($imgj);
-if (is_object($imgj)) {
-$data = "data:image/jpeg;".$imgj->encoding.",".$imgj->content;
-$image = "<img src='".$data ."' class='img-fluid img-thumbnail'  alt='".$imgj->filename."'>";
+$imgj = (array) $imgj; 
+if (is_array($imgj)) {
+$data = "data:".$imgj['content-type'].";".$imgj['encoding'].",".$imgj['content'];
+$image = "<img src='".$data ."' class='img-fluid img-thumbnail'  alt='".$imgj['filename']."'>";
 } else {
 $image = "<i class='fa fa-cube fa-fw fa-2x'></i>";
 }
