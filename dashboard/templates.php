@@ -976,21 +976,23 @@ print "<li class='list-group-item' id='prod-li-".$product->id."'><table width='1
 print doliconnect_image('product', $product, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 print "</center></td>";
 
-print "<td style='border:0px'><b>".doliproduct($product, 'label')."</b>";
+print "<td width='80%' style='border:0px'><b>".doliproduct($product, 'label')."</b>";
 if ( ! empty(doliconnectid('dolicart')) ) { 
 print " ".doliproductstock($product);
 }
-print "<br><small>".__( 'Reference', 'doliconnect').": ".$product->ref;
+print "<div class='row'><div class='col'><small>".__( 'Reference', 'doliconnect').": ".$product->ref;
 if ( !empty($product->barcode) ) { print " / ".__( 'Barcode', 'doliconnect').": ".$product->barcode; }
-print "</small><p>".doliproduct($product, 'description')."</p></td>";
+print "</small>";
+//print "<p>".doliproduct($product, 'description')."</p>";
+print "</div>";
 
 if ( ! empty(doliconnectid('dolicart')) ) { 
-print "<td width='200px' style='border:0px'><center>";
+print "<div class='col-12 col-md-6'><center>";
 //print doliproducttocart($product, esc_attr($_GET['category']), 1);
 print doliconnect_addtocart($product, esc_attr($_GET['category']), 0, 2, 0);
-print "</center></td>";
+print "</center></div>";
 }
-print "</tr></table></li>"; 
+print "</div></td></tr></table></li>"; 
 }
 } else {
 print "<li class='list-group-item list-group-item-light'><center>".__( 'No product', 'doliconnect')."</center></li>";

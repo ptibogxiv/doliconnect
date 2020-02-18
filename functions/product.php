@@ -44,7 +44,9 @@ $imgj =  callDoliApi("GET", "/documents/download?modulepart=product&original_fil
 if (is_object($imgj)) {
 $data = "data:image/jpeg;".$imgj->encoding.",".$imgj->content;
 $image = "<img src='".$data ."' class='img-fluid img-thumbnail'  alt='".$imgj->filename."'>";
-} 
+} else {
+$image = "<i class='fa fa-cube fa-fw fa-2x'></i>";
+}
 } else {
 $image = "<i class='fa fa-cube fa-fw fa-2x'></i>";
 }
