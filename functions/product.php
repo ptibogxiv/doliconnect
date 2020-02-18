@@ -42,7 +42,7 @@ if ( !isset($img->error) && $img != null ) {
 $imgj =  callDoliApi("GET", "/documents/download?modulepart=product&original_file=".$img[0]->level1name."/".$img[0]->relativename, null, dolidelay('product', $refresh));
 //print var_dump($imgj);
 $imgj = (array) $imgj; 
-if (is_array($imgj)) {
+if (is_array($imgj) && $imgj['content-type'] == 'image/jpeg') {
 $data = "data:".$imgj['content-type'].";".$imgj['encoding'].",".$imgj['content'];
 $image = "<img src='".$data ."' class='img-fluid img-thumbnail'  alt='".$imgj['filename']."'>";
 } else {
