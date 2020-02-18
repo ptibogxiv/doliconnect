@@ -1850,14 +1850,14 @@ global $current_user;
 function doliconnect_addtocart($product, $category = 0, $quantity = 0, $add = 0, $time = 0, $refresh = null) {
 global $current_user;
 
-$button = "<form class='product-add-form-".$product->id."' method='post' action='".admin_url('admin-ajax.php')."'>";//product-add-form-".$product->id."
+$button = "<form class='product-".$product->id."' method='post' action='".admin_url('admin-ajax.php')."'>";//product-add-form-".$product->id."
 $button .= "<input type='hidden' name='action' value='doliaddproduct_request'>";
 $button .= "<input type='hidden' name='product-add-nonce' value='".wp_create_nonce( 'product-add-nonce-'.$product->id)."'>";
 
 $button .= "<script>";
 $button .= 'jQuery(document).ready(function($) {
 	
-	jQuery(".product-add-form-'.$product->id.'").on("submit", function(e) {
+	jQuery(".product-'.$product->id.'").on("submit", function(e) {
 		e.preventDefault();
  
 		var $form = $(this);
