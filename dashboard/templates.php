@@ -980,11 +980,10 @@ print "<td width='80%' style='border:0px'><b>".doliproduct($product, 'label')."<
 if ( ! empty(doliconnectid('dolicart')) ) { 
 print " ".doliproductstock($product);
 }
-print "<div class='row'><div class='col'><small>".__( 'Reference', 'doliconnect').": ".$product->ref;
-if ( !empty($product->barcode) ) { print " / ".__( 'Barcode', 'doliconnect').": ".$product->barcode; }
-print "</small>";
-//print "<p>".doliproduct($product, 'description')."</p>";
-print "</div>";
+print "<div class='row'><div class='col'><p><small>".__( 'Reference', 'doliconnect').": ".$product->ref."</small>";
+if ( !empty($product->barcode) ) { print "<br><small>".__( 'Barcode', 'doliconnect').": ".$product->barcode."</small>"; }
+//print "<p>".doliproduct($product, 'description')."</p>"; 
+print "</p></div>";
 
 if ( ! empty(doliconnectid('dolicart')) ) { 
 print "<div class='col-12 col-md-6'><center>";
