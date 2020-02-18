@@ -1847,11 +1847,11 @@ global $current_user;
 
 }
 
-function doliconnect_addtocart($product, $category=0, $add=0, $time=0, $refresh = null) {
+function doliconnect_addtocart($product, $category = 0, $quantity = 0, $add = 0, $time = 0, $refresh = null) {
 global $current_user;
 
 $button = "<form class='product-add-form-".$product->id."' method='post' action='".admin_url('admin-ajax.php')."'>";//product-add-form-".$product->id."
-$button .= "<input type='hidden' name='action' value='dolicontact_form'>";
+$button .= "<input type='hidden' name='action' value='doliaddproduct_request'>";
 $button .= "<input type='hidden' name='product-add-nonce' value='".wp_create_nonce( 'product-add-nonce-'.$product->id)."'>";
 
 $button .= "<script>";
@@ -1879,14 +1879,13 @@ if ( isset($orderfo) && $orderfo->lines != null ) {
 foreach ($orderfo->lines as $line) {
 if  ($line->fk_product == $product->id) {
 //$button = var_dump($line);
-$qty=$line->qty;
-$ln=$line->id;
+$qty = $line->qty;
+$ln = $line->id;
 }
 }}
-
 if (!isset($qty) ) {
-$qty=null;
-$ln=null;
+$qty = null;
+$ln = null;
 }
 
 $currency=isset($orderfo->multicurrency_code)?$orderfo->multicurrency_code:'eur';
@@ -1994,14 +1993,16 @@ $button .= ">";
 if ($m2 < $step)  { $button .= "<OPTION value='0' >x 0</OPTION>"; }
 if (!empty($m2) && $m2 >= $step) {
 foreach (range(0, $m2, $step) as $number) {
-		if ( $number == $qty ) {
+		if ( $number == $qty || ($number == $quantity && empty($qty)) ) {
 $button .= "<option value='$number' selected='selected'>x ".$number."</option>";
 		} else {
 $button .= "<option value='$number' >x ".$number."</option>";
 		}
 	}
 }
-$button .= "</select><div class='input-group-append'><button id='my-button' class='btn btn-warning' type='submit' value='submit'><i class='fas fa-cart-plus fa-inverse fa-fw'></i></button></div></div>";
+$button .= "</select><div class='input-group-append'><button id='my-button' class='btn btn-warning' type='submit' value='submit'";
+if ( ( empty($product->stock_reel) || $m2 < $step) && $product->type == '0' && !empty(doliconst('MAIN_MODULE_STOCK')) ) { $button .= " disabled"; }
+$button .= "><i class='fas fa-cart-plus fa-inverse fa-fw'></i></button></div></div>";
 
 if ( $qty > 0 ) {
 $button .= "<br /><div class='input-group'><a class='btn btn-block btn-warning' href='".doliconnecturl('dolicart')."' role='button' title='".__( 'Go to cart', 'doliconnect')."'>".__( 'Go to cart', 'doliconnect')."</a></div>";

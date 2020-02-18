@@ -984,7 +984,8 @@ print "</small><p>".doliproduct($product, 'description')."</p></td>";
 
 if ( ! empty(doliconnectid('dolicart')) ) { 
 print "<td width='200px' style='border:0px'><center>";
-print doliproducttocart($product, esc_attr($_GET['category']), 1);
+//print doliproducttocart($product, esc_attr($_GET['category']), 1);
+print doliconnect_addtocart($product, esc_attr($_GET['category']), 0, 2, 0);
 print "</center></td>";
 }
 print "</tr></table></li>"; 

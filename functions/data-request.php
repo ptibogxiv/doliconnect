@@ -59,13 +59,13 @@ add_action( 'wp_ajax_doli_gdrf_data_request', 'doli_gdrf_data_request' );
 add_action( 'wp_ajax_nopriv_doli_gdrf_data_request', 'doli_gdrf_data_request' );
 
 
-add_action('wp_ajax_dolicontact_form', 'dolicontact_form');
-add_action('wp_ajax_nopriv_dolicontact_form', 'dolicontact_form');
+add_action('wp_ajax_doliaddproduct_request', 'doliaddproduct_request');
+add_action('wp_ajax_nopriv_doliaddproduct_request', 'doliaddproduct_request');
 
-function dolicontact_form()
+function doliaddproduct_request()
 {
 global $current_user;
 
-wp_send_json_success( trim($_POST['product-add-price']) );
+wp_send_json_success( trim($_POST['product-add-qty']) );
 die();    
 }
