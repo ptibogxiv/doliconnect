@@ -1992,7 +1992,7 @@ if ( ( empty($product->stock_reel) || $m2 < $step) && $product->type == '0' && !
 $button .= ">";
 if ($m2 < $step)  { $button .= "<OPTION value='0' >x 0</OPTION>"; }
 if (!empty($m2) && $m2 >= $step) {
-if (empty($qty) && $quantity < $m2) $quantity=$m2; 
+if (empty($qty) && $quantity > $m2) $quantity=$m2; 
 foreach (range(0, $m2, $step) as $number) {
 		if ( $number == $qty || ($number == $quantity && empty($qty)) ) {
 $button .= "<option value='$number' selected='selected'>x ".$number."</option>";
