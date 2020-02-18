@@ -982,7 +982,12 @@ print " ".doliproductstock($product);
 }
 print "<div class='row'><div class='col'><p><small>".__( 'Reference', 'doliconnect').": ".$product->ref."</small>";
 if ( !empty($product->barcode) ) { print "<br><small>".__( 'Barcode', 'doliconnect').": ".$product->barcode."</small>"; }
-//print "<p>".doliproduct($product, 'description')."</p>"; 
+//print "<p>".doliproduct($product, 'description')."</p>";
+ 
+$arr_params = array( 'category' => $_GET['category'], 'subcategory' => isset($_GET['subcategory'])?$_GET['subcategory']:null, 'product' => $product->id);  
+$return = esc_url( add_query_arg( $arr_params, doliconnecturl('dolishop')) );
+print "<a href='".$return."' class='btn btn-link'>En savoir plus</a>";
+ 
 print "</p></div>";
 
 if ( ! empty(doliconnectid('dolicart')) ) { 
