@@ -63,10 +63,10 @@ $stock = "<span class='badge badge-pill badge-success'>".__( 'Available', 'dolic
 $minstock = min(array($product->stock_theorique,$product->stock_reel));
 $maxstock = max(array($product->stock_theorique,$product->stock_reel));
 
-if ( $maxstock <= 0 || (isset($product->array_options->options_packaging) && $maxstock <= $product->array_options->options_packaging ) ) { $stock = "<span class='badge badge-pill badge-dark'>".__( 'Out of stock', 'doliconnect')."</span>"; }  
-elseif ( ($minstock <= 0 || (isset($product->array_options->options_packaging) && $product->stock_reel < $product->array_options->options_packaging)) && $maxstock >= 0 && $product->stock_theorique > $product->stock_reel ) { $stock = "<span class='badge badge-pill badge-secondary'>".__( 'Replenishment', 'doliconnect')."</span>"; }
-elseif ( $minstock >= 0 && $maxstock <= $product->seuil_stock_alerte ) { $stock = "<span class='badge badge-pill badge-danger'>".__( 'Limited stock', 'doliconnect')."</span>"; } 
-else { $stock = "<span class='badge badge-pill badge-success'>".__( 'In stock', 'doliconnect')."</span>"; }
+if ( $maxstock <= 0 || (isset($product->array_options->options_packaging) && $maxstock <= $product->array_options->options_packaging ) ) { $stock = "<span class='badge badge-pill badge-dark'><i class='fas fa-warehouse'></i> ".__( 'Out of stock', 'doliconnect')."</span>"; }  
+elseif ( ($minstock <= 0 || (isset($product->array_options->options_packaging) && $product->stock_reel < $product->array_options->options_packaging)) && $maxstock >= 0 && $product->stock_theorique > $product->stock_reel ) { $stock = "<span class='badge badge-pill badge-secondary'><i class='fas fa-warehouse'></i> ".__( 'Replenishment', 'doliconnect')."</span>"; }
+elseif ( $minstock >= 0 && $maxstock <= $product->seuil_stock_alerte ) { $stock = "<span class='badge badge-pill badge-danger'><i class='fas fa-warehouse'></i> ".__( 'Limited stock', 'doliconnect')."</span>"; } 
+else { $stock = "<span class='badge badge-pill badge-success'><i class='fas fa-warehouse'></i> ".__( 'In stock', 'doliconnect')."</span>"; }
 }
 //$stock .= $product->stock_theorique;
 return $stock;
