@@ -35,6 +35,22 @@ $fmt = numfmt_create( $locale, NumberFormatter::CURRENCY );
 return numfmt_format_currency($fmt, $montant, $currency);//.$decimal
 }
 
+function doliconnect_image($module, $object, $mode = null, $refresh = null) {
+$img =  callDoliApi("GET", "/documents?modulepart=".$module."&id=".$object->id, null, dolidelay('product', $refresh));
+//print var_dump($img);
+if ( !isset($img->error) && $img != null ) {
+$imgj =  callDoliApi("GET", "/documents/download?modulepart=product&original_file=".$img[0]->level1name."/".$img[0]->relativename, null, dolidelay('product', $refresh));
+//print var_dump($imgj);
+if (is_object($imgj)) {
+$data = "data:image/jpeg;".$imgj->encoding.",".$imgj->content;
+$image = "<img src='".$data ."' class='img-fluid img-thumbnail'  alt='".$imgj->filename."'>";
+} 
+} else {
+$image = "<i class='fa fa-cube fa-fw fa-2x'></i>";
+}
+return $image;
+}
+
 function doliproductstock($product) {
 
 if ( ! is_object($product) || empty(doliconst('MAIN_MODULE_STOCK')) || ($product->type != '0' && empty(doliconst('STOCK_SUPPORTS_SERVICES')) )) {
