@@ -986,7 +986,7 @@ if ( !empty($product->barcode) ) { print "<br><small>".__( 'Barcode', 'doliconne
  
 $arr_params = array( 'category' => $_GET['category'], 'subcategory' => isset($_GET['subcategory'])?$_GET['subcategory']:null, 'product' => $product->id);  
 $return = esc_url( add_query_arg( $arr_params, doliconnecturl('dolishop')) );
-print "<a href='".$return."' class='btn btn-link'>En savoir plus</a>";
+print "<a href='".$return."' class='btn btn-link btn-block'>En savoir plus</a>";
  
 print "</p></div>";
 
