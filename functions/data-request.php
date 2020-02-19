@@ -62,9 +62,14 @@ add_action( 'wp_ajax_nopriv_doli_gdrf_data_request', 'doli_gdrf_data_request' );
 add_action('wp_ajax_doliaddproduct_request', 'doliaddproduct_request');
 add_action('wp_ajax_nopriv_doliaddproduct_request', 'doliaddproduct_request');
 
-function doliaddproduct_request()
-{
+function doliaddproduct_request(){
 global $current_user;
+		
+    if ( ! wp_verify_nonce( trim($_POST['product-add-nonce']), 'product-add-nonce-'.trim($_POST['product-add-id']) ) ) {
+wp_send_json_success( 'error' ); 
+		} else {
 $result = doliaddtocart(trim($_POST['product-add-id']), trim($_POST['product-add-qty']), trim($_POST['product-add-price']), trim($_POST['product-add-remise_percent']), null, null);
-wp_send_json_success( trim($_POST['product-add-qty']) );  
+wp_send_json_success( $result ); 
+    }
+ 
 }

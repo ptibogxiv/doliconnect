@@ -242,6 +242,16 @@ $button .= '<div id="product-add-loading-'.$product->id.'" style="display:none">
 return $button;
 }
 
+function doliconnect_countitems($object){
+$qty=0;
+if ( is_object($object) && isset($object->lines) && $object->lines != null ) {
+foreach ($object->lines as $line) {
+$qty+=$line->qty;
+}
+}
+return $qty;
+}
+
 function doliaddtocart($product, $quantity = null, $price = null, $remise_percent = null, $timestart = null, $timeend = null, $url = null) {
 global $current_user;
 
@@ -301,7 +311,7 @@ $dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolide
 if ( !empty($url) ) {
 set_transient( 'doliconnect_cartlinelink_'.$addline, esc_url($url), dolidelay(MONTH_IN_SECONDS, true));
 }
-return $addline;
+return doliconnect_countitems($order);
 
 } elseif ( doliconnector($current_user, 'fk_order') > 0 && $line > 0 ) {
 
@@ -312,7 +322,7 @@ $order = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order', 
 $dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolidelay('doliconnector', true));
 delete_transient( 'doliconnect_cartlinelink_'.$line );
 
-return $deleteline;
+return doliconnect_countitems($order);
  
 } else {
 
@@ -334,7 +344,7 @@ set_transient( 'doliconnect_cartlinelink_'.$line, esc_url($url), dolidelay(MONTH
 } else {
 delete_transient( 'doliconnect_cartlinelink_'.$line );
 }
-return $updateline;
+return doliconnect_countitems($order);
 
 }
 }

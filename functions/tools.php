@@ -1864,11 +1864,19 @@ $button .= 'jQuery(document).ready(function($) {
  
 		var $form = $(this);
  
-		$.post($form.attr("action"), $form.serialize(), function(datad) {
-			//alert("This is data returned from the server " + datad.data);
-      document.getElementById("DoliHeaderCarItems").innerHTML = datad.data;
-      document.getElementById("DoliWidgetCarItems").innerHTML = datad.data;
-      document.getElementById("DoliFooterCarItems").innerHTML = datad.data;
+		$.post($form.attr("action"), $form.serialize(), function(response) {
+			//alert("This is data returned from the server " + response.data);
+      if (document.getElementById("DoliHeaderCarItems")) {
+      document.getElementById("DoliHeaderCarItems").innerHTML = response.data;
+      }
+      if (document.getElementById("DoliFooterCarItems")) {  
+      document.getElementById("DoliFooterCarItems").innerHTML = response.data;
+      }
+      if (document.getElementById("DoliWidgetCarItems")) {
+      document.getElementById("DoliWidgetCarItems").innerHTML = response.data;      
+      }
+
+
 		}, "json");
 	});
  
