@@ -1866,6 +1866,9 @@ $button .= 'jQuery(document).ready(function($) {
  
 		$.post($form.attr("action"), $form.serialize(), function(datad) {
 			//alert("This is data returned from the server " + datad.data);
+      document.getElementById("DoliHeaderCarItems").innerHTML = datad.data;
+      document.getElementById("DoliWidgetCarItems").innerHTML = datad.data;
+      document.getElementById("DoliFooterCarItems").innerHTML = datad.data;
 		}, "json");
 	});
  

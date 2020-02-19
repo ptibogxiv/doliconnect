@@ -215,7 +215,7 @@ print '<a href="'.doliconnecturl('doliaccount').'" title="'.__('My account', 'do
 
 if ( doliconnectid('dolicart') > 0 ) { 
 print '<a href="'.doliconnecturl('dolicart').'" title="'.__('Basket', 'doliconnect').'"><span class="fa-layers fa-fw fa-2x">
-<i class="fas fa-shopping-bag"></i><span class="fa-layers-counter fa-lg" style="background:Tomato">'.(!empty(doliconnector( null, 'fk_order_nb_item'))?doliconnector( null, 'fk_order_nb_item'):'0').'</span></span></a>';  
+<i class="fas fa-shopping-bag"></i><span class="fa-layers-counter fa-lg" id="DoliWidgetCarItems" style="background:Tomato">'.(!empty(doliconnector( null, 'fk_order_nb_item'))?doliconnector( null, 'fk_order_nb_item'):'0').'</span></span></a>';  
 } 
 
 print $args['after_widget'];  
