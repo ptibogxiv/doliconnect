@@ -1325,7 +1325,7 @@ $time = current_time( 'timestamp',1);
 
 $request = "/adherentsplus/".doliconnector($current_user, 'fk_member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)); 
 
-$productadhesion = callDoliApi("GET", "/doliconnector/constante/ADHERENT_PRODUCT_ID_FOR_SUBSCRIPTIONS", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$productadhesion = doliconst("ADHERENT_PRODUCT_ID_FOR_SUBSCRIPTIONS", dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 if ( isset($_POST["update_membership"]) && function_exists('dolimembership') ) {
 $adherent = dolimembership($current_user, $_POST["update_membership"], $_POST["typeadherent"], dolidelay('member', true));
@@ -1336,7 +1336,7 @@ print dolialert ('success', __( 'Your membership has been updated.', 'doliconnec
 
 if ( ($_POST["update_membership"]==4) && isset($_POST["cotisation"]) && doliconnector($current_user, 'fk_member') > 0 && $_POST["timestamp_start"] > 0 && $_POST["timestamp_end"] > 0 ) {
 
-doliaddtocart($productadhesion->value, 1, $_POST["cotisation"], null, $_POST["timestamp_start"], $_POST["timestamp_end"], $url);
+doliaddtocart($productadhesion, 1, $_POST["cotisation"], null, $_POST["timestamp_start"], $_POST["timestamp_end"], $url);
 wp_redirect(esc_url(doliconnecturl('dolicart')));
 exit;     
 } elseif ( $_POST["update_membership"]==5 || $_POST["update_membership"]==1 ) {
@@ -1380,7 +1380,7 @@ print  "$datefin"; }
 
 print "</div><div class='col-12 col-md-7'>";
 
-if ( function_exists('dolimembership_modal') && !empty(doliconst('MAIN_MODULE_COMMANDE')) && !empty($productadhesion->value) ) {
+if ( function_exists('dolimembership_modal') && !empty(doliconst('MAIN_MODULE_COMMANDE')) && !empty($productadhesion) ) {
 dolimembership_modal($current_user, $adherent, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 //print doliloaderscript('doliconnect-memberform');
@@ -1870,6 +1870,7 @@ function settings_module($url) {
 global $wpdb, $current_user;
 
 $ID = $current_user->ID;
+$monnaie = doliconst("MAIN_MONNAIE", dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 if ( isset($_POST["case"]) && $_POST["case"] == 'updatesettings' ) {
 if ( isset($_POST['loginmailalert'])) { update_user_meta( $ID, 'loginmailalert', sanitize_text_field($_POST['loginmailalert']) ); } else { delete_user_meta($ID, 'loginmailalert'); }
@@ -1879,9 +1880,11 @@ if ( isset($_POST['locale']) ) { update_user_meta( $ID, 'locale', sanitize_text_
 //if (isset($_POST['multicurrency_code'])) {vupdate_user_meta( $ID, 'multicurrency_code', sanitize_text_field($_POST['multicurrency_code']) );v}
 
 if ( doliconnector($current_user, 'fk_soc') > 0 ) {
-$info = array();
-if (isset($_POST['locale']) && !empty($_POST['locale'])) $info['default_lang'] .= sanitize_text_field($_POST['locale']);
-if (isset($_POST['multicurrency_code'])) $info['multicurrency_code'] .= sanitize_text_field($_POST['multicurrency_code']);
+
+$info = array(
+      'default_lang' => isset($_POST['locale'])?sanitize_text_field($_POST['locale']):null,
+      'multicurrency_code' => isset($_POST['multicurrency_code'])?sanitize_text_field($_POST['multicurrency_code']):$monnaie,
+            );
 $thirparty = callDoliApi("PUT", "/thirdparties/".doliconnector($current_user, 'fk_soc'), $info, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 }
 }
@@ -1950,7 +1953,6 @@ if ( doliconnector($current_user, 'fk_soc') > 0 ) {
 $thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 }
 
-$monnaie = callDoliApi("GET", "/doliconnector/constante/MAIN_MONNAIE", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 $currencies = callDoliApi("GET", "/setup/dictionary/currencies?multicurrency=1&sortfield=code_iso&sortorder=ASC&limit=100&active=1", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
  
 print "<li class='list-group-item'>";
@@ -1966,7 +1968,7 @@ print "<option value='".$currency->code_iso."' ";
 if ( $currency->code_iso == $thirdparty->multicurrency_code ) { print " selected"; }
 print ">".$currency->code_iso." / ".doliprice(1.99*$currency->rate, null, $currency->code_iso)."</option>";
 }} else {
-$cur = (!empty($thirdparty->multicurrency_code) ? $thirdparty->multicurrency_code : $monnaie->value );
+$cur = (!empty($thirdparty->multicurrency_code) ? $thirdparty->multicurrency_code : $monnaie );
 print "<option value='".$cur."' selected>".$cur." / ".doliprice('1.99', null, $cur)."</option>";
 }
 print "</select>";
