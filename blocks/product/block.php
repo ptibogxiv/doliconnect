@@ -15,12 +15,12 @@ $content .= dolibug();
 } elseif ( $product->id>0 && $product->status == 1 ) {
 $content .= "<div class='row'>";
 $content .= '<div class="col-12 d-block d-sm-block d-xs-block d-md-none"><center>';
-$content .= doliconnect_image('product', $product, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+$content .= doliconnect_image('product', $product->id, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 $content .= '</center>';
 //$content .= wp_get_attachment_image( $attributes['mediaID'], "ptibogxiv_large", "", array( "class" => "img-fluid" ) );
 $content .= "</div>";
 $content .= '<div class="col-md-4 d-none d-md-block"><center>';
-$content .= doliconnect_image('product', $product, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+$content .= doliconnect_image('product', $product->id, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 $content .= '</center>';
 //$content .= wp_get_attachment_image( $attributes['mediaID'], "ptibogxiv_square", "", array( "class" => "img-fluid" ) );
 $content .= "</div>";

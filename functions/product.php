@@ -35,19 +35,27 @@ $fmt = numfmt_create( $locale, NumberFormatter::CURRENCY );
 return numfmt_format_currency($fmt, $montant, $currency);//.$decimal
 }
 
-function doliconnect_image($module, $object, $mode = null, $refresh = null) {
-$img =  callDoliApi("GET", "/documents?modulepart=".$module."&id=".$object->id, null, dolidelay('document', $refresh));
-//print var_dump($img);
-if ( !isset($img->error) && $img != null ) {
+function doliconnect_image($module, $id, $mode = null, $refresh = null) {
+$img =  callDoliApi("GET", "/documents?modulepart=".$module."&id=".$id, null, dolidelay('document', $refresh));
+   
+$up_dir = wp_upload_dir();
+
+if ( !isset($img->error) && $img != null && !file_exists($up_dir['basedir'].'/doliconnect/'.$module.'/'.$id.'/'.$img[0]->relativename) ) {
 $imgj =  callDoliApi("GET", "/documents/download?modulepart=product&original_file=".$img[0]->level1name."/".$img[0]->relativename, null, 0);
 //print var_dump($imgj);
 $imgj = (array) $imgj; 
 if (is_array($imgj) && $imgj['content-type'] == 'image/jpeg') {
 $data = "data:".$imgj['content-type'].";".$imgj['encoding'].",".$imgj['content'];
-$image = "<img src='".$data ."' class='img-fluid img-thumbnail'  alt='".$imgj['filename']."'>";
+$image = "<img src='".$data ."' class='img-fluid img-thumbnail' alt='".$imgj['filename']."'>";
+mkdir($up_dir['basedir'].'/doliconnect/'.$module.'/'.$id, 0777, true);
+$file=$up_dir['basedir'].'/doliconnect/'.$module.'/'.$id.'/'.$img[0]->relativename;
+file_put_contents($file, base64_decode($imgj['content']));
 } else {
 $image = "<i class='fa fa-cube fa-fw fa-2x'></i>";
 }
+} elseif ( !isset($img->error) && $img != null && file_exists($up_dir['basedir'].'/doliconnect/'.$module.'/'.$id.'/'.$img[0]->relativename) ) {
+$url = $up_dir['baseurl'].'/doliconnect/'.$module.'/'.$id.'/'.$img[0]->relativename;
+$image = "<img src='".$up_dir['baseurl'].'/doliconnect/'.$module.'/'.$id.'/'.$img[0]->relativename."' class='img-fluid img-thumbnail' alt='".$url."'>";
 } else {
 $image = "<i class='fa fa-cube fa-fw fa-2x'></i>";
 }
