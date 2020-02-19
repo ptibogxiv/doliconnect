@@ -40,13 +40,18 @@ $img =  callDoliApi("GET", "/documents?modulepart=".$module."&id=".$id, null, do
    
 $up_dir = wp_upload_dir();
 
-if ( !isset($img->error) && $img != null && !file_exists($up_dir['basedir'].'/doliconnect/'.$module.'/'.$id.'/'.$img[0]->relativename) ) {
+if ( !isset($img->error) && $img != null && (!file_exists($up_dir['basedir'].'/doliconnect/'.$module.'/'.$id.'/'.$img[0]->relativename) || filesize($up_dir['basedir'].'/doliconnect/'.$module.'/'.$id.'/'.$img[0]->relativename) != $img[0]->size) ) {
 $imgj =  callDoliApi("GET", "/documents/download?modulepart=product&original_file=".$img[0]->level1name."/".$img[0]->relativename, null, 0);
 //print var_dump($imgj);
 $imgj = (array) $imgj; 
 if (is_array($imgj) && $imgj['content-type'] == 'image/jpeg') {
 //$data = "data:".$imgj['content-type'].";".$imgj['encoding'].",".$imgj['content'];
 mkdir($up_dir['basedir'].'/doliconnect/'.$module.'/'.$id, 0777, true);
+$files = glob($up_dir['basedir'].'/doliconnect/'.$module.'/'.$id."/*");
+foreach($files as $file){
+if(is_file($file))
+unlink($file); 
+}
 $file=$up_dir['basedir'].'/doliconnect/'.$module.'/'.$id.'/'.$img[0]->relativename;
 file_put_contents($file, base64_decode($imgj['content'])); 
 $image = "<img src='".$up_dir['baseurl'].'/doliconnect/'.$module.'/'.$id.'/'.$img[0]->relativename."' class='img-fluid img-thumbnail' alt='".$img[0]->relativename."'>";
