@@ -286,23 +286,19 @@ print "</div></li>";
 
 } else { 
 print "<li class='list-group-item'><div class='form-row'>";
-$facebook = callDoliApi("GET", "/doliconnector/constante/SOCIALNETWORKS_FACEBOOK", null, $delay);
-if ( is_object($facebook) && $facebook->value == 1 ) {
+if ( !empty(doliconst("SOCIALNETWORKS_FACEBOOK", $delay)) ) {
 print "<div class='col-12 col-md'><label for='inlineFormInputGroup'><small><i class='fab fa-facebook fa-fw'></i> Facebook</small></label>
 <input type='text' name='".$idobject."[facebook]' class='form-control' id='inlineFormInputGroup' placeholder='".__( 'Username', 'doliconnect')."' value='".stripslashes(htmlspecialchars((isset($object->facebook) ? $object->facebook : null), ENT_QUOTES))."'></div>";
 }
-$twitter = callDoliApi("GET", "/doliconnector/constante/SOCIALNETWORKS_TWITTER", null, $delay);
-if ( is_object($twitter) && $twitter->value == 1 ) {
+if ( !empty(doliconst("SOCIALNETWORKS_TWITTER", $delay)) ) {
 print "<div class='col-12 col-md'><label for='inlineFormInputGroup'><small><i class='fab fa-twitter fa-fw'></i> Twitter</small></label>
 <input type='text' name='".$idobject."[twitter]' class='form-control' id='inlineFormInputGroup' placeholder='".__( 'Username', 'doliconnect')."' value='".stripslashes(htmlspecialchars((isset($object->twitter) ? $object->twitter : null), ENT_QUOTES))."'></div>";
 }
-$skype = callDoliApi("GET", "/doliconnector/constante/SOCIALNETWORKS_SKYPE", null, $delay);
-if ( is_object($skype) && $skype->value == 1 ) {
+if ( !empty(doliconst("SOCIALNETWORKS_SKYPE", $delay)) ) {
 print "<div class='col-12 col-md'><label for='inlineFormInputGroup'><small><i class='fab fa-skype fa-fw'></i> Skype</small></label>
 <input type='text' name='".$idobject."[skype]' class='form-control' id='inlineFormInputGroup' placeholder='".__( 'Username', 'doliconnect')."' value='".stripslashes(htmlspecialchars((isset($object->skype) ? $object->skype : null), ENT_QUOTES))."'></div>";
 }
-$linkedin = callDoliApi("GET", "/doliconnector/constante/SOCIALNETWORKS_LINKEDIN", null, $delay);
-if ( is_object($linkedin) && $linkedin->value == 1 ) {
+if ( !empty(doliconst("SOCIALNETWORKS_LINKEDIN", $delay)) ) {
 print "<div class='col-12 col-md'><label for='inlineFormInputGroup'><small><i class='fab fa-linkedin-in fa-fw'></i> Linkedin</small></label>
 <input type='text' name='".$idobject."[linkedin]' class='form-control' id='inlineFormInputGroup' placeholder='".__( 'Username', 'doliconnect')."' value='".stripslashes(htmlspecialchars((isset($object->linkedin) ? $object->linkedin : null), ENT_QUOTES))."'></div>";
 }

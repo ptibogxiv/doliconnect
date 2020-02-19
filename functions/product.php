@@ -27,7 +27,7 @@ $montant = 0;
 }
 
 //$$objet->multicurrency_code
-if ( is_null($currency) ) { $currency = strtoupper(callDoliApi("GET", "/doliconnector/constante/MAIN_MONNAIE", null, dolidelay('constante'))->value); }
+if ( is_null($currency) ) { $currency = strtoupper(doliconst("MAIN_MONNAIE", dolidelay('constante'))); }
 if ( function_exists('pll_the_languages') ) { 
 $locale = pll_current_language('locale');
 } else { if ( $current_user->locale == null ) { $locale = get_locale(); } else { $locale = $current_user->locale; } }
