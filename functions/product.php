@@ -110,10 +110,10 @@ $rdr = [
 $order = callDoliApi("POST", "/orders", $rdr, 0);
 }
 
-$orderfo = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order', true)."?contact_list=0", null, dolidelay('order', true));
+$order = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order', true)."?contact_list=0", null, dolidelay('order', true));
 
-if ( $orderfo->lines != null ) {
-foreach ( $orderfo->lines as $ln ) {
+if ( $order->lines != null ) {
+foreach ( $order->lines as $ln ) {
 if ( $ln->fk_product == $product ) {
 //$deleteline = callDoliApi("DELETE", "/orders/".$orderid."/lines/".$ln[id], null, 0);
 //$qty=$ln[qty];
@@ -173,12 +173,15 @@ if ( !empty($url) ) {
 set_transient( 'doliconnect_cartlinelink_'.$line, esc_url($url), dolidelay(MONTH_IN_SECONDS, true));
 } else {
 delete_transient( 'doliconnect_cartlinelink_'.$line );
+
 }
 return doliconnect_countitems($order);
 
 }
 } else {
-return doliconnect_countitems($orderfo);
+
+return doliconnect_countitems($order);
+
 }
 }
 
