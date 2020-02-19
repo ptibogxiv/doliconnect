@@ -45,17 +45,17 @@ $imgj =  callDoliApi("GET", "/documents/download?modulepart=product&original_fil
 //print var_dump($imgj);
 $imgj = (array) $imgj; 
 if (is_array($imgj) && $imgj['content-type'] == 'image/jpeg') {
-$data = "data:".$imgj['content-type'].";".$imgj['encoding'].",".$imgj['content'];
-$image = "<img src='".$data ."' class='img-fluid img-thumbnail' alt='".$imgj['filename']."'>";
+//$data = "data:".$imgj['content-type'].";".$imgj['encoding'].",".$imgj['content'];
 mkdir($up_dir['basedir'].'/doliconnect/'.$module.'/'.$id, 0777, true);
 $file=$up_dir['basedir'].'/doliconnect/'.$module.'/'.$id.'/'.$img[0]->relativename;
-file_put_contents($file, base64_decode($imgj['content']));
+file_put_contents($file, base64_decode($imgj['content'])); 
+$image = "<img src='".$up_dir['baseurl'].'/doliconnect/'.$module.'/'.$id.'/'.$img[0]->relativename."' class='img-fluid img-thumbnail' alt='".$img[0]->relativename."'>";
 } else {
 $image = "<i class='fa fa-cube fa-fw fa-2x'></i>";
 }
 } elseif ( !isset($img->error) && $img != null && file_exists($up_dir['basedir'].'/doliconnect/'.$module.'/'.$id.'/'.$img[0]->relativename) ) {
 $url = $up_dir['baseurl'].'/doliconnect/'.$module.'/'.$id.'/'.$img[0]->relativename;
-$image = "<img src='".$up_dir['baseurl'].'/doliconnect/'.$module.'/'.$id.'/'.$img[0]->relativename."' class='img-fluid img-thumbnail' alt='".$url."'>";
+$image = "<img src='".$up_dir['baseurl'].'/doliconnect/'.$module.'/'.$id.'/'.$img[0]->relativename."' class='img-fluid img-thumbnail' alt='".$img[0]->relativename."'>";
 } else {
 $image = "<i class='fa fa-cube fa-fw fa-2x'></i>";
 }
