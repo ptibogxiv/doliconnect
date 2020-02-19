@@ -992,7 +992,6 @@ print "</p></div>";
 
 if ( ! empty(doliconnectid('dolicart')) ) { 
 print "<div class='col-12 col-md-6'><center>";
-//print doliproducttocart($product, esc_attr($_GET['category']), 1);
 print doliconnect_addtocart($product, esc_attr($_GET['category']), 0, 2, 0);
 print "</center></div>";
 }

@@ -34,7 +34,6 @@ $content .= "<br><br><p>".doliproduct($product, 'description')."</p>";
 $content .= "<div class='jumbotron'>";
 if ( ! empty(doliconnectid('dolicart')) ) { 
 $content .= doliconnect_addtocart($product, 0, 0, isset($attributes['showButtonToCart']) ? $attributes['showButtonToCart'] : 0, isset($attributes['hideDuration']) ? $attributes['hideDuration'] : 0);
-//$content .= doliproducttocart($product, null, isset($attributes['showButtonToCart']) ? $attributes['showButtonToCart'] : 0, isset($attributes['hideDuration']) ? $attributes['hideDuration'] : 0);
 }
 $content .= "</div></div>";
 } else {
