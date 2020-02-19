@@ -65,7 +65,7 @@ add_action('wp_ajax_nopriv_doliaddproduct_request', 'doliaddproduct_request');
 function doliaddproduct_request()
 {
 global $current_user;
-
+$result = doliaddtocart(trim($_POST['product-add-id']), trim($_POST['product-add-qty']), trim($_POST['product-add-price']), trim($_POST['product-add-remise_percent']), null, null);
 wp_send_json_success( trim($_POST['product-add-qty']) );
 die();    
 }

@@ -1854,6 +1854,7 @@ global $current_user;
 $button = "<form class='product-".$product->id."' method='post' action='".admin_url('admin-ajax.php')."'>";//product-add-form-".$product->id."
 $button .= "<input type='hidden' name='action' value='doliaddproduct_request'>";
 $button .= "<input type='hidden' name='product-add-nonce' value='".wp_create_nonce( 'product-add-nonce-'.$product->id)."'>";
+$button .= "<input type='hidden' name='product-add-id' value='".$product->id."'>";
 
 $button .= "<script>";
 $button .= 'jQuery(document).ready(function($) {
@@ -1864,7 +1865,7 @@ $button .= 'jQuery(document).ready(function($) {
 		var $form = $(this);
  
 		$.post($form.attr("action"), $form.serialize(), function(datad) {
-			alert("This is data returned from the server " + datad.data);
+			//alert("This is data returned from the server " + datad.data);
 		}, "json");
 	});
  
@@ -2026,7 +2027,7 @@ $button .= "<div class='input-group'><a class='btn btn-block btn-info' href='".d
 }
 
 if ( !empty(doliconnector($current_user, 'remise_percent')) ) { $button .= "<small>".sprintf( esc_html__( 'you get %u %% discount', 'doliconnect'), doliconnector($current_user, 'remise_percent'))."</small>"; }
-$button .= "<input type='hidden' name='product-add-vat' value='".$product->tva_tx."'><input type='hidden' name='product-add-price' value='".$price_ht."'>";
+$button .= "<input type='hidden' name='product-add-vat' value='".$product->tva_tx."'><input type='hidden' name='product-add-remise_percent' value='".doliconnector($current_user, 'remise_percent')."'><input type='hidden' name='product-add-price' value='".$price_ht."'>";
 //$button .= '<div id="product-add-loading-'.$product->id.'" style="display:none">'.doliprice($price_ttc).'<button class="btn btn-secondary btn-block" disabled><i class="fas fa-spinner fa-pulse fa-1x fa-fw"></i> '.__( 'Loading', 'doliconnect').'</button></div>';
 
 
