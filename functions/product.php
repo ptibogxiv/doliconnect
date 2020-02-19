@@ -177,6 +177,8 @@ delete_transient( 'doliconnect_cartlinelink_'.$line );
 return doliconnect_countitems($order);
 
 }
+} else {
+return doliconnect_countitems($orderfo);
 }
 }
 
@@ -246,7 +248,7 @@ $button .= 'jQuery(document).ready(function($) {
 	
 	jQuery(".product-'.$product->id.'").on("submit", function(e) {
 		e.preventDefault();
- 
+    jQuery("#DoliconnectLoadingModal").modal("show");
 		var $form = $(this);
  
 		$.post($form.attr("action"), $form.serialize(), function(response) {
@@ -260,7 +262,7 @@ $button .= 'jQuery(document).ready(function($) {
       if (document.getElementById("DoliWidgetCarItems")) {
       document.getElementById("DoliWidgetCarItems").innerHTML = response.data;      
       }
-
+      jQuery("#DoliconnectLoadingModal").modal("toggle");
 
 		}, "json");
 	});
