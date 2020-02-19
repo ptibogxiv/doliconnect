@@ -233,37 +233,201 @@ $cart .= "</ul></div><br>";
 return $cart;
 }
 
-function dolilistpaymentmodes($paymentintent, $listpaymentmethods, $object, $redirect, $url) {
+function doliconnect_addtocart($product, $category = 0, $quantity = 0, $add = 0, $time = 0, $refresh = null) {
+global $current_user;
 
-//PAYMENT REQUEST API
-if ( ! empty($object) && get_option('doliconnectbeta')=='1' && !empty($listpaymentmethods->payment_request_api) ) {  
-$paymentmethod .= "<li id='PraForm' class='list-group-item list-group-item-action flex-column align-items-start' style='display: none'><div class='custom-control custom-radio'>
-<input id='src_pra' onclick='ShowHideDiv()' class='custom-control-input' type='radio' name='modepayment' value='PRA' ";
-//if ($listsource["sources"] == null) { $paymentmethod .= " checked";}
-$paymentmethod .= " ><label class='custom-control-label w-100' for='src_pra'>";
-//$paymentmethod .= "<div class='row' id='googlepay'><div class='col-3 col-md-2 col-xl-2 align-middle'>";
-//$paymentmethod .= '<center><i class="fab fa-google fa-3x fa-fw" style="color:Black"></i></center>';
-//$paymentmethod .= "</div><div class='col-9 col-md-10 col-xl-10 align-middle'><h6 class='my-0'>".__( 'Google Pay', 'doliconnect')."</h6>";
-//$paymentmethod .= "<small class='text-muted'>".__( 'Pay in one clic', 'doliconnect')."</small></div></div>";
-$paymentmethod .= "<div class='row' id='applepay'><div class='col-3 col-md-2 col-xl-2 align-middle'>";
-$paymentmethod .= '<center><i class="fab fa-apple-pay fa-3x fa-fw" style="color:Black"></i></center>';
-$paymentmethod .= "</div><div class='col-9 col-md-10 col-xl-10 align-middle'><h6 class='my-0'>".__( 'Apple Pay', 'doliconnect')."</h6>";
-$paymentmethod .= "<small class='text-muted'>".__( 'Pay in one clic', 'doliconnect')."</small></div></div>";
-$paymentmethod .= '</label></div></li>';
+$button = "<form class='product-".$product->id."' method='post' action='".admin_url('admin-ajax.php')."'>";//product-add-form-".$product->id."
+$button .= "<input type='hidden' name='action' value='doliaddproduct_request'>";
+$button .= "<input type='hidden' name='product-add-nonce' value='".wp_create_nonce( 'product-add-nonce-'.$product->id)."'>";
+$button .= "<input type='hidden' name='product-add-id' value='".$product->id."'>";
+
+$button .= "<script>";
+$button .= 'jQuery(document).ready(function($) {
+	
+	jQuery(".product-'.$product->id.'").on("submit", function(e) {
+		e.preventDefault();
+ 
+		var $form = $(this);
+ 
+		$.post($form.attr("action"), $form.serialize(), function(response) {
+			//alert("This is data returned from the server " + response.data);
+      if (document.getElementById("DoliHeaderCarItems")) {
+      document.getElementById("DoliHeaderCarItems").innerHTML = response.data;
+      }
+      if (document.getElementById("DoliFooterCarItems")) {  
+      document.getElementById("DoliFooterCarItems").innerHTML = response.data;
+      }
+      if (document.getElementById("DoliWidgetCarItems")) {
+      document.getElementById("DoliWidgetCarItems").innerHTML = response.data;      
+      }
+
+
+		}, "json");
+	});
+ 
+});';
+$button .= "</script>";
+
+if (doliconnector($current_user, 'fk_order') > 0) {
+$orderfo = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order'), null, $refresh);
+//$button .=$orderfo;
 }
 
-//alternative payment modes & offline
-if ( ! empty($object) ) {
-
-if ( isset($listpaymentmethods->PAYPAL) && $listpaymentmethods->PAYPAL != null && get_option('doliconnectbeta') == '1' && current_user_can( 'administrator' ) ) {
-$paymentmethod .= "<li id='PaypalForm' class='list-group-item list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>
-<input id='src_paypal' onclick='ShowHideDiv()' class='custom-control-input' type='radio' name='modepayment' value='PAYPAL' ";
-$paymentmethod .= " ><label class='custom-control-label w-100' for='src_paypal'><div class='row'><div class='col-3 col-md-2 col-xl-2 align-middle'>";
-$paymentmethod .= '<center><i class="fab fa-paypal fa-3x fa-fw" style="color:#2997D8"></i></center>';
-$paymentmethod .= "</div><div class='col-9 col-md-10 col-xl-10 align-middle'><h6 class='my-0'>PayPal</h6><small class='text-muted'>".__( 'Redirect to Paypal', 'doliconnect')."</small>";
-$paymentmethod .= '</div></div></label></div></li>';
+if ( isset($orderfo) && $orderfo->lines != null ) {
+foreach ($orderfo->lines as $line) {
+if  ($line->fk_product == $product->id) {
+//$button = var_dump($line);
+$qty = $line->qty;
+$ln = $line->id;
+}
+}}
+if (!isset($qty) ) {
+$qty = null;
+$ln = null;
 }
 
+$currency=isset($orderfo->multicurrency_code)?$orderfo->multicurrency_code:'eur';
+
+if ( $product->type == '1' && !is_null($product->duration_unit) && '0' < ($product->duration_value)) {
+if ( $product->duration_unit == 'i' ) {
+$altdurvalue=60/$product->duration_value; 
 }
+}
+
+if ( !empty(doliconst("PRODUIT_MULTIPRICES")) && !empty($product->multiprices_ttc) ) {
+$lvl=doliconnector($current_user, 'price_level');
+//$button .=$lvl;
+
+if (!empty(doliconnector($current_user, 'price_level'))) {
+$level=doliconnector($current_user, 'price_level');
+} else {
+$level=1;
+}
+ 
+$price_min_ttc=$product->multiprices_min->$level; 
+$price_ht=$product->multiprices->$level;
+$vat=$product->tva_tx;
+
+if (isset($add) && $add == 2) {
+$button .= '<table class="table table-bordered table-sm"><tbody>'; 
+$button .= '<tr><td class="text-right">'.doliprice( $product->multiprices_ttc->$level, $currency)."</td></tr>";
+} else {
+$button .= '<table class="table table-sm table-striped table-bordered"><tbody>';
+foreach ( $product->multiprices_ttc as $level => $price ) {
+$button .= '<tr';
+if ( (empty(doliconnector($current_user, 'price_level')) && $level == 1 ) || doliconnector($current_user, 'price_level') == $level ) {
+$button .= ' class="table-primary"';  
+}
+$button .= '>';   
+$button .= '<td>'.__( 'Price', 'doliconnect').' '.$level.' - '.doliconst('PRODUIT_MULTIPRICES_LABEL'.$level).'</td>';
+$button .= '<td class="text-right">'.doliprice( $price, $currency);
+if ( empty($time) && !empty($product->duration_value) ) { $button .='/'.doliduration($product); }
+$button .= '</td>';
+if ( !empty($altdurvalue) ) { $button .= "<td class='text-right'>soit ".doliprice( $altdurvalue*$price, $currency)." par ".__( 'hour', 'doliconnect')."</td>"; } 
+//$button .= '<small class="float-right">'.__( 'You benefit from the rate', 'doliconnect').' '.doliconst('PRODUIT_MULTIPRICES_LABEL'.$level).'</small>';
+$button .= '</tr>'; 
+}
+}
+
+$button .= '</tbody></table>';
+} else {
+$button .= '<table class="table table-bordered table-sm table-striped"><tbody>';
+$button .= '<tr>'; 
+$button .= '<td>'.__( 'Selling Price', 'doliconnect').'</td>';
+$button .= '<td class="text-right">'.doliprice( $product->price_ttc, $currency);
+if ( empty($time) && !empty($product->duration_value) ) { $button .='/'.doliduration($product); } 
+if ( !empty($altdurvalue) ) { $button .= "<td class='text-right'>soit ".doliprice( $altdurvalue*$product->price_ttc, $currency)." par ".__( 'hour', 'doliconnect')."</td>"; } 
+$button .= '</td>';
+$button .= '</tr>'; 
+
+if ( !empty(doliconst("PRODUIT_CUSTOMER_PRICES")) && doliconnector($current_user, 'fk_soc') > 0 ) {
+$product2 = callDoliApi("GET", "/products/".$product->id."/selling_multiprices/per_customer?thirdparty_id=".doliconnector($current_user, 'fk_soc'), null, dolidelay('product'));
+}
+if ( !empty(doliconst("PRODUIT_CUSTOMER_PRICES")) && isset($product2) && !isset($product2->error) ) {
+foreach ( $product2 as $pdt2 ) {
+$price_min_ttc=$pdt2->price_min;
+$price_ht=$pdt2->price;
+$vat = $pdt2->tva_tx;
+$button .= '<tr class="table-primary">'; 
+$button .= '<td>'.__( 'Your price', 'doliconnect').'</td>';
+$button .= '<td class="text-right">'.doliprice( $pdt2->price_ttc, $currency);
+if ( empty($time) && !empty($product->duration_value) ) { $button .='/'.doliduration($product); } 
+if ( !empty($altdurvalue) ) { $button .= "<td class='text-right'>soit ".doliprice( $altdurvalue*$pdt2->price_ttc, $currency)." par ".__( 'hour', 'doliconnect')."</td>"; } 
+$button .= '</td>';
+}
+} else {
+$price_min_ttc=$product->price_min;
+$price_ht=$product->price;
+$vat=$product->tva_tx;
+}
+
+$button .= '</tbody></table>';
+}
+
+if ( is_user_logged_in() && !empty($add) && !empty(doliconst('MAIN_MODULE_COMMANDE')) && doliconnectid('dolicart') > 0 ) {
+if ( ($product->stock_reel-$qty > 0 && $product->type == '0') ) {
+if (isset($product->array_options->options_packaging) && !empty($product->array_options->options_packaging)) {
+$m1 = 10*$product->array_options->options_packaging;
+} else {
+$m1 = 10;
+}
+if ( $product->stock_reel-$qty >= $m1 || empty(doliconst('MAIN_MODULE_STOCK')) ) {
+$m2 = $m1;
+} elseif ( $product->stock_reel > $qty ) {
+$m2 = $product->stock_reel;
+} else { $m2 = $qty; }
+} else {
+if ( isset($line) && $line->qty > 1 ) { $m2 = $qty; }
+else { $m2 = 1; }
+}
+if (isset($product->array_options->options_packaging) && !empty($product->array_options->options_packaging)) {
+$step = $product->array_options->options_packaging;
+} else {
+$step = 1;
+}
+$button .= "<div class='input-group mb-3'><select class='form-control' id='select' name='product-add-qty' ";
+if ( ( empty($product->stock_reel) || $m2 < $step) && $product->type == '0' && !empty(doliconst('MAIN_MODULE_STOCK')) ) { $button .= " disabled"; }
+$button .= ">";
+if ($m2 < $step)  { $button .= "<OPTION value='0' >x 0</OPTION>"; }
+if (!empty($m2) && $m2 >= $step) {
+if ($step >1 && !empty($quantity)) $quantity = round($quantity/$step)*$step; 
+if (empty($qty) && $quantity > $m2) $quantity = $m2; 
+foreach (range(0, $m2, $step) as $number) {
+		if ( $number == $qty || ($number == $quantity && empty($qty)) ) {
+$button .= "<option value='$number' selected='selected'>x ".$number."</option>";
+		} else {
+$button .= "<option value='$number' >x ".$number."</option>";
+		}
+	}
+}
+$button .= "</select><div class='input-group-append'><button id='my-button' class='btn btn-warning' type='submit' value='submit'";
+if ( ( empty($product->stock_reel) || $m2 < $step) && $product->type == '0' && !empty(doliconst('MAIN_MODULE_STOCK')) ) { $button .= " disabled"; }
+$button .= "><i class='fas fa-cart-plus fa-inverse fa-fw'></i></button></div></div>";
+
+if ( $qty > 0 ) {
+$button .= "<br /><div class='input-group'><a class='btn btn-block btn-warning' href='".doliconnecturl('dolicart')."' role='button' title='".__( 'Go to cart', 'doliconnect')."'>".__( 'Go to cart', 'doliconnect')."</a></div>";
+}
+} elseif ( $add == 1 && doliconnectid('dolicart') > 0 ) {
+$arr_params = array( 'redirect_to' => doliconnecturl('dolishop'));
+$loginurl = esc_url( add_query_arg( $arr_params, wp_login_url( )) );
+
+if ( get_option('doliloginmodal') == '1' ) {       
+$button .= '<div class="input-group"><a href="#" data-toggle="modal" class="btn btn-block btn-outline-secondary" data-target="#DoliconnectLogin" data-dismiss="modal" title="'.__('Sign in', 'ptibogxivtheme').'" role="button">'.__( 'log in', 'doliconnect').'</a></div>';
+} else {
+$button .= "<div class='input-group'><a href='".wp_login_url( get_permalink() )."?redirect_to=".get_permalink()."' class='btn btn-block btn-outline-secondary' >".__( 'log in', 'doliconnect').'</a></div>';
+}
+
+//$button .= "<div class='input-group'><a class='btn btn-block btn-outline-secondary' href='".$loginurl."' role='button' title='".__( 'Login', 'doliconnect')."'>".__( 'Login', 'doliconnect')."</a></div>";
+} else {
+$button .= "<div class='input-group'><a class='btn btn-block btn-info' href='".doliconnecturl('dolicontact')."?type=COM' role='button' title='".__( 'Login', 'doliconnect')."'>".__( 'Contact us', 'doliconnect')."</a></div>";
+}
+
+if ( !empty(doliconnector($current_user, 'remise_percent')) ) { $button .= "<small>".sprintf( esc_html__( 'you get %u %% discount', 'doliconnect'), doliconnector($current_user, 'remise_percent'))."</small>"; }
+$button .= "<input type='hidden' name='product-add-vat' value='".$product->tva_tx."'><input type='hidden' name='product-add-remise_percent' value='".doliconnector($current_user, 'remise_percent')."'><input type='hidden' name='product-add-price' value='".$price_ht."'>";
+//$button .= '<div id="product-add-loading-'.$product->id.'" style="display:none">'.doliprice($price_ttc).'<button class="btn btn-secondary btn-block" disabled><i class="fas fa-spinner fa-pulse fa-1x fa-fw"></i> '.__( 'Loading', 'doliconnect').'</button></div>';
+
+$button .= "</form>";
+
+return $button;
 }
 ?>
