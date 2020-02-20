@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2020-02-20 09:26+0100\n"
-"PO-Revision-Date: 2020-02-20 09:26+0100\n"
+"POT-Creation-Date: 2020-02-20 13:09+0100\n"
+"PO-Revision-Date: 2020-02-20 13:10+0100\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_FR\n"
@@ -188,20 +188,23 @@ msgstr "Masquer la durée"
 msgid "Hide stock"
 msgstr "Masquer le stock"
 
-#: blocks/product/block.php:31 dashboard/templates.php:983
-#: dashboard/templates.php:1221 dashboard/templates.php:1228
-msgid "Reference"
-msgstr "Référence"
+#: blocks/product/block.php:31
+msgid "Reference:"
+msgstr "Référence:"
 
-#: blocks/product/block.php:32 dashboard/templates.php:984
-msgid "Barcode"
-msgstr "Code-barre"
+#: blocks/product/block.php:32
+msgid "Barcode:"
+msgstr "Code Barre:"
 
 #: blocks/product/block.php:40
+msgid "Origin:"
+msgstr "Origine:"
+
+#: blocks/product/block.php:48
 msgid "Product/Service not in sale"
 msgstr "Produit/service non en vente"
 
-#: blocks/product/block.php:44 dashboard/templates.php:859
+#: blocks/product/block.php:52 dashboard/templates.php:859
 #: dashboard/templates.php:1001
 msgid "No product"
 msgstr "Aucun produit"
@@ -1074,6 +1077,15 @@ msgid "I agree to save my personnal informations in order to contact me"
 msgstr ""
 "J'accepte que mes informations personnelles soient sauvegarder afin de me "
 "contacter"
+
+#: dashboard/templates.php:983 dashboard/templates.php:1221
+#: dashboard/templates.php:1228
+msgid "Reference"
+msgstr "Référence"
+
+#: dashboard/templates.php:984
+msgid "Barcode"
+msgstr "Code-barre"
 
 #: dashboard/templates.php:1045
 msgid "Inactive module on Dolibarr"

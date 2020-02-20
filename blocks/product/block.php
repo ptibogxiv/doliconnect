@@ -28,8 +28,16 @@ $content .= "<div class='col-12 col-md-8'><h5 class='card-title'><b>".doliproduc
 if ( ! empty(doliconnectid('dolicart')) && !isset($attributes['hideStock']) ) { 
 $content .= " ".doliproductstock($product);
 }
-$content .= "</h5><small>".__( 'Reference', 'doliconnect').": ".$product->ref."</small>";
-if ( !empty($product->barcode) ) { $content .= "<br><small>".__( 'Barcode', 'doliconnect').": ".$product->barcode."</small>"; }
+$content .= "</h5><small>".__( 'Reference:', 'doliconnect')." ".$product->ref."</small>"; 
+if ( !empty($product->barcode) ) { $content .= "<br><small>".__( 'Barcode:', 'doliconnect')." ".$product->barcode."</small>"; }
+if ( !empty($product->country_id) ) {  
+if ( function_exists('pll_the_languages') ) { 
+$lang = pll_current_language('locale');
+} else {
+$lang = $current_user->locale;
+}
+$country = callDoliApi("GET", "/setup/dictionary/countries/".$product->country_id."?lang=".$lang, null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$content .= "<br><small>".__( 'Origin:', 'doliconnect')." ".$country->label."</small>"; }
 $content .= "<br><br><p>".doliproduct($product, 'description')."</p>";
 $content .= "<div class='jumbotron'>";
 if ( ! empty(doliconnectid('dolicart')) ) { 

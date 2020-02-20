@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2020-02-20 09:27+0100\n"
-"PO-Revision-Date: 2020-02-20 09:27+0100\n"
+"POT-Creation-Date: 2020-02-20 13:11+0100\n"
+"PO-Revision-Date: 2020-02-20 13:14+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: nl_NL\n"
@@ -189,22 +189,23 @@ msgstr "Duur verbergen"
 msgid "Hide stock"
 msgstr "Verberg voorraad"
 
-#: blocks/product/block.php:31 dashboard/templates.php:983
-#: dashboard/templates.php:1221 dashboard/templates.php:1228
-msgid "Reference"
-msgstr "Referentie"
+#: blocks/product/block.php:31
+msgid "Reference:"
+msgstr "Referentie:"
 
-#: blocks/product/block.php:32 dashboard/templates.php:984
-msgid "Barcode"
-msgstr ""
-"Bar\n"
-"code"
+#: blocks/product/block.php:32
+msgid "Barcode:"
+msgstr "Streepjescode:"
 
 #: blocks/product/block.php:40
+msgid "Origin:"
+msgstr "Oorsprong:"
+
+#: blocks/product/block.php:48
 msgid "Product/Service not in sale"
 msgstr "Product/dienst niet in verkoop"
 
-#: blocks/product/block.php:44 dashboard/templates.php:859
+#: blocks/product/block.php:52 dashboard/templates.php:859
 #: dashboard/templates.php:1001
 msgid "No product"
 msgstr "Geen product"
@@ -1074,6 +1075,15 @@ msgid "I agree to save my personnal informations in order to contact me"
 msgstr ""
 "Ik ga akkoord om mijn persoonlijke informatie op te slaan om contact met mij "
 "op te nemen"
+
+#: dashboard/templates.php:983 dashboard/templates.php:1221
+#: dashboard/templates.php:1228
+msgid "Reference"
+msgstr "Referentie"
+
+#: dashboard/templates.php:984
+msgid "Barcode"
+msgstr "Streepjescode"
 
 #: dashboard/templates.php:1045
 msgid "Inactive module on Dolibarr"
