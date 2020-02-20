@@ -1735,7 +1735,7 @@ global $current_user;
 		'label_select_export'  => esc_html__( 'Export Personal Data', 'doliconnect'),
 		'label_select_remove'  => esc_html__( 'Remove Personal Data', 'doliconnect'),
 		'label_input_email'    => esc_html__( 'Your email address (required)', 'doliconnect'),
-		'label_input_captcha'  => esc_html__( 'Human verification (required):', 'doliconnect'),
+		'label_input_captcha'  => esc_html__( 'Human verification (required)', 'doliconnect'),
 		'value_submit'         => esc_html__( 'Send Request', 'doliconnect'),
 		'request_type'         => 'both',
 	);
@@ -1819,10 +1819,12 @@ global $current_user;
        	<li class='list-group-item list-group-item-light list-group-item-action flex-column align-items-start'>
 				<label for="gdrf_data_human">
 					<?php echo esc_html( $args['label_input_captcha'] ); ?>   
-					<?php echo $number_one . ' + ' . $number_two . ' = ?'; ?>
 				</label>
-				<input type="text" id="gdrf_data_human" name="gdrf_data_human" required />
-			</li>
+			<div class='input-group'>
+      <div class='input-group-prepend'><span class='input-group-text' id='gdrf_data_emailPrepend'><?php echo $number_one . ' + ' . $number_two . ' = ?'; ?></div>
+        	<input type="text" class="form-control" id="gdrf_data_human" name="gdrf_data_human" required />
+			</div>
+      </li>
       </ul>
 			<div class="card-body">
         <input id="gdrf-submit-button" class="btn btn-danger btn-block" type="submit" value="<?php echo __( 'Validate the request', 'doliconnect'); ?>"/>
