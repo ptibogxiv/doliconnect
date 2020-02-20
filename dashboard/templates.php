@@ -989,7 +989,7 @@ $lang = pll_current_language('locale');
 $lang = $current_user->locale;
 }
 $country = callDoliApi("GET", "/setup/dictionary/countries/".$product->country_id."?lang=".$lang, null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-$content .= "<br><small>".__( 'Origin:', 'doliconnect')." ".$country->label."</small>"; }
+print "<br><small>".__( 'Origin:', 'doliconnect')." ".$country->label."</small>"; }
  
 $arr_params = array( 'category' => $_GET['category'], 'subcategory' => isset($_GET['subcategory'])?$_GET['subcategory']:null, 'product' => $product->id);  
 $return = esc_url( add_query_arg( $arr_params, doliconnecturl('dolishop')) );
