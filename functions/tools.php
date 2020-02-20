@@ -612,7 +612,7 @@ global $current_user;
 
 $doliline=null;
 
-if ( isset($object) && is_object($object) && isset($object->lines) && $object->lines != null && (doliconnector($current_user, 'fk_soc') == $object->socid) ) {
+if ( isset($object) && is_object($object) && isset($object->lines) && $object->lines != null && (doliconnector($current_user, 'fk_soc') == $object->socid) ) {  
 foreach ( $object->lines as $line ) {
 $doliline .= "<li class='list-group-item list-group-item-light'>";     
 if ( $line->date_start != '' && $line->date_end != '' )
@@ -635,7 +635,9 @@ $includestock = 1;
 }
 $product = callDoliApi("GET", "/products/".$line->fk_product."?includestockdata=".$includestock, null, dolidelay('product', $refresh));
 }
-$doliline .= '<div class="col d-none d-md-block col-md-2 text-right"><center>'.doliproductstock($product).'</center></div>';
+$doliline .= '<div class="col d-none d-md-block col-md-2 text-right"><center>'.doliproductstock($product).'</center>';
+if (!empty($product->country_code)) $doliline .= '<center><span class="flag-icon flag-icon-'.strtolower($product->country_code).'"></span></center>';
+$doliline .= '</div>';
 }
 
 $doliline .= '<div class="col-4 col-md-2 text-right"><h6 class="mb-1">'.doliprice($line, 'total_ttc', isset($line->multicurrency_code) ? $line->multicurrency_code : null).'</h6>';
@@ -856,7 +858,7 @@ if ( !empty($method->expiration) ) { $paymentmethods .=" - ".date("m/Y", strtoti
 if ( $method->default_source ) { $paymentmethods .= " <i class='fas fa-star fa-fw' style='color:Gold' ></i>"; }
 $paymentmethods .= "</h6><small class='text-muted'>".$method->holder."</small></div>";
 $paymentmethods .= "<div class='d-none d-sm-block col-2 align-middle text-right'>";
-$paymentmethods .= "<span class='flag-icon flag-icon-".strtolower($method->country)."'>";
+$paymentmethods .= "<span class='flag-icon flag-icon-".strtolower($method->country)."'></span>";
 $paymentmethods .= "</div></div></label></div></li>";
 $paymentmethods .= '<li id="'.$method->id.'Panel" class="list-group-item list-group-item-secondary panel-collapse collapse"><div class="panel-body">';
 $paymentmethods .= "<div id='".$method->id."-error-message' class='text-danger' role='alert'><!-- a Stripe Message will be inserted here. --></div>";
