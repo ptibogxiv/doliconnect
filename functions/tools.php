@@ -622,7 +622,7 @@ $end = wp_date('d/m/Y', $line->date_end);
 $dates =" <i>(Du $start au $end)</i>";
 }
 
-$doliline .= '<div class="w-100 justify-content-between"><div class="row"><div class="col-1"><center><i class="fa fa-cube fa-fw fa-2x"></i></center></div><div class="col"> 
+$doliline .= '<div class="w-100 justify-content-between"><div class="row"><div class="col-1"><center>'.doliconnect_image('product', $line->fk_product, null, false).'</center></div><div class="col"> 
 <h6 class="mb-1">'.doliproduct($line, 'product_label').'</h6>
 <small><p class="mb-1">'.doliproduct($line, 'product_desc').'</p>
 <i>'.(isset($dates) ? $dates : null).'</i></small></div>';
@@ -638,9 +638,9 @@ $product = callDoliApi("GET", "/products/".$line->fk_product."?includestockdata=
 $doliline .= '<div class="col d-none d-md-block col-md-2 text-right"><center>'.doliproductstock($product).'</center></div>';
 }
 
-$doliline .= '<div class="col-4 col-md-2 text-right"><h5 class="mb-1">'.doliprice($line, 'total_ttc', isset($line->multicurrency_code) ? $line->multicurrency_code : null).'</h5>';
+$doliline .= '<div class="col-4 col-md-2 text-right"><h6 class="mb-1">'.doliprice($line, 'total_ttc', isset($line->multicurrency_code) ? $line->multicurrency_code : null).'</h6>';
 if ( !empty(doliconst('MAIN_MODULE_FRAISDEPORT')) && doliconst('FRAIS_DE_PORT_ID_SERVICE_TO_USE') == $line->fk_product ) {
-$doliline .= '<h5 class="mb-1">x'.$line->qty.'</h5>';
+$doliline .= '<h6 class="mb-1">x'.$line->qty.'</h6>';
 } elseif ( $object->statut == 0 && !empty($mode) ) {
 $doliline .= "<input type='hidden' name='updateorderproduct[".$line->fk_product."][product]' value='".$line->fk_product."'><input type='hidden' name='updateorderproduct[".$line->fk_product."][line]' value='".$line->id."'><input type='hidden' name='updateorderproduct[".$line->fk_product."][price]' value='".$line->subprice."'>";
 $doliline .= "<input type='hidden' name='updateorderproduct[".$line->fk_product."][remise_percent]' value='".$line->remise_percent."'><input type='hidden' name='updateorderproduct[".$line->fk_product."][date_start]' value='".$line->date_start."'><input type='hidden' name='updateorderproduct[".$line->fk_product."][date_end]' value='".$line->date_end."'>";
@@ -675,7 +675,7 @@ $doliline .= "<option value='$number' >x ".$number."</option>";
 	} 
 $doliline .= "</select>";
 } else {
-$doliline .= '<h5 class="mb-1">x'.$line->qty.'</h5>';
+$doliline .= '<h6 class="mb-1">x'.$line->qty.'</h6>';
 }
 $doliline .= "</div></div></li>";
 }
