@@ -901,7 +901,7 @@ if ( in_the_loop() && is_main_query() && is_page(doliconnectid('dolishop')) && !
 
 doliconnect_enqueues();
 
-$shop = callDoliApi("GET", "/doliconnector/constante/DOLICONNECT_CATSHOP", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$shop = doliconst("DOLICONNECT_CATSHOP", esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 //print $shop;
 
 print "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
@@ -909,14 +909,14 @@ print "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
 if ( defined("DOLIBUG")) {
 $request = null;
 print "<li class='list-group-item list-group-item-white'>";
-print dolibug(isset($shop->error->message)?$shop->error->message:$shop);
+print dolibug($shop);
 print "</li>";
 
 } else { 
 if ( !isset($_GET['category']) ) {
-if ( $shop->value != null ) {
+if ( $shop != null ) {
 
-$request = "/categories/".$shop->value."?include_childs=true";
+$request = "/categories/".$shop."?include_childs=true";
 
 $resultatsc = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
