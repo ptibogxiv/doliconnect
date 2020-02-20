@@ -607,7 +607,7 @@ $total .= "<li class='list-group-item list-group-item-primary'><b>".__( 'Total i
 return $total;
 }
 
-function doliline($object, $mode = null, $refresh = false) {
+function doliline($object, $refresh = false) {
 global $current_user;
 
 $doliline=null;
@@ -627,7 +627,7 @@ $doliline .= '<div class="w-100 justify-content-between"><div class="row"><div c
 if(!empty(doliconst("PRODUIT_DESC_IN_FORM"))) $doliline .= '<p class="mb-1">'.doliproduct($line, 'product_desc').'</p>';
 $doliline .= '<i>'.(isset($dates) ? $dates : null).'</i></small></div>';
 
-if ( $object->statut == 0 && !empty($mode)) {
+if ( $object->statut == 0 && !is_page(doliconnectid('doliaccount'))) {
 if ( $line->fk_product > 0 ) {
 $includestock = 0;
 if ( ! empty(doliconnectid('dolicart')) ) {
@@ -641,7 +641,7 @@ $doliline .= '<div class="col d-none d-md-block col-md-2 text-right"><center>'.d
 $doliline .= '<div class="col-4 col-md-2 text-right"><h6 class="mb-1">'.doliprice($line, 'total_ttc', isset($line->multicurrency_code) ? $line->multicurrency_code : null).'</h6>';
 if ( !empty(doliconst('MAIN_MODULE_FRAISDEPORT')) && doliconst('FRAIS_DE_PORT_ID_SERVICE_TO_USE') == $line->fk_product ) {
 $doliline .= '<h6 class="mb-1">x'.$line->qty.'</h6>';
-} elseif ( $object->statut == 0 && !empty($mode) ) {
+} elseif ( $object->statut == 0 && !is_page(doliconnectid('doliaccount')) ) {
 $doliline .= "<input type='hidden' name='updateorderproduct[".$line->fk_product."][product]' value='".$line->fk_product."'><input type='hidden' name='updateorderproduct[".$line->fk_product."][line]' value='".$line->id."'><input type='hidden' name='updateorderproduct[".$line->fk_product."][price]' value='".$line->subprice."'>";
 $doliline .= "<input type='hidden' name='updateorderproduct[".$line->fk_product."][remise_percent]' value='".$line->remise_percent."'><input type='hidden' name='updateorderproduct[".$line->fk_product."][date_start]' value='".$line->date_start."'><input type='hidden' name='updateorderproduct[".$line->fk_product."][date_end]' value='".$line->date_end."'>";
 $doliline .= "<select class='form-control form-control-sm' name='updateorderproduct[".$line->fk_product."][qty]' onchange='ChangeDoliCart();'>";
