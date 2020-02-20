@@ -650,7 +650,7 @@ print "<div class='w-auto text-muted d-none d-sm-block' ><div style='display:inl
 
 print "</div><ul class='list-group list-group-flush'>";
  
-print doliline($proposalfo);
+print doliline($proposalfo, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 
 print dolitotal($proposalfo);
 
@@ -853,7 +853,7 @@ print "<div class='w-auto text-muted d-none d-sm-block' ><div style='display:inl
 
 print "</div><ul class='list-group list-group-flush'>";
  
-print doliline($orderfo);
+print doliline($orderfo, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 
 print dolitotal($orderfo);
 
@@ -1091,7 +1091,7 @@ print "<div class='w-auto text-muted d-none d-sm-block' ><div style='display:inl
 
 print "</div><ul class='list-group list-group-flush'>";
 
-print doliline($contractfo);
+print doliline($contractfo, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 
 print dolitotal($contractfo);
 

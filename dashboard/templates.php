@@ -1575,7 +1575,7 @@ print doliloaderscript('doliconnect-basecartform');
 
 print "<div class='card shadow-sm' id='cart-form'><ul class='list-group list-group-flush'>";
 
-print doliline($object, 'cart');
+print doliline($object, 'cart', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 
 if ( isset($object) && is_object($object) && isset($object->socid) &&(doliconnector($current_user, 'fk_soc') == $object->socid) ) {
 print dolitotal($object);  

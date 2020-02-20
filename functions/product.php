@@ -54,13 +54,13 @@ unlink($file);
 }
 $file=$up_dir['basedir'].'/doliconnect/'.$module.'/'.$id.'/'.$img[0]->relativename;
 file_put_contents($file, base64_decode($imgj['content'])); 
-$image = "<img src='".$up_dir['baseurl'].'/doliconnect/'.$module.'/'.$id.'/'.$img[0]->relativename."' class='img-fluid img-thumbnail' alt='".$img[0]->relativename."'>";
+$image = "<img src='".$up_dir['baseurl'].'/doliconnect/'.$module.'/'.$id.'/'.$img[0]->relativename."' class='img-fluid rounded-lg' loading='lazy' alt='".$img[0]->relativename."'>";
 } else {
 $image = "<i class='fa fa-cube fa-fw fa-2x'></i>";
 }
 } elseif ( !isset($img->error) && $img != null && file_exists($up_dir['basedir'].'/doliconnect/'.$module.'/'.$id.'/'.$img[0]->relativename) ) {
 $url = $up_dir['baseurl'].'/doliconnect/'.$module.'/'.$id.'/'.$img[0]->relativename;
-$image = "<img src='".$up_dir['baseurl'].'/doliconnect/'.$module.'/'.$id.'/'.$img[0]->relativename."' class='img-fluid img-thumbnail' alt='".$img[0]->relativename."'>";
+$image = "<img src='".$up_dir['baseurl'].'/doliconnect/'.$module.'/'.$id.'/'.$img[0]->relativename."' class='img-fluid rounded-lg' loading='lazy' alt='".$img[0]->relativename."'>";
 } else {
 $image = "<i class='fa fa-cube fa-fw fa-2x'></i>";
 }

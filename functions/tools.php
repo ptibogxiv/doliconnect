@@ -607,7 +607,7 @@ $total .= "<li class='list-group-item list-group-item-primary'><b>".__( 'Total i
 return $total;
 }
 
-function doliline($object, $mode = null) {
+function doliline($object, $mode = null, $refresh = false) {
 global $current_user;
 
 $doliline=null;
@@ -622,10 +622,10 @@ $end = wp_date('d/m/Y', $line->date_end);
 $dates =" <i>(Du $start au $end)</i>";
 }
 
-$doliline .= '<div class="w-100 justify-content-between"><div class="row"><div class="col-1"><center>'.doliconnect_image('product', $line->fk_product, null, false).'</center></div><div class="col"> 
-<h6 class="mb-1">'.doliproduct($line, 'product_label').'</h6>
-<small><p class="mb-1">'.doliproduct($line, 'product_desc').'</p>
-<i>'.(isset($dates) ? $dates : null).'</i></small></div>';
+$doliline .= '<div class="w-100 justify-content-between"><div class="row"><div class="col-1"><center>'.doliconnect_image('product', $line->fk_product, null, $refresh).'</center></div><div class="col"> 
+<h6 class="mb-1">'.doliproduct($line, 'product_label').'</h6>';
+if(!empty(doliconst("PRODUIT_DESC_IN_FORM"))) $doliline .= '<small><p class="mb-1">'.doliproduct($line, 'product_desc').'</p>';
+$doliline .= '<i>'.(isset($dates) ? $dates : null).'</i></small></div>';
 
 if ( $object->statut == 0 && !empty($mode)) {
 if ( $line->fk_product > 0 ) {
@@ -633,7 +633,7 @@ $includestock = 0;
 if ( ! empty(doliconnectid('dolicart')) ) {
 $includestock = 1;
 }
-$product = callDoliApi("GET", "/products/".$line->fk_product."?includestockdata=".$includestock, null, 0);
+$product = callDoliApi("GET", "/products/".$line->fk_product."?includestockdata=".$includestock, null, dolidelay('product', $refresh));
 }
 $doliline .= '<div class="col d-none d-md-block col-md-2 text-right"><center>'.doliproductstock($product).'</center></div>';
 }
