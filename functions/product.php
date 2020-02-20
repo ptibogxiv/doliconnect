@@ -403,7 +403,7 @@ $step = $product->array_options->options_packaging;
 } else {
 $step = 1;
 }
-$button .= "<div class='input-group mb-3'><select class='form-control' id='select' name='product-add-qty' ";
+$button .= "<div class='input-group mb-3'><select class='form-control form-control-sm' id='select' name='product-add-qty' ";
 if ( ( empty($product->stock_reel) || $m2 < $step) && $product->type == '0' && !empty(doliconst('MAIN_MODULE_STOCK')) ) { $button .= " disabled"; }
 $button .= ">";
 if ($m2 < $step)  { $button .= "<OPTION value='0' >x 0</OPTION>"; }
@@ -418,7 +418,7 @@ $button .= "<option value='$number' >x ".$number."</option>";
 		}
 	}
 }
-$button .= "</select><div class='input-group-append'><button id='my-button' class='btn btn-warning' type='submit' value='submit'";
+$button .= "</select><div class='input-group-append'><button id='my-button' class='btn btn-warning btn-sm' type='submit' value='submit'";
 if ( ( empty($product->stock_reel) || $m2 < $step) && $product->type == '0' && !empty(doliconst('MAIN_MODULE_STOCK')) ) { $button .= " disabled"; }
 $button .= "><i class='fas fa-cart-plus fa-inverse fa-fw'></i></button></div></div>";
 

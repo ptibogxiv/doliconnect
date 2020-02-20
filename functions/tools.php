@@ -622,7 +622,7 @@ $end = wp_date('d/m/Y', $line->date_end);
 $dates =" <i>(Du $start au $end)</i>";
 }
 
-$doliline .= '<div class="w-100 justify-content-between"><div class="row"><div class="col-1"><center>'.doliconnect_image('product', $line->fk_product, null, $refresh).'</center></div><div class="col"> 
+$doliline .= '<div class="w-100 justify-content-between"><div class="row"><div class="col-2 col-md-1"><center>'.doliconnect_image('product', $line->fk_product, null, $refresh).'</center></div><div class="col"> 
 <h6 class="mb-1">'.doliproduct($line, 'product_label').'</h6><small>';
 if(!empty(doliconst("PRODUIT_DESC_IN_FORM"))) $doliline .= '<p class="mb-1">'.doliproduct($line, 'product_desc').'</p>';
 $doliline .= '<i>'.(isset($dates) ? $dates : null).'</i></small></div>';
@@ -636,7 +636,7 @@ $includestock = 1;
 $product = callDoliApi("GET", "/products/".$line->fk_product."?includestockdata=".$includestock, null, dolidelay('product', $refresh));
 }
 $doliline .= '<div class="col d-none d-md-block col-md-2 text-right"><center>'.doliproductstock($product).'</center>';
-if (!empty($product->country_code)) $doliline .= '<center><span class="flag-icon flag-icon-'.strtolower($product->country_code).'"></span></center>';
+if (!empty($product->country_code)) $doliline .= '<center><span class="flag-icon flag-icon-'.strtolower($product->country_code).'"></span> '.$product->country_code.'</center>';
 $doliline .= '</div>';
 }
 
