@@ -623,8 +623,8 @@ $dates =" <i>(Du $start au $end)</i>";
 }
 
 $doliline .= '<div class="w-100 justify-content-between"><div class="row"><div class="col-1"><center>'.doliconnect_image('product', $line->fk_product, null, $refresh).'</center></div><div class="col"> 
-<h6 class="mb-1">'.doliproduct($line, 'product_label').'</h6>';
-if(!empty(doliconst("PRODUIT_DESC_IN_FORM"))) $doliline .= '<small><p class="mb-1">'.doliproduct($line, 'product_desc').'</p>';
+<h6 class="mb-1">'.doliproduct($line, 'product_label').'</h6><small>';
+if(!empty(doliconst("PRODUIT_DESC_IN_FORM"))) $doliline .= '<p class="mb-1">'.doliproduct($line, 'product_desc').'</p>';
 $doliline .= '<i>'.(isset($dates) ? $dates : null).'</i></small></div>';
 
 if ( $object->statut == 0 && !empty($mode)) {
