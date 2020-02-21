@@ -297,29 +297,29 @@ if ( ! empty( $instance['title'] ) ) {
 print $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ) . $args['after_title'];
 }
 
-$shop = callDoliApi("GET", "/doliconnector/constante/DOLICONNECT_CATSHOP", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$shop = doliconst("DOLICONNECT_CATSHOP", esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 //print $shop;
 
-if ( $shop->value != null ) {
+if ( $shop != null ) {
 
-$request = "/categories?sortfield=t.label&sortorder=ASC&limit=100&type=product&sqlfilters=(t.fk_parent='".esc_attr($shop->value)."')";
+$request = "/categories/".esc_attr($shop)."?include_childs=true";
 
 $resultatsc = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 if ( !isset($resultatsc->error) && $resultatsc != null ) {
-foreach ($resultatsc as $categorie) {
+foreach ($resultatsc->childs as $categorie) {
 
 print "<a href='".esc_url( add_query_arg( 'category', $categorie->id, doliconnecturl('dolishop')) )."' class='list-group-item list-group-item-action";
 if ( $categorie->id == $_GET['category'] && !isset($_GET['subcategory']) ) { print " active"; }
 print "'>".doliproduct($categorie, 'label')."</a>"; //."<br />".doliproduct($categorie, 'description')
 
 if ( isset($_GET['category']) && $categorie->id == $_GET['category'] ) {
-$request = "/categories?sortfield=t.label&sortorder=ASC&limit=100&type=product&sqlfilters=(t.fk_parent='".esc_attr(isset($_GET["category"]) ? $_GET["category"] : $_GET["subcategory"])."')";
+$request = "/categories/".esc_attr(isset($_GET["category"]) ? $_GET["category"] : $_GET["subcategory"])."?include_childs=true";
 
 $resultatsc = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 if ( !isset($resultatsc->error) && $resultatsc != null ) {
-foreach ($resultatsc as $categorie) {
+foreach ($resultatsc->childs as $categorie) {
 
 $arr_params = array( 'category' => $_GET['category'], 'subcategory' => $categorie->id);  
 $return = esc_url( add_query_arg( $arr_params, doliconnecturl('dolishop')) );
