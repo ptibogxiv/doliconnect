@@ -624,11 +624,6 @@ $dates =" <i>(Du $start au $end)</i>";
 
 $doliline .= '<div class="w-100 justify-content-between"><div class="row"><div class="col-2 col-md-1"><center>'.doliconnect_image('product', $line->fk_product, null, $refresh).'</center></div><div class="col"> 
 <h6 class="mb-1">'.doliproduct($line, 'product_label').'</h6>';
-$doliline .= "<p><small><i class='fas fa-toolbox fa-fw'></i> ".$product->ref." | <i class='fas fa-barcode fa-fw'></i> ".(!empty($product->barcode)?$product->barcode:'-')."</small></p>";
-if(!empty(doliconst("PRODUIT_DESC_IN_FORM"))) $doliline .= '<p class="mb-1"><small>'.doliproduct($line, 'product_desc').'</small></p>';
-$doliline .= '<p><small><i>'.(isset($dates) ? $dates : null).'</i></small></p>';
-
-if ( $object->statut == 0 && !is_page(doliconnectid('doliaccount'))) {
 if ( $line->fk_product > 0 ) {
 $includestock = 0;
 if ( ! empty(doliconnectid('dolicart')) ) {
@@ -636,6 +631,11 @@ $includestock = 1;
 }
 $product = callDoliApi("GET", "/products/".$line->fk_product."?includestockdata=".$includestock, null, dolidelay('product', $refresh));
 }
+$doliline .= "<p><small><i class='fas fa-toolbox fa-fw'></i> ".(!empty($product->ref)?$product->ref:'-')." | <i class='fas fa-barcode fa-fw'></i> ".(!empty($product->barcode)?$product->barcode:'-')."</small></p>";
+if(!empty(doliconst("PRODUIT_DESC_IN_FORM"))) $doliline .= '<p class="mb-1"><small>'.doliproduct($line, 'product_desc').'</small></p>';
+$doliline .= '<p><small><i>'.(isset($dates) ? $dates : null).'</i></small></p>';
+
+if ( $object->statut == 0 && !is_page(doliconnectid('doliaccount'))) {
 $doliline .= '</div><div class="col d-none d-md-block col-md-2 text-right"><center>'.doliproductstock($product).'</center>';
 if ( !empty($product->country_id) ) {  
 if ( function_exists('pll_the_languages') ) { 

@@ -973,7 +973,7 @@ print "<td width='80%' style='border:0px'><b>".doliproduct($product, 'label')."<
 if ( ! empty(doliconnectid('dolicart')) ) { 
 print " ".doliproductstock($product);
 }
-print "<div class='row'><div class='col'><p><small><i class='fas fa-toolbox fa-fw'></i> ".$product->ref." | <i class='fas fa-barcode fa-fw'></i> ".(!empty($product->barcode)?$product->barcode:'-')."</small>";
+print "<div class='row'><div class='col'><p><small><i class='fas fa-toolbox fa-fw'></i> ".(!empty($product->ref)?$product->ref:'-')." | <i class='fas fa-barcode fa-fw'></i> ".(!empty($product->barcode)?$product->barcode:'-')."</small>";
 if ( !empty($product->country_id) ) {  
 if ( function_exists('pll_the_languages') ) { 
 $lang = pll_current_language('locale');
