@@ -290,7 +290,7 @@ class Doliconnect_DoliShop extends WP_Widget {
 	 */
 public function widget( $args, $instance ) {
 
-if ( empty($instance['display']) || (!empty($instance['display']) && is_page(doliconnectid('dolishop')) && !empty(doliconnectid('dolishop'))) ) { 
+if ( !empty($instance['display']) || (empty($instance['display']) && is_page(doliconnectid('dolishop')) && !empty(doliconnectid('dolishop'))) ) { 
   
 print $args['before_widget'];
 if ( ! empty( $instance['title'] ) ) {
