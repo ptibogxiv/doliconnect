@@ -344,23 +344,23 @@ print $args['after_widget'];
 	 * @param array $instance The widget options
 	 */
 	public function form( $instance ) {
-		$title = '';
+    // Si le titre n'est pas vide, alors on met le titre, sinon un nouveau titre
+    $title = ! empty( $instance['title'] ) ? $instance['title'] : __( 'Categories', 'doliconenct' );
+    // Si l'utilisateur n'est pas vide, alors on met l'utilisateur, sinon un nouveau utilisateur
+    $display = ! empty( $instance['display'] ) ? $instance['display'] : null;
+ 
 		?>
 		<p>
 		<label for="<?php print esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php esc_attr_e( 'Title:', 'doliconnect'); ?></label> 
 		<input class="widefat" id="<?php print esc_attr( $this->get_field_id( 'title' ) ); ?>" name="<?php print esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text" value="<?php print esc_attr( $title ); ?>">
 		</p>
+    <p>
+    <label for="<?php echo $this->get_field_id( 'display' ); ?>"><?php esc_attr_e( 'Display:', 'doliconnect'); ?></label>
+    <input class="widefat" id="<?php print esc_attr( $this->get_field_id( 'display' ) ); ?>"  name="<?php print esc_attr( $this->get_field_name( 'display' ) ); ?>" type="text" value="<?php print esc_attr( $display ); ?>">
+    </p>
 		<?php 
 	}
 
-	/**
-	 * Processing widget options on save
-	 *
-	 * @param array $new_instance The new options
-	 * @param array $old_instance The previous options
-	 *
-	 * @return array
-	 */
 /**
 	 * Sanitize widget form values as they are saved.
 	 *
@@ -374,7 +374,7 @@ print $args['after_widget'];
 	public function update( $new_instance, $old_instance ) {
 		$instance = array();
 		$instance['title'] = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
-
+    $instance['display'] = ( ! empty( $new_instance['display'] ) ) ? strip_tags( $new_instance['display'] ) : $old_instance['display'];
 		return $instance;
 	}
 
@@ -386,9 +386,6 @@ add_action( 'widgets_init', function(){
 
 class Doliconnect_Changelang extends WP_Widget {
 
-	/**
-	 * Sets up the widgets name etc
-	 */
 	public function __construct() {
 		$widget_ops = array( 
 			'classname' => 'Doliconnect_Changelang',                               
