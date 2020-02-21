@@ -636,7 +636,14 @@ $includestock = 1;
 $product = callDoliApi("GET", "/products/".$line->fk_product."?includestockdata=".$includestock, null, dolidelay('product', $refresh));
 }
 $doliline .= '<div class="col d-none d-md-block col-md-2 text-right"><center>'.doliproductstock($product).'</center>';
-if (!empty($product->country_code)) $doliline .= '<center><span class="flag-icon flag-icon-'.strtolower($product->country_code).'"></span> '.$product->country_code.'</center>';
+if ( !empty($product->country_id) ) {  
+if ( function_exists('pll_the_languages') ) { 
+$lang = pll_current_language('locale');
+} else {
+$lang = $current_user->locale;
+}
+$country = callDoliApi("GET", "/setup/dictionary/countries/".$product->country_id."?lang=".$lang, null, dolidelay('constante', $refresh));
+$doliline .= "<center><span class='flag-icon flag-icon-".strtolower($product->country_code)."'></span> ".$country->label."</center>"; }
 $doliline .= '</div>';
 }
 
