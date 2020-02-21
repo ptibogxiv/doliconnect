@@ -623,9 +623,10 @@ $dates =" <i>(Du $start au $end)</i>";
 }
 
 $doliline .= '<div class="w-100 justify-content-between"><div class="row"><div class="col-2 col-md-1"><center>'.doliconnect_image('product', $line->fk_product, null, $refresh).'</center></div><div class="col"> 
-<h6 class="mb-1">'.doliproduct($line, 'product_label').'</h6><small>';
-if(!empty(doliconst("PRODUIT_DESC_IN_FORM"))) $doliline .= '<p class="mb-1">'.doliproduct($line, 'product_desc').'</p>';
-$doliline .= '<i>'.(isset($dates) ? $dates : null).'</i></small></div>';
+<h6 class="mb-1">'.doliproduct($line, 'product_label').'</h6>';
+$doliline .= "<p><small><i class='fas fa-toolbox fa-fw'></i> ".$product->ref." | <i class='fas fa-barcode fa-fw'></i> ".(!empty($product->barcode)?$product->barcode:'-')."</small></p>";
+if(!empty(doliconst("PRODUIT_DESC_IN_FORM"))) $doliline .= '<p class="mb-1"><small>'.doliproduct($line, 'product_desc').'</small></p>';
+$doliline .= '<p><small><i>'.(isset($dates) ? $dates : null).'</i></small></p>';
 
 if ( $object->statut == 0 && !is_page(doliconnectid('doliaccount'))) {
 if ( $line->fk_product > 0 ) {
@@ -635,7 +636,7 @@ $includestock = 1;
 }
 $product = callDoliApi("GET", "/products/".$line->fk_product."?includestockdata=".$includestock, null, dolidelay('product', $refresh));
 }
-$doliline .= '<div class="col d-none d-md-block col-md-2 text-right"><center>'.doliproductstock($product).'</center>';
+$doliline .= '</div><div class="col d-none d-md-block col-md-2 text-right"><center>'.doliproductstock($product).'</center>';
 if ( !empty($product->country_id) ) {  
 if ( function_exists('pll_the_languages') ) { 
 $lang = pll_current_language('locale');
@@ -643,11 +644,10 @@ $lang = pll_current_language('locale');
 $lang = $current_user->locale;
 }
 $country = callDoliApi("GET", "/setup/dictionary/countries/".$product->country_id."?lang=".$lang, null, dolidelay('constante', $refresh));
-$doliline .= "<center><span class='flag-icon flag-icon-".strtolower($product->country_code)."'></span> ".$country->label."</center>"; }
-$doliline .= '</div>';
+$doliline .= "<center><small><span class='flag-icon flag-icon-".strtolower($product->country_code)."'></span> ".$country->label."</small></center>"; }
 }
 
-$doliline .= '<div class="col-4 col-md-2 text-right"><h6 class="mb-1">'.doliprice($line, 'total_ttc', isset($line->multicurrency_code) ? $line->multicurrency_code : null).'</h6>';
+$doliline .= '</div><div class="col-4 col-md-2 text-right"><h6 class="mb-1">'.doliprice($line, 'total_ttc', isset($line->multicurrency_code) ? $line->multicurrency_code : null).'</h6>';
 if ( !empty(doliconst('MAIN_MODULE_FRAISDEPORT')) && doliconst('FRAIS_DE_PORT_ID_SERVICE_TO_USE') == $line->fk_product ) {
 $doliline .= '<h6 class="mb-1">x'.$line->qty.'</h6>';
 } elseif ( $object->statut == 0 && !is_page(doliconnectid('doliaccount')) ) {
