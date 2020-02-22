@@ -128,7 +128,7 @@ $html .= "<tr><td><div class='row'><div class='col-md-8'><b>";
 if ( $postadh->family == '1' ) {
 $html .= "<i class='fas fa-users fa-fw'></i> ";
 }else{$html .= "<i class='fas fa-user fa-fw'></i> ";}
-$html .= $postadh->label;
+$html .= doliproduct($postadh, 'label');
 if (! empty ($postadh->duration_value)) $html .= " - ".doliduration($postadh);
 $html .= " <small>";
 if ((($postadh->welcome > '0') && ($adherent->datefin == null )) or (($postadh->welcome > '0') && (current_time( 'timestamp',1) > $renewadherent) && (current_time( 'timestamp',1) > $adherent->datefin))) { 
@@ -174,7 +174,7 @@ $html .= '</small></h1>';
 if ( !isset($adherent) or (($postadh->welcome > '0') && isset($adherent) && ($adherent->datefin == null )) or (($postadh->welcome > '0') && isset($renewadherent) && (current_time( 'timestamp',1) > $renewadherent) && isset($adherent) && (current_time( 'timestamp',1) > $adherent->datefin)) ) {          
 $html .= "<small>".__( 'First subscription at', 'doliconnect' )." ".doliprice($montantdata)."</small>"; 
 }   
-$html .= $postadh->note.'</div>';
+$html .= doliproduct($postadh, 'note').'</div>';
 
 if ( function_exists('dolimembership_modal') ) {
 $html .= '<div class="card-footer"><a href="'.doliconnecturl('dolicontact').'?type=COM" role="button" class="btn btn-lg btn-block btn-info">'.__( 'Contact us', 'doliconnect' ).'</a></div>';
