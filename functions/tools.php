@@ -669,14 +669,14 @@ $m1 = 10*$product->array_options->options_packaging;
 } else {
 $m1 = 10;
 }
-if ( $product->stock_reel-$line->qty >= $m1 || (isset($stock) && is_object($stock) && $stock->value != 1) ) {
+if ( $product->stock_reel-$line->qty >= $m1 || empty(doliconst('MAIN_MODULE_STOCK')) ) {
 $m2 = $m1;
-} elseif ($product->stock_reel>$line->qty) {
+} elseif ( $product->stock_reel > $line->qty ) {
 $m2 = $product->stock_reel;
 } else { $m2 = $line->qty; }
 } else {
-if ($line->qty>1){$m2=$line->qty;}
-else {$m2 = 1;}
+if ( isset($line) && $line->qty > 1 ) { $m2 = $line->qty; }
+else { $m2 = 1; }
 }
 if (isset($product->array_options->options_packaging) && !empty($product->array_options->options_packaging)) {
 $step = $product->array_options->options_packaging;
@@ -684,13 +684,15 @@ $step = $product->array_options->options_packaging;
 $step = 1;
 }
 if ($m2 < $step)  { $doliline .= "<OPTION value='0' >x 0</OPTION>"; }
+if (!empty($m2) && $m2 >= $step) {
 foreach (range(0, $m2, $step) as $number) {
 		if ( $number == $line->qty ) {
 $doliline .= "<option value='$number' selected='selected'>x ".$number."</option>";
 		} else {
 $doliline .= "<option value='$number' >x ".$number."</option>";
 		}
-	} 
+	}
+}
 $doliline .= "</select>";
 } else {
 $doliline .= '<h6 class="mb-1">x'.$line->qty.'</h6>';
