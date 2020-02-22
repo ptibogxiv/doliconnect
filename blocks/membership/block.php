@@ -114,7 +114,7 @@ $html .= '</small></h1>';
 if ( !isset($adherent) or (($postadh->welcome > '0') && isset($adherent) && ($adherent->datefin == null )) or (($postadh->welcome > '0') && isset($renewadherent) && (current_time( 'timestamp',1) > $renewadherent) && isset($adherent) && (current_time( 'timestamp',1) > $adherent->datefin)) ) {          
 $html .= "<small>".__( 'First subscription at', 'doliconnect' )." ".doliprice($montantdata)."</small>"; 
 }   
-$html .= $postadh->note.'</div>';
+$html .= doliproduct($postadh, 'note').'</div>';
 
 if ( function_exists('dolimembership_modal') ) {
 $html .= '<div class="card-footer"><a href="'.doliconnecturl('doliaccount').'?module=members" role="button" class="btn btn-block btn'.$color.'">'.__( 'Subscribe', 'doliconnect' ).'</a></div>';
@@ -139,10 +139,10 @@ $html .=  __( 'then', 'doliconnect' )." ".doliprice($montant1)." ".__( 'yearly',
 $html .= "(".doliprice($montant1);
 $html .= " ".__( 'yearly', 'doliconnect' );
 } 
-$html .= ")";
+$html .= ")</small>";
 if (!empty(doliproduct($postadh, 'note'))) $html .= "<br><small class='text-justify text-muted '>".doliproduct($postadh, 'note')."</small>";
 if (!empty(number_format($postadh->federal))) $html .= "<br><small class='text-justify text-muted '>".__( 'Including a federal part of', 'doliconnect-pro')." ".doliprice($postadh->federal)."</small>";
-
+$html .= "</div>";
 if ( function_exists('dolimembership_modal') ) {
 $html .= '<div class="col-md-4"><a href="'.doliconnecturl('doliaccount').'?module=members" role="button" class="btn btn-block btn'.$color.'">'.__( 'Subscribe', 'doliconnect' ).'</a></div>';
 }
