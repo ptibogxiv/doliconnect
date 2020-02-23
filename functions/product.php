@@ -44,7 +44,7 @@ if ( !isset($img->error) && $img != null && (!file_exists($up_dir['basedir'].'/d
 $imgj =  callDoliApi("GET", "/documents/download?modulepart=product&original_file=".$img[0]->level1name."/".$img[0]->relativename, null, 0);
 //print var_dump($imgj);
 $imgj = (array) $imgj; 
-if (is_array($imgj) && $imgj['content-type'] == 'image/jpeg') {
+if (is_array($imgj) && preg_match('/^image/', $subject, $imgj['content-type'])) {
 //$data = "data:".$imgj['content-type'].";".$imgj['encoding'].",".$imgj['content'];
 mkdir($up_dir['basedir'].'/doliconnect/'.$module.'/'.$id, 0777, true);
 $files = glob($up_dir['basedir'].'/doliconnect/'.$module.'/'.$id."/*");
@@ -385,9 +385,9 @@ $button .= '</tbody></table>';
 if ( is_user_logged_in() && !empty($add) && !empty(doliconst('MAIN_MODULE_COMMANDE')) && doliconnectid('dolicart') > 0 ) {
 if ( ($product->stock_reel-$qty > 0 && $product->type == '0') ) {
 if (isset($product->array_options->options_packaging) && !empty($product->array_options->options_packaging)) {
-$m1 = 10*$product->array_options->options_packaging;
+$m1 = 15*$product->array_options->options_packaging;
 } else {
-$m1 = 10;
+$m1 = 15;
 }
 if ( $product->stock_reel-$qty >= $m1 || empty(doliconst('MAIN_MODULE_STOCK')) ) {
 $m2 = $m1;
