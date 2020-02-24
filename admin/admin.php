@@ -215,7 +215,7 @@ echo '<DIV class="wrap">';
 echo '<h2>'.__( 'Doliconnect settings', 'doliconnect' ).'</h2>';
 
 $dolibarr = callDoliApi("GET", "/multicompany/".dolibarr_entity(), null, 60 * MINUTE_IN_SECONDS);
-echo var_dump($dolibarr);  
+//echo var_dump($dolibarr);  
 ?>
 	<div id="ptibogxiv_management_page" class="postbox">
 	<div class="inside">

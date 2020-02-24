@@ -35,16 +35,16 @@ $fmt = numfmt_create( $locale, NumberFormatter::CURRENCY );
 return numfmt_format_currency($fmt, $montant, $currency);//.$decimal
 }
 
-function doliconnect_image($module, $id, $mode = null, $refresh = null) {
-$img =  callDoliApi("GET", "/documents?modulepart=".$module."&id=".$id, null, dolidelay('document', $refresh));
+function doliconnect_image($module, $id, $mode = null, $refresh = null, $entity = null) {
+$img =  callDoliApi("GET", "/documents?modulepart=".$module."&id=".$id, null, dolidelay('document', $refresh), $entity);
    
 $up_dir = wp_upload_dir();
 
 if ( !isset($img->error) && $img != null && (!file_exists($up_dir['basedir'].'/doliconnect/'.$module.'/'.$id.'/'.$img[0]->relativename) || filesize($up_dir['basedir'].'/doliconnect/'.$module.'/'.$id.'/'.$img[0]->relativename) != $img[0]->size) ) {
-$imgj =  callDoliApi("GET", "/documents/download?modulepart=product&original_file=".$img[0]->level1name."/".$img[0]->relativename, null, 0);
+$imgj =  callDoliApi("GET", "/documents/download?modulepart=product&original_file=".$img[0]->level1name."/".$img[0]->relativename, null, 0, $entity);
 //print var_dump($imgj);
 $imgj = (array) $imgj; 
-if (is_array($imgj) && preg_match('/^image/', $subject, $imgj['content-type'])) {
+if (is_array($imgj) && preg_match('/^image/', $imgj['content-type'])) {
 //$data = "data:".$imgj['content-type'].";".$imgj['encoding'].",".$imgj['content'];
 mkdir($up_dir['basedir'].'/doliconnect/'.$module.'/'.$id, 0777, true);
 $files = glob($up_dir['basedir'].'/doliconnect/'.$module.'/'.$id."/*");
