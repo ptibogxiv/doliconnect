@@ -1909,7 +1909,9 @@ print "</script>";
 
 print "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
 print "<li class='list-group-item'><div class='custom-control custom-switch'><input type='checkbox' class='custom-control-input' name='loginmailalert' id='loginmailalert' ";
-if ( $current_user->loginmailalert == 'on' ) { print " checked"; }        
+if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $ID ) {
+print " disabled";
+} elseif ( $current_user->loginmailalert == 'on' ) { print " checked"; }        
 print " onChange='Dolisettings()'><label class='custom-control-label w-100' for='loginmailalert'> ".__( 'Receive a email notification at each connection', 'doliconnect')."</label>
 </div></li>";
 if ( get_option('doliconnectbeta') == '1' ) {
