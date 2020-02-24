@@ -383,7 +383,7 @@ return $bug;
 
 function Doliconnect_MailAlert( $user_login, $user) {
 
-if ( $user->loginmailalert == 'on'  ) { //&& $user->ID != ''.constant("DOLICONNECT_DEMO").''
+if ( $user->loginmailalert == 'on' ) { //&& $user->ID != ''.constant("DOLICONNECT_DEMO").''
 $sitename = get_option('blogname');
 $siteurl = get_option('siteurl');
 $subject = "[$sitename] ".__( 'Connection notification', 'doliconnect');
