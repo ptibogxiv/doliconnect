@@ -1889,21 +1889,22 @@ $thirparty = callDoliApi("PUT", "/thirdparties/".doliconnector($current_user, 'f
 }
 }
 
-print "<form id='settings-form' action='".$url."' method='post'>";
+print "<form id='settings-form' method='post' action='".admin_url('admin-ajax.php')."'>";
+print "<input type='hidden' name='action' value='dolisettings_request'>";
 
 print "<script>";
-print 'window.setTimeout(function() {
-    $(".alert").fadeTo(500, 0).slideUp(500, function(){
-        $(this).remove(); 
-    });
-}, 5000);';
-print 'var form = document.getElementById("settings-form");
-form.addEventListener("submit", function(event) {
-form.submit();
-});';
 print 'function DoliSettings(theForm){
-jQuery("#DoliconnectLoadingModal").modal("show");
-this.form.submit();
+//jQuery("#DoliconnectLoadingModal").modal("show");
+    $.ajax({ // create an AJAX call...
+        data: $(theForm).serialize(), // get the form data
+        type: $(theForm).attr("method"), // GET or POST
+        url: $(theForm).attr("action"), // the file to call
+        success: function (response) { // on success..
+        //jQuery("#DoliconnectLoadingModal").modal("toggle");
+        alert(response.data);
+        }
+    });
+
 }';
 print "</script>";
 
