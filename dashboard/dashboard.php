@@ -1873,35 +1873,23 @@ $ID = $current_user->ID;
 $monnaie = doliconst("MAIN_MONNAIE", dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 if ( isset($_POST["case"]) && $_POST["case"] == 'updatesettings' ) {
-if ( isset($_POST['loginmailalert'])) { update_user_meta( $ID, 'loginmailalert', sanitize_text_field($_POST['loginmailalert']) ); } else { delete_user_meta($ID, 'loginmailalert'); }
-if ( isset($_POST['optin1'])) { update_user_meta( $ID, 'optin1', sanitize_text_field($_POST['optin1']) ); } else { delete_user_meta($ID, 'optin1'); }
-if ( isset($_POST['optin2'])) { update_user_meta( $ID, 'optin2', sanitize_text_field($_POST['optin2']) ); } else { delete_user_meta($ID, 'optin2'); }
-if ( isset($_POST['locale']) ) { update_user_meta( $ID, 'locale', sanitize_text_field($_POST['locale']) ); }  
-//if (isset($_POST['multicurrency_code'])) {vupdate_user_meta( $ID, 'multicurrency_code', sanitize_text_field($_POST['multicurrency_code']) );v}
 
-if ( doliconnector($current_user, 'fk_soc') > 0 ) {
-
-$info = array(
-      'default_lang' => isset($_POST['locale'])?sanitize_text_field($_POST['locale']):null,
-      'multicurrency_code' => isset($_POST['multicurrency_code'])?sanitize_text_field($_POST['multicurrency_code']):$monnaie,
-            );
-$thirparty = callDoliApi("PUT", "/thirdparties/".doliconnector($current_user, 'fk_soc'), $info, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-}
 }
 
 print "<form id='settings-form' method='post' action='".admin_url('admin-ajax.php')."'>";
 print "<input type='hidden' name='action' value='dolisettings_request'>";
+print "<input type='hidden' name='dolisettings-nonce' value='".wp_create_nonce( 'dolisettings-nonce')."'>";
 
 print "<script>";
 print 'function DoliSettings(theForm){
-//jQuery("#DoliconnectLoadingModal").modal("show");
+jQuery("#DoliconnectLoadingModal").modal("show");
     $.ajax({ // create an AJAX call...
         data: $(theForm).serialize(), // get the form data
         type: $(theForm).attr("method"), // GET or POST
         url: $(theForm).attr("action"), // the file to call
         success: function (response) { // on success..
-        //jQuery("#DoliconnectLoadingModal").modal("toggle");
-        alert(response.data);
+        jQuery("#DoliconnectLoadingModal").modal("toggle");
+        //alert(response.data);
         }
     });
 
@@ -1978,7 +1966,7 @@ print "</select>";
 print "</div></div>";
 print "</li>";
 print "<div class='card-body'></div>";
-print '</ul><div class="card-footer text-muted"><input type="hidden" name="case" value="updatesettings"></form>';
+print '</ul><div class="card-footer text-muted"></form>';
 print "<small><div class='float-left'>";
 print dolirefresh( "/thirdparties/".doliconnector($current_user, 'fk_soc'), $url, dolidelay('member'));
 print "</div><div class='float-right'>";
