@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2020-02-25 17:12+0100\n"
-"PO-Revision-Date: 2020-02-25 17:13+0100\n"
+"POT-Creation-Date: 2020-02-25 17:19+0100\n"
+"PO-Revision-Date: 2020-02-25 17:20+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it_IT\n"
@@ -1370,11 +1370,11 @@ msgid "Your price"
 msgstr "Prezzo"
 
 #: functions/product.php:390
-msgid "Prices incl. taxes"
+msgid "Our prices are incl. VAT"
 msgstr "Prezzi IVA incl."
 
 #: functions/product.php:390
-msgid "Prices excl. taxes"
+msgid "Our prices are excl. VAT"
 msgstr "Prezzi IVA esc."
 
 #: functions/product.php:446 functions/product.php:448 functions/tools.php:709
@@ -1894,6 +1894,12 @@ msgstr "ptibogxiv"
 #. Author URI of the plugin/theme
 msgid "https://www.ptibogxiv.net/en"
 msgstr "https://www.ptibogxiv.net/en"
+
+#~ msgid "Prices incl. taxes"
+#~ msgstr "Prezzi IVA incl."
+
+#~ msgid "Prices excl. taxes"
+#~ msgstr "Prezzi IVA esc."
 
 #~ msgid "Go to cart"
 #~ msgstr "Vai al carrello"

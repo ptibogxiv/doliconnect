@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2020-02-25 17:10+0100\n"
-"PO-Revision-Date: 2020-02-25 17:11+0100\n"
+"POT-Creation-Date: 2020-02-25 17:18+0100\n"
+"PO-Revision-Date: 2020-02-25 17:18+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: nl_BE\n"
@@ -1373,12 +1373,12 @@ msgid "Your price"
 msgstr "Uw Prijs"
 
 #: functions/product.php:390
-msgid "Prices incl. taxes"
-msgstr "Totaal incl. BTW"
+msgid "Our prices are incl. VAT"
+msgstr "Onze prijzen zijn incl. BTW"
 
 #: functions/product.php:390
-msgid "Prices excl. taxes"
-msgstr "Totaal excl. BTW"
+msgid "Our prices are excl. VAT"
+msgstr "Onze prijzen zijn excl. BTW"
 
 #: functions/product.php:446 functions/product.php:448 functions/tools.php:709
 #: functions/tools.php:711
