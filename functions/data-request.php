@@ -59,6 +59,7 @@ add_action( 'wp_ajax_doli_gdrf_data_request', 'doli_gdrf_data_request' );
 add_action( 'wp_ajax_nopriv_doli_gdrf_data_request', 'doli_gdrf_data_request' );
 
 
+
 add_action('wp_ajax_doliaddproduct_request', 'doliaddproduct_request');
 add_action('wp_ajax_nopriv_doliaddproduct_request', 'doliaddproduct_request');
 
@@ -71,5 +72,17 @@ wp_send_json_success( 'error' );
 $result = doliaddtocart(trim($_POST['product-add-id']), trim($_POST['product-add-qty']), trim($_POST['product-add-price']), trim($_POST['product-add-remise_percent']), isset($_POST['product-add-timestamp_start'])?trim($_POST['product-add-timestamp_start']):null, isset($_POST['product-add-timestamp_end'])?trim($_POST['product-add-timestamp_end']):null);
 wp_send_json_success( $result ); 
     }
+ 
+}
+
+
+
+add_action('wp_ajax_dolisettings_request', 'dolisettings_request');
+add_action('wp_ajax_nopriv_dolisettings_request', 'dolisettings_request');
+
+function dolisettings_request(){
+global $current_user;
+		
+wp_send_json_success('test'); 
  
 }
