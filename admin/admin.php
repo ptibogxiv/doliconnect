@@ -226,6 +226,10 @@ if (isset($_REQUEST['users_can_register']) && $_REQUEST['users_can_register']==1
 update_option('users_can_register', sanitize_text_field($_REQUEST['users_can_register']));
 }else {
 delete_option('users_can_register');}
+if (isset($_REQUEST['dolibarr_b2bmode']) && $_REQUEST['dolibarr_b2bmode']==1){
+update_option('dolibarr_b2bmode', sanitize_text_field($_REQUEST['dolibarr_b2bmode']));
+}else {
+delete_option('dolibarr_b2bmode');}
 if (isset($_REQUEST['doliloginmodal']) && $_REQUEST['doliloginmodal']==1){
 update_option('doliloginmodal', sanitize_text_field($_REQUEST['doliloginmodal']));
 }else {
@@ -274,17 +278,17 @@ delete_option('doliconnect_google');}
     <form action="" method="post">
         <table class="form-table" width="100%">
             <tr>
-                <th style="width:150px;"><label for="doliloginmodal">Modal login</label></th>
+                <th style="width:150px;"><label for="doliloginmodal"><?php _e('Modal login', 'doliconnect') ?></label></th>
                 <td ><input name="doliloginmodal" type="checkbox" id="doliloginmodal" value="1" <?php if ( is_plugin_active( 'doliconnect-pro/doliconnect-pro.php' ) ) {
 checked('1', get_option('doliloginmodal')); } else { ?> disabled <?php } ?> > <b>PRO</b>            
                 </td>
             </tr> 
             <tr>
-                <th style="width:150px;"><label for="doliconnectbeta">Mode Beta</label></th>
-                <td ><input name="doliconnectbeta" type="checkbox" id="doliconnectbeta" value="1" <?php checked('1', get_option('doliconnectbeta')); ?> /> Active beta functions / May be instable or not functionnal</td>
+                <th style="width:150px;"><label for="doliconnectbeta"><?php _e('Beta mode', 'doliconnect') ?></label></th>
+                <td ><input name="doliconnectbeta" type="checkbox" id="doliconnectbeta" value="1" <?php checked('1', get_option('doliconnectbeta')); ?> /> <?php _e('Active beta functions, can be unstable', 'doliconnect') ?></td>
             </tr>
             <tr>
-                <th style="width:150px;"><label for="doliconnectbeta">Mode site restreint</label></th>
+                <th style="width:150px;"><label for="doliconnectbeta"><?php _e('Restricted mode', 'doliconnect') ?></label></th>
                 <td ><input name="doliconnectrestrict" type="checkbox" id="doliconnectrestrict" value="1" <?php if ( is_plugin_active( 'doliconnect-pro/doliconnect-pro.php' ) ) {
 checked('1', get_option('doliconnectrestrict')); } else { ?> disabled <?php } ?> > <b>PRO</b></td>
             </tr>               
@@ -292,7 +296,7 @@ checked('1', get_option('doliconnectrestrict')); } else { ?> disabled <?php } ?>
 $multicompany = callDoliApi("GET", "/multicompany?sortfield=t.rowid&sortorder=ASC", null, 30 * MINUTE_IN_SECONDS, 1);
 ?>                  
             <tr>
-                <th style="width:150px;"><label for="dolibarr_register">Entite Dolibarr</label></th>
+                <th style="width:150px;"><label for="dolibarr_register"><?php _e("Dolibarr's entity", 'doliconnect') ?></label></th>
                 <td>
 <?php if ( !isset($multicompany->error) && $multicompany != null ) { ?>
 <select class='custom-select' id='dolibarr_entity'  name='dolibarr_entity' <?php if (empty(get_site_option('dolibarr_entity')) || !is_super_admin()) { echo 'disabled'; } ?> >
@@ -317,7 +321,11 @@ echo "<input id='dolibarr_entity'  name='dolibarr_entity' type='text' value='".(
                 <td ><input name="users_can_register" type="checkbox" id="users_can_register" value="1" <?php checked('1', get_option('users_can_register')); ?> /> <?php _e('Anyone can register') ?></td>
             </tr>
             <tr>
-                <th style="width:150px;"><label for="doliconnect_disablepro">dolibarr_disableperso/pro</label></th>
+                <th style="width:150px;"><label for="dolibarr_register"><?php _e('B2B mode', 'doliconnect') ?></label></th>
+                <td ><input name="dolibarr_b2bmode" type="checkbox" id="dolibarr_b2bmode" value="1" <?php checked('1', get_option('dolibarr_b2bmode')); ?> /> <?php _e('Display all prices excluding VAT', 'doliconnect') ?></td>
+            </tr>
+            <tr>
+                <th style="width:150px;"><label for="doliconnect_disablepro"><?php _e('Personnal / Enterprise mode', 'doliconnect') ?></label></th>
                 <td ><select name="doliconnect_disablepro" type="checkbox" id="doliconnect_disablepro">
                 <option value="0" <?php selected('O', get_option('doliconnect_disablepro'));?>>Perso & Pro</option>
                 <option value="phy" <?php selected('phy', get_option('doliconnect_disablepro'));?>>Only Perso</option>
@@ -326,8 +334,8 @@ echo "<input id='dolibarr_entity'  name='dolibarr_entity' type='text' value='".(
                 </td>
             </tr>
             <tr>
-                <th style="width:150px;"><label for="doliconnect_ipkiosk">IP mode kiosque</label></th>
-                <td ><textarea rows="6" cols="75" name="doliconnect_ipkiosk" type="text" id="doliconnect_ipkiosk"><?php if ( ! empty(get_option('doliconnect_ipkiosk')) ) { echo implode("\n",get_option('doliconnect_ipkiosk'));} ?></textarea><br>IP actuelle: <?php echo $_SERVER['REMOTE_ADDR']; ?><br>mettre une IP par ligne sans virgule ni espace</td>
+                <th style="width:150px;"><label for="doliconnect_ipkiosk"><?php _e('Kiosk mode', 'doliconnect') ?></label></th>
+                <td ><textarea rows="6" cols="75" name="doliconnect_ipkiosk" type="text" id="doliconnect_ipkiosk"><?php if ( ! empty(get_option('doliconnect_ipkiosk')) ) { echo implode("\n",get_option('doliconnect_ipkiosk'));} ?></textarea><br><?php _e('IP address', 'doliconnect') ?>: <?php echo $_SERVER['REMOTE_ADDR']; ?><br><?php _e('one IP per line without space or comma', 'doliconnect') ?></td>
             </tr>
             <tr>
                 <th style="width:150px;"><label for="dolibarr_account">dolibarr_account</label></th>
@@ -339,7 +347,7 @@ echo "<input id='dolibarr_entity'  name='dolibarr_entity' type='text' value='".(
     'selected' => get_option('doliaccount') 
 );
            wp_dropdown_pages($args); ?>
-<br><br><textarea name="doliconnect_login_info" placeholder="message d'info sur la page de connexion" class="form-control" id="exampleFormControlTextarea1" rows="3" cols="75"><?php echo get_option('doliaccountinfo'); ?></textarea>   
+<br><br><textarea name="doliconnect_login_info" placeholder="<?php _e('Message on login page', 'doliconnect') ?>" class="form-control" id="exampleFormControlTextarea1" rows="3" cols="75"><?php echo get_option('doliaccountinfo'); ?></textarea>   
            </td>
             </tr>
             <tr>
@@ -415,7 +423,7 @@ echo "<input id='dolibarr_entity'  name='dolibarr_entity' type='text' value='".(
     'option_none_value' => '0', 
     'selected' => get_option( 'wp_page_for_privacy_policy' ) 
 );
-           wp_dropdown_pages($args); ?> (set your default wordpress legacy page)</td>
+           wp_dropdown_pages($args); ?> <?php _e('(set your default wordpress legacy page)', 'doliconnect') ?></td>
             </tr>
 <?php            
 if (is_plugin_active( 'doliconnect-ticket/doliconnect-ticket.php' ) ) { ?>

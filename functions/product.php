@@ -323,6 +323,7 @@ $level=1;
 }
  
 $price_min_ttc=$product->multiprices_min->$level; 
+$price_ttc=$product->multiprices_ttc->$level;
 $price_ht=$product->multiprices->$level;
 $vat=$product->tva_tx;
 
@@ -338,16 +339,16 @@ $button .= ' class="table-primary"';
 }
 $button .= '>';   
 $button .= '<td>'.__( 'Price', 'doliconnect').' '.$level.' - '.doliconst('PRODUIT_MULTIPRICES_LABEL'.$level).'</td>';
-$button .= '<td class="text-right">'.doliprice( $price, $currency);
+$button .= '<td class="text-right">'.doliprice( (empty(get_option('dolibarr_b2bmode'))?$price_ttc:$price_ht), $currency);
 if ( empty($time) && !empty($product->duration_value) ) { $button .='/'.doliduration($product); }
 $button .= '</td>';
-if ( !empty($altdurvalue) ) { $button .= "<td class='text-right'>soit ".doliprice( $altdurvalue*$price, $currency)." par ".__( 'hour', 'doliconnect')."</td>"; } 
+if ( !empty($altdurvalue) ) { $button .= "<td class='text-right'>soit ".doliprice( $altdurvalue*(empty(get_option('dolibarr_b2bmode'))?$price_ttc:$price_ht), $currency)." par ".__( 'hour', 'doliconnect')."</td>"; } 
 //$button .= '<small class="float-right">'.__( 'You benefit from the rate', 'doliconnect').' '.doliconst('PRODUIT_MULTIPRICES_LABEL'.$level).'</small>';
 $button .= '</tr>'; 
 }
 }
 
-if (!empty($product->net_measure)) { $button .= '<tr><td class="text-right"><small>'.doliprice( $price_ht/$product->net_measure, $currency);
+if (!empty($product->net_measure)) { $button .= '<tr><td class="text-right"><small>'.doliprice( (empty(get_option('dolibarr_b2bmode'))?$price_ttc:$price_ht)/$product->net_measure, $currency);
 $unit = callDoliApi("GET", "/setup/dictionary/units?sortfield=rowid&sortorder=ASC&limit=1&active=1&sqlfilters=(t.rowid%3Alike%3A'".$product->net_measure_units."')", null, dolidelay('constante'));
 if (!empty($unit)) $button .= "/".$unit[0]->short_label;
 $button .= "</small></td></tr>"; }
@@ -357,7 +358,7 @@ $button .= '</tbody></table>';
 $button .= '<table class="table table-bordered table-sm table-striped"><tbody>';
 $button .= '<tr>'; 
 $button .= '<td>'.__( 'Selling Price', 'doliconnect').'</td>';
-$button .= '<td class="text-right">'.doliprice( $product->price_ttc, $currency);
+$button .= '<td class="text-right">'.doliprice( empty(get_option('dolibarr_b2bmode'))?$product->price_ttc:$product->price, $currency);
 if ( empty($time) && !empty($product->duration_value) ) { $button .='/'.doliduration($product); } 
 if ( !empty($altdurvalue) ) { $button .= "<td class='text-right'>soit ".doliprice( $altdurvalue*$product->price_ttc, $currency)." par ".__( 'hour', 'doliconnect')."</td>"; } 
 $button .= '</td>';
@@ -369,22 +370,24 @@ $product2 = callDoliApi("GET", "/products/".$product->id."/selling_multiprices/p
 if ( !empty(doliconst("PRODUIT_CUSTOMER_PRICES")) && isset($product2) && !isset($product2->error) ) {
 foreach ( $product2 as $pdt2 ) {
 $price_min_ttc=$pdt2->price_min;
+$price_ttc=$pdt2->price_ttc;
 $price_ht=$pdt2->price;
 $vat = $pdt2->tva_tx;
 $button .= '<tr class="table-primary">'; 
 $button .= '<td>'.__( 'Your price', 'doliconnect').'</td>';
-$button .= '<td class="text-right">'.doliprice( $pdt2->price_ttc, $currency);
+$button .= '<td class="text-right">'.doliprice( empty(get_option('dolibarr_b2bmode'))?$price_ttc:$price_ht, $currency);
 if ( empty($time) && !empty($product->duration_value) ) { $button .='/'.doliduration($product); } 
-if ( !empty($altdurvalue) ) { $button .= "<td class='text-right'>soit ".doliprice( $altdurvalue*$pdt2->price_ttc, $currency)." par ".__( 'hour', 'doliconnect')."</td>"; } 
+if ( !empty($altdurvalue) ) { $button .= "<td class='text-right'>soit ".doliprice( $altdurvalue*(empty(get_option('dolibarr_b2bmode'))?$price_ttc:$price_ht), $currency)." par ".__( 'hour', 'doliconnect')."</td>"; } 
 $button .= '</td>';
 }
 } else {
 $price_min_ttc=$product->price_min;
+$price_ttc=$product->price_ttc;
 $price_ht=$product->price;
 $vat=$product->tva_tx;
 }
 
-if (!empty($product->net_measure)) { $button .= '<tr><td colspan="2" class="text-right"><small>'.doliprice( $price_ht/$product->net_measure, $currency);
+if (!empty($product->net_measure)) { $button .= '<tr><td colspan="2" class="text-right"><small>'.doliprice( (empty(get_option('dolibarr_b2bmode'))?$price_ttc:$price_ht)/$product->net_measure, $currency);
 $unit = callDoliApi("GET", "/setup/dictionary/units?sortfield=rowid&sortorder=ASC&limit=1&active=1&sqlfilters=(t.rowid%3Alike%3A'".$product->net_measure_units."')", null, dolidelay('constante'));
 if (!empty($unit)) $button .= "/".$unit[0]->short_label;
 $button .= "</small></td></tr>"; }
