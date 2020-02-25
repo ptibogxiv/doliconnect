@@ -845,17 +845,47 @@ print "<li class='list-group-item'>".$thirdparty->name."</li>";
 
 $request = "/products/purchase_prices?sortfield=t.ref&sortorder=ASC&limit=100&supplier=".esc_attr($_GET["supplier"]);
 
-$resultatsc = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$resultatso = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
-if ( !isset($resultatsc->error) && $resultatsc != null ) {
-foreach ($resultatsc as $product) {
+if ( !isset($resultatso->error) && $resultatso != null ) {
+foreach ($resultatso as $product) {
+$includestock = 0;
+if ( ! empty(doliconnectid('dolicart')) ) {
+$includestock = 1;
+}
+$product = callDoliApi("GET", "/products/".$product->id."?includestockdata=".$includestock, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+print "<li class='list-group-item' id='prod-li-".$product->id."'><table width='100%' style='border:0px'><tr><td width='20%' style='border:0px'><center>";
+print doliconnect_image('product', $product->id, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), $product->entity);
+print "</center></td>";
 
-$arr_params = array( 'product' => $product->id);  
+print "<td width='80%' style='border:0px'><b>".doliproduct($product, 'label')."</b>";
+if ( ! empty(doliconnectid('dolicart')) ) { 
+print " ".doliproductstock($product);
+}
+print "<div class='row'><div class='col'><p><small><i class='fas fa-toolbox fa-fw'></i> ".(!empty($product->ref)?$product->ref:'-')." | <i class='fas fa-barcode fa-fw'></i> ".(!empty($product->barcode)?$product->barcode:'-')."</small>";
+if ( !empty($product->country_id) ) {  
+if ( function_exists('pll_the_languages') ) { 
+$lang = pll_current_language('locale');
+} else {
+$lang = $current_user->locale;
+}
+$country = callDoliApi("GET", "/setup/dictionary/countries/".$product->country_id."?lang=".$lang, null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+print "<br><small><span class='flag-icon flag-icon-".strtolower($product->country_code)."'></span> ".$country->label."</small>"; }
+ 
+$arr_params = array( 'category' => isset($_GET['category'])?$_GET['category']:null, 'subcategory' => isset($_GET['subcategory'])?$_GET['subcategory']:null, 'product' => $product->id);  
 $return = esc_url( add_query_arg( $arr_params, doliconnecturl('dolishop')) );
+print "<a href='".$return."' class='btn btn-link btn-block'>En savoir plus</a>";
+ 
+print "</p></div>";
 
-print "<li class='list-group-item d-flex justify-content-between lh-condensed list-group-item-action'><div class='d-none d-md-block col-md-2 col-lg-1'><center><i class='fa fa-cube fa-fw fa-2x'></i></center></div><div class='col-12 col-sm-10 col-md-10 col-lg-11'><h6 class='my-0'>".doliproduct($product, 'label')." ".doliproductstock($product)."</h6><small class='text-muted'>".doliproduct($product, 'description')."</small></div></li>"; 
-
-}} else {
+if ( ! empty(doliconnectid('dolicart')) ) { 
+print "<div class='col-12 col-md-6'><center>";
+print doliconnect_addtocart($product, esc_attr(isset($_GET['category'])?$_GET['category']:null), 0, 2, 0);
+print "</center></div>";
+}
+print "</div></td></tr></table></li>"; 
+}
+} else {
 print "<li class='list-group-item list-group-item-light'><center>".__( 'No product', 'doliconnect')."</center></li>";
 }
 
@@ -983,7 +1013,7 @@ $lang = $current_user->locale;
 $country = callDoliApi("GET", "/setup/dictionary/countries/".$product->country_id."?lang=".$lang, null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 print "<br><small><span class='flag-icon flag-icon-".strtolower($product->country_code)."'></span> ".$country->label."</small>"; }
  
-$arr_params = array( 'category' => $_GET['category'], 'subcategory' => isset($_GET['subcategory'])?$_GET['subcategory']:null, 'product' => $product->id);  
+$arr_params = array( 'category' => isset($_GET['category'])?$_GET['category']:null, 'subcategory' => isset($_GET['subcategory'])?$_GET['subcategory']:null, 'product' => $product->id);  
 $return = esc_url( add_query_arg( $arr_params, doliconnecturl('dolishop')) );
 print "<a href='".$return."' class='btn btn-link btn-block'>En savoir plus</a>";
  
@@ -991,7 +1021,7 @@ print "</p></div>";
 
 if ( ! empty(doliconnectid('dolicart')) ) { 
 print "<div class='col-12 col-md-6'><center>";
-print doliconnect_addtocart($product, esc_attr($_GET['category']), 0, 2, 0);
+print doliconnect_addtocart($product, esc_attr(isset($_GET['category'])?$_GET['category']:null), 0, 2, 0);
 print "</center></div>";
 }
 print "</div></td></tr></table></li>"; 
