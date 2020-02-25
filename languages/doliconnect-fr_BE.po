@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2020-02-25 16:34+0100\n"
-"PO-Revision-Date: 2020-02-25 16:35+0100\n"
+"POT-Creation-Date: 2020-02-25 17:08+0100\n"
+"PO-Revision-Date: 2020-02-25 17:09+0100\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_FR\n"
@@ -216,7 +216,7 @@ msgstr "par an"
 msgid "Including a federal part of"
 msgstr "Incluant une part fédérale de"
 
-#: blocks/membership/block.php:180 functions/product.php:450
+#: blocks/membership/block.php:180 functions/product.php:453
 msgid "Contact us"
 msgstr "Contactez-nous"
 
@@ -1080,7 +1080,7 @@ msgid "The security key is invalid!"
 msgstr "La clé de sécurité est invalide!"
 
 #: dashboard/templates.php:607 dashboard/templates.php:658
-#: functions/product.php:443 functions/tools.php:709
+#: functions/product.php:446 functions/tools.php:709
 msgid "Sign in"
 msgstr "Connexion"
 
@@ -1380,33 +1380,41 @@ msgstr "Reste à payer"
 msgid "Total to pay"
 msgstr "Total à payer"
 
-#: functions/product.php:340
+#: functions/product.php:341
 msgid "Price"
 msgstr "Tarif"
 
-#: functions/product.php:344 functions/product.php:362
-#: functions/product.php:378 functions/tools.php:738
+#: functions/product.php:345 functions/product.php:363
+#: functions/product.php:380 functions/tools.php:738
 msgid "hour"
 msgstr "heure"
 
-#: functions/product.php:359
+#: functions/product.php:360
 msgid "Selling Price"
 msgstr "Prix de vente"
 
-#: functions/product.php:375
+#: functions/product.php:377
 msgid "Your price"
 msgstr "Votre prix"
 
-#: functions/product.php:443 functions/product.php:445 functions/tools.php:709
+#: functions/product.php:390
+msgid "Prices incl. taxes"
+msgstr "Prix taxes comprises"
+
+#: functions/product.php:390
+msgid "Prices excl. taxes"
+msgstr "Prix hors taxes"
+
+#: functions/product.php:446 functions/product.php:448 functions/tools.php:709
 #: functions/tools.php:711
 msgid "log in"
 msgstr "connectez-vous"
 
-#: functions/product.php:450
+#: functions/product.php:453
 msgid "Login"
 msgstr "Connexion"
 
-#: functions/product.php:453
+#: functions/product.php:456
 #, php-format
 msgid "you get %u %% discount"
 msgstr "vous bénéficiez de %u %% de réduction"
