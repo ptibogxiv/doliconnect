@@ -349,7 +349,8 @@ $button .= '</tr>';
 
 if (!empty($product->net_measure)) { $button .= '<tr><td class="text-right"><small>'.doliprice( $price_ht/$product->net_measure, $currency);
 $unit = callDoliApi("GET", "/setup/dictionary/units?sortfield=rowid&sortorder=ASC&limit=1&active=1&sqlfilters=(t.rowid%3Alike%3A'".$product->net_measure_units."')", null, dolidelay('constante'));
-$button .= "/".$unit[0]->short_label."</small></td></tr>"; }
+if (!empty($unit)) $button .= "/".$unit[0]->short_label;
+$button .= "</small></td></tr>"; }
 
 $button .= '</tbody></table>';
 } else {
@@ -385,7 +386,8 @@ $vat=$product->tva_tx;
 
 if (!empty($product->net_measure)) { $button .= '<tr><td colspan="2" class="text-right"><small>'.doliprice( $price_ht/$product->net_measure, $currency);
 $unit = callDoliApi("GET", "/setup/dictionary/units?sortfield=rowid&sortorder=ASC&limit=1&active=1&sqlfilters=(t.rowid%3Alike%3A'".$product->net_measure_units."')", null, dolidelay('constante'));
-$button .= "/".$unit[0]->short_label."</small></td></tr>"; }
+if (!empty($unit)) $button .= "/".$unit[0]->short_label;
+$button .= "</small></td></tr>"; }
 
 $button .= '</tbody></table>';
 }
