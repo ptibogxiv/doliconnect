@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2020-02-25 17:19+0100\n"
-"PO-Revision-Date: 2020-02-25 17:20+0100\n"
+"POT-Creation-Date: 2020-02-26 10:40+0100\n"
+"PO-Revision-Date: 2020-02-26 10:40+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it_IT\n"
@@ -216,7 +216,7 @@ msgstr "annuale"
 msgid "Including a federal part of"
 msgstr "Compresa una parte federale"
 
-#: blocks/membership/block.php:180 functions/product.php:453
+#: blocks/membership/block.php:180 functions/product.php:454
 msgid "Contact us"
 msgstr "Contattaci"
 
@@ -1076,7 +1076,7 @@ msgid "The security key is invalid!"
 msgstr "La chiave di sicurezza non è valida!"
 
 #: dashboard/templates.php:607 dashboard/templates.php:658
-#: functions/product.php:446 functions/tools.php:709
+#: functions/product.php:447 functions/tools.php:709
 msgid "Sign in"
 msgstr "Accedi"
 
@@ -1227,15 +1227,31 @@ msgstr "Da convalidare"
 msgid "An error is occured. Please contact us!"
 msgstr "Si è verificato un errore. Vi preghiamo di contattarci!"
 
-#: dashboard/templates.php:1619
+#: dashboard/templates.php:1618
+msgid "Amount outstanding"
+msgstr "Importo in evaso"
+
+#: dashboard/templates.php:1618
+msgid "out of"
+msgstr "su"
+
+#: dashboard/templates.php:1618
+msgid "allowed"
+msgstr "consentito"
+
+#: dashboard/templates.php:1620
+msgid "Please, contact us to pay overdue unpaid invoices"
+msgstr "Vi preghiamo di contattarci per pagare le fatture non pagate scadute"
+
+#: dashboard/templates.php:1629
 msgid "Continue shopping"
 msgstr "Continua lo shopping"
 
-#: dashboard/templates.php:1623
+#: dashboard/templates.php:1633
 msgid "Empty the basket"
 msgstr "Svuotare il cestello"
 
-#: dashboard/templates.php:1626
+#: dashboard/templates.php:1638
 msgid "Process"
 msgstr "Processo"
 
@@ -1356,37 +1372,37 @@ msgstr "Totale da pagare"
 msgid "Price"
 msgstr "Prezzo"
 
-#: functions/product.php:345 functions/product.php:363
-#: functions/product.php:380 functions/tools.php:738
+#: functions/product.php:345 functions/product.php:364
+#: functions/product.php:381 functions/tools.php:738
 msgid "hour"
 msgstr "ora"
 
-#: functions/product.php:360
-msgid "Selling Price"
-msgstr "Prezzo di Vendita"
-
-#: functions/product.php:377
-msgid "Your price"
-msgstr "Prezzo"
-
-#: functions/product.php:390
+#: functions/product.php:351 functions/product.php:391
 msgid "Our prices are incl. VAT"
 msgstr "Prezzi IVA incl."
 
-#: functions/product.php:390
+#: functions/product.php:351 functions/product.php:391
 msgid "Our prices are excl. VAT"
 msgstr "Prezzi IVA esc."
 
-#: functions/product.php:446 functions/product.php:448 functions/tools.php:709
+#: functions/product.php:361
+msgid "Selling Price"
+msgstr "Prezzo di Vendita"
+
+#: functions/product.php:378
+msgid "Your price"
+msgstr "Prezzo"
+
+#: functions/product.php:447 functions/product.php:449 functions/tools.php:709
 #: functions/tools.php:711
 msgid "log in"
 msgstr "accedi"
 
-#: functions/product.php:453
+#: functions/product.php:454
 msgid "Login"
 msgstr "Accedi"
 
-#: functions/product.php:456
+#: functions/product.php:457
 #, php-format
 msgid "you get %u %% discount"
 msgstr "ottieni %u %% di sconto"

@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2020-02-26 10:31+0100\n"
-"PO-Revision-Date: 2020-02-26 10:31+0100\n"
+"POT-Creation-Date: 2020-02-26 10:43+0100\n"
+"PO-Revision-Date: 2020-02-26 10:43+0100\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_FR\n"
@@ -1270,6 +1270,18 @@ msgid "Please, contact us to pay overdue unpaid invoices"
 msgstr ""
 "S’il vous plaît, contactez-nous pour payer les factures impayées en retard"
 
+#: dashboard/templates.php:1629
+msgid "Continue shopping"
+msgstr "Continuer vos achats"
+
+#: dashboard/templates.php:1633
+msgid "Empty the basket"
+msgstr "Vider le panier"
+
+#: dashboard/templates.php:1638
+msgid "Process"
+msgstr "Finaliser"
+
 #: functions/data-request.php:21
 msgid ""
 "The request can’t be processed on this website. This feature requires "
@@ -1928,15 +1940,6 @@ msgstr "ptibogxiv"
 #. Author URI of the plugin/theme
 msgid "https://www.ptibogxiv.net/en"
 msgstr "https://www.ptibogxiv.net/fr"
-
-#~ msgid "Continue shopping"
-#~ msgstr "Continuer vos achats"
-
-#~ msgid "Empty the basket"
-#~ msgstr "Vider le panier"
-
-#~ msgid "Process"
-#~ msgstr "Finaliser"
 
 #~ msgid "Go to cart"
 #~ msgstr "Aller au panier"
