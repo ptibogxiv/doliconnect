@@ -691,7 +691,7 @@ foreach (range(1*$step, $m2, $step) as $number) {
 		if ( $number == $line->qty ) {
 $doliline .= "<option value='$number' selected='selected'>x ".$number."</option>";
 		} else {
-$doliline .= "<option value='$number' >x ".$number."</option>";
+$doliline .= "<option value='$number' >".$number."</option>";
 		}
 	}
 }
