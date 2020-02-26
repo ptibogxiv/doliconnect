@@ -426,8 +426,8 @@ if ($m2 < $step)  { $button .= "<OPTION value='0' >".__( 'Delete', 'doliconnect'
 if (!empty($m2) && $m2 >= $step) {
 if ($step >1 && !empty($quantity)) $quantity = round($quantity/$step)*$step; 
 if (empty($qty) && $quantity > $m2) $quantity = $m2; 
-$button .= "<OPTION value='0' >".__( 'Delete', 'doliconnect')."</OPTION>";
-foreach (range(1*$step, $m2, $step) as $number) {
+if ($m2 < $step)  { $button .= "<OPTION value='0' >".__( 'Delete', 'doliconnect')."</OPTION>"; } else
+foreach (range(0, $m2, $step) as $number) {
 		if ( $number == $qty || ($number == $quantity && empty($qty)) ) {
 $button .= "<option value='$number' selected='selected'>x ".$number."</option>";
 		} else {
