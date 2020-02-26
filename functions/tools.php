@@ -629,7 +629,7 @@ $doliline .= '<i class="fas fa-shipping-fast fa-2x fa-fw"></i>';
 $doliline .= doliconnect_image('product', $line->fk_product, null, $refresh);
 }
 
-$doliline .= '</center></div><div class="col"><h6 class="mb-1">'.doliproduct($line, 'product_label').'</h6>';
+$doliline .= '</center></div><div class="col-8 col-md-7"><h6 class="mb-1">'.doliproduct($line, 'product_label').'</h6>';
 if ( $line->fk_product > 0 ) {
 $includestock = 0;
 if ( ! empty(doliconnectid('dolicart')) ) {
@@ -644,8 +644,9 @@ if(!empty(doliconst("PRODUIT_DESC_IN_FORM"))) $doliline .= '<p class="mb-1"><sma
 $doliline .= '<p><small><i>'.(isset($dates) ? $dates : null).'</i></small></p>';
 }
 
+$doliline .= '</div><div class="col d-none d-md-block col-md-2 text-right">';
 if ( $object->statut == 0 && !is_page(doliconnectid('doliaccount')) && doliconst('FRAIS_DE_PORT_ID_SERVICE_TO_USE') != $line->fk_product  ) {
-$doliline .= '</div><div class="col d-none d-md-block col-md-2 text-right"><center>'.doliproductstock($product).'</center>';
+$doliline .= '<center>'.doliproductstock($product).'</center>';
 if ( !empty($product->country_id) ) {  
 if ( function_exists('pll_the_languages') ) { 
 $lang = pll_current_language('locale');
