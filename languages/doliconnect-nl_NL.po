@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2020-02-26 10:33+0100\n"
-"PO-Revision-Date: 2020-02-26 10:33+0100\n"
+"POT-Creation-Date: 2020-02-26 11:29+0100\n"
+"PO-Revision-Date: 2020-02-26 11:45+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: nl_NL\n"
@@ -1242,9 +1242,12 @@ msgid "allowed"
 msgstr "Toegestaan"
 
 #: dashboard/templates.php:1620
-msgid "Please, contact us to pay overdue unpaid invoices"
+msgid ""
+"Your account is blocked, this order can't be processed. Please, contact us "
+"to pay overdue unpaid invoices"
 msgstr ""
-"Neem contact met ons op om achterstallige onbetaalde facturen te betalen"
+"Je account is geblokkeerd, deze bestelling kan niet worden verwerkt. Neem "
+"contact met ons op om achterstallige onbetaalde facturen te betalen."
 
 #: dashboard/templates.php:1629
 msgid "Continue shopping"

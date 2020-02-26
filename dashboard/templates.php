@@ -1617,7 +1617,7 @@ if ($thirdparty->outstanding_limit) {
 $outstandinginvoice = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc')."/outstandinginvoices?mode=customer", null, dolidelay('cart', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))); 
 print "<li class='list-group-item bg-light'><b>".__( 'Amount outstanding', 'doliconnect').": ".doliprice($outstandinginvoice->opened, null, null)." ".__( 'out of', 'doliconnect')." ".doliprice($thirdparty->outstanding_limit, null, null)." ".__( 'allowed', 'doliconnect');
 $outstandingamount = $outstandinginvoice->opened-$thirdparty->outstanding_limit;
-if ($outstandingamount > 0) print " - ".__( 'Please, contact us to pay overdue unpaid invoices', 'doliconnect');
+if ($outstandingamount > 0) print " - ".__( "Your account is blocked, this order can't be processed. Please, contact us to pay overdue unpaid invoices.", 'doliconnect');
 print "</b></li>";
 }
 

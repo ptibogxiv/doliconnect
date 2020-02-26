@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2020-02-26 10:32+0100\n"
-"PO-Revision-Date: 2020-02-26 10:32+0100\n"
+"POT-Creation-Date: 2020-02-26 11:29+0100\n"
+"PO-Revision-Date: 2020-02-26 11:44+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: nl_BE\n"
@@ -1242,9 +1242,24 @@ msgid "allowed"
 msgstr "Toegestaan"
 
 #: dashboard/templates.php:1620
-msgid "Please, contact us to pay overdue unpaid invoices"
+msgid ""
+"Your account is blocked, this order can't be processed. Please, contact us "
+"to pay overdue unpaid invoices"
 msgstr ""
-"Neem contact met ons op om achterstallige onbetaalde facturen te betalen"
+"Je account is geblokkeerd, deze bestelling kan niet worden verwerkt. Neem "
+"contact met ons op om achterstallige onbetaalde facturen te betalen."
+
+#: dashboard/templates.php:1629
+msgid "Continue shopping"
+msgstr "Doorgaan met winkelen"
+
+#: dashboard/templates.php:1633
+msgid "Empty the basket"
+msgstr "Het mandje leegmaken"
+
+#: dashboard/templates.php:1638
+msgid "Process"
+msgstr "Verwerk"
 
 #: functions/data-request.php:21
 msgid ""
@@ -1901,15 +1916,6 @@ msgstr "ptibogxiv"
 #. Author URI of the plugin/theme
 msgid "https://www.ptibogxiv.net/en"
 msgstr "https://www.ptibogxiv.net/en"
-
-#~ msgid "Continue shopping"
-#~ msgstr "Doorgaan met winkelen"
-
-#~ msgid "Empty the basket"
-#~ msgstr "Het mandje leegmaken"
-
-#~ msgid "Process"
-#~ msgstr "Verwerk"
 
 #~ msgid "Go to cart"
 #~ msgstr "Ga naar winkelwagen"
