@@ -622,14 +622,14 @@ $end = wp_date('d/m/Y', $line->date_end);
 $dates =" <i>(Du $start au $end)</i>";
 }
 
-$doliline .= '<div class="w-100 justify-content-between"><div class="row"><div class="d-none d-md-block col-md-1"><center>';
+$doliline .= '<div class="w-100 justify-content-between"><div class="row"><div class="d-none d-sm-block col-sm-2 col-md-1"><center>';
 if ( !empty(doliconst('MAIN_MODULE_FRAISDEPORT')) && doliconst('FRAIS_DE_PORT_ID_SERVICE_TO_USE') == $line->fk_product ) {
 $doliline .= '<i class="fas fa-shipping-fast fa-2x fa-fw"></i>';
 } else {
 $doliline .= doliconnect_image('product', $line->fk_product, null, $refresh);
 }
 
-$doliline .= '</center></div><div class="col-8 col-md-7"><h6 class="mb-1">'.doliproduct($line, 'product_label').'</h6>';
+$doliline .= '</center></div><div class="col-8 col-sm-7 col-md-7"><h6 class="mb-1">'.doliproduct($line, 'product_label').'</h6>';
 if ( $line->fk_product > 0 ) {
 $includestock = 0;
 if ( ! empty(doliconnectid('dolicart')) ) {
@@ -657,7 +657,7 @@ $country = callDoliApi("GET", "/setup/dictionary/countries/".$product->country_i
 $doliline .= "<center><small><span class='flag-icon flag-icon-".strtolower($product->country_code)."'></span> ".$country->label."</small></center>"; }
 }
 
-$doliline .= '</div><div class="col-4 col-md-2 text-right"><h6 class="mb-1">'.doliprice($line, (empty(get_option('dolibarr_b2bmode'))?'total_ttc':'total_ht'), isset($line->multicurrency_code) ? $line->multicurrency_code : null).'</h6>';
+$doliline .= '</div><div class="col-4 col-sm-3 col-md-2 text-right"><h6 class="mb-1">'.doliprice($line, (empty(get_option('dolibarr_b2bmode'))?'total_ttc':'total_ht'), isset($line->multicurrency_code) ? $line->multicurrency_code : null).'</h6>';
 if ( !empty(doliconst('MAIN_MODULE_FRAISDEPORT')) && doliconst('FRAIS_DE_PORT_ID_SERVICE_TO_USE') == $line->fk_product ) {
 $doliline .= '<h6 class="mb-1">x'.$line->qty.'</h6>';
 } elseif ( $object->statut == 0 && !is_page(doliconnectid('doliaccount')) ) {
