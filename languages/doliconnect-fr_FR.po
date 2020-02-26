@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2020-02-26 10:01+0100\n"
-"PO-Revision-Date: 2020-02-26 10:02+0100\n"
+"POT-Creation-Date: 2020-02-26 10:31+0100\n"
+"PO-Revision-Date: 2020-02-26 10:31+0100\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_FR\n"
@@ -1253,29 +1253,22 @@ msgstr "Valider"
 msgid "An error is occured. Please contact us!"
 msgstr "Une erreur s'est produite. Veuillez nous contacter!"
 
-#: dashboard/templates.php:1617
+#: dashboard/templates.php:1618
 msgid "Amount outstanding"
 msgstr "Montant impayé"
 
-#: dashboard/templates.php:1617
+#: dashboard/templates.php:1618
 msgid "out of"
 msgstr "sur"
 
-#: dashboard/templates.php:1617
+#: dashboard/templates.php:1618
 msgid "allowed"
 msgstr "autorisé"
 
-#: dashboard/templates.php:1625
-msgid "Continue shopping"
-msgstr "Continuer vos achats"
-
-#: dashboard/templates.php:1629
-msgid "Empty the basket"
-msgstr "Vider le panier"
-
-#: dashboard/templates.php:1632
-msgid "Process"
-msgstr "Finaliser"
+#: dashboard/templates.php:1620
+msgid "Please, contact us to pay overdue unpaid invoices"
+msgstr ""
+"S’il vous plaît, contactez-nous pour payer les factures impayées en retard"
 
 #: functions/data-request.php:21
 msgid ""
@@ -1935,6 +1928,15 @@ msgstr "ptibogxiv"
 #. Author URI of the plugin/theme
 msgid "https://www.ptibogxiv.net/en"
 msgstr "https://www.ptibogxiv.net/fr"
+
+#~ msgid "Continue shopping"
+#~ msgstr "Continuer vos achats"
+
+#~ msgid "Empty the basket"
+#~ msgstr "Vider le panier"
+
+#~ msgid "Process"
+#~ msgstr "Finaliser"
 
 #~ msgid "Go to cart"
 #~ msgstr "Aller au panier"

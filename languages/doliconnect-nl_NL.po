@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2020-02-26 10:09+0100\n"
-"PO-Revision-Date: 2020-02-26 10:09+0100\n"
+"POT-Creation-Date: 2020-02-26 10:33+0100\n"
+"PO-Revision-Date: 2020-02-26 10:33+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: nl_NL\n"
@@ -1241,15 +1241,20 @@ msgstr "van de"
 msgid "allowed"
 msgstr "Toegestaan"
 
-#: dashboard/templates.php:1627
+#: dashboard/templates.php:1620
+msgid "Please, contact us to pay overdue unpaid invoices"
+msgstr ""
+"Neem contact met ons op om achterstallige onbetaalde facturen te betalen"
+
+#: dashboard/templates.php:1629
 msgid "Continue shopping"
 msgstr "Verder winkelen"
 
-#: dashboard/templates.php:1631
+#: dashboard/templates.php:1633
 msgid "Empty the basket"
 msgstr "Het mandje leegmaken"
 
-#: dashboard/templates.php:1636
+#: dashboard/templates.php:1638
 msgid "Process"
 msgstr "Verwerken"
 
