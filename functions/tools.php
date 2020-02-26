@@ -622,14 +622,14 @@ $end = wp_date('d/m/Y', $line->date_end);
 $dates =" <i>(Du $start au $end)</i>";
 }
 
-$doliline .= '<div class="w-100 justify-content-between"><div class="row"><div class="col-2 col-md-1"><center>';
+$doliline .= '<div class="w-100 justify-content-between"><div class="row"><div class="d-none d-md-block col-md-1"><center>';
 if ( !empty(doliconst('MAIN_MODULE_FRAISDEPORT')) && doliconst('FRAIS_DE_PORT_ID_SERVICE_TO_USE') == $line->fk_product ) {
 $doliline .= '<i class="fas fa-shipping-fast fa-2x fa-fw"></i>';
 } else {
 $doliline .= doliconnect_image('product', $line->fk_product, null, $refresh);
 }
 
-$doliline .= '</center></div><div class="col"> <h6 class="mb-1">'.doliproduct($line, 'product_label').'</h6>';
+$doliline .= '</center></div><div class="col"><h6 class="mb-1">'.doliproduct($line, 'product_label').'</h6>';
 if ( $line->fk_product > 0 ) {
 $includestock = 0;
 if ( ! empty(doliconnectid('dolicart')) ) {
