@@ -683,9 +683,10 @@ $step = $product->array_options->options_packaging;
 } else {
 $step = 1;
 }
-if ($m2 < $step)  { $doliline .= "<OPTION value='0' >x 0</OPTION>"; }
+if ($m2 < $step)  { $doliline .= "<OPTION value='0' >".__( 'Delete', 'doliconnect')."</OPTION>"; }
 if (!empty($m2) && $m2 >= $step) {
-foreach (range(0, $m2, $step) as $number) {
+$doliline .= "<OPTION value='0' >".__( 'Delete', 'doliconnect')."</OPTION>";
+foreach (range(1*$step, $m2, $step) as $number) {
 		if ( $number == $line->qty ) {
 $doliline .= "<option value='$number' selected='selected'>x ".$number."</option>";
 		} else {
