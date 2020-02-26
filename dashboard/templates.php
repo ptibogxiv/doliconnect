@@ -1611,6 +1611,14 @@ print dolitotal($object);
 print wp_nonce_field( 'valid_dolicart-'.$object->id, 'dolichecknonce');  
 }
 
+$thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
+$outstandingamount = 0;
+if ($thirdparty->outstanding_limit) {
+$outstandinginvoice = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc')."/outstandinginvoices?mode=customer", null, dolidelay('cart', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))); 
+print "<li class='list-group-item bg-light'><b>".__( 'Amount outstanding', 'doliconnect').": ".doliprice($outstandinginvoice->opened, null, null)." ".__( 'out of', 'doliconnect')." ".doliprice($thirdparty->outstanding_limit, null, null)." ".__( 'allowed', 'doliconnect')."</b></li>";
+$outstandingamount = $outstandinginvoice->opened-$thirdparty->outstanding_limit;
+}
+
 print "</ul>";
 print "</form>";  
 if ( get_option('dolishop') || (!get_option('dolishop') && isset($object) && $object->lines != null) ) {
@@ -1623,7 +1631,9 @@ if ( $object->lines != null && $object->statut == 0 ) {
 print "<button type='button' onclick='DeleteDoliCart(\"".$nonce."\")' class='list-group-item list-group-item-action flex-fill' role='button' aria-pressed='true'><center><b>".__( 'Empty the basket', 'doliconnect')."</b></center></button>";
 }
 if ( $object->lines != null ) {
-print "<button type='button' onclick='ValidDoliCart(\"".$nonce."\")' class='list-group-item list-group-item-action list-group-item-warning flex-fill ' role='button' aria-pressed='true'><center><b>".__( 'Process', 'doliconnect')."</b></center></button>";
+print "<button type='button' onclick='ValidDoliCart(\"".$nonce."\")' class='list-group-item list-group-item-action list-group-item-warning flex-fill ' role='button' aria-pressed='true'";
+if ($outstandingamount > 0) print " disabled";
+print "><center><b>".__( 'Process', 'doliconnect')."</b></center></button>";
 }
 }
 print "</ul></div>";

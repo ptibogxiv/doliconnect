@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2020-02-25 17:19+0100\n"
-"PO-Revision-Date: 2020-02-25 17:19+0100\n"
+"POT-Creation-Date: 2020-02-26 10:09+0100\n"
+"PO-Revision-Date: 2020-02-26 10:09+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: nl_NL\n"
@@ -217,7 +217,7 @@ msgstr "jaarlijks"
 msgid "Including a federal part of"
 msgstr "Inclusief een federaal deel van"
 
-#: blocks/membership/block.php:180 functions/product.php:453
+#: blocks/membership/block.php:180 functions/product.php:454
 msgid "Contact us"
 msgstr "Neem contact op"
 
@@ -1078,7 +1078,7 @@ msgid "The security key is invalid!"
 msgstr "De beveiligingssleutel is ongeldig!"
 
 #: dashboard/templates.php:607 dashboard/templates.php:658
-#: functions/product.php:446 functions/tools.php:709
+#: functions/product.php:447 functions/tools.php:709
 msgid "Sign in"
 msgstr "Inloggen"
 
@@ -1229,15 +1229,27 @@ msgstr "Valideren"
 msgid "An error is occured. Please contact us!"
 msgstr "Er is een fout opgetreden. Neem dan contact met ons op!"
 
-#: dashboard/templates.php:1619
+#: dashboard/templates.php:1618
+msgid "Amount outstanding"
+msgstr "Uitstaand bedrag"
+
+#: dashboard/templates.php:1618
+msgid "out of"
+msgstr "van de"
+
+#: dashboard/templates.php:1618
+msgid "allowed"
+msgstr "Toegestaan"
+
+#: dashboard/templates.php:1627
 msgid "Continue shopping"
 msgstr "Verder winkelen"
 
-#: dashboard/templates.php:1623
+#: dashboard/templates.php:1631
 msgid "Empty the basket"
 msgstr "Het mandje leegmaken"
 
-#: dashboard/templates.php:1626
+#: dashboard/templates.php:1636
 msgid "Process"
 msgstr "Verwerken"
 
@@ -1359,37 +1371,37 @@ msgstr "Totaal te betalen"
 msgid "Price"
 msgstr "Prijs"
 
-#: functions/product.php:345 functions/product.php:363
-#: functions/product.php:380 functions/tools.php:738
+#: functions/product.php:345 functions/product.php:364
+#: functions/product.php:381 functions/tools.php:738
 msgid "hour"
 msgstr "uur"
 
-#: functions/product.php:360
-msgid "Selling Price"
-msgstr "Verkoopprijs"
-
-#: functions/product.php:377
-msgid "Your price"
-msgstr "Jouw Prijs"
-
-#: functions/product.php:390
+#: functions/product.php:351 functions/product.php:391
 msgid "Our prices are incl. VAT"
 msgstr "Onze prijzen zijn incl. BTW"
 
-#: functions/product.php:390
+#: functions/product.php:351 functions/product.php:391
 msgid "Our prices are excl. VAT"
 msgstr "Onze prijzen zijn excl. BTW"
 
-#: functions/product.php:446 functions/product.php:448 functions/tools.php:709
+#: functions/product.php:361
+msgid "Selling Price"
+msgstr "Verkoopprijs"
+
+#: functions/product.php:378
+msgid "Your price"
+msgstr "Jouw Prijs"
+
+#: functions/product.php:447 functions/product.php:449 functions/tools.php:709
 #: functions/tools.php:711
 msgid "log in"
 msgstr "log in"
 
-#: functions/product.php:453
+#: functions/product.php:454
 msgid "Login"
 msgstr "Inloggen"
 
-#: functions/product.php:456
+#: functions/product.php:457
 #, php-format
 msgid "you get %u %% discount"
 msgstr "u krijgt% u%% korting"

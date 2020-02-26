@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2020-02-25 17:18+0100\n"
-"PO-Revision-Date: 2020-02-25 17:18+0100\n"
+"POT-Creation-Date: 2020-02-26 10:07+0100\n"
+"PO-Revision-Date: 2020-02-26 10:08+0100\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_FR\n"
@@ -216,7 +216,7 @@ msgstr "par an"
 msgid "Including a federal part of"
 msgstr "Incluant une part fédérale de"
 
-#: blocks/membership/block.php:180 functions/product.php:453
+#: blocks/membership/block.php:180 functions/product.php:454
 msgid "Contact us"
 msgstr "Contactez-nous"
 
@@ -1080,7 +1080,7 @@ msgid "The security key is invalid!"
 msgstr "La clé de sécurité est invalide!"
 
 #: dashboard/templates.php:607 dashboard/templates.php:658
-#: functions/product.php:446 functions/tools.php:709
+#: functions/product.php:447 functions/tools.php:709
 msgid "Sign in"
 msgstr "Connexion"
 
@@ -1253,15 +1253,27 @@ msgstr "Valider"
 msgid "An error is occured. Please contact us!"
 msgstr "Une erreur s'est produite. Veuillez nous contacter!"
 
-#: dashboard/templates.php:1619
+#: dashboard/templates.php:1618
+msgid "Amount outstanding"
+msgstr "Montant impayé"
+
+#: dashboard/templates.php:1618
+msgid "out of"
+msgstr "sur"
+
+#: dashboard/templates.php:1618
+msgid "allowed"
+msgstr "autorisé"
+
+#: dashboard/templates.php:1627
 msgid "Continue shopping"
 msgstr "Continuer vos achats"
 
-#: dashboard/templates.php:1623
+#: dashboard/templates.php:1631
 msgid "Empty the basket"
 msgstr "Vider le panier"
 
-#: dashboard/templates.php:1626
+#: dashboard/templates.php:1636
 msgid "Process"
 msgstr "Finaliser"
 
@@ -1384,37 +1396,37 @@ msgstr "Total à payer"
 msgid "Price"
 msgstr "Tarif"
 
-#: functions/product.php:345 functions/product.php:363
-#: functions/product.php:380 functions/tools.php:738
+#: functions/product.php:345 functions/product.php:364
+#: functions/product.php:381 functions/tools.php:738
 msgid "hour"
 msgstr "heure"
 
-#: functions/product.php:360
-msgid "Selling Price"
-msgstr "Prix de vente"
-
-#: functions/product.php:377
-msgid "Your price"
-msgstr "Votre prix"
-
-#: functions/product.php:390
+#: functions/product.php:351 functions/product.php:391
 msgid "Our prices are incl. VAT"
 msgstr "Nos prix sont TTC"
 
-#: functions/product.php:390
+#: functions/product.php:351 functions/product.php:391
 msgid "Our prices are excl. VAT"
 msgstr "Nos prix sont hors TVA"
 
-#: functions/product.php:446 functions/product.php:448 functions/tools.php:709
+#: functions/product.php:361
+msgid "Selling Price"
+msgstr "Prix de vente"
+
+#: functions/product.php:378
+msgid "Your price"
+msgstr "Votre prix"
+
+#: functions/product.php:447 functions/product.php:449 functions/tools.php:709
 #: functions/tools.php:711
 msgid "log in"
 msgstr "connectez-vous"
 
-#: functions/product.php:453
+#: functions/product.php:454
 msgid "Login"
 msgstr "Connexion"
 
-#: functions/product.php:456
+#: functions/product.php:457
 #, php-format
 msgid "you get %u %% discount"
 msgstr "vous bénéficiez de %u %% de réduction"
