@@ -656,7 +656,7 @@ $country = callDoliApi("GET", "/setup/dictionary/countries/".$product->country_i
 $doliline .= "<center><small><span class='flag-icon flag-icon-".strtolower($product->country_code)."'></span> ".$country->label."</small></center>"; }
 }
 
-$doliline .= '</div><div class="col-4 col-md-2 text-right"><h6 class="mb-1">'.doliprice($line, 'total_ttc', isset($line->multicurrency_code) ? $line->multicurrency_code : null).'</h6>';
+$doliline .= '</div><div class="col-4 col-md-2 text-right"><h6 class="mb-1">'.doliprice($line, (empty(get_option('dolibarr_b2bmode'))?'total_ttc':'total_ht'), isset($line->multicurrency_code) ? $line->multicurrency_code : null).'</h6>';
 if ( !empty(doliconst('MAIN_MODULE_FRAISDEPORT')) && doliconst('FRAIS_DE_PORT_ID_SERVICE_TO_USE') == $line->fk_product ) {
 $doliline .= '<h6 class="mb-1">x'.$line->qty.'</h6>';
 } elseif ( $object->statut == 0 && !is_page(doliconnectid('doliaccount')) ) {
