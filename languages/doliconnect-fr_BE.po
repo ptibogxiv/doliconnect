@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2020-02-26 11:44+0100\n"
-"PO-Revision-Date: 2020-02-26 11:44+0100\n"
+"POT-Creation-Date: 2020-02-26 12:41+0100\n"
+"PO-Revision-Date: 2020-02-26 12:42+0100\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_FR\n"
@@ -37,57 +37,69 @@ msgstr "Paramètres de Doliconnect"
 msgid "Doliconnect"
 msgstr "Doliconnect"
 
-#: admin/admin.php:281
+#: admin/admin.php:282
 msgid "Modal login"
 msgstr "Connexion modale"
 
-#: admin/admin.php:287
+#: admin/admin.php:288
 msgid "Beta mode"
 msgstr "Mode bêta"
 
-#: admin/admin.php:288
+#: admin/admin.php:289
 msgid "Active beta functions, can be unstable"
 msgstr "Fonctions bêta actives, peut être instable"
 
-#: admin/admin.php:291
+#: admin/admin.php:292
 msgid "Restricted mode"
 msgstr "Mode restreint"
 
-#: admin/admin.php:299
+#: admin/admin.php:294
+msgid ""
+"Roles to be assigned for existing users. If none, the connection will not be "
+"allowed."
+msgstr ""
+"Rôles à attribuer aux utilisateurs existants. Si aucun, la connexion ne sera "
+"pas autorisée."
+
+#: admin/admin.php:296
+msgid "None"
+msgstr "Aucun"
+
+#: admin/admin.php:314
 msgid "Dolibarr's entity"
 msgstr "Entité de Dolibarr"
 
-#: admin/admin.php:321
+#: admin/admin.php:336
 msgid "Anyone can register"
 msgstr "Tout le monde peut enregistrer"
 
-#: admin/admin.php:324
+#: admin/admin.php:339
 msgid "B2B mode"
 msgstr "Mode B2B"
 
-#: admin/admin.php:325
+#: admin/admin.php:340
 msgid "Display all prices excluding VAT"
 msgstr "Afficher tous les prix hors TVA"
 
-#: admin/admin.php:328
+#: admin/admin.php:343
 msgid "Personnal / Enterprise mode"
 msgstr "Mode particulier / Entreprise"
 
-#: admin/admin.php:337
+#: admin/admin.php:352
 msgid "Kiosk mode"
 msgstr "Mode kiosque"
 
-#: admin/admin.php:338
+#: admin/admin.php:353
 msgid "IP address"
 msgstr "Adresse IP"
 
-#: admin/admin.php:338
+#: admin/admin.php:353
 msgid "one IP per line without space or comma"
 msgstr "une adresse IP par ligne sans espace ni virgule"
 
-#: admin/admin.php:345 admin/admin.php:359 admin/admin.php:371
-#: admin/admin.php:383 admin/admin.php:396 admin/admin.php:411
-#: admin/admin.php:422 admin/admin.php:435 admin/admin.php:447
+#: admin/admin.php:360 admin/admin.php:374 admin/admin.php:386
+#: admin/admin.php:398 admin/admin.php:411 admin/admin.php:426
+#: admin/admin.php:437 admin/admin.php:450 admin/admin.php:462
 #: dashboard/dashboard.php:1733 dashboard/dashboard.php:1751
 #: dashboard/dashboard.php:1770 dashboard/dashboard.php:1791
 #: dashboard/templates.php:789 functions/tools.php:87 functions/tools.php:130
@@ -95,11 +107,11 @@ msgstr "une adresse IP par ligne sans espace ni virgule"
 msgid "- Select -"
 msgstr "- Sélectionner -"
 
-#: admin/admin.php:350
+#: admin/admin.php:365
 msgid "Message on login page"
 msgstr "Message sur la page de connexion"
 
-#: admin/admin.php:426
+#: admin/admin.php:441
 msgid "(set your default wordpress legacy page)"
 msgstr "(Définir votre page de confidentialité wordpress par défaut)"
 

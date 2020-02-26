@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2020-02-26 11:29+0100\n"
-"PO-Revision-Date: 2020-02-26 11:44+0100\n"
+"POT-Creation-Date: 2020-02-26 12:39+0100\n"
+"PO-Revision-Date: 2020-02-26 12:41+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: nl_BE\n"
@@ -38,57 +38,65 @@ msgstr "Doliconnect-instellingen"
 msgid "Doliconnect"
 msgstr "Doliconnect"
 
-#: admin/admin.php:281
+#: admin/admin.php:282
 msgid "Modal login"
 msgstr "Modaal inloggen"
 
-#: admin/admin.php:287
+#: admin/admin.php:288
 msgid "Beta mode"
 msgstr "Bètamodus"
 
-#: admin/admin.php:288
+#: admin/admin.php:289
 msgid "Active beta functions, can be unstable"
 msgstr "Actieve bètafuncties kunnen instabiel zijn"
 
-#: admin/admin.php:291
+#: admin/admin.php:292
 msgid "Restricted mode"
 msgstr "Beperkte modus"
 
-#: admin/admin.php:299
+#: admin/admin.php:294
+msgid ""
+"Roles to be assigned for existing users. If none, the connection will not be "
+"allowed."
+msgstr ""
+"Rollen die moeten worden toegewezen voor bestaande gebruikers. Als er geen "
+"is, is de verbinding niet toegestaan."
+
+#: admin/admin.php:313
 msgid "Dolibarr's entity"
 msgstr "Dolibarr's entiteit"
 
-#: admin/admin.php:321
+#: admin/admin.php:335
 msgid "Anyone can register"
 msgstr "Iedereen kan zich inschrijven"
 
-#: admin/admin.php:324
+#: admin/admin.php:338
 msgid "B2B mode"
 msgstr "B2B-modus"
 
-#: admin/admin.php:325
+#: admin/admin.php:339
 msgid "Display all prices excluding VAT"
 msgstr "Alle prijzen exclusief BTW weergeven"
 
-#: admin/admin.php:328
+#: admin/admin.php:342
 msgid "Personnal / Enterprise mode"
 msgstr "Personnal / Enterprise-modus"
 
-#: admin/admin.php:337
+#: admin/admin.php:351
 msgid "Kiosk mode"
 msgstr "Kioskmodus AAN"
 
-#: admin/admin.php:338
+#: admin/admin.php:352
 msgid "IP address"
 msgstr "IP-adres"
 
-#: admin/admin.php:338
+#: admin/admin.php:352
 msgid "one IP per line without space or comma"
 msgstr "één IP per regel zonder ruimte of komma"
 
-#: admin/admin.php:345 admin/admin.php:359 admin/admin.php:371
-#: admin/admin.php:383 admin/admin.php:396 admin/admin.php:411
-#: admin/admin.php:422 admin/admin.php:435 admin/admin.php:447
+#: admin/admin.php:359 admin/admin.php:373 admin/admin.php:385
+#: admin/admin.php:397 admin/admin.php:410 admin/admin.php:425
+#: admin/admin.php:436 admin/admin.php:449 admin/admin.php:461
 #: dashboard/dashboard.php:1733 dashboard/dashboard.php:1751
 #: dashboard/dashboard.php:1770 dashboard/dashboard.php:1791
 #: dashboard/templates.php:789 functions/tools.php:87 functions/tools.php:130
@@ -96,11 +104,11 @@ msgstr "één IP per regel zonder ruimte of komma"
 msgid "- Select -"
 msgstr "- Kies -"
 
-#: admin/admin.php:350
+#: admin/admin.php:364
 msgid "Message on login page"
 msgstr "Bericht op aanmeldingspagina"
 
-#: admin/admin.php:426
+#: admin/admin.php:440
 msgid "(set your default wordpress legacy page)"
 msgstr "(stel uw standaard pagina wordpress legacy in)"
 
@@ -1244,7 +1252,7 @@ msgstr "Toegestaan"
 #: dashboard/templates.php:1620
 msgid ""
 "Your account is blocked, this order can't be processed. Please, contact us "
-"to pay overdue unpaid invoices"
+"to pay overdue unpaid invoices."
 msgstr ""
 "Je account is geblokkeerd, deze bestelling kan niet worden verwerkt. Neem "
 "contact met ons op om achterstallige onbetaalde facturen te betalen."

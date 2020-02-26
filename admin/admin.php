@@ -252,6 +252,7 @@ update_option('doliconnect_google', sanitize_text_field($_REQUEST['doliconnect_g
 delete_option('doliconnect_google');}                               
             update_option('doliaccount', sanitize_text_field($_REQUEST['doliaccount']));
             update_option('doliconnect_disablepro', sanitize_text_field($_REQUEST['doliconnect_disablepro']));
+            update_option('doliconnectrestrict_role', sanitize_text_field($_REQUEST['doliconnectrestrict_role']));
             if (isset($_REQUEST['dolibarr_entity'])) update_option('dolibarr_entity', sanitize_text_field($_REQUEST['dolibarr_entity']));
             update_option('dolicart', sanitize_text_field($_REQUEST['dolicart']));
             if (isset($_REQUEST['dolidonation'])) update_option('dolidonation', sanitize_text_field($_REQUEST['dolidonation']));
@@ -290,8 +291,22 @@ checked('1', get_option('doliloginmodal')); } else { ?> disabled <?php } ?> > <b
             <tr>
                 <th style="width:150px;"><label for="doliconnectbeta"><?php _e('Restricted mode', 'doliconnect') ?></label></th>
                 <td ><input name="doliconnectrestrict" type="checkbox" id="doliconnectrestrict" value="1" <?php if ( is_plugin_active( 'doliconnect-pro/doliconnect-pro.php' ) ) {
-checked('1', get_option('doliconnectrestrict')); } else { ?> disabled <?php } ?> > <b>PRO</b></td>
-            </tr>               
+checked('1', get_option('doliconnectrestrict')); } else { ?> disabled <?php } ?> > <b>PRO</b><br><br><?php _e("Roles to be assigned for existing users. If none, the connection will not be allowed.", 'doliconnect') ?>
+<select class='custom-select' id='doliconnectrestrict_role'  name='doliconnectrestrict_role' <?php if ( !get_option('doliconnectrestrict') )  { ?>  disabled <?php } ?> >
+<option value=""><?php _e("None", 'doliconnect') ?></option>
+<?php $wp_roles = new WP_Roles();
+    $roles = $wp_roles->get_names();
+    $roles = array_map( 'translate_user_role', $roles );
+foreach ( $roles as $role => $label ) {
+echo "<option value='".$role."' ";
+if ( get_option('doliconnectrestrict_role') == $role ) {
+echo "selected ";
+}
+echo ">".$label."</option>";
+} 
+?></select>
+                </td>
+            </tr>             
 <?php if ( is_multisite() ) {
 $multicompany = callDoliApi("GET", "/multicompany?sortfield=t.rowid&sortorder=ASC", null, 30 * MINUTE_IN_SECONDS, 1);
 ?>                  
