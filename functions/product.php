@@ -139,7 +139,7 @@ $line=$ln->id;
 if (!$line > 0) { $line=null; }
 
 if ( doliconnector($current_user, 'fk_order') > 0 && $quantity > 0 && is_null($line) ) {
-$prdt = callDoliApi("GET", "/products/".$product."?includestockdata=1", null, dolidelay('product', true));
+$prdt = callDoliApi("GET", "/products/".$product."?includestockdata=1&includesubproducts=true", null, dolidelay('product', true));
 $adln = [
     'fk_product' => $product,
     'desc' => $prdt->description,
@@ -171,7 +171,7 @@ return doliconnect_countitems($order);
  
 } else {
 
-$prdt = callDoliApi("GET", "/products/".$product."?includestockdata=1", null, dolidelay('product', true));
+$prdt = callDoliApi("GET", "/products/".$product."?includestockdata=1&includesubproducts=true", null, dolidelay('product', true));
  $ln = [
     'desc' => $prdt->description,
     'date_start' => $date_start,
@@ -210,7 +210,7 @@ $qty=0;
 if ( isset($object->lines) && $object->lines != null ) {
 $list = null;
 foreach ($object->lines as $line) {
-//$product = callDoliApi("GET", "/products/".$post->product_id."?includestockdata=1", null, 0);
+//$product = callDoliApi("GET", "/products/".$post->product_id."?includestockdata=1&includesubproducts=true", null, 0);
 $list .= "<li class='list-group-item list-group-item-light d-flex justify-content-between lh-condensed'><div><h6 class='my-0'>".$line->libelle."</h6><small class='text-muted'>".__( 'Quantity', 'doliconnect').": ".$line->qty."</small></div>";
 $remise+=$line->subprice-$line->total_ht;
 $subprice+=$line->subprice;

@@ -635,7 +635,7 @@ $includestock = 0;
 if ( ! empty(doliconnectid('dolicart')) ) {
 $includestock = 1;
 }
-$product = callDoliApi("GET", "/products/".$line->fk_product."?includestockdata=".$includestock, null, dolidelay('product', $refresh));
+$product = callDoliApi("GET", "/products/".$line->fk_product."?includestockdata=".$includestock."&includesubproducts=true", null, dolidelay('product', $refresh));
 }
 
 if ( doliconst('FRAIS_DE_PORT_ID_SERVICE_TO_USE') != $line->fk_product ) {

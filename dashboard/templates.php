@@ -860,7 +860,7 @@ $includestock = 0;
 if ( ! empty(doliconnectid('dolicart')) ) {
 $includestock = 1;
 }
-$product = callDoliApi("GET", "/products/".$product->id."?includestockdata=".$includestock, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$product = callDoliApi("GET", "/products/".$product->id."?includestockdata=".$includestock."&includesubproducts=true", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 print "<li class='list-group-item' id='prod-li-".$product->id."'><table width='100%' style='border:0px'><tr><td width='20%' style='border:0px'><center>";
 print doliconnect_image('product', $product->id, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), $product->entity);
 print "</center></td>";
@@ -1001,7 +1001,7 @@ $includestock = 0;
 if ( ! empty(doliconnectid('dolicart')) ) {
 $includestock = 1;
 }
-$product = callDoliApi("GET", "/products/".$product->id."?includestockdata=".$includestock, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$product = callDoliApi("GET", "/products/".$product->id."?includestockdata=".$includestock."&includesubproducts=true", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 print "<li class='list-group-item' id='prod-li-".$product->id."'><table width='100%' style='border:0px'><tr><td width='20%' style='border:0px'><center>";
 print doliconnect_image('product', $product->id, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), $product->entity);
 print "</center></td>";
