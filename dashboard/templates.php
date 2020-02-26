@@ -256,12 +256,15 @@ $password = wp_generate_password( 12, false );
       
 $ID = wp_create_user(uniqid(), $password, $email );
 
-$role = 'subscriber';
+$role = get_option( 'default_role' );
 
 if ( is_multisite() ) {
 $entity = dolibarr_entity(); 
 add_user_to_blog($entity,$ID,$role);
-} 
+} else {
+$user = get_user_by( 'ID', $ID);
+$user->set_role($role);
+}
 
 if ( $thirdparty['morphy'] == 'mor' ) {
 $thirdparty['tva_intra'] =strtoupper(sanitize_user($thirdparty['tva_intra']));

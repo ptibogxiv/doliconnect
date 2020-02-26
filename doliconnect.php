@@ -69,7 +69,9 @@ global $current_user;
 if ( is_user_logged_in() && !is_user_member_of_blog( $current_user->ID, get_current_blog_id()) && !empty(get_option('doliconnectrestrict_role')) ) {
 if ( is_multisite() ) {
 add_user_to_blog(dolibarr_entity(), $current_user->ID, get_option('doliconnectrestrict_role'));
-} 
+} else {
+$current_user->set_role(get_option('doliconnectrestrict_role'));
+}
 }
 } 
 add_action('init', 'app_output_buffer');
