@@ -581,7 +581,10 @@ print "</div></div></form>";
 
 } else {
 
-if ( isset($_GET["login"]) && $_GET["login"] == 'failed' ) { 
+if (is_user_logged_in() && !is_user_member_of_blog( $current_user->ID, get_current_blog_id()) ) {
+print dolialert('danger', __( 'This account is not allowed to connect this website.', 'doliconnect'));
+// TODO logout script
+} elseif ( isset($_GET["login"]) && $_GET["login"] == 'failed' ) { 
 print dolialert('danger', __( 'There is no account for these login data or the email and/or the password are not correct.', 'doliconnect'));
 }
 
