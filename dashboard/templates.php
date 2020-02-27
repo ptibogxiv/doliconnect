@@ -329,59 +329,64 @@ print dolialert('danger', $emailError);
 }
 }
 
-print "<form id='doliconnect-signinform' action='".doliconnecturl('doliaccount')."?action=signup' role='form' method='post' class='was-validated'>";
-
 print doliloaderscript('doliconnect-signinform'); 
 
-print "<div class='card shadow-sm'><div class='card-header'><h5 class='card-title'>".__( 'Create an account', 'doliconnect')."</h5></div>";
+print "<div class='card shadow-sm'><div class='card-header'><h5 class='card-title'>".__( 'Create an account', 'doliconnect')."</h5></div><ul class='list-group list-group-flush panel-group' id='accordion'>";
 
-print '<div class="custom-control custom-radio custom-control-inline" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-  <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input" checked>
-  <label class="custom-control-label" for="customRadioInline1">Toggle this radio</label>
-</div>
-<div class="custom-control custom-radio custom-control-inline" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-  <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input">
-  <label class="custom-control-label" for="customRadioInline2">Or toggle this radio</label>
-</div>
-<div class="custom-control custom-radio custom-control-inline" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-  <input type="radio" id="customRadioInline3" name="customRadioInline1" class="custom-control-input">
-  <label class="custom-control-label" for="customRadioInline3">Or toggle this radio</label>
-</div>
-<div class="btn-group" role="group" aria-label="Basic example">
-  <button type="button" class="btn btn-secondary" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Left</button>
-  <button type="button" class="btn btn-secondary" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">Middle</button>
-  <button type="button" class="btn btn-secondary" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">Right</button>
-</div><div class="accordion" id="accordionExample">
-  <div class="card">
-    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-      <div class="card-body">
-        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably havent heard of them accusamus labore sustainable VHS.
-      </div>
-    </div>
-  </div>
-  <div class="card">
-    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-      <div class="card-body">
-        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably havent heard of them accusamus labore sustainable VHS.
-      </div>
-    </div>
-  </div>
-  <div class="card">
-    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
-      <div class="card-body">
-        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably havent heard of them accusamus labore sustainable VHS.
-      </div>
-    </div>
-  </div>
-</div>';
+print "<li class='list-group-item list-group-item-light list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>
+<input type='radio' id='newuser' name='paymentmode' value='newuser' class='custom-control-input' data-toggle='collapse' data-parent='#accordion' ";
+//if ( !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_code != 'VIR' ) { $paymentmethods .=" disabled "; }
+//else
+//if ( (!empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_code != 'VIR') || ($listpaymentmethods->payment_methods == null && !empty($listpaymentmethods->stripe) && !in_array('card', $listpaymentmethods->stripe->types)) || (isset($object) && $object->mode_reglement_code == 'VIR') ) { print " checked"; }
+print " href='#newuser'><label class='custom-control-label w-100' for='newuser'><div class='row'><div class='col-3 col-md-2 col-xl-2 align-middle'>";
+print '<center><i class="fas fa-user-plus fa-3x fa-fw" style="color:DarkGrey"></i></center>';
+print "</div><div class='col-9 col-md-10 col-xl-10 align-middle'><h6 class='my-0'>".__( 'Create a new user', 'doliconnect')."</h6><small class='text-muted'>".sprintf( esc_html__( "you are not yet customer/supplier or member with %s", 'doliconnect'), get_bloginfo('name'))."</small>";
+print '</div></div></label></div></li>';
 
+print '<li id="newuserPanel" class="list-group-item list-group-item-white panel-collapse collapse"><div class="panel-body">';
+if (get_option( 'users_can_register' )) {
+print "<form id='doliconnect-signinform' action='".doliconnecturl('doliaccount')."?action=signup' role='form' method='post' class='was-validated'>";
 print doliuserform( null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'thirdparty');
-
-print "<div class='card-body'><input type='hidden' name='submitted' id='submitted' value='true'><button class='btn btn-primary btn-block' type='submit'";
+print "<input type='hidden' name='submitted' id='submitted' value='true'><button class='btn btn-primary btn-block' type='submit'";
 if ( get_option('users_can_register')=='1' && ( get_site_option( 'registration' ) == 'user' || get_site_option( 'registration' ) == 'all' ) || ( !is_multisite() && get_option( 'users_can_register' )) ) {
 print "";
 } else { print " aria-disabled='true'  disabled"; }
-print "><b>".__( 'Create an account', 'doliconnect')."</b></button></form>";
+print "><b>".__( 'Create an account', 'doliconnect')."</b></button>";
+} else {
+print "".__( "Creating a new account is not allowed. Please contact us to create it!", 'doliconnect')."";
+}
+print '</form></div></li>';
+
+
+print "<li class='list-group-item list-group-item-light list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>
+<input type='radio' id='linkuser' name='paymentmode' value='linkuser' class='custom-control-input' data-toggle='collapse' data-parent='#accordion' ";
+//if ( !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_code != 'CHQ' ) { $paymentmethods .=" disabled "; }
+//else
+//if ( (!empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_code == 'CHQ') || ($listpaymentmethods->payment_methods == null && !in_array('card', $listpaymentmethods->stripe->types) && $listpaymentmethods->RIB == null) || (isset($object) && $object->mode_reglement_code == 'CHQ') ) { print " checked"; }
+print " href='#linkuser'><label class='custom-control-label w-100' for='linkuser'><div class='row'><div class='col-3 col-md-2 col-xl-2 align-middle'>";
+print '<center><i class="fas fa-user-check fa-3x fa-fw" style="color:DarkGrey"></i></center>';
+print "</div><div class='col-9 col-md-10 col-xl-10 align-middle'><h6 class='my-0'>".__( 'Create from existing customer/supplier', 'doliconnect')."</h6><small class='text-muted'>".sprintf( esc_html__( 'you are already customer/supplier or member with %s', 'doliconnect'), get_bloginfo('name'))."</small>";
+print '</div></div></label></div></li>';
+
+print '<li id="linkuserPanel" class="list-group-item list-group-item-white panel-collapse collapse"><div class="panel-body">';
+print 'We work on it ;)';
+print '</div></li>';
+
+
+print "</ul><script>";
+print  "jQuery('#newuser,#linkuser').on('click', function (e) {
+          e.stopPropagation();";
+print  " if(this.id == 'newuser'){
+              jQuery('#linkuserPanel').collapse('hide');
+              jQuery('#newuserPanel').collapse('show');
+          }else if(this.id == 'linkuser'){
+              jQuery('#newuserPanel').collapse('hide');
+              jQuery('#linkuserPanel').collapse('show');
+          }
+});";
+print "</script>";
+
+print "<div class='card-body'>";
 
 print "</div>";
 print '<div class="card-footer text-muted">';
@@ -390,7 +395,7 @@ print "<small><div class='float-left'>";
 print "</div><div class='float-right'>";
 print dolihelp('ISSUE');
 print "</div></small>";
-print '</div></div></form>';
+print '</div></div>';
 
 do_action( 'login_footer');
 
