@@ -600,47 +600,7 @@ catch(\Exception $e) {
 //print "<hr /><h3>Trace</h3> <pre>" . $e->getTraceAsString() . "</pre>";  
 }
 } elseif ( isset($_GET["action"]) && $_GET["action"] == 'fpw' ) { 
-  
-if( isset($_POST['user_email']) ) {
 
-    if( sanitize_email($_POST['user_email']) === '' )  {
-        $emailError = __( 'A valid email is need to reset your password', 'doliconnect');
-        $hasError = true;
-    } elseif ( !email_exists(sanitize_email($_POST['user_email'])) ) {
-        $emailError = __( 'Reset password is not permitted', 'doliconnect');
-        $hasError = true;   
-    }
-    else {
-        $email = sanitize_email($_POST['user_email']);
-
-        $emailTo = get_option('tz_email');
-        if (!isset($emailTo) || ($emailTo == '') ){
-            $emailTo = get_option('admin_email');
-        }
-        
-$user = get_user_by( 'email', $email);   
-$key = get_password_reset_key($user);
-
-$arr_params = array( 'action' => 'rpw', 'key' => $key, 'login' => $user->user_login);  
-$url = esc_url( add_query_arg( $arr_params, doliconnecturl('doliaccount')) );
-
-if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $user->ID ) {
-      $emailError = __( 'Reset password is not permitted', 'doliconnect');
-      $emailSent = false;	
-      
- } elseif ( !empty($key) ) { 
-			$sitename = get_option('blogname');
-      $siteurl = get_option('siteurl');
-      $subject = "[$sitename] ".__( 'Reset Password', 'doliconnect');
-      $body = __( 'A request to change your password has been made. You can change it via the single-use link below:', 'doliconnect')."<br><br><a href='".$url."'>".$url."</a><br><br>".__( 'If you have not made this request, please ignore this email.', 'doliconnect')."<br><br>".sprintf(__('Your %s\'s team', 'doliconnect'), $sitename)."<br>$siteurl";				
-$headers = array('Content-Type: text/html; charset=UTF-8');
-$mail =  wp_mail($email, $subject, $body, $headers);
-
-				if( $mail ) { $emailSent = true; } else { $emailSent = false; }		
-}
-       
-}
-}
 
 if ( isset($emailSent) && $emailSent == true ) { 
 print dolialert('success', __( 'A password reset link was sent to you by email. Please check your spam folder if you don\'t find it.', 'doliconnect'));
@@ -650,9 +610,26 @@ print dolialert('danger', $emailError);
 print dolialert('warning', __( 'A problem occurred. Please retry later!', 'doliconnect'));
 }
 
-print "<form id='doliconnect-fpwform' action='".doliconnecturl('doliaccount')."?action=fpw' method='post' class='was-validated'><input type='hidden' name='submitted' id='submitted' value='true' />";
+print "<form id='dolifpw-form' method='post' action='".admin_url('admin-ajax.php')."'>";
+print "<input type='hidden' name='action' value='dolifpw_request'>";
+print "<input type='hidden' name='dolifpw-nonce' value='".wp_create_nonce( 'dolifpw-nonce')."'>";
 
-print doliloaderscript('doliconnect-fpwform'); 
+print "<script>";
+print 'jQuery(document).ready(function($) {
+	
+	jQuery("#dolifpw-form").on("submit", function(e) {
+		e.preventDefault();
+    //jQuery("#DoliconnectLoadingModal").modal("show");
+		var $form = $(this);
+ 
+		$.post($form.attr("action"), $form.serialize(), function(response) {
+      //jQuery("#DoliconnectLoadingModal").modal("toggle"); 
+      alert("This is data returned from the server " + response.data);
+		}, "json");
+	});
+ 
+});';
+print "</script>";
  
 print "<div class='card shadow-sm'><div class='card-header'><h5 class='card-title'>".__( 'Forgot password?', 'doliconnect')."</h5></div>";
 print "<ul class='list-group list-group-flush'><li class='list-group-item'>";
@@ -663,14 +640,14 @@ print "<div class='form-group'><label for='inputemail'><small class='text-justif
 print "</div></div>";
 
 print "</li></lu><div class='card-body'>";
-print "<button class='btn btn-danger btn-block' type='submit'><b>".__( 'Submit', 'doliconnect')."</b></button>";
+print "<button class='btn btn-danger btn-block' type='submit' value='submit'><b>".__( 'Submit', 'doliconnect')."</b></button></form>";
 print "</div><div class='card-footer text-muted'>";
 print "<small><div class='float-left'>";
 
 print "</div><div class='float-right'>";
 print dolihelp('ISSUE');
 print "</div></small>";
-print "</div></div></form>";
+print "</div></div>";
 
 } else {
 

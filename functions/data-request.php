@@ -104,3 +104,41 @@ wp_send_json_success('success');
 } else wp_send_json_success( 'error' ); 
  
 }
+
+add_action('wp_ajax_dolifpw_request', 'dolifpw_request');
+add_action('wp_ajax_nopriv_dolifpw_request', 'dolifpw_request');
+
+function dolifpw_request(){
+if ( wp_verify_nonce( trim($_POST['dolifpw-nonce']), 'dolifpw-nonce') && isset($_POST['user_email']) && email_exists(sanitize_email($_POST['user_email'])) ) {
+$email = sanitize_email($_POST['user_email']);
+$emailTo = get_option('tz_email');
+
+if (!isset($emailTo) || ($emailTo == '') ){
+$emailTo = get_option('admin_email');
+}
+
+$user = get_user_by( 'email', $email);   
+$key = get_password_reset_key($user);
+
+$arr_params = array( 'action' => 'rpw', 'key' => $key, 'login' => $user->user_login);  
+$url = esc_url( add_query_arg( $arr_params, doliconnecturl('doliaccount')) );
+
+if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $user->ID ) {
+      $emailError = __( 'Reset password is not permitted', 'doliconnect');
+      wp_send_json_success('error'); 
+} elseif ( !empty($key) ) { 
+			$sitename = get_option('blogname');
+      $siteurl = get_option('siteurl');
+      $subject = "[$sitename] ".__( 'Reset Password', 'doliconnect');
+      $body = __( 'A request to change your password has been made. You can change it via the single-use link below:', 'doliconnect')."<br><br><a href='".$url."'>".$url."</a><br><br>".__( 'If you have not made this request, please ignore this email.', 'doliconnect')."<br><br>".sprintf(__('Your %s\'s team', 'doliconnect'), $sitename)."<br>$siteurl";				
+$headers = array('Content-Type: text/html; charset=UTF-8');
+$mail =  wp_mail($email, $subject, $body, $headers);
+
+if( $mail ) { wp_send_json_success('success');  } else { wp_send_json_success('error');  }		
+}
+
+}	 else {
+wp_send_json_success('error'); 
+}
+}
+
