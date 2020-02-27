@@ -216,10 +216,10 @@ wp_redirect(site_url());
 exit;
 }
 
-if ( is_multisite() && !get_option( 'users_can_register' ) && (get_site_option( 'registration' ) != 'user' or get_site_option( 'registration' ) != 'all') ) {
+if ( is_multisite() && (!get_option( 'dolicustsupp_can_register' )) && !get_option( 'users_can_register' ) ) && (get_site_option( 'registration' ) != 'user' or get_site_option( 'registration' ) != 'all') ) {
 wp_redirect(esc_url(doliconnecturl('doliaccount')));
 exit;
-} elseif ( !get_option( 'users_can_register' ) ) {
+} elseif (!get_option( 'dolicustsupp_can_register' ) && !get_option( 'users_can_register' )) {
 wp_redirect(esc_url(doliconnecturl('doliaccount')));
 exit;
 }
@@ -659,8 +659,8 @@ print "</div></div>";
 do_action( 'login_form');
 
 print "</li><li class='list-group-item'><div><small><div class='float-left'>";
-if ( ((!is_multisite() && get_option( 'users_can_register' )) || (get_option('users_can_register') == '1' && (get_site_option( 'registration' ) == 'user' || get_site_option( 'registration' ) == 'all'))) ) {
-print "<a href='".wp_registration_url( get_permalink() )."' role='button' title='".__( 'Create an account', 'doliconnect')."'>".__( 'Create an account', 'doliconnect')."</a>";
+if ((!is_multisite() && get_option( 'users_can_register' )) || ((!is_multisite() && get_option( 'dolicustsupp_can_register' )) || ((get_option( 'dolicustsupp_can_register' ) || get_option('users_can_register') == '1') && (get_site_option( 'registration' ) == 'user' || get_site_option( 'registration' ) == 'all')))) {
+print "<a href='".wp_registration_url(get_permalink())."' role='button' title='".__( 'Create an account', 'doliconnect-pro')."'>".__( 'Create an account', 'doliconnect')."</a>";
 }
 //<input type='checkbox' class='custom-control-input' value='forever' id='remembermemodal' name='rememberme'>";
 //print "<label class='custom-control-label' for='remembermemodal'> ".__( 'Remember me', 'doliconnect')."</label>";
