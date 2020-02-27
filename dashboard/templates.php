@@ -369,23 +369,44 @@ print "</div><div class='col-9 col-md-10 col-xl-10 align-middle'><h6 class='my-0
 print '</div></div></label></div></li>';
 
 print '<div id="linkuserPanel" class="panel-collapse collapse"><li class="list-group-item list-group-item-white">';
-print "<form class='product-".$product->id."' method='post' action='".admin_url('admin-ajax.php')."'>";
+print "<form class='linkuser-form' method='post' action='".admin_url('admin-ajax.php')."'>";
 print '<div class="form-group">
   <label for="FormCustomer"><small><i class="fas fa-user-tie"></i> '.__( 'Customer/Supplier', 'doliconnect').'</small></label><div class="input-group" id="FormCustomer">
-  <input type="text" aria-label="Name" placeholder="'.__( 'Name of customer/supplier', 'doliconnect').'" class="form-control">
-  <input type="text" aria-label="Last name" placeholder="'.__( 'Customer/Supplier code', 'doliconnect').'" class="form-control">
+  <input type="text" aria-label="Name" placeholder="'.__( 'Name of customer/supplier', 'doliconnect').'" class="form-control" required>
+  <input type="text" aria-label="Last name" placeholder="'.__( 'Customer/Supplier code', 'doliconnect').'" class="form-control" required>
 </div><div>';
 print '<div class="form-group">
   <label for="FormObject"><small><i class="fas fa-file-invoice"></i> '.__( 'Order or Invoice', 'doliconnect').'</small></label><div class="input-group" id="FormObject">
-  <input type="text" aria-label="Name" placeholder="'.__( 'Reference', 'doliconnect').'" class="form-control">
-  <input type="date" aria-label="Last name" placeholder="'.__( 'Date', 'doliconnect').'" class="form-control">
-  <input type="number" aria-label="Last name" placeholder="'.__( 'Amount', 'doliconnect').'" class="form-control">
+  <input type="text" aria-label="Name" placeholder="'.__( 'Reference', 'doliconnect').'" class="form-control" required>
+  <input type="date" aria-label="Last name" placeholder="'.__( 'Date', 'doliconnect').'" class="form-control" required>
+  <input type="number" aria-label="Last name" placeholder="'.__( 'Amount', 'doliconnect').'" class="form-control" required>
 </div><div>';
 print '</li>';
 print doliuserform( null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'thirdparty');
+print "<div class='card-body'><button class='btn btn-danger btn-block' type='submit'><b>".__( 'Submit', 'doliconnect')."</b></button></div>";
+
+print "<input type='hidden' name='action' value='doliaddproduct_request'><script>";
+print 'jQuery(document).ready(function($) {
+	
+	jQuery(".linkuser-form").on("submit", function(e) {
+		e.preventDefault();
+    //jQuery("#DoliconnectLoadingModal").modal("show");
+		var $form = $(this);
+ 
+		$.post($form.attr("action"), $form.serialize(), function(response) {
+			alert("This is data returned from the server " + response.data);
+
+      //jQuery("#DoliconnectLoadingModal").modal("toggle");
+
+		}, "json");
+	});
+ 
+});';
+print "</script>";
+
 print '</form></div>';
 
-print "</ul><script>";
+print "</ul><div class='card-body text-muted'><script>";
 print  "jQuery('#newuser,#linkuser').on('click', function (e) {
           e.stopPropagation();";
 print  " if(this.id == 'newuser'){
@@ -398,16 +419,15 @@ print  " if(this.id == 'newuser'){
 });";
 print "</script>";
 
-print "<div class='card-body'>";
-
 print "</div>";
-print '<div class="card-footer text-muted">';
-print "<small><div class='float-left'>";
+//print '<div class="card-footer text-muted">';
+//print "<small><div class='float-left'>";
 
-print "</div><div class='float-right'>";
-print dolihelp('ISSUE');
-print "</div></small>";
-print '</div></div>';
+//print "</div><div class='float-right'>";
+//print dolihelp('ISSUE');
+//print "</div></small>";
+//print '</div>';
+print '</div>';
 
 do_action( 'login_footer');
 
