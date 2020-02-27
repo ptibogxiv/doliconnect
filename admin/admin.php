@@ -219,13 +219,17 @@ $dolibarr = callDoliApi("GET", "/multicompany/".dolibarr_entity(), null, 60 * MI
 ?>
 	<div id="ptibogxiv_management_page" class="postbox">
 	<div class="inside">
-<?php
+<?php                                                    
 
 if (isset($_REQUEST['doliconnect_settings'])) {            
 if (isset($_REQUEST['users_can_register']) && $_REQUEST['users_can_register']==1){
 update_option('users_can_register', sanitize_text_field($_REQUEST['users_can_register']));
 }else {
 delete_option('users_can_register');}
+if (isset($_REQUEST['dolicustsupp_can_register']) && $_REQUEST['dolicustsupp_can_register']==1){
+update_option('dolicustsupp_can_register', sanitize_text_field($_REQUEST['dolicustsupp_can_register']));
+}else {
+delete_option('dolicustsupp_can_register');}
 if (isset($_REQUEST['dolibarr_b2bmode']) && $_REQUEST['dolibarr_b2bmode']==1){
 update_option('dolibarr_b2bmode', sanitize_text_field($_REQUEST['dolibarr_b2bmode']));
 }else {
@@ -333,7 +337,8 @@ echo "<input id='dolibarr_entity'  name='dolibarr_entity' type='text' value='".(
 <?php } ?>             
             <tr>
                 <th style="width:150px;"><label for="dolibarr_register">dolibarr_register</label></th>
-                <td ><input name="users_can_register" type="checkbox" id="users_can_register" value="1" <?php checked('1', get_option('users_can_register')); ?> /> <?php _e('Anyone can register') ?></td>
+                <td ><input name="users_can_register" type="checkbox" id="users_can_register" value="1" <?php checked('1', get_option('users_can_register')); ?> /> <?php _e('Anyone can register', 'doliconnect') ?><br>
+                     <input name="dolicustsupp_can_register" type="checkbox" id="dolicustsupp_can_register" value="1" <?php checked('1', get_option('dolicustsupp_can_register')); ?> /> <?php _e('Existing Customer/Supplier on Dolibarr can register', 'doliconnect') ?></td>
             </tr>
             <tr>
                 <th style="width:150px;"><label for="dolibarr_register"><?php _e('B2B mode', 'doliconnect') ?></label></th>

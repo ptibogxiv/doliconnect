@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2020-02-27 11:32+0100\n"
-"PO-Revision-Date: 2020-02-27 11:32+0100\n"
+"POT-Creation-Date: 2020-02-27 11:51+0100\n"
+"PO-Revision-Date: 2020-02-27 11:51+0100\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_FR\n"
@@ -73,33 +73,37 @@ msgstr "Entité de Dolibarr"
 msgid "Anyone can register"
 msgstr "Tout le monde peut enregistrer"
 
-#: admin/admin.php:339
+#: admin/admin.php:337
+msgid "Existing Customer/Supplier on Dolibarr can register"
+msgstr "Le client/fournisseur existant sur Dolibarr peut s’inscrire"
+
+#: admin/admin.php:340
 msgid "B2B mode"
 msgstr "Mode B2B"
 
-#: admin/admin.php:340
+#: admin/admin.php:341
 msgid "Display all prices excluding VAT"
 msgstr "Afficher tous les prix hors TVA"
 
-#: admin/admin.php:343
+#: admin/admin.php:344
 msgid "Personnal / Enterprise mode"
 msgstr "Mode particulier / Entreprise"
 
-#: admin/admin.php:352
+#: admin/admin.php:353
 msgid "Kiosk mode"
 msgstr "Mode kiosque"
 
-#: admin/admin.php:353
+#: admin/admin.php:354
 msgid "IP address"
 msgstr "Adresse IP"
 
-#: admin/admin.php:353
+#: admin/admin.php:354
 msgid "one IP per line without space or comma"
 msgstr "une adresse IP par ligne sans espace ni virgule"
 
-#: admin/admin.php:360 admin/admin.php:374 admin/admin.php:386
-#: admin/admin.php:398 admin/admin.php:411 admin/admin.php:426
-#: admin/admin.php:437 admin/admin.php:450 admin/admin.php:462
+#: admin/admin.php:361 admin/admin.php:375 admin/admin.php:387
+#: admin/admin.php:399 admin/admin.php:412 admin/admin.php:427
+#: admin/admin.php:438 admin/admin.php:451 admin/admin.php:463
 #: dashboard/dashboard.php:1733 dashboard/dashboard.php:1751
 #: dashboard/dashboard.php:1770 dashboard/dashboard.php:1791
 #: dashboard/templates.php:800 functions/tools.php:87 functions/tools.php:130
@@ -107,11 +111,11 @@ msgstr "une adresse IP par ligne sans espace ni virgule"
 msgid "- Select -"
 msgstr "- Sélectionner -"
 
-#: admin/admin.php:365
+#: admin/admin.php:366
 msgid "Message on login page"
 msgstr "Message sur la page de connexion"
 
-#: admin/admin.php:441
+#: admin/admin.php:442
 msgid "(set your default wordpress legacy page)"
 msgstr "(Définir votre page de confidentialité wordpress par défaut)"
 
@@ -423,7 +427,7 @@ msgstr "Le mot de passe ne peut pas être modifié en mode démo"
 msgid "Confirm your current password"
 msgstr "Confirmez votre mot de passe actuel"
 
-#: dashboard/dashboard.php:510 dashboard/templates.php:409
+#: dashboard/dashboard.php:510 dashboard/templates.php:403
 msgid "Change your password"
 msgstr "Modifier votre mot de passe"
 

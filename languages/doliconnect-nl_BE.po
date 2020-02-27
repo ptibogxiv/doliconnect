@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2020-02-27 11:32+0100\n"
-"PO-Revision-Date: 2020-02-27 11:33+0100\n"
+"POT-Creation-Date: 2020-02-27 11:53+0100\n"
+"PO-Revision-Date: 2020-02-27 11:53+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: nl_BE\n"
@@ -38,23 +38,23 @@ msgstr "Doliconnect-instellingen"
 msgid "Doliconnect"
 msgstr "Doliconnect"
 
-#: admin/admin.php:282
+#: admin/admin.php:286
 msgid "Modal login"
 msgstr "Modaal inloggen"
 
-#: admin/admin.php:288
+#: admin/admin.php:292
 msgid "Beta mode"
 msgstr "Bètamodus"
 
-#: admin/admin.php:289
+#: admin/admin.php:293
 msgid "Active beta functions, can be unstable"
 msgstr "Actieve bètafuncties kunnen instabiel zijn"
 
-#: admin/admin.php:292
+#: admin/admin.php:296
 msgid "Restricted mode"
 msgstr "Beperkte modus"
 
-#: admin/admin.php:294
+#: admin/admin.php:298
 msgid ""
 "Roles to be assigned for existing users. If none, the connection will not be "
 "allowed."
@@ -62,45 +62,49 @@ msgstr ""
 "Rollen die moeten worden toegewezen voor bestaande gebruikers. Als er geen "
 "is, is de verbinding niet toegestaan."
 
-#: admin/admin.php:296
+#: admin/admin.php:300
 msgid "None"
 msgstr "Geen"
 
-#: admin/admin.php:314
+#: admin/admin.php:318
 msgid "Dolibarr's entity"
 msgstr "Dolibarr's entiteit"
 
-#: admin/admin.php:336
+#: admin/admin.php:340
 msgid "Anyone can register"
 msgstr "Iedereen kan zich inschrijven"
 
-#: admin/admin.php:339
+#: admin/admin.php:341
+msgid "Existing Customer/Supplier on Dolibarr can register"
+msgstr "Bestaande klant/leverancier op Dolibarr kan zich registreren"
+
+#: admin/admin.php:344
 msgid "B2B mode"
 msgstr "B2B-modus"
 
-#: admin/admin.php:340
+#: admin/admin.php:345
 msgid "Display all prices excluding VAT"
 msgstr "Alle prijzen exclusief BTW weergeven"
 
-#: admin/admin.php:343
+#: admin/admin.php:348
 msgid "Personnal / Enterprise mode"
 msgstr "Personnal / Enterprise-modus"
 
-#: admin/admin.php:352
+#: admin/admin.php:357
 msgid "Kiosk mode"
 msgstr "Kioskmodus AAN"
 
-#: admin/admin.php:353
+#: admin/admin.php:358
 msgid "IP address"
 msgstr "IP-adres"
 
-#: admin/admin.php:353
+#: admin/admin.php:358
 msgid "one IP per line without space or comma"
 msgstr "één IP per regel zonder ruimte of komma"
 
-#: admin/admin.php:360 admin/admin.php:374 admin/admin.php:386
-#: admin/admin.php:398 admin/admin.php:411 admin/admin.php:426
-#: admin/admin.php:437 admin/admin.php:450 admin/admin.php:462
+#: admin/admin.php:365 admin/admin.php:379 admin/admin.php:391
+#: admin/admin.php:403 admin/admin.php:416 admin/admin.php:431
+#: admin/admin.php:442 admin/admin.php:455 admin/admin.php:467
 #: dashboard/dashboard.php:1733 dashboard/dashboard.php:1751
 #: dashboard/dashboard.php:1770 dashboard/dashboard.php:1791
 #: dashboard/templates.php:800 functions/tools.php:87 functions/tools.php:130
@@ -108,11 +112,11 @@ msgstr "één IP per regel zonder ruimte of komma"
 msgid "- Select -"
 msgstr "- Kies -"
 
-#: admin/admin.php:365
+#: admin/admin.php:370
 msgid "Message on login page"
 msgstr "Bericht op aanmeldingspagina"
 
-#: admin/admin.php:441
+#: admin/admin.php:446
 msgid "(set your default wordpress legacy page)"
 msgstr "(stel uw standaard pagina wordpress legacy in)"
 
@@ -424,7 +428,7 @@ msgstr "Wachtwoord kan niet worden gewijzigd in demo-modus"
 msgid "Confirm your current password"
 msgstr "Bevestig uw huidige wachtwoord"
 
-#: dashboard/dashboard.php:510 dashboard/templates.php:409
+#: dashboard/dashboard.php:510 dashboard/templates.php:403
 msgid "Change your password"
 msgstr "Verander uw wachtwoord"
 
