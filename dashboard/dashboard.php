@@ -1870,11 +1870,6 @@ function settings_module($url) {
 global $wpdb, $current_user;
 
 $ID = $current_user->ID;
-$monnaie = doliconst("MAIN_MONNAIE", dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-
-if ( isset($_POST["case"]) && $_POST["case"] == 'updatesettings' ) {
-
-}
 
 print "<form id='settings-form' method='post' action='".admin_url('admin-ajax.php')."'>";
 print "<input type='hidden' name='action' value='dolisettings_request'>";
@@ -1952,6 +1947,7 @@ print "<li class='list-group-item'>";
 print "<div class='form-group'><label for='inputaddress'><small>".__( 'Default currency', 'doliconnect')."</small></label>
 <div class='input-group'><div class='input-group-prepend'><span class='input-group-text'><i class='fas fa-money-bill-alt fa-fw'></i></span></div>";
 print "<select class='form-control' id='multicurrency_code' name='multicurrency_code' onchange='DoliSettings(this.form)' ";
+$monnaie = doliconst("MAIN_MONNAIE", dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 if ( empty(doliconst('MAIN_MODULE_MULTICURRENCY', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))) || !doliversion('11.0.0') ) { print " disabled"; }
 print ">";
 if ( !isset( $currencies->error ) && $currencies != null && !empty(doliconst('MAIN_MODULE_MULTICURRENCY', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))) && doliversion('11.0.0')) {
