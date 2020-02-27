@@ -628,7 +628,7 @@ jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function (e) {
       if (document.getElementById("DoliFpwAlert")) {
       document.getElementById("DoliFpwAlert").innerHTML = response.data;      
       }
-      
+
 jQuery("#DoliconnectLoadingModal").modal("hide");
 
 		}, "json");  
