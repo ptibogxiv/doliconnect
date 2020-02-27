@@ -368,9 +368,31 @@ print '<center><i class="fas fa-user-check fa-3x fa-fw" style="color:DarkGrey"><
 print "</div><div class='col-9 col-md-10 col-xl-10 align-middle'><h6 class='my-0'>".__( 'Create from existing customer/supplier', 'doliconnect')."</h6><small class='text-muted'>".sprintf( esc_html__( 'you are already customer/supplier or member with %s', 'doliconnect'), get_bloginfo('name'))."</small>";
 print '</div></div></label></div></li>';
 
-print '<li id="linkuserPanel" class="list-group-item list-group-item-white panel-collapse collapse"><div class="panel-body">';
-print 'We work on it ;)';
-print '</div></li>';
+print '<div id="linkuserPanel" class="panel-collapse collapse"><li class="list-group-item list-group-item-white"><div class="panel-body">';
+print '<div class="input-group">
+  <div class="input-group-prepend">
+    <span class="input-group-text">'.__( 'Customer/Supplier', 'doliconnect').'</span>
+  </div>
+  <input type="text" aria-label="Name" placeholder="'.__( 'Name', 'doliconnect').'" class="form-control">
+  <input type="text" aria-label="Last name" placeholder="'.__( 'Customer/Supplier code', 'doliconnect').'" class="form-control">
+</div>';
+print '<div class="input-group">
+  <div class="input-group-prepend">
+    <div class="input-group-text">
+      <input type="radio" name="objecttype" aria-label="Radio button for following text input">
+    </div>
+  </div>
+  <input type="text" class="form-control" aria-label="Text input with radio button">
+</div><div class="input-group">
+  <div class="input-group-prepend">
+    <div class="input-group-text">
+      <input type="radio" name="objecttype" aria-label="Radio button for following text input">
+    </div>
+  </div>
+  <input type="text" class="form-control" aria-label="Text input with radio button">
+</div></div></li>';
+print doliuserform( null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'thirdparty');
+print '</div>';
 
 
 print "</ul><script>";
