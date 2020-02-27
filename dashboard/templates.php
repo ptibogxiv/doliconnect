@@ -186,7 +186,7 @@ print "</div>";
 //print "<p class='font-weight-light' align='justify'>".__( 'Manage your account, your informations, orders and much more via this secure client area.', 'doliconnect')."</p>";
 print "</div></div></div>";
 print "<div class='col-xs-12 col-sm-12 col-md-9'>";
-print "<div class='card shadow-sm'><div class='card-body'>";
+
 if ( isset($_GET["action"]) && $_GET["action"] == 'confirmaction' ) {
 
 		if ( ! isset( $_GET['request_id'] ) ) {
@@ -564,9 +564,9 @@ print "<form id='doliconnect-fpwform' action='".doliconnecturl('doliaccount')."?
 
 print doliloaderscript('doliconnect-fpwform'); 
  
-print "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>".__( 'Forgot password?', 'doliconnect')."</h5></div>";
+print "<div class='card shadow-sm'><div class='card-header'><h5 class='card-title'>".__( 'Forgot password?', 'doliconnect')."</h5></div>";
 print "<ul class='list-group list-group-flush'><li class='list-group-item'>";
-print "<div class='form-group'><label for='inputemail'><small>".__( 'Please enter the email address by which you registered your account.', 'doliconnect')."</small></label>
+print "<div class='form-group'><label for='inputemail'><small class='text-justify'>".__( 'Please enter the email address by which you registered your account.', 'doliconnect')."</small></label>
 <div class='input-group mb-2 mr-sm-2'><div class='input-group-prepend'>
 <div class='input-group-text'><i class='fas fa-at fa-fw'></i></div></div>
 <input class='form-control' id='user_email' type='email' placeholder='".__( 'Email', 'doliconnect')."' name='user_email' value ='' required>";
@@ -603,7 +603,13 @@ print dolialert('danger', __( 'The security key is invalid!', 'doliconnect'));
 
 }
 
-print "<div class='card shadow-sm'>";
+print "<div class='card shadow-sm'><div class='card-header'>";
+if ( empty(get_option('doliconnectrestrict')) ) {
+print "<h5 class='card-title'>".__( 'Welcome', 'doliconnect')."</h5>";
+} else {
+print "<h5 class='card-title'>".__( 'Access restricted to users', 'doliconnect')."</h5>";
+}
+print "</div>";
 
 if ( function_exists('doliconnect_modal') && get_option('doliloginmodal') == '1' ) {
 
@@ -622,7 +628,7 @@ print '<a href="'.wp_registration_url( get_permalink() ).'" id="login-'.current_
 
 do_action( 'login_head');
 
-print "<div class='card-body'><h5 class='card-title'>".__( 'Welcome', 'doliconnect')."</h5>";
+print "<div class='card-body'>";
 print "<b>".get_option('doliaccountinfo')."</b></div>";
 
 if ( function_exists('socialconnect') ) {
@@ -676,10 +682,8 @@ print dolihelp('ISSUE');
 print "</div></small>";
 print "</div></div></form>";
 
-
-
 }
-print "</div></div>";
+
 }
 
 } else {
