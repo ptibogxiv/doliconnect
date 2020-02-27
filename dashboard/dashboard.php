@@ -1883,16 +1883,17 @@ print "<input type='hidden' name='dolisettings-nonce' value='".wp_create_nonce( 
 print "<script>";
 print 'function DoliSettings(theForm){
 jQuery("#DoliconnectLoadingModal").modal("show");
+jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function (e) { 
     $.ajax({ // create an AJAX call...
         data: $(theForm).serialize(), // get the form data
         type: $(theForm).attr("method"), // GET or POST
         url: $(theForm).attr("action"), // the file to call
         success: function (response) { // on success..
-        jQuery("#DoliconnectLoadingModal").modal("toggle");
+        jQuery("#DoliconnectLoadingModal").modal("hide");
         //alert(response.data);
         }
     });
-
+});
 }';
 print "</script>";
 

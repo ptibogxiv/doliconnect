@@ -601,7 +601,6 @@ catch(\Exception $e) {
 }
 } elseif ( isset($_GET["action"]) && $_GET["action"] == 'fpw' ) { 
 
-
 if ( isset($emailSent) && $emailSent == true ) { 
 print dolialert('success', __( 'A password reset link was sent to you by email. Please check your spam folder if you don\'t find it.', 'doliconnect'));
 } elseif ( isset($hasError) || isset($emailError) ) { 
@@ -610,7 +609,7 @@ print dolialert('danger', $emailError);
 print dolialert('warning', __( 'A problem occurred. Please retry later!', 'doliconnect'));
 }
 
-print "<form id='dolifpw-form' method='post' action='".admin_url('admin-ajax.php')."'>";
+print "<div id='DoliFpwAlert'></div><form id='dolifpw-form' method='post' action='".admin_url('admin-ajax.php')."'>";
 print "<input type='hidden' name='action' value='dolifpw_request'>";
 print "<input type='hidden' name='dolifpw-nonce' value='".wp_create_nonce( 'dolifpw-nonce')."'>";
 
@@ -618,16 +617,23 @@ print "<script>";
 print 'jQuery(document).ready(function($) {
 	
 	jQuery("#dolifpw-form").on("submit", function(e) {
-		e.preventDefault();
-    //jQuery("#DoliconnectLoadingModal").modal("show");
-		var $form = $(this);
- 
+  jQuery("#DoliconnectLoadingModal").modal("show");
+	e.preventDefault();
+    
+	var $form = $(this);
+    
+jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function (e) { 
 		$.post($form.attr("action"), $form.serialize(), function(response) {
-      //jQuery("#DoliconnectLoadingModal").modal("toggle"); 
-      alert("This is data returned from the server " + response.data);
-		}, "json");
-	});
- 
+
+      if (document.getElementById("DoliFpwAlert")) {
+      document.getElementById("DoliFpwAlert").innerHTML = response.data;      
+      }
+      
+jQuery("#DoliconnectLoadingModal").modal("hide");
+
+		}, "json");  
+  });
+});
 });';
 print "</script>";
  

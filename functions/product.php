@@ -265,11 +265,14 @@ $button .= "<script>";
 $button .= 'jQuery(document).ready(function($) {
 	
 	jQuery(".product-'.$product->id.'").on("submit", function(e) {
-		e.preventDefault();
-    jQuery("#DoliconnectLoadingModal").modal("show");
-		var $form = $(this);
- 
+  jQuery("#DoliconnectLoadingModal").modal("show");
+	e.preventDefault();
+    
+	var $form = $(this);
+    
+jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function (e) { 
 		$.post($form.attr("action"), $form.serialize(), function(response) {
+
 			//alert("This is data returned from the server " + response.data);
       if (document.getElementById("DoliHeaderCarItems")) {
       document.getElementById("DoliHeaderCarItems").innerHTML = response.data;
@@ -280,11 +283,12 @@ $button .= 'jQuery(document).ready(function($) {
       if (document.getElementById("DoliWidgetCarItems")) {
       document.getElementById("DoliWidgetCarItems").innerHTML = response.data;      
       }
-      jQuery("#DoliconnectLoadingModal").modal("toggle");
 
-		}, "json");
-	});
- 
+jQuery("#DoliconnectLoadingModal").modal("hide");
+
+		}, "json");  
+  });
+});
 });';
 $button .= "</script>";
 
