@@ -368,28 +368,22 @@ print '<center><i class="fas fa-user-check fa-3x fa-fw" style="color:DarkGrey"><
 print "</div><div class='col-9 col-md-10 col-xl-10 align-middle'><h6 class='my-0'>".__( 'Create from existing customer/supplier', 'doliconnect')."</h6><small class='text-muted'>".sprintf( esc_html__( 'you are already customer/supplier or member with %s', 'doliconnect'), get_bloginfo('name'))."</small>";
 print '</div></div></label></div></li>';
 
-print '<div id="linkuserPanel" class="panel-collapse collapse"><li class="list-group-item list-group-item-white"><div class="panel-body">';
+print '<div id="linkuserPanel" class="panel-collapse collapse"><li class="list-group-item list-group-item-white">';
+print "<form class='product-".$product->id."' method='post' action='".admin_url('admin-ajax.php')."'>";
 print '<div class="form-group">
-  <label for="FormCustomer"><small>'.__( 'Customer/Supplier', 'doliconnect').'</small></label><div class="input-group" id="FormCustomer">
-  <div class="input-group-prepend">
-    <span class="input-group-text"><i class="fas fa-user-tie"></i></span>
-  </div>
+  <label for="FormCustomer"><small><i class="fas fa-user-tie"></i> '.__( 'Customer/Supplier', 'doliconnect').'</small></label><div class="input-group" id="FormCustomer">
   <input type="text" aria-label="Name" placeholder="'.__( 'Name of customer/supplier', 'doliconnect').'" class="form-control">
   <input type="text" aria-label="Last name" placeholder="'.__( 'Customer/Supplier code', 'doliconnect').'" class="form-control">
 </div><div>';
 print '<div class="form-group">
-  <label for="FormObject"><small>'.__( 'Order or Invoice', 'doliconnect').'</small></label><div class="input-group" id="FormObject">
-  <div class="input-group-prepend">
-    <span class="input-group-text"><i class="fas fa-file-invoice"></i></span>
-  </div>
+  <label for="FormObject"><small><i class="fas fa-file-invoice"></i> '.__( 'Order or Invoice', 'doliconnect').'</small></label><div class="input-group" id="FormObject">
   <input type="text" aria-label="Name" placeholder="'.__( 'Reference', 'doliconnect').'" class="form-control">
   <input type="date" aria-label="Last name" placeholder="'.__( 'Date', 'doliconnect').'" class="form-control">
   <input type="number" aria-label="Last name" placeholder="'.__( 'Amount', 'doliconnect').'" class="form-control">
 </div><div>';
-print '</div></li>';
+print '</li>';
 print doliuserform( null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'thirdparty');
-print '</div>';
-
+print '</form></div>';
 
 print "</ul><script>";
 print  "jQuery('#newuser,#linkuser').on('click', function (e) {
