@@ -257,10 +257,10 @@ print " disabled><label class='custom-control-label' for='".$idobject."[roles]["
 print "</li>";
 }
 
-if ( !in_array($mode, array('contact', 'donation')) ) {
+if ( !in_array($mode, array('contact', 'donation', 'linkthirdparty')) ) {
 print "<li class='list-group-item'>";
 
-if ( !in_array($mode, array('contact', 'member')) ) {
+if ( !in_array($mode, array('contact', 'member', 'linkthirdparty')) ) {
 print "<div class='form-row'><div class='col'><label for='description'><small><i class='fas fa-bullhorn fa-fw'></i> ".__( 'About Yourself', 'doliconnect')."</small></label>
 <textarea type='text' class='form-control' name='description' id='description' rows='3' placeholder='".__( 'About Yourself', 'doliconnect')."'>".$current_user->description."</textarea></div></div>";
 
@@ -307,7 +307,7 @@ print "</div></li>";
 
 }
 
-if ( function_exists('dolikiosk') && ! isset($object) && ! empty(dolikiosk()) && $mode == 'thirdparty' ) {
+if ( function_exists('dolikiosk') && ! isset($object) && (! empty(dolikiosk()) && $mode == 'thirdparty') ) {
 print "<li class='list-group-item'><div class='form-row'><div class='col'><label for='pwd1'><small><i class='fas fa-key fa-fw'></i> ".__( 'Password', 'doliconnect')."</small></label>
 <input class='form-control' id='pwd1' type='password' name='pwd1' value ='' placeholder='".__( 'Choose your password', 'doliconnect')."' autocomplete='off' required>
 <small id='pwd1' class='form-text text-justify text-muted'>".__( 'Your password must be between 8 and 20 characters, including at least 1 digit, 1 letter, 1 uppercase.', 'doliconnect')."</small></div></div>
@@ -316,7 +316,7 @@ print "<li class='list-group-item'><div class='form-row'><div class='col'><label
 print "</div></li>";
 }
 
-if ( !is_user_logged_in() && in_array($mode, array('thirdparty')) ) {
+if ( !is_user_logged_in() && in_array($mode, array('thirdparty','linkthirdparty')) ) {
 
 if( has_action('register_form') ) {
 if (!empty(do_action( 'register_form'))){

@@ -343,19 +343,32 @@ print '<center><i class="fas fa-user-plus fa-3x fa-fw" style="color:DarkGrey"></
 print "</div><div class='col-9 col-md-10 col-xl-10 align-middle'><h6 class='my-0'>".__( 'Create a new user', 'doliconnect')."</h6><small class='text-muted'>".sprintf( esc_html__( "you are not yet customer/supplier or member with %s", 'doliconnect'), get_bloginfo('name'))."</small>";
 print '</div></div></label></div></li>';
 
-print '<li id="newuserPanel" class="list-group-item list-group-item-white panel-collapse collapse"><div class="panel-body">';
-if (get_option( 'users_can_register' )) {
-print "<form id='doliconnect-signinform' action='".doliconnecturl('doliaccount')."?action=signup' role='form' method='post' class='was-validated'>";
+print '<div id="newuserPanel" class="panel-collapse collapse">';
+print "<form class='linkuser-form' method='post' action='".admin_url('admin-ajax.php')."'>";
+
 print doliuserform( null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'thirdparty');
-print "<input type='hidden' name='submitted' id='submitted' value='true'><button class='btn btn-primary btn-block' type='submit'";
-if ( get_option('users_can_register')=='1' && ( get_site_option( 'registration' ) == 'user' || get_site_option( 'registration' ) == 'all' ) || ( !is_multisite() && get_option( 'users_can_register' )) ) {
-print "";
-} else { print " aria-disabled='true'  disabled"; }
-print "><b>".__( 'Create an account', 'doliconnect')."</b></button>";
-} else {
-print "".__( "Creating a new account is not allowed. Please contact us to create it!", 'doliconnect')."";
-}
-print '</form></div></li>';
+print "<div class='card-body'><button class='btn btn-danger btn-block' type='submit'><b>".__( 'Submit', 'doliconnect')."</b></button></div>";
+
+print "<input type='hidden' name='action' value='doliaddproduct_request'><script>";
+print 'jQuery(document).ready(function($) {
+	
+	jQuery(".newuser-form").on("submit", function(e) {
+		e.preventDefault();
+    //jQuery("#DoliconnectLoadingModal").modal("show");
+		var $form = $(this);
+ 
+		$.post($form.attr("action"), $form.serialize(), function(response) {
+			alert("This is data returned from the server " + response.data);
+
+      //jQuery("#DoliconnectLoadingModal").modal("toggle");
+
+		}, "json");
+	});
+ 
+});';
+print "</script>";
+
+print '</form></div>';
 
 
 print "<li class='list-group-item list-group-item-light list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>
@@ -382,7 +395,7 @@ print '<div class="form-group">
   <input type="number" aria-label="Last name" placeholder="'.__( 'Amount', 'doliconnect').'" class="form-control" required>
 </div><div>';
 print '</li>';
-print doliuserform( null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'thirdparty');
+print doliuserform( null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'linkthirdparty');
 print "<div class='card-body'><button class='btn btn-danger btn-block' type='submit'><b>".__( 'Submit', 'doliconnect')."</b></button></div>";
 
 print "<input type='hidden' name='action' value='doliaddproduct_request'><script>";
