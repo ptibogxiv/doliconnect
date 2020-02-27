@@ -216,7 +216,7 @@ wp_redirect(site_url());
 exit;
 }
 
-if ( is_multisite() && (!get_option( 'dolicustsupp_can_register' )) && !get_option( 'users_can_register' ) ) && (get_site_option( 'registration' ) != 'user' or get_site_option( 'registration' ) != 'all') ) {
+if ( is_multisite() && (!get_option( 'dolicustsupp_can_register' ) && !get_option( 'users_can_register' ) ) && (get_site_option( 'registration' ) != 'user' or get_site_option( 'registration' ) != 'all') ) {
 wp_redirect(esc_url(doliconnecturl('doliaccount')));
 exit;
 } elseif (!get_option( 'dolicustsupp_can_register' ) && !get_option( 'users_can_register' )) {
@@ -618,8 +618,8 @@ print "<ul class='list-group list-group-flush'><li class='list-group-item'><cent
 print "</li></lu><div class='card-body'>";
 
 print '<a href="#" id="login-'.current_time('timestamp').'" data-toggle="modal" data-target="#DoliconnectLogin" data-dismiss="modal" title="'.__('Sign in', 'doliconnect').'" class="btn btn-block btn-primary my-2 my-sm-0" role="button">'.__('You have already an account', 'doliconnect').'</a>';
-if (((!is_multisite() && get_option( 'users_can_register' )) or (get_option('users_can_register')=='1' && (get_site_option( 'registration' ) == 'user' or get_site_option( 'registration' ) == 'all')))) 
-{
+
+if ((!is_multisite() && get_option( 'users_can_register' )) || ((!is_multisite() && get_option( 'dolicustsupp_can_register' )) || ((get_option( 'dolicustsupp_can_register' ) || get_option('users_can_register') == '1') && (get_site_option( 'registration' ) == 'user' || get_site_option( 'registration' ) == 'all')))) {
 print '<div><div style="display:inline-block;width:46%;float:left"><hr width="90%" /></div><div style="display:inline-block;width: 8%;text-align: center;vertical-align:90%"><small class="text-muted">'.__( 'or', 'doliconnect').'</small></div><div style="display:inline-block;width:46%;float:right" ><hr width="90%"/></div></div>';
 print '<a href="'.wp_registration_url( get_permalink() ).'" id="login-'.current_time('timestamp').'" class="btn btn-block btn-primary my-2 my-sm-0" role="button">'.__("You don't have an account", 'doliconnect').'</a>';
 }
