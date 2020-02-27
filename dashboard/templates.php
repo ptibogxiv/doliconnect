@@ -400,13 +400,13 @@ print dolialert('danger', __( 'Your password must be between 8 and 20 characters
 }
 }
 
-print "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
+print "<div class='card shadow-sm'><div class='card-header'><h5 class='card-title'>".__( 'Change your password', 'doliconnect')."</h5></div><ul class='list-group list-group-flush'>";
 if ( isset($dolibarr->fk_user) && $dolibarr->fk_user > '0'){  
 $request = "/users/".$dolibarr->fk_user;
 $doliuser = callDoliApi("GET", $request , null, dolidelay('thirdparty'));
 print "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".__( 'Your password will be synchronized with your Dolibarr account', 'doliconnect')."</b></li>";
 } 
-print "<li class='list-group-item'><h5 class='card-title'>".__( 'Change your password', 'doliconnect')."</h5>
+print "<li class='list-group-item'>
 <form class='was-validated' id='doliconnect-rpwform' action='' method='post'><input type='hidden' name='submitted' id='submitted' value='true' />";
 
 print doliloaderscript('doliconnect-rpwform'); 
