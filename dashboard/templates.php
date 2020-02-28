@@ -449,7 +449,7 @@ do_action( 'login_footer');
 if (!$_GET["login"] || !$_GET["key"]) {
 wp_redirect(wp_login_url( get_permalink() ));
 exit;
-} else {   
+} else { 
 $user = check_password_reset_key( esc_attr($_GET["key"]), esc_attr($_GET["login"]) );
 if ( ! $user || is_wp_error( $user ) ) {
 if ( $user && $user->get_error_code() === 'expired_key' ){
@@ -463,7 +463,9 @@ exit;
 }
 exit;
 } else {
+
 $dolibarr = callDoliApi("GET", "/doliconnector/".$user->ID, null, 0);
+
 if (isset($_POST["case"]) && $_POST["case"] == 'updatepwd'){
 $pwd = sanitize_text_field($_POST["pwd1"]);                                   
 if ( ($_POST["pwd1"] == $_POST["pwd2"]) && (preg_match('/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,20}/', $pwd))) {  //"#.*^(?=.{8,20})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*$#"
@@ -501,9 +503,8 @@ print "<li class='list-group-item'>
 
 print doliloaderscript('doliconnect-rpwform'); 
 
-print "<div class='form-group'><label for='pwd1'><small>".__( 'New password', 'doliconnect')."</small></label>
-<div class='input-group mb-2 mr-sm-2'><div class='input-group-prepend'>
-<div class='input-group-text'><i class='fas fa-key fa-fw'></i></div></div>
+print "<div class='form-group'><label for='pwd1'><i class='fas fa-key fa-fw'></i> <small>".__( 'New password', 'doliconnect')."</small></label>
+<div class='input-group mb-2 mr-sm-2'>
 <input class='form-control' id='pwd1' type='password' name='pwd1' value ='' placeholder='".__( 'Enter your new password', 'doliconnect')."' ";
 if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $user->ID ) {
 print ' readonly';
@@ -513,10 +514,9 @@ print ' required';
 print "></div>
 <small id='pwd1' class='form-text text-justify text-muted'>
 ".__( 'Your password must be between 8 and 20 characters, including at least 1 digit, 1 letter, 1 uppercase.', 'doliconnect')."
-</small>
-<div class='form-group'><label for='pwd2'></label>
-<div class='input-group mb-2 mr-sm-2'><div class='input-group-prepend'>
-<div class='input-group-text'><i class='fas fa-key fa-fw'></i></div></div>
+</small>";
+print "<div class='form-group'><label for='pwd2'><i class='fas fa-key fa-fw'></i> <small>".__( 'New password', 'doliconnect')."</small></label>
+<div class='input-group mb-2 mr-sm-2'>
 <input class='form-control' id='pwd2' type='password' name='pwd2' value ='' placeholder='".__( 'Confirm your new password', 'doliconnect')."' ";
 if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $user->ID ) {
 print ' readonly';
