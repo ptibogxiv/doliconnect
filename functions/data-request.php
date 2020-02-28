@@ -142,3 +142,37 @@ wp_send_json_success('error');
 }
 }
 
+add_action('wp_ajax_dolirpw_request', 'dolirpw_request');
+add_action('wp_ajax_nopriv_dolirpw_request', 'dolirpw_request');
+
+function dolirpw_request(){
+if ( wp_verify_nonce( trim($_POST['dolirpw-nonce']), 'dolirpw-nonce') && isset($_POST['user_email']) && email_exists(sanitize_email($_POST['user_email'])) ) {
+
+$pwd = sanitize_text_field($_POST["pwd1"]);                                   
+if ( ($_POST["pwd1"] == $_POST["pwd2"]) && (preg_match('/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,20}/', $pwd))) {  //"#.*^(?=.{8,20})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*$#"
+
+wp_set_password($pwd, $user->ID);
+
+if ( $dolibarr->fk_user > '0' ) {
+$data = [
+    'pass' => $pwd
+	];
+$doliuser = callDoliApi("PUT", "/users/".$dolibarr->fk_user, $data, 0);
+}
+
+$wpdb->update( $wpdb->users, array( 'user_activation_key' => '' ), array( 'user_login' => $user->user_login ) );
+$arr_params = array( 'action' => 'lostpassword', 'success' => true);  
+wp_redirect(esc_url( add_query_arg( $arr_params, wp_login_url( get_permalink() )) ));
+exit;
+}
+elseif ( $pwd != $_POST["pwd2"] ) {
+print dolialert('warning', __( 'The new passwords entered are different', 'doliconnect'));
+}
+elseif (!preg_match("#.*^(?=.{8,20})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*$#", $pwd)){
+print dolialert('danger', __( 'Your password must be between 8 and 20 characters, including at least 1 digit, 1 letter, 1 uppercase.', 'doliconnect'));
+}
+
+}	 else {
+wp_send_json_success('error'); 
+}
+}
