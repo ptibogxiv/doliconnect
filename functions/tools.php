@@ -842,7 +842,7 @@ if ( isset($listpaymentmethods->stripe) && empty($listpaymentmethods->stripe->li
 $paymentmethods .= "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".__( "Stripe's in sandbox mode", 'doliconnect')."</b> <small>(<a href='https://stripe.com/docs/testing#cards' target='_blank' rel='noopener'>".__( "Link to Test card numbers", 'doliconnect')."</a>)</small></li>";
 }
 
-$paymentmethods .= '<div class="card-body text-muted">';
+$paymentmethods .= '<div class="card-body text-muted"><small>';
 if (isset($object)) {
 $paymentmethods .= '<div class="custom-control custom-checkbox">
   <input type="checkbox" class="custom-control-input" id="checkBox1" ">
@@ -863,7 +863,7 @@ jQuery('input[name=paymentmode]').attr('disabled', !jQuery('input[name=paymentmo
 });"; 
 $paymentmethods .= "</script>"; 
 }
-$paymentmethods .= '</div>';
+$paymentmethods .= '</small></div>';
 
 if (empty($listpaymentmethods->payment_methods)) {
 $countPM = 0;
@@ -1087,7 +1087,7 @@ $paymentmethods .='<button type="button" onclick="PayPM(\'LIQ\')" class="btn btn
 $paymentmethods .='</div></li>';
 }}
 
-$paymentmethods .= "</ul><div class='card-body text-muted'>";
+$paymentmethods .= "</ul><div class='card-body text-muted'><small>";
 
 $paymentmethods .= "<b>".__( 'Payment term', 'doliconnect').":</b> ";
 if (!empty($thirdparty->cond_reglement_id)) { 
@@ -1096,7 +1096,7 @@ $paymentmethods .= dolipaymentterm($thirdparty->cond_reglement_id);
 $paymentmethods .= __( 'immediately', 'doliconnect');
 }
 
-$paymentmethods .= "</div><div class='card-footer text-muted'>";
+$paymentmethods .= "</small></div><div class='card-footer text-muted'>";
 $paymentmethods .= "<small><div class='float-left'>";
 $paymentmethods .= dolirefresh($request, $url, dolidelay('paymentmethods'));
 $paymentmethods .= "</div><div class='float-right'>";
