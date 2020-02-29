@@ -842,11 +842,28 @@ if ( isset($listpaymentmethods->stripe) && empty($listpaymentmethods->stripe->li
 $paymentmethods .= "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".__( "Stripe's in sandbox mode", 'doliconnect')."</b> <small>(<a href='https://stripe.com/docs/testing#cards' target='_blank' rel='noopener'>".__( "Link to Test card numbers", 'doliconnect')."</a>)</small></li>";
 }
 
-if (!empty($thirdparty->cond_reglement_id)) { 
-$paymentmethods .= "<li class='list-group-item list-group-item-light list-group-item-action flex-column align-items-start'><b>".__( 'Payment term', 'doliconnect').":</b> ";
-$paymentmethods .= dolipaymentterm($thirdparty->cond_reglement_id);
-$paymentmethods .= "</li>";
+$paymentmethods .= '<div class="card-body text-muted">';
+if (isset($object)) {
+$paymentmethods .= '<div class="custom-control custom-checkbox">
+  <input type="checkbox" class="custom-control-input" id="checkBox1" ">
+  <label class="custom-control-label" for="checkBox1">'.sprintf( __( 'I read and accept the %s', 'doliconnect'), dolidocdownload('', '', '', __( 'Terms & Conditions', 'doliconnect'), false, 'btn-link')).'</label>
+</div>';
+$paymentmethods .= "<script>";
+$paymentmethods .= "jQuery(document).ready(function() { 
+jQuery('#checkBox1').click(function() {
+jQuery('input[name=paymentmode]').attr('disabled', !jQuery('input[name=paymentmode]').attr('disabled'));
+}); 
+});"; 
+$paymentmethods .= "</script>"; 
+} else {
+$paymentmethods .= "".sprintf( __( 'Read the %s', 'doliconnect'), dolidocdownload('', '', '', __( 'Terms & Conditions', 'doliconnect'), false, 'btn-link btn-sm'))."";
+$paymentmethods .= "<script>";
+$paymentmethods .= "jQuery(document).ready(function() { 
+jQuery('input[name=paymentmode]').attr('disabled', !jQuery('input[name=paymentmode]').attr('disabled'));
+});"; 
+$paymentmethods .= "</script>"; 
 }
+$paymentmethods .= '</div>';
 
 if (empty($listpaymentmethods->payment_methods)) {
 $countPM = 0;
@@ -1072,25 +1089,9 @@ $paymentmethods .='</div></li>';
 
 $paymentmethods .= "</ul><div class='card-body text-muted'>";
 
-if (isset($object)) {
-$paymentmethods .= '<div class="custom-control custom-checkbox">
-  <input type="checkbox" class="custom-control-input" id="checkBox1" ">
-  <label class="custom-control-label" for="checkBox1">'.sprintf( __( 'I read and accept the %s', 'doliconnect'), dolidocdownload('', '', '', __( 'Terms & Conditions', 'doliconnect'), false, 'btn-link')).'</label>
-</div>';
-$paymentmethods .= "<script>";
-$paymentmethods .= "jQuery(document).ready(function() { 
-jQuery('#checkBox1').click(function() {
-jQuery('input[name=paymentmode]').attr('disabled', !jQuery('input[name=paymentmode]').attr('disabled'));
-}); 
-});"; 
-$paymentmethods .= "</script>"; 
-} else {
-$paymentmethods .= "".sprintf( __( 'Read the %s', 'doliconnect'), dolidocdownload('', '', '', __( 'Terms & Conditions', 'doliconnect'), false, 'btn-link btn-sm'))."";
-$paymentmethods .= "<script>";
-$paymentmethods .= "jQuery(document).ready(function() { 
-jQuery('input[name=paymentmode]').attr('disabled', !jQuery('input[name=paymentmode]').attr('disabled'));
-});"; 
-$paymentmethods .= "</script>"; 
+if (!empty($thirdparty->cond_reglement_id)) { 
+$paymentmethods .= "<b>".__( 'Payment term', 'doliconnect').":</b> ";
+$paymentmethods .= dolipaymentterm($thirdparty->cond_reglement_id);
 }
 
 $paymentmethods .= "</div><div class='card-footer text-muted'>";
