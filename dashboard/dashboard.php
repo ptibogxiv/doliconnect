@@ -458,58 +458,56 @@ add_action( 'user_doliconnect_menu', 'password_menu', 3, 1);
 
 function password_module( $url ){
 global $current_user;
-$ID = $current_user->ID;
  
 if (doliconnector($current_user, 'fk_user') > '0'){  
 $request = "/users/".doliconnector($current_user, 'fk_user');
 $doliuser = callDoliApi("GET", $request , null, dolidelay('thirdparty'));
 }
 
-if ( isset($_POST["case"]) && $_POST["case"] == 'updatepwd' ) {
-$pwd1 = sanitize_text_field($_POST["pwd1"]);
-$pwd0 = sanitize_text_field($_POST["pwd0"]);
-$pwd2 = sanitize_text_field($_POST["pwd2"]);
+print "<div id='DoliRpwAlert' class='text-danger'></div><form id='dolirpw-form' method='post' class='was-validated' action='".admin_url('admin-ajax.php')."'>";
+print "<input type='hidden' name='action' value='dolirpw_request'>";
+print "<input type='hidden' name='dolirpw-nonce' value='".wp_create_nonce( 'dolirpw-nonce')."'>";
 
-if ( (wp_check_password( $pwd0, $current_user->user_pass, $current_user->ID ) ) && ($pwd1 == $pwd2) && (preg_match('/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,20}/', $pwd1)) ) {
-wp_set_password($pwd1, $ID);
+print "<script>";
+print 'jQuery(document).ready(function($) {
+	
+	jQuery("#dolirpw-form").on("submit", function(e) {
+  jQuery("#DoliconnectLoadingModal").modal("show");
+	e.preventDefault();
+    
+	var $form = $(this);
+    
+jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function (e) { 
+		$.post($form.attr("action"), $form.serialize(), function(response) {
 
-if (doliconnector($current_user, 'fk_user') > '0'){
-$data = [
-    'pass' => $pwd1
-	];
-$doliuser = callDoliApi("PUT", $request , $data, 0);
-}
+      if (document.getElementById("DoliRpwAlert")) {
+      document.getElementById("DoliRpwAlert").innerHTML = response.data;      
+      }
 
-print dolialert('success', __( 'Your password have been updated.', 'doliconnect'));
-} elseif ( ! wp_check_password( $pwd0, $current_user->user_pass, $current_user->ID ) ) {
-print dolialert('danger', __( 'Your actual password is incorrect', 'doliconnect'));
-} elseif ( $pwd1 != $_POST["pwd2"] ) {
-print dolialert('danger', __( 'The new passwords entered are different', 'doliconnect'));
-} elseif ( !preg_match("#.*^(?=.{8,20})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*$#", $pwd1) ) {
-print dolialert('danger', __( 'Your password must be between 8 and 20 characters, including at least 1 digit, 1 letter, 1 uppercase.', 'doliconnect'));
-}
-}
+jQuery("#DoliconnectLoadingModal").modal("hide");
 
-print "<form class='was-validated' action='".$url."' id='doliconnect-passwordform' method='post'><input type='hidden' name='case' value='updatepwd'>";
-
-print doliloaderscript('doliconnect-passwordform'); 
+		}, "json");  
+  });
+});
+});';
+print "</script>";
 
 print "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
 if ( doliconnector($current_user, 'fk_user') > '0' ) {
 print "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".__( 'Your password will be synchronized with your Dolibarr account', 'doliconnect')."</b></li>";
-} elseif  ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $ID ) {
+} elseif  ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $current_user->ID ) {
 print "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".__( 'Password cannot be modified in demo mode', 'doliconnect')."</b></li>";
 } 
 print '<li class="list-group-item"><div class="form-group"><div class="row"><div class="col-12"><label for="passwordHelpBlock1"><small>'.__( 'Confirm your current password', 'doliconnect').'</small></label>
 <div class="input-group mb-2"><div class="input-group-prepend"><div class="input-group-text"><i class="fas fa-key fa-fw"></i></div></div><input type="password" id="pwd0" name="pwd0" class="form-control" aria-describedby="passwordHelpBlock1" autocomplete="off" placeholder="'.__( 'Confirm your current password', 'doliconnect').'" ';
-if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $ID ) {
+if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $current_user->ID ) {
 print ' readonly';
 } else {
 print ' required';
 }
 print '></div></div></div></div><div class="form-group"><div class="row"><div class="col-12"><label for="passwordHelpBlock2"><small>'.__( 'Change your password', 'doliconnect').'</small></label>
 <div class="input-group mb-2"><div class="input-group-prepend"><div class="input-group-text"><i class="fas fa-key fa-fw"></i></div></div><input type="password" id="pwd1" name="pwd1" class="form-control" aria-describedby="passwordHelpBlock2" autocomplete="off" placeholder="'.__( 'Choose your new password', 'doliconnect').'" ';
-if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $ID ) {
+if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $current_user->ID ) {
 print ' readonly';
 } else {
 print ' required';
@@ -518,14 +516,14 @@ print '></div><small id="passwordHelpBlock3" class="form-text text-justify text-
 '.__( 'Your password must be between 8 and 20 characters, including at least 1 digit, 1 letter, 1 uppercase.', 'doliconnect').'
 </small><div class="invalid-feedback">'.__( 'This field is required.', 'doliconnect').'</div></div></div><div class="row"><div class="col-12"><label for="passwordHelpBlock3"></label>';
 print '<div class="input-group mb-2"><div class="input-group-prepend"><div class="input-group-text"><i class="fas fa-key fa-fw"></i></div></div><input type="password" id="pwd2" name="pwd2"  class="form-control" aria-describedby="passwordHelpBlock3" autocomplete="off" placeholder="'.__( 'Confirme your new password', 'doliconnect').'" ';
-if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $ID ) {
+if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $current_user->ID ) {
 print ' readonly';
 } else {
 print ' required';
 }
 print '></div></div></div></li>';
 print "</ul><div class='card-body'><button class='btn btn-danger btn-block' type='submit' ";
-if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $ID ) {
+if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $current_user->ID ) {
 print ' disabled';
 }
 print ">".__( 'Update', 'doliconnect')."</button></div><div class='card-footer text-muted'>";
@@ -1893,29 +1891,29 @@ jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function (e) {
 print "</script>";
 
 print "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
-print "<li class='list-group-item'><div class='custom-control custom-switch'><input type='checkbox' class='custom-control-input' name='loginmailalert' id='loginmailalert' ";
+print "<li class='list-group-item list-group-item-light list-group-item-action'><div class='custom-control custom-switch'><input type='checkbox' class='custom-control-input' name='loginmailalert' id='loginmailalert' ";
 if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $ID ) {
 print " disabled";
 } elseif ( $current_user->loginmailalert == 'on' ) { print " checked"; }        
 print " onchange='DoliSettings(this.form)'><label class='custom-control-label w-100' for='loginmailalert'> ".__( 'Receive a email notification at each connection', 'doliconnect')."</label>
 </div></li>";
 if ( get_option('doliconnectbeta') == '1' ) {
-print "<li class='list-group-item'><div class='custom-control custom-switch'><input type='checkbox' class='custom-control-input' name='optin1' id='optin1' ";
+print "<li class='list-group-item list-group-item-light list-group-item-action'><div class='custom-control custom-switch'><input type='checkbox' class='custom-control-input' name='optin1' id='optin1' ";
 if ( $current_user->optin1 == 'on' ) { print " checked"; }        
 print " onchange='DoliSettings(this.form)'><label class='custom-control-label w-100' for='optin1'> ".__( 'I would like to receive the newsletter', 'doliconnect')."</label>
 </div></li>";
-print "<li class='list-group-item'><div class='custom-control custom-switch'><input type='checkbox' class='custom-control-input' name='optin2' id='optin2' ";
+print "<li class='list-group-item list-group-item-light list-group-item-action'><div class='custom-control custom-switch'><input type='checkbox' class='custom-control-input' name='optin2' id='optin2' ";
 if ( $current_user->optin2 == 'on' ) { print " checked"; }        
 print " onchange='DoliSettings(this.form)'><label class='custom-control-label w-100' for='optin2'> ".__( 'I would like to receive the offers of our partners', 'doliconnect')."</label>
 </div></li>";
 }
 $privacy=$wpdb->prefix."doliprivacy";
 if ( $current_user->$privacy ) {
-print "<li class='list-group-item'>";
+print "<li class='list-group-item list-group-item-light list-group-item-action'>";
 print "".__( 'Approval of the Privacy Policy the', 'doliconnect')." ".wp_date( get_option( 'date_format' ).' - '.get_option('time_format'), $current_user->$privacy, false)."";
 print "</li>";
 }
-print "<li class='list-group-item'>";
+print "<li class='list-group-item list-group-item-light list-group-item-action'>";
 //print $current_user->locale;
 print "<div class='form-group'><label for='inputaddress'><small>".__( 'Default language', 'doliconnect')."</small></label>
 <div class='input-group'><div class='input-group-prepend'><span class='input-group-text'><i class='fas fa-language fa-fw'></i></span></div>";
@@ -1942,7 +1940,7 @@ $thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, '
 
 $currencies = callDoliApi("GET", "/setup/dictionary/currencies?multicurrency=1&sortfield=code_iso&sortorder=ASC&limit=100&active=1", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
  
-print "<li class='list-group-item'>";
+print "<li class='list-group-item list-group-item-light list-group-item-action'>";
 //print $current_user->locale;
 print "<div class='form-group'><label for='inputaddress'><small>".__( 'Default currency', 'doliconnect')."</small></label>
 <div class='input-group'><div class='input-group-prepend'><span class='input-group-text'><i class='fas fa-money-bill-alt fa-fw'></i></span></div>";
