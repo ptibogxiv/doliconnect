@@ -1089,9 +1089,11 @@ $paymentmethods .='</div></li>';
 
 $paymentmethods .= "</ul><div class='card-body text-muted'>";
 
-if (!empty($thirdparty->cond_reglement_id)) { 
 $paymentmethods .= "<b>".__( 'Payment term', 'doliconnect').":</b> ";
+if (!empty($thirdparty->cond_reglement_id)) { 
 $paymentmethods .= dolipaymentterm($thirdparty->cond_reglement_id);
+} else {
+$paymentmethods .= __( 'immediately', 'doliconnect');
 }
 
 $paymentmethods .= "</div><div class='card-footer text-muted'>";
