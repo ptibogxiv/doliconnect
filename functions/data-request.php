@@ -146,30 +146,30 @@ add_action('wp_ajax_dolirpw_request', 'dolirpw_request');
 add_action('wp_ajax_nopriv_dolirpw_request', 'dolirpw_request');
 
 function dolirpw_request(){
-if ( wp_verify_nonce( trim($_POST['dolirpw-nonce']), 'dolirpw-nonce') && isset($_POST['user_email']) && email_exists(sanitize_email($_POST['user_email'])) ) {
+global $current_user;
 
-$pwd = sanitize_text_field($_POST["pwd1"]);                                   
-if ( ($_POST["pwd1"] == $_POST["pwd2"]) && (preg_match('/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,20}/', $pwd))) {  //"#.*^(?=.{8,20})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*$#"
+if ( wp_verify_nonce( trim($_POST['dolirpw-nonce']), 'dolirpw-nonce')) {
+$pwd0 = sanitize_text_field($_POST["pwd0"]);
+$pwd1 = sanitize_text_field($_POST["pwd1"]);
+$pwd2 = sanitize_text_field($_POST["pwd2"]);
 
-wp_set_password($pwd, $user->ID);
+if ( ( (isset( $current_user->ID ) && wp_check_password( $pwd0, $current_user->user_pass, $current_user->ID ) ) || (!isset( $current_user->ID ) && check_password_reset_key( esc_attr($_POST["key"]), esc_attr($_POST["login"]) )) ) && ($pwd1 == $pwd2) && (preg_match('/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,20}/', $pwd1)) ) {
+wp_set_password($pwd1, $current_user->ID);
 
-if ( $dolibarr->fk_user > '0' ) {
+if (doliconnector($current_user, 'fk_user') > '0'){
 $data = [
-    'pass' => $pwd
+    'pass' => $pwd1
 	];
-$doliuser = callDoliApi("PUT", "/users/".$dolibarr->fk_user, $data, 0);
+$doliuser = callDoliApi("PUT", "/users/".doliconnector($current_user, 'fk_user'), $data, 0);
 }
 
-$wpdb->update( $wpdb->users, array( 'user_activation_key' => '' ), array( 'user_login' => $user->user_login ) );
-$arr_params = array( 'action' => 'lostpassword', 'success' => true);  
-wp_redirect(esc_url( add_query_arg( $arr_params, wp_login_url( get_permalink() )) ));
-exit;
-}
-elseif ( $pwd != $_POST["pwd2"] ) {
-print dolialert('warning', __( 'The new passwords entered are different', 'doliconnect'));
-}
-elseif (!preg_match("#.*^(?=.{8,20})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*$#", $pwd)){
-print dolialert('danger', __( 'Your password must be between 8 and 20 characters, including at least 1 digit, 1 letter, 1 uppercase.', 'doliconnect'));
+wp_send_json_success('success'); 
+} elseif (isset( $current_user->ID ) && ! wp_check_password( $pwd0, $current_user->user_pass, $current_user->ID ) ) {
+wp_send_json_success(__( 'Your actual password is incorrect', 'doliconnect'));
+} elseif ( $pwd1 != $_POST["pwd2"] ) {
+wp_send_json_success(__( 'The new passwords entered are different', 'doliconnect'));
+} elseif ( !preg_match("#.*^(?=.{8,20})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*$#", $pwd1) ) {
+wp_send_json_success(__( 'Your password must be between 8 and 20 characters, including at least 1 digit, 1 letter, 1 uppercase.', 'doliconnect'));
 }
 
 }	 else {

@@ -609,7 +609,7 @@ print dolialert('danger', $emailError);
 print dolialert('warning', __( 'A problem occurred. Please retry later!', 'doliconnect'));
 }
 
-print "<div id='DoliFpwAlert'></div><form id='dolifpw-form' method='post' class='was-validated' action='".admin_url('admin-ajax.php')."'>";
+print "<div id='DoliFpwAlert' class='text-danger'></div><form id='dolifpw-form' method='post' class='was-validated' action='".admin_url('admin-ajax.php')."'>";
 print "<input type='hidden' name='action' value='dolifpw_request'>";
 print "<input type='hidden' name='dolifpw-nonce' value='".wp_create_nonce( 'dolifpw-nonce')."'>";
 
