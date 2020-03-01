@@ -133,11 +133,11 @@ if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $user-
     $body = __( 'A request to change your password has been made. You can change it via the single-use link below:', 'doliconnect')."<br><br><a href='".$url."'>".$url."</a><br><br>".__( 'If you have not made this request, please ignore this email.', 'doliconnect')."<br><br>".sprintf(__('Your %s\'s team', 'doliconnect'), $sitename)."<br>$siteurl";				
     $headers = array('Content-Type: text/html; charset=UTF-8');
     $mail =  wp_mail($email, $subject, $body, $headers);
-}
+
 if( $mail ) {
 wp_send_json_success( __( 'A password reset link was sent to you by email. Please check your spam folder if you don\'t find it.', 'doliconnect'));
 } else { 
-wp_send_json_error( __( 'A problem occurred. Please retry later!', 'doliconnect'));
+wp_send_json_error( __( 'A problem occurred. Please retry later!', 'doliconnect'));  }		
 }
 } else {
 wp_send_json_error( __( 'No account seems to be linked to this email address', 'doliconnect'));
