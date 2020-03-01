@@ -152,9 +152,8 @@ if ( wp_verify_nonce( trim($_POST['dolirpw-nonce']), 'dolirpw-nonce')) {
 $pwd0 = sanitize_text_field($_POST["pwd0"]);
 $pwd1 = sanitize_text_field($_POST["pwd1"]);
 $pwd2 = sanitize_text_field($_POST["pwd2"]);
-if (!$current_user && isset($_GET["key"]) && isset($_GET["login"])) $current_user = check_password_reset_key( esc_attr($_POST["key"]), esc_attr($_POST["login"]));
 
-if ( ( (isset($pwd0) && !empty($pwd0) && wp_check_password( $pwd0, $current_user->user_pass, $current_user->ID ) ) || (!isset($pwd0) && check_password_reset_key( esc_attr($_POST["key"]), esc_attr($_POST["login"]))) ) && ($pwd1 == $pwd2) && (preg_match('/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,20}/', $pwd1)) ) {
+if ( (isset($pwd0) && !empty($pwd0) && wp_check_password( $pwd0, $current_user->user_pass, $current_user->ID ) ) && ($pwd1 == $pwd2) && (preg_match('/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,20}/', $pwd1)) ) {
 wp_set_password($pwd1, $current_user->ID);
 
 if (doliconnector($current_user, 'fk_user') > '0'){
@@ -174,6 +173,6 @@ wp_send_json_success(__( 'Your password must be between 8 and 20 characters, inc
 }
 
 }	 else {
-wp_send_json_success('error'); 
+wp_send_json_success('security error'); 
 }
 }
