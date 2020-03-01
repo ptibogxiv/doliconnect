@@ -46,15 +46,15 @@ $request = "/users/".doliconnector($user, 'fk_user');
 $doliuser = callDoliApi("GET", $request, null, dolidelay('thirdparty'));
 }
 
-print "<div id='DoliRpwAlert' class='text-danger font-weight-bolder'></div><form id='dolirpw-form' method='post' class='was-validated' action='".admin_url('admin-ajax.php')."'>";
-print "<input type='hidden' name='action' value='dolirpw_request'>";
-print "<input type='hidden' name='dolirpw-nonce' value='".wp_create_nonce( 'dolirpw-nonce')."'>";
+$password = "<div id='DoliRpwAlert' class='text-danger font-weight-bolder'></div><form id='dolirpw-form' method='post' class='was-validated' action='".admin_url('admin-ajax.php')."'>";
+$password .= "<input type='hidden' name='action' value='dolirpw_request'>";
+$password .= "<input type='hidden' name='dolirpw-nonce' value='".wp_create_nonce( 'dolirpw-nonce')."'>";
 if (isset($_GET["key"]) && isset($_GET["login"])) {
-print "<input type='hidden' name='key' value='".esc_attr($_GET["key"])."'><input type='hidden' name='login' value='".esc_attr($_GET["login"])."'>";
+$password .= "<input type='hidden' name='key' value='".esc_attr($_GET["key"])."'><input type='hidden' name='login' value='".esc_attr($_GET["login"])."'>";
 }
 
-print "<script>";
-print 'jQuery(document).ready(function($) {
+$password .= "<script>";
+$password .= 'jQuery(document).ready(function($) {
 	
 	jQuery("#dolirpw-form").on("submit", function(e) {
   jQuery("#DoliconnectLoadingModal").modal("show");
@@ -77,53 +77,55 @@ jQuery("#DoliconnectLoadingModal").modal("hide");
   });
 });
 });';
-print "</script>";
+$password .= "</script>";
 
-print "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
+$password .= "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
 if ( doliconnector($user, 'fk_user') > '0' ) {
-print "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".__( 'Your password will be synchronized with your Dolibarr account', 'doliconnect')."</b></li>";
+$password .= "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".__( 'Your password will be synchronized with your Dolibarr account', 'doliconnect')."</b></li>";
 } elseif  ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $user->ID ) {
-print "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".__( 'Password cannot be modified in demo mode', 'doliconnect')."</b></li>";
+$password .= "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".__( 'Password cannot be modified in demo mode', 'doliconnect')."</b></li>";
 } 
-print '<li class="list-group-item list-group-item-light">';
+$password .= '<li class="list-group-item list-group-item-light">';
 if (is_user_logged_in() && $user) {
-print '<div class="form-group"><div class="row"><div class="col-12"><label for="passwordHelpBlock1"><small>'.__( 'Confirm your current password', 'doliconnect').'</small></label>
+$password .= '<div class="form-group"><div class="row"><div class="col-12"><label for="passwordHelpBlock1"><small>'.__( 'Confirm your current password', 'doliconnect').'</small></label>
 <div class="input-group mb-2"><div class="input-group-prepend"><div class="input-group-text"><i class="fas fa-key fa-fw"></i></div></div><input type="password" id="pwd0" name="pwd0" class="form-control" aria-describedby="passwordHelpBlock1" autocomplete="off" placeholder="'.__( 'Confirm your current password', 'doliconnect').'" ';
 if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $user->ID ) {
-print ' readonly';
+$password .= ' readonly';
 } else {
-print ' required';
+$password .= ' required';
 }
-print '></div></div></div></div>';
+$password .= '></div></div></div></div>';
 }
-print '<div class="form-group"><div class="row"><div class="col-12"><label for="passwordHelpBlock2"><small>'.__( 'New password', 'doliconnect').'</small></label>
+$password .= '<div class="form-group"><div class="row"><div class="col-12"><label for="passwordHelpBlock2"><small>'.__( 'New password', 'doliconnect').'</small></label>
 <div class="input-group mb-2"><div class="input-group-prepend"><div class="input-group-text"><i class="fas fa-key fa-fw"></i></div></div><input type="password" id="pwd1" name="pwd1" class="form-control" aria-describedby="passwordHelpBlock2" autocomplete="off" placeholder="'.__( 'Enter your new password', 'doliconnect').'" ';
 if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $user->ID ) {
-print ' readonly';
+$password .= ' readonly';
 } else {
-print ' required';
+$password .= ' required';
 }
-print '></div><small id="passwordHelpBlock3" class="form-text text-justify text-muted">
+$password .= '></div><small id="passwordHelpBlock3" class="form-text text-justify text-muted">
 '.__( 'Your password must be between 8 and 20 characters, including at least 1 digit, 1 letter, 1 uppercase.', 'doliconnect').'
 </small><div class="invalid-feedback">'.__( 'This field is required.', 'doliconnect').'</div></div></div><div class="row"><div class="col-12"><label for="passwordHelpBlock3"><small>'.__( 'New password', 'doliconnect').'</small></label>';
-print '<div class="input-group mb-2"><div class="input-group-prepend"><div class="input-group-text"><i class="fas fa-key fa-fw"></i></div></div><input type="password" id="pwd2" name="pwd2"  class="form-control" aria-describedby="passwordHelpBlock3" autocomplete="off" placeholder="'.__( 'Confirm your new password', 'doliconnect').'" ';
+$password .= '<div class="input-group mb-2"><div class="input-group-prepend"><div class="input-group-text"><i class="fas fa-key fa-fw"></i></div></div><input type="password" id="pwd2" name="pwd2"  class="form-control" aria-describedby="passwordHelpBlock3" autocomplete="off" placeholder="'.__( 'Confirm your new password', 'doliconnect').'" ';
 if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $user->ID ) {
-print ' readonly';
+$password .= ' readonly';
 } else {
-print ' required';
+$password .= ' required';
 }
-print '></div></div></div></li>';
-print "</ul><div class='card-body'><button class='btn btn-danger btn-block' type='submit' ";
+$password .= '></div></div></div></li>';
+$password .= "</ul><div class='card-body'><button class='btn btn-danger btn-block' type='submit' ";
 if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $user->ID ) {
-print ' disabled';
+$password .= ' disabled';
 }
-print ">".__( 'Update', 'doliconnect')."</button></div><div class='card-footer text-muted'>";
-print "<small><div class='float-left'>";
-if ( isset($request) ) print dolirefresh($request, $url, dolidelay('thirdparty'));
-print "</div><div class='float-right'>";
-print dolihelp('ISSUE');
-print "</div></small>";
-print '</div></div>';
+$password .= ">".__( 'Update', 'doliconnect')."</button></div><div class='card-footer text-muted'>";
+$password .= "<small><div class='float-left'>";
+if ( isset($request) ) $password .= dolirefresh($request, $url, dolidelay('thirdparty'));
+$password .= "</div><div class='float-right'>";
+$password .= dolihelp('ISSUE');
+$password .= "</div></small>";
+$password .= '</div></div>';
+
+return $password;
 }
 
 function doliuserform($object, $delay, $mode) {
