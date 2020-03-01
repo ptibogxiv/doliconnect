@@ -40,7 +40,7 @@ $connect .= '<div><div style="display:inline-block;width:46%;float:left"><hr wid
 return $connect;
 }
 
-function dolipasswordform($user){
+function dolipasswordform($user, $url){
 if (doliconnector($user, 'fk_user') > '0'){  
 $request = "/users/".doliconnector($user, 'fk_user');
 $doliuser = callDoliApi("GET", $request, null, dolidelay('thirdparty'));
@@ -115,7 +115,7 @@ print ' disabled';
 }
 print ">".__( 'Update', 'doliconnect')."</button></div><div class='card-footer text-muted'>";
 print "<small><div class='float-left'>";
-if ( isset($request) ) print dolirefresh($request, null, dolidelay('thirdparty'));
+if ( isset($request) ) print dolirefresh($request, $url, dolidelay('thirdparty'));
 print "</div><div class='float-right'>";
 print dolihelp('ISSUE');
 print "</div></small>";

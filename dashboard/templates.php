@@ -464,7 +464,7 @@ exit;
 exit;
 } else {
 
-print dolipasswordform($user);
+print dolipasswordform($user, doliconnecturl('doliaccount'));
 
 }}
 
