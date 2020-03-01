@@ -471,12 +471,6 @@ function dolipaymentmodes_lock() {
 return apply_filters( 'doliconnect_paymentmethods_lock', null);
 }
 
-//function example_callback( $string ) {
-//    // (maybe) modify $string
-//    return 'test';
-//}
-//add_filter( 'doliconnect_paymentmodes_lock', 'example_callback', 10, 1);
-
 function paymentmethods_menu( $arg ) {
 print "<a href='".esc_url( add_query_arg( 'module', 'paymentmethods', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
 if ($arg=='paymentmethods') { print " active";}

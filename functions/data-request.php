@@ -147,13 +147,14 @@ add_action('wp_ajax_nopriv_dolirpw_request', 'dolirpw_request');
 
 function dolirpw_request(){
 global $current_user;
-
+wp_send_json_success('error'); 
 if ( wp_verify_nonce( trim($_POST['dolirpw-nonce']), 'dolirpw-nonce')) {
 $pwd0 = sanitize_text_field($_POST["pwd0"]);
 $pwd1 = sanitize_text_field($_POST["pwd1"]);
 $pwd2 = sanitize_text_field($_POST["pwd2"]);
+if (!$current_user && isset($_GET["key"]) && isset($_GET["login"])) check_password_reset_key( esc_attr($_POST["key"]), esc_attr($_POST["login"]));
 
-if ( ( (isset( $current_user->ID ) && wp_check_password( $pwd0, $current_user->user_pass, $current_user->ID ) ) || (!isset( $current_user->ID ) && check_password_reset_key( esc_attr($_POST["key"]), esc_attr($_POST["login"]) )) ) && ($pwd1 == $pwd2) && (preg_match('/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,20}/', $pwd1)) ) {
+if ( ( (isset($pwd0) && !empty($pwd0) && wp_check_password( $pwd0, $current_user->user_pass, $current_user->ID ) ) || (!isset($pwd0) && check_password_reset_key( esc_attr($_POST["key"]), esc_attr($_POST["login"]))) ) && ($pwd1 == $pwd2) && (preg_match('/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,20}/', $pwd1)) ) {
 wp_set_password($pwd1, $current_user->ID);
 
 if (doliconnector($current_user, 'fk_user') > '0'){
