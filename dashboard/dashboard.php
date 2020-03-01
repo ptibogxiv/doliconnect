@@ -459,7 +459,7 @@ add_action( 'user_doliconnect_menu', 'password_menu', 3, 1);
 function password_module( $url ){
 global $current_user;
  
-print dolipasswordform($current_user);
+print dolipasswordform($current_user, $url);
 
 }
 add_action( 'user_doliconnect_password', 'password_module');
