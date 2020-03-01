@@ -161,14 +161,14 @@ $pwd0 = sanitize_text_field($_POST["pwd0"]);
 $pwd1 = sanitize_text_field($_POST["pwd1"]);
 $pwd2 = sanitize_text_field($_POST["pwd2"]);
 
-if (!$current_user) {
+if (!isset( $current_user->ID )) {
 $current_user = check_password_reset_key( esc_attr($_POST["key"]), esc_attr($_POST["login"]) );
 }
 
 if ( ((isset($pwd0) && !empty($pwd0) && is_user_logged_in() && wp_check_password( $pwd0, $current_user->user_pass, $current_user->ID )) || (!is_user_logged_in()) ) && ($pwd1 == $pwd2) && (preg_match('/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,20}/', $pwd1)) ) {
 wp_set_password($pwd1, $current_user->ID);
 
-if (doliconnector($current_user, 'fk_user') > '0'){
+if (doliconnector($current_user, 'fk_user') > 0){
 $data = [
     'pass' => $pwd1
 	];

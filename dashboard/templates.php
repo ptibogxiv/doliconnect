@@ -476,7 +476,7 @@ exit;
 $dolibarr = callDoliApi("GET", "/doliconnector/".$user->ID, null, 0);
 
 print "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
-if ( isset($dolibarr->fk_user) && $dolibarr->fk_user > '0'){  
+if ( isset($dolibarr->fk_user) && $dolibarr->fk_user > 0){  
 $request = "/users/".$dolibarr->fk_user;
 $doliuser = callDoliApi("GET", $request , null, dolidelay('thirdparty'));
 print "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".__( 'Your password will be synchronized with your Dolibarr account', 'doliconnect')."</b></li>";
