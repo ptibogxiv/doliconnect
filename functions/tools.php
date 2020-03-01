@@ -41,7 +41,7 @@ return $connect;
 }
 
 function dolipasswordform($user, $url){
-if (doliconnector($user, 'fk_user') > '0'){  
+if (doliconnector($user, 'fk_user') > 0){  
 $request = "/users/".doliconnector($user, 'fk_user');
 $doliuser = callDoliApi("GET", $request, null, dolidelay('thirdparty'));
 }

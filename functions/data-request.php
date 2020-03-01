@@ -193,11 +193,19 @@ add_action('wp_ajax_nopriv_dolisignup_request', 'dolisignup_request');
 function dolisignup_request(){
 global $current_user;
 		
-if ( wp_verify_nonce( trim($_POST['product-add-nonce']), 'product-add-nonce-'.trim($_POST['product-add-id']) ) ) {
+if ( wp_verify_nonce( trim($_POST['dolisignup-nonce']), 'dolisignup-nonce') ) {
+$doliuser = callDoliApi("GET", "/thirdparties?sortfield=t.code_client&sortorder=ASC&limit=1&sqlfilters=(t.code_client%3A%3D%3A'".trim($_POST['code_client'])."')", null, 0);
 
-$result = doliaddtocart(trim($_POST['product-add-id']), trim($_POST['product-add-qty']), trim($_POST['product-add-price']), trim($_POST['product-add-remise_percent']), isset($_POST['product-add-timestamp_start'])?trim($_POST['product-add-timestamp_start']):null, isset($_POST['product-add-timestamp_end'])?trim($_POST['product-add-timestamp_end']):null);
-wp_send_json_success( $result ); 
-
+if (isset($doliuser->error->message)) {
+wp_send_json_error( $doliuser->error->message); 
+} else {
+$invoice = callDoliApi("GET", "/invoices?sortfield=t.ref&sortorder=ASC&limit=1&thirdparty_ids=".$doliuser[0]->id."&sqlfilters=(t.ref%3Alike%3A'".trim($_POST['reference'])."')%20and%20(t.multicurrency_total_ttc%3Alike%3A'".trim($_POST['amount'])."%25')", null, 0);
+if (!isset($invoice->error->message)) {
+ wp_send_json_success( trim($_POST['date'])); 
+} else {
+wp_send_json_error( $invoice->error->message);
+}
+}
 }	else {
 wp_send_json_error( __( 'A security error occured', 'doliconnect')); 
 }

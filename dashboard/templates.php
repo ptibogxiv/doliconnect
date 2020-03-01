@@ -329,8 +329,6 @@ print dolialert('danger', $emailError);
 }
 }
 
-print doliloaderscript('doliconnect-signinform'); 
-
 print "<div class='card shadow-sm'><div class='card-header'><h5 class='card-title'>".__( 'Create an account', 'doliconnect')."</h5></div><ul class='list-group list-group-flush panel-group' id='accordion'>";
 
 print "<li class='list-group-item list-group-item-light list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>
@@ -340,19 +338,18 @@ print "<li class='list-group-item list-group-item-light list-group-item-action f
 //if ( (!empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_code != 'VIR') || ($listpaymentmethods->payment_methods == null && !empty($listpaymentmethods->stripe) && !in_array('card', $listpaymentmethods->stripe->types)) || (isset($object) && $object->mode_reglement_code == 'VIR') ) { print " checked"; }
 print " href='#newuser'><label class='custom-control-label w-100' for='newuser'><div class='row'><div class='col-3 col-md-2 col-xl-2 align-middle'>";
 print '<center><i class="fas fa-user-plus fa-3x fa-fw" style="color:DarkGrey"></i></center>';
-print "</div><div class='col-9 col-md-10 col-xl-10 align-middle'><h6 class='my-0'>".__( 'Create a new user', 'doliconnect')."</h6><small class='text-muted'>".sprintf( esc_html__( "you are not yet customer/supplier or member with %s", 'doliconnect'), get_bloginfo('name'))."</small>";
+print "</div><div class='col-9 col-md-10 col-xl-10 align-middle'><h6 class='my-0'>".__( 'Create a new user', 'doliconnect')."</h6><small class='text-muted'>".sprintf( esc_html__( "you are not yet customer or member with %s", 'doliconnect'), get_bloginfo('name'))."</small>";
 print '</div></div></label></div></li>';
 
 print '<div id="newuserPanel" class="panel-collapse collapse">';
-print "<form class='linkuser-form' method='post' action='".admin_url('admin-ajax.php')."'>";
+print "<form class='dolinewuser-form' method='post' action='".admin_url('admin-ajax.php')."'>";
 
 print doliuserform( null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'thirdparty');
 print "<div class='card-body'><button class='btn btn-danger btn-block' type='submit'><b>".__( 'Submit', 'doliconnect')."</b></button></div>";
 
-print "<input type='hidden' name='action' value='doliaddproduct_request'><script>";
 print 'jQuery(document).ready(function($) {
 	
-	jQuery(".newuser-form").on("submit", function(e) {
+	jQuery(".dolinewuser-form").on("submit", function(e) {
 		e.preventDefault();
     //jQuery("#DoliconnectLoadingModal").modal("show");
 		var $form = $(this);
@@ -378,42 +375,55 @@ print "<li class='list-group-item list-group-item-light list-group-item-action f
 //if ( (!empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_code == 'CHQ') || ($listpaymentmethods->payment_methods == null && !in_array('card', $listpaymentmethods->stripe->types) && $listpaymentmethods->RIB == null) || (isset($object) && $object->mode_reglement_code == 'CHQ') ) { print " checked"; }
 print " href='#linkuser'><label class='custom-control-label w-100' for='linkuser'><div class='row'><div class='col-3 col-md-2 col-xl-2 align-middle'>";
 print '<center><i class="fas fa-user-check fa-3x fa-fw" style="color:DarkGrey"></i></center>';
-print "</div><div class='col-9 col-md-10 col-xl-10 align-middle'><h6 class='my-0'>".__( 'Create from existing customer/supplier', 'doliconnect')."</h6><small class='text-muted'>".sprintf( esc_html__( 'you are already customer/supplier or member with %s', 'doliconnect'), get_bloginfo('name'))."</small>";
+print "</div><div class='col-9 col-md-10 col-xl-10 align-middle'><h6 class='my-0'>".__( 'Create from existing customer', 'doliconnect')."</h6><small class='text-muted'>".sprintf( esc_html__( 'you are already customer or member with %s', 'doliconnect'), get_bloginfo('name'))."</small>";
 print '</div></div></label></div></li>';
 
 print '<div id="linkuserPanel" class="panel-collapse collapse"><li class="list-group-item list-group-item-white">';
-print "<form class='linkuser-form' method='post' action='".admin_url('admin-ajax.php')."'>";
+print "<div id='DoliLinkUserAlert' class='text-danger font-weight-bolder'></div><form id='dolilinkuser-form' method='post' class='was-validated' action='".admin_url('admin-ajax.php')."'>";
+print "<input type='hidden' name='action' value='dolisignup_request'>";
+print "<input type='hidden' name='dolisignup-nonce' value='".wp_create_nonce( 'dolisignup-nonce')."'>";
+
 print '<div class="form-group">
-  <label for="FormCustomer"><small><i class="fas fa-user-tie"></i> '.__( 'Customer/Supplier', 'doliconnect').'</small></label><div class="input-group" id="FormCustomer">
-  <input type="text" aria-label="Name" placeholder="'.__( 'Name of customer/supplier', 'doliconnect').'" class="form-control" required>
-  <input type="text" aria-label="Last name" placeholder="'.__( 'Customer/Supplier code', 'doliconnect').'" class="form-control" required>
+  <label for="FormCustomer"><small><i class="fas fa-user-tie"></i> '.__( 'Customer', 'doliconnect').'</small></label><div class="input-group" id="FormCustomer">
+  <input type="text" aria-label="Name" placeholder="'.__( 'Name of customer', 'doliconnect').'" class="form-control" required>
+  <input type="text" aria-label="Last name" name="code_client" placeholder="'.__( 'Customer code', 'doliconnect').'" class="form-control" required>
 </div><div>';
 print '<div class="form-group">
   <label for="FormObject"><small><i class="fas fa-file-invoice"></i> '.__( 'Order or Invoice', 'doliconnect').'</small></label><div class="input-group" id="FormObject">
-  <input type="text" aria-label="Name" placeholder="'.__( 'Reference', 'doliconnect').'" class="form-control" required>
-  <input type="date" aria-label="Last name" placeholder="'.__( 'Date', 'doliconnect').'" class="form-control" required>
-  <input type="number" aria-label="Last name" placeholder="'.__( 'Amount', 'doliconnect').'" class="form-control" required>
+  <input type="text" aria-label="Reference" name="reference" placeholder="'.__( 'Reference', 'doliconnect').'" class="form-control" required>
+  <input type="date" aria-label="Date" name="date" placeholder="'.__( 'Date', 'doliconnect').'" class="form-control" required>
+  <input type="number" aria-label="Amount" name="amount" placeholder="'.__( 'Amount', 'doliconnect').'" class="form-control" required>
 </div><div>';
 print '</li>';
-print doliuserform( null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'linkthirdparty');
+//print doliuserform( null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'linkthirdparty');
 print "<div class='card-body'><button class='btn btn-danger btn-block' type='submit'><b>".__( 'Submit', 'doliconnect')."</b></button></div>";
 
-print "<input type='hidden' name='action' value='doliaddproduct_request'><script>";
+print "<script>";
 print 'jQuery(document).ready(function($) {
 	
-	jQuery(".linkuser-form").on("submit", function(e) {
-		e.preventDefault();
-    //jQuery("#DoliconnectLoadingModal").modal("show");
-		var $form = $(this);
- 
+	jQuery("#dolilinkuser-form").on("submit", function(e) {
+  jQuery("#DoliconnectLoadingModal").modal("show");
+	e.preventDefault();
+    
+	var $form = $(this);
+  //var url = "";  
+jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function (e) { 
 		$.post($form.attr("action"), $form.serialize(), function(response) {
-			alert("This is data returned from the server " + response.data);
+      if (response.success) {
+      //document.location = url;
+      if (document.getElementById("DoliLinkUserAlert")) {
+      document.getElementById("DoliLinkUserAlert").innerHTML = response.data;      
+      }
+      } else {
+      if (document.getElementById("DoliLinkUserAlert")) {
+      document.getElementById("DoliLinkUserAlert").innerHTML = response.data;      
+      }
+      }
+jQuery("#DoliconnectLoadingModal").modal("hide");
 
-      //jQuery("#DoliconnectLoadingModal").modal("toggle");
-
-		}, "json");
-	});
- 
+		}, "json");  
+  });
+});
 });';
 print "</script>";
 
@@ -442,7 +452,7 @@ print "</div>";
 //print '</div>';
 print '</div>';
 
-do_action( 'login_footer');
+//do_action( 'login_footer');
 
 } elseif ( isset($_GET["action"]) && $_GET["action"] == 'rpw' ) {
 
@@ -464,7 +474,79 @@ exit;
 exit;
 } else {
 
-print dolipasswordform($user, doliconnecturl('doliaccount'));
+if (doliconnector($user, 'fk_user') > 0){  
+$request = "/users/".doliconnector($user, 'fk_user');
+$doliuser = callDoliApi("GET", $request, null, dolidelay('thirdparty'));
+}
+
+print "<div id='DoliRpw2Alert' class='text-danger font-weight-bolder'></div><form id='dolirpw2-form' method='post' class='was-validated' action='".admin_url('admin-ajax.php')."'>";
+print "<input type='hidden' name='action' value='dolirpw_request'>";
+print "<input type='hidden' name='dolirpw-nonce' value='".wp_create_nonce( 'dolirpw-nonce')."'>";
+if (isset($_GET["key"]) && isset($_GET["login"])) {
+print "<input type='hidden' name='key' value='".esc_attr($_GET["key"])."'><input type='hidden' name='login' value='".esc_attr($_GET["login"])."'>";
+}
+
+print "<script>";
+print 'jQuery(document).ready(function($) {
+	
+	jQuery("#dolirpw2-form").on("submit", function(e) {
+  jQuery("#DoliconnectLoadingModal").modal("show");
+	e.preventDefault();
+    
+	var $form = $(this);
+  var url = "'.doliconnecturl('doliaccount').'";  
+jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function (e) { 
+		$.post($form.attr("action"), $form.serialize(), function(response) {
+      if (response.success) {
+      document.location = url;
+      } else {
+      if (document.getElementById("DoliRpw2Alert")) {
+      document.getElementById("DoliRpw2Alert").innerHTML = response.data;      
+      }
+      }
+jQuery("#DoliconnectLoadingModal").modal("hide");
+
+		}, "json");  
+  });
+});
+});';
+print "</script>";
+
+print "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
+if ( doliconnector($user, 'fk_user') > '0' ) {
+print "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".__( 'Your password will be synchronized with your Dolibarr account', 'doliconnect')."</b></li>";
+} elseif  ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $user->ID ) {
+print "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".__( 'Password cannot be modified in demo mode', 'doliconnect')."</b></li>";
+} 
+print '<li class="list-group-item list-group-item-light">';
+print '<div class="form-group"><div class="row"><div class="col-12"><label for="passwordHelpBlock2"><small>'.__( 'New password', 'doliconnect').'</small></label>
+<div class="input-group mb-2"><div class="input-group-prepend"><div class="input-group-text"><i class="fas fa-key fa-fw"></i></div></div><input type="password" id="pwd1" name="pwd1" class="form-control" aria-describedby="passwordHelpBlock2" autocomplete="off" placeholder="'.__( 'Enter your new password', 'doliconnect').'" ';
+if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $user->ID ) {
+print ' readonly';
+} else {
+print ' required';
+}
+print '></div><small id="passwordHelpBlock3" class="form-text text-justify text-muted">
+'.__( 'Your password must be between 8 and 20 characters, including at least 1 digit, 1 letter, 1 uppercase.', 'doliconnect').'
+</small><div class="invalid-feedback">'.__( 'This field is required.', 'doliconnect').'</div></div></div><div class="row"><div class="col-12"><label for="passwordHelpBlock3"><small>'.__( 'New password', 'doliconnect').'</small></label>';
+print '<div class="input-group mb-2"><div class="input-group-prepend"><div class="input-group-text"><i class="fas fa-key fa-fw"></i></div></div><input type="password" id="pwd2" name="pwd2"  class="form-control" aria-describedby="passwordHelpBlock3" autocomplete="off" placeholder="'.__( 'Confirm your new password', 'doliconnect').'" ';
+if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $user->ID ) {
+print ' readonly';
+} else {
+print ' required';
+}
+print '></div></div></div></li>';
+print "</ul><div class='card-body'><button class='btn btn-danger btn-block' type='submit' ";
+if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $user->ID ) {
+print ' disabled';
+}
+print ">".__( 'Update', 'doliconnect')."</button></div><div class='card-footer text-muted'>";
+print "<small><div class='float-left'>";
+if ( isset($request) ) print dolirefresh($request, null, dolidelay('thirdparty'));
+print "</div><div class='float-right'>";
+print dolihelp('ISSUE');
+print "</div></small>";
+print '</div></div>';
 
 }}
 
