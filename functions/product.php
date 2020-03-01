@@ -272,8 +272,7 @@ $button .= 'jQuery(document).ready(function($) {
     
 jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function (e) { 
 		$.post($form.attr("action"), $form.serialize(), function(response) {
-
-			//alert("This is data returned from the server " + response.data);
+      if (response.success) {
       if (document.getElementById("DoliHeaderCarItems")) {
       document.getElementById("DoliHeaderCarItems").innerHTML = response.data;
       }
@@ -283,7 +282,7 @@ jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function (e) {
       if (document.getElementById("DoliWidgetCarItems")) {
       document.getElementById("DoliWidgetCarItems").innerHTML = response.data;      
       }
-
+      }
 jQuery("#DoliconnectLoadingModal").modal("hide");
 
 		}, "json");  
