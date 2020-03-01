@@ -507,9 +507,9 @@ $doliuser = callDoliApi("GET", $request , null, dolidelay('thirdparty'));
 print "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".__( 'Your password will be synchronized with your Dolibarr account', 'doliconnect')."</b></li>";
 } 
 print "<li class='list-group-item'><h5 class='card-title'>".__( 'Change your password', 'doliconnect')."</h5>
-<form class='was-validated' id='doliconnect-rpwform' action='' method='post'><input type='hidden' name='submitted' id='submitted' value='true' />";
+<form class='was-validated' id='dolirpw-form' action='' method='post'><input type='hidden' name='submitted' id='submitted' value='true' />";
 
-print doliloaderscript('doliconnect-rpwform'); 
+print doliloaderscript('dolirpw-form'); 
 
 print "<div class='form-group'><label for='pwd1'><small>".__( 'New password', 'doliconnect')."</small></label>
 <div class='input-group mb-2 mr-sm-2'><div class='input-group-prepend'>
