@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2020-03-01 02:08+0100\n"
-"PO-Revision-Date: 2020-03-01 02:09+0100\n"
+"POT-Creation-Date: 2020-03-01 02:09+0100\n"
+"PO-Revision-Date: 2020-03-01 02:10+0100\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_FR\n"
@@ -1298,10 +1298,14 @@ msgstr ""
 "Impossible d'initier la demande de confirmation. S'il vous plaît contacter "
 "l'administrateur."
 
-#: functions/data-request.php:75 functions/data-request.php:104
-#: functions/data-request.php:147 functions/data-request.php:182
+#: functions/data-request.php:75
 msgid "security error"
 msgstr "erreur de sécurité"
+
+#: functions/data-request.php:104 functions/data-request.php:147
+#: functions/data-request.php:182
+msgid "A security error occured"
+msgstr "Une erreur de sécurité s’est produite"
 
 #: functions/data-request.php:128
 msgid "Reset password is not permitted"

@@ -101,7 +101,7 @@ $thirparty = callDoliApi("PUT", "/thirdparties/".doliconnector($current_user, 'f
 		
 wp_send_json_success('success');
 }	else {
-wp_send_json_error( __( 'security error', 'doliconnect')); 
+wp_send_json_error( __( 'A security error occured', 'doliconnect')); 
 }
 }
 
@@ -144,7 +144,7 @@ wp_send_json_error( __( 'A problem occurred. Please retry later!', 'doliconnect'
 wp_send_json_error( __( 'No account seems to be linked to this email address', 'doliconnect'));
 }
 }	else {
-wp_send_json_error( __( 'security error', 'doliconnect')); 
+wp_send_json_error( __( 'A security error occured', 'doliconnect')); 
 }
 }
 
@@ -179,6 +179,6 @@ wp_send_json_error(__( 'Your password must be between 8 and 20 characters, inclu
 }
 
 }	else {
-wp_send_json_error( __( 'security error', 'doliconnect')); 
+wp_send_json_error( __( 'A security error occured', 'doliconnect')); 
 }
 }
