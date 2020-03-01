@@ -531,14 +531,6 @@ catch(\Exception $e) {
 }
 } elseif ( isset($_GET["action"]) && $_GET["action"] == 'fpw' ) { 
 
-if ( isset($emailSent) && $emailSent == true ) { 
-print dolialert('success', __( 'A password reset link was sent to you by email. Please check your spam folder if you don\'t find it.', 'doliconnect'));
-} elseif ( isset($hasError) || isset($emailError) ) { 
-print dolialert('danger', $emailError);
-} elseif ( isset($emailSent) && $emailSent != true ) {
-print dolialert('warning', __( 'A problem occurred. Please retry later!', 'doliconnect'));
-}
-
 print "<div id='DoliFpwAlert' class='text-danger font-weight-bolder'></div><form id='dolifpw-form' method='post' class='was-validated' action='".admin_url('admin-ajax.php')."'>";
 print "<input type='hidden' name='action' value='dolifpw_request'>";
 print "<input type='hidden' name='dolifpw-nonce' value='".wp_create_nonce( 'dolifpw-nonce')."'>";

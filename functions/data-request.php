@@ -71,8 +71,8 @@ if ( wp_verify_nonce( trim($_POST['product-add-nonce']), 'product-add-nonce-'.tr
 $result = doliaddtocart(trim($_POST['product-add-id']), trim($_POST['product-add-qty']), trim($_POST['product-add-price']), trim($_POST['product-add-remise_percent']), isset($_POST['product-add-timestamp_start'])?trim($_POST['product-add-timestamp_start']):null, isset($_POST['product-add-timestamp_end'])?trim($_POST['product-add-timestamp_end']):null);
 wp_send_json_success( $result ); 
 
-}	 else {
-wp_send_json_error('security error', 'doliconnect'); 
+}	else {
+wp_send_json_error( __( 'security error', 'doliconnect')); 
 }
 }
 
@@ -101,7 +101,7 @@ $thirparty = callDoliApi("PUT", "/thirdparties/".doliconnector($current_user, 'f
 		
 wp_send_json_success('success');
 }	else {
-wp_send_json_error('security error', 'doliconnect'); 
+wp_send_json_error( __( 'security error', 'doliconnect')); 
 }
 }
 
@@ -109,7 +109,8 @@ add_action('wp_ajax_dolifpw_request', 'dolifpw_request');
 add_action('wp_ajax_nopriv_dolifpw_request', 'dolifpw_request');
 
 function dolifpw_request(){
-if ( wp_verify_nonce( trim($_POST['dolifpw-nonce']), 'dolifpw-nonce') && isset($_POST['user_email']) && email_exists(sanitize_email($_POST['user_email'])) ) {
+if ( wp_verify_nonce( trim($_POST['dolifpw-nonce']), 'dolifpw-nonce') ) { 
+if (isset($_POST['user_email']) && email_exists(sanitize_email($_POST['user_email'])) ) {
 $email = sanitize_email($_POST['user_email']);
 $emailTo = get_option('tz_email');
 
@@ -124,21 +125,26 @@ $arr_params = array( 'action' => 'rpw', 'key' => $key, 'login' => $user->user_lo
 $url = esc_url( add_query_arg( $arr_params, doliconnecturl('doliaccount')) );
 
 if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $user->ID ) {
-      $emailError = __( 'Reset password is not permitted', 'doliconnect');
-      wp_send_json_success('error'); 
+    $emailError = __( 'Reset password is not permitted', 'doliconnect');
+    wp_send_json_error($emailError); 
 } elseif ( !empty($key) ) { 
-			$sitename = get_option('blogname');
-      $siteurl = get_option('siteurl');
-      $subject = "[$sitename] ".__( 'Reset Password', 'doliconnect');
-      $body = __( 'A request to change your password has been made. You can change it via the single-use link below:', 'doliconnect')."<br><br><a href='".$url."'>".$url."</a><br><br>".__( 'If you have not made this request, please ignore this email.', 'doliconnect')."<br><br>".sprintf(__('Your %s\'s team', 'doliconnect'), $sitename)."<br>$siteurl";				
-$headers = array('Content-Type: text/html; charset=UTF-8');
-$mail =  wp_mail($email, $subject, $body, $headers);
+		$sitename = get_option('blogname');
+    $siteurl = get_option('siteurl');
+    $subject = "[$sitename] ".__( 'Reset Password', 'doliconnect');
+    $body = __( 'A request to change your password has been made. You can change it via the single-use link below:', 'doliconnect')."<br><br><a href='".$url."'>".$url."</a><br><br>".__( 'If you have not made this request, please ignore this email.', 'doliconnect')."<br><br>".sprintf(__('Your %s\'s team', 'doliconnect'), $sitename)."<br>$siteurl";				
+    $headers = array('Content-Type: text/html; charset=UTF-8');
+    $mail =  wp_mail($email, $subject, $body, $headers);
 
-if( $mail ) { wp_send_json_success('success');  } else { wp_send_json_error('error');  }		
+if( $mail ) {
+wp_send_json_success( __( 'A password reset link was sent to you by email. Please check your spam folder if you don\'t find it.', 'doliconnect'));
+} else { 
+wp_send_json_error( __( 'A problem occurred. Please retry later!', 'doliconnect'));  }		
 }
-
+} else {
+wp_send_json_error( __( 'No account seems to be linked to this email address', 'doliconnect'));
+}
 }	else {
-wp_send_json_error('security error', 'doliconnect'); 
+wp_send_json_error( __( 'security error', 'doliconnect')); 
 }
 }
 
@@ -173,6 +179,6 @@ wp_send_json_error(__( 'Your password must be between 8 and 20 characters, inclu
 }
 
 }	else {
-wp_send_json_error('security error', 'doliconnect'); 
+wp_send_json_error( __( 'security error', 'doliconnect')); 
 }
 }
