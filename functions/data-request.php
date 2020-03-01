@@ -161,7 +161,11 @@ $pwd0 = sanitize_text_field($_POST["pwd0"]);
 $pwd1 = sanitize_text_field($_POST["pwd1"]);
 $pwd2 = sanitize_text_field($_POST["pwd2"]);
 
-if ( (isset($pwd0) && !empty($pwd0) && wp_check_password( $pwd0, $current_user->user_pass, $current_user->ID ) ) && ($pwd1 == $pwd2) && (preg_match('/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,20}/', $pwd1)) ) {
+if (!$current_user) {
+$current_user = check_password_reset_key( esc_attr($_POST["key"]), esc_attr($_POST["login"]) );
+}
+
+if ( ((isset($pwd0) && !empty($pwd0) && is_user_logged_in() && wp_check_password( $pwd0, $current_user->user_pass, $current_user->ID )) || (!is_user_logged_in()) ) && ($pwd1 == $pwd2) && (preg_match('/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,20}/', $pwd1)) ) {
 wp_set_password($pwd1, $current_user->ID);
 
 if (doliconnector($current_user, 'fk_user') > '0'){
@@ -172,14 +176,15 @@ $doliuser = callDoliApi("PUT", "/users/".doliconnector($current_user, 'fk_user')
 }
 
 wp_send_json_success('success'); 
-} elseif (isset( $current_user->ID ) && ! wp_check_password( $pwd0, $current_user->user_pass, $current_user->ID ) ) {
+} elseif (is_user_logged_in() && isset( $current_user->ID ) && ! wp_check_password( $pwd0, $current_user->user_pass, $current_user->ID ) ) {
 wp_send_json_error( __( 'Your actual password is incorrect', 'doliconnect'));
 } elseif ( $pwd1 != $_POST["pwd2"] ) {
 wp_send_json_error( __( 'The new passwords entered are different', 'doliconnect'));
 } elseif ( !preg_match("#.*^(?=.{8,20})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*$#", $pwd1) ) {
 wp_send_json_error( __( 'Your password must be between 8 and 20 characters, including at least 1 digit, 1 letter, 1 uppercase.', 'doliconnect'));
+}	else {
+wp_send_json_error( __( 'A security error occured', 'doliconnect')); 
 }
-
 }	else {
 wp_send_json_error( __( 'A security error occured', 'doliconnect')); 
 }

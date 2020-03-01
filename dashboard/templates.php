@@ -474,31 +474,6 @@ exit;
 exit;
 } else {
 $dolibarr = callDoliApi("GET", "/doliconnector/".$user->ID, null, 0);
-if (isset($_POST["case"]) && $_POST["case"] == 'updatepwd'){
-$pwd = sanitize_text_field($_POST["pwd1"]);                                   
-if ( ($_POST["pwd1"] == $_POST["pwd2"]) && (preg_match('/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,20}/', $pwd))) {  //"#.*^(?=.{8,20})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*$#"
-
-wp_set_password($pwd, $user->ID);
-
-if ( $dolibarr->fk_user > '0' ) {
-$data = [
-    'pass' => $pwd
-	];
-$doliuser = callDoliApi("PUT", "/users/".$dolibarr->fk_user, $data, 0);
-}
-
-$wpdb->update( $wpdb->users, array( 'user_activation_key' => '' ), array( 'user_login' => $user->user_login ) );
-$arr_params = array( 'action' => 'lostpassword', 'success' => true);  
-wp_redirect(esc_url( add_query_arg( $arr_params, wp_login_url( get_permalink() )) ));
-exit;
-}
-elseif ( $pwd != $_POST["pwd2"] ) {
-print dolialert('warning', __( 'The new passwords entered are different', 'doliconnect'));
-}
-elseif (!preg_match("#.*^(?=.{8,20})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*$#", $pwd)){
-print dolialert('danger', __( 'Your password must be between 8 and 20 characters, including at least 1 digit, 1 letter, 1 uppercase.', 'doliconnect'));
-}
-}
 
 print "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
 if ( isset($dolibarr->fk_user) && $dolibarr->fk_user > '0'){  
@@ -506,10 +481,40 @@ $request = "/users/".$dolibarr->fk_user;
 $doliuser = callDoliApi("GET", $request , null, dolidelay('thirdparty'));
 print "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".__( 'Your password will be synchronized with your Dolibarr account', 'doliconnect')."</b></li>";
 } 
-print "<li class='list-group-item'><h5 class='card-title'>".__( 'Change your password', 'doliconnect')."</h5>
-<form class='was-validated' id='dolirpw-form' action='' method='post'><input type='hidden' name='submitted' id='submitted' value='true' />";
+print "<li class='list-group-item'><h5 class='card-title'>".__( 'Change your password', 'doliconnect')."</h5>";
 
-print doliloaderscript('dolirpw-form'); 
+print "<div id='DoliRpwAlert' class='text-danger font-weight-bolder'></div><form id='dolirpw-form' method='post' class='was-validated' action='".admin_url('admin-ajax.php')."'>";
+print "<input type='hidden' name='action' value='dolirpw_request'>";
+print "<input type='hidden' name='dolirpw-nonce' value='".wp_create_nonce( 'dolirpw-nonce')."'>";
+if (isset($_GET["key"]) && isset($_GET["login"])) {
+print "<input type='hidden' name='key' value='".esc_attr($_GET["key"])."'><input type='hidden' name='login' value='".esc_attr($_GET["login"])."'>";
+}
+
+print "<script>";
+print 'jQuery(document).ready(function($) {
+	
+	jQuery("#dolirpw-form").on("submit", function(e) {
+  jQuery("#DoliconnectLoadingModal").modal("show");
+	e.preventDefault();
+    
+	var $form = $(this);
+  var url = "'.doliconnecturl('doliaccount').'";  
+jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function (e) { 
+		$.post($form.attr("action"), $form.serialize(), function(response) {
+      if (response.success) {
+      document.location = url;
+      } else {
+      if (document.getElementById("DoliRpwAlert")) {
+      document.getElementById("DoliRpwAlert").innerHTML = response.data;      
+      }
+      }
+jQuery("#DoliconnectLoadingModal").modal("hide");
+
+		}, "json");  
+  });
+});
+});';
+print "</script>";
 
 print "<div class='form-group'><label for='pwd1'><small>".__( 'New password', 'doliconnect')."</small></label>
 <div class='input-group mb-2 mr-sm-2'><div class='input-group-prepend'>
