@@ -49,7 +49,9 @@ $doliuser = callDoliApi("GET", $request, null, dolidelay('thirdparty'));
 print "<div id='DoliRpwAlert' class='text-danger font-weight-bolder'></div><form id='dolirpw-form' method='post' class='was-validated' action='".admin_url('admin-ajax.php')."'>";
 print "<input type='hidden' name='action' value='dolirpw_request'>";
 print "<input type='hidden' name='dolirpw-nonce' value='".wp_create_nonce( 'dolirpw-nonce')."'>";
-if (isset($_GET["key"]) && isset($_GET["login"])) print "<input type='hidden' name='key' value='".esc_attr($_GET["key"])."'><input type='hidden' name='login' value='".esc_attr($_GET["login"])."'>";
+if (isset($_GET["key"]) && isset($_GET["login"])) {
+print "<input type='hidden' name='key' value='".esc_attr($_GET["key"])."'><input type='hidden' name='login' value='".esc_attr($_GET["login"])."'>";
+}
 
 print "<script>";
 print 'jQuery(document).ready(function($) {
@@ -84,7 +86,7 @@ print "<li class='list-group-item list-group-item-info'><i class='fas fa-info-ci
 print "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".__( 'Password cannot be modified in demo mode', 'doliconnect')."</b></li>";
 } 
 print '<li class="list-group-item list-group-item-light">';
-if ($user && is_user_logged_in()) {
+if (is_user_logged_in() && $user) {
 print '<div class="form-group"><div class="row"><div class="col-12"><label for="passwordHelpBlock1"><small>'.__( 'Confirm your current password', 'doliconnect').'</small></label>
 <div class="input-group mb-2"><div class="input-group-prepend"><div class="input-group-text"><i class="fas fa-key fa-fw"></i></div></div><input type="password" id="pwd0" name="pwd0" class="form-control" aria-describedby="passwordHelpBlock1" autocomplete="off" placeholder="'.__( 'Confirm your current password', 'doliconnect').'" ';
 if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $user->ID ) {
