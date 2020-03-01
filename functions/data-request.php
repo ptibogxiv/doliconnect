@@ -154,15 +154,17 @@ add_action('wp_ajax_dolirpw_request', 'dolirpw_request');
 add_action('wp_ajax_nopriv_dolirpw_request', 'dolirpw_request');
 
 function dolirpw_request(){
-global $current_user;
+global $wpdb; 
 
 if ( wp_verify_nonce( trim($_POST['dolirpw-nonce']), 'dolirpw-nonce')) {
 $pwd0 = sanitize_text_field($_POST["pwd0"]);
 $pwd1 = sanitize_text_field($_POST["pwd1"]);
 $pwd2 = sanitize_text_field($_POST["pwd2"]);
 
-if (!isset( $current_user->ID )) {
+if (!is_user_logged_in()) {
 $current_user = check_password_reset_key( esc_attr($_POST["key"]), esc_attr($_POST["login"]) );
+} else {
+global $current_user;
 }
 
 if ( ((isset($pwd0) && !empty($pwd0) && is_user_logged_in() && wp_check_password( $pwd0, $current_user->user_pass, $current_user->ID )) || (!is_user_logged_in()) ) && ($pwd1 == $pwd2) && (preg_match('/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,20}/', $pwd1)) ) {
@@ -173,6 +175,10 @@ $data = [
     'pass' => $pwd1
 	];
 $doliuser = callDoliApi("PUT", "/users/".doliconnector($current_user, 'fk_user'), $data, 0);
+}
+
+if (!is_user_logged_in()) {
+$wpdb->update( $wpdb->users, array( 'user_activation_key' => '' ), array( 'user_login' => $user->user_login ) );
 }
 
 wp_send_json_success('success'); 
