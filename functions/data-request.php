@@ -125,7 +125,7 @@ $arr_params = array( 'action' => 'rpw', 'key' => $key, 'login' => $user->user_lo
 $url = esc_url( add_query_arg( $arr_params, doliconnecturl('doliaccount')) );
 
 if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $user->ID ) {
-    $emailError = __( 'Reset password is not permitted', 'doliconnect');
+    $emailError = __( 'Reset password is not permitted for this account!', 'doliconnect');
     wp_send_json_error($emailError); 
 } elseif ( !empty($key) ) { 
 		$sitename = get_option('blogname');
