@@ -459,7 +459,7 @@ print '</div>';
 if (!$_GET["login"] || !$_GET["key"]) {
 wp_redirect(wp_login_url( get_permalink() ));
 exit;
-} else { 
+} else {   
 $user = check_password_reset_key( esc_attr($_GET["key"]), esc_attr($_GET["login"]) );
 if ( ! $user || is_wp_error( $user ) ) {
 if ( $user && $user->get_error_code() === 'expired_key' ){
@@ -473,84 +473,82 @@ exit;
 }
 exit;
 } else {
+$dolibarr = callDoliApi("GET", "/doliconnector/".$user->ID, null, 0);
+if (isset($_POST["case"]) && $_POST["case"] == 'updatepwd'){
+$pwd = sanitize_text_field($_POST["pwd1"]);                                   
+if ( ($_POST["pwd1"] == $_POST["pwd2"]) && (preg_match('/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,20}/', $pwd))) {  //"#.*^(?=.{8,20})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*$#"
 
-if (doliconnector($user, 'fk_user') > 0){  
-$request = "/users/".doliconnector($user, 'fk_user');
-$doliuser = callDoliApi("GET", $request, null, dolidelay('thirdparty'));
+wp_set_password($pwd, $user->ID);
+
+if ( $dolibarr->fk_user > '0' ) {
+$data = [
+    'pass' => $pwd
+	];
+$doliuser = callDoliApi("PUT", "/users/".$dolibarr->fk_user, $data, 0);
 }
 
-print "<div id='DoliRpw2Alert' class='text-danger font-weight-bolder'></div><form id='dolirpw2-form' method='post' class='was-validated' action='".admin_url('admin-ajax.php')."'>";
-print "<input type='hidden' name='action' value='dolirpw_request'>";
-print "<input type='hidden' name='dolirpw-nonce' value='".wp_create_nonce( 'dolirpw-nonce')."'>";
-if (isset($_GET["key"]) && isset($_GET["login"])) {
-print "<input type='hidden' name='key' value='".esc_attr($_GET["key"])."'><input type='hidden' name='login' value='".esc_attr($_GET["login"])."'>";
+$wpdb->update( $wpdb->users, array( 'user_activation_key' => '' ), array( 'user_login' => $user->user_login ) );
+$arr_params = array( 'action' => 'lostpassword', 'success' => true);  
+wp_redirect(esc_url( add_query_arg( $arr_params, wp_login_url( get_permalink() )) ));
+exit;
 }
-
-print "<script>";
-print 'jQuery(document).ready(function($) {
-	
-	jQuery("#dolirpw2-form").on("submit", function(e) {
-  jQuery("#DoliconnectLoadingModal").modal("show");
-	e.preventDefault();
-    
-	var $form = $(this);
-  var url = "'.doliconnecturl('doliaccount').'";  
-jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function (e) { 
-		$.post($form.attr("action"), $form.serialize(), function(response) {
-      if (response.success) {
-      document.location = url;
-      } else {
-      if (document.getElementById("DoliRpw2Alert")) {
-      document.getElementById("DoliRpw2Alert").innerHTML = response.data;      
-      }
-      }
-jQuery("#DoliconnectLoadingModal").modal("hide");
-
-		}, "json");  
-  });
-});
-});';
-print "</script>";
+elseif ( $pwd != $_POST["pwd2"] ) {
+print dolialert('warning', __( 'The new passwords entered are different', 'doliconnect'));
+}
+elseif (!preg_match("#.*^(?=.{8,20})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*$#", $pwd)){
+print dolialert('danger', __( 'Your password must be between 8 and 20 characters, including at least 1 digit, 1 letter, 1 uppercase.', 'doliconnect'));
+}
+}
 
 print "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
-if ( doliconnector($user, 'fk_user') > '0' ) {
+if ( isset($dolibarr->fk_user) && $dolibarr->fk_user > '0'){  
+$request = "/users/".$dolibarr->fk_user;
+$doliuser = callDoliApi("GET", $request , null, dolidelay('thirdparty'));
 print "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".__( 'Your password will be synchronized with your Dolibarr account', 'doliconnect')."</b></li>";
-} elseif  ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $user->ID ) {
-print "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".__( 'Password cannot be modified in demo mode', 'doliconnect')."</b></li>";
 } 
-print '<li class="list-group-item list-group-item-light">';
-print '<div class="form-group"><div class="row"><div class="col-12"><label for="passwordHelpBlock2"><small>'.__( 'New password', 'doliconnect').'</small></label>
-<div class="input-group mb-2"><div class="input-group-prepend"><div class="input-group-text"><i class="fas fa-key fa-fw"></i></div></div><input type="password" id="pwd1" name="pwd1" class="form-control" aria-describedby="passwordHelpBlock2" autocomplete="off" placeholder="'.__( 'Enter your new password', 'doliconnect').'" ';
+print "<li class='list-group-item'><h5 class='card-title'>".__( 'Change your password', 'doliconnect')."</h5>
+<form class='was-validated' id='doliconnect-rpwform' action='' method='post'><input type='hidden' name='submitted' id='submitted' value='true' />";
+
+print doliloaderscript('doliconnect-rpwform'); 
+
+print "<div class='form-group'><label for='pwd1'><small>".__( 'New password', 'doliconnect')."</small></label>
+<div class='input-group mb-2 mr-sm-2'><div class='input-group-prepend'>
+<div class='input-group-text'><i class='fas fa-key fa-fw'></i></div></div>
+<input class='form-control' id='pwd1' type='password' name='pwd1' value ='' placeholder='".__( 'Enter your new password', 'doliconnect')."' ";
 if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $user->ID ) {
 print ' readonly';
 } else {
 print ' required';
 }
-print '></div><small id="passwordHelpBlock3" class="form-text text-justify text-muted">
-'.__( 'Your password must be between 8 and 20 characters, including at least 1 digit, 1 letter, 1 uppercase.', 'doliconnect').'
-</small><div class="invalid-feedback">'.__( 'This field is required.', 'doliconnect').'</div></div></div><div class="row"><div class="col-12"><label for="passwordHelpBlock3"><small>'.__( 'New password', 'doliconnect').'</small></label>';
-print '<div class="input-group mb-2"><div class="input-group-prepend"><div class="input-group-text"><i class="fas fa-key fa-fw"></i></div></div><input type="password" id="pwd2" name="pwd2"  class="form-control" aria-describedby="passwordHelpBlock3" autocomplete="off" placeholder="'.__( 'Confirm your new password', 'doliconnect').'" ';
+print "></div>
+<small id='pwd1' class='form-text text-justify text-muted'>
+".__( 'Your password must be between 8 and 20 characters, including at least 1 digit, 1 letter, 1 uppercase.', 'doliconnect')."
+</small>
+<div class='form-group'><label for='pwd2'></label>
+<div class='input-group mb-2 mr-sm-2'><div class='input-group-prepend'>
+<div class='input-group-text'><i class='fas fa-key fa-fw'></i></div></div>
+<input class='form-control' id='pwd2' type='password' name='pwd2' value ='' placeholder='".__( 'Confirm your new password', 'doliconnect')."' ";
 if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $user->ID ) {
 print ' readonly';
 } else {
 print ' required';
 }
-print '></div></div></div></li>';
-print "</ul><div class='card-body'><button class='btn btn-danger btn-block' type='submit' ";
+print "></div>
+</div></div></li></ul><div class='card-body'><input type='hidden' name='case' value ='updatepwd'><button class='btn btn-danger btn-block' type='submit' ";
 if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $user->ID ) {
 print ' disabled';
 }
-print ">".__( 'Update', 'doliconnect')."</button></div><div class='card-footer text-muted'>";
+print "><b>".__( 'Update', 'doliconnect')."</b></button></form></div>";
+print "<div class='card-footer text-muted'>";
 print "<small><div class='float-left'>";
 if ( isset($request) ) print dolirefresh($request, null, dolidelay('thirdparty'));
 print "</div><div class='float-right'>";
 print dolihelp('ISSUE');
 print "</div></small>";
-print '</div></div>';
 
 }}
 
-} elseif ( isset($_GET["provider"]) && $_GET["provider"] != null ) { 
+} elseif ( isset($_GET["provider"]) && $_GET["provider"] != null ) {
 include( plugin_dir_path( __DIR__ ) . 'includes/hybridauth/src/autoload.php');
 include( plugin_dir_path( __DIR__ ) . 'includes/hybridauth/src/config.php');
 try {
