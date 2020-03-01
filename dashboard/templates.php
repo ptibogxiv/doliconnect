@@ -347,6 +347,7 @@ print "<form class='dolinewuser-form' method='post' action='".admin_url('admin-a
 print doliuserform( null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'thirdparty');
 print "<div class='card-body'><button class='btn btn-danger btn-block' type='submit'><b>".__( 'Submit', 'doliconnect')."</b></button></div>";
 
+print "<script>";
 print 'jQuery(document).ready(function($) {
 	
 	jQuery(".dolinewuser-form").on("submit", function(e) {
