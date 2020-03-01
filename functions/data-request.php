@@ -72,7 +72,7 @@ $result = doliaddtocart(trim($_POST['product-add-id']), trim($_POST['product-add
 wp_send_json_success( $result ); 
 
 }	else {
-wp_send_json_error( __( 'security error', 'doliconnect')); 
+wp_send_json_error( __( 'A security error occured', 'doliconnect')); 
 }
 }
 
@@ -179,6 +179,24 @@ wp_send_json_error( __( 'The new passwords entered are different', 'doliconnect'
 } elseif ( !preg_match("#.*^(?=.{8,20})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*$#", $pwd1) ) {
 wp_send_json_error( __( 'Your password must be between 8 and 20 characters, including at least 1 digit, 1 letter, 1 uppercase.', 'doliconnect'));
 }
+
+}	else {
+wp_send_json_error( __( 'A security error occured', 'doliconnect')); 
+}
+}
+
+
+
+add_action('wp_ajax_dolisignup_request', 'dolisignup_request');
+add_action('wp_ajax_nopriv_dolisignup_request', 'dolisignup_request');
+
+function dolisignup_request(){
+global $current_user;
+		
+if ( wp_verify_nonce( trim($_POST['product-add-nonce']), 'product-add-nonce-'.trim($_POST['product-add-id']) ) ) {
+
+$result = doliaddtocart(trim($_POST['product-add-id']), trim($_POST['product-add-qty']), trim($_POST['product-add-price']), trim($_POST['product-add-remise_percent']), isset($_POST['product-add-timestamp_start'])?trim($_POST['product-add-timestamp_start']):null, isset($_POST['product-add-timestamp_end'])?trim($_POST['product-add-timestamp_end']):null);
+wp_send_json_success( $result ); 
 
 }	else {
 wp_send_json_error( __( 'A security error occured', 'doliconnect')); 
