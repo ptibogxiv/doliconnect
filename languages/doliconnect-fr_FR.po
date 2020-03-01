@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2020-03-01 02:09+0100\n"
-"PO-Revision-Date: 2020-03-01 02:10+0100\n"
+"POT-Creation-Date: 2020-03-01 02:10+0100\n"
+"PO-Revision-Date: 2020-03-01 02:11+0100\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_FR\n"
@@ -1308,8 +1308,8 @@ msgid "A security error occured"
 msgstr "Une erreur de sécurité s’est produite"
 
 #: functions/data-request.php:128
-msgid "Reset password is not permitted"
-msgstr "Réinitialiser le mot de passe n’est pas autorisé"
+msgid "Reset password is not permitted for this account!"
+msgstr "Réinitialiser le mot de passe de ce compte n'est pas autorisé!"
 
 #: functions/data-request.php:133
 msgid "Reset Password"

@@ -125,8 +125,7 @@ $arr_params = array( 'action' => 'rpw', 'key' => $key, 'login' => $user->user_lo
 $url = esc_url( add_query_arg( $arr_params, doliconnecturl('doliaccount')) );
 
 if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $user->ID ) {
-    $emailError = __( 'Reset password is not permitted for this account!', 'doliconnect');
-    wp_send_json_error($emailError); 
+    wp_send_json_error( __( 'Reset password is not permitted for this account!', 'doliconnect')); 
 } elseif ( !empty($key) ) { 
 		$sitename = get_option('blogname');
     $siteurl = get_option('siteurl');
@@ -134,11 +133,11 @@ if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $user-
     $body = __( 'A request to change your password has been made. You can change it via the single-use link below:', 'doliconnect')."<br><br><a href='".$url."'>".$url."</a><br><br>".__( 'If you have not made this request, please ignore this email.', 'doliconnect')."<br><br>".sprintf(__('Your %s\'s team', 'doliconnect'), $sitename)."<br>$siteurl";				
     $headers = array('Content-Type: text/html; charset=UTF-8');
     $mail =  wp_mail($email, $subject, $body, $headers);
-
+}
 if( $mail ) {
 wp_send_json_success( __( 'A password reset link was sent to you by email. Please check your spam folder if you don\'t find it.', 'doliconnect'));
 } else { 
-wp_send_json_error( __( 'A problem occurred. Please retry later!', 'doliconnect'));  }		
+wp_send_json_error( __( 'A problem occurred. Please retry later!', 'doliconnect'));
 }
 } else {
 wp_send_json_error( __( 'No account seems to be linked to this email address', 'doliconnect'));
@@ -171,11 +170,11 @@ $doliuser = callDoliApi("PUT", "/users/".doliconnector($current_user, 'fk_user')
 
 wp_send_json_success('success'); 
 } elseif (isset( $current_user->ID ) && ! wp_check_password( $pwd0, $current_user->user_pass, $current_user->ID ) ) {
-wp_send_json_error(__( 'Your actual password is incorrect', 'doliconnect'));
+wp_send_json_error( __( 'Your actual password is incorrect', 'doliconnect'));
 } elseif ( $pwd1 != $_POST["pwd2"] ) {
-wp_send_json_error(__( 'The new passwords entered are different', 'doliconnect'));
+wp_send_json_error( __( 'The new passwords entered are different', 'doliconnect'));
 } elseif ( !preg_match("#.*^(?=.{8,20})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*$#", $pwd1) ) {
-wp_send_json_error(__( 'Your password must be between 8 and 20 characters, including at least 1 digit, 1 letter, 1 uppercase.', 'doliconnect'));
+wp_send_json_error( __( 'Your password must be between 8 and 20 characters, including at least 1 digit, 1 letter, 1 uppercase.', 'doliconnect'));
 }
 
 }	else {
