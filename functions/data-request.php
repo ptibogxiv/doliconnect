@@ -71,11 +71,10 @@ if ( wp_verify_nonce( trim($_POST['product-add-nonce']), 'product-add-nonce-'.tr
 $result = doliaddtocart(trim($_POST['product-add-id']), trim($_POST['product-add-qty']), trim($_POST['product-add-price']), trim($_POST['product-add-remise_percent']), isset($_POST['product-add-timestamp_start'])?trim($_POST['product-add-timestamp_start']):null, isset($_POST['product-add-timestamp_end'])?trim($_POST['product-add-timestamp_end']):null);
 wp_send_json_success( $result ); 
 
-} else {
-wp_send_json_error('security error'); 
+}	 else {
+wp_send_json_error('security error', 'doliconnect'); 
 }
-}  
-
+}
 
 add_action('wp_ajax_dolisettings_request', 'dolisettings_request');
 add_action('wp_ajax_nopriv_dolisettings_request', 'dolisettings_request');
@@ -101,8 +100,9 @@ $thirparty = callDoliApi("PUT", "/thirdparties/".doliconnector($current_user, 'f
 }
 		
 wp_send_json_success('success');
-} else wp_send_json_error('security error'); 
- 
+}	else {
+wp_send_json_error('security error', 'doliconnect'); 
+}
 }
 
 add_action('wp_ajax_dolifpw_request', 'dolifpw_request');
@@ -137,8 +137,8 @@ $mail =  wp_mail($email, $subject, $body, $headers);
 if( $mail ) { wp_send_json_success('success');  } else { wp_send_json_error('error');  }		
 }
 
-}	 else {
-wp_send_json_error('security error'); 
+}	else {
+wp_send_json_error('security error', 'doliconnect'); 
 }
 }
 
@@ -172,7 +172,7 @@ wp_send_json_error(__( 'The new passwords entered are different', 'doliconnect')
 wp_send_json_error(__( 'Your password must be between 8 and 20 characters, including at least 1 digit, 1 letter, 1 uppercase.', 'doliconnect'));
 }
 
-}	 else {
+}	else {
 wp_send_json_error('security error', 'doliconnect'); 
 }
 }
