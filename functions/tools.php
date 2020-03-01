@@ -59,14 +59,16 @@ print 'jQuery(document).ready(function($) {
 	e.preventDefault();
     
 	var $form = $(this);
-    
+  var url = "'.$url.'";  
 jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function (e) { 
 		$.post($form.attr("action"), $form.serialize(), function(response) {
-
+      if (response.success) {
+      document.location = url;
+      } else {
       if (document.getElementById("DoliRpwAlert")) {
       document.getElementById("DoliRpwAlert").innerHTML = response.data;      
       }
-
+      }
 jQuery("#DoliconnectLoadingModal").modal("hide");
 
 		}, "json");  

@@ -67,7 +67,7 @@ function doliaddproduct_request(){
 global $current_user;
 		
     if ( ! wp_verify_nonce( trim($_POST['product-add-nonce']), 'product-add-nonce-'.trim($_POST['product-add-id']) ) ) {
-wp_send_json_success( 'error' ); 
+wp_send_json_error( 'error' ); 
 		} else {
 $result = doliaddtocart(trim($_POST['product-add-id']), trim($_POST['product-add-qty']), trim($_POST['product-add-price']), trim($_POST['product-add-remise_percent']), isset($_POST['product-add-timestamp_start'])?trim($_POST['product-add-timestamp_start']):null, isset($_POST['product-add-timestamp_end'])?trim($_POST['product-add-timestamp_end']):null);
 wp_send_json_success( $result ); 
@@ -101,7 +101,7 @@ $thirparty = callDoliApi("PUT", "/thirdparties/".doliconnector($current_user, 'f
 }
 		
 wp_send_json_success('success');
-} else wp_send_json_success( 'error' ); 
+} else wp_send_json_error('security error'); 
  
 }
 
@@ -134,11 +134,11 @@ if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $user-
 $headers = array('Content-Type: text/html; charset=UTF-8');
 $mail =  wp_mail($email, $subject, $body, $headers);
 
-if( $mail ) { wp_send_json_success('success');  } else { wp_send_json_success('error');  }		
+if( $mail ) { wp_send_json_success('success');  } else { wp_send_json_error('error');  }		
 }
 
 }	 else {
-wp_send_json_success('error'); 
+wp_send_json_error('security error'); 
 }
 }
 
@@ -165,14 +165,14 @@ $doliuser = callDoliApi("PUT", "/users/".doliconnector($current_user, 'fk_user')
 
 wp_send_json_success('success'); 
 } elseif (isset( $current_user->ID ) && ! wp_check_password( $pwd0, $current_user->user_pass, $current_user->ID ) ) {
-wp_send_json_success(__( 'Your actual password is incorrect', 'doliconnect'));
+wp_send_json_error(__( 'Your actual password is incorrect', 'doliconnect'));
 } elseif ( $pwd1 != $_POST["pwd2"] ) {
-wp_send_json_success(__( 'The new passwords entered are different', 'doliconnect'));
+wp_send_json_error(__( 'The new passwords entered are different', 'doliconnect'));
 } elseif ( !preg_match("#.*^(?=.{8,20})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*$#", $pwd1) ) {
-wp_send_json_success(__( 'Your password must be between 8 and 20 characters, including at least 1 digit, 1 letter, 1 uppercase.', 'doliconnect'));
+wp_send_json_error(__( 'Your password must be between 8 and 20 characters, including at least 1 digit, 1 letter, 1 uppercase.', 'doliconnect'));
 }
 
 }	 else {
-wp_send_json_success('security error'); 
+wp_send_json_error('security error', 'doliconnect'); 
 }
 }
