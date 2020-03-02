@@ -353,19 +353,29 @@ print "<div class='card-body'><button class='btn btn-danger btn-block' type='sub
 print "<script>";
 print 'jQuery(document).ready(function($) {
 	
-	jQuery(".dolinewuser-form").on("submit", function(e) {
-		e.preventDefault();
-    //jQuery("#DoliconnectLoadingModal").modal("show");
-		var $form = $(this);
- 
+	jQuery("#dolinewuser-form").on("submit", function(e) {
+  jQuery("#DoliconnectLoadingModal").modal("show");
+	e.preventDefault();
+    
+	var $form = $(this);
+  //var url = "";  
+jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function (e) { 
 		$.post($form.attr("action"), $form.serialize(), function(response) {
-			alert("This is data returned from the server " + response.data);
+      if (response.success) {
+      //document.location = url;
+      if (document.getElementById("DoliNewUserAlert")) {
+      document.getElementById("DoliNewUserAlert").innerHTML = response.data;      
+      }
+      } else {
+      if (document.getElementById("DoliNewUserAlert")) {
+      document.getElementById("DoliNewUserAlert").innerHTML = response.data;      
+      }
+      }
+jQuery("#DoliconnectLoadingModal").modal("hide");
 
-      //jQuery("#DoliconnectLoadingModal").modal("toggle");
-
-		}, "json");
-	});
- 
+		}, "json");  
+  });
+});
 });';
 print "</script>";
 
