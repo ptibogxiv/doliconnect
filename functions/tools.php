@@ -161,6 +161,18 @@ print " required><label class='custom-control-label' for='morphy2'>".__( 'Entrep
 print "</div></div></li><li class='list-group-item'>";
 } elseif ( in_array($mode, array('thirdparty')) ) { //|| $mode == 'member'
 print "<li class='list-group-item'><input type='hidden' id='morphy' name='".$idobject."[morphy]' value='phy'>";
+} elseif ( in_array($mode, array('linkthirdparty')) ) {
+
+print '<li class="list-group-item"><div class="form-group">
+  <label for="FormCustomer"><small><i class="fas fa-user-tie"></i> '.__( 'Customer', 'doliconnect').'</small></label><div class="input-group" id="FormCustomer">
+  <input type="text" aria-label="Last name" name="code_client" placeholder="'.__( 'Customer code', 'doliconnect').'" class="form-control" required>
+</div><div>';
+print '<div class="form-group">
+  <label for="FormObject"><small><i class="fas fa-file-invoice"></i> '.__( 'Order or Invoice', 'doliconnect').'</small></label><div class="input-group" id="FormObject">
+  <input type="text" aria-label="Reference" name="reference" placeholder="'.__( 'Reference', 'doliconnect').'" class="form-control" required>
+  <input type="number" aria-label="Amount" name="amount" placeholder="'.__( 'Total incl. tax', 'doliconnect').'" class="form-control" required>
+</div><div><li class="list-group-item">';
+
 } else {
 print "<li class='list-group-item'>";
 }
