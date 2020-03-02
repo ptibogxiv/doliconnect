@@ -333,17 +333,16 @@ print "<div class='card shadow-sm'><div class='card-header'><h5 class='card-titl
 
 print "<li class='list-group-item list-group-item-light list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>
 <input type='radio' id='newuser' name='paymentmode' value='newuser' class='custom-control-input' data-toggle='collapse' data-parent='#accordion' ";
-//if ( !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_code != 'VIR' ) { $paymentmethods .=" disabled "; }
-//else
-//if ( (!empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_code != 'VIR') || ($listpaymentmethods->payment_methods == null && !empty($listpaymentmethods->stripe) && !in_array('card', $listpaymentmethods->stripe->types)) || (isset($object) && $object->mode_reglement_code == 'VIR') ) { print " checked"; }
 print " href='#newuser'><label class='custom-control-label w-100' for='newuser'><div class='row'><div class='col-3 col-md-2 col-xl-2 align-middle'>";
 print '<center><i class="fas fa-user-plus fa-3x fa-fw" style="color:DarkGrey"></i></center>';
 print "</div><div class='col-9 col-md-10 col-xl-10 align-middle'><h6 class='my-0'>".__( 'Create a new user', 'doliconnect')."</h6><small class='text-muted'>".sprintf( esc_html__( "you are not yet customer or member with %s", 'doliconnect'), get_bloginfo('name'))."</small>";
 print '</div></div></label></div></li>';
 
 print '<div id="newuserPanel" class="panel-collapse collapse">';
-print "<form class='dolinewuser-form' method='post' action='".admin_url('admin-ajax.php')."'>";
+
 if ((!is_multisite() && get_option( 'users_can_register' )) || ((get_option('users_can_register') == '1') && (get_site_option( 'registration' ) == 'user' || get_site_option( 'registration' ) == 'all'))) {
+
+print "<form class='dolinewuser-form' method='post' action='".admin_url('admin-ajax.php')."'>";
 print doliuserform( null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'thirdparty');
 
 print "<div class='card-body'><button class='btn btn-danger btn-block' type='submit'><b>".__( 'Submit', 'doliconnect')."</b></button></div>";
@@ -366,15 +365,16 @@ print 'jQuery(document).ready(function($) {
  
 });';
 print "</script>";
+
+print '</form>';
+} else {
+print 'no new user';
 }
-print '</form></div>';
+print '</div>';
 
 
 print "<li class='list-group-item list-group-item-light list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>
 <input type='radio' id='linkuser' name='paymentmode' value='linkuser' class='custom-control-input' data-toggle='collapse' data-parent='#accordion' ";
-//if ( !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_code != 'CHQ' ) { $paymentmethods .=" disabled "; }
-//else
-//if ( (!empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_code == 'CHQ') || ($listpaymentmethods->payment_methods == null && !in_array('card', $listpaymentmethods->stripe->types) && $listpaymentmethods->RIB == null) || (isset($object) && $object->mode_reglement_code == 'CHQ') ) { print " checked"; }
 print " href='#linkuser'><label class='custom-control-label w-100' for='linkuser'><div class='row'><div class='col-3 col-md-2 col-xl-2 align-middle'>";
 print '<center><i class="fas fa-user-check fa-3x fa-fw" style="color:DarkGrey"></i></center>';
 print "</div><div class='col-9 col-md-10 col-xl-10 align-middle'><h6 class='my-0'>".__( 'Create from existing customer', 'doliconnect')."</h6><small class='text-muted'>".sprintf( esc_html__( 'you are already customer or member with %s', 'doliconnect'), get_bloginfo('name'))."</small>";
