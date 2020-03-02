@@ -161,7 +161,7 @@ print " required><label class='custom-control-label' for='morphy2'>".__( 'Entrep
 print "</div></div></li><li class='list-group-item'>";
 } elseif ( in_array($mode, array('thirdparty')) ) { //|| $mode == 'member'
 print "<li class='list-group-item'><input type='hidden' id='morphy' name='".$idobject."[morphy]' value='phy'>";
-} elseif ( in_array($mode, array('linkthirdparty')) ) {
+} elseif ( !is_user_logged_in() && in_array($mode, array('linkthirdparty')) ) {
 
 print '<li class="list-group-item"><div class="form-group">
   <label for="FormCustomer"><small><i class="fas fa-user-tie"></i> '.__( 'Customer', 'doliconnect').'</small></label><div class="input-group" id="FormCustomer">
@@ -219,9 +219,6 @@ print "</li><li class='list-group-item'>";
 
 print "<div class='form-row'><div class='col-12 col-md-3'><label for='inputCivility'><small><i class='fas fa-user fa-fw'></i> ".__( 'Civility', 'doliconnect')."</small></label>";
 $civility = callDoliApi("GET", "/setup/dictionary/civility?sortfield=code&sortorder=ASC&limit=100", null, $delay);
-if ( isset($civility->error) ) {
-$civility = callDoliApi("GET", "/setup/dictionary/civilities?sortfield=code&sortorder=ASC&limit=100&active=1", null, $delay); 
-}
 
 print "<select class='custom-select' id='identity'  name='".$idobject."[civility_id]' required>";
 print "<option value='' disabled ";
