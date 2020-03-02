@@ -342,7 +342,10 @@ print '<div id="newuserPanel" class="panel-collapse collapse">';
 
 if ((!is_multisite() && get_option( 'users_can_register' )) || ((get_option('users_can_register') == '1') && (get_site_option( 'registration' ) == 'user' || get_site_option( 'registration' ) == 'all'))) {
 
-print "<form class='dolinewuser-form' method='post' action='".admin_url('admin-ajax.php')."'>";
+print "<div id='DoliNewUserAlert' class='text-danger font-weight-bolder'></div><form id='dolinewuser-form' method='post' class='was-validated' action='".admin_url('admin-ajax.php')."'>";
+print "<input type='hidden' name='action' value='dolisignup_request'>";
+print "<input type='hidden' name='dolisignup-nonce' value='".wp_create_nonce( 'dolisignup-nonce')."'>";
+
 print doliuserform( null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'thirdparty');
 
 print "<div class='card-body'><button class='btn btn-danger btn-block' type='submit'><b>".__( 'Submit', 'doliconnect')."</b></button></div>";
@@ -380,7 +383,7 @@ print '<center><i class="fas fa-user-check fa-3x fa-fw" style="color:DarkGrey"><
 print "</div><div class='col-9 col-md-10 col-xl-10 align-middle'><h6 class='my-0'>".__( 'Create from existing customer', 'doliconnect')."</h6><small class='text-muted'>".sprintf( esc_html__( 'you are already customer or member with %s', 'doliconnect'), get_bloginfo('name'))."</small>";
 print '</div></div></label></div></li>';
 
-print '<div id="linkuserPanel" class="panel-collapse collapse"><li class="list-group-item list-group-item-white">';
+print '<div id="linkuserPanel" class="panel-collapse collapse">';
 print "<div id='DoliLinkUserAlert' class='text-danger font-weight-bolder'></div><form id='dolilinkuser-form' method='post' class='was-validated' action='".admin_url('admin-ajax.php')."'>";
 print "<input type='hidden' name='action' value='dolisignup_request'>";
 print "<input type='hidden' name='dolisignup-nonce' value='".wp_create_nonce( 'dolisignup-nonce')."'>";
@@ -394,8 +397,9 @@ print '<div class="form-group">
   <input type="text" aria-label="Reference" name="reference" placeholder="'.__( 'Reference', 'doliconnect').'" class="form-control" required>
   <input type="number" aria-label="Amount" name="amount" placeholder="'.__( 'Total incl. tax', 'doliconnect').'" class="form-control" required>
 </div><div>';
-print '</li>';
-//print doliuserform( null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'linkthirdparty');
+
+print doliuserform( null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'linkthirdparty');
+
 print "<div class='card-body'><button class='btn btn-danger btn-block' type='submit'><b>".__( 'Submit', 'doliconnect')."</b></button></div>";
 
 print "<script>";
@@ -427,9 +431,9 @@ jQuery("#DoliconnectLoadingModal").modal("hide");
 });';
 print "</script>";
 
-print '</form></div>';
+print '</form>';
 
-print "</ul><div class='card-body text-muted'><script>";
+print "</div></ul><div class='card-body text-muted'><script>";
 print  "jQuery('#newuser,#linkuser').on('click', function (e) {
           e.stopPropagation();";
 print  " if(this.id == 'newuser'){
