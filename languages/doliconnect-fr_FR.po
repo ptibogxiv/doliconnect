@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2020-03-01 21:13+0100\n"
-"PO-Revision-Date: 2020-03-01 21:14+0100\n"
+"POT-Creation-Date: 2020-03-02 13:11+0100\n"
+"PO-Revision-Date: 2020-03-02 13:11+0100\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_FR\n"
@@ -603,7 +603,7 @@ msgstr "Aucun contrat"
 msgid "Donations tracking"
 msgstr "Suivi des dons"
 
-#: dashboard/dashboard.php:1174 dashboard/templates.php:395
+#: dashboard/dashboard.php:1174
 msgid "Amount"
 msgstr "Montant"
 
@@ -957,11 +957,11 @@ msgstr ""
 msgid "Create an account"
 msgstr "Créer un compte"
 
-#: dashboard/templates.php:341
+#: dashboard/templates.php:338
 msgid "Create a new user"
 msgstr "Créer un nouvel utilisateur"
 
-#: dashboard/templates.php:341
+#: dashboard/templates.php:338
 #, php-format
 msgid "you are not yet customer or member with %s"
 msgstr "vous n’êtes pas encore client ou membre avec %s"
@@ -971,39 +971,35 @@ msgstr "vous n’êtes pas encore client ou membre avec %s"
 msgid "Submit"
 msgstr "Soumettre"
 
-#: dashboard/templates.php:378
+#: dashboard/templates.php:380
 msgid "Create from existing customer"
 msgstr "Créer à partir du client existant"
 
-#: dashboard/templates.php:378
+#: dashboard/templates.php:380
 #, php-format
 msgid "you are already customer or member with %s"
 msgstr "vous êtes déjà client ou membre avec %s"
 
-#: dashboard/templates.php:387
+#: dashboard/templates.php:389
 msgid "Customer"
 msgstr "Client"
 
-#: dashboard/templates.php:388
-msgid "Name of customer"
-msgstr "Nom du client"
-
-#: dashboard/templates.php:389
+#: dashboard/templates.php:390
 msgid "Customer code"
 msgstr "Code Client"
 
-#: dashboard/templates.php:392
+#: dashboard/templates.php:393
 msgid "Order or Invoice"
 msgstr "Commande ou facture"
 
-#: dashboard/templates.php:393 dashboard/templates.php:1340
+#: dashboard/templates.php:394 dashboard/templates.php:1340
 #: dashboard/templates.php:1347
 msgid "Reference"
 msgstr "Référence"
 
-#: dashboard/templates.php:394
-msgid "Date"
-msgstr "Date"
+#: dashboard/templates.php:395 functions/tools.php:695
+msgid "Total incl. tax"
+msgstr "Total Taxes Comprises"
 
 #: dashboard/templates.php:482 functions/tools.php:84
 msgid "Your password will be synchronized with your Dolibarr account"
@@ -1330,7 +1326,7 @@ msgstr ""
 
 #: functions/data-request.php:75 functions/data-request.php:104
 #: functions/data-request.php:149 functions/data-request.php:192
-#: functions/data-request.php:195 functions/data-request.php:221
+#: functions/data-request.php:195 functions/data-request.php:222
 msgid "A security error occured"
 msgstr "Une erreur de sécurité s’est produite"
 
@@ -1375,6 +1371,10 @@ msgstr "Votre mot de passe actuel est incorrect"
 #: functions/data-request.php:188
 msgid "The new passwords entered are different"
 msgstr "Les nouveaux mots de passe entrés sont différents"
+
+#: functions/data-request.php:211 functions/data-request.php:218
+msgid "Customer not found"
+msgstr "Client introuvable"
 
 #: functions/enqueues.php:8
 msgid ""
@@ -1693,10 +1693,6 @@ msgstr "Total Hors Taxes"
 msgid "Total VAT"
 msgstr "Total TVA"
 
-#: functions/tools.php:695
-msgid "Total incl. tax"
-msgstr "Total Taxes Comprises"
-
 #: functions/tools.php:796
 msgid "Your basket is empty."
 msgstr "Votre panier est vide."
@@ -2006,6 +2002,12 @@ msgstr "ptibogxiv"
 #. Author URI of the plugin/theme
 msgid "https://www.ptibogxiv.net/en"
 msgstr "https://www.ptibogxiv.net/fr"
+
+#~ msgid "Name of customer"
+#~ msgstr "Nom du client"
+
+#~ msgid "Date"
+#~ msgstr "Date"
 
 #~ msgid "security error"
 #~ msgstr "erreur de sécurité"
