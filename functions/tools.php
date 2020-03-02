@@ -414,23 +414,23 @@ print "</li>";
 }
 }
 
-print "<li class='list-group-item'>";
+//print "<li class='list-group-item'>";
 //print "<div class='form-row'><div class='custom-control custom-checkbox my-1 mr-sm-2'>
 //<input type='checkbox' class='custom-control-input' value='1' id='optin1' name='optin1'>
 //<label class='custom-control-label' for='optin1'> ".__( 'I would like to receive the newsletter', 'doliconnect')."</label></div></div>";
-print "<div class='form-row'><div class='custom-control custom-checkbox my-1 mr-sm-2'>
-<input type='checkbox' class='custom-control-input' value='forever' id='validation' name='validation' required>
-<label class='custom-control-label' for='validation'>".__( 'I read and accept the <a href="#" data-toggle="modal" data-target="#cgvumention">Terms & Conditions</a>.', 'doliconnect')."</label></div></div>";
+//print "<div class='form-row'><div class='custom-control custom-checkbox my-1 mr-sm-2'>
+//<input type='checkbox' class='custom-control-input' value='forever' id='validation' name='validation' required>
+//<label class='custom-control-label' for='validation'>".__( 'I read and accept the <a href="#" data-toggle="modal" data-target="#cgvumention">Terms & Conditions</a>.', 'doliconnect')."</label></div></div>";
 
-if ( get_option( 'wp_page_for_privacy_policy' ) ) {
-print "<div class='modal fade' id='cgvumention' tabindex='-1' role='dialog' aria-labelledby='cgvumention' aria-hidden='true'><div class='modal-dialog modal-lg modal-dialog-centered' role='document'><div class='modal-content'><div class='modal-header'><h5 class='modal-title' id='cgvumentionLabel'>".__( 'Terms & Conditions', 'doliconnect')."</h5><button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>
-<div class='modal-body'>";
-$post = get_post(get_option( 'wp_page_for_privacy_policy' ));
-print $post->post_content;
+//if ( get_option( 'wp_page_for_privacy_policy' ) ) {
+//print "<div class='modal fade' id='cgvumention' tabindex='-1' role='dialog' aria-labelledby='cgvumention' aria-hidden='true'><div class='modal-dialog modal-lg modal-dialog-centered' role='document'><div class='modal-content'><div class='modal-header'><h5 class='modal-title' id='cgvumentionLabel'>".__( 'Terms & Conditions', 'doliconnect')."</h5><button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>
+//<div class='modal-body'>";
+//$post = get_post(get_option( 'wp_page_for_privacy_policy' ));
+//print $post->post_content;
 //print apply_filters('the_content', get_post_field('post_content', get_option( 'wp_page_for_privacy_policy' )));
 //print get_the_content( 'Read more', '', get_option( 'wp_page_for_privacy_policy' )); 
-print "</div></div></div>";}
-print "</li>";
+//print "</div></div></div>";}
+//print "</li>";
 }
 
 print "</ul>";
@@ -757,9 +757,9 @@ $doliline .= "<input type='hidden' name='updateorderproduct[".$line->fk_product.
 $doliline .= "<select class='form-control form-control-sm' name='updateorderproduct[".$line->fk_product."][qty]' onchange='ChangeDoliCart();'>";
 if ( ($product->stock_reel-$line->qty > 0 && $product->type == '0') ) {
 if (isset($product->array_options->options_packaging) && !empty($product->array_options->options_packaging)) {
-$m1 = 10*$product->array_options->options_packaging;
+$m1 = 15*$product->array_options->options_packaging;
 } else {
-$m1 = 10;
+$m1 = 15;
 }
 if ( $product->stock_reel-$line->qty >= $m1 || empty(doliconst('MAIN_MODULE_STOCK')) ) {
 $m2 = $m1;
