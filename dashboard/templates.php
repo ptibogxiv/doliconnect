@@ -343,8 +343,9 @@ print '</div></div></label></div></li>';
 
 print '<div id="newuserPanel" class="panel-collapse collapse">';
 print "<form class='dolinewuser-form' method='post' action='".admin_url('admin-ajax.php')."'>";
-
+if ((!is_multisite() && get_option( 'users_can_register' )) || ((get_option('users_can_register') == '1') && (get_site_option( 'registration' ) == 'user' || get_site_option( 'registration' ) == 'all'))) {
 print doliuserform( null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'thirdparty');
+
 print "<div class='card-body'><button class='btn btn-danger btn-block' type='submit'><b>".__( 'Submit', 'doliconnect')."</b></button></div>";
 
 print "<script>";
@@ -365,7 +366,7 @@ print 'jQuery(document).ready(function($) {
  
 });';
 print "</script>";
-
+}
 print '</form></div>';
 
 
@@ -386,14 +387,12 @@ print "<input type='hidden' name='dolisignup-nonce' value='".wp_create_nonce( 'd
 
 print '<div class="form-group">
   <label for="FormCustomer"><small><i class="fas fa-user-tie"></i> '.__( 'Customer', 'doliconnect').'</small></label><div class="input-group" id="FormCustomer">
-  <input type="text" aria-label="Name" placeholder="'.__( 'Name of customer', 'doliconnect').'" class="form-control" required>
   <input type="text" aria-label="Last name" name="code_client" placeholder="'.__( 'Customer code', 'doliconnect').'" class="form-control" required>
 </div><div>';
 print '<div class="form-group">
   <label for="FormObject"><small><i class="fas fa-file-invoice"></i> '.__( 'Order or Invoice', 'doliconnect').'</small></label><div class="input-group" id="FormObject">
   <input type="text" aria-label="Reference" name="reference" placeholder="'.__( 'Reference', 'doliconnect').'" class="form-control" required>
-  <input type="date" aria-label="Date" name="date" placeholder="'.__( 'Date', 'doliconnect').'" class="form-control" required>
-  <input type="number" aria-label="Amount" name="amount" placeholder="'.__( 'Amount', 'doliconnect').'" class="form-control" required>
+  <input type="number" aria-label="Amount" name="amount" placeholder="'.__( 'Total incl. tax', 'doliconnect').'" class="form-control" required>
 </div><div>';
 print '</li>';
 //print doliuserform( null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'linkthirdparty');
