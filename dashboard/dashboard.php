@@ -1834,45 +1834,6 @@ print "<li class='list-group-item list-group-item-light list-group-item-action'>
 print "".__( 'Approval of the Privacy Policy the', 'doliconnect')." ".wp_date( get_option( 'date_format' ).' - '.get_option('time_format'), $current_user->$privacy, false)."";
 print "</li>";
 }
-if ( is_plugin_active( 'two-factor/two-factor.php' ) && current_user_can('administrator') && get_option('doliconnectbeta') == '1' ) {
-print "<li class='list-group-item list-group-item-light list-group-item-action'>";
-require_once( ABSPATH . 'wp-content/plugins/two-factor/class-two-factor-core.php')
-
-		?>
-		<table class="table" id="two-factor-options">
-			<tr>
-				<th>
-					<?php esc_html_e( 'Two-Factor Options', 'two-factor' ); ?>
-				</th>
-				<td>
-					<table class="two-factor-methods-table">
-						<thead>
-							<tr>
-								<th class="col-enabled" scope="col"><?php esc_html_e( 'Enabled', 'two-factor' ); ?></th>
-								<th class="col-primary" scope="col"><?php esc_html_e( 'Primary', 'two-factor' ); ?></th>
-								<th class="col-name" scope="col"><?php esc_html_e( 'Name', 'two-factor' ); ?></th>
-							</tr>
-						</thead>
-						<tbody>
-						<?php foreach ( Two_Factor_Core::get_providers() as $class => $object ) : ?>
-							<tr>
-								<th scope="row"><input type="checkbox" name="<?php echo esc_attr( Two_Factor_Core::ENABLED_PROVIDERS_USER_META_KEY ); ?>[]" value="<?php echo esc_attr( $class ); ?>" <?php checked( in_array( $class, $providers ) ); ?> /></th>
-								<th scope="row"><input type="radio" name="<?php echo esc_attr( Two_Factor_Core::PROVIDER_USER_META_KEY ); ?>" value="<?php echo esc_attr( $class ); ?>" <?php checked( $class, $primary_provider_key ); ?> /></th>
-								<td>
-									<?php $object->print_label(); ?>
-									<?php do_action( 'two-factor-user-options-' . $class, $current_user ); ?>
-								</td>
-							</tr>
-						<?php endforeach; ?>
-						</tbody>
-					</table>
-				</td>
-			</tr>
-		</table>
-		<?php
-		//do_action( 'show_user_security_settings', $current_user );
-print "</li>";
-}
 print "<li class='list-group-item list-group-item-light list-group-item-action'>";
 //print $current_user->locale;
 print "<div class='form-group'><label for='inputaddress'><small>".__( 'Default language', 'doliconnect')."</small></label>
@@ -1920,7 +1881,38 @@ print "<option value='".$cur."' selected>".$cur." / ".doliprice('1.99', null, $c
 print "</select>";
 print "</div></div>";
 print "</li>";
-print "<div class='card-body'></div>";
+print "<div class='card-body'>";
+if ( is_plugin_active( 'two-factor/two-factor.php' ) && current_user_can('administrator') && get_option('doliconnectbeta') == '1' ) {
+require_once( ABSPATH . 'wp-content/plugins/two-factor/class-two-factor-core.php')
+
+		?>
+					<table class="table">
+						<thead>
+							<tr>
+								<th ><?php esc_html_e( 'Enabled',  'doliconnect'); ?></th>
+								<th ><?php esc_html_e( 'Primary',  'doliconnect'); ?></th>
+								<th ><?php esc_html_e( 'Description',  'doliconnect'); ?></th>
+							</tr>
+						</thead>
+						<tbody>
+						<?php foreach ( Two_Factor_Core::get_providers() as $class => $object ) : ?>
+							<tr>
+								<td><input type="checkbox" class="" name="<?php echo esc_attr( Two_Factor_Core::ENABLED_PROVIDERS_USER_META_KEY ); ?>[]" value="<?php echo esc_attr( $class ); ?>" <?php checked( in_array( $class, $providers ) ); ?> /></td>
+								<td><input type="radio" class="" name="<?php echo esc_attr( Two_Factor_Core::PROVIDER_USER_META_KEY ); ?>" value="<?php echo esc_attr( $class ); ?>" <?php checked( $class, $primary_provider_key ); ?> /></td>
+								<td>
+									<?php $object->print_label(); ?>
+									<?php do_action( 'two-factor-user-options-' . $class, $current_user ); ?>
+								</td>
+							</tr>
+						<?php endforeach; ?>
+						</tbody>
+					</table>
+		<?php
+		//do_action( 'show_user_security_settings', $current_user );
+} else {
+print __( 'Two factor authentication is disabled', 'doliconnect');
+}
+print "</div>";
 print '</ul><div class="card-footer text-muted"></form>';
 print "<small><div class='float-left'>";
 print dolirefresh( "/thirdparties/".doliconnector($current_user, 'fk_soc'), $url, dolidelay('member'));
