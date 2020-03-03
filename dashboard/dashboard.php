@@ -8,7 +8,7 @@ print "'>".__( 'Personal informations', 'doliconnect')."</a>";
 add_action( 'user_doliconnect_menu', 'informations_menu', 1, 1);
 
 function informations_module($url) {
-global $wpdb,$current_user;
+global $wpdb, $current_user;
 
 $ID = $current_user->ID;
 

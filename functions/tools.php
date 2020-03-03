@@ -218,8 +218,11 @@ print "</li><li class='list-group-item'>";
 }
 
 print "<div class='form-row'><div class='col-12 col-md-3'><label for='inputCivility'><small><i class='fas fa-user fa-fw'></i> ".__( 'Civility', 'doliconnect')."</small></label>";
+if ( doliversion('10.0.0') ) {
+$civility = callDoliApi("GET", "/setup/dictionary/civilities?sortfield=code&sortorder=ASC&limit=100", null, $delay);
+} else {
 $civility = callDoliApi("GET", "/setup/dictionary/civility?sortfield=code&sortorder=ASC&limit=100", null, $delay);
-
+}
 print "<select class='custom-select' id='identity'  name='".$idobject."[civility_id]' required>";
 print "<option value='' disabled ";
 if ( empty($object->civility_id) ) {
