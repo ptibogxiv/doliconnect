@@ -158,7 +158,7 @@ $link='https://www.ptibogxiv.net/?update_action=get_metadata&slug=doliconnect&li
 ?> 
 
 <?php
-$dolibarr = callDoliApi("GET", "/status", null, 5 * MINUTE_IN_SECONDS);
+$dolibarr = callDoliApi("GET", "/status", null, -5 * MINUTE_IN_SECONDS);
 ?>
 
     <p>Version Dolibarr <a href='https://sourceforge.net/projects/dolibarr/files/Dolibarr%20ERP-CRM/<?php echo constant("DOLIBARR_MINIMUM_VERSION"); ?>/' target='_blank'><?php echo constant("DOLIBARR_MINIMUM_VERSION"); ?></a> minimum - <a href='https://sourceforge.net/projects/dolibarr/files/Dolibarr%20ERP-CRM/<?php echo constant("DOLIBARR_LEGAL_VERSION"); ?>/' target='_blank'><?php echo constant("DOLIBARR_LEGAL_VERSION"); ?></a> recommandée - votre version est <?php echo doliversion(constant("DOLIBARR_LEGAL_VERSION")); ?></p>
@@ -214,7 +214,7 @@ function ptibogxiv_management_page() {
 echo '<DIV class="wrap">';
 echo '<h2>'.__( 'Doliconnect settings', 'doliconnect' ).'</h2>';
 
-$dolibarr = callDoliApi("GET", "/multicompany/".dolibarr_entity(), null, 60 * MINUTE_IN_SECONDS);
+$dolibarr = callDoliApi("GET", "/multicompany/".dolibarr_entity(), null, -5 * MINUTE_IN_SECONDS);
 //echo var_dump($dolibarr);  
 ?>
 	<div id="ptibogxiv_management_page" class="postbox">
