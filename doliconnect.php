@@ -94,7 +94,7 @@ global $wpdb;
 
 $const = callDoliApi("GET", "/doliconnector/constante/".$constante, null, dolidelay('constante', $refresh));
 
-return $const->value;
+return isset($const->value)?$const->value:null;
 }
 // ********************************************************
 function doliconnect_run() {
