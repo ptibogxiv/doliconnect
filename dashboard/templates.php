@@ -697,9 +697,9 @@ print dolialert('danger', __( 'The security key is invalid!', 'doliconnect'));
 }
 
 
-$image_attributes = wp_get_attachment_image_src( get_theme_mod( 'custom_logo' ), 'medium_large', false); 
+$image_attributes = wp_get_attachment_image_src( get_theme_mod( 'custom_logo' ), 'full', false); 
 if ( $image_attributes ) {
-print '<div class="card shadow-lg border-0" style="background-color: rgba(256, 256, 256, 0.9)">';
+print '<div class="card shadow-lg border-0" style="-webkit-backdrop-filter: blur(6px);backdrop-filter: blur(6px);background-color: rgba(255, 255, 255, 0.6);">';
 print '<img src="'.$image_attributes[0].'" class="card-img-top" alt="..."/>';
 } else { 
 print "<div class='card shadow-sm' >";
@@ -717,11 +717,11 @@ print "<ul class='list-group list-group-flush'><li class='list-group-item'><cent
 //print "<h2>".__( 'Restricted area', 'doliconnect')."</h2></center>";
 print "</li></lu><div class='card-body'>";
 
-print '<a href="#" id="login-'.current_time('timestamp').'" data-toggle="modal" data-target="#DoliconnectLogin" data-dismiss="modal" title="'.__('Sign in', 'doliconnect').'" class="btn btn-block btn-outline-secondary" role="button">'.__('You have already an account', 'doliconnect').'</a>';
+print '<a href="#" id="login-'.current_time('timestamp').'" data-toggle="modal" data-target="#DoliconnectLogin" data-dismiss="modal" title="'.__('Sign in', 'doliconnect').'" class="btn btn-block btn-outline-secondary bg-light text-body" role="button">'.__('You have already an account', 'doliconnect').'</a>';
 
 if ((!is_multisite() && get_option( 'users_can_register' )) || ((!is_multisite() && get_option( 'dolicustsupp_can_register' )) || ((get_option( 'dolicustsupp_can_register' ) || get_option('users_can_register') == '1') && (get_site_option( 'registration' ) == 'user' || get_site_option( 'registration' ) == 'all')))) {
 print '<div><div style="display:inline-block;width:46%;float:left"><hr width="90%" /></div><div style="display:inline-block;width: 8%;text-align: center;vertical-align:90%"><small class="text-muted">'.__( 'or', 'doliconnect').'</small></div><div style="display:inline-block;width:46%;float:right" ><hr width="90%"/></div></div>';
-print '<a href="'.wp_registration_url( get_permalink() ).'" id="login-'.current_time('timestamp').'" class="btn btn-block btn-outline-secondary" role="button">'.__("You don't have an account", 'doliconnect').'</a>';
+print '<a href="'.wp_registration_url( get_permalink() ).'" id="login-'.current_time('timestamp').'" class="btn btn-block btn-outline-secondary bg-light text-body" role="button">'.__("You don't have an account", 'doliconnect').'</a>';
 }
 
 } else {
