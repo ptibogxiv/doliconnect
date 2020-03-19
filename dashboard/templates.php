@@ -698,7 +698,7 @@ print dolialert('danger', __( 'The security key is invalid!', 'doliconnect'));
 
 
 $image_attributes = wp_get_attachment_image_src( get_theme_mod( 'custom_logo' ), 'full', false); 
-if ( $image_attributes ) {
+if ( $image_attributes && !empty(get_option('doliconnectrestrict'))) {
 print '<div class="card shadow-lg border-0" style="-webkit-backdrop-filter: blur(6px);backdrop-filter: blur(6px);background-color: rgba(255, 255, 255, 0.6);">';
 print '<img src="'.$image_attributes[0].'" class="card-img-top" alt="..."/>';
 } else { 
