@@ -696,11 +696,13 @@ print dolialert('danger', __( 'The security key is invalid!', 'doliconnect'));
 
 }
 
-print "<div class='card shadow-sm'>";
-$image_attributes = wp_get_attachment_image_src( '234', 'medium_large', false); 
+
+$image_attributes = wp_get_attachment_image_src( get_theme_mod( 'custom_logo' ), 'medium_large', false); 
 if ( $image_attributes ) {
+print '<div class="card shadow-lg border-0" style="background-color: rgba(256, 256, 256, 0.9)">';
 print '<img src="'.$image_attributes[0].'" class="card-img-top" alt="..."/>';
-} else {
+} else { 
+print "<div class='card shadow-sm' >";
 print "<div class='card-header'>";
 if ( empty(get_option('doliconnectrestrict')) ) {
 print "<h5 class='card-title'>".__( 'Welcome', 'doliconnect')."</h5>";
