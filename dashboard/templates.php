@@ -30,7 +30,9 @@ date_default_timezone_set($tzstring);
 $ID = $current_user->ID;
 $time = current_time( 'timestamp', 1);
 
-print "<div class='row'><div class='col-xs-12 col-sm-12 col-md-3'><div class='row'><div class='col-3 col-xs-4 col-sm-4 col-md-12 col-xl-12'><div class='card shadow-sm' style='width: 100%'>";
+print "<div class='row'>";
+if ( empty(get_option('doliconnectrestrict')) || is_user_logged_in() ) {
+print "<div class='col-xs-12 col-sm-12 col-md-3'><div class='row'><div class='col-3 col-xs-4 col-sm-4 col-md-12 col-xl-12'><div class='card shadow-sm' style='width: 100%'>";
 print get_avatar($ID);
 
 if ( !defined("DOLIBUG") && is_user_logged_in() && is_user_member_of_blog( $current_user->ID, get_current_blog_id())) {
@@ -39,8 +41,11 @@ print "<a href='".esc_url( add_query_arg( 'module', 'avatars', doliconnecturl('d
 print "<ul class='list-group list-group-flush'><a href='".esc_url( doliconnecturl('doliaccount') )."' class='list-group-item list-group-item-light list-group-item-action'><center><div class='d-block d-sm-block d-xs-block d-md-none'><i class='fas fa-home'></i></div><div class='d-none d-md-block'><i class='fas fa-home'></i> ".__( 'Home', 'doliconnect')."</div></center></a>";
 print "</ul>";
 
-print "</div><br></div><div class='col-9 col-xs-8 col-sm-8 col-md-12 col-xl-12'>";
-
+print "</div><br></div>";
+print "<div class='col-9 col-xs-8 col-sm-8 col-md-12 col-xl-12'>";
+} else {
+print "<div class='col-md-6 offset-md-3'>";
+}
 if ( is_user_logged_in() && is_user_member_of_blog( $current_user->ID, get_current_blog_id())) {
 
 $thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
@@ -185,7 +190,12 @@ print "</div>";
 } else { 
 //print "<p class='font-weight-light' align='justify'>".__( 'Manage your account, your informations, orders and much more via this secure client area.', 'doliconnect')."</p>";
 print "</div></div></div>";
+
+if ( empty(get_option('doliconnectrestrict')) ) {
 print "<div class='col-xs-12 col-sm-12 col-md-9'>";
+} else {
+print "<div class='col-md-6 offset-md-3'>";
+}
 
 if ( isset($_GET["action"]) && $_GET["action"] == 'confirmaction' ) {
 
@@ -686,25 +696,30 @@ print dolialert('danger', __( 'The security key is invalid!', 'doliconnect'));
 
 }
 
-print "<div class='card shadow-sm'><div class='card-header'>";
+print "<div class='card shadow-sm'>";
+$image_attributes = wp_get_attachment_image_src( '234', 'medium_large', false); 
+if ( $image_attributes ) {
+print '<img src="'.$image_attributes[0].'" class="card-img-top" alt="..."/>';
+} else {
+print "<div class='card-header'>";
 if ( empty(get_option('doliconnectrestrict')) ) {
 print "<h5 class='card-title'>".__( 'Welcome', 'doliconnect')."</h5>";
 } else {
 print "<h5 class='card-title'>".__( 'Access restricted to users', 'doliconnect')."</h5>";
 }
 print "</div>";
-
+}
 if ( function_exists('doliconnect_modal') && get_option('doliloginmodal') == '1' ) {
 
 print "<ul class='list-group list-group-flush'><li class='list-group-item'><center><i class='fas fa-user-lock fa-fw fa-10x'></i><br><br>";
 //print "<h2>".__( 'Restricted area', 'doliconnect')."</h2></center>";
 print "</li></lu><div class='card-body'>";
 
-print '<a href="#" id="login-'.current_time('timestamp').'" data-toggle="modal" data-target="#DoliconnectLogin" data-dismiss="modal" title="'.__('Sign in', 'doliconnect').'" class="btn btn-block btn-primary my-2 my-sm-0" role="button">'.__('You have already an account', 'doliconnect').'</a>';
+print '<a href="#" id="login-'.current_time('timestamp').'" data-toggle="modal" data-target="#DoliconnectLogin" data-dismiss="modal" title="'.__('Sign in', 'doliconnect').'" class="btn btn-block btn-outline-secondary" role="button">'.__('You have already an account', 'doliconnect').'</a>';
 
 if ((!is_multisite() && get_option( 'users_can_register' )) || ((!is_multisite() && get_option( 'dolicustsupp_can_register' )) || ((get_option( 'dolicustsupp_can_register' ) || get_option('users_can_register') == '1') && (get_site_option( 'registration' ) == 'user' || get_site_option( 'registration' ) == 'all')))) {
 print '<div><div style="display:inline-block;width:46%;float:left"><hr width="90%" /></div><div style="display:inline-block;width: 8%;text-align: center;vertical-align:90%"><small class="text-muted">'.__( 'or', 'doliconnect').'</small></div><div style="display:inline-block;width:46%;float:right" ><hr width="90%"/></div></div>';
-print '<a href="'.wp_registration_url( get_permalink() ).'" id="login-'.current_time('timestamp').'" class="btn btn-block btn-primary my-2 my-sm-0" role="button">'.__("You don't have an account", 'doliconnect').'</a>';
+print '<a href="'.wp_registration_url( get_permalink() ).'" id="login-'.current_time('timestamp').'" class="btn btn-block btn-outline-secondary" role="button">'.__("You don't have an account", 'doliconnect').'</a>';
 }
 
 } else {
