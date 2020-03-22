@@ -726,7 +726,7 @@ $includestock = 1;
 $product = callDoliApi("GET", "/products/".$line->fk_product."?includestockdata=".$includestock."&includesubproducts=true", null, dolidelay('cart', $refresh));
 }
 
-if ($product->stock_reel <= 0 && is_page(doliconnectid('dolicart')) && $product->type == '0' && !empty(doliconst('MAIN_MODULE_STOCK')) ) {
+if ($product->stock_reel <= 0 && is_page(doliconnectid('dolicart')) && $product->type == '0' && !empty(doliconst('MAIN_MODULE_STOCK')) && !empty(doliconst('STOCK_ALLOW_NEGATIVE_TRANSFER')) ) {
 $doliline .= "<li class='list-group-item list-group-item-danger'>";
 define('dolilockcart', '1'); 
 } else {
@@ -755,7 +755,7 @@ if(!empty(doliconst("PRODUIT_DESC_IN_FORM"))) $doliline .= '<p class="mb-1"><sma
 $doliline .= '<p><small><i>'.(isset($dates) ? $dates : null).'</i></small></p>';
 }
 
-if (defined('dolilockcart') && !empty(constant('dolilockcart'))) {
+if ($product->stock_reel <= 0 && is_page(doliconnectid('dolicart')) && $product->type == '0' && !empty(doliconst('MAIN_MODULE_STOCK')) && !empty(doliconst('STOCK_ALLOW_NEGATIVE_TRANSFER')) ) {
 $doliline .= "<b>".__( "Sorry, this product is no longer available", 'doliconnect')."</b>";
 }
 
