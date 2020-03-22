@@ -1795,7 +1795,7 @@ print "<button type='button' onclick='DeleteDoliCart(\"".$nonce."\")' class='lis
 }
 if ( $object->lines != null ) {
 print "<button type='button' onclick='ValidDoliCart(\"".$nonce."\")' class='list-group-item list-group-item-action list-group-item-warning flex-fill ' role='button' aria-pressed='true'";
-if ($outstandingamount > 0) print " disabled";
+if ($outstandingamount > 0 || (defined('dolilockcart') && !empty(constant('dolilockcart')))) print " disabled";
 print "><center><b>".__( 'Process', 'doliconnect')."</b></center></button>";
 }
 }

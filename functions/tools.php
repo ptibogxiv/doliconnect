@@ -716,8 +716,23 @@ global $current_user;
 $doliline=null;
 
 if ( isset($object) && is_object($object) && isset($object->lines) && $object->lines != null && (doliconnector($current_user, 'fk_soc') == $object->socid) ) {  
-foreach ( $object->lines as $line ) {
-$doliline .= "<li class='list-group-item list-group-item-light'>";     
+foreach ( $object->lines as $line ) { 
+
+if ( $line->fk_product > 0 ) {
+$includestock = 0;
+if ( ! empty(doliconnectid('dolicart')) ) {
+$includestock = 1;
+}
+$product = callDoliApi("GET", "/products/".$line->fk_product."?includestockdata=".$includestock."&includesubproducts=true", null, dolidelay('cart', $refresh));
+}
+
+if ($product->stock_reel <= 0 && is_page(doliconnectid('dolicart')) && $product->type == '0' && !empty(doliconst('MAIN_MODULE_STOCK')) ) {
+$doliline .= "<li class='list-group-item list-group-item-danger'>";
+define('dolilockcart', '1'); 
+} else {
+$doliline .= "<li class='list-group-item list-group-item-light'>";
+define('dolilockcart', '0'); 
+}    
 if ( $line->date_start != '' && $line->date_end != '' )
 {
 $start = wp_date('d/m/Y', $line->date_start);
@@ -733,18 +748,15 @@ $doliline .= doliconnect_image('product', $line->fk_product, null, $refresh);
 }
 
 $doliline .= '</center></div><div class="col-8 col-sm-7 col-md-6 col-lg-7"><h6 class="mb-1">'.doliproduct($line, 'product_label').'</h6>';
-if ( $line->fk_product > 0 ) {
-$includestock = 0;
-if ( ! empty(doliconnectid('dolicart')) ) {
-$includestock = 1;
-}
-$product = callDoliApi("GET", "/products/".$line->fk_product."?includestockdata=".$includestock."&includesubproducts=true", null, dolidelay('product', $refresh));
-}
 
 if ( doliconst('FRAIS_DE_PORT_ID_SERVICE_TO_USE') != $line->fk_product ) {
 $doliline .= "<p><small><i class='fas fa-toolbox fa-fw'></i> ".(!empty($product->ref)?$product->ref:'-')." | <i class='fas fa-barcode fa-fw'></i> ".(!empty($product->barcode)?$product->barcode:'-')."</small></p>";
 if(!empty(doliconst("PRODUIT_DESC_IN_FORM"))) $doliline .= '<p class="mb-1"><small>'.doliproduct($line, 'product_desc').'</small></p>';
 $doliline .= '<p><small><i>'.(isset($dates) ? $dates : null).'</i></small></p>';
+}
+
+if (defined('dolilockcart') && !empty(constant('dolilockcart'))) {
+$doliline .= "<b>".__( "Sorry, this product is no longer available", 'doliconnect')."</b>";
 }
 
 $doliline .= '</div><div class="col d-none d-md-block col-md-2 text-right">';
