@@ -46,7 +46,7 @@ $imgj =  callDoliApi("GET", "/documents/download?modulepart=product&original_fil
 $imgj = (array) $imgj; 
 if (is_array($imgj) && preg_match('/^image/', $imgj['content-type'])) {
 //$data = "data:".$imgj['content-type'].";".$imgj['encoding'].",".$imgj['content'];
-if (!is_dir($up_dir['basedir'].'/doliconnect/'.$module.'/'.$id.'/'.$img[0]->relativename)) {
+if (!is_dir($up_dir['basedir'].'/doliconnect/'.$module.'/'.$id)) {
 mkdir($up_dir['basedir'].'/doliconnect/'.$module.'/'.$id, 0777, true);
 }
 $files = glob($up_dir['basedir'].'/doliconnect/'.$module.'/'.$id."/*");
