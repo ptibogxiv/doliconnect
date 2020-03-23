@@ -416,6 +416,8 @@ echo "<input id='dolibarr_entity'  name='dolibarr_entity' type='text' value='".(
            <option value="30" <?php if (get_option('dolicartlist') == '30') { ?> selected <?php } ?>>30</option>
            <option value="40" <?php if (get_option('dolicartlist') == '40') { ?> selected <?php } ?>>40</option>
            <option value="50" <?php if (get_option('dolicartlist') == '50') { ?> selected <?php } ?>>50</option>
+           <option value="75" <?php if (get_option('dolicartlist') == '75') { ?> selected <?php } ?>>50</option>
+           <option value="100" <?php if (get_option('dolicartlist') == '100') { ?> selected <?php } ?>>100</option>
            </select> <?php _e('choices of the amount of product', 'doliconnect') ?>
            </td>
             </tr>
