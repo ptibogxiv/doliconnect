@@ -78,17 +78,11 @@ $stock = "<span class='badge badge-pill badge-success'>".__( 'Available', 'dolic
 $minstock = min(array($product->stock_theorique,$product->stock_reel));
 $maxstock = max(array($product->stock_theorique,$product->stock_reel));
 
-if ( $maxstock <= 0 || (isset($product->array_options->options_packaging) && $maxstock <= $product->array_options->options_packaging ) ) { $stock = "<a href='#' title='Header' data-toggle='popover' data-placement='top' data-content='Content' class='badge badge-pill badge-dark'><i class='fas fa-warehouse'></i> ".__( 'Out of stock', 'doliconnect')."</a>"; }  
-elseif ( ($minstock <= 0 || (isset($product->array_options->options_packaging) && $product->stock_reel < $product->array_options->options_packaging)) && $maxstock >= 0 && $product->stock_theorique > $product->stock_reel ) { $stock = "<a href='#' title='Header' data-toggle='popover' data-placement='top' data-content='Content' class='badge badge-pill badge-danger'><i class='fas fa-warehouse'></i> ".__( 'Replenishment', 'doliconnect')."</a>"; }
-elseif ( $minstock >= 0 && $maxstock <= $product->seuil_stock_alerte ) { $stock = "<a href='#' title='Header' data-toggle='popover' data-placement='top' data-content='Content' class='badge badge-pill badge-warning'><i class='fas fa-warehouse'></i> ".__( 'Limited stock', 'doliconnect')."</a>"; } 
-else { $stock = "<a href='#' title='Header' data-toggle='popover' data-placement='top' data-content='Content' class='badge badge-pill badge-success'><i class='fas fa-warehouse'></i> ".__( 'In stock', 'doliconnect')."</a>"; }
-}
-
-$stock .= "<script>
-jQuery(document).ready(function(){
-jQuery('[data-toggle='popover']').popover();   
-});
-</script>";
+if ( $maxstock <= 0 || (isset($product->array_options->options_packaging) && $maxstock <= $product->array_options->options_packaging ) ) { $stock = "<span class='badge badge-pill badge-dark'><i class='fas fa-warehouse'></i> ".__( 'Out of stock', 'doliconnect')."</span>"; }  
+elseif ( ($minstock <= 0 || (isset($product->array_options->options_packaging) && $product->stock_reel < $product->array_options->options_packaging)) && $maxstock >= 0 && $product->stock_theorique > $product->stock_reel ) { $stock = "<span class='badge badge-pill badge-danger'><i class='fas fa-warehouse'></i> ".__( 'Replenishment', 'doliconnect')."</span>"; }
+elseif ( $minstock >= 0 && $maxstock <= $product->seuil_stock_alerte ) { $stock = "<span class='badge badge-pill badge-warning'><i class='fas fa-warehouse'></i> ".__( 'Limited stock', 'doliconnect')."</span>"; } 
+else { $stock = "<span class='badge badge-pill badge-success'><i class='fas fa-warehouse'></i> ".__( 'In stock', 'doliconnect')."</span>"; }
+} 
 
 return $stock;
 }
