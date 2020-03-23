@@ -784,9 +784,9 @@ $doliline .= "<button class='form-control form-control-sm' name='updateorderprod
 $doliline .= "<select class='form-control form-control-sm' name='updateorderproduct[".$line->fk_product."][qty]' onchange='ChangeDoliCart();'>";
 if ( ($product->stock_reel-$line->qty > 0 && $product->type == '0') ) {
 if (isset($product->array_options->options_packaging) && !empty($product->array_options->options_packaging)) {
-$m1 = 15*$product->array_options->options_packaging;
+$m1 = get_option('dolicartlist')*$product->array_options->options_packaging;
 } else {
-$m1 = 15;
+$m1 = get_option('dolicartlist');
 }
 if ( $product->stock_reel-$line->qty >= $m1 || empty(doliconst('MAIN_MODULE_STOCK')) ) {
 $m2 = $m1;

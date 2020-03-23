@@ -404,9 +404,9 @@ $button .= '</tbody></table>';
 if ( is_user_logged_in() && !empty($add) && !empty(doliconst('MAIN_MODULE_COMMANDE')) && doliconnectid('dolicart') > 0 ) {
 if ( ($product->stock_reel-$qty > 0 && $product->type == '0') ) {
 if (isset($product->array_options->options_packaging) && !empty($product->array_options->options_packaging)) {
-$m1 = 15*$product->array_options->options_packaging;
+$m1 = get_option('dolicartlist')*$product->array_options->options_packaging;
 } else {
-$m1 = 15;
+$m1 = get_option('dolicartlist');
 }
 if ( $product->stock_reel-$qty >= $m1 || empty(doliconst('MAIN_MODULE_STOCK')) ) {
 $m2 = $m1;

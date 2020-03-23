@@ -265,6 +265,7 @@ delete_option('doliconnect_google');}
             update_option('doliconnect_ipkiosk', array_values(array_filter(array_map('trim', explode(PHP_EOL, $_REQUEST['doliconnect_ipkiosk'])))));             
             update_option('wp_page_for_privacy_policy', sanitize_text_field($_REQUEST['wp_page_for_privacy_policy']));
             update_option('dolishop', sanitize_text_field($_REQUEST['dolishop']));
+            update_option('dolicartlist', sanitize_text_field($_REQUEST['dolicartlist']));
             update_option('dolisupplier', sanitize_text_field($_REQUEST['dolisupplier']));             
             update_option('doliconnect_social_facebook', sanitize_text_field($_REQUEST['doliconnect_social_facebook']));
             update_option('doliconnect_social_twitter', sanitize_text_field($_REQUEST['doliconnect_social_twitter']));
@@ -404,7 +405,19 @@ echo "<input id='dolibarr_entity'  name='dolibarr_entity' type='text' value='".(
     'option_none_value' => '0', 
     'selected' => get_option('dolicart') 
 );
-           wp_dropdown_pages($args); ?></td>
+           wp_dropdown_pages($args); ?>
+           
+           <select name="dolicartlist" id="dolicartlist">
+           <option value="5" <?php if (get_option('dolicartlist') == '5') { ?> selected <?php } ?>>5</option>
+           <option value="10" <?php if (get_option('dolicartlist') == '10' || empty(get_option('dolicartlist'))) { ?> selected <?php } ?>>10 (<?php _e('by default', 'doliconnect') ?>)</option>
+           <option value="15" <?php if (get_option('dolicartlist') == '15') { ?> selected <?php } ?>>15</option>
+           <option value="20" <?php if (get_option('dolicartlist') == '20') { ?> selected <?php } ?>>20</option>
+           <option value="25" <?php if (get_option('dolicartlist') == '25') { ?> selected <?php } ?>>25</option>
+           <option value="30" <?php if (get_option('dolicartlist') == '30') { ?> selected <?php } ?>>30</option>
+           <option value="40" <?php if (get_option('dolicartlist') == '40') { ?> selected <?php } ?>>40</option>
+           <option value="50" <?php if (get_option('dolicartlist') == '50') { ?> selected <?php } ?>>50</option>
+           </select> <?php _e('choices of the amount of product', 'doliconnect') ?>
+           </td>
             </tr>
             <tr>
                 <th style="width:150px;"><label for="dolibarr_shop">dolibarr_donation</label></th>
