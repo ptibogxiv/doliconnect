@@ -83,7 +83,7 @@ elseif ( ($minstock <= 0 || (isset($product->array_options->options_packaging) &
 elseif ( $minstock >= 0 && $maxstock <= $product->seuil_stock_alerte ) { $stock = "<span class='badge badge-pill badge-warning'><i class='fas fa-warehouse'></i> ".__( 'Limited stock', 'doliconnect')."</span>"; } 
 else { $stock = "<span class='badge badge-pill badge-success'><i class='fas fa-warehouse'></i> ".__( 'In stock', 'doliconnect')."</span>"; }
 }
-//$stock .= $product->stock_theorique;
+
 return $stock;
 }
 
