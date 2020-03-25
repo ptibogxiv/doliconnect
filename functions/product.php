@@ -211,7 +211,7 @@ if ( isset($object->lines) && $object->lines != null ) {
 $list = null;
 foreach ($object->lines as $line) {
 //$product = callDoliApi("GET", "/products/".$post->product_id."?includestockdata=1&includesubproducts=true", null, 0);
-$list .= "<li class='list-group-item list-group-item-light d-flex justify-content-between lh-condensed'><div><h6 class='my-0'>".$line->libelle."</h6><small class='text-muted'>".__( 'Quantity', 'doliconnect').": ".$line->qty."</small></div>";
+$list .= "<li class='list-group-item list-group-item-light d-flex justify-content-between lh-condensed'><div><small class='text-muted'>".$line->libelle."</small><br><small class='text-muted'>".__( 'Quantity', 'doliconnect').": ".$line->qty."</small></div>";
 $remise+=$line->subprice-$line->total_ht;
 $subprice+=$line->subprice;
 $qty+=$line->qty;
