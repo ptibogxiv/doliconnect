@@ -404,8 +404,10 @@ $button .= '</tbody></table>';
 if ( is_user_logged_in() && !empty($add) && !empty(doliconst('MAIN_MODULE_COMMANDE')) && doliconnectid('dolicart') > 0 ) {
 if ( ($product->stock_reel-$qty > 0 && $product->type == '0') ) {
 if (isset($product->array_options->options_packaging) && !empty($product->array_options->options_packaging)) {
+$m0 = 1*$product->array_options->options_packaging;
 $m1 = get_option('dolicartlist')*$product->array_options->options_packaging;
 } else {
+$m0 = 1;
 $m1 = get_option('dolicartlist');
 }
 if ( $product->stock_reel-$qty >= $m1 || empty(doliconst('MAIN_MODULE_STOCK')) ) {
@@ -416,7 +418,7 @@ $m2 = $product->stock_reel;
 } else {
 if ( isset($line) && $line->qty > 1 ) { $m2 = $qty; }
 else { $m2 = 1; }
-}
+} 
 if (isset($product->array_options->options_packaging) && !empty($product->array_options->options_packaging)) {
 $step = $product->array_options->options_packaging;
 } else {
@@ -425,13 +427,13 @@ $step = 1;
 $button .= "<div class='input-group mb-3'><select class='form-control form-control-sm' id='select' name='product-add-qty' ";
 if ( ( empty($product->stock_reel) || $m2 < $step) && $product->type == '0' && !empty(doliconst('MAIN_MODULE_STOCK')) ) { $button .= " disabled"; }
 $button .= ">";
-if ($m2 < $step)  { $button .= "<OPTION value='0' >".__( 'Delete', 'doliconnect')."</OPTION>"; }
+if ($m2 < $step)  { $button .= "<OPTION value='0' >".__( 'Unavailable', 'doliconnect')."</OPTION>"; }
 if (!empty($m2) && $m2 >= $step) {
 if ($step >1 && !empty($quantity)) $quantity = round($quantity/$step)*$step; 
 if (empty($qty) && $quantity > $m2) $quantity = $m2; 
 if ($m2 < $step)  { $button .= "<OPTION value='0' >".__( 'Delete', 'doliconnect')."</OPTION>"; } else
 foreach (range(0, $m2, $step) as $number) {
-		if ( $number == $qty || ($number == $quantity && empty($qty)) ) {
+		if ( $number == $qty || ($number == $quantity && empty($qty)) || ($number == $m0 && empty($qty) && empty($quantity))) {
 $button .= "<option value='$number' selected='selected'>x ".$number."</option>";
 		} else {
 $button .= "<option value='$number' >x ".$number."</option>";

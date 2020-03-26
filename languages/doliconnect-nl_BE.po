@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2020-03-23 17:19+0100\n"
-"PO-Revision-Date: 2020-03-23 17:19+0100\n"
+"POT-Creation-Date: 2020-03-26 15:26+0100\n"
+"PO-Revision-Date: 2020-03-26 15:28+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: nl_BE\n"
@@ -103,8 +103,8 @@ msgid "one IP per line without space or comma"
 msgstr "één IP per regel zonder ruimte of komma"
 
 #: admin/admin.php:366 admin/admin.php:380 admin/admin.php:392
-#: admin/admin.php:404 admin/admin.php:429 admin/admin.php:444
-#: admin/admin.php:455 admin/admin.php:468 admin/admin.php:480
+#: admin/admin.php:404 admin/admin.php:431 admin/admin.php:446
+#: admin/admin.php:457 admin/admin.php:470 admin/admin.php:482
 #: dashboard/dashboard.php:1652 dashboard/dashboard.php:1670
 #: dashboard/dashboard.php:1689 dashboard/dashboard.php:1710
 #: dashboard/templates.php:900 functions/tools.php:187 functions/tools.php:230
@@ -120,11 +120,11 @@ msgstr "Bericht op aanmeldingspagina"
 msgid "by default"
 msgstr "standaard"
 
-#: admin/admin.php:419
+#: admin/admin.php:421
 msgid "choices of the amount of product"
 msgstr "keuzes van de hoeveelheid product"
 
-#: admin/admin.php:459
+#: admin/admin.php:461
 msgid "(set your default wordpress legacy page)"
 msgstr "(stel uw standaard pagina wordpress legacy in)"
 
@@ -241,7 +241,7 @@ msgstr "jaarlijkse"
 msgid "Including a federal part of"
 msgstr "Inclusief een federaal deel van"
 
-#: blocks/membership/block.php:180 functions/product.php:460
+#: blocks/membership/block.php:180 functions/product.php:462
 msgid "Contact us"
 msgstr "Contacteer ons"
 
@@ -380,9 +380,9 @@ msgstr "Nieuwe contactpersoon"
 msgid "Edit"
 msgstr "Bewerk"
 
-#: dashboard/dashboard.php:392 functions/product.php:428
-#: functions/product.php:432 functions/tools.php:782 functions/tools.php:805
-#: functions/tools.php:807 functions/tools.php:1036
+#: dashboard/dashboard.php:392 functions/product.php:434
+#: functions/tools.php:782 functions/tools.php:805 functions/tools.php:807
+#: functions/tools.php:1036
 msgid "Delete"
 msgstr "Verwijder"
 
@@ -1086,7 +1086,7 @@ msgid "Access restricted to users"
 msgstr "Toegang beperkt tot gebruikers"
 
 #: dashboard/templates.php:720 dashboard/templates.php:771
-#: functions/product.php:453 functions/tools.php:830
+#: functions/product.php:455 functions/tools.php:830
 msgid "Sign in"
 msgstr "Aanmelden"
 
@@ -1459,16 +1459,20 @@ msgstr "Verkoopprijs"
 msgid "Your price"
 msgstr "Uw Prijs"
 
-#: functions/product.php:453 functions/product.php:455 functions/tools.php:830
+#: functions/product.php:430
+msgid "Unavailable"
+msgstr "Niet beschikbaar"
+
+#: functions/product.php:455 functions/product.php:457 functions/tools.php:830
 #: functions/tools.php:832
 msgid "log in"
 msgstr "aanmelden"
 
-#: functions/product.php:460
+#: functions/product.php:462
 msgid "Login"
 msgstr "Login"
 
-#: functions/product.php:463
+#: functions/product.php:465
 #, php-format
 msgid "you get %u %% discount"
 msgstr "u krijgt% u%% korting"
@@ -2080,10 +2084,6 @@ msgstr "https://www.ptibogxiv.net/en"
 #, fuzzy
 #~ msgid "Debit of"
 #~ msgstr "Debet van"
-
-#, fuzzy
-#~ msgid "Soon available"
-#~ msgstr "Binnenkort beschikbaar"
 
 #, fuzzy
 #~ msgid "Mandate"
