@@ -76,7 +76,8 @@ jQuery(document).ready(function(){
       $("#popover-'.$product->id.'").popover({
       placement : "auto",
       delay: { "show": 150, "hide": 150 },
-      trigger : "focus"
+      trigger : "focus",
+      html: true,
       })
 });</script>';
 
