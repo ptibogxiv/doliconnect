@@ -1161,6 +1161,9 @@ print "</center></td>";
 
 print "<td width='80%' style='border:0px'><b>".doliproduct($product, 'label')."</b>";
 print "<div class='row'><div class='col'><p><small><i class='fas fa-toolbox fa-fw'></i> ".(!empty($product->ref)?$product->ref:'-')." | <i class='fas fa-barcode fa-fw'></i> ".(!empty($product->barcode)?$product->barcode:'-')."</small>";
+if ( ! empty(doliconnectid('dolicart')) ) { 
+print "<br>".doliproductstock($product);
+}
 if ( !empty($product->country_id) ) {  
 if ( function_exists('pll_the_languages') ) { 
 $lang = pll_current_language('locale');
@@ -1169,9 +1172,7 @@ $lang = $current_user->locale;
 }
 $country = callDoliApi("GET", "/setup/dictionary/countries/".$product->country_id."?lang=".$lang, null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 print "<br><small><span class='flag-icon flag-icon-".strtolower($product->country_code)."'></span> ".$country->label."</small>"; }
-if ( ! empty(doliconnectid('dolicart')) ) { 
-print "<br>".doliproductstock($product);
-}  
+
 $arr_params = array( 'category' => isset($_GET['category'])?$_GET['category']:null, 'subcategory' => isset($_GET['subcategory'])?$_GET['subcategory']:null, 'product' => $product->id);  
 $return = esc_url( add_query_arg( $arr_params, doliconnecturl('dolishop')) );
 print "<a href='".$return."' class='btn btn-link btn-block'>En savoir plus</a>";
