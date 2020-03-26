@@ -24,7 +24,7 @@ $content .= doliconnect_image('product', $product->id, null, esc_attr(isset($_GE
 $content .= '</center>';
 //$content .= wp_get_attachment_image( $attributes['mediaID'], "ptibogxiv_square", "", array( "class" => "img-fluid" ) );
 $content .= "</div>";
-$content .= "<div class='col-12 col-md-8'><h5 class='card-title'><b>".doliproduct($product, 'label')."</b>";
+$content .= "<div class='col-12 col-md-8'><h6 class='card-title'><b>".doliproduct($product, 'label')."</b>";
 if ( ! empty(doliconnectid('dolicart')) && !isset($attributes['hideStock']) ) { 
 $content .= " ".doliproductstock($product);
 }
