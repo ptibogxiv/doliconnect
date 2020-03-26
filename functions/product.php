@@ -89,7 +89,7 @@ $minstock = min(array($product->stock_theorique,$product->stock_reel));
 $maxstock = max(array($product->stock_theorique,$product->stock_reel));
 
 if (!empty(doliconnectid('dolishipping'))) {
-$shipping = '<a href="'.doliconnecturl('doliaccount').'" class="btn btn-link btn-block btn-sm">'.esc_html__( 'Shipping informations', 'doliconnect').'</a>';
+$shipping = '<a href="'.doliconnecturl('dolishipping').'" class="btn btn-link btn-block btn-sm">'.esc_html__( 'Shipping informations', 'doliconnect').'</a>';
 } else {
 $shipping = '';
 }
