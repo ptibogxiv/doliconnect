@@ -389,7 +389,7 @@ echo "<input id='dolibarr_entity'  name='dolibarr_entity' type='text' value='".(
                 <td >
 <?php 
            $args = array(
-    'name' => 'dolidolishipping', 
+    'name' => 'dolishipping', 
     'show_option_none' => __( '- Select -', 'doliconnect' ), 
     'option_none_value' => '0', 
     'selected' => get_option('dolishipping') 
