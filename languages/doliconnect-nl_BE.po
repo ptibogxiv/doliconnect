@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2020-03-26 15:26+0100\n"
-"PO-Revision-Date: 2020-03-26 15:28+0100\n"
+"POT-Creation-Date: 2020-03-26 17:20+0100\n"
+"PO-Revision-Date: 2020-03-26 17:20+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: nl_BE\n"
@@ -241,7 +241,7 @@ msgstr "jaarlijkse"
 msgid "Including a federal part of"
 msgstr "Inclusief een federaal deel van"
 
-#: blocks/membership/block.php:180 functions/product.php:462
+#: blocks/membership/block.php:180 functions/product.php:467
 msgid "Contact us"
 msgstr "Contacteer ons"
 
@@ -380,7 +380,7 @@ msgstr "Nieuwe contactpersoon"
 msgid "Edit"
 msgstr "Bewerk"
 
-#: dashboard/dashboard.php:392 functions/product.php:434
+#: dashboard/dashboard.php:392 functions/product.php:439
 #: functions/tools.php:782 functions/tools.php:805 functions/tools.php:807
 #: functions/tools.php:1036
 msgid "Delete"
@@ -1086,7 +1086,7 @@ msgid "Access restricted to users"
 msgstr "Toegang beperkt tot gebruikers"
 
 #: dashboard/templates.php:720 dashboard/templates.php:771
-#: functions/product.php:455 functions/tools.php:830
+#: functions/product.php:460 functions/tools.php:830
 msgid "Sign in"
 msgstr "Aanmelden"
 
@@ -1201,7 +1201,7 @@ msgstr "Retournerern"
 msgid "Contacts"
 msgstr "Contactpersonen"
 
-#: dashboard/templates.php:1480 functions/product.php:223
+#: dashboard/templates.php:1480 functions/product.php:228
 msgid "update"
 msgstr "updaten"
 
@@ -1375,104 +1375,126 @@ msgstr ""
 msgid "Some errors occurred:"
 msgstr "Er zijn enkele fouten opgetreden:"
 
-#: functions/product.php:75
+#: functions/product.php:80
 msgid "Available"
 msgstr "Beschikbaar"
 
-#: functions/product.php:81
+#: functions/product.php:86
 msgid "Out of stock"
 msgstr "Geen stock"
 
-#: functions/product.php:82
+#: functions/product.php:86
+msgid "This item is out of stock and can not be ordered or shipped."
+msgstr ""
+"Dit artikel is niet op voorraad en kan niet worden besteld of verzonden."
+
+#: functions/product.php:87
 msgid "Replenishment"
 msgstr "Aanvulling"
 
-#: functions/product.php:83
+#: functions/product.php:87
+msgid "This item is not in stock but should be available soon."
+msgstr ""
+"Dit artikel is niet op voorraad, maar moet binnenkort beschikbaar zijn."
+
+#: functions/product.php:88
 msgid "Limited stock"
 msgstr "Beperkte voorraad"
 
-#: functions/product.php:84
+#: functions/product.php:88
+msgid ""
+"This item is in stock and can be shipped immediately but only in limited "
+"quantities."
+msgstr ""
+"Dit artikel is op voorraad en kan onmiddellijk maar slechts in beperkte "
+"hoeveelheden worden verzonden."
+
+#: functions/product.php:89
 msgid "In stock"
 msgstr "Geen stock"
 
-#: functions/product.php:214
+#: functions/product.php:89
+msgid "This item is in stock and can be shipped immediately."
+msgstr "Dit artikel is op voorraad en kan direct verzonden worden."
+
+#: functions/product.php:219
 msgid "Quantity"
 msgstr "Hoeveelheid"
 
-#: functions/product.php:222
+#: functions/product.php:227
 msgid "Cart"
 msgstr "Winkelmandje"
 
-#: functions/product.php:222
+#: functions/product.php:227
 #, php-format
 msgid "%s item"
 msgid_plural "%s items"
 msgstr[0] "%s punt"
 msgstr[1] "%s artikelen"
 
-#: functions/product.php:224
+#: functions/product.php:229
 msgid "unchangeable"
 msgstr "onveranderlijk"
 
-#: functions/product.php:231
+#: functions/product.php:236
 msgid "including Discount"
 msgstr "inclusief korting"
 
-#: functions/product.php:237
+#: functions/product.php:242
 msgid "including VAT"
 msgstr "inclusief BTW"
 
-#: functions/product.php:243
+#: functions/product.php:248
 msgid "Already paid"
 msgstr "Al betaald"
 
-#: functions/product.php:246
+#: functions/product.php:251
 msgid "Remains to be paid"
 msgstr "Nog te betalen"
 
-#: functions/product.php:249
+#: functions/product.php:254
 msgid "Total to pay"
 msgstr "Totaal te betalen"
 
-#: functions/product.php:346
+#: functions/product.php:351
 msgid "Price"
 msgstr "Prijs"
 
-#: functions/product.php:350 functions/product.php:369
-#: functions/product.php:386 functions/tools.php:859
+#: functions/product.php:355 functions/product.php:374
+#: functions/product.php:391 functions/tools.php:859
 msgid "hour"
 msgstr "uur"
 
-#: functions/product.php:356 functions/product.php:396
+#: functions/product.php:361 functions/product.php:401
 msgid "Our prices are incl. VAT"
 msgstr "Onze prijzen zijn incl. BTW"
 
-#: functions/product.php:356 functions/product.php:396
+#: functions/product.php:361 functions/product.php:401
 msgid "Our prices are excl. VAT"
 msgstr "Onze prijzen zijn excl. BTW"
 
-#: functions/product.php:366
+#: functions/product.php:371
 msgid "Selling Price"
 msgstr "Verkoopprijs"
 
-#: functions/product.php:383
+#: functions/product.php:388
 msgid "Your price"
 msgstr "Uw Prijs"
 
-#: functions/product.php:430
+#: functions/product.php:435
 msgid "Unavailable"
 msgstr "Niet beschikbaar"
 
-#: functions/product.php:455 functions/product.php:457 functions/tools.php:830
+#: functions/product.php:460 functions/product.php:462 functions/tools.php:830
 #: functions/tools.php:832
 msgid "log in"
 msgstr "aanmelden"
 
-#: functions/product.php:462
+#: functions/product.php:467
 msgid "Login"
 msgstr "Login"
 
-#: functions/product.php:465
+#: functions/product.php:470
 #, php-format
 msgid "you get %u %% discount"
 msgstr "u krijgt% u%% korting"

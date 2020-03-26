@@ -24,10 +24,10 @@ $version='4.4.1';
 
 	wp_register_style( 'bootstrap.min.css', plugins_url( 'doliconnect/includes/bootstrap/css/'.$css.'bootstrap.min.css'), array(), $version);
 	wp_enqueue_style( 'bootstrap.min.css');
-  wp_register_script( 'popper.min.js', plugins_url( 'doliconnect/includes/bootstrap/js/popper.min.js'), array('jquery'), '1.16', true);
-	wp_enqueue_script( 'popper.min.js');
-	wp_register_script( 'bootstrap.min.js', plugins_url( 'doliconnect/includes/bootstrap/js/bootstrap.min.js'), array('jquery'), $version, true);
-  wp_enqueue_script( 'bootstrap.min.js');
+  //wp_register_script( 'popper.min.js', plugins_url( 'doliconnect/includes/bootstrap/js/popper.min.js'), array('jquery'), '1.16', true);
+	//wp_enqueue_script( 'popper.min.js');
+	wp_register_script( 'bootstrap.bundle.min.js', plugins_url( 'doliconnect/includes/bootstrap/js/bootstrap.bundle.min.js'), array('jquery'), $version, true);
+  wp_enqueue_script( 'bootstrap.bundle.min.js');
   wp_register_script( 'font-awesome', '//use.fontawesome.com/releases/v5.13.0/js/all.js', array(), '5.13.0' );
 	wp_enqueue_script( 'font-awesome');
   wp_register_style( 'bootstrap-social', plugins_url( 'doliconnect/includes/bootstrap/css/bootstrap-social.css'), array(), $version);

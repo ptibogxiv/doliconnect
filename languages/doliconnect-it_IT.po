@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2020-03-23 17:18+0100\n"
-"PO-Revision-Date: 2020-03-23 17:19+0100\n"
+"POT-Creation-Date: 2020-03-26 17:21+0100\n"
+"PO-Revision-Date: 2020-03-26 17:21+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it_IT\n"
@@ -103,8 +103,8 @@ msgid "one IP per line without space or comma"
 msgstr "un indirizzo IP per riga senza spazi o virgole"
 
 #: admin/admin.php:366 admin/admin.php:380 admin/admin.php:392
-#: admin/admin.php:404 admin/admin.php:429 admin/admin.php:444
-#: admin/admin.php:455 admin/admin.php:468 admin/admin.php:480
+#: admin/admin.php:404 admin/admin.php:431 admin/admin.php:446
+#: admin/admin.php:457 admin/admin.php:470 admin/admin.php:482
 #: dashboard/dashboard.php:1652 dashboard/dashboard.php:1670
 #: dashboard/dashboard.php:1689 dashboard/dashboard.php:1710
 #: dashboard/templates.php:900 functions/tools.php:187 functions/tools.php:230
@@ -120,11 +120,11 @@ msgstr "Messaggio nella pagina di accesso"
 msgid "by default"
 msgstr "per impostazione predefinita"
 
-#: admin/admin.php:419
+#: admin/admin.php:421
 msgid "choices of the amount of product"
 msgstr "scelte della quantità di prodotto"
 
-#: admin/admin.php:459
+#: admin/admin.php:461
 msgid "(set your default wordpress legacy page)"
 msgstr "(impostare la pagina predefinita per la stampa di parola legacy)"
 
@@ -240,7 +240,7 @@ msgstr "annuale"
 msgid "Including a federal part of"
 msgstr "Compresa una parte federale"
 
-#: blocks/membership/block.php:180 functions/product.php:460
+#: blocks/membership/block.php:180 functions/product.php:467
 msgid "Contact us"
 msgstr "Contattaci"
 
@@ -379,9 +379,9 @@ msgstr "Nuovo contatto"
 msgid "Edit"
 msgstr "Modifica"
 
-#: dashboard/dashboard.php:392 functions/product.php:428
-#: functions/product.php:432 functions/tools.php:782 functions/tools.php:805
-#: functions/tools.php:807 functions/tools.php:1036
+#: dashboard/dashboard.php:392 functions/product.php:439
+#: functions/tools.php:782 functions/tools.php:805 functions/tools.php:807
+#: functions/tools.php:1036
 msgid "Delete"
 msgstr "Elimina"
 
@@ -1084,7 +1084,7 @@ msgid "Access restricted to users"
 msgstr "Accesso limitato agli utenti"
 
 #: dashboard/templates.php:720 dashboard/templates.php:771
-#: functions/product.php:453 functions/tools.php:830
+#: functions/product.php:460 functions/tools.php:830
 msgid "Sign in"
 msgstr "Accedi"
 
@@ -1197,7 +1197,7 @@ msgstr "Ritorno"
 msgid "Contacts"
 msgstr "Contatti"
 
-#: dashboard/templates.php:1480 functions/product.php:223
+#: dashboard/templates.php:1480 functions/product.php:228
 msgid "update"
 msgstr "aggiorna"
 
@@ -1372,100 +1372,126 @@ msgstr ""
 msgid "Some errors occurred:"
 msgstr "Si sono verificati degli errori:"
 
-#: functions/product.php:75
+#: functions/product.php:80
 msgid "Available"
 msgstr "Disponibile"
 
-#: functions/product.php:81
+#: functions/product.php:86
 msgid "Out of stock"
 msgstr "Esaurito"
 
-#: functions/product.php:82
+#: functions/product.php:86
+msgid "This item is out of stock and can not be ordered or shipped."
+msgstr "Questo articolo è esaurito e non può essere ordinato o spedito."
+
+#: functions/product.php:87
 msgid "Replenishment"
 msgstr "Reintegro"
 
-#: functions/product.php:83
+#: functions/product.php:87
+msgid "This item is not in stock but should be available soon."
+msgstr ""
+"Questo articolo non è disponibile in magazzino, ma dovrebbe essere "
+"disponibile a breve."
+
+#: functions/product.php:88
 msgid "Limited stock"
 msgstr "Scorte limitate"
 
-#: functions/product.php:84
+#: functions/product.php:88
+msgid ""
+"This item is in stock and can be shipped immediately but only in limited "
+"quantities."
+msgstr ""
+"Questo articolo è in magazzino e può essere spedito immediatamente ma solo "
+"in quantità limitate."
+
+#: functions/product.php:89
 msgid "In stock"
 msgstr "Disponibile"
 
-#: functions/product.php:214
+#: functions/product.php:89
+msgid "This item is in stock and can be shipped immediately."
+msgstr "Questo articolo è in magazzino e può essere spedito immediatamente."
+
+#: functions/product.php:219
 msgid "Quantity"
 msgstr "Quantità"
 
-#: functions/product.php:222
+#: functions/product.php:227
 msgid "Cart"
 msgstr "Carrello"
 
-#: functions/product.php:222
+#: functions/product.php:227
 #, php-format
 msgid "%s item"
 msgid_plural "%s items"
 msgstr[0] "%s elemento"
 msgstr[1] "%s elementi"
 
-#: functions/product.php:224
+#: functions/product.php:229
 msgid "unchangeable"
 msgstr "immutabile"
 
-#: functions/product.php:231
+#: functions/product.php:236
 msgid "including Discount"
 msgstr "incluso lo sconto"
 
-#: functions/product.php:237
+#: functions/product.php:242
 msgid "including VAT"
 msgstr "IVA inclusa"
 
-#: functions/product.php:243
+#: functions/product.php:248
 msgid "Already paid"
 msgstr "Già pagato"
 
-#: functions/product.php:246
+#: functions/product.php:251
 msgid "Remains to be paid"
 msgstr "Resta da pagare"
 
-#: functions/product.php:249
+#: functions/product.php:254
 msgid "Total to pay"
 msgstr "Totale da pagare"
 
-#: functions/product.php:346
+#: functions/product.php:351
 msgid "Price"
 msgstr "Prezzo"
 
-#: functions/product.php:350 functions/product.php:369
-#: functions/product.php:386 functions/tools.php:859
+#: functions/product.php:355 functions/product.php:374
+#: functions/product.php:391 functions/tools.php:859
 msgid "hour"
 msgstr "ora"
 
-#: functions/product.php:356 functions/product.php:396
+#: functions/product.php:361 functions/product.php:401
 msgid "Our prices are incl. VAT"
 msgstr "Prezzi IVA incl."
 
-#: functions/product.php:356 functions/product.php:396
+#: functions/product.php:361 functions/product.php:401
 msgid "Our prices are excl. VAT"
 msgstr "Prezzi IVA esc."
 
-#: functions/product.php:366
+#: functions/product.php:371
 msgid "Selling Price"
 msgstr "Prezzo di Vendita"
 
-#: functions/product.php:383
+#: functions/product.php:388
 msgid "Your price"
 msgstr "Prezzo"
 
-#: functions/product.php:453 functions/product.php:455 functions/tools.php:830
+#: functions/product.php:435
+msgid "Unavailable"
+msgstr "Non disponibile"
+
+#: functions/product.php:460 functions/product.php:462 functions/tools.php:830
 #: functions/tools.php:832
 msgid "log in"
 msgstr "accedi"
 
-#: functions/product.php:460
+#: functions/product.php:467
 msgid "Login"
 msgstr "Accedi"
 
-#: functions/product.php:463
+#: functions/product.php:470
 #, php-format
 msgid "you get %u %% discount"
 msgstr "ottieni %u %% di sconto"
@@ -2077,9 +2103,6 @@ msgstr "https://www.ptibogxiv.net/en"
 #, fuzzy
 #~ msgid "Debit of"
 #~ msgstr "Addebito di"
-
-#~ msgid "Soon available"
-#~ msgstr "Presto disponibile"
 
 #~ msgid "Mandate"
 #~ msgstr "Mandato"
