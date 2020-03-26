@@ -26,7 +26,7 @@ $content .= '</center>';
 $content .= "</div>";
 $content .= "<div class='col-12 col-md-8'><h6 class='card-title'><b>".doliproduct($product, 'label')."</b>";
 if ( ! empty(doliconnectid('dolicart')) && !isset($attributes['hideStock']) ) { 
-$content .= " ".doliproductstock($product);
+$content .= ' '.doliproductstock($product);
 }
 $content .= "</h5><small>".__( 'Reference:', 'doliconnect')." ".$product->ref."</small>"; 
 if ( !empty($product->barcode) ) { $content .= "<br><small>".__( 'Barcode:', 'doliconnect')." ".$product->barcode."</small>"; }
