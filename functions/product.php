@@ -77,7 +77,7 @@ jQuery(document).ready(function(){
       placement : "auto",
       delay: { "show": 150, "hide": 150 },
       trigger : "focus",
-      html: true,
+      html : true
       })
 });</script>';
 
@@ -98,7 +98,7 @@ if ( $maxstock <= 0 || (isset($product->array_options->options_packaging) && $ma
 elseif ( ($minstock <= 0 || (isset($product->array_options->options_packaging) && $product->stock_reel < $product->array_options->options_packaging)) && $maxstock >= 0 && $product->stock_theorique > $product->stock_reel ) { $stock .= "<a tabindex='0' id='popover-".$product->id."' class='badge badge-pill badge-danger text-white' title='".__( 'Replenishment', 'doliconnect')."' data-container='body' data-toggle='popover' data-trigger='focus' data-content='".sprintf( esc_html__( 'This item is not in stock but should be available soon. %s', 'doliconnect'), $shipping)."'><i class='fas fa-warehouse'></i> ".__( 'Replenishment', 'doliconnect')."</a>"; }
 elseif ( $minstock >= 0 && $maxstock <= $product->seuil_stock_alerte ) { $stock .= "<a tabindex='0' id='popover-".$product->id."' class='badge badge-pill badge-warning text-white' data-container='body' data-toggle='popover' data-trigger='focus' title='".__( 'Limited stock', 'doliconnect')."' data-content='".sprintf( esc_html__( 'This item is in stock and can be shipped immediately but only in limited quantities. %s', 'doliconnect'), $shipping)."'><i class='fas fa-warehouse'></i> ".__( 'Limited stock', 'doliconnect')."</a>"; } 
 else {
-$stock .= "<a tabindex='0' id='popover-".$product->id."' class='badge badge-pill badge-success text-white' data-container='body' data-toggle='popover' data-trigger='focus' title='".__( 'In stock', 'doliconnect')."' data-content='".sprintf( esc_html__( 'This item is in stock and can be shipped immediately. %s', 'doliconnect'), $shipping)."'><i class='fas fa-warehouse'></i> ".__( 'In stock', 'doliconnect')."</a>";
+$stock .= "<a tabindex='0' id='popover-".$product->id."' class='badge badge-pill badge-success text-white' data-container='body' data-toggle='popover' data-trigger='focus' title='".__( 'In stock', 'doliconnect')."' data-content='".sprintf( esc_html__( 'This item is in stock and can be shipped immediately. %s', 'doliconnect'), $shipping)."'><i class='fas fa-warehouse'></i> ".__( 'In stock', 'doliconnect').'</a>';
 }
 } 
 
