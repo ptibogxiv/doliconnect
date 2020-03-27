@@ -311,6 +311,7 @@ $request = "/categories/".esc_attr($shop)."?include_childs=true";
 $resultatsc = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 if ( !isset($resultatsc->error) && $resultatsc != null ) {
+print "<div class='list-group'>";
 foreach ($resultatsc->childs as $categorie) {
 
 print "<a href='".esc_url( add_query_arg( 'category', $categorie->id, doliconnecturl('dolishop')) )."' class='list-group-item list-group-item-action";
@@ -335,7 +336,9 @@ print "'>>".doliproduct($categorie, 'label')."</a>";
 
 }}
 
-}}
+}
+print "</div>";
+}
 } 
 
 print $args['after_widget'];  
