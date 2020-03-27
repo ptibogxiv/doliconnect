@@ -754,7 +754,7 @@ $doliline .= "<p><small><i class='fas fa-toolbox fa-fw'></i> ".(!empty($product-
 if(!empty(doliconst("PRODUIT_DESC_IN_FORM"))) $doliline .= '<p class="mb-1"><small>'.doliproduct($line, 'product_desc').'</small></p>';
 $doliline .= '<p><small><i>'.(isset($dates) ? $dates : null).'</i></small></p>';
 } else {
-$doliline .= '<a href="'.doliconnecturl('dolishipping').'">'.esc_html__( 'Shipping informations', 'doliconnect').'</a>';
+$doliline .= '<small><a href="'.doliconnecturl('dolishipping').'">'.esc_html__( 'Shipping informations', 'doliconnect').'</a></small>';
 }
 
 if ($product->stock_reel <= 0 && is_page(doliconnectid('dolicart')) && $product->type == '0' && !empty(doliconst('MAIN_MODULE_STOCK')) && empty(doliconst('STOCK_ALLOW_NEGATIVE_TRANSFER')) ) {
