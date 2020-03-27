@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
 "POT-Creation-Date: 2020-03-27 19:31+0100\n"
-"PO-Revision-Date: 2020-03-27 19:31+0100\n"
+"PO-Revision-Date: 2020-03-27 20:47+0100\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_FR\n"
@@ -1421,7 +1421,7 @@ msgstr ""
 
 #: functions/product.php:100
 msgid "few"
-msgstr "peu de"
+msgstr "quelques"
 
 #: functions/product.php:101
 msgid "Restocking in progress"
