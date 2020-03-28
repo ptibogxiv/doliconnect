@@ -747,7 +747,7 @@ $doliline .= '<i class="fas fa-shipping-fast fa-2x fa-fw"></i>';
 $doliline .= doliconnect_image('product', $line->fk_product, null, $refresh);
 }
 
-$doliline .= '</center></div><div class="col-8 col-sm-7 col-md-6 col-lg-7"><h6 class="mb-1">'.doliproduct($line, 'product_label').'</h6>';
+$doliline .= '</center></div><div class="col-8 col-sm-7 col-md-5 col-lg-6"><h6 class="mb-1">'.doliproduct($line, 'product_label').'</h6>';
 
 if ( doliconst('FRAIS_DE_PORT_ID_SERVICE_TO_USE') != $line->fk_product ) {
 $doliline .= "<p><small><i class='fas fa-toolbox fa-fw'></i> ".(!empty($product->ref)?$product->ref:'-')." | <i class='fas fa-barcode fa-fw'></i> ".(!empty($product->barcode)?$product->barcode:'-')."</small></p>";
@@ -761,7 +761,7 @@ if ($product->stock_reel <= 0 && is_page(doliconnectid('dolicart')) && $product-
 $doliline .= "<b>".__( "Sorry, this product is no longer available", 'doliconnect')."</b>";
 }
 
-$doliline .= '</div><div class="col d-none d-md-block col-md-2 text-right">';
+$doliline .= '</div><div class="col d-none d-md-block col-md-3 text-right">';
 if ( $object->statut == 0 && !is_page(doliconnectid('doliaccount')) && doliconst('FRAIS_DE_PORT_ID_SERVICE_TO_USE') != $line->fk_product  ) {
 $doliline .= '<center>'.doliproductstock($product).'</center>';
 if ( !empty($product->country_id) ) {  
