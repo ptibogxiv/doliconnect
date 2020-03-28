@@ -1040,8 +1040,8 @@ print "<li class='list-group-item list-group-item-light'><center>".__( 'No produ
 }
 print "</ul>"; 
 } elseif ( isset($_GET['product']) ) {
-
-$product = callDoliApi("GET", "/products/".esc_attr($_GET['product'])."?includestockdata=1", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$request = "/products/".esc_attr($_GET['product'])."?includestockdata=1";
+$product = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 print "<div class='card-body'>";
 print apply_filters( 'doliproductcard', $product, null);
 print "</div>";

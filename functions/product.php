@@ -4,7 +4,7 @@ function doliproduct($object, $value) {
 
 if ( function_exists('pll_the_languages') ) { 
 $lang = pll_current_language('locale');
-return isset($object->multilangs->$lang->$value) ? $object->multilangs->$lang->$value : $object->$value;
+return !empty($object->multilangs->$lang->$value) ? $object->multilangs->$lang->$value : $object->$value;
 } else {
 return $object->$value;
 }
