@@ -726,7 +726,10 @@ $includestock = 1;
 $product = callDoliApi("GET", "/products/".$line->fk_product."?includestockdata=".$includestock."&includesubproducts=true", null, dolidelay('cart', $refresh));
 }
 
-if ($product->stock_reel <= 0 && is_page(doliconnectid('dolicart')) && $product->type == '0' && !empty(doliconst('MAIN_MODULE_STOCK')) && empty(doliconst('STOCK_ALLOW_NEGATIVE_TRANSFER')) ) {
+if ($product->stock_reel <= $line->qty && is_page(doliconnectid('dolicart')) && $product->type == '0' && !empty(doliconst('MAIN_MODULE_STOCK')) && empty(doliconst('STOCK_ALLOW_NEGATIVE_TRANSFER')) ) {
+$doliline .= "<li class='list-group-item list-group-item-warning'>";
+define('dolilockcart', '1'); 
+} elseif ($product->stock_reel <= 0 && is_page(doliconnectid('dolicart')) && $product->type == '0' && !empty(doliconst('MAIN_MODULE_STOCK')) && empty(doliconst('STOCK_ALLOW_NEGATIVE_TRANSFER')) ) {
 $doliline .= "<li class='list-group-item list-group-item-danger'>";
 define('dolilockcart', '1'); 
 } else {
@@ -757,7 +760,9 @@ $doliline .= '<p><small><i>'.(isset($dates) ? $dates : null).'</i></small></p>';
 $doliline .= '<small><a href="'.doliconnecturl('dolishipping').'">'.esc_html__( 'Shipping informations', 'doliconnect').'</a></small>';
 }
 
-if ($product->stock_reel <= 0 && is_page(doliconnectid('dolicart')) && $product->type == '0' && !empty(doliconst('MAIN_MODULE_STOCK')) && empty(doliconst('STOCK_ALLOW_NEGATIVE_TRANSFER')) ) {
+if ($product->stock_reel <= $line->qty && is_page(doliconnectid('dolicart')) && $product->type == '0' && !empty(doliconst('MAIN_MODULE_STOCK')) && empty(doliconst('STOCK_ALLOW_NEGATIVE_TRANSFER')) ) {
+$doliline .= "<b>".__( "Sorry, this product is not available with this amount", 'doliconnect')."</b>";
+} elseif ($product->stock_reel <= 0 && is_page(doliconnectid('dolicart')) && $product->type == '0' && !empty(doliconst('MAIN_MODULE_STOCK')) && empty(doliconst('STOCK_ALLOW_NEGATIVE_TRANSFER')) ) {
 $doliline .= "<b>".__( "Sorry, this product is no longer available", 'doliconnect')."</b>";
 }
 
