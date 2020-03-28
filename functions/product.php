@@ -353,7 +353,7 @@ $price_ttc=$product->multiprices_ttc->$level;
 $price_ht=$product->multiprices->$level;
 $vat=$product->tva_tx;
 
-if (isset($add) && $add == 2) {
+if (isset($add) && $add < 0) {
 $button .= '<table class="table table-bordered table-sm"><tbody>'; 
 $button .= '<tr><td class="text-right">'.doliprice( (empty(get_option('dolibarr_b2bmode'))?$price_ttc:$price_ht), null, $currency)."</td></tr>";
 } else {
@@ -422,7 +422,7 @@ $button .= "</div></small></td></tr>";
 $button .= '</tbody></table>';
 }
 
-if ( is_user_logged_in() && empty($add) && !empty(doliconst('MAIN_MODULE_COMMANDE')) && doliconnectid('dolicart') > 0 ) {
+if ( is_user_logged_in() && $add <= 0 && !empty(doliconst('MAIN_MODULE_COMMANDE')) && doliconnectid('dolicart') > 0 ) {
 if ( ($product->stock_reel-$qty > 0 && $product->type == '0') ) {
 if (isset($product->array_options->options_packaging) && !empty($product->array_options->options_packaging)) {
 $m0 = 1*$product->array_options->options_packaging;
@@ -468,7 +468,7 @@ $button .= "><i class='fas fa-cart-plus fa-inverse fa-fw'></i></button></div></d
 //if ( $qty > 0 ) {
 //$button .= "<br /><div class='input-group'><a class='btn btn-block btn-warning' href='".doliconnecturl('dolicart')."' role='button' title='".__( 'Go to cart', 'doliconnect')."'>".__( 'Go to cart', 'doliconnect')."</a></div>";
 //}
-} elseif ( $add == 1 && doliconnectid('dolicart') > 0 ) {
+} elseif ( $add > 0 && doliconnectid('dolicart') > 0 ) {
 $arr_params = array( 'redirect_to' => doliconnecturl('dolishop'));
 $loginurl = esc_url( add_query_arg( $arr_params, wp_login_url( )) );
 
@@ -505,7 +505,9 @@ $list .= doliconnect_image('product', $product->id, null, esc_attr(isset($_GET["
 $list .= "</center></td>";
 
 $list .= "<td width='80%' style='border:0px'><b>".doliproduct($product, 'label')."</b>";
-$list .= "<div class='row'><div class='col'><p><small><i class='fas fa-toolbox fa-fw'></i> ".(!empty($product->ref)?$product->ref:'-')." | <i class='fas fa-barcode fa-fw'></i> ".(!empty($product->barcode)?$product->barcode:'-')."</small>";
+$list .= "<div class='row'><div class='col'><p><small><i class='fas fa-toolbox fa-fw'></i> ".(!empty($product->ref)?$product->ref:'-');
+if ( !empty($product->barcode) ) { $list .= " | <i class='fas fa-barcode fa-fw'></i> ".$product->barcode; }
+$list .= "</small>";
 if ( ! empty(doliconnectid('dolicart')) ) { 
 $list .= "<br>".doliproductstock($product);
 }
@@ -526,7 +528,7 @@ $list .= "</p></div>";
 
 if ( ! empty(doliconnectid('dolicart')) ) { 
 $list .= "<div class='col-12 col-md-6'><center>";
-$list .= doliconnect_addtocart($product, esc_attr(isset($_GET['category'])?$_GET['category']:null), 0, 2, 0);
+$list .= doliconnect_addtocart($product, esc_attr(isset($_GET['category'])?$_GET['category']:null), 0, -1, 0);
 $list .= "</center></div>";
 }
 $list .= "</div></td></tr></table></li>";
@@ -556,8 +558,9 @@ $card .= '</center>';
 //$card .= wp_get_attachment_image( $attributes['mediaID'], "ptibogxiv_square", "", array( "class" => "img-fluid" ) );
 $card .= "</div>";
 $card .= "<div class='col-12 col-md-8'><h6 class='card-title'><b>".doliproduct($product, 'label')."</b></h6>";
-$card .= "<small><i class='fas fa-toolbox fa-fw'></i> ".$product->ref; 
-if ( !empty($product->barcode) ) { $card .= " | <i class='fas fa-barcode fa-fw'></i> ".$product->barcode."</small>"; }
+$card .= "<small><i class='fas fa-toolbox fa-fw'></i> ".(!empty($product->ref)?$product->ref:'-'); 
+if ( !empty($product->barcode) ) { $card .= " | <i class='fas fa-barcode fa-fw'></i> ".$product->barcode; }
+$card .= "</small>";
 if ( ! empty(doliconnectid('dolicart')) && !isset($attributes['hideStock']) ) { 
 $card .= '<br>'.doliproductstock($product);
 }
