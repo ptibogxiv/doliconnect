@@ -557,7 +557,7 @@ $card .= doliconnect_image('product', $product->id, null, esc_attr(isset($_GET["
 $card .= '</center>';
 //$card .= wp_get_attachment_image( $attributes['mediaID'], "ptibogxiv_square", "", array( "class" => "img-fluid" ) );
 $card .= "</div>";
-$card .= "<div class='col-12 col-md-8'><h6 class='card-title'><b>".doliproduct($product, 'label')."</b></h6>";
+$card .= "<div class='col-12 col-md-8'><h6><b>".doliproduct($product, 'label')."</b></h6>";
 $card .= "<small><i class='fas fa-toolbox fa-fw'></i> ".(!empty($product->ref)?$product->ref:'-'); 
 if ( !empty($product->barcode) ) { $card .= " | <i class='fas fa-barcode fa-fw'></i> ".$product->barcode; }
 $card .= "</small>";
@@ -583,7 +583,7 @@ $card .= "<center>".__( 'Product/Service not in sale', 'doliconnect' )."</center
 } 
 $card .= "</div>";
 } else {
-$card .= "<center>".__( 'No product', 'doliconnect' )."</center>";
+$card .= "<center><br><br><br><br><center><div class='align-middle'><i class='fas fa-bomb fa-7x fa-fw'></i><h4>".__( 'Oops! This product does not appear to exist', 'doliconnect' )."</h4></div></center><br><br><br><br>";
 }
 
 return $card;
