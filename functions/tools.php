@@ -734,7 +734,7 @@ $doliline .= "<li class='list-group-item list-group-item-danger'>";
 define('dolilockcart', '1'); 
 } else {
 $doliline .= "<li class='list-group-item list-group-item-light'>";
-define('dolilockcart', '0'); 
+//define('dolilockcart', '0'); 
 }    
 if ( $line->date_start != '' && $line->date_end != '' )
 {
@@ -760,8 +760,8 @@ $doliline .= '<p><small><i>'.(isset($dates) ? $dates : null).'</i></small></p>';
 $doliline .= '<small><a href="'.doliconnecturl('dolishipping').'">'.esc_html__( 'Shipping informations', 'doliconnect').'</a></small>';
 }
 
-if ($product->stock_reel <= $line->qty && $product->stock_reel > 0 && is_page(doliconnectid('dolicart')) && $product->type == '0' && !empty(doliconst('MAIN_MODULE_STOCK')) && empty(doliconst('STOCK_ALLOW_NEGATIVE_TRANSFER')) ) {
-$doliline .= "<b>".__( "Sorry, this product is not available with this amount", 'doliconnect')."</b>";
+if ($product->stock_reel < $line->qty && $product->stock_reel > 0 && is_page(doliconnectid('dolicart')) && $product->type == '0' && !empty(doliconst('MAIN_MODULE_STOCK')) && empty(doliconst('STOCK_ALLOW_NEGATIVE_TRANSFER')) ) {
+$doliline .= "<b>".__( "Sorry, this product is not available with this quantity", 'doliconnect')."</b>";
 } elseif ($product->stock_reel <= 0 && is_page(doliconnectid('dolicart')) && $product->type == '0' && !empty(doliconst('MAIN_MODULE_STOCK')) && empty(doliconst('STOCK_ALLOW_NEGATIVE_TRANSFER')) ) {
 $doliline .= "<b>".__( "Sorry, this product is no longer available", 'doliconnect')."</b>";
 }
@@ -814,7 +814,9 @@ if (!empty($m2) && $m2 >= $step) {
 $doliline .= "<OPTION value='0' >".__( 'Delete', 'doliconnect')."</OPTION>";
 foreach (range(1*$step, $m2, $step) as $number) {
 		if ( $number == $line->qty ) {
-$doliline .= "<option value='$number' selected='selected'>".$number."</option>";
+$doliline .= "<option value='$number' selected='selected'";
+if ($product->stock_reel < $number && is_page(doliconnectid('dolicart')) && $product->type == '0' && !empty(doliconst('MAIN_MODULE_STOCK')) && empty(doliconst('STOCK_ALLOW_NEGATIVE_TRANSFER')) ) $doliline .= " disabled";
+$doliline .= ">".$number."</option>";
 		} else {
 $doliline .= "<option value='$number' >".$number."</option>";
 		}
