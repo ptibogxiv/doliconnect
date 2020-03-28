@@ -1013,17 +1013,17 @@ doliconnect_enqueues();
 $shop = doliconst("DOLICONNECT_CATSHOP", esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 //print $shop;
 
-print "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
+print "<div class='card shadow-sm'>";
 
 if ( defined("DOLIBUG")) {
 $request = null;
-print "<li class='list-group-item list-group-item-white'>";
+print "<ul class='list-group list-group-flush'><li class='list-group-item list-group-item-white'>";
 print dolibug($shop);
 print "</li>";
-
+print "</ul>";
 } else {
 if ( isset($_GET['search']) ) {
-
+print "<ul class='list-group list-group-flush'>";
 $request = "/products?sortfield=t.label&sortorder=ASC&sqlfilters=((t.label%3Alike%3A'%25".esc_attr($_GET['search'])."%25')%20OR%20(t.ref%3Alike%3A'%25".esc_attr($_GET['search'])."%25')%20OR%20(t.barcode%3Alike%3A'%25".esc_attr($_GET['search'])."%25'))%20AND%20(t.tosell=1)";
 
 $resultatso = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
@@ -1038,8 +1038,15 @@ print apply_filters( 'doliproductlist', $product);
 } else {
 print "<li class='list-group-item list-group-item-light'><center>".__( 'No product with this search', 'doliconnect')."</center></li>";
 }
- 
+print "</ul>"; 
+} elseif ( isset($_GET['product']) ) {
+
+$product = callDoliApi("GET", "/products/".esc_attr($_GET['product'])."?includestockdata=1", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+print "<div class='card-body'>";
+print apply_filters( 'doliproductcard', $product, null);
+print "</div>";
 } elseif ( !isset($_GET['category']) ) {
+print "<ul class='list-group list-group-flush'>";
 if ( $shop != null ) {
 
 $request = "/categories/".$shop."?include_childs=true";
@@ -1060,8 +1067,9 @@ if ( !empty($catoption) && is_user_logged_in() ) {
 print "<a href='".esc_url( add_query_arg( 'category', $catoption, doliconnecturl('dolishop')) )."' class='list-group-item list-group-item-action' >Produits/Services lies a l'adhesion</a>";
 }
 
+print "</ul>";
 } else {
-
+print "<ul class='list-group list-group-flush'>";
 $category = callDoliApi("GET", "/categories/".esc_attr(isset($_GET["subcategory"]) ? $_GET["subcategory"] : $_GET["category"])."?include_childs=true", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 print "<li class='list-group-item'>".doliproduct($category, 'label')."<br><small>".doliproduct($category, 'description')."</small></li>"; 
 
@@ -1093,7 +1101,7 @@ print apply_filters( 'doliproductlist', $product);
 } else {
 print "<li class='list-group-item list-group-item-light'><center>".__( 'No product', 'doliconnect')."</center></li>";
 }
-
+print "</ul>";
 }
 }
 print '</ul><div class="card-body">';
