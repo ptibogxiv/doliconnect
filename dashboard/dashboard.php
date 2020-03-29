@@ -513,6 +513,72 @@ print dolipaymentmethods(null, null, $url, esc_attr(isset($_GET["refresh"]) ? $_
 
 //*****************************************************************************************
 
+if ( !empty(doliconst('MAIN_MODULE_WISHLIST')) ) {
+add_action( 'customer_doliconnect_menu', 'wishlist_menu', 0, 1);
+add_action( 'customer_doliconnect_wishlist', 'wishlist_module' );
+}  
+
+function wishlist_menu( $arg ) {
+print "<a href='".esc_url( add_query_arg( 'module', 'wishlist', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
+if ($arg=='wishlist') { print " active";}
+print "'>".__( 'Wishlist', 'doliconnect-wishlist' )."</a>";
+}
+
+function wishlist_module( $url ) {
+global $current_user;
+
+$request = "/wishlist?sortfield=t.rowid&sortorder=ASC&thirdparty_ids=".doliconnector($current_user, 'fk_soc')."&sqlfilters=(t.priv%3A%3D%3A0)";
+$wishlist = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+
+if ( isset ($_POST['delete_wish']) && $_POST['delete_wish'] > 0 ) {
+//$memberv = callDoliApi("GET", "/adherentsplus/".esc_attr($_POST['unlink_member']), null, 0);
+//if ( $memberv->socid == doliconnector($current_user, 'fk_soc') ) {
+// try deleting
+$delete = callDoliApi("DELETE", "/wishlist/".esc_attr($_POST['delete_wish']), null, 0);
+
+$msg = dolialert ('success', __( 'Your informations have been updated.', 'doliconnect-wishlist'));
+
+//} else {
+// fail deleting
+//}
+$wishlist = callDoliApi("GET", $request, null, dolidelay('product', true));
+
+}
+
+print '<div class="card shadow-sm"><ul class="list-group list-group-flush">';
+
+$representatives = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc')."/representatives", null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+ 
+if ( !isset( $representatives->error ) && $representatives != null ) {
+foreach ( $representatives as $representative ) { 
+print "<li class='list-group-item list-group-item-light'><center>".__( 'Your representative :', 'doliconnect-wishlist')." ".$representative->firstname." ".$representative->lastname."".$representative->job." ".$representative->phone." ".$representative->email."</center></li>";
+}}
+  
+if ( !isset( $wishlist->error ) && $wishlist != null ) {
+foreach ( $wishlist as $wish ) { 
+
+print apply_filters( 'doliproductlist', $wish);
+ 
+}
+} else {
+print "<li class='list-group-item list-group-item-light'><center>".__( 'No product', 'doliconnect-wishlist')."</center></li>";
+}
+print  "</ul><div class='card-body'>";
+
+//print "<button type='submit' name='dolicart' value='validation' class='btn btn-warning w-100' role='button' aria-pressed='true'><b>".__( 'Order', 'doliconnect-wishlist')."</b></button>";
+
+print "</div>";
+
+print '<div class="card-footer text-muted">';
+print "<small><div class='float-left'>";
+print dolirefresh( $request, $url, dolidelay('product'));
+print "</div><div class='float-right'>";
+print dolihelp('ISSUE');
+print "</div></small>";
+print '</div></div>';
+
+}
+
 if ( !empty(doliconst('MAIN_MODULE_PROPALE')) ) {
 add_action( 'customer_doliconnect_menu', 'proposals_menu', 1, 1);
 add_action( 'customer_doliconnect_proposals', 'proposals_module');
