@@ -521,7 +521,7 @@ add_action( 'customer_doliconnect_wishlist', 'wishlist_module' );
 function wishlist_menu( $arg ) {
 print "<a href='".esc_url( add_query_arg( 'module', 'wishlist', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
 if ($arg=='wishlist') { print " active";}
-print "'>".__( 'Wishlist', 'doliconnect-wishlist' )."</a>";
+print "'>".__( 'Wishlist', 'doliconnect' )."</a>";
 }
 
 function wishlist_module( $url ) {
@@ -536,7 +536,7 @@ if ( isset ($_POST['delete_wish']) && $_POST['delete_wish'] > 0 ) {
 // try deleting
 $delete = callDoliApi("DELETE", "/wishlist/".esc_attr($_POST['delete_wish']), null, 0);
 
-$msg = dolialert ('success', __( 'Your informations have been updated.', 'doliconnect-wishlist'));
+$msg = dolialert ('success', __( 'Your informations have been updated.', 'doliconnect'));
 
 //} else {
 // fail deleting
@@ -551,7 +551,7 @@ $representatives = callDoliApi("GET", "/thirdparties/".doliconnector($current_us
  
 if ( !isset( $representatives->error ) && $representatives != null ) {
 foreach ( $representatives as $representative ) { 
-print "<li class='list-group-item list-group-item-light'><center>".__( 'Your representative :', 'doliconnect-wishlist')." ".$representative->firstname." ".$representative->lastname."".$representative->job." ".$representative->phone." ".$representative->email."</center></li>";
+print "<li class='list-group-item list-group-item-light'><center>".__( 'Your representative :', 'doliconnect')." ".$representative->firstname." ".$representative->lastname."".$representative->job." ".$representative->phone." ".$representative->email."</center></li>";
 }}
   
 if ( !isset( $wishlist->error ) && $wishlist != null ) {
@@ -561,7 +561,7 @@ print apply_filters( 'doliproductlist', $wish);
  
 }
 } else {
-print "<li class='list-group-item list-group-item-light'><center>".__( 'No product', 'doliconnect-wishlist')."</center></li>";
+print "<li class='list-group-item list-group-item-light'><center>".__( 'No product', 'doliconnect')."</center></li>";
 }
 print  "</ul><div class='card-body'>";
 
