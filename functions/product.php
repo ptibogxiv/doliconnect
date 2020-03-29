@@ -462,7 +462,7 @@ $button .= "<option value='$number' >x ".$number."</option>";
 	}
 }
 $button .= "</select><div class='input-group-append'>";
-$button .= "<button id='savewish' class='btn btn-info btn-sm' type='submit' value='savewish' disabled><i class='fas fa-save fa-inverse fa-fw'></i></button>";
+$button .= "<button id='savewish' class='btn btn-info btn-sm' type='submit' title='".esc_html__( 'Save my wish', 'doliconnect')."' value='savewish' disabled><i class='fas fa-save fa-inverse fa-fw'></i></button>";
 $button .= "<button id='my-button' class='btn btn-warning btn-sm' type='submit' title='".esc_html__( 'Add to cart', 'doliconnect')."' value='submit'";
 if ( ( empty($product->stock_reel) || $m2 < $step) && $product->type == '0' && !empty(doliconst('MAIN_MODULE_STOCK')) ) { $button .= " disabled"; }
 $button .= "><i class='fas fa-cart-plus fa-inverse fa-fw'></i></button></div></div>";
