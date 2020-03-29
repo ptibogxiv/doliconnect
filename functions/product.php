@@ -454,11 +454,12 @@ if ($step >1 && !empty($quantity)) $quantity = round($quantity/$step)*$step;
 if (empty($qty) && $quantity > $m2) $quantity = $m2; 
 if ($m2 < $step)  { $button .= "<OPTION value='0' >".__( 'Delete', 'doliconnect')."</OPTION>"; } else
 foreach (range(0, $m2, $step) as $number) {
-		if ( $number == $qty || ($number == $quantity && empty($qty)) || ($number == $m0 && empty($qty) && empty($quantity))) {
+if ($number == 0) { $button .= "<OPTION value='0' >".__( 'Delete', 'doliconnect')."</OPTION>";
+} elseif ( $number == $qty || ($number == $quantity && empty($qty)) || ($number == $m0 && empty($qty) && empty($quantity))) {
 $button .= "<option value='$number' selected='selected'>x ".$number."</option>";
-		} else {
+} else {
 $button .= "<option value='$number' >x ".$number."</option>";
-		}
+}
 	}
 }
 $button .= "</select><div class='input-group-append'>";
