@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2020-03-28 20:50+0100\n"
-"PO-Revision-Date: 2020-03-28 20:56+0100\n"
+"POT-Creation-Date: 2020-03-29 15:16+0200\n"
+"PO-Revision-Date: 2020-03-29 15:16+0200\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_FR\n"
@@ -214,7 +214,7 @@ msgid "Company"
 msgstr "Société"
 
 #: blocks/membership/block.php:110 blocks/membership/block.php:170
-#: functions/tools.php:863
+#: functions/tools.php:867
 msgid "year"
 msgstr "an"
 
@@ -380,8 +380,8 @@ msgid "Edit"
 msgstr "Éditer"
 
 #: dashboard/dashboard.php:392 functions/product.php:455
-#: functions/tools.php:789 functions/tools.php:812 functions/tools.php:814
-#: functions/tools.php:1043
+#: functions/tools.php:791 functions/tools.php:814 functions/tools.php:816
+#: functions/tools.php:1047
 msgid "Delete"
 msgstr "Supprimer"
 
@@ -393,8 +393,8 @@ msgstr "Pas de contact"
 msgid "Update contact"
 msgstr "Mettre à jour le contact"
 
-#: dashboard/dashboard.php:445 functions/tools.php:1098
-#: functions/tools.php:1147
+#: dashboard/dashboard.php:445 functions/tools.php:1102
+#: functions/tools.php:1151
 msgid "Add"
 msgstr "Ajouter"
 
@@ -486,7 +486,7 @@ msgstr "Expédiée"
 msgid "Payment method"
 msgstr "Mode de paiement"
 
-#: dashboard/dashboard.php:686 functions/tools.php:1215
+#: dashboard/dashboard.php:686 functions/tools.php:1219
 msgid "Payment term"
 msgstr "Conditions de règlement"
 
@@ -520,10 +520,10 @@ msgid "Bank"
 msgstr "Banque"
 
 #: dashboard/dashboard.php:714 dashboard/dashboard.php:825
-#: dashboard/dashboard.php:829 functions/tools.php:1031
-#: functions/tools.php:1033 functions/tools.php:1035 functions/tools.php:1096
-#: functions/tools.php:1145 functions/tools.php:1163 functions/tools.php:1180
-#: functions/tools.php:1195 functions/tools.php:1209
+#: dashboard/dashboard.php:829 functions/tools.php:1035
+#: functions/tools.php:1037 functions/tools.php:1039 functions/tools.php:1100
+#: functions/tools.php:1149 functions/tools.php:1167 functions/tools.php:1184
+#: functions/tools.php:1199 functions/tools.php:1213
 msgid "Pay"
 msgstr "Payer"
 
@@ -1086,7 +1086,7 @@ msgid "Access restricted to users"
 msgstr "Accès restreint aux utilisateurs"
 
 #: dashboard/templates.php:720 dashboard/templates.php:771
-#: functions/product.php:476 functions/tools.php:837
+#: functions/product.php:476 functions/tools.php:841
 msgid "Sign in"
 msgstr "Connexion"
 
@@ -1094,7 +1094,7 @@ msgstr "Connexion"
 msgid "You have already an account"
 msgstr "Vous avez déjà un compte"
 
-#: dashboard/templates.php:723 functions/tools.php:37 functions/tools.php:960
+#: dashboard/templates.php:723 functions/tools.php:37 functions/tools.php:964
 msgid "or"
 msgstr "ou"
 
@@ -1400,11 +1400,16 @@ msgstr ""
 msgid "Some errors occurred:"
 msgstr "Quelques erreurs sont survenues :"
 
-#: functions/product.php:85
-msgid "Available"
-msgstr "Disponible"
+#: functions/product.php:85 functions/product.php:104
+msgid "Available immediately"
+msgstr "Disponible immédiatement"
 
-#: functions/product.php:92 functions/tools.php:760
+#: functions/product.php:85
+#, php-format
+msgid "This item is in stock and can be send immediately. %s"
+msgstr "Cet article est en stock et peut être envoyé immédiatement. %s"
+
+#: functions/product.php:92 functions/tools.php:762
 msgid "Shipping informations"
 msgstr "Informations sur l'expédition"
 
@@ -1447,10 +1452,6 @@ msgid ""
 msgstr ""
 "Cet article est en stock et peut être expédié immédiatement, mais seulement "
 "en quantités limitées. %s"
-
-#: functions/product.php:104
-msgid "Available immediately"
-msgstr "Disponible immédiatement"
 
 #: functions/product.php:104
 #, php-format
@@ -1501,7 +1502,7 @@ msgid "Price"
 msgstr "Tarif"
 
 #: functions/product.php:371 functions/product.php:390
-#: functions/product.php:407 functions/tools.php:866
+#: functions/product.php:407 functions/tools.php:870
 msgid "hour"
 msgstr "heure"
 
@@ -1525,8 +1526,8 @@ msgstr "Votre prix"
 msgid "Unavailable"
 msgstr "Indisponible"
 
-#: functions/product.php:476 functions/product.php:478 functions/tools.php:837
-#: functions/tools.php:839
+#: functions/product.php:476 functions/product.php:478 functions/tools.php:841
+#: functions/tools.php:843
 msgid "log in"
 msgstr "connectez-vous"
 
@@ -1680,7 +1681,7 @@ msgstr "Choisissez votre mot de passe"
 msgid "Confirm your password"
 msgstr "Confirmer votre mot de passe"
 
-#: functions/tools.php:455 functions/tools.php:925
+#: functions/tools.php:455 functions/tools.php:929
 msgid "Loading"
 msgstr "Chargement"
 
@@ -1754,125 +1755,125 @@ msgstr "Total Hors Taxes"
 msgid "Total VAT"
 msgstr "Total TVA"
 
-#: functions/tools.php:764
+#: functions/tools.php:766
 msgid "Sorry, this product is not available with this quantity"
 msgstr "Désolé, ce produit n’est plus disponible avec cette quantité"
 
-#: functions/tools.php:766
+#: functions/tools.php:768
 msgid "Sorry, this product is no longer available"
 msgstr "Désolé, ce produit n’est plus disponible"
 
-#: functions/tools.php:831
+#: functions/tools.php:835
 msgid "Your basket is empty."
 msgstr "Votre panier est vide."
 
-#: functions/tools.php:833
+#: functions/tools.php:837
 msgid "If you already have an account,"
 msgstr "Si vous disposez déjà d'un compte,"
 
-#: functions/tools.php:841
+#: functions/tools.php:845
 msgid "to see your basket."
 msgstr "pour voir votre panier."
 
-#: functions/tools.php:857
+#: functions/tools.php:861
 msgid "years"
 msgstr "ans"
 
-#: functions/tools.php:858
+#: functions/tools.php:862
 msgid "months"
 msgstr "mois"
 
-#: functions/tools.php:859
+#: functions/tools.php:863
 msgid "days"
 msgstr "jours"
 
-#: functions/tools.php:860
+#: functions/tools.php:864
 msgid "hours"
 msgstr "heures"
 
-#: functions/tools.php:861
+#: functions/tools.php:865
 msgid "minutes"
 msgstr "minutes"
 
-#: functions/tools.php:864
+#: functions/tools.php:868
 msgid "month"
 msgstr "mois"
 
-#: functions/tools.php:865
+#: functions/tools.php:869
 msgid "day"
 msgstr "jour"
 
-#: functions/tools.php:867
+#: functions/tools.php:871
 msgid "minute"
 msgstr "minute"
 
-#: functions/tools.php:884 functions/tools.php:887 functions/tools.php:890
+#: functions/tools.php:888 functions/tools.php:891 functions/tools.php:894
 #, php-format
 msgid "%s day"
 msgid_plural "%s days"
 msgstr[0] "%s jour"
 msgstr[1] "%s jours"
 
-#: functions/tools.php:885
+#: functions/tools.php:889
 msgid "end of month"
 msgstr "fin de mois"
 
-#: functions/tools.php:888
+#: functions/tools.php:892
 #, php-format
 msgid "the %s of month"
 msgstr "le %s du mois"
 
-#: functions/tools.php:902
+#: functions/tools.php:906
 msgid "Choose your language"
 msgstr "Choisir votre langue"
 
-#: functions/tools.php:965
+#: functions/tools.php:969
 msgid "Stripe's in sandbox mode"
 msgstr "Stripe est en mode bac à sable"
 
-#: functions/tools.php:965
+#: functions/tools.php:969
 msgid "Link to Test card numbers"
 msgstr "Lien vers les numéros de carte de test"
 
-#: functions/tools.php:972
+#: functions/tools.php:976
 #, php-format
 msgid "I read and accept the %s"
 msgstr "J'ai lu et j’accepte les %s"
 
-#: functions/tools.php:972 functions/tools.php:982
+#: functions/tools.php:976 functions/tools.php:986
 msgid "Terms & Conditions"
 msgstr "Conditions générales"
 
-#: functions/tools.php:982
+#: functions/tools.php:986
 #, php-format
 msgid "Read the %s"
 msgstr "Lire les %s"
 
-#: functions/tools.php:1015
+#: functions/tools.php:1019
 msgid "Account"
 msgstr "Compte"
 
-#: functions/tools.php:1018
+#: functions/tools.php:1022
 msgid "Card"
 msgstr "Carte"
 
-#: functions/tools.php:1040
+#: functions/tools.php:1044
 msgid "Favourite"
 msgstr "Favori"
 
-#: functions/tools.php:1051
+#: functions/tools.php:1055
 msgid "No registered payment method"
 msgstr "Pas de mode de paiement enregistré"
 
-#: functions/tools.php:1058
+#: functions/tools.php:1062
 msgid "Credit/debit card"
 msgstr "Carte de crédit/débit"
 
-#: functions/tools.php:1061
+#: functions/tools.php:1065
 msgid "Card's owner"
 msgstr "Titulaire de la carte"
 
-#: functions/tools.php:1066
+#: functions/tools.php:1070
 #, php-format
 msgid ""
 "By providing your card and confirming this form, you are authorizing %s and "
@@ -1891,28 +1892,28 @@ msgstr ""
 "conditions de votre accord avec elle. Un remboursement doit être demandé "
 "dans les 90 jours à compter de la date à laquelle votre carte a été débitée."
 
-#: functions/tools.php:1072 functions/tools.php:1121
+#: functions/tools.php:1076 functions/tools.php:1125
 msgid "Not save"
 msgstr "Pas d'enregistrement"
 
-#: functions/tools.php:1076 functions/tools.php:1085 functions/tools.php:1125
-#: functions/tools.php:1134
+#: functions/tools.php:1080 functions/tools.php:1089 functions/tools.php:1129
+#: functions/tools.php:1138
 msgid "Save"
 msgstr "Enregistrer"
 
-#: functions/tools.php:1093 functions/tools.php:1142
+#: functions/tools.php:1097 functions/tools.php:1146
 msgid "Save as favourite"
 msgstr "Enregistrer comme favori"
 
-#: functions/tools.php:1106
+#: functions/tools.php:1110
 msgid "Bank account"
 msgstr "Compte bancaire"
 
-#: functions/tools.php:1109 functions/tools.php:1158
+#: functions/tools.php:1113 functions/tools.php:1162
 msgid "Bank's owner"
 msgstr "Titulaire du compte"
 
-#: functions/tools.php:1115
+#: functions/tools.php:1119
 #, php-format
 msgid ""
 "By providing your IBAN and confirming this form, you are authorizing %s and "
@@ -1930,84 +1931,84 @@ msgstr ""
 "elle. Un remboursement doit être demandé dans les 8 semaines à partir de la "
 "date à laquelle votre compte a été débité."
 
-#: functions/tools.php:1155
+#: functions/tools.php:1159
 msgid "iDEAL"
 msgstr "iDEAL"
 
-#: functions/tools.php:1176
+#: functions/tools.php:1180
 msgid "Transfer"
 msgstr "Virement bancaire"
 
-#: functions/tools.php:1176 functions/tools.php:1191 functions/tools.php:1205
+#: functions/tools.php:1180 functions/tools.php:1195 functions/tools.php:1209
 msgid "See your receipt"
 msgstr "Voir votre reçu"
 
-#: functions/tools.php:1191
+#: functions/tools.php:1195
 msgid "Check"
 msgstr "Chèque"
 
-#: functions/tools.php:1205
+#: functions/tools.php:1209
 msgid "Cash"
 msgstr "Espèces"
 
-#: functions/tools.php:1219
+#: functions/tools.php:1223
 msgid "immediately"
 msgstr "immédiatement"
 
-#: functions/tools.php:1885
+#: functions/tools.php:1889
 msgid "Select your request:"
 msgstr "Sélectionnez votre demande :"
 
-#: functions/tools.php:1886
+#: functions/tools.php:1890
 msgid "Export Personal Data"
 msgstr "Exporter vos données personnelles"
 
-#: functions/tools.php:1887
+#: functions/tools.php:1891
 msgid "Remove Personal Data"
 msgstr "Supprimer vos données personnelles"
 
-#: functions/tools.php:1888
+#: functions/tools.php:1892
 msgid "Your email address (required)"
 msgstr "Votre adresse e-mail (requise)"
 
-#: functions/tools.php:1889
+#: functions/tools.php:1893
 msgid "Human verification (required)"
 msgstr "Vérification humaine (requise)"
 
-#: functions/tools.php:1890
+#: functions/tools.php:1894
 msgid "Send Request"
 msgstr "Envoyer la demande"
 
-#: functions/tools.php:1921
+#: functions/tools.php:1925
 msgid "Export your data"
 msgstr "Exportez vos données"
 
-#: functions/tools.php:1921
+#: functions/tools.php:1925
 msgid "You will receive an email with a secure link to your data"
 msgstr "Vous recevrez un e-mail avec un lien sécurisé vers vos données"
 
-#: functions/tools.php:1931
+#: functions/tools.php:1935
 msgid "Erase your data"
 msgstr "Effacer vos données"
 
-#: functions/tools.php:1931
+#: functions/tools.php:1935
 msgid "You will receive an email with a secure link to confirm the deletion"
 msgstr ""
 "Vous recevrez un e-mail avec un lien sécurisé pour confirmer la suppression"
 
-#: functions/tools.php:1942
+#: functions/tools.php:1946
 msgid "Delete your account"
 msgstr "Supprimer votre compte"
 
-#: functions/tools.php:1942
+#: functions/tools.php:1946
 msgid "Soon, you will be able to delete your account"
 msgstr "Bientôt, vous pourrez supprimer votre compte"
 
-#: functions/tools.php:1981
+#: functions/tools.php:1985
 msgid "Validate the request"
 msgstr "Valider la demande"
 
-#: functions/tools.php:1995
+#: functions/tools.php:1999
 msgid "This plugin requires WordPress 4.9.6."
 msgstr "Ce plugin nécessite WordPress 4.9.6."
 
@@ -2079,6 +2080,9 @@ msgstr "ptibogxiv"
 #. Author URI of the plugin/theme
 msgid "https://www.ptibogxiv.net/en"
 msgstr "https://www.ptibogxiv.net/fr"
+
+#~ msgid "Available"
+#~ msgstr "Disponible"
 
 #~ msgid "Limited stock"
 #~ msgstr "Stock limité"
