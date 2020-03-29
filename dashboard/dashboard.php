@@ -2001,7 +2001,6 @@ print '<style>';
 <?php
 print '</style>';
 
-
 function generate_license($suffix = null) {
     // Default tokens contain no "ambiguous" characters: 1,i,0,o
     if(isset($suffix)){
