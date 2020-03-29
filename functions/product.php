@@ -285,14 +285,14 @@ $button .= "<input type='hidden' name='product-add-id' value='".$product->id."'>
 $button .= "<script>";
 $button .= 'jQuery(document).ready(function($) {
 	
-	jQuery(".product-'.$product->id.'").on("submit", function(e) {
+	jQuery(".product-'.$product->id.'").on("submit", function(e){
   jQuery("#DoliconnectLoadingModal").modal("show");
 	e.preventDefault();
     
 	var $form = $(this);
     
-jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function (e) { 
-		$.post($form.attr("action"), $form.serialize(), function(response) {
+jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function(e){ 
+		$.post($form.attr("action"), $form.serialize(), function(response){
       if (response.success) {
       if (document.getElementById("DoliHeaderCarItems")) {
       document.getElementById("DoliHeaderCarItems").innerHTML = response.data;
@@ -464,9 +464,9 @@ $button .= "<option value='$number' >x ".$number."</option>";
 }
 $button .= "</select><div class='input-group-append'>";
 if ( !empty(doliconst('MAIN_MODULE_WISHLIST')) && !empty(get_option('doliconnectbeta')) ) {
-$button .= "<button id='savewish' class='btn btn-info btn-sm' type='submit' title='".esc_html__( 'Save my wish', 'doliconnect')."' value='savewish' disabled><i class='fas fa-save fa-inverse fa-fw'></i></button>";
+$button .= "<button id='dolisavewish' class='btn btn-info btn-sm' type='submit' title='".esc_html__( 'Save my wish', 'doliconnect')."' value='savewish' disabled><i class='fas fa-save fa-inverse fa-fw'></i></button>";
 }
-$button .= "<button id='my-button' class='btn btn-warning btn-sm' type='submit' title='".esc_html__( 'Add to cart', 'doliconnect')."' value='submit'";
+$button .= "<button id='dolibuybutton' class='btn btn-warning btn-sm' type='submit' title='".esc_html__( 'Add to cart', 'doliconnect')."' value='submit'";
 if ( ( empty($product->stock_reel) || $m2 < $step) && $product->type == '0' && !empty(doliconst('MAIN_MODULE_STOCK')) ) { $button .= " disabled"; }
 $button .= "><i class='fas fa-cart-plus fa-inverse fa-fw'></i></button></div></div>";
 
