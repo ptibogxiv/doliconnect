@@ -463,7 +463,7 @@ $button .= "<option value='$number' >x ".$number."</option>";
 	}
 }
 $button .= "</select><div class='input-group-append'>";
-if ( !empty(doliconst('MAIN_MODULE_WISHLIST')) ) {
+if ( !empty(doliconst('MAIN_MODULE_WISHLIST')) && !empty(get_option('doliconnectbeta')) ) {
 $button .= "<button id='savewish' class='btn btn-info btn-sm' type='submit' title='".esc_html__( 'Save my wish', 'doliconnect')."' value='savewish' disabled><i class='fas fa-save fa-inverse fa-fw'></i></button>";
 }
 $button .= "<button id='my-button' class='btn btn-warning btn-sm' type='submit' title='".esc_html__( 'Add to cart', 'doliconnect')."' value='submit'";
