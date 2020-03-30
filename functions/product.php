@@ -452,7 +452,7 @@ $step = 1;
 $button .= "<div class='input-group mb-3'><select class='form-control form-control-sm' id='select' name='product-add-qty' ";
 if ( ( empty($product->stock_reel) || $m2 < $step) && $product->type == '0' && !empty(doliconst('MAIN_MODULE_STOCK')) ) { $button .= " disabled"; }
 $button .= ">";
-if ($m2 < $step)  { $button .= "<OPTION value='0' selected>".__( 'Unavailable', 'doliconnect')."</OPTION>"; 
+if (empty($product->stock_reel) || $m2 < $step)  { $button .= "<OPTION value='0' selected>".__( 'Unavailable', 'doliconnect')."</OPTION>"; 
 } elseif (!empty($m2) && $m2 >= $step) {
 if ($step >1 && !empty($quantity)) $quantity = round($quantity/$step)*$step; 
 if (empty($qty) && $quantity > $m2) $quantity = $m2; 
