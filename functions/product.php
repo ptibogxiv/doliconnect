@@ -98,7 +98,17 @@ if ( $maxstock <= 0 || (isset($product->array_options->options_packaging) && $ma
 elseif ( ($minstock <= 0 || (isset($product->array_options->options_packaging) && $product->stock_reel < $product->array_options->options_packaging)) && $maxstock >= 0 && $product->stock_theorique > $product->stock_reel ) { 
 $delay =  callDoliApi("GET", "/products/".$product->id."/purchase_prices", null, dolidelay('product'));
 if (empty($delay[0]->delivery_time_days)) { $delay = esc_html__( 'few', 'doliconnect'); } else { $delay = $delay[0]->delivery_time_days;}
-$stock .= "<a tabindex='0' id='popover-".$product->id."' class='badge badge-pill badge-danger text-white' title='".__( 'Restocking in progress', 'doliconnect')."' data-container='body' data-toggle='popover' data-trigger='focus' data-content='".sprintf( esc_html__( 'This item is not in stock but should be available soon within %s days. %s', 'doliconnect'), $delay, $shipping)."'><i class='fas fa-warehouse'></i> ".__( 'Restocking in progress', 'doliconnect')."</a>"; 
+if (doliversion('12.0.0')) {
+$datelivraison =  callDoliApi("GET", "/supplierorders?sortfield=t.date_livraison&sortorder=ASC&limit=1&product_ids=".$product->id."&sqlfilters=(t.fk_statut%3A%3D%3A'2')", null, dolidelay('order'));
+if (isset($datelivraison[0]->date_livraison) && !empty($datelivraison[0]->date_livraison)) {
+$next = sprintf( "<br>".esc_html__(  'Reception scheduled on %s.', 'doliconnect'), wp_date('d/m/Y', $datelivraison[0]->date_livraison));
+} else {
+$next = null;
+}
+} else {
+$next = null;
+}
+$stock .= "<a tabindex='0' id='popover-".$product->id."' class='badge badge-pill badge-danger text-white' title='".__( 'Restocking in progress', 'doliconnect')."' data-container='body' data-toggle='popover' data-trigger='focus' data-content='".sprintf( esc_html__( 'This item is not in stock but should be available soon within %s days. %s %s', 'doliconnect'), $delay, $next, $shipping)."'><i class='fas fa-warehouse'></i> ".__( 'Restocking in progress', 'doliconnect')."</a>"; 
 } elseif ( $minstock >= 0 && $maxstock <= $product->seuil_stock_alerte ) { $stock .= "<a tabindex='0' id='popover-".$product->id."' class='badge badge-pill badge-warning text-white' data-container='body' data-toggle='popover' data-trigger='focus' title='".__( 'Available in limited stock', 'doliconnect')."' data-content='".sprintf( esc_html__( 'This item is in stock and can be shipped immediately but only in limited quantities. %s', 'doliconnect'), $shipping)."'><i class='fas fa-warehouse'></i> ".__( 'Available in limited stock', 'doliconnect')."</a>";
 } else {
 $stock .= "<a tabindex='0' id='popover-".$product->id."' class='badge badge-pill badge-success text-white' data-container='body' data-toggle='popover' data-trigger='focus' title='".__( 'Available immediately', 'doliconnect')."' data-content='".sprintf( esc_html__( 'This item is in stock and can be shipped immediately. %s', 'doliconnect'), $shipping)."'><i class='fas fa-warehouse'></i> ".__( 'Available immediately', 'doliconnect').'</a>';
