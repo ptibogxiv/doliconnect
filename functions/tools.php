@@ -828,7 +828,9 @@ $doliline .= "</select>";
 } else {
 $doliline .= '<h6 class="mb-1">x'.$line->qty.'</h6>';
 }
-} }
+} } else {
+$doliline .= '<h6 class="mb-1">x'.$line->qty.'</h6>';
+}
 $doliline .= "</div></div></li>";
 }
 } else {

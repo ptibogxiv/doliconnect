@@ -733,22 +733,24 @@ print "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'
 print "<b>".__( 'Date of order', 'doliconnect').":</b> ".wp_date('d/m/Y', $orderfo->date_creation)."<br>";
 if ( $orderfo->statut > 0 ) {
 if ( $orderfo->billed == 1 ) {
-if ( $orderfo->statut >1 ) { $orderinfo=__( 'Shipped', 'doliconnect'); 
+if ( $orderfo->statut > 1 ) { $orderinfo=__( 'Shipped', 'doliconnect'); 
 $orderavancement=100; }
 else { $orderinfo=__( 'Processing', 'doliconnect');
 $orderavancement=40; }
-}
-else { $orderinfo=null;
+} else { $orderinfo=null;
 $orderinfo=null;
 $orderavancement=25;
+$orderinfo=__( 'Validated', 'doliconnect');
 }
 }
-elseif ( $orderfo->statut == 0 ) { $orderinfo=__( 'Validation', 'doliconnect');
+elseif ( $orderfo->statut == 0 ) { $orderinfo=__( 'Draft', 'doliconnect');
 $orderavancement=7; }
 elseif ( $orderfo->statut == -1 ) { $orderinfo=__( 'Canceled', 'doliconnect');
 $orderavancement=0;  }
 
 if (!empty($orderfo->mode_reglement_id)) print "<b>".__( 'Payment method', 'doliconnect').":</b> ".$orderfo->mode_reglement_code."<br>";
+$mode_reglement = callDoliApi("GET", "/setup/dictionary/payment_types?sortfield=code&sortorder=ASC&limit=100&active=1&sqlfilters=(t.code%3A%3D%3A'".$orderfo->mode_reglement_code."')", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+
 if (!empty($orderfo->cond_reglement_id)) print "<b>".__( 'Payment term', 'doliconnect').":</b> ".dolipaymentterm($orderfo->cond_reglement_id)."<br>";
 
 print "<br></div><div class='col-md-6'>";
@@ -756,7 +758,8 @@ print "<br></div><div class='col-md-6'>";
 if ( isset($orderinfo) ) {
 print "<h3 class='text-right'>".$orderinfo."</h3>";
 }
-
+print "</div>";
+ 
 if ( $orderfo->billed != 1 && $orderfo->statut > 0 ) {
 $nonce = wp_create_nonce( 'valid_dolicart-'.$orderfo->id );
 $arr_params = array( 'cart' => $nonce, 'step' => 'payment', 'module' => $_GET["module"], 'id' => $orderfo->id,'ref' => $orderfo->ref);  
@@ -765,17 +768,19 @@ if ( $orderfo->mode_reglement_code == 'CHQ' ) {
 
 $listpaymentmethods = callDoliApi("GET", "/doliconnector/".doliconnector($current_user, 'fk_soc')."/paymentmethods?type=order&rowid=".$orderfo->id, null, dolidelay('paymentmethods', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
-print "<div class='alert alert-danger' role='alert'><p align='justify'>".sprintf( __( 'Please send your cheque in the amount of <b>%1$s</b> with reference <b>%2$s</b> to <b>%3$s</b> at the following address', 'doliconnect'), doliprice($orderfo, 'ttc', isset($orderfo->multicurrency_code) ? $orderfo->multicurrency_code : null), $orderfo->ref, $listpaymentmethods->CHQ->proprio).":</p>";                                                                                                                                                                                                                                                                                                                                      
-print "<p><b>".$listpaymentmethods->CHQ->owner_address."</b></p><button class='btn btn-link btn-sm' onclick='ValidDoliCart(\"".wp_create_nonce( 'valid_dolicart-'.$orderfo->id )."\")' id='button-source-payment'><small><span class='fas fa-sync-alt'></span> ".__( 'Change your payment mode', 'doliconnect')."</small></button></div>";
+print "<div class='col'><div class='card bg-light'><div class='card-body'><p align='justify'>".sprintf( __( 'Please send your cheque in the amount of <b>%1$s</b> with reference <b>%2$s</b> to <b>%3$s</b> at the following address', 'doliconnect'), doliprice($orderfo, 'ttc', isset($orderfo->multicurrency_code) ? $orderfo->multicurrency_code : null), $orderfo->ref, $listpaymentmethods->CHQ->proprio).":</p>";                                                                                                                                                                                                                                                                                                                                      
+print "<p><b>".$listpaymentmethods->CHQ->owner_address."</b></p><button class='btn btn-link btn-sm' onclick='ValidDoliCart(\"".wp_create_nonce( 'valid_dolicart-'.$orderfo->id )."\")' id='button-source-payment'><small><span class='fas fa-sync-alt'></span> ".__( 'Change your payment mode', 'doliconnect')."</small></button></div></div></div>";
 } elseif ( $orderfo->mode_reglement_code == 'VIR' ) { 
 
 $listpaymentmethods = callDoliApi("GET", "/doliconnector/".doliconnector($current_user, 'fk_soc')."/paymentmethods", null, dolidelay('paymentmethods', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
-print "<div class='alert alert-danger' role='alert'><p align='justify'>".sprintf( __( 'Please send your transfert in the amount of <b>%1$s</b> with reference <b>%2$s</b> at the following account', 'doliconnect'), doliprice($orderfo, 'ttc', isset($orderfo->multicurrency_code) ? $orderfo->multicurrency_code : null), $orderfo->ref ).":";
+print "<div class='col'><div class='card bg-light'><div class='card-body'><p align='justify'>".sprintf( __( 'Please send your transfert in the amount of <b>%1$s</b> with reference <b>%2$s</b> at the following account', 'doliconnect'), doliprice($orderfo, 'ttc', isset($orderfo->multicurrency_code) ? $orderfo->multicurrency_code : null), $orderfo->ref ).":";
 print "<br><b>".__( 'Bank', 'doliconnect').": ".$listpaymentmethods->VIR->bank."</b>";
 print "<br><b>IBAN: ".$listpaymentmethods->VIR->iban."</b>";
 if ( ! empty($listpaymentmethods->VIR->bic) ) { print "<br><b>BIC/SWIFT : ".$listpaymentmethods->VIR->bic."</b>";}
-print "</p><button class='btn btn-link btn-sm' onclick='ValidDoliCart(\"".wp_create_nonce( 'valid_dolicart-'.$orderfo->id )."\")' id='button-source-payment'><small><span class='fas fa-sync-alt'></span> ".__( 'Change your payment mode', 'doliconnect')."</small></button></div>";
+print "</p><button class='btn btn-link btn-sm' onclick='ValidDoliCart(\"".wp_create_nonce( 'valid_dolicart-'.$orderfo->id )."\")' id='button-source-payment'><small><span class='fas fa-sync-alt'></span> ".__( 'Change your payment mode', 'doliconnect')."</small></button></div></div></div>";
+} elseif ( $orderfo->mode_reglement_code == 'PRE' ) { 
+
 } else {
 print "<button type='button' onclick='ValidDoliCart(\"".wp_create_nonce( 'valid_dolicart-'.$orderfo->id )."\")' id='button-source-payment' class='btn btn-warning btn-block' ><span class='fa fa-credit-card'></span> ".__( 'Pay', 'doliconnect')."</button>";
 }
@@ -797,11 +802,11 @@ form.submit();
 print "</script>";
 }
 
-print "<br></div></div>"; 
+print "</div><br>"; 
 
 $thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
-print "<div class='card-group'>";
+print "<div class='card-group'>"; 
 if (!empty($orderfo->contacts_ids) && is_array($orderfo->contacts_ids)) {
 
 foreach ($orderfo->contacts_ids as $contact) {
@@ -812,14 +817,14 @@ if ('SHIPPING' == $contact->code) {
 $shippingcard = dolicontact($contact->id, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 }
 }
-print "<div class='card'><div class='card-body'><h6>".__( 'Billing address', 'doliconnect')."</h6><small class='text-muted'>";
+print "<div class='card card bg-light'><div class='card-body'><h6>".__( 'Billing address', 'doliconnect')."</h6><small class='text-muted'>";
 if (isset($billingcard) && !empty($billingcard)) {
 print $billingcard;
 } else {
 print doliaddress($thirdparty, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 }
 print "</small></div></div>";
-print "<div class='card'><div class='card-body'><h6>".__( 'Shipping address', 'doliconnect')."</h6><small class='text-muted'>";
+print "<div class='card card bg-light'><div class='card-body'><h6>".__( 'Shipping address', 'doliconnect')."</h6><small class='text-muted'>";
 if (isset($shippingcard) && !empty($shippingcard)) {
 print $shippingcard;
 } else {
@@ -827,7 +832,7 @@ print doliaddress($thirdparty, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh
 }
 print "</small></div></div>";
 } else {
-print "<div class='card'><div class='card-body'><h6>".__( 'Billing and shipping address', 'doliconnect')."</h6><small class='text-muted'>";
+print "<div class='card card bg-light'><div class='card-body'><h6>".__( 'Billing and shipping address', 'doliconnect')."</h6><small class='text-muted'>";
 print doliaddress($thirdparty, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 print "</small></div></div>";
 }

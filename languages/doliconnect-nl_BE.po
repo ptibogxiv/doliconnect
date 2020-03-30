@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2020-03-29 17:01+0200\n"
-"PO-Revision-Date: 2020-03-29 17:01+0200\n"
+"POT-Creation-Date: 2020-03-30 18:22+0200\n"
+"PO-Revision-Date: 2020-03-30 18:23+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: nl_BE\n"
@@ -241,7 +241,7 @@ msgstr "jaarlijkse"
 msgid "Including a federal part of"
 msgstr "Inclusief een federaal deel van"
 
-#: blocks/membership/block.php:180 functions/product.php:488
+#: blocks/membership/block.php:180 functions/product.php:492
 msgid "Contact us"
 msgstr "Contacteer ons"
 
@@ -257,7 +257,7 @@ msgstr "Een blok voor het weergeven van Dolibarr-product."
 msgid "Product ID"
 msgstr "Product-ID"
 
-#: blocks/product/block.js:64 functions/product.php:469
+#: blocks/product/block.js:64 functions/product.php:473
 msgid "Add to cart"
 msgstr "Aan winkelwagen toevoegen"
 
@@ -277,11 +277,11 @@ msgstr "Verwijzing:"
 msgid "Barcode:"
 msgstr "Barcode:"
 
-#: blocks/product/block.php:40 functions/product.php:580
+#: blocks/product/block.php:40 functions/product.php:584
 msgid "Origin:"
 msgstr "Oorsprong:"
 
-#: blocks/product/block.php:48 functions/product.php:588
+#: blocks/product/block.php:48 functions/product.php:592
 msgid "Product/Service not in sale"
 msgstr "Product/dienst niet in verkoop"
 
@@ -380,8 +380,8 @@ msgstr "Nieuwe contactpersoon"
 msgid "Edit"
 msgstr "Bewerk"
 
-#: dashboard/dashboard.php:392 functions/product.php:455
-#: functions/product.php:457 functions/tools.php:791 functions/tools.php:814
+#: dashboard/dashboard.php:392 functions/product.php:459
+#: functions/product.php:461 functions/tools.php:791 functions/tools.php:814
 #: functions/tools.php:816 functions/tools.php:1047
 msgid "Delete"
 msgstr "Verwijder"
@@ -437,7 +437,7 @@ msgid "Date of creation"
 msgstr "Datum van creatie"
 
 #: dashboard/dashboard.php:608 dashboard/dashboard.php:634
-#: dashboard/dashboard.php:746 dashboard/dashboard.php:1067
+#: dashboard/dashboard.php:1067
 msgid "Validation"
 msgstr "Validatie"
 
@@ -489,6 +489,14 @@ msgstr "Datum van bestelling"
 #: dashboard/dashboard.php:736
 msgid "Shipped"
 msgstr "Verzonden"
+
+#: dashboard/dashboard.php:743
+msgid "Validated"
+msgstr "Gevalideerd"
+
+#: dashboard/dashboard.php:746
+msgid "Draft"
+msgstr "Ontwerp"
 
 #: dashboard/dashboard.php:751 dashboard/dashboard.php:1205
 #: dashboard/templates.php:1322
@@ -903,7 +911,7 @@ msgstr "Omschrijving"
 msgid "Two factor authentication is disabled"
 msgstr "Tweefactorauthenticatie is uitgeschakeld"
 
-#: dashboard/dashboard.php:2054
+#: dashboard/dashboard.php:2053
 msgid "Privacy"
 msgstr "Privacy"
 
@@ -1094,7 +1102,7 @@ msgid "Access restricted to users"
 msgstr "Toegang beperkt tot gebruikers"
 
 #: dashboard/templates.php:720 dashboard/templates.php:771
-#: functions/product.php:481 functions/tools.php:841
+#: functions/product.php:485 functions/tools.php:841
 msgid "Sign in"
 msgstr "Aanmelden"
 
@@ -1479,54 +1487,54 @@ msgstr "Nog te betalen"
 msgid "Total to pay"
 msgstr "Totaal te betalen"
 
-#: functions/product.php:367
+#: functions/product.php:371
 msgid "Price"
 msgstr "Prijs"
 
-#: functions/product.php:371 functions/product.php:390
-#: functions/product.php:407 functions/tools.php:870
+#: functions/product.php:375 functions/product.php:394
+#: functions/product.php:411 functions/tools.php:870
 msgid "hour"
 msgstr "uur"
 
-#: functions/product.php:377 functions/product.php:417
+#: functions/product.php:381 functions/product.php:421
 msgid "Our prices are incl. VAT"
 msgstr "Onze prijzen zijn incl. BTW"
 
-#: functions/product.php:377 functions/product.php:417
+#: functions/product.php:381 functions/product.php:421
 msgid "Our prices are excl. VAT"
 msgstr "Onze prijzen zijn excl. BTW"
 
-#: functions/product.php:387
+#: functions/product.php:391
 msgid "Selling Price"
 msgstr "Verkoopprijs"
 
-#: functions/product.php:404
+#: functions/product.php:408
 msgid "Your price"
 msgstr "Uw Prijs"
 
-#: functions/product.php:451
+#: functions/product.php:455
 msgid "Unavailable"
 msgstr "Niet beschikbaar"
 
-#: functions/product.php:467
+#: functions/product.php:471
 msgid "Save my wish"
 msgstr "Mijn wens opslaan"
 
-#: functions/product.php:481 functions/product.php:483 functions/tools.php:841
+#: functions/product.php:485 functions/product.php:487 functions/tools.php:841
 #: functions/tools.php:843
 msgid "log in"
 msgstr "aanmelden"
 
-#: functions/product.php:488
+#: functions/product.php:492
 msgid "Login"
 msgstr "Login"
 
-#: functions/product.php:491
+#: functions/product.php:495
 #, php-format
 msgid "you get %u %% discount"
 msgstr "u krijgt% u%% korting"
 
-#: functions/product.php:592
+#: functions/product.php:596
 msgid "Oops! This product does not appear to exist"
 msgstr "Oeps! Dit product lijkt niet te bestaan"
 
