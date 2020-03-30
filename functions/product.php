@@ -69,7 +69,7 @@ $image = "<i class='fa fa-cube fa-fw fa-2x'></i>";
 return $image;
 }
 
-function doliproductstock($product) {
+function doliproductstock($product, $refresh = false) {
 
 $stock = '<script>
 jQuery(document).ready(function(){
@@ -96,10 +96,10 @@ $shipping = '';
 
 if ( $maxstock <= 0 || (isset($product->array_options->options_packaging) && $maxstock < $product->array_options->options_packaging ) ) { $stock .= "<a tabindex='0' id='popover-".$product->id."' class='badge badge-pill badge-dark text-white' data-container='body' data-toggle='popover' data-trigger='focus' title='".__( 'Out of stock', 'doliconnect')."' data-content='".sprintf( esc_html__( 'This item is out of stock and can not be ordered or shipped. %s', 'doliconnect'), $shipping)."'><i class='fas fa-warehouse'></i> ".__( 'Out of stock', 'doliconnect')."</a>"; }  
 elseif ( ($minstock <= 0 || (isset($product->array_options->options_packaging) && $product->stock_reel < $product->array_options->options_packaging)) && $maxstock >= 0 && $product->stock_theorique > $product->stock_reel ) { 
-$delay =  callDoliApi("GET", "/products/".$product->id."/purchase_prices", null, dolidelay('product'));
+$delay =  callDoliApi("GET", "/products/".$product->id."/purchase_prices", null, dolidelay('product', $refresh));
 if (empty($delay[0]->delivery_time_days)) { $delay = esc_html__( 'few', 'doliconnect'); } else { $delay = $delay[0]->delivery_time_days;}
 if (doliversion('12.0.0')) {
-$datelivraison =  callDoliApi("GET", "/supplierorders?sortfield=t.date_livraison&sortorder=ASC&limit=1&product_ids=".$product->id."&sqlfilters=(t.fk_statut%3A%3D%3A'2')", null, dolidelay('order'));
+$datelivraison =  callDoliApi("GET", "/supplierorders?sortfield=t.date_livraison&sortorder=ASC&limit=1&product_ids=".$product->id."&sqlfilters=(t.fk_statut%3A%3D%3A'2')", null, dolidelay('order', $refresh));
 if (isset($datelivraison[0]->date_livraison) && !empty($datelivraison[0]->date_livraison)) {
 $next = sprintf( "<br>".esc_html__(  'Reception scheduled on %s.', 'doliconnect'), wp_date('d/m/Y', $datelivraison[0]->date_livraison));
 } else {
