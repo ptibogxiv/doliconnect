@@ -170,7 +170,7 @@ if (!$line > 0) { $line=null; }
 
 $prdt = callDoliApi("GET", "/products/".$productid."?includestockdata=1&includesubproducts=true", null, dolidelay('product', true));
 
-if ( doliconnector($current_user, 'fk_order') > 0 && $quantity > 0 && $prdt->stock_reel >= $quantity && is_null($line) ) {
+if ( doliconnector($current_user, 'fk_order') > 0 && $quantity > 0 && ($prdt->stock_reel >= $quantity || ($line->type != '0' && empty(doliconst('STOCK_SUPPORTS_SERVICES')) )) && is_null($line) ) {
                                                                                      
 $adln = [
     'fk_product' => $prdt->id,
@@ -190,7 +190,7 @@ set_transient( 'doliconnect_cartlinelink_'.$addline, esc_url($url), dolidelay(MO
 }
 return doliconnect_countitems($order);
 
-} elseif ( doliconnector($current_user, 'fk_order') > 0 && $prdt->stock_reel >= $quantity && $line > 0 ) {
+} elseif ( doliconnector($current_user, 'fk_order') > 0 && ($prdt->stock_reel >= $quantity || ($line->type != '0' && empty(doliconst('STOCK_SUPPORTS_SERVICES')) )) && $line > 0 ) {
 
 if ( $quantity < 1 ) {
 
@@ -224,6 +224,10 @@ delete_transient( 'doliconnect_cartlinelink_'.$line );
 return doliconnect_countitems($order);
 
 }
+} elseif ( doliconnector($current_user, 'fk_order') > 0 && is_null($line) ) {
+
+return doliconnect_countitems($order);
+
 } else {
 
 return -1;//doliconnect_countitems($order);
@@ -440,7 +444,7 @@ $button .= '</tbody></table>';
 }
 
 if ( is_user_logged_in() && $add <= 0 && !empty(doliconst('MAIN_MODULE_COMMANDE')) && doliconnectid('dolicart') > 0 ) {
-if ( ($product->stock_reel-$qty > 0 && $product->type == '0') ) {
+if ( $product->stock_reel-$qty > 0 && (empty($product->type) || (!empty($product->type) && doliconst('STOCK_SUPPORTS_SERVICES')) ) ) {
 if (isset($product->array_options->options_packaging) && !empty($product->array_options->options_packaging)) {
 $m0 = 1*$product->array_options->options_packaging;
 $m1 = get_option('dolicartlist')*$product->array_options->options_packaging;
@@ -465,14 +469,14 @@ $step = 1;
 $button .= "<div class='input-group mb-3'><select class='form-control form-control-sm' id='select' name='product-add-qty' ";
 if ( ( empty($product->stock_reel) || $m2 < $step) && $product->type == '0' && !empty(doliconst('MAIN_MODULE_STOCK')) ) { $button .= " disabled"; }
 $button .= ">";
-if (empty($product->stock_reel) || $m2 < $step)  { $button .= "<OPTION value='0' selected>".__( 'Unavailable', 'doliconnect')."</OPTION>"; 
+if ((empty($product->stock_reel) && (empty($product->type) || (!empty($product->type) && doliconst('STOCK_SUPPORTS_SERVICES')) )) || $m2 < $step)  { $button .= "<OPTION value='0' selected>".__( 'Unavailable', 'doliconnect')."</OPTION>"; 
 } elseif (!empty($m2) && $m2 >= $step) {
 if ($step >1 && !empty($quantity)) $quantity = round($quantity/$step)*$step; 
 if (empty($qty) && $quantity > $m2) $quantity = $m2; 
 if ($m2 < $step)  { $button .= "<OPTION value='0' >".__( 'Delete', 'doliconnect')."</OPTION>"; } else
 foreach (range(0, $m2, $step) as $number) {
 if ($number == 0) { $button .= "<OPTION value='0' >".__( 'Delete', 'doliconnect')."</OPTION>";
-} elseif ( $number == $qty || ($number == $quantity && empty($qty)) || ($number == $m0 && empty($qty) && empty($quantity))) {
+} elseif ( ($number == $step && empty($qty) && empty($quantity)) || $number == $qty || ($number == $quantity && empty($qty)) || ($number == $m0 && empty($qty) && empty($quantity))) {
 $button .= "<option value='$number' selected='selected'>x ".$number."</option>";
 } else {
 $button .= "<option value='$number' >x ".$number."</option>";
