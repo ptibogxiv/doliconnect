@@ -226,10 +226,10 @@ wp_redirect(site_url());
 exit;
 }
 
-if ( is_multisite() && (!get_option( 'dolicustsupp_can_register' ) && !get_option( 'users_can_register' ) ) && (get_site_option( 'registration' ) != 'user' or get_site_option( 'registration' ) != 'all') ) {
+if ( is_multisite() && !get_option( 'users_can_register' ) && (get_site_option( 'registration' ) != 'user' or get_site_option( 'registration' ) != 'all') ) {
 wp_redirect(esc_url(doliconnecturl('doliaccount')));
 exit;
-} elseif (!get_option( 'dolicustsupp_can_register' ) && !get_option( 'users_can_register' )) {
+} elseif ( !get_option( 'users_can_register' ) ) {
 wp_redirect(esc_url(doliconnecturl('doliaccount')));
 exit;
 }
@@ -339,134 +339,30 @@ print dolialert('danger', $emailError);
 }
 }
 
-print "<div class='card shadow-sm'><div class='card-header'><h5 class='card-title'>".__( 'Create an account', 'doliconnect')."</h5></div><ul class='list-group list-group-flush panel-group' id='accordion'>";
+print "<form id='doliconnect-signinform' action='".doliconnecturl('doliaccount')."?action=signup' role='form' method='post' class='was-validated'>";
 
-print "<li class='list-group-item list-group-item-light list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>
-<input type='radio' id='newuser' name='paymentmode' value='newuser' class='custom-control-input' data-toggle='collapse' data-parent='#accordion' ";
-print " href='#newuser'><label class='custom-control-label w-100' for='newuser'><div class='row'><div class='col-3 col-md-2 col-xl-2 align-middle'>";
-print '<center><i class="fas fa-user-plus fa-3x fa-fw" style="color:DarkGrey"></i></center>';
-print "</div><div class='col-9 col-md-10 col-xl-10 align-middle'><h6 class='my-0'>".__( 'Create a new user', 'doliconnect')."</h6><small class='text-muted'>".sprintf( esc_html__( "you are not yet customer or member with %s", 'doliconnect'), get_bloginfo('name'))."</small>";
-print '</div></div></label></div></li>';
+print doliloaderscript('doliconnect-signinform'); 
 
-print '<div id="newuserPanel" class="panel-collapse collapse">';
-
-if ((!is_multisite() && get_option( 'users_can_register' )) || ((get_option('users_can_register') == '1') && (get_site_option( 'registration' ) == 'user' || get_site_option( 'registration' ) == 'all'))) {
-
-print "<div id='DoliNewUserAlert' class='text-danger font-weight-bolder'></div><form id='dolinewuser-form' method='post' class='was-validated' action='".admin_url('admin-ajax.php')."'>";
-print "<input type='hidden' name='action' value='dolisignup_request'>";
-print "<input type='hidden' name='dolisignup-nonce' value='".wp_create_nonce( 'dolisignup-nonce')."'>";
+print "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>".__( 'Create an account', 'doliconnect')."</h5></div>";
 
 print doliuserform( null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'thirdparty');
 
-print "<div class='card-body'><button class='btn btn-danger btn-block' type='submit'><b>".__( 'Submit', 'doliconnect')."</b></button></div>";
-
-print "<script>";
-print 'jQuery(document).ready(function($) {
-	
-	jQuery("#dolinewuser-form").on("submit", function(e) {
-  jQuery("#DoliconnectLoadingModal").modal("show");
-	e.preventDefault();
-    
-	var $form = $(this);
-  //var url = "";  
-jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function (e) { 
-		$.post($form.attr("action"), $form.serialize(), function(response) {
-      if (response.success) {
-      //document.location = url;
-      if (document.getElementById("DoliNewUserAlert")) {
-      document.getElementById("DoliNewUserAlert").innerHTML = response.data;      
-      }
-      } else {
-      if (document.getElementById("DoliNewUserAlert")) {
-      document.getElementById("DoliNewUserAlert").innerHTML = response.data;      
-      }
-      }
-jQuery("#DoliconnectLoadingModal").modal("hide");
-
-		}, "json");  
-  });
-});
-});';
-print "</script>";
-
-print '</form>';
-} else {
-print 'no new user';
-}
-print '</div>';
-
-
-print "<li class='list-group-item list-group-item-light list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>
-<input type='radio' id='linkuser' name='paymentmode' value='linkuser' class='custom-control-input' data-toggle='collapse' data-parent='#accordion' ";
-print " href='#linkuser'><label class='custom-control-label w-100' for='linkuser'><div class='row'><div class='col-3 col-md-2 col-xl-2 align-middle'>";
-print '<center><i class="fas fa-user-check fa-3x fa-fw" style="color:DarkGrey"></i></center>';
-print "</div><div class='col-9 col-md-10 col-xl-10 align-middle'><h6 class='my-0'>".__( 'Create from existing customer', 'doliconnect')."</h6><small class='text-muted'>".sprintf( esc_html__( 'you are already customer or member with %s', 'doliconnect'), get_bloginfo('name'))."</small>";
-print '</div></div></label></div></li>';
-
-print '<div id="linkuserPanel" class="panel-collapse collapse">';
-print "<div id='DoliLinkUserAlert' class='text-danger font-weight-bolder'></div><form id='dolilinkuser-form' method='post' class='was-validated' action='".admin_url('admin-ajax.php')."'>";
-print "<input type='hidden' name='action' value='dolisignup_request'>";
-print "<input type='hidden' name='dolisignup-nonce' value='".wp_create_nonce( 'dolisignup-nonce')."'>";
-
-print doliuserform( null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'linkthirdparty');
-
-print "<div class='card-body'><button class='btn btn-danger btn-block' type='submit'><b>".__( 'Submit', 'doliconnect')."</b></button></div>";
-
-print "<script>";
-print 'jQuery(document).ready(function($) {
-	
-	jQuery("#dolilinkuser-form").on("submit", function(e) {
-  jQuery("#DoliconnectLoadingModal").modal("show");
-	e.preventDefault();
-    
-	var $form = $(this);
-  //var url = "";  
-jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function (e) { 
-		$.post($form.attr("action"), $form.serialize(), function(response) {
-      if (response.success) {
-      //document.location = url;
-      if (document.getElementById("DoliLinkUserAlert")) {
-      document.getElementById("DoliLinkUserAlert").innerHTML = response.data;      
-      }
-      } else {
-      if (document.getElementById("DoliLinkUserAlert")) {
-      document.getElementById("DoliLinkUserAlert").innerHTML = response.data;      
-      }
-      }
-jQuery("#DoliconnectLoadingModal").modal("hide");
-
-		}, "json");  
-  });
-});
-});';
-print "</script>";
-
-print '</form>';
-
-print "</div></ul><div class='card-body text-muted'><script>";
-print  "jQuery('#newuser,#linkuser').on('click', function (e) {
-          e.stopPropagation();";
-print  " if(this.id == 'newuser'){
-              jQuery('#linkuserPanel').collapse('hide');
-              jQuery('#newuserPanel').collapse('show');
-          }else if(this.id == 'linkuser'){
-              jQuery('#newuserPanel').collapse('hide');
-              jQuery('#linkuserPanel').collapse('show');
-          }
-});";
-print "</script>";
+print "<div class='card-body'><input type='hidden' name='submitted' id='submitted' value='true'><button class='btn btn-primary btn-block' type='submit'";
+if ( get_option('users_can_register')=='1' && ( get_site_option( 'registration' ) == 'user' || get_site_option( 'registration' ) == 'all' ) || ( !is_multisite() && get_option( 'users_can_register' )) ) {
+print "";
+} else { print " aria-disabled='true'  disabled"; }
+print "><b>".__( 'Create an account', 'doliconnect')."</b></button></form>";
 
 print "</div>";
-//print '<div class="card-footer text-muted">';
-//print "<small><div class='float-left'>";
+print '<div class="card-footer text-muted">';
+print "<small><div class='float-left'>";
 
-//print "</div><div class='float-right'>";
-//print dolihelp('ISSUE');
-//print "</div></small>";
-//print '</div>';
-print '</div>';
+print "</div><div class='float-right'>";
+print dolihelp('ISSUE');
+print "</div></small>";
+print '</div></div></form>';
 
-//do_action( 'login_footer');
+do_action( 'login_footer');
 
 } elseif ( isset($_GET["action"]) && $_GET["action"] == 'rpw' ) {
 

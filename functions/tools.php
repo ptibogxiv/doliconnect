@@ -572,7 +572,7 @@ elseif ($delay == 'contract') { $delay = HOUR_IN_SECONDS; }
 elseif ($delay == 'member') { $delay = DAY_IN_SECONDS; }
 elseif ($delay == 'donation') { $delay = DAY_IN_SECONDS; }
 elseif ($delay == 'ticket') { $delay = HOUR_IN_SECONDS; }
-elseif ($delay == 'product') { $delay = DAY_IN_SECONDS; }
+elseif ($delay == 'product') { $delay = HOUR_IN_SECONDS; }
 elseif ($delay == 'cart') { $delay = 20 * MINUTE_IN_SECONDS; }
 elseif ($delay == 'document') { $delay = MONTH_IN_SECONDS; }
 } else {
