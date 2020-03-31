@@ -61,7 +61,7 @@
 							},
 						} ),
             el( ToggleControl, {
-              label: i18n.__( 'Add to cart', 'doliconnect'),
+              label: i18n.__( 'Hide addition to cart', 'doliconnect'),
               checked: showButtonToCart,
               onChange: function onChange( showButtonToCart ) {
               props.setAttributes({ showButtonToCart: !showButtonToCart });
