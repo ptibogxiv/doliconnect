@@ -319,7 +319,7 @@ jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function(e){
       }
       document.getElementById("error-product-'.$product->id.'").innerHTML = "";
       } else {
-      document.getElementById("error-product-'.$product->id.'").innerHTML = response.data;
+      document.getElementById("error-product-'.$product->id.'").innerHTML = response.data.message;
       }
 jQuery("#DoliconnectLoadingModal").modal("hide");
 
@@ -509,7 +509,7 @@ if ( !empty(doliconnector($current_user, 'remise_percent')) ) { $button .= "<sma
 $button .= "<input type='hidden' name='product-add-vat' value='".$product->tva_tx."'><input type='hidden' name='product-add-remise_percent' value='".doliconnector($current_user, 'remise_percent')."'><input type='hidden' name='product-add-price' value='".$price_ht."'>";
 //$button .= '<div id="product-add-loading-'.$product->id.'" style="display:none">'.doliprice($price_ttc).'<button class="btn btn-secondary btn-block" disabled><i class="fas fa-spinner fa-pulse fa-1x fa-fw"></i> '.__( 'Loading', 'doliconnect').'</button></div>';
 
-$button .= "</form><div id='error-product-".$product->id."'></div>";
+$button .= "</form><div id='error-product-".$product->id."' class='text-danger font-weight-bolder'></div>";
 
 return $button;
 }

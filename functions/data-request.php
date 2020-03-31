@@ -72,7 +72,10 @@ $result = doliaddtocart(trim($_POST['product-add-id']), trim($_POST['product-add
 if ($result > 0) {
 wp_send_json_success( $result ); 
 } else {
-wp_send_json_error( __( 'An error occured when adding this item to cart', 'doliconnect')); 
+$response = [
+    'message' => __( 'We no longer have this item in this quantity', 'doliconnect'),
+        ];
+wp_send_json_error( $response ); 
 }
 }	else {
 wp_send_json_error( __( 'A security error occured', 'doliconnect')); 
