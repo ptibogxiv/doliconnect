@@ -128,7 +128,7 @@ $qty+=$line->qty;
 return $qty;
 }
 
-function doliaddtocart($product, $quantity = null, $price = null, $remise_percent = null, $timestart = null, $timeend = null, $url = null) {
+function doliaddtocart($productid, $quantity = null, $price = null, $remise_percent = null, $timestart = null, $timeend = null, $url = null) {
 global $current_user;
 
 if (!is_null($timestart) && $timestart > 0 ) {
@@ -160,19 +160,20 @@ $order = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order', 
 
 if ( $order->lines != null ) {
 foreach ( $order->lines as $ln ) {
-if ( $ln->fk_product == $product ) {
+if ( $ln->fk_product == $productid ) {
 //$deleteline = callDoliApi("DELETE", "/orders/".$orderid."/lines/".$ln[id], null, 0);
 //$qty=$ln[qty];
 $line=$ln->id;
 }
 }}
-
 if (!$line > 0) { $line=null; }
 
-if ( doliconnector($current_user, 'fk_order') > 0 && $quantity > 0 && is_null($line) ) {
-$prdt = callDoliApi("GET", "/products/".$product."?includestockdata=1&includesubproducts=true", null, dolidelay('product', true));
+$prdt = callDoliApi("GET", "/products/".$productid."?includestockdata=1&includesubproducts=true", null, dolidelay('product', true));
+
+if ( doliconnector($current_user, 'fk_order') > 0 && $quantity > 0 && $prdt->stock_reel >= $quantity && is_null($line) ) {
+                                                                                     
 $adln = [
-    'fk_product' => $product,
+    'fk_product' => $prdt->id,
     'desc' => $prdt->description,
     'date_start' => $date_start,
     'date_end' => $date_end,
@@ -189,7 +190,7 @@ set_transient( 'doliconnect_cartlinelink_'.$addline, esc_url($url), dolidelay(MO
 }
 return doliconnect_countitems($order);
 
-} elseif ( doliconnector($current_user, 'fk_order') > 0 && $line > 0 ) {
+} elseif ( doliconnector($current_user, 'fk_order') > 0 && $prdt->stock_reel >= $quantity && $line > 0 ) {
 
 if ( $quantity < 1 ) {
 
@@ -202,8 +203,7 @@ return doliconnect_countitems($order);
  
 } else {
 
-$prdt = callDoliApi("GET", "/products/".$product."?includestockdata=1&includesubproducts=true", null, dolidelay('product', true));
- $ln = [
+$uln = [
     'desc' => $prdt->description,
     'date_start' => $date_start,
     'date_end' => $date_end,
@@ -212,7 +212,7 @@ $prdt = callDoliApi("GET", "/products/".$product."?includestockdata=1&includesub
     'remise_percent' => isset($remise_percent) ? $remise_percent : doliconnector($current_user, 'remise_percent'),
     'subprice' => $price
 	];                  
-$updateline = callDoliApi("PUT", "/orders/".doliconnector($current_user, 'fk_order')."/lines/".$line, $ln, 0);
+$updateline = callDoliApi("PUT", "/orders/".doliconnector($current_user, 'fk_order')."/lines/".$line, $uln, 0);
 $order = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order', true)."?contact_list=0", null, dolidelay('order', true));
 $dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolidelay('doliconnector', true));
 if ( !empty($url) ) {
@@ -226,7 +226,7 @@ return doliconnect_countitems($order);
 }
 } else {
 
-return doliconnect_countitems($order);
+return -1;//doliconnect_countitems($order);
 
 }
 }
@@ -287,7 +287,7 @@ return $cart;
 function doliconnect_addtocart($product, $category = 0, $quantity = 0, $add = 0, $time = 0, $refresh = null) {
 global $current_user;
 
-$button = "<form class='product-".$product->id."' method='post' action='".admin_url('admin-ajax.php')."'>";
+$button = "<form id='form-product-".$product->id."' class='form-product-".$product->id."' method='post' action='".admin_url('admin-ajax.php')."'>";
 $button .= "<input type='hidden' name='action' value='doliaddproduct_request'>";
 $button .= "<input type='hidden' name='product-add-nonce' value='".wp_create_nonce( 'product-add-nonce-'.$product->id)."'>";
 $button .= "<input type='hidden' name='product-add-id' value='".$product->id."'>";
@@ -299,7 +299,7 @@ $button .= 'jQuery(document).ready(function($) {
 //alert("test");
 //}
 	
-	jQuery(".product-'.$product->id.'").on("submit", function(e){
+	jQuery(".form-product-'.$product->id.'").on("submit", function(e){
   jQuery("#DoliconnectLoadingModal").modal("show");
 	e.preventDefault();
 
@@ -317,6 +317,8 @@ jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function(e){
       if (document.getElementById("DoliWidgetCarItems")) {
       document.getElementById("DoliWidgetCarItems").innerHTML = response.data;      
       }
+      } else {
+      document.getElementById("form-product-'.$product->id.'").innerHTML = response.data;
       }
 jQuery("#DoliconnectLoadingModal").modal("hide");
 

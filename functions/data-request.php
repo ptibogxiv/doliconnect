@@ -69,8 +69,11 @@ global $current_user;
 if ( wp_verify_nonce( trim($_POST['product-add-nonce']), 'product-add-nonce-'.trim($_POST['product-add-id']) ) ) {
 
 $result = doliaddtocart(trim($_POST['product-add-id']), trim($_POST['product-add-qty']), trim($_POST['product-add-price']), trim($_POST['product-add-remise_percent']), isset($_POST['product-add-timestamp_start'])?trim($_POST['product-add-timestamp_start']):null, isset($_POST['product-add-timestamp_end'])?trim($_POST['product-add-timestamp_end']):null);
+if ($result > 0) {
 wp_send_json_success( $result ); 
-
+} else {
+wp_send_json_error( __( 'An error occured when adding this item to cart', 'doliconnect')); 
+}
 }	else {
 wp_send_json_error( __( 'A security error occured', 'doliconnect')); 
 }
