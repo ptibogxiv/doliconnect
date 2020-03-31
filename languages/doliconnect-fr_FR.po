@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2020-03-30 23:53+0200\n"
-"PO-Revision-Date: 2020-03-30 23:56+0200\n"
+"POT-Creation-Date: 2020-03-31 09:51+0200\n"
+"PO-Revision-Date: 2020-03-31 09:56+0200\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_FR\n"
@@ -1430,8 +1430,8 @@ msgid "Shipping informations"
 msgstr "Informations sur l'expédition"
 
 #: functions/product.php:97
-msgid "Out of stock"
-msgstr "Rupture de stock"
+msgid "Not available"
+msgstr "Non disponible"
 
 #: functions/product.php:97
 #, php-format
@@ -1450,8 +1450,8 @@ msgid "Reception scheduled on %s."
 msgstr "Réception prévue le %s."
 
 #: functions/product.php:111
-msgid "Restocking in progress"
-msgstr "Réapprovisionnement en cours"
+msgid "Available soon"
+msgstr "Disponible prochainement"
 
 #: functions/product.php:111
 #, php-format
@@ -1462,8 +1462,8 @@ msgstr ""
 "sous %s jours. %s %s"
 
 #: functions/product.php:112
-msgid "Available in limited stock"
-msgstr "Disponible en stock limité"
+msgid "Limited availability"
+msgstr "Disponibilité limitée"
 
 #: functions/product.php:112
 #, php-format
@@ -2106,8 +2106,14 @@ msgstr "ptibogxiv"
 msgid "https://www.ptibogxiv.net/en"
 msgstr "https://www.ptibogxiv.net/fr"
 
-#~ msgid "Available"
-#~ msgstr "Disponible"
+#~ msgid "Out of stock"
+#~ msgstr "Rupture de stock"
+
+#~ msgid "Restocking in progress"
+#~ msgstr "Réapprovisionnement en cours"
+
+#~ msgid "Available in limited stock"
+#~ msgstr "Disponible en stock limité"
 
 #~ msgid "Limited stock"
 #~ msgstr "Stock limité"
