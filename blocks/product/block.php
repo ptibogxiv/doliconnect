@@ -54,7 +54,7 @@ $content .= "<center>".__( 'No product', 'doliconnect' )."</center>";
 $content .= "</div>";
 $content .= "<div class='card-footer text-muted'>";
 $content .= "<small><div class='float-left'>";
-$content .= dolirefresh("/products/".$attributes['productID']."?includestockdata=1", null, dolidelay('thirdparty'));
+$content .= dolirefresh("/products/".$attributes['productID']."?includestockdata=1&includesubproducts=true", null, dolidelay('thirdparty'));
 $content .= "</div><div class='float-right'>";
 $content .= dolihelp('ISSUE');
 $content .= "</div></small>";
