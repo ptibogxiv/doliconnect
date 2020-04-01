@@ -170,7 +170,7 @@ if (!$line > 0) { $line=null; }
 
 $prdt = callDoliApi("GET", "/products/".$productid."?includestockdata=1&includesubproducts=true", null, dolidelay('product', true));
 
-if ( doliconnector($current_user, 'fk_order') > 0 && $quantity > 0 && ($prdt->stock_reel >= $quantity || ($line->type != '0' && empty(doliconst('STOCK_SUPPORTS_SERVICES')) )) && is_null($line) ) {
+if ( doliconnector($current_user, 'fk_order') > 0 && $quantity > 0 && (empty(doliconst('MAIN_MODULE_STOCK')) || $prdt->stock_reel >= $quantity || ($line->type != '0' && empty(doliconst('STOCK_SUPPORTS_SERVICES')) )) && is_null($line) ) {
                                                                                      
 $adln = [
     'fk_product' => $prdt->id,
@@ -469,7 +469,7 @@ $step = 1;
 $button .= "<div class='input-group mb-3'><select class='form-control form-control-sm' id='select' name='product-add-qty' ";
 if ( ( empty($product->stock_reel) || $m2 < $step) && $product->type == '0' && !empty(doliconst('MAIN_MODULE_STOCK')) ) { $button .= " disabled"; }
 $button .= ">";
-if ((empty($product->stock_reel) && (empty($product->type) || (!empty($product->type) && doliconst('STOCK_SUPPORTS_SERVICES')) )) || $m2 < $step)  { $button .= "<OPTION value='0' selected>".__( 'Unavailable', 'doliconnect')."</OPTION>"; 
+if ((empty($product->stock_reel) && !empty(doliconst('MAIN_MODULE_STOCK')) && (empty($product->type) || (!empty($product->type) && doliconst('STOCK_SUPPORTS_SERVICES')) )) || $m2 < $step)  { $button .= "<OPTION value='0' selected>".__( 'Unavailable', 'doliconnect')."</OPTION>"; 
 } elseif (!empty($m2) && $m2 >= $step) {
 if ($step >1 && !empty($quantity)) $quantity = round($quantity/$step)*$step; 
 if (empty($qty) && $quantity > $m2) $quantity = $m2; 
