@@ -515,7 +515,7 @@ if ( isset($ref) && isset($fichier) && isset($doc->content) ) {
 $data = "data:application/pdf;".$doc->encoding.",".$doc->content;
 $filename = explode(".", $doc->filename)[0];
 
-if (get_option('doliconnectbeta') == '1') {
+if (!empty(get_option('doliconnectbeta'))) {
 $document = '<button type="button" class="btn btn btn-outline-dark btn-sm btn-block" data-toggle="modal" data-target=".modal-'.$filename.'">'.$name.' <i class="fas fa-file-download"></i></button>';
 $document .= '<div class="modal fade modal-'.$filename.'" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 <div class="modal-dialog modal-dialog-centered modal-lg" role="document"><div class="modal-content"><div class="modal-header">
@@ -972,7 +972,7 @@ $paymentmethods .= "<li class='list-group-item list-group-item-info'><i class='f
 }
 
 $paymentmethods .= '<div class="card-body text-muted"><small>';
-if (isset($object)) {
+if (isset($object) && !empty(get_option('doliconnectbeta'))) {
 $paymentmethods .= '<div class="custom-control custom-checkbox">
   <input type="checkbox" class="custom-control-input" id="checkBox1" ">
   <label class="custom-control-label" for="checkBox1">'.sprintf( __( 'I read and accept the %s', 'doliconnect'), dolidocdownload('', '', '', __( 'Terms & Conditions', 'doliconnect'), false, 'btn-link')).'</label>
@@ -1936,7 +1936,7 @@ global $current_user;
 		<?php endif; ?>
 <div class='col-auto align-middle'><h6 class='my-0'><?php echo __( 'Erase your data', 'doliconnect'); ?></h6><small class='text-muted'><?php echo __( 'You will receive an email with a secure link to confirm the deletion', 'doliconnect'); ?></small>
 </div></div></label></div></li>
-<?php if (get_option('doliconnectbeta') =='1') { ?>
+<?php if (!empty(get_option('doliconnectbeta'))) { ?>
 <li class='list-group-item list-group-item-light list-group-item-action flex-column align-items-start'><div class='custom-control custom-radio'>
 <input id='gdrf-data-type-delete' class='custom-control-input' type='radio' name='gdrf_data_type' value='delete_personal_data' disabled>
 <label class='custom-control-label w-100' for='gdrf-data-type-delete'><div class='row'>
