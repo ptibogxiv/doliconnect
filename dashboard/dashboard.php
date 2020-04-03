@@ -1370,7 +1370,6 @@ print  "$datefin"; }
 print "</div><div class='col-12 col-md-7'>";
 
 if ( function_exists('dolimembership_modal') && !empty(doliconst('MAIN_MODULE_COMMANDE')) && !empty($productadhesion) ) {
-dolimembership_modal($current_user, $adherent, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 //print doliloaderscript('doliconnect-memberform');
 
