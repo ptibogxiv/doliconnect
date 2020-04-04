@@ -43,6 +43,11 @@ WordPress configuration steps:
 Doliconnect v4.x -> Dolibarr 11.x
 Doliconnect v3.x -> Dolibarr 10.x
 
+= REST API compatibility =
+
+In some cases, REST API with Dolibarr need some extra settings to work. Please read this
+https://github.com/Dolibarr/dolibarr/pull/12089
+
 == Screenshots ==
 
 1. Shortcode integration.
