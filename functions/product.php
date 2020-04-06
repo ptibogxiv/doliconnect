@@ -572,13 +572,13 @@ if ($product->id > 0) {
 
 $documents = callDoliApi("GET", "/documents?modulepart=product&id=".$product->id, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 //$card .= $documents;
+$card = "<div class='row'>";
 if (defined("DOLIBUG")) {
 $card = dolibug();
 } elseif ( $product->id>0 && $product->status == 1 ) {
-$card = "<div class='row'>";
-$card .= '<div class="col-12 d-block d-sm-block d-xs-block d-md-none"><center>';
+$card .= "<div class='col-12 d-block d-sm-block d-xs-block d-md-none'><center>";
 $card .= doliconnect_image('product', $product->id, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
-$card .= '</center>';
+$card .= "</center>";
 //$card .= wp_get_attachment_image( $attributes['mediaID'], "ptibogxiv_large", "", array( "class" => "img-fluid" ) );
 $card .= "</div>";
 $card .= '<div class="col-md-4 d-none d-md-block"><center>';
@@ -608,7 +608,7 @@ $card .= doliconnect_addtocart($product, 0, 0, isset($attributes['hideButtonToCa
 $card .= "</div></div>";
 $card .= "<div class='col-12'><p>".doliproduct($product, 'description')."</p></div>";
 } else {
-$card .= "<center>".__( 'Product/Service not in sale', 'doliconnect' )."</center>";
+$card .= "<div class='col-12'><p><center>".__( 'Product/Service not in sale', 'doliconnect' )."</center></p></div>";
 } 
 $card .= "</div>";
 } else {
