@@ -606,7 +606,7 @@ if ( ! empty(doliconnectid('dolicart')) ) {
 $card .= doliconnect_addtocart($product, 0, 0, isset($attributes['hideButtonToCart']) ? $attributes['hideButtonToCart'] : 0, isset($attributes['hideDuration']) ? $attributes['hideDuration'] : 0);
 }
 $card .= "</div></div>";
-$card .= "<div class='col-12'><p>".doliproduct($product, 'description')."</p></div>";
+$card .= "<div class='col-12'><h6>".__( 'Description', 'doliconnect' )."</h6><p>".doliproduct($product, 'description')."</p></div>";
 } else {
 $card .= "<div class='col-12'><p><center>".__( 'Product/Service not in sale', 'doliconnect' )."</center></p></div>";
 } 
