@@ -920,8 +920,8 @@ print "</ul>";
 } else {
 if ( isset($_GET['search']) ) {
 print "<ul class='list-group list-group-flush'>";
-$request = "/products?sortfield=t.label&sortorder=ASC&sqlfilters=((t.label%3Alike%3A'%25".esc_attr($_GET['search'])."%25')%20OR%20(t.ref%3Alike%3A'%25".esc_attr($_GET['search'])."%25')%20OR%20(t.barcode%3Alike%3A'%25".esc_attr($_GET['search'])."%25'))%20AND%20(t.tosell%3A%3D%3A1)";
 
+$request = "/products?sortfield=t.label&sortorder=ASC&sqlfilters=((t.label%3Alike%3A'%25".esc_attr($_GET['search'])."%25')%20OR%20(t.ref%3Alike%3A'%25".esc_attr($_GET['search'])."%25')%20OR%20(t.barcode%3Alike%3A'%25".esc_attr($_GET['search'])."%25'))%20AND%20(t.tosell%3A%3D%3A1)";
 $resultatso = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 //print $resultatso;
 
@@ -936,8 +936,10 @@ print "<li class='list-group-item list-group-item-light'><center>".__( 'No produ
 }
 print "</ul>"; 
 } elseif ( isset($_GET['product']) ) {
+
 $request = "/products/".esc_attr($_GET['product'])."?includestockdata=1";
 $product = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+
 print "<div class='card-body'>";
 print apply_filters( 'doliproductcard', $product, null);
 print "</div>";
@@ -946,7 +948,6 @@ print "<ul class='list-group list-group-flush'>";
 if ( $shop != null ) {
 
 $request = "/categories/".$shop."?include_childs=true";
-
 $resultatsc = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 if ( !isset($resultatsc->error) && $resultatsc != null ) {
@@ -970,7 +971,6 @@ $category = callDoliApi("GET", "/categories/".esc_attr(isset($_GET["subcategory"
 print "<li class='list-group-item'>".doliproduct($category, 'label')."<br><small>".doliproduct($category, 'description')."</small></li>"; 
 
 $request = "/categories/".esc_attr(isset($_GET["subcategory"]) ? $_GET["subcategory"] : $_GET["category"])."?include_childs=true";
-
 $resultatsc = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 if ( !isset($resultatsc->error) && $resultatsc != null ) {
@@ -984,7 +984,6 @@ print "<a href='".$return."' class='list-group-item list-group-item-action'>".do
 }}
 
 $request = "/products?sortfield=t.label&sortorder=ASC&category=".esc_attr(isset($_GET["subcategory"]) ? $_GET["subcategory"] : $_GET["category"])."&sqlfilters=(t.tosell=1)";
-
 $resultatso = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 //print $resultatso;
 
