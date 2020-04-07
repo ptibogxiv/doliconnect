@@ -839,7 +839,7 @@ doliconnect_enqueues();
 if ( isset($_GET['supplier']) && $_GET['supplier'] > 0 ) { 
  
 $request = "/thirdparties/".esc_attr($_GET['supplier']);
-
+$module = 'thirdparty';
 $thirdparty = callDoliApi("GET", $request, null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 //print $thirdparty;
 }
@@ -848,10 +848,10 @@ print "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
 
 if ( !isset($thirdparty->error) && isset($_GET['supplier']) && isset($thirdparty->id) && ($_GET['supplier'] == $thirdparty->id) && $thirdparty->status == 1 && $thirdparty->fournisseur == 1 ) {
 
-print "<li class='list-group-item'>".$thirdparty->name."</li>"; 
+print "<li class='list-group-item'>".(!empty($thirdparty->name_alias)?$thirdparty->name_alias:$thirdparty->name)."</li>"; 
 
 $request = "/products/purchase_prices?sortfield=t.ref&sortorder=ASC&limit=100&supplier=".esc_attr($_GET["supplier"]);
-
+$module = 'product';
 $resultatso = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 if ( !isset($resultatso->error) && $resultatso != null ) {
@@ -866,14 +866,14 @@ print "<li class='list-group-item list-group-item-light'><center>".__( 'No produ
 
 } else {
 
-$request = "/thirdparties?sortfield=t.rowid&sortorder=ASC&limit=100&mode=4&sqlfilters=(t.status%3A%3D%3A'1')";
-
+$request = "/thirdparties?sortfield=t.nom&sortorder=ASC&limit=100&mode=4&sqlfilters=(t.status%3A%3D%3A'1')";
+$module = 'thirdparty';
 $resultatsc = callDoliApi("GET", $request, null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 if ( !isset($resultatsc->error) && $resultatsc != null ) {
 foreach ($resultatsc as $supplier) {
 
-print "<a href='".esc_url( add_query_arg( 'supplier', $supplier->id, doliconnecturl('dolisupplier')) )."' class='list-group-item list-group-item-action'>".$supplier->name."</a>";
+print "<a href='".esc_url( add_query_arg( 'supplier', $supplier->id, doliconnecturl('dolisupplier')) )."' class='list-group-item list-group-item-action'>".(!empty($supplier->name_alias)?$supplier->name_alias:$supplier->name)."</a>";
 
 }}
 
@@ -882,7 +882,7 @@ print "<a href='".esc_url( add_query_arg( 'supplier', $supplier->id, doliconnect
 print '</ul><div class="card-body">';
 print '</div><div class="card-footer text-muted">';
 print "<small><div class='float-left'>";
-if ( isset($request) ) print dolirefresh($request, get_permalink(), dolidelay('product'));
+if ( isset($request) ) print dolirefresh($request, get_permalink(), dolidelay($module));
 print "</div><div class='float-right'>";
 print dolihelp('ISSUE');
 print "</div></small>";
