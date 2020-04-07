@@ -850,7 +850,7 @@ if ( !isset($thirdparty->error) && isset($_GET['supplier']) && isset($thirdparty
 
 print "<li class='list-group-item'>".(!empty($thirdparty->name_alias)?$thirdparty->name_alias:$thirdparty->name)."</li>"; 
 
-$request = "/products/purchase_prices?sortfield=t.ref&sortorder=ASC&limit=100&supplier=".esc_attr($_GET["supplier"]);
+$request = "/products/purchase_prices?sortfield=t.ref&sortorder=ASC&limit=100&supplier=".esc_attr($_GET["supplier"])."&sqlfilters=(t.tosell%3A%3D%3A1)";
 $module = 'product';
 $resultatso = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
@@ -920,7 +920,7 @@ print "</ul>";
 } else {
 if ( isset($_GET['search']) ) {
 print "<ul class='list-group list-group-flush'>";
-$request = "/products?sortfield=t.label&sortorder=ASC&sqlfilters=((t.label%3Alike%3A'%25".esc_attr($_GET['search'])."%25')%20OR%20(t.ref%3Alike%3A'%25".esc_attr($_GET['search'])."%25')%20OR%20(t.barcode%3Alike%3A'%25".esc_attr($_GET['search'])."%25'))%20AND%20(t.tosell=1)";
+$request = "/products?sortfield=t.label&sortorder=ASC&sqlfilters=((t.label%3Alike%3A'%25".esc_attr($_GET['search'])."%25')%20OR%20(t.ref%3Alike%3A'%25".esc_attr($_GET['search'])."%25')%20OR%20(t.barcode%3Alike%3A'%25".esc_attr($_GET['search'])."%25'))%20AND%20(t.tosell%3A%3D%3A1)";
 
 $resultatso = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 //print $resultatso;
