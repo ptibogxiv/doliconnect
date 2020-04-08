@@ -850,8 +850,10 @@ if ( !isset($thirdparty->error) && isset($_GET['supplier']) && isset($thirdparty
 
 print "<li class='list-group-item'>".(!empty($thirdparty->name_alias)?$thirdparty->name_alias:$thirdparty->name)."</li>"; 
 
-$request = "/products/purchase_prices?sortfield=t.ref&sortorder=ASC&limit=100&supplier=".esc_attr($_GET["supplier"])."&sqlfilters=(t.tosell%3A%3D%3A1)";
 $module = 'product';
+$limit=20;
+if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']-1); }  else { $page = "0"; }
+$request = "/products/purchase_prices?sortfield=t.ref&sortorder=ASC&limit=".$limit."&page=".$page."&supplier=".esc_attr($_GET["supplier"])."&sqlfilters=(t.tosell%3A%3D%3A1)";
 $resultatso = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 if ( !isset($resultatso->error) && $resultatso != null ) {
@@ -866,8 +868,10 @@ print "<li class='list-group-item list-group-item-light'><center>".__( 'No produ
 
 } else {
 
-$request = "/thirdparties?sortfield=t.nom&sortorder=ASC&limit=100&mode=4&sqlfilters=(t.status%3A%3D%3A'1')";
 $module = 'thirdparty';
+$limit=20;
+if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']-1); }  else { $page = "0"; }
+$request = "/thirdparties?sortfield=t.nom&sortorder=ASC&limit=".$limit."&page=".$page."&mode=4&sqlfilters=(t.status%3A%3D%3A'1')";
 $resultatsc = callDoliApi("GET", $request, null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 if ( !isset($resultatsc->error) && $resultatsc != null ) {
@@ -984,7 +988,9 @@ print "<a href='".$return."' class='list-group-item list-group-item-action'>".do
 
 }}
 
-$request = "/products?sortfield=t.label&sortorder=ASC&category=".esc_attr(isset($_GET["subcategory"]) ? $_GET["subcategory"] : $_GET["category"])."&sqlfilters=(t.tosell=1)";
+$limit=20;
+if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']-1); }  else { $page = "0"; }
+$request = "/products?sortfield=t.label&sortorder=ASC&limit=".$limit."&page=".$page."&category=".esc_attr(isset($_GET["subcategory"]) ? $_GET["subcategory"] : $_GET["category"])."&sqlfilters=(t.tosell=1)";
 $resultatso = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 //print $resultatso;
 
@@ -1001,7 +1007,7 @@ print "</ul>";
 }
 }
 print "</ul><div class='card-body'>";
-//print dolipage($url, $page, 8);
+print dolipage($_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], $page, $limit);
 print "</div><div class='card-footer text-muted'>";
 print "<small><div class='float-left'>";
 if ( isset($request) ) print dolirefresh($request, get_permalink(), dolidelay('product'));

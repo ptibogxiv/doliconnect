@@ -667,6 +667,7 @@ print '</div></div>';
 
 } else {
 
+$limit=8;
 if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']-1); }  else { $page = "0"; }
 $request = "/proposals?sortfield=t.date_valid&sortorder=DESC&limit=8&page=".$page."&thirdparty_ids=".doliconnector($current_user, 'fk_soc')."&sqlfilters=(t.fk_statut!=0)";
 $listpropal = callDoliApi("GET", $request, null, dolidelay('proposal', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
@@ -692,7 +693,7 @@ else{
 print "<li class='list-group-item list-group-item-light'><center>".__( 'No proposal', 'doliconnect')."</center></li>";
 }
 print "</ul><div class='card-body'>";
-print dolipage($url, $page, 8);
+print dolipage($url, $page, $limit);
 print "</div><div class='card-footer text-muted'>";
 print "<small><div class='float-left'>";
 if ( isset($request) ) print dolirefresh($request, $url, dolidelay('proposal'));
@@ -1001,7 +1002,7 @@ print "<li class='list-group-item list-group-item-light'><center>".__( 'No order
 }
 
 print "</ul><div class='card-body'>";
-print dolipage($url, $page, 8);
+print dolipage($url, $page, $limit);
 print "</div><div class='card-footer text-muted'>";
 print "<small><div class='float-left'>";
 if ( isset($request) ) print dolirefresh($request, $url, dolidelay('order'));
@@ -1096,6 +1097,7 @@ print '</div></div>';
 
 } else {
 
+$limit=8;
 if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']-1); }  else { $page = "0"; }
 $request = "/contracts?sortfield=t.date_valid&sortorder=DESC&limit=8&page=".$page."&thirdparty_ids=".doliconnector($current_user, 'fk_soc'); //".$page."                                 
 $listcontract = callDoliApi("GET", $request, null, dolidelay('contract', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
@@ -1126,7 +1128,7 @@ else{
 print "<li class='list-group-item list-group-item-light'><center>".__( 'No contract', 'doliconnect')."</center></li>";
 }
 print "</ul><div class='card-body'>";
-print dolipage($url, $page, 8);
+print dolipage($url, $page, $limit);
 print "</div><div class='card-footer text-muted'>";
 print "<small><div class='float-left'>";
 if ( isset($request) ) print dolirefresh($request, $url, dolidelay('contract'));
@@ -1215,6 +1217,7 @@ print "</div></small>";
 
 } else {
 
+$limit=8;
 if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']-1); }  else { $page = "0"; }
 $request= "/donations?sortfield=t.date_valid&sortorder=DESC&limit=8&page=".$page."&thirdparty_ids=".doliconnector($current_user, 'fk_soc');// ".$page."   ."&sqlfilters=(t.fk_statut!=0)"
 $listdonation = callDoliApi("GET", $request, null, dolidelay('donation', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
@@ -1244,7 +1247,7 @@ else{
 print "<li class='list-group-item list-group-item-light'><center>".__( 'No donation', 'doliconnect')."</center></li>";
 }
 print "</ul><div class='card-body'>";
-print dolipage($url, $page, 8);
+print dolipage($url, $page, $limit);
 print "</div><div class='card-footer text-muted'>";
 print "<small><div class='float-left'>";
 if ( isset($request) ) print dolirefresh($request, $url, dolidelay('donation'));
