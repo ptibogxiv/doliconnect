@@ -22,7 +22,7 @@ function dolipage($url, $page, $limit = 8) {
 $pagination = "<nav aria-label='Page navigation example'><ul class='pagination pagination-sm'>";
 if ($page > '1') {
 $pagination .= '<li class="page-item">
-      <a class="page-link" href="#" aria-label="Previous">
+      <a class="page-link" href="'.$url.'&pg='.esc_attr($page).'" aria-label="Previous">
         <span aria-hidden="true">'.__( 'Previous', 'doliconnect').'</span>
         <span class="sr-only">'.__( 'Previous', 'doliconnect').'</span>
      </a>
@@ -38,7 +38,7 @@ if ($page < '1') {
 $pagination .= '<li class="page-item"><a class="page-link" href="'.$url.'&pg='.esc_attr($page+3).'">'.esc_attr($page+3).'</a></li>';
 } 
 $pagination .= '<li class="page-item">
-      <a class="page-link" href="#" aria-label="Next">
+      <a class="page-link" href="'.$url.'&pg='.esc_attr($page+2).'" aria-label="Next">
         <span aria-hidden="true">'.__( 'Next', 'doliconnect').'</span>
         <span class="sr-only">'.__( 'Next', 'doliconnect').'</span>
       </a>
@@ -599,6 +599,7 @@ elseif ($delay == 'contact') { $delay = WEEK_IN_SECONDS; }
 elseif ($delay == 'proposal') { $delay = HOUR_IN_SECONDS; }
 elseif ($delay == 'order') { $delay = HOUR_IN_SECONDS; }
 elseif ($delay == 'contract') { $delay = HOUR_IN_SECONDS; }
+elseif ($delay == 'project') { $delay = HOUR_IN_SECONDS; }
 elseif ($delay == 'member') { $delay = DAY_IN_SECONDS; }
 elseif ($delay == 'donation') { $delay = DAY_IN_SECONDS; }
 elseif ($delay == 'ticket') { $delay = HOUR_IN_SECONDS; }

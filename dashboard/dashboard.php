@@ -971,7 +971,7 @@ print '</div></div>';
 
 $limit=8;
 if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']-1); }  else { $page = "0"; }
-$request= "/orders?sortfield=t.date_valid&sortorder=DESC&limit=".$limit."&page=".$page."&thirdparty_ids=".doliconnector($current_user, 'fk_soc')."&sqlfilters=(t.fk_statut!=0)"; //".$page."
+$request= "/orders?sortfield=t.date_valid&sortorder=DESC&limit=".$limit."&page=".$page."&thirdparty_ids=".doliconnector($current_user, 'fk_soc')."&sqlfilters=(t.fk_statut!=0)";
 $listorder = callDoliApi("GET", $request, null, dolidelay('order', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 print '<div class="card shadow-sm"><ul class="list-group list-group-flush">';
@@ -1099,7 +1099,7 @@ print '</div></div>';
 
 $limit=8;
 if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']-1); }  else { $page = "0"; }
-$request = "/contracts?sortfield=t.date_valid&sortorder=DESC&limit=8&page=".$page."&thirdparty_ids=".doliconnector($current_user, 'fk_soc'); //".$page."                                 
+$request = "/contracts?sortfield=t.date_valid&sortorder=DESC&limit=".$limit."&page=".$page."&thirdparty_ids=".doliconnector($current_user, 'fk_soc');                              
 $listcontract = callDoliApi("GET", $request, null, dolidelay('contract', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 print '<div class="card shadow-sm"><ul class="list-group list-group-flush">';
@@ -1132,6 +1132,133 @@ print dolipage($url, $page, $limit);
 print "</div><div class='card-footer text-muted'>";
 print "<small><div class='float-left'>";
 if ( isset($request) ) print dolirefresh($request, $url, dolidelay('contract'));
+print "</div><div class='float-right'>";
+print dolihelp('ISSUE');
+print "</div></small>";
+print "</div></div>";
+
+}
+}
+
+if ( !empty(doliconst('MAIN_MODULE_PROJET'))  && !empty(get_option('doliconnectbeta')) ) {
+add_action( 'customer_doliconnect_menu', 'projets_menu', 2, 1);
+add_action( 'customer_doliconnect_projets', 'projets_module');
+}
+
+function projets_menu( $arg ) {
+print "<a href='".esc_url( add_query_arg( 'module', 'projets', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
+if ( $arg == 'projets' ) { print " active"; }
+print "'>".__( 'Projets tracking', 'doliconnect')."</a>";
+}
+
+function projets_module( $url ) {
+global $current_user;
+
+if ( isset($_GET['id']) && $_GET['id'] > 0 ) {  
+
+$request = "/contracts/".esc_attr($_GET['id'])."?contact_list=0";
+$contractfo = callDoliApi("GET", $request, null, dolidelay('contract', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+//print $contractfo;
+}
+
+if ( !isset($contractfo->error) && isset($_GET['id']) && isset($_GET['id']) && isset($_GET['ref']) && (doliconnector($current_user, 'fk_soc') == $contractfo->socid) && ($_GET['ref'] == $contractfo->ref) && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doli-contracts-'.$contractfo->id.'-'.$contractfo->ref)) {
+print "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>$contractfo->ref</h5><div class='row'><div class='col-md-5'>";
+print "<b>".__( 'Date of creation', 'doliconnect').": </b> ".wp_date('d/m/Y', $contractfo->date_creation)."<br>";
+if ( $contractfo->statut > 0 ) {
+//if ( $contractfo->billed == 1 ) {
+//if ( $contractfo->statut > 1 ) { $contractfo=__( 'Shipped', 'doliconnect'); 
+//$orderavancement=100; }
+//else { $orderinfo=__( 'Processing', 'doliconnect');
+//$contractavancement=40; }
+//}
+//else { $contractinfo=null;
+//$contractinfo=null;
+//$contractavancement=25;
+//}
+$contractavancement=0; 
+}
+elseif ( $contractfo->statut == 0 ) { $contractinfo=__( 'Validation', 'doliconnect');
+$contractavancement=7; }
+elseif ( $contractfo->statut == -1) { $contractinfo=__( 'Canceled', 'doliconnect');
+$contractavancement=0; }
+
+print "</div></div>";
+
+print '<div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: '.$contractavancement.'%" aria-valuenow="'.$contractavancement.'" aria-valuemin="0" aria-valuemax="100"></div></div>';
+print "<div class='w-auto text-muted d-none d-sm-block' ><div style='display:inline-block;width:20%'>".__( 'Order', 'doliconnect')."</div><div style='display:inline-block;width:15%'>".__( 'Payment', 'doliconnect')."</div><div style='display:inline-block;width:25%'>".__( 'Processing', 'doliconnect')."</div><div style='display:inline-block;width:20%'>".__( 'Shipping', 'doliconnect')."</div><div class='text-right' style='display:inline-block;width:20%'>".__( 'Delivery', 'doliconnect')."</div></div>";
+
+print "</div><ul class='list-group list-group-flush'>";
+
+print doliline($contractfo, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+
+print dolitotal($contractfo);
+
+if ( $contractfo->last_main_doc != null ) {
+$doc = array_reverse( explode("/", $contractfo->last_main_doc) );      
+$document = dolidocdownload($doc[2], $doc[1], $doc[0], __( 'Summary', 'doliconnect'));
+} 
+    
+$fruits[$contractfo->date_creation.'p'] = array(
+"timestamp" => $contractfo->date_creation,
+"type" => __( 'contract', 'doliconnect'),  
+"label" => $contractfo->ref,
+"document" => "",
+"description" => null,
+);
+
+sort($fruits, SORT_NUMERIC | SORT_FLAG_CASE);
+foreach ( $fruits as $key => $val ) {
+print "<li class='list-group-item'><div class='row'><div class='col-6 col-md-3'>" . wp_date('d/m/Y H:i', $val['timestamp']) . "</div><div class='col-6 col-md-2'>" . $val['type'] . "</div>";
+print "<div class='col-md-7'><h6>" . $val['label'] . "</h6>" . $val['description'] ."" . $val['document'] ."</div></div></li>";
+} 
+
+//var_dump($fruits);
+print '</ul><div class="card-body"></div><div class="card-footer text-muted">';
+print "<small><div class='float-left'>";
+if ( isset($request) ) print dolirefresh($request, $url, dolidelay('contract'), $contractfo);
+print "</div><div class='float-right'>";
+print dolihelp('ISSUE');
+print "</div></small>";
+print '</div></div>';
+
+} else {
+
+$limit=8;
+if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']-1); }  else { $page = "0"; }
+$request = "/projects?sortfield=t.rowid&sortorder=DESC&limit=".$limit."&page=".$page."&thirdparty_ids=".doliconnector($current_user, 'fk_soc');                                
+$listproject = callDoliApi("GET", $request, null, dolidelay('project', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+
+print '<div class="card shadow-sm"><ul class="list-group list-group-flush">';
+if ( !isset($listproject->error) && $listproject != null ) {
+foreach ($listproject  as $postproject) { 
+                                                                                
+$nonce = wp_create_nonce( 'doli-contracts-'. $postproject->id.'-'.$postproject->ref);
+$arr_params = array( 'id' => $postproject->id, 'ref' => $postproject->ref, 'security' => $nonce);  
+$return = esc_url( add_query_arg( $arr_params, $url) );
+                                                                                                                                                      
+print "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'><div><i class='fa fa-sitemap fa-3x fa-fw'></i></div><div><h6 class='my-0'>".$postproject->ref."</h6><small class='text-muted'>du ".wp_date('d/m/Y', $postcontract->date_creation)."</small></div><span>".doliprice($postproject, 'ttc', isset($postproject->multicurrency_code) ? $postproject->multicurrency_code : null)."</span><span>";
+if ( $postproject->statut > 0 ) { print "<span class='fas fa-check-circle fa-fw text-success'></span> ";
+//if ( $postcontract->billed == 1 ) { print "<span class='fas fa-money-bill-alt fa-fw text-success'></span> "; 
+//if ( $postcontract->statut > 1 ) { print "<span class='fas fa-shipping-fast fa-fw text-success'></span> "; }
+//else { print "<span class='fas fa-shipping-fast fa-fw text-warning'></span> "; }
+//}
+//else { print "<span class='fas fa-money-bill-alt fa-fw text-warning'></span> "; 
+//if ( $postcontract->statut > 1 ) { print "<span class='fas fa-shipping-fast fa-fw text-success'></span> "; }
+//else { print "<span class='fas fa-shipping-fast fa-fw text-danger'></span> "; }
+//}
+}
+elseif ( $postproject->statut == 0 ) { print "<span class='fas fa-check-circle fa-fw text-warning'></span> <span class='fas fa-money-bill-alt fa-fw text-danger'></span> <span class='fas fa-shipping-fast fa-fw text-danger'></span>";}
+elseif ( $postproject->statut == -1 ) {print "<span class='fas fa-check-circle fa-fw text-secondary'></span> <span class='fas fa-money-bill-alt fa-fw text-secondary'></span> <span class='fas fa-shipping-fast fa-fw text-secondary'></span>";}
+print "</span></a>";
+}}
+else{
+print "<li class='list-group-item list-group-item-light'><center>".__( 'No project', 'doliconnect')."</center></li>";
+}
+print "</ul><div class='card-body'>";
+print dolipage($url, $page, $limit);
+print "</div><div class='card-footer text-muted'>";
+print "<small><div class='float-left'>";
+if ( isset($request) ) print dolirefresh($request, $url, dolidelay('project'));
 print "</div><div class='float-right'>";
 print dolihelp('ISSUE');
 print "</div></small>";
