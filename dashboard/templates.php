@@ -879,14 +879,15 @@ print "<a href='".esc_url( add_query_arg( 'supplier', $supplier->id, doliconnect
 
 } 
 
-print '</ul><div class="card-body">';
-print '</div><div class="card-footer text-muted">';
+print "</ul><div class='card-body'>";
+//print dolipage($url, $page, 8);
+print "</div><div class='card-footer text-muted'>";
 print "<small><div class='float-left'>";
 if ( isset($request) ) print dolirefresh($request, get_permalink(), dolidelay($module));
 print "</div><div class='float-right'>";
 print dolihelp('ISSUE');
 print "</div></small>";
-print '</div></div>';
+print "</div></div>";
 
 } else {
 
@@ -999,14 +1000,15 @@ print "<li class='list-group-item list-group-item-light'><center>".__( 'No produ
 print "</ul>";
 }
 }
-print '</ul><div class="card-body">';
-print '</div><div class="card-footer text-muted">';
+print "</ul><div class='card-body'>";
+//print dolipage($url, $page, 8);
+print "</div><div class='card-footer text-muted'>";
 print "<small><div class='float-left'>";
 if ( isset($request) ) print dolirefresh($request, get_permalink(), dolidelay('product'));
 print "</div><div class='float-right'>";
 print dolihelp('ISSUE');
 print "</div></small>";
-print '</div></div>';
+print "</div></div>";
 
 } else {
 
