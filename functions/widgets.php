@@ -307,7 +307,6 @@ print '<form role="search" method="get" id="shopform" action="' . doliconnecturl
 </div></form><br>';
 
 $request = "/categories/".esc_attr($shop)."?include_childs=true";
-
 $resultatsc = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 if ( !isset($resultatsc->error) && $resultatsc != null ) {
