@@ -966,8 +966,9 @@ print '</div></div>';
 
 } else {
 
+$limit=8;
 if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']-1); }  else { $page = "0"; }
-$request= "/orders?sortfield=t.date_valid&sortorder=DESC&limit=8&page=".$page."&thirdparty_ids=".doliconnector($current_user, 'fk_soc')."&sqlfilters=(t.fk_statut!=0)"; //".$page."
+$request= "/orders?sortfield=t.date_valid&sortorder=DESC&limit=".$limit."&page=".$page."&thirdparty_ids=".doliconnector($current_user, 'fk_soc')."&sqlfilters=(t.fk_statut!=0)"; //".$page."
 $listorder = callDoliApi("GET", $request, null, dolidelay('order', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 print '<div class="card shadow-sm"><ul class="list-group list-group-flush">';
@@ -998,26 +999,31 @@ print "<li class='list-group-item list-group-item-light'><center>".__( 'No order
 }
 
 print "</ul><div class='card-body'>";
-print "<nav aria-label='Page navigation example'><ul class='pagination'>";
-if ($page > 0) {
+print "<nav aria-label='Page navigation example'><ul class='pagination pagination-sm'>";
+if ($page > '1') {
 print '<li class="page-item">
       <a class="page-link" href="#" aria-label="Previous">
         <span aria-hidden="true">'.__( 'Previous', 'doliconnect').'</span>
         <span class="sr-only">'.__( 'Previous', 'doliconnect').'</span>
      </a>
-  </li>
-    <li class="page-item"><a class="page-link" href="'.$url.'&pg='.esc_attr($page).'">'.esc_attr($page).'</a></li>';
+  </li>';
+}
+if ($page > '0') {
+print '<li class="page-item"><a class="page-link" href="'.$url.'&pg='.esc_attr($page).'">'.esc_attr($page).'</a></li>';
 }    
 print '<li class="page-item active"><a class="page-link" href="'.$url.'&pg='.esc_attr($page+1).'">'.esc_attr($page+1).'</a></li>';
-if ($page > 0) {
-print '<li class="page-item"><a class="page-link" href="'.$url.'&pg='.esc_attr($page+2).'">'.esc_attr($page+2).'</a></li>    
-  <li class="page-item">
+//if (9 >= $limit) {
+print '<li class="page-item"><a class="page-link" href="'.$url.'&pg='.esc_attr($page+2).'">'.esc_attr($page+2).'</a></li>';
+if ($page < '1') {
+print '<li class="page-item"><a class="page-link" href="'.$url.'&pg='.esc_attr($page+3).'">'.esc_attr($page+3).'</a></li>';
+} 
+print '<li class="page-item">
       <a class="page-link" href="#" aria-label="Next">
         <span aria-hidden="true">'.__( 'Next', 'doliconnect').'</span>
         <span class="sr-only">'.__( 'Next', 'doliconnect').'</span>
       </a>
   </li>';
-}
+//}
 print "</ul></nav>";
 print "</div><div class='card-footer text-muted'>";
 print "<small><div class='float-left'>";
