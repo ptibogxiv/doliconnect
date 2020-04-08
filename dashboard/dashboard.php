@@ -691,13 +691,15 @@ print "</span></a>";
 else{
 print "<li class='list-group-item list-group-item-light'><center>".__( 'No proposal', 'doliconnect')."</center></li>";
 }
-print '</ul><div class="card-body"></div><div class="card-footer text-muted">';
+print "</ul><div class='card-body'>";
+print dolipage($url, $page, 8);
+print "</div><div class='card-footer text-muted'>";
 print "<small><div class='float-left'>";
 if ( isset($request) ) print dolirefresh($request, $url, dolidelay('proposal'));
 print "</div><div class='float-right'>";
 print dolihelp('ISSUE');
 print "</div></small>";
-print '</div></div>';
+print "</div></div>";
 
 }
 }
@@ -999,32 +1001,7 @@ print "<li class='list-group-item list-group-item-light'><center>".__( 'No order
 }
 
 print "</ul><div class='card-body'>";
-print "<nav aria-label='Page navigation example'><ul class='pagination pagination-sm'>";
-if ($page > '1') {
-print '<li class="page-item">
-      <a class="page-link" href="#" aria-label="Previous">
-        <span aria-hidden="true">'.__( 'Previous', 'doliconnect').'</span>
-        <span class="sr-only">'.__( 'Previous', 'doliconnect').'</span>
-     </a>
-  </li>';
-}
-if ($page > '0') {
-print '<li class="page-item"><a class="page-link" href="'.$url.'&pg='.esc_attr($page).'">'.esc_attr($page).'</a></li>';
-}    
-print '<li class="page-item active"><a class="page-link" href="'.$url.'&pg='.esc_attr($page+1).'">'.esc_attr($page+1).'</a></li>';
-//if (9 >= $limit) {
-print '<li class="page-item"><a class="page-link" href="'.$url.'&pg='.esc_attr($page+2).'">'.esc_attr($page+2).'</a></li>';
-if ($page < '1') {
-print '<li class="page-item"><a class="page-link" href="'.$url.'&pg='.esc_attr($page+3).'">'.esc_attr($page+3).'</a></li>';
-} 
-print '<li class="page-item">
-      <a class="page-link" href="#" aria-label="Next">
-        <span aria-hidden="true">'.__( 'Next', 'doliconnect').'</span>
-        <span class="sr-only">'.__( 'Next', 'doliconnect').'</span>
-      </a>
-  </li>';
-//}
-print "</ul></nav>";
+print dolipage($url, $page, 8);
 print "</div><div class='card-footer text-muted'>";
 print "<small><div class='float-left'>";
 if ( isset($request) ) print dolirefresh($request, $url, dolidelay('order'));
@@ -1148,33 +1125,15 @@ print "</span></a>";
 else{
 print "<li class='list-group-item list-group-item-light'><center>".__( 'No contract', 'doliconnect')."</center></li>";
 }
-print '</ul><div class="card-body"></div><div class="card-footer text-muted">';
+print "</ul><div class='card-body'>";
+print dolipage($url, $page, 8);
+print "</div><div class='card-footer text-muted'>";
 print "<small><div class='float-left'>";
 if ( isset($request) ) print dolirefresh($request, $url, dolidelay('contract'));
 print "</div><div class='float-right'>";
 print dolihelp('ISSUE');
 print "</div></small>";
-print '</div></div>';
-
-//print '<br><nav aria-label="Page navigation example">
-//  <ul class="pagination">
-//    <li class="page-item disabled">
-//      <a class="page-link" href="#" aria-label="Previous">
-//        <span aria-hidden="true">&laquo;</span>
-//        <span class="sr-only">Previous</span>
-//     </a>
- //   </li>
-//    <li class="page-item"><a class="page-link" href="'.$url.'&pg=1">1</a></li>
-//    <li class="page-item"><a class="page-link" href="'.$url.'&pg=2">3</a></li>
-//    <li class="page-item"><a class="page-link" href="'.$url.'&pg=3">3</a></li>    
-//    <li class="page-item disabled">
-//      <a class="page-link" href="#" aria-label="Next">
-//        <span aria-hidden="true">&raquo;</span>
-//        <span class="sr-only">Next</span>
-//      </a>
-//    </li>
-//  </ul>
-//</nav>';
+print "</div></div>";
 
 }
 }
@@ -1284,13 +1243,15 @@ print "</span></a>";
 else{
 print "<li class='list-group-item list-group-item-light'><center>".__( 'No donation', 'doliconnect')."</center></li>";
 }
-print '</ul><div class="card-body"></div><div class="card-footer text-muted">';
+print "</ul><div class='card-body'>";
+print dolipage($url, $page, 8);
+print "</div><div class='card-footer text-muted'>";
 print "<small><div class='float-left'>";
 if ( isset($request) ) print dolirefresh($request, $url, dolidelay('donation'));
 print "</div><div class='float-right'>";
 print dolihelp('ISSUE');
 print "</div></small>";
-print '</div></div>';
+print "</div></div>";
 
 }
 }
