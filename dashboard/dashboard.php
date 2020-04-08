@@ -998,8 +998,7 @@ print "<li class='list-group-item list-group-item-light'><center>".__( 'No order
 }
 
 print "</ul><div class='card-body'>";
-print '<nav aria-label="Page navigation example">
-  <ul class="pagination">';
+print "<nav aria-label='Page navigation example'><ul class='pagination'>";
 if ($page > 0) {
 print '<li class="page-item">
       <a class="page-link" href="#" aria-label="Previous">
@@ -1009,16 +1008,17 @@ print '<li class="page-item">
   </li>
     <li class="page-item"><a class="page-link" href="'.$url.'&pg='.esc_attr($page).'">'.esc_attr($page).'</a></li>';
 }    
-print '<li class="page-item active"><a class="page-link" href="'.$url.'&pg='.esc_attr($page+1).'">'.esc_attr($page+1).'</a></li>
-    <li class="page-item"><a class="page-link" href="'.$url.'&pg='.esc_attr($page+2).'">'.esc_attr($page+2).'</a></li>    
+print '<li class="page-item active"><a class="page-link" href="'.$url.'&pg='.esc_attr($page+1).'">'.esc_attr($page+1).'</a></li>';
+if ($page > 0) {
+print '<li class="page-item"><a class="page-link" href="'.$url.'&pg='.esc_attr($page+2).'">'.esc_attr($page+2).'</a></li>    
   <li class="page-item">
       <a class="page-link" href="#" aria-label="Next">
         <span aria-hidden="true">'.__( 'Next', 'doliconnect').'</span>
         <span class="sr-only">'.__( 'Next', 'doliconnect').'</span>
       </a>
-  </li>
-  </ul>
-</nav>';
+  </li>';
+}
+print "</ul></nav>";
 print "</div><div class='card-footer text-muted'>";
 print "<small><div class='float-left'>";
 if ( isset($request) ) print dolirefresh($request, $url, dolidelay('order'));
