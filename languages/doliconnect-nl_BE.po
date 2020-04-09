@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2020-04-08 22:43+0200\n"
-"PO-Revision-Date: 2020-04-08 22:44+0200\n"
+"POT-Creation-Date: 2020-04-09 13:19+0200\n"
+"PO-Revision-Date: 2020-04-09 13:22+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: nl_BE\n"
@@ -1100,7 +1100,7 @@ msgid "Access restricted to users"
 msgstr "Toegang beperkt tot gebruikers"
 
 #: dashboard/templates.php:616 dashboard/templates.php:667
-#: functions/product.php:502 functions/tools.php:874
+#: functions/product.php:502
 msgid "Sign in"
 msgstr "Aanmelden"
 
@@ -1531,8 +1531,7 @@ msgstr "Mijn wens opslaan"
 msgid "Add to cart"
 msgstr "Aan winkelwagen toevoegen"
 
-#: functions/product.php:502 functions/product.php:504 functions/tools.php:874
-#: functions/tools.php:876
+#: functions/product.php:502 functions/product.php:504
 msgid "log in"
 msgstr "aanmelden"
 
@@ -1782,6 +1781,12 @@ msgstr "Uw winkelmandje is leeg."
 #: functions/tools.php:870
 msgid "If you already have an account,"
 msgstr "Als u al een account heeft,"
+
+#: functions/tools.php:874 functions/tools.php:876
+#, fuzzy
+#| msgid "Sign in"
+msgid "sign in"
+msgstr "Aanmelden"
 
 #: functions/tools.php:878
 msgid "to see your basket."

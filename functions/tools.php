@@ -871,9 +871,9 @@ $doliline .= '<center>'.__( 'If you already have an account,', 'doliconnect').' 
 
 if ( get_option('doliloginmodal') == '1' ) {
        
-$doliline .= '<a href="#" data-toggle="modal" data-target="#DoliconnectLogin" data-dismiss="modal" title="'.__('Sign in', 'ptibogxivtheme').'" role="button">'.__( 'log in', 'doliconnect').'</a> ';
+$doliline .= '<a href="#" data-toggle="modal" data-target="#DoliconnectLogin" data-dismiss="modal" title="'.__('sign in', 'doliconnect').'" role="button">'.__( 'sign in', 'doliconnect').'</a> ';
 } else {
-$doliline .= "<a href='".wp_login_url( doliconnecturl('dolicart') )."?redirect_to=".doliconnecturl('dolicart')."' >".__( 'log in', 'doliconnect').'</a> ';
+$doliline .= "<a href='".wp_login_url( doliconnecturl('dolicart') )."?redirect_to=".doliconnecturl('dolicart')."' title='".__('sign in', 'doliconnect')."'>".__( 'sign in', 'doliconnect').'</a> ';
 }
 $doliline .= __( 'to see your basket.', 'doliconnect').'</center>';
 }

@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2020-04-08 22:26+0200\n"
-"PO-Revision-Date: 2020-04-08 22:27+0200\n"
+"POT-Creation-Date: 2020-04-09 13:07+0200\n"
+"PO-Revision-Date: 2020-04-09 13:16+0200\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_FR\n"
@@ -1100,7 +1100,7 @@ msgid "Access restricted to users"
 msgstr "Accès restreint aux utilisateurs"
 
 #: dashboard/templates.php:616 dashboard/templates.php:667
-#: functions/product.php:502 functions/tools.php:874
+#: functions/product.php:502
 msgid "Sign in"
 msgstr "Connexion"
 
@@ -1557,8 +1557,7 @@ msgstr "Enregistrer mon souhait"
 msgid "Add to cart"
 msgstr "Ajouter au panier"
 
-#: functions/product.php:502 functions/product.php:504 functions/tools.php:874
-#: functions/tools.php:876
+#: functions/product.php:502 functions/product.php:504
 msgid "log in"
 msgstr "connectez-vous"
 
@@ -1809,6 +1808,10 @@ msgstr "Votre panier est vide."
 #: functions/tools.php:870
 msgid "If you already have an account,"
 msgstr "Si vous disposez déjà d'un compte,"
+
+#: functions/tools.php:874 functions/tools.php:876
+msgid "sign in"
+msgstr "se connecter"
 
 #: functions/tools.php:878
 msgid "to see your basket."
