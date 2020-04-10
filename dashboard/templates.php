@@ -953,6 +953,7 @@ print "</div>";
 print "<ul class='list-group list-group-flush'>";
 if ( $shop != null ) {
 
+$limit=20;
 $request = "/categories/".$shop."?include_childs=true";
 $resultats = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
