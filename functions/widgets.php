@@ -318,8 +318,8 @@ if ( $categorie->id == $_GET['category'] && !isset($_GET['subcategory']) ) { pri
 print "'>".doliproduct($categorie, 'label')."</a>"; //."<br />".doliproduct($categorie, 'description')
 
 if ( isset($_GET['category']) && $categorie->id == $_GET['category'] ) {
-$request = "/categories/".esc_attr(isset($_GET["category"]) ? $_GET["category"] : $_GET["subcategory"])."?include_childs=true";
 
+$request = "/categories/".esc_attr(isset($_GET["category"]) ? $_GET["category"] : $_GET["subcategory"])."?include_childs=true";
 $resultatsc = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 if ( !isset($resultatsc->error) && $resultatsc != null ) {

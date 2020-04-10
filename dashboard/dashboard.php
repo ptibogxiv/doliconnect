@@ -693,7 +693,7 @@ else{
 print "<li class='list-group-item list-group-item-light'><center>".__( 'No proposal', 'doliconnect')."</center></li>";
 }
 print "</ul><div class='card-body'>";
-print dolipage($url, $page, $limit);
+print dolipage($listpropal, $url, $page, $limit);
 print "</div><div class='card-footer text-muted'>";
 print "<small><div class='float-left'>";
 if ( isset($request) ) print dolirefresh($request, $url, dolidelay('proposal'));
@@ -1002,7 +1002,7 @@ print "<li class='list-group-item list-group-item-light'><center>".__( 'No order
 }
 
 print "</ul><div class='card-body'>";
-print dolipage($url, $page, $limit);
+print dolipage($listorder, $url, $page, $limit);
 print "</div><div class='card-footer text-muted'>";
 print "<small><div class='float-left'>";
 if ( isset($request) ) print dolirefresh($request, $url, dolidelay('order'));
@@ -1128,7 +1128,7 @@ else{
 print "<li class='list-group-item list-group-item-light'><center>".__( 'No contract', 'doliconnect')."</center></li>";
 }
 print "</ul><div class='card-body'>";
-print dolipage($url, $page, $limit);
+print dolipage($listcontract, $url, $page, $limit);
 print "</div><div class='card-footer text-muted'>";
 print "<small><div class='float-left'>";
 if ( isset($request) ) print dolirefresh($request, $url, dolidelay('contract'));
@@ -1255,7 +1255,7 @@ else{
 print "<li class='list-group-item list-group-item-light'><center>".__( 'No project', 'doliconnect')."</center></li>";
 }
 print "</ul><div class='card-body'>";
-print dolipage($url, $page, $limit);
+print dolipage($listproject, $url, $page, $limit);
 print "</div><div class='card-footer text-muted'>";
 print "<small><div class='float-left'>";
 if ( isset($request) ) print dolirefresh($request, $url, dolidelay('project'));
@@ -1374,7 +1374,7 @@ else{
 print "<li class='list-group-item list-group-item-light'><center>".__( 'No donation', 'doliconnect')."</center></li>";
 }
 print "</ul><div class='card-body'>";
-print dolipage($url, $page, $limit);
+print dolipage($listdonation, $url, $page, $limit);
 print "</div><div class='card-footer text-muted'>";
 print "<small><div class='float-left'>";
 if ( isset($request) ) print dolirefresh($request, $url, dolidelay('donation'));
