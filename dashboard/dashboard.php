@@ -527,6 +527,8 @@ print "'>".__( 'Wishlist', 'doliconnect' )."</a>";
 function wishlist_module( $url ) {
 global $current_user;
 
+$limit=8;
+if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']-1); }  else { $page = "0"; }
 $request = "/wishlist?sortfield=t.rowid&sortorder=ASC&thirdparty_ids=".doliconnector($current_user, 'fk_soc')."&sqlfilters=(t.priv%3A%3D%3A0)";
 $wishlist = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
@@ -563,19 +565,15 @@ print apply_filters( 'doliproductlist', $wish);
 } else {
 print "<li class='list-group-item list-group-item-light'><center>".__( 'No product', 'doliconnect')."</center></li>";
 }
-print  "</ul><div class='card-body'>";
-
-//print "<button type='submit' name='dolicart' value='validation' class='btn btn-warning w-100' role='button' aria-pressed='true'><b>".__( 'Order', 'doliconnect-wishlist')."</b></button>";
-
-print "</div>";
-
-print '<div class="card-footer text-muted">';
+print "</ul><div class='card-body'>";
+print dolipage($wishlist, $url, $page, $limit);
+print "</div><div class='card-footer text-muted'>";
 print "<small><div class='float-left'>";
 print dolirefresh( $request, $url, dolidelay('product'));
 print "</div><div class='float-right'>";
 print dolihelp('ISSUE');
 print "</div></small>";
-print '</div></div>';
+print "</div></div>";
 
 }
 
@@ -669,7 +667,7 @@ print '</div></div>';
 
 $limit=8;
 if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']-1); }  else { $page = "0"; }
-$request = "/proposals?sortfield=t.date_valid&sortorder=DESC&limit=8&page=".$page."&thirdparty_ids=".doliconnector($current_user, 'fk_soc')."&sqlfilters=(t.fk_statut!=0)";
+$request = "/proposals?sortfield=t.date_valid&sortorder=DESC&limit=".$limit."&page=".$page."&thirdparty_ids=".doliconnector($current_user, 'fk_soc')."&sqlfilters=(t.fk_statut!=0)";
 $listpropal = callDoliApi("GET", $request, null, dolidelay('proposal', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 print '<div class="card shadow-sm"><ul class="list-group list-group-flush">';  
