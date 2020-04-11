@@ -278,7 +278,9 @@ add_action( 'user_doliconnect_menu', 'contacts_menu', 2, 1);
 function contacts_module($url){
 global $current_user;
 
-$request = "/contacts?sortfield=t.rowid&sortorder=ASC&limit=100&thirdparty_ids=".doliconnector($current_user, 'fk_soc')."&includecount=1&sqlfilters=t.statut=1";
+$limit=8;
+if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']-1); }  else { $page = "0"; }
+$request = "/contacts?sortfield=t.rowid&sortorder=ASC&limit=".$limit."&page=".$page."&thirdparty_ids=".doliconnector($current_user, 'fk_soc')."&includecount=1&sqlfilters=t.statut=1";
 
 if ( isset ($_POST['add_contact']) && $_POST['add_contact'] == 'new_contact' ) {
 $contactv=$_POST['contact'][''.doliconnector($current_user, 'fk_soc').''];
@@ -347,19 +349,7 @@ if ( doliconnector($current_user, 'fk_soc') > 0 ) {
 $thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
 }
 
-print "<form role='form' action='$url' id='doliconnect-contactform' method='post'>";
-//$nonce = wp_create_nonce( 'my-nonce');
-
-// This code would go in the target page.
-// We need to verify the nonce.
-//$nonce = $nonce;//$_REQUEST['_wpnonce'];
-//if ( ! wp_verify_nonce( $nonce, 'my-nonce' ) ) {
-    // This nonce is not valid.
- //   die( 'Security check'); 
-//} else {
-
-//print $nonce;
-//}                    
+print "<form role='form' action='$url' id='doliconnect-contactform' method='post'>";                   
 
 print doliloaderscript('doliconnect-contactform');
 
@@ -398,15 +388,15 @@ print "</li>";
 print "<li class='list-group-item list-group-item-light'><center>".__( 'No contact', 'doliconnect')."</center></li>";
 }
 
-print '</ul>';
-print "<div class='card-body'></div>";
-print '<div class="card-footer text-muted">';
+print "</ul><div class='card-body'>";
+print dolipage($listcontact, $url, $page, $limit);
+print "</div><div class='card-footer text-muted'>";
 print "<small><div class='float-left'>";
 if ( isset($request) ) print dolirefresh($request, $url, dolidelay('contact'));
 print "</div><div class='float-right'>";
 print dolihelp('ISSUE');
 print "</div></small>";
-print '</div></div></form>';
+print "</div></div></form>";
 
 if ( !isset($listcontact->error) && $listcontact != null ) {
 foreach ( $listcontact as $contact ) { 
@@ -1344,7 +1334,7 @@ print "</div></small>";
 
 $limit=8;
 if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']-1); }  else { $page = "0"; }
-$request= "/donations?sortfield=t.date_valid&sortorder=DESC&limit=8&page=".$page."&thirdparty_ids=".doliconnector($current_user, 'fk_soc');// ".$page."   ."&sqlfilters=(t.fk_statut!=0)"
+$request= "/donations?sortfield=t.date_valid&sortorder=DESC&limit=".$limit."&page=".$page."&thirdparty_ids=".doliconnector($current_user, 'fk_soc');// ".$page."   ."&sqlfilters=(t.fk_statut!=0)"
 $listdonation = callDoliApi("GET", $request, null, dolidelay('donation', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 //print var_dump($listdonation);
 
