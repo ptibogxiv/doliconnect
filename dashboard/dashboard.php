@@ -1956,7 +1956,7 @@ jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function (e) {
         //alert(response.data);
         }
     });
-});
+}); 
 }';
 print "</script>";
 
