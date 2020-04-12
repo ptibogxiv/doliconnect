@@ -601,12 +601,12 @@ $lang = $current_user->locale;
 }
 $country = callDoliApi("GET", "/setup/dictionary/countries/".$product->country_id."?lang=".$lang, null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 $card .= "<br><small>".__( 'Origin:', 'doliconnect')." <span class='flag-icon flag-icon-".strtolower($product->country_code)."'></span> ".$country->label."</small>"; }
-$card .= "<div class='jumbotron'>";
 if ( ! empty(doliconnectid('dolicart')) ) { 
+$card .= "<br><br><div class='jumbotron'>";
 $card .= doliconnect_addtocart($product, 0, 0, isset($attributes['hideButtonToCart']) ? $attributes['hideButtonToCart'] : 0, isset($attributes['hideDuration']) ? $attributes['hideDuration'] : 0);
+$card .= "</div>";
 }
-$card .= "</div></div>";
-$card .= "<div class='col-12'><h6>".__( 'Description', 'doliconnect' )."</h6><p>".doliproduct($product, 'description')."</p></div>";
+$card .= "</div><div class='col-12'><h6>".__( 'Description', 'doliconnect' )."</h6><p>".doliproduct($product, 'description')."</p></div>";
 } else {
 $card .= "<div class='col-12'><p><center>".__( 'Product/Service not in sale', 'doliconnect' )."</center></p></div>";
 } 
