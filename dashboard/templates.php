@@ -949,16 +949,26 @@ $product = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isse
 print "<div class='card-body'>";
 print apply_filters( 'doliproductcard', $product, null);
 print "</div>";
+
+print "</ul><div class='card-body'>";
+
+print "</div><div class='card-footer text-muted'>";
+print "<small><div class='float-left'>";
+if ( isset($request) ) print dolirefresh($request, get_permalink(), dolidelay('product'));
+print "</div><div class='float-right'>";
+print dolihelp('ISSUE');
+print "</div></small>";
+print "</div></div>";
+
 } elseif ( !isset($_GET['category']) ) {
 print "<ul class='list-group list-group-flush'>";
 if ( $shop != null ) {
 
-$limit=20;
+$limit=25;
 $request = "/categories/".$shop."?include_childs=true";
 $resultats = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 if ( !isset($resultats->error) && $resultats != null ) {
-$list=$resultats->childs;
 foreach ($resultats->childs as $categorie) {
 
 print "<a href='".esc_url( add_query_arg( 'category', $categorie->id, doliconnecturl('dolishop')) )."' class='list-group-item list-group-item-action'>".doliproduct($categorie, 'label')."</a>"; //."<br>".doliproduct($categorie, 'description')
@@ -973,7 +983,19 @@ print "<a href='".esc_url( add_query_arg( 'category', $catoption, doliconnecturl
 }
 
 print "</ul>";
+
+print "</ul><div class='card-body'>";
+print dolipage($resultats->childs, $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], $page, $limit);
+print "</div><div class='card-footer text-muted'>";
+print "<small><div class='float-left'>";
+if ( isset($request) ) print dolirefresh($request, get_permalink(), dolidelay('product'));
+print "</div><div class='float-right'>";
+print dolihelp('ISSUE');
+print "</div></small>";
+print "</div></div>";
+
 } else {
+
 print "<ul class='list-group list-group-flush'>";
 $category = callDoliApi("GET", "/categories/".esc_attr(isset($_GET["subcategory"]) ? $_GET["subcategory"] : $_GET["category"])."?include_childs=true", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 print "<li class='list-group-item'>".doliproduct($category, 'label')."<br><small>".doliproduct($category, 'description')."</small></li>"; 
@@ -991,14 +1013,13 @@ print "<a href='".$return."' class='list-group-item list-group-item-action'>".do
 
 }}
 
-$limit=20;
+$limit=25;
 if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']-1); }  else { $page = 0; }
 $request = "/products?sortfield=t.label&sortorder=ASC&limit=".$limit."&page=".$page."&category=".esc_attr(isset($_GET["subcategory"]) ? $_GET["subcategory"] : $_GET["category"])."&sqlfilters=(t.tosell=1)";
 $resultats = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 //print $resultatso;
 
 if ( !isset($resultats->error) && $resultats != null ) {
-$list=$resultats;
 foreach ($resultats as $product) {
 
 print apply_filters( 'doliproductlist', $product);
@@ -1008,11 +1029,9 @@ print apply_filters( 'doliproductlist', $product);
 print "<li class='list-group-item list-group-item-light'><center>".__( 'No product', 'doliconnect')."</center></li>";
 }
 print "</ul>";
-}
-}
 
 print "</ul><div class='card-body'>";
-print dolipage($list, $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], $page, $limit);
+print dolipage($resultats, $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], $page, $limit);
 print "</div><div class='card-footer text-muted'>";
 print "<small><div class='float-left'>";
 if ( isset($request) ) print dolirefresh($request, get_permalink(), dolidelay('product'));
@@ -1020,6 +1039,9 @@ print "</div><div class='float-right'>";
 print dolihelp('ISSUE');
 print "</div></small>";
 print "</div></div>";
+
+}
+}
 
 } else {
 

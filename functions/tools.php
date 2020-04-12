@@ -365,9 +365,9 @@ print "</div></div>";
 
 print "</li>";
 
-if( has_action('mydoliconnectuserform') && !in_array($mode, array('donation')) ) {
+if( has_filter('mydoliconnectuserform') && !in_array($mode, array('donation')) ) {
 print "<li class='list-group-item'>";
-print do_action('mydoliconnectuserform', $object);
+print apply_filters('mydoliconnectuserform', $object);
 print "</li>";
 }
 
