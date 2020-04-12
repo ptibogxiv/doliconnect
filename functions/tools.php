@@ -18,7 +18,7 @@ return $ret;
 }
 add_action( 'admin_init', 'doliversion', 5, 1); 
 
-function dolipage($object, $url, $page, $limit = 8) {
+function dolipage($object, $url, $page = 0, $limit = 8) {
 
 if (empty($object) || isset($object->error)) {
 $count = 0;
@@ -35,17 +35,17 @@ $pagination .= '<li class="page-item">
      </a>
   </li>';
 }
-if ($page > '0') {
+if ($page > 0) {
 $pagination .= '<li class="page-item"><a class="page-link" href="'.esc_url( add_query_arg( array( 'pg' => esc_attr($page)), $url) ).'">'.esc_attr($page).'</a></li>';
 }    
 $pagination .= '<li class="page-item active"><a class="page-link" href="'.esc_url( add_query_arg( array( 'pg' => esc_attr($page+1)), $url) ).'">'.esc_attr($page+1).'</a></li>';
 if ($count >= $limit) {
-$pagination .= '<li class="page-item"><a class="page-link" href="'.esc_url( add_query_arg( array( 'pg' => $esc_attr($page+2)), $url) ).'">'.esc_attr($page+2).'</a></li>';
-if ($page < '1') {
+$pagination .= '<li class="page-item"><a class="page-link" href="'.esc_url( add_query_arg( array( 'pg' => esc_attr($page+2)), $url) ).'">'.esc_attr($page+2).'</a></li>';
+if ($page < 1) {
 $pagination .= '<li class="page-item"><a class="page-link" href="'.esc_url( add_query_arg( array( 'pg' => esc_attr($page+3)), $url) ).'">'.esc_attr($page+3).'</a></li>';
 } 
 $pagination .= '<li class="page-item">
-      <a class="page-link" href="'.esc_url( add_query_arg( array( 'pg' => $esc_attr($page+2)), $url) ).'" aria-label="Next">
+      <a class="page-link" href="'.esc_url( add_query_arg( array( 'pg' => esc_attr($page+2)), $url) ).'" aria-label="Next">
         <span aria-hidden="true">'.__( 'Next', 'doliconnect').'</span>
         <span class="sr-only">'.__( 'Next', 'doliconnect').'</span>
       </a>
