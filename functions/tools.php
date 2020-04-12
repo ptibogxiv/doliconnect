@@ -42,7 +42,7 @@ $pagination .= '<li class="page-item active"><a class="page-link" href="'.esc_ur
 if ($count >= $limit) {
 $pagination .= '<li class="page-item"><a class="page-link" href="'.esc_url( add_query_arg( array( 'pg' => esc_attr($page+2)), $url) ).'">'.esc_attr($page+2).'</a></li>';
 if ($page < 1) {
-$pagination .= '<li class="page-item"><a class="page-link" href="'.esc_url( add_query_arg( array( 'pg' => esc_attr($page+3)), $url) ).'">'.esc_attr($page+3).'</a></li>';
+//$pagination .= '<li class="page-item"><a class="page-link" href="'.esc_url( add_query_arg( array( 'pg' => esc_attr($page+3)), $url) ).'">'.esc_attr($page+3).'</a></li>';
 } 
 $pagination .= '<li class="page-item">
       <a class="page-link" href="'.esc_url( add_query_arg( array( 'pg' => esc_attr($page+2)), $url) ).'" aria-label="Next">
