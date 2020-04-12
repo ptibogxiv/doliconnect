@@ -985,7 +985,7 @@ print "<a href='".esc_url( add_query_arg( 'category', $catoption, doliconnecturl
 print "</ul>";
 
 print "</ul><div class='card-body'>";
-print dolipage($resultats->childs, $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], $page, $limit);
+print dolipage($resultats->childs, $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], 0, $limit);
 print "</div><div class='card-footer text-muted'>";
 print "<small><div class='float-left'>";
 if ( isset($request) ) print dolirefresh($request, get_permalink(), dolidelay('product'));
