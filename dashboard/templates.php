@@ -1573,7 +1573,7 @@ $timeout=$object->date_modification-current_time('timestamp',1)+1200;
 //print wp_date('d/m/Y H:i', $object[date_modification]);
 }
 
-if ( doliconnector($current_user, 'fk_order')>0 && $object->lines != null ) {  //&& $timeout>'0'                                                                                         
+if ( doliconnector($current_user, 'fk_order')>0 && isset($object->lines) && $object->lines != null ) {  //&& $timeout>'0'                                                                                         
 //print "<div id='timer' class='text-center'><small>".sprintf( esc_html__('Your basket #%s is reserved for', 'doliconnect'), doliconnector($current_user, 'fk_order'))." <span class='duration'></span></small></div>";
 }
 
