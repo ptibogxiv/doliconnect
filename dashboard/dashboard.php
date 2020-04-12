@@ -660,7 +660,8 @@ if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['
 $request = "/proposals?sortfield=t.date_valid&sortorder=DESC&limit=".$limit."&page=".$page."&thirdparty_ids=".doliconnector($current_user, 'fk_soc')."&sqlfilters=(t.fk_statut!=0)";
 $listpropal = callDoliApi("GET", $request, null, dolidelay('proposal', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
-print '<div class="card shadow-sm"><ul class="list-group list-group-flush">';  
+print '<div class="card shadow-sm"><ul class="list-group list-group-flush">';
+  
 if ( !isset( $listpropal->error ) && $listpropal != null ) {
 foreach ( $listpropal as $postproposal ) { 
 $nonce = wp_create_nonce( 'doli-proposals-'. $postproposal->id.'-'.$postproposal->ref);
@@ -676,10 +677,11 @@ elseif ( $postproposal->statut == 1 ) { print "<span class='fa fa-check-circle f
 elseif ( $postproposal->statut == 0 ) { print "<span class='fa fa-check-circle fa-fw text-warning'></span><span class='fa fa-eur fa-fw text-danger'></span><span class='fa fa-truck fa-fw text-danger'></span><span class='fa fa-file-text fa-fw text-danger'></span>"; }
 elseif ( $postproposal->statut == -1 ) { print "<span class='fa fa-check-circle fa-fw text-secondary'></span><span class='fa fa-eur fa-fw text-secondary'></span><span class='fa fa-truck fa-fw text-secondary'></span><span class='fa fa-file-text fa-fw text-secondary'></span>"; }
 print "</span></a>";
-}}
-else{
+}
+} else {
 print "<li class='list-group-item list-group-item-light'><center>".__( 'No proposal', 'doliconnect')."</center></li>";
 }
+
 print "</ul><div class='card-body'>";
 print dolipage($listpropal, $url, $page, $limit);
 print "</div><div class='card-footer text-muted'>";
@@ -1090,6 +1092,7 @@ $request = "/contracts?sortfield=t.date_valid&sortorder=DESC&limit=".$limit."&pa
 $listcontract = callDoliApi("GET", $request, null, dolidelay('contract', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 print '<div class="card shadow-sm"><ul class="list-group list-group-flush">';
+
 if ( !isset($listcontract->error) && $listcontract != null ) {
 foreach ($listcontract  as $postcontract) {                                                                                 
 $nonce = wp_create_nonce( 'doli-contracts-'. $postcontract->id.'-'.$postcontract->ref);
@@ -1110,10 +1113,11 @@ if ( $postcontract->statut > 0 ) {print "<span class='fas fa-check-circle fa-fw 
 elseif ( $postcontract->statut == 0 ) { print "<span class='fas fa-check-circle fa-fw text-warning'></span> <span class='fas fa-money-bill-alt fa-fw text-danger'></span> <span class='fas fa-shipping-fast fa-fw text-danger'></span>";}
 elseif ( $postcontract->statut == -1 ) {print "<span class='fas fa-check-circle fa-fw text-secondary'></span> <span class='fas fa-money-bill-alt fa-fw text-secondary'></span> <span class='fas fa-shipping-fast fa-fw text-secondary'></span>";}
 print "</span></a>";
-}}
-else{
+}
+} else {
 print "<li class='list-group-item list-group-item-light'><center>".__( 'No contract', 'doliconnect')."</center></li>";
 }
+
 print "</ul><div class='card-body'>";
 print dolipage($listcontract, $url, $page, $limit);
 print "</div><div class='card-footer text-muted'>";
@@ -1216,6 +1220,7 @@ $request = "/projects?sortfield=t.rowid&sortorder=DESC&limit=".$limit."&page=".$
 $listproject = callDoliApi("GET", $request, null, dolidelay('project', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 print '<div class="card shadow-sm"><ul class="list-group list-group-flush">';
+
 if ( !isset($listproject->error) && $listproject != null ) {
 foreach ($listproject  as $postproject) { 
                                                                                 
@@ -1237,10 +1242,11 @@ if ( $postproject->statut > 0 ) { print "<span class='fas fa-check-circle fa-fw 
 elseif ( $postproject->statut == 0 ) { print "<span class='fas fa-check-circle fa-fw text-warning'></span> <span class='fas fa-money-bill-alt fa-fw text-danger'></span> <span class='fas fa-shipping-fast fa-fw text-danger'></span>";}
 elseif ( $postproject->statut == -1 ) {print "<span class='fas fa-check-circle fa-fw text-secondary'></span> <span class='fas fa-money-bill-alt fa-fw text-secondary'></span> <span class='fas fa-shipping-fast fa-fw text-secondary'></span>";}
 print "</span></a>";
-}}
-else{
+}
+} else {
 print "<li class='list-group-item list-group-item-light'><center>".__( 'No project', 'doliconnect')."</center></li>";
 }
+
 print "</ul><div class='card-body'>";
 print dolipage($listproject, $url, $page, $limit);
 print "</div><div class='card-footer text-muted'>";
@@ -1341,6 +1347,7 @@ print '<div class="card shadow-sm"><ul class="list-group list-group-flush">';
 if ( !empty(doliconnectid('dolidonation'))) {
 print '<a href="'.doliconnecturl('dolidonation').'" class="list-group-item lh-condensed list-group-item-action list-group-item-primary "><center><i class="fas fa-plus-circle"></i> '.__( 'Donate', 'doliconnect').'</center></a>';  
 }
+
 if ( !isset( $listdonation->error ) && $listdonation != null ) {
 foreach ( $listdonation as $postdonation ) { 
 
@@ -1360,6 +1367,7 @@ print "</span></a>";
 else{
 print "<li class='list-group-item list-group-item-light'><center>".__( 'No donation', 'doliconnect')."</center></li>";
 }
+
 print "</ul><div class='card-body'>";
 print dolipage($listdonation, $url, $page, $limit);
 print "</div><div class='card-footer text-muted'>";
