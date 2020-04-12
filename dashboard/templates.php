@@ -1010,6 +1010,7 @@ print "<li class='list-group-item list-group-item-light'><center>".__( 'No produ
 print "</ul>";
 }
 }
+
 print "</ul><div class='card-body'>";
 print dolipage($list, $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], $page, $limit);
 print "</div><div class='card-footer text-muted'>";
