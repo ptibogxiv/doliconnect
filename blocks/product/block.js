@@ -16,7 +16,7 @@
 			productID: {
 				type: 'text',
 			},
-      showButtonToCart: {
+      hideButtonToCart: {
         type: 'boolean',
         default: false,
       }, 
@@ -34,7 +34,7 @@
 
 			var attributes = props.attributes;
 			var productID = props.attributes.productID;
-			var showButtonToCart = props.attributes.showButtonToCart;
+			var hideButtonToCart= props.attributes.hideButtonToCart;
       var hideDuration = props.attributes.hideDuration;
       var hideStock = props.attributes.hideStock;
 
@@ -62,9 +62,9 @@
 						} ),
             el( ToggleControl, {
               label: i18n.__( 'Hide addition to cart', 'doliconnect'),
-              checked: showButtonToCart,
-              onChange: function onChange( showButtonToCart ) {
-              props.setAttributes({ showButtonToCart: !showButtonToCart });
+              checked: hideButtonToCart,
+              onChange: function onChange( hideButtonToCart ) {
+              props.setAttributes({ showButtonToCart: !hideButtonToCart });
 							},
 						} ),
             el( ToggleControl, {
