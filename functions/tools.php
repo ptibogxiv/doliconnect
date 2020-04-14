@@ -803,11 +803,13 @@ $includestock = 1;
 $product = callDoliApi("GET", "/products/".$line->fk_product."?includestockdata=".$includestock."&includesubproducts=true", null, dolidelay('cart', $refresh));
 }
 
-if ($product->stock_reel < $line->qty && $product->stock_reel > 0 && is_page(doliconnectid('dolicart')) && $product->type == '0' && !empty(doliconst('MAIN_MODULE_STOCK')) && empty(doliconst('STOCK_ALLOW_NEGATIVE_TRANSFER')) ) {
-$doliline .= "<li class='list-group-item list-group-item-warning'>";
-define('dolilockcart', '1'); 
-} elseif ($product->stock_reel <= 0 && is_page(doliconnectid('dolicart')) && $product->type == '0' && !empty(doliconst('MAIN_MODULE_STOCK')) && empty(doliconst('STOCK_ALLOW_NEGATIVE_TRANSFER')) ) {
+if (isset($product->array_options->options_packaging)) $product->stock_reel = $product->stock_reel/$product->array_options->options_packaging;
+
+if ($product->stock_reel <= 0 && is_page(doliconnectid('dolicart')) && $product->type == '0' && !empty(doliconst('MAIN_MODULE_STOCK')) && empty(doliconst('STOCK_ALLOW_NEGATIVE_TRANSFER')) ) {
 $doliline .= "<li class='list-group-item list-group-item-danger'>";
+define('dolilockcart', '1'); 
+} elseif ($product->stock_reel < $line->qty && $product->stock_reel > 0 && is_page(doliconnectid('dolicart')) && $product->type == '0' && !empty(doliconst('MAIN_MODULE_STOCK')) && empty(doliconst('STOCK_ALLOW_NEGATIVE_TRANSFER')) ) {
+$doliline .= "<li class='list-group-item list-group-item-warning'>";
 define('dolilockcart', '1'); 
 } else {
 $doliline .= "<li class='list-group-item list-group-item-light'>";
