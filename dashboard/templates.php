@@ -884,7 +884,7 @@ print "<a href='".esc_url( add_query_arg( 'supplier', $supplier->id, doliconnect
 } 
 
 print "</ul><div class='card-body'>";
-print dolipage($resultats, $url, $page, 8);
+print dolipage($resultats, $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], $page, 8);
 print "</div><div class='card-footer text-muted'>";
 print "<small><div class='float-left'>";
 if ( isset($request) ) print dolirefresh($request, get_permalink(), dolidelay($module));
