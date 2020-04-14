@@ -460,7 +460,7 @@ $button .= "><i class='fas fa-cart-plus fa-inverse fa-fw'></i></button></div></d
 //if ( $qty > 0 ) {
 //$button .= "<br /><div class='input-group'><a class='btn btn-block btn-warning' href='".doliconnecturl('dolicart')."' role='button' title='".__( 'Go to cart', 'doliconnect')."'>".__( 'Go to cart', 'doliconnect')."</a></div>";
 //}
-} elseif ( $add > 0 && doliconnectid('dolicart') > 0 ) {
+} elseif ( empty($add) && doliconnectid('dolicart') > 0 ) {
 $arr_params = array( 'redirect_to' => doliconnecturl('dolishop'));
 $loginurl = esc_url( add_query_arg( $arr_params, wp_login_url( )) );
 
