@@ -829,10 +829,12 @@ if ($product->stock_reel <= 0 && is_page(doliconnectid('dolicart')) && $product-
 $doliline .= "<button class='form-control form-control-sm' name='updateorderproduct[".$line->fk_product."][qty]' value='0' onclick='ChangeDoliCart();'>".__( 'Delete', 'doliconnect')."</button>";
 } else {
 $doliline .= "<select class='form-control form-control-sm' name='updateorderproduct[".$line->fk_product."][qty]' onchange='ChangeDoliCart();'>";
-if ( ($product->stock_reel-$line->qty > 0 && $product->type == '0') ) {
+if ( $product->stock_reel-$line->qty > 0 && (empty($product->type) || (!empty($product->type) && doliconst('STOCK_SUPPORTS_SERVICES')) ) ) {
 if (isset($product->array_options->options_packaging) && !empty($product->array_options->options_packaging)) {
+$m0 = 1*$product->array_options->options_packaging;
 $m1 = get_option('dolicartlist')*$product->array_options->options_packaging;
 } else {
+$m0 = 1;
 $m1 = get_option('dolicartlist');
 }
 if ( $product->stock_reel-$line->qty >= $m1 || empty(doliconst('MAIN_MODULE_STOCK')) ) {
@@ -843,26 +845,27 @@ $m2 = $product->stock_reel;
 } else {
 if ( isset($line) && $line->qty > 1 ) { $m2 = $line->qty; }
 else { $m2 = 1; }
-}
+} 
 if (isset($product->array_options->options_packaging) && !empty($product->array_options->options_packaging)) {
 $step = $product->array_options->options_packaging;
 } else {
 $step = 1;
-}
+}              
+if ((empty($product->stock_reel) && !empty(doliconst('MAIN_MODULE_STOCK')) && (empty($product->type) || (!empty($product->type) && doliconst('STOCK_SUPPORTS_SERVICES')) )) || $m2 < $step)  { $doliline .= "<OPTION value='0' selected>".__( 'Unavailable', 'doliconnect')."</OPTION>"; 
+} elseif (!empty($m2) && $m2 >= $step) {
+//if ($step >1 && !empty($quantity)) $quantity = round($quantity/$step)*$step; 
+//if (empty($qty) && $quantity > $m2) $quantity = $m2; 
 if ($m2 < $step)  { $doliline .= "<OPTION value='0' >".__( 'Delete', 'doliconnect')."</OPTION>"; }
-if (!empty($m2) && $m2 >= $step) {
-$doliline .= "<OPTION value='0' >".__( 'Delete', 'doliconnect')."</OPTION>";
-foreach (range(1*$step, $m2, $step) as $number) {
-		if ( $number == $line->qty ) {
-$doliline .= "<option value='$number' selected='selected'";
-if ($product->stock_reel < $number && is_page(doliconnectid('dolicart')) && $product->type == '0' && !empty(doliconst('MAIN_MODULE_STOCK')) && empty(doliconst('STOCK_ALLOW_NEGATIVE_TRANSFER')) ) $doliline .= " disabled";
-$doliline .= ">".$number."</option>";
-		} else {
-$doliline .= "<option value='$number' >".$number."</option>";
-		}
+foreach (range(0, $m2, $step) as $number) {
+if ($number == 0) { $doliline .= "<OPTION value='0' >".__( 'Delete', 'doliconnect')."</OPTION>";
+} elseif ( ($number == $step && empty($line->qty) ) || $number == $line->qty || ($number == $m0 && empty($line->qty) )) {
+$doliline .= "<option value='$number' selected='selected'>x ".$number."</option>";
+} else {
+$doliline .= "<option value='$number' >x ".$number."</option>";
+}
 	}
 
-$doliline .= "</select>";
+$doliline .= "</select>".$m2.$step.$line->qty;
 } else {
 $doliline .= '<h6 class="mb-1">x'.$line->qty.'</h6>';
 }
