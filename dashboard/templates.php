@@ -848,7 +848,15 @@ print "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
 
 if ( !isset($thirdparty->error) && isset($_GET['supplier']) && isset($thirdparty->id) && ($_GET['supplier'] == $thirdparty->id) && $thirdparty->status == 1 && $thirdparty->fournisseur == 1 ) {
 
-print "<li class='list-group-item'>".(!empty($thirdparty->name_alias)?$thirdparty->name_alias:$thirdparty->name)."</li>"; 
+print "<li class='list-group-item'>".(!empty($thirdparty->name_alias)?$thirdparty->name_alias:$thirdparty->name);
+
+print "<p class='text-justify'>".$thirdparty->note_public."</p>";
+
+$photos = callDoliApi("GET", "/documents?modulepart=thirdparty&id=".$thirdparty->id, null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+
+print doliconnect_image('thirdparty', $thirdparty->id, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+
+print "</li>"; 
 
 $module = 'product';
 $limit=20;
@@ -884,7 +892,7 @@ print "<a href='".esc_url( add_query_arg( 'supplier', $supplier->id, doliconnect
 } 
 
 print "</ul><div class='card-body'>";
-print dolipage($resultats, $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], $page, 8);
+print dolipage($resultats, $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], $page, $limit);
 print "</div><div class='card-footer text-muted'>";
 print "<small><div class='float-left'>";
 if ( isset($request) ) print dolirefresh($request, get_permalink(), dolidelay($module));
