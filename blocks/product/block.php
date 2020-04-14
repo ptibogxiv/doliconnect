@@ -41,7 +41,7 @@ $content .= "<br><small>".__( 'Origin:', 'doliconnect')." ".$country->label."</s
 $content .= "<br><br><p>".doliproduct($product, 'description')."</p>";
 $content .= "<div class='jumbotron'>";
 if ( ! empty(doliconnectid('dolicart')) ) { 
-$content .= doliconnect_addtocart($product, 0, 0, isset($attributes['showButtonToCart']) ? $attributes['showButtonToCart'] : 0, isset($attributes['hideDuration']) ? $attributes['hideDuration'] : 0);
+$content .= doliconnect_addtocart($product, 0, 0, isset($attributes['hideButtonToCart']) ? $attributes['hideButtonToCart'] : 0, isset($attributes['hideDuration']) ? $attributes['hideDuration'] : 0);
 }
 $content .= "</div></div>";
 } else {
