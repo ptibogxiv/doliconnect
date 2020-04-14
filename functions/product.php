@@ -35,40 +35,6 @@ $fmt = numfmt_create( $locale, NumberFormatter::CURRENCY );
 return numfmt_format_currency($fmt, $montant, $currency);//.$decimal
 }
 
-function doliconnect_image($module, $id, $mode = null, $refresh = null, $entity = null) {
-$img =  callDoliApi("GET", "/documents?modulepart=".$module."&id=".$id, null, dolidelay('document', $refresh), $entity);
-   
-$up_dir = wp_upload_dir();
-
-if ( !isset($img->error) && $img != null && (!file_exists($up_dir['basedir'].'/doliconnect/'.$module.'/'.$id.'/'.$img[0]->relativename) || filesize($up_dir['basedir'].'/doliconnect/'.$module.'/'.$id.'/'.$img[0]->relativename) != $img[0]->size) ) {
-$imgj =  callDoliApi("GET", "/documents/download?modulepart=product&original_file=".$img[0]->level1name."/".$img[0]->relativename, null, 0, $entity);
-//print var_dump($imgj);
-$imgj = (array) $imgj; 
-if (is_array($imgj) && preg_match('/^image/', $imgj['content-type'])) {
-//$data = "data:".$imgj['content-type'].";".$imgj['encoding'].",".$imgj['content'];
-if (!is_dir($up_dir['basedir'].'/doliconnect/'.$module.'/'.$id)) {
-mkdir($up_dir['basedir'].'/doliconnect/'.$module.'/'.$id, 0777, true);
-}
-$files = glob($up_dir['basedir'].'/doliconnect/'.$module.'/'.$id."/*");
-foreach($files as $file){
-if(is_file($file))
-unlink($file); 
-}
-$file=$up_dir['basedir'].'/doliconnect/'.$module.'/'.$id.'/'.$img[0]->relativename;
-file_put_contents($file, base64_decode($imgj['content'])); 
-$image = "<img src='".$up_dir['baseurl'].'/doliconnect/'.$module.'/'.$id.'/'.$img[0]->relativename."' class='img-fluid rounded-lg' loading='lazy' alt='".$img[0]->relativename."'>";
-} else {
-$image = "<i class='fa fa-cube fa-fw fa-2x'></i>";
-}
-} elseif ( !isset($img->error) && $img != null && file_exists($up_dir['basedir'].'/doliconnect/'.$module.'/'.$id.'/'.$img[0]->relativename) ) {
-$url = $up_dir['baseurl'].'/doliconnect/'.$module.'/'.$id.'/'.$img[0]->relativename;
-$image = "<img src='".$up_dir['baseurl'].'/doliconnect/'.$module.'/'.$id.'/'.$img[0]->relativename."' class='img-fluid rounded-lg' loading='lazy' alt='".$img[0]->relativename."'>";
-} else {
-$image = "<i class='fa fa-cube fa-fw fa-2x'></i>";
-}
-return $image;
-}
-
 function doliproductstock($product, $refresh = false) {
 
 $stock = '<script>
@@ -532,7 +498,7 @@ $wish = 0;
 if (!empty($product->quantity)) $wish = $product->quantity;
 $product = callDoliApi("GET", "/products/".$product->id."?includestockdata=".$includestock."&includesubproducts=true", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 $list = "<li class='list-group-item' id='prod-li-".$product->id."'><table width='100%' style='border:0px'><tr><td width='20%' style='border:0px'><center>";
-$list .= doliconnect_image('product', $product->id, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), $product->entity);
+$list .= doliconnect_image('product', $product->id, 1, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), $product->entity);
 $list .= "</center></td>";
 
 $list .= "<td width='80%' style='border:0px'><b>".doliproduct($product, 'label')."</b>";
@@ -579,12 +545,12 @@ if (defined("DOLIBUG")) {
 $card = dolibug();
 } elseif ( $product->id>0 && $product->status == 1 ) {
 $card .= "<div class='col-12 d-block d-sm-block d-xs-block d-md-none'><center>";
-$card .= doliconnect_image('product', $product->id, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+$card .= doliconnect_image('product', $product->id, 1, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 $card .= "</center>";
 //$card .= wp_get_attachment_image( $attributes['mediaID'], "ptibogxiv_large", "", array( "class" => "img-fluid" ) );
 $card .= "</div>";
 $card .= '<div class="col-md-4 d-none d-md-block"><center>';
-$card .= doliconnect_image('product', $product->id, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+$card .= doliconnect_image('product', $product->id, 1, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 $card .= '</center>';
 //$card .= wp_get_attachment_image( $attributes['mediaID'], "ptibogxiv_square", "", array( "class" => "img-fluid" ) );
 $card .= "</div>";
