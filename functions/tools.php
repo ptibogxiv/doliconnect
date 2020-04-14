@@ -901,7 +901,9 @@ if ($m2 <= $step)  { $doliline .= "<OPTION value='0' >".__( 'Delete', 'doliconne
 foreach (range(0, $m2, $step) as $number) {
 if ($number == 0) { $doliline .= "<OPTION value='0' >".__( 'Delete', 'doliconnect')."</OPTION>";
 } elseif ( ($number == $step && empty($line->qty) ) || $number == $line->qty || ($number == $m0 && empty($line->qty) )) {
-$doliline .= "<option value='$number' selected='selected'>x ".$number."</option>";
+$doliline .= "<option value='$number' selected='selected'";
+if ($product->stock_reel < $number && is_page(doliconnectid('dolicart')) && $product->type == '0' && !empty(doliconst('MAIN_MODULE_STOCK')) && empty(doliconst('STOCK_ALLOW_NEGATIVE_TRANSFER')) ) $doliline .= " disabled";
+$doliline .= ">x ".$number."</option>";
 } else {
 $doliline .= "<option value='$number' >x ".$number."</option>";
 }
