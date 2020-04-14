@@ -87,7 +87,7 @@ $image .= "<i class='fa fa-cube fa-fw fa-2x'></i>";
 }
 
 $image .= "</div>";
-}} else {
+}} elseif ($module == 'product') {
 $image .= "<div class='col'><i class='fa fa-cube fa-fw fa-2x'></i></div>";
 }
 $image .= "</div>";
