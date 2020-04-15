@@ -102,7 +102,7 @@ function doliconnect_categories($type, $object, $url = null){
 $cats = "";
 
 if ( !empty(doliconst('MAIN_MODULE_CATEGORIE')) ) {
-$categories =  callDoliApi("GET", "/categories/object/".$type."/".$object->id."?sortfield=s.rowid&sortorder=ASC", null, dolidelay('constante'));
+$categories =  callDoliApi("GET", "/categories/object/".$type."/".$object->id."?sortfield=s.rowid&sortorder=ASC", null, dolidelay($type));
 
 if ( !isset($categories->error) && $categories != null ) {
 $cats .= "<small><i class='fas fa-tags fa-fw'></i> ".__( 'Categories:', 'doliconnect' )." ";
