@@ -871,7 +871,7 @@ print apply_filters( 'doliproductlist', $product);
 
 }
 } else {
-print "<li class='list-group-item list-group-item-light'><center>".__( 'No product', 'doliconnect')."</center></li>";
+print "<li class='list-group-item list-group-item-light'><center>".__( 'No product / service currently on sale', 'doliconnect')."</center></li>";
 }
 
 } else {
@@ -1045,7 +1045,7 @@ print apply_filters( 'doliproductlist', $product);
  
 }
 } else {
-print "<li class='list-group-item list-group-item-light'><center>".__( 'No product', 'doliconnect')."</center></li>";
+print "<li class='list-group-item list-group-item-light'><center>".__( 'No product / service currently on sale', 'doliconnect')."</center></li>";
 }
 
 print "</ul><div class='card-body'>";
