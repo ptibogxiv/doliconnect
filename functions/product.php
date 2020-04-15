@@ -488,15 +488,23 @@ return $button;
 
 function doliconnect_supplier($product){
 
+$brands =  callDoliApi("GET", "/products/".$product->id."/purchase_prices", null, dolidelay('product'));
+
+if ( !isset($brands->error) && $brands != null ) {
 $supplier = "<br><small><i class='fas fa-building fa-fw'></i> ".__( 'Brand:', 'doliconnect' )." ";
+foreach ($brands as $brand) {
+$thirdparty =  callDoliApi("GET", "/thirdparties/".$brand->fourn_id, null, dolidelay('product'));
 if (!empty(doliconnectid('dolisupplier'))) {
-$supplier .= "<a href='".doliconnecturl('dolisupplier')."'>";
+$supplier .= "<a href='".doliconnecturl('dolisupplier')."?supplier=".$thirdparty->id."'>";
 }
-$supplier .= "marque";
+$supplier .= (!empty($thirdparty->name_alias)?$thirdparty->name_alias:$thirdparty->name);
 if (!empty(doliconnectid('dolisupplier'))) {
 $supplier .= "</a>";
 }
+
+}
 $supplier .= "</small>";
+}
 
 return $supplier;
 }
