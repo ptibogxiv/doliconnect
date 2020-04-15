@@ -63,14 +63,16 @@ $image = "<div class='row'>";
 if ( !isset($imgs->error) && $imgs != null ) {
 $imgs = array_slice((array) $imgs, 0, $nb);
 foreach ($imgs as $img) {
+$up_dir = wp_upload_dir();
 $image .= "<div class='col'>";
-
+$file=$up_dir['basedir'].'/doliconnect/'.$module.'/'.$id.'/'.$img->relativename;
+if (!is_file($file)) {
 $imgj =  callDoliApi("GET", "/documents/download?modulepart=".$module."&original_file=".$img->level1name."/".$img->relativename, null, dolidelay('document', $refresh), $entity);
 //$image .= var_dump($imgj);
 $imgj = (array) $imgj; 
 if (is_array($imgj) && preg_match('/^image/', $imgj['content-type'])) {
 //$data = "data:".$imgj['content-type'].";".$imgj['encoding'].",".$imgj['content'];
-$up_dir = wp_upload_dir();
+
 if (!is_dir($up_dir['basedir'].'/doliconnect/'.$module.'/'.$id)) {
 mkdir($up_dir['basedir'].'/doliconnect/'.$module.'/'.$id, 0777, true);
 }
@@ -80,12 +82,14 @@ $files = glob($up_dir['basedir'].'/doliconnect/'.$module.'/'.$id."/*");
 //unlink($file); 
 //}
 $file=$up_dir['basedir'].'/doliconnect/'.$module.'/'.$id.'/'.$img->relativename;
-file_put_contents($file, base64_decode($imgj['content'])); 
-$image .= "<img src='".$up_dir['baseurl'].'/doliconnect/'.$module.'/'.$id.'/'.$img->relativename."' class='img-fluid rounded-lg' loading='lazy' alt='".$img->relativename."'>";
+file_put_contents($file, base64_decode($imgj['content']));
+$image .= "<img src='".$up_dir['baseurl'].'/doliconnect/'.$module.'/'.$id.'/'.$img->relativename."' class='img-fluid rounded-lg' loading='lazy' alt='".$img->relativename."'>"; 
 } else {
 $image .= "<i class='fa fa-cube fa-fw fa-2x'></i>";
 }
-
+} else {
+$image .= "<img src='".$up_dir['baseurl'].'/doliconnect/'.$module.'/'.$id.'/'.$img->relativename."' class='img-fluid rounded-lg' loading='lazy' alt='".$img->relativename."'>";
+}
 $image .= "</div>";
 }} elseif ($module == 'product') {
 $image .= "<div class='col'><i class='fa fa-cube fa-fw fa-2x'></i></div>";
