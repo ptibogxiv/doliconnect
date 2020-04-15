@@ -838,6 +838,7 @@ doliconnect_enqueues();
 
 $shopsupplier = doliconst("DOLICONNECT_CATSHOP_SUPPLIER", esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 $category = "";
+
 if ( isset($_GET['supplier']) && $_GET['supplier'] > 0 ) { 
  
 $request = "/thirdparties/".esc_attr($_GET['supplier']);
