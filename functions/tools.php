@@ -99,11 +99,13 @@ return $image;
 }
 
 function doliconnect_categories($type, $object, $url = null){
+$cats = "";
 
-$categories =  callDoliApi("GET", "/categories/object/".$type."/".$object->id."?sortfield=s.rowid&sortorder=ASC", null, dolidelay('product'));
+if ( !empty(doliconst('MAIN_MODULE_CATEGORIE')) ) {
+$categories =  callDoliApi("GET", "/categories/object/".$type."/".$object->id."?sortfield=s.rowid&sortorder=ASC", null, dolidelay('constante'));
 
 if ( !isset($categories->error) && $categories != null ) {
-$cats = "<small><i class='fas fa-tags fa-fw'></i> ".__( 'Categories:', 'doliconnect' )." ";
+$cats .= "<small><i class='fas fa-tags fa-fw'></i> ".__( 'Categories:', 'doliconnect' )." ";
 $i = 0;
 foreach ($categories as $category) {
 if (!empty($i)) { $cats .= " "; }
@@ -124,7 +126,7 @@ $i++;
 }
 $cats .= "</small>";
 }
-
+}
 return $cats;
 }
 

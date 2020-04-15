@@ -586,8 +586,8 @@ $card .= "</small>";
 if ( ! empty(doliconnectid('dolicart')) && !isset($attributes['hideStock']) ) { 
 $card .= '<br>'.doliproductstock($product);
 }
-$card .= '<br>'.doliconnect_supplier($product);
-$card .= '<br>'.doliconnect_categories('product', $product, doliconnecturl('dolishop'));
+if (!empty(doliconnect_supplier($product))) $card .= '<br>'.doliconnect_supplier($product);
+if (doliconnect_categories('product', $product, doliconnecturl('dolishop'))) $card .= '<br>'.doliconnect_categories('product', $product, doliconnecturl('dolishop'));
 if ( !empty($product->country_id) ) {  
 if ( function_exists('pll_the_languages') ) { 
 $lang = pll_current_language('locale');

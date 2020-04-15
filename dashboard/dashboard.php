@@ -1131,7 +1131,7 @@ print "</div></div>";
 }
 }
 
-if ( !empty(doliconst('MAIN_MODULE_PROJET'))  && !empty(get_option('doliconnectbeta')) ) {
+if ( !empty(doliconst('MAIN_MODULE_PROJET')) && !empty(get_option('doliconnectbeta')) ) {
 add_action( 'customer_doliconnect_menu', 'projets_menu', 2, 1);
 add_action( 'customer_doliconnect_projets', 'projets_module');
 }
