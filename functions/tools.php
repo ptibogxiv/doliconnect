@@ -98,6 +98,36 @@ $image .= "</div>";
 return $image;
 }
 
+function doliconnect_categories($type, $object, $url = null){
+
+$categories =  callDoliApi("GET", "/categories/object/".$type."/".$object->id."?sortfield=s.rowid&sortorder=ASC", null, dolidelay('product'));
+
+if ( !isset($categories->error) && $categories != null ) {
+$cats = "<small><i class='fas fa-tags fa-fw'></i> ".__( 'Categories:', 'doliconnect' )." ";
+$i = 0;
+foreach ($categories as $category) {
+if (!empty($i)) { $cats .= " "; }
+if (!empty($url)) {
+$cats .= "<a href='".esc_url( add_query_arg( 'category', $category->id, $url) )."'";
+} else { 
+$cats .= "<span ";
+}
+$cats .= "class='badge badge-pill badge-secondary'>";
+
+$cats .= doliproduct($category, 'label');
+if (!empty($url)) {
+$cats .= "</a>";
+} else {
+$cats .= "</span>";
+}
+$i++;
+}
+$cats .= "</small>";
+}
+
+return $cats;
+}
+
 function socialconnect( $url ) {
 $connect = null;
 
