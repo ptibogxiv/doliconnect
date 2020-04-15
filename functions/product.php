@@ -486,6 +486,21 @@ $button .= "<div id='error-product-".$product->id."' class='text-danger font-wei
 return $button;
 }
 
+function doliconnect_supplier($product){
+
+$supplier = "<br><small><i class='fas fa-building fa-fw'></i> ".__( 'Brand:', 'doliconnect' )." ";
+if (!empty(doliconnectid('dolisupplier'))) {
+$supplier .= "<a href='".doliconnecturl('dolisupplier')."'>";
+}
+$supplier .= "marque";
+if (!empty(doliconnectid('dolisupplier'))) {
+$supplier .= "</a>";
+}
+$supplier .= "</small>";
+
+return $supplier;
+}
+
 // list of products filter
 function doliproductlist($product) {
 
@@ -561,6 +576,7 @@ $card .= "</small>";
 if ( ! empty(doliconnectid('dolicart')) && !isset($attributes['hideStock']) ) { 
 $card .= '<br>'.doliproductstock($product);
 }
+$card .= doliconnect_supplier($product);
 if ( !empty($product->country_id) ) {  
 if ( function_exists('pll_the_languages') ) { 
 $lang = pll_current_language('locale');
@@ -568,7 +584,7 @@ $lang = pll_current_language('locale');
 $lang = $current_user->locale;
 }
 $country = callDoliApi("GET", "/setup/dictionary/countries/".$product->country_id."?lang=".$lang, null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-$card .= "<br><small>".__( 'Origin:', 'doliconnect')." <span class='flag-icon flag-icon-".strtolower($product->country_code)."'></span> ".$country->label."</small>"; }
+$card .= "<br><small><i class='fas fa-globe fa-fw'></i> ".__( 'Origin:', 'doliconnect')." <span class='flag-icon flag-icon-".strtolower($product->country_code)."'></span> ".$country->label."</small>"; }
 if ( ! empty(doliconnectid('dolicart')) ) { 
 $card .= "<br><br><div class='jumbotron'>";
 $card .= doliconnect_addtocart($product, 0, 0, isset($attributes['hideButtonToCart']) ? $attributes['hideButtonToCart'] : 0, isset($attributes['hideDuration']) ? $attributes['hideDuration'] : 0);

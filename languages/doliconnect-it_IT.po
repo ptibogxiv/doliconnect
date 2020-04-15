@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2020-04-15 16:18+0200\n"
-"PO-Revision-Date: 2020-04-15 16:18+0200\n"
+"POT-Creation-Date: 2020-04-15 20:30+0200\n"
+"PO-Revision-Date: 2020-04-15 20:30+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it_IT\n"
@@ -21,7 +21,7 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: includes\n"
 
-#: admin/admin.php:7 dashboard/templates.php:1388
+#: admin/admin.php:7 dashboard/templates.php:1392
 msgid ""
 "It seems that your version of Dolibarr and/or its plugins are not up to date!"
 msgstr ""
@@ -321,8 +321,8 @@ msgstr "Le tue informazioni sono state aggiornate."
 
 #: dashboard/dashboard.php:67 dashboard/dashboard.php:259
 #: dashboard/dashboard.php:416 dashboard/dashboard.php:1682
-#: dashboard/templates.php:456 dashboard/templates.php:1112
-#: dashboard/templates.php:1476 dashboard/templates.php:1495
+#: dashboard/templates.php:456 dashboard/templates.php:1116
+#: dashboard/templates.php:1480 dashboard/templates.php:1499
 #: functions/tools.php:200
 msgid "Update"
 msgstr "Aggiorna"
@@ -483,7 +483,7 @@ msgid "Draft"
 msgstr "Bozza"
 
 #: dashboard/dashboard.php:741 dashboard/dashboard.php:1293
-#: dashboard/templates.php:1270
+#: dashboard/templates.php:1274
 msgid "Payment method"
 msgstr "Metodo di pagamento"
 
@@ -491,8 +491,8 @@ msgstr "Metodo di pagamento"
 msgid "Payment term"
 msgstr "CONDIZIONI DI PAGAMENTO"
 
-#: dashboard/dashboard.php:759 dashboard/templates.php:1125
-#: dashboard/templates.php:1284
+#: dashboard/dashboard.php:759 dashboard/templates.php:1129
+#: dashboard/templates.php:1288
 #, php-format
 msgid ""
 "Please send your cheque in the amount of <b>%1$s</b> with reference <b>%2$s</"
@@ -505,8 +505,8 @@ msgstr ""
 msgid "Change your payment mode"
 msgstr "Modificare la modalità di pagamento"
 
-#: dashboard/dashboard.php:765 dashboard/templates.php:1134
-#: dashboard/templates.php:1290
+#: dashboard/dashboard.php:765 dashboard/templates.php:1138
+#: dashboard/templates.php:1294
 #, php-format
 msgid ""
 "Please send your transfert in the amount of <b>%1$s</b> with reference <b>"
@@ -515,8 +515,8 @@ msgstr ""
 "Si prega di inviare il trasferimento per un importo di <b>%1$s</b> con "
 "riferimento <b>%2$s</b> al seguente account"
 
-#: dashboard/dashboard.php:766 dashboard/templates.php:1135
-#: dashboard/templates.php:1291
+#: dashboard/dashboard.php:766 dashboard/templates.php:1139
+#: dashboard/templates.php:1295
 msgid "Bank"
 msgstr "Banca"
 
@@ -528,18 +528,18 @@ msgstr "Banca"
 msgid "Pay"
 msgstr "Paga"
 
-#: dashboard/dashboard.php:808 dashboard/templates.php:1358
-#: dashboard/templates.php:1465 dashboard/templates.php:1486
+#: dashboard/dashboard.php:808 dashboard/templates.php:1362
+#: dashboard/templates.php:1469 dashboard/templates.php:1490
 msgid "Billing address"
 msgstr "Indirizzo di fatturazione"
 
-#: dashboard/dashboard.php:815 dashboard/templates.php:1362
-#: dashboard/templates.php:1500
+#: dashboard/dashboard.php:815 dashboard/templates.php:1366
+#: dashboard/templates.php:1504
 msgid "Shipping address"
 msgstr "Indirizzo di spedizione"
 
-#: dashboard/dashboard.php:823 dashboard/templates.php:1369
-#: dashboard/templates.php:1488
+#: dashboard/dashboard.php:823 dashboard/templates.php:1373
+#: dashboard/templates.php:1492
 msgid "Billing and shipping address"
 msgstr "Indirizzo di fatturazione e spedizione"
 
@@ -838,7 +838,7 @@ msgid "Sales representative"
 msgstr "Tuángòu"
 
 #: dashboard/dashboard.php:1883 dashboard/templates.php:810
-#: dashboard/templates.php:1375 dashboard/templates.php:1533
+#: dashboard/templates.php:1379 dashboard/templates.php:1537
 msgid "Message"
 msgstr "Messaggio"
 
@@ -898,7 +898,7 @@ msgstr "Abilitato"
 msgid "Primary"
 msgstr "Primario"
 
-#: dashboard/dashboard.php:2050 functions/product.php:577
+#: dashboard/dashboard.php:2050 functions/product.php:593
 msgid "Description"
 msgstr "Descrizione"
 
@@ -1129,134 +1129,134 @@ msgstr "Tipo di richiesta"
 msgid "I agree to save my personnal informations in order to contact me"
 msgstr "Accetto di salvare le mie informazioni personali per contattarmi"
 
-#: dashboard/templates.php:874 dashboard/templates.php:1048
+#: dashboard/templates.php:877 dashboard/templates.php:1052
 msgid "No product / service currently on sale"
 msgstr "Nessun prodotto / servizio attualmente in vendita"
 
-#: dashboard/templates.php:944
+#: dashboard/templates.php:948
 #, php-format
 msgid "Your search: %s"
 msgstr "La tua ricerca: %s"
 
-#: dashboard/templates.php:951
+#: dashboard/templates.php:955
 #, php-format
 msgid "No product with this search: %s"
 msgstr "Nessun prodotto con questa ricerca: %s"
 
-#: dashboard/templates.php:1094
+#: dashboard/templates.php:1098
 msgid "Inactive module on Dolibarr"
 msgstr "Modulo inattivo su Dolibarr"
 
-#: dashboard/templates.php:1141
+#: dashboard/templates.php:1145
 msgid "Tax exemptions"
 msgstr "Riduzioni d'imposta"
 
-#: dashboard/templates.php:1144
+#: dashboard/templates.php:1148
 msgid "DonationArt200"
 msgstr "DonazioneArt200"
 
-#: dashboard/templates.php:1148
+#: dashboard/templates.php:1152
 msgid "DonationArt238"
 msgstr "DonazioneArt238"
 
-#: dashboard/templates.php:1152
+#: dashboard/templates.php:1156
 msgid "DonationArt835"
 msgstr "DonazioneArt835"
 
-#: dashboard/templates.php:1155
+#: dashboard/templates.php:1159
 msgid "You should't have tax exemptions"
 msgstr "Non dovresti avere esenzioni fiscali"
 
-#: dashboard/templates.php:1214
+#: dashboard/templates.php:1218
 msgid "Oops, Order's module is not available"
 msgstr "Oops, il modulo dell'Ordine non è disponibile"
 
-#: dashboard/templates.php:1270
+#: dashboard/templates.php:1274
 msgid "Your order has been registered"
 msgstr "Il tuo ordine è stato registrato"
 
-#: dashboard/templates.php:1270 dashboard/templates.php:1277
+#: dashboard/templates.php:1274 dashboard/templates.php:1281
 #: functions/tools.php:252
 msgid "Reference"
 msgstr "Riferimento"
 
-#: dashboard/templates.php:1276
+#: dashboard/templates.php:1280
 msgid "Your payment has been registered"
 msgstr "Il pagamento è stato registrato"
 
-#: dashboard/templates.php:1299
+#: dashboard/templates.php:1303
 msgid "or go to reception desk"
 msgstr "o andare alla reception"
 
-#: dashboard/templates.php:1305
+#: dashboard/templates.php:1309
 msgid "View my receipt"
 msgstr "Vedi la ricevuta"
 
-#: dashboard/templates.php:1317
+#: dashboard/templates.php:1321
 msgid "An error is occurred"
 msgstr "Si è verificato un errore"
 
-#: dashboard/templates.php:1318
+#: dashboard/templates.php:1322
 #, php-format
 msgid "Return to %s"
 msgstr "Torna a %s"
 
-#: dashboard/templates.php:1343
+#: dashboard/templates.php:1347
 msgid "Contacts"
 msgstr "Contatti"
 
-#: dashboard/templates.php:1344 functions/product.php:224
+#: dashboard/templates.php:1348 functions/product.php:224
 msgid "update"
 msgstr "aggiorna"
 
-#: dashboard/templates.php:1345
+#: dashboard/templates.php:1349
 msgid "unchangeable, please contact us"
 msgstr "immutabile, vi preghiamo di contattarci"
 
-#: dashboard/templates.php:1352
+#: dashboard/templates.php:1356
 msgid "Customer's Address"
 msgstr "Indirizzo del cliente"
 
-#: dashboard/templates.php:1504
+#: dashboard/templates.php:1508
 msgid "Same address that billing"
 msgstr "Stesso indirizzo di fatturazione"
 
-#: dashboard/templates.php:1530
+#: dashboard/templates.php:1534
 #, php-format
 msgid "Add shipping contact needs Dolibarr %s but your version is %s"
 msgstr ""
 "Aggiungi contatto di spedizione ha bisogno di Dolibarr %s ma la tua versione "
 "è %s"
 
-#: dashboard/templates.php:1536
+#: dashboard/templates.php:1540
 msgid "Add a message"
 msgstr "Aggiungi un messaggio"
 
-#: dashboard/templates.php:1538
+#: dashboard/templates.php:1542
 msgid "Enter a message here that you want to send us about your order"
 msgstr "Inserisci qui un messaggio che vuoi inviarci sul tuo ordine"
 
-#: dashboard/templates.php:1542
+#: dashboard/templates.php:1546
 msgid "Validate"
 msgstr "Da convalidare"
 
-#: dashboard/templates.php:1588
+#: dashboard/templates.php:1592
 msgid "An error is occured. Please contact us!"
 msgstr "Si è verificato un errore. Vi preghiamo di contattarci!"
 
-#: dashboard/templates.php:1643
+#: dashboard/templates.php:1647
 msgid "Amount outstanding"
 msgstr "Importo in evaso"
 
-#: dashboard/templates.php:1643
+#: dashboard/templates.php:1647
 msgid "out of"
 msgstr "su"
 
-#: dashboard/templates.php:1643
+#: dashboard/templates.php:1647
 msgid "allowed"
 msgstr "consentito"
 
-#: dashboard/templates.php:1645
+#: dashboard/templates.php:1649
 msgid ""
 "Your account is blocked, this order can't be processed. Please, contact us "
 "to pay overdue unpaid invoices."
@@ -1264,15 +1264,15 @@ msgstr ""
 "Il tuo account è bloccato, questo ordine non può essere elaborato. Vi "
 "preghiamo di contattarci per pagare le fatture scadute non pagate."
 
-#: dashboard/templates.php:1654
+#: dashboard/templates.php:1658
 msgid "Continue shopping"
 msgstr "Continua lo shopping"
 
-#: dashboard/templates.php:1658
+#: dashboard/templates.php:1662
 msgid "Empty the basket"
 msgstr "Svuotare il cestello"
 
-#: dashboard/templates.php:1663
+#: dashboard/templates.php:1667
 msgid "Process"
 msgstr "Processo"
 
@@ -1534,15 +1534,19 @@ msgstr "Accedi"
 msgid "you get %u %% discount"
 msgstr "ottieni %u %% di sconto"
 
-#: functions/product.php:571
+#: functions/product.php:491
+msgid "Brand:"
+msgstr "Marca:"
+
+#: functions/product.php:587
 msgid "Origin:"
 msgstr "Origine:"
 
-#: functions/product.php:579
+#: functions/product.php:595
 msgid "Product/Service not in sale"
 msgstr "Prodotto/Servizio non in vendita"
 
-#: functions/product.php:588
+#: functions/product.php:604
 msgid "Oops! This product does not appear to exist"
 msgstr "Oops! Questo prodotto non sembra esistere"
 
