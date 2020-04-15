@@ -837,7 +837,7 @@ if ( in_the_loop() && is_main_query() && is_page(doliconnectid('dolisupplier')) 
 doliconnect_enqueues();
 
 $shopsupplier = doliconst("DOLICONNECT_CATSHOP_SUPPLIER", esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
-
+$category = "";
 if ( isset($_GET['supplier']) && $_GET['supplier'] > 0 ) { 
  
 $request = "/thirdparties/".esc_attr($_GET['supplier']);
@@ -878,10 +878,11 @@ print "<li class='list-group-item list-group-item-light'><center>".__( 'No produ
 
 } else {
 
+ if (!empty($shopsupplier)) $category = "&category=".$shopsupplier;
 $module = 'thirdparty';
 $limit=20;
 if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']-1); }  else { $page = 0; }
-$request = "/thirdparties?sortfield=t.nom&sortorder=ASC&limit=".$limit."&page=".$page."&mode=4&sqlfilters=(t.status%3A%3D%3A'1')";
+$request = "/thirdparties?sortfield=t.nom&sortorder=ASC&limit=".$limit."&page=".$page."&mode=4".$category."&sqlfilters=(t.status%3A%3D%3A'1')";
 $resultats = callDoliApi("GET", $request, null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 if ( !isset($resultats->error) && $resultats != null ) {
