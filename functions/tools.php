@@ -57,7 +57,6 @@ return $pagination;
 
 function doliconnect_image($module, $id, $nb = 1, $refresh = null, $entity = null) {
 $imgs = callDoliApi("GET", "/documents?modulepart=".$module."&id=".$id, null, dolidelay('document', $refresh), $entity);   
-$up_dir = wp_upload_dir();
 
 $image = "<div class='row'>";
 
@@ -66,11 +65,12 @@ $imgs = array_slice((array) $imgs, 0, $nb);
 foreach ($imgs as $img) {
 $image .= "<div class='col'>";
 
-$imgj =  callDoliApi("GET", "/documents/download?modulepart=".$module."&original_file=".$img->level1name."/".$img->relativename, null, $refresh, $entity);
+$imgj =  callDoliApi("GET", "/documents/download?modulepart=".$module."&original_file=".$img->level1name."/".$img->relativename, null, dolidelay('document', $refresh), $entity);
 //$image .= var_dump($imgj);
 $imgj = (array) $imgj; 
 if (is_array($imgj) && preg_match('/^image/', $imgj['content-type'])) {
 //$data = "data:".$imgj['content-type'].";".$imgj['encoding'].",".$imgj['content'];
+$up_dir = wp_upload_dir();
 if (!is_dir($up_dir['basedir'].'/doliconnect/'.$module.'/'.$id)) {
 mkdir($up_dir['basedir'].'/doliconnect/'.$module.'/'.$id, 0777, true);
 }

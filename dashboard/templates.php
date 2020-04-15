@@ -854,7 +854,7 @@ print "<p class='text-justify'>".$thirdparty->note_public."</p>";
 
 $photos = callDoliApi("GET", "/documents?modulepart=thirdparty&id=".$thirdparty->id, null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
-print doliconnect_image('thirdparty', $thirdparty->id, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+print doliconnect_image('thirdparty', $thirdparty->id, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), $thirdparty->entity);
 
 print "</li>"; 
 
@@ -1305,13 +1305,17 @@ $return = esc_url( add_query_arg( $arr_params, doliconnecturl('doliaccount')) );
 print "<br><a href='".$return."' class='btn btn-primary'>".__( 'View my receipt', 'doliconnect')."</a>";
 
 } else {
-
+if (isset($_GET['module']) && !empty($_GET['module'])) {
 $nonce = wp_create_nonce( 'doli-'.$module.'-'. $object->id.'-'.$object->ref);
-$arr_params = array('module' => $module, 'id' => $object->id, 'ref' => $object->ref, 'security' => $nonce);  
+$arr_params = array('module' => $module, 'id' => $object->id, 'ref' => $object->ref, 'security' => $nonce, 'refresh' => true); 
 $return = esc_url( add_query_arg( $arr_params, doliconnecturl('doliaccount')) );
+} else {
+$arr_params = array('refresh' => true); 
+$return = esc_url( add_query_arg( $arr_params, doliconnecturl('dolicart')) );
+} 
 
 print "<div class='alert alert-danger' role='alert'><p>".__( 'An error is occurred', 'doliconnect')."</p>";
-print "<br><a href='".$return."' class='btn btn-primary'>".__( 'Return', 'doliconnect')."</a>";
+print "<br><a href='".$return."' class='btn btn-primary'>".sprintf( esc_html__( 'Return to %s', 'doliconnect'), $object->ref)."</a>";
 }
 
 print "</div></div></div>";
