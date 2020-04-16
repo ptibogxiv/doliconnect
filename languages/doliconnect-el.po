@@ -1,0 +1,2130 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Doliconnect\n"
+"POT-Creation-Date: 2020-04-16 12:53+0200\n"
+"PO-Revision-Date: 2020-04-16 12:58+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: el\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.3\n"
+"X-Poedit-Basepath: ..\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Poedit-WPHeader: doliconnect.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.min.js\n"
+
+#: admin/admin.php:7 dashboard/templates.php:1408
+msgid ""
+"It seems that your version of Dolibarr and/or its plugins are not up to date!"
+msgstr ""
+"Φαίνεται ότι η δική σας έκδοση του Dolibarr και / ή plugins του δεν είναι "
+"ενημερωμένα!"
+
+#: admin/admin.php:16 admin/admin.php:17 admin/admin.php:27 admin/admin.php:28
+#: admin/admin.php:215
+msgid "Doliconnect settings"
+msgstr "Ρυθμίσεις Doliconnect"
+
+#. Plugin Name of the plugin/theme
+#: admin/admin.php:16 admin/admin.php:22 admin/admin.php:27
+msgid "Doliconnect"
+msgstr "Ντολίκον"
+
+#: admin/admin.php:288
+msgid "Modal login"
+msgstr "Σύνδεση με το modal"
+
+#: admin/admin.php:294
+msgid "Beta mode"
+msgstr "Λειτουργία beta"
+
+#: admin/admin.php:295
+msgid "Active beta functions, can be unstable"
+msgstr "Οι ενεργές βήτα λειτουργίες, μπορούν να είναι ασταθείς"
+
+#: admin/admin.php:298
+msgid "Restricted mode"
+msgstr "Λειτουργία περιορισμένης πρόσβασης"
+
+#: admin/admin.php:300
+msgid ""
+"Roles to be assigned for existing users. If none, the connection will not be "
+"allowed."
+msgstr ""
+"Ρόλοι που θα εκχωρηθούν για υπάρχοντες χρήστες. Εάν δεν υπάρχει, η σύνδεση "
+"δεν θα επιτρέπεται."
+
+#: admin/admin.php:302
+msgid "None"
+msgstr "Κανένα"
+
+#: admin/admin.php:320
+msgid "Dolibarr's entity"
+msgstr "Η οντότητα του Ντολιμπάρ"
+
+#: admin/admin.php:342
+msgid "Anyone can register"
+msgstr "Οποιοσδήποτε μπορεί να εγγραφεί"
+
+#: admin/admin.php:343
+msgid "Existing Customer/Supplier on Dolibarr can register"
+msgstr "Ο υφιστάμενος πελάτης/προμηθευτής στο Dolibarr μπορεί να εγγραφεί"
+
+#: admin/admin.php:346
+msgid "B2B mode"
+msgstr "Λειτουργία B2B"
+
+#: admin/admin.php:347
+msgid "Display all prices excluding VAT"
+msgstr "Εμφάνιση όλων των τιμών εκτός ΦΠΑ"
+
+#: admin/admin.php:350
+msgid "Personnal / Enterprise mode"
+msgstr "Λειτουργία προσωπικότητας / εταιρείας"
+
+#: admin/admin.php:359
+msgid "Kiosk mode"
+msgstr "Λειτουργία περιπτέρου"
+
+#: admin/admin.php:360
+msgid "IP address"
+msgstr "Διεύθυνση IP"
+
+#: admin/admin.php:360
+msgid "one IP per line without space or comma"
+msgstr "μία IP ανά γραμμή χωρίς χώρο ή κόμμα"
+
+#: admin/admin.php:367 admin/admin.php:381 admin/admin.php:393
+#: admin/admin.php:405 admin/admin.php:417 admin/admin.php:444
+#: admin/admin.php:459 admin/admin.php:470 admin/admin.php:483
+#: admin/admin.php:495 dashboard/dashboard.php:1808
+#: dashboard/dashboard.php:1826 dashboard/dashboard.php:1845
+#: dashboard/dashboard.php:1866 dashboard/templates.php:796
+#: functions/tools.php:328 functions/tools.php:371 functions/tools.php:456
+msgid "- Select -"
+msgstr "- Επιλογή -"
+
+#: admin/admin.php:372
+msgid "Message on login page"
+msgstr "Μήνυμα στη σελίδα σύνδεσης"
+
+#: admin/admin.php:425
+msgid "by default"
+msgstr "από προεπιλογή"
+
+#: admin/admin.php:434
+msgid "choices of the amount of product"
+msgstr "επιλογές της ποσότητας του προϊόντος"
+
+#: admin/admin.php:474
+msgid "(set your default wordpress legacy page)"
+msgstr "(ορίστε την προεπιλεγμένη σελίδα παλαιού τύπου wordpress)"
+
+#: blocks/admin/block.js:11
+msgid "List of admins"
+msgstr "Λίστα διαχειριστών"
+
+#: blocks/admin/block.js:12
+msgid "A block for displaying list of admins."
+msgstr "Ένα μπλοκ για την εμφάνιση λίστας διαχειριστών."
+
+#: blocks/admin/block.js:25 blocks/product/block.js:50
+#: blocks/profile/block.js:108
+msgid "Social Media Links"
+msgstr "Σύνδεσμοι Κοινωνικών Δικτύων"
+
+#: blocks/admin/block.js:29 blocks/product/block.js:54
+#: blocks/profile/block.js:112
+msgid "Add links to your social media profiles."
+msgstr "Προσθέστε συνδέσμους στα προφίλ σας στα μέσα κοινωνικής δικτύωσης."
+
+#: blocks/gdpr/block.js:13
+msgid "Privacy Data Request Form"
+msgstr "Φόρμα αίτησης δεδομένων απορρήτου"
+
+#: blocks/gdpr/block.js:16
+msgid "form"
+msgstr "φόρμα"
+
+#: blocks/gdpr/block.js:16
+msgid "data"
+msgstr "Δεδομένων"
+
+#: blocks/gdpr/block.js:16
+msgid "request"
+msgstr "Αίτηση"
+
+#: blocks/gdpr/block.js:48
+msgid "Privacy Data request form"
+msgstr "Φόρμα αίτησης δεδομένων απορρήτου"
+
+#: blocks/gdpr/block.js:58
+msgid "This block displays a Privacy Data Request Form."
+msgstr "Αυτό το μπλοκ εμφανίζει μια φόρμα αίτησης δεδομένων απορρήτου."
+
+#: blocks/gdpr/block.js:68
+msgid ""
+"By default, the form shows both export and remove Data Request options (it’s "
+"up to the visitor). You can set it either to \"both\", \"export\" or \"remove"
+"\"."
+msgstr ""
+"Από προεπιλογή, η φόρμα εμφανίζει τις επιλογές εξαγωγής και κατάργησης "
+"αίτησης δεδομένων (εξαρτάται από τον επισκέπτη). Μπορείτε να το ορίσετε είτε "
+"σε \"και τα δύο\", \"εξαγωγή\" ή \"κατάργηση\"."
+
+#: blocks/gdpr/block.js:85
+msgid "Request type:"
+msgstr "Τύπος αιτήματος:"
+
+#: blocks/gdpr/block.js:92 functions/widgets.php:528
+msgid "Both Export and Remove"
+msgstr "Εξαγωγή και κατάργηση"
+
+#: blocks/gdpr/block.js:93 functions/widgets.php:529
+msgid "Data Export form only"
+msgstr "Φόρμα εξαγωγής δεδομένων μόνο"
+
+#: blocks/gdpr/block.js:94 functions/widgets.php:530
+msgid "Data Remove form only"
+msgstr "Μόνο φόρμα κατάργησης δεδομένων"
+
+#: blocks/membership/block.js:9 dashboard/dashboard.php:1394
+#: functions/widgets.php:128
+msgid "Membership"
+msgstr "Συνδρομή"
+
+#: blocks/membership/block.js:10
+msgid "A block for displaying membership."
+msgstr "Ένα μπλοκ για την εμφάνιση της ιδιότητας μέλους."
+
+#: blocks/membership/block.php:77
+msgid "Individual"
+msgstr "Ιδιώτες"
+
+#: blocks/membership/block.php:78
+msgid "Company"
+msgstr "Εταιρεία"
+
+#: blocks/membership/block.php:110 blocks/membership/block.php:170
+#: functions/tools.php:1019
+msgid "year"
+msgstr "έτος"
+
+#: blocks/membership/block.php:115 blocks/membership/block.php:175
+msgid "First subscription at"
+msgstr "Πρώτη συνδρομή στο"
+
+#: blocks/membership/block.php:120 blocks/membership/block.php:147
+#: functions/widgets.php:125 functions/widgets.php:131
+msgid "Subscribe"
+msgstr "Εγγραφή"
+
+#: blocks/membership/block.php:137 functions/tools.php:343
+msgid "then"
+msgstr "Στη συνέχεια"
+
+#: blocks/membership/block.php:137 blocks/membership/block.php:140
+#: functions/tools.php:343 functions/tools.php:346
+msgid "yearly"
+msgstr "Ετήσια"
+
+#: blocks/membership/block.php:144
+msgid "Including a federal part of"
+msgstr "Συμπεριλαμβανομένου ενός ομοσπονδιακού μέρους της"
+
+#: blocks/membership/block.php:180 functions/product.php:475
+msgid "Contact us"
+msgstr "Επικοινωνήστε μαζί μας"
+
+#: blocks/product/block.js:11 blocks/profile/block.js:12
+msgid "Product"
+msgstr "Προϊόν"
+
+#: blocks/product/block.js:12
+msgid "A block for displaying dolibarr product."
+msgstr "Ένα μπλοκ για την εμφάνιση του προϊόντος dolibarr."
+
+#: blocks/product/block.js:57
+msgid "Product ID"
+msgstr "ID προϊόντος"
+
+#: blocks/product/block.js:64
+msgid "Hide addition to cart"
+msgstr "Απόκρυψη προσθήκης στο καλάθι"
+
+#: blocks/product/block.js:71
+msgid "Hide duration"
+msgstr "Απόκρυψη διάρκειας"
+
+#: blocks/product/block.js:78
+msgid "Hide stock"
+msgstr "Απόκρυψη αποθεμάτων"
+
+#: blocks/product/block.php:15 dashboard/dashboard.php:556
+msgid "No product"
+msgstr "Κανένα προϊόν"
+
+#: blocks/profile/block.js:13
+msgid "A custom block for displaying dolibarr product."
+msgstr "Ένα προσαρμοσμένο μπλοκ για την εμφάνιση του προϊόντος dolibarr."
+
+#: blocks/profile/block.js:115
+msgid "Facebook URL"
+msgstr "Facebook URL"
+
+#: blocks/profile/block.js:123
+msgid "Twitter URL"
+msgstr "Εισάγετε διεύθυνση Twitter"
+
+#: blocks/profile/block.js:131
+msgid "Instagram URL"
+msgstr "Εισάγετε διεύθυνση Instagram"
+
+#: blocks/profile/block.js:139
+msgid "LinkedIn URL"
+msgstr "Εισάγετε διεύθυνση LinkedΙn"
+
+#: blocks/profile/block.js:147
+msgid "Email Address"
+msgstr "Διεύθυνση Email"
+
+#: blocks/profile/block.js:169
+msgid "Upload Image"
+msgstr "Μεταφόρτωση Εικόνας"
+
+#: blocks/profile/block.js:188
+msgid "Subtitle"
+msgstr "Υποσέλιδο"
+
+#: blocks/profile/block.js:198
+msgid "Write a brief desc"
+msgstr "Γράψτε μια σύντομη desc"
+
+#: dashboard/dashboard.php:6 dashboard/dashboard.php:1486
+msgid "Personal informations"
+msgstr "Προσωπικές πληροφορίες"
+
+#: dashboard/dashboard.php:47 dashboard/dashboard.php:232
+#: dashboard/dashboard.php:304 dashboard/dashboard.php:312
+#: dashboard/dashboard.php:337 dashboard/dashboard.php:531
+#: dashboard/dashboard.php:1607 dashboard/dashboard.php:1623
+msgid "Your informations have been updated."
+msgstr "Οι πληροφορίες σας έχουν ενημερωθεί."
+
+#: dashboard/dashboard.php:67 dashboard/dashboard.php:259
+#: dashboard/dashboard.php:416 dashboard/dashboard.php:1682
+#: dashboard/templates.php:456 dashboard/templates.php:1132
+#: dashboard/templates.php:1496 dashboard/templates.php:1515
+#: functions/tools.php:261
+msgid "Update"
+msgstr "Ενημέρωση"
+
+#: dashboard/dashboard.php:241
+msgid "Profile Picture"
+msgstr "Εικόνα προφίλ"
+
+#: dashboard/dashboard.php:250
+msgid "Browse"
+msgstr "Περιήγηση"
+
+#: dashboard/dashboard.php:250
+msgid "Select a file"
+msgstr "Επιλέξτε ένα αρχείο"
+
+#: dashboard/dashboard.php:251
+msgid "Your avatar must be a .jpg/.jpeg file, <10Mo and 350x350pixels minimum."
+msgstr ""
+"Avatar σας πρέπει να είναι ένα αρχείο .jpg/.jpeg, <10Mo και 350x350pixels "
+"ελάχιστο."
+
+#: dashboard/dashboard.php:257
+msgid "Delete your picture"
+msgstr "Διαγραφή της εικόνας σας"
+
+#: dashboard/dashboard.php:274
+msgid "Manage address book"
+msgstr "Διαχείριση βιβλίου διευθύνσεων"
+
+#: dashboard/dashboard.php:365 dashboard/dashboard.php:424
+msgid "New contact"
+msgstr "Νέα επαφή"
+
+#: dashboard/dashboard.php:381 dashboard/dashboard.php:1649
+#: dashboard/templates.php:39
+msgid "Edit"
+msgstr "Επεξεργασία"
+
+#: dashboard/dashboard.php:382 functions/product.php:442
+#: functions/product.php:444 functions/tools.php:936 functions/tools.php:965
+#: functions/tools.php:967 functions/tools.php:1199
+msgid "Delete"
+msgstr "Διαγραφή"
+
+#: dashboard/dashboard.php:388
+msgid "No contact"
+msgstr "Καμία επαφή"
+
+#: dashboard/dashboard.php:406
+msgid "Update contact"
+msgstr "Ενημέρωση επαφής"
+
+#: dashboard/dashboard.php:435 functions/tools.php:1254
+#: functions/tools.php:1303
+msgid "Add"
+msgstr "Προσθήκη"
+
+#: dashboard/dashboard.php:445
+msgid "Modify the password"
+msgstr "Τροποποίηση του κωδικού πρόσβασης"
+
+#: dashboard/dashboard.php:467
+msgid "Manage payment methods"
+msgstr "Διαχείριση μεθόδων πληρωμής"
+
+#: dashboard/dashboard.php:483
+msgid "You changed your default payment method"
+msgstr "Αλλάξατε την προεπιλεγμένη μέθοδο πληρωμής"
+
+#: dashboard/dashboard.php:488
+msgid "You deleted a payment method"
+msgstr "Διαγράψατε μια μέθοδο πληρωμής"
+
+#: dashboard/dashboard.php:497
+msgid "You added a new payment method"
+msgstr "Προσθέσατε μια νέα μέθοδο πληρωμής"
+
+#: dashboard/dashboard.php:514
+msgid "Wishlist"
+msgstr "Αγαπημένα"
+
+#: dashboard/dashboard.php:546
+msgid "Your representative :"
+msgstr "Ο εκπρόσωπός σας:"
+
+#: dashboard/dashboard.php:578
+msgid "Propals tracking"
+msgstr "Παρακολούθηση propals"
+
+#: dashboard/dashboard.php:594 dashboard/dashboard.php:1029
+#: dashboard/dashboard.php:1157 dashboard/dashboard.php:1730
+msgid "Date of creation"
+msgstr "Ημερομηνία δημιουργίας"
+
+#: dashboard/dashboard.php:595 dashboard/dashboard.php:621
+#: dashboard/dashboard.php:1043 dashboard/dashboard.php:1171
+msgid "Validation"
+msgstr "Επικύρωση"
+
+#: dashboard/dashboard.php:598
+msgid "Refused"
+msgstr "Αρνήθηκε"
+
+#: dashboard/dashboard.php:600 dashboard/dashboard.php:604
+#: dashboard/dashboard.php:621 dashboard/dashboard.php:727
+#: dashboard/dashboard.php:830 dashboard/dashboard.php:1051
+#: dashboard/dashboard.php:1179 dashboard/dashboard.php:1303
+#: functions/tools.php:608
+msgid "Processing"
+msgstr "Σε επεξεργασία"
+
+#: dashboard/dashboard.php:602
+msgid "Sign before"
+msgstr "Υπογράψτε πριν"
+
+#: dashboard/dashboard.php:606 dashboard/dashboard.php:737
+#: dashboard/dashboard.php:1045 dashboard/dashboard.php:1173
+msgid "Canceled"
+msgstr "Ακυρώθηκε"
+
+#: dashboard/dashboard.php:621 dashboard/dashboard.php:636
+msgid "Propal"
+msgstr "Προχάλκ"
+
+#: dashboard/dashboard.php:621
+msgid "Billing"
+msgstr "Χρέωση"
+
+#: dashboard/dashboard.php:631 dashboard/dashboard.php:840
+#: dashboard/dashboard.php:842 dashboard/dashboard.php:1061
+#: dashboard/dashboard.php:1189
+msgid "Summary"
+msgstr "Περίληψη"
+
+#: dashboard/dashboard.php:682
+msgid "No proposal"
+msgstr "Καμία πρόταση"
+
+#: dashboard/dashboard.php:706
+msgid "Orders tracking"
+msgstr "Παρακολούθηση παραγγελιών"
+
+#: dashboard/dashboard.php:722 dashboard/dashboard.php:1291
+msgid "Date of order"
+msgstr "Ημερομηνία παραγγελίας"
+
+#: dashboard/dashboard.php:725
+msgid "Shipped"
+msgstr "Στάλθηκε"
+
+#: dashboard/dashboard.php:732
+msgid "Validated"
+msgstr "Επικυρωθεί"
+
+#: dashboard/dashboard.php:735
+msgid "Draft"
+msgstr "Προσχέδιο"
+
+#: dashboard/dashboard.php:741 dashboard/dashboard.php:1293
+#: dashboard/templates.php:1290
+msgid "Payment method"
+msgstr "Μέθοδος πληρωμής"
+
+#: dashboard/dashboard.php:742 functions/tools.php:1371
+msgid "Payment term"
+msgstr "Όρος πληρωμής"
+
+#: dashboard/dashboard.php:759 dashboard/templates.php:1145
+#: dashboard/templates.php:1304
+#, php-format
+msgid ""
+"Please send your cheque in the amount of <b>%1$s</b> with reference <b>%2$s</"
+"b> to <b>%3$s</b> at the following address"
+msgstr ""
+"Στείλτε την επιταγή σας στο ποσό των <b>%1$s</b> με αναφορά <b>%2$s</b> σε "
+"<b>%3$s</b> στην ακόλουθη διεύθυνση"
+
+#: dashboard/dashboard.php:760 dashboard/dashboard.php:769
+msgid "Change your payment mode"
+msgstr "Αλλαγή της λειτουργίας πληρωμής"
+
+#: dashboard/dashboard.php:765 dashboard/templates.php:1154
+#: dashboard/templates.php:1310
+#, php-format
+msgid ""
+"Please send your transfert in the amount of <b>%1$s</b> with reference <b>"
+"%2$s</b> at the following account"
+msgstr ""
+"Στείλτε το transfert σας στο ποσό των <b>%1$s</b> με αναφορά <b>%2$s</b> "
+"στον ακόλουθο λογαριασμό"
+
+#: dashboard/dashboard.php:766 dashboard/templates.php:1155
+#: dashboard/templates.php:1311
+msgid "Bank"
+msgstr "Τράπεζα"
+
+#: dashboard/dashboard.php:773 dashboard/dashboard.php:884
+#: dashboard/dashboard.php:888 functions/tools.php:1187
+#: functions/tools.php:1189 functions/tools.php:1191 functions/tools.php:1252
+#: functions/tools.php:1301 functions/tools.php:1319 functions/tools.php:1336
+#: functions/tools.php:1351 functions/tools.php:1365
+msgid "Pay"
+msgstr "Πληρωμή"
+
+#: dashboard/dashboard.php:808 dashboard/templates.php:1378
+#: dashboard/templates.php:1485 dashboard/templates.php:1506
+msgid "Billing address"
+msgstr "Διεύθυνση χρέωσης"
+
+#: dashboard/dashboard.php:815 dashboard/templates.php:1382
+#: dashboard/templates.php:1520
+msgid "Shipping address"
+msgstr "Διεύθυνση Αποστολής"
+
+#: dashboard/dashboard.php:823 dashboard/templates.php:1389
+#: dashboard/templates.php:1508
+msgid "Billing and shipping address"
+msgstr "Διεύθυνση χρέωσης και αποστολής"
+
+#: dashboard/dashboard.php:830 dashboard/dashboard.php:847
+#: dashboard/dashboard.php:1051 dashboard/dashboard.php:1179
+#: dashboard/dashboard.php:1303
+msgid "Order"
+msgstr "Παραγγελία"
+
+#: dashboard/dashboard.php:830 dashboard/dashboard.php:867
+#: dashboard/dashboard.php:1051 dashboard/dashboard.php:1179
+#: dashboard/dashboard.php:1303
+msgid "Payment"
+msgstr "Πληρωμή"
+
+#: dashboard/dashboard.php:830 dashboard/dashboard.php:1051
+#: dashboard/dashboard.php:1179 dashboard/dashboard.php:1303
+msgid "Shipping"
+msgstr "Αποστολή"
+
+#: dashboard/dashboard.php:830 dashboard/dashboard.php:1051
+#: dashboard/dashboard.php:1179 dashboard/dashboard.php:1303
+msgid "Delivery"
+msgstr "Παράδοση"
+
+#: dashboard/dashboard.php:877 dashboard/dashboard.php:879
+#: dashboard/dashboard.php:896
+msgid "Invoice"
+msgstr "Τιμολόγιο"
+
+#: dashboard/dashboard.php:918
+msgid "of"
+msgstr "από"
+
+#: dashboard/dashboard.php:921
+msgid "size"
+msgstr "μέγεθος"
+
+#: dashboard/dashboard.php:925
+msgid "Estimated delivery"
+msgstr "Εκτιμώμενη παράδοση"
+
+#: dashboard/dashboard.php:929 dashboard/dashboard.php:937
+msgid "Shipment"
+msgstr "Αποστολή"
+
+#: dashboard/dashboard.php:931
+msgid "Parcel"
+msgstr "Αγροτεμάχιο"
+
+#: dashboard/dashboard.php:938
+msgid "Packaging in progress"
+msgstr "Συσκευασία σε εξέλιξη"
+
+#: dashboard/dashboard.php:990
+msgid "No order"
+msgstr "Δεν υπάρχει παραγγελία"
+
+#: dashboard/dashboard.php:1014
+msgid "Contracts tracking"
+msgstr "Παρακολούθηση συμβάσεων"
+
+#: dashboard/dashboard.php:1066 dashboard/dashboard.php:1194
+msgid "contract"
+msgstr "Σύμβαση"
+
+#: dashboard/dashboard.php:1118
+msgid "No contract"
+msgstr "Χωρίς σύμβαση"
+
+#: dashboard/dashboard.php:1142
+msgid "Projets tracking"
+msgstr "Παρακολούθηση projets"
+
+#: dashboard/dashboard.php:1247
+msgid "No project"
+msgstr "Δεν υπάρχει έργο"
+
+#: dashboard/dashboard.php:1271
+msgid "Donations tracking"
+msgstr "Παρακολούθηση δωρεών"
+
+#: dashboard/dashboard.php:1328
+msgid "Amount"
+msgstr "Ποσό"
+
+#: dashboard/dashboard.php:1348
+msgid "Donate"
+msgstr "Δωρεά"
+
+#: dashboard/dashboard.php:1368
+msgid "No donation"
+msgstr "Καμία δωρεά"
+
+#: dashboard/dashboard.php:1410
+msgid "Your membership has been updated."
+msgstr "Η συνδρομή σας έχει ενημερωθεί."
+
+#: dashboard/dashboard.php:1432
+msgid "Status"
+msgstr "Κατάσταση"
+
+#: dashboard/dashboard.php:1434 dashboard/dashboard.php:1436
+msgid "Waiting payment"
+msgstr "Πληρωμή αναμονής"
+
+#: dashboard/dashboard.php:1436
+msgid "Active"
+msgstr "Ενεργό"
+
+#: dashboard/dashboard.php:1439
+msgid "Terminated"
+msgstr "Τερματίστηκε"
+
+#: dashboard/dashboard.php:1441
+msgid "Waiting validation"
+msgstr "Επικύρωση αναμονής"
+
+#: dashboard/dashboard.php:1442
+msgid "No membership"
+msgstr "Χωρίς συμμετοχή"
+
+#: dashboard/dashboard.php:1444
+msgid "nothing"
+msgstr "semmi*"
+
+#: dashboard/dashboard.php:1445 functions/tools.php:322 functions/tools.php:830
+msgid "Type"
+msgstr "Τύπος"
+
+#: dashboard/dashboard.php:1446
+msgid "End of membership"
+msgstr "Τέλος της ιδιότητας μέλους"
+
+#: dashboard/dashboard.php:1449
+msgid "License"
+msgstr "Άδεια Χρήσης"
+
+#: dashboard/dashboard.php:1451
+msgid "Commitment"
+msgstr "Δέσμευση"
+
+#: dashboard/dashboard.php:1452
+msgid "no"
+msgstr "όχι"
+
+#: dashboard/dashboard.php:1463 dashboard/dashboard.php:1488
+msgid "Become a member"
+msgstr "Γίνετε μέλος"
+
+#: dashboard/dashboard.php:1466 dashboard/dashboard.php:1474
+msgid "Renew my subscription"
+msgstr "Ανανέωση της συνδρομής μου"
+
+#: dashboard/dashboard.php:1468
+msgid "Modify my subscription"
+msgstr "Τροποποίηση της συνδρομής μου"
+
+#: dashboard/dashboard.php:1469 functions/widgets.php:122
+msgid "Pay my subscription"
+msgstr "Πληρωμή της συνδρομής μου"
+
+#: dashboard/dashboard.php:1472
+msgid "Reactivate my subscription"
+msgstr "Επανενεργοποίηση της συνδρομής μου"
+
+#: dashboard/dashboard.php:1478
+msgid "Your request has been registered. You will be notified at validation."
+msgstr "Το αίτημά σας έχει καταχωρηθεί. Θα ειδοποιηθείτε κατά την επικύρωση."
+
+#: dashboard/dashboard.php:1494
+#, php-format
+msgid "Renew from %s"
+msgstr "Ανανέωση από %s"
+
+#: dashboard/dashboard.php:1515
+msgid "to"
+msgstr "έως"
+
+#: dashboard/dashboard.php:1520
+msgid "No subscription"
+msgstr "Χωρίς συνδρομή"
+
+#: dashboard/dashboard.php:1540
+msgid "Consumptions monitoring"
+msgstr "Παρακολούθηση αναλήσεων"
+
+#: dashboard/dashboard.php:1549
+msgid "Next billing date"
+msgstr "Επόμενη ημερομηνία χρέωσης"
+
+#: dashboard/dashboard.php:1572
+msgid "No consumption"
+msgstr "Καμία κατανάλωση"
+
+#: dashboard/dashboard.php:1593
+msgid "Manage linked members"
+msgstr "Διαχείριση συνδεδεμένων μελών"
+
+#: dashboard/dashboard.php:1639
+msgid "New linked member"
+msgstr "Νέο συνδεδεμένο μέλος"
+
+#: dashboard/dashboard.php:1641
+msgid "Please contact us to link a pre-existing member"
+msgstr ""
+"Παρακαλούμε επικοινωνήστε μαζί μας για να συνδέσετε ένα προϋπάρχον μέλος"
+
+#: dashboard/dashboard.php:1650
+msgid "Unlink"
+msgstr "Αποσυνδέσετε"
+
+#: dashboard/dashboard.php:1656
+msgid "No linked member"
+msgstr "Κανένα συνδεδεμένο μέλος"
+
+#: dashboard/dashboard.php:1672
+msgid "Update member"
+msgstr "Ενημέρωση μέλους"
+
+#: dashboard/dashboard.php:1698
+msgid "Help"
+msgstr "Βοήθεια"
+
+#: dashboard/dashboard.php:1723
+msgid "Your message has been send."
+msgstr "Το μήνυμά σας έχει σταλεί."
+
+#: dashboard/dashboard.php:1731 dashboard/dashboard.php:1799
+msgid "Type and category"
+msgstr "Τύπος και κατηγορία"
+
+#: dashboard/dashboard.php:1732 dashboard/dashboard.php:1837
+msgid "Severity"
+msgstr "Σοβαρότητα"
+
+#: dashboard/dashboard.php:1734 dashboard/dashboard.php:1912
+msgid "Deleted"
+msgstr "Διαγραμμένο"
+
+#: dashboard/dashboard.php:1735 dashboard/dashboard.php:1913
+msgid "Closed"
+msgstr "Κλειστό"
+
+#: dashboard/dashboard.php:1736 dashboard/dashboard.php:1914
+msgid "Waiting"
+msgstr "Αναμονή"
+
+#: dashboard/dashboard.php:1737
+msgid "In progress"
+msgstr "Σε εξέλιξη"
+
+#: dashboard/dashboard.php:1738 dashboard/dashboard.php:1916
+msgid "Assigned"
+msgstr "Ανατέθηκε"
+
+#: dashboard/dashboard.php:1739 dashboard/dashboard.php:1917
+msgid "Answered"
+msgstr "Απαντημένα"
+
+#: dashboard/dashboard.php:1740 dashboard/dashboard.php:1918
+msgid "Read"
+msgstr "Ανάγνωση"
+
+#: dashboard/dashboard.php:1741 dashboard/dashboard.php:1919
+msgid "Unread"
+msgstr "Αδιάβαστο"
+
+#: dashboard/dashboard.php:1745 dashboard/dashboard.php:1880
+msgid "Subject"
+msgstr "Θέμα"
+
+#: dashboard/dashboard.php:1746
+msgid "Initial message"
+msgstr "Αρχικό μήνυμα"
+
+#: dashboard/dashboard.php:1755
+msgid "Response"
+msgstr "Απάντηση"
+
+#: dashboard/dashboard.php:1757
+msgid "Answer"
+msgstr "Απάντηση"
+
+#: dashboard/dashboard.php:1791
+msgid "Your ticket has been submitted."
+msgstr "Το εισιτήριό σας έχει υποβληθεί."
+
+#: dashboard/dashboard.php:1798
+msgid "Open a new ticket"
+msgstr "Άνοιγμα νέου εισιτηρίου"
+
+#: dashboard/dashboard.php:1858
+msgid "Sales representative"
+msgstr "Αντιπρόσωπος πωλήσεων"
+
+#: dashboard/dashboard.php:1883 dashboard/templates.php:810
+#: dashboard/templates.php:1395 dashboard/templates.php:1553
+msgid "Message"
+msgstr "Μήνυμα"
+
+#: dashboard/dashboard.php:1886 dashboard/templates.php:817
+msgid "Send"
+msgstr "Αποστολή"
+
+#: dashboard/dashboard.php:1899
+msgid "New ticket"
+msgstr "Νέο Αίτημα"
+
+#: dashboard/dashboard.php:1915
+msgid "Progress"
+msgstr "Εξέλιξη"
+
+#: dashboard/dashboard.php:1923
+msgid "No ticket"
+msgstr "Δεν υπάρχει εισιτήριο"
+
+#: dashboard/dashboard.php:1940
+msgid "Settings & security"
+msgstr "Ρυθμίσεις και ασφάλεια"
+
+#: dashboard/dashboard.php:1975
+msgid "Receive a email notification at each connection"
+msgstr "Λήψη ειδοποίησης μέσω ηλεκτρονικού ταχυδρομείου σε κάθε σύνδεση"
+
+#: dashboard/dashboard.php:1980
+msgid "I would like to receive the newsletter"
+msgstr "Θα ήθελα να λαμβάνω το ενημερωτικό δελτίο"
+
+#: dashboard/dashboard.php:1984
+msgid "I would like to receive the offers of our partners"
+msgstr "Θα ήθελα να λάβω τις προσφορές των εταίρων μας"
+
+#: dashboard/dashboard.php:1990
+msgid "Approval of the Privacy Policy the"
+msgstr "Έγκριση της Πολιτικής Απορρήτου"
+
+#: dashboard/dashboard.php:1995
+msgid "Default language"
+msgstr "Προεπιλεγμένη γλώσσα"
+
+#: dashboard/dashboard.php:1999 dashboard/dashboard.php:2008
+msgid "Default / Browser language"
+msgstr "Προεπιλεγμένη / Γλώσσα προγράμματος περιήγησης"
+
+#: dashboard/dashboard.php:2022
+msgid "Default currency"
+msgstr "Προεπιλεγμένη νομισματική μονάδα"
+
+#: dashboard/dashboard.php:2048
+msgid "Enabled"
+msgstr "Ενεργοποιημένο"
+
+#: dashboard/dashboard.php:2049
+msgid "Primary"
+msgstr "Κύριο"
+
+#: dashboard/dashboard.php:2050 functions/product.php:604
+msgid "Description"
+msgstr "Περιγραφή"
+
+#: dashboard/dashboard.php:2069
+msgid "Two factor authentication is disabled"
+msgstr "Ο έλεγχος ταυτότητας δύο παραγόντων είναι απενεργοποιημένος"
+
+#: dashboard/dashboard.php:2143
+msgid "Privacy"
+msgstr "Απόρρητο"
+
+#: dashboard/templates.php:39
+msgid "Edit avatar"
+msgstr "Επεξεργασία avatar"
+
+#: dashboard/templates.php:41
+msgid "Home"
+msgstr "Αρχική"
+
+#: dashboard/templates.php:64
+msgid "This account is closed. Please contact us for reopen it."
+msgstr ""
+"Αυτός ο λογαριασμός είναι κλειστός. Παρακαλούμε επικοινωνήστε μαζί μας για "
+"να το ανοίξετε ξανά."
+
+#: dashboard/templates.php:126 dashboard/templates.php:153
+#, php-format
+msgid "Hello %s"
+msgstr "Γεια σου %s"
+
+#: dashboard/templates.php:126 dashboard/templates.php:153
+msgid ""
+"Manage your account, your informations, orders and much more via this secure "
+"client area."
+msgstr ""
+"Διαχειριστείτε το λογαριασμό σας, τις πληροφορίες, τις παραγγελίες σας και "
+"πολλά άλλα μέσω αυτής της ασφαλούς περιοχής πελάτη."
+
+#: dashboard/templates.php:130 dashboard/templates.php:203
+msgid "Missing request ID."
+msgstr "Λείπει το αναγνωριστικό αίτησης."
+
+#: dashboard/templates.php:134 dashboard/templates.php:207
+msgid "Missing confirm key."
+msgstr "Λείπει το κλειδί επιβεβαίωσης."
+
+#: dashboard/templates.php:242
+msgid ""
+"This email address is already linked to an account. You can reactivate your "
+"account through this <a href='\".wp_lostpassword_url( get_permalink() ).\"' "
+"title='lost password'>form</a>."
+msgstr ""
+"Αυτή η διεύθυνση ηλεκτρονικού ταχυδρομείου είναι ήδη συνδεδεμένη με ένα "
+"λογαριασμό. Μπορείτε να ενεργοποιήσετε ξανά το λογαριασμό σας μέσω αυτής <a "
+"href='\".wp_lostpassword_url( get_permalink() ).\"' title='lost "
+"password'>της φόρμας</a>."
+
+#: dashboard/templates.php:249
+msgid "Create this account is not permitted"
+msgstr "Η δημιουργία αυτού του λογαριασμού δεν επιτρέπεται"
+
+#: dashboard/templates.php:260
+msgid "Registration confirmation"
+msgstr "Επιβεβαίωση εγγραφής"
+
+#: dashboard/templates.php:300
+#, php-format
+msgid "Thank you for your registration on %s."
+msgstr "Σας ευχαριστούμε για την εγγραφή σας στο %s."
+
+#: dashboard/templates.php:321
+msgid ""
+"To activate your account on and choose your password, please click on the "
+"following link"
+msgstr ""
+"Για να ενεργοποιήσετε το λογαριασμό σας και να επιλέξετε τον κωδικό "
+"πρόσβασής σας, κάντε κλικ στον παρακάτω σύνδεσμο"
+
+#: dashboard/templates.php:324 functions/data-request.php:139
+#: functions/tools.php:634
+#, php-format
+msgid "Your %s's team"
+msgstr "Η ομάδα του %s"
+
+#: dashboard/templates.php:333
+msgid "Your account was created. Now, you are connected"
+msgstr "Ο λογαριασμός σας δημιουργήθηκε. Τώρα, είστε συνδεδεμένοι"
+
+#: dashboard/templates.php:335
+msgid ""
+"Your account was created and an account activation link was sent by email. "
+"Don't forget to look at your unwanted emails if you can't find our message."
+msgstr ""
+"Ο λογαριασμός σας δημιουργήθηκε και στάλθηκε ένας σύνδεσμος ενεργοποίησης "
+"λογαριασμού μέσω ηλεκτρονικού ταχυδρομείου. Μην ξεχάσετε να δείτε τα "
+"ανεπιθύμητα μηνύματα ηλεκτρονικού ταχυδρομείου σας, αν δεν μπορείτε να "
+"βρείτε το μήνυμά μας."
+
+#: dashboard/templates.php:346 dashboard/templates.php:354
+#: dashboard/templates.php:659
+msgid "Create an account"
+msgstr "Δημιουργία λογαριασμού"
+
+#: dashboard/templates.php:392 functions/tools.php:225
+msgid "Your password will be synchronized with your Dolibarr account"
+msgstr ""
+"Ο κωδικός πρόσβασής σας θα συγχρονιστεί με το λογαριασμό σας στο Dolibarr"
+
+#: dashboard/templates.php:394
+msgid "Change your password"
+msgstr "Αλλάξτε τον κωδικό σας"
+
+#: dashboard/templates.php:429 functions/tools.php:240 functions/tools.php:249
+msgid "New password"
+msgstr "Νέος κωδικός"
+
+#: dashboard/templates.php:432 functions/tools.php:241
+msgid "Enter your new password"
+msgstr "Πληκτρολογήστε τον νέο σας κωδικό πρόσβασης"
+
+#: dashboard/templates.php:440 functions/data-request.php:196
+#: functions/tools.php:248 functions/tools.php:554
+msgid ""
+"Your password must be between 8 and 20 characters, including at least 1 "
+"digit, 1 letter, 1 uppercase."
+msgstr ""
+"Ο κωδικός πρόσβασής σας πρέπει να είναι μεταξύ 8 και 20 χαρακτήρων, "
+"συμπεριλαμβανομένων τουλάχιστον 1 ψηφίου, 1 γράμματος, 1 κεφαλαίου."
+
+#: dashboard/templates.php:445 functions/tools.php:250
+msgid "Confirm your new password"
+msgstr "Επιβεβαίωση του νέου κωδικού πρόσβασής σας"
+
+#: dashboard/templates.php:482 functions/data-request.php:152
+msgid "No account seems to be linked to this email address"
+msgstr ""
+"Κανένας λογαριασμός δεν φαίνεται να συνδέεται με αυτήν τη διεύθυνση "
+"ηλεκτρονικού ταχυδρομείου"
+
+#: dashboard/templates.php:557 dashboard/templates.php:663
+msgid "Forgot password?"
+msgstr "Ξεχάσατε τον κωδικό σας?"
+
+#: dashboard/templates.php:559
+msgid "Please enter the email address by which you registered your account."
+msgstr ""
+"Παρακαλώ εισάγετε τη διεύθυνση ηλεκτρονικού ταχυδρομείου με την οποία έχετε "
+"καταχωρήσει το λογαριασμό σας."
+
+#: dashboard/templates.php:561 dashboard/templates.php:648
+#: dashboard/templates.php:779 dashboard/templates.php:784
+#: functions/tools.php:415
+msgid "Email"
+msgstr "Email"
+
+#: dashboard/templates.php:565
+msgid "Submit"
+msgstr "Υποβολή"
+
+#: dashboard/templates.php:577
+msgid "This account is not allowed to connect this website."
+msgstr ""
+"Αυτός ο λογαριασμός δεν επιτρέπεται να συνδέσει αυτήν την τοποθεσία Web."
+
+#: dashboard/templates.php:580
+msgid ""
+"There is no account for these login data or the email and/or the password "
+"are not correct."
+msgstr ""
+"Δεν υπάρχει λογαριασμός για αυτά τα δεδομένα σύνδεσης ή το email ή/ και ο "
+"κωδικός πρόσβασης δεν είναι σωστά."
+
+#: dashboard/templates.php:586
+msgid "Your password have been updated."
+msgstr "Ο κωδικός πρόσβασής σας έχει ενημερωθεί."
+
+#: dashboard/templates.php:588
+msgid "The security key is expired!"
+msgstr "Το κλειδί ασφαλείας έχει λήξει!"
+
+#: dashboard/templates.php:590
+msgid "The security key is invalid!"
+msgstr "Το κλειδί ασφαλείας δεν είναι έγκυρο!"
+
+#: dashboard/templates.php:604
+msgid "Welcome"
+msgstr "Καλώς ήρθατε"
+
+#: dashboard/templates.php:606
+msgid "Access restricted to users"
+msgstr "Πρόσβαση που περιορίζεται στους χρήστες"
+
+#: dashboard/templates.php:616 dashboard/templates.php:667
+#: functions/product.php:468
+msgid "Sign in"
+msgstr "Σύνδεση"
+
+#: dashboard/templates.php:616
+msgid "You have already an account"
+msgstr "Έχετε ήδη λογαριασμό"
+
+#: dashboard/templates.php:619 functions/tools.php:178 functions/tools.php:1116
+msgid "or"
+msgstr "ή"
+
+#: dashboard/templates.php:620
+msgid "You don't have an account"
+msgstr "Δεν έχετε λογαριασμό"
+
+#: dashboard/templates.php:652 functions/tools.php:552
+msgid "Password"
+msgstr "Κωδικός"
+
+#: dashboard/templates.php:706
+msgid "Your request is unsuccessful"
+msgstr "Το αίτημά σας δεν είναι επιτυχές"
+
+#: dashboard/templates.php:753 functions/tools.php:431 functions/tools.php:432
+msgid "Address"
+msgstr "Διεύθυνση"
+
+#: dashboard/templates.php:761
+msgid "Your message is successful send!"
+msgstr "Το μήνυμά σας είναι επιτυχής αποστολή!"
+
+#: dashboard/templates.php:763
+msgid "Please try again!"
+msgstr "Παρακαλούμε προσπαθήστε ξανά!"
+
+#: dashboard/templates.php:772
+msgid "Complete name"
+msgstr "Πλήρες όνομα"
+
+#: dashboard/templates.php:789
+msgid "Type of request"
+msgstr "Είδος αίτησης"
+
+#: dashboard/templates.php:814
+msgid "I agree to save my personnal informations in order to contact me"
+msgstr ""
+"Συμφωνώ να αποθηκεύσω τις προσωπικά μου πληροφορίες για να επικοινωνήσω μαζί "
+"μου"
+
+#: dashboard/templates.php:893 dashboard/templates.php:1068
+msgid "No product / service currently on sale"
+msgstr "Δεν υπάρχει προϊόν / υπηρεσία επί του παρόντος προς πώληση"
+
+#: dashboard/templates.php:964
+#, php-format
+msgid "Your search: %s"
+msgstr "Η αναζήτησή σας: %s"
+
+#: dashboard/templates.php:971
+#, php-format
+msgid "No product with this search: %s"
+msgstr "Δεν υπάρχει προϊόν με αυτήν την αναζήτηση: %s"
+
+#: dashboard/templates.php:1114
+msgid "Inactive module on Dolibarr"
+msgstr "Ανενεργή μονάδα στο Dolibarr"
+
+#: dashboard/templates.php:1161
+msgid "Tax exemptions"
+msgstr "Φορολογικές απαλλαγές"
+
+#: dashboard/templates.php:1164
+msgid "DonationArt200"
+msgstr "ΔωρεάArt200"
+
+#: dashboard/templates.php:1168
+msgid "DonationArt238"
+msgstr "ΔωρεάArt238"
+
+#: dashboard/templates.php:1172
+msgid "DonationArt835"
+msgstr "ΔωρεάΆρθρο835"
+
+#: dashboard/templates.php:1175
+msgid "You should't have tax exemptions"
+msgstr "Δεν πρέπει να έχεις φορολογικές απαλλαγές."
+
+#: dashboard/templates.php:1234
+msgid "Oops, Order's module is not available"
+msgstr "Ουπς, η λειτουργική μονάδα του Order δεν είναι διαθέσιμη"
+
+#: dashboard/templates.php:1290
+msgid "Your order has been registered"
+msgstr "Η παραγγελία σας έχει καταχωρηθεί"
+
+#: dashboard/templates.php:1290 dashboard/templates.php:1297
+#: functions/tools.php:313
+msgid "Reference"
+msgstr "Σύσταση"
+
+#: dashboard/templates.php:1296
+msgid "Your payment has been registered"
+msgstr "Η πληρωμή σας έχει καταχωρηθεί"
+
+#: dashboard/templates.php:1319
+msgid "or go to reception desk"
+msgstr "ή πηγαίνετε στη ρεσεψιόν"
+
+#: dashboard/templates.php:1325
+msgid "View my receipt"
+msgstr "Προβολή της απόδειξής μου"
+
+#: dashboard/templates.php:1337
+msgid "An error is occurred"
+msgstr "Παρουσιάστηκε σφάλμα"
+
+#: dashboard/templates.php:1338
+#, php-format
+msgid "Return to %s"
+msgstr "Επιστροφή στο %s"
+
+#: dashboard/templates.php:1363
+msgid "Contacts"
+msgstr "Επαφές"
+
+#: dashboard/templates.php:1364 functions/product.php:224
+msgid "update"
+msgstr "Ενημερωση"
+
+#: dashboard/templates.php:1365
+msgid "unchangeable, please contact us"
+msgstr "αμετάβλητο, παρακαλώ μας ελάτε σε επαφή με"
+
+#: dashboard/templates.php:1372
+msgid "Customer's Address"
+msgstr "Διεύθυνση Πελάτη"
+
+#: dashboard/templates.php:1524
+msgid "Same address that billing"
+msgstr "Ίδια διεύθυνση με την χρέωση"
+
+#: dashboard/templates.php:1550
+#, php-format
+msgid "Add shipping contact needs Dolibarr %s but your version is %s"
+msgstr ""
+"Η επαφή προσθήκης αποστολής χρειάζεται Dolibarr %s, αλλά η έκδοσή σας είναι "
+"%s"
+
+#: dashboard/templates.php:1556
+msgid "Add a message"
+msgstr "Προσθήκη μηνύματος"
+
+#: dashboard/templates.php:1558
+msgid "Enter a message here that you want to send us about your order"
+msgstr ""
+"Εισάγετε ένα μήνυμα εδώ που θέλετε να μας στείλετε για την παραγγελία σας"
+
+#: dashboard/templates.php:1562
+msgid "Validate"
+msgstr "Επικύρωση"
+
+#: dashboard/templates.php:1608
+msgid "An error is occured. Please contact us!"
+msgstr "Παρουσιάστηκε σφάλμα. Παρακαλώ επικοινωνήστε μαζί μας!"
+
+#: dashboard/templates.php:1663
+msgid "Amount outstanding"
+msgstr "Ανεξόφλητο υπόλοιπο"
+
+#: dashboard/templates.php:1663
+msgid "out of"
+msgstr "από"
+
+#: dashboard/templates.php:1663
+msgid "allowed"
+msgstr "Επιτρέπεται"
+
+#: dashboard/templates.php:1665
+msgid ""
+"Your account is blocked, this order can't be processed. Please, contact us "
+"to pay overdue unpaid invoices."
+msgstr ""
+"Ο λογαριασμός σας είναι αποκλεισμένος, δεν είναι δυνατή η επεξεργασία αυτής "
+"της παραγγελίας. Παρακαλούμε επικοινωνήστε μαζί μας για να πληρώσετε "
+"ληξιπρόθεσμα απλήρωτα τιμολόγια."
+
+#: dashboard/templates.php:1674
+msgid "Continue shopping"
+msgstr "Συνεχίστε τις αγορές"
+
+#: dashboard/templates.php:1678
+msgid "Empty the basket"
+msgstr "Αδειάστε το καλάθι"
+
+#: dashboard/templates.php:1683
+msgid "Process"
+msgstr "Διεργασία"
+
+#: functions/data-request.php:21
+msgid ""
+"The request can’t be processed on this website. This feature requires "
+"WordPress 4.9.6 at least."
+msgstr ""
+"Δεν είναι δυνατή η επεξεργασία της αίτησης σε αυτήν την τοποθεσία Web. Αυτό "
+"το χαρακτηριστικό απαιτεί WordPress 4.9.6 τουλάχιστον."
+
+#: functions/data-request.php:27
+msgid ""
+"Security check failed, please refresh this page and try to submit the form "
+"again."
+msgstr ""
+"Ο έλεγχος ασφαλείας απέτυχε, ανανεώστε αυτήν τη σελίδα και προσπαθήστε να "
+"υποβάλετε ξανά τη φόρμα."
+
+#: functions/data-request.php:30
+msgid "This is not a valid email address."
+msgstr "Αυτή η διεύθυνση ηλεκτρονικού ταχυδρομείου δεν είναι έγκυρη."
+
+#: functions/data-request.php:33
+msgid "Security check failed, invalid human verification field."
+msgstr ""
+"Ο έλεγχος ασφαλείας απέτυχε, το πεδίο επαλήθευσης ανθρώπου δεν είναι έγκυρο."
+
+#: functions/data-request.php:36
+msgid ""
+"Request type invalid, please refresh this page and try to submit the form "
+"again."
+msgstr ""
+"Ο τύπος αίτησης δεν είναι έγκυρος, ανανεώστε αυτήν τη σελίδα και προσπαθήστε "
+"να υποβάλετε ξανά τη φόρμα."
+
+#: functions/data-request.php:40
+msgid "All fields are required."
+msgstr "Όλα τα πεδία είναι υποχρεωτικά."
+
+#: functions/data-request.php:47
+msgid ""
+"Unable to initiate confirmation request. Please contact the administrator."
+msgstr ""
+"Δεν είναι δυνατή η προετοιμασία της αίτησης επιβεβαίωσης. Επικοινωνήστε με "
+"το διαχειριστή."
+
+#: functions/data-request.php:76
+msgid "We no longer have this item in this quantity"
+msgstr "Δεν έχουμε πλέον αυτό το στοιχείο σε αυτή την ποσότητα"
+
+#: functions/data-request.php:81 functions/data-request.php:110
+#: functions/data-request.php:155 functions/data-request.php:198
+#: functions/data-request.php:201 functions/data-request.php:228
+msgid "A security error occured"
+msgstr "Παρουσιάστηκε σφάλμα ασφαλείας"
+
+#: functions/data-request.php:134
+msgid "Reset password is not permitted for this account!"
+msgstr "Επαναφορά κωδικού πρόσβασης δεν επιτρέπεται για αυτόν το λογαριασμό!"
+
+#: functions/data-request.php:138
+msgid "Reset Password"
+msgstr "Επαναφορά κωδικού"
+
+#: functions/data-request.php:139
+msgid ""
+"A request to change your password has been made. You can change it via the "
+"single-use link below:"
+msgstr ""
+"Έχει γίνει αίτημα αλλαγής του κωδικού πρόσβασής σας. Μπορείτε να το αλλάξετε "
+"μέσω του συνδέσμου μίας χρήσης παρακάτω:"
+
+#: functions/data-request.php:139
+msgid "If you have not made this request, please ignore this email."
+msgstr ""
+"Εάν δεν έχετε υποβάλει αυτό το αίτημα, αγνοήστε αυτό το μήνυμα ηλεκτρονικού "
+"ταχυδρομείου."
+
+#: functions/data-request.php:144
+msgid ""
+"A password reset link was sent to you by email. Please check your spam "
+"folder if you don't find it."
+msgstr ""
+"Σας στάλθηκε ένας σύνδεσμος επαναφοράς κωδικού πρόσβασης μέσω ηλεκτρονικού "
+"ταχυδρομείου. Ελέγξτε το φάκελο ανεπιθύμητης αλληλογραφίας, αν δεν τον "
+"βρείτε."
+
+#: functions/data-request.php:146 functions/data-request.php:149
+msgid "A problem occurred. Please retry later!"
+msgstr "Παρουσιάστηκε ένα πρόβλημα. Παρακαλώ προσπαθήστε ξανά αργότερα!"
+
+#: functions/data-request.php:192
+msgid "Your actual password is incorrect"
+msgstr "Ο πραγματικός κωδικός πρόσβασης είναι εσφαλμένος"
+
+#: functions/data-request.php:194
+msgid "The new passwords entered are different"
+msgstr "Οι νέοι κωδικοί πρόσβασης που εισάγονται είναι διαφορετικοί"
+
+#: functions/data-request.php:217 functions/data-request.php:224
+msgid "Customer not found"
+msgstr "Ο πελάτης δεν βρέθηκε"
+
+#: functions/enqueues.php:8
+msgid ""
+"Your enquiry have been submitted. Check your email to validate your data "
+"request."
+msgstr ""
+"Η έρευνά σας έχει υποβληθεί. Ελέγξτε το email σας για να επικυρώσετε το "
+"αίτημα δεδομένων σας."
+
+#: functions/enqueues.php:9
+msgid "Some errors occurred:"
+msgstr "Παρουσιάστηκαν ορισμένα σφάλματα:"
+
+#: functions/product.php:51 functions/product.php:80
+msgid "Available immediately"
+msgstr "Διατίθεται άμεσα"
+
+#: functions/product.php:51
+#, php-format
+msgid "This item is in stock and can be send immediately. %s"
+msgstr "Αυτό το στοιχείο είναι στο απόθεμα και μπορεί να σταλεί αμέσως. %s"
+
+#: functions/product.php:58 functions/tools.php:907
+msgid "Shipping informations"
+msgstr "Πληροφορίες αποστολής"
+
+#: functions/product.php:63
+msgid "Not available"
+msgstr "Μη διαθέσιμο"
+
+#: functions/product.php:63
+#, php-format
+msgid "This item is out of stock and can not be ordered or shipped. %s"
+msgstr ""
+"Αυτό το στοιχείο είναι από το απόθεμα και δεν μπορεί να παραγγελθεί ή να "
+"σταλεί. %s"
+
+#: functions/product.php:66
+msgid "few"
+msgstr "Μερικά"
+
+#: functions/product.php:70
+#, php-format
+msgid "Reception scheduled on %s."
+msgstr "Η υποδοχή έχει προγραμματιστεί στο %s."
+
+#: functions/product.php:77
+msgid "Available soon"
+msgstr "Διαθέσιμο σύντομα"
+
+#: functions/product.php:77
+#, php-format
+msgid ""
+"This item is not in stock but should be available soon within %s days. %s %s"
+msgstr ""
+"Αυτό το είδος δεν είναι σε απόθεμα, αλλά θα πρέπει να είναι διαθέσιμο "
+"σύντομα εντός %s ημερών. %s %s"
+
+#: functions/product.php:78
+msgid "Limited availability"
+msgstr "Περιορισμένη διαθεσιμότητα"
+
+#: functions/product.php:78
+#, php-format
+msgid ""
+"This item is in stock and can be shipped immediately but only in limited "
+"quantities. %s"
+msgstr ""
+"Αυτό το είδος είναι σε απόθεμα και μπορεί να αποσταλεί αμέσως αλλά μόνο σε "
+"περιορισμένες ποσότητες. %s"
+
+#: functions/product.php:80
+#, php-format
+msgid "This item is in stock and can be shipped immediately. %s"
+msgstr "Αυτό το προϊόν είναι σε απόθεμα και μπορεί να αποσταλεί αμέσως. %s"
+
+#: functions/product.php:215
+msgid "Quantity"
+msgstr "Ποσότητα"
+
+#: functions/product.php:223
+msgid "Cart"
+msgstr "Καλάθι"
+
+#: functions/product.php:223
+#, php-format
+msgid "%s item"
+msgid_plural "%s items"
+msgstr[0] "%s item"
+msgstr[1] "%s items"
+
+#: functions/product.php:225
+msgid "unchangeable"
+msgstr "Αμετάβλητη"
+
+#: functions/product.php:232
+msgid "including Discount"
+msgstr "συμπεριλαμβανομένης της έκπτωσης"
+
+#: functions/product.php:238
+msgid "including VAT"
+msgstr "συμπεριλαμβανομένου του ΦΠΑ"
+
+#: functions/product.php:244
+msgid "Already paid"
+msgstr "Η πληρωμή έχει ήδη πραγματοποιηθεί"
+
+#: functions/product.php:247
+msgid "Remains to be paid"
+msgstr "Απομένει να καταβληθεί"
+
+#: functions/product.php:250
+msgid "Total to pay"
+msgstr "Σύνολο για την πληρωμή"
+
+#: functions/product.php:354
+msgid "Price"
+msgstr "Τιμή"
+
+#: functions/product.php:358 functions/product.php:377
+#: functions/product.php:394 functions/tools.php:1022
+msgid "hour"
+msgstr "ώρα"
+
+#: functions/product.php:364 functions/product.php:404
+msgid "Our prices are incl. VAT"
+msgstr "Οι τιμές μας είναι συμπ."
+
+#: functions/product.php:364 functions/product.php:404
+msgid "Our prices are excl. VAT"
+msgstr "Οι τιμές μας είναι εκτός ΦΠΑ"
+
+#: functions/product.php:374
+msgid "Selling Price"
+msgstr "Τιμή Πώλησης"
+
+#: functions/product.php:391
+msgid "Your price"
+msgstr "Η τιμή σας"
+
+#: functions/product.php:438 functions/tools.php:961
+msgid "Unavailable"
+msgstr "Μη Διαθέσιμο"
+
+#: functions/product.php:454
+msgid "Save my wish"
+msgstr "Αποθηκεύστε την επιθυμία μου"
+
+#: functions/product.php:456
+msgid "Add to cart"
+msgstr "Προσθήκη στο καλάθι"
+
+#: functions/product.php:468 functions/product.php:470
+msgid "log in"
+msgstr "σύνδεση"
+
+#: functions/product.php:475
+msgid "Login"
+msgstr "Σύνδεση"
+
+#: functions/product.php:478
+#, php-format
+msgid "you get %u %% discount"
+msgstr "έχετε %u %% έκπτωση"
+
+#: functions/product.php:496
+msgid "Brand:"
+msgstr "Μάρκα:"
+
+#: functions/product.php:598
+msgid "Origin:"
+msgstr "Προέλευσης:"
+
+#: functions/product.php:606
+msgid "Product/Service not in sale"
+msgstr "Προϊόν/Υπηρεσία δεν πωλείται"
+
+#: functions/product.php:615
+msgid "Oops! This product does not appear to exist"
+msgstr "Ωχ! Αυτό το προϊόν δεν φαίνεται να υπάρχει"
+
+#: functions/tools.php:33 functions/tools.php:34
+msgid "Previous"
+msgstr "Προηγούμενο"
+
+#: functions/tools.php:49 functions/tools.php:50
+msgid "Next"
+msgstr "Επόμενο"
+
+#: functions/tools.php:137
+msgid "Categories:"
+msgstr "Κατηγορίες:"
+
+#: functions/tools.php:174
+msgid "Sign in with"
+msgstr "Συνδεθείτε με"
+
+#: functions/tools.php:227
+msgid "Password cannot be modified in demo mode"
+msgstr ""
+"Δεν είναι δυνατή η τροποποίηση του κωδικού πρόσβασης σε λειτουργία επίδειξης"
+
+#: functions/tools.php:231 functions/tools.php:232
+msgid "Confirm your current password"
+msgstr "Επιβεβαίωση του τρέχοντος κωδικού πρόσβασής σας"
+
+#: functions/tools.php:249
+msgid "This field is required."
+msgstr "Αυτό το πεδίο είναι υποχρεωτικό."
+
+#: functions/tools.php:284
+msgid "Create a personnal account"
+msgstr "Δημιουργία personnal λογαριασμού"
+
+#: functions/tools.php:288
+msgid "Create a enterprise / supplier account"
+msgstr "Δημιουργία εταιρικού λογαριασμού / λογαριασμού προμηθευτή"
+
+#: functions/tools.php:293
+msgid "Type of account"
+msgstr "Τύπος λογαριασμού"
+
+#: functions/tools.php:296
+msgid "Personnal account"
+msgstr "Προσωπικικός λογαριασμός"
+
+#: functions/tools.php:300
+msgid "Entreprise account"
+msgstr "Λογαριασμός Entreprise"
+
+#: functions/tools.php:308
+msgid "Customer"
+msgstr "Πελάτης"
+
+#: functions/tools.php:309
+msgid "Customer code"
+msgstr "Κωδικός πελάτη"
+
+#: functions/tools.php:312
+msgid "Order or Invoice"
+msgstr "Παραγγελία ή Τιμολόγιο"
+
+#: functions/tools.php:314 functions/tools.php:849
+msgid "Total incl. tax"
+msgstr "Σύνολο συμπεριλαμβανομένου του φόρου"
+
+#: functions/tools.php:355
+msgid "Name of company"
+msgstr "Επωνυμία εταιρείας"
+
+#: functions/tools.php:356
+msgid "Professional ID"
+msgstr "Επαγγελματική ταυτότητα"
+
+#: functions/tools.php:357
+msgid "VAT number"
+msgstr "ΑΦΜ"
+
+#: functions/tools.php:361
+msgid "Civility"
+msgstr "Αβρότητα"
+
+#: functions/tools.php:384
+msgid "Miss"
+msgstr "Δεσποινής"
+
+#: functions/tools.php:388
+msgid "Mister"
+msgstr "Mister"
+
+#: functions/tools.php:393 functions/tools.php:394
+msgid "Firstname"
+msgstr "Όνομα"
+
+#: functions/tools.php:397 functions/tools.php:398
+msgid "Lastname"
+msgstr "Επώνυμο"
+
+#: functions/tools.php:403
+msgid "Birthday"
+msgstr "Γενέθλια"
+
+#: functions/tools.php:408
+msgid "Display name"
+msgstr "Εμφανιζόμενο όνομα"
+
+#: functions/tools.php:408
+msgid "Nickname"
+msgstr "Ψευδώνυμο"
+
+#: functions/tools.php:410
+msgid "Title / Job"
+msgstr "Τίτλος / Εργασία"
+
+#: functions/tools.php:424
+msgid "Phone"
+msgstr "Τηλέφωνο"
+
+#: functions/tools.php:435 functions/tools.php:436
+msgid "Town"
+msgstr "Πόλη"
+
+#: functions/tools.php:438 functions/tools.php:439
+msgid "Zipcode"
+msgstr "Ταχυδρομικός Κώδικας"
+
+#: functions/tools.php:441 functions/tools.php:466
+msgid "Country"
+msgstr "Χώρα"
+
+#: functions/tools.php:505 functions/tools.php:506
+msgid "About Yourself"
+msgstr "Σχετικά με εσένα"
+
+#: functions/tools.php:508 functions/tools.php:509
+msgid "Website"
+msgstr "Ιστοσελίδα"
+
+#: functions/tools.php:523 functions/tools.php:532 functions/tools.php:536
+#: functions/tools.php:540 functions/tools.php:544
+msgid "Username"
+msgstr "Όνομα Χρήστη"
+
+#: functions/tools.php:553
+msgid "Choose your password"
+msgstr "Επιλέξτε τον κωδικό πρόσβασής σας"
+
+#: functions/tools.php:555 functions/tools.php:556
+msgid "Confirm your password"
+msgstr "Επιβεβαίωση του κωδικού πρόσβασής σας"
+
+#: functions/tools.php:596 functions/tools.php:1081
+msgid "Loading"
+msgstr "Φόρτωση"
+
+#: functions/tools.php:619
+msgid ""
+"Oops, our servers are unreachable.<br>Thank you for coming back in a few "
+"minutes."
+msgstr ""
+"Ουπς, οι διακομιστές μας δεν είναι προσβάσιμοι.<br>Σας ευχαριστώ που "
+"επιστρέψατε σε λίγα λεπτά."
+
+#: functions/tools.php:622
+msgid "Error code"
+msgstr "Λάθους Κωδικός"
+
+#: functions/tools.php:633
+msgid "Connection notification"
+msgstr "Ειδοποίηση σύνδεσης"
+
+#: functions/tools.php:634
+msgid ""
+"It appears that you have just logged on to our site the following IP address:"
+msgstr ""
+"Φαίνεται ότι έχετε μόλις συνδεθεί με την ιστοσελίδα μας την ακόλουθη "
+"διεύθυνση IP:"
+
+#: functions/tools.php:634
+msgid ""
+"If you have not made this action, please change your password immediately."
+msgstr ""
+"Εάν δεν έχετε κάνει αυτήν την ενέργεια, αλλάξτε αμέσως τον κωδικό πρόσβασής "
+"σας."
+
+#: functions/tools.php:663
+msgid "Download"
+msgstr "Λήψη"
+
+#: functions/tools.php:693
+msgid "Help?"
+msgstr "Βοήθεια?"
+
+#: functions/tools.php:693
+msgid "Need help?"
+msgstr "Χρειάζεστε βοήθεια;"
+
+#: functions/tools.php:753
+msgid "Refresh"
+msgstr "Ανανέωση"
+
+#: functions/tools.php:757
+msgid "Refresh datas"
+msgstr "Ανανέωση δεδομένων"
+
+#: functions/tools.php:775
+msgid "Congratulations!"
+msgstr "Συγχαρητήρια!"
+
+#: functions/tools.php:777
+msgid "Be carefull"
+msgstr "Να είστε προσεκτικοί"
+
+#: functions/tools.php:779
+msgid "Oops"
+msgstr "Ωχ"
+
+#: functions/tools.php:847
+msgid "Total excl. tax"
+msgstr "Σύνολο εκτός φόρου"
+
+#: functions/tools.php:848
+msgid "Total VAT"
+msgstr "Συνολικός ΦΠΑ"
+
+#: functions/tools.php:911
+msgid "Sorry, this product is no longer available"
+msgstr "Λυπούμαστε, αυτό το προϊόν δεν είναι πλέον διαθέσιμο"
+
+#: functions/tools.php:913
+msgid "Sorry, this product is not available with this quantity"
+msgstr "Λυπούμαστε, αυτό το προϊόν δεν είναι διαθέσιμο με αυτήν την ποσότητα"
+
+#: functions/tools.php:987
+msgid "Your basket is empty."
+msgstr "Το καλάθι σας είναι άδειο"
+
+#: functions/tools.php:989
+msgid "If you already have an account,"
+msgstr "Εάν έχετε ήδη λογαριασμό,"
+
+#: functions/tools.php:993 functions/tools.php:995
+msgid "sign in"
+msgstr "σύνδεση"
+
+#: functions/tools.php:997
+msgid "to see your basket."
+msgstr "για να δείτε το καλάθι σας."
+
+#: functions/tools.php:1013
+msgid "years"
+msgstr "έτη"
+
+#: functions/tools.php:1014
+msgid "months"
+msgstr "μήνες"
+
+#: functions/tools.php:1015
+msgid "days"
+msgstr "ημέρες"
+
+#: functions/tools.php:1016
+msgid "hours"
+msgstr "ώρες"
+
+#: functions/tools.php:1017
+msgid "minutes"
+msgstr "λεπτά"
+
+#: functions/tools.php:1020
+msgid "month"
+msgstr "μήνας"
+
+#: functions/tools.php:1021
+msgid "day"
+msgstr "ημέρα"
+
+#: functions/tools.php:1023
+msgid "minute"
+msgstr "λεπτό"
+
+#: functions/tools.php:1040 functions/tools.php:1043 functions/tools.php:1046
+#, php-format
+msgid "%s day"
+msgid_plural "%s days"
+msgstr[0] "%s ημέρα"
+msgstr[1] "%s ημέρες"
+
+#: functions/tools.php:1041
+msgid "end of month"
+msgstr "τέλος του μήνα"
+
+#: functions/tools.php:1044
+#, php-format
+msgid "the %s of month"
+msgstr "το %s του μήνα"
+
+#: functions/tools.php:1058
+msgid "Choose your language"
+msgstr "Επιλέξτε τη γλώσσα σας"
+
+#: functions/tools.php:1121
+msgid "Stripe's in sandbox mode"
+msgstr "Ρίγες σε λειτουργία sandbox"
+
+#: functions/tools.php:1121
+msgid "Link to Test card numbers"
+msgstr "Σύνδεση με αριθμούς καρτών δοκιμής"
+
+#: functions/tools.php:1128
+#, php-format
+msgid "I read and accept the %s"
+msgstr "Διαβάζω και αποδέχομαι το %s"
+
+#: functions/tools.php:1128 functions/tools.php:1138
+msgid "Terms & Conditions"
+msgstr "Όροι & Προϋποθέσεις"
+
+#: functions/tools.php:1138
+#, php-format
+msgid "Read the %s"
+msgstr "Ανάγνωση του %s"
+
+#: functions/tools.php:1171
+msgid "Account"
+msgstr "Λογαριασμός"
+
+#: functions/tools.php:1174
+msgid "Card"
+msgstr "Κάρτα"
+
+#: functions/tools.php:1196
+msgid "Favourite"
+msgstr "Αγαπημένο"
+
+#: functions/tools.php:1207
+msgid "No registered payment method"
+msgstr "Δεν υπάρχει καταχωρημένη μέθοδος πληρωμής"
+
+#: functions/tools.php:1214
+msgid "Credit/debit card"
+msgstr "Πιστωτική/χρεωστική κάρτα"
+
+#: functions/tools.php:1217
+msgid "Card's owner"
+msgstr "Ιδιοκτήτης κάρτας"
+
+#: functions/tools.php:1222
+#, php-format
+msgid ""
+"By providing your card and confirming this form, you are authorizing %s and "
+"Stripe, our payment service provider, to send instructions to the financial "
+"institution that issued your card to take payments from your card account in "
+"accordance with those instructions. You are entitled to a refund from your "
+"financial institution under the terms and conditions of your agreement with "
+"it. A refund must be claimed within 90 days starting from the date on which "
+"your card was debited."
+msgstr ""
+"Παρέχοντας την κάρτα σας και επιβεβαιώνοντας αυτή τη φόρμα, εξουσιοδοτείτε "
+"την %s και τη Stripe, τον πάροχο υπηρεσιών πληρωμών μας, να αποστέλλουν "
+"οδηγίες στο χρηματοπιστωτικό ίδρυμα που εξέδωσε την κάρτα σας για να "
+"λαμβάνει πληρωμές από το λογαριασμό της κάρτας σας σύμφωνα με αυτές τις "
+"οδηγίες. Δικαιούστε επιστροφή χρημάτων από το χρηματοπιστωτικό σας ίδρυμα "
+"σύμφωνα με τους όρους και τις προϋποθέσεις της συμφωνίας σας με αυτό. Η "
+"επιστροφή χρημάτων πρέπει να ζητηθεί εντός 90 ημερών από την ημερομηνία κατά "
+"την οποία χρεώθηκε η κάρτα σας."
+
+#: functions/tools.php:1228 functions/tools.php:1277
+msgid "Not save"
+msgstr "Δεν αποθήκευση"
+
+#: functions/tools.php:1232 functions/tools.php:1241 functions/tools.php:1281
+#: functions/tools.php:1290
+msgid "Save"
+msgstr "Αποθήκευση"
+
+#: functions/tools.php:1249 functions/tools.php:1298
+msgid "Save as favourite"
+msgstr "Αποθήκευση ως αγαπημένου"
+
+#: functions/tools.php:1262
+msgid "Bank account"
+msgstr "Τραπεζικός λογαριασμός"
+
+#: functions/tools.php:1265 functions/tools.php:1314
+msgid "Bank's owner"
+msgstr "Ιδιοκτήτης τράπεζας"
+
+#: functions/tools.php:1271
+#, php-format
+msgid ""
+"By providing your IBAN and confirming this form, you are authorizing %s and "
+"Stripe, our payment service provider, to send instructions to your bank to "
+"debit your account and your bank to debit your account in accordance with "
+"those instructions. You are entitled to a refund from your bank under the "
+"terms and conditions of your agreement with it. A refund must be claimed "
+"within 8 weeks starting from the date on which your account was debited."
+msgstr ""
+"Παρέχοντας τον IBAN σας και επιβεβαιώνοντας αυτή τη φόρμα, εξουσιοδοτείτε "
+"την %s και τη Stripe, τον πάροχο υπηρεσιών πληρωμών μας, να στέλνουν οδηγίες "
+"στην τράπεζά σας για να χρεώσουν το λογαριασμό σας και την τράπεζά σας για "
+"να χρεώσουν το λογαριασμό σας σύμφωνα με αυτές τις οδηγίες. Δικαιούστε "
+"επιστροφή χρημάτων από την τράπεζά σας σύμφωνα με τους όρους και τις "
+"προϋποθέσεις της συμφωνίας σας με αυτήν. Πρέπει να ζητηθεί επιστροφή "
+"χρημάτων εντός 8 εβδομάδων από την ημερομηνία κατά την οποία χρεώθηκε ο "
+"λογαριασμός σας."
+
+#: functions/tools.php:1311
+msgid "iDEAL"
+msgstr "iDEAL"
+
+#: functions/tools.php:1332
+msgid "Transfer"
+msgstr "Μεταφορά"
+
+#: functions/tools.php:1332 functions/tools.php:1347 functions/tools.php:1361
+msgid "See your receipt"
+msgstr "Δείτε την απόδειξή σας"
+
+#: functions/tools.php:1347
+msgid "Check"
+msgstr "Ελεγχος"
+
+#: functions/tools.php:1361
+msgid "Cash"
+msgstr "Μετρητά"
+
+#: functions/tools.php:1375
+msgid "immediately"
+msgstr "Αμέσως"
+
+#: functions/tools.php:2041
+msgid "Select your request:"
+msgstr "Επιλέξτε το αίτημά σας:"
+
+#: functions/tools.php:2042
+msgid "Export Personal Data"
+msgstr "Εξαγωγή προσωπικών δεδομένων"
+
+#: functions/tools.php:2043
+msgid "Remove Personal Data"
+msgstr "Κατάργηση προσωπικών δεδομένων"
+
+#: functions/tools.php:2044
+msgid "Your email address (required)"
+msgstr "Η διεύθυνση ηλεκτρονικού ταχυδρομείου σας (απαιτείται)"
+
+#: functions/tools.php:2045
+msgid "Human verification (required)"
+msgstr "Επαλήθευση από τον άνθρωπο (απαιτείται)"
+
+#: functions/tools.php:2046
+msgid "Send Request"
+msgstr "Στείλε Αίτημα"
+
+#: functions/tools.php:2077
+msgid "Export your data"
+msgstr "Εξαγωγή των δεδομένων σας"
+
+#: functions/tools.php:2077
+msgid "You will receive an email with a secure link to your data"
+msgstr ""
+"Θα λάβετε ένα μήνυμα ηλεκτρονικού ταχυδρομείου με ασφαλή σύνδεσμο προς τα "
+"δεδομένα σας"
+
+#: functions/tools.php:2087
+msgid "Erase your data"
+msgstr "Διαγραφή των δεδομένων σας"
+
+#: functions/tools.php:2087
+msgid "You will receive an email with a secure link to confirm the deletion"
+msgstr ""
+"Θα λάβετε ένα email με έναν ασφαλή σύνδεσμο για να επιβεβαιώσετε τη διαγραφή"
+
+#: functions/tools.php:2098
+msgid "Delete your account"
+msgstr "Διαγραφή του λογαριασμού σας"
+
+#: functions/tools.php:2098
+msgid "Soon, you will be able to delete your account"
+msgstr "Σύντομα, θα μπορείτε να διαγράψετε το λογαριασμό σας"
+
+#: functions/tools.php:2137
+msgid "Validate the request"
+msgstr "Επικύρωση της αίτησης"
+
+#: functions/tools.php:2151
+msgid "This plugin requires WordPress 4.9.6."
+msgstr "Αυτό το plugin απαιτεί WordPress 4.9.6."
+
+#: functions/widgets.php:35 functions/widgets.php:37
+msgid "Report a Bug"
+msgstr "Αναφορά σφάλματος"
+
+#: functions/widgets.php:51 functions/widgets.php:148 functions/widgets.php:234
+#: functions/widgets.php:360 functions/widgets.php:434
+msgid "Title:"
+msgstr "Τίτλος:"
+
+#: functions/widgets.php:196
+msgid "Account & Cart"
+msgstr "Λογαριασμός & Καλάθι"
+
+#: functions/widgets.php:213
+msgid "My account"
+msgstr "Ο λογαριασμός μου"
+
+#: functions/widgets.php:217
+msgid "Basket"
+msgstr "Καλάθι"
+
+#: functions/widgets.php:282
+msgid "Category of products"
+msgstr "Κατηγορία προϊόντων"
+
+#: functions/widgets.php:305
+msgid "Name, Ref. or barcode"
+msgstr "Όνομα, κωδικός ή γραμμωτός κώδικας"
+
+#: functions/widgets.php:354
+msgid "Categories"
+msgstr "Κατηγορίες"
+
+#: functions/widgets.php:364
+msgid "Display:"
+msgstr "Εμφάνιση:"
+
+#: functions/widgets.php:401
+msgid "Change language"
+msgstr "Αλλαγή γλώσσας"
+
+#: functions/widgets.php:418
+msgid "Choose language"
+msgstr "Επιλογή γλώσσας"
+
+#: functions/widgets.php:518
+msgid "Optional widget title:"
+msgstr "Προαιρετικός τίτλος widget:"
+
+#: functions/widgets.php:522
+msgid "Optional widget description:"
+msgstr "Προαιρετική περιγραφή widget:"
+
+#. Plugin URI of the plugin/theme
+msgid "https://www.ptibogxiv.net"
+msgstr "https://www.ptibogxiv.net"
+
+#. Description of the plugin/theme
+msgid "Connect your Dolibarr (free ERP/CRM) to Wordpress."
+msgstr "Συνδέστε το Dolibarr σας (δωρεάν ERP/CRM) στο Wordpress."
+
+#. Author of the plugin/theme
+msgid "ptibogxiv"
+msgstr "ptibogxiv"
+
+#. Author URI of the plugin/theme
+msgid "https://www.ptibogxiv.net/en"
+msgstr "https://www.ptibogxiv.net/en"
