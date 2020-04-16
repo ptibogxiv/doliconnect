@@ -851,7 +851,21 @@ print "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
 
 if ( !isset($thirdparty->error) && isset($_GET['supplier']) && isset($thirdparty->id) && ($_GET['supplier'] == $thirdparty->id) && $thirdparty->status == 1 && $thirdparty->fournisseur == 1 ) {
 
-print "<li class='list-group-item'>".(!empty($thirdparty->name_alias)?$thirdparty->name_alias:$thirdparty->name);
+print "<li class='list-group-item'>";
+
+print "<div class='row'><div class='col-4 col-md-2'><center>";
+print doliconnect_image('thirdparty', $thirdparty->id.'/logos/'.$thirdparty->logo, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), $thirdparty->entity);
+print "</center></div><div class='col-8 col-md-10'>".(!empty($thirdparty->name_alias)?$thirdparty->name_alias:$thirdparty->name);
+if ( !empty($thirdparty->country_id) ) {  
+if ( function_exists('pll_the_languages') ) { 
+$lang = pll_current_language('locale');
+} else {
+$lang = $current_user->locale;
+}
+$country = callDoliApi("GET", "/setup/dictionary/countries/".$thirdparty->country_id."?lang=".$lang, null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+print "<br><span class='flag-icon flag-icon-".strtolower($thirdparty->country_code)."'></span> ".$country->label.""; }
+
+print "</div></div>";
 
 print "<p class='text-justify'>".$thirdparty->note_public."</p>";
 

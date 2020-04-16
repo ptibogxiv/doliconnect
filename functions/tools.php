@@ -56,8 +56,9 @@ return $pagination;
 }
 
 function doliconnect_image($module, $id, $nb = 1, $refresh = null, $entity = null) {
-$imgs = callDoliApi("GET", "/documents?modulepart=".$module."&id=".$id, null, dolidelay('document', $refresh), $entity);   
 
+if (is_numeric($id)) {
+$imgs = callDoliApi("GET", "/documents?modulepart=".$module."&id=".$id, null, dolidelay('document', $refresh), $entity);   
 $image = "<div class='row'>";
 
 if ( !isset($imgs->error) && $imgs != null ) {
@@ -76,7 +77,7 @@ if (is_array($imgj) && preg_match('/^image/', $imgj['content-type'])) {
 if (!is_dir($up_dir['basedir'].'/doliconnect/'.$module.'/'.$id)) {
 mkdir($up_dir['basedir'].'/doliconnect/'.$module.'/'.$id, 0777, true);
 }
-$files = glob($up_dir['basedir'].'/doliconnect/'.$module.'/'.$id."/*");
+//$files = glob($up_dir['basedir'].'/doliconnect/'.$module.'/'.$id."/*");
 //foreach($files as $file){
 //if(is_file($file))
 //unlink($file); 
@@ -95,6 +96,34 @@ $image .= "</div>";
 $image .= "<div class='col'><i class='fa fa-cube fa-fw fa-2x'></i></div>";
 }
 $image .= "</div>";
+} else {
+$up_dir = wp_upload_dir();
+$file=$up_dir['basedir'].'/doliconnect/'.$module.'/'.$id;
+if (!is_file($file)) {
+$imgj =  callDoliApi("GET", "/documents/download?modulepart=".$module."&original_file=".$id, null, dolidelay('document', $refresh), $entity);
+//$image .= var_dump($imgj);
+$imgj = (array) $imgj; 
+if (is_array($imgj) && preg_match('/^image/', $imgj['content-type'])) {
+//$data = "data:".$imgj['content-type'].";".$imgj['encoding'].",".$imgj['content'];
+
+if (!is_dir($up_dir['basedir'].'/doliconnect/'.$module.'/'.$id)) {
+mkdir($up_dir['basedir'].'/doliconnect/'.$module.'/'.explode('/'.$imgj['filename'], $id, 2)[0], 0777, true);
+}
+//$files = glob($up_dir['basedir'].'/doliconnect/'.$module.'/'.$id."/*");
+//foreach($files as $file){
+//if(is_file($file))
+//unlink($file); 
+//}
+$file=$up_dir['basedir'].'/doliconnect/'.$module.'/'.$id;
+file_put_contents($file, base64_decode($imgj['content']));
+$image = "<img src='".$up_dir['baseurl'].'/doliconnect/'.$module.'/'.$id."' class='img-fluid rounded-lg' loading='lazy' alt='".$imgj['filename']."'>"; 
+} else {
+$image = "<i class='fa fa-cube fa-fw fa-2x'></i>";
+}
+} else {
+$image = "<img src='".$up_dir['baseurl'].'/doliconnect/'.$module.'/'.$id."' class='img-fluid rounded-lg' loading='lazy' alt='".$up_dir['baseurl'].'/doliconnect/'.$module.'/'.$id."'>";
+}
+}
 return $image;
 }
 
