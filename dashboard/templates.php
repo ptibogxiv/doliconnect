@@ -1037,7 +1037,12 @@ print "</div></div>";
 
 print "<ul class='list-group list-group-flush'>";
 $category = callDoliApi("GET", "/categories/".esc_attr(isset($_GET["subcategory"]) ? $_GET["subcategory"] : $_GET["category"])."?include_childs=true", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-print "<li class='list-group-item'>".doliproduct($category, 'label')."<br><small>".doliproduct($category, 'description')."</small></li>"; 
+print "<li class='list-group-item'>";
+
+print "<div class='row'><div class='col-4 col-md-2'><center>";
+print doliconnect_image('category', $category->id, 1, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), $category->entity);
+print "</center></div><div class='col-8 col-md-10'>".doliproduct($category, 'label')."<br><small>".doliproduct($category, 'description');
+print "</small></div></div></li>"; 
 
 $request = "/categories/".esc_attr(isset($_GET["subcategory"]) ? $_GET["subcategory"] : $_GET["category"])."?include_childs=true";
 $resultats = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
