@@ -62,7 +62,7 @@ $imgs = callDoliApi("GET", "/documents?modulepart=".$module."&id=".$id, null, do
 $image = "<div class='row'>";
 $subdir = '';
 $dir = '/'.$id;
-if ($module == 'category' || $module == 'categorie') {
+if ($module == 'category') {
 $num = preg_replace('/([^0-9])/i', '', $id);
 $subdir = substr($num, 1, 1).'/'.substr($num, 0, 1).'/'.$id.'/';
 $dir = '/'.substr($num, 1, 1).'/'.substr($num, 0, 1).'/'.$id;
@@ -98,7 +98,7 @@ $image .= "<i class='fa fa-cube fa-fw fa-2x'></i>";
 $image .= "<img src='".$up_dir['baseurl'].'/doliconnect/'.$module.$dir.'/'.$img->relativename."' class='img-fluid rounded-lg' loading='lazy' alt='".$img->relativename."'>";
 }
 $image .= "</div>";
-}} elseif ($module == 'product') {
+}} elseif ($module == 'product' || $module == 'category') {
 $image .= "<div class='col'><i class='fa fa-cube fa-fw fa-2x'></i></div>";
 }
 $image .= "</div>";
