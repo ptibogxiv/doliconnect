@@ -1306,7 +1306,7 @@ print "</p>";
 
 $listpaymentmethods = callDoliApi("GET", "/doliconnector/".doliconnector($current_user, 'fk_soc')."/paymentmethods", null, dolidelay('paymentmethods', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
-print "<div class='alert alert-info' role='alert'><p align='justify'>".sprintf( __( 'Please send your cheque in the amount of <b>%1$s</b> with reference <b>%2$s</b> to <b>%3$s</b> at the following address', 'doliconnect'), $TTC, $listpaymentmethods->CHQ->proprio, $object->ref ).":</p><p><b>".$listpaymentmethods->CHQ->owner_address."</b></p>";
+print "<div class='alert alert-info' role='alert'><p align='justify'>".sprintf( __( 'Please send your cheque in the amount of <b>%1$s</b> with reference <b>%2$s</b> to <b>%3$s</b> at the following address', 'doliconnect'), $TTC, $object->ref, $listpaymentmethods->CHQ->proprio).":</p><p><b>".$listpaymentmethods->CHQ->owner_address."</b></p>";
 
 } elseif ($object->mode_reglement_code == 'VIR') {
 
