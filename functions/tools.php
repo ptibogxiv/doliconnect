@@ -2266,7 +2266,7 @@ $paymentmethods .= "<div class='tab-pane fade";
 if ( $method->default_source ) {
 $paymentmethods .= " show active"; 
 }
-$paymentmethods .= "' id='nav-tab-".$method->id."'><br><form role='form'>";
+$paymentmethods .= "' id='nav-tab-".$method->id."'><br><form role='form' method='post'>";
 $paymentmethods .= "<p>".$method->id." Paypal is easiest way to pay online</p>
 <p>
 <button type='button' class='btn btn-primary'> <i class='fab fa-paypal'></i> Log in my Paypal </button>
@@ -2283,10 +2283,10 @@ $paymentmethods .= '<button type="button" onclick="PaySepaDebitPM(\''.$method->i
 $paymentmethods .= '<button type="button" onclick="PayPM(\''.$method->type.'\')" class="btn btn-danger btn-block">'.__( 'Pay', 'doliconnect')." ".doliprice($object, 'ttc', $currency).'</button>';
 }
 } else {
-$paymentmethods .= '<button type="button" onclick="DefaultPM(\''.$method->id.'\')" class="btn btn-outline-secondary"';
+$paymentmethods .= '<button type="button" onclick="DefaultPM(\''.$method->id.'\')" class="btn btn-light"';
 if ( !empty($method->default_source) ) { $paymentmethods .= " disabled"; }
 $paymentmethods .= "><i class='fas fa-star fa-fw' style='color:Gold'></i> ".__( "Favourite", 'doliconnect').'</button>
-<button type="button" onclick="DeletePM(\''.$method->id.'\')" class="btn btn-outline-secondary"';
+<button type="button" onclick="DeletePM(\''.$method->id.'\')" class="btn btn-light"';
 if ( !empty($method->default_source) && $countPM > 1 ) { $paymentmethods .= " disabled"; }
 $paymentmethods .= "><i class='fas fa-trash fa-fw' style='color:Red'></i> ".__( 'Delete', 'doliconnect').'</button>';
 }
@@ -2299,7 +2299,7 @@ $paymentmethods .= "<div class='tab-pane fade";
 if (empty($countPM)) {
 $paymentmethods .= " show active"; 
 }
-$paymentmethods .= "' id='nav-tab-card'><br><form role='form'>";
+$paymentmethods .= "' id='nav-tab-card'><br><form role='form' method='post'>";
 $paymentmethods .= "<input id='cardholder-name' name='cardholder-name' value='' type='text' class='form-control' placeholder='".__( "Full name on the card", 'doliconnect')."' autocomplete='off' required>
 <label for='card-element'></label><div class='form-control' id='card-element'><!-- a Stripe Element will be inserted here. --></div>";
 $paymentmethods .= "<div id='card-error-message' class='text-danger' role='alert'><!-- a Stripe Message will be inserted here. --></div>";
@@ -2321,7 +2321,7 @@ $paymentmethods .= "<div class='tab-pane";
 //} else {
 $paymentmethods .= " fade";
 //}
-$paymentmethods .= "' id='nav-tab-sepa_debit'><br><form role='form'>";
+$paymentmethods .= "' id='nav-tab-sepa_debit'><br><form role='form' method='post'>";
 $paymentmethods .= "<input id='ibanholder-name' name='ibanholder-name' value='' type='text' class='form-control' placeholder='".__( "Full name of the owner", 'doliconnect')."' autocomplete='off' required>
 <label for='iban-element'></label><div class='form-control' id='iban-element'><!-- a Stripe Element will be inserted here. --></div>";
 $paymentmethods .= "<div id='bank-name' role='alert'><!-- a Stripe Message will be inserted here. --></div>";
@@ -2355,22 +2355,24 @@ $paymentmethods .= "<p>".sprintf( __( 'Please send your bank transfert in the am
 } else {
 $paymentmethods .= "<p>".__( 'Please send your bank transfert at the following account:', 'doliconnect')."</p>";
 }
-if (!empty($listpaymentmethods->VIR->bank)) { $paymentmethods .= "<dl class='param'>
-  <dt>BANK: </dt>
+$paymentmethods .= "<div class='row'>";
+if (!empty($listpaymentmethods->VIR->bank)) { $paymentmethods .= "<div class='col'>
+  <dt>".__( 'Bank', 'doliconnect')."</dt>
   <dd>".$listpaymentmethods->VIR->bank."</dd>
-</dl>"; }
-if (!empty($listpaymentmethods->VIR->iban)) { $paymentmethods .= "<dl class='param'>
-  <dt>Account number: </dt>
+</div>"; }
+if (!empty($listpaymentmethods->VIR->account)) { $paymentmethods .= "<div class='col'>
+  <dt>".__( 'Account', 'doliconnect')."</dt>
   <dd> 12345678912345</dd>
-</dl>"; }
-if (!empty($listpaymentmethods->VIR->iban)) { $paymentmethods .= "<dl class='param'>
-  <dt>IBAN: </dt>
+</div>"; }
+if (!empty($listpaymentmethods->VIR->iban)) { $paymentmethods .= "<div class='col'>
+  <dt>IBAN</dt>
   <dd>".$listpaymentmethods->VIR->iban."</dd>
-</dl>"; }
-if (!empty($listpaymentmethods->VIR->bic)) { $paymentmethods .= "<dl class='param'>
-  <dt>BIC/SWIFT: </dt>
+</div>"; }
+if (!empty($listpaymentmethods->VIR->bic)) { $paymentmethods .= "<div class='col'
+  <dt>BIC/SWIFT</dt>
   <dd>".$listpaymentmethods->VIR->bic."</dd>
-</dl>"; }
+</div>"; }
+$paymentmethods .= "</div>";
 $paymentmethods .= "<p><strong>Note:</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 tempor incididunt ut labore et dolore magna aliqua. </p>";
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
@@ -2389,7 +2391,7 @@ $paymentmethods .= "<p>".sprintf( __( 'Please send your money check in the amoun
 $paymentmethods .= "<p>".sprintf( __( 'Please send your money check to <b>%s</b> at the following address:', 'doliconnect'), $listpaymentmethods->CHQ->proprio)."</p>";
 }
 $paymentmethods .= "<dl class='param'>
-  <dt>Address: </dt>
+  <dt>Address</dt>
   <dd>".$listpaymentmethods->CHQ->owner_address."</dd>
 </dl>
 <p><strong>Note:</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
