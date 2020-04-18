@@ -2360,9 +2360,9 @@ if (!empty($listpaymentmethods->VIR->bank)) { $paymentmethods .= "<div class='co
   <dt>".__( 'Bank', 'doliconnect')."</dt>
   <dd>".$listpaymentmethods->VIR->bank."</dd>
 </div>"; }
-if (!empty($listpaymentmethods->VIR->account)) { $paymentmethods .= "<div class='col'>
+if (!empty($listpaymentmethods->VIR->number)) { $paymentmethods .= "<div class='col'>
   <dt>".__( 'Account', 'doliconnect')."</dt>
-  <dd> 12345678912345</dd>
+  <dd>".$listpaymentmethods->VIR->number."</dd>
 </div>"; }
 if (!empty($listpaymentmethods->VIR->iban)) { $paymentmethods .= "<div class='col'>
   <dt>IBAN</dt>
@@ -2392,7 +2392,7 @@ $paymentmethods .= "<p>".sprintf( __( 'Please send your money check to <b>%s</b>
 }
 $paymentmethods .= "<dl class='param'>
   <dt>Address</dt>
-  <dd>".$listpaymentmethods->CHQ->owner_address."</dd>
+  <dd>".$listpaymentmethods->CHQ->proprio." - ".$listpaymentmethods->CHQ->owner_address."</dd>
 </dl>
 <p><strong>Note:</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 tempor incididunt ut labore et dolore magna aliqua. </p>";
