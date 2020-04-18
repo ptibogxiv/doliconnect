@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2020-04-18 14:05+0200\n"
-"PO-Revision-Date: 2020-04-18 14:05+0200\n"
+"POT-Creation-Date: 2020-04-18 14:19+0200\n"
+"PO-Revision-Date: 2020-04-18 14:19+0200\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_FR\n"
@@ -488,7 +488,7 @@ msgid "Payment method"
 msgstr "Mode de paiement"
 
 #: dashboard/dashboard.php:748 functions/tools.php:1377
-#: functions/tools.php:2411
+#: functions/tools.php:2415
 msgid "Payment term"
 msgstr "Conditions de règlement"
 
@@ -527,7 +527,7 @@ msgstr "Banque"
 #: functions/tools.php:1307 functions/tools.php:1325 functions/tools.php:1342
 #: functions/tools.php:1357 functions/tools.php:1371 functions/tools.php:2151
 #: functions/tools.php:2153 functions/tools.php:2155 functions/tools.php:2182
-#: functions/tools.php:2205 functions/tools.php:2246 functions/tools.php:2267
+#: functions/tools.php:2205 functions/tools.php:2250 functions/tools.php:2271
 msgid "Pay"
 msgstr "Payer"
 
@@ -2006,7 +2006,7 @@ msgstr "Chèque"
 msgid "Cash"
 msgstr "Espèces"
 
-#: functions/tools.php:1381 functions/tools.php:2415
+#: functions/tools.php:1381 functions/tools.php:2419
 msgid "immediately"
 msgstr "immédiatement"
 
@@ -2038,75 +2038,91 @@ msgstr "Nom complet sur la carte"
 msgid "Full name of the owner"
 msgstr "Nom complet du propriétaire"
 
-#: functions/tools.php:2255
+#: functions/tools.php:2226
+#, fuzzy, php-format
+#| msgid ""
+#| "Please send your transfert in the amount of <b>%1$s</b> with reference <b>"
+#| "%2$s</b> at the following account:"
+msgid ""
+"Please send your bank transfert in the amount of <b>%1$s</b> with reference "
+"<b>%2$s</b> at the following account:"
+msgstr ""
+"Veuillez envoyer votre virement au montant de <b>%1$s</b> avec la référence "
+"<b>%2$s</b> sur le compte suivant:"
+
+#: functions/tools.php:2228
+msgid "Please send your bank transfert at the following account:"
+msgstr "Veuillez envoyer votre virement au compte suivant :"
+
+#: functions/tools.php:2259
 #, php-format
 msgid ""
 "Please send your money check in the amount of <b>%1$s</b> with reference <b>"
-"%2$s</b> to <b>%3$s</b> at the following address"
+"%2$s</b> to <b>%3$s</b> at the following address:"
 msgstr ""
 "Veuillez envoyer votre chèque d'un montant de <b>%1$s</b> avec la référence "
-"<b>%2$s</b> à l'ordre de <b>%3$s</b> à l'adresse suivante"
+"<b>%2$s</b> à l'ordre de <b>%3$s</b> à l'adresse suivante:"
 
-#: functions/tools.php:2257
+#: functions/tools.php:2261
 #, php-format
-msgid "Please send your money check to <b>%s</b> at the following address"
+msgid "Please send your money check to <b>%s</b> at the following address:"
 msgstr ""
-"Veuillez envoyer votre chèque à l'ordre de <b>%s</b> à l’adresse suivante"
+"Veuillez envoyer votre chèque à l'ordre de <b>%s</b> à l’adresse suivante:"
 
-#: functions/tools.php:2440
+#: functions/tools.php:2444
 msgid "Select your request:"
 msgstr "Sélectionnez votre demande :"
 
-#: functions/tools.php:2441
+#: functions/tools.php:2445
 msgid "Export Personal Data"
 msgstr "Exporter vos données personnelles"
 
-#: functions/tools.php:2442
+#: functions/tools.php:2446
 msgid "Remove Personal Data"
 msgstr "Supprimer vos données personnelles"
 
-#: functions/tools.php:2443
+#: functions/tools.php:2447
 msgid "Your email address (required)"
 msgstr "Votre adresse e-mail (requise)"
 
-#: functions/tools.php:2444
+#: functions/tools.php:2448
 msgid "Human verification (required)"
 msgstr "Vérification humaine (requise)"
 
-#: functions/tools.php:2445
+#: functions/tools.php:2449
 msgid "Send Request"
 msgstr "Envoyer la demande"
 
-#: functions/tools.php:2476
+#: functions/tools.php:2480
 msgid "Export your data"
 msgstr "Exportez vos données"
 
-#: functions/tools.php:2476
+#: functions/tools.php:2480
 msgid "You will receive an email with a secure link to your data"
 msgstr "Vous recevrez un e-mail avec un lien sécurisé vers vos données"
 
-#: functions/tools.php:2486
+#: functions/tools.php:2490
 msgid "Erase your data"
 msgstr "Effacer vos données"
 
-#: functions/tools.php:2486
+#: functions/tools.php:2490
 msgid "You will receive an email with a secure link to confirm the deletion"
 msgstr ""
 "Vous recevrez un e-mail avec un lien sécurisé pour confirmer la suppression"
 
-#: functions/tools.php:2497
+#: functions/tools.php:2501
 msgid "Delete your account"
 msgstr "Supprimer votre compte"
 
-#: functions/tools.php:2497
+#: functions/tools.php:2501
 msgid "Soon, you will be able to delete your account"
 msgstr "Bientôt, vous pourrez supprimer votre compte"
 
-#: functions/tools.php:2536
+#: functions/tools.php:2540
 msgid "Validate the request"
 msgstr "Valider la demande"
 
-#: functions/tools.php:2550
+#: functions/tools.php:2554
 msgid "This plugin requires WordPress 4.9.6."
 msgstr "Ce plugin nécessite WordPress 4.9.6."
 

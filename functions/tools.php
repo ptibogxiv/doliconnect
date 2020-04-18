@@ -2221,8 +2221,12 @@ tempor incididunt ut labore et dolore magna aliqua. </p>
 }
 
 if ( isset($listpaymentmethods->VIR) && !empty($listpaymentmethods->VIR) ) {
-$paymentmethods .= "<div class='tab-pane fade' id='nav-tab-vir'><br><form role='form'>
-<p>Bank account details</p>";
+$paymentmethods .= "<div class='tab-pane fade' id='nav-tab-vir'><br><form role='form'>";
+if ( !empty($module) && is_object($object) && isset($object->id) ) {
+$paymentmethods .= "<p>".sprintf( __( 'Please send your bank transfert in the amount of <b>%1$s</b> with reference <b>%2$s</b> at the following account:', 'doliconnect'), $TTC, $object->ref )."</p>";
+} else {
+$paymentmethods .= "<p>".__( 'Please send your bank transfert at the following account:', 'doliconnect')."</p>";
+}
 if (!empty($listpaymentmethods->VIR->bank)) { $paymentmethods .= "<dl class='param'>
   <dt>BANK: </dt>
   <dd>".$listpaymentmethods->VIR->bank."</dd>
@@ -2252,9 +2256,9 @@ $paymentmethods .= "</form></div>";
 if ( isset($listpaymentmethods->CHQ) && !empty($listpaymentmethods->CHQ) ) {
 $paymentmethods .= "<div class='tab-pane fade' id='nav-tab-chq'><br><form role='form'>";
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
-$paymentmethods .= "<p>".sprintf( __( 'Please send your money check in the amount of <b>%1$s</b> with reference <b>%2$s</b> to <b>%3$s</b> at the following address', 'doliconnect'), doliprice($object, 'ttc', isset($object->multicurrency_code) ? $object->multicurrency_code : null), $object->ref, $listpaymentmethods->CHQ->proprio).":</p>";
+$paymentmethods .= "<p>".sprintf( __( 'Please send your money check in the amount of <b>%1$s</b> with reference <b>%2$s</b> to <b>%3$s</b> at the following address:', 'doliconnect'), doliprice($object, 'ttc', isset($object->multicurrency_code) ? $object->multicurrency_code : null), $object->ref, $listpaymentmethods->CHQ->proprio)."</p>";
 } else {
-$paymentmethods .= "<p>".sprintf( __( 'Please send your money check to <b>%s</b> at the following address', 'doliconnect'), $listpaymentmethods->CHQ->proprio).":</p>";
+$paymentmethods .= "<p>".sprintf( __( 'Please send your money check to <b>%s</b> at the following address:', 'doliconnect'), $listpaymentmethods->CHQ->proprio)."</p>";
 }
 $paymentmethods .= "<dl class='param'>
   <dt>Address: </dt>
