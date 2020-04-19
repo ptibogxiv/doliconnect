@@ -472,18 +472,18 @@ global $wpdb, $current_user;
 
 $request = "/doliconnector/".doliconnector($current_user, 'fk_soc')."/paymentmethods";
 
-if ( isset($_POST['default_paymentmethod']) ) {
+if ( isset($_POST['action_paymentmethod']) && $_POST['action_paymentmethod'] == "default_paymentmethod") {
 
 $data = [
 'default' => 1
 ];
 
-$gateway = callDoliApi("PUT", $request."/".sanitize_text_field($_POST['default_paymentmethod']), $data, dolidelay( 0, true));
+$gateway = callDoliApi("PUT", $request."/".sanitize_text_field($_POST['payment_method']), $data, dolidelay( 0, true));
 $gateway = callDoliApi("GET", $request, null, dolidelay('paymentmethods', true));
 print dolialert ('success', __( 'You changed your default payment method', 'doliconnect'));
-} elseif ( isset($_POST['delete_paymentmethod']) ) {
+} elseif ( isset($_POST['action_paymentmethod']) && $_POST['action_paymentmethod'] == "delete_paymentmethod") {
 
-$gateway = callDoliApi("DELETE", $request."/".sanitize_text_field($_POST['delete_paymentmethod']), null, dolidelay( 0, true));
+$gateway = callDoliApi("DELETE", $request."/".sanitize_text_field($_POST['payment_method']), null, dolidelay( 0, true));
 $gateway = callDoliApi("GET", $request, null, dolidelay('paymentmethods', true));
 print dolialert ('success', __( 'You deleted a payment method', 'doliconnect'));
 } elseif ( isset($_POST['add_paymentmethod']) ) {
