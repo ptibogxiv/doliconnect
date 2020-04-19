@@ -2283,6 +2283,8 @@ $paymentmethods .= "window.onload=my_code();";
 
 $paymentmethods .= "</script>";
 
+
+
 $paymentmethods .= "<div class='card-body'><ul class='nav bg-light nav-pills rounded nav-fill flex-column mb-3' role='tablist'>";
 
 if ( $listpaymentmethods->payment_methods != null ) {
@@ -2409,8 +2411,6 @@ if (empty($countPM)) {
 $paymentmethods .= " show active"; 
 }
 $paymentmethods .= "' id='nav-tab-card'><br>";
-$paymentmethods .= "<script>";
-$paymentmethods .= "</script>";
 
 $paymentmethods .= "<input id='cardholder-name' name='cardholder-name' value='' type='text' class='form-control' placeholder='".__( "Full name on the card", 'doliconnect')."' autocomplete='off' required>
 <label for='card-element'></label><div class='form-control' id='card-element'><!-- a Stripe Element will be inserted here. --></div>";
