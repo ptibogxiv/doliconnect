@@ -2383,7 +2383,11 @@ jQuery('#payment_method_".$method->id."').submit();
 $paymentmethods .= "</script>";
 $paymentmethods .= "<input type='hidden' name='payment_method' value='".$method->id."'>";
 $paymentmethods .= "<p>".__( 'Holder: ', 'doliconnect')." ".$method->holder."</p>";
-if (!empty($method->expiration)) $paymentmethods .= "<p>".__( 'Expiration: ', 'doliconnect')." ".$method->expiration."</p>";
+if (!empty($method->expiration)) {
+$paymentmethods .= "<p>".__( 'Expiration:', 'doliconnect');
+$expdate =  explode("/", $method->expiration);
+$timestamp = mktime(0, 0, 0, (int) $expdate['1'], 0, (int) $expdate['0']);
+$paymentmethods .= " ".wp_date( 'F Y', $timestamp, false)."</p>";}
 $paymentmethods .= "<p class='text-justify'><small><strong>Note:</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 tempor incididunt ut labore et dolore magna aliqua.</small></p>";
 $paymentmethods .= '<div class="btn-group btn-block" role="group" aria-label="actions buttons">';

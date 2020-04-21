@@ -497,13 +497,11 @@ $gateway = callDoliApi("GET", $request, null, dolidelay('paymentmethods', true))
 print dolialert ('success', __( 'You added a new payment method', 'doliconnect'));
 }
 
-if (current_user_can('administrator') && !empty(get_option('doliconnectbeta')) ) { 
+//if (current_user_can('administrator') && !empty(get_option('doliconnectbeta')) ) { 
 print doliconnect_paymentmethods(null, null, $url, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
-} else {
-print dolipaymentmethods(null, null, $url, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
-}
-
-
+//} else {
+//print dolipaymentmethods(null, null, $url, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+//}
 
 }
 
