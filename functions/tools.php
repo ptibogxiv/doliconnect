@@ -2311,32 +2311,32 @@ $paymentmethods .= __( 'Card', 'doliconnect').' '.$method->reference;
 if ( $method->default_source ) { $paymentmethods .= " <i class='fas fa-star fa-fw' style='color:Gold'></i>"; }
 $paymentmethods .= "<span class='flag-icon flag-icon-".strtolower($method->country)." float-right'></span></a></li>";
 }}
-if ( $countPM < 5 && isset($listpaymentmethods->stripe) && in_array('card', $listpaymentmethods->stripe->types) && empty($thirdparty->mode_reglement_id) ) {
-$paymentmethods .= '<li class="nav-item"><a onclick="my_code()" class="nav-link" data-toggle="pill" href="#nav-tab-card">
+if (isset($listpaymentmethods->stripe) && in_array('card', $listpaymentmethods->stripe->types) && empty($thirdparty->mode_reglement_id) ) {
+$paymentmethods .= '<li class="nav-item"><a onclick="my_code();" class="nav-link';
+if ($countPM >= 5) $paymentmethods .= " disabled"; 
+$paymentmethods .= '" data-toggle="pill" href="#nav-tab-card">
 <span class="fa-stack fa-3x fa-fw float-left" style="font-size: 0.5em;"><i class="fas fa-credit-card fa-stack-2x"></i><i class="fas fa-plus fa-stack-1x" style="color:Tomato"></i></span> '.__( 'Pay by bank card', 'doliconnect').'</a></li>';
 }
-if ( $countPM < 5 && isset($listpaymentmethods->stripe) && in_array('sepa_debit', $listpaymentmethods->stripe->types) && empty($thirdparty->mode_reglement_id) ) {
-$paymentmethods .= '<li class="nav-item"><a onclick="my_code()" class="nav-link';
-if (empty($countPM)) {
-$paymentmethods .= " active"; 
-}
+if (isset($listpaymentmethods->stripe) && in_array('sepa_debit', $listpaymentmethods->stripe->types) && empty($thirdparty->mode_reglement_id) ) {
+$paymentmethods .= '<li class="nav-item"><a onclick="my_code();" class="nav-link';
+if ($countPM >= 5) $paymentmethods .= " disabled"; 
 $paymentmethods .= '" data-toggle="pill" href="#nav-tab-sepa_debit">
-		<span class="fa-stack fa-3x fa-fw float-left" style="font-size: 0.5em;"><i class="fas fa-university fa-stack-2x"></i><i class="fas fa-plus fa-stack-1x" style="color:Tomato"></i></span> '.__( 'Pay by levy', 'doliconnect').'</a></li>';
+<span class="fa-stack fa-3x fa-fw float-left" style="font-size: 0.5em;"><i class="fas fa-university fa-stack-2x"></i><i class="fas fa-plus fa-stack-1x" style="color:Tomato"></i></span> '.__( 'Pay by levy', 'doliconnect').'</a></li>';
 }
 if ( isset($listpaymentmethods->PAYPAL) && !empty($listpaymentmethods->PAYPAL) ) {
 $paymentmethods .= '<li class="nav-item"><a class="nav-link" data-toggle="pill" href="#nav-tab-paypal">
 <i class="fab fa-paypal float-left"></i>  Paypal</a></li>';
 }
 if ( isset($listpaymentmethods->VIR) && !empty($listpaymentmethods->VIR) ) {
-$paymentmethods .= '<li class="nav-item"><a onclick="my_code()" class="nav-link" data-toggle="pill" href="#nav-tab-vir">
+$paymentmethods .= '<li class="nav-item"><a onclick="my_code();" class="nav-link" data-toggle="pill" href="#nav-tab-vir">
 <i class="fa fa-university fa-fw float-left" style="color:DarkGrey"></i>  '.__( 'Pay by bank transfert', 'doliconnect').'</a></li>';
 }
 if ( isset($listpaymentmethods->CHQ) && !empty($listpaymentmethods->CHQ) ) {
-$paymentmethods .= '<li class="nav-item"><a onclick="my_code()" class="nav-link" data-toggle="pill" href="#nav-tab-chq">
+$paymentmethods .= '<li class="nav-item"><a onclick="my_code();" class="nav-link" data-toggle="pill" href="#nav-tab-chq">
 <i class="fa fa-money-check fa-fw float-left" style="color:Tan"></i>  '.__( 'Pay by bank check', 'doliconnect').'</a></li>';
 }    
 if ( ! empty(dolikiosk()) ) {
-$paymentmethods .= '<li class="nav-item"><a onclick="my_code()" class="nav-link" data-toggle="pill" href="#nav-tab-kiosk">
+$paymentmethods .= '<li class="nav-item"><a onclick="my_code();" class="nav-link" data-toggle="pill" href="#nav-tab-kiosk">
 <i class="fas fa-money-bill-alt fa-fw float-left" style="color:#85bb65"></i> '.__( 'Pay at front desk', 'doliconnect').'</a></li>';
 }
 
@@ -2382,13 +2382,16 @@ jQuery('#payment_method_".$method->id."').submit();
 });";
 $paymentmethods .= "</script>";
 $paymentmethods .= "<input type='hidden' name='payment_method' value='".$method->id."'>";
-$paymentmethods .= "<p>".__( 'Holder: ', 'doliconnect')." ".$method->holder."</p>";
+$paymentmethods .= "<p>".__( 'Holder: ', 'doliconnect')." ".$method->holder;
 if (!empty($method->expiration)) {
-$paymentmethods .= "<p>".__( 'Expiration:', 'doliconnect');
+$paymentmethods .= "<br>".__( 'Expiration:', 'doliconnect');
 $expdate =  explode("/", $method->expiration);
 $timestamp = mktime(0, 0, 0, (int) $expdate['1'], 0, (int) $expdate['0']);
-$paymentmethods .= " ".wp_date( 'F Y', $timestamp, false)."</p>";}
-$paymentmethods .= "<p class='text-justify'><small><strong>Note:</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+$paymentmethods .= " ".wp_date( 'F Y', $timestamp, false); }
+if (!empty($method->mandat)) {
+$paymentmethods .= "<br>".__( 'Mandate:', 'doliconnect');
+ }
+$paymentmethods .= "</p><p class='text-justify'><small><strong>Note:</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 tempor incididunt ut labore et dolore magna aliqua.</small></p>";
 $paymentmethods .= '<div class="btn-group btn-block" role="group" aria-label="actions buttons">';
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
