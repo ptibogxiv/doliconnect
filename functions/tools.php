@@ -2183,7 +2183,8 @@ cardButton.disabled = true;
         jQuery('#DoliconnectLoadingModal').modal('hide');   
         	}
         else
-        	{
+        	{    
+jQuery('#DoliconnectLoadingModal').modal('show');
   stripe.confirmCardSetup(
     clientSecret,
     {
@@ -2370,6 +2371,7 @@ event.preventDefault();
 jQuery('#DoliconnectLoadingModal').modal('show');
     var test = $('#deletebtn_".$method->id."').val();
         //alert('JQuery delete Running! ".$method->id." ' + test);
+document.getElementById('li-".$method->id."').outerHTML = '';
 var form = document.getElementById('payment_method_".$method->id."');
 var inputvar = document.createElement('input');
 inputvar.setAttribute('type', 'hidden');
