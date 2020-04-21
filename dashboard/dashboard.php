@@ -1978,7 +1978,7 @@ print " disabled";
 } elseif ( $current_user->loginmailalert == 'on' ) { print " checked"; }        
 print " onchange='DoliSettings(this.form)'><label class='custom-control-label w-100' for='loginmailalert'> ".__( 'Receive a email notification at each connection', 'doliconnect')."</label>
 </div></li>";
-if ( !empty(get_option('doliconnectbeta')) ) {
+if ( current_user_can('administrator') && !empty(get_option('doliconnectbeta')) ) {
 print "<li class='list-group-item list-group-item-light list-group-item-action'><div class='custom-control custom-switch'><input type='checkbox' class='custom-control-input' name='optin1' id='optin1' ";
 if ( $current_user->optin1 == 'on' ) { print " checked"; }        
 print " onchange='DoliSettings(this.form)'><label class='custom-control-label w-100' for='optin1'> ".__( 'I would like to receive the newsletter', 'doliconnect')."</label>
