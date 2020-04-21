@@ -2118,6 +2118,8 @@ $paymentmethods .= "var cardElement = elements.create('card', options);
 cardElement.mount('#card-element');
 var cardholderName = document.getElementById('cardholder-name');
 cardholderName.value = '';
+var cardButton = document.getElementById('cardButton');
+var cardPayButton = document.getElementById('cardPayButton');
 var displayCardError = document.getElementById('card-error-message');
 displayCardError.textContent = '';
 cardElement.addEventListener('change', function(event) {
@@ -2411,7 +2413,8 @@ if (empty($countPM)) {
 $paymentmethods .= " show active"; 
 }
 $paymentmethods .= "' id='nav-tab-card'><br>";
-
+$paymentmethods .= "<script>";
+$paymentmethods .= "</script>";
 $paymentmethods .= "<input id='cardholder-name' name='cardholder-name' value='' type='text' class='form-control' placeholder='".__( "Full name on the card", 'doliconnect')."' autocomplete='off' required>
 <label for='card-element'></label><div class='form-control' id='card-element'><!-- a Stripe Element will be inserted here. --></div>";
 $paymentmethods .= "<div id='card-error-message' class='text-danger' role='alert'><!-- a Stripe Message will be inserted here. --></div>";
@@ -2433,7 +2436,9 @@ $paymentmethods .= "<div class='tab-pane";
 //} else {
 $paymentmethods .= " fade";
 //}
-$paymentmethods .= "' id='nav-tab-sepa_debit'><br><form role='form' method='post'>";
+$paymentmethods .= "' id='nav-tab-sepa_debit'><br>";
+$paymentmethods .= "<script>";
+$paymentmethods .= "</script>";
 $paymentmethods .= "<input id='ibanholder-name' name='ibanholder-name' value='' type='text' class='form-control' placeholder='".__( "Full name of the owner", 'doliconnect')."' autocomplete='off' required>
 <label for='iban-element'></label><div class='form-control' id='iban-element'><!-- a Stripe Element will be inserted here. --></div>";
 $paymentmethods .= "<div id='bank-name' role='alert'><!-- a Stripe Message will be inserted here. --></div>";
@@ -2446,7 +2451,7 @@ $paymentmethods .= "<button id='cardPayButton' class='btn btn-danger btn-block'>
 } else {
 $paymentmethods .= "<button id='cardButton' class='btn btn-warning btn-block' title='".__( 'Add', 'doliconnect')."'>".__( 'Add', 'doliconnect')."</button>";
 }
-$paymentmethods .= "</form></div>";
+$paymentmethods .= "</div>";
 }
 
 if ( isset($listpaymentmethods->PAYPAL) && !empty($listpaymentmethods->PAYPAL) ) {
