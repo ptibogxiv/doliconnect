@@ -2329,11 +2329,11 @@ $paymentmethods .= '<li class="nav-item"><a class="nav-link" data-toggle="pill" 
 <i class="fab fa-paypal float-left"></i>  Paypal</a></li>';
 }
 if ( isset($listpaymentmethods->VIR) && !empty($listpaymentmethods->VIR) ) {
-$paymentmethods .= '<li class="nav-item"><a onclick="my_code();" class="nav-link" data-toggle="pill" href="#nav-tab-vir">
+$paymentmethods .= '<li id="li-VIR" class="nav-item"><a onclick="my_code();" class="nav-link" data-toggle="pill" href="#nav-tab-vir">
 <i class="fa fa-university fa-fw float-left" style="color:DarkGrey"></i>  '.__( 'Pay by bank transfert', 'doliconnect').'</a></li>';
 }
 if ( isset($listpaymentmethods->CHQ) && !empty($listpaymentmethods->CHQ) ) {
-$paymentmethods .= '<li class="nav-item"><a onclick="my_code();" class="nav-link" data-toggle="pill" href="#nav-tab-chq">
+$paymentmethods .= '<li id="li-CHQ" class="nav-item"><a onclick="my_code();" class="nav-link" data-toggle="pill" href="#nav-tab-chq">
 <i class="fa fa-money-check fa-fw float-left" style="color:Tan"></i>  '.__( 'Pay by bank check', 'doliconnect').'</a></li>';
 }    
 if ( ! empty(dolikiosk()) ) {
@@ -2384,16 +2384,33 @@ jQuery('#payment_method_".$method->id."').submit();
 });";
 $paymentmethods .= "</script>";
 $paymentmethods .= "<input type='hidden' name='payment_method' value='".$method->id."'>";
-$paymentmethods .= "<p>".__( 'Holder: ', 'doliconnect')." ".$method->holder;
-if (!empty($method->expiration)) {
+$paymentmethods .= "<div class='row'>";
+$paymentmethods .= "<div class='col'>
+  <dt>".__( 'Debtor', 'doliconnect')."</dt>
+  <dd>".__( 'Holder: ', 'doliconnect')." ".$method->holder;
+if (isset($method->mandate->creation) && !empty($method->mandate->creation)) {
+$paymentmethods .= "<br>".__( 'Creation:', 'doliconnect');
+$paymentmethods .= " ".wp_date( 'j F Y', $method->mandate->creation, false); }
+if (isset($method->expiration) && !empty($method->expiration)) {
 $paymentmethods .= "<br>".__( 'Expiration:', 'doliconnect');
 $expdate =  explode("/", $method->expiration);
 $timestamp = mktime(0, 0, 0, (int) $expdate['1'], 0, (int) $expdate['0']);
 $paymentmethods .= " ".wp_date( 'F Y', $timestamp, false); }
-if (!empty($method->mandat)) {
-$paymentmethods .= "<br>".__( 'Mandate:', 'doliconnect');
- }
-$paymentmethods .= "</p><p class='text-justify'><small><strong>Note:</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+$paymentmethods .= "</dd>
+</div>";
+if (isset($method->mandate) && !empty($method->mandate)) { $paymentmethods .= "<div class='col'>
+  <dt>".__( 'Mandate', 'doliconnect')."</dt>
+  <dd>".__( 'Reference: ', 'doliconnect')." <a href='".$method->mandate->url."' target='_blank'>".$method->mandate->reference."</a>";
+$paymentmethods .= "<br>".__( 'Type:', 'doliconnect')." ";
+if ($method->mandate->type == 'multi_use') {
+$paymentmethods .= __( 'Recurring', 'doliconnect'); 
+} elseif ($method->mandate->type == 'single_use') {
+$paymentmethods .= __( 'Unique', 'doliconnect');
+}
+$paymentmethods .= "</dd>
+</div>"; }
+$paymentmethods .= "</div>";
+$paymentmethods .= "<p class='text-justify'><small><strong>Note:</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 tempor incididunt ut labore et dolore magna aliqua.</small></p>";
 $paymentmethods .= '<div class="btn-group btn-block" role="group" aria-label="actions buttons">';
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
@@ -2543,8 +2560,15 @@ if (!empty($thirdparty->cond_reglement_id)) {
 $paymentmethods .= dolipaymentterm($thirdparty->cond_reglement_id);
 } else {
 $paymentmethods .= __( 'immediately', 'doliconnect');
-}  
-
+} 
+//
+//    $(document).ready(function(){
+//       $("a[href='#nav-tab-chq']").hasClass('active') ) {
+          //alert('tab:' + e.target.href);
+          //document.getElementById('li-VIR').outerHTML = '';
+//       });
+//    });
+//
 $paymentmethods .= "</small></div><div class='card-footer text-muted'>";
 $paymentmethods .= "<small><div class='float-left'>";
 $paymentmethods .= dolirefresh($request, $url, dolidelay('paymentmethods'));
