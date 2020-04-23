@@ -2371,7 +2371,7 @@ event.preventDefault();
 jQuery('#DoliconnectLoadingModal').modal('show');
     var test = $('#deletebtn_".$method->id."').val();
         //alert('JQuery delete Running! ".$method->id." ' + test);
-document.getElementById('li-".$method->id."').outerHTML = '';
+
 var form = document.getElementById('payment_method_".$method->id."');
 var inputvar = document.createElement('input');
 inputvar.setAttribute('type', 'hidden');
@@ -2380,6 +2380,8 @@ inputvar.setAttribute('value', test);
 form.appendChild(inputvar);
 //document.body.appendChild(form);
 jQuery('#payment_method_".$method->id."').submit();
+document.getElementById('li-".$method->id."').outerHTML = '';
+document.getElementById('nav-tab-".$method->id."').outerHTML = '';
     });
 });";
 $paymentmethods .= "</script>";
@@ -2444,7 +2446,7 @@ $paymentmethods .= "</script>";
 $paymentmethods .= "<input id='cardholder-name' name='cardholder-name' value='' type='text' class='form-control' placeholder='".__( "Full name on the card", 'doliconnect')."' autocomplete='off' required>
 <label for='card-element'></label><div class='form-control' id='card-element'><!-- a Stripe Element will be inserted here. --></div>";
 $paymentmethods .= "<div id='card-error-message' class='text-danger' role='alert'><!-- a Stripe Message will be inserted here. --></div>";
-$paymentmethods .= "<p class='text-justify'>";
+$paymentmethods .= "<p class='text-justify'>";                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
 $paymentmethods .= "<small><strong>Note:</strong> ".sprintf( esc_html__( 'By providing your card and confirming this form, you are authorizing %s and Stripe, our payment service provider, to send instructions to the financial institution that issued your card to take payments from your card account in accordance with those instructions. You are entitled to a refund from your financial institution under the terms and conditions of your agreement with it. A refund must be claimed within 90 days starting from the date on which your card was debited.', 'doliconnect'), get_bloginfo('name'))."</small>";
 $paymentmethods .= "</p>";
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
