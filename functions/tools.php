@@ -2316,13 +2316,13 @@ if (isset($listpaymentmethods->stripe) && in_array('card', $listpaymentmethods->
 $paymentmethods .= '<li class="nav-item"><a onclick="my_code();" class="nav-link';
 if ($countPM >= 5) $paymentmethods .= " disabled"; 
 $paymentmethods .= '" data-toggle="pill" href="#nav-tab-card">
-<span class="fa-stack fa-3x fa-fw float-left" style="font-size: 0.5em;"><i class="fas fa-credit-card fa-stack-2x"></i><i class="fas fa-plus fa-stack-1x" style="color:Tomato"></i></span> '.__( 'Pay by bank card', 'doliconnect').'</a></li>';
+<i class="fas fa-credit-card fa-fw float-left"></i> '.__( 'Pay by bank card', 'doliconnect').'</a></li>';
 }
 if (isset($listpaymentmethods->stripe) && in_array('sepa_debit', $listpaymentmethods->stripe->types) && empty($thirdparty->mode_reglement_id) ) {
 $paymentmethods .= '<li class="nav-item"><a onclick="my_code();" class="nav-link';
 if ($countPM >= 5) $paymentmethods .= " disabled"; 
 $paymentmethods .= '" data-toggle="pill" href="#nav-tab-sepa_debit">
-<span class="fa-stack fa-3x fa-fw float-left" style="font-size: 0.5em;"><i class="fas fa-university fa-stack-2x"></i><i class="fas fa-plus fa-stack-1x" style="color:Tomato"></i></span> '.__( 'Pay by levy', 'doliconnect').'</a></li>';
+<i class="fas fa-university fa-fw float-left"></i></span> '.__( 'Pay by levy', 'doliconnect').'</a></li>';
 }
 if ( isset($listpaymentmethods->PAYPAL) && !empty($listpaymentmethods->PAYPAL) ) {
 $paymentmethods .= '<li class="nav-item"><a class="nav-link" data-toggle="pill" href="#nav-tab-paypal">
