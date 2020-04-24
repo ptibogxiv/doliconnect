@@ -48,7 +48,7 @@ jQuery(document).ready(function(){
 });</script>';
 
 if ( ! is_object($product) || empty(doliconst('MAIN_MODULE_STOCK')) || ($product->type != '0' && empty(doliconst('STOCK_SUPPORTS_SERVICES')) )) {
-$stock .= "<a tabindex='0' id='popover-".$product->id."' class='badge badge-pill badge-success text-white' data-container='body' data-toggle='popover' data-trigger='focus' title='".__( 'Available immediately', 'doliconnect')."' data-content='".sprintf( esc_html__( 'This item is in stock and can be send immediately. %s', 'doliconnect'), $shipping)."'><i class='fas fa-warehouse'></i> ".__( 'Available immediately', 'doliconnect').'</a>';
+$stock .= "<a tabindex='0' id='popover-".$product->id."' class='badge badge-pill badge-success text-white' data-container='body' data-toggle='popover' data-trigger='focus' title='".__( 'Available immediately', 'doliconnect')."' data-content='".sprintf( esc_html__( 'This item is in stock and can be send immediately. %s', 'doliconnect'), '')."'><i class='fas fa-warehouse'></i> ".__( 'Available immediately', 'doliconnect').'</a>';
 } else {
 
 $minstock = min(array($product->stock_theorique,$product->stock_reel));
