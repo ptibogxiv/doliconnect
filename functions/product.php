@@ -263,19 +263,20 @@ $button .= "<input type='hidden' name='product-add-nonce' value='".wp_create_non
 $button .= "<input type='hidden' name='product-add-id' value='".$product->id."'>";
 
 $button .= "<script>";
-$button .= 'jQuery(document).ready(function($) {
+$button .= '(function ($) {
+$(document).ready(function () {
 
 //jQuery(".dolisavewish'.$product->id.'").click(function(){
 //alert("test");
 //}
 	
-	jQuery(".form-product-'.$product->id.'").on("submit", function(e){
-  jQuery("#DoliconnectLoadingModal").modal("show");
+	$(".form-product-'.$product->id.'").on("submit", function(e){
+  $("#DoliconnectLoadingModal").modal("show");
 	e.preventDefault();
 
-	var $form = $(this);
+var $form = $(this);
     
-jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function(e){ 
+$("#DoliconnectLoadingModal").on("shown.bs.modal", function(e){ 
 		$.post($form.attr("action"), $form.serialize(), function(response){
       if (response.success) {
       if (document.getElementById("DoliHeaderCarItems")) {
@@ -291,12 +292,13 @@ jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function(e){
       } else {
       document.getElementById("error-product-'.$product->id.'").innerHTML = response.data.message;
       }
-jQuery("#DoliconnectLoadingModal").modal("hide");
+$("#DoliconnectLoadingModal").modal("hide");
 
 		}, "json");  
   });
 });
-});';
+  });
+})(jQuery)';
 $button .= "</script>";
 
 if (doliconnector($current_user, 'fk_order') > 0) {
