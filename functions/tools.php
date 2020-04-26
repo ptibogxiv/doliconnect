@@ -2356,7 +2356,6 @@ $(document).ready(function(){
 $('#defaultbtn_".$method->id.", #deletebtn_".$method->id."').on('click',function(event){
 event.preventDefault();
 $('#DoliconnectLoadingModal').modal('show');
-
         $.ajax({
           url: '".esc_url( admin_url( 'admin-ajax.php' ) )."',
           type: 'POST',
@@ -2376,7 +2375,6 @@ $('#DoliconnectLoadingModal').modal('show');
       //}
 $('#DoliconnectLoadingModal').modal('hide');
         });
-
 });
 });
 })(jQuery);";
