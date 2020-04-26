@@ -208,7 +208,20 @@ wp_send_json_error( __( 'A security error occured', 'doliconnect'));
 }
 }
 
+add_action('wp_ajax_dolipaymentmethod_request', 'dolipaymentmethod_request');
+add_action('wp_ajax_nopriv_dolipaymentmethod_request', 'dolipaymentmethod_request');
 
+function dolipaymentmethod_request(){
+global $wpdb; 
+
+if ( wp_verify_nonce( trim($_POST['dolipaymentmethod-nonce']), 'dolipaymentmethod-nonce')) {
+
+wp_send_json_success('success'); 
+
+}	else {
+wp_send_json_error( __( 'A security error occured', 'doliconnect')); 
+}
+}
 
 add_action('wp_ajax_dolisignup_request', 'dolisignup_request');
 add_action('wp_ajax_nopriv_dolisignup_request', 'dolisignup_request');

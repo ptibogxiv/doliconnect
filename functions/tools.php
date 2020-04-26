@@ -2063,7 +2063,7 @@ $paymentmethods .= doliloaderscript('doliconnect-paymentmethodsform');
 //<div id='else' style='display: none' ><br><div style='display:inline-block;width:46%;float:left'><hr width='90%' /></div><div style='display:inline-block;width: 8%;text-align: center;vertical-align:90%'><small class='text-muted'>".__( 'or', 'doliconnect-pro' )."</small></div><div style='display:inline-block;width:46%;float:right' ><hr width='90%'/></div><br></div>";
 //} 
 
-$paymentmethods .= '<div class="card shadow-sm">';
+$paymentmethods .= "<div id='DoliPaymentmethodAlert' class='text-danger font-weight-bolder'></div><div class='card shadow-sm'>";
 
 if ( isset($listpaymentmethods->stripe) && empty($listpaymentmethods->stripe->live) ) {
 $paymentmethods .= "<div class='card-header'><i class='fas fa-info-circle'></i> <b>".__( "Stripe's in sandbox mode", 'doliconnect')."</b> <small>(<a href='https://stripe.com/docs/testing#cards' target='_blank' rel='noopener'>".__( "Link to Test card numbers", 'doliconnect')."</a>)</small></div>";
@@ -2349,14 +2349,16 @@ $paymentmethods .= "<div class='tab-pane fade";
 if ( $method->default_source ) {
 $paymentmethods .= " show active"; 
 }
-$paymentmethods .= "' id='nav-tab-".$method->id."'><br><form id='payment_method_".$method->id."' method='post' action='".$url."'>";
+$paymentmethods .= "' id='nav-tab-".$method->id."'><br><form id='payment_method_".$method->id."' method='post' action='".$url."'>";//action='".$url."'admin_url('admin-ajax.php')
+$paymentmethods .= "<input type='hidden' name='action' value='dolipaymentmethod_request'>";
+$paymentmethods .= "<input type='hidden' name='dolipaymentmethod-nonce' value='".wp_create_nonce( 'dolipaymentmethod-nonce')."'>";
 $paymentmethods .= "<script>";
 $paymentmethods .= "$(document).ready(function(){
-    $('#defaultbtn_".$method->id."').on('click',function(event){
+$('#defaultbtn_".$method->id.", #deletebtn_".$method->id."').on('click',function(event){
 event.preventDefault();
 jQuery('#DoliconnectLoadingModal').modal('show');
-    var test = $('#defaultbtn_".$method->id."').val();
-        //alert('JQuery default Running! ".$method->id." ' + test);
+var test = $(this).val();
+//alert('JQuery default Running! ".$method->id." ' + test);
 var form = document.getElementById('payment_method_".$method->id."');
 var inputvar = document.createElement('input');
 inputvar.setAttribute('type', 'hidden');
@@ -2365,26 +2367,35 @@ inputvar.setAttribute('value', test);
 form.appendChild(inputvar);
 //document.body.appendChild(form);
 jQuery('#payment_method_".$method->id."').submit();
-    });
-    $('#deletebtn_".$method->id."').on('click',function(event){
-event.preventDefault(); 
-jQuery('#DoliconnectLoadingModal').modal('show');
-    var test = $('#deletebtn_".$method->id."').val();
-        //alert('JQuery delete Running! ".$method->id." ' + test);
-
-var form = document.getElementById('payment_method_".$method->id."');
-var inputvar = document.createElement('input');
-inputvar.setAttribute('type', 'hidden');
-inputvar.setAttribute('name', 'action_paymentmethod');
-inputvar.setAttribute('value', test);
-form.appendChild(inputvar);
-//document.body.appendChild(form);
-jQuery('#payment_method_".$method->id."').submit();
-document.getElementById('li-".$method->id."').outerHTML = '';
-document.getElementById('nav-tab-".$method->id."').outerHTML = '';
-    });
+});
 });";
 $paymentmethods .= "</script>";
+//$password .= "<script>";
+//$password .= 'jQuery(document).ready(function($) {
+//	
+//	jQuery("#dolirpw-form").on("submit", function(e) {
+//  jQuery("#DoliconnectLoadingModal").modal("show");
+//	e.preventDefault();
+//    
+//	var $form = $(this);
+//  var url = "'.$url.'";  
+//jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function (e) { 
+//		$.post($form.attr("action"), $form.serialize(), function(response) {
+//      if (response.success) {
+//      document.location = url;
+//      } else {
+//      if (document.getElementById("DoliRpwAlert")) {
+//      document.getElementById("DoliRpwAlert").innerHTML = response.data;      
+//      }
+//      }
+//jQuery("#DoliconnectLoadingModal").modal("hide");
+//
+//		}, "json");  
+//  });
+//});
+//});';
+//$password .= "</script>";
+
 $paymentmethods .= "<input type='hidden' name='payment_method' value='".$method->id."'>";
 $paymentmethods .= "<div class='row'>";
 $paymentmethods .= "<div class='col'>
@@ -2424,10 +2435,10 @@ $paymentmethods .= '<button type="button" onclick="PaySepaDebitPM(\''.$method->i
 $paymentmethods .= '<button type="button" onclick="PayPM(\''.$method->type.'\')" class="btn btn-danger btn-block">'.__( 'Pay', 'doliconnect')." ".doliprice($object, 'ttc', $currency).'</button>';
 }
 } else {
-$paymentmethods .= '<button type="button" id="defaultbtn_'.$method->id.'" value="default_paymentmethod" class="btn btn-light"'; //onclick="DefaultPM(\''.$method->id.'\')"
+$paymentmethods .= '<button type="submit" id="defaultbtn_'.$method->id.'" name="default_paymentmethod" value="default_paymentmethod" class="btn btn-light"'; //onclick="DefaultPM(\''.$method->id.'\')"
 if ( !empty($method->default_source) ) { $paymentmethods .= " disabled"; }
 $paymentmethods .= "><i class='fas fa-star fa-fw' style='color:Gold'></i> ".__( "Favourite", 'doliconnect').'</button>
-<button type="button" id="deletebtn_'.$method->id.'" value="delete_paymentmethod" class="btn btn-light"'; //onclick="DeletePM(\''.$method->id.'\')"
+<button type="submit" id="deletebtn_'.$method->id.'" name="delete_paymentmethod" value="delete_paymentmethod" class="btn btn-light"'; //onclick="DeletePM(\''.$method->id.'\')"
 if ( !empty($method->default_source) && $countPM > 1 ) { $paymentmethods .= " disabled"; }
 $paymentmethods .= "><i class='fas fa-trash fa-fw' style='color:Red'></i> ".__( 'Delete', 'doliconnect').'</button>';
 }
