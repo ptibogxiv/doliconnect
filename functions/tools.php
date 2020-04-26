@@ -2353,22 +2353,22 @@ $paymentmethods .= "' id='nav-tab-".$method->id."'><br><form id='payment_method_
 $paymentmethods .= "<input type='hidden' name='action' value='dolipaymentmethod_request'>";
 $paymentmethods .= "<input type='hidden' name='dolipaymentmethod-nonce' value='".wp_create_nonce( 'dolipaymentmethod-nonce')."'>";
 $paymentmethods .= "<script>";
-$paymentmethods .= "$(document).ready(function(){
+$paymentmethods .= "(function ($) {
+$(document).ready(function(){
 $('#defaultbtn_".$method->id.", #deletebtn_".$method->id."').on('click',function(event){
 event.preventDefault();
-jQuery('#DoliconnectLoadingModal').modal('show');
+$('#DoliconnectLoadingModal').modal('show');
 var test = $(this).val();
-//alert('JQuery default Running! ".$method->id." ' + test);
 var form = document.getElementById('payment_method_".$method->id."');
 var inputvar = document.createElement('input');
 inputvar.setAttribute('type', 'hidden');
 inputvar.setAttribute('name', 'action_paymentmethod');
 inputvar.setAttribute('value', test);
 form.appendChild(inputvar);
-//document.body.appendChild(form);
-jQuery('#payment_method_".$method->id."').submit();
+$('#payment_method_".$method->id."').submit();
 });
-});";
+});
+})(jQuery);";
 $paymentmethods .= "</script>";
 //$password .= "<script>";
 //$password .= 'jQuery(document).ready(function($) {
