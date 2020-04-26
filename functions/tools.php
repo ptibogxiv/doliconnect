@@ -2349,54 +2349,39 @@ $paymentmethods .= "<div class='tab-pane fade";
 if ( $method->default_source ) {
 $paymentmethods .= " show active"; 
 }
-$paymentmethods .= "' id='nav-tab-".$method->id."'><br><form id='payment_method_".$method->id."' method='post' action='".$url."'>";//action='".$url."'admin_url('admin-ajax.php')
-$paymentmethods .= "<input type='hidden' name='action' value='dolipaymentmethod_request'>";
-$paymentmethods .= "<input type='hidden' name='dolipaymentmethod-nonce' value='".wp_create_nonce( 'dolipaymentmethod-nonce')."'>";
+$paymentmethods .= "' id='nav-tab-".$method->id."'><br><form id='payment_method_".$method->id."' method='post' action='".esc_url( admin_url( 'admin-ajax.php' ) )."'>";
 $paymentmethods .= "<script>";
 $paymentmethods .= "(function ($) {
 $(document).ready(function(){
 $('#defaultbtn_".$method->id.", #deletebtn_".$method->id."').on('click',function(event){
 event.preventDefault();
 $('#DoliconnectLoadingModal').modal('show');
-var test = $(this).val();
-var form = document.getElementById('payment_method_".$method->id."');
-var inputvar = document.createElement('input');
-inputvar.setAttribute('type', 'hidden');
-inputvar.setAttribute('name', 'action_paymentmethod');
-inputvar.setAttribute('value', test);
-form.appendChild(inputvar);
-$('#payment_method_".$method->id."').submit();
+
+        $.ajax({
+          url: '".esc_url( admin_url( 'admin-ajax.php' ) )."',
+          type: 'POST',
+          data: {
+            'action': 'dolipaymentmethod_request',
+            'dolipaymentmethod-nonce': '".wp_create_nonce( 'dolipaymentmethod-nonce')."',
+            'payment_method': '".$method->id."',
+            'action_payment_method': $(this).val()
+          }
+        }).done(function(response) {
+      //if (response.success) {
+     //document.location = url;
+      //} else {
+      if (document.getElementById('DoliPaymentmethodAlert')) {
+      document.getElementById('DoliPaymentmethodAlert').innerHTML = response.data;      
+      }
+      //}
+$('#DoliconnectLoadingModal').modal('hide');
+        });
+
 });
 });
 })(jQuery);";
 $paymentmethods .= "</script>";
-//$password .= "<script>";
-//$password .= 'jQuery(document).ready(function($) {
-//	
-//	jQuery("#dolirpw-form").on("submit", function(e) {
-//  jQuery("#DoliconnectLoadingModal").modal("show");
-//	e.preventDefault();
-//    
-//	var $form = $(this);
-//  var url = "'.$url.'";  
-//jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function (e) { 
-//		$.post($form.attr("action"), $form.serialize(), function(response) {
-//      if (response.success) {
-//      document.location = url;
-//      } else {
-//      if (document.getElementById("DoliRpwAlert")) {
-//      document.getElementById("DoliRpwAlert").innerHTML = response.data;      
-//      }
-//      }
-//jQuery("#DoliconnectLoadingModal").modal("hide");
-//
-//		}, "json");  
-//  });
-//});
-//});';
-//$password .= "</script>";
 
-$paymentmethods .= "<input type='hidden' name='payment_method' value='".$method->id."'>";
 $paymentmethods .= "<div class='row'>";
 $paymentmethods .= "<div class='col'>
   <dt>".__( 'Debtor', 'doliconnect')."</dt>
@@ -2435,15 +2420,15 @@ $paymentmethods .= '<button type="button" onclick="PaySepaDebitPM(\''.$method->i
 $paymentmethods .= '<button type="button" onclick="PayPM(\''.$method->type.'\')" class="btn btn-danger btn-block">'.__( 'Pay', 'doliconnect')." ".doliprice($object, 'ttc', $currency).'</button>';
 }
 } else {
-$paymentmethods .= '<button type="submit" id="defaultbtn_'.$method->id.'" name="default_paymentmethod" value="default_paymentmethod" class="btn btn-light"'; //onclick="DefaultPM(\''.$method->id.'\')"
+$paymentmethods .= '<button type="button" id="defaultbtn_'.$method->id.'" name="default_payment_method" value="default_payment_method" class="btn btn-light"'; //onclick="DefaultPM(\''.$method->id.'\')"
 if ( !empty($method->default_source) ) { $paymentmethods .= " disabled"; }
 $paymentmethods .= "><i class='fas fa-star fa-fw' style='color:Gold'></i> ".__( "Favourite", 'doliconnect').'</button>
-<button type="submit" id="deletebtn_'.$method->id.'" name="delete_paymentmethod" value="delete_paymentmethod" class="btn btn-light"'; //onclick="DeletePM(\''.$method->id.'\')"
+<button type="button" id="deletebtn_'.$method->id.'" name="delete_payment_method" value="delete_payment_method" class="btn btn-light"'; //onclick="DeletePM(\''.$method->id.'\')"
 if ( !empty($method->default_source) && $countPM > 1 ) { $paymentmethods .= " disabled"; }
 $paymentmethods .= "><i class='fas fa-trash fa-fw' style='color:Red'></i> ".__( 'Delete', 'doliconnect').'</button>';
 }
 $paymentmethods .= "</div>";
-$paymentmethods .= "</form></div>";
+$paymentmethods .= "</div></form>";//
 }}
 
 if ( $countPM < 5 && isset($listpaymentmethods->stripe) && in_array('card', $listpaymentmethods->stripe->types) && empty($thirdparty->mode_reglement_id) ) {

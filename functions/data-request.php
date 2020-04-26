@@ -89,7 +89,7 @@ wp_send_json_error( __( 'A security error occured', 'doliconnect'));
 }
 
 add_action('wp_ajax_dolisettings_request', 'dolisettings_request');
-add_action('wp_ajax_nopriv_dolisettings_request', 'dolisettings_request');
+//add_action('wp_ajax_nopriv_dolisettings_request', 'dolisettings_request');
 
 function dolisettings_request(){
 global $current_user;
@@ -209,14 +209,31 @@ wp_send_json_error( __( 'A security error occured', 'doliconnect'));
 }
 
 add_action('wp_ajax_dolipaymentmethod_request', 'dolipaymentmethod_request');
-add_action('wp_ajax_nopriv_dolipaymentmethod_request', 'dolipaymentmethod_request');
+//add_action('wp_ajax_nopriv_dolipaymentmethod_request', 'dolipaymentmethod_request');
 
 function dolipaymentmethod_request(){
-global $wpdb; 
+global $wpdb, $current_user;
+
+$request = "/doliconnector/".doliconnector($current_user, 'fk_soc')."/paymentmethods"; 
 
 if ( wp_verify_nonce( trim($_POST['dolipaymentmethod-nonce']), 'dolipaymentmethod-nonce')) {
 
-wp_send_json_success('success'); 
+if ( isset($_POST['action_payment_method']) && $_POST['action_payment_method'] == "default_payment_method") {
+
+$data = [
+'default' => 1
+];
+$gateway = callDoliApi("PUT", $request."/".sanitize_text_field($_POST['payment_method']), $data, dolidelay( 0, true));
+$gateway = callDoliApi("GET", $request, null, dolidelay('paymentmethods', true));
+wp_send_json_success(__( 'You changed your default payment method', 'doliconnect'));
+
+} elseif ( isset($_POST['action_payment_method']) && $_POST['action_payment_method'] == "delete_payment_method") {
+
+$gateway = callDoliApi("DELETE", $request."/".sanitize_text_field($_POST['payment_method']), null, dolidelay( 0, true));
+$gateway = callDoliApi("GET", $request, null, dolidelay('paymentmethods', true));
+wp_send_json_success(__( 'You deleted a payment method', 'doliconnect'));
+
+}
 
 }	else {
 wp_send_json_error( __( 'A security error occured', 'doliconnect')); 
