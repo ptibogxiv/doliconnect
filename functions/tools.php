@@ -2198,7 +2198,6 @@ $('#DoliconnectLoadingModal').modal('hide');
 });
 })(jQuery);";
 $paymentmethods .= "</script>";
-
 $paymentmethods .= "<div class='row'>";
 $paymentmethods .= "<div class='col'>
   <dt>".__( 'Debtor', 'doliconnect')."</dt>
@@ -2254,6 +2253,12 @@ if (empty($countPM)) {
 $paymentmethods .= " show active"; 
 }
 $paymentmethods .= "' id='nav-tab-card'><br>";
+$paymentmethods .= "<input id='cardholder-name' name='cardholder-name' value='' type='text' class='form-control' placeholder='".__( "Full name on the card", 'doliconnect')."' autocomplete='off' required>
+<label for='card-element'></label><div class='form-control' id='card-element'><!-- a Stripe Element will be inserted here. --></div>";
+$paymentmethods .= "<div id='card-error-message' class='text-danger' role='alert'><!-- a Stripe Message will be inserted here. --></div>";
+$paymentmethods .= "<p class='text-justify'>";
+$paymentmethods .= "<small><strong>Note:</strong> ".sprintf( esc_html__( 'By providing your card and confirming this form, you are authorizing %s and Stripe, our payment service provider, to send instructions to the financial institution that issued your card to take payments from your card account in accordance with those instructions. You are entitled to a refund from your financial institution under the terms and conditions of your agreement with it. A refund must be claimed within 90 days starting from the date on which your card was debited.', 'doliconnect'), get_bloginfo('name'))."</small>";
+$paymentmethods .= "</p>";
 $paymentmethods .= "<script>";
 $paymentmethods .= "function dolistripecard(){";
 if ( isset($listpaymentmethods->stripe->publishable_key) ) {
@@ -2299,13 +2304,6 @@ cardButton.disabled = false;
 $paymentmethods .= "}";
 $paymentmethods .= "window.onload=dolistripecard();";
 $paymentmethods .= "</script>";
-
-$paymentmethods .= "<input id='cardholder-name' name='cardholder-name' value='' type='text' class='form-control' placeholder='".__( "Full name on the card", 'doliconnect')."' autocomplete='off' required>
-<label for='card-element'></label><div class='form-control' id='card-element'><!-- a Stripe Element will be inserted here. --></div>";
-$paymentmethods .= "<div id='card-error-message' class='text-danger' role='alert'><!-- a Stripe Message will be inserted here. --></div>";
-$paymentmethods .= "<p class='text-justify'>";
-$paymentmethods .= "<small><strong>Note:</strong> ".sprintf( esc_html__( 'By providing your card and confirming this form, you are authorizing %s and Stripe, our payment service provider, to send instructions to the financial institution that issued your card to take payments from your card account in accordance with those instructions. You are entitled to a refund from your financial institution under the terms and conditions of your agreement with it. A refund must be claimed within 90 days starting from the date on which your card was debited.', 'doliconnect'), get_bloginfo('name'))."</small>";
-$paymentmethods .= "</p>";
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
 $paymentmethods .= "<button type='button' id='cardPayButton' class='btn btn-danger btn-block'>".__( 'Pay', 'doliconnect')." ".doliprice($object, 'ttc', $currency)."</button>";
 } else {
@@ -2322,8 +2320,6 @@ $paymentmethods .= "<div class='tab-pane";
 $paymentmethods .= " fade";
 //}
 $paymentmethods .= "' id='nav-tab-sepa_debit'><br>";
-$paymentmethods .= "<script>";
-$paymentmethods .= "</script>";
 $paymentmethods .= "<input id='ibanholder-name' name='ibanholder-name' value='' type='text' class='form-control' placeholder='".__( "Full name of the owner", 'doliconnect')."' autocomplete='off' required>
 <label for='iban-element'></label><div class='form-control' id='iban-element'><!-- a Stripe Element will be inserted here. --></div>";
 $paymentmethods .= "<div id='bank-name' role='alert'><!-- a Stripe Message will be inserted here. --></div>";
@@ -2331,6 +2327,8 @@ $paymentmethods .= "<div id='iban-error-message' class='text-danger' role='alert
 $paymentmethods .= "<p class='text-justify'>";
 $paymentmethods .= "<small><strong>Note:</strong> ".sprintf( esc_html__( 'By providing your IBAN and confirming this form, you are authorizing %s and Stripe, our payment service provider, to send instructions to your bank to debit your account and your bank to debit your account in accordance with those instructions. You are entitled to a refund from your bank under the terms and conditions of your agreement with it. A refund must be claimed within 8 weeks starting from the date on which your account was debited.', 'doliconnect'), get_bloginfo('name'))."</small>";
 $paymentmethods .= "</p>";
+$paymentmethods .= "<script>";
+$paymentmethods .= "</script>";
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
 $paymentmethods .= "<button id='cardPayButton' class='btn btn-danger btn-block'>".__( 'Pay', 'doliconnect')." ".doliprice($object, 'ttc', $currency)."</button>";
 } else {
