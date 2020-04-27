@@ -2101,7 +2101,7 @@ $paymentmethods .= "<div class='card-body'><ul class='nav bg-light nav-pills rou
 
 if ( $listpaymentmethods->payment_methods != null ) {
 foreach ( $listpaymentmethods->payment_methods as $method ) {
-$paymentmethods .= '<li id="li-'.$method->id.'" class="nav-item"><a onclick="my_code();" class="nav-link';
+$paymentmethods .= '<li id="li-'.$method->id.'" class="nav-item"><a class="nav-link';
 if ( (!empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id != $method->id && !empty($module) && is_object($object) && isset($object->id)) || (date('Y/n') >= $method->expiration && !empty($object) && !empty($method->expiration)) ) { $paymentmethods .=" disabled "; }
 elseif ( !empty($method->default_source) ) { $paymentmethods .=" active"; }
 $paymentmethods .= '" data-toggle="pill" href="#nav-tab-'.$method->id.'"><i ';
@@ -2122,10 +2122,16 @@ if ( $method->default_source ) { $paymentmethods .= " <i class='fas fa-star fa-f
 $paymentmethods .= "<span class='flag-icon flag-icon-".strtolower($method->country)." float-right'></span></a></li>";
 }}
 if (isset($listpaymentmethods->stripe) && in_array('card', $listpaymentmethods->stripe->types) && empty($thirdparty->mode_reglement_id) ) {
-$paymentmethods .= '<li class="nav-item"><a onclick="my_code();" class="nav-link';
+$paymentmethods .= '<li class="nav-item"><a onclick="dolistripecard();" class="nav-link';
 if ($countPM >= 5) $paymentmethods .= " disabled"; 
 $paymentmethods .= '" data-toggle="pill" href="#nav-tab-card">
-<i class="fas fa-credit-card fa-fw float-left"></i> '.__( 'Pay by bank card', 'doliconnect').'</a></li>';
+<i class="fas fa-credit-card fa-fw float-left"></i> ';
+if ( !empty($module) && is_object($object) && isset($object->id) ) {
+$paymentmethods .= __( 'Pay by credit/debit card', 'doliconnect');
+} else {
+$paymentmethods .= __( 'Add a credit/debit card', 'doliconnect');
+}
+$paymentmethods .= "</a></li>";
 }
 //if (isset($listpaymentmethods->stripe) && in_array('sepa_debit', $listpaymentmethods->stripe->types) && empty($thirdparty->mode_reglement_id) ) {
 //$paymentmethods .= '<li class="nav-item"><a onclick="my_code();" class="nav-link';
@@ -2138,15 +2144,15 @@ $paymentmethods .= '<li class="nav-item"><a class="nav-link" data-toggle="pill" 
 <i class="fab fa-paypal float-left"></i>  Paypal</a></li>';
 }
 if ( isset($listpaymentmethods->VIR) && !empty($listpaymentmethods->VIR) ) {
-$paymentmethods .= '<li id="li-VIR" class="nav-item"><a onclick="my_code();" class="nav-link" data-toggle="pill" href="#nav-tab-vir">
+$paymentmethods .= '<li id="li-VIR" class="nav-item"><a class="nav-link" data-toggle="pill" href="#nav-tab-vir">
 <i class="fa fa-university fa-fw float-left" style="color:DarkGrey"></i>  '.__( 'Pay by bank transfert', 'doliconnect').'</a></li>';
 }
 if ( isset($listpaymentmethods->CHQ) && !empty($listpaymentmethods->CHQ) ) {
-$paymentmethods .= '<li id="li-CHQ" class="nav-item"><a onclick="my_code();" class="nav-link" data-toggle="pill" href="#nav-tab-chq">
+$paymentmethods .= '<li id="li-CHQ" class="nav-item"><a class="nav-link" data-toggle="pill" href="#nav-tab-chq">
 <i class="fa fa-money-check fa-fw float-left" style="color:Tan"></i>  '.__( 'Pay by bank check', 'doliconnect').'</a></li>';
 }    
 if ( ! empty(dolikiosk()) ) {
-$paymentmethods .= '<li class="nav-item"><a onclick="my_code();" class="nav-link" data-toggle="pill" href="#nav-tab-kiosk">
+$paymentmethods .= '<li class="nav-item"><a class="nav-link" data-toggle="pill" href="#nav-tab-kiosk">
 <i class="fas fa-money-bill-alt fa-fw float-left" style="color:#85bb65"></i> '.__( 'Pay at front desk', 'doliconnect').'</a></li>';
 }
 
@@ -2178,6 +2184,10 @@ $('#DoliconnectLoadingModal').modal('show');
       //if (response.success) {
      //document.location = url;
       //} else {
+//if ($(this).val() = 'delete_payment_method')  {
+//document.getElementById('li-".$method->id."').remove();
+//document.getElementById('nav-tab-".$method->id."').remove();
+//}
       if (document.getElementById('DoliPaymentmethodAlert')) {
       document.getElementById('DoliPaymentmethodAlert').innerHTML = response.data;      
       }
@@ -2227,12 +2237,12 @@ $paymentmethods .= '<button type="button" onclick="PaySepaDebitPM(\''.$method->i
 $paymentmethods .= '<button type="button" onclick="PayPM(\''.$method->type.'\')" class="btn btn-danger btn-block">'.__( 'Pay', 'doliconnect')." ".doliprice($object, 'ttc', $currency).'</button>';
 }
 } else {
-$paymentmethods .= '<button type="button" id="defaultbtn_'.$method->id.'" name="default_payment_method" value="default_payment_method" class="btn btn-light"'; //onclick="DefaultPM(\''.$method->id.'\')"
+$paymentmethods .= "<button type='button' id='defaultbtn_".$method->id."' name='default_payment_method' value='default_payment_method' class='btn btn-light'"; //onclick="DefaultPM(\''.$method->id.'\')"
 if ( !empty($method->default_source) ) { $paymentmethods .= " disabled"; }
-$paymentmethods .= "><i class='fas fa-star fa-fw' style='color:Gold'></i> ".__( "Favourite", 'doliconnect').'</button>
-<button type="button" id="deletebtn_'.$method->id.'" name="delete_payment_method" value="delete_payment_method" class="btn btn-light"'; //onclick="DeletePM(\''.$method->id.'\')"
+$paymentmethods .= "title='".__( 'Favourite', 'doliconnect')."'><i class='fas fa-star fa-fw' style='color:Gold'></i> ".__( "Favourite", 'doliconnect')."</button>
+<button type='button' id='deletebtn_".$method->id."' name='delete_payment_method' value='delete_payment_method' class='btn btn-light'"; //onclick="DeletePM(\''.$method->id.'\')"
 if ( !empty($method->default_source) && $countPM > 1 ) { $paymentmethods .= " disabled"; }
-$paymentmethods .= "><i class='fas fa-trash fa-fw' style='color:Red'></i> ".__( 'Delete', 'doliconnect').'</button>';
+$paymentmethods .= "title='".__( 'Delete', 'doliconnect')."'><i class='fas fa-trash fa-fw' style='color:Red'></i> ".__( 'Delete', 'doliconnect').'</button>';
 }
 $paymentmethods .= "</div>";
 $paymentmethods .= "</div></form>";//
@@ -2245,6 +2255,30 @@ $paymentmethods .= " show active";
 }
 $paymentmethods .= "' id='nav-tab-card'><br>";
 $paymentmethods .= "<script>";
+$paymentmethods .= "function dolistripecard(){";
+if ( isset($listpaymentmethods->stripe->publishable_key) ) {
+$paymentmethods .= "var elements = stripe.elements();";
+}
+if (!empty($listpaymentmethods->stripe->client_secret)) { 
+$paymentmethods .= "var clientSecret = '".$listpaymentmethods->stripe->client_secret."';";
+}
+$paymentmethods .= "var cardElement = elements.create('card', {style: style});
+cardElement.mount('#card-element');
+var cardholderName = document.getElementById('cardholder-name');
+cardholderName.value = '';
+var displayCardError = document.getElementById('card-error-message');
+displayCardError.textContent = '';
+cardElement.on('change', function(event) {
+    console.log('Reset error message');
+    displayCardError.textContent = '';
+  if (event.error) {
+    displayCardError.textContent = event.error.message;
+    displayCardError.classList.add('visible');
+  } else {
+    displayCardError.textContent = '';
+    displayCardError.classList.remove('visible');
+  }
+});";
 $paymentmethods .= "(function ($) {
 $(document).ready(function(){
 $('#cardButton').on('click',function(event){
@@ -2252,17 +2286,20 @@ event.preventDefault();
 //$('#DoliconnectLoadingModal').modal('show');
 console.log('We click on cardButton');
 var cardholderName = document.getElementById('cardholder-name');
-if (cardholderName.value == ''){        
-$('#DoliconnectLoadingModal').modal('hide');         
+if (cardholderName.value == ''){               
 console.log('Field Card holder is empty');
 displayCardError.textContent = 'We need an owner as on your card';
-cardButton.disabled = false; 
+cardButton.disabled = false;
+///$('#DoliconnectLoadingModal').modal('hide');  
 }         
 
 });
 });
 })(jQuery);";
+$paymentmethods .= "}";
+$paymentmethods .= "window.onload=dolistripecard();";
 $paymentmethods .= "</script>";
+
 $paymentmethods .= "<input id='cardholder-name' name='cardholder-name' value='' type='text' class='form-control' placeholder='".__( "Full name on the card", 'doliconnect')."' autocomplete='off' required>
 <label for='card-element'></label><div class='form-control' id='card-element'><!-- a Stripe Element will be inserted here. --></div>";
 $paymentmethods .= "<div id='card-error-message' class='text-danger' role='alert'><!-- a Stripe Message will be inserted here. --></div>";
@@ -2272,7 +2309,7 @@ $paymentmethods .= "</p>";
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
 $paymentmethods .= "<button type='button' id='cardPayButton' class='btn btn-danger btn-block'>".__( 'Pay', 'doliconnect')." ".doliprice($object, 'ttc', $currency)."</button>";
 } else {
-$paymentmethods .= "<button type='button' id='cardButton' class='btn btn-warning btn-block' title='".__( 'Add', 'doliconnect')."'>".__( 'Add', 'doliconnect')."</button>";
+$paymentmethods .= "<button type='button' id='cardButton' class='btn btn-light btn-block' title='".__( 'Add', 'doliconnect')."'><i class='fas fa-plus-circle fa-fw'></i> ".__( 'Add', 'doliconnect')."</button>";
 }
 $paymentmethods .= "</div>";
 }
@@ -2376,37 +2413,6 @@ $paymentmethods .= '<div class="tab-pane fade" id="nav-tab-kiosk"><br>
 tempor incididunt ut labore et dolore magna aliqua. </p>
 </div>';
 } 
-$paymentmethods .= "<script>";
-$paymentmethods .= "function my_code(){";
-if ( isset($listpaymentmethods->stripe->publishable_key) ) {
-$paymentmethods .= "var elements = stripe.elements();";
-}
-if (!empty($listpaymentmethods->stripe->client_secret)) { 
-$paymentmethods .= "var clientSecret = '".$listpaymentmethods->stripe->client_secret."';";
-}
-$paymentmethods .= "var cardElement = elements.create('card', {style: style});
-cardElement.mount('#card-element');
-var cardholderName = document.getElementById('cardholder-name');
-cardholderName.value = '';
-var displayCardError = document.getElementById('card-error-message');
-displayCardError.textContent = '';
-cardElement.on('change', function(event) {
-    console.log('Reset error message');
-    displayCardError.textContent = '';
-  if (event.error) {
-    displayCardError.textContent = event.error.message;
-    displayCardError.classList.add('visible');
-  } else {
-    displayCardError.textContent = '';
-    displayCardError.classList.remove('visible');
-  }
-});";
-
-$paymentmethods .= "}";
-
-$paymentmethods .= "window.onload=my_code();";
-
-$paymentmethods .= "</script>";
 
 $paymentmethods .= "</div><br><small><b>".__( 'Payment term', 'doliconnect').":</b> ";
 if (!empty($thirdparty->cond_reglement_id)) { 
