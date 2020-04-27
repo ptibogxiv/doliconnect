@@ -2184,7 +2184,7 @@ $('#DoliconnectLoadingModal').modal('show');
       //if (response.success) {
      //document.location = url;
       //} else {
-//if ($(this).val() = 'delete_payment_method')  {
+//if ($(this).val() == 'delete_payment_method')  {
 //document.getElementById('li-".$method->id."').remove();
 //document.getElementById('nav-tab-".$method->id."').remove();
 //}
@@ -2296,7 +2296,45 @@ console.log('Field Card holder is empty');
 displayCardError.textContent = 'We need an owner as on your card';
 cardButton.disabled = false;
 ///$('#DoliconnectLoadingModal').modal('hide');  
-}         
+} 
+        else
+        	{
+  stripe.confirmCardSetup(
+    clientSecret,
+    {
+      payment_method: {
+        card: cardElement,
+        billing_details: {name: cardholderName.value}
+      }
+    }
+  ).then(function(result) {
+    if (result.error) {
+      // Display error.message
+jQuery('#DoliconnectLoadingModal').modal('hide');
+console.log('Error occured when adding card');
+displayCardError.textContent = result.error.message;    
+    } else {
+      // The setup has succeeded. Display a success message.
+jQuery('#DoliconnectLoadingModal').modal('show');
+var form = document.createElement('form');
+form.setAttribute('action', '".$url."');
+form.setAttribute('method', 'post');
+form.setAttribute('id', 'doliconnect-paymentmethodsform');
+var inputvar = document.createElement('input');
+inputvar.setAttribute('type', 'hidden');
+inputvar.setAttribute('name', 'add_paymentmethod');
+inputvar.setAttribute('value', result.setupIntent.payment_method);
+form.appendChild(inputvar);
+var inputvar = document.createElement('input');
+inputvar.setAttribute('type', 'hidden');
+inputvar.setAttribute('name', 'default');
+inputvar.setAttribute('value', jQuery('input:radio[name=cardDefault]:checked').val());
+form.appendChild(inputvar);
+document.body.appendChild(form);
+form.submit();
+    }
+  }); 
+          }     
 
 });
 });
