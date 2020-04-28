@@ -854,7 +854,7 @@ if ( !isset($thirdparty->error) && isset($_GET['supplier']) && isset($thirdparty
 print "<li class='list-group-item'>";
 
 print "<div class='row'><div class='col-4 col-md-2'><center>";
-print doliconnect_image('thirdparty', $thirdparty->id.'/logos/'.$thirdparty->logo, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), $thirdparty->entity);
+print doliconnect_image('thirdparty', $thirdparty->id.'/logos/'.$thirdparty->logo, array('entity'=> $thirdparty->entity), esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 print "</center></div><div class='col-8 col-md-10'>".(!empty($thirdparty->name_alias)?$thirdparty->name_alias:$thirdparty->name);
 if ( !empty($thirdparty->country_id) ) {  
 if ( function_exists('pll_the_languages') ) { 

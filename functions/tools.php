@@ -103,14 +103,18 @@ $image .= "<img src='".$up_dir['baseurl'].'/doliconnect/'.$module.$dir.'/'.explo
 $image .= "<i class='fa fa-cube fa-fw fa-2x'></i>";
 }
 } else {
-
-if (!is_file($up_dir['basedir'].'/doliconnect/'.$module.$dir.'/'.explode('.', $img->relativename, 2)[0].'-'.$options['size'].'.'.explode('.', $img->relativename, 2)[1])) {
+$picture = '/doliconnect/'.$module.$dir.'/'.$img->relativename;
+if (isset($options['size'])) {
+$picture2 = '/doliconnect/'.$module.$dir.'/'.explode('.', $img->relativename, 2)[0].'-'.$options['size'].'.'.explode('.', $img->relativename, 2)[1];
+$picture = $picture2;
+}
+if (isset($options['size']) && !is_file($up_dir['basedir'].$picture)) {
 $imgy = wp_get_image_editor($file); 
 $imgy->resize( 350, 350, true );
 $avatar = $imgy->generate_filename($options['size'],$up_dir['basedir']."/doliconnect/".$module.$dir."/", NULL );
 $imgy->save($avatar);
 }
-$image .= "<img src='".$up_dir['baseurl'].'/doliconnect/'.$module.$dir.'/'.explode('.', $img->relativename, 2)[0].'-'.$options['size'].'.'.explode('.', $img->relativename, 2)[1]."' class='img-fluid rounded-lg' loading='lazy' alt='".$img->relativename."'>";
+$image .= "<img src='".$up_dir['baseurl'].$picture."' class='img-fluid rounded-lg' loading='lazy' alt='".$img->relativename."'>";
 
 }
 $image .= "</div>";
