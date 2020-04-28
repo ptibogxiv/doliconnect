@@ -314,8 +314,8 @@ print "<div class='list-group'>";
 foreach ($resultatsc->childs as $categorie) {
 
 print "<a href='".esc_url( add_query_arg( 'category', $categorie->id, doliconnecturl('dolishop')) )."' class='list-group-item list-group-item-action";
-if ( $categorie->id == $_GET['category'] && !isset($_GET['subcategory']) ) { print " active"; }
-print "'>".doliproduct($categorie, 'label')."</a>"; //."<br />".doliproduct($categorie, 'description')
+if ( isset($_GET['category']) && !isset($_GET['subcategory']) && $categorie->id == $_GET['category']) { print " active"; }
+print "'>".doliproduct($categorie, 'label')."</a>";
 
 if ( isset($_GET['category']) && $categorie->id == $_GET['category'] ) {
 
@@ -329,7 +329,7 @@ $arr_params = array( 'category' => $_GET['category'], 'subcategory' => $categori
 $return = esc_url( add_query_arg( $arr_params, doliconnecturl('dolishop')) );
 
 print "<a href='".$return."' class='list-group-item list-group-item-action";
-if ( $categorie->id == $_GET['subcategory'] ) { print " active"; }
+if ( isset($_GET['subcategory']) && $categorie->id == $_GET['subcategory'] ) { print " active"; }
 print "'>>".doliproduct($categorie, 'label')."</a>"; 
 }
 
