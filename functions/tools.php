@@ -55,10 +55,10 @@ $pagination .= "</ul></nav>";
 return $pagination;
 }
 
-function doliconnect_image($module, $id, $nb = 1, $refresh = null, $entity = null) {
+function doliconnect_image($module, $id, $options = array(), $refresh = null) {
 
 if (is_numeric($id)) {
-$imgs = callDoliApi("GET", "/documents?modulepart=".$module."&id=".$id, null, dolidelay('document', $refresh), $entity);   
+$imgs = callDoliApi("GET", "/documents?modulepart=".$module."&id=".$id, null, dolidelay('document', $refresh), $options['entity']);   
 $image = "<div class='row'>";
 $subdir = '';
 $dir = '/'.$id;
@@ -68,13 +68,13 @@ $subdir = substr($num, 1, 1).'/'.substr($num, 0, 1).'/'.$id.'/';
 $dir = '/'.substr($num, 1, 1).'/'.substr($num, 0, 1).'/'.$id;
 }
 if ( !isset($imgs->error) && $imgs != null ) {
-$imgs = array_slice((array) $imgs, 0, $nb);
+$imgs = array_slice((array) $imgs, 0, $options['limit']);
 foreach ($imgs as $img) {
 $up_dir = wp_upload_dir();
 $image .= "<div class='col'>";
 $file=$up_dir['basedir'].'/doliconnect/'.$module.$dir.'/'.$img->relativename;
 if (!is_file($file)) {
-$imgj =  callDoliApi("GET", "/documents/download?modulepart=".$module."&original_file=".$subdir.$img->level1name."/".$img->relativename, null, dolidelay('document', $refresh), $entity);
+$imgj =  callDoliApi("GET", "/documents/download?modulepart=".$module."&original_file=".$subdir.$img->level1name."/".$img->relativename, null, dolidelay('document', $refresh), $options['entity']);
 //$image .= var_dump($imgj);
 $imgj = (array) $imgj; 
 if (is_array($imgj) && !isset($imgj['error']) && preg_match('/^image/', $imgj['content-type'])) {
@@ -90,12 +90,28 @@ mkdir($up_dir['basedir'].'/doliconnect/'.$module.$dir, 0777, true);
 //}
 $file=$up_dir['basedir'].'/doliconnect/'.$module.$dir.'/'.$img->relativename;
 file_put_contents($file, base64_decode($imgj['content']));
-$image .= "<img src='".$up_dir['baseurl'].'/doliconnect/'.$module.$dir.'/'.$img->relativename."' class='img-fluid rounded-lg' loading='lazy' alt='".$img->relativename."'>"; 
+
+if (!is_file($up_dir['basedir'].'/doliconnect/'.$module.$dir.'/'.explode('.', $img->relativename, 2)[0].'-'.$options['size'].'.'.explode('.', $img->relativename, 2)[1])) {
+$imgy = wp_get_image_editor($file); 
+$imgy->resize( 350, 350, true );
+$avatar = $imgy->generate_filename($options['size'],$up_dir['basedir']."/doliconnect/".$module.$dir."/", NULL );
+$imgy->save($avatar);
+}
+$image .= "<img src='".$up_dir['baseurl'].'/doliconnect/'.$module.$dir.'/'.explode('.', $img->relativename, 2)[0].'-'.$options['size'].'.'.explode('.', $img->relativename, 2)[1]."' class='img-fluid rounded-lg' loading='lazy' alt='".$img->relativename."'>";
+
 } else {
 $image .= "<i class='fa fa-cube fa-fw fa-2x'></i>";
 }
 } else {
-$image .= "<img src='".$up_dir['baseurl'].'/doliconnect/'.$module.$dir.'/'.$img->relativename."' class='img-fluid rounded-lg' loading='lazy' alt='".$img->relativename."'>";
+
+if (!is_file($up_dir['basedir'].'/doliconnect/'.$module.$dir.'/'.explode('.', $img->relativename, 2)[0].'-'.$options['size'].'.'.explode('.', $img->relativename, 2)[1])) {
+$imgy = wp_get_image_editor($file); 
+$imgy->resize( 350, 350, true );
+$avatar = $imgy->generate_filename($options['size'],$up_dir['basedir']."/doliconnect/".$module.$dir."/", NULL );
+$imgy->save($avatar);
+}
+$image .= "<img src='".$up_dir['baseurl'].'/doliconnect/'.$module.$dir.'/'.explode('.', $img->relativename, 2)[0].'-'.$options['size'].'.'.explode('.', $img->relativename, 2)[1]."' class='img-fluid rounded-lg' loading='lazy' alt='".$img->relativename."'>";
+
 }
 $image .= "</div>";
 }} elseif ($module == 'product' || $module == 'category') {
@@ -106,7 +122,7 @@ $image .= "</div>";
 $up_dir = wp_upload_dir();
 $file=$up_dir['basedir'].'/doliconnect/'.$module.'/'.$id;
 if (!is_file($file)) {
-$imgj =  callDoliApi("GET", "/documents/download?modulepart=".$module."&original_file=".$id, null, dolidelay('document', $refresh), $entity);
+$imgj =  callDoliApi("GET", "/documents/download?modulepart=".$module."&original_file=".$id, null, dolidelay('document', $refresh), $options['entity']);
 //$image .= var_dump($imgj);
 $imgj = (array) $imgj; 
 if (is_array($imgj) && preg_match('/^image/', $imgj['content-type'])) {
@@ -2404,7 +2420,7 @@ if (!empty($listpaymentmethods->VIR->iban)) { $paymentmethods .= "<div class='co
   <dt>IBAN</dt>
   <dd>".$listpaymentmethods->VIR->iban."</dd>
 </div>"; }
-if (!empty($listpaymentmethods->VIR->bic)) { $paymentmethods .= "<div class='col'
+if (!empty($listpaymentmethods->VIR->bic)) { $paymentmethods .= "<div class='col'>
   <dt>BIC/SWIFT</dt>
   <dd>".$listpaymentmethods->VIR->bic."</dd>
 </div>"; }

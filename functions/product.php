@@ -520,7 +520,7 @@ $wish = 0;
 if (!empty($product->quantity)) $wish = $product->quantity;
 $product = callDoliApi("GET", "/products/".$product->id."?includestockdata=".$includestock."&includesubproducts=true", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 $list = "<li class='list-group-item' id='prod-li-".$product->id."'><table width='100%' style='border:0px'><tr><td width='20%' style='border:0px'><center>";
-$list .= doliconnect_image('product', $product->id, 1, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), $product->entity);
+$list .= doliconnect_image('product', $product->id, array('limit'=>1, 'entity'=>$product->entity, 'size'=>'150x150'), esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 $list .= "</center></td>";
 
 $list .= "<td width='80%' style='border:0px'><b>".doliproduct($product, 'label')."</b>";
@@ -567,12 +567,12 @@ if (defined("DOLIBUG")) {
 $card = dolibug();
 } elseif ( $product->id>0 && $product->status == 1 ) {
 $card .= "<div class='col-12 d-block d-sm-block d-xs-block d-md-none'><center>";
-$card .= doliconnect_image('product', $product->id, 1, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), $product->entity);
+$card .= doliconnect_image('product', $product->id, array('limit'=>1, 'entity'=>$product->entity, 'size'=>'200x200'), esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 $card .= "</center>";
 //$card .= wp_get_attachment_image( $attributes['mediaID'], "ptibogxiv_large", "", array( "class" => "img-fluid" ) );
 $card .= "</div>";
 $card .= '<div class="col-md-4 d-none d-md-block"><center>';
-$card .= doliconnect_image('product', $product->id, 1, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), $product->entity);
+$card .= doliconnect_image('product', $product->id, array('limit'=>1, 'entity'=>$product->entity, 'size'=>'200x200'), esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 $card .= '</center>';
 //$card .= wp_get_attachment_image( $attributes['mediaID'], "ptibogxiv_square", "", array( "class" => "img-fluid" ) );
 $card .= "</div>";
