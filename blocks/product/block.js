@@ -1,8 +1,8 @@
 ( function( editor, components, i18n, element ) {
 	var el = element.createElement;
 	var registerBlockType = wp.blocks.registerBlockType;
-	var BlockControls = wp.editor.BlockControls;
-	var InspectorControls = wp.editor.InspectorControls;
+	var BlockControls = wp.blockEditor.BlockControls;
+	var InspectorControls = wp.blockEditor.InspectorControls;
 	var TextControl = wp.components.TextControl;
   var ToggleControl = wp.components.ToggleControl;
   var ServerSideRender = wp.components.ServerSideRender;
