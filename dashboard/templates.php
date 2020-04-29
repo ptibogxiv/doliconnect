@@ -960,15 +960,16 @@ $request = "/products?sortfield=t.label&sortorder=ASC&limit=".$limit."&page=".$p
 $resultats = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 //print $resultatso;
 
-if ( !isset($resultats->error) && $resultats != null ) { 
-print "<li class='list-group-item list-group-item-light'><center>".sprintf( esc_html__( 'Your search: %s', 'doliconnect'), esc_attr($_GET['search']))."</center></li>";
+if ( !isset($resultats->error) && $resultats != null ) {
+
+print "<li class='list-group-item list-group-item-light'><center>".sprintf( esc_html__( 'We have %s products with this search "%s"', 'doliconnect'), count($resultats), esc_attr($_GET['search']))."</center></li>";
 foreach ($resultats as $product) {
 
 print apply_filters( 'doliproductlist', $product);
  
 }
 } else {
-print "<li class='list-group-item list-group-item-light'><center>".sprintf( esc_html__( 'No product with this search: %s', 'doliconnect'), esc_attr($_GET['search']))."</center></li>";
+print "<li class='list-group-item list-group-item-light'><center>".sprintf( esc_html__( 'No product with this search: "%s"', 'doliconnect'), esc_attr($_GET['search']))."</center></li>";
 }
 print "</ul><div class='card-body'>";
 print dolipage($resultats, $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], 0, $limit);
@@ -1012,7 +1013,15 @@ $resultats = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(is
 if ( !isset($resultats->error) && $resultats != null ) {
 foreach ($resultats->childs as $categorie) {
 
-print "<a href='".esc_url( add_query_arg( 'category', $categorie->id, doliconnecturl('dolishop')) )."' class='list-group-item list-group-item-action'>".doliproduct($categorie, 'label')."</a>"; //."<br>".doliproduct($categorie, 'description')
+$requestp = "/products?sortfield=t.label&sortorder=ASC&category=".$categorie->id."&sqlfilters=(t.tosell=1)";
+$listproduct = callDoliApi("GET", $requestp, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+if (empty($listproduct) || isset($listproduct->error)) {
+$count = 0;
+} else {
+$count = count($listproduct);
+}
+
+print "<a href='".esc_url( add_query_arg( 'category', $categorie->id, doliconnecturl('dolishop')) )."' class='list-group-item list-group-item-action'>".doliproduct($categorie, 'label')." (".$count.")</a>"; //."<br>".doliproduct($categorie, 'description')
 
 }}
 }
@@ -1050,10 +1059,15 @@ $resultats = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(is
 if ( !isset($resultats->error) && $resultats != null ) {
 foreach ($resultats->childs as $categorie) {
 
-$arr_params = array( 'category' => $_GET['category'], 'subcategory' => $categorie->id);  
-$return = esc_url( add_query_arg( $arr_params, doliconnecturl('dolishop')) );
+$requestp = "/products?sortfield=t.label&sortorder=ASC&category=".$categorie->id."&sqlfilters=(t.tosell=1)";
+$listproduct = callDoliApi("GET", $requestp, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+if (empty($listproduct) || isset($listproduct->error)) {
+$count = 0;
+} else {
+$count = count($listproduct);
+}
 
-print "<a href='".$return."' class='list-group-item list-group-item-action'>".doliproduct($categorie, 'label')."<br><small>".doliproduct($categorie, 'description')."</small></a>"; 
+print "<a href='".esc_url( add_query_arg( array( 'category' => $_GET['category'], 'subcategory' => $categorie->id), doliconnecturl('dolishop')) )."' class='list-group-item list-group-item-action'>".doliproduct($categorie, 'label')." (".$count.")</a>";
 
 }}
 

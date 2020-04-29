@@ -313,9 +313,17 @@ if ( !isset($resultatsc->error) && $resultatsc != null ) {
 print "<div class='list-group'>";
 foreach ($resultatsc->childs as $categorie) {
 
+$requestp = "/products?sortfield=t.label&sortorder=ASC&category=".$categorie->id."&sqlfilters=(t.tosell=1)";
+$listproduct = callDoliApi("GET", $requestp, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+if (empty($listproduct) || isset($listproduct->error)) {
+$count = 0;
+} else {
+$count = count($listproduct);
+}
+
 print "<a href='".esc_url( add_query_arg( 'category', $categorie->id, doliconnecturl('dolishop')) )."' class='list-group-item list-group-item-action";
 if ( isset($_GET['category']) && !isset($_GET['subcategory']) && $categorie->id == $_GET['category']) { print " active"; }
-print "'>".doliproduct($categorie, 'label')."</a>";
+print "'>".doliproduct($categorie, 'label')." (".$count.")</a>";
 
 if ( isset($_GET['category']) && $categorie->id == $_GET['category'] ) {
 
@@ -325,12 +333,17 @@ $resultatsc = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(i
 if ( !isset($resultatsc->error) && $resultatsc != null ) {
 foreach ($resultatsc->childs as $categorie) {
 
-$arr_params = array( 'category' => $_GET['category'], 'subcategory' => $categorie->id);  
-$return = esc_url( add_query_arg( $arr_params, doliconnecturl('dolishop')) );
+$requestp = "/products?sortfield=t.label&sortorder=ASC&category=".$categorie->id."&sqlfilters=(t.tosell=1)";
+$listproduct = callDoliApi("GET", $requestp, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+if (empty($listproduct) || isset($listproduct->error)) {
+$count = 0;
+} else {
+$count = count($listproduct);
+}
 
-print "<a href='".$return."' class='list-group-item list-group-item-action";
+print "<a href='".esc_url( add_query_arg( array( 'category' => $_GET['category'], 'subcategory' => $categorie->id), doliconnecturl('dolishop')) )."' class='list-group-item list-group-item-action";
 if ( isset($_GET['subcategory']) && $categorie->id == $_GET['subcategory'] ) { print " active"; }
-print "'>>".doliproduct($categorie, 'label')."</a>"; 
+print "'>>".doliproduct($categorie, 'label')." (".$count.")</a>";
 }
 
 }}
