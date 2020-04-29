@@ -2074,13 +2074,6 @@ $paymentmethods = "";
 if ( isset($listpaymentmethods->stripe) ) {
 $paymentmethods .= "<script src='https://js.stripe.com/v3/'></script>";
 $paymentmethods .= "<script>";
-if ( !empty($listpaymentmethods->stripe->account) && isset($listpaymentmethods->stripe->publishable_key) ) {
-$paymentmethods .= "var stripe = Stripe('".$listpaymentmethods->stripe->publishable_key."', {
-  stripeAccount: '".$listpaymentmethods->stripe->account."'
-});";
-} elseif ( isset($listpaymentmethods->stripe->publishable_key) ) {
-$paymentmethods .= "var stripe = Stripe('".$listpaymentmethods->stripe->publishable_key."');";
-}
 $paymentmethods .= 'var style = {
   base: {
     color: "#32325d",
@@ -2283,6 +2276,13 @@ $paymentmethods .= "<script>";
 $paymentmethods .= "function dolistripecard(){
 (function ($) {
 $(document).ready(function(){";
+if ( !empty($listpaymentmethods->stripe->account) && isset($listpaymentmethods->stripe->publishable_key) ) {
+$paymentmethods .= "var stripe = Stripe('".$listpaymentmethods->stripe->publishable_key."', {
+  stripeAccount: '".$listpaymentmethods->stripe->account."'
+});";
+} elseif ( isset($listpaymentmethods->stripe->publishable_key) ) {
+$paymentmethods .= "var stripe = Stripe('".$listpaymentmethods->stripe->publishable_key."');";
+} 
 if ( isset($listpaymentmethods->stripe->publishable_key) ) {
 $paymentmethods .= "var elements = stripe.elements();";
 }
@@ -2309,14 +2309,15 @@ cardElement.on('change', function(event) {
 $paymentmethods .= "
 $('#cardButton').on('click',function(event){
 event.preventDefault();
-//$('#DoliconnectLoadingModal').modal('show');
+$('#cardButton').disabled = true;
+$('#DoliconnectLoadingModal').modal('show');
 console.log('We click on cardButton');
 var cardholderName = document.getElementById('cardholder-name');
 if (cardholderName.value == ''){               
 console.log('Field Card holder is empty');
 displayCardError.textContent = 'We need an owner as on your card';
-cardButton.disabled = false;
-///$('#DoliconnectLoadingModal').modal('hide');  
+$('#cardButton').disabled = false;
+$('#DoliconnectLoadingModal').modal('hide');  
 } else {
   stripe.confirmCardSetup(
     clientSecret,
@@ -2328,13 +2329,14 @@ cardButton.disabled = false;
     }
   ).then(function(result) {
     if (result.error) {
-      // Display error.message
+// Display error.message
 $('#DoliconnectLoadingModal').modal('hide');
+$('#cardButton').disabled = false;
 console.log('Error occured when adding card');
 displayCardError.textContent = result.error.message;    
     } else {
-      // The setup has succeeded. Display a success message.
-$('#DoliconnectLoadingModal').modal('show');
+// The setup has succeeded. Display a success message.
+jQuery('#DoliconnectLoadingModal').modal('show');
 var form = document.createElement('form');
 form.setAttribute('action', '".$url."');
 form.setAttribute('method', 'post');
