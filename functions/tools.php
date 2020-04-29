@@ -2112,7 +2112,7 @@ $countPM = count(get_object_vars($listpaymentmethods->payment_methods));
 
 $paymentmethods .= "<div class='card-body'><ul class='nav bg-light nav-pills rounded nav-fill flex-column mb-3' role='tablist'>";
 
-if ( $listpaymentmethods->payment_methods != null ) {
+if ( isset($listpaymentmethods->payment_methods) && $listpaymentmethods->payment_methods != null ) {
 foreach ( $listpaymentmethods->payment_methods as $method ) {
 $paymentmethods .= '<li id="li-'.$method->id.'" class="nav-item"><a class="nav-link';
 if ( (!empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id != $method->id && !empty($module) && is_object($object) && isset($object->id)) || (date('Y/n') >= $method->expiration && !empty($object) && !empty($method->expiration)) ) { $paymentmethods .=" disabled "; }
@@ -2171,7 +2171,7 @@ $paymentmethods .= '<li class="nav-item"><a class="nav-link" data-toggle="pill" 
 
 $paymentmethods .= "</ul><div class='tab-content'>";
 
-if ( $listpaymentmethods->payment_methods != null ) {
+if ( isset($listpaymentmethods->payment_methods) && $listpaymentmethods->payment_methods != null ) {
 foreach ( $listpaymentmethods->payment_methods as $method ) {
 $paymentmethods .= "<div class='tab-pane fade";
 if ( $method->default_source ) {
@@ -2204,8 +2204,10 @@ $('#DoliconnectLoadingModal').modal('show');
       if (document.getElementById('DoliPaymentmethodAlert')) {
       document.getElementById('DoliPaymentmethodAlert').innerHTML = response.data;      
       }
+console.log(response.data);
+document.location = '".$url."';
       //}
-$('#DoliconnectLoadingModal').modal('hide');
+//$('#DoliconnectLoadingModal').modal('hide');
         });
 });
 });
