@@ -2391,7 +2391,7 @@ $paymentmethods .= "}";
 $paymentmethods .= "window.onload=dolistripecard();";
 $paymentmethods .= "</script>";
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
-$paymentmethods .= "<button type='button' id='cardPayButton' class='btn btn-danger btn-block'>".__( 'Pay', 'doliconnect')." ".doliprice($object, 'ttc', $currency)."</button>";
+$paymentmethods .= "<button type='button' id='cardPayButton' class='btn btn-danger btn-block'>".__( 'Pay', 'doliconnect')." ".doliprice($object, 'ttc', isset($object->multicurrency_code) ? $object->multicurrency_code : null)."</button>";
 } else {
 $paymentmethods .= "<button type='button' id='cardButton' class='btn btn-light btn-block' title='".__( 'Add', 'doliconnect')."'><i class='fas fa-plus-circle fa-fw'></i> ".__( 'Add', 'doliconnect')."</button>";
 }
@@ -2416,7 +2416,7 @@ $paymentmethods .= "</p>";
 $paymentmethods .= "<script>";
 $paymentmethods .= "</script>";
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
-$paymentmethods .= "<button id='cardPayButton' class='btn btn-danger btn-block'>".__( 'Pay', 'doliconnect')." ".doliprice($object, 'ttc', $currency)."</button>";
+$paymentmethods .= "<button id='cardPayButton' class='btn btn-danger btn-block'>".__( 'Pay', 'doliconnect')." ".doliprice($object, 'ttc', isset($object->multicurrency_code) ? $object->multicurrency_code : null)."</button>";
 } else {
 $paymentmethods .= "<button id='cardButton' class='btn btn-warning btn-block' title='".__( 'Add', 'doliconnect')."'>".__( 'Add', 'doliconnect')."</button>";
 }
@@ -2437,7 +2437,7 @@ tempor incididunt ut labore et dolore magna aliqua. </p>
 if ( isset($listpaymentmethods->VIR) && !empty($listpaymentmethods->VIR) ) {
 $paymentmethods .= "<div class='tab-pane fade' id='nav-tab-vir'><br><form role='form'>";
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
-$paymentmethods .= "<p class='text-justify'>".sprintf( __( 'Please send your bank transfert in the amount of <b>%1$s</b> with reference <b>%2$s</b> at the following account:', 'doliconnect'), $TTC, $object->ref )."</p>";
+$paymentmethods .= "<p class='text-justify'>".sprintf( __( 'Please send your bank transfert in the amount of <b>%1$s</b> with reference <b>%2$s</b> at the following account:', 'doliconnect'), doliprice($object, 'ttc', isset($object->multicurrency_code) ? $object->multicurrency_code : null), $object->ref )."</p>";
 } else {
 $paymentmethods .= "<p class='text-justify'>".__( 'Please send your bank transfert at the following account:', 'doliconnect')."</p>";
 }

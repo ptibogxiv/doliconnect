@@ -1471,12 +1471,12 @@ $data = [
 $object = callDoliApi("PUT", "/".$module."/".$object->id, $data, dolidelay('order', true));
 }
 
-wp_safe_redirect(doliconnecturl('dolicart').'?cart='.$_GET['cart'].'&step=payment');
+wp_redirect(doliconnecturl('dolicart').'?cart='.$_GET['cart'].'&step=payment');
 exit;
                                    
 } elseif ( !$object->id > 0 && $object->lines == null ) {
 
-wp_safe_redirect(doliconnecturl('dolicart'));
+wp_redirect(doliconnecturl('dolicart'));
 exit;
 
 }
