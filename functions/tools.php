@@ -2270,7 +2270,32 @@ $paymentmethods .= " show active";
 $paymentmethods .= "' id='nav-tab-card'><br>";
 $paymentmethods .= "<input id='cardholder-name' name='cardholder-name' value='' type='text' class='form-control' placeholder='".__( "Full name on the card", 'doliconnect')."' autocomplete='off' required>
 <label for='card-element'></label><div class='form-control' id='card-element'><!-- a Stripe Element will be inserted here. --></div>";
-$paymentmethods .= "<div id='card-error-message' class='text-danger' role='alert'><!-- a Stripe Message will be inserted here. --></div>";
+$paymentmethods .= "<p><div id='card-error-message' class='text-danger' role='alert'><!-- a Stripe Message will be inserted here. --></div></p>";
+$paymentmethods .= '<p><div class="custom-control custom-radio custom-control-inline ">';
+if ( !empty($module) && is_object($object) && isset($object->id) ) {
+$paymentmethods .= '<input type="radio" id="cardDefault0" name="cardDefault" value="0"  class="custom-control-input" checked>
+  <label class="custom-control-label text-muted" for="cardDefault0">'.__( "Not save", 'doliconnect').'</label>
+</div>
+<div class="custom-control custom-radio custom-control-inline">
+  <input type="radio" id="cardDefault1" name="cardDefault" value="1"  class="custom-control-input">
+  <label class="custom-control-label text-muted" for="cardDefault1">'.__( "Save", 'doliconnect').'</label>
+</div>';} else {
+$paymentmethods .= '<input type="radio" id="cardDefault0" name="cardDefault" value="0"  class="custom-control-input"';
+if (empty($countPM)) {
+$paymentmethods .= ' disabled'; 
+} else {
+$paymentmethods .= ' checked';
+} 
+$paymentmethods .= '><label class="custom-control-label text-muted" for="cardDefault0">'.__( "Save", 'doliconnect').'</label>
+</div>';
+}
+$paymentmethods .= '<div class="custom-control custom-radio custom-control-inline">
+  <input type="radio" id="cardDefault1" name="cardDefault" value="1" class="custom-control-input"';
+if (empty($countPM)) {
+$paymentmethods .= ' checked'; 
+} 
+$paymentmethods .= '><label class="custom-control-label text-muted" for="cardDefault1">'.__( "Save as favourite", 'doliconnect').'</label>
+</div></p>';
 $paymentmethods .= "<p class='text-justify'>";
 $paymentmethods .= "<small><strong>Note:</strong> ".sprintf( esc_html__( 'By providing your card and confirming this form, you are authorizing %s and Stripe, our payment service provider, to send instructions to the financial institution that issued your card to take payments from your card account in accordance with those instructions. You are entitled to a refund from your financial institution under the terms and conditions of your agreement with it. A refund must be claimed within 90 days starting from the date on which your card was debited.', 'doliconnect'), get_bloginfo('name'))."</small>";
 $paymentmethods .= "</p>";
@@ -2450,11 +2475,13 @@ $paymentmethods .= "<p class='text-justify'>".sprintf( __( 'Please send your mon
 } else {
 $paymentmethods .= "<p class='text-justify'>".sprintf( __( 'Please send your money check to <b>%s</b> at the following address:', 'doliconnect'), $listpaymentmethods->CHQ->proprio)."</p>";
 }
-$paymentmethods .= "<dl class='param'>
+$paymentmethods .= "<div class='row'>";
+$paymentmethods .= "<div class='col'><dl class='param'>
   <dt>Address</dt>
   <dd>".$listpaymentmethods->CHQ->proprio." - ".$listpaymentmethods->CHQ->owner_address."</dd>
-</dl>
-<p class='text-justify'><small><strong>Note:</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+</dl></div>";
+$paymentmethods .= "</div>";
+$paymentmethods .= "<p class='text-justify'><small><strong>Note:</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 tempor incididunt ut labore et dolore magna aliqua.</small></p>";
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
 $paymentmethods .= '<li id="chqPanel" class="list-group-item list-group-item-secondary panel-collapse collapse"><div class="panel-body">';
