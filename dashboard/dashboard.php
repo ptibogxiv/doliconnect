@@ -2025,8 +2025,8 @@ require_once( ABSPATH . 'wp-content/plugins/two-factor/class-two-factor-core.php
 						<tbody>
 						<?php foreach ( Two_Factor_Core::get_providers() as $class => $object ) : ?>
 							<tr>
-								<td><input type="checkbox" class="" name="<?php echo esc_attr( Two_Factor_Core::ENABLED_PROVIDERS_USER_META_KEY ); ?>[]" value="<?php echo esc_attr( $class ); ?>" <?php checked( in_array( $class, $providers ) ); ?> /></td>
-								<td><input type="radio" class="" name="<?php echo esc_attr( Two_Factor_Core::PROVIDER_USER_META_KEY ); ?>" value="<?php echo esc_attr( $class ); ?>" <?php checked( $class, $primary_provider_key ); ?> /></td>
+								<td><input type="checkbox" class="" name="<?php echo esc_attr( Two_Factor_Core::ENABLED_PROVIDERS_USER_META_KEY ); ?>[]" value="<?php echo esc_attr( $class ); ?>" <?php //checked( in_array( $class, $providers ) ); ?> /></td>
+								<td><input type="radio" class="" name="<?php echo esc_attr( Two_Factor_Core::PROVIDER_USER_META_KEY ); ?>" value="<?php echo esc_attr( $class ); ?>" <?php //checked( $class, $primary_provider_key ); ?> /></td>
 								<td>
 									<?php $object->print_label(); ?>
 									<?php do_action( 'two-factor-user-options-' . $class, $current_user ); ?>
