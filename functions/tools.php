@@ -2462,10 +2462,8 @@ $paymentmethods .= "</div>";
 $paymentmethods .= "<p class='text-justify'><small><strong>Note:</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 tempor incididunt ut labore et dolore magna aliqua.</small></p>";
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
-$paymentmethods .= '<li id="virPanel" class="list-group-item list-group-item-secondary panel-collapse collapse"><div class="panel-body">';
 $paymentmethods .= '<button type="button" onclick="PayPM(\'VIR\')" class="btn btn-danger btn-block">'.__( 'Pay', 'doliconnect')." ".doliprice($object, 'ttc', $currency).'</button>';
-$paymentmethods .= "</div></li>";
-}
+}  
 $paymentmethods .= "</form></div>";
 }
 
@@ -2485,9 +2483,7 @@ $paymentmethods .= "</div>";
 $paymentmethods .= "<p class='text-justify'><small><strong>Note:</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 tempor incididunt ut labore et dolore magna aliqua.</small></p>";
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
-$paymentmethods .= '<li id="chqPanel" class="list-group-item list-group-item-secondary panel-collapse collapse"><div class="panel-body">';
 $paymentmethods .= '<button type="button" onclick="PayPM(\'CHQ\')" class="btn btn-danger btn-block">'.__( 'Pay', 'doliconnect')." ".doliprice($object, 'ttc', $currency).'</button>';
-$paymentmethods .= "</div></li>";
 }
 $paymentmethods .= "</form></div>";
 }
