@@ -233,6 +233,15 @@ $gateway = callDoliApi("DELETE", $request."/".sanitize_text_field($_POST['paymen
 $gateway = callDoliApi("GET", $request, null, dolidelay('paymentmethods', true));
 wp_send_json_success(__( 'You deleted a payment method', 'doliconnect'));
 
+} elseif ( isset($_POST['action_payment_method']) && $_POST['action_payment_method'] == "add_payment_method") {
+
+$data = [
+'default' => isset($_POST['default'])?$_POST['default']:0,
+];
+
+$gateway = callDoliApi("POST", $request."/".sanitize_text_field($_POST['payment_method']), $data, dolidelay( 0, true));
+$gateway = callDoliApi("GET", $request, null, dolidelay('paymentmethods', true));
+wp_send_json_success(__( 'You added a new payment method', 'doliconnect'));
 }
 
 }	else {

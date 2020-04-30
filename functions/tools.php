@@ -2345,7 +2345,7 @@ form.setAttribute('method', 'post');
 form.setAttribute('id', 'doliconnect-paymentmethodsform');
 var inputvar = document.createElement('input');
 inputvar.setAttribute('type', 'hidden');
-inputvar.setAttribute('name', 'add_paymentmethod');
+inputvar.setAttribute('name', 'add_payment_method');
 inputvar.setAttribute('value', result.setupIntent.payment_method);
 form.appendChild(inputvar);
 var inputvar = document.createElement('input');
