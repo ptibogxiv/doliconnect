@@ -2365,22 +2365,32 @@ displayCardError.textContent = result.error.message;
     } else {
 // The setup has succeeded. Display a success message.
 jQuery('#DoliconnectLoadingModal').modal('show');
-var form = document.createElement('form');
-form.setAttribute('action', '".$url."');
-form.setAttribute('method', 'post');
-form.setAttribute('id', 'doliconnect-paymentmethodsform');
-var inputvar = document.createElement('input');
-inputvar.setAttribute('type', 'hidden');
-inputvar.setAttribute('name', 'add_payment_method');
-inputvar.setAttribute('value', result.setupIntent.payment_method);
-form.appendChild(inputvar);
-var inputvar = document.createElement('input');
-inputvar.setAttribute('type', 'hidden');
-inputvar.setAttribute('name', 'default');
-inputvar.setAttribute('value', jQuery('input:radio[name=cardDefault]:checked').val());
-form.appendChild(inputvar);
-document.body.appendChild(form);
-form.submit();
+        $.ajax({
+          url: '".esc_url( admin_url( 'admin-ajax.php' ) )."',
+          type: 'POST',
+          data: {
+            'action': 'dolipaymentmethod_request',
+            'dolipaymentmethod-nonce': '".wp_create_nonce( 'dolipaymentmethod-nonce')."',
+            'payment_method': result.setupIntent.payment_method,
+            'action_payment_method': 'add_payment_method',
+            'default': $('input:radio[name=cardDefault]:checked').val()
+          }
+        }).done(function(response) {
+      //if (response.success) {
+     //document.location = url;
+      //} else {
+//if ($(this).val() == 'delete_payment_method')  {
+//document.getElementById('li-".$method->id."').remove();
+//document.getElementById('nav-tab-".$method->id."').remove();
+//}
+      if (document.getElementById('DoliPaymentmethodAlert')) {
+      document.getElementById('DoliPaymentmethodAlert').innerHTML = response.data;      
+      }
+console.log(response.data);
+document.location = '".$url."';
+      //}
+//$('#DoliconnectLoadingModal').modal('hide');
+        });
     }
   }); 
           }     
