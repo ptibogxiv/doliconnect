@@ -2501,7 +2501,8 @@ if (!empty($thirdparty->cond_reglement_id)) {
 $paymentmethods .= dolipaymentterm($thirdparty->cond_reglement_id);
 } else {
 $paymentmethods .= __( 'immediately', 'doliconnect');
-} 
+}
+$paymentmethods .= "</small>"; 
 //
 //    $(document).ready(function(){
 //       $("a[href='#nav-tab-chq']").hasClass('active') ) {
@@ -2510,7 +2511,119 @@ $paymentmethods .= __( 'immediately', 'doliconnect');
 //       });
 //    });
 //
-$paymentmethods .= "</small></div><div class='card-footer text-muted'>";
+$paymentmethods .= "<script>";
+$paymentmethods .= "function PayPM(pm) {
+// The setup has succeeded. Display a success message.
+jQuery('#DoliconnectLoadingModal').modal('show');
+var form = document.createElement('form');
+form.setAttribute('action', '".$url."');
+form.setAttribute('method', 'post');
+form.setAttribute('id', 'doliconnect-paymentmethodsform');
+var inputvar = document.createElement('input');
+inputvar.setAttribute('type', 'hidden');
+inputvar.setAttribute('name', 'paymentintent');
+inputvar.setAttribute('value', null);
+form.appendChild(inputvar);
+var inputvar = document.createElement('input');
+inputvar.setAttribute('type', 'hidden');
+inputvar.setAttribute('name', 'paymentmethod');
+inputvar.setAttribute('value', pm);
+form.appendChild(inputvar);
+document.body.appendChild(form);
+form.submit();
+}    
+        
+function PayCardPM(pm) {";
+if (!empty($listpaymentmethods->stripe->client_secret)) { 
+$paymentmethods .= "var clientSecret = '".$listpaymentmethods->stripe->client_secret."';";
+}
+$paymentmethods .= "var displayCardError = document.getElementById( pm + '-error-message');
+displayCardError.textContent = '';
+  stripe.confirmCardPayment(
+    clientSecret,
+    {
+      payment_method: pm
+    }
+  ).then(function(result) {
+    if (result.error) {
+      // Display error.message
+jQuery('#DoliconnectLoadingModal').modal('hide');
+console.log('Error occured when adding card');
+displayCardError.textContent = result.error.message;    
+    } else {
+      // The setup has succeeded. Display a success message.
+jQuery('#DoliconnectLoadingModal').modal('show');
+var form = document.createElement('form');
+form.setAttribute('action', '".$url."');
+form.setAttribute('method', 'post');
+form.setAttribute('id', 'doliconnect-paymentmethodsform');
+var inputvar = document.createElement('input');
+inputvar.setAttribute('type', 'hidden');
+inputvar.setAttribute('name', 'paymentintent');
+inputvar.setAttribute('value', result.paymentIntent.id);
+form.appendChild(inputvar);
+var inputvar = document.createElement('input');
+inputvar.setAttribute('type', 'hidden');
+inputvar.setAttribute('name', 'paymentmethod');
+inputvar.setAttribute('value', pm);
+form.appendChild(inputvar);
+var inputvar = document.createElement('input');
+inputvar.setAttribute('type', 'hidden');
+inputvar.setAttribute('name', 'default');
+inputvar.setAttribute('value', jQuery('input:radio[name=cardDefault]:checked').val());
+form.appendChild(inputvar);
+document.body.appendChild(form);
+form.submit();
+    }
+  }); 
+}
+
+function PaySepaDebitPM(pm) {";
+if (!empty($listpaymentmethods->stripe->client_secret)) { 
+$paymentmethods .= "var clientSecret = '".$listpaymentmethods->stripe->client_secret."';";
+}
+$paymentmethods .= "var displayIbanError = document.getElementById( pm + '-error-message');
+displayIbanError.textContent = '';
+  stripe.confirmSepaDebitPayment(
+    clientSecret,
+    {
+      payment_method: pm
+    }
+  ).then(function(result) {
+    if (result.error) {
+      // Display error.message
+jQuery('#DoliconnectLoadingModal').modal('hide');
+console.log('Error occured when adding card');
+displayIbanError.textContent = result.error.message;    
+    } else {
+      // The setup has succeeded. Display a success message.
+jQuery('#DoliconnectLoadingModal').modal('show');
+var form = document.createElement('form');
+form.setAttribute('action', '".$url."');
+form.setAttribute('method', 'post');
+form.setAttribute('id', 'doliconnect-paymentmethodsform');
+var inputvar = document.createElement('input');
+inputvar.setAttribute('type', 'hidden');
+inputvar.setAttribute('name', 'paymentintent');
+inputvar.setAttribute('value', result.paymentIntent.id);
+form.appendChild(inputvar);
+var inputvar = document.createElement('input');
+inputvar.setAttribute('type', 'hidden');
+inputvar.setAttribute('name', 'paymentmethod');
+inputvar.setAttribute('value', pm);
+form.appendChild(inputvar);
+var inputvar = document.createElement('input');
+inputvar.setAttribute('type', 'hidden');
+inputvar.setAttribute('name', 'default');
+inputvar.setAttribute('value', jQuery('input:radio[name=ibanDefault]:checked').val());
+form.appendChild(inputvar);
+document.body.appendChild(form);
+form.submit();
+    }
+  }); 
+}";
+$paymentmethods .= "</script>";
+$paymentmethods .= "</div><div class='card-footer text-muted'>";
 $paymentmethods .= "<small><div class='float-left'>";
 $paymentmethods .= dolirefresh($request, $url, dolidelay('paymentmethods'));
 $paymentmethods .= "</div><div class='float-right'>";
