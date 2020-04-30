@@ -2177,7 +2177,7 @@ $paymentmethods .= "<div class='tab-pane fade";
 if ( $method->default_source ) {
 $paymentmethods .= " show active"; 
 }
-$paymentmethods .= "' id='nav-tab-".$method->id."'><br><form id='payment_method_".$method->id."' method='post' action='".esc_url( admin_url( 'admin-ajax.php' ) )."'>";
+$paymentmethods .= "' id='nav-tab-".$method->id."'><br>";
 $paymentmethods .= "<script>";
 $paymentmethods .= "(function ($) {
 $(document).ready(function(){
@@ -2260,7 +2260,7 @@ $paymentmethods .= "<button type='button' id='deletebtn_".$method->id."' name='d
 $paymentmethods .= "title='".__( 'Delete', 'doliconnect')."'><i class='fas fa-trash fa-fw' style='color:Red'></i> ".__( 'Delete', 'doliconnect').'</button>';
 }}
 $paymentmethods .= "</div>";
-$paymentmethods .= "</div></form>";//
+$paymentmethods .= "</div>";
 }}
 
 if ( $countPM < 5 && isset($listpaymentmethods->stripe) && in_array('card', $listpaymentmethods->stripe->types) && empty($thirdparty->mode_reglement_id) ) {
