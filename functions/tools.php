@@ -2383,8 +2383,9 @@ form.submit();
     }
   }); 
           }     
-});
-});
+});";
+
+$paymentmethods .= "});
 })(jQuery);";
 $paymentmethods .= "}";
 $paymentmethods .= "window.onload=dolistripecard();";

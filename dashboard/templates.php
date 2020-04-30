@@ -1422,7 +1422,13 @@ if ( doliversion('11.0.0') ) {
 $nonce = wp_create_nonce( 'valid_dolicart-'. $object->id);
 $arr_params = array('step' => 'validation', 'module' => $module, 'id' => $object->id, 'ref' => $object->ref, 'cart' => $nonce);  
 $return = add_query_arg( $arr_params, doliconnecturl('dolicart'));
+
+if ( current_user_can('administrator') && !empty(get_option('doliconnectbeta')) ) {
+print doliconnect_paymentmethods($object, substr($module, 0, -1), $return, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+} else {
 print dolipaymentmethods($object, substr($module, 0, -1), $return, true);
+}
+
 } else {
 print __( "It seems that your version of Dolibarr and/or its plugins are not up to date!", "doliconnect");
 }
@@ -1546,18 +1552,18 @@ print '<div class="custom-control custom-radio">
 $listcontact = callDoliApi("GET", "/contacts?sortfield=t.rowid&sortorder=ASC&limit=100&thirdparty_ids=".doliconnector($current_user, 'fk_soc')."&includecount=1&sqlfilters=t.statut=1", null, dolidelay('contact', true));
 
 if (!empty($object->contacts_ids) && is_array($object->contacts_ids)) {
-
+$contactshipping = null;
 foreach ($object->contacts_ids as $contact) {
 if ('SHIPPING' == $contact->code) {
 $contactshipping = $contact->id;
 }
 }
-
 }
+
 if ( !isset($listcontact->error) && $listcontact != null ) {
 foreach ( $listcontact as $contact ) {
 print '<div class="custom-control custom-radio"><input type="radio" id="shipping-'.$contact->id.'" name="contact_shipping" class="custom-control-input" value="'.$contact->id.'" ';
-if ( !empty($contact->default) || $contactshipping == $contact->id ) { print "checked"; }
+if ( (isset($contact->default) && !empty($contact->default)) || $contactshipping == $contact->id ) { print "checked"; }
 print '><label class="custom-control-label" for="shipping-'.$contact->id.'">';
 print dolicontact($contact->id, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 print '</label></div>';
