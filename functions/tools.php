@@ -2333,12 +2333,12 @@ cardElement.on('change', function(event) {
     displayCardError.classList.remove('visible');
   }
 });";
-$paymentmethods .= "
-$('#cardButton').on('click',function(event){
+// add card
+$paymentmethods .= "$('#cardButton').on('click',function(event){
 event.preventDefault();
 $('#cardButton').disabled = true;
 $('#DoliconnectLoadingModal').modal('show');
-console.log('We click on cardButton');
+console.log('Click on cardButton');
 var cardholderName = document.getElementById('cardholder-name');
 if (cardholderName.value == ''){               
 console.log('Field Card holder is empty');
