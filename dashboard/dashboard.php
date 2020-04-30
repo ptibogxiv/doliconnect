@@ -468,20 +468,6 @@ print "'>".__( 'Manage payment methods', 'doliconnect')."</a>";
 }
 
 function paymentmethods_module( $url ) {
-global $wpdb, $current_user;
-
-$request = "/doliconnector/".doliconnector($current_user, 'fk_soc')."/paymentmethods";
-
-if ( isset($_POST['add_payment_method']) ) {
-
-$data = [
-'default' => isset($_POST['default'])?$_POST['default']:0,
-];
-
-$gateway = callDoliApi("POST", $request."/".sanitize_text_field($_POST['add_payment_method']), $data, dolidelay( 0, true));
-$gateway = callDoliApi("GET", $request, null, dolidelay('paymentmethods', true));
-print dolialert ('success', __( 'You added a new payment method', 'doliconnect'));
-}
 
 print doliconnect_paymentmethods(null, null, $url, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 
