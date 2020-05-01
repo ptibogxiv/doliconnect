@@ -58,9 +58,9 @@ $minstock = min(array($product->stock_theorique,$product->stock_reel));
 $maxstock = max(array($product->stock_theorique,$product->stock_reel));
 
 if (!empty(doliconnectid('dolishipping'))) {
-$shipping = '<a href="'.doliconnecturl('dolishipping').'" class="btn btn-link btn-block btn-sm">'.esc_html__( 'Shipping informations', 'doliconnect').'</a>';
+$shipping = '<a href="'.doliconnecturl('dolishipping').'" class="btn btn-link btn-block btn-sm">'.__( 'Shipping', 'doliconnect').'</a>';
 } else {
-$shipping = '';
+$shipping = null;
 }
 
 if ( $maxstock <= 0 || (isset($product->array_options->options_packaging) && $maxstock < $product->array_options->options_packaging ) ) { $stock .= "<a tabindex='0' id='popover-".$product->id."' class='badge badge-pill badge-dark text-white' data-container='body' data-toggle='popover' data-trigger='focus' title='".__( 'Not available', 'doliconnect')."' data-content='".sprintf( __( 'This item is out of stock and can not be ordered or shipped. %s', 'doliconnect'), $shipping)."'><i class='fas fa-warehouse'></i> ".__( 'Not available', 'doliconnect')."</a>"; }  
