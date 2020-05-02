@@ -596,7 +596,11 @@ print "</div><ul class='list-group list-group-flush'>";
  
 print doliline($proposalfo, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 
+print "</ul><ul class='list-group list-group-flush'>";
+
 print dolitotal($proposalfo);
+
+print "</ul><ul class='list-group list-group-flush'>";
 
 if ( $proposalfo->last_main_doc != null ) {
 $doc = array_reverse( explode("/", $proposalfo->last_main_doc) );      
@@ -805,7 +809,11 @@ print "</div><ul class='list-group list-group-flush'>";
  
 print doliline($orderfo, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 
+print "</ul><ul class='list-group list-group-flush'>";
+
 print dolitotal($orderfo);
+
+print "</ul><ul class='list-group list-group-flush'>";
 
 if ( $orderfo->last_main_doc != null ) {
 $doc = array_reverse(explode("/", $orderfo->last_main_doc)); 
@@ -1026,7 +1034,11 @@ print "</div><ul class='list-group list-group-flush'>";
 
 print doliline($contractfo, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 
+print "</ul><ul class='list-group list-group-flush'>";
+
 print dolitotal($contractfo);
+
+print "</ul><ul class='list-group list-group-flush'>";
 
 if ( $contractfo->last_main_doc != null ) {
 $doc = array_reverse( explode("/", $contractfo->last_main_doc) );      

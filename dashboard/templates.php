@@ -1591,7 +1591,7 @@ if ( isset($request) ) print dolirefresh($request, get_permalink(), dolidelay('c
 print "</div><div class='float-right'>";
 print dolihelp('ISSUE');
 print "</div></small>";
-print '</div></div>';
+print "</div></div>";
 
 } else {
 
@@ -1600,27 +1600,20 @@ wp_safe_redirect(doliconnecturl('dolicart'));
 exit;
 } 
 
-print "<table width='100%' style='border: none'><tr style='border: none'><td width='50px' style='border: none'><div class='fa-3x'>
-<i class='fas fa-shopping-bag fa-fw text-warning' data-fa-transform='shrink-3.5' data-fa-mask='fas fa-circle' ></i>
-</div></td><td style='border: none'><div class='progress'>
-<div class='progress-bar progress-bar-striped progress-bar-animated w-100' role='progressbar' aria-valuenow='75' aria-valuemin='0' aria-valuemax='100'></div>
-</div></td><td width='50px' style='border: none'><div class='fa-3x'>
-<i class='fas fa-user-check fa-fw text-dark' data-fa-transform='shrink-3.5' data-fa-mask='fas fa-circle' ></i>
-</div></td><td style='border: none'><div class='progress'>
-<div class='progress-bar w-0' role='progressbar' aria-valuenow='75' aria-valuemin='0' aria-valuemax='100'></div>
-</div></td><td width='50px' style='border: none'><div class='fa-3x'>
-<i class='fas fa-money-bill-wave fa-fw text-dark' data-fa-transform='shrink-3.5' data-fa-mask='fas fa-circle' ></i>
-</div></td><td style='border: none'><div class='progress'>
-<div class='progress-bar w-0' role='progressbar' aria-valuenow='75' aria-valuemin='0' aria-valuemax='100'></div>
-</div></td><td width='50px' style='border: none'><div class='fa-3x'>
-<i class='fas fa-check fa-fw text-dark' data-fa-transform='shrink-3.5' data-fa-mask='fas fa-circle' ></i>
-</div></td></tr></table><br>";
+print "<ul class='nav bg-white nav-pills rounded nav-justified flex-column flex-sm-row' role='tablist'>";
 
-print '<nav class="nav bg-light nav-pills rounded nav-fill flex-column flex-sm-row">
-  <a class="flex-sm-fill text-sm-center nav-link active" href="#">Panier</a>
-  <a class="flex-sm-fill text-sm-center nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Coordonnees</a>
-  <a class="flex-sm-fill text-sm-center nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Paiement</a>
-</nav><br>';
+print '<li id="li-tab-cart" class="nav-item"><a id="a-tab-cart" class="nav-link active" data-toggle="pill" href="#nav-tab-cart">
+<i class="fas fa-shopping-bag fa-fw"></i> Panier</a></li>';
+
+print '<li id="li-tab-info" class="nav-item"><a id="a-tab-info" class="nav-link disabled" data-toggle="pill" href="#nav-tab-info">
+<i class="fas fa-user-check fa-fw"></i> Coordonnees</a></li>';
+
+print '<li id="li-CHQ" class="nav-item"><a class="nav-link disabled" data-toggle="pill" href="#nav-tab-pay">
+<i class="fas fa-money-bill-wave fa-fw"></i> Paiement</a></li>';
+ 
+print "</ul><br><div class='tab-content'>";
+
+print "<div class='tab-pane fade show active' id='nav-tab-cart'>";
 
 if ( isset($object) && is_object($object) && isset($object->id) && $object->id > 0 ) {
 $nonce = wp_create_nonce( 'valid_dolicart-'.$object->id );
@@ -1725,7 +1718,7 @@ $('#DoliconnectLoadingModal').modal('show');
 var form = document.getElementById('doliconnect-basecartform');
 form.submit();
 });
-})(jQuery);}"; 
+})(jQuery);}";
 print "function DeleteDoliCart(nonce) { 
 (function ($) {
 $(document).ready(function(){
@@ -1770,6 +1763,36 @@ if ( isset($request) ) print dolirefresh($request, doliconnecturl('dolicart'), d
 print "</div><div class='float-right'>";
 print dolihelp('ISSUE');
 print "</div></small>";
+print "</div></div>";
+
+print "</div>";
+
+print "<div class='tab-pane fade' id='nav-tab-info'>
+<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+tempor incididunt ut labore et dolore magna aliqua.</p>
+</div>";
+
+print "<div class='tab-pane fade' id='nav-tab-pay'>
+<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+tempor incididunt ut labore et dolore magna aliqua.</p>
+</div>";
+
+print "</div>";
+
+print "<script>";
+print "function dolistripecard(){
+  $(document).ready(function() {
+//    $('#a-tab-cart').removeClass('active');
+//    $('#a-tab-info').removeClass('disabled');
+//    $('#a-tab-info').addClass('active');    
+//    $('#nav-tab-cart').removeClass('show active');
+//    $('#nav-tab-info').addClass('show active');
+//$('#nav-tab-cart').tab('dispose');
+//$('#nav-tab-info').tab('show');
+  });
+}";
+print "window.onload=dolistripecard();";
+print "</script>";
 
 }
 }
