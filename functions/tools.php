@@ -2089,6 +2089,19 @@ $paymentmethods .= 'var style = {
     iconColor: "#fa755a"
   }
 };';
+if ( !empty($listpaymentmethods->stripe->account) && isset($listpaymentmethods->stripe->publishable_key) ) {
+$paymentmethods .= "var stripe = Stripe('".$listpaymentmethods->stripe->publishable_key."', {
+  stripeAccount: '".$listpaymentmethods->stripe->account."'
+});";
+} elseif ( isset($listpaymentmethods->stripe->publishable_key) ) {
+$paymentmethods .= "var stripe = Stripe('".$listpaymentmethods->stripe->publishable_key."');";
+} 
+if ( isset($listpaymentmethods->stripe->publishable_key) ) {
+$paymentmethods .= "var elements = stripe.elements();";
+}
+if (!empty($listpaymentmethods->stripe->client_secret)) { 
+$paymentmethods .= "var clientSecret = '".$listpaymentmethods->stripe->client_secret."';";
+}
 $paymentmethods .= "</script>";
 }
 
@@ -2304,19 +2317,6 @@ $paymentmethods .= "<script>";
 $paymentmethods .= "function dolistripecard(){
 (function ($) {
 $(document).ready(function(){";
-if ( !empty($listpaymentmethods->stripe->account) && isset($listpaymentmethods->stripe->publishable_key) ) {
-$paymentmethods .= "var stripe = Stripe('".$listpaymentmethods->stripe->publishable_key."', {
-  stripeAccount: '".$listpaymentmethods->stripe->account."'
-});";
-} elseif ( isset($listpaymentmethods->stripe->publishable_key) ) {
-$paymentmethods .= "var stripe = Stripe('".$listpaymentmethods->stripe->publishable_key."');";
-} 
-if ( isset($listpaymentmethods->stripe->publishable_key) ) {
-$paymentmethods .= "var elements = stripe.elements();";
-}
-if (!empty($listpaymentmethods->stripe->client_secret)) { 
-$paymentmethods .= "var clientSecret = '".$listpaymentmethods->stripe->client_secret."';";
-}
 $paymentmethods .= "var cardElement = elements.create('card', {style: style});
 cardElement.mount('#card-element');
 var cardholderName = document.getElementById('cardholder-name');
@@ -2357,14 +2357,11 @@ $('#DoliconnectLoadingModal').modal('hide');
     }
   ).then(function(result) {
     if (result.error) {
-// Display error.message
 $('#DoliconnectLoadingModal').modal('hide');
 $('#cardButton').disabled = false;
 console.log('Error occured when adding card');
 displayCardError.textContent = result.error.message;    
     } else {
-// The setup has succeeded. Display a success message.
-jQuery('#DoliconnectLoadingModal').modal('show');
         $.ajax({
           url: '".esc_url( admin_url( 'admin-ajax.php' ) )."',
           type: 'POST',

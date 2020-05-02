@@ -1616,6 +1616,12 @@ print "<table width='100%' style='border: none'><tr style='border: none'><td wid
 <i class='fas fa-check fa-fw text-dark' data-fa-transform='shrink-3.5' data-fa-mask='fas fa-circle' ></i>
 </div></td></tr></table><br>";
 
+print '<nav class="nav bg-light nav-pills rounded nav-fill flex-column flex-sm-row">
+  <a class="flex-sm-fill text-sm-center nav-link active" href="#">Panier</a>
+  <a class="flex-sm-fill text-sm-center nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Coordonnees</a>
+  <a class="flex-sm-fill text-sm-center nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Paiement</a>
+</nav><br>';
+
 if ( isset($object) && is_object($object) && isset($object->id) && $object->id > 0 ) {
 $nonce = wp_create_nonce( 'valid_dolicart-'.$object->id );
 $arr_params = array( 'cart' => $nonce, 'step' => 'info');  
