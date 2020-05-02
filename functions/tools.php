@@ -2334,7 +2334,7 @@ cardElement.on('change', function(event) {
     displayCardError.classList.remove('visible');
   }
 });";
-// add card
+// add a card
 $paymentmethods .= "$('#cardButton').on('click',function(event){
 event.preventDefault();
 $('#cardButton').disabled = true;
@@ -2392,7 +2392,7 @@ document.location = '".$url."';
   }); 
           }     
 });";
-
+// pay with card script
 $paymentmethods .= "});
 })(jQuery);";
 $paymentmethods .= "}";

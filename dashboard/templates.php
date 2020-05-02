@@ -1719,12 +1719,17 @@ print "</ul></div>";
 
 print "<script>";
 print "function ChangeDoliCart() {
-jQuery('#DoliconnectLoadingModal').modal('show');
+(function ($) {
+$(document).ready(function(){
+$('#DoliconnectLoadingModal').modal('show');
 var form = document.getElementById('doliconnect-basecartform');
 form.submit();
-        }"; 
-print "function DeleteDoliCart(nonce) {
-jQuery('#DoliconnectLoadingModal').modal('show');
+});
+})(jQuery);}"; 
+print "function DeleteDoliCart(nonce) { 
+(function ($) {
+$(document).ready(function(){
+$('#DoliconnectLoadingModal').modal('show');
 var form = document.createElement('form');
 form.setAttribute('action', '".doliconnecturl('dolicart')."');
 form.setAttribute('method', 'post');
@@ -1741,7 +1746,8 @@ inputvar.setAttribute('value', nonce);
 form.appendChild(inputvar);
 document.body.appendChild(form);
 form.submit();
-        }"; 
+});
+})(jQuery);}"; 
 print "function ValidDoliCart(nonce) {
 jQuery('#DoliconnectLoadingModal').modal('show');
 var form = document.createElement('form');
