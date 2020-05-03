@@ -268,6 +268,8 @@ $response = [
         ];
 wp_send_json_success($response);
 
+} elseif ( isset($_POST['action_cart']) && $_POST['action_cart'] == "validate_cart") {
+wp_send_json_success( 'success'); 
 } else {
 wp_send_json_error( __( 'An error occured', 'doliconnect')); 
 }

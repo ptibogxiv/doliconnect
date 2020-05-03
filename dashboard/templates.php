@@ -1614,12 +1614,6 @@ print '<li id="li-CHQ" class="nav-item"><a class="nav-link disabled" data-toggle
 print "</ul><br><div class='tab-content'>";
 
 print "<div class='tab-pane fade show active' id='nav-tab-cart'>";
-
-if ( isset($object) && is_object($object) && isset($object->id) && $object->id > 0 ) {
-$nonce = wp_create_nonce( 'valid_dolicart-'.$object->id );
-$arr_params = array( 'cart' => $nonce, 'step' => 'info');  
-$return = add_query_arg( $arr_params, doliconnecturl('dolicart'));
-}
  
 if ( isset($_POST['updateorderproduct']) && wp_verify_nonce( $_POST['dolichecknonce'], 'valid_dolicart-'.$object->id)) {
 foreach ( $_POST['updateorderproduct'] as $productupdate ) {
@@ -1665,7 +1659,6 @@ print doliline($object, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : nu
 if ( isset($object) && is_object($object) && isset($object->socid) &&(doliconnector($current_user, 'fk_soc') == $object->socid) ) {
 print "</ul><ul id='dolitotal' class='list-group list-group-flush'>";
 print dolitotal($object);  
-print wp_nonce_field( 'valid_dolicart-'.$object->id, 'dolichecknonce');  
 }
 
 if (doliconnector($current_user, 'fk_soc')>0) {
@@ -1692,7 +1685,7 @@ if ( $object->lines != null && $object->statut == 0 ) {
 print "<button button type='button' id='purgebtn_cart' name='purge_cart' value='purge_cart' class='list-group-item list-group-item-action flex-fill'><center><b>".__( 'Empty the basket', 'doliconnect')."</b></center></button>";
 }
 if ( $object->lines != null ) {
-print "<button type='button' id='validatebtn_cart' name='validate_cart' value='validate_cart' onclick='ValidDoliCart(\"".$nonce."\")' class='list-group-item list-group-item-action list-group-item-warning flex-fill ' role='button' aria-pressed='true'";
+print "<button type='button' id='validatebtn_cart' name='validate_cart' value='validate_cart' class='list-group-item list-group-item-action list-group-item-warning flex-fill ' ";
 if ($outstandingamount > 0 || (defined('dolilockcart') && !empty(constant('dolilockcart')))) print " disabled";
 print "><center><b>".__( 'Process', 'doliconnect')."</b></center></button>";
 }
@@ -1703,7 +1696,7 @@ print "</ul></div>";
 print "<script>";
 print "(function ($) {
 $(document).ready(function(){
-$('#purgebtn_cart').on('click',function(event){
+$('#purgebtn_cart, #validatebtn_cart').on('click',function(event){
 event.preventDefault();
 $('#DoliconnectLoadingModal').modal('show');
 var actionvalue = $(this).val();
@@ -1716,6 +1709,7 @@ var actionvalue = $(this).val();
             'action_cart': actionvalue
           }
         }).done(function(response) {
+console.log(actionvalue);
       if (response.success) {
 if (actionvalue == 'purge_cart')  {
 document.getElementById('doliline').innerHTML = response.data.lines;
@@ -1729,10 +1723,18 @@ document.getElementById('validatebtn_cart').remove();
       document.getElementById('DoliFooterCarItems').innerHTML = response.data.items;
       }
       if (document.getElementById('DoliWidgetCarItems')) {
-      document.getElementById('DoliWidgetCarItems').innerHTML = response.data.items;      
-      }
-} else {
+      document.getElementById('DoliWidgetCarItems').innerHTML = response.data.items;
+      } 
 
+} else if (actionvalue == 'validate_cart') {
+$('#a-tab-cart').removeClass('active');
+$('#a-tab-info').removeClass('disabled');
+$('#a-tab-info').addClass('active');    
+$('#nav-tab-cart').removeClass('show active');
+$('#nav-tab-info').addClass('show active');
+$('#nav-tab-cart').tab('dispose');
+$('#nav-tab-info').tab('show');
+//$('#a-tab-cart').addClass('disabled');      
 }
 
 console.log(response.data);
@@ -1752,21 +1754,7 @@ $('#DoliconnectLoadingModal').modal('show');
 var form = document.getElementById('doliconnect-basecartform');
 form.submit();
 });
-})(jQuery);}";
-print "function ValidDoliCart(nonce) {
-jQuery('#DoliconnectLoadingModal').modal('show');
-var form = document.createElement('form');
-form.setAttribute('action', '".$return."');
-form.setAttribute('method', 'post');
-form.setAttribute('id', 'doliconnect-cartform');
-var inputvar = document.createElement('input');
-inputvar.setAttribute('type', 'hidden');
-inputvar.setAttribute('name', 'dolichecknonce');
-inputvar.setAttribute('value', nonce);
-form.appendChild(inputvar);
-document.body.appendChild(form);
-form.submit();
-        }";                  
+})(jQuery);}";                 
 print "</script>";
  
 print '<div class="card-footer text-muted">';
@@ -1790,21 +1778,6 @@ tempor incididunt ut labore et dolore magna aliqua.</p>
 </div>";
 }
 print "</div>";
-
-print "<script>";
-print "function dolistripecard(){
-  $(document).ready(function() {
-//    $('#a-tab-cart').removeClass('active');
-//    $('#a-tab-info').removeClass('disabled');
-//    $('#a-tab-info').addClass('active');    
-//    $('#nav-tab-cart').removeClass('show active');
-//    $('#nav-tab-info').addClass('show active');
-//$('#nav-tab-cart').tab('dispose');
-//$('#nav-tab-info').tab('show');
-  });
-}";
-print "window.onload=dolistripecard();";
-print "</script>";
 
 }
 }
