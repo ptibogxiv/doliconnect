@@ -1766,7 +1766,7 @@ print "</div></small>";
 print "</div></div>";
 
 print "</div>";
-
+if ( is_user_logged_in() ) { 
 print "<div class='tab-pane fade' id='nav-tab-info'>
 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 tempor incididunt ut labore et dolore magna aliqua.</p>
@@ -1776,7 +1776,7 @@ print "<div class='tab-pane fade' id='nav-tab-pay'>
 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 tempor incididunt ut labore et dolore magna aliqua.</p>
 </div>";
-
+}
 print "</div>";
 
 print "<script>";
