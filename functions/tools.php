@@ -2151,7 +2151,11 @@ $paymentmethods .= "<span class='flag-icon flag-icon-".strtolower($method->count
 }}
 if (isset($listpaymentmethods->stripe) && in_array('card', $listpaymentmethods->stripe->types) && empty($thirdparty->mode_reglement_id) ) {
 $paymentmethods .= '<li class="nav-item"><a onclick="dolistripecard();" class="nav-link';
-if ($countPM >= 5) $paymentmethods .= " disabled"; 
+if ($countPM >= 5) { 
+$paymentmethods .= " disabled";
+} elseif (empty($countPM)) {
+$paymentmethods .= " active";
+}
 $paymentmethods .= '" data-toggle="pill" href="#nav-tab-card">
 <i class="fas fa-credit-card fa-fw float-left"></i> ';
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
