@@ -212,7 +212,7 @@ add_action('wp_ajax_dolipaymentmethod_request', 'dolipaymentmethod_request');
 //add_action('wp_ajax_nopriv_dolipaymentmethod_request', 'dolipaymentmethod_request');
 
 function dolipaymentmethod_request(){
-global $wpdb, $current_user;
+global $current_user;
 
 $request = "/doliconnector/".doliconnector($current_user, 'fk_soc')."/paymentmethods"; 
 
@@ -242,6 +242,34 @@ $data = [
 $gateway = callDoliApi("POST", $request."/".sanitize_text_field($_POST['payment_method']), $data, dolidelay( 0, true));
 $gateway = callDoliApi("GET", $request, null, dolidelay('paymentmethods', true));
 wp_send_json_success(__( 'You added a new payment method', 'doliconnect'));
+}
+
+}	else {
+wp_send_json_error( __( 'A security error occured', 'doliconnect')); 
+}
+}
+
+add_action('wp_ajax_dolicart_request', 'dolicart_request');
+//add_action('wp_ajax_nopriv_dolicart_request', 'dolicart_request');
+
+function dolicart_request(){
+
+if ( wp_verify_nonce( trim($_POST['dolicart-nonce']), 'dolicart-nonce')) {
+
+if ( isset($_POST['action_cart']) && $_POST['action_cart'] == "purge_cart") {
+$orderdelete = callDoliApi("DELETE", "/orders/".doliconnector($current_user, 'fk_order'), null);
+$dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolidelay('doliconnector', true));
+doliconnector($current_user, 'fk_order', true);
+
+$response = [
+    'items' => '0',
+    'lines' => doliline(null, null),
+    'message' => __( 'We no longer have this item in this quantity', 'doliconnect'),
+        ];
+wp_send_json_success($response);
+
+} else {
+wp_send_json_error( __( 'An error occured', 'doliconnect')); 
 }
 
 }	else {

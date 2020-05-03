@@ -1620,18 +1620,6 @@ $nonce = wp_create_nonce( 'valid_dolicart-'.$object->id );
 $arr_params = array( 'cart' => $nonce, 'step' => 'info');  
 $return = add_query_arg( $arr_params, doliconnecturl('dolicart'));
 }
-
-if ( isset($_POST['dolicart']) && $_POST['dolicart'] == 'purge' && wp_verify_nonce( $_POST['dolichecknonce'], 'valid_dolicart-'.$object->id) ) {
-$orderdelete = callDoliApi("DELETE", "/".$module."/".doliconnector($current_user, 'fk_order'), null);
-$dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolidelay('doliconnector', true));
-if (1==1) {
-doliconnector($current_user, 'fk_order', true);
-wp_safe_redirect(doliconnecturl('dolicart'));
-exit;
-} else {
-print dolialert('danger', __( 'An error is occured. Please contact us!', 'doliconnect'));
-}
-}
  
 if ( isset($_POST['updateorderproduct']) && wp_verify_nonce( $_POST['dolichecknonce'], 'valid_dolicart-'.$object->id)) {
 foreach ( $_POST['updateorderproduct'] as $productupdate ) {
@@ -1670,11 +1658,12 @@ print "<form role='form' action='".doliconnecturl('dolicart')."' id='doliconnect
 
 print doliloaderscript('doliconnect-basecartform');
 
-print "<div class='card shadow-sm' id='cart-form'><ul class='list-group list-group-flush'>";
+print "<div class='card shadow-sm' id='cart-form'><ul id='doliline' class='list-group list-group-flush'>";
 
 print doliline($object, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 
 if ( isset($object) && is_object($object) && isset($object->socid) &&(doliconnector($current_user, 'fk_soc') == $object->socid) ) {
+print "</ul><ul id='dolitotal' class='list-group list-group-flush'>";
 print dolitotal($object);  
 print wp_nonce_field( 'valid_dolicart-'.$object->id, 'dolichecknonce');  
 }
@@ -1691,7 +1680,8 @@ print "</b></li>";
 }}
 
 print "</ul>";
-print "</form>";  
+print "</form>"; 
+ 
 if ( get_option('dolishop') || (!get_option('dolishop') && isset($object) && $object->lines != null) ) {
 print "<div class='card-body'><ul class='list-group list-group-horizontal-sm'>";
 if ( get_option('dolishop') ) {
@@ -1699,16 +1689,60 @@ print "<a href='".doliconnecturl('dolishop')."' class='list-group-item list-grou
 } 
 if ( isset($object) && is_object($object) && isset($object->lines) && $object->lines != null && (doliconnector($current_user, 'fk_soc') == $object->socid) ) { 
 if ( $object->lines != null && $object->statut == 0 ) {
-print "<button type='button' onclick='DeleteDoliCart(\"".$nonce."\")' class='list-group-item list-group-item-action flex-fill' role='button' aria-pressed='true'><center><b>".__( 'Empty the basket', 'doliconnect')."</b></center></button>";
+print "<button button type='button' id='purgebtn_cart' name='purge_cart' value='purge_cart' class='list-group-item list-group-item-action flex-fill'><center><b>".__( 'Empty the basket', 'doliconnect')."</b></center></button>";
 }
 if ( $object->lines != null ) {
-print "<button type='button' onclick='ValidDoliCart(\"".$nonce."\")' class='list-group-item list-group-item-action list-group-item-warning flex-fill ' role='button' aria-pressed='true'";
+print "<button type='button' id='validatebtn_cart' name='validate_cart' value='validate_cart' onclick='ValidDoliCart(\"".$nonce."\")' class='list-group-item list-group-item-action list-group-item-warning flex-fill ' role='button' aria-pressed='true'";
 if ($outstandingamount > 0 || (defined('dolilockcart') && !empty(constant('dolilockcart')))) print " disabled";
 print "><center><b>".__( 'Process', 'doliconnect')."</b></center></button>";
 }
 }
 print "</ul></div>";
 }
+
+print "<script>";
+print "(function ($) {
+$(document).ready(function(){
+$('#purgebtn_cart').on('click',function(event){
+event.preventDefault();
+$('#DoliconnectLoadingModal').modal('show');
+var actionvalue = $(this).val();
+        $.ajax({
+          url: '".esc_url( admin_url( 'admin-ajax.php' ) )."',
+          type: 'POST',
+          data: {
+            'action': 'dolicart_request',
+            'dolicart-nonce': '".wp_create_nonce( 'dolicart-nonce')."',
+            'action_cart': actionvalue
+          }
+        }).done(function(response) {
+      if (response.success) {
+if (actionvalue == 'purge_cart')  {
+document.getElementById('doliline').innerHTML = response.data.lines;
+document.getElementById('dolitotal').remove();
+document.getElementById('purgebtn_cart').remove();
+document.getElementById('validatebtn_cart').remove();
+      if (document.getElementById('DoliHeaderCarItems')) {
+      document.getElementById('DoliHeaderCarItems').innerHTML = response.data.items;
+      }
+      if (document.getElementById('DoliFooterCarItems')) {  
+      document.getElementById('DoliFooterCarItems').innerHTML = response.data.items;
+      }
+      if (document.getElementById('DoliWidgetCarItems')) {
+      document.getElementById('DoliWidgetCarItems').innerHTML = response.data.items;      
+      }
+} else {
+
+}
+
+console.log(response.data);
+}
+$('#DoliconnectLoadingModal').modal('hide');
+        });
+});
+});
+})(jQuery);";
+print "</script>";
 
 print "<script>";
 print "function ChangeDoliCart() {
@@ -1719,28 +1753,6 @@ var form = document.getElementById('doliconnect-basecartform');
 form.submit();
 });
 })(jQuery);}";
-print "function DeleteDoliCart(nonce) { 
-(function ($) {
-$(document).ready(function(){
-$('#DoliconnectLoadingModal').modal('show');
-var form = document.createElement('form');
-form.setAttribute('action', '".doliconnecturl('dolicart')."');
-form.setAttribute('method', 'post');
-form.setAttribute('id', 'doliconnect-cartform');
-var inputvar = document.createElement('input');
-inputvar.setAttribute('type', 'hidden');
-inputvar.setAttribute('name', 'dolicart');
-inputvar.setAttribute('value', 'purge');
-form.appendChild(inputvar);
-var inputvar = document.createElement('input');
-inputvar.setAttribute('type', 'hidden');
-inputvar.setAttribute('name', 'dolichecknonce');
-inputvar.setAttribute('value', nonce);
-form.appendChild(inputvar);
-document.body.appendChild(form);
-form.submit();
-});
-})(jQuery);}"; 
 print "function ValidDoliCart(nonce) {
 jQuery('#DoliconnectLoadingModal').modal('show');
 var form = document.createElement('form');
@@ -1756,7 +1768,7 @@ document.body.appendChild(form);
 form.submit();
         }";                  
 print "</script>";
-  
+ 
 print '<div class="card-footer text-muted">';
 print "<small><div class='float-left'>";
 if ( isset($request) ) print dolirefresh($request, doliconnecturl('dolicart'), dolidelay('cart'));
