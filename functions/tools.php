@@ -2378,10 +2378,7 @@ displayCardError.textContent = result.error.message;
       //if (response.success) {
      //document.location = url;
       //} else {
-//if ($(this).val() == 'delete_payment_method')  {
-//document.getElementById('li-".$method->id."').remove();
-//document.getElementById('nav-tab-".$method->id."').remove();
-//}
+
       if (document.getElementById('DoliPaymentmethodAlert')) {
       document.getElementById('DoliPaymentmethodAlert').innerHTML = response.data;      
       }
