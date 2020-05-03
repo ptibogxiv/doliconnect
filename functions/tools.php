@@ -2199,6 +2199,7 @@ $(document).ready(function(){
 $('#defaultbtn_".$method->id.", #deletebtn_".$method->id."').on('click',function(event){
 event.preventDefault();
 $('#DoliconnectLoadingModal').modal('show');
+var actionvalue = $(this).val();
         $.ajax({
           url: '".esc_url( admin_url( 'admin-ajax.php' ) )."',
           type: 'POST',
@@ -2206,23 +2207,22 @@ $('#DoliconnectLoadingModal').modal('show');
             'action': 'dolipaymentmethod_request',
             'dolipaymentmethod-nonce': '".wp_create_nonce( 'dolipaymentmethod-nonce')."',
             'payment_method': '".$method->id."',
-            'action_payment_method': $(this).val()
+            'action_payment_method': actionvalue
           }
         }).done(function(response) {
-      //if (response.success) {
-     //document.location = url;
-      //} else {
-//if ($(this).val() == 'delete_payment_method')  {
-//document.getElementById('li-".$method->id."').remove();
-//document.getElementById('nav-tab-".$method->id."').remove();
-//}
-      if (document.getElementById('DoliPaymentmethodAlert')) {
-      document.getElementById('DoliPaymentmethodAlert').innerHTML = response.data;      
-      }
-console.log(response.data);
+      if (response.success) {
+if (actionvalue == 'delete_payment_method')  {
+document.getElementById('li-".$method->id."').remove();
+document.getElementById('nav-tab-".$method->id."').remove();
+} else {
 document.location = '".$url."';
-      //}
-//$('#DoliconnectLoadingModal').modal('hide');
+}
+if (document.getElementById('DoliPaymentmethodAlert')) {
+document.getElementById('DoliPaymentmethodAlert').innerHTML = response.data;      
+}
+console.log(response.data);
+}
+$('#DoliconnectLoadingModal').modal('hide');
         });
 });
 });
