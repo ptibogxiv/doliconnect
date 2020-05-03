@@ -2214,6 +2214,8 @@ var actionvalue = $(this).val();
             'action_payment_method': actionvalue
           }
         }).done(function(response) {
+$(window).scrollTop(0); 
+console.log(actionvalue);
       if (response.success) {
 if (actionvalue == 'delete_payment_method')  {
 document.getElementById('li-".$method->id."').remove();
@@ -2379,6 +2381,7 @@ displayCardError.textContent = result.error.message;
             'default': $('input:radio[name=cardDefault]:checked').val()
           }
         }).done(function(response) {
+$(window).scrollTop(0); 
       //if (response.success) {
      //document.location = url;
       //} else {
