@@ -302,7 +302,7 @@ $orderfo = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order'
 //$button .=$orderfo;
 }
 
-if ( isset($orderfo) && $orderfo->lines != null ) {
+if ( isset($orderfo->lines) && $orderfo->lines != null ) {
 foreach ($orderfo->lines as $line) {
 if  ($line->fk_product == $product->id) {
 //$button = var_dump($line);
