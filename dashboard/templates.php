@@ -1448,8 +1448,7 @@ if ($outstandingamount > 0) print " - ".__( "Your account is blocked, this order
 print "</b></li>";
 }}
 
-print "</ul>";
-print "</form>"; 
+print "</ul>"; 
  
 if ( get_option('dolishop') || (!get_option('dolishop') && isset($object) && $object->lines != null) ) {
 print "<div class='card-body'><ul class='list-group list-group-horizontal-sm'>";
