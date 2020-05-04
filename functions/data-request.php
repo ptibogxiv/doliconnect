@@ -285,8 +285,13 @@ $data = [
     'demand_reason_id' => 1,
     'module_source' => 'doliconnect',
     'pos_source' => get_current_blog_id(),
+    'note_public' => $_POST['note_public'],
 	];                 
 $object = callDoliApi("PUT", "/".trim($_POST['module'])."/".trim($_POST['id']), $data, dolidelay('order', true));
+
+if ($_POST['contact_shipping']) {
+$shipping= callDoliApi("POST", "/".trim($_POST['module'])."/".trim($_POST['id'])."/contact/".$_POST['contact_shipping']."/SHIPPING", null, dolidelay('order', true));
+}
 
 if ( doliversion('11.0.0') ) {
 if ( current_user_can('administrator') && !empty(get_option('doliconnectbeta')) ) {

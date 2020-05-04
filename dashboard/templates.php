@@ -1375,19 +1375,7 @@ do_action('wp_dolibarr_sync', $thirdparty);
                                    
 } elseif ( isset($_POST['info']) && $_POST['info'] == 'validation' ) {
 
-if ($_POST['contact_shipping']) {
-$order_shipping= callDoliApi("POST", "/".$module."/".$object->id."/contact/".$_POST['contact_shipping']."/SHIPPING", null, dolidelay('order', true));
-}
 
-if ( isset($_POST['note_public']) && $_POST['note_public'] != $object->note_public) {
-$data = [
-    'note_public' => isset($_POST['AddMessage']) ? $_POST['note_public'] : '',
-	];
-$object = callDoliApi("PUT", "/".$module."/".$object->id, $data, dolidelay('order', true));
-}
-
-wp_redirect(doliconnecturl('dolicart').'?cart='.$_GET['cart'].'&step=payment');
-exit;
                                    
 } elseif ( !$object->id > 0 && $object->lines == null ) {
 
@@ -1540,7 +1528,11 @@ $('#a-tab-info').addClass('active');
 $('#nav-tab-cart').removeClass('show active');
 $('#nav-tab-info').addClass('show active');
 $('#nav-tab-cart').tab('dispose');
-$('#nav-tab-info').tab('show');     
+$('#nav-tab-info').tab('show');
+if (document.getElementById('nav-tab-pay')) {
+$('#a-tab-pay').addClass('disabled');
+document.getElementById('nav-tab-pay').remove();    
+}     
 }
 
 console.log(response.data);
@@ -1551,7 +1543,7 @@ $('#DoliconnectLoadingModal').modal('hide');
 });
 })(jQuery);";
 print "</script>";
-
+                                                                                                                                                                           
 print "<script>";
 print "function ChangeDoliCart() {
 (function ($) {
@@ -1651,6 +1643,7 @@ print "<textarea class='form-control' id='note_public' name='note_public' rows='
 print "</div>";
 print "</li></ul>";
 
+$note_public = isset($_POST['AddMessage']) ? $_POST['note_public'] : '';
 print "<script>";
 print "(function ($) {
 $(document).ready(function(){
@@ -1666,7 +1659,8 @@ var actionvalue = $(this).val();
             'dolicart-nonce': '".wp_create_nonce( 'dolicart-nonce')."',
             'action_cart': actionvalue,
             'module': '".$module."',
-            'id': '".$id."'
+            'id': '".$id."',
+            'note_public': '".$note_public."'
           }
         }).done(function(response) {
 $(window).scrollTop(0); 
