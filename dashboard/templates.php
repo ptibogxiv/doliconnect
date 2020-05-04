@@ -1551,9 +1551,6 @@ print "</div>";
 
 if ( is_user_logged_in() ) { 
 print "<div class='tab-pane fade' id='nav-tab-info'>";
-print "<div class='row' id='informations-form'><div class='col-12 col-md-4 d-none d-sm-none d-md-block'>";
-print dolisummarycart($object);
-print "</div><div class='col-12 col-md-8'>";
   
 $thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))); 
 
@@ -1676,8 +1673,6 @@ if ( isset($request) ) print dolirefresh($request, get_permalink(), dolidelay('c
 print "</div><div class='float-right'>";
 print dolihelp('ISSUE');
 print "</div></small>";
-print "</div></div>";
-
 print "</div></div>";
 
 print "</div>";

@@ -275,7 +275,7 @@ wp_send_json_success($response);
 //print var_dump($_POST['updateorderproduct']);
 //}
 //doliconnector($current_user, 'fk_order', true);
-//$object = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order', true), null, dolidelay('cart', true));
+$object = callDoliApi("GET", "/".trim($_POST['module'])."/".trim($_POST['id']), null, dolidelay('order', true));
 
 $response = [
     'items' => '0',

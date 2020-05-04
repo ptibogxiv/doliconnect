@@ -1001,8 +1001,8 @@ $doliline .= "<option value='$number' >x ".$number."</option>";
 	}
 }
 $doliline .= "</select>";
-print "<script>";
-print "(function ($) {
+$doliline .= "<script>";
+$doliline .= "(function ($) {
 $(document).ready(function(){
 $('#updateorderproduct-".$line->fk_product."').on('change',function(event){
 event.preventDefault();
@@ -1039,7 +1039,7 @@ $('#DoliconnectLoadingModal').modal('hide');
 });
 });
 })(jQuery);";
-print "</script>";
+$doliline .= "</script>";
 } else {
 $doliline .= '<h6 class="mb-1">x'.$line->qty.'</h6>';
 }
