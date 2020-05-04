@@ -1406,17 +1406,6 @@ print "</ul><br><div id='tab-cart-content' class='tab-content'>";
 
 print "<div class='tab-pane fade show active' id='nav-tab-cart'>";
  
-if ( isset($_POST['updateorderproduct']) && wp_verify_nonce( $_POST['dolichecknonce'], 'valid_dolicart-'.$object->id)) {
-foreach ( $_POST['updateorderproduct'] as $productupdate ) {
-$result = doliaddtocart($productupdate['product'], $productupdate['qty'], $productupdate['price'], $productupdate['remise_percent'], $productupdate['date_start'], $productupdate['date_end']);
-//print var_dump($_POST['updateorderproduct']);
-}
-doliconnector($current_user, 'fk_order', true);
-$object = callDoliApi("GET", $request, null, dolidelay('cart', true));
-wp_safe_redirect(doliconnecturl('dolicart'));
-exit;
-}
-
 if ( isset($object) && is_object($object) && isset($object->date_modification)) {
 $timeout=$object->date_modification-current_time('timestamp',1)+1200;
 //print "<script>";
@@ -1438,10 +1427,6 @@ $timeout=$object->date_modification-current_time('timestamp',1)+1200;
 if ( doliconnector($current_user, 'fk_order')>0 && isset($object->lines) && $object->lines != null ) {  //&& $timeout>'0'                                                                                         
 //print "<div id='timer' class='text-center'><small>".sprintf( esc_html__('Your basket #%s is reserved for', 'doliconnect'), doliconnector($current_user, 'fk_order'))." <span class='duration'></span></small></div>";
 }
-
-print "<form role='form' id='doliconnect-basecartform' method='post'>";
-
-//print doliloaderscript('doliconnect-basecartform');
 
 print "<div class='card shadow-sm' id='cart-form'><ul id='doliline' class='list-group list-group-flush'>";
 

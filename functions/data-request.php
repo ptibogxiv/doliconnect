@@ -267,6 +267,22 @@ $response = [
         ];
 wp_send_json_success($response);
 
+} elseif ( isset($_POST['action_cart']) && $_POST['action_cart'] == "update_cart") {
+
+//foreach ( $_POST['updateorderproduct'] as $productupdate ) {
+//$result = doliaddtocart($productupdate['product'], $productupdate['qty'], $productupdate['price'], $productupdate['remise_percent'], $productupdate['date_start'], $productupdate['date_end']);
+//print var_dump($_POST['updateorderproduct']);
+//}
+//doliconnector($current_user, 'fk_order', true);
+//$object = callDoliApi("GET", $request, null, dolidelay('cart', true));
+
+$response = [
+    'items' => '0',
+    'lines' => doliline(null, null),
+    'message' => __( 'We no longer have this item in this quantity', 'doliconnect'),
+        ];
+wp_send_json_success($response);
+
 } elseif ( isset($_POST['action_cart']) && $_POST['action_cart'] == "validate_cart") {
 
 $data = [

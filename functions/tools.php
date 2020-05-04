@@ -961,7 +961,7 @@ $doliline .= "<input type='hidden' name='updateorderproduct[".$line->fk_product.
 if (( $maxstock <= 0 || (isset($product->array_options->options_packaging) && $maxstock < $product->array_options->options_packaging ) ) && is_page(doliconnectid('dolicart')) && $product->type == '0' && !empty(doliconst('MAIN_MODULE_STOCK')) && empty(doliconst('STOCK_ALLOW_NEGATIVE_TRANSFER')) ) {
 $doliline .= "<button class='form-control form-control-sm' name='updateorderproduct[".$line->fk_product."][qty]' value='0' onclick='ChangeDoliCart();'>".__( 'Delete', 'doliconnect')."</button>";
 } else {
-$doliline .= "<select class='form-control form-control-sm' name='updateorderproduct[".$line->fk_product."][qty]' onchange='ChangeDoliCart();'>";
+$doliline .= "<select class='form-control form-control-sm' id='updateorderproduct-".$line->fk_product."' name='updateorderproduct[".$line->fk_product."][qty]'>";
 if ( $product->stock_reel-$line->qty > 0 && (empty($product->type) || (!empty($product->type) && doliconst('STOCK_SUPPORTS_SERVICES')) ) ) {
 if (isset($product->array_options->options_packaging) && !empty($product->array_options->options_packaging)) {
 $m0 = 1*$product->array_options->options_packaging;
@@ -1001,6 +1001,47 @@ $doliline .= "<option value='$number' >x ".$number."</option>";
 	}
 }
 $doliline .= "</select>";
+print "<script>";
+print "(function ($) {
+$(document).ready(function(){
+$('#updateorderproduct-".$line->fk_product."').on('change',function(event){
+event.preventDefault();
+$('#DoliconnectLoadingModal').modal('show');
+var qty = $(this).val();
+        $.ajax({
+          url: '".esc_url( admin_url( 'admin-ajax.php' ) )."',
+          type: 'POST',
+          data: {
+            'action': 'dolicart_request',
+            'dolicart-nonce': '".wp_create_nonce( 'dolicart-nonce')."',
+            'action_cart': 'update_cart',
+            'module': 'tt',
+            'qty': qty
+          }
+        }).done(function(response) {
+      if (response.success) {
+if (actionvalue == 'update_cart') {
+$('#a-tab-cart').removeClass('active');
+$('#a-tab-info').removeClass('disabled');
+$('#a-tab-info').addClass('active');    
+$('#nav-tab-cart').removeClass('show active');
+$('#nav-tab-info').addClass('show active');
+$('#nav-tab-cart').tab('dispose');
+$('#nav-tab-info').tab('show');
+if (document.getElementById('nav-tab-pay')) {
+$('#a-tab-pay').addClass('disabled');
+//document.getElementById('nav-tab-pay').remove();    
+}     
+}
+
+//console.log(response.data);
+}
+$('#DoliconnectLoadingModal').modal('hide');
+        });
+});
+});
+})(jQuery);";
+print "</script>";
 } else {
 $doliline .= '<h6 class="mb-1">x'.$line->qty.'</h6>';
 }
