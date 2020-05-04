@@ -257,9 +257,8 @@ function dolicart_request(){
 if ( wp_verify_nonce( trim($_POST['dolicart-nonce']), 'dolicart-nonce')) {
 
 if ( isset($_POST['action_cart']) && $_POST['action_cart'] == "purge_cart") {
-$orderdelete = callDoliApi("DELETE", "/orders/".doliconnector($current_user, 'fk_order'), null);
+$orderdelete = callDoliApi("DELETE", "/".trim($_POST['module'])."/".trim($_POST['id']), null);
 $dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolidelay('doliconnector', true));
-doliconnector($current_user, 'fk_order', true);
 
 $response = [
     'items' => '0',
