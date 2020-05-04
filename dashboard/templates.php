@@ -1441,7 +1441,7 @@ if ( doliconnector($current_user, 'fk_order')>0 && isset($object->lines) && $obj
 
 print "<form role='form' id='doliconnect-basecartform' method='post'>";
 
-print doliloaderscript('doliconnect-basecartform');
+//print doliloaderscript('doliconnect-basecartform');
 
 print "<div class='card shadow-sm' id='cart-form'><ul id='doliline' class='list-group list-group-flush'>";
 
@@ -1676,7 +1676,7 @@ $('#tab-cart-content').append( new_tab );
 $('#nav-tab-pay').tab('show');                                                                             
 }
 
-console.log(response.data);
+//console.log(response.data);
 }
 $('#DoliconnectLoadingModal').modal('hide');
         });

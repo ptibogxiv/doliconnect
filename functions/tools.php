@@ -545,8 +545,8 @@ if ( !isset($socialnetworks->error) && $socialnetworks != null ) {
 print "<li class='list-group-item'><div class='form-row'>";
 foreach ( $socialnetworks as $social ) { 
 $code = $social->code;
-print "<div class='col-12 col-md-4'><label for='inlineFormInputGroup'><small><i class='fab fa-".$social->code." fa-fw'></i> ".$social->label."</small></label>
-<input type='text' name='".$idobject."[socialnetworks][".$social->code."]' class='form-control' id='inlineFormInputGroup' placeholder='".__( 'Username', 'doliconnect')."' value='".stripslashes(htmlspecialchars((isset($object->socialnetworks->$code) ? $object->socialnetworks->$code : null), ENT_QUOTES))."'></div>";
+print "<div class='col-12 col-md-4'><label for='".$idobject."[socialnetworks][".$social->code."]'><small><i class='fab fa-".$social->code." fa-fw'></i> ".$social->label."</small></label>
+<input type='text' name='".$idobject."[socialnetworks][".$social->code."]' class='form-control' id='".$idobject."[socialnetworks][".$social->code."]' placeholder='".__( 'Username', 'doliconnect')."' value='".stripslashes(htmlspecialchars((isset($object->socialnetworks->$code) ? $object->socialnetworks->$code : null), ENT_QUOTES))."'></div>";
 }
 print "</div></li>";
 }
