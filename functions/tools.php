@@ -1020,21 +1020,10 @@ var qty = $(this).val();
           }
         }).done(function(response) {
       if (response.success) {
-if (actionvalue == 'update_cart') {
-$('#a-tab-cart').removeClass('active');
-$('#a-tab-info').removeClass('disabled');
-$('#a-tab-info').addClass('active');    
-$('#nav-tab-cart').removeClass('show active');
-$('#nav-tab-info').addClass('show active');
-$('#nav-tab-cart').tab('dispose');
-$('#nav-tab-info').tab('show');
-if (document.getElementById('nav-tab-pay')) {
-$('#a-tab-pay').addClass('disabled');
-//document.getElementById('nav-tab-pay').remove();    
-}     
-}
+$('#a-tab-info').addClass('disabled'); 
+$('#a-tab-pay').addClass('disabled');  
 
-//console.log(response.data);
+console.log(response.data.message);
 }
 $('#DoliconnectLoadingModal').modal('hide');
         });

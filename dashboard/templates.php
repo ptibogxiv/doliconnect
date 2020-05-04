@@ -1520,7 +1520,7 @@ $('#a-tab-pay').addClass('disabled');
 }     
 }
 
-console.log(response.data);
+console.log(response.data.message);
 }
 $('#DoliconnectLoadingModal').modal('hide');
         });

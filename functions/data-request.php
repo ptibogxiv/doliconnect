@@ -263,7 +263,7 @@ $dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolide
 $response = [
     'items' => '0',
     'lines' => doliline(null, null),
-    'message' => __( 'We no longer have this item in this quantity', 'doliconnect'),
+    'message' => __( 'Your cart has been emptied', 'doliconnect'),
         ];
 wp_send_json_success($response);
 
@@ -293,7 +293,10 @@ $data = [
 	];                 
 $object = callDoliApi("PUT", "/".trim($_POST['module'])."/".trim($_POST['id']), $data, dolidelay('order', true));
 
-wp_send_json_success( 'success'); 
+$response = [
+    'message' => __( 'Your cart has been validated', 'doliconnect'),
+        ];
+wp_send_json_success($response);
 } elseif ( isset($_POST['action_cart']) && $_POST['action_cart'] == "info_cart") {
 
 $data = [
