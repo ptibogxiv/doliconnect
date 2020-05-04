@@ -257,7 +257,7 @@ function dolicart_request(){
 if ( wp_verify_nonce( trim($_POST['dolicart-nonce']), 'dolicart-nonce')) {
 
 if ( isset($_POST['action_cart']) && $_POST['action_cart'] == "purge_cart") {
-$orderdelete = callDoliApi("DELETE", "/".trim($_POST['module'])."/".trim($_POST['id']), null);
+$order = callDoliApi("DELETE", "/".trim($_POST['module'])."/".trim($_POST['id']), null);
 $dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolidelay('doliconnector', true));
 
 $response = [
@@ -268,6 +268,14 @@ $response = [
 wp_send_json_success($response);
 
 } elseif ( isset($_POST['action_cart']) && $_POST['action_cart'] == "validate_cart") {
+
+$data = [
+    'demand_reason_id' => 1,
+    'module_source' => 'doliconnect',
+    'pos_source' => get_current_blog_id(),
+	];                 
+$order = callDoliApi("PUT", "/".trim($_POST['module'])."/".trim($_POST['id']), $data, dolidelay('order', true));
+
 wp_send_json_success( 'success'); 
 } else {
 wp_send_json_error( __( 'An error occured', 'doliconnect')); 
