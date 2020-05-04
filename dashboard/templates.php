@@ -1229,19 +1229,19 @@ $time = current_time( 'timestamp', 1);
 
 if ( isset($_GET['module']) && ($_GET['module'] == 'orders' || $_GET['module'] == 'invoices') && isset($_GET['id']) && isset($_GET['ref']) ) {
 $request = "/".esc_attr($_GET['module'])."/".esc_attr($_GET['id'])."?contact_list=0";
-$module=esc_attr($_GET['module']);
+$module = esc_attr($_GET['module']);
+$id = $_GET['id']; 
 } elseif (doliconnector($current_user, 'fk_order') > 0) {
 $request = "/orders/".doliconnector($current_user, 'fk_order')."?contact_list=0";
-$module='orders';
+$module = 'orders';
+$id = doliconnector($current_user, 'fk_order'); 
 } else {
 $request = "/orders/-1";
-$module='orders';
+$module = 'orders';
+$id = null;
 }
 
-//if ( doliconnector($current_user, 'fk_order') > 0 ) {
 $object = callDoliApi("GET", $request, null, dolidelay('cart', true));
-//print var_dump($object);
-//}
 
 if ( defined("DOLIBUG") ) {
 
@@ -1498,7 +1498,7 @@ print '<li id="li-tab-cart" class="nav-item"><a id="a-tab-cart" class="nav-link 
 print '<li id="li-tab-info" class="nav-item"><a id="a-tab-info" class="nav-link disabled" data-toggle="pill" href="#nav-tab-info">
 <i class="fas fa-user-check fa-fw"></i> Coordonnees</a></li>';
 
-print '<li id="li-CHQ" class="nav-item"><a class="nav-link disabled" data-toggle="pill" href="#nav-tab-pay">
+print '<li id="li-tab-pay" class="nav-item"><a class="nav-link disabled" data-toggle="pill" href="#nav-tab-pay">
 <i class="fas fa-money-bill-wave fa-fw"></i> Paiement</a></li>';
  
 print "</ul><br><div class='tab-content'>";
@@ -1596,7 +1596,9 @@ var actionvalue = $(this).val();
           data: {
             'action': 'dolicart_request',
             'dolicart-nonce': '".wp_create_nonce( 'dolicart-nonce')."',
-            'action_cart': actionvalue
+            'action_cart': actionvalue,
+            'module': '".$module."',
+            'id': '".$id."'
           }
         }).done(function(response) {
 $(window).scrollTop(0); 
@@ -1607,6 +1609,7 @@ document.getElementById('doliline').innerHTML = response.data.lines;
 document.getElementById('dolitotal').remove();
 document.getElementById('purgebtn_cart').remove();
 document.getElementById('validatebtn_cart').remove();
+$('#a-tab-info').addClass('disabled');
       if (document.getElementById('DoliHeaderCarItems')) {
       document.getElementById('DoliHeaderCarItems').innerHTML = response.data.items;
       }
