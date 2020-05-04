@@ -1496,15 +1496,15 @@ document.getElementById('dolitotal').remove();
 document.getElementById('purgebtn_cart').remove();
 document.getElementById('validatebtn_cart').remove();
 $('#a-tab-info').addClass('disabled');
-      if (document.getElementById('DoliHeaderCarItems')) {
-      document.getElementById('DoliHeaderCarItems').innerHTML = response.data.items;
-      }
-      if (document.getElementById('DoliFooterCarItems')) {  
-      document.getElementById('DoliFooterCarItems').innerHTML = response.data.items;
-      }
-      if (document.getElementById('DoliWidgetCarItems')) {
-      document.getElementById('DoliWidgetCarItems').innerHTML = response.data.items;
-      } 
+if (document.getElementById('DoliHeaderCarItems')) {
+document.getElementById('DoliHeaderCarItems').innerHTML = response.data.items;
+}
+if (document.getElementById('DoliFooterCarItems')) {  
+document.getElementById('DoliFooterCarItems').innerHTML = response.data.items;
+}
+if (document.getElementById('DoliWidgetCarItems')) {
+document.getElementById('DoliWidgetCarItems').innerHTML = response.data.items;
+} 
 
 } else if (actionvalue == 'validate_cart') {
 $('#a-tab-cart').removeClass('active');

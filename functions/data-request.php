@@ -253,6 +253,7 @@ add_action('wp_ajax_dolicart_request', 'dolicart_request');
 //add_action('wp_ajax_nopriv_dolicart_request', 'dolicart_request');
 
 function dolicart_request(){
+global $current_user;
 
 if ( wp_verify_nonce( trim($_POST['dolicart-nonce']), 'dolicart-nonce')) {
 
@@ -274,11 +275,12 @@ wp_send_json_success($response);
 //print var_dump($_POST['updateorderproduct']);
 //}
 //doliconnector($current_user, 'fk_order', true);
-//$object = callDoliApi("GET", $request, null, dolidelay('cart', true));
+//$object = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order', true), null, dolidelay('cart', true));
 
 $response = [
     'items' => '0',
-    'lines' => doliline(null, null),
+    'lines' => doliline($object, true),
+    'total' => 'test',
     'message' => __( 'We no longer have this item in this quantity', 'doliconnect'),
         ];
 wp_send_json_success($response);

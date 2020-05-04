@@ -1022,7 +1022,16 @@ var qty = $(this).val();
       if (response.success) {
 $('#a-tab-info').addClass('disabled'); 
 $('#a-tab-pay').addClass('disabled');  
-
+document.getElementById('doliline').innerHTML = response.data.lines;
+if (document.getElementById('DoliHeaderCarItems')) {
+document.getElementById('DoliHeaderCarItems').innerHTML = response.data.items;
+}
+if (document.getElementById('DoliFooterCarItems')) {  
+document.getElementById('DoliFooterCarItems').innerHTML = response.data.items;
+}
+if (document.getElementById('DoliWidgetCarItems')) {
+document.getElementById('DoliWidgetCarItems').innerHTML = response.data.items;
+} 
 console.log(response.data.message);
 }
 $('#DoliconnectLoadingModal').modal('hide');
