@@ -1635,12 +1635,7 @@ print "<li class='list-group-item list-group-item-info'><i class='fas fa-info-ci
 }
 
 print "<li class='list-group-item'><h6>".__( 'Message', 'doliconnect')."</h6>";
-//print '<div class="custom-control custom-checkbox">
-//<input type="checkbox" class="custom-control-input" id="AddMessage" name="AddMessage" data-toggle="collapse" data-target="#collapseMessage" aria-expanded="false" aria-controls="collapseMessage">
-//<label class="custom-control-label" for="AddMessage">'.__( 'Add a message', 'doliconnect').'</label></div>';
-//print "<div class='collapse' id='collapseMessage'>";
 print "<textarea class='form-control' id='note_public' name='note_public' rows='3' placeholder='".__( 'Enter a message here that you want to send us about your order', 'doliconnect')."'>".$object->note_public."</textarea>";
-//print "</div>";
 print "</li></ul>";
 
 $note_public = isset($_POST['note_public']) ? $_POST['note_public'] : '';
