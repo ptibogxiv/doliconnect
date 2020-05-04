@@ -293,18 +293,19 @@ if ($_POST['contact_shipping']) {
 $shipping= callDoliApi("POST", "/".trim($_POST['module'])."/".trim($_POST['id'])."/contact/".$_POST['contact_shipping']."/SHIPPING", null, dolidelay('order', true));
 }
 
-if ( doliversion('11.0.0') ) {
-if ( current_user_can('administrator') && !empty(get_option('doliconnectbeta')) ) {
-$content = doliconnect_paymentmethods($object, substr(trim($_POST['module']), 0, -1), null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
-} else {
-$content = dolipaymentmethods($object, substr(trim($_POST['module']), 0, -1), null, true);
-}
-} else {
-$content = __( "It seems that your version of Dolibarr and/or its plugins are not up to date!", "doliconnect");
-}
+//if ( doliversion('11.0.0') ) {
+//if ( current_user_can('administrator') && !empty(get_option('doliconnectbeta')) ) {
+//$content = doliconnect_paymentmethods($object, substr(trim($_POST['module']), 0, -1), null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+//} else {
+//$content = dolipaymentmethods($object, substr(trim($_POST['module']), 0, -1), null, true);
+//}
+//} else {
+//$content = __( "It seems that your version of Dolibarr and/or its plugins are not up to date!", "doliconnect");
+//}
 
 $response = [
-    'message' => ''.$content.'',
+    //'content' => '".$content."',
+    'message' => 'ok',
         ];
 wp_send_json_success($response);
 } else {

@@ -1531,7 +1531,7 @@ $('#nav-tab-cart').tab('dispose');
 $('#nav-tab-info').tab('show');
 if (document.getElementById('nav-tab-pay')) {
 $('#a-tab-pay').addClass('disabled');
-document.getElementById('nav-tab-pay').remove();    
+//document.getElementById('nav-tab-pay').remove();    
 }     
 }
 
@@ -1669,14 +1669,14 @@ $('#a-tab-pay').addClass('active');
 $('#nav-tab-info').removeClass('show active');
 $('#nav-tab-info').tab('dispose');
 if (document.getElementById('nav-tab-pay')) {
-document.getElementById('nav-tab-pay').remove();    
+//document.getElementById('nav-tab-pay').remove();    
 }
-var new_tab = $('<div>').addClass( 'tab-pane fade show active').attr('id', 'nav-tab-pay').append( response.data.message );
-$('#tab-cart-content').append( new_tab );
+//var new_tab = $('<div>').addClass( 'tab-pane fade show active').attr('id', 'nav-tab-pay').append( response.data.content );
+//$('#tab-cart-content').append( new_tab );
 $('#nav-tab-pay').tab('show');                                                                             
 }
 
-//console.log(response.data);
+console.log(response.data.message);
 }
 $('#DoliconnectLoadingModal').modal('hide');
         });
@@ -1698,9 +1698,22 @@ print "</div></div>";
 
 print "</div>";
 
-}
-print "</div>";
+print "<div class='tab-pane fade' id='nav-tab-pay'>";
 
+if ( doliversion('11.0.0') ) {
+if ( current_user_can('administrator') && !empty(get_option('doliconnectbeta')) ) {
+print doliconnect_paymentmethods($object, substr(trim($module), 0, -1), null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+} else {
+print dolipaymentmethods($object, substr(trim($module), 0, -1), null, true);
+}
+} else {
+print __( "It seems that your version of Dolibarr and/or its plugins are not up to date!", "doliconnect");
+}
+
+print "</div>";
+}
+
+print "</div>";
 }
 }
 
