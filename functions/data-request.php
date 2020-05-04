@@ -257,7 +257,7 @@ function dolicart_request(){
 if ( wp_verify_nonce( trim($_POST['dolicart-nonce']), 'dolicart-nonce')) {
 
 if ( isset($_POST['action_cart']) && $_POST['action_cart'] == "purge_cart") {
-$order = callDoliApi("DELETE", "/".trim($_POST['module'])."/".trim($_POST['id']), null);
+$object = callDoliApi("DELETE", "/".trim($_POST['module'])."/".trim($_POST['id']), null);
 $dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolidelay('doliconnector', true));
 
 $response = [
@@ -270,13 +270,38 @@ wp_send_json_success($response);
 } elseif ( isset($_POST['action_cart']) && $_POST['action_cart'] == "validate_cart") {
 
 $data = [
+    'date_modification' => mktime(),
     'demand_reason_id' => 1,
     'module_source' => 'doliconnect',
     'pos_source' => get_current_blog_id(),
 	];                 
-$order = callDoliApi("PUT", "/".trim($_POST['module'])."/".trim($_POST['id']), $data, dolidelay('order', true));
+$object = callDoliApi("PUT", "/".trim($_POST['module'])."/".trim($_POST['id']), $data, dolidelay('order', true));
 
 wp_send_json_success( 'success'); 
+} elseif ( isset($_POST['action_cart']) && $_POST['action_cart'] == "info_cart") {
+
+$data = [
+    'date_modification' => mktime(),
+    'demand_reason_id' => 1,
+    'module_source' => 'doliconnect',
+    'pos_source' => get_current_blog_id(),
+	];                 
+$object = callDoliApi("PUT", "/".trim($_POST['module'])."/".trim($_POST['id']), $data, dolidelay('order', true));
+
+if ( doliversion('11.0.0') ) {
+if ( current_user_can('administrator') && !empty(get_option('doliconnectbeta')) ) {
+$content = doliconnect_paymentmethods($object, substr(trim($_POST['module']), 0, -1), null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+} else {
+$content = dolipaymentmethods($object, substr(trim($_POST['module']), 0, -1), null, true);
+}
+} else {
+$content = __( "It seems that your version of Dolibarr and/or its plugins are not up to date!", "doliconnect");
+}
+
+$response = [
+    'message' => ''.$content.'',
+        ];
+wp_send_json_success($response);
 } else {
 wp_send_json_error( __( 'An error occured', 'doliconnect')); 
 }

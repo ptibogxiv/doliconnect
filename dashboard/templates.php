@@ -1268,20 +1268,7 @@ $payinfo = callDoliApi("POST", "/doliconnector/pay/".$module."/".$object->id, $d
 doliconnector($current_user, 'fk_order', true);
 $object = callDoliApi("GET", "/".$module."/".$object->id."?contact_list=0", null, dolidelay('cart', true));
 
-print "<table width='100%' style='border: none'><tr style='border: none'><td width='50px' style='border: none'><div class='fa-3x'>
-<i class='fas fa-shopping-bag fa-fw text-success' data-fa-transform='shrink-3.5' data-fa-mask='fas fa-circle' ></i>
-</div></td><td style='border: none'><div class='progress'>
-<div class='progress-bar bg-success w-100' role='progressbar' aria-valuenow='75' aria-valuemin='0' aria-valuemax='100'></div>
-</div></td><td width='50px' style='border: none'><div class='fa-3x'>
-<i class='fas fa-user-check fa-fw text-success' data-fa-transform='shrink-3.5' data-fa-mask='fas fa-circle' ></i>
-</div></td><td style='border: none'><div class='progress'>
-<div class='progress-bar bg-success w-100' role='progressbar' aria-valuenow='75' aria-valuemin='0' aria-valuemax='100'></div>
-</div></td><td width='50px' style='border: none'><div class='fa-3x'>
-<i class='fas fa-money-bill-wave fa-fw text-success' data-fa-transform='shrink-3.5' data-fa-mask='fas fa-circle' ></i>
-</div></td><td style='border: none'><div class='progress'>
-<div class='progress-bar bg-success w-100' role='progressbar' aria-valuenow='75' aria-valuemin='0' aria-valuemax='100'></div>
-</div></td><td width='50px' style='border: none'><div class='fa-3x'>
-<i class='fas fa-check fa-fw ";
+
 
 if ( $payinfo->status == 'succeeded' ) {
 print "text-success";
@@ -1361,79 +1348,7 @@ print "</div></div></div>";
 
 } elseif ( isset($_GET['step']) && $_GET['step'] == 'payment' && isset($_GET['cart']) && wp_verify_nonce( $_GET['cart'], 'valid_dolicart-'.$object->id) && ( (doliconnector($current_user, 'fk_order_nb_item') > 0 && $object->statut == 0 && !isset($_GET['module']) && !isset($_GET['id'])) || ( ($_GET['module'] == 'orders' && $object->billed != 1 ) || ($_GET['module'] == 'invoices' && $object->paye != 1) )) && $object->socid == doliconnector($current_user, 'fk_soc') ) {
 
-print "<table width='100%' style='border: none'><tr style='border: none'><td width='50px' style='border: none'><div class='fa-3x'>
-<i class='fas fa-shopping-bag fa-fw text-success' data-fa-transform='shrink-3.5' data-fa-mask='fas fa-circle' ></i>
-</div></td><td style='border: none'><div class='progress'>
-<div class='progress-bar bg-success w-100' role='progressbar' aria-valuenow='75' aria-valuemin='0' aria-valuemax='100'></div>
-</div></td><td width='50px' style='border: none'><div class='fa-3x'>
-<i class='fas fa-user-check fa-fw text-success' data-fa-transform='shrink-3.5' data-fa-mask='fas fa-circle' ></i>
-</div></td><td style='border: none'><div class='progress'>
-<div class='progress-bar bg-success w-100' role='progressbar' aria-valuenow='75' aria-valuemin='0' aria-valuemax='100'></div>
-</div></td><td width='50px' style='border: none'><div class='fa-3x'>
-<i class='fas fa-money-bill-wave fa-fw text-warning' data-fa-transform='shrink-3.5' data-fa-mask='fas fa-circle' ></i>
-</div></td><td style='border: none'><div class='progress'>
-<div class='progress-bar progress-bar-striped progress-bar-animated w-100' role='progressbar' aria-valuenow='75' aria-valuemin='0' aria-valuemax='100'></div>
-</div></td><td width='50px' style='border: none'><div class='fa-3x'>
-<i class='fas fa-check fa-fw text-dark' data-fa-transform='shrink-3.5' data-fa-mask='fas fa-circle' ></i>
-</div></td></tr></table><br>";
 
-print "<div class='row'><div class='col-12 col-md-4  d-none d-sm-none d-md-block'>";
-print dolisummarycart($object);
-print "<div class='card'><div class='card-header'>".__( 'Contacts', 'doliconnect')."  <small>(";
-if ( !isset($object->resteapayer) && $object->statut == 0 ) { print "<a href='".doliconnecturl('dolicart')."?cart=".$_GET['cart']."&step=info' >".__( 'update', 'doliconnect')."</a>"; }
-else { print __( 'unchangeable, please contact us', 'doliconnect'); }
-print ")</small></div><ul class='list-group list-group-flush'>";
-
-$thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-
-if (!empty($object->contacts_ids) && is_array($object->contacts_ids)) {
-
-print "<li class='list-group-item list-group-item-light'><h6>".__( "Customer's Address", "doliconnect")."</h6><small class='text-muted'>";
-print doliaddress($thirdparty, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
-print "</small></li>";
-
-foreach ($object->contacts_ids as $contact) {
-if ('BILLING' == $contact->code) {
-print "<li class='list-group-item list-group-item-light'><h6>".__( "Billing address", "doliconnect")."</h6><small class='text-muted'>";
-print dolicontact($contact->id, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
-print "</small></li>";
-} elseif ('SHIPPING' == $contact->code) {
-print "<li class='list-group-item list-group-item-light'><h6>".__( "Shipping address", "doliconnect")."</h6><small class='text-muted'>";
-print dolicontact($contact->id, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
-print "</small></li>";
-} 
-}
-
-} else {
-print "<li class='list-group-item list-group-item-light'><h6>".__( 'Billing and shipping address', 'doliconnect')."</h6><small class='text-muted'>";
-print doliaddress($thirdparty, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
-print "</small></li>";
-}
-
-if ( ! empty($object->note_public) ) {
-print "<li class='list-group-item list-group-item-light'><h6>".__( 'Message', 'doliconnect')."</h6><small class='text-muted'>";
-print $object->note_public;
-print "</small></li>";
-}
-
-print "</ul></div></div><div class='col-12 col-md-8'>";
-
-if ( doliversion('11.0.0') ) {
-$nonce = wp_create_nonce( 'valid_dolicart-'. $object->id);
-$arr_params = array('step' => 'validation', 'module' => $module, 'id' => $object->id, 'ref' => $object->ref, 'cart' => $nonce);  
-$return = add_query_arg( $arr_params, doliconnecturl('dolicart'));
-
-if ( current_user_can('administrator') && !empty(get_option('doliconnectbeta')) ) {
-print doliconnect_paymentmethods($object, substr($module, 0, -1), $return, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
-} else {
-print dolipaymentmethods($object, substr($module, 0, -1), $return, true);
-}
-
-} else {
-print __( "It seems that your version of Dolibarr and/or its plugins are not up to date!", "doliconnect");
-}
-
-print "</div></div>";
 
 } elseif ( isset($_GET['step']) && $_GET['step'] == 'info' && isset($_GET['cart']) && wp_verify_nonce( $_GET['cart'], 'valid_dolicart-'.$object->id) && isset($_POST['dolichecknonce']) && $_GET['cart'] == $_POST['dolichecknonce'] && doliconnector($current_user, 'fk_order_nb_item') > 0 && $object->socid == doliconnector($current_user, 'fk_soc') && !isset($object->resteapayer) && $object->statut == 0 && !isset($_GET['module']) && !isset($_GET['id']) ) {
 
@@ -1480,8 +1395,6 @@ wp_redirect(doliconnecturl('dolicart'));
 exit;
 
 }
-//header('Refresh: 300; URL='.esc_url(get_permalink()).'');
-
 
 } else {
 
@@ -1498,10 +1411,10 @@ print '<li id="li-tab-cart" class="nav-item"><a id="a-tab-cart" class="nav-link 
 print '<li id="li-tab-info" class="nav-item"><a id="a-tab-info" class="nav-link disabled" data-toggle="pill" href="#nav-tab-info">
 <i class="fas fa-user-check fa-fw"></i> Coordonnees</a></li>';
 
-print '<li id="li-tab-pay" class="nav-item"><a class="nav-link disabled" data-toggle="pill" href="#nav-tab-pay">
+print '<li id="li-tab-pay" class="nav-item"><a id="a-tab-pay" class="nav-link disabled" data-toggle="pill" href="#nav-tab-pay">
 <i class="fas fa-money-bill-wave fa-fw"></i> Paiement</a></li>';
  
-print "</ul><br><div class='tab-content'>";
+print "</ul><br><div id='tab-cart-content' class='tab-content'>";
 
 print "<div class='tab-pane fade show active' id='nav-tab-cart'>";
  
@@ -1627,8 +1540,7 @@ $('#a-tab-info').addClass('active');
 $('#nav-tab-cart').removeClass('show active');
 $('#nav-tab-info').addClass('show active');
 $('#nav-tab-cart').tab('dispose');
-$('#nav-tab-info').tab('show');
-//$('#a-tab-cart').addClass('disabled');      
+$('#nav-tab-info').tab('show');     
 }
 
 console.log(response.data);
@@ -1660,6 +1572,7 @@ print "</div></small>";
 print "</div></div>";
 
 print "</div>";
+
 if ( is_user_logged_in() ) { 
 print "<div class='tab-pane fade' id='nav-tab-info'>";
 print "<div class='row' id='informations-form'><div class='col-12 col-md-4 d-none d-sm-none d-md-block'>";
@@ -1738,7 +1651,51 @@ print "<textarea class='form-control' id='note_public' name='note_public' rows='
 print "</div>";
 print "</li></ul>";
 
-print "<div class='card-body'><center><button class='btn btn-warning btn-block' type='submit'>".__( 'Validate', 'doliconnect')."</button></center></div>";
+print "<script>";
+print "(function ($) {
+$(document).ready(function(){
+$('#infobtn_cart').on('click',function(event){
+event.preventDefault();
+$('#DoliconnectLoadingModal').modal('show');
+var actionvalue = $(this).val();
+        $.ajax({
+          url: '".esc_url( admin_url( 'admin-ajax.php' ) )."',
+          type: 'POST',
+          data: {
+            'action': 'dolicart_request',
+            'dolicart-nonce': '".wp_create_nonce( 'dolicart-nonce')."',
+            'action_cart': actionvalue,
+            'module': '".$module."',
+            'id': '".$id."'
+          }
+        }).done(function(response) {
+$(window).scrollTop(0); 
+console.log(actionvalue);
+      if (response.success) {
+if (actionvalue == 'info_cart') {
+$('#a-tab-info').removeClass('active');
+$('#a-tab-pay').removeClass('disabled');
+$('#a-tab-pay').addClass('active');    
+$('#nav-tab-info').removeClass('show active');
+$('#nav-tab-info').tab('dispose');
+if (document.getElementById('nav-tab-pay')) {
+document.getElementById('nav-tab-pay').remove();    
+}
+var new_tab = $('<div>').addClass( 'tab-pane fade show active').attr('id', 'nav-tab-pay').append( response.data.message );
+$('#tab-cart-content').append( new_tab );
+$('#nav-tab-pay').tab('show');                                                                             
+}
+
+console.log(response.data);
+}
+$('#DoliconnectLoadingModal').modal('hide');
+        });
+});
+});
+})(jQuery);";
+print "</script>";
+
+print "<div class='card-body'><center><button type='button'  id='infobtn_cart' name='info_cart' value='info_cart'  class='btn btn-warning btn-block'>".__( 'Validate', 'doliconnect')."</button></center></div>";
 print "<div class='card-footer text-muted'>";
 print "<small><div class='float-left'>";
 if ( isset($request) ) print dolirefresh($request, get_permalink(), dolidelay('cart'));
@@ -1746,12 +1703,11 @@ print "</div><div class='float-right'>";
 print dolihelp('ISSUE');
 print "</div></small>";
 print "</div></div>";
+
+print "</div></div>";
+
 print "</div>";
 
-print "<div class='tab-pane fade' id='nav-tab-pay'>
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-tempor incididunt ut labore et dolore magna aliqua.</p>
-</div>";
 }
 print "</div>";
 
