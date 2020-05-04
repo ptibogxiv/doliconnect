@@ -1015,7 +1015,8 @@ var qty = $(this).val();
             'action': 'dolicart_request',
             'dolicart-nonce': '".wp_create_nonce( 'dolicart-nonce')."',
             'action_cart': 'update_cart',
-            'module': 'tt',
+            'module': 'orders',
+            'id': '".$object->id."',
             'qty': qty
           }
         }).done(function(response) {
