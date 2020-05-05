@@ -1554,17 +1554,6 @@ print "<div class='tab-pane fade' id='nav-tab-info'>";
   
 $thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))); 
 
-print "<div class='modal fade' id='updatethirdparty' tabindex='-1' role='dialog' aria-labelledby='updatethirdpartyTitle' aria-hidden='true' data-backdrop='static' data-keyboard='false'>
-<div class='modal-dialog modal-lg modal-dialog-centered' role='document'><div class='modal-content border-0'><div class='modal-header border-0'>
-<h5 class='modal-title' id='updatethirdpartyTitle'>".__( 'Billing address', 'doliconnect')."</h5><button id='Closeupdatethirdparty-form' type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
-</div><div id='updatethirdparty-form'>";
-
-print doliuserform( $thirdparty, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'contact');
-
-print "</div>".doliloading('updatethirdparty-form');
-print "<div id='Footerupdatethirdparty-form' class='modal-footer'><button name='update_thirdparty' value='validation' class='btn btn-warning btn-block' type='submit'><b>".__( 'Update', 'doliconnect')."</b></button></form></div>
-</div></div></div>";
-
 print "<div class='card'><ul class='list-group list-group-flush'>";
 
 if ( doliversion('10.0.0') ) {
@@ -1573,12 +1562,46 @@ print "<li class='list-group-item'><h6>".__( 'Billing address', 'doliconnect')."
 print "<li class='list-group-item'><h6>".__( 'Billing and shipping address', 'doliconnect')."</h6><small class='text-muted'>";
 }
 print '<div class="custom-control custom-radio">
-<input type="radio" id="billing0" name="contact_billing" class="custom-control-input" value="" checked>
-<label class="custom-control-label" for="billing0">'.doliaddress($thirdparty).'</label>
+<input type="radio" id="billing00" name="contact_billing0" class="custom-control-input" value="" checked>
+<label class="custom-control-label" for="billing00">'.doliaddress($thirdparty).'</label>
 </div>';
 
-//print '<div class="float-right"><button type="button" class="btn btn-link btn-sm" data-toggle="modal" data-target="#updatethirdparty"><center>'.__( 'Update', 'doliconnect').'</center></button></div>';
 print "</small></li>";
+
+if ( doliversion('10.0.0') ) {
+
+print "<li class='list-group-item'><h6>".__( 'Billing address', 'doliconnect')."</h6><small class='text-muted'>";
+
+print '<div class="custom-control custom-radio">
+<input type="radio" id="billing-0" name="contact_billing" class="custom-control-input" value="" checked>
+<label class="custom-control-label" for="billing-0">'.__( "Same address that billing", "doliconnect").'</label>
+</div>';
+
+$listcontact = callDoliApi("GET", "/contacts?sortfield=t.rowid&sortorder=ASC&limit=100&thirdparty_ids=".doliconnector($current_user, 'fk_soc')."&includecount=1&sqlfilters=t.statut=1", null, dolidelay('contact', true));
+
+if (!empty($object->contacts_ids) && is_array($object->contacts_ids)) {
+$contactshipping = null;
+foreach ($object->contacts_ids as $contact) {
+if ('BILLING' == $contact->code) {
+$contactshipping = $contact->id;
+}
+}
+}
+
+if ( !isset($listcontact->error) && $listcontact != null ) {
+foreach ( $listcontact as $contact ) {
+print '<div class="custom-control custom-radio"><input type="radio" id="billing-'.$contact->id.'" name="contact_billing" class="custom-control-input" value="'.$contact->id.'" ';
+if ( (isset($contact->default) && !empty($contact->default)) || $contactshipping == $contact->id ) { print "checked"; }
+print '><label class="custom-control-label" for="billing-'.$contact->id.'">';
+print dolicontact($contact->id, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+print '</label></div>';
+}
+}
+print "</small></li>";
+
+} elseif ( current_user_can( 'administrator' ) ) {
+print "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".sprintf( esc_html__( "Add shipping contact needs Dolibarr %s but your version is %s", 'doliconnect'), '10.0.0', doliversion('10.0.0'))."</b></li>";
+}
 
 if ( doliversion('10.0.0') ) {
 
