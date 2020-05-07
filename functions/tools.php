@@ -2322,7 +2322,7 @@ $paymentmethods .= '<button type="button" onclick="PaySepaDebitPM(\''.$method->i
 $paymentmethods .= '<button type="button" onclick="PayPM(\''.$method->type.'\')" class="btn btn-danger btn-block">'.__( 'Pay', 'doliconnect')." ".doliprice($object, 'ttc', $currency).'</button>';
 }
 } else {
-if ( !isset($method->default_source) && !in_array($method->type, array('VIR')) ) {
+if ( !isset($method->default_source) && !in_array($method->type, array('VIR')) && empty($thirdparty->mode_reglement_id) ) {
 $paymentmethods .= "<button type='button' id='defaultbtn_".$method->id."' name='default_payment_method' value='default_payment_method' class='btn btn-light'";
 $paymentmethods .= "title='".__( 'Favourite', 'doliconnect')."'><i class='fas fa-star fa-fw' style='color:Gold'></i> ".__( "Favourite", 'doliconnect')."</button>";
 }
