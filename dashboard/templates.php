@@ -1556,15 +1556,9 @@ $thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, '
 
 print "<div class='card'><ul class='list-group list-group-flush'>";
 
-if ( doliversion('10.0.0') ) {
-print "<li class='list-group-item'><h6>".__( 'Billing address', 'doliconnect')."</h6><small class='text-muted'>";
-} else {
-print "<li class='list-group-item'><h6>".__( 'Billing and shipping address', 'doliconnect')."</h6><small class='text-muted'>";
-}
-print '<div class="custom-control custom-radio">
-<input type="radio" id="billing00" name="contact_billing0" class="custom-control-input" value="" checked>
-<label class="custom-control-label" for="billing00">'.doliaddress($thirdparty).'</label>
-</div>';
+print "<li class='list-group-item'><h6>".__( 'Customer', 'doliconnect')."</h6><small class='text-muted'>";
+
+print doliaddress($thirdparty);
 
 print "</small></li>";
 
@@ -1573,8 +1567,8 @@ if ( doliversion('10.0.0') ) {
 print "<li class='list-group-item'><h6>".__( 'Billing address', 'doliconnect')."</h6><small class='text-muted'>";
 
 print '<div class="custom-control custom-radio">
-<input type="radio" id="billing-0" name="contact_billing" class="custom-control-input" value="" checked>
-<label class="custom-control-label" for="billing-0">'.__( "Same address that billing", "doliconnect").'</label>
+<input type="radio" id="billing-0" name="contact_billing" class="custom-control-input" value="" checked disabled>
+<label class="custom-control-label" for="billing-0">'.__( "Same address as the customer", "doliconnect").'</label>
 </div>';
 
 $listcontact = callDoliApi("GET", "/contacts?sortfield=t.rowid&sortorder=ASC&limit=100&thirdparty_ids=".doliconnector($current_user, 'fk_soc')."&includecount=1&sqlfilters=t.statut=1", null, dolidelay('contact', true));
@@ -1592,24 +1586,18 @@ if ( !isset($listcontact->error) && $listcontact != null ) {
 foreach ( $listcontact as $contact ) {
 print '<div class="custom-control custom-radio"><input type="radio" id="billing-'.$contact->id.'" name="contact_billing" class="custom-control-input" value="'.$contact->id.'" ';
 if ( (isset($contact->default) && !empty($contact->default)) || $contactshipping == $contact->id ) { print "checked"; }
-print '><label class="custom-control-label" for="billing-'.$contact->id.'">';
+print ' disabled><label class="custom-control-label" for="billing-'.$contact->id.'">';
 print dolicontact($contact->id, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 print '</label></div>';
 }
 }
-print "</small></li>";
+print "</small>";
 
-} elseif ( current_user_can( 'administrator' ) ) {
-print "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".sprintf( esc_html__( "Add shipping contact needs Dolibarr %s but your version is %s", 'doliconnect'), '10.0.0', doliversion('10.0.0'))."</b></li>";
-}
-
-if ( doliversion('10.0.0') ) {
-
-print "<li class='list-group-item'><h6>".__( 'Shipping address', 'doliconnect')."</h6><small class='text-muted'>";
+print "<h6>".__( 'Shipping address', 'doliconnect')."</h6><small class='text-muted'>";
 
 print '<div class="custom-control custom-radio">
-<input type="radio" id="shipping-0" name="contact_shipping" class="custom-control-input" value="" checked>
-<label class="custom-control-label" for="shipping-0">'.__( "Same address that billing", "doliconnect").'</label>
+<input type="radio" id="shipping-0" name="contact_shipping" class="custom-control-input" value="" checked disabled>
+<label class="custom-control-label" for="shipping-0">'.__( "Same address as the customer", "doliconnect").'</label>
 </div>';
 
 $listcontact = callDoliApi("GET", "/contacts?sortfield=t.rowid&sortorder=ASC&limit=100&thirdparty_ids=".doliconnector($current_user, 'fk_soc')."&includecount=1&sqlfilters=t.statut=1", null, dolidelay('contact', true));
@@ -1627,7 +1615,7 @@ if ( !isset($listcontact->error) && $listcontact != null ) {
 foreach ( $listcontact as $contact ) {
 print '<div class="custom-control custom-radio"><input type="radio" id="shipping-'.$contact->id.'" name="contact_shipping" class="custom-control-input" value="'.$contact->id.'" ';
 if ( (isset($contact->default) && !empty($contact->default)) || $contactshipping == $contact->id ) { print "checked"; }
-print '><label class="custom-control-label" for="shipping-'.$contact->id.'">';
+print ' disabled><label class="custom-control-label" for="shipping-'.$contact->id.'">';
 print dolicontact($contact->id, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 print '</label></div>';
 }
@@ -1635,7 +1623,7 @@ print '</label></div>';
 print "</small></li>";
 
 } elseif ( current_user_can( 'administrator' ) ) {
-print "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".sprintf( esc_html__( "Add shipping contact needs Dolibarr %s but your version is %s", 'doliconnect'), '10.0.0', doliversion('10.0.0'))."</b></li>";
+print "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".sprintf( esc_html__( "Adding billing or shipping contacts requires Dolibarr %s but your version is %s", 'doliconnect'), '10.0.0', doliversion('10.0.0'))."</b></li>";
 }
 
 print "<li class='list-group-item'><h6>".__( 'Message', 'doliconnect')."</h6>";
@@ -1689,7 +1677,7 @@ $('#DoliconnectLoadingModal').modal('hide');
 })(jQuery);";
 print "</script>";
 
-print "<div class='card-body'><center><button type='button'  id='infobtn_cart' name='info_cart' value='info_cart'  class='btn btn-warning btn-block'>".__( 'Validate', 'doliconnect')."</button></center></div>";
+print "<div class='card-body'><button type='button'  id='infobtn_cart' name='info_cart' value='info_cart'  class='btn btn-light btn-block'>".__( 'Validate', 'doliconnect')."</button></div>";
 print "<div class='card-footer text-muted'>";
 print "<small><div class='float-left'>";
 if ( isset($request) ) print dolirefresh($request, get_permalink(), dolidelay('cart'));
