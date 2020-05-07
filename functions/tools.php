@@ -2421,18 +2421,19 @@ displayCardError.textContent = result.error.message;
             'default': $('input:radio[name=cardDefault]:checked').val()
           }
         }).done(function(response) {
-$(window).scrollTop(0); 
-      //if (response.success) {
-     //document.location = url;
-      //} else {
-
+$(window).scrollTop(0);
+console.log(response.data); 
+      if (response.success) {
       if (document.getElementById('DoliPaymentmethodAlert')) {
       document.getElementById('DoliPaymentmethodAlert').innerHTML = response.data;      
       }
-console.log(response.data);
 document.location = '".$url."';
-      //}
-//$('#DoliconnectLoadingModal').modal('hide');
+      } else {
+      if (document.getElementById('DoliPaymentmethodAlert')) {
+      document.getElementById('DoliPaymentmethodAlert').innerHTML = response.data;      
+      }
+$('#DoliconnectLoadingModal').modal('hide');
+      }
         });
     }
   }); 
