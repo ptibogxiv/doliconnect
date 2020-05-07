@@ -2216,7 +2216,8 @@ $paymentmethods .= '<li class="nav-item"><a class="nav-link" data-toggle="pill" 
 if ( isset($listpaymentmethods->VIR) && !empty($listpaymentmethods->VIR) ) {
 $paymentmethods .= "<li id='li-VIR' class='nav-item'><a class='nav-link ";
 $mode_reglement_code = callDoliApi("GET", "/setup/dictionary/payment_types?sortfield=code&sortorder=ASC&limit=100&active=1&sqlfilters=(t.code%3A%3D%3A'VIR')", null, dolidelay('constante'));
-if ( !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id == $mode_reglement_code[0]->id ) { $paymentmethods .=" active"; }
+if ( !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id != $mode_reglement_code[0]->id && !empty($module) && is_object($object) && isset($object->id) ) { $paymentmethods .=" disabled "; }
+elseif ( !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id == $mode_reglement_code[0]->id ) { $paymentmethods .=" active"; }
 $paymentmethods .= "' data-toggle='pill' href='#nav-tab-vir'>
 <i class='fa fa-money-check fa-fw float-left' style='color:Tan'></i> ".__( 'Pay by bank transfert', 'doliconnect');
 if ( !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id == $mode_reglement_code[0]->id ) { $paymentmethods .= " <i class='fas fa-star fa-fw' style='color:Gold'></i>"; }
@@ -2225,7 +2226,8 @@ $paymentmethods .= "</a></li>";
 if ( isset($listpaymentmethods->CHQ) && !empty($listpaymentmethods->CHQ) ) {
 $paymentmethods .= "<li id='li-CHQ' class='nav-item'><a class='nav-link ";
 $mode_reglement_code = callDoliApi("GET", "/setup/dictionary/payment_types?sortfield=code&sortorder=ASC&limit=100&active=1&sqlfilters=(t.code%3A%3D%3A'CHQ')", null, dolidelay('constante'));
-if ( !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id == $mode_reglement_code[0]->id ) { $paymentmethods .=" active"; }
+if ( !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id != $mode_reglement_code[0]->id && !empty($module) && is_object($object) && isset($object->id) ) { $paymentmethods .=" disabled "; }
+elseif ( !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id == $mode_reglement_code[0]->id ) { $paymentmethods .=" active"; }
 $paymentmethods .= "' data-toggle='pill' href='#nav-tab-chq'>
 <i class='fa fa-money-check fa-fw float-left' style='color:Tan'></i> ".__( 'Pay by bank check', 'doliconnect');
 if ( !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id == $mode_reglement_code[0]->id ) { $paymentmethods .= " <i class='fas fa-star fa-fw' style='color:Gold'></i>"; }
