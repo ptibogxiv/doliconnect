@@ -1394,13 +1394,13 @@ exit;
 print "<ul class='nav bg-white nav-pills rounded nav-justified flex-column flex-sm-row' role='tablist'>";
 
 print '<li id="li-tab-cart" class="nav-item"><a id="a-tab-cart" class="nav-link active" data-toggle="pill" href="#nav-tab-cart">
-<i class="fas fa-shopping-bag fa-fw"></i> Panier</a></li>';
+<i class="fas fa-shopping-bag fa-fw"></i> '.__( 'Cart', 'doliconnect').'</a></li>';
 
 print '<li id="li-tab-info" class="nav-item"><a id="a-tab-info" class="nav-link disabled" data-toggle="pill" href="#nav-tab-info">
-<i class="fas fa-user-check fa-fw"></i> Coordonnees</a></li>';
+<i class="fas fa-user-check fa-fw"></i> '.__( 'Coordinates', 'doliconnect').'</a></li>';
 
 print '<li id="li-tab-pay" class="nav-item"><a id="a-tab-pay" class="nav-link disabled" data-toggle="pill" href="#nav-tab-pay">
-<i class="fas fa-money-bill-wave fa-fw"></i> Paiement</a></li>';
+<i class="fas fa-money-bill-wave fa-fw"></i> '.__( 'Payment', 'doliconnect').'</a></li>';
  
 print "</ul><br><div id='tab-cart-content' class='tab-content'>";
 
@@ -1564,7 +1564,7 @@ print "</small></li>";
 
 if ( doliversion('10.0.0') ) {
 
-print "<li class='list-group-item'><h6>".__( 'Billing address', 'doliconnect')."</h6><small class='text-muted'>";
+print "<li class='list-group-item'><div class='row'><div class='col-12 col-md-6'><h6>".__( 'Billing address', 'doliconnect')."</h6><small class='text-muted'>";
 
 print '<div class="custom-control custom-radio">
 <input type="radio" id="billing-0" name="contact_billing" class="custom-control-input" value="" checked disabled>
@@ -1591,9 +1591,9 @@ print dolicontact($contact->id, esc_attr(isset($_GET["refresh"]) ? $_GET["refres
 print '</label></div>';
 }
 }
-print "</small>";
+print "</small></div>";
 
-print "<h6>".__( 'Shipping address', 'doliconnect')."</h6><small class='text-muted'>";
+print "<div class='col-12 col-md-6'><h6>".__( 'Shipping address', 'doliconnect')."</h6><small class='text-muted'>";
 
 print '<div class="custom-control custom-radio">
 <input type="radio" id="shipping-0" name="contact_shipping" class="custom-control-input" value="" checked disabled>
@@ -1620,7 +1620,7 @@ print dolicontact($contact->id, esc_attr(isset($_GET["refresh"]) ? $_GET["refres
 print '</label></div>';
 }
 }
-print "</small></li>";
+print "</small></div></div></li>";
 
 } elseif ( current_user_can( 'administrator' ) ) {
 print "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".sprintf( esc_html__( "Adding billing or shipping contacts requires Dolibarr %s but your version is %s", 'doliconnect'), '10.0.0', doliversion('10.0.0'))."</b></li>";

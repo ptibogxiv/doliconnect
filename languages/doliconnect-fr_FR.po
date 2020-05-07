@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2020-05-07 19:46+0200\n"
-"PO-Revision-Date: 2020-05-07 19:46+0200\n"
+"POT-Creation-Date: 2020-05-07 19:52+0200\n"
+"PO-Revision-Date: 2020-05-07 19:53+0200\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_FR\n"
@@ -538,7 +538,7 @@ msgstr "Commande"
 
 #: dashboard/dashboard.php:806 dashboard/dashboard.php:847
 #: dashboard/dashboard.php:1031 dashboard/dashboard.php:1163
-#: dashboard/dashboard.php:1287
+#: dashboard/dashboard.php:1287 dashboard/templates.php:1403
 msgid "Payment"
 msgstr "Paiement"
 
@@ -1212,6 +1212,14 @@ msgstr "Une erreur s’est produite"
 msgid "Return to %s"
 msgstr "Retour à %s"
 
+#: dashboard/templates.php:1397 functions/product.php:226
+msgid "Cart"
+msgstr "Panier"
+
+#: dashboard/templates.php:1400
+msgid "Coordinates"
+msgstr "Coordonnées"
+
 #: dashboard/templates.php:1445
 msgid "Amount outstanding"
 msgstr "Montant impayé"
@@ -1471,10 +1479,6 @@ msgstr "Cet article est en stock et peut être expédié immédiatement. %s"
 #: functions/product.php:218
 msgid "Quantity"
 msgstr "Quantité"
-
-#: functions/product.php:226
-msgid "Cart"
-msgstr "Panier"
 
 #: functions/product.php:226
 #, php-format
