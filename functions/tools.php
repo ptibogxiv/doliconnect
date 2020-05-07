@@ -727,7 +727,7 @@ if (! is_numeric($delay)) {
 
 if (false ===  get_site_option('doliconnect_delay_'.$delay) ) {
 
-if ($delay == 'constante') { $delay = MONTH_IN_SECONDS; }
+if ($delay == 'constante' || $delay == 'constantes') { $delay = MONTH_IN_SECONDS; }
 elseif ($delay == 'dolibarr') { $delay = HOUR_IN_SECONDS; }
 elseif ($delay == 'doliconnector') { $delay = HOUR_IN_SECONDS; }
 elseif ($delay == 'paymentmethods') { $delay = WEEK_IN_SECONDS; }
@@ -2171,7 +2171,7 @@ if ( isset($listpaymentmethods->payment_methods) && $listpaymentmethods->payment
 foreach ( $listpaymentmethods->payment_methods as $method ) {
 $paymentmethods .= '<li id="li-'.$method->id.'" class="nav-item"><a class="nav-link';
 if ( (!empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id != $method->id && !empty($module) && is_object($object) && isset($object->id)) || (date('Y/n') >= $method->expiration && !empty($object) && !empty($method->expiration)) ) { $paymentmethods .=" disabled "; }
-elseif ( !empty($method->default_source) && !in_array($method->type, array('PRE','VIR')) ) { $paymentmethods .=" active"; }
+elseif ( !empty($method->default_source) && empty($thirdparty->mode_reglement_id) && !in_array($method->type, array('PRE','VIR')) ) { $paymentmethods .=" active"; }
 $paymentmethods .= '" data-toggle="pill" href="#nav-tab-'.$method->id.'"><i ';
 if ( $method->type == 'sepa_debit' || $method->type == 'PRE' || $method->type == 'VIR' ) { $paymentmethods .= 'class="fas fa-university fa-fw float-left" style="color:DarkGrey"'; } 
 elseif ( $method->brand == 'visa' ) { $paymentmethods .= 'class="fab fa-cc-visa fa-fw float-left" style="color:#172274"'; }
@@ -2181,12 +2181,10 @@ else { $paymentmethods .= 'class="fab fa-credit-card fa-fw float-left"';}
 $paymentmethods .= "></i> ";
 if ( $method->type == 'sepa_debit' || $method->type == 'PRE' || $method->type == 'VIR' ) {
 $paymentmethods .= __( 'Account', 'doliconnect')." ".$method->reference;
-//$paymentmethods .= '<small> <a href="'.$method->mandate_url.'" title="'.__( 'Mandate', 'doliconnect').' '.$method->mandate_reference.'" target="_blank"><i class="fas fa-info-circle"></i></a></small>';
 } else {
 $paymentmethods .= __( 'Card', 'doliconnect').' '.$method->reference;
 }
-//if ( !empty($method->expiration) ) { $paymentmethods .=" - ".date("m/Y", strtotime($method->expiration.'/1')); }
-if ( $method->default_source && !in_array($method->type, array('PRE','VIR')) ) { $paymentmethods .= " <i class='fas fa-star fa-fw' style='color:Gold'></i>"; }
+if ( $method->default_source && empty($thirdparty->mode_reglement_id) && !in_array($method->type, array('PRE','VIR')) ) { $paymentmethods .= " <i class='fas fa-star fa-fw' style='color:Gold'></i>"; }
 $paymentmethods .= "<span class='flag-icon flag-icon-".strtolower($method->country)." float-right'></span></a></li>";
 }}
 if (isset($listpaymentmethods->stripe) && in_array('card', $listpaymentmethods->stripe->types) && empty($thirdparty->mode_reglement_id) ) {
@@ -2216,12 +2214,22 @@ $paymentmethods .= '<li class="nav-item"><a class="nav-link" data-toggle="pill" 
 <i class="fab fa-paypal float-left"></i> Paypal</a></li>';
 }
 if ( isset($listpaymentmethods->VIR) && !empty($listpaymentmethods->VIR) ) {
-$paymentmethods .= '<li id="li-VIR" class="nav-item"><a class="nav-link" data-toggle="pill" href="#nav-tab-vir">
-<i class="fa fa-university fa-fw float-left" style="color:DarkGrey"></i> '.__( 'Pay by bank transfert', 'doliconnect').'</a></li>';
+$paymentmethods .= "<li id='li-VIR' class='nav-item'><a class='nav-link ";
+$mode_reglement_code = callDoliApi("GET", "/setup/dictionary/payment_types?sortfield=code&sortorder=ASC&limit=100&active=1&sqlfilters=(t.code%3A%3D%3A'VIR')", null, dolidelay('constante'));
+if ( !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id == $mode_reglement_code[0]->id ) { $paymentmethods .=" active"; }
+$paymentmethods .= "' data-toggle='pill' href='#nav-tab-vir'>
+<i class='fa fa-money-check fa-fw float-left' style='color:Tan'></i> ".__( 'Pay by bank transfert', 'doliconnect');
+if ( !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id == $mode_reglement_code[0]->id ) { $paymentmethods .= " <i class='fas fa-star fa-fw' style='color:Gold'></i>"; }
+$paymentmethods .= "</a></li>";
 }
 if ( isset($listpaymentmethods->CHQ) && !empty($listpaymentmethods->CHQ) ) {
-$paymentmethods .= '<li id="li-CHQ" class="nav-item"><a class="nav-link" data-toggle="pill" href="#nav-tab-chq">
-<i class="fa fa-money-check fa-fw float-left" style="color:Tan"></i> '.__( 'Pay by bank check', 'doliconnect').'</a></li>';
+$paymentmethods .= "<li id='li-CHQ' class='nav-item'><a class='nav-link ";
+$mode_reglement_code = callDoliApi("GET", "/setup/dictionary/payment_types?sortfield=code&sortorder=ASC&limit=100&active=1&sqlfilters=(t.code%3A%3D%3A'CHQ')", null, dolidelay('constante'));
+if ( !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id == $mode_reglement_code[0]->id ) { $paymentmethods .=" active"; }
+$paymentmethods .= "' data-toggle='pill' href='#nav-tab-chq'>
+<i class='fa fa-money-check fa-fw float-left' style='color:Tan'></i> ".__( 'Pay by bank check', 'doliconnect');
+if ( !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id == $mode_reglement_code[0]->id ) { $paymentmethods .= " <i class='fas fa-star fa-fw' style='color:Gold'></i>"; }
+$paymentmethods .= "</a></li>";
 }    
 if ( ! empty(dolikiosk()) ) {
 $paymentmethods .= '<li class="nav-item"><a class="nav-link" data-toggle="pill" href="#nav-tab-kiosk">
@@ -2233,7 +2241,7 @@ $paymentmethods .= "</ul><br><div class='tab-content'>";
 if ( isset($listpaymentmethods->payment_methods) && $listpaymentmethods->payment_methods != null ) {
 foreach ( $listpaymentmethods->payment_methods as $method ) {
 $paymentmethods .= "<div class='tab-pane fade";
-if ( $method->default_source && !in_array($method->type, array('PRE','VIR')) ) {
+if ( $method->default_source && empty($thirdparty->mode_reglement_id) && !in_array($method->type, array('PRE','VIR')) ) {
 $paymentmethods .= " show active"; 
 }
 $paymentmethods .= "' id='nav-tab-".$method->id."'>";
@@ -2326,7 +2334,7 @@ $paymentmethods .= "</div>";
 
 if ( $countPM < 5 && isset($listpaymentmethods->stripe) && in_array('card', $listpaymentmethods->stripe->types) && empty($thirdparty->mode_reglement_id) ) {
 $paymentmethods .= "<div class='tab-pane fade";
-if (empty($countPM)) {
+if (empty($countPM) && empty($thirdparty->mode_reglement_id)) {
 $paymentmethods .= " show active"; 
 }
 $paymentmethods .= "' id='nav-tab-card'>";
@@ -2490,7 +2498,10 @@ tempor incididunt ut labore et dolore magna aliqua. </p>
 }
 
 if ( isset($listpaymentmethods->VIR) && !empty($listpaymentmethods->VIR) ) {
-$paymentmethods .= "<div class='tab-pane fade' id='nav-tab-vir'><form role='form'>";
+$paymentmethods .= "<div class='tab-pane fade";
+$mode_reglement_code = callDoliApi("GET", "/setup/dictionary/payment_types?sortfield=code&sortorder=ASC&limit=100&active=1&sqlfilters=(t.code%3A%3D%3A'VIR')", null, dolidelay('constante'));
+if ( !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id == $mode_reglement_code[0]->id ) { $paymentmethods .=" show active"; }
+$paymentmethods .= "' id='nav-tab-vir'><form role='form'>";
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
 $paymentmethods .= "<p class='text-justify'>".sprintf( __( 'Please send your bank transfert in the amount of <b>%1$s</b> with reference <b>%2$s</b> at the following account:', 'doliconnect'), doliprice($object, 'ttc', isset($object->multicurrency_code) ? $object->multicurrency_code : null), $object->ref )."</p>";
 } else {
@@ -2523,7 +2534,10 @@ $paymentmethods .= "</form></div>";
 }
 
 if ( isset($listpaymentmethods->CHQ) && !empty($listpaymentmethods->CHQ) ) {
-$paymentmethods .= "<div class='tab-pane fade' id='nav-tab-chq'><form role='form'>";
+$paymentmethods .= "<div class='tab-pane fade";
+$mode_reglement_code = callDoliApi("GET", "/setup/dictionary/payment_types?sortfield=code&sortorder=ASC&limit=100&active=1&sqlfilters=(t.code%3A%3D%3A'CHQ')", null, dolidelay('constante'));
+if ( !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id == $mode_reglement_code[0]->id ) { $paymentmethods .=" show active"; }
+$paymentmethods .= "' id='nav-tab-chq'><form role='form'>";
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
 $paymentmethods .= "<p class='text-justify'>".sprintf( __( 'Please send your money check in the amount of <b>%1$s</b> with reference <b>%2$s</b> to <b>%3$s</b> at the following address:', 'doliconnect'), doliprice($object, 'ttc', isset($object->multicurrency_code) ? $object->multicurrency_code : null), $object->ref, $listpaymentmethods->CHQ->proprio)."</p>";
 } else {
