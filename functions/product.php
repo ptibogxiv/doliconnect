@@ -525,8 +525,11 @@ $list .= doliconnect_image('product', $product->id, array('limit'=>1, 'entity'=>
 $list .= "</center></td>";
 
 $list .= "<td width='80%' style='border:0px'><b>".doliproduct($product, 'label')."</b>";
-$list .= "<div class='row'><div class='col'><p><small><i class='fas fa-toolbox fa-fw'></i> ".(!empty($product->ref)?$product->ref:'-');
-if ( !empty($product->barcode) ) { $list .= " | <i class='fas fa-barcode fa-fw'></i> ".$product->barcode; }
+$list .= "<div class='row'><div class='col'><p><small>";
+if ( !doliconst('MAIN_GENERATE_DOCUMENTS_HIDE_REF') ) { $list .= "<i class='fas fa-toolbox fa-fw'></i> ".(!empty($product->ref)?$product->ref:'-'); }
+if ( !empty($product->barcode) ) { 
+if ( !doliconst('MAIN_GENERATE_DOCUMENTS_HIDE_REF') ) { $list .= " | "; }
+$list .= "<i class='fas fa-barcode fa-fw'></i> ".$product->barcode; }
 $list .= "</small>";
 if ( ! empty(doliconnectid('dolicart')) ) { 
 $list .= "<br>".doliproductstock($product);
