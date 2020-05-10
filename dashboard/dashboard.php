@@ -279,8 +279,7 @@ function contacts_module($url){
 global $current_user;
 
 $limit=8;
-if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']-1); }  else { $page = "0"; }
-$request = "/contacts?sortfield=t.rowid&sortorder=ASC&limit=".$limit."&page=".$page."&thirdparty_ids=".doliconnector($current_user, 'fk_soc')."&includecount=1&sqlfilters=t.statut=1";
+$request = "/contacts?sortfield=t.rowid&sortorder=ASC&limit=".$limit."&thirdparty_ids=".doliconnector($current_user, 'fk_soc')."&includecount=1&sqlfilters=t.statut=1";
 
 if ( isset ($_POST['add_contact']) && $_POST['add_contact'] == 'new_contact' ) {
 $contactv=$_POST['contact'][''.doliconnector($current_user, 'fk_soc').''];
@@ -361,35 +360,50 @@ $countContact = 0;
 $countContact = count($listcontact);
 }
 
-if ( $countContact < 5 ) {
-print '<button type="button" class="list-group-item lh-condensed list-group-item-action list-group-item-primary" data-toggle="modal" data-target="#addcontactadress"><center><i class="fas fa-plus-circle"></i> '.__( 'New contact', 'doliconnect').'</center></button>';
-}
+print "</ul><div class='card-body'>";
 
+print "<ul class='nav bg-light nav-pills rounded nav-fill flex-column' role='tablist'>";
 if ( !isset($listcontact->error) && $listcontact != null ) {
 foreach ( $listcontact as $contact ) { 
-$count=$contact->ref_facturation+$contact->ref_contrat+$contact->ref_commande+$contact->ref_propal;
-print "<li class='list-group-item d-flex justify-content-between lh-condensed list-group-item-action'>";
+print "<li class='nav-item'><a class='nav-link' data-toggle='pill' href='#nav-tab-contact-".$contact->id."'>
+<i class='fab fa-paypal float-left'></i> ".$contact->firstname." ".$contact->lastname."</a></li>";
+}}
+if ( $countContact < $limit ) {
+print "<li class='nav-item'><a class='nav-link' data-toggle='pill' href='#nav-tab-contact-new'>
+<i class='fas fa-plus-circle float-left'></i> ".__( 'Add a contact', 'doliconnect')."</a></li>";
+}
+print "</ul><br><div class='tab-content'>";
+if ( !isset($listcontact->error) && $listcontact != null ) {
+foreach ( $listcontact as $contact ) { 
+print '<div class="tab-pane fade" id="nav-tab-contact-'.$contact->id.'"><div class="card bg-light" style="border:0"><div class="card-body">';
 print doliaddress($contact);
-if (1 == 1) {
+print "</div></div><br><div class='btn-group btn-block' role='group' aria-label='actions buttons'>";
 
-if ( doliversion('11.0.0') && isset($contact->roles) && $contact->roles != null ) {
-foreach ( $contact->roles as $role ) { 
-//print $role->label;
+print "<button type='button' id='editbtn_".$contact->id."' name='edit_contact' value='edit_contact' class='btn btn-light'";
+print "title='".__( 'Favourite', 'doliconnect')."'><i class='fas fa-edit fa-fw' style='color:Blue'></i> ".__( "Edit", 'doliconnect')."</button>";
+
+
+print "<button type='button' id='deletebtn_".$contact->id."' name='delete_contact' value='delete_contact' class='btn btn-light'";
+print "title='".__( 'Delete', 'doliconnect')."'><i class='fas fa-trash fa-fw' style='color:Red'></i> ".__( 'Delete', 'doliconnect').'</button>';
+
+print "</div></div>";
 }}
 
-print "<div class='col-4 col-sm-3 col-md-2 btn-group-vertical' role='group'>";
-print "<button type='button' class='btn btn-light text-primary' data-toggle='modal' data-target='#contact-".$contact->id."' title='".__( 'Edit', 'doliconnect')." ".$contact->firstname." ".$contact->lastname."'><i class='fas fa-edit fa-fw'></i></a>
-<button name='delete_contact' value='".$contact->id."' class='btn btn-light text-danger' type='submit' title='".__( 'Delete', 'doliconnect')." ".$contact->firstname." ".$contact->lastname."'><i class='fas fa-trash fa-fw'></i></button>";
-print "</div>";
-}
-print "</li>";
-}
-} else {
-print "<li class='list-group-item list-group-item-light'><center>".__( 'No contact', 'doliconnect')."</center></li>";
-}
+print '<div class="tab-pane fade" id="nav-tab-contact-new"><div class="card bg-light">';
+print doliuserform($thirdparty, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'contact');
+print "</div><br><div class='btn-group btn-block' role='group' aria-label='actions buttons'>";
 
-print "</ul><div class='card-body'>";
-print dolipage($listcontact, $url, $page, $limit);
+print "<button type='button' id='editbtn_".$contact->id."' name='edit_contact' value='edit_contact' class='btn btn-light'";
+print "title='".__( 'Favourite', 'doliconnect')."'><i class='fas fa-edit fa-fw' style='color:Blue'></i> ".__( "Edit", 'doliconnect')."</button>";
+
+
+print "<button type='button' id='deletebtn_".$contact->id."' name='delete_contact' value='delete_contact' class='btn btn-light'";
+print "title='".__( 'Delete', 'doliconnect')."'><i class='fas fa-trash fa-fw' style='color:Red'></i> ".__( 'Delete', 'doliconnect').'</button>';
+
+print "</div></div>";
+
+print "</div>";
+//print dolipage($listcontact, $url, null, $limit);
 print "</div><div class='card-footer text-muted'>";
 print "<small><div class='float-left'>";
 if ( isset($request) ) print dolirefresh($request, $url, dolidelay('contact'));
@@ -398,43 +412,9 @@ print dolihelp('ISSUE');
 print "</div></small>";
 print "</div></div></form>";
 
-if ( !isset($listcontact->error) && $listcontact != null ) {
-foreach ( $listcontact as $contact ) { 
-
-print '<div class="modal fade" id="contact-'.$contact->id.'" tabindex="-1" role="dialog" aria-labelledby="contact-'.$contact->id.'Title" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-<div class="modal-dialog modal-lg modal-dialog-centered" role="document"><div class="modal-content border-0"><div class="modal-header border-0">
-<h5 class="modal-title" id="contact-'.$contact->id.'Title">'.__( 'Update contact', 'doliconnect').'</h5><button id="Closecontact'.$contact->id.'-form" type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
-<div id="contact'.$contact->id.'-form">';
-print "<form class='was-validated' role='form' action='$url' name='contact".$contact->id."-form' method='post'>";
-
-print dolimodalloaderscript('contact'.$contact->id.'-form');
-
-print doliuserform($contact, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'contact');
-
-print "</div>".doliloading('contact'.$contact->id.'-form');
-      
-print "<div id='Footercontact".$contact->id."-form' class='modal-footer'><button name='update_contact' value='".$contact->id."' class='btn btn-warning btn-block' type='submit'>".__( 'Update', 'doliconnect')."</button></form></div>
-</div></div></div>";
-}}
-
-if ( $countContact < 5 ) {
-
-print "<div class='modal fade' id='addcontactadress' tabindex='-1' role='dialog' aria-labelledby='addcontactadressTitle' aria-hidden='true' data-backdrop='static' data-keyboard='false'>
-<div class='modal-dialog modal-lg modal-dialog-centered' role='document'><div class='modal-content border-0'><div class='modal-header border-0'>
-<h5 class='modal-title' id='addcontactadressTitle'>".__( 'New contact', 'doliconnect')."</h5><button id='Closeaddcontact-form' type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
-</div><div id='addcontact-form'>";
-
-print "<form class='was-validated' role='form' action='$url' name='addcontact-form' method='post'>";
-
-print dolimodalloaderscript('addcontact-form');
-
-print doliuserform($thirdparty, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'contact');
-
-print "</div>".doliloading('addcontact-form');
-
-print "<div id='Footeraddcontact-form' class='modal-footer'><button name='add_contact' value='new_contact' class='btn btn-warning btn-block' type='submit'>".__( 'Add', 'doliconnect')."</button></form></div>
-</div></div></div>";
-}
+print "<div id='content_div'></div><script>";
+print '$("#content_div").load("'.plugins_url('functions/dashboard.php?module=contacts', dirname(__FILE__) ).'");';
+print "</script>";
 
 }
 add_action( 'user_doliconnect_contacts', 'contacts_module');
@@ -732,13 +712,13 @@ if ( $orderfo->mode_reglement_code == 'CHQ' ) {
 
 $listpaymentmethods = callDoliApi("GET", "/doliconnector/".doliconnector($current_user, 'fk_soc')."/paymentmethods?type=order&rowid=".$orderfo->id, null, dolidelay('paymentmethods', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
-print "<div class='col'><div class='card bg-light'><div class='card-body'><p align='justify'>".sprintf( __( 'Please send your cheque in the amount of <b>%1$s</b> with reference <b>%2$s</b> to <b>%3$s</b> at the following address', 'doliconnect'), doliprice($orderfo, 'ttc', isset($orderfo->multicurrency_code) ? $orderfo->multicurrency_code : null), $orderfo->ref, $listpaymentmethods->CHQ->proprio).":</p>";                                                                                                                                                                                                                                                                                                                                      
+print "<div class='col'><div class='card bg-light' style='border:0'><div class='card-body'><p align='justify'>".sprintf( __( 'Please send your cheque in the amount of <b>%1$s</b> with reference <b>%2$s</b> to <b>%3$s</b> at the following address', 'doliconnect'), doliprice($orderfo, 'ttc', isset($orderfo->multicurrency_code) ? $orderfo->multicurrency_code : null), $orderfo->ref, $listpaymentmethods->CHQ->proprio).":</p>";                                                                                                                                                                                                                                                                                                                                      
 print "<p><b>".$listpaymentmethods->CHQ->owner_address."</b></p><button class='btn btn-link btn-sm' onclick='ValidDoliCart(\"".wp_create_nonce( 'valid_dolicart-'.$orderfo->id )."\")' id='button-source-payment'><small><span class='fas fa-sync-alt'></span> ".__( 'Change your payment mode', 'doliconnect')."</small></button></div></div></div>";
 } elseif ( $orderfo->mode_reglement_code == 'VIR' ) { 
 
 $listpaymentmethods = callDoliApi("GET", "/doliconnector/".doliconnector($current_user, 'fk_soc')."/paymentmethods", null, dolidelay('paymentmethods', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
-print "<div class='col'><div class='card bg-light'><div class='card-body'><p align='justify'>".sprintf( __( 'Please send your transfert in the amount of <b>%1$s</b> with reference <b>%2$s</b> at the following account', 'doliconnect'), doliprice($orderfo, 'ttc', isset($orderfo->multicurrency_code) ? $orderfo->multicurrency_code : null), $orderfo->ref ).":";
+print "<div class='col'><div class='card bg-light' style='border:0'><div class='card-body'><p align='justify'>".sprintf( __( 'Please send your transfert in the amount of <b>%1$s</b> with reference <b>%2$s</b> at the following account', 'doliconnect'), doliprice($orderfo, 'ttc', isset($orderfo->multicurrency_code) ? $orderfo->multicurrency_code : null), $orderfo->ref ).":";
 print "<br><b>".__( 'Bank', 'doliconnect').": ".$listpaymentmethods->VIR->bank."</b>";
 print "<br><b>IBAN: ".$listpaymentmethods->VIR->iban."</b>";
 if ( ! empty($listpaymentmethods->VIR->bic) ) { print "<br><b>BIC/SWIFT : ".$listpaymentmethods->VIR->bic."</b>";}
@@ -781,14 +761,14 @@ if ('SHIPPING' == $contact->code) {
 $shippingcard = dolicontact($contact->id, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 }
 }
-print "<div class='card card bg-light'><div class='card-body'><h6>".__( 'Billing address', 'doliconnect')."</h6><small class='text-muted'>";
+print "<div class='card bg-light' style='border:0'><div class='card-body'><h6>".__( 'Billing address', 'doliconnect')."</h6><small class='text-muted'>";
 if (isset($billingcard) && !empty($billingcard)) {
 print $billingcard;
 } else {
 print doliaddress($thirdparty, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 }
 print "</small></div></div>";
-print "<div class='card card bg-light'><div class='card-body'><h6>".__( 'Shipping address', 'doliconnect')."</h6><small class='text-muted'>";
+print "<div class='card bg-light' style='border:0'><div class='card-body'><h6>".__( 'Shipping address', 'doliconnect')."</h6><small class='text-muted'>";
 if (isset($shippingcard) && !empty($shippingcard)) {
 print $shippingcard;
 } else {
@@ -796,7 +776,7 @@ print doliaddress($thirdparty, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh
 }
 print "</small></div></div>";
 } else {
-print "<div class='card card bg-light'><div class='card-body'><h6>".__( 'Billing and shipping address', 'doliconnect')."</h6><small class='text-muted'>";
+print "<div class='card bg-light' style='border:0'><div class='card-body'><h6>".__( 'Billing and shipping address', 'doliconnect')."</h6><small class='text-muted'>";
 print doliaddress($thirdparty, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 print "</small></div></div>";
 }

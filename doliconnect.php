@@ -315,6 +315,17 @@ return $dolibarr;
 }
 
 // ********************************************************
+/* Bloquer accès aux non-admins */
+function doliconnect_block_dashboard() {
+	$file = basename($_SERVER['PHP_SELF']);
+	if (is_user_logged_in() && is_admin() && !current_user_can('edit_posts') && $file != 'admin-ajax.php') {
+		wp_redirect( doliconnecturl('doliaccount') );
+		exit();
+	}
+}
+add_action('init', 'doliconnect_block_dashboard');
+
+// ********************************************************
 
 add_filter( 'pll_custom_flag', 'dolipll_custom_flag', 10, 2 );
  

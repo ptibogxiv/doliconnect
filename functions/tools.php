@@ -852,7 +852,7 @@ $address = "<b><i class='fas fa-building fa-fw'></i> ".$object->name;
 $address = "<b><i class='fas fa-building fa-fw'></i> ".($object->civility ? $object->civility : $object->civility_code)." ".$object->firstname." ".$object->lastname;
 }
 if ( !empty($object->default) ) { $address .= " <i class='fas fa-star fa-1x fa-fw' style='color:Gold'></i>"; }
-if ( !empty($object->poste) ) { $address .= "<br>".$object->poste; }
+if ( !empty($object->poste) ) { $address .= ", ".$object->poste; }
 if ( !empty($object->type) ) { $address .= "<br>".__( 'Type', 'doliconnect').": ".$object->type; }
 $address .= "</b><br>";
 $address .= "<small class='text-muted'>".$object->address.", ".$object->zip." ".$object->town." - ".$object->country."<br>".$object->email." - ".(isset($object->phone) ? $object->phone : $object->phone_pro)."</small>";
@@ -2489,14 +2489,14 @@ $paymentmethods .= "</div>";
 }
 
 if ( isset($listpaymentmethods->PAYPAL) && !empty($listpaymentmethods->PAYPAL) ) {
-$paymentmethods .= '<div class="tab-pane fade" id="nav-tab-paypal">
+$paymentmethods .= '<div class="tab-pane fade" id="nav-tab-paypal"><div class="card bg-light" style="border:0"><div class="card-body">
 <p>Paypal is easiest way to pay online</p>
 <p>
 <button type="button" class="btn btn-primary"> <i class="fab fa-paypal"></i> Log in my Paypal </button>
 </p>
 <p class="text-justify"><strong>Note:</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 tempor incididunt ut labore et dolore magna aliqua. </p>
-</div>';
+</div></div></div>';
 }
 
 if ( isset($listpaymentmethods->VIR) && !empty($listpaymentmethods->VIR) ) {
@@ -2528,11 +2528,11 @@ if (!empty($listpaymentmethods->VIR->bic)) { $paymentmethods .= "<div class='col
 </div>"; }
 $paymentmethods .= "</div>";
 $paymentmethods .= "<p class='text-justify'><small><strong>Note:</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-tempor incididunt ut labore et dolore magna aliqua.</small></p>";
+tempor incididunt ut labore et dolore magna aliqua.</small></p></div></div>";
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
 $paymentmethods .= '<button type="button" onclick="PayPM(\'VIR\')" class="btn btn-danger btn-block">'.__( 'Pay', 'doliconnect')." ".doliprice($object, 'ttc', $currency).'</button>';
 }  
-$paymentmethods .= "</div></div></div>";
+$paymentmethods .= "</div>";
 }
 
 if ( isset($listpaymentmethods->CHQ) && !empty($listpaymentmethods->CHQ) ) {
@@ -2552,11 +2552,11 @@ $paymentmethods .= "<div class='col'><dl class='param'>
 </dl></div>";
 $paymentmethods .= "</div>";
 $paymentmethods .= "<p class='text-justify'><small><strong>Note:</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-tempor incididunt ut labore et dolore magna aliqua.</small></p>";
+tempor incididunt ut labore et dolore magna aliqua.</small></p></div></div>";
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
 $paymentmethods .= '<button type="button" onclick="PayPM(\'CHQ\')" class="btn btn-danger btn-block">'.__( 'Pay', 'doliconnect')." ".doliprice($object, 'ttc', $currency).'</button>';
 }
-$paymentmethods .= "</div></div></div>";
+$paymentmethods .= "</div>";
 }
 
 if ( ! empty(dolikiosk()) ) {
