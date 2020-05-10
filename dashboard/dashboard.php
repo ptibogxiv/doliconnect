@@ -348,11 +348,7 @@ if ( doliconnector($current_user, 'fk_soc') > 0 ) {
 $thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
 }
 
-print "<form role='form' action='$url' id='doliconnect-contactform' method='post'>";                   
-
-print doliloaderscript('doliconnect-contactform');
-
-print "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
+print "<div id='DoliContactAlert' class='text-danger font-weight-bolder'></div><div class='card shadow-sm'><ul class='list-group list-group-flush'>";
 
 if (empty($listcontact) || isset($listcontact->error)) {
 $countContact = 0;
@@ -377,6 +373,43 @@ if ( !isset($listcontact->error) && $listcontact != null ) {
 foreach ( $listcontact as $contact ) { 
 print '<div class="tab-pane fade" id="nav-tab-contact-'.$contact->id.'"><div class="card bg-light" style="border:0"><div class="card-body">';
 print doliaddress($contact);
+print "<script>";
+print "(function ($) {
+$(document).ready(function(){
+$('#deletebtn_".$contact->id."').on('click',function(event){
+event.preventDefault();
+$('#DoliconnectLoadingModal').modal('show');
+var actionvalue = $(this).val();
+        $.ajax({
+          url: '".esc_url( admin_url( 'admin-ajax.php' ) )."',
+          type: 'POST',
+          data: {
+            'action': 'dolicontact_request',
+            'dolipaymentmethod-nonce': '".wp_create_nonce( 'dolicontact-nonce')."',
+            'contact': '".$contact->id."',
+            'action_payment_method': actionvalue
+          }
+        }).done(function(response) {
+$(window).scrollTop(0); 
+console.log(actionvalue);
+      if (response.success) {
+if (actionvalue == 'delete_payment_method')  {
+document.getElementById('li-".$method->id."').remove();
+document.getElementById('nav-tab-".$contact->id."').remove();
+} else {
+document.location = '".$url."';
+}
+if (document.getElementById('DoliContactAlert')) {
+document.getElementById('DoliContactAlert').innerHTML = response.data;      
+}
+console.log(response.data);
+}
+$('#DoliconnectLoadingModal').modal('hide');
+        });
+});
+});
+})(jQuery);";
+print "</script>";
 print "</div></div><br><div class='btn-group btn-block' role='group' aria-label='actions buttons'>";
 
 print "<button type='button' id='editbtn_".$contact->id."' name='edit_contact' value='edit_contact' class='btn btn-light'";
@@ -410,7 +443,7 @@ if ( isset($request) ) print dolirefresh($request, $url, dolidelay('contact'));
 print "</div><div class='float-right'>";
 print dolihelp('ISSUE');
 print "</div></small>";
-print "</div></div></form>";
+print "</div></div>";
 
 print "<div id='content_div'></div><script>";
 print '$("#content_div").load("'.plugins_url('functions/dashboard.php?module=contacts', dirname(__FILE__) ).'");';
