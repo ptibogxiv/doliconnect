@@ -422,7 +422,7 @@ print "title='".__( 'Delete', 'doliconnect')."'><i class='fas fa-trash fa-fw' st
 print "</div></div>";
 }}
 
-print '<div class="tab-pane fade" id="nav-tab-contact-new"><div class="card bg-light">';
+print '<div class="tab-pane fade" id="nav-tab-contact-new"><div class="card bg-white">';
 print doliuserform($thirdparty, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'contact');
 print "</div><br><div class='btn-group btn-block' role='group' aria-label='actions buttons'>";
 
