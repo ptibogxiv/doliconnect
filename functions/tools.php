@@ -81,7 +81,7 @@ if (is_array($imgj) && !isset($imgj['error']) && preg_match('/^image/', $imgj['c
 //$data = "data:".$imgj['content-type'].";".$imgj['encoding'].",".$imgj['content'];
 
 if (!is_dir($up_dir['basedir'].'/doliconnect/'.$module.$dir)) {
-mkdir($up_dir['basedir'].'/doliconnect/'.$module.$dir, 0777, true);
+mkdir($up_dir['basedir'].'/doliconnect/'.$module.$dir, 0755, true);
 }
 //$files = glob($up_dir['basedir'].'/doliconnect/'.$module.'/'.$id."/*");
 //foreach($files as $file){
@@ -133,7 +133,7 @@ if (is_array($imgj) && preg_match('/^image/', $imgj['content-type'])) {
 //$data = "data:".$imgj['content-type'].";".$imgj['encoding'].",".$imgj['content'];
 
 if (!is_dir($up_dir['basedir'].'/doliconnect/'.$module.'/'.$id)) {
-mkdir($up_dir['basedir'].'/doliconnect/'.$module.'/'.explode('/'.$imgj['filename'], $id, 2)[0], 0777, true);
+mkdir($up_dir['basedir'].'/doliconnect/'.$module.'/'.explode('/'.$imgj['filename'], $id, 2)[0], 0755, true);
 }
 //$files = glob($up_dir['basedir'].'/doliconnect/'.$module.'/'.$id."/*");
 //foreach($files as $file){
