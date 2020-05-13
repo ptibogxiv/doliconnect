@@ -987,12 +987,8 @@ $step = 1;
 }              
 if ((empty($product->stock_reel) && !empty(doliconst('MAIN_MODULE_STOCK')) && (empty($product->type) || (!empty($product->type) && doliconst('STOCK_SUPPORTS_SERVICES')) )) || $m2 < $step)  { $doliline .= "<OPTION value='0' selected>".__( 'Unavailable', 'doliconnect')."</OPTION>"; 
 } elseif (!empty($m2) && $m2 >= $step) {
-//if ($step >1 && !empty($quantity)) $quantity = round($quantity/$step)*$step; 
-//if (empty($qty) && $quantity > $m2) $quantity = $m2; 
-if ($m2 <= $step)  { $doliline .= "<OPTION value='0' >".__( 'Delete', 'doliconnect')."</OPTION>"; } else {
 foreach (range(0, $m2, $step) as $number) {
-if ($number == 0) { $doliline .= "<OPTION value='0' >".__( 'Delete', 'doliconnect')."</OPTION>";
-} elseif ( ($number == $step && empty($line->qty) ) || $number == $line->qty || ($number == $m0 && empty($line->qty) )) {
+if ( ($number == $step && empty($line->qty) ) || $number == $line->qty || ($number == $m0 && empty($line->qty) )) {
 $doliline .= "<option value='$number' selected='selected'";
 if ($product->stock_reel < $number && is_page(doliconnectid('dolicart')) && $product->type == '0' && !empty(doliconst('MAIN_MODULE_STOCK')) && empty(doliconst('STOCK_ALLOW_NEGATIVE_TRANSFER')) ) $doliline .= " disabled";
 $doliline .= ">x ".$number."</option>";
@@ -1000,7 +996,6 @@ $doliline .= ">x ".$number."</option>";
 $doliline .= "<option value='$number' >x ".$number."</option>";
 }
 	}
-}
 $doliline .= "</select>";
 } else {
 $doliline .= '<h6 class="mb-1">x'.$line->qty.'</h6>';
@@ -1009,7 +1004,43 @@ $doliline .= "</div>";
 $doliline .= "<script>";
 $doliline .= "(function ($) {
 $(document).ready(function(){
-$('#deleteorderproduct-".$line->fk_product.", #updateorderproduct-".$line->fk_product."').on('change',function(event){
+$('#deleteorderproduct-".$line->fk_product."').on('click',function(event){
+event.preventDefault();
+$('#DoliconnectLoadingModal').modal('show');
+var qty = $(this).val();
+console.log('".$line->fk_product." ' + qty + '".$line->subprice."');
+        $.ajax({
+          url: '".esc_url( admin_url( 'admin-ajax.php' ) )."',
+          type: 'POST',
+          data: {
+            'action': 'dolicart_request',
+            'dolicart-nonce': '".wp_create_nonce( 'dolicart-nonce')."',
+            'action_cart': 'update_cart',
+            'productid': '".$line->fk_product."',
+            'qty': qty,
+            'price': '".$line->subprice."' 
+          }
+        }).done(function(response) {
+      if (response.success) {
+$('#a-tab-info').addClass('disabled'); 
+$('#a-tab-pay').addClass('disabled');
+window.location.reload();  
+//document.getElementById('doliline').innerHTML = response.data.lines;
+//if (document.getElementById('DoliHeaderCarItems')) {
+//document.getElementById('DoliHeaderCarItems').innerHTML = response.data.items;
+//}
+//if (document.getElementById('DoliFooterCarItems')) {  
+//document.getElementById('DoliFooterCarItems').innerHTML = response.data.items;
+//}
+//if (document.getElementById('DoliWidgetCarItems')) {
+//document.getElementById('DoliWidgetCarItems').innerHTML = response.data.items;
+//} 
+console.log(response.data.message);
+}
+//$('#DoliconnectLoadingModal').modal('hide');
+        });
+});
+$('#updateorderproduct-".$line->fk_product."').on('change',function(event){
 event.preventDefault();
 $('#DoliconnectLoadingModal').modal('show');
 var qty = $(this).val();

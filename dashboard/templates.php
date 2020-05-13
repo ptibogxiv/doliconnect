@@ -1433,7 +1433,7 @@ print "<div class='card shadow-sm' id='cart-form'><ul id='doliline' class='list-
 print doliline($object, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 
 if ( isset($object) && is_object($object) && isset($object->socid) &&(doliconnector($current_user, 'fk_soc') == $object->socid) ) {
-print "</ul><ul id='dolitotal' class='list-group list-group-flush'>";
+print "</ul>ggg<ul id='dolitotal' class='list-group list-group-flush'>";
 print dolitotal($object);  
 }
 
