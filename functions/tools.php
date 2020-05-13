@@ -958,10 +958,11 @@ $doliline .= '<h6 class="mb-1">x'.$line->qty.'</h6>';
 } elseif ( $object->statut == 0 && !is_page(doliconnectid('doliaccount')) ) {
 $doliline .= "<input type='hidden' name='updateorderproduct[".$line->fk_product."][product]' value='".$line->fk_product."'><input type='hidden' name='updateorderproduct[".$line->fk_product."][price]' value='".$line->subprice."'>";
 $doliline .= "<input type='hidden' name='updateorderproduct[".$line->fk_product."][remise_percent]' value='".$line->remise_percent."'><input type='hidden' name='updateorderproduct[".$line->fk_product."][date_start]' value='".$line->date_start."'><input type='hidden' name='updateorderproduct[".$line->fk_product."][date_end]' value='".$line->date_end."'>";
-if (( $maxstock <= 0 || (isset($product->array_options->options_packaging) && $maxstock < $product->array_options->options_packaging ) ) && is_page(doliconnectid('dolicart')) && $product->type == '0' && !empty(doliconst('MAIN_MODULE_STOCK')) && empty(doliconst('STOCK_ALLOW_NEGATIVE_TRANSFER')) ) {
-$doliline .= "<button class='form-control form-control-sm' name='updateorderproduct[".$line->fk_product."][qty]' value='0' onclick='ChangeDoliCart();'>".__( 'Delete', 'doliconnect')."</button>";
-} else {
-$doliline .= "<select class='form-control form-control-sm' id='updateorderproduct-".$line->fk_product."' name='updateorderproduct[".$line->fk_product."][qty]'>";
+$doliline .= "<div class='input-group input-group-sm mb-3'>";
+//if (( $maxstock <= 0 || (isset($product->array_options->options_packaging) && $maxstock < $product->array_options->options_packaging ) ) && is_page(doliconnectid('dolicart')) && $product->type == '0' && !empty(doliconst('MAIN_MODULE_STOCK')) && empty(doliconst('STOCK_ALLOW_NEGATIVE_TRANSFER')) ) {
+$doliline .= "<button type='button' class='form-control form-control-sm' id='deleteorderproduct-".$line->fk_product."' name='deleteorderproduct-".$line->fk_product."' value='0' title='".__( 'Delete', 'doliconnect')."'><i class='fas fa-trash fa-fw' style='color:Red'></i></button>";
+//} else {
+$doliline .= "<select class='form-control form-control-sm' id='updateorderproduct-".$line->fk_product."' name='updateorderproduct-".$line->fk_product."'>";
 if ( $product->stock_reel-$line->qty >= 0 && (empty($product->type) || (!empty($product->type) && doliconst('STOCK_SUPPORTS_SERVICES')) ) ) {
 if (isset($product->array_options->options_packaging) && !empty($product->array_options->options_packaging)) {
 $m0 = 1*$product->array_options->options_packaging;
@@ -1001,10 +1002,14 @@ $doliline .= "<option value='$number' >x ".$number."</option>";
 	}
 }
 $doliline .= "</select>";
+} else {
+$doliline .= '<h6 class="mb-1">x'.$line->qty.'</h6>';
+}
+$doliline .= "</div>";
 $doliline .= "<script>";
 $doliline .= "(function ($) {
 $(document).ready(function(){
-$('#updateorderproduct-".$line->fk_product."').on('change',function(event){
+$('#deleteorderproduct-".$line->fk_product.", #updateorderproduct-".$line->fk_product."').on('change',function(event){
 event.preventDefault();
 $('#DoliconnectLoadingModal').modal('show');
 var qty = $(this).val();
@@ -1043,10 +1048,8 @@ console.log(response.data.message);
 });
 })(jQuery);";
 $doliline .= "</script>";
+//} 
 } else {
-$doliline .= '<h6 class="mb-1">x'.$line->qty.'</h6>';
-}
-} } else {
 $doliline .= '<h6 class="mb-1">x'.$line->qty.'</h6>';
 }
 $doliline .= "</div></div></li>";
