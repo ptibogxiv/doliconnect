@@ -529,9 +529,11 @@ $card .= doliconnect_image('product', $product->id, array('limit'=>1, 'entity'=>
 $card .= '</center>';
 //$card .= wp_get_attachment_image( $attributes['mediaID'], "ptibogxiv_square", "", array( "class" => "img-fluid" ) );
 $card .= "</div>";
-$card .= "<div class='col-12 col-md-8'><h6><b>".doliproduct($product, 'label')."</b></h6>";
-$card .= "<small><i class='fas fa-toolbox fa-fw'></i> ".(!empty($product->ref)?$product->ref:'-'); 
-if ( !empty($product->barcode) ) { $card .= " | <i class='fas fa-barcode fa-fw'></i> ".$product->barcode; }
+$card .= "<div class='col-12 col-md-8'><h6><b>".doliproduct($product, 'label')."</b></h6><small>";
+if ( !doliconst('MAIN_GENERATE_DOCUMENTS_HIDE_REF') ) { $card .= "<i class='fas fa-toolbox fa-fw'></i> ".(!empty($product->ref)?$product->ref:'-'); }
+if ( !empty($product->barcode) ) { 
+if ( !doliconst('MAIN_GENERATE_DOCUMENTS_HIDE_REF') ) { $card .= " | "; }
+$card .= "<i class='fas fa-barcode fa-fw'></i> ".$product->barcode; }
 $card .= "</small>";
 if ( ! empty(doliconnectid('dolicart')) && !isset($attributes['hideStock']) ) { 
 $card .= '<br>'.doliproductstock($product);

@@ -924,8 +924,11 @@ $doliline .= doliconnect_image('product', $line->fk_product, null, $refresh);
 $doliline .= '</center></div><div class="col-8 col-sm-7 col-md-5 col-lg-6"><h6 class="mb-1">'.doliproduct($line, 'product_label').'</h6>';
 
 if ( doliconst('FRAIS_DE_PORT_ID_SERVICE_TO_USE') != $line->fk_product ) {
-$doliline .= "<p><small><i class='fas fa-toolbox fa-fw'></i> ".(!empty($product->ref)?$product->ref:'-');
-if ( !empty($product->barcode) ) { $doliline .= " | <i class='fas fa-barcode fa-fw'></i> ".(!empty($product->barcode)?$product->barcode:'-'); }
+$doliline .= "<p><small>";
+if ( !doliconst('MAIN_GENERATE_DOCUMENTS_HIDE_REF') ) { $doliline .= "<i class='fas fa-toolbox fa-fw'></i> ".(!empty($product->ref)?$product->ref:'-'); }
+if ( !empty($product->barcode) ) { 
+if ( !doliconst('MAIN_GENERATE_DOCUMENTS_HIDE_REF') ) { $doliline .= " | "; }
+$doliline .= "<i class='fas fa-barcode fa-fw'></i> ".$product->barcode; }
 $doliline .= "</small></p>";
 if(!empty(doliconst("PRODUIT_DESC_IN_FORM"))) $doliline .= '<p class="mb-1"><small>'.doliproduct($line, 'product_desc').'</small></p>';
 $doliline .= '<p><small><i>'.(isset($dates) ? $dates : null).'</i></small></p>';
