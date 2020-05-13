@@ -271,7 +271,7 @@ wp_send_json_success($response);
 } elseif ( isset($_POST['action_cart']) && $_POST['action_cart'] == "update_cart") {
 
 //foreach ( $_POST['updateorderproduct'] as $productupdate ) {
-//$result = doliaddtocart($productupdate['product'], $productupdate['qty'], $productupdate['price'], $productupdate['remise_percent'], $productupdate['date_start'], $productupdate['date_end']);
+$result = doliaddtocart($_POST['productid'], $_POST['qty'], $_POST['price'], $_POST['remise_percent'], $_POST['date_start'], $_POST['date_end']);
 //print var_dump($_POST['updateorderproduct']);
 //}
 //doliconnector($current_user, 'fk_order', true);
@@ -302,7 +302,7 @@ wp_send_json_success($response);
 } elseif ( isset($_POST['action_cart']) && $_POST['action_cart'] == "info_cart") {
 
 $data = [
-    'date_modification' => mktime(),
+    'date_modif' => mktime(),
     'demand_reason_id' => 1,
     'module_source' => 'doliconnect',
     'pos_source' => get_current_blog_id(),
