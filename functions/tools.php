@@ -2642,18 +2642,22 @@ var actionvalue = $(this).val();
         }).done(function(response) {
 $(window).scrollTop(0); 
 console.log(actionvalue);
-      if (response.success) {
+if (response.success) {
 
-
+if (document.getElementById('nav-tab-pay')) {
+document.getElementById('nav-tab-pay').innerHTML = response.data;      
+}
 
 } else {
-      if (document.getElementById('DoliPaymentmethodAlert')) {
-      document.getElementById('DoliPaymentmethodAlert').innerHTML = response.data;      
-      }
+
+if (document.getElementById('DoliPaymentmethodAlert')) {
+document.getElementById('DoliPaymentmethodAlert').innerHTML = response.data;      
+}
+
 }
 console.log(response.data.message);
 $('#DoliconnectLoadingModal').modal('hide');
-        });
+});
 });
 })(jQuery);
 }    

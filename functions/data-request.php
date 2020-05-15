@@ -336,9 +336,14 @@ $payinfo = callDoliApi("POST", "/doliconnector/pay/".trim($_POST['module'])."/".
 //print var_dump($payinfo);
   
 doliconnector($current_user, 'fk_order', true);
-$object = callDoliApi("GET", "/".$module."/".$object->id."?contact_list=0", null, dolidelay('cart', true));
 
+$object = callDoliApi("GET", "/".trim($_POST['module'])."/".trim($_POST['id'])."?contact_list=0", null, dolidelay('cart', true));
+
+if ($object->status > 0) { 
+wp_send_json_success( __( 'payment is ok', 'doliconnect')); 
+} else {
 wp_send_json_error( __( 'An error occured', 'doliconnect')); 
+}
 
 } else {
 wp_send_json_error( __( 'An error occured', 'doliconnect')); 
