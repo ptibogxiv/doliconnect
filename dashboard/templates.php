@@ -1498,18 +1498,7 @@ $('#DoliconnectLoadingModal').modal('hide');
 });
 })(jQuery);";
 print "</script>";
-                                                                                                                                                                           
-print "<script>";
-print "function ChangeDoliCart() {
-(function ($) {
-$(document).ready(function(){
-$('#DoliconnectLoadingModal').modal('show');
-var form = document.getElementById('doliconnect-basecartform');
-form.submit();
-});
-})(jQuery);}";                 
-print "</script>";
- 
+
 print '<div class="card-footer text-muted">';
 print "<small><div class='float-left'>";
 if ( isset($request) ) print dolirefresh($request, doliconnecturl('dolicart'), dolidelay('cart'));
@@ -1602,6 +1591,7 @@ print "<textarea class='form-control' id='note_public' name='note_public' rows='
 print "</li></ul>";
 
 $note_public = isset($_POST['note_public']) ? $_POST['note_public'] : '';
+
 print "<script>";
 print "(function ($) {
 $(document).ready(function(){
@@ -1648,7 +1638,7 @@ $('#DoliconnectLoadingModal').modal('hide');
 })(jQuery);";
 print "</script>";
 
-print "<div class='card-body'><button type='button'  id='infobtn_cart' name='info_cart' value='info_cart'  class='btn btn-light btn-block'>".__( 'Validate', 'doliconnect')."</button></div>";
+print "<div class='card-body'><button type='button' id='infobtn_cart' name='info_cart' value='info_cart'  class='btn btn-light btn-outline-secondary btn-block'>".__( 'Validate', 'doliconnect')."</button></div>";
 print "<div class='card-footer text-muted'>";
 print "<small><div class='float-left'>";
 if ( isset($request) ) print dolirefresh($request, get_permalink(), dolidelay('cart'));

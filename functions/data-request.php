@@ -1,10 +1,6 @@
 <?php
 /**
  * Data Request Handler.
- *
- * @link       http://jeanbaptisteaudras.com
- * @since      1.0
- *
  */
 
 function doli_gdrf_data_request() {
@@ -329,6 +325,10 @@ $response = [
     'message' => 'ok',
         ];
 wp_send_json_success($response);
+} elseif ( isset($_POST['action_cart']) && $_POST['action_cart'] == "pay_cart") {
+
+wp_send_json_error( __( 'An error occured', 'doliconnect')); 
+
 } else {
 wp_send_json_error( __( 'An error occured', 'doliconnect')); 
 }
