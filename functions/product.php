@@ -379,7 +379,7 @@ $step = $product->array_options->options_packaging;
 } else {
 $step = 1;
 }
-$button .= "<div class='input-group mb-3'><select class='form-control form-control-sm' id='product-".$product->id."-add-qty' name='product-add-qty' ";
+$button .= "<div class='input-group input-group-sm mb-3'><select class='form-control btn-light btn-outline-secondary' id='product-".$product->id."-add-qty' name='product-add-qty' ";
 if ( ( empty($product->stock_reel) || $m2 < $step) && $product->type == '0' && !empty(doliconst('MAIN_MODULE_STOCK')) ) { $button .= " disabled"; }
 $button .= ">";
 if ((empty($product->stock_reel) && !empty(doliconst('MAIN_MODULE_STOCK')) && (empty($product->type) || (!empty($product->type) && doliconst('STOCK_SUPPORTS_SERVICES')) )) || $m2 < $step)  { $button .= "<OPTION value='0' selected>".__( 'Unavailable', 'doliconnect')."</OPTION>"; 
@@ -398,11 +398,11 @@ $button .= "<option value='$number' >x ".$number."</option>";
 }}
 $button .= "</select><div class='input-group-append'>";
 if ( !empty(doliconst('MAIN_MODULE_WISHLIST')) && !empty(get_option('doliconnectbeta')) ) {
-$button .= "<button class='btn btn-info btn-sm' type='submit' name='cartaction' value='addtowish' title='".esc_html__( 'Save my wish', 'doliconnect')."'><i class='fas fa-save fa-inverse fa-fw'></i></button>";
+$button .= "<button class='btn btn-sm btn-light btn-outline-info' type='submit' name='cartaction' value='addtowish' title='".esc_html__( 'Save my wish', 'doliconnect')."'><i class='fas fa-save fa-fw'></i></button>";
 }
-$button .= "<button class='btn btn-warning btn-sm' type='submit' name='cartaction' value='addtocart' title='".esc_html__( 'Add to cart', 'doliconnect')."' ";
+$button .= "<button class='btn btn-sm btn-light btn-outline-warning' type='submit' name='cartaction' value='addtocart' title='".esc_html__( 'Add to cart', 'doliconnect')."' ";
 if ( ( empty($product->stock_reel) || $m2 < $step) && $product->type == '0' && !empty(doliconst('MAIN_MODULE_STOCK')) ) { $button .= " disabled"; }
-$button .= "><i class='fas fa-cart-plus fa-inverse fa-fw'></i></button></div></div>";
+$button .= "><i class='fas fa-cart-plus fa-fw'></i></button></div></div>";
 
 //if ( $qty > 0 ) {
 //$button .= "<br /><div class='input-group'><a class='btn btn-block btn-warning' href='".doliconnecturl('dolicart')."' role='button' title='".__( 'Go to cart', 'doliconnect')."'>".__( 'Go to cart', 'doliconnect')."</a></div>";
