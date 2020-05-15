@@ -1245,7 +1245,7 @@ $object = callDoliApi("GET", $request, null, dolidelay('cart', true));
 
 if ( defined("DOLIBUG") ) {
 
-print dolibug($object->error->message);
+print dolibug((isset($object->error)?$object->error->message:null));
 
 } elseif ( empty(doliconst('MAIN_MODULE_COMMANDE', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))) ) {
 
@@ -1267,31 +1267,6 @@ $payinfo = callDoliApi("POST", "/doliconnector/pay/".$module."/".$object->id, $d
   
 doliconnector($current_user, 'fk_order', true);
 $object = callDoliApi("GET", "/".$module."/".$object->id."?contact_list=0", null, dolidelay('cart', true));
-
-
-
-if ( $payinfo->status == 'succeeded' ) {
-print "text-success";
-}
-elseif ( $payinfo->status == 'processing' ) {
-print "text-warning";
-}
-elseif ( $payinfo->status == 'requires_confirmation' ) {
-print "text-danger";
-}
-else {
-print "text-warning";
-}
-
-print "' data-fa-transform='shrink-3.5' data-fa-mask='fas fa-circle' ></i>
-</div></td></tr></table><br>"; 
-
-//if ( ( !isset($object->id) ) || (doliconnector($current_user, 'fk_soc') != $object->socid) ) {
-//$order = callDoliApi("GET", "/".$module."/".$object->id."?contact_list=0", null, 0);
-//$dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, 0);
-//wp_safe_redirect(esc_url(doliconnecturl('dolicart')));
-//exit;
-//}
 
 print "<div class='card shadow-sm' id='cart-form'><div class='card-body'><center><h2>".__( 'Your order has been registered', 'doliconnect')."</h2>".__( 'Reference', 'doliconnect').": ".$object->ref."<br>".__( 'Payment method', 'doliconnect').": ".$object->mode_reglement_code."<br><br>";
 $TTC = doliprice($object, 'ttc', isset($object->multicurrency_code) ? $object->multicurrency_code : null);
@@ -1345,10 +1320,6 @@ print "<br><a href='".$return."' class='btn btn-primary'>".sprintf( esc_html__( 
 }
 
 print "</div></div></div>";
-
-} elseif ( isset($_GET['step']) && $_GET['step'] == 'payment' && isset($_GET['cart']) && wp_verify_nonce( $_GET['cart'], 'valid_dolicart-'.$object->id) && ( (doliconnector($current_user, 'fk_order_nb_item') > 0 && $object->statut == 0 && !isset($_GET['module']) && !isset($_GET['id'])) || ( ($_GET['module'] == 'orders' && $object->billed != 1 ) || ($_GET['module'] == 'invoices' && $object->paye != 1) )) && $object->socid == doliconnector($current_user, 'fk_soc') ) {
-
-
 
 } elseif ( isset($_GET['step']) && $_GET['step'] == 'info' && isset($_GET['cart']) && wp_verify_nonce( $_GET['cart'], 'valid_dolicart-'.$object->id) && isset($_POST['dolichecknonce']) && $_GET['cart'] == $_POST['dolichecknonce'] && doliconnector($current_user, 'fk_order_nb_item') > 0 && $object->socid == doliconnector($current_user, 'fk_soc') && !isset($object->resteapayer) && $object->statut == 0 && !isset($_GET['module']) && !isset($_GET['id']) ) {
 
