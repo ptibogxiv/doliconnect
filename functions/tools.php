@@ -2636,6 +2636,8 @@ var actionvalue = $(this).val();
             'action_cart': 'pay_cart',
             'module': '".$module."',
             'id': '".$object->id."',
+            'paymentintent': null,
+            'paymentmethod': pm,        
           }
         }).done(function(response) {
 $(window).scrollTop(0); 
