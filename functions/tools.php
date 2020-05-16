@@ -2621,6 +2621,7 @@ $paymentmethods .= "</small>";
 //       });
 //    });
 //
+if (isset($object)) {
 $paymentmethods .= "<script>";
 $paymentmethods .= "function PayPM(pm) {
 (function ($) {
@@ -2686,8 +2687,8 @@ displayCardError.textContent = result.error.message;
     }
   }); 
 }";
-
 $paymentmethods .= "</script>";
+}
 $paymentmethods .= "</div><div class='card-footer text-muted'>";
 $paymentmethods .= "<small><div class='float-left'>";
 $paymentmethods .= dolirefresh($request, $url, dolidelay('paymentmethods'));
