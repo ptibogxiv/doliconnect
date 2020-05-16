@@ -348,15 +348,13 @@ if ( doliconnector($current_user, 'fk_soc') > 0 ) {
 $thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
 }
 
-print "<div id='DoliContactAlert' class='text-danger font-weight-bolder'></div><div class='card shadow-sm'><ul class='list-group list-group-flush'>";
-
 if (empty($listcontact) || isset($listcontact->error)) {
 $countContact = 0;
 } else {
 $countContact = count($listcontact);
 }
 
-print "</ul><div class='card-body'>";
+print "<div id='DoliContactAlert' class='text-danger font-weight-bolder'></div><div class='card shadow-sm'><div class='card-body'>";
 
 print "<ul class='nav bg-light nav-pills rounded nav-fill flex-column' role='tablist'>";
 if ( !isset($listcontact->error) && $listcontact != null ) {
