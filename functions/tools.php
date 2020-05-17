@@ -2326,7 +2326,7 @@ $paymentmethods .= "</script>";
 $paymentmethods .= "<div class='row'>";
 $paymentmethods .= "<div class='col'>
   <dt>".__( 'Debtor', 'doliconnect')."</dt>
-  <dd>".__( 'Holder: ', 'doliconnect')." ".$method->holder;
+  <dd>".__( 'Holder:', 'doliconnect')." ".$method->holder;
 if (isset($method->mandate->creation) && !empty($method->mandate->creation)) {
 $paymentmethods .= "<br>".__( 'Creation:', 'doliconnect');
 $paymentmethods .= " ".wp_date( 'j F Y', $method->mandate->creation, false); }
@@ -2339,7 +2339,7 @@ $paymentmethods .= "</dd>
 </div>";
 if (isset($method->mandate) && !empty($method->mandate)) { $paymentmethods .= "<div class='col'>
   <dt>".__( 'Mandate', 'doliconnect')."</dt>
-  <dd>".__( 'Reference: ', 'doliconnect')." <a href='".$method->mandate->url."' target='_blank'>".$method->mandate->reference."</a>";
+  <dd>".__( 'Reference:', 'doliconnect')." <a href='".$method->mandate->url."' target='_blank'>".$method->mandate->reference."</a>";
 $paymentmethods .= "<br>".__( 'Type:', 'doliconnect')." ";
 if ($method->mandate->type == 'multi_use') {
 $paymentmethods .= __( 'Recurring', 'doliconnect'); 
