@@ -2648,6 +2648,8 @@ if (response.success) {
 if (document.getElementById('nav-tab-pay')) {
 document.getElementById('nav-tab-pay').innerHTML = response.data;      
 }
+$('#a-tab-cart').addClass('disabled');
+$('#a-tab-info').addClass('disabled');
 
 } else {
 
