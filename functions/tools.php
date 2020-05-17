@@ -2649,7 +2649,13 @@ if (document.getElementById('nav-tab-pay')) {
 document.getElementById('nav-tab-pay').innerHTML = response.data;      
 }
 $('#a-tab-cart').addClass('disabled');
-$('#a-tab-info').addClass('disabled');
+if (document.getElementById('nav-tab-cart')) {
+document.getElementById('nav-tab-cart').remove();    
+}
+$('#a-tab-info').addClass('disabled')
+if (document.getElementById('nav-tab-info')) {
+document.getElementById('nav-tab-info').remove();    
+};
 
 } else {
 
