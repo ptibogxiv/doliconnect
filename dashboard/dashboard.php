@@ -354,22 +354,11 @@ $countContact = 0;
 $countContact = count($listcontact);
 }
 
-print "<div id='DoliContactAlert' class='text-danger font-weight-bolder'></div><div class='card shadow-sm'><div class='card-body'>";
+print "<div id='DoliContactAlert' class='text-danger font-weight-bolder'></div>";
 
-print "<ul class='nav bg-light nav-pills rounded nav-fill flex-column' role='tablist'>";
-if ( !isset($listcontact->error) && $listcontact != null ) {
+if ( !isset($listcontact->error) && $listcontact != null && 7 == 6 ) {
 foreach ( $listcontact as $contact ) { 
-print "<li class='nav-item'><a class='nav-link' data-toggle='pill' href='#nav-tab-contact-".$contact->id."'>
-<i class='fab fa-paypal float-left'></i> ".$contact->firstname." ".$contact->lastname."</a></li>";
-}}
-if ( $countContact < $limit ) {
-print "<li class='nav-item'><a class='nav-link' data-toggle='pill' href='#nav-tab-contact-new'>
-<i class='fas fa-plus-circle float-left'></i> ".__( 'Add a contact', 'doliconnect')."</a></li>";
-}
-print "</ul><br><div class='tab-content'>";
-if ( !isset($listcontact->error) && $listcontact != null ) {
-foreach ( $listcontact as $contact ) { 
-print '<div class="tab-pane fade" id="nav-tab-contact-'.$contact->id.'"><div class="card bg-light" style="border:0"><div class="card-body">';
+print '<div class="tab-pane fade" id="nav-tab-contact-'.$contact->id.'lll"><div class="card bg-light" style="border:0"><div class="card-body">';
 print doliaddress($contact);
 print "<script>";
 print "(function ($) {
@@ -418,23 +407,41 @@ print "<button type='button' id='deletebtn_".$contact->id."' name='delete_contac
 print "title='".__( 'Delete', 'doliconnect')."'><i class='fas fa-trash fa-fw' style='color:Red'></i> ".__( 'Delete', 'doliconnect').'</button>';
 
 print "</div></div>";
+}}  
+
+print '<div class="card shadow-sm"><div class="tab-content" id="nav-tabContent">';                             
+print '<div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list"><div class="card-header">
+    Featured
+  </div>';
+print '<ul class="list-group list-group-flush" id="list-tab" role="tablist">';
+if ( !isset($listcontact->error) && $listcontact != null ) {
+foreach ( $listcontact as $contact ) { 
+print "<a class='list-group-item list-group-item-action' data-toggle='list' id='tab-contact-".$contact->id."-list' href='#tab-contact-".$contact->id."' role='tab' aria-controls='contact-".$contact->id."'>
+".$contact->firstname." ".$contact->lastname."</a>";
 }}
 
-print '<div class="tab-pane fade" id="nav-tab-contact-new"><div class="card bg-white">';
-print doliuserform($thirdparty, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'contact');
-print "</div><br><div class='btn-group btn-block' role='group' aria-label='actions buttons'>";
+if ( $countContact < $limit ) {
+print "<a class='list-group-item list-group-item-action' data-toggle='list' id='tab-contact-new-list' href='#tab-contact-new' role='tab' aria-controls='contact-new'>
+".__( 'Add a contact', 'doliconnect')."</a>";
+}
 
-print "<button type='button' id='editbtn_".$contact->id."' name='edit_contact' value='edit_contact' class='btn btn-light'";
-print "title='".__( 'Favourite', 'doliconnect')."'><i class='fas fa-edit fa-fw' style='color:Blue'></i> ".__( "Edit", 'doliconnect')."</button>";
+print "</ul></div>";
 
-
-print "<button type='button' id='deletebtn_".$contact->id."' name='delete_contact' value='delete_contact' class='btn btn-light'";
-print "title='".__( 'Delete', 'doliconnect')."'><i class='fas fa-trash fa-fw' style='color:Red'></i> ".__( 'Delete', 'doliconnect').'</button>';
-
-print "</div></div>";
-
+if ( !isset($listcontact->error) && $listcontact != null ) {
+foreach ( $listcontact as $contact ) { 
+print '<div class="tab-pane fade" id="tab-contact-'.$contact->id.'" role="tabpanel" aria-labelledby="tab-contact-'.$contact->id.'-list">';
+print '<div class="card-header"><a class="link" onclick="ChangeTab(\'#tab-contact-'.$contact->id.'\');" href="#">'.__( 'Return', 'doliconnect').'</a></div>';
+print doliaddress($contact);
+print "<div class='card-body'><button class='btn btn-danger btn-block' type='submit'>".__( 'Create', 'doliconnect')."</button></div>";
 print "</div>";
-//print dolipage($listcontact, $url, null, $limit);
+}}
+
+print '<div class="tab-pane fade" id="tab-contact-new" role="tabpanel" aria-labelledby="tab-contact-new-list">';
+print '<div class="card-header"><a class="link" onclick="ChangeTab(\'#tab-contact-new\');" href="#">'.__( 'Return', 'doliconnect').'</a></div>';
+print doliuserform($thirdparty, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'contact');
+print "<div class='card-body'><button class='btn btn-danger btn-block' type='submit'>".__( 'Create', 'doliconnect')."</button></div>";
+print "</div>";
+
 print "</div><div class='card-footer text-muted'>";
 print "<small><div class='float-left'>";
 if ( isset($request) ) print dolirefresh($request, $url, dolidelay('contact'));
@@ -442,6 +449,14 @@ print "</div><div class='float-right'>";
 print dolihelp('ISSUE');
 print "</div></small>";
 print "</div></div>";
+
+print '<script>
+function ChangeTab(old){
+jQuery( old ).removeClass("show active");
+jQuery( old + "-list").removeClass("active");
+jQuery("#list-home").addClass("show active");
+}
+</script>';
 
 print "<div id='content_div'></div><script>";
 print '$("#content_div").load("'.plugins_url('functions/dashboard.php?module=contacts', dirname(__FILE__) ).'");';
