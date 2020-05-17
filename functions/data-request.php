@@ -340,7 +340,16 @@ doliconnector($current_user, 'fk_order', true);
 $object = callDoliApi("GET", "/".trim($_POST['module'])."/".trim($_POST['id'])."?contact_list=0", null, dolidelay('cart', true));
 
 if (!isset($payinfo->error)) { 
-wp_send_json_success( __( 'payment is ok', 'doliconnect')); 
+$message = '<div class="card" >
+  <div class="card-body">
+    <h5 class="card-title">Card title</h5>
+    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the cards content.</p>
+    <a href="#" class="card-link">Card link</a>
+    <a href="#" class="card-link">Another link</a>
+  </div>
+</div>';
+wp_send_json_success( $message ); 
 } else {
 wp_send_json_error( __( 'An error occured', 'doliconnect')); 
 }
