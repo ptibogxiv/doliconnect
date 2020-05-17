@@ -430,7 +430,7 @@ foreach ( $listcontact as $contact ) {
 print '<div class="tab-pane fade" id="tab-contact-'.$contact->id.'" role="tabpanel" aria-labelledby="tab-contact-'.$contact->id.'-list">';
 print '<div class="card-header"><a class="" onclick="ChangeTab(\'#tab-contact-'.$contact->id.'\');" href="#"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a> '.__( 'Update contact', 'doliconnect').'</div>';
 print doliuserform($contact, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'contact');
-print "<div class='card-body'><button class='btn btn-danger btn-block' type='submit'>".__( 'Create', 'doliconnect')."</button></div>";
+print "<div class='card-body'><button class='btn btn-danger btn-block' type='submit'>".__( 'Update', 'doliconnect')."</button></div>";
 print "</div>";
 }}
 
