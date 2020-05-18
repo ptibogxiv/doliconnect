@@ -2628,7 +2628,6 @@ $paymentmethods .= "function PayPM(pm) {
 (function ($) {
 $(document).ready(function(){
 $('#DoliconnectLoadingModal').modal('show');
-var actionvalue = $(this).val();
         $.ajax({
           url: '".esc_url( admin_url( 'admin-ajax.php' ) )."',
           type: 'POST',
@@ -2643,7 +2642,7 @@ var actionvalue = $(this).val();
           }
         }).done(function(response) {
 $(window).scrollTop(0); 
-console.log(actionvalue);
+console.log(response.data);
 if (response.success) {
 
 if (document.getElementById('nav-tab-pay')) {
