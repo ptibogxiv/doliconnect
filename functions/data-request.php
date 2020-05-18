@@ -351,7 +351,7 @@ $message = '<div class="card" >
 </div>';
 wp_send_json_success( $message ); 
 } else {
-wp_send_json_error( __( 'An error occured', 'doliconnect')); 
+wp_send_json_error( __( 'An error occured:', 'doliconnect').' '.$payinfo->error->message); 
 }
 
 } else {
