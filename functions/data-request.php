@@ -342,13 +342,13 @@ $object = callDoliApi("GET", "/".trim($_POST['module'])."/".trim($_POST['id'])."
 if (!isset($payinfo->error)) { 
 $message = '<div class="card" >
   <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the cards content.</p>
-    <a href="#" class="card-link">Card link</a>
-    <a href="#" class="card-link">Another link</a>
-  </div>
-</div>';
+    <center><i class="fas fa-check-circle fa-9x fa-fw text-success"></i>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the cards content.</p>';
+$nonce = wp_create_nonce( 'doli-'.trim($_POST['module']).'-'. trim($_POST['id']).'-'.trim($_POST['ref']));
+$arr_params = array('module' => trim($_POST['module']), 'id' => trim($_POST['id']), 'ref' => trim($_POST['ref']), 'security' => $nonce);  
+$return = esc_url( add_query_arg( $arr_params, doliconnecturl('doliaccount')) );
+$message .= "<br><a href='".$return."' class='btn btn-primary'>".__( 'View my receipt', 'doliconnect')."</a>";
+$message .= '</center></div></div>';
 wp_send_json_success( $message ); 
 } else {
 wp_send_json_error( __( 'An error occured:', 'doliconnect').' '.$payinfo->error->message); 
