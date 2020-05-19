@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2020-05-18 20:45+0200\n"
-"PO-Revision-Date: 2020-05-18 20:45+0200\n"
+"POT-Creation-Date: 2020-05-19 16:16+0200\n"
+"PO-Revision-Date: 2020-05-19 16:37+0200\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_FR\n"
@@ -419,8 +419,7 @@ msgid "Refused"
 msgstr "Refusée"
 
 #: dashboard/dashboard.php:596 dashboard/dashboard.php:600
-#: dashboard/dashboard.php:617 dashboard/dashboard.php:727
-#: dashboard/dashboard.php:830 dashboard/dashboard.php:1055
+#: dashboard/dashboard.php:617 dashboard/dashboard.php:1055
 #: dashboard/dashboard.php:1187 dashboard/dashboard.php:1311
 #: functions/tools.php:634
 msgid "Processing"
@@ -430,8 +429,8 @@ msgstr "Traitement"
 msgid "Sign before"
 msgstr "A signer avant"
 
-#: dashboard/dashboard.php:602 dashboard/dashboard.php:737
-#: dashboard/dashboard.php:1049 dashboard/dashboard.php:1181
+#: dashboard/dashboard.php:602 dashboard/dashboard.php:1049
+#: dashboard/dashboard.php:1181
 msgid "Canceled"
 msgstr "Annulée"
 
@@ -457,31 +456,41 @@ msgstr "Aucune proposition"
 msgid "Orders tracking"
 msgstr "Suivi des commandes"
 
-#: dashboard/dashboard.php:722 dashboard/dashboard.php:1299
-msgid "Date of order"
-msgstr "Date de commande"
+#: dashboard/dashboard.php:721 dashboard/dashboard.php:830
+msgid "order"
+msgstr "commande"
+
+#: dashboard/dashboard.php:722
+msgid "date of order"
+msgstr "date de commande"
 
 #: dashboard/dashboard.php:725
-msgid "Shipped"
-msgstr "Expédiée"
+msgid "shipped"
+msgstr "expédiée"
+
+#: dashboard/dashboard.php:727 dashboard/dashboard.php:830
+msgid "processing"
+msgstr "traitement"
 
 #: dashboard/dashboard.php:732
-msgid "Validated"
-msgstr "Validée"
+msgid "validated"
+msgstr "validée"
 
 #: dashboard/dashboard.php:735
-msgid "Draft"
-msgstr "Brouillon"
+msgid "draft"
+msgstr "brouillon"
 
-#: dashboard/dashboard.php:741 dashboard/dashboard.php:1301
-#: dashboard/templates.php:1271
-msgid "Payment method"
-msgstr "Mode de paiement"
+#: dashboard/dashboard.php:737
+msgid "canceled"
+msgstr "annulée"
 
-#: dashboard/dashboard.php:742 functions/tools.php:1476
-#: functions/tools.php:2610
-msgid "Payment term"
-msgstr "Conditions de règlement"
+#: dashboard/dashboard.php:741
+msgid "payment method"
+msgstr "mode de paiement"
+
+#: dashboard/dashboard.php:742
+msgid "payment term"
+msgstr "conditions de règlement"
 
 #: dashboard/dashboard.php:759 dashboard/templates.php:1164
 #: dashboard/templates.php:1285
@@ -534,28 +543,28 @@ msgstr "Adresse d’expédition"
 msgid "Billing and shipping address"
 msgstr "Adresse de facturation et d'expédition"
 
-#: dashboard/dashboard.php:830 dashboard/dashboard.php:851
-#: dashboard/dashboard.php:1055 dashboard/dashboard.php:1187
-#: dashboard/dashboard.php:1311
+#: dashboard/dashboard.php:830
+msgid "payment"
+msgstr "paiement"
+
+#: dashboard/dashboard.php:830
+msgid "shipping"
+msgstr "expédition"
+
+#: dashboard/dashboard.php:830
+msgid "delivery"
+msgstr "livraison"
+
+#: dashboard/dashboard.php:851 dashboard/dashboard.php:1055
+#: dashboard/dashboard.php:1187 dashboard/dashboard.php:1311
 msgid "Order"
 msgstr "Commande"
 
-#: dashboard/dashboard.php:830 dashboard/dashboard.php:871
-#: dashboard/dashboard.php:1055 dashboard/dashboard.php:1187
-#: dashboard/dashboard.php:1311 dashboard/templates.php:1374
+#: dashboard/dashboard.php:871 dashboard/dashboard.php:1055
+#: dashboard/dashboard.php:1187 dashboard/dashboard.php:1311
+#: dashboard/templates.php:1374
 msgid "Payment"
 msgstr "Paiement"
-
-#: dashboard/dashboard.php:830 dashboard/dashboard.php:1055
-#: dashboard/dashboard.php:1187 dashboard/dashboard.php:1311
-#: functions/product.php:61
-msgid "Shipping"
-msgstr "Expédition"
-
-#: dashboard/dashboard.php:830 dashboard/dashboard.php:1055
-#: dashboard/dashboard.php:1187 dashboard/dashboard.php:1311
-msgid "Delivery"
-msgstr "Livraison"
 
 #: dashboard/dashboard.php:881 dashboard/dashboard.php:883
 #: dashboard/dashboard.php:900
@@ -594,6 +603,16 @@ msgstr "Aucune commande"
 msgid "Contracts tracking"
 msgstr "Suivi des contrats"
 
+#: dashboard/dashboard.php:1055 dashboard/dashboard.php:1187
+#: dashboard/dashboard.php:1311 functions/product.php:61
+msgid "Shipping"
+msgstr "Expédition"
+
+#: dashboard/dashboard.php:1055 dashboard/dashboard.php:1187
+#: dashboard/dashboard.php:1311
+msgid "Delivery"
+msgstr "Livraison"
+
 #: dashboard/dashboard.php:1074 dashboard/dashboard.php:1202
 msgid "contract"
 msgstr "contrat"
@@ -613,6 +632,14 @@ msgstr "Aucun projet"
 #: dashboard/dashboard.php:1279
 msgid "Donations tracking"
 msgstr "Suivi des dons"
+
+#: dashboard/dashboard.php:1299
+msgid "Date of order"
+msgstr "Date de commande"
+
+#: dashboard/dashboard.php:1301 dashboard/templates.php:1271
+msgid "Payment method"
+msgstr "Mode de paiement"
 
 #: dashboard/dashboard.php:1336
 msgid "Amount"
@@ -1203,7 +1230,8 @@ msgstr "Votre paiement a été enregistré"
 msgid "or go to reception desk"
 msgstr "ou aller à la réception"
 
-#: dashboard/templates.php:1306
+#: dashboard/templates.php:1306 dashboard/templates.php:1678
+#: functions/data-request.php:350
 msgid "View my receipt"
 msgstr "Voir mon reçu"
 
@@ -1973,6 +2001,10 @@ msgstr "Chèque"
 #: functions/tools.php:1466
 msgid "Cash"
 msgstr "Espèces"
+
+#: functions/tools.php:1476 functions/tools.php:2610
+msgid "Payment term"
+msgstr "Conditions de règlement"
 
 #: functions/tools.php:1480 functions/tools.php:2614
 msgid "immediately"

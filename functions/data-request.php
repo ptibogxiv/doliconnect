@@ -343,7 +343,7 @@ if (!isset($payinfo->error)) {
 $message = '<div class="card" >
   <div class="card-body">
     <center><i class="fas fa-check-circle fa-9x fa-fw text-success"></i>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the cards content.</p>';
+    <p class="card-text"><h2>'.__( 'Your order has been registered', 'doliconnect').'</h2>'.__( 'Reference', 'doliconnect').': '.$payinfo->ref.'<br>'.__( 'Payment method', 'doliconnect').': '.$payinfo->mode_reglement_code.'</p>';
 $nonce = wp_create_nonce( 'doli-'.trim($_POST['module']).'-'. trim($_POST['id']).'-'.trim($_POST['ref']));
 $arr_params = array('module' => trim($_POST['module']), 'id' => trim($_POST['id']), 'ref' => trim($_POST['ref']), 'security' => $nonce);  
 $return = esc_url( add_query_arg( $arr_params, doliconnecturl('doliaccount')) );
