@@ -718,28 +718,28 @@ $orderfo = callDoliApi("GET", $request, null, dolidelay('order', esc_attr(isset(
 
 if ( !isset($orderfo->error) && isset($_GET['id']) && isset($_GET['ref']) && (doliconnector($current_user, 'fk_soc') == $orderfo->socid ) && ($_GET['ref'] == $orderfo->ref) && $orderfo->statut != 0 && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doli-orders-'.$orderfo->id.'-'.$orderfo->ref)) {
 
-print "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>$orderfo->ref</h5><div class='row'><div class='col-md-6'>";
-print "<b>".__( 'Date of order', 'doliconnect').":</b> ".wp_date('d/m/Y', $orderfo->date_creation)."<br>";
+print "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>".__( 'order', 'doliconnect')." $orderfo->ref</h5><div class='row'><div class='col-md-6'>";
+print "<b>".__( 'date of order', 'doliconnect').":</b> ".wp_date('d/m/Y', $orderfo->date_creation)."<br>";
 if ( $orderfo->statut > 0 ) {
 if ( $orderfo->billed == 1 ) {
-if ( $orderfo->statut > 1 ) { $orderinfo=__( 'Shipped', 'doliconnect'); 
+if ( $orderfo->statut > 1 ) { $orderinfo=__( 'shipped', 'doliconnect'); 
 $orderavancement=100; }
-else { $orderinfo=__( 'Processing', 'doliconnect');
+else { $orderinfo=__( 'processing', 'doliconnect');
 $orderavancement=40; }
 } else { $orderinfo=null;
 $orderinfo=null;
 $orderavancement=25;
-$orderinfo=__( 'Validated', 'doliconnect');
+$orderinfo=__( 'validated', 'doliconnect');
 }
 }
-elseif ( $orderfo->statut == 0 ) { $orderinfo=__( 'Draft', 'doliconnect');
+elseif ( $orderfo->statut == 0 ) { $orderinfo=__( 'draft', 'doliconnect');
 $orderavancement=7; }
-elseif ( $orderfo->statut == -1 ) { $orderinfo=__( 'Canceled', 'doliconnect');
+elseif ( $orderfo->statut == -1 ) { $orderinfo=__( 'canceled', 'doliconnect');
 $orderavancement=0;  }
 
 $mode_reglement = callDoliApi("GET", "/setup/dictionary/payment_types?sortfield=code&sortorder=ASC&limit=100&active=1&sqlfilters=(t.code%3A%3D%3A'".$orderfo->mode_reglement_code."')", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-if (!empty($orderfo->mode_reglement_id)) print "<b>".__( 'Payment method', 'doliconnect').":</b> ".$mode_reglement[0]->label."<br>";
-if (!empty($orderfo->cond_reglement_id)) print "<b>".__( 'Payment term', 'doliconnect').":</b> ".dolipaymentterm($orderfo->cond_reglement_id)."<br>";
+if (!empty($orderfo->mode_reglement_id)) print "<b>".__( 'payment method', 'doliconnect').":</b> ".$mode_reglement[0]->label."<br>";
+if (!empty($orderfo->cond_reglement_id)) print "<b>".__( 'payment term', 'doliconnect').":</b> ".dolipaymentterm($orderfo->cond_reglement_id)."<br>";
 
 print "<br></div><div class='col-md-6'>";
 
@@ -827,7 +827,7 @@ print "</small></div></div>";
 print "</div><br>";
 
 print '<div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: '.$orderavancement.'%" aria-valuenow="'.$orderavancement.'" aria-valuemin="0" aria-valuemax="100"></div></div>';
-print "<div class='w-auto text-muted d-none d-sm-block' ><div style='display:inline-block;width:20%'>".__( 'Order', 'doliconnect')."</div><div style='display:inline-block;width:15%'>".__( 'Payment', 'doliconnect')."</div><div style='display:inline-block;width:25%'>".__( 'Processing', 'doliconnect')."</div><div style='display:inline-block;width:20%'>".__( 'Shipping', 'doliconnect')."</div><div class='text-right' style='display:inline-block;width:20%'>".__( 'Delivery', 'doliconnect')."</div></div>";
+print "<div class='w-auto text-muted d-none d-sm-block' ><div style='display:inline-block;width:20%'>".__( 'order', 'doliconnect')."</div><div style='display:inline-block;width:15%'>".__( 'payment', 'doliconnect')."</div><div style='display:inline-block;width:25%'>".__( 'processing', 'doliconnect')."</div><div style='display:inline-block;width:20%'>".__( 'shipping', 'doliconnect')."</div><div class='text-right' style='display:inline-block;width:20%'>".__( 'delivery', 'doliconnect')."</div></div>";
 
 print "</div><ul class='list-group list-group-flush'>";
  
