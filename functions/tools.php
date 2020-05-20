@@ -2138,7 +2138,11 @@ global $current_user;
 $request = "/doliconnector/".doliconnector($current_user, 'fk_soc')."/paymentmethods";
  
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
-$request .= "?type=".$module."&rowid=".$object->id;
+if ($module == 'orders') { $module2 = 'order'; }
+elseif ($module == 'invoices') { $module2 = 'invoice'; }
+elseif ($module == 'donationss') { $module2 = 'donation'; }
+else { $module2 = $module; }
+$request .= "?type=".$module2."&rowid=".$object->id;
 $currency=strtolower($object->multicurrency_code?$object->multicurrency_code:'eur');  
 $stripeAmount=($object->multicurrency_total_ttc?$object->multicurrency_total_ttc:$object->total_ttc)*100;
 }
