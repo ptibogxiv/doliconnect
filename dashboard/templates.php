@@ -1300,23 +1300,9 @@ if ( (! empty(dolikiosk()) && empty($object->billed) && empty($object->paid) ) |
 print "<br><p><b>".__( 'or go to reception desk', 'doliconnect')."</b></p>";
 }
 
-$nonce = wp_create_nonce( 'doli-'.$module.'-'. $object->id.'-'.$object->ref);
-$arr_params = array('module' => $module, 'id' => $object->id, 'ref' => $object->ref, 'security' => $nonce);  
-$return = esc_url( add_query_arg( $arr_params, doliconnecturl('doliaccount')) );
-print "<br><a href='".$return."' class='btn btn-primary'>".__( 'View my receipt', 'doliconnect')."</a>";
 
 } else {
-if (isset($_GET['module']) && !empty($_GET['module'])) {
-$nonce = wp_create_nonce( 'doli-'.$module.'-'. $object->id.'-'.$object->ref);
-$arr_params = array('module' => $module, 'id' => $object->id, 'ref' => $object->ref, 'security' => $nonce, 'refresh' => true); 
-$return = esc_url( add_query_arg( $arr_params, doliconnecturl('doliaccount')) );
-} else {
-$arr_params = array('refresh' => true); 
-$return = esc_url( add_query_arg( $arr_params, doliconnecturl('dolicart')) );
-} 
 
-print "<div class='alert alert-danger' role='alert'><p>".__( 'An error is occurred', 'doliconnect')."</p>";
-print "<br><a href='".$return."' class='btn btn-primary'>".sprintf( esc_html__( 'Return to %s', 'doliconnect'), $object->ref)."</a>";
 }
 
 print "</div></div></div>";
@@ -1653,7 +1639,7 @@ print "<div class='tab-pane fade' id='nav-tab-pay'>";
 
 if ( doliversion('11.0.0') ) {
 if ( current_user_can('administrator') && !empty(get_option('doliconnectbeta')) ) {
-print doliconnect_paymentmethods($object, substr(trim($module), 0, -1), null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+print doliconnect_paymentmethods($object, esc_attr($module), null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 } else {
 print dolipaymentmethods($object, substr(trim($module), 0, -1), null, true);
 }
