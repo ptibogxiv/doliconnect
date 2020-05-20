@@ -515,7 +515,7 @@ global $current_user;
 
 $limit=8;
 if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']-1); }  else { $page = 0; }
-$request = "/wishlist?sortfield=t.rowid&sortorder=ASC&thirdparty_ids=".doliconnector($current_user, 'fk_soc')."&sqlfilters=(t.priv%3A%3D%3A0)";
+$request = "/wishlist?sortfield=t.rang&sortorder=ASC&thirdparty_ids=".doliconnector($current_user, 'fk_soc')."&sqlfilters=(t.priv%3A%3D%3A0)";
 $wishlist = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 if ( isset ($_POST['delete_wish']) && $_POST['delete_wish'] > 0 ) {
