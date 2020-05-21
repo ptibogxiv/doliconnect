@@ -456,9 +456,9 @@ jQuery("#list-home").addClass("show active");
 }
 </script>';
 
-print "<div id='content_div'></div><script>";
-print '$("#content_div").load("'.plugins_url('functions/dashboard.php?module=contacts', dirname(__FILE__) ).'");';
-print "</script>";
+//print "<div id='content_div'></div><script>";
+//print '$("#content_div").load("'.plugins_url('functions/dashboard.php?module=contacts', dirname(__FILE__) ).'");';
+//print "</script>";
 
 }
 add_action( 'user_doliconnect_contacts', 'contacts_module');
