@@ -1430,7 +1430,7 @@ print "(function ($) {
 $(document).ready(function(){
 $('#purgebtn_cart, #validatebtn_cart').on('click',function(event){
 event.preventDefault();
-$('#DoliconnectLoadingModal').modal('show');
+//$('#DoliconnectLoadingModal').modal('show');
 var actionvalue = $(this).val();
         $.ajax({
           url: '".esc_url( admin_url( 'admin-ajax.php' ) )."',
@@ -1469,16 +1469,12 @@ $('#a-tab-info').addClass('active');
 $('#nav-tab-cart').removeClass('show active');
 $('#nav-tab-info').addClass('show active');
 $('#nav-tab-cart').tab('dispose');
-$('#nav-tab-info').tab('show');
-if (document.getElementById('nav-tab-pay')) {
-$('#a-tab-pay').addClass('disabled');
-//document.getElementById('nav-tab-pay').remove();    
-}     
+$('#nav-tab-info').tab('show');   
 }
 
 console.log(response.data.message);
-}
-$('#DoliconnectLoadingModal').modal('hide');
+//$('#DoliconnectLoadingModal').modal('hide');
+} 
         });
 });
 });
@@ -1513,7 +1509,7 @@ if ( doliversion('10.0.0') ) {
 print "<li class='list-group-item'><div class='row'><div class='col-12 col-md-6'><h6>".__( 'Billing address', 'doliconnect')."</h6><small class='text-muted'>";
 
 print '<div class="custom-control custom-radio">
-<input type="radio" id="billing-0" name="contact_billing" class="custom-control-input" value="" checked disabled>
+<input type="radio" id="billing-0" name="contact_billing" class="custom-control-input" value="0" checked disabled>
 <label class="custom-control-label" for="billing-0">'.__( "Same address as the customer", "doliconnect").'</label>
 </div>';
 
@@ -1542,7 +1538,7 @@ print "</small></div>";
 print "<div class='col-12 col-md-6'><h6>".__( 'Shipping address', 'doliconnect')."</h6><small class='text-muted'>";
 
 print '<div class="custom-control custom-radio">
-<input type="radio" id="shipping-0" name="contact_shipping" class="custom-control-input" value="" checked disabled>
+<input type="radio" id="shipping-0" name="contact_shipping" class="custom-control-input" value="0" checked disabled>
 <label class="custom-control-label" for="shipping-0">'.__( "Same address as the customer", "doliconnect").'</label>
 </div>';
 
@@ -1583,7 +1579,7 @@ print "(function ($) {
 $(document).ready(function(){
 $('#infobtn_cart').on('click',function(event){
 event.preventDefault();
-$('#DoliconnectLoadingModal').modal('show');
+//$('#DoliconnectLoadingModal').modal('show');
 var actionvalue = $(this).val();
 var note_public = $('#note_public').val();
         $.ajax({
@@ -1617,7 +1613,7 @@ $('#nav-tab-pay').tab('show');
 
 console.log(response.data.message);
 }
-$('#DoliconnectLoadingModal').modal('hide');
+//$('#DoliconnectLoadingModal').modal('hide');
         });
 });
 });
@@ -1638,11 +1634,7 @@ print "</div>";
 print "<div class='tab-pane fade' id='nav-tab-pay'>";
 
 if ( doliversion('11.0.0') ) {
-if ( current_user_can('administrator') && !empty(get_option('doliconnectbeta')) ) {
 print doliconnect_paymentmethods($object, esc_attr($module), null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
-} else {
-print dolipaymentmethods($object, substr(trim($module), 0, -1), null, true);
-}
 } else {
 print __( "It seems that your version of Dolibarr and/or its plugins are not up to date!", "doliconnect");
 }

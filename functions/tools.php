@@ -1011,7 +1011,6 @@ $('#deleteorderproduct-".$line->fk_product."').on('click',function(event){
 event.preventDefault();
 $('#DoliconnectLoadingModal').modal('show');
 var qty = $(this).val();
-console.log('".$line->fk_product." ' + qty + '".$line->subprice."');
         $.ajax({
           url: '".esc_url( admin_url( 'admin-ajax.php' ) )."',
           type: 'POST',
@@ -1047,7 +1046,6 @@ $('#updateorderproduct-".$line->fk_product."').on('change',function(event){
 event.preventDefault();
 $('#DoliconnectLoadingModal').modal('show');
 var qty = $(this).val();
-console.log('".$line->fk_product." ' + qty + '".$line->subprice."');
         $.ajax({
           url: '".esc_url( admin_url( 'admin-ajax.php' ) )."',
           type: 'POST',

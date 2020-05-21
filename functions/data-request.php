@@ -277,7 +277,7 @@ $response = [
     'items' => '0',
     'lines' => doliline($object, true),
     'total' => 'test',
-    'message' => __( 'We no longer have this item in this quantity', 'doliconnect'),
+    'message' => __( 'Quantities have been changed', 'doliconnect'),
         ];
 wp_send_json_success($response);
 
