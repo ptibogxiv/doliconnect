@@ -2569,8 +2569,15 @@ if (!empty($listpaymentmethods->VIR->bic)) { $paymentmethods .= "<div class='col
   <dd>".$listpaymentmethods->VIR->bic."</dd>
 </div>"; }
 $paymentmethods .= "</div>";
-$paymentmethods .= "<p class='text-justify'><small><strong>Note:</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-tempor incididunt ut labore et dolore magna aliqua.</small></p></div></div>";
+$paymentmethods .= "<p class='text-justify'>";
+$paymentmethods .= "<small><b>".__( 'Payment term', 'doliconnect').":</b> ";
+if (!empty($thirdparty->cond_reglement_id)) { 
+$paymentmethods .= dolipaymentterm($thirdparty->cond_reglement_id);
+} else {
+$paymentmethods .= __( 'immediately', 'doliconnect');
+}
+$paymentmethods .= "</small>";
+$paymentmethods .= "</p></div></div>";
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
 $paymentmethods .= '<br><button type="button" onclick="PayPM(\'VIR\')" class="btn btn-danger btn-block">'.__( 'Pay', 'doliconnect')." ".doliprice($object, 'ttc', $currency).'</button>';
 }  
@@ -2593,8 +2600,15 @@ $paymentmethods .= "<div class='col'><dl class='param'>
   <dd>".$listpaymentmethods->CHQ->proprio." - ".$listpaymentmethods->CHQ->owner_address."</dd>
 </dl></div>";
 $paymentmethods .= "</div>";
-$paymentmethods .= "<p class='text-justify'><small><strong>Note:</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-tempor incididunt ut labore et dolore magna aliqua.</small></p></div></div>";
+$paymentmethods .= "<p class='text-justify'>";
+$paymentmethods .= "<small><b>".__( 'Payment term', 'doliconnect').":</b> ";
+if (!empty($thirdparty->cond_reglement_id)) { 
+$paymentmethods .= dolipaymentterm($thirdparty->cond_reglement_id);
+} else {
+$paymentmethods .= __( 'immediately', 'doliconnect');
+}
+$paymentmethods .= "</small>";
+$paymentmethods .= "</p></div></div>";
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
 $paymentmethods .= '<br><button type="button" onclick="PayPM(\'CHQ\')" class="btn btn-danger btn-block">'.__( 'Pay', 'doliconnect')." ".doliprice($object, 'ttc', $currency).'</button>';
 }
@@ -2609,13 +2623,7 @@ tempor incididunt ut labore et dolore magna aliqua. </p>
 </div>';
 } 
 
-$paymentmethods .= "</div><br><small><b>".__( 'Payment term', 'doliconnect').":</b> ";
-if (!empty($thirdparty->cond_reglement_id)) { 
-$paymentmethods .= dolipaymentterm($thirdparty->cond_reglement_id);
-} else {
-$paymentmethods .= __( 'immediately', 'doliconnect');
-}
-$paymentmethods .= "</small>"; 
+$paymentmethods .= "</div>"; 
 //
 //    $(document).ready(function(){
 //       $("a[href='#nav-tab-chq']").hasClass('active') ) {
