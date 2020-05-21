@@ -886,7 +886,7 @@ $resultats = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(is
 if ( !isset($resultats->error) && $resultats != null ) {
 foreach ($resultats as $product) {
 
-print apply_filters( 'doliproductlist', $product);
+print apply_filters( 'doliproductlist', $product[0]);
 
 }
 } else {
