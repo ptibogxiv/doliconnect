@@ -961,8 +961,10 @@ $resultats = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(is
 //print $resultatso;
 
 if ( !isset($resultats->error) && $resultats != null ) {
-
-print "<li class='list-group-item list-group-item-light'><center>".sprintf( esc_html__( 'We have %s products with this search "%s"', 'doliconnect'), count($resultats), esc_attr($_GET['search']))."</center></li>";
+$count = count($resultats);
+print "<li class='list-group-item list-group-item-light'><center>";
+printf( _n( 'We have %s product with this search', 'We have %s products with this search', $count, 'doliconnect' ), number_format_i18n( $count ) );
+print " '".esc_attr($_GET['search'])."'</center></li>";
 foreach ($resultats as $product) {
 
 print apply_filters( 'doliproductlist', $product);
