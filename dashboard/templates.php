@@ -881,11 +881,11 @@ $module = 'product';
 $limit=20;
 if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']-1); }  else { $page = "0"; }
 $request = "/products/purchase_prices?sortfield=t.ref&sortorder=ASC&limit=".$limit."&page=".$page."&supplier=".esc_attr($_GET["supplier"])."&sqlfilters=(t.tosell%3A%3D%3A1)";
-$resultats = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-
-if ( !isset($resultats->error) && $resultats != null ) {
-foreach ($resultats as $product) {
-
+$resultats2 = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$resultats = array();
+if ( !isset($resultats2->error) && $resultats2 != null ) {
+foreach ($resultats2 as $product) {
+$resultats[$product[0]->id] = 1;
 print apply_filters( 'doliproductlist', $product[0]);
 
 }
