@@ -257,12 +257,16 @@ if ( isset($_POST['action_cart']) && $_POST['action_cart'] == "purge_cart") {
 $object = callDoliApi("DELETE", "/".trim($_POST['module'])."/".trim($_POST['id']), null);
 $dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolidelay('doliconnector', true));
 
+if (!isset($object->error)) {
 $response = [
     'items' => '0',
     'lines' => doliline(null, null),
     'message' => __( 'Your cart has been emptied', 'doliconnect'),
         ];
 wp_send_json_success($response);
+} else {
+wp_send_json_error( __( 'An error occured:', 'doliconnect').' '.$object->error->message); 
+}
 
 } elseif ( isset($_POST['action_cart']) && $_POST['action_cart'] == "update_cart") {
 
@@ -319,12 +323,15 @@ $shipping= callDoliApi("POST", "/".trim($_POST['module'])."/".trim($_POST['id'])
 //} else {
 //$content = __( "It seems that your version of Dolibarr and/or its plugins are not up to date!", "doliconnect");
 //}
-
+if (!isset($object->error)) {
 $response = [
     //'content' => '".$content."',
     'message' => 'ok',
         ];
 wp_send_json_success($response);
+} else {
+wp_send_json_error( __( 'An error occured:', 'doliconnect').' '.$object->error->message); 
+}
 } elseif ( isset($_POST['action_cart']) && $_POST['action_cart'] == "pay_cart") {
 
 $data = [
