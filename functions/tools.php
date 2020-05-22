@@ -22,7 +22,7 @@ function dolipage($object, $url, $page = 0, $limit = 8) {
 
 if (empty($object) || isset($object->error)) {
 $count = 0;
-} else {
+} else { 
 $count = count($object);
 }
 
