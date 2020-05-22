@@ -410,7 +410,7 @@ print "</div></div>";
 }}  
 
 print "<div class='card shadow-sm'><div class='tab-content' id='nav-tabContent'>";                             
-print "<div class='tab-pane fade show active' id='list-home' role='tabpanel' aria-labelledby='list-home-list'><div class='card-header'>".__( 'Manage address book', 'doliconnect')."</div>";
+print "<div class='tab-pane fade show active' id='list-home' role='tabpanel' aria-labelledby='list-home-list'><div class='card-body'><h5 class='card-title'>".__( 'Manage address book', 'doliconnect')."</h5></div>";
 print '<ul class="list-group list-group-flush" id="list-tab" role="tablist">';
 if ( !isset($listcontact->error) && $listcontact != null ) {
 foreach ( $listcontact as $contact ) { 
@@ -428,14 +428,14 @@ print "</ul></div>";
 if ( !isset($listcontact->error) && $listcontact != null ) {
 foreach ( $listcontact as $contact ) { 
 print '<div class="tab-pane fade" id="tab-contact-'.$contact->id.'" role="tabpanel" aria-labelledby="tab-contact-'.$contact->id.'-list">';
-print '<div class="card-header"><a class="" onclick="ChangeTab(\'#tab-contact-'.$contact->id.'\');" href="#"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a> '.__( 'Update contact', 'doliconnect').'</div>';
+print '<div class="card-body"><h5 class="card-title">'.__( 'Update contact', 'doliconnect').'<a class="float-right" onclick="ChangeTab(\'#tab-contact-'.$contact->id.'\');" href="#"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></h5></div>';
 print doliuserform($contact, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'contact');
 print "<div class='card-body'><button class='btn btn-danger btn-block' type='submit'>".__( 'Update', 'doliconnect')."</button></div>";
 print "</div>";
 }}
 
 print '<div class="tab-pane fade" id="tab-contact-new" role="tabpanel" aria-labelledby="tab-contact-new-list">';
-print '<div class="card-header"><a class="" onclick="ChangeTab(\'#tab-contact-new\');" href="#"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a> '.__( 'Add contact', 'doliconnect').'</div>';
+print '<div class="card-body"><h5 class="card-title">'.__( 'Add contact', 'doliconnect').'<a class="float-right" onclick="ChangeTab(\'#tab-contact-new\');" href="#"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></h5></div>';
 print doliuserform($thirdparty, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'contact');
 print "<div class='card-body'><button class='btn btn-danger btn-block' type='submit'>".__( 'Create', 'doliconnect')."</button></div>";
 print "</div>";
