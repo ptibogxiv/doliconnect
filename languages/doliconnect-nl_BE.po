@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2020-05-21 15:26+0200\n"
-"PO-Revision-Date: 2020-05-21 15:26+0200\n"
+"POT-Creation-Date: 2020-05-22 14:27+0200\n"
+"PO-Revision-Date: 2020-05-22 14:28+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: nl_BE\n"
@@ -373,13 +373,15 @@ msgstr "Verwijder"
 msgid "Add contact"
 msgstr "Contactpersoon toevoegen"
 
-#: dashboard/dashboard.php:431 dashboard/dashboard.php:438
-msgid "Back"
-msgstr "Terug"
-
 #: dashboard/dashboard.php:431
 msgid "Update contact"
 msgstr "Contactpersoon bijwerken"
+
+#: dashboard/dashboard.php:431 dashboard/dashboard.php:438
+#: dashboard/dashboard.php:588 dashboard/dashboard.php:721
+#: dashboard/dashboard.php:1032
+msgid "Back"
+msgstr "Terug"
 
 #: dashboard/dashboard.php:440
 msgid "Create"
@@ -405,42 +407,40 @@ msgstr "Uw vertegenwoordiger :"
 msgid "Propals tracking"
 msgstr "Propals tracking"
 
+#: dashboard/dashboard.php:588 dashboard/dashboard.php:617
+msgid "proposal"
+msgstr "Voorstel"
+
 #: dashboard/dashboard.php:590 dashboard/dashboard.php:1033
-#: dashboard/dashboard.php:1165 dashboard/dashboard.php:1738
-msgid "Date of creation"
-msgstr "Datum van creatie"
+msgid "date of creation"
+msgstr "datum van aanmaakdatum"
 
 #: dashboard/dashboard.php:591 dashboard/dashboard.php:617
-#: dashboard/dashboard.php:1047 dashboard/dashboard.php:1179
-msgid "Validation"
+#: dashboard/dashboard.php:1047
+msgid "validation"
 msgstr "Validatie"
 
 #: dashboard/dashboard.php:594
-msgid "Refused"
+msgid "refused"
 msgstr "Geweigerd"
 
 #: dashboard/dashboard.php:596 dashboard/dashboard.php:600
-#: dashboard/dashboard.php:617 dashboard/dashboard.php:1055
-#: dashboard/dashboard.php:1187 dashboard/dashboard.php:1311
-#: functions/tools.php:634
-msgid "Processing"
+#: dashboard/dashboard.php:617 dashboard/dashboard.php:727
+#: dashboard/dashboard.php:830 dashboard/dashboard.php:1055
+msgid "processing"
 msgstr "In Bearbeitung"
 
 #: dashboard/dashboard.php:598
-msgid "Sign before"
-msgstr "Teken voor"
+msgid "sign before"
+msgstr "ondertekenen voor"
 
-#: dashboard/dashboard.php:602 dashboard/dashboard.php:1049
-#: dashboard/dashboard.php:1181
-msgid "Canceled"
+#: dashboard/dashboard.php:602 dashboard/dashboard.php:737
+#: dashboard/dashboard.php:1049
+msgid "canceled"
 msgstr "Geannuleerd"
 
-#: dashboard/dashboard.php:617 dashboard/dashboard.php:636
-msgid "Propal"
-msgstr "Propal"
-
 #: dashboard/dashboard.php:617
-msgid "Billing"
+msgid "billing"
 msgstr "Facturatie"
 
 #: dashboard/dashboard.php:631 dashboard/dashboard.php:844
@@ -448,6 +448,10 @@ msgstr "Facturatie"
 #: dashboard/dashboard.php:1197
 msgid "Summary"
 msgstr "Samenvatting"
+
+#: dashboard/dashboard.php:636
+msgid "Propal"
+msgstr "Propal"
 
 #: dashboard/dashboard.php:682
 msgid "No proposal"
@@ -458,6 +462,7 @@ msgid "Orders tracking"
 msgstr "Orders traceren"
 
 #: dashboard/dashboard.php:721 dashboard/dashboard.php:830
+#: dashboard/dashboard.php:1055
 msgid "order"
 msgstr "Sorteer"
 
@@ -469,10 +474,6 @@ msgstr "Datum van bestelling"
 msgid "shipped"
 msgstr "Verzonden"
 
-#: dashboard/dashboard.php:727 dashboard/dashboard.php:830
-msgid "processing"
-msgstr "In Bearbeitung"
-
 #: dashboard/dashboard.php:732
 msgid "validated"
 msgstr "Gevalideerd"
@@ -480,10 +481,6 @@ msgstr "Gevalideerd"
 #: dashboard/dashboard.php:735
 msgid "draft"
 msgstr "Ontwerp"
-
-#: dashboard/dashboard.php:737
-msgid "canceled"
-msgstr "Geannuleerd"
 
 #: dashboard/dashboard.php:741
 msgid "payment method"
@@ -544,7 +541,7 @@ msgstr "Verzendadres"
 msgid "Billing and shipping address"
 msgstr "Factuur-en verzendadres"
 
-#: dashboard/dashboard.php:830
+#: dashboard/dashboard.php:830 dashboard/dashboard.php:1055
 msgid "payment"
 msgstr "Betaling"
 
@@ -552,18 +549,17 @@ msgstr "Betaling"
 msgid "shipping"
 msgstr "Verzending"
 
-#: dashboard/dashboard.php:830
+#: dashboard/dashboard.php:830 dashboard/dashboard.php:1055
 msgid "delivery"
 msgstr "Levering"
 
-#: dashboard/dashboard.php:851 dashboard/dashboard.php:1055
-#: dashboard/dashboard.php:1187 dashboard/dashboard.php:1311
+#: dashboard/dashboard.php:851 dashboard/dashboard.php:1187
+#: dashboard/dashboard.php:1311
 msgid "Order"
 msgstr "Sorteer"
 
-#: dashboard/dashboard.php:871 dashboard/dashboard.php:1055
-#: dashboard/dashboard.php:1187 dashboard/dashboard.php:1311
-#: dashboard/templates.php:1362
+#: dashboard/dashboard.php:871 dashboard/dashboard.php:1187
+#: dashboard/dashboard.php:1311 dashboard/templates.php:1362
 msgid "Payment"
 msgstr "Betaling"
 
@@ -609,11 +605,6 @@ msgstr "Contracten traceren"
 msgid "Shipping"
 msgstr "Verzending"
 
-#: dashboard/dashboard.php:1055 dashboard/dashboard.php:1187
-#: dashboard/dashboard.php:1311
-msgid "Delivery"
-msgstr "Levering"
-
 #: dashboard/dashboard.php:1074 dashboard/dashboard.php:1202
 msgid "contract"
 msgstr "contract"
@@ -625,6 +616,27 @@ msgstr "Geen contract"
 #: dashboard/dashboard.php:1150
 msgid "Projets tracking"
 msgstr "Projets volgen"
+
+#: dashboard/dashboard.php:1165 dashboard/dashboard.php:1738
+msgid "Date of creation"
+msgstr "Datum van creatie"
+
+#: dashboard/dashboard.php:1179
+msgid "Validation"
+msgstr "Validatie"
+
+#: dashboard/dashboard.php:1181
+msgid "Canceled"
+msgstr "Geannuleerd"
+
+#: dashboard/dashboard.php:1187 dashboard/dashboard.php:1311
+#: functions/tools.php:634
+msgid "Processing"
+msgstr "In Bearbeitung"
+
+#: dashboard/dashboard.php:1187 dashboard/dashboard.php:1311
+msgid "Delivery"
+msgstr "Levering"
 
 #: dashboard/dashboard.php:1255
 msgid "No project"

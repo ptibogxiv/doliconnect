@@ -585,21 +585,21 @@ $proposalfo = callDoliApi("GET", $request, null, dolidelay('proposal', esc_attr(
 }
 
 if ( !isset($proposalfo->error) && isset($_GET['id']) && isset($_GET['ref']) && ( doliconnector($current_user, 'fk_soc') == $proposalfo->socid ) && ( $_GET['ref'] == $proposalfo->ref ) && $proposalfo->statut != 0 && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doli-proposals-'.$proposalfo->id.'-'.$proposalfo->ref)) {
-print "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>$proposalfo->ref</h5><div class='row'><div class='col-md-5'>";
+print "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>".__( 'proposal', 'doliconnect')." ".$proposalfo->ref."<a class='float-right' href='".esc_url( add_query_arg( 'module', 'proposals', doliconnecturl('doliaccount')) )."'><i class='fas fa-arrow-left'></i> ".__( 'Back', 'doliconnect')."</a></h5><div class='row'><div class='col-md-5'>";
 $datevalidation =  wp_date('d/m/Y', $proposalfo->date_validation);
-print "<b>".__( 'Date of creation', 'doliconnect').":</b> ".wp_date('d/m/Y', $proposalfo->date_creation)."<br>";
-print "<b>".__( 'Validation', 'doliconnect')." : </b> $datevalidation<br>";
+print "<b>".__( 'date of creation', 'doliconnect').":</b> ".wp_date('d/m/Y', $proposalfo->date_creation)."<br>";
+print "<b>".__( 'validation', 'doliconnect')." : </b> $datevalidation<br>";
 //print "<b>Date de fin de validité:</b> $datevalidite";
 //print "<b>".__( 'Status', 'doliconnect')." : </b> ";
-if ( $proposalfo->statut == 3 ) { $propalinfo=__( 'Refused', 'doliconnect');
+if ( $proposalfo->statut == 3 ) { $propalinfo=__( 'refused', 'doliconnect');
 $propalavancement=0; }
-elseif ( $proposalfo->statut == 2 ) { $propalinfo=__( 'Processing', 'doliconnect');
+elseif ( $proposalfo->statut == 2 ) { $propalinfo=__( 'processing', 'doliconnect');
 $propalavancement=65; }
-elseif ( $proposalfo->statut == 1 ) { $propalinfo=__( 'Sign before', 'doliconnect')." ".wp_date('d/m/Y', $proposalfo->fin_validite);
+elseif ( $proposalfo->statut == 1 ) { $propalinfo=__( 'sign before', 'doliconnect')." ".wp_date('d/m/Y', $proposalfo->fin_validite);
 $propalavancement=42; }
-elseif ( $proposalfo->statut == 0 ) { $propalinfo=__( 'Processing', 'doliconnect');
+elseif ( $proposalfo->statut == 0 ) { $propalinfo=__( 'processing', 'doliconnect');
 $propalavancement=22; }
-elseif ( $proposalfo->statut == -1 ) { $propalinfo=__( 'Canceled', 'doliconnect');
+elseif ( $proposalfo->statut == -1 ) { $propalinfo=__( 'canceled', 'doliconnect');
 $propalavancement=0; }
 print "<br><br>";
 //print "<b>Moyen de paiement : </b> $proposalfo[mode_reglement]<br>";
@@ -614,7 +614,7 @@ $currency = strtolower($proposalfo->multicurrency_code);
 print "</div></div>";
 
 print '<div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: '.$propalavancement.'%" aria-valuenow="'.$propalavancement.'" aria-valuemin="0" aria-valuemax="100"></div></div>';
-print "<div class='w-auto text-muted d-none d-sm-block' ><div style='display:inline-block;width:16%'>".__( 'Propal', 'doliconnect')."</div><div style='display:inline-block;width:21%'>".__( 'Processing', 'doliconnect')."</div><div style='display:inline-block;width:19%'>".__( 'Validation', 'doliconnect')."</div><div style='display:inline-block;width:24%'>".__( 'Processing', 'doliconnect')."</div><div class='text-right' style='display:inline-block;width:20%'>".__( 'Billing', 'doliconnect')."</div></div>";
+print "<div class='w-auto text-muted d-none d-sm-block' ><div style='display:inline-block;width:16%'>".__( 'proposal', 'doliconnect')."</div><div style='display:inline-block;width:21%'>".__( 'processing', 'doliconnect')."</div><div style='display:inline-block;width:19%'>".__( 'validation', 'doliconnect')."</div><div style='display:inline-block;width:24%'>".__( 'processing', 'doliconnect')."</div><div class='text-right' style='display:inline-block;width:20%'>".__( 'billing', 'doliconnect')."</div></div>";
 
 print "</div><ul class='list-group list-group-flush'>";
  
@@ -718,7 +718,7 @@ $orderfo = callDoliApi("GET", $request, null, dolidelay('order', esc_attr(isset(
 
 if ( !isset($orderfo->error) && isset($_GET['id']) && isset($_GET['ref']) && (doliconnector($current_user, 'fk_soc') == $orderfo->socid ) && ($_GET['ref'] == $orderfo->ref) && $orderfo->statut != 0 && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doli-orders-'.$orderfo->id.'-'.$orderfo->ref)) {
 
-print "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>".__( 'order', 'doliconnect')." $orderfo->ref</h5><div class='row'><div class='col-md-6'>";
+print "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>".__( 'order', 'doliconnect')." ".$orderfo->ref."<a class='float-right' href='".esc_url( add_query_arg( 'module', 'orders', doliconnecturl('doliaccount')) )."'><i class='fas fa-arrow-left'></i> ".__( 'Back', 'doliconnect')."</a></h5><div class='row'><div class='col-md-6'>";
 print "<b>".__( 'date of order', 'doliconnect').":</b> ".wp_date('d/m/Y', $orderfo->date_creation)."<br>";
 if ( $orderfo->statut > 0 ) {
 if ( $orderfo->billed == 1 ) {
@@ -1029,8 +1029,8 @@ $contractfo = callDoliApi("GET", $request, null, dolidelay('contract', esc_attr(
 }
 
 if ( !isset($contractfo->error) && isset($_GET['id']) && isset($_GET['id']) && isset($_GET['ref']) && (doliconnector($current_user, 'fk_soc') == $contractfo->socid) && ($_GET['ref'] == $contractfo->ref) && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doli-contracts-'.$contractfo->id.'-'.$contractfo->ref)) {
-print "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>$contractfo->ref</h5><div class='row'><div class='col-md-5'>";
-print "<b>".__( 'Date of creation', 'doliconnect').": </b> ".wp_date('d/m/Y', $contractfo->date_creation)."<br>";
+print "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>".$contractfo->ref."<a class='float-right' href='".esc_url( add_query_arg( 'module', 'contracts', doliconnecturl('doliaccount')) )."'><i class='fas fa-arrow-left'></i> ".__( 'Back', 'doliconnect')."</a></h5><div class='row'><div class='col-md-5'>";
+print "<b>".__( 'date of creation', 'doliconnect').": </b> ".wp_date('d/m/Y', $contractfo->date_creation)."<br>";
 if ( $contractfo->statut > 0 ) {
 //if ( $contractfo->billed == 1 ) {
 //if ( $contractfo->statut > 1 ) { $contractfo=__( 'Shipped', 'doliconnect'); 
@@ -1044,15 +1044,15 @@ if ( $contractfo->statut > 0 ) {
 //}
 $contractavancement=0; 
 }
-elseif ( $contractfo->statut == 0 ) { $contractinfo=__( 'Validation', 'doliconnect');
+elseif ( $contractfo->statut == 0 ) { $contractinfo=__( 'validation', 'doliconnect');
 $contractavancement=7; }
-elseif ( $contractfo->statut == -1) { $contractinfo=__( 'Canceled', 'doliconnect');
+elseif ( $contractfo->statut == -1) { $contractinfo=__( 'canceled', 'doliconnect');
 $contractavancement=0; }
 
 print "</div></div>";
 
 print '<div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: '.$contractavancement.'%" aria-valuenow="'.$contractavancement.'" aria-valuemin="0" aria-valuemax="100"></div></div>';
-print "<div class='w-auto text-muted d-none d-sm-block' ><div style='display:inline-block;width:20%'>".__( 'Order', 'doliconnect')."</div><div style='display:inline-block;width:15%'>".__( 'Payment', 'doliconnect')."</div><div style='display:inline-block;width:25%'>".__( 'Processing', 'doliconnect')."</div><div style='display:inline-block;width:20%'>".__( 'Shipping', 'doliconnect')."</div><div class='text-right' style='display:inline-block;width:20%'>".__( 'Delivery', 'doliconnect')."</div></div>";
+print "<div class='w-auto text-muted d-none d-sm-block' ><div style='display:inline-block;width:20%'>".__( 'order', 'doliconnect')."</div><div style='display:inline-block;width:15%'>".__( 'payment', 'doliconnect')."</div><div style='display:inline-block;width:25%'>".__( 'processing', 'doliconnect')."</div><div style='display:inline-block;width:20%'>".__( 'Shipping', 'doliconnect')."</div><div class='text-right' style='display:inline-block;width:20%'>".__( 'delivery', 'doliconnect')."</div></div>";
 
 print "</div><ul class='list-group list-group-flush'>";
 
