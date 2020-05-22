@@ -2283,8 +2283,9 @@ $paymentmethods .= "</ul><br><div class='tab-content'>";
 
 if ( isset($listpaymentmethods->payment_methods) && $listpaymentmethods->payment_methods != null ) {
 foreach ( $listpaymentmethods->payment_methods as $method ) {
+$mode_reglement = callDoliApi("GET", "/setup/dictionary/payment_types?sortfield=code&sortorder=ASC&limit=100&active=1&sqlfilters=(t.rowid%3A%3D%3A'".$thirdparty->mode_reglement_id."')", null, dolidelay('constante', $refresh));
 $paymentmethods .= "<div class='tab-pane fade";
-if ( $method->default_source && empty($thirdparty->mode_reglement_id) && !in_array($method->type, array('PRE','VIR')) || (!empty($method->default_source) && !empty($thirdparty->mode_reglement_id) && in_array($method->type, array('PRE'))) ) {
+if ( $method->default_source && empty($thirdparty->mode_reglement_id) && !in_array($method->type, array('PRE','VIR'))) {
 $paymentmethods .= " show active"; 
 }
 $paymentmethods .= "' id='nav-tab-".$method->id."'><div class='card bg-light' style='border:0'><div class='card-body'>";
