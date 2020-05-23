@@ -2352,9 +2352,9 @@ $paymentmethods .= $method->mandate->reference;
 if (isset($method->mandate->url) && !empty($method->mandate->url)) { $paymentmethods .= "</a>"; }
 $paymentmethods .= "<br>".__( 'Type:', 'doliconnect')." ";
 if (($method->mandate->type == 'multi_use') || ($method->mandate->type == 'RECUR')) {
-$paymentmethods .= __( 'Recurring', 'doliconnect'); 
+$paymentmethods .= __( 'Recurring', 'doliconnect').' (RECUR)'; 
 } elseif (($method->mandate->type == 'single_use') || ($method->mandate->type == 'FRST')) {
-$paymentmethods .= __( 'Unique', 'doliconnect');
+$paymentmethods .= __( 'Unique', 'doliconnect').' (FRST)';
 }
 $paymentmethods .= "</dd>
 </div>"; }
