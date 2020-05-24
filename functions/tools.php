@@ -1297,7 +1297,7 @@ $paymentmethods .= '<li class="nav-item"><a onclick="dolistripecard();" class="n
 if (empty($countPM)) {
 $paymentmethods .= ' active';
 }
-$paymentmethods .= '" data-toggle="pill" href="#nav-tab-card">
+$paymentmethods .= '" data-toggle="pill" href="#nav-tab-newpm">
 <i class="fas fa-plus-circle fa-fw float-left"></i> ';
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
 $paymentmethods .= __( 'Pay by credit/debit card', 'doliconnect');
@@ -1447,13 +1447,13 @@ $paymentmethods .= "</div>";
 $paymentmethods .= "</div>";
 }}
 
-if ( isset($listpaymentmethods->stripe) && in_array('card', $listpaymentmethods->stripe->types) && empty($thirdparty->mode_reglement_id) ) {
+if ( isset($listpaymentmethods->stripe) && !empty(array_intersect(array('card','sepa_debit'), $listpaymentmethods->stripe->types)) && empty($thirdparty->mode_reglement_id) ) {
 $paymentmethods .= "<div class='tab-pane fade";
 if (empty($countPM) && empty($thirdparty->mode_reglement_id)) {
 $paymentmethods .= " show active"; 
 }
-$paymentmethods .= "' id='nav-tab-card'><div class='card bg-white'><div class='card-body'>";
-if ($countPM >= $maxPM) {
+$paymentmethods .= "' id='nav-tab-newpm'><div class='card bg-white'><div class='card-body'>";
+if ($countPM >= $maxPM && empty($object)) {
 $paymentmethods .= __( "You have reached limit of payment methods. Please delete a payment method for add a new one.", 'doliconnect').'</div></div>';
 } else {
 $paymentmethods .= "<input id='cardholder-name' name='cardholder-name' value='' type='text' class='form-control' placeholder='".__( "Full name on the card", 'doliconnect')."' autocomplete='off' required>
