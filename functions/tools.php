@@ -1212,8 +1212,8 @@ $thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, '
 $paymentmethods = "";
  
 if ( isset($listpaymentmethods->stripe) ) {
-$paymentmethods .= "<script src='https://js.stripe.com/v3/'></script>";
-$paymentmethods .= "<script>";
+$paymentmethods .= '<script src="https://js.stripe.com/v3/"></script>';
+$paymentmethods .= '<script>';
 $paymentmethods .= 'var style = {
   base: {
     color: "#32325d",
@@ -1242,7 +1242,7 @@ $paymentmethods .= "var elements = stripe.elements();";
 if (!empty($listpaymentmethods->stripe->client_secret)) { 
 $paymentmethods .= "var clientSecret = '".$listpaymentmethods->stripe->client_secret."';";
 }
-$paymentmethods .= "</script>";
+$paymentmethods .= '</script>';
 }
 
 //if ( isset($listpaymentmethods->stripe) && in_array('payment_request_api', $listpaymentmethods->stripe->types) && !empty($module) && is_object($object) && isset($object->id) && empty($thirdparty->mode_reglement_id) ) {
@@ -1251,7 +1251,7 @@ $paymentmethods .= "</script>";
 //<div id='else' style='display: none' ><br><div style='display:inline-block;width:46%;float:left'><hr width='90%' /></div><div style='display:inline-block;width: 8%;text-align: center;vertical-align:90%'><small class='text-muted'>".__( 'or', 'doliconnect-pro' )."</small></div><div style='display:inline-block;width:46%;float:right' ><hr width='90%'/></div><br></div>";
 //} 
 
-$paymentmethods .= "<div id='DoliPaymentmethodAlert' class='text-danger font-weight-bolder'></div><div class='card shadow-sm'>";
+$paymentmethods .= '<div id="DoliPaymentmethodAlert" class="text-danger font-weight-bolder"></div><div class="card shadow-sm">';
 
 if (empty($listpaymentmethods->payment_methods)) {
 $countPM = 0;
@@ -1260,13 +1260,7 @@ $countPM = count(get_object_vars($listpaymentmethods->payment_methods));
 }
 $maxPM = 5;
 
-$paymentmethods .= "<div class='card-body'>";
-
-if ( isset($listpaymentmethods->stripe) && empty($listpaymentmethods->stripe->live) ) {
-$paymentmethods .= "<i class='fas fa-info-circle'></i> <b>".__( "Stripe's in sandbox mode", 'doliconnect')."</b> <small>(<a href='https://stripe.com/docs/testing#cards' target='_blank' rel='noopener'>".__( "Link to Test card numbers", 'doliconnect')."</a>)</small>";
-}
-
-$paymentmethods .= "<ul class='nav bg-light nav-pills rounded nav-fill flex-column' role='tablist'>";
+$paymentmethods .= '<div class="card-body"><ul class="nav bg-light nav-pills rounded nav-fill flex-column" role="tablist">';
 
 if ( isset($listpaymentmethods->payment_methods) && $listpaymentmethods->payment_methods != null ) {
 foreach ( $listpaymentmethods->payment_methods as $method ) { 
@@ -1319,7 +1313,7 @@ elseif ( !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_i
 $paymentmethods .= "' data-toggle='pill' href='#nav-tab-vir'>
 <i class='fa fa-money-check fa-fw float-left' style='color:Tan'></i> ".__( 'Pay by bank transfert', 'doliconnect');
 if ( !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id == $mode_reglement_code[0]->id ) { $paymentmethods .= " <i class='fas fa-star fa-fw' style='color:Gold'></i>"; }
-$paymentmethods .= "</a></li>";
+$paymentmethods .= '</a></li>';
 }
 if ( isset($listpaymentmethods->CHQ) && !empty($listpaymentmethods->CHQ) ) {
 $paymentmethods .= "<li id='li-CHQ' class='nav-item'><a class='nav-link ";
@@ -1329,14 +1323,14 @@ elseif ( !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_i
 $paymentmethods .= "' data-toggle='pill' href='#nav-tab-chq'>
 <i class='fa fa-money-check fa-fw float-left' style='color:Tan'></i> ".__( 'Pay by bank check', 'doliconnect');
 if ( !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id == $mode_reglement_code[0]->id ) { $paymentmethods .= " <i class='fas fa-star fa-fw' style='color:Gold'></i>"; }
-$paymentmethods .= "</a></li>";
+$paymentmethods .= '</a></li>';
 }    
 if ( ! empty(dolikiosk()) ) {
 $paymentmethods .= '<li class="nav-item"><a class="nav-link" data-toggle="pill" href="#nav-tab-kiosk">
 <i class="fas fa-money-bill-alt fa-fw float-left" style="color:#85bb65"></i> '.__( 'Pay at front desk', 'doliconnect').'</a></li>';
 }
 
-$paymentmethods .= "</ul><br><div class='tab-content'>";
+$paymentmethods .= '</ul><br><div class="tab-content">';
 
 if ( isset($listpaymentmethods->payment_methods) && $listpaymentmethods->payment_methods != null ) {
 foreach ( $listpaymentmethods->payment_methods as $method ) {
@@ -1448,46 +1442,49 @@ $paymentmethods .= "</div>";
 }}
 
 if ( isset($listpaymentmethods->stripe) && !empty(array_intersect(array('card','sepa_debit'), $listpaymentmethods->stripe->types)) && empty($thirdparty->mode_reglement_id) ) {
-$paymentmethods .= "<div class='tab-pane fade";
+$paymentmethods .= '<div class="tab-pane fade';
 if (empty($countPM) && empty($thirdparty->mode_reglement_id)) {
-$paymentmethods .= " show active"; 
+$paymentmethods .= ' show active'; 
 }
-$paymentmethods .= "' id='nav-tab-newpm'><div class='card bg-white'><div class='card-body'>";
+$paymentmethods .= '" id="nav-tab-newpm"><div class="card bg-white"><div class="card-body">';
 if ($countPM >= $maxPM && empty($object)) {
 $paymentmethods .= __( "You have reached limit of payment methods. Please delete a payment method for add a new one.", 'doliconnect').'</div></div>';
 } else {
+if (empty($listpaymentmethods->stripe->live)) {
+$paymentmethods .= "<i class='fas fa-info-circle'></i> <b>".__( "Stripe's in sandbox mode", 'doliconnect')."</b> <small>(<a href='https://stripe.com/docs/testing#cards' target='_blank' rel='noopener'>".__( "Link to Test card numbers", 'doliconnect')."</a>)</small>";
+}
 $paymentmethods .= "<input id='cardholder-name' name='cardholder-name' value='' type='text' class='form-control' placeholder='".__( "Full name on the card", 'doliconnect')."' autocomplete='off' required>
 <label for='card-element'></label><div class='form-control' id='card-element'><!-- a Stripe Element will be inserted here. --></div>";
 $paymentmethods .= "<p><div id='card-error-message' class='text-danger' role='alert'><!-- a Stripe Message will be inserted here. --></div></p>";
 $paymentmethods .= '<p><div class="custom-control custom-radio custom-control-inline ">';
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
 $paymentmethods .= '<input type="radio" id="cardDefault0" name="cardDefault" value="0"  class="custom-control-input" checked>
-  <label class="custom-control-label text-muted" for="cardDefault0">'.__( "Not save", 'doliconnect').'</label>
-</div>
-<div class="custom-control custom-radio custom-control-inline">
-  <input type="radio" id="cardDefault1" name="cardDefault" value="1"  class="custom-control-input">
-  <label class="custom-control-label text-muted" for="cardDefault1">'.__( "Save", 'doliconnect').'</label>
-</div>';} else {
-$paymentmethods .= '<input type="radio" id="cardDefault0" name="cardDefault" value="0"  class="custom-control-input"';
+<label class="custom-control-label text-muted" for="cardDefault0">'.__( "Not save", 'doliconnect').'</label></div>';
+
+$paymentmethods .= '<div class="custom-control custom-radio custom-control-inline">
+<input type="radio" id="cardDefault1" name="cardDefault" value="1"  class="custom-control-input">
+<label class="custom-control-label text-muted" for="cardDefault1">'.__( "Save", 'doliconnect').'</label></div>';
+} else {
+$paymentmethods .= '<input type="radio" id="cardDefault1" name="cardDefault" value="1"  class="custom-control-input"';
 if (empty($countPM)) {
 $paymentmethods .= ' disabled'; 
 } else {
 $paymentmethods .= ' checked';
 } 
-$paymentmethods .= '><label class="custom-control-label text-muted" for="cardDefault0">'.__( "Save", 'doliconnect').'</label>
+$paymentmethods .= '><label class="custom-control-label text-muted" for="cardDefault1">'.__( "Save", 'doliconnect').'</label>
 </div>';
 }
 $paymentmethods .= '<div class="custom-control custom-radio custom-control-inline">
-  <input type="radio" id="cardDefault1" name="cardDefault" value="1" class="custom-control-input"';
+<input type="radio" id="cardDefault2" name="cardDefault" value="2" class="custom-control-input"';
 if (empty($countPM)) {
 $paymentmethods .= ' checked'; 
 } 
-$paymentmethods .= '><label class="custom-control-label text-muted" for="cardDefault1">'.__( "Save as favourite", 'doliconnect').'</label>
+$paymentmethods .= '><label class="custom-control-label text-muted" for="cardDefault2">'.__( "Save as favourite", 'doliconnect').'</label>
 </div></p>';
-$paymentmethods .= "<p class='text-justify'>";
+$paymentmethods .= '<p class="text-justify">';
 $paymentmethods .= "<small><strong>Note:</strong> ".sprintf( esc_html__( 'By providing your card and confirming this form, you are authorizing %s and Stripe, our payment service provider, to send instructions to the financial institution that issued your card to take payments from your card account in accordance with those instructions. You are entitled to a refund from your financial institution under the terms and conditions of your agreement with it. A refund must be claimed within 90 days starting from the date on which your card was debited.', 'doliconnect'), get_bloginfo('name'))."</small>";
-$paymentmethods .= "</p>";
-$paymentmethods .= "<script>";
+$paymentmethods .= '</p>';
+$paymentmethods .= '<script>';
 $paymentmethods .= "function dolistripecard(){
 (function ($) {
 $(document).ready(function(){";
@@ -1552,7 +1549,8 @@ document.getElementById('DoliPaymentmethodAlert').innerHTML = response.data;
             'module': '".$module."',
             'id': '".$object->id."',
             'paymentintent': result.paymentIntent.id,
-            'paymentmethod': result.paymentIntent.payment_method,        
+            'paymentmethod': result.paymentIntent.payment_method, 
+            'default': $('input:radio[name=cardDefault]:checked').val()       
           }
         }).done(function(response) {
 $(window).scrollTop(0); 
@@ -1647,15 +1645,15 @@ $('#DoliconnectLoadingModal').modal('hide');
 $paymentmethods .= "});
 })(jQuery);";
 $paymentmethods .= "}";
-$paymentmethods .= "window.onload=dolistripecard();";
-$paymentmethods .= "</script></div></div><br>";
+$paymentmethods .= 'window.onload=dolistripecard();';
+$paymentmethods .= '</script></div></div><br>';
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
 $paymentmethods .= "<button type='button' id='PayCardButton' class='btn btn-danger btn-block'>".__( 'Pay', 'doliconnect')." ".doliprice($object, 'ttc', isset($object->multicurrency_code) ? $object->multicurrency_code : null)."</button>";
 } else {
 $paymentmethods .= "<button type='button' id='AddCardButton' class='btn btn-light btn-block' title='".__( 'Add', 'doliconnect')."'>".__( 'Add', 'doliconnect')."</button>";
 }
 }
-$paymentmethods .= "</div>";
+$paymentmethods .= '</div>';
 }
 
 if ( !isset($lockNewpm ) && isset($listpaymentmethods->stripe) && in_array('sepa_debit', $listpaymentmethods->stripe->types) && empty($thirdparty->mode_reglement_id) ) {
