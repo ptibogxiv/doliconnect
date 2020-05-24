@@ -302,7 +302,7 @@ $response = [
     'total' => 'test',
     'message' => __( 'Quantities have been changed', 'doliconnect'),
         ];
-//wp_send_json_success($response);
+wp_send_json_success($response);
 //} else {
 //wp_send_json_error( __( 'An error occured:', 'doliconnect').' '.$object->error->message); 
 //}
