@@ -1293,7 +1293,8 @@ $paymentmethods .= "<span class='flag-icon flag-icon-".strtolower($method->count
 }}
 if (isset($listpaymentmethods->stripe) && in_array('card', $listpaymentmethods->stripe->types) && empty($thirdparty->mode_reglement_id) ) {
 $paymentmethods .= '<li class="nav-item"><a onclick="dolistripecard();" class="nav-link';
-if ($countPM >= 5) { 
+if ($countPM >= 5 && empty($module) && !is_object($object) && !isset($object->id) ) {
+$lockNewpm = 1; 
 $paymentmethods .= " disabled";
 } elseif (empty($countPM)) {
 $paymentmethods .= " active";
@@ -1452,7 +1453,7 @@ $paymentmethods .= "</div>";
 $paymentmethods .= "</div>";
 }}
 
-if ( $countPM < 5 && isset($listpaymentmethods->stripe) && in_array('card', $listpaymentmethods->stripe->types) && empty($thirdparty->mode_reglement_id) ) {
+if ( !isset($lockNewpm ) && isset($listpaymentmethods->stripe) && in_array('card', $listpaymentmethods->stripe->types) && empty($thirdparty->mode_reglement_id) ) {
 $paymentmethods .= "<div class='tab-pane fade";
 if (empty($countPM) && empty($thirdparty->mode_reglement_id)) {
 $paymentmethods .= " show active"; 
@@ -1659,7 +1660,7 @@ $paymentmethods .= "<button type='button' id='AddCardButton' class='btn btn-ligh
 $paymentmethods .= "</div>";
 }
 
-if ( $countPM < 5 && isset($listpaymentmethods->stripe) && in_array('sepa_debit', $listpaymentmethods->stripe->types) && empty($thirdparty->mode_reglement_id) ) {
+if ( !isset($lockNewpm ) && isset($listpaymentmethods->stripe) && in_array('sepa_debit', $listpaymentmethods->stripe->types) && empty($thirdparty->mode_reglement_id) ) {
 $paymentmethods .= "<div class='tab-pane fade";
 //if (empty($countPM)) {
 //$paymentmethods .= " show active";
