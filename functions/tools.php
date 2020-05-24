@@ -1379,7 +1379,7 @@ $('#DoliconnectLoadingModal').modal('hide');
 })(jQuery);";
 $paymentmethods .= "</script>";
 $paymentmethods .= "<div class='row'>";
-$paymentmethods .= "<div class='col'>
+$paymentmethods .= "<div class='col-12 col-sm-6'>
   <dt>".__( 'Debtor', 'doliconnect')."</dt>
   <dd>".__( 'Holder:', 'doliconnect')." ".$method->holder;
 if (isset($method->mandate->creation) && !empty($method->mandate->creation)) {
@@ -1392,7 +1392,7 @@ $timestamp = mktime(0, 0, 0, (int) $expdate['1'], 0, (int) $expdate['0']);
 $paymentmethods .= " ".wp_date( 'F Y', $timestamp, false); }
 $paymentmethods .= "</dd>
 </div>";
-if (isset($method->mandate) && !empty($method->mandate)) { $paymentmethods .= "<div class='col'>
+if (isset($method->mandate) && !empty($method->mandate)) { $paymentmethods .= "<div class='col-12 col-sm-6'>
   <dt>".__( 'Mandate', 'doliconnect')."</dt>
   <dd>".__( 'Reference:', 'doliconnect')." ";
 if (isset($method->mandate->url) && !empty($method->mandate->url)) { $paymentmethods .= "<a href='".$method->mandate->url."' target='_blank'>"; }
@@ -1705,19 +1705,19 @@ $paymentmethods .= "<p class='text-justify'>".sprintf( __( 'Please send your ban
 $paymentmethods .= "<p class='text-justify'>".__( 'Please send your bank transfert at the following account:', 'doliconnect')."</p>";
 }
 $paymentmethods .= "<div class='row'>";
-if (!empty($listpaymentmethods->VIR->bank)) { $paymentmethods .= "<div class='col'>
+if (!empty($listpaymentmethods->VIR->bank)) { $paymentmethods .= "<div class='col-12 col-sm-6'>
   <dt>".__( 'Bank', 'doliconnect')."</dt>
   <dd>".$listpaymentmethods->VIR->bank."</dd>
 </div>"; }
-if (!empty($listpaymentmethods->VIR->number)) { $paymentmethods .= "<div class='col'>
+if (!empty($listpaymentmethods->VIR->number)) { $paymentmethods .= "<div class='col-12 col-sm-6'>
   <dt>".__( 'Account', 'doliconnect')."</dt>
   <dd>".$listpaymentmethods->VIR->number."</dd>
 </div>"; }
-if (!empty($listpaymentmethods->VIR->iban)) { $paymentmethods .= "<div class='col'>
+if (!empty($listpaymentmethods->VIR->iban)) { $paymentmethods .= "<div class='col-12 col-sm-6'>
   <dt>IBAN</dt>
   <dd>".$listpaymentmethods->VIR->iban."</dd>
 </div>"; }
-if (!empty($listpaymentmethods->VIR->bic)) { $paymentmethods .= "<div class='col'>
+if (!empty($listpaymentmethods->VIR->bic)) { $paymentmethods .= "<div class='col-12 col-sm-6'>
   <dt>BIC/SWIFT</dt>
   <dd>".$listpaymentmethods->VIR->bic."</dd>
 </div>"; }
@@ -1748,7 +1748,7 @@ $paymentmethods .= "<p class='text-justify'>".sprintf( __( 'Please send your mon
 $paymentmethods .= "<p class='text-justify'>".sprintf( __( 'Please send your money check to <b>%s</b> at the following address:', 'doliconnect'), $listpaymentmethods->CHQ->proprio)."</p>";
 }
 $paymentmethods .= "<div class='row'>";
-$paymentmethods .= "<div class='col'><dl class='param'>
+$paymentmethods .= "<div class='col-12'><dl class='param'>
   <dt>Address</dt>
   <dd>".$listpaymentmethods->CHQ->proprio." - ".$listpaymentmethods->CHQ->owner_address."</dd>
 </dl></div>";
