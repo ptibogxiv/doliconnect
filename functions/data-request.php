@@ -352,7 +352,7 @@ $shipping= callDoliApi("POST", "/".trim($_POST['module'])."/".trim($_POST['id'])
 if (!isset($object->error)) {
 $response = [
     //'content' => '".$content."',
-    'message' => 'Your cart has been validated',
+    'message' => __( 'Your cart has been validated', 'doliconnect'),
         ];
 wp_send_json_success($response);
 } else {
