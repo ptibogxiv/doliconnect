@@ -2138,7 +2138,7 @@ $request = "/doliconnector/".doliconnector($current_user, 'fk_soc')."/paymentmet
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
 if ($module == 'orders') { $module2 = 'order'; }
 elseif ($module == 'invoices') { $module2 = 'invoice'; }
-elseif ($module == 'donationss') { $module2 = 'donation'; }
+elseif ($module == 'donations') { $module2 = 'donation'; }
 else { $module2 = $module; }
 $request .= "?type=".$module2."&rowid=".$object->id;
 $currency=strtolower($object->multicurrency_code?$object->multicurrency_code:'eur');  
@@ -2451,17 +2451,35 @@ cardElement.on('change', function(event) {
     displayCardError.classList.remove('visible');
   }
 });";
-// add a card
-$paymentmethods .= "$('#cardButton').on('click',function(event){
+if ( !empty($module) && is_object($object) && isset($object->id) ) {
+// pay with card script
+$paymentmethods .= "$('#PayCardButton').on('click',function(event){
 event.preventDefault();
-$('#cardButton').disabled = true;
+$('#PayCardButton').disabled = true;
 $('#DoliconnectLoadingModal').modal('show');
-console.log('Click on cardButton');
+console.log('Click on PayCardButton');
 var cardholderName = document.getElementById('cardholder-name');
 if (cardholderName.value == ''){               
 console.log('Field Card holder is empty');
 displayCardError.textContent = 'We need an owner as on your card';
-$('#cardButton').disabled = false;
+$('#PayCardButton').disabled = false;
+$('#DoliconnectLoadingModal').modal('hide');  
+} else {
+
+          }     
+});";
+} else {
+// add a card
+$paymentmethods .= "$('#AddCardButton').on('click',function(event){
+event.preventDefault();
+$('#AddCardButton').disabled = true;
+$('#DoliconnectLoadingModal').modal('show');
+console.log('Click on AddCardButton');
+var cardholderName = document.getElementById('cardholder-name');
+if (cardholderName.value == ''){               
+console.log('Field Card holder is empty');
+displayCardError.textContent = 'We need an owner as on your card';
+$('#AddCardButton').disabled = false;
 $('#DoliconnectLoadingModal').modal('hide');  
 } else {
   stripe.confirmCardSetup(
@@ -2475,7 +2493,7 @@ $('#DoliconnectLoadingModal').modal('hide');
   ).then(function(result) {
     if (result.error) {
 $('#DoliconnectLoadingModal').modal('hide');
-$('#cardButton').disabled = false;
+$('#AddCardButton').disabled = false;
 console.log('Error occured when adding card');
 displayCardError.textContent = result.error.message;    
     } else {
@@ -2508,16 +2526,16 @@ $('#DoliconnectLoadingModal').modal('hide');
   }); 
           }     
 });";
-// pay with card script
+}
 $paymentmethods .= "});
 })(jQuery);";
 $paymentmethods .= "}";
 $paymentmethods .= "window.onload=dolistripecard();";
 $paymentmethods .= "</script></div></div><br>";
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
-$paymentmethods .= "<button type='button' id='cardPayButton' class='btn btn-danger btn-block'>".__( 'Pay', 'doliconnect')." ".doliprice($object, 'ttc', isset($object->multicurrency_code) ? $object->multicurrency_code : null)."</button>";
+$paymentmethods .= "<button type='button' id='PayCardButton' class='btn btn-danger btn-block'>".__( 'Pay', 'doliconnect')." ".doliprice($object, 'ttc', isset($object->multicurrency_code) ? $object->multicurrency_code : null)."</button>";
 } else {
-$paymentmethods .= "<button type='button' id='cardButton' class='btn btn-light btn-block' title='".__( 'Add', 'doliconnect')."'><i class='fas fa-plus-circle fa-fw'></i> ".__( 'Add', 'doliconnect')."</button>";
+$paymentmethods .= "<button type='button' id='AddCardButton' class='btn btn-light btn-block' title='".__( 'Add', 'doliconnect')."'><i class='fas fa-plus-circle fa-fw'></i> ".__( 'Add', 'doliconnect')."</button>";
 }
 $paymentmethods .= "</div>";
 }
@@ -2657,7 +2675,7 @@ $paymentmethods .= "</div>";
 //       });
 //    });
 //
-if (isset($object)) {
+if ( !empty($module) && is_object($object) && isset($object->id) ) {
 $paymentmethods .= "<script>";
 $paymentmethods .= "function PayPM(pm) {
 (function ($) {
