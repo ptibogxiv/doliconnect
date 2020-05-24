@@ -1271,7 +1271,7 @@ if ( isset($listpaymentmethods->payment_methods) && $listpaymentmethods->payment
 foreach ( $listpaymentmethods->payment_methods as $method ) { 
 $mode_reglement_code = callDoliApi("GET", "/setup/dictionary/payment_types?sortfield=code&sortorder=ASC&limit=100&active=1&sqlfilters=(t.code%3A%3D%3A'PRE')", null, dolidelay('constante'));
 $paymentmethods .= '<li id="li-'.$method->id.'" class="nav-item"><a class="nav-link';//(!empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id != $method->id && !empty($module) && is_object($object) && isset($object->id)) || ;
-if ( (isset($method->expiration) && date('Y/n') >= $method->expiration && !empty($object) && !empty($method->expiration)) ) {
+if ( (isset($method->expiration) && date('Y/n') >= $method->expiration && !empty($object) && !empty($method->expiration)) || (!empty($module) && is_object($object) && isset($object->id) && !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id != $mode_reglement_code[0]->id) ) {
 $paymentmethods .=" disabled "; 
 } elseif ( (!empty($method->default_source) && empty($thirdparty->mode_reglement_id) && !in_array($method->type, array('PRE','VIR'))) || (!empty($method->default_source) && !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id == $mode_reglement_code[0]->id) ) {
 $paymentmethods .=" active";
