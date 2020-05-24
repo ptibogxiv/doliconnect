@@ -1530,10 +1530,8 @@ document.getElementById('DoliPaymentmethodAlert').innerHTML = '';
     if (result.error) {
       // Display error.message
 $('#DoliconnectLoadingModal').modal('hide');
-console.log('Error occured when adding card');
-if (document.getElementById('DoliPaymentmethodAlert')) {
-document.getElementById('DoliPaymentmethodAlert').innerHTML = response.data;      
-}  
+console.log('Error occured when using card');
+displayCardError.textContent = result.error.message;    
     } else {
         $.ajax({
           url: '".esc_url( admin_url( 'admin-ajax.php' ) )."',
@@ -1857,7 +1855,7 @@ document.getElementById('DoliPaymentmethodAlert').innerHTML = '';
 $('#DoliconnectLoadingModal').modal('hide');
 console.log('Error occured when adding card');
 if (document.getElementById('DoliPaymentmethodAlert')) {
-document.getElementById('DoliPaymentmethodAlert').innerHTML = response.data;      
+document.getElementById('DoliPaymentmethodAlert').innerHTML = result.error.message;       
 }  
     } else {
         $.ajax({
@@ -1925,7 +1923,7 @@ document.getElementById('DoliPaymentmethodAlert').innerHTML = '';
 $('#DoliconnectLoadingModal').modal('hide');
 console.log('Error occured when adding card');
 if (document.getElementById('DoliPaymentmethodAlert')) {
-document.getElementById('DoliPaymentmethodAlert').innerHTML = response.data;      
+document.getElementById('DoliPaymentmethodAlert').innerHTML = result.error.message;       
 }  
     } else {
         $.ajax({
