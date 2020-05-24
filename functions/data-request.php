@@ -289,19 +289,23 @@ wp_send_json_error( __( 'An error occured:', 'doliconnect').' '.$object->error->
 } elseif ( isset($_POST['action_cart']) && $_POST['action_cart'] == "update_cart") {
 
 //foreach ( $_POST['updateorderproduct'] as $productupdate ) {
-$result = doliaddtocart($_POST['productid'], $_POST['qty'], $_POST['price'], $_POST['remise_percent'], $_POST['date_start'], $_POST['date_end']);
+$update = doliaddtocart($_POST['productid'], $_POST['qty'], $_POST['price'], $_POST['remise_percent'], $_POST['date_start'], $_POST['date_end']);
 //print var_dump($_POST['updateorderproduct']);
 //}
 //doliconnector($current_user, 'fk_order', true);
 $object = callDoliApi("GET", "/".trim($_POST['module'])."/".trim($_POST['id']), null, dolidelay('order', true));
 
+//if (!isset($object->error)) {
 $response = [
     'items' => '0',
     'lines' => doliline($object, true),
     'total' => 'test',
     'message' => __( 'Quantities have been changed', 'doliconnect'),
         ];
-wp_send_json_success($response);
+//wp_send_json_success($response);
+//} else {
+//wp_send_json_error( __( 'An error occured:', 'doliconnect').' '.$object->error->message); 
+//}
 
 } elseif ( isset($_POST['action_cart']) && $_POST['action_cart'] == "validate_cart") {
 
@@ -313,10 +317,14 @@ $data = [
 	];                 
 $object = callDoliApi("PUT", "/".trim($_POST['module'])."/".trim($_POST['id']), $data, dolidelay('order', true));
 
+if (!isset($object->error)) {
 $response = [
     'message' => __( 'Your cart has been validated', 'doliconnect'),
         ];
 wp_send_json_success($response);
+} else {
+wp_send_json_error( __( 'An error occured:', 'doliconnect').' '.$object->error->message); 
+}
 } elseif ( isset($_POST['action_cart']) && $_POST['action_cart'] == "info_cart") {
 
 $data = [
