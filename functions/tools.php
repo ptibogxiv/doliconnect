@@ -2774,6 +2774,74 @@ $('#DoliconnectLoadingModal').modal('hide');
 });
 })(jQuery);
 }";
+$paymentmethods .= "function PaySepaDebitPM(pm) {
+(function ($) {
+$(document).ready(function(){
+$('#DoliconnectLoadingModal').modal('show');";
+if (!empty($listpaymentmethods->stripe->client_secret)) { 
+$paymentmethods .= "var clientSecret = '".$listpaymentmethods->stripe->client_secret."';";
+}
+$paymentmethods .= "if (document.getElementById('DoliPaymentmethodAlert')) {
+document.getElementById('DoliPaymentmethodAlert').innerHTML = '';      
+}  
+  stripe.confirmSepaDebitPayment(
+    clientSecret,
+    {
+      payment_method: pm
+    }
+  ).then(function(result) {
+    if (result.error) {
+      // Display error.message
+$('#DoliconnectLoadingModal').modal('hide');
+console.log('Error occured when adding card');
+if (document.getElementById('DoliPaymentmethodAlert')) {
+document.getElementById('DoliPaymentmethodAlert').innerHTML = response.data;      
+}  
+    } else {
+        $.ajax({
+          url: '".esc_url( admin_url( 'admin-ajax.php' ) )."',
+          type: 'POST',
+          data: {
+            'action': 'dolicart_request',
+            'dolicart-nonce': '".wp_create_nonce( 'dolicart-nonce')."',
+            'action_cart': 'pay_cart',
+            'module': '".$module."',
+            'id': '".$object->id."',
+            'paymentintent': null,
+            'paymentmethod': pm,        
+          }
+        }).done(function(response) {
+$(window).scrollTop(0); 
+console.log(response.data);
+if (response.success) {
+
+if (document.getElementById('nav-tab-pay')) {
+document.getElementById('nav-tab-pay').innerHTML = response.data;      
+}
+$('#a-tab-cart').addClass('disabled');
+if (document.getElementById('nav-tab-cart')) {
+document.getElementById('nav-tab-cart').remove();    
+}
+$('#a-tab-info').addClass('disabled')
+if (document.getElementById('nav-tab-info')) {
+document.getElementById('nav-tab-info').remove();    
+};
+
+} else {
+
+if (document.getElementById('DoliPaymentmethodAlert')) {
+document.getElementById('DoliPaymentmethodAlert').innerHTML = response.data;      
+}
+
+}
+console.log(response.data.message);
+$('#DoliconnectLoadingModal').modal('hide');
+});
+}
+});
+});
+})(jQuery);
+}";
 $paymentmethods .= "</script>";
 }
 $paymentmethods .= "</div><div class='card-footer text-muted'>";
