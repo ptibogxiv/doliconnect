@@ -1448,7 +1448,7 @@ $paymentmethods .= ' show active';
 }
 $paymentmethods .= '" id="nav-tab-newpm"><div class="card bg-white"><div class="card-body">';
 if ($countPM >= $maxPM && empty($object)) {
-$paymentmethods .= __( "You have reached limit of payment methods. Please delete a payment method for add a new one.", 'doliconnect').'</div></div>';
+$paymentmethods .= '<div class="text-justify"><i class="fas fa-times-circle fa-3x fa-fw float-left"></i>'.__( "You have reached limit of payment methods. Please delete a payment method for add a new one.", 'doliconnect').'</div></div></div>';
 } else {
 if (empty($listpaymentmethods->stripe->live)) {
 $paymentmethods .= "<i class='fas fa-info-circle'></i> <b>".__( "Stripe's in sandbox mode", 'doliconnect')."</b> <small>(<a href='https://stripe.com/docs/testing#cards' target='_blank' rel='noopener'>".__( "Link to Test card numbers", 'doliconnect')."</a>)</small>";
@@ -1478,7 +1478,7 @@ $paymentmethods .= '><label class="custom-control-label text-muted" for="cardDef
 }
 $paymentmethods .= '</p>';
 $paymentmethods .= '<p class="text-justify">';
-$paymentmethods .= "<small><strong>Note:</strong> ".sprintf( esc_html__( 'By providing your card and confirming this form, you are authorizing %s and Stripe, our payment service provider, to send instructions to the financial institution that issued your card to take payments from your card account in accordance with those instructions. You are entitled to a refund from your financial institution under the terms and conditions of your agreement with it. A refund must be claimed within 90 days starting from the date on which your card was debited.', 'doliconnect'), get_bloginfo('name'))."</small>";
+$paymentmethods .= '<small><strong>Note:</strong> '.sprintf( esc_html__( 'By providing your card and confirming this form, you are authorizing %s and Stripe, our payment service provider, to send instructions to the financial institution that issued your card to take payments from your card account in accordance with those instructions. You are entitled to a refund from your financial institution under the terms and conditions of your agreement with it. A refund must be claimed within 90 days starting from the date on which your card was debited.', 'doliconnect'), get_bloginfo('name')).'</small>';
 $paymentmethods .= '</p>';
 $paymentmethods .= '<script>';
 $paymentmethods .= "function dolistripecard(){
@@ -1638,7 +1638,7 @@ $('#DoliconnectLoadingModal').modal('hide');
 }
 $paymentmethods .= "});
 })(jQuery);";
-$paymentmethods .= "}";
+$paymentmethods .= '}';
 $paymentmethods .= 'window.onload=dolistripecard();';
 $paymentmethods .= '</script></div></div><br>';
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
