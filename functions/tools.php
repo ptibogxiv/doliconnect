@@ -1209,7 +1209,7 @@ $listpaymentmethods = callDoliApi("GET", $request, null, dolidelay('paymentmetho
 $thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty', $refresh)); 
 //print $thirdparty;
 
-$paymentmethods = "";
+$paymentmethods = '';
  
 if ( isset($listpaymentmethods->stripe) ) {
 $paymentmethods .= '<script src="https://js.stripe.com/v3/"></script>';
