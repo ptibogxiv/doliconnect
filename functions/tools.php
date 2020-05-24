@@ -2704,9 +2704,12 @@ $('#DoliconnectLoadingModal').modal('hide');
 });
 });
 })(jQuery);
-}    
+}";    
         
-function PayCardPM(pm) {";
+$paymentmethods .= "function PayCardPM(pm) {
+(function ($) {
+$(document).ready(function(){
+$('#DoliconnectLoadingModal').modal('show');";
 if (!empty($listpaymentmethods->stripe->client_secret)) { 
 $paymentmethods .= "var clientSecret = '".$listpaymentmethods->stripe->client_secret."';";
 }
@@ -2720,7 +2723,7 @@ displayCardError.textContent = '';
   ).then(function(result) {
     if (result.error) {
       // Display error.message
-jQuery('#DoliconnectLoadingModal').modal('hide');
+$('#DoliconnectLoadingModal').modal('hide');
 console.log('Error occured when adding card');
 displayCardError.textContent = result.error.message;    
     } else {
@@ -2729,6 +2732,8 @@ displayCardError.textContent = result.error.message;
 
     }
   }); 
+});
+})(jQuery);
 }";
 $paymentmethods .= "</script>";
 }
