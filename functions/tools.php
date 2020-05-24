@@ -2552,10 +2552,18 @@ $paymentmethods .= '<div class="tab-pane fade" id="nav-tab-paypal"><div class="c
 <p>Paypal is easiest way to pay online</p>
 <p>
 <button type="button" class="btn btn-primary"> <i class="fab fa-paypal"></i> Log in my Paypal </button>
-</p>
-<p class="text-justify"><strong>Note:</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-tempor incididunt ut labore et dolore magna aliqua. </p>
-</div></div></div>';
+</p>';
+$paymentmethods .= "<p class='text-justify'>";
+$paymentmethods .= "<small><b>".__( 'Payment term', 'doliconnect').":</b> ";
+if (!empty($thirdparty->cond_reglement_id)) { 
+$paymentmethods .= dolipaymentterm($thirdparty->cond_reglement_id);
+} else {
+$paymentmethods .= __( 'immediately', 'doliconnect');
+}
+$paymentmethods .= "</small>";
+//$paymentmethods .= "<small><strong>Note:</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+//tempor incididunt ut labore et dolore magna aliqua.</small>";
+$paymentmethods .= "</p></div></div></div>";
 }
 
 if ( isset($listpaymentmethods->VIR) && !empty($listpaymentmethods->VIR) ) {
