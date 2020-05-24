@@ -2465,8 +2465,68 @@ displayCardError.textContent = 'We need an owner as on your card';
 $('#PayCardButton').disabled = false;
 $('#DoliconnectLoadingModal').modal('hide');  
 } else {
+if (document.getElementById('DoliPaymentmethodAlert')) {
+document.getElementById('DoliPaymentmethodAlert').innerHTML = '';      
+}  
+  stripe.confirmCardPayment(
+    clientSecret,
+    {
+      payment_method: {
+        card: cardElement,
+        billing_details: {name: cardholderName.value}
+      }
+    }
+  ).then(function(result) {
+    if (result.error) {
+      // Display error.message
+$('#DoliconnectLoadingModal').modal('hide');
+console.log('Error occured when adding card');
+if (document.getElementById('DoliPaymentmethodAlert')) {
+document.getElementById('DoliPaymentmethodAlert').innerHTML = response.data;      
+}  
+    } else {
+        $.ajax({
+          url: '".esc_url( admin_url( 'admin-ajax.php' ) )."',
+          type: 'POST',
+          data: {
+            'action': 'dolicart_request',
+            'dolicart-nonce': '".wp_create_nonce( 'dolicart-nonce')."',
+            'action_cart': 'pay_cart',
+            'module': '".$module."',
+            'id': '".$object->id."',
+            'paymentintent': result.paymentIntent.id,
+            'paymentmethod': result.paymentIntent.payment_method,        
+          }
+        }).done(function(response) {
+$(window).scrollTop(0); 
+console.log(response.data);
+if (response.success) {
 
-          }     
+if (document.getElementById('nav-tab-pay')) {
+document.getElementById('nav-tab-pay').innerHTML = response.data;      
+}
+$('#a-tab-cart').addClass('disabled');
+if (document.getElementById('nav-tab-cart')) {
+document.getElementById('nav-tab-cart').remove();    
+}
+$('#a-tab-info').addClass('disabled')
+if (document.getElementById('nav-tab-info')) {
+document.getElementById('nav-tab-info').remove();    
+};
+
+} else {
+
+if (document.getElementById('DoliPaymentmethodAlert')) {
+document.getElementById('DoliPaymentmethodAlert').innerHTML = response.data;      
+}
+
+}
+console.log(response.data.message);
+$('#DoliconnectLoadingModal').modal('hide');
+});
+}
+});
+        }     
 });";
 } else {
 // add a card
