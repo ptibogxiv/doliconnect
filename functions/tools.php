@@ -1258,6 +1258,7 @@ $countPM = 0;
 } else {
 $countPM = count(get_object_vars($listpaymentmethods->payment_methods));
 }
+$maxPM = 5;
 
 $paymentmethods .= "<div class='card-body'>";
 
@@ -1291,29 +1292,21 @@ $paymentmethods .= __( 'Card', 'doliconnect').' '.$method->reference;
 if ( $method->default_source && empty($thirdparty->mode_reglement_id) && !in_array($method->type, array('PRE','VIR')) || (!empty($method->default_source) && !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id == $mode_reglement_code[0]->id ) ) { $paymentmethods .= " <i class='fas fa-star fa-fw' style='color:Gold'></i>"; }
 $paymentmethods .= "<span class='flag-icon flag-icon-".strtolower($method->country)." float-right'></span></a></li>";
 }}
-if (isset($listpaymentmethods->stripe) && in_array('card', $listpaymentmethods->stripe->types) && empty($thirdparty->mode_reglement_id) ) {
+if (isset($listpaymentmethods->stripe) && !empty(array_intersect(array('card','sepa_debit'), $listpaymentmethods->stripe->types)) && empty($thirdparty->mode_reglement_id) ) {
 $paymentmethods .= '<li class="nav-item"><a onclick="dolistripecard();" class="nav-link';
-if ($countPM >= 5 && empty($module) && !is_object($object) && !isset($object->id) ) {
-$lockNewpm = 1; 
-$paymentmethods .= " disabled";
-} elseif (empty($countPM)) {
-$paymentmethods .= " active";
+if (empty($countPM)) {
+$paymentmethods .= ' active';
 }
 $paymentmethods .= '" data-toggle="pill" href="#nav-tab-card">
-<i class="fas fa-credit-card fa-fw float-left"></i> ';
+<i class="fas fa-plus-circle fa-fw float-left"></i> ';
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
 $paymentmethods .= __( 'Pay by credit/debit card', 'doliconnect');
 } else {
-$paymentmethods .= __( 'Add a credit/debit card', 'doliconnect');
+$paymentmethods .= __( 'Add a payment method', 'doliconnect');
 }
-$paymentmethods .= "</a></li>";
+$paymentmethods .= '</a></li>';
 }
-//if (isset($listpaymentmethods->stripe) && in_array('sepa_debit', $listpaymentmethods->stripe->types) && empty($thirdparty->mode_reglement_id) ) {
-//$paymentmethods .= '<li class="nav-item"><a onclick="my_code();" class="nav-link';
-//if ($countPM >= 5) $paymentmethods .= " disabled"; 
-//$paymentmethods .= '" data-toggle="pill" href="#nav-tab-sepa_debit">
-//<i class="fas fa-university fa-fw float-left"></i></span> '.__( 'Pay by levy', 'doliconnect').'</a></li>';
-//}
+
 if ( isset($listpaymentmethods->PAYPAL) && !empty($listpaymentmethods->PAYPAL) ) {
 $paymentmethods .= '<li class="nav-item"><a class="nav-link" data-toggle="pill" href="#nav-tab-paypal">
 <i class="fab fa-paypal float-left"></i> Paypal</a></li>';
@@ -1376,6 +1369,7 @@ console.log(actionvalue);
 if (actionvalue == 'delete_payment_method')  {
 document.getElementById('li-".$method->id."').remove();
 document.getElementById('nav-tab-".$method->id."').remove();
+document.location = '".$url."';
 } else {
 document.location = '".$url."';
 }
@@ -1453,12 +1447,15 @@ $paymentmethods .= "</div>";
 $paymentmethods .= "</div>";
 }}
 
-if ( !isset($lockNewpm ) && isset($listpaymentmethods->stripe) && in_array('card', $listpaymentmethods->stripe->types) && empty($thirdparty->mode_reglement_id) ) {
+if ( isset($listpaymentmethods->stripe) && in_array('card', $listpaymentmethods->stripe->types) && empty($thirdparty->mode_reglement_id) ) {
 $paymentmethods .= "<div class='tab-pane fade";
 if (empty($countPM) && empty($thirdparty->mode_reglement_id)) {
 $paymentmethods .= " show active"; 
 }
 $paymentmethods .= "' id='nav-tab-card'><div class='card bg-white'><div class='card-body'>";
+if ($countPM >= $maxPM) {
+$paymentmethods .= __( "You have reached limit of payment methods. Please delete a payment method for add a new one.", 'doliconnect').'</div></div>';
+} else {
 $paymentmethods .= "<input id='cardholder-name' name='cardholder-name' value='' type='text' class='form-control' placeholder='".__( "Full name on the card", 'doliconnect')."' autocomplete='off' required>
 <label for='card-element'></label><div class='form-control' id='card-element'><!-- a Stripe Element will be inserted here. --></div>";
 $paymentmethods .= "<p><div id='card-error-message' class='text-danger' role='alert'><!-- a Stripe Message will be inserted here. --></div></p>";
@@ -1655,7 +1652,8 @@ $paymentmethods .= "</script></div></div><br>";
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
 $paymentmethods .= "<button type='button' id='PayCardButton' class='btn btn-danger btn-block'>".__( 'Pay', 'doliconnect')." ".doliprice($object, 'ttc', isset($object->multicurrency_code) ? $object->multicurrency_code : null)."</button>";
 } else {
-$paymentmethods .= "<button type='button' id='AddCardButton' class='btn btn-light btn-block' title='".__( 'Add', 'doliconnect')."'><i class='fas fa-plus-circle fa-fw'></i> ".__( 'Add', 'doliconnect')."</button>";
+$paymentmethods .= "<button type='button' id='AddCardButton' class='btn btn-light btn-block' title='".__( 'Add', 'doliconnect')."'>".__( 'Add', 'doliconnect')."</button>";
+}
 }
 $paymentmethods .= "</div>";
 }
