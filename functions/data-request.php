@@ -271,7 +271,7 @@ global $current_user;
 
 if ( wp_verify_nonce( trim($_POST['dolicart-nonce']), 'dolicart-nonce')) {
 
-if ( isset($_POST['action_cart']) && $_POST['action_cart'] == "purge_cart") {
+if ( isset($_POST['action_cart']) && $_POST['action_cart'] == "purge_cart" && isset($_POST['module']) && isset($_POST['id'])) {
 $object = callDoliApi("DELETE", "/".trim($_POST['module'])."/".trim($_POST['id']), null);
 
 if (!isset($object->error)) { 
@@ -307,7 +307,7 @@ $response = [
 //wp_send_json_error( __( 'An error occured:', 'doliconnect').' '.$object->error->message); 
 //}
 
-} elseif ( isset($_POST['action_cart']) && $_POST['action_cart'] == "validate_cart") {
+} elseif ( isset($_POST['action_cart']) && $_POST['action_cart'] == "validate_cart" && isset($_POST['module']) && isset($_POST['id'])) {
 
 $data = [
     'date_modification' => mktime(),
@@ -325,7 +325,7 @@ wp_send_json_success($response);
 } else {
 wp_send_json_error( __( 'An error occured:', 'doliconnect').' '.$object->error->message); 
 }
-} elseif ( isset($_POST['action_cart']) && $_POST['action_cart'] == "info_cart") {
+} elseif ( isset($_POST['action_cart']) && $_POST['action_cart'] == "info_cart" && isset($_POST['module']) && isset($_POST['id'])) {
 
 $data = [
     'date_modif' => mktime(),
@@ -358,7 +358,7 @@ wp_send_json_success($response);
 } else {
 wp_send_json_error( __( 'An error occured:', 'doliconnect').' '.$object->error->message); 
 }
-} elseif ( isset($_POST['action_cart']) && $_POST['action_cart'] == "pay_cart") {
+} elseif ( isset($_POST['action_cart']) && $_POST['action_cart'] == "pay_cart" && isset($_POST['module']) && isset($_POST['id'])) {
 
 $data = [
   'paymentintent' => isset($_POST['paymentintent']) ? $_POST['paymentintent'] : null,
