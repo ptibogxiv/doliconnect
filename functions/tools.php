@@ -1456,24 +1456,18 @@ $paymentmethods .= "<i class='fas fa-info-circle'></i> <b>".__( "Stripe's in san
 $paymentmethods .= "<input id='cardholder-name' name='cardholder-name' value='' type='text' class='form-control' placeholder='".__( "Full name on the card", 'doliconnect')."' autocomplete='off' required>
 <label for='card-element'></label><div class='form-control' id='card-element'><!-- a Stripe Element will be inserted here. --></div>";
 $paymentmethods .= "<p><div id='card-error-message' class='text-danger' role='alert'><!-- a Stripe Message will be inserted here. --></div></p>";
-$paymentmethods .= '<p><div class="custom-control custom-radio custom-control-inline ">';
+$paymentmethods .= '<p><div class="custom-control custom-radio custom-control-inline">';
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
 $paymentmethods .= '<input type="radio" id="cardDefault0" name="cardDefault" value="0"  class="custom-control-input" checked>
-<label class="custom-control-label text-muted" for="cardDefault0">'.__( "Not save", 'doliconnect').'</label></div>';
-
-$paymentmethods .= '<div class="custom-control custom-radio custom-control-inline">
-<input type="radio" id="cardDefault1" name="cardDefault" value="1"  class="custom-control-input">
-<label class="custom-control-label text-muted" for="cardDefault1">'.__( "Save", 'doliconnect').'</label></div>';
-} else {
+<label class="custom-control-label text-muted" for="cardDefault0">'.__( "Not save", 'doliconnect').'</label></div><div class="custom-control custom-radio custom-control-inline">';
+}
 $paymentmethods .= '<input type="radio" id="cardDefault1" name="cardDefault" value="1"  class="custom-control-input"';
 if (empty($countPM)) {
 $paymentmethods .= ' disabled'; 
-} else {
-$paymentmethods .= ' checked';
-} 
-$paymentmethods .= '><label class="custom-control-label text-muted" for="cardDefault1">'.__( "Save", 'doliconnect').'</label>
-</div>';
+} elseif (empty($object)) {
+$paymentmethods .= ' checked'; 
 }
+$paymentmethods .= '><label class="custom-control-label text-muted" for="cardDefault1">'.__( "Save", 'doliconnect').'</label></div>';
 $paymentmethods .= '<div class="custom-control custom-radio custom-control-inline">
 <input type="radio" id="cardDefault2" name="cardDefault" value="2" class="custom-control-input"';
 if (empty($countPM)) {
