@@ -241,8 +241,14 @@ wp_send_json_error( __( 'An error occured:', 'doliconnect').' '.$object->error->
 
 } elseif ( isset($_POST['action_payment_method']) && $_POST['action_payment_method'] == "add_payment_method") {
 
+if ($_POST['default'] == 2) { 
+$default = 1;
+} else {
+$default = 0;
+}
+
 $data = [
-'default' => isset($_POST['default'])?$_POST['default']:0,
+'default' => $default,
 ];
 
 $object = callDoliApi("POST", $request."/".sanitize_text_field($_POST['payment_method']), $data, dolidelay( 0, true));
