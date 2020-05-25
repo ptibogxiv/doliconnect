@@ -1340,6 +1340,7 @@ if ( (!empty($method->default_source) && empty($thirdparty->mode_reglement_id) &
 $paymentmethods .= " show active"; 
 }
 $paymentmethods .= "' id='nav-tab-".$method->id."'><div class='card bg-light' style='border:0'><div class='card-body'>";
+if ( empty($module) && !is_object($object) ) {
 $paymentmethods .= "<script>";
 $paymentmethods .= "(function ($) {
 $(document).ready(function(){
@@ -1378,6 +1379,7 @@ $('#DoliconnectLoadingModal').modal('hide');
 });
 })(jQuery);";
 $paymentmethods .= "</script>";
+}
 $paymentmethods .= "<div class='row'>";
 $paymentmethods .= "<div class='col-12 col-sm-6'>
   <dt>".__( 'Debtor', 'doliconnect')."</dt>
