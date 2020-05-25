@@ -1433,6 +1433,8 @@ $(document).ready(function(){
 $('#purgebtn_cart, #validatebtn_cart').on('click',function(event){
 event.preventDefault();
 //$('#DoliconnectLoadingModal').modal('show');
+//$('#DoliconnectLoadingModal').on('shown.bs.modal',function (e) {
+//console.log(e.relatedTarget);
 var actionvalue = $(this).val();
         $.ajax({
           url: '".esc_url( admin_url( 'admin-ajax.php' ) )."',
@@ -1478,6 +1480,7 @@ console.log(response.data.message);
 //$('#DoliconnectLoadingModal').modal('hide');
 } 
         });
+  //});
 });
 });
 })(jQuery);";
