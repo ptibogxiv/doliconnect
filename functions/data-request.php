@@ -380,7 +380,7 @@ $object = callDoliApi("GET", "/".trim($_POST['module'])."/".trim($_POST['id'])."
 $mode_reglement = callDoliApi("GET", "/setup/dictionary/payment_types?sortfield=code&sortorder=ASC&limit=100&active=1&sqlfilters=(t.code%3A%3D%3A'".$payinfo->mode_reglement_code."')", null, dolidelay('constante'));
 $message = '<div class="card"><div class="card-body"><center><i class="fas fa-check-circle fa-9x fa-fw text-success"></i>
 <p class="card-text"><h2>'.__( 'Your order has been registered', 'doliconnect').'</h2>'.__( 'Reference', 'doliconnect').': '.$payinfo->ref.'<br>'.__( 'Payment method', 'doliconnect').': '.$mode_reglement[0]->label.'</p>';
-$message .= '<p class="card-text">'.__( 'Status', 'doliconnect').': '.$payinfo->charge_status.'<br>'.__( 'Payment method', 'doliconnect').': '.$payinfo->charge.'</p>';
+$message .= '<p class="card-text">'.__( 'Payment status', 'doliconnect').': '.$payinfo->charge_status.'<br>'.__( 'Payment ID', 'doliconnect').': '.$payinfo->charge.'</p>';
 $nonce = wp_create_nonce( 'doli-'.trim($_POST['module']).'-'. trim($_POST['id']).'-'.$payinfo->ref);
 $arr_params = array('module' => trim($_POST['module']), 'id' => trim($_POST['id']), 'ref' => $payinfo->ref, 'security' => $nonce);  
 $return = esc_url( add_query_arg( $arr_params, doliconnecturl('doliaccount')) );
