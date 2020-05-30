@@ -268,12 +268,27 @@ print '</div></div></form>';
 }
 add_action( 'user_doliconnect_avatars', 'avatars_module');
 
+function password_menu( $arg ){
+print "<a href='".esc_url( add_query_arg( 'module', 'password', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
+if ($arg=='password') { print " active";}
+print "'>".__( 'Modify the password', 'doliconnect')."</a>";
+}
+add_action( 'user_doliconnect_menu', 'password_menu', 2, 1);
+
+function password_module( $url ){
+global $current_user;
+ 
+print dolipasswordform($current_user, $url);
+
+}
+add_action( 'user_doliconnect_password', 'password_module');
+
 function contacts_menu($arg) {
 print "<a href='".esc_url( add_query_arg( 'module', 'contacts', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
 if ( $arg == 'contacts' ) { print " active"; }
 print "'>".__( 'Manage address book', 'doliconnect')."</a>";
 }
-add_action( 'user_doliconnect_menu', 'contacts_menu', 2, 1);
+add_action( 'user_doliconnect_menu', 'contacts_menu', 3, 1);
 
 function contacts_module($url){
 global $current_user;
@@ -462,21 +477,6 @@ jQuery("#list-home").addClass("show active");
 
 }
 add_action( 'user_doliconnect_contacts', 'contacts_module');
-
-function password_menu( $arg ){
-print "<a href='".esc_url( add_query_arg( 'module', 'password', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
-if ($arg=='password') { print " active";}
-print "'>".__( 'Modify the password', 'doliconnect')."</a>";
-}
-add_action( 'user_doliconnect_menu', 'password_menu', 3, 1);
-
-function password_module( $url ){
-global $current_user;
- 
-print dolipasswordform($current_user, $url);
-
-}
-add_action( 'user_doliconnect_password', 'password_module');
 
 add_action( 'user_doliconnect_menu', 'paymentmethods_menu', 4, 1);
 add_action( 'user_doliconnect_paymentmethods', 'paymentmethods_module');
