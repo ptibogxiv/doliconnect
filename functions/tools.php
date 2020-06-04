@@ -1260,6 +1260,13 @@ $countPM = count(get_object_vars($listpaymentmethods->payment_methods));
 }
 $maxPM = 5;
 
+$minPM = 0;
+if ( has_filter( 'doliconnect_force_minipaymentmethod') ) {
+if (is_numeric(apply_filters( 'doliconnect_force_minipaymentmethod', $listpaymentmethods->payment_methods))){
+$minPM = apply_filters( 'doliconnect_force_minipaymentmethod', $listpaymentmethods->payment_methods);
+}
+}
+
 $paymentmethods .= '<div class="card-body"><ul class="nav bg-light nav-pills rounded nav-fill flex-column" role="tablist">';
 
 if ( isset($listpaymentmethods->payment_methods) && $listpaymentmethods->payment_methods != null ) {
@@ -1434,7 +1441,7 @@ if ( !isset($method->default_source) && !in_array($method->type, array('VIR')) &
 $paymentmethods .= "<button type='button' id='defaultbtn_".$method->id."' name='default_payment_method' value='default_payment_method' class='btn btn-light'";
 $paymentmethods .= "title='".__( 'Favourite', 'doliconnect')."'><i class='fas fa-star fa-fw' style='color:Gold'></i> ".__( "Favourite", 'doliconnect')."</button>";
 }
-if ( (!isset($method->default_source) && $countPM > 1) || $countPM == 1  || in_array($method->type, array('VIR')) ) { 
+if ( (!isset($method->default_source) && $countPM > ($minPM+1)) || ($countPM == 1 && $minPM == 0) || in_array($method->type, array('VIR')) ) { 
 $paymentmethods .= "<button type='button' id='deletebtn_".$method->id."' name='delete_payment_method' value='delete_payment_method' class='btn btn-light'";
 $paymentmethods .= "title='".__( 'Delete', 'doliconnect')."'><i class='fas fa-trash fa-fw' style='color:Red'></i> ".__( 'Delete', 'doliconnect').'</button>';
 }
