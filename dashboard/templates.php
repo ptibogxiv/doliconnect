@@ -867,7 +867,7 @@ print "<br><span class='flag-icon flag-icon-".strtolower($thirdparty->country_co
 
 print "</div></div>";
 
-print "<p class='text-justify'>".$thirdparty->note_public."</p>";
+print "<p class='text-justify'>".$thirdparty->note_private."</p>";
 
 $photos = callDoliApi("GET", "/documents?modulepart=thirdparty&id=".$thirdparty->id, null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
