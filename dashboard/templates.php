@@ -658,8 +658,10 @@ print "</li><li class='list-group-item'><div><small><div class='float-left'>";
 if ((!is_multisite() && get_option( 'users_can_register' )) || ((!is_multisite() && get_option( 'dolicustsupp_can_register' )) || ((get_option( 'dolicustsupp_can_register' ) || get_option('users_can_register') == '1') && (get_site_option( 'registration' ) == 'user' || get_site_option( 'registration' ) == 'all')))) {
 print "<a href='".wp_registration_url(get_permalink())."' role='button' title='".__( 'Create an account', 'doliconnect-pro')."'>".__( 'Create an account', 'doliconnect')."</a>";
 }
-//<input type='checkbox' class='custom-control-input' value='forever' id='remembermemodal' name='rememberme'>";
-//print "<label class='custom-control-label' for='remembermemodal'> ".__( 'Remember me', 'doliconnect')."</label>";
+
+print "<div class='form-group'><div class='custom-control custom-checkbox'><input type='checkbox' class='custom-control-input' value='forever' id='remembermelogin' name='rememberme'>";
+print "<label class='custom-control-label' for='remembermelogin'> ".__( 'Remember me', 'doliconnect')."</label></div></div>";
+
 print "</div><div class='float-right'><a href='".wp_lostpassword_url( get_permalink() )."' role='button' title='".__( 'Forgot password?', 'doliconnect')."'>".__( 'Forgot password?', 'doliconnect')."</a></div></small></div>"; 
 print "</li></lu><div class='card-body'>";
 
@@ -907,7 +909,10 @@ foreach ($resultats as $supplier) {
 
 print "<a href='".esc_url( add_query_arg( 'supplier', $supplier->id, doliconnecturl('dolisupplier')) )."' class='list-group-item list-group-item-action'>".(!empty($supplier->name_alias)?$supplier->name_alias:$supplier->name)."</a>";
 
-}}
+}
+} else {
+print "<li class='list-group-item list-group-item-light'><center>".__( 'No supplier', 'doliconnect')."</center></li>";
+}
 
 } 
 
