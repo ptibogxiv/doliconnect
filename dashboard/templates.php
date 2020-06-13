@@ -995,7 +995,7 @@ print "<ul class='list-group list-group-flush'>";
 
 $limit=25;
 if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']-1); }  else { $page = 0; }
-$request = "/products?sortfield=t.tms&sortorder=DESC&limit=".$limit."&page=".$page."&sqlfilters=(t.tosell%3A%3D%3A1)"; //%20AND%20
+$request = "/products?sortfield=t.datec&sortorder=DESC&limit=".$limit."&page=".$page."&sqlfilters=(t.tosell%3A%3D%3A1)"; //%20AND%20
 $resultats = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 //print $resultatso;
 
@@ -1011,7 +1011,7 @@ print apply_filters( 'doliproductlist', $product);
 print "<li class='list-group-item list-group-item-light'><center>".__(  'No new product', 'doliconnect')."</center></li>";
 }
 print "</ul><div class='card-body'>";
-print dolipage($resultats, $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], 0, $limit);
+print dolipage($resultats, $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], $page, $limit);
 print "</div><div class='card-footer text-muted'>";
 print "<small><div class='float-left'>";
 if ( isset($request) ) print dolirefresh($request, get_permalink(), dolidelay('product'));
@@ -1071,7 +1071,7 @@ print "<a href='".esc_url( add_query_arg( 'category', $catoption, doliconnecturl
 }
 
 print "</ul><div class='card-body'>";
-print dolipage($resultats->childs, $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], 0, $limit);
+print dolipage($resultats->childs, $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], $page, $limit);
 print "</div><div class='card-footer text-muted'>";
 print "<small><div class='float-left'>";
 if ( isset($request) ) print dolirefresh($request, get_permalink(), dolidelay('product'));
