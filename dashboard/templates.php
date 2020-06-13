@@ -1043,6 +1043,8 @@ print dolihelp('ISSUE');
 print "</div></small>";
 print "</div></div>";
 
+} elseif ( isset($_GET['sales']) ) {
+
 } elseif ( isset($_GET['product']) ) {
 
 $request = "/products/".esc_attr($_GET['product'])."?includestockdata=1";
