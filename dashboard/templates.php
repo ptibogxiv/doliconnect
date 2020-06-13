@@ -997,7 +997,9 @@ print apply_filters( 'doliproductlist', $product);
  
 }
 } else {
-print "<li class='list-group-item list-group-item-light'><center>".sprintf( esc_html__( 'No product with this search: "%s"', 'doliconnect'), esc_attr($_GET['search']))."</center></li>";
+print "<li class='list-group-item list-group-item-light'><center>".sprintf( esc_html__( 'No product with this search: "%s"', 'doliconnect'), esc_attr($_GET['search']));
+print "<a href='".esc_url( add_query_arg( 'search', '', doliconnecturl('dolishop')) )."' class='btn btn-link btn-block'>".__(  'New search', 'doliconnect')."</a>";
+print "</center></li>";
 }
 print "</ul><div class='card-body'>";
 print dolipage($resultats, $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], 0, $limit);
