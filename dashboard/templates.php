@@ -957,6 +957,7 @@ print "</li>";
 print "</ul>";
 } else {
 if ( isset($_GET['search']) ) {
+
 print "<ul class='list-group list-group-flush'>";
 
 $limit=25;
@@ -988,7 +989,37 @@ print dolihelp('ISSUE');
 print "</div></small>";
 print "</div></div>";
 
+} elseif ( isset($_GET['new']) ) {
+
+print "<ul class='list-group list-group-flush'>";
+
+$limit=25;
+if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']-1); }  else { $page = 0; }
+$request = "/products?sortfield=t.tms&sortorder=DESC&limit=".$limit."&page=".$page."&sqlfilters=(t.tosell%3A%3D%3A1)"; //%20AND%20
+$resultats = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+//print $resultatso;
+
+if ( !isset($resultats->error) && $resultats != null ) {
+$count = count($resultats);
+print "<li class='list-group-item list-group-item-light'><center>".__(  'Here are our new products', 'doliconnect')."</center></li>";
+foreach ($resultats as $product) {
+
+print apply_filters( 'doliproductlist', $product);
  
+}
+} else {
+print "<li class='list-group-item list-group-item-light'><center>".__(  'No new product', 'doliconnect')."</center></li>";
+}
+print "</ul><div class='card-body'>";
+print dolipage($resultats, $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], 0, $limit);
+print "</div><div class='card-footer text-muted'>";
+print "<small><div class='float-left'>";
+if ( isset($request) ) print dolirefresh($request, get_permalink(), dolidelay('product'));
+print "</div><div class='float-right'>";
+print dolihelp('ISSUE');
+print "</div></small>";
+print "</div></div>";
+
 } elseif ( isset($_GET['product']) ) {
 
 $request = "/products/".esc_attr($_GET['product'])."?includestockdata=1";
