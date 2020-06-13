@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2020-06-13 15:18+0200\n"
-"PO-Revision-Date: 2020-06-13 15:18+0200\n"
+"POT-Creation-Date: 2020-06-13 20:09+0200\n"
+"PO-Revision-Date: 2020-06-13 20:10+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: nl_NL\n"
@@ -21,7 +21,7 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: includes\n"
 
-#: admin/admin.php:7 dashboard/templates.php:1677
+#: admin/admin.php:7 dashboard/templates.php:1698
 msgid ""
 "It seems that your version of Dolibarr and/or its plugins are not up to date!"
 msgstr ""
@@ -322,7 +322,7 @@ msgstr "Uw informatie is bijgewerkt."
 
 #: dashboard/dashboard.php:67 dashboard/dashboard.php:259
 #: dashboard/dashboard.php:448 dashboard/dashboard.php:1693
-#: dashboard/templates.php:456 dashboard/templates.php:1189
+#: dashboard/templates.php:456 dashboard/templates.php:1210
 #: functions/tools.php:287
 msgid "Update"
 msgstr "Bijwerken"
@@ -488,8 +488,8 @@ msgstr "Betaalmethode"
 msgid "payment term"
 msgstr "Betalingstermijn"
 
-#: dashboard/dashboard.php:759 dashboard/templates.php:1202
-#: dashboard/templates.php:1323
+#: dashboard/dashboard.php:759 dashboard/templates.php:1223
+#: dashboard/templates.php:1344
 #, php-format
 msgid ""
 "Please send your cheque in the amount of <b>%1$s</b> with reference <b>%2$s</"
@@ -498,8 +498,8 @@ msgstr ""
 "Stuur uw cheque in het bedrag van <b>%1$s</b> met verwijzing <b>%2$s</b> "
 "naar <b>%3$s</b> op het volgende adres"
 
-#: dashboard/dashboard.php:767 dashboard/templates.php:1211
-#: dashboard/templates.php:1329
+#: dashboard/dashboard.php:767 dashboard/templates.php:1232
+#: dashboard/templates.php:1350
 #, php-format
 msgid ""
 "Please send your transfert in the amount of <b>%1$s</b> with reference <b>"
@@ -508,16 +508,16 @@ msgstr ""
 "Stuur uw transfert naar het bedrag van <b>%1$s</b> met verwijzing <b>%2$s</"
 "b> op het volgende account"
 
-#: dashboard/dashboard.php:768 dashboard/templates.php:1212
-#: dashboard/templates.php:1330 functions/tools.php:1718
+#: dashboard/dashboard.php:768 dashboard/templates.php:1233
+#: dashboard/templates.php:1351 functions/tools.php:1718
 msgid "Bank"
 msgstr "Bank"
 
-#: dashboard/dashboard.php:811 dashboard/templates.php:1547
+#: dashboard/dashboard.php:811 dashboard/templates.php:1568
 msgid "Billing address"
 msgstr "Factuuradres"
 
-#: dashboard/dashboard.php:818 dashboard/templates.php:1576
+#: dashboard/dashboard.php:818 dashboard/templates.php:1597
 msgid "Shipping address"
 msgstr "Verzendadres"
 
@@ -543,7 +543,7 @@ msgid "Order"
 msgstr "Bestelling"
 
 #: dashboard/dashboard.php:874 dashboard/dashboard.php:1190
-#: dashboard/dashboard.php:1314 dashboard/templates.php:1398
+#: dashboard/dashboard.php:1314 dashboard/templates.php:1419
 msgid "Payment"
 msgstr "Betaling"
 
@@ -641,7 +641,7 @@ msgstr "Donaties volgen"
 msgid "Date of order"
 msgstr "Datum van bestelling"
 
-#: dashboard/dashboard.php:1304 dashboard/templates.php:1309
+#: dashboard/dashboard.php:1304 dashboard/templates.php:1330
 #: functions/data-request.php:382
 msgid "Payment method"
 msgstr "Betaalmethode"
@@ -861,7 +861,7 @@ msgid "Sales representative"
 msgstr "Vertegenwoordiger"
 
 #: dashboard/dashboard.php:1894 dashboard/templates.php:812
-#: dashboard/templates.php:1609
+#: dashboard/templates.php:1630
 msgid "Message"
 msgstr "Bericht"
 
@@ -1160,7 +1160,7 @@ msgstr ""
 "Ik ga akkoord om mijn persoonlijke informatie op te slaan om contact met mij "
 "op te nemen"
 
-#: dashboard/templates.php:895 dashboard/templates.php:1125
+#: dashboard/templates.php:895 dashboard/templates.php:1146
 msgid "No product / service currently on sale"
 msgstr "Geen product / dienst momenteel te koop"
 
@@ -1168,92 +1168,100 @@ msgstr "Geen product / dienst momenteel te koop"
 msgid "No supplier"
 msgstr "Geen leverancier"
 
-#: dashboard/templates.php:972
-#, php-format
-msgid "We have %s product with this search"
-msgid_plural "We have %s products with this search"
-msgstr[0] "We hebben %s product met deze zoekopdracht"
-msgstr[1] "We hebben %s product met deze zoekopdracht"
+#: dashboard/templates.php:968 functions/widgets.php:305
+msgid "Name, Ref. or barcode"
+msgstr "Naam, Ref. of barcode"
 
-#: dashboard/templates.php:980
+#: dashboard/templates.php:990
+#, php-format
+msgid "We have found %s product with this search"
+msgid_plural "We have found %s products with this search"
+msgstr[0] "We hebben %s product gevonden met deze zoekopdracht"
+msgstr[1] "We hebben %s products gevonden met deze zoekopdracht"
+
+#: dashboard/templates.php:992
+msgid "New search"
+msgstr "Opnieuw zoeken"
+
+#: dashboard/templates.php:1000
 #, php-format
 msgid "No product with this search: \"%s\""
 msgstr "Geen product met deze zoekopdracht: \"%s\""
 
-#: dashboard/templates.php:1004
+#: dashboard/templates.php:1025
 msgid "Here are our new products"
 msgstr "Hier zijn onze nieuwe producten"
 
-#: dashboard/templates.php:1011
+#: dashboard/templates.php:1032
 msgid "No new product"
 msgstr "Geen nieuw product"
 
-#: dashboard/templates.php:1171
+#: dashboard/templates.php:1192
 msgid "Inactive module on Dolibarr"
 msgstr "Inactieve module op Dolibarr"
 
-#: dashboard/templates.php:1218
+#: dashboard/templates.php:1239
 msgid "Tax exemptions"
 msgstr "Belasting-vrijstellingen"
 
-#: dashboard/templates.php:1221
+#: dashboard/templates.php:1242
 msgid "DonationArt200"
 msgstr "DonationArt200"
 
-#: dashboard/templates.php:1225
+#: dashboard/templates.php:1246
 msgid "DonationArt238"
 msgstr "DonationArt238"
 
-#: dashboard/templates.php:1229
+#: dashboard/templates.php:1250
 msgid "DonationArt835"
 msgstr "DonationArt835"
 
-#: dashboard/templates.php:1232
+#: dashboard/templates.php:1253
 msgid "You should't have tax exemptions"
 msgstr "Je hebt geen belastingvrijstellingen"
 
-#: dashboard/templates.php:1291
+#: dashboard/templates.php:1312
 msgid "Oops, Order's module is not available"
 msgstr "Oeps, de module van de bestelling is niet beschikbaar"
 
-#: dashboard/templates.php:1309 functions/data-request.php:382
+#: dashboard/templates.php:1330 functions/data-request.php:382
 msgid "Your order has been registered"
 msgstr "Uw bestelling is geregistreerd"
 
-#: dashboard/templates.php:1309 dashboard/templates.php:1316
+#: dashboard/templates.php:1330 dashboard/templates.php:1337
 #: functions/data-request.php:382 functions/tools.php:339
 msgid "Reference"
 msgstr "Referentie"
 
-#: dashboard/templates.php:1315
+#: dashboard/templates.php:1336
 msgid "Your payment has been registered"
 msgstr "Uw betaling is geregistreerd"
 
-#: dashboard/templates.php:1338
+#: dashboard/templates.php:1359
 msgid "or go to reception desk"
 msgstr "of ga naar de receptie"
 
-#: dashboard/templates.php:1392
+#: dashboard/templates.php:1413
 msgid "Cart"
 msgstr "Winkelwagen"
 
-#: dashboard/templates.php:1395
+#: dashboard/templates.php:1416
 msgid "Coordinates"
 msgstr "Coördinaten"
 
-#: dashboard/templates.php:1440
+#: dashboard/templates.php:1461
 msgid "Amount outstanding"
 msgstr "Uitstaand bedrag"
 
-#: dashboard/templates.php:1440
+#: dashboard/templates.php:1461
 msgid "out of"
 msgstr "van de"
 
-#: dashboard/templates.php:1440
+#: dashboard/templates.php:1461
 msgid "allowed"
 msgstr "toegestaan"
 
-#: dashboard/templates.php:1442
+#: dashboard/templates.php:1463
 msgid ""
 "Your account is blocked, this order can't be processed. Please, contact us "
 "to pay overdue unpaid invoices."
@@ -1261,27 +1269,27 @@ msgstr ""
 "Je account is geblokkeerd, deze bestelling kan niet worden verwerkt. Neem "
 "contact met ons op om achterstallige onbetaalde facturen te betalen."
 
-#: dashboard/templates.php:1451
+#: dashboard/templates.php:1472
 msgid "Continue shopping"
 msgstr "Verder winkelen"
 
-#: dashboard/templates.php:1455
+#: dashboard/templates.php:1476
 msgid "Empty the basket"
 msgstr "Het mandje leegmaken"
 
-#: dashboard/templates.php:1460
+#: dashboard/templates.php:1481
 msgid "Process"
 msgstr "Verwerken"
 
-#: dashboard/templates.php:1539 functions/tools.php:334
+#: dashboard/templates.php:1560 functions/tools.php:334
 msgid "Customer"
 msgstr "Klant"
 
-#: dashboard/templates.php:1551 dashboard/templates.php:1580
+#: dashboard/templates.php:1572 dashboard/templates.php:1601
 msgid "Same address as the customer"
 msgstr "Hetzelfde adres als de klant"
 
-#: dashboard/templates.php:1606
+#: dashboard/templates.php:1627
 #, php-format
 msgid ""
 "Adding billing or shipping contacts requires Dolibarr %s but your version is "
@@ -1290,14 +1298,14 @@ msgstr ""
 "Voor het toevoegen van facturerings- of verzendcontactpersonen is Dolibarr "
 "%s vereist, maar uw versie is %s"
 
-#: dashboard/templates.php:1610
+#: dashboard/templates.php:1631
 msgid ""
 "If you want to send us a message about your order, you can leave one here"
 msgstr ""
 "Als u ons een bericht wilt sturen over uw bestelling, u er hier een "
 "achterlaten"
 
-#: dashboard/templates.php:1661
+#: dashboard/templates.php:1682
 msgid "Validate"
 msgstr "Valideren"
 
@@ -2140,10 +2148,6 @@ msgstr "Winkelmand"
 #: functions/widgets.php:282
 msgid "Category of products"
 msgstr "Productcategorie"
-
-#: functions/widgets.php:305
-msgid "Name, Ref. or barcode"
-msgstr "Naam, Ref. of barcode"
 
 #: functions/widgets.php:316
 msgid "New products"
