@@ -313,7 +313,18 @@ if ( !isset($resultatsc->error) && $resultatsc != null ) {
 print "<div class='list-group'>";
 print "<a href='".esc_url( add_query_arg( 'new', '', doliconnecturl('dolishop')) )."' class='list-group-item list-group-item-action";
 //if ( isset($_GET['new']) && $categorie->id == $_GET['subcategory'] ) { print " active"; }
-print "'>".__(  'New products', 'doliconnect')."</a>";
+$date = new DateTime(); 
+$date->modify('NOW');
+$date->modify('FIRST DAY OF LAST MONTH MIDNIGHT');
+$lastdate = $date->format('Y-m-d');
+$requestp = "/products?sortfield=t.datec&sortorder=DESC&sqlfilters=(t.datec%3A%3E%3A'".$lastdate."')%20AND%20(t.tosell%3A%3D%3A1)";
+$listproduct = callDoliApi("GET", $requestp, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+if (empty($listproduct) || isset($listproduct->error)) {
+$count = 0;
+} else {
+$count = count($listproduct);
+}
+print "'>".__(  'New products', 'doliconnect')." (".$count.")</a>";
 foreach ($resultatsc->childs as $categorie) {
 
 $requestp = "/products?sortfield=t.label&sortorder=ASC&category=".$categorie->id."&sqlfilters=(t.tosell=1)";

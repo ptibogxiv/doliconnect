@@ -1028,7 +1028,7 @@ $resultats = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(is
 
 if ( !isset($resultats->error) && $resultats != null ) {
 $count = count($resultats);
-print "<li class='list-group-item list-group-item-light'><center>".__(  'Here are our new products', 'doliconnect').$lastdate."</center></li>";
+print "<li class='list-group-item list-group-item-light'><center>".__(  'Here are our new products', 'doliconnect')."</center></li>";
 foreach ($resultats as $product) {
 
 print apply_filters( 'doliproductlist', $product);
