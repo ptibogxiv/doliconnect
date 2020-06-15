@@ -1021,13 +1021,14 @@ if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['
 $date = new DateTime(); 
 $date->modify('NOW');
 $date->modify('FIRST DAY OF LAST MONTH MIDNIGHT');
-$request = "/products?sortfield=t.datec&sortorder=DESC&limit=".$limit."&page=".$page."&sqlfilters=(t.datec%3A%3E%3A'".$date->format('Y-m-d H:i:s')."')%20AND%20(t.tosell%3A%3D%3A1)";
+$lastdate = $date->format('Y-m-d');
+$request = "/products?sortfield=t.datec&sortorder=DESC&limit=".$limit."&page=".$page."&sqlfilters=(t.datec%3A%3E%3A'".$lastdate."')%20AND%20(t.tosell%3A%3D%3A1)";
 $resultats = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 //print $resultatso;
 
 if ( !isset($resultats->error) && $resultats != null ) {
 $count = count($resultats);
-print "<li class='list-group-item list-group-item-light'><center>".__(  'Here are our new products', 'doliconnect').$date->format('Y-m-d H:i:s')."</center></li>";
+print "<li class='list-group-item list-group-item-light'><center>".__(  'Here are our new products', 'doliconnect').$lastdate."</center></li>";
 foreach ($resultats as $product) {
 
 print apply_filters( 'doliproductlist', $product);
