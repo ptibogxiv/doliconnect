@@ -438,6 +438,7 @@ echo "<input id='dolibarr_entity'  name='dolibarr_entity' type='text' value='".(
            <option value="month" <?php if (get_option('dolicartnewlist') == 'month' || empty(get_option('dolicartnewlist'))) { ?> selected <?php } ?>><?php _e('Last month', 'doliconnect') ?> (<?php _e('by default', 'doliconnect') ?>)</option>
            <option value="week" <?php if (get_option('dolicartnewlist') == 'week') { ?> selected <?php } ?>><?php _e('Last week', 'doliconnect') ?></option>
            <option value="day" <?php if (get_option('dolicartnewlist') == 'day') { ?> selected <?php } ?>><?php _e('Last day', 'doliconnect') ?></option>
+           <option value="none" <?php if (get_option('dolicartnewlist') == 'none') { ?> selected <?php } ?>><?php _e('None', 'doliconnect') ?></option>
            </select> <?php _e('Duration of new product', 'doliconnect') ?>
            </td>
             </tr>

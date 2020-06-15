@@ -311,6 +311,7 @@ $resultatsc = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(i
 
 if ( !isset($resultatsc->error) && $resultatsc != null ) {
 print "<div class='list-group'>";
+if (get_option('dolicartnewlist') != 'none') {
 print "<a href='".esc_url( add_query_arg( 'new', '', doliconnecturl('dolishop')) )."' class='list-group-item list-group-item-action";
 //if ( isset($_GET['new']) && $categorie->id == $_GET['subcategory'] ) { print " active"; }
 $date = new DateTime(); 
@@ -326,6 +327,7 @@ $count = 0;
 $count = count($listproduct);
 }
 print "'>".__(  'New products', 'doliconnect')." (".$count.")</a>";
+}
 foreach ($resultatsc->childs as $categorie) {
 
 $requestp = "/products?sortfield=t.label&sortorder=ASC&category=".$categorie->id."&sqlfilters=(t.tosell=1)";

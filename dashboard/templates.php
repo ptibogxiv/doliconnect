@@ -1012,7 +1012,7 @@ print "</div></small>";
 print "</div></div>";
 }
 
-} elseif ( isset($_GET['new']) ) {
+} elseif ( isset($_GET['new']) && get_option('dolicartnewlist') != 'none') {
 
 print "<ul class='list-group list-group-flush'>";
 
