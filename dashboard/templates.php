@@ -1020,7 +1020,8 @@ $limit=25;
 if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']-1); }  else { $page = 0; }
 $date = new DateTime(); 
 $date->modify('NOW');
-$date->modify('FIRST DAY OF LAST MONTH MIDNIGHT');
+$duration = (!empty(get_option('dolicartnewlist'))?get_option('dolicartnewlist'):'month');
+$date->modify('FIRST DAY OF LAST '.$duration.' MIDNIGHT');
 $lastdate = $date->format('Y-m-d');
 $request = "/products?sortfield=t.datec&sortorder=DESC&limit=".$limit."&page=".$page."&sqlfilters=(t.datec%3A%3E%3A'".$lastdate."')%20AND%20(t.tosell%3A%3D%3A1)";
 $resultats = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));

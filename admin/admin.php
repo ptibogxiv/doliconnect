@@ -266,6 +266,7 @@ delete_option('doliconnect_google');}
             update_option('wp_page_for_privacy_policy', sanitize_text_field($_REQUEST['wp_page_for_privacy_policy']));
             update_option('dolishop', sanitize_text_field($_REQUEST['dolishop']));
             update_option('dolishipping', sanitize_text_field($_REQUEST['dolishipping']));
+            update_option('dolicartnewlist', sanitize_text_field($_REQUEST['dolicartnewlist']));
             update_option('dolicartlist', sanitize_text_field($_REQUEST['dolicartlist']));
             update_option('dolisupplier', sanitize_text_field($_REQUEST['dolisupplier']));             
             update_option('doliconnect_social_facebook', sanitize_text_field($_REQUEST['doliconnect_social_facebook']));
@@ -432,6 +433,12 @@ echo "<input id='dolibarr_entity'  name='dolibarr_entity' type='text' value='".(
            <option value="75" <?php if (get_option('dolicartlist') == '75') { ?> selected <?php } ?>>75</option>
            <option value="100" <?php if (get_option('dolicartlist') == '100') { ?> selected <?php } ?>>100</option>
            </select> <?php _e('choices of the amount of product', 'doliconnect') ?>
+           
+           <select name="dolicartnewlist" id="dolicartnewlist">
+           <option value="month" <?php if (get_option('dolicartnewlist') == 'month' || empty(get_option('dolicartnewlist'))) { ?> selected <?php } ?>><?php _e('Last month', 'doliconnect') ?> (<?php _e('by default', 'doliconnect') ?>)</option>
+           <option value="week" <?php if (get_option('dolicartnewlist') == 'week') { ?> selected <?php } ?>><?php _e('Last week', 'doliconnect') ?></option>
+           <option value="day" <?php if (get_option('dolicartnewlist') == 'day') { ?> selected <?php } ?>><?php _e('Last day', 'doliconnect') ?></option>
+           </select> <?php _e('Duration of new product', 'doliconnect') ?>
            </td>
             </tr>
             <tr>

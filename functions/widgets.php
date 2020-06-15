@@ -315,7 +315,8 @@ print "<a href='".esc_url( add_query_arg( 'new', '', doliconnecturl('dolishop'))
 //if ( isset($_GET['new']) && $categorie->id == $_GET['subcategory'] ) { print " active"; }
 $date = new DateTime(); 
 $date->modify('NOW');
-$date->modify('FIRST DAY OF LAST MONTH MIDNIGHT');
+$duration = (!empty(get_option('dolicartnewlist'))?get_option('dolicartnewlist'):'month');
+$date->modify('FIRST DAY OF LAST '.$duration.' MIDNIGHT');
 $lastdate = $date->format('Y-m-d');
 $requestp = "/products?sortfield=t.datec&sortorder=DESC&sqlfilters=(t.datec%3A%3E%3A'".$lastdate."')%20AND%20(t.tosell%3A%3D%3A1)";
 $listproduct = callDoliApi("GET", $requestp, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
