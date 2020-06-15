@@ -880,7 +880,7 @@ print doliconnect_image('thirdparty', $thirdparty->id, null, esc_attr(isset($_GE
 print "</li>"; 
 
 $module = 'product';
-$limit=20;
+$limit=25;
 if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']-1); }  else { $page = "0"; }
 $request = "/products/purchase_prices?sortfield=t.ref&sortorder=ASC&limit=".$limit."&page=".$page."&supplier=".esc_attr($_GET["supplier"])."&sqlfilters=(t.tosell%3A%3D%3A1)";
 $resultats2 = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
@@ -899,7 +899,7 @@ print "<li class='list-group-item list-group-item-light'><center>".__( 'No produ
 
  if (!empty($shopsupplier)) $category = "&category=".$shopsupplier;
 $module = 'thirdparty';
-$limit=20;
+$limit=25;
 if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']-1); }  else { $page = 0; }
 $request = "/thirdparties?sortfield=t.nom&sortorder=ASC&limit=".$limit."&page=".$page."&mode=4".$category."&sqlfilters=(t.status%3A%3D%3A'1')";
 $resultats = callDoliApi("GET", $request, null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
@@ -1018,13 +1018,16 @@ print "<ul class='list-group list-group-flush'>";
 
 $limit=25;
 if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']-1); }  else { $page = 0; }
-$request = "/products?sortfield=t.datec&sortorder=DESC&limit=".$limit."&page=".$page."&sqlfilters=(t.tosell%3A%3D%3A1)"; //%20AND%20
+$date = new DateTime(); 
+$date->modify('NOW');
+$date->modify('FIRST DAY OF LAST MONTH MIDNIGHT');
+$request = "/products?sortfield=t.datec&sortorder=DESC&limit=".$limit."&page=".$page."&sqlfilters=(t.datec%3A%3E%3A'".$date->format('Y-m-d H:i:s')."')%20AND%20(t.tosell%3A%3D%3A1)";
 $resultats = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 //print $resultatso;
 
 if ( !isset($resultats->error) && $resultats != null ) {
 $count = count($resultats);
-print "<li class='list-group-item list-group-item-light'><center>".__(  'Here are our new products', 'doliconnect')."</center></li>";
+print "<li class='list-group-item list-group-item-light'><center>".__(  'Here are our new products', 'doliconnect').$date->format('Y-m-d H:i:s')."</center></li>";
 foreach ($resultats as $product) {
 
 print apply_filters( 'doliproductlist', $product);
