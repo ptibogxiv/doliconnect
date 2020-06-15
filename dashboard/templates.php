@@ -1079,6 +1079,23 @@ $request = "/categories/".$shop."?include_childs=true";
 $resultats = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 if ( !isset($resultats->error) && $resultats != null ) {
+if (get_option('dolicartnewlist') != 'none') {
+print "<a href='".esc_url( add_query_arg( 'new', '', doliconnecturl('dolishop')) )."' class='list-group-item list-group-item-action";
+//if ( isset($_GET['new']) && $categorie->id == $_GET['subcategory'] ) { print " active"; }
+$date = new DateTime(); 
+$date->modify('NOW');
+$duration = (!empty(get_option('dolicartnewlist'))?get_option('dolicartnewlist'):'month');
+$date->modify('FIRST DAY OF LAST '.$duration.' MIDNIGHT');
+$lastdate = $date->format('Y-m-d');
+$requestp = "/products?sortfield=t.datec&sortorder=DESC&sqlfilters=(t.datec%3A%3E%3A'".$lastdate."')%20AND%20(t.tosell%3A%3D%3A1)";
+$listproduct = callDoliApi("GET", $requestp, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+if (empty($listproduct) || isset($listproduct->error)) {
+$count = 0;
+} else {
+$count = count($listproduct);
+}
+print "'>".__(  'New products', 'doliconnect')." (".$count.")</a>";
+}
 foreach ($resultats->childs as $categorie) {
 
 $requestp = "/products?sortfield=t.label&sortorder=ASC&category=".$categorie->id."&sqlfilters=(t.tosell=1)";
