@@ -15,3 +15,4 @@ require_once ( WP_PLUGIN_DIR . '/' . dirname( plugin_basename( __DIR__ ) ) . '/b
 require_once ( WP_PLUGIN_DIR . '/' . dirname( plugin_basename( __DIR__ ) ) . '/blocks/membership/block.php' );
 require_once ( WP_PLUGIN_DIR . '/' . dirname( plugin_basename( __DIR__ ) ) . '/blocks/gdpr/block.php' );  
 require_once ( WP_PLUGIN_DIR . '/' . dirname( plugin_basename( __DIR__ ) ) . '/blocks/product/block.php' );
+require_once ( WP_PLUGIN_DIR . '/' . dirname( plugin_basename( __DIR__ ) ) . '/blocks/product/blocknew.php' );
