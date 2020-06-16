@@ -514,7 +514,7 @@ add_filter( 'doliproductlist', 'doliproductlist', 10, 1);
 // list of products filter
 function doliproductcard($product, $attributes) {
 
-if ($product->id > 0) {
+if (isset($product->id) && $product->id > 0) {
 
 $documents = callDoliApi("GET", "/documents?modulepart=product&id=".$product->id, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 //$card .= $documents;
@@ -567,7 +567,7 @@ $card .= apply_filters('mydoliconnectproductcard', $product);
 
 $card .= "</div>";
 } else {
-$card .= "<center><br><br><br><br><center><div class='align-middle'><i class='fas fa-bomb fa-7x fa-fw'></i><h4>".__( 'Oops! This product does not appear to exist', 'doliconnect' )."</h4></div></center><br><br><br><br>";
+$card = "<center><br><br><br><br><center><div class='align-middle'><i class='fas fa-bomb fa-7x fa-fw'></i><h4>".__( 'Oops! This product does not appear to exist', 'doliconnect' )."</h4></div></center><br><br><br><br>";
 }
 
 return $card;
