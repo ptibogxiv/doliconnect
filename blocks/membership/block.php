@@ -111,7 +111,7 @@ $html .= __( 'year', 'doliconnect');
 }
 $html .= '</small></h1>';
 
-if ( !isset($adherent) or (($postadh->welcome > '0') && isset($adherent) && ($adherent->datefin == null )) or (($postadh->welcome > '0') && isset($renewadherent) && (current_time( 'timestamp',1) > $renewadherent) && isset($adherent) && (current_time( 'timestamp',1) > $adherent->datefin)) ) {          
+if ( !isset($adherent) or (($postadh->welcome > '0') && isset($adherent) && ($adherent->datefin == null )) or (($postadh->welcome > '0') && (current_time( 'timestamp',1) > $adherent->next_subscription_renew) && isset($adherent) && (current_time( 'timestamp',1) > $adherent->datefin)) ) {          
 $html .= "<small>".__( 'First subscription at', 'doliconnect' )." ".doliprice($montantdata)."</small>"; 
 }   
 $html .= doliproduct($postadh, 'note').'</div>';
@@ -131,7 +131,7 @@ $html .= "<i class='fas fa-users fa-fw'></i> ";
 $html .= doliproduct($postadh, 'label');
 if (! empty ($postadh->duration_value)) $html .= " - ".doliduration($postadh);
 $html .= " <small>";
-if ((($postadh->welcome > '0') && ($adherent->datefin == null )) or (($postadh->welcome > '0') && (current_time( 'timestamp',1) > $renewadherent) && (current_time( 'timestamp',1) > $adherent->datefin))) { 
+if ((($postadh->welcome > '0') && ($adherent->datefin == null )) or (($postadh->welcome > '0') && (current_time( 'timestamp',1) > $adherent->next_subscription_renew) && (current_time( 'timestamp',1) > $adherent->datefin))) { 
 $html .= "(";
 $html .= doliprice($montantdata)." ";
 $html .=  __( 'then', 'doliconnect' )." ".doliprice($montant1)." ".__( 'yearly', 'doliconnect' ); 
