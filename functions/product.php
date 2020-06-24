@@ -225,7 +225,9 @@ $button .= 'jQuery(document).ready(function($) {
     
 jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function(e){ 
 		$.post($form.attr("action"), $form.serialize(), function(response){
+      document.getElementById("success-product-'.$product->id.'").innerHTML = "";
       document.getElementById("error-product-'.$product->id.'").innerHTML = "";
+      
       if (response.success) {
       if (document.getElementById("DoliHeaderCarItems")) {
       document.getElementById("DoliHeaderCarItems").innerHTML = response.data.items;
@@ -236,8 +238,10 @@ jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function(e){
       if (document.getElementById("DoliWidgetCarItems")) {
       document.getElementById("DoliWidgetCarItems").innerHTML = response.data.items;      
       }
+      document.getElementById("success-product-'.$product->id.'").innerHTML = response.data.message;    
+      } else {
+      document.getElementById("error-product-'.$product->id.'").innerHTML = response.data.message;      
       }
-      document.getElementById("error-product-'.$product->id.'").innerHTML = response.data.message;
 
 jQuery("#DoliconnectLoadingModal").modal("hide");
 		}, "json");  
