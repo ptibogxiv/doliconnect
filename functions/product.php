@@ -225,20 +225,20 @@ $button .= 'jQuery(document).ready(function($) {
     
 jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function(e){ 
 		$.post($form.attr("action"), $form.serialize(), function(response){
+      document.getElementById("error-product-'.$product->id.'").innerHTML = "";
       if (response.success) {
       if (document.getElementById("DoliHeaderCarItems")) {
-      document.getElementById("DoliHeaderCarItems").innerHTML = response.data;
+      document.getElementById("DoliHeaderCarItems").innerHTML = response.data.items;
       }
       if (document.getElementById("DoliFooterCarItems")) {  
-      document.getElementById("DoliFooterCarItems").innerHTML = response.data;
+      document.getElementById("DoliFooterCarItems").innerHTML = response.data.items;
       }
       if (document.getElementById("DoliWidgetCarItems")) {
-      document.getElementById("DoliWidgetCarItems").innerHTML = response.data;      
+      document.getElementById("DoliWidgetCarItems").innerHTML = response.data.items;      
       }
-      document.getElementById("error-product-'.$product->id.'").innerHTML = "";
-      } else {
+      }
       document.getElementById("error-product-'.$product->id.'").innerHTML = response.data.message;
-      }
+
 jQuery("#DoliconnectLoadingModal").modal("hide");
 		}, "json");  
   });
