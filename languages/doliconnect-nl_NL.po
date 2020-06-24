@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2020-06-24 13:13+0200\n"
-"PO-Revision-Date: 2020-06-24 13:14+0200\n"
+"POT-Creation-Date: 2020-06-24 14:29+0200\n"
+"PO-Revision-Date: 2020-06-24 14:29+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: nl_NL\n"
@@ -257,7 +257,7 @@ msgstr "jaarlijks"
 msgid "Including a federal part of"
 msgstr "Inclusief een federaal deel van"
 
-#: blocks/membership/block.php:180 functions/product.php:422
+#: blocks/membership/block.php:180 functions/product.php:426
 msgid "Contact us"
 msgstr "Neem contact op"
 
@@ -384,8 +384,8 @@ msgstr "Favoriet"
 msgid "Edit"
 msgstr "Bewerken"
 
-#: dashboard/dashboard.php:422 functions/product.php:389
-#: functions/product.php:391 functions/tools.php:966 functions/tools.php:1446
+#: dashboard/dashboard.php:422 functions/product.php:393
+#: functions/product.php:395 functions/tools.php:966 functions/tools.php:1446
 msgid "Delete"
 msgstr "Verwijderen"
 
@@ -939,7 +939,7 @@ msgstr "Ingeschakeld"
 msgid "Primary"
 msgstr "Primair"
 
-#: dashboard/dashboard.php:2061 functions/product.php:561
+#: dashboard/dashboard.php:2061 functions/product.php:565
 msgid "Description"
 msgstr "Omschrijving"
 
@@ -1124,7 +1124,7 @@ msgid "Access restricted to users"
 msgstr "Toegang beperkt tot gebruikers"
 
 #: dashboard/templates.php:616 dashboard/templates.php:669
-#: functions/product.php:415
+#: functions/product.php:419
 msgid "Sign in"
 msgstr "Inloggen"
 
@@ -1375,8 +1375,12 @@ msgstr ""
 "Kan bevestigings verzoek niet initiëren. Neem contact op met de beheerder."
 
 #: functions/data-request.php:70
-msgid "Your items have been put in the basket for 1 hour"
-msgstr "Uw artikelen zijn 1 uur in de mand gestopt"
+msgid ""
+"As our inventory is updated in real time, your items have been put in the "
+"basket for 1 hour"
+msgstr ""
+"Omdat onze voorraad in realtime wordt bijgewerkt, zijn uw artikelen 1 uur in "
+"het mandje gezet"
 
 #: functions/data-request.php:76
 msgid "We no longer have this item in this quantity"
@@ -1550,69 +1554,69 @@ msgstr ""
 msgid "This item is in stock and can be shipped immediately. %s"
 msgstr "Dit artikel is op voorraad en kan direct verzonden worden. %s"
 
-#: functions/product.php:301
+#: functions/product.php:305
 msgid "Price"
 msgstr "Prijs"
 
-#: functions/product.php:305 functions/product.php:324
-#: functions/product.php:341 functions/tools.php:1125
+#: functions/product.php:309 functions/product.php:328
+#: functions/product.php:345 functions/tools.php:1125
 msgid "hour"
 msgstr "uur"
 
-#: functions/product.php:311 functions/product.php:351
+#: functions/product.php:315 functions/product.php:355
 msgid "Our prices are incl. VAT"
 msgstr "Onze prijzen zijn incl. BTW"
 
-#: functions/product.php:311 functions/product.php:351
+#: functions/product.php:315 functions/product.php:355
 msgid "Our prices are excl. VAT"
 msgstr "Onze prijzen zijn excl. BTW"
 
-#: functions/product.php:321
+#: functions/product.php:325
 msgid "Selling Price"
 msgstr "Verkoopprijs"
 
-#: functions/product.php:338
+#: functions/product.php:342
 msgid "Your price"
 msgstr "Jouw Prijs"
 
-#: functions/product.php:385 functions/tools.php:991
+#: functions/product.php:389 functions/tools.php:991
 msgid "Unavailable"
 msgstr "Niet beschikbaar"
 
-#: functions/product.php:401
+#: functions/product.php:405
 msgid "Save my wish"
 msgstr "Mijn wens opslaan"
 
-#: functions/product.php:403
+#: functions/product.php:407
 msgid "Add to cart"
 msgstr "In winkelwagen"
 
-#: functions/product.php:415 functions/product.php:417
+#: functions/product.php:419 functions/product.php:421
 msgid "log in"
 msgstr "log in"
 
-#: functions/product.php:422
+#: functions/product.php:426
 msgid "Login"
 msgstr "Inloggen"
 
-#: functions/product.php:425
+#: functions/product.php:429
 #, php-format
 msgid "you get %u %% discount"
 msgstr "u krijgt% u%% korting"
 
-#: functions/product.php:443
+#: functions/product.php:447
 msgid "Brand:"
 msgstr "Merk:"
 
-#: functions/product.php:555
+#: functions/product.php:559
 msgid "Origin:"
 msgstr "Oorsprong:"
 
-#: functions/product.php:563
+#: functions/product.php:567
 msgid "Product/Service not in sale"
 msgstr "Product/dienst niet in verkoop"
 
-#: functions/product.php:572
+#: functions/product.php:576
 msgid "Oops! This product does not appear to exist"
 msgstr "Oeps! Dit product lijkt niet te bestaan"
 
