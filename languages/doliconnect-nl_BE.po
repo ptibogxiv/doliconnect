@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2020-06-24 14:29+0200\n"
-"PO-Revision-Date: 2020-06-24 14:29+0200\n"
+"POT-Creation-Date: 2020-06-24 15:11+0200\n"
+"PO-Revision-Date: 2020-06-24 15:11+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: nl_BE\n"
@@ -1178,7 +1178,7 @@ msgstr ""
 "Ik ga akkoord om mijn persoonlijke informatie op te slaan om contact met mij "
 "op te nemen"
 
-#: dashboard/templates.php:895 dashboard/templates.php:1172
+#: dashboard/templates.php:895
 msgid "No product / service currently on sale"
 msgstr "Geen product / dienst momenteel te koop"
 
@@ -1192,9 +1192,9 @@ msgstr "Naam, Ref. of barcode"
 
 #: dashboard/templates.php:990
 #, php-format
-msgid "We have found %s product with this search"
-msgid_plural "We have found %s products with this search"
-msgstr[0] "We hebben %s product gevonden met deze zoekopdracht"
+msgid "We have found %s item with this search"
+msgid_plural "We have found %s items with this search"
+msgstr[0] "We hebben %s item gevonden met deze zoekopdracht"
 msgstr[1] "We hebben %s products gevonden met deze zoekopdracht"
 
 #: dashboard/templates.php:992 dashboard/templates.php:1001
@@ -1203,20 +1203,24 @@ msgstr "Nieuwe zoekopdracht"
 
 #: dashboard/templates.php:1000
 #, php-format
-msgid "No product with this search: \"%s\""
-msgstr "Geen enkel product met deze zoekopdracht: \"%s\""
+msgid "No item with this search: \"%s\""
+msgstr "Geen object met deze zoekopdracht: \"%s\""
 
 #: dashboard/templates.php:1032
-msgid "Here are our new products"
-msgstr "Hier zijn onze nieuwe producten"
+msgid "Here are our new items"
+msgstr "Hier zijn onze nieuwe items"
 
 #: dashboard/templates.php:1039
-msgid "No new product"
-msgstr "Geen nieuw product"
+msgid "No new item"
+msgstr "Geen nieuw object"
 
 #: dashboard/templates.php:1097 functions/widgets.php:329
 msgid "New products"
 msgstr "Nieuwe producten"
+
+#: dashboard/templates.php:1172
+msgid "No item currently on sale"
+msgstr "Er is momenteel geen object te koop"
 
 #: dashboard/templates.php:1218
 msgid "Inactive module on Dolibarr"
@@ -1613,12 +1617,12 @@ msgid "Origin:"
 msgstr "Oorsprong:"
 
 #: functions/product.php:567
-msgid "Product/Service not in sale"
-msgstr "Product/dienst niet in verkoop"
+msgid "Item not in sale"
+msgstr "Object niet in de verkoop"
 
 #: functions/product.php:576
-msgid "Oops! This product does not appear to exist"
-msgstr "Oeps! Dit product lijkt niet te bestaan"
+msgid "Oops! This item does not appear to exist"
+msgstr "Oeps! Dit item lijkt niet te bestaan"
 
 #: functions/tools.php:33 functions/tools.php:34
 msgid "Previous"

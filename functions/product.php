@@ -564,7 +564,7 @@ $card .= "</div>";
 }
 $card .= "</div><div class='col-12'><h6>".__( 'Description', 'doliconnect' )."</h6><p>".doliproduct($product, 'description')."</p></div>";
 } else {
-$card .= "<div class='col-12'><p><center>".__( 'Product/Service not in sale', 'doliconnect' )."</center></p></div>";
+$card .= "<div class='col-12'><p><center>".__( 'Item not in sale', 'doliconnect' )."</center></p></div>";
 } 
 
 if( has_filter('mydoliconnectproductcard') ) {
@@ -573,7 +573,7 @@ $card .= apply_filters('mydoliconnectproductcard', $product);
 
 $card .= "</div>";
 } else {
-$card = "<center><br><br><br><br><center><div class='align-middle'><i class='fas fa-bomb fa-7x fa-fw'></i><h4>".__( 'Oops! This product does not appear to exist', 'doliconnect' )."</h4></div></center><br><br><br><br>";
+$card = "<center><br><br><br><br><center><div class='align-middle'><i class='fas fa-bomb fa-7x fa-fw'></i><h4>".__( 'Oops! This item does not appear to exist', 'doliconnect' )."</h4></div></center><br><br><br><br>";
 }
 
 return $card;

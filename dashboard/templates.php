@@ -987,7 +987,7 @@ $resultats = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(is
 if ( !isset($resultats->error) && $resultats != null ) {
 $count = count($resultats);
 print "<li class='list-group-item list-group-item-light'><center>";
-printf( _n( 'We have found %s product with this search', 'We have found %s products with this search', $count, 'doliconnect' ), number_format_i18n( $count ) );
+printf( _n( 'We have found %s item with this search', 'We have found %s items with this search', $count, 'doliconnect' ), number_format_i18n( $count ) );
 print " '".esc_attr($_GET['search'])."'";
 print "<a href='".esc_url( add_query_arg( 'search', '', doliconnecturl('dolishop')) )."' class='btn btn-link btn-block'>".__(  'New search', 'doliconnect')."</a>";
 print "</center></li>";
@@ -997,7 +997,7 @@ print apply_filters( 'doliproductlist', $product);
  
 }
 } else {
-print "<li class='list-group-item list-group-item-light'><center>".sprintf( esc_html__( 'No product with this search: "%s"', 'doliconnect'), esc_attr($_GET['search']));
+print "<li class='list-group-item list-group-item-light'><center>".sprintf( esc_html__( 'No item with this search: "%s"', 'doliconnect'), esc_attr($_GET['search']));
 print "<a href='".esc_url( add_query_arg( 'search', '', doliconnecturl('dolishop')) )."' class='btn btn-link btn-block'>".__(  'New search', 'doliconnect')."</a>";
 print "</center></li>";
 }
@@ -1029,14 +1029,14 @@ $resultats = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(is
 
 if ( !isset($resultats->error) && $resultats != null ) {
 $count = count($resultats);
-print "<li class='list-group-item list-group-item-light'><center>".__(  'Here are our new products', 'doliconnect')."</center></li>";
+print "<li class='list-group-item list-group-item-light'><center>".__(  'Here are our new items', 'doliconnect')."</center></li>";
 foreach ($resultats as $product) {
 
 print apply_filters( 'doliproductlist', $product);
  
 }
 } else {
-print "<li class='list-group-item list-group-item-light'><center>".__(  'No new product', 'doliconnect')."</center></li>";
+print "<li class='list-group-item list-group-item-light'><center>".__(  'No new item', 'doliconnect')."</center></li>";
 }
 print "</ul><div class='card-body'>";
 print dolipage($resultats, $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], $page, $limit);
@@ -1169,7 +1169,7 @@ print apply_filters( 'doliproductlist', $product);
  
 }
 } else {
-print "<li class='list-group-item list-group-item-light'><center>".__( 'No product / service currently on sale', 'doliconnect')."</center></li>";
+print "<li class='list-group-item list-group-item-light'><center>".__( 'No item currently on sale', 'doliconnect')."</center></li>";
 }
 
 print "</ul><div class='card-body'>";

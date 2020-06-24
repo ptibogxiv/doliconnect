@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2020-06-24 14:28+0200\n"
-"PO-Revision-Date: 2020-06-24 14:28+0200\n"
+"POT-Creation-Date: 2020-06-24 15:10+0200\n"
+"PO-Revision-Date: 2020-06-24 15:11+0200\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_FR\n"
@@ -1178,7 +1178,7 @@ msgstr ""
 "J'accepte que mes informations personnelles soient sauvegarder afin de me "
 "contacter"
 
-#: dashboard/templates.php:895 dashboard/templates.php:1172
+#: dashboard/templates.php:895
 msgid "No product / service currently on sale"
 msgstr "Aucun produit / service actuellement en vente"
 
@@ -1192,10 +1192,10 @@ msgstr "Nom, Réf. ou code-barres"
 
 #: dashboard/templates.php:990
 #, php-format
-msgid "We have found %s product with this search"
-msgid_plural "We have found %s products with this search"
-msgstr[0] "Nous avons trouvé %s produit avec cette recherche"
-msgstr[1] "Nous avons trouvé %s produits avec cette recherche"
+msgid "We have found %s item with this search"
+msgid_plural "We have found %s items with this search"
+msgstr[0] "Nous avons trouvé %s article avec cette recherche"
+msgstr[1] "Nous avons trouvé %s articles avec cette recherche"
 
 #: dashboard/templates.php:992 dashboard/templates.php:1001
 msgid "New search"
@@ -1203,20 +1203,24 @@ msgstr "Nouvelle recherche"
 
 #: dashboard/templates.php:1000
 #, php-format
-msgid "No product with this search: \"%s\""
-msgstr "Aucun produit avec cette recherche: \"%s\""
+msgid "No item with this search: \"%s\""
+msgstr "Aucun article avec cette recherche: « %s »"
 
 #: dashboard/templates.php:1032
-msgid "Here are our new products"
-msgstr "Voici nos nouveaux produits"
+msgid "Here are our new items"
+msgstr "Voici nos nouveaux articles"
 
 #: dashboard/templates.php:1039
-msgid "No new product"
-msgstr "Pas de nouveau produit"
+msgid "No new item"
+msgstr "Aucun nouvel article"
 
 #: dashboard/templates.php:1097 functions/widgets.php:329
 msgid "New products"
 msgstr "Nouveaux produits"
+
+#: dashboard/templates.php:1172
+msgid "No item currently on sale"
+msgstr "Aucun article actuellement en vente"
 
 #: dashboard/templates.php:1218
 msgid "Inactive module on Dolibarr"
@@ -1636,12 +1640,12 @@ msgid "Origin:"
 msgstr "Origine:"
 
 #: functions/product.php:567
-msgid "Product/Service not in sale"
-msgstr "Produit/service non en vente"
+msgid "Item not in sale"
+msgstr "Article non en vente"
 
 #: functions/product.php:576
-msgid "Oops! This product does not appear to exist"
-msgstr "Oups! Ce produit ne semble pas exister"
+msgid "Oops! This item does not appear to exist"
+msgstr "Oups! Cet article ne semble pas exister"
 
 #: functions/tools.php:33 functions/tools.php:34
 msgid "Previous"
