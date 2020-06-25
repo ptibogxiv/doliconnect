@@ -57,6 +57,8 @@ return $pagination;
 
 function doliconnect_image($module, $id, $options = array(), $refresh = null) {
 
+$class = isset($options['class']) ? $options['class'] : 'img-fluid rounded-lg';
+
 if (is_numeric($id)) {
 $imgs = callDoliApi("GET", "/documents?modulepart=".$module."&id=".$id, null, dolidelay('document', $refresh), $options['entity']);   
 $image = "<div class='row'>";
@@ -97,7 +99,7 @@ $imgy->resize( 350, 350, true );
 $avatar = $imgy->generate_filename($options['size'],$up_dir['basedir']."/doliconnect/".$module.$dir."/", NULL );
 $imgy->save($avatar);
 }
-$image .= "<img src='".$up_dir['baseurl'].'/doliconnect/'.$module.$dir.'/'.explode('.', $img->relativename, 2)[0].'-'.$options['size'].'.'.explode('.', $img->relativename, 2)[1]."' class='img-fluid rounded-lg' loading='lazy' alt='".$img->relativename."'>";
+$image .= "<img src='".$up_dir['baseurl'].'/doliconnect/'.$module.$dir.'/'.explode('.', $img->relativename, 2)[0].'-'.$options['size'].'.'.explode('.', $img->relativename, 2)[1]."' class='".$class."' alt='".$img->relativename."'>";
 
 } else {
 $image .= "<i class='fa fa-cube fa-fw fa-2x'></i>";
@@ -114,7 +116,7 @@ $imgy->resize( 350, 350, true );
 $avatar = $imgy->generate_filename($options['size'],$up_dir['basedir']."/doliconnect/".$module.$dir."/", NULL );
 $imgy->save($avatar);
 }
-$image .= "<img src='".$up_dir['baseurl'].$picture."' class='img-fluid rounded-lg' alt='".$img->relativename."'>";
+$image .= "<img src='".$up_dir['baseurl'].$picture."' class='".$class."' alt='".$img->relativename."'>";
 
 }
 $image .= "</div>";
@@ -142,12 +144,12 @@ mkdir($up_dir['basedir'].'/doliconnect/'.$module.'/'.explode('/'.$imgj['filename
 //}
 $file=$up_dir['basedir'].'/doliconnect/'.$module.'/'.$id;
 file_put_contents($file, base64_decode($imgj['content']));
-$image = "<img src='".$up_dir['baseurl'].'/doliconnect/'.$module.'/'.$id."' class='img-fluid rounded-lg' alt='".$imgj['filename']."'>"; 
+$image = "<img src='".$up_dir['baseurl'].'/doliconnect/'.$module.'/'.$id."' class='".$class."' alt='".$imgj['filename']."'>"; 
 } else {
 $image = "<i class='fa fa-cube fa-fw fa-2x'></i>";
 }
 } else {
-$image = "<img src='".$up_dir['baseurl'].'/doliconnect/'.$module.'/'.$id."' class='img-fluid rounded-lg' alt='".$up_dir['baseurl'].'/doliconnect/'.$module.'/'.$id."'>";
+$image = "<img src='".$up_dir['baseurl'].'/doliconnect/'.$module.'/'.$id."' class='".$class."' alt='".$up_dir['baseurl'].'/doliconnect/'.$module.'/'.$id."'>";
 }
 }
 return $image;
