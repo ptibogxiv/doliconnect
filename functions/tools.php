@@ -71,10 +71,13 @@ $dir = '/'.substr($num, 1, 1).'/'.substr($num, 0, 1).'/'.$id;
 }
 if ( !isset($imgs->error) && $imgs != null ) {
 $imgs = array_slice((array) $imgs, 0, $options['limit']);
-$image .= "<div class='card-columns'>";
+if (empty($options['limit'])) $image .= "<div class='card-columns'>";
 foreach ($imgs as $img) {
 $up_dir = wp_upload_dir();
-$image .= "<div class='card'>";
+if (empty($options['limit'])) { $image .= "<div class='card'>";
+} else {
+$image .= "<div class='col'>";
+}
 $file=$up_dir['basedir'].'/doliconnect/'.$module.$dir.'/'.$img->relativename;
 if (!is_file($file)) {
 $imgj =  callDoliApi("GET", "/documents/download?modulepart=".$module."&original_file=".$subdir.$img->level1name."/".$img->relativename, null, dolidelay('document', $refresh), $options['entity']);
@@ -100,7 +103,13 @@ $imgy->resize( 350, 350, true );
 $avatar = $imgy->generate_filename($options['size'],$up_dir['basedir']."/doliconnect/".$module.$dir."/", NULL );
 $imgy->save($avatar);
 }
-$image .= "<img src='".$up_dir['baseurl'].'/doliconnect/'.$module.$dir.'/'.explode('.', $img->relativename, 2)[0].'-'.$options['size'].'.'.explode('.', $img->relativename, 2)[1]."' class='card-img' alt='".$img->relativename."'>";
+$image .= "<img src='".$up_dir['baseurl'].'/doliconnect/'.$module.$dir.'/'.explode('.', $img->relativename, 2)[0].'-'.$options['size'].'.'.explode('.', $img->relativename, 2)[1]."' class='";
+if (empty($options['limit'])) {
+$image .= "card-img";
+} else {
+$image .=  $class;
+}
+$image .= "' alt='".$img->relativename."'>";
 
 } else {
 $image .= "<i class='fa fa-cube fa-fw fa-2x'></i>";
@@ -122,7 +131,7 @@ $image .= "<img src='".$up_dir['baseurl'].$picture."' class='".$class."' alt='".
 }
 $image .= "</div>";
 }
-$image .= "</div>";
+if (empty($options['limit'])) $image .= "</div>";
 } elseif ($module == 'product' || $module == 'category') {
 $image .= "<div class='col'><i class='fa fa-cube fa-fw fa-2x'></i></div>";
 }
