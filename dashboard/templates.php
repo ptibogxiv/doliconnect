@@ -916,14 +916,14 @@ if ( !isset($resultats->error) && $resultats != null ) {
 foreach ($resultats as $supplier) {
 
 if (empty(get_option('dolicartsupplierlayout'))) { 
-print '<div class="col mb-4"><div class="card">';
+print '<div class="card">';
 if (!empty($supplier->logo)) { 
 print '<a href="'.esc_url( add_query_arg( 'supplier', $supplier->id, doliconnecturl('dolisupplier')) ).'">'.doliconnect_image('thirdparty', $supplier->id.'/logos/'.$supplier->logo, array('entity'=> $supplier->entity, 'class' => 'card-img'), esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)).'</a>';
 } else {
-print '<div class="card-body"><a href="'.esc_url( add_query_arg( 'supplier', $supplier->id, doliconnecturl('dolisupplier')) ).'">'.(!empty($supplier->name_alias)?$supplier->name_alias:$supplier->name).'</a></div>';
+print '<div class="card-body"><a href="'.esc_url( add_query_arg( 'supplier', $supplier->id, doliconnecturl('dolisupplier')) ).'"><center>'.(!empty($supplier->name_alias)?$supplier->name_alias:$supplier->name).'</center></a></div>';
 }
 
-print "</div></div>";
+print "</div>";
 
 } else {
 print "<a href='".esc_url( add_query_arg( 'supplier', $supplier->id, doliconnecturl('dolisupplier')) )."' class='list-group-item list-group-item-action'>".(!empty($supplier->name_alias)?$supplier->name_alias:$supplier->name)."</a>";
