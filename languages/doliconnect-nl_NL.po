@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2020-06-24 15:11+0200\n"
-"PO-Revision-Date: 2020-06-24 15:12+0200\n"
+"POT-Creation-Date: 2020-06-25 14:41+0200\n"
+"PO-Revision-Date: 2020-06-25 14:41+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: nl_NL\n"
@@ -1215,8 +1215,8 @@ msgid "No new item"
 msgstr "Geen nieuw object"
 
 #: dashboard/templates.php:1097 functions/widgets.php:329
-msgid "New products"
-msgstr "Nieuwe producten"
+msgid "New items"
+msgstr "Nieuwe objecten"
 
 #: dashboard/templates.php:1172
 msgid "No item currently on sale"
@@ -2222,6 +2222,9 @@ msgstr "ptibogxiv"
 #. Author URI of the plugin/theme
 msgid "https://www.ptibogxiv.net/en"
 msgstr "https://www.ptibogxiv.net/en"
+
+#~ msgid "New products"
+#~ msgstr "Nieuwe producten"
 
 #~ msgid "Change your payment mode"
 #~ msgstr "De betalingsmodus wijzigen"

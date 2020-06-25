@@ -326,7 +326,7 @@ $count = 0;
 } else {
 $count = count($listproduct);
 }
-print "'>".__(  'New products', 'doliconnect')." (".$count.")</a>";
+print "'>".__(  'New items', 'doliconnect')." (".$count.")</a>";
 }
 foreach ($resultatsc->childs as $categorie) {
 
