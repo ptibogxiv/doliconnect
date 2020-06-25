@@ -892,7 +892,7 @@ print apply_filters( 'doliproductlist', $product[0]);
 
 }
 } else {
-print "<li class='list-group-item list-group-item-light'><center>".__( 'No product / service currently on sale', 'doliconnect')."</center></li>";
+print "<li class='list-group-item list-group-item-light'><center>".__( 'No item currently on sale', 'doliconnect')."</center></li>";
 }
 
 } else {

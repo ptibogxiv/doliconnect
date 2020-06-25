@@ -114,7 +114,7 @@ $imgy->resize( 350, 350, true );
 $avatar = $imgy->generate_filename($options['size'],$up_dir['basedir']."/doliconnect/".$module.$dir."/", NULL );
 $imgy->save($avatar);
 }
-$image .= "<img src='".$up_dir['baseurl'].$picture."' class='img-fluid rounded-lg' loading='lazy' alt='".$img->relativename."'>";
+$image .= "<img src='".$up_dir['baseurl'].$picture."' class='img-fluid rounded-lg' alt='".$img->relativename."'>";
 
 }
 $image .= "</div>";
@@ -142,12 +142,12 @@ mkdir($up_dir['basedir'].'/doliconnect/'.$module.'/'.explode('/'.$imgj['filename
 //}
 $file=$up_dir['basedir'].'/doliconnect/'.$module.'/'.$id;
 file_put_contents($file, base64_decode($imgj['content']));
-$image = "<img src='".$up_dir['baseurl'].'/doliconnect/'.$module.'/'.$id."' class='img-fluid rounded-lg' loading='lazy' alt='".$imgj['filename']."'>"; 
+$image = "<img src='".$up_dir['baseurl'].'/doliconnect/'.$module.'/'.$id."' class='img-fluid rounded-lg' alt='".$imgj['filename']."'>"; 
 } else {
 $image = "<i class='fa fa-cube fa-fw fa-2x'></i>";
 }
 } else {
-$image = "<img src='".$up_dir['baseurl'].'/doliconnect/'.$module.'/'.$id."' class='img-fluid rounded-lg' loading='lazy' alt='".$up_dir['baseurl'].'/doliconnect/'.$module.'/'.$id."'>";
+$image = "<img src='".$up_dir['baseurl'].'/doliconnect/'.$module.'/'.$id."' class='img-fluid rounded-lg' alt='".$up_dir['baseurl'].'/doliconnect/'.$module.'/'.$id."'>";
 }
 }
 return $image;
