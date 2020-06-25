@@ -313,7 +313,7 @@ if ( !isset($resultatsc->error) && $resultatsc != null ) {
 print "<div class='list-group'>";
 if (get_option('dolicartnewlist') != 'none') {
 print "<a href='".esc_url( add_query_arg( 'new', '', doliconnecturl('dolishop')) )."' class='list-group-item list-group-item-action";
-//if ( isset($_GET['new']) && $categorie->id == $_GET['subcategory'] ) { print " active"; }
+if ( isset($_GET['new']) ) { print " active"; }
 $date = new DateTime(); 
 $date->modify('NOW');
 $duration = (!empty(get_option('dolicartnewlist'))?get_option('dolicartnewlist'):'month');
