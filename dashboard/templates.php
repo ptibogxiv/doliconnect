@@ -849,11 +849,11 @@ $thirdparty = callDoliApi("GET", $request, null, dolidelay('thirdparty', esc_att
 //print $thirdparty;
 }
 
-print "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
+print "<div class='card shadow-sm'>";
 
 if ( !isset($thirdparty->error) && isset($_GET['supplier']) && isset($thirdparty->id) && ($_GET['supplier'] == $thirdparty->id) && $thirdparty->status == 1 && $thirdparty->fournisseur == 1 ) {
 
-print "<li class='list-group-item'>";
+print "<ul class='list-group list-group-flush'><li class='list-group-item'>";
 
 print "<div class='row'><div class='col-4 col-md-2'><center>";
 print doliconnect_image('thirdparty', $thirdparty->id.'/logos/'.$thirdparty->logo, array('entity'=> $thirdparty->entity), esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
@@ -903,6 +903,8 @@ $limit=25;
 if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']-1); }  else { $page = 0; }
 $request = "/thirdparties?sortfield=t.nom&sortorder=ASC&limit=".$limit."&page=".$page."&mode=4".$category."&sqlfilters=(t.status%3A%3D%3A'1')";
 $resultats = callDoliApi("GET", $request, null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+
+print "<ul class='list-group list-group-flush'>";
 
 if ( !isset($resultats->error) && $resultats != null ) {
 foreach ($resultats as $supplier) {
