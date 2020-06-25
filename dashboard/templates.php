@@ -895,6 +895,8 @@ print apply_filters( 'doliproductlist', $product[0]);
 print "<li class='list-group-item list-group-item-light'><center>".__( 'No item currently on sale', 'doliconnect')."</center></li>";
 }
 
+print "</ul><div class='card-body'>";
+
 } else {
 
  if (!empty($shopsupplier)) $category = "&category=".$shopsupplier;
@@ -904,7 +906,11 @@ if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['
 $request = "/thirdparties?sortfield=t.nom&sortorder=ASC&limit=".$limit."&page=".$page."&mode=4".$category."&sqlfilters=(t.status%3A%3D%3A'1')";
 $resultats = callDoliApi("GET", $request, null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
+if (!empty(get_option('dolicartsupplierlayout'))) { 
+print "<div class='card-body'>";
+} else {
 print "<ul class='list-group list-group-flush'>";
+}
 
 if ( !isset($resultats->error) && $resultats != null ) {
 foreach ($resultats as $supplier) {
@@ -916,9 +922,12 @@ print "<a href='".esc_url( add_query_arg( 'supplier', $supplier->id, doliconnect
 print "<li class='list-group-item list-group-item-light'><center>".__( 'No supplier', 'doliconnect')."</center></li>";
 }
 
+if (empty(get_option('dolicartsupplierlayout'))) {
+print "</ul><div class='card-body'>";
+}
+
 } 
 
-print "</ul><div class='card-body'>";
 print dolipage($resultats, $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], $page, $limit);
 print "</div><div class='card-footer text-muted'>";
 print "<small><div class='float-left'>";
