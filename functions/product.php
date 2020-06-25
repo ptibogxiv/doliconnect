@@ -573,7 +573,7 @@ $card .= apply_filters('mydoliconnectproductcard', $product);
 
 $card .= "</div>";
 } else {
-$card = "<center><br><br><br><br><center><div class='align-middle'><i class='fas fa-bomb fa-7x fa-fw'></i><h4>".__( 'Oops! This item does not appear to exist', 'doliconnect' )."</h4></div></center><br><br><br><br>";
+$card = "<center><br><br><br><br><div class='align-middle'><i class='fas fa-bomb fa-7x fa-fw'></i><h4>".__( 'Oops! This item does not appear to exist', 'doliconnect' )."</h4></div><br><br><br><br></center>";
 }
 
 return $card;

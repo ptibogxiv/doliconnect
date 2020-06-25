@@ -1131,8 +1131,9 @@ print "</div></div>";
 
 print "<ul class='list-group list-group-flush'>";
 $category = callDoliApi("GET", "/categories/".esc_attr(isset($_GET["subcategory"]) ? $_GET["subcategory"] : $_GET["category"])."?include_childs=true", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-print "<li class='list-group-item'>";
 
+if (isset($category->id) && $category->id > 0) {
+print "<li class='list-group-item'>";
 print "<div class='row'><div class='col-4 col-md-2'><center>";
 print doliconnect_image('category', $category->id, 1, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), $category->entity);
 print "</center></div><div class='col-8 col-md-10'>".doliproduct($category, 'label')."<br><small>".doliproduct($category, 'description');
@@ -1171,9 +1172,12 @@ print apply_filters( 'doliproductlist', $product);
 } else {
 print "<li class='list-group-item list-group-item-light'><center>".__( 'No item currently on sale', 'doliconnect')."</center></li>";
 }
+} else {
+print "<li class='list-group-item list-group-item-white'><center><br><br><br><br><div class='align-middle'><i class='fas fa-bomb fa-7x fa-fw'></i><h4>".__( 'Oops! This category does not appear to exist', 'doliconnect' )."</h4></div><br><br><br><br></center></li>";
+}
 
 print "</ul><div class='card-body'>";
-print dolipage($resultats, $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], $page, $limit);
+if ( isset($resultats) ) print dolipage($resultats, $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], $page, $limit);
 print "</div><div class='card-footer text-muted'>";
 print "<small><div class='float-left'>";
 if ( isset($request) ) print dolirefresh($request, get_permalink(), dolidelay('product'));
