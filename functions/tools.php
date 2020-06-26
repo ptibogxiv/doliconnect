@@ -105,7 +105,7 @@ $imgy->save($avatar);
 }
 $image .= "<img src='".$up_dir['baseurl'].'/doliconnect/'.$module.$dir.'/'.explode('.', $img->relativename, 2)[0].'-'.$options['size'].'.'.explode('.', $img->relativename, 2)[1]."' class='";
 if (empty($options['limit'])) {
-$image .= "card-img";
+$image .= "img-fluid card-img";
 } else {
 $image .=  $class;
 }
@@ -126,7 +126,13 @@ $imgy->resize( 350, 350, true );
 $avatar = $imgy->generate_filename($options['size'],$up_dir['basedir']."/doliconnect/".$module.$dir."/", NULL );
 $imgy->save($avatar);
 }
-$image .= "<img src='".$up_dir['baseurl'].$picture."' class='".$class."' alt='".$img->relativename."'>";
+$image .= "<img src='".$up_dir['baseurl'].$picture."' class='";
+if (empty($options['limit'])) {
+$image .= "img-fluid card-img";
+} else {
+$image .=  $class;
+}
+$image .= "' alt='".$img->relativename."'>";
 
 }
 $image .= "</div>";
