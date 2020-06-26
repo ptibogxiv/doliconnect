@@ -246,6 +246,10 @@ if (isset($_REQUEST['doliconnectrestrict']) && $_REQUEST['doliconnectrestrict']=
 update_option('doliconnectrestrict', sanitize_text_field($_REQUEST['doliconnectrestrict']));
 }else {
 delete_option('doliconnectrestrict');}
+if (isset($_REQUEST['dolicartsuppliergrid']) && $_REQUEST['dolicartsuppliergrid']==1){
+update_option('dolicartsuppliergrid', sanitize_text_field($_REQUEST['dolicartsuppliergrid']));
+}else {
+delete_option('dolicartsuppliergrid');}
 if (isset($_REQUEST['doliconnect_facebook']) && $_REQUEST['doliconnect_facebook']>0){
 update_option('doliconnect_facebook', sanitize_text_field($_REQUEST['doliconnect_facebook']));
 }else {
@@ -407,7 +411,7 @@ echo "<input id='dolibarr_entity'  name='dolibarr_entity' type='text' value='".(
     'option_none_value' => '0', 
     'selected' => get_option('dolisupplier') 
 );
-           wp_dropdown_pages($args); ?></td>
+           wp_dropdown_pages($args); ?><input name="dolicartsuppliergrid" type="checkbox" id="dolicartsuppliergrid" value="1" <?php checked('1', get_option('dolicartsuppliergrid')); ?> /> <?php _e('Display in grid rather than a list', 'doliconnect') ?></td>
             </tr> 
             <tr>
                 <th style="width:150px;"><label for="dolibarr_cart">dolibarr_cart</label></th>
