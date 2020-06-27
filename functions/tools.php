@@ -1135,12 +1135,14 @@ $duration = $object->duration_value.' ';
 if ( $object->duration_value > 1 ) {
 if ( $object->duration_unit == 'y' ) { $duration .=__( 'years', 'doliconnect'); }
 elseif ( $object->duration_unit == 'm' )  { $duration .=__( 'months', 'doliconnect'); }
+elseif ( $object->duration_unit == 'w' )  { $duration .=__( 'weeks', 'doliconnect'); }
 elseif ( $object->duration_unit == 'd' )  { $duration .=__( 'days', 'doliconnect'); }
 elseif ( $object->duration_unit == 'h' )  { $duration .=__( 'hours', 'doliconnect'); }
 elseif ( $object->duration_unit == 'i' )  { $duration .=__( 'minutes', 'doliconnect'); }
 } else {
 if ( $object->duration_unit == 'y' ) { $duration .=__( 'year', 'doliconnect');}
 elseif ( $object->duration_unit == 'm' )  { $duration .=__( 'month', 'doliconnect'); }
+elseif ( $object->duration_unit == 'w' )  { $duration .=__( 'week', 'doliconnect'); }
 elseif ( $object->duration_unit == 'd' )  { $duration .=__( 'day', 'doliconnect'); }
 elseif ( $object->duration_unit == 'h' )  { $duration .=__( 'hour', 'doliconnect'); }
 elseif ( $object->duration_unit == 'i' )  { $duration .=__( 'minute', 'doliconnect'); }

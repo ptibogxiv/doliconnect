@@ -85,7 +85,7 @@ if ( !isset($typeadhesion->error) ) {
 if ( count($typeadhesion) < 4 ) {
 $html .= '<div class="card-deck mb-3 text-center">';
 } else {
-$html .= '<table class="table table-striped"><tbody>';
+$html .= '<div class="card"><table class="table table-striped"><tbody>';
 }
 foreach ( $typeadhesion as $postadh ) {
 if ($postadh->subscription == '1'){
@@ -134,10 +134,10 @@ $html .= " <small>";
 if ((($postadh->welcome > '0') && ($adherent->datefin == null )) or (($postadh->welcome > '0') && (current_time( 'timestamp',1) > $adherent->next_subscription_renew) && (current_time( 'timestamp',1) > $adherent->datefin))) { 
 $html .= "(";
 $html .= doliprice($montantdata)." ";
-$html .=  __( 'then', 'doliconnect' )." ".doliprice($montant1)." ".__( 'yearly', 'doliconnect' ); 
+$html .=  __( 'then', 'doliconnect' )." ".doliprice($montant1);//." ".__( 'yearly', 'doliconnect' ); 
 } else {
 $html .= "(".doliprice($montant1);
-$html .= " ".__( 'yearly', 'doliconnect' );
+//$html .= " ".__( 'yearly', 'doliconnect' );
 } 
 $html .= ")</small>";
 if (!empty(doliproduct($postadh, 'note'))) $html .= "<br><small class='text-justify text-muted '>".doliproduct($postadh, 'note')."</small>";
@@ -154,7 +154,7 @@ $html .= "</div></td></tr>";
 if ( count($typeadhesion) < 4 ) {
 $html .= '</div>';
 } else {
-$html .= '</tbody></table>';
+$html .= '</tbody></table></div>';
 }
 }
 
