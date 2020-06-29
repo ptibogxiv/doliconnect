@@ -85,7 +85,7 @@ if ( !isset($typeadhesion->error) ) {
 if ( count($typeadhesion) < 4 ) {
 $html .= '<div class="card-deck mb-3 text-center">';
 } else {
-$html .= '<div class="card"><table class="table table-striped"><tbody>';
+$html .= '<div class="card"><div class="card-header">'.__( 'Season', 'doliconnect').'</div><table class="table table-striped"><tbody>';
 }
 foreach ( $typeadhesion as $postadh ) {
 if ($postadh->subscription == '1'){
@@ -103,12 +103,9 @@ $montant2 = $tx*$postadh->price;
 
 if ( count($typeadhesion) < 4 ) {
 
-$html .= '<DIV class="card border'.$color.' mb-4 box-shadow"><div class="card-header"><h4 class="my-0 font-weight-normal">'.doliproduct($postadh, 'label').'</h4></div><div class="card-body">'; 
+$html .= '<div class="card border'.$color.' mb-4 box-shadow"><div class="card-header"><h4 class="my-0 font-weight-normal">'.doliproduct($postadh, 'label').'</h4></div><div class="card-body">'; 
 $html .= '<h1 class="card-title pricing-card-title">'.doliprice($postadh->price).'<small class="text-muted">/';
-if (! empty ($postadh->duration_value)) { $html .= doliduration($postadh); }
-else {
-$html .= __( 'year', 'doliconnect');
-}
+$html .= doliduration($postadh);
 $html .= '</small></h1>';
 
 if ( !isset($adherent) or (($postadh->welcome > '0') && isset($adherent) && ($adherent->datefin == null )) or (($postadh->welcome > '0') && (current_time( 'timestamp',1) > $adherent->next_subscription_renew) && isset($adherent) && (current_time( 'timestamp',1) > $adherent->datefin)) ) {          
@@ -134,10 +131,9 @@ $html .= " <small>";
 if ((($postadh->welcome > '0') && ($adherent->datefin == null )) or (($postadh->welcome > '0') && (current_time( 'timestamp',1) > $adherent->next_subscription_renew) && (current_time( 'timestamp',1) > $adherent->datefin))) { 
 $html .= "(";
 $html .= doliprice($montantdata)." ";
-$html .=  __( 'then', 'doliconnect' )." ".doliprice($montant1);//." ".__( 'yearly', 'doliconnect' ); 
+$html .=  __( 'then', 'doliconnect' )." ".doliprice($montant1);
 } else {
 $html .= "(".doliprice($montant1);
-//$html .= " ".__( 'yearly', 'doliconnect' );
 } 
 $html .= ")</small>";
 if (!empty(doliproduct($postadh, 'note'))) $html .= "<br><small class='text-justify text-muted '>".doliproduct($postadh, 'note')."</small>";
