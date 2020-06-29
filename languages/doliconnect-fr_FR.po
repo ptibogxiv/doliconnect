@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2020-06-27 16:26+0200\n"
-"PO-Revision-Date: 2020-06-27 16:26+0200\n"
+"POT-Creation-Date: 2020-06-29 20:25+0200\n"
+"PO-Revision-Date: 2020-06-29 20:25+0200\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_FR\n"
@@ -233,29 +233,32 @@ msgstr "Particulier"
 msgid "Company"
 msgstr "Société"
 
-#: blocks/membership/block.php:110 blocks/membership/block.php:170
-#: functions/tools.php:1143
-msgid "year"
-msgstr "an"
+#: blocks/membership/block.php:88
+msgid "Prices"
+msgstr "Tarifs"
 
-#: blocks/membership/block.php:115 blocks/membership/block.php:175
+#: blocks/membership/block.php:107 blocks/membership/block.php:166
 msgid "First subscription at"
 msgstr "Première souscription à"
 
-#: blocks/membership/block.php:120 blocks/membership/block.php:147
+#: blocks/membership/block.php:112 blocks/membership/block.php:138
 #: functions/widgets.php:125 functions/widgets.php:131
 msgid "Subscribe"
 msgstr "Souscrire"
 
-#: blocks/membership/block.php:137 functions/tools.php:389
+#: blocks/membership/block.php:129 functions/tools.php:389
 msgid "then"
 msgstr "puis"
 
-#: blocks/membership/block.php:144
+#: blocks/membership/block.php:135
 msgid "Including a federal part of"
 msgstr "Incluant une part fédérale de"
 
-#: blocks/membership/block.php:180 functions/product.php:426
+#: blocks/membership/block.php:161 functions/tools.php:1143
+msgid "year"
+msgstr "an"
+
+#: blocks/membership/block.php:171 functions/product.php:426
 msgid "Contact us"
 msgstr "Contactez-nous"
 
@@ -2258,6 +2261,9 @@ msgstr "ptibogxiv"
 msgid "https://www.ptibogxiv.net/en"
 msgstr "https://www.ptibogxiv.net/fr"
 
+#~ msgid "Season"
+#~ msgstr "Saison"
+
 #~ msgid "No product / service currently on sale"
 #~ msgstr "Aucun produit / service actuellement en vente"
 
@@ -2973,6 +2979,3 @@ msgstr "https://www.ptibogxiv.net/fr"
 
 #~ msgid "Autoriser les nouvelles inscriptions au site."
 #~ msgstr "Autoriser les nouvelles inscriptions au site."
-
-#~ msgid "Season"
-#~ msgstr "Saison"

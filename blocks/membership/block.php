@@ -85,7 +85,7 @@ if ( !isset($typeadhesion->error) ) {
 if ( count($typeadhesion) < 4 ) {
 $html .= '<div class="card-deck mb-3 text-center">';
 } else {
-$html .= '<div class="card"><div class="card-header">'.__( 'Season', 'doliconnect').' '.$typeadhesion[0]->season.'</div><table class="table table-striped"><tbody>';
+$html .= '<div class="card"><div class="card-header">'.__( 'Prices', 'doliconnect').' '.$typeadhesion[0]->season.'</div><table class="table table-striped"><tbody>';
 }
 foreach ( $typeadhesion as $postadh ) {
 if ($postadh->subscription == '1'){
