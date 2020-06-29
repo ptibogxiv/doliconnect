@@ -36,8 +36,6 @@ function doliconnect_membership_block() {
 function doliconnect_membership_render_block( $attributes ) {
 global $current_user;
 
-$delay=MONTH_IN_SECONDS;
-
 doliconnect_enqueues(); 
 
 $html = "";
@@ -48,7 +46,6 @@ $adherent = callDoliApi("GET", "/adherentsplus/".doliconnector($current_user, 'f
 
 $request = "/adherentsplus/type?sortfield=t.libelle&sortorder=ASC"; //&sqlfilters=(t.morphy%3A=%3A'')%20or%20(t.morphy%3Ais%3Anull)%20or%20(t.morphy%3A%3D%3A'phy')
 $typeadhesion = callDoliApi("GET", $request, null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true));
-
 
 if ( !isset($typeadhesion->error) ) {
 if ( count($typeadhesion) < 4 ) {
