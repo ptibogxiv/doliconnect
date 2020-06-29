@@ -40,47 +40,16 @@ $delay=MONTH_IN_SECONDS;
 
 doliconnect_enqueues(); 
 
-$current_offset = get_option('gmt_offset');
-$tzstring = get_option('timezone_string');
-$check_zone_info = true;
-// Remove old Etc mappings. Fallback to gmt_offset.
-if ( false !== strpos($tzstring,'Etc/GMT') )
-	$tzstring = '';
-
-if ( empty($tzstring) ) { // Create a UTC+- zone if no timezone string exists
-	$check_zone_info = false;
-	if ( 0 == $current_offset )
-		$tzstring = 'UTC+0';
-	elseif ($current_offset < 0)
-		$tzstring = 'UTC' . $current_offset;
-	else
-		$tzstring = 'UTC+' . $current_offset;
-}
-//define( 'MY_TIMEZONE', (get_option( 'timezone_string' ) ? get_option( 'timezone_string' ) : date_default_timezone_get() ) );
-//date_default_timezone_set( MY_TIMEZONE );
-date_default_timezone_set($tzstring);
-
 $html = "";
 
 if (is_user_logged_in() && doliconnector($current_user, 'fk_member') > 0){
 $adherent = callDoliApi("GET", "/adherentsplus/".doliconnector($current_user, 'fk_member'), null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true));
 }
 
-$request = "/adherentsplus/type?sortfield=t.libelle&sortorder=ASC&sqlfilters=(t.morphy%3A=%3A'')%20or%20(t.morphy%3Ais%3Anull)%20or%20(t.morphy%3A%3D%3A'phy')";
-
+$request = "/adherentsplus/type?sortfield=t.libelle&sortorder=ASC"; //&sqlfilters=(t.morphy%3A=%3A'')%20or%20(t.morphy%3Ais%3Anull)%20or%20(t.morphy%3A%3D%3A'phy')
 $typeadhesion = callDoliApi("GET", $request, null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true));
 
-$typeadhesionpro = callDoliApi("GET", "/adherentsplus/type?sortfield=t.libelle&sortorder=ASC&sqlfilters=(t.morphy%3A=%3A'')%20or%20(t.morphy%3Ais%3Anull)%20or%20(t.morphy%3A%3D%3A'mor')", null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true));
 
-if ( isset($typeadhesionpro->error) && $typeadhesionpro->error->code != '404' ) {
-$html .= '<center><ul class="nav nav-pills nav-justified" id="pills-tab" role="tablist">
-<li class="nav-item"><a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">'.__( 'Individual', 'doliconnect' ).'</a></li>
-<li class="nav-item"><a class="nav-link" id="pills-group-tab" data-toggle="pill" href="#pills-group" role="tab" aria-controls="pills-group" aria-selected="false">'.__( 'Company', 'doliconnect' ).'</a></li>
-</ul></center><br>';
-}
-
-$html .= '<div class="tab-content" id="pills-tabContent"><div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">';
-      
 if ( !isset($typeadhesion->error) ) {
 if ( count($typeadhesion) < 4 ) {
 $html .= '<div class="card-deck mb-3 text-center">';
@@ -104,7 +73,7 @@ $html .= doliduration($postadh);
 $html .= '</small></h1>';
 
 if ( !isset($adherent) or (($postadh->welcome > '0') && isset($adherent) && ($adherent->datefin == null )) or (($postadh->welcome > '0') && (current_time( 'timestamp',1) > $adherent->next_subscription_renew) && isset($adherent) && (current_time( 'timestamp',1) > $adherent->datefin)) ) {          
-$html .= "<small>".__( 'First subscription at', 'doliconnect' )." ".doliprice($montantdata)."</small>"; 
+$html .= "<small>".__( 'First subscription at', 'doliconnect' )." ".doliprice($postadh->price_prorata)."</small>"; 
 }   
 $html .= doliproduct($postadh, 'note').'</div>';
 
@@ -142,50 +111,17 @@ $html .= "</div></td></tr>";
 }
 
 }}
-if ( count($typeadhesion) < 4 ) {
-$html .= '</div>';
-} else {
-$html .= '</tbody></table></div>';
+
+$html .= '</tbody></table>';
+
 }
-}
-
-$html .= '</div><div class="tab-pane fade" id="pills-group" role="tabpanel" aria-labelledby="pills-group-tab">';
-
-if ( !isset($typeadhesionpro->error) ) {
-$html .= '<div class="card-deck mb-3 text-center">';
-foreach ( $typeadhesionpro as $postadh ) {
-$html .= '<div class="card border-info mb-4 box-shadow"><div class="card-header"><h4 class="my-0 font-weight-normal">'.doliproduct($postadh, 'label').'</h4></div><div class="card-body">
-<h1 class="card-title pricing-card-title">'.doliprice($postadh->price).'<small class="text-muted">/';
-if (! empty ($postadh->duration_value)) { $html .= doliduration($postadh); }
-else {
-$html .= __( 'year', 'doliconnect' );
-}
-$html .= '</small></h1>';
-
-if ( !isset($adherent) or (($postadh->welcome > '0') && isset($adherent) && ($adherent->datefin == null )) or (($postadh->welcome > '0') && isset($renewadherent) && (current_time( 'timestamp',1) > $renewadherent) && isset($adherent) && (current_time( 'timestamp',1) > $adherent->datefin)) ) {          
-$html .= "<small>".__( 'First subscription at', 'doliconnect' )." ".doliprice($montantdata)."</small>"; 
-}   
-$html .= doliproduct($postadh, 'note').'</div>';
-
-if ( function_exists('dolimembership_modal') ) {
-$html .= '<div class="card-footer"><a href="'.doliconnecturl('dolicontact').'?type=COM" role="button" class="btn btn-lg btn-block btn-info">'.__( 'Contact us', 'doliconnect' ).'</a></div>';
-}
-
-$html .= '</div>';
-}
-$html .= '</div>';
-}
-
-$html .= '</div></div>';
-
+$html .= "<div class='card-footer text-muted'>";
 $html .= "<small><div class='float-left'>";
 $html .= dolirefresh($request, get_permalink(), dolidelay('thirdparty'), $typeadhesion);
 $html .= "</div><div class='float-right'>";
 $html .= dolihelp('ISSUE');
 $html .= "</div></small>";
- 
-$html .= '<br>';
-
+$html .= "</div></div>";
 return $html;
 }
 
