@@ -6,8 +6,9 @@ doliconnect_enqueues();
 
 $content = '<div class="card shadow-sm"><div class="card-body">';
 
-if (isset($attributes['productID']) && $attributes['productID']>0) {
-$product = callDoliApi("GET", "/products/".$attributes['productID']."?includestockdata=1", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+if (isset($attributes['productID']) && $attributes['productID'] > 0) {
+$request = "/products/".$attributes['productID']."?includestockdata=1";
+$product = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 $content .= doliproductcard($product, $attributes);
 
@@ -17,7 +18,7 @@ $content .= "<center>".__( 'No product', 'doliconnect' )."</center>";
 $content .= "</div>";
 $content .= "<div class='card-footer text-muted'>";
 $content .= "<small><div class='float-left'>";
-$content .= dolirefresh("/products/".$attributes['productID']."?includestockdata=1&includesubproducts=true", null, dolidelay('thirdparty'));
+$content .= dolirefresh($request, get_permalink(), dolidelay('product'));
 $content .= "</div><div class='float-right'>";
 $content .= dolihelp('ISSUE');
 $content .= "</div></small>";
