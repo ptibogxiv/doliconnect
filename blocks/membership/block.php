@@ -125,10 +125,10 @@ if (! empty ($postadh->duration_value)) $html .= " - ".doliduration($postadh);
 $html .= " <small>";
 if ((($postadh->welcome > '0') && ($adherent->datefin == null )) or (($postadh->welcome > '0') && (current_time( 'timestamp',1) > $adherent->next_subscription_renew) && (current_time( 'timestamp',1) > $adherent->datefin))) { 
 $html .= "(";
-$html .= doliprice($montantdata)." ";
-$html .=  __( 'then', 'doliconnect' )." ".doliprice($montant1);
+$html .= doliprice($postadh->price_prorata)." ";
+$html .=  __( 'then', 'doliconnect' )." ".doliprice($postadh->price);
 } else {
-$html .= "(".doliprice($montant1);
+$html .= "(".doliprice($postadh->price_prorata);
 } 
 $html .= ")</small>";
 if (!empty(doliproduct($postadh, 'note'))) $html .= "<br><small class='text-justify text-muted '>".doliproduct($postadh, 'note')."</small>";
