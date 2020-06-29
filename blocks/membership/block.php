@@ -85,7 +85,7 @@ if ( !isset($typeadhesion->error) ) {
 if ( count($typeadhesion) < 4 ) {
 $html .= '<div class="card-deck mb-3 text-center">';
 } else {
-$html .= '<div class="card"><div class="card-header">'.__( 'Season', 'doliconnect').'</div><table class="table table-striped"><tbody>';
+$html .= '<div class="card"><div class="card-header">'.__( 'Season', 'doliconnect').' '.$typeadhesion[0]->season.'</div><table class="table table-striped"><tbody>';
 }
 foreach ( $typeadhesion as $postadh ) {
 if ($postadh->subscription == '1'){
@@ -96,15 +96,10 @@ $color="-success";
 $color="-danger";
 } else { $color="-warning"; }
 
-$tx=1;
-$montantdata=($tx*$postadh->price)+$postadh->welcome;
-$montant1 = $postadh->price;
-$montant2 = $tx*$postadh->price;
-
 if ( count($typeadhesion) < 4 ) {
 
 $html .= '<div class="card border'.$color.' mb-4 box-shadow"><div class="card-header"><h4 class="my-0 font-weight-normal">'.doliproduct($postadh, 'label').'</h4></div><div class="card-body">'; 
-$html .= '<h1 class="card-title pricing-card-title">'.doliprice($postadh->price).'<small class="text-muted">/';
+$html .= '<h1 class="card-title pricing-card-title">'.doliprice($postadh->price_prorata).'<small class="text-muted">/';
 $html .= doliduration($postadh);
 $html .= '</small></h1>';
 
