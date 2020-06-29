@@ -92,7 +92,7 @@ $html .= "<i class='fas fa-users fa-fw'></i> ";
 $html .= doliproduct($postadh, 'label');
 if (! empty ($postadh->duration_value)) $html .= " - ".doliduration($postadh);
 $html .= " <small>";
-if ((($postadh->welcome > '0') && ($adherent->datefin == null )) or (($postadh->welcome > '0') && (current_time( 'timestamp',1) > $adherent->next_subscription_renew) && (current_time( 'timestamp',1) > $adherent->datefin))) { 
+if ($postadh->price_prorata != $postadh->price) { 
 $html .= "(";
 $html .= doliprice($postadh->price_prorata)." ";
 $html .=  __( 'then', 'doliconnect' )." ".doliprice($postadh->price);

@@ -527,7 +527,7 @@ $documents = callDoliApi("GET", "/documents?modulepart=product&id=".$product->id
 $card = "<div class='row'>";
 if (defined("DOLIBUG")) {
 $card = dolibug();
-} elseif ( $product->id>0 && $product->status == 1 ) {
+} elseif ($product->id > 0 && $product->status == 1) {
 $card .= "<div class='col-12 d-block d-sm-block d-xs-block d-md-none'><center>";
 $card .= doliconnect_image('product', $product->id, array('limit'=>1, 'entity'=>$product->entity, 'size'=>'200x200'), esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 $card .= "</center>";
