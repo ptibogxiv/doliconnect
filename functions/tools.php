@@ -1302,9 +1302,9 @@ $paymentmethods .=" active";
 }
 $paymentmethods .= '" data-toggle="pill" href="#nav-tab-'.$method->id.'"><i ';
 if ( $method->type == 'sepa_debit' || $method->type == 'PRE' || $method->type == 'VIR' ) { $paymentmethods .= 'class="fas fa-university fa-fw float-left" style="color:DarkGrey"'; } 
-elseif ( $method->brand == 'visa' ) { $paymentmethods .= 'class="fab fa-cc-visa fa-fw float-left" style="color:#172274"'; }
-else if ( $method->brand == 'mastercard' ) { $paymentmethods .= 'class="fab fa-cc-mastercard fa-fw float-left" style="color:#FF5F01"'; }
-else if ( $method->brand == 'amex' ) { $paymentmethods .= 'class="fab fa-cc-amex fa-fw float-left" style="color:#2E78BF"'; }
+elseif ( $method->brand == 'visa' ) { $paymentmethods .= 'class="fab fa-cc-visa fa-fw float-left bg-white" style="color:#172274"'; }
+else if ( $method->brand == 'mastercard' ) { $paymentmethods .= 'class="fab fa-cc-mastercard fa-fw float-left bg-white" style="color:#FF5F01"'; }
+else if ( $method->brand == 'amex' ) { $paymentmethods .= 'class="fab fa-cc-amex fa-fw float-left bg-white" style="color:#2E78BF"'; }
 else { $paymentmethods .= 'class="fab fa-credit-card fa-fw float-left"';}
 $paymentmethods .= "></i> ";
 if ( $method->type == 'sepa_debit' || $method->type == 'PRE' || $method->type == 'VIR' ) {
