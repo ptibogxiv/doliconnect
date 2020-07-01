@@ -1340,7 +1340,7 @@ $mode_reglement_code = callDoliApi("GET", "/setup/dictionary/payment_types?sortf
 if ( !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id != $mode_reglement_code[0]->id && !empty($module) && is_object($object) && isset($object->id) ) { $paymentmethods .=" disabled "; }
 elseif ( !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id == $mode_reglement_code[0]->id ) { $paymentmethods .=" active"; }
 $paymentmethods .= "' data-toggle='pill' href='#nav-tab-vir'>
-<i class='fa fa-money-check fa-fw float-left' style='color:Tan'></i> ".__( 'Pay by bank transfert', 'doliconnect');
+<i class='fas fa-university fa-fw float-left' style='color:DarkGrey'></i> ".__( 'Pay by bank transfert', 'doliconnect');
 if ( !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id == $mode_reglement_code[0]->id ) { $paymentmethods .= " <i class='fas fa-star fa-fw' style='color:Gold'></i>"; }
 $paymentmethods .= '</a></li>';
 }
