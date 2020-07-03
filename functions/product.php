@@ -120,7 +120,7 @@ $rdr = [
     'demand_reason_id' => 1,
     'cond_reglement_id' => $thirdparty->cond_reglement_id,
     'module_source' => 'doliconnect',
-    'model_pdf' =>  doliconst("COMMANDE_ADDON_PDF"),
+    'modelpdf' =>  doliconst("COMMANDE_ADDON_PDF"),
     'pos_source' => get_current_blog_id(),
 	];                  
 $order = callDoliApi("POST", "/orders", $rdr, 0);
