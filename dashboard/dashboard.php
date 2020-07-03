@@ -1457,7 +1457,6 @@ print  "<b>".__( 'Type', 'doliconnect').":</b> ".$type."<br>";
 print  "<b>".__( 'End of membership', 'doliconnect').":</b> ";
 if ( $adherent->datefin == null ) { print  "***";
 } else { print  wp_date('d/m/Y', $adherent->datefin); }
-if ( isset($adherent->license) &&  null != $adherent->license ) print "<br><b>".__( 'License', 'doliconnect').":</b> ".$adherent->license;
 //print  "<br><b>".__( 'Seniority', 'doliconnect').":</b> ";
 print  "<br><b>".__( 'Commitment', 'doliconnect').":</b> ";
 if ( (current_time('timestamp') > $adherent->datecommitment) || null == $adherent->datecommitment ) { print  __( 'no', 'doliconnect');
