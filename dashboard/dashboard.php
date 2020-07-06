@@ -1467,13 +1467,13 @@ print  "$datefin"; }
 print "</div><div class='col-12 col-md-7'>";
 
 if ( ! empty($adherent) && $adherent->statut != 0 ) {
-print "<div class='row'><div class='col-md-8'><b><i class='fas fa-user-slash'></i> ".__( 'Cancel my subscription', 'doliconnect-pro');
+print "<div class='row'><div class='col-md-6'><b><i class='fas fa-user-slash'></i> ".__( 'Cancel my subscription', 'doliconnect-pro');
 
 print "<small></small></b><br /><small class='text-justify text-muted '>".__( 'Will be terminated', 'doliconnect-pro');
 if ($adherent->datefin > current_time('timestamp', 1) )  {
 print " ".sprintf( __( 'from the %s', 'doliconnect-pro'), wp_date('d/m/Y', $adherent->datefin));
 } else { print " ".__( 'immediately', 'doliconnect-pro'); }
-print "</small></div><div class='col-md-4'>";
+print "</small></div><div class='col-md-6'>";
 print "<form id='subscription-form' action='".esc_url( add_query_arg( 'module', 'members', doliconnecturl('doliaccount')) )."' method='post'><input type='hidden' name='cotisation' value=''><input type='hidden' name='timestamp_start' value='".$adherent->next_subscription_date_start."'><input type='hidden' name='timestamp_end' value='".$adherent->next_subscription_date_end."'><input type='hidden' name='update_membership' value='2'><input type='hidden' name='typeadherent' value=''><button class='btn btn-dark btn-block' type='submit'>".__( 'Resiliate', 'doliconnect-pro')."</button></form>";
 print "</div></div>";
 }
