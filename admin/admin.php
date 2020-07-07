@@ -166,7 +166,7 @@ $dolibarr = callDoliApi("GET", "/status", null, -5 * MINUTE_IN_SECONDS);
     <form action="" method="post">
         <table class="form-table" width="100%">
             <tr>
-                <th style="width:150px;"><label for="license_key_doliconnect-pro">License Doliconnect</label></th>
+                <th style="width:150px;"><label for="license_key_doliconnect-pro"><?php _e('License Doliconnect', 'doliconnect') ?></label></th>
                 <td ><input class="regular-text" type="text" id="license_key_doliconnect-pro" name="license_key_doliconnect-pro" value="<?php if ( is_plugin_active( 'doliconnect-pro/doliconnect-pro.php' ) ) {
 echo get_site_option('license_key_doliconnect-pro');?> " <?php } else { echo "";?>" disabled <?php } ?> > <b>PRO</b> 
                 </td>
@@ -182,7 +182,7 @@ echo get_site_option('license_key_doliconnect-pro');?> " <?php } else { echo "";
                 <td ><input class="regular-text" type="text" id="dolibarr_private_key" name="dolibarr_private_key"  value="<?php echo get_site_option('dolibarr_private_key'); ?>" required></td>
             </tr>
             <tr>          
-                <th style="width:150px;"><label for="status">Status Dolibarr</label></th>
+                <th style="width:150px;"><label for="status"><?php _e('Status Dolibarr', 'doliconnect') ?></label></th>
                 <td>
 <?php if ( is_object($dolibarr) ) {
 ?>                 
@@ -196,7 +196,7 @@ echo get_site_option('license_key_doliconnect-pro');?> " <?php } else { echo "";
                 <td ><?php echo site_url(); ?>/<input class="regular-text" type="text" id="dolibarr_login" name="doliconnect_login"  value="<?php echo get_site_option('doliconnect_login'); ?>" required><br>ex: wp-login.php (wordpress default)</td>
             </tr>
             <tr>
-                <th style="width:150px;"><label for="dolibarr_entity">Personalize entity</label></th>
+                <th style="width:150px;"><label for="dolibarr_entity"><?php _e('Personalize entity', 'doliconnect') ?></label></th>
                 <td ><input name="dolibarr_entity" type="checkbox" id="dolibarr_entity" value="1" <?php checked('1', get_site_option('dolibarr_entity')); ?> /> permettre de personnaliser les entités liés par defaut entité-wordpress == entité-dolibarr</td>
             </tr>    
         </table>
