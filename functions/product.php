@@ -323,12 +323,12 @@ $button .= '</tbody></table>';
 } else {
 $button .= '<table class="table table-bordered table-sm table-striped"><tbody>';
 $button .= '<tr>'; 
-$button .= '<td>'.__( 'Selling Price', 'doliconnect').'</td>';
-$button .= '<td class="text-right">'.doliprice( empty(get_option('dolibarr_b2bmode'))?$product->price_ttc:$product->price, null, $currency);
+$button .= '<td><div class="float-left">'.__( 'Selling Price', 'doliconnect').'</div>';
+$button .= '<div class="float-right">'.doliprice( empty(get_option('dolibarr_b2bmode'))?$product->price_ttc:$product->price, null, $currency).'</div></td></tr>';
 if ( empty($time) && !empty($product->duration_value) ) { $button .='/'.doliduration($product); } 
-if ( !empty($altdurvalue) ) { $button .= "<td class='text-right'>soit ".doliprice( $altdurvalue*$product->price_ttc, null, $currency)." par ".__( 'hour', 'doliconnect')."</td>"; } 
-$button .= '</td>';
-$button .= '</tr>'; 
+if ( !empty($altdurvalue) ) { $button .= "<tr><td class='text-right'>soit ".doliprice( $altdurvalue*$product->price_ttc, null, $currency)." par ".__( 'hour', 'doliconnect')."</td></tr>"; } 
+
+$button .= ''; 
 
 if ( !empty(doliconst("PRODUIT_CUSTOMER_PRICES")) && doliconnector($current_user, 'fk_soc') > 0 ) {
 $product2 = callDoliApi("GET", "/products/".$product->id."/selling_multiprices/per_customer?thirdparty_id=".doliconnector($current_user, 'fk_soc'), null, dolidelay('product'));
