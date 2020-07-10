@@ -8,7 +8,7 @@
   var ServerSideRender = wp.components.ServerSideRender;
 
 	registerBlockType( 'doliconnect/newproduct-block', { // The name of our block. Must be a string with prefix. Example: my-plugin/my-custom-block.
-		title: i18n.__( 'Product', 'doliconnect'), // The title of our block.
+		title: i18n.__( 'newProduct', 'doliconnect'), // The title of our block.
 		description: i18n.__( 'A block for displaying dolibarr product.', 'doliconnect'), // The description of our block.
 		icon: 'store', // Dashicon icon for our block. Custom icons can be added using inline SVGs.
 		category: 'widgets', // The category of the block.
