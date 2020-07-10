@@ -1073,7 +1073,40 @@ print dolihelp('ISSUE');
 print "</div></small>";
 print "</div></div>";
 
-} elseif ( isset($_GET['sales']) ) {
+} elseif ( isset($_GET['discount']) ) {
+
+print "<ul class='list-group list-group-flush'>";
+
+$limit=25;
+if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']-1); }  else { $page = 0; }
+$date = new DateTime(); 
+$date->modify('NOW');
+$lastdate = $date->format('Y-m-d');
+$request = "/discountprice?sortfield=t.rowid&sortorder=ASC&sqlfilters=(t.date_begin%3A%3C%3D%3A'".$lastdate."')%20AND%20(t.date_end%3A%3C%3D%3A'".$lastdate."')";
+$resultats = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+//print $resultatso;
+
+if ( !isset($resultats->error) && $resultats != null ) {
+$count = count($resultats);
+print "<li class='list-group-item list-group-item-light'><center>".__(  'Here are our discounted items', 'doliconnect')."</center></li>";
+foreach ($resultats as $product) {
+$request = "/products/".$product->fk_product."?includestockdata=1";
+$product = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+print apply_filters( 'doliproductlist', $product);
+ 
+}
+} else {
+print "<li class='list-group-item list-group-item-light'><center>".__(  'No discounted item', 'doliconnect')."</center></li>";
+}
+print "</ul><div class='card-body'>";
+print dolipage($resultats, $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], $page, $limit);
+print "</div><div class='card-footer text-muted'>";
+print "<small><div class='float-left'>";
+if ( isset($request) ) print dolirefresh($request, get_permalink(), dolidelay('product'));
+print "</div><div class='float-right'>";
+print dolihelp('ISSUE');
+print "</div></small>";
+print "</div></div>";
 
 } elseif ( isset($_GET['product']) ) {
 

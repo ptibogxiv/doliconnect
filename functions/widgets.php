@@ -311,6 +311,7 @@ $resultatsc = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(i
 
 if ( !isset($resultatsc->error) && $resultatsc != null ) {
 print "<div class='list-group'>";
+
 if (get_option('dolicartnewlist') != 'none') {
 print "<a href='".esc_url( add_query_arg( 'new', '', doliconnecturl('dolishop')) )."' class='list-group-item list-group-item-action";
 if ( isset($_GET['new']) ) { print " active"; }
@@ -328,6 +329,23 @@ $count = count($listproduct);
 }
 print "'>".__(  'New items', 'doliconnect')." (".$count.")</a>";
 }
+
+if ( !empty(doliconst('MAIN_MODULE_DISCOUNTPRICE')) ) {
+print "<a href='".esc_url( add_query_arg( 'discount', '', doliconnecturl('dolishop')) )."' class='list-group-item list-group-item-action";
+if ( isset($_GET['discount']) ) { print " active"; }
+$date = new DateTime(); 
+$date->modify('NOW');
+$lastdate = $date->format('Y-m-d');
+$requestp = "/discountprice?sortfield=t.rowid&sortorder=ASC&sqlfilters=(t.date_begin%3A%3C%3D%3A'".$lastdate."')%20AND%20(t.date_end%3A%3C%3D%3A'".$lastdate."')";
+$listproduct = callDoliApi("GET", $requestp, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+if (empty($listproduct) || isset($listproduct->error)) {
+$count = 0;
+} else {
+$count = count($listproduct);
+}
+print "'>".__(  'Discounted items', 'doliconnect')." (".$count.")</a>";
+}
+
 foreach ($resultatsc->childs as $categorie) {
 
 $requestp = "/products?sortfield=t.label&sortorder=ASC&category=".$categorie->id."&sqlfilters=(t.tosell=1)";
