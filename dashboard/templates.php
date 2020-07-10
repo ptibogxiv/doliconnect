@@ -1073,7 +1073,7 @@ print dolihelp('ISSUE');
 print "</div></small>";
 print "</div></div>";
 
-} elseif ( isset($_GET['discount']) ) {
+} elseif ( isset($_GET['discount']) && !empty(doliconst('MAIN_MODULE_DISCOUNTPRICE')) ) {
 
 print "<ul class='list-group list-group-flush'>";
 
