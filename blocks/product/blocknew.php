@@ -12,7 +12,7 @@ $product = callDoliApi("GET", "/products/".$attributes['productID']."?includesto
 $content .= doliproductcard($product, $attributes);
 
 } else {
-$content .= "<center>".__( 'No product', 'doliconnect' )."</center>";
+$content .= "<center>".__( 'No item', 'doliconnect' )."</center>";
 }
 $content .= "</div>";
 $content .= "<div class='card-footer text-muted'>";

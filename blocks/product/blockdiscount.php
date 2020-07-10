@@ -4,20 +4,31 @@ function doliconnect_discountproduct_block_render( $attributes, $content) {
 
 doliconnect_enqueues();
 
-$content = '<div class="card shadow-sm"><div class="card-body">';
+$content = '<div class="card shadow-sm"><ul class="list-group list-group-flush">';
 
-if (isset($attributes['productID']) && $attributes['productID']>0) {
-$product = callDoliApi("GET", "/products/".$attributes['productID']."?includestockdata=1", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$date = new DateTime(); 
+$date->modify('NOW');
+$lastdate = $date->format('Y-m-d');
+$request = "/discountprice?sortfield=t.rowid&sortorder=DESC&limit=5&sqlfilters=(t.date_begin%3A%3C%3D%3A'".$lastdate."')%20AND%20(t.date_end%3A%3C%3D%3A'".$lastdate."')";
+$resultats = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+//print $resultatso;
 
-$content .= doliproductcard($product, $attributes);
-
-} else {
-$content .= "<center>".__( 'No product', 'doliconnect' )."</center>";
+if ( !isset($resultats->error) && $resultats != null ) {
+$count = count($resultats);
+//$content .= "<li class='list-group-item list-group-item-light'><center>".__(  'Here are our discounted items', 'doliconnect')."</center></li>";
+foreach ($resultats as $product) {
+$request2 = "/products/".$product->fk_product."?includestockdata=1";
+$product = callDoliApi("GET", $request2, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$content .= apply_filters( 'doliproductlist', $product);
+ 
 }
-$content .= "</div>";
+} else {
+$content .= "<center>".__( 'No discounted item', 'doliconnect' )."</center>";
+}
+$content .= '</ul><div class="card-body"></div>';
 $content .= "<div class='card-footer text-muted'>";
 $content .= "<small><div class='float-left'>";
-//$content .= dolirefresh("/products/".$attributes['productID']."?includestockdata=1&includesubproducts=true", null, dolidelay('thirdparty'));
+$content .= dolirefresh($request, null, dolidelay('product'));
 $content .= "</div><div class='float-right'>";
 $content .= dolihelp('ISSUE');
 $content .= "</div></small>";
