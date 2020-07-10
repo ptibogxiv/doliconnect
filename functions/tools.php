@@ -58,9 +58,9 @@ return $pagination;
 function doliconnect_image($module, $id, $options = array(), $refresh = null) {
 
 $class = isset($options['class']) ? $options['class'] : 'img-fluid rounded-lg';
-
+$entity = dolibarr_entity(isset($options['entity'])?$options['entity']:null);
 if (is_numeric($id)) {
-$imgs = callDoliApi("GET", "/documents?modulepart=".$module."&id=".$id, null, dolidelay('document', $refresh), $options['entity']);   
+$imgs = callDoliApi("GET", "/documents?modulepart=".$module."&id=".$id, null, dolidelay('document', $refresh), $entity);   
 $image = "<div class='row'>";
 $subdir = '';
 $dir = '/'.$id;
@@ -80,7 +80,7 @@ $image .= "<div class='col'>";
 }
 $file=$up_dir['basedir'].'/doliconnect/'.$module.$dir.'/'.$img->relativename;
 if (!is_file($file)) {
-$imgj =  callDoliApi("GET", "/documents/download?modulepart=".$module."&original_file=".$subdir.$img->level1name."/".$img->relativename, null, dolidelay('document', $refresh), $options['entity']);
+$imgj =  callDoliApi("GET", "/documents/download?modulepart=".$module."&original_file=".$subdir.$img->level1name."/".$img->relativename, null, dolidelay('document', $refresh), $entity);
 //$image .= var_dump($imgj);
 $imgj = (array) $imgj; 
 if (is_array($imgj) && !isset($imgj['error']) && preg_match('/^image/', $imgj['content-type'])) {
@@ -146,7 +146,7 @@ $image .= "</div>";
 $up_dir = wp_upload_dir();
 $file=$up_dir['basedir'].'/doliconnect/'.$module.'/'.$id;
 if (!is_file($file)) {
-$imgj =  callDoliApi("GET", "/documents/download?modulepart=".$module."&original_file=".$id, null, dolidelay('document', $refresh), $options['entity']);
+$imgj =  callDoliApi("GET", "/documents/download?modulepart=".$module."&original_file=".$id, null, dolidelay('document', $refresh), $entity);
 //$image .= var_dump($imgj);
 $imgj = (array) $imgj; 
 if (is_array($imgj) && isset($imgj['content-type']) && preg_match('/^image/', $imgj['content-type'])) {
