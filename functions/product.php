@@ -338,7 +338,7 @@ $date = new DateTime();
 $date->modify('NOW');
 $lastdate = $date->format('Y-m-d');
 $requestp = "/discountprice?productid=".$product->id."&sortfield=t.rowid&sortorder=ASC&sqlfilters=(t.date_begin%3A%3C%3D%3A'".$lastdate."')%20AND%20(t.date_end%3A%3E%3D%3A'".$lastdate."')";
-$product2 = callDoliApi("GET", $requestp, null, dolidelay('product', $refresh));
+$product3 = callDoliApi("GET", $requestp, null, dolidelay('product', $refresh));
 }
 if ( !empty(doliconst("PRODUIT_CUSTOMER_PRICES")) && isset($product2) && !isset($product2->error) ) {
 foreach ( $product2 as $pdt2 ) {
