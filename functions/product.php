@@ -287,10 +287,11 @@ $level=doliconnector($current_user, 'price_level');
 $level=1;
 }
  
-$price_min_ttc=$product->multiprices_min->$level; 
-$price_ttc=$product->multiprices_ttc->$level;
-$price_ht=$product->multiprices->$level;
-$vat=$product->tva_tx;
+$price_min_ttc = $product->multiprices_min->$level; 
+$price_ttc = $product->multiprices_ttc->$level;
+$price_ht = $product->multiprices->$level;
+$vat = $product->tva_tx;
+$discount = doliconnector($current_user, 'remise_percent');
 
 if (isset($add) && $add < 0) {
 $button .= '<table class="table table-bordered table-sm"><tbody>'; 
@@ -341,9 +342,12 @@ $requestp = "/discountprice?productid=".$product->id."&sortfield=t.rowid&sortord
 $product3 = callDoliApi("GET", $requestp, null, dolidelay('product', $refresh));
 }
 if ( !empty(doliconst('MAIN_MODULE_DISCOUNTPRICE')) && isset($product3) && !isset($product3->error) ) {
-$price_ttc=$product->price_ttc-($product3[0]->discount/100);
-$price_ht=$product->price-($product3[0]->discount/100);
+$price_ttc3=$product->price_ttc-($product3[0]->discount/100);
+$price_ht3=$product->price-($product3[0]->discount/100);
+$price_ttc=$product->price_ttc;
+$price_ht=$product->price;
 $vat = $product->tva_tx;
+$discount = $product3[0]->discount;
 $button .= '<tr class="table-primary">'; 
 $button .= '<td><div class="float-left">';
 if (!empty($product3[0]->label)) {
@@ -352,7 +356,7 @@ $button .= $product3[0]->label;
 $button .= __( 'Sales', 'doliconnect');
 }
 $button .= '</div>';
-$button .= '<div class="float-right">'.doliprice( empty(get_option('dolibarr_b2bmode'))?$price_ttc:$price_ht, $currency).'</div></td></tr>';
+$button .= '<div class="float-right">'.doliprice( empty(get_option('dolibarr_b2bmode'))?$price_ttc3:$price_ht3, $currency).'</div></td></tr>';
 } elseif ( !empty(doliconst("PRODUIT_CUSTOMER_PRICES")) && isset($product2) && !isset($product2->error) ) {
 foreach ( $product2 as $pdt2 ) {
 $price_min_ttc=$pdt2->price_min;
@@ -446,8 +450,8 @@ $button .= "<div class='input-group'><a href='".wp_login_url( get_permalink() ).
 $button .= "<div class='input-group'><a class='btn btn-block btn-info' href='".doliconnecturl('dolicontact')."?type=COM' role='button' title='".__( 'Login', 'doliconnect')."'>".__( 'Contact us', 'doliconnect')."</a></div>";
 }
 
-if ( !empty(doliconnector($current_user, 'remise_percent')) ) { $button .= "<small>".sprintf( esc_html__( 'you get %u %% discount', 'doliconnect'), doliconnector($current_user, 'remise_percent'))."</small>"; }
-$button .= "<input type='hidden' name='product-add-vat' value='".$product->tva_tx."'><input type='hidden' name='product-add-remise_percent' value='".doliconnector($current_user, 'remise_percent')."'><input type='hidden' name='product-add-price' value='".$price_ht."'>";
+if ( !empty($discount) ) { $button .= "<small>".sprintf( esc_html__( 'you get %u %% discount', 'doliconnect'), $discount)."</small>"; }
+$button .= "<input type='hidden' name='product-add-vat' value='".$product->tva_tx."'><input type='hidden' name='product-add-remise_percent' value='".$discount."'><input type='hidden' name='product-add-price' value='".$price_ht."'>";
 //$button .= '<div id="product-add-loading-'.$product->id.'" style="display:none">'.doliprice($price_ttc).'<button class="btn btn-secondary btn-block" disabled><i class="fas fa-spinner fa-pulse fa-1x fa-fw"></i> '.__( 'Loading', 'doliconnect').'</button></div>';
 
 $button .= "</form>";
