@@ -341,11 +341,17 @@ $requestp = "/discountprice?productid=".$product->id."&sortfield=t.rowid&sortord
 $product3 = callDoliApi("GET", $requestp, null, dolidelay('product', $refresh));
 }
 if ( !empty(doliconst('MAIN_MODULE_DISCOUNTPRICE')) && isset($product3) && !isset($product3->error) ) {
-$price_ttc=$product->price_ttc;
-$price_ht=$product->price;
+$price_ttc=$product->price_ttc-($product3[0]->discount/100);
+$price_ht=$product->price-($product3[0]->discount/100);
 $vat = $product->tva_tx;
 $button .= '<tr class="table-primary">'; 
-$button .= '<td><div class="float-left">'.__( 'Sales', 'doliconnect').' '.$product3[0]->label.'</div>';
+$button .= '<td><div class="float-left">';
+if (!empty($product3[0]->label)) {
+$button .= $product3[0]->label;
+} else {
+$button .= __( 'Sales', 'doliconnect');
+}
+$button .= '</div>';
 $button .= '<div class="float-right">'.doliprice( empty(get_option('dolibarr_b2bmode'))?$price_ttc:$price_ht, $currency).'</div></td></tr>';
 } elseif ( !empty(doliconst("PRODUIT_CUSTOMER_PRICES")) && isset($product2) && !isset($product2->error) ) {
 foreach ( $product2 as $pdt2 ) {
