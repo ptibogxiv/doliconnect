@@ -340,7 +340,14 @@ $lastdate = $date->format('Y-m-d');
 $requestp = "/discountprice?productid=".$product->id."&sortfield=t.rowid&sortorder=ASC&sqlfilters=(t.date_begin%3A%3C%3D%3A'".$lastdate."')%20AND%20(t.date_end%3A%3E%3D%3A'".$lastdate."')";
 $product3 = callDoliApi("GET", $requestp, null, dolidelay('product', $refresh));
 }
-if ( !empty(doliconst("PRODUIT_CUSTOMER_PRICES")) && isset($product2) && !isset($product2->error) ) {
+if ( !empty(doliconst('MAIN_MODULE_DISCOUNTPRICE')) && isset($product3) && !isset($product3->error) ) {
+$price_ttc=$product->price_ttc;
+$price_ht=$product->price;
+$vat = $product->tva_tx;
+$button .= '<tr class="table-primary">'; 
+$button .= '<td><div class="float-left">'.__( 'Sales', 'doliconnect').' '.$product3[0]->label.'</div>';
+$button .= '<div class="float-right">'.doliprice( empty(get_option('dolibarr_b2bmode'))?$price_ttc:$price_ht, $currency).'</div></td></tr>';
+} elseif ( !empty(doliconst("PRODUIT_CUSTOMER_PRICES")) && isset($product2) && !isset($product2->error) ) {
 foreach ( $product2 as $pdt2 ) {
 $price_min_ttc=$pdt2->price_min;
 $price_ttc=$pdt2->price_ttc;
@@ -348,7 +355,7 @@ $price_ht=$pdt2->price;
 $vat = $pdt2->tva_tx;
 $button .= '<tr class="table-primary">'; 
 $button .= '<td><div class="float-left">'.__( 'Your price', 'doliconnect').'</div>';
-$button .= '<div class="float-right">'.doliprice( empty(get_option('dolibarr_b2bmode'))?$price_ttc:$price_ht, $currency).'</div></td><tr>';
+$button .= '<div class="float-right">'.doliprice( empty(get_option('dolibarr_b2bmode'))?$price_ttc:$price_ht, $currency).'</div></td></tr>';
 if ( empty($time) && !empty($product->duration_value) ) { $button .='/'.doliduration($product); } 
 if ( !empty($altdurvalue) ) { $button .= "<td class='text-right'>soit ".doliprice( $altdurvalue*(empty(get_option('dolibarr_b2bmode'))?$price_ttc:$price_ht), null, $currency)." par ".__( 'hour', 'doliconnect')."</td>"; } 
 }
