@@ -276,6 +276,7 @@ if ( $product->duration_unit == 'i' ) {
 $altdurvalue=60/$product->duration_value; 
 }
 }
+ $discount = !empty(doliconnector($current_user, 'remise_percent'))?doliconnector($current_user, 'remise_percent'):'0';
 
 if ( !empty(doliconst("PRODUIT_MULTIPRICES")) && !empty($product->multiprices_ttc) ) {
 $lvl=doliconnector($current_user, 'price_level');
@@ -289,9 +290,8 @@ $level=1;
  
 $price_min_ttc = $product->multiprices_min->$level; 
 $price_ttc = $product->multiprices_ttc->$level;
-$price_ht = $product->multiprices->$level;
+$price_ht = $product->multiprices->$level; 
 $vat = $product->tva_tx;
-$discount = doliconnector($current_user, 'remise_percent');
 
 if (isset($add) && $add < 0) {
 $button .= '<table class="table table-bordered table-sm"><tbody>'; 
