@@ -334,6 +334,7 @@ $button .= '';
 if ( !empty(doliconst("PRODUIT_CUSTOMER_PRICES")) && doliconnector($current_user, 'fk_soc') > 0 ) {
 $product2 = callDoliApi("GET", "/products/".$product->id."/selling_multiprices/per_customer?thirdparty_id=".doliconnector($current_user, 'fk_soc'), null, dolidelay('product', $refresh));
 }
+
 if ( !empty(doliconst('MAIN_MODULE_DISCOUNTPRICE')) ) {
 $date = new DateTime(); 
 $date->modify('NOW');
@@ -341,13 +342,31 @@ $lastdate = $date->format('Y-m-d');
 $requestp = "/discountprice?productid=".$product->id."&sortfield=t.rowid&sortorder=ASC&sqlfilters=(t.date_begin%3A%3C%3D%3A'".$lastdate."')%20AND%20(t.date_end%3A%3E%3D%3A'".$lastdate."')";
 $product3 = callDoliApi("GET", $requestp, null, dolidelay('product', $refresh));
 }
+
 if ( !empty(doliconst('MAIN_MODULE_DISCOUNTPRICE')) && isset($product3) && !isset($product3->error) ) {
+if (!empty($product3[0]->discount)) {
 $price_ttc3=$product->price_ttc-($product3[0]->discount/100);
 $price_ht3=$product->price-($product3[0]->discount/100);
 $price_ttc=$product->price_ttc;
 $price_ht=$product->price;
 $vat = $product->tva_tx;
 $discount = $product3[0]->discount;
+} elseif (!empty($product3[0]->price)) {
+$price_ht3=$product3[0]->price; 
+$price_ht=$product->price; 
+$discount = 100-(100*$price_ht3/$price_ht);
+$price_ttc3=$product->price_ttc-($discount/100);
+$price_ttc=$product->price_ttc;
+$vat = $product->tva_tx;
+} elseif (!empty($product3[0]->price_ttc)) {
+$price_ttc3=$product3[0]->price_ttc; 
+$price_ttc=$product->price_ttc; 
+$discount = 100-(100*$price_ttc3/$price_ttc);
+$price_htc3=$product->price-($discount/100);
+$price_ht=$product->price;
+$vat = $product->tva_tx;
+}
+
 $button .= '<tr class="table-primary">'; 
 $button .= '<td><div class="float-left">';
 if (!empty($product3[0]->label)) {
