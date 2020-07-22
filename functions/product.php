@@ -345,8 +345,8 @@ $product3 = callDoliApi("GET", $requestp, null, dolidelay('product', $refresh));
 
 if ( !empty(doliconst('MAIN_MODULE_DISCOUNTPRICE')) && isset($product3) && !isset($product3->error) ) {
 if (!empty($product3[0]->discount)) {
-$price_ttc3=$product->price_ttc-($product3[0]->discount/100);
-$price_ht3=$product->price-($product3[0]->discount/100);
+$price_ttc3=$product->price_ttc-($product->price_ttc*$product3[0]->discount/100);
+$price_ht3=$product->price-($product->price_ttc*$product3[0]->discount/100);
 $price_ttc=$product->price_ttc;
 $price_ht=$product->price;
 $vat = $product->tva_tx;
@@ -355,14 +355,14 @@ $discount = $product3[0]->discount;
 $price_ht3=$product3[0]->price; 
 $price_ht=$product->price; 
 $discount = 100-(100*$price_ht3/$price_ht);
-$price_ttc3=$product->price_ttc-($discount/100);
+$price_ttc3=$product->price_ttc-($product->price_ttc*$discount/100);
 $price_ttc=$product->price_ttc;
 $vat = $product->tva_tx;
 } elseif (!empty($product3[0]->price_ttc)) {
 $price_ttc3=$product3[0]->price_ttc; 
 $price_ttc=$product->price_ttc; 
 $discount = 100-(100*$price_ttc3/$price_ttc);
-$price_htc3=$product->price-($discount/100);
+$price_htc3=$product->price-($product->price*$discount/100);
 $price_ht=$product->price;
 $vat = $product->tva_tx;
 }
