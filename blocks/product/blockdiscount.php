@@ -4,7 +4,7 @@ function doliconnect_discountproduct_block_render( $attributes, $content) {
 
 doliconnect_enqueues();
 
-$content = '<div class="card shadow-sm"><ul class="list-group list-group-flush">';
+$content = '<div class="card shadow-sm"> <div class="card-header">'.__( 'New discounted items', 'doliconnect' ).'</div><ul class="list-group list-group-flush">';
 
 $date = new DateTime(); 
 $date->modify('NOW');
