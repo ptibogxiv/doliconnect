@@ -565,6 +565,7 @@ add_filter( 'doliproductlist', 'doliproductlist', 10, 1);
 
 // list of products filter
 function doliproductcard($product, $attributes) {
+global $current_user;
 
 if (isset($product->id) && $product->id > 0) {
 
