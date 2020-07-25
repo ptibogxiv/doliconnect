@@ -384,18 +384,20 @@ $price_min_ttc=$pdt2->price_min;
 $price_ttc=$pdt2->price_ttc;
 $price_ht=$pdt2->price;
 $vat = $pdt2->tva_tx;
-$refprice=(empty(get_option('dolibarr_b2bmode'))?$price_ttc:$price_ht);
+$refprice = (empty(get_option('dolibarr_b2bmode'))?$price_ttc:$price_ht);
+
 $button .= '<tr class="table-primary">'; 
 $button .= '<td><div class="float-left">'.__( 'Your price', 'doliconnect').'</div>';
 $button .= '<div class="float-right">'.doliprice( $refprice, $currency).'</div></td></tr>';
 if ( empty($time) && !empty($product->duration_value) ) { $button .='/'.doliduration($product); } 
-if ( !empty($altdurvalue) ) { $button .= "<td class='text-right'>soit ".doliprice( $altdurvalue*(empty(get_option('dolibarr_b2bmode'))?$price_ttc:$price_ht), null, $currency)." par ".__( 'hour', 'doliconnect')."</td>"; } 
+if ( !empty($altdurvalue) ) { $button .= "<td class='text-right'>soit ".doliprice( $altdurvalue*$refprice, null, $currency)." par ".__( 'hour', 'doliconnect')."</td>"; } 
 }
 } else {
 $price_min_ttc=$product->price_min;
 $price_ttc=$product->price_ttc;
 $price_ht=$product->price;
 $vat=$product->tva_tx;
+$refprice = (empty(get_option('dolibarr_b2bmode'))?$price_ttc:$price_ht);
 }
 
 $button .= '<tr><td colspan="'.(!empty($altdurvalue)?'3':'2').'"><small><div class="float-left">'.(empty(get_option('dolibarr_b2bmode'))?__( 'Our prices are incl. VAT', 'doliconnect'):__( 'Our prices are excl. VAT', 'doliconnect'));
