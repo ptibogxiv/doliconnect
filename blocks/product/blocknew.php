@@ -4,20 +4,32 @@ function doliconnect_newproduct_block_render( $attributes, $content) {
 
 doliconnect_enqueues();
 
-$content = '<div class="card shadow-sm"><div class="card-body">';
+$content = '<div class="card shadow-sm"> <div class="card-header">'.__( 'New items', 'doliconnect' ).'</div><ul class="list-group list-group-flush">';
 
-if (isset($attributes['productID']) && $attributes['productID']>0) {
-$product = callDoliApi("GET", "/products/".$attributes['productID']."?includestockdata=1", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$date = new DateTime(); 
+$date->modify('NOW');
+$duration = (!empty(get_option('dolicartnewlist'))?get_option('dolicartnewlist'):'month');
+$date->modify('FIRST DAY OF LAST '.$duration.' MIDNIGHT');
+$lastdate = $date->format('Y-m-d');
+$request = "/products?sortfield=t.datec&sortorder=DESC&limit=5&sqlfilters=(t.datec%3A%3E%3A'".$lastdate."')%20AND%20(t.tosell%3A%3D%3A1)";
+$resultats = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+//print $resultatso;
 
-$content .= doliproductcard($product, $attributes);
+if ( !isset($resultats->error) && $resultats != null ) {
+$count = count($resultats);
+//$content .= "<li class='list-group-item list-group-item-light'><center>".__(  'Here are our discounted items', 'doliconnect')."</center></li>";
+foreach ($resultats as $product) {
 
-} else {
-$content .= "<center>".__( 'No item', 'doliconnect' )."</center>";
+$content .= apply_filters( 'doliproductlist', $product);
+ 
 }
-$content .= "</div>";
+} else {
+$content .= "<center>".__( 'No new item', 'doliconnect' )."</center>";
+}
+$content .= '</ul><div class="card-body"></div>';
 $content .= "<div class='card-footer text-muted'>";
 $content .= "<small><div class='float-left'>";
-$content .= dolirefresh("/products/".$attributes['productID']."?includestockdata=1&includesubproducts=true", null, dolidelay('thirdparty'));
+$content .= dolirefresh($request, null, dolidelay('product'));
 $content .= "</div><div class='float-right'>";
 $content .= dolihelp('ISSUE');
 $content .= "</div></small>";

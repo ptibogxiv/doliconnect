@@ -1090,7 +1090,7 @@ if ( !isset($resultats->error) && $resultats != null ) {
 $count = count($resultats);
 print "<li class='list-group-item list-group-item-light'><center>".__(  'Here are our discounted items', 'doliconnect')."</center></li>";
 foreach ($resultats as $product) {
-$request2 = "/products/".$product->fk_product."?includestockdata=1";
+$request2 = "/products/".$product->fk_product."?includestockdata=1&includesubproducts=true";
 $product = callDoliApi("GET", $request2, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 print apply_filters( 'doliproductlist', $product);
  
@@ -1110,7 +1110,7 @@ print "</div></div>";
 
 } elseif ( isset($_GET['product']) ) {
 
-$request = "/products/".esc_attr($_GET['product'])."?includestockdata=1";
+$request = "/products/".esc_attr($_GET['product'])."?includestockdata=1&includesubproducts=true";
 $product = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 print "<div class='card-body'>";
