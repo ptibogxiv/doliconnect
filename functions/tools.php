@@ -901,7 +901,7 @@ return $total;
 function doliline($object, $refresh = false) {
 global $current_user;
 
-$doliline=null;
+$doliline = null;
 
 if ( isset($object) && is_object($object) && isset($object->lines) && $object->lines != null && (doliconnector($current_user, 'fk_soc') == $object->socid) ) {  
 foreach ( $object->lines as $line ) { 
@@ -1008,7 +1008,7 @@ $step = $product->array_options->options_packaging;
 } else {
 $step = 1;
 }              
-if ((empty($product->stock_reel) && !empty(doliconst('MAIN_MODULE_STOCK')) && (empty($product->type) || (!empty($product->type) && doliconst('STOCK_SUPPORTS_SERVICES')) )) || $m2 < $step)  { $doliline .= "<OPTION value='0' selected>".__( 'Unavailable', 'doliconnect')."</OPTION>"; 
+if ((empty($product->stock_reel) && !empty(doliconst('MAIN_MODULE_STOCK')) && (empty($product->type) || (!empty($product->type) && doliconst('STOCK_SUPPORTS_SERVICES')) )) || $m2 < $step)  { $doliline .= "<option value='0' selected>".__( 'Unavailable', 'doliconnect')."</option></select>"; 
 } elseif (!empty($m2) && $m2 >= $step) {
 foreach (range($m0, $m2, $step) as $number) {
 if ( ($number == $step && empty($line->qty) ) || $number == $line->qty || ($number == $m0 && empty($line->qty) )) {
