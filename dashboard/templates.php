@@ -841,7 +841,7 @@ doliconnect_enqueues();
 $shopsupplier = doliconst("DOLICONNECT_CATSHOP_SUPPLIER", esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 $category = "";
 
-if ( isset($_GET['supplier']) && $_GET['supplier'] > 0 ) { 
+if ( isset($_GET['supplier']) && is_numeric(esc_attr($_GET['supplier'])) && esc_attr($_GET['supplier']) > 0 ) { 
  
 $request = "/thirdparties/".esc_attr($_GET['supplier']);
 $module = 'thirdparty';
@@ -1108,7 +1108,7 @@ print dolihelp('ISSUE');
 print "</div></small>";
 print "</div></div>";
 
-} elseif ( isset($_GET['product']) ) {
+} elseif ( isset($_GET['product']) && is_numeric(esc_attr($_GET['product'])) ) {
 
 $request = "/products/".esc_attr($_GET['product'])."?includestockdata=1&includesubproducts=true";
 $product = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
