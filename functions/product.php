@@ -514,6 +514,7 @@ return $supplier;
 
 // list of products filter
 function doliproductlist($product) {
+global $current_user;
 
 $includestock = 0;
 if ( ! empty(doliconnectid('dolicart')) ) {

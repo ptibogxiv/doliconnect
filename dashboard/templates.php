@@ -833,6 +833,7 @@ add_filter( 'the_content', 'dolicontact_display');
 // ********************************************************
 
 function dolisupplier_display($content) {
+global $current_user;
 
 if ( in_the_loop() && is_main_query() && is_page(doliconnectid('dolisupplier')) && !empty(doliconnectid('dolisupplier')) ) {
 
