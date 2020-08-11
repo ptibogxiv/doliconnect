@@ -957,9 +957,9 @@ $doliline .= '<small><a href="'.doliconnecturl('dolishipping').'">'.esc_html__( 
 }
 
 if (( $maxstock <= 0 || (isset($product->array_options->options_packaging) && $maxstock < $product->array_options->options_packaging ) ) && is_page(doliconnectid('dolicart')) && $product->type == '0' && !empty(doliconst('MAIN_MODULE_STOCK', $refresh)) && empty(doliconst('STOCK_ALLOW_NEGATIVE_TRANSFER', $refresh)) ) {
-$doliline .= "<b>".__( "Sorry, this product is no longer available", 'doliconnect')."</b>";
+$doliline .= "<b>".__( "Sorry, this product is no longer available. Please, delete it to order", 'doliconnect')."</b>";
 } elseif ($product->stock_reel < $line->qty && $product->stock_reel > 0 && is_page(doliconnectid('dolicart')) && $product->type == '0' && !empty(doliconst('MAIN_MODULE_STOCK', $refresh)) && empty(doliconst('STOCK_ALLOW_NEGATIVE_TRANSFER', $refresh)) ) {
-$doliline .= "<b>".__( "Sorry, this product is not available with this quantity", 'doliconnect')."</b>";
+$doliline .= "<b>".__( "Sorry, this product is not available with this quantity. Please, change it for order", 'doliconnect')."</b>";
 }
 
 $doliline .= '</div><div class="col d-none d-md-block col-md-3 text-right">';
