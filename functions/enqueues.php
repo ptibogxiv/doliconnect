@@ -19,7 +19,7 @@ $css='';
 $version='4.5.2'; 
 } else {
 $css='bootswatch/'.get_theme_mod( 'ptibogxivtheme_css').'/';
-$version='4.5.0';  
+$version='4.5.2';  
 }
 
 	wp_register_style( 'bootstrap.min.css', plugins_url( 'doliconnect/includes/bootstrap/css/'.$css.'bootstrap.min.css'), array(), $version);
