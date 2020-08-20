@@ -62,6 +62,10 @@ We would like to thank this contributors and plugins:
 [gdpr-data-request-form](https://wordpress.org/plugins/gdpr-data-request-form/ "gdpr-data-request-form")
 
 == Changelog ==
+  = 4.5.1 =
+* beta version with lot of ajax and new feature
+* support of dolibarr 12
+
   = 4.5.0 =
 * beta version with lot of ajax and new feature
 * support of dolibarr 12
