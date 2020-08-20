@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2020-08-11 11:48+0200\n"
-"PO-Revision-Date: 2020-08-11 11:48+0200\n"
+"POT-Creation-Date: 2020-08-20 15:07+0200\n"
+"PO-Revision-Date: 2020-08-20 15:09+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: nl_BE\n"
@@ -407,8 +407,8 @@ msgstr "Favoriete"
 msgid "Edit"
 msgstr "Bewerk"
 
-#: dashboard/dashboard.php:422 functions/product.php:441
-#: functions/product.php:443 functions/tools.php:986 functions/tools.php:989
+#: dashboard/dashboard.php:422 functions/product.php:452
+#: functions/product.php:454 functions/tools.php:986 functions/tools.php:989
 #: functions/tools.php:1475
 msgid "Delete"
 msgstr "Verwijder"
@@ -638,7 +638,7 @@ msgid "Contracts tracking"
 msgstr "Contracten traceren"
 
 #: dashboard/dashboard.php:1058 dashboard/dashboard.php:1190
-#: dashboard/dashboard.php:1314 functions/product.php:61
+#: dashboard/dashboard.php:1314 functions/product.php:66
 msgid "Shipping"
 msgstr "Verzending"
 
@@ -967,7 +967,7 @@ msgstr "Ingeschakeld"
 msgid "Primary"
 msgstr "Primair"
 
-#: dashboard/dashboard.php:2068 functions/product.php:615
+#: dashboard/dashboard.php:2068 functions/product.php:626
 msgid "Description"
 msgstr "Omschrijving"
 
@@ -1152,7 +1152,7 @@ msgid "Access restricted to users"
 msgstr "Toegang beperkt tot gebruikers"
 
 #: dashboard/templates.php:616 dashboard/templates.php:669
-#: functions/product.php:467
+#: functions/product.php:478
 msgid "Sign in"
 msgstr "Aanmelden"
 
@@ -1528,39 +1528,43 @@ msgstr ""
 msgid "Some errors occurred:"
 msgstr "Er zijn enkele fouten opgetreden:"
 
-#: functions/product.php:54 functions/product.php:83
-msgid "Available immediately"
-msgstr "Direct beschikbaar"
+#: functions/product.php:54 functions/product.php:86 functions/product.php:88
+msgid "Available"
+msgstr "Niet beschikbaar"
 
 #: functions/product.php:54
 #, php-format
 msgid "This item is in stock and can be send immediately. %s"
 msgstr "Dit artikel is op voorraad en kan direct verzonden worden. %s"
 
-#: functions/product.php:66
+#: functions/product.php:54 functions/product.php:88
+msgid "Available immediately"
+msgstr "Direct beschikbaar"
+
+#: functions/product.php:71
 msgid "Not available"
 msgstr "Niet beschikbaar"
 
-#: functions/product.php:66
+#: functions/product.php:71
 #, php-format
 msgid "This item is out of stock and can not be ordered or shipped. %s"
 msgstr ""
 "Dit artikel is niet op voorraad en kan niet worden besteld of verzonden. %s"
 
-#: functions/product.php:69
+#: functions/product.php:74
 msgid "few"
 msgstr "paar"
 
-#: functions/product.php:73
+#: functions/product.php:78
 #, php-format
 msgid "Reception scheduled on %s."
 msgstr "Receptie gepland op %s."
 
-#: functions/product.php:80
+#: functions/product.php:85
 msgid "Available soon"
 msgstr "Binnenkort beschikbaar"
 
-#: functions/product.php:80
+#: functions/product.php:85
 #, php-format
 msgid ""
 "This item is not in stock but should be available soon within %s days. %s %s"
@@ -1568,11 +1572,11 @@ msgstr ""
 "Dit artikel is niet op voorraad, maar moet binnenkort beschikbaar zijn "
 "binnen %s dagen. %s %s"
 
-#: functions/product.php:81
+#: functions/product.php:86
 msgid "Limited availability"
 msgstr "Beperkte beschikbaarheid"
 
-#: functions/product.php:81
+#: functions/product.php:86
 #, php-format
 msgid ""
 "This item is in stock and can be shipped immediately but only in limited "
@@ -1581,82 +1585,82 @@ msgstr ""
 "Dit artikel is op voorraad en kan onmiddellijk maar slechts in beperkte "
 "hoeveelheden worden verzonden. %s"
 
-#: functions/product.php:83
+#: functions/product.php:88
 #, php-format
 msgid "This item is in stock and can be shipped immediately. %s"
 msgstr "Dit artikel is op voorraad en kan direct verzonden worden. %s"
 
-#: functions/product.php:308
+#: functions/product.php:313
 msgid "Price"
 msgstr "Prijs"
 
-#: functions/product.php:312 functions/product.php:331
-#: functions/product.php:393 functions/tools.php:1154
+#: functions/product.php:317 functions/product.php:336
+#: functions/product.php:398 functions/tools.php:1154
 msgid "hour"
 msgstr "uur"
 
-#: functions/product.php:318 functions/product.php:403
+#: functions/product.php:323 functions/product.php:408
 msgid "Our prices are incl. VAT"
 msgstr "Onze prijzen zijn incl. BTW"
 
-#: functions/product.php:318 functions/product.php:403
+#: functions/product.php:323 functions/product.php:408
 msgid "Our prices are excl. VAT"
 msgstr "Onze prijzen zijn excl. BTW"
 
-#: functions/product.php:328
+#: functions/product.php:333
 msgid "Selling Price"
 msgstr "Verkoopprijs"
 
-#: functions/product.php:377
+#: functions/product.php:382
 msgid "Sales"
 msgstr "Solden"
 
-#: functions/product.php:390
+#: functions/product.php:395
 msgid "Your price"
 msgstr "Uw Prijs"
 
-#: functions/product.php:437
+#: functions/product.php:448
 msgid "Unavailable"
 msgstr "Niet beschikbaar"
 
-#: functions/product.php:453
+#: functions/product.php:464
 msgid "Save my wish"
 msgstr "Mijn wens opslaan"
 
-#: functions/product.php:455
+#: functions/product.php:466
 msgid "Add to cart"
 msgstr "Aan winkelwagen toevoegen"
 
-#: functions/product.php:467 functions/product.php:469
+#: functions/product.php:478 functions/product.php:480
 msgid "log in"
 msgstr "aanmelden"
 
-#: functions/product.php:474
+#: functions/product.php:485
 msgid "Login"
 msgstr "Login"
 
-#: functions/product.php:474
+#: functions/product.php:485
 msgid "Contact us"
 msgstr "Contacteer ons"
 
-#: functions/product.php:477
+#: functions/product.php:488
 #, php-format
 msgid "you get %u %% discount"
 msgstr "u krijgt% u%% korting"
 
-#: functions/product.php:495
+#: functions/product.php:506
 msgid "Brand:"
 msgstr "Merk:"
 
-#: functions/product.php:609
+#: functions/product.php:620
 msgid "Origin:"
 msgstr "Oorsprong:"
 
-#: functions/product.php:617
+#: functions/product.php:628
 msgid "Item not in sale"
 msgstr "Object niet in de verkoop"
 
-#: functions/product.php:626
+#: functions/product.php:637
 msgid "Oops! This item does not appear to exist"
 msgstr "Oeps! Dit item lijkt niet te bestaan"
 
