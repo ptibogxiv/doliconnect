@@ -145,7 +145,7 @@ if (!$line > 0) { $line=null; }
 
 $prdt = callDoliApi("GET", "/products/".$productid."?includestockdata=1&includesubproducts=true", null, dolidelay('product', true));
 
-if ( doliconnector($current_user, 'fk_order') > 0 && $quantity > 0 && (empty(doliconst('MAIN_MODULE_STOCK')) || $prdt->stock_reel >= $quantity || ($line->type != '0' && empty(doliconst('STOCK_SUPPORTS_SERVICES')) )) && is_null($line) ) {
+if ( doliconnector($current_user, 'fk_order') > 0 && $quantity > 0 && (empty(doliconst('MAIN_MODULE_STOCK')) || $prdt->stock_reel >= $quantity || (is_null($line) && empty(doliconst('STOCK_SUPPORTS_SERVICES')) ))) {
                                                                                      
 $adln = [
     'fk_product' => $prdt->id,
@@ -165,7 +165,7 @@ set_transient( 'doliconnect_cartlinelink_'.$addline, esc_url($url), dolidelay(MO
 }
 return doliconnect_countitems($order);
 
-} elseif ( doliconnector($current_user, 'fk_order') > 0 && ($prdt->stock_reel >= $quantity || ($line->type != '0' && empty(doliconst('STOCK_SUPPORTS_SERVICES')) )) && $line > 0 ) {
+} elseif ( doliconnector($current_user, 'fk_order') > 0 && ($prdt->stock_reel >= $quantity || (is_object($line) && $line->type != '0' && empty(doliconst('STOCK_SUPPORTS_SERVICES')) )) && $line > 0 ) {
 
 if ( $quantity < 1 ) {
 
