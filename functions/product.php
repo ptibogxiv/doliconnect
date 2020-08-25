@@ -54,8 +54,12 @@ if ( ! is_object($product) || empty(doliconst('MAIN_MODULE_STOCK', $refresh)) ||
 $stock .= "<a tabindex='0' id='popover-".$product->id."' class='badge badge-pill badge-success text-white' data-container='body' data-toggle='popover' data-trigger='focus' title='".__( 'Available', 'doliconnect')."' data-content='".sprintf( __( 'This item is in stock and can be send immediately. %s', 'doliconnect'), '')."'><i class='fas fa-warehouse'></i> ".__( 'Available immediately', 'doliconnect').'</a>';
 } else {
 $warehouse = doliconst('DOLICONNECT_ID_WAREHOUSE', $refresh);
-if (isset($product->stock_warehouse) && !empty($product->stock_warehouse) && !empty($warehouse) && isset($product->stock_warehouse->$warehouse) ) {
+if (isset($product->stock_warehouse) && !empty($product->stock_warehouse) && !empty($warehouse)) {
+if ( isset($product->stock_warehouse->$warehouse) ) {
 $realstock = min(array($product->stock_reel,$product->stock_warehouse->$warehouse->real));
+} else {
+$realstock = 0;
+}
 } else {
 $realstock = $product->stock_reel;
 } 
@@ -68,7 +72,7 @@ $shipping = '<a href="'.doliconnecturl('dolishipping').'" class="btn btn-link bt
 $shipping = null;
 }
 
-if ( $maxstock <= 0 || (isset($product->array_options->options_packaging) && $maxstock < $product->array_options->options_packaging ) ) { $stock .= "<a tabindex='0' id='popover-".$product->id."' class='badge badge-pill badge-dark text-white' data-container='body' data-toggle='popover' data-trigger='focus' title='".__( 'Not available', 'doliconnect')."' data-content='".sprintf( __( 'This item is out of stock and can not be ordered or shipped. %s', 'doliconnect'), $shipping)."'><i class='fas fa-warehouse'></i> ".__( 'Not available', 'doliconnect')."</a>"; }  
+if ( $realstock <= 0 || (isset($product->array_options->options_packaging) && $maxstock < $product->array_options->options_packaging ) ) { $stock .= "<a tabindex='0' id='popover-".$product->id."' class='badge badge-pill badge-dark text-white' data-container='body' data-toggle='popover' data-trigger='focus' title='".__( 'Not available', 'doliconnect')."' data-content='".sprintf( __( 'This item is out of stock and can not be ordered or shipped. %s', 'doliconnect'), $shipping)."'><i class='fas fa-warehouse'></i> ".__( 'Not available', 'doliconnect')."</a>"; }  
 elseif ( ($minstock <= 0 || (isset($product->array_options->options_packaging) && $product->stock_reel < $product->array_options->options_packaging)) && $maxstock >= 0 && $product->stock_theorique > $product->stock_reel ) { 
 $delay =  callDoliApi("GET", "/products/".$product->id."/purchase_prices", null, dolidelay('product', $refresh));
 if (empty($delay[0]->delivery_time_days)) { $delay = esc_html__( 'few', 'doliconnect'); } else { $delay = $delay[0]->delivery_time_days;}
@@ -415,11 +419,15 @@ $button .= '</tbody></table>';
 
 if ( is_user_logged_in() && $add <= 0 && !empty(doliconst('MAIN_MODULE_COMMANDE')) && doliconnectid('dolicart') > 0 ) {
 $warehouse = doliconst('DOLICONNECT_ID_WAREHOUSE', $refresh);
-if (isset($product->stock_warehouse) && !empty($product->stock_warehouse) && !empty($warehouse) && isset($product->stock_warehouse->$warehouse) ) {
+if (isset($product->stock_warehouse) && !empty($product->stock_warehouse) && !empty($warehouse)) {
+if ( isset($product->stock_warehouse->$warehouse) ) {
 $realstock = min(array($product->stock_reel,$product->stock_warehouse->$warehouse->real));
 } else {
-$realstock = $product->stock_reel;
+$realstock = 0;
 }
+} else {
+$realstock = $product->stock_reel;
+} 
 if ( $realstock-$qty > 0 && (empty($product->type) || (!empty($product->type) && doliconst('STOCK_SUPPORTS_SERVICES')) ) ) {
 if (isset($product->array_options->options_packaging) && !empty($product->array_options->options_packaging)) {
 $m0 = 1*$product->array_options->options_packaging;
