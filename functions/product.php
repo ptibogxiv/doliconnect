@@ -149,7 +149,7 @@ if (!$line > 0) { $line=null; }
 
 $prdt = callDoliApi("GET", "/products/".$productid."?includestockdata=1&includesubproducts=true", null, dolidelay('product', true));
 
-if ( doliconnector($current_user, 'fk_order') > 0 && $quantity > 0 && (empty(doliconst('MAIN_MODULE_STOCK')) || $prdt->stock_reel >= $quantity || (is_null($line) && empty(doliconst('STOCK_SUPPORTS_SERVICES')) ))) {
+if ( doliconnector($current_user, 'fk_order') > 0 && $quantity > 0 && empty($line) && (empty(doliconst('MAIN_MODULE_STOCK')) || $prdt->stock_reel >= $quantity || (is_null($line) && empty(doliconst('STOCK_SUPPORTS_SERVICES')) ))) {
                                                                                      
 $adln = [
     'fk_product' => $prdt->id,
