@@ -308,17 +308,18 @@ $button .= '<table class="table table-bordered table-sm"><tbody>';
 $button .= '<tr><td class="text-right">'.doliprice( (empty(get_option('dolibarr_b2bmode'))?$price_ttc:$price_ht), null, $currency)."</td></tr>";
 } else {
 $button .= '<table class="table table-sm table-striped table-bordered"><tbody>';
-foreach ( $product->multiprices_ttc as $level => $price ) {
+$multiprix = (empty(get_option('dolibarr_b2bmode'))?$product->multiprices_ttc:$product->multiprices);
+foreach ( $multiprix as $level => $price ) {
 $button .= '<tr';
 if ( (empty(doliconnector($current_user, 'price_level')) && $level == 1 ) || doliconnector($current_user, 'price_level') == $level ) {
 $button .= ' class="table-primary"';  
 }
 $button .= '>';   
-$button .= '<td><small>'.__( 'Price', 'doliconnect').' '.$level.' - '.doliconst('PRODUIT_MULTIPRICES_LABEL'.$level).'</small></td>';
-$button .= '<td class="text-right"><small>'.doliprice( (empty(get_option('dolibarr_b2bmode'))?$price_ttc:$price_ht), null, $currency);
+$button .= '<td><small>'.(!empty(doliconst('PRODUIT_MULTIPRICES_LABEL'.$level))?doliconst('PRODUIT_MULTIPRICES_LABEL'.$level):__( 'Price', 'doliconnect').' '.$level).'</small></td>';
+$button .= '<td class="text-right"><small>'.doliprice( (empty(get_option('dolibarr_b2bmode'))?$price:$price_ht), null, $currency);
 if ( empty($time) && !empty($product->duration_value) ) { $button .='/'.doliduration($product); }
 $button .= '</small></td>';
-if ( !empty($altdurvalue) ) { $button .= "<td class='text-right'>soit ".doliprice( $altdurvalue*(empty(get_option('dolibarr_b2bmode'))?$price_ttc:$price_ht), null, $currency)." par ".__( 'hour', 'doliconnect')."</td>"; } 
+if ( !empty($altdurvalue) ) { $button .= "<td class='text-right'>soit ".doliprice( $altdurvalue*(empty(get_option('dolibarr_b2bmode'))?$price:$price_ht), null, $currency)." par ".__( 'hour', 'doliconnect')."</td>"; } 
 //$button .= '<small class="float-right">'.__( 'You benefit from the rate', 'doliconnect').' '.doliconst('PRODUIT_MULTIPRICES_LABEL'.$level).'</small>';
 $button .= '</tr>'; 
 }
