@@ -278,7 +278,7 @@ $qty = null;
 $ln = null;
 }
 
-$currency=isset($orderfo->multicurrency_code)?$orderfo->multicurrency_code:'eur';
+$currency=isset($orderfo->multicurrency_code)?$orderfo->multicurrency_code:strtoupper(doliconst("MAIN_MONNAIE", dolidelay('constante'), $refresh));
 
 if ( $product->type == '1' && !is_null($product->duration_unit) && '0' < ($product->duration_value)) {
 if ( $product->duration_unit == 'i' ) {
