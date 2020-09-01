@@ -145,7 +145,9 @@ if ( $ln->fk_product == $productid ) {
 $line=$ln->id;
 }
 }}
-if (!$line > 0) { $line=null; }
+
+if (isset($line) && !$line > 0) { $line = null; }
+if (! isset($line)) { $line = null; }
 
 $prdt = callDoliApi("GET", "/products/".$productid."?includestockdata=1&includesubproducts=true", null, dolidelay('product', true));
 
@@ -359,7 +361,7 @@ $product3 = callDoliApi("GET", $requestp, null, dolidelay('product', $refresh));
 if ( !empty(doliconst('MAIN_MODULE_DISCOUNTPRICE')) && isset($product3) && !isset($product3->error) ) {
 if (!empty($product3[0]->discount)) {
 $price_ttc3=$product->price_ttc-($product->price_ttc*$product3[0]->discount/100);
-$price_ht3=$product->price-($product->price_ttc*$product3[0]->discount/100);
+$price_ht3=$product->price-($product->price*$product3[0]->discount/100);
 $price_ttc=$product->price_ttc;
 $price_ht=$product->price;
 $vat = $product->tva_tx;
