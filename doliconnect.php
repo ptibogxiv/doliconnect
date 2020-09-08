@@ -187,7 +187,7 @@ $http_code = wp_remote_retrieve_response_code( $request );
 
 if ( $method == 'DELETE' ) {
 delete_transient( $link ); 
-} elseif ( $delay <= 0 || ! in_array( $http_code,array('200','404') ) ) {
+} elseif ( $delay <= 0 || ! in_array( $http_code,array('200', '404') ) ) {
 delete_transient( $link );
 
 if (! in_array($http_code,array('200', '400', '404')) ) {

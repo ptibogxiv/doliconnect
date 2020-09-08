@@ -55,7 +55,7 @@ $pagination .= "</ul></nav>";
 return $pagination;
 }
 
-function doliconnect_image($module, $id, $options = array(), $refresh = null) {
+function doliconnect_image($module, $id, $options = array(), $refresh = false) {
 
 $class = isset($options['class']) ? $options['class'] : 'img-fluid rounded-lg';
 $entity = dolibarr_entity(isset($options['entity'])?$options['entity']:null);
