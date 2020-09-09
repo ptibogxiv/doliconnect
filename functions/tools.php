@@ -898,7 +898,7 @@ $total .= "<li class='list-group-item list-group-item-primary'><b>".__( 'Total i
 return $total;
 }
 
-function doliline($object, $refresh = false) {
+function doliline($object, $refresh = false, $refreshstock = false) {
 global $current_user;
 
 $doliline = null;
@@ -911,7 +911,8 @@ $includestock = 0;
 if ( ! empty(doliconnectid('dolicart')) ) {
 $includestock = 1;
 }
-$product = callDoliApi("GET", "/products/".$line->fk_product."?includestockdata=".$includestock."&includesubproducts=true", null, dolidelay('cart', $refresh));
+if ($refresh || $refreshstock) $refreshstock = true;
+$product = callDoliApi("GET", "/products/".$line->fk_product."?includestockdata=".$includestock."&includesubproducts=true", null, dolidelay('cart', $refreshstock));
 }
 
 $minstock = min(array($product->stock_theorique,$product->stock_reel));
