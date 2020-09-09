@@ -167,7 +167,7 @@ $addline = callDoliApi("POST", "/orders/".doliconnector($current_user, 'fk_order
 $order = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order', true)."?contact_list=0", null, dolidelay('order', true));
 $dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolidelay('doliconnector', true));
 if ( !empty($url) ) {
-set_transient( 'doliconnect_cartlinelink_'.$addline, esc_url($url), dolidelay(MONTH_IN_SECONDS, true));
+//set_transient( 'doliconnect_cartlinelink_'.$addline, esc_url($url), dolidelay(MONTH_IN_SECONDS, true));
 }
 return doliconnect_countitems($order);
 
@@ -178,7 +178,7 @@ if ( $quantity < 1 ) {
 $deleteline = callDoliApi("DELETE", "/orders/".doliconnector($current_user, 'fk_order')."/lines/".$line, null, 0);
 $order = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order', true)."?contact_list=0", null, dolidelay('order', true));
 $dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolidelay('doliconnector', true));
-delete_transient( 'doliconnect_cartlinelink_'.$line );
+//delete_transient( 'doliconnect_cartlinelink_'.$line );
 
 return doliconnect_countitems($order);
  
@@ -197,9 +197,9 @@ $updateline = callDoliApi("PUT", "/orders/".doliconnector($current_user, 'fk_ord
 $order = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order', true)."?contact_list=0", null, dolidelay('order', true));
 $dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolidelay('doliconnector', true));
 if ( !empty($url) ) {
-set_transient( 'doliconnect_cartlinelink_'.$line, esc_url($url), dolidelay(MONTH_IN_SECONDS, true));
+//set_transient( 'doliconnect_cartlinelink_'.$line, esc_url($url), dolidelay(MONTH_IN_SECONDS, true));
 } else {
-delete_transient( 'doliconnect_cartlinelink_'.$line );
+//delete_transient( 'doliconnect_cartlinelink_'.$line );
 
 }
 return doliconnect_countitems($order);
