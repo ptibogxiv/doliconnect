@@ -92,13 +92,13 @@ add_action( 'admin_init', 'dolibarr_entity', 5);
 function doliconst( $constante, $refresh = null ) {
 global $wpdb;
 
-//if (doliversion('12.0.0')){
-//$const = callDoliApi("GET", "/setup/conf?confname=".$constante, null, dolidelay('constante', $refresh));
-//return $const;
-//} else {
+if (doliversion('12.0.0')){
+$const = callDoliApi("GET", "/setup/conf/".$constante, null, dolidelay('constante', $refresh));
+return isset($const)?$const:null;
+} else {
 $const = callDoliApi("GET", "/doliconnector/constante/".$constante, null, dolidelay('constante', $refresh));
 return isset($const->value)?$const->value:null;
-//}
+}
 
 }
 // ********************************************************

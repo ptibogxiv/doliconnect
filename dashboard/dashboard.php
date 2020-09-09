@@ -2147,6 +2147,7 @@ function generate_license($suffix = null) {
     }
     return $license_string;
 }
+print doliconst('MAIN_MONNAIE');
 
 //print generate_license();
 
