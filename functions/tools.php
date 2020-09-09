@@ -657,7 +657,7 @@ print '<div id="DoliconnectLoadingModal" class="modal fade bd-example-modal" tab
 }
 add_action( 'wp_footer', 'doliconnect_loading');
 
-function dolibug($msg = null) {
+function dolibug($msg = null, $request = null) {
 //header('Refresh: 180; URL='.esc_url(get_permalink()).'');
 $bug = '<div id="dolibug" ><br><br><br><br><center><div class="align-middle"><i class="fas fa-bug fa-7x fa-fw"></i><h4>';
 if ( ! empty($msg) ) {
@@ -667,6 +667,7 @@ $bug .= '</h4>';
 if ( defined("DOLIBUG") && ! empty(constant("DOLIBUG")) ) {
 $bug .= '<h6>'.__( 'Error code', 'doliconnect').' #'.constant("DOLIBUG").'</h6>';
 }
+if ($request) $bug .= '<h6>'.__( 'Request', 'doliconnect').' '.$request.'</h6>';
 $bug .='</div></center><br><br><br><br></div>';
 return $bug;
 }

@@ -193,7 +193,7 @@ delete_transient( $link );
 if (! in_array($http_code,array('200', '400', '404')) ) {
 
 if ( !defined("DOLIBUG") ) {
-define('DOLIBUG', $http_code);
+define('DOLIBUG', $http_code, $link);
 }
 
 } elseif ( $delay != 0 ) {
