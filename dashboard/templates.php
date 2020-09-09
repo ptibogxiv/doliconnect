@@ -1552,7 +1552,7 @@ if ( doliconnector($current_user, 'fk_order')>0 && isset($object->lines) && $obj
 
 print "<div class='card shadow-sm' id='cart-form'><ul id='doliline' class='list-group list-group-flush'>";
 
-print doliline($object, true);
+print doliline($object, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 
 if ( isset($object) && is_object($object) && isset($object->socid) &&(doliconnector($current_user, 'fk_soc') == $object->socid) ) {
 print "</ul><ul id='dolitotal' class='list-group list-group-flush'>";

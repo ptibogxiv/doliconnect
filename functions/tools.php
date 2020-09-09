@@ -109,7 +109,7 @@ $image .= "img-fluid card-img";
 } else {
 $image .=  $class;
 }
-$image .= "' alt='".$img->relativename."'>";
+$image .= "' alt='".$img->relativename."' loading='lazy'>";
 
 } else {
 $image .= "<i class='fa fa-cube fa-fw fa-2x'></i>";
@@ -132,7 +132,7 @@ $image .= "img-fluid card-img";
 } else {
 $image .=  $class;
 }
-$image .= "' alt='".$img->relativename."'>";
+$image .= "' alt='".$img->relativename."' loading='lazy'>";
 
 }
 $image .= "</div>";
@@ -162,12 +162,12 @@ mkdir($up_dir['basedir'].'/doliconnect/'.$module.'/'.explode('/'.$imgj['filename
 //}
 $file=$up_dir['basedir'].'/doliconnect/'.$module.'/'.$id;
 file_put_contents($file, base64_decode($imgj['content']));
-$image = "<img src='".$up_dir['baseurl'].'/doliconnect/'.$module.'/'.$id."' class='".$class."' alt='".$imgj['filename']."'>"; 
+$image = "<img src='".$up_dir['baseurl'].'/doliconnect/'.$module.'/'.$id."' class='".$class."' alt='".$imgj['filename']."' loading='lazy'>"; 
 } else {
 $image = "<i class='fa fa-cube fa-fw fa-2x'></i>";
 }
 } else {
-$image = "<img src='".$up_dir['baseurl'].'/doliconnect/'.$module.'/'.$id."' class='".$class."' alt='".$up_dir['baseurl'].'/doliconnect/'.$module.'/'.$id."'>";
+$image = "<img src='".$up_dir['baseurl'].'/doliconnect/'.$module.'/'.$id."' class='".$class."' alt='".$up_dir['baseurl'].'/doliconnect/'.$module.'/'.$id."' loading='lazy'>";
 }
 }
 return $image;
