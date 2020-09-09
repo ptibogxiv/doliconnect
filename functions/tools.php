@@ -760,7 +760,7 @@ elseif ($delay == 'project') { $delay = HOUR_IN_SECONDS; }
 elseif ($delay == 'member') { $delay = DAY_IN_SECONDS; }
 elseif ($delay == 'donation') { $delay = DAY_IN_SECONDS; }
 elseif ($delay == 'ticket') { $delay = HOUR_IN_SECONDS; }
-elseif ($delay == 'product') { $delay = 6 * HOUR_IN_SECONDS; }
+elseif ($delay == 'product') { $delay = 8 * HOUR_IN_SECONDS; }
 elseif ($delay == 'cart') { $delay = 20 * MINUTE_IN_SECONDS; }
 elseif ($delay == 'document') { $delay = MONTH_IN_SECONDS; }
 } else {
