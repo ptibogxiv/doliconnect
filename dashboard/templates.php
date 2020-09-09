@@ -1406,7 +1406,7 @@ $module = 'orders';
 $id = null;
 }
 
-$object = callDoliApi("GET", $request, null, dolidelay('cart', true));
+$object = callDoliApi("GET", $request, null, dolidelay('cart', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 if ( defined("DOLIBUG") ) {
 

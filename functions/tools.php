@@ -938,7 +938,7 @@ $doliline .= '<div class="w-100 justify-content-between"><div class="row"><div c
 if ( !empty(doliconst('MAIN_MODULE_FRAISDEPORT', $refresh)) && doliconst('FRAIS_DE_PORT_ID_SERVICE_TO_USE', $refresh) == $line->fk_product ) {
 $doliline .= '<i class="fas fa-shipping-fast fa-2x fa-fw"></i>';
 } else {
-$doliline .= doliconnect_image('product', $line->fk_product, array('limit'=>1, 'size'=>'50x50'), esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+$doliline .= doliconnect_image('product', $line->fk_product, array('limit'=>1, 'size'=>'50x50'), $refresh);
 }
 
 $doliline .= '</center></div><div class="col-8 col-sm-7 col-md-5 col-lg-6"><h6 class="mb-1">'.doliproduct($line, 'product_label').'</h6>';
