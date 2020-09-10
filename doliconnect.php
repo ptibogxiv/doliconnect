@@ -441,6 +441,9 @@ $thirparty = callDoliApi("PUT", "/thirdparties/".doliconnector($current_user, 'f
 
 }
 // ********************************************************
+
+
+// ********************************************************
 // outils de personnalisation et utilisation du module
 function my_login_logo_url() {
 return get_bloginfo( 'url' );
