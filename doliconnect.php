@@ -441,8 +441,32 @@ $thirparty = callDoliApi("PUT", "/thirdparties/".doliconnector($current_user, 'f
 
 }
 // ********************************************************
+// Activación del Plugin
+register_activation_hook( __FILE__, 'dcms_plugin_activation' );
+function dcms_plugin_activation() {
+    if( ! wp_next_scheduled( 'dcms_my_cron_hook' ) ) {
+        wp_schedule_event( current_time( 'timestamp' ), 'hourly', 'dcms_my_cron_hook' );
+    }
+}
 
 
+// Desactivación del Plugin
+register_deactivation_hook( __FILE__, 'dcms_plugin_desactivation' );
+function dcms_plugin_desactivation() {
+    wp_clear_scheduled_hook( 'dcms_my_cron_hook' );
+}
+
+// Acción personalizada
+add_action( 'dcms_my_cron_hook', 'dcms_my_process' );
+
+function dcms_my_process() {
+    //error_log('Mi evento se ejecutó: '.Date("h:i:sa"));
+    $recepients="support@ptibogxiv.net";
+    $subject="Hello from your Cron Job";
+    $message="This is a test mail sent by WordPress automatically as per Your schedule.";
+    //let’s send it
+    wp_mail($recepients,$subject,$message);
+}
 // ********************************************************
 // outils de personnalisation et utilisation du module
 function my_login_logo_url() {

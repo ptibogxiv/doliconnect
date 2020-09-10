@@ -330,7 +330,7 @@ $count = count($listproduct);
 print "'>".__(  'New items', 'doliconnect')." (".$count.")</a>";
 }
 
-if ( !empty(doliconst('MAIN_MODULE_DISCOUNTPRICE')) ) {
+if ( !empty(doliconst('MAIN_MODULE_DISCOUNTPRICE', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))) ) {
 print "<a href='".esc_url( add_query_arg( 'discount', '', doliconnecturl('dolishop')) )."' class='list-group-item list-group-item-action";
 if ( isset($_GET['discount']) ) { print " active"; }
 $date = new DateTime(); 
