@@ -30,15 +30,6 @@ date_default_timezone_set($tzstring);
 $ID = $current_user->ID;
 $time = current_time( 'timestamp', 1);
 
-if ( isset($_GET["action"]) && $_GET["action"] == 'confirm_admin_email' ) {
-if ( function_exists('secupress_get_module_option') && secupress_get_module_option('move-login_slug-login', $slug, 'users-login' ) ) {
-$login_url=site_url()."/".secupress_get_module_option('move-login_slug-login', $slug, 'users-login'); 
-} else {
-$login_url=site_url()."/wp-login.php"; }
-wp_redirect( $login_url .'?action=confirm_admin_email&wp_lang='.$_GET["wp_lang"] );
-exit;
-}
-
 print "<div class='row'>";
 if ( empty(get_option('doliconnectrestrict')) || is_user_logged_in() ) {
 print "<div class='col-xs-12 col-sm-12 col-md-3'><div class='row'><div class='col-3 col-xs-4 col-sm-4 col-md-12 col-xl-12'><div class='card shadow-sm' style='width: 100%'>";
@@ -909,7 +900,7 @@ print "</ul><div class='card-body'>";
 
 } else {
 
- if (!empty($shopsupplier)) $category = "&category=".$shopsupplier;
+if (isset($shopsupplier) && !empty($shopsupplier)) $category = "&category=".$shopsupplier;
 $module = 'thirdparty';
 $limit=25;
 if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']-1); }  else { $page = 0; }

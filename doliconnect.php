@@ -20,12 +20,12 @@
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
-}  
- 
+}
+  
+add_action( 'plugins_loaded', 'doliconnect_textdomain' ); 
 function doliconnect_textdomain() {
     load_plugin_textdomain( 'doliconnect', false, basename( dirname( __FILE__ ) ) . '/languages/' );
 }
-add_action( 'plugins_loaded', 'doliconnect_textdomain' );
 
 require_once plugin_dir_path(__FILE__).'/functions/enqueues.php';
 require_once plugin_dir_path(__FILE__).'/functions/data-request.php';
@@ -63,6 +63,7 @@ return get_option($page);
 }  
 }
 // ********************************************************
+add_action('init', 'app_output_buffer');
 function app_output_buffer() {
 global $current_user;
 //ob_start();
@@ -74,8 +75,8 @@ $current_user->set_role(get_option('doliconnectrestrict_role'));
 }
 }
 } 
-add_action('init', 'app_output_buffer');
 // ********************************************************
+add_action( 'admin_init', 'dolibarr_entity', 5);
 function dolibarr_entity( $entity = null ) {
 
 if ( !empty($entity) ) {
@@ -87,14 +88,17 @@ return get_current_blog_id();
 }
 //return get_current_network_id();
 }
-add_action( 'admin_init', 'dolibarr_entity', 5); 
 // ********************************************************
 function doliconst( $constante, $refresh = null ) {
 global $wpdb;
 
 if (doliversion('13.0.0')){
 $const = callDoliApi("GET", "/setup/conf/".$constante, null, dolidelay('constante', $refresh));
-return isset($const)?$const:null;
+if (!isset($const->error) && $const != null) {
+return $const;
+} else {
+return null; 
+}
 } else {
 $const = callDoliApi("GET", "/doliconnector/constante/".$constante, null, dolidelay('constante', $refresh));
 return isset($const->value)?$const->value:null;
@@ -102,6 +106,7 @@ return isset($const->value)?$const->value:null;
 
 }
 // ********************************************************
+add_action( 'wp_head', 'doliconnect_run', 10, 0 );
 function doliconnect_run() {
 $array=array();
 if ( !empty(doliconnectid('doliaccount')) ) { $array[]=doliconnectid('doliaccount'); }
@@ -112,7 +117,18 @@ define( 'DONOTCACHEPAGE', 1);
 }
 }
 }
-add_action( 'wp_head', 'doliconnect_run', 10, 0 );
+// ********************************************************
+add_action ('wp_loaded', 'doliconnect_confirm_admin_email_redirect');
+function doliconnect_confirm_admin_email_redirect() {
+if ( isset($_GET["action"]) && $_GET["action"] == 'confirm_admin_email' ) {
+if ( function_exists('secupress_get_module_option') && secupress_get_module_option('move-login_slug-login', $slug, 'users-login' ) ) {
+$login_url=site_url()."/".secupress_get_module_option('move-login_slug-login', $slug, 'users-login'); 
+} else {
+$login_url=site_url()."/wp-login.php"; }
+wp_redirect( $login_url .'?action=confirm_admin_email&wp_lang='.$_GET["wp_lang"] );
+exit;
+}  
+}
 // ********************************************************
 function json_basic_auth_handler( $user ) {
 	global $wp_json_basic_auth_error;
@@ -149,6 +165,7 @@ function json_basic_auth_error( $error ) {
 }
 add_filter( 'rest_authentication_errors', 'json_basic_auth_error' );
 // ********************************************************
+add_action( 'admin_init', 'callDoliApi', 5, 5); 
 function callDoliApi($method = null, $link = null, $body = null, $delay = HOUR_IN_SECONDS, $entity = null) {
 global $wpdb;
 
@@ -219,8 +236,8 @@ define('DOLIBUG', 1);
 }
 }
 }
-add_action( 'admin_init', 'callDoliApi', 5, 5); 
 // ********************************************************
+add_action( 'init', 'dolibarr', 10);
 function dolibarr() {
 global $current_user;  
 
@@ -278,7 +295,6 @@ define('DOLICONNECT_CART_ITEM', 0);
 } 
 
 }
-add_action( 'init', 'dolibarr', 10);
 // ********************************************************
 function doliconnector($current_user = null, $value = null, $refresh = false, $thirdparty = null) {
 
@@ -316,6 +332,7 @@ return $dolibarr;
 
 // ********************************************************
 /* Bloquer accès aux non-admins */
+add_action('init', 'doliconnect_block_dashboard');
 function doliconnect_block_dashboard() {
 	$file = basename($_SERVER['PHP_SELF']);
 	if (is_user_logged_in() && is_admin() && !current_user_can('edit_posts') && $file != 'admin-ajax.php') {
@@ -323,23 +340,16 @@ function doliconnect_block_dashboard() {
 		exit();
 	}
 }
-add_action('init', 'doliconnect_block_dashboard');
-
 // ********************************************************
-
 add_filter( 'pll_custom_flag', 'dolipll_custom_flag', 10, 2 );
- 
 function dolipll_custom_flag( $flag, $code ) {
     $flag['url']    = "https://demo.ptibogxiv.net/wp-content/plugins/doliconnect/includes/flag-icon-css/flags/4x3/{$code}.svg";
     $flag['width']  = 24;
     $flag['height'] = 18;
     return $flag;
 }
-
 // ********************************************************
-
 add_filter( 'get_avatar' , 'my_custom_avatar' , 1 , 5 );
-
 function my_custom_avatar( $avatar, $id_or_email, $size, $default, $alt ) {
 global $wpdb;    
     $user = false;
@@ -410,9 +420,8 @@ restore_current_blog();
 }
 return $avatar;
 }
-
 // ********************************************************
-
+add_action('wp_dolibarr_sync','update_synctodolibarr', 1, 1);
 function update_synctodolibarr($element) {
 global $current_user;
 $entity = get_current_blog_id();
@@ -430,8 +439,7 @@ $thirparty = callDoliApi("PUT", "/thirdparties/".doliconnector($current_user, 'f
 }
 
 }
-add_action('wp_dolibarr_sync','update_synctodolibarr', 1, 1);
-
+// ********************************************************
 // outils de personnalisation et utilisation du module
 function my_login_logo_url() {
 return get_bloginfo( 'url' );
