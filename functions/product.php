@@ -596,8 +596,6 @@ global $current_user;
 
 if (isset($product->id) && $product->id > 0) {
 
-$documents = callDoliApi("GET", "/documents?modulepart=product&id=".$product->id, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-//$card .= $documents;
 $card = "<div class='row'>";
 if (defined("DOLIBUG")) {
 $card = dolibug();

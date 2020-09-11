@@ -441,7 +441,7 @@ $thirparty = callDoliApi("PUT", "/thirdparties/".doliconnector($current_user, 'f
 
 }
 // ********************************************************
-// Activación del Plugin
+// Actication Doliconnect
 register_activation_hook( __FILE__, 'doliconnect_plugin_activation' );
 function doliconnect_plugin_activation() {
     if( ! wp_next_scheduled( 'doliconnect_cron_hook' ) ) {
@@ -449,23 +449,10 @@ function doliconnect_plugin_activation() {
     }
 }
 
-
-// Desactivación del Plugin
+// Desactivation Doliconnect
 register_deactivation_hook( __FILE__, 'doliconnect_plugin_desactivation' );
 function doliconnect_plugin_desactivation() {
     wp_clear_scheduled_hook( 'doliconnect_cron_hook' );
-}
-
-// Acción personalizada
-add_action( 'doliconnect_cron_hook', 'doliconnect_cron_process' );
-
-function doliconnect_cron_process() {
-    //error_log('Mi evento se ejecutó: '.Date("h:i:sa"));
-    $recepients="support@ptibogxiv.net";
-    $subject="Hello from your Cron Job";
-    $message="This is a test mail sent by WordPress automatically as per Your schedule.";
-    //let’s send it
-    //wp_mail($recepients,$subject,$message);
 }
 // ********************************************************
 // outils de personnalisation et utilisation du module
