@@ -450,7 +450,19 @@ function doliconnect_add_cron_interval( $schedules ) {
 }
 // Actication Doliconnect
 register_activation_hook( __FILE__, 'doliconnect_plugin_activation' );
-function doliconnect_plugin_activation() {
+function doliconnect_plugin_activation($network_wide){
+    if($network_wide){ //Plugin is network activated
+        $site_ids = get_sites(array('fields' => 'ids'));
+        foreach($site_ids as $site_id){
+            //Perform something on all sites within the network
+            switch_to_blog($site_id);
+            if( ! wp_next_scheduled( 'doliconnect_cron_hook' ) ) {
+            wp_schedule_event( current_time( 'timestamp', 1), 'fifteen_minutes', 'doliconnect_cron_hook' );
+            }
+            restore_current_blog();
+        }
+        return;
+    }
     if( ! wp_next_scheduled( 'doliconnect_cron_hook' ) ) {
         wp_schedule_event( current_time( 'timestamp', 1), 'fifteen_minutes', 'doliconnect_cron_hook' );
     }
@@ -458,7 +470,17 @@ function doliconnect_plugin_activation() {
 
 // Desactivation Doliconnect
 register_deactivation_hook( __FILE__, 'doliconnect_plugin_desactivation' );
-function doliconnect_plugin_desactivation() {
+function doliconnect_plugin_desactivation($network_wide){
+    if($network_wide){ //Plugin is network activated
+        $site_ids = get_sites(array('fields' => 'ids'));
+        foreach($site_ids as $site_id){
+            //Perform something on all sites within the network
+            switch_to_blog($site_id);
+            wp_clear_scheduled_hook( 'doliconnect_cron_hook' );
+            restore_current_blog();
+        }
+        return;
+    }
     wp_clear_scheduled_hook( 'doliconnect_cron_hook' );
 }
 // ********************************************************
