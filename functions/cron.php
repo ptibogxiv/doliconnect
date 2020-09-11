@@ -34,7 +34,6 @@ $product[$produit->fk_product] = $produit->fk_product;
 }
 
 $shop = doliconst("DOLICONNECT_CATSHOP", $refresh);
-
 $request = "/categories/".esc_attr($shop)."?include_childs=true";
 $resultatsc = callDoliApi("GET", $request, null, dolidelay('product', $refresh));
 
