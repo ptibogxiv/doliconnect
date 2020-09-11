@@ -17,7 +17,8 @@ $requestp = "/products?sortfield=t.datec&sortorder=DESC&sqlfilters=(t.datec%3A%3
 $listproduct = callDoliApi("GET", $requestp, null, dolidelay('product', $refresh));
 if ( !isset($listproduct->error) && $listproduct != null ) {
 foreach ($listproduct as $product) {
-$products[$product->id] = $product->id;
+$products[$product->id]['id'] = $product->id;
+$products[$product->id]['entity'] = $product->entity;
 }}
 }
 
@@ -29,7 +30,8 @@ $requestp = "/discountprice?sortfield=t.rowid&sortorder=ASC&sqlfilters=(t.date_b
 $listproduct = callDoliApi("GET", $requestp, null, dolidelay('product', $refresh));
 if ( !isset($listproduct->error) && $listproduct != null ) {
 foreach ($listproduct as $product) {
-$products[$product->fk_product] = $product->fk_product;
+$products[$product->fk_product]['id'] = $product->fk_product;
+$products[$product->fk_product]['entity'] = $product->entity;
 }}
 }
 
@@ -37,16 +39,18 @@ $shop = doliconst("DOLICONNECT_CATSHOP");
 $request = "/categories/".esc_attr($shop)."?include_childs=true";
 $resultatsc = callDoliApi("GET", $request, null, dolidelay('product', $refresh));
 if ( !isset($resultatsc->error) && $resultatsc != null ) {
-foreach ($resultatsc->childs as $categorie) {
-$categories[$categorie->id] = $categorie->id;
+foreach ($resultatsc->childs as $category) {
+$categories[$category->id] = $category->id;
+doliconnect_image('category', $category->id, 1, $refresh, $category->entity);
 }}
 
 foreach ($categories as $id => $categorie) {
 $request = "/categories/".$id."?include_childs=true";
 $resultatsc = callDoliApi("GET", $request, null, dolidelay('product', $refresh));
 if ( !isset($resultatsc->error) && $resultatsc != null ) {
-foreach ($resultatsc->childs as $categorie) {
-$categories[$categorie->id] = $categorie->id;
+foreach ($resultatsc->childs as $category) {
+$categories[$category->id] = $category->id;
+doliconnect_image('category', $category->id, 1, $refresh, $category->entity);
 }}
 }
 
@@ -56,7 +60,8 @@ $requestp = "/products?sortfield=t.label&sortorder=ASC&category=".$id."&sqlfilte
 $listproduct = callDoliApi("GET", $requestp, null, dolidelay('product', $refresh));
 if ( !isset($listproduct->error) && $listproduct != null ) {
 foreach ($listproduct as $product) {
-$products[$product->id] = $product->id;
+$products[$product->id]['id'] = $product->id;
+$products[$product->id]['entity'] = $product->entity;
 }}
 }
 
@@ -65,7 +70,8 @@ if ( ! empty(doliconnectid('dolicart')) ) {
 $includestock = 1;
 }  
 foreach ($products as $id => $product) {
-$product = callDoliApi("GET", "/products/".$id."?includestockdata=".$includestock."&includesubproducts=true", null, dolidelay('product', $refresh));
+$produit = callDoliApi("GET", "/products/".$product['id']."?includestockdata=".$includestock."&includesubproducts=true", null, dolidelay('product', $refresh));
+doliconnect_image('product', $product['id'], array('limit'=>1, 'entity'=>$product['entity'], 'size'=>'200x200'), $refresh);
 }
 
 }
