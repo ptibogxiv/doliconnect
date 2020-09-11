@@ -41,7 +41,7 @@ $resultatsc = callDoliApi("GET", $request, null, dolidelay('product', $refresh))
 if ( !isset($resultatsc->error) && $resultatsc != null ) {
 foreach ($resultatsc->childs as $category) {
 $categories[$category->id] = $category->id;
-doliconnect_image('category', $category->id, 1, $refresh, $category->entity);
+//doliconnect_image('category', $category->id, 1, $refresh, $category->entity);
 }}
 
 foreach ($categories as $id => $categorie) {
@@ -50,7 +50,7 @@ $resultatsc = callDoliApi("GET", $request, null, dolidelay('product', $refresh))
 if ( !isset($resultatsc->error) && $resultatsc != null ) {
 foreach ($resultatsc->childs as $category) {
 $categories[$category->id] = $category->id;
-doliconnect_image('category', $category->id, 1, $refresh, $category->entity);
+//doliconnect_image('category', $category->id, 1, $refresh, $category->entity);
 }}
 }
 
@@ -71,7 +71,7 @@ $includestock = 1;
 }  
 foreach ($products as $id => $product) {
 $produit = callDoliApi("GET", "/products/".$product['id']."?includestockdata=".$includestock."&includesubproducts=true", null, dolidelay('product', $refresh));
-doliconnect_image('product', $product['id'], array('limit'=>1, 'entity'=>$product['entity'], 'size'=>'200x200'), $refresh);
+//doliconnect_image('product', $product['id'], array('limit'=>1, 'entity'=>$product['entity'], 'size'=>'200x200'), $refresh);
 if ( !empty(doliconst('MAIN_MODULE_DISCOUNTPRICE')) ) {
 $date = new DateTime(); 
 $date->modify('NOW');
