@@ -15,6 +15,10 @@ $date->modify('FIRST DAY OF LAST '.$duration.' MIDNIGHT');
 $lastdate = $date->format('Y-m-d');
 $requestp = "/products?sortfield=t.datec&sortorder=DESC&sqlfilters=(t.datec%3A%3E%3A'".$lastdate."')%20AND%20(t.tosell%3A%3D%3A1)";
 $listproduct = callDoliApi("GET", $requestp, null, dolidelay('product', $refresh));
+if ( !isset($listproduct->error) && $listproduct != null ) {
+foreach ($listproduct as $produit) {
+$product[$produit->id] = $produit->id;
+}}
 }
 
 if ( !empty(doliconst('MAIN_MODULE_DISCOUNTPRICE')) ) {
@@ -23,6 +27,10 @@ $date->modify('NOW');
 $lastdate = $date->format('Y-m-d');
 $requestp = "/discountprice?sortfield=t.rowid&sortorder=ASC&sqlfilters=(t.date_begin%3A%3C%3D%3A'".$lastdate."')%20AND%20(t.date_end%3A%3E%3D%3A'".$lastdate."')%20AND%20(d.tosell%3A%3D%3A1)";
 $listproduct = callDoliApi("GET", $requestp, null, dolidelay('product', $refresh));
+if ( !isset($listproduct->error) && $listproduct != null ) {
+foreach ($listproduct as $produit) {
+$product[$produit->fk_product] = $produit->fk_product;
+}}
 }
 
 $shop = doliconst("DOLICONNECT_CATSHOP", $refresh);
@@ -44,16 +52,16 @@ if ( !isset($resultatsc->error) && $resultatsc != null ) {
 foreach ($resultatsc->childs as $categorie) {
 $requestp = "/products?sortfield=t.label&sortorder=ASC&category=".$categorie->id."&sqlfilters=(t.tosell=1)";
 $listproduct = callDoliApi("GET", $requestp, null, dolidelay('product', $refresh));
-
-//if ( !isset($listproduct->error) && $listproduct != null ) {
-//foreach ($resultats as $product) {
-
-//}}
-
 }}
-
 }
+} 
 
+$includestock = 0;
+if ( ! empty(doliconnectid('dolicart')) ) {
+$includestock = 1;
+}  
+foreach ($product as $id => $product) {
+$product = callDoliApi("GET", "/products/".$id."?includestockdata=".$includestock."&includesubproducts=true", null, dolidelay('product', $refresh));
 }
 
     //error_log('Mi evento se ejecutó: '.Date("h:i:sa"));
