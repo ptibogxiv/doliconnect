@@ -441,11 +441,18 @@ $thirparty = callDoliApi("PUT", "/thirdparties/".doliconnector($current_user, 'f
 
 }
 // ********************************************************
+add_filter( 'cron_schedules', 'doliconnect_add_cron_interval' );
+function doliconnect_add_cron_interval( $schedules ) { 
+    $schedules['fifteen_minutes'] = array(
+        'interval' => 300,
+        'display'  => esc_html__( 'Every 15 minutes' ), );
+    return $schedules;
+}
 // Actication Doliconnect
 register_activation_hook( __FILE__, 'doliconnect_plugin_activation' );
 function doliconnect_plugin_activation() {
     if( ! wp_next_scheduled( 'doliconnect_cron_hook' ) ) {
-        wp_schedule_event( current_time( 'timestamp' ), 'hourly', 'doliconnect_cron_hook' );
+        wp_schedule_event( current_time( 'timestamp', 1), 'fifteen_minutes', 'doliconnect_cron_hook' );
     }
 }
 
