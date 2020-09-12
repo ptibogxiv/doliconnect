@@ -406,7 +406,7 @@ $button .= __( 'Sales', 'doliconnect');
 }
 $button .= '</div>';
 $button .= '<div class="float-right">'.doliprice( empty(get_option('dolibarr_b2bmode'))?$price_ttc3:$price_ht3, $currency).'</div></td></tr>';
-} elseif ( !empty(doliconst("PRODUIT_CUSTOMER_PRICES", $refresh)) && isset($product2) && !empty($product2) && !isset($product2->error) ) {
+} elseif ( !empty(doliconst("PRODUIT_CUSTOMER_PRICES", $refresh)) && isset($product2) && !isset($product2->error) ) {
 foreach ( $product2 as $pdt2 ) {
 $price_min_ttc=$pdt2->price_min;
 $price_ttc=$pdt2->price_ttc;
