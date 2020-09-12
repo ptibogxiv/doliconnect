@@ -887,9 +887,16 @@ $request = "/products/purchase_prices?sortfield=t.ref&sortorder=ASC&limit=".$lim
 $resultats2 = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 $resultats = array();
 if ( !isset($resultats2->error) && $resultats2 != null ) {
+$count = count($resultats);
+$includestock = 0;
+if ( ! empty(doliconnectid('dolicart')) ) {
+$includestock = 1;
+}
 foreach ($resultats2 as $product) {
-$resultats[$product[0]->id] = 1;
-print apply_filters( 'doliproductlist', $product[0]);
+
+$resultats[$product[0]->id] = 1; 
+$product = callDoliApi("GET", "/products/".$product[0]->id."?includestockdata=".$includestock."&includesubproducts=true", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+print apply_filters( 'doliproductlist', $product);
 
 }
 } else {
@@ -1012,6 +1019,11 @@ $resultats = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(is
 
 if ( !isset($resultats->error) && $resultats != null ) {
 $count = count($resultats);
+$count = count($resultats);
+$includestock = 0;
+if ( ! empty(doliconnectid('dolicart')) ) {
+$includestock = 1;
+}
 print "<li class='list-group-item list-group-item-light'><center>";
 printf( _n( 'We have found %s item with this search', 'We have found %s items with this search', $count, 'doliconnect' ), number_format_i18n( $count ) );
 print " '".esc_attr($_GET['search'])."'";
@@ -1019,6 +1031,7 @@ print "<a href='".esc_url( add_query_arg( 'search', '', doliconnecturl('dolishop
 print "</center></li>";
 foreach ($resultats as $product) {
 
+$product = callDoliApi("GET", "/products/".$product->id."?includestockdata=".$includestock."&includesubproducts=true", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 print apply_filters( 'doliproductlist', $product);
  
 }
@@ -1055,9 +1068,14 @@ $resultats = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(is
 
 if ( !isset($resultats->error) && $resultats != null ) {
 $count = count($resultats);
+$includestock = 0;
+if ( ! empty(doliconnectid('dolicart')) ) {
+$includestock = 1;
+}
 print "<li class='list-group-item list-group-item-light'><center>".__(  'Here are our new items', 'doliconnect')."</center></li>";
 foreach ($resultats as $product) {
 
+$product = callDoliApi("GET", "/products/".$product->id."?includestockdata=".$includestock."&includesubproducts=true", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 print apply_filters( 'doliproductlist', $product);
  
 }
@@ -1094,10 +1112,14 @@ $includestock = 1;
 
 if ( !isset($resultats->error) && $resultats != null ) {
 $count = count($resultats);
+$includestock = 0;
+if ( ! empty(doliconnectid('dolicart')) ) {
+$includestock = 1;
+}
 print "<li class='list-group-item list-group-item-light'><center>".__(  'Here are our discounted items', 'doliconnect')."</center></li>";
 foreach ($resultats as $product) {
-$request2 = "/products/".$product->fk_product."?includestockdata=".$includestock."&includesubproducts=true";
-$product = callDoliApi("GET", $request2, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+
+$product = callDoliApi("GET", "/products/".$product->fk_product."?includestockdata=".$includestock."&includesubproducts=true", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 print apply_filters( 'doliproductlist', $product);
  
 }
@@ -1124,7 +1146,7 @@ $request = "/products/".esc_attr($_GET['product'])."?includestockdata=".$include
 $product = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 print "<div class='card-body'>";
-print apply_filters( 'doliproductcard', $product, null);
+print apply_filters( 'doliproductcard', $product);
 print "</div>";
 
 print "</ul><div class='card-body'>";
@@ -1249,8 +1271,13 @@ $resultats = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(is
 //print $resultatso;
 
 if ( !isset($resultats->error) && $resultats != null ) {
+$includestock = 0;
+if ( ! empty(doliconnectid('dolicart')) ) {
+$includestock = 1;
+}
 foreach ($resultats as $product) {
 
+$product = callDoliApi("GET", "/products/".$product->id."?includestockdata=".$includestock."&includesubproducts=true", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 print apply_filters( 'doliproductlist', $product);
  
 }

@@ -540,17 +540,12 @@ return $supplier;
 function doliproductlist($product) {
 global $current_user;
 
-$includestock = 0;
-if ( ! empty(doliconnectid('dolicart')) ) {
-$includestock = 1;
-}
-
 $wish = 0;
 if (!empty($product->qty)) {
 $wish = $product->qty;
 $product->id = $product->fk_product;
 }
-$product = callDoliApi("GET", "/products/".$product->id."?includestockdata=".$includestock."&includesubproducts=true", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+
 $list = "<li class='list-group-item' id='prod-li-".$product->id."'><table width='100%' style='border:0px'><tr><td width='20%' style='border:0px'><center>";
 $list .= doliconnect_image('product', $product->id, array('limit'=>1, 'entity'=>$product->entity, 'size'=>'150x150'), esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 $list .= "</center></td>";
