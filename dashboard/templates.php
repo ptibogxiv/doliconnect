@@ -1146,7 +1146,7 @@ $request = "/products/".esc_attr($_GET['product'])."?includestockdata=".$include
 $product = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 print "<div class='card-body'>";
-print apply_filters( 'doliproductcard', $product);
+print apply_filters( 'doliproductcard', $product, null);
 print "</div>";
 
 print "</ul><div class='card-body'>";

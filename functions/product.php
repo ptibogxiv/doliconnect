@@ -347,7 +347,21 @@ if ( !empty($altdurvalue) ) { $button .= "<tr><td class='text-right'>soit ".doli
 $button .= ''; 
 
 if ( !empty(doliconst("PRODUIT_CUSTOMER_PRICES", $refresh)) && doliconnector($current_user, 'fk_soc', $refresh) > 0 ) {
-$product2 = callDoliApi("GET", "/products/".$product->id."/selling_multiprices/per_customer?thirdparty_id=".doliconnector($current_user, 'fk_soc'), null, dolidelay('product', $refresh));
+$product2 = callDoliApi("GET", "/products/".$product->id."/selling_multiprices/per_customer", null, dolidelay('product', $refresh));
+if ( !isset($product2->error) && $product2 != null ) {
+$new_product2 = array_filter($product2, function($obj){
+global $current_user;
+$thirdparty_id = doliconnector($current_user, 'fk_soc');
+    if (isset($obj->fk_soc)) {
+            if ($obj->fk_soc != $thirdparty_id)  { return false; }
+    }
+    return true;
+});
+$product2 = null;
+foreach ($new_product2 as $array) {
+$product2 = $array;
+}
+}
 }
 
 if ( !empty(doliconst('MAIN_MODULE_DISCOUNTPRICE', $refresh)) ) {
@@ -392,7 +406,7 @@ $button .= __( 'Sales', 'doliconnect');
 }
 $button .= '</div>';
 $button .= '<div class="float-right">'.doliprice( empty(get_option('dolibarr_b2bmode'))?$price_ttc3:$price_ht3, $currency).'</div></td></tr>';
-} elseif ( !empty(doliconst("PRODUIT_CUSTOMER_PRICES", $refresh)) && isset($product2) && !isset($product2->error) ) {
+} elseif ( !empty(doliconst("PRODUIT_CUSTOMER_PRICES", $refresh)) && isset($product2) && !empty($product2) && !isset($product2->error) ) {
 foreach ( $product2 as $pdt2 ) {
 $price_min_ttc=$pdt2->price_min;
 $price_ttc=$pdt2->price_ttc;

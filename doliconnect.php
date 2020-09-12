@@ -169,7 +169,7 @@ add_filter( 'rest_authentication_errors', 'json_basic_auth_error' );
 add_action( 'admin_init', 'callDoliApi', 5, 5); 
 function callDoliApi($method = null, $link = null, $body = null, $delay = HOUR_IN_SECONDS, $entity = null) {
 global $wpdb;
-
+//echo $link;
 $headers = array(
         'DOLAPIENTITY' => dolibarr_entity($entity),
         'DOLAPIKEY' => get_site_option('dolibarr_private_key')
