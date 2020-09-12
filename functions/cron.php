@@ -79,7 +79,7 @@ $lastdate = $date->format('Y-m-d');
 $product2 = callDoliApi("GET", "/discountprice?productid=".$product['id']."&sortfield=t.rowid&sortorder=ASC&sqlfilters=(t.date_begin%3A%3C%3D%3A'".$lastdate."')%20AND%20(t.date_end%3A%3E%3D%3A'".$lastdate."')", null, dolidelay('product', $refresh));
 }
 if ( !empty(doliconst("PRODUIT_CUSTOMER_PRICES"))) {
-$produit3 = callDoliApi("GET", "/products/".$product['id']."/selling_multiprices/per_customer", null, dolidelay('product', $refresh));
+$product3 = callDoliApi("GET", "/products/".$product['id']."/selling_multiprices/per_customer", null, dolidelay('product', $refresh));
 }
 }
 
