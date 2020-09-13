@@ -5,6 +5,27 @@ function dolimenu($name, $traduction, $right, $content) {
 
 }
 
+function dolisanitize($object) {
+
+if (isset($object['firstname'])) $object['firstname'] = stripslashes(ucfirst(sanitize_user(strtolower($object['firstname']))));
+if (isset($object['lastname'])) $object['lastname'] = stripslashes(strtoupper(sanitize_user($object['lastname'])));
+if (isset($object['name'])) { $object['name'] = sanitize_user(stripslashes($object['name']));
+} elseif (isset($object['morphy']) && $object['morphy'] != 'mor' && get_option('doliconnect_disablepro') != 'mor' ) {
+$object['name'] = sanitize_user($object['firstname']." ".$object['lastname']);
+} else {
+$object['name'] = null;
+}
+if (isset($object['address'])) $object['address'] = stripslashes($object['address']);
+if (isset($object['email'])) $object['email'] = sanitize_email($object['email']);
+if (isset($object['url'])) $object['url'] = sanitize_textarea_field($object['url']);
+if (isset($object['note_public'])) $object['note_public'] = stripslashes(sanitize_textarea_field($object['note_public']));
+if (isset($object['morphy']) && $object['morphy'] == 'mor' ) {
+$object['tva_intra'] =strtoupper(sanitize_user($object['tva_intra']));
+} else { $object['tva_intra'] = ''; }
+
+return $object;
+}
+
 function doliversion($version) {
 $ret = false;
 if (!empty(get_site_option('dolibarr_public_url')) && !empty(get_site_option('dolibarr_private_key'))) {
