@@ -180,14 +180,13 @@ if ( !empty(doliconst('MAIN_MODULE_CATEGORIE')) ) {
 $categories =  callDoliApi("GET", "/categories/object/".$type."/".$object->id."?sortfield=s.rowid&sortorder=ASC", null, dolidelay($type));
 
 if ( !isset($categories->error) && $categories != null ) {
-$cats .= "<small><i class='fas fa-tags fa-fw'></i> ".__( 'Categories:', 'doliconnect' )." ";
-$i = 0;
+$cats .= "<small><i class='fas fa-tags fa-fw'></i> ";
+$cats .= _n( 'Category:', 'Categories:', count($categories), 'doliconnect' );
 foreach ($categories as $category) {
-if (!empty($i)) { $cats .= " "; }
 if (!empty($url)) {
-$cats .= "<a href='".esc_url( add_query_arg( 'category', $category->id, $url) )."'";
+$cats .= " <a href='".esc_url( add_query_arg( 'category', $category->id, $url) )."'";
 } else { 
-$cats .= "<span ";
+$cats .= " <span ";
 }
 $cats .= "class='badge badge-pill badge-secondary'>";
 
@@ -197,7 +196,6 @@ $cats .= "</a>";
 } else {
 $cats .= "</span>";
 }
-$i++;
 }
 $cats .= "</small>";
 }
