@@ -428,6 +428,12 @@ global $current_user;
 $entity = get_current_blog_id();
 wp_get_current_user();
 
+if (isset($element['name'])) $element['name'] = stripslashes($element['name']);
+if (isset($element['firstname'])) $element['firstname'] = stripslashes(ucfirst(sanitize_user(strtolower($element['firstname']))));
+if (isset($element['lastname'])) $element['lastname'] = stripslashes(strtoupper(sanitize_user($element['lastname'])));
+if (isset($element['address'])) $element['address'] = stripslashes($element['address']);
+if (isset($element['note_public'])) $element['note_public'] = stripslashes(sanitize_textarea_field($element['note_public']));
+
 if ($current_user->billing_type == 'phy'){
 $name = $current_user->user_firstname." ".$current_user->user_lastname;}
 else {$name = $current_user->billing_company;}
