@@ -532,7 +532,7 @@ $brands =  callDoliApi("GET", "/products/".$product->id."/purchase_prices", null
 $supplier = "";
 
 if ( !isset($brands->error) && $brands != null ) {
-$supplier .= "<small><i class='fas fa-building fa-fw'></i> ";
+$supplier .= "<small><i class='fas fa-industry fa-fw'></i> ";
 $supplier .= _n( 'Brand:', 'Brands:', count($brands), 'doliconnect' );
 $i = 0;
 foreach ($brands as $brand) {
