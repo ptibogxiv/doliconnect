@@ -16,6 +16,8 @@ $object['name'] = $object['firstname']." ".$object['lastname'];
 $object['name'] = null;
 }
 if (isset($object['address'])) $object['address'] = stripslashes($object['address']);
+if (isset($object['zip'])) $object['zip'] = strtoupper(stripslashes(sanitize_user($object['zip'])));
+if (isset($object['town'])) $object['town'] = strtoupper(stripslashes(sanitize_user($object['town'])));
 if (isset($object['email'])) $object['email'] = sanitize_email($object['email']);
 if (isset($object['url'])) $object['url'] = sanitize_textarea_field($object['url']);
 if (isset($object['note_public'])) $object['note_public'] = stripslashes(sanitize_textarea_field($object['note_public']));
