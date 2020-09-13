@@ -9,7 +9,7 @@ function dolisanitize($object) {
 
 if (isset($object['firstname'])) $object['firstname'] = stripslashes(ucfirst(sanitize_user(strtolower($object['firstname']))));
 if (isset($object['lastname'])) $object['lastname'] = stripslashes(strtoupper(sanitize_user($object['lastname'])));
-if (isset($object['name'])) { $object['name'] = sanitize_user(stripslashes($object['name']));
+if (isset($object['name'])) { $object['name'] = stripslashes(sanitize_user($object['name']));
 } elseif (isset($object['morphy']) && $object['morphy'] != 'mor' && get_option('doliconnect_disablepro') != 'mor' ) {
 $object['name'] = sanitize_user($object['firstname']." ".$object['lastname']);
 } else {
