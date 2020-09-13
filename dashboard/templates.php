@@ -874,7 +874,7 @@ print "<p class='text-justify'>".$thirdparty->note_private."</p>";
 
 $photos = callDoliApi("GET", "/documents?modulepart=thirdparty&id=".$thirdparty->id, null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
-if (!empty(doliconnect_categories('supplier', $thirdparty))) print doliconnect_categories('supplier', $thirdparty)."<br><br>";
+if (!empty(doliconnect_categories('supplier', $thirdparty))) print doliconnect_categories('supplier', $thirdparty, doliconnecturl('dolisupplier'))."<br><br>";
 
 print doliconnect_image('thirdparty', $thirdparty->id, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), $thirdparty->entity);
 
