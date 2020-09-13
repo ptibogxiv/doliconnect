@@ -644,7 +644,7 @@ $lang = pll_current_language('locale');
 $lang = $current_user->locale;
 }
 $country = callDoliApi("GET", "/setup/dictionary/countries/".$product->country_id."?lang=".$lang, null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-$card .= "<br><small><i class='fas fa-globe fa-fw'></i> ".__( 'Origin:', 'doliconnect')." <span class='flag-icon flag-icon-".strtolower($product->country_code)."'></span> ".$country->label."</small>"; }
+$card .= "<br><small><i class='fas fa-globe-europe fa-fw'></i> ".__( 'Origin:', 'doliconnect')." ".$country->label." <span class='flag-icon flag-icon-".strtolower($product->country_code)."'></span></small>"; }
 if ( ! empty(doliconnectid('dolicart')) ) { 
 $card .= "<br><br><div class='jumbotron'>";
 $card .= doliconnect_addtocart($product, 0, 0, isset($attributes['hideButtonToCart']) ? $attributes['hideButtonToCart'] : 0, isset($attributes['hideDuration']) ? $attributes['hideDuration'] : 0);
