@@ -18,6 +18,11 @@ if ( isset($_POST["case"]) && $_POST["case"] == 'updateuser' ) {
  
 $thirdparty=$_POST['thirdparty'][''.doliconnector($current_user, 'fk_soc').''];
 
+$thirdparty['name'] = stripslashes($thirdparty['name']);
+$thirdparty['firstname'] = stripslashes($thirdparty['firstname']);
+$thirdparty['lastname'] = stripslashes($thirdparty['lastname']);
+$thirdparty['address'] = stripslashes($thirdparty['address']);
+
 if ( $thirdparty['morphy'] == 'mor' ) {
 $thirdparty['tva_intra'] =strtoupper(sanitize_user($thirdparty['tva_intra']));
 } else { $thirdparty['tva_intra'] = ''; }

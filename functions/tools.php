@@ -396,7 +396,7 @@ print "</select></div></div></li><li class='list-group-item'>";
 }
 
 if ( in_array($mode, array('thirdparty', 'donation')) && ($current_user->billing_type == 'mor' || ( isset($_GET["morphy"]) && $_GET["morphy"] == 'mor') || get_option('doliconnect_disablepro') == 'mor' ) ) {
-print "<div class='form-row'><div class='col-12'><label for='coordonnees'><small><i class='fas fa-building fa-fw'></i> ".__( 'Name of company', 'doliconnect')."</small></label><input type='text' class='form-control' id='inputcompany' placeholder='".__( 'Name of company', 'doliconnect')."' name='".$idobject."[name]' value='".$object->name."' required></div></div>";  //$current_user->billing_company
+print "<div class='form-row'><div class='col-12'><label for='coordonnees'><small><i class='fas fa-building fa-fw'></i> ".__( 'Name of company', 'doliconnect')."</small></label><input type='text' class='form-control' id='inputcompany' placeholder='".__( 'Name of company', 'doliconnect')."' name='".$idobject."[name]' value='".stripslashes(htmlspecialchars($object->name, ENT_QUOTES))."' required></div></div>";  //$current_user->billing_company
 print "<div class='form-row'><div class='col-12'><label for='coordonnees'><small><i class='fas fa-building fa-fw'></i> ".__( 'Professional ID', 'doliconnect')."</small></label><input type='text' class='form-control' id='inputcompany' placeholder='".__( 'Professional ID', 'doliconnect')."' name='".$idobject."[idprof1]' value='".$object->idprof1."' required></div></div>";  //$current_user->billing_company
 print "<div class='form-row'><div class='col-12'><label for='coordonnees'><small><i class='fas fa-landmark fa-fw'></i> ".__( 'VAT number', 'doliconnect')."</small></label><input type='text' class='form-control' id='inputcompany' placeholder='".__( 'VAT number', 'doliconnect')."' name='".$idobject."[tva_intra]' value='".$object->tva_intra."'></div></div>";
 print "</li><li class='list-group-item'>";
@@ -473,7 +473,7 @@ if ( ( !is_user_logged_in() && ((isset($_GET["morphy"])&& $_GET["morphy"] == "mo
 print "<li class='list-group-item'>";
  
 print "<div class='form-row'><div class='col-12'><label for='".$idobject."[address]'><small><i class='fas fa-map-marked fa-fw'></i> ".__( 'Address', 'doliconnect')."</small></label>
-<textarea id='".$idobject."[address]' name='".$idobject."[address]' class='form-control' rows='3' placeholder='".__( 'Address', 'doliconnect')."' required>".(isset($object->address) ? $object->address : null)."</textarea></div></div>";
+<textarea id='".$idobject."[address]' name='".$idobject."[address]' class='form-control' rows='3' placeholder='".__( 'Address', 'doliconnect')."' required>".stripslashes(htmlspecialchars($object->address, ENT_QUOTES))."</textarea></div></div>";
 
 print "<div class='form-row'>
     <div class='col-md-6'><label for='".$idobject."[town]'><small><i class='fas fa-map-marked fa-fw'></i> ".__( 'Town', 'doliconnect')."</small></label>
