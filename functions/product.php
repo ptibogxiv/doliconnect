@@ -486,7 +486,11 @@ $button .= "<option value='$number' >x ".$number."</option>";
 }}
 $button .= "</select><div class='input-group-append'>";
 if ( !empty(doliconst('MAIN_MODULE_WISHLIST', $refresh)) && !empty(get_option('doliconnectbeta')) ) {
-$button .= "<button class='btn btn-sm  btn-light btn-outline-secondary' type='submit' name='cartaction' value='addtowish' title='".esc_html__( 'Save my wish', 'doliconnect')."'><i class='fas fa-heart' style='color:Pink'></i></i></button>";
+if (!empty($wish)) {
+$button .= "<button class='btn btn-sm  btn-light btn-outline-secondary' type='submit' name='cartaction' value='addtowish' title='".esc_html__( 'Save my wish', 'doliconnect')."'><i class='fas fa-heart-broken' style='color:Fuchsia'></i></i></button>";
+} else {
+$button .= "<button class='btn btn-sm  btn-light btn-outline-secondary' type='submit' name='cartaction' value='addtowish' title='".esc_html__( 'Save my wish', 'doliconnect')."'><i class='fas fa-heart' style='color:Fuchsia'></i></i></button>";
+}
 }
 $button .= "<button class='btn btn-sm btn-warning' type='submit' name='cartaction' value='addtocart' title='".esc_html__( 'Add to cart', 'doliconnect')."' ";
 if ( ( empty($product->stock_reel) || $m2 < $step) && $product->type == '0' && !empty(doliconst('MAIN_MODULE_STOCK', $refresh)) ) { $button .= " disabled"; }
@@ -555,7 +559,11 @@ global $current_user;
 $wish = 0;
 if (!empty($product->qty)) {
 $wish = $product->qty;
-$product->id = $product->fk_product;
+$includestock = 0;
+if ( ! empty(doliconnectid('dolicart')) ) {
+$includestock = 1;
+}
+$product = callDoliApi("GET", "/products/".$product->fk_product."?includestockdata=".$includestock."&includesubproducts=true", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 }
 
 $list = "<li class='list-group-item' id='prod-li-".$product->id."'><table width='100%' style='border:0px'><tr><td width='20%' style='border:0px'><center>";
