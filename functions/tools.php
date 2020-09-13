@@ -19,8 +19,8 @@ if (isset($object['address'])) $object['address'] = stripslashes($object['addres
 if (isset($object['email'])) $object['email'] = sanitize_email($object['email']);
 if (isset($object['url'])) $object['url'] = sanitize_textarea_field($object['url']);
 if (isset($object['note_public'])) $object['note_public'] = stripslashes(sanitize_textarea_field($object['note_public']));
-if (isset($object['morphy']) && $object['morphy'] == 'mor' ) {
-$object['tva_intra'] =strtoupper(sanitize_user($object['tva_intra']));
+if (isset($object['morphy']) && $object['morphy'] == 'mor' && isset($object['tva_intra']) ) {
+$object['tva_intra'] = strtoupper(sanitize_user($object['tva_intra']));
 } else { $object['tva_intra'] = ''; }
 
 return $object;
