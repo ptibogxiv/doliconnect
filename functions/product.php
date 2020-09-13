@@ -486,7 +486,7 @@ $button .= "<option value='$number' >x ".$number."</option>";
 }}
 $button .= "</select><div class='input-group-append'>";
 if ( !empty(doliconst('MAIN_MODULE_WISHLIST', $refresh)) && !empty(get_option('doliconnectbeta')) ) {
-$button .= "<button class='btn btn-sm btn-info' type='submit' name='cartaction' value='addtowish' title='".esc_html__( 'Save my wish', 'doliconnect')."'><i class='fas fa-save fa-fw'></i></button>";
+$button .= "<button class='btn btn-sm  btn-light btn-outline-secondary' type='submit' name='cartaction' value='addtowish' title='".esc_html__( 'Save my wish', 'doliconnect')."'><i class='fas fa-heart' style='color:Pink'></i></i></button>";
 }
 $button .= "<button class='btn btn-sm btn-warning' type='submit' name='cartaction' value='addtocart' title='".esc_html__( 'Add to cart', 'doliconnect')."' ";
 if ( ( empty($product->stock_reel) || $m2 < $step) && $product->type == '0' && !empty(doliconst('MAIN_MODULE_STOCK', $refresh)) ) { $button .= " disabled"; }

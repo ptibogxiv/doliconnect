@@ -72,6 +72,7 @@ $includestock = 1;
 foreach ($products as $id => $product) {
 $product1 = callDoliApi("GET", "/products/".$product['id']."?includestockdata=".$includestock."&includesubproducts=true", null, dolidelay('product', $refresh));
 doliconnect_image('product', $product['id'], array('limit'=>1, 'entity'=>$product['entity'], 'size'=>'200x200'), $refresh);
+if ( ! empty(doliconnectid('dolicart')) ) {
 if ( !empty(doliconst('MAIN_MODULE_DISCOUNTPRICE')) ) {
 $date = new DateTime(); 
 $date->modify('NOW');
@@ -80,6 +81,7 @@ $product2 = callDoliApi("GET", "/discountprice?productid=".$product['id']."&sort
 }
 if ( !empty(doliconst("PRODUIT_CUSTOMER_PRICES"))) {
 $product3 = callDoliApi("GET", "/products/".$product['id']."/selling_multiprices/per_customer", null, dolidelay('product', $refresh));
+}
 }
 }
 
