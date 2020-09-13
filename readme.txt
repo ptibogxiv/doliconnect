@@ -62,6 +62,11 @@ We would like to thank this contributors and plugins:
 [gdpr-data-request-form](https://wordpress.org/plugins/gdpr-data-request-form/ "gdpr-data-request-form")
 
 == Changelog ==
+  = 4.7.0 =
+* introduce cron for better transient
+* fix special characters in form
+* minor bugfixes
+
   = 4.6.1 =
 * fix real stock display
 
