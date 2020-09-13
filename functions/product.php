@@ -588,7 +588,9 @@ $lang = pll_current_language('locale');
 $lang = $current_user->locale;
 }
 $country = callDoliApi("GET", "/setup/dictionary/countries/".$product->country_id."?lang=".$lang, null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-$list .= "<br><small><span class='flag-icon flag-icon-".strtolower($product->country_code)."'></span> ".$country->label."</small>"; }
+$list .= "<br><small><span class='flag-icon flag-icon-".strtolower($product->country_code)."'></span> ".$country->label;
+ if ( !empty($product->state_id) ) { $list .= " - ".$product->state_id;  } 
+$list .= "</small>"; }
 
 $arr_params = array( 'category' => isset($_GET['category'])?$_GET['category']:null, 'subcategory' => isset($_GET['subcategory'])?$_GET['subcategory']:null, 'product' => $product->id);  
 $return = esc_url( add_query_arg( $arr_params, doliconnecturl('dolishop')) );
