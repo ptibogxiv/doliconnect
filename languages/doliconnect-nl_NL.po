@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2020-08-20 15:10+0200\n"
-"PO-Revision-Date: 2020-08-20 15:10+0200\n"
+"POT-Creation-Date: 2020-09-13 14:53+0200\n"
+"PO-Revision-Date: 2020-09-13 14:54+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: nl_NL\n"
@@ -21,7 +21,7 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: includes\n"
 
-#: admin/admin.php:7 dashboard/templates.php:1804
+#: admin/admin.php:7 dashboard/templates.php:1840
 msgid ""
 "It seems that your version of Dolibarr and/or its plugins are not up to date!"
 msgstr ""
@@ -120,7 +120,7 @@ msgstr "één IP per regel zonder ruimte of komma"
 #: admin/admin.php:507 dashboard/dashboard.php:1826
 #: dashboard/dashboard.php:1844 dashboard/dashboard.php:1863
 #: dashboard/dashboard.php:1884 dashboard/templates.php:798
-#: functions/tools.php:374 functions/tools.php:417 functions/tools.php:502
+#: functions/tools.php:372 functions/tools.php:415 functions/tools.php:500
 msgid "- Select -"
 msgstr "Selecteer bestand"
 
@@ -252,7 +252,7 @@ msgstr "Eerste abonnement op"
 msgid "Subscribe"
 msgstr "Inschrijven"
 
-#: blocks/membership/block.php:95 functions/tools.php:389
+#: blocks/membership/block.php:95 functions/tools.php:387
 msgid "then"
 msgstr "dan"
 
@@ -297,7 +297,7 @@ msgstr "kortingProduct"
 msgid "New discounted items"
 msgstr "Nieuwe artikelen met korting"
 
-#: blocks/product/blockdiscount.php:26 dashboard/templates.php:1100
+#: blocks/product/blockdiscount.php:26 dashboard/templates.php:1127
 msgid "No discounted item"
 msgstr "Geen object met korting"
 
@@ -305,12 +305,12 @@ msgstr "Geen object met korting"
 msgid "newProduct"
 msgstr "newProduct"
 
-#: blocks/product/blocknew.php:7 dashboard/templates.php:1156
+#: blocks/product/blocknew.php:7 dashboard/templates.php:1187
 #: functions/widgets.php:330
 msgid "New items"
 msgstr "Nieuwe objecten"
 
-#: blocks/product/blocknew.php:27 dashboard/templates.php:1065
+#: blocks/product/blocknew.php:27 dashboard/templates.php:1083
 msgid "No new item"
 msgstr "Geen nieuw object"
 
@@ -364,7 +364,7 @@ msgstr "Uw informatie is bijgewerkt."
 #: dashboard/dashboard.php:67 dashboard/dashboard.php:259
 #: dashboard/dashboard.php:448 dashboard/dashboard.php:1471
 #: dashboard/dashboard.php:1700 dashboard/templates.php:456
-#: dashboard/templates.php:1316 functions/tools.php:307
+#: dashboard/templates.php:1352 functions/tools.php:305
 msgid "Update"
 msgstr "Bijwerken"
 
@@ -398,7 +398,7 @@ msgstr "Het wachtwoord wijzigen"
 msgid "Manage address book"
 msgstr "Adresboek beheren"
 
-#: dashboard/dashboard.php:418 functions/tools.php:1471
+#: dashboard/dashboard.php:418 functions/tools.php:1481
 msgid "Favourite"
 msgstr "Favoriet"
 
@@ -407,9 +407,9 @@ msgstr "Favoriet"
 msgid "Edit"
 msgstr "Bewerken"
 
-#: dashboard/dashboard.php:422 functions/product.php:452
-#: functions/product.php:454 functions/tools.php:986 functions/tools.php:989
-#: functions/tools.php:1475
+#: dashboard/dashboard.php:422 functions/product.php:477
+#: functions/product.php:479 functions/tools.php:996 functions/tools.php:999
+#: functions/tools.php:1485
 msgid "Delete"
 msgstr "Verwijderen"
 
@@ -534,8 +534,8 @@ msgstr "Betaalmethode"
 msgid "payment term"
 msgstr "Betalingstermijn"
 
-#: dashboard/dashboard.php:759 dashboard/templates.php:1329
-#: dashboard/templates.php:1450
+#: dashboard/dashboard.php:759 dashboard/templates.php:1365
+#: dashboard/templates.php:1486
 #, php-format
 msgid ""
 "Please send your cheque in the amount of <b>%1$s</b> with reference <b>%2$s</"
@@ -544,8 +544,8 @@ msgstr ""
 "Stuur uw cheque in het bedrag van <b>%1$s</b> met verwijzing <b>%2$s</b> "
 "naar <b>%3$s</b> op het volgende adres"
 
-#: dashboard/dashboard.php:767 dashboard/templates.php:1338
-#: dashboard/templates.php:1456
+#: dashboard/dashboard.php:767 dashboard/templates.php:1374
+#: dashboard/templates.php:1492
 #, php-format
 msgid ""
 "Please send your transfert in the amount of <b>%1$s</b> with reference <b>"
@@ -554,16 +554,16 @@ msgstr ""
 "Stuur uw transfert naar het bedrag van <b>%1$s</b> met verwijzing <b>%2$s</"
 "b> op het volgende account"
 
-#: dashboard/dashboard.php:768 dashboard/templates.php:1339
-#: dashboard/templates.php:1457 functions/tools.php:1747
+#: dashboard/dashboard.php:768 dashboard/templates.php:1375
+#: dashboard/templates.php:1493 functions/tools.php:1757
 msgid "Bank"
 msgstr "Bank"
 
-#: dashboard/dashboard.php:811 dashboard/templates.php:1674
+#: dashboard/dashboard.php:811 dashboard/templates.php:1710
 msgid "Billing address"
 msgstr "Factuuradres"
 
-#: dashboard/dashboard.php:818 dashboard/templates.php:1703
+#: dashboard/dashboard.php:818 dashboard/templates.php:1739
 msgid "Shipping address"
 msgstr "Verzendadres"
 
@@ -589,7 +589,7 @@ msgid "Order"
 msgstr "Bestelling"
 
 #: dashboard/dashboard.php:874 dashboard/dashboard.php:1190
-#: dashboard/dashboard.php:1314 dashboard/templates.php:1525
+#: dashboard/dashboard.php:1314 dashboard/templates.php:1561
 msgid "Payment"
 msgstr "Betaling"
 
@@ -599,9 +599,9 @@ msgid "Invoice"
 msgstr "Factuur"
 
 #: dashboard/dashboard.php:891 dashboard/dashboard.php:895
-#: functions/tools.php:1461 functions/tools.php:1463 functions/tools.php:1465
-#: functions/tools.php:1683 functions/tools.php:1709 functions/tools.php:1773
-#: functions/tools.php:1804
+#: functions/tools.php:1471 functions/tools.php:1473 functions/tools.php:1475
+#: functions/tools.php:1693 functions/tools.php:1719 functions/tools.php:1783
+#: functions/tools.php:1814
 msgid "Pay"
 msgstr "Betalen"
 
@@ -638,7 +638,7 @@ msgid "Contracts tracking"
 msgstr "Contracten traceren"
 
 #: dashboard/dashboard.php:1058 dashboard/dashboard.php:1190
-#: dashboard/dashboard.php:1314 functions/product.php:66
+#: dashboard/dashboard.php:1314 functions/product.php:70
 msgid "Shipping"
 msgstr "Verzending"
 
@@ -667,7 +667,7 @@ msgid "Canceled"
 msgstr "Geannuleerd"
 
 #: dashboard/dashboard.php:1190 dashboard/dashboard.php:1314
-#: functions/tools.php:654
+#: functions/tools.php:652
 msgid "Processing"
 msgstr "In behandeling"
 
@@ -687,7 +687,7 @@ msgstr "Donaties volgen"
 msgid "Date of order"
 msgstr "Datum van bestelling"
 
-#: dashboard/dashboard.php:1304 dashboard/templates.php:1436
+#: dashboard/dashboard.php:1304 dashboard/templates.php:1472
 #: functions/data-request.php:386
 msgid "Payment method"
 msgstr "Betaalmethode"
@@ -736,7 +736,7 @@ msgstr "Lidmaatschap"
 msgid "nothing"
 msgstr "niets"
 
-#: dashboard/dashboard.php:1456 functions/tools.php:368 functions/tools.php:876
+#: dashboard/dashboard.php:1456 functions/tools.php:366 functions/tools.php:875
 msgid "Type"
 msgstr "Type"
 
@@ -907,7 +907,7 @@ msgid "Sales representative"
 msgstr "Vertegenwoordiger"
 
 #: dashboard/dashboard.php:1901 dashboard/templates.php:812
-#: dashboard/templates.php:1736
+#: dashboard/templates.php:1772
 msgid "Message"
 msgstr "Bericht"
 
@@ -967,7 +967,7 @@ msgstr "Ingeschakeld"
 msgid "Primary"
 msgstr "Primair"
 
-#: dashboard/dashboard.php:2068 functions/product.php:626
+#: dashboard/dashboard.php:2068 functions/product.php:653
 msgid "Description"
 msgstr "Omschrijving"
 
@@ -1045,7 +1045,7 @@ msgstr ""
 "volgende link"
 
 #: dashboard/templates.php:324 functions/data-request.php:145
-#: functions/tools.php:680
+#: functions/tools.php:679
 #, php-format
 msgid "Your %s's team"
 msgstr "Het team van uw %s"
@@ -1068,7 +1068,7 @@ msgstr ""
 msgid "Create an account"
 msgstr "Maak een account aan"
 
-#: dashboard/templates.php:392 functions/tools.php:271
+#: dashboard/templates.php:392 functions/tools.php:269
 msgid "Your password will be synchronized with your Dolibarr account"
 msgstr "Uw wachtwoord wordt gesynchroniseerd met uw Dolibarr-account"
 
@@ -1076,16 +1076,16 @@ msgstr "Uw wachtwoord wordt gesynchroniseerd met uw Dolibarr-account"
 msgid "Change your password"
 msgstr "Wachtwoord wijzigen"
 
-#: dashboard/templates.php:429 functions/tools.php:286 functions/tools.php:295
+#: dashboard/templates.php:429 functions/tools.php:284 functions/tools.php:293
 msgid "New password"
 msgstr "Nieuw wachtwoord"
 
-#: dashboard/templates.php:432 functions/tools.php:287
+#: dashboard/templates.php:432 functions/tools.php:285
 msgid "Enter your new password"
 msgstr "Voer je nieuwe wachtwoord in"
 
 #: dashboard/templates.php:440 functions/data-request.php:202
-#: functions/tools.php:294 functions/tools.php:600
+#: functions/tools.php:292 functions/tools.php:598
 msgid ""
 "Your password must be between 8 and 20 characters, including at least 1 "
 "digit, 1 letter, 1 uppercase."
@@ -1093,7 +1093,7 @@ msgstr ""
 "Uw wachtwoord moet tussen de 8 en 20 tekens, met inbegrip van ten minste 1 "
 "cijfer, 1 letter, 1 hoofdletter."
 
-#: dashboard/templates.php:445 functions/tools.php:296
+#: dashboard/templates.php:445 functions/tools.php:294
 msgid "Confirm your new password"
 msgstr "Bevestig uw nieuwe wachtwoord"
 
@@ -1111,7 +1111,7 @@ msgstr "Geef het e-mailadres op waarmee u uw account heeft geregistreerd."
 
 #: dashboard/templates.php:561 dashboard/templates.php:648
 #: dashboard/templates.php:781 dashboard/templates.php:786
-#: functions/tools.php:461
+#: functions/tools.php:459
 msgid "Email"
 msgstr "E-mail"
 
@@ -1152,7 +1152,7 @@ msgid "Access restricted to users"
 msgstr "Toegang beperkt tot gebruikers"
 
 #: dashboard/templates.php:616 dashboard/templates.php:669
-#: functions/product.php:478
+#: functions/product.php:507
 msgid "Sign in"
 msgstr "Inloggen"
 
@@ -1160,7 +1160,7 @@ msgstr "Inloggen"
 msgid "You have already an account"
 msgstr "Je hebt al een account"
 
-#: dashboard/templates.php:619 functions/tools.php:224
+#: dashboard/templates.php:619 functions/tools.php:222
 msgid "or"
 msgstr "of"
 
@@ -1168,7 +1168,7 @@ msgstr "of"
 msgid "You don't have an account"
 msgstr "U geen account hebt"
 
-#: dashboard/templates.php:652 functions/tools.php:598
+#: dashboard/templates.php:652 functions/tools.php:596
 msgid "Password"
 msgstr "Wachtwoord"
 
@@ -1180,7 +1180,7 @@ msgstr "Onthoud mij"
 msgid "Your request is unsuccessful"
 msgstr "Uw aanvraag is mislukt"
 
-#: dashboard/templates.php:755 functions/tools.php:477 functions/tools.php:478
+#: dashboard/templates.php:755 functions/tools.php:475 functions/tools.php:476
 msgid "Address"
 msgstr "Adres"
 
@@ -1206,116 +1206,116 @@ msgstr ""
 "Ik ga akkoord om mijn persoonlijke informatie op te slaan om contact met mij "
 "op te nemen"
 
-#: dashboard/templates.php:896 dashboard/templates.php:1249
+#: dashboard/templates.php:903 dashboard/templates.php:1285
 msgid "No item currently on sale"
 msgstr "Er is momenteel geen object te koop"
 
-#: dashboard/templates.php:935
+#: dashboard/templates.php:942
 msgid "No supplier"
 msgstr "Geen leverancier"
 
-#: dashboard/templates.php:994 functions/widgets.php:305
+#: dashboard/templates.php:1001 functions/widgets.php:305
 msgid "Name, Ref. or barcode"
 msgstr "Naam, Ref. of barcode"
 
-#: dashboard/templates.php:1016
+#: dashboard/templates.php:1028
 #, php-format
 msgid "We have found %s item with this search"
 msgid_plural "We have found %s items with this search"
 msgstr[0] "We hebben %s item gevonden met deze zoekopdracht"
 msgstr[1] "We hebben %s items gevonden met deze zoekopdracht"
 
-#: dashboard/templates.php:1018 dashboard/templates.php:1027
+#: dashboard/templates.php:1030 dashboard/templates.php:1040
 msgid "New search"
 msgstr "Opnieuw zoeken"
 
-#: dashboard/templates.php:1026
+#: dashboard/templates.php:1039
 #, php-format
 msgid "No item with this search: \"%s\""
 msgstr "Geen object met deze zoekopdracht: \"%s\""
 
-#: dashboard/templates.php:1058
+#: dashboard/templates.php:1075
 msgid "Here are our new items"
 msgstr "Hier zijn onze nieuwe items"
 
-#: dashboard/templates.php:1092
+#: dashboard/templates.php:1119
 msgid "Here are our discounted items"
 msgstr "Hier zijn onze scherp geprijsde artikelen"
 
-#: dashboard/templates.php:1171 functions/widgets.php:346
+#: dashboard/templates.php:1202 functions/widgets.php:346
 msgid "Discounted items"
 msgstr "Objecten met korting"
 
-#: dashboard/templates.php:1252
+#: dashboard/templates.php:1288
 msgid "Oops! This category does not appear to exist"
 msgstr "Oeps! Deze categorie lijkt niet te bestaan"
 
-#: dashboard/templates.php:1298
+#: dashboard/templates.php:1334
 msgid "Inactive module on Dolibarr"
 msgstr "Inactieve module op Dolibarr"
 
-#: dashboard/templates.php:1345
+#: dashboard/templates.php:1381
 msgid "Tax exemptions"
 msgstr "Belasting-vrijstellingen"
 
-#: dashboard/templates.php:1348
+#: dashboard/templates.php:1384
 msgid "DonationArt200"
 msgstr "DonationArt200"
 
-#: dashboard/templates.php:1352
+#: dashboard/templates.php:1388
 msgid "DonationArt238"
 msgstr "DonationArt238"
 
-#: dashboard/templates.php:1356
+#: dashboard/templates.php:1392
 msgid "DonationArt835"
 msgstr "DonationArt835"
 
-#: dashboard/templates.php:1359
+#: dashboard/templates.php:1395
 msgid "You should't have tax exemptions"
 msgstr "Je hebt geen belastingvrijstellingen"
 
-#: dashboard/templates.php:1418
+#: dashboard/templates.php:1454
 msgid "Oops, Order's module is not available"
 msgstr "Oeps, de module van de bestelling is niet beschikbaar"
 
-#: dashboard/templates.php:1436 functions/data-request.php:386
+#: dashboard/templates.php:1472 functions/data-request.php:386
 msgid "Your order has been registered"
 msgstr "Uw bestelling is geregistreerd"
 
-#: dashboard/templates.php:1436 dashboard/templates.php:1443
-#: functions/data-request.php:386 functions/tools.php:359
+#: dashboard/templates.php:1472 dashboard/templates.php:1479
+#: functions/data-request.php:386 functions/tools.php:357
 msgid "Reference"
 msgstr "Referentie"
 
-#: dashboard/templates.php:1442
+#: dashboard/templates.php:1478
 msgid "Your payment has been registered"
 msgstr "Uw betaling is geregistreerd"
 
-#: dashboard/templates.php:1465
+#: dashboard/templates.php:1501
 msgid "or go to reception desk"
 msgstr "of ga naar de receptie"
 
-#: dashboard/templates.php:1519
+#: dashboard/templates.php:1555
 msgid "Cart"
 msgstr "Winkelwagen"
 
-#: dashboard/templates.php:1522
+#: dashboard/templates.php:1558
 msgid "Coordinates"
 msgstr "Coördinaten"
 
-#: dashboard/templates.php:1567
+#: dashboard/templates.php:1603
 msgid "Amount outstanding"
 msgstr "Uitstaand bedrag"
 
-#: dashboard/templates.php:1567
+#: dashboard/templates.php:1603
 msgid "out of"
 msgstr "van de"
 
-#: dashboard/templates.php:1567
+#: dashboard/templates.php:1603
 msgid "allowed"
 msgstr "toegestaan"
 
-#: dashboard/templates.php:1569
+#: dashboard/templates.php:1605
 msgid ""
 "Your account is blocked, this order can't be processed. Please, contact us "
 "to pay overdue unpaid invoices."
@@ -1323,27 +1323,27 @@ msgstr ""
 "Je account is geblokkeerd, deze bestelling kan niet worden verwerkt. Neem "
 "contact met ons op om achterstallige onbetaalde facturen te betalen."
 
-#: dashboard/templates.php:1578
+#: dashboard/templates.php:1614
 msgid "Continue shopping"
 msgstr "Verder winkelen"
 
-#: dashboard/templates.php:1582
+#: dashboard/templates.php:1618
 msgid "Empty the basket"
 msgstr "Het mandje leegmaken"
 
-#: dashboard/templates.php:1587
+#: dashboard/templates.php:1623
 msgid "Process"
 msgstr "Verwerken"
 
-#: dashboard/templates.php:1666 functions/tools.php:354
+#: dashboard/templates.php:1702 functions/tools.php:352
 msgid "Customer"
 msgstr "Klant"
 
-#: dashboard/templates.php:1678 dashboard/templates.php:1707
+#: dashboard/templates.php:1714 dashboard/templates.php:1743
 msgid "Same address as the customer"
 msgstr "Hetzelfde adres als de klant"
 
-#: dashboard/templates.php:1733
+#: dashboard/templates.php:1769
 #, php-format
 msgid ""
 "Adding billing or shipping contacts requires Dolibarr %s but your version is "
@@ -1352,16 +1352,20 @@ msgstr ""
 "Voor het toevoegen van facturerings- of verzendcontactpersonen is Dolibarr "
 "%s vereist, maar uw versie is %s"
 
-#: dashboard/templates.php:1737
+#: dashboard/templates.php:1773
 msgid ""
 "If you want to send us a message about your order, you can leave one here"
 msgstr ""
 "Als u ons een bericht wilt sturen over uw bestelling, u er hier een "
 "achterlaten"
 
-#: dashboard/templates.php:1788
+#: dashboard/templates.php:1824
 msgid "Validate"
 msgstr "Valideren"
+
+#: doliconnect.php:448
+msgid "Every 15 minutes"
+msgstr "Elke 15 minuten"
 
 #: functions/data-request.php:17
 msgid ""
@@ -1528,7 +1532,7 @@ msgstr ""
 msgid "Some errors occurred:"
 msgstr "Er zijn enkele fouten opgetreden:"
 
-#: functions/product.php:54 functions/product.php:86 functions/product.php:88
+#: functions/product.php:54 functions/product.php:90 functions/product.php:92
 msgid "Available"
 msgstr "Niet beschikbaar"
 
@@ -1537,34 +1541,34 @@ msgstr "Niet beschikbaar"
 msgid "This item is in stock and can be send immediately. %s"
 msgstr "Dit artikel is op voorraad en kan direct verzonden worden. %s"
 
-#: functions/product.php:54 functions/product.php:88
+#: functions/product.php:54 functions/product.php:92
 msgid "Available immediately"
 msgstr "Direct beschikbaar"
 
-#: functions/product.php:71
+#: functions/product.php:75
 msgid "Not available"
 msgstr "Niet beschikbaar"
 
-#: functions/product.php:71
+#: functions/product.php:75
 #, php-format
 msgid "This item is out of stock and can not be ordered or shipped. %s"
 msgstr ""
 "Dit artikel is niet op voorraad en kan niet worden besteld of verzonden. %s"
 
-#: functions/product.php:74
+#: functions/product.php:78
 msgid "few"
 msgstr "paar"
 
-#: functions/product.php:78
+#: functions/product.php:82
 #, php-format
 msgid "Reception scheduled on %s."
 msgstr "Receptie gepland op %s."
 
-#: functions/product.php:85
+#: functions/product.php:89
 msgid "Available soon"
 msgstr "Binnenkort beschikbaar"
 
-#: functions/product.php:85
+#: functions/product.php:89
 #, php-format
 msgid ""
 "This item is not in stock but should be available soon within %s days. %s %s"
@@ -1572,11 +1576,11 @@ msgstr ""
 "Dit artikel is niet op voorraad, maar moet binnenkort beschikbaar zijn "
 "binnen %s dagen. %s %s"
 
-#: functions/product.php:86
+#: functions/product.php:90
 msgid "Limited availability"
 msgstr "Beperkte beschikbaarheid"
 
-#: functions/product.php:86
+#: functions/product.php:90
 #, php-format
 msgid ""
 "This item is in stock and can be shipped immediately but only in limited "
@@ -1585,82 +1589,84 @@ msgstr ""
 "Dit artikel is op voorraad en kan onmiddellijk maar slechts in beperkte "
 "hoeveelheden worden verzonden. %s"
 
-#: functions/product.php:88
+#: functions/product.php:92
 #, php-format
 msgid "This item is in stock and can be shipped immediately. %s"
 msgstr "Dit artikel is op voorraad en kan direct verzonden worden. %s"
 
-#: functions/product.php:313
+#: functions/product.php:320
 msgid "Price"
 msgstr "Prijs"
 
-#: functions/product.php:317 functions/product.php:336
-#: functions/product.php:398 functions/tools.php:1154
+#: functions/product.php:324 functions/product.php:345
+#: functions/product.php:420 functions/tools.php:1164
 msgid "hour"
 msgstr "uur"
 
-#: functions/product.php:323 functions/product.php:408
+#: functions/product.php:332 functions/product.php:429
 msgid "Our prices are incl. VAT"
 msgstr "Onze prijzen zijn incl. BTW"
 
-#: functions/product.php:323 functions/product.php:408
+#: functions/product.php:332 functions/product.php:429
 msgid "Our prices are excl. VAT"
 msgstr "Onze prijzen zijn excl. BTW"
 
-#: functions/product.php:333
+#: functions/product.php:342
 msgid "Selling Price"
 msgstr "Verkoopprijs"
 
-#: functions/product.php:382
+#: functions/product.php:405
 msgid "Sales"
 msgstr "Verkopen"
 
-#: functions/product.php:395
+#: functions/product.php:417
 msgid "Your price"
 msgstr "Jouw Prijs"
 
-#: functions/product.php:448
+#: functions/product.php:473
 msgid "Unavailable"
 msgstr "Niet beschikbaar"
 
-#: functions/product.php:464
+#: functions/product.php:490 functions/product.php:492
 msgid "Save my wish"
 msgstr "Mijn wens opslaan"
 
-#: functions/product.php:466
+#: functions/product.php:495
 msgid "Add to cart"
 msgstr "In winkelwagen"
 
-#: functions/product.php:478 functions/product.php:480
+#: functions/product.php:507 functions/product.php:509
 msgid "log in"
 msgstr "log in"
 
-#: functions/product.php:485
+#: functions/product.php:514
 msgid "Login"
 msgstr "Inloggen"
 
-#: functions/product.php:485
+#: functions/product.php:514
 msgid "Contact us"
 msgstr "Neem contact op"
 
-#: functions/product.php:488
+#: functions/product.php:517
 #, php-format
 msgid "you get %u %% discount"
 msgstr "u krijgt% u%% korting"
 
-#: functions/product.php:506
+#: functions/product.php:536
 msgid "Brand:"
-msgstr "Merk:"
+msgid_plural "Brands:"
+msgstr[0] "Merk:"
+msgstr[1] "Merks:"
 
-#: functions/product.php:620
+#: functions/product.php:647
 msgid "Origin:"
 msgstr "Oorsprong:"
 
-#: functions/product.php:628
+#: functions/product.php:655
 msgid "Item not in sale"
 msgstr "Object niet in de verkoop"
 
-#: functions/product.php:637
+#: functions/product.php:664
 msgid "Oops! This item does not appear to exist"
 msgstr "Oeps! Dit item lijkt niet te bestaan"
 
@@ -1672,152 +1678,154 @@ msgstr "Vorige"
 msgid "Next"
 msgstr "Volgende"
 
-#: functions/tools.php:183
-msgid "Categories:"
-msgstr "Categorieën:"
+#: functions/tools.php:184
+msgid "Category:"
+msgid_plural "Categories:"
+msgstr[0] "Categorie:"
+msgstr[1] "Categorieën:"
 
-#: functions/tools.php:220
+#: functions/tools.php:218
 msgid "Sign in with"
 msgstr "Meld je aan met"
 
-#: functions/tools.php:273
+#: functions/tools.php:271
 msgid "Password cannot be modified in demo mode"
 msgstr "Wachtwoord kan niet worden gewijzigd in demo-modus"
 
-#: functions/tools.php:277 functions/tools.php:278
+#: functions/tools.php:275 functions/tools.php:276
 msgid "Confirm your current password"
 msgstr "Bevestig uw huidige wachtwoord"
 
-#: functions/tools.php:295
+#: functions/tools.php:293
 msgid "This field is required."
 msgstr "Dit veld is verplicht."
 
-#: functions/tools.php:330
+#: functions/tools.php:328
 msgid "Create a personnal account"
 msgstr "Een persoonlijk account aanmaken"
 
-#: functions/tools.php:334
+#: functions/tools.php:332
 msgid "Create a enterprise / supplier account"
 msgstr "Een ondernemings-/leverancieraccount maken"
 
-#: functions/tools.php:339
+#: functions/tools.php:337
 msgid "Type of account"
 msgstr "Soort account"
 
-#: functions/tools.php:342
+#: functions/tools.php:340
 msgid "Personnal account"
 msgstr "Persoonlijke account"
 
-#: functions/tools.php:346
+#: functions/tools.php:344
 msgid "Entreprise account"
 msgstr "Entreprise account"
 
-#: functions/tools.php:355
+#: functions/tools.php:353
 msgid "Customer code"
 msgstr "Klantnummer"
 
-#: functions/tools.php:358
+#: functions/tools.php:356
 msgid "Order or Invoice"
 msgstr "Bestellen of factuur"
 
-#: functions/tools.php:360 functions/tools.php:895
+#: functions/tools.php:358 functions/tools.php:894
 msgid "Total incl. tax"
 msgstr "Totaal incl. BTW"
 
-#: functions/tools.php:389 functions/tools.php:392
+#: functions/tools.php:387 functions/tools.php:390
 msgid "yearly"
 msgstr "jaarlijks"
 
-#: functions/tools.php:401
+#: functions/tools.php:399
 msgid "Name of company"
 msgstr "Naam onderneming"
 
-#: functions/tools.php:402
+#: functions/tools.php:400
 msgid "Professional ID"
 msgstr "Professionele ID"
 
-#: functions/tools.php:403
+#: functions/tools.php:401
 msgid "VAT number"
 msgstr "BTW nummer"
 
-#: functions/tools.php:407
+#: functions/tools.php:405
 msgid "Civility"
 msgstr "Beleefdheid"
 
-#: functions/tools.php:430
+#: functions/tools.php:428
 msgid "Miss"
 msgstr "Mevr"
 
-#: functions/tools.php:434
+#: functions/tools.php:432
 msgid "Mister"
 msgstr "Meneer"
 
-#: functions/tools.php:439 functions/tools.php:440
+#: functions/tools.php:437 functions/tools.php:438
 msgid "Firstname"
 msgstr "Voornaam"
 
-#: functions/tools.php:443 functions/tools.php:444
+#: functions/tools.php:441 functions/tools.php:442
 msgid "Lastname"
 msgstr "Achternaam"
 
-#: functions/tools.php:449
+#: functions/tools.php:447
 msgid "Birthday"
 msgstr "Geboortedatum"
 
-#: functions/tools.php:454
+#: functions/tools.php:452
 msgid "Display name"
 msgstr "Weergavenaam"
 
-#: functions/tools.php:454
+#: functions/tools.php:452
 msgid "Nickname"
 msgstr "Bijnaam"
 
-#: functions/tools.php:456
+#: functions/tools.php:454
 msgid "Title / Job"
 msgstr "Titel/taak"
 
-#: functions/tools.php:470
+#: functions/tools.php:468
 msgid "Phone"
 msgstr "Telefoon"
 
-#: functions/tools.php:481 functions/tools.php:482
+#: functions/tools.php:479 functions/tools.php:480
 msgid "Town"
 msgstr "Woonplaats"
 
-#: functions/tools.php:484 functions/tools.php:485
+#: functions/tools.php:482 functions/tools.php:483
 msgid "Zipcode"
 msgstr "Postcode"
 
-#: functions/tools.php:487 functions/tools.php:512
+#: functions/tools.php:485 functions/tools.php:510
 msgid "Country"
 msgstr "Land"
 
-#: functions/tools.php:551 functions/tools.php:552
+#: functions/tools.php:549 functions/tools.php:550
 msgid "About Yourself"
 msgstr "Over jezelf"
 
-#: functions/tools.php:554 functions/tools.php:555
+#: functions/tools.php:552 functions/tools.php:553
 msgid "Website"
 msgstr "Website"
 
-#: functions/tools.php:569 functions/tools.php:578 functions/tools.php:582
-#: functions/tools.php:586 functions/tools.php:590
+#: functions/tools.php:567 functions/tools.php:576 functions/tools.php:580
+#: functions/tools.php:584 functions/tools.php:588
 msgid "Username"
 msgstr "Gebruikersnaam"
 
-#: functions/tools.php:599
+#: functions/tools.php:597
 msgid "Choose your password"
 msgstr "Kies je wachtwoord"
 
-#: functions/tools.php:601 functions/tools.php:602
+#: functions/tools.php:599 functions/tools.php:600
 msgid "Confirm your password"
 msgstr "Bevestig je wachtwoord"
 
-#: functions/tools.php:642 functions/tools.php:1213
+#: functions/tools.php:640 functions/tools.php:1223
 msgid "Loading"
 msgstr "Laden"
 
-#: functions/tools.php:665
+#: functions/tools.php:663
 msgid ""
 "Oops, our servers are unreachable.<br>Thank you for coming back in a few "
 "minutes."
@@ -1825,78 +1833,82 @@ msgstr ""
 "Oeps, onze servers zijn onbereikbaar.<br>Dank u voor het terugkomen in een "
 "paar minuten."
 
-#: functions/tools.php:668
+#: functions/tools.php:666
 msgid "Error code"
 msgstr "Foutcode"
 
-#: functions/tools.php:679
+#: functions/tools.php:668
+msgid "Request"
+msgstr "Aanvraag"
+
+#: functions/tools.php:678
 msgid "Connection notification"
 msgstr "Kennisgeving van verbinding"
 
-#: functions/tools.php:680
+#: functions/tools.php:679
 msgid ""
 "It appears that you have just logged on to our site the following IP address:"
 msgstr ""
 "Het lijkt erop dat u zich net hebt aangemeld bij onze site het volgende IP-"
 "adres:"
 
-#: functions/tools.php:680
+#: functions/tools.php:679
 msgid ""
 "If you have not made this action, please change your password immediately."
 msgstr ""
 "Als u deze actie niet hebt uitgevoerd, wijzigt u uw wachtwoord onmiddellijk."
 
-#: functions/tools.php:709
+#: functions/tools.php:708
 msgid "Download"
 msgstr "Download"
 
-#: functions/tools.php:739
+#: functions/tools.php:738
 msgid "Help?"
 msgstr "Help?"
 
-#: functions/tools.php:739
+#: functions/tools.php:738
 msgid "Need help?"
 msgstr "Hulp nodig?"
 
-#: functions/tools.php:799
+#: functions/tools.php:798
 msgid "Refresh"
 msgstr "Ververs"
 
-#: functions/tools.php:803
+#: functions/tools.php:802
 msgid "Refresh datas"
 msgstr "Datas vernieuwen"
 
-#: functions/tools.php:821
+#: functions/tools.php:820
 msgid "Congratulations!"
 msgstr "Gefeliciteerd!"
 
-#: functions/tools.php:823
+#: functions/tools.php:822
 msgid "Be carefull"
 msgstr "Wees voorzichtig"
 
-#: functions/tools.php:825
+#: functions/tools.php:824
 msgid "Oops"
 msgstr "Oeps"
 
-#: functions/tools.php:893
+#: functions/tools.php:892
 msgid "Total excl. tax"
 msgstr "Totaal excl. BTW"
 
-#: functions/tools.php:894
+#: functions/tools.php:893
 msgid "Total VAT"
 msgstr "Totaal BTW"
 
-#: functions/tools.php:956
+#: functions/tools.php:966
 msgid "Shipping informations"
 msgstr "Verzendgegevens"
 
-#: functions/tools.php:960
+#: functions/tools.php:970
 msgid "Sorry, this product is no longer available. Please, delete it to order"
 msgstr ""
 "Dit product is helaas niet meer beschikbaar. Gelieve, verwijder het om te "
 "bestellen"
 
-#: functions/tools.php:962
+#: functions/tools.php:972
 msgid ""
 "Sorry, this product is not available with this quantity. Please, change it "
 "for order"
@@ -1904,161 +1916,161 @@ msgstr ""
 "Dit product is helaas niet beschikbaar met deze hoeveelheid. Gelieve, "
 "wijzigen voor bestelling"
 
-#: functions/tools.php:1117
+#: functions/tools.php:1127
 msgid "Your basket is empty."
 msgstr "Je winkelmandje is leeg."
 
-#: functions/tools.php:1119
+#: functions/tools.php:1129
 msgid "If you already have an account,"
 msgstr "Als je al een account hebt,"
 
-#: functions/tools.php:1123 functions/tools.php:1125
+#: functions/tools.php:1133 functions/tools.php:1135
 msgid "sign in"
 msgstr "inloggen"
 
-#: functions/tools.php:1127
+#: functions/tools.php:1137
 msgid "to see your basket."
 msgstr "om uw winkelmandje te bekijken."
 
-#: functions/tools.php:1143
+#: functions/tools.php:1153
 msgid "years"
 msgstr "jaren"
 
-#: functions/tools.php:1144
+#: functions/tools.php:1154
 msgid "months"
 msgstr "maanden"
 
-#: functions/tools.php:1145
+#: functions/tools.php:1155
 msgid "weeks"
 msgstr "weken"
 
-#: functions/tools.php:1146
+#: functions/tools.php:1156
 msgid "days"
 msgstr "dagen"
 
-#: functions/tools.php:1147
+#: functions/tools.php:1157
 msgid "hours"
 msgstr "uren"
 
-#: functions/tools.php:1148
+#: functions/tools.php:1158
 msgid "minutes"
 msgstr "minuten"
 
-#: functions/tools.php:1150
+#: functions/tools.php:1160
 msgid "year"
 msgstr "jaar"
 
-#: functions/tools.php:1151
+#: functions/tools.php:1161
 msgid "month"
 msgstr "maand"
 
-#: functions/tools.php:1152
+#: functions/tools.php:1162
 msgid "week"
 msgstr "week"
 
-#: functions/tools.php:1153
+#: functions/tools.php:1163
 msgid "day"
 msgstr "dag"
 
-#: functions/tools.php:1155
+#: functions/tools.php:1165
 msgid "minute"
 msgstr "minuut"
 
-#: functions/tools.php:1172 functions/tools.php:1175 functions/tools.php:1178
+#: functions/tools.php:1182 functions/tools.php:1185 functions/tools.php:1188
 #, php-format
 msgid "%s day"
 msgid_plural "%s days"
 msgstr[0] "%s dag"
 msgstr[1] "%s dagen"
 
-#: functions/tools.php:1173
+#: functions/tools.php:1183
 msgid "end of month"
 msgstr "maandultimo"
 
-#: functions/tools.php:1176
+#: functions/tools.php:1186
 #, php-format
 msgid "the %s of month"
 msgstr "de %s van de maand"
 
-#: functions/tools.php:1190
+#: functions/tools.php:1200
 msgid "Choose your language"
 msgstr "Kies uw taal"
 
-#: functions/tools.php:1318 functions/tools.php:1751
+#: functions/tools.php:1328 functions/tools.php:1761
 msgid "Account"
 msgstr "Account"
 
-#: functions/tools.php:1320
+#: functions/tools.php:1330
 msgid "Card"
 msgstr "Kaart"
 
-#: functions/tools.php:1333
+#: functions/tools.php:1343
 msgid "Pay by credit/debit card"
 msgstr "Credit Card/betaalpas"
 
-#: functions/tools.php:1335
+#: functions/tools.php:1345
 msgid "Add a payment method"
 msgstr "Een betalingsmethode toevoegen"
 
-#: functions/tools.php:1350
+#: functions/tools.php:1360
 msgid "Pay by bank transfert"
 msgstr "Betalen per bankoverschrijving"
 
-#: functions/tools.php:1360
+#: functions/tools.php:1370
 msgid "Pay by bank check"
 msgstr "Betalen per bankcheque"
 
-#: functions/tools.php:1366
+#: functions/tools.php:1376
 msgid "Pay at front desk"
 msgstr "Betaal bij de receptie"
 
-#: functions/tools.php:1421
+#: functions/tools.php:1431
 msgid "Debtor"
 msgstr "Debiteur"
 
-#: functions/tools.php:1422
+#: functions/tools.php:1432
 msgid "Holder:"
 msgstr "Houder:"
 
-#: functions/tools.php:1424
+#: functions/tools.php:1434
 msgid "Creation:"
 msgstr "Oprichting:"
 
-#: functions/tools.php:1427
+#: functions/tools.php:1437
 msgid "Expiration:"
 msgstr "Verval datum:"
 
-#: functions/tools.php:1434
+#: functions/tools.php:1444
 msgid "Mandate"
 msgstr "Machtiging"
 
-#: functions/tools.php:1435
+#: functions/tools.php:1445
 msgid "Reference:"
 msgstr "Referentie:"
 
-#: functions/tools.php:1439
+#: functions/tools.php:1449
 msgid "Type:"
 msgstr "Type:"
 
-#: functions/tools.php:1441
+#: functions/tools.php:1451
 msgid "Recurring"
 msgstr "Periodiek"
 
-#: functions/tools.php:1443
+#: functions/tools.php:1453
 msgid "Unique"
 msgstr "Uniek"
 
-#: functions/tools.php:1449 functions/tools.php:1723 functions/tools.php:1764
-#: functions/tools.php:1795
+#: functions/tools.php:1459 functions/tools.php:1733 functions/tools.php:1774
+#: functions/tools.php:1805
 msgid "Payment term"
 msgstr "Betalingstermijn"
 
-#: functions/tools.php:1453 functions/tools.php:1727 functions/tools.php:1768
-#: functions/tools.php:1799
+#: functions/tools.php:1463 functions/tools.php:1737 functions/tools.php:1778
+#: functions/tools.php:1809
 msgid "immediately"
 msgstr "onmiddellijk"
 
-#: functions/tools.php:1489
+#: functions/tools.php:1499
 msgid ""
 "You have reached limit of payment methods. Please delete a payment method "
 "for add a new one."
@@ -2066,31 +2078,31 @@ msgstr ""
 "U hebt de limiet van de betalingsmethoden bereikt. Verwijder een "
 "betalingsmethode om een nieuwe toe te voegen."
 
-#: functions/tools.php:1492
+#: functions/tools.php:1502
 msgid "Stripe's in sandbox mode"
 msgstr "Stripe's in de sandbox-modus"
 
-#: functions/tools.php:1492
+#: functions/tools.php:1502
 msgid "Link to Test card numbers"
 msgstr "Koppeling naar kaartnummers testen"
 
-#: functions/tools.php:1494
+#: functions/tools.php:1504
 msgid "Full name on the card"
 msgstr "Volledige naam op de kaart"
 
-#: functions/tools.php:1500
+#: functions/tools.php:1510
 msgid "Not save"
 msgstr "Niet opslaan"
 
-#: functions/tools.php:1509
+#: functions/tools.php:1519
 msgid "Save"
 msgstr "Opslaan"
 
-#: functions/tools.php:1515
+#: functions/tools.php:1525
 msgid "Save as favourite"
 msgstr "Opslaan als favoriet"
 
-#: functions/tools.php:1519
+#: functions/tools.php:1529
 #, php-format
 msgid ""
 "By providing your card and confirming this form, you are authorizing %s and "
@@ -2109,15 +2121,15 @@ msgstr ""
 "uw overeenkomst met uw financiële instelling. Een restitutie moet worden "
 "geclaimd binnen 90 dagen vanaf de datum waarop uw kaart is gedebiteerd."
 
-#: functions/tools.php:1685 functions/tools.php:1711
+#: functions/tools.php:1695 functions/tools.php:1721
 msgid "Add"
 msgstr "Toevoegen"
 
-#: functions/tools.php:1699
+#: functions/tools.php:1709
 msgid "Full name of the owner"
 msgstr "Volledige naam van de eigenaar"
 
-#: functions/tools.php:1704
+#: functions/tools.php:1714
 #, php-format
 msgid ""
 "By providing your IBAN and confirming this form, you are authorizing %s and "
@@ -2135,7 +2147,7 @@ msgstr ""
 "moet worden geclaimd binnen 8 weken vanaf de datum waarop uw rekening is "
 "gedebiteerd."
 
-#: functions/tools.php:1741
+#: functions/tools.php:1751
 #, php-format
 msgid ""
 "Please send your bank transfert in the amount of <b>%1$s</b> at the "
@@ -2144,13 +2156,13 @@ msgstr ""
 "Stuur uw bankoverschrijving in het bedrag van <b>%1$s</b> op de volgende "
 "rekening:"
 
-#: functions/tools.php:1743
+#: functions/tools.php:1753
 msgid "Please send your bank transfert at the following account:"
 msgstr ""
 "Stuur uw transfert naar het bedrag van <b>%1$s</b> met verwijzing <b>%2$s</"
 "b> op het volgende account:"
 
-#: functions/tools.php:1784
+#: functions/tools.php:1794
 #, php-format
 msgid ""
 "Please send your money check in the amount of <b>%1$s</b> to <b>%2$s</b> at "
@@ -2159,64 +2171,64 @@ msgstr ""
 "Stuur uw geldcheque in het bedrag van <b>%1$s</b> tot <b>%2$s</b> op het "
 "volgende adres:"
 
-#: functions/tools.php:1786
+#: functions/tools.php:1796
 #, php-format
 msgid "Please send your money check to <b>%s</b> at the following address:"
 msgstr "Stuur uw geldcheque naar <b>%s</b> op het volgende adres:"
 
-#: functions/tools.php:2035
+#: functions/tools.php:2045
 msgid "Select your request:"
 msgstr "Selecteer uw aanvraag:"
 
-#: functions/tools.php:2036
+#: functions/tools.php:2046
 msgid "Export Personal Data"
 msgstr "Persoonlijke gegevens exporteren"
 
-#: functions/tools.php:2037
+#: functions/tools.php:2047
 msgid "Remove Personal Data"
 msgstr "Persoonlijke gegevens verwijderen"
 
-#: functions/tools.php:2038
+#: functions/tools.php:2048
 msgid "Your email address (required)"
 msgstr "Uw e-mailadres (verplicht)"
 
-#: functions/tools.php:2039
+#: functions/tools.php:2049
 msgid "Human verification (required)"
 msgstr "Menselijke verificatie (vereist)"
 
-#: functions/tools.php:2040
+#: functions/tools.php:2050
 msgid "Send Request"
 msgstr "Verzoek versturen"
 
-#: functions/tools.php:2071
+#: functions/tools.php:2081
 msgid "Export your data"
 msgstr "Exporteer je gegevens"
 
-#: functions/tools.php:2071
+#: functions/tools.php:2081
 msgid "You will receive an email with a secure link to your data"
 msgstr "U ontvangt een e-mail met een beveiligde link naar uw gegevens"
 
-#: functions/tools.php:2081
+#: functions/tools.php:2091
 msgid "Erase your data"
 msgstr "Wis uw gegevens"
 
-#: functions/tools.php:2081
+#: functions/tools.php:2091
 msgid "You will receive an email with a secure link to confirm the deletion"
 msgstr "U ontvangt een e-mail met een beveiligde link naar uw gegevens"
 
-#: functions/tools.php:2092
+#: functions/tools.php:2102
 msgid "Delete your account"
 msgstr "Uw account verwijderen"
 
-#: functions/tools.php:2092
+#: functions/tools.php:2102
 msgid "Soon, you will be able to delete your account"
 msgstr "Binnenkort u uw account verwijderen"
 
-#: functions/tools.php:2131
+#: functions/tools.php:2141
 msgid "Validate the request"
 msgstr "De aanvraag valideren"
 
-#: functions/tools.php:2145
+#: functions/tools.php:2155
 msgid "This plugin requires WordPress 4.9.6."
 msgstr "Deze plugin vereist WordPress 4.9.6."
 
