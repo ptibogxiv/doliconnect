@@ -423,20 +423,15 @@ return $avatar;
 }
 // ********************************************************
 add_action('wp_dolibarr_sync','update_synctodolibarr', 1, 1);
-function update_synctodolibarr($element) {
+function update_synctodolibarr($object) {
 global $current_user;
-$entity = get_current_blog_id();
-wp_get_current_user();
 
-if ($current_user->billing_type == 'phy'){
-$name = $current_user->user_firstname." ".$current_user->user_lastname;}
-else {$name = $current_user->billing_company;}
 if (NULL != doliconnector($current_user, 'fk_member')) { 
-$adherent = callDoliApi("PUT", "/adherentsplus/".doliconnector($current_user, 'fk_member'), $element, 0);
+$adherent = callDoliApi("PUT", "/adherentsplus/".doliconnector($current_user, 'fk_member'), $object, 0);
 //update_user_meta( $current_user->ID, 'billing_birth', $current_user->billing_birth);
 }
 if ( doliconnector($current_user, 'fk_soc') > 0 ) {
-$thirparty = callDoliApi("PUT", "/thirdparties/".doliconnector($current_user, 'fk_soc'), $element, 0);
+$thirparty = callDoliApi("PUT", "/thirdparties/".doliconnector($current_user, 'fk_soc'), $object, 0);
 }
 
 }
