@@ -7,19 +7,19 @@ function dolimenu($name, $traduction, $right, $content) {
 
 function dolisanitize($object) {
 
-if (isset($object['firstname'])) $object['firstname'] = ucfirst(strtolower(stripslashes(sanitize_user($object['firstname']))));
-if (isset($object['lastname'])) $object['lastname'] = strtoupper(stripslashes(sanitize_user($object['lastname'])));
+if (isset($object['firstname'])) $object['firstname'] = ucfirst(strtolower(stripslashes(sanitize_text_field($object['firstname']))));
+if (isset($object['lastname'])) $object['lastname'] = strtoupper(stripslashes(sanitize_text_field($object['lastname'])));
 if (isset($object['name'])) { $object['name'] = strtoupper(stripslashes(sanitize_text_field($object['name'])));
 } elseif (isset($object['morphy']) && $object['morphy'] != 'mor' && get_option('doliconnect_disablepro') != 'mor' ) {
 $object['name'] = $object['firstname']." ".$object['lastname'];
 } else {
 $object['name'] = null;
 }
-if (isset($object['address'])) $object['address'] = stripslashes($object['address']);
-if (isset($object['zip'])) $object['zip'] = strtoupper(stripslashes(sanitize_user($object['zip'])));
-if (isset($object['town'])) $object['town'] = strtoupper(stripslashes(sanitize_user($object['town'])));
+if (isset($object['address'])) $object['address'] = stripslashes(sanitize_textarea_field($object['address']));
+if (isset($object['zip'])) $object['zip'] = strtoupper(stripslashes(sanitize_text_field($object['zip'])));
+if (isset($object['town'])) $object['town'] = strtoupper(stripslashes(sanitize_text_field($object['town'])));
 if (isset($object['email'])) $object['email'] = sanitize_email($object['email']);
-if (isset($object['url'])) $object['url'] = sanitize_textarea_field($object['url']);
+if (isset($object['url'])) $object['url'] = sanitize_text_field($object['url']);
 if (isset($object['note_public'])) $object['note_public'] = stripslashes(sanitize_textarea_field($object['note_public']));
 if (isset($object['tva_intra'])) $object['tva_intra'] = strtoupper(sanitize_text_field($object['tva_intra']));
 
