@@ -9,7 +9,7 @@ function dolisanitize($object) {
 
 if (isset($object['firstname'])) $object['firstname'] = ucfirst(strtolower(stripslashes(sanitize_user($object['firstname']))));
 if (isset($object['lastname'])) $object['lastname'] = strtoupper(stripslashes(sanitize_user($object['lastname'])));
-if (isset($object['name'])) { $object['name'] = strtoupper(stripslashes(sanitize_user($object['name'])));
+if (isset($object['name'])) { $object['name'] = strtoupper(stripslashes(sanitize_text_field($object['name'])));
 } elseif (isset($object['morphy']) && $object['morphy'] != 'mor' && get_option('doliconnect_disablepro') != 'mor' ) {
 $object['name'] = $object['firstname']." ".$object['lastname'];
 } else {
@@ -21,9 +21,7 @@ if (isset($object['town'])) $object['town'] = strtoupper(stripslashes(sanitize_u
 if (isset($object['email'])) $object['email'] = sanitize_email($object['email']);
 if (isset($object['url'])) $object['url'] = sanitize_textarea_field($object['url']);
 if (isset($object['note_public'])) $object['note_public'] = stripslashes(sanitize_textarea_field($object['note_public']));
-if (isset($object['morphy']) && $object['morphy'] == 'mor' && isset($object['tva_intra']) ) {
-$object['tva_intra'] = strtoupper(sanitize_user($object['tva_intra']));
-} else { $object['tva_intra'] = ''; }
+if (isset($object['tva_intra'])) $object['tva_intra'] = strtoupper(sanitize_text_field($object['tva_intra']));
 
 return $object;
 }
