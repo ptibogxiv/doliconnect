@@ -591,7 +591,7 @@ $country = callDoliApi("GET", "/setup/dictionary/countries/".$product->country_i
 $list .= "<br><small><span class='flag-icon flag-icon-".strtolower($product->country_code)."'></span> ".$country->label;
 if ( isset($product->state_id) && !empty($product->state_id) ) { 
 $state = callDoliApi("GET", "/setup/dictionary/states/".$product->state_id."?lang=".$lang, null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))); 
-$list .= ", ".$state->name; } 
+$list .= " - ".$state->name; } 
 $list .= "</small>"; }
 
 $arr_params = array( 'category' => isset($_GET['category'])?$_GET['category']:null, 'subcategory' => isset($_GET['subcategory'])?$_GET['subcategory']:null, 'product' => $product->id);  
