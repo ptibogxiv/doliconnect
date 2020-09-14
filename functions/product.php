@@ -589,7 +589,7 @@ $lang = $current_user->locale;
 }
 $country = callDoliApi("GET", "/setup/dictionary/countries/".$product->country_id."?lang=".$lang, null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 $list .= "<br><small><span class='flag-icon flag-icon-".strtolower($product->country_code)."'></span> ".$country->label;
-if ( doliversion('13.0.0') && isset($product->state_id) && !empty($product->state_id) ) { 
+if ( isset($product->state_id) && !empty($product->state_id) ) { 
 $state = callDoliApi("GET", "/setup/dictionary/states/".$product->state_id."?lang=".$lang, null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))); 
 $list .= " - ".$state->name; } 
 $list .= "</small>"; }
