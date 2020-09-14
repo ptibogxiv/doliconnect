@@ -119,7 +119,7 @@ if ( !is_null($timeend) && $timeend > 0 ) {
 $date_end=strftime('%Y-%m-%d 00:00:00', $timeend);
 } else {
 $date_end=null;
-}
+} 
 
 if ( empty(doliconnector($current_user, 'fk_order', true)) ) {
 $thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty'));
@@ -151,7 +151,18 @@ if (! isset($line)) { $line = null; }
 
 $prdt = callDoliApi("GET", "/products/".$productid."?includestockdata=1&includesubproducts=true", null, dolidelay('product', true));
 
-if ( doliconnector($current_user, 'fk_order') > 0 && $quantity > 0 && empty($line) && (empty(doliconst('MAIN_MODULE_STOCK')) || $prdt->stock_reel >= $quantity || (is_null($line) && empty(doliconst('STOCK_SUPPORTS_SERVICES')) ))) {
+$warehouse = doliconst('DOLICONNECT_ID_WAREHOUSE');
+if (isset($prdt->stock_warehouse) && !empty($prdt->stock_warehouse) && !empty($warehouse)) {
+if ( isset($prdt->stock_warehouse->$warehouse) ) {
+$realstock = min(array($prdt->stock_reel,$prdt->stock_warehouse->$warehouse->real));
+} else {
+$realstock = 0;
+}
+} else {
+$realstock = $prdt->stock_reel;
+}
+
+if ( doliconnector($current_user, 'fk_order') > 0 && $quantity > 0 && empty($line) && (empty(doliconst('MAIN_MODULE_STOCK')) || $realstock >= $quantity || (is_null($line) && empty(doliconst('STOCK_SUPPORTS_SERVICES')) ))) {
                                                                                      
 $adln = [
     'fk_product' => $prdt->id,
@@ -171,7 +182,7 @@ if ( !empty($url) ) {
 }
 return doliconnect_countitems($order);
 
-} elseif ( doliconnector($current_user, 'fk_order') > 0 && ($prdt->stock_reel >= $quantity || (is_object($line) && $line->type != '0' && empty(doliconst('STOCK_SUPPORTS_SERVICES')) )) && $line > 0 ) {
+} elseif ( doliconnector($current_user, 'fk_order') > 0 && ($realstock >= $quantity || empt($quantity) || (is_object($line) && $line->type != '0' && empty(doliconst('STOCK_SUPPORTS_SERVICES')) )) && $line > 0 ) {
 
 if ( $quantity < 1 ) {
 
