@@ -425,6 +425,10 @@ print "<div class='input-group'><input type='number' class='form-control' id='in
 if (isset($object->idprof1) && !empty($object->idprof1)) { print "readonly"; } else { print "required"; }
 print "><input type='text' aria-label='NAF-APE' placeholder='".__( 'NAF-APE', 'doliconnect')."' name='".$idobject."[idprof3]' maxlength='5' value='".$object->idprof3."' class='form-control'></div></div>
 <div class='col-12'><label for='coordonnees'><small><i class='fas fa-building fa-fw'></i> ".__( 'RCS/RM', 'doliconnect')."</small></label><input type='text' aria-label='RCS/RM' placeholder='".__( 'RCS/RM', 'doliconnect')."' class='form-control'></div></div>";
+} elseif ( in_array($object->country_code, array('BE')) ) { print "<div class='form-row'><div class='col-12'><label for='coordonnees'><small><i class='fas fa-building fa-fw'></i> ".__( 'Company identification number', 'doliconnect')."</small></label>";
+print "<div class='input-group'><input type='number' class='form-control' id='inputcompany' aria-label='SIREN'  maxlength='9' placeholder='".__( 'SIREN', 'doliconnect')."' name='".$idobject."[idprof1]' value='".$object->idprof1."' ";
+if (isset($object->idprof1) && !empty($object->idprof1)) { print "readonly"; } else { print "required"; }
+print "></div></div></div>";
 }
 print "<div class='form-row'><div class='col-12'><label for='coordonnees'><small><i class='fas fa-landmark fa-fw'></i> ".__( 'VAT number', 'doliconnect')."</small></label><input type='text' class='form-control' id='inputcompany' placeholder='".__( 'VAT number', 'doliconnect')."' name='".$idobject."[tva_intra]' value='".$object->tva_intra."' ";
 if (isset($object->tva_intra) && !empty($object->tva_intra)) { print "readonly"; } else { print ""; }
