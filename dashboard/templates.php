@@ -57,7 +57,7 @@ print "<div class='col-xs-12 col-sm-12 col-md-9'><div class='card shadow-sm'><di
 print dolibug(isset($thirdparty->error->message)?$thirdparty->error->message:$thirdparty);
 print "</div></div></div></div>";
 
-} elseif ( $thirdparty->status != '1' ) {
+} elseif ( isset($thirdparty->status) && $thirdparty->status != '1' ) {
 
 print "</div></div></div>";
 print "<div class='col-xs-12 col-sm-12 col-md-9'><div class='card shadow-sm'><div class='card-body'>";
@@ -158,7 +158,7 @@ do_action('user_doliconnect_menu');
 print "</div><br>";
 }  
 
-if ( has_action('customer_doliconnect_menu') && $thirdparty->client == '1' ) {
+if ( has_action('customer_doliconnect_menu') && isset($thirdparty->client) && $thirdparty->client == '1' ) {
 print "<div class='list-group shadow-sm'>";
 do_action('customer_doliconnect_menu');
 print "</div><br>";
@@ -170,7 +170,7 @@ do_action('options_doliconnect_menu');
 print "</div><br>";
 }
 
-if ( has_action('supplier_doliconnect_menu') && $thirdparty->fournisseur == '1' ) {
+if ( has_action('supplier_doliconnect_menu') && isset($thirdparty->fournisseur) && $thirdparty->fournisseur == '1' ) {
 print "<div class='list-group shadow-sm'>";
 do_action('supplier_doliconnect_menu');
 print "</div><br>";
