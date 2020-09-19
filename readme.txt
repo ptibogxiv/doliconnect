@@ -63,7 +63,7 @@ We would like to thank this contributors and plugins:
 
 == Changelog ==
   = 4.7.0 =
-* introduce cron for better transient
+* introduce cron for better transient with soft ou full refresh (can need huge server)
 * fix special characters in form
 * minor bugfixes
 
