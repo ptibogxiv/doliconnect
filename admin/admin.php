@@ -203,9 +203,9 @@ echo get_site_option('license_key_doliconnect-pro');?> " <?php } else { echo "";
             <tr>
                 <th style="width:150px;"><label for="doliconnect_disablepro"><?php _e('Cronjobs', 'doliconnect') ?></label></th>
                 <td ><select name="doliconnect_cronjob" type="checkbox" id="doliconnect_cronjob">
-                <option value="0" <?php selected('O', get_option('doliconnect_cronjob'));?>><?php _e('Disabled', 'doliconnect') ?></option>
-                <option value="1" <?php selected('1', get_option('doliconnect_cronjob'));?>><?php _e('Soft refresh', 'doliconnect') ?></option>
-                <option value="2" <?php selected('2', get_option('doliconnect_cronjob'));?>><?php _e('Full refresh', 'doliconnect') ?></option>
+                <option value="0" <?php selected('O', get_site_option('doliconnect_cronjob'));?>><?php _e('Disabled', 'doliconnect') ?></option>
+                <option value="1" <?php selected('1', get_site_option('doliconnect_cronjob'));?>><?php _e('Soft refresh', 'doliconnect') ?></option>
+                <option value="2" <?php selected('2', get_site_option('doliconnect_cronjob'));?>><?php _e('Full refresh', 'doliconnect') ?></option>
                 </select>
                 </td>
             </tr>
