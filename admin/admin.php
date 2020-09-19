@@ -144,6 +144,11 @@ update_site_option( 'dolibarr_entity', sanitize_text_field($_REQUEST['dolibarr_e
 } else {
 delete_site_option('dolibarr_entity');
 }
+if ( isset($_REQUEST['doliconnect_cronjob_multisite']) ) {
+update_site_option( 'doliconnect_cronjob_multisite', sanitize_text_field($_REQUEST['doliconnect_cronjob_multisite']));
+} else {
+delete_site_option('doliconnect_cronjob_multisite');
+}
 
     }
     /*** End of license activation ***/
@@ -201,11 +206,11 @@ echo get_site_option('license_key_doliconnect-pro');?> " <?php } else { echo "";
                 <td ><input name="dolibarr_entity" type="checkbox" id="dolibarr_entity" value="1" <?php checked('1', get_site_option('dolibarr_entity')); ?> /> permettre de personnaliser les entités liés par defaut entité-wordpress == entité-dolibarr</td>
             </tr>
             <tr>
-                <th style="width:150px;"><label for="doliconnect_disablepro"><?php _e('Cronjobs', 'doliconnect') ?></label></th>
-                <td ><select name="doliconnect_cronjob" type="checkbox" id="doliconnect_cronjob">
-                <option value="0" <?php selected('O', get_site_option('doliconnect_cronjob'));?>><?php _e('Disabled', 'doliconnect') ?></option>
-                <option value="1" <?php selected('1', get_site_option('doliconnect_cronjob'));?>><?php _e('Soft refresh', 'doliconnect') ?></option>
-                <option value="2" <?php selected('2', get_site_option('doliconnect_cronjob'));?>><?php _e('Full refresh', 'doliconnect') ?></option>
+                <th style="width:150px;"><label for="doliconnect_cronjob_multisite"><?php _e('Cronjobs', 'doliconnect') ?></label></th>
+                <td ><select name="doliconnect_cronjob_multisite" type="checkbox" id="doliconnect_cronjob_multisite">
+                <option value="0" <?php selected('O', get_site_option('doliconnect_cronjob_multisite'));?>><?php _e('By blog', 'doliconnect') ?></option>
+                <option value="1" <?php selected('1', get_site_option('doliconnect_cronjob_multisite'));?>><?php _e('Soft refresh', 'doliconnect') ?></option>
+                <option value="2" <?php selected('2', get_site_option('doliconnect_cronjob_multisite'));?>><?php _e('Full refresh', 'doliconnect') ?></option>
                 </select>
                 </td>
             </tr>
@@ -523,12 +528,12 @@ if (is_plugin_active( 'doliconnect-classifieds/doliconnect-classifieds.php' ) ) 
            wp_dropdown_pages($args); ?></td>
             </tr>
 <?php } ?> 
-            <tr>
-                <th style="width:150px;"><label for="doliconnect_disablepro"><?php _e('Cronjobs', 'doliconnect') ?></label></th>
-                <td ><select name="doliconnect_cronjob" type="checkbox" id="doliconnect_cronjob">
-                <option value="0" <?php selected('O', get_option('doliconnect_cronjob'));?>><?php _e('Disabled', 'doliconnect') ?></option>
-                <option value="1" <?php selected('1', get_option('doliconnect_cronjob'));?>><?php _e('Soft refresh', 'doliconnect') ?></option>
-                <option value="2" <?php selected('2', get_option('doliconnect_cronjob'));?>><?php _e('Full refresh', 'doliconnect') ?></option>
+            <tr><?php $cronjob = !empty(get_site_option('doliconnect_cronjob_multisite'))?get_site_option('doliconnect_cronjob_multisite'):get_option('doliconnect_cronjob'); ?>
+                <th style="width:150px;"><label for="doliconnect_cronjob"><?php _e('Cronjobs', 'doliconnect') ?></label></th>
+                <td ><select name="doliconnect_cronjob" type="checkbox" id="doliconnect_cronjob" <?php if (!empty(get_site_option('doliconnect_cronjob_multisite'))) { ?> disabled <?php } ?>>
+                <option value="0" <?php selected('O', $cronjob);?>><?php _e('Disabled', 'doliconnect') ?></option>
+                <option value="1" <?php selected('1', $cronjob);?>><?php _e('Soft refresh', 'doliconnect') ?></option>
+                <option value="2" <?php selected('2', $cronjob);?>><?php _e('Full refresh', 'doliconnect') ?></option>
                 </select>
                 </td>
             </tr>
