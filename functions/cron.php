@@ -5,7 +5,7 @@ add_action( 'doliconnect_cron_hook', 'doliconnect_cron_process' );
 function doliconnect_cron_process($refresh = false) {
 $cronjob = !empty(get_site_option('doliconnect_cronjob_multisite'))?get_site_option('doliconnect_cronjob_multisite'):get_option('doliconnect_cronjob');
 if (!empty($cronjob)) {
-if (get_option('doliconnect_cronjob') == '2') $refresh = true;
+if ($cronjob == '2') $refresh = true;
 $products = array();
 $categories = array();
 
