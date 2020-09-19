@@ -195,10 +195,21 @@ echo get_site_option('license_key_doliconnect-pro');?> " <?php } else { echo "";
                 <th style="width:150px;"><label for="dolibarr_login">Wordpress Login Page</label></th>
                 <td ><?php echo site_url(); ?>/<input class="regular-text" type="text" id="dolibarr_login" name="doliconnect_login"  value="<?php echo get_site_option('doliconnect_login'); ?>" required><br>ex: wp-login.php (wordpress default)</td>
             </tr>
+<?php if ( is_multisite() ) { ?>       
             <tr>
                 <th style="width:150px;"><label for="dolibarr_entity"><?php _e('Personalize entity', 'doliconnect') ?></label></th>
                 <td ><input name="dolibarr_entity" type="checkbox" id="dolibarr_entity" value="1" <?php checked('1', get_site_option('dolibarr_entity')); ?> /> permettre de personnaliser les entités liés par defaut entité-wordpress == entité-dolibarr</td>
-            </tr>    
+            </tr>
+            <tr>
+                <th style="width:150px;"><label for="doliconnect_disablepro"><?php _e('Cronjobs', 'doliconnect') ?></label></th>
+                <td ><select name="doliconnect_cronjob" type="checkbox" id="doliconnect_cronjob">
+                <option value="0" <?php selected('O', get_option('doliconnect_cronjob'));?>><?php _e('Disabled', 'doliconnect') ?></option>
+                <option value="1" <?php selected('1', get_option('doliconnect_cronjob'));?>><?php _e('Soft refresh', 'doliconnect') ?></option>
+                <option value="2" <?php selected('2', get_option('doliconnect_cronjob'));?>><?php _e('Full refresh', 'doliconnect') ?></option>
+                </select>
+                </td>
+            </tr>
+<?php } ?>
         </table>
         <p class="submit">
             <input type="submit" name="activate_license" value="Activate" class="button-primary" />
