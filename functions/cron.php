@@ -4,6 +4,8 @@ add_action( 'doliconnect_cron_hook', 'doliconnect_cron_process' );
 
 function doliconnect_cron_process($refresh = false) {
 
+if (isset(get_option('doliconnect_cronjob')) && !empty(get_option('doliconnect_cronjob'))) {
+if (get_option('doliconnect_cronjob') == '2') $refresh = true;
 $products = array();
 $categories = array();
 
@@ -84,6 +86,6 @@ $product3 = callDoliApi("GET", "/products/".$product['id']."/selling_multiprices
 }
 }
 }
-
+}
 }
 ?>

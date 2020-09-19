@@ -260,6 +260,7 @@ update_option('doliconnect_google', sanitize_text_field($_REQUEST['doliconnect_g
 delete_option('doliconnect_google');}                               
             update_option('doliaccount', sanitize_text_field($_REQUEST['doliaccount']));
             update_option('doliconnect_disablepro', sanitize_text_field($_REQUEST['doliconnect_disablepro']));
+            update_option('doliconnect_cronjob', sanitize_text_field($_REQUEST['doliconnect_cronjob']));
             if (isset($_REQUEST['doliconnectrestrict_role'])) update_option('doliconnectrestrict_role', sanitize_text_field($_REQUEST['doliconnectrestrict_role']));
             if (isset($_REQUEST['dolibarr_entity'])) update_option('dolibarr_entity', sanitize_text_field($_REQUEST['dolibarr_entity']));
             update_option('dolicart', sanitize_text_field($_REQUEST['dolicart']));
@@ -513,7 +514,7 @@ if (is_plugin_active( 'doliconnect-classifieds/doliconnect-classifieds.php' ) ) 
 <?php } ?> 
             <tr>
                 <th style="width:150px;"><label for="doliconnect_disablepro"><?php _e('Cronjobs', 'doliconnect') ?></label></th>
-                <td ><select name="doliconnect_disablepro" type="checkbox" id="doliconnect_disablepro">
+                <td ><select name="doliconnect_cronjob" type="checkbox" id="doliconnect_cronjob">
                 <option value="0" <?php selected('O', get_option('doliconnect_cronjob'));?>><?php _e('Disabled', 'doliconnect') ?></option>
                 <option value="1" <?php selected('1', get_option('doliconnect_cronjob'));?>><?php _e('Soft refresh', 'doliconnect') ?></option>
                 <option value="2" <?php selected('2', get_option('doliconnect_cronjob'));?>><?php _e('Full refresh', 'doliconnect') ?></option>
