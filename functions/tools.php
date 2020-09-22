@@ -578,16 +578,16 @@ print " disabled><label class='custom-control-label' for='".$idobject."[roles]["
 print "</li>";
 }
 
-if ( !in_array($mode, array('contact', 'donation', 'linkthirdparty')) ) {
+if ( !in_array($mode, array('donation', 'linkthirdparty')) ) {
 print "<li class='list-group-item'>";
 
-if ( !in_array($mode, array('contact', 'member', 'linkthirdparty')) ) {
+//if ( !in_array($mode, array('member', 'linkthirdparty')) ) {
 print "<div class='form-row'><div class='col'><label for='note_public'><small><i class='fas fa-bullhorn fa-fw'></i> ".__( 'About Yourself', 'doliconnect')."</small></label>
 <textarea type='text' class='form-control' name='".$idobject."[note_public]' id='note_public' rows='3' placeholder='".__( 'About Yourself', 'doliconnect')."'>".stripslashes(htmlspecialchars(isset($object->note_public)?$object->note_public:$current_user->description, ENT_QUOTES))."</textarea></div></div>";
 
 print "<div class='form-row'><div class='col'><label for='description'><small><i class='fas fa-link fa-fw'></i> ".__( 'Website', 'doliconnect')."</small></label>
 <input type='url' class='form-control' name='".$idobject."[url]' id='website' placeholder='".__( 'Website', 'doliconnect')."' value='".stripslashes(htmlspecialchars((isset($object->url) ? $object->url : null), ENT_QUOTES))."'></div></div>";
-}
+//}
 
 print "</li>";
 }
