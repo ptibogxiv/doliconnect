@@ -288,6 +288,20 @@ add_action( 'user_doliconnect_menu', 'contacts_menu', 3, 1);
 function contacts_module($url){
 global $current_user;
 
+if ( isset($_POST["case"]) && $_POST["case"] == 'updatecontact' && isset($_POST["contactid"]) && !empty($_POST["contactid"])) {
+ 
+$contact = $_POST['contact'][''.$_POST['contactid'].''];
+
+$contactfo = callDoliApi("PUT", "/contacts/".$_POST["contactid"]."?includecount=1", $contact, 0);
+
+if ( isset($_GET['return']) ) {
+wp_redirect(doliconnecturl('doliaccount').'?module='.$_GET['return']);
+exit;
+} else {
+print dolialert ('success', __( 'Your informations have been updated.', 'doliconnect'));
+}
+}
+
 if ( isset($_GET['id']) && $_GET['id'] > 0 ) {  
 
 $request = "/contacts/".esc_attr($_GET['id'])."?includecount=1";
@@ -296,10 +310,8 @@ $contactfo = callDoliApi("GET", $request, null, dolidelay('contact', esc_attr(is
 }
 
 if ( !isset($contactfo->error) && isset($_GET['id']) && isset($_GET['id']) && isset($_GET['ref']) && (doliconnector($current_user, 'fk_soc') == $contactfo->socid) && ($_GET['ref'] == $contactfo->ref) && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doli-contacts-'.$contactfo->id.'-'.$contactfo->ref)) {
-$nonce = wp_create_nonce( 'doli-contacts-'. $contactfo->id.'-'.$contactfo->ref);
-$arr_params = array( 'id' => $contactfo->id, 'ref' => $contactfo->ref, 'security' => $nonce);  
-$return = esc_url( add_query_arg( $arr_params, $url) );
-print "<form action='".$return."' id='doliconnect-infosform' method='post' class='was-validated' enctype='multipart/form-data'><input type='hidden' name='case' value='updateuser'>";
+
+print "<form action='".$url."' id='doliconnect-infosform' method='post' class='was-validated' enctype='multipart/form-data'><input type='hidden' name='case' value='updatecontact'><input type='hidden' name='contactid' value='".$contactfo->id."'>";
 
 print doliloaderscript('doliconnect-infosform');
 
