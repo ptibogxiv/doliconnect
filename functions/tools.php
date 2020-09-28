@@ -446,15 +446,14 @@ $civility = callDoliApi("GET", "/setup/dictionary/civility?sortfield=code&sortor
 }
 print "<select class='custom-select' id='".$idobject."[civility_id]'  name='".$idobject."[civility_id]' required>";
 print "<option value='' disabled ";
-if ( empty($object->civility_id) ) {
+if ( empty($object->civility_code) ) {
 print "selected ";}
 print ">".__( '- Select -', 'doliconnect')."</option>";
 if ( !isset($civility->error ) && $civility != null ) { 
 foreach ( $civility as $postv ) {
 
-print "<option value='".$postv->code."' ";
-if ( $object->civility_id == $postv->code && $object->civility_id != null) {
-print "selected ";}
+print "<option value='".$postv->rowid."' ";
+if ( $object->civility_code == $postv->code && $object->civility_code != null) { print "selected "; }
 print ">".$postv->label."</option>";
 
 }} else {
