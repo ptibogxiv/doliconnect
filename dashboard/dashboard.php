@@ -296,8 +296,10 @@ $contactfo = callDoliApi("GET", $request, null, dolidelay('contact', esc_attr(is
 }
 
 if ( !isset($contactfo->error) && isset($_GET['id']) && isset($_GET['id']) && isset($_GET['ref']) && (doliconnector($current_user, 'fk_soc') == $contactfo->socid) && ($_GET['ref'] == $contactfo->ref) && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doli-contacts-'.$contactfo->id.'-'.$contactfo->ref)) {
-
-print "<form action='".$url."' id='doliconnect-infosform' method='post' class='was-validated' enctype='multipart/form-data'><input type='hidden' name='case' value='updateuser'>";
+$nonce = wp_create_nonce( 'doli-contacts-'. $contactfo->id.'-'.$contactfo->ref);
+$arr_params = array( 'id' => $contactfo->id, 'ref' => $contactfo->ref, 'security' => $nonce);  
+$return = esc_url( add_query_arg( $arr_params, $url) );
+print "<form action='".$return."' id='doliconnect-infosform' method='post' class='was-validated' enctype='multipart/form-data'><input type='hidden' name='case' value='updateuser'>";
 
 print doliloaderscript('doliconnect-infosform');
 
@@ -330,11 +332,8 @@ $nonce = wp_create_nonce( 'doli-contacts-'. $postcontact->id.'-'.$postcontact->r
 $arr_params = array( 'id' => $postcontact->id, 'ref' => $postcontact->ref, 'security' => $nonce);  
 $return = esc_url( add_query_arg( $arr_params, $url) );
                                                                                                                                                       
-print "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'><div><i class='fa fa-address-card fa-3x fa-fw'></i></div><div><h6 class='my-0'>".$postcontact->firstname." ".$postcontact->lastname."</h6><small class='text-muted'>".$postcontact->poste."</small></div><span></span><span>";
-if ( $postcontact->statut > 0 ) { print "<span class='fas fa-check-circle fa-fw text-success'></span> ";
-}
-elseif ( $postcontact->statut == 0 ) { print "<span class='fas fa-check-circle fa-fw text-warning'></span> <span class='fas fa-money-bill-alt fa-fw text-danger'></span> <span class='fas fa-shipping-fast fa-fw text-danger'></span>";}
-elseif ( $postcontact->statut == -1 ) {print "<span class='fas fa-check-circle fa-fw text-secondary'></span> <span class='fas fa-money-bill-alt fa-fw text-secondary'></span> <span class='fas fa-shipping-fast fa-fw text-secondary'></span>";}
+print "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'><div><i class='fa fa-address-card fa-3x fa-fw'></i></div><div><h6 class='my-0'>".($postcontact->civility ? $postcontact->civility : $postcontact->civility_code)." ".$postcontact->firstname." ".$postcontact->lastname."</h6><small class='text-muted'>".$postcontact->poste."</small></div><span></span><span>";
+//if ( $postcontact->statut > 0 ) { print "<span class='fas fa-check-circle fa-fw text-success'></span> "; }
 print "</span></a>";
 }
 } else {
