@@ -452,8 +452,9 @@ print ">".__( '- Select -', 'doliconnect')."</option>";
 if ( !isset($civility->error ) && $civility != null ) { 
 foreach ( $civility as $postv ) {
 
-print "<option value='".$postv->rowid."' ";
-if ( $object->civility_code == $postv->code && $object->civility_code != null) { print "selected "; }
+print "<option value='".$postv->code."' ";
+if ( (isset($object->civility_id) ? $object->civility_id : $current_user->civility_id) == $postv->code && (isset($object->civility_id) ? $object->civility_id : $current_user->civility_id) != null) {
+print "selected "; }
 print ">".$postv->label."</option>";
 
 }} else {
