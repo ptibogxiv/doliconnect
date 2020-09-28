@@ -59,7 +59,7 @@ print "<div class='card shadow-sm'>";
 
 print doliuserform( $thirdparty, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'thirdparty');
 
-print "<div class='card-body'><input type='hidden' name='userid' value='$ID'><button class='btn btn-danger btn-block' type='submit'>".__( 'Update', 'doliconnect')."</button></div>";
+print "<div class='card-body'><button class='btn btn-danger btn-block' type='submit'>".__( 'Update', 'doliconnect')."</button></div>";
 print '<div class="card-footer text-muted">';
 print "<small><div class='float-left'>";
 if ( isset($request) ) print dolirefresh($request, $url, dolidelay('thirdparty'), $thirdparty);
@@ -288,168 +288,61 @@ add_action( 'user_doliconnect_menu', 'contacts_menu', 3, 1);
 function contacts_module($url){
 global $current_user;
 
+if ( isset($_GET['id']) && $_GET['id'] > 0 ) {  
+
+$request = "/contacts/".esc_attr($_GET['id'])."?includecount=1";
+$contactfo = callDoliApi("GET", $request, null, dolidelay('contact', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+//print $contractfo;
+}
+
+if ( !isset($contactfo->error) && isset($_GET['id']) && isset($_GET['id']) && isset($_GET['ref']) && (doliconnector($current_user, 'fk_soc') == $contactfo->socid) && ($_GET['ref'] == $contactfo->ref) && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doli-contacts-'.$contactfo->id.'-'.$contactfo->ref)) {
+
+print "<form action='".$url."' id='doliconnect-infosform' method='post' class='was-validated' enctype='multipart/form-data'><input type='hidden' name='case' value='updateuser'>";
+
+print doliloaderscript('doliconnect-infosform');
+
+print "<div class='card shadow-sm'>";
+
+print doliuserform( $contactfo, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'contact');
+
+print "<div class='card-body'><button class='btn btn-danger btn-block' type='submit'>".__( 'Update', 'doliconnect')."</button></div>";
+print '<div class="card-footer text-muted">';
+print "<small><div class='float-left'>";
+if ( isset($request) ) print dolirefresh($request, $url, dolidelay('contact'), $contactfo);
+print "</div><div class='float-right'>";
+print dolihelp('ISSUE');
+print "</div></small>";
+print '</div></div></form>';
+
+} else {
+
 $limit=8;
-$request = "/contacts?sortfield=t.rowid&sortorder=ASC&limit=".$limit."&thirdparty_ids=".doliconnector($current_user, 'fk_soc')."&includecount=1&sqlfilters=t.statut=1";
-
-if ( isset ($_POST['add_contact']) && $_POST['add_contact'] == 'new_contact' ) {
-$contactv=$_POST['contact'][''.doliconnector($current_user, 'fk_soc').''];
-$data = [
-    'civility_id'  => $contactv['civility_id'],     
-    'firstname' => ucfirst(sanitize_user(strtolower($contactv['firstname']))),
-    'lastname' => strtoupper(sanitize_user($contactv['lastname'])),
-    'socid' => doliconnector($current_user, 'fk_soc'),
-    'poste' => sanitize_textarea_field($contactv['poste']), 
-    'address' => sanitize_textarea_field($contactv['address']),    
-    'zip' => sanitize_text_field($contactv['zip']),
-    'town' => sanitize_text_field($contactv['town']),
-    'country_id' => sanitize_text_field($contactv['country_id']),
-    'email' => sanitize_email($contactv['email']),
-    'birthday' => $contactv['birth'],
-    'phone_pro' => sanitize_text_field($contactv['phone'])
-	];
-$contactv = callDoliApi("POST", "/contacts", $data, 0);
-$listcontact = callDoliApi("GET", $request, null, dolidelay('contact', true));
-if ( $contactv > 0 ) {
-print dolialert ('success', __( 'Your informations have been updated.', 'doliconnect'));
-}
-} elseif ( isset ($_POST['delete_contact']) && $_POST['delete_contact'] > 0 ) {
-$contactv = callDoliApi("GET", "/contacts/".$_POST['delete_contact'], null, 0);
-if ( $contactv->socid == doliconnector($current_user, 'fk_soc') ) {
-// try deleting
-$delete = callDoliApi("DELETE", "/contacts/".$contactv->id, null, 0);
-
-print dolialert ('success', __( 'Your informations have been updated.', 'doliconnect'));
-
-} else {
-// fail deleting
-}
-$listcontact = callDoliApi("GET", $request, null, dolidelay('contact', true));
-} elseif ( isset ($_POST['update_contact']) && $_POST['update_contact'] > 0 ) {
-$contactv=$_POST['contact'][''.$_POST['update_contact'].''];
-$data = [
-    'civility_id'  => $contactv['civility_id'],     
-    'firstname' => ucfirst(sanitize_user(strtolower($contactv['firstname']))),
-    'lastname' => strtoupper(sanitize_user($contactv['lastname'])),
-    'socid' => doliconnector($current_user, 'fk_soc'),
-    'poste' => sanitize_textarea_field($contactv['poste']), 
-    'address' => sanitize_textarea_field($contactv['address']),    
-    'zip' => sanitize_text_field($contactv['zip']),
-    'town' => sanitize_text_field($contactv['town']),
-    'country_id' => sanitize_text_field($contactv['country_id']),
-    'email' => sanitize_email($contactv['email']),
-    'birthday' => $contactv['birth'],
-    'phone_pro' => sanitize_text_field($contactv['phone'])
-	];
-$contactv = callDoliApi("PUT", "/contacts/".$_POST['update_contact'], $data, 0);
-if ( $contactv->socid == doliconnector($current_user, 'fk_soc') ) {
-// try deleting
-print dolialert ('success', __( 'Your informations have been updated.', 'doliconnect'));
-} else {
-// fail deleting
-}
-$listcontact = callDoliApi("GET", $request, null, dolidelay('contact', true));
-} else {
-
+if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']-1); }  else { $page = 0; }
+$request = "/contacts?sortfield=t.rowid&sortorder=DESC&limit=".$limit."&page=".$page."&thirdparty_ids=".doliconnector($current_user, 'fk_soc')."";                               
 $listcontact = callDoliApi("GET", $request, null, dolidelay('contact', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
-}
-
-if ( doliconnector($current_user, 'fk_soc') > 0 ) {
-$thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
-}
-
-if (empty($listcontact) || isset($listcontact->error)) {
-$countContact = 0;
-} else {
-$countContact = count($listcontact);
-}
-
-print "<div id='DoliContactAlert' class='text-danger font-weight-bolder'></div>";
-
-if ( !isset($listcontact->error) && $listcontact != null && 7 == 6 ) {
-foreach ( $listcontact as $contact ) { 
-print '<div class="tab-pane fade" id="nav-tab-contact-'.$contact->id.'lll"><div class="card bg-light" style="border:0"><div class="card-body">';
-print doliaddress($contact);
-print "<script>";
-print "(function ($) {
-$(document).ready(function(){
-$('#deletebtn_".$contact->id."').on('click',function(event){
-event.preventDefault();
-$('#DoliconnectLoadingModal').modal('show');
-var actionvalue = $(this).val();
-        $.ajax({
-          url: '".esc_url( admin_url( 'admin-ajax.php' ) )."',
-          type: 'POST',
-          data: {
-            'action': 'dolicontact_request',
-            'dolipaymentmethod-nonce': '".wp_create_nonce( 'dolicontact-nonce')."',
-            'contact': '".$contact->id."',
-            'action_payment_method': actionvalue
-          }
-        }).done(function(response) {
-$(window).scrollTop(0); 
-console.log(actionvalue);
-      if (response.success) {
-if (actionvalue == 'delete_payment_method')  {
-document.getElementById('li-".$method->id."').remove();
-document.getElementById('nav-tab-".$contact->id."').remove();
-} else {
-document.location = '".$url."';
-}
-if (document.getElementById('DoliContactAlert')) {
-document.getElementById('DoliContactAlert').innerHTML = response.data;      
-}
-console.log(response.data);
-}
-$('#DoliconnectLoadingModal').modal('hide');
-        });
-});
-});
-})(jQuery);";
-print "</script>";
-print "</div></div><br><div class='btn-group btn-block' role='group' aria-label='actions buttons'>";
-
-print "<button type='button' id='editbtn_".$contact->id."' name='edit_contact' value='edit_contact' class='btn btn-light'";
-print "title='".__( 'Favourite', 'doliconnect')."'><i class='fas fa-edit fa-fw' style='color:Blue'></i> ".__( "Edit", 'doliconnect')."</button>";
-
-
-print "<button type='button' id='deletebtn_".$contact->id."' name='delete_contact' value='delete_contact' class='btn btn-light'";
-print "title='".__( 'Delete', 'doliconnect')."'><i class='fas fa-trash fa-fw' style='color:Red'></i> ".__( 'Delete', 'doliconnect').'</button>';
-
-print "</div></div>";
-}}  
-
-print "<div class='card shadow-sm'><div class='tab-content' id='nav-tabContent'>";                             
-print "<div class='tab-pane fade show active' id='list-home' role='tabpanel' aria-labelledby='list-home-list'><div class='card-body'><h5 class='card-title'>".__( 'Manage address book', 'doliconnect')."</h5></div>";
-print '<ul class="list-group list-group-flush" id="list-tab" role="tablist">';
-if ( !isset($listcontact->error) && $listcontact != null ) {
-foreach ( $listcontact as $contact ) { 
-print "<a class='list-group-item list-group-item-action' data-toggle='list' id='tab-contact-".$contact->id."-list' href='#tab-contact-".$contact->id."' role='tab' aria-controls='contact-".$contact->id."'>
-".$contact->firstname." ".$contact->lastname."</a>";
-}}
-
-if ( $countContact < $limit ) {
-print "<a class='list-group-item list-group-item-action' data-toggle='list' id='tab-contact-new-list' href='#tab-contact-new' role='tab' aria-controls='contact-new'>
-".__( 'Add contact', 'doliconnect')."</a>";
-}
-
-print "</ul></div>";
+print '<div class="card shadow-sm"><ul class="list-group list-group-flush">';
 
 if ( !isset($listcontact->error) && $listcontact != null ) {
-foreach ( $listcontact as $contact ) { 
-print '<div class="tab-pane fade" id="tab-contact-'.$contact->id.'" role="tabpanel" aria-labelledby="tab-contact-'.$contact->id.'-list">';
-print '<div class="card-body"><h5 class="card-title">'.__( 'Update contact', 'doliconnect').'<a class="float-right" onclick="ChangeTab(\'#tab-contact-'.$contact->id.'\');" href="#"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></h5></div>';
-print doliuserform($contact, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'contact');
-print "<div class='card-body'><button class='btn btn-danger btn-block' type='submit'>".__( 'Update', 'doliconnect')."</button></div>";
-print "</div>";
-}}
+foreach ($listcontact  as $postcontact) { 
+                                                                                
+$nonce = wp_create_nonce( 'doli-contacts-'. $postcontact->id.'-'.$postcontact->ref);
+$arr_params = array( 'id' => $postcontact->id, 'ref' => $postcontact->ref, 'security' => $nonce);  
+$return = esc_url( add_query_arg( $arr_params, $url) );
+                                                                                                                                                      
+print "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'><div><i class='fa fa-address-card fa-3x fa-fw'></i></div><div><h6 class='my-0'>".$postcontact->firstname." ".$postcontact->lastname."</h6><small class='text-muted'>".$postcontact->poste."</small></div><span></span><span>";
+if ( $postcontact->statut > 0 ) { print "<span class='fas fa-check-circle fa-fw text-success'></span> ";
+}
+elseif ( $postcontact->statut == 0 ) { print "<span class='fas fa-check-circle fa-fw text-warning'></span> <span class='fas fa-money-bill-alt fa-fw text-danger'></span> <span class='fas fa-shipping-fast fa-fw text-danger'></span>";}
+elseif ( $postcontact->statut == -1 ) {print "<span class='fas fa-check-circle fa-fw text-secondary'></span> <span class='fas fa-money-bill-alt fa-fw text-secondary'></span> <span class='fas fa-shipping-fast fa-fw text-secondary'></span>";}
+print "</span></a>";
+}
+} else {
+print "<li class='list-group-item list-group-item-light'><center>".__( 'No contact', 'doliconnect')."</center></li>";
+}
 
-print '<div class="tab-pane fade" id="tab-contact-new" role="tabpanel" aria-labelledby="tab-contact-new-list">';
-print '<div class="card-body"><h5 class="card-title">'.__( 'Add contact', 'doliconnect').'<a class="float-right" onclick="ChangeTab(\'#tab-contact-new\');" href="#"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></h5></div>';
-print doliuserform($thirdparty, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'contact');
-print "<div class='card-body'><button class='btn btn-danger btn-block' type='submit'>".__( 'Create', 'doliconnect')."</button></div>";
-print "</div>";
-
+print "</ul><div class='card-body'>";
+print dolipage($listcontact, $url, $page, $limit);
 print "</div><div class='card-footer text-muted'>";
 print "<small><div class='float-left'>";
 if ( isset($request) ) print dolirefresh($request, $url, dolidelay('contact'));
@@ -458,18 +351,7 @@ print dolihelp('ISSUE');
 print "</div></small>";
 print "</div></div>";
 
-print '<script>
-function ChangeTab(old){
-jQuery( old ).removeClass("show active");
-jQuery( old + "-list").removeClass("active");
-jQuery("#list-home").addClass("show active");
 }
-</script>';
-
-//print "<div id='content_div'></div><script>";
-//print '$("#content_div").load("'.plugins_url('functions/dashboard.php?module=contacts', dirname(__FILE__) ).'");';
-//print "</script>";
-
 }
 add_action( 'user_doliconnect_contacts', 'contacts_module');
 

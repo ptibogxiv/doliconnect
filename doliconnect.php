@@ -168,7 +168,6 @@ add_filter( 'rest_authentication_errors', 'json_basic_auth_error' );
 // ********************************************************
 add_action( 'admin_init', 'callDoliApi', 5, 5); 
 function callDoliApi($method = null, $link = null, $body = null, $delay = HOUR_IN_SECONDS, $entity = null) {
-global $wpdb;
 //echo $link;
 $headers = array(
         'DOLAPIENTITY' => dolibarr_entity($entity),
@@ -211,7 +210,7 @@ delete_transient( $link );
 if (! in_array($http_code,array('200', '400', '404')) ) {
 
 if ( !defined("DOLIBUG") ) {
-define('DOLIBUG', $http_code, $link);
+define('DOLIBUG', $http_code);
 }
 
 } elseif ( $delay != 0 ) {
