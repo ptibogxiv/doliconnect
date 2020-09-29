@@ -605,7 +605,7 @@ $state = callDoliApi("GET", "/setup/dictionary/states/".$product->state_id."?lan
 $list .= " - ".$state->name; } 
 $list .= "</small>"; }
 if( has_filter('mydoliconnectproductdesc') ) {
-$list .= apply_filters('mydoliconnectproductdesc', $product);
+$list .= apply_filters('mydoliconnectproductdesc', $product, 'list');
 }
 $arr_params = array( 'category' => isset($_GET['category'])?$_GET['category']:null, 'subcategory' => isset($_GET['subcategory'])?$_GET['subcategory']:null, 'product' => $product->id);  
 $return = esc_url( add_query_arg( $arr_params, doliconnecturl('dolishop')) );
@@ -680,7 +680,7 @@ $card .= "<div class='col-12'><p><center>".__( 'Item not in sale', 'doliconnect'
 } 
 
 if( has_filter('mydoliconnectproductcard') ) {
-$card .= apply_filters('mydoliconnectproductcard', $product);
+$card .= apply_filters('mydoliconnectproductcard', $product, 'card');
 }
 
 $card .= "</div>";
