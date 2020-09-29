@@ -604,7 +604,9 @@ if ( isset($product->state_id) && !empty($product->state_id) ) {
 $state = callDoliApi("GET", "/setup/dictionary/states/".$product->state_id."?lang=".$lang, null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))); 
 $list .= " - ".$state->name; } 
 $list .= "</small>"; }
-
+if( has_filter('mydoliconnectproductdesc') ) {
+$list .= apply_filters('mydoliconnectproductdesc', $product);
+}
 $arr_params = array( 'category' => isset($_GET['category'])?$_GET['category']:null, 'subcategory' => isset($_GET['subcategory'])?$_GET['subcategory']:null, 'product' => $product->id);  
 $return = esc_url( add_query_arg( $arr_params, doliconnecturl('dolishop')) );
 $list .= "<a href='".$return."' class='btn btn-link btn-block'>En savoir plus</a>";
@@ -664,6 +666,9 @@ if ( isset($product->state_id) && !empty($product->state_id) ) {
 $state = callDoliApi("GET", "/setup/dictionary/states/".$product->state_id."?lang=".$lang, null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))); 
 $card .= " - ".$state->name; } 
 $card .= " <span class='flag-icon flag-icon-".strtolower($product->country_code)."'></span></small>"; }
+if( has_filter('mydoliconnectproductdesc') ) {
+$card .= apply_filters('mydoliconnectproductdesc', $product);
+}
 if ( ! empty(doliconnectid('dolicart')) ) { 
 $card .= "<br><br><div class='jumbotron'>";
 $card .= doliconnect_addtocart($product, 0, 0, isset($attributes['hideButtonToCart']) ? $attributes['hideButtonToCart'] : 0, isset($attributes['hideDuration']) ? $attributes['hideDuration'] : 0);
