@@ -479,15 +479,15 @@ function doliconnect_plugin_desactivation($network_wide){
 }
 // ********************************************************
 // outils de personnalisation et utilisation du module
-function my_login_logo_url() {
+function doliconnect_login_logo_url() {
 return get_bloginfo( 'url' );
 }
-add_filter( 'login_headerurl', 'my_login_logo_url' );
+add_filter( 'login_headerurl', 'doliconnect_login_logo_url' );
 
-function my_login_logo_url_title() {
+function doliconnect_login_logo_url_title() {
 return 'nom du site';
 }
-add_filter( 'login_headertext', 'my_login_logo_url_title' );
+add_filter( 'login_headertext', 'doliconnect_login_logo_url_title' );
 
 // Hide Author EVERYWHERE
 add_filter( 'generate_post_author','generate_modify_author_display' );
@@ -498,36 +498,36 @@ function generate_modify_author_display()
 return false;
 }
 
-function my_register_page( $register_url ) {
+function doliconnect_register_page( $register_url ) {
 return esc_url( add_query_arg( 'action', 'signup', doliconnecturl('doliaccount')) ); 
 }
-add_filter( 'register_url', 'my_register_page' );
+add_filter( 'register_url', 'doliconnect_register_page' );
 
-function my_lost_password_page( $lostpassword_url ) {
+function doliconnect_lost_password_page( $lostpassword_url ) {
 return esc_url( add_query_arg( 'action', 'fpw', doliconnecturl('doliaccount')) ); 
 }
 if (get_option('doliaccount')) {
-add_filter( 'lostpassword_url', 'my_lost_password_page', 10, 2 );}
+add_filter( 'lostpassword_url', 'doliconnect_lost_password_page', 10, 2 );}
 
-function login_link_url( $url ) {
+function doliconnect_login_link_url( $url ) {
 if (get_option('doliaccount')) {
 return doliconnecturl('doliaccount'); }
 }
 if (get_option('doliaccount')) {
-add_filter( 'login_url', 'login_link_url', 10, 2 ); }
+add_filter( 'login_url', 'doliconnect_login_link_url', 10, 2 ); }
 
-add_filter('asgarosforum_filter_profile_link', 'my_profile_url', 10, 2);
-function my_profile_url($profile_url, $user_object) {
+add_filter('asgarosforum_filter_profile_link', 'doliconnect_profile_url', 10, 2);
+function doliconnect_profile_url($profile_url, $user_object) {
 return doliconnecturl('doliaccount');
 }
 
-function account_login_fail( $username ) {
+function doliconnect_account_login_fail( $username ) {
 $referrer = $_SERVER['HTTP_REFERER'];  
 if ( !empty($referrer) && !strstr($referrer,'wp-login') && !strstr($referrer,'wp-admin') ) {
 wp_redirect( esc_url( add_query_arg( 'login', 'failed', doliconnecturl('doliaccount')) ) );
 exit;}
 }
-add_action( 'wp_login_failed', 'account_login_fail' );  // hook failed login
+add_action( 'wp_login_failed', 'doliconnect_account_login_fail' );  // hook failed login
 
 function passresetmodif_login ($url, $redirect) { 
 if (get_site_option('doliconnect_login')) {
