@@ -40,7 +40,7 @@ WordPress configuration steps:
 
 = Dolibarr compatibility =
 
-Doliconnect v4.x -> Dolibarr 11.x
+Doliconnect v4.x -> Dolibarr >11.x
 Doliconnect v3.x -> Dolibarr 10.x
 
 = REST API compatibility =
