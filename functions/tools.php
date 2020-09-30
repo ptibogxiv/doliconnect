@@ -1036,7 +1036,16 @@ $doliline .= "<button type='button' class='btn btn-danger' id='deleteorderproduc
 $doliline .= "</div>";
 }
 //} else {
-if ( $realstock-$line->qty >= 0 && (empty($product->type) || (!empty($product->type) && doliconst('STOCK_SUPPORTS_SERVICES', $refresh)) ) ) {
+if (empty($product->type) && !empty(doliconst('STOCK_ALLOW_NEGATIVE_TRANSFER', $refresh)) && empty(doliconst('STOCK_MUST_BE_ENOUGH_FOR_ORDER', $refresh))) {
+if (isset($product->array_options->options_packaging) && !empty($product->array_options->options_packaging)) {
+$m0 = 1*$product->array_options->options_packaging;
+$m1 = get_option('dolicartlist')*$product->array_options->options_packaging;
+} else {
+$m0 = 1;
+$m1 = get_option('dolicartlist');
+}
+$m2 = $m1; 
+} elseif ( $realstock-$line->qty >= 0 && (empty($product->type) || (!empty($product->type) && doliconst('STOCK_SUPPORTS_SERVICES', $refresh)) ) ) {
 if (isset($product->array_options->options_packaging) && !empty($product->array_options->options_packaging)) {
 $m0 = 1*$product->array_options->options_packaging;
 $m1 = get_option('dolicartlist')*$product->array_options->options_packaging;
