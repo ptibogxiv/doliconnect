@@ -28,7 +28,7 @@ wp_update_user( array( 'ID' => $ID,
 'description' => $thirdparty['note_public'],
 'user_url' => $thirdparty['url'],
 'display_name' => $thirdparty['name']));
-update_user_meta( $ID, 'civility_id', sanitize_text_field($thirdparty['civility_id']));
+update_user_meta( $ID, 'civility_code', sanitize_text_field($thirdparty['civility_code']));
 update_user_meta( $ID, 'billing_type', sanitize_text_field($thirdparty['morphy']));
 if ( $thirdparty['morphy'] == 'mor' ) { update_user_meta( $ID, 'billing_company', $thirdparty['name']); }
 update_user_meta( $ID, 'billing_birth', $thirdparty['birth']);
@@ -288,6 +288,11 @@ add_action( 'user_doliconnect_menu', 'contacts_menu', 3, 1);
 function contacts_module($url){
 global $current_user;
 
+$limit=8;
+if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']-1); }  else { $page = 0; }
+
+$requestlist = "/contacts?sortfield=t.rowid&sortorder=DESC&limit=".$limit."&page=".$page."&thirdparty_ids=".doliconnector($current_user, 'fk_soc');    
+
 if ( isset($_POST["case"]) && $_POST["case"] == 'updatecontact' && isset($_POST["contactid"]) && !empty($_POST["contactid"])) {
  
 $contact = $_POST['contact'][''.$_POST['contactid'].''];
@@ -298,6 +303,7 @@ if ( isset($_GET['return']) ) {
 wp_redirect(doliconnecturl('doliaccount').'?module='.$_GET['return']);
 exit;
 } else {
+$listcontact = callDoliApi("GET", $requestlist, null, dolidelay('contact', true));
 print dolialert ('success', __( 'Your informations have been updated.', 'doliconnect'));
 }
 }
@@ -329,11 +335,8 @@ print "</div></small>";
 print '</div></div></form>';
 
 } else {
-
-$limit=8;
-if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']-1); }  else { $page = 0; }
-$request = "/contacts?sortfield=t.rowid&sortorder=DESC&limit=".$limit."&page=".$page."&thirdparty_ids=".doliconnector($current_user, 'fk_soc')."";                               
-$listcontact = callDoliApi("GET", $request, null, dolidelay('contact', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+                           
+$listcontact = callDoliApi("GET", $requestlist, null, dolidelay('contact', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 print '<div class="card shadow-sm"><ul class="list-group list-group-flush">';
 
@@ -356,7 +359,7 @@ print "</ul><div class='card-body'>";
 print dolipage($listcontact, $url, $page, $limit);
 print "</div><div class='card-footer text-muted'>";
 print "<small><div class='float-left'>";
-if ( isset($request) ) print dolirefresh($request, $url, dolidelay('contact'));
+if ( isset($requestlist) ) print dolirefresh($requestlist, $url, dolidelay('contact'));
 print "</div><div class='float-right'>";
 print dolihelp('ISSUE');
 print "</div></small>";

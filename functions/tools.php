@@ -444,7 +444,7 @@ $civility = callDoliApi("GET", "/setup/dictionary/civilities?sortfield=code&sort
 } else {
 $civility = callDoliApi("GET", "/setup/dictionary/civility?sortfield=code&sortorder=ASC&limit=100", null, $delay);
 }
-print "<select class='custom-select' id='".$idobject."[civility_id]'  name='".$idobject."[civility_id]' required>";
+print "<select class='custom-select' id='".$idobject."[civility_code]'  name='".$idobject."[civility_code]' required>";
 print "<option value='' disabled ";
 if ( empty($object->civility_code) ) {
 print "selected ";}
@@ -453,17 +453,17 @@ if ( !isset($civility->error ) && $civility != null ) {
 foreach ( $civility as $postv ) {
 
 print "<option value='".$postv->code."' ";
-if ( (isset($object->civility_id) ? $object->civility_id : $current_user->civility_id) == $postv->code && (isset($object->civility_id) ? $object->civility_id : $current_user->civility_id) != null) {
+if ( (isset($object->civility_code) ? $object->civility_code : $current_user->civility_code) == $postv->code && (isset($object->civility_code) ? $object->civility_code : $current_user->civility_code) != null) {
 print "selected "; }
 print ">".$postv->label."</option>";
 
 }} else {
 print "<option value='MME' ";
-if ( $current_user->civility_id == 'MME' && $object->civility_id != null) {
+if ( $current_user->civility_code == 'MME' && $object->civility_code != null) {
 print "selected ";}
 print ">".__( 'Miss', 'doliconnect')."</option>";
 print  "<option value='MR' ";
-if ( $current_user->civility_id == 'MR' && $object->civility_id != null) {
+if ( $current_user->civility_code == 'MR' && $object->civility_code != null) {
 print "selected ";}
 print ">".__( 'Mister', 'doliconnect')."</option>";
 }
