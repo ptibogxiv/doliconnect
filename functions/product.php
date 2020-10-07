@@ -151,6 +151,11 @@ if (! isset($line)) { $line = null; }
 
 $prdt = callDoliApi("GET", "/products/".$productid."?includestockdata=1&includesubproducts=true", null, dolidelay('product', true));
 
+if (empty($prdt->status)) {
+return -1;
+exit;
+}
+
 $warehouse = doliconst('DOLICONNECT_ID_WAREHOUSE');
 if (isset($prdt->stock_warehouse) && !empty($prdt->stock_warehouse) && !empty($warehouse)) {
 if ( isset($prdt->stock_warehouse->$warehouse) ) {
