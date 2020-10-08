@@ -151,11 +151,6 @@ if (! isset($line)) { $line = null; }
 
 $prdt = callDoliApi("GET", "/products/".$productid."?includestockdata=1&includesubproducts=true", null, dolidelay('product', true));
 
-if (empty($prdt->status)) {
-return -1;
-exit;
-}
-
 $warehouse = doliconst('DOLICONNECT_ID_WAREHOUSE');
 if (isset($prdt->stock_warehouse) && !empty($prdt->stock_warehouse) && !empty($warehouse)) {
 if ( isset($prdt->stock_warehouse->$warehouse) ) {
@@ -167,7 +162,11 @@ $realstock = 0;
 $realstock = $prdt->stock_reel;
 }
 
-if ( doliconnector($current_user, 'fk_order') > 0 && $quantity > 0 && empty($line) && (empty(doliconst('MAIN_MODULE_STOCK')) || $realstock >= $quantity || (is_null($line) && empty(doliconst('STOCK_SUPPORTS_SERVICES')) ))) {
+if (empty($prdt->status)) {
+
+return -1;
+
+} elseif ( doliconnector($current_user, 'fk_order') > 0 && $quantity > 0 && empty($line) && (empty(doliconst('MAIN_MODULE_STOCK')) || $realstock >= $quantity || (is_null($line) && empty(doliconst('STOCK_SUPPORTS_SERVICES')) ))) {
                                                                                      
 $adln = [
     'fk_product' => $prdt->id,
