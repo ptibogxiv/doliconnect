@@ -307,7 +307,8 @@ if ( $product->duration_unit == 'i' ) {
 $altdurvalue=60/$product->duration_value; 
 }
 }
- $discount = !empty(doliconnector($current_user, 'remise_percent'))?doliconnector($current_user, 'remise_percent'):'0';
+
+$discount = !empty(doliconnector($current_user, 'remise_percent'))?doliconnector($current_user, 'remise_percent'):'0';
 
 if ( !empty(doliconst("PRODUIT_MULTIPRICES", $refresh)) && !empty($product->multiprices_ttc) ) {
 $lvl=doliconnector($current_user, 'price_level');
