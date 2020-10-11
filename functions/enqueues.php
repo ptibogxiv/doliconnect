@@ -26,8 +26,10 @@ $version='4.5.2';
 	wp_enqueue_style( 'bootstrap.min.css');
 	wp_register_script( 'bootstrap.bundle.min.js', plugins_url( 'doliconnect/includes/bootstrap/js/bootstrap.bundle.min.js'), array('jquery'), $version, true);
   wp_enqueue_script( 'bootstrap.bundle.min.js');
+  if (empty(get_option('doliconnectfontawesome'))) {
   wp_register_script( 'font-awesome', '//use.fontawesome.com/releases/v5.15.1/js/all.js', array(), '5.15.1' );
 	wp_enqueue_script( 'font-awesome');
+  }
   wp_register_style( 'bootstrap-social', plugins_url( 'doliconnect/includes/bootstrap/css/bootstrap-social.css'), array(), $version);
 	wp_enqueue_style( 'bootstrap-social');
   wp_register_style( 'flag-icon-css', plugins_url( 'doliconnect/includes/flag-icon-css/css/flag-icon.css'), array(), '3.4.5'); 
