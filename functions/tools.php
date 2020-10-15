@@ -942,12 +942,8 @@ if ( isset($object) && is_object($object) && isset($object->lines) && $object->l
 foreach ( $object->lines as $line ) { 
 
 if ( $line->fk_product > 0 ) {
-$includestock = 0;
-if ( ! empty(doliconnectid('dolicart')) ) {
-$includestock = 1;
-}
 if ($refresh || $refreshstock) $refreshstock = true;
-$product = callDoliApi("GET", "/products/".$line->fk_product."?includestockdata=".$includestock."&includesubproducts=true", null, dolidelay('cart', $refreshstock));
+$product = callDoliApi("GET", "/products/".$line->fk_product."?includestockdata=1&includesubproducts=true", null, dolidelay('cart', $refreshstock));
 }
 
 $warehouse = doliconst('DOLICONNECT_ID_WAREHOUSE', $refresh);
