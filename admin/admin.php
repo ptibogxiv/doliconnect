@@ -571,11 +571,11 @@ if (is_plugin_active( 'doliconnect-classifieds/doliconnect-classifieds.php' ) ) 
             Key<input class="regular-text" type="text" id="doliconnect_google_key" name="doliconnect_google_key" value="<?php echo get_option('doliconnect_google_key'); ?>"><br> 
             Secret<input class="regular-text" type="text" id="doliconnect_google_secret" name="doliconnect_google_secret"  value="<?php echo get_option('doliconnect_google_secret'); ?>"><br>  
 
-            <input name="doliconnect_twitter" type="checkbox" id="doliconnect_twitter" value="1" <?php checked('1', get_option('doliconnect_twitter')); ?> /> Google<br>      
+            <input name="doliconnect_twitter" type="checkbox" id="doliconnect_twitter" value="1" <?php checked('1', get_option('doliconnect_twitter')); ?> /> Twitter<br>      
             Key<input class="regular-text" type="text" id="doliconnect_twitter_key" name="doliconnect_twitter_key" value="<?php echo get_option('doliconnect_twitter_key'); ?>"><br> 
             Secret<input class="regular-text" type="text" id="doliconnect_twitter_secret" name="doliconnect_twitter_secret"  value="<?php echo get_option('doliconnect_twitter_secret'); ?>"><br>  
            
-            <input name="doliconnect_linkedin" type="checkbox" id="doliconnect_linkedin" value="1" <?php checked('1', get_option('doliconnect_linkedin')); ?> /> Google<br>      
+            <input name="doliconnect_linkedin" type="checkbox" id="doliconnect_linkedin" value="1" <?php checked('1', get_option('doliconnect_linkedin')); ?> /> LinkedIn<br>      
             Key<input class="regular-text" type="text" id="doliconnect_linkedin_key" name="doliconnect_linkedin_key" value="<?php echo get_option('doliconnect_linkedin_key'); ?>"><br> 
             Secret<input class="regular-text" type="text" id="doliconnect_linkedin_secret" name="doliconnect_linkedin_secret"  value="<?php echo get_option('doliconnect_linkedin_secret'); ?>"><br>  
                      
