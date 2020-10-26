@@ -24,7 +24,7 @@ $content .= apply_filters( 'doliproductlist', $product);
  
 }
 } else {
-$content .= "<center>".__( 'No new item', 'doliconnect' )."</center>";
+$content .= "<li class='list-group-item'><center><center>".__( 'No new item', 'doliconnect' )."</center></li>";
 }
 $content .= '</ul><div class="card-body"></div>';
 $content .= "<div class='card-footer text-muted'>";
