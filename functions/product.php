@@ -521,7 +521,7 @@ $button .= "<button class='btn btn-sm  btn-light btn-outline-secondary' type='su
 }
 }
 $button .= "<button class='btn btn-sm btn-warning' type='submit' name='cartaction' value='addtocart' title='".esc_html__( 'Add to cart', 'doliconnect')."' ";
-if ( ( empty($product->stock_reel) || $m2 < $step) && $product->type == '0' && !empty(doliconst('MAIN_MODULE_STOCK', $refresh)) ) { $button .= " disabled"; }
+if ( ( $realstock <= 0 || $m2 < $step) && $product->type == '0' && !empty(doliconst('MAIN_MODULE_STOCK', $refresh)) ) { $button .= " disabled"; }
 $button .= "><i class='fas fa-cart-plus fa-fw'></i></button></div></div>";
 
 //if ( $qty > 0 ) {
