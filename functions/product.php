@@ -589,6 +589,8 @@ $wish = 0;
 if (!empty($product->qty)) {
 $wish = $product->qty;
 $product = callDoliApi("GET", "/products/".$product->fk_product."?includestockdata=1&includesubproducts=true", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+} else {
+$product = callDoliApi("GET", "/products/".$product->id."?includestockdata=1&includesubproducts=true", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 }
 
 $list = "<li class='list-group-item' id='prod-li-".$product->id."'><table width='100%' style='border:0px'><tr><td width='20%' style='border:0px'><center>";
