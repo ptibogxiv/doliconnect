@@ -150,14 +150,14 @@ if (! isset($line)) { $line = null; }
 $prdt = callDoliApi("GET", "/products/".$productid."?includestockdata=1&includesubproducts=true", null, dolidelay('product', true));
 
 $warehouse = doliconst('DOLICONNECT_ID_WAREHOUSE', $refresh);
-if (isset($product->stock_warehouse) && !empty($product->stock_warehouse) && !empty($warehouse)) {
-if (isset($product->stock_warehouse->$warehouse)) {
-$realstock = min(array($product->stock_reel,$product->stock_warehouse->$warehouse->real,$product->stock_theorique));
+if (isset($prdt->stock_warehouse) && !empty($prdt->stock_warehouse) && !empty($warehouse)) {
+if (isset($prdt->stock_warehouse->$warehouse)) {
+$realstock = min(array($prdt->stock_reel,$prdt->stock_warehouse->$warehouse->real,$prdt->stock_theorique));
 } else {
 $realstock = 0;
 }
 } else {
-$realstock = min(array($product->stock_theorique,$product->stock_reel));
+$realstock = min(array($prdt->stock_theorique,$prdt->stock_reel));
 }
 
 if (empty($prdt->status)) {
