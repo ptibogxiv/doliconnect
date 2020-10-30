@@ -1044,7 +1044,7 @@ print "</ul><div class='card-body'>";
 print dolipage($resultats, $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], 0, $limit);
 print "</div><div class='card-footer text-muted'>";
 print "<small><div class='float-left'>";
-if ( isset($request) ) print dolirefresh($request, get_permalink(), dolidelay('product'));
+if ( isset($request) ) print dolirefresh($request, get_permalink(), dolidelay('search'));
 print "</div><div class='float-right'>";
 print dolihelp('ISSUE');
 print "</div></small>";
