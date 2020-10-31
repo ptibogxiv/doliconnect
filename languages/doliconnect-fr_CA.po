@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2020-10-31 12:39+0100\n"
-"PO-Revision-Date: 2020-10-31 12:39+0100\n"
+"POT-Creation-Date: 2020-10-31 13:34+0100\n"
+"PO-Revision-Date: 2020-10-31 13:34+0100\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_CA\n"
@@ -50,7 +50,7 @@ msgstr "État Dolibarr"
 msgid "Personalize entity"
 msgstr "Personnaliser l’entité"
 
-#: admin/admin.php:209 admin/admin.php:544
+#: admin/admin.php:209 admin/admin.php:552
 msgid "Cronjobs"
 msgstr "Cronjobs"
 
@@ -58,39 +58,39 @@ msgstr "Cronjobs"
 msgid "By blog"
 msgstr "Par blog"
 
-#: admin/admin.php:212 admin/admin.php:547
+#: admin/admin.php:212 admin/admin.php:555
 msgid "Soft refresh"
 msgstr "Actualisation douce"
 
-#: admin/admin.php:213 admin/admin.php:548
+#: admin/admin.php:213 admin/admin.php:556
 msgid "Full refresh"
 msgstr "Actualisation complète"
 
-#: admin/admin.php:318
+#: admin/admin.php:322
 msgid "Modal login"
 msgstr "Connexion modale"
 
-#: admin/admin.php:324
+#: admin/admin.php:328
 msgid "Beta mode"
 msgstr "Mode bêta"
 
-#: admin/admin.php:325
+#: admin/admin.php:329
 msgid "Active beta functions, can be unstable"
 msgstr "Fonctions bêta actives, peut être instable"
 
-#: admin/admin.php:328
+#: admin/admin.php:332
 msgid "Disable enqueuing Font-awesome library"
 msgstr "Désactiver la bibliothèque Font-awesome"
 
-#: admin/admin.php:329
+#: admin/admin.php:333
 msgid "Disable if your template already loads it"
 msgstr "Désactiver si votre thème le charge déjà"
 
-#: admin/admin.php:332
+#: admin/admin.php:336
 msgid "Restricted mode"
 msgstr "Mode restreint"
 
-#: admin/admin.php:334
+#: admin/admin.php:338
 msgid ""
 "Roles to be assigned for existing users. If none, the connection will not be "
 "allowed."
@@ -98,93 +98,97 @@ msgstr ""
 "Rôles à attribuer aux utilisateurs existants. Si aucun, la connexion ne sera "
 "pas autorisée."
 
-#: admin/admin.php:336 admin/admin.php:474
+#: admin/admin.php:340 admin/admin.php:482
 msgid "None"
 msgstr "Aucun"
 
-#: admin/admin.php:354
+#: admin/admin.php:358
 msgid "Dolibarr's entity"
 msgstr "Entité de Dolibarr"
 
-#: admin/admin.php:376
+#: admin/admin.php:380
 msgid "Anyone can register"
 msgstr "N’importe qui peut s’inscrire"
 
-#: admin/admin.php:377
+#: admin/admin.php:381
 msgid "Existing Customer/Supplier on Dolibarr can register"
 msgstr "Le client/fournisseur existant sur Dolibarr peut s’inscrire"
 
-#: admin/admin.php:380
+#: admin/admin.php:384
 msgid "B2B mode"
 msgstr "Mode B2B"
 
-#: admin/admin.php:381
+#: admin/admin.php:385
 msgid "Display all prices excluding VAT"
 msgstr "Afficher tous les prix hors TVA"
 
-#: admin/admin.php:384
+#: admin/admin.php:388
+msgid "Enable displaying invoices in menu"
+msgstr "Activer l’affichage des factures dans le menu"
+
+#: admin/admin.php:392
 msgid "Personnal / Enterprise mode"
 msgstr "Mode Personne / Entreprise"
 
-#: admin/admin.php:393
+#: admin/admin.php:401
 msgid "Kiosk mode"
 msgstr "Mode Kiosque"
 
-#: admin/admin.php:394
+#: admin/admin.php:402
 msgid "IP address"
 msgstr "Adresse IP"
 
-#: admin/admin.php:394
+#: admin/admin.php:402
 msgid "one IP per line without space or comma"
 msgstr "une adresse IP par ligne sans espace ni virgule"
 
-#: admin/admin.php:401 admin/admin.php:415 admin/admin.php:427
-#: admin/admin.php:439 admin/admin.php:451 admin/admin.php:485
-#: admin/admin.php:500 admin/admin.php:511 admin/admin.php:524
-#: admin/admin.php:536 dashboard/dashboard.php:1990
+#: admin/admin.php:409 admin/admin.php:423 admin/admin.php:435
+#: admin/admin.php:447 admin/admin.php:459 admin/admin.php:493
+#: admin/admin.php:508 admin/admin.php:519 admin/admin.php:532
+#: admin/admin.php:544 dashboard/dashboard.php:1990
 #: dashboard/dashboard.php:2008 dashboard/dashboard.php:2027
 #: dashboard/dashboard.php:2048 dashboard/templates.php:798
 #: functions/tools.php:394 functions/tools.php:451 functions/tools.php:536
 msgid "- Select -"
 msgstr "- Sélectionner -"
 
-#: admin/admin.php:406
+#: admin/admin.php:414
 msgid "Message on login page"
 msgstr "Message sur la page de connexion"
 
-#: admin/admin.php:443
+#: admin/admin.php:451
 msgid "Display in grid rather than a list"
 msgstr "Afficher dans la grille plutôt qu’une liste"
 
-#: admin/admin.php:459 admin/admin.php:471
+#: admin/admin.php:467 admin/admin.php:479
 msgid "by default"
 msgstr "par défaut"
 
-#: admin/admin.php:468
+#: admin/admin.php:476
 msgid "choices of the amount of product"
 msgstr "choix de la quantité de produit"
 
-#: admin/admin.php:471
+#: admin/admin.php:479
 msgid "Last month"
 msgstr "Le mois dernier"
 
-#: admin/admin.php:472
+#: admin/admin.php:480
 msgid "Last week"
 msgstr "La semaine dernière"
 
-#: admin/admin.php:473
+#: admin/admin.php:481
 msgid "Last day"
 msgstr "Dernier jour"
 
-#: admin/admin.php:475
+#: admin/admin.php:483
 msgid "Duration of new product"
 msgstr "Durée du nouveau produit"
 
-#: admin/admin.php:515
+#: admin/admin.php:523
 msgid "(set your default wordpress legacy page)"
 msgstr "(définissez votre page d’héritage wordpress par défaut)"
 
-#: admin/admin.php:546
+#: admin/admin.php:554
 msgid "Disabled"
 msgstr "Désactivé"
 

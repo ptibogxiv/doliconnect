@@ -901,7 +901,7 @@ print "</div></div>";
 }
 }
 
-if ( !empty(doliconst('MAIN_MODULE_FACTURE')) ) {
+if ( !empty(doliconst('MAIN_MODULE_FACTURE')) && get_option('doliconnectdisplayinvoice') ) {
 add_action( 'customer_doliconnect_menu', 'invoices_menu', 2, 1);
 add_action( 'customer_doliconnect_invoices', 'invoices_module');
 }

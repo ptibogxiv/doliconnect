@@ -250,6 +250,10 @@ if (isset($_REQUEST['dolibarr_b2bmode']) && $_REQUEST['dolibarr_b2bmode']==1){
 update_option('dolibarr_b2bmode', sanitize_text_field($_REQUEST['dolibarr_b2bmode']));
 }else {
 delete_option('dolibarr_b2bmode');}
+if (isset($_REQUEST['doliconnectdisplayinvoice']) && $_REQUEST['doliconnectdisplayinvoice']==1){
+update_option('doliconnectdisplayinvoice', sanitize_text_field($_REQUEST['doliconnectdisplayinvoice']));
+}else {
+delete_option('doliconnectdisplayinvoice');}
 if (isset($_REQUEST['doliloginmodal']) && $_REQUEST['doliloginmodal']==1){
 update_option('doliloginmodal', sanitize_text_field($_REQUEST['doliloginmodal']));
 }else {
@@ -379,6 +383,10 @@ echo "<input id='dolibarr_entity'  name='dolibarr_entity' type='text' value='".(
             <tr>
                 <th style="width:150px;"><label for="dolibarr_register"><?php _e('B2B mode', 'doliconnect') ?></label></th>
                 <td ><input name="dolibarr_b2bmode" type="checkbox" id="dolibarr_b2bmode" value="1" <?php checked('1', get_option('dolibarr_b2bmode')); ?> /> <?php _e('Display all prices excluding VAT', 'doliconnect') ?></td>
+            </tr>
+            <tr>
+                <th style="width:150px;"><label for="doliconnectdisplayinvoice"><?php _e('Enable displaying invoices in menu', 'doliconnect') ?></label></th>
+                <td ><input name="doliconnectdisplayinvoice" type="checkbox" id="doliconnectdisplayinvoice" value="1" <?php checked('1', get_option('doliconnectdisplayinvoice')); ?> /></td>
             </tr>
             <tr>
                 <th style="width:150px;"><label for="doliconnect_disablepro"><?php _e('Personnal / Enterprise mode', 'doliconnect') ?></label></th>
