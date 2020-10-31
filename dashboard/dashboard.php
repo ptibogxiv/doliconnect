@@ -901,6 +901,279 @@ print "</div></div>";
 }
 }
 
+if ( !empty(doliconst('MAIN_MODULE_FACTURE')) ) {
+add_action( 'customer_doliconnect_menu', 'invoices_menu', 2, 1);
+add_action( 'customer_doliconnect_invoices', 'invoices_module');
+}
+
+function invoices_menu( $arg ) {
+print "<a href='".esc_url( add_query_arg( 'module', 'invoices', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
+if ( $arg == 'invoices' ) { print " active"; }
+print "'>".__( 'Invoices tracking', 'doliconnect')."</a>";
+}
+
+function invoices_module( $url ) {
+global $current_user;
+
+if ( isset($_GET['id']) && $_GET['id'] > 0 ) { 
+
+$request = "/invoices/".esc_attr($_GET['id'])."?contact_list=0";
+$invoicefo = callDoliApi("GET", $request, null, dolidelay('invoice', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+//print $orderfo;
+}
+
+if ( !isset($orderfo->error) && isset($_GET['id']) && isset($_GET['ref']) && (doliconnector($current_user, 'fk_soc') == $invoicefo->socid ) && ($_GET['ref'] == $invoicefo->ref) && $invoicefo->statut != 0 && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doli-invoices-'.$invoicefo->id.'-'.$invoicefo->ref)) {
+
+print "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>".__( 'order', 'doliconnect')." ".$invoicefo->ref."<a class='float-right' href='".esc_url( add_query_arg( 'module', 'orders', doliconnecturl('doliaccount')) )."'><i class='fas fa-arrow-left'></i> ".__( 'Back', 'doliconnect')."</a></h5><div class='row'><div class='col-md-6'>";
+print "<b>".__( 'date of invoice', 'doliconnect').":</b> ".wp_date('d/m/Y', $invoicefo->date_creation)."<br>";
+if ( $invoicefo->statut > 0 ) {
+if ( $invoicefo->paye == 1 ) {
+if ( $invoicefo->statut > 1 ) { $orderinfo=__( 'shipped', 'doliconnect'); 
+$orderavancement=100; }
+else { $orderinfo=__( 'processing', 'doliconnect');
+$orderavancement=40; }
+} else { $orderinfo=null;
+$orderinfo=null;
+$orderavancement=25;
+$orderinfo=__( 'validated', 'doliconnect');
+}
+}
+elseif ( $invoicefo->statut == 0 ) { $orderinfo=__( 'draft', 'doliconnect');
+$orderavancement=7; }
+elseif ( $invoicefo->statut == -1 ) { $orderinfo=__( 'canceled', 'doliconnect');
+$orderavancement=0;  }
+
+$mode_reglement = callDoliApi("GET", "/setup/dictionary/payment_types?sortfield=code&sortorder=ASC&limit=100&active=1&sqlfilters=(t.code%3A%3D%3A'".$invoicefo->mode_reglement_code."')", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+if (!empty($invoicefo->mode_reglement_id)) print "<b>".__( 'payment method', 'doliconnect').":</b> ".$mode_reglement[0]->label."<br>";
+if (!empty($invoicefo->cond_reglement_id)) print "<b>".__( 'payment term', 'doliconnect').":</b> ".dolipaymentterm($invoicefo->cond_reglement_id)."<br>";
+
+print "<br></div><div class='col-md-6'>";
+
+if ( isset($orderinfo) ) {
+print "<h3 class='text-right'>".$orderinfo."</h3>";
+}
+print "</div>";
+ 
+if ( $invoicefo->paye != 1 && $invoicefo->statut > 0 ) {
+$nonce = wp_create_nonce( 'valid_dolicart-'.$invoicefo->id );
+$arr_params = array( 'cart' => $nonce, 'step' => 'payment', 'module' => $_GET["module"], 'id' => $invoicefo->id,'ref' => $invoicefo->ref);  
+$return = add_query_arg( $arr_params, doliconnecturl('dolicart'));
+if ( $invoicefo->mode_reglement_code == 'CHQ' ) {
+
+$listpaymentmethods = callDoliApi("GET", "/doliconnector/".doliconnector($current_user, 'fk_soc')."/paymentmethods?type=order&rowid=".$invoicefo->id, null, dolidelay('paymentmethods', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+
+print "<div class='col'><div class='card bg-light' style='border:0'><div class='card-body'><p align='justify'>".sprintf( __( 'Please send your cheque in the amount of <b>%1$s</b> with reference <b>%2$s</b> to <b>%3$s</b> at the following address', 'doliconnect'), doliprice($invoicefo, 'ttc', isset($invoicefo->multicurrency_code) ? $invoicefo->multicurrency_code : null), $invoicefo->ref, $listpaymentmethods->CHQ->proprio).":</p>";                                                                                                                                                                                                                                                                                                                                      
+print "<p><b>".$listpaymentmethods->CHQ->owner_address."</b></p>";
+//print "<button class='btn btn-link btn-sm' onclick='ValidDoliCart(\"".wp_create_nonce( 'valid_dolicart-'.$invoicefo->id )."\")' id='button-source-payment'><small><span class='fas fa-sync-alt'></span> ".__( 'Change your payment mode', 'doliconnect')."</small></button>";
+print "</div></div></div>";
+} elseif ( $invoicefo->mode_reglement_code == 'VIR' ) { 
+
+$listpaymentmethods = callDoliApi("GET", "/doliconnector/".doliconnector($current_user, 'fk_soc')."/paymentmethods", null, dolidelay('paymentmethods', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+
+print "<div class='col'><div class='card bg-light' style='border:0'><div class='card-body'><p align='justify'>".sprintf( __( 'Please send your transfert in the amount of <b>%1$s</b> with reference <b>%2$s</b> at the following account', 'doliconnect'), doliprice($invoicefo, 'ttc', isset($invoicefo->multicurrency_code) ? $invoicefo->multicurrency_code : null), $invoicefo->ref ).":";
+print "<br><b>".__( 'Bank', 'doliconnect').": ".$listpaymentmethods->VIR->bank."</b>";
+print "<br><b>IBAN: ".$listpaymentmethods->VIR->iban."</b></p>";
+if ( ! empty($listpaymentmethods->VIR->bic) ) { print "<br><b>BIC/SWIFT : ".$listpaymentmethods->VIR->bic."</b>";}
+//print "<button class='btn btn-link btn-sm' onclick='ValidDoliCart(\"".wp_create_nonce( 'valid_dolicart-'.$invoicefo->id )."\")' id='button-source-payment'><small><span class='fas fa-sync-alt'></span> ".__( 'Change your payment mode', 'doliconnect')."</small></button>";
+print "</div></div></div>";
+} elseif ( $invoicefo->mode_reglement_code == 'PRE' ) { 
+
+} else {
+//print "<button type='button' onclick='ValidDoliCart(\"".wp_create_nonce( 'valid_dolicart-'.$invoicefo->id )."\")' id='button-source-payment' class='btn btn-warning btn-block' ><span class='fa fa-credit-card'></span> ".__( 'Pay', 'doliconnect')."</button>";
+}
+print "<script>";
+print "function ValidDoliCart(nonce) {
+jQuery('#DoliconnectLoadingModal').modal('show');
+var form = document.createElement('form');
+form.setAttribute('action', '".$return."');
+form.setAttribute('method', 'post');
+form.setAttribute('id', 'doliconnect-cartform');
+var inputvar = document.createElement('input');
+inputvar.setAttribute('type', 'hidden');
+inputvar.setAttribute('name', 'dolichecknonce');
+inputvar.setAttribute('value', nonce);
+form.appendChild(inputvar);
+document.body.appendChild(form);
+form.submit();
+        }";                  
+print "</script>";
+}
+
+print "</div><br>"; 
+
+$thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+
+print "<div class='card-group'>"; 
+if (!empty($invoicefo->contacts_ids) && is_array($invoicefo->contacts_ids)) {
+
+foreach ($invoicefo->contacts_ids as $contact) {
+if ('BILLING' == $contact->code) {
+$billingcard = dolicontact($contact->id, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+}
+if ('SHIPPING' == $contact->code) {
+$shippingcard = dolicontact($contact->id, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+}
+}
+print "<div class='card bg-light' style='border:0'><div class='card-body'><h6>".__( 'Billing address', 'doliconnect')."</h6><small class='text-muted'>";
+if (isset($billingcard) && !empty($billingcard)) {
+print $billingcard;
+} else {
+print doliaddress($thirdparty, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+}
+print "</small></div></div>";
+print "<div class='card bg-light' style='border:0'><div class='card-body'><h6>".__( 'Shipping address', 'doliconnect')."</h6><small class='text-muted'>";
+if (isset($shippingcard) && !empty($shippingcard)) {
+print $shippingcard;
+} else {
+print doliaddress($thirdparty, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+}
+print "</small></div></div>";
+} else {
+print "<div class='card bg-light' style='border:0'><div class='card-body'><h6>".__( 'Billing and shipping address', 'doliconnect')."</h6><small class='text-muted'>";
+print doliaddress($thirdparty, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+print "</small></div></div>";
+}
+print "</div><br>";
+
+print '<div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: '.$orderavancement.'%" aria-valuenow="'.$orderavancement.'" aria-valuemin="0" aria-valuemax="100"></div></div>';
+print "<div class='w-auto text-muted d-none d-sm-block' ><div style='display:inline-block;width:20%'>".__( 'order', 'doliconnect')."</div><div style='display:inline-block;width:15%'>".__( 'payment', 'doliconnect')."</div><div style='display:inline-block;width:25%'>".__( 'processing', 'doliconnect')."</div><div style='display:inline-block;width:20%'>".__( 'shipping', 'doliconnect')."</div><div class='text-right' style='display:inline-block;width:20%'>".__( 'delivery', 'doliconnect')."</div></div>";
+
+print "</div><ul class='list-group list-group-flush'>";
+ 
+print doliline($invoicefo, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+
+print "</ul><ul class='list-group list-group-flush'>";
+
+print dolitotal($invoicefo);
+
+print "</ul><ul class='list-group list-group-flush'>";
+
+if ( $invoicefo->last_main_doc != null ) {
+$doc = array_reverse(explode("/", $invoicefo->last_main_doc)); 
+$document_order = dolidocdownload($doc[2], $doc[1], $doc[0], __( 'Invoice', 'doliconnect'));
+} else {
+$document_order = dolidocdownload('invoice', $invoicefo->ref, $invoicefo->ref.'.pdf', __( 'Invoice', 'doliconnect'), true);
+} 
+    
+$fruits[$invoicefo->date_creation.'o'] = array(
+"timestamp" => $invoicefo->date_creation,
+"type" => __( 'Invoice', 'doliconnect'),  
+"label" => $invoicefo->ref,
+"document" => $document_order,
+"description" => null,
+);
+
+if ( isset($invoicefo->linkedObjectsIds->facture) && $invoicefo->linkedObjectsIds->facture != null ) {
+foreach ($invoicefo->linkedObjectsIds->facture as $f => $value) {
+
+if ($value > 0) {
+$invoice = callDoliApi("GET", "/invoices/".$value."?contact_list=0", null, dolidelay('order', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+//print $invoice;
+$payment = callDoliApi("GET", "/invoices/".$value."/payments", null, dolidelay('order', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+//print $payment;
+}
+
+if ( $payment != null ) { 
+foreach ( $payment as $pay ) {
+$fruits[strtotime($pay->date).'p'] = array(
+"timestamp" => strtotime($pay->date),
+"type" => __( 'Payment', 'doliconnect'),  
+"label" => "$pay->type de ".doliprice($pay->amount, isset($invoicefo->multicurrency_code) ? $invoicefo->multicurrency_code : null),
+"description" => $pay->num,
+"document" => null,
+); 
+}
+}
+
+if ( $invoice->last_main_doc != null ) {
+$doc = array_reverse(explode("/", $invoice->last_main_doc)); 
+$document_invoice = dolidocdownload($doc[2], $doc[1], $doc[0], __( 'Invoice', 'doliconnect'));
+} else {
+$document_invoice = dolidocdownload('invoice', $invoice->ref, $invoice->ref.'.pdf', __( 'Invoice', 'doliconnect'), true);
+}
+
+if ( $invoice->paye != 1 && $invoice->remaintopay != 0 && function_exists('dolipaymentmodes') ) {
+
+$payment_invoice = "<a href='".doliconnecturl('dolicart')."?pay&module=invoices&id=".$invoice->id."&ref=".$invoice->ref."' id='button-source-payment' class='btn btn-warning btn-block' role='button'><span class='fa fa-credit-card'></span> ".__( 'Pay', 'doliconnect')."</a><br>";
+
+} elseif ( $invoice->paye != 1 && $invoice->remaintopay != 0 &&  isset($invoicefo->public_payment_url) && !empty($invoicefo->public_payment_url) ) {
+
+$payment_invoice = "<a href='".$invoicefo->public_payment_url."' id='button-source-payment' class='btn btn-warning btn-block' role='button'><span class='fa fa-credit-card'></span> ".__( 'Pay', 'doliconnect')."</a><br>";
+
+} else {
+$payment_invoice = null;
+}
+  
+$fruits[$invoice->date_creation.'i'] = array(
+"timestamp" => $invoice->date_creation,
+"type" => __( 'Invoice', 'doliconnect'),  
+"label" => $invoice->ref,
+"document" => $document_invoice,
+"description" => $payment_invoice,
+);  
+} 
+}
+
+sort($fruits, SORT_NUMERIC | SORT_FLAG_CASE);
+foreach ( $fruits as $key => $val ) {
+print "<li class='list-group-item'><div class='row'><div class='col-6 col-md-3'>" . wp_date('d/m/Y H:i', $val['timestamp']) . "</div><div class='col-6 col-md-2'>" . $val['type'] . "</div>";
+print "<div class='col-md-7'><h6>".$val['label']."</h6>" . $val['description'] ."" . $val['document'] ."</div></div></li>";
+} 
+//var_dump($fruits);
+print '</ul><div class="card-body"></div><div class="card-footer text-muted">';
+print "<small><div class='float-left'>";
+if ( isset($request) ) print dolirefresh($request, $url, dolidelay('invoice'), $invoicefo);
+print "</div><div class='float-right'>";
+print dolihelp('ISSUE');
+print "</div></small>";
+print '</div></div>';
+
+} else {
+
+$limit=8;
+if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']-1); }  else { $page = 0; }
+$request= "/invoices?sortfield=t.date_valid&sortorder=DESC&limit=".$limit."&page=".$page."&thirdparty_ids=".doliconnector($current_user, 'fk_soc')."&sqlfilters=(t.fk_statut!=0)";
+$listinvoice = callDoliApi("GET", $request, null, dolidelay('invoice', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+
+print '<div class="card shadow-sm"><ul class="list-group list-group-flush">';
+
+if ( !isset($listinvoice->error ) && $listinvoice != null ) {
+foreach ( $listinvoice as $postinvoice ) {
+$nonce = wp_create_nonce( 'doli-invoices-'.$postinvoice->id.'-'.$postinvoice->ref);
+$arr_params = array( 'id' => $postinvoice->id, 'ref' => $postinvoice->ref, 'security' => $nonce);  
+$return = esc_url( add_query_arg( $arr_params, $url) );
+                                                                                                                                                      
+print "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'><div><i class='fa fa-file-invoice fa-3x fa-fw'></i></div><div><h6 class='my-0'>".$postinvoice->ref."</h6><small class='text-muted'>du ".wp_date('d/m/Y', $postinvoice->date_creation)."</small></div><span>".doliprice($postinvoice, 'ttc', isset($postinvoice->multicurrency_code) ? $postinvoice->multicurrency_code : null)."</span><span>";
+if ( $postinvoice->statut > 0 ) { print "<span class='fas fa-check-circle fa-fw text-success'></span> ";
+if ( $postinvoice->paye == 1 ) { print "<span class='fas fa-money-bill-alt fa-fw text-success'></span> "; 
+if ( $postinvoice->statut > 1 ) { print "<span class='fas fa-dolly fa-fw text-success'></span> "; }
+else { print "<span class='fas fa-dolly fa-fw text-warning'></span> "; }
+}
+else { print "<span class='fas fa-money-bill-alt fa-fw text-warning'></span> "; 
+if ( $postinvoice->statut > 1 ) { print "<span class='fas fa-dolly fa-fw text-success'></span> "; }
+else { print "<span class='fas fa-dolly fa-fw text-danger'></span> "; }
+}}
+elseif ( $postinvoice->statut == 0 ) { print "<span class='fas fa-check-circle fa-fw text-warning'></span> <span class='fas fa-money-bill-alt fa-fw text-danger'></span> <span class='fas fa-dolly fa-fw text-danger'></span>"; }
+elseif ( $postinvoice->statut == -1 ) { print "<span class='fas fa-check-circle fa-fw text-secondary'></span> <span class='fas fa-money-bill-alt fa-fw text-secondary'></span> <span class='fas fa-dolly fa-fw text-secondary'></span>"; }
+print "</span></a>";
+}
+} else {
+print "<li class='list-group-item list-group-item-light'><center>".__( 'No invoice', 'doliconnect')."</center></li>";
+}
+
+print "</ul><div class='card-body'>";
+print dolipage($listinvoice, $url, $page, $limit);
+print "</div><div class='card-footer text-muted'>";
+print "<small><div class='float-left'>";
+if ( isset($request) ) print dolirefresh($request, $url, dolidelay('invoice'));
+print "</div><div class='float-right'>";
+print dolihelp('ISSUE');
+print "</div></small>";
+print "</div></div>";
+
+}
+}
+
 if ( !empty(doliconst('MAIN_MODULE_CONTRAT'))  && !empty(get_option('doliconnectbeta')) ) {
 add_action( 'customer_doliconnect_menu', 'contracts_menu', 2, 1);
 add_action( 'customer_doliconnect_contracts', 'contracts_module');
