@@ -688,7 +688,7 @@ $card .= apply_filters('mydoliconnectproductdesc', $product, 'card');
 }
 if ( ! empty(doliconnectid('dolicart')) ) { 
 $card .= '<br><br><div class="jumbotron">';
-$card .= doliconnect_addtocart($product, 0, 0, isset($attributes['hideButtonToCart']) ? $attributes['hideButtonToCart'] : 1, isset($attributes['hideDuration']) ? $attributes['hideDuration'] : 0);
+$card .= doliconnect_addtocart($product, 0, 0, !empty($attributes['hideButtonToCart']) ? $attributes['hideButtonToCart'] : 1, isset($attributes['hideDuration']) ? $attributes['hideDuration'] : 0);
 $card .= '</div>';
 }
 $card .= '</div><div class="col-12"><h6>'.__( 'Description', 'doliconnect' ).'</h6><p>'.doliproduct($product, 'description').'</p>';
