@@ -998,7 +998,7 @@ if (empty($_GET['search'])) {
 
 print "<div class='card-body'>";
 
-print '<form role="search" method="get" id="shopform" action="' . doliconnecturl('dolishop') . '" ><div class="input-group"><input type="text" class="form-control" name="search" id="search" placeholder="' . esc_attr__('Name, Ref. or barcode', 'doliconnect') . '" aria-label="Search for..." aria-describedby="search-widget">
+print '<form role="search" method="get" id="shopform" action="' . doliconnecturl('dolishop') . '" ><div class="input-group"><input type="text" class="form-control" name="search" id="search" placeholder="' . esc_attr__('Name, Ref., Description or Barcode', 'doliconnect') . '" aria-label="Search for..." aria-describedby="search-widget">
 <div class="input-group-append"><button class="btn btn-primary" type="submit" id="searchproduct" ><i class="fas fa-search"></i></button></div>
 </div></form>';
 
