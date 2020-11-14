@@ -694,7 +694,22 @@ $card .= doliconnect_addtocart($product, 0, 0, !empty($attributes['hideButtonToC
 $card .= '</div>';
 }
 $card .= '</div><div class="col-12"><h6>'.__( 'Description', 'doliconnect' ).'</h6><p>'.doliproduct($product, 'description').'</p>';
-if (!empty(doliconnect_supplier($product))) $card .= '<p>'.doliconnect_supplier($product).'<p>';
+
+if (!empty(doliconnect_supplier($product))) {
+$brands =  callDoliApi("GET", "/products/".$product->id."/purchase_prices", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+if ( !isset($brands->error) && $brands != null ) {
+$i = 0;
+foreach ($brands as $brand) {
+//if ($i > 0) $card .= "<br>";
+$thirdparty =  callDoliApi("GET", "/thirdparties/".$brand->fourn_id, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$card .= '<p>';
+$card .= (!empty($thirdparty->name_alias)?$thirdparty->name_alias:$thirdparty->name).'<br>';
+$card .= $brand->desc_supplier;
+$card .= '</p>';
+$i++;
+}
+}}
+
 $card .= '</div>';
 } else {
 $card .= '<div class="col-12"><p><center>'.__( 'Item not in sale', 'doliconnect' ).'</center></p></div>';
