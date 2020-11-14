@@ -28,7 +28,7 @@ if ( !empty(doliconst('MAIN_MODULE_DISCOUNTPRICE')) ) {
 $date = new DateTime(); 
 $date->modify('NOW');
 $lastdate = $date->format('Y-m-d');
-$requestp = "/discountprice?sortfield=t.rowid&sortorder=ASC&sqlfilters=(t.date_begin%3A%3C%3D%3A'".$lastdate."')%20AND%20(t.date_end%3A%3E%3D%3A'".$lastdate."')%20AND%20(d.tosell%3A%3D%3A1)";
+$requestp = "/discountprice?sortfield=t.rowid&sortorder=DESC&sqlfilters=(t.date_begin%3A%3C%3D%3A'".$lastdate."')%20AND%20(t.date_end%3A%3E%3D%3A'".$lastdate."')%20AND%20(d.tosell%3A%3D%3A1)";
 $listproduct = callDoliApi("GET", $requestp, null, dolidelay('product', $refresh));
 if ( !isset($listproduct->error) && $listproduct != null ) {
 foreach ($listproduct as $product) {
@@ -58,7 +58,7 @@ doliconnect_image('category', $category->id, 1, $refresh, $category->entity);
 
 
 foreach ($categories as $id => $categorie) {
-$requestp = "/products?sortfield=t.label&sortorder=ASC&category=".$id."&sqlfilters=(t.tosell=1)";
+$requestp = "/products?sortfield=t.rowid&sortorder=DESC&category=".$id."&sqlfilters=(t.tosell=1)";
 $listproduct = callDoliApi("GET", $requestp, null, dolidelay('product', $refresh));
 if ( !isset($listproduct->error) && $listproduct != null ) {
 foreach ($listproduct as $product) {

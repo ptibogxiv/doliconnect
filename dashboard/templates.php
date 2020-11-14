@@ -1051,7 +1051,7 @@ print "</div></small>";
 print "</div></div>";
 }
 
-} elseif ( isset($_GET['new']) && get_option('dolicartnewlist') != 'none') {
+} elseif (get_option('dolicartnewlist') != 'none' && isset($_GET['category']) && $_GET['category'] == 'new') {
 
 print "<ul class='list-group list-group-flush'>";
 
@@ -1092,7 +1092,7 @@ print dolihelp('ISSUE');
 print "</div></small>";
 print "</div></div>";
 
-} elseif ( isset($_GET['discount']) && !empty(doliconst('MAIN_MODULE_DISCOUNTPRICE')) ) {
+} elseif (!empty(doliconst('MAIN_MODULE_DISCOUNTPRICE')) && isset($_GET['category']) && $_GET['category'] == 'discount') {
 
 print "<ul class='list-group list-group-flush'>";
 
