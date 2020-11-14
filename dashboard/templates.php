@@ -1239,7 +1239,7 @@ print "<ul class='list-group list-group-flush'>";
 $cat = esc_attr(isset($_GET["subcategory"]) ? $_GET["subcategory"] : $_GET["category"]);
 $category = callDoliApi("GET", "/categories/".$cat."?include_childs=true", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
-if (isset($category->id) && is_numeric($cat) && $category->id > 0) {
+if (is_numeric($cat) && isset($category->id) && $category->id > 0) {
 print "<li class='list-group-item'>";
 print "<div class='row'><div class='col-4 col-md-2'><center>";
 print doliconnect_image('category', $category->id, 1, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), $category->entity);
