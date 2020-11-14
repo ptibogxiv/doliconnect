@@ -700,12 +700,13 @@ $brands =  callDoliApi("GET", "/products/".$product->id."/purchase_prices", null
 if ( !isset($brands->error) && $brands != null ) {
 $i = 0;
 foreach ($brands as $brand) {
-//if ($i > 0) $card .= "<br>";
+if (!empty($brand->desc_supplier)) {
 $thirdparty =  callDoliApi("GET", "/thirdparties/".$brand->fourn_id, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 $card .= '<p>';
 $card .= (!empty($thirdparty->name_alias)?$thirdparty->name_alias:$thirdparty->name).'<br>';
 $card .= $brand->desc_supplier;
 $card .= '</p>';
+}
 $i++;
 }
 }}

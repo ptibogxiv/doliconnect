@@ -1080,7 +1080,7 @@ print apply_filters( 'doliproductlist', $product);
  
 }
 } else {
-print "<li class='list-group-item list-group-item-light'><center>".__(  'No discounted item', 'doliconnect')."</center></li>";
+print "<li class='list-group-item list-group-item-light'><center>".__(  'No item', 'doliconnect')."</center></li>";
 }
 print "</ul><div class='card-body'>";
 print dolipage($resultats, $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], $page, $limit);
