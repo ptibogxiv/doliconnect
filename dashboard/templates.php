@@ -1051,7 +1051,7 @@ print "</div></small>";
 print "</div></div>";
 }
 
-} elseif (get_option('dolicartnewlist') != 'none' && isset($_GET['category']) && $_GET['category'] == 'all') {
+} elseif (doliconst("CATEGORIE_RECURSIV_ADD", esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)) && isset($_GET['category']) && $_GET['category'] == 'all') {
 
 print "<ul class='list-group list-group-flush'>";
 
