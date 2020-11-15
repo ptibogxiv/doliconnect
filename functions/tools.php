@@ -1238,8 +1238,7 @@ if (function_exists('pll_the_languages')) {
 print '<div class="modal fade" id="DoliconnectSelectLang" tabindex="-1" role="dialog" aria-labelledby="DoliconnectSelectLangLabel" aria-hidden="true">
 <div class="modal-dialog modal-dialog-centered" role="document">
 <div class="modal-content border-0"><div class="modal-header border-0">
-<h5 class="modal-title" id="DoliconnectSelectLangLabel">'.__('Choose your language', 'doliconnect').'</h5><button id="closemodalSelectLang" type="button" class="close" data-dismiss="modal" aria-label="Close">
-<span aria-hidden="true">&times;</span></button></div>';
+<h5 class="modal-title" id="DoliconnectSelectLangLabel">'.__('Choose your language', 'doliconnect').'</h5><button id="closemodalSelectLang" class="btn-close" data-dismiss="modal" aria-label="Close"></button></button></div>';
  
 print '<script>';
 ?>
