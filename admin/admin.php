@@ -282,7 +282,8 @@ if (isset($_REQUEST['doliconnect_google']) && $_REQUEST['doliconnect_google']>0)
 update_option('doliconnect_google', sanitize_text_field($_REQUEST['doliconnect_google']));
 }else {
 delete_option('doliconnect_google');}                               
-            update_option('doliaccount', sanitize_text_field($_REQUEST['doliaccount']));
+            update_option('doliaccount', sanitize_text_field($_REQUEST['doliaccount']));   
+            update_option('doliaccountinfo', sanitize_text_field($_REQUEST['doliaccountinfo'])); 
             update_option('doliconnect_disablepro', sanitize_text_field($_REQUEST['doliconnect_disablepro']));
             update_option('doliconnect_cronjob', sanitize_text_field($_REQUEST['doliconnect_cronjob']));
             if (isset($_REQUEST['doliconnectrestrict_role'])) update_option('doliconnectrestrict_role', sanitize_text_field($_REQUEST['doliconnectrestrict_role']));
@@ -411,7 +412,7 @@ echo "<input id='dolibarr_entity'  name='dolibarr_entity' type='text' value='".(
     'selected' => get_option('doliaccount') 
 );
            wp_dropdown_pages($args); ?>
-<br><br><textarea name="doliconnect_login_info" placeholder="<?php _e('Message on login page', 'doliconnect') ?>" class="form-control" id="exampleFormControlTextarea1" rows="3" cols="75"><?php echo get_option('doliaccountinfo'); ?></textarea>   
+<br><br><textarea name="doliaccountinfo" placeholder="<?php _e('Message on login page', 'doliconnect') ?>" class="form-control" id="exampleFormControlTextarea1" rows="3" cols="75"><?php echo get_option('doliaccountinfo'); ?></textarea>   
            </td>
             </tr>
             <tr>
