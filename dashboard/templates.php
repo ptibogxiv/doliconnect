@@ -656,7 +656,7 @@ print '<div class="form-check">
   <label class="form-check-label" for="rememberme">'.__( 'Remember me', 'doliconnect-pro').'</label>
 </div>';
 
-print "</li><li class='list-group-item'><div><small><div class='float-left'>";
+print "<div><small><div class='float-left'>";
 if ((!is_multisite() && get_option( 'users_can_register' )) || ((!is_multisite() && get_option( 'dolicustsupp_can_register' )) || ((get_option( 'dolicustsupp_can_register' ) || get_option('users_can_register') == '1') && (get_site_option( 'registration' ) == 'user' || get_site_option( 'registration' ) == 'all')))) {
 print "<a href='".wp_registration_url(get_permalink())."' role='button' title='".__( 'Create an account', 'doliconnect-pro')."'>".__( 'Create an account', 'doliconnect')."</a>";
 }
