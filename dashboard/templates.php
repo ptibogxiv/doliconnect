@@ -634,35 +634,32 @@ $redirect_to=$_SERVER['HTTP_REFERER'];}
  
 print "<form class='was-validated' id='doliconnect-loginform' action='$login_url' method='post'>";
 print "<ul class='list-group list-group-flush'><li class='list-group-item'>";
+
 print doliloaderscript('doliconnect-loginform'); 
  
-print "<div class='form-group'>
-<div class='input-group mb-2 mr-sm-2'><div class='input-group-prepend'>
-<div class='input-group-text'><i class='fas fa-at fa-fw'></i></div></div>
-<input class='form-control' id='user_login' type='email' placeholder='".__( 'Email', 'doliconnect')."' name='log' value='";
+print '<div class="form-floating mb-3"><input type="email" class="form-control" id="user_login" name="log" placeholder="name@example.com" value="';
 if ( defined("DOLICONNECT_DEMO_EMAIL") && !empty(constant("DOLICONNECT_DEMO_EMAIL")) ) {
 print constant("DOLICONNECT_DEMO_EMAIL");
 }
-print "' required autofocus>";
-print "</div></div><div class='form-group'>
-<div class='input-group mb-2 mr-sm-2'><div class='input-group-prepend'>
-<div class='input-group-text'><i class='fas fa-key fa-fw'></i></div></div>
-<input class='form-control' id='user_pass' type='password' placeholder='".__( 'Password', 'doliconnect')."' name='pwd' value ='";
+print '" required autofocus><label for="user_login">'.__( 'Email', 'doliconnect-pro').'</label></div>';
+
+print '<div class="form-floating mb-3"><input type="password" class="form-control" id="user_pass" name="pwd" placeholder="Password" value="';
 if ( defined("DOLICONNECT_DEMO_PASSWORD") && !empty(constant("DOLICONNECT_DEMO_PASSWORD")) ) {
 print constant("DOLICONNECT_DEMO_PASSWORD");
 }
-print "' required>";
-print "</div></div>";
+print '" required><label for="user_pass">'.__( 'Password', 'doliconnect-pro').'</label></div>';
 
-do_action( 'login_form');
+do_action( 'login_form' );
+
+print '<div class="form-check">
+  <input class="form-check-input" type="checkbox" name="rememberme" value="forever" id="rememberme" checked>
+  <label class="form-check-label" for="rememberme">'.__( 'Remember me', 'doliconnect-pro').'</label>
+</div>';
 
 print "</li><li class='list-group-item'><div><small><div class='float-left'>";
 if ((!is_multisite() && get_option( 'users_can_register' )) || ((!is_multisite() && get_option( 'dolicustsupp_can_register' )) || ((get_option( 'dolicustsupp_can_register' ) || get_option('users_can_register') == '1') && (get_site_option( 'registration' ) == 'user' || get_site_option( 'registration' ) == 'all')))) {
 print "<a href='".wp_registration_url(get_permalink())."' role='button' title='".__( 'Create an account', 'doliconnect-pro')."'>".__( 'Create an account', 'doliconnect')."</a>";
 }
-
-print "<div class='form-group'><div class='custom-control custom-checkbox'><input type='checkbox' class='custom-control-input' value='forever' id='remembermelogin' name='rememberme'>";
-print "<label class='custom-control-label' for='remembermelogin'> ".__( 'Remember me', 'doliconnect')."</label></div></div>";
 
 print "</div><div class='float-right'><a href='".wp_lostpassword_url( get_permalink() )."' role='button' title='".__( 'Forgot password?', 'doliconnect')."'>".__( 'Forgot password?', 'doliconnect')."</a></div></small></div>"; 
 print "</li></lu><div class='card-body'>";

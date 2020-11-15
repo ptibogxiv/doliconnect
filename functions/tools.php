@@ -210,7 +210,7 @@ $cats .= " <a href='".esc_url( add_query_arg( 'category', $category->id, $url) )
 } else { 
 $cats .= " <span ";
 }
-$cats .= "class='badge badge-pill badge-secondary'>";
+$cats .= "class='badge rounded-pill bg-secondary text-white text-decoration-none''>";
 
 $cats .= doliproduct($category, 'label');
 if (!empty($url)) {

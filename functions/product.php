@@ -51,7 +51,7 @@ html : true
 $stock .= "</script>";
 
 if ( ! is_object($product) || empty(doliconst('MAIN_MODULE_STOCK', $refresh)) || (!empty($product->type) && empty(doliconst('STOCK_SUPPORTS_SERVICES', $refresh)) ) || (empty($product->type) && !empty(doliconst('STOCK_ALLOW_NEGATIVE_TRANSFER', $refresh)) && empty(doliconst('STOCK_MUST_BE_ENOUGH_FOR_ORDER', $refresh)) )) {
-$stock .= "<a tabindex='0' id='popover-".$product->id."' class='badge badge-pill badge-success text-white' data-container='body' data-toggle='popover' data-trigger='focus' title='".__( 'Available', 'doliconnect')."' data-content='".__( 'This item is available and can be order', 'doliconnect')."'><i class='fas fa-warehouse'></i> ".__( 'Available', 'doliconnect').'</a>';
+$stock .= "<a tabindex='0' id='popover-".$product->id."' class='badge rounded-pill bg-success text-white text-decoration-none' data-container='body' data-toggle='popover' data-trigger='focus' title='".__( 'Available', 'doliconnect')."' data-content='".__( 'This item is available and can be order', 'doliconnect')."'><i class='fas fa-warehouse'></i> ".__( 'Available', 'doliconnect').'</a>';
 } else {
 $warehouse = doliconst('DOLICONNECT_ID_WAREHOUSE', $refresh);
 if (isset($product->stock_warehouse) && !empty($product->stock_warehouse) && !empty($warehouse)) {
@@ -70,7 +70,7 @@ $shipping = '<a href="'.doliconnecturl('dolishipping').'" class="btn btn-link bt
 $shipping = null;
 }
 
-if ( $realstock <= 0 || (isset($product->array_options->options_packaging) && !empty($product->array_options->options_packaging) && $realstock < $product->array_options->options_packaging) ) { $stock .= "<a tabindex='0' id='popover-".$product->id."' class='badge badge-pill badge-dark text-white' data-container='body' data-toggle='popover' data-trigger='focus' title='".__( 'Not available', 'doliconnect')."' data-content='".sprintf( __( 'This item is out of stock and can not be ordered or shipped. %s', 'doliconnect'), $shipping)."'><i class='fas fa-warehouse'></i> ".__( 'Not available', 'doliconnect')."</a>"; }  
+if ( $realstock <= 0 || (isset($product->array_options->options_packaging) && !empty($product->array_options->options_packaging) && $realstock < $product->array_options->options_packaging) ) { $stock .= "<a tabindex='0' id='popover-".$product->id."' class='badge rounded-pill bg-dark text-white text-decoration-none' data-container='body' data-toggle='popover' data-trigger='focus' title='".__( 'Not available', 'doliconnect')."' data-content='".sprintf( __( 'This item is out of stock and can not be ordered or shipped. %s', 'doliconnect'), $shipping)."'><i class='fas fa-warehouse'></i> ".__( 'Not available', 'doliconnect')."</a>"; }  
 elseif ( ($realstock <= 0 || (isset($product->array_options->options_packaging) && $realstock < $product->array_options->options_packaging)) && $product->stock_theorique > $realstock ) { 
 $delay =  callDoliApi("GET", "/products/".$product->id."/purchase_prices", null, dolidelay('product', $refresh));
 if (empty($delay[0]->delivery_time_days)) { $delay = esc_html__( 'few', 'doliconnect'); } else { $delay = $delay[0]->delivery_time_days;}
@@ -84,10 +84,10 @@ $next = null;
 } else {
 $next = null;
 }
-$stock .= "<a tabindex='0' id='popover-".$product->id."' class='badge badge-pill badge-danger text-white' title='".__( 'Available soon', 'doliconnect')."' data-container='body' data-toggle='popover' data-trigger='focus' data-content='".sprintf( __( 'This item is not in stock but should be available soon within %s days. %s %s', 'doliconnect'), $delay, $next, $shipping)."'><i class='fas fa-warehouse'></i> ".__( 'Available soon', 'doliconnect')."</a>"; 
-} elseif ( $realstock >= 0 && $realstock <= $product->seuil_stock_alerte ) { $stock .= "<a tabindex='0' id='popover-".$product->id."' class='badge badge-pill badge-warning text-white' data-container='body' data-toggle='popover' data-trigger='focus' title='".__( 'Limited availability', 'doliconnect')."' data-content='".sprintf( __( 'This item is in stock and can be shipped immediately but only in limited quantities. %s', 'doliconnect'), $shipping)."'><i class='fas fa-warehouse'></i> ".__( 'Available', 'doliconnect')."</a>";
+$stock .= "<a tabindex='0' id='popover-".$product->id."' class='badge rounded-pill bg-danger text-white text-decoration-none' title='".__( 'Available soon', 'doliconnect')."' data-container='body' data-toggle='popover' data-trigger='focus' data-content='".sprintf( __( 'This item is not in stock but should be available soon within %s days. %s %s', 'doliconnect'), $delay, $next, $shipping)."'><i class='fas fa-warehouse'></i> ".__( 'Available soon', 'doliconnect')."</a>"; 
+} elseif ( $realstock >= 0 && $realstock <= $product->seuil_stock_alerte ) { $stock .= "<a tabindex='0' id='popover-".$product->id."' class='badge rounded-pill bg-warning text-white text-decoration-none' data-container='body' data-toggle='popover' data-trigger='focus' title='".__( 'Limited availability', 'doliconnect')."' data-content='".sprintf( __( 'This item is in stock and can be shipped immediately but only in limited quantities. %s', 'doliconnect'), $shipping)."'><i class='fas fa-warehouse'></i> ".__( 'Available', 'doliconnect')."</a>";
 } else {
-$stock .= "<a tabindex='0' id='popover-".$product->id."' class='badge badge-pill badge-success text-white' data-container='body' data-toggle='popover' data-trigger='focus' title='".__( 'Available immediately', 'doliconnect')."' data-content='".sprintf( __( 'This item is in stock and can be shipped immediately. %s', 'doliconnect'), $shipping)."'><i class='fas fa-warehouse'></i> ".__( 'Available', 'doliconnect').'</a>';
+$stock .= "<a tabindex='0' id='popover-".$product->id."' class='badge rounded-pill bg-success text-white text-decoration-none' data-container='body' data-toggle='popover' data-trigger='focus' title='".__( 'Available immediately', 'doliconnect')."' data-content='".sprintf( __( 'This item is in stock and can be shipped immediately. %s', 'doliconnect'), $shipping)."'><i class='fas fa-warehouse'></i> ".__( 'Available', 'doliconnect').'</a>';
 }
 } 
 
