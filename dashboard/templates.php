@@ -556,19 +556,13 @@ print "</script>";
  
 print "<div class='card shadow-sm'><div class='card-header'><h5 class='card-title'>".__( 'Forgot password?', 'doliconnect')."</h5></div>";
 print "<ul class='list-group list-group-flush'><li class='list-group-item'>";
-print "<div class='form-group'><label for='inputemail'><small class='text-justify'><i class='fas fa-at fa-fw'></i> ".__( 'Please enter the email address by which you registered your account.', 'doliconnect')."</small></label>
+print "<div class='form-group'><label for='inputemail'><small class='text-justify'>".__( 'Please enter the email address by which you registered your account.', 'doliconnect')."</small></label>
 <div class='input-group mb-2 mr-sm-2'>
 <input class='form-control' id='user_email' type='email' placeholder='".__( 'Email', 'doliconnect')."' name='user_email' value ='' required>";
 print "</div></div>";
 
 print "</li></lu><div class='card-body'>";
 print "<button class='btn btn-danger btn-block' type='submit' value='submit'><b>".__( 'Submit', 'doliconnect')."</b></button></form>";
-print "</div><div class='card-footer text-muted'>";
-print "<small><div class='float-left'>";
-
-print "</div><div class='float-right'>";
-print dolihelp('ISSUE');
-print "</div></small>";
 print "</div></div>";
 
 } else {

@@ -136,7 +136,7 @@ $key = get_password_reset_key($user);
 $arr_params = array( 'action' => 'rpw', 'key' => $key, 'login' => $user->user_login);  
 $url = esc_url( add_query_arg( $arr_params, doliconnecturl('doliaccount')) );
 
-if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $user->ID ) {
+if ( defined("DOLICONNECT_DEMO_EMAIL") && ''.constant("DOLICONNECT_DEMO_EMAIL").'' == $email ) {
     wp_send_json_error( __( 'Reset password is not permitted for this account!', 'doliconnect')); 
 } elseif ( !empty($key) ) { 
 		$sitename = get_option('blogname');
