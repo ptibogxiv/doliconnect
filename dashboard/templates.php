@@ -625,8 +625,8 @@ if ( function_exists('socialconnect') ) {
 print socialconnect(get_permalink());
 }
 
-if ( function_exists('secupress_get_module_option') && secupress_get_module_option('move-login_slug-login', $slug, 'users-login' ) ) {
-$login_url=site_url()."/".secupress_get_module_option('move-login_slug-login', $slug, 'users-login'); 
+if ( function_exists('secupress_get_module_option') && secupress_get_module_option('move-login_slug-login', '', 'users-login' ) ) {
+$login_url=site_url()."/".secupress_get_module_option('move-login_slug-login', '', 'users-login'); 
 } else {
 $login_url=site_url()."/wp-login.php"; }
 if ( isset($_GET["redirect_to"])) { $redirect_to=$_GET["redirect_to"]; } else {
@@ -639,11 +639,19 @@ print doliloaderscript('doliconnect-loginform');
 print "<div class='form-group'>
 <div class='input-group mb-2 mr-sm-2'><div class='input-group-prepend'>
 <div class='input-group-text'><i class='fas fa-at fa-fw'></i></div></div>
-<input class='form-control' id='user_login' type='email' placeholder='".__( 'Email', 'doliconnect')."' name='log' value='' required autofocus>";
+<input class='form-control' id='user_login' type='email' placeholder='".__( 'Email', 'doliconnect')."' name='log' value='";
+if ( defined("DOLICONNECT_DEMO_EMAIL") && !empty(constant("DOLICONNECT_DEMO_EMAIL")) ) {
+print constant("DOLICONNECT_DEMO_EMAIL");
+}
+print "' required autofocus>";
 print "</div></div><div class='form-group'>
 <div class='input-group mb-2 mr-sm-2'><div class='input-group-prepend'>
 <div class='input-group-text'><i class='fas fa-key fa-fw'></i></div></div>
-<input class='form-control' id='user_pass' type='password' placeholder='".__( 'Password', 'doliconnect')."' name='pwd' value ='' required>";
+<input class='form-control' id='user_pass' type='password' placeholder='".__( 'Password', 'doliconnect')."' name='pwd' value ='";
+if ( defined("DOLICONNECT_DEMO_PASSWORD") && !empty(constant("DOLICONNECT_DEMO_PASSWORD")) ) {
+print constant("DOLICONNECT_DEMO_PASSWORD");
+}
+print "' required>";
 print "</div></div>";
 
 do_action( 'login_form');
@@ -660,18 +668,12 @@ print "</div><div class='float-right'><a href='".wp_lostpassword_url( get_permal
 print "</li></lu><div class='card-body'>";
 
 print "<input type='hidden' value='$redirect_to' name='redirect_to'><button id='submit' class='btn btn-block btn-primary' type='submit' name='submit' value='Submit'";
-print "><b>".__( 'Sign in', 'doliconnect')."</b></button></form>";
+print "><b>".__( 'Sign in', 'doliconnect')."</b></button>";
 
 do_action( 'login_footer');
 
 }
 
-print "</div><div class='card-footer text-muted'>";
-print "<small><div class='float-left'>";
-
-print "</div><div class='float-right'>";
-print dolihelp('ISSUE');
-print "</div></small>";
 print "</div></div></form>";
 
 }
