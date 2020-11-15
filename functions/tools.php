@@ -294,32 +294,33 @@ $password .= "<li class='list-group-item list-group-item-info'><i class='fas fa-
 } 
 $password .= '<li class="list-group-item list-group-item-light">';
 if (is_user_logged_in() && $user) {
-$password .= '<div class="form-group"><div class="row"><div class="col-12"><label for="passwordHelpBlock1"><small>'.__( 'Confirm your current password', 'doliconnect').'</small></label>
-<div class="input-group mb-2"><div class="input-group-prepend"><div class="input-group-text"><i class="fas fa-key fa-fw"></i></div></div><input type="password" id="pwd0" name="pwd0" class="form-control" aria-describedby="passwordHelpBlock1" autocomplete="off" placeholder="'.__( 'Confirm your current password', 'doliconnect').'" ';
+$password .= '<div class="form-floating"><input type="password" class="form-control" id="pwd0" name="pwd0" placeholder="Password" ';
 if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $user->ID ) {
 $password .= ' readonly';
 } else {
 $password .= ' required';
 }
-$password .= '></div></div></div></div>';
+$password .= '><label for="floatingPassword">'.__( 'Confirm your current password', 'doliconnect').'</label></div>';
 }
-$password .= '<div class="form-group"><div class="row"><div class="col-12"><label for="passwordHelpBlock2"><small>'.__( 'New password', 'doliconnect').'</small></label>
-<div class="input-group mb-2"><div class="input-group-prepend"><div class="input-group-text"><i class="fas fa-key fa-fw"></i></div></div><input type="password" id="pwd1" name="pwd1" class="form-control" aria-describedby="passwordHelpBlock2" autocomplete="off" placeholder="'.__( 'Enter your new password', 'doliconnect').'" ';
+$password .= '</li><li class="list-group-item list-group-item-light"><p>'.__( 'Your password must be between 8 and 20 characters, including at least 1 digit, 1 letter, 1 uppercase.', 'doliconnect').'</p>';
+$password .= '<div class="row g-2"><div class="col-md">';
+$password .= '<div class="form-floating"><input type="password" class="form-control" id="pwd1" name="pwd1" placeholder="Password" ';
 if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $user->ID ) {
 $password .= ' readonly';
 } else {
 $password .= ' required';
 }
-$password .= '></div><small id="passwordHelpBlock3" class="form-text text-justify text-muted">
-'.__( 'Your password must be between 8 and 20 characters, including at least 1 digit, 1 letter, 1 uppercase.', 'doliconnect').'
-</small><div class="invalid-feedback">'.__( 'This field is required.', 'doliconnect').'</div></div></div><div class="row"><div class="col-12"><label for="passwordHelpBlock3"><small>'.__( 'New password', 'doliconnect').'</small></label>';
-$password .= '<div class="input-group mb-2"><div class="input-group-prepend"><div class="input-group-text"><i class="fas fa-key fa-fw"></i></div></div><input type="password" id="pwd2" name="pwd2"  class="form-control" aria-describedby="passwordHelpBlock3" autocomplete="off" placeholder="'.__( 'Confirm your new password', 'doliconnect').'" ';
+$password .= '><label for="floatingPassword">'.__( 'New password', 'doliconnect').'</label></div>';
+$password .= '</div><div class="col-md">';
+$password .= '<div class="form-floating"><input type="password" class="form-control" id="pwd2" name="pwd2" placeholder="Password" ';
 if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $user->ID ) {
 $password .= ' readonly';
 } else {
 $password .= ' required';
 }
-$password .= '></div></div></div></li>';
+$password .= '><label for="floatingPassword">'.__( 'Confirm your new password', 'doliconnect').'</label></div>';
+$password .= '</div></div>';
+$password .= '</li>';
 $password .= "</ul><div class='card-body'><button class='btn btn-danger btn-block' type='submit' ";
 if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $user->ID ) {
 $password .= ' disabled';
