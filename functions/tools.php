@@ -302,7 +302,7 @@ $password .= ' required';
 }
 $password .= '><label for="floatingPassword">'.__( 'Confirm your current password', 'doliconnect').'</label></div>';
 }
-$password .= '</li><li class="list-group-item list-group-item-light"><p>'.__( 'Your password must be between 8 and 20 characters, including at least 1 digit, 1 letter, 1 uppercase.', 'doliconnect').'</p>';
+$password .= '</li><li class="list-group-item list-group-item-light"><p class="text-justify">'.__( 'Your password must be between 8 and 20 characters, including at least 1 digit, 1 letter, 1 uppercase.', 'doliconnect').'</p>';
 $password .= '<div class="row g-2"><div class="col-md">';
 $password .= '<div class="form-floating"><input type="password" class="form-control" id="pwd1" name="pwd1" placeholder="Password" ';
 if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $user->ID ) {

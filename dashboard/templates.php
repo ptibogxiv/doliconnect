@@ -556,7 +556,7 @@ print "</script>";
  
 print "<div class='card shadow-sm'><div class='card-header'><h5 class='card-title'>".__( 'Forgot password?', 'doliconnect')."</h5></div>";
 print "<ul class='list-group list-group-flush'><li class='list-group-item'>";
-print "<p>".__( 'Please enter the email address by which you registered your account.', 'doliconnect')."</p>";
+print "<p class='text-justify'>".__( 'Please enter the email address by which you registered your account.', 'doliconnect')."</p>";
 
 print '<div class="form-floating mb-3">
   <input type="email" class="form-control" id="user_email" placeholder="name@example.com" name="user_email" value="" required>
