@@ -2201,11 +2201,10 @@ print "<li class='list-group-item list-group-item-light list-group-item-action'>
 print '<div class="form-floating">';
 $monnaie = doliconst("MAIN_MONNAIE", dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 $testvalue='1.99';
-if ( empty(doliconst('MAIN_MODULE_MULTICURRENCY', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))) || !doliversion('11.0.0') ) { 
 $cur = (!empty($thirdparty->multicurrency_code) ? $thirdparty->multicurrency_code : $monnaie );
+if ( empty(doliconst('MAIN_MODULE_MULTICURRENCY', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))) || !doliversion('11.0.0') ) { 
 print '<input type="text" class="form-control" id="multicurrency_code" value="'.$cur." / ".doliprice($testvalue, null, $cur).'" readonly>
 <label for="multicurrency_code">'.__( 'Default currency', 'doliconnect').'</label>';
-
 } else {
 print '<select class="form-select" id="multicurrency_code" name="multicurrency_code" onchange="DoliSettings(this.form)" aria-label="'.__( 'Default currency', 'doliconnect').'">';
 if ( !isset( $currencies->error ) && $currencies != null && !empty(doliconst('MAIN_MODULE_MULTICURRENCY', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))) && doliversion('11.0.0')) {
@@ -2214,7 +2213,6 @@ print "<option value='".$currency->code_iso."' ";
 if ( $currency->code_iso == $thirdparty->multicurrency_code ) { print " selected"; }
 print ">".$currency->code_iso." / ".doliprice(1.99*$currency->rate, null, $currency->code_iso)."</option>";
 }} else {
-$cur = (!empty($thirdparty->multicurrency_code) ? $thirdparty->multicurrency_code : $monnaie );
 print "<option value='".$cur."' selected>".$cur." / ".doliprice($testvalue, null, $cur)."</option>";
 }
 print '</select><label for="multicurrency_code">'.__( 'Default currency', 'doliconnect').'</label>';
