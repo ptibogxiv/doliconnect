@@ -2169,15 +2169,14 @@ print " onchange='DoliSettings(this.form)'><label class='form-check-label w-100'
 $privacy=$wpdb->prefix."doliprivacy";
 if ( $current_user->$privacy ) {
 print "<li class='list-group-item list-group-item-light list-group-item-action'>";
-print '<div class="form-floating mb-3">
-  <input type="email" class="form-control" id="floatingInput" value="'.wp_date( get_option( 'date_format' ).' - '.get_option('time_format'), $current_user->$privacy, false).'" disabled readonly>
-  <label for="floatingInput">'.__( 'Approval of the Privacy Policy', 'doliconnect').'</label>
+print '<div class="form-floating">
+<input type="text" class="form-control" id="floatingInput" value="'.wp_date( get_option( 'date_format' ).' - '.get_option('time_format'), $current_user->$privacy, false).'" readonly>
+<label for="floatingInput">'.__( 'Approval of the Privacy Policy', 'doliconnect').'</label>
 </div>';
 print "</li>";
 }
 
 print "<li class='list-group-item list-group-item-light list-group-item-action'>";
-//print $current_user->locale;
 print '<div class="form-floating"><select class="form-select" id="locale" name="locale" onchange="DoliSettings(this.form)" aria-label="'.__( 'Default language', 'doliconnect').'">';
 if ( function_exists('pll_the_languages') ) { 
 print "<option value=''>".__( 'Default / Browser language', 'doliconnect')."</option>";
@@ -2199,7 +2198,6 @@ $thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, '
 $currencies = callDoliApi("GET", "/setup/dictionary/currencies?multicurrency=1&sortfield=code_iso&sortorder=ASC&limit=100&active=1", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
  
 print "<li class='list-group-item list-group-item-light list-group-item-action'>";
-//print $current_user->locale;
 print '<div class="form-floating"><select class="form-select" id="multicurrency_code" name="multicurrency_code" onchange="DoliSettings(this.form)" aria-label="'.__( 'Default currency', 'doliconnect').'" ';
 $monnaie = doliconst("MAIN_MONNAIE", dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 if ( empty(doliconst('MAIN_MODULE_MULTICURRENCY', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))) || !doliversion('11.0.0') ) { print " disabled"; }

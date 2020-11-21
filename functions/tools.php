@@ -2154,14 +2154,14 @@ global $current_user;
         <input class='form-control' type='email' id='gdrf_data_email' aria-describedby='gdrf_data_emailPrepend' name='gdrf_data_email' required>
       </div>
 		<?php else : ?>
-      <div class="form-floating mb-3">
+      <div class="form-floating">
           <input type="email" class="form-control" id="gdrf_data_email" name="gdrf_data_email" value="<?php echo $current_user->user_email; ?>">
           <label for="gdrf_data_email"><?php echo esc_html( $args['label_input_email'] ); ?></label>
       </div>
 		<?php endif; ?> 
       </li>
       <li class='list-group-item list-group-item-light list-group-item-action flex-column align-items-start'>
-      <div class="form-floating mb-3">
+      <div class="form-floating">
           <input type="num" class="form-control" id="gdrf_data_human" name="gdrf_data_human" required>
           <label for="gdrf_data_human"><?php echo esc_html( $args['label_input_captcha'] ); ?> <?php echo $number_one . ' + ' . $number_two . ' = ?'; ?></label>
       </div>
