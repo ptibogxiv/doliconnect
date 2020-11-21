@@ -2110,7 +2110,7 @@ global $current_user;
 		<?php elseif ( 'remove' === $args['request_type'] ) : ?>
 			<input type="hidden" name="gdrf_data_type" value="remove_personal_data" id="gdrf-data-type-remove" />
 		<?php else : ?>
-<li class='list-group-item list-group-item-light list-group-item-action flex-column align-items-start'><div class='form-check'>
+<li class='list-group-item list-group-item-light list-group-item-action'><div class='form-check'>
 <input id='gdrf-data-type-export' class='form-check-input' type='radio' name='gdrf_data_type' value='export_personal_data' checked>
 <label class='form-check-label w-100' for='gdrf-data-type-export'><div class='row'>
 		<?php if ( !isset($args['widget']) ) : ?>
@@ -2120,7 +2120,7 @@ global $current_user;
 		<?php endif; ?>
 <div class='col-auto align-middle'><h6 class='my-0'><?php echo __( 'Export your data', 'doliconnect'); ?></h6><small class='text-muted'><?php echo __( 'You will receive an email with a secure link to your data', 'doliconnect'); ?></small>
 </div></div></label></div></li>
-<li class='list-group-item list-group-item-light list-group-item-action flex-column align-items-start'><div class='form-check'>
+<li class='list-group-item list-group-item-light list-group-item-action'><div class='form-check'>
 <input id='gdrf-data-type-remove' class='form-check-input' type='radio' name='gdrf_data_type' value='remove_personal_data'>
 <label class='form-check-label w-100' for='gdrf-data-type-remove'><div class='row'>
 		<?php if ( !isset($args['widget']) ) : ?>
@@ -2131,7 +2131,7 @@ global $current_user;
 <div class='col-auto align-middle'><h6 class='my-0'><?php echo __( 'Erase your data', 'doliconnect'); ?></h6><small class='text-muted'><?php echo __( 'You will receive an email with a secure link to confirm the deletion', 'doliconnect'); ?></small>
 </div></div></label></div></li>
 <?php if (!empty(get_option('doliconnectbeta'))) { ?>
-<li class='list-group-item list-group-item-light list-group-item-action flex-column align-items-start'><div class='form-check'>
+<li class='list-group-item list-group-item-light list-group-item-action'><div class='form-check'>
 <input id='gdrf-data-type-delete' class='form-check-input' type='radio' name='gdrf_data_type' value='delete_personal_data' disabled>
 <label class='form-check-label w-100' for='gdrf-data-type-delete'><div class='row'>
 		<?php if ( !isset($args['widget']) ) : ?>
@@ -2142,7 +2142,7 @@ global $current_user;
 <div class='col-auto align-middle'><h6 class='my-0'><?php echo __( 'Delete your account', 'doliconnect'); ?></h6><small class='text-muted'><?php echo __( 'Soon, you will be able to delete your account', 'doliconnect'); ?></small>
 </div></div></label></div></li>
 		<?php } endif; ?>
-      <li class='list-group-item list-group-item-light list-group-item-action flex-column align-items-start'>
+      <li class='list-group-item list-group-item-light list-group-item-action'>
     <?php if ( empty($current_user->user_email) ) : ?>
 		<label for="gdrf_data_email">
 			<?php echo esc_html( $args['label_input_email'] ); ?>
@@ -2154,13 +2154,12 @@ global $current_user;
         <input class='form-control' type='email' id='gdrf_data_email' aria-describedby='gdrf_data_emailPrepend' name='gdrf_data_email' required>
       </div>
 		<?php else : ?>
-      <div class="form-floating">
+      <div class="form-floating mb-3">
           <input type="email" class="form-control" id="gdrf_data_email" name="gdrf_data_email" value="<?php echo $current_user->user_email; ?>">
           <label for="gdrf_data_email"><?php echo esc_html( $args['label_input_email'] ); ?></label>
       </div>
 		<?php endif; ?> 
-      </li>
-      <li class='list-group-item list-group-item-light list-group-item-action flex-column align-items-start'>
+      
       <div class="form-floating">
           <input type="num" class="form-control" id="gdrf_data_human" name="gdrf_data_human" required>
           <label for="gdrf_data_human"><?php echo esc_html( $args['label_input_captcha'] ); ?> <?php echo $number_one . ' + ' . $number_two . ' = ?'; ?></label>
