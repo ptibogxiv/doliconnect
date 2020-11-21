@@ -2142,9 +2142,8 @@ global $current_user;
 <div class='col-auto align-middle'><h6 class='my-0'><?php echo __( 'Delete your account', 'doliconnect'); ?></h6><small class='text-muted'><?php echo __( 'Soon, you will be able to delete your account', 'doliconnect'); ?></small>
 </div></div></label></div></li>
 		<?php } endif; ?>
-    
+      <li class='list-group-item list-group-item-light list-group-item-action flex-column align-items-start'>
     <?php if ( empty($current_user->user_email) ) : ?>
-<li class='list-group-item list-group-item-light list-group-item-action flex-column align-items-start'>
 		<label for="gdrf_data_email">
 			<?php echo esc_html( $args['label_input_email'] ); ?>
 		</label>
@@ -2154,19 +2153,13 @@ global $current_user;
         </div>
         <input class='form-control' type='email' id='gdrf_data_email' aria-describedby='gdrf_data_emailPrepend' name='gdrf_data_email' required>
       </div>
-</li>
 		<?php else : ?>
-      <li class='list-group-item list-group-item-light list-group-item-action flex-column align-items-start'>
-      <label for='gdrf_data_email'><?php echo esc_html( $args['label_input_email'] ); ?></label>
-      <div class='input-group'>
-        <div class='input-group-prepend'>
-          <span class='input-group-text' id='gdrf_data_emailPrepend'><i class='fas fa-at fa-fw'></i></span>
-        </div>
-        <input class='form-control' type='email' id='gdrf_data_email' aria-describedby='gdrf_data_emailPrepend' name='gdrf_data_email' value='<?php echo $current_user->user_email; ?>' readonly>
+      <div class="form-floating mb-3">
+          <input type="email" class="form-control" id="gdrf_data_email" name="gdrf_data_email" value="<?php echo $current_user->user_email; ?>">
+          <label for="gdrf_data_email"><?php echo esc_html( $args['label_input_email'] ); ?></label>
       </div>
-
+		<?php endif; ?> 
       </li>
-		<?php endif; ?>
       <li class='list-group-item list-group-item-light list-group-item-action flex-column align-items-start'>
       <div class="form-floating mb-3">
           <input type="num" class="form-control" id="gdrf_data_human" name="gdrf_data_human" required>
