@@ -2169,7 +2169,10 @@ print " onchange='DoliSettings(this.form)'><label class='form-check-label w-100'
 $privacy=$wpdb->prefix."doliprivacy";
 if ( $current_user->$privacy ) {
 print "<li class='list-group-item list-group-item-light list-group-item-action'>";
-print "".__( 'Approval of the Privacy Policy the', 'doliconnect')." ".wp_date( get_option( 'date_format' ).' - '.get_option('time_format'), $current_user->$privacy, false)."";
+print '<div class="form-floating mb-3">
+  <input type="email" class="form-control" id="floatingInput" value="'.wp_date( get_option( 'date_format' ).' - '.get_option('time_format'), $current_user->$privacy, false).'" disabled readonly>
+  <label for="floatingInput">'.__( 'Approval of the Privacy Policy', 'doliconnect').'</label>
+</div>';
 print "</li>";
 }
 

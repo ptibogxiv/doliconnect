@@ -426,34 +426,33 @@ jQuery("#DoliconnectLoadingModal").modal("hide");
 });';
 print "</script>";
 
-print "<div class='form-group'><label for='pwd1'><small>".__( 'New password', 'doliconnect')."</small></label>
-<div class='input-group mb-2 mr-sm-2'><div class='input-group-prepend'>
-<div class='input-group-text'><i class='fas fa-key fa-fw'></i></div></div>
-<input class='form-control' id='pwd1' type='password' name='pwd1' value ='' placeholder='".__( 'Enter your new password', 'doliconnect')."' ";
+print '</li><li class="list-group-item list-group-item-light"><p class="text-justify">'.__( 'Your password must be between 8 and 20 characters, including at least 1 digit, 1 letter, 1 uppercase.', 'doliconnect').'</p>';
+print '<div class="row g-2"><div class="col-md">';
+print '<div class="form-floating"><input type="password" class="form-control" id="pwd1" name="pwd1" placeholder="Password" ';
 if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $user->ID ) {
 print ' readonly';
 } else {
 print ' required';
 }
-print "></div>
-<small id='pwd1' class='form-text text-justify text-muted'>
-".__( 'Your password must be between 8 and 20 characters, including at least 1 digit, 1 letter, 1 uppercase.', 'doliconnect')."
-</small>
-<div class='form-group'><label for='pwd2'></label>
-<div class='input-group mb-2 mr-sm-2'><div class='input-group-prepend'>
-<div class='input-group-text'><i class='fas fa-key fa-fw'></i></div></div>
-<input class='form-control' id='pwd2' type='password' name='pwd2' value ='' placeholder='".__( 'Confirm your new password', 'doliconnect')."' ";
+print '><label for="floatingPassword">'.__( 'New password', 'doliconnect').'</label></div>';
+print '</div><div class="col-md">';
+print '<div class="form-floating"><input type="password" class="form-control" id="pwd2" name="pwd2" placeholder="Password" ';
 if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $user->ID ) {
 print ' readonly';
 } else {
 print ' required';
 }
-print "></div>
-</div></div></li></ul><div class='card-body'><input type='hidden' name='case' value ='updatepwd'><button class='btn btn-danger btn-block' type='submit' ";
-if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $user->ID ) {
-print ' disabled';
-}
-print "><b>".__( 'Update', 'doliconnect')."</b></button></form></div>";
+print '><label for="floatingPassword">'.__( 'Confirm your new password', 'doliconnect').'</label></div>';
+print '</div></div>';
+print '</li>';
+print "</ul><div class='card-body'><input type='hidden' name='case' value ='updatepwd'>";
+print '<div class="d-grid gap-2"><button class="btn btn-outline-secondary" type="submit" value="submit">'.__( 'Update', 'doliconnect').'</button></div>';
+
+//if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $user->ID ) {
+//print ' disabled';
+//}
+
+print '</form></div>';
 print "<div class='card-footer text-muted'>";
 print "<small><div class='float-left'>";
 if ( isset($request) ) print dolirefresh($request, null, dolidelay('thirdparty'));
@@ -564,8 +563,9 @@ print '<div class="form-floating mb-3">
 </div>';
 
 print "</li></lu><div class='card-body'>";
-print "<button class='btn btn-danger btn-block' type='submit' value='submit'><b>".__( 'Submit', 'doliconnect')."</b></button></form>";
-print "</div></div>";
+print '<div class="d-grid gap-2"><button class="btn btn-outline-secondary" type="submit" value="submit">'.__( 'Submit', 'doliconnect').'</button></div>';
+
+print "</form></div></div>";
 
 } else {
 
@@ -609,11 +609,11 @@ print "<ul class='list-group list-group-flush'><li class='list-group-item'><cent
 //print "<h2>".__( 'Restricted area', 'doliconnect')."</h2></center>";
 print "</li></lu><div class='card-body'>";
 
-print '<a href="#" id="login-'.current_time('timestamp').'" data-toggle="modal" data-target="#DoliconnectLogin" data-dismiss="modal" title="'.__('Sign in', 'doliconnect').'" class="btn btn-block btn-outline-secondary bg-light text-body" role="button">'.__('You have already an account', 'doliconnect').'</a>';
+print '<div class="d-grid gap-2"><a href="#" id="login-'.current_time('timestamp').'" data-toggle="modal" data-target="#DoliconnectLogin" data-dismiss="modal" title="'.__('Sign in', 'doliconnect').'" class="btn btn-outline-secondary" role="button">'.__('You have already an account', 'doliconnect').'</a></div>';
 
 if ((!is_multisite() && get_option( 'users_can_register' )) || ((!is_multisite() && get_option( 'dolicustsupp_can_register' )) || ((get_option( 'dolicustsupp_can_register' ) || get_option('users_can_register') == '1') && (get_site_option( 'registration' ) == 'user' || get_site_option( 'registration' ) == 'all')))) {
 print '<div><div style="display:inline-block;width:46%;float:left"><hr width="90%" /></div><div style="display:inline-block;width: 8%;text-align: center;vertical-align:90%"><small class="text-muted">'.__( 'or', 'doliconnect').'</small></div><div style="display:inline-block;width:46%;float:right" ><hr width="90%"/></div></div>';
-print '<a href="'.wp_registration_url( get_permalink() ).'" id="login-'.current_time('timestamp').'" class="btn btn-block btn-outline-secondary bg-light text-body" role="button">'.__("You don't have an account", 'doliconnect').'</a>';
+print '<div class="d-grid gap-2"><a href="'.wp_registration_url( get_permalink() ).'" id="login-'.current_time('timestamp').'" data-toggle="modal" data-target="#DoliconnectLogin" data-dismiss="modal" title="'.__('Sign in', 'doliconnect').'" class="btn btn-outline-secondary" role="button">'.__("You don't have an account", 'doliconnect').'</a></div>';
 }
 
 } else {
