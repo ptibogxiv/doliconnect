@@ -2198,10 +2198,16 @@ $thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, '
 $currencies = callDoliApi("GET", "/setup/dictionary/currencies?multicurrency=1&sortfield=code_iso&sortorder=ASC&limit=100&active=1", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
  
 print "<li class='list-group-item list-group-item-light list-group-item-action'>";
-print '<div class="form-floating"><select class="form-select" id="multicurrency_code" name="multicurrency_code" onchange="DoliSettings(this.form)" aria-label="'.__( 'Default currency', 'doliconnect').'" ';
+print '<div class="form-floating">';
 $monnaie = doliconst("MAIN_MONNAIE", dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-if ( empty(doliconst('MAIN_MODULE_MULTICURRENCY', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))) || !doliversion('11.0.0') ) { print " disabled"; }
-print '>';
+$testvalue='1.99';
+if ( empty(doliconst('MAIN_MODULE_MULTICURRENCY', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))) || !doliversion('11.0.0') ) { 
+$cur = (!empty($thirdparty->multicurrency_code) ? $thirdparty->multicurrency_code : $monnaie );
+print '<input type="text" class="form-control" id="multicurrency_code" value="'.$cur." / ".doliprice($testvalue, null, $cur).'" readonly>
+<label for="multicurrency_code">'.__( 'Default currency', 'doliconnect').'</label>';
+
+} else {
+print '<select class="form-select" id="multicurrency_code" name="multicurrency_code" onchange="DoliSettings(this.form)" aria-label="'.__( 'Default currency', 'doliconnect').'">';
 if ( !isset( $currencies->error ) && $currencies != null && !empty(doliconst('MAIN_MODULE_MULTICURRENCY', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))) && doliversion('11.0.0')) {
 foreach ( $currencies as $currency ) { 
 print "<option value='".$currency->code_iso."' ";
@@ -2209,11 +2215,11 @@ if ( $currency->code_iso == $thirdparty->multicurrency_code ) { print " selected
 print ">".$currency->code_iso." / ".doliprice(1.99*$currency->rate, null, $currency->code_iso)."</option>";
 }} else {
 $cur = (!empty($thirdparty->multicurrency_code) ? $thirdparty->multicurrency_code : $monnaie );
-print "<option value='".$cur."' selected>".$cur." / ".doliprice('1.99', null, $cur)."</option>";
+print "<option value='".$cur."' selected>".$cur." / ".doliprice($testvalue, null, $cur)."</option>";
 }
-print '</select><label for="multicurrency_code">'.__( 'Default currency', 'doliconnect').'</label></div>';
-print "</li>";
-print "<div class='card-body'>";
+print '</select><label for="multicurrency_code">'.__( 'Default currency', 'doliconnect').'</label>';
+}
+print '</div></li><div class="card-body">';
 if ( is_plugin_active( 'two-factor/two-factor.php' ) && current_user_can('administrator') && !empty(get_option('doliconnectbeta')) ) {
 require_once( ABSPATH . 'wp-content/plugins/two-factor/class-two-factor-core.php')
 
