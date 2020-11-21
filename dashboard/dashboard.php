@@ -1579,7 +1579,8 @@ $request = "/adherentsplus/".doliconnector($current_user, 'fk_member', esc_attr(
 $productadhesion = doliconst("ADHERENT_PRODUCT_ID_FOR_SUBSCRIPTIONS", dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 if ( isset($_POST["update_membership"]) && function_exists('dolimembership') ) {
-$adherent = dolimembership($current_user, $_POST["update_membership"], $_POST["typeadherent"], dolidelay('member', true));
+$typeadherent = isset($_POST["typeadherent"]) ? $_POST["typeadherent"] : null;
+$adherent = dolimembership($current_user, $_POST["update_membership"], $typeadherent, dolidelay('member', true));
 $request = "/adherentsplus/".doliconnector($current_user, 'fk_member', true); 
 //if ($statut==1) {
 print dolialert('success', __( 'Your membership has been updated.', 'doliconnect'));

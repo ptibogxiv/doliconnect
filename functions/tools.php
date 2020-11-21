@@ -864,7 +864,7 @@ $alert .= '<strong>'.__( 'Be carefull', 'doliconnect').'</strong>';
 $alert .= '<strong>'.__( 'Oops', 'doliconnect').'</strong>';
 }
 $alert .= ' '.$msg;
-$alert .= '<button type="button" class="btn-close" aria-label="Close"></button></div>';
+$alert .= '<button type="button" class="btn-close" data-dismiss="alert" aria-label="Close"></button></div>';
 return $alert;
 }
 
