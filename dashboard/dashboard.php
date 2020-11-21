@@ -1687,14 +1687,14 @@ print do_action('mydoliconnectmemberform', $adherent);
 print "</div><ul class='list-group list-group-flush'>";
 
 if (doliconnector($current_user, 'fk_member') > 0) {
-$listcotisation = callDoliApi("GET", "/adherentsplus/".doliconnector($current_user, 'fk_member')."/subscriptions", null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$listcotisation = callDoliApi("GET", "/members/".doliconnector($current_user, 'fk_member')."/subscriptions", null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 } 
 
 if ( !isset($listcotisation->error) && $listcotisation != null ) { 
 foreach ( $listcotisation as $cotisation ) {                                                                                 
 $dated =  wp_date('d/m/Y', $cotisation->dateh);
 $datef =  wp_date('d/m/Y', $cotisation->datef);
-print "<li class='list-group-item'><table width='100%' border='0'><tr><td>$cotisation->label</td><td>$dated ".__( 'to', 'doliconnect')." $datef";
+print "<li class='list-group-item'><table width='100%' border='0'><tr><td>".$cotisation->note."</td><td>".$dated." ".__( 'to', 'doliconnect')." ".$datef;
 print "</td><td class='text-right'><b>".doliprice($cotisation->amount)."</b></td></tr></table><span></span></li>";
 }
 }
