@@ -2171,7 +2171,7 @@ if ( $current_user->$privacy ) {
 print "<li class='list-group-item list-group-item-light list-group-item-action'>";
 print '<div class="form-floating">
 <input type="text" class="form-control" id="floatingInput" value="'.wp_date( get_option( 'date_format' ).' - '.get_option('time_format'), $current_user->$privacy, false).'" readonly>
-<label for="floatingInput">'.__( 'Approval of the Privacy Policy', 'doliconnect').'</label>
+<label for="floatingInput">'.__( 'Privacy policy', 'doliconnect').'</label>
 </div>';
 print "</li>";
 }
