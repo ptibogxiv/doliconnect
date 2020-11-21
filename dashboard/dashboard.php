@@ -2172,25 +2172,22 @@ print "<li class='list-group-item list-group-item-light list-group-item-action'>
 print "".__( 'Approval of the Privacy Policy the', 'doliconnect')." ".wp_date( get_option( 'date_format' ).' - '.get_option('time_format'), $current_user->$privacy, false)."";
 print "</li>";
 }
+
 print "<li class='list-group-item list-group-item-light list-group-item-action'>";
 //print $current_user->locale;
-print "<div class='form-group'><label for='inputaddress'><small>".__( 'Default language', 'doliconnect')."</small></label>
-<div class='input-group'><div class='input-group-prepend'><span class='input-group-text'><i class='fas fa-language fa-fw'></i></span></div>";
+print '<div class="form-floating"><select class="form-select" id="locale" name="locale" onchange="DoliSettings(this.form)" aria-label="'.__( 'Default language', 'doliconnect').'">';
 if ( function_exists('pll_the_languages') ) { 
-print "<select class='form-control' id='locale' name='locale' onchange='DoliSettings(this.form)' >";
 print "<option value=''>".__( 'Default / Browser language', 'doliconnect')."</option>";
 $translations = pll_the_languages( array( 'raw' => 1 ) );
 foreach ($translations as $key => $value) {
-print "<option value='".str_replace("-","_",$value[locale])."' ";
+print "<option value='".str_replace("-","_",$value['locale'])."' ";
 if  ( $current_user->locale == str_replace("-","_",$value['locale']) ) {print " selected";}
 print ">".$value['name']."</option>";
 }
-print "</select>";
 } else {
 print "<input class='form-control' type='text' value='".__( 'Default / Browser language', 'doliconnect')."' readonly>";
 }
-print "</div></div>";
-//print pll_default_language('locale');
+print '</select><label for="locale">'.__( 'Default language', 'doliconnect').'</label></div>';
 print "</li>";
 
 if ( doliconnector($current_user, 'fk_soc') > 0 ) {
@@ -2200,7 +2197,7 @@ $currencies = callDoliApi("GET", "/setup/dictionary/currencies?multicurrency=1&s
  
 print "<li class='list-group-item list-group-item-light list-group-item-action'>";
 //print $current_user->locale;
-print '<div class="form-floating"><select class="form-select" id="multicurrency_code" name="multicurrency_code" onchange="DoliSettings(this.form)" aria-label="Floating label select example" ';
+print '<div class="form-floating"><select class="form-select" id="multicurrency_code" name="multicurrency_code" onchange="DoliSettings(this.form)" aria-label="'.__( 'Default currency', 'doliconnect').'" ';
 $monnaie = doliconst("MAIN_MONNAIE", dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 if ( empty(doliconst('MAIN_MODULE_MULTICURRENCY', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))) || !doliversion('11.0.0') ) { print " disabled"; }
 print '>';
