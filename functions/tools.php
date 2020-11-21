@@ -321,11 +321,13 @@ $password .= ' required';
 $password .= '><label for="floatingPassword">'.__( 'Confirm your new password', 'doliconnect').'</label></div>';
 $password .= '</div></div>';
 $password .= '</li>';
-$password .= "</ul><div class='card-body'><button class='btn btn-danger btn-block' type='submit' ";
+$password .= "</ul><div class='card-body'>";
+$password .= '<div class="d-grid gap-2"><button class="btn btn-outline-secondary" id="gdrf-submit-button" type="submit"';
 if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $user->ID ) {
 $password .= ' disabled';
 }
-$password .= ">".__( 'Update', 'doliconnect')."</button></div><div class='card-footer text-muted'>";
+$password .= '>'.__( 'Update', 'doliconnect').'</button></div>';
+$password .= "</div><div class='card-footer text-muted'>";
 $password .= "<small><div class='float-left'>";
 if ( isset($request) ) $password .= dolirefresh($request, $url, dolidelay('thirdparty'));
 $password .= "</div><div class='float-right'>";
@@ -2167,7 +2169,7 @@ global $current_user;
       </li>
       </ul>
 			<div class="card-body">
-          <div class="d-grid gap-2"><button class="btn btn-danger" id="gdrf-submit-button" type="submit"><?php _e('Validate the request', 'doliconnect'); ?></button></div>
+          <div class="d-grid gap-2"><button class="btn btn-outline-secondary" id="gdrf-submit-button" type="submit"><?php _e('Validate the request', 'doliconnect'); ?></button></div>
       </div>
   </div> 
 </form>
