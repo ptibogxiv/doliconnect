@@ -2168,7 +2168,7 @@ global $current_user;
       </li>
       </ul>
 			<div class="card-body">
-        <input id="gdrf-submit-button" class="btn btn-danger btn-block" type="submit" value="<?php echo __( 'Validate the request', 'doliconnect'); ?>"/>
+          <div class="d-grid gap-2"><button class="btn btn-danger" id="gdrf-submit-button" type="submit"><?php _e('Validate the request', 'doliconnect'); ?></button></div>
       </div>
   </div> 
 </form>
