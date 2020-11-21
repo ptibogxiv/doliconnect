@@ -1694,7 +1694,12 @@ if ( !isset($listcotisation->error) && $listcotisation != null ) {
 foreach ( $listcotisation as $cotisation ) {                                                                                 
 $dated =  wp_date('d/m/Y', $cotisation->dateh);
 $datef =  wp_date('d/m/Y', $cotisation->datef);
-print "<li class='list-group-item'><table width='100%' border='0'><tr><td>".$cotisation->note."</td><td>".$dated." ".__( 'to', 'doliconnect')." ".$datef;
+print "<li class='list-group-item'><table width='100%' border='0'><tr><td>";
+if ($cotisation->fk_type > 0) {
+$type= callDoliApi("GET", "/memberstypes/".$cotisation->fk_type, null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+}
+print doliproduct($type, 'label');
+print "</td><td>".$cotisation->note."</td><td>".$dated." ".__( 'to', 'doliconnect')." ".$datef;
 print "</td><td class='text-right'><b>".doliprice($cotisation->amount)."</b></td></tr></table><span></span></li>";
 }
 }
