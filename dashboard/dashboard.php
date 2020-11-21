@@ -2150,20 +2150,20 @@ jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function (e) {
 print "</script>";
 
 print "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
-print "<li class='list-group-item list-group-item-light list-group-item-action'><div class='custom-control custom-switch'><input type='checkbox' class='custom-control-input' name='loginmailalert' id='loginmailalert' ";
+print "<li class='list-group-item list-group-item-light list-group-item-action'><div class='form-check form-switch'><input type='checkbox' class='form-check-input' name='loginmailalert' id='loginmailalert' ";
 if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $ID ) {
 print " disabled";
 } elseif ( $current_user->loginmailalert == 'on' ) { print " checked"; }        
-print " onchange='DoliSettings(this.form)'><label class='custom-control-label w-100' for='loginmailalert'> ".__( 'Receive a email notification at each connection', 'doliconnect')."</label>
+print " onchange='DoliSettings(this.form)'><label class='form-check-label w-100' for='loginmailalert'> ".__( 'Receive a email notification at each connection', 'doliconnect')."</label>
 </div></li>";
 if ( current_user_can('administrator') && !empty(get_option('doliconnectbeta')) ) {
-print "<li class='list-group-item list-group-item-light list-group-item-action'><div class='custom-control custom-switch'><input type='checkbox' class='custom-control-input' name='optin1' id='optin1' ";
+print "<li class='list-group-item list-group-item-light list-group-item-action'><div class='form-check form-switch'><input type='checkbox' class='form-check-input' name='optin1' id='optin1' ";
 if ( $current_user->optin1 == 'on' ) { print " checked"; }        
-print " onchange='DoliSettings(this.form)'><label class='custom-control-label w-100' for='optin1'> ".__( 'I would like to receive the newsletter', 'doliconnect')."</label>
+print " onchange='DoliSettings(this.form)'><label class='form-check-label w-100' for='optin1'> ".__( 'I would like to receive the newsletter', 'doliconnect')."</label>
 </div></li>";
-print "<li class='list-group-item list-group-item-light list-group-item-action'><div class='custom-control custom-switch'><input type='checkbox' class='custom-control-input' name='optin2' id='optin2' ";
+print "<li class='list-group-item list-group-item-light list-group-item-action'><div class='form-check form-switch'><input type='checkbox' class='form-check-input' name='optin2' id='optin2' ";
 if ( $current_user->optin2 == 'on' ) { print " checked"; }        
-print " onchange='DoliSettings(this.form)'><label class='custom-control-label w-100' for='optin2'> ".__( 'I would like to receive the offers of our partners', 'doliconnect')."</label>
+print " onchange='DoliSettings(this.form)'><label class='form-check-label w-100' for='optin2'> ".__( 'I would like to receive the offers of our partners', 'doliconnect')."</label>
 </div></li>";
 }
 $privacy=$wpdb->prefix."doliprivacy";
