@@ -2102,7 +2102,7 @@ global $current_user;
 		// Display the form
 		ob_start();
 		?>
-		<form action="<?php echo esc_url( admin_url( 'admin-ajax.php' ) ); ?>" method="post" class="was-validated" id="gdrf-form">
+		<form action="<?php echo esc_url( admin_url( 'admin-ajax.php' ) ); ?>" method="post" id="gdrf-form" class="was-validated" >
 			<input type="hidden" name="action" value="doli_gdrf_data_request" />
 			<input type="hidden" name="gdrf_data_human_key" id="gdrf_data_human_key" value="<?php echo $number_one . '000' . $number_two; ?>" />
 			<input type="hidden" name="gdrf_data_nonce" id="gdrf_data_nonce" value="<?php echo wp_create_nonce( 'gdrf_nonce'); ?>" />

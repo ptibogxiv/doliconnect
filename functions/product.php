@@ -149,7 +149,7 @@ if (! isset($line)) { $line = null; }
 
 $prdt = callDoliApi("GET", "/products/".$productid."?includestockdata=1&includesubproducts=true", null, dolidelay('product', true));
 
-$warehouse = doliconst('DOLICONNECT_ID_WAREHOUSE', $refresh);
+$warehouse = doliconst('DOLICONNECT_ID_WAREHOUSE');
 if (isset($prdt->stock_warehouse) && !empty($prdt->stock_warehouse) && !empty($warehouse)) {
 if (isset($prdt->stock_warehouse->$warehouse)) {
 $realstock = min(array($prdt->stock_reel,$prdt->stock_warehouse->$warehouse->real,$prdt->stock_theorique));
@@ -189,7 +189,7 @@ if ( !empty($url) ) {
 }
 return doliconnect_countitems($order);
 
-} elseif ( doliconnector($current_user, 'fk_order') > 0 && ($realstock >= $quantity || empt($quantity) || (is_object($line) && $line->type != '0' && empty(doliconst('STOCK_SUPPORTS_SERVICES')) )) && $line > 0 ) {
+} elseif ( doliconnector($current_user, 'fk_order') > 0 && ($realstock >= $quantity || empty($quantity) || (is_object($line) && $line->type != '0' && empty(doliconst('STOCK_SUPPORTS_SERVICES')) )) && $line > 0 ) {
 
 if ( $quantity < 1 ) {
 

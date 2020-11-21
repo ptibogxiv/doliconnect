@@ -1752,8 +1752,7 @@ print $consumption->value." ".$consumption->unit;
 print "x$consumption->qty";
 }
 
-print "</td>";
-print "<td class='text-right'><b>".doliprice($consumption->amount)."</b></td></tr></table><span></span></li>";
+print "</td></tr></table><span></span></li>";
 }
 } else { 
 print "<li class='list-group-item list-group-item-light'><center>".__( 'No consumption', 'doliconnect')."</center></li>";
