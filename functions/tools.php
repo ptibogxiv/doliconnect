@@ -1548,23 +1548,23 @@ $paymentmethods .= "<input id='cardholder-name' name='cardholder-name' value='' 
 $paymentmethods .= "<p><div id='card-error-message' class='text-danger' role='alert'><!-- a Stripe Message will be inserted here. --></div></p>";
 $paymentmethods .= '<p>';
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
-$paymentmethods .= '<div class="custom-control custom-radio custom-control-inline"><input type="radio" id="cardDefault0" name="cardDefault" value="0"  class="custom-control-input" checked>
-<label class="custom-control-label text-muted" for="cardDefault0">'.__( "Not save", 'doliconnect').'</label></div>';
+$paymentmethods .= '<div class="form-check"><input type="radio" id="cardDefault0" name="cardDefault" value="0"  class="form-check-input" checked>
+<label class="form-check-label text-muted" for="cardDefault0">'.__( "Not save", 'doliconnect').'</label></div>';
 }
 if ($countPM < $maxPM) {
-$paymentmethods .= '<div class="custom-control custom-radio custom-control-inline"><input type="radio" id="cardDefault1" name="cardDefault" value="1"  class="custom-control-input"';
+$paymentmethods .= '<div class="form-check"><input type="radio" id="cardDefault1" name="cardDefault" value="1"  class="form-check-input"';
 if (empty($countPM)) {
 $paymentmethods .= ' disabled'; 
 } elseif (empty($object)) {
 $paymentmethods .= ' checked'; 
 }
-$paymentmethods .= '><label class="custom-control-label text-muted" for="cardDefault1">'.__( "Save", 'doliconnect').'</label></div>';
-$paymentmethods .= '<div class="custom-control custom-radio custom-control-inline">
-<input type="radio" id="cardDefault2" name="cardDefault" value="2" class="custom-control-input"';
+$paymentmethods .= '><label class="form-check-label text-muted" for="cardDefault1">'.__( "Save", 'doliconnect').'</label></div>';
+$paymentmethods .= '<div class="form-check">
+<input type="radio" id="cardDefault2" name="cardDefault" value="2" class="form-check-input"';
 if (empty($countPM)) {
 $paymentmethods .= ' checked'; 
 } 
-$paymentmethods .= '><label class="custom-control-label text-muted" for="cardDefault2">'.__( "Save as favourite", 'doliconnect').'</label></div>';
+$paymentmethods .= '><label class="form-check-label text-muted" for="cardDefault2">'.__( "Save as favourite", 'doliconnect').'</label></div>';
 }
 $paymentmethods .= '</p>';
 $paymentmethods .= '<p class="text-justify">';
@@ -1756,13 +1756,13 @@ $paymentmethods .= "<p class='text-justify'>";
 $paymentmethods .= "<small><strong>Note:</strong> ".sprintf( esc_html__( 'By providing your IBAN and confirming this form, you are authorizing %s and Stripe, our payment service provider, to send instructions to your bank to debit your account and your bank to debit your account in accordance with those instructions. You are entitled to a refund from your bank under the terms and conditions of your agreement with it. A refund must be claimed within 8 weeks starting from the date on which your account was debited.', 'doliconnect'), get_bloginfo('name'))."</small>";
 $paymentmethods .= "</p>";
 $paymentmethods .= "<script>";
-$paymentmethods .= "</script>";
+$paymentmethods .= '</script><div class="d-grid gap-2">';
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
 $paymentmethods .= "<button id='cardPayButton' class='btn btn-danger btn-block'>".__( 'Pay', 'doliconnect')." ".doliprice($object, 'ttc', isset($object->multicurrency_code) ? $object->multicurrency_code : null)."</button>";
 } else {
 $paymentmethods .= "<button id='cardButton' class='btn btn-warning btn-block' title='".__( 'Add', 'doliconnect')."'>".__( 'Add', 'doliconnect')."</button>";
 }
-$paymentmethods .= "</div>";
+$paymentmethods .= '</div></div>';
 }
 
 if ( isset($listpaymentmethods->PAYPAL) && !empty($listpaymentmethods->PAYPAL) ) {
@@ -1819,12 +1819,12 @@ $paymentmethods .= dolipaymentterm($thirdparty->cond_reglement_id);
 } else {
 $paymentmethods .= __( 'immediately', 'doliconnect');
 }
-$paymentmethods .= "</small>";
-$paymentmethods .= "</p></div></div>";
+$paymentmethods .= '</small>';
+$paymentmethods .= '</p></div></div><div class="d-grid gap-2">';
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
-$paymentmethods .= '<br><button type="button" onclick="PayPM(\'VIR\')" class="btn btn-danger btn-block">'.__( 'Pay', 'doliconnect')." ".doliprice($object, 'ttc', $currency).'</button>';
+$paymentmethods .= '<button type="button" onclick="PayPM(\'VIR\')" class="btn btn-danger btn-block">'.__( 'Pay', 'doliconnect')." ".doliprice($object, 'ttc', $currency).'</button>';
 }  
-$paymentmethods .= "</div>";
+$paymentmethods .= '</div></div>';
 }
 
 if ( isset($listpaymentmethods->CHQ) && !empty($listpaymentmethods->CHQ) ) {
