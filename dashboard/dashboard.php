@@ -2178,7 +2178,7 @@ print "</li>";
 }
 
 print "<li class='list-group-item list-group-item-light list-group-item-action'>";
-print '<div class="form-floating"><select class="form-select" id="locale" name="locale" onchange="DoliSettings(this.form)" aria-label="'.__( 'Default language', 'doliconnect').'">';
+print '<div class="form-floating mb-2"><select class="form-select" id="locale" name="locale" onchange="DoliSettings(this.form)" aria-label="'.__( 'Default language', 'doliconnect').'">';
 if ( function_exists('pll_the_languages') ) { 
 print "<option value=''>".__( 'Default / Browser language', 'doliconnect')."</option>";
 $translations = pll_the_languages( array( 'raw' => 1 ) );
@@ -2191,14 +2191,12 @@ print ">".$value['name']."</option>";
 print "<input class='form-control' type='text' value='".__( 'Default / Browser language', 'doliconnect')."' readonly>";
 }
 print '</select><label for="locale">'.__( 'Default language', 'doliconnect').'</label></div>';
-print "</li>";
 
 if ( doliconnector($current_user, 'fk_soc') > 0 ) {
 $thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 }
 $currencies = callDoliApi("GET", "/setup/dictionary/currencies?multicurrency=1&sortfield=code_iso&sortorder=ASC&limit=100&active=1", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
- 
-print "<li class='list-group-item list-group-item-light list-group-item-action'>";
+
 print '<div class="form-floating">';
 $monnaie = doliconst("MAIN_MONNAIE", dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 $testvalue='1.99';
