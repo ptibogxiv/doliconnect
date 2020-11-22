@@ -232,24 +232,22 @@ print "<form action='".$url."' id='doliconnect-avatarform' method='post' class='
 print doliloaderscript('doliconnect-avatarform');
 
 print "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
-print "<li class='list-group-item'>";
-print "<label for='description'><small>".__( 'Profile Picture', 'doliconnect')."</small></label><div class='form-group'>
-<div class='input-group mb-2'><div class='input-group-prepend'><span class='input-group-text'><i class='fas fa-camera fa-fw'></i></span></div><div class='custom-file'>
-<input type='file' name='inputavatar' class='custom-file-input' id='customFile' accept='image/*' ";
-$table_prefix = $wpdb->get_blog_prefix( get_current_blog_id() ); 
-$upload_dir = wp_upload_dir();
-$nam=$table_prefix."member_photo";
-if ( null == $current_user->$nam && doliconnector($current_user, 'fk_member') ) {
-//print " required='required'";
-}
-print " capture><label class='custom-file-label' for='customFile' data-browse='".__( 'Browse', 'doliconnect')."'>".__( 'Select a file', 'doliconnect')."</label></div></div>
-<small id='infoavatar' class='form-text text-muted text-justify'>".__( 'Your avatar must be a .jpg/.jpeg file, <10Mo and 350x350pixels minimum.', 'doliconnect')."</SMALL>";
-print "<div class='custom-control custom-checkbox my-1 mr-sm-2'>
-    <input type='checkbox' class='custom-control-input' id='inputavatar' name='inputavatar' value='delete' ";
+print "<li class='list-group-item'>".__( 'Profile Picture', 'doliconnect')."";
+
+print '<div class="mb-3">
+<label for="inputavatar" name="inputavatar" class="form-label">'.__( 'Select a file', 'doliconnect').'</label>
+<input class="form-control" type="file" id="inputavatar" accept="image/*">
+</div>';
+
+print "<small id='infoavatar' class='form-text text-muted text-justify'>".__( 'Your avatar must be a .jpg/.jpeg file, <10Mo and 350x350pixels minimum.', 'doliconnect')."</small>";
+
+print "<div class='form-check'>
+    <input type='checkbox' class='form-check-input' id='deleteavatar' name='deleteavatar' value='delete' ";
 if ( null == $current_user->$nam ) {
 print " disabled='disabled'";
 }
-print "><label class='custom-control-label' for='inputavatar'>".__( 'Delete your picture', 'doliconnect')."</label></div></div>";
+print "><label class='form-checklabel' for='deleteavatar'>".__( 'Delete your picture', 'doliconnect')."</label></div>";
+
 print "</li>";
 print "</ul><div class='card-body'><input type='hidden' name='userid' value='$ID'><button class='btn btn-danger btn-block' type='submit'>".__( 'Update', 'doliconnect')."</button></div>";
 print '<div class="card-footer text-muted">';
