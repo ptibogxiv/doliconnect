@@ -584,13 +584,14 @@ print "</li>";
 if ( !in_array($mode, array('donation', 'linkthirdparty')) ) {
 print "<li class='list-group-item'>";
 
+if ( !in_array($mode, array('member', 'contact', 'linkthirdparty')) ) {
+print '<div class="form-floating mb-2"><input type="url" class="form-control" id="'.$idobject.'[url]" name="'.$idobject.'[url]" placeholder="www.example.com" value="'.stripslashes(htmlspecialchars((isset($object->url) ? $object->url : null), ENT_QUOTES)).'">
+<label for="'.$idobject.'[url]">'.__( 'Website', 'doliconnect').'</label></div>';
+}
+
 if ( !in_array($mode, array('member', 'linkthirdparty')) ) {
 print '<div class="form-floating"><textarea class="form-control" placeholder="Leave a comment here"  name="'.$idobject.'[note_public]" id="note_public" style="height: 100px">'.stripslashes(htmlspecialchars(isset($object->note_public)?$object->note_public:$current_user->description, ENT_QUOTES)).'</textarea>
 <label for="note_public">'.__( 'About Yourself', 'doliconnect').'</label></div>';
-}
-if ( !in_array($mode, array('member', 'contact', 'linkthirdparty')) ) {
-print "<div class='form-row'><div class='col'><label for='description'><small><i class='fas fa-link fa-fw'></i> ".__( 'Website', 'doliconnect')."</small></label>
-<input type='url' class='form-control' name='".$idobject."[url]' id='website' placeholder='".__( 'Website', 'doliconnect')."' value='".stripslashes(htmlspecialchars((isset($object->url) ? $object->url : null), ENT_QUOTES))."'></div></div>";
 }
 
 print "</li>";
