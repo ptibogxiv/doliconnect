@@ -511,17 +511,16 @@ print "</div></li>";
 if ( ( !is_user_logged_in() && ((isset($_GET["morphy"])&& $_GET["morphy"] == "mor" && get_option('doliconnect_disablepro') != 'phy') || get_option('doliconnect_disablepro') == 'mor' || (function_exists('dolikiosk') && ! empty(dolikiosk())) ) && in_array($mode, array('thirdparty'))) || (is_user_logged_in() && in_array($mode, array('thirdparty','contact','member','donation'))) ) {       
 print "<li class='list-group-item'>";
 
-print '<div class="form-floating"><textarea class="form-control" placeholder="'.__( 'Address', 'doliconnect').'"  name="'.$idobject.'[address]" id="'.$idobject.'[address]" style="height: 100px" required>'.stripslashes(htmlspecialchars($object->address, ENT_QUOTES)).'</textarea>
-<label for="'.$idobject.'[address]">'.__( 'Address', 'doliconnect').'</label></div>';
-
-print "<div class='form-row'>
-    <div class='col-md-6'><label for='".$idobject."[town]'><small><i class='fas fa-map-marked fa-fw'></i> ".__( 'Town', 'doliconnect')."</small></label>
-      <input type='text' class='form-control' placeholder='".__( 'Town', 'doliconnect')."' name='".$idobject."[town]' value='".(isset($object->town) ? $object->town : null)."' autocomplete='off' required>
-    </div>
-    <div class='col'><label for='".$idobject."[zip]'><small><i class='fas fa-map-marked fa-fw'></i> ".__( 'Zipcode', 'doliconnect')."</small></label>
-      <input type='text' class='form-control' placeholder='".__( 'Zipcode', 'doliconnect')."' name='".$idobject."[zip]' value='".(isset($object->zip) ? $object->zip : null)."' autocomplete='off' required>
-    </div>
-    <div class='col'>";
+print '<div class="form-floating mb-2"><textarea class="form-control" placeholder="'.__( 'Address', 'doliconnect').'"  name="'.$idobject.'[address]" id="'.$idobject.'[address]" style="height: 100px" required>'.stripslashes(htmlspecialchars($object->address, ENT_QUOTES)).'</textarea>
+<label for="'.$idobject.'[address]"><i class="fas fa-map-marked fa-fw"></i> '.__( 'Address', 'doliconnect').'</label></div>';
+    
+print '<div class="form-floating mb-2"><input type="text" class="form-control" id="'.$idobject.'[town]" name="'.$idobject.'[town]" placeholder="" value="'.(isset($object->town) ? $object->town : null).'" required>
+<label for="'.$idobject.'[town]"><i class="fas fa-map-marked fa-fw"></i> '.__( 'Town', 'doliconnect').'</label></div>';  
+    
+print '<div class="form-floating mb-2"><input type="text" class="form-control" id="'.$idobject.'[zip]" name="'.$idobject.'[zip]" placeholder="" value="'.(isset($object->zip) ? $object->zip : null).'" required>
+<label for="'.$idobject.'[zip]"><i class="fas fa-map-marked fa-fw"></i> '.__( 'Zipcode', 'doliconnect').'</label></div>';  
+    
+print '<div class="col">';
 
 if ( function_exists('pll_the_languages') ) { 
 $lang = pll_current_language('locale');
@@ -548,7 +547,7 @@ print '</select><label for="'.$idobject.'[country_id]"><i class="fas fa-map-mark
 } else {
 print "<input type='text' class='form-control' id='inputcountry' placeholder='".__( 'Country', 'doliconnect')."' name='".$idobject."[country_id]' value='".$object->country_id."' autocomplete='off' required>";
 }
-print "</div></div>";
+print "</div>";
 
 print "</li>";
 
