@@ -473,7 +473,7 @@ $proposalfo = callDoliApi("GET", $request, null, dolidelay('proposal', esc_attr(
 }
 
 if ( !isset($proposalfo->error) && isset($_GET['id']) && isset($_GET['ref']) && ( doliconnector($current_user, 'fk_soc') == $proposalfo->socid ) && ( $_GET['ref'] == $proposalfo->ref ) && $proposalfo->statut != 0 && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doli-proposals-'.$proposalfo->id.'-'.$proposalfo->ref)) {
-print "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>".__( 'proposal', 'doliconnect')." ".$proposalfo->ref."<a class='float-right' href='".esc_url( add_query_arg( 'module', 'proposals', doliconnecturl('doliaccount')) )."'><i class='fas fa-arrow-left'></i> ".__( 'Back', 'doliconnect')."</a></h5><div class='row'><div class='col-md-5'>";
+print "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>".__( 'Proposal', 'doliconnect')." ".$proposalfo->ref."<a class='float-right' href='".esc_url( add_query_arg( 'module', 'proposals', doliconnecturl('doliaccount')) )."'><i class='fas fa-arrow-left'></i> ".__( 'Back', 'doliconnect')."</a></h5><div class='row'><div class='col-md-5'>";
 $datevalidation =  wp_date('d/m/Y', $proposalfo->date_validation);
 print "<b>".__( 'date of creation', 'doliconnect').":</b> ".wp_date('d/m/Y', $proposalfo->date_creation)."<br>";
 print "<b>".__( 'validation', 'doliconnect')." : </b> $datevalidation<br>";
@@ -606,7 +606,7 @@ $orderfo = callDoliApi("GET", $request, null, dolidelay('order', esc_attr(isset(
 
 if ( !isset($orderfo->error) && isset($_GET['id']) && isset($_GET['ref']) && (doliconnector($current_user, 'fk_soc') == $orderfo->socid ) && ($_GET['ref'] == $orderfo->ref) && $orderfo->statut != 0 && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doli-orders-'.$orderfo->id.'-'.$orderfo->ref)) {
 
-print "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>".__( 'order', 'doliconnect')." ".$orderfo->ref."<a class='float-right' href='".esc_url( add_query_arg( 'module', 'orders', doliconnecturl('doliaccount')) )."'><i class='fas fa-arrow-left'></i> ".__( 'Back', 'doliconnect')."</a></h5><div class='row'><div class='col-md-6'>";
+print "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>".__( 'Order', 'doliconnect')." ".$orderfo->ref."<a class='float-right' href='".esc_url( add_query_arg( 'module', 'orders', doliconnecturl('doliaccount')) )."'><i class='fas fa-arrow-left'></i> ".__( 'Back', 'doliconnect')."</a></h5><div class='row'><div class='col-md-6'>";
 print "<b>".__( 'date of order', 'doliconnect').":</b> ".wp_date('d/m/Y', $orderfo->date_creation)."<br>";
 if ( $orderfo->statut > 0 ) {
 if ( $orderfo->billed == 1 ) {
@@ -921,7 +921,7 @@ $invoicefo = callDoliApi("GET", $request, null, dolidelay('invoice', esc_attr(is
 
 if ( !isset($orderfo->error) && isset($_GET['id']) && isset($_GET['ref']) && (doliconnector($current_user, 'fk_soc') == $invoicefo->socid ) && ($_GET['ref'] == $invoicefo->ref) && $invoicefo->statut != 0 && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doli-invoices-'.$invoicefo->id.'-'.$invoicefo->ref)) {
 
-print "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>".__( 'order', 'doliconnect')." ".$invoicefo->ref."<a class='float-right' href='".esc_url( add_query_arg( 'module', 'orders', doliconnecturl('doliaccount')) )."'><i class='fas fa-arrow-left'></i> ".__( 'Back', 'doliconnect')."</a></h5><div class='row'><div class='col-md-6'>";
+print "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>".__( 'Invoice', 'doliconnect')." ".$invoicefo->ref."<a class='float-right' href='".esc_url( add_query_arg( 'module', 'orders', doliconnecturl('doliaccount')) )."'><i class='fas fa-arrow-left'></i> ".__( 'Back', 'doliconnect')."</a></h5><div class='row'><div class='col-md-6'>";
 print "<b>".__( 'date of invoice', 'doliconnect').":</b> ".wp_date('d/m/Y', $invoicefo->date_creation)."<br>";
 if ( $invoicefo->statut > 0 ) {
 if ( $invoicefo->paye == 1 ) {
