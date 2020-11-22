@@ -123,7 +123,7 @@ exit;
 print "</div>";
 
 } elseif ( isset($_GET["action"]) && $_GET["action"] == 'confirmaction' ) {
-print "<p class='font-weight-light' align='justify'><h5>".sprintf(__('Hello %s', 'doliconnect'), $current_user->first_name)."</h5>".__( 'Manage your account, your informations, orders and much more via this secure client area.', 'doliconnect')."</p></div></div></div>";
+print "<p class='font-weight-light' align='justify'><h5>".sprintf(__('Hello %s', 'doliconnect'), $current_user->first_name)."</h5><small class='text-muted'>".__( 'Manage your account, your informations, orders and much more via this secure client area.', 'doliconnect')."</small></p></div></div></div>";
 print "<div class='col-xs-12 col-sm-12 col-md-9'>";
 print "<div class='card shadow-sm'><div class='card-body'>";
 		if ( ! isset( $_GET['request_id'] ) ) {
@@ -150,7 +150,7 @@ print "</div></div></div>";
 
 } else {
 
-print "<p class='font-weight-light' align='justify'><h5>".sprintf(__('Hello %s', 'doliconnect'), $current_user->first_name)."</h5>".__( 'Manage your account, your informations, orders and much more via this secure client area.', 'doliconnect')."</p></div></div></div>";
+print "<p class='font-weight-light' align='justify'><h5>".sprintf(__('Hello %s', 'doliconnect'), $current_user->first_name)."</h5><small class='text-muted'>".__( 'Manage your account, your informations, orders and much more via this secure client area.', 'doliconnect')."</small></p></div></div></div>";
 print "<div class='col-xs-12 col-sm-12 col-md-9'>";
 if ( has_action('user_doliconnect_menu') ) {
 print "<div class='list-group shadow-sm'>";
@@ -188,7 +188,7 @@ print "</div>";
 print "</div>";
 }
 } else { 
-//print "<p class='font-weight-light' align='justify'>".__( 'Manage your account, your informations, orders and much more via this secure client area.', 'doliconnect')."</p>";
+//print "<p class='font-weight-light' align='justify'><small class='text-muted'>".__( 'Manage your account, your informations, orders and much more via this secure client area.', 'doliconnect')."</p>";
 print "</div></div></div>";
 
 if ( empty(get_option('doliconnectrestrict')) ) {
