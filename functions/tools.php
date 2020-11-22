@@ -521,7 +521,7 @@ print "<div class='form-row'>
     <div class='col'><label for='".$idobject."[zip]'><small><i class='fas fa-map-marked fa-fw'></i> ".__( 'Zipcode', 'doliconnect')."</small></label>
       <input type='text' class='form-control' placeholder='".__( 'Zipcode', 'doliconnect')."' name='".$idobject."[zip]' value='".(isset($object->zip) ? $object->zip : null)."' autocomplete='off' required>
     </div>
-    <div class='col'><label for='".$idobject."[country_id]'><small><i class='fas fa-map-marked fa-fw'></i> ".__( 'Country', 'doliconnect')."</small></label>";
+    <div class='col'>";
 
 if ( function_exists('pll_the_languages') ) { 
 $lang = pll_current_language('locale');
@@ -532,11 +532,11 @@ $lang = $current_user->locale;
 $pays = callDoliApi("GET", "/setup/dictionary/countries?sortfield=favorite%2Clabel&sortorder=DESC%2CASC&limit=400&lang=".$lang, null, $delay);
 
 if ( isset($pays) ) { 
-print "<select class='custom-select' id='".$idobject."[country_id]'  name='".$idobject."[country_id]' required>";
+print '<div class="form-floating"><select class="form-select" id="'.$idobject.'[country_id]" aria-label="'.__( 'Country', 'doliconnect').'" required>';
 print "<option value='' disabled ";
 if ( !isset($object->country_id) && ! $object->country_id > 0 || $pays == 0) {
 print "selected ";}
-print ">".__( '- Select -', 'doliconnect')."</option>";
+print ">".__( '- Select your country -', 'doliconnect')."</option>";
 foreach ( $pays as $postv ) { 
 print "<option value='".$postv->id."' ";
 if ( isset($object->country_id) && $object->country_id == $postv->id && $object->country_id != null && $postv->id != '0' ) {
@@ -544,7 +544,7 @@ print "selected ";
 } elseif ( $postv->id == '0' ) { print "disabled "; }
 print ">".$postv->label."</option>";
 }
-print "</select>";
+print '</select><label for="'.$idobject.'[country_id]"><i class="fas fa-map-marked fa-fw"></i> '.__( 'Country', 'doliconnect').'</label></div>';
 } else {
 print "<input type='text' class='form-control' id='inputcountry' placeholder='".__( 'Country', 'doliconnect')."' name='".$idobject."[country_id]' value='".$object->country_id."' autocomplete='off' required>";
 }
