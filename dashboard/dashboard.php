@@ -59,13 +59,13 @@ print "<div class='card shadow-sm'>";
 
 print doliuserform( $thirdparty, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'thirdparty');
 
-print "<div class='card-body'><button class='btn btn-danger btn-block' type='submit'>".__( 'Update', 'doliconnect')."</button></div>";
+print "<div class='card-body'><div class='d-grid gap-2'><button class='btn btn-outline-secondary' type='submit'>".__( 'Update', 'doliconnect')."</button></div></div>";
 print '<div class="card-footer text-muted">';
 print "<small><div class='float-left'>";
 if ( isset($request) ) print dolirefresh($request, $url, dolidelay('thirdparty'), $thirdparty);
-print "</div><div class='float-right'>";
+print '</div><div class="float-right">';
 print dolihelp('ISSUE');
-print "</div></small>";
+print '</div></small>';
 print '</div></div></form>';
 
 }

@@ -585,8 +585,8 @@ if ( !in_array($mode, array('donation', 'linkthirdparty')) ) {
 print "<li class='list-group-item'>";
 
 if ( !in_array($mode, array('member', 'linkthirdparty')) ) {
-print "<div class='form-row'><div class='col'><label for='note_public'><small><i class='fas fa-bullhorn fa-fw'></i> ".__( 'About Yourself', 'doliconnect')."</small></label>
-<textarea type='text' class='form-control' name='".$idobject."[note_public]' id='note_public' rows='3' placeholder='".__( 'About Yourself', 'doliconnect')."'>".stripslashes(htmlspecialchars(isset($object->note_public)?$object->note_public:$current_user->description, ENT_QUOTES))."</textarea></div></div>";
+print '<div class="form-floating"><textarea class="form-control" placeholder="Leave a comment here"  name="'.$idobject.'[note_public]" id="note_public" style="height: 100px">'.stripslashes(htmlspecialchars(isset($object->note_public)?$object->note_public:$current_user->description, ENT_QUOTES)).'</textarea>
+<label for="note_public">'.__( 'About Yourself', 'doliconnect').'</label></div>';
 }
 if ( !in_array($mode, array('member', 'contact', 'linkthirdparty')) ) {
 print "<div class='form-row'><div class='col'><label for='description'><small><i class='fas fa-link fa-fw'></i> ".__( 'Website', 'doliconnect')."</small></label>
@@ -600,11 +600,11 @@ print "</li>";
 if ( doliversion('11.0.0') ) { 
 $socialnetworks = callDoliApi("GET", "/setup/dictionary/socialnetworks?sortfield=rowid&sortorder=ASC&limit=100&active=1", null, $delay);
 if ( !isset($socialnetworks->error) && $socialnetworks != null ) { 
-print "<li class='list-group-item'><div class='form-row'>";
+print "<li class='list-group-item'><div class='row g-2'>";
 foreach ( $socialnetworks as $social ) { 
 $code = $social->code;
-print "<div class='col-12 col-md-4'><label for='".$idobject."[socialnetworks][".$social->code."]'><small><i class='fab fa-".$social->code." fa-fw'></i> ".$social->label."</small></label>
-<input type='text' name='".$idobject."[socialnetworks][".$social->code."]' class='form-control' id='".$idobject."[socialnetworks][".$social->code."]' placeholder='".__( 'Username', 'doliconnect')."' value='".stripslashes(htmlspecialchars((isset($object->socialnetworks->$code) ? $object->socialnetworks->$code : null), ENT_QUOTES))."'></div>";
+print '<div class="col-12 col-sm-6 col-lg-4"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[socialnetworks]['.$social->code.']" name="'.$idobject.'[socialnetworks]['.$social->code.']" placeholder="name@example.com" value="'.stripslashes(htmlspecialchars((isset($object->socialnetworks->$code) ? $object->socialnetworks->$code : null), ENT_QUOTES)).'">
+<label for="'.$idobject.'[socialnetworks]['.$social->code.']"><i class="fab fa-'.$social->code.' fa-fw"></i> '.$social->label.'</label></div></div>';
 }
 print "</div></li>";
 }

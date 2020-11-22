@@ -666,7 +666,7 @@ print "<a href='".wp_registration_url(get_permalink())."' role='button' title='"
 print "</div><div class='float-right'><a href='".wp_lostpassword_url( get_permalink() )."' role='button' title='".__( 'Forgot password?', 'doliconnect')."'>".__( 'Forgot password?', 'doliconnect')."</a></div></small></div>"; 
 print "</li></lu><div class='card-body'>";
 
-print "<input type='hidden' value='$redirect_to' name='redirect_to'><button id='submit' class='btn btn-block btn-primary' type='submit' name='submit' value='Submit'";
+print "<input type='hidden' value='$redirect_to' name='redirect_to'><button id='submit' class='btn btn-outline-secondary' type='submit' name='submit' value='Submit'";
 print "><b>".__( 'Sign in', 'doliconnect')."</b></button>";
 
 do_action( 'login_footer');
@@ -1857,7 +1857,7 @@ console.log(response.data.message);
 })(jQuery);";
 print "</script>";
 
-print "<div class='card-body'><div class='d-grid gap-2'><button type='button' id='infobtn_cart' name='info_cart' value='info_cart'  class='btn btn-light btn-outline-secondary'>".__( 'Validate', 'doliconnect')."</button></div></div>";
+print "<div class='card-body'><div class='d-grid gap-2'><button type='button' id='infobtn_cart' name='info_cart' value='info_cart'  class='btn btn-outline-secondary'>".__( 'Validate', 'doliconnect')."</button></div></div>";
 print "<div class='card-footer text-muted'>";
 print "<small><div class='float-left'>";
 if ( isset($request) ) print dolirefresh($request, get_permalink(), dolidelay('cart'));
