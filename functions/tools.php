@@ -579,26 +579,20 @@ print "</li>";
 }
 
 if ( in_array($mode, array('contact')) && doliversion('11.0.0') && !empty(get_option('doliconnectbeta')) ) {
-
 $contact_types = callDoliApi("GET", "/setup/dictionary/contact_types?sortfield=code&sortorder=ASC&limit=100&active=1&sqlfilters=(t.source%3A%3D%3A'external')%20AND%20(t.element%3A%3D%3A'commande')", null, $delay);//%20OR%20(t.element%3A%3D%3A'propal')
-
 print "<li class='list-group-item list-group-item-light list-group-item-action'>";
 if ( !isset($contact_types->error ) && $contact_types != null ) {
 $typecontact = array();
-
 if ( isset($object->roles) && $object->roles != null ) {
 foreach ( $object->roles as $role ) {
 $typecontact[] .= $role->id; 
 }}
-foreach ( $contact_types as $contacttype ) {                                                           //name='".$idobject."[roles][id]'
-print "<div class='form-check'><input type='checkbox' class='form-check-input' value='".$contacttype->rowid."' id='".$idobject."[roles][".$contacttype->rowid."]' ";
+foreach ( $contact_types as $contacttype ) {                                                          
+print "<div class='form-check'><input type='checkbox' class='form-check-input' id='".$idobject."[roles][".$contacttype->rowid."]'  value='".$contacttype->rowid."'  ";
 if ( isset($object->roles) && $object->roles != null && in_array($contacttype->rowid, $typecontact)) { print " checked"; }
 print " disabled><label class='form-check-label' for='".$idobject."[roles][".$contacttype->rowid."]'>".$contacttype->label."</label></div>";
-}
- 
-}
-
-print "</li>";
+}}
+print "<input type='hidden' name=name='".$idobject."[roles]' value='".array(100)."'></li>";
 }
 
 if ( !in_array($mode, array('donation', 'linkthirdparty')) ) {
