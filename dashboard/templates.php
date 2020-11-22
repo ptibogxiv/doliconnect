@@ -243,9 +243,10 @@ $thirdparty=$_POST['thirdparty'];
         $hasError = true;
     } else {
         $email = sanitize_email($thirdparty['email']);
+        $domainemail = explode("@", $email)[1];
     }
     
-    if (defined("DOLICONNECT_SELECTEDEMAIL") && is_array(constant("DOLICONNECT_SELECTEDEMAIL")) && !in_array($email, constant("DOLICONNECT_SELECTEDEMAIL"))) {
+    if (defined("DOLICONNECT_SELECTEDEMAIL") && is_array(constant("DOLICONNECT_SELECTEDEMAIL")) && !in_array($domainemail, constant("DOLICONNECT_SELECTEDEMAIL"))) {
         $emailError = __( 'Only emails from selected domains are allowed', 'doliconnect'); 
         $hasError = true;
     }
@@ -281,24 +282,17 @@ $user = get_user_by( 'ID', $ID);
 $user->set_role($role);
 }
 
-if ( $thirdparty['morphy'] == 'mor' ) {
-$thirdparty['tva_intra'] =strtoupper(sanitize_user($thirdparty['tva_intra']));
-} else { $thirdparty['tva_intra'] = ''; }
-
-if ( $thirdparty['morphy'] != 'mor' && get_option('doliconnect_disablepro') != 'mor' ) {
-$thirdparty['name'] = ucfirst(strtolower($thirdparty['firstname']))." ".strtoupper($thirdparty['lastname']);
-} 
- 
-wp_update_user( array( 'ID' => $ID, 'user_email' => sanitize_email($thirdparty['email'])));
-wp_update_user( array( 'ID' => $ID, 'nickname' => sanitize_user($_POST['user_nicename'])));
-if ( isset($thirdparty['name'])) wp_update_user( array( 'ID' => $ID, 'display_name' => sanitize_user($thirdparty['name'])));
-wp_update_user( array( 'ID' => $ID, 'first_name' => ucfirst(sanitize_user(strtolower($thirdparty['firstname'])))));
-wp_update_user( array( 'ID' => $ID, 'last_name' => strtoupper(sanitize_user($thirdparty['lastname']))));
-if ( isset($_POST['description'])) wp_update_user( array( 'ID' => $ID, 'description' => sanitize_textarea_field($_POST['description'])));
-if ( isset($thirdparty['url'])) wp_update_user( array( 'ID' => $ID, 'user_url' => sanitize_textarea_field($thirdparty['url'])));
-update_user_meta( $ID, 'civility_id', sanitize_text_field($thirdparty['civility_id']));
+wp_update_user( array( 'ID' => $ID,
+'user_email' => $thirdparty['email'],
+'nickname' => sanitize_user($_POST['user_nicename']),
+'first_name' => $thirdparty['firstname'],
+'last_name' => $thirdparty['lastname'],
+'description' => $thirdparty['note_public'],
+'user_url' => $thirdparty['url'],
+'display_name' => $thirdparty['name']));
+update_user_meta( $ID, 'civility_code', sanitize_text_field($thirdparty['civility_code']));
 update_user_meta( $ID, 'billing_type', sanitize_text_field($thirdparty['morphy']));
-if ( $thirdparty['morphy'] == 'mor' ) { update_user_meta( $ID, 'billing_company', sanitize_text_field($thirdparty['name'])); }
+if ( $thirdparty['morphy'] == 'mor' ) { update_user_meta( $ID, 'billing_company', $thirdparty['name']); }
 update_user_meta( $ID, 'billing_birth', $thirdparty['birth']);
 if ( isset($_POST['optin1']) ) { update_user_meta( $ID, 'optin1', $_POST['optin1'] ); }
 
@@ -352,20 +346,13 @@ print "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'
 
 print doliuserform( null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'thirdparty');
 
-print "<div class='card-body'><input type='hidden' name='submitted' id='submitted' value='true'><button class='btn btn-primary btn-block' type='submit'";
+print "<div class='card-body'><div class='d-grid gap-2'><input type='hidden' name='submitted' id='submitted' value='true'><button class='btn btn-outline-secondary' type='submit'";
 if ( get_option('users_can_register')=='1' && ( get_site_option( 'registration' ) == 'user' || get_site_option( 'registration' ) == 'all' ) || ( !is_multisite() && get_option( 'users_can_register' )) ) {
 print "";
 } else { print " aria-disabled='true'  disabled"; }
 print "><b>".__( 'Create an account', 'doliconnect')."</b></button></form>";
 
-print "</div>";
-print '<div class="card-footer text-muted">';
-print "<small><div class='float-left'>";
-
-print "</div><div class='float-right'>";
-print dolihelp('ISSUE');
-print "</div></small>";
-print '</div></div></form>';
+print '</div></div></div></form>';
 
 do_action( 'login_footer');
 

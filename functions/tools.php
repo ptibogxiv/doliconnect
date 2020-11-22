@@ -423,10 +423,10 @@ print "</select></div></div></li><li class='list-group-item list-group-item-ligh
 if ( in_array($mode, array('thirdparty', 'donation')) && ($current_user->billing_type == 'mor' || ( isset($_GET["morphy"]) && $_GET["morphy"] == 'mor') || get_option('doliconnect_disablepro') == 'mor' ) ) {
 
 print '<div class="row g-2 mb-2"><div class="col-lg">';    
-print '<div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[name]" name="'.$idobject.'[name]" placeholder="'.__( 'Name of company', 'doliconnect').'" value="'.stripslashes(htmlspecialchars($object->name, ENT_QUOTES)).'" required>
+print '<div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[name]" name="'.$idobject.'[name]" placeholder="'.__( 'Name of company', 'doliconnect').'" value="'.(isset($object->name) ? stripslashes(htmlspecialchars($object->name, ENT_QUOTES)) : null).'" required>
 <label for="'.$idobject.'[name]"><i class="fas fa-building fa-fw"></i> '.__( 'Name of company', 'doliconnect').'</label></div>';   
 print '</div><div class="col-md">';
-print '<div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[name_alias]" name="'.$idobject.'[name_alias]" placeholder="'.__( 'Commercial name / Brand', 'doliconnect').'" value="'.stripslashes(htmlspecialchars($object->name_alias, ENT_QUOTES)).'" required>
+print '<div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[name_alias]" name="'.$idobject.'[name_alias]" placeholder="'.__( 'Commercial name / Brand', 'doliconnect').'" value="'.(isset($object->name_alias) ? stripslashes(htmlspecialchars($object->name_alias, ENT_QUOTES)) : null).'" required>
 <label for="'.$idobject.'[name_alias]"><i class="fas fa-building fa-fw"></i> '.__( 'Commercial name / Brand', 'doliconnect').'</label></div>';
 print '</div></div>';
 
@@ -447,28 +447,28 @@ print "></div></div></div>";
 
 print '<div class="row g-2">';
     
-print '<div class="col-md-6 col-lg-4"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[idprof1]" name="'.$idobject.'[idprof1]" placeholder="idprof1" value="'.$object->idprof1.'"';
+print '<div class="col-md-6 col-lg-4"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[idprof1]" name="'.$idobject.'[idprof1]" placeholder="idprof1" value="'.(isset($object->idprof1) ? $object->idprof1 : null).'"';
 if (isset($object->idprof1) && !empty($object->idprof1)) { print ' readonly'; } else { print ' required'; }
 print ' autocomplete="off">
 <label for="'.$idobject.'[idprof1]"><i class="fas fa-building fa-fw"></i> '.__( 'SIREN', 'doliconnect').'</label></div></div>'; 
 
-print '<div class="col-md-6 col-lg-4"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[idprof2]" name="'.$idobject.'[idprof2]" placeholder="idprof2" value="'.$object->idprof2.'"';
+print '<div class="col-md-6 col-lg-4"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[idprof2]" name="'.$idobject.'[idprof2]" placeholder="idprof2" value="'.(isset($object->idprof2) ? $object->idprof2 : null).'"';
 if (isset($object->idprof2) && !empty($object->idprof2)) { print ' readonly'; } else { print ' required'; }
 print ' autocomplete="off">
 <label for="'.$idobject.'[idprof2]"><i class="fas fa-building fa-fw"></i> '.__( 'SIRET', 'doliconnect').'</label></div></div>';
 
 
-print '<div class="col-md-6 col-lg-4"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[idprof3]" name="'.$idobject.'[idprof3]" placeholder="idprof3" value="'.$object->idprof3.'"';
+print '<div class="col-md-6 col-lg-4"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[idprof3]" name="'.$idobject.'[idprof3]" placeholder="idprof3" value="'.(isset($object->idprof3) ? $object->idprof3 : null).'"';
 if (isset($object->idprof3) && !empty($object->idprof3)) { print ' readonly'; } else { print ' required'; }
 print ' autocomplete="off">
 <label for="'.$idobject.'[idprof3]"><i class="fas fa-building fa-fw"></i> '.__( 'NAF-APE', 'doliconnect').'</label></div></div>';
 
-print '<div class="col-md-6 col-lg-4"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[idprof4]" name="'.$idobject.'[idprof4]" placeholder="idprof4" value="'.$object->idprof4.'"';
+print '<div class="col-md-6 col-lg-4"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[idprof4]" name="'.$idobject.'[idprof4]" placeholder="idprof4" value="'.(isset($object->idprof4) ? $object->idprof4 : null).'"';
 //if (isset($object->idprof4) && !empty($object->idprof4)) { print ' readonly'; } else { print ' required'; }
 print ' autocomplete="off">
 <label for="'.$idobject.'[idprof4]"><i class="fas fa-building fa-fw"></i> '.__( 'RCS/RM', 'doliconnect').'</label></div></div>';      
 
-print '<div class="col-md-6 col-lg-4"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[tva_intra]" name="'.$idobject.'[tva_intra]" placeholder="tva" value="'.$object->tva_intra.'"';
+print '<div class="col-md-6 col-lg-4"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[tva_intra]" name="'.$idobject.'[tva_intra]" placeholder="tva" value="'.(isset($object->tva_intra) ? $object->tva_intra : null).'"';
 if (isset($object->tva_intra) && !empty($object->tva_intra)) { print ' readonly'; } else { print ''; }
 print ' autocomplete="off">
 <label for="'.$idobject.'[tva_intra]"><i class="fas fa-building fa-fw"></i> '.__( 'VAT number', 'doliconnect').'</label></div></div>';
@@ -547,7 +547,7 @@ print ' required';
 print '><label for="'.$idobject.'[email]"><i class="fas fa-at fa-fw"></i> '.__( 'Email', 'doliconnect').'</label></div></div>';
 
 if ( ( !is_user_logged_in() && ((isset($_GET["morphy"])&& $_GET["morphy"] == "mor" && get_option('doliconnect_disablepro') != 'phy') || get_option('doliconnect_disablepro') == 'mor' || (function_exists('dolikiosk') && ! empty(dolikiosk())) ) && in_array($mode, array('thirdparty'))) || (is_user_logged_in() && in_array($mode, array('thirdparty','contact','member','donation'))) ) {
-print '<div class="col-md"><div class="form-floating"><input type="tel" class="form-control" id="'.$idobject.'[phone]" placeholder="0012345678" name="'.$idobject.'[phone]" value="'.(isset($object->phone) ? $object->phone : (isset($object->phone_pro) ? $object->phone_pro: null)).'" autocomplete="off">
+print '<div class="col-md"><div class="form-floating"><input type="tel" class="form-control" id="'.$idobject.'[phone]" placeholder="0012345678" name="'.$idobject.'[phone]" value="'.(isset($object->phone) ? $object->phone : (isset($object->phone_pro) ? $object->phone_pro : null)).'" autocomplete="off">
 <label for="'.$idobject.'[phone]"><i class="fas fa-phone fa-fw"></i> '.__( 'Phone', 'doliconnect').'</label></div></div>';
 }
 
@@ -556,7 +556,7 @@ print "</div></li>";
 if ( ( !is_user_logged_in() && ((isset($_GET["morphy"])&& $_GET["morphy"] == "mor" && get_option('doliconnect_disablepro') != 'phy') || get_option('doliconnect_disablepro') == 'mor' || (function_exists('dolikiosk') && ! empty(dolikiosk())) ) && in_array($mode, array('thirdparty'))) || (is_user_logged_in() && in_array($mode, array('thirdparty','contact','member','donation'))) ) {       
 print "<li class='list-group-item list-group-item-light list-group-item-action'>";
 
-print '<div class="form-floating mb-2"><textarea class="form-control" placeholder="'.__( 'Address', 'doliconnect').'"  name="'.$idobject.'[address]" id="'.$idobject.'[address]" style="height: 100px" required>'.stripslashes(htmlspecialchars($object->address, ENT_QUOTES)).'</textarea>
+print '<div class="form-floating mb-2"><textarea class="form-control" placeholder="'.__( 'Address', 'doliconnect').'"  name="'.$idobject.'[address]" id="'.$idobject.'[address]" style="height: 100px" required>'.(isset($object->address) ? stripslashes(htmlspecialchars($object->address, ENT_QUOTES)) : null).'</textarea>
 <label for="'.$idobject.'[address]"><i class="fas fa-map-marked fa-fw"></i> '.__( 'Address', 'doliconnect').'</label></div>';
  
 print '<div class="row g-2 mb-2"><div class="col-lg-8">';
