@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2020-11-22 19:24+0100\n"
-"PO-Revision-Date: 2020-11-22 19:24+0100\n"
+"POT-Creation-Date: 2020-11-22 21:39+0100\n"
+"PO-Revision-Date: 2020-11-22 21:39+0100\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_CA\n"
@@ -21,7 +21,7 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: includes\n"
 
-#: admin/admin.php:7 dashboard/templates.php:1876
+#: admin/admin.php:7 dashboard/templates.php:1868
 msgid ""
 "It seems that your version of Dolibarr and/or its plugins are not up to date!"
 msgstr ""
@@ -147,7 +147,7 @@ msgstr "une adresse IP par ligne sans espace ni virgule"
 #: admin/admin.php:509 admin/admin.php:520 admin/admin.php:533
 #: admin/admin.php:545 dashboard/dashboard.php:1990
 #: dashboard/dashboard.php:2008 dashboard/dashboard.php:2027
-#: dashboard/dashboard.php:2048 dashboard/templates.php:793
+#: dashboard/dashboard.php:2048 dashboard/templates.php:785
 #: functions/tools.php:397 functions/tools.php:491
 msgid "- Select -"
 msgstr "- Sélectionner -"
@@ -317,7 +317,7 @@ msgstr "Masquer la durée"
 msgid "Hide stock"
 msgstr "Masquer le stock"
 
-#: blocks/product/block.php:16 dashboard/templates.php:1078
+#: blocks/product/block.php:16 dashboard/templates.php:1070
 msgid "No item"
 msgstr "Aucun élément"
 
@@ -329,7 +329,7 @@ msgstr "discountProduct"
 msgid "New discounted items"
 msgstr "Nouveaux articles à prix réduit"
 
-#: blocks/product/blockdiscount.php:26 dashboard/templates.php:1163
+#: blocks/product/blockdiscount.php:26 dashboard/templates.php:1155
 msgid "No discounted item"
 msgstr "Aucun article réduit"
 
@@ -337,12 +337,12 @@ msgstr "Aucun article réduit"
 msgid "newProduct"
 msgstr "newProduct"
 
-#: blocks/product/blocknew.php:7 dashboard/templates.php:1223
+#: blocks/product/blocknew.php:7 dashboard/templates.php:1215
 #: functions/widgets.php:343
 msgid "New items"
 msgstr "Nouveaux articles"
 
-#: blocks/product/blocknew.php:27 dashboard/templates.php:1119
+#: blocks/product/blocknew.php:27 dashboard/templates.php:1111
 msgid "No new item"
 msgstr "Aucun nouvel article"
 
@@ -394,8 +394,8 @@ msgstr "Vos informations ont été mises à jour."
 
 #: dashboard/dashboard.php:62 dashboard/dashboard.php:252
 #: dashboard/dashboard.php:325 dashboard/dashboard.php:1632
-#: dashboard/dashboard.php:1864 dashboard/templates.php:449
-#: dashboard/templates.php:1388 functions/tools.php:329
+#: dashboard/dashboard.php:1864 dashboard/templates.php:441
+#: dashboard/templates.php:1380 functions/tools.php:329
 msgid "Update"
 msgstr "Mettre à jour"
 
@@ -543,7 +543,7 @@ msgid "payment term"
 msgstr "durée de paiement"
 
 #: dashboard/dashboard.php:647 dashboard/dashboard.php:962
-#: dashboard/templates.php:1401 dashboard/templates.php:1522
+#: dashboard/templates.php:1393 dashboard/templates.php:1514
 #, php-format
 msgid ""
 "Please send your cheque in the amount of <b>%1$s</b> with reference <b>%2$s</"
@@ -553,7 +553,7 @@ msgstr ""
 "%2$s</b> à <b>%3$s</b> à l’adresse suivante"
 
 #: dashboard/dashboard.php:655 dashboard/dashboard.php:970
-#: dashboard/templates.php:1410 dashboard/templates.php:1528
+#: dashboard/templates.php:1402 dashboard/templates.php:1520
 #, php-format
 msgid ""
 "Please send your transfert in the amount of <b>%1$s</b> with reference <b>"
@@ -563,18 +563,18 @@ msgstr ""
 "<b>%2$s</b> sur le compte suivant"
 
 #: dashboard/dashboard.php:656 dashboard/dashboard.php:971
-#: dashboard/templates.php:1411 dashboard/templates.php:1529
+#: dashboard/templates.php:1403 dashboard/templates.php:1521
 #: functions/tools.php:1841
 msgid "Bank"
 msgstr "Banque"
 
 #: dashboard/dashboard.php:699 dashboard/dashboard.php:1014
-#: dashboard/templates.php:1746
+#: dashboard/templates.php:1738
 msgid "Billing address"
 msgstr "Adresse de facturation"
 
 #: dashboard/dashboard.php:706 dashboard/dashboard.php:1021
-#: dashboard/templates.php:1775
+#: dashboard/templates.php:1767
 msgid "Shipping address"
 msgstr "Adresse de livraison"
 
@@ -603,7 +603,7 @@ msgstr "livraison"
 
 #: dashboard/dashboard.php:762 dashboard/dashboard.php:1077
 #: dashboard/dashboard.php:1351 dashboard/dashboard.php:1475
-#: dashboard/templates.php:1597
+#: dashboard/templates.php:1589
 msgid "Payment"
 msgstr "Paiement"
 
@@ -717,7 +717,7 @@ msgstr "Suivi des dons"
 msgid "Date of order"
 msgstr "Date de commande"
 
-#: dashboard/dashboard.php:1465 dashboard/templates.php:1508
+#: dashboard/dashboard.php:1465 dashboard/templates.php:1500
 #: functions/data-request.php:389
 msgid "Payment method"
 msgstr "Méthode de paiement"
@@ -940,12 +940,12 @@ msgstr "Ouvrir un nouveau billet"
 msgid "Sales representative"
 msgstr "Représentant commercial"
 
-#: dashboard/dashboard.php:2065 dashboard/templates.php:807
-#: dashboard/templates.php:1808
+#: dashboard/dashboard.php:2065 dashboard/templates.php:799
+#: dashboard/templates.php:1800
 msgid "Message"
 msgstr "Message"
 
-#: dashboard/dashboard.php:2068 dashboard/templates.php:814
+#: dashboard/dashboard.php:2068 dashboard/templates.php:806
 msgid "Send"
 msgstr "Envoyer"
 
@@ -1057,20 +1057,24 @@ msgstr ""
 "compte via ce <a href='\".wp_lostpassword_url( get_permalink() ).\"' "
 "title='lost password'>formulaire</a>."
 
-#: dashboard/templates.php:249
+#: dashboard/templates.php:250
+msgid "Only emails from selected domains are allowed"
+msgstr "Seuls les e-mails provenant de domaines sélectionnés sont autorisés"
+
+#: dashboard/templates.php:255
 msgid "Create this account is not permitted"
 msgstr "Créer ce compte n’est pas autorisé"
 
-#: dashboard/templates.php:260
+#: dashboard/templates.php:266
 msgid "Registration confirmation"
 msgstr "Confirmation d’inscription"
 
-#: dashboard/templates.php:300
+#: dashboard/templates.php:299
 #, php-format
 msgid "Thank you for your registration on %s."
 msgstr "Merci pour votre inscription sur %s."
 
-#: dashboard/templates.php:321
+#: dashboard/templates.php:320
 msgid ""
 "To activate your account on and choose your password, please click on the "
 "following link"
@@ -1078,17 +1082,17 @@ msgstr ""
 "Pour activer votre compte et choisir votre mot de passe, veuillez cliquer "
 "sur le lien suivant"
 
-#: dashboard/templates.php:324 functions/data-request.php:145
+#: dashboard/templates.php:323 functions/data-request.php:145
 #: functions/tools.php:760
 #, php-format
 msgid "Your %s's team"
 msgstr "L’équipe de votre %s"
 
-#: dashboard/templates.php:333
+#: dashboard/templates.php:332
 msgid "Your account was created. Now, you are connected"
 msgstr "Votre compte a été créé. Maintenant, vous êtes connecté"
 
-#: dashboard/templates.php:335
+#: dashboard/templates.php:334
 msgid ""
 "Your account was created and an account activation link was sent by email. "
 "Don't forget to look at your unwanted emails if you can't find our message."
@@ -1097,20 +1101,20 @@ msgstr ""
 "mail. N’oubliez pas de regarder vos e-mails indésirables si vous ne trouvez "
 "pas notre message."
 
-#: dashboard/templates.php:346 dashboard/templates.php:354
-#: dashboard/templates.php:663
+#: dashboard/templates.php:345 dashboard/templates.php:353
+#: dashboard/templates.php:655
 msgid "Create an account"
 msgstr "Créer mon compte"
 
-#: dashboard/templates.php:392 functions/tools.php:291
+#: dashboard/templates.php:384 functions/tools.php:291
 msgid "Your password will be synchronized with your Dolibarr account"
 msgstr "Votre mot de passe sera synchronisé avec votre compte Dolibarr"
 
-#: dashboard/templates.php:394
+#: dashboard/templates.php:386
 msgid "Change your password"
 msgstr "Modifier votre mot de passe"
 
-#: dashboard/templates.php:429 functions/data-request.php:202
+#: dashboard/templates.php:421 functions/data-request.php:202
 #: functions/tools.php:305 functions/tools.php:679
 msgid ""
 "Your password must be between 8 and 20 characters, including at least 1 "
@@ -1119,42 +1123,42 @@ msgstr ""
 "Votre mot de passe doit être compris entre 8 et 20 caractères, y compris au "
 "moins 1 chiffre, 1 lettre, 1 majuscule."
 
-#: dashboard/templates.php:437 functions/tools.php:313
+#: dashboard/templates.php:429 functions/tools.php:313
 msgid "New password"
 msgstr "Nouveau mot de passe"
 
-#: dashboard/templates.php:445 functions/tools.php:321
+#: dashboard/templates.php:437 functions/tools.php:321
 msgid "Confirm your new password"
 msgstr "Confirmer votre nouveau mot de passe"
 
-#: dashboard/templates.php:481 functions/data-request.php:158
+#: dashboard/templates.php:473 functions/data-request.php:158
 msgid "No account seems to be linked to this email address"
 msgstr "Aucun compte ne semble être lié à cette adresse e-mail"
 
-#: dashboard/templates.php:556 dashboard/templates.php:666
+#: dashboard/templates.php:548 dashboard/templates.php:658
 msgid "Forgot password?"
 msgstr "Mot de passe oublié?"
 
-#: dashboard/templates.php:558
+#: dashboard/templates.php:550
 msgid "Please enter the email address by which you registered your account."
 msgstr ""
 "Entrez l’adresse e-mail par laquelle vous avez enregistré votre compte."
 
-#: dashboard/templates.php:562 dashboard/templates.php:646
-#: dashboard/templates.php:776 dashboard/templates.php:781
+#: dashboard/templates.php:554 dashboard/templates.php:638
+#: dashboard/templates.php:768 dashboard/templates.php:773
 #: functions/tools.php:547 functions/tools.php:2132
 msgid "Email"
 msgstr "Courriel"
 
-#: dashboard/templates.php:566
+#: dashboard/templates.php:558
 msgid "Submit"
 msgstr "Soumettre"
 
-#: dashboard/templates.php:573
+#: dashboard/templates.php:565
 msgid "This account is not allowed to connect this website."
 msgstr "Ce compte n’est pas autorisé à connecter ce site."
 
-#: dashboard/templates.php:576
+#: dashboard/templates.php:568
 msgid ""
 "There is no account for these login data or the email and/or the password "
 "are not correct."
@@ -1162,190 +1166,190 @@ msgstr ""
 "Il n’y a pas de compte pour ces données de connexion ou l’e-mail et / ou le "
 "mot de passe ne sont pas corrects."
 
-#: dashboard/templates.php:582
+#: dashboard/templates.php:574
 msgid "Your password have been updated."
 msgstr "Votre mot de passe a été mis à jour."
 
-#: dashboard/templates.php:584
+#: dashboard/templates.php:576
 msgid "The security key is expired!"
 msgstr "La clé de sécurité est expirée!"
 
-#: dashboard/templates.php:586
+#: dashboard/templates.php:578
 msgid "The security key is invalid!"
 msgstr "La clé de sécurité n’est pas valide !"
 
-#: dashboard/templates.php:600
+#: dashboard/templates.php:592
 msgid "Welcome"
 msgstr "Bienvenue"
 
-#: dashboard/templates.php:602
+#: dashboard/templates.php:594
 msgid "Access restricted to users"
 msgstr "Accès réservé aux utilisateurs"
 
-#: dashboard/templates.php:612 dashboard/templates.php:616
-#: dashboard/templates.php:670 functions/product.php:540
+#: dashboard/templates.php:604 dashboard/templates.php:608
+#: dashboard/templates.php:662 functions/product.php:540
 msgid "Sign in"
 msgstr "Connexion"
 
-#: dashboard/templates.php:612
+#: dashboard/templates.php:604
 msgid "You have already an account"
 msgstr "Vous avez déjà un compte"
 
-#: dashboard/templates.php:615 functions/tools.php:244
+#: dashboard/templates.php:607 functions/tools.php:244
 msgid "or"
 msgstr "ou"
 
-#: dashboard/templates.php:616
+#: dashboard/templates.php:608
 msgid "You don't have an account"
 msgstr "Vous n’avez pas de compte"
 
-#: dashboard/templates.php:652 functions/tools.php:677
+#: dashboard/templates.php:644 functions/tools.php:677
 msgid "Password"
 msgstr "Mot de passe"
 
-#: dashboard/templates.php:658
+#: dashboard/templates.php:650
 msgid "Remember me"
 msgstr "Se souvenir de moi"
 
-#: dashboard/templates.php:703
+#: dashboard/templates.php:695
 msgid "Your request is unsuccessful"
 msgstr "Votre demande est infructueuse"
 
-#: dashboard/templates.php:750 functions/tools.php:559 functions/tools.php:560
+#: dashboard/templates.php:742 functions/tools.php:559 functions/tools.php:560
 msgid "Address"
 msgstr "Adresse"
 
-#: dashboard/templates.php:758
+#: dashboard/templates.php:750
 msgid "Your message is successful send!"
 msgstr "Votre message est réussi envoyer!"
 
-#: dashboard/templates.php:760
+#: dashboard/templates.php:752
 msgid "Please try again!"
 msgstr "S’il vous plaît essayer à nouveau!"
 
-#: dashboard/templates.php:769
+#: dashboard/templates.php:761
 msgid "Complete name"
 msgstr "Nom complet"
 
-#: dashboard/templates.php:786
+#: dashboard/templates.php:778
 msgid "Type of request"
 msgstr "Type de demande"
 
-#: dashboard/templates.php:811
+#: dashboard/templates.php:803
 msgid "I agree to save my personnal informations in order to contact me"
 msgstr ""
 "J’accepte de sauvegarder mes informations personnelles afin de me contacter"
 
-#: dashboard/templates.php:898 dashboard/templates.php:1321
+#: dashboard/templates.php:890 dashboard/templates.php:1313
 msgid "No item currently on sale"
 msgstr "Aucun article actuellement en vente"
 
-#: dashboard/templates.php:937
+#: dashboard/templates.php:929
 msgid "No supplier"
 msgstr "Aucun fournisseur"
 
-#: dashboard/templates.php:996 functions/widgets.php:305
+#: dashboard/templates.php:988 functions/widgets.php:305
 msgid "Name, Ref., Description or Barcode"
 msgstr "Nom, Réf., Description ou Code-barres"
 
-#: dashboard/templates.php:1023
+#: dashboard/templates.php:1015
 #, php-format
 msgid "We have found %s item with this search"
 msgid_plural "We have found %s items with this search"
 msgstr[0] "Nous avons trouvé %s article avec cette recherche"
 msgstr[1] "Nous avons trouvé %s articles avec cette recherche"
 
-#: dashboard/templates.php:1025 dashboard/templates.php:1035
+#: dashboard/templates.php:1017 dashboard/templates.php:1027
 msgid "New search"
 msgstr "Nouvelle recherche"
 
-#: dashboard/templates.php:1034
+#: dashboard/templates.php:1026
 #, php-format
 msgid "No item with this search: \"%s\""
 msgstr "Aucun élément avec cette recherche: « %s »"
 
-#: dashboard/templates.php:1111
+#: dashboard/templates.php:1103
 msgid "Here are our new items"
 msgstr "Voici nos nouveaux articles"
 
-#: dashboard/templates.php:1155
+#: dashboard/templates.php:1147
 msgid "Here are our discounted items"
 msgstr "Voici nos articles à prix réduit"
 
-#: dashboard/templates.php:1238 functions/widgets.php:359
+#: dashboard/templates.php:1230 functions/widgets.php:359
 msgid "Discounted items"
 msgstr "Articles à prix réduit"
 
-#: dashboard/templates.php:1324
+#: dashboard/templates.php:1316
 msgid "Oops! This category does not appear to exist"
 msgstr "Oups! Cette catégorie ne semble pas exister"
 
-#: dashboard/templates.php:1370
+#: dashboard/templates.php:1362
 msgid "Inactive module on Dolibarr"
 msgstr "Module inactif sur Dolibarr"
 
-#: dashboard/templates.php:1417
+#: dashboard/templates.php:1409
 msgid "Tax exemptions"
 msgstr "Exonérations fiscales"
 
-#: dashboard/templates.php:1420
+#: dashboard/templates.php:1412
 msgid "DonationArt200"
 msgstr "DonationArt200"
 
-#: dashboard/templates.php:1424
+#: dashboard/templates.php:1416
 msgid "DonationArt238"
 msgstr "DonationArt238"
 
-#: dashboard/templates.php:1428
+#: dashboard/templates.php:1420
 msgid "DonationArt835"
 msgstr "DonationArt835"
 
-#: dashboard/templates.php:1431
+#: dashboard/templates.php:1423
 msgid "You should't have tax exemptions"
 msgstr "Vous ne devriez pas avoir d’exonérations fiscales"
 
-#: dashboard/templates.php:1490
+#: dashboard/templates.php:1482
 msgid "Oops, Order's module is not available"
 msgstr "Oups, le module de Order n’est pas disponible"
 
-#: dashboard/templates.php:1508 functions/data-request.php:389
+#: dashboard/templates.php:1500 functions/data-request.php:389
 msgid "Your order has been registered"
 msgstr "Votre commande a été enregistrée"
 
-#: dashboard/templates.php:1508 dashboard/templates.php:1515
+#: dashboard/templates.php:1500 dashboard/templates.php:1507
 #: functions/data-request.php:389 functions/tools.php:382
 msgid "Reference"
 msgstr "Référence"
 
-#: dashboard/templates.php:1514
+#: dashboard/templates.php:1506
 msgid "Your payment has been registered"
 msgstr "Votre paiement a été enregistré"
 
-#: dashboard/templates.php:1537
+#: dashboard/templates.php:1529
 msgid "or go to reception desk"
 msgstr "ou aller à la réception"
 
-#: dashboard/templates.php:1591
+#: dashboard/templates.php:1583
 msgid "Cart"
 msgstr "Panier"
 
-#: dashboard/templates.php:1594
+#: dashboard/templates.php:1586
 msgid "Coordinates"
 msgstr "Coordonnées"
 
-#: dashboard/templates.php:1639
+#: dashboard/templates.php:1631
 msgid "Amount outstanding"
 msgstr "Montant en souffrance"
 
-#: dashboard/templates.php:1639
+#: dashboard/templates.php:1631
 msgid "out of"
 msgstr "hors de"
 
-#: dashboard/templates.php:1639
+#: dashboard/templates.php:1631
 msgid "allowed"
 msgstr "autorisé"
 
-#: dashboard/templates.php:1641
+#: dashboard/templates.php:1633
 msgid ""
 "Your account is blocked, this order can't be processed. Please, contact us "
 "to pay overdue unpaid invoices."
@@ -1353,27 +1357,27 @@ msgstr ""
 "Votre compte est bloqué, cette commande ne peut pas être traitée. S’il vous "
 "plaît, contactez-nous pour payer les factures impayées en retard."
 
-#: dashboard/templates.php:1650
+#: dashboard/templates.php:1642
 msgid "Continue shopping"
 msgstr "Retourner à la boutique"
 
-#: dashboard/templates.php:1654
+#: dashboard/templates.php:1646
 msgid "Empty the basket"
 msgstr "Vider le panier"
 
-#: dashboard/templates.php:1659
+#: dashboard/templates.php:1651
 msgid "Process"
 msgstr "Processus"
 
-#: dashboard/templates.php:1738 functions/tools.php:377
+#: dashboard/templates.php:1730 functions/tools.php:377
 msgid "Customer"
 msgstr "Client"
 
-#: dashboard/templates.php:1750 dashboard/templates.php:1779
+#: dashboard/templates.php:1742 dashboard/templates.php:1771
 msgid "Same address as the customer"
 msgstr "Même adresse que le client"
 
-#: dashboard/templates.php:1805
+#: dashboard/templates.php:1797
 #, php-format
 msgid ""
 "Adding billing or shipping contacts requires Dolibarr %s but your version is "
@@ -1382,14 +1386,14 @@ msgstr ""
 "L’ajout de contacts de facturation ou d’expédition nécessite Dolibarr %s "
 "mais votre version est %s"
 
-#: dashboard/templates.php:1809
+#: dashboard/templates.php:1801
 msgid ""
 "If you want to send us a message about your order, you can leave one here"
 msgstr ""
 "Si vous voulez nous envoyer un message sur votre commande, vous pouvez en "
 "laisser un ici"
 
-#: dashboard/templates.php:1860
+#: dashboard/templates.php:1852
 msgid "Validate"
 msgstr "Valider"
 
