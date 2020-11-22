@@ -527,9 +527,11 @@ print '><label for="'.$idobject.'[birth]"><i class="fas fa-user fa-fw"></i> '.__
 
 print '<div class="col-md-6">';
 if ( $mode != 'contact' ) {
-print "<label for='inputnickname'><small><i class='fas fa-user-secret fa-fw'></i> ".__( 'Display name', 'doliconnect')."</small></label><input type='text' class='form-control' id='inputnickname' placeholder='".__( 'Nickname', 'doliconnect')."' name='user_nicename' value='".stripslashes(htmlspecialchars($current_user->nickname, ENT_QUOTES))."' autocomplete='off' required >";
+print '<div class="form-floating"><input type="text" class="form-control" id="user_nicename" name="user_nicename" placeholder="DirectExample" value="'.stripslashes(htmlspecialchars(isset($object->poste) ? $object->poste : null, ENT_QUOTES)).'" autocomplete="off" required>
+<label for="user_nicename"><i class="fas fa-user-secret fa-fw"></i> '.__( 'Display name', 'doliconnect').'</label></div>';  
 } else {
-print "<label for='".$idobject."[poste]'><small><i class='fas fa-user-secret fa-fw'></i> ".__( 'Title / Job', 'doliconnect')."</small></label><input type='text' class='form-control' id='".$idobject."[poste]' placeholder='".__( 'Title / Job', 'doliconnect')."' name='".$idobject."[poste]' value='".stripslashes(htmlspecialchars(isset($object->poste) ? $object->poste : null, ENT_QUOTES))."' autocomplete='off'>";
+print '<div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[poste]" name="'.$idobject.'[poste]" placeholder="Director" value="'.stripslashes(htmlspecialchars($current_user->nickname, ENT_QUOTES)).'" autocomplete="off" required>
+<label for="'.$idobject.'[poste]"><i class="fas fa-user-secret fa-fw"></i> '.__( 'Title / Job', 'doliconnect').'</label></div>';  
 }
 print '</div>';
 print '</div>';
