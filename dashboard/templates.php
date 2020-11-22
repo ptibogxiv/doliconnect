@@ -238,23 +238,28 @@ if ( isset($_POST['submitted']) ) {
 
 $thirdparty=$_POST['thirdparty'];
 
-if ( email_exists($thirdparty['email']) ) {
-        $emailError = "".__( 'This email address is already linked to an account. You can reactivate your account through this <a href=\'".wp_lostpassword_url( get_permalink() )."\' title=\'lost password\'>form</a>.', 'doliconnect')."";
+    if (email_exists($thirdparty['email'])) {
+        $emailError = __( 'This email address is already linked to an account. You can reactivate your account through this <a href=\'".wp_lostpassword_url( get_permalink() )."\' title=\'lost password\'>form</a>.', 'doliconnect');
         $hasError = true;
-        } else {
+    } else {
         $email = sanitize_email($thirdparty['email']);
-        }
-
-if ( $thirdparty['firstname'] == $_POST['user_nicename'] && $thirdparty['firstname'] == $thirdparty['lastname']) {
-        $emailError = "".__( 'Create this account is not permitted', 'doliconnect')."";       
+    }
+    
+    if (defined("DOLICONNECT_SELECTEDEMAIL") && is_array(constant("DOLICONNECT_SELECTEDEMAIL")) && !in_array($email, constant("DOLICONNECT_SELECTEDEMAIL"))) {
+        $emailError = __( 'Only emails from selected domains are allowed', 'doliconnect'); 
         $hasError = true;
-        }
+    }
+
+    if ($thirdparty['firstname'] == $_POST['user_nicename'] && $thirdparty['firstname'] == $thirdparty['lastname']) {
+        $emailError = __( 'Create this account is not permitted', 'doliconnect');       
+        $hasError = true;
+    }
 
     if(!isset($hasError)) {
         $emailTo = get_option('tz_email');
         if (!isset($emailTo) || ($emailTo == '') ) {
         $emailTo = get_option('admin_email');
-        }
+    }
 
 $sitename = get_option('blogname');
 $subject = "[".$sitename."] ".__( 'Registration confirmation', 'doliconnect')."";
