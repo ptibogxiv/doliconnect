@@ -294,7 +294,7 @@ $requestlist = "/contacts?sortfield=t.rowid&sortorder=DESC&limit=".$limit."&page
 if ( isset($_POST["case"]) && $_POST["case"] == 'updatecontact' && isset($_POST["contactid"]) && !empty($_POST["contactid"])) {
  
 $contact = $_POST['contact'][''.$_POST['contactid'].''];
-
+//$contact['roles'] = array(100, 102);
 $contactfo = callDoliApi("PUT", "/contacts/".$_POST["contactid"]."?includecount=1", $contact, 0);
 
 if ( isset($_GET['return']) ) {
