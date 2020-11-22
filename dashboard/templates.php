@@ -1745,9 +1745,9 @@ if ( doliversion('10.0.0') ) {
 
 print "<li class='list-group-item'><div class='row'><div class='col-12 col-md-6'><h6>".__( 'Billing address', 'doliconnect')."</h6><small class='text-muted'>";
 
-print '<div class="custom-control custom-radio">
-<input type="radio" id="billing-0" name="contact_billing" class="custom-control-input" value="0" checked disabled>
-<label class="custom-control-label" for="billing-0">'.__( "Same address as the customer", "doliconnect").'</label>
+print '<div class="form-check">
+<input type="radio" id="billing-0" name="contact_billing" class="form-check-input" value="0" checked disabled>
+<label class="form-check-label" for="billing-0">'.__( "Same address as the customer", "doliconnect").'</label>
 </div>';
 
 $listcontact = callDoliApi("GET", "/contacts?sortfield=t.rowid&sortorder=ASC&limit=100&thirdparty_ids=".doliconnector($current_user, 'fk_soc')."&includecount=1&sqlfilters=t.statut=1", null, dolidelay('contact', true));
@@ -1763,9 +1763,9 @@ $contactshipping = $contact->id;
 
 if ( !isset($listcontact->error) && $listcontact != null ) {
 foreach ( $listcontact as $contact ) {
-print '<div class="custom-control custom-radio"><input type="radio" id="billing-'.$contact->id.'" name="contact_billing" class="custom-control-input" value="'.$contact->id.'" ';
+print '<div class="form-check"><input type="radio" id="billing-'.$contact->id.'" name="contact_billing" class="form-check-input" value="'.$contact->id.'" ';
 if ( (isset($contact->default) && !empty($contact->default)) || $contactshipping == $contact->id ) { print "checked"; }
-print ' disabled><label class="custom-control-label" for="billing-'.$contact->id.'">';
+print ' disabled><label class="form-check-label" for="billing-'.$contact->id.'">';
 print dolicontact($contact->id, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 print '</label></div>';
 }
@@ -1774,9 +1774,9 @@ print "</small></div>";
 
 print "<div class='col-12 col-md-6'><h6>".__( 'Shipping address', 'doliconnect')."</h6><small class='text-muted'>";
 
-print '<div class="custom-control custom-radio">
-<input type="radio" id="shipping-0" name="contact_shipping" class="custom-control-input" value="0" checked disabled>
-<label class="custom-control-label" for="shipping-0">'.__( "Same address as the customer", "doliconnect").'</label>
+print '<div class="form-check">
+<input type="radio" id="shipping-0" name="contact_shipping" class="form-check-input" value="0" checked disabled>
+<label class="form-check-label" for="shipping-0">'.__( "Same address as the customer", "doliconnect").'</label>
 </div>';
 
 $listcontact = callDoliApi("GET", "/contacts?sortfield=t.rowid&sortorder=ASC&limit=100&thirdparty_ids=".doliconnector($current_user, 'fk_soc')."&includecount=1&sqlfilters=t.statut=1", null, dolidelay('contact', true));
@@ -1792,9 +1792,9 @@ $contactshipping = $contact->id;
 
 if ( !isset($listcontact->error) && $listcontact != null ) {
 foreach ( $listcontact as $contact ) {
-print '<div class="custom-control custom-radio"><input type="radio" id="shipping-'.$contact->id.'" name="contact_shipping" class="custom-control-input" value="'.$contact->id.'" ';
+print '<div class="form-check"><input type="radio" id="shipping-'.$contact->id.'" name="contact_shipping" class="form-check-input" value="'.$contact->id.'" ';
 if ( (isset($contact->default) && !empty($contact->default)) || $contactshipping == $contact->id ) { print "checked"; }
-print ' disabled><label class="custom-control-label" for="shipping-'.$contact->id.'">';
+print ' disabled><label class="form-check-label" for="shipping-'.$contact->id.'">';
 print dolicontact($contact->id, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 print '</label></div>';
 }
