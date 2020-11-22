@@ -477,13 +477,15 @@ print '</div>';
 print "</li><li class='list-group-item list-group-item-light list-group-item-action'>";
 }
 
-print "<div class='form-row'><div class='col-12 col-md-3'><label for='inputCivility'><small><i class='fas fa-user fa-fw'></i> ".__( 'Civility', 'doliconnect')."</small></label>";
+print '<div class="row g-2">';
+    
+print '<div class="col-md-12 col-lg-3 col-xl-2">';
 if ( doliversion('10.0.0') ) {
 $civility = callDoliApi("GET", "/setup/dictionary/civilities?sortfield=code&sortorder=ASC&limit=100", null, $delay);
 } else {
 $civility = callDoliApi("GET", "/setup/dictionary/civility?sortfield=code&sortorder=ASC&limit=100", null, $delay);
 }
-print "<select class='custom-select' id='".$idobject."[civility_code]'  name='".$idobject."[civility_code]' required>";
+print '<div class="form-floating"><select class="form-select" id="'.$idobject.'[civility_code]"  name="'.$idobject.'[civility_code]" aria-label="'.__( 'Civility', 'doliconnect').'" required>';
 print "<option value='' disabled ";
 if ( empty($object->civility_code) ) {
 print "selected ";}
@@ -506,16 +508,17 @@ if ( $current_user->civility_code == 'MR' && $object->civility_code != null) {
 print "selected ";}
 print ">".__( 'Mister', 'doliconnect')."</option>";
 }
-print "</select>";
-print "</div>
-    <div class='col-12 col-md-4'>
-      <label for='".$idobject."[firstname]'><small><i class='fas fa-user fa-fw'></i> ".__( 'Firstname', 'doliconnect')."</small></label>
-      <input type='text' name='".$idobject."[firstname]' class='form-control' placeholder='".__( 'Firstname', 'doliconnect')."' value='".(isset($object->firstname) ? $object->firstname : stripslashes(htmlspecialchars($current_user->user_firstname, ENT_QUOTES)))."' required>
-    </div>
-    <div class='col-12 col-md-5'>
-      <label for='".$idobject."[lastname]'><small><i class='fas fa-user fa-fw'></i> ".__( 'Lastname', 'doliconnect')."</small></label>
-      <input type='text' name='".$idobject."[lastname]' class='form-control' placeholder='".__( 'Lastname', 'doliconnect')."' value='".(isset($object->lastname) ? $object->lastname : stripslashes(htmlspecialchars($current_user->user_lastname, ENT_QUOTES)))."' required>
-    </div></div>";
+print '</select><label for="'.$idobject.'[civility_code]"><i class="fas fa-user fa-fw"></i> '.__( 'Civility', 'doliconnect').'</label></div></div>';
+
+print '<div class="col-md-5 col-lg-4 col-xl-5"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[firstname]]" name="'.$idobject.'[firstname]]" placeholder="'.__( 'Firstname', 'doliconnect').'" value="'.(isset($object->firstname) ? $object->firstname : stripslashes(htmlspecialchars($current_user->user_firstname, ENT_QUOTES))).'" required>
+<label for="'.$idobject.'[firstname]]"><i class="fas fa-user fa-fw"></i> '.__( 'Firstname', 'doliconnect').'</label></div></div>';
+
+print '<div class="col-md-6 col-lg-5 col-xl-5"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[lastname]]" name="'.$idobject.'[lastname]]" placeholder="'.__( 'Firstname', 'doliconnect').'" value="'.(isset($object->lastname) ? $object->lastname : stripslashes(htmlspecialchars($current_user->user_lastname, ENT_QUOTES))).'" required>
+<label for="'.$idobject.'[lastname]]"><i class="fas fa-user fa-fw"></i> '.__( 'Lastname', 'doliconnect').'</label></div></div>';   
+
+print '<div>';
+
+print "<div class='form-row'>";
 
 if ( !in_array($mode, array('donation')) ) {
 if ( !empty($object->birth) ) { $birth = wp_date('Y-m-d', $object->birth); }
