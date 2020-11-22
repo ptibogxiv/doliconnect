@@ -539,12 +539,13 @@ print '</div>';
 
 print '<div class="row g-2">';
 print '<div class="col-md"><div class="form-floating"><input type="email" class="form-control" id="'.$idobject.'[email]" placeholder="name@example.com" name="'.$idobject.'[email]" value="'.(isset($object->email) ? $object->email : $current_user->user_email).'" autocomplete="off"';
-if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $current_user->ID && is_user_logged_in() && in_array($mode, array('thirdparty')) ) {
+if ((defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $current_user->ID && is_user_logged_in() && in_array($mode, array('thirdparty'))) || (defined("DOLICONNECT_SELECTEDEMAIL") && is_array(constant("DOLICONNECT_SELECTEDEMAIL")))) {
 print ' readonly';
 } else {
 print ' required';
 }
 print '><label for="'.$idobject.'[email]"><i class="fas fa-at fa-fw"></i> '.__( 'Email', 'doliconnect').'</label>';
+if (defined("DOLICONNECT_SELECTEDEMAIL") && is_array(constant("DOLICONNECT_SELECTEDEMAIL")) && !is_user_logged_in()) {
 print '<small><i class="fas fa-info-circle"></i> Only emails from these domains are allowed:';
 $array = constant("DOLICONNECT_SELECTEDEMAIL");
 $i = 0;
@@ -553,6 +554,7 @@ if (!empty($i)) print ',';
 print ' @'.$val; 
 $i++; }
 print '</small>';
+}
 print '</div></div>';
 
 if ( ( !is_user_logged_in() && ((isset($_GET["morphy"])&& $_GET["morphy"] == "mor" && get_option('doliconnect_disablepro') != 'phy') || get_option('doliconnect_disablepro') == 'mor' || (function_exists('dolikiosk') && ! empty(dolikiosk())) ) && in_array($mode, array('thirdparty'))) || (is_user_logged_in() && in_array($mode, array('thirdparty','contact','member','donation'))) ) {
