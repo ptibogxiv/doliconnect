@@ -513,14 +513,18 @@ print "<li class='list-group-item'>";
 
 print '<div class="form-floating mb-2"><textarea class="form-control" placeholder="'.__( 'Address', 'doliconnect').'"  name="'.$idobject.'[address]" id="'.$idobject.'[address]" style="height: 100px" required>'.stripslashes(htmlspecialchars($object->address, ENT_QUOTES)).'</textarea>
 <label for="'.$idobject.'[address]"><i class="fas fa-map-marked fa-fw"></i> '.__( 'Address', 'doliconnect').'</label></div>';
+ 
+print '<div class="row g-2 mb-2"><div class="col-lg-4">';
     
-print '<div class="form-floating mb-2"><input type="text" class="form-control" id="'.$idobject.'[town]" name="'.$idobject.'[town]" placeholder="" value="'.(isset($object->town) ? $object->town : null).'" required>
+print '<div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[town]" name="'.$idobject.'[town]" placeholder="" value="'.(isset($object->town) ? $object->town : null).'" required>
 <label for="'.$idobject.'[town]"><i class="fas fa-map-marked fa-fw"></i> '.__( 'Town', 'doliconnect').'</label></div>';  
+
+print '</div><div class="col-lg-8">';
     
-print '<div class="form-floating mb-2"><input type="text" class="form-control" id="'.$idobject.'[zip]" name="'.$idobject.'[zip]" placeholder="" value="'.(isset($object->zip) ? $object->zip : null).'" required>
+print '<div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[zip]" name="'.$idobject.'[zip]" placeholder="" value="'.(isset($object->zip) ? $object->zip : null).'" required>
 <label for="'.$idobject.'[zip]"><i class="fas fa-map-marked fa-fw"></i> '.__( 'Zipcode', 'doliconnect').'</label></div>';  
-    
-print '<div class="col">';
+
+print '</div></div>';
 
 if ( function_exists('pll_the_languages') ) { 
 $lang = pll_current_language('locale');
@@ -547,7 +551,6 @@ print '</select><label for="'.$idobject.'[country_id]"><i class="fas fa-map-mark
 } else {
 print "<input type='text' class='form-control' id='inputcountry' placeholder='".__( 'Country', 'doliconnect')."' name='".$idobject."[country_id]' value='".$object->country_id."' autocomplete='off' required>";
 }
-print "</div>";
 
 print "</li>";
 
