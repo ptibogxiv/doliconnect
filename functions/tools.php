@@ -423,13 +423,14 @@ print "</select></div></div></li><li class='list-group-item list-group-item-ligh
 if ( in_array($mode, array('thirdparty', 'donation')) && ($current_user->billing_type == 'mor' || ( isset($_GET["morphy"]) && $_GET["morphy"] == 'mor') || get_option('doliconnect_disablepro') == 'mor' ) ) {
 
 print '<div class="row g-2 mb-2"><div class="col-lg">';    
-print '<div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[name]" name="'.$idobject.'[name]" placeholder="" value="'.stripslashes(htmlspecialchars($object->name, ENT_QUOTES)).'" required>
+print '<div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[name]" name="'.$idobject.'[name]" placeholder="'.__( 'Name of company', 'doliconnect').'" value="'.stripslashes(htmlspecialchars($object->name, ENT_QUOTES)).'" required>
 <label for="'.$idobject.'[name]"><i class="fas fa-building fa-fw"></i> '.__( 'Name of company', 'doliconnect').'</label></div>';   
 print '</div><div class="col-md">';
-print '<div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[name_alias]" name="'.$idobject.'[name_alias]" placeholder="" value="'.stripslashes(htmlspecialchars($object->name_alias, ENT_QUOTES)).'" required>
+print '<div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[name_alias]" name="'.$idobject.'[name_alias]" placeholder="'.__( 'Commercial name / Brand', 'doliconnect').'" value="'.stripslashes(htmlspecialchars($object->name_alias, ENT_QUOTES)).'" required>
 <label for="'.$idobject.'[name_alias]"><i class="fas fa-building fa-fw"></i> '.__( 'Commercial name / Brand', 'doliconnect').'</label></div>';
 print '</div></div>';
 
+/*
 print "<div class='form-row'>";  
 if ( in_array($object->country_code, array('FR', 'ES')) ) { print "<div class='form-row'><div class='col-12'><label for='coordonnees'><small><i class='fas fa-building fa-fw'></i> ".__( 'Company identification number', 'doliconnect')."</small></label>";
 print "<div class='input-group'><input type='number' class='form-control' id='inputcompany' aria-label='SIREN'  maxlength='9' placeholder='".__( 'SIREN', 'doliconnect')."' name='".$idobject."[idprof1]' value='".$object->idprof1."' ";
@@ -442,27 +443,34 @@ print "<div class='input-group'><input type='number' class='form-control' id='in
 if (isset($object->idprof1) && !empty($object->idprof1)) { print "readonly"; } else { print "required"; }
 print "></div></div></div>";
 }
+*/
 
-print '<div class="row g-2 mb-2">';
+print '<div class="row g-2">';
     
-print '<div class="col-lg-6"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[idprof1]" name="'.$idobject.'[idprof1]" placeholder="idprof1" value="'.$object->idprof1.'"';
+print '<div class="col-md-6 col-lg-4"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[idprof1]" name="'.$idobject.'[idprof1]" placeholder="idprof1" value="'.$object->idprof1.'"';
 if (isset($object->idprof1) && !empty($object->idprof1)) { print ' readonly'; } else { print ' required'; }
-print '>
+print ' autocomplete="off">
 <label for="'.$idobject.'[idprof1]"><i class="fas fa-building fa-fw"></i> '.__( 'SIREN', 'doliconnect').'</label></div></div>'; 
 
-print '<div class="col-lg-6"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[idprof3]" name="'.$idobject.'[idprof3]" placeholder="idprof3" value="'.$object->idprof3.'"';
+print '<div class="col-md-6 col-lg-4"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[idprof2]" name="'.$idobject.'[idprof2]" placeholder="idprof2" value="'.$object->idprof2.'"';
+if (isset($object->idprof2) && !empty($object->idprof2)) { print ' readonly'; } else { print ' required'; }
+print ' autocomplete="off">
+<label for="'.$idobject.'[idprof2]"><i class="fas fa-building fa-fw"></i> '.__( 'SIRET', 'doliconnect').'</label></div></div>';
+
+
+print '<div class="col-md-6 col-lg-4"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[idprof3]" name="'.$idobject.'[idprof3]" placeholder="idprof3" value="'.$object->idprof3.'"';
 if (isset($object->idprof3) && !empty($object->idprof3)) { print ' readonly'; } else { print ' required'; }
-print '>
+print ' autocomplete="off">
 <label for="'.$idobject.'[idprof3]"><i class="fas fa-building fa-fw"></i> '.__( 'NAF-APE', 'doliconnect').'</label></div></div>';
 
-print '<div class="col-lg-6"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[idprof4]" name="'.$idobject.'[idprof4]" placeholder="idprof4" value="'.$object->idprof4.'"';
+print '<div class="col-md-6 col-lg-4"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[idprof4]" name="'.$idobject.'[idprof4]" placeholder="idprof4" value="'.$object->idprof4.'"';
 //if (isset($object->idprof4) && !empty($object->idprof4)) { print ' readonly'; } else { print ' required'; }
-print '>
+print ' autocomplete="off">
 <label for="'.$idobject.'[idprof4]"><i class="fas fa-building fa-fw"></i> '.__( 'RCS/RM', 'doliconnect').'</label></div></div>';      
 
-print '<div class="col-lg-6"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[tva_intra]" name="'.$idobject.'[tva_intra]" placeholder="tva" value="'.$object->tva_intra.'"';
+print '<div class="col-md-6 col-lg-4"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[tva_intra]" name="'.$idobject.'[tva_intra]" placeholder="tva" value="'.$object->tva_intra.'"';
 if (isset($object->tva_intra) && !empty($object->tva_intra)) { print ' readonly'; } else { print ''; }
-print '>
+print ' autocomplete="off">
 <label for="'.$idobject.'[tva_intra]"><i class="fas fa-building fa-fw"></i> '.__( 'VAT number', 'doliconnect').'</label></div></div>';
 
 print '</div>';
