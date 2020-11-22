@@ -436,26 +436,36 @@ print "<div class='input-group'><input type='number' class='form-control' id='in
 if (isset($object->idprof1) && !empty($object->idprof1)) { print "readonly"; } else { print "required"; }
 print "><input type='text' aria-label='NAF-APE' placeholder='".__( 'NAF-APE', 'doliconnect')."' name='".$idobject."[idprof3]' maxlength='5' value='".$object->idprof3."' class='form-control' ";
 if (isset($object->idprof3) && !empty($object->idprof3)) { print "readonly"; } else { print "required"; }
-print "></div></div>
-<div class='col-12'><label for='coordonnees'><small><i class='fas fa-building fa-fw'></i> ".__( 'RCS/RM', 'doliconnect')."</small></label><input type='text' aria-label='RCS/RM' placeholder='".__( 'RCS/RM', 'doliconnect')."' class='form-control'></div></div>";
+print "></div></div></div>";
 } elseif ( in_array($object->country_code, array('BE')) ) { print "<div class='form-row'><div class='col-12'><label for='coordonnees'><small><i class='fas fa-building fa-fw'></i> ".__( 'Company identification number', 'doliconnect')."</small></label>";
 print "<div class='input-group'><input type='number' class='form-control' id='inputcompany' aria-label='SIREN'  maxlength='9' placeholder='".__( 'SIREN', 'doliconnect')."' name='".$idobject."[idprof1]' value='".$object->idprof1."' ";
 if (isset($object->idprof1) && !empty($object->idprof1)) { print "readonly"; } else { print "required"; }
 print "></div></div></div>";
 }
 
-print '<div class="row g-2 mb-2"><div class="col-lg">';    
-print '<div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[idprof1]" name="'.$idobject.'[idprof1]" placeholder="" value="'.$object->idprof1.'"';
+print '<div class="row g-2 mb-2">';
+    
+print '<div class="col-lg-6"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[idprof1]" name="'.$idobject.'[idprof1]" placeholder="" value="'.$object->idprof1.'"';
 if (isset($object->idprof1) && !empty($object->idprof1)) { print ' readonly'; } else { print ' required'; }
 print '>
-<label for="'.$idobject.'[idprof1]"><i class="fas fa-building fa-fw"></i> '.__( 'SIREN', 'doliconnect').'</label></div>';   
-print '</div><div class="col-md">';
-print '<div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[tva_intra]" name="'.$idobject.'[tva_intra]" placeholder="" value="'.$object->tva_intra.'"';
+<label for="'.$idobject.'[idprof1]"><i class="fas fa-building fa-fw"></i> '.__( 'SIREN', 'doliconnect').'</label></div></div>'; 
+
+print '<div class="col-lg-6"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[idprof3]" name="'.$idobject.'[idprof3]" placeholder="" value="'.$object->idprof3.'"';
+if (isset($object->idprof3) && !empty($object->idprof3)) { print ' readonly'; } else { print ' required'; }
+print '>
+<label for="'.$idobject.'[idprof3]"><i class="fas fa-building fa-fw"></i> '.__( 'NAF-APE', 'doliconnect').'</label></div></div>';
+
+print '<div class="col-lg-6"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[idprof4]" name="'.$idobject.'[idprof4]" placeholder="" value="'.$object->idprof4.'"';
+//if (isset($object->idprof4) && !empty($object->idprof4)) { print ' readonly'; } else { print ' required'; }
+print '>
+<label for="'.$idobject.'[idprof4]"><i class="fas fa-building fa-fw"></i> '.__( 'RCS/RM', 'doliconnect').'</label></div></div>';      
+
+print '<div class="col-lg-6"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[tva_intra]" name="'.$idobject.'[tva_intra]" placeholder="" value="'.$object->tva_intra.'"';
 if (isset($object->tva_intra) && !empty($object->tva_intra)) { print ' readonly'; } else { print ''; }
 print '>
-<label for="'.$idobject.'[tva_intra]"><i class="fas fa-building fa-fw"></i> '.__( 'VAT number', 'doliconnect').'</label></div>';
-print '</div></div>';
+<label for="'.$idobject.'[tva_intra]"><i class="fas fa-building fa-fw"></i> '.__( 'VAT number', 'doliconnect').'</label></div></div>';
 
+print '</div>';
 print "</li><li class='list-group-item list-group-item-light list-group-item-action'>";
 }
 
@@ -578,7 +588,7 @@ print apply_filters('mydoliconnectuserform', $object);
 print "</li>";
 }
 
-if ( in_array($mode, array('contact')) && doliversion('11.0.0') && !empty(get_option('doliconnectbeta')) ) {
+if ( in_array($mode, array('contact')) && doliversion('12.0.0') ) {
 $contact_types = callDoliApi("GET", "/setup/dictionary/contact_types?sortfield=code&sortorder=ASC&limit=100&active=1&sqlfilters=(t.source%3A%3D%3A'external')%20AND%20(t.element%3A%3D%3A'commande')", null, $delay);//%20OR%20(t.element%3A%3D%3A'propal')
 print "<li class='list-group-item list-group-item-light list-group-item-action'>";
 if ( !isset($contact_types->error ) && $contact_types != null ) {
