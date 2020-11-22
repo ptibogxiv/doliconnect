@@ -421,8 +421,16 @@ print "</select></div></div></li><li class='list-group-item list-group-item-ligh
 }
 
 if ( in_array($mode, array('thirdparty', 'donation')) && ($current_user->billing_type == 'mor' || ( isset($_GET["morphy"]) && $_GET["morphy"] == 'mor') || get_option('doliconnect_disablepro') == 'mor' ) ) {
-print "<div class='form-row'><div class='col-12 col-md-6'><label for='coordonnees'><small><i class='fas fa-building fa-fw'></i> ".__( 'Name of company', 'doliconnect')."</small></label><input type='text' class='form-control' id='inputcompany' placeholder='".__( 'Name of company', 'doliconnect')."' name='".$idobject."[name]' value='".stripslashes(htmlspecialchars($object->name, ENT_QUOTES))."' required></div>"; 
-print "<div class='col-12 col-md-6'><label for='coordonnees'><small><i class='fas fa-building fa-fw'></i> ".__( 'Commercial name / Brand', 'doliconnect')."</small></label><input type='text' class='form-control' id='inputcompanyalias' placeholder='".__( 'Commercial name / Brand', 'doliconnect')."' name='".$idobject."[name_alias]' value='".stripslashes(htmlspecialchars($object->name_alias, ENT_QUOTES))."' ></div></div>";  
+
+print '<div class="row g-2 mb-2"><div class="col-lg">';    
+print '<div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[name]" name="'.$idobject.'[name]" placeholder="" value="'.stripslashes(htmlspecialchars($object->name, ENT_QUOTES)).'" required>
+<label for="'.$idobject.'[name]"><i class="fas fa-building fa-fw"></i> '.__( 'Name of company', 'doliconnect').'</label></div>';   
+print '</div><div class="col-md">';
+print '<div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[name_alias]" name="'.$idobject.'[name_alias]" placeholder="" value="'.stripslashes(htmlspecialchars($object->name_alias, ENT_QUOTES)).'" required>
+<label for="'.$idobject.'[name_alias]"><i class="fas fa-building fa-fw"></i> '.__( 'Commercial name / Brand', 'doliconnect').'</label></div>';
+print '</div></div>';
+
+print "<div class='form-row'>";  
 if ( in_array($object->country_code, array('FR', 'ES')) ) { print "<div class='form-row'><div class='col-12'><label for='coordonnees'><small><i class='fas fa-building fa-fw'></i> ".__( 'Company identification number', 'doliconnect')."</small></label>";
 print "<div class='input-group'><input type='number' class='form-control' id='inputcompany' aria-label='SIREN'  maxlength='9' placeholder='".__( 'SIREN', 'doliconnect')."' name='".$idobject."[idprof1]' value='".$object->idprof1."' ";
 if (isset($object->idprof1) && !empty($object->idprof1)) { print "readonly"; } else { print "required"; }
@@ -435,9 +443,19 @@ print "<div class='input-group'><input type='number' class='form-control' id='in
 if (isset($object->idprof1) && !empty($object->idprof1)) { print "readonly"; } else { print "required"; }
 print "></div></div></div>";
 }
-print "<div class='form-row'><div class='col-12'><label for='coordonnees'><small><i class='fas fa-landmark fa-fw'></i> ".__( 'VAT number', 'doliconnect')."</small></label><input type='text' class='form-control' id='inputcompany' placeholder='".__( 'VAT number', 'doliconnect')."' name='".$idobject."[tva_intra]' value='".$object->tva_intra."' ";
-if (isset($object->tva_intra) && !empty($object->tva_intra)) { print "readonly"; } else { print ""; }
-print "></div></div>";
+
+print '<div class="row g-2 mb-2"><div class="col-lg">';    
+print '<div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[idprof1]" name="'.$idobject.'[idprof1]" placeholder="" value="'.$object->idprof1.'"';
+if (isset($object->idprof1) && !empty($object->idprof1)) { print ' readonly'; } else { print ' required'; }
+print '>
+<label for="'.$idobject.'[idprof1]"><i class="fas fa-building fa-fw"></i> '.__( 'SIREN', 'doliconnect').'</label></div>';   
+print '</div><div class="col-md">';
+print '<div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[tva_intra]" name="'.$idobject.'[tva_intra]" placeholder="" value="'.$object->tva_intra.'"';
+if (isset($object->tva_intra) && !empty($object->tva_intra)) { print ' readonly'; } else { print ''; }
+print '>
+<label for="'.$idobject.'[tva_intra]"><i class="fas fa-building fa-fw"></i> '.__( 'VAT number', 'doliconnect').'</label></div>';
+print '</div></div>';
+
 print "</li><li class='list-group-item list-group-item-light list-group-item-action'>";
 }
 
@@ -514,12 +532,12 @@ print "<li class='list-group-item list-group-item-light list-group-item-action'>
 print '<div class="form-floating mb-2"><textarea class="form-control" placeholder="'.__( 'Address', 'doliconnect').'"  name="'.$idobject.'[address]" id="'.$idobject.'[address]" style="height: 100px" required>'.stripslashes(htmlspecialchars($object->address, ENT_QUOTES)).'</textarea>
 <label for="'.$idobject.'[address]"><i class="fas fa-map-marked fa-fw"></i> '.__( 'Address', 'doliconnect').'</label></div>';
  
-print '<div class="row g-2 mb-2"><div class="col-lg-4">';
+print '<div class="row g-2 mb-2"><div class="col-lg-8">';
     
 print '<div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[town]" name="'.$idobject.'[town]" placeholder="" value="'.(isset($object->town) ? $object->town : null).'" required>
 <label for="'.$idobject.'[town]"><i class="fas fa-map-marked fa-fw"></i> '.__( 'Town', 'doliconnect').'</label></div>';  
 
-print '</div><div class="col-lg-8">';
+print '</div><div class="col-lg-4">';
     
 print '<div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[zip]" name="'.$idobject.'[zip]" placeholder="" value="'.(isset($object->zip) ? $object->zip : null).'" required>
 <label for="'.$idobject.'[zip]"><i class="fas fa-map-marked fa-fw"></i> '.__( 'Zipcode', 'doliconnect').'</label></div>';  
