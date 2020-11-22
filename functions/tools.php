@@ -590,9 +590,8 @@ $typecontact[] .= $role->id;
 foreach ( $contact_types as $contacttype ) {                                                          
 print "<div class='form-check'><input type='checkbox' class='form-check-input' id='".$idobject."[roles][".$contacttype->rowid."]' name='".$idobject."[roles][]' value='".$contacttype->rowid."'  ";
 if ( isset($object->roles) && $object->roles != null && in_array($contacttype->rowid, $typecontact)) { print " checked"; }
-print " disabled><label class='form-check-label' for='".$idobject."[roles][".$contacttype->rowid."]'>".$contacttype->label."</label></div>";
+print "><label class='form-check-label' for='".$idobject."[roles][".$contacttype->rowid."]'>".$contacttype->label."</label></div>";
 }}
-print "<input type='hidden' name='".$idobject."[roles][]' value='100'></li>";
 }
 
 if ( !in_array($mode, array('donation', 'linkthirdparty')) ) {
