@@ -1507,15 +1507,16 @@ $paymentmethods .= __( 'immediately', 'doliconnect');
 $paymentmethods .= "</small>";
 //$paymentmethods .= "<small><strong>Note:</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 //tempor incididunt ut labore et dolore magna aliqua.</small>";
-$paymentmethods .= "</p></div></div>";
+$paymentmethods .= '</p></div></div><div class="d-grid gap-2">';
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
 if ( $method->type == 'card' ) {
-$paymentmethods .= '<br><button type="button" onclick="PayCardPM(\''.$method->id.'\')" class="btn btn-danger btn-block">'.__( 'Pay', 'doliconnect')." ".doliprice($object, 'ttc', $currency).'</button>';
+$paymentmethods .= '<button type="button" onclick="PayCardPM(\''.$method->id.'\')" class="btn btn-danger btn-block">'.__( 'Pay', 'doliconnect')." ".doliprice($object, 'ttc', $currency).'</button>';
 } elseif ( $method->type == 'sepa_debit' ) {
-$paymentmethods .= '<br><button type="button" onclick="PaySepaDebitPM(\''.$method->id.'\')" class="btn btn-danger btn-clock">'.__( 'Pay', 'doliconnect')." ".doliprice($object, 'ttc', $currency).'</button>';
+$paymentmethods .= '<button type="button" onclick="PaySepaDebitPM(\''.$method->id.'\')" class="btn btn-danger btn-clock">'.__( 'Pay', 'doliconnect')." ".doliprice($object, 'ttc', $currency).'</button>';
 } else {
-$paymentmethods .= '<br><button type="button" onclick="PayPM(\''.$method->type.'\')" class="btn btn-danger btn-block">'.__( 'Pay', 'doliconnect')." ".doliprice($object, 'ttc', $currency).'</button>';
+$paymentmethods .= '<button type="button" onclick="PayPM(\''.$method->type.'\')" class="btn btn-danger btn-block">'.__( 'Pay', 'doliconnect')." ".doliprice($object, 'ttc', $currency).'</button>';
 }
+$paymentmethods .= '</div>';
 } else {
 $paymentmethods .= '<br><div class="btn-group btn-block" role="group" aria-label="actions buttons">';
 if ( !isset($method->default_source) && !in_array($method->type, array('VIR')) && empty($thirdparty->mode_reglement_id) ) {
@@ -1851,11 +1852,11 @@ $paymentmethods .= dolipaymentterm($thirdparty->cond_reglement_id);
 $paymentmethods .= __( 'immediately', 'doliconnect');
 }
 $paymentmethods .= "</small>";
-$paymentmethods .= "</p></div></div>";
+$paymentmethods .= '</p></div></div><div class="d-grid gap-2">';
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
 $paymentmethods .= '<br><button type="button" onclick="PayPM(\'CHQ\')" class="btn btn-danger btn-block">'.__( 'Pay', 'doliconnect')." ".doliprice($object, 'ttc', $currency).'</button>';
 }
-$paymentmethods .= "</div>";
+$paymentmethods .= '</div>';
 }
 
 if ( ! empty(dolikiosk()) ) {
@@ -2062,7 +2063,7 @@ $('#DoliconnectLoadingModal').modal('hide');
 }";
 $paymentmethods .= "</script>";
 }
-$paymentmethods .= "</div><div class='card-footer text-muted'>";
+$paymentmethods .= "</div></div><div class='card-footer text-muted'>";
 $paymentmethods .= "<small><div class='float-left'>";
 $paymentmethods .= dolirefresh($request, $url, dolidelay('paymentmethods'));
 $paymentmethods .= "</div><div class='float-right'>";
