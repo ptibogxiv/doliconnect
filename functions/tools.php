@@ -510,9 +510,9 @@ print "</div></li>";
 
 if ( ( !is_user_logged_in() && ((isset($_GET["morphy"])&& $_GET["morphy"] == "mor" && get_option('doliconnect_disablepro') != 'phy') || get_option('doliconnect_disablepro') == 'mor' || (function_exists('dolikiosk') && ! empty(dolikiosk())) ) && in_array($mode, array('thirdparty'))) || (is_user_logged_in() && in_array($mode, array('thirdparty','contact','member','donation'))) ) {       
 print "<li class='list-group-item'>";
- 
-print "<div class='form-row'><div class='col-12'><label for='".$idobject."[address]'><small><i class='fas fa-map-marked fa-fw'></i> ".__( 'Address', 'doliconnect')."</small></label>
-<textarea id='".$idobject."[address]' name='".$idobject."[address]' class='form-control' rows='3' placeholder='".__( 'Address', 'doliconnect')."' required>".stripslashes(htmlspecialchars($object->address, ENT_QUOTES))."</textarea></div></div>";
+
+print '<div class="form-floating"><textarea class="form-control" placeholder="'.__( 'Address', 'doliconnect').'"  name="'.$idobject.'[address]" id="'.$idobject.'[address]" style="height: 100px" required>'.stripslashes(htmlspecialchars($object->address, ENT_QUOTES)).'</textarea>
+<label for="'.$idobject.'[address]">'.__( 'Address', 'doliconnect').'</label></div>';
 
 print "<div class='form-row'>
     <div class='col-md-6'><label for='".$idobject."[town]'><small><i class='fas fa-map-marked fa-fw'></i> ".__( 'Town', 'doliconnect')."</small></label>
