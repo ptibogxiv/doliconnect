@@ -534,14 +534,14 @@ print "<label for='".$idobject."[poste]'><small><i class='fas fa-user-secret fa-
 print "</div></div>";
 }
 
-print "<div class='form-row'><div class='col'><label for='".$idobject."[email]'><small><i class='fas fa-at fa-fw'></i> ".__( 'Email', 'doliconnect')."</small></label><input type='email' class='form-control' id='".$idobject."[email]' placeholder='email@example.com' name='".$idobject."[email]' value='".(isset($object->email) ? $object->email : $current_user->user_email)."' autocomplete='off' ";
-
+print '<div class="form-floating mb-3"><input type="email" class="form-control" id="'.$idobject.'[email]" placeholder="name@example.com" name="'.$idobject.'[email]" value="'.(isset($object->email) ? $object->email : $current_user->user_email).'" autocomplete="off"';
 if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $current_user->ID && is_user_logged_in() && in_array($mode, array('thirdparty')) ) {
-print " readonly";
+print ' readonly';
 } else {
-print " required";
+print ' required';
 }
-print "></div>";
+print '><label for="'.$idobject.'[email]"><i class="fas fa-at fa-fw"></i> '.__( 'Email', 'doliconnect').'</label></div>';
+
 if ( ( !is_user_logged_in() && ((isset($_GET["morphy"])&& $_GET["morphy"] == "mor" && get_option('doliconnect_disablepro') != 'phy') || get_option('doliconnect_disablepro') == 'mor' || (function_exists('dolikiosk') && ! empty(dolikiosk())) ) && in_array($mode, array('thirdparty'))) || (is_user_logged_in() && in_array($mode, array('thirdparty','contact','member','donation'))) ) {
 print "<div class='col-12 col-md-5'><label for='".$idobject."[phone]'><small><i class='fas fa-phone fa-fw'></i> ".__( 'Phone', 'doliconnect')."</small></label><input type='tel' class='form-control' id='".$idobject."[phone]' placeholder='".__( 'Phone', 'doliconnect')."' name='".$idobject."[phone]' value='".(isset($object->phone) ? $object->phone : (isset($object->phone_pro) ? $object->phone_pro: null))."' autocomplete='off'></div>";
 }
