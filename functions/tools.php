@@ -360,13 +360,13 @@ print "<input type='hidden' id='morphy' name='".$idobject."[morphy]' value='phy'
 print "</div></div></li><li class='list-group-item list-group-item-light list-group-item-action'>";
 } elseif ( isset($object) && in_array($mode, array('thirdparty')) && empty(get_option('doliconnect_disablepro')) ) { //|| $mode == 'member'
 print "<li class='list-group-item list-group-item-light list-group-item-action'><div class='form-row'><div class='col-12'><label for='inputMorphy'><small><i class='fas fa-user-tag fa-fw'></i> ".__( 'Type of account', 'doliconnect')."</small></label><br>";
-print "<div class='custom-control custom-radio custom-control-inline'><input type='radio' id='morphy1' name='".$idobject."[morphy]' value='phy' class='custom-control-input'";
+print "<div class='form-check form-check-inline'><input type='radio' id='morphy1' name='".$idobject."[morphy]' value='phy' class='form-check-input'";
 if ( $current_user->billing_type != 'mor' || empty($current_user->billing_type) ) { print " checked"; }
-print " required><label class='custom-control-label' for='morphy1'>".__( 'Personnal account', 'doliconnect')."</label>
+print " required><label class='form-check-label' for='morphy1'>".__( 'Personnal account', 'doliconnect')."</label>
 </div>
-<div class='custom-control custom-radio custom-control-inline'><input type='radio' id='morphy2' name='".$idobject."[morphy]' value='mor' class='custom-control-input'";
+<div class='form-check form-check-inline'><input type='radio' id='morphy2' name='".$idobject."[morphy]' value='mor' class='form-check-input'";
 if ( $current_user->billing_type == 'mor' ) { print " checked"; }
-print " required><label class='custom-control-label' for='morphy2'>".__( 'Entreprise account', 'doliconnect')."</label>
+print " required><label class='form-check-label' for='morphy2'>".__( 'Entreprise account', 'doliconnect')."</label>
 </div>";
 print "</div></div></li><li class='list-group-item list-group-item-light list-group-item-action'>";
 } elseif ( in_array($mode, array('thirdparty')) ) { //|| $mode == 'member'
