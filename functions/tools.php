@@ -1730,14 +1730,14 @@ $paymentmethods .= "});
 })(jQuery);";
 $paymentmethods .= '}';
 $paymentmethods .= 'window.onload=dolistripecard();';
-$paymentmethods .= '</script></div></div><br>';
+$paymentmethods .= '</script></div></div><br><div class="d-grid gap-2">';
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
-$paymentmethods .= "<button type='button' id='PayCardButton' class='btn btn-danger btn-block'>".__( 'Pay', 'doliconnect')." ".doliprice($object, 'ttc', isset($object->multicurrency_code) ? $object->multicurrency_code : null)."</button>";
+$paymentmethods .= "<button type='button' id='PayCardButton' class='btn btn-danger'>".__( 'Pay', 'doliconnect')." ".doliprice($object, 'ttc', isset($object->multicurrency_code) ? $object->multicurrency_code : null)."</button>";
 } else {
-$paymentmethods .= "<button type='button' id='AddCardButton' class='btn btn-light btn-block' title='".__( 'Add', 'doliconnect')."'>".__( 'Add', 'doliconnect')."</button>";
+$paymentmethods .= "<button type='button' id='AddCardButton' class='btn btn-light' title='".__( 'Add', 'doliconnect')."'>".__( 'Add', 'doliconnect')."</button>";
 }
 }
-$paymentmethods .= '</div>';
+$paymentmethods .= '</div></div>';
 }
 
 if ( !isset($lockNewpm ) && isset($listpaymentmethods->stripe) && in_array('sepa_debit', $listpaymentmethods->stripe->types) && empty($thirdparty->mode_reglement_id) ) {

@@ -1857,7 +1857,7 @@ console.log(response.data.message);
 })(jQuery);";
 print "</script>";
 
-print "<div class='card-body'><button type='button' id='infobtn_cart' name='info_cart' value='info_cart'  class='btn btn-light btn-outline-secondary btn-block'>".__( 'Validate', 'doliconnect')."</button></div>";
+print "<div class='card-body'><div class='d-grid gap-2'><button type='button' id='infobtn_cart' name='info_cart' value='info_cart'  class='btn btn-light btn-outline-secondary'>".__( 'Validate', 'doliconnect')."</button></div></div>";
 print "<div class='card-footer text-muted'>";
 print "<small><div class='float-left'>";
 if ( isset($request) ) print dolirefresh($request, get_permalink(), dolidelay('cart'));
