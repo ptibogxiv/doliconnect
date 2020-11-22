@@ -445,22 +445,22 @@ print "></div></div></div>";
 
 print '<div class="row g-2 mb-2">';
     
-print '<div class="col-lg-6"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[idprof1]" name="'.$idobject.'[idprof1]" placeholder="" value="'.$object->idprof1.'"';
+print '<div class="col-lg-6"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[idprof1]" name="'.$idobject.'[idprof1]" placeholder="idprof1" value="'.$object->idprof1.'"';
 if (isset($object->idprof1) && !empty($object->idprof1)) { print ' readonly'; } else { print ' required'; }
 print '>
 <label for="'.$idobject.'[idprof1]"><i class="fas fa-building fa-fw"></i> '.__( 'SIREN', 'doliconnect').'</label></div></div>'; 
 
-print '<div class="col-lg-6"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[idprof3]" name="'.$idobject.'[idprof3]" placeholder="" value="'.$object->idprof3.'"';
+print '<div class="col-lg-6"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[idprof3]" name="'.$idobject.'[idprof3]" placeholder="idprof3" value="'.$object->idprof3.'"';
 if (isset($object->idprof3) && !empty($object->idprof3)) { print ' readonly'; } else { print ' required'; }
 print '>
 <label for="'.$idobject.'[idprof3]"><i class="fas fa-building fa-fw"></i> '.__( 'NAF-APE', 'doliconnect').'</label></div></div>';
 
-print '<div class="col-lg-6"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[idprof4]" name="'.$idobject.'[idprof4]" placeholder="" value="'.$object->idprof4.'"';
+print '<div class="col-lg-6"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[idprof4]" name="'.$idobject.'[idprof4]" placeholder="idprof4" value="'.$object->idprof4.'"';
 //if (isset($object->idprof4) && !empty($object->idprof4)) { print ' readonly'; } else { print ' required'; }
 print '>
 <label for="'.$idobject.'[idprof4]"><i class="fas fa-building fa-fw"></i> '.__( 'RCS/RM', 'doliconnect').'</label></div></div>';      
 
-print '<div class="col-lg-6"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[tva_intra]" name="'.$idobject.'[tva_intra]" placeholder="" value="'.$object->tva_intra.'"';
+print '<div class="col-lg-6"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[tva_intra]" name="'.$idobject.'[tva_intra]" placeholder="tva" value="'.$object->tva_intra.'"';
 if (isset($object->tva_intra) && !empty($object->tva_intra)) { print ' readonly'; } else { print ''; }
 print '>
 <label for="'.$idobject.'[tva_intra]"><i class="fas fa-building fa-fw"></i> '.__( 'VAT number', 'doliconnect').'</label></div></div>';
@@ -544,12 +544,12 @@ print '<div class="form-floating mb-2"><textarea class="form-control" placeholde
  
 print '<div class="row g-2 mb-2"><div class="col-lg-8">';
     
-print '<div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[town]" name="'.$idobject.'[town]" placeholder="" value="'.(isset($object->town) ? $object->town : null).'" required>
+print '<div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[town]" name="'.$idobject.'[town]" placeholder="'.__( 'Town', 'doliconnect').'" value="'.(isset($object->town) ? $object->town : null).'" required>
 <label for="'.$idobject.'[town]"><i class="fas fa-map-marked fa-fw"></i> '.__( 'Town', 'doliconnect').'</label></div>';  
 
 print '</div><div class="col-lg-4">';
     
-print '<div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[zip]" name="'.$idobject.'[zip]" placeholder="" value="'.(isset($object->zip) ? $object->zip : null).'" required>
+print '<div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[zip]" name="'.$idobject.'[zip]" placeholder="'.__( 'Zipcode', 'doliconnect').'" value="'.(isset($object->zip) ? $object->zip : null).'" required>
 <label for="'.$idobject.'[zip]"><i class="fas fa-map-marked fa-fw"></i> '.__( 'Zipcode', 'doliconnect').'</label></div>';  
 
 print '</div></div>';
@@ -627,7 +627,7 @@ if ( !isset($socialnetworks->error) && $socialnetworks != null ) {
 print "<li class='list-group-item list-group-item-light list-group-item-action'><div class='row g-2'>";
 foreach ( $socialnetworks as $social ) { 
 $code = $social->code;
-print '<div class="col-12 col-sm-6 col-lg-4"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[socialnetworks]['.$social->code.']" name="'.$idobject.'[socialnetworks]['.$social->code.']" placeholder="name@example.com" value="'.stripslashes(htmlspecialchars((isset($object->socialnetworks->$code) ? $object->socialnetworks->$code : null), ENT_QUOTES)).'">
+print '<div class="col-12 col-sm-6 col-lg-4"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[socialnetworks]['.$social->code.']" name="'.$idobject.'[socialnetworks]['.$social->code.']" placeholder="'.$social->label.'" value="'.stripslashes(htmlspecialchars((isset($object->socialnetworks->$code) ? $object->socialnetworks->$code : null), ENT_QUOTES)).'">
 <label for="'.$idobject.'[socialnetworks]['.$social->code.']"><i class="fab fa-'.$social->code.' fa-fw"></i> '.$social->label.'</label></div></div>';
 }
 print "</div></li>";
