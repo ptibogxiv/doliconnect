@@ -294,7 +294,7 @@ $requestlist = "/contacts?sortfield=t.rowid&sortorder=DESC&limit=".$limit."&page
 if ( isset($_POST["case"]) && $_POST["case"] == 'updatecontact' && isset($_POST["contactid"]) && !empty($_POST["contactid"])) {
  
 $contact = $_POST['contact'][''.$_POST['contactid'].''];
-$contactfo = callDoliApi("PUT", "/contacts/".$_POST["contactid"]."?includecount=1", $contact, 0);
+$contactfo = callDoliApi("PUT", "/contacts/".$_POST["contactid"]."?includecount=1&includeroles=1", $contact, 0);
 
 if ( isset($_GET['return']) ) {
 wp_redirect(doliconnecturl('doliaccount').'?module='.$_GET['return']);
@@ -307,7 +307,7 @@ print dolialert ('success', __( 'Your informations have been updated.', 'dolicon
 
 if ( isset($_GET['id']) && $_GET['id'] > 0 ) {  
 
-$request = "/contacts/".esc_attr($_GET['id'])."?includecount=1";
+$request = "/contacts/".esc_attr($_GET['id'])."?includecount=1&includeroles=1";
 $contactfo = callDoliApi("GET", $request, null, dolidelay('contact', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 //print $contractfo;
 }
