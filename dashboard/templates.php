@@ -1242,16 +1242,17 @@ $count = count($listproduct);
 print "<a href='".esc_url( add_query_arg( 'category', $categorie->id, doliconnecturl('dolishop')) )."' class='list-group-item list-group-item-action'>".doliproduct($categorie, 'label')." (".$count.")</a>"; //."<br>".doliproduct($categorie, 'description')
 
 }}
+} else {
+
 }
 
 $catoption = doliconst("ADHERENT_MEMBER_CATEGORY", esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
-
 if ( !empty($catoption) && is_user_logged_in() ) {
 print "<a href='".esc_url( add_query_arg( 'category', $catoption, doliconnecturl('dolishop')) )."' class='list-group-item list-group-item-action' >Produits/Services lies a l'adhesion</a>";
 }
 
 print "</ul><div class='card-body'>";
-print dolipage($resultats->childs, $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], $page, $limit);
+if (isset($resultats->childs)) print dolipage($resultats->childs, $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], $page, $limit);
 print "</div><div class='card-footer text-muted'>";
 print "<small><div class='float-left'>";
 if ( isset($request) ) print dolirefresh($request, get_permalink(), dolidelay('product'));
