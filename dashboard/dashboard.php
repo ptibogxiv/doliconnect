@@ -2176,9 +2176,9 @@ print '<div class="form-floating">
 print "</li>";
 }
 
-print "<li class='list-group-item list-group-item-light list-group-item-action'>";
-print '<div class="form-floating mb-2"><select class="form-select" id="locale" name="locale" onchange="DoliSettings(this.form)" aria-label="'.__( 'Default language', 'doliconnect').'">';
-if ( function_exists('pll_the_languages') ) { 
+print '<li class="list-group-item list-group-item-light list-group-item-action"><div class="form-floating mb-2">';
+if ( function_exists('pll_the_languages') ) {
+print '<select class="form-select" id="locale" name="locale" onchange="DoliSettings(this.form)" aria-label="'.__( 'Default language', 'doliconnect').'">';
 print "<option value=''>".__( 'Default / Browser language', 'doliconnect')."</option>";
 $translations = pll_the_languages( array( 'raw' => 1 ) );
 foreach ($translations as $key => $value) {
@@ -2186,10 +2186,12 @@ print "<option value='".str_replace("-","_",$value['locale'])."' ";
 if  ( $current_user->locale == str_replace("-","_",$value['locale']) ) {print " selected";}
 print ">".$value['name']."</option>";
 }
+print '</select><label for="locale">'.__( 'Default language', 'doliconnect').'</label>';
 } else {
-print "<input class='form-control' type='text' value='".__( 'Default / Browser language', 'doliconnect')."' readonly>";
+print '<input type="text" class="form-control" id="multicurrency_code" value="'.__( 'Default / Browser language', 'doliconnect').'" readonly>
+<label for="multicurrency_code">'.__( 'Default / Browser language', 'doliconnect').'</label>';
 }
-print '</select><label for="locale">'.__( 'Default language', 'doliconnect').'</label></div>';
+print '</div>';
 
 if ( doliconnector($current_user, 'fk_soc') > 0 ) {
 $thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
