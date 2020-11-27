@@ -591,7 +591,7 @@ $lang = $current_user->locale;
 $pays = callDoliApi("GET", "/setup/dictionary/countries?sortfield=favorite%2Clabel&sortorder=DESC%2CASC&limit=400&lang=".$lang, null, $delay);
 
 if ( isset($pays) ) { 
-print '<div class="form-floating"><select class="form-select" id="'.$idobject.'[country_id]" aria-label="'.__( 'Country', 'doliconnect').'" required>';
+print '<div class="form-floating"><select class="form-select" id="'.$idobject.'[country_id]" name="'.$idobject.'[country_id]" aria-label="'.__( 'Country', 'doliconnect').'" required>';
 print "<option value='' disabled ";
 if ( !isset($object->country_id) && ! $object->country_id > 0 || $pays == 0) {
 print "selected ";}
