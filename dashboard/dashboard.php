@@ -1924,11 +1924,11 @@ elseif ( $ticketfo->fk_statut == 0 ) { print "<span class='label label-danger'>"
 print "</h3></div></div>";
 print '<br><div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: '.$ticketfo->progress.'%" aria-valuenow="'.$ticketfo->progress.'" aria-valuemin="0" aria-valuemax="100"></div></div>';
 print "</div><ul class='list-group list-group-flush'>
-<li class='list-group-item'><h5 class='mb-1'>".__( 'Subject', 'doliconnect').": ".$ticketfo->subject."</h5>
+<li class='list-group-item list-group-item-light list-group-item-action'><h5 class='mb-1'>".__( 'Subject', 'doliconnect').": ".$ticketfo->subject."</h5>
 <p class='mb-1'>".__( 'Initial message', 'doliconnect').": ".$ticketfo->message."</p></li>";
 
 if ( $ticketfo->fk_statut < '8' && $ticketfo->fk_statut > '0' && !empty(get_option('doliconnectbeta')) ) {
-print "<li class='list-group-item'>";
+print "<li class='list-group-item list-group-item-light list-group-item-action'>";
 
 print '<form id="doliconnect-msgticketform" action="'.$url.'&id='.$ticketfo->id.'&ref='.$ticketfo->ref.'" method="post" class="was-validated">';
 
@@ -1945,7 +1945,7 @@ print '</li>';
 if ( isset($ticketfo->messages) ) {
 foreach ( $ticketfo->messages as $msg ) {
 $datemsg =  wp_date('d/m/Y - H:i', $msg->datec);  
-print  "<li class='list-group-item'><b>$datemsg $msg->fk_user_action_string</b><br>$msg->message</li>";
+print  "<li class='list-group-item list-group-item-light list-group-item-action'><b>$datemsg $msg->fk_user_action_string</b><br>$msg->message</li>";
 }} 
 print '</ul><div class="card-footer text-muted">';
 print "<small><div class='float-left'>";
@@ -1978,7 +1978,7 @@ print "<form class='was-validated' id='doliconnect-newticketform' action='".$url
 
 print doliloaderscript('doliconnect-newticketform'); 
 
-print "<div class='card shadow-sm'><ul class='list-group list-group-flush'><li class='list-group-item'><h5 class='card-title'>".__( 'Open a new ticket', 'doliconnect')."</h5>";
+print "<div class='card shadow-sm'><ul class='list-group list-group-flush'><li class='list-group-item list-group-item-light list-group-item-action'><h5 class='card-title'>".__( 'Open a new ticket', 'doliconnect')."</h5>";
 print "<div class='form-group'><label for='inputcivility'><small>".__( 'Type and category', 'doliconnect')."</small></label>
 <div class='input-group mb-2'><div class='input-group-prepend'><span class='input-group-text' id='identity'><i class='fas fa-info-circle fa-fw'></i></span></div>";
 
@@ -2060,7 +2060,9 @@ print "<select class='custom-select' id='fk_user_assign' name='fk_user_assign' d
 print "</div></div>";
 }
 
-print '<div class="form-floating mb-3"><input type="text" class="form-control" id="ticket_subject" name="ticket_subject" value="" placeholder="subject" required>
+print '</li><li class="list-group-item list-group-item-light list-group-item-action">';
+
+print '<div class="form-floating mb-2"><input type="text" class="form-control" id="ticket_subject" name="ticket_subject" value="" placeholder="subject" required>
 <label for="ticket_subject">'.__( 'Subject', 'doliconnect').'</label></div>';
 
 print '<div class="form-floating"><textarea class="form-control" name="ticket_message" id="ticket_message" placeholder="Leave a comment here" style="height: 200px" required></textarea>
@@ -2070,7 +2072,7 @@ print '</li></ul>';
 
 print "<div class='card-body'><div class='d-grid gap-2'><input type='hidden' name='case' value='createticket'><button type='submit' class='btn btn-outline-secondary'>".__( 'Send', 'doliconnect')."</button></div></div>";
 
-print "</div></form>";
+print '</div></form>';
 
 } else {
 
