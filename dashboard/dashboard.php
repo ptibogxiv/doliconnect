@@ -249,7 +249,7 @@ print " disabled='disabled'";
 print "><label class='form-checklabel' for='deleteavatar'>".__( 'Delete your picture', 'doliconnect')."</label></div>";
 
 print "</li>";
-print "</ul><div class='card-body'><input type='hidden' name='userid' value='$ID'><button class='btn btn-danger btn-block' type='submit'>".__( 'Update', 'doliconnect')."</button></div>";
+print "</ul><div class='card-body'><input type='hidden' name='userid' value='$ID'><button class='btn btn-outline-secondary' type='submit'>".__( 'Update', 'doliconnect')."</button></div>";
 print '<div class="card-footer text-muted">';
 print "<small><div class='float-left'>";
 if ( isset($request) ) print dolirefresh($request, $url, dolidelay('thirdparty'), $thirdparty);
@@ -1934,10 +1934,11 @@ print '<form id="doliconnect-msgticketform" action="'.$url.'&id='.$ticketfo->id.
 
 print doliloaderscript('doliconnect-msgticketform'); 
 
-print '<div class="form-group"><label for="ticketnewmessage"><small>'.__( 'Response', 'doliconnect').'</small></label>
-<div class="input-group mb-2"><div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-comment fa-fw"></i></span></div><textarea class="form-control" name="ticket_newmessage" id="ticket_newmessage" rows="5" required></textarea>
-</div></div><input type="hidden" name="case" value="messageticket"><button class="btn btn-danger btn-block" type="submit">'.__( 'Answer', 'doliconnect').'</button></form>';
-print "</li>";
+print '<div class="form-floating mb-2"><textarea class="form-control" name="ticket_newmessage" id="ticket_newmessage" placeholder="Leave a comment here" style="height: 200px" required></textarea>
+<label for="ticket_newmessage">'.__( 'Message', 'doliconnect').'</label></div>';
+
+print '<div class="d-grid gap-2"><input type="hidden" name="case" value="messageticket"><button class="btn btn-outline-secondary" type="submit">'.__( 'Answer', 'doliconnect').'</button></form></div>';
+print '</li>';
 
 }
 
@@ -2059,13 +2060,15 @@ print "<select class='custom-select' id='fk_user_assign' name='fk_user_assign' d
 print "</div></div>";
 }
 
-print "<div class='form-group'><label for='ticket_subject'><small>".__( 'Subject', 'doliconnect')."</small></label><div class='input-group mb-2'><div class='input-group-prepend'><div class='input-group-text'><i class='fas fa-bullhorn fa-fw'></i></div></div><input type='text' class='form-control' id='ticket_subject' name='ticket_subject' value='' autocomplete='off' required></div></div>";
+print '<div class="form-floating mb-3"><input type="text" class="form-control" id="ticket_subject" name="ticket_subject" value="" placeholder="subject" required>
+<label for="ticket_subject">'.__( 'Subject', 'doliconnect').'</label></div>';
 
-print "<div class='form-group'>
-<label for='description'><small>".__( 'Message', 'doliconnect')."</small></label><div class='input-group mb-2'><div class='input-group-prepend'><span class='input-group-text'><i class='fas fa-file-alt fa-fw'></i></span></div>
-<textarea type='text' class='form-control' name='ticket_message' id='ticket_message' rows='8' required></textarea></div></div></li></ul>";
+print '<div class="form-floating"><textarea class="form-control" name="ticket_message" id="ticket_message" placeholder="Leave a comment here" style="height: 200px" required></textarea>
+<label for="ticket_message">'.__( 'Message', 'doliconnect').'</label></div>';
 
-print "<div class='card-body'><input type='hidden' name='case' value='createticket'><button type='submit' class='btn btn-block btn-warning'>".__( 'Send', 'doliconnect')."</button></div>";
+print '</li></ul>';
+
+print "<div class='card-body'><div class='d-grid gap-2'><input type='hidden' name='case' value='createticket'><button type='submit' class='btn btn-outline-secondary'>".__( 'Send', 'doliconnect')."</button></div></div>";
 
 print "</div></form>";
 
