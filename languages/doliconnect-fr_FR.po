@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
 "POT-Creation-Date: 2020-11-22 21:39+0100\n"
-"PO-Revision-Date: 2020-11-22 21:39+0100\n"
+"PO-Revision-Date: 2020-11-28 09:09+0100\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_FR\n"
@@ -660,7 +660,7 @@ msgstr "date de la facture"
 
 #: dashboard/dashboard.php:1158
 msgid "No invoice"
-msgstr "Pas de facture"
+msgstr "Aucune Facture"
 
 #: dashboard/dashboard.php:1182
 msgid "Contracts tracking"
