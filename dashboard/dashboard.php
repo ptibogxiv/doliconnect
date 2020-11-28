@@ -2078,7 +2078,10 @@ print '</div></form>';
 
 } else {
 
-$request = "/tickets?socid=".doliconnector($current_user, 'fk_soc')."&sortfield=t.rowid&sortorder=DESC&limit=10";
+$limit=8;
+if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']-1); }  else { $page = 0; }
+
+$request = "/tickets?socid=".doliconnector($current_user, 'fk_soc')."&sortfield=t.rowid&sortorder=DESC&limit=".$limit."&page=".$page;
 
 $listticket = callDoliApi("GET", $request, null, dolidelay('ticket', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 //print $listticket;
@@ -2112,7 +2115,9 @@ else{
 print "<li class='list-group-item list-group-item-light'><center>".__( 'No ticket', 'doliconnect')."</center></li>";
 }
 
-print '</ul><div class="card-body"></div><div class="card-footer text-muted">';
+print '</ul><div class="card-body">';
+print dolipage($listticket, $url, $page, $limit);
+print '</div><div class="card-footer text-muted">';
 print "<small><div class='float-left'>";
 if ( isset($request) ) print dolirefresh($request, $url, dolidelay('ticket'));
 print "</div><div class='float-right'>";
