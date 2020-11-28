@@ -1937,7 +1937,7 @@ print '<form id="doliconnect-msgticketform" action="'.$url.'&id='.$ticketfo->id.
 print doliloaderscript('doliconnect-msgticketform'); 
 
 print '<div class="form-floating mb-2"><textarea class="form-control" name="ticket_newmessage" id="ticket_newmessage" placeholder="Leave a comment here" style="height: 200px" required></textarea>
-<label for="ticket_newmessage">'.__( 'Message', 'doliconnect').'</label></div>';
+<label for="ticket_newmessage"><i class="fas fa-comment"></i> '.__( 'Message', 'doliconnect').'</label></div>';
 
 print '<div class="d-grid gap-2"><input type="hidden" name="case" value="messageticket"><button class="btn btn-outline-secondary" type="submit">'.__( 'Answer', 'doliconnect').'</button></form></div>';
 print '</li>';
@@ -2065,10 +2065,10 @@ print "</div></div>";
 print '</li><li class="list-group-item list-group-item-light list-group-item-action">';
 
 print '<div class="form-floating mb-2"><input type="text" class="form-control" id="ticket_subject" name="ticket_subject" value="" placeholder="subject" required>
-<label for="ticket_subject">'.__( 'Subject', 'doliconnect').'</label></div>';
+<label for="ticket_subject"><i class="fas fa-envelope-open-text"></i> '.__( 'Subject', 'doliconnect').'</label></div>';
 
 print '<div class="form-floating"><textarea class="form-control" name="ticket_message" id="ticket_message" placeholder="Leave a comment here" style="height: 200px" required></textarea>
-<label for="ticket_message">'.__( 'Message', 'doliconnect').'</label></div>';
+<label for="ticket_message"><i class="fas fa-comment"></i> '.__( 'Message', 'doliconnect').'</label></div>';
 
 print '</li></ul>';
 
