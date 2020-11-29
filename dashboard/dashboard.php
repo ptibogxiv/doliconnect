@@ -585,7 +585,7 @@ $listpropal = callDoliApi("GET", $request, null, dolidelay('proposal', esc_attr(
 
 print '<div class="card shadow-sm"><ul class="list-group list-group-flush">';
   
-if ( !isset( $listpropal->error ) && $listpropal != null ) {
+if ( !isset($listpropal->error) && $listpropal != null ) {
 foreach ( $listpropal as $postproposal ) { 
 $nonce = wp_create_nonce( 'doli-proposals-'. $postproposal->id.'-'.$postproposal->ref);
 $arr_params = array( 'id' => $postproposal->id, 'ref' => $postproposal->ref, 'security' => $nonce);  
@@ -896,7 +896,7 @@ $listorder = callDoliApi("GET", $request, null, dolidelay('order', esc_attr(isse
 
 print '<div class="card shadow-sm"><ul class="list-group list-group-flush">';
 
-if ( !isset($listorder->error ) && $listorder != null ) {
+if ( !isset($listorder->error) && $listorder != null ) {
 foreach ( $listorder as $postorder ) {
 $nonce = wp_create_nonce( 'doli-orders-'. $postorder->id.'-'.$postorder->ref);
 $arr_params = array( 'id' => $postorder->id, 'ref' => $postorder->ref, 'security' => $nonce);  
@@ -1169,7 +1169,7 @@ $listinvoice = callDoliApi("GET", $request, null, dolidelay('invoice', esc_attr(
 
 print '<div class="card shadow-sm"><ul class="list-group list-group-flush">';
 
-if ( !isset($listinvoice->error ) && $listinvoice != null ) {
+if ( !isset($listinvoice->error) && $listinvoice != null ) {
 foreach ( $listinvoice as $postinvoice ) {
 $nonce = wp_create_nonce( 'doli-invoices-'.$postinvoice->id.'-'.$postinvoice->ref);
 $arr_params = array( 'id' => $postinvoice->id, 'ref' => $postinvoice->ref, 'security' => $nonce);  

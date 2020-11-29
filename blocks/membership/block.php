@@ -43,7 +43,8 @@ $html = "";
 if (is_user_logged_in() && doliconnector($current_user, 'fk_member') > 0){
 $adherent = callDoliApi("GET", "/adherentsplus/".doliconnector($current_user, 'fk_member'), null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true));
 } else {
-$adherent = null;
+$adherent = (object) 0;
+$adherent->typeid = 0;
 }
 
 $request = "/adherentsplus/type?sortfield=t.libelle&sortorder=ASC"; //&sqlfilters=(t.morphy%3A=%3A'')%20or%20(t.morphy%3Ais%3Anull)%20or%20(t.morphy%3A%3D%3A'phy')
@@ -58,7 +59,7 @@ $html .= '<div class="card"><div class="card-header">'.__( 'Prices', 'doliconnec
 foreach ( $typeadhesion as $postadh ) {
 if ($postadh->subscription == '1'){
 
-if ( (! is_user_logged_in() && $postadh->automatic == '1') or ($postadh->automatic == '1' && !empty($adherent) && $postadh->id == $adherent->typeid or $postadh->id == $adherent->typeid )) {
+if ( (! is_user_logged_in() && $postadh->automatic == '1') || ($postadh->automatic == '1' && isset($adherent) && $postadh->id == $adherent->typeid or $postadh->id == $adherent->typeid )) {
 $color="-success";
 } elseif ($postadh->automatic != '1') {
 $color="-danger";
