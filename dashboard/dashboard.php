@@ -306,7 +306,8 @@ print dolialert ('success', __( 'Your informations have been updated.', 'dolicon
 } elseif ( isset($_POST["case"]) && $_POST["case"] == 'addcontact' && isset($_POST["contactid"]) && empty($_POST["contactid"])) {
  
 $contact = $_POST['contact'][''.doliconnector($current_user, 'fk_soc').''];
-$contactfo = callDoliApi("POST", "/contacts/", $contact, 0);
+$contact['socid'] = doliconnector($current_user, 'fk_soc');
+$contactfo = callDoliApi("POST", "/contacts", $contact, 0);
 
 if ( isset($_GET['return']) ) {
 wp_redirect(doliconnecturl('doliaccount').'?module='.$_GET['return']);
