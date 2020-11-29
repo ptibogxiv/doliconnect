@@ -300,9 +300,9 @@ print $args['before_title'] . apply_filters( 'widget_title', $instance['title'] 
 $shop = doliconst("DOLICONNECT_CATSHOP", esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 //print $shop;
 
-print '<form role="search" method="get" id="shopform" action="' . doliconnecturl('dolishop') . '" ><div class="input-group"><input type="text" class="form-control" name="search" id="search" placeholder="' . esc_attr__('Name, Ref., Description or Barcode', 'doliconnect') . '" aria-label="Search for..." aria-describedby="search-widget">
-<div class="input-group-append"><button class="btn btn-primary" type="submit" id="searchproduct" ><i class="fas fa-search"></i></button></div>
-</div></form><br>';
+print '<form role="search" method="get" id="shopform" action="' . doliconnecturl('dolishop') . '" ><div class="input-group mb-3">
+<input type="text" name="search" id="search" class="form-control" placeholder="' . esc_attr__('Name, Ref., Description or Barcode', 'doliconnect') . '" aria-label="' . esc_attr__('Name, Ref., Description or Barcode', 'doliconnect') . '" aria-describedby="searchproduct">
+<button class="btn btn-primary" type="submit" id="searchproduct"><i class="fas fa-search"></i></button></div></form>';
 
 if ( $shop != null ) {
 $request = "/categories/".esc_attr($shop)."?include_childs=true";
