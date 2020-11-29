@@ -1790,7 +1790,7 @@ $paymentmethods .= "<button type='button' id='PayCardButton' class='btn btn-dang
 $paymentmethods .= "<button type='button' id='AddCardButton' class='btn btn-light' title='".__( 'Add', 'doliconnect')."'>".__( 'Add', 'doliconnect')."</button>";
 }
 }
-$paymentmethods .= '</div></div>';
+$paymentmethods .= '</div>';
 }
 
 if ( !isset($lockNewpm ) && isset($listpaymentmethods->stripe) && in_array('sepa_debit', $listpaymentmethods->stripe->types) && empty($thirdparty->mode_reglement_id) ) {
