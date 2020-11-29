@@ -1772,7 +1772,7 @@ if (doliconnector($current_user, 'fk_member') > 0) {
 $listconsumption = callDoliApi("GET", $request, null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 } 
 
-if ( !isset($listconsumption->error) && $listconsumption != null ) { 
+if ( isset($listconsumption) && !isset($listconsumption->error) && $listconsumption != null ) { 
 foreach ( $listconsumption as $consumption ) {                                                                                 
 $datec =  wp_date('d/m/Y H:i', $consumption->date_creation);
 print "<li class='list-group-item'><table width='100%'><tr><td>$datec</td><td>$consumption->label</td><td>";
@@ -1853,11 +1853,12 @@ print doliloaderscript('doliconnect-linkedmembersform');
 
 print "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
 
+if (doliconnector($current_user, 'fk_member') > 0) {
 print '<button type="button" class="list-group-item lh-condensed list-group-item-action list-group-item-primary" data-toggle="modal" data-target="#addmember"><center><i class="fas fa-plus-circle"></i> '.__( 'New linked member', 'doliconnect').'</center></button>';
-
 print "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".__( 'Please contact us to link a pre-existing member', 'doliconnect')."</b></li>"; 
+}
 
-if ( !isset($linkedmember->error) && $linkedmember != null ) { 
+if ( isset($linkedmember) && !isset($linkedmember->error) && $linkedmember != null ) { 
 foreach ( $linkedmember as $member ) {                                                                                 
 print "<li class='list-group-item d-flex justify-content-between lh-condensed list-group-item-action'>";
 print doliaddress($member);
@@ -1881,7 +1882,7 @@ print dolihelp('ISSUE');
 print "</div></small>";
 print '</div></div>';
 
-if ( !isset($linkedmember->error) && $linkedmember != null ) { 
+if ( isset($linkedmember) && !isset($linkedmember->error) && $linkedmember != null ) { 
 foreach ( $linkedmember as $member ) {
 
 print '<div class="modal fade" id="member-'.$member->id.'" tabindex="-1" role="dialog" aria-labelledby="member-'.$member->id.'Title" aria-hidden="true" data-backdrop="static" data-keyboard="false">
