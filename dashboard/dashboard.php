@@ -303,6 +303,18 @@ exit;
 $listcontact = callDoliApi("GET", $requestlist, null, dolidelay('contact', true));
 print dolialert ('success', __( 'Your informations have been updated.', 'doliconnect'));
 }
+} elseif ( isset($_POST["case"]) && $_POST["case"] == 'addcontact' && isset($_POST["contactid"]) && empty($_POST["contactid"])) {
+ 
+$contact = $_POST['contact']['0'];
+$contactfo = callDoliApi("POST", "/contacts/".$_POST["contactid"]."?includecount=1&includeroles=1", $contact, 0);
+
+if ( isset($_GET['return']) ) {
+wp_redirect(doliconnecturl('doliaccount').'?module='.$_GET['return']);
+exit;
+} else {
+$listcontact = callDoliApi("GET", $requestlist, null, dolidelay('contact', true));
+print dolialert ('success', __( 'Your informations have been updated.', 'doliconnect'));
+}
 }
 
 if ( isset($_GET['id']) && $_GET['id'] > 0 ) {  
