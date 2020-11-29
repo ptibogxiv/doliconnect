@@ -626,9 +626,8 @@ $list .= apply_filters('mydoliconnectproductdesc', $product, 'list');
 }
 $arr_params = array( 'category' => isset($_GET['category'])?$_GET['category']:null, 'subcategory' => isset($_GET['subcategory'])?$_GET['subcategory']:null, 'product' => $product->id);  
 $return = esc_url( add_query_arg( $arr_params, doliconnecturl('dolishop')) );
-$list .= "<a href='".$return."' class='btn btn-link btn-block'>En savoir plus</a>";
- 
-$list .= "</p></div>";
+$list .= '<div class="d-grid gap-2"><a href="'.$return.'" class="btn btn-link">En savoir plus</a></div>';
+$list .= '</p></div>';
 
 if ( ! empty(doliconnectid('dolicart')) ) { 
 $list .= "<div class='col-12 col-md-6'><center>";
