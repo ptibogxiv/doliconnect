@@ -1815,7 +1815,7 @@ $paymentmethods .= "<button id='cardPayButton' class='btn btn-danger btn-block'>
 } else {
 $paymentmethods .= "<button id='cardButton' class='btn btn-warning btn-block' title='".__( 'Add', 'doliconnect')."'>".__( 'Add', 'doliconnect')."</button>";
 }
-$paymentmethods .= '</div></div>';
+$paymentmethods .= '</div>';
 }
 
 if ( isset($listpaymentmethods->PAYPAL) && !empty($listpaymentmethods->PAYPAL) ) {
@@ -1877,7 +1877,7 @@ $paymentmethods .= '</p></div></div><div class="d-grid gap-2">';
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
 $paymentmethods .= '<button type="button" onclick="PayPM(\'VIR\')" class="btn btn-danger btn-block">'.__( 'Pay', 'doliconnect')." ".doliprice($object, 'ttc', $currency).'</button>';
 }  
-$paymentmethods .= '</div></div>';
+$paymentmethods .= '</div>';
 }
 
 if ( isset($listpaymentmethods->CHQ) && !empty($listpaymentmethods->CHQ) ) {
