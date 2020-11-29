@@ -968,17 +968,9 @@ $shop = doliconst("DOLICONNECT_CATSHOP", esc_attr(isset($_GET["refresh"]) ? $_GE
 
 print "<div class='card shadow-sm'>";
 
-if ( defined("DOLIBUG")) {
-$request = null;
-print "<ul class='list-group list-group-flush'><li class='list-group-item list-group-item-white'>";
-print dolibug($shop);
-print "</li>";
-print "</ul>";
-} else {
 if ( isset($_GET['search']) ) {
 
 print "<ul class='list-group list-group-flush'>";
-
 
 if (empty($_GET['search'])) {
 
@@ -1013,7 +1005,7 @@ $includestock = 1;
 print "<li class='list-group-item list-group-item-light'><center>";
 printf( _n( 'We have found %s item with this search', 'We have found %s items with this search', $count, 'doliconnect' ), number_format_i18n( $count ) );
 print " '".esc_attr($_GET['search'])."'";
-print "<a href='".esc_url( add_query_arg( 'search', '', doliconnecturl('dolishop')) )."' class='btn btn-link btn-block'>".__(  'New search', 'doliconnect')."</a>";
+print "<div class='d-grid gap-2'><a href='".esc_url( add_query_arg( 'search', '', doliconnecturl('dolishop')) )."' class='btn btn-link'>".__(  'New search', 'doliconnect')."</a></div>";
 print "</center></li>";
 foreach ($resultats as $product) {
 
@@ -1023,7 +1015,7 @@ print apply_filters( 'doliproductlist', $product);
 }
 } else {
 print "<li class='list-group-item list-group-item-light'><center>".sprintf( esc_html__( 'No item with this search: "%s"', 'doliconnect'), esc_attr($_GET['search']));
-print "<a href='".esc_url( add_query_arg( 'search', '', doliconnecturl('dolishop')) )."' class='btn btn-link btn-block'>".__(  'New search', 'doliconnect')."</a>";
+print "<div class='d-grid gap-2'><a href='".esc_url( add_query_arg( 'search', '', doliconnecturl('dolishop')) )."' class='btn btn-link'>".__(  'New search', 'doliconnect')."</a></div>";
 print "</center></li>";
 }
 print "</ul><div class='card-body'>";
@@ -1192,7 +1184,12 @@ if ( $shop != null ) {
 
 $limit=25;
 if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']-1); }  else { $page = 0; }
-$request = "/categories/".$shop."?include_childs=true";
+
+if ( $shop != null ) {
+$request = "/categories/".esc_attr($shop)."?include_childs=true";
+} else{
+$request = "/categories";
+}
 $resultats = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 if ( !isset($resultats->error) && $resultats != null ) {
@@ -1229,7 +1226,11 @@ $count = count($listproduct);
 print "'>".__(  'Discounted items', 'doliconnect')." (".$count.")</a>";
 }
 
-foreach ($resultats->childs as $categorie) {
+if ( $shop != null ) {
+$resultats = $resultatsc->childs;
+} 
+
+foreach ($resultats as $categorie) {
 
 $requestp = "/products?sortfield=t.label&sortorder=ASC&category=".$categorie->id."&sqlfilters=(t.tosell=1)";
 $listproduct = callDoliApi("GET", $requestp, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
@@ -1326,7 +1327,6 @@ print dolihelp('ISSUE');
 print "</div></small>";
 print "</div></div>";
 
-}
 }
 
 } else {

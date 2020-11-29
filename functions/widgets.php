@@ -300,13 +300,16 @@ print $args['before_title'] . apply_filters( 'widget_title', $instance['title'] 
 $shop = doliconst("DOLICONNECT_CATSHOP", esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 //print $shop;
 
-if ( $shop != null ) {
-
 print '<form role="search" method="get" id="shopform" action="' . doliconnecturl('dolishop') . '" ><div class="input-group"><input type="text" class="form-control" name="search" id="search" placeholder="' . esc_attr__('Name, Ref., Description or Barcode', 'doliconnect') . '" aria-label="Search for..." aria-describedby="search-widget">
 <div class="input-group-append"><button class="btn btn-primary" type="submit" id="searchproduct" ><i class="fas fa-search"></i></button></div>
 </div></form><br>';
 
+if ( $shop != null ) {
 $request = "/categories/".esc_attr($shop)."?include_childs=true";
+} else{
+$request = "/categories";
+}
+
 $resultatsc = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 if ( !isset($resultatsc->error) && $resultatsc != null ) {
@@ -359,7 +362,11 @@ $count = count($listproduct);
 print "'>".__(  'Discounted items', 'doliconnect')." (".$count.")</a>";
 }
 
-foreach ($resultatsc->childs as $categorie) {
+if ( $shop != null ) {
+$resultatsc = $resultatsc->childs;
+} 
+
+foreach ($resultatsc as $categorie) {
 
 $requestp = "/products?sortfield=t.rowid&sortorder=DESC&category=".$categorie->id."&sqlfilters=(t.tosell=1)";
 $listproduct = callDoliApi("GET", $requestp, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
@@ -399,7 +406,6 @@ print "'>>".doliproduct($categorie, 'label')." <span class='badge bg-secondary r
 }
 print "</div>";
 }
-} 
 
 print $args['after_widget'];  
 }    
