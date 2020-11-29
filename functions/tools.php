@@ -1082,9 +1082,7 @@ $doliline .= "<div class='input-group input-group-sm mb-3'>";
 if ((empty($realstock) && !empty(doliconst('MAIN_MODULE_STOCK', $refresh)) && (empty($product->type) || (!empty($product->type) && doliconst('STOCK_SUPPORTS_SERVICES', $refresh)) )) )  { 
 $doliline .= "<button type='button' class='btn btn-danger btn-sm btn-block' id='deleteorderproduct-".$line->fk_product."' name='deleteorderproduct-".$line->fk_product."' value='0' title='".__( 'Delete', 'doliconnect')."'><i class='fas fa-trash fa-fw'></i></button>";
 } else {
-$doliline .= "<div class='input-group-prepend'>";
 $doliline .= "<button type='button' class='btn btn-danger' id='deleteorderproduct-".$line->fk_product."' name='deleteorderproduct-".$line->fk_product."' value='0' title='".__( 'Delete', 'doliconnect')."'><i class='fas fa-trash fa-fw'></i></button>";
-$doliline .= "</div>";
 }
 //} else {
 if (empty($product->type) && !empty(doliconst('STOCK_ALLOW_NEGATIVE_TRANSFER', $refresh)) && empty(doliconst('STOCK_MUST_BE_ENOUGH_FOR_ORDER', $refresh))) {
