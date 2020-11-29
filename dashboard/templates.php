@@ -997,7 +997,6 @@ $resultats = callDoliApi("GET", $request, null, dolidelay('search', esc_attr(iss
 
 if ( !isset($resultats->error) && $resultats != null ) {
 $count = count($resultats);
-$count = count($resultats);
 $includestock = 0;
 if ( ! empty(doliconnectid('dolicart')) ) {
 $includestock = 1;
@@ -1180,7 +1179,6 @@ print "</div></div>";
 
 } elseif ( !isset($_GET['category']) ) {
 print "<ul class='list-group list-group-flush'>";
-if ( $shop != null ) {
 
 $limit=25;
 if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']-1); }  else { $page = 0; }
@@ -1242,9 +1240,7 @@ $count = count($listproduct);
 
 print "<a href='".esc_url( add_query_arg( 'category', $categorie->id, doliconnecturl('dolishop')) )."' class='list-group-item list-group-item-action'>".doliproduct($categorie, 'label')." (".$count.")</a>"; //."<br>".doliproduct($categorie, 'description')
 
-}}
-} else {
-
+}
 }
 
 $catoption = doliconst("ADHERENT_MEMBER_CATEGORY", esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
