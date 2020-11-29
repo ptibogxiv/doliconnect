@@ -846,6 +846,7 @@ elseif ($delay == 'paymentmethods') { $delay = WEEK_IN_SECONDS; }
 elseif ($delay == 'thirdparty' || $delay == 'customer' || $delay == 'supplier' || $delay == 'contact') { $delay = DAY_IN_SECONDS; }
 elseif ($delay == 'proposal') { $delay = HOUR_IN_SECONDS; }
 elseif ($delay == 'order') { $delay = HOUR_IN_SECONDS; }
+elseif ($delay == 'invoice') { $delay = HOUR_IN_SECONDS; }
 elseif ($delay == 'contract') { $delay = HOUR_IN_SECONDS; }
 elseif ($delay == 'project') { $delay = HOUR_IN_SECONDS; }
 elseif ($delay == 'member') { $delay = DAY_IN_SECONDS; }
