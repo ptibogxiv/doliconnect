@@ -1995,13 +1995,13 @@ print '</div></div>';
 if ( isset($_POST["case"]) && $_POST["case"] == 'createticket' ) {
 $rdr = [        
     'fk_soc' => doliconnector($current_user, 'fk_soc'),
-    'fk_user_assign' => $_POST['fk_user_assign'],
     'type_code' => $_POST['ticket_type'],
     'category_code' => $_POST['ticket_category'],
     'severity_code' => $_POST['ticket_severity'],
     'subject' => sanitize_text_field($_POST['ticket_subject']),
     'message' => sanitize_textarea_field($_POST['ticket_message']),
-	];                  
+	];
+if (isset($_POST['fk_user_assign']) && !empty($_POST['fk_user_assign'])) $rdr['fk_user_assign'] = $_POST['fk_user_assign'];                    
 $ticketid = callDoliApi("POST", "/tickets", $rdr, dolidelay('ticket', true));
 //print $ticketid;
 
@@ -2014,14 +2014,12 @@ print "<form class='was-validated' id='doliconnect-newticketform' action='".$url
 print doliloaderscript('doliconnect-newticketform'); 
 
 print "<div class='card shadow-sm'><ul class='list-group list-group-flush'><li class='list-group-item list-group-item-light list-group-item-action'><h5 class='card-title'>".__( 'Open a new ticket', 'doliconnect')."</h5>";
-print "<div class='form-group'><label for='inputcivility'><small>".__( 'Type and category', 'doliconnect')."</small></label>
-<div class='input-group mb-2'><div class='input-group-prepend'><span class='input-group-text' id='identity'><i class='fas fa-info-circle fa-fw'></i></span></div>";
+
+print '<div class="row mb-2 g-2"><div class="col-md">';
 
 $type = callDoliApi("GET", "/setup/dictionary/ticket_types?sortfield=pos&sortorder=ASC&limit=100", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-//print $type;
-
 if ( isset($type) ) { 
-print "<select class='custom-select' id='ticket_type'  name='ticket_type'>";
+print '<div class="form-floating"><select class="form-select" id="ticket_type"  name="ticket_type" aria-label="'.__( 'Type', 'doliconnect').'" required>';
 if ( count($type) > 1 ) {
 print "<option value='' disabled selected >".__( '- Select -', 'doliconnect')."</option>";
 }
@@ -2033,13 +2031,14 @@ print "selected ";
 print "selected ";}
 print ">".$postv->label."</option>";
 }
-print "</select>";
+print '</select><label for="ticket_type">'.__( 'Type', 'doliconnect').'</label></div>';
 }
 
-$cat = callDoliApi("GET", "/setup/dictionary/ticket_categories?sortfield=pos&sortorder=ASC&limit=100", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+print '</div><div class="col-md">';
 
+$cat = callDoliApi("GET", "/setup/dictionary/ticket_categories?sortfield=pos&sortorder=ASC&limit=100", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 if ( isset($cat) ) { 
-print "<select class='custom-select' id='ticket_cat'  name='ticket_category'>";
+print '<div class="form-floating"><select class="form-select" id="ticket_category"  name="ticket_category" aria-label="'.__( 'Category', 'doliconnect').'" required>';
 if ( count($cat) > 1 ) {
 print "<option value='' disabled selected >".__( '- Select -', 'doliconnect')."</option>";
 }
@@ -2049,16 +2048,14 @@ if ( $postv->use_default == 1 ) {
 print "selected ";}
 print ">".$postv->label."</option>";
 }
-print "</select>";
+print '</select><label for="ticket_category">'.__( 'Category', 'doliconnect').'</label></div>';
 } 
-print "</div></div>";
-print "<div class='form-group'><label for='inputcivility'><small>".__( 'Severity', 'doliconnect')."</small></label>
-<div class='input-group mb-2'><div class='input-group-prepend'><span class='input-group-text' id='identity'><i class='fas fa-bug fa-fw'></i></span></div>";
+
+print '</div><div class="col-md">';
 
 $severity = callDoliApi("GET", "/setup/dictionary/ticket_severities?sortfield=pos&sortorder=ASC&limit=100", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-
 if ( isset($severity) ) { 
-print "<select class='custom-select' id='ticket_severity'  name='ticket_severity'>";
+print '<div class="form-floating"><select class="form-select" id="ticket_severity"  name="ticket_severity" aria-label="'.__( 'Severity', 'doliconnect').'" required>';
 if ( count($severity) > 1 ) {
 print "<option value='' disabled selected >".__( '- Select -', 'doliconnect')."</option>";
 }
@@ -2068,18 +2065,15 @@ if ( $postv->use_default == 1 ) {
 print "selected ";}
 print ">".$postv->label."</option>";
 }
-print "</select>";
+print '</select><label for="ticket_severity">'.__( 'Severity', 'doliconnect').'</label></div>';
 }
-print "</div></div>";
+
+print '</div></div>';
 
 if ( doliversion('11.0.0') ) {
-print "<div class='form-group'><label for='inputcivility'><small>".__( 'Sales representative', 'doliconnect')."</small></label>
-<div class='input-group mb-2'><div class='input-group-prepend'><span class='input-group-text' id='identity'><i class='fas fa-user-tie fa-fw'></i></span></div>";
 $representatives = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc')."/representatives?mode=0", null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
-//print $type;
-
 if ( !isset($representatives->error) && $representatives != null ) {
-print "<select class='custom-select' id='fk_user_assign'  name='fk_user_assign' required>";
+print '<div class="form-floating"><select class="form-select" id="fk_user_assign"  name="fk_user_assign" aria-label="'.__( 'Sales representative', 'doliconnect').'" required>';
 if ( count($representatives) > 1 ) {
 print "<option value='' disabled selected >".__( '- Select -', 'doliconnect')."</option>";
 }
@@ -2088,11 +2082,8 @@ print "<option value='".$postv->id."' >".$postv->firstname." ".$postv->lastname;
 if (!empty($postv->job)) print ", ".$postv->job;
 print "</option>";
 }
-print "</select>";
-} else {
-print "<select class='custom-select' id='fk_user_assign' name='fk_user_assign' disabled></select>";
+print '</select><label for="fk_user_assign">'.__( 'Sales representative', 'doliconnect').'</label></div>';
 }
-print "</div></div>";
 }
 
 print '</li><li class="list-group-item list-group-item-light list-group-item-action">';
