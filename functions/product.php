@@ -516,17 +516,17 @@ $button .= "<option value='$number' >x ".$number."</option>";
 }
 	}
 }}
-$button .= "</select><div class='input-group-append'>";
+$button .= "</select>";
 if ( !empty(doliconst('MAIN_MODULE_WISHLIST', $refresh)) && !empty(get_option('doliconnectbeta')) ) {
 if (!empty($wish)) {
-$button .= "<button class='btn btn-sm  btn-light btn-outline-secondary' type='submit' name='cartaction' value='addtowish' title='".esc_html__( 'Save my wish', 'doliconnect')."'><i class='fas fa-heart-broken' style='color:Fuchsia'></i></i></button>";
+$button .= "<button class='btn btn-sm btn-light btn-outline-secondary' type='submit' name='cartaction' value='addtowish' title='".esc_html__( 'Save my wish', 'doliconnect')."'><i class='fas fa-heart-broken' style='color:Fuchsia'></i></i></button>";
 } else {
-$button .= "<button class='btn btn-sm  btn-light btn-outline-secondary' type='submit' name='cartaction' value='addtowish' title='".esc_html__( 'Save my wish', 'doliconnect')."'><i class='fas fa-heart' style='color:Fuchsia'></i></i></button>";
+$button .= "<button class='btn btn-sm btn-light btn-outline-secondary' type='submit' name='cartaction' value='addtowish' title='".esc_html__( 'Save my wish', 'doliconnect')."'><i class='fas fa-heart' style='color:Fuchsia'></i></i></button>";
 }
 }
 $button .= "<button class='btn btn-sm btn-warning' type='submit' name='cartaction' value='addtocart' title='".esc_html__( 'Add to cart', 'doliconnect')."' ";
 if ( ( $realstock <= 0 || $m2 < $step) && $product->type == '0' && !empty(doliconst('MAIN_MODULE_STOCK', $refresh)) ) { $button .= " disabled"; }
-$button .= "><i class='fas fa-cart-plus fa-fw'></i></button></div></div>";
+$button .= "><i class='fas fa-cart-plus fa-fw'></i></button></div>";
 
 //if ( $qty > 0 ) {
 //$button .= "<br /><div class='input-group'><a class='btn btn-block btn-warning' href='".doliconnecturl('dolicart')."' role='button' title='".__( 'Go to cart', 'doliconnect')."'>".__( 'Go to cart', 'doliconnect')."</a></div>";
