@@ -1192,7 +1192,7 @@ $resultats = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(is
 
 if ( !isset($resultats->error) && $resultats != null ) {
 if (get_option('dolicartnewlist') != 'none') {
-print "<a href='".esc_url( add_query_arg( 'new', '', doliconnecturl('dolishop')) )."' class='list-group-item list-group-item-action";
+print "<a href='".esc_url( add_query_arg( 'category', 'new', doliconnecturl('dolishop')) )."' class='list-group-item list-group-item-action";
 //if ( isset($_GET['new']) && $categorie->id == $_GET['subcategory'] ) { print " active"; }
 $date = new DateTime(); 
 $date->modify('NOW');
@@ -1209,7 +1209,7 @@ $count = count($listproduct);
 print "'>".__(  'New items', 'doliconnect')." (".$count.")</a>";
 }
 if ( !empty(doliconst('MAIN_MODULE_DISCOUNTPRICE')) ) {
-print "<a href='".esc_url( add_query_arg( 'discount', '', doliconnecturl('dolishop')) )."' class='list-group-item list-group-item-action";
+print "<a href='".esc_url( add_query_arg( 'category', 'discount', doliconnecturl('dolishop')) )."' class='list-group-item list-group-item-action";
 if ( isset($_GET['discount']) ) { print " active"; }
 $date = new DateTime(); 
 $date->modify('NOW');
