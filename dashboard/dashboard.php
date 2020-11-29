@@ -305,8 +305,8 @@ print dolialert ('success', __( 'Your informations have been updated.', 'dolicon
 }
 } elseif ( isset($_POST["case"]) && $_POST["case"] == 'addcontact' && isset($_POST["contactid"]) && empty($_POST["contactid"])) {
  
-$contact = $_POST['contact']['0'];
-$contactfo = callDoliApi("POST", "/contacts/".$_POST["contactid"]."?includecount=1&includeroles=1", $contact, 0);
+$contact = $_POST['contact'][''.doliconnector($current_user, 'fk_soc').''];
+$contactfo = callDoliApi("POST", "/contacts/", $contact, 0);
 
 if ( isset($_GET['return']) ) {
 wp_redirect(doliconnecturl('doliaccount').'?module='.$_GET['return']);
@@ -318,10 +318,11 @@ print dolialert ('success', __( 'Your informations have been updated.', 'dolicon
 }
 
 if ( isset($_GET['id']) && $_GET['id'] > 0 ) {  
-
 $request = "/contacts/".esc_attr($_GET['id'])."?includecount=1&includeroles=1";
 $contactfo = callDoliApi("GET", $request, null, dolidelay('contact', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 //print $contractfo;
+} elseif ( isset($_GET['create']) && doliconnector($current_user, 'fk_soc') > 0 ) {
+$thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
 }
 
 if ( !isset($contactfo->error) && isset($_GET['id']) && isset($_GET['id']) && isset($_GET['ref']) && (doliconnector($current_user, 'fk_soc') == $contactfo->socid) && ($_GET['ref'] == $contactfo->ref) && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doli-contacts-'.$contactfo->id.'-'.$contactfo->ref)) {
@@ -345,13 +346,13 @@ print '</div></div></form>';
 
 } elseif ( isset($_GET['create']) ) {
 
-print "<form action='".$url."' id='doliconnect-infosform' method='post' class='was-validated' enctype='multipart/form-data'><input type='hidden' name='case' value='updatecontact'><input type='hidden' name='contactid' value='".$contactfo->id."'>";
+print "<form action='".$url."' id='doliconnect-infosform' method='post' class='was-validated' enctype='multipart/form-data'><input type='hidden' name='case' value='addcontact'><input type='hidden' name='contactid' value='0'>";
 
 print doliloaderscript('doliconnect-infosform');
 
 print "<div class='card shadow-sm'>";
 
-print doliuserform( '', dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'contact');
+print doliuserform( $thirdparty, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'contact');
 
 print "<div class='card-body'><div class='d-grid gap-2'><button class='btn btn-outline-secondary' type='submit'>".__( 'Add', 'doliconnect')."</button></div></div>";
 print '<div class="card-footer text-muted">';
