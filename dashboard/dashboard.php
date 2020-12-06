@@ -1631,13 +1631,14 @@ exit;
 
 } 
 
-print "<div class='card shadow-sm'><div class='card-body'><div class='row'><div class='col-12 col-md-5'>";
+print "<div class='card shadow-sm'><div class='card-body'>";
 
 if ( !empty(doliconnector($current_user, 'fk_member')) && doliconnector($current_user, 'fk_member') > 0 && doliconnector($current_user, 'fk_soc') > 0 ) { 
 $adherent = callDoliApi("GET", $request, null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 }
 
-print "<b>".__( 'Status', 'doliconnect').":</b> ";
+if ( isset($adherent) && !isset($adherent->error) && $adherent != null ) {
+print "<div class='row'><div class='col-12 col-md-5'><b>".__( 'Status', 'doliconnect').":</b> ";
 if ( $adherent->statut > 0) {
 if  ($adherent->datefin == null ) { print  "<span class='badge rounded-pill bg-danger'>".__( 'Waiting payment', 'doliconnect')."</span>";}
 else {
@@ -1737,9 +1738,13 @@ print "</td><td class='text-right'><b>".doliprice($cotisation->amount)."</b></td
 else { 
 print "<li class='list-group-item list-group-item-light'><center>".__( 'No subscription', 'doliconnect')."</center></li>";
 }
-print '</ul><div class="card-body"></div><div class="card-footer text-muted">';
+print '</ul><div class="card-body">';
+} else {
+print 'TODO: membership add form';
+}
+print '</div><div class="card-footer text-muted">';
 print "<small><div class='float-left'>";
-if ( isset($request) ) print dolirefresh($request, $url, dolidelay('member'), $adherent);
+if ( isset($request) ) print dolirefresh($request, $url, dolidelay('member'), (isset($adherent)?$adherent:null));
 print "</div><div class='float-right'>";
 print dolihelp('ISSUE');
 print "</div></small>";

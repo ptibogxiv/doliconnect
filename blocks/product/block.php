@@ -30,7 +30,7 @@ function doliconnect_product_block_init() {
 		wp_register_script(
 			'doliconnect-product-block-script',
 			plugins_url( 'block.js', __FILE__ ),
-			array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-components' )
+			array( 'wp-blocks', 'wp-i18n', 'wp-element')
 		);
 		register_block_type(
 			'doliconnect/product-block',
