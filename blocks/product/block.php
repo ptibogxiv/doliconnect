@@ -17,9 +17,9 @@ $content .= "<center>".__( 'No item', 'doliconnect' )."</center>";
 }
 $content .= "</div>";
 $content .= "<div class='card-footer text-muted'>";
-$content .= "<small><div class='float-left'>";
+$content .= "<small><div class='float-start'>";
 $content .= dolirefresh($request, get_permalink(), dolidelay('product'));
-$content .= "</div><div class='float-right'>";
+$content .= "</div><div class='float-end'>";
 $content .= dolihelp('ISSUE');
 $content .= "</div></small>";
 $content .= "</div></div>";
