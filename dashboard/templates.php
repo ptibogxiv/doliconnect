@@ -445,9 +445,9 @@ print '<div class="d-grid gap-2"><button class="btn btn-outline-secondary" type=
 
 print '</form></div>';
 print "<div class='card-footer text-muted'>";
-print "<small><div class='float-left'>";
+print "<small><div class='float-start'>";
 if ( isset($request) ) print dolirefresh($request, null, dolidelay('thirdparty'));
-print "</div><div class='float-right'>";
+print "</div><div class='float-end'>";
 print dolihelp('ISSUE');
 print "</div></small>";
 
@@ -649,12 +649,12 @@ print '<div class="form-check">
   <label class="form-check-label" for="rememberme">'.__( 'Remember me', 'doliconnect-pro').'</label>
 </div>';
 
-print "<div><small><div class='float-left'>";
+print "<div><small><div class='float-start'>";
 if ((!is_multisite() && get_option( 'users_can_register' )) || ((!is_multisite() && get_option( 'dolicustsupp_can_register' )) || ((get_option( 'dolicustsupp_can_register' ) || get_option('users_can_register') == '1') && (get_site_option( 'registration' ) == 'user' || get_site_option( 'registration' ) == 'all')))) {
 print "<a href='".wp_registration_url(get_permalink())."' role='button' title='".__( 'Create an account', 'doliconnect-pro')."'>".__( 'Create an account', 'doliconnect')."</a>";
 }
 
-print "</div><div class='float-right'><a href='".wp_lostpassword_url( get_permalink() )."' role='button' title='".__( 'Forgot password?', 'doliconnect')."'>".__( 'Forgot password?', 'doliconnect')."</a></div></small></div>"; 
+print "</div><div class='float-end'><a href='".wp_lostpassword_url( get_permalink() )."' role='button' title='".__( 'Forgot password?', 'doliconnect')."'>".__( 'Forgot password?', 'doliconnect')."</a></div></small></div>"; 
 print "</li></lu><div class='card-body'>";
 
 print "<input type='hidden' value='$redirect_to' name='redirect_to'><button id='submit' class='btn btn-outline-secondary' type='submit' name='submit' value='Submit'";
@@ -938,9 +938,9 @@ print "</ul><div class='card-body'>";
 
 print dolipage($resultats, $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], $page, $limit);
 print "</div><div class='card-footer text-muted'>";
-print "<small><div class='float-left'>";
+print "<small><div class='float-start'>";
 if ( isset($request) ) print dolirefresh($request, get_permalink(), dolidelay($module));
-print "</div><div class='float-right'>";
+print "</div><div class='float-end'>";
 print dolihelp('ISSUE');
 print "</div></small>";
 print "</div></div>";
@@ -981,9 +981,9 @@ print '<form role="search" method="get" id="shopform" action="' . doliconnecturl
 <button class="btn btn-primary" type="submit" id="searchproduct" ><i class="fas fa-search"></i></button></div></form>';
 
 print "</div><div class='card-footer text-muted'>";
-print "<small><div class='float-left'>";
+print "<small><div class='float-start'>";
 if ( isset($request) ) print dolirefresh($request, get_permalink(), dolidelay('product'));
-print "</div><div class='float-right'>";
+print "</div><div class='float-end'>";
 print dolihelp('ISSUE');
 print "</div></small>";
 print "</div></div>";
@@ -1020,9 +1020,9 @@ print "</center></li>";
 print "</ul><div class='card-body'>";
 print dolipage($resultats, $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], 0, $limit);
 print "</div><div class='card-footer text-muted'>";
-print "<small><div class='float-left'>";
+print "<small><div class='float-start'>";
 if ( isset($request) ) print dolirefresh($request, get_permalink(), dolidelay('search'));
-print "</div><div class='float-right'>";
+print "</div><div class='float-end'>";
 print dolihelp('ISSUE');
 print "</div></small>";
 print "</div></div>";
@@ -1062,9 +1062,9 @@ print "<li class='list-group-item list-group-item-light'><center>".__(  'No item
 print "</ul><div class='card-body'>";
 print dolipage($resultats, $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], $page, $limit);
 print "</div><div class='card-footer text-muted'>";
-print "<small><div class='float-left'>";
+print "<small><div class='float-start'>";
 if ( isset($request) ) print dolirefresh($request, get_permalink(), dolidelay('product'));
-print "</div><div class='float-right'>";
+print "</div><div class='float-end'>";
 print dolihelp('ISSUE');
 print "</div></small>";
 print "</div></div>";
@@ -1103,9 +1103,9 @@ print "<li class='list-group-item list-group-item-light'><center>".__(  'No new 
 print "</ul><div class='card-body'>";
 print dolipage($resultats, $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], $page, $limit);
 print "</div><div class='card-footer text-muted'>";
-print "<small><div class='float-left'>";
+print "<small><div class='float-start'>";
 if ( isset($request) ) print dolirefresh($request, get_permalink(), dolidelay('product'));
-print "</div><div class='float-right'>";
+print "</div><div class='float-end'>";
 print dolihelp('ISSUE');
 print "</div></small>";
 print "</div></div>";
@@ -1147,9 +1147,9 @@ print "<li class='list-group-item list-group-item-light'><center>".__(  'No disc
 print "</ul><div class='card-body'>";
 print dolipage($resultats, $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], $page, $limit);
 print "</div><div class='card-footer text-muted'>";
-print "<small><div class='float-left'>";
+print "<small><div class='float-start'>";
 if ( isset($request) ) print dolirefresh($request, get_permalink(), dolidelay('product'));
-print "</div><div class='float-right'>";
+print "</div><div class='float-end'>";
 print dolihelp('ISSUE');
 print "</div></small>";
 print "</div></div>";
@@ -1170,9 +1170,9 @@ print "</div>";
 print "</ul><div class='card-body'>";
 
 print "</div><div class='card-footer text-muted'>";
-print "<small><div class='float-left'>";
+print "<small><div class='float-start'>";
 if ( isset($request) ) print dolirefresh($request, get_permalink(), dolidelay('product'));
-print "</div><div class='float-right'>";
+print "</div><div class='float-end'>";
 print dolihelp('ISSUE');
 print "</div></small>";
 print "</div></div>";
@@ -1251,9 +1251,9 @@ print "<a href='".esc_url( add_query_arg( 'category', $catoption, doliconnecturl
 print "</ul><div class='card-body'>";
 if (isset($resultats->childs)) print dolipage($resultats->childs, $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], $page, $limit);
 print "</div><div class='card-footer text-muted'>";
-print "<small><div class='float-left'>";
+print "<small><div class='float-start'>";
 if ( isset($request) ) print dolirefresh($request, get_permalink(), dolidelay('product'));
-print "</div><div class='float-right'>";
+print "</div><div class='float-end'>";
 print dolihelp('ISSUE');
 print "</div></small>";
 print "</div></div>";
@@ -1316,9 +1316,9 @@ print "<li class='list-group-item list-group-item-white'><center><br><br><br><br
 print "</ul><div class='card-body'>";
 if ( isset($resultats) ) print dolipage($resultats, $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], $page, $limit);
 print "</div><div class='card-footer text-muted'>";
-print "<small><div class='float-left'>";
+print "<small><div class='float-start'>";
 if ( isset($request) ) print dolirefresh($request, get_permalink(), dolidelay('product'));
-print "</div><div class='float-right'>";
+print "</div><div class='float-end'>";
 print dolihelp('ISSUE');
 print "</div></small>";
 print "</div></div>";
@@ -1423,9 +1423,9 @@ print "</div>";
 
 print "</div></form>";
 
-print "<small><div class='float-left'>";
+print "<small><div class='float-start'>";
 if ( isset($request) ) print dolirefresh($request, doliconnecturl('dolidonation'), dolidelay('constante'));
-print "</div><div class='float-right'>";
+print "</div><div class='float-end'>";
 print dolihelp('COM');
 print "</div></small>";
 }
@@ -1707,9 +1707,9 @@ console.log(response.data.message);
 print "</script>";
 
 print '<div class="card-footer text-muted">';
-print "<small><div class='float-left'>";
+print "<small><div class='float-start'>";
 if ( isset($request) ) print dolirefresh($request, doliconnecturl('dolicart'), dolidelay('cart'));
-print "</div><div class='float-right'>";
+print "</div><div class='float-end'>";
 print dolihelp('ISSUE');
 print "</div></small>";
 print "</div></div>";
@@ -1847,9 +1847,9 @@ print "</script>";
 
 print "<div class='card-body'><div class='d-grid gap-2'><button type='button' id='infobtn_cart' name='info_cart' value='info_cart'  class='btn btn-outline-secondary'>".__( 'Validate', 'doliconnect')."</button></div></div>";
 print "<div class='card-footer text-muted'>";
-print "<small><div class='float-left'>";
+print "<small><div class='float-start'>";
 if ( isset($request) ) print dolirefresh($request, get_permalink(), dolidelay('cart'));
-print "</div><div class='float-right'>";
+print "</div><div class='float-end'>";
 print dolihelp('ISSUE');
 print "</div></small>";
 print "</div></div>";

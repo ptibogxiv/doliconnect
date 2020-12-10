@@ -61,9 +61,9 @@ print doliuserform( $thirdparty, dolidelay('constante', esc_attr(isset($_GET["re
 
 print "<div class='card-body'><div class='d-grid gap-2'><button class='btn btn-outline-secondary' type='submit'>".__( 'Update', 'doliconnect')."</button></div></div>";
 print '<div class="card-footer text-muted">';
-print "<small><div class='float-left'>";
+print "<small><div class='float-start'>";
 if ( isset($request) ) print dolirefresh($request, $url, dolidelay('thirdparty'), $thirdparty);
-print '</div><div class="float-right">';
+print '</div><div class="float-end">';
 print dolihelp('ISSUE');
 print '</div></small>';
 print '</div></div></form>';
@@ -251,9 +251,9 @@ print "><label class='form-checklabel' for='deleteavatar'>".__( 'Delete your pic
 print "</li>";
 print "</ul><div class='card-body'><input type='hidden' name='userid' value='$ID'><button class='btn btn-outline-secondary' type='submit'>".__( 'Update', 'doliconnect')."</button></div>";
 print '<div class="card-footer text-muted">';
-print "<small><div class='float-left'>";
+print "<small><div class='float-start'>";
 if ( isset($request) ) print dolirefresh($request, $url, dolidelay('thirdparty'), $thirdparty);
-print "</div><div class='float-right'>";
+print "</div><div class='float-end'>";
 print dolihelp('ISSUE');
 print "</div></small>";
 print '</div></div></form>';
@@ -338,9 +338,9 @@ print doliuserform( $contactfo, dolidelay('constante', esc_attr(isset($_GET["ref
 
 print "<div class='card-body'><div class='d-grid gap-2'><button class='btn btn-outline-secondary' type='submit'>".__( 'Update', 'doliconnect')."</button></div></div>";
 print '<div class="card-footer text-muted">';
-print '<small><div class="float-left">';
+print '<small><div class="float-start">';
 if ( isset($request) ) print dolirefresh($request, $url, dolidelay('contact'), $contactfo);
-print '</div><div class="float-right">';
+print '</div><div class="float-end">';
 print dolihelp('ISSUE');
 print '</div></small>';
 print '</div></div></form>';
@@ -357,9 +357,9 @@ print doliuserform( $thirdparty, dolidelay('constante', esc_attr(isset($_GET["re
 
 print "<div class='card-body'><div class='d-grid gap-2'><button class='btn btn-outline-secondary' type='submit'>".__( 'Add', 'doliconnect')."</button></div></div>";
 print '<div class="card-footer text-muted">';
-print '<small><div class="float-left">';
+print '<small><div class="float-start">';
 if ( isset($request) ) print dolirefresh($request, $url, dolidelay('contact'), $contactfo);
-print '</div><div class="float-right">';
+print '</div><div class="float-end">';
 print dolihelp('ISSUE');
 print '</div></small>';
 print '</div></div></form>';
@@ -390,9 +390,9 @@ print "<li class='list-group-item list-group-item-light'><center>".__( 'No conta
 print "</ul><div class='card-body'>";
 print dolipage($listcontact, $url, $page, $limit);
 print "</div><div class='card-footer text-muted'>";
-print "<small><div class='float-left'>";
+print "<small><div class='float-start'>";
 if ( isset($requestlist) ) print dolirefresh($requestlist, $url, dolidelay('contact'));
-print "</div><div class='float-right'>";
+print "</div><div class='float-end'>";
 print dolihelp('ISSUE');
 print "</div></small>";
 print "</div></div>";
@@ -477,9 +477,9 @@ print "<li class='list-group-item list-group-item-light'><center>".__( 'No produ
 print "</ul><div class='card-body'>";
 print dolipage($wishlist, $url, $page, $limit);
 print "</div><div class='card-footer text-muted'>";
-print "<small><div class='float-left'>";
+print "<small><div class='float-start'>";
 print dolirefresh( $request, $url, dolidelay('product'));
-print "</div><div class='float-right'>";
+print "</div><div class='float-end'>";
 print dolihelp('ISSUE');
 print "</div></small>";
 print "</div></div>";
@@ -508,7 +508,7 @@ $proposalfo = callDoliApi("GET", $request, null, dolidelay('proposal', esc_attr(
 }
 
 if ( !isset($proposalfo->error) && isset($_GET['id']) && isset($_GET['ref']) && ( doliconnector($current_user, 'fk_soc') == $proposalfo->socid ) && ( $_GET['ref'] == $proposalfo->ref ) && $proposalfo->statut != 0 && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doli-proposals-'.$proposalfo->id.'-'.$proposalfo->ref)) {
-print "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>".__( 'Proposal', 'doliconnect')." ".$proposalfo->ref."<a class='float-right' href='".esc_url( add_query_arg( 'module', 'proposals', doliconnecturl('doliaccount')) )."'><i class='fas fa-arrow-left'></i> ".__( 'Back', 'doliconnect')."</a></h5><div class='row'><div class='col-md-5'>";
+print "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>".__( 'Proposal', 'doliconnect')." ".$proposalfo->ref."<a class='float-end' href='".esc_url( add_query_arg( 'module', 'proposals', doliconnecturl('doliaccount')) )."'><i class='fas fa-arrow-left'></i> ".__( 'Back', 'doliconnect')."</a></h5><div class='row'><div class='col-md-5'>";
 $datevalidation =  wp_date('d/m/Y', $proposalfo->date_validation);
 print "<b>".__( 'date of creation', 'doliconnect').":</b> ".wp_date('d/m/Y', $proposalfo->date_creation)."<br>";
 print "<b>".__( 'validation', 'doliconnect')." : </b> $datevalidation<br>";
@@ -569,9 +569,9 @@ print "<div class='col-md-7'><h6>" . $val['label'] . "</h6>" . $val['description
 } 
 //var_dump($fruits);
 print '</ul><div class="card-body"></div><div class="card-footer text-muted">';
-print "<small><div class='float-left'>";
+print "<small><div class='float-start'>";
 if ( isset($request) ) print dolirefresh($request, $url, dolidelay('proposal'), $proposalfo);
-print "</div><div class='float-right'>";
+print "</div><div class='float-end'>";
 print dolihelp('ISSUE');
 print "</div></small>";
 print '</div></div>';
@@ -608,9 +608,9 @@ print "<li class='list-group-item list-group-item-light'><center>".__( 'No propo
 print "</ul><div class='card-body'>";
 print dolipage($listpropal, $url, $page, $limit);
 print "</div><div class='card-footer text-muted'>";
-print "<small><div class='float-left'>";
+print "<small><div class='float-start'>";
 if ( isset($request) ) print dolirefresh($request, $url, dolidelay('proposal'));
-print "</div><div class='float-right'>";
+print "</div><div class='float-end'>";
 print dolihelp('ISSUE');
 print "</div></small>";
 print "</div></div>";
@@ -641,7 +641,7 @@ $orderfo = callDoliApi("GET", $request, null, dolidelay('order', esc_attr(isset(
 
 if ( !isset($orderfo->error) && isset($_GET['id']) && isset($_GET['ref']) && (doliconnector($current_user, 'fk_soc') == $orderfo->socid ) && ($_GET['ref'] == $orderfo->ref) && $orderfo->statut != 0 && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doli-orders-'.$orderfo->id.'-'.$orderfo->ref)) {
 
-print "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>".__( 'Order', 'doliconnect')." ".$orderfo->ref."<a class='float-right' href='".esc_url( add_query_arg( 'module', 'orders', doliconnecturl('doliaccount')) )."'><i class='fas fa-arrow-left'></i> ".__( 'Back', 'doliconnect')."</a></h5><div class='row'><div class='col-md-6'>";
+print "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>".__( 'Order', 'doliconnect')." ".$orderfo->ref."<a class='float-end' href='".esc_url( add_query_arg( 'module', 'orders', doliconnecturl('doliaccount')) )."'><i class='fas fa-arrow-left'></i> ".__( 'Back', 'doliconnect')."</a></h5><div class='row'><div class='col-md-6'>";
 print "<b>".__( 'date of order', 'doliconnect').":</b> ".wp_date('d/m/Y', $orderfo->date_creation)."<br>";
 if ( $orderfo->statut > 0 ) {
 if ( $orderfo->billed == 1 ) {
@@ -880,9 +880,9 @@ print "<div class='col-md-7'><h6>".$val['label']."</h6>" . $val['description'] .
 } 
 //var_dump($fruits);
 print '</ul><div class="card-body"></div><div class="card-footer text-muted">';
-print "<small><div class='float-left'>";
+print "<small><div class='float-start'>";
 if ( isset($request) ) print dolirefresh($request, $url, dolidelay('order'), $orderfo);
-print "</div><div class='float-right'>";
+print "</div><div class='float-end'>";
 print dolihelp('ISSUE');
 print "</div></small>";
 print '</div></div>';
@@ -923,9 +923,9 @@ print "<li class='list-group-item list-group-item-light'><center>".__( 'No order
 print "</ul><div class='card-body'>";
 print dolipage($listorder, $url, $page, $limit);
 print "</div><div class='card-footer text-muted'>";
-print "<small><div class='float-left'>";
+print "<small><div class='float-start'>";
 if ( isset($request) ) print dolirefresh($request, $url, dolidelay('order'));
-print "</div><div class='float-right'>";
+print "</div><div class='float-end'>";
 print dolihelp('ISSUE');
 print "</div></small>";
 print "</div></div>";
@@ -956,7 +956,7 @@ $invoicefo = callDoliApi("GET", $request, null, dolidelay('invoice', esc_attr(is
 
 if ( !isset($orderfo->error) && isset($_GET['id']) && isset($_GET['ref']) && (doliconnector($current_user, 'fk_soc') == $invoicefo->socid ) && ($_GET['ref'] == $invoicefo->ref) && $invoicefo->statut != 0 && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doli-invoices-'.$invoicefo->id.'-'.$invoicefo->ref)) {
 
-print "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>".__( 'Invoice', 'doliconnect')." ".$invoicefo->ref."<a class='float-right' href='".esc_url( add_query_arg( 'module', 'orders', doliconnecturl('doliaccount')) )."'><i class='fas fa-arrow-left'></i> ".__( 'Back', 'doliconnect')."</a></h5><div class='row'><div class='col-md-6'>";
+print "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>".__( 'Invoice', 'doliconnect')." ".$invoicefo->ref."<a class='float-end' href='".esc_url( add_query_arg( 'module', 'orders', doliconnecturl('doliaccount')) )."'><i class='fas fa-arrow-left'></i> ".__( 'Back', 'doliconnect')."</a></h5><div class='row'><div class='col-md-6'>";
 print "<b>".__( 'date of invoice', 'doliconnect').":</b> ".wp_date('d/m/Y', $invoicefo->date_creation)."<br>";
 if ( $invoicefo->statut > 0 ) {
 if ( $invoicefo->paye == 1 ) {
@@ -1153,9 +1153,9 @@ print "<div class='col-md-7'><h6>".$val['label']."</h6>" . $val['description'] .
 } 
 //var_dump($fruits);
 print '</ul><div class="card-body"></div><div class="card-footer text-muted">';
-print "<small><div class='float-left'>";
+print "<small><div class='float-start'>";
 if ( isset($request) ) print dolirefresh($request, $url, dolidelay('invoice'), $invoicefo);
-print "</div><div class='float-right'>";
+print "</div><div class='float-end'>";
 print dolihelp('ISSUE');
 print "</div></small>";
 print '</div></div>';
@@ -1196,9 +1196,9 @@ print "<li class='list-group-item list-group-item-light'><center>".__( 'No invoi
 print "</ul><div class='card-body'>";
 print dolipage($listinvoice, $url, $page, $limit);
 print "</div><div class='card-footer text-muted'>";
-print "<small><div class='float-left'>";
+print "<small><div class='float-start'>";
 if ( isset($request) ) print dolirefresh($request, $url, dolidelay('invoice'));
-print "</div><div class='float-right'>";
+print "</div><div class='float-end'>";
 print dolihelp('ISSUE');
 print "</div></small>";
 print "</div></div>";
@@ -1228,7 +1228,7 @@ $contractfo = callDoliApi("GET", $request, null, dolidelay('contract', esc_attr(
 }
 
 if ( !isset($contractfo->error) && isset($_GET['id']) && isset($_GET['id']) && isset($_GET['ref']) && (doliconnector($current_user, 'fk_soc') == $contractfo->socid) && ($_GET['ref'] == $contractfo->ref) && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doli-contracts-'.$contractfo->id.'-'.$contractfo->ref)) {
-print "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>".$contractfo->ref."<a class='float-right' href='".esc_url( add_query_arg( 'module', 'contracts', doliconnecturl('doliaccount')) )."'><i class='fas fa-arrow-left'></i> ".__( 'Back', 'doliconnect')."</a></h5><div class='row'><div class='col-md-5'>";
+print "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>".$contractfo->ref."<a class='float-end' href='".esc_url( add_query_arg( 'module', 'contracts', doliconnecturl('doliaccount')) )."'><i class='fas fa-arrow-left'></i> ".__( 'Back', 'doliconnect')."</a></h5><div class='row'><div class='col-md-5'>";
 print "<b>".__( 'date of creation', 'doliconnect').": </b> ".wp_date('d/m/Y', $contractfo->date_creation)."<br>";
 if ( $contractfo->statut > 0 ) {
 //if ( $contractfo->billed == 1 ) {
@@ -1284,9 +1284,9 @@ print "<div class='col-md-7'><h6>" . $val['label'] . "</h6>" . $val['description
 
 //var_dump($fruits);
 print '</ul><div class="card-body"></div><div class="card-footer text-muted">';
-print "<small><div class='float-left'>";
+print "<small><div class='float-start'>";
 if ( isset($request) ) print dolirefresh($request, $url, dolidelay('contract'), $contractfo);
-print "</div><div class='float-right'>";
+print "</div><div class='float-end'>";
 print dolihelp('ISSUE');
 print "</div></small>";
 print '</div></div>';
@@ -1328,9 +1328,9 @@ print "<li class='list-group-item list-group-item-light'><center>".__( 'No contr
 print "</ul><div class='card-body'>";
 print dolipage($listcontract, $url, $page, $limit);
 print "</div><div class='card-footer text-muted'>";
-print "<small><div class='float-left'>";
+print "<small><div class='float-start'>";
 if ( isset($request) ) print dolirefresh($request, $url, dolidelay('contract'));
-print "</div><div class='float-right'>";
+print "</div><div class='float-end'>";
 print dolihelp('ISSUE');
 print "</div></small>";
 print "</div></div>";
@@ -1412,9 +1412,9 @@ print "<div class='col-md-7'><h6>" . $val['label'] . "</h6>" . $val['description
 
 //var_dump($fruits);
 print '</ul><div class="card-body"></div><div class="card-footer text-muted">';
-print "<small><div class='float-left'>";
+print "<small><div class='float-start'>";
 if ( isset($request) ) print dolirefresh($request, $url, dolidelay('contract'), $contractfo);
-print "</div><div class='float-right'>";
+print "</div><div class='float-end'>";
 print dolihelp('ISSUE');
 print "</div></small>";
 print '</div></div>';
@@ -1457,9 +1457,9 @@ print "<li class='list-group-item list-group-item-light'><center>".__( 'No proje
 print "</ul><div class='card-body'>";
 print dolipage($listproject, $url, $page, $limit);
 print "</div><div class='card-footer text-muted'>";
-print "<small><div class='float-left'>";
+print "<small><div class='float-start'>";
 if ( isset($request) ) print dolirefresh($request, $url, dolidelay('project'));
-print "</div><div class='float-right'>";
+print "</div><div class='float-end'>";
 print dolihelp('ISSUE');
 print "</div></small>";
 print "</div></div>";
@@ -1536,9 +1536,9 @@ print "<b>".__( 'Amount', 'doliconnect').": ".doliprice($donationfo, 'amount', i
 print "</li>";
 print "</ul></div>";
 
-print "<small><div class='float-left'>";
+print "<small><div class='float-start'>";
 if ( isset($request) ) print dolirefresh($request, $url, dolidelay('donation'), $donationfo);
-print "</div><div class='float-right'>";
+print "</div><div class='float-end'>";
 print dolihelp('COM');
 print "</div></small>";
 
@@ -1578,9 +1578,9 @@ print "<li class='list-group-item list-group-item-light'><center>".__( 'No donat
 print "</ul><div class='card-body'>";
 print dolipage($listdonation, $url, $page, $limit);
 print "</div><div class='card-footer text-muted'>";
-print "<small><div class='float-left'>";
+print "<small><div class='float-start'>";
 if ( isset($request) ) print dolirefresh($request, $url, dolidelay('donation'));
-print "</div><div class='float-right'>";
+print "</div><div class='float-end'>";
 print dolihelp('ISSUE');
 print "</div></small>";
 print "</div></div>";
@@ -1688,7 +1688,7 @@ print "<form id='subscription-form' action='".doliconnecturl('doliaccount')."?mo
 print  "<button class='btn btn text-white btn-warning btn-block' data-toggle='modal' data-target='#activatemember'>".__( 'Renew my subscription', 'doliconnect')."</button>";
 }
 } elseif ( $adherent->statut == '-1' ) {
-print '<div class="clearfix"><div class="spinner-border float-left" role="status">
+print '<div class="clearfix"><div class="spinner-border float-start" role="status">
 <span class="sr-only">Loading...</span></div>'.__('Your request has been registered. You will be notified at validation.', 'doliconnect').'</div>';
 } else { 
 
@@ -1743,9 +1743,9 @@ print '</ul><div class="card-body">';
 print 'TODO: membership add form';
 }
 print '</div><div class="card-footer text-muted">';
-print "<small><div class='float-left'>";
+print "<small><div class='float-start'>";
 if ( isset($request) ) print dolirefresh($request, $url, dolidelay('member'), (isset($adherent)?$adherent:null));
-print "</div><div class='float-right'>";
+print "</div><div class='float-end'>";
 print dolihelp('ISSUE');
 print "</div></small>";
 print '</div></div>';
@@ -1795,9 +1795,9 @@ print "<li class='list-group-item list-group-item-light'><center>".__( 'No consu
 }
 
 print '</ul><div class="card-body"></div><div class="card-footer text-muted">';
-print "<small><div class='float-left'>";
+print "<small><div class='float-start'>";
 if ( isset($request) ) print dolirefresh($request, $url, dolidelay('member'));
-print "</div><div class='float-right'>";
+print "</div><div class='float-end'>";
 print dolihelp('ISSUE');
 print "</div></small>";
 print '</div></div>';
@@ -1880,9 +1880,9 @@ print "<li class='list-group-item list-group-item-light'><center>".__( 'No linke
 }
 print "</form>";
 print '</ul><div class="card-body"></div><div class="card-footer text-muted">';
-print "<small><div class='float-left'>";
+print "<small><div class='float-start'>";
 if ( isset($request) ) print dolirefresh($request, $url, dolidelay('member'));
-print "</div><div class='float-right'>";
+print "</div><div class='float-end'>";
 print dolihelp('ISSUE');
 print "</div></small>";
 print '</div></div>';
@@ -1989,9 +1989,9 @@ $datemsg =  wp_date('d/m/Y - H:i', $msg->datec);
 print  "<li class='list-group-item list-group-item-light list-group-item-action'><b>$datemsg $msg->fk_user_action_string</b><br>$msg->message</li>";
 }} 
 print '</ul><div class="card-footer text-muted">';
-print "<small><div class='float-left'>";
+print "<small><div class='float-start'>";
 if ( isset($request) ) print dolirefresh($request, $url, dolidelay('ticket'), $ticketfo);
-print "</div><div class='float-right'>";
+print "</div><div class='float-end'>";
 print dolihelp('ISSUE');
 print "</div></small>";
 print '</div></div>';
@@ -2148,9 +2148,9 @@ print "<li class='list-group-item list-group-item-light'><center>".__( 'No ticke
 print '</ul><div class="card-body">';
 print dolipage($listticket, $url, $page, $limit);
 print '</div><div class="card-footer text-muted">';
-print "<small><div class='float-left'>";
+print "<small><div class='float-start'>";
 if ( isset($request) ) print dolirefresh($request, $url, dolidelay('ticket'));
-print "</div><div class='float-right'>";
+print "</div><div class='float-end'>";
 print dolihelp('ISSUE');
 print "</div></small>";
 print '</div></div>';
@@ -2292,9 +2292,9 @@ print __( 'Two factor authentication is disabled', 'doliconnect');
 }
 print "</div>";
 print '</ul><div class="card-footer text-muted"></form>';
-print "<small><div class='float-left'>";
+print "<small><div class='float-start'>";
 print dolirefresh( "/thirdparties/".doliconnector($current_user, 'fk_soc'), $url, dolidelay('member'));
-print "</div><div class='float-right'>";
+print "</div><div class='float-end'>";
 print dolihelp('ISSUE');
 print "</div></small>";
 print '</div></div>';
