@@ -737,8 +737,8 @@ function doliconnect_loading() {
 
 doliconnect_enqueues();
 
-print '<div id="DoliconnectLoadingModal" class="modal fade bd-example-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" data-show="true" data-backdrop="static" data-keyboard="false">
-<div class="modal-dialog modal-dialog-centered modal">
+print '<div id="DoliconnectLoadingModal" class="modal fade bd-example-modal" tabindex="-1" aria-labelledby="myLargeModalLabel" aria-hidden="true" data-bs-show="true" data-bs-backdrop="static" data-keyboard="false">
+<div class="modal-dialog modal-fullscreen modal-dialog-centered">
 <div class="text-center text-light w-100">
 <div class="spinner-border" role="status"><span class="sr-only">loading...</span></div>
 <h4>'.__( 'Processing', 'doliconnect').'</h4>
