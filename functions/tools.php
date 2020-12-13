@@ -1288,10 +1288,10 @@ function doliconnect_langs($arg) {
 
 if (function_exists('pll_the_languages')) {       
 
-print '<div class="modal fade" id="DoliconnectSelectLang" tabindex="-1" role="dialog" aria-labelledby="DoliconnectSelectLangLabel" aria-hidden="true">
-<div class="modal-dialog modal-fullscreen-md-down modal-dialog-centered modal-dialog-scrollable" role="document">
+print '<div class="modal fade" id="DoliconnectSelectLang" tabindex="-1" aria-labelledby="DoliconnectSelectLangLabel" aria-hidden="true">
+<div class="modal-dialog modal-fullscreen-md-down modal-dialog-centered modal-dialog-scrollable">
 <div class="modal-content"><div class="modal-header">
-<h5 class="modal-title" id="DoliconnectSelectLangLabel">'.__('Choose your language', 'doliconnect').'</h5><button id="closemodalSelectLang" class="btn-close" data-dismiss="modal" aria-label="Close"></button></button></div>';
+<h5 class="modal-title" id="DoliconnectSelectLangLabel">'.__('Choose your language', 'doliconnect').'</h5><button id="closemodalSelectLang" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></button></div>';
  
 print '<script>';
 ?>

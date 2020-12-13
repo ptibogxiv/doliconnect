@@ -1665,7 +1665,7 @@ print "</div><div class='col-12 col-md-7'>";
 
 if ( ! empty($adherent) && $adherent->statut != 0 ) {
 print '<form id="subscription-form" action="'.esc_url( add_query_arg( 'module', 'members', doliconnecturl('doliaccount')) ).'" method="post"><input type="hidden" name="update_membership" value="2"><div class="d-grid gap-2"><div class="btn-group" role="group" aria-label="Update membership">
-<button type="button"  class="btn btn text-white btn-warning" data-toggle="modal" data-target="#activatemember">'.__( 'Update', 'doliconnect').'</button>';
+<button type="button"  class="btn btn text-white btn-warning" data-bs-toggle="modal" data-bs-target="#activatemember">'.__( 'Update', 'doliconnect').'</button>';
 print "<button class='btn btn-dark' type='submit'>".__( 'Resiliate', 'doliconnect')."</button>";
 print '</div></div></form>';
 }
@@ -1674,18 +1674,18 @@ if ( function_exists('dolimembership_modal') && !empty(doliconst('MAIN_MODULE_CO
 
 //print doliloaderscript('doliconnect-memberform');
 
-if ( $adherent->datefin == null && $adherent->statut == '0' ) {print  "<a href='#' id='subscribe-button2' class='btn btn text-white btn-warning btn-block' data-toggle='modal' data-target='#activatemember'><b>".__( 'Become a member', 'doliconnect')."</b></a>";
+if ( $adherent->datefin == null && $adherent->statut == '0' ) {print  "<a href='#' id='subscribe-button2' class='btn btn text-white btn-warning btn-block' data-bs-toggle='modal' data-bs-target='#activatemember'><b>".__( 'Become a member', 'doliconnect')."</b></a>";
 } elseif ($adherent->statut == '1') {
 if ( $time > $adherent->next_subscription_renew && $adherent->datefin != null ) {
-print "<button class='btn btn text-white btn-warning btn-block' data-toggle='modal' data-target='#activatemember'>".__( 'Renew my subscription', 'doliconnect')."</button>";
+print "<button class='btn btn text-white btn-warning btn-block' data-bs-toggle='modal' data-bs-target='#activatemember'>".__( 'Renew my subscription', 'doliconnect')."</button>";
 } elseif ( intval(86400+(!empty($adherent->datefin)?$adherent->datefin:0)) > $time ) {
-print  "<button id='subscribe-button2' class='btn btn text-white btn-warning btn-block' data-toggle='modal' data-target='#activatemember'>".__( 'Modify my subscription', 'doliconnect')."</button>";
-} else { print  "<button class='btn btn btn-danger btn-block' data-toggle='modal' data-target='#activatemember'>".__( 'Pay my subscription', 'doliconnect')."</button>";}
+print  "<button id='subscribe-button2' class='btn btn text-white btn-warning btn-block' data-bs-toggle='modal' data-bs-target='#activatemember'>".__( 'Modify my subscription', 'doliconnect')."</button>";
+} else { print  "<button class='btn btn btn-danger btn-block' data-bs-toggle='modal' data-bs-target='#activatemember'>".__( 'Pay my subscription', 'doliconnect')."</button>";}
 } elseif ( $adherent->statut == '0' ) {
 if ( intval(86400+(!empty($adherent->datefin)?$adherent->datefin:0)) > $time ) {
 print "<form id='subscription-form' action='".doliconnecturl('doliaccount')."?module=members' method='post'><input type='hidden' name='update_membership' value='4'><button id='resiliation-button' class='btn btn btn-warning btn-block' type='submit'><b>".__( 'Reactivate my subscription', 'doliconnect')."</b></button></form>";
 } else {
-print  "<button class='btn btn text-white btn-warning btn-block' data-toggle='modal' data-target='#activatemember'>".__( 'Renew my subscription', 'doliconnect')."</button>";
+print  "<button class='btn btn text-white btn-warning btn-block' data-bs-toggle='modal' data-bs-target='#activatemember'>".__( 'Renew my subscription', 'doliconnect')."</button>";
 }
 } elseif ( $adherent->statut == '-1' ) {
 print '<div class="clearfix"><div class="spinner-border float-start" role="status">
@@ -1699,7 +1699,7 @@ $thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, '
 if ( empty($thirdparty->address) || empty($thirdparty->zip) || empty($thirdparty->town) || empty($thirdparty->country_id) || empty($current_user->billing_type) || empty($current_user->billing_birth) || empty($current_user->user_firstname) || empty($current_user->user_lastname) || empty($current_user->user_email)) {
 print "Pour adhérer, tous les champs doivent être renseignés dans vos <a href='".esc_url( get_permalink(get_option('doliaccount')))."?module=informations&return=members' class='alert-link'>".__( 'Personal informations', 'doliconnect')."</a></div><div class='col-sm-6 col-md-7'>";
 } else { 
-print "<button class='btn btn text-white btn-warning btn-block' data-toggle='modal' data-target='#activatemember'>".__( 'Become a member', 'doliconnect')."</button>";
+print "<button class='btn btn text-white btn-warning btn-block' data-bs-toggle='modal' data-bs-target='#activatemember'>".__( 'Become a member', 'doliconnect')."</button>";
 }
 }
 
