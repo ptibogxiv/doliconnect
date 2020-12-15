@@ -1779,8 +1779,8 @@ $listconsumption = callDoliApi("GET", $request, null, dolidelay('member', esc_at
 
 if ( isset($listconsumption) && !isset($listconsumption->error) && $listconsumption != null ) { 
 foreach ( $listconsumption as $consumption ) {                                                                                 
-$datec =  wp_date('d/m/Y H:i', $consumption->date_creation);
-print "<li class='list-group-item'><table width='100%'><tr><td>$datec</td><td>$consumption->label</td><td>";
+$datestart =  wp_date('d/m/Y H:i', $consumption->date_start);
+print "<li class='list-group-item'><table width='100%'><tr><td>$datestart</td><td>$consumption->label</td><td>";
 
 if ( !empty($consumption->value) ) {
 print $consumption->value." ".$consumption->unit;
