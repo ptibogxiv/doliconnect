@@ -709,7 +709,7 @@ print "</li>";
 //<label class='custom-control-label' for='optin1'> ".__( 'I would like to receive the newsletter', 'doliconnect')."</label></div></div>";
 //print "<div class='form-row'><div class='custom-control custom-checkbox my-1 mr-sm-2'>
 //<input type='checkbox' class='custom-control-input' value='forever' id='validation' name='validation' required>
-//<label class='custom-control-label' for='validation'>".__( 'I read and accept the <a href="#" data-toggle="modal" data-target="#cgvumention">Terms & Conditions</a>.', 'doliconnect')."</label></div></div>";
+//<label class='custom-control-label' for='validation'>".__( 'I read and accept the <a href="#" data-bs-toggle="modal" data-target="#cgvumention">Terms & Conditions</a>.', 'doliconnect')."</label></div></div>";
 
 //if ( get_option( 'wp_page_for_privacy_policy' ) ) {
 //print "<div class='modal fade' id='cgvumention' tabindex='-1' role='dialog' aria-labelledby='cgvumention' aria-hidden='true'><div class='modal-dialog modal-lg modal-dialog-centered' role='document'><div class='modal-content'><div class='modal-header'><h5 class='modal-title' id='cgvumentionLabel'>".__( 'Terms & Conditions', 'doliconnect')."</h5><button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>
@@ -794,7 +794,7 @@ $data = "data:application/pdf;".$doc->encoding.",".$doc->content;
 $filename = explode(".", $doc->filename)[0];
 
 if (!empty(get_option('doliconnectbeta'))) {
-$document = '<button type="button" class="btn btn btn-outline-dark btn-sm btn-block" data-toggle="modal" data-target=".modal-'.$filename.'">'.$name.' <i class="fas fa-file-download"></i></button>';
+$document = '<button type="button" class="btn btn btn-outline-dark btn-sm btn-block" data-bs-toggle="modal" data-target=".modal-'.$filename.'">'.$name.' <i class="fas fa-file-download"></i></button>';
 $document .= '<div class="modal fade modal-'.$filename.'" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 <div class="modal-dialog modal-dialog-centered modal-lg" role="document"><div class="modal-content"><div class="modal-header">
 <h5 class="modal-title" id="exampleModalCenterTitle"><a href="'.$data.'" download="'.$doc->filename.'">'.__( 'Download', 'doliconnect').' '.$doc->filename.'</a></h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="modal-body">';
@@ -1224,7 +1224,7 @@ $doliline .= '<center>'.__( 'If you already have an account,', 'doliconnect').' 
 
 if ( get_option('doliloginmodal') == '1' ) {
        
-$doliline .= '<a href="#" data-toggle="modal" data-target="#DoliconnectLogin" data-dismiss="modal" title="'.__('sign in', 'doliconnect').'" role="button">'.__( 'sign in', 'doliconnect').'</a> ';
+$doliline .= '<a href="#" data-bs-toggle="modal" data-target="#DoliconnectLogin" data-dismiss="modal" title="'.__('sign in', 'doliconnect').'" role="button">'.__( 'sign in', 'doliconnect').'</a> ';
 } else {
 $doliline .= "<a href='".wp_login_url( doliconnecturl('dolicart') )."?redirect_to=".doliconnecturl('dolicart')."' title='".__('sign in', 'doliconnect')."'>".__( 'sign in', 'doliconnect').'</a> ';
 }
@@ -1410,7 +1410,7 @@ $paymentmethods .=" disabled ";
 } elseif ( (!empty($method->default_source) && empty($thirdparty->mode_reglement_id) && !in_array($method->type, array('PRE','VIR'))) || (!empty($method->default_source) && !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id == $mode_reglement_code[0]->id) ) {
 $paymentmethods .=" active";
 }
-$paymentmethods .= '" data-toggle="pill" href="#nav-tab-'.$method->id.'"><i ';
+$paymentmethods .= '" data-bs-toggle="pill" href="#nav-tab-'.$method->id.'"><i ';
 if ( $method->type == 'sepa_debit' || $method->type == 'PRE' || $method->type == 'VIR' ) { $paymentmethods .= 'class="fas fa-university fa-fw float-start" style="color:DarkGrey"'; } 
 elseif ( $method->brand == 'visa' ) { $paymentmethods .= 'class="fab fa-cc-visa fa-fw float-start bg-white" style="color:#172274"'; }
 else if ( $method->brand == 'mastercard' ) { $paymentmethods .= 'class="fab fa-cc-mastercard fa-fw float-start bg-white" style="color:#FF5F01"'; }
@@ -1430,7 +1430,7 @@ $paymentmethods .= '<li class="nav-item"><a onclick="dolistripecard();" class="n
 if (empty($countPM)) {
 $paymentmethods .= ' active';
 }
-$paymentmethods .= '" data-toggle="pill" href="#nav-tab-newpm">
+$paymentmethods .= '" data-bs-toggle="pill" href="#nav-tab-newpm">
 <i class="fas fa-plus-circle fa-fw float-start"></i> ';
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
 $paymentmethods .= __( 'Pay by credit/debit card', 'doliconnect');
@@ -1441,7 +1441,7 @@ $paymentmethods .= '</a></li>';
 }
 
 if ( isset($listpaymentmethods->PAYPAL) && !empty($listpaymentmethods->PAYPAL) ) {
-$paymentmethods .= '<li class="nav-item"><a class="nav-link" data-toggle="pill" href="#nav-tab-paypal">
+$paymentmethods .= '<li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#nav-tab-paypal">
 <i class="fab fa-paypal float-start"></i> Paypal</a></li>';
 }
 if ( isset($listpaymentmethods->VIR) && !empty($listpaymentmethods->VIR) ) {
@@ -1449,7 +1449,7 @@ $paymentmethods .= "<li id='li-VIR' class='nav-item'><a class='nav-link ";
 $mode_reglement_code = callDoliApi("GET", "/setup/dictionary/payment_types?sortfield=code&sortorder=ASC&limit=100&active=1&sqlfilters=(t.code%3A%3D%3A'VIR')", null, dolidelay('constante'));
 if ( !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id != $mode_reglement_code[0]->id && !empty($module) && is_object($object) && isset($object->id) ) { $paymentmethods .=" disabled "; }
 elseif ( !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id == $mode_reglement_code[0]->id ) { $paymentmethods .=" active"; }
-$paymentmethods .= "' data-toggle='pill' href='#nav-tab-vir'>
+$paymentmethods .= "' data-bs-toggle='pill' href='#nav-tab-vir'>
 <i class='fas fa-university fa-fw float-start' style='color:DarkGrey'></i> ".__( 'Pay by bank transfert', 'doliconnect');
 if ( !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id == $mode_reglement_code[0]->id ) { $paymentmethods .= " <i class='fas fa-star fa-fw' style='color:Gold'></i>"; }
 $paymentmethods .= '</a></li>';
@@ -1459,13 +1459,13 @@ $paymentmethods .= "<li id='li-CHQ' class='nav-item'><a class='nav-link ";
 $mode_reglement_code = callDoliApi("GET", "/setup/dictionary/payment_types?sortfield=code&sortorder=ASC&limit=100&active=1&sqlfilters=(t.code%3A%3D%3A'CHQ')", null, dolidelay('constante'));
 if ( !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id != $mode_reglement_code[0]->id && !empty($module) && is_object($object) && isset($object->id) ) { $paymentmethods .=" disabled "; }
 elseif ( !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id == $mode_reglement_code[0]->id ) { $paymentmethods .=" active"; }
-$paymentmethods .= "' data-toggle='pill' href='#nav-tab-chq'>
+$paymentmethods .= "' data-bs-toggle='pill' href='#nav-tab-chq'>
 <i class='fa fa-money-check fa-fw float-start' style='color:Tan'></i> ".__( 'Pay by bank check', 'doliconnect');
 if ( !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id == $mode_reglement_code[0]->id ) { $paymentmethods .= " <i class='fas fa-star fa-fw' style='color:Gold'></i>"; }
 $paymentmethods .= '</a></li>';
 }    
 if ( ! empty(dolikiosk()) ) {
-$paymentmethods .= '<li class="nav-item"><a class="nav-link" data-toggle="pill" href="#nav-tab-kiosk">
+$paymentmethods .= '<li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#nav-tab-kiosk">
 <i class="fas fa-money-bill-alt fa-fw float-start" style="color:#85bb65"></i> '.__( 'Pay at front desk', 'doliconnect').'</a></li>';
 }
 
@@ -1580,7 +1580,7 @@ $paymentmethods .= "title='".__( 'Delete', 'doliconnect')."'><i class='fas fa-tr
 }
 $paymentmethods .= "</div>";
 }
-$paymentmethods .= "</div>";
+$paymentmethods .= "</div></div>";
 }}
 
 if ( isset($listpaymentmethods->stripe) && !empty(array_intersect(array('card','sepa_debit'), $listpaymentmethods->stripe->types)) && empty($thirdparty->mode_reglement_id) ) {
