@@ -917,7 +917,7 @@ $alert .= '<strong>'.__( 'Be carefull', 'doliconnect').'</strong>';
 $alert .= '<strong>'.__( 'Oops', 'doliconnect').'</strong>';
 }
 $alert .= ' '.$msg;
-$alert .= '<button type="button" class="btn-close" data-dismiss="alert" aria-label="Close"></button></div>';
+$alert .= '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
 return $alert;
 }
 
@@ -1876,7 +1876,7 @@ $paymentmethods .= '</p></div></div><div class="d-grid gap-2">';
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
 $paymentmethods .= '<button type="button" onclick="PayPM(\'VIR\')" class="btn btn-danger btn-block">'.__( 'Pay', 'doliconnect')." ".doliprice($object, 'ttc', $currency).'</button>';
 }  
-$paymentmethods .= '</div>';
+$paymentmethods .= '</div></div>';
 }
 
 if ( isset($listpaymentmethods->CHQ) && !empty($listpaymentmethods->CHQ) ) {
@@ -1907,7 +1907,7 @@ $paymentmethods .= '</p></div></div><div class="d-grid gap-2">';
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
 $paymentmethods .= '<br><button type="button" onclick="PayPM(\'CHQ\')" class="btn btn-danger btn-block">'.__( 'Pay', 'doliconnect')." ".doliprice($object, 'ttc', $currency).'</button>';
 }
-$paymentmethods .= '</div>';
+$paymentmethods .= '</div></div>';
 }
 
 if ( ! empty(dolikiosk()) ) {

@@ -73,7 +73,7 @@ $response = [
 wp_send_json_success( $response ); 
 } else {
 $response = [
-    'message' => __( 'We no longer have this item in this quantity', 'doliconnect'),
+    'message' => __( 'We no longer have this item in this quantity', 'doliconnect').$result,
         ];
 wp_send_json_error( $response ); 
 }

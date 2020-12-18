@@ -229,7 +229,7 @@ return doliconnect_countitems($order);
 
 } else {
 
-return -1;//doliconnect_countitems($order);
+return -$realstock;//doliconnect_countitems($order);
 
 }
 }
