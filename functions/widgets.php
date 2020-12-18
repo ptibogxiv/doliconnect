@@ -304,7 +304,7 @@ print '<form role="search" method="get" id="shopform" action="' . doliconnecturl
 <input type="text" name="search" id="search" class="form-control" placeholder="' . esc_attr__('Name, Ref., Description or Barcode', 'doliconnect') . '" aria-label="' . esc_attr__('Name, Ref., Description or Barcode', 'doliconnect') . '" aria-describedby="searchproduct">
 <button class="btn btn-primary" type="submit" id="searchproduct"><i class="fas fa-search"></i></button></div></form>';
 
-if ( $shop != null ) {
+if ( $shop != null && $shop > 0 ) {
 $request = "/categories/".esc_attr($shop)."?include_childs=true";
 } else{
 $request = "/categories";
@@ -362,7 +362,7 @@ $count = count($listproduct);
 print "'>".__(  'Discounted items', 'doliconnect')." (".$count.")</a>";
 }
 
-if ( $shop != null ) {
+if ( $shop != null && $shop > 0 ) {
 $resultatsc = $resultatsc->childs;
 } 
 

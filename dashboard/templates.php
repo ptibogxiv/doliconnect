@@ -1110,7 +1110,7 @@ print dolihelp('ISSUE');
 print "</div></small>";
 print "</div></div>";
 
-} elseif (is_numeric(doliconst('MAIN_MODULE_DISCOUNTPRICE')) && isset($_GET['category']) && $_GET['category'] == 'discount') {
+} elseif (!empty(doliconst('MAIN_MODULE_DISCOUNTPRICE')) && isset($_GET['category']) && $_GET['category'] == 'discount') {
 
 print "<ul class='list-group list-group-flush'>";
 
@@ -1183,7 +1183,7 @@ print "<ul class='list-group list-group-flush'>";
 $limit=25;
 if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']-1); }  else { $page = 0; }
 
-if ( $shop != null ) {
+if ( $shop != null && $shop > 0 ) {
 $request = "/categories/".esc_attr($shop)."?include_childs=true";
 } else{
 $request = "/categories";
@@ -1208,7 +1208,7 @@ $count = count($listproduct);
 }
 print "'>".__(  'New items', 'doliconnect')." (".$count.")</a>";
 }
-if ( is_numeric(doliconst('MAIN_MODULE_DISCOUNTPRICE')) ) {
+if ( !empty(doliconst('MAIN_MODULE_DISCOUNTPRICE')) ) {
 print "<a href='".esc_url( add_query_arg( 'category', 'discount', doliconnecturl('dolishop')) )."' class='list-group-item list-group-item-action";
 if ( isset($_GET['discount']) ) { print " active"; }
 $date = new DateTime(); 
@@ -1224,7 +1224,7 @@ $count = count($listproduct);
 print "'>".__(  'Discounted items', 'doliconnect')." (".$count.")</a>";
 }
 
-if ( $shop != null ) {
+if ( $shop != null && $shop > 0 ) {
 $resultats = $resultatsc->childs;
 } 
 
@@ -1353,7 +1353,7 @@ if ( defined("DOLIBUG") ) {
 
 print dolibug();
 
-} elseif ( !is_numeric(doliconst('MAIN_MODULE_COMMANDE')) ) {
+} elseif ( !!empty(doliconst('MAIN_MODULE_COMMANDE')) ) {
 print "<div class='card shadow-sm'><div class='card-body'>";
 print dolibug(__( 'Inactive module on Dolibarr', 'doliconnect'));
 print "</div></div>";
@@ -1472,7 +1472,7 @@ if ( defined("DOLIBUG") ) {
 
 print dolibug((isset($object->error)?$object->error->message:null));
 
-} elseif ( !is_numeric(doliconst('MAIN_MODULE_COMMANDE', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))) ) {
+} elseif ( empty(doliconst('MAIN_MODULE_COMMANDE', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))) ) {
 
 print "<div class='card shadow-sm'><div class='card-body'>";
 print dolibug(__( "Oops, Order's module is not available", "doliconnect"));
