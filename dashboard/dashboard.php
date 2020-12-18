@@ -422,7 +422,7 @@ print doliconnect_paymentmethods(null, null, $url, esc_attr(isset($_GET["refresh
 
 //*****************************************************************************************
 
-if ( is_numeric(doliconst('MAIN_MODULE_WISHLIST')) ) {
+if ( !empty(doliconst('MAIN_MODULE_WISHLIST')) ) {
 add_action( 'customer_doliconnect_menu', 'wishlist_menu', 0, 1);
 add_action( 'customer_doliconnect_wishlist', 'wishlist_module' );
 }  
@@ -486,7 +486,7 @@ print "</div></div>";
 
 }
 
-if ( is_numeric(doliconst('MAIN_MODULE_PROPALE')) ) {
+if ( !empty(doliconst('MAIN_MODULE_PROPALE')) ) {
 add_action( 'customer_doliconnect_menu', 'proposals_menu', 1, 1);
 add_action( 'customer_doliconnect_proposals', 'proposals_module');
 }
@@ -618,7 +618,7 @@ print "</div></div>";
 }
 }
 
-if ( is_numeric(doliconst('MAIN_MODULE_COMMANDE')) ) {
+if ( !empty(doliconst('MAIN_MODULE_COMMANDE')) ) {
 add_action( 'customer_doliconnect_menu', 'orders_menu', 2, 1);
 add_action( 'customer_doliconnect_orders', 'orders_module');
 }
@@ -933,7 +933,7 @@ print "</div></div>";
 }
 }
 
-if ( is_numeric(doliconst('MAIN_MODULE_FACTURE')) && get_option('doliconnectdisplayinvoice') ) {
+if ( !empty(doliconst('MAIN_MODULE_FACTURE')) && get_option('doliconnectdisplayinvoice') ) {
 add_action( 'customer_doliconnect_menu', 'invoices_menu', 2, 1);
 add_action( 'customer_doliconnect_invoices', 'invoices_module');
 }
@@ -1206,7 +1206,7 @@ print "</div></div>";
 }
 }
 
-if ( is_numeric(doliconst('MAIN_MODULE_CONTRAT'))  && !empty(get_option('doliconnectbeta')) ) {
+if ( !empty(doliconst('MAIN_MODULE_CONTRAT'))  && !empty(get_option('doliconnectbeta')) ) {
 add_action( 'customer_doliconnect_menu', 'contracts_menu', 2, 1);
 add_action( 'customer_doliconnect_contracts', 'contracts_module');
 }
@@ -1338,7 +1338,7 @@ print "</div></div>";
 }
 }
 
-if ( is_numeric(doliconst('MAIN_MODULE_PROJET')) && !empty(get_option('doliconnectbeta')) ) {
+if ( !empty(doliconst('MAIN_MODULE_PROJET')) && !empty(get_option('doliconnectbeta')) ) {
 add_action( 'customer_doliconnect_menu', 'projets_menu', 2, 1);
 add_action( 'customer_doliconnect_projets', 'projets_module');
 }
@@ -1467,7 +1467,7 @@ print "</div></div>";
 }
 }
 
-if ( is_numeric(doliconst('MAIN_MODULE_DON')) ) {
+if ( !empty(doliconst('MAIN_MODULE_DON')) ) {
 add_action( 'customer_doliconnect_menu', 'donations_menu', 5, 1);
 add_action( 'customer_doliconnect_donations', 'donations_module');
 }  
@@ -1590,7 +1590,7 @@ print "</div></div>";
 
 //*****************************************************************************************
 
-if ( is_numeric(doliconst('MAIN_MODULE_ADHERENTSPLUS')) ) {
+if ( !empty(doliconst('MAIN_MODULE_ADHERENTSPLUS')) ) {
 add_action( 'options_doliconnect_menu', 'members_menu', 1, 1);
 add_action( 'options_doliconnect_members', 'members_module');
 }
@@ -1670,7 +1670,7 @@ print "<button class='btn btn-dark' type='submit'>".__( 'Resiliate', 'doliconnec
 print '</div></div></form>';
 }
 
-if ( function_exists('dolimembership_modal') && is_numeric(doliconst('MAIN_MODULE_COMMANDE')) && !empty($productadhesion) ) {
+if ( function_exists('dolimembership_modal') && !empty(doliconst('MAIN_MODULE_COMMANDE')) && !empty($productadhesion) ) {
 
 //print doliloaderscript('doliconnect-memberform');
 
@@ -1752,7 +1752,7 @@ print '</div></div>';
 
 }
 
-if ( is_numeric(doliconst('ADHERENT_CONSUMPTION')) && !empty(get_option('doliconnectbeta')) ) {
+if ( !empty(doliconst('ADHERENT_CONSUMPTION')) && !empty(get_option('doliconnectbeta')) ) {
 add_action( 'options_doliconnect_menu', 'membershipconsumption_menu', 2, 1);
 add_action( 'options_doliconnect_membershipconsumption', 'membershipconsumption_module');
 }  
@@ -1804,7 +1804,7 @@ print '</div></div>';
 
 }
 
-if ( is_numeric(doliconst('ADHERENT_LINKEDMEMBER')) ) {
+if ( !empty(doliconst('ADHERENT_LINKEDMEMBER')) ) {
 add_action( 'options_doliconnect_menu', 'linkedmember_menu', 3, 1);
 add_action( 'options_doliconnect_linkedmember', 'linkedmember_module');
 }  
@@ -1910,7 +1910,7 @@ print "<div id='Footermember".$member->id."-form' class='modal-footer'><button n
 
 //*****************************************************************************************
 
-if ( is_numeric(doliconst('MAIN_MODULE_TICKET')) ) {
+if ( !empty(doliconst('MAIN_MODULE_TICKET')) ) {
 add_action( 'settings_doliconnect_menu', 'tickets_menu', 1, 1);
 add_action( 'settings_doliconnect_tickets', 'tickets_module');
 }
@@ -2244,12 +2244,12 @@ print '<div class="form-floating">';
 $monnaie = doliconst("MAIN_MONNAIE", dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 $testvalue='1.99';
 $cur = (!empty($thirdparty->multicurrency_code) ? $thirdparty->multicurrency_code : $monnaie );
-if ( !is_numeric(doliconst('MAIN_MODULE_MULTICURRENCY', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))) || !doliversion('11.0.0') ) { 
+if ( !!empty(doliconst('MAIN_MODULE_MULTICURRENCY', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))) || !doliversion('11.0.0') ) { 
 print '<input type="text" class="form-control" id="multicurrency_code" value="'.$cur." / ".doliprice($testvalue, null, $cur).'" readonly>
 <label for="multicurrency_code">'.__( 'Default currency', 'doliconnect').'</label>';
 } else {
 print '<select class="form-select" id="multicurrency_code" name="multicurrency_code" onchange="DoliSettings(this.form)" aria-label="'.__( 'Default currency', 'doliconnect').'">';
-if ( !isset( $currencies->error ) && $currencies != null && is_numeric(doliconst('MAIN_MODULE_MULTICURRENCY', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))) && doliversion('11.0.0')) {
+if ( !isset( $currencies->error ) && $currencies != null && !empty(doliconst('MAIN_MODULE_MULTICURRENCY', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))) && doliversion('11.0.0')) {
 foreach ( $currencies as $currency ) { 
 print "<option value='".$currency->code_iso."' ";
 if ( $currency->code_iso == $thirdparty->multicurrency_code ) { print " selected"; }
