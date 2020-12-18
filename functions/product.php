@@ -50,11 +50,11 @@ html : true
 })(jQuery);";
 $stock .= "</script>";
 
-if ( ! is_object($product) || empty(doliconst('MAIN_MODULE_STOCK', $refresh)) || (!empty($product->type) && empty(doliconst('STOCK_SUPPORTS_SERVICES', $refresh)) ) || (empty($product->type) && !empty(doliconst('STOCK_ALLOW_NEGATIVE_TRANSFER', $refresh)) && empty(doliconst('STOCK_MUST_BE_ENOUGH_FOR_ORDER', $refresh)) )) {
+if ( ! is_object($product) || !is_numeric(doliconst('MAIN_MODULE_STOCK', $refresh)) || (!empty($product->type) && !is_numeric(doliconst('STOCK_SUPPORTS_SERVICES', $refresh)) ) || (empty($product->type) && is_numeric(doliconst('STOCK_ALLOW_NEGATIVE_TRANSFER', $refresh)) && is_numeric(doliconst('STOCK_MUST_BE_ENOUGH_FOR_ORDER', $refresh)) )) {
 $stock .= "<a tabindex='0' id='popover-".$product->id."' class='badge rounded-pill bg-success text-white text-decoration-none' data-bs-container='body' data-bs-toggle='popover' data-bs-trigger='focus' title='".__( 'Available', 'doliconnect')."' data-bs-content='".__( 'This item is available and can be order', 'doliconnect')."'><i class='fas fa-warehouse'></i> ".__( 'Available', 'doliconnect').'</a>';
 } else {
 $warehouse = doliconst('DOLICONNECT_ID_WAREHOUSE', $refresh);
-if (isset($product->stock_warehouse) && !empty($product->stock_warehouse) && !empty($warehouse)) {
+if (isset($product->stock_warehouse) && !empty($product->stock_warehouse) && is_numeric($warehouse)) {
 if (isset($product->stock_warehouse->$warehouse)) {
 $realstock = min(array($product->stock_reel,$product->stock_warehouse->$warehouse->real,$product->stock_theorique));
 } else {
@@ -91,7 +91,7 @@ $stock .= "<a tabindex='0' id='popover-".$product->id."' class='badge rounded-pi
 }
 } 
 
-return $stock;
+return $stock.$realstock;
 }
 
 function doliconnect_countitems($object){
@@ -169,7 +169,7 @@ $dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolide
 
 return -1;
 
-} elseif ( doliconnector($current_user, 'fk_order') > 0 && $quantity > 0 && empty($line) && (empty(doliconst('MAIN_MODULE_STOCK')) || $realstock >= $quantity || (is_null($line) && empty(doliconst('STOCK_SUPPORTS_SERVICES')) ))) {
+} elseif ( doliconnector($current_user, 'fk_order') > 0 && $quantity > 0 && empty($line) && (!is_numeric(doliconst('MAIN_MODULE_STOCK')) || $realstock >= $quantity || (is_null($line) && !is_numeric(doliconst('STOCK_SUPPORTS_SERVICES')) ))) {
                                                                                      
 $adln = [
     'fk_product' => $prdt->id,
@@ -189,7 +189,7 @@ if ( !empty($url) ) {
 }
 return doliconnect_countitems($order);
 
-} elseif ( doliconnector($current_user, 'fk_order') > 0 && ($realstock >= $quantity || empty($quantity) || (is_object($line) && $line->type != '0' && empty(doliconst('STOCK_SUPPORTS_SERVICES')) )) && $line > 0 ) {
+} elseif ( doliconnector($current_user, 'fk_order') > 0 && ($realstock >= $quantity || empty($quantity) || (is_object($line) && $line->type != '0' && !is_numeric(doliconst('STOCK_SUPPORTS_SERVICES')) )) && $line > 0 ) {
 
 if ( $quantity < 1 ) {
 
@@ -308,7 +308,7 @@ $altdurvalue=60/$product->duration_value;
 
 $discount = !empty(doliconnector($current_user, 'remise_percent'))?doliconnector($current_user, 'remise_percent'):'0';
 
-if ( !empty(doliconst("PRODUIT_MULTIPRICES", $refresh)) && !empty($product->multiprices_ttc) ) {
+if ( is_numeric(doliconst("PRODUIT_MULTIPRICES", $refresh)) && !empty($product->multiprices_ttc) ) {
 $lvl=doliconnector($current_user, 'price_level');
 //$button .=$lvl;
 
@@ -336,7 +336,7 @@ if ( (empty(doliconnector($current_user, 'price_level')) && $level == 1 ) || dol
 $button .= ' class="table-primary"';  
 }
 $button .= '>';   
-$button .= '<td><small>'.(!empty(doliconst('PRODUIT_MULTIPRICES_LABEL'.$level, $refresh))?doliconst('PRODUIT_MULTIPRICES_LABEL'.$level, $refresh):__( 'Price', 'doliconnect').' '.$level).'</small></td>';
+$button .= '<td><small>'.(is_numeric(doliconst('PRODUIT_MULTIPRICES_LABEL'.$level, $refresh))?doliconst('PRODUIT_MULTIPRICES_LABEL'.$level, $refresh):__( 'Price', 'doliconnect').' '.$level).'</small></td>';
 $button .= '<td class="text-right"><small>'.doliprice( (empty(get_option('dolibarr_b2bmode'))?$price:$price_ht), null, $currency);
 if ( empty($time) && !empty($product->duration_value) ) { $button .='/'.doliduration($product); }
 $button .= '</small></td>';
@@ -365,7 +365,7 @@ if ( !empty($altdurvalue) ) { $button .= "<tr><td class='text-right'>soit ".doli
 
 $button .= ''; 
 
-if ( !empty(doliconst("PRODUIT_CUSTOMER_PRICES", $refresh)) && doliconnector($current_user, 'fk_soc', $refresh) > 0 ) {
+if ( is_numeric(doliconst("PRODUIT_CUSTOMER_PRICES", $refresh)) && doliconnector($current_user, 'fk_soc', $refresh) > 0 ) {
 $product2 = callDoliApi("GET", "/products/".$product->id."/selling_multiprices/per_customer", null, dolidelay('product', $refresh));
 if ( !isset($product2->error) && $product2 != null ) {
 $new_product2 = array_filter($product2, function($obj){
@@ -383,7 +383,7 @@ $product2 = $array;
 }
 }
 
-if ( !empty(doliconst('MAIN_MODULE_DISCOUNTPRICE', $refresh)) ) {
+if ( is_numeric(doliconst('MAIN_MODULE_DISCOUNTPRICE', $refresh)) ) {
 $date = new DateTime(); 
 $date->modify('NOW');
 $lastdate = $date->format('Y-m-d');
@@ -391,7 +391,7 @@ $requestp = "/discountprice?productid=".$product->id."&sortfield=t.rowid&sortord
 $product3 = callDoliApi("GET", $requestp, null, dolidelay('product', $refresh));
 }
 
-if ( !empty(doliconst('MAIN_MODULE_DISCOUNTPRICE', $refresh)) && isset($product3) && !isset($product3->error) ) {
+if ( is_numeric(doliconst('MAIN_MODULE_DISCOUNTPRICE', $refresh)) && isset($product3) && !isset($product3->error) ) {
 if (!empty($product3[0]->discount)) {
 $price_ttc3=$product->price_ttc-($product->price_ttc*$product3[0]->discount/100);
 $price_ht3=$product->price-($product->price*$product3[0]->discount/100);
@@ -425,7 +425,7 @@ $button .= __( 'Sales', 'doliconnect');
 }
 $button .= '</div>';
 $button .= '<div class="float-right">'.doliprice( empty(get_option('dolibarr_b2bmode'))?$price_ttc3:$price_ht3, $currency).'</div></td></tr>';
-} elseif ( !empty(doliconst("PRODUIT_CUSTOMER_PRICES", $refresh)) && isset($product2) && !empty($product2) && !isset($product2->error) ) {
+} elseif ( is_numeric(doliconst("PRODUIT_CUSTOMER_PRICES", $refresh)) && isset($product2) && !empty($product2) && !isset($product2->error) ) {
 $price_min_ttc=$product2->price_min;
 $price_ttc=$product2->price_ttc;
 $price_ht=$product2->price;
@@ -457,7 +457,7 @@ if ( empty(doliconnectid('dolicart')) ) {
 
 $button .= "<div class='input-group'><a class='btn btn-block btn-info' href='".doliconnecturl('dolicontact')."?type=COM' role='button' title='".__( 'Login', 'doliconnect')."'>".__( 'Contact us', 'doliconnect')."</a></div>";
 
-} elseif ( is_user_logged_in() && !empty($add) && !empty(doliconst('MAIN_MODULE_COMMANDE', $refresh)) && doliconnectid('dolicart') > 0 ) {
+} elseif ( is_user_logged_in() && !empty($add) && is_numeric(doliconst('MAIN_MODULE_COMMANDE', $refresh)) && doliconnectid('dolicart') > 0 ) {
 $warehouse = doliconst('DOLICONNECT_ID_WAREHOUSE', $refresh);
 if (isset($product->stock_warehouse) && !empty($product->stock_warehouse) && !empty($warehouse)) {
 if (isset($product->stock_warehouse->$warehouse)) {
@@ -468,7 +468,7 @@ $realstock = 0;
 } else {
 $realstock = min(array($product->stock_theorique,$product->stock_reel));
 }
-if (empty($product->type) && !empty(doliconst('STOCK_ALLOW_NEGATIVE_TRANSFER', $refresh)) && empty(doliconst('STOCK_MUST_BE_ENOUGH_FOR_ORDER', $refresh))) {
+if (empty($product->type) && is_numeric(doliconst('STOCK_ALLOW_NEGATIVE_TRANSFER', $refresh)) && !is_numeric(doliconst('STOCK_MUST_BE_ENOUGH_FOR_ORDER', $refresh))) {
 if (isset($product->array_options->options_packaging) && !empty($product->array_options->options_packaging)) {
 $m0 = 1*$product->array_options->options_packaging;
 $m1 = get_option('dolicartlist')*$product->array_options->options_packaging;
@@ -500,9 +500,9 @@ $step = $product->array_options->options_packaging;
 $step = 1;
 }
 $button .= "<div class='input-group input-group-sm mb-3'><select class='form-control btn-light btn-outline-secondary' id='product-".$product->id."-add-qty' name='product-add-qty' ";
-if ( ( $realstock <= 0 || $m2 < $step) && empty($product->type) && !empty(doliconst('MAIN_MODULE_STOCK')) ) { $button .= " disabled"; }
+if ( ( $realstock <= 0 || $m2 < $step) && empty($product->type) && is_numeric(doliconst('MAIN_MODULE_STOCK')) ) { $button .= " disabled"; }
 $button .= ">";
-if (($realstock <= 0 && !empty(doliconst('MAIN_MODULE_STOCK', $refresh)) && (empty($product->type) || (!empty($product->type) && doliconst('STOCK_SUPPORTS_SERVICES', $refresh)) )) || $m2 < $step)  { $button .= "<OPTION value='0' selected>".__( 'Unavailable', 'doliconnect')."</OPTION>"; 
+if (($realstock <= 0 && is_numeric(doliconst('MAIN_MODULE_STOCK', $refresh)) && (empty($product->type) || (!empty($product->type) && doliconst('STOCK_SUPPORTS_SERVICES', $refresh)) )) || $m2 < $step)  { $button .= "<OPTION value='0' selected>".__( 'Unavailable', 'doliconnect')."</OPTION>"; 
 } elseif (!empty($m2) && $m2 >= $step) {
 if ($step >1 && !empty($quantity)) $quantity = round($quantity/$step)*$step; 
 if (empty($qty) && $quantity > $m2) $quantity = $m2; 
@@ -517,7 +517,7 @@ $button .= "<option value='$number' >x ".$number."</option>";
 	}
 }}
 $button .= "</select>";
-if ( !empty(doliconst('MAIN_MODULE_WISHLIST', $refresh)) && !empty(get_option('doliconnectbeta')) ) {
+if ( is_numeric(doliconst('MAIN_MODULE_WISHLIST', $refresh)) && !empty(get_option('doliconnectbeta')) ) {
 if (!empty($wish)) {
 $button .= "<button class='btn btn-sm btn-light btn-outline-secondary' type='submit' name='cartaction' value='addtowish' title='".esc_html__( 'Save my wish', 'doliconnect')."'><i class='fas fa-heart-broken' style='color:Fuchsia'></i></i></button>";
 } else {
@@ -525,7 +525,7 @@ $button .= "<button class='btn btn-sm btn-light btn-outline-secondary' type='sub
 }
 }
 $button .= "<button class='btn btn-sm btn-warning' type='submit' name='cartaction' value='addtocart' title='".esc_html__( 'Add to cart', 'doliconnect')."' ";
-if ( ( $realstock <= 0 || $m2 < $step) && $product->type == '0' && !empty(doliconst('MAIN_MODULE_STOCK', $refresh)) ) { $button .= " disabled"; }
+if ( ( $realstock <= 0 || $m2 < $step) && $product->type == '0' && is_numeric(doliconst('MAIN_MODULE_STOCK', $refresh)) ) { $button .= " disabled"; }
 $button .= "><i class='fas fa-cart-plus fa-fw'></i></button></div>";
 
 //if ( $qty > 0 ) {
