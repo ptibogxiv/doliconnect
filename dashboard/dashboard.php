@@ -3,7 +3,7 @@
 function informations_menu($arg) {
 print "<a href='".esc_url( add_query_arg( 'module', 'informations', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
 if ($arg=='informations') { print " active";}
-print "'>".__( 'Personal informations', 'doliconnect')."</a>";
+print "'>".__( 'Edit your informations', 'doliconnect')."</a>";
 }
 add_action( 'user_doliconnect_menu', 'informations_menu', 1, 1);
 
@@ -55,7 +55,7 @@ print "<form action='".$url."' id='doliconnect-infosform' method='post' class='w
 
 print doliloaderscript('doliconnect-infosform');
 
-print "<div class='card shadow-sm'>";
+print '<div class="card shadow-sm"><div class="card-header">'.__( 'Edit your informations', 'doliconnect').'</div>';
 
 print doliuserform( $thirdparty, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'thirdparty');
 
@@ -264,7 +264,7 @@ add_action( 'user_doliconnect_avatars', 'avatars_module');
 function password_menu( $arg ){
 print "<a href='".esc_url( add_query_arg( 'module', 'password', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
 if ($arg=='password') { print " active";}
-print "'>".__( 'Edit password', 'doliconnect')."</a>";
+print "'>".__( 'Edit your password', 'doliconnect')."</a>";
 }
 add_action( 'user_doliconnect_menu', 'password_menu', 2, 1);
 

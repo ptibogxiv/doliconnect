@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2020-12-19 20:34+0100\n"
-"PO-Revision-Date: 2020-12-19 20:34+0100\n"
+"POT-Creation-Date: 2020-12-19 20:42+0100\n"
+"PO-Revision-Date: 2020-12-19 20:42+0100\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_FR\n"
@@ -381,9 +381,9 @@ msgstr "Sous-titre"
 msgid "Write a brief desc"
 msgstr "Écrire un bref desc"
 
-#: dashboard/dashboard.php:6 dashboard/dashboard.php:1700
-msgid "Personal informations"
-msgstr "Informations personnelles"
+#: dashboard/dashboard.php:6 dashboard/dashboard.php:58
+msgid "Edit your informations"
+msgstr "Modifiez vos informations"
 
 #: dashboard/dashboard.php:42 dashboard/dashboard.php:227
 #: dashboard/dashboard.php:304 dashboard/dashboard.php:317
@@ -417,9 +417,10 @@ msgstr ""
 msgid "Delete your picture"
 msgstr "Supprimer votre photo de profil"
 
-#: dashboard/dashboard.php:267 functions/tools.php:289
-msgid "Edit password"
-msgstr "Modifier le mot de passe"
+#: dashboard/dashboard.php:267 dashboard/templates.php:414
+#: functions/tools.php:289
+msgid "Edit your password"
+msgstr "Modifier votre mot de passe"
 
 #: dashboard/dashboard.php:282 dashboard/dashboard.php:371
 msgid "Manage address book"
@@ -827,6 +828,10 @@ msgid "Your request has been registered. You will be notified at validation."
 msgstr ""
 "Votre demande a été enregistrée. Vous serez averti lors de la validation."
 
+#: dashboard/dashboard.php:1700
+msgid "Personal informations"
+msgstr "Informations personnelles"
+
 #: dashboard/dashboard.php:1708
 #, php-format
 msgid "Renew from %s"
@@ -1123,10 +1128,6 @@ msgstr ""
 #: dashboard/templates.php:660
 msgid "Create an account"
 msgstr "Créer un compte"
-
-#: dashboard/templates.php:414
-msgid "Change your password"
-msgstr "Modifier votre mot de passe"
 
 #: dashboard/templates.php:421 functions/tools.php:291
 msgid "Your password will be synchronized with your Dolibarr account"
@@ -2397,6 +2398,12 @@ msgstr "ptibogxiv"
 msgid "https://www.ptibogxiv.net/en"
 msgstr "https://www.ptibogxiv.net/fr"
 
+#~ msgid "Edit password"
+#~ msgstr "Modifier le mot de passe"
+
+#~ msgid "Change your password"
+#~ msgstr "Modifier votre mot de passe"
+
 #~ msgid "New contact"
 #~ msgstr "Nouveau contact"
 
@@ -2951,9 +2958,6 @@ msgstr "https://www.ptibogxiv.net/fr"
 
 #~ msgid "Enter your email"
 #~ msgstr "Saisir votre email"
-
-#~ msgid "Enter your password"
-#~ msgstr "Saisir votre mot de passe"
 
 #~ msgid "The contact has been added"
 #~ msgstr "Le contact a été ajouté"

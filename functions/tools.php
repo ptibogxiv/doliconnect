@@ -286,7 +286,7 @@ jQuery("#DoliconnectLoadingModal").modal("hide");
 });';
 $password .= "</script>";
 
-$password .= '<div class="card shadow-sm"><div class="card-header">'.__( 'Edit password', 'doliconnect').'</div><ul class="list-group list-group-flush">';
+$password .= '<div class="card shadow-sm"><div class="card-header">'.__( 'Edit your password', 'doliconnect').'</div><ul class="list-group list-group-flush">';
 if ( doliconnector($user, 'fk_user') > '0' ) {
 $password .= "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".__( 'Your password will be synchronized with your Dolibarr account', 'doliconnect')."</b></li>";
 } elseif  ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $user->ID ) {

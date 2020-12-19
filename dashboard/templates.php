@@ -411,7 +411,7 @@ jQuery("#DoliconnectLoadingModal").modal("hide");
 });';
 print "</script>";
 
-print '<div class="card shadow-sm"><div class="card-header">'.__( 'Edit password', 'doliconnect');
+print '<div class="card shadow-sm"><div class="card-header">'.__( 'Edit your password', 'doliconnect');
 print '<a class="float-end text-decoration-none" href="'.esc_url( doliconnecturl('doliaccount') ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a>';  
 print '</div>';
 print "<ul class='list-group list-group-flush'>";
