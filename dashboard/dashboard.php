@@ -370,7 +370,7 @@ $listcontact = callDoliApi("GET", $requestlist, null, dolidelay('contact', esc_a
 
 print '<div class="card shadow-sm"><ul class="list-group list-group-flush">';
 
-print '<a href="'.$url.'&action=create" class="list-group-item lh-condensed list-group-item-action list-group-item-primary"><center><i class="fas fa-plus-circle"></i> '.__( 'New contact', 'doliconnect').'</center></a>';  
+print '<a href="'.$url.'&action=create" class="list-group-item lh-condensed list-group-item-action list-group-item-primary"><center><i class="fas fa-plus-circle"></i> '.__( 'Create contact', 'doliconnect').'</center></a>';  
 
 if ( !isset($listcontact->error) && $listcontact != null ) {
 foreach ($listcontact  as $postcontact) { 
