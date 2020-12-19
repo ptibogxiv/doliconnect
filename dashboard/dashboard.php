@@ -1859,7 +1859,7 @@ print doliloaderscript('doliconnect-linkedmembersform');
 print "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
 
 if (doliconnector($current_user, 'fk_member') > 0) {
-print '<button type="button" class="list-group-item lh-condensed list-group-item-action list-group-item-primary" data-toggle="modal" data-target="#addmember"><center><i class="fas fa-plus-circle"></i> '.__( 'New linked member', 'doliconnect').'</center></button>';
+print '<button type="button" class="list-group-item lh-condensed list-group-item-action list-group-item-primary" data-bs-toggle="modal" data-bs-target="#addmember"><center><i class="fas fa-plus-circle"></i> '.__( 'New linked member', 'doliconnect').'</center></button>';
 print "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".__( 'Please contact us to link a pre-existing member', 'doliconnect')."</b></li>"; 
 }
 
@@ -1890,9 +1890,9 @@ print '</div></div>';
 if ( isset($linkedmember) && !isset($linkedmember->error) && $linkedmember != null ) { 
 foreach ( $linkedmember as $member ) {
 
-print '<div class="modal fade" id="member-'.$member->id.'" tabindex="-1" role="dialog" aria-labelledby="member-'.$member->id.'Title" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+print '<div class="modal fade" id="member-'.$member->id.'" tabindex="-1" role="dialog" aria-labelledby="member-'.$member->id.'Title" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
 <div class="modal-dialog modal-lg modal-dialog-centered" role="document"><div class="modal-content border-0"><div class="modal-header border-0">
-<h5 class="modal-title" id="member-'.$member->id.'Title">'.__( 'Update member', 'doliconnect').'</h5><button id="Closemember'.$member->id.'-form" type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
+<h5 class="modal-title" id="member-'.$member->id.'Title">'.__( 'Update member', 'doliconnect').'</h5><button id="Closemember'.$member->id.'-form" type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
 <div id="member'.$member->id.'-form">';
 print "<form class='was-validated' role='form' action='$url' id='member-".$member->id."-form' method='post'>";
 
