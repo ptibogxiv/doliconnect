@@ -376,13 +376,7 @@ exit;
 } else {
 $dolibarr = callDoliApi("GET", "/doliconnector/".$user->ID, null, 0);
 
-print "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
-if ( isset($dolibarr->fk_user) && $dolibarr->fk_user > 0){  
-$request = "/users/".$dolibarr->fk_user;
-$doliuser = callDoliApi("GET", $request , null, dolidelay('thirdparty'));
-print "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".__( 'Your password will be synchronized with your Dolibarr account', 'doliconnect')."</b></li>";
-} 
-print "<li class='list-group-item'><h5 class='card-title'>".__( 'Change your password', 'doliconnect')."</h5>";
+
 
 print "<div id='DoliRpwAlert' class='text-danger font-weight-bolder'></div><form id='dolirpw-form' method='post' class='was-validated' action='".admin_url('admin-ajax.php')."'>";
 print "<input type='hidden' name='action' value='dolirpw_request'>";
@@ -417,7 +411,17 @@ jQuery("#DoliconnectLoadingModal").modal("hide");
 });';
 print "</script>";
 
-print '</li><li class="list-group-item list-group-item-light"><p class="text-justify">'.__( 'Your password must be between 8 and 20 characters, including at least 1 digit, 1 letter, 1 uppercase.', 'doliconnect').'</p>';
+print '<div class="card shadow-sm"><div class="card-header">'.__( 'Change your password', 'doliconnect');
+print '<a class="float-end text-decoration-none" href="'.esc_url( doliconnecturl('doliaccount') ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a>';  
+print '</div>';
+print "<ul class='list-group list-group-flush'>";
+if ( isset($dolibarr->fk_user) && $dolibarr->fk_user > 0){  
+$request = "/users/".$dolibarr->fk_user;
+$doliuser = callDoliApi("GET", $request , null, dolidelay('thirdparty'));
+print "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".__( 'Your password will be synchronized with your Dolibarr account', 'doliconnect')."</b></li>";
+} 
+
+print '<li class="list-group-item list-group-item-light"><p class="text-justify">'.__( 'Your password must be between 8 and 20 characters, including at least 1 digit, 1 letter, 1 uppercase.', 'doliconnect').'</p>';
 print '<div class="row g-2"><div class="col-md">';
 print '<div class="form-floating"><input type="password" class="form-control" id="pwd1" name="pwd1" placeholder="Password" ';
 if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $user->ID ) {
