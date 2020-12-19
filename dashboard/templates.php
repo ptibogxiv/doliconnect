@@ -374,10 +374,8 @@ exit;
 }
 exit;
 } else {
+
 $dolibarr = callDoliApi("GET", "/doliconnector/".$user->ID, null, 0);
-
-
-
 print "<div id='DoliRpwAlert' class='text-danger font-weight-bolder'></div><form id='dolirpw-form' method='post' class='was-validated' action='".admin_url('admin-ajax.php')."'>";
 print "<input type='hidden' name='action' value='dolirpw_request'>";
 print "<input type='hidden' name='dolirpw-nonce' value='".wp_create_nonce( 'dolirpw-nonce')."'>";
@@ -442,10 +440,6 @@ print '</div></div>';
 print '</li>';
 print "</ul><div class='card-body'><input type='hidden' name='case' value ='updatepwd'>";
 print '<div class="d-grid gap-2"><button class="btn btn-outline-secondary" type="submit" value="submit">'.__( 'Update', 'doliconnect').'</button></div>';
-
-//if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $user->ID ) {
-//print ' disabled';
-//}
 
 print '</form></div>';
 print "<div class='card-footer text-muted'>";

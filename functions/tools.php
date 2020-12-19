@@ -288,9 +288,9 @@ $password .= "</script>";
 
 $password .= '<div class="card shadow-sm"><div class="card-header">'.__( 'Edit my password', 'doliconnect').'</div><ul class="list-group list-group-flush">';
 if ( doliconnector($user, 'fk_user') > '0' ) {
-$password .= "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".__( 'Your password will be synchronized with your Dolibarr account', 'doliconnect')."</b></li>";
+$password .= "<li class='list-group-item list-group-item-info list-group-item-action'><i class='fas fa-info-circle'></i> <b>".__( 'Your password will be synchronized with your Dolibarr account', 'doliconnect')."</b></li>";
 } elseif  ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $user->ID ) {
-$password .= "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".__( 'Password cannot be modified in demo mode', 'doliconnect')."</b></li>";
+$password .= "<li class='list-group-item list-group-item-info list-group-item-action'><i class='fas fa-info-circle'></i> <b>".__( 'Password cannot be modified in demo mode', 'doliconnect')."</b></li>";
 } 
 $password .= '<li class="list-group-item list-group-item-light list-group-item-action">';
 if (is_user_logged_in() && $user) {
