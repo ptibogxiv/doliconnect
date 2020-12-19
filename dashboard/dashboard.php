@@ -332,7 +332,7 @@ print "<form action='".$url."' id='doliconnect-infosform' method='post' class='w
 
 print doliloaderscript('doliconnect-infosform');
 
-print '<div class="card shadow-sm"><div class="card-header">'.__( 'Edit contact', 'doliconnect').'<a class="float-end" href="'.esc_url( add_query_arg( 'module', 'contacts', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div>';
+print '<div class="card shadow-sm"><div class="card-header">'.__( 'Edit contact', 'doliconnect').'<a class="float-end text-decoration-none" href="'.esc_url( add_query_arg( 'module', 'contacts', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div>';
 
 print doliuserform( $contactfo, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'contact');
 
@@ -351,7 +351,7 @@ print "<form action='".$url."' id='doliconnect-infosform' method='post' class='w
 
 print doliloaderscript('doliconnect-infosform');
 
-print '<div class="card shadow-sm"><div class="card-header">'.__( 'Create contact', 'doliconnect').'<a class="float-end" href="'.esc_url( add_query_arg( 'module', 'contacts', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div>';
+print '<div class="card shadow-sm"><div class="card-header">'.__( 'Create contact', 'doliconnect').'<a class="float-end text-decoration-none" href="'.esc_url( add_query_arg( 'module', 'contacts', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div>';
 
 print doliuserform( $thirdparty, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'contact');
 
@@ -368,9 +368,9 @@ print '</div></div></form>';
                            
 $listcontact = callDoliApi("GET", $requestlist, null, dolidelay('contact', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
-print '<div class="card shadow-sm"><ul class="list-group list-group-flush">';
-
-print '<a href="'.$url.'&action=create" class="list-group-item lh-condensed list-group-item-action list-group-item-primary"><center><i class="fas fa-plus-circle"></i> '.__( 'Create contact', 'doliconnect').'</center></a>';  
+print '<div class="card shadow-sm"><div class="card-header">'.__( 'Manage address book', 'doliconnect');
+print '<a class="float-end text-decoration-none" href="'.esc_url( add_query_arg( 'action', 'create', $url) ).'"><i class="fas fa-plus-circle"></i> '.__( 'Create contact', 'doliconnect').'</a>';  
+print '</div><ul class="list-group list-group-flush">';
 
 if ( !isset($listcontact->error) && $listcontact != null ) {
 foreach ($listcontact  as $postcontact) { 

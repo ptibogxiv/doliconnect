@@ -544,7 +544,9 @@ jQuery("#DoliconnectLoadingModal").modal("hide");
 });';
 print "</script>";
  
-print "<div class='card shadow-sm'><div class='card-header'><h5 class='card-title'>".__( 'Forgot password?', 'doliconnect')."</h5></div>";
+print '<div class="card shadow-sm"><div class="card-header">'.__( 'Forgot password?', 'doliconnect');
+print '<a class="float-end text-decoration-none" href="'.esc_url( doliconnecturl('doliaccount') ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a>';  
+print '</div>';
 print "<ul class='list-group list-group-flush'><li class='list-group-item'>";
 print "<p class='text-justify'>".__( 'Please enter the email address by which you registered your account.', 'doliconnect')."</p>";
 
