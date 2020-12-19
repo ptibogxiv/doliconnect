@@ -537,7 +537,7 @@ $arr_params = array( 'redirect_to' => doliconnecturl('dolishop'));
 $loginurl = esc_url( add_query_arg( $arr_params, wp_login_url( )) );
 
 if ( get_option('doliloginmodal') == '1' ) {       
-$button .= '<div class="input-group"><a href="#" data-toggle="modal" class="btn btn-block btn-outline-secondary" data-bs-target="#DoliconnectLogin" data-bs-dismiss="modal" title="'.__('Sign in', 'ptibogxivtheme').'" role="button">'.__( 'log in', 'doliconnect').'</a></div>';
+$button .= '<div class="input-group"><a href="#" data-bs-toggle="modal" class="btn btn-block btn-outline-secondary" data-bs-target="#DoliconnectLogin" data-bs-dismiss="modal" title="'.__('Sign in', 'ptibogxivtheme').'" role="button">'.__( 'log in', 'doliconnect').'</a></div>';
 } else {
 $button .= "<div class='input-group'><a href='".wp_login_url( get_permalink() )."?redirect_to=".get_permalink()."' class='btn btn-block btn-outline-secondary' >".__( 'log in', 'doliconnect').'</a></div>';
 }
