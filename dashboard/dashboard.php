@@ -231,8 +231,8 @@ print "<form action='".$url."' id='doliconnect-avatarform' method='post' class='
 
 print doliloaderscript('doliconnect-avatarform');
 
-print "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
-print "<li class='list-group-item'>".__( 'Profile Picture', 'doliconnect')."";
+print '<div class="card shadow-sm"><div class="card-header">'.__( 'Edit my avatar', 'doliconnect').'</div>';
+print "<ul class='list-group list-group-flush'><li class='list-group-item'>";
 
 print '<div class="mb-3">
 <label for="inputavatar" name="inputavatar" class="form-label">'.__( 'Select a file', 'doliconnect').'</label>
