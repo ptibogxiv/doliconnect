@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2020-12-19 20:42+0100\n"
-"PO-Revision-Date: 2020-12-19 20:42+0100\n"
+"POT-Creation-Date: 2020-12-19 21:13+0100\n"
+"PO-Revision-Date: 2020-12-19 21:13+0100\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_FR\n"
@@ -382,8 +382,8 @@ msgid "Write a brief desc"
 msgstr "Écrire un bref desc"
 
 #: dashboard/dashboard.php:6 dashboard/dashboard.php:58
-msgid "Edit your informations"
-msgstr "Modifiez vos informations"
+msgid "Edit my informations"
+msgstr "Modifier mes informations"
 
 #: dashboard/dashboard.php:42 dashboard/dashboard.php:227
 #: dashboard/dashboard.php:304 dashboard/dashboard.php:317
@@ -417,10 +417,9 @@ msgstr ""
 msgid "Delete your picture"
 msgstr "Supprimer votre photo de profil"
 
-#: dashboard/dashboard.php:267 dashboard/templates.php:414
-#: functions/tools.php:289
-msgid "Edit your password"
-msgstr "Modifier votre mot de passe"
+#: dashboard/dashboard.php:267 functions/tools.php:289
+msgid "Edit my password"
+msgstr "Modifier mon mot de passe"
 
 #: dashboard/dashboard.php:282 dashboard/dashboard.php:371
 msgid "Manage address book"
@@ -1128,6 +1127,10 @@ msgstr ""
 #: dashboard/templates.php:660
 msgid "Create an account"
 msgstr "Créer un compte"
+
+#: dashboard/templates.php:414
+msgid "Edit your password"
+msgstr "Modifier votre mot de passe"
 
 #: dashboard/templates.php:421 functions/tools.php:291
 msgid "Your password will be synchronized with your Dolibarr account"
@@ -2397,9 +2400,6 @@ msgstr "ptibogxiv"
 #. Author URI of the plugin/theme
 msgid "https://www.ptibogxiv.net/en"
 msgstr "https://www.ptibogxiv.net/fr"
-
-#~ msgid "Edit password"
-#~ msgstr "Modifier le mot de passe"
 
 #~ msgid "Change your password"
 #~ msgstr "Modifier votre mot de passe"
