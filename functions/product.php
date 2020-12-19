@@ -356,7 +356,7 @@ $button .= "</div></small></td></tr>";
 
 $button .= '</tbody></table>';
 } else {
-$button .= '<table class="table table-bordered table-sm table-striped"><tbody>';
+$button .= '<table class="table table-borderless table-sm table-striped"><tbody>';
 $button .= '<tr>'; 
 $button .= '<td><div class="float-start">'.__( 'Selling Price', 'doliconnect').'</div>';
 $button .= '<div class="float-end">'.doliprice( empty(get_option('dolibarr_b2bmode'))?$product->price_ttc:$product->price, null, $currency).'</div></td></tr>';
