@@ -264,7 +264,7 @@ add_action( 'user_doliconnect_avatars', 'avatars_module');
 function password_menu( $arg ){
 print "<a href='".esc_url( add_query_arg( 'module', 'password', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
 if ($arg=='password') { print " active";}
-print "'>".__( 'Modify the password', 'doliconnect')."</a>";
+print "'>".__( 'Edit password', 'doliconnect')."</a>";
 }
 add_action( 'user_doliconnect_menu', 'password_menu', 2, 1);
 
