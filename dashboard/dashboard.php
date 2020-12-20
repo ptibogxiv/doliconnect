@@ -1996,7 +1996,7 @@ print dolihelp('ISSUE');
 print "</div></small>";
 print '</div></div>';
 
-} elseif ( isset($_GET['create']) ) {
+} elseif ( isset($_GET['action']) && $_GET['action'] == 'create' ) {
 
 if ( isset($_POST["case"]) && $_POST["case"] == 'createticket' ) {
 $rdr = [        
@@ -2019,7 +2019,9 @@ print "<form class='was-validated' id='doliconnect-newticketform' action='".$url
 
 print doliloaderscript('doliconnect-newticketform'); 
 
-print "<div class='card shadow-sm'><ul class='list-group list-group-flush'><li class='list-group-item list-group-item-light list-group-item-action'><h5 class='card-title'>".__( 'Open a new ticket', 'doliconnect')."</h5>";
+print '<div class="card shadow-sm"><div class="card-header">'.__( 'Create ticket', 'doliconnect').'<a class="float-end text-decoration-none" href="'.esc_url( add_query_arg( 'module', 'tickets', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><ul class="list-group list-group-flush">';
+
+print "<li class='list-group-item list-group-item-light list-group-item-action'>";
 
 print '<div class="row mb-2 g-2"><div class="col-md">';
 
@@ -2116,10 +2118,10 @@ $request = "/tickets?socid=".doliconnector($current_user, 'fk_soc')."&sortfield=
 $listticket = callDoliApi("GET", $request, null, dolidelay('ticket', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 //print $listticket;
 
-print '<div class="card shadow-sm"><ul class="list-group list-group-flush">';
-//if ($help>0) {
-print '<a href="'.$url.'&create" class="list-group-item lh-condensed list-group-item-action list-group-item-primary"><center><i class="fas fa-plus-circle"></i> '.__( 'New ticket', 'doliconnect').'</center></a>';  
-//}
+print '<div class="card shadow-sm"><div class="card-header">'.__( 'Help', 'doliconnect');
+print '<a class="float-end text-decoration-none" href="'.esc_url( add_query_arg( 'action', 'create', $url) ).'"><i class="fas fa-plus-circle"></i> '.__( 'Create contact', 'doliconnect').'</a>';  
+print '</div><ul class="list-group list-group-flush">';  
+
 if ( !isset($listticket->error) && $listticket != null ) {
 foreach ($listticket as $postticket) {                                                                                 
 
@@ -2191,7 +2193,7 @@ jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function (e) {
 }';
 print "</script>";
 
-print "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
+print '<div class="card shadow-sm"><div class="card-header">'.__( 'Settings & security', 'doliconnect').'</div><ul class="list-group list-group-flush">';
 print "<li class='list-group-item list-group-item-light list-group-item-action'><div class='form-check form-switch'><input type='checkbox' class='form-check-input' name='loginmailalert' id='loginmailalert' ";
 if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $ID ) {
 print " disabled";
