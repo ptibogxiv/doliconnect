@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2020-12-19 23:36+0100\n"
-"PO-Revision-Date: 2020-12-19 23:37+0100\n"
+"POT-Creation-Date: 2020-12-20 11:12+0100\n"
+"PO-Revision-Date: 2020-12-20 11:13+0100\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_CA\n"
@@ -145,9 +145,9 @@ msgstr "une adresse IP par ligne sans espace ni virgule"
 #: admin/admin.php:410 admin/admin.php:424 admin/admin.php:436
 #: admin/admin.php:448 admin/admin.php:460 admin/admin.php:494
 #: admin/admin.php:509 admin/admin.php:520 admin/admin.php:533
-#: admin/admin.php:545 dashboard/dashboard.php:2030
-#: dashboard/dashboard.php:2049 dashboard/dashboard.php:2066
-#: dashboard/dashboard.php:2084 dashboard/templates.php:712
+#: admin/admin.php:545 dashboard/dashboard.php:2032
+#: dashboard/dashboard.php:2051 dashboard/dashboard.php:2068
+#: dashboard/dashboard.php:2086 dashboard/templates.php:712
 #: functions/tools.php:397 functions/tools.php:491
 msgid "- Select -"
 msgstr "- Sélectionner -"
@@ -433,11 +433,13 @@ msgstr "Modifier le contact"
 #: dashboard/dashboard.php:335 dashboard/dashboard.php:354
 #: dashboard/dashboard.php:511 dashboard/dashboard.php:644
 #: dashboard/dashboard.php:959 dashboard/dashboard.php:1231
+#: dashboard/dashboard.php:1951 dashboard/dashboard.php:2022
 #: dashboard/templates.php:474
 msgid "Back"
 msgstr "Retour"
 
 #: dashboard/dashboard.php:354 dashboard/dashboard.php:372
+#: dashboard/dashboard.php:2122
 msgid "Create contact"
 msgstr "Créer le contact"
 
@@ -466,22 +468,23 @@ msgstr "Votre représentant :"
 msgid "No product"
 msgstr "Aucun produit"
 
-#: dashboard/dashboard.php:497
-msgid "Propals tracking"
-msgstr "Suivi des propales"
+#: dashboard/dashboard.php:497 dashboard/dashboard.php:586
+msgid "Proposals tracking"
+msgstr "Suivi des propositions"
 
 #: dashboard/dashboard.php:511
-msgid "Proposal"
-msgstr "Proposition"
+#, php-format
+msgid "Proposal %s"
+msgstr "Proposition %s"
 
-#: dashboard/dashboard.php:513 dashboard/dashboard.php:1232
-msgid "date of creation"
-msgstr "date de création"
+#: dashboard/dashboard.php:513 dashboard/dashboard.php:1364
+#: dashboard/dashboard.php:1953
+msgid "Date of creation"
+msgstr "Date de création"
 
-#: dashboard/dashboard.php:514 dashboard/dashboard.php:540
-#: dashboard/dashboard.php:1246
-msgid "validation"
-msgstr "validation"
+#: dashboard/dashboard.php:514 dashboard/dashboard.php:1378
+msgid "Validation"
+msgstr "Validation URL"
 
 #: dashboard/dashboard.php:517
 msgid "refused"
@@ -507,6 +510,10 @@ msgstr "cancelé"
 msgid "proposal"
 msgstr "devis"
 
+#: dashboard/dashboard.php:540 dashboard/dashboard.php:1246
+msgid "validation"
+msgstr "validation"
+
 #: dashboard/dashboard.php:540
 msgid "billing"
 msgstr "facturation"
@@ -525,18 +532,18 @@ msgstr "Propal"
 msgid "No proposal"
 msgstr "Aucune proposition"
 
-#: dashboard/dashboard.php:629
+#: dashboard/dashboard.php:629 dashboard/dashboard.php:897
 msgid "Orders tracking"
 msgstr "Suivi des commandes"
 
-#: dashboard/dashboard.php:644 dashboard/dashboard.php:777
-#: dashboard/dashboard.php:1386 dashboard/dashboard.php:1510
-msgid "Order"
-msgstr "Commande"
+#: dashboard/dashboard.php:644
+#, php-format
+msgid "Order %s"
+msgstr "Commande %s"
 
-#: dashboard/dashboard.php:645
-msgid "date of order"
-msgstr "date de commande"
+#: dashboard/dashboard.php:645 dashboard/dashboard.php:1498
+msgid "Date of order"
+msgstr "Date de commande"
 
 #: dashboard/dashboard.php:648 dashboard/dashboard.php:963
 msgid "shipped"
@@ -551,12 +558,16 @@ msgid "draft"
 msgstr "brouillon"
 
 #: dashboard/dashboard.php:664 dashboard/dashboard.php:979
-msgid "payment method"
-msgstr "méthode de paiement"
+#: dashboard/dashboard.php:1500 dashboard/templates.php:1424
+#: functions/data-request.php:389
+msgid "Payment method"
+msgstr "Méthode de paiement"
 
 #: dashboard/dashboard.php:665 dashboard/dashboard.php:980
-msgid "payment term"
-msgstr "durée de paiement"
+#: functions/tools.php:1552 functions/tools.php:1827 functions/tools.php:1868
+#: functions/tools.php:1899
+msgid "Payment term"
+msgstr "Durée du paiement"
 
 #: dashboard/dashboard.php:682 dashboard/dashboard.php:997
 #: dashboard/templates.php:1317 dashboard/templates.php:1438
@@ -617,6 +628,11 @@ msgstr "expédition"
 msgid "delivery"
 msgstr "livraison"
 
+#: dashboard/dashboard.php:777 dashboard/dashboard.php:1386
+#: dashboard/dashboard.php:1510
+msgid "Order"
+msgstr "Commande"
+
 #: dashboard/dashboard.php:797 dashboard/dashboard.php:1112
 #: dashboard/dashboard.php:1386 dashboard/dashboard.php:1510
 #: dashboard/templates.php:1513
@@ -624,10 +640,10 @@ msgid "Payment"
 msgstr "Paiement"
 
 #: dashboard/dashboard.php:807 dashboard/dashboard.php:809
-#: dashboard/dashboard.php:826 dashboard/dashboard.php:959
-#: dashboard/dashboard.php:1085 dashboard/dashboard.php:1087
-#: dashboard/dashboard.php:1092 dashboard/dashboard.php:1122
-#: dashboard/dashboard.php:1124 dashboard/dashboard.php:1141
+#: dashboard/dashboard.php:826 dashboard/dashboard.php:1085
+#: dashboard/dashboard.php:1087 dashboard/dashboard.php:1092
+#: dashboard/dashboard.php:1122 dashboard/dashboard.php:1124
+#: dashboard/dashboard.php:1141
 msgid "Invoice"
 msgstr "Facture"
 
@@ -667,21 +683,30 @@ msgstr "Emballage en cours"
 msgid "No order"
 msgstr "Pas d’ordre"
 
-#: dashboard/dashboard.php:944
+#: dashboard/dashboard.php:944 dashboard/dashboard.php:1170
 msgid "Invoices tracking"
 msgstr "Suivi des factures"
 
+#: dashboard/dashboard.php:959
+#, php-format
+msgid "Invoice %s"
+msgstr "Facture %s"
+
 #: dashboard/dashboard.php:960
-msgid "date of invoice"
-msgstr "date de la facture"
+msgid "Date of invoice"
+msgstr "Date de la facture"
 
 #: dashboard/dashboard.php:1193
 msgid "No invoice"
 msgstr "Pas de facture"
 
-#: dashboard/dashboard.php:1217
+#: dashboard/dashboard.php:1217 dashboard/dashboard.php:1301
 msgid "Contracts tracking"
 msgstr "Suivi des contrats"
+
+#: dashboard/dashboard.php:1232
+msgid "date of creation"
+msgstr "date de création"
 
 #: dashboard/dashboard.php:1254 dashboard/dashboard.php:1386
 #: dashboard/dashboard.php:1510 functions/product.php:68
@@ -700,14 +725,6 @@ msgstr "Pas de contrat"
 msgid "Projets tracking"
 msgstr "Suivi des projets"
 
-#: dashboard/dashboard.php:1364 dashboard/dashboard.php:1953
-msgid "Date of creation"
-msgstr "Date de création"
-
-#: dashboard/dashboard.php:1378
-msgid "Validation"
-msgstr "Validation URL"
-
 #: dashboard/dashboard.php:1380
 msgid "Canceled"
 msgstr "Annulée"
@@ -721,6 +738,10 @@ msgstr "En traitement"
 msgid "Delivery"
 msgstr "Livraison"
 
+#: dashboard/dashboard.php:1429
+msgid "Projects tracking"
+msgstr "Suivi des projets"
+
 #: dashboard/dashboard.php:1454
 msgid "No project"
 msgstr "Pas de projet"
@@ -728,15 +749,6 @@ msgstr "Pas de projet"
 #: dashboard/dashboard.php:1478
 msgid "Donations tracking"
 msgstr "Suivi des dons"
-
-#: dashboard/dashboard.php:1498
-msgid "Date of order"
-msgstr "Date de commande"
-
-#: dashboard/dashboard.php:1500 dashboard/templates.php:1424
-#: functions/data-request.php:389
-msgid "Payment method"
-msgstr "Méthode de paiement"
 
 #: dashboard/dashboard.php:1535
 msgid "Amount"
@@ -782,8 +794,8 @@ msgstr "Pas d’adhésion"
 msgid "nothing"
 msgstr "rien"
 
-#: dashboard/dashboard.php:1653 dashboard/dashboard.php:2028
-#: dashboard/dashboard.php:2040 functions/tools.php:391 functions/tools.php:968
+#: dashboard/dashboard.php:1653 dashboard/dashboard.php:2030
+#: dashboard/dashboard.php:2042 functions/tools.php:391 functions/tools.php:968
 msgid "Type"
 msgstr "Type"
 
@@ -885,7 +897,7 @@ msgstr "Aucun membre lié"
 msgid "Update member"
 msgstr "Mettre à jour le membre"
 
-#: dashboard/dashboard.php:1921
+#: dashboard/dashboard.php:1921 dashboard/dashboard.php:2121
 msgid "Help"
 msgstr "Aide"
 
@@ -893,24 +905,29 @@ msgstr "Aide"
 msgid "Your message has been send."
 msgstr "Votre message a été envoyé."
 
+#: dashboard/dashboard.php:1951
+#, php-format
+msgid "Ticket %s"
+msgstr "Ticket %s"
+
 #: dashboard/dashboard.php:1954
 msgid "Type and category"
 msgstr "Type et catégorie"
 
-#: dashboard/dashboard.php:1955 dashboard/dashboard.php:2064
-#: dashboard/dashboard.php:2074
+#: dashboard/dashboard.php:1955 dashboard/dashboard.php:2066
+#: dashboard/dashboard.php:2076
 msgid "Severity"
 msgstr "Gravité"
 
-#: dashboard/dashboard.php:1957 dashboard/dashboard.php:2134
+#: dashboard/dashboard.php:1957 dashboard/dashboard.php:2136
 msgid "Deleted"
 msgstr "Supprimé"
 
-#: dashboard/dashboard.php:1958 dashboard/dashboard.php:2135
+#: dashboard/dashboard.php:1958 dashboard/dashboard.php:2137
 msgid "Closed"
 msgstr "Fermé"
 
-#: dashboard/dashboard.php:1959 dashboard/dashboard.php:2136
+#: dashboard/dashboard.php:1959 dashboard/dashboard.php:2138
 msgid "Waiting"
 msgstr "En attente"
 
@@ -918,23 +935,23 @@ msgstr "En attente"
 msgid "In progress"
 msgstr "En cours"
 
-#: dashboard/dashboard.php:1961 dashboard/dashboard.php:2138
+#: dashboard/dashboard.php:1961 dashboard/dashboard.php:2140
 msgid "Assigned"
 msgstr "Attribué"
 
-#: dashboard/dashboard.php:1962 dashboard/dashboard.php:2139
+#: dashboard/dashboard.php:1962 dashboard/dashboard.php:2141
 msgid "Answered"
 msgstr "Répondus"
 
-#: dashboard/dashboard.php:1963 dashboard/dashboard.php:2140
+#: dashboard/dashboard.php:1963 dashboard/dashboard.php:2142
 msgid "Read"
 msgstr "Lu"
 
-#: dashboard/dashboard.php:1964 dashboard/dashboard.php:2141
+#: dashboard/dashboard.php:1964 dashboard/dashboard.php:2143
 msgid "Unread"
 msgstr "Non lu"
 
-#: dashboard/dashboard.php:1968 dashboard/dashboard.php:2098
+#: dashboard/dashboard.php:1968 dashboard/dashboard.php:2100
 msgid "Subject"
 msgstr "Sujet"
 
@@ -942,7 +959,7 @@ msgstr "Sujet"
 msgid "Initial message"
 msgstr "Message initial"
 
-#: dashboard/dashboard.php:1979 dashboard/dashboard.php:2101
+#: dashboard/dashboard.php:1979 dashboard/dashboard.php:2103
 #: dashboard/templates.php:726 dashboard/templates.php:1724
 msgid "Message"
 msgstr "Message"
@@ -956,84 +973,80 @@ msgid "Your ticket has been submitted."
 msgstr "Votre billet a été soumis."
 
 #: dashboard/dashboard.php:2022
-msgid "Open a new ticket"
-msgstr "Ouvrir un nouveau billet"
+msgid "Create ticket"
+msgstr "Créer un ticket"
 
-#: dashboard/dashboard.php:2047 dashboard/dashboard.php:2057
+#: dashboard/dashboard.php:2049 dashboard/dashboard.php:2059
 msgid "Category"
 msgstr "Catégorie"
 
-#: dashboard/dashboard.php:2082 dashboard/dashboard.php:2091
+#: dashboard/dashboard.php:2084 dashboard/dashboard.php:2093
 msgid "Sales representative"
 msgstr "Représentant commercial"
 
-#: dashboard/dashboard.php:2105 dashboard/templates.php:733
+#: dashboard/dashboard.php:2107 dashboard/templates.php:733
 msgid "Send"
 msgstr "Envoyer"
 
-#: dashboard/dashboard.php:2121
-msgid "New ticket"
-msgstr "Nouveau billet"
-
-#: dashboard/dashboard.php:2137
+#: dashboard/dashboard.php:2139
 msgid "Progress"
 msgstr "Progression"
 
-#: dashboard/dashboard.php:2145
+#: dashboard/dashboard.php:2147
 msgid "No ticket"
 msgstr "Pas de billet"
 
-#: dashboard/dashboard.php:2164
+#: dashboard/dashboard.php:2166 dashboard/dashboard.php:2196
 msgid "Settings & security"
 msgstr "Paramètres et sécurité"
 
-#: dashboard/dashboard.php:2199
+#: dashboard/dashboard.php:2201
 msgid "Receive a email notification at each connection"
 msgstr "Recevoir une notification par e-mail à chaque connexion"
 
-#: dashboard/dashboard.php:2204
+#: dashboard/dashboard.php:2206
 msgid "I would like to receive the newsletter"
 msgstr "Je voudrais recevoir le bulletin"
 
-#: dashboard/dashboard.php:2208
+#: dashboard/dashboard.php:2210
 msgid "I would like to receive the offers of our partners"
 msgstr "Je voudrais recevoir les offres de nos partenaires"
 
-#: dashboard/dashboard.php:2216
+#: dashboard/dashboard.php:2218
 msgid "Privacy policy"
 msgstr "Politique de confidentialité"
 
-#: dashboard/dashboard.php:2223 dashboard/dashboard.php:2231
+#: dashboard/dashboard.php:2225 dashboard/dashboard.php:2233
 msgid "Default language"
 msgstr "Langue par défaut"
 
-#: dashboard/dashboard.php:2224 dashboard/dashboard.php:2233
-#: dashboard/dashboard.php:2234
+#: dashboard/dashboard.php:2226 dashboard/dashboard.php:2235
+#: dashboard/dashboard.php:2236
 msgid "Default / Browser language"
 msgstr "Langue par défaut / Navigateur"
 
-#: dashboard/dashboard.php:2249 dashboard/dashboard.php:2251
-#: dashboard/dashboard.php:2260
+#: dashboard/dashboard.php:2251 dashboard/dashboard.php:2253
+#: dashboard/dashboard.php:2262
 msgid "Default currency"
 msgstr "Monnaie par défaut"
 
-#: dashboard/dashboard.php:2270
+#: dashboard/dashboard.php:2272
 msgid "Enabled"
 msgstr "Activé"
 
-#: dashboard/dashboard.php:2271
+#: dashboard/dashboard.php:2273
 msgid "Primary"
 msgstr "Primaire"
 
-#: dashboard/dashboard.php:2272 functions/product.php:695
+#: dashboard/dashboard.php:2274 functions/product.php:695
 msgid "Description"
 msgstr "Description"
 
-#: dashboard/dashboard.php:2291
+#: dashboard/dashboard.php:2293
 msgid "Two factor authentication is disabled"
 msgstr "L’authentification à deux facteurs est désactivée"
 
-#: dashboard/dashboard.php:2365
+#: dashboard/dashboard.php:2367 functions/tools.php:2161
 msgid "Privacy"
 msgstr "Confidentialité"
 
@@ -2135,11 +2148,6 @@ msgstr "Récurrent"
 msgid "Unique"
 msgstr "Unique"
 
-#: functions/tools.php:1552 functions/tools.php:1827 functions/tools.php:1868
-#: functions/tools.php:1899
-msgid "Payment term"
-msgstr "Durée du paiement"
-
 #: functions/tools.php:1556 functions/tools.php:1831 functions/tools.php:1872
 #: functions/tools.php:1903
 msgid "immediately"
@@ -2371,6 +2379,21 @@ msgstr "ptibogxiv"
 #. Author URI of the plugin/theme
 msgid "https://www.ptibogxiv.net/en"
 msgstr "https://www.ptibogxiv.net/en"
+
+#~ msgid "date of order"
+#~ msgstr "date de commande"
+
+#~ msgid "payment method"
+#~ msgstr "méthode de paiement"
+
+#~ msgid "payment term"
+#~ msgstr "durée de paiement"
+
+#~ msgid "Open a new ticket"
+#~ msgstr "Ouvrir un nouveau billet"
+
+#~ msgid "New ticket"
+#~ msgstr "Nouveau billet"
 
 #~ msgid "Profile Picture"
 #~ msgstr "Photo de profil"
@@ -3045,9 +3068,6 @@ msgstr "https://www.ptibogxiv.net/en"
 #~ msgid "Manage your account"
 #~ msgstr "Gérer votre compte"
 
-#~ msgid "Orders"
-#~ msgstr "Commandes"
-
 #~ msgid "Ask"
 #~ msgstr "Demander"
 
@@ -3059,9 +3079,6 @@ msgstr "https://www.ptibogxiv.net/en"
 
 #~ msgid "Tax"
 #~ msgstr "Taxe"
-
-#~ msgid "Ticket"
-#~ msgstr "Assistance"
 
 #~ msgid "At the first time"
 #~ msgstr "À la première fois"
