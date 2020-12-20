@@ -4,7 +4,7 @@ function doliconnect_newproduct_block_render( $attributes, $content) {
 
 doliconnect_enqueues();
 
-$content = '<div class="card shadow-sm"> <div class="card-header">'.__( 'New items', 'doliconnect' ).'</div><ul class="list-group list-group-flush">';
+$content = '<div class="card shadow-sm"><div class="card-header">'.__( 'New items', 'doliconnect' ).'</div><ul class="list-group list-group-flush">';
 
 $date = new DateTime(); 
 $date->modify('NOW');
@@ -28,9 +28,9 @@ $content .= "<li class='list-group-item'><center><center>".__( 'No new item', 'd
 }
 $content .= '</ul><div class="card-body"></div>';
 $content .= "<div class='card-footer text-muted'>";
-$content .= "<small><div class='float-left'>";
+$content .= "<small><div class='float-start'>";
 $content .= dolirefresh($request, null, dolidelay('product'));
-$content .= "</div><div class='float-right'>";
+$content .= "</div><div class='float-end'>";
 $content .= dolihelp('ISSUE');
 $content .= "</div></small>";
 $content .= "</div></div>";

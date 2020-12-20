@@ -4,7 +4,7 @@ function doliconnect_product_block_render( $attributes, $content) {
 
 doliconnect_enqueues();
 
-$content = '<div class="card shadow-sm"><div class="card-header">'.__( 'Product', 'doliconnect').'</div><div class="card-body">';
+$content = '<div class="card shadow-sm"><div class="card-header">'.__( 'Item', 'doliconnect').'</div><div class="card-body">';
 
 if (isset($attributes['productID']) && $attributes['productID'] > 0) {
 $request = "/products/".$attributes['productID']."?includestockdata=1";
