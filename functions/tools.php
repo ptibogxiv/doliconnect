@@ -2234,4 +2234,96 @@ global $current_user;
 
 }
 
+function doliconnect_modal() {
+global $current_user;
+$year = strftime("%Y", current_time( 'timestamp', 1));
+
+if ( (!is_user_logged_in() || !is_user_member_of_blog( $current_user->ID, get_current_blog_id())) && (get_option('doliloginmodal') == '1') ) {
+
+doliconnect_enqueues();
+
+do_action( 'login_head' );
+
+print "<div class='modal fade' id='DoliconnectLogin' tabindex='-1' role='dialog' aria-labelledby='DoliconnectLoginTitle' aria-hidden='true' data-keyboard='false' ";
+
+print "><div class='modal-dialog modal-fullscreen-md-down modal-dialog-centered modal-dialog-scrollable' role='document'><div class='modal-content'><div class='modal-header'>";
+
+if ( empty(get_option('doliconnectrestrict')) ) {
+print "<h5 class='modal-title' id='DoliconnectLoginTitle'>".__( 'Welcome', 'doliconnect-pro')."</h5>";
+} else {
+print "<h5 class='modal-title' id='DoliconnectLoginTitle'>".__( 'Access restricted to users', 'doliconnect-pro')."</h5>";
+}
+
+print '<button type="button" id="Closeloginmodal-form" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div><div class="modal-body"><div id="loginmodal-form">';
+print '<b>'.get_option('doliaccountinfo').'</b>';
+
+if ( ! function_exists('dolikiosk') || ( function_exists('dolikiosk') && empty(dolikiosk())) ) {
+print socialconnect ( get_permalink() );
+}
+
+if ( function_exists('secupress_get_module_option') && secupress_get_module_option('move-login_slug-login', null, 'users-login' )) {
+$login_url=site_url()."/".secupress_get_module_option('move-login_slug-login', null, 'users-login' ); 
+}else{
+$login_url=site_url()."/wp-login.php"; }
+
+if ( function_exists('dolikiosk') && ! empty(dolikiosk()) ) {
+$redirect_to=doliconnecturl('doliaccount');
+} else {
+$redirect_to=get_permalink();
+}
+
+print "<form name='loginmodal-form' action='$login_url' method='post' class='was-validated'>";
+
+print dolimodalloaderscript('loginmodal-form');
+
+print '<div class="form-floating mb-3"><input type="email" class="form-control" id="user_login" name="log" placeholder="name@example.com" value="';
+if ( defined("DOLICONNECT_DEMO_EMAIL") && !empty(constant("DOLICONNECT_DEMO_EMAIL")) ) {
+print constant("DOLICONNECT_DEMO_EMAIL");
+}
+print '" required autofocus><label for="user_login">'.__( 'Email', 'doliconnect-pro').'</label></div>';
+
+print '<div class="form-floating mb-3"><input type="password" class="form-control" id="user_pass" name="pwd" placeholder="Password" value="';
+if ( defined("DOLICONNECT_DEMO_PASSWORD") && !empty(constant("DOLICONNECT_DEMO_PASSWORD")) ) {
+print constant("DOLICONNECT_DEMO_PASSWORD");
+}
+print '" required><label for="user_pass">'.__( 'Password', 'doliconnect-pro').'</label></div>';
+
+do_action( 'login_form' );
+
+print '<div class="form-check">
+  <input class="form-check-input" type="checkbox" name="rememberme" value="forever" id="rememberme" checked>
+  <label class="form-check-label" for="rememberme">'.__( 'Remember me', 'doliconnect-pro').'</label>
+</div>';
+
+if ( get_site_option('doliconnect_mode') == 'one' && function_exists('switch_to_blog') ) {
+switch_to_blog(1);
+} 
+
+if ((!is_multisite() && get_option( 'users_can_register' )) || ((!is_multisite() && get_option( 'dolicustsupp_can_register' )) || ((get_option( 'dolicustsupp_can_register' ) || get_option('users_can_register') == '1') && (get_site_option( 'registration' ) == 'user' || get_site_option( 'registration' ) == 'all')))) {
+print "<a class='float-start' href='".wp_registration_url(get_permalink())."' role='button' title='".__( 'Create an account', 'doliconnect-pro')."'><small>".__( 'Create an account', 'doliconnect-pro')."</small></a>";
+}
+print "<a class='float-end' href='".wp_lostpassword_url(get_permalink())."' role='button' title='".__( 'Forgot password?', 'doliconnect-pro')."'><small>".__( 'Forgot password?', 'doliconnect-pro')."</small></a>"; 
+
+if (get_site_option('doliconnect_mode')=='one') {
+restore_current_blog();
+}
+
+print "<input type='hidden' value='$redirect_to' name='redirect_to'></div>";
+
+print "".doliloading('loginmodal-form');
+
+print '</div><div id="Footerloginmodal-form" class="modal-footer">';
+print '<div class="d-grid gap-2"><button class="btn btn-outline-secondary" type="submit" value="submit">'.__( 'Sign in', 'doliconnect-pro').'</button></div>';
+print '</form></div>';
+print '</div></div></div>';
+
+//if( !array_key_exists( 'login_footer' , $GLOBALS['wp_filter']) ) { 
+do_action( 'login_footer' );
+//}
+
+}
+
+}
+add_action( 'wp_footer', 'doliconnect_modal' );
+
 ?>
