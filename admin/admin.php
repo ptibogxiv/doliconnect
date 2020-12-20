@@ -334,8 +334,7 @@ delete_option('doliconnect_google');}
             </tr>
             <tr>
                 <th style="width:150px;"><label for="doliconnectbeta"><?php _e('Restricted mode', 'doliconnect') ?></label></th>
-                <td ><input name="doliconnectrestrict" type="checkbox" id="doliconnectrestrict" value="1" <?php if ( is_plugin_active( 'doliconnect-pro/doliconnect-pro.php' ) ) {
-checked('1', get_option('doliconnectrestrict')); } else { ?> disabled <?php } ?> > <b>PRO</b><br><br><?php _e("Roles to be assigned for existing users. If none, the connection will not be allowed.", 'doliconnect') ?>
+                <td ><input name="doliconnectrestrict" type="checkbox" id="doliconnectrestrict" value="1" <?php checked('1', get_option('doliconnectrestrict')); ?> ><br><br><?php _e("Roles to be assigned for existing users. If none, the connection will not be allowed.", 'doliconnect') ?>
 <select class='custom-select' id='doliconnectrestrict_role'  name='doliconnectrestrict_role' <?php if ( !get_option('doliconnectrestrict') )  { ?>  disabled <?php } ?> >
 <option value=""><?php _e("None", 'doliconnect') ?></option>
 <?php $wp_roles = new WP_Roles();
