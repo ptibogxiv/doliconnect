@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2020-12-20 11:12+0100\n"
-"PO-Revision-Date: 2020-12-20 11:13+0100\n"
+"POT-Creation-Date: 2020-12-20 11:36+0100\n"
+"PO-Revision-Date: 2020-12-20 11:36+0100\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_CA\n"
@@ -50,7 +50,7 @@ msgstr "État Dolibarr"
 msgid "Personalize entity"
 msgstr "Personnaliser l’entité"
 
-#: admin/admin.php:209 admin/admin.php:553
+#: admin/admin.php:209 admin/admin.php:552
 msgid "Cronjobs"
 msgstr "Cronjobs"
 
@@ -58,11 +58,11 @@ msgstr "Cronjobs"
 msgid "By blog"
 msgstr "Par blog"
 
-#: admin/admin.php:212 admin/admin.php:556
+#: admin/admin.php:212 admin/admin.php:555
 msgid "Soft refresh"
 msgstr "Actualisation douce"
 
-#: admin/admin.php:213 admin/admin.php:557
+#: admin/admin.php:213 admin/admin.php:556
 msgid "Full refresh"
 msgstr "Actualisation complète"
 
@@ -70,27 +70,27 @@ msgstr "Actualisation complète"
 msgid "Modal login"
 msgstr "Connexion modale"
 
-#: admin/admin.php:329
+#: admin/admin.php:328
 msgid "Beta mode"
 msgstr "Mode bêta"
 
-#: admin/admin.php:330
+#: admin/admin.php:329
 msgid "Active beta functions, can be unstable"
 msgstr "Fonctions bêta actives, peut être instable"
 
-#: admin/admin.php:333
+#: admin/admin.php:332
 msgid "Disable enqueuing Font-awesome library"
 msgstr "Désactiver la bibliothèque Font-awesome"
 
-#: admin/admin.php:334
+#: admin/admin.php:333
 msgid "Disable if your template already loads it"
 msgstr "Désactiver si votre thème le charge déjà"
 
-#: admin/admin.php:337
+#: admin/admin.php:336
 msgid "Restricted mode"
 msgstr "Mode restreint"
 
-#: admin/admin.php:339
+#: admin/admin.php:338
 msgid ""
 "Roles to be assigned for existing users. If none, the connection will not be "
 "allowed."
@@ -98,97 +98,97 @@ msgstr ""
 "Rôles à attribuer aux utilisateurs existants. Si aucun, la connexion ne sera "
 "pas autorisée."
 
-#: admin/admin.php:341 admin/admin.php:483
+#: admin/admin.php:340 admin/admin.php:482
 msgid "None"
 msgstr "Aucun"
 
-#: admin/admin.php:359
+#: admin/admin.php:358
 msgid "Dolibarr's entity"
 msgstr "Entité de Dolibarr"
 
-#: admin/admin.php:381
+#: admin/admin.php:380
 msgid "Anyone can register"
 msgstr "N’importe qui peut s’inscrire"
 
-#: admin/admin.php:382
+#: admin/admin.php:381
 msgid "Existing Customer/Supplier on Dolibarr can register"
 msgstr "Le client/fournisseur existant sur Dolibarr peut s’inscrire"
 
-#: admin/admin.php:385
+#: admin/admin.php:384
 msgid "B2B mode"
 msgstr "Mode B2B"
 
-#: admin/admin.php:386
+#: admin/admin.php:385
 msgid "Display all prices excluding VAT"
 msgstr "Afficher tous les prix hors TVA"
 
-#: admin/admin.php:389
+#: admin/admin.php:388
 msgid "Enable displaying invoices in menu"
 msgstr "Activer l’affichage des factures dans le menu"
 
-#: admin/admin.php:393
+#: admin/admin.php:392
 msgid "Personnal / Enterprise mode"
 msgstr "Mode Personne / Entreprise"
 
-#: admin/admin.php:402
+#: admin/admin.php:401
 msgid "Kiosk mode"
 msgstr "Mode Kiosque"
 
-#: admin/admin.php:403
+#: admin/admin.php:402
 msgid "IP address"
 msgstr "Adresse IP"
 
-#: admin/admin.php:403
+#: admin/admin.php:402
 msgid "one IP per line without space or comma"
 msgstr "une adresse IP par ligne sans espace ni virgule"
 
-#: admin/admin.php:410 admin/admin.php:424 admin/admin.php:436
-#: admin/admin.php:448 admin/admin.php:460 admin/admin.php:494
-#: admin/admin.php:509 admin/admin.php:520 admin/admin.php:533
-#: admin/admin.php:545 dashboard/dashboard.php:2032
+#: admin/admin.php:409 admin/admin.php:423 admin/admin.php:435
+#: admin/admin.php:447 admin/admin.php:459 admin/admin.php:493
+#: admin/admin.php:508 admin/admin.php:519 admin/admin.php:532
+#: admin/admin.php:544 dashboard/dashboard.php:2032
 #: dashboard/dashboard.php:2051 dashboard/dashboard.php:2068
 #: dashboard/dashboard.php:2086 dashboard/templates.php:712
 #: functions/tools.php:397 functions/tools.php:491
 msgid "- Select -"
 msgstr "- Sélectionner -"
 
-#: admin/admin.php:415
+#: admin/admin.php:414
 msgid "Message on login page"
 msgstr "Message sur la page de connexion"
 
-#: admin/admin.php:452
+#: admin/admin.php:451
 msgid "Display in grid rather than a list"
 msgstr "Afficher dans la grille plutôt qu’une liste"
 
-#: admin/admin.php:468 admin/admin.php:480
+#: admin/admin.php:467 admin/admin.php:479
 msgid "by default"
 msgstr "par défaut"
 
-#: admin/admin.php:477
+#: admin/admin.php:476
 msgid "choices of the amount of product"
 msgstr "choix de la quantité de produit"
 
-#: admin/admin.php:480
+#: admin/admin.php:479
 msgid "Last month"
 msgstr "Le mois dernier"
 
-#: admin/admin.php:481
+#: admin/admin.php:480
 msgid "Last week"
 msgstr "La semaine dernière"
 
-#: admin/admin.php:482
+#: admin/admin.php:481
 msgid "Last day"
 msgstr "Dernier jour"
 
-#: admin/admin.php:484
+#: admin/admin.php:483
 msgid "Duration of new product"
 msgstr "Durée du nouveau produit"
 
-#: admin/admin.php:524
+#: admin/admin.php:523
 msgid "(set your default wordpress legacy page)"
 msgstr "(définissez votre page d’héritage wordpress par défaut)"
 
-#: admin/admin.php:555
+#: admin/admin.php:554
 msgid "Disabled"
 msgstr "Désactivé"
 
@@ -1134,7 +1134,7 @@ msgstr ""
 "pas notre message."
 
 #: dashboard/templates.php:344 dashboard/templates.php:352
-#: dashboard/templates.php:582
+#: dashboard/templates.php:582 functions/tools.php:2303
 msgid "Create an account"
 msgstr "Créer mon compte"
 
@@ -1143,6 +1143,7 @@ msgid "No account seems to be linked to this email address"
 msgstr "Aucun compte ne semble être lié à cette adresse e-mail"
 
 #: dashboard/templates.php:473 dashboard/templates.php:585
+#: functions/tools.php:2305
 msgid "Forgot password?"
 msgstr "Mot de passe oublié?"
 
@@ -1153,7 +1154,7 @@ msgstr ""
 
 #: dashboard/templates.php:481 dashboard/templates.php:565
 #: dashboard/templates.php:695 dashboard/templates.php:700
-#: functions/tools.php:547 functions/tools.php:2142
+#: functions/tools.php:547 functions/tools.php:2142 functions/tools.php:2283
 msgid "Email"
 msgstr "Courriel"
 
@@ -1185,16 +1186,16 @@ msgstr "La clé de sécurité est expirée!"
 msgid "The security key is invalid!"
 msgstr "La clé de sécurité n’est pas valide !"
 
-#: dashboard/templates.php:519
+#: dashboard/templates.php:519 functions/tools.php:2252
 msgid "Welcome"
 msgstr "Bienvenue"
 
-#: dashboard/templates.php:521
+#: dashboard/templates.php:521 functions/tools.php:2254
 msgid "Access restricted to users"
 msgstr "Accès réservé aux utilisateurs"
 
 #: dashboard/templates.php:531 dashboard/templates.php:589
-#: functions/product.php:540
+#: functions/product.php:540 functions/tools.php:2316
 msgid "Sign in"
 msgstr "Connexion"
 
@@ -1214,11 +1215,11 @@ msgstr "S’enregistrer"
 msgid "You don't have an account"
 msgstr "Vous n’avez pas de compte"
 
-#: dashboard/templates.php:571 functions/tools.php:688
+#: dashboard/templates.php:571 functions/tools.php:688 functions/tools.php:2289
 msgid "Password"
 msgstr "Mot de passe"
 
-#: dashboard/templates.php:577
+#: dashboard/templates.php:577 functions/tools.php:2295
 msgid "Remember me"
 msgstr "Se souvenir de moi"
 
@@ -1516,8 +1517,7 @@ msgstr "Votre mot de passe réel est incorrect"
 msgid "The new passwords entered are different"
 msgstr "Les nouveaux mots de passe entrés sont différents"
 
-#: functions/data-request.php:202 functions/tools.php:305
-#: functions/tools.php:690
+#: functions/data-request.php:202 functions/tools.php:690
 msgid ""
 "Your password must be between 8 and 20 characters, including at least 1 "
 "digit, 1 letter, 1 uppercase."
@@ -1757,17 +1757,25 @@ msgstr "Votre mot de passe sera synchronisé avec votre compte Dolibarr"
 msgid "Password cannot be modified in demo mode"
 msgstr "Le mot de passe ne peut pas être modifié en mode démo"
 
-#: functions/tools.php:303
-msgid "Confirm your current password"
-msgstr "Confirmez votre mot de passe actuel"
+#: functions/tools.php:303 functions/tools.php:691 functions/tools.php:692
+msgid "Confirm your password"
+msgstr "Confirmer votre mot de passe"
+
+#: functions/tools.php:305
+msgid ""
+"Your new password must be between 8 and 20 characters, including at least 1 "
+"digit, 1 letter, 1 uppercase."
+msgstr ""
+"Votre nouveau mot de passe doit être entre 8 et 20 caractères, y compris au "
+"moins 1 chiffre, 1 lettre, 1 majuscule."
 
 #: functions/tools.php:313
 msgid "New password"
 msgstr "Nouveau mot de passe"
 
 #: functions/tools.php:321
-msgid "Confirm your new password"
-msgstr "Confirmer votre nouveau mot de passe"
+msgid "Confirm the password"
+msgstr "Confirmer le mot de passe"
 
 #: functions/tools.php:353
 msgid "Create a personnal account"
@@ -1902,10 +1910,6 @@ msgstr "Nom d'utilisateur"
 msgid "Choose your password"
 msgstr "Choisissez votre mot de passe"
 
-#: functions/tools.php:691 functions/tools.php:692
-msgid "Confirm your password"
-msgstr "Confirmer votre mot de passe"
-
 #: functions/tools.php:732 functions/tools.php:1316
 msgid "Loading"
 msgstr "Chargement"
@@ -1974,7 +1978,7 @@ msgstr "Attention"
 
 #: functions/tools.php:917
 msgid "Oops"
-msgstr "Oups..."
+msgstr "Oups"
 
 #: functions/tools.php:985
 msgid "Total excl. tax"
@@ -2379,6 +2383,12 @@ msgstr "ptibogxiv"
 #. Author URI of the plugin/theme
 msgid "https://www.ptibogxiv.net/en"
 msgstr "https://www.ptibogxiv.net/en"
+
+#~ msgid "Confirm your current password"
+#~ msgstr "Confirmez votre mot de passe actuel"
+
+#~ msgid "Confirm your new password"
+#~ msgstr "Confirmer votre nouveau mot de passe"
 
 #~ msgid "date of order"
 #~ msgstr "date de commande"
