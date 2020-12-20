@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2020-12-20 11:35+0100\n"
-"PO-Revision-Date: 2020-12-20 11:36+0100\n"
+"POT-Creation-Date: 2020-12-20 11:40+0100\n"
+"PO-Revision-Date: 2020-12-20 11:40+0100\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_FR\n"
@@ -1133,7 +1133,7 @@ msgstr ""
 "trouvez pas notre message."
 
 #: dashboard/templates.php:344 dashboard/templates.php:352
-#: dashboard/templates.php:582 functions/tools.php:2303
+#: dashboard/templates.php:582 functions/tools.php:2305
 msgid "Create an account"
 msgstr "Créer un compte"
 
@@ -1142,7 +1142,7 @@ msgid "No account seems to be linked to this email address"
 msgstr "Aucun compte ne semble être lié à cet adresse email"
 
 #: dashboard/templates.php:473 dashboard/templates.php:585
-#: functions/tools.php:2305
+#: functions/tools.php:2307
 msgid "Forgot password?"
 msgstr "Mot de passe oublié?"
 
@@ -1154,7 +1154,7 @@ msgstr ""
 
 #: dashboard/templates.php:481 dashboard/templates.php:565
 #: dashboard/templates.php:695 dashboard/templates.php:700
-#: functions/tools.php:547 functions/tools.php:2142 functions/tools.php:2283
+#: functions/tools.php:547 functions/tools.php:2142 functions/tools.php:2285
 msgid "Email"
 msgstr "Adresse électronique"
 
@@ -1195,7 +1195,7 @@ msgid "Access restricted to users"
 msgstr "Accès restreint aux utilisateurs"
 
 #: dashboard/templates.php:531 dashboard/templates.php:589
-#: functions/product.php:540 functions/tools.php:2316
+#: functions/product.php:540 functions/tools.php:2318
 msgid "Sign in"
 msgstr "Connexion"
 
@@ -1215,11 +1215,11 @@ msgstr "S'inscrire"
 msgid "You don't have an account"
 msgstr "Vous n'avez pas de compte"
 
-#: dashboard/templates.php:571 functions/tools.php:688 functions/tools.php:2289
+#: dashboard/templates.php:571 functions/tools.php:688 functions/tools.php:2291
 msgid "Password"
 msgstr "Mot de passe"
 
-#: dashboard/templates.php:577 functions/tools.php:2295
+#: dashboard/templates.php:577 functions/tools.php:2297
 msgid "Remember me"
 msgstr "Se souvenir de moi"
 
@@ -2335,6 +2335,10 @@ msgstr "Valider la demande"
 #: functions/tools.php:2232
 msgid "This plugin requires WordPress 4.9.6."
 msgstr "Ce plugin nécessite WordPress 4.9.6."
+
+#: functions/tools.php:2279
+msgid "Demo mode is activated"
+msgstr "Le mode démo est activé"
 
 #: functions/widgets.php:35 functions/widgets.php:37
 msgid "Report a Bug"

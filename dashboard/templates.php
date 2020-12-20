@@ -557,7 +557,9 @@ print "<form class='was-validated' id='doliconnect-loginform' action='$login_url
 print "<ul class='list-group list-group-flush'><li class='list-group-item'>";
 
 print doliloaderscript('doliconnect-loginform'); 
- 
+if  ( defined("DOLICONNECT_DEMO") ) {
+print "<p><i class='fas fa-info-circle'></i> <b>".__( 'Demo mode is activated', 'doliconnect')."</b></p>";
+} 
 print '<div class="form-floating mb-3"><input type="email" class="form-control" id="user_login" name="log" placeholder="name@example.com" value="';
 if ( defined("DOLICONNECT_DEMO_EMAIL") && !empty(constant("DOLICONNECT_DEMO_EMAIL")) ) {
 print constant("DOLICONNECT_DEMO_EMAIL");
@@ -577,12 +579,19 @@ print '<div class="form-check">
   <label class="form-check-label" for="rememberme">'.__( 'Remember me', 'doliconnect-pro').'</label>
 </div>';
 
-print "<div><small><div class='float-start'>";
+if ( get_site_option('doliconnect_mode') == 'one' && function_exists('switch_to_blog') ) {
+switch_to_blog(1);
+} 
+
 if ((!is_multisite() && get_option( 'users_can_register' )) || ((!is_multisite() && get_option( 'dolicustsupp_can_register' )) || ((get_option( 'dolicustsupp_can_register' ) || get_option('users_can_register') == '1') && (get_site_option( 'registration' ) == 'user' || get_site_option( 'registration' ) == 'all')))) {
-print "<a href='".wp_registration_url(get_permalink())."' role='button' title='".__( 'Create an account', 'doliconnect-pro')."'>".__( 'Create an account', 'doliconnect')."</a>";
+print "<a class='float-start' href='".wp_registration_url(get_permalink())."' role='button' title='".__( 'Create an account', 'doliconnect-pro')."'><small>".__( 'Create an account', 'doliconnect-pro')."</small></a>";
+}
+print "<a class='float-end' href='".wp_lostpassword_url(get_permalink())."' role='button' title='".__( 'Forgot password?', 'doliconnect-pro')."'><small>".__( 'Forgot password?', 'doliconnect-pro')."</small></a>"; 
+
+if (get_site_option('doliconnect_mode')=='one') {
+restore_current_blog();
 }
 
-print "</div><div class='float-end'><a href='".wp_lostpassword_url( get_permalink() )."' role='button' title='".__( 'Forgot password?', 'doliconnect')."'>".__( 'Forgot password?', 'doliconnect')."</a></div></small></div>"; 
 print "</li></lu><div class='card-body'>";
 
 print "<input type='hidden' value='$redirect_to' name='redirect_to'><button id='submit' class='btn btn-outline-secondary' type='submit' name='submit' value='Submit'";

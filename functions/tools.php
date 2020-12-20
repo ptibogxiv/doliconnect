@@ -2275,7 +2275,9 @@ $redirect_to=get_permalink();
 print "<form name='loginmodal-form' action='$login_url' method='post' class='was-validated'>";
 
 print dolimodalloaderscript('loginmodal-form');
-
+if  ( defined("DOLICONNECT_DEMO") ) {
+print "<p><i class='fas fa-info-circle'></i> <b>".__( 'Demo mode is activated', 'doliconnect')."</b></p>";
+} 
 print '<div class="form-floating mb-3"><input type="email" class="form-control" id="user_login" name="log" placeholder="name@example.com" value="';
 if ( defined("DOLICONNECT_DEMO_EMAIL") && !empty(constant("DOLICONNECT_DEMO_EMAIL")) ) {
 print constant("DOLICONNECT_DEMO_EMAIL");
