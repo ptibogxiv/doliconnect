@@ -529,7 +529,7 @@ print "<br><br>";
 print "</div><div class='col-md-7'>";
 
 if ( isset($propalinfo) ) {
-print "<h3 class='text-right'>".$propalinfo."</h3>";
+print "<h3 class='text-end'>".$propalinfo."</h3>";
 }
 
 $TTC = number_format($proposalfo->multicurrency_total_ttc, 2, ',', ' ');
@@ -537,7 +537,7 @@ $currency = strtolower($proposalfo->multicurrency_code);
 print "</div></div>";
 
 print '<div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: '.$propalavancement.'%" aria-valuenow="'.$propalavancement.'" aria-valuemin="0" aria-valuemax="100"></div></div>';
-print "<div class='w-auto text-muted d-none d-sm-block' ><div style='display:inline-block;width:16%'>".__( 'proposal', 'doliconnect')."</div><div style='display:inline-block;width:21%'>".__( 'processing', 'doliconnect')."</div><div style='display:inline-block;width:19%'>".__( 'validation', 'doliconnect')."</div><div style='display:inline-block;width:24%'>".__( 'processing', 'doliconnect')."</div><div class='text-right' style='display:inline-block;width:20%'>".__( 'billing', 'doliconnect')."</div></div>";
+print "<div class='w-auto text-muted d-none d-sm-block' ><div style='display:inline-block;width:16%'>".__( 'proposal', 'doliconnect')."</div><div style='display:inline-block;width:21%'>".__( 'processing', 'doliconnect')."</div><div style='display:inline-block;width:19%'>".__( 'validation', 'doliconnect')."</div><div style='display:inline-block;width:24%'>".__( 'processing', 'doliconnect')."</div><div class='text-end' style='display:inline-block;width:20%'>".__( 'billing', 'doliconnect')."</div></div>";
 
 print "</div><ul class='list-group list-group-flush'>";
  
@@ -667,7 +667,7 @@ if (!empty($orderfo->cond_reglement_id)) print "<b>".__( 'payment term', 'dolico
 print "<br></div><div class='col-md-6'>";
 
 if ( isset($orderinfo) ) {
-print "<h3 class='text-right'>".$orderinfo."</h3>";
+print "<h3 class='text-end'>".$orderinfo."</h3>";
 }
 print "</div>";
  
@@ -753,7 +753,7 @@ print "</small></div></div>";
 print "</div><br>";
 
 print '<div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: '.$orderavancement.'%" aria-valuenow="'.$orderavancement.'" aria-valuemin="0" aria-valuemax="100"></div></div>';
-print "<div class='w-auto text-muted d-none d-sm-block' ><div style='display:inline-block;width:20%'>".__( 'order', 'doliconnect')."</div><div style='display:inline-block;width:15%'>".__( 'payment', 'doliconnect')."</div><div style='display:inline-block;width:25%'>".__( 'processing', 'doliconnect')."</div><div style='display:inline-block;width:20%'>".__( 'shipping', 'doliconnect')."</div><div class='text-right' style='display:inline-block;width:20%'>".__( 'delivery', 'doliconnect')."</div></div>";
+print "<div class='w-auto text-muted d-none d-sm-block' ><div style='display:inline-block;width:20%'>".__( 'order', 'doliconnect')."</div><div style='display:inline-block;width:15%'>".__( 'payment', 'doliconnect')."</div><div style='display:inline-block;width:25%'>".__( 'processing', 'doliconnect')."</div><div style='display:inline-block;width:20%'>".__( 'shipping', 'doliconnect')."</div><div class='text-end' style='display:inline-block;width:20%'>".__( 'delivery', 'doliconnect')."</div></div>";
 
 print "</div><ul class='list-group list-group-flush'>";
  
@@ -982,7 +982,7 @@ if (!empty($invoicefo->cond_reglement_id)) print "<b>".__( 'payment term', 'doli
 print "<br></div><div class='col-md-6'>";
 
 if ( isset($orderinfo) ) {
-print "<h3 class='text-right'>".$orderinfo."</h3>";
+print "<h3 class='text-end'>".$orderinfo."</h3>";
 }
 print "</div>";
  
@@ -1068,7 +1068,7 @@ print "</small></div></div>";
 print "</div><br>";
 
 print '<div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: '.$orderavancement.'%" aria-valuenow="'.$orderavancement.'" aria-valuemin="0" aria-valuemax="100"></div></div>';
-print "<div class='w-auto text-muted d-none d-sm-block' ><div style='display:inline-block;width:20%'>".__( 'order', 'doliconnect')."</div><div style='display:inline-block;width:15%'>".__( 'payment', 'doliconnect')."</div><div style='display:inline-block;width:25%'>".__( 'processing', 'doliconnect')."</div><div style='display:inline-block;width:20%'>".__( 'shipping', 'doliconnect')."</div><div class='text-right' style='display:inline-block;width:20%'>".__( 'delivery', 'doliconnect')."</div></div>";
+print "<div class='w-auto text-muted d-none d-sm-block' ><div style='display:inline-block;width:20%'>".__( 'order', 'doliconnect')."</div><div style='display:inline-block;width:15%'>".__( 'payment', 'doliconnect')."</div><div style='display:inline-block;width:25%'>".__( 'processing', 'doliconnect')."</div><div style='display:inline-block;width:20%'>".__( 'shipping', 'doliconnect')."</div><div class='text-end' style='display:inline-block;width:20%'>".__( 'delivery', 'doliconnect')."</div></div>";
 
 print "</div><ul class='list-group list-group-flush'>";
  
@@ -1251,7 +1251,7 @@ $contractavancement=0; }
 print "</div></div>";
 
 print '<div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: '.$contractavancement.'%" aria-valuenow="'.$contractavancement.'" aria-valuemin="0" aria-valuemax="100"></div></div>';
-print "<div class='w-auto text-muted d-none d-sm-block' ><div style='display:inline-block;width:20%'>".__( 'order', 'doliconnect')."</div><div style='display:inline-block;width:15%'>".__( 'payment', 'doliconnect')."</div><div style='display:inline-block;width:25%'>".__( 'processing', 'doliconnect')."</div><div style='display:inline-block;width:20%'>".__( 'Shipping', 'doliconnect')."</div><div class='text-right' style='display:inline-block;width:20%'>".__( 'delivery', 'doliconnect')."</div></div>";
+print "<div class='w-auto text-muted d-none d-sm-block' ><div style='display:inline-block;width:20%'>".__( 'order', 'doliconnect')."</div><div style='display:inline-block;width:15%'>".__( 'payment', 'doliconnect')."</div><div style='display:inline-block;width:25%'>".__( 'processing', 'doliconnect')."</div><div style='display:inline-block;width:20%'>".__( 'Shipping', 'doliconnect')."</div><div class='text-end' style='display:inline-block;width:20%'>".__( 'delivery', 'doliconnect')."</div></div>";
 
 print "</div><ul class='list-group list-group-flush'>";
 
@@ -1383,7 +1383,7 @@ $contractavancement=0; }
 print "</div></div>";
 
 print '<div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: '.$contractavancement.'%" aria-valuenow="'.$contractavancement.'" aria-valuemin="0" aria-valuemax="100"></div></div>';
-print "<div class='w-auto text-muted d-none d-sm-block' ><div style='display:inline-block;width:20%'>".__( 'Order', 'doliconnect')."</div><div style='display:inline-block;width:15%'>".__( 'Payment', 'doliconnect')."</div><div style='display:inline-block;width:25%'>".__( 'Processing', 'doliconnect')."</div><div style='display:inline-block;width:20%'>".__( 'Shipping', 'doliconnect')."</div><div class='text-right' style='display:inline-block;width:20%'>".__( 'Delivery', 'doliconnect')."</div></div>";
+print "<div class='w-auto text-muted d-none d-sm-block' ><div style='display:inline-block;width:20%'>".__( 'Order', 'doliconnect')."</div><div style='display:inline-block;width:15%'>".__( 'Payment', 'doliconnect')."</div><div style='display:inline-block;width:25%'>".__( 'Processing', 'doliconnect')."</div><div style='display:inline-block;width:20%'>".__( 'Shipping', 'doliconnect')."</div><div class='text-end' style='display:inline-block;width:20%'>".__( 'Delivery', 'doliconnect')."</div></div>";
 
 print "</div><ul class='list-group list-group-flush'>";
 
@@ -1500,14 +1500,14 @@ print "<b>".__( 'Date of order', 'doliconnect').":</b> $datecommande<br>";
 print "<b>".__( 'Payment method', 'doliconnect').":</b> ".__( $donationfo->mode_reglement, 'doliconnect')."<br><br></div><div class='col-md-7'>";
 
 if ( isset($orderinfo) ) {
-print "<h3 class='text-right'>".$orderinfo."</h3>";
+print "<h3 class='text-end'>".$orderinfo."</h3>";
 }
 
 $orderavancement=100;
 
 print "</div></div>";
 print '<div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: '.$orderavancement.'%" aria-valuenow="'.$orderavancement.'" aria-valuemin="0" aria-valuemax="100"></div></div>';
-print "<div class='w-auto text-muted d-none d-sm-block' ><div style='display:inline-block;width:20%'>".__( 'Order', 'doliconnect')."</div><div style='display:inline-block;width:15%'>".__( 'Payment', 'doliconnect')."</div><div style='display:inline-block;width:25%'>".__( 'Processing', 'doliconnect')."</div><div style='display:inline-block;width:20%'>".__( 'Shipping', 'doliconnect')."</div><div class='text-right' style='display:inline-block;width:20%'>".__( 'Delivery', 'doliconnect')."</div></div>";
+print "<div class='w-auto text-muted d-none d-sm-block' ><div style='display:inline-block;width:20%'>".__( 'Order', 'doliconnect')."</div><div style='display:inline-block;width:15%'>".__( 'Payment', 'doliconnect')."</div><div style='display:inline-block;width:25%'>".__( 'Processing', 'doliconnect')."</div><div style='display:inline-block;width:20%'>".__( 'Shipping', 'doliconnect')."</div><div class='text-end' style='display:inline-block;width:20%'>".__( 'Delivery', 'doliconnect')."</div></div>";
 
 print "</div><ul class='list-group list-group-flush'>";
  
@@ -1525,7 +1525,7 @@ print '<div class="w-100 justify-content-between"><div class="row"><div class="c
 <h6 class="mb-1">'.$line->libelle.'</h6>
 <p class="mb-1">'.$line->description.'</p>
 <small>'.$dates.'</small>'; 
-print '</div><div class="col-4 col-md-2 text-right"><h5 class="mb-1">'.doliprice($line, 'ttc', isset($line->multicurrency_code) ? $line->multicurrency_code : null).'</h5>';
+print '</div><div class="col-4 col-md-2 text-end"><h5 class="mb-1">'.doliprice($line, 'ttc', isset($line->multicurrency_code) ? $line->multicurrency_code : null).'</h5>';
 print '<h5 class="mb-1">x'.$line->qty.'</h5>'; 
 print "</div></div></li>";
 }
@@ -1732,7 +1732,7 @@ $type= callDoliApi("GET", "/memberstypes/".$cotisation->fk_type, null, dolidelay
 }
 print doliproduct($type, 'label');
 print "</td><td>".$cotisation->note."</td><td>".$dated." ".__( 'to', 'doliconnect')." ".$datef;
-print "</td><td class='text-right'><b>".doliprice($cotisation->amount)."</b></td></tr></table><span></span></li>";
+print "</td><td class='text-end'><b>".doliprice($cotisation->amount)."</b></td></tr></table><span></span></li>";
 }
 }
 else { 
@@ -1948,12 +1948,12 @@ $ticketfo = callDoliApi("GET", $request, null, dolidelay('ticket', true));
 //print $ticket;
 } }
 
-print "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>".$ticketfo->ref."</h5><div class='row'><div class='col-md-6'>";
+print '<div class="card shadow-sm"><div class="card-header">'.__( 'Ticket #', 'doliconnect').''.$ticketfo->ref.'<a class="float-end text-decoration-none" href="'.esc_url( add_query_arg( 'module', 'tickets', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-6">';
 $dateticket =  wp_date('d/m/Y', $ticketfo->datec);
 print "<b>".__( 'Date of creation', 'doliconnect').": </b> $dateticket<br>";
 print "<b>".__( 'Type and category', 'doliconnect').": </b> ".__($ticketfo->type_label, 'doliconnect').", ".__($ticketfo->category_label, 'doliconnect')."<br>";
 print "<b>".__( 'Severity', 'doliconnect').": </b> ".__($ticketfo->severity_label, 'doliconnect')."<br>";
-print "</div><div class='col-md-6'><h3 class='text-right'>";
+print "</div><div class='col-md-6'><h3 class='text-end'>";
 if ( $ticketfo->fk_statut == 9 ) { print "<span class='label label-default'>".__( 'Deleted', 'doliconnect')."</span>"; }
 elseif ( $ticketfo->fk_statut == 8 ) { print "<span class='label label-success'>".__( 'Closed', 'doliconnect')."</span>"; }
 elseif ( $ticketfo->fk_statut == 6 ) { print "<span class='label label-warning'>".__( 'Waiting', 'doliconnect')."</span>"; }
