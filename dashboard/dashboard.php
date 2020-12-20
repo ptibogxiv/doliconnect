@@ -1598,7 +1598,7 @@ add_action( 'options_doliconnect_members', 'members_module');
 function members_menu( $arg ) {
 print "<a href='".esc_url( add_query_arg( 'module', 'members', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
 if ($arg=='members') { print " active";}
-print "'>".__( 'Membership', 'doliconnect')."</a>";
+print "'>".__( 'Manage my subscription', 'doliconnect')."</a>";
 }
 
 function members_module( $url ) {
@@ -1631,7 +1631,7 @@ exit;
 
 } 
 
-print "<div class='card shadow-sm'><div class='card-body'>";
+print '<div class="card shadow-sm"><div class="card-header">'.__( 'Manage my subscription', 'doliconnect').'</div><div class="card-body">';
 
 if ( !empty(doliconnector($current_user, 'fk_member')) && doliconnector($current_user, 'fk_member') > 0 && doliconnector($current_user, 'fk_soc') > 0 ) { 
 $adherent = callDoliApi("GET", $request, null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));

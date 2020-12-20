@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2020-12-20 11:44+0100\n"
-"PO-Revision-Date: 2020-12-20 11:44+0100\n"
+"POT-Creation-Date: 2020-12-20 23:04+0100\n"
+"PO-Revision-Date: 2020-12-20 23:04+0100\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_CA\n"
@@ -50,7 +50,7 @@ msgstr "État Dolibarr"
 msgid "Personalize entity"
 msgstr "Personnaliser l’entité"
 
-#: admin/admin.php:209 admin/admin.php:552
+#: admin/admin.php:209 admin/admin.php:551
 msgid "Cronjobs"
 msgstr "Cronjobs"
 
@@ -58,11 +58,11 @@ msgstr "Cronjobs"
 msgid "By blog"
 msgstr "Par blog"
 
-#: admin/admin.php:212 admin/admin.php:555
+#: admin/admin.php:212 admin/admin.php:554
 msgid "Soft refresh"
 msgstr "Actualisation douce"
 
-#: admin/admin.php:213 admin/admin.php:556
+#: admin/admin.php:213 admin/admin.php:555
 msgid "Full refresh"
 msgstr "Actualisation complète"
 
@@ -90,7 +90,7 @@ msgstr "Désactiver si votre thème le charge déjà"
 msgid "Restricted mode"
 msgstr "Mode restreint"
 
-#: admin/admin.php:338
+#: admin/admin.php:337
 msgid ""
 "Roles to be assigned for existing users. If none, the connection will not be "
 "allowed."
@@ -98,97 +98,97 @@ msgstr ""
 "Rôles à attribuer aux utilisateurs existants. Si aucun, la connexion ne sera "
 "pas autorisée."
 
-#: admin/admin.php:340 admin/admin.php:482
+#: admin/admin.php:339 admin/admin.php:481
 msgid "None"
 msgstr "Aucun"
 
-#: admin/admin.php:358
+#: admin/admin.php:357
 msgid "Dolibarr's entity"
 msgstr "Entité de Dolibarr"
 
-#: admin/admin.php:380
+#: admin/admin.php:379
 msgid "Anyone can register"
 msgstr "N’importe qui peut s’inscrire"
 
-#: admin/admin.php:381
+#: admin/admin.php:380
 msgid "Existing Customer/Supplier on Dolibarr can register"
 msgstr "Le client/fournisseur existant sur Dolibarr peut s’inscrire"
 
-#: admin/admin.php:384
+#: admin/admin.php:383
 msgid "B2B mode"
 msgstr "Mode B2B"
 
-#: admin/admin.php:385
+#: admin/admin.php:384
 msgid "Display all prices excluding VAT"
 msgstr "Afficher tous les prix hors TVA"
 
-#: admin/admin.php:388
+#: admin/admin.php:387
 msgid "Enable displaying invoices in menu"
 msgstr "Activer l’affichage des factures dans le menu"
 
-#: admin/admin.php:392
+#: admin/admin.php:391
 msgid "Personnal / Enterprise mode"
 msgstr "Mode Personne / Entreprise"
 
-#: admin/admin.php:401
+#: admin/admin.php:400
 msgid "Kiosk mode"
 msgstr "Mode Kiosque"
 
-#: admin/admin.php:402
+#: admin/admin.php:401
 msgid "IP address"
 msgstr "Adresse IP"
 
-#: admin/admin.php:402
+#: admin/admin.php:401
 msgid "one IP per line without space or comma"
 msgstr "une adresse IP par ligne sans espace ni virgule"
 
-#: admin/admin.php:409 admin/admin.php:423 admin/admin.php:435
-#: admin/admin.php:447 admin/admin.php:459 admin/admin.php:493
-#: admin/admin.php:508 admin/admin.php:519 admin/admin.php:532
-#: admin/admin.php:544 dashboard/dashboard.php:2032
+#: admin/admin.php:408 admin/admin.php:422 admin/admin.php:434
+#: admin/admin.php:446 admin/admin.php:458 admin/admin.php:492
+#: admin/admin.php:507 admin/admin.php:518 admin/admin.php:531
+#: admin/admin.php:543 dashboard/dashboard.php:2032
 #: dashboard/dashboard.php:2051 dashboard/dashboard.php:2068
 #: dashboard/dashboard.php:2086 dashboard/templates.php:721
 #: functions/tools.php:397 functions/tools.php:491
 msgid "- Select -"
 msgstr "- Sélectionner -"
 
-#: admin/admin.php:414
+#: admin/admin.php:413
 msgid "Message on login page"
 msgstr "Message sur la page de connexion"
 
-#: admin/admin.php:451
+#: admin/admin.php:450
 msgid "Display in grid rather than a list"
 msgstr "Afficher dans la grille plutôt qu’une liste"
 
-#: admin/admin.php:467 admin/admin.php:479
+#: admin/admin.php:466 admin/admin.php:478
 msgid "by default"
 msgstr "par défaut"
 
-#: admin/admin.php:476
+#: admin/admin.php:475
 msgid "choices of the amount of product"
 msgstr "choix de la quantité de produit"
 
-#: admin/admin.php:479
+#: admin/admin.php:478
 msgid "Last month"
 msgstr "Le mois dernier"
 
-#: admin/admin.php:480
+#: admin/admin.php:479
 msgid "Last week"
 msgstr "La semaine dernière"
 
-#: admin/admin.php:481
+#: admin/admin.php:480
 msgid "Last day"
 msgstr "Dernier jour"
 
-#: admin/admin.php:483
+#: admin/admin.php:482
 msgid "Duration of new product"
 msgstr "Durée du nouveau produit"
 
-#: admin/admin.php:523
+#: admin/admin.php:522
 msgid "(set your default wordpress legacy page)"
 msgstr "(définissez votre page d’héritage wordpress par défaut)"
 
-#: admin/admin.php:554
+#: admin/admin.php:553
 msgid "Disabled"
 msgstr "Désactivé"
 
@@ -262,8 +262,7 @@ msgstr "Formulaire d’exportation de données uniquement"
 msgid "Data Remove form only"
 msgstr "Formulaire De suppression de données uniquement"
 
-#: blocks/membership/block.js:9 dashboard/dashboard.php:1601
-#: functions/widgets.php:128
+#: blocks/membership/block.js:9 functions/widgets.php:128
 msgid "Membership"
 msgstr "Adhésion"
 
@@ -292,7 +291,8 @@ msgstr "puis"
 msgid "Including a federal part of"
 msgstr "Y compris une partie fédérale de"
 
-#: blocks/product/block.js:11 blocks/profile/block.js:12
+#: blocks/product/block.js:11 blocks/product/block.php:7
+#: blocks/profile/block.js:12
 msgid "Product"
 msgstr "Produit"
 
@@ -761,6 +761,10 @@ msgstr "Donnez"
 #: dashboard/dashboard.php:1575
 msgid "No donation"
 msgstr "Pas de don"
+
+#: dashboard/dashboard.php:1601 dashboard/dashboard.php:1634
+msgid "Manage my subscription"
+msgstr "Gérer mon abonnement"
 
 #: dashboard/dashboard.php:1618
 msgid "Your membership has been updated."
@@ -1413,7 +1417,7 @@ msgstr ""
 msgid "Validate"
 msgstr "Valider"
 
-#: doliconnect.php:442
+#: doliconnect.php:453
 msgid "Every 15 minutes"
 msgstr "Chaque 15 minutes"
 
