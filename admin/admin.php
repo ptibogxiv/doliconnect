@@ -321,8 +321,7 @@ delete_option('doliconnect_google');}
         <table class="form-table" width="100%">
             <tr>
                 <th style="width:150px;"><label for="doliloginmodal"><?php _e('Modal login', 'doliconnect') ?></label></th>
-                <td ><input name="doliloginmodal" type="checkbox" id="doliloginmodal" value="1" <?php if ( is_plugin_active( 'doliconnect-pro/doliconnect-pro.php' ) ) {
-checked('1', get_option('doliloginmodal')); } else { ?> disabled <?php } ?> > <b>PRO</b>            
+                <td ><input name="doliloginmodal" type="checkbox" id="doliloginmodal" value="1" <?php checked('1', get_option('doliloginmodal')); ?> />           
                 </td>
             </tr> 
             <tr>
