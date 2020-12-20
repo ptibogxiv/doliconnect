@@ -568,7 +568,7 @@ print "<li class='list-group-item'><div class='row'><div class='col-6 col-md-3'>
 print "<div class='col-md-7'><h6>" . $val['label'] . "</h6>" . $val['description'] ."" . $val['document'] ."</div></div></li>";
 } 
 //var_dump($fruits);
-print '</ul><div class="card-body"></div><div class="card-footer text-muted">';
+print '</ul><div class="card-footer text-muted">';
 print "<small><div class='float-start'>";
 if ( isset($request) ) print dolirefresh($request, $url, dolidelay('proposal'), $proposalfo);
 print "</div><div class='float-end'>";
@@ -879,7 +879,7 @@ print "<li class='list-group-item'><div class='row'><div class='col-6 col-md-3'>
 print "<div class='col-md-7'><h6>".$val['label']."</h6>" . $val['description'] ."" . $val['document'] ."</div></div></li>";
 } 
 //var_dump($fruits);
-print '</ul><div class="card-body"></div><div class="card-footer text-muted">';
+print '</ul><div class="card-footer text-muted">';
 print "<small><div class='float-start'>";
 if ( isset($request) ) print dolirefresh($request, $url, dolidelay('order'), $orderfo);
 print "</div><div class='float-end'>";
@@ -1152,7 +1152,7 @@ print "<li class='list-group-item'><div class='row'><div class='col-6 col-md-3'>
 print "<div class='col-md-7'><h6>".$val['label']."</h6>" . $val['description'] ."" . $val['document'] ."</div></div></li>";
 } 
 //var_dump($fruits);
-print '</ul><div class="card-body"></div><div class="card-footer text-muted">';
+print '</ul><div class="card-footer text-muted">';
 print "<small><div class='float-start'>";
 if ( isset($request) ) print dolirefresh($request, $url, dolidelay('invoice'), $invoicefo);
 print "</div><div class='float-end'>";
@@ -1283,7 +1283,7 @@ print "<div class='col-md-7'><h6>" . $val['label'] . "</h6>" . $val['description
 } 
 
 //var_dump($fruits);
-print '</ul><div class="card-body"></div><div class="card-footer text-muted">';
+print '</ul><div class="card-footer text-muted">';
 print "<small><div class='float-start'>";
 if ( isset($request) ) print dolirefresh($request, $url, dolidelay('contract'), $contractfo);
 print "</div><div class='float-end'>";
