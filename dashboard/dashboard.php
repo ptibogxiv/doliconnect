@@ -1768,7 +1768,7 @@ global $current_user;
 
 $request = "/adherentsplus/".doliconnector($current_user, 'fk_member')."/consumptions";
 
-print "<div class='card shadow-sm'><div class='card-body'>";
+print '<div class="card shadow-sm"><div class="card-header">'.__( 'Consumptions monitoring', 'doliconnect').'</div><div class="card-body">';
 print "<b>".__( 'Next billing date', 'doliconnect').": </b> <br>";
 
 print "</div><ul class='list-group list-group-flush'>";
