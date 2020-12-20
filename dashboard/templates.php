@@ -1731,7 +1731,7 @@ print "<li class='list-group-item list-group-item-info'><i class='fas fa-info-ci
 }
 
 print "<li class='list-group-item'><h6>".__( 'Message', 'doliconnect')."</h6>";
-print "<textarea class='form-control' id='note_public' name='note_public' rows='3' placeholder='".__( 'If you want to send us a message about your order, you can leave one here', 'doliconnect')."'>".$object->note_public."</textarea>";
+print "<textarea class='form-control' id='note_public' name='note_public' rows='3' placeholder='".__( 'If you want to send us a message about your order, you can leave one here', 'doliconnect')."'>".stripslashes(htmlspecialchars($object->note_public, ENT_QUOTES))."</textarea>";
 print "</li></ul>";
 
 $note_public = isset($_POST['note_public']) ? $_POST['note_public'] : '';

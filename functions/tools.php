@@ -967,7 +967,7 @@ if ( !empty($object->default) ) { $address .= " <i class='fas fa-star fa-1x fa-f
 if ( !empty($object->poste) ) { $address .= ", ".$object->poste; }
 if ( !empty($object->type) ) { $address .= "<br>".__( 'Type', 'doliconnect').": ".$object->type; }
 $address .= "</b><br>";
-$address .= "<small class='text-muted'>".$object->address.", ".$object->zip." ".$object->town." - ".$object->country."<br>".$object->email." - ".(isset($object->phone) ? $object->phone : $object->phone_pro)."</small>";
+$address .= "<small class='text-muted'>".$object->address.", ".$object->zip." ".$object->town." - ".$object->country."<br>".$object->email." - ".(isset($object->phone) ? $object->phone : (isset($object->phone_pro)?$object->phone_pro:null))."</small>";
 return $address;
 }
 
