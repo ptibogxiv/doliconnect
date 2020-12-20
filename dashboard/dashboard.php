@@ -1854,9 +1854,10 @@ $linkedmember= callDoliApi("GET", $request, null, dolidelay('member', esc_attr(i
 
 print "<form role='form' action='$url' id='doliconnect-linkedmembersform' method='post'>";                      
 
-print doliloaderscript('doliconnect-linkedmembersform'); 
-
-print "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
+print doliloaderscript('doliconnect-linkedmembersform');
+ 
+print '<div class="card shadow-sm"><div class="card-header">'.__( 'Manage linked members', 'doliconnect').'</div>';
+print "<ul class='list-group list-group-flush'>";
 
 if (doliconnector($current_user, 'fk_member') > 0) {
 print '<button type="button" class="list-group-item lh-condensed list-group-item-action list-group-item-primary" data-bs-toggle="modal" data-bs-target="#addmember"><center><i class="fas fa-plus-circle"></i> '.__( 'New linked member', 'doliconnect').'</center></button>';
@@ -1869,7 +1870,7 @@ print "<li class='list-group-item d-flex justify-content-between lh-condensed li
 print doliaddress($member);
 if (1 == 1) {
 print "<div class='col-4 col-sm-3 col-md-2 btn-group-vertical' role='group'>";
-print "<button type='button' class='btn btn-light text-primary' data-toggle='modal' data-target='#member-".$member->id."' title='".__( 'Edit', 'doliconnect')." ".$member->firstname." ".$member->lastname."'><i class='fas fa-edit fa-fw'></i></a>
+print "<button type='button' class='btn btn-light text-primary' data-bs- toggle='modal' data-bs-target='#member-".$member->id."' title='".__( 'Edit', 'doliconnect')." ".$member->firstname." ".$member->lastname."'><i class='fas fa-edit fa-fw'></i></a>
 <button name='unlink_member' value='".$member->id."' class='btn btn-light text-danger' type='submit' title='".__( 'Unlink', 'doliconnect')." ".$member->firstname." ".$member->lastname."'><i class='fas fa-unlink'></i></button>";
 print "</div>";
 }
