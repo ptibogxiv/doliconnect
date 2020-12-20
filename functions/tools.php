@@ -2158,7 +2158,7 @@ global $current_user;
 			<input type="hidden" name="action" value="doli_gdrf_data_request" />
 			<input type="hidden" name="gdrf_data_human_key" id="gdrf_data_human_key" value="<?php echo $number_one . '000' . $number_two; ?>" />
 			<input type="hidden" name="gdrf_data_nonce" id="gdrf_data_nonce" value="<?php echo wp_create_nonce( 'gdrf_nonce'); ?>" />
-    <div class="card shadow-sm"><ul class="list-group list-group-flush">
+    <div class="card shadow-sm"><div class="card-header"><?php _e( 'Privacy', 'doliconnect'); ?></div><ul class="list-group list-group-flush">
 		<?php if ( 'export' === $args['request_type'] ) : ?>
 			<input type="hidden" name="gdrf_data_type" value="export_personal_data" id="gdrf-data-type-export" />
 		<?php elseif ( 'remove' === $args['request_type'] ) : ?>
@@ -2172,7 +2172,7 @@ global $current_user;
 <center><i class='fas fa-download fa-3x fa-fw'></i></center>
 </div>
 		<?php endif; ?>
-<div class='col-auto align-middle'><h6 class='my-0'><?php echo __( 'Export your data', 'doliconnect'); ?></h6><small class='text-muted'><?php echo __( 'You will receive an email with a secure link to your data', 'doliconnect'); ?></small>
+<div class='col-auto align-middle'><h6 class='my-0'><?php _e( 'Export your data', 'doliconnect'); ?></h6><small class='text-muted'><?php _e( 'You will receive an email with a secure link to your data', 'doliconnect'); ?></small>
 </div></div></label></div></li>
 <li class='list-group-item list-group-item-light list-group-item-action'><div class='form-check'>
 <input id='gdrf-data-type-remove' class='form-check-input' type='radio' name='gdrf_data_type' value='remove_personal_data'>
@@ -2182,7 +2182,7 @@ global $current_user;
 <center><i class='fas fa-eraser fa-3x fa-fw'></i></center>
 </div>
 		<?php endif; ?>
-<div class='col-auto align-middle'><h6 class='my-0'><?php echo __( 'Erase your data', 'doliconnect'); ?></h6><small class='text-muted'><?php echo __( 'You will receive an email with a secure link to confirm the deletion', 'doliconnect'); ?></small>
+<div class='col-auto align-middle'><h6 class='my-0'><?php _e( 'Erase your data', 'doliconnect'); ?></h6><small class='text-muted'><?php _e( 'You will receive an email with a secure link to confirm the deletion', 'doliconnect'); ?></small>
 </div></div></label></div></li>
 <?php if (!empty(get_option('doliconnectbeta'))) { ?>
 <li class='list-group-item list-group-item-light list-group-item-action'><div class='form-check'>
@@ -2193,7 +2193,7 @@ global $current_user;
 <center><i class='fas fa-trash fa-3x fa-fw'></i></center>
 </div>
 		<?php endif; ?>
-<div class='col-auto align-middle'><h6 class='my-0'><?php echo __( 'Delete your account', 'doliconnect'); ?></h6><small class='text-muted'><?php echo __( 'Soon, you will be able to delete your account', 'doliconnect'); ?></small>
+<div class='col-auto align-middle'><h6 class='my-0'><?php _e( 'Delete your account', 'doliconnect'); ?></h6><small class='text-muted'><?php _e( 'Soon, you will be able to delete your account', 'doliconnect'); ?></small>
 </div></div></label></div></li>
 		<?php } endif; ?>
       <li class='list-group-item list-group-item-light list-group-item-action'>
