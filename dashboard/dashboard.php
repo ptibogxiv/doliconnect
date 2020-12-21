@@ -456,7 +456,7 @@ $wishlist = callDoliApi("GET", $request, null, dolidelay('product', true));
 
 }
 
-print '<div class="card shadow-sm"><ul class="list-group list-group-flush">';
+print '<div class="card shadow-sm"><div class="card-header">'.__( 'Wishlist', 'doliconnect').'</div><ul class="list-group list-group-flush">';
 
 $representatives = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc')."/representatives", null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
  
