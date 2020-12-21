@@ -1738,11 +1738,11 @@ print "</td><td class='text-end'><b>".doliprice($cotisation->amount)."</b></td><
 else { 
 print "<li class='list-group-item list-group-item-light'><center>".__( 'No subscription', 'doliconnect')."</center></li>";
 }
-print '</ul><div class="card-body">';
+print '</ul>';
 } else {
 print 'TODO: membership add form';
 }
-print '</div><div class="card-footer text-muted">';
+print '<div class="card-footer text-muted">';
 print "<small><div class='float-start'>";
 if ( isset($request) ) print dolirefresh($request, $url, dolidelay('member'), (isset($adherent)?$adherent:null));
 print "</div><div class='float-end'>";
