@@ -475,7 +475,7 @@ print "</script>";
 print '<div class="card shadow-sm"><div class="card-header">'.__( 'Forgot password?', 'doliconnect');
 print '<a class="float-end text-decoration-none" href="'.esc_url( doliconnecturl('doliaccount') ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a>';  
 print '</div>';
-print "<ul class='list-group list-group-flush'><li class='list-group-item'>";
+print "<ul class='list-group list-group-flush'><li class='list-group-item list-group-item-light list-group-item-action'>";
 print "<p class='text-justify'>".__( 'Please enter the email address by which you registered your account.', 'doliconnect')."</p>";
 
 print '<div class="form-floating mb-3">
