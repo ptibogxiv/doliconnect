@@ -2209,7 +2209,7 @@ global $current_user;
       </div>
 		<?php else : ?>
       <div class="form-floating mb-3">
-          <input type="email" class="form-control" id="gdrf_data_email" name="gdrf_data_email" value="<?php echo $current_user->user_email; ?>">
+          <input type="email" class="form-control" id="gdrf_data_email" name="gdrf_data_email" value="<?php echo $current_user->user_email; ?>" readonly>
           <label for="gdrf_data_email"><?php echo esc_html( $args['label_input_email'] ); ?></label>
       </div>
 		<?php endif; ?> 
