@@ -341,7 +341,9 @@ print "<form id='doliconnect-signinform' action='".doliconnecturl('doliaccount')
 
 print doliloaderscript('doliconnect-signinform'); 
 
-print "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>".__( 'Create an account', 'doliconnect')."</h5></div>";
+print '<div class="card shadow-sm"><div class="card-header">'.__( 'Create an account', 'doliconnect');
+print '<a class="float-end text-decoration-none" href="'.esc_url( doliconnecturl('doliaccount') ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a>';  
+print '</div>';
 
 print doliuserform( null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'thirdparty');
 
@@ -349,7 +351,7 @@ print "<div class='card-body'><div class='d-grid gap-2'><input type='hidden' nam
 if ( get_option('users_can_register')=='1' && ( get_site_option( 'registration' ) == 'user' || get_site_option( 'registration' ) == 'all' ) || ( !is_multisite() && get_option( 'users_can_register' )) ) {
 print "";
 } else { print " aria-disabled='true'  disabled"; }
-print "><b>".__( 'Create an account', 'doliconnect')."</b></button></form>";
+print ">".__( 'Create an account', 'doliconnect')."</button></form>";
 
 print '</div></div></div></form>';
 
@@ -528,7 +530,7 @@ print "<ul class='list-group list-group-flush'><li class='list-group-item'><cent
 //print "<h2>".__( 'Restricted area', 'doliconnect')."</h2></center>";
 print "</li></lu><div class='card-body'>";
 
-print '<div class="btn-group col-12 mx-auto" role="group" aria-label="Login"><a href="#" id="login-'.current_time('timestamp').'" data-bs-toggle="modal" data-bs-target="#DoliconnectLogin" data-bs-dismiss="modal" title="'.__('Sign in', 'doliconnect').'" class="btn btn-outline-secondary" role="button">'.__('You have already an account', 'doliconnect').'</a>';
+print '<div class="d-grid gap-2 d-md-flex justify-content-md-end"><a href="#" id="login-'.current_time('timestamp').'" data-bs-toggle="modal" data-bs-target="#DoliconnectLogin" data-bs-dismiss="modal" title="'.__('Sign in', 'doliconnect').'" class="btn btn-outline-secondary" role="button">'.__('You have already an account', 'doliconnect').'</a>';
 if ((!is_multisite() && get_option( 'users_can_register' )) || ((!is_multisite() && get_option( 'dolicustsupp_can_register' )) || ((get_option( 'dolicustsupp_can_register' ) || get_option('users_can_register') == '1') && (get_site_option( 'registration' ) == 'user' || get_site_option( 'registration' ) == 'all')))) {
 print '<a href="'.wp_registration_url( get_permalink() ).'" id="login-'.current_time('timestamp').'" title="'.__('Signup', 'doliconnect').'" class="btn btn-outline-secondary" role="button">'.__("You don't have an account", 'doliconnect').'</a>';
 }
