@@ -528,12 +528,11 @@ print "<ul class='list-group list-group-flush'><li class='list-group-item'><cent
 //print "<h2>".__( 'Restricted area', 'doliconnect')."</h2></center>";
 print "</li></lu><div class='card-body'>";
 
-print '<div class="d-grid gap-2"><a href="#" id="login-'.current_time('timestamp').'" data-bs-toggle="modal" data-bs-target="#DoliconnectLogin" data-bs-dismiss="modal" title="'.__('Sign in', 'doliconnect').'" class="btn btn-outline-secondary" role="button">'.__('You have already an account', 'doliconnect').'</a></div>';
-
+print '<div class="btn-group col-12 mx-auto" role="group" aria-label="Login"><a href="#" id="login-'.current_time('timestamp').'" data-bs-toggle="modal" data-bs-target="#DoliconnectLogin" data-bs-dismiss="modal" title="'.__('Sign in', 'doliconnect').'" class="btn btn-outline-secondary" role="button">'.__('You have already an account', 'doliconnect').'</a>';
 if ((!is_multisite() && get_option( 'users_can_register' )) || ((!is_multisite() && get_option( 'dolicustsupp_can_register' )) || ((get_option( 'dolicustsupp_can_register' ) || get_option('users_can_register') == '1') && (get_site_option( 'registration' ) == 'user' || get_site_option( 'registration' ) == 'all')))) {
-print '<div><div style="display:inline-block;width:46%;float:left"><hr width="90%" /></div><div style="display:inline-block;width: 8%;text-align: center;vertical-align:90%"><small class="text-muted">'.__( 'or', 'doliconnect').'</small></div><div style="display:inline-block;width:46%;float:right" ><hr width="90%"/></div></div>';
-print '<div class="d-grid gap-2"><a href="'.wp_registration_url( get_permalink() ).'" id="login-'.current_time('timestamp').'"  title="'.__('Signup', 'doliconnect').'" class="btn btn-outline-secondary" role="button">'.__("You don't have an account", 'doliconnect').'</a></div>';
+print '<a href="'.wp_registration_url( get_permalink() ).'" id="login-'.current_time('timestamp').'" title="'.__('Signup', 'doliconnect').'" class="btn btn-outline-secondary" role="button">'.__("You don't have an account", 'doliconnect').'</a>';
 }
+print '</div>';
 
 } else {
 
