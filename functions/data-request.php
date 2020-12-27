@@ -121,6 +121,12 @@ add_action('wp_ajax_dolifpw_request', 'dolifpw_request');
 add_action('wp_ajax_nopriv_dolifpw_request', 'dolifpw_request');
 
 function dolifpw_request(){
+	$gdrf_email     = sanitize_email( $_POST['gdrf_data_email'] );
+	$gdrf_human     = absint( filter_input( INPUT_POST, 'gdrf_data_human', FILTER_SANITIZE_NUMBER_INT ) );
+	$gdrf_human_key = esc_html( filter_input( INPUT_POST, 'gdrf_data_human_key', FILTER_SANITIZE_STRING ) );
+	$gdrf_numbers   = explode( '000', $gdrf_human_key );
+	$gdrf_answer    = absint( $gdrf_numbers[0] ) + absint( $gdrf_numbers[1] );
+
 if ( wp_verify_nonce( trim($_POST['dolifpw-nonce']), 'dolifpw-nonce') ) { 
 if (isset($_POST['user_email']) && email_exists(sanitize_email($_POST['user_email'])) ) {
 $email = sanitize_email($_POST['user_email']);
