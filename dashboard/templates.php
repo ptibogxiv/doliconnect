@@ -478,10 +478,18 @@ print '</div>';
 print "<ul class='list-group list-group-flush'><li class='list-group-item list-group-item-light list-group-item-action'>";
 print "<p class='text-justify'>".__( 'Please enter the email address by which you registered your account.', 'doliconnect')."</p>";
 
-print '<div class="form-floating mb-3">
-  <input type="email" class="form-control" id="user_email" placeholder="name@example.com" name="user_email" value="" required>
-  <label for="user_email">'.__( 'Email', 'doliconnect').'</label>
+print '<div class="form-floating mb-2">
+<input type="email" class="form-control" id="user_email" placeholder="name@example.com" name="user_email" value="" required>
+<label for="user_email">'.__( 'Email', 'doliconnect').'</label>
 </div>';
+
+// Captcha
+$number_one = wp_rand( 1, 9 );
+$number_two = wp_rand( 1, 9 );
+print '<div class="form-floating">
+<input type="num" class="form-control" id="gdrf_data_human" placeholder="name@example.com" name="gdrf_data_human" value="" required>
+<label for="gdrf_data_human">'.__( 'Human verification:', 'doliconnect').' '.$number_one . ' + ' . $number_two . ' = ?</label>
+</div><input type="hidden" name="gdrf_data_human_key" id="gdrf_data_human_key" value="'.$number_one . '000' . $number_two.'">';
 
 print "</li></lu><div class='card-body'>";
 print '<div class="d-grid gap-2"><button class="btn btn-outline-secondary" type="submit" value="submit">'.__( 'Submit', 'doliconnect').'</button></div>';

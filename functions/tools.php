@@ -2215,7 +2215,7 @@ global $current_user;
 		<?php endif; ?> 
       
       <div class="form-floating">
-          <input type="num" class="form-control" id="gdrf_data_human" name="gdrf_data_human" required>
+          <input type="num" class="form-control" id="gdrf_data_human" name="gdrf_data_human" placeholder="name@example.com" value="" required>
           <label for="gdrf_data_human"><?php echo esc_html( $args['label_input_captcha'] ); ?> <?php echo $number_one . ' + ' . $number_two . ' = ?'; ?></label>
       </div>
       </li>
