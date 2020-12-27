@@ -38,15 +38,15 @@ function doli_gdrf_data_request() {
 	if ( empty( $gdrf_error ) ) {
 		$request_id = wp_create_user_request( $gdrf_email, $gdrf_type );
 		if ( is_wp_error( $request_id ) ) {
-			wp_send_json_success( $request_id->get_error_message() );
+			wp_send_json_error( $request_id->get_error_message() );
 		} elseif ( ! $request_id ) {
-			wp_send_json_success( esc_html__( 'Unable to initiate confirmation request. Please contact the administrator.', 'doliconnect') );
+			wp_send_json_error( esc_html__( 'Unable to initiate confirmation request. Please contact the administrator.', 'doliconnect') );
 		} else {
 			$send_request = wp_send_user_request( $request_id );
 			wp_send_json_success( 'success' );
 		}
 	} else {
-		wp_send_json_success( join( '<br />', $gdrf_error ) );
+		wp_send_json_error( join( '<br />', $gdrf_error ) );
 	}
 	die();
 }
@@ -121,15 +121,34 @@ add_action('wp_ajax_dolifpw_request', 'dolifpw_request');
 add_action('wp_ajax_nopriv_dolifpw_request', 'dolifpw_request');
 
 function dolifpw_request(){
-	$gdrf_email     = sanitize_email( $_POST['gdrf_data_email'] );
+	$gdrf_error     = array();
+	$gdrf_email     = sanitize_email( $_POST['user_email'] );
 	$gdrf_human     = absint( filter_input( INPUT_POST, 'gdrf_data_human', FILTER_SANITIZE_NUMBER_INT ) );
 	$gdrf_human_key = esc_html( filter_input( INPUT_POST, 'gdrf_data_human_key', FILTER_SANITIZE_STRING ) );
 	$gdrf_numbers   = explode( '000', $gdrf_human_key );
 	$gdrf_answer    = absint( $gdrf_numbers[0] ) + absint( $gdrf_numbers[1] );
+	$gdrf_nonce     = esc_html( filter_input( INPUT_POST, 'dolifpw-nonce', FILTER_SANITIZE_STRING ) );
+  
+	if ( ! empty( $gdrf_email ) && ! empty( $gdrf_human ) ) {
+		if ( ! wp_verify_nonce( $gdrf_nonce, 'dolifpw-nonce' ) ) {
+			$gdrf_error[] = esc_html__( 'Security check failed, please refresh this page and try to submit the form again.', 'doliconnect');
+		} else {
+			if ( ! is_email( $gdrf_email ) ) {
+				$gdrf_error[] = esc_html__( 'This is not a valid email address.', 'doliconnect');
+			}
+			if ( ! email_exists( $gdrf_email ) ) {
+				$gdrf_error[] = esc_html__( 'No account seems to be linked to this email address', 'doliconnect');
+			}
+			if ( intval( $gdrf_answer ) !== intval( $gdrf_human ) ) {
+				$gdrf_error[] = esc_html__( 'Security check failed, invalid human verification field.', 'doliconnect');
+			}
+		}
+	} else {
+		$gdrf_error[] = esc_html__( 'All fields are required.', 'doliconnect');
+	}
+	if ( empty( $gdrf_error ) ) {
 
-if ( wp_verify_nonce( trim($_POST['dolifpw-nonce']), 'dolifpw-nonce') ) { 
-if (isset($_POST['user_email']) && email_exists(sanitize_email($_POST['user_email'])) ) {
-$email = sanitize_email($_POST['user_email']);
+$email = $gdrf_email;
 $emailTo = get_option('tz_email');
 
 if (!isset($emailTo) || ($emailTo == '') ){
@@ -156,16 +175,12 @@ if( $mail ) {
 wp_send_json_success( __( 'A password reset link was sent to you by email. Please check your spam folder if you don\'t find it.', 'doliconnect'));
 } else { 
 wp_send_json_error( __( 'A problem occurred. Please retry later!', 'doliconnect'));  
-}		
-} else { 
-wp_send_json_error( __( 'A problem occurred. Please retry later!', 'doliconnect'));		
+}	
 }
-} else {
-wp_send_json_error( __( 'No account seems to be linked to this email address', 'doliconnect'));
-}
-}	else {
-wp_send_json_error( __( 'A security error occured', 'doliconnect')); 
-}
+	} else {
+		wp_send_json_error( join( '<br />', $gdrf_error ) );
+	}
+	die();
 }
 
 add_action('wp_ajax_dolirpw_request', 'dolirpw_request');
