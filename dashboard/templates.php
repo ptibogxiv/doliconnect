@@ -534,14 +534,15 @@ print "</div>";
 }
 if ( function_exists('doliconnect_modal') && get_option('doliloginmodal') == '1' ) {
 
-print "<ul class='list-group list-group-flush'><li class='list-group-item'><center><i class='fas fa-user-lock fa-fw fa-10x'></i><br><br>";
+print '<ul class="list-group list-group-flush"><li class="list-group-item"><center><i class="fas fa-user-lock fa-fw fa-10x"></i>';
 //print "<h2>".__( 'Restricted area', 'doliconnect')."</h2></center>";
-print "</li></lu><div class='card-body'>";
+print "</center></li></lu><div class='card-body'>";
 
-print '<div class="d-grid"><a href="#" id="login-'.current_time('timestamp').'" data-bs-toggle="modal" data-bs-target="#DoliconnectLogin" data-bs-dismiss="modal" title="'.__('Sign in', 'doliconnect').'" class="btn btn-outline-secondary" role="button">'.__('You have already an account', 'doliconnect').'</a>';
+print '<div class="d-grid gap-2 d-md-flex justify-content-md-end">';
 if ((!is_multisite() && get_option( 'users_can_register' )) || ((!is_multisite() && get_option( 'dolicustsupp_can_register' )) || ((get_option( 'dolicustsupp_can_register' ) || get_option('users_can_register') == '1') && (get_site_option( 'registration' ) == 'user' || get_site_option( 'registration' ) == 'all')))) {
 print '<a href="'.wp_registration_url( get_permalink() ).'" id="login-'.current_time('timestamp').'" title="'.__('Signup', 'doliconnect').'" class="btn btn-outline-secondary" role="button">'.__("You don't have an account", 'doliconnect').'</a>';
 }
+print '<a href="#" id="login-'.current_time('timestamp').'" data-bs-toggle="modal" data-bs-target="#DoliconnectLogin" data-bs-dismiss="modal" title="'.__('Sign in', 'doliconnect').'" class="btn btn-outline-secondary" role="button">'.__('You have already an account', 'doliconnect').'</a>';
 print '</div>';
 
 } else {
