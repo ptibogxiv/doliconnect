@@ -523,8 +523,7 @@ if ( $image_attributes && !empty(get_option('doliconnectrestrict'))) {
 print '<div class="card shadow-lg border-0" style="-webkit-backdrop-filter: blur(6px);backdrop-filter: blur(6px);background-color: rgba(255, 255, 255, 0.6);">';
 print '<img src="'.$image_attributes[0].'" class="card-img-top" alt="..."/>';
 } else { 
-print "<div class='card shadow-sm' >";
-print "<div class='card-header'>";
+print "<div class='card shadow-sm'><div class='card-header'>";
 if ( empty(get_option('doliconnectrestrict')) ) {
 print "<h5 class='card-title'>".__( 'Welcome', 'doliconnect')."</h5>";
 } else {
