@@ -1383,7 +1383,7 @@ $paymentmethods .= '</script>';
 //<div id='else' style='display: none' ><br><div style='display:inline-block;width:46%;float:left'><hr width='90%' /></div><div style='display:inline-block;width: 8%;text-align: center;vertical-align:90%'><small class='text-muted'>".__( 'or', 'doliconnect-pro' )."</small></div><div style='display:inline-block;width:46%;float:right' ><hr width='90%'/></div><br></div>";
 //} 
 
-$paymentmethods .= '<div id="DoliPaymentmethodAlert" class="text-danger font-weight-bolder"></div><div class="card shadow-sm">';
+$paymentmethods .= '<div id="DoliPaymentmethodAlert" class="text-danger font-weight-bolder"></div><div class="card shadow-sm"><div class="card-header">'.__( 'Manage payment methods', 'doliconnect').'</div>';
 
 if (empty($listpaymentmethods->payment_methods)) {
 $countPM = 0;
