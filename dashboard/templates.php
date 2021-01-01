@@ -254,6 +254,11 @@ $thirdparty=$_POST['thirdparty'];
         $emailError = __( 'Create this account is not permitted', 'doliconnect');       
         $hasError = true;
     }
+    
+    if ( defined("DOLICONNECT_DEMO") ) {
+        $emailError = __( 'Create account is not permitted because the demo mode is active', 'doliconnect');       
+        $hasError = true;
+    }
 
     if(!isset($hasError)) {
         $emailTo = get_option('tz_email');
@@ -480,7 +485,7 @@ print "<p class='text-justify'>".__( 'Please enter the email address by which yo
 
 print '<div class="form-floating mb-2">
 <input type="email" class="form-control" id="user_email" placeholder="name@example.com" name="user_email" value="" required>
-<label for="user_email">'.__( 'Email', 'doliconnect').'</label>
+<label for="user_email"><i class="fas fa-at fa-fw"></i> '.__( 'Email', 'doliconnect').'</label>
 </div>';
 
 // Captcha
@@ -488,7 +493,7 @@ $number_one = wp_rand( 1, 9 );
 $number_two = wp_rand( 1, 9 );
 print '<div class="form-floating">
 <input type="number" class="form-control" id="gdrf_data_human" placeholder="name@example.com" name="gdrf_data_human" value="" required>
-<label for="gdrf_data_human">'.__( 'Human verification:', 'doliconnect').' '.$number_one . ' + ' . $number_two . ' = ?</label>
+<label for="gdrf_data_human"><i class="fas fa-shield-alt"></i> '.__( 'Human verification:', 'doliconnect').' '.$number_one . ' + ' . $number_two . ' = ?</label>
 </div><input type="hidden" name="gdrf_data_human_key" id="gdrf_data_human_key" value="'.$number_one . '000' . $number_two.'">';
 
 print "</li></lu><div class='card-body'>";

@@ -693,6 +693,16 @@ print "<li class='list-group-item list-group-item-light list-group-item-action'>
 print "</div></li>";
 }
 
+if ( !is_user_logged_in() ) {
+// Captcha
+$number_one = wp_rand( 1, 9 );
+$number_two = wp_rand( 1, 9 );
+print '<li class="list-group-item list-group-item-light list-group-item-action"><div class="form-floating">
+<input type="number" class="form-control" id="gdrf_data_human" placeholder="name@example.com" name="gdrf_data_human" value="" required>
+<label for="gdrf_data_human"><i class="fas fa-shield-alt"></i> '.__( 'Human verification:', 'doliconnect').' '.$number_one . ' + ' . $number_two . ' = ?</label>
+</div><input type="hidden" name="gdrf_data_human_key" id="gdrf_data_human_key" value="'.$number_one . '000' . $number_two.'"></li>';
+}
+
 if ( !is_user_logged_in() && in_array($mode, array('thirdparty','linkthirdparty')) ) {
 
 if( has_action('register_form') ) {
@@ -1383,6 +1393,41 @@ $paymentmethods .= '</script>';
 //<div id='else' style='display: none' ><br><div style='display:inline-block;width:46%;float:left'><hr width='90%' /></div><div style='display:inline-block;width: 8%;text-align: center;vertical-align:90%'><small class='text-muted'>".__( 'or', 'doliconnect-pro' )."</small></div><div style='display:inline-block;width:46%;float:right' ><hr width='90%'/></div><br></div>";
 //} 
 
+$paymentmethods .= '<div class="card shadow-sm"><div class="card-header">'.__( 'Manage payment methods', 'doliconnect').'</div><div class="accordion accordion-flush" id="accordionFlushExample">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="flush-headingOne">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+        Accordion Item #1
+      </button>
+    </h2>
+    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+      <div class="accordion-body">Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably havent heard of them accusamus labore sustainable VHS.</div>
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="flush-headingTwo">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+        Accordion Item #2
+      </button>
+    </h2>
+    <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+      <div class="accordion-body">Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably havent heard of them accusamus labore sustainable VHS.</div>
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="flush-headingThree">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+        Accordion Item #3
+      </button>
+    </h2>
+    <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+      <div class="accordion-body">Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably havent heard of them accusamus labore sustainable VHS.</div>
+    </div>
+  </div>
+</div></div>';
+
+$paymentmethods .= '<br>';
+
 $paymentmethods .= '<div id="DoliPaymentmethodAlert" class="text-danger font-weight-bolder"></div><div class="card shadow-sm"><div class="card-header">'.__( 'Manage payment methods', 'doliconnect').'</div>';
 
 if (empty($listpaymentmethods->payment_methods)) {
@@ -1399,6 +1444,31 @@ $minPM = apply_filters( 'doliconnect_force_minipaymentmethod', $listpaymentmetho
 }
 }
 
+$paymentmethods .= '<ul class="list-group list-group-flush">';
+if ( isset($listpaymentmethods->payment_methods) && $listpaymentmethods->payment_methods != null ) {
+foreach ( $listpaymentmethods->payment_methods as $method ) { 
+$paymentmethods .= "<a href='#' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'><div><i ";
+if ( $method->type == 'sepa_debit' || $method->type == 'PRE' || $method->type == 'VIR' ) { $paymentmethods .= 'class="fas fa-university fa-fw float-start" style="color:DarkGrey"'; } 
+elseif ( $method->brand == 'visa' ) { $paymentmethods .= 'class="fab fa-cc-visa fa-3x fa-fw float-start" style="color:#172274"'; }
+else if ( $method->brand == 'mastercard' ) { $paymentmethods .= 'class="fab fa-cc-mastercard fa-3x fa-fw float-start" style="color:#FF5F01"'; }
+else if ( $method->brand == 'amex' ) { $paymentmethods .= 'class="fab fa-cc-amex fa-3x fa-fw float-start" style="color:#2E78BF"'; }
+else { $paymentmethods .= 'class="fab fa-credit-card fa-3x fa-fw float-start"';}
+$paymentmethods .= "></i> ";
+$paymentmethods .= "</div><div><h6 class='my-0'>";
+if ( $method->type == 'sepa_debit' || $method->type == 'PRE' || $method->type == 'VIR' ) {
+$paymentmethods .= __( 'Account', 'doliconnect')." ".$method->reference;
+} else {
+$paymentmethods .= __( 'Card', 'doliconnect').' '.$method->reference;
+}
+if ( $method->default_source && empty($thirdparty->mode_reglement_id) && !in_array($method->type, array('PRE','VIR')) || (!empty($method->default_source) && !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id == $mode_reglement_code[0]->id ) ) { $paymentmethods .= " <i class='fas fa-star fa-fw' style='color:Gold'></i>"; }
+$paymentmethods .= "</h6><small class='text-muted'>".$method->holder."</small></div><span></span><span>";
+//if ( $postcontact->statut > 0 ) { print "<span class='fas fa-check-circle fa-fw text-success'></span> "; }
+$paymentmethods .= '</span>';
+$paymentmethods .= "<span class='flag-icon flag-icon-".strtolower($method->country)." float-end'></span></a></li>";
+$paymentmethods .= '</a>';
+}}
+$paymentmethods .= '</ul>';
+
 $paymentmethods .= '<div class="card-body"><ul class="nav bg-light nav-pills rounded nav-fill flex-column" role="tablist">';
 
 if ( isset($listpaymentmethods->payment_methods) && $listpaymentmethods->payment_methods != null ) {
@@ -1406,7 +1476,7 @@ foreach ( $listpaymentmethods->payment_methods as $method ) {
 $mode_reglement_code = callDoliApi("GET", "/setup/dictionary/payment_types?sortfield=code&sortorder=ASC&limit=100&active=1&sqlfilters=(t.code%3A%3D%3A'PRE')", null, dolidelay('constante'));
 $paymentmethods .= '<li id="li-'.$method->id.'" class="nav-item"><a class="nav-link';//(!empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id != $method->id && !empty($module) && is_object($object) && isset($object->id)) || ;
 if ( (isset($method->expiration) && date('Y/n') >= $method->expiration && !empty($object) && !empty($method->expiration)) || (!empty($module) && is_object($object) && isset($object->id) && !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id != $mode_reglement_code[0]->id) ) {
-$paymentmethods .=" disabled "; 
+$paymentmethods .= " disabled "; 
 } elseif ( (!empty($method->default_source) && empty($thirdparty->mode_reglement_id) && !in_array($method->type, array('PRE','VIR'))) || (!empty($method->default_source) && !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id == $mode_reglement_code[0]->id) ) {
 $paymentmethods .=" active";
 }
@@ -2216,7 +2286,7 @@ global $current_user;
       
       <div class="form-floating">
           <input type="number" class="form-control" id="gdrf_data_human" name="gdrf_data_human" placeholder="name@example.com" value="" required>
-          <label for="gdrf_data_human"><?php echo esc_html( $args['label_input_captcha'] ); ?> <?php echo $number_one . ' + ' . $number_two . ' = ?'; ?></label>
+          <label for="gdrf_data_human"><i class="fas fa-shield-alt"></i> <?php echo esc_html( $args['label_input_captcha'] ); ?> <?php echo $number_one . ' + ' . $number_two . ' = ?'; ?></label>
       </div>
       </li>
       </ul>
