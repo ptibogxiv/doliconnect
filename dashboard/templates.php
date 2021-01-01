@@ -875,7 +875,7 @@ print "<li class='list-group-item list-group-item-light'><center>".__( 'No suppl
 }
 
 if (!empty(get_option('dolicartsuppliergrid'))) { 
-print "</div>";
+print "</div></div><div class='card-body'>";
 } else {
 print "</ul><div class='card-body'>";
 } 
