@@ -1674,8 +1674,6 @@ $paymentmethods .= dolihelp('ISSUE');
 $paymentmethods .= '</div></small>';
 $paymentmethods .= '</div></div>';
 
-$paymentmethods .= '<br>';
-
 $paymentmethods .= '<div id="DoliPaymentmethodAlert" class="text-danger font-weight-bolder"></div>';
 
 /***
