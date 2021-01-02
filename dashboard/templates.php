@@ -572,7 +572,7 @@ print "<ul class='list-group list-group-flush'><li class='list-group-item'>";
 
 print doliloaderscript('doliconnect-loginform'); 
 if  ( defined("DOLICONNECT_DEMO") ) {
-print "<p><i class='fas fa-info-circle'></i> <b>".__( 'Demo mode is activated', 'doliconnect')."</b></p>";
+print "<p><i class='fas fa-info-circle fa-fw'></i> <b>".__( 'Demo mode is activated', 'doliconnect')."</b></p>";
 } 
 print '<div class="form-floating mb-3"><input type="email" class="form-control" id="user_login" name="log" placeholder="name@example.com" value="';
 if ( defined("DOLICONNECT_DEMO") && defined("DOLICONNECT_DEMO_EMAIL") && !empty(constant("DOLICONNECT_DEMO_EMAIL")) ) {
