@@ -1518,7 +1518,6 @@ $paymentmethods .= '<button type="button" onclick="PaySepaDebitPM(\''.$method->i
 } else {
 $paymentmethods .= '<button type="button" onclick="PayPM(\''.$method->type.'\')" class="btn btn-danger btn-block">'.__( 'Pay', 'doliconnect')." ".doliprice($object, 'ttc', $currency).'</button>';
 }
-$paymentmethods .= '</div>';
 } else {
 $paymentmethods .= '<div class="btn-group btn-block" role="group" aria-label="actions buttons">';
 if ( !isset($method->default_source) && !in_array($method->type, array('VIR')) && empty($thirdparty->mode_reglement_id) ) {
@@ -1546,11 +1545,7 @@ $paymentmethods .= __( 'Pay by credit/debit card', 'doliconnect');
 $paymentmethods .= __( 'Add a payment method', 'doliconnect');
 }
 $paymentmethods .= '</button></h2>';
-if (empty($countPM)) {
-$paymentmethods .= ' active';
-}
 $paymentmethods .= '<div id="flush-collapsenewpm" class="accordion-collapse collapse" aria-labelledby="flush-headingnewpm" data-bs-parent="#accordionFlushExample"><div class="accordion-body">';
-
 
 $paymentmethods .= '</div></div></div>';
 }
