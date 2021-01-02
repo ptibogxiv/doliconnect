@@ -1394,10 +1394,26 @@ $paymentmethods .= '</script>';
 //} 
 
 $paymentmethods .= '<div class="card shadow-sm"><div class="card-header">'.__( 'Manage payment methods', 'doliconnect').'</div><div class="accordion accordion-flush" id="accordionFlushExample">';
+if (empty($listpaymentmethods->payment_methods)) {
+$countPM = 0;
+} else {
+$countPM = count(get_object_vars($listpaymentmethods->payment_methods));
+}
+$maxPM = 5;
+
+$minPM = 0;
+if ( has_filter( 'doliconnect_force_minipaymentmethod') ) {
+if (is_numeric(apply_filters( 'doliconnect_force_minipaymentmethod', $listpaymentmethods->payment_methods))){
+$minPM = apply_filters( 'doliconnect_force_minipaymentmethod', $listpaymentmethods->payment_methods);
+}
+}
 if ( isset($listpaymentmethods->payment_methods) && $listpaymentmethods->payment_methods != null ) {
 foreach ( $listpaymentmethods->payment_methods as $method ) { 
-$paymentmethods .= '<div class="accordion-item"><h2 class="accordion-header" id="flush-headingOne">
-<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="true" aria-controls="flush-collapseOne">';
+$paymentmethods .= '<div class="accordion-item"><h2 class="accordion-header" id="flush-heading'.$method->id.'"><button class="accordion-button';
+if ( $method->default_source && empty($thirdparty->mode_reglement_id) && !in_array($method->type, array('PRE','VIR')) || (!empty($method->default_source) && !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id == $mode_reglement_code[0]->id ) ) { $paymentmethods .= ""; } else { $paymentmethods .= " collapsed"; }
+$paymentmethods .= '" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse'.$method->id.'" aria-expanded="';
+if ( $method->default_source && empty($thirdparty->mode_reglement_id) && !in_array($method->type, array('PRE','VIR')) || (!empty($method->default_source) && !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id == $mode_reglement_code[0]->id ) ) { $paymentmethods .= "true"; } else { $paymentmethods .= "false"; }
+$paymentmethods .= '" aria-controls="flush-collapse'.$method->id.'">';
 $paymentmethods .= '<i ';
 if ( $method->type == 'sepa_debit' || $method->type == 'PRE' || $method->type == 'VIR' ) { $paymentmethods .= 'class="fas fa-university fa-fw float-start" style="color:DarkGrey"'; } 
 elseif ( $method->brand == 'visa' ) { $paymentmethods .= 'class="fab fa-cc-visa fa-3x fa-fw float-start" style="color:#172274"'; }
@@ -1411,23 +1427,209 @@ $paymentmethods .= __( 'Account', 'doliconnect')." ".$method->reference;
 $paymentmethods .= __( 'Card', 'doliconnect').' '.$method->reference;
 }
 if ( $method->default_source && empty($thirdparty->mode_reglement_id) && !in_array($method->type, array('PRE','VIR')) || (!empty($method->default_source) && !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id == $mode_reglement_code[0]->id ) ) { $paymentmethods .= " <i class='fas fa-star fa-fw' style='color:Gold'></i>"; }
-
-$paymentmethods .= '</h6><small class="text-muted">'.$method->holder.'</small></div></button></h2>';
-$paymentmethods .= '<div id="flush-collapseOne" class="accordion-collapse collapse show" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-      <div class="accordion-body">Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably havent heard of them accusamus labore sustainable VHS.</div>
-    </div>
-  </div>';
+$paymentmethods .= '</h6><small class="text-muted">'.$method->holder.'</small></div><span class="flag-icon flag-icon-'.strtolower($method->country).' float-end"></span></button></h2>';
+$paymentmethods .= '<div id="flush-collapse'.$method->id.'" class="accordion-collapse collapse';
+if ( $method->default_source && empty($thirdparty->mode_reglement_id) && !in_array($method->type, array('PRE','VIR')) || (!empty($method->default_source) && !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id == $mode_reglement_code[0]->id ) ) { $paymentmethods .= " show"; }
+$paymentmethods .= '" aria-labelledby="flush-heading'.$method->id.'" data-bs-parent="#accordionFlushExample"><div class="accordion-body">';
+$paymentmethods .= "<div class='row bg-light'><div class='col-12 col-sm-6'>
+  <dt>".__( 'Debtor', 'doliconnect')."</dt>
+  <dd>".__( 'Holder:', 'doliconnect')." ".$method->holder;
+if (isset($method->mandate->creation) && !empty($method->mandate->creation)) {
+$paymentmethods .= "<br>".__( 'Creation:', 'doliconnect');
+$paymentmethods .= " ".wp_date( 'j F Y', $method->mandate->creation, false); }
+if (isset($method->expiration) && !empty($method->expiration)) {
+$paymentmethods .= "<br>".__( 'Expiration:', 'doliconnect');
+$expdate =  explode("/", $method->expiration);
+$timestamp = mktime(0, 0, 0, (int) $expdate['1'], 0, (int) $expdate['0']);
+$paymentmethods .= " ".wp_date( 'F Y', $timestamp, false); }
+$paymentmethods .= "</dd>
+</div>";
+if (isset($method->mandate) && !empty($method->mandate)) { $paymentmethods .= "<div class='col-12 col-sm-6'>
+  <dt>".__( 'Mandate', 'doliconnect')."</dt>
+  <dd>".__( 'Reference:', 'doliconnect')." ";
+if (isset($method->mandate->url) && !empty($method->mandate->url)) { $paymentmethods .= "<a href='".$method->mandate->url."' target='_blank'>"; }
+$paymentmethods .= $method->mandate->reference;
+if (isset($method->mandate->url) && !empty($method->mandate->url)) { $paymentmethods .= "</a>"; }
+$paymentmethods .= "<br>".__( 'Type:', 'doliconnect')." ";
+if (($method->mandate->type == 'multi_use') || ($method->mandate->type == 'RECUR')) {
+$paymentmethods .= __( 'Recurring', 'doliconnect').' (RECUR)'; 
+} elseif (($method->mandate->type == 'single_use') || ($method->mandate->type == 'FRST')) {
+$paymentmethods .= __( 'Unique', 'doliconnect').' (FRST)';
+}
+$paymentmethods .= "</dd>
+</div>"; }
+$paymentmethods .= "</div>";
+$paymentmethods .= "<p class='text-justify'>";
+$paymentmethods .= "<small><b>".__( 'Payment term', 'doliconnect').":</b> ";
+if (!empty($thirdparty->cond_reglement_id)) { 
+$paymentmethods .= dolipaymentterm($thirdparty->cond_reglement_id);
+} else {
+$paymentmethods .= __( 'immediately', 'doliconnect');
+}
+$paymentmethods .= "</small>";
+//$paymentmethods .= "<small><strong>Note:</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+//tempor incididunt ut labore et dolore magna aliqua.</small>";
+$paymentmethods .= '</p></div><div class="d-grid gap-2">';
+if ( !empty($module) && is_object($object) && isset($object->id) ) {
+if ( $method->type == 'card' ) {
+$paymentmethods .= '<button type="button" onclick="PayCardPM(\''.$method->id.'\')" class="btn btn-danger btn-block">'.__( 'Pay', 'doliconnect')." ".doliprice($object, 'ttc', $currency).'</button>';
+} elseif ( $method->type == 'sepa_debit' ) {
+$paymentmethods .= '<button type="button" onclick="PaySepaDebitPM(\''.$method->id.'\')" class="btn btn-danger btn-clock">'.__( 'Pay', 'doliconnect')." ".doliprice($object, 'ttc', $currency).'</button>';
+} else {
+$paymentmethods .= '<button type="button" onclick="PayPM(\''.$method->type.'\')" class="btn btn-danger btn-block">'.__( 'Pay', 'doliconnect')." ".doliprice($object, 'ttc', $currency).'</button>';
+}
+$paymentmethods .= '</div>';
+} else {
+$paymentmethods .= '<div class="btn-group btn-block" role="group" aria-label="actions buttons">';
+if ( !isset($method->default_source) && !in_array($method->type, array('VIR')) && empty($thirdparty->mode_reglement_id) ) {
+$paymentmethods .= "<button type='button' id='defaultbtn_".$method->id."' name='default_payment_method' value='default_payment_method' class='btn btn-light'";
+$paymentmethods .= "title='".__( 'Favourite', 'doliconnect')."'><i class='fas fa-star fa-fw' style='color:Gold'></i> ".__( "Favourite", 'doliconnect')."</button>";
+}
+if ( (!isset($method->default_source) && $countPM > ($minPM+1)) || ($countPM == 1 && $minPM == 0) || in_array($method->type, array('VIR')) ) { 
+$paymentmethods .= "<button type='button' id='deletebtn_".$method->id."' name='delete_payment_method' value='delete_payment_method' class='btn btn-light'";
+$paymentmethods .= "title='".__( 'Delete', 'doliconnect')."'><i class='fas fa-trash fa-fw' style='color:Red'></i> ".__( 'Delete', 'doliconnect').'</button>';
+}
+$paymentmethods .= "</div>";
+}
+$paymentmethods .= '</div></div></div>';
 }}
-$paymentmethods .= '<div class="accordion-item">
-    <h2 class="accordion-header" id="flush-headingThree">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree" disabled>
-        Accordion Item #3
+
+if (isset($listpaymentmethods->stripe) && !empty(array_intersect(array('card','sepa_debit'), $listpaymentmethods->stripe->types)) && empty($thirdparty->mode_reglement_id) ) {
+$paymentmethods .= '<div class="accordion-item"><h2 class="accordion-header" id="flush-headingnewpm"><button class="accordion-button';
+if ( $method->default_source && empty($thirdparty->mode_reglement_id) && !in_array($method->type, array('PRE','VIR')) || (!empty($method->default_source) && !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id == $mode_reglement_code[0]->id ) ) { $paymentmethods .= ""; } else { $paymentmethods .= " collapsed"; }
+$paymentmethods .= '" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapsenewpm" aria-expanded="';
+if ( $method->default_source && empty($thirdparty->mode_reglement_id) && !in_array($method->type, array('PRE','VIR')) || (!empty($method->default_source) && !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id == $mode_reglement_code[0]->id ) ) { $paymentmethods .= "true"; } else { $paymentmethods .= "false"; }
+$paymentmethods .= '" aria-controls="flush-collapsenewpm"><i class="fas fa-plus-circle fa-3x fa-fw float-start"></i> ';
+if ( !empty($module) && is_object($object) && isset($object->id) ) {
+$paymentmethods .= __( 'Pay by credit/debit card', 'doliconnect');
+} else {
+$paymentmethods .= __( 'Add a payment method', 'doliconnect');
+}
+$paymentmethods .= '</button></h2>';
+if (empty($countPM)) {
+$paymentmethods .= ' active';
+}
+$paymentmethods .= '<div id="flush-collapsenewpm" class="accordion-collapse collapse" aria-labelledby="flush-headingnewpm" data-bs-parent="#accordionFlushExample"><div class="accordion-body">';
+
+
+$paymentmethods .= '</div></div></div>';
+}
+
+if ( isset($listpaymentmethods->PAYPAL) && !empty($listpaymentmethods->PAYPAL) ) {
+$paymentmethods .= '<li class="nav-item"><a class="nav-link" data-bs-toggle="pill" href="#nav-tab-paypal">
+<i class="fab fa-paypal float-start"></i> Paypal</a></li>';
+}
+if ( isset($listpaymentmethods->VIR) && !empty($listpaymentmethods->VIR) ) {
+$paymentmethods .= '<div class="accordion-item"><h2 class="accordion-header" id="flush-headingvir"><button class="accordion-button';
+if ( $method->default_source && empty($thirdparty->mode_reglement_id) && !in_array($method->type, array('PRE','VIR')) || (!empty($method->default_source) && !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id == $mode_reglement_code[0]->id ) ) { $paymentmethods .= ""; } else { $paymentmethods .= " collapsed"; }
+$paymentmethods .= '" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapsevir" aria-expanded="';
+if ( $method->default_source && empty($thirdparty->mode_reglement_id) && !in_array($method->type, array('PRE','VIR')) || (!empty($method->default_source) && !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id == $mode_reglement_code[0]->id ) ) { $paymentmethods .= "true"; } else { $paymentmethods .= "false"; }
+$paymentmethods .= '" aria-controls="flush-collapsevir"><i class="fas fa-university fa-3x fa-fw float-start" style="color:DarkGrey"></i> ';
+$paymentmethods .= __( 'Pay by bank transfert', 'doliconnect');
+if ( !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id == $mode_reglement_code[0]->id ) { $paymentmethods .= " <i class='fas fa-star fa-fw' style='color:Gold'></i>"; }
+$paymentmethods .= '</button></h2>';
+$paymentmethods .= '<div id="flush-collapsevir" class="accordion-collapse collapse" aria-labelledby="flush-headingvir" data-bs-parent="#accordionFlushExample"><div class="accordion-body">';
+
+$mode_reglement_code = callDoliApi("GET", "/setup/dictionary/payment_types?sortfield=code&sortorder=ASC&limit=100&active=1&sqlfilters=(t.code%3A%3D%3A'VIR')", null, dolidelay('constante'));
+if ( !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id == $mode_reglement_code[0]->id ) { $paymentmethods .=" show active"; }
+$paymentmethods .= "<div class='bg-light'>";
+if ( !empty($module) && is_object($object) && isset($object->id) ) {
+$paymentmethods .= "<p class='text-justify'>".sprintf( __( 'Please send your bank transfert in the amount of <b>%1$s</b> at the following account:', 'doliconnect'), doliprice($object, 'ttc', isset($object->multicurrency_code) ? $object->multicurrency_code : null))."</p>";
+} else {
+$paymentmethods .= "<p class='text-justify'>".__( 'Please send your bank transfert at the following account:', 'doliconnect')."</p>";
+}
+$paymentmethods .= "<div class='row'>";
+if (!empty($listpaymentmethods->VIR->bank)) { $paymentmethods .= "<div class='col-12 col-sm-6'>
+  <dt>".__( 'Bank', 'doliconnect')."</dt>
+  <dd>".$listpaymentmethods->VIR->bank."</dd>
+</div>"; }
+if (!empty($listpaymentmethods->VIR->number)) { $paymentmethods .= "<div class='col-12 col-sm-6'>
+  <dt>".__( 'Account', 'doliconnect')."</dt>
+  <dd>".$listpaymentmethods->VIR->number."</dd>
+</div>"; }
+if (!empty($listpaymentmethods->VIR->iban)) { $paymentmethods .= "<div class='col-12 col-sm-6'>
+  <dt>IBAN</dt>
+  <dd>".$listpaymentmethods->VIR->iban."</dd>
+</div>"; }
+if (!empty($listpaymentmethods->VIR->bic)) { $paymentmethods .= "<div class='col-12 col-sm-6'>
+  <dt>BIC/SWIFT</dt>
+  <dd>".$listpaymentmethods->VIR->bic."</dd>
+</div>"; }
+$paymentmethods .= "</div>";
+$paymentmethods .= "<p class='text-justify'>";
+$paymentmethods .= "<small><b>".__( 'Payment term', 'doliconnect').":</b> ";
+if (!empty($thirdparty->cond_reglement_id)) { 
+$paymentmethods .= dolipaymentterm($thirdparty->cond_reglement_id);
+} else {
+$paymentmethods .= __( 'immediately', 'doliconnect');
+}
+$paymentmethods .= '</small>';
+$paymentmethods .= '</p>';
+if ( !empty($module) && is_object($object) && isset($object->id) ) {
+$paymentmethods .= '<div class="d-grid gap-2"><button type="button" onclick="PayPM(\'VIR\')" class="btn btn-danger btn-block">'.__( 'Pay', 'doliconnect')." ".doliprice($object, 'ttc', $currency).'</button></div>';
+} 
+$paymentmethods .= '</div>';
+$paymentmethods .= '</div></div></div>';
+}
+
+if ( isset($listpaymentmethods->CHQ) && !empty($listpaymentmethods->CHQ) ) {
+$paymentmethods .= '<div class="accordion-item"><h2 class="accordion-header" id="flush-headingvir"><button class="accordion-button';
+if ( $method->default_source && empty($thirdparty->mode_reglement_id) && !in_array($method->type, array('PRE','VIR')) || (!empty($method->default_source) && !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id == $mode_reglement_code[0]->id ) ) { $paymentmethods .= ""; } else { $paymentmethods .= " collapsed"; }
+$paymentmethods .= '" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapsechq" aria-expanded="';
+if ( $method->default_source && empty($thirdparty->mode_reglement_id) && !in_array($method->type, array('PRE','VIR')) || (!empty($method->default_source) && !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id == $mode_reglement_code[0]->id ) ) { $paymentmethods .= "true"; } else { $paymentmethods .= "false"; }
+$paymentmethods .= '" aria-controls="flush-collapsechq"><i class="fa fa-money-check fa-3x fa-fw float-start" style="color:Tan"></i> ';
+$paymentmethods .= __( 'Pay by bank check', 'doliconnect');
+if ( !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id == $mode_reglement_code[0]->id ) { $paymentmethods .= " <i class='fas fa-star fa-fw' style='color:Gold'></i>"; }
+$paymentmethods .= '</button></h2>';
+$paymentmethods .= '<div id="flush-collapsechq" class="accordion-collapse collapse" aria-labelledby="flush-headingchq" data-bs-parent="#accordionFlushExample"><div class="accordion-body">';
+$mode_reglement_code = callDoliApi("GET", "/setup/dictionary/payment_types?sortfield=code&sortorder=ASC&limit=100&active=1&sqlfilters=(t.code%3A%3D%3A'CHQ')", null, dolidelay('constante'));
+if ( !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id == $mode_reglement_code[0]->id ) { $paymentmethods .=" show active"; }
+$paymentmethods .= "<div class='bg-light'>";
+if ( !empty($module) && is_object($object) && isset($object->id) ) {
+$paymentmethods .= "<p class='text-justify'>".sprintf( __( 'Please send your money check in the amount of <b>%1$s</b> to <b>%2$s</b> at the following address:', 'doliconnect'), doliprice($object, 'ttc', isset($object->multicurrency_code) ? $object->multicurrency_code : null), $listpaymentmethods->CHQ->proprio)."</p>";
+} else {
+$paymentmethods .= "<p class='text-justify'>".sprintf( __( 'Please send your money check to <b>%s</b> at the following address:', 'doliconnect'), $listpaymentmethods->CHQ->proprio)."</p>";
+}
+$paymentmethods .= "<div class='row'>";
+$paymentmethods .= "<div class='col-12'><dl class='param'>
+  <dt>Address</dt>
+  <dd>".$listpaymentmethods->CHQ->proprio." - ".$listpaymentmethods->CHQ->owner_address."</dd>
+</dl></div>";
+$paymentmethods .= "</div>";
+$paymentmethods .= "<p class='text-justify'>";
+$paymentmethods .= "<small><b>".__( 'Payment term', 'doliconnect').":</b> ";
+if (!empty($thirdparty->cond_reglement_id)) { 
+$paymentmethods .= dolipaymentterm($thirdparty->cond_reglement_id);
+} else {
+$paymentmethods .= __( 'immediately', 'doliconnect');
+}
+$paymentmethods .= "</small>";
+$paymentmethods .= '</p>';
+if ( !empty($module) && is_object($object) && isset($object->id) ) {
+$paymentmethods .= '<div class="d-grid gap-2"><button type="button" onclick="PayPM(\'CHQ\')" class="btn btn-danger btn-block">'.__( 'Pay', 'doliconnect')." ".doliprice($object, 'ttc', $currency).'</button></div>';
+}
+$paymentmethods .= '</div>';
+$paymentmethods .= '</div></div></div>';
+} 
+
+//if ( ! empty(dolikiosk()) ) {
+$paymentmethods .= '<div class="accordion-item"><h2 class="accordion-header" id="flush-headingThree">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+        <i class="fas fa-money-bill-alt fa-3x fa-fw float-start" style="color:#85bb65"></i> '.__( 'Pay at front desk', 'doliconnect').'
       </button>
     </h2>
     <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
       <div class="accordion-body">Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably havent heard of them accusamus labore sustainable VHS.</div>
     </div>
   </div>';
+//}
+  
+$paymentmethods .= '</div><div class="card-footer text-muted">';
+$paymentmethods .= '<small><div class="float-start">';
+$paymentmethods .= dolirefresh($request, $url, dolidelay('paymentmethods'));
+$paymentmethods .= '</div><div class="float-end">';
+$paymentmethods .= dolihelp('ISSUE');
+$paymentmethods .= '</div></small>';
 $paymentmethods .= '</div></div>';
 
 $paymentmethods .= '<br>';
@@ -1632,7 +1834,7 @@ $paymentmethods .= __( 'immediately', 'doliconnect');
 $paymentmethods .= "</small>";
 //$paymentmethods .= "<small><strong>Note:</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 //tempor incididunt ut labore et dolore magna aliqua.</small>";
-$paymentmethods .= '</p></div></div><div class="d-grid gap-2">';
+$paymentmethods .= '</p></div><div class="d-grid gap-2">';
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
 if ( $method->type == 'card' ) {
 $paymentmethods .= '<button type="button" onclick="PayCardPM(\''.$method->id.'\')" class="btn btn-danger btn-block">'.__( 'Pay', 'doliconnect')." ".doliprice($object, 'ttc', $currency).'</button>';
