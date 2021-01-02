@@ -493,7 +493,7 @@ $number_one = wp_rand( 1, 9 );
 $number_two = wp_rand( 1, 9 );
 print '<div class="form-floating">
 <input type="number" class="form-control" id="gdrf_data_human" placeholder="name@example.com" name="gdrf_data_human" value="" required>
-<label for="gdrf_data_human"><i class="fas fa-shield-alt"></i> '.__( 'Human verification:', 'doliconnect').' '.$number_one . ' + ' . $number_two . ' = ?</label>
+<label for="gdrf_data_human"><i class="fas fa-shield-alt fa-fw"></i> '.__( 'Human verification:', 'doliconnect').' '.$number_one . ' + ' . $number_two . ' = ?</label>
 </div><input type="hidden" name="gdrf_data_human_key" id="gdrf_data_human_key" value="'.$number_one . '000' . $number_two.'">';
 
 print "</li></lu><div class='card-body'>";
@@ -578,13 +578,13 @@ print '<div class="form-floating mb-3"><input type="email" class="form-control" 
 if ( defined("DOLICONNECT_DEMO") && defined("DOLICONNECT_DEMO_EMAIL") && !empty(constant("DOLICONNECT_DEMO_EMAIL")) ) {
 print constant("DOLICONNECT_DEMO_EMAIL");
 }
-print '" required autofocus><label for="user_login">'.__( 'Email', 'doliconnect-pro').'</label></div>';
+print '" required autofocus><label for="user_login"><i class="fas fa-at fa-fw"></i> '.__( 'Email', 'doliconnect-pro').'</label></div>';
 
 print '<div class="form-floating mb-3"><input type="password" class="form-control" id="user_pass" name="pwd" placeholder="Password" value="';
 if ( defined("DOLICONNECT_DEMO") && defined("DOLICONNECT_DEMO_PASSWORD") && !empty(constant("DOLICONNECT_DEMO_PASSWORD")) ) {
 print constant("DOLICONNECT_DEMO_PASSWORD");
 }
-print '" required><label for="user_pass">'.__( 'Password', 'doliconnect-pro').'</label></div>';
+print '" required><label for="user_pass"><i class="fas fa-key fa-fw"></i> '.__( 'Password', 'doliconnect-pro').'</label></div>';
 
 do_action( 'login_form' );
 

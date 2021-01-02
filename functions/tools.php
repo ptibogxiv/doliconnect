@@ -2280,13 +2280,13 @@ global $current_user;
 		<?php else : ?>
       <div class="form-floating mb-3">
           <input type="email" class="form-control" id="gdrf_data_email" name="gdrf_data_email" value="<?php echo $current_user->user_email; ?>" readonly>
-          <label for="gdrf_data_email"><?php echo esc_html( $args['label_input_email'] ); ?></label>
+          <label for="gdrf_data_email"><i class="fas fa-at fa-fw"></i> <?php echo esc_html( $args['label_input_email'] ); ?></label>
       </div>
 		<?php endif; ?> 
       
       <div class="form-floating">
           <input type="number" class="form-control" id="gdrf_data_human" name="gdrf_data_human" placeholder="name@example.com" value="" required>
-          <label for="gdrf_data_human"><i class="fas fa-shield-alt"></i> <?php echo esc_html( $args['label_input_captcha'] ); ?> <?php echo $number_one . ' + ' . $number_two . ' = ?'; ?></label>
+          <label for="gdrf_data_human"><i class="fas fa-shield-alt fa-fw"></i> <?php echo esc_html( $args['label_input_captcha'] ); ?> <?php echo $number_one . ' + ' . $number_two . ' = ?'; ?></label>
       </div>
       </li>
       </ul>
