@@ -1393,7 +1393,9 @@ $paymentmethods .= '</script>';
 //<div id='else' style='display: none' ><br><div style='display:inline-block;width:46%;float:left'><hr width='90%' /></div><div style='display:inline-block;width: 8%;text-align: center;vertical-align:90%'><small class='text-muted'>".__( 'or', 'doliconnect-pro' )."</small></div><div style='display:inline-block;width:46%;float:right' ><hr width='90%'/></div><br></div>";
 //} 
 
-$paymentmethods .= '<div class="card shadow-sm"><div class="card-header">'.__( 'Manage payment methods', 'doliconnect').'</div><div class="accordion accordion-flush" id="accordionFlushExample">';
+$paymentmethods .= '<div class="card shadow-sm">';
+if ( empty($module) ) { $paymentmethods .= '<div class="card-header">'.__( 'Manage payment methods', 'doliconnect').'</div>'; }
+$paymentmethods .= '<div class="accordion accordion-flush" id="accordionFlushExample">';
 if (empty($listpaymentmethods->payment_methods)) {
 $countPM = 0;
 } else {
@@ -1538,7 +1540,7 @@ $paymentmethods .= '" type="button" data-bs-toggle="collapse" data-bs-target="#f
 if (empty($countPM)) { $paymentmethods .= "true"; } else { $paymentmethods .= "false"; }
 $paymentmethods .= '" aria-controls="flush-collapsenewpm">';
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
-$paymentmethods .= '<i class="fas fa-plus-circle fa-3x fa-fw float-start"></i> '.__( 'Pay by credit/debit card', 'doliconnect');
+$paymentmethods .= '<i class="far fa-credit-card fa-3x fa-fw float-start"></i> '.__( 'Pay by bank card', 'doliconnect');
 } else {
 $paymentmethods .= '<i class="fas fa-plus-circle fa-3x fa-fw float-start"></i> '.__( 'Add a payment method', 'doliconnect');
 }
