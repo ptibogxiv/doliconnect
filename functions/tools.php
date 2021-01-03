@@ -1552,7 +1552,7 @@ if ($countPM >= $maxPM && empty($object)) {
 $paymentmethods .= '<div class="text-justify"><i class="fas fa-times-circle fa-3x fa-fw float-start"></i>'.__( "You have reached limit of payment methods. Please delete a payment method for add a new one.", 'doliconnect').'</div></div></div>';
 } else {
 if (empty($listpaymentmethods->stripe->live)) {
-$paymentmethods .= "<i class='fas fa-info-circle'></i> <b>".__( "Stripe's in sandbox mode", 'doliconnect')."</b> <small>(<a href='https://stripe.com/docs/testing#cards' target='_blank' rel='noopener'>".__( "Link to Test card numbers", 'doliconnect')."</a>)</small>";
+$paymentmethods .= "<i class='fas fa-info-circle'></i> <b>".__( "Stripe's in sandbox mode", 'doliconnect')."</b> <small>(<a href='https://stripe.com/docs/testing#cards' target='_blank' rel='noopener'>".__( "Link to test card numbers", 'doliconnect')."</a>)</small>";
 }
 $paymentmethods .= "<input id='cardholder-name' name='cardholder-name' value='' type='text' class='form-control' placeholder='".__( "Full name on the card", 'doliconnect')."' autocomplete='off' required>
 <label for='card-element'></label><div class='form-control' id='card-element'><!-- a Stripe Element will be inserted here. --></div>";
@@ -1770,35 +1770,22 @@ if ($countPM >= $maxPM && empty($object)) {
 $paymentmethods .= '<div class="text-justify"><i class="fas fa-times-circle fa-3x fa-fw float-start"></i>'.__( "You have reached limit of payment methods. Please delete a payment method for add a new one.", 'doliconnect').'</div></div></div>';
 } else {
 if (empty($listpaymentmethods->stripe->live)) {
-$paymentmethods .= "<i class='fas fa-info-circle'></i> <b>".__( "Stripe's in sandbox mode", 'doliconnect')."</b> <small>(<a href='https://stripe.com/docs/testing#cards' target='_blank' rel='noopener'>".__( "Link to Test card numbers", 'doliconnect')."</a>)</small>";
+$paymentmethods .= "<i class='fas fa-info-circle'></i> <b>".__( "Stripe's in sandbox mode", 'doliconnect')."</b> <small>(<a href='https://stripe.com/docs/testing#sepa-direct-debit' target='_blank' rel='noopener'>".__( "Link to test SEPA account numbers", 'doliconnect')."</a>)</small>";
 }
-$paymentmethods .= "<input id='cardholder-name' name='cardholder-name' value='' type='text' class='form-control' placeholder='".__( "Full name on the card", 'doliconnect')."' autocomplete='off' required>
-<label for='card-element'></label><div class='form-control' id='card-element'><!-- a Stripe Element will be inserted here. --></div>";
-$paymentmethods .= "<p><div id='card-error-message' class='text-danger' role='alert'><!-- a Stripe Message will be inserted here. --></div></p>";
-$paymentmethods .= '<p>';
+$paymentmethods .= "<input id='ibanholder-name' name='ibanholder-name' value='' type='text' class='form-control' placeholder='".__( "Full name of the owner", 'doliconnect')."' autocomplete='off' required>
+<label for='iban-element'></label><div class='form-control' id='iban-element'><!-- a Stripe Element will be inserted here. --></div>";
+$paymentmethods .= "<div id='bank-name' role='alert'><!-- a Stripe Message will be inserted here. --></div>";
+$paymentmethods .= "<div id='iban-error-message' class='text-danger' role='alert'><!-- a Stripe Message will be inserted here. --></div>";
+$paymentmethods .= "<p class='text-justify'>";
+$paymentmethods .= "<small><strong>Note:</strong> ".sprintf( esc_html__( 'By providing your IBAN and confirming this form, you are authorizing %s and Stripe, our payment service provider, to send instructions to your bank to debit your account and your bank to debit your account in accordance with those instructions. You are entitled to a refund from your bank under the terms and conditions of your agreement with it. A refund must be claimed within 8 weeks starting from the date on which your account was debited.', 'doliconnect'), get_bloginfo('name'))."</small>";
+$paymentmethods .= "</p>";
+$paymentmethods .= "<script>";
+$paymentmethods .= '</script><div class="d-grid gap-2">';
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
-$paymentmethods .= '<div class="form-check"><input type="radio" id="cardDefault0" name="cardDefault" value="0"  class="form-check-input" checked>
-<label class="form-check-label text-muted" for="cardDefault0">'.__( "Not save", 'doliconnect').'</label></div>';
+$paymentmethods .= "<button id='cardPayButton' class='btn btn-danger btn-block'>".__( 'Pay', 'doliconnect')." ".doliprice($object, 'ttc', isset($object->multicurrency_code) ? $object->multicurrency_code : null)."</button>";
+} else {
+$paymentmethods .= "<button id='cardButton' class='btn btn-warning btn-block' title='".__( 'Add', 'doliconnect')."'>".__( 'Add', 'doliconnect')."</button>";
 }
-if ($countPM < $maxPM) {
-$paymentmethods .= '<div class="form-check"><input type="radio" id="cardDefault1" name="cardDefault" value="1"  class="form-check-input"';
-if (empty($countPM)) {
-$paymentmethods .= ' disabled'; 
-} elseif (empty($object)) {
-$paymentmethods .= ' checked'; 
-}
-$paymentmethods .= '><label class="form-check-label text-muted" for="cardDefault1">'.__( "Save", 'doliconnect').'</label></div>';
-$paymentmethods .= '<div class="form-check">
-<input type="radio" id="cardDefault2" name="cardDefault" value="2" class="form-check-input"';
-if (empty($countPM)) {
-$paymentmethods .= ' checked'; 
-} 
-$paymentmethods .= '><label class="form-check-label text-muted" for="cardDefault2">'.__( "Save as favourite", 'doliconnect').'</label></div>';
-}
-$paymentmethods .= '</p>';
-$paymentmethods .= '<p class="text-justify">';
-$paymentmethods .= '<small><strong>Note:</strong> '.sprintf( esc_html__( 'By providing your card and confirming this form, you are authorizing %s and Stripe, our payment service provider, to send instructions to the financial institution that issued your card to take payments from your card account in accordance with those instructions. You are entitled to a refund from your financial institution under the terms and conditions of your agreement with it. A refund must be claimed within 90 days starting from the date on which your card was debited.', 'doliconnect'), get_bloginfo('name')).'</small>';
-$paymentmethods .= '</p>';
 $paymentmethods .= '<script>';
 $paymentmethods .= "function dolistripecard(){
 (function ($) {
