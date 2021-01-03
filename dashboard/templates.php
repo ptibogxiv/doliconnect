@@ -542,7 +542,7 @@ print '<ul class="list-group list-group-flush"><li class="list-group-item"><cent
 //print "<h2>".__( 'Restricted area', 'doliconnect')."</h2></center>";
 print "</center></li></lu><div class='card-body'>";
 
-print '<div class="d-grid gap-2 d-md-flex justify-content-md-end">';
+print '<div class="btn-group w-100" role="group" aria-label="actions buttons">';
 if ((!is_multisite() && get_option( 'users_can_register' )) || ((!is_multisite() && get_option( 'dolicustsupp_can_register' )) || ((get_option( 'dolicustsupp_can_register' ) || get_option('users_can_register') == '1') && (get_site_option( 'registration' ) == 'user' || get_site_option( 'registration' ) == 'all')))) {
 print '<a href="'.wp_registration_url( get_permalink() ).'" id="login-'.current_time('timestamp').'" title="'.__('Signup', 'doliconnect').'" class="btn btn-outline-secondary" role="button">'.__("You don't have an account", 'doliconnect').'</a>';
 }
