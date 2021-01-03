@@ -1417,7 +1417,7 @@ $paymentmethods .= '" type="button" data-bs-toggle="collapse" data-bs-target="#f
 if ( $method->default_source && empty($thirdparty->mode_reglement_id) && !in_array($method->type, array('PRE','VIR')) || (!empty($method->default_source) && !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id == $mode_reglement_code[0]->id ) ) { $paymentmethods .= "true"; } else { $paymentmethods .= "false"; }
 $paymentmethods .= '" aria-controls="flush-collapse'.$method->id.'">';
 $paymentmethods .= '<i ';
-if ( $method->type == 'sepa_debit' || $method->type == 'PRE' || $method->type == 'VIR' ) { $paymentmethods .= 'class="fas fa-university fa-fw float-start" style="color:DarkGrey"'; } 
+if ( $method->type == 'sepa_debit' || $method->type == 'PRE' || $method->type == 'VIR' ) { $paymentmethods .= 'class="fas fa-university fa-3x fa-fw float-start" style="color:DarkGrey"'; } 
 elseif ( $method->brand == 'visa' ) { $paymentmethods .= 'class="fab fa-cc-visa fa-3x fa-fw float-start" style="color:#172274"'; }
 else if ( $method->brand == 'mastercard' ) { $paymentmethods .= 'class="fab fa-cc-mastercard fa-3x fa-fw float-start" style="color:#FF5F01"'; }
 else if ( $method->brand == 'amex' ) { $paymentmethods .= 'class="fab fa-cc-amex fa-3x fa-fw float-start" style="color:#2E78BF"'; }
