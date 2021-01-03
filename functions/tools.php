@@ -1359,11 +1359,11 @@ $paymentmethods .= '<script>';
 $paymentmethods .= 'var style = {
   base: {
     color: "#32325d",
-    lineHeight: "18px",
+    lineHeight: "25px",
     fontSmoothing: "antialiased",
     fontSize: "16px",
     "::placeholder": {
-      color: "#aab7c4"
+      color: "#8d8d8d"
     }
   },
   invalid: {
@@ -1507,8 +1507,6 @@ $paymentmethods .= dolipaymentterm($thirdparty->cond_reglement_id);
 $paymentmethods .= __( 'immediately', 'doliconnect');
 }
 $paymentmethods .= "</small>";
-//$paymentmethods .= "<small><strong>Note:</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-//tempor incididunt ut labore et dolore magna aliqua.</small>";
 $paymentmethods .= '</p></div><div class="d-grid gap-2">';
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
 if ( $method->type == 'card' ) {
@@ -1521,11 +1519,11 @@ $paymentmethods .= '<button type="button" onclick="PayPM(\''.$method->type.'\')"
 } else {
 $paymentmethods .= '<div class="btn-group btn-block" role="group" aria-label="actions buttons">';
 if ( !isset($method->default_source) && !in_array($method->type, array('VIR')) && empty($thirdparty->mode_reglement_id) ) {
-$paymentmethods .= "<button type='button' id='defaultbtn_".$method->id."' name='default_payment_method' value='default_payment_method' class='btn btn-light'";
+$paymentmethods .= "<button type='button' id='defaultbtn_".$method->id."' name='default_payment_method' value='default_payment_method' class='btn btn-outline-secondary'";
 $paymentmethods .= "title='".__( 'Favourite', 'doliconnect')."'><i class='fas fa-star fa-fw' style='color:Gold'></i> ".__( "Favourite", 'doliconnect')."</button>";
 }
 if ( (!isset($method->default_source) && $countPM > ($minPM+1)) || ($countPM == 1 && $minPM == 0) || in_array($method->type, array('VIR')) ) { 
-$paymentmethods .= "<button type='button' id='deletebtn_".$method->id."' name='delete_payment_method' value='delete_payment_method' class='btn btn-light'";
+$paymentmethods .= "<button type='button' id='deletebtn_".$method->id."' name='delete_payment_method' value='delete_payment_method' class='btn btn-outline-secondary'";
 $paymentmethods .= "title='".__( 'Delete', 'doliconnect')."'><i class='fas fa-trash fa-fw' style='color:Red'></i> ".__( 'Delete', 'doliconnect').'</button>';
 }
 $paymentmethods .= "</div>";
@@ -1538,18 +1536,217 @@ $paymentmethods .= '<div class="accordion-item"><h2 class="accordion-header" id=
 if (empty($countPM)) { $paymentmethods .= ""; } else { $paymentmethods .= " collapsed"; }
 $paymentmethods .= '" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapsenewpm" aria-expanded="';
 if (empty($countPM)) { $paymentmethods .= "true"; } else { $paymentmethods .= "false"; }
-$paymentmethods .= '" aria-controls="flush-collapsenewpm"><i class="fas fa-plus-circle fa-3x fa-fw float-start"></i> ';
+$paymentmethods .= '" aria-controls="flush-collapsenewpm">';
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
-$paymentmethods .= __( 'Pay by credit/debit card', 'doliconnect');
+$paymentmethods .= '<i class="fas fa-plus-circle fa-3x fa-fw float-start"></i> '.__( 'Pay by credit/debit card', 'doliconnect');
 } else {
-$paymentmethods .= __( 'Add a payment method', 'doliconnect');
+$paymentmethods .= '<i class="fas fa-plus-circle fa-3x fa-fw float-start"></i> '.__( 'Add a payment method', 'doliconnect');
 }
 $paymentmethods .= '</button></h2>';
 $paymentmethods .= '<div id="flush-collapsenewpm" class="accordion-collapse collapse';
 if (empty($countPM)) { $paymentmethods .= " show"; }
 $paymentmethods .= '" aria-labelledby="flush-headingnewpm" data-bs-parent="#accordionFlushExample"><div class="accordion-body bg-light">';
+if ($countPM >= $maxPM && empty($object)) {
+$paymentmethods .= '<div class="text-justify"><i class="fas fa-times-circle fa-3x fa-fw float-start"></i>'.__( "You have reached limit of payment methods. Please delete a payment method for add a new one.", 'doliconnect').'</div></div></div>';
+} else {
+if (empty($listpaymentmethods->stripe->live)) {
+$paymentmethods .= "<i class='fas fa-info-circle'></i> <b>".__( "Stripe's in sandbox mode", 'doliconnect')."</b> <small>(<a href='https://stripe.com/docs/testing#cards' target='_blank' rel='noopener'>".__( "Link to Test card numbers", 'doliconnect')."</a>)</small>";
+}
+$paymentmethods .= "<input id='cardholder-name' name='cardholder-name' value='' type='text' class='form-control' placeholder='".__( "Full name on the card", 'doliconnect')."' autocomplete='off' required>
+<label for='card-element'></label><div class='form-control' id='card-element'><!-- a Stripe Element will be inserted here. --></div>";
+$paymentmethods .= "<p><div id='card-error-message' class='text-danger' role='alert'><!-- a Stripe Message will be inserted here. --></div></p>";
+$paymentmethods .= '<p>';
+if ( !empty($module) && is_object($object) && isset($object->id) ) {
+$paymentmethods .= '<div class="form-check"><input type="radio" id="cardDefault0" name="cardDefault" value="0"  class="form-check-input" checked>
+<label class="form-check-label text-muted" for="cardDefault0">'.__( "Not save", 'doliconnect').'</label></div>';
+}
+if ($countPM < $maxPM) {
+$paymentmethods .= '<div class="form-check"><input type="radio" id="cardDefault1" name="cardDefault" value="1"  class="form-check-input"';
+if (empty($countPM)) {
+$paymentmethods .= ' disabled'; 
+} elseif (empty($object)) {
+$paymentmethods .= ' checked'; 
+}
+$paymentmethods .= '><label class="form-check-label text-muted" for="cardDefault1">'.__( "Save", 'doliconnect').'</label></div>';
+$paymentmethods .= '<div class="form-check">
+<input type="radio" id="cardDefault2" name="cardDefault" value="2" class="form-check-input"';
+if (empty($countPM)) {
+$paymentmethods .= ' checked'; 
+} 
+$paymentmethods .= '><label class="form-check-label text-muted" for="cardDefault2">'.__( "Save as favourite", 'doliconnect').'</label></div>';
+}
+$paymentmethods .= '</p>';
+$paymentmethods .= '<p class="text-justify">';
+$paymentmethods .= '<small><strong>Note:</strong> '.sprintf( esc_html__( 'By providing your card and confirming this form, you are authorizing %s and Stripe, our payment service provider, to send instructions to the financial institution that issued your card to take payments from your card account in accordance with those instructions. You are entitled to a refund from your financial institution under the terms and conditions of your agreement with it. A refund must be claimed within 90 days starting from the date on which your card was debited.', 'doliconnect'), get_bloginfo('name')).'</small>';
+$paymentmethods .= '</p>';
+$paymentmethods .= '<script>';
+$paymentmethods .= "function dolistripecard(){
+(function ($) {
+$(document).ready(function(){";
+$paymentmethods .= "var cardElement = elements.create('card', {style: style});
+cardElement.mount('#card-element');
+var cardholderName = document.getElementById('cardholder-name');
+cardholderName.value = '';
+var displayCardError = document.getElementById('card-error-message');
+displayCardError.textContent = '';
+cardElement.on('change', function(event) {
+    console.log('Reset error message');
+    displayCardError.textContent = '';
+  if (event.error) {
+    displayCardError.textContent = event.error.message;
+    displayCardError.classList.add('visible');
+  } else {
+    displayCardError.textContent = '';
+    displayCardError.classList.remove('visible');
+  }
+});";
+if ( !empty($module) && is_object($object) && isset($object->id) ) {
+// pay with card script
+$paymentmethods .= "$('#PayCardButton').on('click',function(event){
+event.preventDefault();
+$('#PayCardButton').disabled = true;
+$('#DoliconnectLoadingModal').modal('show');
+console.log('Click on PayCardButton');
+var cardholderName = document.getElementById('cardholder-name');
+if (cardholderName.value == ''){               
+console.log('Field Card holder is empty');
+displayCardError.textContent = 'We need an owner as on your card';
+$('#PayCardButton').disabled = false;
+$('#DoliconnectLoadingModal').modal('hide');  
+} else {
+if (document.getElementById('DoliPaymentmethodAlert')) {
+document.getElementById('DoliPaymentmethodAlert').innerHTML = '';      
+}  
+  stripe.confirmCardPayment(
+    clientSecret,
+    {
+      payment_method: {
+        card: cardElement,
+        billing_details: {name: cardholderName.value}
+      }
+    }
+  ).then(function(result) {
+    if (result.error) {
+      // Display error.message
+$('#DoliconnectLoadingModal').modal('hide');
+console.log('Error occured when using card');
+displayCardError.textContent = result.error.message;    
+    } else {
+        $.ajax({
+          url: '".esc_url( admin_url( 'admin-ajax.php' ) )."',
+          type: 'POST',
+          data: {
+            'action': 'dolicart_request',
+            'dolicart-nonce': '".wp_create_nonce( 'dolicart-nonce')."',
+            'action_cart': 'pay_cart',
+            'module': '".$module."',
+            'id': '".$object->id."',
+            'paymentintent': result.paymentIntent.id,
+            'paymentmethod': result.paymentIntent.payment_method, 
+            'default': $('input:radio[name=cardDefault]:checked').val()       
+          }
+        }).done(function(response) {
+$(window).scrollTop(0); 
+console.log(response.data);
+if (response.success) {
 
-$paymentmethods .= '</div></div></div>';
+if (document.getElementById('nav-tab-pay')) {
+document.getElementById('nav-tab-pay').innerHTML = response.data;      
+}
+$('#a-tab-cart').addClass('disabled');
+if (document.getElementById('nav-tab-cart')) {
+document.getElementById('nav-tab-cart').remove();    
+}
+$('#a-tab-info').addClass('disabled')
+if (document.getElementById('nav-tab-info')) {
+document.getElementById('nav-tab-info').remove();    
+};
+
+} else {
+
+if (document.getElementById('DoliPaymentmethodAlert')) {
+document.getElementById('DoliPaymentmethodAlert').innerHTML = response.data;      
+}
+
+}
+console.log(response.data.message);
+$('#DoliconnectLoadingModal').modal('hide');
+});
+}
+});
+        }     
+});";
+} else {
+// add a card
+$paymentmethods .= "$('#AddCardButton').on('click',function(event){
+event.preventDefault();
+$('#AddCardButton').disabled = true;
+$('#DoliconnectLoadingModal').modal('show');
+console.log('Click on AddCardButton');
+var cardholderName = document.getElementById('cardholder-name');
+if (cardholderName.value == ''){               
+console.log('Field Card holder is empty');
+displayCardError.textContent = 'We need an owner as on your card';
+$('#AddCardButton').disabled = false;
+$('#DoliconnectLoadingModal').modal('hide');  
+} else {
+  stripe.confirmCardSetup(
+    clientSecret,
+    {
+      payment_method: {
+        card: cardElement,
+        billing_details: {name: cardholderName.value}
+      }
+    }
+  ).then(function(result) {
+    if (result.error) {
+$('#DoliconnectLoadingModal').modal('hide');
+$('#AddCardButton').disabled = false;
+console.log('Error occured when adding card');
+displayCardError.textContent = result.error.message;    
+    } else {
+        $.ajax({
+          url: '".esc_url( admin_url( 'admin-ajax.php' ) )."',
+          type: 'POST',
+          data: {
+            'action': 'dolipaymentmethod_request',
+            'dolipaymentmethod-nonce': '".wp_create_nonce( 'dolipaymentmethod-nonce')."',
+            'payment_method': result.setupIntent.payment_method,
+            'action_payment_method': 'add_payment_method',
+            'default': $('input:radio[name=cardDefault]:checked').val()
+          }
+        }).done(function(response) {
+$(window).scrollTop(0);
+console.log(response.data); 
+      if (response.success) {
+      if (document.getElementById('DoliPaymentmethodAlert')) {
+      document.getElementById('DoliPaymentmethodAlert').innerHTML = response.data;      
+      }
+document.location = '".$url."';
+      } else {
+      if (document.getElementById('DoliPaymentmethodAlert')) {
+      document.getElementById('DoliPaymentmethodAlert').innerHTML = response.data;      
+      }
+$('#DoliconnectLoadingModal').modal('hide');
+      }
+        });
+    }
+  }); 
+          }     
+});";
+}
+$paymentmethods .= "});
+})(jQuery);";
+$paymentmethods .= '}';
+$paymentmethods .= 'window.onload=dolistripecard();';
+$paymentmethods .= '</script><div class="d-grid gap-2">';
+if ( !empty($module) && is_object($object) && isset($object->id) ) {
+$paymentmethods .= "<button type='button' id='PayCardButton' class='btn btn-danger'>".__( 'Pay', 'doliconnect')." ".doliprice($object, 'ttc', isset($object->multicurrency_code) ? $object->multicurrency_code : null)."</button>";
+} else {
+$paymentmethods .= "<button type='button' id='AddCardButton' class='btn btn-outline-secondary' title='".__( 'Add', 'doliconnect')."'>".__( 'Add', 'doliconnect')."</button>";
+}
+}
+$paymentmethods .= '</div></div></div></div>';
 }
 
 if ( isset($listpaymentmethods->PAYPAL) && !empty($listpaymentmethods->PAYPAL) ) {
@@ -1647,7 +1844,7 @@ $paymentmethods .= '<div class="d-grid gap-2"><button type="button" onclick="Pay
 $paymentmethods .= '</div></div></div>';
 } 
 
-//if ( ! empty(dolikiosk()) ) {
+if ( ! empty(dolikiosk()) ) {
 $paymentmethods .= '<div class="accordion-item"><h2 class="accordion-header" id="flush-headingThree">
       <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
         <i class="fas fa-money-bill-alt fa-3x fa-fw float-start" style="color:#85bb65"></i> '.__( 'Pay at front desk', 'doliconnect').'
@@ -1657,7 +1854,7 @@ $paymentmethods .= '<div class="accordion-item"><h2 class="accordion-header" id=
       <div class="accordion-body bg-light">Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably havent heard of them accusamus labore sustainable VHS.</div>
     </div>
   </div>';
-//}
+}
   
 $paymentmethods .= '</div><div class="card-footer text-muted">';
 $paymentmethods .= '<small><div class="float-start">';
@@ -2413,15 +2610,6 @@ $('#DoliconnectLoadingModal').modal('hide');
 }";
 $paymentmethods .= "</script>";
 }
-/**
-$paymentmethods .= "</div></div><div class='card-footer text-muted'>";
-$paymentmethods .= "<small><div class='float-start'>";
-$paymentmethods .= dolirefresh($request, $url, dolidelay('paymentmethods'));
-$paymentmethods .= "</div><div class='float-end'>";
-$paymentmethods .= dolihelp('ISSUE');
-$paymentmethods .= "</div></small>";
-$paymentmethods .= "</div></div>";
-*/
 return $paymentmethods;
 }
 
