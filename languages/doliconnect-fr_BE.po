@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2021-01-01 22:46+0100\n"
-"PO-Revision-Date: 2021-01-01 22:46+0100\n"
+"POT-Creation-Date: 2021-01-03 14:26+0100\n"
+"PO-Revision-Date: 2021-01-03 14:26+0100\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_FR\n"
@@ -21,7 +21,7 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: includes\n"
 
-#: admin/admin.php:7 dashboard/templates.php:1815
+#: admin/admin.php:7 dashboard/templates.php:1812
 msgid ""
 "It seems that your version of Dolibarr and/or its plugins are not up to date!"
 msgstr ""
@@ -445,8 +445,7 @@ msgstr "Retour"
 msgid "Create contact"
 msgstr "Créer un contact"
 
-#: dashboard/dashboard.php:358 functions/tools.php:1859
-#: functions/tools.php:1885
+#: dashboard/dashboard.php:358 functions/tools.php:1748
 msgid "Add"
 msgstr "Ajouter"
 
@@ -454,8 +453,7 @@ msgstr "Ajouter"
 msgid "No contact"
 msgstr "Pas de contact"
 
-#: dashboard/dashboard.php:414 functions/tools.php:1396
-#: functions/tools.php:1431
+#: dashboard/dashboard.php:414 functions/tools.php:1397
 msgid "Manage payment methods"
 msgstr "Gérer les modes de paiement"
 
@@ -567,8 +565,7 @@ msgid "Payment method"
 msgstr "Mode de paiement"
 
 #: dashboard/dashboard.php:665 dashboard/dashboard.php:980
-#: functions/tools.php:1622 functions/tools.php:1897 functions/tools.php:1938
-#: functions/tools.php:1969
+#: functions/tools.php:1505 functions/tools.php:1796 functions/tools.php:1835
 msgid "Payment term"
 msgstr "Conditions de règlement"
 
@@ -594,7 +591,7 @@ msgstr ""
 
 #: dashboard/dashboard.php:691 dashboard/dashboard.php:1006
 #: dashboard/templates.php:1350 dashboard/templates.php:1468
-#: functions/tools.php:1921
+#: functions/tools.php:1779
 msgid "Bank"
 msgstr "Banque"
 
@@ -652,9 +649,8 @@ msgstr "Facture"
 
 #: dashboard/dashboard.php:814 dashboard/dashboard.php:818
 #: dashboard/dashboard.php:1129 dashboard/dashboard.php:1133
-#: functions/tools.php:1634 functions/tools.php:1636 functions/tools.php:1638
-#: functions/tools.php:1857 functions/tools.php:1883 functions/tools.php:1947
-#: functions/tools.php:1978
+#: functions/tools.php:1515 functions/tools.php:1517 functions/tools.php:1519
+#: functions/tools.php:1746 functions/tools.php:1805 functions/tools.php:1844
 msgid "Pay"
 msgstr "Payer"
 
@@ -967,7 +963,7 @@ msgid "Initial message"
 msgstr "Message initial"
 
 #: dashboard/dashboard.php:1980 dashboard/dashboard.php:2104
-#: dashboard/templates.php:749 dashboard/templates.php:1747
+#: dashboard/templates.php:749 dashboard/templates.php:1748
 msgid "Message"
 msgstr "Message"
 
@@ -1053,7 +1049,7 @@ msgstr "Description"
 msgid "Two factor authentication is disabled"
 msgstr "L’authentification à deux facteurs est désactivée"
 
-#: dashboard/dashboard.php:2368 functions/tools.php:2231
+#: dashboard/dashboard.php:2368 functions/tools.php:2651
 msgid "Privacy"
 msgstr "Confidentialité"
 
@@ -1145,7 +1141,7 @@ msgstr ""
 "trouvez pas notre message."
 
 #: dashboard/templates.php:349 dashboard/templates.php:359
-#: dashboard/templates.php:601 functions/tools.php:2375
+#: dashboard/templates.php:601 functions/tools.php:2795
 msgid "Create an account"
 msgstr "Créer un compte"
 
@@ -1154,7 +1150,7 @@ msgid "No account seems to be linked to this email address"
 msgstr "Aucun compte ne semble être lié à cet adresse email"
 
 #: dashboard/templates.php:480 dashboard/templates.php:603
-#: functions/tools.php:2377
+#: functions/tools.php:2797
 msgid "Forgot password?"
 msgstr "Mot de passe oublié?"
 
@@ -1166,11 +1162,11 @@ msgstr ""
 
 #: dashboard/templates.php:488 dashboard/templates.php:581
 #: dashboard/templates.php:718 dashboard/templates.php:723
-#: functions/tools.php:547 functions/tools.php:2212 functions/tools.php:2355
+#: functions/tools.php:547 functions/tools.php:2632 functions/tools.php:2775
 msgid "Email"
 msgstr "Adresse électronique"
 
-#: dashboard/templates.php:496 functions/tools.php:702 functions/tools.php:2213
+#: dashboard/templates.php:496 functions/tools.php:702 functions/tools.php:2633
 msgid "Human verification:"
 msgstr "Vérification humaine :"
 
@@ -1202,11 +1198,11 @@ msgstr "La clé de sécurité est expirée!"
 msgid "The security key is invalid!"
 msgstr "La clé de sécurité est invalide!"
 
-#: dashboard/templates.php:533 functions/tools.php:2322
+#: dashboard/templates.php:533 functions/tools.php:2742
 msgid "Welcome"
 msgstr "Bienvenue"
 
-#: dashboard/templates.php:535 functions/tools.php:2324
+#: dashboard/templates.php:535 functions/tools.php:2744
 msgid "Access restricted to users"
 msgstr "Accès restreint aux utilisateurs"
 
@@ -1219,7 +1215,7 @@ msgid "You don't have an account"
 msgstr "Vous n'avez pas de compte"
 
 #: dashboard/templates.php:549 dashboard/templates.php:612
-#: functions/product.php:540 functions/tools.php:2388
+#: functions/product.php:540 functions/tools.php:2808
 msgid "Sign in"
 msgstr "Connexion"
 
@@ -1227,15 +1223,15 @@ msgstr "Connexion"
 msgid "You have already an account"
 msgstr "Vous avez déjà un compte"
 
-#: dashboard/templates.php:575 functions/tools.php:2349
+#: dashboard/templates.php:575 functions/tools.php:2769
 msgid "Demo mode is activated"
 msgstr "Le mode démo est activé"
 
-#: dashboard/templates.php:587 functions/tools.php:688 functions/tools.php:2361
+#: dashboard/templates.php:587 functions/tools.php:688 functions/tools.php:2781
 msgid "Password"
 msgstr "Mot de passe"
 
-#: dashboard/templates.php:593 functions/tools.php:2367
+#: dashboard/templates.php:593 functions/tools.php:2787
 msgid "Remember me"
 msgstr "Se souvenir de moi"
 
@@ -1434,14 +1430,14 @@ msgstr ""
 "L’ajout de contacts de facturation ou d’expédition nécessite Dolibarr %s "
 "mais votre version est %s"
 
-#: dashboard/templates.php:1748
+#: dashboard/templates.php:1749
 msgid ""
 "If you want to send us a message about your order, you can leave one here"
 msgstr ""
 "Si vous voulez nous envoyer un message sur votre commande, vous pouvez en "
 "laisser un ici"
 
-#: dashboard/templates.php:1799
+#: dashboard/templates.php:1796
 msgid "Validate"
 msgstr "Valider"
 
@@ -1729,7 +1725,7 @@ msgid "Unavailable"
 msgstr "Indisponible"
 
 #: functions/product.php:509 functions/product.php:511 functions/tools.php:1093
-#: functions/tools.php:1095 functions/tools.php:1649
+#: functions/tools.php:1095 functions/tools.php:1529
 msgid "Delete"
 msgstr "Supprimer"
 
@@ -2129,80 +2125,67 @@ msgstr "le %s du mois"
 msgid "Choose your language"
 msgstr "Choisir votre langue"
 
-#: functions/tools.php:1459 functions/tools.php:1491 functions/tools.php:1925
+#: functions/tools.php:1427 functions/tools.php:1783
 msgid "Account"
 msgstr "Compte"
 
-#: functions/tools.php:1461 functions/tools.php:1493
+#: functions/tools.php:1429
 msgid "Card"
 msgstr "Carte"
 
-#: functions/tools.php:1506
-msgid "Pay by credit/debit card"
-msgstr "Payer par carte de crédit/débit"
-
-#: functions/tools.php:1508
-msgid "Add a payment method"
-msgstr "Ajouter un mode de paiement"
-
-#: functions/tools.php:1523
-msgid "Pay by bank transfert"
-msgstr "Payer par virement bancaire"
-
-#: functions/tools.php:1533
-msgid "Pay by bank check"
-msgstr "Payer par chèque bancaire"
-
-#: functions/tools.php:1539
-msgid "Pay at front desk"
-msgstr "Payer à la réception"
-
-#: functions/tools.php:1594
+#: functions/tools.php:1477
 msgid "Debtor"
 msgstr "Débiteur"
 
-#: functions/tools.php:1595
+#: functions/tools.php:1478
 msgid "Holder:"
 msgstr "Titulaire:"
 
-#: functions/tools.php:1597
+#: functions/tools.php:1480
 msgid "Creation:"
 msgstr "Création:"
 
-#: functions/tools.php:1600
+#: functions/tools.php:1483
 msgid "Expiration:"
 msgstr "Expiration:"
 
-#: functions/tools.php:1607
+#: functions/tools.php:1490
 msgid "Mandate"
 msgstr "Mandat"
 
-#: functions/tools.php:1608
+#: functions/tools.php:1491
 msgid "Reference:"
 msgstr "Référence:"
 
-#: functions/tools.php:1612
+#: functions/tools.php:1495
 msgid "Type:"
 msgstr "Type:"
 
-#: functions/tools.php:1614
+#: functions/tools.php:1497
 msgid "Recurring"
 msgstr "Récurrent"
 
-#: functions/tools.php:1616
+#: functions/tools.php:1499
 msgid "Unique"
 msgstr "Unique"
 
-#: functions/tools.php:1626 functions/tools.php:1901 functions/tools.php:1942
-#: functions/tools.php:1973
+#: functions/tools.php:1509 functions/tools.php:1800 functions/tools.php:1839
 msgid "immediately"
 msgstr "immédiatement"
 
-#: functions/tools.php:1645
+#: functions/tools.php:1525
 msgid "Favourite"
 msgstr "Favori"
 
-#: functions/tools.php:1663
+#: functions/tools.php:1543
+msgid "Pay by bank card"
+msgstr "Payer par carte bancaire"
+
+#: functions/tools.php:1545
+msgid "Add a payment method"
+msgstr "Ajouter un mode de paiement"
+
+#: functions/tools.php:1552
 msgid ""
 "You have reached limit of payment methods. Please delete a payment method "
 "for add a new one."
@@ -2210,31 +2193,31 @@ msgstr ""
 "Vous avez atteint la limite de modes de paiement. Veuillez supprimer un mode "
 "de paiement pour en ajouter un nouveau."
 
-#: functions/tools.php:1666
+#: functions/tools.php:1555
 msgid "Stripe's in sandbox mode"
 msgstr "Stripe est en mode bac à sable"
 
-#: functions/tools.php:1666
+#: functions/tools.php:1555
 msgid "Link to Test card numbers"
 msgstr "Lien vers les numéros de carte de test"
 
-#: functions/tools.php:1668
+#: functions/tools.php:1557
 msgid "Full name on the card"
 msgstr "Nom complet sur la carte"
 
-#: functions/tools.php:1674
+#: functions/tools.php:1563
 msgid "Not save"
 msgstr "Pas d'enregistrement"
 
-#: functions/tools.php:1683
+#: functions/tools.php:1572
 msgid "Save"
 msgstr "Enregistrer"
 
-#: functions/tools.php:1689
+#: functions/tools.php:1578
 msgid "Save as favourite"
 msgstr "Enregistrer comme favori"
 
-#: functions/tools.php:1693
+#: functions/tools.php:1582
 #, php-format
 msgid ""
 "By providing your card and confirming this form, you are authorizing %s and "
@@ -2253,29 +2236,11 @@ msgstr ""
 "conditions de votre accord avec elle. Un remboursement doit être demandé "
 "dans les 90 jours à compter de la date à laquelle votre carte a été débitée."
 
-#: functions/tools.php:1873
-msgid "Full name of the owner"
-msgstr "Nom complet du propriétaire"
+#: functions/tools.php:1764
+msgid "Pay by bank transfert"
+msgstr "Payer par virement bancaire"
 
-#: functions/tools.php:1878
-#, php-format
-msgid ""
-"By providing your IBAN and confirming this form, you are authorizing %s and "
-"Stripe, our payment service provider, to send instructions to your bank to "
-"debit your account and your bank to debit your account in accordance with "
-"those instructions. You are entitled to a refund from your bank under the "
-"terms and conditions of your agreement with it. A refund must be claimed "
-"within 8 weeks starting from the date on which your account was debited."
-msgstr ""
-"En fournissant votre IBAN et en confirmant ce formulaire, vous autorisez %s "
-"et Stripe, notre fournisseur de services de paiement, à envoyer des "
-"instructions à votre banque pour débiter votre compte et votre banque pour "
-"débiter votre compte conformément à ces instructions. Vous avez droit à un "
-"remboursement de votre banque aux termes et conditions de votre accord avec "
-"elle. Un remboursement doit être demandé dans les 8 semaines à partir de la "
-"date à laquelle votre compte a été débité."
-
-#: functions/tools.php:1915
+#: functions/tools.php:1773
 #, php-format
 msgid ""
 "Please send your bank transfert in the amount of <b>%1$s</b> at the "
@@ -2284,11 +2249,15 @@ msgstr ""
 "Veuillez envoyer votre virement bancaire au montant de <b>%1$s</b> au compte "
 "suivant:"
 
-#: functions/tools.php:1917
+#: functions/tools.php:1775
 msgid "Please send your bank transfert at the following account:"
 msgstr "Veuillez envoyer votre virement au compte suivant :"
 
-#: functions/tools.php:1958
+#: functions/tools.php:1816
+msgid "Pay by bank check"
+msgstr "Payer par chèque bancaire"
+
+#: functions/tools.php:1824
 #, php-format
 msgid ""
 "Please send your money check in the amount of <b>%1$s</b> to <b>%2$s</b> at "
@@ -2297,58 +2266,62 @@ msgstr ""
 "Veuillez envoyer votre chèque d'un montant de <b>%1$s</b> à <b>%2$s</b> à "
 "l’adresse suivante:"
 
-#: functions/tools.php:1960
+#: functions/tools.php:1826
 #, php-format
 msgid "Please send your money check to <b>%s</b> at the following address:"
 msgstr ""
 "Veuillez envoyer votre chèque à l'ordre de <b>%s</b> à l’adresse suivante:"
 
-#: functions/tools.php:2209
+#: functions/tools.php:1852
+msgid "Pay at front desk"
+msgstr "Payer à la réception"
+
+#: functions/tools.php:2629
 msgid "Select your request:"
 msgstr "Sélectionnez votre demande :"
 
-#: functions/tools.php:2210
+#: functions/tools.php:2630
 msgid "Export Personal Data"
 msgstr "Exporter vos données personnelles"
 
-#: functions/tools.php:2211
+#: functions/tools.php:2631
 msgid "Remove Personal Data"
 msgstr "Supprimer vos données personnelles"
 
-#: functions/tools.php:2214
+#: functions/tools.php:2634
 msgid "Send Request"
 msgstr "Envoyer la demande"
 
-#: functions/tools.php:2245
+#: functions/tools.php:2665
 msgid "Export your data"
 msgstr "Exportez vos données"
 
-#: functions/tools.php:2245
+#: functions/tools.php:2665
 msgid "You will receive an email with a secure link to your data"
 msgstr "Vous recevrez un e-mail avec un lien sécurisé vers vos données"
 
-#: functions/tools.php:2255
+#: functions/tools.php:2675
 msgid "Erase your data"
 msgstr "Effacer vos données"
 
-#: functions/tools.php:2255
+#: functions/tools.php:2675
 msgid "You will receive an email with a secure link to confirm the deletion"
 msgstr ""
 "Vous recevrez un e-mail avec un lien sécurisé pour confirmer la suppression"
 
-#: functions/tools.php:2266
+#: functions/tools.php:2686
 msgid "Delete your account"
 msgstr "Supprimer votre compte"
 
-#: functions/tools.php:2266
+#: functions/tools.php:2686
 msgid "Soon, you will be able to delete your account"
 msgstr "Bientôt, vous pourrez supprimer votre compte"
 
-#: functions/tools.php:2294
+#: functions/tools.php:2714
 msgid "Validate the request"
 msgstr "Valider la demande"
 
-#: functions/tools.php:2302
+#: functions/tools.php:2722
 msgid "This plugin requires WordPress 4.9.6."
 msgstr "Ce plugin nécessite WordPress 4.9.6."
 
@@ -2420,6 +2393,30 @@ msgstr "ptibogxiv"
 #. Author URI of the plugin/theme
 msgid "https://www.ptibogxiv.net/en"
 msgstr "https://www.ptibogxiv.net/fr"
+
+#~ msgid "Pay by credit/debit card"
+#~ msgstr "Payer par carte de crédit/débit"
+
+#~ msgid "Full name of the owner"
+#~ msgstr "Nom complet du propriétaire"
+
+#, php-format
+#~ msgid ""
+#~ "By providing your IBAN and confirming this form, you are authorizing %s "
+#~ "and Stripe, our payment service provider, to send instructions to your "
+#~ "bank to debit your account and your bank to debit your account in "
+#~ "accordance with those instructions. You are entitled to a refund from "
+#~ "your bank under the terms and conditions of your agreement with it. A "
+#~ "refund must be claimed within 8 weeks starting from the date on which "
+#~ "your account was debited."
+#~ msgstr ""
+#~ "En fournissant votre IBAN et en confirmant ce formulaire, vous autorisez "
+#~ "%s et Stripe, notre fournisseur de services de paiement, à envoyer des "
+#~ "instructions à votre banque pour débiter votre compte et votre banque "
+#~ "pour débiter votre compte conformément à ces instructions. Vous avez "
+#~ "droit à un remboursement de votre banque aux termes et conditions de "
+#~ "votre accord avec elle. Un remboursement doit être demandé dans les 8 "
+#~ "semaines à partir de la date à laquelle votre compte a été débité."
 
 #~ msgid "Confirm your current password"
 #~ msgstr "Confirmez votre mot de passe actuel"
@@ -2612,9 +2609,6 @@ msgstr "https://www.ptibogxiv.net/fr"
 #, php-format
 #~ msgid "Your search: %s"
 #~ msgstr "Votre recherche: %s"
-
-#~ msgid "Pay by bank card"
-#~ msgstr "Payer par carte bancaire"
 
 #~ msgid "Pay by levy"
 #~ msgstr "Payer par prélèvement"
