@@ -1430,7 +1430,7 @@ if ( $method->default_source && empty($thirdparty->mode_reglement_id) && !in_arr
 $paymentmethods .= '</h6><small class="text-muted">'.$method->holder.'</small></div><span class="flag-icon flag-icon-'.strtolower($method->country).' float-end"></span></button></h2>';
 $paymentmethods .= '<div id="flush-collapse'.$method->id.'" class="accordion-collapse collapse';
 if ( $method->default_source && empty($thirdparty->mode_reglement_id) && !in_array($method->type, array('PRE','VIR')) || (!empty($method->default_source) && !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id == $mode_reglement_code[0]->id ) ) { $paymentmethods .= " show"; }
-$paymentmethods .= '" aria-labelledby="flush-heading'.$method->id.'" data-bs-parent="#accordionFlushExample"><div class="accordion-body">';
+$paymentmethods .= '" aria-labelledby="flush-heading'.$method->id.'" data-bs-parent="#accordionFlushExample"><div class="accordion-body bg-light">';
 if ( empty($module) && !is_object($object) ) {
 $paymentmethods .= "<script>";
 $paymentmethods .= "(function ($) {
@@ -1471,7 +1471,7 @@ $('#DoliconnectLoadingModal').modal('hide');
 })(jQuery);";
 $paymentmethods .= "</script>";
 }
-$paymentmethods .= "<div class='row bg-light'><div class='col-12 col-sm-6'>
+$paymentmethods .= "<div class='row'><div class='col-12 col-sm-6'>
   <dt>".__( 'Debtor', 'doliconnect')."</dt>
   <dd>".__( 'Holder:', 'doliconnect')." ".$method->holder;
 if (isset($method->mandate->creation) && !empty($method->mandate->creation)) {
@@ -1547,7 +1547,7 @@ $paymentmethods .= __( 'Add a payment method', 'doliconnect');
 $paymentmethods .= '</button></h2>';
 $paymentmethods .= '<div id="flush-collapsenewpm" class="accordion-collapse collapse';
 if (empty($countPM)) { $paymentmethods .= " show"; }
-$paymentmethods .= '" aria-labelledby="flush-headingnewpm" data-bs-parent="#accordionFlushExample"><div class="accordion-body">';
+$paymentmethods .= '" aria-labelledby="flush-headingnewpm" data-bs-parent="#accordionFlushExample"><div class="accordion-body bg-light">';
 
 $paymentmethods .= '</div></div></div>';
 }
@@ -1567,10 +1567,9 @@ if ( !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id ==
 $paymentmethods .= '</button></h2>';
 $paymentmethods .= '<div id="flush-collapsevir" class="accordion-collapse collapse';
 if ( !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id == $mode_reglement_code[0]->id ) { $paymentmethods .= " show"; }
-$paymentmethods .= '" aria-labelledby="flush-headingvir" data-bs-parent="#accordionFlushExample"><div class="accordion-body">';
+$paymentmethods .= '" aria-labelledby="flush-headingvir" data-bs-parent="#accordionFlushExample"><div class="accordion-body bg-light">';
 
 $mode_reglement_code = callDoliApi("GET", "/setup/dictionary/payment_types?sortfield=code&sortorder=ASC&limit=100&active=1&sqlfilters=(t.code%3A%3D%3A'VIR')", null, dolidelay('constante'));
-$paymentmethods .= "<div class='bg-light'>";
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
 $paymentmethods .= "<p class='text-justify'>".sprintf( __( 'Please send your bank transfert in the amount of <b>%1$s</b> at the following account:', 'doliconnect'), doliprice($object, 'ttc', isset($object->multicurrency_code) ? $object->multicurrency_code : null))."</p>";
 } else {
@@ -1606,7 +1605,6 @@ $paymentmethods .= '</p>';
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
 $paymentmethods .= '<div class="d-grid gap-2"><button type="button" onclick="PayPM(\'VIR\')" class="btn btn-danger btn-block">'.__( 'Pay', 'doliconnect')." ".doliprice($object, 'ttc', $currency).'</button></div>';
 } 
-$paymentmethods .= '</div>';
 $paymentmethods .= '</div></div></div>';
 }
 
@@ -1621,9 +1619,8 @@ if ( !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id ==
 $paymentmethods .= '</button></h2>';
 $paymentmethods .= '<div id="flush-collapsechq" class="accordion-collapse collapse';
 if ( !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id == $mode_reglement_code[0]->id ) { $paymentmethods .= " show"; }
-$paymentmethods .= '" aria-labelledby="flush-headingchq" data-bs-parent="#accordionFlushExample"><div class="accordion-body">';
+$paymentmethods .= '" aria-labelledby="flush-headingchq" data-bs-parent="#accordionFlushExample"><div class="accordion-body bg-light">';
 $mode_reglement_code = callDoliApi("GET", "/setup/dictionary/payment_types?sortfield=code&sortorder=ASC&limit=100&active=1&sqlfilters=(t.code%3A%3D%3A'CHQ')", null, dolidelay('constante'));
-$paymentmethods .= "<div class='bg-light'>";
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
 $paymentmethods .= "<p class='text-justify'>".sprintf( __( 'Please send your money check in the amount of <b>%1$s</b> to <b>%2$s</b> at the following address:', 'doliconnect'), doliprice($object, 'ttc', isset($object->multicurrency_code) ? $object->multicurrency_code : null), $listpaymentmethods->CHQ->proprio)."</p>";
 } else {
@@ -1647,7 +1644,6 @@ $paymentmethods .= '</p>';
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
 $paymentmethods .= '<div class="d-grid gap-2"><button type="button" onclick="PayPM(\'CHQ\')" class="btn btn-danger btn-block">'.__( 'Pay', 'doliconnect')." ".doliprice($object, 'ttc', $currency).'</button></div>';
 }
-$paymentmethods .= '</div>';
 $paymentmethods .= '</div></div></div>';
 } 
 
@@ -1658,7 +1654,7 @@ $paymentmethods .= '<div class="accordion-item"><h2 class="accordion-header" id=
       </button>
     </h2>
     <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
-      <div class="accordion-body">Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably havent heard of them accusamus labore sustainable VHS.</div>
+      <div class="accordion-body bg-light">Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably havent heard of them accusamus labore sustainable VHS.</div>
     </div>
   </div>';
 //}
