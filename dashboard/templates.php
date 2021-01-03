@@ -1778,12 +1778,8 @@ $('#a-tab-info').removeClass('active');
 $('#a-tab-pay').removeClass('disabled');
 $('#a-tab-pay').addClass('active');    
 $('#nav-tab-info').removeClass('show active');
+$('#nav-tab-pay').addClass('show active');
 $('#nav-tab-info').tab('dispose');
-if (document.getElementById('nav-tab-pay')) {
-//document.getElementById('nav-tab-pay').remove();    
-}
-//var new_tab = $('<div>').addClass( 'tab-pane fade show active').attr('id', 'nav-tab-pay').append( response.data.content );
-//$('#tab-cart-content').append( new_tab );
 $('#nav-tab-pay').tab('show');                                                                             
 }
 
