@@ -1779,13 +1779,6 @@ $paymentmethods .= "<div id='iban-error-message' class='text-danger' role='alert
 $paymentmethods .= "<p class='text-justify'>";
 $paymentmethods .= "<small><strong>Note:</strong> ".sprintf( esc_html__( 'By providing your IBAN and confirming this form, you are authorizing %s and Stripe, our payment service provider, to send instructions to your bank to debit your account and your bank to debit your account in accordance with those instructions. You are entitled to a refund from your bank under the terms and conditions of your agreement with it. A refund must be claimed within 8 weeks starting from the date on which your account was debited.', 'doliconnect'), get_bloginfo('name'))."</small>";
 $paymentmethods .= "</p>";
-$paymentmethods .= "<script>";
-$paymentmethods .= '</script><div class="d-grid gap-2">';
-if ( !empty($module) && is_object($object) && isset($object->id) ) {
-$paymentmethods .= "<button id='PayIbanButton' class='btn btn-danger btn-block'>".__( 'Pay', 'doliconnect')." ".doliprice($object, 'ttc', isset($object->multicurrency_code) ? $object->multicurrency_code : null)."</button>";
-} else {
-$paymentmethods .= "<button id='AddIbanButton' class='btn btn-warning btn-block' title='".__( 'Add', 'doliconnect')."'>".__( 'Add', 'doliconnect')."</button>";
-}
 $paymentmethods .= '<script>';
 $paymentmethods .= "function dolistripeiban(){
 (function ($) {
@@ -1952,9 +1945,9 @@ $paymentmethods .= '}';
 $paymentmethods .= 'window.onload=dolistripeiban();';
 $paymentmethods .= '</script><div class="d-grid gap-2">';
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
-$paymentmethods .= "<button type='button' id='PayCardButton' class='btn btn-danger'>".__( 'Pay', 'doliconnect')." ".doliprice($object, 'ttc', isset($object->multicurrency_code) ? $object->multicurrency_code : null)."</button>";
+$paymentmethods .= "<button id='PayIbanButton' class='btn btn-danger btn-block'>".__( 'Pay', 'doliconnect')." ".doliprice($object, 'ttc', isset($object->multicurrency_code) ? $object->multicurrency_code : null)."</button>";
 } else {
-$paymentmethods .= "<button type='button' id='AddCardButton' class='btn btn-outline-secondary' title='".__( 'Add', 'doliconnect')."'>".__( 'Add', 'doliconnect')."</button>";
+$paymentmethods .= "<button id='AddIbanButton' class='btn btn-warning btn-block' title='".__( 'Add', 'doliconnect')."'>".__( 'Add', 'doliconnect')."</button>";
 }
 }
 $paymentmethods .= '</div></div></div></div>';
