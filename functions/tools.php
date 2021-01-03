@@ -1782,43 +1782,44 @@ $paymentmethods .= "</p>";
 $paymentmethods .= "<script>";
 $paymentmethods .= '</script><div class="d-grid gap-2">';
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
-$paymentmethods .= "<button id='cardPayButton' class='btn btn-danger btn-block'>".__( 'Pay', 'doliconnect')." ".doliprice($object, 'ttc', isset($object->multicurrency_code) ? $object->multicurrency_code : null)."</button>";
+$paymentmethods .= "<button id='PayIbanButton' class='btn btn-danger btn-block'>".__( 'Pay', 'doliconnect')." ".doliprice($object, 'ttc', isset($object->multicurrency_code) ? $object->multicurrency_code : null)."</button>";
 } else {
-$paymentmethods .= "<button id='cardButton' class='btn btn-warning btn-block' title='".__( 'Add', 'doliconnect')."'>".__( 'Add', 'doliconnect')."</button>";
+$paymentmethods .= "<button id='AddIbanButton' class='btn btn-warning btn-block' title='".__( 'Add', 'doliconnect')."'>".__( 'Add', 'doliconnect')."</button>";
 }
 $paymentmethods .= '<script>';
-$paymentmethods .= "function dolistripecard(){
+$paymentmethods .= "function dolistripeiban(){
 (function ($) {
 $(document).ready(function(){";
-$paymentmethods .= "var cardElement = elements.create('card', {style: style});
-cardElement.mount('#card-element');
-var cardholderName = document.getElementById('cardholder-name');
-cardholderName.value = '';
-var displayCardError = document.getElementById('card-error-message');
-displayCardError.textContent = '';
-cardElement.on('change', function(event) {
-    console.log('Reset error message');
-    displayCardError.textContent = '';
+$paymentmethods .= "var ibanElement = elements.create('iban', {style: style, supportedCountries: ['SEPA']});
+ibanElement.mount('#iban-element');
+var displayIbanError = document.getElementById('iban-error-message');
+var bankName = document.getElementById('bank-name');
+ibanElement.on('change', function(event) {
   if (event.error) {
-    displayCardError.textContent = event.error.message;
-    displayCardError.classList.add('visible');
+    displayIbanError.textContent = event.error.message;
+    displayIbanError.classList.add('visible');
   } else {
-    displayCardError.textContent = '';
-    displayCardError.classList.remove('visible');
+    displayIbanError.classList.remove('visible');
+  }
+  if (event.bankName) {
+    bankName.textContent = event.bankName;
+    bankName.classList.add('visible');
+  } else {
+    bankName.classList.remove('visible');
   }
 });";
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
 // pay with card script
-$paymentmethods .= "$('#PayCardButton').on('click',function(event){
+$paymentmethods .= "$('#PayIbanButton').on('click',function(event){
 event.preventDefault();
-$('#PayCardButton').disabled = true;
+$('#PayIbanButton').disabled = true;
 $('#DoliconnectLoadingModal').modal('show');
-console.log('Click on PayCardButton');
-var cardholderName = document.getElementById('cardholder-name');
-if (cardholderName.value == ''){               
+console.log('Click on PayIbanButton');
+var ibanholderName = document.getElementById('cardholder-name');
+if (ibanholderName.value == ''){               
 console.log('Field Card holder is empty');
 displayCardError.textContent = 'We need an owner as on your card';
-$('#PayCardButton').disabled = false;
+$('#PayIbanButton').disabled = false;
 $('#DoliconnectLoadingModal').modal('hide');  
 } else {
 if (document.getElementById('DoliPaymentmethodAlert')) {
@@ -1885,32 +1886,35 @@ $('#DoliconnectLoadingModal').modal('hide');
 });";
 } else {
 // add a card
-$paymentmethods .= "$('#AddCardButton').on('click',function(event){
+$paymentmethods .= "$('#AddIbanButton').on('click',function(event){
 event.preventDefault();
-$('#AddCardButton').disabled = true;
+$('#AddIbanButton').disabled = true;
 $('#DoliconnectLoadingModal').modal('show');
-console.log('Click on AddCardButton');
-var cardholderName = document.getElementById('cardholder-name');
-if (cardholderName.value == ''){               
-console.log('Field Card holder is empty');
-displayCardError.textContent = 'We need an owner as on your card';
-$('#AddCardButton').disabled = false;
+console.log('Click on AddIbanButton');
+var ibanholderName = document.getElementById('ibanholder-name');
+if (ibanholderName.value == ''){               
+console.log('Field Iban holder is empty');
+displayIbanError.textContent = 'We need an owner as on your iban';
+$('#AddIbanButton').disabled = false;
 $('#DoliconnectLoadingModal').modal('hide');  
 } else {
-  stripe.confirmCardSetup(
+  stripe.confirmSepaDebitSetup(
     clientSecret,
     {
-      payment_method: {
-        card: cardElement,
-        billing_details: {name: cardholderName.value}
-      }
+    payment_method: {
+      sepa_debit: ibanElement,
+      billing_details: {
+        name: 'Jenny Rosen',
+        email: 'jenny@example.com',
+      },
+    },
     }
   ).then(function(result) {
     if (result.error) {
 $('#DoliconnectLoadingModal').modal('hide');
-$('#AddCardButton').disabled = false;
-console.log('Error occured when adding card');
-displayCardError.textContent = result.error.message;    
+$('#AddIbanButton').disabled = false;
+console.log('Error occured when adding iban');
+displayIbanError.textContent = result.error.message;    
     } else {
         $.ajax({
           url: '".esc_url( admin_url( 'admin-ajax.php' ) )."',
@@ -1945,7 +1949,7 @@ $('#DoliconnectLoadingModal').modal('hide');
 $paymentmethods .= "});
 })(jQuery);";
 $paymentmethods .= '}';
-$paymentmethods .= 'window.onload=dolistripecard();';
+$paymentmethods .= 'window.onload=dolistripeiban();';
 $paymentmethods .= '</script><div class="d-grid gap-2">';
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
 $paymentmethods .= "<button type='button' id='PayCardButton' class='btn btn-danger'>".__( 'Pay', 'doliconnect')." ".doliprice($object, 'ttc', isset($object->multicurrency_code) ? $object->multicurrency_code : null)."</button>";
