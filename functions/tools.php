@@ -1363,7 +1363,7 @@ $paymentmethods .= 'var style = {
     fontSmoothing: "antialiased",
     fontSize: "16px",
     "::placeholder": {
-      color: "#8d8d8d"
+      color: "#6c757d"
     }
   },
   invalid: {
@@ -1453,8 +1453,8 @@ $(window).scrollTop(0);
 console.log(actionvalue);
       if (response.success) {
 if (actionvalue == 'delete_payment_method')  {
-document.getElementById('li-".$method->id."').remove();
-document.getElementById('nav-tab-".$method->id."').remove();
+//document.getElementById('li-".$method->id."').remove();
+//document.getElementById('nav-tab-".$method->id."').remove();
 document.location = '".$url."';
 } else {
 document.location = '".$url."';
