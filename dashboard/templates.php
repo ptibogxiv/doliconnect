@@ -1674,7 +1674,7 @@ $thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, '
 
 print "<div class='card'><ul class='list-group list-group-flush'>";
 
-print "<li class='list-group-item'><h6>".__( 'Customer', 'doliconnect')."</h6><small class='text-muted'>";
+print "<li class='list-group-item list-group-item-action'><h6>".__( 'Customer', 'doliconnect')."</h6><small class='text-muted'>";
 
 print doliaddress($thirdparty);
 
@@ -1682,7 +1682,7 @@ print "</small></li>";
 
 if ( doliversion('10.0.0') ) {
 
-print "<li class='list-group-item'><div class='row'><div class='col-12 col-md-6'><h6>".__( 'Billing address', 'doliconnect')."</h6><small class='text-muted'>";
+print "<li class='list-group-item list-group-item-action'><div class='row'><div class='col-12 col-md-6'><h6>".__( 'Billing address', 'doliconnect')."</h6><small class='text-muted'>";
 
 print '<div class="form-check">
 <input type="radio" id="billing-0" name="contact_billing" class="form-check-input" value="0" checked disabled>
@@ -1744,8 +1744,9 @@ print "</small></div></div></li>";
 print "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".sprintf( esc_html__( "Adding billing or shipping contacts requires Dolibarr %s but your version is %s", 'doliconnect'), '10.0.0', doliversion('10.0.0'))."</b></li>";
 }
 
-print "<li class='list-group-item'><h6>".__( 'Message', 'doliconnect')."</h6>";
-print "<textarea class='form-control' id='note_public' name='note_public' rows='3' placeholder='".__( 'If you want to send us a message about your order, you can leave one here', 'doliconnect')."'>".stripslashes(htmlspecialchars($object->note_public, ENT_QUOTES))."</textarea>";
+print "<li class='list-group-item list-group-item-action'>";
+print '<div class="form-floating"><textarea class="form-control" placeholder="'.__( 'Message', 'doliconnect').'" id="note_public" name="note_public" style="height: 100px">'.$object->note_public.'</textarea>
+<label for="floatingTextarea"><i class="fas fa-comment fa-fw"></i> '.__( 'If you want to send us a message about your order, you can leave one here', 'doliconnect').'</label></div>';
 print "</li></ul>";
 
 $note_public = isset($_POST['note_public']) ? $_POST['note_public'] : '';
