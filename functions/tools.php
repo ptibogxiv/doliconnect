@@ -1545,7 +1545,9 @@ $paymentmethods .= __( 'Pay by credit/debit card', 'doliconnect');
 $paymentmethods .= __( 'Add a payment method', 'doliconnect');
 }
 $paymentmethods .= '</button></h2>';
-$paymentmethods .= '<div id="flush-collapsenewpm" class="accordion-collapse collapse" aria-labelledby="flush-headingnewpm" data-bs-parent="#accordionFlushExample"><div class="accordion-body">';
+$paymentmethods .= '<div id="flush-collapsenewpm" class="accordion-collapse collapse';
+if (empty($countPM)) { $paymentmethods .= " show"; }
+$paymentmethods .= '" aria-labelledby="flush-headingnewpm" data-bs-parent="#accordionFlushExample"><div class="accordion-body">';
 
 $paymentmethods .= '</div></div></div>';
 }
