@@ -1507,7 +1507,7 @@ $paymentmethods .= dolipaymentterm($thirdparty->cond_reglement_id);
 $paymentmethods .= __( 'immediately', 'doliconnect');
 }
 $paymentmethods .= "</small>";
-$paymentmethods .= '</p></div><div class="d-grid gap-2">';
+$paymentmethods .= '</p><div class="d-grid gap-2">';
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
 if ( $method->type == 'card' ) {
 $paymentmethods .= '<button type="button" onclick="PayCardPM(\''.$method->id.'\')" class="btn btn-danger btn-block">'.__( 'Pay', 'doliconnect')." ".doliprice($object, 'ttc', $currency).'</button>';
@@ -1528,7 +1528,7 @@ $paymentmethods .= "title='".__( 'Delete', 'doliconnect')."'><i class='fas fa-tr
 }
 $paymentmethods .= "</div>";
 }
-$paymentmethods .= '</div></div></div>';
+$paymentmethods .= '</div></div></div></div>';
 }}
 
 if (isset($listpaymentmethods->stripe) && !empty(array_intersect(array('card','sepa_debit'), $listpaymentmethods->stripe->types)) && empty($thirdparty->mode_reglement_id) ) {
