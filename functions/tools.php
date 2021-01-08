@@ -1823,7 +1823,7 @@ document.getElementById('DoliPaymentmethodAlert').innerHTML = '';
     {
       payment_method: {
         card: cardElement,
-        billing_details: {name: cardholderName.value}
+        billing_details: {name: ibanholderName.value}
       }
     }
   ).then(function(result) {
@@ -1897,8 +1897,8 @@ $('#DoliconnectLoadingModal').modal('hide');
     payment_method: {
       sepa_debit: ibanElement,
       billing_details: {
-        name: 'Jenny Rosen',
-        email: 'jenny@example.com',
+        name: ibanholderName.value,
+        email: '".$listpaymentmethods->thirdparty->email."',
       },
     },
     }
