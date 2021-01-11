@@ -1818,7 +1818,7 @@ $('#DoliconnectLoadingModal').modal('hide');
 if (document.getElementById('DoliPaymentmethodAlert')) {
 document.getElementById('DoliPaymentmethodAlert').innerHTML = '';      
 }  
-  stripe.confirmCardPayment(
+  stripe.confirmSepaDebitPayment(
     clientSecret,
     {
       payment_method: {
@@ -1878,7 +1878,7 @@ $('#DoliconnectLoadingModal').modal('hide');
         }     
 });";
 } else {
-// add a card
+// add a sepa debit
 $paymentmethods .= "$('#AddIbanButton').on('click',function(event){
 event.preventDefault();
 $('#AddIbanButton').disabled = true;
