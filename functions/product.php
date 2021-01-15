@@ -628,7 +628,7 @@ if( has_filter('mydoliconnectproductdesc') ) {
 $list .= apply_filters('mydoliconnectproductdesc', $product, 'list');
 }
 
-$list .= '<div class="d-grid gap-2"><a href="'.$producturl.'" class="btn btn-link">En savoir plus</a></div>';
+$list .= '<div class="d-grid gap-2"><a href="'.$producturl.'" class="btn btn-link">'.__( 'Read more...', 'doliconnect').'</a></div>';
 $list .= '</p></div>';
 
 if ( ! empty(doliconnectid('dolicart')) ) { 
