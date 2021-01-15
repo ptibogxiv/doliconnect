@@ -1229,8 +1229,8 @@ print "</center></div><div class='col-4 col-md-7'>".doliproduct($category, 'labe
 print '<div class="col-4 col-md-3"><div class="input-group">
   <span class="input-group-text" id="basic-addon1">'.__( 'Filter', 'doliconnect').'</span><select id="selectbox" class="form-select form-select-sm" aria-label=".form-select-sm example" name="" onchange="javascript:location.href = this.value;">
     <option value="" disabled selected>'.__( '- Select -', 'doliconnect').'</option>
-    <option value="'.esc_url( add_query_arg( array( 'category' => $cat, 'subcategory' => $subcat, 'pg' => $page, 'field' => 'label', 'order' => 'ASC'), doliconnecturl('dolishop')) ).'">label ASC</option>
-    <option value="'.esc_url( add_query_arg( array( 'category' => $cat, 'subcategory' => $subcat, 'pg' => $page, 'field' => 'label', 'order' => 'DESC'), doliconnecturl('dolishop')) ).'">Label DESC</option>
+    <option value="'.esc_url( add_query_arg( array( 'category' => $cat, 'subcategory' => $subcat, 'pg' => $page, 'field' => 'label', 'order' => 'ASC'), doliconnecturl('dolishop')) ).'">Titre A->Z</option>
+    <option value="'.esc_url( add_query_arg( array( 'category' => $cat, 'subcategory' => $subcat, 'pg' => $page, 'field' => 'label', 'order' => 'DESC'), doliconnecturl('dolishop')) ).'">Titre Z->A</option>
     <option value="'.esc_url( add_query_arg( array( 'category' => $cat, 'subcategory' => $subcat, 'pg' => $page, 'field' => 'rowid', 'order' => 'ASC'), doliconnecturl('dolishop')) ).'">Plus ancient</option>
     <option value="'.esc_url( add_query_arg( array( 'category' => $cat, 'subcategory' => $subcat, 'pg' => $page, 'field' => 'rowid', 'order' => 'DESC'), doliconnecturl('dolishop')) ).'">Plus recent</option>
 
