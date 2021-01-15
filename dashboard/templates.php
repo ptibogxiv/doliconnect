@@ -1229,12 +1229,24 @@ print "</center></div><div class='col-4 col-md-7'>".doliproduct($category, 'labe
 print '<div class="col-4 col-md-3"><div class="input-group">
   <span class="input-group-text" id="basic-addon1">'.__( 'Filter', 'doliconnect').'</span><select id="selectbox" class="form-select form-select-sm" aria-label=".form-select-sm example" name="" onchange="javascript:location.href = this.value;">
     <option value="" disabled selected>'.__( '- Select -', 'doliconnect').'</option>
-    <option value="'.esc_url( add_query_arg( array( 'category' => $cat, 'subcategory' => $subcat, 'pg' => $page+1, 'field' => 'label', 'order' => 'ASC'), doliconnecturl('dolishop')) ).'">Titre A->Z</option>
-    <option value="'.esc_url( add_query_arg( array( 'category' => $cat, 'subcategory' => $subcat, 'pg' => $page+1, 'field' => 'label', 'order' => 'DESC'), doliconnecturl('dolishop')) ).'">Titre Z->A</option>
-    <option value="'.esc_url( add_query_arg( array( 'category' => $cat, 'subcategory' => $subcat, 'pg' => $page+1, 'field' => 'rowid', 'order' => 'ASC'), doliconnecturl('dolishop')) ).'">Plus ancient</option>
-    <option value="'.esc_url( add_query_arg( array( 'category' => $cat, 'subcategory' => $subcat, 'pg' => $page+1, 'field' => 'rowid', 'order' => 'DESC'), doliconnecturl('dolishop')) ).'">Plus recent</option>
-    <option value="'.esc_url( add_query_arg( array( 'category' => $cat, 'subcategory' => $subcat, 'pg' => $page+1, 'field' => 'price', 'order' => 'ASC'), doliconnecturl('dolishop')) ).'">Prix croissant</option>
-    <option value="'.esc_url( add_query_arg( array( 'category' => $cat, 'subcategory' => $subcat, 'pg' => $page+1, 'field' => 'price', 'order' => 'DESC'), doliconnecturl('dolishop')) ).'">Prix decroissant</option>
+    <option value="'.esc_url( add_query_arg( array( 'category' => $cat, 'subcategory' => $subcat, 'pg' => $page+1, 'field' => 'label', 'order' => 'ASC'), doliconnecturl('dolishop')) ).'"';
+    if ($field == 'label' && $order == 'ASC') { print 'selected'; }
+    print '>Titre A->Z</option>
+    <option value="'.esc_url( add_query_arg( array( 'category' => $cat, 'subcategory' => $subcat, 'pg' => $page+1, 'field' => 'label', 'order' => 'DESC'), doliconnecturl('dolishop')) ).'"';
+    if ($field == 'label' && $order == 'DESC') { print 'selected'; }
+    print '>Titre Z->A</option>
+    <option value="'.esc_url( add_query_arg( array( 'category' => $cat, 'subcategory' => $subcat, 'pg' => $page+1, 'field' => 'rowid', 'order' => 'ASC'), doliconnecturl('dolishop')) ).'"';
+    if ($field == 'rowid' && $order == 'ASC') { print 'selected'; }
+    print '>Plus ancient</option>
+    <option value="'.esc_url( add_query_arg( array( 'category' => $cat, 'subcategory' => $subcat, 'pg' => $page+1, 'field' => 'rowid', 'order' => 'DESC'), doliconnecturl('dolishop')) ).'"';
+    if ($field == 'rowid' && $order == 'DESC') { print 'selected'; }
+    print '>Plus recent</option>
+    <option value="'.esc_url( add_query_arg( array( 'category' => $cat, 'subcategory' => $subcat, 'pg' => $page+1, 'field' => 'price', 'order' => 'ASC'), doliconnecturl('dolishop')) ).'"';
+    if ($field == 'price' && $order == 'ASC') { print 'selected'; }
+    print '>Prix croissant</option>
+    <option value="'.esc_url( add_query_arg( array( 'category' => $cat, 'subcategory' => $subcat, 'pg' => $page+1, 'field' => 'price', 'order' => 'DESC'), doliconnecturl('dolishop')) ).'"';
+    if ($field == 'price' && $order == 'DESC') { print 'selected'; }
+    print '>Prix decroissant</option>
 </select></div></div>';
 print '</div></li>'; 
 
