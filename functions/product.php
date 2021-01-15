@@ -595,7 +595,7 @@ $product = callDoliApi("GET", "/products/".$product->fk_product."?includestockda
 $product = callDoliApi("GET", "/products/".$product->id."?includestockdata=1&includesubproducts=true", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 }
 
-$arr_params = array( 'category' => isset($_GET['category'])?$_GET['category']:null, 'subcategory' => isset($_GET['subcategory'])?$_GET['subcategory']:null, 'product' => $product->id);  
+$arr_params = array( 'search' => isset($_GET['search'])?$_GET['search']:null, 'category' => isset($_GET['category'])?$_GET['category']:null, 'subcategory' => isset($_GET['subcategory'])?$_GET['subcategory']:null, 'product' => $product->id);  
 $producturl = esc_url( add_query_arg( $arr_params, doliconnecturl('dolishop')) );
 
 $list = "<li class='list-group-item list-group-item-light list-group-item-action' id='prod-li-".$product->id."'><table width='100%' style='border:0px'><tr><td width='20%' style='border:0px'><center>";
