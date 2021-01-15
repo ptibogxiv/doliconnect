@@ -595,11 +595,14 @@ $product = callDoliApi("GET", "/products/".$product->fk_product."?includestockda
 $product = callDoliApi("GET", "/products/".$product->id."?includestockdata=1&includesubproducts=true", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 }
 
+$arr_params = array( 'category' => isset($_GET['category'])?$_GET['category']:null, 'subcategory' => isset($_GET['subcategory'])?$_GET['subcategory']:null, 'product' => $product->id);  
+$producturl = esc_url( add_query_arg( $arr_params, doliconnecturl('dolishop')) );
+
 $list = "<li class='list-group-item list-group-item-light list-group-item-action' id='prod-li-".$product->id."'><table width='100%' style='border:0px'><tr><td width='20%' style='border:0px'><center>";
-$list .= doliconnect_image('product', $product->id, array('limit'=>1, 'entity'=>$product->entity, 'size'=>'150x150'), esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+$list .= '<a href="'.$producturl.'" class="text-decoration-none">'.doliconnect_image('product', $product->id, array('limit'=>1, 'entity'=>$product->entity, 'size'=>'150x150'), esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)).'</a>';
 $list .= "</center></td>";
 
-$list .= "<td width='80%' style='border:0px'><b>".doliproduct($product, 'label')."</b>";
+$list .= '<td width="80%" style="border:0px"><a href="'.$producturl.'" class="text-decoration-none"><b>'.doliproduct($product, 'label').'</b></a>';
 $list .= "<div class='row'><div class='col'><p><small>";
 if ( !doliconst('MAIN_GENERATE_DOCUMENTS_HIDE_REF') ) { $list .= "<i class='fas fa-toolbox fa-fw'></i> ".(!empty($product->ref)?$product->ref:'-'); }
 if ( !empty($product->barcode) ) { 
@@ -624,9 +627,8 @@ $list .= "</small>"; }
 if( has_filter('mydoliconnectproductdesc') ) {
 $list .= apply_filters('mydoliconnectproductdesc', $product, 'list');
 }
-$arr_params = array( 'category' => isset($_GET['category'])?$_GET['category']:null, 'subcategory' => isset($_GET['subcategory'])?$_GET['subcategory']:null, 'product' => $product->id);  
-$return = esc_url( add_query_arg( $arr_params, doliconnecturl('dolishop')) );
-$list .= '<div class="d-grid gap-2"><a href="'.$return.'" class="btn btn-link">En savoir plus</a></div>';
+
+$list .= '<div class="d-grid gap-2"><a href="'.$producturl.'" class="btn btn-link">En savoir plus</a></div>';
 $list .= '</p></div>';
 
 if ( ! empty(doliconnectid('dolicart')) ) { 
