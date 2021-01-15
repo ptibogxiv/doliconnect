@@ -1199,9 +1199,13 @@ if ( !empty($catoption) && is_user_logged_in() ) {
 print "<a href='".esc_url( add_query_arg( 'category', $catoption, doliconnecturl('dolishop')) )."' class='list-group-item list-group-item-action' >Produits/Services lies a l'adhesion</a>";
 }
 
-print "</ul><div class='card-body'>";
-if (isset($resultats->childs)) print dolipage($resultats->childs, $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], $page, $limit);
-print "</div><div class='card-footer text-muted'>";
+print '</ul>';
+if (isset($resultats->childs)) {
+print "<div class='card-body'>";
+print dolipage($resultats->childs, $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], $page, $limit);
+print "</div>";
+} 
+print "<div class='card-footer text-muted'>";
 print "<small><div class='float-start'>";
 if ( isset($request) ) print dolirefresh($request, get_permalink(), dolidelay('product'));
 print "</div><div class='float-end'>";
