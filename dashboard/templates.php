@@ -1175,7 +1175,7 @@ print "<div class='row'><div class='col-4 col-md-2'><center>";
 if (isset($_GET['search'])&& !empty($_GET['search'])) {
 if ( !isset($resultats->error) && $resultats != null ) {
 $count = count($resultats);
-}
+} else $count = 0;
 //print doliconnect_image('category', $category->id, 1, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), $category->entity);
 print '</center></div><div class="col-4 col-md-7">';
 printf( _n( 'We have found %s item with this search', 'We have found %s items with this search', $count, 'doliconnect' ), number_format_i18n( $count ) );
