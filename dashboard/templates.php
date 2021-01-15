@@ -919,7 +919,7 @@ $shop = doliconst("DOLICONNECT_CATSHOP", esc_attr(isset($_GET["refresh"]) ? $_GE
 
 print "<div class='card shadow-sm'>";
 
-if ( isset($_GET['search']) ) {
+if ( isset($_GET['search']) && !isset($_GET['product'])) {
 
 print "<ul class='list-group list-group-flush'>";
 
@@ -1020,7 +1020,7 @@ print dolihelp('ISSUE');
 print "</div></small>";
 print "</div></div>";
 
-} elseif (get_option('dolicartnewlist') != 'none' && isset($_GET['category']) && $_GET['category'] == 'new') {
+} elseif (get_option('dolicartnewlist') != 'none' && isset($_GET['category']) && $_GET['category'] == 'new' && !isset($_GET['product'])) {
 
 print "<ul class='list-group list-group-flush'>";
 
@@ -1061,7 +1061,7 @@ print dolihelp('ISSUE');
 print "</div></small>";
 print "</div></div>";
 
-} elseif (!empty(doliconst('MAIN_MODULE_DISCOUNTPRICE')) && isset($_GET['category']) && $_GET['category'] == 'discount') {
+} elseif (!empty(doliconst('MAIN_MODULE_DISCOUNTPRICE')) && isset($_GET['category']) && $_GET['category'] == 'discount' && !isset($_GET['product'])) {
 
 print "<ul class='list-group list-group-flush'>";
 
