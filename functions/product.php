@@ -563,7 +563,7 @@ $supplier = "";
 
 if ( !isset($brands->error) && $brands != null ) {
 $supplier .= "<small><i class='fas fa-industry fa-fw'></i> ";
-$supplier .= _n( 'Brand:', 'Brands:', count($brands), 'doliconnect' );
+$supplier .= _n( 'Supplier:', 'Supplier:', count($brands), 'doliconnect' );
 $i = 0;
 foreach ($brands as $brand) {
 if ($i > 0) $supplier .= ",";
@@ -670,7 +670,7 @@ $card .= "</small>";
 if ( ! empty(doliconnectid('dolicart')) && !isset($attributes['hideStock']) ) { 
 $card .= '<br>'.doliproductstock($product);
 }
-if (!empty(doliconnect_supplier($product))) {
+if (!empty(doliconnect_supplier($product, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)))) {
 $card .= '<br>'.doliconnect_supplier($product, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 }
 if (!empty(doliconnect_categories('product', $product, doliconnecturl('dolishop')))) $card .= '<br>'.doliconnect_categories('product', $product, doliconnecturl('dolishop'));
