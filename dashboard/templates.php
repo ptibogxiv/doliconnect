@@ -1219,8 +1219,14 @@ if (is_numeric($cat) && isset($category->id) && $category->id > 0) {
 print "<li class='list-group-item'>";
 print "<div class='row'><div class='col-4 col-md-2'><center>";
 print doliconnect_image('category', $category->id, 1, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), $category->entity);
-print "</center></div><div class='col-8 col-md-10'>".doliproduct($category, 'label')."<br><small>".doliproduct($category, 'description');
-print "</small></div></div></li>"; 
+print "</center></div><div class='col-5 col-md-7'>".doliproduct($category, 'label')."<br><small>".doliproduct($category, 'description').'</small></div>';
+print '<div class="col-3 col-md-3"><select id="selectbox" class="form-select form-select-sm" aria-label=".form-select-sm example" name="" onchange="javascript:location.href = this.value;">
+    <option value="'.doliconnecturl('dolishop').'" selected>Option1</option>
+    <option value="'.doliconnecturl('dolishop').'">Option2</option>
+    <option value="'.doliconnecturl('dolishop').'">Option3</option>
+
+</select></div>';
+print '</div></li>'; 
 
 $request = "/categories/".$cat."?include_childs=true";
 $resultats = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
