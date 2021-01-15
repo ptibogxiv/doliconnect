@@ -1275,7 +1275,9 @@ print apply_filters( 'doliproductlist', $product);
 print "<li class='list-group-item list-group-item-light'><center>".__( 'No item currently on sale', 'doliconnect')."</center></li>";
 }
 } else {
-print "<li class='list-group-item list-group-item-white'><center><br><br><br><br><div class='align-middle'><i class='fas fa-bomb fa-7x fa-fw'></i><h4>".__( 'Oops! This category does not appear to exist', 'doliconnect' )."</h4></div><br><br><br><br></center></li>";
+print "<li class='list-group-item list-group-item-white'><center><br><br><br><br><div class='align-middle'><i class='fas fa-bomb fa-7x fa-fw'></i><h4>".__( 'Oops! This category does not appear to exist', 'doliconnect' )."</h4></div><br>";
+print '<button type="button" class="btn btn-link" onclick="window.history.back()">'.__( 'Return', 'doliconnect').'</button>';
+print "<br><br><br></center></li>";
 }
 
 print '</ul>';
