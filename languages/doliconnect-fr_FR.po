@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2021-01-15 18:59+0100\n"
-"PO-Revision-Date: 2021-01-15 19:04+0100\n"
+"POT-Creation-Date: 2021-01-16 13:10+0100\n"
+"PO-Revision-Date: 2021-01-16 13:10+0100\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_FR\n"
@@ -21,7 +21,7 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: includes\n"
 
-#: admin/admin.php:7 dashboard/templates.php:1832
+#: admin/admin.php:7 dashboard/templates.php:1819
 msgid ""
 "It seems that your version of Dolibarr and/or its plugins are not up to date!"
 msgstr ""
@@ -147,7 +147,7 @@ msgstr "une adresse IP par ligne sans espace ni virgule"
 #: admin/admin.php:543 dashboard/dashboard.php:2033
 #: dashboard/dashboard.php:2052 dashboard/dashboard.php:2069
 #: dashboard/dashboard.php:2087 dashboard/templates.php:735
-#: dashboard/templates.php:1231 functions/tools.php:397 functions/tools.php:491
+#: dashboard/templates.php:1146 functions/tools.php:397 functions/tools.php:491
 msgid "- Select -"
 msgstr "- Sélectionner -"
 
@@ -319,7 +319,7 @@ msgstr "Masquer le stock"
 msgid "Item"
 msgstr "Article"
 
-#: blocks/product/block.php:16 dashboard/templates.php:1011
+#: blocks/product/block.php:16 dashboard/templates.php:968
 msgid "No item"
 msgstr "Aucun article"
 
@@ -331,7 +331,7 @@ msgstr "discountProduct"
 msgid "New discounted items"
 msgstr "Nouveaux articles en promotion"
 
-#: blocks/product/blockdiscount.php:26 dashboard/templates.php:1096
+#: blocks/product/blockdiscount.php:26 dashboard/templates.php:1053
 msgid "No discounted item"
 msgstr "Aucun article en promotion"
 
@@ -339,12 +339,12 @@ msgstr "Aucun article en promotion"
 msgid "newProduct"
 msgstr "newProduct"
 
-#: blocks/product/blocknew.php:7 dashboard/templates.php:1160
-#: functions/widgets.php:346
+#: blocks/product/blocknew.php:7 dashboard/templates.php:1155
+#: dashboard/templates.php:1228 functions/widgets.php:346
 msgid "New items"
 msgstr "Nouveaux articles"
 
-#: blocks/product/blocknew.php:27 dashboard/templates.php:1052
+#: blocks/product/blocknew.php:27 dashboard/templates.php:1009
 msgid "No new item"
 msgstr "Aucun nouvel article"
 
@@ -397,7 +397,7 @@ msgstr "Vos informations ont été mises à jour."
 
 #: dashboard/dashboard.php:62 dashboard/dashboard.php:252
 #: dashboard/dashboard.php:339 dashboard/dashboard.php:1668
-#: dashboard/dashboard.php:1906 dashboard/templates.php:1347
+#: dashboard/dashboard.php:1906 dashboard/templates.php:1334
 #: functions/tools.php:329
 msgid "Update"
 msgstr "Modifier"
@@ -560,7 +560,7 @@ msgid "draft"
 msgstr "brouillon"
 
 #: dashboard/dashboard.php:664 dashboard/dashboard.php:979
-#: dashboard/dashboard.php:1500 dashboard/templates.php:1467
+#: dashboard/dashboard.php:1500 dashboard/templates.php:1454
 #: functions/data-request.php:410
 msgid "Payment method"
 msgstr "Mode de paiement"
@@ -571,7 +571,7 @@ msgid "Payment term"
 msgstr "Conditions de règlement"
 
 #: dashboard/dashboard.php:682 dashboard/dashboard.php:997
-#: dashboard/templates.php:1360 dashboard/templates.php:1481
+#: dashboard/templates.php:1347 dashboard/templates.php:1468
 #, php-format
 msgid ""
 "Please send your cheque in the amount of <b>%1$s</b> with reference <b>%2$s</"
@@ -581,7 +581,7 @@ msgstr ""
 "<b>%2$s</b> à l'ordre de <b>%3$s</b> à l'adresse suivante"
 
 #: dashboard/dashboard.php:690 dashboard/dashboard.php:1005
-#: dashboard/templates.php:1369 dashboard/templates.php:1487
+#: dashboard/templates.php:1356 dashboard/templates.php:1474
 #, php-format
 msgid ""
 "Please send your transfert in the amount of <b>%1$s</b> with reference <b>"
@@ -591,18 +591,18 @@ msgstr ""
 "référence <b>%2$s</b> sur le compte suivant"
 
 #: dashboard/dashboard.php:691 dashboard/dashboard.php:1006
-#: dashboard/templates.php:1370 dashboard/templates.php:1488
+#: dashboard/templates.php:1357 dashboard/templates.php:1475
 #: functions/tools.php:1981
 msgid "Bank"
 msgstr "Banque"
 
 #: dashboard/dashboard.php:734 dashboard/dashboard.php:1049
-#: dashboard/templates.php:1705
+#: dashboard/templates.php:1692
 msgid "Billing address"
 msgstr "Adresse de facturation"
 
 #: dashboard/dashboard.php:741 dashboard/dashboard.php:1056
-#: dashboard/templates.php:1734
+#: dashboard/templates.php:1721
 msgid "Shipping address"
 msgstr "Adresse d’expédition"
 
@@ -636,7 +636,7 @@ msgstr "Commande"
 
 #: dashboard/dashboard.php:797 dashboard/dashboard.php:1112
 #: dashboard/dashboard.php:1386 dashboard/dashboard.php:1510
-#: dashboard/templates.php:1556
+#: dashboard/templates.php:1543
 msgid "Payment"
 msgstr "Paiement"
 
@@ -965,7 +965,7 @@ msgid "Initial message"
 msgstr "Message initial"
 
 #: dashboard/dashboard.php:1980 dashboard/dashboard.php:2104
-#: dashboard/templates.php:749 dashboard/templates.php:1768
+#: dashboard/templates.php:749 dashboard/templates.php:1755
 msgid "Message"
 msgstr "Message"
 
@@ -1267,7 +1267,7 @@ msgstr ""
 "J'accepte que mes informations personnelles soient sauvegardées afin de me "
 "contacter"
 
-#: dashboard/templates.php:840 dashboard/templates.php:1275
+#: dashboard/templates.php:840 dashboard/templates.php:1177
 msgid "No item currently on sale"
 msgstr "Aucun article actuellement en vente"
 
@@ -1275,59 +1275,66 @@ msgstr "Aucun article actuellement en vente"
 msgid "No supplier"
 msgstr "Aucun fournisseur"
 
-#: dashboard/templates.php:931 functions/widgets.php:304
+#: dashboard/templates.php:928 functions/widgets.php:304
 msgid "Name, Ref., Description or Barcode"
 msgstr "Nom, Réf., Description ou Code-barres"
 
-#: dashboard/templates.php:956
+#: dashboard/templates.php:1001
+msgid "Here are our new items"
+msgstr "Voici nos nouveaux articles"
+
+#: dashboard/templates.php:1045
+msgid "Here are our discounted items"
+msgstr "Voici nos articles en promotion"
+
+#: dashboard/templates.php:1138
 #, php-format
 msgid "We have found %s item with this search"
 msgid_plural "We have found %s items with this search"
 msgstr[0] "Nous avons trouvé %s article avec cette recherche"
 msgstr[1] "Nous avons trouvé %s articles avec cette recherche"
 
-#: dashboard/templates.php:958 dashboard/templates.php:968
-msgid "New search"
-msgstr "Nouvelle recherche"
-
-#: dashboard/templates.php:967
-#, php-format
-msgid "No item with this search: \"%s\""
-msgstr "Aucun article avec cette recherche: « %s »"
-
-#: dashboard/templates.php:1044
-msgid "Here are our new items"
-msgstr "Voici nos nouveaux articles"
-
-#: dashboard/templates.php:1088
-msgid "Here are our discounted items"
-msgstr "Voici nos articles en promotion"
-
-#: dashboard/templates.php:1175 functions/widgets.php:362
-msgid "Discounted items"
-msgstr "Articles en promotion"
-
-#: dashboard/templates.php:1230
+#: dashboard/templates.php:1145
 msgid "Filter"
 msgstr "Filtrer"
 
-#: dashboard/templates.php:1278
+#: dashboard/templates.php:1149
+msgid "Title A->Z"
+msgstr "Titre A->Z"
+
+#: dashboard/templates.php:1152
+msgid "Title Z->A"
+msgstr "Titre Z->A"
+
+#: dashboard/templates.php:1158
+msgid "Lowest prices"
+msgstr "Prix les plus bas"
+
+#: dashboard/templates.php:1161
+msgid "Highest prices"
+msgstr "Prix les plus élevés"
+
+#: dashboard/templates.php:1180
 msgid "Oops! This category does not appear to exist"
 msgstr "Oups! Cette catégorie ne semble pas exister"
 
-#: dashboard/templates.php:1279
+#: dashboard/templates.php:1181 functions/product.php:727
 msgid "Return"
 msgstr "Retour"
 
-#: dashboard/templates.php:1329
+#: dashboard/templates.php:1243 functions/widgets.php:362
+msgid "Discounted items"
+msgstr "Articles en promotion"
+
+#: dashboard/templates.php:1316
 msgid "Inactive module on Dolibarr"
 msgstr "Module inactif sur Dolibarr"
 
-#: dashboard/templates.php:1376
+#: dashboard/templates.php:1363
 msgid "Tax exemptions"
 msgstr "Exonérations fiscales"
 
-#: dashboard/templates.php:1379
+#: dashboard/templates.php:1366
 msgid "DonationArt200"
 msgstr ""
 "Particuliers, votre don vous donne droit à une déduction fiscale de 66% dans "
@@ -1337,7 +1344,7 @@ msgstr ""
 "sur les cinq années suivantes. Vous bénéficierez de la réduction d’impôt "
 "dans les mêmes conditions. (Art. 200 du Code général des impôts)"
 
-#: dashboard/templates.php:1383
+#: dashboard/templates.php:1370
 msgid "DonationArt238"
 msgstr ""
 "Entreprises, votre don vous donne droit à une déduction fiscale de 60% dans "
@@ -1347,7 +1354,7 @@ msgstr ""
 "sur les cinq années suivantes. Vous bénéficierez de la réduction d’impôt "
 "dans les mêmes conditions. (Art. 238 du Code général des impôts)"
 
-#: dashboard/templates.php:1387
+#: dashboard/templates.php:1374
 msgid "DonationArt835"
 msgstr ""
 "Si vous êtes redevable de l’Impôt sur la Fortune Immobilière, vous "
@@ -1358,52 +1365,52 @@ msgstr ""
 "dispositifs, le donateur pourra choisir l’un ou l’autre ou bien décider de "
 "ventiler son don. (Art. 2835 du Code général des impôts)"
 
-#: dashboard/templates.php:1390
+#: dashboard/templates.php:1377
 msgid "You should't have tax exemptions"
 msgstr "Vous ne devriez pas avoir d'exonérations fiscales"
 
-#: dashboard/templates.php:1449
+#: dashboard/templates.php:1436
 msgid "Oops, Order's module is not available"
 msgstr "Oops, le module de commande n’est pas disponible"
 
-#: dashboard/templates.php:1467 functions/data-request.php:410
+#: dashboard/templates.php:1454 functions/data-request.php:410
 msgid "Your order has been registered"
 msgstr "Votre commande a été enregistrée"
 
-#: dashboard/templates.php:1467 dashboard/templates.php:1474
+#: dashboard/templates.php:1454 dashboard/templates.php:1461
 #: functions/data-request.php:410 functions/tools.php:382
 msgid "Reference"
 msgstr "Référence"
 
-#: dashboard/templates.php:1473
+#: dashboard/templates.php:1460
 msgid "Your payment has been registered"
 msgstr "Votre paiement a été enregistré"
 
-#: dashboard/templates.php:1496
+#: dashboard/templates.php:1483
 msgid "or go to reception desk"
 msgstr "ou aller à la réception"
 
-#: dashboard/templates.php:1550
+#: dashboard/templates.php:1537
 msgid "Cart"
 msgstr "Panier"
 
-#: dashboard/templates.php:1553
+#: dashboard/templates.php:1540
 msgid "Coordinates"
 msgstr "Coordonnées"
 
-#: dashboard/templates.php:1598
+#: dashboard/templates.php:1585
 msgid "Amount outstanding"
 msgstr "Montant impayé"
 
-#: dashboard/templates.php:1598
+#: dashboard/templates.php:1585
 msgid "out of"
 msgstr "sur"
 
-#: dashboard/templates.php:1598
+#: dashboard/templates.php:1585
 msgid "allowed"
 msgstr "autorisé"
 
-#: dashboard/templates.php:1600
+#: dashboard/templates.php:1587
 msgid ""
 "Your account is blocked, this order can't be processed. Please, contact us "
 "to pay overdue unpaid invoices."
@@ -1411,27 +1418,27 @@ msgstr ""
 "Votre compte est bloqué, cette commande ne peut pas être traitée. S’il vous "
 "plaît, contactez-nous pour régler les factures impayées en retard."
 
-#: dashboard/templates.php:1609
+#: dashboard/templates.php:1596
 msgid "Continue shopping"
 msgstr "Continuer vos achats"
 
-#: dashboard/templates.php:1613
+#: dashboard/templates.php:1600
 msgid "Empty the basket"
 msgstr "Vider le panier"
 
-#: dashboard/templates.php:1618
+#: dashboard/templates.php:1605
 msgid "Process"
 msgstr "Finaliser"
 
-#: dashboard/templates.php:1697 functions/tools.php:377
+#: dashboard/templates.php:1684 functions/tools.php:377
 msgid "Customer"
 msgstr "Client"
 
-#: dashboard/templates.php:1709 dashboard/templates.php:1738
+#: dashboard/templates.php:1696 dashboard/templates.php:1725
 msgid "Same address as the customer"
 msgstr "Même adresse que le client"
 
-#: dashboard/templates.php:1764
+#: dashboard/templates.php:1751
 #, php-format
 msgid ""
 "Adding billing or shipping contacts requires Dolibarr %s but your version is "
@@ -1440,14 +1447,14 @@ msgstr ""
 "L’ajout de contacts de facturation ou d’expédition nécessite Dolibarr %s "
 "mais votre version est %s"
 
-#: dashboard/templates.php:1769
+#: dashboard/templates.php:1756
 msgid ""
 "If you want to send us a message about your order, you can leave one here"
 msgstr ""
 "Si vous voulez nous envoyer un message sur votre commande, vous pouvez en "
 "laisser un ici"
 
-#: dashboard/templates.php:1816
+#: dashboard/templates.php:1803
 msgid "Validate"
 msgstr "Valider"
 
@@ -2441,6 +2448,27 @@ msgstr "ptibogxiv"
 #. Author URI of the plugin/theme
 msgid "https://www.ptibogxiv.net/en"
 msgstr "https://www.ptibogxiv.net/fr"
+
+#~ msgid "Most recent"
+#~ msgstr "Plus récent"
+
+#~ msgid "Most ancient"
+#~ msgstr "Plus ancien"
+
+#~ msgid "Older"
+#~ msgstr "Plus ancien"
+
+#, fuzzy
+#~| msgid "Selling Price"
+#~ msgid "Declining prices"
+#~ msgstr "Prix de vente"
+
+#~ msgid "New search"
+#~ msgstr "Nouvelle recherche"
+
+#, php-format
+#~ msgid "No item with this search: \"%s\""
+#~ msgstr "Aucun article avec cette recherche: « %s »"
 
 #~ msgid "Brand:"
 #~ msgid_plural "Brands:"
