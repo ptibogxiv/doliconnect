@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2021-01-16 13:10+0100\n"
-"PO-Revision-Date: 2021-01-16 13:10+0100\n"
+"POT-Creation-Date: 2021-01-16 13:16+0100\n"
+"PO-Revision-Date: 2021-01-16 13:16+0100\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_FR\n"
@@ -339,8 +339,8 @@ msgstr "Aucun article en promotion"
 msgid "newProduct"
 msgstr "newProduct"
 
-#: blocks/product/blocknew.php:7 dashboard/templates.php:1155
-#: dashboard/templates.php:1228 functions/widgets.php:346
+#: blocks/product/blocknew.php:7 dashboard/templates.php:1228
+#: functions/widgets.php:346
 msgid "New items"
 msgstr "Nouveaux articles"
 
@@ -1294,10 +1294,6 @@ msgid_plural "We have found %s items with this search"
 msgstr[0] "Nous avons trouvé %s article avec cette recherche"
 msgstr[1] "Nous avons trouvé %s articles avec cette recherche"
 
-#: dashboard/templates.php:1145
-msgid "Filter"
-msgstr "Filtrer"
-
 #: dashboard/templates.php:1149
 msgid "Title A->Z"
 msgstr "Titre A->Z"
@@ -1305,6 +1301,10 @@ msgstr "Titre A->Z"
 #: dashboard/templates.php:1152
 msgid "Title Z->A"
 msgstr "Titre Z->A"
+
+#: dashboard/templates.php:1155
+msgid "Novelties"
+msgstr "Nouveautés"
 
 #: dashboard/templates.php:1158
 msgid "Lowest prices"
@@ -2448,6 +2448,9 @@ msgstr "ptibogxiv"
 #. Author URI of the plugin/theme
 msgid "https://www.ptibogxiv.net/en"
 msgstr "https://www.ptibogxiv.net/fr"
+
+#~ msgid "Filter"
+#~ msgstr "Filtrer"
 
 #~ msgid "Most recent"
 #~ msgstr "Plus récent"
