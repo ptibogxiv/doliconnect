@@ -1118,7 +1118,7 @@ $count = 0;
 $count = count($listproduct);
 }
 
-print "<a href='".esc_url( add_query_arg( array( 'category' => $_GET['category'], 'subcategory' => $categorie->id), doliconnecturl('dolishop')) )."' class='list-group-item list-group-item-action'>".doliproduct($categorie, 'label')." (".$count.")</a>";
+print "<a href='".esc_url( add_query_arg( array( 'category' => esc_attr($_GET['category']), 'subcategory' => $categorie->id), doliconnecturl('dolishop')) )."' class='list-group-item list-group-item-action'>".doliproduct($categorie, 'label')." (".$count.")</a>";
 
 }}
 
