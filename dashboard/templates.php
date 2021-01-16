@@ -936,7 +936,7 @@ print dolihelp('ISSUE');
 print "</div></small>";
 print "</div></div>";
 
-} elseif (doliconst("CATEGORIE_RECURSIV_ADD", esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)) && isset($_GET['category']) && $_GET['category'] == 'all') {
+} elseif (doliconst("CATEGORIE_RECURSIV_ADD", esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)) && isset($_GET['category']) && $_GET['category'] == 'alll') {
 
 print "<ul class='list-group list-group-flush'>";
 
@@ -1098,12 +1098,15 @@ $cat = esc_attr(isset($_GET["subcategory"]) ? $_GET["subcategory"] : isset($_GET
 $subcat = esc_attr(isset($_GET["subcategory"]) ? $_GET["subcategory"] : $cat);
 $category = callDoliApi("GET", "/categories/".$cat."?include_childs=true", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
-if ((is_numeric($cat) && isset($category->id) && $category->id > 0) or (isset($_GET['search'])&& !empty($_GET['search']))) {
+if ((is_numeric($cat) && isset($category->id) && $category->id > 0) || (isset($_GET["category"]) && $_GET["category"] == 'all') || (isset($_GET['search'])&& !empty($_GET['search']))) {
 
 if (isset($_GET['search'])&& !empty($_GET['search']))  {
 $request = "/products?sortfield=t.".$field."&sortorder=".$order."&limit=".$limit."&page=".$page."&sqlfilters=((t.label%3Alike%3A'%25".esc_attr($_GET['search'])."%25')%20OR%20(t.description%3Alike%3A'%25".esc_attr($_GET['search'])."%25')%20OR%20(t.ref%3Alike%3A'%25".esc_attr($_GET['search'])."%25')%20OR%20(t.barcode%3Alike%3A'%25".esc_attr($_GET['search'])."%25'))%20AND%20(t.tosell%3A%3D%3A1)";
 $resultats = callDoliApi("GET", $request, null, dolidelay('search', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-} else {
+} elseif (isset($_GET["category"]) && $_GET["category"] == 'all') {
+$request = "/products?sortfield=t.".$field."&sortorder=".$order."&limit=".$limit."&page=".$page."&category=".esc_attr($shop)."&sqlfilters=(t.tosell%3A%3D%3A1)";
+$resultats = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+}else {
 $request = "/products?sortfield=t.".$field."&sortorder=".$order."&limit=".$limit."&page=".$page."&category=".$cat."&sqlfilters=(t.tosell=1)";
 $resultats = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 }
