@@ -1122,6 +1122,9 @@ $count = count($resultats);
 print '</center></div><div class="col-4 col-md-7">';
 printf( _n( 'We have found %s item with this search', 'We have found %s items with this search', $count, 'doliconnect' ), number_format_i18n( $count ) );
 print " '".esc_attr($_GET['search'])."'";
+} elseif (isset($_GET["category"]) && $_GET["category"] == 'all') {
+//print doliconnect_image('category', $category->id, 1, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), $category->entity);
+print "</center></div><div class='col-4 col-md-7'>".__( 'All items', 'doliconnect');
 } else {
 print doliconnect_image('category', $category->id, 1, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), $category->entity);
 print "</center></div><div class='col-4 col-md-7'>".doliproduct($category, 'label')."<br><small>".doliproduct($category, 'description').'</small>';
