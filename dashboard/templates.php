@@ -1150,7 +1150,7 @@ print "<br><br><br></center></li>";
 }
 
 print '</ul>';
-if (is_numeric($cat) && isset($category->id) && $category->id > 0) {
+if ((is_numeric($cat) && isset($category->id) && $category->id > 0) || (isset($_GET["category"]) && $_GET["category"] == 'all') || (isset($_GET['search'])&& !empty($_GET['search']))) {
 print '<div class="card-body">';
 if ( isset($resultats) ) print dolipage($resultats, $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], $page, $limit);
 print '</div>';
