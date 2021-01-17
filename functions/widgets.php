@@ -343,7 +343,7 @@ $count = 0;
 } else {
 $count = count($listproduct);
 }
-print "'>".__(  'New items', 'doliconnect')." <span class='badge bg-secondary rounded-pill'>".$count."</span></a>";
+print "'>".__(  'Novelties', 'doliconnect')." <span class='badge bg-secondary rounded-pill'>".$count."</span></a>";
 }
 
 if ( !empty(doliconst('MAIN_MODULE_DISCOUNTPRICE', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))) ) {
