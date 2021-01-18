@@ -265,6 +265,9 @@ jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function(e){
       if (document.getElementById("DoliFooterCarItems")) {  
       document.getElementById("DoliFooterCarItems").innerHTML = response.data.items;
       }
+      if (document.getElementById("DoliHeaderCartItemsList")) {  
+      document.getElementById("DoliHeaderCartItemsList").innerHTML = response.data.items;
+      }
       if (document.getElementById("DoliWidgetCarItems")) {
       document.getElementById("DoliWidgetCarItems").innerHTML = response.data.items;      
       }
