@@ -1228,7 +1228,7 @@ $doliline .= '<h6 class="mb-1">x'.$line->qty.'</h6>';
 $doliline .= "</div></div></li>";
 }
 } else {
-$doliline .= "<li class='list-group-item list-group-item-light'><br><br><br><br><br><center><h5>".__( 'Your basket is empty.', 'doliconnect')."</h5></center>";
+$doliline .= "<li class='list-group-item list-group-item-light'><br><br><br><br><br><center><h5>".__( 'Your basket is empty', 'doliconnect')."</h5></center>";
 if ( !is_user_logged_in() ) {
 $doliline .= '<center>'.__( 'If you already have an account,', 'doliconnect').' ';
 
