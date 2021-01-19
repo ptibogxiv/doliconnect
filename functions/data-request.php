@@ -68,7 +68,8 @@ $result = doliaddtocart(trim($_POST['product-add-id']), trim($_POST['product-add
 if ($result >= 0) {
 $response = [
     'message' => __( 'As our inventory is updated in real time, your items have been put in the basket for 1 hour', 'doliconnect'),
-    'items' => $result
+    'items' => $result,
+    'list' => $result
         ];
 wp_send_json_success( $response ); 
 } else {

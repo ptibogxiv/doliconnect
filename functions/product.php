@@ -259,16 +259,16 @@ jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function(e){
       document.getElementById("error-product-'.$product->id.'").innerHTML = "";
       
       if (response.success) {
-      if (document.getElementById("DoliHeaderCarItems")) {
+      if (document.getElementById("DoliHeaderCartItems")) {
       document.getElementById("DoliHeaderCarItems").innerHTML = response.data.items;
       }
-      if (document.getElementById("DoliFooterCarItems")) {  
+      if (document.getElementById("DoliFooterCartItems")) {  
       document.getElementById("DoliFooterCarItems").innerHTML = response.data.items;
       }
       if (document.getElementById("DoliHeaderCartItemsList")) {  
-      document.getElementById("DoliHeaderCartItemsList").innerHTML = response.data.items;
+      document.getElementById("DoliHeaderCartItemsList").innerHTML = response.data.list;
       }
-      if (document.getElementById("DoliWidgetCarItems")) {
+      if (document.getElementById("DoliWidgetCartItems")) {
       document.getElementById("DoliWidgetCarItems").innerHTML = response.data.items;      
       }
       document.getElementById("success-product-'.$product->id.'").innerHTML = response.data.message;    
