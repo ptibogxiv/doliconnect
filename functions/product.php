@@ -110,7 +110,7 @@ $order = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order', 
 if ( isset($order->lines) && $order->lines != null ) {
 $ln = null;
 foreach ( $order->lines as $line ) { 
-$ln .= '<li><h6 class="dropdown-header">'.doliproduct($line, 'product_label').'</h6></li>';
+$ln .= '<li><h6 class="dropdown-header">'.$line->qty.'x '.doliproduct($line, 'product_label').'</h6></li>';
 }
 return $ln;
 } else {
