@@ -69,7 +69,7 @@ if ($result >= 0) {
 $response = [
     'message' => __( 'As our inventory is updated in real time, your items have been put in the basket for 1 hour', 'doliconnect'),
     'items' => $result,
-    'list' => $result
+    'list' => doliconnect_CartItemsList()
         ];
 wp_send_json_success( $response ); 
 } else {
