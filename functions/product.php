@@ -104,6 +104,12 @@ $qty+=$line->qty;
 return $qty;
 }
 
+function doliconnect_CartItemsList() {
+return '<li><h6 class="dropdown-header">'.__( 'Your basket is empty', 'doliconnect').'</h6></li>
+<li><a class="dropdown-item disabled" href="#" tabindex="-1" aria-disabled="true">'.__( 'Your basket is empty', 'doliconnect').'</a></li>
+<p class="p-3 text-muted"> test hfzefze fzeze gtez gtezgezg ezg</p>';
+}
+
 function doliaddtocart($productid, $quantity = null, $price = null, $remise_percent = null, $timestart = null, $timeend = null, $url = null) {
 global $current_user;
 
