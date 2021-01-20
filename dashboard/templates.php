@@ -259,15 +259,16 @@ $gdrf_answer    = absint( $gdrf_numbers[0] ) + absint( $gdrf_numbers[1] );
         $hasError = true;
     }
     
+		if ( intval( $gdrf_answer ) !== intval( $gdrf_human ) ) {
+				$emailError = __( 'Security check failed, invalid human verification field.', 'doliconnect');
+        $hasError = true;
+		}
+      
+    
     if ( defined("DOLICONNECT_DEMO") ) {
         $emailError = __( 'Create account is not permitted because the demo mode is active', 'doliconnect');       
         $hasError = true;
     }
-    
-			if ( intval( $gdrf_answer ) !== intval( $gdrf_human ) ) {
-				$emailError = __( 'Security check failed, invalid human verification field.', 'doliconnect');
-        $hasError = true;
-			}
 
     if(!isset($hasError)) {
         $emailTo = get_option('tz_email');
