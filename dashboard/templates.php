@@ -1222,8 +1222,9 @@ print "'>".__(  'Discounted items', 'doliconnect')." (".$count.")</a>";
 
 if ( $shop != null && $shop > 0 ) {
 $resultats = $resultatsc->childs;
-} 
-
+}
+ 
+if ( !isset($resultats->error) && $resultats != null ) {
 foreach ($resultats as $categorie) {
 
 $requestp = "/products?sortfield=t.label&sortorder=ASC&category=".$categorie->id."&sqlfilters=(t.tosell=1)";
@@ -1236,6 +1237,7 @@ $count = count($listproduct);
 
 print "<a href='".esc_url( add_query_arg( 'category', $categorie->id, doliconnecturl('dolishop')) )."' class='list-group-item list-group-item-action'>".doliproduct($categorie, 'label')." (".$count.")</a>"; //."<br>".doliproduct($categorie, 'description')
 
+}
 }
 }
 
