@@ -2926,7 +2926,7 @@ global $current_user;
 
 }
 
-function doliconnect_modal() {
+function doliconnect_modalform() {
 global $current_user;
 $year = strftime("%Y", current_time( 'timestamp', 1));
 
@@ -3018,6 +3018,6 @@ do_action( 'login_footer' );
 }
 
 }
-add_action( 'wp_footer', 'doliconnect_modal' );
+add_action( 'wp_footer', 'doliconnect_modalform' );
 
 ?>

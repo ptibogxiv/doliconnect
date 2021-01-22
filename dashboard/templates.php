@@ -546,7 +546,7 @@ print "<h5 class='card-title'>".__( 'Access restricted to users', 'doliconnect')
 }
 print "</div>";
 }
-if ( function_exists('doliconnect_modal') && get_option('doliloginmodal') == '1' ) {
+if ( function_exists('doliconnect_modalform') && get_option('doliloginmodal') == '1' ) {
 
 print '<ul class="list-group list-group-flush"><li class="list-group-item"><center><i class="fas fa-user-lock fa-fw fa-10x"></i>';
 //print "<h2>".__( 'Restricted area', 'doliconnect')."</h2></center>";
