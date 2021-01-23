@@ -1758,7 +1758,7 @@ $paymentmethods .= '" type="button" data-bs-toggle="collapse" data-bs-target="#f
 if (empty($countPM)) { $paymentmethods .= "true"; } else { $paymentmethods .= "false"; }
 $paymentmethods .= '" aria-controls="flush-collapsenewpm">';
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
-$paymentmethods .= '<i class="far fa-credit-card fa-3x fa-fw float-start"></i> '.__( 'Pay by SEPA bank debit', 'doliconnect');
+$paymentmethods .= '<i class="fas fa-university fa-3x fa-fw float-start"></i> '.__( 'Pay by SEPA bank debit', 'doliconnect');
 } else {
 $paymentmethods .= '<i class="fas fa-plus-circle fa-3x fa-fw float-start"></i> '.__( 'Add a SEPA bank account', 'doliconnect');
 }
@@ -1808,10 +1808,10 @@ event.preventDefault();
 $('#PayIbanButton').disabled = true;
 $('#DoliconnectLoadingModal').modal('show');
 console.log('Click on PayIbanButton');
-var ibanholderName = document.getElementById('cardholder-name');
+var ibanholderName = document.getElementById('ibanholder-name');
 if (ibanholderName.value == ''){               
 console.log('Field Card holder is empty');
-displayCardError.textContent = 'We need an owner as on your card';
+displayCardError.textContent = 'We need an owner as on your account';
 $('#PayIbanButton').disabled = false;
 $('#DoliconnectLoadingModal').modal('hide');  
 } else {
@@ -1821,10 +1821,13 @@ document.getElementById('DoliPaymentmethodAlert').innerHTML = '';
   stripe.confirmSepaDebitPayment(
     clientSecret,
     {
-      payment_method: {
-        card: cardElement,
-        billing_details: {name: ibanholderName.value}
-      }
+    payment_method: {
+      sepa_debit: ibanElement,
+      billing_details: {
+        name: ibanholderName.value,
+        email: '".$listpaymentmethods->thirdparty->email."',
+      },
+    },
     }
   ).then(function(result) {
     if (result.error) {
@@ -1887,7 +1890,7 @@ console.log('Click on AddIbanButton');
 var ibanholderName = document.getElementById('ibanholder-name');
 if (ibanholderName.value == ''){               
 console.log('Field Iban holder is empty');
-displayIbanError.textContent = 'We need an owner as on your iban';
+displayCardError.textContent = 'We need an owner as on your account';
 $('#AddIbanButton').disabled = false;
 $('#DoliconnectLoadingModal').modal('hide');  
 } else {
