@@ -359,7 +359,7 @@ $count = 0;
 } else {
 $count = count($listproduct);
 }
-print "'>".__(  'Discounted items', 'doliconnect')." (".$count.")</a>";
+print "'>".__(  'Discounted items', 'doliconnect')." <span class='badge bg-secondary rounded-pill'>".$count."</span></a>";
 }
 
 if ( $shop != null && $shop > 0 ) {
