@@ -23,7 +23,7 @@ $css='bootswatch/'.get_theme_mod( 'ptibogxivtheme_css').'/';
 $version='4.5.2';  
 }
 
-if (!empty(get_theme_mod( 'ptibogxivtheme_css')) && ($version != $versionbase || empty(get_option('doliconnectbeta')))) {
+if (!empty(get_theme_mod( 'ptibogxivtheme_css')) && $version != $versionbase && empty(get_option('doliconnectbeta'))) {
 $css='';
 $version=$versionbase;
 }
