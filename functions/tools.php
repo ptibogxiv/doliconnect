@@ -1411,6 +1411,7 @@ $minPM = apply_filters( 'doliconnect_force_minipaymentmethod', $listpaymentmetho
 }
 if ( isset($listpaymentmethods->payment_methods) && $listpaymentmethods->payment_methods != null ) {
 foreach ( $listpaymentmethods->payment_methods as $method ) { 
+$mode_reglement_code = callDoliApi("GET", "/setup/dictionary/payment_types?sortfield=code&sortorder=ASC&limit=100&active=1&sqlfilters=(t.code%3A%3D%3A'PRE')", null, dolidelay('constante'));
 $paymentmethods .= '<div class="accordion-item"><h2 class="accordion-header" id="flush-heading'.$method->id.'"><button class="accordion-button';
 if ( $method->default_source && empty($thirdparty->mode_reglement_id) && !in_array($method->type, array('PRE','VIR')) || (!empty($method->default_source) && !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id == $mode_reglement_code[0]->id ) ) { $paymentmethods .= ""; } else { $paymentmethods .= " collapsed"; }
 $paymentmethods .= '" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse'.$method->id.'" aria-expanded="';
@@ -1961,6 +1962,7 @@ $paymentmethods .= '<li class="nav-item"><a class="nav-link" data-bs-toggle="pil
 <i class="fab fa-paypal float-start"></i> Paypal</a></li>';
 }
 if ( isset($listpaymentmethods->VIR) && !empty($listpaymentmethods->VIR) ) {
+$mode_reglement_code = callDoliApi("GET", "/setup/dictionary/payment_types?sortfield=code&sortorder=ASC&limit=100&active=1&sqlfilters=(t.code%3A%3D%3A'VIR')", null, dolidelay('constante'));
 $paymentmethods .= '<div class="accordion-item"><h2 class="accordion-header" id="flush-headingvir"><button class="accordion-button';
 if ( !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id == $mode_reglement_code[0]->id ) { $paymentmethods .= ""; } else { $paymentmethods .= " collapsed"; }
 $paymentmethods .= '" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapsevir" aria-expanded="';
@@ -2013,6 +2015,7 @@ $paymentmethods .= '</div></div></div>';
 }
 
 if ( isset($listpaymentmethods->CHQ) && !empty($listpaymentmethods->CHQ) ) {
+$mode_reglement_code = callDoliApi("GET", "/setup/dictionary/payment_types?sortfield=code&sortorder=ASC&limit=100&active=1&sqlfilters=(t.code%3A%3D%3A'CHQ')", null, dolidelay('constante'));
 $paymentmethods .= '<div class="accordion-item"><h2 class="accordion-header" id="flush-headingvir"><button class="accordion-button';
 if ( !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id == $mode_reglement_code[0]->id ) { $paymentmethods .= ""; } else { $paymentmethods .= " collapsed"; }
 $paymentmethods .= '" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapsechq" aria-expanded="';
