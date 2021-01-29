@@ -1184,12 +1184,27 @@ $request = "/categories/".esc_attr($shop)."?include_childs=true";
 } else{
 $request = "/categories";
 }
-$resultats = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
-if ( !isset($resultats->error) && $resultats != null ) {
+$resultatsc = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+
+if ( !isset($resultatsc->error) && $resultatsc != null ) {
+
+if (doliconst("CATEGORIE_RECURSIV_ADD", esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))) { 
+print "<a href='".esc_url( add_query_arg( 'category', 'all', doliconnecturl('dolishop')) )."' class='list-group-item list-group-item-light list-group-item-action d-flex justify-content-between";
+if (isset($_GET['category']) && $_GET['category'] == 'all') { print " active"; }
+$requestp = "/products?sortfield=t.rowid&sortorder=DESC&category=".esc_attr($shop)."&sqlfilters=(t.tosell%3A%3D%3A1)";
+$listproduct = callDoliApi("GET", $requestp, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+if (empty($listproduct) || isset($listproduct->error)) {
+$count = 0;
+} else {
+$count = count($listproduct);
+}
+print "'>".__(  'All items', 'doliconnect')." <span class='badge bg-secondary rounded-pill'>".$count."</span></a>";
+}
+
 if (get_option('dolicartnewlist') != 'none') {
-print "<a href='".esc_url( add_query_arg( 'category', 'new', doliconnecturl('dolishop')) )."' class='list-group-item list-group-item-action";
-//if ( isset($_GET['new']) && $categorie->id == $_GET['subcategory'] ) { print " active"; }
+print "<a href='".esc_url( add_query_arg( 'category', 'new', doliconnecturl('dolishop')) )."' class='list-group-item list-group-item-light list-group-item-action d-flex justify-content-between";
+if (isset($_GET['category']) && $_GET['category'] == 'new') { print " active"; }
 $date = new DateTime(); 
 $date->modify('NOW');
 $duration = (!empty(get_option('dolicartnewlist'))?get_option('dolicartnewlist'):'month');
@@ -1202,32 +1217,32 @@ $count = 0;
 } else {
 $count = count($listproduct);
 }
-print "'>".__(  'New items', 'doliconnect')." (".$count.")</a>";
+print "'>".__(  'Novelties', 'doliconnect')." <span class='badge bg-secondary rounded-pill'>".$count."</span></a>";
 }
-if ( !empty(doliconst('MAIN_MODULE_DISCOUNTPRICE')) ) {
-print "<a href='".esc_url( add_query_arg( 'category', 'discount', doliconnecturl('dolishop')) )."' class='list-group-item list-group-item-action";
-if ( isset($_GET['discount']) ) { print " active"; }
+
+if ( !empty(doliconst('MAIN_MODULE_DISCOUNTPRICE', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))) ) {
+print "<a href='".esc_url( add_query_arg( 'category', 'discount', doliconnecturl('dolishop')) )."' class='list-group-item list-group-item-light list-group-item-action d-flex justify-content-between";
+if (isset($_GET['category']) && $_GET['category'] == 'discount') { print " active"; }
 $date = new DateTime(); 
 $date->modify('NOW');
 $lastdate = $date->format('Y-m-d');
-$requestp = "/discountprice?sortfield=t.rowid&sortorder=ASC&sqlfilters=(t.date_begin%3A%3C%3D%3A'".$lastdate."')%20AND%20(t.date_end%3A%3E%3D%3A'".$lastdate."')%20AND%20(d.tosell%3A%3D%3A1)";
+$requestp = "/discountprice?sortfield=t.rowid&sortorder=DESC&sqlfilters=(t.date_begin%3A%3C%3D%3A'".$lastdate."')%20AND%20(t.date_end%3A%3E%3D%3A'".$lastdate."')%20AND%20(d.tosell%3A%3D%3A1)";
 $listproduct = callDoliApi("GET", $requestp, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 if (empty($listproduct) || isset($listproduct->error)) {
 $count = 0;
 } else {
 $count = count($listproduct);
 }
-print "'>".__(  'Discounted items', 'doliconnect')." (".$count.")</a>";
+print "'>".__(  'Discounted items', 'doliconnect')." <span class='badge bg-secondary rounded-pill'>".$count."</span></a>";
 }
 
 if ( $shop != null && $shop > 0 ) {
-$resultats = $resultatsc->childs;
-}
- 
-if ( !isset($resultats->error) && $resultats != null ) {
-foreach ($resultats as $categorie) {
+$resultatsc = $resultatsc->childs;
+} 
 
-$requestp = "/products?sortfield=t.label&sortorder=ASC&category=".$categorie->id."&sqlfilters=(t.tosell=1)";
+foreach ($resultatsc as $categorie) {
+
+$requestp = "/products?sortfield=t.rowid&sortorder=DESC&category=".$categorie->id."&sqlfilters=(t.tosell=1)";
 $listproduct = callDoliApi("GET", $requestp, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 if (empty($listproduct) || isset($listproduct->error)) {
 $count = 0;
@@ -1235,10 +1250,35 @@ $count = 0;
 $count = count($listproduct);
 }
 
-print "<a href='".esc_url( add_query_arg( 'category', $categorie->id, doliconnecturl('dolishop')) )."' class='list-group-item list-group-item-action'>".doliproduct($categorie, 'label')." (".$count.")</a>"; //."<br>".doliproduct($categorie, 'description')
+print "<a href='".esc_url( add_query_arg( 'category', $categorie->id, doliconnecturl('dolishop')) )."' class='list-group-item list-group-item-light list-group-item-action d-flex justify-content-between";
+if ( isset($_GET['category']) && !isset($_GET['subcategory']) && $categorie->id == $_GET['category']) { print " active"; }
+print "'>".doliproduct($categorie, 'label')." <span class='badge bg-secondary rounded-pill'>".$count."</span></a>";
+
+if ( isset($_GET['category']) && $categorie->id == $_GET['category'] ) {
+
+$request = "/categories/".esc_attr(isset($_GET["category"]) ? $_GET["category"] : $_GET["subcategory"])."?include_childs=true";
+$resultatsc = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+
+if ( !isset($resultatsc->error) && $resultatsc != null ) {
+foreach ($resultatsc->childs as $categorie) {
+
+$requestp = "/products?sortfield=t.rowid&sortorder=DESC&category=".$categorie->id."&sqlfilters=(t.tosell=1)";
+$listproduct = callDoliApi("GET", $requestp, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+if (empty($listproduct) || isset($listproduct->error)) {
+$count = 0;
+} else {
+$count = count($listproduct);
+}
+
+print "<a href='".esc_url( add_query_arg( array( 'category' => $_GET['category'], 'subcategory' => $categorie->id), doliconnecturl('dolishop')) )."' class='list-group-item list-group-item-light list-group-item-action d-flex justify-content-between";
+if ( isset($_GET['subcategory']) && $categorie->id == $_GET['subcategory'] ) { print " active"; }
+print "'>>".doliproduct($categorie, 'label')." <span class='badge bg-secondary rounded-pill'>".$count."</span></a>";
+}
+
+}}
 
 }
-}
+
 }
 
 $catoption = doliconst("ADHERENT_MEMBER_CATEGORY", esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
