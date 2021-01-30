@@ -717,13 +717,15 @@ print "<form action='' id='doliconnect-contactform' method='post' class='was-val
 print doliloaderscript('doliconnect-contactform');
 
 print "<div class='card shadow-sm'><ul class='list-group list-group-flush'>
-<li class='list-group-item'><div class='form-group'>
-<label class='control-label' for='contactName'><small>".__( 'Complete name', 'doliconnect')."</small></label>
-<input class='form-control' type='text' name='contactName' autocomplete='off' id='contactName' value='";
+<li class='list-group-item'><div class='form-group'>";
+print '<div class="form-floating mb-2">
+<input type="text" class="form-control" name="contactName" autocomplete="off" id="contactName" placeholder="Name" value="';
 if ( is_user_logged_in() ) { print $current_user->user_lastname." ".$current_user->user_firstname; } else { print ""; }
-print "'";
-if ( is_user_logged_in() ) { print " readonly";} else { print " required"; }
-print ">";
+print '"';
+if ( is_user_logged_in() ) { print " readonly"; } else { print " required"; }
+print '>
+<label for="contactName">'.__( 'Complete name', 'doliconnect').'</label>
+</div>';
 print '</div><div class="form-group">';
 print '<div class="form-floating mb-3">
 <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com" value="'.$current_user->user_email.'" autocomplete="off" ';
