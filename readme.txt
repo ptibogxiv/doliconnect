@@ -64,6 +64,7 @@ We would like to thank this contributors and plugins:
 == Changelog ==
    = 5.0.2 =
 * upgrade bootswatch to 4.6.0
+* fix template and form
 
   = 5.0.1 =
 * fix critical bug
