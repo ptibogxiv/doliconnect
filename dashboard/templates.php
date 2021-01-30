@@ -1052,7 +1052,7 @@ print dolihelp('ISSUE');
 print "</div></small>";
 print "</div></div>";
 
-} elseif ( (isset($_GET['category']) && !empty($_GET['category'])) or (isset($_GET['search'])&& !empty($_GET['search'])) ) {
+} elseif ( (isset($_GET['category']) && !empty($_GET['category'])) || (isset($_GET['search']) && !empty($_GET['search'])) ) {
 
 $limit=25;
 if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']-1); } else { $page = 0; }
@@ -1061,7 +1061,7 @@ if ( isset($_GET['order']) ) { $order = esc_attr($_GET['order']); } else { $orde
 
 print "<ul class='list-group list-group-flush'>";
 
-$cat = esc_attr(isset($_GET["subcategory"]) ? $_GET["subcategory"] : isset($_GET["category"]) ? $_GET["category"] : null);
+$cat = esc_attr(isset($_GET["subcategory"]) ? $_GET["subcategory"] : (isset($_GET["category"]) ? $_GET["category"] : null));
 $subcat = esc_attr(isset($_GET["subcategory"]) ? $_GET["subcategory"] : $cat);
 $category = callDoliApi("GET", "/categories/".$cat."?include_childs=true", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
