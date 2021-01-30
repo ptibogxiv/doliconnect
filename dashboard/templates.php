@@ -760,8 +760,10 @@ print "</select>";
 }
 print "</div>";
 
-print "<div class='form-group'><label class='control-label' for='commentsText'><small>".__( 'Message', 'doliconnect')."</small></label>
-<textarea class='form-control' name='comments' id='commentsText' rows='7' cols='20' required></textarea>";
+print '<div class="form-floating">
+<textarea class="form-control" placeholder="Leave a comment here" name="comments" id="commentsText" style="height: 100px"></textarea>
+<label for="commentsText">'.__( 'Message', 'doliconnect').'</label>
+</div>';
 
 if ( !is_user_logged_in() ) {
 print '</li><li class="list-group-item"><div class="custom-control custom-checkbox"><input id="rgpdinfo" class="custom-control-input form-control-sm" type="checkbox" name="rgpdinfo" value="ok" required><label class="custom-control-label w-100" for="rgpdinfo"><small class="form-text text-muted"> '.__( 'I agree to save my personnal informations in order to contact me', 'doliconnect').'</small></label></div>';  
