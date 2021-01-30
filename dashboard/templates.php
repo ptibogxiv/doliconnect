@@ -1061,8 +1061,9 @@ if ( isset($_GET['order']) ) { $order = esc_attr($_GET['order']); } else { $orde
 
 print "<ul class='list-group list-group-flush'>";
 
-$cat = esc_attr(isset($_GET["subcategory"]) ? $_GET["subcategory"] : (isset($_GET["category"]) ? $_GET["category"] : null));
+$cat = esc_attr(isset($_GET["subsubcategory"]) ? $_GET["subsubcategory"] : (isset($_GET["subcategory"]) ? $_GET["subcategory"] : (isset($_GET["category"]) ? $_GET["category"] : null)));
 $subcat = esc_attr(isset($_GET["subcategory"]) ? $_GET["subcategory"] : $cat);
+$subsubcat = esc_attr(isset($_GET["subsubcategory"]) ? $_GET["subsubcategory"] : $cat);
 $category = callDoliApi("GET", "/categories/".$cat."?include_childs=true", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 if ((is_numeric($cat) && isset($category->id) && $category->id > 0) || (isset($_GET["category"]) && $_GET["category"] == 'all') || (isset($_GET['search'])&& !empty($_GET['search']))) {
@@ -1132,7 +1133,14 @@ $count = 0;
 $count = count($listproduct);
 }
 
-print "<a href='".esc_url( add_query_arg( array( 'category' => esc_attr($_GET['category']), 'subcategory' => $categorie->id), doliconnecturl('dolishop')) )."' class='list-group-item list-group-item-action'>".doliproduct($categorie, 'label')." (".$count.")</a>";
+$arg['category'] = esc_attr($_GET['category']);
+if (isset($_GET["subcategory"]) && isset($_GET["category"])) {
+$arg['subcategory'] = esc_attr($_GET['subcategory']);
+$arg['subsubcategory'] = $categorie->id;
+} else {
+$arg['subcategory'] = $categorie->id;
+}
+print "<a href='".esc_url( add_query_arg( $arg, doliconnecturl('dolishop')) )."' class='list-group-item list-group-item-action'>".doliproduct($categorie, 'label')." (".$count.")</a>";
 
 }}
 }
