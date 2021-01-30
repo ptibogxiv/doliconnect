@@ -717,7 +717,8 @@ print "<form action='' id='doliconnect-contactform' method='post' class='was-val
 print doliloaderscript('doliconnect-contactform');
 
 print "<div class='card shadow-sm'><ul class='list-group list-group-flush'>
-<li class='list-group-item'><div class='form-group'>";
+<li class='list-group-item'>";
+
 print '<div class="form-floating mb-2">
 <input type="text" class="form-control" name="contactName" autocomplete="off" id="contactName" placeholder="Name" value="';
 if ( is_user_logged_in() ) { print $current_user->user_lastname." ".$current_user->user_firstname; } else { print ""; }
@@ -726,25 +727,17 @@ if ( is_user_logged_in() ) { print " readonly"; } else { print " required"; }
 print '>
 <label for="contactName">'.__( 'Complete name', 'doliconnect').'</label>
 </div>';
-print '</div><div class="form-group">';
-print '<div class="form-floating mb-3">
+
+print '<div class="form-floating mb-2">
 <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com" value="'.$current_user->user_email.'" autocomplete="off" ';
 if ( is_user_logged_in() ) { print " readonly"; } else { print " required"; }
 print '>
 <label for="email">'.__( 'Email', 'doliconnect').'</label>
 </div>';
-print "</div><div class='form-group d-none'>
-<label class='control-label' for='email-control'><small>".__( 'Email', 'doliconnect')."</small></label>
-<input class='form-control' type='email' name='email-control' autocomplete='off' id='email-control' ";
-print "/>";
-print "</div>";
 
-print "<div class='form-group'><label class='control-label' for='type'><small>".__( 'Type of request', 'doliconnect')."</small></label>";
 $type = callDoliApi("GET", "/setup/dictionary/ticket_types?sortfield=pos&sortorder=ASC&limit=100", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-//print $type;
-
 if ( isset($type) ) { 
-print "<select class='custom-select' id='ticket_type'  name='ticket_type'>";
+print '<div class="form-floating mb-2"><select class="form-select" id="ticket_type"  name="ticket_type" aria-label="'.__( 'Type', 'doliconnect').'" required>';
 if ( count($type) > 1 ) {
 print "<option value='' disabled selected >".__( '- Select -', 'doliconnect')."</option>";
 }
@@ -756,9 +749,8 @@ print "selected ";
 print "selected ";}
 print ">".$postv->label."</option>";
 }
-print "</select>";
+print '</select><label for="ticket_type">'.__( 'Type', 'doliconnect').'</label></div>';
 }
-print "</div>";
 
 print '<div class="form-floating">
 <textarea class="form-control" placeholder="Leave a comment here" name="comments" id="commentsText" style="height: 100px"></textarea>
@@ -769,7 +761,7 @@ if ( !is_user_logged_in() ) {
 print '</li><li class="list-group-item"><div class="custom-control custom-checkbox"><input id="rgpdinfo" class="custom-control-input form-control-sm" type="checkbox" name="rgpdinfo" value="ok" required><label class="custom-control-label w-100" for="rgpdinfo"><small class="form-text text-muted"> '.__( 'I agree to save my personnal informations in order to contact me', 'doliconnect').'</small></label></div>';  
 }
 print "</li></ul>";
-print "<div class='card-body'><button class='btn btn-primary btn-block' type='submit'>".__( 'Send', 'doliconnect')."</button><input type='hidden' name='submitted' id='submitted' value='true' /></div></div></div></div></form>";
+print "<div class='card-body'><div class='d-grid gap-2'><button class='btn btn-outline-secondary' type='submit'>".__( 'Send', 'doliconnect')."</button><input type='hidden' name='submitted' id='submitted' value='true' /></div></div></div></div></div></form>";
 
 print "</div>";
 
