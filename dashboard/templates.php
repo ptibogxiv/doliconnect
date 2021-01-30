@@ -724,11 +724,13 @@ if ( is_user_logged_in() ) { print $current_user->user_lastname." ".$current_use
 print "'";
 if ( is_user_logged_in() ) { print " readonly";} else { print " required"; }
 print ">";
-print "</div><div class='form-group'>
-<label class='control-label' for='email'><small>".__( 'Email', 'doliconnect')."</small></label>
-<input class='form-control' type='email' name='email' autocomplete='off' id='email' value='$current_user->user_email'";
+print '</div><div class="form-group">';
+print '<div class="form-floating mb-3">
+<input type="email" class="form-control" id="email" name="email" placeholder="name@example.com" value="'.$current_user->user_email.'" autocomplete="off" ';
 if ( is_user_logged_in() ) { print " readonly"; } else { print " required"; }
-print ">";
+print '>
+<label for="email">'.__( 'Email', 'doliconnect').'</label>
+</div>';
 print "</div><div class='form-group d-none'>
 <label class='control-label' for='email-control'><small>".__( 'Email', 'doliconnect')."</small></label>
 <input class='form-control' type='email' name='email-control' autocomplete='off' id='email-control' ";
