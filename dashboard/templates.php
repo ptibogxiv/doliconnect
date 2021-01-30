@@ -1602,6 +1602,12 @@ print "</ul><ul id='dolitotal' class='list-group list-group-flush'>";
 print dolitotal($object);  
 }
 
+if ( has_filter('mydoliconnectcartfilter') ) {
+print "<li class='list-group-item bg-light'>";
+print apply_filters('mydoliconnectcartfilter', $object);
+print "</li>";
+}
+
 if (doliconnector($current_user, 'fk_soc')>0) {
 $thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
 $outstandingamount = 0;
