@@ -401,14 +401,14 @@ if ( isset($_GET['subcategory']) && $scategorie->id == $_GET['subcategory'] ) { 
 print "'>>".doliproduct($scategorie, 'label')." <span class='badge bg-secondary rounded-pill'>".$count."</span></a>";
 }
 
-}}
+
 
 if ( isset($_GET['subcategory']) && $scategorie->id == $_GET['subcategory'] ) {
 
 $request = "/categories/".esc_attr(isset($_GET["subcategory"]) ? $_GET["subcategory"] : $_GET["category"])."?include_childs=true";
 $resultatsc = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
-if ( !isset($resultatsc->error) && $resultatsc != null ) {
+if ( !isset($resultatsc->error) && $resultatsc != null) {
 foreach ($resultatsc->childs as $sscategorie) {
 
 $requestp = "/products?sortfield=t.rowid&sortorder=DESC&category=".$sscategorie->id."&sqlfilters=(t.tosell=1)";
@@ -423,7 +423,7 @@ print "<a href='".esc_url( add_query_arg( array( 'category' => $_GET['category']
 if ( isset($_GET['subsubcategory']) && $sscategorie->id == $_GET['subsubcategory'] ) { print " active"; }
 print "'>>> ".doliproduct($sscategorie, 'label')." <span class='badge bg-secondary rounded-pill'>".$count."</span></a>";
 } 
-
+}}
 }}
 
 }
