@@ -1423,14 +1423,14 @@ elseif ( $method->brand == 'visa' ) { $paymentmethods .= 'class="fab fa-cc-visa 
 else if ( $method->brand == 'mastercard' ) { $paymentmethods .= 'class="fab fa-cc-mastercard fa-3x fa-fw float-start" style="color:#FF5F01"'; }
 else if ( $method->brand == 'amex' ) { $paymentmethods .= 'class="fab fa-cc-amex fa-3x fa-fw float-start" style="color:#2E78BF"'; }
 else { $paymentmethods .= 'class="fab fa-credit-card fa-3x fa-fw float-start"';}
-$paymentmethods .= '></i> <div><h6 class="my-0">';
+$paymentmethods .= '></i> <div>';
 if ( $method->type == 'sepa_debit' || $method->type == 'PRE' || $method->type == 'VIR' ) {
 $paymentmethods .= __( 'Account', 'doliconnect')." ".$method->reference;
 } else {
 $paymentmethods .= __( 'Card', 'doliconnect').' '.$method->reference;
 }
 if ( $method->default_source && empty($thirdparty->mode_reglement_id) && !in_array($method->type, array('PRE','VIR')) || (!empty($method->default_source) && !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id == $mode_reglement_code[0]->id ) ) { $paymentmethods .= " <i class='fas fa-star fa-fw' style='color:Gold'></i>"; }
-$paymentmethods .= '</h6><small class="text-muted">'.$method->holder.'</small></div><span class="flag-icon flag-icon-'.strtolower($method->country).' float-end"></span></button></h2>';
+$paymentmethods .= '<br><small class="text-muted">'.$method->holder.'</small></div><span class="flag-icon flag-icon-'.strtolower($method->country).' float-end"></span></button></h2>';
 $paymentmethods .= '<div id="flush-collapse'.$method->id.'" class="accordion-collapse collapse';
 if ( $method->default_source && empty($thirdparty->mode_reglement_id) && !in_array($method->type, array('PRE','VIR')) || (!empty($method->default_source) && !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id == $mode_reglement_code[0]->id ) ) { $paymentmethods .= " show"; }
 $paymentmethods .= '" aria-labelledby="flush-heading'.$method->id.'" data-bs-parent="#accordionFlushExample"><div class="accordion-body bg-light">';
