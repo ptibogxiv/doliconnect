@@ -344,7 +344,8 @@ $refprice=(empty(get_option('dolibarr_b2bmode'))?$price_ttc:$price_ht);
 
 if (isset($add) && $add < 0) {
 $button .= '<table class="table table-bordered table-sm"><tbody>'; 
-$button .= '<tr><td class="text-end">'.doliprice( (empty(get_option('dolibarr_b2bmode'))?$price_ttc:$price_ht), null, $currency)."</td></tr>";
+$button .= '<tr><td class="text-end"><div class="float-start">'.__( 'Selling Price', 'doliconnect').'</div>';
+$button .= '<div class="float-end">'.doliprice( (empty(get_option('dolibarr_b2bmode'))?$price_ttc:$price_ht), null, $currency)."</div></td></tr>";
 } else {
 $button .= '<table class="table table-sm table-striped table-bordered"><tbody>';
 $multiprix = (empty(get_option('dolibarr_b2bmode'))?$product->multiprices_ttc:$product->multiprices);
