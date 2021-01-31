@@ -1571,7 +1571,7 @@ print "</ul><br><div id='tab-cart-content' class='tab-content'>";
 
 print "<div class='tab-pane fade show active' id='nav-tab-cart'>";
  
-if ( isset($object) && is_object($object) && isset($object->date_modification)) {
+if ( isset($object) && is_object($object) && isset($object->date_modification) && !empty($object->date_modification)) {
 $timeout=$object->date_modification-current_time('timestamp',1)+1200;
 //print "<script>";
 //var tmp=<?php print ($timeout)*10;
