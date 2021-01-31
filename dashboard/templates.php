@@ -1288,7 +1288,7 @@ print "'>>".doliproduct($categorie, 'label')." <span class='badge bg-secondary r
 }
 
 $catoption = doliconst("ADHERENT_MEMBER_CATEGORY", esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
-if ( !empty($catoption) && is_user_logged_in() ) {
+if ( !empty(doliconst('MAIN_MODULE_ADHERENTSPLUS')) && !empty($catoption) && is_user_logged_in() ) {
 print "<a href='".esc_url( add_query_arg( 'category', $catoption, doliconnecturl('dolishop')) )."' class='list-group-item list-group-item-action' >Produits/Services lies a l'adhesion</a>";
 }
 

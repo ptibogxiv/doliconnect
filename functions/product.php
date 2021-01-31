@@ -344,7 +344,7 @@ $refprice=(empty(get_option('dolibarr_b2bmode'))?$price_ttc:$price_ht);
 
 if (isset($add) && $add < 0) {
 $button .= '<table class="table table-bordered table-sm"><tbody>'; 
-$button .= '<tr><td class="text-right">'.doliprice( (empty(get_option('dolibarr_b2bmode'))?$price_ttc:$price_ht), null, $currency)."</td></tr>";
+$button .= '<tr><td class="text-end">'.doliprice( (empty(get_option('dolibarr_b2bmode'))?$price_ttc:$price_ht), null, $currency)."</td></tr>";
 } else {
 $button .= '<table class="table table-sm table-striped table-bordered"><tbody>';
 $multiprix = (empty(get_option('dolibarr_b2bmode'))?$product->multiprices_ttc:$product->multiprices);
@@ -355,10 +355,10 @@ $button .= ' class="table-primary"';
 }
 $button .= '>';   
 $button .= '<td><small>'.(!empty(doliconst('PRODUIT_MULTIPRICES_LABEL'.$level, $refresh))?doliconst('PRODUIT_MULTIPRICES_LABEL'.$level, $refresh):__( 'Price', 'doliconnect').' '.$level).'</small></td>';
-$button .= '<td class="text-right"><small>'.doliprice( (empty(get_option('dolibarr_b2bmode'))?$price:$price_ht), null, $currency);
+$button .= '<td class="text-end"><small>'.doliprice( (empty(get_option('dolibarr_b2bmode'))?$price:$price_ht), null, $currency);
 if ( empty($time) && !empty($product->duration_value) ) { $button .='/'.doliduration($product); }
 $button .= '</small></td>';
-if ( !empty($altdurvalue) ) { $button .= "<td class='text-right'>soit ".doliprice( $altdurvalue*(empty(get_option('dolibarr_b2bmode'))?$price:$price_ht), null, $currency)." par ".__( 'hour', 'doliconnect')."</td>"; } 
+if ( !empty($altdurvalue) ) { $button .= "<td class='text-end'>soit ".doliprice( $altdurvalue*(empty(get_option('dolibarr_b2bmode'))?$price:$price_ht), null, $currency)." par ".__( 'hour', 'doliconnect')."</td>"; } 
 //$button .= '<small class="float-end">'.__( 'You benefit from the rate', 'doliconnect').' '.doliconst('PRODUIT_MULTIPRICES_LABEL'.$level).'</small>';
 $button .= '</tr>'; 
 }
@@ -379,7 +379,7 @@ $button .= '<tr>';
 $button .= '<td><div class="float-start">'.__( 'Selling Price', 'doliconnect').'</div>';
 $button .= '<div class="float-end">'.doliprice( empty(get_option('dolibarr_b2bmode'))?$product->price_ttc:$product->price, null, $currency).'</div></td></tr>';
 if ( empty($time) && !empty($product->duration_value) ) { $button .='/'.doliduration($product); } 
-if ( !empty($altdurvalue) ) { $button .= "<tr><td class='text-right'>soit ".doliprice( $altdurvalue*$product->price_ttc, null, $currency)." par ".__( 'hour', 'doliconnect')."</td></tr>"; } 
+if ( !empty($altdurvalue) ) { $button .= "<tr><td class='text-end'>soit ".doliprice( $altdurvalue*$product->price_ttc, null, $currency)." par ".__( 'hour', 'doliconnect')."</td></tr>"; } 
 
 $button .= ''; 
 
@@ -454,7 +454,7 @@ $button .= '<tr class="table-primary">';
 $button .= '<td><div class="float-start">'.__( 'Your price', 'doliconnect').'</div>';
 $button .= '<div class="float-end">'.doliprice( $refprice, $currency).'</div></td></tr>';
 if ( empty($time) && !empty($product->duration_value) ) { $button .='/'.doliduration($product); } 
-if ( !empty($altdurvalue) ) { $button .= "<td class='text-right'>soit ".doliprice( $altdurvalue*$refprice, null, $currency)." par ".__( 'hour', 'doliconnect')."</td>"; } 
+if ( !empty($altdurvalue) ) { $button .= "<td class='text-end'>soit ".doliprice( $altdurvalue*$refprice, null, $currency)." par ".__( 'hour', 'doliconnect')."</td>"; } 
 } else {
 $price_min_ttc=$product->price_min;
 $price_ttc=$product->price_ttc;
