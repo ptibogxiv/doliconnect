@@ -2120,7 +2120,7 @@ $listticket = callDoliApi("GET", $request, null, dolidelay('ticket', esc_attr(is
 //print $listticket;
 
 print '<div class="card shadow-sm"><div class="card-header">'.__( 'Help', 'doliconnect');
-print '<a class="float-end text-decoration-none" href="'.esc_url( add_query_arg( 'action', 'create', $url) ).'"><i class="fas fa-plus-circle"></i> '.__( 'Create contact', 'doliconnect').'</a>';  
+print '<a class="float-end text-decoration-none" href="'.esc_url( add_query_arg( 'action', 'create', $url) ).'"><i class="fas fa-plus-circle"></i> '.__( 'Create ticket', 'doliconnect').'</a>';  
 print '</div><ul class="list-group list-group-flush">';  
 
 if ( !isset($listticket->error) && $listticket != null ) {
