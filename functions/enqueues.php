@@ -28,10 +28,10 @@ $css='';
 $version=$versionbase;
 }
 
-	wp_register_style( 'bootstrap.min.css', get_stylesheet_directory_uri() . '/theme/css/'.$css.'bootstrap.min.css', array(), $version);
+	wp_register_style( 'bootstrap.min.css', plugins_url( 'doliconnect/includes/bootstrap/css/'.$css.'bootstrap.min.css'), array(), $version);
   //wp_register_style( 'bootstrap.min.css', 'https://cdn.jsdelivr.net/npm/bootstrap@'.$version.'/dist/css/bootstrap.min.css', array(), $version);
 	wp_enqueue_style( 'bootstrap.min.css');
-	wp_register_script( 'bootstrap.bundle.min.js', get_template_directory_uri() . '/theme/js/bootstrap.bundle.min.js', array('jquery'), $version, true);
+	wp_register_script( 'bootstrap.bundle.min.js', plugins_url( 'doliconnect/includes/bootstrap/js/bootstrap.bundle.min.js'), array('jquery'), $version, true);
   //wp_register_script( 'bootstrap.bundle.min.js', 'https://cdn.jsdelivr.net/npm/bootstrap@'.$version.'/dist/js/bootstrap.bundle.min.js', array(), $version);
   wp_enqueue_script( 'bootstrap.bundle.min.js');
   if (empty(get_option('doliconnectfontawesome'))) {
