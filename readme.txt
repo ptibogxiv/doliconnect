@@ -62,6 +62,9 @@ We would like to thank this contributors and plugins:
 [gdpr-data-request-form](https://wordpress.org/plugins/gdpr-data-request-form/ "gdpr-data-request-form")
 
 == Changelog ==
+   = 5.0.3 =
+* fix & bugfixes
+
    = 5.0.2 =
 * upgrade bootswatch to 4.6.0
 * fix template and form
