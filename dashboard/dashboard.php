@@ -2262,8 +2262,9 @@ print "<option value='".$cur."' selected>".$cur." / ".doliprice($testvalue, null
 }
 print '</select><label for="multicurrency_code">'.__( 'Default currency', 'doliconnect').'</label>';
 }
-print '</div></li><div class="card-body">';
+print '</div></li>';
 if ( is_plugin_active( 'two-factor/two-factor.php' ) && current_user_can('administrator') && !empty(get_option('doliconnectbeta')) ) {
+print '<li class="list-group-item list-group-item-light list-group-item-action">';
 require_once( ABSPATH . 'wp-content/plugins/two-factor/class-two-factor-core.php')
 
 		?>
@@ -2290,10 +2291,8 @@ require_once( ABSPATH . 'wp-content/plugins/two-factor/class-two-factor-core.php
 					</table>
 		<?php
 		//do_action( 'show_user_security_settings', $current_user );
-} else {
-print __( 'Two factor authentication is disabled', 'doliconnect');
+print "</li>";    
 }
-print "</div>";
 print '</ul><div class="card-footer text-muted"></form>';
 print "<small><div class='float-start'>";
 print dolirefresh( "/thirdparties/".doliconnector($current_user, 'fk_soc'), $url, dolidelay('member'));
