@@ -205,6 +205,7 @@ if ( !isset($categories->error) && $categories != null ) {
 $cats .= "<small><i class='fas fa-tags fa-fw'></i> ";
 $cats .= _n( 'Category:', 'Categories:', count($categories), 'doliconnect' );
 foreach ($categories as $category) {
+if ($category->id != doliconst("DOLICONNECT_CATSHOP")) {
 if (!empty($url)) {
 $cats .= " <a href='".esc_url( add_query_arg( 'category', $category->id, $url) )."'";
 } else { 
@@ -220,6 +221,7 @@ $cats .= "</span>";
 }
 }
 $cats .= "</small>";
+}
 }
 }
 return $cats;

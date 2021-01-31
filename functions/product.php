@@ -586,8 +586,9 @@ $i = 0;
 foreach ($brands as $brand) {
 if ($i > 0) $supplier .= ",";
 $thirdparty =  callDoliApi("GET", "/thirdparties/".$brand->fourn_id, null, dolidelay('product', $refresh));
+ $supplier .= " ";
 if (!empty(doliconnectid('dolisupplier'))) {
-$supplier .= " <a href='".doliconnecturl('dolisupplier')."?supplier=".$thirdparty->id."'>";
+$supplier .= "<a href='".doliconnecturl('dolisupplier')."?supplier=".$thirdparty->id."'>";
 }
 $supplier .= (!empty($thirdparty->name_alias)?$thirdparty->name_alias:$thirdparty->name);
 if (!empty(doliconnectid('dolisupplier'))) {
