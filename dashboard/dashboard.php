@@ -663,7 +663,7 @@ $orderavancement=0;  }
 $mode_reglement = callDoliApi("GET", "/setup/dictionary/payment_types?sortfield=code&sortorder=ASC&limit=100&active=1&sqlfilters=(t.code%3A%3D%3A'".$orderfo->mode_reglement_code."')", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 if (!empty($orderfo->mode_reglement_id)) print "<b>".__( 'Payment method', 'doliconnect').":</b> ".$mode_reglement[0]->label."<br>";
 if (!empty($orderfo->cond_reglement_id)) print "<b>".__( 'Payment term', 'doliconnect').":</b> ".dolipaymentterm($orderfo->cond_reglement_id)."<br>";
-if (!empty($orderfo->shipping_method_id)) print "<b>".__( 'Shipping method', 'doliconnect').":</b> ".dolipaymentterm($orderfo->shipping_method_id)."<br>";
+if (!empty($orderfo->shipping_method_id)) print "<b>".__( 'Shipping method', 'doliconnect').":</b> ".dolishipping($orderfo->shipping_method_id)."<br>";
 
 print "<br></div><div class='col-md-6'>";
 
