@@ -1296,8 +1296,8 @@ $term = sprintf( _n( '%s day', '%s days', $paymenterm[0]->nbjour, 'doliconnect')
 return $term;
 }
 
-function dolishipping($id, $refresh = false) {
-$paymenterm = callDoliApi("GET", "/setup/dictionary/payment_terms?sortfield=rowid&sortorder=ASC&limit=100&active=1&sqlfilters=(t.rowid%3A%3D%3A'".$id."')", null, dolidelay('constante', $refresh)); 
+function dolishipmentmethods($id, $refresh = false) {
+$paymenterm = callDoliApi("GET", "/setup/dictionary/shipment_methods?sortfield=rowid&sortorder=ASC&limit=100&active=1&sqlfilters=(t.rowid%3A%3D%3A'".$id."')", null, dolidelay('constante', $refresh)); 
 //print var_dump($paymenterm[0]);
 if ($paymenterm[0]->type_cdr == 1) {
 $term = sprintf( _n( '%s day', '%s days', $paymenterm[0]->nbjour, 'doliconnect'), $paymenterm[0]->nbjour);
