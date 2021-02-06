@@ -1560,25 +1560,25 @@ print "<ul class='nav bg-white nav-pills rounded nav-justified flex-column flex-
 
 print '<li id="li-tab-cart" class="nav-item"><a id="a-tab-cart" class="nav-link';
 if (!isset($_GET['stage'])) { print ' active'; }
-print '" data-bs-toggle="pill" role="tab" href="#nav-tab-cart">
+print '" data-bs-toggle="pill" role="tab" href="#nav-tab-cart" aria-controls="nav-tab-cart">
 <i class="fas fa-shopping-bag fa-fw"></i> '.__( 'Cart', 'doliconnect').'</a></li>';
 
 print '<li id="li-tab-info" class="nav-item"><a id="a-tab-info" class="nav-link';
 if (isset($_GET['stage']) && $_GET['stage'] == 'informations') { print ' active'; }
 elseif (isset($_GET['stage']) && $_GET['stage'] == 'payment') { print ''; } else { print ' disabled'; }
-print '" data-bs-toggle="pill" role="tab" href="#nav-tab-info">
+print '" data-bs-toggle="pill" role="tab" href="#nav-tab-info" aria-controls="nav-tab-info">
 <i class="fas fa-user-check fa-fw"></i> '.__( 'Coordinates', 'doliconnect').'</a></li>';
 
 print '<li id="li-tab-pay" class="nav-item"><a id="a-tab-pay" class="nav-link';
 if (isset($_GET['stage']) && $_GET['stage'] == 'payment') { print ' active'; } else { print ' disabled'; }
-print '" data-bs-toggle="pill" role="tab" href="#nav-tab-pay">
+print '" data-bs-toggle="pill" role="tab" href="#nav-tab-pay" aria-controls="nav-tab-pay">
 <i class="fas fa-money-bill-wave fa-fw"></i> '.__( 'Payment', 'doliconnect').'</a></li>';
  
 print "</ul><br><div id='tab-cart-content' class='tab-content'>";
 
 print '<div class="tab-pane fade';
 if (!isset($_GET['stage'])) { print ' show active'; }
-print '" id="nav-tab-cart">';
+print '" role="tabpanel" id="nav-tab-cart">';
  
 if ( isset($object) && is_object($object) && isset($object->date_modification) && !empty($object->date_modification)) {
 $timeout=$object->date_modification-current_time('timestamp',1)+1200;
@@ -1718,7 +1718,7 @@ print "</div></div>";
 print "</div>";
 
 if ( is_user_logged_in() ) { 
-print '<div class="tab-pane fade" id="nav-tab-info">';
+print '<div class="tab-pane fade" role="tabpanel" id="nav-tab-info">';
   
 $thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))); 
 
@@ -1862,7 +1862,7 @@ print "</div></div>";
 
 print "</div>";
 
-print "<div class='tab-pane fade' id='nav-tab-pay'>";
+print '<div class="tab-pane fade" role="tabpanel" id="nav-tab-pay">';
 
 if ( doliversion('11.0.0') ) {
 print doliconnect_paymentmethods($object, esc_attr($module), null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
