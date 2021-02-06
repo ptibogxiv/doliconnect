@@ -1803,9 +1803,9 @@ print "<li class='list-group-item list-group-item-action'><h6>".__( 'Shipping me
 $listshipment = callDoliApi("GET", "/fraisdeport?modulepart=".$module."&id=1", null, dolidelay('contact', true));
 if ( !isset($listshipment->error) && $listshipment != null ) {
 foreach ( $listshipment as $shipment ) {
-print '<div class="form-check"><input type="radio" id="shipping-'.$shipment->id.'" name="contact_shipping" class="form-check-input" value="'.$shipment->id.'" ';
+print '<div class="form-check"><input type="radio" id="shipment-'.$shipment->id.'" name="shipment_method" class="form-check-input" value="'.$shipment->id.'" ';
 if ( (isset($shipment->default) && !empty($shipment->default)) || $object->shipping_method_id == $shipment->id ) { print "checked"; }
-print ' ><label class="form-check-label" for="shipping-'.$shipment->id.'">'.$shipment->label.'</label></div>';
+print ' ><label class="form-check-label" for="shipment-'.$shipment->id.'">'.dolishipmentmethods($shipment->fk_shipment_mode).' - '.doliprice($shipment->fdp).'</label></div>';
 }
 }
 print "</li>";
