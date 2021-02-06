@@ -1558,18 +1558,27 @@ exit;
 
 print "<ul class='nav bg-white nav-pills rounded nav-justified flex-column flex-sm-row' role='tablist'>";
 
-print '<li id="li-tab-cart" class="nav-item"><a id="a-tab-cart" class="nav-link active" data-bs-toggle="pill" href="#nav-tab-cart">
+print '<li id="li-tab-cart" class="nav-item"><a id="a-tab-cart" class="nav-link';
+if (!isset($_GET['stage'])) { print ' active'; }
+print '" data-bs-toggle="pill" role="tab" href="#nav-tab-cart">
 <i class="fas fa-shopping-bag fa-fw"></i> '.__( 'Cart', 'doliconnect').'</a></li>';
 
-print '<li id="li-tab-info" class="nav-item"><a id="a-tab-info" class="nav-link disabled" data-bs-toggle="pill" href="#nav-tab-info">
+print '<li id="li-tab-info" class="nav-item"><a id="a-tab-info" class="nav-link';
+if (isset($_GET['stage']) && $_GET['stage'] == 'informations') { print ' active'; }
+elseif (isset($_GET['stage']) && $_GET['stage'] == 'payment') { print ''; } else { print ' disabled'; }
+print '" data-bs-toggle="pill" role="tab" href="#nav-tab-info">
 <i class="fas fa-user-check fa-fw"></i> '.__( 'Coordinates', 'doliconnect').'</a></li>';
 
-print '<li id="li-tab-pay" class="nav-item"><a id="a-tab-pay" class="nav-link disabled" data-bs-toggle="pill" href="#nav-tab-pay">
+print '<li id="li-tab-pay" class="nav-item"><a id="a-tab-pay" class="nav-link';
+if (isset($_GET['stage']) && $_GET['stage'] == 'payment') { print ' active'; } else { print ' disabled'; }
+print '" data-bs-toggle="pill" role="tab" href="#nav-tab-pay">
 <i class="fas fa-money-bill-wave fa-fw"></i> '.__( 'Payment', 'doliconnect').'</a></li>';
  
 print "</ul><br><div id='tab-cart-content' class='tab-content'>";
 
-print "<div class='tab-pane fade show active' id='nav-tab-cart'>";
+print '<div class="tab-pane fade';
+if (!isset($_GET['stage'])) { print ' show active'; }
+print '" id="nav-tab-cart">';
  
 if ( isset($object) && is_object($object) && isset($object->date_modification) && !empty($object->date_modification)) {
 $timeout=$object->date_modification-current_time('timestamp',1)+1200;
@@ -1638,7 +1647,9 @@ print "><center><b>".__( 'Process', 'doliconnect')."</b></center></button>";
 }
 print "</ul></div>";
 }
-
+$nonce = wp_create_nonce( 'dolicart-nonce');
+$arr_params = array( 'stage' => 'informations', 'security' => $nonce);  
+$return = add_query_arg( $arr_params, doliconnecturl('dolicart'));
 print "<script>";
 print "(function ($) {
 $(document).ready(function(){
@@ -1651,7 +1662,7 @@ var actionvalue = $(this).val();
           type: 'POST',
           data: {
             'action': 'dolicart_request',
-            'dolicart-nonce': '".wp_create_nonce( 'dolicart-nonce')."',
+            'dolicart-nonce': '".$nonce."',
             'action_cart': actionvalue,
             'module': '".$module."',
             'id': '".$id."'
@@ -1677,13 +1688,14 @@ document.getElementById('DoliWidgetCarItems').innerHTML = response.data.items;
 } 
 
 } else if (actionvalue == 'validate_cart') {
-$('#a-tab-cart').removeClass('active');
-$('#a-tab-info').removeClass('disabled');
-$('#a-tab-info').addClass('active');    
-$('#nav-tab-cart').removeClass('show active');
-$('#nav-tab-info').addClass('show active');
-$('#nav-tab-cart').tab('dispose');
-$('#nav-tab-info').tab('show');   
+//$('#a-tab-cart').removeClass('active');
+//$('#a-tab-info').removeClass('disabled');
+//$('#a-tab-info').addClass('active');    
+//$('#nav-tab-cart').removeClass('show active');
+//$('#nav-tab-info').addClass('show active');
+//$('#nav-tab-cart').tab('dispose');
+//$('#nav-tab-info').tab('show');
+document.location = '".$return."';
 }
 
 console.log(response.data.message);
@@ -1706,7 +1718,7 @@ print "</div></div>";
 print "</div>";
 
 if ( is_user_logged_in() ) { 
-print "<div class='tab-pane fade' id='nav-tab-info'>";
+print '<div class="tab-pane fade" id="nav-tab-info">';
   
 $thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))); 
 
@@ -1793,6 +1805,9 @@ print "</li></ul>";
 
 $note_public = isset($_POST['note_public']) ? $_POST['note_public'] : '';
 
+$nonce = wp_create_nonce( 'dolicart-nonce');
+$arr_params = array( 'stage' => 'payment', 'security' => $nonce);  
+$return = add_query_arg( $arr_params, doliconnecturl('dolicart'));
 print "<script>";
 print "(function ($) {
 $(document).ready(function(){
@@ -1817,13 +1832,14 @@ $(window).scrollTop(0);
 console.log(actionvalue);
       if (response.success) {
 if (actionvalue == 'info_cart') {
-$('#a-tab-info').removeClass('active');
-$('#a-tab-pay').removeClass('disabled');
-$('#a-tab-pay').addClass('active');    
-$('#nav-tab-info').removeClass('show active');
-$('#nav-tab-pay').addClass('show active');
-$('#nav-tab-info').tab('dispose');
-$('#nav-tab-pay').tab('show');                                                                             
+//$('#a-tab-info').removeClass('active');
+//$('#a-tab-pay').removeClass('disabled');
+//$('#a-tab-pay').addClass('active');    
+//$('#nav-tab-info').removeClass('show active');
+//$('#nav-tab-pay').addClass('show active');
+//$('#nav-tab-info').tab('dispose');
+//$('#nav-tab-pay').tab('show'); 
+document.location = '".$return."';                                                                            
 }
 
 console.log(response.data.message);
