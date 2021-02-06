@@ -365,6 +365,7 @@ wp_send_json_error( __( 'An error occured:', 'doliconnect').' '.$object->error->
 $data = [
     'date_modif' => mktime(),
     'demand_reason_id' => 1,
+    'fk_shipping_method' => 5,
     'module_source' => 'doliconnect',
     'pos_source' => get_current_blog_id(),
     'note_public' => $_POST['note_public'],
