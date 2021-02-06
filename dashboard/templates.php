@@ -1795,12 +1795,19 @@ print '</label></div>';
 }
 print "</small></div></div></li>";
 
-} elseif ( current_user_can( 'administrator' ) ) {
+} else {
 print "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".sprintf( esc_html__( "Adding billing or shipping contacts requires Dolibarr %s but your version is %s", 'doliconnect'), '10.0.0', doliversion('10.0.0'))."</b></li>";
 }
 
 print "<li class='list-group-item list-group-item-action'><h6>".__( 'Shipping method', 'doliconnect')."</h6>";
-print "";
+$listshipment = callDoliApi("GET", "/fraisdeport?modulepart=".$module."&id=1", null, dolidelay('contact', true));
+if ( !isset($listshipment->error) && $listshipment != null ) {
+foreach ( $listshipment as $shipment ) {
+print '<div class="form-check"><input type="radio" id="shipping-'.$shipment->id.'" name="contact_shipping" class="form-check-input" value="'.$shipment->id.'" ';
+if ( (isset($shipment->default) && !empty($shipment->default)) || $object->shipping_method_id == $shipment->id ) { print "checked"; }
+print ' ><label class="form-check-label" for="shipping-'.$shipment->id.'">'.$shipment->label.'</label></div>';
+}
+}
 print "</li>";
 
 print "<li class='list-group-item list-group-item-action'>";
