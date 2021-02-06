@@ -1297,9 +1297,13 @@ return $term;
 }
 
 function dolishipmentmethods($id, $refresh = false) {
+if ( doliversion('14.0.0') ) {
 $paymenterm = callDoliApi("GET", "/setup/dictionary/shipment_methods?sortfield=rowid&sortorder=ASC&limit=100&active=1&sqlfilters=(t.rowid%3A%3D%3A'".$id."')", null, dolidelay('constante', $refresh)); 
 //print var_dump($paymenterm[0]);
-$term = $paymenterm[0]->libelle;
+$term = $paymenterm[0]->label; } else {
+$paymenterm = callDoliApi("GET", "/setup/dictionary/shipping_methods?limit=100&active=1&sqlfilters=(t.rowid%3A%3D%3A'".$id."')", null, dolidelay('constante', $refresh)); 
+//print var_dump($paymenterm[0]);
+$term = $paymenterm[0]->libelle; }
 return $term;
 }
 
