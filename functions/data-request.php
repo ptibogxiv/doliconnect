@@ -365,11 +365,12 @@ wp_send_json_error( __( 'An error occured:', 'doliconnect').' '.$object->error->
 $data = [
     'date_modif' => mktime(),
     'demand_reason_id' => 1,
-    'shipping_method_id' => $_POST['shipping_method_id'],
     'module_source' => 'doliconnect',
     'pos_source' => get_current_blog_id(),
     'note_public' => $_POST['note_public'],
-	];                 
+	]; 
+if (isset($_POST['shipping_method_id'])) $data['shipping_method_id'] = $_POST['shipping_method_id'];  
+                  
 $object = callDoliApi("PUT", "/".trim($_POST['module'])."/".trim($_POST['id']), $data, 0);
 $object = callDoliApi("GET", "/".trim($_POST['module'])."/".trim($_POST['id'])."?contact_list=0", $data, dolidelay('order', true));
 if ($_POST['contact_shipping']) {

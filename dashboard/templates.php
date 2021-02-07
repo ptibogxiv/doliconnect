@@ -1799,6 +1799,7 @@ print "</small></div></div></li>";
 print "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".sprintf( esc_html__( "Adding billing or shipping contacts requires Dolibarr %s but your version is %s", 'doliconnect'), '10.0.0', doliversion('10.0.0'))."</b></li>";
 }
 
+if ( !empty(doliconst('MAIN_MODULE_FRAISDEPORT')) ) {
 print "<li class='list-group-item list-group-item-action'><h6>".__( 'Shipping method', 'doliconnect')."</h6>";
 $listshipment = callDoliApi("GET", "/fraisdeport?modulepart=".$module."&id=1", null, dolidelay('contact', true));
 if ( !isset($listshipment->error) && $listshipment != null ) {
@@ -1809,6 +1810,7 @@ print ' ><label class="form-check-label" for="shipment-'.$shipment->id.'">'.doli
 }
 }
 print "</li>";
+}
 
 print "<li class='list-group-item list-group-item-action'>";
 print '<div class="form-floating"><textarea class="form-control" placeholder="'.__( 'Message', 'doliconnect').'" id="note_public" name="note_public" style="height: 100px">'.$object->note_public.'</textarea>
