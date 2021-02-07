@@ -1804,7 +1804,7 @@ $listshipment = callDoliApi("GET", "/fraisdeport?modulepart=".$module."&id=1", n
 if ( !isset($listshipment->error) && $listshipment != null ) {
 foreach ( $listshipment as $shipment ) {
 print '<div class="form-check"><input type="radio" id="shipment-'.$shipment->id.'" name="shipment_method" class="form-check-input" value="'.$shipment->fk_shipment_mode.'" ';
-if ( (isset($shipment->default) && !empty($shipment->default)) || $object->shipping_method_id == $shipment->id ) { print "checked"; }
+if ( $object->shipping_method_id == $shipment->fk_shipment_mode ) { print "checked"; }
 print ' ><label class="form-check-label" for="shipment-'.$shipment->id.'">'.dolishipmentmethods($shipment->fk_shipment_mode).' - '.doliprice($shipment->fdp).'</label></div>';
 }
 }
