@@ -1061,7 +1061,7 @@ $doliline .= "<i class='fas fa-barcode fa-fw'></i> ".$product->barcode; }
 $doliline .= "</small></p>";
 if(!empty(doliconst('PRODUIT_DESC_IN_FORM', $refresh)) && !doliconst('MAIN_GENERATE_DOCUMENTS_HIDE_DESC', $refresh) ) { $doliline .= '<p class="mb-1"><small>'.doliproduct($line, 'product_desc').'</small></p>'; }
 $doliline .= '<p><small><i>'.(isset($dates) ? $dates : null).'</i></small></p>';
-} else {
+} elseif (doliconnectid('dolishipping')) {
 $doliline .= '<small><a href="'.doliconnecturl('dolishipping').'">'.esc_html__( 'Shipping informations', 'doliconnect').'</a></small>';
 }
 
