@@ -1803,7 +1803,7 @@ print "<li class='list-group-item list-group-item-action'><h6>".__( 'Shipping me
 $listshipment = callDoliApi("GET", "/fraisdeport?modulepart=".$module."&id=1", null, dolidelay('contact', true));
 if ( !isset($listshipment->error) && $listshipment != null ) {
 foreach ( $listshipment as $shipment ) {
-print '<div class="form-check"><input type="radio" id="shipment-'.$shipment->id.'" name="shipment_method" class="form-check-input" value="'.$shipment->fk_shipment_mode.'" ';
+print '<div class="form-check"><input type="radio" id="shipment-'.$shipment->id.'" name="shipping_method_id" class="form-check-input" value="'.$shipment->fk_shipment_mode.'" ';
 if ( $object->shipping_method_id == $shipment->fk_shipment_mode ) { print "checked"; }
 print ' ><label class="form-check-label" for="shipment-'.$shipment->id.'">'.dolishipmentmethods($shipment->fk_shipment_mode).' - '.doliprice($shipment->fdp).'</label></div>';
 }
@@ -1828,7 +1828,7 @@ event.preventDefault();
 //$('#DoliconnectLoadingModal').modal('show');
 var actionvalue = $(this).val();
 var note_public = $('#note_public').val();
-var shipment_method = $('input:radio[name=shipment_method]:checked').val();
+var shipping_method_id = $('input:radio[name=shipping_method_id]:checked').val();
         $.ajax({
           url: '".esc_url( admin_url( 'admin-ajax.php' ) )."',
           type: 'POST',
@@ -1838,7 +1838,7 @@ var shipment_method = $('input:radio[name=shipment_method]:checked').val();
             'action_cart': actionvalue,
             'module': '".$module."',
             'id': '".$id."',
-            'fk_shipping_method': shipment_method,
+            'shipping_method_id': shipping_method_id,
             'note_public': note_public
           }
         }).done(function(response) {
