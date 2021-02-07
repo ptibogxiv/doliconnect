@@ -345,7 +345,6 @@ wp_send_json_success($response);
 } elseif ( isset($_POST['action_cart']) && $_POST['action_cart'] == "validate_cart" && isset($_POST['module']) && isset($_POST['id'])) {
 
 $data = [
-    'date_modification' => mktime(),
     'demand_reason_id' => 1,
     'module_source' => 'doliconnect',
     'pos_source' => get_current_blog_id(),
@@ -363,7 +362,6 @@ wp_send_json_error( __( 'An error occured:', 'doliconnect').' '.$object->error->
 } elseif ( isset($_POST['action_cart']) && $_POST['action_cart'] == "info_cart" && isset($_POST['module']) && isset($_POST['id'])) {
 
 $data = [
-    'date_modif' => mktime(),
     'demand_reason_id' => 1,
     'module_source' => 'doliconnect',
     'pos_source' => get_current_blog_id(),
