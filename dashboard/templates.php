@@ -1828,7 +1828,7 @@ event.preventDefault();
 //$('#DoliconnectLoadingModal').modal('show');
 var actionvalue = $(this).val();
 var note_public = $('#note_public').val();
-var shipment_method = $('#shipment_method').val();
+var shipment_method = $('input:radio[name=shipment_method]:checked').val();
         $.ajax({
           url: '".esc_url( admin_url( 'admin-ajax.php' ) )."',
           type: 'POST',
@@ -1838,7 +1838,7 @@ var shipment_method = $('#shipment_method').val();
             'action_cart': actionvalue,
             'module': '".$module."',
             'id': '".$id."',
-            'shipment_method': 5,
+            'fk_shipping_method': shipment_method,
             'note_public': note_public
           }
         }).done(function(response) {
