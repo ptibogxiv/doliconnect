@@ -860,7 +860,7 @@ $request = "/thirdparties?sortfield=t.nom&sortorder=ASC&limit=".$limit."&page=".
 $resultats = callDoliApi("GET", $request, null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 if (!empty(get_option('dolicartsuppliergrid'))) { 
-print "<div class='card-body'><div class='card-columns'>";
+print "<div class='card-body'><div class='row' data-masonry='{'percentPosition': true }'>";
 } else {
 print "<ul class='list-group list-group-flush'>";
 }
@@ -869,14 +869,14 @@ if ( !isset($resultats->error) && $resultats != null ) {
 foreach ($resultats as $supplier) {
 
 if (!empty(get_option('dolicartsuppliergrid'))) { 
-print '<div class="card">';
+print '<div class="col-sm-6 col-lg-4 mb-4"><div class="card">';
 if (!empty($supplier->logo)) { 
 print '<a href="'.esc_url( add_query_arg( 'supplier', $supplier->id, doliconnecturl('dolisupplier')) ).'">'.doliconnect_image('thirdparty', $supplier->id.'/logos/'.$supplier->logo, array('entity'=>$supplier->entity, 'class'=>'card-img'), esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)).'</a>';
 } else {
 print '<div class="card-body"><a href="'.esc_url( add_query_arg( 'supplier', $supplier->id, doliconnecturl('dolisupplier')) ).'"><center>'.(!empty($supplier->name_alias)?$supplier->name_alias:$supplier->name).'</center></a></div>';
 }
 
-print "</div>";
+print "</div></div>";
 
 } else {
 print "<a href='".esc_url( add_query_arg( 'supplier', $supplier->id, doliconnecturl('dolisupplier')) )."' class='list-group-item list-group-item-action'>".(!empty($supplier->name_alias)?$supplier->name_alias:$supplier->name)."</a>";
