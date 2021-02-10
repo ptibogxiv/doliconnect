@@ -61,7 +61,11 @@ We would like to thank this contributors and plugins:
 
 [gdpr-data-request-form](https://wordpress.org/plugins/gdpr-data-request-form/ "gdpr-data-request-form")
 
-== Changelog ==
+== Changelog == 
+   = 5.0.3 =
+* fix & bugfixes
+* new shipping api
+* 
    = 5.0.3 =
 * fix & bugfixes
 
