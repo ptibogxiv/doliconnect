@@ -1804,11 +1804,13 @@ print "<li class='list-group-item list-group-item-action'><h6>".__( 'Shipping me
 $listshipment = callDoliApi("GET", "/fraisdeport?modulepart=".$module."&id=1", null, dolidelay('contact', true));
 if ( !isset($listshipment->error) && $listshipment != null ) {
 foreach ( $listshipment as $shipment ) {
+if ($object->total_ht >= $shipment->palier && !isset($controlefdp[$shipment->fk_shipment_mode])) {
 print '<div class="form-check"><input type="radio" id="shipment-'.$shipment->id.'" name="shipping_method_id" class="form-check-input" value="'.$shipment->fk_shipment_mode.'" ';
 if ( $object->shipping_method_id == $shipment->fk_shipment_mode ) { print "checked"; }
 print ' ><label class="form-check-label" for="shipment-'.$shipment->id.'">'.dolishipmentmethods($shipment->fk_shipment_mode).' - '.doliprice($shipment, (empty(get_option('dolibarr_b2bmode'))?'price_ttc':'price_ht')).'<small></small></label></div>';
+$controlefdp[$shipment->fk_shipment_mode] = true;
 }
-}
+}}
 print "</li>";
 }
 
