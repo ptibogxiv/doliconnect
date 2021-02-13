@@ -197,7 +197,8 @@ print "<div class='col-md-6 offset-md-3'>";
 }
 
 if (dolicheckie($_SERVER['HTTP_USER_AGENT'])) {
-print "<div class='card'><div class='card-body'>";
+print '<div class="card shadow-sm">';
+print '<div class="card-body">';
 print dolicheckie($_SERVER['HTTP_USER_AGENT']);
 print "</div></div>";
 } elseif ( isset($_GET["action"]) && $_GET["action"] == 'confirmaction' ) {
@@ -791,6 +792,12 @@ doliconnect_enqueues();
 $shopsupplier = doliconst("DOLICONNECT_CATSHOP_SUPPLIER", esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 $category = "";
 
+if (dolicheckie($_SERVER['HTTP_USER_AGENT'])) {
+print '<div class="card shadow-sm">';
+print '<div class="card-body">';
+print dolicheckie($_SERVER['HTTP_USER_AGENT']);
+print "</div></div>";
+} else {
 if ( isset($_GET['supplier']) && is_numeric(esc_attr($_GET['supplier'])) && esc_attr($_GET['supplier']) > 0 ) { 
  
 $request = "/thirdparties/".esc_attr($_GET['supplier']);
@@ -907,7 +914,7 @@ print "</div><div class='float-end'>";
 print dolihelp('ISSUE');
 print "</div></small>";
 print "</div></div>";
-
+}
 } else {
 
 return $content;
@@ -931,7 +938,12 @@ $shop = doliconst("DOLICONNECT_CATSHOP", esc_attr(isset($_GET["refresh"]) ? $_GE
 
 print "<div class='card shadow-sm'>";
 
-if ( isset($_GET['search']) && !isset($_GET['product']) && empty($_GET['search'])) {
+if (dolicheckie($_SERVER['HTTP_USER_AGENT'])) {
+print '<div class="card shadow-sm">';
+print '<div class="card-body">';
+print dolicheckie($_SERVER['HTTP_USER_AGENT']);
+print "</div></div>";
+} elseif ( isset($_GET['search']) && !isset($_GET['product']) && empty($_GET['search'])) {
 
 print "<ul class='list-group list-group-flush'>";
 print "<div class='card-body'>";
