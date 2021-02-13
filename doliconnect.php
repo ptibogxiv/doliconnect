@@ -117,6 +117,9 @@ if ( !defined ('DONOTCACHEPAGE') ) {
 define( 'DONOTCACHEPAGE', 1);
 }
 }
+if (!is_user_logged_in() && !empty(get_option('doliconnectrestrict')) ) { 
+define( 'DONOTCACHEPAGE', 1);
+}
 }
 // ********************************************************
 add_action ('wp_loaded', 'doliconnect_confirm_admin_email_redirect');
