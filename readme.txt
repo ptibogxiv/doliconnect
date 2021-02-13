@@ -64,6 +64,10 @@ We would like to thank this contributors and plugins:
 == Changelog == 
    = 5.0.4 =
 * fix & bugfixes
+* block using internet explorer
+
+   = 5.0.4 =
+* fix & bugfixes
 * new shipping api
 * 
    = 5.0.3 =
