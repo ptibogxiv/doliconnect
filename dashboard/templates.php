@@ -196,7 +196,11 @@ print "<div class='col-xs-12 col-sm-12 col-md-9'>";
 print "<div class='col-md-6 offset-md-3'>";
 }
 
-if ( isset($_GET["action"]) && $_GET["action"] == 'confirmaction' ) {
+if (dolicheckie($_SERVER['HTTP_USER_AGENT'])) {
+print "<div class='card'><div class='card-body'>";
+print '<i class="fab fa-internet-explorer"></i> '.__( 'You are on Internet Explorer.', 'doliconnect');
+print "</div></div>";
+} elseif ( isset($_GET["action"]) && $_GET["action"] == 'confirmaction' ) {
 
 		if ( ! isset( $_GET['request_id'] ) ) {
 			print __( 'Missing request ID.');
