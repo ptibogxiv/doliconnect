@@ -9,7 +9,8 @@ function dolicheckie($server) {
 $return = false;
 $ua = htmlentities($server, ENT_QUOTES, 'UTF-8');
 if (preg_match('~MSIE|Internet Explorer~i', $ua) || (strpos($ua, 'Trident/7.0') !== false && strpos($ua, 'rv:11.0') !== false)) {
-$return = true;
+$return = '<div class="float-start"><i class="fab fa-internet-explorer fa-3x a-fw"></i> </div><div class="text-justify">'.__( 'Dear user, you are using Internet Explorer. We regret to inform you that it is no longer supported by our site. You must now use a modern browser.', 'doliconnect').'</div>';
+$return .= '<p class="text-center"><a href="https://www.microsoft.com/edge" target="_blank"><i class="fab fa-edge"></i> '.__( 'Download Edge', 'doliconnect').'</a> | <a href="https://www.mozilla.org/firefox/new/" target="_blank"><i class="fab fa-firefox"></i> '.__( 'Download Firefox', 'doliconnect').'</a> | <a href="https://www.google.com/chrome/" target="_blank"><i class="fab fa-chrome"></i> '.__( 'Download Chrome', 'doliconnect').'</a></p>';
 }
 return $return;
 }
