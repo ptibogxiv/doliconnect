@@ -198,7 +198,7 @@ print "<div class='col-md-6 offset-md-3'>";
 
 if (dolicheckie($_SERVER['HTTP_USER_AGENT'])) {
 print "<div class='card'><div class='card-body'>";
-print '<i class="fab fa-internet-explorer"></i> '.__( 'You are on Internet Explorer.', 'doliconnect');
+print '<div class="float-start"><i class="fab fa-internet-explorer fa-3x a-fw"></i> </div><div class="text-justify">'.__( 'Dear user, you are using Internet Explorer. We regret to inform you that it is no longer supported by our site. You must now use a modern browser.', 'doliconnect').'</div><i class="fab fa-edge"></i><i class="fab fa-firefox"></i><i class="fab fa-chrome"></i>';
 print "</div></div>";
 } elseif ( isset($_GET["action"]) && $_GET["action"] == 'confirmaction' ) {
 
