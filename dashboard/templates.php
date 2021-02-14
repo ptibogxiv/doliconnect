@@ -655,6 +655,13 @@ if ( in_the_loop() && is_main_query() && is_page(doliconnectid('dolicontact')) &
 
 doliconnect_enqueues();
 
+if (dolicheckie($_SERVER['HTTP_USER_AGENT'])) {
+print '<div class="card shadow-sm">';
+print '<div class="card-body">';
+print dolicheckie($_SERVER['HTTP_USER_AGENT']);
+print "</div></div>";
+} else {
+
 if( ! empty($_POST['email-control']) )   //! $is_valid  || ! 
 {
 $emailError = __( 'Your request is unsuccessful', 'doliconnect');
@@ -769,7 +776,7 @@ print "</li></ul>";
 print "<div class='card-body'><div class='d-grid gap-2'><button class='btn btn-outline-secondary' type='submit'>".__( 'Send', 'doliconnect')."</button><input type='hidden' name='submitted' id='submitted' value='true' /></div></div></div></div></div></form>";
 
 print "</div>";
-
+}
 } else {
 
 return $content;
