@@ -1474,7 +1474,12 @@ $id = null;
 
 $object = callDoliApi("GET", $request, null, dolidelay('cart', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
-if ( defined("DOLIBUG") ) {
+if (dolicheckie($_SERVER['HTTP_USER_AGENT'])) {
+print '<div class="card shadow-sm">';
+print '<div class="card-body">';
+print dolicheckie($_SERVER['HTTP_USER_AGENT']);
+print "</div></div>";
+} elseif ( defined("DOLIBUG") ) {
 
 print dolibug((isset($object->error)?$object->error->message:null));
 
