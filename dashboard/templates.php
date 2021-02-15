@@ -765,7 +765,7 @@ print '</select><label for="ticket_type">'.__( 'Type', 'doliconnect').'</label><
 }
 
 print '<div class="form-floating">
-<textarea class="form-control" placeholder="Leave a comment here" name="comments" id="commentsText" style="height: 100px"></textarea>
+<textarea class="form-control" placeholder="Leave a comment here" name="comments" id="commentsText" style="height: 200px"></textarea>
 <label for="commentsText">'.__( 'Message', 'doliconnect').'</label>
 </div>';
 
