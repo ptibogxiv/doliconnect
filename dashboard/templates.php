@@ -665,8 +665,7 @@ print "</div></div>";
 if( ! empty($_POST['email-control']) )   //! $is_valid  || ! 
 {
 $emailError = __( 'Your request is unsuccessful', 'doliconnect');
-}
-elseif ( isset($_POST['submitted']) ) {
+} elseif ( isset($_POST['submitted']) ) {
 
 $gdrf_human     = absint( filter_input( INPUT_POST, 'gdrf_data_human', FILTER_SANITIZE_NUMBER_INT ) );
 $gdrf_human_key = esc_html( filter_input( INPUT_POST, 'gdrf_data_human_key', FILTER_SANITIZE_STRING ) );
@@ -706,7 +705,7 @@ $gdrf_answer    = absint( $gdrf_numbers[0] ) + absint( $gdrf_numbers[1] );
 
     if ( !isset($hasError) ) {
         $emailTo = get_option('tz_email');
-        $user=get_userdata( $_GET['user'] ); 
+        $user = get_userdata( $_GET['user'] ); 
         
         if ( isset($_GET['user']) && $user == true && $_GET['type'] == 'EMAIL' ) {
         $emailTo = $user->user_email;}
