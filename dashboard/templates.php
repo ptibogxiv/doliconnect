@@ -673,24 +673,24 @@ $gdrf_numbers   = explode( '000', $gdrf_human_key );
 $gdrf_answer    = absint( $gdrf_numbers[0] ) + absint( $gdrf_numbers[1] ); 
 
     if ( sanitize_text_field($_POST['contactName']) === '' ) {
-        $nameError = 'Please enter your name.';
+        $ContactError = 'Please enter your name.';
         $hasError = true;
     } else {
         $name = sanitize_text_field($_POST['contactName']);
     }
 
     if ( sanitize_email($_POST['email']) === '' )  {
-        $emailError = 'Please enter your email address.';
+        $ContactError = 'Please enter your email address.';
         $hasError = true;
     } else if (!preg_match("/^[[:alnum:]][a-z0-9_.-]*@[a-z0-9.-]+\.[a-z]{2,4}$/i", sanitize_email($_POST['email']))) {
-        $emailError = 'You entered an invalid email address.';
+        $ContactError = 'You entered an invalid email address.';
         $hasError = true;
     } else {
         $email = sanitize_email($_POST['email']);
     }
 
     if( sanitize_textarea_field($_POST['comments']) === '') {
-        $commentError = 'Please enter a message.';
+        $ContactError = 'Please enter a message.';
         $hasError = true;
     } else {
 
@@ -699,17 +699,14 @@ $gdrf_answer    = absint( $gdrf_numbers[0] ) + absint( $gdrf_numbers[1] );
     }
     
 		if ( intval( $gdrf_answer ) !== intval( $gdrf_human ) ) {
-				$commentError = __( 'Security check failed, invalid human verification field.', 'doliconnect');
+				$ContactError = __( 'Security check failed, invalid human verification field.', 'doliconnect');
         $hasError = true;
 		}
 
     if ( !isset($hasError) ) {
         $emailTo = get_option('tz_email');
-        $user = get_userdata( $_GET['user'] ); 
         
-        if ( isset($_GET['user']) && $user == true && $_GET['type'] == 'EMAIL' ) {
-        $emailTo = $user->user_email;}
-        elseif (!isset($emailTo) || ($emailTo == '') ) {
+        if (!isset($emailTo) || ($emailTo == '') ) {
             $emailTo = get_option('admin_email');
         }
         $subject = "[".get_bloginfo( 'name' )."] ".$_POST['ticket_type'];
@@ -731,7 +728,8 @@ print "</div></div><div class='col-md-8'><div id='content'>";
 if ( isset($emailSent) && $emailSent == true ) {
 print dolialert('success', __( 'Your message is successful send!', 'doliconnect')); 
 } elseif ( isset($hasError) || isset($captchaError) ) { 
-print dolialert('success', __( 'Please try again!', 'doliconnect')); 
+print dolialert('danger', $ContactError);
+//print dolialert('danger', __( 'Please try again!', 'doliconnect')); 
 }
 
 print "<form action='' id='doliconnect-contactform' method='post' class='was-validated'>";
