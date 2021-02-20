@@ -749,14 +749,14 @@ if ( is_user_logged_in() ) { print $current_user->user_lastname." ".$current_use
 print '"';
 if ( is_user_logged_in() ) { print " readonly"; } else { print " required"; }
 print '>
-<label for="contactName">'.__( 'Complete name', 'doliconnect').'</label>
+<label for="contactName"><i class="fas fa-user fa-fw"></i> '.__( 'Complete name', 'doliconnect').'</label>
 </div>';
 
 print '<div class="form-floating mb-2">
 <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com" value="'.$current_user->user_email.'" autocomplete="off" ';
 if ( is_user_logged_in() ) { print " readonly"; } else { print " required"; }
 print '>
-<label for="email">'.__( 'Email', 'doliconnect').'</label>
+<label for="email"><i class="fas fa-at fa-fw"></i> '.__( 'Email', 'doliconnect').'</label>
 </div>';
 
 $type = callDoliApi("GET", "/setup/dictionary/ticket_types?sortfield=pos&sortorder=ASC&limit=100", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
