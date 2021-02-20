@@ -338,7 +338,7 @@ $password .= '<div class="d-grid gap-2"><button class="btn btn-outline-secondary
 if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $user->ID ) {
 $password .= ' disabled';
 }
-$password .= '>'.__( 'Update', 'doliconnect').'</button></div>';
+$password .= '>'.__( 'Update', 'doliconnect').'</button></div></form>';
 $password .= "</div><div class='card-footer text-muted'>";
 $password .= "<small><div class='float-start'>";
 if ( isset($request) ) $password .= dolirefresh($request, $url, dolidelay('thirdparty'));
