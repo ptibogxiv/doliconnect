@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
 "POT-Creation-Date: 2021-02-16 20:03+0100\n"
-"PO-Revision-Date: 2021-02-16 20:04+0100\n"
+"PO-Revision-Date: 2021-02-26 08:08+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: nl_NL\n"
@@ -1625,7 +1625,7 @@ msgstr "Er zijn enkele fouten opgetreden:"
 
 #: functions/product.php:54 functions/product.php:88 functions/product.php:90
 msgid "Available"
-msgstr "Niet beschikbaar"
+msgstr "Beschikbaar"
 
 #: functions/product.php:54
 msgid "This item is available and can be order"
@@ -1677,7 +1677,7 @@ msgstr ""
 
 #: functions/product.php:90
 msgid "Available immediately"
-msgstr "Direct beschikbaar"
+msgstr "Per direct beschikbaar"
 
 #: functions/product.php:90
 #, php-format
