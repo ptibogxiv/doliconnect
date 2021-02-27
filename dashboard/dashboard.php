@@ -1742,6 +1742,7 @@ print "<li class='list-group-item list-group-item-light'><center>".__( 'No subsc
 print '</ul>';
 } else {
 print 'TODO: membership add form';
+print '</div>';
 }
 print '<div class="card-footer text-muted">';
 print "<small><div class='float-start'>";
