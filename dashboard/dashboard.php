@@ -1616,7 +1616,9 @@ $typeadherent = isset($_POST["typeadherent"]) ? $_POST["typeadherent"] : null;
 $adherent = dolimembership($current_user, $_POST["update_membership"], $typeadherent, dolidelay('member', true));
 $request = "/adherentsplus/".doliconnector($current_user, 'fk_member', true); 
 //if ($statut==1) {
+//print $_POST["update_membership"];
 print dolialert('success', __( 'Your membership has been updated.', 'doliconnect'));
+//print var_dump($adherent);
 //}
 
 if ( ($_POST["update_membership"]==4) && isset($_POST["cotisation"]) && doliconnector($current_user, 'fk_member') > 0 && $_POST["timestamp_start"] > 0 && $_POST["timestamp_end"] > 0 ) {
