@@ -1673,7 +1673,7 @@ print "<button class='btn btn-dark' type='submit'>".__( 'Resiliate', 'doliconnec
 print '</div></div></form>';
 }
 
-if ( function_exists('dolimembership_modal') && !empty(doliconst('MAIN_MODULE_COMMANDE')) && !empty($productadhesion) ) {
+if ( function_exists('doliconnect_membership_modal') && !empty(doliconst('MAIN_MODULE_COMMANDE')) && !empty($productadhesion) ) {
 
 //print doliloaderscript('doliconnect-memberform');
 
