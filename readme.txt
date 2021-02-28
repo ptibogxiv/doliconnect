@@ -64,7 +64,8 @@ We would like to thank this contributors and plugins:
 
 == Changelog ==
    = 5.2.0 =
-* enable manghement of membership in free version
+* enable mangement of membership in free version
+* todo: more ajax forms
 
    = 5.1.0 =
 * new public release with boostrap 5 and support of dolibarr 13
