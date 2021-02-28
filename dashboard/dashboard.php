@@ -551,7 +551,7 @@ print "</ul><ul class='list-group list-group-flush'>";
 
 if ( $proposalfo->last_main_doc != null ) {
 $doc = array_reverse( explode("/", $proposalfo->last_main_doc) );      
-$document = dolidocdownload($doc[2], $doc[1], $doc[0], __( 'Summary', 'doliconnect'));
+$document = dolidocdownload($doc[2], $doc[1], $doc[0], __( 'Summary', 'doliconnect'), true, $proposalfo->entity);
 } 
     
 $fruits[$proposalfo->date_creation.'p'] = array(
@@ -768,9 +768,9 @@ print "</ul><ul class='list-group list-group-flush'>";
 
 if ( $orderfo->last_main_doc != null ) {
 $doc = array_reverse(explode("/", $orderfo->last_main_doc)); 
-$document_order = dolidocdownload($doc[2], $doc[1], $doc[0], __( 'Summary', 'doliconnect'));
+$document_order = dolidocdownload($doc[2], $doc[1], $doc[0], __( 'Summary', 'doliconnect'), true, $orderfo->entity);
 } else {
-$document_order = dolidocdownload('order', $orderfo->ref, $orderfo->ref.'.pdf', __( 'Summary', 'doliconnect'), true);
+$document_order = dolidocdownload('order', $orderfo->ref, $orderfo->ref.'.pdf', __( 'Summary', 'doliconnect'), true, $orderfo->entity);
 } 
     
 $fruits[$orderfo->date_commande.'o'] = array(
@@ -805,9 +805,9 @@ $fruits[strtotime($pay->date).'p'] = array(
 
 if ( $invoice->last_main_doc != null ) {
 $doc = array_reverse(explode("/", $invoice->last_main_doc)); 
-$document_invoice = dolidocdownload($doc[2], $doc[1], $doc[0], __( 'Invoice', 'doliconnect'));
+$document_invoice = dolidocdownload($doc[2], $doc[1], $doc[0], __( 'Invoice', 'doliconnect'), true, $orderfo->entity);
 } else {
-$document_invoice = dolidocdownload('invoice', $invoice->ref, $invoice->ref.'.pdf', __( 'Invoice', 'doliconnect'), true);
+$document_invoice = dolidocdownload('invoice', $invoice->ref, $invoice->ref.'.pdf', __( 'Invoice', 'doliconnect'), true, $orderfo->entity);
 }
 
 if ( $invoice->paye != 1 && $invoice->remaintopay != 0 && function_exists('dolipaymentmodes') ) {
@@ -1083,9 +1083,9 @@ print "</ul><ul class='list-group list-group-flush'>";
 
 if ( $invoicefo->last_main_doc != null ) {
 $doc = array_reverse(explode("/", $invoicefo->last_main_doc)); 
-$document_order = dolidocdownload($doc[2], $doc[1], $doc[0], __( 'Invoice', 'doliconnect'));
+$document_order = dolidocdownload($doc[2], $doc[1], $doc[0], __( 'Invoice', 'doliconnect'), true, $invoicefo->entity);
 } else {
-$document_order = dolidocdownload('invoice', $invoicefo->ref, $invoicefo->ref.'.pdf', __( 'Invoice', 'doliconnect'), true);
+$document_order = dolidocdownload('invoice', $invoicefo->ref, $invoicefo->ref.'.pdf', __( 'Invoice', 'doliconnect'), true, $invoicefo->entity);
 } 
     
 $fruits[$invoicefo->date_creation.'o'] = array(
@@ -1120,9 +1120,9 @@ $fruits[strtotime($pay->date).'p'] = array(
 
 if ( $invoice->last_main_doc != null ) {
 $doc = array_reverse(explode("/", $invoice->last_main_doc)); 
-$document_invoice = dolidocdownload($doc[2], $doc[1], $doc[0], __( 'Invoice', 'doliconnect'));
+$document_invoice = dolidocdownload($doc[2], $doc[1], $doc[0], __( 'Invoice', 'doliconnect'), true, $invoicefo->entity);
 } else {
-$document_invoice = dolidocdownload('invoice', $invoice->ref, $invoice->ref.'.pdf', __( 'Invoice', 'doliconnect'), true);
+$document_invoice = dolidocdownload('invoice', $invoice->ref, $invoice->ref.'.pdf', __( 'Invoice', 'doliconnect'), true, $invoicefo->entity);
 }
 
 if ( $invoice->paye != 1 && $invoice->remaintopay != 0 && function_exists('dolipaymentmodes') ) {
@@ -1266,7 +1266,7 @@ print "</ul><ul class='list-group list-group-flush'>";
 
 if ( $contractfo->last_main_doc != null ) {
 $doc = array_reverse( explode("/", $contractfo->last_main_doc) );      
-$document = dolidocdownload($doc[2], $doc[1], $doc[0], __( 'Summary', 'doliconnect'));
+$document = dolidocdownload($doc[2], $doc[1], $doc[0], __( 'Summary', 'doliconnect'), true, $contractfo->entity);
 } 
     
 $fruits[$contractfo->date_creation.'p'] = array(
@@ -1394,7 +1394,7 @@ print dolitotal($contractfo);
 
 if ( $contractfo->last_main_doc != null ) {
 $doc = array_reverse( explode("/", $contractfo->last_main_doc) );      
-$document = dolidocdownload($doc[2], $doc[1], $doc[0], __( 'Summary', 'doliconnect'));
+$document = dolidocdownload($doc[2], $doc[1], $doc[0], __( 'Summary', 'doliconnect'), true, $contractfo->entity);
 } 
     
 $fruits[$contractfo->date_creation.'p'] = array(

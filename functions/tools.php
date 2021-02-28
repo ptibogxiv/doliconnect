@@ -798,15 +798,15 @@ $mail =  wp_mail($user->user_email, $subject, $body, $headers);
 }
 add_action('wp_login', 'Doliconnect_MailAlert', 10, 2);
 
-function dolidocdownload($type, $ref=null, $fichier=null, $name=null, $refresh = false, $style = 'btn-outline-dark btn-sm btn-block') {
+function dolidocdownload($type, $ref=null, $fichier=null, $name=null, $refresh = false, $entity = null, $style = 'btn-outline-dark btn-sm btn-block') {
 global $wpdb;
  
 if ( $name == null ) { $name=$fichier; } 
 
 if ( doliversion('11.0.0') ) {
-$doc = callDoliApi("GET", "/documents/download?modulepart=".$type."&original_file=".$ref."/".$fichier, null, 0);
+$doc = callDoliApi("GET", "/documents/download?modulepart=".$type."&original_file=".$ref."/".$fichier, null, 0, $entity);
 } else {
-$doc = callDoliApi("GET", "/documents/download?module_part=".$type."&original_file=".$ref."/".$fichier, null, 0);
+$doc = callDoliApi("GET", "/documents/download?module_part=".$type."&original_file=".$ref."/".$fichier, null, 0, $entity);
 }
 //print var_dump($doc);
 
@@ -815,8 +815,8 @@ if ( isset($ref) && isset($fichier) && isset($doc->content) ) {
 $data = "data:application/pdf;".$doc->encoding.",".$doc->content;
 $filename = explode(".", $doc->filename)[0];
 
-if (!empty(get_option('doliconnectbeta'))) {
-$document = '<button type="button" class="btn btn btn-outline-dark btn-sm btn-block" data-bs-toggle="modal" data-target=".modal-'.$filename.'">'.$name.' <i class="fas fa-file-download"></i></button>';
+if (!empty(get_option('doliconnectbeta')) && 7==4) {
+$document = '<button type="button" class="btn btn btn-outline-dark btn-sm btn-block" data-bs-toggle="modal" data-bs-target=".modal-'.$filename.'">'.$name.' <i class="fas fa-file-download"></i></button>';
 $document .= '<div class="modal fade modal-'.$filename.'" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 <div class="modal-dialog modal-dialog-centered modal-lg" role="document"><div class="modal-content"><div class="modal-header">
 <h5 class="modal-title" id="exampleModalCenterTitle"><a href="'.$data.'" download="'.$doc->filename.'">'.__( 'Download', 'doliconnect').' '.$doc->filename.'</a></h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="modal-body">';
