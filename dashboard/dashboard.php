@@ -805,9 +805,9 @@ $fruits[strtotime($pay->date).'p'] = array(
 
 if ( $invoice->last_main_doc != null ) {
 $doc = array_reverse(explode("/", $invoice->last_main_doc)); 
-$document_invoice = dolidocdownload($doc[2], $doc[1], $doc[0], __( 'Invoice', 'doliconnect'), true, $orderfo->entity);
+$document_invoice = dolidocdownload($doc[2], $doc[1], $doc[0], __( 'Invoice', 'doliconnect'), true, $invoice->entity);
 } else {
-$document_invoice = dolidocdownload('invoice', $invoice->ref, $invoice->ref.'.pdf', __( 'Invoice', 'doliconnect'), true, $orderfo->entity);
+$document_invoice = dolidocdownload('invoice', $invoice->ref, $invoice->ref.'.pdf', __( 'Invoice', 'doliconnect'), true, $invoice->entity);
 }
 
 if ( $invoice->paye != 1 && $invoice->remaintopay != 0 && function_exists('dolipaymentmodes') ) {
@@ -1120,9 +1120,9 @@ $fruits[strtotime($pay->date).'p'] = array(
 
 if ( $invoice->last_main_doc != null ) {
 $doc = array_reverse(explode("/", $invoice->last_main_doc)); 
-$document_invoice = dolidocdownload($doc[2], $doc[1], $doc[0], __( 'Invoice', 'doliconnect'), true, $invoicefo->entity);
+$document_invoice = dolidocdownload($doc[2], $doc[1], $doc[0], __( 'Invoice', 'doliconnect'), true, $invoice->entity);
 } else {
-$document_invoice = dolidocdownload('invoice', $invoice->ref, $invoice->ref.'.pdf', __( 'Invoice', 'doliconnect'), true, $invoicefo->entity);
+$document_invoice = dolidocdownload('invoice', $invoice->ref, $invoice->ref.'.pdf', __( 'Invoice', 'doliconnect'), true, $invoice->entity);
 }
 
 if ( $invoice->paye != 1 && $invoice->remaintopay != 0 && function_exists('dolipaymentmodes') ) {
