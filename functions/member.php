@@ -66,7 +66,7 @@ $adherent = callDoliApi("GET", $request, null, $delay);
 print "<div class='modal fade' id='activatemember' tabindex='-1' aria-labelledby='activatememberLabel' aria-hidden='true' data-bs-keyboard='false'>
 <div class='modal-dialog modal-lg modal-fullscreen-md-down modal-dialog-centered modal-dialog-scrollable'><div class='modal-content'><div class='modal-header'>";
 if ( !isset($adherent->datefin) || ( $adherent->datefin>current_time( 'timestamp',1)) || ( $adherent->datefin < current_time( 'timestamp',1)) ) {
-$typeadhesion = callDoliApi("GET", "/adherentsplus/type?sortfield=t.libelle&sortorder=ASC&sqlfilters=(t.morphy%3A=%3A'')%20or%20(t.morphy%3Ais%3Anull)%20or%20(t.morphy%3A%3D%3A'".$current_user->billing_type."')", null, $delay);
+$typeadhesion = callDoliApi("GET", "/adherentsplus/type?sortfield=t.libelle&sortorder=ASC&member_id=".$adherent->id."&sqlfilters=(t.morphy%3A=%3A'')%20or%20(t.morphy%3Ais%3Anull)%20or%20(t.morphy%3A%3D%3A'".$current_user->billing_type."')", null, $delay);
 //print $typeadhesion;
 print '<h4 class="modal-title" id="myModalLabel">'.__( 'Prices', 'doliconnect').' '.$typeadhesion[0]->season.'</h4><button id="subscription-close" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div>';
 
@@ -102,10 +102,10 @@ print doliproduct($postadh, 'label');
 if (! empty ($postadh->duration_value)) print " - ".doliduration($postadh);
 print " <small>";
 if ( !empty($postadh->subscription) ) {
-if ($postadh->price_prorata != $postadh->price ) { 
+if ($postadh->price_prorata != $postadh->next_price) { 
 print "(";
 print doliprice($postadh->price_prorata)." ";
-print __( 'then', 'doliconnect-pro')." ".doliprice($postadh->price);
+print __( 'then', 'doliconnect-pro')." ".doliprice($postadh->next_price);
 } else {
 print "(".doliprice($postadh->price_prorata);
 } 
