@@ -77,7 +77,7 @@ $html .= "<small>".__( 'First subscription at', 'doliconnect' )." ".doliprice($p
 }   
 $html .= doliproduct($postadh, 'note').'</div>';
 
-if ( function_exists('dolimembership_modal') ) {
+if ( function_exists('doliconnect_membership_modal') ) {
 $html .= '<div class="card-footer"><a href="'.doliconnecturl('doliaccount').'?module=members" role="button" class="btn btn-block btn'.$color.'">'.__( 'Subscribe', 'doliconnect' ).'</a></div>';
 }
 
@@ -103,7 +103,7 @@ $html .= ")</small>";
 if (!empty(doliproduct($postadh, 'note'))) $html .= "<br><small class='text-justify text-muted '>".doliproduct($postadh, 'note')."</small>";
 if (!empty(number_format($postadh->federal))) $html .= "<br><small class='text-justify text-muted '>".__( 'Including a federal part of', 'doliconnect-pro')." ".doliprice($postadh->federal)."</small>";
 $html .= "</div>";
-if ( function_exists('dolimembership_modal') ) {
+if ( function_exists('doliconnect_membership_modal') ) {
 $html .= '<div class="col-md-4"><a href="'.doliconnecturl('doliaccount').'?module=members" role="button" class="btn btn-block btn'.$color.'">'.__( 'Subscribe', 'doliconnect' ).'</a></div>';
 }
 
