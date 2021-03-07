@@ -604,7 +604,7 @@ do_action( 'login_form' );
 
 print '<div class="form-check">
   <input class="form-check-input" type="checkbox" name="rememberme" value="forever" id="rememberme" checked>
-  <label class="form-check-label" for="rememberme">'.__( 'Remember me', 'doliconnect-pro').'</label>
+  <label class="form-check-label" for="rememberme">'.__( 'Remember me', 'doliconnect').'</label>
 </div>';
 
 if ( get_site_option('doliconnect_mode') == 'one' && function_exists('switch_to_blog') ) {
@@ -612,9 +612,9 @@ switch_to_blog(1);
 } 
 
 if ((!is_multisite() && get_option( 'users_can_register' )) || ((!is_multisite() && get_option( 'dolicustsupp_can_register' )) || ((get_option( 'dolicustsupp_can_register' ) || get_option('users_can_register') == '1') && (get_site_option( 'registration' ) == 'user' || get_site_option( 'registration' ) == 'all')))) {
-print "<a class='float-start' href='".wp_registration_url(get_permalink())."' role='button' title='".__( 'Create an account', 'doliconnect-pro')."'><small>".__( 'Create an account', 'doliconnect-pro')."</small></a>";
+print "<a class='float-start' href='".wp_registration_url(get_permalink())."' role='button' title='".__( 'Create an account', 'doliconnect')."'><small>".__( 'Create an account', 'doliconnect')."</small></a>";
 }
-print "<a class='float-end' href='".wp_lostpassword_url(get_permalink())."' role='button' title='".__( 'Forgot password?', 'doliconnect-pro')."'><small>".__( 'Forgot password?', 'doliconnect-pro')."</small></a>"; 
+print "<a class='float-end' href='".wp_lostpassword_url(get_permalink())."' role='button' title='".__( 'Forgot password?', 'doliconnect')."'><small>".__( 'Forgot password?', 'doliconnect')."</small></a>"; 
 
 if (get_site_option('doliconnect_mode')=='one') {
 restore_current_blog();
