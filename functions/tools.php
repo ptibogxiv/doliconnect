@@ -421,10 +421,10 @@ $tx=1;
 if ( ( ($postadh->welcome > '0') && ($object->datefin == null )) || (($postadh->welcome > '0') && (current_time( 'timestamp',1) > $object->next_subscription_valid) && (current_time( 'timestamp',1) > $object->datefin) && $object->next_subscription_valid != $object->datefin ) ) { 
 print " (";
 print doliprice(($tx*$postadh->price)+$postadh->welcome)." ";
-print __( 'then', 'doliconnect-pro' )." ".doliprice($postadh->price)." ".__( 'yearly', 'doliconnect-pro' ).")"; 
+print __( 'then', 'doliconnect' )." ".doliprice($postadh->price)." ".__( 'yearly', 'doliconnect' ).")"; 
 } else {
 print " (".doliprice($postadh->price);
-print " ".__( 'yearly', 'doliconnect-pro' ).")";
+print " ".__( 'yearly', 'doliconnect' ).")";
 } 
 
 print "</option>";
@@ -1409,7 +1409,7 @@ $paymentmethods .= '</script>';
 //if ( isset($listpaymentmethods->stripe) && in_array('payment_request_api', $listpaymentmethods->stripe->types) && !empty($module) && is_object($object) && isset($object->id) && empty($thirdparty->mode_reglement_id) ) {
 //$paymentmethods .= "<div id='pra-error-message' role='alert'><!-- a Stripe Message will be inserted here. --></div>";
 //$paymentmethods .= "<div id='payment-request-button'><!-- A Stripe Element will be inserted here. --></div>
-//<div id='else' style='display: none' ><br><div style='display:inline-block;width:46%;float:left'><hr width='90%' /></div><div style='display:inline-block;width: 8%;text-align: center;vertical-align:90%'><small class='text-muted'>".__( 'or', 'doliconnect-pro' )."</small></div><div style='display:inline-block;width:46%;float:right' ><hr width='90%'/></div><br></div>";
+//<div id='else' style='display: none' ><br><div style='display:inline-block;width:46%;float:left'><hr width='90%' /></div><div style='display:inline-block;width: 8%;text-align: center;vertical-align:90%'><small class='text-muted'>".__( 'or', 'doliconnect' )."</small></div><div style='display:inline-block;width:46%;float:right' ><hr width='90%'/></div><br></div>";
 //} 
 
 $paymentmethods .= '<div class="card shadow-sm">';
@@ -2964,9 +2964,9 @@ print "<div class='modal fade' id='DoliconnectLogin' tabindex='-1' role='dialog'
 print "><div class='modal-dialog modal-fullscreen-md-down modal-dialog-centered modal-dialog-scrollable' role='document'><div class='modal-content'><div class='modal-header'>";
 
 if ( empty(get_option('doliconnectrestrict')) ) {
-print "<h5 class='modal-title' id='DoliconnectLoginTitle'>".__( 'Welcome', 'doliconnect-pro')."</h5>";
+print "<h5 class='modal-title' id='DoliconnectLoginTitle'>".__( 'Welcome', 'doliconnect')."</h5>";
 } else {
-print "<h5 class='modal-title' id='DoliconnectLoginTitle'>".__( 'Access restricted to users', 'doliconnect-pro')."</h5>";
+print "<h5 class='modal-title' id='DoliconnectLoginTitle'>".__( 'Access restricted to users', 'doliconnect')."</h5>";
 }
 
 print '<button type="button" id="Closeloginmodal-form" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div><div class="modal-body"><div id="loginmodal-form">';
@@ -2997,19 +2997,19 @@ print '<div class="form-floating mb-3"><input type="email" class="form-control" 
 if ( defined("DOLICONNECT_DEMO") && defined("DOLICONNECT_DEMO_EMAIL") && !empty(constant("DOLICONNECT_DEMO_EMAIL")) ) {
 print constant("DOLICONNECT_DEMO_EMAIL");
 }
-print '" required autofocus><label for="user_login"><i class="fas fa-at fa-fw"></i> '.__( 'Email', 'doliconnect-pro').'</label></div>';
+print '" required autofocus><label for="user_login"><i class="fas fa-at fa-fw"></i> '.__( 'Email', 'doliconnect').'</label></div>';
 
 print '<div class="form-floating mb-3"><input type="password" class="form-control" id="user_pass" name="pwd" placeholder="Password" value="';
 if ( defined("DOLICONNECT_DEMO") && defined("DOLICONNECT_DEMO_PASSWORD") && !empty(constant("DOLICONNECT_DEMO_PASSWORD")) ) {
 print constant("DOLICONNECT_DEMO_PASSWORD");
 }
-print '" required><label for="user_pass"><i class="fas fa-key fa-fw"></i> '.__( 'Password', 'doliconnect-pro').'</label></div>';
+print '" required><label for="user_pass"><i class="fas fa-key fa-fw"></i> '.__( 'Password', 'doliconnect').'</label></div>';
 
 do_action( 'login_form' );
 
 print '<div class="form-check">
   <input class="form-check-input" type="checkbox" name="rememberme" value="forever" id="rememberme" checked>
-  <label class="form-check-label" for="rememberme">'.__( 'Remember me', 'doliconnect-pro').'</label>
+  <label class="form-check-label" for="rememberme">'.__( 'Remember me', 'doliconnect').'</label>
 </div>';
 
 if ( get_site_option('doliconnect_mode') == 'one' && function_exists('switch_to_blog') ) {
@@ -3017,9 +3017,9 @@ switch_to_blog(1);
 } 
 
 if ((!is_multisite() && get_option( 'users_can_register' )) || ((!is_multisite() && get_option( 'dolicustsupp_can_register' )) || ((get_option( 'dolicustsupp_can_register' ) || get_option('users_can_register') == '1') && (get_site_option( 'registration' ) == 'user' || get_site_option( 'registration' ) == 'all')))) {
-print "<a class='float-start' href='".wp_registration_url(get_permalink())."' role='button' title='".__( 'Create an account', 'doliconnect-pro')."'><small>".__( 'Create an account', 'doliconnect-pro')."</small></a>";
+print "<a class='float-start' href='".wp_registration_url(get_permalink())."' role='button' title='".__( 'Create an account', 'doliconnect')."'><small>".__( 'Create an account', 'doliconnect')."</small></a>";
 }
-print "<a class='float-end' href='".wp_lostpassword_url(get_permalink())."' role='button' title='".__( 'Forgot password?', 'doliconnect-pro')."'><small>".__( 'Forgot password?', 'doliconnect-pro')."</small></a>"; 
+print "<a class='float-end' href='".wp_lostpassword_url(get_permalink())."' role='button' title='".__( 'Forgot password?', 'doliconnect')."'><small>".__( 'Forgot password?', 'doliconnect')."</small></a>"; 
 
 if (get_site_option('doliconnect_mode')=='one') {
 restore_current_blog();
@@ -3030,7 +3030,7 @@ print "<input type='hidden' value='$redirect_to' name='redirect_to'></div>";
 print "".doliloading('loginmodal-form');
 
 print '</div><div id="Footerloginmodal-form" class="modal-footer">';
-print '<div class="d-grid gap-2"><button class="btn btn-outline-secondary" type="submit" value="submit">'.__( 'Sign in', 'doliconnect-pro').'</button></div>';
+print '<div class="d-grid gap-2"><button class="btn btn-outline-secondary" type="submit" value="submit">'.__( 'Sign in', 'doliconnect').'</button></div>';
 print '</form></div>';
 print '</div></div></div>';
 
