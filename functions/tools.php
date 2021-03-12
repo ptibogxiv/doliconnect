@@ -1771,9 +1771,9 @@ $paymentmethods .= '</div></div></div></div>';
 
 if (isset($listpaymentmethods->stripe) && !empty(array_intersect(array('sepa_debit'), $listpaymentmethods->stripe->types)) && empty($thirdparty->mode_reglement_id) ) {
 $paymentmethods .= '<div class="accordion-item"><h2 class="accordion-header" id="flush-headingnewpm"><button class="accordion-button';
-if (empty($countPM)) { $paymentmethods .= ""; } else { $paymentmethods .= " collapsed"; }
+if (empty($countPM) && empty(array_intersect(array('card'), $listpaymentmethods->stripe->types))) { $paymentmethods .= ""; } else { $paymentmethods .= " collapsed"; }
 $paymentmethods .= '" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapsenewpm" aria-expanded="';
-if (empty($countPM)) { $paymentmethods .= "true"; } else { $paymentmethods .= "false"; }
+if (empty($countPM) && empty(array_intersect(array('card'), $listpaymentmethods->stripe->types))) { $paymentmethods .= "true"; } else { $paymentmethods .= "false"; }
 $paymentmethods .= '" aria-controls="flush-collapsenewpm">';
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
 $paymentmethods .= '<i class="fas fa-university fa-3x fa-fw float-start"></i> '.__( 'Pay by SEPA bank debit', 'doliconnect');
@@ -1782,7 +1782,7 @@ $paymentmethods .= '<i class="fas fa-plus-circle fa-3x fa-fw float-start"></i> '
 }
 $paymentmethods .= '</button></h2>';
 $paymentmethods .= '<div id="flush-collapsenewpm" class="accordion-collapse collapse';
-if (empty($countPM)) { $paymentmethods .= " show"; }
+if (empty($countPM) && empty(array_intersect(array('card'), $listpaymentmethods->stripe->types))) { $paymentmethods .= " show"; }
 $paymentmethods .= '" aria-labelledby="flush-headingnewpm" data-bs-parent="#accordionFlushExample"><div class="accordion-body bg-light">';
 if ($countPM >= $maxPM && empty($object)) {
 $paymentmethods .= '<div class="text-justify"><i class="fas fa-times-circle fa-3x fa-fw float-start"></i>'.__( "You have reached limit of payment methods. Please delete a payment method for add a new one.", 'doliconnect').'</div></div></div>';
