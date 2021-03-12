@@ -79,9 +79,13 @@ $time = current_time( 'timestamp', 1);
 
 require_once ABSPATH . WPINC . '/class-phpass.php';
 
+if ( ! function_exists( 'wp_handle_upload' ) ) {
+    require_once( ABSPATH . 'wp-admin/includes/file.php' );
+}
+
 if ( isset($_POST["case"]) && $_POST["case"] == 'updateavatar' ) {
 
-if ( isset($_POST['inputavatar']) && $_POST['inputavatar'] == 'delete' ) {
+if ( isset($_POST['deleteavatar']) && $_POST['deleteavatar'] == 'delete' ) {
 
 $upload_dir = wp_upload_dir();
 $nam=$wpdb->prefix."member_photo";
@@ -118,7 +122,6 @@ if(is_file($file))
 unlink($file); 
 }}
 
-if ( ! function_exists( 'wp_handle_upload' ) ) require_once( ABSPATH . 'wp-admin/includes/file.php');
 $uploadedfile = $_FILES['inputavatar'];
    
 add_filter('wp_handle_upload_prefilter', 'custom_upload_filter');
@@ -234,15 +237,14 @@ print doliloaderscript('doliconnect-avatarform');
 print '<div class="card shadow-sm"><div class="card-header">'.__( 'Edit my avatar', 'doliconnect').'</div>';
 print "<ul class='list-group list-group-flush'><li class='list-group-item'>";
 
-print '<div class="mb-3">
+print '<div class="mb-2">
 <label for="inputavatar" name="inputavatar" class="form-label">'.__( 'Select a file', 'doliconnect').'</label>
-<input class="form-control" type="file" id="inputavatar" accept="image/*">
+<input class="form-control" type="file" id="inputavatar" name="inputavatar" accept="image/*">
 </div>';
 
 print "<small id='infoavatar' class='form-text text-muted text-justify'>".__( 'Your avatar must be a .jpg/.jpeg file, <10Mo and 350x350pixels minimum.', 'doliconnect')."</small>";
 
-print "<div class='form-check'>
-    <input type='checkbox' class='form-check-input' id='deleteavatar' name='deleteavatar' value='delete' ";
+print "<div class='form-check'><input type='checkbox' class='form-check-input' id='deleteavatar' name='deleteavatar' value='delete' ";
 if ( null == $current_user->$nam ) {
 print " disabled='disabled'";
 }
