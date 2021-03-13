@@ -36,11 +36,16 @@ print get_avatar($ID);
 
 if ( !defined("DOLIBUG") && is_user_logged_in() && is_user_member_of_blog( $current_user->ID, get_current_blog_id())) {
 print "<a href='".esc_url( add_query_arg( 'module', 'avatars', doliconnecturl('doliaccount')) )."' title='".__( 'Edit my avatar', 'doliconnect')."' class='card-img-overlay'><div class='d-block d-sm-block d-xs-block d-md-none'></div><div class='d-none d-md-block'><i class='fas fa-camera fa-2x'></i></div></a>";
+} 
+print '<ul class="list-group list-group-flush">';
+if ( isset($_GET['module']) && !empty($_GET['module'])) {
+print "<a href='".esc_url( doliconnecturl('doliaccount') )."' class='list-group-item list-group-item-light list-group-item-action'><center><div class='d-block d-sm-block d-xs-block d-md-none'><i class='fas fa-home'></i></div><div class='d-none d-md-block'><i class='fas fa-arrow-circle-left fa-fw'></i> ".__( 'Return', 'doliconnect')."</div></center></a>";
+} else {
+print "<a href='".esc_url(home_url())."' class='list-group-item list-group-item-light list-group-item-action'><center><div class='d-block d-sm-block d-xs-block d-md-none'><i class='fas fa-home'></i></div><div class='d-none d-md-block'><i class='fas fa-home fa-fw'></i> ".__( 'Home', 'doliconnect')."</div></center></a>";
 }
-print "<ul class='list-group list-group-flush'><a href='".esc_url( doliconnecturl('doliaccount') )."' class='list-group-item list-group-item-light list-group-item-action'><center><div class='d-block d-sm-block d-xs-block d-md-none'><i class='fas fa-home'></i></div><div class='d-none d-md-block'><i class='fas fa-home'></i> ".__( 'Home', 'doliconnect')."</div></center></a>";
-print "</ul>";
+print '</ul>';
 
-print "</div><br></div>";
+print '</div><br></div>';
 print "<div class='col-9 col-xs-8 col-sm-8 col-md-12 col-xl-12'>";
 } else {
 print "<div class='col-md-6 offset-md-3'>";
@@ -67,7 +72,7 @@ $thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, '
 
 } else { 
 
-if ( isset($_GET['module']) ) {
+if ( isset($_GET['module']) && !empty($_GET['module'])) {
 //****
 if ( has_action('user_doliconnect_'.esc_attr($_GET['module'])) ) {
 if ( has_action('user_doliconnect_menu') ) {
