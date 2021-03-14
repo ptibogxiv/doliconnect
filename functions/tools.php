@@ -249,7 +249,7 @@ $adapters = $hybridauth->getConnectedAdapters();
 foreach ($hybridauth->getProviders() as $name) {
 
 if (!isset($adapters[$name])) {
-$connect .= "<a href='".doliconnecturl('doliaccount')."?provider=".$name."' onclick='loadingLoginModal()' role='button' class='btn btn-block btn-outline-dark' title='".__( 'Sign in with', 'doliconnect')." ".$name."'><b><i class='fab fa-".strtolower($name)." fa-lg float-start'></i> ".__( 'Sign in with', 'doliconnect')." ".$name."</b></a>";
+$connect .= "<div class='d-grid gap-2'><a href='".doliconnecturl('doliaccount')."?provider=".$name."' onclick='loadingLoginModal()' role='button' class='btn btn-outline-dark' title='".__( 'Sign in with', 'doliconnect')." ".$name."'><b><i class='fab fa-".strtolower($name)." fa-lg float-start'></i> ".__( 'Sign in with', 'doliconnect')." ".$name."</b></a></div>";
 }
 }
 if (!empty($hybridauth->getProviders())) {
