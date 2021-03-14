@@ -444,13 +444,14 @@ add_filter( 'template_include', 'doliconnect_accessrestricted' );
 function doliconnect_accessrestricted( $template )
 {
     global $current_user;
-    if (defined("DOLICONNECT_EVICTIONRESTRICTEDPAGEID") && is_array(constant("DOLICONNECT_EVICTIONRESTRICTEDPAGEID"))) {
+    if (!empty(get_option('doliconnectrestrict')) && defined("DOLICONNECT_EVICTIONRESTRICTEDPAGEID") && is_array(constant("DOLICONNECT_EVICTIONRESTRICTEDPAGEID"))) {
     $eviction = constant("DOLICONNECT_EVICTIONRESTRICTEDPAGEID");
     } else {
     $eviction = array();
     }
-    if( ( !is_user_logged_in() && !empty(get_option('doliconnectrestrict')) && !in_array(get_the_ID(), $eviction)) || (!is_user_member_of_blog( $current_user->ID, get_current_blog_id()) && !empty(get_option('doliconnectrestrict')) && !in_array(get_the_ID(), $eviction)) )
-        $template = plugin_dir_path( __FILE__ ) . 'templates/restricted.php';
+    if ( (!empty(get_option('doliconnectrestrict')) && !is_user_logged_in() && !in_array(get_the_ID(), $eviction)) || (!empty(get_option('doliconnectrestrict')) && !is_user_member_of_blog( $current_user->ID, get_current_blog_id()) && !in_array(get_the_ID(), $eviction)) ) {
+    $template = plugin_dir_path( __FILE__ ) . 'templates/restricted.php';
+    }
 
     return $template;
 }
