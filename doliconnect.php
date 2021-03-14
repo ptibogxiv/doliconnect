@@ -126,12 +126,12 @@ define( 'DONOTCACHEPAGE', 1);
 add_action ('wp_loaded', 'doliconnect_confirm_admin_email_redirect');
 function doliconnect_confirm_admin_email_redirect() {
 if ( isset($_GET["action"]) && $_GET["action"] == 'confirm_admin_email' ) {
-if ( function_exists('secupress_get_module_option') && secupress_get_module_option('move-login_slug-login', $slug, 'users-login' ) ) {
-$login_url=site_url()."/".secupress_get_module_option('move-login_slug-login', $slug, 'users-login'); 
+if ( function_exists('secupress_get_module_option') && secupress_get_module_option('move-login_slug-login', $slug, 'users-login' ) && !empty(secupress_get_module_option('move-login_slug-login', $slug, 'users-login')) ) {
+$login_url=home_url()."/".secupress_get_module_option('move-login_slug-login', $slug, 'users-login'); 
 } else {
-$login_url=site_url()."/wp-login.php"; }
-wp_redirect( $login_url .'?action=confirm_admin_email&wp_lang='.$_GET["wp_lang"] );
-exit;
+$login_url=home_url()."/wp-login.php"; }
+//wp_redirect( $login_url .'?action=confirm_admin_email&wp_lang='.$_GET["wp_lang"] );
+//exit;
 }  
 }
 // ********************************************************
@@ -524,12 +524,13 @@ return esc_url( add_query_arg( 'action', 'fpw', doliconnecturl('doliaccount')) )
 if (get_option('doliaccount')) {
 add_filter( 'lostpassword_url', 'doliconnect_lost_password_page', 10, 2 );}
 
-function doliconnect_login_link_url( $url ) {
+function doliconnect_login_link_url( $login_url, $redirect, $force_reauth ) {
 if (get_option('doliaccount')) {
-return doliconnecturl('doliaccount'); }
+return doliconnecturl('doliaccount');
+}
 }
 if (get_option('doliaccount')) {
-add_filter( 'login_url', 'doliconnect_login_link_url', 10, 2 ); }
+add_filter( 'login_url', 'doliconnect_login_link_url', 10, 3 ); }
 
 add_filter('asgarosforum_filter_profile_link', 'doliconnect_profile_url', 10, 2);
 function doliconnect_profile_url($profile_url, $user_object) {
