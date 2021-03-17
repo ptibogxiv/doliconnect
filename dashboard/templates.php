@@ -572,8 +572,9 @@ print '</div>';
 
 do_action( 'login_head');
 
-print "<div class='card-body'>";
-print "<b>".get_option('doliaccountinfo')."</b></div>";
+if (!empty(get_option('doliaccountinfo'))) {
+print "<div class='card-body'><b>".get_option('doliaccountinfo')."</b></div>";
+}
 
 if ( function_exists('socialconnect') ) {
 print socialconnect(get_permalink());
