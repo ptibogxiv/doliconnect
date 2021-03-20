@@ -445,23 +445,28 @@ $button .= __( 'Sales', 'doliconnect');
 $button .= '</div>';
 $button .= '<div class="float-end">'.doliprice( empty(get_option('dolibarr_b2bmode'))?$price_ttc3:$price_ht3, $currency).'</div></td></tr>';
 } elseif ( !empty(doliconst("PRODUIT_CUSTOMER_PRICES", $refresh)) && isset($product2) && !empty($product2) && !isset($product2->error) ) {
-$price_min_ttc=$product2->price_min;
+$price_min_ttc=$product2->price_min_ttc;
 $price_ttc=$product2->price_ttc;
 $price_ht=$product2->price;
 $vat = $product2->tva_tx;
 $refprice = (empty(get_option('dolibarr_b2bmode'))?$price_ttc:$price_ht);
-
 $button .= '<tr class="table-primary">'; 
 $button .= '<td><div class="float-start">'.__( 'Your price', 'doliconnect').'</div>';
 $button .= '<div class="float-end">'.doliprice( $refprice, $currency).'</div></td></tr>';
 if ( empty($time) && !empty($product->duration_value) ) { $button .='/'.doliduration($product); } 
 if ( !empty($altdurvalue) ) { $button .= "<td class='text-end'>soit ".doliprice( $altdurvalue*$refprice, null, $currency)." par ".__( 'hour', 'doliconnect')."</td>"; } 
 } else {
-$price_min_ttc=$product->price_min;
+$price_min_ttc=$product->price_min_ttc;
 $price_ttc=$product->price_ttc;
 $price_ht=$product->price;
 $vat=$product->tva_tx;
 $refprice = (empty(get_option('dolibarr_b2bmode'))?$price_ttc:$price_ht);
+}
+
+if ($price_min_ttc == $price_ttc) {
+$discount = 0;
+} elseif ($price_min_ttc > ($price_ttc-($price_ttc*$discount/100))) {
+$discount = 100-($price_min_ttc/$price_ttc);
 }
 
 $button .= '<tr><td colspan="'.(!empty($altdurvalue)?'3':'2').'"><small><div class="float-start">'.(empty(get_option('dolibarr_b2bmode'))?__( 'Our prices are incl. VAT', 'doliconnect'):__( 'Our prices are excl. VAT', 'doliconnect'));
