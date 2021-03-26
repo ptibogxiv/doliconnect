@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
 "POT-Creation-Date: 2021-03-07 19:30+0100\n"
-"PO-Revision-Date: 2021-03-07 19:30+0100\n"
+"PO-Revision-Date: 2021-03-26 10:45+0100\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_FR\n"
@@ -1968,7 +1968,7 @@ msgstr "Nom commercial / Marque"
 
 #: functions/tools.php:465
 msgid "SIREN"
-msgstr "Sirène"
+msgstr "SIREN"
 
 #: functions/tools.php:470
 msgid "SIRET"
