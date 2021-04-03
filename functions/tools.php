@@ -1763,7 +1763,7 @@ $paymentmethods .= '</script><div class="d-grid gap-2">';
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
 $paymentmethods .= '<button type="button" id="PayCardButton" class="btn btn-danger">'.__( 'I order', 'doliconnect').'</button>';
 } else {
-$paymentmethods .= "<button type='button' id='AddCardButton' class='btn btn-outline-secondary' title='".__( 'Add', 'doliconnect')."'>".__( 'Add', 'doliconnect')."</button>";
+$paymentmethods .= "<button type='button' id='AddCardButton' class='btn btn-warning btn-block' title='".__( 'Add', 'doliconnect')."'>".__( 'Add', 'doliconnect')."</button>";
 }
 }
 $paymentmethods .= '</div></div></div></div>';
