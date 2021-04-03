@@ -344,6 +344,13 @@ $body .= "<br><br>".__('To activate your account on and choose your password, pl
 }
 
 $body .= "<br><br>".sprintf(__("Your %s's team", 'doliconnect'), $sitename)."<br>".get_option('siteurl');
+
+if ( has_filter( 'doliconnect_templatesignupemail') ) {
+if (!empty(apply_filters( 'doliconnect_templatesignupemail', $sitename, $url))){
+$body = apply_filters( 'doliconnect_templatesignupemail', $sitename, $url);
+}
+}
+
 $headers = array('Content-Type: text/html; charset=UTF-8'); 
 wp_mail($email, $subject, $body, $headers);
 $emailSent = true;
