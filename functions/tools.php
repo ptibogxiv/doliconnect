@@ -1317,7 +1317,7 @@ function doliconnect_langs($arg) {
 
 if (function_exists('pll_the_languages')) {       
 
-print '<div class="modal fade" id="DoliconnectSelectLang" tabindex="-1" aria-labelledby="DoliconnectSelectLangLabel" aria-hidden="true">
+print '<div class="modal fade" id="DoliconnectSelectLang" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="DoliconnectSelectLangLabel" aria-hidden="true">
 <div class="modal-dialog modal-fullscreen-md-down modal-dialog-centered modal-dialog-scrollable">
 <div class="modal-content"><div class="modal-header">
 <h5 class="modal-title" id="DoliconnectSelectLangLabel">'.__('Choose your language', 'doliconnect').'</h5><button id="closemodalSelectLang" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></button></div>';
@@ -2402,7 +2402,7 @@ doliconnect_enqueues();
 
 do_action( 'login_head' );
 
-print "<div class='modal fade' id='DoliconnectLogin' tabindex='-1' role='dialog' aria-labelledby='DoliconnectLoginTitle' aria-hidden='true' data-keyboard='false' ";
+print "<div class='modal fade' id='DoliconnectLogin' data-bs-backdrop='static' data-bs-keyboard='false' tabindex='-1' role='dialog' aria-labelledby='DoliconnectLoginTitle' aria-hidden='true' data-keyboard='false' ";
 
 print "><div class='modal-dialog modal-fullscreen-md-down modal-dialog-centered modal-dialog-scrollable' role='document'><div class='modal-content'><div class='modal-header'>";
 
