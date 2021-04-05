@@ -70,7 +70,7 @@ $member_id = '';
 if (isset($adherent) && $adherent->id > 0) $member_id = "member_id=".$adherent->id;
 $morphy = '';
 //if (!empty($current_user->billing_type)) $morphy = "&sqlfilters=(t.morphy%3A=%3A'')%20or%20(t.morphy%3Ais%3Anull)%20or%20(t.morphy%3A%3D%3A'".$current_user->billing_type."')";
-$typeadhesion = callDoliApi("GET", "/adherentsplus/type?sortfield=t.libelle&sortorder=ASC&nature=all&".$member_id.$morphy, null, $delay);
+$typeadhesion = callDoliApi("GET", "/adherentsplus/type?sortfield=t.rowid&sortorder=ASC&nature=all&".$member_id.$morphy, null, $delay);
 //print $typeadhesion;
 print '<h4 class="modal-title" id="myModalLabel">'.__( 'Prices', 'doliconnect').' '.$typeadhesion[0]->season.'</h4><button id="subscription-close" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div>';
 
