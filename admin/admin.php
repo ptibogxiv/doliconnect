@@ -289,6 +289,7 @@ delete_option('doliconnect_google');}
             if (isset($_REQUEST['doliconnectrestrict_role'])) update_option('doliconnectrestrict_role', sanitize_text_field($_REQUEST['doliconnectrestrict_role']));
             if (isset($_REQUEST['dolibarr_entity'])) update_option('dolibarr_entity', sanitize_text_field($_REQUEST['dolibarr_entity']));
             update_option('dolicart', sanitize_text_field($_REQUEST['dolicart']));
+            update_option('dolitos', sanitize_text_field($_REQUEST['dolicart']));
             if (isset($_REQUEST['dolidonation'])) update_option('dolidonation', sanitize_text_field($_REQUEST['dolidonation']));
             if (isset($_REQUEST['doliticket'])) update_option('doliticket', sanitize_text_field($_REQUEST['doliticket']));
             if (isset($_REQUEST['doliclassifieds'])) update_option('doliclassifieds', sanitize_text_field($_REQUEST['doliclassifieds'])); 
@@ -520,6 +521,17 @@ echo "<input id='dolibarr_entity'  name='dolibarr_entity' type='text' value='".(
     'selected' => get_option( 'wp_page_for_privacy_policy' ) 
 );
            wp_dropdown_pages($args); ?> <?php _e('(set your default wordpress legacy page)', 'doliconnect') ?></td>
+            </tr>
+             <tr>
+                <th style="width:150px;"><label for="dolibarr_tos">dolibarr_tos</label></th>
+                <td ><?php 
+           $args = array(
+    'name' => 'dolitos', 
+    'show_option_none' => __( '- Select -', 'doliconnect' ), 
+    'option_none_value' => '0', 
+    'selected' => get_option('dolitos')
+);
+           wp_dropdown_pages($args); ?> <?php _e('(Terms of service)', 'doliconnect') ?></td>
             </tr>
 <?php            
 if (is_plugin_active( 'doliconnect-ticket/doliconnect-ticket.php' ) ) { ?>
