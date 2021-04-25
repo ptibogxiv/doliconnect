@@ -306,14 +306,28 @@ $password .= "<li class='list-group-item list-group-item-info list-group-item-ac
 } 
 if (is_user_logged_in() && $user) {
 $password .= '<li class="list-group-item list-group-item-light list-group-item-action">';
-$password .= '<div class="form-floating"><input type="password" class="form-control" id="pwd0" name="pwd0" placeholder="Password" ';
+$password .= '<div class="form-floating input-group"><input type="password" class="form-control" id="pwd0" name="pwd0" placeholder="Password" ';
 if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $user->ID ) {
 $password .= ' readonly';
 } else {
 $password .= ' required';
 }
-$password .= '><label for="floatingPassword">'.__( 'Confirm your password', 'doliconnect').'</label></div></li>';
+$password .= '><label for="pwd0">'.__( 'Confirm your password', 'doliconnect').'</label><button id="toggle-password" type="button" onclick="revealpwd0()" class="btn btn-outline-secondary" type="button" aria-label="Show password as plain text. Warning: this will display your password on the screen.">
+<i id="toggle-password-fa" class="far fa-fw fa-eye-slash"></i></button></div></li>';
 }
+$password .= "<script>";
+$password .= 'function revealpwd0() {
+  var x = document.getElementById("pwd0");
+  if (x.type === "password") {
+    x.type = "text";
+    document.getElementById("toggle-password-fa").classList.toggle("fa-eye");
+  } else {
+    x.type = "password";
+    document.getElementById("toggle-password-fa").classList.toggle("fa-eye-slash");
+  }
+
+}';
+$password .= "</script>";
 $password .= '<li class="list-group-item list-group-item-light list-group-item-action"><p class="text-justify">'.__( 'Your new password must be between 8 and 20 characters, including at least 1 digit, 1 letter, 1 uppercase.', 'doliconnect').'</p>';
 $password .= '<div class="row g-2"><div class="col-md">';
 $password .= '<div class="form-floating"><input type="password" class="form-control" id="pwd1" name="pwd1" placeholder="Password" ';
@@ -322,7 +336,7 @@ $password .= ' readonly';
 } else {
 $password .= ' required';
 }
-$password .= '><label for="floatingPassword">'.__( 'New password', 'doliconnect').'</label></div>';
+$password .= '><label for="pwd1">'.__( 'New password', 'doliconnect').'</label></div>';
 $password .= '</div><div class="col-md">';
 $password .= '<div class="form-floating"><input type="password" class="form-control" id="pwd2" name="pwd2" placeholder="Password" ';
 if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $user->ID ) {
@@ -330,7 +344,7 @@ $password .= ' readonly';
 } else {
 $password .= ' required';
 }
-$password .= '><label for="floatingPassword">'.__( 'Confirm the password', 'doliconnect').'</label></div>';
+$password .= '><label for="pwd2">'.__( 'Confirm the password', 'doliconnect').'</label></div>';
 $password .= '</div></div>';
 $password .= '</li>';
 $password .= "</ul><div class='card-body'>";
