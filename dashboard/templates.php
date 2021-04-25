@@ -1870,18 +1870,20 @@ $controlefdp[$shipment->fk_shipment_mode] = true;
 }
 }}
 print "</li>";
-}
+} 
+
+$note_public = isset($_POST['note_public']) ? $_POST['note_public'] : $object->note_public;
 
 if ( empty(doliconst('MAIN_DISABLE_NOTES_TAB')) ) {
 print "<li class='list-group-item list-group-item-action'>";
-print '<div class="form-floating"><textarea class="form-control" placeholder="'.__( 'Message', 'doliconnect').'" id="note_public" name="note_public" style="height: 100px">'.$object->note_public.'</textarea>
+print '<div class="form-floating"><textarea class="form-control" placeholder="'.__( 'Message', 'doliconnect').'" id="note_public" name="note_public" style="height: 100px">'.$note_public.'</textarea>
 <label for="floatingTextarea"><i class="fas fa-comment fa-fw"></i> '.__( 'If you want to send us a message about your order, you can leave one here', 'doliconnect').'</label></div>';
 print "</li>";
+} else {
+print '<input type="hidden" id="note_public" name="note_public" value="'.$note_public.'">';
 }
 
 print "</ul>";
-
-$note_public = isset($_POST['note_public']) ? $_POST['note_public'] : '';
 
 $nonce = wp_create_nonce( 'dolicart-nonce');
 $arr_params = array( 'stage' => 'payment', 'security' => $nonce);  
