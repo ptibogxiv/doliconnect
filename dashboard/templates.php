@@ -1872,10 +1872,14 @@ $controlefdp[$shipment->fk_shipment_mode] = true;
 print "</li>";
 }
 
+if ( empty(doliconst('MAIN_DISABLE_NOTES_TAB')) ) {
 print "<li class='list-group-item list-group-item-action'>";
 print '<div class="form-floating"><textarea class="form-control" placeholder="'.__( 'Message', 'doliconnect').'" id="note_public" name="note_public" style="height: 100px">'.$object->note_public.'</textarea>
 <label for="floatingTextarea"><i class="fas fa-comment fa-fw"></i> '.__( 'If you want to send us a message about your order, you can leave one here', 'doliconnect').'</label></div>';
-print "</li></ul>";
+print "</li>";
+}
+
+print "</ul>";
 
 $note_public = isset($_POST['note_public']) ? $_POST['note_public'] : '';
 
