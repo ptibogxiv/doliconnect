@@ -16,11 +16,11 @@ function doliconnect_enqueues() {
 /* Styles */
 if ( empty(get_theme_mod( 'ptibogxivtheme_css')) || get_theme_mod( 'ptibogxivtheme_css') == 'css' ) {
 $css='';
-$versionbase = '5.0.0'; 
+$versionbase = '5.0.1'; 
 $version=$versionbase; 
 } else {
 $css='bootswatch/'.get_theme_mod( 'ptibogxivtheme_css').'/';
-$version='5.0.0';  
+$version='5.0.1';  
 }
 
 if (!empty(get_theme_mod( 'ptibogxivtheme_css')) && $version != $versionbase && empty(get_option('doliconnectbeta'))) {
