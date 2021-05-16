@@ -452,7 +452,7 @@ print '<div class="row g-2 mb-2"><div class="col-lg">';
 print '<div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[name]" name="'.$idobject.'[name]" placeholder="'.__( 'Name of company', 'doliconnect').'" value="'.(isset($object->name) ? stripslashes(htmlspecialchars($object->name, ENT_QUOTES)) : null).'" required>
 <label for="'.$idobject.'[name]"><i class="fas fa-building fa-fw"></i> '.__( 'Name of company', 'doliconnect').'</label></div>';   
 print '</div><div class="col-md">';
-print '<div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[name_alias]" name="'.$idobject.'[name_alias]" placeholder="'.__( 'Commercial name / Brand', 'doliconnect').'" value="'.(isset($object->name_alias) ? stripslashes(htmlspecialchars($object->name_alias, ENT_QUOTES)) : null).'" required>
+print '<div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[name_alias]" name="'.$idobject.'[name_alias]" placeholder="'.__( 'Commercial name / Brand', 'doliconnect').'" value="'.(isset($object->name_alias) ? stripslashes(htmlspecialchars($object->name_alias, ENT_QUOTES)) : null).'">
 <label for="'.$idobject.'[name_alias]"><i class="fas fa-building fa-fw"></i> '.__( 'Commercial name / Brand', 'doliconnect').'</label></div>';
 print '</div></div>';
 
