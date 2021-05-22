@@ -523,11 +523,15 @@ $step = $product->array_options->options_packaging;
 } else {
 $step = 1;
 }
+
+$thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty', $refresh));
+
 $button .= "<div class='input-group input-group-sm mb-3'><select class='form-control btn-light btn-outline-secondary' id='product-".$product->id."-add-qty' name='product-add-qty' ";
-if ( ( $realstock <= 0 || $m2 < $step) && empty($product->type) && !empty(doliconst('MAIN_MODULE_STOCK')) ) { $button .= " disabled"; }
+if (( isset($thirdparty->status) && $thirdparty->status != '1' ) || (( $realstock <= 0 || $m2 < $step) && empty($product->type) && !empty(doliconst('MAIN_MODULE_STOCK')) )) { $button .= " disabled"; }
 $button .= ">";
-if (($realstock <= 0 && !empty(doliconst('MAIN_MODULE_STOCK', $refresh)) && (empty($product->type) || (!empty($product->type) && doliconst('STOCK_SUPPORTS_SERVICES', $refresh)) )) || $m2 < $step)  { $button .= "<OPTION value='0' selected>".__( 'Unavailable', 'doliconnect')."</OPTION>"; 
-} elseif (!empty($m2) && $m2 >= $step) {
+if (isset($thirdparty->status) && $thirdparty->status != '1' )  { $button .= "<OPTION value='0' selected>".__( 'Account closed', 'doliconnect')."</OPTION>"; }
+elseif (($realstock <= 0 && !empty(doliconst('MAIN_MODULE_STOCK', $refresh)) && (empty($product->type) || (!empty($product->type) && doliconst('STOCK_SUPPORTS_SERVICES', $refresh)) )) || $m2 < $step)  { $button .= "<OPTION value='0' selected>".__( 'Unavailable', 'doliconnect')."</OPTION>"; }
+elseif (!empty($m2) && $m2 >= $step) {
 if ($step >1 && !empty($quantity)) $quantity = round($quantity/$step)*$step; 
 if (empty($qty) && $quantity > $m2) $quantity = $m2; 
 if ($m2 < $step)  { $button .= "<OPTION value='0' >".__( 'Delete', 'doliconnect')."</OPTION>"; } else {
@@ -549,7 +553,7 @@ $button .= "<button class='btn btn-sm btn-light btn-outline-secondary' type='sub
 }
 }
 $button .= "<button class='btn btn-sm btn-warning' type='submit' name='cartaction' value='addtocart' title='".esc_html__( 'Add to cart', 'doliconnect')."' ";
-if ( ( $realstock <= 0 || $m2 < $step) && $product->type == '0' && !empty(doliconst('MAIN_MODULE_STOCK', $refresh)) ) { $button .= " disabled"; }
+if (( isset($thirdparty->status) && $thirdparty->status != '1' ) || (( $realstock <= 0 || $m2 < $step) && $product->type == '0' && !empty(doliconst('MAIN_MODULE_STOCK', $refresh)) )) { $button .= " disabled"; }
 $button .= "><i class='fas fa-cart-plus fa-fw'></i></button></div>";
 
 //if ( $qty > 0 ) {
