@@ -323,10 +323,10 @@ $body = sprintf(__('Thank you for your registration on %s.', 'doliconnect'), $si
 
 $user = get_user_by( 'ID', $ID);
  
-if ( function_exists('dolikiosk') && ! empty(dolikiosk()) && $user ) {  
+if ( ($thirdparty['morphy'] == 'mor' && $user) || (function_exists('dolikiosk') && ! empty(dolikiosk()) && $user) ) {  
 
-print $dolibarrid = doliconnector($user, 'fk_soc', true, $thirdparty);
-do_action('wp_dolibarr_sync', $thirdparty);
+$dolibarrid = doliconnector($user, 'fk_soc', true, $thirdparty);
+do_action('wp_dolibarr_sync', $thirdparty, $user);
 
 //wp_set_current_user( $ID, $user->user_login );
 //wp_set_auth_cookie( $ID, false);

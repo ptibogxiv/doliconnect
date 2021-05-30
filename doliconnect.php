@@ -425,9 +425,13 @@ restore_current_blog();
 return $avatar;
 }
 // ********************************************************
-add_action('wp_dolibarr_sync','update_synctodolibarr', 1, 1);
-function update_synctodolibarr($object) {
+add_action('wp_dolibarr_sync','update_synctodolibarr', 1, 2);
+function update_synctodolibarr($object, $user = null) {
 global $current_user;
+
+if (!empty($user)) {
+$current_user = $user;
+}
 
 if (NULL != doliconnector($current_user, 'fk_member')) { 
 $adherent = callDoliApi("PUT", "/adherentsplus/".doliconnector($current_user, 'fk_member'), $object, 0);
