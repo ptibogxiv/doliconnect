@@ -1658,8 +1658,10 @@ else {
 if ( $adherent->datefin+86400>$time){ print  "<span class='badge rounded-pill bg-success'>".__( 'Active', 'doliconnect')."</span>"; } else { print  "<span class='badge rounded-pill bg-danger'>".__( 'Waiting payment', 'doliconnect')."</span>";}
 }} elseif ( empty($adherent->statut) ) {
 print  "<span class='badge rounded-pill bg-dark'>".__( 'Terminated', 'doliconnect')."</span>";}
-elseif ( $adherent->statut < 0 ) {
+elseif ( $adherent->statut == '-1' ) {
 print "<span class='badge rounded-pill bg-warning'>".__( 'Waiting validation', 'doliconnect')."</span>"; }
+elseif ( $adherent->statut == '-2' ) {
+print "<span class='badge rounded-pill bg-dark'>".__( 'Excluded', 'doliconnect')."</span>"; }
 else { print  "<span class='badge rounded-pill bg-dark'>".__( 'No membership', 'doliconnect')."</span>"; }
 print  "<br>";
 $type=(! empty($adherent->typeid) ? doliproduct($adherenttype, 'label') : __( 'nothing', 'doliconnect'));
@@ -1676,10 +1678,14 @@ print  "$datefin"; }
 
 print "</div><div class='col-12 col-md-7'>";
 
-if ( ! empty($adherent) && $adherent->statut != 0 ) {
+if ( ! empty($adherent) && $adherent->statut != '-2' ) {
 print '<form id="subscription-form" action="'.esc_url( add_query_arg( 'module', 'members', doliconnecturl('doliaccount')) ).'" method="post"><input type="hidden" name="update_membership" value="2"><div class="d-grid gap-2"><div class="btn-group" role="group" aria-label="Update membership">
-<button type="button"  class="btn btn text-white btn-warning" data-bs-toggle="modal" data-bs-target="#activatemember">'.__( 'Update', 'doliconnect').'</button>';
+<button type="button"  class="btn btn text-white btn-warning" data-bs-toggle="modal" data-bs-target="#activatemember"';
+if ( $adherent->statut == '-1' ) { print ' disabled'; }
+print '>'.__( 'Update', 'doliconnect').'</button>';
+if ( $adherent->statut != '0' ) {
 print "<button class='btn btn-dark' type='submit'>".__( 'Resiliate', 'doliconnect')."</button>";
+}
 print '</div></div></form>';
 }
 
@@ -1703,6 +1709,8 @@ print  "<button class='btn btn text-white btn-warning btn-block' data-bs-toggle=
 } elseif ( $adherent->statut == '-1' ) {
 print '<div class="clearfix"><div class="spinner-border float-start" role="status">
 <span class="sr-only">Loading...</span></div>'.__('Your request has been registered. You will be notified at validation.', 'doliconnect').'</div>';
+} elseif ( $adherent->statut == '-2' ) {
+
 } else { 
 
 if ( doliconnector($current_user, 'fk_soc') > 0 ) {
