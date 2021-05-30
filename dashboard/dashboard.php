@@ -1664,10 +1664,10 @@ else { print  "<span class='badge rounded-pill bg-dark'>".__( 'No membership', '
 print  "<br>";
 $type=(! empty($adherent->typeid) ? doliproduct($adherenttype, 'label') : __( 'nothing', 'doliconnect'));
 print  "<b>".__( 'Type', 'doliconnect').":</b> ".$type."<br>";
-print  "<b>".__( 'End of membership', 'doliconnect').":</b> ";
+print  "<b>".__( 'End date', 'doliconnect').":</b> ";
 if ( $adherent->datefin == null ) { print  "***";
 } else { print  wp_date('d/m/Y', $adherent->datefin); }
-//print  "<br><b>".__( 'Seniority', 'doliconnect').":</b> ";
+print  "<br><b>".__( 'Renewal', 'doliconnect').":</b> ".__( 'manual', 'doliconnect');
 print  "<br><b>".__( 'Commitment', 'doliconnect').":</b> ";
 if ( (current_time('timestamp') > $adherent->datecommitment) || null == $adherent->datecommitment ) { print  __( 'no', 'doliconnect');
 } else {
