@@ -1728,10 +1728,10 @@ if ( !empty(doliconnector($current_user, 'fk_member')) && doliconnector($current
 $request= "/adherentsplus/type/".$adherent->typeid;
 $adherenttype = callDoliApi("GET", $request, null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 //print var_dump($adherenttype);
-print '<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
+print '<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">eeeeeeeeeeee
+  <div class="modal-dialog modal-lg modal-fullscreen-md-down modal-dialog-centered modal-dialog-scrollable">eeeeee
+    <div class="modal-content">fffff
+      <div class="modal-header">azzzzz
         <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
