@@ -1696,15 +1696,15 @@ if ( function_exists('doliconnect_membership_modal') && !empty(doliconst('MAIN_M
 if ( $adherent->datefin == null && $adherent->statut == '0' ) {print  "<a href='#' id='subscribe-button2' class='btn btn text-white btn-warning btn-block' data-bs-toggle='modal' data-bs-target='#activatemember'><b>".__( 'Become a member', 'doliconnect')."</b></a>";
 } elseif ($adherent->statut == '1') {
 if ( $time > $adherent->next_subscription_renew && $adherent->datefin != null ) {
-print "<br><button class='btn btn text-white btn-warning btn-block' data-bs-toggle='modal' data-bs-target='#exampleModal'>".__( 'Renew my subscription', 'doliconnect')."</button>";
+print "<br><button class='btn btn text-white btn-warning btn-block' data-bs-toggle='modal' data-bs-target='#PaySubscription'>".__( 'Renew my subscription', 'doliconnect')."</button>";
 } elseif ( intval(86400+(!empty($adherent->datefin)?$adherent->datefin:0)) > $time ) {
-print  "<br><button id='subscribe-button2' class='btn btn text-white btn-warning btn-block' data-bs-toggle='modal' data-bs-target='#exampleModal'>".__( 'Modify my subscription', 'doliconnect')."</button>";
-} else { print  "<button class='btn btn btn-danger btn-block' data-bs-toggle='modal' data-bs-target='#exampleModal'>".__( 'Pay my subscription', 'doliconnect')."</button>";}
+print  "<br><button id='subscribe-button2' class='btn btn text-white btn-warning btn-block' data-bs-toggle='modal' data-bs-target='#PaySubscription'>".__( 'Modify my subscription', 'doliconnect')."</button>";
+} else { print  "<button class='btn btn btn-danger btn-block' data-bs-toggle='modal' data-bs-target='#PaySubscription'>".__( 'Pay my subscription', 'doliconnect')."</button>";}
 } elseif ( $adherent->statut == '0' ) {
 if ( intval(86400+(!empty($adherent->datefin)?$adherent->datefin:0)) > $time ) {
 print "<form id='subscription-form' action='".doliconnecturl('doliaccount')."?module=members' method='post'><input type='hidden' name='update_membership' value='4'><button id='resiliation-button' class='btn btn btn-warning btn-block' type='submit'><b>".__( 'Reactivate my subscription', 'doliconnect')."</b></button></form>";
 } else {
-print  "<button class='btn btn text-white btn-warning btn-block' data-bs-toggle='modal' data-bs-target='#exampleModal'>".__( 'Renew my subscription', 'doliconnect')."</button>";
+print  "<button class='btn btn text-white btn-warning btn-block' data-bs-toggle='modal' data-bs-target='#PaySubscription'>".__( 'Renew my subscription', 'doliconnect')."</button>";
 }
 } elseif ( $adherent->statut == '-1' ) {
 print '<br><div class="clearfix"><div class="spinner-border float-start" role="status">
@@ -1728,23 +1728,7 @@ if ( !empty(doliconnector($current_user, 'fk_member')) && doliconnector($current
 $request= "/adherentsplus/type/".$adherent->typeid;
 $adherenttype = callDoliApi("GET", $request, null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 //print var_dump($adherenttype);
-print '<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">eeeeeeeeeeee
-  <div class="modal-dialog modal-lg modal-fullscreen-md-down modal-dialog-centered modal-dialog-scrollable">eeeeee
-    <div class="modal-content">fffff
-      <div class="modal-header">azzzzz
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>';
+
 }
 
 if ( $adherent->datefin != null && $adherent->statut == 1 && $adherent->datefin > $adherent->next_subscription_renew && $adherent->next_subscription_renew > current_time( 'timestamp',1) ) {
