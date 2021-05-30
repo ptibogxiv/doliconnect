@@ -1212,7 +1212,7 @@ print "</div></div>";
 }
 }
 
-if ( !empty(doliconst('MAIN_MODULE_CONTRAT'))  && !empty(get_option('doliconnectbeta')) ) {
+if ( !empty(doliconst('MAIN_MODULE_CONTRAT')) && !empty(get_option('doliconnectbeta')) ) {
 add_action( 'customer_doliconnect_menu', 'contracts_menu', 2, 1);
 add_action( 'customer_doliconnect_contracts', 'contracts_module');
 }
