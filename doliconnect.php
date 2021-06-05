@@ -218,7 +218,7 @@ define('DOLIBUG', $http_code);
 }
 
 } elseif ( $delay != 0 ) {
-$delay = abs( $delay );
+$delay = abs( intval($delay) );
 set_transient( $link, wp_remote_retrieve_body( $request ), $delay);
 }
 
