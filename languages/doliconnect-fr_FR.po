@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2021-05-30 20:59+0200\n"
-"PO-Revision-Date: 2021-05-30 20:59+0200\n"
+"POT-Creation-Date: 2021-06-05 13:47+0200\n"
+"PO-Revision-Date: 2021-06-05 13:47+0200\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_FR\n"
@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 2.4.3\n"
+"X-Generator: Poedit 3.0\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-Flags-xgettext: --add-comments=translators:\n"
 "X-Poedit-WPHeader: doliconnect.php\n"
@@ -282,7 +282,7 @@ msgid "First subscription at"
 msgstr "Première souscription à"
 
 #: blocks/membership/block.php:81 blocks/membership/block.php:107
-#: functions/widgets.php:125 functions/widgets.php:131
+#: functions/member.php:226 functions/widgets.php:125 functions/widgets.php:131
 msgid "Subscribe"
 msgstr "Souscrire"
 
@@ -816,8 +816,8 @@ msgid "Type"
 msgstr "Type"
 
 #: dashboard/dashboard.php:1669
-msgid "End date"
-msgstr "Date de fin"
+msgid "Validity"
+msgstr "Validité"
 
 #: dashboard/dashboard.php:1672
 msgid "Renewal"
@@ -1669,11 +1669,11 @@ msgstr "Quelques erreurs sont survenues :"
 msgid "Free"
 msgstr "Gratuit"
 
-#: functions/member.php:120
+#: functions/member.php:120 functions/member.php:221 functions/member.php:224
 msgid "From"
 msgstr "Du"
 
-#: functions/member.php:120
+#: functions/member.php:120 functions/member.php:221 functions/member.php:224
 msgid "until"
 msgstr "jusqu’au"
 
@@ -1714,19 +1714,19 @@ msgstr ""
 "adhésion par rapport à votre situation personnelle. Une validation de "
 "l’adhésion peut être nécessaire en fonction des cas."
 
-#: functions/member.php:214
+#: functions/member.php:217
 msgid "Subscription"
 msgstr "Adhésion"
 
-#: functions/member.php:216
+#: functions/member.php:219
 msgid "This subscription"
 msgstr "Cet abonnement"
 
-#: functions/member.php:217 functions/member.php:219
+#: functions/member.php:220 functions/member.php:223
 msgid "Price:"
 msgstr "Tarif:"
 
-#: functions/member.php:218
+#: functions/member.php:222
 msgid "Next subscription"
 msgstr "Prochain abonnement"
 
@@ -2563,6 +2563,9 @@ msgstr "ptibogxiv"
 #. Author URI of the plugin/theme
 msgid "https://www.ptibogxiv.net/en"
 msgstr "https://www.ptibogxiv.net/fr"
+
+#~ msgid "End date"
+#~ msgstr "Date de fin"
 
 #~ msgid "Renew"
 #~ msgstr "Renouveler"
