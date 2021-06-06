@@ -2427,7 +2427,7 @@ doliconnect_enqueues();
 
 do_action( 'login_head' );
 
-print "<div class='modal fade' id='DoliconnectLogin' data-bs-backdrop='static' data-bs-keyboard='false' tabindex='-1' role='dialog' aria-labelledby='DoliconnectLoginTitle' aria-hidden='true' data-keyboard='false' ";
+print "<div class='modal fade' id='DoliconnectLogin' data-bs-backdrop='static' data-bs-keyboard='false' tabindex='-1' role='dialog' aria-labelledby='DoliconnectLoginTitle' aria-hidden='true' ";
 
 print "><div class='modal-dialog modal-fullscreen-md-down modal-dialog-centered modal-dialog-scrollable' role='document'><div class='modal-content'><div class='modal-header'>";
 

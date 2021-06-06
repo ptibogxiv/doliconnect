@@ -570,7 +570,7 @@ print '<div class="btn-group w-100" role="group" aria-label="actions buttons">';
 if ((!is_multisite() && get_option( 'users_can_register' )) || ((!is_multisite() && get_option( 'dolicustsupp_can_register' )) || ((get_option( 'dolicustsupp_can_register' ) || get_option('users_can_register') == '1') && (get_site_option( 'registration' ) == 'user' || get_site_option( 'registration' ) == 'all')))) {
 print '<a href="'.wp_registration_url( get_permalink() ).'" id="login-'.current_time('timestamp').'" title="'.__('Signup', 'doliconnect').'" class="btn btn-outline-secondary" role="button">'.__("You don't have an account", 'doliconnect').'</a>';
 }
-print '<a href="#" id="login-'.current_time('timestamp').'" data-bs-toggle="modal" data-bs-target="#DoliconnectLogin" data-bs-dismiss="modal" title="'.__('Sign in', 'doliconnect').'" class="btn btn-outline-secondary" role="button">'.__('You have already an account', 'doliconnect').'</a>';
+print '<a href="#" id="login-'.current_time('timestamp').'" data-bs-target="#DoliconnectLogin"  data-bs-toggle="modal" data-bs-dismiss="modal" title="'.__('Sign in', 'doliconnect').'" class="btn btn-outline-secondary" role="button">'.__('You have already an account', 'doliconnect').'</a>';
 print '</div>';
 
 } else {
