@@ -1665,7 +1665,7 @@ print "<span class='badge rounded-pill bg-dark'>".__( 'Excluded', 'doliconnect')
 else { print  "<span class='badge rounded-pill bg-dark'>".__( 'No membership', 'doliconnect')."</span>"; }
 print  "<br>";
 $type=(! empty($adherent->typeid) ? doliproduct($adherenttype, 'label') : __( 'nothing', 'doliconnect'));
-print  "<b>".__( 'Type', 'doliconnect').":</b> ".$type."<br>";
+print  "<b>".__( 'Type', 'doliconnect').":</b> ".$type." - ".doliduration($adherenttype)."<br>";
 print  "<b>".__( 'Validity', 'doliconnect').":</b> ";
 if ( $adherent->datefin == null ) { print  "***";
 } else { print  wp_date('d/m/Y', $adherent->last_subscription_date_start).' '.__( 'to', 'doliconnect').' '.wp_date('d/m/Y', $adherent->last_subscription_date_end); }
