@@ -117,8 +117,7 @@ if ( !empty($array) && is_page( $array ) ) {
 if ( !defined ('DONOTCACHEPAGE') ) {
 define( 'DONOTCACHEPAGE', 1);
 }
-}
-if (!is_user_logged_in() && !empty(get_option('doliconnectrestrict')) ) { 
+} elseif (!is_user_logged_in() && !empty(get_option('doliconnectrestrict')) ) { 
 define( 'DONOTCACHEPAGE', 1);
 }
 }
