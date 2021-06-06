@@ -33,7 +33,7 @@ $version=$versionbase;
 	wp_register_script( 'bootstrap.bundle.min.js', plugins_url( 'doliconnect/includes/bootstrap/js/bootstrap.bundle.min.js'), array('jquery'), $version, true);
   wp_enqueue_script( 'bootstrap.bundle.min.js');
   if (empty(get_option('doliconnectfontawesome'))) {
-  wp_register_script( 'font-awesome', '//use.fontawesome.com/releases/v5.15.2/js/all.js', array(), '5.15.2' );
+  wp_register_script( 'font-awesome', '//use.fontawesome.com/releases/v5.15.3/js/all.js', array(), '5.15.3' );
 	wp_enqueue_script( 'font-awesome');
   }
   wp_register_style( 'bootstrap-social', plugins_url( 'doliconnect/includes/bootstrap/css/bootstrap-social.css'), array(), $version);
