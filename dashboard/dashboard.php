@@ -2390,7 +2390,7 @@ function generate_license($suffix = null) {
     return $license_string;
 }
 
-//print generate_license();	
+//print generate_license();	  
 
 }
 
