@@ -433,6 +433,7 @@ $price_htc3=$product->price-($product->price*$discount/100);
 $price_ht=$product->price;
 $vat = $product->tva_tx;
 }
+$price_min_ttc=$product->price_min_ttc;
 $refprice=(empty(get_option('dolibarr_b2bmode'))?$price_ttc3:$price_ht3);
 
 $button .= '<tr class="table-primary">'; 
