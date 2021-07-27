@@ -1004,7 +1004,7 @@ form.submit();
 print "</script>";
 }
 
-function doliaddress($object) {
+function doliaddress($object, $refresh = false) {
 if ( !empty($object->name) ) {
 $address = "<b><i class='fas fa-building fa-fw'></i> ".$object->name;
 } else {
@@ -1014,7 +1014,14 @@ if ( !empty($object->default) ) { $address .= " <i class='fas fa-star fa-1x fa-f
 if ( !empty($object->poste) ) { $address .= ", ".$object->poste; }
 if ( !empty($object->type) ) { $address .= "<br>".__( 'Type', 'doliconnect').": ".$object->type; }
 $address .= "</b><br>";
-$address .= "<small class='text-muted'>".$object->address.", ".$object->zip." ".$object->town." - ".$object->country."<br>".$object->email." - ".(isset($object->phone) ? $object->phone : (isset($object->phone_pro)?$object->phone_pro:null))."</small>";
+if ( !empty($object->country_id) ) {  
+if ( function_exists('pll_the_languages') ) { 
+$lang = pll_current_language('locale');
+} else {
+$lang = $current_user->locale;
+}
+$country = callDoliApi("GET", "/setup/dictionary/countries/".$object->country_id."?lang=".$lang, null, dolidelay('constante', $refresh)); }
+$address .= "<small class='text-muted'>".$object->address.", ".$object->zip." ".$object->town." - ".$country->label."<br>".$object->email." - ".(isset($object->phone) ? $object->phone : (isset($object->phone_pro)?$object->phone_pro:null))."</small>";
 return $address;
 }
 
