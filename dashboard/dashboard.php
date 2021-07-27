@@ -1747,6 +1747,7 @@ print "</div><ul class='list-group list-group-flush'>";
 
 if (doliconnector($current_user, 'fk_member') > 0) {
 $listcotisation = callDoliApi("GET", "/members/".doliconnector($current_user, 'fk_member')."/subscriptions", null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+//print var_dump($listcotisation);
 } 
 
 if ( !isset($listcotisation->error) && $listcotisation != null ) { 
@@ -1758,7 +1759,7 @@ if ($cotisation->fk_type > 0) {
 $type= callDoliApi("GET", "/memberstypes/".$cotisation->fk_type, null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 }
 print doliproduct($type, 'label');
-print "</td><td>".$cotisation->note."</td><td>".$dated." ".__( 'to', 'doliconnect')." ".$datef;
+print "</td><td>".$dated." ".__( 'to', 'doliconnect')." ".$datef;
 print "</td><td class='text-end'><b>".doliprice($cotisation->amount)."</b></td></tr></table><span></span></li>";
 }
 }
