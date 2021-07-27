@@ -1024,7 +1024,14 @@ $address = "<b><i class='fas fa-address-book fa-fw'></i> ".($object->civility ? 
 if ( !empty($object->default) ) { $address .= " <i class='fas fa-star fa-1x fa-fw' style='color:Gold'></i>"; }
 if ( !empty($object->poste) ) { $address .= ", ".$object->poste; }
 $address .= "</b><br>";
-$address .= "<small class='text-muted'>".$object->address.", ".$object->zip." ".$object->town." - ".$object->country."<br>".$object->email." - ".$object->phone_pro."</small>";
+if ( !empty($object->country_id) ) {  
+if ( function_exists('pll_the_languages') ) { 
+$lang = pll_current_language('locale');
+} else {
+$lang = $current_user->locale;
+}
+$country = callDoliApi("GET", "/setup/dictionary/countries/".$object->country_id."?lang=".$lang, null, dolidelay('constante', $refresh)); }
+$address .= "<small class='text-muted'>".$object->address.", ".$object->zip." ".$object->town." - ".$country->label."<br>".$object->email." - ".$object->phone_pro."</small>";
 return $address;
 }
 
