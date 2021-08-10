@@ -6,7 +6,7 @@ if ( function_exists('pll_the_languages') ) {
 $lang = pll_current_language('locale');
 return !empty($object->multilangs->$lang->$value) ? $object->multilangs->$lang->$value : $object->$value;
 } else {
-return $object->$value;
+if (isset($object->$value)) return $object->$value;
 }
 
 }
