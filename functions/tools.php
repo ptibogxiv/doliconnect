@@ -1005,6 +1005,7 @@ print "</script>";
 }
 
 function doliaddress($object, $refresh = false) {
+global $current_user;
 if ( !empty($object->name) ) {
 $address = "<b><i class='fas fa-building fa-fw'></i> ".$object->name;
 } else {
