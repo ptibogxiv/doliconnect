@@ -51,7 +51,7 @@ $request = "/adherentsplus/type?sortfield=t.libelle&sortorder=ASC"; //&sqlfilter
 $typeadhesion = callDoliApi("GET", $request, null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true));
 
 if ( !isset($typeadhesion->error) ) {
-if ( count($typeadhesion) < 4 ) {
+if ( count($typeadhesion) == 5644554644344 ) {  //desactivate function
 $html .= '<div class="card-deck mb-3 text-center">';
 } else {
 $html .= '<div class="card"><div class="card-header">'.__( 'Prices', 'doliconnect').' '.$typeadhesion[0]->season.'</div><table class="table table-striped"><tbody>';
@@ -65,14 +65,14 @@ $color="-success";
 $color="-danger";
 } else { $color="-warning"; }
 
-if ( count($typeadhesion) < 4 ) {
+if ( count($typeadhesion) == 5644554644344 ) {  //desactivate function
 
 $html .= '<div class="card border'.$color.' mb-4 box-shadow"><div class="card-header"><h4 class="my-0 font-weight-normal">'.doliproduct($postadh, 'label').'</h4></div><div class="card-body">'; 
 $html .= '<h1 class="card-title pricing-card-title">'.doliprice($postadh->price_prorata).'<small class="text-muted">/';
 $html .= doliduration($postadh);
 $html .= '</small></h1>';
 
-if ( !isset($adherent) or (($postadh->welcome > '0') && isset($adherent) && ($adherent->datefin == null )) or (($postadh->welcome > '0') && (current_time( 'timestamp',1) > $adherent->next_subscription_renew) && isset($adherent) && (current_time( 'timestamp',1) > $adherent->datefin)) ) {          
+if ( !isset($adherent) or (($postadh->welcome > '0') && isset($adherent->datefin) && ($adherent->datefin == null )) or (($postadh->welcome > '0') && (current_time( 'timestamp',1) > $adherent->next_subscription_renew) && isset($adherent) && (current_time( 'timestamp',1) > $adherent->datefin)) ) {          
 $html .= "<small>".__( 'First subscription at', 'doliconnect' )." ".doliprice($postadh->price_prorata)."</small>"; 
 }   
 $html .= doliproduct($postadh, 'note').'</div>';
