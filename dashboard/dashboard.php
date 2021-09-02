@@ -1615,6 +1615,7 @@ $time = current_time( 'timestamp',1);
 $request = "/adherentsplus/".doliconnector($current_user, 'fk_member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)); 
 
 $productadhesion = doliconst("ADHERENT_PRODUCT_ID_FOR_SUBSCRIPTIONS", dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+//print $productadhesion;
 
 if ( isset($_POST["update_membership"]) && function_exists('doliconnect_membership') ) {
 $typeadherent = isset($_POST["typeadherent"]) ? $_POST["typeadherent"] : null;
@@ -1628,7 +1629,7 @@ print dolialert('success', __( 'Your membership has been updated.', 'doliconnect
 
 if ( ($_POST["update_membership"]==4) && isset($_POST["cotisation"]) && doliconnector($current_user, 'fk_member') > 0 && $_POST["timestamp_start"] > 0 && $_POST["timestamp_end"] > 0 ) {
 
-//doliaddtocart($productadhesion, 1, $_POST["cotisation"], null, $_POST["timestamp_start"], $_POST["timestamp_end"], $url);
+doliaddtocart($productadhesion, 1, $_POST["cotisation"], null, $_POST["timestamp_start"], $_POST["timestamp_end"], $url);
 //wp_redirect(esc_url(doliconnecturl('dolicart')));
 //exit;     
 } elseif ( $_POST["update_membership"]==5 || $_POST["update_membership"]==1 ) {
