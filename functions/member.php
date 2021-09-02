@@ -115,7 +115,8 @@ print "(".doliprice($postadh->price_prorata);
 } 
 print ")"; } else { print "<span class='badge badge-pill badge-primary'>".__( 'Free', 'doliconnect')."</span>"; }
 print "</small></b>";
-if (!empty(doliproduct($postadh, 'note'))) print "<br><small class='text-justify text-muted '>".doliproduct($postadh, 'note')."</small>";
+if (isset($postadh->note)) print "<br><small class='text-justify text-muted '>".doliproduct($postadh, 'note')."</small>";
+if (isset($postadh->description)) print "<br><small class='text-justify text-muted '>".doliproduct($postadh, 'description')."</small>";
 if (!empty(number_format($postadh->federal))) print "<br><small class='text-justify text-muted '>".__( 'Including a federal part of', 'doliconnect')." ".doliprice($postadh->federal)."</small>";
 print "<br><small class='text-justify text-muted '>".__( 'From', 'doliconnect')." ".wp_date('d/m/Y', $postadh->date_begin)." ".__( 'until', 'doliconnect')." ".wp_date('d/m/Y', $postadh->date_end)."</small>";
 print "</div><div class='col-md-4'>";
