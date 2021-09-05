@@ -224,7 +224,7 @@ print '<div class="modal fade" id="PaySubscription" data-bs-backdrop="static" da
 '.__( 'Price:', 'doliconnect').' '.doliprice($adherenttype->price).'<br>
 '.__( 'From', 'doliconnect').' '.wp_date('d/m/Y', $adherenttype->date_nextbegin).' '.__( 'until', 'doliconnect').' '.wp_date('d/m/Y', $adherenttype->date_nextend).'
 </div><div class="modal-footer">
-<button type="button" class="btn btn-danger">'.__( 'Subscribe', 'doliconnect').'</button>
+<form id="subscribe-form" action="'.doliconnecturl('doliaccount').'?module=members" method="post"><button class="btn btn-danger" type="submit">'.__( 'Subscribe', 'doliconnect').'</button></form>
 </div></div></div></div>';
 }}
 add_action( 'wp_footer', 'doliconnect_membership_modal');
