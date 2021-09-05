@@ -1627,9 +1627,17 @@ print dolialert('success', __( 'Your membership has been updated.', 'doliconnect
 //print var_dump($adherent);
 //}
 
+if ( isset($_POST["update_membership"]) && $_POST["update_membership"] == 'renew') {
+$requesta= "/adherentsplus/type/".$adherent->typeid;
+$adherenttype = callDoliApi("GET", $requesta, null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+doliaddtocart($productadhesion, 1, $adherenttype->price_prorata, null, $adherenttype->date_begin, $adherenttype->date_end, $url);
+wp_redirect(esc_url(doliconnecturl('dolicart')));
+exit;     
+}
+
 if ( ($_POST["update_membership"]==4) && isset($_POST["cotisation"]) && doliconnector($current_user, 'fk_member') > 0 && $_POST["timestamp_start"] > 0 && $_POST["timestamp_end"] > 0 ) {
 
-doliaddtocart($productadhesion, 1, $_POST["cotisation"], null, $_POST["timestamp_start"], $_POST["timestamp_end"], $url);
+//doliaddtocart($productadhesion, 1, $_POST["cotisation"], null, $_POST["timestamp_start"], $_POST["timestamp_end"], $url);
 //wp_redirect(esc_url(doliconnecturl('dolicart')));
 //exit;     
 } elseif ( $_POST["update_membership"]==5 || $_POST["update_membership"]==1 ) {
