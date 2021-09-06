@@ -74,7 +74,7 @@ $response = [
 wp_send_json_success( $response ); 
 } else {
 $response = [
-    'message' => '<div class="alert alert-danger d-flex align-items-center" role="alert">'.__( 'We no longer have this item in this quantity', 'doliconnect').$result.'</div>',
+    'message' => '<div class="alert alert-danger d-flex align-items-center" role="alert">'.__( 'We no longer have this item in this quantity', 'doliconnect').'</div>',
         ];
 wp_send_json_error( $response ); 
 }
