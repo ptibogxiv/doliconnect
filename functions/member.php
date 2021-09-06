@@ -236,7 +236,8 @@ print 'jQuery(document).ready(function($) {
     
 	var $form = $(this);
   var url = "'.esc_url(doliconnecturl('dolicart')).'";  
-jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function (e) { 
+jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function (e) {
+      document.getElementById("message-dolicart").innerHTML = "";  
 		$.post($form.attr("action"), $form.serialize(), function(response) {
       if (response.success) {
       jQuery("#offcanvasCartDoliconnect").offcanvas("show");
