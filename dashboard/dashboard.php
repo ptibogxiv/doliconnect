@@ -1788,7 +1788,6 @@ print "<button class='btn btn text-white btn-warning btn-block' data-bs-toggle='
 }
 print '</div>';
 }  
-
 print '<div class="card-footer text-muted">';
 print "<small><div class='float-start'>";
 if ( isset($request) ) print dolirefresh($request, $url, dolidelay('member'), (isset($adherent)?$adherent:null));
