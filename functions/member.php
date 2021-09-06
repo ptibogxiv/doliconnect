@@ -240,7 +240,8 @@ jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function (e) {
 		$.post($form.attr("action"), $form.serialize(), function(response) {
       if (response.success) {
       jQuery("#offcanvasCartDoliconnect").offcanvas("show");
-      document.getElementById("message-dolicart").innerHTML = response.data.message;  
+      document.getElementById("message-dolicart").innerHTML = response.data.message;
+      document.getElementById("DoliHeaderCartItemsList").innerHTML = response.data.list;     
       } else {
       if (document.getElementById("DoliRpwAlert")) {
       document.getElementById("DoliRpwAlert").innerHTML = response.data;      
