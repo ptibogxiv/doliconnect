@@ -274,9 +274,7 @@ $button .= 'jQuery(document).ready(function($) {
     
 jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function(e){ 
 		$.post($form.attr("action"), $form.serialize(), function(response){
-      document.getElementById("success-product-'.$product->id.'").innerHTML = "";
-      document.getElementById("error-product-'.$product->id.'").innerHTML = "";
-      
+      document.getElementById("message-doliproduct-'.$product->id.'").innerHTML = "";   
       if (response.success) {
       if (document.getElementById("DoliHeaderCartItems")) {
       document.getElementById("DoliHeaderCartItems").innerHTML = response.data.items;
@@ -290,9 +288,9 @@ jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function(e){
       if (document.getElementById("DoliWidgetCartItems")) {
       document.getElementById("DoliWidgetCartItems").innerHTML = response.data.items;      
       }
-      document.getElementById("success-product-'.$product->id.'").innerHTML = response.data.message;    
+      document.getElementById("message-doliproduct-'.$product->id.'").innerHTML = response.data.message;    
       } else {
-      document.getElementById("error-product-'.$product->id.'").innerHTML = response.data.message;      
+      document.getElementById("message-doliproduct-'.$product->id.'").innerHTML = response.data.message;      
       }
 
 jQuery("#DoliconnectLoadingModal").modal("hide");
@@ -582,8 +580,7 @@ $button .= "<input type='hidden' name='product-add-vat' value='".$product->tva_t
 //$button .= '<div id="product-add-loading-'.$product->id.'" style="display:none">'.doliprice($price_ttc).'<button class="btn btn-secondary btn-block" disabled><i class="fas fa-spinner fa-pulse fa-1x fa-fw"></i> '.__( 'Loading', 'doliconnect').'</button></div>';
 
 $button .= "</form>";
-$button .= "<div id='success-product-".$product->id."'></div>";
-$button .= "<div id='error-product-".$product->id."'></div>";
+$button .= "<div id='message-doliproduct-".$product->id."'></div>";
 
 return $button;
 }
