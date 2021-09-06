@@ -471,7 +471,7 @@ $result = doliaddtocart($productadhesion, 1, $adherenttype->price_prorata, null,
 //$result = doliaddtocart(trim($_POST['product-add-id']), trim($_POST['product-add-qty']), trim($_POST['product-add-price']), trim($_POST['product-add-remise_percent']), isset($_POST['product-add-timestamp_start'])?trim($_POST['product-add-timestamp_start']):null, isset($_POST['product-add-timestamp_end'])?trim($_POST['product-add-timestamp_end']):null);
 if ($result >= 0) {
 $response = [
-    'message' => '<div class="alert alert-warning d-flex align-items-center" role="alert">'.__( 'As our inventory is updated in real time, your items have been put in the basket for 1 hour', 'doliconnect').'</div>',
+    'message' => '<div class="alert alert-success d-flex align-items-center" role="alert">'.__( 'Your subscription have been put in the basket for 1 hour', 'doliconnect').'</div>',
     'items' => $result,
     'list' => doliconnect_CartItemsList()
         ];
