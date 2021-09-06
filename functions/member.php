@@ -213,7 +213,7 @@ print "</div><div id='subscription-footer' class='modal-footer'><small class='te
 $request= "/adherentsplus/type/".$adherent->typeid;
 $adherenttype = callDoliApi("GET", $request, null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
-print '<div class="modal fade" id="PaySubscription" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+print '<div class="modal fade" id="PaySubscriptionModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"><div class="modal-content"><div class="modal-header">
 <h5 class="modal-title" id="staticBackdropLabel">'.__( 'Subscription', 'doliconnect').'</h5><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 </div><div class="modal-body">
@@ -223,8 +223,36 @@ print '<div class="modal fade" id="PaySubscription" data-bs-backdrop="static" da
 <h6>'.__( 'Next subscription', 'doliconnect').'</h6>
 '.__( 'Price:', 'doliconnect').' '.doliprice($adherenttype->price).'<br>
 '.__( 'From', 'doliconnect').' '.wp_date('d/m/Y', $adherenttype->date_nextbegin).' '.__( 'until', 'doliconnect').' '.wp_date('d/m/Y', $adherenttype->date_nextend).'
-</div><div class="modal-footer">
-<form id="subscribe-form" action="'.doliconnecturl('doliaccount').'?module=members" method="post"><input type="hidden" name="update_membership" value="renew"><button class="btn btn-danger" type="submit">'.__( 'Subscribe', 'doliconnect').'</button></form>
+</div><div class="modal-footer"><form id="subscribe-form" action="'.admin_url('admin-ajax.php').'" method="post">';
+print "<input type='hidden' name='action' value='dolimember_request'>";
+print "<input type='hidden' name='dolimembernonce' value='".wp_create_nonce( 'dolimember-nonce')."'>";
+print "<script>";
+print 'jQuery(document).ready(function($) {
+	
+	jQuery("#subscribe-form").on("submit", function(e) { 
+  jQuery("#PaySubscriptionModal").modal("hide");
+  jQuery("#DoliconnectLoadingModal").modal("show");
+	e.preventDefault();
+    
+	var $form = $(this);
+  var url = "'.esc_url(doliconnecturl('dolicart')).'";  
+jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function (e) { 
+		$.post($form.attr("action"), $form.serialize(), function(response) {
+      if (response.success) {
+      document.location = url;
+      } else {
+      if (document.getElementById("DoliRpwAlert")) {
+      document.getElementById("DoliRpwAlert").innerHTML = response.data;      
+      }
+      jQuery("#DoliconnectLoadingModal").modal("hide");
+      }
+		}, "json");  
+  });
+});
+});';
+print "</script>";
+
+print '<input type="hidden" name="update_membership" value="renew"><button class="btn btn-danger" type="submit">'.__( 'Subscribe', 'doliconnect').'</button></form>
 </div></div></div></div>';
 }}
 add_action( 'wp_footer', 'doliconnect_membership_modal');

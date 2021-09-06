@@ -453,3 +453,13 @@ wp_send_json_error( __( 'Customer not found', 'doliconnect'));
 wp_send_json_error( __( 'A security error occured', 'doliconnect')); 
 }
 }
+
+add_action('wp_ajax_dolimember_request', 'dolimember_request');
+add_action('wp_ajax_nopriv_dolimember_request', 'dolimember_request');
+
+function dolimember_request(){
+global $current_user;
+		
+wp_send_json_success( 'success'); 
+
+}
