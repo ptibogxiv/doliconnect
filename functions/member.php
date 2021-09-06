@@ -95,6 +95,9 @@ print "<table class='table table-striped' id ='subscription-table'>";
 
 if ( !isset($typeadhesion->error) ) {
 foreach ($typeadhesion as $postadh) {
+if ( !doliversion('14.0.0') ) {
+$postadh->amount = $postadh->price;
+} 
 if ( ( $postadh->subscription == '1' || ( $postadh->subscription != '1' && $adherent->typeid == $postadh->id ) ) && $postadh->statut == '1' || ( $postadh->statut == '0' && $postadh->id == $adherent->typeid && $adherent->statut == '1' ) ) {
 print "<tr><td><div class='row'><div class='col-md-8'><b>";
 if ($postadh->morphy == 'mor') {
@@ -106,17 +109,17 @@ print doliproduct($postadh, 'label');
 if (! empty ($postadh->duration_value)) print " - ".doliduration($postadh);
 print " <small>";
 if ( !empty($postadh->subscription) ) {
-if ($postadh->price_prorata != $postadh->price) { 
+if ($postadh->price_prorata != $postadh->amount) { 
 print "(";
 print doliprice($postadh->price_prorata)." ";
-print __( 'then', 'doliconnect')." ".doliprice($postadh->price);
+print __( 'then', 'doliconnect')." ".doliprice($postadh->amount);
 } else {
 print "(".doliprice($postadh->price_prorata);
 } 
 print ")"; } else { print "<span class='badge badge-pill badge-primary'>".__( 'Free', 'doliconnect')."</span>"; }
 print "</small></b>";
-if (isset($postadh->note)) print "<br><small class='text-justify text-muted '>".doliproduct($postadh, 'note')."</small>";
-if (isset($postadh->description)) print "<br><small class='text-justify text-muted '>".doliproduct($postadh, 'description')."</small>";
+if (isset($postadh->note) && !empty($postadh->note)) print "<br><small class='text-justify text-muted '>".doliproduct($postadh, 'note')."</small>";
+if (isset($postadh->description) && !empty($postadh->description)) print "<br><small class='text-justify text-muted '>".doliproduct($postadh, 'description')."</small>";
 if (!empty(number_format($postadh->federal))) print "<br><small class='text-justify text-muted '>".__( 'Including a federal part of', 'doliconnect')." ".doliprice($postadh->federal)."</small>";
 print "<br><small class='text-justify text-muted '>".__( 'From', 'doliconnect')." ".wp_date('d/m/Y', $postadh->date_begin)." ".__( 'until', 'doliconnect')." ".wp_date('d/m/Y', $postadh->date_end)."</small>";
 print "</div><div class='col-md-4'>";
@@ -212,6 +215,11 @@ print "</div><div id='subscription-footer' class='modal-footer'><small class='te
 
 $request= "/adherentsplus/type/".$adherent->typeid;
 $adherenttype = callDoliApi("GET", $request, null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+//print var_dump($adherenttype);
+
+if ( !doliversion('14.0.0') ) {
+$adherenttype->amount = $adherenttype->price;
+} 
 
 print '<div class="modal fade" id="PaySubscriptionModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"><div class="modal-content"><div class="modal-header">
@@ -221,7 +229,7 @@ print '<div class="modal fade" id="PaySubscriptionModal" data-bs-backdrop="stati
 '.__( 'Price:', 'doliconnect').' '.doliprice($adherenttype->price_prorata).'<br>
 '.__( 'From', 'doliconnect').' '.wp_date('d/m/Y', $adherenttype->date_begin).' '.__( 'until', 'doliconnect').' '.wp_date('d/m/Y', $adherenttype->date_end).'
 <h6>'.__( 'Next subscription', 'doliconnect').'</h6>
-'.__( 'Price:', 'doliconnect').' '.doliprice($adherenttype->price).'<br>
+'.__( 'Price:', 'doliconnect').' '.doliprice($adherenttype->amount).'<br>
 '.__( 'From', 'doliconnect').' '.wp_date('d/m/Y', $adherenttype->date_nextbegin).' '.__( 'until', 'doliconnect').' '.wp_date('d/m/Y', $adherenttype->date_nextend).'
 </div><div class="modal-footer"><form id="subscribe-form" action="'.admin_url('admin-ajax.php').'" method="post">';
 print "<input type='hidden' name='action' value='dolimember_request'>";
