@@ -114,8 +114,7 @@ $ln .= '<li><h6 class="dropdown-header">'.$line->qty.'x '.doliproduct($line, 'pr
 }
 return $ln;
 } else {
-return '<li><h6 class="dropdown-header">'.__( 'Your basket is empty', 'doliconnect').'</h6></li>
-<small class="p-3 text-muted">'.__( 'Your basket is empty', 'doliconnect').'</small>';
+return '<center class="p-3 text-muted">'.__( 'Your basket is empty', 'doliconnect').'</center>';
 }
 }
 
