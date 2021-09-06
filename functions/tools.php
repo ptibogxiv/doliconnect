@@ -796,7 +796,7 @@ print '<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasCartDol
     <h5 class="offcanvas-title" id="offcanvasCartDoliconnectLabel">'.__( 'Cart', 'doliconnect').'</h5>
     <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
   </div>
-  <div class="offcanvas-body">';
+  <div class="offcanvas-body"><div id="message-dolicart"></div>';
 if (function_exists('doliconnect_CartItemsList')) { print '<div id="DoliHeaderCartItemsList">'.doliconnect_CartItemsList().'</div>'; }
 print '</div></div>';
 }

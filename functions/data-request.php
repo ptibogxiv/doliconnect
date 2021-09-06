@@ -460,11 +460,36 @@ add_action('wp_ajax_nopriv_dolimember_request', 'dolimember_request');
 function dolimember_request(){
 global $current_user;
 
+
+		
+if ( wp_verify_nonce( trim($_POST['dolimember-nonce']), 'dolimember-nonce' ) ) {
+//if ( $_POST['cartaction'] == 'addtocart') {
 $productadhesion = doliconst("ADHERENT_PRODUCT_ID_FOR_SUBSCRIPTIONS", dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 $requesta= "/adherentsplus/type/1";//.$adherent->typeid;
 $adherenttype = callDoliApi("GET", $requesta, null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-doliaddtocart($productadhesion, 1, $adherenttype->price_prorata, null, $adherenttype->date_begin, $adherenttype->date_end);
-		
-wp_send_json_success( 'success'); 
+$result = doliaddtocart($productadhesion, 1, $adherenttype->price_prorata, null, $adherenttype->date_begin, $adherenttype->date_end);
+//$result = doliaddtocart(trim($_POST['product-add-id']), trim($_POST['product-add-qty']), trim($_POST['product-add-price']), trim($_POST['product-add-remise_percent']), isset($_POST['product-add-timestamp_start'])?trim($_POST['product-add-timestamp_start']):null, isset($_POST['product-add-timestamp_end'])?trim($_POST['product-add-timestamp_end']):null);
+if ($result >= 0) {
+$response = [
+    'message' => '<div class="alert alert-warning d-flex align-items-center" role="alert">'.__( 'As our inventory is updated in real time, your items have been put in the basket for 1 hour', 'doliconnect').'</div>',
+    'items' => $result,
+    'list' => doliconnect_CartItemsList()
+        ];
+wp_send_json_success( $response ); 
+} else {
+$response = [
+    'message' => __( 'We no longer have this item in this quantity', 'doliconnect').$result,
+        ];
+wp_send_json_error( $response ); 
+}
+//}	else {
+//$response = [
+//    'message' => __( 'Wish disabled', 'doliconnect').$_POST['cartaction'],
+//        ];
+//wp_send_json_error( $response ); 
+//}
+}	else {
+wp_send_json_error( __( 'A security error occured', 'doliconnect')); 
+}
 
 }

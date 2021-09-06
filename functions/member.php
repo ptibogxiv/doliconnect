@@ -225,7 +225,7 @@ print '<div class="modal fade" id="PaySubscriptionModal" data-bs-backdrop="stati
 '.__( 'From', 'doliconnect').' '.wp_date('d/m/Y', $adherenttype->date_nextbegin).' '.__( 'until', 'doliconnect').' '.wp_date('d/m/Y', $adherenttype->date_nextend).'
 </div><div class="modal-footer"><form id="subscribe-form" action="'.admin_url('admin-ajax.php').'" method="post">';
 print "<input type='hidden' name='action' value='dolimember_request'>";
-print "<input type='hidden' name='dolimembernonce' value='".wp_create_nonce( 'dolimember-nonce')."'>";
+print "<input type='hidden' name='dolimember-nonce' value='".wp_create_nonce( 'dolimember-nonce')."'>";
 print "<script>";
 print 'jQuery(document).ready(function($) {
 	
@@ -240,7 +240,7 @@ jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function (e) {
 		$.post($form.attr("action"), $form.serialize(), function(response) {
       if (response.success) {
       jQuery("#offcanvasCartDoliconnect").offcanvas("show");
-      //document.location = url;
+      document.getElementById("message-dolicart").innerHTML = response.data.message;  
       } else {
       if (document.getElementById("DoliRpwAlert")) {
       document.getElementById("DoliRpwAlert").innerHTML = response.data;      
