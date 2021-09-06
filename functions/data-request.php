@@ -310,7 +310,7 @@ $object = callDoliApi("DELETE", "/".trim($_POST['module'])."/".trim($_POST['id']
 if (!isset($object->error)) { 
 $dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolidelay('doliconnector', true));
 $response = [
-    'items' => 0,
+    'items' => '0',
     'lines' => doliline(null, null),
     'message' => __( 'Your cart has been emptied', 'doliconnect'),
         ];
@@ -459,6 +459,11 @@ add_action('wp_ajax_nopriv_dolimember_request', 'dolimember_request');
 
 function dolimember_request(){
 global $current_user;
+
+$productadhesion = doliconst("ADHERENT_PRODUCT_ID_FOR_SUBSCRIPTIONS", dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$requesta= "/adherentsplus/type/1";//.$adherent->typeid;
+$adherenttype = callDoliApi("GET", $requesta, null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+doliaddtocart($productadhesion, 1, $adherenttype->price_prorata, null, $adherenttype->date_begin, $adherenttype->date_end);
 		
 wp_send_json_success( 'success'); 
 
