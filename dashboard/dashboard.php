@@ -1787,7 +1787,8 @@ print "Pour adhérer, tous les champs doivent être renseignés dans vos <a href
 print "<button class='btn btn text-white btn-warning btn-block' data-bs-toggle='modal' data-bs-target='#activatemember'>".__( 'Become a member', 'doliconnect')."</button>";
 }
 print '</div>';
-}
+}  
+
 print '<div class="card-footer text-muted">';
 print "<small><div class='float-start'>";
 if ( isset($request) ) print dolirefresh($request, $url, dolidelay('member'), (isset($adherent)?$adherent:null));
