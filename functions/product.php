@@ -283,8 +283,8 @@ jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function(e){
       if (document.getElementById("DoliFooterCartItems")) {  
       document.getElementById("DoliFooterCartItems").innerHTML = response.data.items;
       }
-      if (document.getElementById("DoliHeaderCartItemsList")) {  
-      document.getElementById("DoliHeaderCartItemsList").innerHTML = response.data.list;
+      if (document.getElementById("DoliCartItemsList")) {  
+      document.getElementById("DoliCartItemsList").innerHTML = response.data.list;
       }
       if (document.getElementById("DoliWidgetCartItems")) {
       document.getElementById("DoliWidgetCartItems").innerHTML = response.data.items;      

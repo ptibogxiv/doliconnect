@@ -792,12 +792,12 @@ print '<div id="DoliconnectLoadingModal" class="modal fade bd-example-modal" tab
 </div></div></div>';
 
 print '<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasCartDoliconnect" aria-labelledby="offcanvasCartDoliconnectLabel">
-  <div class="offcanvas-header">
-    <h5 class="offcanvas-title" id="offcanvasCartDoliconnectLabel">'.__( 'Cart', 'doliconnect').'</h5>
-    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-  </div>
-  <div class="offcanvas-body"><div id="message-dolicart"></div>';
-if (function_exists('doliconnect_CartItemsList')) { print '<div id="DoliHeaderCartItemsList">'.doliconnect_CartItemsList().'</div>'; }
+<div class="offcanvas-header">
+  <h5 class="offcanvas-title" id="offcanvasCartDoliconnectLabel">'.__( 'Cart', 'doliconnect').'</h5>
+  <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+</div>
+<div class="offcanvas-body"><div id="message-dolicart"></div>';
+print '<div id="DoliCartItemsList">'.doliconnect_CartItemsList().'</div>';
 print '</div></div>';
 }
 add_action( 'wp_footer', 'doliconnect_loading');
