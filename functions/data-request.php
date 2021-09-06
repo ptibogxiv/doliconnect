@@ -67,14 +67,14 @@ if ( wp_verify_nonce( trim($_POST['product-add-nonce']), 'product-add-nonce-'.tr
 $result = doliaddtocart(trim($_POST['product-add-id']), trim($_POST['product-add-qty']), trim($_POST['product-add-price']), trim($_POST['product-add-remise_percent']), isset($_POST['product-add-timestamp_start'])?trim($_POST['product-add-timestamp_start']):null, isset($_POST['product-add-timestamp_end'])?trim($_POST['product-add-timestamp_end']):null);
 if ($result >= 0) {
 $response = [
-    'message' => __( 'As our inventory is updated in real time, your items have been put in the basket for 1 hour', 'doliconnect'),
+    'message' => '<div class="alert alert-warning d-flex align-items-center" role="alert">'.__( 'As our inventory is updated in real time, your items have been put in the basket for 1 hour', 'doliconnect').'</div>',
     'items' => $result,
     'list' => doliconnect_CartItemsList()
         ];
 wp_send_json_success( $response ); 
 } else {
 $response = [
-    'message' => __( 'We no longer have this item in this quantity', 'doliconnect').$result,
+    'message' => '<div class="alert alert-danger d-flex align-items-center" role="alert">'.__( 'We no longer have this item in this quantity', 'doliconnect').$result.'</div>',
         ];
 wp_send_json_error( $response ); 
 }

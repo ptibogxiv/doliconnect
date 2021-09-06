@@ -582,8 +582,8 @@ $button .= "<input type='hidden' name='product-add-vat' value='".$product->tva_t
 //$button .= '<div id="product-add-loading-'.$product->id.'" style="display:none">'.doliprice($price_ttc).'<button class="btn btn-secondary btn-block" disabled><i class="fas fa-spinner fa-pulse fa-1x fa-fw"></i> '.__( 'Loading', 'doliconnect').'</button></div>';
 
 $button .= "</form>";
-$button .= "<div id='success-product-".$product->id."' class='text-success font-weight-bolder'></div>";
-$button .= "<div id='error-product-".$product->id."' class='text-danger font-weight-bolder'></div>";
+$button .= "<div id='success-product-".$product->id."'></div>";
+$button .= "<div id='error-product-".$product->id."'></div>";
 
 return $button;
 }
