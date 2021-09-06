@@ -798,13 +798,7 @@ print '<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasCartDol
   </div>
   <div class="offcanvas-body">';
 if (function_exists('doliconnect_CartItemsList')) { print '<div id="DoliHeaderCartItemsList">'.doliconnect_CartItemsList().'</div>'; }
-print '<div class="dropdown mt-3">
-<div class="d-grid gap-2">
-  <a href="'.esc_url(doliconnecturl('dolicart')).'" class="btn btn-primary" type="button">'.__( 'Go to basket', 'doliconnect').'</a>
-</div>
-    </div>
-  </div>
-</div>';
+print '</div></div>';
 }
 add_action( 'wp_footer', 'doliconnect_loading');
 

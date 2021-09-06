@@ -108,10 +108,15 @@ function doliconnect_CartItemsList() {
 global $current_user;
 $order = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order', true)."?contact_list=0", null, dolidelay('order'));
 if ( isset($order->lines) && $order->lines != null ) {
-$ln = null;
+$ln = '<ul>';
 foreach ( $order->lines as $line ) { 
 $ln .= '<li><h6 class="dropdown-header">'.$line->qty.'x '.doliproduct($line, 'product_label').'</h6></li>';
 }
+$ln .= '</ul><div class="dropdown mt-3">
+<div class="d-grid gap-2">
+  <a href="'.esc_url(doliconnecturl('dolicart')).'" class="btn btn-primary" type="button">'.__( 'Go to basket', 'doliconnect').'</a>
+</div>
+    </div>';
 return $ln;
 } else {
 return '<center class="p-3 text-muted">'.__( 'Your basket is empty', 'doliconnect').'</center>';
