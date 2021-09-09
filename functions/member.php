@@ -248,7 +248,7 @@ jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function (e) {
       document.getElementById("message-dolicart").innerHTML = "";  
 		$.post($form.attr("action"), $form.serialize(), function(response) {
       if (response.success) {
-      jQuery("#offcanvasCartDoliconnect").offcanvas("show");
+      jQuery("#offcanvasDolicart").offcanvas("show");
       document.getElementById("message-dolicart").innerHTML = response.data.message;
       if (document.getElementById("DoliCartItemsList")) {  
       document.getElementById("DoliCartItemsList").innerHTML = response.data.list;
