@@ -217,7 +217,7 @@ $request= "/adherentsplus/type/".$adherent->typeid;
 $adherenttype = callDoliApi("GET", $request, null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 //print var_dump($adherenttype);
 
-if ( !doliversion('14.0.0') ) {
+if ( !doliversion('14.0.0') || !isset($adherenttype->amount)) {
 $adherenttype->amount = $adherenttype->price;
 } 
 
