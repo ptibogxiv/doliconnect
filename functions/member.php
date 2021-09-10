@@ -95,7 +95,7 @@ print "<table class='table table-striped' id ='subscription-table'>";
 
 if ( !isset($typeadhesion->error) ) {
 foreach ($typeadhesion as $postadh) {
-if ( !doliversion('14.0.0') ) {
+if ( !doliversion('14.0.0') || (!isset($postadh->amount)) ) {
 $postadh->amount = $postadh->price;
 } 
 if ( ( $postadh->subscription == '1' || ( $postadh->subscription != '1' && $adherent->typeid == $postadh->id ) ) && $postadh->statut == '1' || ( $postadh->statut == '0' && $postadh->id == $adherent->typeid && $adherent->statut == '1' ) ) {
