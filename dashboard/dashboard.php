@@ -1694,7 +1694,8 @@ if ( function_exists('doliconnect_membership_modal') && !empty(doliconst('MAIN_M
 
 //print doliloaderscript('doliconnect-memberform');
 
-if ( $adherent->datefin == null && $adherent->statut == '0' ) {print  "<a href='#' id='subscribe-button2' class='btn btn text-white btn-warning btn-block' data-bs-toggle='modal' data-bs-target='#activatemember'><b>".__( 'Become a member', 'doliconnect')."</b></a>";
+if ( $adherent->datefin == null && $adherent->statut == '0' ) {
+//print  "<a href='#' id='subscribe-button2' class='btn btn text-white btn-warning btn-block' data-bs-toggle='modal' data-bs-target='#activatemember'><b>".__( 'Become a member', 'doliconnect')."</b></a>";
 } elseif ($adherent->statut == '1') {
 if ( $time > $adherent->next_subscription_renew && $adherent->datefin != null ) {
 print "<br><button class='btn btn text-white btn-warning btn-block' data-bs-toggle='modal' data-bs-target='#PaySubscriptionModal'>".__( 'Renew my subscription', 'doliconnect')."</button>";
@@ -1705,7 +1706,7 @@ print  "<br><button id='subscribe-button2' class='btn btn text-white btn-warning
 if ( intval(86400+(!empty($adherent->datefin)?$adherent->datefin:0)) > $time ) {
 print "<form id='subscription-form' action='".doliconnecturl('doliaccount')."?module=members' method='post'><input type='hidden' name='update_membership' value='4'><button id='resiliation-button' class='btn btn btn-warning btn-block' type='submit'><b>".__( 'Reactivate my subscription', 'doliconnect')."</b></button></form>";
 } else {
-print  "<button class='btn btn text-white btn-warning btn-block' data-bs-toggle='modal' data-bs-target='#PaySubscriptionModal'>".__( 'Renew my subscription', 'doliconnect')."</button>";
+//print  "<button class='btn btn text-white btn-warning btn-block' data-bs-toggle='modal' data-bs-target='#PaySubscriptionModal'>".__( 'Renew my subscription', 'doliconnect')."</button>";
 }
 } elseif ( $adherent->statut == '-1' ) {
 print '<br><div class="clearfix"><div class="spinner-border float-start" role="status">
@@ -1721,7 +1722,7 @@ $thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, '
 if ( empty($thirdparty->address) || empty($thirdparty->zip) || empty($thirdparty->town) || empty($thirdparty->country_id) || empty($current_user->billing_type) || empty($current_user->billing_birth) || empty($current_user->user_firstname) || empty($current_user->user_lastname) || empty($current_user->user_email)) {
 print "Pour adhérer, tous les champs doivent être renseignés dans vos <a href='".esc_url( get_permalink(get_option('doliaccount')))."?module=informations&return=members' class='alert-link'>".__( 'Personal informations', 'doliconnect')."</a></div><div class='col-sm-6 col-md-7'>";
 } else { 
-print "<button class='btn btn text-white btn-warning btn-block' data-bs-toggle='modal' data-bs-target='#activatemember'>".__( 'Become a member', 'doliconnect')."</button>";
+//print "<button class='btn btn text-white btn-warning btn-block' data-bs-toggle='modal' data-bs-target='#activatemember'>".__( 'Become a member', 'doliconnect')."</button>";
 }
 }
 
