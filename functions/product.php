@@ -108,43 +108,15 @@ function doliconnect_CartItemsList() {
 global $current_user;
 $order = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order', true)."?contact_list=0", null, dolidelay('order'));
 if ( isset($order->lines) && $order->lines != null ) {
-$ln = '<ul>';
+$ln = '<table class="table table-sm"><thead><tr>
+<th scope="col" width="40px">'.__( 'Qty', 'doliconnect').'</th><th scope="col">'.__( 'Item', 'doliconnect').'</th></tr></thead><tbody>';
 foreach ( $order->lines as $line ) { 
-$ln .= '<li><h6 class="dropdown-header">'.$line->qty.'x '.doliproduct($line, 'product_label').'</h6></li>';
+$ln .= '<tr><th scope="row">'.$line->qty.'</td><td>'.doliproduct($line, 'product_label').'</tr>';
 }
-$ln .= '</ul><div class="dropdown mt-3">
+$ln .= '</tbody></table><div class="dropdown mt-3">
 <div class="d-grid gap-2">
   <a href="'.esc_url(doliconnecturl('dolicart')).'" class="btn btn-primary" type="button">'.__( 'Go to basket', 'doliconnect').'</a>
-</div>
-    </div><table class="table">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col">Handle</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td colspan="2">Larry the Bird</td>
-      <td>@twitter</td>
-    </tr>
-  </tbody>
-</table>';
+</div></div>';
 return $ln;
 } else {
 return '<center class="p-3 text-muted">'.__( 'Your basket is empty', 'doliconnect').'</center>';
