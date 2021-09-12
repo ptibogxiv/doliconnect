@@ -245,7 +245,7 @@ print '<div class="mb-2">
 print "<small id='infoavatar' class='form-text text-muted text-justify'>".__( 'Your avatar must be a .jpg/.jpeg file, <10Mo and 350x350pixels minimum.', 'doliconnect')."</small>";
 
 print "<div class='form-check'><input type='checkbox' class='form-check-input' id='deleteavatar' name='deleteavatar' value='delete' ";
-if ( null == $current_user->$nam ) {
+if ( isset($nam) && null == $current_user->$nam ) {
 print " disabled='disabled'";
 }
 print "><label class='form-checklabel' for='deleteavatar'>".__( 'Delete your picture', 'doliconnect')."</label></div>";
