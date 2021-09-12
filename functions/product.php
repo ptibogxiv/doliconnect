@@ -115,7 +115,7 @@ $ln .= '<tr><th scope="row">'.$line->qty.'</td><td>'.doliproduct($line, 'product
 }
 $ln .= '</tbody><tfoot><tr><th colspan="2" class="table-active">'.__( 'Total to be paid', 'doliconnect').' '.doliprice($order, 'ttc', isset($order->multicurrency_code) ? $order->multicurrency_code : null).'</th></tr></tfoot></table><div class="dropdown mt-3">
 <div class="d-grid gap-2">
-  <a href="'.esc_url(doliconnecturl('dolicart')).'" class="btn btn-primary" type="button">'.__( 'Go to basket', 'doliconnect').'</a>
+  <a class="btn btn-primary" role="button" href="'.esc_url(doliconnecturl('dolicart')).'" >'.__( 'Go to basket', 'doliconnect').'</a>
 </div></div>';
 return $ln;
 } else {
