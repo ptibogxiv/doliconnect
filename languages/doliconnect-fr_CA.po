@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2021-09-12 14:05+0200\n"
-"PO-Revision-Date: 2021-09-12 14:06+0200\n"
+"POT-Creation-Date: 2021-09-12 14:39+0200\n"
+"PO-Revision-Date: 2021-09-12 14:40+0200\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_CA\n"
@@ -282,7 +282,7 @@ msgstr "Prix"
 msgid "First subscription at"
 msgstr "Premier abonnement à"
 
-#: blocks/membership/block.php:84 blocks/membership/block.php:110
+#: blocks/membership/block.php:84 blocks/membership/block.php:111
 #: functions/member.php:268 functions/widgets.php:125 functions/widgets.php:131
 msgid "Subscribe"
 msgstr "S’inscrire"
@@ -292,7 +292,7 @@ msgstr "S’inscrire"
 msgid "then"
 msgstr "puis"
 
-#: blocks/membership/block.php:107 functions/member.php:123
+#: blocks/membership/block.php:108 functions/member.php:123
 msgid "Including a federal part of"
 msgstr "Y compris une partie fédérale de"
 
@@ -1780,6 +1780,10 @@ msgstr "Cet article est en stock et peut être expédié immédiatement. %s"
 msgid "Qty"
 msgstr "Qté"
 
+#: functions/product.php:116
+msgid "Total to be paid"
+msgstr "Total à payer"
+
 #: functions/product.php:118
 msgid "Go to basket"
 msgstr "Aller au panier"
@@ -2761,9 +2765,6 @@ msgstr "https://www.ptibogxiv.net/en"
 
 #~ msgid "Remains to be paid"
 #~ msgstr "Reste à payer"
-
-#~ msgid "Total to pay"
-#~ msgstr "Total à payer"
 
 #~ msgid "Contacts"
 #~ msgstr "Contacts"
