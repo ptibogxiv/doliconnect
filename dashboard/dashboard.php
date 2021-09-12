@@ -1701,7 +1701,7 @@ if ( $time > $adherent->next_subscription_renew && $adherent->datefin != null ) 
 print "<br><button class='btn btn text-white btn-warning btn-block' data-bs-toggle='modal' data-bs-target='#PaySubscriptionModal'>".__( 'Renew my subscription', 'doliconnect')."</button>";
 } elseif ( intval(86400+(!empty($adherent->datefin)?$adherent->datefin:0)) > $time ) {
 print  "<br><button id='subscribe-button2' class='btn btn text-white btn-warning btn-block' data-bs-toggle='modal' data-bs-target='#PaySubscriptionModal'>".__( 'Modify my subscription', 'doliconnect')."</button>";
-} else { print  "<button class='btn btn btn-danger btn-block' data-bs-toggle='modal' data-bs-target='#PaySubscriptionModal'>".__( 'Pay my subscription', 'doliconnect')."</button>";}
+} else { print  "<br><button class='btn btn btn-danger btn-block' data-bs-toggle='modal' data-bs-target='#PaySubscriptionModal'>".__( 'Pay my subscription', 'doliconnect')."</button>";}
 } elseif ( $adherent->statut == '0' ) {
 if ( intval(86400+(!empty($adherent->datefin)?$adherent->datefin:0)) > $time ) {
 print "<form id='subscription-form' action='".doliconnecturl('doliaccount')."?module=members' method='post'><input type='hidden' name='update_membership' value='4'><button id='resiliation-button' class='btn btn btn-warning btn-block' type='submit'><b>".__( 'Reactivate my subscription', 'doliconnect')."</b></button></form>";
