@@ -102,7 +102,7 @@ $subdir = substr($num, 1, 1).'/'.substr($num, 0, 1).'/'.$id.'/';
 $dir = '/'.substr($num, 1, 1).'/'.substr($num, 0, 1).'/'.$id;
 }
 if ( !isset($imgs->error) && $imgs != null ) {
-$imgs = array_slice((array) $imgs, 0, $options['limit']);
+$imgs = array_slice((array) $imgs, 0, isset($options['limit'])?$options['limit']:null);
 if (empty($options['limit'])) $image .= "<div class='card-columns'>";
 foreach ($imgs as $img) {
 $up_dir = wp_upload_dir();
