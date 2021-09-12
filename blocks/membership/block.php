@@ -57,6 +57,9 @@ $html .= '<div class="card-deck mb-3 text-center">';
 $html .= '<div class="card"><div class="card-header">'.__( 'Prices', 'doliconnect').' '.$typeadhesion[0]->season.'</div><table class="table table-striped"><tbody>';
 }
 foreach ( $typeadhesion as $postadh ) {
+if ( !doliversion('14.0.0') || (!isset($postadh->amount)) ) {
+$postadh->amount = $postadh->price;
+} 
 if ($postadh->subscription == '1'){
 
 if ( (! is_user_logged_in() && $postadh->automatic == '1') || ($postadh->automatic == '1' && isset($adherent) && $postadh->id == $adherent->typeid or $postadh->id == $adherent->typeid )) {
@@ -92,10 +95,10 @@ $html .= "<i class='fas fa-users fa-fw'></i> ";
 $html .= doliproduct($postadh, 'label');
 if (! empty ($postadh->duration_value)) $html .= " - ".doliduration($postadh);
 $html .= " <small>";
-if ($postadh->price_prorata != $postadh->price) { 
+if ($postadh->price_prorata != $postadh->amount) { 
 $html .= "(";
 $html .= doliprice($postadh->price_prorata)." ";
-$html .=  __( 'then', 'doliconnect' )." ".doliprice($postadh->price);
+$html .=  __( 'then', 'doliconnect' )." ".doliprice($postadh->amount);
 } else {
 $html .= "(".doliprice($postadh->price_prorata);
 } 
