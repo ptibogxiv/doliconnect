@@ -15,13 +15,14 @@ $return .= '<p class="text-center"><a href="https://www.microsoft.com/edge" targ
 return $return;
 }
 
-function doliCheckRights($module, $right) {
+function doliCheckRights($right = null) {
 $return = false;
-$user = callDoliApi("GET", "users/info?includepermissions=1", null, dolidelay('dolibarr'));
-if (isset($user->$module->$right) && !empty($user->$module->$right)) {
+$check = '->rights->societe->contact->creer';
+$user = callDoliApi("GET", "/users/info?includepermissions=1", null, dolidelay('dolibarr'));
+if (isset($user) && !empty($user)) {
 $return = true;
 }
-return $return;
+return $user;
 }
 
 function dolisanitize($object) {
