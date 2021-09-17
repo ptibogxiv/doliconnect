@@ -15,6 +15,15 @@ $return .= '<p class="text-center"><a href="https://www.microsoft.com/edge" targ
 return $return;
 }
 
+function doliCheckRights($module, $right) {
+$return = false;
+$user = callDoliApi("GET", "users/info?includepermissions=1", null, dolidelay('dolibarr'));
+if (isset($user->$module->$right) && !empty($user->$module->$right)) {
+$return = true;
+}
+return $return;
+}
+
 function dolisanitize($object) {
 
 if (isset($object['firstname'])) $object['firstname'] = ucfirst(strtolower(stripslashes(sanitize_text_field($object['firstname']))));
