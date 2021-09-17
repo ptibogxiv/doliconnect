@@ -493,7 +493,7 @@ print "</div></div>";
 
 }
 
-if ( !empty(doliconst('MAIN_MODULE_PROPALE')) ) {
+if ( !empty(doliconst('MAIN_MODULE_PROPALE')) && doliCheckRights('propale', 'lire') ) {
 add_action( 'customer_doliconnect_menu', 'proposals_menu', 1, 1);
 add_action( 'customer_doliconnect_proposals', 'proposals_module');
 }
@@ -625,7 +625,7 @@ print "</div></div>";
 }
 }
 
-if ( !empty(doliconst('MAIN_MODULE_COMMANDE')) ) {
+if ( !empty(doliconst('MAIN_MODULE_COMMANDE')) && doliCheckRights('commande', 'lire') ) {
 add_action( 'customer_doliconnect_menu', 'orders_menu', 2, 1);
 add_action( 'customer_doliconnect_orders', 'orders_module');
 }
@@ -941,7 +941,7 @@ print "</div></div>";
 }
 }
 
-if ( !empty(doliconst('MAIN_MODULE_FACTURE')) && get_option('doliconnectdisplayinvoice') ) {
+if ( !empty(doliconst('MAIN_MODULE_FACTURE')) && get_option('doliconnectdisplayinvoice') && doliCheckRights('facture', 'lire') ) {
 add_action( 'customer_doliconnect_menu', 'invoices_menu', 2, 1);
 add_action( 'customer_doliconnect_invoices', 'invoices_module');
 }
@@ -1214,7 +1214,7 @@ print "</div></div>";
 }
 }
 
-if ( !empty(doliconst('MAIN_MODULE_CONTRAT')) && !empty(get_option('doliconnectbeta')) ) {
+if ( !empty(doliconst('MAIN_MODULE_CONTRAT')) && !empty(get_option('doliconnectbeta')) && doliCheckRights('contrat', 'lire') ) {
 add_action( 'customer_doliconnect_menu', 'contracts_menu', 2, 1);
 add_action( 'customer_doliconnect_contracts', 'contracts_module');
 }
@@ -1346,7 +1346,7 @@ print "</div></div>";
 }
 }
 
-if ( !empty(doliconst('MAIN_MODULE_PROJET')) && !empty(get_option('doliconnectbeta')) ) {
+if ( !empty(doliconst('MAIN_MODULE_PROJET')) && !empty(get_option('doliconnectbeta')) && doliCheckRights('projet', 'lire') ) {
 add_action( 'customer_doliconnect_menu', 'projets_menu', 2, 1);
 add_action( 'customer_doliconnect_projets', 'projets_module');
 }
