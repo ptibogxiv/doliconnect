@@ -373,9 +373,9 @@ print '</div></div></form>';
 } else {
                            
 $listcontact = callDoliApi("GET", $requestlist, null, dolidelay('contact', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-//print var_dump(callDoliApi("GET", "/users/info?includepermissions=1", null, dolidelay('dolibarr'))->rights->societe->contact->creer);
+
 print '<div class="card shadow-sm"><div class="card-header">'.__( 'Manage address book', 'doliconnect');
-if (doliCheckRights()->rights->societe->contact->creer) print '<a class="float-end text-decoration-none" href="'.esc_url( add_query_arg( 'action', 'create', $url) ).'"><i class="fas fa-plus-circle"></i> '.__( 'Create contact', 'doliconnect').'</a>';  
+if (doliCheckRights('societe', 'contact', 'creer')) print '<a class="float-end text-decoration-none" href="'.esc_url( add_query_arg( 'action', 'create', $url) ).'"><i class="fas fa-plus-circle"></i> '.__( 'Create contact', 'doliconnect').'</a>';  
 print '</div><ul class="list-group list-group-flush">';
 
 if ( !isset($listcontact->error) && $listcontact != null ) {
@@ -386,7 +386,7 @@ $arr_params = array( 'id' => $postcontact->id, 'ref' => $postcontact->ref, 'secu
 $return = esc_url( add_query_arg( $arr_params, $url) );
                                                                                                                                                       
 print "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action";
-if (!doliCheckRights()->rights->societe->contact->creer) { print " disabled"; }
+if (!doliCheckRights('societe', 'contact', 'creer')) { print " disabled"; }
 print "'><div><i class='fa fa-address-card fa-3x fa-fw'></i></div><div><h6 class='my-0'>".($postcontact->civility ? $postcontact->civility : $postcontact->civility_code)." ".$postcontact->firstname." ".$postcontact->lastname."</h6><small class='text-muted'>".$postcontact->poste."</small></div><span></span><span>";
 //if ( $postcontact->statut > 0 ) { print "<span class='fas fa-check-circle fa-fw text-success'></span> "; }
 print "</span></a>";
