@@ -19,8 +19,8 @@ function doliCheckRights($right1, $right2 = null, $right3 = null) {
 $return = false;
 $check = '->rights->societe->contact->creer';
 $user = callDoliApi("GET", "/users/info?includepermissions=1", null, dolidelay('dolibarr'))->rights->$right1;
-if ($right2) $user = $user ->$right2;
-if ($right3) $user = $user ->$right3;
+if ($right2) $user = $user->$right2;
+if ($right3) $user = $user->$right3;
 if (isset($user) && !empty($user)) {
 $return = true;
 }
