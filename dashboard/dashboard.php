@@ -429,7 +429,7 @@ print doliconnect_paymentmethods(null, null, $url, esc_attr(isset($_GET["refresh
 
 //*****************************************************************************************
 
-if ( !empty(doliconst('MAIN_MODULE_WISHLIST')) ) {
+if ( !empty(doliconst('MAIN_MODULE_WISHLIST')) && doliCheckRights('wishlist', 'read') ) {
 add_action( 'customer_doliconnect_menu', 'wishlist_menu', 0, 1);
 add_action( 'customer_doliconnect_wishlist', 'wishlist_module' );
 }  
