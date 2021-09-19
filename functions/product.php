@@ -286,9 +286,13 @@ jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function(e){
       if (document.getElementById("DoliWidgetCartItems")) {
       document.getElementById("DoliWidgetCartItems").innerHTML = response.data.items;      
       }
-      document.getElementById("message-dolicart").innerHTML = response.data.message;    
-      } else {
+      if (document.getElementById("message-dolicart")) {
       document.getElementById("message-dolicart").innerHTML = response.data.message;      
+      }   
+      } else {
+      if (document.getElementById("message-dolicart")) {
+      document.getElementById("message-dolicart").innerHTML = response.data.message;      
+      }      
       }
 		}, "json");  
   });
@@ -564,10 +568,11 @@ $button .= 'jQuery(document).ready(function($) {
     
 jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function(e){ 
 		$.post($form.attr("action"), $form.serialize(), function(response){
-      //jQuery("#offcanvasDolicart").offcanvas("show");
       jQuery("#DoliconnectLoadingModal").modal("hide");
       if (response.success) {
-
+      if (document.getElementById("product-wish-'.$product->id.'")) {
+      document.getElementById("product-wish-'.$product->id.'").innerHTML = "test";      
+      }
       } else {
            
       }
@@ -577,9 +582,9 @@ jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function(e){
 });';
 $button .= "</script>";
 if (!empty($wish)) {
-$button .= "<button class='btn btn-sm btn-light btn-outline-secondary' type='submit' name='cartwish' value='addtowish' title='".esc_html__( 'Save my wish', 'doliconnect')."'><i class='fas fa-heart-broken' style='color:Fuchsia'></i></i></button>";
+$button .= "<button id='product-wish-".$product->id."' class='btn btn-sm btn-light btn-outline-secondary' type='submit' name='cartwish' value='addtowish' title='".esc_html__( 'Save my wish', 'doliconnect')."'><i class='fas fa-heart-broken' style='color:Fuchsia'></i></i></button>";
 } else {
-$button .= "<button class='btn btn-sm btn-light btn-outline-secondary' type='submit' name='cartwish' value='addtowish' title='".esc_html__( 'Save my wish', 'doliconnect')."'><i class='fas fa-heart' style='color:Fuchsia'></i></i></button>";
+$button .= "<button id='product-wish-".$product->id."' class='btn btn-sm btn-light btn-outline-secondary' type='submit' name='cartwish' value='addtowish' title='".esc_html__( 'Save my wish', 'doliconnect')."'><i class='fas fa-heart' style='color:Fuchsia'></i></i></button>";
 }
 $button .= "</form>";
 }
