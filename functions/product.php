@@ -558,7 +558,6 @@ $button .= "<form id='form-product-wish-".$product->id."' class='form-product-wi
 $button .= "<input type='hidden' name='action' value='doliproduct_request'>";
 $button .= "<input type='hidden' name='product-wish-nonce' value='".wp_create_nonce( 'product-wish-nonce-'.$product->id)."'>";
 $button .= "<input type='hidden' name='product-wish-id' value='".$product->id."'>";
-
 $button .= "<script>";
 $button .= 'jQuery(document).ready(function($) {
 	jQuery(".form-product-wish-'.$product->id.'").on("submit", function(e){
