@@ -564,25 +564,12 @@ $button .= 'jQuery(document).ready(function($) {
     
 jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function(e){ 
 		$.post($form.attr("action"), $form.serialize(), function(response){
-      jQuery("#offcanvasDolicart").offcanvas("show");
-      document.getElementById("message-dolicart").innerHTML = "";
+      //jQuery("#offcanvasDolicart").offcanvas("show");
       jQuery("#DoliconnectLoadingModal").modal("hide");
       if (response.success) {
-      if (document.getElementById("DoliHeaderCartItems")) {
-      document.getElementById("DoliHeaderCartItems").innerHTML = response.data.items;
-      }
-      if (document.getElementById("DoliFooterCartItems")) {  
-      document.getElementById("DoliFooterCartItems").innerHTML = response.data.items;
-      }
-      if (document.getElementById("DoliCartItemsList")) {  
-      document.getElementById("DoliCartItemsList").innerHTML = response.data.list;
-      }
-      if (document.getElementById("DoliWidgetCartItems")) {
-      document.getElementById("DoliWidgetCartItems").innerHTML = response.data.items;      
-      }
-      document.getElementById("message-dolicart").innerHTML = response.data.message;    
+
       } else {
-      document.getElementById("message-dolicart").innerHTML = response.data.message;      
+           
       }
 		}, "json");  
   });
