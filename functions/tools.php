@@ -18,11 +18,12 @@ return $return;
 function doliCheckRights($right1, $right2 = null, $right3 = null, $right4 = null) {
 $return = false;
 if ( doliversion('13.0.0') ) {
-$user = callDoliApi("GET", "/users/info?includepermissions=1", null, dolidelay('dolibarr'));
+$user = callDoliApi("GET", "/users/info?includepermissions=1", null, dolidelay('dolibarr')); 
 if (isset($user->rights)) {
 $user = $user->rights->$right1;
 } else {
 $user = null;
+$return = true;
 }
 if ($user && $right2) $user = $user->$right2;
 if ($user && $right3) $user = $user->$right3;
@@ -833,7 +834,7 @@ function dolibug($msg = null, $request = null) {
 //header('Refresh: 180; URL='.esc_url(get_permalink()).'');
 $bug = '<div id="dolibug" ><br><br><br><br><center><div class="align-middle"><i class="fas fa-bug fa-7x fa-fw"></i><h4>';
 if ( ! empty($msg) ) {
-$bug .= $msg;
+$bug .= var_dump($msg);
 } else { $bug .= __( 'Oops, our servers are unreachable.<br>Thank you for coming back in a few minutes.', 'doliconnect'); }
 $bug .= '</h4>';
 if ( defined("DOLIBUG") && ! empty(constant("DOLIBUG")) ) {
