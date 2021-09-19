@@ -1747,7 +1747,10 @@ print "<label for='license'><small>N° de licence</small></label><div class='inp
 if( has_action('mydoliconnectmemberform') ) {
 print do_action('mydoliconnectmemberform', $adherent);
 }
-print "</div><ul class='list-group list-group-flush'>";
+print "</div>";
+
+if ( doliCheckRights('adherent', 'cotisation', 'lire') ) {
+print "<ul class='list-group list-group-flush'>";
 
 if (doliconnector($current_user, 'fk_member') > 0) {
 $listcotisation = callDoliApi("GET", "/members/".doliconnector($current_user, 'fk_member')."/subscriptions", null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
@@ -1771,6 +1774,7 @@ else {
 print "<li class='list-group-item list-group-item-light'><center>".__( 'No subscription', 'doliconnect')."</center></li>";
 }
 print '</ul>';
+}
 } else { 
 if ( doliconnector($current_user, 'fk_soc') > 0 ) {
 $thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
