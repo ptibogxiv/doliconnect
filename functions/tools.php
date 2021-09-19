@@ -18,10 +18,15 @@ return $return;
 function doliCheckRights($right1, $right2 = null, $right3 = null, $right4 = null) {
 $return = false;
 if ( doliversion('13.0.0') ) {
-$user = callDoliApi("GET", "/users/info?includepermissions=1", null, dolidelay('dolibarr'))->rights->$right1;
-if ($right2) $user = $user->$right2;
-if ($right3) $user = $user->$right3;
-if ($right4) $user = $user->$right4;
+$user = callDoliApi("GET", "/users/info?includepermissions=1", null, dolidelay('dolibarr'));
+if (isset($user->rights)) {
+$user = $user->rights->$right1;
+} else {
+$user = null;
+}
+if ($user && $right2) $user = $user->$right2;
+if ($user && $right3) $user = $user->$right3;
+if ($user && $right4) $user = $user->$right4;
 if (isset($user) && !empty($user)) {
 $return = true;
 }
