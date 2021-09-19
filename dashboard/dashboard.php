@@ -385,11 +385,9 @@ $nonce = wp_create_nonce( 'doli-contacts-'. $postcontact->id.'-'.$postcontact->r
 $arr_params = array( 'id' => $postcontact->id, 'ref' => $postcontact->ref, 'security' => $nonce);  
 $return = esc_url( add_query_arg( $arr_params, $url) );
                                                                                                                                                       
-print "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action";
-if (!doliCheckRights('societe', 'contact', 'creer')) { print " disabled"; }
-print "'><div><i class='fa fa-address-card fa-3x fa-fw'></i></div><div><h6 class='my-0'>".($postcontact->civility ? $postcontact->civility : $postcontact->civility_code)." ".$postcontact->firstname." ".$postcontact->lastname."</h6><small class='text-muted'>".$postcontact->poste."</small></div><span></span><span>";
-//if ( $postcontact->statut > 0 ) { print "<span class='fas fa-check-circle fa-fw text-success'></span> "; }
-print "</span></a>";
+print "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'>
+<div><i class='fa fa-address-card fa-3x fa-fw'></i></div><div><h6 class='my-0'>".($postcontact->civility ? $postcontact->civility : $postcontact->civility_code)." ".$postcontact->firstname." ".$postcontact->lastname."</h6>
+<small class='text-muted'>".$postcontact->poste."</small></div><span></span><span></span></a>";
 }
 } else {
 print "<li class='list-group-item list-group-item-light'><center>".__( 'No contact', 'doliconnect')."</center></li>";
