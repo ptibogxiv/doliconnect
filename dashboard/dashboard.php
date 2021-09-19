@@ -278,7 +278,7 @@ print dolipasswordform($current_user, $url);
 }
 add_action( 'user_doliconnect_password', 'password_module');
 
-if ( empty(doliconst('MAIN_DISABLE_CONTACTS_TAB')) ) {
+if ( empty(doliconst('MAIN_DISABLE_CONTACTS_TAB')) && doliCheckRights('societe', 'contact', 'lire') ) {
 add_action( 'user_doliconnect_menu', 'contacts_menu', 3, 1);
 add_action( 'user_doliconnect_contacts', 'contacts_module');
 }
