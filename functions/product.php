@@ -256,26 +256,23 @@ return -$realstock;//doliconnect_countitems($order);
 function doliconnect_addtocart($product, $category = 0, $quantity = 0, $add = 0, $time = 0, $refresh = null) {
 global $current_user;
 
-$button = "<form id='form-product-".$product->id."' class='form-product-".$product->id."' method='post' action='".admin_url('admin-ajax.php')."'>";
-$button .= "<input type='hidden' name='action' value='doliaddproduct_request'>";
+$button = "<form id='form-product-cart-".$product->id."' class='form-product-cart-".$product->id."' method='post' action='".admin_url('admin-ajax.php')."'>";
+$button .= "<input type='hidden' name='action' value='doliproduct_request'>";
 $button .= "<input type='hidden' name='product-add-nonce' value='".wp_create_nonce( 'product-add-nonce-'.$product->id)."'>";
 $button .= "<input type='hidden' name='product-add-id' value='".$product->id."'>";
 
 $button .= "<script>";
 $button .= 'jQuery(document).ready(function($) {
-//jQuery(".dolisavewish'.$product->id.'").click(function(){
-//alert("test");
-//}
-	
-	jQuery(".form-product-'.$product->id.'").on("submit", function(e){
+	jQuery(".form-product-cart-'.$product->id.'").on("submit", function(e){
   jQuery("#DoliconnectLoadingModal").modal("show");
 	e.preventDefault();
 	var $form = $(this);
     
 jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function(e){ 
 		$.post($form.attr("action"), $form.serialize(), function(response){
+      jQuery("#offcanvasDolicart").offcanvas("show");
       document.getElementById("message-dolicart").innerHTML = "";
-      jQuery("#offcanvasDolicart").offcanvas("show");  
+      jQuery("#DoliconnectLoadingModal").modal("hide");  
       if (response.success) {
       if (document.getElementById("DoliHeaderCartItems")) {
       document.getElementById("DoliHeaderCartItems").innerHTML = response.data.items;
@@ -293,8 +290,6 @@ jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function(e){
       } else {
       document.getElementById("message-dolicart").innerHTML = response.data.message;      
       }
-
-jQuery("#DoliconnectLoadingModal").modal("hide");
 		}, "json");  
   });
 });
@@ -549,16 +544,59 @@ $button .= "<option value='$number' >x ".$number."</option>";
 	}
 }}
 $button .= "</select>";
-if ( !empty(doliconst('MAIN_MODULE_WISHLIST', $refresh)) && !empty(get_option('doliconnectbeta')) ) {
-if (!empty($wish)) {
-$button .= "<button class='btn btn-sm btn-light btn-outline-secondary' type='submit' name='cartaction' value='addtowish' title='".esc_html__( 'Save my wish', 'doliconnect')."'><i class='fas fa-heart-broken' style='color:Fuchsia'></i></i></button>";
-} else {
-$button .= "<button class='btn btn-sm btn-light btn-outline-secondary' type='submit' name='cartaction' value='addtowish' title='".esc_html__( 'Save my wish', 'doliconnect')."'><i class='fas fa-heart' style='color:Fuchsia'></i></i></button>";
-}
-}
+$button .= "<input type='hidden' name='product-add-vat' value='".$product->tva_tx."'><input type='hidden' name='product-add-remise_percent' value='".$discount."'><input type='hidden' name='product-add-price' value='".$price_ht."'>";
+
 $button .= "<button class='btn btn-sm btn-warning' type='submit' name='cartaction' value='addtocart' title='".esc_html__( 'Add to cart', 'doliconnect')."' ";
 if (( isset($thirdparty->status) && $thirdparty->status != '1' ) || (( $realstock <= 0 || $m2 < $step) && $product->type == '0' && !empty(doliconst('MAIN_MODULE_STOCK', $refresh)) )) { $button .= " disabled"; }
-$button .= "><i class='fas fa-cart-plus fa-fw'></i></button></div>";
+$button .= "><i class='fas fa-cart-plus fa-fw'></i></button></form>";
+if ( !empty(doliconst('MAIN_MODULE_WISHLIST', $refresh)) && !empty(get_option('doliconnectbeta')) ) {
+$button .= "<form id='form-product-wish-".$product->id."' class='form-product-wish-".$product->id."' method='post' action='".admin_url('admin-ajax.php')."'>";
+$button .= "<input type='hidden' name='action' value='doliproduct_request'>";
+$button .= "<input type='hidden' name='product-wish-nonce' value='".wp_create_nonce( 'product-wish-nonce-'.$product->id)."'>";
+$button .= "<input type='hidden' name='product-wish-id' value='".$product->id."'>";
+
+$button .= "<script>";
+$button .= 'jQuery(document).ready(function($) {
+	jQuery(".form-product-wish-'.$product->id.'").on("submit", function(e){
+  jQuery("#DoliconnectLoadingModal").modal("show");
+	e.preventDefault();
+	var $form = $(this);
+    
+jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function(e){ 
+		$.post($form.attr("action"), $form.serialize(), function(response){
+      jQuery("#offcanvasDolicart").offcanvas("show");
+      document.getElementById("message-dolicart").innerHTML = "";
+      jQuery("#DoliconnectLoadingModal").modal("hide");
+      if (response.success) {
+      if (document.getElementById("DoliHeaderCartItems")) {
+      document.getElementById("DoliHeaderCartItems").innerHTML = response.data.items;
+      }
+      if (document.getElementById("DoliFooterCartItems")) {  
+      document.getElementById("DoliFooterCartItems").innerHTML = response.data.items;
+      }
+      if (document.getElementById("DoliCartItemsList")) {  
+      document.getElementById("DoliCartItemsList").innerHTML = response.data.list;
+      }
+      if (document.getElementById("DoliWidgetCartItems")) {
+      document.getElementById("DoliWidgetCartItems").innerHTML = response.data.items;      
+      }
+      document.getElementById("message-dolicart").innerHTML = response.data.message;    
+      } else {
+      document.getElementById("message-dolicart").innerHTML = response.data.message;      
+      }
+		}, "json");  
+  });
+});
+});';
+$button .= "</script>";
+if (!empty($wish)) {
+$button .= "<button class='btn btn-sm btn-light btn-outline-secondary' type='submit' name='cartwish' value='addtowish' title='".esc_html__( 'Save my wish', 'doliconnect')."'><i class='fas fa-heart-broken' style='color:Fuchsia'></i></i></button>";
+} else {
+$button .= "<button class='btn btn-sm btn-light btn-outline-secondary' type='submit' name='cartwish' value='addtowish' title='".esc_html__( 'Save my wish', 'doliconnect')."'><i class='fas fa-heart' style='color:Fuchsia'></i></i></button>";
+}
+$button .= "</form>";
+}
+$button .= "</div>";
 
 //if ( $qty > 0 ) {
 //$button .= "<br /><div class='input-group'><a class='btn btn-block btn-warning' href='".doliconnecturl('dolicart')."' role='button' title='".__( 'Go to cart', 'doliconnect')."'>".__( 'Go to cart', 'doliconnect')."</a></div>";
@@ -577,10 +615,6 @@ $button .= '</div>';
 }
 
 if ( !empty($discount) ) { $button .= "<small>".sprintf( esc_html__( 'you get %u %% discount', 'doliconnect'), $discount)."</small>"; }
-$button .= "<input type='hidden' name='product-add-vat' value='".$product->tva_tx."'><input type='hidden' name='product-add-remise_percent' value='".$discount."'><input type='hidden' name='product-add-price' value='".$price_ht."'>";
-//$button .= '<div id="product-add-loading-'.$product->id.'" style="display:none">'.doliprice($price_ttc).'<button class="btn btn-secondary btn-block" disabled><i class="fas fa-spinner fa-pulse fa-1x fa-fw"></i> '.__( 'Loading', 'doliconnect').'</button></div>';
-
-$button .= "</form>";
 $button .= "<div id='message-doliproduct-".$product->id."'></div>";
 
 return $button;
