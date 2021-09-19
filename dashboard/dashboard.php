@@ -1598,7 +1598,7 @@ print "</div></div>";
 
 //*****************************************************************************************
 
-if ( !empty(doliconst('MAIN_MODULE_ADHERENTSPLUS')) ) {
+if ( !empty(doliconst('MAIN_MODULE_ADHERENTSPLUS')) && doliCheckRights('adherent', 'lire') ) {
 add_action( 'options_doliconnect_menu', 'members_menu', 1, 1);
 add_action( 'options_doliconnect_members', 'members_module');
 }
@@ -1793,7 +1793,7 @@ print '</div></div>';
 
 }
 
-if ( !empty(doliconst('ADHERENT_CONSUMPTION')) && !empty(get_option('doliconnectbeta')) ) {
+if ( !empty(doliconst('ADHERENT_CONSUMPTION')) && !empty(get_option('doliconnectbeta')) && doliCheckRights('adherent', 'lire') ) {
 add_action( 'options_doliconnect_menu', 'membershipconsumption_menu', 2, 1);
 add_action( 'options_doliconnect_membershipconsumption', 'membershipconsumption_module');
 }  
@@ -1845,7 +1845,7 @@ print '</div></div>';
 
 }
 
-if ( !empty(doliconst('ADHERENT_LINKEDMEMBER')) ) {
+if ( !empty(doliconst('ADHERENT_LINKEDMEMBER')) && doliCheckRights('adherent', 'lire') ) {
 add_action( 'options_doliconnect_menu', 'linkedmember_menu', 3, 1);
 add_action( 'options_doliconnect_linkedmember', 'linkedmember_module');
 }  
