@@ -4,7 +4,7 @@ Contributors: ptibogxiv, audrasjb
 Tags: erp, crm, ecommerce, dolibarr, payment, interface, customer, subscription, membership, doliconnect, dashboard, paypal, stripe, doliconnect, invoice, order, donation, GDPR, RGPD, LGPD, CCPA
 Requires at least: 5.0
 Tested up to: 5.9
-Stable tag: 5.5.3
+Stable tag: 5.6.0
 Requires PHP: 7.0
 License: GPL v3 or later
 Donate link: https://www.paypal.me/ptibogxiv
@@ -38,6 +38,9 @@ WordPress configuration steps:
 
 == Frequently Asked Questions ==
 
+1. From Dolibarr 13.X, Doliconnect supports rights of Dolibarr for view/edit/delete datas via WordPress.
+2. Using old and unupdated Dolibarr can do some mistakes or less functionnality. Please check compatibility!
+
 = Dolibarr compatibility =
 
 Doliconnect v5.x -> Dolibarr >11.x
@@ -63,6 +66,9 @@ We would like to thank this contributors and plugins:
 [gdpr-data-request-form](https://wordpress.org/plugins/gdpr-data-request-form/ "gdpr-data-request-form")
 
 == Changelog ==
+   = 5.6.0 =
+* support Dolibarr's rights. Be carefull of your correct rights !
+
    = 5.5.3 =
 * bugfix membership and php 8 error
 
