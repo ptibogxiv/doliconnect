@@ -597,7 +597,7 @@ print '<div class="row g-2 mb-2">';
 
 if ( !empty($object->birth) ) { $birth = wp_date('Y-m-d', $object->birth); }
 print '<div class="col-md-6"><div class="form-floating"><input type="date" class="form-control" id="'.$idobject.'[birth]" name="'.$idobject.'[birth]" placeholder="yyyy-mm-dd" value="'.(isset($birth) ? $birth : $current_user->billing_birth).'"';
-if ($mode != 'contact' || $rights) {
+if (($mode != 'contact' && $rights) || $rights) {
 print 'required';
 } else {
 print 'readonly';
