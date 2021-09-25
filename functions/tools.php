@@ -397,7 +397,7 @@ $password .= '</div></div>';
 return $password;
 }
 
-function doliuserform($object, $delay, $mode) {
+function doliuserform($object, $delay, $mode, $rights) {
 global $current_user;
 
 if ( is_object($object) && $object->id > 0 ) {
@@ -628,18 +628,6 @@ print "<li class='list-group-item list-group-item-light list-group-item-action'>
 
 print '<div class="form-floating mb-2"><textarea class="form-control" placeholder="'.__( 'Address', 'doliconnect').'"  name="'.$idobject.'[address]" id="'.$idobject.'[address]" style="height: 100px" required>'.(isset($object->address) ? stripslashes(htmlspecialchars($object->address, ENT_QUOTES)) : null).'</textarea>
 <label for="'.$idobject.'[address]"><i class="fas fa-map-marked fa-fw"></i> '.__( 'Address', 'doliconnect').'</label></div>';
- 
-print '<div class="row g-2 mb-2"><div class="col-lg-8">';
-    
-print '<div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[town]" name="'.$idobject.'[town]" placeholder="'.__( 'Town', 'doliconnect').'" value="'.(isset($object->town) ? $object->town : null).'" required>
-<label for="'.$idobject.'[town]"><i class="fas fa-map-marked fa-fw"></i> '.__( 'Town', 'doliconnect').'</label></div>';  
-
-print '</div><div class="col-lg-4">';
-    
-print '<div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[zip]" name="'.$idobject.'[zip]" placeholder="'.__( 'Zipcode', 'doliconnect').'" value="'.(isset($object->zip) ? $object->zip : null).'" required>
-<label for="'.$idobject.'[zip]"><i class="fas fa-map-marked fa-fw"></i> '.__( 'Zipcode', 'doliconnect').'</label></div>';  
-
-print '</div></div>';
 
 if ( function_exists('pll_the_languages') ) { 
 $lang = pll_current_language('locale');
@@ -650,7 +638,7 @@ $lang = $current_user->locale;
 $pays = callDoliApi("GET", "/setup/dictionary/countries?sortfield=favorite%2Clabel&sortorder=DESC%2CASC&limit=400&lang=".$lang, null, $delay);
 
 if ( isset($pays) ) { 
-print '<div class="form-floating"><select class="form-select" id="'.$idobject.'[country_id]" name="'.$idobject.'[country_id]" aria-label="'.__( 'Country', 'doliconnect').'" required>';
+print '<div class="form-floating mb-2"><select class="form-select" id="'.$idobject.'[country_id]" name="'.$idobject.'[country_id]" aria-label="'.__( 'Country', 'doliconnect').'" required>';
 print "<option value='' disabled ";
 if ( !isset($object->country_id) && ! $object->country_id > 0 || $pays == 0) {
 print "selected ";}
@@ -666,6 +654,18 @@ print '</select><label for="'.$idobject.'[country_id]"><i class="fas fa-map-mark
 } else {
 print "<input type='text' class='form-control' id='inputcountry' placeholder='".__( 'Country', 'doliconnect')."' name='".$idobject."[country_id]' value='".$object->country_id."' autocomplete='off' required>";
 }
+
+print '<div class="row g-2"><div class="col-lg-8">';
+    
+print '<div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[town]" name="'.$idobject.'[town]" placeholder="'.__( 'Town', 'doliconnect').'" value="'.(isset($object->town) ? $object->town : null).'" required>
+<label for="'.$idobject.'[town]"><i class="fas fa-map-marked fa-fw"></i> '.__( 'Town', 'doliconnect').'</label></div>';  
+
+print '</div><div class="col-lg-4">';
+    
+print '<div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[zip]" name="'.$idobject.'[zip]" placeholder="'.__( 'Zipcode', 'doliconnect').'" value="'.(isset($object->zip) ? $object->zip : null).'" required>
+<label for="'.$idobject.'[zip]"><i class="fas fa-map-marked fa-fw"></i> '.__( 'Zipcode', 'doliconnect').'</label></div>';  
+
+print '</div></div>';
 
 print "</li>";
 

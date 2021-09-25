@@ -57,7 +57,7 @@ print doliloaderscript('doliconnect-infosform');
 
 print '<div class="card shadow-sm"><div class="card-header">'.__( 'Edit my informations', 'doliconnect').'</div>';
 
-print doliuserform( $thirdparty, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'thirdparty');
+print doliuserform( $thirdparty, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'thirdparty', doliCheckRights('societe', 'creer'));
 
 print "<div class='card-body'><div class='d-grid gap-2'><button class='btn btn-outline-secondary' type='submit'>".__( 'Update', 'doliconnect')."</button></div></div>";
 print '<div class="card-footer text-muted">';
@@ -340,7 +340,7 @@ print doliloaderscript('doliconnect-infosform');
 
 print '<div class="card shadow-sm"><div class="card-header">'.__( 'Edit contact', 'doliconnect').'<a class="float-end text-decoration-none" href="'.esc_url( add_query_arg( 'module', 'contacts', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div>';
 
-print doliuserform( $contactfo, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'contact');
+print doliuserform( $contactfo, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'contact', doliCheckRights('societe', 'contact', 'creer'));
 
 print "<div class='card-body'><div class='d-grid gap-2'><button class='btn btn-outline-secondary' type='submit'>".__( 'Update', 'doliconnect')."</button></div></div>";
 print '<div class="card-footer text-muted">';
@@ -359,7 +359,7 @@ print doliloaderscript('doliconnect-infosform');
 
 print '<div class="card shadow-sm"><div class="card-header">'.__( 'Create contact', 'doliconnect').'<a class="float-end text-decoration-none" href="'.esc_url( add_query_arg( 'module', 'contacts', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div>';
 
-print doliuserform( $thirdparty, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'contact');
+print doliuserform( $thirdparty, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'contact', doliCheckRights('societe', 'contact', 'creer'));
 
 print "<div class='card-body'><div class='d-grid gap-2'><button class='btn btn-outline-secondary' type='submit'>".__( 'Add', 'doliconnect')."</button></div></div>";
 print '<div class="card-footer text-muted">';
@@ -1942,7 +1942,7 @@ print "<form class='was-validated' role='form' action='$url' id='member-".$membe
 
 print dolimodalloaderscript('member'.$member->id.'-form');
 
-print doliuserform($member, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'member'); 
+print doliuserform($member, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'member', doliCheckRights('adherent', 'creer')); 
 
 print "</div>".doliloading('member'.$member->id.'-form');
      
