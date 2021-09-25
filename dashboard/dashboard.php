@@ -2356,7 +2356,7 @@ print '<style>';
   filter: blur(5px);
 }
 <?php
-print '</style>'; 
+print '</style>';
 
 function generate_license($suffix = null) {
     // Default tokens contain no "ambiguous" characters: 1,i,0,o

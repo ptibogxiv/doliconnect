@@ -213,6 +213,7 @@ print doliloading('subscription');
 
 print "</div><div id='subscription-footer' class='modal-footer'><small class='text-justify'>".__( 'Note: the admins reserve the right to change your membership in relation to your personal situation. A validation of the membership may be necessary depending on the cases.', 'doliconnect')."</small></div></div></div></div>";
 
+if (isset($adherent) && !empty($adherent->typeid)) {
 $request= "/adherentsplus/type/".$adherent->typeid;
 $adherenttype = callDoliApi("GET", $request, null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 //print var_dump($adherenttype);
@@ -268,5 +269,7 @@ print "</script>";
 print '<input type="hidden" name="update_membership" value="renew"><button class="btn btn-danger" type="submit">'.__( 'Subscribe', 'doliconnect').'</button></form>
 </div></div></div></div>';
 }}
+
+}
 add_action( 'wp_footer', 'doliconnect_membership_modal');
 ?>
