@@ -59,7 +59,9 @@ print '<div class="card shadow-sm"><div class="card-header">'.__( 'Edit my infor
 
 print doliuserform( $thirdparty, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'thirdparty', doliCheckRights('societe', 'creer'));
 
-print "<div class='card-body'><div class='d-grid gap-2'><button class='btn btn-outline-secondary' type='submit'>".__( 'Update', 'doliconnect')."</button></div></div>";
+print "<div class='card-body'><div class='d-grid gap-2'><button class='btn btn-outline-secondary' type='submit' ";
+if (!doliCheckRights('societe', 'creer')) { print 'disabled'; }
+print ">".__( 'Update', 'doliconnect')."</button></div></div>";
 print '<div class="card-footer text-muted">';
 print "<small><div class='float-start'>";
 if ( isset($request) ) print dolirefresh($request, $url, dolidelay('thirdparty'), $thirdparty);
@@ -1946,7 +1948,9 @@ print doliuserform($member, dolidelay('constante', esc_attr(isset($_GET["refresh
 
 print "</div>".doliloading('member'.$member->id.'-form');
      
-print "<div id='Footermember".$member->id."-form' class='modal-footer'><button name='update_member' value='".$member->id."' class='btn btn-warning btn-block' type='submit'>".__( 'Update', 'doliconnect')."</button></form></div>
+print "<div id='Footermember".$member->id."-form' class='modal-footer'><button name='update_member' value='".$member->id."' class='btn btn-warning btn-block' type='submit' ";
+if (!doliCheckRights('adherent', 'creer')) { print 'disabled'; }
+print ">".__( 'Update', 'doliconnect')."</button></form></div>
 </div></div></div>";
 }}
 
