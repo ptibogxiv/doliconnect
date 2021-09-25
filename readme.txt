@@ -40,6 +40,7 @@ WordPress configuration steps:
 
 1. From Dolibarr 13.X, Doliconnect supports rights of Dolibarr for view/edit/delete datas via WordPress.
 2. Using old and unupdated Dolibarr can do some mistakes or less functionnality. Please check compatibility!
+3. Always delete WordPress transients after changing settings in Dolibarr. All datas are saved with transients in WordPress 
 
 = Dolibarr compatibility =
 
