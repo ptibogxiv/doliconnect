@@ -25,12 +25,12 @@ $user = $user->rights->$right1;
 $user = null;
 $return = true;
 }
-if ($user && $right2) $user = $user->$right2;
-if ($user && $right3) $user = $user->$right3;
-if ($user && $right4) $user = $user->$right4;
+if ($user && !empty($right2) && isset($user->$right2)) { $user = $user->$right2; } else { $user = null; }
+if ($user && !empty($right3) && isset($user->$right3)) { $user = $user->$right3; } else { $user = null; }
+if ($user && !empty($right4) && isset($user->$right4)) { $user = $user->$right4; } else { $user = null; }
 if (isset($user) && !empty($user)) {
 $return = true;
-}
+} 
 } else {
 $return = true;
 }
