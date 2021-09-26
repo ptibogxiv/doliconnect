@@ -1853,7 +1853,8 @@ print '</label></div>';
 print "</small></div></div></li>";
 
 } else {
-print "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".sprintf( esc_html__( "Adding billing or shipping contacts requires Dolibarr %s but your version is %s", 'doliconnect'), '10.0.0', doliversion('10.0.0'))."</b></li>";
+print "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".sprintf( esc_html__( "Managing contacts requires Dolibarr %s but your version is %s", 'doliconnect'), '10.0.0', doliversion('10.0.0'))."</b>";
+print "<br>".doliaddress($thirdparty)."</li>";
 }
 
 if ( !empty(doliconst('MAIN_MODULE_FRAISDEPORT')) ) {
