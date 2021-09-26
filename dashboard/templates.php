@@ -374,7 +374,7 @@ print '<div class="card shadow-sm"><div class="card-header">'.__( 'Create an acc
 print '<a class="float-end text-decoration-none" href="'.esc_url( doliconnecturl('doliaccount') ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a>';  
 print '</div>';
 
-print doliuserform( null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'thirdparty');
+print doliuserform( null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'thirdparty', doliCheckRights('societe', 'creer'));
 
 print "<div class='card-body'><div class='d-grid gap-2'><input type='hidden' name='submitted' id='submitted' value='true'><button class='btn btn-outline-secondary' type='submit'";
 if ( get_option('users_can_register')=='1' && ( get_site_option( 'registration' ) == 'user' || get_site_option( 'registration' ) == 'all' ) || ( !is_multisite() && get_option( 'users_can_register' )) ) {
