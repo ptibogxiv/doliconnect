@@ -1412,7 +1412,7 @@ print doliloaderscript('doliconnect-donationform');
 print "<div class='card shadow-sm'>";
 
 if (isset($_GET["create"])) {
-print doliuserform( $thirdparty, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'donation');
+print doliuserform( $thirdparty, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'donation', doliCheckRights('societe', 'creer'));
 
 print "<div class='card-body'><input type='hidden' name='userid' value='$ID'><button class='btn btn-danger btn-block' type='submit'><b>".__( 'Update', 'doliconnect')."</b></button></div>";
 
