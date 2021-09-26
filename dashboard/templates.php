@@ -1792,19 +1792,13 @@ $thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, '
 
 print "<div class='card'><ul class='list-group list-group-flush'>";
 
-print "<li class='list-group-item list-group-item-action'><h6>".__( 'Customer', 'doliconnect')."</h6><small class='text-muted'>";
-
-print doliaddress($thirdparty);
-
-print "</small></li>";
-
 if ( doliversion('10.0.0') ) {
 
 print "<li class='list-group-item list-group-item-action'><div class='row'><div class='col-12 col-md-6'><h6>".__( 'Billing address', 'doliconnect')."</h6><small class='text-muted'>";
 
 print '<div class="form-check">
 <input type="radio" id="billing-0" name="contact_billing" class="form-check-input" value="0" checked disabled>
-<label class="form-check-label" for="billing-0">'.__( "Same address as the customer", "doliconnect").'</label>
+<label class="form-check-label" for="billing-0">'.doliaddress($thirdparty).'</label>
 </div>';
 
 $listcontact = callDoliApi("GET", "/contacts?sortfield=t.rowid&sortorder=ASC&limit=100&thirdparty_ids=".doliconnector($current_user, 'fk_soc')."&includecount=1&sqlfilters=t.statut=1", null, dolidelay('contact', true));
@@ -1833,7 +1827,7 @@ print "<div class='col-12 col-md-6'><h6>".__( 'Shipping address', 'doliconnect')
 
 print '<div class="form-check">
 <input type="radio" id="shipping-0" name="contact_shipping" class="form-check-input" value="0" checked disabled>
-<label class="form-check-label" for="shipping-0">'.__( "Same address as the customer", "doliconnect").'</label>
+<label class="form-check-label" for="shipping-0">'.doliaddress($thirdparty).'</label>
 </div>';
 
 $listcontact = callDoliApi("GET", "/contacts?sortfield=t.rowid&sortorder=ASC&limit=100&thirdparty_ids=".doliconnector($current_user, 'fk_soc')."&includecount=1&sqlfilters=t.statut=1", null, dolidelay('contact', true));
@@ -1865,11 +1859,13 @@ print "<li class='list-group-item list-group-item-info'><i class='fas fa-info-ci
 if ( !empty(doliconst('MAIN_MODULE_FRAISDEPORT')) ) {
 print "<li class='list-group-item list-group-item-action'><h6>".__( 'Shipping method', 'doliconnect')."</h6>";
 $listshipment = callDoliApi("GET", "/fraisdeport?modulepart=".$module."&id=1", null, dolidelay('contact', true));
+$shipping_method_id = $thirdparty->shipping_method_id;
+if (!empty($object->shipping_method_id)) { $shipping_method_id = $object->shipping_method_id; }
 if ( !isset($listshipment->error) && $listshipment != null ) {
 foreach ( $listshipment as $shipment ) {
 if ($object->total_ht >= $shipment->palier && !isset($controlefdp[$shipment->fk_shipment_mode])) {
 print '<div class="form-check"><input type="radio" id="shipment-'.$shipment->id.'" name="shipping_method_id" class="form-check-input" value="'.$shipment->fk_shipment_mode.'" ';
-if ( $object->shipping_method_id == $shipment->fk_shipment_mode ) { print "checked"; }
+if ( $shipping_method_id == $shipment->fk_shipment_mode ) { print "checked"; }
 print ' ><label class="form-check-label" for="shipment-'.$shipment->id.'">'.dolishipmentmethods($shipment->fk_shipment_mode).' - '.doliprice($shipment, (empty(get_option('dolibarr_b2bmode'))?'price_ttc':'price_ht')).'<small></small></label></div>';
 $controlefdp[$shipment->fk_shipment_mode] = true;
 }
