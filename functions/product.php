@@ -145,6 +145,7 @@ $rdr = [
     'date' => time(),
     'demand_reason_id' => 1,
     'cond_reglement_id' => $thirdparty->cond_reglement_id,
+    'shipping_method_id' => $thirdparty->shipping_method_id,
     'module_source' => 'doliconnect',
     'modelpdf' =>  doliconst("COMMANDE_ADDON_PDF"),
     'pos_source' => get_current_blog_id(),
