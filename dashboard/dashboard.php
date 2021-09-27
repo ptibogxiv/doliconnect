@@ -1920,7 +1920,7 @@ print "<form class='was-validated' role='form' action='$url' id='addmember-form'
 
 print dolimodalloaderscript('addmember-form');
 
-print doliuserform($member, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'member', doliCheckRights('adherent', 'creer')); 
+print doliuserform( '', dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'member', doliCheckRights('adherent', 'creer')); 
 
 print "</div>".doliloading('member'.$member->id.'-form');
      
