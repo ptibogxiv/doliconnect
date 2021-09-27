@@ -594,7 +594,7 @@ $login_url = site_url()."/wp-login.php"; }
 if ( isset($_GET["redirect_to"])) { $redirect_to=$_GET["redirect_to"]; } else {
 $redirect_to=$_SERVER['HTTP_REFERER'];}
  
-print "<form class='was-validated' id='doliconnect-loginform' action='$login_url' method='post'>";
+print "<form class='was-validated' id='doliconnect-loginform' action='".$login_url."' method='post'>";
 print "<ul class='list-group list-group-flush'><li class='list-group-item'>";
 
 print doliloaderscript('doliconnect-loginform'); 

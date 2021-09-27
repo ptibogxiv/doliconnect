@@ -2601,7 +2601,7 @@ $redirect_to=doliconnecturl('doliaccount');
 $redirect_to=get_permalink();
 }
 
-print "<form name='loginmodal-form' action='$login_url' method='post' class='was-validated'>";
+print "<form name='loginmodal-form' action='".$login_url."' method='post' class='was-validated'>";
 
 print dolimodalloaderscript('loginmodal-form');
 if  ( defined("DOLICONNECT_DEMO") ) {
