@@ -132,8 +132,8 @@ define( 'DONOTCACHEPAGE', 1);
 //$login_url=home_url()."/wp-login.php"; }
 //wp_redirect( $login_url .'?action=confirm_admin_email&wp_lang='.$_GET["wp_lang"] );
 //exit;
-}  
-}
+//}  
+//}
 // ********************************************************
 function json_basic_auth_handler( $user ) {
 	global $wp_json_basic_auth_error;
