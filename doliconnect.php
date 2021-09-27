@@ -539,15 +539,32 @@ if (get_option('doliaccount') && strpos( $login_url, 'action=confirm_admin_email
 $login_url = doliconnecturl('doliaccount');
 }
 if ( ! empty( $redirect ) ) {
-        $login_url = add_query_arg( 'redirect_to', urlencode( $redirect ), $login_url );
-    }
-    if ( $force_reauth ) {
-        $login_url = add_query_arg( 'reauth', '1', $login_url );
-    }
-    return $login_url;
+$login_url = add_query_arg( 'redirect_to', urlencode( $redirect ), $login_url );
+}
+if ( $force_reauth ) {
+$login_url = add_query_arg( 'reauth', '1', $login_url );
+}
+return $login_url;
 }
 if (get_option('doliaccount')) {
 add_filter( 'login_url', 'doliconnect_login_link_url', 10, 3 ); }
+
+add_filter( 'logout_url', 'doliconnect_logout_url', 10, 2 );
+function doliconnect_logout_url( $logout_url, $redirect ) {
+if ( function_exists('secupress_get_module_option') && secupress_get_module_option('move-login_slug-login', null, 'users-login' )) {
+$logout_url = site_url()."/".secupress_get_module_option('move-login_slug-login', null, 'users-login' ); 
+} elseif (get_site_option('doliconnect_login')) {
+$logout_url = site_url()."/".get_site_option('doliconnect_login');
+} else {
+$logout_url = site_url()."/wp-login.php";
+};
+$logout_url = add_query_arg( 'action', 'logout', $logout_url );
+if ( ! empty( $redirect ) ) {
+$logout_url = add_query_arg( 'redirect_to', urlencode( $redirect ), $logout_url );
+}
+$logout_url = wp_nonce_url( $logout_url, 'log-out' );
+return $logout_url;
+}
 
 add_filter('asgarosforum_filter_profile_link', 'doliconnect_profile_url', 10, 2);
 function doliconnect_profile_url($profile_url, $user_object) {
