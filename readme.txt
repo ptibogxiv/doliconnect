@@ -69,6 +69,7 @@ We would like to thank this contributors and plugins:
 == Changelog ==
    = 5.6.0 =
 * support Dolibarr's rights. Be carefull of your correct rights !
+* better support of alternatives namme or URL for wp-login.php
 
    = 5.5.3 =
 * bugfix membership and php 8 error
