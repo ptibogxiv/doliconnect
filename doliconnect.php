@@ -187,6 +187,7 @@ $args = array(
     'timeout' => '10',
     'redirection' => '5',
     'method' => $method,
+    'sslverify' => false,
     'headers' => $headers
 ); 
 
