@@ -585,7 +585,7 @@ if ( function_exists('socialconnect') ) {
 print socialconnect(get_permalink());
 }
 
-if ( function_exists('secupress_get_module_option') && isset(get_site_option('doliconnect_login')) && secupress_get_module_option('move-login_slug-login', '', 'users-login' ) ) {
+if ( function_exists('secupress_get_module_option') && !empty(get_site_option('secupress_active_submodule_move-login')) && secupress_get_module_option('move-login_slug-login', '', 'users-login' ) ) {
 $login_url = site_url()."/".secupress_get_module_option('move-login_slug-login', '', 'users-login'); 
 } elseif (get_site_option('doliconnect_login')) {
 $login_url = site_url()."/".get_site_option('doliconnect_login');
