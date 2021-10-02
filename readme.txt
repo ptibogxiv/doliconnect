@@ -68,7 +68,8 @@ We would like to thank this contributors and plugins:
 
 == Changelog ==
    = 5.6.2 =
-* fix for login/logout url
+* fix for login/logout url with secupress
+* better membership module
 
    = 5.6.1 =
 * fix for login/logout url
