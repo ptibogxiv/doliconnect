@@ -3,7 +3,7 @@
  * Plugin Name: Doliconnect
  * Plugin URI: https://www.ptibogxiv.net
  * Description: Connect your Dolibarr (free ERP/CRM) to Wordpress. 
- * Version: 5.6.0
+ * Version: 5.6.1
  * Author: ptibogxiv
  * Author URI: https://www.ptibogxiv.net/en
  * Network: true
@@ -552,9 +552,7 @@ add_filter( 'login_url', 'doliconnect_login_link_url', 10, 3 ); }
 
 add_filter( 'logout_url', 'doliconnect_logout_url', 10, 2 );
 function doliconnect_logout_url( $logout_url, $redirect ) {
-if ( function_exists('secupress_get_module_option') && secupress_get_module_option('move-login_slug-login', null, 'users-login' )) {
-$logout_url = site_url()."/".secupress_get_module_option('move-login_slug-login', null, 'users-login' ); 
-} elseif (get_site_option('doliconnect_login')) {
+if (get_site_option('doliconnect_login')) {
 $logout_url = site_url()."/".get_site_option('doliconnect_login');
 } else {
 $logout_url = site_url()."/wp-login.php";

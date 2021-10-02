@@ -2589,9 +2589,10 @@ if ( ! function_exists('dolikiosk') || ( function_exists('dolikiosk') && empty(d
 print socialconnect ( get_permalink() );
 }
 
-if ( function_exists('secupress_get_module_option') && secupress_get_module_option('move-login_slug-login', null, 'users-login' )) {
-$login_url = site_url()."/".secupress_get_module_option('move-login_slug-login', null, 'users-login' ); 
-} elseif (get_site_option('doliconnect_login')) {
+//if ( function_exists('secupress_get_module_option') && secupress_get_module_option('move-login_slug-login', null, 'users-login' )) {
+//$login_url = site_url()."/".secupress_get_module_option('move-login_slug-login', null, 'users-login' ); 
+//} else
+if (get_site_option('doliconnect_login')) {
 $login_url = site_url()."/".get_site_option('doliconnect_login');
 } else {
 $login_url = site_url()."/wp-login.php"; }

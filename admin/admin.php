@@ -205,6 +205,7 @@ echo get_site_option('license_key_doliconnect-pro');?> " <?php } else { echo "";
                 <th style="width:150px;"><label for="dolibarr_entity"><?php _e('Personalize entity', 'doliconnect') ?></label></th>
                 <td ><input name="dolibarr_entity" type="checkbox" id="dolibarr_entity" value="1" <?php checked('1', get_site_option('dolibarr_entity')); ?> /> permettre de personnaliser les entités liés par defaut entité-wordpress == entité-dolibarr</td>
             </tr>
+<?php } ?>
             <tr>
                 <th style="width:150px;"><label for="doliconnect_cronjob_multisite"><?php _e('Cronjobs', 'doliconnect') ?></label></th>
                 <td ><select name="doliconnect_cronjob_multisite" type="checkbox" id="doliconnect_cronjob_multisite">
@@ -214,7 +215,6 @@ echo get_site_option('license_key_doliconnect-pro');?> " <?php } else { echo "";
                 </select>
                 </td>
             </tr>
-<?php } ?>
         </table>
         <p class="submit">
             <input type="submit" name="activate_license" value="Activate" class="button-primary" />
