@@ -124,12 +124,12 @@ if (!empty(number_format($postadh->federal))) print "<br><small class='text-just
 print "<br><small class='text-justify text-muted '>".__( 'From', 'doliconnect')." ".wp_date('d/m/Y', $postadh->date_begin)." ".__( 'until', 'doliconnect')." ".wp_date('d/m/Y', $postadh->date_end)."</small>";
 print "</div><div class='col-md-4'>";
 if ( isset($adherent) && $adherent->datefin != null && $adherent->statut == 1 && $adherent->datefin > $adherent->next_subscription_renew && $adherent->next_subscription_renew > current_time( 'timestamp',1) ) {
-print "<button class='btn btn-info btn-block' disabled>".sprintf(__('From %s', 'doliconnect'), wp_date('d/m/Y', $adherent->next_subscription_renew))."</button>";
+print "<div class='d-grid gap-2'><button class='btn btn-light' disabled>".sprintf(__('From %s', 'doliconnect'), wp_date('d/m/Y', $adherent->next_subscription_renew))."</button></div>";
 } elseif ( $postadh->family == '1' ) {
 print "<div class='d-grid gap-2'><a href='".doliconnecturl('doliaccount')."?module=ticket&type=COM&create' class='btn btn-info' role='button'>".__( 'Contact us', 'doliconnect')."</a></div>";
 } 
 elseif ( ( $postadh->statut == '0' && $postadh->id == $adherent->typeid ) ) { 
-print "<button class='btn btn-secondary btn-block' disabled>".__( 'Non-renewable', 'doliconnect')."</a>";
+print "<div class='d-grid gap-2'><button class='btn btn-secondary' disabled>".__( 'Non-renewable', 'doliconnect')."</div></div>";
 } 
 elseif ( ( isset($adherent) && $postadh->automatic_renew != '1' && $postadh->id == $adherent->typeid ) ) { //to do add security for avoid loop  in revali
 print "<form id='subscription-form' action='".esc_url( add_query_arg( 'module', 'members', doliconnecturl('doliaccount')) )."' method='post'><input type='hidden' name='cotisation' value='$postadh->price_prorata'><input type='hidden' name='timestamp_start' value='".$postadh->date_begin."'><input type='hidden' name='timestamp_end' value='".$postadh->date_end."'><input type='hidden' name='update_membership' value='4'><input type='hidden' name='typeadherent' value='$postadh->id'><div class='d-grid gap-2'><button class='btn btn-warning btn-block' type='submit'>".__( 'Validate', 'doliconnect')."</button></div></form>";
