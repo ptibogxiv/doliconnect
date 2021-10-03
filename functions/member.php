@@ -109,7 +109,10 @@ print doliproduct($postadh, 'label');
 if (! empty ($postadh->duration_value)) print " - ".doliduration($postadh);
 print " <small>";
 if ( !empty($postadh->subscription) ) {
-if ($postadh->price_prorata != $postadh->amount) { 
+if ($adherent->datefin > $adherent->next_subscription_renew) { 
+print "(";
+print doliprice($postadh->amount);
+} elseif ($postadh->price_prorata != $postadh->amount) { 
 print "(";
 print doliprice($postadh->price_prorata)." ";
 print __( 'then', 'doliconnect')." ".doliprice($postadh->amount);
