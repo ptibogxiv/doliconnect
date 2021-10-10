@@ -682,14 +682,14 @@ $gdrf_numbers   = explode( '000', $gdrf_human_key );
 $gdrf_answer    = absint( $gdrf_numbers[0] ) + absint( $gdrf_numbers[1] ); 
 
     if ( sanitize_text_field($_POST['contactName']) === '' ) {
-        $ContactError = 'Please enter your name.';
+        $ContactError = __( 'Please enter your name.', 'doliconnect');
         $hasError = true;
     } else {
         $name = sanitize_text_field($_POST['contactName']);
     }
 
     if ( sanitize_email($_POST['email']) === '' )  {
-        $ContactError = 'Please enter your email address.';
+        $ContactError = __( 'Please enter you email.', 'doliconnect');
         $hasError = true;
     } else if (!preg_match("/^[[:alnum:]][a-z0-9_.-]*@[a-z0-9.-]+\.[a-z]{2,4}$/i", sanitize_email($_POST['email']))) {
         $ContactError = 'You entered an invalid email address.';
@@ -699,7 +699,7 @@ $gdrf_answer    = absint( $gdrf_numbers[0] ) + absint( $gdrf_numbers[1] );
     }
 
     if( sanitize_textarea_field($_POST['comments']) === '') {
-        $ContactError = 'Please enter a message.';
+        $ContactError = __( 'A message is needed.', 'doliconnect');
         $hasError = true;
     } else {
 
@@ -802,12 +802,12 @@ print '<div class="form-floating mb-2">
 $number_one = wp_rand( 1, 9 );
 $number_two = wp_rand( 1, 9 );
 print '<div class="form-floating">
-<input type="text" class="form-control" id="gdrf_data_human" placeholder="name@example.com" name="gdrf_data_human" value="" required>
+<input type="text" class="form-control" id="gdrf_data_human" placeholder="name@example.com" name="gdrf_data_human" value="">
 <label for="gdrf_data_human"><i class="fas fa-shield-alt fa-fw"></i> '.__( 'Human verification:', 'doliconnect').' '.$number_one . ' + ' . $number_two . ' = ?</label>
 </div><input type="hidden" name="gdrf_data_human_key" id="gdrf_data_human_key" value="'.$number_one . '000' . $number_two.'">';
 
 if ( !is_user_logged_in() ) {
-print '</li><li class="list-group-item"><div class="form-check"><input id="rgpdinfo" class="form-check-input form-check-sm" type="checkbox" name="rgpdinfo" value="ok" required><label class="form-check-label w-100" for="rgpdinfo"><small class="form-text text-muted"> '.__( 'I agree to save my personnal informations in order to contact me', 'doliconnect').'</small></label></div>';  
+print '</li><li class="list-group-item"><div class="form-check"><input id="rgpdinfo" class="form-check-input form-check-sm" type="checkbox" name="rgpdinfo" value="ok"><label class="form-check-label w-100" for="rgpdinfo"><small class="form-text text-muted"> '.__( 'I agree to save my personnal informations in order to contact me', 'doliconnect').'</small></label></div>';  
 }
 print "</li></ul>";
 print "<div class='card-body'><div class='d-grid gap-2'><button class='btn btn-outline-secondary' type='submit'>".__( 'Send', 'doliconnect')."</button><input type='hidden' name='submitted' id='submitted' value='true' /></div></div></div></div></div></form>";
