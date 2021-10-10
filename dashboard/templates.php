@@ -1425,20 +1425,20 @@ print "<h5><i class='fas fa-donate fa-fw'></i> Don hors ligne</h5>";
 
 //if ( $object->mode_reglement_code == 'CHQ') {
 
-$chq = callDoliApi("GET", "/doliconnector/constante/FACTURE_CHQ_NUMBER", null, dolidelay('constante'));
+$chq = doliconst("FACTURE_CHQ_NUMBER", dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
-$bank = callDoliApi("GET", "/bankaccounts/".$chq->value, null, dolidelay('constante'));
+$bank = callDoliApi("GET", "/bankaccounts/".$chq, null, dolidelay('constante'));
 
-print "<div class='alert alert-info' role='alert'><p align='justify'>".sprintf( __( 'Please send your cheque in the amount of <b>%1$s</b> with reference <b>%2$s</b> to <b>%3$s</b> at the following address', 'doliconnect'), 'votre choix', $bank->proprio, $object->ref ).":</p><p><b>$bank->owner_address</b></p></div>";
+print "<div class='alert alert-info' role='alert'><p align='justify'>".sprintf( __( 'Please send your cheque in the amount of <b>%1$s</b> with reference <b>%2$s</b> to <b>%3$s</b> at the following address', 'doliconnect'), 'votre choix', __( 'donation', 'doliconnect'), $bank->proprio ).":</p><p><b>$bank->owner_address</b></p></div>";
 
 //} 
 //if ($object->mode_reglement_code == 'VIR') {
 
-$vir = callDoliApi("GET", "/doliconnector/constante/FACTURE_RIB_NUMBER", null, dolidelay('constante'));
+$vir = doliconst("FACTURE_RIB_NUMBER", dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
-$bank = callDoliApi("GET", "/bankaccounts/".$vir->value, null, dolidelay('constante'));
+$bank = callDoliApi("GET", "/bankaccounts/".$vir, null, dolidelay('constante'));
 
-print "<div class='alert alert-info' role='alert'><p align='justify'>".sprintf( __( 'Please send your transfert in the amount of <b>%1$s</b> with reference <b>%2$s</b> at the following account', 'doliconnect'), 'votre choix', $object->ref ).":";
+print "<div class='alert alert-info' role='alert'><p align='justify'>".sprintf( __( 'Please send your transfert in the amount of <b>%1$s</b> with reference <b>%2$s</b> at the following account', 'doliconnect'), 'votre choix', __( 'donation', 'doliconnect') ).":";
 print "<br><b>".__( 'Bank', 'doliconnect').": $bank->bank</b>";
 print "<br><b>IBAN: $bank->iban</b>";
 if ( ! empty($bank->bic) ) { print "<br><b>BIC/SWIFT: $bank->bic</b>";}
@@ -1464,13 +1464,13 @@ print __( "You should't have tax exemptions", 'doliconnect');
 print "</div>";
 }
 
-print "</div></form>";
+print '<div class="card-footer text-muted">';
 
 print "<small><div class='float-start'>";
 if ( isset($request) ) print dolirefresh($request, doliconnecturl('dolidonation'), dolidelay('constante'));
 print "</div><div class='float-end'>";
 print dolihelp('COM');
-print "</div></small>";
+print "</div></small></div>";
 }
 
 
