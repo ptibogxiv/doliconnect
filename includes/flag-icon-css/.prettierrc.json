@@ -1,9 +1,8 @@
 {
   "arrowParens": "avoid",
   "bracketSpacing": false,
-  "jsxBracketSameLine": false,
   "printWidth": 80,
-  "proseWrap": "preserve",
+  "proseWrap": "never",
   "requirePragma": false,
   "semi": true,
   "singleQuote": true,
