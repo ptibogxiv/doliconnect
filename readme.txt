@@ -67,7 +67,7 @@ We would like to thank this contributors and plugins:
 [gdpr-data-request-form](https://wordpress.org/plugins/gdpr-data-request-form/ "gdpr-data-request-form")
 
 == Changelog ==
-   = 5.6.4 =
+   = 5.6.5 =
 * upgrade flat icon
 * debug template
 
