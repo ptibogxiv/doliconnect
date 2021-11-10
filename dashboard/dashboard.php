@@ -468,13 +468,6 @@ $wishlist = callDoliApi("GET", $request, null, dolidelay('product', true));
 }
 
 print '<div class="card shadow-sm"><div class="card-header">'.__( 'Wishlist', 'doliconnect').'</div><ul class="list-group list-group-flush">';
-
-$representatives = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc')."/representatives", null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
- 
-if ( !isset( $representatives->error ) && $representatives != null ) {
-foreach ( $representatives as $representative ) { 
-print "<li class='list-group-item list-group-item-light'><center>".__( 'Your representative :', 'doliconnect')." ".$representative->firstname." ".$representative->lastname."".$representative->job." ".$representative->phone." ".$representative->email."</center></li>";
-}}
   
 if ( !isset( $wishlist->error ) && $wishlist != null ) {
 foreach ( $wishlist as $wish ) { 
@@ -1975,6 +1968,39 @@ print ">".__( 'Update', 'doliconnect')."</button></form></div>
 }
 
 //*****************************************************************************************
+
+//if ( !empty( callDoliApi("GET",'/thirdparties/'.doliconnector( null, 'fk_soc').'/representatives')) ) {
+add_action( 'settings_doliconnect_menu', 'representatives_menu', 1, 1);
+add_action( 'settings_doliconnect_representatives', 'representatives_module');
+//}
+
+function representatives_menu( $arg ) {
+print "<a href='".esc_url( add_query_arg( 'module', 'representatives', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
+if ( $arg == 'representatives' ) { print " active"; }
+print "'>".__( 'Your sales representatives', 'doliconnect')."</a>";
+}
+
+function representatives_module( $url ) {
+global $current_user;
+
+print '<div class="card shadow-sm"><div class="card-header">'.__( 'Your sales representatives', 'doliconnect').'</div><ul class="list-group list-group-flush">';
+
+$request = "/thirdparties/".doliconnector($current_user, 'fk_soc')."/representatives";
+$representatives = callDoliApi("GET", $request, null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+ 
+if ( !isset( $representatives->error ) && $representatives != null ) {
+foreach ( $representatives as $representative ) { 
+print "<li class='list-group-item list-group-item-light'><center>".$representative->firstname." ".$representative->lastname."".$representative->job." ".$representative->phone." ".$representative->email."</center></li>";
+}}
+
+print '</ul><div class="card-footer text-muted">';
+print "<small><div class='float-start'>";
+if ( isset($request) ) print dolirefresh($request, $url, dolidelay('thirdparty'));
+print "</div><div class='float-end'>";
+print dolihelp('ISSUE');
+print "</div></small>";
+print '</div></div>';
+}
 
 if ( !empty(doliconst('MAIN_MODULE_TICKET')) ) {
 add_action( 'settings_doliconnect_menu', 'tickets_menu', 1, 1);
