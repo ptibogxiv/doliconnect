@@ -549,8 +549,8 @@ print ' autocomplete="off">
 <label for="'.$idobject.'[tva_intra]"><i class="fas fa-building fa-fw"></i> '.__( 'VAT number', 'doliconnect').'</label></div></div>';
 
 if ( doliversion('15.0.0') ) {
-$pays = callDoliApi("GET", "/setup/dictionary/legal_form?sortfield=rowid&sortorder=ASC&limit=100&active=1", null, $delay);
-if ( isset($pays) ) { 
+$legalform = callDoliApi("GET", "/setup/dictionary/legal_form?sortfield=rowid&sortorder=ASC&limit=100&active=1&country=".$object->country_id, null, $delay);
+if ( isset($legalform) ) { 
 print '<div class="col-md-6 col-lg-4"><div class="form-floating mb-2"><select class="form-select" id="'.$idobject.'[forme_juridique_code]" name="'.$idobject.'[forme_juridique_code]" aria-label="'.__( 'Legal form', 'doliconnect').'" ';
 if ($rights) {
 print 'required';
@@ -559,10 +559,10 @@ print 'disabled';
 }
 print '>';
 print "<option value='' disabled ";
-if ( !isset($object->forme_juridique_code) && ! $object->forme_juridique_code > 0 || $pays == 0) {
+if ( !isset($object->forme_juridique_code) && ! $object->forme_juridique_code > 0 || $legalform == 0) {
 print "selected ";}
 print ">".__( '- Select your legal form -', 'doliconnect')."</option>";
-foreach ( $pays as $postv ) { 
+foreach ( $legalform as $postv ) { 
 print "<option value='".$postv->code."' ";
 if ( isset($object->forme_juridique_code) && $object->forme_juridique_code == $postv->code && $object->forme_juridique_code != null && $postv->code != '0' ) {
 print "selected ";
