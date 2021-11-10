@@ -79,7 +79,7 @@ wp_send_json_error( $response );
 }
 }	elseif ( wp_verify_nonce( trim($_POST['product-wish-nonce']), 'product-wish-nonce-'.trim($_POST['product-wish-id']) ) ) {
 $response = [
-    'message' => '<div class="alert alert-success alert-dismissible d-flex align-items-center" role="alert">wish ok</div>',
+    'message' => '<i class="fas fa-heart-broken" style="color:Fuchsia"></i>',
     'items' => $result,
     'list' => doliconnect_CartItemsList()
         ];

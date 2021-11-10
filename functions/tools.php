@@ -548,6 +548,31 @@ if ((isset($object->tva_intra) && !empty($object->tva_intra)) || !$rights) { pri
 print ' autocomplete="off">
 <label for="'.$idobject.'[tva_intra]"><i class="fas fa-building fa-fw"></i> '.__( 'VAT number', 'doliconnect').'</label></div></div>';
 
+if ( doliversion('15.0.0') ) {
+$pays = callDoliApi("GET", "/setup/dictionary/legal_form?sortfield=rowid&sortorder=ASC&limit=100&active=1", null, $delay);
+if ( isset($pays) ) { 
+print '<div class="col-md-6 col-lg-4"><div class="form-floating mb-2"><select class="form-select" id="'.$idobject.'[forme_juridique_code]" name="'.$idobject.'[forme_juridique_code]" aria-label="'.__( 'Legal form', 'doliconnect').'" ';
+if ($rights) {
+print 'required';
+} else {
+print 'disabled';
+}
+print '>';
+print "<option value='' disabled ";
+if ( !isset($object->forme_juridique_code) && ! $object->forme_juridique_code > 0 || $pays == 0) {
+print "selected ";}
+print ">".__( '- Select your legal form -', 'doliconnect')."</option>";
+foreach ( $pays as $postv ) { 
+print "<option value='".$postv->code."' ";
+if ( isset($object->forme_juridique_code) && $object->forme_juridique_code == $postv->code && $object->forme_juridique_code != null && $postv->code != '0' ) {
+print "selected ";
+} elseif ( $postv->code == '0' ) { print "disabled "; }
+print ">".$postv->libelle."</option>";
+}
+print '</select><label for="'.$idobject.'[forme_juridique_code]"><i class="fas fa-building fa-fw"></i> '.__( 'Legal form', 'doliconnect').'</label></div></div>';
+}
+}
+
 print '</div>';
 print "</li><li class='list-group-item list-group-item-light list-group-item-action'>";
 }
@@ -589,7 +614,7 @@ print "selected ";}
 print ">".__( 'Mister', 'doliconnect')."</option>";
 }
 print '</select><label for="'.$idobject.'[civility_code]"><i class="fas fa-user fa-fw"></i> '.__( 'Civility', 'doliconnect').'</label></div></div>';
-
+                                                                                                                                                            
 print '<div class="col-md-6 col-lg-4 col-xl-5"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[firstname]" name="'.$idobject.'[firstname]" placeholder="'.__( 'Firstname', 'doliconnect').'" value="'.(isset($object->firstname) ? $object->firstname : stripslashes(htmlspecialchars($current_user->user_firstname, ENT_QUOTES))).'" ';
 if ($rights) {
 print 'required';
