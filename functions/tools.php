@@ -1044,10 +1044,10 @@ return $document;
 function dolihelp($type) {
 
 if ( is_user_logged_in() && !empty(doliconst('MAIN_MODULE_TICKET')) ) {
-$arr_params = array( 'module' => 'tickets', 'type' => $type, 'create' => true); 
+$arr_params = array( 'module' => 'tickets', 'type' => $type, 'action' => 'create'); 
 $link=esc_url( add_query_arg( $arr_params, doliconnecturl('doliaccount'))); 
 } elseif ( !empty(get_option('dolicontact')) ) {
-$arr_params = array( 'create' => true); //'type' => $postorder->id,  
+$arr_params = array( 'action' => 'create'); //'type' => $postorder->id,  
 $link=esc_url( add_query_arg( $arr_params, doliconnecturl('dolicontact')));
 } else {
 $link='#';
