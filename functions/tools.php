@@ -522,23 +522,23 @@ print "></div></div></div>";
 
 print '<div class="row g-2">';
     
-print '<div class="col-md-6 col-lg-4"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[idprof1]" name="'.$idobject.'[idprof1]" placeholder="idprof1" value="'.(isset($object->idprof1) ? $object->idprof1 : null).'"';
+print '<div class="col-md-6 col-lg-3"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[idprof1]" name="'.$idobject.'[idprof1]" placeholder="idprof1" value="'.(isset($object->idprof1) ? $object->idprof1 : null).'"';
 if ((isset($object->idprof1) && !empty($object->idprof1)) || !$rights) { print ' readonly'; } else { print ' required'; }
 print ' autocomplete="off">
 <label for="'.$idobject.'[idprof1]"><i class="fas fa-building fa-fw"></i> '.__( 'SIREN', 'doliconnect').'</label></div></div>'; 
 
-print '<div class="col-md-6 col-lg-4"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[idprof2]" name="'.$idobject.'[idprof2]" placeholder="idprof2" value="'.(isset($object->idprof2) ? $object->idprof2 : null).'"';
+print '<div class="col-md-6 col-lg-3"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[idprof2]" name="'.$idobject.'[idprof2]" placeholder="idprof2" value="'.(isset($object->idprof2) ? $object->idprof2 : null).'"';
 if ((isset($object->idprof2) && !empty($object->idprof2)) || !$rights) { print ' readonly'; } else { print ' required'; }
 print ' autocomplete="off">
 <label for="'.$idobject.'[idprof2]"><i class="fas fa-building fa-fw"></i> '.__( 'SIRET', 'doliconnect').'</label></div></div>';
 
 
-print '<div class="col-md-6 col-lg-4"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[idprof3]" name="'.$idobject.'[idprof3]" placeholder="idprof3" value="'.(isset($object->idprof3) ? $object->idprof3 : null).'"';
+print '<div class="col-md-6 col-lg-3"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[idprof3]" name="'.$idobject.'[idprof3]" placeholder="idprof3" value="'.(isset($object->idprof3) ? $object->idprof3 : null).'"';
 if ((isset($object->idprof3) && !empty($object->idprof3)) || !$rights) { print ' readonly'; } else { print ' required'; }
 print ' autocomplete="off">
 <label for="'.$idobject.'[idprof3]"><i class="fas fa-building fa-fw"></i> '.__( 'NAF-APE', 'doliconnect').'</label></div></div>';
 
-print '<div class="col-md-6 col-lg-4"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[idprof4]" name="'.$idobject.'[idprof4]" placeholder="idprof4" value="'.(isset($object->idprof4) ? $object->idprof4 : null).'"';
+print '<div class="col-md-6 col-lg-3"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[idprof4]" name="'.$idobject.'[idprof4]" placeholder="idprof4" value="'.(isset($object->idprof4) ? $object->idprof4 : null).'"';
 if ((isset($object->idprof4) && !empty($object->idprof4)) || !$rights) { print ' readonly'; } else { print ' required'; }
 print ' autocomplete="off">
 <label for="'.$idobject.'[idprof4]"><i class="fas fa-building fa-fw"></i> '.__( 'RCS/RM', 'doliconnect').'</label></div></div>';      
@@ -551,7 +551,7 @@ print ' autocomplete="off">
 if ( doliversion('15.0.0') ) {
 $legalform = callDoliApi("GET", "/setup/dictionary/legal_form?sortfield=rowid&sortorder=ASC&limit=100&active=1&country=".$object->country_id, null, $delay);
 if ( isset($legalform) ) { 
-print '<div class="col-md-6 col-lg-4"><div class="form-floating mb-2"><select class="form-select" id="'.$idobject.'[forme_juridique_code]" name="'.$idobject.'[forme_juridique_code]" aria-label="'.__( 'Legal form', 'doliconnect').'" ';
+print '<div class="col-md-6 col-lg-4"><div class="form-floating"><select class="form-select" id="'.$idobject.'[forme_juridique_code]" name="'.$idobject.'[forme_juridique_code]" aria-label="'.__( 'Legal form', 'doliconnect').'" ';
 if ($rights) {
 print 'required';
 } else {
@@ -570,6 +570,31 @@ print "selected ";
 print ">".$postv->libelle."</option>";
 }
 print '</select><label for="'.$idobject.'[forme_juridique_code]"><i class="fas fa-building fa-fw"></i> '.__( 'Legal form', 'doliconnect').'</label></div></div>';
+}
+}
+
+if ( doliversion('15.0.0') ) {
+$staff = callDoliApi("GET", "/setup/dictionary/staff?sortfield=id&sortorder=ASC&limit=100&active=1", null, $delay);
+if ( isset($staff) ) { 
+print '<div class="col-md-6 col-lg-4"><div class="form-floating"><select class="form-select" id="'.$idobject.'[effectif_id]" name="'.$idobject.'[effectif_id]" aria-label="'.__( 'Staff', 'doliconnect').'" ';
+if ($rights) {
+print 'required';
+} else {
+print 'disabled';
+}
+print '>';
+print "<option value='' disabled ";
+if ( !isset($object->effectif_id) && ! $object->effectif_id > 0 || $staff == 0) {
+print "selected ";}
+print ">".__( '- Select your staff -', 'doliconnect')."</option>";
+foreach ( $staff as $postv ) { 
+print "<option value='".$postv->id."' ";
+if ( isset($object->effectif_id) && $object->effectif_id == $postv->id && $object->effectif_id != null && $postv->id != '0' ) {
+print "selected ";
+} elseif ( $postv->code == '0' ) { print "disabled "; }
+print ">".$postv->libelle."</option>";
+}
+print '</select><label for="'.$idobject.'[effectif_id]"><i class="fas fa-building fa-fw"></i> '.__( 'Staff', 'doliconnect').'</label></div></div>';
 }
 }
 
