@@ -2200,7 +2200,7 @@ if (empty($countPM) && empty(array_intersect(array('card'), $listpaymentmethods-
 $paymentmethods .= '" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseklarna" aria-expanded="';
 if (empty($countPM) && empty(array_intersect(array('card'), $listpaymentmethods->stripe->types))) { $paymentmethods .= "true"; } else { $paymentmethods .= "false"; }
 $paymentmethods .= '" aria-controls="flush-collapseklarna">';
-$paymentmethods .= '<i class="fas fa-university fa-3x fa-fw float-start"></i> '.__( 'Pay with Klarna', 'doliconnect');
+$paymentmethods .= '<i class="fas fa-university fa-3x fa-fw float-start"></i> '.__( 'Buy now or pay later with Klarna', 'doliconnect');
 $paymentmethods .= '</button></h2>';
 $paymentmethods .= '<div id="flush-collapseklarna" class="accordion-collapse collapse';
 if (empty($countPM) && empty(array_intersect(array('card'), $listpaymentmethods->stripe->types))) { $paymentmethods .= " show"; }
