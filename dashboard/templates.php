@@ -1971,7 +1971,7 @@ if (isset($_GET['stage']) && $_GET['stage'] == 'payment' && isset($object) && is
 print '" role="tabpanel" id="nav-tab-pay">';
 
 if ( doliversion('11.0.0') ) {
-print doliconnect_paymentmethods($object, esc_attr($module), null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+print doliconnect_paymentmethods($object, esc_attr($module), $return, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 } else {
 print __( "It seems that your version of Dolibarr and/or its plugins are not up to date!", "doliconnect");
 }
