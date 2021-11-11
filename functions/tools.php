@@ -2213,55 +2213,33 @@ $paymentmethods .= "<p class='text-justify'>";
 $paymentmethods .= "<small><strong>Note:</strong> ".sprintf( esc_html__( 'By providing your IBAN and confirming this form, you are authorizing %s and Stripe, our payment service provider, to send instructions to your bank to debit your account and your bank to debit your account in accordance with those instructions. You are entitled to a refund from your bank under the terms and conditions of your agreement with it. A refund must be claimed within 8 weeks starting from the date on which your account was debited.', 'doliconnect'), get_bloginfo('name'))."</small>";
 $paymentmethods .= "</p>";
 $paymentmethods .= '<script>';
-$paymentmethods .= "function dolistripeiban(){
+$paymentmethods .= "function dolistripeklarna(){
 (function ($) {
 $(document).ready(function(){";
-$paymentmethods .= "var ibanElement = elements.create('iban', {style: style, supportedCountries: ['SEPA']});
-ibanElement.mount('#iban-element');
-var displayIbanError = document.getElementById('iban-error-message');
-var bankName = document.getElementById('bank-name');
-ibanElement.on('change', function(event) {
-  if (event.error) {
-    displayIbanError.textContent = event.error.message;
-    displayIbanError.classList.add('visible');
-  } else {
-    displayIbanError.classList.remove('visible');
-  }
-  if (event.bankName) {
-    bankName.textContent = event.bankName;
-    bankName.classList.add('visible');
-  } else {
-    bankName.classList.remove('visible');
-  }
-});";
-// pay with klarna script
-$paymentmethods .= "$('#PayIbanButton').on('click',function(event){
+$paymentmethods .= "var displayKlarnaError = document.getElementById('klarna-error-message');";
+if ( !empty($module) && is_object($object) && isset($object->id) ) {
+// pay with sepa_debit script
+$paymentmethods .= "$('#PayKlarnaButton').on('click',function(event){
 event.preventDefault();
-$('#PayIbanButton').disabled = true;
 $('#DoliconnectLoadingModal').modal('show');
-console.log('Click on PayIbanButton');
-var ibanholderName = document.getElementById('ibanholder-name');
-if (ibanholderName.value == ''){               
-console.log('Field Card holder is empty');
-displayCardError.textContent = 'We need an owner as on your account';
-$('#PayIbanButton').disabled = false;
-$('#DoliconnectLoadingModal').modal('hide');  
-} else {
-if (document.getElementById('DoliPaymentmethodAlert')) {
-document.getElementById('DoliPaymentmethodAlert').innerHTML = '';      
-}  
-  stripe.confirmSepaDebitPayment(
-    clientSecret,
-    {
+console.log('Click on PayKlarnaButton');
+if (1 == 7){               
+ 
+} else { 
+  stripe.confirmKlarnaPayment(
+  clientSecret,
+  {
     payment_method: {
-      sepa_debit: ibanElement,
       billing_details: {
-        name: ibanholderName.value,
         email: '".$listpaymentmethods->thirdparty->email."',
+        address: {
+          country: 'FR',
+        },
       },
     },
-    }
-  ).then(function(result) {
+    return_url: '".$url."',
+  }
+).then(function(result) {
     if (result.error) {
       // Display error.message
 $('#DoliconnectLoadingModal').modal('hide');
@@ -2312,12 +2290,74 @@ $('#DoliconnectLoadingModal').modal('hide');
 });
         }     
 });";
+} else {
+// add a sepa debit
+$paymentmethods .= "$('#AddIbanButton').on('click',function(event){
+event.preventDefault();
+$('#AddIbanButton').disabled = true;
+$('#DoliconnectLoadingModal').modal('show');
+console.log('Click on AddIbanButton');
+var ibanholderName = document.getElementById('ibanholder-name');
+if (ibanholderName.value == ''){               
+console.log('Field Iban holder is empty');
+displayCardError.textContent = 'We need an owner as on your account';
+$('#AddIbanButton').disabled = false;
+$('#DoliconnectLoadingModal').modal('hide');  
+} else {
+  stripe.confirmSepaDebitSetup(
+    clientSecret,
+    {
+    payment_method: {
+      sepa_debit: ibanElement,
+      billing_details: {
+        name: ibanholderName.value,
+        email: '".$listpaymentmethods->thirdparty->email."',
+      },
+    },
+    }
+  ).then(function(result) {
+    if (result.error) {
+$('#DoliconnectLoadingModal').modal('hide');
+$('#AddIbanButton').disabled = false;
+console.log('Error occured when adding iban');
+displayIbanError.textContent = result.error.message;    
+    } else {
+        $.ajax({
+          url: '".esc_url( admin_url( 'admin-ajax.php' ) )."',
+          type: 'POST',
+          data: {
+            'action': 'dolipaymentmethod_request',
+            'dolipaymentmethod-nonce': '".wp_create_nonce( 'dolipaymentmethod-nonce')."',
+            'payment_method': result.setupIntent.payment_method,
+            'action_payment_method': 'add_payment_method',
+            'default': $('input:radio[name=cardDefault]:checked').val()
+          }
+        }).done(function(response) {
+$(window).scrollTop(0);
+console.log(response.data); 
+      if (response.success) {
+      if (document.getElementById('DoliPaymentmethodAlert')) {
+      document.getElementById('DoliPaymentmethodAlert').innerHTML = response.data;      
+      }
+document.location = '".$url."';
+      } else {
+      if (document.getElementById('DoliPaymentmethodAlert')) {
+      document.getElementById('DoliPaymentmethodAlert').innerHTML = response.data;      
+      }
+$('#DoliconnectLoadingModal').modal('hide');
+      }
+        });
+    }
+  }); 
+          }     
+});";
+}
 $paymentmethods .= "});
 })(jQuery);";
 $paymentmethods .= '}';
-$paymentmethods .= 'window.onload=dolistripeiban();';
+$paymentmethods .= 'window.onload=dolistripeklarna();';
 $paymentmethods .= '</script><div class="d-grid gap-2">';
-$paymentmethods .= '<button id="PayIbanButton" class="btn btn-danger btn-block">'.__( 'I order', 'doliconnect').'</button>';
+$paymentmethods .= '<button id="PayKlarnaButton" class="btn btn-danger btn-block">'.__( 'I order', 'doliconnect').'</button>';
 $paymentmethods .= '</div></div></div></div>';
 }
 
