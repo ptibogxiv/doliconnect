@@ -1990,20 +1990,20 @@ $paymentmethods .= '</div></div></div></div>';
 }
 
 if (isset($listpaymentmethods->stripe) && !empty(array_intersect(array('sepa_debit'), $listpaymentmethods->stripe->types)) && empty($thirdparty->mode_reglement_id) ) {
-$paymentmethods .= '<div class="accordion-item"><h2 class="accordion-header" id="flush-headingnewpm"><button class="accordion-button';
+$paymentmethods .= '<div class="accordion-item"><h2 class="accordion-header" id="flush-headingnewsepa"><button class="accordion-button';
 if (empty($countPM) && empty(array_intersect(array('card'), $listpaymentmethods->stripe->types))) { $paymentmethods .= ""; } else { $paymentmethods .= " collapsed"; }
-$paymentmethods .= '" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapsenewpm" aria-expanded="';
+$paymentmethods .= '" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapsenewsepa" aria-expanded="';
 if (empty($countPM) && empty(array_intersect(array('card'), $listpaymentmethods->stripe->types))) { $paymentmethods .= "true"; } else { $paymentmethods .= "false"; }
-$paymentmethods .= '" aria-controls="flush-collapsenewpm">';
+$paymentmethods .= '" aria-controls="flush-collapsenewsepa">';
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
 $paymentmethods .= '<i class="fas fa-university fa-3x fa-fw float-start"></i> '.__( 'Pay by SEPA bank debit', 'doliconnect');
 } else {
 $paymentmethods .= '<i class="fas fa-plus-circle fa-3x fa-fw float-start"></i> '.__( 'Add a SEPA bank account', 'doliconnect');
 }
 $paymentmethods .= '</button></h2>';
-$paymentmethods .= '<div id="flush-collapsenewpm" class="accordion-collapse collapse';
+$paymentmethods .= '<div id="flush-collapsenewsepa" class="accordion-collapse collapse';
 if (empty($countPM) && empty(array_intersect(array('card'), $listpaymentmethods->stripe->types))) { $paymentmethods .= " show"; }
-$paymentmethods .= '" aria-labelledby="flush-headingnewpm" data-bs-parent="#accordionFlushExample"><div class="accordion-body bg-light">';
+$paymentmethods .= '" aria-labelledby="flush-headingnewsepa" data-bs-parent="#accordionFlushExample"><div class="accordion-body bg-light">';
 if ($countPM >= $maxPM && empty($object)) {
 $paymentmethods .= '<div class="text-justify"><i class="fas fa-times-circle fa-3x fa-fw float-start"></i>'.__( "You have reached limit of payment methods. Please delete a payment method for add a new one.", 'doliconnect').'</div></div></div>';
 } else {
@@ -2040,7 +2040,7 @@ ibanElement.on('change', function(event) {
   }
 });";
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
-// pay with card script
+// pay with sepa_debit script
 $paymentmethods .= "$('#PayIbanButton').on('click',function(event){
 event.preventDefault();
 $('#PayIbanButton').disabled = true;
@@ -2191,6 +2191,133 @@ $paymentmethods .= '<button id="PayIbanButton" class="btn btn-danger btn-block">
 $paymentmethods .= "<button id='AddIbanButton' class='btn btn-warning btn-block' title='".__( 'Add', 'doliconnect')."'>".__( 'Add', 'doliconnect')."</button>";
 }
 }
+$paymentmethods .= '</div></div></div></div>';
+}
+
+if (isset($listpaymentmethods->stripe) && !empty(array_intersect(array('klarna'), $listpaymentmethods->stripe->types)) && empty($thirdparty->mode_reglement_id) && !empty($module) && is_object($object) && isset($object->id) ) {
+$paymentmethods .= '<div class="accordion-item"><h2 class="accordion-header" id="flush-headingklarna"><button class="accordion-button';
+if (empty($countPM) && empty(array_intersect(array('card'), $listpaymentmethods->stripe->types))) { $paymentmethods .= ""; } else { $paymentmethods .= " collapsed"; }
+$paymentmethods .= '" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseklarna" aria-expanded="';
+if (empty($countPM) && empty(array_intersect(array('card'), $listpaymentmethods->stripe->types))) { $paymentmethods .= "true"; } else { $paymentmethods .= "false"; }
+$paymentmethods .= '" aria-controls="flush-collapseklarna">';
+$paymentmethods .= '<i class="fas fa-university fa-3x fa-fw float-start"></i> '.__( 'Pay with Klarna', 'doliconnect');
+$paymentmethods .= '</button></h2>';
+$paymentmethods .= '<div id="flush-collapseklarna" class="accordion-collapse collapse';
+if (empty($countPM) && empty(array_intersect(array('card'), $listpaymentmethods->stripe->types))) { $paymentmethods .= " show"; }
+$paymentmethods .= '" aria-labelledby="flush-headingklarna" data-bs-parent="#accordionFlushExample"><div class="accordion-body bg-light">';
+if (empty($listpaymentmethods->stripe->live)) {
+$paymentmethods .= "<i class='fas fa-info-circle'></i> <b>".__( "Stripe's in sandbox mode", 'doliconnect')."</b> <small>(<a href='https://stripe.com/docs/testing#sepa-direct-debit' target='_blank' rel='noopener'>".__( "Link to test SEPA account numbers", 'doliconnect')."</a>)</small>";
+}
+$paymentmethods .= "<div id='klarna-error-message' class='text-danger' role='alert'><!-- a Stripe Message will be inserted here. --></div>";
+$paymentmethods .= "<p class='text-justify'>";
+$paymentmethods .= "<small><strong>Note:</strong> ".sprintf( esc_html__( 'By providing your IBAN and confirming this form, you are authorizing %s and Stripe, our payment service provider, to send instructions to your bank to debit your account and your bank to debit your account in accordance with those instructions. You are entitled to a refund from your bank under the terms and conditions of your agreement with it. A refund must be claimed within 8 weeks starting from the date on which your account was debited.', 'doliconnect'), get_bloginfo('name'))."</small>";
+$paymentmethods .= "</p>";
+$paymentmethods .= '<script>';
+$paymentmethods .= "function dolistripeiban(){
+(function ($) {
+$(document).ready(function(){";
+$paymentmethods .= "var ibanElement = elements.create('iban', {style: style, supportedCountries: ['SEPA']});
+ibanElement.mount('#iban-element');
+var displayIbanError = document.getElementById('iban-error-message');
+var bankName = document.getElementById('bank-name');
+ibanElement.on('change', function(event) {
+  if (event.error) {
+    displayIbanError.textContent = event.error.message;
+    displayIbanError.classList.add('visible');
+  } else {
+    displayIbanError.classList.remove('visible');
+  }
+  if (event.bankName) {
+    bankName.textContent = event.bankName;
+    bankName.classList.add('visible');
+  } else {
+    bankName.classList.remove('visible');
+  }
+});";
+// pay with klarna script
+$paymentmethods .= "$('#PayIbanButton').on('click',function(event){
+event.preventDefault();
+$('#PayIbanButton').disabled = true;
+$('#DoliconnectLoadingModal').modal('show');
+console.log('Click on PayIbanButton');
+var ibanholderName = document.getElementById('ibanholder-name');
+if (ibanholderName.value == ''){               
+console.log('Field Card holder is empty');
+displayCardError.textContent = 'We need an owner as on your account';
+$('#PayIbanButton').disabled = false;
+$('#DoliconnectLoadingModal').modal('hide');  
+} else {
+if (document.getElementById('DoliPaymentmethodAlert')) {
+document.getElementById('DoliPaymentmethodAlert').innerHTML = '';      
+}  
+  stripe.confirmSepaDebitPayment(
+    clientSecret,
+    {
+    payment_method: {
+      sepa_debit: ibanElement,
+      billing_details: {
+        name: ibanholderName.value,
+        email: '".$listpaymentmethods->thirdparty->email."',
+      },
+    },
+    }
+  ).then(function(result) {
+    if (result.error) {
+      // Display error.message
+$('#DoliconnectLoadingModal').modal('hide');
+console.log('Error occured when using card');
+displayCardError.textContent = result.error.message;    
+    } else {
+        $.ajax({
+          url: '".esc_url( admin_url( 'admin-ajax.php' ) )."',
+          type: 'POST',
+          data: {
+            'action': 'dolicart_request',
+            'dolicart-nonce': '".wp_create_nonce( 'dolicart-nonce')."',
+            'action_cart': 'pay_cart',
+            'module': '".$module."',
+            'id': '".$object->id."',
+            'paymentintent': result.paymentIntent.id,
+            'paymentmethod': result.paymentIntent.payment_method, 
+            'default': $('input:radio[name=cardDefault]:checked').val()       
+          }
+        }).done(function(response) {
+$(window).scrollTop(0); 
+console.log(response.data);
+if (response.success) {
+
+if (document.getElementById('nav-tab-pay')) {
+document.getElementById('nav-tab-pay').innerHTML = response.data;      
+}
+$('#a-tab-cart').addClass('disabled');
+if (document.getElementById('nav-tab-cart')) {
+document.getElementById('nav-tab-cart').remove();    
+}
+$('#a-tab-info').addClass('disabled')
+if (document.getElementById('nav-tab-info')) {
+document.getElementById('nav-tab-info').remove();    
+};
+
+} else {
+
+if (document.getElementById('DoliPaymentmethodAlert')) {
+document.getElementById('DoliPaymentmethodAlert').innerHTML = response.data;      
+}
+
+}
+console.log(response.data.message);
+$('#DoliconnectLoadingModal').modal('hide');
+});
+}
+});
+        }     
+});";
+$paymentmethods .= "});
+})(jQuery);";
+$paymentmethods .= '}';
+$paymentmethods .= 'window.onload=dolistripeiban();';
+$paymentmethods .= '</script><div class="d-grid gap-2">';
+$paymentmethods .= '<button id="PayIbanButton" class="btn btn-danger btn-block">'.__( 'I order', 'doliconnect').'</button>';
 $paymentmethods .= '</div></div></div></div>';
 }
 
