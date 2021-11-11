@@ -2233,7 +2233,7 @@ if (1 == 7){
       billing_details: {
         email: '".$listpaymentmethods->thirdparty->email."',
         address: {
-          country: 'FR',
+          country: '".$listpaymentmethods->thirdparty->countrycode."',
         },
       },
     },
