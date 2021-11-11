@@ -2206,7 +2206,7 @@ $paymentmethods .= '<div id="flush-collapseklarna" class="accordion-collapse col
 if (empty($countPM) && empty(array_intersect(array('card'), $listpaymentmethods->stripe->types))) { $paymentmethods .= " show"; }
 $paymentmethods .= '" aria-labelledby="flush-headingklarna" data-bs-parent="#accordionFlushExample"><div class="accordion-body bg-light">';
 if (empty($listpaymentmethods->stripe->live)) {
-$paymentmethods .= "<i class='fas fa-info-circle'></i> <b>".__( "Stripe's in sandbox mode", 'doliconnect')."</b> <small>(<a href='https://stripe.com/docs/testing#sepa-direct-debit' target='_blank' rel='noopener'>".__( "Link to test SEPA account numbers", 'doliconnect')."</a>)</small>";
+$paymentmethods .= "<i class='fas fa-info-circle'></i> <b>".__( "Stripe's in sandbox mode", 'doliconnect')."</b> <small>(<a href='https://stripe.com/docs/payments/klarna/accept-a-payment?platform=web#repayment-method' target='_blank' rel='noopener'>".__( "Link to test SEPA account numbers", 'doliconnect')."</a>)</small>";
 }
 $paymentmethods .= "<div id='klarna-error-message' class='text-danger' role='alert'><!-- a Stripe Message will be inserted here. --></div>";
 $paymentmethods .= "<p class='text-justify'>";
