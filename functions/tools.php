@@ -2206,10 +2206,10 @@ $paymentmethods .= '<div id="flush-collapseklarna" class="accordion-collapse col
 if (empty($countPM) && empty(array_intersect(array('card'), $listpaymentmethods->stripe->types))) { $paymentmethods .= " show"; }
 $paymentmethods .= '" aria-labelledby="flush-headingklarna" data-bs-parent="#accordionFlushExample"><div class="accordion-body bg-light">';
 if (empty($listpaymentmethods->stripe->live)) {
-$paymentmethods .= "<i class='fas fa-info-circle'></i> <b>".__( "Stripe's in sandbox mode", 'doliconnect')."</b> <small>(<a href='https://stripe.com/docs/payments/klarna/accept-a-payment?platform=web#repayment-method' target='_blank' rel='noopener'>".__( "Link to test SEPA account numbers", 'doliconnect')."</a>)</small>";
+$paymentmethods .= "<i class='fas fa-info-circle'></i> <b>".__( "Stripe's in sandbox mode", 'doliconnect')."</b> <small>(<a href='https://stripe.com/docs/payments/klarna/accept-a-payment?platform=web#repayment-method' target='_blank' rel='noopener'>".__( "Link to test Klarna", 'doliconnect')."</a>)</small>";
 }
 $paymentmethods .= "<div id='klarna-error-message' class='text-danger' role='alert'><!-- a Stripe Message will be inserted here. --></div>";
-$paymentmethods .= "<p class='text-justify'>";
+$paymentmethods .= "<p class='text-justify'>".$url;
 $paymentmethods .= "<small><strong>Note:</strong> ".sprintf( esc_html__( 'By providing your IBAN and confirming this form, you are authorizing %s and Stripe, our payment service provider, to send instructions to your bank to debit your account and your bank to debit your account in accordance with those instructions. You are entitled to a refund from your bank under the terms and conditions of your agreement with it. A refund must be claimed within 8 weeks starting from the date on which your account was debited.', 'doliconnect'), get_bloginfo('name'))."</small>";
 $paymentmethods .= "</p>";
 $paymentmethods .= '<script>';
