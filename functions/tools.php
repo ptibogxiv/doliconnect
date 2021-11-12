@@ -1626,9 +1626,19 @@ $paymentmethods .= "var clientSecret = '".$listpaymentmethods->stripe->client_se
 $paymentmethods .= '</script>';
 }
 
-if ($array["payment_intent"] && $array["payment_intent_client_secret"] && $array["redirect_status"]) {
-$paymentmethods .= $array["payment_intent"]."<script>";
-$paymentmethods .= '</script>';
+if ($array["payment_intent"] && $array["payment_intent_client_secret"] && $array["redirect_status"] ) {
+$paymentmethods .= "<script>";
+$paymentmethods .= "(function ($) {
+$(document).ready(function(){
+$('#DoliconnectLoadingModal').modal('show');
+stripe.retrievePaymentIntent('".$array["payment_intent_client_secret"]."')
+  .then(function(result) {
+    // Handle result.error or result.paymentIntent
+    alert(result.paymentIntent.status);
+  });
+ });  
+})(jQuery);";
+$paymentmethods .= "</script>";
 }
 
 //if ( isset($listpaymentmethods->stripe) && in_array('payment_request_api', $listpaymentmethods->stripe->types) && !empty($module) && is_object($object) && isset($object->id) && empty($thirdparty->mode_reglement_id) ) {
