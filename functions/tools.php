@@ -1626,7 +1626,7 @@ $paymentmethods .= "var clientSecret = '".$listpaymentmethods->stripe->client_se
 $paymentmethods .= '</script>';
 }
 
-if ($array["payment_intent"] && $array["payment_intent_client_secret"] && $array["redirect_status"] ) {
+if (isset($array["payment_intent"]) && isset($array["payment_intent_client_secret"]) && isset($array["redirect_status"]) ) {
 $paymentmethods .= "<script>";
 $paymentmethods .= "(function ($) {
 $(document).ready(function(){

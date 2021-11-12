@@ -1970,7 +1970,11 @@ if (isset($_GET['stage']) && $_GET['stage'] == 'payment' && isset($object) && is
 print '" role="tabpanel" id="nav-tab-pay">';
 
 if ( doliversion('11.0.0') ) {
-print doliconnect_paymentmethods($object, esc_attr($module), $return, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), array("payment_intent" => $_GET["payment_intent"], "payment_intent_client_secret" => $_GET["payment_intent_client_secret"], "redirect_status" => $_GET["redirect_status"]));
+$array = array();
+if (isset($_GET["payment_intent"])) $array["payment_intent"] = $_GET["payment_intent"];
+if (isset($_GET["payment_intent_client_secret"])) $array["payment_intent_client_secret"] = $_GET["payment_intent_client_secret"];
+if (isset($_GET["redirect_status"])) $array["redirect_status"] = $_GET["redirect_status"];
+print doliconnect_paymentmethods($object, esc_attr($module), $return, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), $array);
 } else {
 print __( "It seems that your version of Dolibarr and/or its plugins are not up to date!", "doliconnect");
 }
