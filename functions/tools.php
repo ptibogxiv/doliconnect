@@ -1570,7 +1570,7 @@ print '</ul></div>
 }
 add_action( 'wp_footer', 'doliconnect_langs', 10, 1);
 
-function doliconnect_paymentmethods($object = null, $module = null, $url = null, $refresh = false) {
+function doliconnect_paymentmethods($object = null, $module = null, $url = null, $refresh = false, $array = array()) {
 global $current_user;
 
 $request = "/doliconnector/".doliconnector($current_user, 'fk_soc')."/paymentmethods";
@@ -1623,6 +1623,11 @@ $paymentmethods .= "var elements = stripe.elements();";
 if (!empty($listpaymentmethods->stripe->client_secret)) { 
 $paymentmethods .= "var clientSecret = '".$listpaymentmethods->stripe->client_secret."';";
 }
+$paymentmethods .= '</script>';
+}
+
+if ($array["payment_intent"] && $array["payment_intent_client_secret"] && $array["redirect_status"]) {
+$paymentmethods .= $array["payment_intent"]."<script>";
 $paymentmethods .= '</script>';
 }
 
