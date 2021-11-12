@@ -1634,7 +1634,47 @@ $('#DoliconnectLoadingModal').modal('show');
 stripe.retrievePaymentIntent('".$array["payment_intent_client_secret"]."')
   .then(function(result) {
     // Handle result.error or result.paymentIntent
-    alert(result.paymentIntent.status);
+    if (result.error) {
+if (document.getElementById('DoliPaymentmethodAlert')) {
+document.getElementById('DoliPaymentmethodAlert').innerHTML = result.error;      
+}
+    $('#DoliconnectLoadingModal').modal('hide');  
+    } else {
+        $.ajax({
+          url: '".esc_url( admin_url( 'admin-ajax.php' ) )."',
+          type: 'POST',
+          data: {
+            'action': 'dolicart_request',
+            'dolicart-nonce': '".wp_create_nonce( 'dolicart-nonce')."',
+            'action_cart': 'pay_cart',
+            'module': '".$module."',
+            'id': '".$object->id."',
+            'paymentintent': result.paymentIntent.id,
+            'paymentmethod': result.paymentIntent.payment_method,     
+          }
+        }).done(function(response) {
+$(window).scrollTop(0); 
+console.log(response.data);
+$('#DoliconnectLoadingModal').modal('hide'); 
+if (response.success) {
+if (document.getElementById('nav-tab-pay')) {
+document.getElementById('nav-tab-pay').innerHTML = response.data;      
+}
+$('#a-tab-cart').addClass('disabled');
+if (document.getElementById('nav-tab-cart')) {
+document.getElementById('nav-tab-cart').remove();    
+}
+$('#a-tab-info').addClass('disabled')
+if (document.getElementById('nav-tab-info')) {
+document.getElementById('nav-tab-info').remove();    
+};
+} else {
+if (document.getElementById('DoliPaymentmethodAlert')) {
+document.getElementById('DoliPaymentmethodAlert').innerHTML = response.error;      
+}
+}
+});  
+    }  
   });
  });  
 })(jQuery);";
