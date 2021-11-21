@@ -41,7 +41,7 @@ require_once plugin_dir_path(__FILE__).'/blocks/index.php';
 //include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 
 define('DOLIBARR_MINIMUM_VERSION', '12.0.5');
-define('DOLIBARR_LEGAL_VERSION', '14.0.3');
+define('DOLIBARR_LEGAL_VERSION', '14.0.4');
 // ********************************************************
 function doliconnecturl($page) {
 global $wpdb;
@@ -336,7 +336,7 @@ return $dolibarr;
 }
 
 // ********************************************************
-/* Bloquer accès aux non-admins */
+/* Bloquer accï¿½s aux non-admins */
 add_action('init', 'doliconnect_block_dashboard');
 function doliconnect_block_dashboard() {
 	$file = basename($_SERVER['PHP_SELF']);
