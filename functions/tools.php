@@ -37,6 +37,30 @@ $return = true;
 return $return;
 }
 
+function dolicaptcha() {
+  $arrX = array("car"=>array("label"=>__( "car", "doliconnect"),"icon"=>"car"),"carrot"=>array("label"=>__( "carrot", "doliconnect"),"icon"=>"carrot"),"male"=>array("label"=>__( "male", "doliconnect"),"icon"=>"male"),"laptop"=>array("label"=>__( "laptop", "doliconnect"),"icon"=>"laptop"),"female"=>array("label"=>__( "female", "doliconnect"),"icon"=>"female"),"seedling"=>array("label"=>__( "seedling", "doliconnect"),"icon"=>"seedling"),"bacterium"=>array("label"=>__( "bacterium", "doliconnect"),"icon"=>"bacterium"));
+ 
+  // get 2 random indexes from array $arrX
+  $randIndex = array_rand($arrX, 4);
+  $controle = array_rand($randIndex, 1); 
+
+  $captcha = '<label for="btncaptcha" class="form-label">'.__( 'Please select the correct icon: ', 'doliconnect').''.$arrX[$randIndex[$controle]]['label'].'</label><div class="d-flex btn-group" role="group" aria-label="Basic radio toggle button group" required>
+  <input type="radio" class="btn-check" name="btncaptcha" id="btncaptcha1" autocomplete="off">
+  <label class="btn btn-outline-secondary" for="btncaptcha1"><i class="fas fa-'.$arrX[$randIndex[0]]['icon'].' fa-fw"></i></label>
+
+  <input type="radio" class="btn-check" name="btncaptcha" id="btncaptcha2" autocomplete="off">
+  <label class="btn btn-outline-secondary" for="btncaptcha2"><i class="fas fa-'.$arrX[$randIndex[1]]['icon'].' fa-fw"></i></label>
+
+  <input type="radio" class="btn-check" name="btncaptcha" id="btncaptcha3" autocomplete="off">
+  <label class="btn btn-outline-secondary" for="btncaptcha3"><i class="fas fa-'.$arrX[$randIndex[2]]['icon'].' fa-fw"></i></label>
+
+  <input type="radio" class="btn-check" name="btncaptcha" id="btncaptcha4" autocomplete="off">
+  <label class="btn btn-outline-secondary" for="btncaptcha4"><i class="fas fa-'.$arrX[$randIndex[3]]['icon'].' fa-fw"></i></label>
+</div>';
+
+return $captcha;
+}
+
 function dolisanitize($object) {
 
 if (isset($object['firstname'])) $object['firstname'] = ucfirst(strtolower(stripslashes(sanitize_text_field($object['firstname']))));

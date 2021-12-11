@@ -676,10 +676,10 @@ if( ! empty($_POST['email-control']) )   //! $is_valid  || !
 $emailError = __( 'Your request is unsuccessful', 'doliconnect');
 } elseif ( isset($_POST['submitted']) ) {
 
-$gdrf_human     = absint( filter_input( INPUT_POST, 'gdrf_data_human', FILTER_SANITIZE_NUMBER_INT ) );
-$gdrf_human_key = esc_html( filter_input( INPUT_POST, 'gdrf_data_human_key', FILTER_SANITIZE_STRING ) );
-$gdrf_numbers   = explode( '000', $gdrf_human_key );
-$gdrf_answer    = absint( $gdrf_numbers[0] ) + absint( $gdrf_numbers[1] ); 
+///$gdrf_human     = absint( filter_input( INPUT_POST, 'gdrf_data_human', FILTER_SANITIZE_NUMBER_INT ) );
+//$gdrf_human_key = esc_html( filter_input( INPUT_POST, 'gdrf_data_human_key', FILTER_SANITIZE_STRING ) );
+//$gdrf_numbers   = explode( '000', $gdrf_human_key );
+//$gdrf_answer    = absint( $gdrf_numbers[0] ) + absint( $gdrf_numbers[1] ); 
 
     if ( sanitize_text_field($_POST['contactName']) === '' ) {
         $ContactError = __( 'Please enter your name.', 'doliconnect');
@@ -799,12 +799,14 @@ print '<div class="form-floating mb-2">
 </div>';
 
 // Captcha
-$number_one = wp_rand( 1, 9 );
-$number_two = wp_rand( 1, 9 );
-print '<div class="form-floating">
-<input type="text" class="form-control" id="gdrf_data_human" placeholder="name@example.com" name="gdrf_data_human" value="">
-<label for="gdrf_data_human"><i class="fas fa-shield-alt fa-fw"></i> '.__( 'Human verification:', 'doliconnect').' '.$number_one . ' + ' . $number_two . ' = ?</label>
-</div><input type="hidden" name="gdrf_data_human_key" id="gdrf_data_human_key" value="'.$number_one . '000' . $number_two.'">';
+//$number_one = wp_rand( 1, 9 );
+//$number_two = wp_rand( 1, 9 );
+//print '<div class="form-floating">
+//<input type="text" class="form-control" id="gdrf_data_human" placeholder="name@example.com" name="gdrf_data_human" value="">
+//<label for="gdrf_data_human"><i class="fas fa-shield-alt fa-fw"></i> '.__( 'Human verification:', 'doliconnect').' '.$number_one . ' + ' . $number_two . ' = ?</label>
+//</div><input type="hidden" name="gdrf_data_human_key" id="gdrf_data_human_key" value="'.$number_one . '000' . $number_two.'">';
+
+print dolicaptcha();
 
 if ( !is_user_logged_in() ) {
 print '</li><li class="list-group-item"><div class="form-check"><input id="rgpdinfo" class="form-check-input form-check-sm" type="checkbox" name="rgpdinfo" value="ok"><label class="form-check-label w-100" for="rgpdinfo"><small class="form-text text-muted"> '.__( 'I agree to save my personnal informations in order to contact me', 'doliconnect').'</small></label></div>';  
