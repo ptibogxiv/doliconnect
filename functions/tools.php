@@ -51,7 +51,7 @@ function dolicaptcha() {
   <input type="radio" class="btn-check" name="btndolicaptcha" id="btndolicaptcha2" autocomplete="off">
   <label class="btn btn-outline-secondary" for="btndolicaptcha2"><i class="fas fa-'.$arrX[$randIndex[1]]['icon'].' fa-fw"></i></label>
 
-  <input type="radio" class="btn-check" name="btndolicaptcha" id="btndolicaptcha3" autocomplete="off">
+  <input type="radio" class="btn-check" name="btndolicaptcha" id="btndolicaptcha3" value="'.$arrX[$randIndex[2]]['icon'].'" autocomplete="off">
   <label class="btn btn-outline-secondary" for="btndolicaptcha3"><i class="fas fa-'.$arrX[$randIndex[2]]['icon'].' fa-fw"></i></label>
 
   <input type="radio" class="btn-check" name="btndolicaptcha" id="btndolicaptcha4" autocomplete="off">
