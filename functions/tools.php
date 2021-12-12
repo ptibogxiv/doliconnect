@@ -44,18 +44,18 @@ function dolicaptcha() {
   $randIndex = array_rand($arrX, 4);
   $controle = array_rand($randIndex, 1); 
 
-  $captcha = '<label for="btncaptcha" class="form-label">'.__( 'Please select the correct icon: ', 'doliconnect').''.$arrX[$randIndex[$controle]]['label'].'</label><div class="d-flex btn-group" role="group" aria-label="Basic radio toggle button group" required>
-  <input type="radio" class="btn-check" name="btncaptcha" id="btncaptcha1" autocomplete="off">
-  <label class="btn btn-outline-secondary" for="btncaptcha1"><i class="fas fa-'.$arrX[$randIndex[0]]['icon'].' fa-fw"></i></label>
+  $captcha = '<label for="btndolicaptcha" class="form-label">'.__( 'Please select the correct icon: ', 'doliconnect').''.$arrX[$randIndex[$controle]]['label'].'</label><div class="d-flex btn-group" role="group" aria-label="Basic radio toggle button group" required>
+  <input type="radio" class="btn-check" name="btndolicaptcha" id="btndolicaptcha1" autocomplete="off">
+  <label class="btn btn-outline-secondary" for="btndolicaptcha1"><i class="fas fa-'.$arrX[$randIndex[0]]['icon'].' fa-fw"></i></label>
 
-  <input type="radio" class="btn-check" name="btncaptcha" id="btncaptcha2" autocomplete="off">
-  <label class="btn btn-outline-secondary" for="btncaptcha2"><i class="fas fa-'.$arrX[$randIndex[1]]['icon'].' fa-fw"></i></label>
+  <input type="radio" class="btn-check" name="btndolicaptcha" id="btndolicaptcha2" autocomplete="off">
+  <label class="btn btn-outline-secondary" for="btndolicaptcha2"><i class="fas fa-'.$arrX[$randIndex[1]]['icon'].' fa-fw"></i></label>
 
-  <input type="radio" class="btn-check" name="btncaptcha" id="btncaptcha3" autocomplete="off">
-  <label class="btn btn-outline-secondary" for="btncaptcha3"><i class="fas fa-'.$arrX[$randIndex[2]]['icon'].' fa-fw"></i></label>
+  <input type="radio" class="btn-check" name="btndolicaptcha" id="btndolicaptcha3" autocomplete="off">
+  <label class="btn btn-outline-secondary" for="btndolicaptcha3"><i class="fas fa-'.$arrX[$randIndex[2]]['icon'].' fa-fw"></i></label>
 
-  <input type="radio" class="btn-check" name="btncaptcha" id="btncaptcha4" autocomplete="off">
-  <label class="btn btn-outline-secondary" for="btncaptcha4"><i class="fas fa-'.$arrX[$randIndex[3]]['icon'].' fa-fw"></i></label>
+  <input type="radio" class="btn-check" name="btndolicaptcha" id="btndolicaptcha4" autocomplete="off">
+  <label class="btn btn-outline-secondary" for="btndolicaptcha4"><i class="fas fa-'.$arrX[$randIndex[3]]['icon'].' fa-fw"></i></label>
 </div>';
 
 return $captcha;

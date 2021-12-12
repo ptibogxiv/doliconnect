@@ -707,7 +707,7 @@ $emailError = __( 'Your request is unsuccessful', 'doliconnect');
 
     }
     
-		if ( intval( $gdrf_answer ) !== intval( $gdrf_human ) ) {
+		if ( $_POST['btndolicaptcha'] !== intval( $gdrf_human ) ) {
 				$ContactError = __( 'Security check failed, invalid human verification field.', 'doliconnect');
         $hasError = true;
 		}
