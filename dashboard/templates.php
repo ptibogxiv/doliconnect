@@ -707,7 +707,7 @@ $emailError = __( 'Your request is unsuccessful', 'doliconnect');
 
     }
     
-		if ( !isset($_POST['btndolicaptcha']) || !wp_verify_nonce( $_POST['ctrldolicaptcha'], 'ctrldolicaptcha-'.$_POST['btndolicaptcha']) ) {
+		if ( !isset($_POST['btndolicaptcha']) || empty(wp_verify_nonce( $_POST['ctrldolicaptcha'], 'ctrldolicaptcha-'.$_POST['btndolicaptcha'])) ) {
 				$ContactError = __( 'Security check failed, invalid human verification field.', 'doliconnect');
         $hasError = true;
 		}
