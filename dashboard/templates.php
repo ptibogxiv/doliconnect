@@ -707,11 +707,11 @@ $emailError = __( 'Your request is unsuccessful', 'doliconnect');
 
     }
     
-		if ( $_POST['btndolicaptcha'] !== intval( $gdrf_human ) ) {
+		if ( !isset($_POST['btndolicaptcha']) || !wp_verify_nonce( $_POST['ctrldolicaptcha'], 'ctrldolicaptcha-'.$_POST['btndolicaptcha']) ) {
 				$ContactError = __( 'Security check failed, invalid human verification field.', 'doliconnect');
         $hasError = true;
 		}
-    
+
     if ( defined("DOLICONNECT_DEMO") ) {
         $ContactError = __( 'Send message is not permitted because the demo mode is active', 'doliconnect');       
         $hasError = true;
