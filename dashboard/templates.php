@@ -676,11 +676,6 @@ if( ! empty($_POST['email-control']) )   //! $is_valid  || !
 $emailError = __( 'Your request is unsuccessful', 'doliconnect');
 } elseif ( isset($_POST['submitted']) ) {
 
-///$gdrf_human     = absint( filter_input( INPUT_POST, 'gdrf_data_human', FILTER_SANITIZE_NUMBER_INT ) );
-//$gdrf_human_key = esc_html( filter_input( INPUT_POST, 'gdrf_data_human_key', FILTER_SANITIZE_STRING ) );
-//$gdrf_numbers   = explode( '000', $gdrf_human_key );
-//$gdrf_answer    = absint( $gdrf_numbers[0] ) + absint( $gdrf_numbers[1] ); 
-
     if ( sanitize_text_field($_POST['contactName']) === '' ) {
         $ContactError = __( 'Please enter your name.', 'doliconnect');
         $hasError = true;
@@ -797,14 +792,6 @@ print '<div class="form-floating mb-2">
 <textarea class="form-control" placeholder="Leave a comment here" name="comments" id="commentsText" style="height: 200px">'.stripslashes(htmlspecialchars(isset($_POST['comments'])?$_POST['comments']:null, ENT_QUOTES)).'</textarea>
 <label for="commentsText">'.__( 'Message', 'doliconnect').'</label>
 </div>';
-
-// Captcha
-//$number_one = wp_rand( 1, 9 );
-//$number_two = wp_rand( 1, 9 );
-//print '<div class="form-floating">
-//<input type="text" class="form-control" id="gdrf_data_human" placeholder="name@example.com" name="gdrf_data_human" value="">
-//<label for="gdrf_data_human"><i class="fas fa-shield-alt fa-fw"></i> '.__( 'Human verification:', 'doliconnect').' '.$number_one . ' + ' . $number_two . ' = ?</label>
-//</div><input type="hidden" name="gdrf_data_human_key" id="gdrf_data_human_key" value="'.$number_one . '000' . $number_two.'">';
 
 print dolicaptcha();
 
