@@ -756,16 +756,14 @@ print "<div class='card shadow-sm'><ul class='list-group list-group-flush'>
 <li class='list-group-item'>";
 
 print '<div class="form-floating mb-2">
-<input type="text" class="form-control" name="contactName" autocomplete="off" id="contactName" placeholder="Name" value="';
-if ( is_user_logged_in() ) { print $current_user->user_lastname." ".$current_user->user_firstname; } else { print ""; }
-print '"';
+<input type="text" class="form-control" name="contactName" autocomplete="off" id="contactName" placeholder="Name" value="'.(isset($_POST['contactName'])?$_POST['contactName']:$current_user->user_lastname." ".$current_user->user_firstname).'"';
 if ( is_user_logged_in() ) { print " readonly"; } else { print " required"; }
 print '>
 <label for="contactName"><i class="fas fa-user fa-fw"></i> '.__( 'Complete name', 'doliconnect').'</label>
 </div>';
 
 print '<div class="form-floating mb-2">
-<input type="email" class="form-control" id="email" name="email" placeholder="name@example.com" value="'.$current_user->user_email.'" autocomplete="off" ';
+<input type="email" class="form-control" id="email" name="email" placeholder="name@example.com" value="'.(isset($_POST['email'])?$_POST['email']:$current_user->user_email).'" autocomplete="off" ';
 if ( is_user_logged_in() ) { print " readonly"; } else { print " required"; }
 print '>
 <label for="email"><i class="fas fa-at fa-fw"></i> '.__( 'Email', 'doliconnect').'</label>
