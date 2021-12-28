@@ -113,6 +113,7 @@ function doliconnect_run() {
 $array=array();
 if ( !empty(doliconnectid('doliaccount')) ) { $array[]=doliconnectid('doliaccount'); }
 if ( !empty(doliconnectid('dolicart')) ) { $array[]=doliconnectid('dolicart'); }
+if ( !empty(doliconnectid('dolicontact')) ) { $array[]=doliconnectid('dolicontact'); }
 if ( !empty($array) && is_page( $array ) ) {
 if ( !defined ('DONOTCACHEPAGE') ) {
 define( 'DONOTCACHEPAGE', 1);
