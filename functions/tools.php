@@ -920,13 +920,9 @@ print "</div></li>";
 }
 
 if ( !is_user_logged_in() ) {
-// Captcha
-$number_one = wp_rand( 1, 9 );
-$number_two = wp_rand( 1, 9 );
-print '<li class="list-group-item list-group-item-light list-group-item-action"><div class="form-floating">
-<input type="text" class="form-control" id="gdrf_data_human" placeholder="name@example.com" name="gdrf_data_human" value="" required>
-<label for="gdrf_data_human"><i class="fas fa-shield-alt"></i> '.__( 'Human verification:', 'doliconnect').' '.$number_one . ' + ' . $number_two . ' = ?</label>
-</div><input type="hidden" name="gdrf_data_human_key" id="gdrf_data_human_key" value="'.$number_one . '000' . $number_two.'"></li>';
+  print "<li class='list-group-item list-group-item-light list-group-item-action'>";
+  print dolicaptcha();
+  print "</li>";
 }
 
 if ( !is_user_logged_in() && in_array($mode, array('thirdparty','linkthirdparty')) ) {
