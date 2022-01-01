@@ -246,10 +246,6 @@ exit;
 if ( isset($_POST['submitted']) ) {
 
 $thirdparty=$_POST['thirdparty'];
-$gdrf_human     = absint( filter_input( INPUT_POST, 'gdrf_data_human', FILTER_SANITIZE_NUMBER_INT ) );
-$gdrf_human_key = esc_html( filter_input( INPUT_POST, 'gdrf_data_human_key', FILTER_SANITIZE_STRING ) );
-$gdrf_numbers   = explode( '000', $gdrf_human_key );
-$gdrf_answer    = absint( $gdrf_numbers[0] ) + absint( $gdrf_numbers[1] );
   
     if (email_exists($thirdparty['email'])) {
         $emailError = __( 'This email address is already linked to an account. You can reactivate your account through this <a href=\'".wp_lostpassword_url( get_permalink() )."\' title=\'lost password\'>form</a>.', 'doliconnect');
@@ -269,10 +265,10 @@ $gdrf_answer    = absint( $gdrf_numbers[0] ) + absint( $gdrf_numbers[1] );
         $hasError = true;
     }
     
-		if ( intval( $gdrf_answer ) !== intval( $gdrf_human ) ) {
-				$emailError = __( 'Security check failed, invalid human verification field.', 'doliconnect');
+	if ( !isset($_POST['btndolicaptcha']) || empty(wp_verify_nonce( $_POST['ctrldolicaptcha'], 'ctrldolicaptcha-'.$_POST['btndolicaptcha'])) ) {
+        $ContactError = __( 'Security check failed, invalid human verification field.', 'doliconnect');
         $hasError = true;
-		}
+    }
           
     if ( defined("DOLICONNECT_DEMO") ) {
         $emailError = __( 'Create account is not permitted because the demo mode is active', 'doliconnect');       
