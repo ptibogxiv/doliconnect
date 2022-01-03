@@ -103,8 +103,8 @@ $html .=  __( 'then', 'doliconnect' )." ".doliprice($postadh->amount);
 $html .= "(".doliprice($postadh->price_prorata);
 } 
 $html .= ")</small>";
-if (isset($postadh->note) && !empty($postadh->note)) print "<br><small class='text-justify text-muted '>".doliproduct($postadh, 'note')."</small>";
-if (isset($postadh->description) && !empty($postadh->description)) print "<br><small class='text-justify text-muted '>".doliproduct($postadh, 'description')."</small>";
+if (isset($postadh->note) && !empty($postadh->note)) $html .= "<br><small class='text-justify text-muted '>".doliproduct($postadh, 'note')."</small>";
+if (isset($postadh->description) && !empty($postadh->description)) $html .= "<br><small class='text-justify text-muted '>".doliproduct($postadh, 'description')."</small>";
 if (!empty(number_format($postadh->federal))) $html .= "<br><small class='text-justify text-muted '>".__( 'Including a federal part of', 'doliconnect-pro')." ".doliprice($postadh->federal)."</small>";
 $html .= "</div>";
 if ( function_exists('doliconnect_membership_modal') ) {
