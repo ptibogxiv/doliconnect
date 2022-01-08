@@ -127,6 +127,7 @@ add_action('wp_ajax_nopriv_dolifpw_request', 'dolifpw_request');
 function dolifpw_request(){
 	$gdrf_error     = array();
 	$gdrf_email     = sanitize_email( $_POST['user_email'] );
+	$gdrf_nonce     = esc_html( filter_input( INPUT_POST, 'dolifpw-nonce', FILTER_SANITIZE_STRING ) );
 
 	if ( ! empty( $gdrf_email ) && ! empty( $_POST['btndolicaptcha'] ) ) {
 		if ( ! wp_verify_nonce( $gdrf_nonce, 'dolifpw-nonce' ) ) {
