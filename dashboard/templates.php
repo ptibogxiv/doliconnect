@@ -508,13 +508,7 @@ print '<div class="form-floating mb-2">
 <label for="user_email"><i class="fas fa-at fa-fw"></i> '.__( 'Email', 'doliconnect').'</label>
 </div>';
 
-// Captcha
-$number_one = wp_rand( 1, 9 );
-$number_two = wp_rand( 1, 9 );
-print '<div class="form-floating">
-<input type="text" class="form-control" id="gdrf_data_human" placeholder="name@example.com" name="gdrf_data_human" value="" required>
-<label for="gdrf_data_human"><i class="fas fa-shield-alt fa-fw"></i> '.__( 'Human verification:', 'doliconnect').' '.$number_one . ' + ' . $number_two . ' = ?</label>
-</div><input type="hidden" name="gdrf_data_human_key" id="gdrf_data_human_key" value="'.$number_one . '000' . $number_two.'">';
+print dolicaptcha();
 
 print "</li></lu><div class='card-body'>";
 print '<div class="d-grid gap-2"><button class="btn btn-outline-secondary" type="submit" value="submit">'.__( 'Submit', 'doliconnect').'</button></div>';
