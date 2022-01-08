@@ -127,24 +127,19 @@ add_action('wp_ajax_nopriv_dolifpw_request', 'dolifpw_request');
 function dolifpw_request(){
 	$gdrf_error     = array();
 	$gdrf_email     = sanitize_email( $_POST['user_email'] );
-	$gdrf_human     = absint( filter_input( INPUT_POST, 'gdrf_data_human', FILTER_SANITIZE_NUMBER_INT ) );
-	$gdrf_human_key = esc_html( filter_input( INPUT_POST, 'gdrf_data_human_key', FILTER_SANITIZE_STRING ) );
-	$gdrf_numbers   = explode( '000', $gdrf_human_key );
-	$gdrf_answer    = absint( $gdrf_numbers[0] ) + absint( $gdrf_numbers[1] );
-	$gdrf_nonce     = esc_html( filter_input( INPUT_POST, 'dolifpw-nonce', FILTER_SANITIZE_STRING ) );
-  
-	if ( ! empty( $gdrf_email ) && ! empty( $gdrf_human ) ) {
+
+	if ( ! empty( $gdrf_email ) && ! empty( $_POST['btndolicaptcha'] ) ) {
 		if ( ! wp_verify_nonce( $gdrf_nonce, 'dolifpw-nonce' ) ) {
 			$gdrf_error[] = esc_html__( 'Security check failed, please refresh this page and try to submit the form again.', 'doliconnect');
 		} else {
+			if ( !isset($_POST['btndolicaptcha']) || empty(wp_verify_nonce( $_POST['ctrldolicaptcha'], 'ctrldolicaptcha-'.$_POST['btndolicaptcha'])) ) {
+				$gdrf_error[] = esc_html__( 'Security check failed, invalid human verification field.', 'doliconnect');
+			}
 			if ( ! is_email( $gdrf_email ) ) {
 				$gdrf_error[] = esc_html__( 'This is not a valid email address.', 'doliconnect');
 			}
 			if ( ! email_exists( $gdrf_email ) ) {
 				$gdrf_error[] = esc_html__( 'No account seems to be linked to this email address', 'doliconnect');
-			}
-			if ( intval( $gdrf_answer ) !== intval( $gdrf_human ) ) {
-				$gdrf_error[] = esc_html__( 'Security check failed, invalid human verification field.', 'doliconnect');
 			}
 		}
 	} else {
