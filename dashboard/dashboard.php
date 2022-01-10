@@ -1611,13 +1611,13 @@ if ( !empty(doliconst('MAIN_MODULE_RECRUITMENT')) ) {
     
     if ( isset($_GET['id']) && $_GET['id'] > 0 ) { 
      
-    $request = "/donations/".esc_attr($_GET['id']);
+    $request = "/recruitment/jobposition/".esc_attr($_GET['id']);
     
     $donationfo = callDoliApi("GET", $request, null, dolidelay('donation', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
     //print $donationfo;
     }
     
-    if ( !isset($donationfo->error) && isset($_GET['id']) && isset($_GET['ref']) && (doliconnector($current_user, 'fk_soc') == $donationfo->socid ) && ($_GET['ref'] == $donationfo->ref) && $donationfo->statut != 0 ) {
+    if ( !isset($donationfo->error) && isset($_GET['id']) && isset($_GET['ref']) && (doliconnector($current_user, 'fk_soc') == $donationfo->fk_soc ) && ($_GET['ref'] == $donationfo->ref) && $donationfo->status != 0 ) {
     
     print "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>$donationfo->ref</h5><div class='row'><div class='col-md-5'>";
     $datecommande =  wp_date('d/m/Y', $donationfo->date_creation);
