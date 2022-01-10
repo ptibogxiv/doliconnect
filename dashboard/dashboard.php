@@ -1539,13 +1539,15 @@ print "</div></div></li>";
 print "<li class='list-group-item list-group-item-info'>";
 print "<b>".__( 'Amount', 'doliconnect').": ".doliprice($donationfo, 'amount', isset($donationfo->multicurrency_code) ? $donationfo->multicurrency_code : null)."</b>";
 print "</li>";
-print "</ul></div>";
+print "</ul>";
 
+print "<div class='card-footer text-muted'>";
 print "<small><div class='float-start'>";
 if ( isset($request) ) print dolirefresh($request, $url, dolidelay('donation'), $donationfo);
 print "</div><div class='float-end'>";
 print dolihelp('COM');
 print "</div></small>";
+print "</div></div>";
 
 } else {
 
@@ -1620,10 +1622,10 @@ if ( !empty(doliconst('MAIN_MODULE_RECRUITMENT')) ) {
     if ( !isset($donationfo->error) && isset($_GET['id']) && isset($_GET['ref']) && (doliconnector($current_user, 'fk_soc') == $donationfo->fk_soc ) && ($_GET['ref'] == $donationfo->ref) && $donationfo->status != 0 ) {
     
     print "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>$donationfo->ref</h5><div class='row'><div class='col-md-5'>";
-    $datecommande =  wp_date('d/m/Y', $donationfo->date_creation);
-    print "<b>".__( 'Date of order', 'doliconnect').":</b> $datecommande<br>";
+    $datecreation =  wp_date('d/m/Y', $donationfo->date_creation);
+    print "<b>".__( 'Date of creation', 'doliconnect').":</b> $datecreation<br>";
     
-    print "<b>".__( 'Payment method', 'doliconnect').":</b> ".__( $donationfo->mode_reglement, 'doliconnect')."<br><br></div><div class='col-md-7'>";
+    print "<b>".__( 'Payment method', 'doliconnect').":</b> <br><br></div><div class='col-md-7'>";
     
     if ( isset($orderinfo) ) {
     print "<h3 class='text-end'>".$orderinfo."</h3>";
@@ -1635,38 +1637,13 @@ if ( !empty(doliconst('MAIN_MODULE_RECRUITMENT')) ) {
     print '<div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: '.$orderavancement.'%" aria-valuenow="'.$orderavancement.'" aria-valuemin="0" aria-valuemax="100"></div></div>';
     print "<div class='w-auto text-muted d-none d-sm-block' ><div style='display:inline-block;width:20%'>".__( 'Order', 'doliconnect')."</div><div style='display:inline-block;width:15%'>".__( 'Payment', 'doliconnect')."</div><div style='display:inline-block;width:25%'>".__( 'Processing', 'doliconnect')."</div><div style='display:inline-block;width:20%'>".__( 'Shipping', 'doliconnect')."</div><div class='text-end' style='display:inline-block;width:20%'>".__( 'Delivery', 'doliconnect')."</div></div>";
     
-    print "</div><ul class='list-group list-group-flush'>";
-     
-    if ( $donationfo->lines != null ) {
-    foreach ( $donationfo->lines as $line ) {
-    print "<li class='list-group-item'>";     
-    if ( $line->date_start != '' && $line->date_end != '' )
-    {
-    $start = wp_date('d/m/Y', $line->date_start);
-    $end = wp_date('d/m/Y', $line->date_end);
-    $dates =" <i>(Du $start au $end)</i>";
-    }
-    
-    print '<div class="w-100 justify-content-between"><div class="row"><div class="col-8 col-md-10"> 
-    <h6 class="mb-1">'.$line->libelle.'</h6>
-    <p class="mb-1">'.$line->description.'</p>
-    <small>'.$dates.'</small>'; 
-    print '</div><div class="col-4 col-md-2 text-end"><h5 class="mb-1">'.doliprice($line, 'ttc', isset($line->multicurrency_code) ? $line->multicurrency_code : null).'</h5>';
-    print '<h5 class="mb-1">x'.$line->qty.'</h5>'; 
-    print "</div></div></li>";
-    }
-    }
-    
-    print "<li class='list-group-item list-group-item-info'>";
-    print "<b>".__( 'Amount', 'doliconnect').": ".doliprice($donationfo, 'amount', isset($donationfo->multicurrency_code) ? $donationfo->multicurrency_code : null)."</b>";
-    print "</li>";
-    print "</ul></div>";
-    
+    print "</div><div class='card-footer text-muted'>";
     print "<small><div class='float-start'>";
     if ( isset($request) ) print dolirefresh($request, $url, dolidelay('donation'), $donationfo);
     print "</div><div class='float-end'>";
     print dolihelp('COM');
     print "</div></small>";
+    print "</div></div>";
     
     } else {
     
