@@ -1593,6 +1593,127 @@ print "</div></div>";
 }
 }
 
+if ( !empty(doliconst('MAIN_MODULE_RECRUITMENT')) ) {
+    add_action( 'customer_doliconnect_menu', 'recruitment_menu', 6, 1);
+    add_action( 'customer_doliconnect_recruitment', 'recruitment_module');
+    }  
+    
+    function recruitment_menu( $arg ) {
+    print "<a href='".esc_url( add_query_arg( 'module', 'recruitment', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
+    if ($arg=='recruitment') { print " active";}
+    print "'>".__( 'Recruitment', 'doliconnect')."</a>";
+    }
+    
+    function recruitment_module( $url ) {
+    global $wpdb, $current_user;
+    $entity = get_current_blog_id();
+    $ID = $current_user->ID;
+    
+    if ( isset($_GET['id']) && $_GET['id'] > 0 ) { 
+     
+    $request = "/donations/".esc_attr($_GET['id']);
+    
+    $donationfo = callDoliApi("GET", $request, null, dolidelay('donation', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+    //print $donationfo;
+    }
+    
+    if ( !isset($donationfo->error) && isset($_GET['id']) && isset($_GET['ref']) && (doliconnector($current_user, 'fk_soc') == $donationfo->socid ) && ($_GET['ref'] == $donationfo->ref) && $donationfo->statut != 0 ) {
+    
+    print "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>$donationfo->ref</h5><div class='row'><div class='col-md-5'>";
+    $datecommande =  wp_date('d/m/Y', $donationfo->date_creation);
+    print "<b>".__( 'Date of order', 'doliconnect').":</b> $datecommande<br>";
+    
+    print "<b>".__( 'Payment method', 'doliconnect').":</b> ".__( $donationfo->mode_reglement, 'doliconnect')."<br><br></div><div class='col-md-7'>";
+    
+    if ( isset($orderinfo) ) {
+    print "<h3 class='text-end'>".$orderinfo."</h3>";
+    }
+    
+    $orderavancement=100;
+    
+    print "</div></div>";
+    print '<div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: '.$orderavancement.'%" aria-valuenow="'.$orderavancement.'" aria-valuemin="0" aria-valuemax="100"></div></div>';
+    print "<div class='w-auto text-muted d-none d-sm-block' ><div style='display:inline-block;width:20%'>".__( 'Order', 'doliconnect')."</div><div style='display:inline-block;width:15%'>".__( 'Payment', 'doliconnect')."</div><div style='display:inline-block;width:25%'>".__( 'Processing', 'doliconnect')."</div><div style='display:inline-block;width:20%'>".__( 'Shipping', 'doliconnect')."</div><div class='text-end' style='display:inline-block;width:20%'>".__( 'Delivery', 'doliconnect')."</div></div>";
+    
+    print "</div><ul class='list-group list-group-flush'>";
+     
+    if ( $donationfo->lines != null ) {
+    foreach ( $donationfo->lines as $line ) {
+    print "<li class='list-group-item'>";     
+    if ( $line->date_start != '' && $line->date_end != '' )
+    {
+    $start = wp_date('d/m/Y', $line->date_start);
+    $end = wp_date('d/m/Y', $line->date_end);
+    $dates =" <i>(Du $start au $end)</i>";
+    }
+    
+    print '<div class="w-100 justify-content-between"><div class="row"><div class="col-8 col-md-10"> 
+    <h6 class="mb-1">'.$line->libelle.'</h6>
+    <p class="mb-1">'.$line->description.'</p>
+    <small>'.$dates.'</small>'; 
+    print '</div><div class="col-4 col-md-2 text-end"><h5 class="mb-1">'.doliprice($line, 'ttc', isset($line->multicurrency_code) ? $line->multicurrency_code : null).'</h5>';
+    print '<h5 class="mb-1">x'.$line->qty.'</h5>'; 
+    print "</div></div></li>";
+    }
+    }
+    
+    print "<li class='list-group-item list-group-item-info'>";
+    print "<b>".__( 'Amount', 'doliconnect').": ".doliprice($donationfo, 'amount', isset($donationfo->multicurrency_code) ? $donationfo->multicurrency_code : null)."</b>";
+    print "</li>";
+    print "</ul></div>";
+    
+    print "<small><div class='float-start'>";
+    if ( isset($request) ) print dolirefresh($request, $url, dolidelay('donation'), $donationfo);
+    print "</div><div class='float-end'>";
+    print dolihelp('COM');
+    print "</div></small>";
+    
+    } else {
+    
+    $limit=8;
+    if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']-1); }  else { $page = 0; }
+    $request= "/recruitment/jobposition?sortfield=t.rowid&sortorder=DESC&limit=".$limit."&page=".$page."&fk_soc=".doliconnector($current_user, 'fk_soc');//    ."&sqlfilters=(t.fk_statut!=0)"
+    $listdonation = callDoliApi("GET", $request, null, dolidelay('donation', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+    //print var_dump($listdonation);
+    
+    print '<div class="card shadow-sm"><ul class="list-group list-group-flush">'; 
+    if ( !empty(doliconnectid('dolidonation'))) {
+    print '<a href="'.doliconnecturl('dolidonation').'" class="list-group-item lh-condensed list-group-item-action list-group-item-primary "><center><i class="fas fa-plus-circle"></i> '.__( 'Donate', 'doliconnect').'</center></a>';  
+    }
+    
+    if ( !isset( $listdonation->error ) && $listdonation != null ) {
+    foreach ( $listdonation as $postdonation ) { 
+    
+    $arr_params = array( 'id' => $postdonation->id, 'ref' => $postdonation->ref);  
+    $return = esc_url( add_query_arg( $arr_params, $url) );
+                    
+    print "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'><div><i class='fas fa-briefcase fa-3x fa-fw'></i></div><div><h6 class='my-0'>".$postdonation->ref."</h6><small class='text-muted'>du ".wp_date('d/m/Y', $postdonation->date_creation)."</small></div><span></span><span>";
+    if ( $postdonation->statut == 3 ) {
+    if ( $postdonation->billed == 1 ) { print "<span class='fa fa-check-circle fa-fw text-success'></span><span class='fa fa-eur fa-fw text-success'></span><span class='fa fa-truck fa-fw text-success'></span><span class='fa fa-file-text fa-fw text-success'></span>"; } 
+    else { print "<span class='fa fa-check-circle fa-fw text-success'></span><span class='fa fa-eur fa-fw text-success'></span><span class='fa fa-truck fa-fw text-success'></span><span class='fa fa-file-text fa-fw text-warning'></span>"; } }
+    elseif ( $postdonation->statut == 2 ) { print "<span class='fa fa-check-circle fa-fw text-success'></span><span class='fa fa-eur fa-fw text-success'></span><span class='fa fa-truck fa-fw text-warning'></span><span class='fa fa-file-text fa-fw text-danger'></span>"; }
+    elseif ( $postdonation->statut == 1 ) { print "<span class='fa fa-check-circle fa-fw text-success'></span><span class='fa fa-eur fa-fw text-warning'></span><span class='fa fa-truck fa-fw text-danger'></span><span class='fa fa-file-text fa-fw text-danger'></span>"; }
+    elseif ( $postdonation->statut == 0 ) { print "<span class='fa fa-check-circle fa-fw text-warning'></span><span class='fa fa-eur fa-fw text-danger'></span><span class='fa fa-truck fa-fw text-danger'></span><span class='fa fa-file-text fa-fw text-danger'></span>"; }
+    elseif ( $postdonation->statut == -1 ) { print "<span class='fa fa-check-circle fa-fw text-secondary'></span><span class='fa fa-eur fa-fw text-secondary'></span><span class='fa fa-truck fa-fw text-secondary'></span><span class='fa fa-file-text fa-fw text-secondary'></span>"; }
+    print "</span></a>";
+    }}
+    else{
+    print "<li class='list-group-item list-group-item-light'><center>".__( 'No jobposition', 'doliconnect')."</center></li>";
+    }
+    
+    print "</ul><div class='card-body'>";
+    print dolipage($listdonation, $url, $page, $limit);
+    print "</div><div class='card-footer text-muted'>";
+    print "<small><div class='float-start'>";
+    if ( isset($request) ) print dolirefresh($request, $url, dolidelay('donation'));
+    print "</div><div class='float-end'>";
+    print dolihelp('ISSUE');
+    print "</div></small>";
+    print "</div></div>";
+    
+    }
+    }
+
 //*****************************************************************************************
 
 if ( !empty(doliconst('MAIN_MODULE_ADHERENTSPLUS')) && doliCheckRights('adherent', 'lire') ) {
