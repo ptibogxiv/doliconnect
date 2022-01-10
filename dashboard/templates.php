@@ -75,50 +75,59 @@ $thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, '
 if ( isset($_GET['module']) && !empty($_GET['module'])) {
 //****
 if ( has_action('user_doliconnect_'.esc_attr($_GET['module'])) ) {
-if ( has_action('user_doliconnect_menu') ) {
-print "<div class='list-group shadow-sm'>";
-do_action('user_doliconnect_menu', esc_attr($_GET['module']));
-print "</div><br>";
-}
-print "</div></div></div>";
-print "<div class='col-xs-12 col-sm-12 col-md-9'>";
-do_action( 'user_doliconnect_'.esc_attr($_GET['module']), esc_url( add_query_arg( 'module', esc_attr($_GET['module']), doliconnecturl('doliaccount')) ) ); 
+    if ( has_action('user_doliconnect_menu') ) {
+    print "<div class='list-group shadow-sm'>";
+    do_action('user_doliconnect_menu', esc_attr($_GET['module']));
+    print "</div><br>";
+    }
+    print "</div></div></div>";
+    print "<div class='col-xs-12 col-sm-12 col-md-9'>";
+    do_action( 'user_doliconnect_'.esc_attr($_GET['module']), esc_url( add_query_arg( 'module', esc_attr($_GET['module']), doliconnecturl('doliaccount')) ) ); 
 } elseif ( has_action('customer_doliconnect_'.esc_attr($_GET['module'])) && $thirdparty->client == '1' ) {
-if ( has_action('customer_doliconnect_menu') ) {
-print "<div class='list-group shadow-sm'>";
-do_action('customer_doliconnect_menu', esc_attr($_GET['module']));
-print "</div><br>";
-}
-print "</div></div></div>";
-print "<div class='col-xs-12 col-sm-12 col-md-9'>";
-do_action( 'customer_doliconnect_'.esc_attr($_GET['module']), esc_url( add_query_arg( 'module', esc_attr($_GET['module']), doliconnecturl('doliaccount')) ) ); 
+    if ( has_action('customer_doliconnect_menu') ) {
+    print "<div class='list-group shadow-sm'>";
+    do_action('customer_doliconnect_menu', esc_attr($_GET['module']));
+    print "</div><br>";
+    }
+    print "</div></div></div>";
+    print "<div class='col-xs-12 col-sm-12 col-md-9'>";
+    do_action( 'customer_doliconnect_'.esc_attr($_GET['module']), esc_url( add_query_arg( 'module', esc_attr($_GET['module']), doliconnecturl('doliaccount')) ) ); 
 } elseif ( has_action('options_doliconnect_'.esc_attr($_GET['module'])) ) {
-if ( has_action('options_doliconnect_menu') ) {
-print "<div class='list-group shadow-sm'>";
-do_action('options_doliconnect_menu', esc_attr($_GET['module']));
-print "</div><br>";
-}
-print "</div></div></div>";
-print "<div class='col-xs-12 col-sm-12 col-md-9'>";
-do_action( 'options_doliconnect_'.esc_attr($_GET['module']), esc_url( add_query_arg( 'module', esc_attr($_GET['module']), doliconnecturl('doliaccount')) ) ); 
+    if ( has_action('options_doliconnect_menu') ) {
+    print "<div class='list-group shadow-sm'>";
+    do_action('options_doliconnect_menu', esc_attr($_GET['module']));
+    print "</div><br>";
+    }
+    print "</div></div></div>";
+    print "<div class='col-xs-12 col-sm-12 col-md-9'>";
+    do_action( 'options_doliconnect_'.esc_attr($_GET['module']), esc_url( add_query_arg( 'module', esc_attr($_GET['module']), doliconnecturl('doliaccount')) ) ); 
 } elseif ( has_action('supplier_doliconnect_'.esc_attr($_GET['module'])) && $thirdparty->fournisseur == '1' ) {
-if ( has_action('supplier_doliconnect_menu') ) {
-print "<div class='list-group shadow-sm'>";
-do_action('supplier_doliconnect_menu', esc_attr($_GET['module']));
-print "</div><br>";
-}
-print "</div></div></div>";
-print "<div class='col-xs-12 col-sm-12 col-md-9'>";
-do_action('supplier_doliconnect_'.esc_attr($_GET['module']), esc_url( add_query_arg( 'module', esc_attr($_GET['module']), doliconnecturl('doliaccount')) ) ); 
+    if ( has_action('supplier_doliconnect_menu') ) {
+    print "<div class='list-group shadow-sm'>";
+    do_action('supplier_doliconnect_menu', esc_attr($_GET['module']));
+    print "</div><br>";
+    }
+    print "</div></div></div>";
+    print "<div class='col-xs-12 col-sm-12 col-md-9'>";
+    do_action('supplier_doliconnect_'.esc_attr($_GET['module']), esc_url( add_query_arg( 'module', esc_attr($_GET['module']), doliconnecturl('doliaccount')) ) ); 
+} elseif ( has_action('grh_doliconnect_'.esc_attr($_GET['module'])) ) {
+    if ( has_action('grh_doliconnect_menu') ) {
+    print "<div class='list-group shadow-sm'>";
+    do_action('grh_doliconnect_menu', esc_attr($_GET['module']));
+    print "</div><br>";
+    }
+    print "</div></div></div>";
+    print "<div class='col-xs-12 col-sm-12 col-md-9'>";
+    do_action('grh_doliconnect_'.esc_attr($_GET['module']), esc_url( add_query_arg( 'module', esc_attr($_GET['module']), doliconnecturl('doliaccount')) ) ); 
 } elseif ( has_action('settings_doliconnect_'.esc_attr($_GET['module'])) ) {
-if ( has_action('settings_doliconnect_menu') ) {
-print "<div class='list-group shadow-sm'>";
-do_action('settings_doliconnect_menu', esc_attr($_GET['module']));
-print "</div><br>";
-}
-print "</div></div></div>";
-print "<div class='col-xs-12 col-sm-12 col-md-9'>";
-do_action( 'settings_doliconnect_'.esc_attr($_GET['module']), esc_url( add_query_arg( 'module', esc_attr($_GET['module']), doliconnecturl('doliaccount')) ) ); 
+    if ( has_action('settings_doliconnect_menu') ) {
+    print "<div class='list-group shadow-sm'>";
+    do_action('settings_doliconnect_menu', esc_attr($_GET['module']));
+    print "</div><br>";
+    }
+    print "</div></div></div>";
+    print "<div class='col-xs-12 col-sm-12 col-md-9'>";
+    do_action( 'settings_doliconnect_'.esc_attr($_GET['module']), esc_url( add_query_arg( 'module', esc_attr($_GET['module']), doliconnecturl('doliaccount')) ) ); 
 } else {
 wp_redirect( esc_url(doliconnecturl('doliaccount')) );
 exit;
@@ -177,6 +186,12 @@ print "</div><br>";
 if ( has_action('supplier_doliconnect_menu') && isset($thirdparty->fournisseur) && $thirdparty->fournisseur == '1' ) {
 print "<div class='list-group shadow-sm'>";
 do_action('supplier_doliconnect_menu');
+print "</div><br>";
+}
+
+if ( has_action('grh_doliconnect_menu') ) {
+print "<div class='list-group shadow-sm'>";
+do_action('grh_doliconnect_menu');
 print "</div><br>";
 }
 

@@ -1594,8 +1594,8 @@ print "</div></div>";
 }
 
 if ( !empty(doliconst('MAIN_MODULE_RECRUITMENT')) ) {
-    add_action( 'customer_doliconnect_menu', 'recruitment_menu', 6, 1);
-    add_action( 'customer_doliconnect_recruitment', 'recruitment_module');
+    add_action( 'grh_doliconnect_menu', 'recruitment_menu', 3, 1);
+    add_action( 'grh_doliconnect_recruitment', 'recruitment_module');
     }  
     
     function recruitment_menu( $arg ) {
