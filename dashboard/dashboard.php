@@ -1601,7 +1601,7 @@ if ( !empty(doliconst('MAIN_MODULE_RECRUITMENT')) ) {
     function recruitment_menu( $arg ) {
     print "<a href='".esc_url( add_query_arg( 'module', 'recruitment', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
     if ($arg=='recruitment') { print " active";}
-    print "'>".__( 'Recruitment', 'doliconnect')."</a>";
+    print "'>".__( 'List of jobpositions', 'doliconnect')."</a>";
     }
     
     function recruitment_module( $url ) {
