@@ -93,7 +93,7 @@ wp_send_json_error( $response );
 }
 
 add_action('wp_ajax_doliuserinformations_request', 'doliuserinformations_request');
-add_action('wp_ajax_nopriv_doliuserinformations_request', 'doliuserinformationsrequest');
+//add_action('wp_ajax_nopriv_doliuserinformations_request', 'doliuserinformationsrequest');
 
 function doliuserinformations_request(){
 	global $current_user;
