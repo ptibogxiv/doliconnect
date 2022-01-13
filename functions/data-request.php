@@ -99,7 +99,7 @@ function doliuserinformations_request(){
 	global $current_user;
 	$ID = $current_user->ID;
 	
-	if ( wp_verify_nonce( trim($_POST['dolisettings-nonce']), 'dolisettings-nonce') ) {
+	if ( wp_verify_nonce( trim($_POST['doliuserinfos-nonce']), 'doliuserinfos-nonce') ) {
 
 			
 	wp_send_json_success('success');
