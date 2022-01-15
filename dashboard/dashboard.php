@@ -36,7 +36,7 @@ print 'jQuery(document).ready(function($) {
 	e.preventDefault();
     
 	var $form = $(this);
-  var url = "'.$url.'";  
+    var url = "'.$url.'";  
 jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function (e) { 
 		$.post($form.attr("action"), $form.serialize(), function(response) {
       if (response.success) {
