@@ -2209,7 +2209,7 @@ console.log('Click on AddIbanButton');
 var ibanholderName = document.getElementById('ibanholder-name');
 if (ibanholderName.value == ''){               
 console.log('Field Iban holder is empty');
-displayCardError.textContent = 'We need an owner as on your account';
+displayIbanError.textContent = 'We need an owner as on your account';
 $('#AddIbanButton').disabled = false;
 $('#DoliconnectLoadingModal').modal('hide');  
 } else {
