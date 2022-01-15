@@ -409,7 +409,7 @@ $password .= '><label for="pwd2">'.__( 'Confirm the password', 'doliconnect').'<
 $password .= '</div></div>';
 $password .= '</li>';
 $password .= "</ul><div class='card-body'>";
-$password .= '<div class="d-grid gap-2"><button class="btn btn-outline-secondary" id="gdrf-submit-button" type="submit"';
+$password .= '<div class="d-grid gap-2"><button class="btn btn-outline-secondary" id="pwd-submit-button" type="submit"';
 if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $user->ID ) {
 $password .= ' disabled';
 }
