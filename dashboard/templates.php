@@ -473,7 +473,7 @@ catch(\Exception $e) {
 } elseif ( isset($_GET["action"]) && $_GET["action"] == 'fpw' ) { 
 
 print "<div id='dolifpw-alert'></div><form id='dolifpw-form' method='post' class='was-validated' action='".admin_url('admin-ajax.php')."'>";
-print doliajax('dolifpw', $url);
+print doliajax('dolifpw');
  
 print '<div class="card shadow-sm"><div class="card-header">'.__( 'Forgot password?', 'doliconnect');
 print '<a class="float-end text-decoration-none" href="'.esc_url( doliconnecturl('doliaccount') ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a>';  

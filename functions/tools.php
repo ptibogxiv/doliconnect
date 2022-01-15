@@ -305,7 +305,7 @@ $connect .= '<div><div style="display:inline-block;width:46%;float:left"><hr wid
 return $connect;
 }
 
-function doliajax($id, $url){
+function doliajax($id, $url = null){
   $ajax = "<input type='hidden' name='action' value='".$id."_request'>";
   $ajax.= "<input type='hidden' name='".$id."-nonce' value='".wp_create_nonce( $id.'-nonce')."'>";
   $ajax.= "<script>";
