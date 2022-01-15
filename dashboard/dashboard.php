@@ -22,7 +22,7 @@ if ( doliconnector($current_user, 'fk_soc') > '0' ) {
 $thirdparty = callDoliApi("GET", $request, null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
 }
 
-print "<div id='DoliInfosAlert'></div><form action='".admin_url('admin-ajax.php')."' id='doliuserinfos-form' method='post' class='was-validated' enctype='multipart/form-data'>";
+print "<div id='doliuserinfos-alert'></div><form action='".admin_url('admin-ajax.php')."' id='doliuserinfos-form' method='post' class='was-validated' enctype='multipart/form-data'>";
 
 print "<input type='hidden' name='case' value='updateuser'>";
 print "<input type='hidden' name='action' value='doliuserinfos_request'>";
@@ -41,12 +41,12 @@ jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function (e) {
 		$.post($form.attr("action"), $form.serialize(), function(response) {
       if (response.success) {
         //document.location = url;
-        if (document.getElementById("DoliInfosAlert")) {
-        document.getElementById("DoliInfosAlert").innerHTML = response.data;      
+        if (document.getElementById("doliuserinfos-alert")) {
+        document.getElementById("doliuserinfos-alert").innerHTML = response.data;      
         }
       } else {
-        if (document.getElementById("DoliInfosAlert")) {
-        document.getElementById("DoliInfosAlert").innerHTML = response.data;      
+        if (document.getElementById("doliuserinfos-alert")) {
+        document.getElementById("doliuserinfos-alert").innerHTML = response.data;      
         }
       }
 jQuery("#DoliconnectLoadingModal").modal("hide");
