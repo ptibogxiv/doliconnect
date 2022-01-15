@@ -283,7 +283,7 @@ $object = callDoliApi("PUT", $request."/".sanitize_text_field($_POST['payment_me
 
 if (!isset($object->error)) {  
 $gateway = callDoliApi("GET", $request, null, dolidelay('paymentmethods', true));
-wp_send_json_success(__( 'You changed your default payment method', 'doliconnect'));
+wp_send_json_success( dolialert('success', __( 'You changed your default payment method', 'doliconnect')));
 } else {
 wp_send_json_error( __( 'An error occured:', 'doliconnect').' '.$object->error->message); 
 }
@@ -294,7 +294,7 @@ $object = callDoliApi("DELETE", $request."/".sanitize_text_field($_POST['payment
 
 if (!isset($object->error)) {
 $gateway = callDoliApi("GET", $request, null, dolidelay('paymentmethods', true));
-wp_send_json_success(__( 'You deleted a payment method', 'doliconnect'));
+wp_send_json_success( dolialert('success', __( 'You deleted a payment method', 'doliconnect')));
 } else {
 wp_send_json_error( __( 'An error occured:', 'doliconnect').' '.$object->error->message); 
 }
@@ -315,7 +315,7 @@ $object = callDoliApi("POST", $request."/".sanitize_text_field($_POST['payment_m
 
 if (!isset($object->error)) { 
 $gateway = callDoliApi("GET", $request, null, dolidelay('paymentmethods', true));
-wp_send_json_success(__( 'You added a new payment method', 'doliconnect'));
+wp_send_json_success( dolialert('success', __( 'You added a new payment method', 'doliconnect')));
 } else {
 wp_send_json_error( __( 'An error occured:', 'doliconnect').' '.$object->error->message); 
 }

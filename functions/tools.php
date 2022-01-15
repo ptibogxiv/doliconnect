@@ -1711,6 +1711,8 @@ $paymentmethods .= "</script>";
 //<div id='else' style='display: none' ><br><div style='display:inline-block;width:46%;float:left'><hr width='90%' /></div><div style='display:inline-block;width: 8%;text-align: center;vertical-align:90%'><small class='text-muted'>".__( 'or', 'doliconnect' )."</small></div><div style='display:inline-block;width:46%;float:right' ><hr width='90%'/></div><br></div>";
 //} 
 
+$paymentmethods .= '<div id="DoliPaymentmethodAlert"></div>';
+
 $paymentmethods .= '<div class="card shadow-sm">';
 if ( empty($module) ) { $paymentmethods .= '<div class="card-header">'.__( 'Manage payment methods', 'doliconnect').'</div>'; }
 $paymentmethods .= '<div class="accordion accordion-flush" id="accordionFlushExample">';
@@ -2556,8 +2558,6 @@ $paymentmethods .= '</div><div class="float-end">';
 $paymentmethods .= dolihelp('ISSUE');
 $paymentmethods .= '</div></small>';
 $paymentmethods .= '</div></div>';
-
-$paymentmethods .= '<div id="DoliPaymentmethodAlert" class="text-danger font-weight-bolder"></div>';
 
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
 $paymentmethods .= "<script>";
