@@ -22,7 +22,7 @@ if ( doliconnector($current_user, 'fk_soc') > '0' ) {
 $thirdparty = callDoliApi("GET", $request, null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
 }
 
-print "<div id='DoliInfosAlert'></div><form action='".admin_url('admin-ajax.php')."' id='doliconnect-infosform' method='post' class='was-validated' enctype='multipart/form-data'>";
+print "<div id='DoliInfosAlert'></div><form action='".admin_url('admin-ajax.php')."' id='doliuserinfos-form' method='post' class='was-validated' enctype='multipart/form-data'>";
 
 print "<input type='hidden' name='case' value='updateuser'>";
 print "<input type='hidden' name='action' value='doliuserinfos_request'>";
@@ -31,7 +31,7 @@ print "<input type='hidden' name='doliuserinfos-nonce' value='".wp_create_nonce(
 print "<script>";
 print 'jQuery(document).ready(function($) {
 	
-	jQuery("#doliconnect-infosform").on("submit", function(e) {
+	jQuery("#doliuserinfos-form").on("submit", function(e) {
   jQuery("#DoliconnectLoadingModal").modal("show");
 	e.preventDefault();
     
