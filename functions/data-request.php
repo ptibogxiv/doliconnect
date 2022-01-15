@@ -135,10 +135,61 @@ function dolicontact_request(){
 	
 	if ( wp_verify_nonce( trim($_POST['dolicontact-nonce']), 'dolicontact-nonce') ) {
 
+		if ( sanitize_text_field($_POST['contactName']) === '' ) {
+			$ContactError = __( 'Please enter your name.', 'doliconnect');
+			$hasError = true;
+		} else {
+			$name = sanitize_text_field($_POST['contactName']);
+		}
 	
-
+		if ( sanitize_email($_POST['email']) === '' )  {
+			$ContactError = __( 'Please enter you email.', 'doliconnect');
+			$hasError = true;
+		} else if (!preg_match("/^[[:alnum:]][a-z0-9_.-]*@[a-z0-9.-]+\.[a-z]{2,4}$/i", sanitize_email($_POST['email']))) {
+			$ContactError = 'You entered an invalid email address.';
+			$hasError = true;
+		} else {
+			$email = sanitize_email($_POST['email']);
+		}
+	
+		if( sanitize_textarea_field($_POST['comments']) === '') {
+			$ContactError = __( 'A message is needed.', 'doliconnect');
+			$hasError = true;
+		} else {
+	
+			$comments = sanitize_textarea_field($_POST['comments']);
+	
+		}
 		
-	wp_send_json_success( dolialert('success', __( 'Your informations have been updated.', 'doliconnect')));
+		if ( !isset($_POST['btndolicaptcha']) || empty(wp_verify_nonce( $_POST['ctrldolicaptcha'], 'ctrldolicaptcha-'.$_POST['btndolicaptcha'])) ) {
+			$ContactError = __( 'Security check failed, invalid human verification field.', 'doliconnect');
+			$hasError = true;
+		}
+	
+		if ( defined("DOLICONNECT_DEMO") ) {
+			$ContactError = __( 'Send message is not permitted because the demo mode is active', 'doliconnect');       
+			$hasError = true;
+		}
+	
+		if ( !isset($hasError) ) {
+			$emailTo = get_option('tz_email');
+			
+			if (!isset($emailTo) || ($emailTo == '') ) {
+				$emailTo = get_option('admin_email');
+			}
+			$subject = "[".get_bloginfo( 'name' )."] ".$_POST['ticket_type'];
+			$body = "Nom: $name <br>Email: $email <br>Message: $comments";
+			$headers = array("Content-Type: text/html; charset=UTF-8","From: ".$name." <".$email.">","Cc: ".$name." <".$email.">"); 
+			wp_mail($emailTo, $subject, $body, $headers);
+			$emailSent = true;
+		}
+
+		if ( isset($emailSent) && $emailSent == true ) {
+			wp_send_json_success( dolialert('success', __( 'Your message is successful send!', 'doliconnect')));
+		} elseif ( isset($hasError) || isset($captchaError) ) { 
+			wp_send_json_success( dolialert('danger', $ContactError));
+		}
+
 	}	else {
 	wp_send_json_error( dolialert('danger', __( 'A security error occured', 'doliconnect'))); 
 	}

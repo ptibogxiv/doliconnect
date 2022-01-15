@@ -638,62 +638,6 @@ print dolicheckie($_SERVER['HTTP_USER_AGENT']);
 print "</div></div>";
 } else {
 
-if( ! empty($_POST['email-control']) )   //! $is_valid  || ! 
-{
-$emailError = __( 'Your request is unsuccessful', 'doliconnect');
-} elseif ( isset($_POST['submitted']) ) {
-
-    if ( sanitize_text_field($_POST['contactName']) === '' ) {
-        $ContactError = __( 'Please enter your name.', 'doliconnect');
-        $hasError = true;
-    } else {
-        $name = sanitize_text_field($_POST['contactName']);
-    }
-
-    if ( sanitize_email($_POST['email']) === '' )  {
-        $ContactError = __( 'Please enter you email.', 'doliconnect');
-        $hasError = true;
-    } else if (!preg_match("/^[[:alnum:]][a-z0-9_.-]*@[a-z0-9.-]+\.[a-z]{2,4}$/i", sanitize_email($_POST['email']))) {
-        $ContactError = 'You entered an invalid email address.';
-        $hasError = true;
-    } else {
-        $email = sanitize_email($_POST['email']);
-    }
-
-    if( sanitize_textarea_field($_POST['comments']) === '') {
-        $ContactError = __( 'A message is needed.', 'doliconnect');
-        $hasError = true;
-    } else {
-
-        $comments = sanitize_textarea_field($_POST['comments']);
-
-    }
-    
-	if ( !isset($_POST['btndolicaptcha']) || empty(wp_verify_nonce( $_POST['ctrldolicaptcha'], 'ctrldolicaptcha-'.$_POST['btndolicaptcha'])) ) {
-		$ContactError = __( 'Security check failed, invalid human verification field.', 'doliconnect');
-        $hasError = true;
-	}
-
-    if ( defined("DOLICONNECT_DEMO") ) {
-        $ContactError = __( 'Send message is not permitted because the demo mode is active', 'doliconnect');       
-        $hasError = true;
-    }
-
-    if ( !isset($hasError) ) {
-        $emailTo = get_option('tz_email');
-        
-        if (!isset($emailTo) || ($emailTo == '') ) {
-            $emailTo = get_option('admin_email');
-        }
-        $subject = "[".get_bloginfo( 'name' )."] ".$_POST['ticket_type'];
-        $body = "Nom: $name <br>Email: $email <br>Message: $comments";
-        $headers = array("Content-Type: text/html; charset=UTF-8","From: ".$name." <".$email.">","Cc: ".$name." <".$email.">"); 
-        wp_mail($emailTo, $subject, $body, $headers);
-        $emailSent = true;
-    }
-
-}
-
 print "<div class='row'><div class='col-md-4'><div class='form-group'><h4>".__( 'Address', 'doliconnect')."</h4>";
 $company = callDoliApi("GET", "/setup/company", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 print $company->name.'<br>';
@@ -708,6 +652,7 @@ $lang = $current_user->locale;
 $country = callDoliApi("GET", "/setup/dictionary/countries/".$company->country_id."?lang=".$lang, null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))); }
 print $country->label;
 print "</div></div><div class='col-md-8'><div id='content'>";
+
 if ( isset($emailSent) && $emailSent == true ) {
 print dolialert('success', __( 'Your message is successful send!', 'doliconnect')); 
 } elseif ( isset($hasError) || isset($captchaError) ) { 
