@@ -484,33 +484,8 @@ catch(\Exception $e) {
 }
 } elseif ( isset($_GET["action"]) && $_GET["action"] == 'fpw' ) { 
 
-print "<div id='DoliFpwAlert'></div><form id='dolifpw-form' method='post' class='was-validated' action='".admin_url('admin-ajax.php')."'>";
-print "<input type='hidden' name='action' value='dolifpw_request'>";
-print "<input type='hidden' name='dolifpw-nonce' value='".wp_create_nonce( 'dolifpw-nonce')."'>";
-
-print "<script>";
-print 'jQuery(document).ready(function($) {
-	
-	jQuery("#dolifpw-form").on("submit", function(e) {
-  jQuery("#DoliconnectLoadingModal").modal("show");
-	e.preventDefault();
-    
-	var $form = $(this);
-    
-jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function (e) { 
-		$.post($form.attr("action"), $form.serialize(), function(response) {
-
-      if (document.getElementById("DoliFpwAlert")) {
-      document.getElementById("DoliFpwAlert").innerHTML = response.data;      
-      }
-
-jQuery("#DoliconnectLoadingModal").modal("hide");
-
-		}, "json");  
-  });
-});
-});';
-print "</script>";
+print "<div id='dolifpw-alert'></div><form id='dolifpw-form' method='post' class='was-validated' action='".admin_url('admin-ajax.php')."'>";
+print doliajax('dolifpw', $url);
  
 print '<div class="card shadow-sm"><div class="card-header">'.__( 'Forgot password?', 'doliconnect');
 print '<a class="float-end text-decoration-none" href="'.esc_url( doliconnecturl('doliaccount') ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a>';  
