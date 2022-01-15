@@ -7,25 +7,6 @@ if ( (in_the_loop() && is_main_query() && is_page(doliconnectid('doliaccount')) 
 
 doliconnect_enqueues();
 
-$current_offset = get_option('gmt_offset');
-$tzstring = get_option('timezone_string');
-$check_zone_info = true;
-// Remove old Etc mappings. Fallback to gmt_offset.
-if ( false !== strpos($tzstring,'Etc/GMT') )
-	$tzstring = '';
-
-if ( empty($tzstring) ) { // Create a UTC+- zone if no timezone string exists
-	$check_zone_info = false;
-	if ( 0 == $current_offset )
-		$tzstring = 'UTC+0';
-	elseif ($current_offset < 0)
-		$tzstring = 'UTC' . $current_offset;
-	else
-		$tzstring = 'UTC+' . $current_offset;
-}
-
-if ($tzstring != 'UTC+0') date_default_timezone_set($tzstring);
-
 $ID = $current_user->ID;
 $time = current_time( 'timestamp', 1);
 
