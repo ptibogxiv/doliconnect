@@ -194,7 +194,6 @@ function dolicontact_request(){
 	wp_send_json_error( dolialert('danger', __( 'A security error occured', 'doliconnect'))); 
 	}
 }
-	
 
 add_action('wp_ajax_dolisettings_request', 'dolisettings_request');
 //add_action('wp_ajax_nopriv_dolisettings_request', 'dolisettings_request');
