@@ -14,10 +14,6 @@ $ID = $current_user->ID;
 
 $request = "/thirdparties/".doliconnector($current_user, 'fk_soc');
 
-if ( isset($_POST["case"]) && $_POST["case"] == 'updateuser' ) {
-print dolialert ('success', __( 'Your informations have been updated.', 'doliconnect'));
-}
-
 if ( isset($_GET['return']) ) {
 $url = esc_url( add_query_arg( 'return', $_GET['return'], $url) );
 }
