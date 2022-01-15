@@ -120,10 +120,9 @@ function doliuserinfos_request(){
 		
 		do_action('wp_dolibarr_sync', $thirdparty);
 		
-		//dolialert ('success', __( 'Your informations have been updated.', 'doliconnect'));
-	wp_send_json_success( __( 'Your informations have been updated.', 'doliconnect'));
+	wp_send_json_success( dolialert ('success', __( 'Your informations have been updated.', 'doliconnect')));
 	}	else {
-	wp_send_json_error( __( 'A security error occured', 'doliconnect')); 
+	wp_send_json_error( dolialert ('danger', __( 'A security error occured', 'doliconnect'))); 
 	}
 }
 	
