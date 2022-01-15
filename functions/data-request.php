@@ -197,7 +197,7 @@ $arr_params = array( 'action' => 'rpw', 'key' => $key, 'login' => $user->user_lo
 $url = esc_url( add_query_arg( $arr_params, doliconnecturl('doliaccount')) );
 
 if ( defined("DOLICONNECT_DEMO_EMAIL") && ''.constant("DOLICONNECT_DEMO_EMAIL").'' == $email ) {
-    wp_send_json_error( __( 'Reset password is not permitted for this account!', 'doliconnect')); 
+    wp_send_json_error( dolialert('danger', __( 'Reset password is not permitted for this account!', 'doliconnect'))); 
 } elseif ( !empty($key) ) { 
 		$sitename = get_option('blogname');
     $siteurl = get_option('siteurl');
@@ -207,13 +207,13 @@ if ( defined("DOLICONNECT_DEMO_EMAIL") && ''.constant("DOLICONNECT_DEMO_EMAIL").
     $mail =  wp_mail($email, $subject, $body, $headers);
 
 if( $mail ) {
-wp_send_json_success( __( 'A password reset link was sent to you by email. Please check your spam folder if you don\'t find it.', 'doliconnect'));
+wp_send_json_success( dolialert('success', __( 'A password reset link was sent to you by email. Please check your spam folder if you don\'t find it.', 'doliconnect')));
 } else { 
-wp_send_json_error( __( 'A problem occurred. Please retry later!', 'doliconnect'));  
+wp_send_json_error( dolialert('danger', __( 'A problem occurred. Please retry later!', 'doliconnect')));  
 }	
 }
 	} else {
-		wp_send_json_error( join( '<br />', $gdrf_error ) );
+		wp_send_json_error( dolialert('warning', join( '<br />', $gdrf_error ) ));
 	}
 	die();
 }
