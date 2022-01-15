@@ -40,7 +40,7 @@ print 'jQuery(document).ready(function($) {
 jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function (e) { 
 		$.post($form.attr("action"), $form.serialize(), function(response) {
       if (response.success) {
-      //document.location = url;
+        //document.location = url;
         if (document.getElementById("DoliInfosAlert")) {
         document.getElementById("DoliInfosAlert").innerHTML = response.data;      
         }

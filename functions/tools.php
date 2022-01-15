@@ -311,7 +311,7 @@ $request = "/users/".doliconnector($user, 'fk_user');
 $doliuser = callDoliApi("GET", $request, null, dolidelay('thirdparty'));
 }
 
-$password = "<div id='DoliRpwAlert' class='text-danger font-weight-bolder'></div><form id='dolirpw-form' method='post' class='was-validated' action='".admin_url('admin-ajax.php')."'>";
+$password = "<div id='DoliRpwAlert'></div><form id='dolirpw-form' method='post' class='was-validated' action='".admin_url('admin-ajax.php')."'>";
 $password .= "<input type='hidden' name='action' value='dolirpw_request'>";
 $password .= "<input type='hidden' name='dolirpw-nonce' value='".wp_create_nonce( 'dolirpw-nonce')."'>";
 if (isset($_GET["key"]) && isset($_GET["login"])) {
@@ -330,11 +330,14 @@ $password .= 'jQuery(document).ready(function($) {
 jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function (e) { 
 		$.post($form.attr("action"), $form.serialize(), function(response) {
       if (response.success) {
-      document.location = url;
+        //document.location = url;
+        if (document.getElementById("DoliRpwAlert")) {
+        document.getElementById("DoliRpwAlert").innerHTML = response.data;      
+        }
       } else {
-      if (document.getElementById("DoliRpwAlert")) {
-      document.getElementById("DoliRpwAlert").innerHTML = response.data;      
-      }
+        if (document.getElementById("DoliRpwAlert")) {
+        document.getElementById("DoliRpwAlert").innerHTML = response.data;      
+        }
       }
 jQuery("#DoliconnectLoadingModal").modal("hide");
 
