@@ -2334,7 +2334,7 @@ global $wpdb, $current_user;
 
 $ID = $current_user->ID;
 
-print "<form id='settings-form' method='post' action='".admin_url('admin-ajax.php')."'>";
+print "<form id='dolisettings-form' method='post' action='".admin_url('admin-ajax.php')."'>";
 print "<input type='hidden' name='action' value='dolisettings_request'>";
 print "<input type='hidden' name='dolisettings-nonce' value='".wp_create_nonce( 'dolisettings-nonce')."'>";
 
