@@ -15,32 +15,7 @@ $ID = $current_user->ID;
 $request = "/thirdparties/".doliconnector($current_user, 'fk_soc');
 
 if ( isset($_POST["case"]) && $_POST["case"] == 'updateuser' ) {
- 
-$thirdparty=$_POST['thirdparty'][''.doliconnector($current_user, 'fk_soc').''];
-
-$thirdparty = dolisanitize($thirdparty);
-
-wp_update_user( array( 'ID' => $ID,
-'user_email' => $thirdparty['email'],
-'nickname' => sanitize_user($_POST['user_nicename']),
-'first_name' => $thirdparty['firstname'],
-'last_name' => $thirdparty['lastname'],
-'description' => $thirdparty['note_public'],
-'user_url' => $thirdparty['url'],
-'display_name' => $thirdparty['name']));
-update_user_meta( $ID, 'civility_code', sanitize_text_field($thirdparty['civility_code']));
-update_user_meta( $ID, 'billing_type', sanitize_text_field($thirdparty['morphy']));
-if ( $thirdparty['morphy'] == 'mor' ) { update_user_meta( $ID, 'billing_company', $thirdparty['name']); }
-update_user_meta( $ID, 'billing_birth', $thirdparty['birth']);
-
-do_action('wp_dolibarr_sync', $thirdparty);
-
-if ( isset($_GET['return']) ) {
-wp_redirect(doliconnecturl('doliaccount').'?module='.$_GET['return']);
-exit;
-} else {
 print dolialert ('success', __( 'Your informations have been updated.', 'doliconnect'));
-}
 }
 
 if ( isset($_GET['return']) ) {
@@ -51,9 +26,37 @@ if ( doliconnector($current_user, 'fk_soc') > '0' ) {
 $thirdparty = callDoliApi("GET", $request, null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
 }
 
-print "<form action='".$url."' id='doliconnect-infosform' method='post' class='was-validated' enctype='multipart/form-data'><input type='hidden' name='case' value='updateuser'>";
+print "<form action='".admin_url('admin-ajax.php')."' id='doliconnect-infosform' method='post' class='was-validated' enctype='multipart/form-data'>";
 
-print doliloaderscript('doliconnect-infosform');
+print "<input type='hidden' name='case' value='updateuser'>";
+print "<input type='hidden' name='action' value='doliuserinfos_request'>";
+print "<input type='hidden' name='doliuserinfos-nonce' value='".wp_create_nonce( 'doliuserinfos-nonce')."'>";
+
+print "<script>";
+print 'jQuery(document).ready(function($) {
+	
+	jQuery("#doliconnect-infosform").on("submit", function(e) {
+  jQuery("#DoliconnectLoadingModal").modal("show");
+	e.preventDefault();
+    
+	var $form = $(this);
+  var url = "'.$url.'";  
+jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function (e) { 
+		$.post($form.attr("action"), $form.serialize(), function(response) {
+      if (response.success) {
+      document.location = url;
+      } else {
+      if (document.getElementById("DoliRpwAlert")) {
+      document.getElementById("DoliRpwAlert").innerHTML = response.data;      
+      }
+      }
+jQuery("#DoliconnectLoadingModal").modal("hide");
+
+		}, "json");  
+  });
+});
+});';
+print "</script>";
 
 print '<div class="card shadow-sm"><div class="card-header">'.__( 'Edit my informations', 'doliconnect').'</div>';
 
