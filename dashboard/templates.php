@@ -7,6 +7,13 @@ if ( (in_the_loop() && is_main_query() && is_page(doliconnectid('doliaccount')) 
 
 doliconnect_enqueues();
 
+if (dolicheckie($_SERVER['HTTP_USER_AGENT'])) {
+print '<div class="card shadow-sm">';
+print '<div class="card-body">';
+print dolicheckie($_SERVER['HTTP_USER_AGENT']);
+print "</div></div>";
+} else {
+
 $ID = $current_user->ID;
 $time = current_time( 'timestamp', 1);
 
@@ -606,10 +613,9 @@ print "</div></div></form>";
 
 }
 
+} 
 } else {
-
 return $content;
-
 }
 
 }
@@ -761,11 +767,10 @@ print "</li></ul>";
 print "<div class='card-body'><div class='d-grid gap-2'><button class='btn btn-outline-secondary' type='submit'>".__( 'Send', 'doliconnect')."</button><input type='hidden' name='submitted' id='submitted' value='true' /></div></div></div></div></div></form>";
 
 print "</div>";
+
 }
 } else {
-
 return $content;
-
 }
 
 }
@@ -790,6 +795,7 @@ print '<div class="card-body">';
 print dolicheckie($_SERVER['HTTP_USER_AGENT']);
 print "</div></div>";
 } else {
+
 if ( isset($_GET['supplier']) && is_numeric(esc_attr($_GET['supplier'])) && esc_attr($_GET['supplier']) > 0 ) { 
  
 $request = "/thirdparties/".esc_attr($_GET['supplier']);
@@ -906,11 +912,10 @@ print "</div><div class='float-end'>";
 print dolihelp('ISSUE');
 print "</div></small>";
 print "</div></div>";
+
 }
 } else {
-
 return $content;
-
 }
 
 }
@@ -1315,11 +1320,8 @@ print "</div></small>";
 print "</div></div>";
 
 }
-
 } else {
-
 return $content;
-
 }
 
 }
@@ -1419,13 +1421,10 @@ if ( isset($request) ) print dolirefresh($request, doliconnecturl('dolidonation'
 print "</div><div class='float-end'>";
 print dolihelp('COM');
 print "</div></small></div>";
+
 }
-
-
 } else {
-
 return $content;
-
 }
 
 }
@@ -1935,9 +1934,7 @@ print "</div>";
 }
 
 } else {
-
 return $content;
-
 }
 
 }
