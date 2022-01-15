@@ -715,9 +715,8 @@ print dolialert('danger', $ContactError);
 //print dolialert('danger', __( 'Please try again!', 'doliconnect')); 
 }
 
-print "<form action='' id='doliconnect-contactform' method='post' class='was-validated'>";
-
-print doliloaderscript('doliconnect-contactform');
+print "<div id='dolicontact-alert'></div><form id='dolicontact-form' method='post' class='was-validated' action='".admin_url('admin-ajax.php')."'>";
+print doliajax('dolicontact');
 
 print "<div class='card shadow-sm'><ul class='list-group list-group-flush'>
 <li class='list-group-item'>";

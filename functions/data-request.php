@@ -125,6 +125,24 @@ function doliuserinfos_request(){
 	wp_send_json_error( dolialert('danger', __( 'A security error occured', 'doliconnect'))); 
 	}
 }
+
+add_action('wp_ajax_dolicontact_request', 'dolicontact_request');
+//add_action('wp_ajax_nopriv_dolicontact_request', 'dolicontact_request');
+
+function dolicontact_request(){
+	global $current_user;
+	$ID = $current_user->ID;
+	
+	if ( wp_verify_nonce( trim($_POST['dolicontact-nonce']), 'dolicontact-nonce') ) {
+
+	
+
+		
+	wp_send_json_success( dolialert('success', __( 'Your informations have been updated.', 'doliconnect')));
+	}	else {
+	wp_send_json_error( dolialert('danger', __( 'A security error occured', 'doliconnect'))); 
+	}
+}
 	
 
 add_action('wp_ajax_dolisettings_request', 'dolisettings_request');
