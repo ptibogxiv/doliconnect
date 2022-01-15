@@ -25,37 +25,7 @@ $thirdparty = callDoliApi("GET", $request, null, dolidelay('thirdparty', esc_att
 print "<div id='doliuserinfos-alert'></div><form action='".admin_url('admin-ajax.php')."' id='doliuserinfos-form' method='post' class='was-validated' enctype='multipart/form-data'>";
 
 print "<input type='hidden' name='case' value='updateuser'>";
-print "<input type='hidden' name='action' value='doliuserinfos_request'>";
-print "<input type='hidden' name='doliuserinfos-nonce' value='".wp_create_nonce( 'doliuserinfos-nonce')."'>";
-
-print "<script>";
-print 'jQuery(document).ready(function($) {
-	
-	jQuery("#doliuserinfos-form").on("submit", function(e) {
-  jQuery("#DoliconnectLoadingModal").modal("show");
-	e.preventDefault();
-    
-	var $form = $(this);
-    var url = "'.$url.'";  
-jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function (e) { 
-		$.post($form.attr("action"), $form.serialize(), function(response) {
-      if (response.success) {
-        //document.location = url;
-        if (document.getElementById("doliuserinfos-alert")) {
-        document.getElementById("doliuserinfos-alert").innerHTML = response.data;      
-        }
-      } else {
-        if (document.getElementById("doliuserinfos-alert")) {
-        document.getElementById("doliuserinfos-alert").innerHTML = response.data;      
-        }
-      }
-jQuery("#DoliconnectLoadingModal").modal("hide");
-
-		}, "json");  
-  });
-});
-});';
-print "</script>";
+print doliajax('doliuserinfos', $url);
 
 print '<div class="card shadow-sm"><div class="card-header">'.__( 'Edit my informations', 'doliconnect').'</div>';
 

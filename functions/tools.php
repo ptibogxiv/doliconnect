@@ -305,47 +305,48 @@ $connect .= '<div><div style="display:inline-block;width:46%;float:left"><hr wid
 return $connect;
 }
 
+function doliajax($id, $url){
+  $ajax = "<input type='hidden' name='action' value='".$id."_request'>";
+  $ajax.= "<input type='hidden' name='".$id."-nonce' value='".wp_create_nonce( $id.'-nonce')."'>";
+  $ajax.= "<script>";
+  $ajax.= 'jQuery(document).ready(function($) {
+    jQuery("#'.$id.'-form").on("submit", function(e) {
+    jQuery("#DoliconnectLoadingModal").modal("show");
+    e.preventDefault(); 
+    var $form = $(this);
+    var url = "'.$url.'";
+    jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function (e) { 
+      $.post($form.attr("action"), $form.serialize(), function(response) {
+        if (response.success) {
+          //document.location = url;
+          if (document.getElementById("'.$id.'-alert")) {
+          document.getElementById("'.$id.'-alert").innerHTML = response.data;      
+          }
+        } else {
+          if (document.getElementById("'.$id.'-alert")) {
+          document.getElementById("'.$id.'-alert").innerHTML = response.data;      
+          }
+        }
+      jQuery("#DoliconnectLoadingModal").modal("hide");
+      }, "json");  
+    });
+  });
+  });';
+  $ajax.= "</script>";
+return $ajax;
+}
+
 function dolipasswordform($user, $url){
 if (doliconnector($user, 'fk_user') > 0){  
 $request = "/users/".doliconnector($user, 'fk_user');
 $doliuser = callDoliApi("GET", $request, null, dolidelay('thirdparty'));
 }
 
-$password = "<div id='DoliRpwAlert'></div><form id='dolirpw-form' method='post' class='was-validated' action='".admin_url('admin-ajax.php')."'>";
-$password .= "<input type='hidden' name='action' value='dolirpw_request'>";
-$password .= "<input type='hidden' name='dolirpw-nonce' value='".wp_create_nonce( 'dolirpw-nonce')."'>";
+$password = "<div id='dolirpw-alert'></div><form id='dolirpw-form' method='post' class='was-validated' action='".admin_url('admin-ajax.php')."'>";
 if (isset($_GET["key"]) && isset($_GET["login"])) {
 $password .= "<input type='hidden' name='key' value='".esc_attr($_GET["key"])."'><input type='hidden' name='login' value='".esc_attr($_GET["login"])."'>";
 }
-
-$password .= "<script>";
-$password .= 'jQuery(document).ready(function($) {
-	
-	jQuery("#dolirpw-form").on("submit", function(e) {
-  jQuery("#DoliconnectLoadingModal").modal("show");
-	e.preventDefault();
-    
-	var $form = $(this);
-  var url = "'.$url.'";  
-jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function (e) { 
-		$.post($form.attr("action"), $form.serialize(), function(response) {
-      if (response.success) {
-        //document.location = url;
-        if (document.getElementById("DoliRpwAlert")) {
-        document.getElementById("DoliRpwAlert").innerHTML = response.data;      
-        }
-      } else {
-        if (document.getElementById("DoliRpwAlert")) {
-        document.getElementById("DoliRpwAlert").innerHTML = response.data;      
-        }
-      }
-jQuery("#DoliconnectLoadingModal").modal("hide");
-
-		}, "json");  
-  });
-});
-});';
-$password .= "</script>";
+$password .= doliajax('dolirpw', $url);
 
 $password .= '<div class="card shadow-sm"><div class="card-header">'.__( 'Edit my password', 'doliconnect').'</div><ul class="list-group list-group-flush">';
 if ( doliconnector($user, 'fk_user') > '0' ) {
