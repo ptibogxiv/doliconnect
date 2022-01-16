@@ -27,7 +27,7 @@ print "<a href='".esc_url( add_query_arg( 'module', 'avatars', doliconnecturl('d
 } 
 print '<ul class="list-group list-group-flush">';
 if ( isset($_GET['module']) && !empty($_GET['module'])) {
-print "<a href='".esc_url( doliconnecturl('doliaccount') )."' class='list-group-item list-group-item-light list-group-item-action'><center><div class='d-block d-sm-block d-xs-block d-md-none'><i class='fas fa-home'></i></div><div class='d-none d-md-block'><i class='fas fa-arrow-circle-left fa-fw'></i> ".__( 'Return', 'doliconnect')."</div></center></a>";
+print "<a href='".esc_url( doliconnecturl('doliaccount') )."' class='list-group-item list-group-item-light list-group-item-action'><center><div class='d-block d-sm-block d-xs-block d-md-none'><i class='fas fa-arrow-circle-left fa-fw'></i></div><div class='d-none d-md-block'><i class='fas fa-arrow-circle-left fa-fw'></i> ".__( 'Return', 'doliconnect')."</div></center></a>";
 } else {
 print "<a href='".esc_url(home_url())."' class='list-group-item list-group-item-light list-group-item-action'><center><div class='d-block d-sm-block d-xs-block d-md-none'><i class='fas fa-home'></i></div><div class='d-none d-md-block'><i class='fas fa-home fa-fw'></i> ".__( 'Home', 'doliconnect')."</div></center></a>";
 }
