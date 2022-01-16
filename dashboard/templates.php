@@ -665,9 +665,13 @@ print doliajax('dolicontact');
 
 print "<div class='card shadow-sm'><ul class='list-group list-group-flush'>
 <li class='list-group-item'>";
-
+if (is_user_logged_in()) {
+$fullname = $current_user->user_firstname." ".$current_user->user_lastname;
+} else {
+$fullname = null;
+}
 print '<div class="form-floating mb-2">
-<input type="text" class="form-control" name="contactName" autocomplete="off" id="contactName" placeholder="Name" value="'.(isset($_POST['contactName'])?$_POST['contactName']:$current_user->user_lastname." ".$current_user->user_firstname).'"';
+<input type="text" class="form-control" name="contactName" autocomplete="off" id="contactName" placeholder="Name" value="'.(isset($_POST['contactName'])?$_POST['contactName']:$fullname).'"';
 if ( is_user_logged_in() ) { print " readonly"; } else { print " required"; }
 print '>
 <label for="contactName"><i class="fas fa-user fa-fw"></i> '.__( 'Complete name', 'doliconnect').'</label>
@@ -698,7 +702,7 @@ print '</select><label for="ticket_type">'.__( 'Type', 'doliconnect').'</label><
 }
 
 print '<div class="form-floating mb-2">
-<textarea class="form-control" placeholder="Leave a comment here" name="comments" id="commentsText" style="height: 200px">'.stripslashes(htmlspecialchars(isset($_POST['comments'])?$_POST['comments']:null, ENT_QUOTES)).'</textarea>
+<textarea class="form-control" placeholder="Leave a comment here" name="comments" id="commentsText" style="height: 200px" required>'.stripslashes(htmlspecialchars(isset($_POST['comments'])?$_POST['comments']:null, ENT_QUOTES)).'</textarea>
 <label for="commentsText">'.__( 'Message', 'doliconnect').'</label>
 </div>';
 
