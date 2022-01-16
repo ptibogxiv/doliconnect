@@ -637,13 +637,10 @@ function dolifaq_display($content) {
     print dolicheckie($_SERVER['HTTP_USER_AGENT']);
     print "</div></div>";
     } else {
+
+    $faq = callDoliApi("GET", "/knowledgemanagement/knowledgerecords?sortfield=t.rowid&sortorder=ASC&limit=100", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
     
-    print "<div class='row'><div class='col-md-4'><div class='form-group'><h4>".__( 'Address', 'doliconnect')."</h4>";
-    
-    print "</div></div><div class='col-md-8'>";
-    
-    print "<div id='dolicontact-alert'></div><form id='dolicontact-form' method='post' class='was-validated' action='".admin_url('admin-ajax.php')."'>";
-    print doliajax('dolicontact');
+    print var_dump($faq);
     
     print "<div class='card shadow-sm'><ul class='list-group list-group-flush'>
     <li class='list-group-item'>";
@@ -694,10 +691,8 @@ function dolifaq_display($content) {
     print '</li><li class="list-group-item"><div class="form-check"><input id="rgpdinfo" class="form-check-input form-check-sm" type="checkbox" name="rgpdinfo" value="ok"><label class="form-check-label w-100" for="rgpdinfo"><small class="form-text text-muted"> '.__( 'I agree to save my personnal informations in order to contact me', 'doliconnect').'</small></label></div>';  
     }
     print "</li></ul>";
-    print "<div class='card-body'><div class='d-grid gap-2'><button class='btn btn-outline-secondary' type='submit'>".__( 'Send', 'doliconnect')."</button><input type='hidden' name='submitted' id='submitted' value='true' /></div></div></div></form>";
-
-    print "</div></div>";
-    
+    print "<div class='card-body'><div class='d-grid gap-2'><button class='btn btn-outline-secondary' type='submit'>".__( 'Send', 'doliconnect')."</button><input type='hidden' name='submitted' id='submitted' value='true' /></div></div></form>";
+ 
     }
     } else {
     return $content;
