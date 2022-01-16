@@ -317,6 +317,7 @@ function doliajax($id, $url = null){
     var url = "'.$url.'";
     jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function (e) { 
       $.post($form.attr("action"), $form.serialize(), function(response) {
+        $(window).scrollTop(0); 
         if (response.success) {
           //document.location = url;
           if (document.getElementById("'.$id.'-alert")) {
