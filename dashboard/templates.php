@@ -653,13 +653,6 @@ $country = callDoliApi("GET", "/setup/dictionary/countries/".$company->country_i
 print $country->label;
 print "</div></div><div class='col-md-8'><div id='content'>";
 
-if ( isset($emailSent) && $emailSent == true ) {
-print dolialert('success', __( 'Your message is successful send!', 'doliconnect')); 
-} elseif ( isset($hasError) || isset($captchaError) ) { 
-print dolialert('danger', $ContactError);
-//print dolialert('danger', __( 'Please try again!', 'doliconnect')); 
-}
-
 print "<div id='dolicontact-alert'></div><form id='dolicontact-form' method='post' class='was-validated' action='".admin_url('admin-ajax.php')."'>";
 print doliajax('dolicontact');
 
