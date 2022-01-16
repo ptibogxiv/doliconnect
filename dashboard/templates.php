@@ -650,11 +650,11 @@ function dolifaq_display($content) {
     print '<div class="accordion accordion-flush" id="accordionDolifaq">';
     if ( !isset( $listfaq->error ) && $listfaq != null ) {
         foreach ( $listfaq as $postfaq ) { 
-    print '<div class="accordion-item"><h2 class="accordion-header" id="flush-headingOne">';
-    print '<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">';
+    print '<div class="accordion-item"><h2 class="accordion-header" id="flush-headingDolifaq'.$postfaq->id.'">';
+    print '<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseDolifaq'.$postfaq->id.'" aria-expanded="false" aria-controls="flush-collapseDolifaq'.$postfaq->id.'">';
     print $postfaq->question;
     print '</button></h2>
-    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionDolifaq">
+    <div id="flush-collapseDolifaq'.$postfaq->id.'" class="accordion-collapse collapse" aria-labelledby="flush-headingDolifaq'.$postfaq->id.'" data-bs-parent="#accordionDolifaq">
     <div class="accordion-body">'.$postfaq->answer.'</div></div></div>';
     }}
   print '</div>';
