@@ -54,8 +54,6 @@ function doli_gdrf_data_request() {
 add_action( 'wp_ajax_doli_gdrf_data_request', 'doli_gdrf_data_request' );
 add_action( 'wp_ajax_nopriv_doli_gdrf_data_request', 'doli_gdrf_data_request' );
 
-
-
 add_action('wp_ajax_doliproduct_request', 'doliproduct_request');
 add_action('wp_ajax_nopriv_doliproduct_request', 'doliproduct_request');
 
@@ -127,24 +125,22 @@ function doliuserinfos_request(){
 }
 
 add_action('wp_ajax_dolicontact_request', 'dolicontact_request');
-//add_action('wp_ajax_nopriv_dolicontact_request', 'dolicontact_request');
+add_action('wp_ajax_nopriv_dolicontact_request', 'dolicontact_request');
 
 function dolicontact_request(){
 	global $current_user;
 	$ID = $current_user->ID;
 	
 	if ( wp_verify_nonce( trim($_POST['dolicontact-nonce']), 'dolicontact-nonce') ) {
-
+			$ContactError = array();
 		if ( sanitize_text_field($_POST['contactName']) === '' ) {
-			$ContactError = __( 'Please enter your name.', 'doliconnect');
-			$hasError = true;
+			$ContactError[] = esc_html__( 'Please enter your name.', 'doliconnect');
 		} else {
 			$name = sanitize_text_field($_POST['contactName']);
 		}
 	
 		if ( sanitize_email($_POST['email']) === '' )  {
-			$ContactError = __( 'Please enter you email.', 'doliconnect');
-			$hasError = true;
+			$ContactError[] = esc_html__( 'Please enter you email.', 'doliconnect');
 		} elseif (!preg_match("/^[[:alnum:]][a-z0-9_.-]*@[a-z0-9.-]+\.[a-z]{2,4}$/i", sanitize_email($_POST['email']))) {
 			$ContactError = 'You entered an invalid email address.';
 			$hasError = true;
@@ -153,23 +149,20 @@ function dolicontact_request(){
 		}
 	
 		if( sanitize_textarea_field($_POST['comments']) === '') {
-			$ContactError = __( 'A message is needed.', 'doliconnect');
-			$hasError = true;
+			$ContactError[] = esc_html__( 'A message is needed.', 'doliconnect');
 		} else {
 			$comments = sanitize_textarea_field($_POST['comments']);
 		}
 		
 		if ( !isset($_POST['btndolicaptcha']) || empty(wp_verify_nonce( $_POST['ctrldolicaptcha'], 'ctrldolicaptcha-'.$_POST['btndolicaptcha'])) ) {
-			$ContactError = __( 'Security check failed, invalid human verification field.', 'doliconnect');
-			$hasError = true;
+			$ContactError[] = esc_html__( 'Security check failed, invalid human verification field.', 'doliconnect');
 		}
 	
 		if ( defined("DOLICONNECT_DEMO") ) {
-			$ContactError = __( 'Send message is not permitted because the demo mode is active', 'doliconnect');       
-			$hasError = true;
+			$ContactError[] = esc_html__( 'Send message is not permitted because the demo mode is active', 'doliconnect');       
 		}
 	
-		if ( !isset($hasError) ) {
+		if ( !empty($ContactError) ) {
 			$emailTo = get_option('tz_email');
 			
 			if (!isset($emailTo) || ($emailTo == '') ) {
@@ -185,7 +178,7 @@ function dolicontact_request(){
 		if ( isset($emailSent) && $emailSent == true ) {
 			wp_send_json_success( dolialert('success', __( 'Your message is successful send!', 'doliconnect')));
 		} elseif ( isset($hasError) || isset($captchaError) ) { 
-			wp_send_json_error( dolialert('danger', $ContactError));
+			wp_send_json_error( dolialert('danger', join( '<br />', $ContactError )));
 		}
 
 	}	else {
@@ -555,7 +548,7 @@ wp_send_json_error( __( 'A security error occured', 'doliconnect'));
 }
 
 add_action('wp_ajax_dolimember_request', 'dolimember_request');
-add_action('wp_ajax_nopriv_dolimember_request', 'dolimember_request');
+//add_action('wp_ajax_nopriv_dolimember_request', 'dolimember_request');
 
 function dolimember_request(){
 global $current_user;
