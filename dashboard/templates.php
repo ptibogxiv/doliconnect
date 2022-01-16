@@ -663,7 +663,7 @@ function dolifaq_display($content) {
   print dolipage($listfaq, $url, $page, $limit);
   print '</div><div class="card-footer text-muted">';
   print "<small><div class='float-start'>";
-  if ( isset($request) ) print dolirefresh($request, $url, dolidelay('ticket'));
+  if ( isset($request) ) print dolirefresh($request, $url, dolidelay('constante'));
   print "</div><div class='float-end'>";
   print dolihelp('ISSUE');
   print "</div></small>";
