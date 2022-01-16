@@ -638,61 +638,41 @@ function dolifaq_display($content) {
     print "</div></div>";
     } else {
 
-    $faq = callDoliApi("GET", "/knowledgemanagement/knowledgerecords?sortfield=t.rowid&sortorder=ASC&limit=100", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+        $limit=8;
+        if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']-1); }  else { $page = 0; }
+        $request = "/knowledgemanagement/knowledgerecords?sortfield=t.rowid&sortorder=ASC&limit=100"; 
+        $listfaq = callDoliApi("GET", $request, null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+        $url = doliconnecturl('dolifaq');
+
+    //print var_dump($faq);
     
-    print var_dump($faq);
-    
-    print "<div class='card shadow-sm'><ul class='list-group list-group-flush'>
-    <li class='list-group-item'>";
-    if (is_user_logged_in()) {
-    $fullname = $current_user->user_firstname." ".$current_user->user_lastname;
-    } else {
-    $fullname = '';
-    }
-    print '<div class="form-floating mb-2">
-    <input type="text" class="form-control" name="contactName" autocomplete="off" id="contactName" placeholder="Name" value="'.$fullname.'"';
-    if ( is_user_logged_in() ) { print " readonly"; } else { print " required"; }
-    print '>
-    <label for="contactName"><i class="fas fa-user fa-fw"></i> '.__( 'Complete name', 'doliconnect').'</label>
+    print '<div class="card"><div class="card-header">'.__( 'Knowledge base', 'doliconnect').'</div>';
+    print '<div class="accordion accordion-flush" id="accordionFlushExample">';
+    if ( !isset( $listfaq->error ) && $listfaq != null ) {
+        foreach ( $listfaq as $postfaq ) { 
+    print '<div class="accordion-item">
+      <h2 class="accordion-header" id="flush-headingOne">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+          Accordion Item #1
+        </button>
+      </h2>
+      <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+        <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the first items accordion body.</div>
+      </div>
     </div>';
-    
-    print '<div class="form-floating mb-2">
-    <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com" value="'.$current_user->user_email.'" autocomplete="off" ';
-    if ( is_user_logged_in() ) { print " readonly"; } else { print " required"; }
-    print '>
-    <label for="email"><i class="fas fa-at fa-fw"></i> '.__( 'Email', 'doliconnect').'</label>
-    </div>';
-    
-    $type = callDoliApi("GET", "/setup/dictionary/ticket_types?sortfield=pos&sortorder=ASC&limit=100", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-    if ( isset($type) ) { 
-    print '<div class="form-floating mb-2"><select class="form-select" id="ticket_type"  name="ticket_type" aria-label="'.__( 'Type', 'doliconnect').'" required>';
-    if ( count($type) > 1 ) {
-    print "<option value='' disabled selected >".__( '- Select -', 'doliconnect')."</option>";
-    }
-    foreach ($type as $postv) {
-    print "<option value='".$postv->code."' ";
-    if ( isset($_GET['type']) && $_GET['type'] == $postv->code ) {
-    print "selected ";
-    } elseif ( $postv->use_default == 1 ) {
-    print "selected ";}
-    print ">".$postv->label."</option>";
-    }
-    print '</select><label for="ticket_type">'.__( 'Type', 'doliconnect').'</label></div>';
-    }
-    
-    print '<div class="form-floating mb-2">
-    <textarea class="form-control" placeholder="Leave a comment here" name="comments" id="commentsText" style="height: 200px" required></textarea>
-    <label for="commentsText">'.__( 'Message', 'doliconnect').'</label>
-    </div>';
-    
-    print dolicaptcha();
-    
-    if ( !is_user_logged_in() ) {
-    print '</li><li class="list-group-item"><div class="form-check"><input id="rgpdinfo" class="form-check-input form-check-sm" type="checkbox" name="rgpdinfo" value="ok"><label class="form-check-label w-100" for="rgpdinfo"><small class="form-text text-muted"> '.__( 'I agree to save my personnal informations in order to contact me', 'doliconnect').'</small></label></div>';  
-    }
-    print "</li></ul>";
-    print "<div class='card-body'><div class='d-grid gap-2'><button class='btn btn-outline-secondary' type='submit'>".__( 'Send', 'doliconnect')."</button><input type='hidden' name='submitted' id='submitted' value='true' /></div></div></form>";
- 
+    }}
+  print '</div>';
+
+  print '<div class="card-body">';
+  print dolipage($listfaq, $url, $page, $limit);
+  print '</div><div class="card-footer text-muted">';
+  print "<small><div class='float-start'>";
+  if ( isset($request) ) print dolirefresh($request, $url, dolidelay('ticket'));
+  print "</div><div class='float-end'>";
+  print dolihelp('ISSUE');
+  print "</div></small>";
+  print '</div></div>';
+
     }
     } else {
     return $content;
