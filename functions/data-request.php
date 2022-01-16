@@ -145,7 +145,7 @@ function dolicontact_request(){
 		if ( sanitize_email($_POST['email']) === '' )  {
 			$ContactError = __( 'Please enter you email.', 'doliconnect');
 			$hasError = true;
-		} else if (!preg_match("/^[[:alnum:]][a-z0-9_.-]*@[a-z0-9.-]+\.[a-z]{2,4}$/i", sanitize_email($_POST['email']))) {
+		} elseif (!preg_match("/^[[:alnum:]][a-z0-9_.-]*@[a-z0-9.-]+\.[a-z]{2,4}$/i", sanitize_email($_POST['email']))) {
 			$ContactError = 'You entered an invalid email address.';
 			$hasError = true;
 		} else {
