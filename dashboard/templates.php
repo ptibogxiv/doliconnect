@@ -624,6 +624,91 @@ add_filter( 'the_content', 'doliaccount_display', 10, 2);
 
 // ********************************************************
 
+function dolifaq_display($content) {
+    global $current_user;
+    
+    if ( in_the_loop() && is_main_query() && is_page(doliconnectid('dolifaq')) && !empty(doliconnectid('dolifaq')) ) {
+    
+    doliconnect_enqueues();
+    
+    if (dolicheckie($_SERVER['HTTP_USER_AGENT'])) {
+    print '<div class="card shadow-sm">';
+    print '<div class="card-body">';
+    print dolicheckie($_SERVER['HTTP_USER_AGENT']);
+    print "</div></div>";
+    } else {
+    
+    print "<div class='row'><div class='col-md-4'><div class='form-group'><h4>".__( 'Address', 'doliconnect')."</h4>";
+    
+    print "</div></div><div class='col-md-8'>";
+    
+    print "<div id='dolicontact-alert'></div><form id='dolicontact-form' method='post' class='was-validated' action='".admin_url('admin-ajax.php')."'>";
+    print doliajax('dolicontact');
+    
+    print "<div class='card shadow-sm'><ul class='list-group list-group-flush'>
+    <li class='list-group-item'>";
+    if (is_user_logged_in()) {
+    $fullname = $current_user->user_firstname." ".$current_user->user_lastname;
+    } else {
+    $fullname = '';
+    }
+    print '<div class="form-floating mb-2">
+    <input type="text" class="form-control" name="contactName" autocomplete="off" id="contactName" placeholder="Name" value="'.$fullname.'"';
+    if ( is_user_logged_in() ) { print " readonly"; } else { print " required"; }
+    print '>
+    <label for="contactName"><i class="fas fa-user fa-fw"></i> '.__( 'Complete name', 'doliconnect').'</label>
+    </div>';
+    
+    print '<div class="form-floating mb-2">
+    <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com" value="'.$current_user->user_email.'" autocomplete="off" ';
+    if ( is_user_logged_in() ) { print " readonly"; } else { print " required"; }
+    print '>
+    <label for="email"><i class="fas fa-at fa-fw"></i> '.__( 'Email', 'doliconnect').'</label>
+    </div>';
+    
+    $type = callDoliApi("GET", "/setup/dictionary/ticket_types?sortfield=pos&sortorder=ASC&limit=100", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+    if ( isset($type) ) { 
+    print '<div class="form-floating mb-2"><select class="form-select" id="ticket_type"  name="ticket_type" aria-label="'.__( 'Type', 'doliconnect').'" required>';
+    if ( count($type) > 1 ) {
+    print "<option value='' disabled selected >".__( '- Select -', 'doliconnect')."</option>";
+    }
+    foreach ($type as $postv) {
+    print "<option value='".$postv->code."' ";
+    if ( isset($_GET['type']) && $_GET['type'] == $postv->code ) {
+    print "selected ";
+    } elseif ( $postv->use_default == 1 ) {
+    print "selected ";}
+    print ">".$postv->label."</option>";
+    }
+    print '</select><label for="ticket_type">'.__( 'Type', 'doliconnect').'</label></div>';
+    }
+    
+    print '<div class="form-floating mb-2">
+    <textarea class="form-control" placeholder="Leave a comment here" name="comments" id="commentsText" style="height: 200px" required></textarea>
+    <label for="commentsText">'.__( 'Message', 'doliconnect').'</label>
+    </div>';
+    
+    print dolicaptcha();
+    
+    if ( !is_user_logged_in() ) {
+    print '</li><li class="list-group-item"><div class="form-check"><input id="rgpdinfo" class="form-check-input form-check-sm" type="checkbox" name="rgpdinfo" value="ok"><label class="form-check-label w-100" for="rgpdinfo"><small class="form-text text-muted"> '.__( 'I agree to save my personnal informations in order to contact me', 'doliconnect').'</small></label></div>';  
+    }
+    print "</li></ul>";
+    print "<div class='card-body'><div class='d-grid gap-2'><button class='btn btn-outline-secondary' type='submit'>".__( 'Send', 'doliconnect')."</button><input type='hidden' name='submitted' id='submitted' value='true' /></div></div></div></form>";
+
+    print "</div></div>";
+    
+    }
+    } else {
+    return $content;
+    }
+    
+    }
+    
+    add_filter( 'the_content', 'dolifaq_display');
+    
+    // ********************************************************
+
 function dolicontact_display($content) {
 global $current_user;
 
