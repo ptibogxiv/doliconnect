@@ -296,6 +296,7 @@ delete_option('doliconnect_google');}
             update_option('doliconnect_ipkiosk', array_values(array_filter(array_map('trim', explode(PHP_EOL, $_REQUEST['doliconnect_ipkiosk'])))));             
             update_option('wp_page_for_privacy_policy', sanitize_text_field($_REQUEST['wp_page_for_privacy_policy']));
             update_option('dolishop', sanitize_text_field($_REQUEST['dolishop']));
+            update_option('dolifaq', sanitize_text_field($_REQUEST['dolifaq']));
             update_option('dolishipping', sanitize_text_field($_REQUEST['dolishipping']));
             update_option('dolicartnewlist', sanitize_text_field($_REQUEST['dolicartnewlist']));
             update_option('dolicartlist', sanitize_text_field($_REQUEST['dolicartlist']));
@@ -482,6 +483,17 @@ echo "<input id='dolibarr_entity'  name='dolibarr_entity' type='text' value='".(
            <option value="none" <?php if (get_option('dolicartnewlist') == 'none') { ?> selected <?php } ?>><?php _e('None', 'doliconnect') ?></option>
            </select> <?php _e('Duration of new product', 'doliconnect') ?>
            </td>
+            </tr>
+            <tr>
+                <th style="width:150px;"><label for="dolibarr_faq">dolibarr_faq</label></th>
+                <td ><?php 
+           $args = array(
+    'name' => 'dolifaq', 
+    'show_option_none' => __( '- Select -', 'doliconnect' ), 
+    'option_none_value' => '0', 
+    'selected' => get_option('dolifaq')  
+);
+           wp_dropdown_pages($args); ?> <?php _e('(Display your knowledge base)', 'doliconnect') ?></td>
             </tr>
             <tr>
                 <th style="width:150px;"><label for="dolibarr_shop">dolibarr_donation</label></th>
