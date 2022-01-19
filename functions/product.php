@@ -370,7 +370,7 @@ $button .= '</tr>';
 
 $button .= '<tr><td colspan="';
 if (!empty($product->net_measure)) { $button .= '2'; } else { $button .= '3'; };
-$button .= '"><small><div class="float-start">'.(empty(get_option('dolibarr_b2bmode'))?__( 'Our prices are incl. VAT', 'doliconnect'):__( 'Our prices are excl. VAT', 'doliconnect'));
+$button .= '"><small class="fw-lighter"><div class="float-start">'.(empty(get_option('dolibarr_b2bmode'))?__( 'Our prices are incl. VAT', 'doliconnect'):__( 'Our prices are excl. VAT', 'doliconnect'));
 if (!empty($product->net_measure)) { $button .= '</div><div class="float-end">'.doliprice( $refprice/$product->net_measure, null, $currency);
 $unit = callDoliApi("GET", "/setup/dictionary/units?sortfield=rowid&sortorder=ASC&limit=1&active=1&sqlfilters=(t.rowid%3Alike%3A'".$product->net_measure_units."')", null, dolidelay('constante'));
 if (!empty($unit)) $button .= "/".$unit[0]->short_label; }
@@ -473,11 +473,11 @@ $discount = 0;
 $discount = 100-($price_min_ttc/$price_ttc);
 }
 
-$button .= '<tr><td colspan="'.(!empty($altdurvalue)?'3':'2').'"><small><div class="float-start">'.(empty(get_option('dolibarr_b2bmode'))?__( 'Our prices are incl. VAT', 'doliconnect'):__( 'Our prices are excl. VAT', 'doliconnect'));
+$button .= '<tr><td colspan="'.(!empty($altdurvalue)?'3':'2').'"><small class="fw-lighter"><div class="float-start">'.(empty(get_option('dolibarr_b2bmode'))?__( 'Our prices are incl. VAT', 'doliconnect'):__( 'Our prices are excl. VAT', 'doliconnect'));
 if (!empty($product->net_measure)) { $button .= '</div><div class="float-end">'.doliprice( $refprice/$product->net_measure, null, $currency);
 $unit = callDoliApi("GET", "/setup/dictionary/units?sortfield=rowid&sortorder=ASC&limit=1&active=1&sqlfilters=(t.rowid%3Alike%3A'".$product->net_measure_units."')", null, dolidelay('constante'));
 if (!empty($unit)) $button .= "/".$unit[0]->short_label; }
-$button .= "</div></small></td></tr>";
+$button .= "</div></p></td></tr>";
 $button .= '</tbody></table>';
 }
 
