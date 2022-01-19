@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2022-01-19 19:39+0100\n"
-"PO-Revision-Date: 2022-01-19 19:39+0100\n"
+"POT-Creation-Date: 2022-01-19 20:13+0100\n"
+"PO-Revision-Date: 2022-01-19 20:13+0100\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_FR\n"
@@ -1319,12 +1319,12 @@ msgid "All items"
 msgstr "Tous les articles"
 
 #: dashboard/templates.php:1115
-msgid "Title A->Z"
-msgstr "Titre A->Z"
+msgid "Name A->Z"
+msgstr "Nom A->Z"
 
 #: dashboard/templates.php:1118
-msgid "Title Z->A"
-msgstr "Titre Z->A"
+msgid "Name Z->A"
+msgstr "Nom Z->A"
 
 #: dashboard/templates.php:1121 dashboard/templates.php:1236
 #: functions/widgets.php:346

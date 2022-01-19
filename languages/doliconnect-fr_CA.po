@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2022-01-19 19:39+0100\n"
-"PO-Revision-Date: 2022-01-19 19:39+0100\n"
+"POT-Creation-Date: 2022-01-19 20:14+0100\n"
+"PO-Revision-Date: 2022-01-19 20:14+0100\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_CA\n"
@@ -775,16 +775,12 @@ msgid "No donation"
 msgstr "Pas de don"
 
 #: dashboard/dashboard.php:1578
-#, fuzzy
-#| msgid "List of admins"
 msgid "List of jobpositions"
-msgstr "Liste des administrateurs"
+msgstr "Liste des postes à pourvoir"
 
 #: dashboard/dashboard.php:1650
-#, fuzzy
-#| msgid "No subscription"
 msgid "No jobposition"
-msgstr "Pas d’abonnement"
+msgstr "Pas de poste"
 
 #: dashboard/dashboard.php:1676 dashboard/dashboard.php:1712
 msgid "Manage my subscription"
@@ -1322,12 +1318,12 @@ msgid "All items"
 msgstr "Tous les articles"
 
 #: dashboard/templates.php:1115
-msgid "Title A->Z"
-msgstr "Titre A->Z"
+msgid "Name A->Z"
+msgstr "Nom A->Z"
 
 #: dashboard/templates.php:1118
-msgid "Title Z->A"
-msgstr "Titre Z->A"
+msgid "Name Z->A"
+msgstr "Nom Z->A"
 
 #: dashboard/templates.php:1121 dashboard/templates.php:1236
 #: functions/widgets.php:346

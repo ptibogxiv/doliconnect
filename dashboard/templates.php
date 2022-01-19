@@ -1112,10 +1112,10 @@ print '</div><div class="col-4 col-md-3"><div class="input-group">
     <option value="" disabled selected>'.__( '- Select -', 'doliconnect').'</option>
     <option value="'.esc_url( add_query_arg( array( 'search' =>isset($_GET['search'])?esc_attr($_GET['search']):null, 'category' => !empty($cat)?$cat:null, 'subcategory' => !empty($subcat)?$subcat:null, 'pg' => $page+1, 'field' => 'label', 'order' => 'ASC'), doliconnecturl('dolishop')) ).'"';
     if ($field == 'label' && $order == 'ASC') { print 'selected'; }
-    print '>'.__( 'Title A->Z', 'doliconnect').'</option>
+    print '>'.__( 'Name A->Z', 'doliconnect').'</option>
     <option value="'.esc_url( add_query_arg( array( 'search' =>isset($_GET['search'])?esc_attr($_GET['search']):null, 'category' => !empty($cat)?$cat:null, 'subcategory' => !empty($subcat)?$subcat:null, 'pg' => $page+1, 'field' => 'label', 'order' => 'DESC'), doliconnecturl('dolishop')) ).'"';
     if ($field == 'label' && $order == 'DESC') { print 'selected'; }
-    print '>'.__( 'Title Z->A', 'doliconnect').'</option>
+    print '>'.__( 'Name Z->A', 'doliconnect').'</option>
     <option value="'.esc_url( add_query_arg( array( 'search' =>isset($_GET['search'])?esc_attr($_GET['search']):null, 'category' => !empty($cat)?$cat:null, 'subcategory' => !empty($subcat)?$subcat:null, 'pg' => $page+1, 'field' => 'rowid', 'order' => 'DESC'), doliconnecturl('dolishop')) ).'"';
     if ($field == 'rowid' && $order == 'DESC') { print 'selected'; }
     print '>'.__( 'Novelties', 'doliconnect').'</option>
