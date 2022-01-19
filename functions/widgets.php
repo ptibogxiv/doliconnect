@@ -403,7 +403,7 @@ print "'>>".doliproduct($scategorie, 'label')." <span class='badge bg-secondary 
 
 
 
-if ( isset($_GET['subcategory']) && $scategorie->id == $_GET['subcategory'] ) {
+if ( isset($_GET['subcategory']) && isset($scategorie) && $scategorie->id == $_GET['subcategory'] ) {
 
 $request = "/categories/".esc_attr(isset($_GET["subcategory"]) ? $_GET["subcategory"] : $_GET["category"])."?include_childs=true";
 $resultatsc = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
