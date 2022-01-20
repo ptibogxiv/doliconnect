@@ -269,7 +269,7 @@ $thirdparty=$_POST['thirdparty'];
     }
     
 	if ( !isset($_POST['btndolicaptcha']) || empty(wp_verify_nonce( $_POST['ctrldolicaptcha'], 'ctrldolicaptcha-'.$_POST['btndolicaptcha'])) ) {
-        $ContactError = __( 'Security check failed, invalid human verification field.', 'doliconnect');
+        $emailError = __( 'Security check failed, invalid human verification field.', 'doliconnect');
         $hasError = true;
     }
           
