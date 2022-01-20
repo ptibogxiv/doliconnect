@@ -538,7 +538,7 @@ if (get_option('doliaccount')) {
 add_filter( 'lostpassword_url', 'doliconnect_lost_password_page', 10, 2 );}
 
 function doliconnect_login_link_url( $login_url, $redirect, $force_reauth ) {
-if (get_option('doliaccount') && strpos( $login_url, 'action=confirm_admin_email' ) === false ) {
+if (get_option('doliaccount') && !preg_match('/action=confirm_admin_email/i', $redirect)) {
 $login_url = doliconnecturl('doliaccount');
 }
 if ( ! empty( $redirect ) ) {
@@ -550,7 +550,8 @@ $login_url = add_query_arg( 'reauth', '1', $login_url );
 return $login_url;
 }
 if (get_option('doliaccount')) {
-add_filter( 'login_url', 'doliconnect_login_link_url', 10, 3 ); }
+add_filter( 'login_url', 'doliconnect_login_link_url', 10, 3 );
+}
 
 add_filter( 'logout_url', 'doliconnect_logout_url', 10, 2 );
 function doliconnect_logout_url( $logout_url, $redirect ) {
