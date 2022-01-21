@@ -373,7 +373,7 @@ print '<div class="card shadow-sm"><div class="card-header">';
 if ($_GET["morphy"] == 'phy') {
 print __( 'Create a personnal account', 'doliconnect');   
 } else {
-print __( 'Create an entreprise account', 'doliconnect');    
+print __( 'Create an enterprise account', 'doliconnect');    
 }
 print '<a class="float-end text-decoration-none" href="'.wp_registration_url(get_permalink()).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a>';  
 print '</div>';
@@ -408,9 +408,9 @@ print '<div class="card-body"><div class="card-group">
   <div class="card">
     
     <div class="card-body">
-      <h5 class="card-title">'.__( 'Create a enterprise account', 'doliconnect').'</h5>
+      <h5 class="card-title">'.__( 'Create an enterprise account', 'doliconnect').'</h5>
       <p class="card-text"><small class="text-muted">his is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</small></p>
-      <div class="d-grid gap-2"><a class="btn btn-primary" href="'.wp_registration_url(get_permalink()).'&morphy=mor" role="button" title="'.__( 'Create a enterprise account', 'doliconnect').'">'.__( 'Create a enterprise account', 'doliconnect').'</a></div>
+      <div class="d-grid gap-2"><a class="btn btn-primary" href="'.wp_registration_url(get_permalink()).'&morphy=mor" role="button" title="'.__( 'Create an enterprise account', 'doliconnect').'">'.__( 'Create an enterprise account', 'doliconnect').'</a></div>
     </div>
   </div>
 </div>';
