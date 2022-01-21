@@ -369,8 +369,13 @@ print "<form id='doliconnect-signinform' action='".doliconnecturl('doliaccount')
 
 print doliloaderscript('doliconnect-signinform'); 
 
-print '<div class="card shadow-sm"><div class="card-header">'.__( 'Create an account', 'doliconnect');
-print '<a class="float-end text-decoration-none" href="'.esc_url( doliconnecturl('doliaccount') ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a>';  
+print '<div class="card shadow-sm"><div class="card-header">';
+if ($_GET["morphy"] == 'phy') {
+print __( 'Create a personnal account', 'doliconnect');   
+} else {
+print __( 'Create an entreprise account', 'doliconnect');    
+}
+print '<a class="float-end text-decoration-none" href="'.wp_registration_url(get_permalink()).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a>';  
 print '</div>';
 
 print doliuserform( null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'thirdparty', doliCheckRights('societe', 'creer'));
