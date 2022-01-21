@@ -364,7 +364,7 @@ if ( isset($hasError) || isset($captchaError) ) {
 print dolialert('danger', $emailError);
 }
 }
-
+if (isset($_GET["morphy"]) && ($_GET["morphy"] == 'mor' || $_GET["morphy"] == 'phy')) {
 print "<form id='doliconnect-signinform' action='".doliconnecturl('doliaccount')."?action=signup' role='form' method='post' class='was-validated'>";
 
 print doliloaderscript('doliconnect-signinform'); 
@@ -384,6 +384,33 @@ print ">".__( 'Create an account', 'doliconnect')."</button></form>";
 print '</div></div></div></form>';
 
 do_action( 'login_footer');
+
+} else {
+
+print '<div class="card shadow-sm"><div class="card-header">'.__( 'Create an account', 'doliconnect');
+print '<a class="float-end text-decoration-none" href="'.esc_url( doliconnecturl('doliaccount') ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a>';  
+print '</div>';
+
+print '<div class="card-body"><div class="card-group">
+  <div class="card">
+    
+    <div class="card-body">
+      <h5 class="card-title">'.__( 'Create a personnal account', 'doliconnect').'</h5>
+      <p class="card-text"><small class="text-muted">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</small></p>
+      <div class="d-grid gap-2"><a class="btn btn-primary" href="'.wp_registration_url(get_permalink()).'&morphy=phy" role="button" title="'.__( 'Create a personnal account', 'doliconnect').'">'.__( 'Create a personnal account', 'doliconnect').'</a></div>
+    </div>
+  </div>
+  <div class="card">
+    
+    <div class="card-body">
+      <h5 class="card-title">'.__( 'Create a enterprise account', 'doliconnect').'</h5>
+      <p class="card-text"><small class="text-muted">his is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</small></p>
+      <div class="d-grid gap-2"><a class="btn btn-primary" href="'.wp_registration_url(get_permalink()).'&morphy=mor" role="button" title="'.__( 'Create a enterprise account', 'doliconnect').'">'.__( 'Create a enterprise account', 'doliconnect').'</a></div>
+    </div>
+  </div>
+</div>';
+print '</div></div>';
+}
 
 } elseif ( isset($_GET["action"]) && $_GET["action"] == 'rpw' ) {
 
