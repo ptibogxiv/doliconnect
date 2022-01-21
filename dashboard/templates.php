@@ -242,8 +242,8 @@ if ( is_multisite() && !get_option( 'users_can_register' ) && (get_site_option( 
 wp_redirect(esc_url(doliconnecturl('doliaccount')));
 exit;
 } elseif ( !get_option( 'users_can_register' ) ) {
-wp_redirect(esc_url(doliconnecturl('doliaccount')));
-exit;
+//wp_redirect(esc_url(doliconnecturl('doliaccount')));
+//exit;
 }
 
 if ( isset($_POST['submitted']) ) {
