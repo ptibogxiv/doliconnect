@@ -231,12 +231,7 @@ print $message;
 //}
 }
 print "</div></div>";
-} elseif ( isset($_GET["action"]) && $_GET["action"] == 'signup' ) {
-
-if ( is_user_logged_in() ) {
-wp_redirect(site_url());
-exit;
-}
+} elseif ( isset($_GET["action"]) && $_GET["action"] == 'signup' && !is_user_logged_in() ) {
 
 if ( is_multisite() && !get_option( 'users_can_register' ) && (get_site_option( 'registration' ) != 'user' or get_site_option( 'registration' ) != 'all') ) {
 wp_redirect(esc_url(doliconnecturl('doliaccount')));
