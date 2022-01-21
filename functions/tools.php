@@ -578,7 +578,8 @@ print ' autocomplete="off">
 <label for="'.$idobject.'[tva_intra]"><i class="fas fa-building fa-fw"></i> '.__( 'VAT number', 'doliconnect').'</label></div></div>';
 
 if ( doliversion('15.0.0') ) {
-$legalform = callDoliApi("GET", "/setup/dictionary/legal_form?sortfield=rowid&sortorder=ASC&limit=100&active=1&country=".$object->country_id, null, $delay);
+//$country = $object->country_id ?$object->country_id?:null;
+$legalform = callDoliApi("GET", "/setup/dictionary/legal_form?sortfield=rowid&sortorder=ASC&limit=100&active=1&country=".(isset($object->country_id) ? $object->country_id : null), null, $delay);
 if ( isset($legalform) ) { 
 print '<div class="col-md-6 col-lg-4"><div class="form-floating"><select class="form-select" id="'.$idobject.'[forme_juridique_code]" name="'.$idobject.'[forme_juridique_code]" aria-label="'.__( 'Legal form', 'doliconnect').'" ';
 if ($rights) {
