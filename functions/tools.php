@@ -2824,24 +2824,18 @@ global $current_user;
 		<?php } endif; ?>
       <li class='list-group-item list-group-item-light list-group-item-action'>
     <?php if ( empty($current_user->user_email) ) : ?>
-		<label for="gdrf_data_email">
-			<?php echo esc_html( $args['label_input_email'] ); ?>
-		</label>
-      <div class='input-group'>
-        <div class='input-group-prepend'>
-          <span class='input-group-text' id='gdrf_data_emailPrepend'><i class='fas fa-at fa-fw'></i></span>
-        </div>
-        <input class='form-control' type='email' id='gdrf_data_email' aria-describedby='gdrf_data_emailPrepend' name='gdrf_data_email' required>
+      <div class="form-floating mb-3">
+          <input type="email" class="form-control" id="gdrf_data_email" name="gdrf_data_email" placeholder="name@example.com" value="" required>
+          <label for="gdrf_data_email"><i class="fas fa-at fa-fw"></i> <?php echo esc_html( $args['label_input_email'] ); ?></label>
       </div>
 		<?php else : ?>
       <div class="form-floating mb-3">
-          <input type="email" class="form-control" id="gdrf_data_email" name="gdrf_data_email" value="<?php echo $current_user->user_email; ?>" readonly>
+          <input type="email" class="form-control" id="gdrf_data_email" name="gdrf_data_email" placeholder="name@example.com" value="<?php echo $current_user->user_email; ?>" readonly>
           <label for="gdrf_data_email"><i class="fas fa-at fa-fw"></i> <?php echo esc_html( $args['label_input_email'] ); ?></label>
       </div>
 		<?php endif; ?> 
-      
       <div class="form-floating">
-          <input type="text" class="form-control" id="gdrf_data_human" name="gdrf_data_human" placeholder="name@example.com" value="" required>
+          <input type="text" class="form-control" id="gdrf_data_human" name="gdrf_data_human" placeholder="number" value="" required>
           <label for="gdrf_data_human"><i class="fas fa-shield-alt fa-fw"></i> <?php echo esc_html( $args['label_input_captcha'] ); ?> <?php echo $number_one . ' + ' . $number_two . ' = ?'; ?></label>
       </div>
       </li>
