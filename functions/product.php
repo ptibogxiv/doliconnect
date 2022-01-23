@@ -123,7 +123,7 @@ return '<center class="p-3 text-muted">'.__( 'Your basket is empty', 'doliconnec
 }
 }
 
-function doliaddtocart($productid, $quantity = null, $price = null, $remise_percent = null, $timestart = null, $timeend = null, $url = null) {
+function doliaddtocart($productid, $quantity = null, $price = null, $remise_percent = null, $timestart = null, $timeend = null, $url = null, $array_options = array()) {
 global $current_user;
 
 if (!is_null($timestart) && $timestart > 0 ) {
