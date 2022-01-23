@@ -199,7 +199,8 @@ $adln = [
     'qty' => $quantity,
     'tva_tx' => $prdt->tva_tx, 
     'remise_percent' => isset($remise_percent) ? $remise_percent : doliconnector($current_user, 'remise_percent'),
-    'subprice' => $price
+    'subprice' => $price,
+    'array_options' => $array_options
 	];                 
 $addline = callDoliApi("POST", "/orders/".doliconnector($current_user, 'fk_order')."/lines", $adln, 0);
 $order = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order', true)."?contact_list=0", null, dolidelay('order', true));
@@ -229,7 +230,8 @@ $uln = [
     'qty' => $quantity,
     'tva_tx' => $prdt->tva_tx, 
     'remise_percent' => isset($remise_percent) ? $remise_percent : doliconnector($current_user, 'remise_percent'),
-    'subprice' => $price
+    'subprice' => $price,
+    'array_options' => $array_options
 	];                  
 $updateline = callDoliApi("PUT", "/orders/".doliconnector($current_user, 'fk_order')."/lines/".$line, $uln, 0);
 $order = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order', true)."?contact_list=0", null, dolidelay('order', true));
