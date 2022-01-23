@@ -562,7 +562,7 @@ $adherent = callDoliApi("GET", $requesta, null, dolidelay('member'));
 }
 $requestb= "/adherentsplus/type/".$adherent->typeid;
 $adherenttype = callDoliApi("GET", $requestb, null, dolidelay('member'));
-$result = doliaddtocart($productadhesion, 1, $adherenttype->price_prorata, null, $adherenttype->date_begin, $adherenttype->date_end);
+$result = doliaddtocart($productadhesion, 1, $adherenttype->price_prorata, null, $adherenttype->date_begin, $adherenttype->date_end, 'array_options' => array('options_member_beneficiary' => 1));
 //$result = doliaddtocart(trim($_POST['product-add-id']), trim($_POST['product-add-qty']), trim($_POST['product-add-price']), trim($_POST['product-add-remise_percent']), isset($_POST['product-add-timestamp_start'])?trim($_POST['product-add-timestamp_start']):null, isset($_POST['product-add-timestamp_end'])?trim($_POST['product-add-timestamp_end']):null);
 if ($result >= 0) {
 $response = [
