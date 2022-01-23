@@ -123,7 +123,7 @@ return '<center class="p-3 text-muted">'.__( 'Your basket is empty', 'doliconnec
 }
 }
 
-function doliaddtocart($productid, $quantity = null, $price = null, $remise_percent = null, $timestart = null, $timeend = null, $url = null, $array_options = array()) {
+function doliaddtocart($productid, $quantity = null, $price = null, $remise_percent = null, $timestart = null, $timeend = null, $url = null, $array_options = null) {
 global $current_user;
 
 if (!is_null($timestart) && $timestart > 0 ) {
@@ -200,7 +200,7 @@ $adln = [
     'tva_tx' => $prdt->tva_tx, 
     'remise_percent' => isset($remise_percent) ? $remise_percent : doliconnector($current_user, 'remise_percent'),
     'subprice' => $price,
-    'array_options' => $array_options
+    $array_options
 	];                 
 $addline = callDoliApi("POST", "/orders/".doliconnector($current_user, 'fk_order')."/lines", $adln, 0);
 $order = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order', true)."?contact_list=0", null, dolidelay('order', true));
@@ -231,7 +231,7 @@ $uln = [
     'tva_tx' => $prdt->tva_tx, 
     'remise_percent' => isset($remise_percent) ? $remise_percent : doliconnector($current_user, 'remise_percent'),
     'subprice' => $price,
-    'array_options' => $array_options
+    $array_options
 	];                  
 $updateline = callDoliApi("PUT", "/orders/".doliconnector($current_user, 'fk_order')."/lines/".$line, $uln, 0);
 $order = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order', true)."?contact_list=0", null, dolidelay('order', true));
