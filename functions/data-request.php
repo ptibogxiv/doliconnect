@@ -288,10 +288,12 @@ function dolicontact_request(){
 			
 		} else {
 			wp_send_json_error( dolialert('danger', join( '<br />', $ContactError )));
+			die();	
 		}
 
 		if ( !is_wp_error( $emailSent )) {
 			wp_send_json_success( dolialert('success', __( 'Your message is successful send!', 'doliconnect')));
+			die();	
 		} else {
 			wp_send_json_error( dolialert('error', sprintf(__('Sending message fails for the following reason: %s. Please contact us for help.', 'doliconnect'), $emailSent->get_error_message()) ));	
 			die();	
