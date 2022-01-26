@@ -375,19 +375,21 @@ $url = esc_url( add_query_arg( $arr_params, doliconnecturl('doliaccount')) );
 
 if ( defined("DOLICONNECT_DEMO_EMAIL") && ''.constant("DOLICONNECT_DEMO_EMAIL").'' == $email ) {
     wp_send_json_error( dolialert('danger', __( 'Reset password is not permitted for this account!', 'doliconnect'))); 
+	die();
 } elseif ( !empty($key) ) { 
 		$sitename = get_option('blogname');
     $siteurl = get_option('siteurl');
     $subject = "[$sitename] ".__( 'Reset Password', 'doliconnect');
     $body = __( 'A request to change your password has been made. You can change it via the single-use link below:', 'doliconnect')."<br><br><a href='".$url."'>".$url."</a><br><br>".__( 'If you have not made this request, please ignore this email.', 'doliconnect')."<br><br>".sprintf(__('Your %s\'s team', 'doliconnect'), $sitename)."<br>$siteurl";				
     $headers = array('Content-Type: text/html; charset=UTF-8');
-    $mail =  wp_mail($email, $subject, $body, $headers);
+    $emailSent =  wp_mail($email, $subject, $body, $headers);
 
-if( $mail ) {
-wp_send_json_success( dolialert('success', __( 'A password reset link was sent to you by email. Please check your spam folder if you don\'t find it.', 'doliconnect')));
-} else { 
-wp_send_json_error( dolialert('danger', __( 'A problem occurred. Please retry later!', 'doliconnect')));  
-}	
+	if ( !is_wp_error( $emailSent )) {
+	wp_send_json_success( dolialert('success', __( 'A password reset link was sent to you by email. Please check your spam folder if you don\'t find it.', 'doliconnect')));
+	} else { 
+	wp_send_json_error( dolialert('error', sprintf(__('Sending message fails for the following reason: %s. Please contact us for help.', 'doliconnect'), $emailSent->get_error_message()) ));	
+	die(); 
+	}	
 }
 	} else {
 		wp_send_json_error( dolialert('warning', join( '<br />', $gdrf_error ) ));
