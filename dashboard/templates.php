@@ -360,9 +360,9 @@ print dolialert('danger', $emailError);
 }
 }
 if (isset($_GET["morphy"]) && ($_GET["morphy"] == 'mor' || $_GET["morphy"] == 'phy')) {
-print "<form id='doliconnect-signinform' action='".doliconnecturl('doliaccount')."?action=signup' role='form' method='post' class='was-validated'>";
+print "<div id='doliuserinfos-alert'></div><form action='".admin_url('admin-ajax.php')."' id='doliuserinfos-form' method='post' class='was-validated' enctype='multipart/form-data'>";
 
-print doliloaderscript('doliconnect-signinform'); 
+print doliajax('doliuserinfos', $url, 'create');
 
 print '<div class="card shadow-sm"><div class="card-header">';
 if ($_GET["morphy"] == 'phy') {

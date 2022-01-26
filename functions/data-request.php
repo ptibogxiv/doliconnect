@@ -124,21 +124,7 @@ function doliuserinfos_request(){
 		$thirdparty=$_POST['thirdparty'][''.doliconnector($current_user, 'fk_soc').''];
 
 		$thirdparty = dolisanitize($thirdparty);
-		
-		wp_update_user( array( 'ID' => $ID,
-		'user_email' => $thirdparty['email'],
-		'nickname' => sanitize_user($_POST['user_nicename']),
-		'first_name' => $thirdparty['firstname'],
-		'last_name' => $thirdparty['lastname'],
-		'description' => $thirdparty['note_public'],
-		'user_url' => $thirdparty['url'],
-		'display_name' => $thirdparty['name']));
-		update_user_meta( $ID, 'civility_code', sanitize_text_field($thirdparty['civility_code']));
-		update_user_meta( $ID, 'billing_type', sanitize_text_field($thirdparty['morphy']));
-		if ( $thirdparty['morphy'] == 'mor' ) { update_user_meta( $ID, 'billing_company', $thirdparty['name']); }
-		update_user_meta( $ID, 'billing_birth', $thirdparty['birth']);
-		
-		do_action('wp_dolibarr_sync', $thirdparty);
+	
 		
 	wp_send_json_success( dolialert('success', __( 'Your account have been created.', 'doliconnect')));
 	} else {
