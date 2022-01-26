@@ -97,7 +97,7 @@ function doliuserinfos_request(){
 	global $current_user;
 	$ID = $current_user->ID;
 	
-	if ( isset($_POST['doliuserinfos-nonce']) && wp_verify_nonce( trim($_POST['doliuserinfos-nonce']), 'doliuserinfos-nonce') ) {
+	if ( isset($_POST['doliuserinfos-nonce']) && wp_verify_nonce( trim($_POST['doliuserinfos-nonce']), 'doliuserinfos-nonce') && isset($_POST['case']) && $_POST['case'] == "update" ) {
 
 		$thirdparty=$_POST['thirdparty'][''.doliconnector($current_user, 'fk_soc').''];
 
