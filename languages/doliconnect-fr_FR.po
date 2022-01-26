@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2022-01-26 17:35+0100\n"
-"PO-Revision-Date: 2022-01-26 17:35+0100\n"
+"POT-Creation-Date: 2022-01-26 17:39+0100\n"
+"PO-Revision-Date: 2022-01-26 17:39+0100\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_FR\n"
@@ -569,7 +569,7 @@ msgstr "brouillon"
 
 #: dashboard/dashboard.php:639 dashboard/dashboard.php:955
 #: dashboard/dashboard.php:1476 dashboard/dashboard.php:1599
-#: dashboard/templates.php:1397 functions/data-request.php:617
+#: dashboard/templates.php:1397 functions/data-request.php:620
 msgid "Payment method"
 msgstr "Mode de paiement"
 
@@ -1129,7 +1129,7 @@ msgstr "Créer un compte d'entreprise"
 msgid "Create an account"
 msgstr "Créer un compte"
 
-#: dashboard/templates.php:337 functions/data-request.php:350
+#: dashboard/templates.php:337 functions/data-request.php:353
 msgid "No account seems to be linked to this email address"
 msgstr "Aucun compte ne semble être lié à cet adresse email"
 
@@ -1345,12 +1345,12 @@ msgstr "Vous ne devriez pas avoir d'exonérations fiscales"
 msgid "Oops, Order's module is not available"
 msgstr "Oops, le module de commande n’est pas disponible"
 
-#: dashboard/templates.php:1397 functions/data-request.php:617
+#: dashboard/templates.php:1397 functions/data-request.php:620
 msgid "Your order has been registered"
 msgstr "Votre commande a été enregistrée"
 
 #: dashboard/templates.php:1397 dashboard/templates.php:1404
-#: functions/data-request.php:617 functions/tools.php:474
+#: functions/data-request.php:620 functions/tools.php:474
 msgid "Reference"
 msgstr "Référence"
 
@@ -1432,7 +1432,7 @@ msgstr ""
 "La demande ne peut pas être traitée sur ce site. Cette fonctionnalité "
 "nécessite WordPress 4.9.6 au moins."
 
-#: functions/data-request.php:23 functions/data-request.php:341
+#: functions/data-request.php:23 functions/data-request.php:344
 msgid ""
 "Security check failed, please refresh this page and try to submit the form "
 "again."
@@ -1440,12 +1440,12 @@ msgstr ""
 "La vérification de la sécurité a échoué. Actualisez la page et essayez à "
 "nouveau."
 
-#: functions/data-request.php:26 functions/data-request.php:347
+#: functions/data-request.php:26 functions/data-request.php:350
 msgid "This is not a valid email address."
 msgstr "Ceci n'est pas une adresse e-mail valide."
 
 #: functions/data-request.php:29 functions/data-request.php:143
-#: functions/data-request.php:271 functions/data-request.php:344
+#: functions/data-request.php:271 functions/data-request.php:347
 msgid "Security check failed, invalid human verification field."
 msgstr ""
 "La vérification de sécurité a échoué, champ de vérification humaine invalide."
@@ -1458,7 +1458,7 @@ msgstr ""
 "Type de demande invalide, veuillez rafraîchir cette page et essayer de "
 "soumettre à nouveau le formulaire."
 
-#: functions/data-request.php:36 functions/data-request.php:354
+#: functions/data-request.php:36 functions/data-request.php:357
 msgid "All fields are required."
 msgstr "Tous les champs sont obligatoires."
 
@@ -1477,15 +1477,15 @@ msgstr ""
 "Nos stocks étant mis à jour en temps réel, vos articles ont été mis dans le "
 "panier pour 1 heure"
 
-#: functions/data-request.php:74 functions/data-request.php:689
+#: functions/data-request.php:74 functions/data-request.php:692
 msgid "We no longer have this item in this quantity"
 msgstr "Nous n’avons plus cet article dans cette quantité"
 
 #: functions/data-request.php:87 functions/data-request.php:236
-#: functions/data-request.php:298 functions/data-request.php:327
-#: functions/data-request.php:432 functions/data-request.php:435
-#: functions/data-request.php:500 functions/data-request.php:634
-#: functions/data-request.php:659 functions/data-request.php:700
+#: functions/data-request.php:301 functions/data-request.php:330
+#: functions/data-request.php:435 functions/data-request.php:438
+#: functions/data-request.php:503 functions/data-request.php:637
+#: functions/data-request.php:662 functions/data-request.php:703
 msgid "A security error occured"
 msgstr "Une erreur de sécurité s’est produite"
 
@@ -1537,7 +1537,7 @@ msgstr ""
 "Pour activer votre compte et choisir votre mot de passe, veuillez cliquer "
 "sur le lien suivant"
 
-#: functions/data-request.php:201 functions/data-request.php:377
+#: functions/data-request.php:201 functions/data-request.php:380
 #: functions/tools.php:1021
 #, php-format
 msgid "Your %s's team"
@@ -1578,22 +1578,31 @@ msgid "A message is needed."
 msgstr "Un message est nécessaire."
 
 #: functions/data-request.php:275
-msgid "Send message is not permitted because the demo mode is active"
-msgstr "Envoyer un message n’est pas autorisé parce que le mode démo est actif"
+msgid "Sending message is not permitted because the demo mode is active"
+msgstr "L'envoi de message n'est pas autorisé car le mode démo est actif"
 
 #: functions/data-request.php:294
 msgid "Your message is successful send!"
 msgstr "Votre message a été envoyé avec succès!"
 
-#: functions/data-request.php:372
+#: functions/data-request.php:296
+#, php-format
+msgid ""
+"Sending message fails for the following reason: %s. Please contact us for "
+"help."
+msgstr ""
+"L'envoi du message échoue pour la raison suivante : %s. Veuillez nous "
+"contacter pour obtenir de l'aide."
+
+#: functions/data-request.php:375
 msgid "Reset password is not permitted for this account!"
 msgstr "Réinitialiser le mot de passe de ce compte n'est pas autorisé!"
 
-#: functions/data-request.php:376
+#: functions/data-request.php:379
 msgid "Reset Password"
 msgstr "Réinitialisation du mot de passe"
 
-#: functions/data-request.php:377
+#: functions/data-request.php:380
 msgid ""
 "A request to change your password has been made. You can change it via the "
 "single-use link below:"
@@ -1601,13 +1610,13 @@ msgstr ""
 "Une demande de modification de votre mot de passe a été faite. Vous pouvez "
 "le changer via le lien à utilisation unique ci-dessous:"
 
-#: functions/data-request.php:377
+#: functions/data-request.php:380
 msgid "If you have not made this request, please ignore this email."
 msgstr ""
 "Si vous n'êtes pas à l'origine de cette action, merci de ne pas tenir compte "
 "de cet e-mail."
 
-#: functions/data-request.php:382
+#: functions/data-request.php:385
 msgid ""
 "A password reset link was sent to you by email. Please check your spam "
 "folder if you don't find it."
@@ -1615,11 +1624,11 @@ msgstr ""
 "Un lien de réinitialisation du mot de passe vous a été envoyé par email. "
 "Pensez à regarder vos messages indésirables si vous ne le trouvez pas."
 
-#: functions/data-request.php:384
+#: functions/data-request.php:387
 msgid "A problem occurred. Please retry later!"
 msgstr "Un problème s’est produit. Veuillez réessayer plus tard!"
 
-#: functions/data-request.php:424
+#: functions/data-request.php:427
 msgid ""
 "Your informations have been updated. Now, you will be log out and need to "
 "log in again."
@@ -1627,15 +1636,15 @@ msgstr ""
 "Vos informations ont été mises à jour. Maintenant, vous allez être "
 "déconnecté et vous devrez vous reconnecter."
 
-#: functions/data-request.php:426
+#: functions/data-request.php:429
 msgid "Your actual password is incorrect"
 msgstr "Votre mot de passe actuel est incorrect"
 
-#: functions/data-request.php:428
+#: functions/data-request.php:431
 msgid "The new passwords entered are different"
 msgstr "Les nouveaux mots de passe entrés sont différents"
 
-#: functions/data-request.php:430 functions/tools.php:920
+#: functions/data-request.php:433 functions/tools.php:920
 msgid ""
 "Your password must be between 8 and 20 characters, including at least 1 "
 "digit, 1 letter, 1 uppercase."
@@ -1643,58 +1652,58 @@ msgstr ""
 "Votre mot de passe doit faire entre 8 et 20 caractères, incluant au moins un "
 "chiffre, une lettre, une majuscule."
 
-#: functions/data-request.php:458
+#: functions/data-request.php:461
 msgid "You changed your default payment method"
 msgstr "Vous avez modifié votre mode de paiement par défaut"
 
-#: functions/data-request.php:460 functions/data-request.php:471
-#: functions/data-request.php:492 functions/data-request.php:525
-#: functions/data-request.php:528 functions/data-request.php:566
-#: functions/data-request.php:600 functions/data-request.php:626
+#: functions/data-request.php:463 functions/data-request.php:474
+#: functions/data-request.php:495 functions/data-request.php:528
+#: functions/data-request.php:531 functions/data-request.php:569
+#: functions/data-request.php:603 functions/data-request.php:629
 msgid "An error occured:"
 msgstr "Une erreur est survenue :"
 
-#: functions/data-request.php:469
+#: functions/data-request.php:472
 msgid "You deleted a payment method"
 msgstr "Vous avez supprimé un mode de paiement"
 
-#: functions/data-request.php:490
+#: functions/data-request.php:493
 msgid "You added a new payment method"
 msgstr "Vous avez ajouté un nouveau mode de paiement"
 
-#: functions/data-request.php:496 functions/data-request.php:630
+#: functions/data-request.php:499 functions/data-request.php:633
 msgid "An error occured"
 msgstr "Une erreur est survenue"
 
-#: functions/data-request.php:521
+#: functions/data-request.php:524
 msgid "Your cart has been emptied"
 msgstr "Votre panier a été vidé"
 
-#: functions/data-request.php:544
+#: functions/data-request.php:547
 msgid "Quantities have been changed"
 msgstr "Les quantités ont été modifiées"
 
-#: functions/data-request.php:562 functions/data-request.php:596
+#: functions/data-request.php:565 functions/data-request.php:599
 msgid "Your cart has been validated"
 msgstr "Votre panier a été validé"
 
-#: functions/data-request.php:618
+#: functions/data-request.php:621
 msgid "Payment status"
 msgstr "État du paiement"
 
-#: functions/data-request.php:618
+#: functions/data-request.php:621
 msgid "Payment ID"
 msgstr "ID du Paiement"
 
-#: functions/data-request.php:622
+#: functions/data-request.php:625
 msgid "View my receipt"
 msgstr "Voir mon reçu"
 
-#: functions/data-request.php:648 functions/data-request.php:655
+#: functions/data-request.php:651 functions/data-request.php:658
 msgid "Customer not found"
 msgstr "Client introuvable"
 
-#: functions/data-request.php:682
+#: functions/data-request.php:685
 msgid "Your subscription have been put in the basket for 1 hour"
 msgstr "Votre souscription a été mis dans le panier pour 1 heure"
 

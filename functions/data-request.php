@@ -272,7 +272,7 @@ function dolicontact_request(){
 		}
 	
 		if ( defined("DOLICONNECT_DEMO") ) {
-			$ContactError[] = esc_html__( 'Send message is not permitted because the demo mode is active', 'doliconnect');       
+			$ContactError[] = esc_html__( 'Sending message is not permitted because the demo mode is active', 'doliconnect');       
 		}
 	
 		if ( empty($ContactError) ) {
@@ -284,14 +284,17 @@ function dolicontact_request(){
 			$subject = "[".get_bloginfo( 'name' )."] ".$_POST['ticket_type'];
 			$body = "Nom: $name <br>Email: $email <br>Message: $comments";
 			$headers = array("Content-Type: text/html; charset=UTF-8","From: ".$name." <".$email.">","Cc: ".$name." <".$email.">"); 
-			wp_mail($emailTo, $subject, $body, $headers);
-			$emailSent = true;
+			$emailSent = wp_mail($emailTo, $subject, $body, $headers);
+			
 		} else {
 			wp_send_json_error( dolialert('danger', join( '<br />', $ContactError )));
 		}
 
-		if ( isset($emailSent) && $emailSent == true ) {
+		if ( !is_wp_error( $emailSent )) {
 			wp_send_json_success( dolialert('success', __( 'Your message is successful send!', 'doliconnect')));
+		} else {
+			wp_send_json_error( dolialert('error', sprintf(__('Sending message fails for the following reason: %s. Please contact us for help.', 'doliconnect'), $emailSent->get_error_message()) ));	
+			die();	
 		}
 
 	} else {
