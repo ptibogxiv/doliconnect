@@ -162,6 +162,11 @@ function doliuserinfos_request(){
 			  
 		$ID = wp_create_user(uniqid(), $password, $email );
 		
+		if ( is_wp_error( $ID )) {
+			wp_send_json_error( dolialert('error', sprintf(__('Creating your account fails for the following reason: %s. Please contact us for help.', 'doliconnect'), $ID->get_error_message()) ));	
+			die();		   
+		} 
+
 		$role = get_option( 'default_role' );
 		
 		if ( is_multisite() ) {
@@ -187,10 +192,8 @@ function doliuserinfos_request(){
 		if ( isset($_POST['optin1']) ) { update_user_meta( $ID, 'optin1', $_POST['optin1'] ); }
 		
 		$body = sprintf(__('Thank you for your registration on %s.', 'doliconnect'), $sitename);
-		
 		$user = get_user_by( 'ID', $ID);
 		$key = get_password_reset_key($user);
-		
 		$arr_params = array( 'action' => 'rpw', 'key' => $key, 'login' => $user->user_login);  
 		$url = esc_url( add_query_arg( $arr_params, doliconnecturl('doliaccount')) );
 		
@@ -204,24 +207,29 @@ function doliuserinfos_request(){
 		}
 		
 		$headers = array('Content-Type: text/html; charset=UTF-8'); 
-		wp_mail($email, $subject, $body, $headers);
-		$emailSent = true;
+		$emailSent = wp_mail($email, $subject, $body, $headers);
 
-		if ( ($thirdparty['morphy'] == 'mor' && $user) || (function_exists('dolikiosk') && ! empty(dolikiosk()) && $user) ) {  
+		if ( !is_wp_error( $emailSent ) && ($thirdparty['morphy'] == 'mor' && $user) || (function_exists('dolikiosk') && ! empty(dolikiosk()) && $user) ) {  
 		
 			$dolibarrid = doliconnector($user, 'fk_soc', true, $thirdparty);
 			do_action('wp_dolibarr_sync', $thirdparty, $user);
 			
-			//wp_set_current_user( $ID, $user->user_login );
-			//wp_set_auth_cookie( $ID, false);
-			//do_action( 'wp_login', $user->user_login, $user);
-			wp_send_json_success( dolialert('success', __( "Your account has been created. Now, you are connected", 'doliconnect')));			   	 
-		} else {
+			wp_set_current_user( $ID, $user->user_login );
+			wp_set_auth_cookie( $ID, false);
+			do_action( 'wp_login', $user->user_login, $user);
+			wp_send_json_success( dolialert('success', __( "Your account has been created. Now, you are connected", 'doliconnect')));	
+			die();		   	 
+		} elseif ( !is_wp_error( $emailSent )) {
 			wp_send_json_success( dolialert('success', __( "Your account has been created and an account activation link has been sent by email. Don't forget to look at your unwanted emails if you can't find our message.", 'doliconnect')));			   
+			die();
+		} else {
+			wp_send_json_error( dolialert('danger', __( 'Your account has been created but sending an activation link by email fails. Please contact us.', 'doliconnect'))); 
+			die();
 		}
 
 		} else {
 			wp_send_json_error( dolialert('danger', join( '<br />', $UserError )));
+			die();
 		}
 	
 	} else {
