@@ -24,8 +24,7 @@ $thirdparty = callDoliApi("GET", $request, null, dolidelay('thirdparty', esc_att
 
 print "<div id='doliuserinfos-alert'></div><form action='".admin_url('admin-ajax.php')."' id='doliuserinfos-form' method='post' class='was-validated' enctype='multipart/form-data'>";
 
-print "<input type='hidden' name='case' value='updateuser'>";
-print doliajax('doliuserinfos', $url);
+print doliajax('doliuserinfos', $url, 'update');
 
 print '<div class="card shadow-sm"><div class="card-header">'.__( 'Edit my informations', 'doliconnect').'</div>';
 
