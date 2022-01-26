@@ -1769,7 +1769,7 @@ var actionvalue = $(this).val();
             'action': 'dolipaymentmethod_request',
             'dolipaymentmethod-nonce': '".wp_create_nonce( 'dolipaymentmethod-nonce')."',
             'payment_method': '".$method->id."',
-            'action_payment_method': actionvalue
+            'case': actionvalue
           }
         }).done(function(response) {
 $(window).scrollTop(0); 
@@ -2033,7 +2033,7 @@ displayCardError.textContent = result.error.message;
             'action': 'dolipaymentmethod_request',
             'dolipaymentmethod-nonce': '".wp_create_nonce( 'dolipaymentmethod-nonce')."',
             'payment_method': result.setupIntent.payment_method,
-            'action_payment_method': 'add_payment_method',
+            'case': 'create',
             'default': $('input:radio[name=cardDefault]:checked').val()
           }
         }).done(function(response) {
@@ -2238,7 +2238,7 @@ displayIbanError.textContent = result.error.message;
             'action': 'dolipaymentmethod_request',
             'dolipaymentmethod-nonce': '".wp_create_nonce( 'dolipaymentmethod-nonce')."',
             'payment_method': result.setupIntent.payment_method,
-            'action_payment_method': 'add_payment_method',
+            'case': 'create',
             'default': $('input:radio[name=cardDefault]:checked').val()
           }
         }).done(function(response) {
@@ -2410,7 +2410,7 @@ displayIbanError.textContent = result.error.message;
             'action': 'dolipaymentmethod_request',
             'dolipaymentmethod-nonce': '".wp_create_nonce( 'dolipaymentmethod-nonce')."',
             'payment_method': result.setupIntent.payment_method,
-            'action_payment_method': 'add_payment_method',
+            'case': 'create',
             'default': $('input:radio[name=cardDefault]:checked').val()
           }
         }).done(function(response) {
