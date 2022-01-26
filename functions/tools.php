@@ -307,7 +307,7 @@ return $connect;
 
 function doliajax($id, $url = null, $case = null){
   $ajax = "<input type='hidden' name='action' value='".$id."_request'>";
-  $ajax = "<input type='hidden' name='case' value='".$case."'>";
+  $ajax .= "<input type='hidden' name='case' value='".$case."'>";
   $ajax.= "<input type='hidden' name='".$id."-nonce' value='".wp_create_nonce( $id.'-nonce')."'>";
   $ajax.= "<script>";
   $ajax.= 'jQuery(document).ready(function($) {
