@@ -250,6 +250,7 @@ if ( isset($hasError) || isset($captchaError) ) {
 print dolialert('danger', $emailError);
 }
 }
+
 if (isset($_GET["morphy"]) && ($_GET["morphy"] == 'mor' || $_GET["morphy"] == 'phy')) {
 print "<div id='doliuserinfos-alert'></div><form action='".admin_url('admin-ajax.php')."' id='doliuserinfos-form' method='post' class='was-validated' enctype='multipart/form-data'>";
 

@@ -122,31 +122,32 @@ function doliuserinfos_request(){
 
 		$thirdparty=$_POST['thirdparty'];
 		$thirdparty = dolisanitize($thirdparty);
-  
+		$UserError = array();
+
 		if (email_exists($thirdparty['email'])) {
-			$userError = __( 'This email address is already linked to an account. You can reactivate your account through this <a href=\'".wp_lostpassword_url( get_permalink() )."\' title=\'lost password\'>form</a>.', 'doliconnect');
+			$UserError[] = __( 'This email address is already linked to an account. You can reactivate your account through this <a href=\'".wp_lostpassword_url( get_permalink() )."\' title=\'lost password\'>form</a>.', 'doliconnect');
 		} else {
 			$email = sanitize_email($thirdparty['email']);
 			$domainemail = explode("@", $email)[1];
 		}
 		
 		if (defined("DOLICONNECT_SELECTEDEMAIL") && is_array(constant("DOLICONNECT_SELECTEDEMAIL")) && !in_array($domainemail, constant("DOLICONNECT_SELECTEDEMAIL"))) {
-			$userError = esc_html__( 'Only emails from selected domains are allowed', 'doliconnect'); 
+			$UserError[] = esc_html__( 'Only emails from selected domains are allowed', 'doliconnect'); 
 		}
 	
 		if ($thirdparty['firstname'] == $_POST['user_nicename'] && $thirdparty['firstname'] == $thirdparty['lastname']) {
-			$userError = esc_html__( 'Create this account is not permitted', 'doliconnect');       
+			$UserError[] = esc_html__( 'Create this account is not permitted', 'doliconnect');       
 		}
 		
 		if ( !isset($_POST['btndolicaptcha']) || empty(wp_verify_nonce( $_POST['ctrldolicaptcha'], 'ctrldolicaptcha-'.$_POST['btndolicaptcha'])) ) {
-			$userError = esc_html__( 'Security check failed, invalid human verification field.', 'doliconnect');
+			$UserError[] = esc_html__( 'Security check failed, invalid human verification field.', 'doliconnect');
 		}
 			  
 		if ( defined("DOLICONNECT_DEMO") ) {
-			$userError = esc_html__( 'Create account is not permitted because the demo mode is active', 'doliconnect');       
+			$UserError[] = esc_html__( 'Create account is not permitted because the demo mode is active', 'doliconnect');       
 		}
 	
-		if ( empty($userError) ) {
+		if ( empty($UserError) ) {
 			$emailTo = get_option('tz_email');
 			if (!isset($emailTo) || ($emailTo == '') ) {
 			$emailTo = get_option('admin_email');
@@ -218,10 +219,12 @@ function doliuserinfos_request(){
 		$headers = array('Content-Type: text/html; charset=UTF-8'); 
 		wp_mail($email, $subject, $body, $headers);
 		$emailSent = true;
-					   
+
+		wp_send_json_success( dolialert('success', __( "Your account has been created and an account activation link has been sent by email. Don't forget to look at your unwanted emails if you can't find our message.", 'doliconnect')));			   
+		} else {
+			wp_send_json_error( dolialert('danger', join( '<br />', $UserError )));
 		}
-		
-	wp_send_json_success( dolialert('success', __( 'Your account have been created.', 'doliconnect')));
+	
 	} else {
 	wp_send_json_error( dolialert('danger', __( 'A security error occured', 'doliconnect'))); 
 	}
