@@ -242,12 +242,12 @@ if ( is_multisite() && !get_option( 'users_can_register' ) && (get_site_option( 
 }
 
 if ( function_exists('dolikiosk') && ! empty(dolikiosk()) && isset($user) && isset($emailSent) && $emailSent == true ) { 
-print dolialert('success', __( 'Your account was created. Now, you are connected', 'doliconnect'));
+//print dolialert('success', __( 'Your account was created. Now, you are connected', 'doliconnect'));
 } elseif ( isset($emailSent) && $emailSent == true ) { 
-print dolialert('success', __( 'Your account was created and an account activation link was sent by email. Don\'t forget to look at your unwanted emails if you can\'t find our message.', 'doliconnect'));
+//print dolialert('success', __( 'Your account was created and an account activation link was sent by email. Don\'t forget to look at your unwanted emails if you can\'t find our message.', 'doliconnect'));
 } else {
 if ( isset($hasError) || isset($captchaError) ) {
-print dolialert('danger', $emailError);
+//print dolialert('danger', $emailError);
 }
 }
 
