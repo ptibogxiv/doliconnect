@@ -243,111 +243,9 @@ exit;
 
 if ( isset($_POST['submitted']) ) {
 
-$thirdparty=$_POST['thirdparty'];
-  
-    if (email_exists($thirdparty['email'])) {
-        $emailError = __( 'This email address is already linked to an account. You can reactivate your account through this <a href=\'".wp_lostpassword_url( get_permalink() )."\' title=\'lost password\'>form</a>.', 'doliconnect');
-        $hasError = true;
-    } else {
-        $email = sanitize_email($thirdparty['email']);
-        $domainemail = explode("@", $email)[1];
-    }
-    
-    if (defined("DOLICONNECT_SELECTEDEMAIL") && is_array(constant("DOLICONNECT_SELECTEDEMAIL")) && !in_array($domainemail, constant("DOLICONNECT_SELECTEDEMAIL"))) {
-        $emailError = __( 'Only emails from selected domains are allowed', 'doliconnect'); 
-        $hasError = true;
-    }
 
-    if ($thirdparty['firstname'] == $_POST['user_nicename'] && $thirdparty['firstname'] == $thirdparty['lastname']) {
-        $emailError = __( 'Create this account is not permitted', 'doliconnect');       
-        $hasError = true;
-    }
-    
-	if ( !isset($_POST['btndolicaptcha']) || empty(wp_verify_nonce( $_POST['ctrldolicaptcha'], 'ctrldolicaptcha-'.$_POST['btndolicaptcha'])) ) {
-        $emailError = __( 'Security check failed, invalid human verification field.', 'doliconnect');
-        $hasError = true;
-    }
-          
-    if ( defined("DOLICONNECT_DEMO") ) {
-        $emailError = __( 'Create account is not permitted because the demo mode is active', 'doliconnect');       
-        $hasError = true;
-    }
 
-    if(!isset($hasError)) {
-        $emailTo = get_option('tz_email');
-        if (!isset($emailTo) || ($emailTo == '') ) {
-        $emailTo = get_option('admin_email');
-    }
 
-$sitename = get_option('blogname');
-$subject = "[".$sitename."] ".__( 'Registration confirmation', 'doliconnect')."";
-if ( !empty($_POST['pwd1']) && $_POST['pwd1'] == $_POST['pwd2'] ) {
-$password=sanitize_text_field($_POST['pwd1']);
-} else {
-$password = wp_generate_password( 12, false ); 
-}
-      
-$ID = wp_create_user(uniqid(), $password, $email );
-
-$role = get_option( 'default_role' );
-
-if ( is_multisite() ) {
-$entity = dolibarr_entity(); 
-add_user_to_blog($entity,$ID,$role);
-} else {
-$user = get_user_by( 'ID', $ID);
-$user->set_role($role);
-}
-
-wp_update_user( array( 'ID' => $ID,
-'user_email' => $thirdparty['email'],
-'nickname' => sanitize_user($_POST['user_nicename']),
-'first_name' => $thirdparty['firstname'],
-'last_name' => $thirdparty['lastname'],
-'description' => $thirdparty['note_public'],
-'user_url' => $thirdparty['url'],
-'display_name' => $thirdparty['name']));
-update_user_meta( $ID, 'civility_code', sanitize_text_field($thirdparty['civility_code']));
-update_user_meta( $ID, 'billing_type', sanitize_text_field($thirdparty['morphy']));
-if ( $thirdparty['morphy'] == 'mor' ) { update_user_meta( $ID, 'billing_company', $thirdparty['name']); }
-update_user_meta( $ID, 'billing_birth', $thirdparty['birth']);
-if ( isset($_POST['optin1']) ) { update_user_meta( $ID, 'optin1', $_POST['optin1'] ); }
-
-$body = sprintf(__('Thank you for your registration on %s.', 'doliconnect'), $sitename);
-
-$user = get_user_by( 'ID', $ID);
-$key = get_password_reset_key($user);
-
-$arr_params = array( 'action' => 'rpw', 'key' => $key, 'login' => $user->user_login);  
-$url = esc_url( add_query_arg( $arr_params, doliconnecturl('doliaccount')) );
- 
-if ( ($thirdparty['morphy'] == 'mor' && $user) || (function_exists('dolikiosk') && ! empty(dolikiosk()) && $user) ) {  
-
-$dolibarrid = doliconnector($user, 'fk_soc', true, $thirdparty);
-do_action('wp_dolibarr_sync', $thirdparty, $user);
-
-//wp_set_current_user( $ID, $user->user_login );
-//wp_set_auth_cookie( $ID, false);
-//do_action( 'wp_login', $user->user_login, $user);
-
-//wp_redirect(esc_url(home_url()));
-//exit;   
-}
-
-$body .= "<br><br>".__('To activate your account on and choose your password, please click on the following link', 'doliconnect').":<br><br><a href='".$url."'>".$url."</a>";
-$body .= "<br><br>".sprintf(__("Your %s's team", 'doliconnect'), $sitename)."<br>".get_option('siteurl');
-
-if ( has_filter( 'doliconnect_templatesignupemail') ) {
-if (!empty(apply_filters( 'doliconnect_templatesignupemail', $sitename, $url))){
-$body = apply_filters( 'doliconnect_templatesignupemail', $sitename, $url);
-}
-}
-
-$headers = array('Content-Type: text/html; charset=UTF-8'); 
-wp_mail($email, $subject, $body, $headers);
-$emailSent = true;
-               
-}
 }
 
 if ( function_exists('dolikiosk') && ! empty(dolikiosk()) && isset($user) && isset($emailSent) && $emailSent == true ) { 
@@ -362,7 +260,7 @@ print dolialert('danger', $emailError);
 if (isset($_GET["morphy"]) && ($_GET["morphy"] == 'mor' || $_GET["morphy"] == 'phy')) {
 print "<div id='doliuserinfos-alert'></div><form action='".admin_url('admin-ajax.php')."' id='doliuserinfos-form' method='post' class='was-validated' enctype='multipart/form-data'>";
 
-print doliajax('doliuserinfos', $url, 'create');
+print doliajax('doliuserinfos', null, 'create');
 
 print '<div class="card shadow-sm"><div class="card-header">';
 if ($_GET["morphy"] == 'phy') {
