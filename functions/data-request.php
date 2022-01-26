@@ -193,19 +193,6 @@ function doliuserinfos_request(){
 		
 		$arr_params = array( 'action' => 'rpw', 'key' => $key, 'login' => $user->user_login);  
 		$url = esc_url( add_query_arg( $arr_params, doliconnecturl('doliaccount')) );
-		 
-		if ( ($thirdparty['morphy'] == 'mor' && $user) || (function_exists('dolikiosk') && ! empty(dolikiosk()) && $user) ) {  
-		
-		$dolibarrid = doliconnector($user, 'fk_soc', true, $thirdparty);
-		do_action('wp_dolibarr_sync', $thirdparty, $user);
-		
-		//wp_set_current_user( $ID, $user->user_login );
-		//wp_set_auth_cookie( $ID, false);
-		//do_action( 'wp_login', $user->user_login, $user);
-		
-		//wp_redirect(esc_url(home_url()));
-		//exit;   
-		}
 		
 		$body .= "<br><br>".__('To activate your account on and choose your password, please click on the following link', 'doliconnect').":<br><br><a href='".$url."'>".$url."</a>";
 		$body .= "<br><br>".sprintf(__("Your %s's team", 'doliconnect'), $sitename)."<br>".get_option('siteurl');
@@ -220,7 +207,19 @@ function doliuserinfos_request(){
 		wp_mail($email, $subject, $body, $headers);
 		$emailSent = true;
 
-		wp_send_json_success( dolialert('success', __( "Your account has been created and an account activation link has been sent by email. Don't forget to look at your unwanted emails if you can't find our message.", 'doliconnect')));			   
+		if ( ($thirdparty['morphy'] == 'mor' && $user) || (function_exists('dolikiosk') && ! empty(dolikiosk()) && $user) ) {  
+		
+			$dolibarrid = doliconnector($user, 'fk_soc', true, $thirdparty);
+			do_action('wp_dolibarr_sync', $thirdparty, $user);
+			
+			//wp_set_current_user( $ID, $user->user_login );
+			//wp_set_auth_cookie( $ID, false);
+			//do_action( 'wp_login', $user->user_login, $user);
+			wp_send_json_success( dolialert('success', __( "Your account has been created. Now, you are connected", 'doliconnect')));			   	 
+		} else {
+			wp_send_json_success( dolialert('success', __( "Your account has been created and an account activation link has been sent by email. Don't forget to look at your unwanted emails if you can't find our message.", 'doliconnect')));			   
+		}
+
 		} else {
 			wp_send_json_error( dolialert('danger', join( '<br />', $UserError )));
 		}
