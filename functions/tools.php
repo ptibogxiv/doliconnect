@@ -829,7 +829,7 @@ print "</li>";
 
 if( has_filter('mydoliconnectuserform') && !in_array($mode, array('donation')) ) {
 print "<li class='list-group-item list-group-item-light list-group-item-action'>";
-print apply_filters('mydoliconnectuserform', $object);
+print apply_filters('mydoliconnectuserform', $object, $idobject);
 print "</li>";
 }
 
