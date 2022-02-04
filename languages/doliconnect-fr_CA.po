@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2022-01-26 17:39+0100\n"
-"PO-Revision-Date: 2022-01-26 17:40+0100\n"
+"POT-Creation-Date: 2022-02-04 14:46+0100\n"
+"PO-Revision-Date: 2022-02-04 14:46+0100\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_CA\n"
@@ -457,8 +457,8 @@ msgstr "Retour"
 msgid "Create contact"
 msgstr "Créer le contact"
 
-#: dashboard/dashboard.php:341 functions/tools.php:2067
-#: functions/tools.php:2272
+#: dashboard/dashboard.php:341 functions/tools.php:2069
+#: functions/tools.php:2274
 msgid "Add"
 msgstr "Ajouter"
 
@@ -569,12 +569,12 @@ msgstr "brouillon"
 
 #: dashboard/dashboard.php:639 dashboard/dashboard.php:955
 #: dashboard/dashboard.php:1476 dashboard/dashboard.php:1599
-#: dashboard/templates.php:1397 functions/data-request.php:620
+#: dashboard/templates.php:1397 functions/data-request.php:618
 msgid "Payment method"
 msgstr "Méthode de paiement"
 
 #: dashboard/dashboard.php:640 dashboard/dashboard.php:956
-#: functions/tools.php:1826 functions/tools.php:2488 functions/tools.php:2528
+#: functions/tools.php:1828 functions/tools.php:2490 functions/tools.php:2530
 msgid "Payment term"
 msgstr "Durée du paiement"
 
@@ -604,7 +604,7 @@ msgstr ""
 
 #: dashboard/dashboard.php:667 dashboard/dashboard.php:982
 #: dashboard/templates.php:1298 dashboard/templates.php:1418
-#: functions/tools.php:2471
+#: functions/tools.php:2473
 msgid "Bank"
 msgstr "Banque"
 
@@ -1076,7 +1076,7 @@ msgstr "Primaire"
 msgid "Description"
 msgstr "Description"
 
-#: dashboard/dashboard.php:2524 functions/tools.php:2785
+#: dashboard/dashboard.php:2524 functions/tools.php:2787
 msgid "Privacy"
 msgstr "Confidentialité"
 
@@ -1125,16 +1125,16 @@ msgid "Create an enterprise account"
 msgstr "Créer un compte d'entreprise"
 
 #: dashboard/templates.php:264 dashboard/templates.php:272
-#: dashboard/templates.php:507 functions/tools.php:2930
+#: dashboard/templates.php:507 functions/tools.php:2932
 msgid "Create an account"
 msgstr "Créer mon compte"
 
-#: dashboard/templates.php:337 functions/data-request.php:353
+#: dashboard/templates.php:337 functions/data-request.php:355
 msgid "No account seems to be linked to this email address"
 msgstr "Aucun compte ne semble être lié à cette adresse e-mail"
 
 #: dashboard/templates.php:387 dashboard/templates.php:500
-#: functions/tools.php:2919
+#: functions/tools.php:2921
 msgid "Forgot password?"
 msgstr "Mot de passe oublié?"
 
@@ -1144,8 +1144,8 @@ msgstr ""
 "Entrez l’adresse e-mail par laquelle vous avez enregistré votre compte."
 
 #: dashboard/templates.php:395 dashboard/templates.php:485
-#: dashboard/templates.php:642 functions/tools.php:732 functions/tools.php:2766
-#: functions/tools.php:2904
+#: dashboard/templates.php:642 functions/tools.php:732 functions/tools.php:2768
+#: functions/tools.php:2906
 msgid "Email"
 msgstr "Courriel"
 
@@ -1177,11 +1177,11 @@ msgstr "La clé de sécurité est expirée!"
 msgid "The security key is invalid!"
 msgstr "La clé de sécurité n’est pas valide !"
 
-#: dashboard/templates.php:434 functions/tools.php:2870
+#: dashboard/templates.php:434 functions/tools.php:2872
 msgid "Welcome"
 msgstr "Bienvenue"
 
-#: dashboard/templates.php:436 functions/tools.php:2872
+#: dashboard/templates.php:436 functions/tools.php:2874
 msgid "Access restricted to users"
 msgstr "Accès réservé aux utilisateurs"
 
@@ -1194,7 +1194,7 @@ msgid "You don't have an account"
 msgstr "Vous n’avez pas de compte"
 
 #: dashboard/templates.php:450 dashboard/templates.php:513
-#: functions/product.php:604 functions/tools.php:2935
+#: functions/product.php:604 functions/tools.php:2937
 msgid "Sign in"
 msgstr "Connexion"
 
@@ -1202,15 +1202,15 @@ msgstr "Connexion"
 msgid "You have already an account"
 msgstr "Vous avez déjà un compte"
 
-#: dashboard/templates.php:479 functions/tools.php:2898
+#: dashboard/templates.php:479 functions/tools.php:2900
 msgid "Demo mode is activated"
 msgstr "Le mode démo est activé"
 
-#: dashboard/templates.php:491 functions/tools.php:918 functions/tools.php:2910
+#: dashboard/templates.php:491 functions/tools.php:918 functions/tools.php:2912
 msgid "Password"
 msgstr "Mot de passe"
 
-#: dashboard/templates.php:497 functions/tools.php:2916
+#: dashboard/templates.php:497 functions/tools.php:2918
 msgid "Remember me"
 msgstr "Se souvenir de moi"
 
@@ -1324,12 +1324,12 @@ msgstr "Vous ne devriez pas avoir d’exonérations fiscales"
 msgid "Oops, Order's module is not available"
 msgstr "Oups, le module de Order n’est pas disponible"
 
-#: dashboard/templates.php:1397 functions/data-request.php:620
+#: dashboard/templates.php:1397 functions/data-request.php:618
 msgid "Your order has been registered"
 msgstr "Votre commande a été enregistrée"
 
 #: dashboard/templates.php:1397 dashboard/templates.php:1404
-#: functions/data-request.php:620 functions/tools.php:474
+#: functions/data-request.php:618 functions/tools.php:474
 msgid "Reference"
 msgstr "Référence"
 
@@ -1411,7 +1411,7 @@ msgstr ""
 "La demande ne peut pas être traitée sur ce site. Cette fonctionnalité "
 "nécessite WordPress 4.9.6 au moins."
 
-#: functions/data-request.php:23 functions/data-request.php:344
+#: functions/data-request.php:23 functions/data-request.php:346
 msgid ""
 "Security check failed, please refresh this page and try to submit the form "
 "again."
@@ -1419,12 +1419,12 @@ msgstr ""
 "Vérification de sécurité échoué, s’il vous plaît actualiser cette page et "
 "essayer de soumettre le formulaire à nouveau."
 
-#: functions/data-request.php:26 functions/data-request.php:350
+#: functions/data-request.php:26 functions/data-request.php:352
 msgid "This is not a valid email address."
 msgstr "Il ne s’agit pas d’une adresse e-mail valide."
 
 #: functions/data-request.php:29 functions/data-request.php:143
-#: functions/data-request.php:271 functions/data-request.php:347
+#: functions/data-request.php:271 functions/data-request.php:349
 msgid "Security check failed, invalid human verification field."
 msgstr ""
 "Échec de la vérification de sécurité, champ de vérification humaine non "
@@ -1438,7 +1438,7 @@ msgstr ""
 "Demande de type non valide, réactulez cette page et essayez de soumettre le "
 "formulaire à nouveau."
 
-#: functions/data-request.php:36 functions/data-request.php:357
+#: functions/data-request.php:36 functions/data-request.php:359
 msgid "All fields are required."
 msgstr "Tous les champs sont requis."
 
@@ -1457,15 +1457,15 @@ msgstr ""
 "Comme notre inventaire est mis à jour en temps réel, vos articles ont été "
 "mis dans le panier pendant 1 heure"
 
-#: functions/data-request.php:74 functions/data-request.php:692
+#: functions/data-request.php:74 functions/data-request.php:690
 msgid "We no longer have this item in this quantity"
 msgstr "Nous n’avons plus cet article dans cette quantité"
 
 #: functions/data-request.php:87 functions/data-request.php:236
-#: functions/data-request.php:301 functions/data-request.php:330
-#: functions/data-request.php:435 functions/data-request.php:438
-#: functions/data-request.php:503 functions/data-request.php:637
-#: functions/data-request.php:662 functions/data-request.php:703
+#: functions/data-request.php:303 functions/data-request.php:332
+#: functions/data-request.php:439 functions/data-request.php:442
+#: functions/data-request.php:501 functions/data-request.php:635
+#: functions/data-request.php:660 functions/data-request.php:701
 msgid "A security error occured"
 msgstr "Une erreur de sécurité s’est produite"
 
@@ -1517,7 +1517,7 @@ msgstr ""
 "Pour activer votre compte et choisir votre mot de passe, veuillez cliquer "
 "sur le lien suivant"
 
-#: functions/data-request.php:201 functions/data-request.php:380
+#: functions/data-request.php:201 functions/data-request.php:383
 #: functions/tools.php:1021
 #, php-format
 msgid "Your %s's team"
@@ -1561,11 +1561,11 @@ msgstr "Un message est nécessaire."
 msgid "Sending message is not permitted because the demo mode is active"
 msgstr "L'envoi de message n'est pas autorisé car le mode démo est actif"
 
-#: functions/data-request.php:294
+#: functions/data-request.php:290
 msgid "Your message is successful send!"
 msgstr "Votre message est réussi envoyer!"
 
-#: functions/data-request.php:296
+#: functions/data-request.php:293 functions/data-request.php:390
 #, php-format
 msgid ""
 "Sending message fails for the following reason: %s. Please contact us for "
@@ -1574,15 +1574,15 @@ msgstr ""
 "L'envoi du message échoue pour la raison suivante : %s. Veuillez nous "
 "contacter pour obtenir de l'aide."
 
-#: functions/data-request.php:375
+#: functions/data-request.php:377
 msgid "Reset password is not permitted for this account!"
 msgstr "Le mot de passe de réinitialisation n’est pas autorisé pour ce compte!"
 
-#: functions/data-request.php:379
+#: functions/data-request.php:382
 msgid "Reset Password"
 msgstr "Réinitialiser le mot de passe"
 
-#: functions/data-request.php:380
+#: functions/data-request.php:383
 msgid ""
 "A request to change your password has been made. You can change it via the "
 "single-use link below:"
@@ -1590,11 +1590,11 @@ msgstr ""
 "Une demande de modification de votre mot de passe a été faite. Vous pouvez "
 "le modifier via le lien à usage unique ci-dessous :"
 
-#: functions/data-request.php:380
+#: functions/data-request.php:383
 msgid "If you have not made this request, please ignore this email."
 msgstr "Si vous n’avez pas fait cette demande, veuillez ignorer cet e-mail."
 
-#: functions/data-request.php:385
+#: functions/data-request.php:388
 msgid ""
 "A password reset link was sent to you by email. Please check your spam "
 "folder if you don't find it."
@@ -1602,11 +1602,7 @@ msgstr ""
 "Un lien de réinitialisation de mot de passe vous a été envoyé par e-mail. "
 "Veuillez vérifier votre dossier de spam si vous ne le trouvez pas."
 
-#: functions/data-request.php:387
-msgid "A problem occurred. Please retry later!"
-msgstr "Un problème s’est produit. S’il vous plaît réessayer plus tard!"
-
-#: functions/data-request.php:427
+#: functions/data-request.php:431
 msgid ""
 "Your informations have been updated. Now, you will be log out and need to "
 "log in again."
@@ -1614,15 +1610,15 @@ msgstr ""
 "Vos informations ont été mises à jour. Maintenant, vous allez être "
 "déconnecté et vous devrez vous reconnecter."
 
-#: functions/data-request.php:429
+#: functions/data-request.php:433
 msgid "Your actual password is incorrect"
 msgstr "Votre mot de passe réel est incorrect"
 
-#: functions/data-request.php:431
+#: functions/data-request.php:435
 msgid "The new passwords entered are different"
 msgstr "Les nouveaux mots de passe entrés sont différents"
 
-#: functions/data-request.php:433 functions/tools.php:920
+#: functions/data-request.php:437 functions/tools.php:920
 msgid ""
 "Your password must be between 8 and 20 characters, including at least 1 "
 "digit, 1 letter, 1 uppercase."
@@ -1630,58 +1626,58 @@ msgstr ""
 "Votre mot de passe doit être compris entre 8 et 20 caractères, y compris au "
 "moins 1 chiffre, 1 lettre, 1 majuscule."
 
-#: functions/data-request.php:461
+#: functions/data-request.php:463
 msgid "You changed your default payment method"
 msgstr "Vous avez modifié votre méthode de paiement par défaut"
 
-#: functions/data-request.php:463 functions/data-request.php:474
-#: functions/data-request.php:495 functions/data-request.php:528
-#: functions/data-request.php:531 functions/data-request.php:569
-#: functions/data-request.php:603 functions/data-request.php:629
+#: functions/data-request.php:465 functions/data-request.php:476
+#: functions/data-request.php:497 functions/data-request.php:526
+#: functions/data-request.php:529 functions/data-request.php:567
+#: functions/data-request.php:601 functions/data-request.php:627
 msgid "An error occured:"
 msgstr "Une erreur s’est produite :"
 
-#: functions/data-request.php:472
+#: functions/data-request.php:474
 msgid "You deleted a payment method"
 msgstr "Vous avez supprimé un mode de paiement"
 
-#: functions/data-request.php:493
+#: functions/data-request.php:495
 msgid "You added a new payment method"
 msgstr "Vous avez ajouté un nouveau mode de paiement"
 
-#: functions/data-request.php:499 functions/data-request.php:633
-msgid "An error occured"
-msgstr "Une erreur s’est produite"
-
-#: functions/data-request.php:524
+#: functions/data-request.php:522
 msgid "Your cart has been emptied"
 msgstr "Votre chariot a été vidé"
 
-#: functions/data-request.php:547
+#: functions/data-request.php:545
 msgid "Quantities have been changed"
 msgstr "Les quantités ont été modifiées"
 
-#: functions/data-request.php:565 functions/data-request.php:599
+#: functions/data-request.php:563 functions/data-request.php:597
 msgid "Your cart has been validated"
 msgstr "Votre panier a été validé"
 
-#: functions/data-request.php:621
+#: functions/data-request.php:619
 msgid "Payment status"
 msgstr "Statut de paiement"
 
-#: functions/data-request.php:621
+#: functions/data-request.php:619
 msgid "Payment ID"
 msgstr "ID de paiement"
 
-#: functions/data-request.php:625
+#: functions/data-request.php:623
 msgid "View my receipt"
 msgstr "Afficher mon reçu"
 
-#: functions/data-request.php:651 functions/data-request.php:658
+#: functions/data-request.php:631
+msgid "An error occured"
+msgstr "Une erreur s’est produite"
+
+#: functions/data-request.php:649 functions/data-request.php:656
 msgid "Customer not found"
 msgstr "Client non trouvé"
 
-#: functions/data-request.php:685
+#: functions/data-request.php:683
 msgid "Your subscription have been put in the basket for 1 hour"
 msgstr ""
 "Comme notre inventaire est mis à jour en temps réel, vos articles ont été "
@@ -1884,7 +1880,7 @@ msgid "Unavailable"
 msgstr "Indisponible"
 
 #: functions/product.php:543 functions/product.php:545 functions/tools.php:1348
-#: functions/tools.php:1350 functions/tools.php:1850
+#: functions/tools.php:1350 functions/tools.php:1852
 msgid "Delete"
 msgstr "Supprimer"
 
@@ -2349,73 +2345,77 @@ msgstr "les %s du mois"
 msgid "Choose your language"
 msgstr "Choisissez votre langue"
 
-#: functions/tools.php:1748 functions/tools.php:2475
+#: functions/tools.php:1718
+msgid "Choose payment method"
+msgstr "Choisir un moyen de paiement"
+
+#: functions/tools.php:1750 functions/tools.php:2477
 msgid "Account"
 msgstr "Compte"
 
-#: functions/tools.php:1750
+#: functions/tools.php:1752
 msgid "Card"
 msgstr "Carte"
 
-#: functions/tools.php:1798
+#: functions/tools.php:1800
 msgid "Debtor"
 msgstr "Débiteur"
 
-#: functions/tools.php:1799
+#: functions/tools.php:1801
 msgid "Holder:"
 msgstr "Titulaire:"
 
-#: functions/tools.php:1801
+#: functions/tools.php:1803
 msgid "Creation:"
 msgstr "Création:"
 
-#: functions/tools.php:1804
+#: functions/tools.php:1806
 msgid "Expiration:"
 msgstr "Expiration:"
 
-#: functions/tools.php:1811
+#: functions/tools.php:1813
 msgid "Mandate"
 msgstr "Mandat"
 
-#: functions/tools.php:1812
+#: functions/tools.php:1814
 msgid "Reference:"
 msgstr "Référence :"
 
-#: functions/tools.php:1816
+#: functions/tools.php:1818
 msgid "Type:"
 msgstr "Type :"
 
-#: functions/tools.php:1818
+#: functions/tools.php:1820
 msgid "Recurring"
 msgstr "Récurrent"
 
-#: functions/tools.php:1820
+#: functions/tools.php:1822
 msgid "Unique"
 msgstr "Unique"
 
-#: functions/tools.php:1830 functions/tools.php:2492 functions/tools.php:2532
+#: functions/tools.php:1832 functions/tools.php:2494 functions/tools.php:2534
 msgid "immediately"
 msgstr "immédiatement"
 
-#: functions/tools.php:1836 functions/tools.php:1838 functions/tools.php:1840
-#: functions/tools.php:2065 functions/tools.php:2270 functions/tools.php:2441
-#: functions/tools.php:2497 functions/tools.php:2537
+#: functions/tools.php:1838 functions/tools.php:1840 functions/tools.php:1842
+#: functions/tools.php:2067 functions/tools.php:2272 functions/tools.php:2443
+#: functions/tools.php:2499 functions/tools.php:2539
 msgid "I order"
 msgstr "Je commande"
 
-#: functions/tools.php:1846
+#: functions/tools.php:1848
 msgid "Favourite"
 msgstr "Préféré"
 
-#: functions/tools.php:1864
+#: functions/tools.php:1866
 msgid "Pay by bank card"
 msgstr "Payer par carte bancaire"
 
-#: functions/tools.php:1866
+#: functions/tools.php:1868
 msgid "Add a bank card"
 msgstr "Ajouter une carte bancaire"
 
-#: functions/tools.php:1873 functions/tools.php:2089
+#: functions/tools.php:1875 functions/tools.php:2091
 msgid ""
 "You have reached limit of payment methods. Please delete a payment method "
 "for add a new one."
@@ -2423,31 +2423,31 @@ msgstr ""
 "Vous avez atteint la limite des modes de paiement. Veuillez supprimer un "
 "mode de paiement pour en ajouter un nouveau."
 
-#: functions/tools.php:1876 functions/tools.php:2092 functions/tools.php:2290
+#: functions/tools.php:1878 functions/tools.php:2094 functions/tools.php:2292
 msgid "Stripe's in sandbox mode"
 msgstr "Stripe est en mode bac à sable"
 
-#: functions/tools.php:1876
+#: functions/tools.php:1878
 msgid "Link to test card numbers"
 msgstr "Lien vers les numéros de carte de test"
 
-#: functions/tools.php:1878
+#: functions/tools.php:1880
 msgid "Full name on the card"
 msgstr "Nom complet sur la carte"
 
-#: functions/tools.php:1883
+#: functions/tools.php:1885
 msgid "Not save"
 msgstr "Ne pas enregistrer"
 
-#: functions/tools.php:1892
+#: functions/tools.php:1894
 msgid "Save"
 msgstr "Sauvegarder"
 
-#: functions/tools.php:1898
+#: functions/tools.php:1900
 msgid "Save as favourite"
 msgstr "Enregistrer comme favori"
 
-#: functions/tools.php:1901
+#: functions/tools.php:1903
 #, php-format
 msgid ""
 "By providing your card and confirming this form, you are authorizing %s and "
@@ -2466,23 +2466,23 @@ msgstr ""
 "modalités de votre entente avec elle. Un remboursement doit être réclamé "
 "dans les 90 jours à compter de la date à laquelle votre carte a été débitée."
 
-#: functions/tools.php:2080
+#: functions/tools.php:2082
 msgid "Pay by SEPA bank debit"
 msgstr "Paiement par débit bancaire SEPA"
 
-#: functions/tools.php:2082
+#: functions/tools.php:2084
 msgid "Add a SEPA bank account"
 msgstr "Ajouter un compte bancaire SEPA"
 
-#: functions/tools.php:2092
+#: functions/tools.php:2094
 msgid "Link to test SEPA account numbers"
 msgstr "Lien pour tester les numéros de compte SEPA"
 
-#: functions/tools.php:2094
+#: functions/tools.php:2096
 msgid "Full name of the owner"
 msgstr "Nom complet du propriétaire"
 
-#: functions/tools.php:2099 functions/tools.php:2294
+#: functions/tools.php:2101 functions/tools.php:2296
 #, php-format
 msgid ""
 "By providing your IBAN and confirming this form, you are authorizing %s and "
@@ -2500,19 +2500,19 @@ msgstr ""
 "elle. Un remboursement doit être réclamé dans les 8 semaines à compter de la "
 "date à laquelle votre compte a été débité."
 
-#: functions/tools.php:2284
+#: functions/tools.php:2286
 msgid "Buy now or pay later with Klarna"
 msgstr "Acheter maintenant ou payer plus tard avec Klarna"
 
-#: functions/tools.php:2290
+#: functions/tools.php:2292
 msgid "Link to test Klarna"
 msgstr "Lien vers le test Klarna"
 
-#: functions/tools.php:2456
+#: functions/tools.php:2458
 msgid "Pay by bank transfert"
 msgstr "Payer par virement bancaire"
 
-#: functions/tools.php:2465
+#: functions/tools.php:2467
 #, php-format
 msgid ""
 "Please send your bank transfert in the amount of <b>%1$s</b> at the "
@@ -2521,15 +2521,15 @@ msgstr ""
 "Veuillez envoyer votre virement bancaire au montant de <b>%1$sur</b> le "
 "compte suivant :"
 
-#: functions/tools.php:2467
+#: functions/tools.php:2469
 msgid "Please send your bank transfert at the following account:"
 msgstr "Veuillez envoyer votre virement bancaire sur le compte suivant :"
 
-#: functions/tools.php:2509
+#: functions/tools.php:2511
 msgid "Pay by bank check"
 msgstr "Payer par chèque bancaire"
 
-#: functions/tools.php:2517
+#: functions/tools.php:2519
 #, php-format
 msgid ""
 "Please send your money check in the amount of <b>%1$s</b> to <b>%2$s</b> at "
@@ -2538,66 +2538,66 @@ msgstr ""
 "Veuillez envoyer votre chèque d’argent au montant de <b>%1$s</b> à <b>%2$s</"
 "b> à l’adresse suivante :"
 
-#: functions/tools.php:2519
+#: functions/tools.php:2521
 #, php-format
 msgid "Please send your money check to <b>%s</b> at the following address:"
 msgstr ""
 "Veuillez envoyer votre chèque d’argent à <b>%s</b> à l’adresse suivante :"
 
-#: functions/tools.php:2545
+#: functions/tools.php:2547
 msgid "Pay at front desk"
 msgstr "Payer à la réception"
 
-#: functions/tools.php:2763
+#: functions/tools.php:2765
 msgid "Select your request:"
 msgstr "Sélectionnez votre demande :"
 
-#: functions/tools.php:2764
+#: functions/tools.php:2766
 msgid "Export Personal Data"
 msgstr "Exporter des données personnelles"
 
-#: functions/tools.php:2765
+#: functions/tools.php:2767
 msgid "Remove Personal Data"
 msgstr "Supprimer les données personnelles"
 
-#: functions/tools.php:2767
+#: functions/tools.php:2769
 msgid "Human verification:"
 msgstr "Vérification humaine :"
 
-#: functions/tools.php:2768
+#: functions/tools.php:2770
 msgid "Send Request"
 msgstr "Envoyer une demande"
 
-#: functions/tools.php:2799
+#: functions/tools.php:2801
 msgid "Export your data"
 msgstr "Exporter vos données"
 
-#: functions/tools.php:2799
+#: functions/tools.php:2801
 msgid "You will receive an email with a secure link to your data"
 msgstr "Vous recevrez un e-mail avec un lien sécurisé vers vos données"
 
-#: functions/tools.php:2809
+#: functions/tools.php:2811
 msgid "Erase your data"
 msgstr "Effacer vos données"
 
-#: functions/tools.php:2809
+#: functions/tools.php:2811
 msgid "You will receive an email with a secure link to confirm the deletion"
 msgstr ""
 "Vous recevrez un e-mail avec un lien sécurisé pour confirmer la suppression"
 
-#: functions/tools.php:2820
+#: functions/tools.php:2822
 msgid "Delete your account"
 msgstr "Supprimer votre compte"
 
-#: functions/tools.php:2820
+#: functions/tools.php:2822
 msgid "Soon, you will be able to delete your account"
 msgstr "Bientôt, vous pourrez supprimer votre compte"
 
-#: functions/tools.php:2842
+#: functions/tools.php:2844
 msgid "Validate the request"
 msgstr "Valider la demande"
 
-#: functions/tools.php:2850
+#: functions/tools.php:2852
 msgid "This plugin requires WordPress 4.9.6."
 msgstr "Ce plugin nécessite WordPress 4.9.6."
 
@@ -2665,6 +2665,9 @@ msgstr "ptibogxiv"
 #. Author URI of the plugin/theme
 msgid "https://www.ptibogxiv.net/en"
 msgstr "https://www.ptibogxiv.net/en"
+
+#~ msgid "A problem occurred. Please retry later!"
+#~ msgstr "Un problème s’est produit. S’il vous plaît réessayer plus tard!"
 
 #, fuzzy
 #~| msgid "Create a enterprise / supplier account"

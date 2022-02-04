@@ -1714,7 +1714,9 @@ $paymentmethods .= "</script>";
 $paymentmethods .= '<div id="DoliPaymentmethodAlert"></div>';
 
 $paymentmethods .= '<div class="card shadow-sm">';
-if ( empty($module) ) { $paymentmethods .= '<div class="card-header">'.__( 'Manage payment methods', 'doliconnect').'</div>'; }
+if ( empty($module) ) { $paymentmethods .= '<div class="card-header">'.__( 'Manage payment methods', 'doliconnect').'</div>'; } else{
+  $paymentmethods .= '<div class="card-header">'.__( 'Choose payment method', 'doliconnect').'</div>';
+}
 $paymentmethods .= '<div class="accordion accordion-flush" id="accordionFlushExample">';
 if (empty($listpaymentmethods->payment_methods)) {
 $countPM = 0;
