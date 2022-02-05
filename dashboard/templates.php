@@ -257,7 +257,7 @@ print '</div>';
 
 print doliuserform( null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'thirdparty', doliCheckRights('societe', 'creer'));
 
-print "<div class='card-body'><div class='d-grid gap-2'><input type='hidden' name='submitted' id='submitted' value='true'><button class='btn btn-outline-secondary' type='submit'";
+print "<div class='card-body'><div class='d-grid gap-2'><input type='hidden' name='submitted' id='submitted' value='true'><button class='btn btn-secondary' type='submit'";
 if ( get_option('users_can_register')=='1' && ( get_site_option( 'registration' ) == 'user' || get_site_option( 'registration' ) == 'all' ) || ( !is_multisite() && get_option( 'users_can_register' )) ) {
 print "";
 } else { print " aria-disabled='true'  disabled"; }
@@ -398,7 +398,7 @@ print '<div class="form-floating mb-2">
 print dolicaptcha();
 
 print "</li></lu><div class='card-body'>";
-print '<div class="d-grid gap-2"><button class="btn btn-outline-secondary" type="submit" value="submit">'.__( 'Submit', 'doliconnect').'</button></div>';
+print '<div class="d-grid gap-2"><button class="btn btn-secondary" type="submit" value="submit">'.__( 'Submit', 'doliconnect').'</button></div>';
 
 print "</form></div></div>";
 
@@ -445,9 +445,9 @@ print "</center></li></lu><div class='card-body'>";
 
 print '<div class="btn-group w-100" role="group" aria-label="actions buttons">';
 if ((!is_multisite() && get_option( 'users_can_register' )) || ((!is_multisite() && get_option( 'dolicustsupp_can_register' )) || ((get_option( 'dolicustsupp_can_register' ) || get_option('users_can_register') == '1') && (get_site_option( 'registration' ) == 'user' || get_site_option( 'registration' ) == 'all')))) {
-print '<a href="'.wp_registration_url( get_permalink() ).'" id="login-'.current_time('timestamp').'" title="'.__('Signup', 'doliconnect').'" class="btn btn-outline-secondary" role="button">'.__("You don't have an account", 'doliconnect').'</a>';
+print '<a href="'.wp_registration_url( get_permalink() ).'" id="login-'.current_time('timestamp').'" title="'.__('Signup', 'doliconnect').'" class="btn btn-secondary" role="button">'.__("You don't have an account", 'doliconnect').'</a>';
 }
-print '<a href="#" id="login-'.current_time('timestamp').'" data-bs-target="#DoliconnectLogin"  data-bs-toggle="modal" data-bs-dismiss="modal" title="'.__('Sign in', 'doliconnect').'" class="btn btn-outline-secondary" role="button">'.__('You have already an account', 'doliconnect').'</a>';
+print '<a href="#" id="login-'.current_time('timestamp').'" data-bs-target="#DoliconnectLogin"  data-bs-toggle="modal" data-bs-dismiss="modal" title="'.__('Sign in', 'doliconnect').'" class="btn btn-secondary" role="button">'.__('You have already an account', 'doliconnect').'</a>';
 print '</div>';
 
 } else {
@@ -504,13 +504,12 @@ if ( get_site_option('doliconnect_mode') == 'one' && function_exists('switch_to_
 switch_to_blog(1);
 } 
 if ((!is_multisite() && get_option( 'users_can_register' )) || ((!is_multisite() && get_option( 'dolicustsupp_can_register' )) || ((get_option( 'dolicustsupp_can_register' ) || get_option('users_can_register') == '1') && (get_site_option( 'registration' ) == 'user' || get_site_option( 'registration' ) == 'all')))) {
-print "<a class='btn btn-secondary' href='".wp_registration_url(get_permalink())."' role='button' title='".__( 'Create an account', 'doliconnect')."'><small>".__( 'Create an account', 'doliconnect')."</small></a> ";
+print "<a class='btn btn-secondary' href='".wp_registration_url(get_permalink())."' role='button' title='".__( 'Create an account', 'doliconnect')."'>".__( 'Create an account', 'doliconnect')."</a> ";
 }
 if (get_site_option('doliconnect_mode')=='one') {
 restore_current_blog();
 }
-print "<input type='hidden' value='$redirect_to' name='redirect_to'><button id='submit' class='btn btn-outline-secondary' type='submit' name='submit' value='Submit'";
-print "><b>".__( 'Sign in', 'doliconnect')."</b></button>";
+print "<input type='hidden' value='$redirect_to' name='redirect_to'><button id='submit' class='btn btn-secondary' type='submit' name='submit' value='Submit'>".__( 'Sign in', 'doliconnect')."</button>";
 
 do_action( 'login_footer');
 
@@ -670,7 +669,7 @@ if ( !is_user_logged_in() ) {
 print '</li><li class="list-group-item"><div class="form-check"><input id="rgpdinfo" class="form-check-input form-check-sm" type="checkbox" name="rgpdinfo" value="ok"><label class="form-check-label w-100" for="rgpdinfo"><small class="form-text text-muted"> '.__( 'I agree to save my personnal informations in order to contact me', 'doliconnect').'</small></label></div>';  
 }
 print "</li></ul>";
-print "<div class='card-body'><div class='d-grid gap-2'><button class='btn btn-outline-secondary' type='submit'>".__( 'Send', 'doliconnect')."</button><input type='hidden' name='submitted' id='submitted' value='true' /></div></div></div></div></div></form>";
+print "<div class='card-body'><div class='d-grid gap-2'><button class='btn btn-secondary' type='submit'>".__( 'Send', 'doliconnect')."</button><input type='hidden' name='submitted' id='submitted' value='true' /></div></div></div></div></div></form>";
 
 print "</div>";
 
@@ -1801,7 +1800,7 @@ console.log(response.data.message);
 })(jQuery);";
 print "</script>";
 
-print "<div class='card-body'><div class='d-grid gap-2'><button type='button' id='infobtn_cart' name='info_cart' value='info_cart'  class='btn btn-outline-secondary'>".__( 'Validate', 'doliconnect')."</button></div></div>";
+print "<div class='card-body'><div class='d-grid gap-2'><button type='button' id='infobtn_cart' name='info_cart' value='info_cart'  class='btn btn-secondary'>".__( 'Validate', 'doliconnect')."</button></div></div>";
 print "<div class='card-footer text-muted'>";
 print "<small><div class='float-start'>";
 if ( isset($request) ) print dolirefresh($request, get_permalink(), dolidelay('cart'));
