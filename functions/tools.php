@@ -1756,7 +1756,7 @@ $paymentmethods .= '<br><small class="text-muted">'.$method->holder.'</small></d
 $paymentmethods .= '<div id="flush-collapse'.$method->id.'" class="accordion-collapse collapse';
 if ( $method->default_source && empty($thirdparty->mode_reglement_id) && !in_array($method->type, array('PRE','VIR')) || (!empty($method->default_source) && !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id == $mode_reglement_code[0]->id ) ) { $paymentmethods .= " show"; }
 $paymentmethods .= '" aria-labelledby="flush-heading'.$method->id.'" data-bs-parent="#accordionFlushExample"><div class="accordion-body bg-light">';
-if ( empty($module) && !is_object($object) ) {
+if ( empty($module) && !is_object($object) && doliCheckRights('societe', 'thirdparty_paymentinformation_advance', 'write', null, '15.0.0') ) {
 $paymentmethods .= "<script>";
 $paymentmethods .= "(function ($) {
 $(document).ready(function(){
@@ -1841,7 +1841,7 @@ $paymentmethods .= '<button type="button" onclick="PaySepaDebitPM(\''.$method->i
 } else {
 $paymentmethods .= '<button type="button" onclick="PayPM(\''.$method->type.'\')" class="btn btn-danger btn-block">'.__( 'I order', 'doliconnect').'</button>';
 }
-} else {
+} elseif (doliCheckRights('societe', 'thirdparty_paymentinformation_advance', 'write', null, '15.0.0')) {
 $paymentmethods .= '<div class="btn-group btn-block" role="group" aria-label="actions buttons">';
 if ( !isset($method->default_source) && !in_array($method->type, array('VIR')) && empty($thirdparty->mode_reglement_id) ) {
 $paymentmethods .= "<button type='button' id='defaultbtn_".$method->id."' name='default_payment_method' value='default' class='btn btn-outline-secondary'";
