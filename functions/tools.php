@@ -18,6 +18,9 @@ return $return;
 function doliCheckRights($right1, $right2 = null, $right3 = null, $right4 = null, $version = '13.0.0') {
 $return = false;
 if ( doliversion($version) ) {
+if (isset($right2) && preg_match("/advance/i", $right2) && !doliconst('MAIN_USE_ADVANCED_PERMS')) { 
+return true;
+} else {
 $user = callDoliApi("GET", "/users/info?includepermissions=1", null, dolidelay('dolibarr')); 
 if (isset($user->rights)) {
 $user = $user->rights->$right1;
@@ -31,7 +34,7 @@ if ($user && !empty($right4) && isset($user->$right4)) { $user = $user->$right4;
 if (isset($user) && !empty($user)) {
 $return = true;
 } 
-} else {
+}} else {
 $return = true;
 }
 return $return;
