@@ -1650,11 +1650,6 @@ if ( doliversion('10.0.0') ) {
 
 print "<li class='list-group-item list-group-item-action'><div class='row'><div class='col-12 col-md-6'><h6>".__( 'Billing address', 'doliconnect')."</h6><small class='text-muted'>";
 
-print '<div class="form-check">
-<input type="checkbox" id="billing-0" name="contact_billing" class="form-check-input" value="0" checked disabled>
-<label class="form-check-label" for="billing-0">'.doliaddress($thirdparty).'</label>
-</div>';
-
 $listcontact = callDoliApi("GET", "/contacts?sortfield=t.rowid&sortorder=ASC&limit=100&thirdparty_ids=".doliconnector($current_user, 'fk_soc')."&includecount=1&sqlfilters=t.statut=1", null, dolidelay('contact', true));
 
 $contactbilling = array(); 
@@ -1662,9 +1657,12 @@ if (!empty($object->contacts_ids) && is_array($object->contacts_ids)) {
 foreach ($object->contacts_ids as $contact) {
 if ('BILLING' == $contact->code) {
 $contactbilling[] = $contact->id;
+}}
 }
-}
-}
+
+print '<div class="form-check"><input type="checkbox" id="billing-0" name="contact_billing" class="form-check-input" value="0" ';
+if (empty($contactbilling)) print ' checked ';
+print 'disabled><label class="form-check-label" for="billing-0">'.doliaddress($thirdparty).'</label></div>';
 
 if ( !isset($listcontact->error) && $listcontact != null ) {
 foreach ( $listcontact as $contact ) {
@@ -1679,21 +1677,17 @@ print "</small></div>";
 
 print "<div class='col-12 col-md-6'><h6>".__( 'Shipping address', 'doliconnect')."</h6><small class='text-muted'>";
 
-print '<div class="form-check">
-<input type="checkbox" id="shipping-0" name="contact_shipping" class="form-check-input" value="0" checked disabled>
-<label class="form-check-label" for="shipping-0">'.doliaddress($thirdparty).'</label>
-</div>';
-
-$listcontact = callDoliApi("GET", "/contacts?sortfield=t.rowid&sortorder=ASC&limit=100&thirdparty_ids=".doliconnector($current_user, 'fk_soc')."&includecount=1&sqlfilters=t.statut=1", null, dolidelay('contact', true));
-
 $contactshipping = array(); 
 if (!empty($object->contacts_ids) && is_array($object->contacts_ids)) {
 foreach ($object->contacts_ids as $contact) {
 if ('SHIPPING' == $contact->code) {
 $contactshipping[] = $contact->id;
+}}
 }
-}
-}
+
+print '<div class="form-check"><input type="checkbox" id="shipping-0" name="contact_shipping" class="form-check-input" value="0" ';
+if (empty($contactshipping)) print ' checked ';
+print 'disabled><label class="form-check-label" for="shipping-0">'.doliaddress($thirdparty).'</label></div>';
 
 if ( !isset($listcontact->error) && $listcontact != null ) {
 foreach ( $listcontact as $contact ) {
