@@ -262,7 +262,7 @@ function dolicontactinfos_request(){
 		$object = callDoliApi("POST", "/contacts", $contact, 0);
 		
 		if (!isset($object->error)) { 
-		$listcontact = callDoliApi("GET", $requestlist, null, dolidelay('contact', true));
+		//$listcontact = callDoliApi("GET", $requestlist, null, dolidelay('contact', true));
 		wp_send_json_success( dolialert('success', __( 'Your informations have been added.', 'doliconnect')));
 		} else {
 		wp_send_json_error( __( 'An error occured:', 'doliconnect').' '.$object->error->message); 
