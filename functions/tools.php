@@ -323,10 +323,10 @@ function doliajax($id, $url = null, $case = null){
       $.post($form.attr("action"), $form.serialize(), function(response) {
         $(window).scrollTop(0); 
         if (response.success) {
-          //document.location = url;
           if (document.getElementById("'.$id.'-alert")) {
           document.getElementById("'.$id.'-alert").innerHTML = response.data;      
           }
+          //document.location = url;
         } else {
           if (document.getElementById("'.$id.'-alert")) {
           document.getElementById("'.$id.'-alert").innerHTML = response.data;      
