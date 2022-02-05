@@ -237,6 +237,33 @@ function doliuserinfos_request(){
 	}
 }
 
+add_action('wp_ajax_dolicontactinfos_request', 'dolicontactinfos//_request');
+add_action('wp_ajax_nopriv_dolicontactinfos_request', 'dolicontactinfos_request');
+
+function dolicontactinfos_request(){
+	global $current_user;
+	$ID = $current_user->ID;
+	
+	if ( isset($_POST['dolicontactinfos-nonce']) && wp_verify_nonce( trim($_POST['dolicontactinfos-nonce']), 'dolicontactinfos-nonce') && isset($_POST['case']) && $_POST['case'] == "update" ) {
+
+		$contact = $_POST['contact'][''.$_POST['contactid'].''];
+		$object = callDoliApi("PUT", "/contacts/".$_POST["contactid"]."?includecount=1&includeroles=1", $contact, 0);
+		
+		if (!isset($object->error)) { 
+			wp_send_json_success( dolialert('success', __( 'Your informations have been updated.', 'doliconnect')));
+		} else {
+			wp_send_json_error( __( 'An error occured:', 'doliconnect').' '.$object->error->message); 
+		}
+
+	} elseif ( isset($_POST['dolicontactinfos-nonce']) && wp_verify_nonce( trim($_POST['dolicontactinfos-nonce']), 'dolicontactinfos-nonce') && isset($_POST['case']) && $_POST['case'] == "create" ) {
+
+
+	
+	} else {
+	wp_send_json_error( dolialert('danger', __( 'A security error occured', 'doliconnect'))); 
+	}
+}
+
 add_action('wp_ajax_dolicontact_request', 'dolicontact_request');
 add_action('wp_ajax_nopriv_dolicontact_request', 'dolicontact_request');
 
