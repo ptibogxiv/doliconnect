@@ -292,7 +292,7 @@ if ( !isset($contactfo->error) && isset($_GET['id']) && isset($_GET['id']) && is
 
 print "<form action='".admin_url('admin-ajax.php')."' id='dolicontactinfos-form' method='post' class='was-validated' enctype='multipart/form-data'>";
 
-print doliajax('dolicontactinfos', $url, 'update');
+print doliajax('dolicontactinfos', null, 'update');
 
 print "<input type='hidden' name='contactid' value='".$contactfo->id."'>";
 
@@ -315,7 +315,7 @@ print '</div></div></form>';
 
 print "<form action='".admin_url('admin-ajax.php')."' id='dolicontactinfos-form' method='post' class='was-validated' enctype='multipart/form-data'>";
 
-print doliajax('dolicontactinfos', $url, 'create');
+print doliajax('dolicontactinfos', null, 'create');
     
 print "<input type='hidden' name='contactid' value='0'>";
 
