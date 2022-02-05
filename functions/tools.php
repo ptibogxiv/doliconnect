@@ -411,7 +411,7 @@ $password .= '><label for="pwd2">'.__( 'Confirm the password', 'doliconnect').'<
 $password .= '</div></div>';
 $password .= '</li>';
 $password .= "</ul><div class='card-body'>";
-$password .= '<div class="d-grid gap-2"><button class="btn btn-outline-secondary" id="pwd-submit-button" type="submit"';
+$password .= '<div class="d-grid gap-2"><button class="btn btn-secondary" id="pwd-submit-button" type="submit"';
 if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $user->ID ) {
 $password .= ' disabled';
 }
@@ -2841,7 +2841,7 @@ global $current_user;
       </li>
       </ul>
 			<div class="card-body">
-          <div class="d-grid gap-2"><button class="btn btn-outline-secondary" id="gdrf-submit-button" type="submit"><?php _e('Validate the request', 'doliconnect'); ?></button></div>
+          <div class="d-grid gap-2"><button class="btn btn-secondary" id="gdrf-submit-button" type="submit"><?php _e('Validate the request', 'doliconnect'); ?></button></div>
       </div>
   </div> 
 </form>

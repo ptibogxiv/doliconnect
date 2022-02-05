@@ -30,7 +30,7 @@ print '<div class="card shadow-sm"><div class="card-header">'.__( 'Edit my infor
 
 print doliuserform( $thirdparty, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'thirdparty', doliCheckRights('societe', 'creer'));
 
-print "<div class='card-body'><div class='d-grid gap-2'><button class='btn btn-outline-secondary' type='submit' ";
+print "<div class='card-body'><div class='d-grid gap-2'><button class='btn btn-secondary' type='submit' ";
 if (!doliCheckRights('societe', 'creer')) { print 'disabled'; }
 print ">".__( 'Update', 'doliconnect')."</button></div></div>";
 print '<div class="card-footer text-muted">';
@@ -315,7 +315,7 @@ print '<div class="card shadow-sm"><div class="card-header">'.__( 'Edit contact'
 
 print doliuserform( $contactfo, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'contact', doliCheckRights('societe', 'contact', 'creer'));
 
-print "<div class='card-body'><div class='d-grid gap-2'><button class='btn btn-outline-secondary' type='submit' ";
+print "<div class='card-body'><div class='d-grid gap-2'><button class='btn btn-secondary' type='submit' ";
 if (!doliCheckRights('societe', 'contact', 'creer')) { print 'disabled'; }
 print ">".__( 'Update', 'doliconnect')."</button></div></div>";
 print '<div class="card-footer text-muted">';
@@ -336,7 +336,7 @@ print '<div class="card shadow-sm"><div class="card-header">'.__( 'Create contac
 
 print doliuserform( $thirdparty, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'contact', doliCheckRights('societe', 'contact', 'creer'));
 
-print "<div class='card-body'><div class='d-grid gap-2'><button class='btn btn-outline-secondary' type='submit' ";
+print "<div class='card-body'><div class='d-grid gap-2'><button class='btn btn-secondary' type='submit' ";
 if (!doliCheckRights('societe', 'contact', 'creer')) { print 'disabled'; }
 print ">".__( 'Add', 'doliconnect')."</button></div></div>";
 print '<div class="card-footer text-muted">';
