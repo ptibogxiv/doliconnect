@@ -15,9 +15,9 @@ $return .= '<p class="text-center"><a href="https://www.microsoft.com/edge" targ
 return $return;
 }
 
-function doliCheckRights($right1, $right2 = null, $right3 = null, $right4 = null) {
+function doliCheckRights($right1, $right2 = null, $right3 = null, $right4 = null, $version = '13.0.0') {
 $return = false;
-if ( doliversion('13.0.0') ) {
+if ( doliversion($version) ) {
 $user = callDoliApi("GET", "/users/info?includepermissions=1", null, dolidelay('dolibarr')); 
 if (isset($user->rights)) {
 $user = $user->rights->$right1;
