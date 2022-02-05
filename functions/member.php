@@ -131,13 +131,13 @@ print "<div class='d-grid gap-2'><button class='btn btn-light' disabled>".sprint
 } elseif ( $postadh->family == '1' ) {
 print "<div class='d-grid gap-2'><a href='".doliconnecturl('doliaccount')."?module=ticket&type=COM&create' class='btn btn-info' role='button'>".__( 'Contact us', 'doliconnect')."</a></div>";
 } 
-elseif ( ( $postadh->statut == '0' && $postadh->id == $adherent->typeid ) ) { 
+elseif ( ($postadh->statut == '0' && isset($adherent) && $postadh->id == $adherent->typeid ) { 
 print "<div class='d-grid gap-2'><button class='btn btn-secondary' disabled>".__( 'Non-renewable', 'doliconnect')."</div></div>";
 } 
-elseif ( ( isset($adherent) && $postadh->automatic_renew != '1' && $postadh->id == $adherent->typeid ) ) { //to do add security for avoid loop  in revali
+elseif (  $postadh->automatic_renew != '1' && isset($adherent) && $postadh->id == $adherent->typeid ) { //to do add security for avoid loop  in revali
 print "<form id='subscription-form' action='".esc_url( add_query_arg( 'module', 'members', doliconnecturl('doliaccount')) )."' method='post'><input type='hidden' name='cotisation' value='$postadh->price_prorata'><input type='hidden' name='timestamp_start' value='".$postadh->date_begin."'><input type='hidden' name='timestamp_end' value='".$postadh->date_end."'><input type='hidden' name='update_membership' value='4'><input type='hidden' name='typeadherent' value='$postadh->id'><div class='d-grid gap-2'><button class='btn btn-warning btn-block' type='submit'>".__( 'Validate', 'doliconnect')."</button></div></form>";
 } 
-elseif ( ($postadh->automatic == '1' ) && ($postadh->id == $adherent->typeid) ) {
+elseif ( $postadh->automatic == '1' && isset($adherent) && $postadh->id == $adherent->typeid ) {
 if ( isset($adherent) && $adherent->statut == '1' ) {
 if ( $adherent->datefin == null ) {print "<form id='subscription-form' action='".esc_url( add_query_arg( 'module', 'members', doliconnecturl('doliaccount')) )."' method='post'><input type='hidden' name='cotisation' value='$postadh->price_prorata'><input type='hidden' name='timestamp_start' value='".$postadh->date_begin."'><input type='hidden' name='timestamp_end' value='".$postadh->date_end."'><input type='hidden' name='update_membership' value='4'><input type='hidden' name='typeadherent' value='$postadh->id'><div class='d-grid gap-2'><button class='btn btn-success btn-block' type='submit'>".__( 'Pay', 'doliconnect')."</button></div></form>";}
 
@@ -150,7 +150,7 @@ print "<form id='subscription-form' action='".esc_url( add_query_arg( 'module', 
 } else {print "<form id='subscription-form' action='".esc_url( add_query_arg( 'module', 'members', doliconnecturl('doliaccount')) )."' method='post'><input type='hidden' name='cotisation' value='$postadh->price_prorata'><input type='hidden' name='timestamp_start' value='".$postadh->date_begin."'><input type='hidden' name='timestamp_end' value='".$postadh->date_end."'><input type='hidden' name='update_membership' value='4'><input type='hidden' name='typeadherent' value='$postadh->id'><div class='d-grid gap-2'><button class='btn btn-success btn-block' type='submit'>".__( 'Validate', 'doliconnect')."</button></div></form>";
 }
 
-} elseif (($postadh->automatic == '1') && ( (isset($adherent) && $postadh->id != $adherent->typeid) || !isset($adherent)) ) {
+} elseif ( $postadh->automatic == '1' && ( (isset($adherent) && $postadh->id != $adherent->typeid) || !isset($adherent)) ) {
 
 if ( isset($adherent) && $adherent->statut == '1' ) {
 
@@ -168,7 +168,7 @@ print "<form id='subscription-form' action='".esc_url( add_query_arg( 'module', 
 } else {print "<form id='subscription-form' action='".esc_url( add_query_arg( 'module', 'members', doliconnecturl('doliaccount')) )."' method='post'><input type='hidden' name='cotisation' value='$postadh->price_prorata'><input type='hidden' name='timestamp_start' value='".$postadh->date_begin."'><input type='hidden' name='timestamp_end' value='".$postadh->date_end."'><input type='hidden' name='update_membership' value='5'><input type='hidden' name='typeadherent' value='$postadh->id'><div class='d-grid gap-2'><button class='btn btn-warning btn-block' type='submit'>".__( 'Validate', 'doliconnect')."</button></div></form>";
 }
 
-} elseif ( ($postadh->automatic != '1' ) && ( isset($adherent) && $postadh->id == $adherent->typeid ) ) {
+} elseif ( $postadh->automatic != '1'  && isset($adherent) && $postadh->id == $adherent->typeid ) {
 
 if ( isset($adherent) && $adherent->statut == '1' ) {
 
@@ -186,7 +186,7 @@ print "<form id='subscription-form' action='".esc_url( add_query_arg( 'module', 
 } else {print "<form id='subscription-form' action='".esc_url( add_query_arg( 'module', 'members', doliconnecturl('doliaccount')) )."' method='post'><input type='hidden' name='cotisation' value='$postadh->price_prorata'><input type='hidden' name='timestamp_start' value='".$postadh->date_begin."'><input type='hidden' name='timestamp_end' value='".$postadh->date_end."'><input type='hidden' name='update_membership' value='5'><input type='hidden' name='typeadherent' value='$postadh->id'><div class='d-grid gap-2'><button class='btn btn-danger' type='submit'>".__( 'Ask us', 'doliconnect')."</button></div></form>";
 }
 }
-elseif ( ($postadh->automatic != '1' ) && ( (isset($adherent) && $postadh->id != $adherent->typeid) || !isset($adherent)) ) {
+elseif ( $postadh->automatic != '1' && ( (isset($adherent) && $postadh->id != $adherent->typeid) || !isset($adherent)) ) {
 if (isset($adherent) && $adherent->statut == '1') {
 if ($adherent->datefin == null ){print "<form id='subscription-form' action='".esc_url( add_query_arg( 'module', 'members', doliconnecturl('doliaccount')) )."' method='post'><input type='hidden' name='cotisation' value='$postadh->price_prorata'><input type='hidden' name='timestamp_start' value='".$postadh->date_begin."'><input type='hidden' name='timestamp_end' value='".$postadh->date_end."'><input type='hidden' name='update_membership' value='3'><input type='hidden' name='typeadherent' value='$postadh->id'><div class='d-grid gap-2'><button class='btn btn-danger' type='submit'>".__( 'Ask us', 'doliconnect')."</button></div></form>";}
 
