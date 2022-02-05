@@ -270,33 +270,6 @@ if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['
 
 $requestlist = "/contacts?sortfield=t.rowid&sortorder=DESC&limit=".$limit."&page=".$page."&thirdparty_ids=".doliconnector($current_user, 'fk_soc');    
 
-if ( isset($_POST["case"]) && $_POST["case"] == 'updatecontact' && isset($_POST["contactid"]) && !empty($_POST["contactid"])) {
- 
-$contact = $_POST['contact'][''.$_POST['contactid'].''];
-$contactfo = callDoliApi("PUT", "/contacts/".$_POST["contactid"]."?includecount=1&includeroles=1", $contact, 0);
-
-if ( isset($_GET['return']) ) {
-wp_redirect(doliconnecturl('doliaccount').'?module='.$_GET['return']);
-exit;
-} else {
-$listcontact = callDoliApi("GET", $requestlist, null, dolidelay('contact', true));
-print dolialert ('success', __( 'Your informations have been updated.', 'doliconnect'));
-}
-} elseif ( isset($_POST["case"]) && $_POST["case"] == 'addcontact' && isset($_POST["contactid"]) && empty($_POST["contactid"])) {
- 
-$contact = $_POST['contact'][''.doliconnector($current_user, 'fk_soc').''];
-$contact['socid'] = doliconnector($current_user, 'fk_soc');
-$contactfo = callDoliApi("POST", "/contacts", $contact, 0);
-
-if ( isset($_GET['return']) ) {
-wp_redirect(doliconnecturl('doliaccount').'?module='.$_GET['return']);
-exit;
-} else {
-$listcontact = callDoliApi("GET", $requestlist, null, dolidelay('contact', true));
-print dolialert ('success', __( 'Your informations have been updated.', 'doliconnect'));
-}
-}
-
 if ( isset($_GET['id']) && $_GET['id'] > 0 ) {  
 $request = "/contacts/".esc_attr($_GET['id'])."?includecount=1&includeroles=1";
 $contactfo = callDoliApi("GET", $request, null, dolidelay('contact', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
@@ -332,9 +305,11 @@ print '</div></div></form>';
 
 } elseif ( isset($_GET['action']) && $_GET['action'] == 'create' ) {
 
-print "<form action='".$url."' id='doliconnect-infosform' method='post' class='was-validated' enctype='multipart/form-data'><input type='hidden' name='case' value='addcontact'><input type='hidden' name='contactid' value='0'>";
+print "<form action='".admin_url('admin-ajax.php')."' id='dolicontactinfos-form' method='post' class='was-validated' enctype='multipart/form-data'>";
 
-print doliloaderscript('doliconnect-infosform');
+print doliajax('dolicontactinfos', $url, 'create');
+    
+print "<input type='hidden' name='contactid' value='0'>";
 
 print '<div class="card shadow-sm"><div class="card-header">'.__( 'Create contact', 'doliconnect').'<a class="float-end text-decoration-none" href="'.esc_url( add_query_arg( 'module', 'contacts', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div>';
 

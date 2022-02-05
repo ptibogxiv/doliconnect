@@ -257,7 +257,16 @@ function dolicontactinfos_request(){
 
 	} elseif ( isset($_POST['dolicontactinfos-nonce']) && wp_verify_nonce( trim($_POST['dolicontactinfos-nonce']), 'dolicontactinfos-nonce') && isset($_POST['case']) && $_POST['case'] == "create" ) {
 
-
+		$contact = $_POST['contact'][''.doliconnector($current_user, 'fk_soc').''];
+		$contact['socid'] = doliconnector($current_user, 'fk_soc');
+		$object = callDoliApi("POST", "/contacts", $contact, 0);
+		
+		if (!isset($object->error)) { 
+		$listcontact = callDoliApi("GET", $requestlist, null, dolidelay('contact', true));
+		wp_send_json_success( dolialert('success', __( 'Your informations have been added.', 'doliconnect')));
+		} else {
+		wp_send_json_error( __( 'An error occured:', 'doliconnect').' '.$object->error->message); 
+		}
 	
 	} else {
 	wp_send_json_error( dolialert('danger', __( 'A security error occured', 'doliconnect'))); 
