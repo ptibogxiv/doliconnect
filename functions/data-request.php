@@ -237,8 +237,8 @@ function doliuserinfos_request(){
 	}
 }
 
-add_action('wp_ajax_dolicontactinfos_request', 'dolicontactinfos//_request');
-add_action('wp_ajax_nopriv_dolicontactinfos_request', 'dolicontactinfos_request');
+add_action('wp_ajax_dolicontactinfos_request', 'dolicontactinfos_request');
+//add_action('wp_ajax_nopriv_dolicontactinfos_request', 'dolicontactinfos_request');
 
 function dolicontactinfos_request(){
 	global $current_user;
