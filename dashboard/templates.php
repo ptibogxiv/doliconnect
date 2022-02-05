@@ -1651,7 +1651,7 @@ if ( doliversion('10.0.0') ) {
 print "<li class='list-group-item list-group-item-action'><div class='row'><div class='col-12 col-md-6'><h6>".__( 'Billing address', 'doliconnect')."</h6><small class='text-muted'>";
 
 print '<div class="form-check">
-<input type="radio" id="billing-0" name="contact_billing" class="form-check-input" value="0" checked disabled>
+<input type="checkbox" id="billing-0" name="contact_billing" class="form-check-input" value="0" checked disabled>
 <label class="form-check-label" for="billing-0">'.doliaddress($thirdparty).'</label>
 </div>';
 
@@ -1668,7 +1668,7 @@ $contactbilling = $contact->id;
 
 if ( !isset($listcontact->error) && $listcontact != null ) {
 foreach ( $listcontact as $contact ) {
-print '<div class="form-check"><input type="radio" id="billing-'.$contact->id.'" name="contact_billing" class="form-check-input" value="'.$contact->id.'" ';
+print '<div class="form-check"><input type="checkbox" id="billing-'.$contact->id.'" name="contact_billing" class="form-check-input" value="'.$contact->id.'" ';
 if ( (isset($contact->default) && !empty($contact->default)) || $contactbilling == $contact->id ) { print "checked"; }
 print ' disabled><label class="form-check-label" for="billing-'.$contact->id.'">';
 print dolicontact($contact->id, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
@@ -1680,7 +1680,7 @@ print "</small></div>";
 print "<div class='col-12 col-md-6'><h6>".__( 'Shipping address', 'doliconnect')."</h6><small class='text-muted'>";
 
 print '<div class="form-check">
-<input type="radio" id="shipping-0" name="contact_shipping" class="form-check-input" value="0" checked disabled>
+<input type="checkbox" id="shipping-0" name="contact_shipping" class="form-check-input" value="0" checked disabled>
 <label class="form-check-label" for="shipping-0">'.doliaddress($thirdparty).'</label>
 </div>';
 
@@ -1697,7 +1697,7 @@ $contactshipping = $contact->id;
 
 if ( !isset($listcontact->error) && $listcontact != null ) {
 foreach ( $listcontact as $contact ) {
-print '<div class="form-check"><input type="radio" id="shipping-'.$contact->id.'" name="contact_shipping" class="form-check-input" value="'.$contact->id.'" ';
+print '<div class="form-check"><input type="checkbox" id="shipping-'.$contact->id.'" name="contact_shipping" class="form-check-input" value="'.$contact->id.'" ';
 if ( (isset($contact->default) && !empty($contact->default)) || $contactshipping == $contact->id ) { print "checked"; }
 print ' disabled><label class="form-check-label" for="shipping-'.$contact->id.'">';
 print dolicontact($contact->id, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
