@@ -241,7 +241,7 @@ if ( is_multisite() && !get_option( 'users_can_register' ) && (get_site_option( 
 //exit;
 }
 
-if (isset($_GET["morphy"]) && ($_GET["morphy"] == 'mor' || $_GET["morphy"] == 'phy')) {
+if (isset($_GET["morphy"]) && (($_GET["morphy"] == 'mor' && (empty(get_option('doliconnect_disablepro')) || get_option('doliconnect_disablepro') == 'mor')) || ($_GET["morphy"] == 'phy' && (empty(get_option('doliconnect_disablepro')) || get_option('doliconnect_disablepro') == 'phy')))) {
 print "<div id='doliuserinfos-alert'></div><form action='".admin_url('admin-ajax.php')."' id='doliuserinfos-form' method='post' class='was-validated' enctype='multipart/form-data'>";
 
 print doliajax('doliuserinfos', null, 'create');
@@ -249,7 +249,7 @@ print doliajax('doliuserinfos', null, 'create');
 print '<div class="card shadow-sm"><div class="card-header">';
 if ($_GET["morphy"] == 'phy') {
 print __( 'Create a personnal account', 'doliconnect');   
-} else {
+} elseif ($_GET["morphy"] == 'mor') {
 print __( 'Create an enterprise account', 'doliconnect');    
 }
 print '<a class="float-end text-decoration-none" href="'.wp_registration_url(get_permalink()).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a>';  
@@ -279,7 +279,13 @@ print '<div class="card-body"><div class="card-group">
     <div class="card-body">
       <h5 class="card-title">'.__( 'Create a personnal account', 'doliconnect').'</h5>
       <p class="card-text"><small class="text-muted">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</small></p>
-      <div class="d-grid gap-2"><a class="btn btn-primary" href="'.wp_registration_url(get_permalink()).'&morphy=phy" role="button" title="'.__( 'Create a personnal account', 'doliconnect').'">'.__( 'Create a personnal account', 'doliconnect').'</a></div>
+      <div class="d-grid gap-2">';
+  if (empty(get_option('doliconnect_disablepro')) || get_option('doliconnect_disablepro') == 'mor') {
+    print '<a class="btn btn-primary disabled" href="'.wp_registration_url(get_permalink()).'&morphy=phy" role="button" title="'.__( 'Create a personnal account', 'doliconnect').'" aria-disabled="true">'.__( 'Create a personnal account', 'doliconnect').'</a>';
+  } else {
+    print '<a class="btn btn-primary" href="'.wp_registration_url(get_permalink()).'&morphy=phy" role="button" title="'.__( 'Create a personnal account', 'doliconnect').'">'.__( 'Create a personnal account', 'doliconnect').'</a>';    
+  }
+      print '</div>
     </div>
   </div>
   <div class="card">
@@ -287,8 +293,13 @@ print '<div class="card-body"><div class="card-group">
     <div class="card-body">
       <h5 class="card-title">'.__( 'Create an enterprise account', 'doliconnect').'</h5>
       <p class="card-text"><small class="text-muted">his is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</small></p>
-      <div class="d-grid gap-2"><a class="btn btn-primary" href="'.wp_registration_url(get_permalink()).'&morphy=mor" role="button" title="'.__( 'Create an enterprise account', 'doliconnect').'">'.__( 'Create an enterprise account', 'doliconnect').'</a></div>
-    </div>
+      <div class="d-grid gap-2">';
+  if (empty(get_option('doliconnect_disablepro')) || get_option('doliconnect_disablepro') == 'phy') {
+    print '<a class="btn btn-primary disabled" href="'.wp_registration_url(get_permalink()).'&morphy=mor" role="button" title="'.__( 'Create an enterprise account', 'doliconnect').'" aria-disabled="true">'.__( 'Create a personnal account', 'doliconnect').'</a>';
+  } else {
+    print '<a class="btn btn-primary" href="'.wp_registration_url(get_permalink()).'&morphy=mor" role="button" title="'.__( 'Create an enterprise account', 'doliconnect').'">'.__( 'Create an enterprise account', 'doliconnect').'</a>';    
+  }
+      print '</div>
   </div>
 </div>';
 print '</div></div>';
