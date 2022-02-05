@@ -1585,8 +1585,10 @@ if ( !empty(doliconst('MAIN_MODULE_RECRUITMENT')) && doliversion('15.0.0') ) {
     
     print "</div></div>";
     print '<div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: '.$orderavancement.'%" aria-valuenow="'.$orderavancement.'" aria-valuemin="0" aria-valuemax="100"></div></div>';
-    print "<div class='w-auto text-muted d-none d-sm-block' ><div style='display:inline-block;width:20%'>".__( 'Order', 'doliconnect')."</div><div style='display:inline-block;width:15%'>".__( 'Payment', 'doliconnect')."</div><div style='display:inline-block;width:25%'>".__( 'Processing', 'doliconnect')."</div><div style='display:inline-block;width:20%'>".__( 'Shipping', 'doliconnect')."</div><div class='text-end' style='display:inline-block;width:20%'>".__( 'Delivery', 'doliconnect')."</div></div>";
+    print "<div class='w-auto text-muted d-none d-sm-block' ><div style='display:inline-block;width:20%'>".__( 'Order', 'doliconnect')."</div><div style='display:inline-block;width:15%'>".__( 'Payment', 'doliconnect')."</div><div style='display:inline-block;width:25%'>".__( 'Processing', 'doliconnect')."</div><div style='display:inline-block;width:20%'>".__( 'Shipping', 'doliconnect')."</div><div class='text-end' style='display:inline-block;width:20%'>".__( 'Recruited', 'doliconnect')."</div></div>";
     
+    print $donationfo->description;
+
     print "</div><div class='card-footer text-muted'>";
     print "<small><div class='float-start'>";
     if ( isset($request) ) print dolirefresh($request, $url, dolidelay('donation'), $donationfo);
