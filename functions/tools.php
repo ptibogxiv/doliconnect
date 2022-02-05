@@ -326,7 +326,7 @@ function doliajax($id, $url = null, $case = null){
           if (document.getElementById("'.$id.'-alert")) {
           document.getElementById("'.$id.'-alert").innerHTML = response.data;      
           }
-          //document.location = url;
+          if (!!url) document.location = url;
         } else {
           if (document.getElementById("'.$id.'-alert")) {
           document.getElementById("'.$id.'-alert").innerHTML = response.data;      
@@ -341,7 +341,7 @@ function doliajax($id, $url = null, $case = null){
 return $ajax;
 }
 
-function dolipasswordform($user, $url){
+function dolipasswordform($user, $url, $return = null){
 if (doliconnector($user, 'fk_user') > 0){  
 $request = "/users/".doliconnector($user, 'fk_user');
 $doliuser = callDoliApi("GET", $request, null, dolidelay('thirdparty'));
@@ -351,7 +351,7 @@ $password = "<div id='dolirpw-alert'></div><form id='dolirpw-form' method='post'
 if (isset($_GET["key"]) && isset($_GET["login"])) {
 $password .= "<input type='hidden' name='key' value='".esc_attr($_GET["key"])."'><input type='hidden' name='login' value='".esc_attr($_GET["login"])."'>";
 }
-$password .= doliajax('dolirpw', $url);
+$password .= doliajax('dolirpw', $return);
 
 $password .= '<div class="card shadow-sm"><div class="card-header">'.__( 'Edit my password', 'doliconnect').'</div><ul class="list-group list-group-flush">';
 if ( doliconnector($user, 'fk_user') > '0' ) {

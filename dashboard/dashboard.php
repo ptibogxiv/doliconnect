@@ -14,8 +14,10 @@ $ID = $current_user->ID;
 
 $request = "/thirdparties/".doliconnector($current_user, 'fk_soc');
 
+$return = null;
 if ( isset($_GET['return']) ) {
 $url = esc_url( add_query_arg( 'return', $_GET['return'], $url) );
+$return = esc_url_raw( $_GET['return']);
 }
 
 if ( doliconnector($current_user, 'fk_soc') > '0' ) {
@@ -24,7 +26,7 @@ $thirdparty = callDoliApi("GET", $request, null, dolidelay('thirdparty', esc_att
 
 print "<div id='doliuserinfos-alert'></div><form action='".admin_url('admin-ajax.php')."' id='doliuserinfos-form' method='post' class='was-validated' enctype='multipart/form-data'>";
 
-print doliajax('doliuserinfos', $url, 'update');
+print doliajax('doliuserinfos', $return, 'update');
 
 print '<div class="card shadow-sm"><div class="card-header">'.__( 'Edit my informations', 'doliconnect').'</div>';
 
@@ -245,8 +247,14 @@ add_action( 'user_doliconnect_menu', 'password_menu', 2, 1);
 
 function password_module( $url ){
 global $current_user;
+
+$return = null;
+if ( isset($_GET['return']) ) {
+$url = esc_url( add_query_arg( 'return', $_GET['return'], $url) );
+$return = esc_url_raw( $_GET['return']);
+}
  
-print dolipasswordform($current_user, $url);
+print dolipasswordform($current_user, $url, $return);
 
 }
 add_action( 'user_doliconnect_password', 'password_module');
