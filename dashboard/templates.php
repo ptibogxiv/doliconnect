@@ -1657,11 +1657,11 @@ print '<div class="form-check">
 
 $listcontact = callDoliApi("GET", "/contacts?sortfield=t.rowid&sortorder=ASC&limit=100&thirdparty_ids=".doliconnector($current_user, 'fk_soc')."&includecount=1&sqlfilters=t.statut=1", null, dolidelay('contact', true));
 
-$contactbilling = null;
-if (!empty($object->contacts_ids) && is_array($object->contacts_ids)) {
+$contactbilling = array(); 
+if (!empty($object->contacts_ids) && is_array($object->contacts_ids)) { 
 foreach ($object->contacts_ids as $contact) {
 if ('BILLING' == $contact->code) {
-$contactbilling = $contact->id;
+$contactbilling[] = $contact->id;
 }
 }
 }
@@ -1669,7 +1669,7 @@ $contactbilling = $contact->id;
 if ( !isset($listcontact->error) && $listcontact != null ) {
 foreach ( $listcontact as $contact ) {
 print '<div class="form-check"><input type="checkbox" id="billing-'.$contact->id.'" name="contact_billing" class="form-check-input" value="'.$contact->id.'" ';
-if ( (isset($contact->default) && !empty($contact->default)) || $contactbilling == $contact->id ) { print "checked"; }
+if ( (isset($contact->default) && !empty($contact->default)) || in_array($contact->id, $contactbilling) ) { print "checked"; }
 print ' disabled><label class="form-check-label" for="billing-'.$contact->id.'">';
 print dolicontact($contact->id, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 print '</label></div>';
@@ -1686,11 +1686,11 @@ print '<div class="form-check">
 
 $listcontact = callDoliApi("GET", "/contacts?sortfield=t.rowid&sortorder=ASC&limit=100&thirdparty_ids=".doliconnector($current_user, 'fk_soc')."&includecount=1&sqlfilters=t.statut=1", null, dolidelay('contact', true));
 
-$contactshipping = null;
+$contactshipping = array(); 
 if (!empty($object->contacts_ids) && is_array($object->contacts_ids)) {
 foreach ($object->contacts_ids as $contact) {
 if ('SHIPPING' == $contact->code) {
-$contactshipping = $contact->id;
+$contactshipping[] = $contact->id;
 }
 }
 }
@@ -1698,7 +1698,7 @@ $contactshipping = $contact->id;
 if ( !isset($listcontact->error) && $listcontact != null ) {
 foreach ( $listcontact as $contact ) {
 print '<div class="form-check"><input type="checkbox" id="shipping-'.$contact->id.'" name="contact_shipping" class="form-check-input" value="'.$contact->id.'" ';
-if ( (isset($contact->default) && !empty($contact->default)) || $contactshipping == $contact->id ) { print "checked"; }
+if ( (isset($contact->default) && !empty($contact->default)) || in_array($contact->id, $contactshipping) ) { print "checked"; }
 print ' disabled><label class="form-check-label" for="shipping-'.$contact->id.'">';
 print dolicontact($contact->id, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 print '</label></div>';
