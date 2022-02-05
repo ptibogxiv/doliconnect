@@ -784,7 +784,7 @@ print 'disabled';
 }
 print '>';
 print "<option value='' disabled ";
-if ( !isset($object->country_id) && ! $object->country_id > 0 || $pays == 0) {
+if ( !isset($object->country_id) && empty($object->country_id) || $pays == 0) {
 print "selected ";}
 print ">".__( '- Select your country -', 'doliconnect')."</option>";
 foreach ( $pays as $postv ) { 
