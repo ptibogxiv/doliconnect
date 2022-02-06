@@ -217,8 +217,6 @@ print '<div class="modal-body">';
 
 print dolimembertypelist($typeadhesion, $adherent);
 
-print doliloading('subscription'); 
-
 print "</div><div id='subscription-footer' class='modal-footer'><small class='text-justify'>".__( 'Note: the admins reserve the right to change your membership in relation to your personal situation. A validation of the membership may be necessary depending on the cases.', 'doliconnect')."</small></div></div></div></div>";
 
 if (isset($adherent) && !empty($adherent->typeid)) {
