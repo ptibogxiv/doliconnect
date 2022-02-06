@@ -51,72 +51,10 @@ $request = "/adherentsplus/type?sortfield=t.libelle&sortorder=ASC"; //&sqlfilter
 $typeadhesion = callDoliApi("GET", $request, null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true));
 
 if ( !isset($typeadhesion->error) ) {
-if ( count($typeadhesion) == 5644554644344 ) {  //desactivate function
-$html .= '<div class="card-deck mb-3 text-center">';
-} else {
-$html .= '<div class="card"><div class="card-header">'.__( 'Prices', 'doliconnect').' '.$typeadhesion[0]->season.'</div><table class="table table-striped"><tbody>';
-}
-foreach ( $typeadhesion as $postadh ) {
-if ( !doliversion('14.0.0') || (!isset($postadh->amount)) ) {
-$postadh->amount = $postadh->price;
-} 
-if ($postadh->subscription == '1'){
 
-if ( (! is_user_logged_in() && $postadh->automatic == '1') || ($postadh->automatic == '1' && isset($adherent) && $postadh->id == $adherent->typeid or $postadh->id == $adherent->typeid )) {
-$color="-success";
-} elseif ($postadh->automatic != '1') {
-$color="-danger";
-} else { $color="-warning"; }
+$html .= '<div class="card"><div class="card-header">'.__( 'Prices', 'doliconnect').' '.$typeadhesion[0]->season.'</div>';
 
-if ( count($typeadhesion) == 5644554644344 ) {  //desactivate function
-
-$html .= '<div class="card border'.$color.' mb-4 box-shadow"><div class="card-header"><h4 class="my-0 font-weight-normal">'.doliproduct($postadh, 'label').'</h4></div><div class="card-body">'; 
-$html .= '<h1 class="card-title pricing-card-title">'.doliprice($postadh->price_prorata).'<small class="text-muted">/';
-$html .= doliduration($postadh);
-$html .= '</small></h1>';
-
-if ( !isset($adherent) or (($postadh->welcome > '0') && isset($adherent->datefin) && ($adherent->datefin == null )) or (($postadh->welcome > '0') && (current_time( 'timestamp',1) > $adherent->next_subscription_renew) && isset($adherent) && (current_time( 'timestamp',1) > $adherent->datefin)) ) {          
-$html .= "<small>".__( 'First subscription at', 'doliconnect' )." ".doliprice($postadh->price_prorata)."</small>"; 
-}   
-$html .= doliproduct($postadh, 'note').'</div>';
-
-if ( function_exists('doliconnect_membership_modal') ) {
-$html .= '<div class="card-footer"><a href="'.doliconnecturl('doliaccount').'?module=members" role="button" class="btn btn-block btn'.$color.'">'.__( 'Subscribe', 'doliconnect' ).'</a></div>';
-}
-
-$html .= '</div>';
-
-} else {
- 
-$html .= "<tr><td><div class='row'><div class='col-md-8'><b>";
-if ( $postadh->family == '1' ) {
-$html .= "<i class='fas fa-users fa-fw'></i> ";
-}else{$html .= "<i class='fas fa-user fa-fw'></i> ";}
-$html .= doliproduct($postadh, 'label');
-if (! empty ($postadh->duration_value)) $html .= " - ".doliduration($postadh);
-$html .= " <small>";
-if ($postadh->price_prorata != $postadh->amount) { 
-$html .= "(";
-$html .= doliprice($postadh->price_prorata)." ";
-$html .=  __( 'then', 'doliconnect' )." ".doliprice($postadh->amount);
-} else {
-$html .= "(".doliprice($postadh->price_prorata);
-} 
-$html .= ")</small>";
-if (isset($postadh->note) && !empty($postadh->note)) $html .= "<br><small class='text-justify text-muted '>".doliproduct($postadh, 'note')."</small>";
-if (isset($postadh->description) && !empty($postadh->description)) $html .= "<br><small class='text-justify text-muted '>".doliproduct($postadh, 'description')."</small>";
-if (!empty(number_format($postadh->federal))) $html .= "<br><small class='text-justify text-muted '>".__( 'Including a federal part of', 'doliconnect-pro')." ".doliprice($postadh->federal)."</small>";
-$html .= "</div>";
-if ( function_exists('doliconnect_membership_modal') ) {
-$html .= '<div class="col-md-4"><a href="'.doliconnecturl('doliaccount').'?module=members" role="button" class="btn btn-block btn'.$color.'">'.__( 'Subscribe', 'doliconnect' ).'</a></div>';
-}
-
-$html .= "</div></td></tr>"; 
-}
-
-}}
-
-$html .= '</tbody></table>';
+$html .= dolimembertypelist($typeadhesion, $adherent);
 
 }
 $html .= "<div class='card-footer text-muted'>";
