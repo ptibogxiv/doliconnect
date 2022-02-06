@@ -47,7 +47,11 @@ $adherent = (object) 0;
 $adherent->typeid = 0;
 }
 
-$request = "/adherentsplus/type?sortfield=t.libelle&sortorder=ASC"; //&sqlfilters=(t.morphy%3A=%3A'')%20or%20(t.morphy%3Ais%3Anull)%20or%20(t.morphy%3A%3D%3A'phy')
+$member_id = '';
+if (isset($adherent) && $adherent->id > 0) $member_id = "member_id=".$adherent->id;
+$morphy = '';
+
+$request = "/adherentsplus/type?sortfield=t.libelle&sortorder=ASC&nature=all&".$member_id.$morphy;
 $typeadhesion = callDoliApi("GET", $request, null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true));
 
 if ( !isset($typeadhesion->error) ) {
