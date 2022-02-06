@@ -48,7 +48,7 @@ $adherent->typeid = 0;
 }
 
 $member_id = '';
-if (isset($adherent) && $adherent->id > 0) $member_id = "member_id=".$adherent->id;
+if (isset($adherent->id) && $adherent->id > 0) $member_id = "member_id=".$adherent->id;
 $morphy = '';
 
 $request = "/adherentsplus/type?sortfield=t.libelle&sortorder=ASC&nature=all&".$member_id.$morphy;
