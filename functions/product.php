@@ -772,6 +772,14 @@ $i++;
 }
 }}
 
+if (!empty($product->sousprods)) {
+$card .= '</div><div class="col-12"><h6>'.__( 'This item contains:', 'doliconnect' ).'</h6>';
+foreach ($product->sousprods as $subprod) {
+  $card .= '<li>'.$subprod->qty.'x '.$subprod->label.'</li>';
+}
+
+}
+
 $card .= '</div>';
 } else {
 $card .= '<div class="col-12"><p><center>'.__( 'Item not in sale', 'doliconnect' ).'</center></p></div>';
