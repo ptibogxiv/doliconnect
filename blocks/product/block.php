@@ -7,7 +7,7 @@ doliconnect_enqueues();
 $content = '<div class="card shadow-sm"><div class="card-header">'.__( 'Item', 'doliconnect').'</div><div class="card-body">';
 
 if (isset($attributes['productID']) && $attributes['productID'] > 0) {
-$request = "/products/".$attributes['productID']."?includestockdata=1";
+$request = "/products/".$attributes['productID']."?includestockdata=1&includesubproducts=true&includetrans=true";
 $product = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 $content .= doliproductcard($product, $attributes);

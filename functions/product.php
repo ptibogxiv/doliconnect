@@ -167,7 +167,7 @@ $line=$ln->id;
 if (isset($line) && !$line > 0) { $line = null; }
 if (! isset($line)) { $line = null; }
 
-$prdt = callDoliApi("GET", "/products/".$productid."?includestockdata=1&includesubproducts=true", null, dolidelay('product', true));
+$prdt = callDoliApi("GET", "/products/".$productid."?includestockdata=1&includesubproducts=true&includetrans=true", null, dolidelay('product', true));
 
 $warehouse = doliconst('DOLICONNECT_ID_WAREHOUSE');
 if (isset($prdt->stock_warehouse) && !empty($prdt->stock_warehouse) && is_numeric($warehouse)) {
@@ -650,9 +650,9 @@ global $current_user;
 $wish = 0;
 if (!empty($product->qty)) {
 $wish = $product->qty;
-$product = callDoliApi("GET", "/products/".$product->fk_product."?includestockdata=1&includesubproducts=true", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$product = callDoliApi("GET", "/products/".$product->fk_product."?includestockdata=1&includesubproducts=true&includetrans=true", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 } else {
-$product = callDoliApi("GET", "/products/".$product->id."?includestockdata=1&includesubproducts=true", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$product = callDoliApi("GET", "/products/".$product->id."?includestockdata=1&includesubproducts=true&includetrans=true", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 }
 
 $arr_params = array( 'search' => isset($_GET['search'])?$_GET['search']:null, 'category' => isset($_GET['category'])?$_GET['category']:null, 'subcategory' => isset($_GET['subcategory'])?$_GET['subcategory']:null, 'product' => $product->id);  
