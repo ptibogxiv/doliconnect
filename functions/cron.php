@@ -79,7 +79,7 @@ $products[$product->id]['entity'] = $product->entity;
 }
  
 foreach ($products as $id => $product) {
-$product1 = callDoliApi("GET", "/products/".$product['id']."?includestockdata=1&includesubproducts=true", null, dolidelay('product', $refresh));
+$product1 = callDoliApi("GET", "/products/".$product['id']."?includestockdata=1&includesubproducts=true&includetrans=true", null, dolidelay('product', $refresh));
 doliconnect_image('product', $product['id'], array('limit'=>1, 'entity'=>$product['entity'], 'size'=>'200x200'), $refresh);
 if ( ! empty(doliconnectid('dolicart')) ) {
 if ( is_numeric(doliconst('MAIN_MODULE_DISCOUNTPRICE')) ) {
