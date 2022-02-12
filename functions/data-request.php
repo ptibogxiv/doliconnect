@@ -90,6 +90,13 @@ wp_send_json_error( $response );
 }
 }
 
+add_action('wp_ajax_dolistatetowndata_request', 'dolistatetowndata_request');
+add_action('wp_ajax_nopriv_dolistatetowndata_request', 'dolistatetowndata_request');
+
+function dolistatetowndata_request(){
+
+}
+
 add_action('wp_ajax_doliuserinfos_request', 'doliuserinfos_request');
 add_action('wp_ajax_nopriv_doliuserinfos_request', 'doliuserinfos_request');
 
