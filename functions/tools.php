@@ -840,7 +840,7 @@ print '</div></div>';
 
 print '</div><div class="row g-2">';
   
-if (!empty(get_option('doliconnectbeta')) && doliconst("MAIN_USE_ZIPTOWN_DICTIONNARY")) {
+if (current_user_can('administrator') && !empty(get_option('doliconnectbeta')) && doliconst("MAIN_USE_ZIPTOWN_DICTIONNARY")) {
   print '<div class="col-12 col-md"><div class="form-floating" id="ziptown">';
   print doliSelectForm("ziptown", "/setup/dictionary/towns?sortfield=zip%2Ctown&sortorder=ASC&active=1&sqlfilters=(t.fk_pays%3A%3D%3A'".$object->country_id."')%20AND%20(t.fk_county%3A%3D%3A'".$object->state_id."')", __( '- Select your town -', 'doliconnect'), __( 'Town', 'doliconnect'), $object->state_id, $idobject, $rights);
   print '</div></div>';
