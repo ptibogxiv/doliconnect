@@ -617,7 +617,7 @@ print ' autocomplete="off">
 
 if ( doliversion('15.0.0') ) {
 print '<div class="col-md-6 col-lg-4"><div class="form-floating" id="legal_form">';
-print doliSelectForm("forme_juridique_code", "/setup/dictionary/legal_form?sortfield=rowid&sortorder=ASC&limit=100&active=1&country=".(isset($object->country_id) ? $object->country_id : null), __( '- Select your legal form -', 'doliconnect'), __( 'Legal form', 'doliconnect'), $object->forme_juridique_code, $idobject, $rights, $delay, 'code');
+print doliSelectForm("forme_juridique_code", "/setup/dictionary/legal_form?sortfield=rowid&sortorder=ASC&active=1&country=".(isset($object->country_id) ? $object->country_id : null), __( '- Select your legal form -', 'doliconnect'), __( 'Legal form', 'doliconnect'), $object->forme_juridique_code, $idobject, $rights, $delay, 'code');
 //print '<label for="yyyy"><i class="fas fa-building fa-fw"></i> '.__( 'Legal form', 'doliconnect').'</label>';
 print '</div></div>';
 }
