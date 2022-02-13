@@ -341,6 +341,43 @@ function doliajax($id, $url = null, $case = null){
 return $ajax;
 }
 
+function doliSelectForm($name, $request, $selectlang = '- Select -', $valuelang = 'Value', $value = null, $idobject = 0, $rights = 1, $delay = null) {
+  
+  $object = callDoliApi("GET", $request, null, $delay);
+  if ( isset($object) ) {
+    $doliSelect = '<select class="form-select" id="'.$name.'" name="'.$idobject.'['.$name.']" aria-label="'.$valuelang.'" ';
+  if ($rights) {
+    $doliSelect .= 'required';
+  } else {
+    $doliSelect .= 'disabled';
+  }
+    $doliSelect .= '>';
+    $doliSelect .= "<option value='' disabled ";
+  if ( !isset($value) && empty($value) || empty(array_search($value, array_column($object, 'id')))) {
+    $doliSelect .= "selected ";}
+    $doliSelect .= ">".$selectlang."</option>";
+  foreach ( $object as $postv ) { 
+    if (isset($postv->rowid)) $postv->id = $postv->rowid;
+    $doliSelect .= "<option value='".$postv->id."' ";
+  if ( isset($value) && !empty($value) && $value == $postv->id && $postv->id != '0' ) {
+    $doliSelect .= "selected ";
+  } elseif ( $postv->id == '0' ) { $doliSelect .= "disabled "; }
+   if (isset($postv->libelle)) $postv->label = $postv->libelle;
+    $doliSelect .= ">".(isset($postv->label)?$postv->label:$postv->name)."</option>";
+  }
+    $doliSelect .= '</select><label for="'.$name.'"><i class="fas fa-map-marked fa-fw"></i> '.$valuelang.'</label>';
+  } else {
+    $doliSelect = '<input type="text" class="form-control" id="'.$name.'" placeholder="'.$valuelang.'" name="'.$idobject.'['.$name.']" value="'.$object->$name.'" autocomplete="off" ';
+  if ($rights) {
+    $doliSelect .= 'required';
+  } else {
+    $doliSelect .= 'readonly';
+  }
+  $doliSelect .= '>';
+  }
+return $doliSelect;
+}
+
 function dolipasswordform($user, $url, $return = null){
 if (doliconnector($user, 'fk_user') > 0){  
 $request = "/users/".doliconnector($user, 'fk_user');
@@ -579,29 +616,10 @@ print ' autocomplete="off">
 <label for="'.$idobject.'[tva_intra]"><i class="fas fa-building fa-fw"></i> '.__( 'VAT number', 'doliconnect').'</label></div></div>';
 
 if ( doliversion('15.0.0') ) {
-//$country = $object->country_id ?$object->country_id?:null;
-$legalform = callDoliApi("GET", "/setup/dictionary/legal_form?sortfield=rowid&sortorder=ASC&limit=100&active=1&country=".(isset($object->country_id) ? $object->country_id : null), null, $delay);
-if ( isset($legalform) ) { 
-print '<div class="col-md-6 col-lg-4"><div class="form-floating"><select class="form-select" id="'.$idobject.'[forme_juridique_code]" name="'.$idobject.'[forme_juridique_code]" aria-label="'.__( 'Legal form', 'doliconnect').'" ';
-if ($rights) {
-print 'required';
-} else {
-print 'disabled';
-}
-print '>';
-print "<option value='' disabled ";
-if ( !isset($object->forme_juridique_code) && ! $object->forme_juridique_code > 0 || $legalform == 0) {
-print "selected ";}
-print ">".__( '- Select your legal form -', 'doliconnect')."</option>";
-foreach ( $legalform as $postv ) { 
-print "<option value='".$postv->code."' ";
-if ( isset($object->forme_juridique_code) && $object->forme_juridique_code == $postv->code && $object->forme_juridique_code != null && $postv->code != '0' ) {
-print "selected ";
-} elseif ( $postv->code == '0' ) { print "disabled "; }
-print ">".$postv->libelle."</option>";
-}
-print '</select><label for="'.$idobject.'[forme_juridique_code]"><i class="fas fa-building fa-fw"></i> '.__( 'Legal form', 'doliconnect').'</label></div></div>';
-}
+print '<div class="col-md-6 col-lg-4"><div class="form-floating" id="legal_form">';
+print doliSelectForm("forme_juridique_code", "/setup/dictionary/legal_form?sortfield=rowid&sortorder=ASC&limit=100&active=1&country=".(isset($object->country_id) ? $object->country_id : null), __( '- Select your legal form -', 'doliconnect'), __( 'Legal form', 'doliconnect'), $object->forme_juridique_code, $idobject, $rights);
+//print '<label for="yyyy"><i class="fas fa-building fa-fw"></i> '.__( 'Legal form', 'doliconnect').'</label>';
+print '</div></div>';
 }
 
 if ( doliversion('15.0.0') ) {
@@ -775,8 +793,34 @@ $lang = $current_user->locale;
 
 $pays = callDoliApi("GET", "/setup/dictionary/countries?sortfield=favorite%2Clabel&sortorder=DESC%2CASC&limit=400&lang=".$lang, null, $delay);
 
-if ( isset($pays) ) { 
-print '<div class="form-floating mb-2"><select class="form-select" id="'.$idobject.'[country_id]" name="'.$idobject.'[country_id]" aria-label="'.__( 'Country', 'doliconnect').'" ';
+if ( isset($pays) ) {
+print '<script type="text/javascript">';
+print 'jQuery(document).ready(function($) {
+  // State dependent ajax
+  jQuery("#country_id").on("change",function(){
+    //jQuery("#DoliconnectLoadingModal").modal("show");
+    var countryId = $(this).val();
+    $.ajax({
+      url :"'.admin_url('admin-ajax.php').'",
+      type:"POST",
+      cache:false,
+      data: {
+        "action": "doliselectform_request",
+        "countryId": countryId,
+        "objectId": "'.$idobject.'",
+        "valueId": '.$object->state_id.',
+        "rights": '.$rights.'
+      },
+    }).done(function(response) {
+      //jQuery("#DoliconnectLoadingModal").modal("show");
+      document.getElementById("state").innerHTML = response.data;
+    });
+  });
+
+});'; 
+print '</script>';
+print '<div class="row mb-2 g-2"><div class="col">';
+print '<div class="form-floating"><select class="form-select" id="country_id" name="'.$idobject.'[country_id]" aria-label="'.__( 'Country', 'doliconnect').'" ';
 if ($rights) {
 print 'required';
 } else {
@@ -794,7 +838,7 @@ print "selected ";
 } elseif ( $postv->id == '0' ) { print "disabled "; }
 print ">".$postv->label."</option>";
 }
-print '</select><label for="'.$idobject.'[country_id]"><i class="fas fa-map-marked fa-fw"></i> '.__( 'Country', 'doliconnect').'</label></div>';
+print '</select><label for="country_id"><i class="fas fa-map-marked fa-fw"></i> '.__( 'Country', 'doliconnect').'</label></div>';
 } else {
 print '<input type="text" class="form-control" id="inputcountry" placeholder="'.__( 'Country', 'doliconnect').'" name="'.$idobject.'[country_id]" value="'.$object->country_id.'" autocomplete="off" ';
 if ($rights) {
@@ -805,9 +849,15 @@ print 'readonly';
 print '>';
 }
 
-print '<div class="row g-2"><div class="col-lg-8">';
+print '</div>';
+
+print '<div class="col"><div class="form-floating" id="state">';
+print doliSelectForm("state_id", "/setup/dictionary/states?sortfield=code_departement&sortorder=ASC&country=".$object->country_id, __( '- Select your state -', 'doliconnect'), __( 'State', 'doliconnect'), $object->state_id, $idobject, $rights);
+print '</div></div>';
+
+print '</div><div class="row g-2"><div class="col-lg-8">';
     
-print '<div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[town]" name="'.$idobject.'[town]" placeholder="'.__( 'Town', 'doliconnect').'" value="'.(isset($object->town) ? $object->town : null).'" ';
+print '<div class="form-floating" id="town"><input type="text" class="form-control" id="'.$idobject.'[town]" name="'.$idobject.'[town]" placeholder="'.__( 'Town', 'doliconnect').'" value="'.(isset($object->town) ? $object->town : null).'" ';
 if ($rights) {
 print 'required';
 } else {
