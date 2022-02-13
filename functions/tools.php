@@ -363,7 +363,7 @@ function doliSelectForm($name, $request, $selectlang = '- Select -', $valuelang 
     $doliSelect .= "selected ";
   } elseif ( $postv->id == '0' ) { $doliSelect .= "disabled "; }
    if (isset($postv->libelle)) $postv->label = $postv->libelle;
-   if (isset($postv->zip)&&isset($postv->town)) $postv->label = $postv->zip.' '.$postv->town;  
+   if (isset($postv->zip)&&isset($postv->town)) $postv->label = $postv->zip.' - '.$postv->town;  
     $doliSelect .= ">".(isset($postv->label)?$postv->label:$postv->name)."</option>";
   }
     $doliSelect .= '</select><label for="'.$name.'"><i class="fas fa-map-marked fa-fw"></i> '.$valuelang.'</label>';
@@ -842,7 +842,7 @@ print '</div><div class="row g-2">';
   
 if (!empty(get_option('doliconnectbeta')) && doliconst("MAIN_USE_ZIPTOWN_DICTIONNARY")) {
   print '<div class="col-12 col-md"><div class="form-floating" id="ziptown">';
-  print doliSelectForm("ziptown", "/setup/dictionary/towns?sortfield=zip%2Ctown&sortorder=ASC&limit=100&active=1", __( '- Select your town -', 'doliconnect'), __( 'Town', 'doliconnect'), $object->state_id, $idobject, $rights);
+  print doliSelectForm("ziptown", "/setup/dictionary/towns?sortfield=zip%2Ctown&sortorder=ASC&active=1&sqlfilters=(t.fk_pays%3A%3D%3A'".$object->country_id."')%20AND%20(t.fk_county%3A%3D%3A'".$object->state_id."')", __( '- Select your town -', 'doliconnect'), __( 'Town', 'doliconnect'), $object->state_id, $idobject, $rights);
   print '</div></div>';
 } else {
 print '<div class="col-lg-8"><div class="form-floating" id="town"><input type="text" class="form-control" id="'.$idobject.'[town]" name="'.$idobject.'[town]" placeholder="'.__( 'Town', 'doliconnect').'" value="'.(isset($object->town) ? $object->town : null).'" ';
