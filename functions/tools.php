@@ -812,7 +812,7 @@ print '<script type="text/javascript">';
 print 'jQuery(document).ready(function() {
   // Country dependent ajax
   $("#country_id").on("change",function(){
-    jQuery("#DoliconnectLoadingModal").modal("show");
+    //jQuery("#DoliconnectLoadingModal").modal("show");
     var countryId = $(this).val();
     //console.log("country is changed to " + countryId );
     $.ajax({
@@ -840,13 +840,13 @@ print 'jQuery(document).ready(function() {
       if ( document.getElementById("ziptown") ) { 
         document.getElementById("ziptown").innerHTML = response.data.ziptown;
       }
-      jQuery("#DoliconnectLoadingModal").modal("hide");
+      //jQuery("#DoliconnectLoadingModal").modal("hide");
     });
   });
 
   // State dependent ajax
   $("#state_id").on("change",function(){
-    jQuery("#DoliconnectLoadingModal").modal("show");
+    //jQuery("#DoliconnectLoadingModal").modal("show");
     var stateId = $(this).val();
     //console.log("state is changed to " +  stateId );
     $.ajax({
@@ -867,7 +867,7 @@ print 'jQuery(document).ready(function() {
       if ( document.getElementById("ziptown") ) { 
         document.getElementById("ziptown").innerHTML = response.data.ziptown;
       }
-      jQuery("#DoliconnectLoadingModal").modal("hide");
+      //jQuery("#DoliconnectLoadingModal").modal("hide");
     });
   });
 });';
