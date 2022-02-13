@@ -794,31 +794,6 @@ $lang = $current_user->locale;
 $pays = callDoliApi("GET", "/setup/dictionary/countries?sortfield=favorite%2Clabel&sortorder=DESC%2CASC&limit=400&lang=".$lang, null, $delay);
 
 if ( isset($pays) ) {
-print '<script type="text/javascript">';
-print 'jQuery(document).ready(function($) {
-  // State dependent ajax
-  jQuery("#country_id").on("change",function(){
-    //jQuery("#DoliconnectLoadingModal").modal("show");
-    var countryId = $(this).val();
-    $.ajax({
-      url :"'.admin_url('admin-ajax.php').'",
-      type:"POST",
-      cache:false,
-      data: {
-        "action": "doliselectform_request",
-        "countryId": countryId,
-        "objectId": "'.$idobject.'",
-        "valueId": '.$object->state_id.',
-        "rights": '.$rights.'
-      },
-    }).done(function(response) {
-      //jQuery("#DoliconnectLoadingModal").modal("show");
-      document.getElementById("state").innerHTML = response.data;
-    });
-  });
-
-});'; 
-print '</script>';
 print '<div class="row mb-2 g-2"><div class="col">';
 print '<div class="form-floating"><select class="form-select" id="country_id" name="'.$idobject.'[country_id]" aria-label="'.__( 'Country', 'doliconnect').'" ';
 if ($rights) {
@@ -851,9 +826,37 @@ print '>';
 
 print '</div>';
 
-print '<div class="col"><div class="form-floating" id="state">';
+if ( doliversion('16.0.0') ) {
+print '<script type="text/javascript">';
+print 'jQuery(document).ready(function($) {
+  // State dependent ajax
+  jQuery("#country_id").on("change",function(){
+    //jQuery("#DoliconnectLoadingModal").modal("show");
+    var countryId = $(this).val();
+    $.ajax({
+      url :"'.admin_url('admin-ajax.php').'",
+      type:"POST",
+      cache:false,
+      data: {
+        "action": "doliselectform_request",
+        "case": "state_id",
+        "countryId": countryId,
+        "objectId": "'.$idobject.'",
+        "valueId": '.$object->state_id.',
+        "rights": '.$rights.'
+      },
+    }).done(function(response) {
+      //jQuery("#DoliconnectLoadingModal").modal("show");
+      document.getElementById("state_id").innerHTML = response.data;
+    });
+  });
+
+});'; 
+print '</script>';
+print '<div class="col"><div class="form-floating" id="state_id">';
 print doliSelectForm("state_id", "/setup/dictionary/states?sortfield=code_departement&sortorder=ASC&country=".$object->country_id, __( '- Select your state -', 'doliconnect'), __( 'State', 'doliconnect'), $object->state_id, $idobject, $rights);
 print '</div></div>';
+}
 
 print '</div><div class="row g-2"><div class="col-lg-8">';
     

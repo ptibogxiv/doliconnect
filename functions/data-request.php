@@ -94,11 +94,15 @@ add_action('wp_ajax_doliselectform_request', 'doliselectform_request');
 add_action('wp_ajax_nopriv_doliselectform_request', 'doliselectform_request');
 
 function doliselectform_request(){
-	
+
+if (isset($_POST['case']) && $_POST['case'] == "state_id" ) {	
 	wp_send_json_success( doliSelectForm("state_id", "/setup/dictionary/states?sortfield=code_departement&sortorder=ASC&country=".$_POST['countryId'], __( '- Select your state -', 'doliconnect'), __( 'State', 'doliconnect'), $_POST['valueId'], $_POST['objectId'], $_POST['rights']) );
-//} else {
-	//wp_send_json_error( dolialert('danger', __( 'A security error occured', 'doliconnect'))); 
-	//}
+} elseif (isset($_POST['case']) && $_POST['case'] == "legal_form" ) {	
+	wp_send_json_success( doliSelectForm("state_id", "/setup/dictionary/states?sortfield=code_departement&sortorder=ASC&country=".$_POST['countryId'], __( '- Select your state -', 'doliconnect'), __( 'State', 'doliconnect'), $_POST['valueId'], $_POST['objectId'], $_POST['rights']) );
+} else {
+	wp_send_json_error( dolialert('danger', __( 'A security error occured', 'doliconnect'))); 
+}
+
 }
 add_action('wp_ajax_doliuserinfos_request', 'doliuserinfos_request');
 add_action('wp_ajax_nopriv_doliuserinfos_request', 'doliuserinfos_request');
