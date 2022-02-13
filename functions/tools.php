@@ -829,7 +829,7 @@ print 'jQuery(document).ready(function($) {
 
 });'; 
 print '</script>';
-print '<div class="col"><div class="form-floating" id="state_id">';
+print '<div class="col-12 col-md"><div class="form-floating" id="state_id">';
 print doliSelectForm("state_id", "/setup/dictionary/states?sortfield=code_departement&sortorder=ASC&country=".$object->country_id, __( '- Select your state -', 'doliconnect'), __( 'State', 'doliconnect'), $object->state_id, $idobject, $rights);
 print '</div></div>';
 }
