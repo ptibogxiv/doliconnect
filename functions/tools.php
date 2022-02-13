@@ -804,9 +804,8 @@ print '</div></div>';
 if (!empty(get_option('doliconnectbeta'))) {
 print '<script type="text/javascript">';
 print 'jQuery(document).ready(function($) {
-  // State dependent ajax
+  // Country dependent ajax
   jQuery("#country_id").on("change",function(){
-    //jQuery("#DoliconnectLoadingModal").modal("show");
     var countryId = $(this).val();
     $.ajax({
       url :"'.admin_url('admin-ajax.php').'",
@@ -824,7 +823,6 @@ print 'jQuery(document).ready(function($) {
         "delay": '.$delay.'
       },
     }).done(function(response) {
-      //jQuery("#DoliconnectLoadingModal").modal("show");
       if ( document.getElementById("state_id") ) { 
         document.getElementById("state_id").innerHTML = response.data.state_id;
       }
@@ -837,6 +835,29 @@ print 'jQuery(document).ready(function($) {
     });
   });
 
+  // State dependent ajax
+  jQuery("#state_id").on("change",function(){
+    var stateId = $(this).val();
+    $.ajax({
+      url :"'.admin_url('admin-ajax.php').'",
+      type:"POST",
+      cache:false,
+      data: {
+        "action": "doliselectform_request",
+        "case": "country_id",
+        "countryId": $("#country_id").val(),
+        "objectId": "'.$idobject.'",
+        "stateId": stateId,
+        "ziptownId": "'.$object->zip.','.$object->town.'", 
+        "rights": '.$rights.',
+        "delay": '.$delay.'
+      },
+    }).done(function(response) {
+      if ( document.getElementById("ziptown") ) { 
+        document.getElementById("ziptown").innerHTML = response.data.ziptown;
+      }
+    });
+  });
 });';
 print '</script>';
 }
