@@ -622,7 +622,7 @@ print ' autocomplete="off">
 <label for="'.$idobject.'[tva_intra]"><i class="fas fa-building fa-fw"></i> '.__( 'VAT number', 'doliconnect').'</label></div></div>';
 
 if ( doliversion('15.0.0') ) {
-print '<div class="col-md-6 col-lg-4"><div class="form-floating" id="forme_juridique_code">';
+print '<div class="col-md-6 col-lg-4"><div class="form-floating" id="forme_juridique_code_form">';
 print doliSelectForm("forme_juridique_code", "/setup/dictionary/legal_form?sortfield=libelle&sortorder=ASC&active=1&country=".(isset($object->country_id) ? $object->country_id : null), __( '- Select your legal form -', 'doliconnect'), __( 'Legal form', 'doliconnect'), $object->forme_juridique_code, $idobject, $rights, $delay, 'code');
 //print '<label for="yyyy"><i class="fas fa-building fa-fw"></i> '.__( 'Legal form', 'doliconnect').'</label>';
 print '</div></div>';
@@ -802,7 +802,7 @@ print doliSelectForm("country_id", "/setup/dictionary/countries?sortfield=favori
 print '</div></div>';
 
 if ( doliversion('16.0.0') ) { 
-  print '<div class="col-12 col-md"><div class="form-floating" id="state_id">';
+  print '<div class="col-12 col-md"><div class="form-floating" id="state_form">';
   print doliSelectForm("state_id", "/setup/dictionary/states?sortfield=code_departement&sortorder=ASC&country=".$object->country_id, __( '- Select your state -', 'doliconnect'), __( 'State', 'doliconnect'), $object->state_id, $idobject, $rights);
   print '</div></div>';
 }
@@ -873,7 +873,7 @@ print '</script>';
 print '</div><div class="row g-2">';
   
 if (current_user_can('administrator') && !empty(get_option('doliconnectbeta')) && doliconst("MAIN_USE_ZIPTOWN_DICTIONNARY")) {
-  print '<div class="col-12 col-md"><div class="form-floating" id="ziptown">';
+  print '<div class="col-12 col-md"><div class="form-floating" id="ziptown_form">';
   print doliSelectForm("ziptown", "/setup/dictionary/towns?sortfield=zip%2Ctown&sortorder=ASC&active=1&sqlfilters=(t.fk_pays%3A%3D%3A'".$object->country_id."')%20AND%20(t.fk_county%3A%3D%3A'".$object->state_id."')", __( '- Select your town -', 'doliconnect'), __( 'Town', 'doliconnect'), $object->zip.','.$object->town, $idobject, $rights);
   print '</div></div>';
 } else {
