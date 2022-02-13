@@ -818,6 +818,7 @@ print 'jQuery(document).ready(function($) {
         "countryId": countryId,
         "objectId": "'.$idobject.'",
         "stateId": '.$object->state_id.',
+        "ziptownId": "'.$object->zip.','.$object->town.'", 
         "legalformId": '.$object->forme_juridique_code.',
         "rights": '.$rights.',
         "delay": '.$delay.'
@@ -830,6 +831,9 @@ print 'jQuery(document).ready(function($) {
       if ( document.getElementById("forme_juridique_code") ) { 
         document.getElementById("forme_juridique_code").innerHTML = response.data.forme_juridique_code;
       }
+      if ( document.getElementById("ziptown") ) { 
+        document.getElementById("ziptown").innerHTML = response.data.ziptown;
+      }
     });
   });
 
@@ -838,9 +842,9 @@ print '</script>';
 }
 
 if ( doliversion('16.0.0') ) { 
-print '<div class="col-12 col-md"><div class="form-floating" id="state_id">';
-print doliSelectForm("state_id", "/setup/dictionary/states?sortfield=code_departement&sortorder=ASC&country=".$object->country_id, __( '- Select your state -', 'doliconnect'), __( 'State', 'doliconnect'), $object->state_id, $idobject, $rights);
-print '</div></div>';
+  print '<div class="col-12 col-md"><div class="form-floating" id="state_id">';
+  print doliSelectForm("state_id", "/setup/dictionary/states?sortfield=code_departement&sortorder=ASC&country=".$object->country_id, __( '- Select your state -', 'doliconnect'), __( 'State', 'doliconnect'), $object->state_id, $idobject, $rights);
+  print '</div></div>';
 }
 
 print '</div><div class="row g-2">';
@@ -850,22 +854,23 @@ if (current_user_can('administrator') && !empty(get_option('doliconnectbeta')) &
   print doliSelectForm("ziptown", "/setup/dictionary/towns?sortfield=zip%2Ctown&sortorder=ASC&active=1&sqlfilters=(t.fk_pays%3A%3D%3A'".$object->country_id."')%20AND%20(t.fk_county%3A%3D%3A'".$object->state_id."')", __( '- Select your town -', 'doliconnect'), __( 'Town', 'doliconnect'), $object->zip.','.$object->town, $idobject, $rights);
   print '</div></div>';
 } else {
-print '<div class="col-lg-8"><div class="form-floating" id="town"><input type="text" class="form-control" id="'.$idobject.'[town]" name="'.$idobject.'[town]" placeholder="'.__( 'Town', 'doliconnect').'" value="'.(isset($object->town) ? $object->town : null).'" ';
+  print '<div class="col-lg-8"><div class="form-floating" id="town">';
+  print '<input type="text" class="form-control" id="'.$idobject.'[town]" name="'.$idobject.'[town]" placeholder="'.__( 'Town', 'doliconnect').'" value="'.(isset($object->town) ? $object->town : null).'" ';
   if ($rights) {
   print 'required';
   } else {
   print 'readonly';
   }
   print '><label for="'.$idobject.'[town]"><i class="fas fa-map-marked fa-fw"></i> '.__( 'Town', 'doliconnect').'</label></div>';  
-print '</div><div class="col-lg-4">';   
-print '<div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[zip]" name="'.$idobject.'[zip]" placeholder="'.__( 'Zipcode', 'doliconnect').'" value="'.(isset($object->zip) ? $object->zip : null).'" ';
-if ($rights) {
-print 'required';
-} else {
-print 'readonly';
-}
-print '><label for="'.$idobject.'[zip]"><i class="fas fa-map-marked fa-fw"></i> '.__( 'Zipcode', 'doliconnect').'</label></div>';  
-print '</div>';
+  print '</div><div class="col-lg-4">';   
+  print '<div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[zip]" name="'.$idobject.'[zip]" placeholder="'.__( 'Zipcode', 'doliconnect').'" value="'.(isset($object->zip) ? $object->zip : null).'" ';
+  if ($rights) {
+  print 'required';
+  } else {
+  print 'readonly';
+  }
+  print '><label for="'.$idobject.'[zip]"><i class="fas fa-map-marked fa-fw"></i> '.__( 'Zipcode', 'doliconnect').'</label></div>';  
+  print '</div>';
 }
 
 print "</div></li>";
