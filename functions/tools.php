@@ -849,8 +849,12 @@ print 'jQuery(document).ready(function($) {
       },
     }).done(function(response) {
       //jQuery("#DoliconnectLoadingModal").modal("show");
-      document.getElementById("state_id").innerHTML = response.data.state_id;
-      document.getElementById("forme_juridique_code").innerHTML = response.data.forme_juridique_code;
+      if ( document.getElementById("state_id") ) { 
+        document.getElementById("state_id").innerHTML = response.data.state_id;
+      }
+      if ( document.getElementById("forme_juridique_code") ) { 
+        document.getElementById("forme_juridique_code").innerHTML = response.data.forme_juridique_code;
+      }
     });
   });
 
