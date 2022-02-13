@@ -801,6 +801,12 @@ print '<div class="row mb-2 g-2"><div class="col"><div class="form-floating">';
 print doliSelectForm("country_id", "/setup/dictionary/countries?sortfield=favorite%2Clabel&sortorder=DESC%2CASC&lang=".$lang, __( '- Select your country -', 'doliconnect'), __( 'Country', 'doliconnect'), $object->country_id, $idobject, $rights);
 print '</div></div>';
 
+if ( doliversion('16.0.0') ) { 
+  print '<div class="col-12 col-md"><div class="form-floating" id="state_id">';
+  print doliSelectForm("state_id", "/setup/dictionary/states?sortfield=code_departement&sortorder=ASC&country=".$object->country_id, __( '- Select your state -', 'doliconnect'), __( 'State', 'doliconnect'), $object->state_id, $idobject, $rights);
+  print '</div></div>';
+}
+
 if (!empty(get_option('doliconnectbeta'))) {
 print '<script type="text/javascript">';
 print 'jQuery(document).ready(function() {
@@ -862,12 +868,6 @@ print 'jQuery(document).ready(function() {
   });
 });';
 print '</script>';
-}
-
-if ( doliversion('16.0.0') ) { 
-  print '<div class="col-12 col-md"><div class="form-floating" id="state_id">';
-  print doliSelectForm("state_id", "/setup/dictionary/states?sortfield=code_departement&sortorder=ASC&country=".$object->country_id, __( '- Select your state -', 'doliconnect'), __( 'State', 'doliconnect'), $object->state_id, $idobject, $rights);
-  print '</div></div>';
 }
 
 print '</div><div class="row g-2">';
