@@ -838,8 +838,8 @@ print 'jQuery(document).ready(function() {
 
   // State dependent ajax
   $("#state_id").on("change",function(){
-    var stateId2 = $(this).val();
-    console.log("state is changed to " +  $("#state_id").val() );
+    var stateId = $(this).val();
+    console.log("state is changed to " +  stateId );
     $.ajax({
       url :"'.admin_url('admin-ajax.php').'",
       type:"POST",
@@ -849,7 +849,7 @@ print 'jQuery(document).ready(function() {
         "case": "update",
         "countryId": $("#country_id").val(),
         "objectId": "'.$idobject.'",
-        "stateId": stateId2,
+        "stateId": stateId,
         "ziptownId": "'.$object->zip.','.$object->town.'", 
         "rights": '.$rights.',
         "delay": '.$delay.'
