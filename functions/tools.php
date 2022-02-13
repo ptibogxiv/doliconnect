@@ -791,40 +791,9 @@ $lang = pll_current_language('locale');
 $lang = $current_user->locale;
 }
 
-$pays = callDoliApi("GET", "/setup/dictionary/countries?sortfield=favorite%2Clabel&sortorder=DESC%2CASC&limit=400&lang=".$lang, null, $delay);
-
-if ( isset($pays) ) {
-print '<div class="row mb-2 g-2"><div class="col">';
-print '<div class="form-floating"><select class="form-select" id="country_id" name="'.$idobject.'[country_id]" aria-label="'.__( 'Country', 'doliconnect').'" ';
-if ($rights) {
-print 'required';
-} else {
-print 'disabled';
-}
-print '>';
-print "<option value='' disabled ";
-if ( !isset($object->country_id) && empty($object->country_id) || $pays == 0) {
-print "selected ";}
-print ">".__( '- Select your country -', 'doliconnect')."</option>";
-foreach ( $pays as $postv ) { 
-print "<option value='".$postv->id."' ";
-if ( isset($object->country_id) && $object->country_id == $postv->id && $object->country_id != null && $postv->id != '0' ) {
-print "selected ";
-} elseif ( $postv->id == '0' ) { print "disabled "; }
-print ">".$postv->label."</option>";
-}
-print '</select><label for="country_id"><i class="fas fa-map-marked fa-fw"></i> '.__( 'Country', 'doliconnect').'</label></div>';
-} else {
-print '<input type="text" class="form-control" id="inputcountry" placeholder="'.__( 'Country', 'doliconnect').'" name="'.$idobject.'[country_id]" value="'.$object->country_id.'" autocomplete="off" ';
-if ($rights) {
-print 'required';
-} else {
-print 'readonly';
-}
-print '>';
-}
-
-print '</div>';
+print '<div class="row mb-2 g-2"><div class="col"><div class="form-floating">';
+print doliSelectForm("country_id", "/setup/dictionary/countries?sortfield=favorite%2Clabel&sortorder=DESC%2CASC&lang=".$lang, __( '- Select your country -', 'doliconnect'), __( 'Country', 'doliconnect'), $object->country_id, $idobject, $rights);
+print '</div></div>';
 
 if ( doliversion('16.0.0') ) {
 print '<script type="text/javascript">';
