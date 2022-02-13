@@ -844,7 +844,8 @@ print 'jQuery(document).ready(function($) {
         "objectId": "'.$idobject.'",
         "stateId": '.$object->state_id.',
         "legalformId": '.$object->forme_juridique_code.',
-        "rights": '.$rights.'
+        "rights": '.$rights.',
+        "delay": '.$delay.'
       },
     }).done(function(response) {
       //jQuery("#DoliconnectLoadingModal").modal("show");
