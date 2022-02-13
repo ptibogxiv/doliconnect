@@ -76,6 +76,10 @@ $object['name'] = null;
 } 
 if (isset($object['name_alias'])) $object['name_alias'] = strtoupper(stripslashes(sanitize_text_field($object['name_alias'])));
 if (isset($object['address'])) $object['address'] = stripslashes(sanitize_textarea_field($object['address']));
+if (isset($object['ziptown'])) {
+  $object['zip'] = explode(',', $object['ziptown'])[0];
+  $object['town'] = explode(',', $object['ziptown'])[1];
+} 
 if (isset($object['zip'])) $object['zip'] = strtoupper(stripslashes(sanitize_text_field($object['zip'])));
 if (isset($object['town'])) $object['town'] = strtoupper(stripslashes(sanitize_text_field($object['town'])));
 if (isset($object['email'])) $object['email'] = sanitize_email($object['email']);
@@ -357,8 +361,9 @@ function doliSelectForm($name, $request, $selectlang = '- Select -', $valuelang 
     $doliSelect .= "selected ";}
     $doliSelect .= ">".$selectlang."</option>";
   foreach ( $object as $postv ) { 
-    if (isset($postv->rowid)) $postv->id = $postv->rowid;
-    $doliSelect .= "<option value='".$postv->$id."' ";
+    if (isset($postv->rowid)) $postv->$code = $postv->rowid;
+    if (isset($postv->zip)&&isset($postv->town)) $postv->$code = $postv->zip.','.$postv->town;
+    $doliSelect .= "<option value='".$postv->$code."' ";
   if ( isset($value) && !empty($value) && $value == $postv->$id && $postv->$id != '0' ) {
     $doliSelect .= "selected ";
   } elseif ( $postv->id == '0' ) { $doliSelect .= "disabled "; }
