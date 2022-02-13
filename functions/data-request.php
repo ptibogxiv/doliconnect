@@ -95,9 +95,13 @@ add_action('wp_ajax_nopriv_doliselectform_request', 'doliselectform_request');
 
 function doliselectform_request(){
 
-if (isset($_POST['case']) && $_POST['case'] == "state_id" ) {	
-	wp_send_json_success( doliSelectForm("state_id", "/setup/dictionary/states?sortfield=code_departement&sortorder=ASC&country=".$_POST['countryId'], __( '- Select your state -', 'doliconnect'), __( 'State', 'doliconnect'), $_POST['valueId'], $_POST['objectId'], $_POST['rights']) );
-} elseif (isset($_POST['case']) && $_POST['case'] == "legal_form" ) {	
+if (isset($_POST['case']) && $_POST['case'] == "country_id" ) {	
+	$response = array();
+	$response['state_id'] = doliSelectForm("state_id", "/setup/dictionary/states?sortfield=code_departement&sortorder=ASC&country=".$_POST['countryId'], __( '- Select your state -', 'doliconnect'), __( 'State', 'doliconnect'), $_POST['stateId'], $_POST['objectId'], $_POST['rights']);
+	$response['forme_juridique_code'] = doliSelectForm("forme_juridique_code", "/setup/dictionary/legal_form?sortfield=libelle&sortorder=ASC&active=1&country=".$_POST['countryId'], __( '- Select your legal form -', 'doliconnect'), __( 'Legal form', 'doliconnect'), $_POST['legalformId'], $_POST['objectId'], $_POST['rights']);
+
+	wp_send_json_success( $response );
+} elseif (isset($_POST['case']) && $_POST['case'] == "legal_formjjjjj" ) {	
 	wp_send_json_success( doliSelectForm("state_id", "/setup/dictionary/states?sortfield=code_departement&sortorder=ASC&country=".$_POST['countryId'], __( '- Select your state -', 'doliconnect'), __( 'State', 'doliconnect'), $_POST['valueId'], $_POST['objectId'], $_POST['rights']) );
 } else {
 	wp_send_json_error( dolialert('danger', __( 'A security error occured', 'doliconnect'))); 

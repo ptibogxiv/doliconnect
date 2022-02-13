@@ -616,7 +616,7 @@ print ' autocomplete="off">
 <label for="'.$idobject.'[tva_intra]"><i class="fas fa-building fa-fw"></i> '.__( 'VAT number', 'doliconnect').'</label></div></div>';
 
 if ( doliversion('15.0.0') ) {
-print '<div class="col-md-6 col-lg-4"><div class="form-floating" id="legal_form">';
+print '<div class="col-md-6 col-lg-4"><div class="form-floating" id="forme_juridique_code">';
 print doliSelectForm("forme_juridique_code", "/setup/dictionary/legal_form?sortfield=libelle&sortorder=ASC&active=1&country=".(isset($object->country_id) ? $object->country_id : null), __( '- Select your legal form -', 'doliconnect'), __( 'Legal form', 'doliconnect'), $object->forme_juridique_code, $idobject, $rights, $delay, 'code');
 //print '<label for="yyyy"><i class="fas fa-building fa-fw"></i> '.__( 'Legal form', 'doliconnect').'</label>';
 print '</div></div>';
@@ -839,15 +839,17 @@ print 'jQuery(document).ready(function($) {
       cache:false,
       data: {
         "action": "doliselectform_request",
-        "case": "state_id",
+        "case": "country_id",
         "countryId": countryId,
         "objectId": "'.$idobject.'",
-        "valueId": '.$object->state_id.',
+        "stateId": '.$object->state_id.',
+        "legalformId": '.$object->forme_juridique_code.',
         "rights": '.$rights.'
       },
     }).done(function(response) {
       //jQuery("#DoliconnectLoadingModal").modal("show");
-      document.getElementById("state_id").innerHTML = response.data;
+      document.getElementById("state_id").innerHTML = response.data.state_id;
+      document.getElementById("forme_juridique_code").innerHTML = response.data.forme_juridique_code;
     });
   });
 
