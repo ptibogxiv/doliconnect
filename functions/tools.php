@@ -823,9 +823,9 @@ print 'jQuery(document).ready(function() {
         "case": "update",
         "countryId": countryId,
         "objectId": "'.$idobject.'",
-        "stateId": '.(isset($object->state_id) ? $object->state_id : null).',
+        "stateId": '.(isset($object->state_id) ? $object->state_id : 0).',
         "ziptownId": "'.(isset($object->zip) ? $object->zip : null).','.(isset($object->town) ? $object->town : null).'", 
-        "legalformId": '.(isset($object->forme_juridique_code) ? $object->forme_juridique_code : null).',
+        "legalformId": '.(isset($object->forme_juridique_code) ? $object->forme_juridique_code : 0).',
         "rights": '.$rights.',
         "delay": '.$delay.'
       },
