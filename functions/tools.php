@@ -813,7 +813,7 @@ print 'jQuery(document).ready(function() {
   // Country dependent ajax
   $("#country_id").on("change",function(){
     var countryId = $(this).val();
-    console.log("country is changed to " + countryId );
+    //console.log("country is changed to " + countryId );
     $.ajax({
       url :"'.admin_url('admin-ajax.php').'",
       type:"POST",
@@ -845,7 +845,7 @@ print 'jQuery(document).ready(function() {
   // State dependent ajax
   $("#state_id").on("change",function(){
     var stateId = $(this).val();
-    console.log("state is changed to " +  stateId );
+    //console.log("state is changed to " +  stateId );
     $.ajax({
       url :"'.admin_url('admin-ajax.php').'",
       type:"POST",
