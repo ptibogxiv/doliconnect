@@ -803,17 +803,18 @@ print '</div></div>';
 
 if (!empty(get_option('doliconnectbeta'))) {
 print '<script type="text/javascript">';
-print 'jQuery(document).ready(function($) {
+print 'jQuery(document).ready(function() {
   // Country dependent ajax
-  jQuery("#country_id").on("change",function(){
+  $("#country_id").on("change",function(){
     var countryId = $(this).val();
+    console.log("country is changed to " + countryId );
     $.ajax({
       url :"'.admin_url('admin-ajax.php').'",
       type:"POST",
       cache:false,
       data: {
         "action": "doliselectform_request",
-        "case": "country_id",
+        "case": "update",
         "countryId": countryId,
         "objectId": "'.$idobject.'",
         "stateId": '.$object->state_id.',
@@ -836,18 +837,19 @@ print 'jQuery(document).ready(function($) {
   });
 
   // State dependent ajax
-  jQuery("#state_id").on("change",function(){
-    var stateId = $(this).val();
+  $("#state_id").on("change",function(){
+    var stateId2 = $(this).val();
+    console.log("state is changed to " +  $("#state_id").val() );
     $.ajax({
       url :"'.admin_url('admin-ajax.php').'",
       type:"POST",
       cache:false,
       data: {
         "action": "doliselectform_request",
-        "case": "country_id",
+        "case": "update",
         "countryId": $("#country_id").val(),
         "objectId": "'.$idobject.'",
-        "stateId": stateId,
+        "stateId": stateId2,
         "ziptownId": "'.$object->zip.','.$object->town.'", 
         "rights": '.$rights.',
         "delay": '.$delay.'
