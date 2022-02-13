@@ -361,12 +361,12 @@ function doliSelectForm($name, $request, $selectlang = '- Select -', $valuelang 
     $doliSelect .= "selected ";}
     $doliSelect .= ">".$selectlang."</option>";
   foreach ( $object as $postv ) { 
-    if (isset($postv->rowid)) $postv->$code = $postv->rowid;
-    if (isset($postv->zip)&&isset($postv->town)) $postv->$code = $postv->zip.','.$postv->town;
-    $doliSelect .= "<option value='".$postv->$code."' ";
+    if (isset($postv->rowid) && $id == 'id') $postv->$id = $postv->rowid;
+    if (isset($postv->zip)&&isset($postv->town)) $postv->$id = $postv->zip.','.$postv->town;
+    $doliSelect .= "<option value='".$postv->$id."' ";
   if ( isset($value) && !empty($value) && $value == $postv->$id && $postv->$id != '0' ) {
     $doliSelect .= "selected ";
-  } elseif ( $postv->id == '0' ) { $doliSelect .= "disabled "; }
+  } elseif ( $postv->$id == '0' ) { $doliSelect .= "disabled "; }
    if (isset($postv->libelle)) $postv->label = $postv->libelle;
    if (isset($postv->zip)&&isset($postv->town)) $postv->label = $postv->zip.' - '.$postv->town;  
     $doliSelect .= ">".(isset($postv->label)?$postv->label:$postv->name)."</option>";
@@ -847,7 +847,7 @@ print '</div><div class="row g-2">';
   
 if (current_user_can('administrator') && !empty(get_option('doliconnectbeta')) && doliconst("MAIN_USE_ZIPTOWN_DICTIONNARY")) {
   print '<div class="col-12 col-md"><div class="form-floating" id="ziptown">';
-  print doliSelectForm("ziptown", "/setup/dictionary/towns?sortfield=zip%2Ctown&sortorder=ASC&active=1&sqlfilters=(t.fk_pays%3A%3D%3A'".$object->country_id."')%20AND%20(t.fk_county%3A%3D%3A'".$object->state_id."')", __( '- Select your town -', 'doliconnect'), __( 'Town', 'doliconnect'), $object->state_id, $idobject, $rights);
+  print doliSelectForm("ziptown", "/setup/dictionary/towns?sortfield=zip%2Ctown&sortorder=ASC&active=1&sqlfilters=(t.fk_pays%3A%3D%3A'".$object->country_id."')%20AND%20(t.fk_county%3A%3D%3A'".$object->state_id."')", __( '- Select your town -', 'doliconnect'), __( 'Town', 'doliconnect'), $object->zip.','.$object->town, $idobject, $rights);
   print '</div></div>';
 } else {
 print '<div class="col-lg-8"><div class="form-floating" id="town"><input type="text" class="form-control" id="'.$idobject.'[town]" name="'.$idobject.'[town]" placeholder="'.__( 'Town', 'doliconnect').'" value="'.(isset($object->town) ? $object->town : null).'" ';
