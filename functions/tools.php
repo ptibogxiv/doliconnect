@@ -341,7 +341,7 @@ function doliajax($id, $url = null, $case = null){
 return $ajax;
 }
 
-function doliSelectForm($name, $request, $selectlang = '- Select -', $valuelang = 'Value', $value = null, $idobject = 0, $rights = 1, $delay = null) {
+function doliSelectForm($name, $request, $selectlang = '- Select -', $valuelang = 'Value', $value = null, $idobject = 0, $rights = 1, $delay = null, $id = 'id') {
   
   $object = callDoliApi("GET", $request, null, $delay);
   if ( isset($object) ) {
@@ -353,15 +353,15 @@ function doliSelectForm($name, $request, $selectlang = '- Select -', $valuelang 
   }
     $doliSelect .= '>';
     $doliSelect .= "<option value='' disabled ";
-  if ( !isset($value) && empty($value) || empty(array_search($value, array_column($object, 'id')))) {
+  if ( !isset($value) && empty($value) || empty(array_search($value, array_column($object, $id)))) {
     $doliSelect .= "selected ";}
     $doliSelect .= ">".$selectlang."</option>";
   foreach ( $object as $postv ) { 
-    if (isset($postv->rowid)) $postv->id = $postv->rowid;
-    $doliSelect .= "<option value='".$postv->id."' ";
-  if ( isset($value) && !empty($value) && $value == $postv->id && $postv->id != '0' ) {
+    if (isset($postv->rowid)) $postv->$id = $postv->rowid;
+    $doliSelect .= "<option value='".$postv->$id."' ";
+  if ( isset($value) && !empty($value) && $value == $postv->$id && $postv->$id != '0' ) {
     $doliSelect .= "selected ";
-  } elseif ( $postv->id == '0' ) { $doliSelect .= "disabled "; }
+  } elseif ( $postv->$id == '0' ) { $doliSelect .= "disabled "; }
    if (isset($postv->libelle)) $postv->label = $postv->libelle;
     $doliSelect .= ">".(isset($postv->label)?$postv->label:$postv->name)."</option>";
   }
@@ -617,7 +617,7 @@ print ' autocomplete="off">
 
 if ( doliversion('15.0.0') ) {
 print '<div class="col-md-6 col-lg-4"><div class="form-floating" id="legal_form">';
-print doliSelectForm("forme_juridique_code", "/setup/dictionary/legal_form?sortfield=rowid&sortorder=ASC&limit=100&active=1&country=".(isset($object->country_id) ? $object->country_id : null), __( '- Select your legal form -', 'doliconnect'), __( 'Legal form', 'doliconnect'), $object->forme_juridique_code, $idobject, $rights);
+print doliSelectForm("forme_juridique_code", "/setup/dictionary/legal_form?sortfield=rowid&sortorder=ASC&limit=100&active=1&country=".(isset($object->country_id) ? $object->country_id : null), __( '- Select your legal form -', 'doliconnect'), __( 'Legal form', 'doliconnect'), $object->forme_juridique_code, $idobject, $rights, $delay, 'code');
 //print '<label for="yyyy"><i class="fas fa-building fa-fw"></i> '.__( 'Legal form', 'doliconnect').'</label>';
 print '</div></div>';
 }
