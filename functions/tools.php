@@ -473,6 +473,35 @@ $password .= '</div></div>';
 return $password;
 }
 
+function doliProfId($object, $idobject, $rights) {
+  $ifprod = '<div class="col-md-6 col-lg-3"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[idprof1]" name="'.$idobject.'[idprof1]" placeholder="idprof1" value="'.(isset($object->idprof1) ? $object->idprof1 : null).'"';
+  if ((isset($object->idprof1) && !empty($object->idprof1)) || !$rights) { $ifprod .= ' readonly'; } else { $ifprod .= ' required'; }
+  $ifprod .= ' autocomplete="off">
+  <label for="'.$idobject.'[idprof1]"><i class="fas fa-building fa-fw"></i> '.__( 'SIREN', 'doliconnect').'</label></div></div>'; 
+  
+  $ifprod .= '<div class="col-md-6 col-lg-3"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[idprof2]" name="'.$idobject.'[idprof2]" placeholder="idprof2" value="'.(isset($object->idprof2) ? $object->idprof2 : null).'"';
+  if ((isset($object->idprof2) && !empty($object->idprof2)) || !$rights) { $ifprod .=' readonly'; } else { $ifprod .= ' required'; }
+  $ifprod .= ' autocomplete="off">
+  <label for="'.$idobject.'[idprof2]"><i class="fas fa-building fa-fw"></i> '.__( 'SIRET', 'doliconnect').'</label></div></div>';
+  
+  
+  $ifprod .= '<div class="col-md-6 col-lg-3"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[idprof3]" name="'.$idobject.'[idprof3]" placeholder="idprof3" value="'.(isset($object->idprof3) ? $object->idprof3 : null).'"';
+  if ((isset($object->idprof3) && !empty($object->idprof3)) || !$rights) { $ifprod .= ' readonly'; } else { $ifprod .= ' required'; }
+  $ifprod .= ' autocomplete="off">
+  <label for="'.$idobject.'[idprof3]"><i class="fas fa-building fa-fw"></i> '.__( 'NAF-APE', 'doliconnect').'</label></div></div>';
+  
+  $ifprod .= '<div class="col-md-6 col-lg-3"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[idprof4]" name="'.$idobject.'[idprof4]" placeholder="idprof4" value="'.(isset($object->idprof4) ? $object->idprof4 : null).'"';
+  if ((isset($object->idprof4) && !empty($object->idprof4)) || !$rights) { $ifprod .= ' readonly'; } else { $ifprod .= ' required'; }
+  $ifprod .= ' autocomplete="off">
+  <label for="'.$idobject.'[idprof4]"><i class="fas fa-building fa-fw"></i> '.__( 'RCS/RM', 'doliconnect').'</label></div></div>';      
+  
+  $ifprod .= '<div class="col-md-6 col-lg-4"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[tva_intra]" name="'.$idobject.'[tva_intra]" placeholder="tva" value="'.(isset($object->tva_intra) ? $object->tva_intra : null).'"';
+  if ((isset($object->tva_intra) && !empty($object->tva_intra)) || !$rights) { $ifprod .= ' readonly'; } else { $ifprod .= ''; }
+  $ifprod .= ' autocomplete="off">
+  <label for="'.$idobject.'[tva_intra]"><i class="fas fa-building fa-fw"></i> '.__( 'VAT number', 'doliconnect').'</label></div></div>';
+return $ifprod;
+}
+
 function doliuserform($object, $delay, $mode, $rights) {
 global $current_user;
 //$rights = 0;
@@ -595,31 +624,7 @@ print "></div></div></div>";
 
 print '<div class="row g-2">';
     
-print '<div class="col-md-6 col-lg-3"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[idprof1]" name="'.$idobject.'[idprof1]" placeholder="idprof1" value="'.(isset($object->idprof1) ? $object->idprof1 : null).'"';
-if ((isset($object->idprof1) && !empty($object->idprof1)) || !$rights) { print ' readonly'; } else { print ' required'; }
-print ' autocomplete="off">
-<label for="'.$idobject.'[idprof1]"><i class="fas fa-building fa-fw"></i> '.__( 'SIREN', 'doliconnect').'</label></div></div>'; 
-
-print '<div class="col-md-6 col-lg-3"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[idprof2]" name="'.$idobject.'[idprof2]" placeholder="idprof2" value="'.(isset($object->idprof2) ? $object->idprof2 : null).'"';
-if ((isset($object->idprof2) && !empty($object->idprof2)) || !$rights) { print ' readonly'; } else { print ' required'; }
-print ' autocomplete="off">
-<label for="'.$idobject.'[idprof2]"><i class="fas fa-building fa-fw"></i> '.__( 'SIRET', 'doliconnect').'</label></div></div>';
-
-
-print '<div class="col-md-6 col-lg-3"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[idprof3]" name="'.$idobject.'[idprof3]" placeholder="idprof3" value="'.(isset($object->idprof3) ? $object->idprof3 : null).'"';
-if ((isset($object->idprof3) && !empty($object->idprof3)) || !$rights) { print ' readonly'; } else { print ' required'; }
-print ' autocomplete="off">
-<label for="'.$idobject.'[idprof3]"><i class="fas fa-building fa-fw"></i> '.__( 'NAF-APE', 'doliconnect').'</label></div></div>';
-
-print '<div class="col-md-6 col-lg-3"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[idprof4]" name="'.$idobject.'[idprof4]" placeholder="idprof4" value="'.(isset($object->idprof4) ? $object->idprof4 : null).'"';
-if ((isset($object->idprof4) && !empty($object->idprof4)) || !$rights) { print ' readonly'; } else { print ' required'; }
-print ' autocomplete="off">
-<label for="'.$idobject.'[idprof4]"><i class="fas fa-building fa-fw"></i> '.__( 'RCS/RM', 'doliconnect').'</label></div></div>';      
-
-print '<div class="col-md-6 col-lg-4"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[tva_intra]" name="'.$idobject.'[tva_intra]" placeholder="tva" value="'.(isset($object->tva_intra) ? $object->tva_intra : null).'"';
-if ((isset($object->tva_intra) && !empty($object->tva_intra)) || !$rights) { print ' readonly'; } else { print ''; }
-print ' autocomplete="off">
-<label for="'.$idobject.'[tva_intra]"><i class="fas fa-building fa-fw"></i> '.__( 'VAT number', 'doliconnect').'</label></div></div>';
+print doliProfId($object, $idobject, $rights);
 
 if ( doliversion('15.0.0') ) {
 print '<div class="col-md-6 col-lg-4"><div class="form-floating" id="forme_juridique_code_form">';
