@@ -494,11 +494,7 @@ function doliProfId($object, $idobject, $rights) {
   if ((isset($object->idprof4) && !empty($object->idprof4)) || !$rights) { $ifprod .= ' readonly'; } else { $ifprod .= ' required'; }
   $ifprod .= ' autocomplete="off">
   <label for="'.$idobject.'[idprof4]"><i class="fas fa-building fa-fw"></i> '.__( 'RCS/RM', 'doliconnect').'</label></div></div>';      
-  
-  $ifprod .= '<div class="col-md-6 col-lg-4"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[tva_intra]" name="'.$idobject.'[tva_intra]" placeholder="tva" value="'.(isset($object->tva_intra) ? $object->tva_intra : null).'"';
-  if ((isset($object->tva_intra) && !empty($object->tva_intra)) || !$rights) { $ifprod .= ' readonly'; } else { $ifprod .= ''; }
-  $ifprod .= ' autocomplete="off">
-  <label for="'.$idobject.'[tva_intra]"><i class="fas fa-building fa-fw"></i> '.__( 'VAT number', 'doliconnect').'</label></div></div>';
+
 return $ifprod;
 }
 
@@ -625,6 +621,11 @@ print "></div></div></div>";
 print '<div class="row g-2">';
     
 print doliProfId($object, $idobject, $rights);
+
+print '<div class="col-md-6 col-lg-4"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[tva_intra]" name="'.$idobject.'[tva_intra]" placeholder="tva" value="'.(isset($object->tva_intra) ? $object->tva_intra : null).'"';
+if ((isset($object->tva_intra) && !empty($object->tva_intra)) || !$rights) { print ' readonly'; } else { print ''; }
+print ' autocomplete="off">
+<label for="'.$idobject.'[tva_intra]"><i class="fas fa-building fa-fw"></i> '.__( 'VAT number', 'doliconnect').'</label></div></div>';
 
 if ( doliversion('15.0.0') ) {
 print '<div class="col-md-6 col-lg-4"><div class="form-floating" id="forme_juridique_code_form">';
