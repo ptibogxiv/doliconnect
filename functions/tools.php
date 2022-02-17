@@ -480,23 +480,23 @@ $country_code = callDoliApi("GET", "/setup/dictionary/countries/".$country_code,
 }
 $ProfId1 = callDoliApi("GET", "/doliconnector/translation/ProfId1".$country_code."?filename=companies&langcode=".str_replace("-","_",get_bloginfo("language")), null, dolidelay('constante',));
 if ($ProfId1 != '-') {
-  $ifprod .= '<div class="col-md-6 col-lg"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[idprof1]" name="'.$idobject.'[idprof1]" placeholder="'.$ProfId1.'" value="'.(isset($idprof1) ? $idprof1 : null).'" required autocomplete="off">
-  <label for="'.$idobject.'[idprof1]"><i class="fas fa-building fa-fw"></i> '.$ProfId1.'</label></div></div>'; 
+  $ifprod .= '<div class="col-md-6 col-lg"><div class="form-floating"><input type="text" class="form-control" id="idprof1" name="'.$idobject.'[idprof1]" placeholder="'.$ProfId1.'" value="'.(isset($idprof1) ? $idprof1 : null).'" required autocomplete="off">
+  <label for="idprof1"><i class="fas fa-building fa-fw"></i> '.$ProfId1.'</label></div></div>'; 
 }
 $ProfId2 = callDoliApi("GET", "/doliconnector/translation/ProfId2".$country_code."?filename=companies&langcode=".str_replace("-","_",get_bloginfo("language")), null, dolidelay('constante',));
 if ($ProfId2 != '-') {
-  $ifprod .= '<div class="col-md-6 col-lg"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[idprof2]" name="'.$idobject.'[idprof2]" placeholder="'.$ProfId1.'" value="'.(isset($idprof2) ? $idprof2 : null).'" required autocomplete="off">
-  <label for="'.$idobject.'[idprof2]"><i class="fas fa-building fa-fw"></i> '.$ProfId2.'</label></div></div>';
+  $ifprod .= '<div class="col-md-6 col-lg"><div class="form-floating"><input type="text" class="form-control" id="[idprof2" name="'.$idobject.'[idprof2]" placeholder="'.$ProfId1.'" value="'.(isset($idprof2) ? $idprof2 : null).'" required autocomplete="off">
+  <label for="idprof2"><i class="fas fa-building fa-fw"></i> '.$ProfId2.'</label></div></div>';
 } 
 $ProfId3 = callDoliApi("GET", "/doliconnector/translation/ProfId2".$country_code."?filename=companies&langcode=".str_replace("-","_",get_bloginfo("language")), null, dolidelay('constante',));
 if ($ProfId3 != '-') {
-  $ifprod .= '<div class="col-md-6 col-lg"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[idprof3]" name="'.$idobject.'[idprof3]" placeholder="'.$ProfId3.'" value="'.(isset($idprof3) ? $idprof3 : null).'" required autocomplete="off">
-  <label for="'.$idobject.'[idprof3]"><i class="fas fa-building fa-fw"></i> '.$ProfId3.'</label></div></div>';
+  $ifprod .= '<div class="col-md-6 col-lg"><div class="form-floating"><input type="text" class="form-control" id="idprof3" name="'.$idobject.'[idprof3]" placeholder="'.$ProfId3.'" value="'.(isset($idprof3) ? $idprof3 : null).'" required autocomplete="off">
+  <label for="idprof3"><i class="fas fa-building fa-fw"></i> '.$ProfId3.'</label></div></div>';
 } 
 $ProfId4 = callDoliApi("GET", "/doliconnector/translation/ProfId4".$country_code."?filename=companies&langcode=".str_replace("-","_",get_bloginfo("language")), null, dolidelay('constante',));
 if ($ProfId4 != '-') {
-  $ifprod .= '<div class="col-md-6 col-lg"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[idprof4]" name="'.$idobject.'[idprof4]" placeholder="'.$ProfId4.'" value="'.(isset($idprof4) ? $idprof4 : null).'" required autocomplete="off">
-  <label for="'.$idobject.'[idprof4]"><i class="fas fa-building fa-fw"></i> '.$ProfId4.'</label></div></div>';      
+  $ifprod .= '<div class="col-md-6 col-lg"><div class="form-floating"><input type="text" class="form-control" id="idprof4" name="'.$idobject.'[idprof4]" placeholder="'.$ProfId4.'" value="'.(isset($idprof4) ? $idprof4 : null).'" required autocomplete="off">
+  <label for="idprof4"><i class="fas fa-building fa-fw"></i> '.$ProfId4.'</label></div></div>';      
 } 
 return $ifprod;
 }
@@ -818,7 +818,7 @@ print 'jQuery(document).ready(function() {
         "case": "update",
         "countryId": countryId,
         "country_code": countryId,
-        "idprof1": "'.(isset($object->idprof1) ? $object->idprof1 : null).'",
+        "idprof1": $("#idprof1").val(),
         "idprof2": "'.(isset($object->idprof2) ? $object->idprof2 : null).'",
         "idprof3": "'.(isset($object->idprof3) ? $object->idprof3 : null).'",
         "idprof4": "'.(isset($object->idprof4) ? $object->idprof4 : null).'",   
