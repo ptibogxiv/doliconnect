@@ -603,26 +603,11 @@ print 'readonly';
 print '><label for="'.$idobject.'[name_alias]"><i class="fas fa-building fa-fw"></i> '.__( 'Commercial name / Brand', 'doliconnect').'</label></div>';
 print '</div></div>';
 
-/*
-print "<div class='form-row'>";  
-if ( in_array($object->country_code, array('FR', 'ES')) ) { print "<div class='form-row'><div class='col-12'><label for='coordonnees'><small><i class='fas fa-building fa-fw'></i> ".__( 'Company identification number', 'doliconnect')."</small></label>";
-print "<div class='input-group'><input type='number' class='form-control' id='inputcompany' aria-label='SIREN'  maxlength='9' placeholder='".__( 'SIREN', 'doliconnect')."' name='".$idobject."[idprof1]' value='".$object->idprof1."' ";
-if (isset($object->idprof1) && !empty($object->idprof1)) { print "readonly"; } else { print "required"; }
-print "><input type='text' aria-label='NAF-APE' placeholder='".__( 'NAF-APE', 'doliconnect')."' name='".$idobject."[idprof3]' maxlength='5' value='".$object->idprof3."' class='form-control' ";
-if (isset($object->idprof3) && !empty($object->idprof3)) { print "readonly"; } else { print "required"; }
-print "></div></div></div>";
-} elseif ( in_array($object->country_code, array('BE')) ) { print "<div class='form-row'><div class='col-12'><label for='coordonnees'><small><i class='fas fa-building fa-fw'></i> ".__( 'Company identification number', 'doliconnect')."</small></label>";
-print "<div class='input-group'><input type='number' class='form-control' id='inputcompany' aria-label='SIREN'  maxlength='9' placeholder='".__( 'SIREN', 'doliconnect')."' name='".$idobject."[idprof1]' value='".$object->idprof1."' ";
-if (isset($object->idprof1) && !empty($object->idprof1)) { print "readonly"; } else { print "required"; }
-print "></div></div></div>";
-}
-*/
-
-print '<div class="row g-2">';
+print '<div id="profids" class="row mb-2 g-2">';
     
 print doliProfId($object->idprof1, $object->idprof2, $object->idprof3, $object->idprof4, $object->country_code, $idobject, $rights);
 
-print '<div class="col-md-6 col-lg-4"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[tva_intra]" name="'.$idobject.'[tva_intra]" placeholder="tva" value="'.(isset($object->tva_intra) ? $object->tva_intra : null).'"';
+print '</div><div class="row g-2"><div class="col-md-6 col-lg-4"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[tva_intra]" name="'.$idobject.'[tva_intra]" placeholder="tva" value="'.(isset($object->tva_intra) ? $object->tva_intra : null).'"';
 if ((isset($object->tva_intra) && !empty($object->tva_intra)) || !$rights) { print ' readonly'; } else { print ''; }
 print ' autocomplete="off">
 <label for="'.$idobject.'[tva_intra]"><i class="fas fa-building fa-fw"></i> '.__( 'VAT number', 'doliconnect').'</label></div></div>';
@@ -845,6 +830,9 @@ print 'jQuery(document).ready(function() {
       }
       if ( document.getElementById("ziptown") ) { 
         document.getElementById("ziptown").innerHTML = response.data.ziptown;
+      }
+      if ( document.getElementById("profids") ) { 
+        document.getElementById("profids").innerHTML = response.data.profids;
       }
       //jQuery("#DoliconnectLoadingModal").modal("hide");
     });
