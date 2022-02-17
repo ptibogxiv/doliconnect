@@ -808,25 +808,25 @@ print 'jQuery(document).ready(function() {
   $("#country_id").on("change",function(){
     //jQuery("#DoliconnectLoadingModal").modal("show");
     var countryId = $(this).val();
-    if ( document.getElementById("idprof1") ) { 
+    if ( typeof(document.getElementById("idprof1")) != "undefined" && document.getElementById("idprof1") != null ) { 
       var idprof1 = $("#idprof1").val();
     } else {
-      var idprof1 = '.(isset($object->idprof1) ? $object->idprof1 : 0).';
+      var idprof1 = "'.(isset($object->idprof1) ? $object->idprof1 : 0).'";
     } 
-    if ( document.getElementById("idprof2") ) { 
+    if ( typeof(document.getElementById("idprof2")) != "undefined" && document.getElementById("idprof2") != null ) { 
       var idprof2 = $("#idprof2").val();
     } else {
-      var idprof2 = '.(isset($object->idprof2) ? $object->idprof2 : 0).';
+      var idprof2 = "'.(isset($object->idprof2) ? $object->idprof2 : 0).'";
     } 
-    if ( document.getElementById("idprof3") ) { 
+    if ( typeof(document.getElementById("idprof3")) != "undefined" && document.getElementById("idprof3") != null ) { 
       var idprof3 = $("#idprof3").val();
     } else {
-      var idprof3 = '.(isset($object->idprof3) ? $object->idprof3 : 0).';
+      var idprof3 = "'.(isset($object->idprof3) ? $object->idprof3 : 0).'";
     } 
-    if ( document.getElementById("idprof4") ) { 
+    if ( typeof(document.getElementById("idprof4")) != "undefined" && document.getElementById("idprof4") != null ) { 
       var idprof4 = $("#idprof4").val();
     } else {
-      var idprof4 = '.(isset($object->idprof4) ? $object->idprof4 : 0).';
+      var idprof4 = "'.(isset($object->idprof4) ? $object->idprof4 : 0).'";
     } 
     //console.log("country is changed to " + countryId );
     $.ajax({
