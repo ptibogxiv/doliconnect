@@ -808,10 +808,26 @@ print 'jQuery(document).ready(function() {
   $("#country_id").on("change",function(){
     //jQuery("#DoliconnectLoadingModal").modal("show");
     var countryId = $(this).val();
-    var idprof1 = $("#idprof1").val();
-    var idprof2 = $("#idprof2").val();
-    var idprof3 = $("#idprof3").val();
-    var idprof4 = $("#idprof4").val();
+    if ( document.getElementById("idprof1") ) { 
+      var idprof1 = $("#idprof1").val();
+    } else {
+      var idprof1 = '.(isset($object->idprof1) ? $object->idprof1 : 0).';
+    } 
+    if ( document.getElementById("idprof2") ) { 
+      var idprof2 = $("#idprof2").val();
+    } else {
+      var idprof2 = '.(isset($object->idprof2) ? $object->idprof2 : 0).';
+    } 
+    if ( document.getElementById("idprof3") ) { 
+      var idprof3 = $("#idprof3").val();
+    } else {
+      var idprof3 = '.(isset($object->idprof3) ? $object->idprof3 : 0).';
+    } 
+    if ( document.getElementById("idprof4") ) { 
+      var idprof4 = $("#idprof4").val();
+    } else {
+      var idprof4 = '.(isset($object->idprof4) ? $object->idprof4 : 0).';
+    } 
     //console.log("country is changed to " + countryId );
     $.ajax({
       url :"'.admin_url('admin-ajax.php').'",
