@@ -100,7 +100,7 @@ if (isset($_POST['case']) && $_POST['case'] == "update" ) {
 	if (isset($_POST['legalformId'])) $response['state_id'] = doliSelectForm("state_id", "/setup/dictionary/states?sortfield=code_departement&sortorder=ASC&limit=500&country=".$_POST['countryId'], __( '- Select your state -', 'doliconnect'), __( 'State', 'doliconnect'), $_POST['stateId'], $_POST['objectId'], $_POST['rights'], $_POST['delay']);
 	if (isset($_POST['legalformId'])) $response['forme_juridique_code'] = doliSelectForm("forme_juridique_code", "/setup/dictionary/legal_form?sortfield=libelle&sortorder=ASC&active=1&limit=500&country=".$_POST['countryId'], __( '- Select your legal form -', 'doliconnect'), __( 'Legal form', 'doliconnect'), $_POST['legalformId'], $_POST['objectId'], $_POST['rights'], $_POST['delay'], 'code');
 	$response['ziptown'] = doliSelectForm("ziptown", "/setup/dictionary/towns?sortfield=town&sortorder=ASC&active=1&limit=1000&sqlfilters=(t.fk_pays%3A%3D%3A'".$_POST['countryId']."')%20AND%20(t.fk_county%3A%3D%3A'".$_POST['stateId']."')", __( '- Select your town -', 'doliconnect'), __( 'Town', 'doliconnect'), $_POST['ziptownId'], $_POST['objectId'], $_POST['rights'], $_POST['delay']);
-	$response['profids'] = '';
+	$response['profids'] = doliProfId($_POST['idprof1'], $_POST['idprof2'], $_POST['idprof3'], $_POST['idprof4'], $_POST['country_code'], $_POST['objectId'], $_POST['rights']);
 	wp_send_json_success( $response );
 } else {
 	wp_send_json_error( dolialert('danger', __( 'A security error occured', 'doliconnect'))); 
