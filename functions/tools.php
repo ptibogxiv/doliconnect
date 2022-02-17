@@ -808,6 +808,10 @@ print 'jQuery(document).ready(function() {
   $("#country_id").on("change",function(){
     //jQuery("#DoliconnectLoadingModal").modal("show");
     var countryId = $(this).val();
+    var idprof1 = $("#idprof1").val();
+    var idprof2 = $("#idprof2").val();
+    var idprof3 = $("#idprof3").val();
+    var idprof4 = $("#idprof4").val();
     //console.log("country is changed to " + countryId );
     $.ajax({
       url :"'.admin_url('admin-ajax.php').'",
@@ -818,10 +822,10 @@ print 'jQuery(document).ready(function() {
         "case": "update",
         "countryId": countryId,
         "country_code": countryId,
-        "idprof1": $("#idprof1").val(),
-        "idprof2": $("#idprof2").val(),
-        "idprof3": $("#idprof3").val(),
-        "idprof4": $("#idprof4").val(), 
+        "idprof1": idprof1,
+        "idprof2": idprof2,
+        "idprof3": idprof3,
+        "idprof4": idprof4, 
         "objectId": "'.$idobject.'",
         "stateId": '.(isset($object->state_id) ? $object->state_id : 0).',
         "ziptownId": "'.(isset($object->zip) ? $object->zip : null).','.(isset($object->town) ? $object->town : null).'", 
