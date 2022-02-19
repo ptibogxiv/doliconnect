@@ -1553,7 +1553,7 @@ print "</div></div>";
 }
 }
 
-if ( !empty(doliconst('MAIN_MODULE_RECRUITMENT')) && doliversion('15.0.0') ) {
+if ( !empty(doliconst('MAIN_MODULE_RECRUITMENT')) && doliversion('15.0.0') && !empty(get_option('doliconnectbeta')) ) {
     add_action( 'grh_doliconnect_menu', 'recruitment_menu', 3, 1);
     add_action( 'grh_doliconnect_recruitment', 'recruitment_module');
     }  
