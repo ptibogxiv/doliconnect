@@ -425,15 +425,15 @@ function rewards_menu($arg){
     
     $fidelity = callDoliApi("GET", "/rewards/".constant("DOLIBARR"), null, dolidelay($delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
     
-    print "Fidelisation ".$fidelity->total." points <small>(soit environ ".doliprice(floor($fidelity->total*doliconst('REWARDS_DISCOUNT'))).")</small>";
+    print "Fidelisation ".$fidelity->total." points <small>(soit environ ".doliprice(floor($fidelity->total*doliconst('REWARDS_DISCOUNT', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)))).")</small>";
     print "</li></ul><div class='card-body'><b>Informations:</b><ul>
     <li>Répétitions: +20 points par présence</li>
     <li>Manifestations (mariage, concert, cérémonies..): +500 points par présence</li>
-    <li>Facture: +1 point par tranche de ".doliprice(doliconst('REWARDS_RATIO'))." dès ".doliprice(doliconst('REWARDS_MINPAY'))." facturés</li>
-    <li>Montant maximal de réduction: ".doliconst('REWARDS_MAXUSE')."% du montant facturé</li>
+    <li>Facture: +1 point par tranche de ".doliprice(doliconst('REWARDS_RATIO', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)))." dès ".doliprice(doliconst('REWARDS_MINPAY'))." facturés</li>
+    <li>Montant maximal de réduction: ".doliconst('REWARDS_MAXUSE', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))."% du montant facturé</li>
     <li>Validité maximale des points: ";
-    if (empty(doliconst('REWARDS_VALIDITY'))) { print __( 'unlimited', 'doliconnect'); } else {
-    print doliconst('REWARDS_VALIDITY')." mois";
+    if (empty(doliconst('REWARDS_VALIDITY', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)))) { print __( 'unlimited', 'doliconnect'); } else {
+    print doliconst('REWARDS_VALIDITY', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))." mois";
     }
     print "</li>";
     
