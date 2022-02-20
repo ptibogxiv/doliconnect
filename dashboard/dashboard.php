@@ -389,6 +389,61 @@ print doliconnect_paymentmethods(null, null, $url, esc_attr(isset($_GET["refresh
 
 }
 
+if ( !empty(doliconst('MAIN_MODULE_REWARDS')) ) {
+    add_action( 'user_doliconnect_menu', 'rewards_menu', 5, 1);
+    add_action( 'user_doliconnect_rewards', 'rewards_module' );
+}
+    
+function rewards_menu($arg){
+    print "<a href='".esc_url(get_permalink()."?module=rewards")."' class='list-group-item list-group-item-light list-group-item-action";
+    if ($arg=='rewards') { print " active";}
+    print "'>".__( 'Rewards & fidelity', 'doliconnect')."</a>";
+    }
+    
+    function rewards_module($url) {
+    global $wpdb,$current_user;
+    $entity = get_current_blog_id();
+    $ID = $current_user->ID;
+    print "<div class='card shadow-sm'>";
+    
+    $delay = DAY_IN_SECONDS;
+    
+    $presence = callDoliApi("GET", "/assiduity/".constant("DOLIBARR_MEMBER"), null, dolidelay($delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+    
+    print "<ul class='list-group list-group-flush'><li class='list-group-item list-group-item-";
+    if ($presence->actual0>=90 ) {
+    print "info";
+    } elseif ( $presence->actual0 >= 66 ) {
+    print "success";
+    } elseif ( $presence->actual0 >= 50 ) {
+    print "warning";
+    } elseif ( $presence->actual0 <50 ) {
+    print "danger";
+    }
+    print "'><table width='100%'><tr><td width='50%' align='center'><b>Votre présence</b><h3>$presence->actual0%</h3></td><td width='50%' align='center'><b>Assiduité du choeur</b><h3>$presence->total0%</h3></td></tr></table>";
+    print "</li><li class='list-group-item'>";
+    
+    $fidelity = callDoliApi("GET", "/rewards/".constant("DOLIBARR"), null, dolidelay($delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+    
+    print "Fidelisation ".$fidelity->total." points <small>(soit environ ".doliprice(floor($fidelity->total*doliconst('REWARDS_DISCOUNT'))).")</small>";
+    print "</li></ul><div class='card-body'><b>Informations:</b><ul>
+    <li>Répétitions: +20 points par présence</li>
+    <li>Manifestations (mariage, concert, cérémonies..): +500 points par présence</li>
+    <li>Facture: +1 point par tranche de ".doliprice(doliconst('REWARDS_RATIO'))." dès ".doliprice(doliconst('REWARDS_MINPAY'))." facturés</li>
+    <li>Montant maximal de réduction: ".doliconst('REWARDS_MAXUSE')."% du montant facturé</li>
+    <li>Validité maximale des points: ".doliconst('REWARDS_VALIDITY')." mois</li>";
+    
+    print '</ul></div>';
+    print "<div class='card-body'></div>";
+    print '<div class="card-footer text-muted">';
+    print "<small><div class='float-start'>";
+    print dolirefresh("/assiduity/".constant("DOLIBARR_MEMBER"), $url, $delay);
+    print "</div><div class='float-end'>";
+    print dolihelp('ISSUE');
+    print "</div></small>";
+    print '</div></div></form>';
+}
+
 //*****************************************************************************************
 
 if ( !empty(doliconst('MAIN_MODULE_WISHLIST')) && doliCheckRights('wishlist', 'read') ) {
