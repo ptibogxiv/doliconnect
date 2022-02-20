@@ -431,7 +431,11 @@ function rewards_menu($arg){
     <li>Manifestations (mariage, concert, cérémonies..): +500 points par présence</li>
     <li>Facture: +1 point par tranche de ".doliprice(doliconst('REWARDS_RATIO'))." dès ".doliprice(doliconst('REWARDS_MINPAY'))." facturés</li>
     <li>Montant maximal de réduction: ".doliconst('REWARDS_MAXUSE')."% du montant facturé</li>
-    <li>Validité maximale des points: ".doliconst('REWARDS_VALIDITY')." mois</li>";
+    <li>Validité maximale des points: ";
+    if (empty(doliconst('REWARDS_VALIDITY'))) { print __( 'unlimited', 'doliconnect'); } else {
+    print doliconst('REWARDS_VALIDITY')." mois";
+    }
+    print "</li>";
     
     print '</ul></div>';
     print "<div class='card-body'></div>";
