@@ -633,7 +633,7 @@ if (isset($_POST['shipping_method_id'])) $data['shipping_method_id'] = $_POST['s
                   
 $object = callDoliApi("PUT", "/".trim($_POST['module'])."/".trim($_POST['id']), $data, 0);
 $object = callDoliApi("GET", "/".trim($_POST['module'])."/".trim($_POST['id'])."?contact_list=0", $data, dolidelay('order', true));
-if ($_POST['contact_shipping']) {
+if (isset($_POST['contact_shipping'])) {
 //$shipping= callDoliApi("POST", "/".trim($_POST['module'])."/".trim($_POST['id'])."/contact/".$_POST['contact_shipping']."/SHIPPING", null, dolidelay('order', true));
 }
 
