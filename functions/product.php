@@ -155,7 +155,7 @@ $order = callDoliApi("POST", "/orders", $rdr, 0);
 
 $order = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order', true)."?contact_list=0", null, dolidelay('order', true));
 
-if ( $order->lines != null ) {
+if ( isset($order->lines) && $order->lines != null ) {
 foreach ( $order->lines as $ln ) {
 if ( $ln->fk_product == $productid ) {
 //$deleteline = callDoliApi("DELETE", "/orders/".$orderid."/lines/".$ln[id], null, 0);
