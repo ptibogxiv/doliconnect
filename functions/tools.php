@@ -633,7 +633,7 @@ print 'disabled';
 }
 print '>';
 print "<option value='' disabled ";
-if ( !isset($object->effectif_id) || $staff == 0) {
+if ( (isset($object->effectif_id) && empty($object->effectif_id)) || $staff == 0) {
 print "selected ";}
 print ">".__( '- Select your staff -', 'doliconnect')."</option>";
 foreach ( $staff as $postv ) { 
