@@ -281,11 +281,11 @@ $dolibarr = callDoliApi("POST", "/doliconnector/".$user, $rdr, dolidelay('dolico
 define('DOLIBARR', $dolibarr->fk_soc);
 } else {   
 define('DOLIBARR', $dolibarr->fk_soc);}
-define('PRICE_LEVEL', $dolibarr->price_level);
-define('REMISE_PERCENT', $dolibarr->remise_percent);
-define('DOLIBARR_MEMBER', $dolibarr->fk_member);
-define('DOLIBARR_TRAINEE', $dolibarr->fk_trainee);
-define('DOLIBARR_USER', $dolibarr->fk_user); 
+if (isset($dolibarr->price_level)) define('PRICE_LEVEL', $dolibarr->price_level);
+if (isset($dolibarr->remise_percent)) define('REMISE_PERCENT', $dolibarr->remise_percent);
+if (isset($dolibarr->fk_member)) define('DOLIBARR_MEMBER', $dolibarr->fk_member);
+if (isset($dolibarr->fk_trainee)) define('DOLIBARR_TRAINEE', $dolibarr->fk_trainee);
+if (isset($dolibarr->fk_user)) define('DOLIBARR_USER', $dolibarr->fk_user); 
 define('DOLICONNECT_CART', $dolibarr->fk_order);
 define('DOLICONNECT_CART_ITEM', $dolibarr->fk_order_nb_item);
 } 
