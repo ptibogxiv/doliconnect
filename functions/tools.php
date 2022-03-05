@@ -473,7 +473,7 @@ $password .= '</div></div>';
 return $password;
 }
 
-function doliProfId($idprof1, $idprof2, $idprof3, $idprof4, $country_code, $idobject, $rights) {
+function doliProfId($idprof1 = null, $idprof2 = null, $idprof3 = null, $idprof4 = null, $country_code = 0, $idobject = 0, $rights = 1) {
   $ifprod = '';
 if (is_numeric($country_code)) { 
 $country_code = callDoliApi("GET", "/setup/dictionary/countries/".$country_code, null, dolidelay('constante',))->code;
@@ -608,7 +608,9 @@ print '</div></div>';
 
 print '<div id="profids" class="row mb-2 g-2">';
     
+if ( doliversion('15.0.0') ) {
 print doliProfId($object->idprof1, $object->idprof2, $object->idprof3, $object->idprof4, $object->country_code, $idobject, $rights);
+}
 
 print '</div><div class="row g-2"><div class="col-md-6 col-lg-4"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[tva_intra]" name="'.$idobject.'[tva_intra]" placeholder="tva" value="'.(isset($object->tva_intra) ? $object->tva_intra : null).'"';
 if ((isset($object->tva_intra) && !empty($object->tva_intra)) || !$rights) { print ' readonly'; } else { print ''; }
