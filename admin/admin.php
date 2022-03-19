@@ -285,7 +285,7 @@ delete_option('doliconnect_google');}
             update_option('doliaccount', sanitize_text_field($_REQUEST['doliaccount']));   
             update_option('doliaccountinfo', sanitize_text_field($_REQUEST['doliaccountinfo'])); 
             update_option('doliconnect_disablepro', sanitize_text_field($_REQUEST['doliconnect_disablepro']));
-            update_option('doliconnect_cronjob', sanitize_text_field($_REQUEST['doliconnect_cronjob']));
+            if (isset($_REQUEST['doliconnect_cronjob'])) update_option('doliconnect_cronjob', sanitize_text_field($_REQUEST['doliconnect_cronjob']));
             if (isset($_REQUEST['doliconnectrestrict_role'])) update_option('doliconnectrestrict_role', sanitize_text_field($_REQUEST['doliconnectrestrict_role']));
             if (isset($_REQUEST['dolibarr_entity'])) update_option('dolibarr_entity', sanitize_text_field($_REQUEST['dolibarr_entity']));
             update_option('dolicart', sanitize_text_field($_REQUEST['dolicart']));
