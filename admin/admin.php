@@ -300,14 +300,7 @@ delete_option('doliconnect_google');}
             update_option('dolishipping', sanitize_text_field($_REQUEST['dolishipping']));
             update_option('dolicartnewlist', sanitize_text_field($_REQUEST['dolicartnewlist']));
             update_option('dolicartlist', sanitize_text_field($_REQUEST['dolicartlist']));
-            update_option('dolisupplier', sanitize_text_field($_REQUEST['dolisupplier']));             
-            update_option('doliconnect_social_facebook', sanitize_text_field($_REQUEST['doliconnect_social_facebook']));
-            update_option('doliconnect_social_twitter', sanitize_text_field($_REQUEST['doliconnect_social_twitter']));
-            update_option('doliconnect_social_instagram', sanitize_text_field($_REQUEST['doliconnect_social_instagram']));
-            update_option('doliconnect_social_youtube', sanitize_text_field($_REQUEST['doliconnect_social_youtube']));
-            update_option('doliconnect_social_github', sanitize_text_field($_REQUEST['doliconnect_social_github']));
-            update_option('doliconnect_social_linkedin', sanitize_text_field($_REQUEST['doliconnect_social_linkedin']));
-            update_option('doliconnect_social_skype', sanitize_text_field($_REQUEST['doliconnect_social_skype']));                        
+            update_option('dolisupplier', sanitize_text_field($_REQUEST['dolisupplier']));                                  
             update_option('dolicontact', sanitize_text_field($_REQUEST['dolicontact']));          
             update_option('doliconnect_facebook_key', sanitize_text_field($_REQUEST['doliconnect_facebook_key']));
             update_option('doliconnect_facebook_secret', sanitize_text_field($_REQUEST['doliconnect_facebook_secret']));     
@@ -580,18 +573,6 @@ if (is_plugin_active( 'doliconnect-classifieds/doliconnect-classifieds.php' ) ) 
                 </select>
                 </td>
             </tr>
-        <tr>
-            <th style="width:100px;"><label for="doliconnect_sociallink">Social link</label></th>
-            <td>
-            <input class="regular-text" type="text" id="doliconnect_social_facebook" name="doliconnect_social_facebook"  value="<?php echo get_option('doliconnect_social_facebook'); ?>" >Facebook<br>
-            <input class="regular-text" type="text" id="doliconnect_social_twitter" name="doliconnect_social_twitter"  value="<?php echo get_option('doliconnect_social_twitter'); ?>" >Twitter<br>
-            <input class="regular-text" type="text" id="doliconnect_social_instagram" name="doliconnect_social_instagram"  value="<?php echo get_option('doliconnect_social_instagram'); ?>" >Instagram<br>
-            <input class="regular-text" type="text" id="doliconnect_social_youtube" name="doliconnect_social_youtube"  value="<?php echo get_option('doliconnect_social_youtube'); ?>" >Youtube<br>
-            <input class="regular-text" type="text" id="doliconnect_social_github" name="doliconnect_social_github"  value="<?php echo get_option('doliconnect_social_github'); ?>" >Github<br>
-            <input class="regular-text" type="text" id="doliconnect_social_linkedin" name="doliconnect_social_linkedin"  value="<?php echo get_option('doliconnect_social_linkedin'); ?>" >Linkedin<br>            
-            <input class="regular-text" type="text" id="doliconnect_social_skype" name="doliconnect_social_skype"  value="<?php echo get_option('doliconnect_social_skype'); ?>" >Skype<br>            
-            </td>
-        </tr>
         <tr>
             <th style="width:100px;"><label for="doliconnect_sociallogin">Social login</label></th>
             <td><input name="doliconnect_facebook" type="checkbox" id="doliconnect_facebook" value="1" <?php checked('1', get_option('doliconnect_facebook')); ?> /> Facebook<br>
