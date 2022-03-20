@@ -1650,11 +1650,13 @@ return $term;
 }
 
 function dolishipmentmethods($id, $refresh = false) {
+if ( !empty($id) && $id > 0) {
 $paymenterm = callDoliApi("GET", "/setup/dictionary/shipping_methods?sortfield=rowid&sortorder=ASC&limit=100&active=1&sqlfilters=(t.rowid%3A%3D%3A'".$id."')", null, dolidelay('constante', $refresh)); 
 //print var_dump($paymenterm[0]);
 $term = (isset($paymenterm[0]->label)?$paymenterm[0]->label:$paymenterm[0]->libelle); 
 if (isset($paymenterm[0]->description) && !empty($paymenterm[0]->description)) $term .= ' <small>('.$paymenterm[0]->description.')</small>'; 
 return $term;
+}
 }
 
 function doliconnect_langs($arg) {
