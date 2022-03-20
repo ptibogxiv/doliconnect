@@ -1369,7 +1369,7 @@ $product = callDoliApi("GET", "/products/".$line->fk_product."?includestockdata=
 }
 
 $warehouse = doliconst('DOLICONNECT_ID_WAREHOUSE', $refresh);
-if (isset($product->stock_warehouse) && !empty($product->stock_warehouse) && !empty($warehouse)) {
+if (isset($product->stock_warehouse) && !empty($product->stock_warehouse) && !empty($warehouse) && $warehouse > 0) {
 if (isset($product->stock_warehouse->$warehouse)) {
 $realstock = min(array($product->stock_reel,$product->stock_warehouse->$warehouse->real,$product->stock_theorique));
 } else {
