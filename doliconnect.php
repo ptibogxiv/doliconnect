@@ -315,12 +315,13 @@ $dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolide
 
 if ( defined("DOLIBUG") || (is_object($dolibarr) && ! empty($dolibarr->fk_soc) ) )  {
 
-if ( ! empty($value) ) {
+if ( ! empty($value) && isset($dolibarr->$value) ) {
 return $dolibarr->$value;
+} elseif ( ! empty($value) && !isset($dolibarr->$value) ) {
+    return null;
 } else {
-return $dolibarr;
+    return $dolibarr;
 }
- 
 } else {
 
 $dolibarr = callDoliApi("POST", "/doliconnector/".$current_user->ID, $thirdparty, dolidelay('doliconnector', true));
