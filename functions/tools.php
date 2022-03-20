@@ -1656,6 +1656,8 @@ $paymenterm = callDoliApi("GET", "/setup/dictionary/shipping_methods?sortfield=r
 $term = (isset($paymenterm[0]->label)?$paymenterm[0]->label:$paymenterm[0]->libelle); 
 if (isset($paymenterm[0]->description) && !empty($paymenterm[0]->description)) $term .= ' <small>('.$paymenterm[0]->description.')</small>'; 
 return $term;
+} else {
+return __('Transporter by default', 'doliconnect'); 
 }
 }
 
