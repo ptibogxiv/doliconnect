@@ -489,7 +489,7 @@ $button .= "<div class='input-group'><a class='btn btn-block btn-info' href='".d
 
 } elseif ( is_user_logged_in() && !empty($add) && !empty(doliconst('MAIN_MODULE_COMMANDE', $refresh)) && doliconnectid('dolicart') > 0 ) {
 $warehouse = doliconst('DOLICONNECT_ID_WAREHOUSE', $refresh);
-if (isset($product->stock_warehouse) && !empty($product->stock_warehouse) && !empty($warehouse)) {
+if (isset($product->stock_warehouse) && !empty($product->stock_warehouse) && !empty($warehouse) && $warehouse > 0) {
 if (isset($product->stock_warehouse->$warehouse)) {
 $realstock = min(array($product->stock_reel,$product->stock_warehouse->$warehouse->real,$product->stock_theorique));
 } else {
