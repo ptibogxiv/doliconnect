@@ -1720,14 +1720,16 @@ $shipping_method_id = $thirdparty->shipping_method_id;
 if (!empty($object->shipping_method_id)) { $shipping_method_id = $object->shipping_method_id; }
 if ( !isset($listshipment->error) && $listshipment != null ) {
 print "<li class='list-group-item list-group-item-action'><h6>".__( 'Shipping method', 'doliconnect')."</h6>";
+$i=0;
 foreach ( $listshipment as $shipment ) {
 if ($object->total_ht >= $shipment->palier && !isset($controlefdp[$shipment->fk_shipment_mode])) {
 print '<div class="form-check"><input type="radio" id="shipment-'.$shipment->id.'" name="shipping_method_id" class="form-check-input" value="'.$shipment->fk_shipment_mode.'" ';
-if ( $shipping_method_id == $shipment->fk_shipment_mode ) { print "checked"; }
-print ' ><label class="form-check-label" for="shipment-'.$shipment->id.'">'.dolishipmentmethods($shipment->fk_shipment_mode).' - '.doliprice($shipment, (empty(get_option('dolibarr_b2bmode'))?'price_ttc':'price_ht'));
+if ( empty($i) || $shipping_method_id == $shipment->fk_shipment_mode ) { print " checked"; }
+print '><label class="form-check-label" for="shipment-'.$shipment->id.'">'.dolishipmentmethods($shipment->fk_shipment_mode).' - '.doliprice($shipment, (empty(get_option('dolibarr_b2bmode'))?'price_ttc':'price_ht'));
 if (!empty($shipment->description)) print ' <small>('.$shipment->description.')</small>';
 print '</label></div>';
 $controlefdp[$shipment->fk_shipment_mode] = true;
+$i++;
 }
 }
 print "</li>";
@@ -1740,8 +1742,8 @@ if ( !isset($listshipment->error) && $listshipment != null ) {
 print "<li class='list-group-item list-group-item-action'><h6>".__( 'Shipping method', 'doliconnect')."</h6>";
 foreach ( $listshipment as $shipment ) {
 print '<div class="form-check"><input type="radio" id="shipment-'.$shipment->id.'" name="shipping_method_id" class="form-check-input" value="'.$shipment->id.'" ';
-if ( $shipping_method_id == $shipment->id ) { print "checked"; }
-print ' ><label class="form-check-label" for="shipment-'.$shipment->id.'">'.$shipment->label;
+if ( $shipping_method_id == $shipment->id ) { print " checked"; }
+print '><label class="form-check-label" for="shipment-'.$shipment->id.'">'.$shipment->label;
 if (!empty($shipment->description)) print ' <small>('.$shipment->description.')</small>';
 print '</label></div>';
 $controlefdp[$shipment->id] = true;
