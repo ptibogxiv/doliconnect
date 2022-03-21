@@ -765,7 +765,7 @@ $includestock = 1;
 foreach ($resultats2 as $product) {
 
 $resultats[$product[0]->id] = 1; 
-$product = callDoliApi("GET", "/products/".$product[0]->id."?includestockdata=".$includestock."&includesubproducts=true", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$product = callDoliApi("GET", "/products/".$product[0]->id."?includestockdata=".$includestock."&includesubproducts=true&includetrans=true", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 print apply_filters( 'doliproductlist', $product);
 
 }
@@ -897,7 +897,7 @@ $includestock = 1;
 print "<li class='list-group-item list-group-item-light'><center>".__(  'Here are our new items', 'doliconnect')."</center></li>";
 foreach ($resultats as $product) {
 
-$product = callDoliApi("GET", "/products/".$product->id."?includestockdata=".$includestock."&includesubproducts=true", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$product = callDoliApi("GET", "/products/".$product->id."?includestockdata=".$includestock."&includesubproducts=true&includetrans=true", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 print apply_filters( 'doliproductlist', $product);
  
 }
@@ -941,7 +941,7 @@ $includestock = 1;
 print "<li class='list-group-item list-group-item-light'><center>".__(  'Here are our discounted items', 'doliconnect')."</center></li>";
 foreach ($resultats as $product) {
 
-$product = callDoliApi("GET", "/products/".$product->fk_product."?includestockdata=".$includestock."&includesubproducts=true", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$product = callDoliApi("GET", "/products/".$product->fk_product."?includestockdata=".$includestock."&includesubproducts=true&includetrans=true", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 print apply_filters( 'doliproductlist', $product);
  
 }
@@ -964,7 +964,7 @@ $includestock = 0;
 if ( ! empty(doliconnectid('dolicart')) ) {
 $includestock = 1;
 }
-$request = "/products/".esc_attr($_GET['product'])."?includestockdata=".$includestock."&includesubproducts=true";
+$request = "/products/".esc_attr($_GET['product'])."?includestockdata=".$includestock."&includesubproducts=true&includetrans=true";
 $product = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 print "<div class='card-body'>";
@@ -1081,7 +1081,7 @@ $includestock = 1;
 }
 foreach ($resultats as $product) {
 
-$product = callDoliApi("GET", "/products/".$product->id."?includestockdata=".$includestock."&includesubproducts=true", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$product = callDoliApi("GET", "/products/".$product->id."?includestockdata=".$includestock."&includesubproducts=true&includetrans=true", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 print apply_filters( 'doliproductlist', $product);
  
 }
