@@ -1363,7 +1363,7 @@ foreach ( $object->lines as $line ) {
 
 if ( $line->fk_product > 0 ) {
 if ($refresh || $refreshstock) $refreshstock = true;
-$product = callDoliApi("GET", "/products/".$line->fk_product."?includestockdata=1&includesubproducts=true", null, dolidelay('cart', $refreshstock));
+$product = callDoliApi("GET", "/products/".$line->fk_product."?includestockdata=1&includesubproducts=true&includetrans=true", null, dolidelay('cart', $refreshstock));
 }
 
 $warehouse = doliconst('DOLICONNECT_ID_WAREHOUSE', $refresh);
