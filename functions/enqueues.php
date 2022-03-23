@@ -38,7 +38,7 @@ $version=$versionbase;
   }
   wp_register_style( 'bootstrap-social', plugins_url( 'doliconnect/includes/bootstrap/css/bootstrap-social.css'), array(), $version);
 	wp_enqueue_style( 'bootstrap-social');
-  wp_register_style( 'flag-icon-css', plugins_url( 'doliconnect/includes/flag-icon-css/css/flag-icon.css'), array(), '4.1.4'); 
+  wp_register_style( 'flag-icon-css', plugins_url( 'doliconnect/includes/flag-icon-css/css/flag-icons.css'), array(), '4.1.4'); 
 	wp_enqueue_style( 'flag-icon-css');
 }
 
