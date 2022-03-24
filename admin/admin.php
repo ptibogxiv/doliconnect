@@ -155,7 +155,7 @@ delete_site_option('doliconnect_cronjob_multisite');
     
     /*** End of sample license deactivation ***/    
 		?>       
-<div id="<?php echo $id; ?>" class="postbox">
+<div id="generaladmin" class="postbox">
 <div class="inside">
 
 <?php
