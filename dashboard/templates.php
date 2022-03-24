@@ -1722,7 +1722,7 @@ if ( !isset($listshipment->error) && $listshipment != null ) {
 print "<li class='list-group-item list-group-item-action'><h6>".__( 'Shipping method', 'doliconnect')."</h6>";
 $i=0;
 foreach ( $listshipment as $shipment ) {
-if ($object->total_ht >= $shipment->palier && !isset($controlefdp[$shipment->fk_shipment_mode])) {
+if (isset($object->total_ht) && $object->total_ht >= $shipment->palier && !isset($controlefdp[$shipment->fk_shipment_mode])) {
 print '<div class="form-check"><input type="radio" id="shipment-'.$shipment->id.'" name="shipping_method_id" class="form-check-input" value="'.$shipment->fk_shipment_mode.'" ';
 if ( empty($i) || $shipping_method_id == $shipment->fk_shipment_mode ) { print " checked"; }
 print '><label class="form-check-label" for="shipment-'.$shipment->id.'">'.dolishipmentmethods($shipment->fk_shipment_mode).' - '.doliprice($shipment, (empty(get_option('dolibarr_b2bmode'))?'price_ttc':'price_ht'));
@@ -1752,7 +1752,7 @@ print "</li>";
 }
 }
 
-$note_public = isset($_POST['note_public']) ? $_POST['note_public'] : $object->note_public;
+$note_public = isset($_POST['note_public']) ? $_POST['note_public'] : (isset($object->note_public) ? $object->note_public: null);
 
 if ( empty(doliconst('MAIN_DISABLE_NOTES_TAB')) ) {
 print "<li class='list-group-item list-group-item-action'>";
