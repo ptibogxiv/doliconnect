@@ -459,7 +459,7 @@ function dolirpw_request(){
 global $wpdb; 
 
 if ( wp_verify_nonce( trim($_POST['dolirpw-nonce']), 'dolirpw-nonce')) {
-$pwd0 = sanitize_text_field($_POST["pwd0"]);
+if (isset($pwd0)) $pwd0 = sanitize_text_field($_POST["pwd0"]);
 $pwd1 = sanitize_text_field($_POST["pwd1"]);
 $pwd2 = sanitize_text_field($_POST["pwd2"]);
 
