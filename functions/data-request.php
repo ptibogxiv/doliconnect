@@ -574,7 +574,7 @@ $dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolide
 $response = [
     'items' => '0',
     'lines' => doliline(null, null),
-	'total' => dolitotal(),
+	'total' => doliprice(),
     'message' => __( 'Your cart has been emptied', 'doliconnect'),
         ];
 wp_send_json_success($response);
@@ -594,7 +594,7 @@ if ($result >= 0) {
 	$response = [
 	'items' => $result,
     'lines' => doliline($object, true),
-    'total' => dolitotal($object),
+    'total' => doliprice($object, 'ttc', isset($object->multicurrency_code) ? $object->multicurrency_code : null),
     'message' => __( 'Quantities have been changed', 'doliconnect'),
         ];
 		wp_send_json_success( $response ); 
