@@ -586,7 +586,7 @@ wp_send_json_error( __( 'An error occured:', 'doliconnect').' '.$object->error->
 }
 } elseif ( isset($_POST['action_cart']) && $_POST['action_cart'] == "update_cart") {
 
-$result = doliaddtocart($_POST['productid'], $_POST['qty'], $_POST['price'], $_POST['remise_percent'], $_POST['date_start'], $_POST['date_end']);
+$result = doliaddtocart($_POST['productid'], $_POST['qty'], $_POST['price'], (isset($_POST['remise_percent'])?$_POST['remise_percent']:null), (isset($_POST['date_start'])?$_POST['date_start']:null), (isset($_POST['date_end'])?$_POST['date_end']:null));
 
 if (isset($_POST['module']) && isset($_POST['id']) ) $object = callDoliApi("GET", "/".trim($_POST['module'])."/".trim($_POST['id']), null, dolidelay('order', true));
 
