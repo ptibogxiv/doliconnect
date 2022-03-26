@@ -91,6 +91,9 @@ $product2 = callDoliApi("GET", "/discountprice?productid=".$product['id']."&sort
 if ( is_numeric(doliconst("PRODUIT_CUSTOMER_PRICES"))) {
 $product3 = callDoliApi("GET", "/products/".$product['id']."/selling_multiprices/per_customer", null, dolidelay('product', $refresh));
 }
+if ( is_numeric(doliconst("PRODUIT_CUSTOMER_PRICES", $refresh))) {
+$product4 = callDoliApi("GET", "/products/".$product['id']."/selling_multiprices/per_customer", null, dolidelay('product', $refresh));
+}
 }
 }
 }
