@@ -10,6 +10,8 @@ if (isset($object->$value)) return $object->$value;
 }
 
 function doliprice($object = null, $mode = "ttc", $currency = null) {
+global $current_user;
+
 if ( is_object($object) ) {
 $total='multicurrency_total_'.$mode;
 if ( isset($object->$mode) ) { $montant=$object->$mode;
