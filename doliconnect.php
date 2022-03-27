@@ -124,19 +124,6 @@ define( 'DONOTCACHEPAGE', 1);
 }
 }
 // ********************************************************
-//add_action ('wp_loaded', 'doliconnect_confirm_admin_email_redirect');
-//function doliconnect_confirm_admin_email_redirect() {
-//$slug = null;
-//if ( isset($_GET["action"]) && $_GET["action"] == 'confirm_admin_email' ) {
-//if ( function_exists('secupress_get_module_option') && secupress_get_module_option('move-login_slug-login', $slug, 'users-login' ) && !empty(secupress_get_module_option('move-login_slug-login', $slug, 'users-login')) ) {
-//$login_url=home_url()."/".secupress_get_module_option('move-login_slug-login', $slug, 'users-login'); 
-//} else {
-//$login_url=home_url()."/wp-login.php"; }
-//wp_redirect( $login_url .'?action=confirm_admin_email&wp_lang='.$_GET["wp_lang"] );
-//exit;
-//}  
-//}
-// ********************************************************
 function json_basic_auth_handler( $user ) {
 	global $wp_json_basic_auth_error;
 	$wp_json_basic_auth_error = null;
