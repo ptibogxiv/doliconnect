@@ -540,7 +540,8 @@ add_filter( 'lostpassword_url', 'doliconnect_lost_password_page', 10, 2 );}
 
 function doliconnect_login_link_url( $login_url, $redirect, $force_reauth ) {
 if (get_option('doliaccount') && !preg_match('/action=confirm_admin_email/i', $redirect)) {
-$login_url = doliconnecturl('doliaccount');
+//$login_url = doliconnecturl('doliaccount');
+$login_url = add_query_arg( 'redirect_to', urlencode( $redirect ), $login_url );
 }
 if ( ! empty( $redirect ) ) {
 $login_url = add_query_arg( 'redirect_to', urlencode( $redirect ), $login_url );
