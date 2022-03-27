@@ -591,12 +591,16 @@ $result = doliaddtocart($_POST['productid'], $_POST['qty'], $_POST['price'], (is
 if (isset($_POST['module']) && isset($_POST['id']) ) $object = callDoliApi("GET", "/".trim($_POST['module'])."/".trim($_POST['id']), null, dolidelay('order', true));
 
 if ($result >= 0) {
-	$response = [
-	'items' => $result,
-    'lines' => doliline($object, true),
-    'total' => doliprice($object, 'ttc', isset($object->multicurrency_code) ? $object->multicurrency_code : null),
-    'message' => __( 'Quantities have been changed', 'doliconnect'),
-        ];
+		$response = [
+		'items' => $result,
+    	'message' => __( 'Quantities have been changed', 'doliconnect')
+    	];
+		if (isset($object)) {
+		$response .= [
+		'lines' => doliline($object, true),
+		'total' => doliprice($object, 'ttc', isset($object->multicurrency_code) ? $object->multicurrency_code : null)
+		];	
+		}	
 		wp_send_json_success( $response ); 
 	} else {
 	$response = [
