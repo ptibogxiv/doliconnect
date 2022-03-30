@@ -27,9 +27,9 @@ $content .= "<li class='list-group-item'><center>".__( 'No discounted item', 'do
 }
 $content .= '</ul><div class="card-body"></div>';
 $content .= "<div class='card-footer text-muted'>";
-$content .= "<small><div class='float-left'>";
+$content .= "<small><div class='float-start'>";
 $content .= dolirefresh($request, null, dolidelay('product'));
-$content .= "</div><div class='float-right'>";
+$content .= "</div><div class='float-end'>";
 $content .= dolihelp('ISSUE');
 $content .= "</div></small>";
 $content .= "</div></div>";
