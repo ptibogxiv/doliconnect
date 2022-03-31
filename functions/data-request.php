@@ -480,7 +480,7 @@ $doliuser = callDoliApi("PUT", "/users/".doliconnector($current_user, 'fk_user')
 }
 
 if (!is_user_logged_in()) {
-$wpdb->update( $wpdb->users, array( 'user_activation_key' => '' ), array( 'user_login' => $user->user_login ) );
+$wpdb->update( $wpdb->users, array( 'user_activation_key' => '' ), array( 'user_login' => $current_user->user_login ) );
 }
 
 wp_send_json_success( dolialert('success', __( 'Your informations have been updated. Now, you will be log out and need to log in again.', 'doliconnect')));
