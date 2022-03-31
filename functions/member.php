@@ -199,7 +199,9 @@ doliconnect_enqueues();
 $delay = dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 $request = "/adherentsplus/".doliconnector($current_user, 'fk_member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)); 
 if ( !empty(doliconnector($current_user, 'fk_member')) && doliconnector($current_user, 'fk_member') > 0 && doliconnector($current_user, 'fk_soc') > 0 ) {
-$adherent = callDoliApi("GET", $request, null, $delay);
+  $adherent = callDoliApi("GET", $request, null, $delay);
+} else {
+  $adherent = null;
 }
 
 print "<div class='modal fade' id='activatemember' tabindex='-1' aria-labelledby='activatememberLabel' aria-hidden='true' data-bs-keyboard='false'>
