@@ -174,6 +174,8 @@ if (is_array($imgj) && !isset($imgj['error']) && preg_match('/^image/', $imgj['c
 if (!is_dir($up_dir['basedir'].'/doliconnect/'.$module.$dir)) {
 mkdir($up_dir['basedir'].'/doliconnect/'.$module.$dir, 0755, true);
 }
+$size = null;
+if (isset($options['size'])) $size = '-'.$options['size'];
 //$files = glob($up_dir['basedir'].'/doliconnect/'.$module.'/'.$id."/*");
 //foreach($files as $file){
 //if(is_file($file))
@@ -182,13 +184,13 @@ mkdir($up_dir['basedir'].'/doliconnect/'.$module.$dir, 0755, true);
 $file=$up_dir['basedir'].'/doliconnect/'.$module.$dir.'/'.$img->relativename;
 file_put_contents($file, base64_decode($imgj['content']));
 
-if (!is_file($up_dir['basedir'].'/doliconnect/'.$module.$dir.'/'.explode('.', $img->relativename, 2)[0].'-'.$options['size'].'.'.explode('.', $img->relativename, 2)[1])) {
+if (!is_file($up_dir['basedir'].'/doliconnect/'.$module.$dir.'/'.explode('.', $img->relativename, 2)[0].$size.'.'.explode('.', $img->relativename, 2)[1])) {
 $imgy = wp_get_image_editor($file); 
 $imgy->resize( 350, 350, true );
-$avatar = $imgy->generate_filename($options['size'],$up_dir['basedir']."/doliconnect/".$module.$dir."/", NULL );
+$avatar = $imgy->generate_filename($size,$up_dir['basedir']."/doliconnect/".$module.$dir."/", NULL );
 $imgy->save($avatar);
 }
-$image .= "<img src='".$up_dir['baseurl'].'/doliconnect/'.$module.$dir.'/'.explode('.', $img->relativename, 2)[0].'-'.$options['size'].'.'.explode('.', $img->relativename, 2)[1]."' class='";
+$image .= "<img src='".$up_dir['baseurl'].'/doliconnect/'.$module.$dir.'/'.explode('.', $img->relativename, 2)[0].$size.'.'.explode('.', $img->relativename, 2)[1]."' class='";
 if (empty($options['limit'])) {
 $image .= "img-fluid card-img";
 } else {
