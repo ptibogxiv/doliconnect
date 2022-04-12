@@ -1331,6 +1331,7 @@ return $address;
 function dolicontact($id, $refresh = false) {
 global $current_user;
 $object = callDoliApi("GET", "/contacts/".$id, null, dolidelay('contact', esc_attr(isset($refresh) ? $refresh : null)));  
+if (isset($object->id)) {
 $address = "<b><i class='fas fa-address-book fa-fw'></i> ".($object->civility ? $object->civility : $object->civility_code)." ".$object->firstname." ".$object->lastname;
 if ( !empty($object->default) ) { $address .= " <i class='fas fa-star fa-1x fa-fw' style='color:Gold'></i>"; }
 if ( !empty($object->poste) ) { $address .= ", ".$object->poste; }
@@ -1344,6 +1345,7 @@ $lang = $current_user->locale;
 $country = callDoliApi("GET", "/setup/dictionary/countries/".$object->country_id."?lang=".$lang, null, dolidelay('constante', $refresh)); }
 $address .= "<small class='text-muted'>".$object->address.", ".$object->zip." ".$object->town." - ".$country->label."<br>".$object->email." - ".$object->phone_pro."</small>";
 return $address;
+}
 }
 
 function dolitotal($object) { 
