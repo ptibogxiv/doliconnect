@@ -25,7 +25,7 @@ $content .= apply_filters( 'doliproductlist', $product);
 } else {
 $content .= "<li class='list-group-item'><center>".__( 'No discounted item', 'doliconnect' )."</center></li>";
 }
-$content .= '</ul><div class="card-body"></div>';
+$content .= '</ul>';
 $content .= "<div class='card-footer text-muted'>";
 $content .= "<small><div class='float-start'>";
 $content .= dolirefresh($request, null, dolidelay('product'));
