@@ -519,6 +519,7 @@ $m2 = $m1;
 $m2 = $realstock;
 } else { $m2 = $qty; }
 } else {
+$m0 = 1;
 if ( isset($line) && $line->qty > 1 ) { $m2 = $qty; }
 else { $m2 = 1; }
 } 
