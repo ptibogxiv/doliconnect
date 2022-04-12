@@ -17,11 +17,8 @@ $resultats = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(is
 
 if ( !isset($resultats->error) && $resultats != null ) {
 $count = count($resultats);
-//$content .= "<li class='list-group-item list-group-item-light'><center>".__(  'Here are our discounted items', 'doliconnect')."</center></li>";
 foreach ($resultats as $product) {
-
 $content .= apply_filters( 'doliproductlist', $product);
- 
 }
 } else {
 $content .= "<li class='list-group-item'><center><center>".__( 'No new item', 'doliconnect' )."</center></li>";
