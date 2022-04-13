@@ -484,7 +484,7 @@ $wpdb->update( $wpdb->users, array( 'user_activation_key' => '' ), array( 'user_
 }
 
 wp_send_json_success( dolialert('success', __( 'Your informations have been updated. Now, you will be log out and need to log in again.', 'doliconnect')));
-} elseif (is_user_logged_in() && isset( $current_user->ID ) && ! wp_check_password( $pwd0, $current_user->user_pass, $current_user->ID ) ) {
+} elseif (is_user_logged_in() && isset( $current_user->ID ) && (!isset($pwd0) || (isset($pwd0) && ! wp_check_password( $pwd0, $current_user->user_pass, $current_user->ID ))) ) {
 wp_send_json_error( dolialert('danger', __( 'Your actual password is incorrect', 'doliconnect')));
 } elseif ( $pwd1 != $_POST["pwd2"] ) {
 wp_send_json_error( dolialert('danger',  __( 'The new passwords entered are different', 'doliconnect')));
