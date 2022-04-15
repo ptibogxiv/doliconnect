@@ -616,8 +616,8 @@ print "</div></div>";
 print "<div class='row'><div class='col-md-4'><div class='form-group'><h4>".__( 'Address', 'doliconnect')."</h4>";
 $company = callDoliApi("GET", "/setup/company", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 print $company->name.'<br>';
-print $company->address.'<br>';
-print $company->zip.' '.$company->town.'<br>';
+if (isset($company->address) && !empty($company->address)) print $company->address.'<br>';
+if (isset($company->town) && !empty($company->town)) print $company->zip.' '.$company->town.'<br>';
 if ( isset($company->state_id) && !empty($company->state_id) ) {  
   if ( function_exists('pll_the_languages') ) { 
   $lang = pll_current_language('locale');
