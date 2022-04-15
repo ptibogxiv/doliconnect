@@ -641,6 +641,7 @@ print '<br>';
 if (isset($company->phone) && !empty($company->phone)) print $company->phone;
 print "<br><h4>".__( 'Opening hours', 'doliconnect')."</h4>";
 
+
 print "</div><div class='col-md-8'><div id='content'>";
 
 print "<div id='dolicontact-alert'></div><form id='dolicontact-form' method='post' class='was-validated' action='".admin_url('admin-ajax.php')."'>";
