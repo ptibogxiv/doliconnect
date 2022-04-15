@@ -625,7 +625,7 @@ $lang = pll_current_language('locale');
 $lang = $current_user->locale;
 }
 $country = callDoliApi("GET", "/setup/dictionary/countries/".$company->country_id."?lang=".$lang, null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))); }
-print $country->label;
+print $country->label.'<br>';
 if (isset($company->phone) && !empty($company->phone)) print $company->phone.'<br>';
 print "</div></div><div class='col-md-8'><div id='content'>";
 
