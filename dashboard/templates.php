@@ -639,7 +639,7 @@ print $country->label;
 }
 print '<br>';
 if (isset($company->phone) && !empty($company->phone)) print $company->phone;
-print "<h4>".__( 'Opening hours', 'doliconnect')."</h4>";
+print "<br><h4>".__( 'Opening hours', 'doliconnect')."</h4>";
 
 print "</div><div class='col-md-8'><div id='content'>";
 
