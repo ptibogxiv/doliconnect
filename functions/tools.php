@@ -314,6 +314,14 @@ $connect .= '<div><div style="display:inline-block;width:46%;float:left"><hr wid
 return $connect;
 }
 
+function doliopeninghours($constante){
+if (!empty(doliconst($constante))) { 
+  return doliconst($constante);
+} else {
+  return __( 'closed', 'doliconnect');
+}
+}
+
 function doliajax($id, $url = null, $case = null){
   $ajax = "<input type='hidden' name='action' value='".$id."_request'>";
   $ajax .= "<input type='hidden' name='case' value='".$case."'>";

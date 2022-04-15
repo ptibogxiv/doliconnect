@@ -640,13 +640,13 @@ print $country->label;
 print '<br>';
 if (isset($company->phone) && !empty($company->phone)) print $company->phone;
 print "<br><h4>".__( 'Opening hours', 'doliconnect')."</h4>";
-print __( 'Monday', 'doliconnect').": ".doliconst('MAIN_INFO_OPENINGHOURS_MONDAY').'<br>';
-print __( 'Tuesday', 'doliconnect').": ".doliconst('MAIN_INFO_OPENINGHOURS_TUESDAY').'<br>';
-print __( 'Wednesday', 'doliconnect').": ".doliconst('MAIN_INFO_OPENINGHOURS_WEDNESDAY').'<br>';
-print __( 'Thursday', 'doliconnect').": ".doliconst('MAIN_INFO_OPENINGHOURS_THURSDAY').'<br>';
-print __( 'Friday', 'doliconnect').": ".doliconst('MAIN_INFO_OPENINGHOURS_FRIDAY').'<br>';
-print __( 'Saturday', 'doliconnect').": ".doliconst('MAIN_INFO_OPENINGHOURS_SATURDAY').'<br>';
-print __( 'Sunday', 'doliconnect').": ".doliconst('MAIN_INFO_OPENINGHOURS_SUNDAY');
+print __( 'Monday', 'doliconnect').": ".doliopeninghours('MAIN_INFO_OPENINGHOURS_MONDAY').'<br>';
+print __( 'Tuesday', 'doliconnect').": ".doliopeninghours('MAIN_INFO_OPENINGHOURS_TUESDAY').'<br>';
+print __( 'Wednesday', 'doliconnect').": ".doliopeninghours('MAIN_INFO_OPENINGHOURS_WEDNESDAY').'<br>';
+print __( 'Thursday', 'doliconnect').": ".doliopeninghours('MAIN_INFO_OPENINGHOURS_THURSDAY').'<br>';
+print __( 'Friday', 'doliconnect').": ".doliopeninghours('MAIN_INFO_OPENINGHOURS_FRIDAY').'<br>';
+print __( 'Saturday', 'doliconnect').": ".doliopeninghours('MAIN_INFO_OPENINGHOURS_SATURDAY').'<br>';
+print __( 'Sunday', 'doliconnect').": ".doliopeninghours('MAIN_INFO_OPENINGHOURS_SUNDAY');
 
 print "</div><div class='col-md-8'><div id='content'>";
 
