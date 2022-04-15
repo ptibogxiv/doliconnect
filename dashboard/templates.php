@@ -626,6 +626,7 @@ $lang = $current_user->locale;
 }
 $country = callDoliApi("GET", "/setup/dictionary/countries/".$company->country_id."?lang=".$lang, null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))); }
 print $country->label;
+if (isset($company->phone) && !empty($company->phone)) print $company->phone.'<br>';
 print "</div></div><div class='col-md-8'><div id='content'>";
 
 print "<div id='dolicontact-alert'></div><form id='dolicontact-form' method='post' class='was-validated' action='".admin_url('admin-ajax.php')."'>";
