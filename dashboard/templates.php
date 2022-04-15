@@ -613,7 +613,7 @@ print dolicheckie($_SERVER['HTTP_USER_AGENT']);
 print "</div></div>";
 } else {
 
-print "<div class='row'><div class='col-md-4'><div class='form-group'><h4>".__( 'Address', 'doliconnect')."</h4>";
+print "<div class='row w-100'><div class='col-md-4'><h4>".__( 'Address', 'doliconnect')."</h4>";
 $company = callDoliApi("GET", "/setup/company", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 print $company->name.'<br>';
 if (isset($company->address) && !empty($company->address)) print $company->address.'<br>';
@@ -639,7 +639,9 @@ print $country->label;
 }
 print '<br>';
 if (isset($company->phone) && !empty($company->phone)) print $company->phone;
-print "</div></div><div class='col-md-8'><div id='content'>";
+print "<h4>".__( 'Opening hours', 'doliconnect')."</h4>";
+
+print "</div><div class='col-md-8'><div id='content'>";
 
 print "<div id='dolicontact-alert'></div><form id='dolicontact-form' method='post' class='was-validated' action='".admin_url('admin-ajax.php')."'>";
 print doliajax('dolicontact');
