@@ -2736,24 +2736,3 @@ msgstr "ptibogxiv"
 #. Author URI of the plugin/theme
 msgid "https://www.ptibogxiv.net/en"
 msgstr "https://www.ptibogxiv.net/fr"
-
-#~ msgid "SIREN"
-#~ msgstr "SIREN"
-
-#~ msgid "SIRET"
-#~ msgstr "SIRET"
-
-#~ msgid "NAF-APE"
-#~ msgstr "NAF-APE"
-
-#~ msgid "RCS/RM"
-#~ msgstr "RCS/RM"
-
-#~ msgid "First subscription at"
-#~ msgstr "Première souscription à"
-
-#~ msgid "A problem occurred. Please retry later!"
-#~ msgstr "Un problème s’est produit. Veuillez réessayer plus tard!"
-
-#~ msgid "Your request is unsuccessful"
-#~ msgstr "Votre demande est infructueuse"
