@@ -2508,50 +2508,17 @@ print '</div></div>';
 
 if (current_user_can('administrator') && !empty(get_option('doliconnectbeta')) ) { 
 
-print '<form id="doliform-product-0" class="doliform-product-0" method="post" action="'.admin_url('admin-ajax.php').'">';
+print '<form id="doliform-product-7" class="doliform-product-7" method="post" action="'.admin_url('admin-ajax.php').'">';
 print "<input type='hidden' name='action' value='doliproduct_request'>";
-print "<input type='hidden' name='product-add-nonce' value='".wp_create_nonce('product-add-nonce-2')."'>";
-print '<input type="hidden" name="product-add-id" value="2">';
+print "<input type='hidden' name='product-add-nonce' value='".wp_create_nonce('product-add-nonce-7')."'>";
+print '<input type="hidden" name="product-id" value="7">';
 
 print "<script>";
-print 'jQuery(document).ready(function($) {
-	jQuery("#doliform-product-0 button[type=submit]").on("submit", function(e){
-    jQuery("#DoliconnectLoadingModal").modal("show");
-	e.preventDefault();
-    var value = $(this).val();
-    console.log("click " + value);
-	var $form = $(this);
-    
-    jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function(e){ 
-		$.post($form.attr("action"), $form.serialize(), function(response){
-        console.log(response);
-      jQuery("#offcanvasDolicart").offcanvas("show");
-      document.getElementById("message-dolicart").innerHTML = "";
-      jQuery("#DoliconnectLoadingModal").modal("hide");  
-      if (response.success) {
-      if (document.getElementById("DoliHeaderCartItems")) {
-      document.getElementById("DoliHeaderCartItems").innerHTML = response.data.items;
-      }
-      if (document.getElementById("DoliFooterCartItems")) {  
-      document.getElementById("DoliFooterCartItems").innerHTML = response.data.items;
-      }
-      if (document.getElementById("DoliCartItemsList")) {  
-      document.getElementById("DoliCartItemsList").innerHTML = response.data.list;
-      }
-      if (document.getElementById("DoliWidgetCartItems")) {
-      document.getElementById("DoliWidgetCartItems").innerHTML = response.data.items;      
-      }
-      if (document.getElementById("message-dolicart")) {
-      document.getElementById("message-dolicart").innerHTML = response.data.message;      
-      }   
-      } else {
-      if (document.getElementById("message-dolicart")) {
-      document.getElementById("message-dolicart").innerHTML = response.data.message;      
-      }      
-      }
-		}, "json");  
-  });
-});
+print '$(function() {
+    $("#doliform-product-7 button[type=submit]").click(function() {
+        var value = $(this).val();
+        alert(value);
+    });
 });';
 print "</script>";
 
