@@ -1585,16 +1585,16 @@ print "</ul>";
 if ( get_option('dolishop') || (!get_option('dolishop') && isset($object) && $object->lines != null) ) {
 print "<div class='card-body'><ul class='list-group list-group-horizontal-sm'>";
 if ( get_option('dolishop') ) {
-print "<a href='".doliconnecturl('dolishop')."' class='list-group-item list-group-item-action flex-fill'><center><b>".__( 'Continue shopping', 'doliconnect')."</b></center></a>";
+print "<a href='".doliconnecturl('dolishop')."' class='list-group-item list-group-item-action flex-fill'><center>".__( 'Continue shopping', 'doliconnect')."</center></a>";
 } 
 if ( isset($object) && is_object($object) && isset($object->lines) && $object->lines != null && (doliconnector($current_user, 'fk_soc') == $object->socid) ) { 
 if ( $object->lines != null && $object->statut == 0 ) {
-print "<button button type='button' id='purgebtn_cart' name='purge_cart' value='purge_cart' class='list-group-item list-group-item-action flex-fill'><center><b>".__( 'Empty the basket', 'doliconnect')."</b></center></button>";
+print "<button button type='button' id='purgebtn_cart' name='purge_cart' value='purge_cart' class='list-group-item list-group-item-action flex-fill'><center>".__( 'Empty the basket', 'doliconnect')."</center></button>";
 }
 if ( $object->lines != null ) {
 print "<button type='button' id='validatebtn_cart' name='validate_cart' value='validate_cart' class='list-group-item list-group-item-action list-group-item-warning flex-fill ' ";
 if ($outstandingamount > 0 || (defined('dolilockcart') && !empty(constant('dolilockcart')))) print " disabled";
-print "><center><b>".__( 'Process', 'doliconnect')."</b></center></button>";
+print "><center>".__( 'Process', 'doliconnect')."</center></button>";
 }
 }
 print "</ul></div>";
