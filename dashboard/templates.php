@@ -1505,6 +1505,15 @@ wp_safe_redirect(doliconnecturl('dolicart'));
 exit;
 } 
 
+print '<div class="position-relative m-4">
+<div class="progress" style="height: 3px;">
+  <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
+<button class="position-absolute top-0 start-0 translate-middle btn btn-sm btn-primary rounded-pill" style="width: 2rem; height:2rem;"><i class="fas fa-shopping-bag"></i></button>
+<button class="position-absolute top-0 start-50 translate-middle btn btn-sm btn-light rounded-pill" style="width: 2rem; height:2rem;" disabled><i class="fas fa-user-check"></i></button>
+<button class="position-absolute top-0 start-100 translate-middle btn btn-sm btn-light rounded-pill" style="width: 2rem; height:2rem;" disabled><i class="fas fa-money-bill-wave"></i></button>
+</div>';
+
 print "<ul class='nav bg-white nav-pills rounded nav-justified flex-column flex-sm-row' role='tablist'>";
 
 print '<li id="li-tab-cart" class="nav-item"><a id="a-tab-cart" class="nav-link';
@@ -1554,7 +1563,7 @@ if ( doliconnector($current_user, 'fk_order')>0 && isset($object->lines) && $obj
 //print "<div id='timer' class='text-center'><small>".sprintf( esc_html__('Your basket #%s is reserved for', 'doliconnect'), doliconnector($current_user, 'fk_order'))." <span class='duration'></span></small></div>";
 }
 
-print "<div class='card shadow-sm' id='cart-form'><ul id='doliline' class='list-group list-group-flush'>";
+print "<div class='card shadow-sm' id='cart-form'><div class='card-header'>".__( 'Cart', 'doliconnect')."</div><ul id='doliline' class='list-group list-group-flush'>";
 
 print doliline($object, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), false);
 
