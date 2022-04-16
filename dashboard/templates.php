@@ -1515,7 +1515,9 @@ if (isset($_GET['stage']) && $_GET['stage'] == 'payment' && isset($object) && is
 
 print '<div class="position-relative m-4">
 <div class="progress" style="height: 3px;">';
-if (isset($_GET['stage']) && $_GET['stage'] == 'payment' && isset($object) && is_object($object) && isset($object->lines) && $object->lines != null) {
+if (isset($_GET['stage']) && $_GET['stage'] == 'validation' && isset($object) && is_object($object) && isset($object->lines) && $object->lines != null) {
+  print '<div class="progress-bar bg-success" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>';
+} elseif (isset($_GET['stage']) && $_GET['stage'] == 'payment' && isset($object) && is_object($object) && isset($object->lines) && $object->lines != null) {
   print '<div class="progress-bar bg-success" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
   <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>';
 } elseif (isset($_GET['stage']) && $_GET['stage'] == 'informations' && isset($object) && is_object($object) && isset($object->lines) && $object->lines != null) {
