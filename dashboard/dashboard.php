@@ -2508,27 +2508,17 @@ print '</div></div>';
 
 if (current_user_can('administrator') && !empty(get_option('doliconnectbeta')) ) { 
 
-print '<form id="doliform-product-7" method="post" action="'.admin_url('admin-ajax.php').'">';
+print '<form id="doliform-product-7" method="post">';
 print "<input type='hidden' name='action' value='doliproduct_request'>";
 print "<input type='hidden' name='product-add-nonce' value='".wp_create_nonce('product-add-nonce-7')."'>";
 print '<input type="hidden" name="product-id" value="7">';
 
 print "<script>";
 print '$(function() {
-    $("#doliform-product-7 button[type=submit]").submit(function() {
+    $("#doliform-product-7 button[type=submit]").click(function() {
         var value = $(this).val();
         jQuery("#DoliconnectLoadingModal").modal("show");
-        jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function (e) { 
-            $.ajax({ // create an AJAX call...
-                data: null, // get the form data
-                type: $(theForm).attr("method"), // GET or POST
-                url: $(theForm).attr("action"), // the file to call
-                success: function (response) { // on success..
-                jQuery("#DoliconnectLoadingModal").modal("hide");
-                //alert(response.data);
-                }
-            });
-        });
+
     });
 });';
 print "</script>";
