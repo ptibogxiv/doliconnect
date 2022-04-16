@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2022-04-15 20:22+0200\n"
-"PO-Revision-Date: 2022-04-15 20:23+0200\n"
+"POT-Creation-Date: 2022-04-15 21:00+0200\n"
+"PO-Revision-Date: 2022-04-15 21:00+0200\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_FR\n"
@@ -1921,8 +1921,8 @@ msgid "Total to be paid"
 msgstr "Total à payer"
 
 #: functions/product.php:116
-msgid "Go to basket"
-msgstr "Aller au panier"
+msgid "Finalize the order"
+msgstr "Finaliser la commande"
 
 #: functions/product.php:120 functions/tools.php:1596
 msgid "Your basket is empty"
@@ -2739,3 +2739,6 @@ msgstr "ptibogxiv"
 #. Author URI of the plugin/theme
 msgid "https://www.ptibogxiv.net/en"
 msgstr "https://www.ptibogxiv.net/fr"
+
+#~ msgid "Go to basket"
+#~ msgstr "Aller au panier"
