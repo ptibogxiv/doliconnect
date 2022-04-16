@@ -2508,13 +2508,23 @@ print '</div></div>';
 
 if (current_user_can('administrator') && !empty(get_option('doliconnectbeta')) ) { 
 
-    $plus='<i class="fas fa-plus"></i>';
-print '<div class="input-group">
-<button class="btn btn-secondary" name="minus" type="button"><i class="fas fa-minus"></i></button>
-<input type="text" class="form-control" placeholder="" aria-label="Example text with two button addons" value="0">
-<button class="btn btn-secondary" name="plus" type="button"><i class="fas fa-plus"></i></button>
-<input type="submit" class="btn btn-secondary" placeholder="" aria-label="Example text with two button addons" value="+">
-</div>';
+print '<form id="lets_search" >
+    Search:<input type="text" name="str" id="str" />';
+    print '<div class="input-group">
+    <button class="btn btn-secondary" name="minus" value="minus" type="submit"><i class="fas fa-minus"></i></button>
+    <input type="text" class="form-control" placeholder="" aria-label="Example text with two button addons" value="0">
+    <button class="btn btn-secondary" name="plus" value="plus" type="submit"><i class="fas fa-plus"></i></button>
+    </div>';
+print '</form>';    
+
+print "<script>";
+print '$(function() {
+    $("#lets_search button[type=submit]").click(function() {
+        var value = $(this).val();
+alert(value);
+    });
+});';
+print "</script>";
 
 print '<style>';
 ?>
