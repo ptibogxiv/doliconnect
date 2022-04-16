@@ -2508,9 +2508,54 @@ print '</div></div>';
 
 if (current_user_can('administrator') && !empty(get_option('doliconnectbeta')) ) { 
 
-print '<form id="lets_search" >
-    Search:<input type="text" name="str" id="str" />';
-    print '<div class="input-group">
+print '<form id="doliform-product-0" class="doliform-product-0" method="post" action="'.admin_url('admin-ajax.php').'">';
+print "<input type='hidden' name='action' value='doliproduct_request'>";
+print "<input type='hidden' name='product-add-nonce' value='".wp_create_nonce('product-add-nonce-2')."'>";
+print '<input type="hidden" name="product-add-id" value="2">';
+
+print "<script>";
+print 'jQuery(document).ready(function($) {
+	jQuery("#doliform-product-0 button[type=submit]").on("submit", function(e){
+    jQuery("#DoliconnectLoadingModal").modal("show");
+	e.preventDefault();
+    var value = $(this).val();
+    console.log("click " + value);
+	var $form = $(this);
+    
+    jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function(e){ 
+		$.post($form.attr("action"), $form.serialize(), function(response){
+        console.log(response);
+      jQuery("#offcanvasDolicart").offcanvas("show");
+      document.getElementById("message-dolicart").innerHTML = "";
+      jQuery("#DoliconnectLoadingModal").modal("hide");  
+      if (response.success) {
+      if (document.getElementById("DoliHeaderCartItems")) {
+      document.getElementById("DoliHeaderCartItems").innerHTML = response.data.items;
+      }
+      if (document.getElementById("DoliFooterCartItems")) {  
+      document.getElementById("DoliFooterCartItems").innerHTML = response.data.items;
+      }
+      if (document.getElementById("DoliCartItemsList")) {  
+      document.getElementById("DoliCartItemsList").innerHTML = response.data.list;
+      }
+      if (document.getElementById("DoliWidgetCartItems")) {
+      document.getElementById("DoliWidgetCartItems").innerHTML = response.data.items;      
+      }
+      if (document.getElementById("message-dolicart")) {
+      document.getElementById("message-dolicart").innerHTML = response.data.message;      
+      }   
+      } else {
+      if (document.getElementById("message-dolicart")) {
+      document.getElementById("message-dolicart").innerHTML = response.data.message;      
+      }      
+      }
+		}, "json");  
+  });
+});
+});';
+print "</script>";
+
+print '<div class="input-group">
     <button class="btn btn-sm btn-warning" name="minus" value="minus" type="submit"><i class="fas fa-minus"></i></button>
     <input type="text" class="form-control" placeholder="" aria-label="Example text with two button addons" value="0" style="text-align:center;" readonly>
     <button class="btn btn-sm btn-warning" name="plus" value="plus" type="submit"><i class="fas fa-plus"></i></button>';
@@ -2518,22 +2563,42 @@ print '<button class="btn btn-sm btn-outline-secondary" name="wish" value="wish"
 print '</div>';
 print '</form>';    
 
-print "<script>";
-print '$(function() {
-    $("#lets_search button[type=submit]").click(function() {
-        var value = $(this).val();
-alert(value);
-    });
-});';
-print "</script>";
+//print "<script>";
+//print '$(function() {
+ //   $("#doliform-product-450 button[type=submit]").click(function() {
+ //       var value = $(this).val();
+//alert(value);
+//    });
+//});';
+//print "</script>";
 
 print '<div class="position-relative m-4">
 <div class="progress" style="height: 3px;">
   <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
 </div>
-<button type="button" class="position-absolute top-0 start-0 translate-middle btn btn-sm btn-primary rounded-pill" style="width: 2rem; height:2rem;">1</button>
-<button type="button" class="position-absolute top-0 start-50 translate-middle btn btn-sm btn-primary rounded-pill" style="width: 2rem; height:2rem;">2</button>
-<button type="button" class="position-absolute top-0 start-100 translate-middle btn btn-sm btn-light rounded-pill" style="width: 2rem; height:2rem;" disabled>3</button>
+<button class="position-absolute top-0 start-0 translate-middle btn btn-sm btn-success rounded-pill" style="width: 2rem; height:2rem;">1</button>
+<button class="position-absolute top-0 start-50 translate-middle btn btn-sm btn-primary rounded-pill" style="width: 2rem; height:2rem;">2</button>
+<button class="position-absolute top-0 start-100 translate-middle btn btn-sm btn-light rounded-pill" style="width: 2rem; height:2rem;" disabled>3</button>
+</div>';
+
+print '<ul class="nav nav-pills position-relative m-4" id="pills-tab" role="tablist">
+<div class="progress" style="height: 3px;">
+  <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
+<li class="nav-item" role="presentation">
+  <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Home</button>
+</li>
+<li class="nav-item" role="presentation">
+  <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Profile</button>
+</li>
+<li class="nav-item" role="presentation">
+  <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Contact</button>
+</li>
+</ul>
+<div class="tab-content" id="pills-tabContent">
+<div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">home</div>
+<div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">profile</div>
+<div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">contact</div>
 </div>';
 
 print '<style>';
