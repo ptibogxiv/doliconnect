@@ -2511,9 +2511,10 @@ if (current_user_can('administrator') && !empty(get_option('doliconnectbeta')) )
 print '<form id="lets_search" >
     Search:<input type="text" name="str" id="str" />';
     print '<div class="input-group">
-    <button class="btn btn-secondary" name="minus" value="minus" type="submit"><i class="fas fa-minus"></i></button>
-    <input type="text" class="form-control" placeholder="" aria-label="Example text with two button addons" value="0">
-    <button class="btn btn-secondary" name="plus" value="plus" type="submit"><i class="fas fa-plus"></i></button>
+    <button class="btn btn-sm btn-warning" name="minus" value="minus" type="submit"><i class="fas fa-minus"></i></button>
+    <input type="text" class="form-control form-control-plaintext tex" placeholder="" aria-label="Example text with two button addons" value="0" readonly>
+    <button class="btn btn-sm btn-warning" name="plus" value="plus" type="submit"><i class="fas fa-plus"></i></button>
+    <button class="btn btn-sm btn-light btn-outline-secondary" name="wish" value="wish" type="submit"><i class="fas fa-heart" style="color:Fuchsia"></i></button>
     </div>';
 print '</form>';    
 
@@ -2525,6 +2526,15 @@ alert(value);
     });
 });';
 print "</script>";
+
+print '<div class="position-relative m-4">
+<div class="progress" style="height: 3px;">
+  <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
+<button type="button" class="position-absolute top-0 start-0 translate-middle btn btn-sm btn-primary rounded-pill" style="width: 2rem; height:2rem;">1</button>
+<button type="button" class="position-absolute top-0 start-50 translate-middle btn btn-sm btn-primary rounded-pill" style="width: 2rem; height:2rem;">2</button>
+<button type="button" class="position-absolute top-0 start-100 translate-middle btn btn-sm btn-light rounded-pill" style="width: 2rem; height:2rem;" disabled>3</button>
+</div>';
 
 print '<style>';
 ?>
