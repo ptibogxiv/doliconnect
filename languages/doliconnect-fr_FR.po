@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2022-04-17 11:12+0200\n"
-"PO-Revision-Date: 2022-04-17 11:12+0200\n"
+"POT-Creation-Date: 2022-04-17 13:34+0200\n"
+"PO-Revision-Date: 2022-04-17 13:34+0200\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_FR\n"
@@ -21,7 +21,7 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: includes\n"
 
-#: admin/admin.php:7 dashboard/templates.php:1887
+#: admin/admin.php:7 dashboard/templates.php:1901
 msgid ""
 "It seems that your version of Dolibarr and/or its plugins are not up to date!"
 msgstr ""
@@ -608,12 +608,12 @@ msgid "Bank"
 msgstr "Banque"
 
 #: dashboard/dashboard.php:756 dashboard/dashboard.php:1071
-#: dashboard/templates.php:1710 dashboard/templates.php:1763
+#: dashboard/templates.php:1724 dashboard/templates.php:1777
 msgid "Billing address"
 msgstr "Adresse de facturation"
 
 #: dashboard/dashboard.php:763 dashboard/dashboard.php:1078
-#: dashboard/templates.php:1737
+#: dashboard/templates.php:1751
 msgid "Shipping address"
 msgstr "Adresse d’expédition"
 
@@ -647,7 +647,7 @@ msgstr "Commande"
 
 #: dashboard/dashboard.php:819 dashboard/dashboard.php:1134
 #: dashboard/dashboard.php:1408 dashboard/dashboard.php:1532
-#: dashboard/dashboard.php:1655 dashboard/templates.php:1554
+#: dashboard/dashboard.php:1655 dashboard/templates.php:1568
 msgid "Payment"
 msgstr "Paiement"
 
@@ -996,7 +996,7 @@ msgid "Initial message"
 msgstr "Message initial"
 
 #: dashboard/dashboard.php:2185 dashboard/dashboard.php:2309
-#: dashboard/templates.php:697 dashboard/templates.php:1808
+#: dashboard/templates.php:697 dashboard/templates.php:1822
 msgid "Message"
 msgstr "Message"
 
@@ -1082,16 +1082,16 @@ msgstr "Activé"
 msgid "Primary"
 msgstr "Principal"
 
-#: dashboard/dashboard.php:2481 functions/product.php:757
+#: dashboard/dashboard.php:2481 functions/product.php:776
 msgid "Description"
 msgstr "Description"
 
-#: dashboard/dashboard.php:2595 functions/tools.php:2902
+#: dashboard/dashboard.php:2599 functions/tools.php:2902
 msgid "Privacy"
 msgstr "Confidentialité"
 
 #: dashboard/templates.php:30 dashboard/templates.php:1116
-#: functions/product.php:795
+#: functions/product.php:814
 msgid "Return"
 msgstr "Retour"
 
@@ -1236,7 +1236,7 @@ msgid "You don't have an account"
 msgstr "Vous n'avez pas de compte"
 
 #: dashboard/templates.php:462 dashboard/templates.php:524
-#: functions/product.php:604 functions/tools.php:3052
+#: functions/product.php:623 functions/tools.php:3052
 msgid "Sign in"
 msgstr "Connexion"
 
@@ -1436,28 +1436,28 @@ msgstr "Votre paiement a été enregistré"
 msgid "or go to reception desk"
 msgstr "ou aller à la réception"
 
-#: dashboard/templates.php:1541 dashboard/templates.php:1584
+#: dashboard/templates.php:1555 dashboard/templates.php:1598
 #: functions/tools.php:1098
 msgid "Cart"
 msgstr "Panier"
 
-#: dashboard/templates.php:1548
+#: dashboard/templates.php:1562
 msgid "Coordinates"
 msgstr "Coordonnées"
 
-#: dashboard/templates.php:1604
+#: dashboard/templates.php:1618
 msgid "Amount outstanding"
 msgstr "Montant impayé"
 
-#: dashboard/templates.php:1604
+#: dashboard/templates.php:1618
 msgid "out of"
 msgstr "sur"
 
-#: dashboard/templates.php:1604
+#: dashboard/templates.php:1618
 msgid "allowed"
 msgstr "autorisé"
 
-#: dashboard/templates.php:1606
+#: dashboard/templates.php:1620
 msgid ""
 "Your account is blocked, this order can't be processed. Please, contact us "
 "to pay overdue unpaid invoices."
@@ -1465,30 +1465,30 @@ msgstr ""
 "Votre compte est bloqué, cette commande ne peut pas être traitée. S’il vous "
 "plaît, contactez-nous pour régler les factures impayées en retard."
 
-#: dashboard/templates.php:1615
+#: dashboard/templates.php:1629
 msgid "Continue shopping"
 msgstr "Continuer vos achats"
 
-#: dashboard/templates.php:1619 functions/product.php:117
+#: dashboard/templates.php:1633 functions/product.php:117
 msgid "Empty the basket"
 msgstr "Vider le panier"
 
-#: dashboard/templates.php:1624
+#: dashboard/templates.php:1638
 msgid "Process"
 msgstr "Finaliser"
 
-#: dashboard/templates.php:1771 dashboard/templates.php:1791
+#: dashboard/templates.php:1785 dashboard/templates.php:1805
 msgid "Shipping method"
 msgstr "Méthode de livraison"
 
-#: dashboard/templates.php:1809
+#: dashboard/templates.php:1823
 msgid ""
 "If you want to send us a message about your order, you can leave one here"
 msgstr ""
 "Si vous voulez nous envoyer un message sur votre commande, vous pouvez en "
 "laisser un ici"
 
-#: dashboard/templates.php:1865 functions/member.php:117
+#: dashboard/templates.php:1879 functions/member.php:117
 #: functions/member.php:124 functions/member.php:125 functions/member.php:128
 #: functions/member.php:129 functions/member.php:147 functions/member.php:156
 #: functions/member.php:157
@@ -1847,7 +1847,7 @@ msgstr "jusqu’au"
 msgid "From %s"
 msgstr "A partir du %s"
 
-#: functions/member.php:111 functions/product.php:487
+#: functions/member.php:111 functions/product.php:506
 msgid "Contact us"
 msgstr "Contactez-nous"
 
@@ -1975,84 +1975,90 @@ msgstr "Prix de vente"
 msgid "Price"
 msgstr "Tarif"
 
-#: functions/product.php:366 functions/product.php:387
-#: functions/product.php:462 functions/tools.php:1633
+#: functions/product.php:366 functions/product.php:388
+#: functions/product.php:463 functions/tools.php:1633
 msgid "hour"
 msgstr "heure"
 
-#: functions/product.php:374 functions/product.php:477
+#: functions/product.php:374 functions/product.php:478
+#: functions/product.php:498
 msgid "Our prices are incl. VAT"
 msgstr "Nos prix sont TTC"
 
-#: functions/product.php:374 functions/product.php:477
+#: functions/product.php:374 functions/product.php:478
+#: functions/product.php:498
 msgid "Our prices are excl. VAT"
 msgstr "Nos prix sont hors TVA"
 
-#: functions/product.php:448
+#: functions/product.php:449
 msgid "Sales"
 msgstr "Promotions"
 
-#: functions/product.php:459
+#: functions/product.php:460
 msgid "Your price"
 msgstr "Votre prix"
 
-#: functions/product.php:487
+#: functions/product.php:499
+msgid "About our prices"
+msgstr "A propos de nos prix"
+
+#: functions/product.php:506
 msgid "Login"
 msgstr "Connexion"
 
-#: functions/product.php:538
+#: functions/product.php:557
 msgid "Account closed"
 msgstr "Compte fermé"
 
-#: functions/product.php:539
+#: functions/product.php:558
 msgid "Unavailable"
 msgstr "Indisponible"
 
-#: functions/product.php:543 functions/product.php:545 functions/tools.php:1458
+#: functions/product.php:562 functions/product.php:564 functions/tools.php:1458
 #: functions/tools.php:1460 functions/tools.php:1967
 msgid "Delete"
 msgstr "Supprimer"
 
-#: functions/product.php:556
+#: functions/product.php:575
 msgid "Add to cart"
 msgstr "Ajouter au panier"
 
-#: functions/product.php:587 functions/product.php:589
+#: functions/product.php:606 functions/product.php:608
 msgid "Save my wish"
 msgstr "Enregistrer mon souhait"
 
-#: functions/product.php:604 functions/product.php:606
+#: functions/product.php:623 functions/product.php:625
 msgid "log in"
 msgstr "connectez-vous"
 
-#: functions/product.php:611
+#: functions/product.php:630
 #, php-format
 msgid "you get %u %% discount"
 msgstr "vous bénéficiez de %u %% de réduction"
 
-#: functions/product.php:625
+#: functions/product.php:644
 msgid "Supplier:"
 msgid_plural "Supplier:"
 msgstr[0] "Fournisseur:"
 msgstr[1] "Fournisseurs:"
 
-#: functions/product.php:691
+#: functions/product.php:710
 msgid "Read more..."
 msgstr "Lire la suite…"
 
-#: functions/product.php:744
+#: functions/product.php:763
 msgid "Origin:"
 msgstr "Origine:"
 
-#: functions/product.php:776
+#: functions/product.php:795
 msgid "This item contains:"
 msgstr "Cet article contient :"
 
-#: functions/product.php:785
+#: functions/product.php:804
 msgid "Item not in sale"
 msgstr "Article non en vente"
 
-#: functions/product.php:794
+#: functions/product.php:813
 msgid "Oops! This item does not appear to exist"
 msgstr "Oups! Cet article ne semble pas exister"
 
@@ -2778,7 +2784,3 @@ msgstr "ptibogxiv"
 #. Author URI of the plugin/theme
 msgid "https://www.ptibogxiv.net/en"
 msgstr "https://www.ptibogxiv.net/fr"
-
-#, php-format
-#~ msgid "%s My options"
-#~ msgstr "%s Mes options"
