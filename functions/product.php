@@ -23,6 +23,9 @@ $montant = $object;
 } else {
 $montant = 0;
 }
+if ( empty($montant)) {
+return __( 'Free', 'doliconnect');
+}
 
 //$$objet->multicurrency_code
 if ( is_null($currency) ) { $currency = strtoupper(doliconst("MAIN_MONNAIE")); }
@@ -503,7 +506,9 @@ $explication .= '<li>'.sprintf(__( 'Initial sale price: %s', 'doliconnect'), dol
 if (isset($customer_discount) && !empty($customer_discount) && !empty($discount)) $explication .= '<li>'.sprintf(__( 'Your customer discount is %s percent', 'doliconnect'), $customer_discount).'</li>';
 if ($price_ttc != $price_ttc3) $explication .= '<li>'.sprintf(__( 'Discounted price: %s', 'doliconnect'), doliprice( empty(get_option('dolibarr_b2bmode'))?$price_ttc:$price_ht, $currency)).'</li>';
 $explication .= '</ul>';
-$button .= "<a tabindex='0' id='popover-price-".$product->id."' class='btn btn-light position-relative float-end' data-bs-container='body' data-bs-toggle='popover' data-bs-trigger='focus' title='".__( 'About price', 'doliconnect')."' data-bs-content='".$explication."'>";
+$button .= "<a tabindex='0' id='popover-price-".$product->id."' class='btn btn-light position-relative float-end";
+if (!empty($discount)) $button .= " text-danger";
+$button .= "' data-bs-container='body' data-bs-toggle='popover' data-bs-trigger='focus' title='".__( 'About price', 'doliconnect')."' data-bs-content='".$explication."'>";
 $button .= doliprice( empty(get_option('dolibarr_b2bmode'))?$price_ttc:$price_ht, $currency);
 if (!empty($discount)) $button .= '<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">-'.$discount.'%<small>*</small><span class="visually-hidden">Selling price</span></span>';
 $button .= '</a><br><br>';

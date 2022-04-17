@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2022-04-17 15:08+0200\n"
-"PO-Revision-Date: 2022-04-17 15:08+0200\n"
+"POT-Creation-Date: 2022-04-17 15:15+0200\n"
+"PO-Revision-Date: 2022-04-17 15:15+0200\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_FR\n"
@@ -318,7 +318,7 @@ msgstr "Masquer la durée"
 msgid "Hide stock"
 msgstr "Masquer le stock"
 
-#: blocks/product/block.php:7 functions/product.php:110
+#: blocks/product/block.php:7 functions/product.php:113
 msgid "Item"
 msgstr "Article"
 
@@ -720,7 +720,7 @@ msgstr "date de création"
 
 #: dashboard/dashboard.php:1276 dashboard/dashboard.php:1408
 #: dashboard/dashboard.php:1532 dashboard/dashboard.php:1655
-#: functions/product.php:66
+#: functions/product.php:69
 msgid "Shipping"
 msgstr "Expédition"
 
@@ -1082,7 +1082,7 @@ msgstr "Activé"
 msgid "Primary"
 msgstr "Principal"
 
-#: dashboard/dashboard.php:2481 functions/product.php:782
+#: dashboard/dashboard.php:2481 functions/product.php:787
 msgid "Description"
 msgstr "Description"
 
@@ -1091,7 +1091,7 @@ msgid "Privacy"
 msgstr "Confidentialité"
 
 #: dashboard/templates.php:30 dashboard/templates.php:1116
-#: functions/product.php:820
+#: functions/product.php:825
 msgid "Return"
 msgstr "Retour"
 
@@ -1236,7 +1236,7 @@ msgid "You don't have an account"
 msgstr "Vous n'avez pas de compte"
 
 #: dashboard/templates.php:462 dashboard/templates.php:524
-#: functions/product.php:630 functions/tools.php:3052
+#: functions/product.php:635 functions/tools.php:3052
 msgid "Sign in"
 msgstr "Connexion"
 
@@ -1469,7 +1469,7 @@ msgstr ""
 msgid "Continue shopping"
 msgstr "Continuer vos achats"
 
-#: dashboard/templates.php:1633 functions/product.php:117
+#: dashboard/templates.php:1633 functions/product.php:120
 msgid "Empty the basket"
 msgstr "Vider le panier"
 
@@ -1826,7 +1826,7 @@ msgstr "Quelques erreurs sont survenues :"
 msgid "then"
 msgstr "puis"
 
-#: functions/member.php:101
+#: functions/member.php:101 functions/product.php:27
 msgid "Free"
 msgstr "Gratuit"
 
@@ -1847,7 +1847,7 @@ msgstr "jusqu’au"
 msgid "From %s"
 msgstr "A partir du %s"
 
-#: functions/member.php:111 functions/product.php:513
+#: functions/member.php:111 functions/product.php:518
 msgid "Contact us"
 msgstr "Contactez-nous"
 
@@ -1889,39 +1889,39 @@ msgstr "Prochain abonnement"
 msgid "Subscribe"
 msgstr "Souscrire"
 
-#: functions/product.php:52 functions/product.php:86 functions/product.php:88
+#: functions/product.php:55 functions/product.php:89 functions/product.php:91
 msgid "Available"
 msgstr "Disponible"
 
-#: functions/product.php:52
+#: functions/product.php:55
 msgid "This item is available and can be order"
 msgstr "Cet article est disponible et peut être commandé"
 
-#: functions/product.php:71
+#: functions/product.php:74
 msgid "Not available"
 msgstr "Non disponible"
 
-#: functions/product.php:71
+#: functions/product.php:74
 #, php-format
 msgid "This item is out of stock and can not be ordered or shipped. %s"
 msgstr ""
 "Cet article est en rupture de stock et ne peut pas être commandé ou expédié. "
 "%s"
 
-#: functions/product.php:74
+#: functions/product.php:77
 msgid "few"
 msgstr "quelques"
 
-#: functions/product.php:78
+#: functions/product.php:81
 #, php-format
 msgid "Reception scheduled on %s."
 msgstr "Réception prévue le %s."
 
-#: functions/product.php:85
+#: functions/product.php:88
 msgid "Available soon"
 msgstr "Disponible prochainement"
 
-#: functions/product.php:85
+#: functions/product.php:88
 #, php-format
 msgid ""
 "This item is not in stock but should be available soon within %s days. %s %s"
@@ -1929,11 +1929,11 @@ msgstr ""
 "Cet article n’est pas en stock, mais devrait être disponible prochainement "
 "sous %s jours. %s %s"
 
-#: functions/product.php:86
+#: functions/product.php:89
 msgid "Limited availability"
 msgstr "Disponibilité limitée"
 
-#: functions/product.php:86
+#: functions/product.php:89
 #, php-format
 msgid ""
 "This item is in stock and can be shipped immediately but only in limited "
@@ -1942,131 +1942,131 @@ msgstr ""
 "Cet article est en stock et peut être expédié immédiatement mais seulement "
 "en quantités limitées. %s"
 
-#: functions/product.php:88
+#: functions/product.php:91
 msgid "Available immediately"
 msgstr "Disponible immédiatement"
 
-#: functions/product.php:88
+#: functions/product.php:91
 #, php-format
 msgid "This item is in stock and can be shipped immediately. %s"
 msgstr "Cet article est en stock et peut être expédié immédiatement. %s"
 
-#: functions/product.php:110
+#: functions/product.php:113
 msgid "Qty"
 msgstr "Qté"
 
-#: functions/product.php:114
+#: functions/product.php:117
 msgid "Total to be paid"
 msgstr "Total à payer"
 
-#: functions/product.php:116
+#: functions/product.php:119
 msgid "Finalize the order"
 msgstr "Finaliser la commande"
 
-#: functions/product.php:121 functions/tools.php:1596
+#: functions/product.php:124 functions/tools.php:1596
 msgid "Your basket is empty"
 msgstr "Votre panier est vide"
 
-#: functions/product.php:352
+#: functions/product.php:355
 msgid "Selling Price"
 msgstr "Prix de vente"
 
-#: functions/product.php:363
+#: functions/product.php:366
 msgid "Price"
 msgstr "Tarif"
 
-#: functions/product.php:367 functions/product.php:385
-#: functions/product.php:458 functions/tools.php:1633
+#: functions/product.php:370 functions/product.php:388
+#: functions/product.php:461 functions/tools.php:1633
 msgid "hour"
 msgstr "heure"
 
-#: functions/product.php:444
+#: functions/product.php:447
 msgid "Sales"
 msgstr "Promotions"
 
-#: functions/product.php:455
+#: functions/product.php:458
 msgid "Your price"
 msgstr "Votre prix"
 
-#: functions/product.php:501
+#: functions/product.php:504
 msgid "Displayed price is included VAT"
 msgstr "Le prix affiché comprend la TVA"
 
-#: functions/product.php:501
+#: functions/product.php:504
 msgid "Displayed price is excluded VAT"
 msgstr "Le prix affiché ne comprend pas TVA"
 
-#: functions/product.php:502
+#: functions/product.php:505
 #, php-format
 msgid "Initial sale price: %s"
 msgstr "Prix de vente initial : %s"
 
-#: functions/product.php:503
+#: functions/product.php:506
 #, php-format
 msgid "Your customer discount is %s percent"
 msgstr "Votre remise client est de %s pour cent"
 
-#: functions/product.php:504
+#: functions/product.php:507
 #, php-format
 msgid "Discounted price: %s"
 msgstr "Prix réduit : %s"
 
-#: functions/product.php:506
+#: functions/product.php:511
 msgid "About price"
 msgstr "A propos du prix"
 
-#: functions/product.php:513
+#: functions/product.php:518
 msgid "Login"
 msgstr "Connexion"
 
-#: functions/product.php:564
+#: functions/product.php:569
 msgid "Account closed"
 msgstr "Compte fermé"
 
-#: functions/product.php:565
+#: functions/product.php:570
 msgid "Unavailable"
 msgstr "Indisponible"
 
-#: functions/product.php:569 functions/product.php:571 functions/tools.php:1458
+#: functions/product.php:574 functions/product.php:576 functions/tools.php:1458
 #: functions/tools.php:1460 functions/tools.php:1967
 msgid "Delete"
 msgstr "Supprimer"
 
-#: functions/product.php:582
+#: functions/product.php:587
 msgid "Add to cart"
 msgstr "Ajouter au panier"
 
-#: functions/product.php:613 functions/product.php:615
+#: functions/product.php:618 functions/product.php:620
 msgid "Save my wish"
 msgstr "Enregistrer mon souhait"
 
-#: functions/product.php:630 functions/product.php:632
+#: functions/product.php:635 functions/product.php:637
 msgid "log in"
 msgstr "connectez-vous"
 
-#: functions/product.php:650
+#: functions/product.php:655
 msgid "Supplier:"
 msgid_plural "Supplier:"
 msgstr[0] "Fournisseur:"
 msgstr[1] "Fournisseurs:"
 
-#: functions/product.php:716
+#: functions/product.php:721
 msgid "Read more..."
 msgstr "Lire la suite…"
 
-#: functions/product.php:769
+#: functions/product.php:774
 msgid "Origin:"
 msgstr "Origine:"
 
-#: functions/product.php:801
+#: functions/product.php:806
 msgid "This item contains:"
 msgstr "Cet article contient :"
 
-#: functions/product.php:810
+#: functions/product.php:815
 msgid "Item not in sale"
 msgstr "Article non en vente"
 
-#: functions/product.php:819
+#: functions/product.php:824
 msgid "Oops! This item does not appear to exist"
 msgstr "Oups! Cet article ne semble pas exister"
 
