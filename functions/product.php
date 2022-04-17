@@ -507,8 +507,8 @@ if (!empty($discount)) $button .= " text-danger";
 $button .= "' data-bs-container='body' data-bs-toggle='popover' data-bs-trigger='focus' title='".__( 'About price', 'doliconnect')."' data-bs-content='".$explication."'>";
 $button .= doliprice( empty(get_option('dolibarr_b2bmode'))?$price_ttc3:$price_ht3, $currency);
 if (!empty($discount)) $button .= '<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">-'.$discount.'%<small>*</small><span class="visually-hidden">discount</span></span>';
-if (!empty($discount)) $button .= '<span class="position-absolute top-100 start-100 translate-middle badge rounded-pill bg-light text-dark"><s>'.doliprice( empty(get_option('dolibarr_b2bmode'))?$price_ttc:$price_ht, $currency).'</s><span class="visually-hidden"initial price</span></span>';
-$button .= '</a><br><br>';
+if (!empty($discount)) $button .= '<span class="position-absolute top-100 start-100 translate-middle badge bg-light text-dark"><small><s>'.doliprice( empty(get_option('dolibarr_b2bmode'))?$price_ttc:$price_ht, $currency).'</s><span class="visually-hidden"initial price</span></small></span>';
+$button .= '</a><br><br><br>';
 
 if ( empty(doliconnectid('dolicart')) ) {
 
