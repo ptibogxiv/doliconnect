@@ -23,17 +23,17 @@ $montant = $object;
 } else {
 $montant = 0;
 }
-if ( empty($montant)) {
+if (empty((int)$montant)) {
 return __( 'Free', 'doliconnect');
-}
-
-//$$objet->multicurrency_code
+} else {
+//$objet->multicurrency_code
 if ( is_null($currency) ) { $currency = strtoupper(doliconst("MAIN_MONNAIE")); }
 if ( function_exists('pll_the_languages') ) { 
 $locale = pll_current_language('locale');
 } else { if ( $current_user->locale == null ) { $locale = get_locale(); } else { $locale = $current_user->locale; } }
 $fmt = numfmt_create( $locale, NumberFormatter::CURRENCY );
 return numfmt_format_currency($fmt, $montant, $currency);//.$decimal
+}
 }
 
 function doliproductstock($product, $refresh = false) {
@@ -500,8 +500,8 @@ html : true
 });
 })(jQuery);";
 $button .= "</script>";
-$explication = '<ul>';
-$explication .= '<li>'.(empty(get_option('dolibarr_b2bmode'))?__( 'Displayed price is included VAT', 'doliconnect'):__( 'Displayed price is excluded VAT', 'doliconnect')).'</li>';
+$explication = (empty(get_option('dolibarr_b2bmode'))?__( 'Displayed price is included VAT', 'doliconnect'):__( 'Displayed price is excluded VAT', 'doliconnect')).'<br>';
+$explication .= '<ul>';
 $explication .= '<li>'.sprintf(__( 'Initial sale price: %s', 'doliconnect'), doliprice( empty(get_option('dolibarr_b2bmode'))?$price_ttc:$price_ht, $currency)).'</li>';
 if (isset($customer_discount) && !empty($customer_discount) && !empty($discount)) $explication .= '<li>'.sprintf(__( 'Your customer discount is %s percent', 'doliconnect'), $customer_discount).'</li>';
 if ($price_ttc != $price_ttc3) $explication .= '<li>'.sprintf(__( 'Discounted price: %s', 'doliconnect'), doliprice( empty(get_option('dolibarr_b2bmode'))?$price_ttc:$price_ht, $currency)).'</li>';
