@@ -444,6 +444,9 @@ $button .= __( 'Sales', 'doliconnect');
 }
 
 } elseif ( !empty(doliconst("PRODUIT_CUSTOMER_PRICES", $refresh)) && isset($product2) && !empty($product2) && !isset($product2->error) ) {
+  $price_min_ttc3=$product->price_min_ttc-($product2->price_min_ttc*$discount/100);
+  $price_ttc3=$product->price_ttc-($product2->price_ttc*$discount/100);
+  $price_ht3=$product->price-($product2->price*$discount/100);
   $price_min_ttc=$product2->price_min_ttc;
   $price_ttc=$product2->price_ttc;
   $price_ht=$product2->price;
@@ -493,6 +496,7 @@ html : true
 })(jQuery);";
 $button .= "</script>";
 $explication = (empty(get_option('dolibarr_b2bmode'))?__( 'Displayed price is included VAT', 'doliconnect'):__( 'Displayed price is excluded VAT', 'doliconnect')).'<br>';
+$explication .= sprintf(__( 'VAT rate of %s', 'doliconnect'), $vat).'<br>';
 $explication .= '<ul>';
 $explication .= '<li>'.sprintf(__( 'Initial sale price: %s', 'doliconnect'), doliprice( empty(get_option('dolibarr_b2bmode'))?$price_ttc:$price_ht, $currency)).'</li>';
 if (isset($customer_discount) && !empty($customer_discount) && !empty($discount)) $explication .= '<li>'.sprintf(__( 'Your customer discount is %s percent', 'doliconnect'), $customer_discount).'</li>';
