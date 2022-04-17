@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2022-04-17 13:59+0200\n"
-"PO-Revision-Date: 2022-04-17 13:59+0200\n"
+"POT-Creation-Date: 2022-04-17 14:02+0200\n"
+"PO-Revision-Date: 2022-04-17 14:02+0200\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_FR\n"
@@ -1968,7 +1968,6 @@ msgid "Your basket is empty"
 msgstr "Votre panier est vide"
 
 #: functions/product.php:351 functions/product.php:384
-#: functions/product.php:500
 msgid "Selling Price"
 msgstr "Prix de vente"
 
@@ -1996,6 +1995,11 @@ msgstr "Nos prix affichés sont TTC"
 #: functions/product.php:499
 msgid "Our displayed prices are excl. VAT"
 msgstr "Nos prix affichés sont hors TVA"
+
+#: functions/product.php:500
+#, php-format
+msgid "Initial sale price: %s"
+msgstr "Prix de vente initial : %s"
 
 #: functions/product.php:503
 msgid "About price"
