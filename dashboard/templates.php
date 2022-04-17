@@ -167,7 +167,7 @@ if ( has_action('customer_doliconnect_menu') && isset($thirdparty->client) && $t
 }
 
 if ( has_action('options_doliconnect_menu') ) {
-  print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__('%s My options', 'doliconnect'), '<i class="fa-solid fa-user-alien"></i>').'</div><ul class="list-group list-group-flush">';
+  print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__('%s My membership', 'doliconnect'), '<i class="fa-solid fa-user-plus"></i>').'</div><ul class="list-group list-group-flush">';
   do_action('options_doliconnect_menu');
   print "</ul></div><br>";
 }
