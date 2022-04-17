@@ -456,6 +456,9 @@ $button .= '<div class="float-end">'.doliprice( $refprice, $currency).'</div></t
 if ( empty($time) && !empty($product->duration_value) ) { $button .='/'.doliduration($product); } 
 if ( !empty($altdurvalue) ) { $button .= "<td class='text-end'>soit ".doliprice( $altdurvalue*$refprice, null, $currency)." par ".__( 'hour', 'doliconnect')."</td>"; } 
 } else {
+  $price_min_ttc3=$product->price_min_ttc;
+  $price_ttc3=$product->price_ttc; 
+  $price_ht3=$product->price; 
 $price_min_ttc=$product->price_min_ttc;
 $price_ttc=$product->price_ttc;
 $price_ht=$product->price;
@@ -471,7 +474,9 @@ $discount = 100-($price_min_ttc/$price_ttc);
 
 if (!empty($product->net_measure)) { 
 $unit = callDoliApi("GET", "/setup/dictionary/units?sortfield=rowid&sortorder=ASC&limit=1&active=1&sqlfilters=(t.rowid%3Alike%3A'".$product->net_measure_units."')", null, dolidelay('constante'));
-$button .= '<span class="badge rounded-pill bg-light text-dark">'.$product->net_measure.'</span> ';
+$button .= '<span class="badge rounded-pill bg-light text-dark">'.$product->net_measure;
+if (!empty($unit)) $button .= " ".$unit[0]->short_label;
+$button .= '</span> ';
 $button .= '<span class="badge rounded-pill bg-light text-dark">'.doliprice( $refprice/$product->net_measure, null, $currency);
 if (!empty($unit)) $button .= "/".$unit[0]->short_label; 
 $button .= '</span>';
@@ -495,7 +500,7 @@ $explication = '<ul>';
 $explication .= '<li>'.(empty(get_option('dolibarr_b2bmode'))?__( 'Displayed price is included VAT', 'doliconnect'):__( 'Displayed price is excluded VAT', 'doliconnect')).'</li>';
 $explication .= '<li>'.sprintf(__( 'Initial sale price: %s', 'doliconnect'), doliprice( empty(get_option('dolibarr_b2bmode'))?$price_ttc:$price_ht, $currency)).'</li>';
 if (isset($customerdiscount)) $explication .= '<li>Your customer discount is</li>';
-if ($price_ttc != $price_ttc) $explication .= '<li>'.sprintf(__( 'Discounted price: %s', 'doliconnect'), doliprice( empty(get_option('dolibarr_b2bmode'))?$price_ttc:$price_ht, $currency)).'</li>';
+if ($price_ttc != $price_ttc3) $explication .= '<li>'.sprintf(__( 'Discounted price: %s', 'doliconnect'), doliprice( empty(get_option('dolibarr_b2bmode'))?$price_ttc:$price_ht, $currency)).'</li>';
 $explication .= '</ul>';
 $button .= "<a tabindex='0' id='popover-price-".$product->id."' class='btn btn-light position-relative float-end' data-bs-container='body' data-bs-toggle='popover' data-bs-trigger='focus' title='".__( 'About price', 'doliconnect')."' data-bs-content='".$explication."'>";
 $button .= doliprice( empty(get_option('dolibarr_b2bmode'))?$price_ttc:$price_ht, $currency);
