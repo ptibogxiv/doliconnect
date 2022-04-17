@@ -382,6 +382,7 @@ $button .= '</tbody></table>';
 $button .= '<table class="table table-borderless table-sm table-striped"><tbody>';
 $button .= '<tr>'; 
 $button .= '<td><div class="float-start">'.__( 'Selling Price', 'doliconnect').'</div>';
+
 $button .= '<div class="float-end">'.doliprice( empty(get_option('dolibarr_b2bmode'))?$product->price_ttc:$product->price, null, $currency).'</div></td></tr>';
 if ( empty($time) && !empty($product->duration_value) ) { $button .='/'.doliduration($product); } 
 if ( !empty($altdurvalue) ) { $button .= "<tr><td class='text-end'>soit ".doliprice( $altdurvalue*$product->price_ttc, null, $currency)." par ".__( 'hour', 'doliconnect')."</td></tr>"; } 
@@ -481,6 +482,11 @@ if (!empty($unit)) $button .= "/".$unit[0]->short_label; }
 $button .= "</div></p></td></tr>";
 $button .= '</tbody></table>';
 }
+
+$button .= '<button type="button" class="btn btn-light position-relative float-end">';
+$button .= doliprice( empty(get_option('dolibarr_b2bmode'))?$price_ttc:$price_ht, $currency);
+$button .= '<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">-'.$discount.'%<span class="visually-hidden">selling price</span></span>';
+$button .= '</button>';
 
 if ( empty(doliconnectid('dolicart')) ) {
 
