@@ -469,9 +469,13 @@ $discount = 0;
 $discount = 100-($price_min_ttc/$price_ttc);
 }
 
-if (!empty($product->net_measure)) { $button .= '<div class="float-end">'.doliprice( $refprice/$product->net_measure, null, $currency).'</div>';
+if (!empty($product->net_measure)) { 
 $unit = callDoliApi("GET", "/setup/dictionary/units?sortfield=rowid&sortorder=ASC&limit=1&active=1&sqlfilters=(t.rowid%3Alike%3A'".$product->net_measure_units."')", null, dolidelay('constante'));
-if (!empty($unit)) $button .= "/".$unit[0]->short_label; }
+$button .= '<span class="badge rounded-pill bg-light text-dark">'.$product->net_measure.'</span> ';
+$button .= '<span class="badge rounded-pill bg-light text-dark">'.doliprice( $refprice/$product->net_measure, null, $currency);
+if (!empty($unit)) $button .= "/".$unit[0]->short_label; 
+$button .= '</span>';
+}
 
 }
 
