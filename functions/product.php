@@ -379,15 +379,9 @@ $button .= "</small></td></tr>";
 
 $button .= '</tbody></table>';
 } else {
-$button .= '<table class="table table-borderless table-sm table-striped"><tbody>';
-$button .= '<tr>'; 
-$button .= '<td><div class="float-start">'.__( 'Selling Price', 'doliconnect').'</div>';
 
-$button .= '<div class="float-end">'.doliprice( empty(get_option('dolibarr_b2bmode'))?$product->price_ttc:$product->price, null, $currency).'</div></td></tr>';
 if ( empty($time) && !empty($product->duration_value) ) { $button .='/'.doliduration($product); } 
 if ( !empty($altdurvalue) ) { $button .= "<tr><td class='text-end'>soit ".doliprice( $altdurvalue*$product->price_ttc, null, $currency)." par ".__( 'hour', 'doliconnect')."</td></tr>"; } 
-
-$button .= ''; 
 
 if ( !empty(doliconst("PRODUIT_CUSTOMER_PRICES", $refresh)) && doliconnector($current_user, 'fk_soc', $refresh) > 0 ) {
 $product2 = callDoliApi("GET", "/products/".$product->id."/selling_multiprices/per_customer", null, dolidelay('product', $refresh));
@@ -475,12 +469,10 @@ $discount = 0;
 $discount = 100-($price_min_ttc/$price_ttc);
 }
 
-$button .= '<tr><td colspan="'.(!empty($altdurvalue)?'3':'2').'"><small class="fw-lighter">';
 if (!empty($product->net_measure)) { $button .= '<div class="float-end">'.doliprice( $refprice/$product->net_measure, null, $currency).'</div>';
 $unit = callDoliApi("GET", "/setup/dictionary/units?sortfield=rowid&sortorder=ASC&limit=1&active=1&sqlfilters=(t.rowid%3Alike%3A'".$product->net_measure_units."')", null, dolidelay('constante'));
 if (!empty($unit)) $button .= "/".$unit[0]->short_label; }
-$button .= "</p></td></tr>";
-$button .= '</tbody></table>';
+
 }
 
 $button .= "<script>";
@@ -496,9 +488,10 @@ html : true
 })(jQuery);";
 $button .= "</script>";
 $explication = '<ul>';
-$explication .= '<li>'.(empty(get_option('dolibarr_b2bmode'))?__( 'Our displayed prices are incl. VAT', 'doliconnect'):__( 'Our displayed prices are excl. VAT', 'doliconnect')).'</li>';
+$explication .= '<li>'.(empty(get_option('dolibarr_b2bmode'))?__( 'Displayed prices are incl. VAT', 'doliconnect'):__( 'Displayed prices are excl. VAT', 'doliconnect')).'</li>';
 $explication .= '<li>'.sprintf(__( 'Initial sale price: %s', 'doliconnect'), doliprice( empty(get_option('dolibarr_b2bmode'))?$price_ttc:$price_ht, $currency)).'</li>';
 if (isset($customerdiscount)) $explication .= '<li>Your customer discount is</li>';
+$explication .= '<li>'.sprintf(__( 'Discounted price: %s', 'doliconnect'), doliprice( empty(get_option('dolibarr_b2bmode'))?$price_ttc:$price_ht, $currency)).'</li>';
 $explication .= '</ul>';
 $button .= "<a tabindex='0' id='popover-price-".$product->id."' class='btn btn-light position-relative float-end' data-bs-container='body' data-bs-toggle='popover' data-bs-trigger='focus' title='".__( 'About price', 'doliconnect')."' data-bs-content='".$explication."'>";
 $button .= doliprice( empty(get_option('dolibarr_b2bmode'))?$price_ttc:$price_ht, $currency);
@@ -714,7 +707,7 @@ $list .= '<div class="d-grid gap-2"><a href="'.$producturl.'" class="btn btn-lin
 $list .= '</p></div>';
 
 if ( ! empty(doliconnectid('dolicart')) ) { 
-$list .= "<div class='col-12 col-md-6'><center>";
+$list .= "<div class='col-12 col-md-4'><center>";
 $list .= doliconnect_addtocart($product, esc_attr(isset($_GET['category'])?$_GET['category']:null), $wish, -1, 0, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 $list .= "</center></div>";
 }
