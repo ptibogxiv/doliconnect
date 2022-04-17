@@ -384,9 +384,6 @@ $button .= "</small></td></tr>";
 $button .= '</tbody></table>';
 } else {
 
-if ( empty($time) && !empty($product->duration_value) ) { $button .='/'.doliduration($product); } 
-if ( !empty($altdurvalue) ) { $button .= "<tr><td class='text-end'>soit ".doliprice( $altdurvalue*$product->price_ttc, null, $currency)." par ".__( 'hour', 'doliconnect')."</td></tr>"; } 
-
 if ( !empty(doliconst("PRODUIT_CUSTOMER_PRICES", $refresh)) && doliconnector($current_user, 'fk_soc', $refresh) > 0 ) {
 $product2 = callDoliApi("GET", "/products/".$product->id."/selling_multiprices/per_customer", null, dolidelay('product', $refresh));
 if ( !isset($product2->error) && $product2 != null ) {
@@ -412,6 +409,7 @@ $lastdate = $date->format('Y-m-d');
 $requestp = "/discountprice?productid=".$product->id."&sortfield=t.rowid&sortorder=ASC&sqlfilters=(t.date_begin%3A%3C%3D%3A'".$lastdate."')%20AND%20(t.date_end%3A%3E%3D%3A'".$lastdate."')";
 $product3 = callDoliApi("GET", $requestp, null, dolidelay('product', $refresh));
 }
+//$button .= var_dump($product3);
 
 if ( !empty(doliconst('MAIN_MODULE_DISCOUNTPRICE', $refresh)) && isset($product3) && !isset($product3->error) ) {
 if (!empty($product3[0]->discount)) {
@@ -432,42 +430,34 @@ $vat = $product->tva_tx;
 $price_ttc3=$product3[0]->price_ttc; 
 $price_ttc=$product->price_ttc; 
 $discount = 100-(100*$price_ttc3/$price_ttc);
-$price_htc3=$product->price-($product->price*$discount/100);
+$price_ht3=$product->price-($product->price*$discount/100);
 $price_ht=$product->price;
 $vat = $product->tva_tx;
 }
 $price_min_ttc=$product->price_min_ttc;
 $refprice=(empty(get_option('dolibarr_b2bmode'))?$price_ttc3:$price_ht3);
 
-$button .= '<tr class="table-primary">'; 
-$button .= '<td><div class="float-start">';
 if (!empty($product3[0]->label)) {
 $button .= $product3[0]->label;
 } else {
 $button .= __( 'Sales', 'doliconnect');
 }
-$button .= '</div>';
-$button .= '<div class="float-end">'.doliprice( empty(get_option('dolibarr_b2bmode'))?$price_ttc3:$price_ht3, $currency).'</div></td></tr>';
+
 } elseif ( !empty(doliconst("PRODUIT_CUSTOMER_PRICES", $refresh)) && isset($product2) && !empty($product2) && !isset($product2->error) ) {
-$price_min_ttc=$product2->price_min_ttc;
-$price_ttc=$product2->price_ttc;
-$price_ht=$product2->price;
-$vat = $product2->tva_tx;
-$refprice = (empty(get_option('dolibarr_b2bmode'))?$price_ttc:$price_ht);
-$button .= '<tr class="table-primary">'; 
-$button .= '<td><div class="float-start">'.__( 'Your price', 'doliconnect').'</div>';
-$button .= '<div class="float-end">'.doliprice( $refprice, $currency).'</div></td></tr>';
-if ( empty($time) && !empty($product->duration_value) ) { $button .='/'.doliduration($product); } 
-if ( !empty($altdurvalue) ) { $button .= "<td class='text-end'>soit ".doliprice( $altdurvalue*$refprice, null, $currency)." par ".__( 'hour', 'doliconnect')."</td>"; } 
+  $price_min_ttc=$product2->price_min_ttc;
+  $price_ttc=$product2->price_ttc;
+  $price_ht=$product2->price;
+  $vat = $product2->tva_tx;
+  $refprice = (empty(get_option('dolibarr_b2bmode'))?$price_ttc:$price_ht);
 } else {
   $price_min_ttc3=$product->price_min_ttc;
   $price_ttc3=$product->price_ttc; 
   $price_ht3=$product->price; 
-$price_min_ttc=$product->price_min_ttc;
-$price_ttc=$product->price_ttc;
-$price_ht=$product->price;
-$vat=$product->tva_tx;
-$refprice = (empty(get_option('dolibarr_b2bmode'))?$price_ttc:$price_ht);
+  $price_min_ttc=$product->price_min_ttc;
+  $price_ttc=$product->price_ttc;
+  $price_ht=$product->price;
+  $vat=$product->tva_tx;
+  $refprice = (empty(get_option('dolibarr_b2bmode'))?$price_ttc:$price_ht);
 }
 
 if ($price_min_ttc == $price_ttc) {
@@ -476,6 +466,10 @@ $discount = 0;
 $discount = 100-($price_min_ttc/$price_ttc);
 }
 
+}
+
+//if ( empty($time) && !empty($product->duration_value) ) { $button .='/'.doliduration($product); } 
+//if ( !empty($altdurvalue) ) { $button .= "<tr><td class='text-end'>soit ".doliprice( $altdurvalue*$product->price_ttc, null, $currency)." par ".__( 'hour', 'doliconnect')."</td></tr>"; } 
 if (!empty($product->net_measure)) { 
 $unit = callDoliApi("GET", "/setup/dictionary/units?sortfield=rowid&sortorder=ASC&limit=1&active=1&sqlfilters=(t.rowid%3Alike%3A'".$product->net_measure_units."')", null, dolidelay('constante'));
 $button .= '<span class="badge rounded-pill bg-light text-dark">'.$product->net_measure;
@@ -484,8 +478,6 @@ $button .= '</span> ';
 $button .= '<span class="badge rounded-pill bg-light text-dark">'.doliprice( $refprice/$product->net_measure, null, $currency);
 if (!empty($unit)) $button .= "/".$unit[0]->short_label; 
 $button .= '</span>';
-}
-
 }
 
 $button .= "<script>";
@@ -504,12 +496,12 @@ $explication = (empty(get_option('dolibarr_b2bmode'))?__( 'Displayed price is in
 $explication .= '<ul>';
 $explication .= '<li>'.sprintf(__( 'Initial sale price: %s', 'doliconnect'), doliprice( empty(get_option('dolibarr_b2bmode'))?$price_ttc:$price_ht, $currency)).'</li>';
 if (isset($customer_discount) && !empty($customer_discount) && !empty($discount)) $explication .= '<li>'.sprintf(__( 'Your customer discount is %s percent', 'doliconnect'), $customer_discount).'</li>';
-if ($price_ttc != $price_ttc3) $explication .= '<li>'.sprintf(__( 'Discounted price: %s', 'doliconnect'), doliprice( empty(get_option('dolibarr_b2bmode'))?$price_ttc:$price_ht, $currency)).'</li>';
+if ($price_ttc != $price_ttc3) $explication .= '<li>'.sprintf(__( 'Discounted price: %s', 'doliconnect'), doliprice( empty(get_option('dolibarr_b2bmode'))?$price_ttc3:$price_ht3, $currency)).'</li>';
 $explication .= '</ul>';
 $button .= "<a tabindex='0' id='popover-price-".$product->id."' class='btn btn-light position-relative float-end";
 if (!empty($discount)) $button .= " text-danger";
 $button .= "' data-bs-container='body' data-bs-toggle='popover' data-bs-trigger='focus' title='".__( 'About price', 'doliconnect')."' data-bs-content='".$explication."'>";
-$button .= doliprice( empty(get_option('dolibarr_b2bmode'))?$price_ttc:$price_ht, $currency);
+$button .= doliprice( empty(get_option('dolibarr_b2bmode'))?$price_ttc3:$price_ht3, $currency);
 if (!empty($discount)) $button .= '<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">-'.$discount.'%<small>*</small><span class="visually-hidden">Selling price</span></span>';
 $button .= '</a><br><br>';
 
