@@ -485,7 +485,7 @@ $button .= '</tbody></table>';
 
 $button .= '<button type="button" class="btn btn-light position-relative float-end">';
 $button .= doliprice( empty(get_option('dolibarr_b2bmode'))?$price_ttc:$price_ht, $currency);
-$button .= '<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">-'.$discount.'%<span class="visually-hidden">selling price</span></span>';
+if (!empty($discount)) $button .= '<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">-'.$discount.'%<span class="visually-hidden">selling price</span></span>';
 $button .= '</button>';
 
 if ( empty(doliconnectid('dolicart')) ) {
