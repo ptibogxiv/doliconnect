@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2022-04-17 14:25+0200\n"
-"PO-Revision-Date: 2022-04-17 14:25+0200\n"
+"POT-Creation-Date: 2022-04-17 14:32+0200\n"
+"PO-Revision-Date: 2022-04-17 14:32+0200\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_FR\n"
@@ -1082,7 +1082,7 @@ msgstr "Activé"
 msgid "Primary"
 msgstr "Principal"
 
-#: dashboard/dashboard.php:2481 functions/product.php:771
+#: dashboard/dashboard.php:2481 functions/product.php:772
 msgid "Description"
 msgstr "Description"
 
@@ -1091,7 +1091,7 @@ msgid "Privacy"
 msgstr "Confidentialité"
 
 #: dashboard/templates.php:30 dashboard/templates.php:1116
-#: functions/product.php:809
+#: functions/product.php:810
 msgid "Return"
 msgstr "Retour"
 
@@ -1236,7 +1236,7 @@ msgid "You don't have an account"
 msgstr "Vous n'avez pas de compte"
 
 #: dashboard/templates.php:462 dashboard/templates.php:524
-#: functions/product.php:619 functions/tools.php:3052
+#: functions/product.php:620 functions/tools.php:3052
 msgid "Sign in"
 msgstr "Connexion"
 
@@ -1847,7 +1847,7 @@ msgstr "jusqu’au"
 msgid "From %s"
 msgstr "A partir du %s"
 
-#: functions/member.php:111 functions/product.php:502
+#: functions/member.php:111 functions/product.php:503
 msgid "Contact us"
 msgstr "Contactez-nous"
 
@@ -1989,74 +1989,79 @@ msgid "Your price"
 msgstr "Votre prix"
 
 #: functions/product.php:491
-msgid "Displayed prices are incl. VAT"
-msgstr "Les prix affichés sont TTC"
+msgid "Displayed price is included VAT"
+msgstr "Le prix affiché comprend la TVA"
 
 #: functions/product.php:491
-msgid "Displayed prices are excl. VAT"
-msgstr "Les prix affichés sont hors TVA"
+msgid "Displayed price is excluded VAT"
+msgstr "Le prix affiché ne comprend pas TVA"
 
 #: functions/product.php:492
 #, php-format
 msgid "Initial sale price: %s"
 msgstr "Prix de vente initial : %s"
 
-#: functions/product.php:495
+#: functions/product.php:494
+#, php-format
+msgid "Discounted price: %s"
+msgstr "Prix réduit : %s"
+
+#: functions/product.php:496
 msgid "About price"
 msgstr "A propos du prix"
 
-#: functions/product.php:502
+#: functions/product.php:503
 msgid "Login"
 msgstr "Connexion"
 
-#: functions/product.php:553
+#: functions/product.php:554
 msgid "Account closed"
 msgstr "Compte fermé"
 
-#: functions/product.php:554
+#: functions/product.php:555
 msgid "Unavailable"
 msgstr "Indisponible"
 
-#: functions/product.php:558 functions/product.php:560 functions/tools.php:1458
+#: functions/product.php:559 functions/product.php:561 functions/tools.php:1458
 #: functions/tools.php:1460 functions/tools.php:1967
 msgid "Delete"
 msgstr "Supprimer"
 
-#: functions/product.php:571
+#: functions/product.php:572
 msgid "Add to cart"
 msgstr "Ajouter au panier"
 
-#: functions/product.php:602 functions/product.php:604
+#: functions/product.php:603 functions/product.php:605
 msgid "Save my wish"
 msgstr "Enregistrer mon souhait"
 
-#: functions/product.php:619 functions/product.php:621
+#: functions/product.php:620 functions/product.php:622
 msgid "log in"
 msgstr "connectez-vous"
 
-#: functions/product.php:639
+#: functions/product.php:640
 msgid "Supplier:"
 msgid_plural "Supplier:"
 msgstr[0] "Fournisseur:"
 msgstr[1] "Fournisseurs:"
 
-#: functions/product.php:705
+#: functions/product.php:706
 msgid "Read more..."
 msgstr "Lire la suite…"
 
-#: functions/product.php:758
+#: functions/product.php:759
 msgid "Origin:"
 msgstr "Origine:"
 
-#: functions/product.php:790
+#: functions/product.php:791
 msgid "This item contains:"
 msgstr "Cet article contient :"
 
-#: functions/product.php:799
+#: functions/product.php:800
 msgid "Item not in sale"
 msgstr "Article non en vente"
 
-#: functions/product.php:808
+#: functions/product.php:809
 msgid "Oops! This item does not appear to exist"
 msgstr "Oups! Cet article ne semble pas exister"
 
