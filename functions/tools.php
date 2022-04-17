@@ -1390,13 +1390,13 @@ $realstock = min(array($product->stock_theorique,$product->stock_reel));
 }
 
 if (( $realstock <= 0 || (isset($product->array_options->options_packaging) && $realstock < $product->array_options->options_packaging ) ) && is_page(doliconnectid('dolicart')) && empty($product->type) && !empty(doliconst('MAIN_MODULE_STOCK', $refresh)) && empty(doliconst('STOCK_ALLOW_NEGATIVE_TRANSFER', $refresh)) ) {
-$doliline .= "<li class='list-group-item list-group-item-danger'>";
+$doliline .= "<li class='list-group-item list-group-item-danger list-group-item-action'>";
 define('dolilockcart', '1'); 
 } elseif ($realstock < $line->qty && $realstock > 0 && is_page(doliconnectid('dolicart')) && empty($product->type) && !empty(doliconst('MAIN_MODULE_STOCK', $refresh)) && empty(doliconst('STOCK_ALLOW_NEGATIVE_TRANSFER', $refresh)) ) {
-$doliline .= "<li class='list-group-item list-group-item-warning'>";
+$doliline .= "<li class='list-group-item list-group-item-warning list-group-item-action'>";
 define('dolilockcart', '1'); 
 } else {
-$doliline .= "<li class='list-group-item list-group-item-light'>";
+$doliline .= "<li class='list-group-item list-group-item-light list-group-item-action'>";
 //define('dolilockcart', '0'); 
 }    
 if ( $line->date_start != '' && $line->date_end != '' )
