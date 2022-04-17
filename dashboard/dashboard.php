@@ -2124,7 +2124,7 @@ add_action( 'settings_doliconnect_tickets', 'tickets_module');
 function tickets_menu( $arg ) {
 print "<a href='".esc_url( add_query_arg( 'module', 'tickets', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
 if ( $arg == 'tickets' ) { print " active"; }
-print "'>".__( 'Help', 'doliconnect')."</a>";
+print "'>".__( 'Help & Contact', 'doliconnect')."</a>";
 }
 
 function tickets_module( $url ) {
@@ -2369,7 +2369,7 @@ print '</div></div>';
 function settings_menu($arg) {
 print "<a href='".esc_url( add_query_arg( 'module', 'settings', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
 if ($arg=='settings') { print " active"; }
-print "'>".__( 'Settings & security', 'doliconnect')."</a>";
+print "'>".__( 'Settings of security', 'doliconnect')."</a>";
 }
 add_action( 'settings_doliconnect_menu', 'settings_menu', 2, 1);
 
