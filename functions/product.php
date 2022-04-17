@@ -438,9 +438,7 @@ $price_min_ttc=$product->price_min_ttc;
 $refprice=(empty(get_option('dolibarr_b2bmode'))?$price_ttc3:$price_ht3);
 
 if (!empty($product3[0]->label)) {
-$button .= $product3[0]->label;
-} else {
-$button .= __( 'Sales', 'doliconnect');
+$discountlabel = $product3[0]->label;
 }
 
 } elseif ( !empty(doliconst("PRODUIT_CUSTOMER_PRICES", $refresh)) && isset($product2) && !empty($product2) && !isset($product2->error) ) {
