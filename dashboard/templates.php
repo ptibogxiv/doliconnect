@@ -167,19 +167,19 @@ if ( has_action('customer_doliconnect_menu') && isset($thirdparty->client) && $t
 }
 
 if ( has_action('options_doliconnect_menu') ) {
-print "<div class='list-group shadow-sm'>";
-do_action('options_doliconnect_menu');
-print "</div><br>";
+  print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__('%s My options', 'doliconnect'), '<i class="fa-solid fa-user-alien"></i>').'</div><ul class="list-group list-group-flush">';
+  do_action('options_doliconnect_menu');
+  print "</ul></div><br>";
 }
 
 if ( has_action('supplier_doliconnect_menu') && isset($thirdparty->fournisseur) && $thirdparty->fournisseur == '1' ) {
-print "<div class='list-group shadow-sm'>";
-do_action('supplier_doliconnect_menu');
-print "</div><br>";
+  print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__('%s My supplies', 'doliconnect'), '<i class="fa-solid fa-boxes-packing"></i>').'</div><ul class="list-group list-group-flush">';
+  do_action('supplier_doliconnect_menu');
+  print "</ul></div><br>";
 }
 
 if ( has_action('grh_doliconnect_menu') ) {
-  print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__('%s My HR', 'doliconnect'), '<i class="fa-solid fa-user-gear"></i>').'</div><ul class="list-group list-group-flush">';
+  print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__('%s My human resources', 'doliconnect'), '<i class="fa-solid fa-user-tie"></i>').'</div><ul class="list-group list-group-flush">';
   do_action('grh_doliconnect_menu');
   print "</ul></div><br>";
 }
