@@ -154,9 +154,9 @@ print "</div></div></div>";
 print "<p class='font-weight-light' align='justify'><h5>".sprintf(__('Hello %s', 'doliconnect'), $current_user->first_name)."</h5><small class='text-muted'>".__( 'Manage your account, your informations, orders and much more via this secure client area.', 'doliconnect')."</small></p></div></div></div>";
 print "<div class='col-xs-12 col-sm-12 col-md-9'>";
 if ( has_action('user_doliconnect_menu') ) {
-print "<div class='list-group shadow-sm'>";
+print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__('%s My profil', 'doliconnect'), '<i class="fa-solid fa-user"></i>').'</div><ul class="list-group list-group-flush">';
 do_action('user_doliconnect_menu');
-print "</div><br>";
+print "</ul></div><br>";
 }  
 
 if ( has_action('customer_doliconnect_menu') && isset($thirdparty->client) && $thirdparty->client == '1' ) {
@@ -184,9 +184,9 @@ print "</div><br>";
 }
 
 if ( has_action('settings_doliconnect_menu') ) {
-print "<div class='list-group shadow-sm'>";
+  print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__('%s My settings', 'doliconnect'), '<i class="fa-solid fa-user-gear"></i>').'</div><ul class="list-group list-group-flush">';
 do_action('settings_doliconnect_menu');
-print "</div><br>";
+print "</ul></div><br>";
 }
 
 print "</div>";
