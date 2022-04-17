@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2022-04-17 13:34+0200\n"
-"PO-Revision-Date: 2022-04-17 13:34+0200\n"
+"POT-Creation-Date: 2022-04-17 13:48+0200\n"
+"PO-Revision-Date: 2022-04-17 13:49+0200\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_FR\n"
@@ -1082,7 +1082,7 @@ msgstr "Activé"
 msgid "Primary"
 msgstr "Principal"
 
-#: dashboard/dashboard.php:2481 functions/product.php:776
+#: dashboard/dashboard.php:2481 functions/product.php:778
 msgid "Description"
 msgstr "Description"
 
@@ -1091,7 +1091,7 @@ msgid "Privacy"
 msgstr "Confidentialité"
 
 #: dashboard/templates.php:30 dashboard/templates.php:1116
-#: functions/product.php:814
+#: functions/product.php:816
 msgid "Return"
 msgstr "Retour"
 
@@ -1236,7 +1236,7 @@ msgid "You don't have an account"
 msgstr "Vous n'avez pas de compte"
 
 #: dashboard/templates.php:462 dashboard/templates.php:524
-#: functions/product.php:623 functions/tools.php:3052
+#: functions/product.php:626 functions/tools.php:3052
 msgid "Sign in"
 msgstr "Connexion"
 
@@ -1847,7 +1847,7 @@ msgstr "jusqu’au"
 msgid "From %s"
 msgstr "A partir du %s"
 
-#: functions/member.php:111 functions/product.php:506
+#: functions/member.php:111 functions/product.php:509
 msgid "Contact us"
 msgstr "Contactez-nous"
 
@@ -1980,16 +1980,6 @@ msgstr "Tarif"
 msgid "hour"
 msgstr "heure"
 
-#: functions/product.php:374 functions/product.php:478
-#: functions/product.php:498
-msgid "Our prices are incl. VAT"
-msgstr "Nos prix sont TTC"
-
-#: functions/product.php:374 functions/product.php:478
-#: functions/product.php:498
-msgid "Our prices are excl. VAT"
-msgstr "Nos prix sont hors TVA"
-
 #: functions/product.php:449
 msgid "Sales"
 msgstr "Promotions"
@@ -1999,66 +1989,69 @@ msgid "Your price"
 msgstr "Votre prix"
 
 #: functions/product.php:499
-msgid "About our prices"
-msgstr "A propos de nos prix"
+msgid "Our prices are incl. VAT"
+msgstr "Nos prix sont TTC"
 
-#: functions/product.php:506
+#: functions/product.php:499
+msgid "Our prices are excl. VAT"
+msgstr "Nos prix sont hors TVA"
+
+#: functions/product.php:502
+msgid "About price"
+msgstr "A propos du prix"
+
+#: functions/product.php:509
 msgid "Login"
 msgstr "Connexion"
 
-#: functions/product.php:557
+#: functions/product.php:560
 msgid "Account closed"
 msgstr "Compte fermé"
 
-#: functions/product.php:558
+#: functions/product.php:561
 msgid "Unavailable"
 msgstr "Indisponible"
 
-#: functions/product.php:562 functions/product.php:564 functions/tools.php:1458
+#: functions/product.php:565 functions/product.php:567 functions/tools.php:1458
 #: functions/tools.php:1460 functions/tools.php:1967
 msgid "Delete"
 msgstr "Supprimer"
 
-#: functions/product.php:575
+#: functions/product.php:578
 msgid "Add to cart"
 msgstr "Ajouter au panier"
 
-#: functions/product.php:606 functions/product.php:608
+#: functions/product.php:609 functions/product.php:611
 msgid "Save my wish"
 msgstr "Enregistrer mon souhait"
 
-#: functions/product.php:623 functions/product.php:625
+#: functions/product.php:626 functions/product.php:628
 msgid "log in"
 msgstr "connectez-vous"
 
-#: functions/product.php:630
-#, php-format
-msgid "you get %u %% discount"
-msgstr "vous bénéficiez de %u %% de réduction"
-
-#: functions/product.php:644
+#: functions/product.php:646
 msgid "Supplier:"
 msgid_plural "Supplier:"
 msgstr[0] "Fournisseur:"
 msgstr[1] "Fournisseurs:"
 
-#: functions/product.php:710
+#: functions/product.php:712
 msgid "Read more..."
 msgstr "Lire la suite…"
 
-#: functions/product.php:763
+#: functions/product.php:765
 msgid "Origin:"
 msgstr "Origine:"
 
-#: functions/product.php:795
+#: functions/product.php:797
 msgid "This item contains:"
 msgstr "Cet article contient :"
 
-#: functions/product.php:804
+#: functions/product.php:806
 msgid "Item not in sale"
 msgstr "Article non en vente"
 
-#: functions/product.php:813
+#: functions/product.php:815
 msgid "Oops! This item does not appear to exist"
 msgstr "Oups! Cet article ne semble pas exister"
 
@@ -2784,3 +2777,7 @@ msgstr "ptibogxiv"
 #. Author URI of the plugin/theme
 msgid "https://www.ptibogxiv.net/en"
 msgstr "https://www.ptibogxiv.net/fr"
+
+#, php-format
+#~ msgid "you get %u %% discount"
+#~ msgstr "vous bénéficiez de %u %% de réduction"
