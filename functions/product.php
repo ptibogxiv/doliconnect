@@ -450,9 +450,9 @@ $button .= __( 'Sales', 'doliconnect');
   $vat = $product2->tva_tx;
   $refprice = (empty(get_option('dolibarr_b2bmode'))?$price_ttc:$price_ht);
 } else {
-  $price_min_ttc3=$product->price_min_ttc;
-  $price_ttc3=$product->price_ttc; 
-  $price_ht3=$product->price; 
+  $price_min_ttc3=$product->price_min_ttc-($product->price_min_ttc*$discount/100);
+  $price_ttc3=$product->price_ttc-($product->price_ttc*$discount/100);
+  $price_ht3=$product->price_ht-($product->price_ht*$discount/100);
   $price_min_ttc=$product->price_min_ttc;
   $price_ttc=$product->price_ttc;
   $price_ht=$product->price;
