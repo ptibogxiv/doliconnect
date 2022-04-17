@@ -2529,11 +2529,7 @@ print '<div class="input-group">
     <button class="btn btn-sm btn-warning" name="plus" value="plus" type="submit"><i class="fas fa-plus"></i></button>';
 print '<button class="btn btn-sm btn-outline-secondary" name="wish" value="wish" type="submit"><i class="fas fa-heart" style="color:Fuchsia"></i></button>';
 print '</div>';
-print '</form>'; 
-
-print '<button type="button" class="btn btn-light position-relative">
-20,00 €<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">-20%<span class="visually-hidden">selling price</span></span>
-</button>';
+print '</form>';
 
 print '<style>';
 ?>
