@@ -627,7 +627,6 @@ $button .= "<a href='".wp_login_url( get_permalink() )."?redirect_to=".get_perma
 $button .= '</div>';
 }
 
-if ( !empty($discount) ) { $button .= "<small>".sprintf( esc_html__( 'you get %u %% discount', 'doliconnect'), $discount)."</small>"; }
 $button .= "<div id='message-doliproduct-".$product->id."'></div>";
 
 return $button;
