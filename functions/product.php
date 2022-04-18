@@ -494,19 +494,20 @@ if (!empty($discount)) $button .= " text-danger";
 $button .= "' data-bs-container='body' data-bs-toggle='popover' data-bs-trigger='focus' title='".__( 'About price', 'doliconnect')."' data-bs-content='".$explication."'>";
 $button .= doliprice( empty(get_option('dolibarr_b2bmode'))?$price_ttc3:$price_ht3, $currency);
 if (!empty($discount)) $button .= '<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">-'.$discount.'%<span class="visually-hidden">discount</span></span>';
-if (!empty($discount)) $button .= '<span class="position-absolute top-100 start-100 translate-middle badge bg-light text-dark"><small><s>'.doliprice( empty(get_option('dolibarr_b2bmode'))?$price_ttc:$price_ht, $currency).'</s><span class="visually-hidden"initial price</span></small></span>';
+if (!empty($product->net_measure) && !empty($product->net_measure_units)) { 
+  $unit = callDoliApi("GET", "/setup/dictionary/units?sortfield=rowid&sortorder=ASC&limit=1&active=1&sqlfilters=(t.rowid%3Alike%3A'".$product->net_measure_units."')", null, dolidelay('constante'));
+  $button .= '<span class="position-absolute top-100 start-0 translate-middle badge rounded-pill bg-info "><small>'.doliprice( $refprice/$product->net_measure, null, $currency).'/'.$unit[0]->short_label.'<span class="visually-hidden">net measure price</span></small></span>';
+}
+if (!empty($discount)) $button .= '<span class="position-absolute top-100 start-100 translate-middle badge bg-light text-dark"><small><s>'.doliprice( empty(get_option('dolibarr_b2bmode'))?$price_ttc:$price_ht, $currency).'</s><span class="visually-hidden">initial price</span></small></span>';
 $button .= '</a><br><br>';
 
 //if ( empty($time) && !empty($product->duration_value) ) { $button .='/'.doliduration($product); } 
 //if ( !empty($altdurvalue) ) { $button .= "<tr><td class='text-end'>soit ".doliprice( $altdurvalue*$product->price_ttc, null, $currency)." par ".__( 'hour', 'doliconnect')."</td></tr>"; } 
-if (!empty($product->net_measure)) { 
+if (!empty($product->net_measure) && !empty($product->net_measure_units)) { 
   $unit = callDoliApi("GET", "/setup/dictionary/units?sortfield=rowid&sortorder=ASC&limit=1&active=1&sqlfilters=(t.rowid%3Alike%3A'".$product->net_measure_units."')", null, dolidelay('constante'));
   $button .= '<span class="badge rounded-pill bg-light text-dark">'.$product->net_measure;
   if (!empty($unit)) $button .= " ".$unit[0]->short_label;
   $button .= '</span> ';
-  $button .= '<span class="badge rounded-pill bg-light text-dark">'.doliprice( $refprice/$product->net_measure, null, $currency);
-  if (!empty($unit)) $button .= "/".$unit[0]->short_label; 
-  $button .= '</span>';
 }
   
 
