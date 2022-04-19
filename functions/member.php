@@ -18,7 +18,7 @@ $action='POST';
 } 
 
 list($year, $month, $day) = explode("-", $current_user->billing_birth);
-$birth = mktime(0, 0, 0, $month, $day, $year);
+$birth = mktime(0, 0, 0, $month, $day, $year); // debug si non conforme
 
 $thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty'));  
 
