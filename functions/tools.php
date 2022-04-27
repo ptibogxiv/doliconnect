@@ -617,7 +617,7 @@ print '</div></div>';
 print '<div id="profids" class="row mb-2 g-2">';
     
 if ( doliversion('15.0.0') ) {
-print doliProfId($object->idprof1, $object->idprof2, $object->idprof3, $object->idprof4, $object->country_code, $idobject, $rights);
+print doliProfId((isset($object->idprof1)?$object->idprof1:null), (isset($object->idprof2)?$object->idprof2:null), (isset($object->idprof3)?$object->idprof3:null), (isset($object->idprof4)?$object->idprof4:null), (isset($object->country_code)?$object->country_code:null), $idobject, $rights);
 }
 
 print '</div><div class="row g-2"><div class="col-md-6 col-lg-4"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[tva_intra]" name="'.$idobject.'[tva_intra]" placeholder="tva" value="'.(isset($object->tva_intra) ? $object->tva_intra : null).'"';
