@@ -619,7 +619,7 @@ print '</div></div>';
 print '<div id="profids" class="row mb-2 g-2">';
     
 if ( doliversion('15.0.0') ) {
-print doliProfId((isset($object->idprof1)?$object->idprof1:null), (isset($object->idprof2)?$object->idprof2:null), (isset($object->idprof3)?$object->idprof3:null), (isset($object->idprof4)?$object->idprof4:null), (isset($object->country_code)?$object->country_code:$company->country_code), $idobject, $rights);
+print doliProfId((isset($object->idprof1)?$object->idprof1:''), (isset($object->idprof2)?$object->idprof2:''), (isset($object->idprof3)?$object->idprof3:''), (isset($object->idprof4)?$object->idprof4:''), (isset($object->country_code)?$object->country_code:$company->country_code), $idobject, $rights);
 }
 
 print '</div><div class="row g-2"><div class="col-md-6 col-lg-4"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[tva_intra]" name="'.$idobject.'[tva_intra]" placeholder="tva" value="'.(isset($object->tva_intra) ? $object->tva_intra : null).'"';
@@ -823,22 +823,22 @@ print 'jQuery(document).ready(function() {
     if ( typeof(document.getElementById("idprof1")) != "undefined" && document.getElementById("idprof1") != null ) { 
       var idprof1 = $("#idprof1").val();
     } else {
-      var idprof1 = "'.(isset($object->idprof1) ? $object->idprof1 : 0).'";
+      var idprof1 = "'.(isset($object->idprof1) ? $object->idprof1 : '').'";
     } 
     if ( typeof(document.getElementById("idprof2")) != "undefined" && document.getElementById("idprof2") != null ) { 
       var idprof2 = $("#idprof2").val();
     } else {
-      var idprof2 = "'.(isset($object->idprof2) ? $object->idprof2 : 0).'";
+      var idprof2 = "'.(isset($object->idprof2) ? $object->idprof2 : '').'";
     } 
     if ( typeof(document.getElementById("idprof3")) != "undefined" && document.getElementById("idprof3") != null ) { 
       var idprof3 = $("#idprof3").val();
     } else {
-      var idprof3 = "'.(isset($object->idprof3) ? $object->idprof3 : 0).'";
+      var idprof3 = "'.(isset($object->idprof3) ? $object->idprof3 : '').'";
     } 
     if ( typeof(document.getElementById("idprof4")) != "undefined" && document.getElementById("idprof4") != null ) { 
       var idprof4 = $("#idprof4").val();
     } else {
-      var idprof4 = "'.(isset($object->idprof4) ? $object->idprof4 : 0).'";
+      var idprof4 = "'.(isset($object->idprof4) ? $object->idprof4 : '').'";
     } 
     //console.log("country is changed to " + countryId );
     $.ajax({
