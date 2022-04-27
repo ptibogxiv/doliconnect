@@ -813,7 +813,6 @@ if ( doliversion('16.0.0') ) {
   print '</div></div>';
 }
 
-if (!empty(get_option('doliconnectbeta'))) {
 print '<script type="text/javascript">';
 print 'jQuery(document).ready(function() {
   // Country dependent ajax
@@ -906,7 +905,6 @@ print 'jQuery(document).ready(function() {
   });
 });';
 print '</script>';
-}
 
 print '</div><div class="row g-2">';
   
