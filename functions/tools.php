@@ -518,6 +518,8 @@ if ( is_object($object) && $object->id > 0 ) {
 $idobject=$mode."[".$object->id."]";
 } else { $idobject=$mode; }
 
+$company = callDoliApi("GET", "/setup/company", null, dolidelay('constante'));
+
 print "<ul class='list-group list-group-flush'>";
 
 if ( ! isset($object) && in_array($mode, array('thirdparty')) && empty(get_option('doliconnect_disablepro')) ) {
@@ -617,7 +619,7 @@ print '</div></div>';
 print '<div id="profids" class="row mb-2 g-2">';
     
 if ( doliversion('15.0.0') ) {
-print doliProfId((isset($object->idprof1)?$object->idprof1:null), (isset($object->idprof2)?$object->idprof2:null), (isset($object->idprof3)?$object->idprof3:null), (isset($object->idprof4)?$object->idprof4:null), (isset($object->country_code)?$object->country_code:null), $idobject, $rights);
+print doliProfId((isset($object->idprof1)?$object->idprof1:null), (isset($object->idprof2)?$object->idprof2:null), (isset($object->idprof3)?$object->idprof3:null), (isset($object->idprof4)?$object->idprof4:null), (isset($object->country_code)?$object->country_code:$company->country_code), $idobject, $rights);
 }
 
 print '</div><div class="row g-2"><div class="col-md-6 col-lg-4"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[tva_intra]" name="'.$idobject.'[tva_intra]" placeholder="tva" value="'.(isset($object->tva_intra) ? $object->tva_intra : null).'"';
@@ -627,7 +629,7 @@ print ' autocomplete="off">
 
 if ( doliversion('15.0.0') ) {
 print '<div class="col-md-6 col-lg-4"><div class="form-floating" id="forme_juridique_code_form">';
-print doliSelectForm("forme_juridique_code", "/setup/dictionary/legal_form?sortfield=libelle&sortorder=ASC&active=1&limit=500&country=".(isset($object->country_id) ? $object->country_id : null), __( '- Select your legal form -', 'doliconnect'), __( 'Legal form', 'doliconnect'), (isset($object->forme_juridique_code) ? $object->forme_juridique_code : null), $idobject, $rights, $delay, 'code');
+print doliSelectForm("forme_juridique_code", "/setup/dictionary/legal_form?sortfield=libelle&sortorder=ASC&active=1&limit=500&country=".(isset($object->country_id) ? $object->country_id : $company->country_id), __( '- Select your legal form -', 'doliconnect'), __( 'Legal form', 'doliconnect'), (isset($object->forme_juridique_code) ? $object->forme_juridique_code : null), $idobject, $rights, $delay, 'code');
 //print '<label for="yyyy"><i class="fas fa-building fa-fw"></i> '.__( 'Legal form', 'doliconnect').'</label>';
 print '</div></div>';
 }
@@ -802,12 +804,12 @@ $lang = $current_user->locale;
 }
 
 print '<div class="row mb-2 g-2"><div class="col"><div class="form-floating">';
-print doliSelectForm("country_id", "/setup/dictionary/countries?sortfield=favorite%2Clabel&sortorder=DESC%2CASC&limit=500&lang=".$lang, __( '- Select your country -', 'doliconnect'), __( 'Country', 'doliconnect'), (isset($object->country_id) ? $object->country_id : null), $idobject, $rights);
+print doliSelectForm("country_id", "/setup/dictionary/countries?sortfield=favorite%2Clabel&sortorder=DESC%2CASC&limit=500&lang=".$lang, __( '- Select your country -', 'doliconnect'), __( 'Country', 'doliconnect'), (isset($object->country_id) ? $object->country_id : $company->country_id), $idobject, $rights);
 print '</div></div>';
 
 if ( doliversion('16.0.0') ) { 
   print '<div class="col-12 col-md"><div class="form-floating" id="state_form">';
-  print doliSelectForm("state_id", "/setup/dictionary/states?sortfield=code_departement&sortorder=ASC&limit=500&country=".(isset($object->country_id) ? $object->country_id : null), __( '- Select your state -', 'doliconnect'), __( 'State', 'doliconnect'), (isset($object->state_id) ? $object->state_id : null), $idobject, $rights);
+  print doliSelectForm("state_id", "/setup/dictionary/states?sortfield=code_departement&sortorder=ASC&limit=500&country=".(isset($object->country_id) ? $object->country_id : $company->country_id), __( '- Select your state -', 'doliconnect'), __( 'State', 'doliconnect'), (isset($object->state_id) ? $object->state_id : $company->state_id), $idobject, $rights);
   print '</div></div>';
 }
 
@@ -910,7 +912,7 @@ print '</div><div class="row g-2">';
   
 if (!empty(get_option('doliconnectbeta')) && doliconst("MAIN_USE_ZIPTOWN_DICTIONNARY")) {
   print '<div class="col-12 col-md"><div class="form-floating" id="ziptown_form">';
-  print doliSelectForm("ziptown", "/setup/dictionary/towns?sortfield=town&sortorder=ASC&active=1&limit=1000&sqlfilters=(t.fk_pays%3A%3D%3A'".(isset($object->country_id) ? $object->country_id : null)."')%20AND%20(t.fk_county%3A%3D%3A'".(isset($object->state_id) ? $object->state_id : null)."')", __( '- Select your town -', 'doliconnect'), __( 'Town', 'doliconnect'), (isset($object->zip) ? $object->zip : null).','.(isset($object->town) ? $object->town : null), $idobject, $rights);
+  print doliSelectForm("ziptown", "/setup/dictionary/towns?sortfield=town&sortorder=ASC&active=1&limit=1000&sqlfilters=(t.fk_pays%3A%3D%3A'".(isset($object->country_id) ? $object->country_id : $company->country_id)."')%20AND%20(t.fk_county%3A%3D%3A'".(isset($object->state_id) ? $object->state_id : null)."')", __( '- Select your town -', 'doliconnect'), __( 'Town', 'doliconnect'), (isset($object->zip) ? $object->zip : null).','.(isset($object->town) ? $object->town : null), $idobject, $rights);
   print '</div></div>';
 } else {
   print '<div class="col-lg-8"><div class="form-floating" id="town">';
