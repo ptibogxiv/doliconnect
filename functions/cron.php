@@ -15,7 +15,7 @@ $date->modify('NOW');
 $duration = (!empty(get_option('dolicartnewlist'))?get_option('dolicartnewlist'):'month');
 $date->modify('FIRST DAY OF LAST '.$duration.' MIDNIGHT');
 $lastdate = $date->format('Y-m-d');
-$requestp = "/products?sortfield=t.datec&sortorder=DESC&sqlfilters=(t.datec%3A%3E%3A'".$lastdate."')%20AND%20(t.tosell%3A%3D%3A1)";
+$requestp = "/products?sortfield=t.datec&sortorder=DESC&sqlfilters=(t.datec%3A%3E%3A'".$lastdate."')%20AND%20(t.tosell%3A%3D%3A1)&limit=1000";
 $listproduct = callDoliApi("GET", $requestp, null, dolidelay('product', $refresh));
 if ( !isset($listproduct->error) && $listproduct != null ) {
 foreach ($listproduct as $product) {
@@ -69,7 +69,7 @@ doliconnect_image('category', $category->id, 1, $refresh, $category->entity);
 
 
 foreach ($categories as $id => $categorie) {
-$requestp = "/products?sortfield=t.rowid&sortorder=DESC&category=".$id."&sqlfilters=(t.tosell=1)";
+$requestp = "/products?sortfield=t.rowid&sortorder=DESC&category=".$id."&sqlfilters=(t.tosell=1)&limit=1000";
 $listproduct = callDoliApi("GET", $requestp, null, dolidelay('product', $refresh));
 if ( !isset($listproduct->error) && $listproduct != null ) {
 foreach ($listproduct as $product) {
