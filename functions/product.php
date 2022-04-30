@@ -465,9 +465,10 @@ if ($price_min_ttc == $price_ttc) {
 $discount = 0;
 $price_ttc3 = $price_min_ttc;
 //$price_ht3 = $price_min_ht;
-} elseif ($price_min_ttc >= ($price_ttc-($price_ttc*$discount/100))) {
-$discount = 100-($price_min_ttc/$price_ttc);
+} elseif ($price_min_ttc > ($price_ttc-($price_ttc*$discount/100))) {
+$discount = 100-(100*$price_min_ttc/$price_ttc);
 $price_ttc3 = $price_ttc-($price_ttc*$discount/100);
+$price_ht3 = $price_ht-($price_ht*$discount/100);
 }
 
 }
