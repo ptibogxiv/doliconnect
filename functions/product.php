@@ -463,8 +463,11 @@ $discountlabel = $product3[0]->label;
 
 if ($price_min_ttc == $price_ttc) {
 $discount = 0;
-} elseif ($price_min_ttc > ($price_ttc-($price_ttc*$discount/100))) {
+$price_ttc3 = $price_min_ttc;
+//$price_ht3 = $price_min_ht;
+} elseif ($price_min_ttc >= ($price_ttc-($price_ttc*$discount/100))) {
 $discount = 100-($price_min_ttc/$price_ttc);
+$price_ttc3 = $price_ttc-($price_ttc*$discount/100);
 }
 
 }
