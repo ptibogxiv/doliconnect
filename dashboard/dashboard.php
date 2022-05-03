@@ -2508,7 +2508,7 @@ print '</div></div>';
 
 if (current_user_can('administrator') && !empty(get_option('doliconnectbeta')) ) { 
 
-print '<form id="doliform-product-7" method="post">';
+print '<form id="doliform-product-7" method="post" action="'.admin_url('admin-ajax.php').'">';
 print "<input type='hidden' name='action' value='doliproduct_request'>";
 print "<input type='hidden' name='product-add-nonce' value='".wp_create_nonce('product-add-nonce-7')."'>";
 print '<input type="hidden" name="product-id" value="7">';
