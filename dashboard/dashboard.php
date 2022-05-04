@@ -2514,16 +2514,16 @@ print "<script>";
 print '$(function() {
     $("#doliform-product-7 button[type=submit]").on("click", function(e) {
         e.preventDefault();
-        var case = $(this).val();
+        var acase = $(this).val();
         //jQuery("#DoliconnectLoadingModal").modal("show");
-        console.log("changed to " + case);
+        console.log("changed to " + acase);
         $.ajax({
             url :"'.admin_url('admin-ajax.php').'",
             type:"POST",
             cache:false,
             data: {
               "action": "dolicart_request",
-              "case": case,
+              "case": acase,
             },
         }).done(function(response) {
             //jQuery("#DoliconnectLoadingModal").modal("hide");
