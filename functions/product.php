@@ -591,40 +591,6 @@ $button .= "<input type='hidden' name='product-add-vat' value='".$product->tva_t
 $button .= "<button class='btn btn-sm btn-warning' type='submit' name='cartaction' value='addtocart' title='".esc_html__( 'Add to cart', 'doliconnect')."' ";
 if (( isset($thirdparty->status) && $thirdparty->status != '1' ) || (( $realstock <= 0 || $m2 < $step) && $product->type == '0' && !empty(doliconst('MAIN_MODULE_STOCK', $refresh)) )) { $button .= " disabled"; }
 $button .= "><i class='fas fa-cart-plus fa-fw'></i></button></form>";
-if ( !empty(doliconst('MAIN_MODULE_WISHLIST', $refresh)) && !empty(get_option('doliconnectbeta')) ) {
-$button .= "<form id='form-product-wish-".$product->id."' class='form-product-wish-".$product->id."' method='post' action='".admin_url('admin-ajax.php')."'>";
-$button .= "<input type='hidden' name='action' value='doliproduct_request'>";
-$button .= "<input type='hidden' name='product-wish-nonce' value='".wp_create_nonce( 'product-wish-nonce-'.$product->id)."'>";
-$button .= "<input type='hidden' name='product-wish-id' value='".$product->id."'>";
-$button .= "<script>";
-$button .= 'jQuery(document).ready(function($) {
-	jQuery(".form-product-wish-'.$product->id.'").on("submit", function(e){
-  jQuery("#DoliconnectLoadingModal").modal("show");
-	e.preventDefault();
-	var $form = $(this);
-    
-jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function(e){ 
-		$.post($form.attr("action"), $form.serialize(), function(response){
-      jQuery("#DoliconnectLoadingModal").modal("hide");
-      if (response.success) {
-      if (document.getElementById("product-wish-'.$product->id.'")) {
-      document.getElementById("product-wish-'.$product->id.'").innerHTML = response.data.message;      
-      }
-      } else {
-           
-      }
-		}, "json");  
-  });
-});
-});';
-$button .= "</script>";
-if (!empty($wish)) {
-$button .= "<button id='product-wish-".$product->id."' class='btn btn-sm btn-light btn-outline-secondary' type='submit' name='cartwish' value='addtowish' title='".esc_html__( 'Save my wish', 'doliconnect')."'><i class='fas fa-heart-broken' style='color:Fuchsia'></i></button>";
-} else {
-$button .= "<button id='product-wish-".$product->id."' class='btn btn-sm btn-light btn-outline-secondary' type='submit' name='cartwish' value='addtowish' title='".esc_html__( 'Save my wish', 'doliconnect')."'><i class='fas fa-heart' style='color:Fuchsia'></i></button>";
-}
-$button .= "</form>";
-}
 $button .= "</div>";
 
 //if ( $qty > 0 ) {
