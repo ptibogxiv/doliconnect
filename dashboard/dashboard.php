@@ -2508,10 +2508,7 @@ print '</div></div>';
 
 if (current_user_can('administrator') && !empty(get_option('doliconnectbeta')) ) { 
 
-print '<form id="doliform-product-7" method="post" action="'.admin_url('admin-ajax.php').'">';
-print "<input type='hidden' name='action' value='doliproduct_request'>";
-print "<input type='hidden' name='product-add-nonce' value='".wp_create_nonce('product-add-nonce-7')."'>";
-print '<input type="hidden" name="product-id" value="7">';
+print '<form id="doliform-product-7" method="post">';
 
 print "<script>";
 print '$(function() {
@@ -2520,7 +2517,18 @@ print '$(function() {
         var value = $(this).val();
         //jQuery("#DoliconnectLoadingModal").modal("show");
         console.log("changed to " + value );
-
+        $.ajax({
+            url :"'.admin_url('admin-ajax.php').'",
+            type:"POST",
+            cache:false,
+            data: {
+              "action": "doliproduct_request",
+              "case": "update",
+            },
+        }).done(function(response) {
+            //jQuery("#DoliconnectLoadingModal").modal("hide");
+            console.log("updated qty " + response.data.message);
+        });
 
     });
 });';
