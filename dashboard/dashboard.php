@@ -2534,10 +2534,10 @@ print '$(function() {
 });';
 print "</script>";
 
-print '<div class="input-group">
-    <button class="btn btn-sm btn-warning" name="minus" value="minus" type="submit"><i class="fa-solid fa-minus"></i></button>
-    <input type="text" class="form-control" placeholder="" aria-label="Example text with two button addons" value="0" style="text-align:center;" readonly>
-    <button class="btn btn-sm btn-warning" name="plus" value="plus" type="submit"><i class="fa-solid fa-plus"></i></button>';
+print '<div class="input-group">';
+print '<button class="btn btn-sm btn-warning" name="minus" value="minus" type="submit"><i class="fa-solid fa-minus"></i></button>
+<input type="text" class="form-control" placeholder="" aria-label="Example text with two button addons" value="0" style="text-align:center;" readonly>
+<button class="btn btn-sm btn-warning" name="plus" value="plus" type="submit"><i class="fa-solid fa-plus"></i></button>';
 print '<button class="btn btn-sm btn-light" name="wish" value="wish" type="submit"><i class="fas fa-heart" style="color:Fuchsia"></i></button>';
 print '</div>';
 print '</form>';
