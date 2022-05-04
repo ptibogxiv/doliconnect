@@ -565,7 +565,7 @@ global $current_user;
 
 if ( wp_verify_nonce( trim($_POST['dolicart-nonce']), 'dolicart-nonce')) {
 
-if ( isset($_POST['action_cart']) && $_POST['action_cart'] == "purge_cart" && isset($_POST['module']) && isset($_POST['id'])) {
+if ( isset($_POST['case']) && $_POST['case'] == "purge_cart" && isset($_POST['module']) && isset($_POST['id'])) {
 $object = callDoliApi("GET", "/".trim($_POST['module'])."/".trim($_POST['id']), null, dolidelay('order', true));
 if (!isset($object->error) && empty($object->statut)) {
 $object = callDoliApi("DELETE", "/".trim($_POST['module'])."/".trim($_POST['id']), null);
@@ -584,7 +584,7 @@ wp_send_json_error( __( 'An error occured:', 'doliconnect').' '.$object->error->
 } else{
 wp_send_json_error( __( 'An error occured:', 'doliconnect').' '.$object->error->message); 
 }
-} elseif ( isset($_POST['action_cart']) && $_POST['action_cart'] == "update_cart") {
+} elseif ( isset($_POST['case']) && $_POST['case'] == "update_cart") {
 
 $result = doliaddtocart($_POST['productid'], $_POST['qty'], $_POST['price'], (isset($_POST['remise_percent'])?$_POST['remise_percent']:null), (isset($_POST['date_start'])?$_POST['date_start']:null), (isset($_POST['date_end'])?$_POST['date_end']:null));
 
@@ -609,7 +609,7 @@ if ($result >= 0) {
 	wp_send_json_error( $response ); 
 	}
 
-} elseif ( isset($_POST['action_cart']) && $_POST['action_cart'] == "validate_cart" && isset($_POST['module']) && isset($_POST['id'])) {
+} elseif ( isset($_POST['case']) && $_POST['case'] == "validate_cart" && isset($_POST['module']) && isset($_POST['id'])) {
 
 $data = [
     'demand_reason_id' => 1,
@@ -626,7 +626,7 @@ wp_send_json_success($response);
 } else {
 wp_send_json_error( __( 'An error occured:', 'doliconnect').' '.$object->error->message); 
 }
-} elseif ( isset($_POST['action_cart']) && $_POST['action_cart'] == "info_cart" && isset($_POST['module']) && isset($_POST['id'])) {
+} elseif ( isset($_POST['case']) && $_POST['case'] == "info_cart" && isset($_POST['module']) && isset($_POST['id'])) {
 
 $data = [
     'demand_reason_id' => 1,
@@ -660,7 +660,7 @@ wp_send_json_success($response);
 } else {
 wp_send_json_error( __( 'An error occured:', 'doliconnect').' '.$object->error->message); 
 }
-} elseif ( isset($_POST['action_cart']) && $_POST['action_cart'] == "pay_cart" && isset($_POST['module']) && isset($_POST['id'])) {
+} elseif ( isset($_POST['case']) && $_POST['case'] == "pay_cart" && isset($_POST['module']) && isset($_POST['id'])) {
 
 $data = [
   'paymentintent' => isset($_POST['paymentintent']) ? $_POST['paymentintent'] : null,

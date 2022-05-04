@@ -1656,7 +1656,7 @@ var actionvalue = $(this).val();
           data: {
             'action': 'dolicart_request',
             'dolicart-nonce': '".$nonce."',
-            'action_cart': actionvalue,
+            'case': actionvalue,
             'module': '".$module."',
             'id': '".$id."'
           }
@@ -1846,7 +1846,7 @@ var shipping_method_id = $('input:radio[name=shipping_method_id]:checked').val()
           data: {
             'action': 'dolicart_request',
             'dolicart-nonce': '".wp_create_nonce( 'dolicart-nonce')."',
-            'action_cart': actionvalue,
+            'case': actionvalue,
             'module': '".$module."',
             'id': '".$id."',
             'shipping_method_id': shipping_method_id,
