@@ -2516,9 +2516,9 @@ print '<input type="hidden" name="product-id" value="7">';
 print "<script>";
 print '$(function() {
     $("#doliform-product-7 button[type=submit]").on("click", function(e) {
+        e.preventDefault();
         var value = $(this).val();
         //jQuery("#DoliconnectLoadingModal").modal("show");
-        e.preventDefault();
         console.log("changed to " + value );
 
 
