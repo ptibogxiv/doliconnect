@@ -697,7 +697,7 @@ print '<div class="form-floating mb-2">
 <label for="commentsText">'.__( 'Message', 'doliconnect').'</label>
 </div>';
 
-print dolicaptcha();
+print dolicaptcha('dolicontact');
 
 if ( !is_user_logged_in() ) {
 print '</li><li class="list-group-item"><div class="form-check"><input id="rgpdinfo" class="form-check-input form-check-sm" type="checkbox" name="rgpdinfo" value="ok"><label class="form-check-label w-100" for="rgpdinfo"><small class="form-text text-muted"> '.__( 'I agree to save my personnal informations in order to contact me', 'doliconnect').'</small></label></div>';  

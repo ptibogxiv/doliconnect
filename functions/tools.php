@@ -40,7 +40,7 @@ $return = true;
 return $return;
 }
 
-function dolicaptcha() {
+function dolicaptcha($id = null) {
   $arrX = array(
     "car"=>array("label"=>__( "car", "doliconnect"),"icon"=>"car"),
     "carrot"=>array("label"=>__( "carrot", "doliconnect"),"icon"=>"carrot"),
@@ -54,7 +54,7 @@ function dolicaptcha() {
   $randIndex = array_rand($arrX, 4);
   $controle = array_rand($randIndex, 1); 
 
-  $captcha = '<input type="hidden" name="ctrldolicaptcha" value="'.wp_create_nonce( 'ctrldolicaptcha-'.$arrX[$randIndex[$controle]]['icon']).'"><label for="btndolicaptcha" class="form-label">'.__( 'Please select the correct icon: ', 'doliconnect').''.$arrX[$randIndex[$controle]]['label'].'</label><div class="d-flex btn-group" role="group" aria-label="Basic radio toggle button group" required>
+  $captcha = '<div id="'.$id.'"><input type="hidden" name="ctrldolicaptcha" value="'.wp_create_nonce( 'ctrldolicaptcha-'.$arrX[$randIndex[$controle]]['icon']).'"><label for="btndolicaptcha" class="form-label">'.__( 'Please select the correct icon: ', 'doliconnect').''.$arrX[$randIndex[$controle]]['label'].'</label><div class="d-flex btn-group" role="group" aria-label="Basic radio toggle button group" required>
   <input type="radio" class="btn-check" name="btndolicaptcha" id="btndolicaptcha1" value="'.$arrX[$randIndex[0]]['icon'].'" autocomplete="off">
   <label class="btn btn-outline-secondary" for="btndolicaptcha1"><i class="fas fa-'.$arrX[$randIndex[0]]['icon'].' fa-fw"></i></label>
 
@@ -66,7 +66,7 @@ function dolicaptcha() {
 
   <input type="radio" class="btn-check" name="btndolicaptcha" id="btndolicaptcha4" value="'.$arrX[$randIndex[3]]['icon'].'" autocomplete="off">
   <label class="btn btn-outline-secondary" for="btndolicaptcha4"><i class="fas fa-'.$arrX[$randIndex[3]]['icon'].' fa-fw"></i></label>
-</div>';
+</div></div>';
 
 return $captcha;
 }
