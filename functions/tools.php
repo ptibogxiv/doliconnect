@@ -41,7 +41,14 @@ return $return;
 }
 
 function dolicaptcha() {
-  $arrX = array("car"=>array("label"=>__( "car", "doliconnect"),"icon"=>"car"),"carrot"=>array("label"=>__( "carrot", "doliconnect"),"icon"=>"carrot"),"male"=>array("label"=>__( "male", "doliconnect"),"icon"=>"male"),"laptop"=>array("label"=>__( "laptop", "doliconnect"),"icon"=>"laptop"),"female"=>array("label"=>__( "female", "doliconnect"),"icon"=>"female"),"seedling"=>array("label"=>__( "seedling", "doliconnect"),"icon"=>"seedling"),"bacterium"=>array("label"=>__( "bacterium", "doliconnect"),"icon"=>"bacterium"));
+  $arrX = array(
+    "car"=>array("label"=>__( "car", "doliconnect"),"icon"=>"car"),
+    "carrot"=>array("label"=>__( "carrot", "doliconnect"),"icon"=>"carrot"),
+    "male"=>array("label"=>__( "male", "doliconnect"),"icon"=>"male"),
+    "laptop"=>array("label"=>__( "laptop", "doliconnect"),"icon"=>"laptop"),
+    "female"=>array("label"=>__( "female", "doliconnect"),"icon"=>"female"),
+    "seedling"=>array("label"=>__( "seedling", "doliconnect"),"icon"=>"seedling"),
+    "bacterium"=>array("label"=>__( "bacterium", "doliconnect"),"icon"=>"bacterium"));
  
   // get 2 random indexes from array $arrX
   $randIndex = array_rand($arrX, 4);
