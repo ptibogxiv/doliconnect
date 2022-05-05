@@ -355,7 +355,7 @@ function doliajax($id, $url = null, $case = null){
         }
         if (document.getElementById("'.$id.'-captcha") && response.data.captcha) {
           document.getElementById("'.$id.'-captcha").innerHTML = response.data.captcha;      
-          }
+        }
       jQuery("#DoliconnectLoadingModal").modal("hide");
       }, "json");  
     });
