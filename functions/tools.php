@@ -54,7 +54,7 @@ function dolicaptcha($id = null) {
   $randIndex = array_rand($arrX, 4);
   $controle = array_rand($randIndex, 1); 
 
-  $captcha = '<div id="'.$id.'"><input type="hidden" name="ctrldolicaptcha" value="'.wp_create_nonce( 'ctrldolicaptcha-'.$arrX[$randIndex[$controle]]['icon']).'"><label for="btndolicaptcha" class="form-label">'.__( 'Please select the correct icon: ', 'doliconnect').''.$arrX[$randIndex[$controle]]['label'].'</label><div class="d-flex btn-group" role="group" aria-label="Basic radio toggle button group" required>
+  $captcha = '<div id="'.$id.'-captcha"><input type="hidden" name="ctrldolicaptcha" value="'.wp_create_nonce( 'ctrldolicaptcha-'.$arrX[$randIndex[$controle]]['icon']).'"><label for="btndolicaptcha" class="form-label">'.__( 'Please select the correct icon: ', 'doliconnect').''.$arrX[$randIndex[$controle]]['label'].'</label><div class="d-flex btn-group" role="group" aria-label="Basic radio toggle button group" required>
   <input type="radio" class="btn-check" name="btndolicaptcha" id="btndolicaptcha1" value="'.$arrX[$randIndex[0]]['icon'].'" autocomplete="off">
   <label class="btn btn-outline-secondary" for="btndolicaptcha1"><i class="fas fa-'.$arrX[$randIndex[0]]['icon'].' fa-fw"></i></label>
 
@@ -353,6 +353,9 @@ function doliajax($id, $url = null, $case = null){
           document.getElementById("'.$id.'-alert").innerHTML = response.data;      
           }
         }
+        if (document.getElementById("'.$id.'-captcha") && response.data.captcha) {
+          document.getElementById("'.$id.'-captcha").innerHTML = response.data.captcha;      
+          }
       jQuery("#DoliconnectLoadingModal").modal("hide");
       }, "json");  
     });
