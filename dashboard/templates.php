@@ -407,7 +407,7 @@ print '<div class="form-floating mb-2">
 <label for="user_email"><i class="fas fa-at fa-fw"></i> '.__( 'Email', 'doliconnect').'</label>
 </div>';
 
-print dolicaptcha();
+print dolicaptcha('dolifpw');
 
 print "</li></lu><div class='card-body'>";
 print '<div class="d-grid gap-2"><button class="btn btn-secondary" type="submit" value="submit">'.__( 'Submit', 'doliconnect').'</button></div>';
