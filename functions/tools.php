@@ -345,7 +345,7 @@ function doliajax($id, $url = null, $case = null){
         $(window).scrollTop(0); 
         if (response.success) {
           if (document.getElementById("'.$id.'-alert")) {
-          document.getElementById("'.$id.'-alert").innerHTML = response.data;      
+          document.getElementById("'.$id.'-alert").innerHTML = response.data.message;      
           }
           if (!!url) document.location = url;
         } else {
