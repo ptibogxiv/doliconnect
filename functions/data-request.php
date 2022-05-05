@@ -342,14 +342,18 @@ function dolicontact_request(){
 			$emailSent = wp_mail($emailTo, $subject, $body, $headers);
 
 		if ( !is_wp_error( $emailSent )) {
-			wp_send_json_success( dolialert('success', __( 'Your message is successful send!', 'doliconnect')));
+			$response = [
+				'message' => dolialert('success', __( 'Your message is successful send!', 'doliconnect')),
+				'captcha' => dolicaptcha('dolicontact'),
+					];
+			wp_send_json_success( $response );
 			die();	
 		} else {
 			$response = [
 				'message' => dolialert('error', sprintf(__('Sending message fails for the following reason: %s. Please contact us for help.', 'doliconnect'), $emailSent->get_error_message()) ),
 				'captcha' => dolicaptcha('dolicontact'),
 					];
-			wp_send_json_error( $response ); 
+			wp_send_json_error( $response );
 			die();	
 		}
 			
@@ -358,7 +362,7 @@ function dolicontact_request(){
 				'message' => dolialert('danger', join( '<br />', $ContactError )),
 				'captcha' => dolicaptcha('dolicontact'),
 					];
-			wp_send_json_error( $response ); 
+			wp_send_json_error( $response );
 			die();	
 		}
 
