@@ -350,7 +350,7 @@ function doliajax($id, $url = null, $case = null){
           if (!!url) document.location = url;
         } else {
           if (document.getElementById("'.$id.'-alert")) {
-          document.getElementById("'.$id.'-alert").innerHTML = response.data;      
+          document.getElementById("'.$id.'-alert").innerHTML = response.data.message;      
           }
         }
         if (document.getElementById("'.$id.'-captcha") && response.data.captcha) {

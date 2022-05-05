@@ -345,17 +345,29 @@ function dolicontact_request(){
 			wp_send_json_success( dolialert('success', __( 'Your message is successful send!', 'doliconnect')));
 			die();	
 		} else {
-			wp_send_json_error( dolialert('error', sprintf(__('Sending message fails for the following reason: %s. Please contact us for help.', 'doliconnect'), $emailSent->get_error_message()) ));	
+			$response = [
+				'message' => dolialert('error', sprintf(__('Sending message fails for the following reason: %s. Please contact us for help.', 'doliconnect'), $emailSent->get_error_message()) ),
+				'captcha' => dolicaptcha('dolicontact'),
+					];
+			wp_send_json_error( $response ); 
 			die();	
 		}
 			
 		} else {
-			wp_send_json_error( dolialert('danger', join( '<br />', $ContactError )));
+			$response = [
+				'message' => dolialert('danger', join( '<br />', $ContactError )),
+				'captcha' => dolicaptcha('dolicontact'),
+					];
+			wp_send_json_error( $response ); 
 			die();	
 		}
 
 	} else {
-	wp_send_json_error( dolialert('danger', __( 'A security error occured', 'doliconnect'))); 
+		$response = [
+			'message' => dolialert('danger', __( 'A security error occured', 'doliconnect')),
+			'captcha' => dolicaptcha('dolicontact'),
+				];
+		wp_send_json_error( $response ); 
 	}
 }
 	
