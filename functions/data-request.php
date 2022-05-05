@@ -445,7 +445,11 @@ $arr_params = array( 'action' => 'rpw', 'key' => $key, 'login' => $user->user_lo
 $url = esc_url( add_query_arg( $arr_params, doliconnecturl('doliaccount')) );
 
 if ( defined("DOLICONNECT_DEMO_EMAIL") && ''.constant("DOLICONNECT_DEMO_EMAIL").'' == $email ) {
-    wp_send_json_error( dolialert('danger', __( 'Reset password is not permitted for this account!', 'doliconnect'))); 
+	$response = [
+		'message' => dolialert('danger', __( 'Reset password is not permitted for this account!', 'doliconnect')),
+		'captcha' => dolicaptcha('dolifpw'),
+			];
+    wp_send_json_error( $response ); 
 	die();
 } elseif ( !empty($key) ) { 
 		$sitename = get_option('blogname');
@@ -456,14 +460,26 @@ if ( defined("DOLICONNECT_DEMO_EMAIL") && ''.constant("DOLICONNECT_DEMO_EMAIL").
     $emailSent =  wp_mail($email, $subject, $body, $headers);
 
 	if ( !is_wp_error( $emailSent )) {
-	wp_send_json_success( dolialert('success', __( 'A password reset link was sent to you by email. Please check your spam folder if you don\'t find it.', 'doliconnect')));
+		$response = [
+			'message' => dolialert('success', __( 'A password reset link was sent to you by email. Please check your spam folder if you don\'t find it.', 'doliconnect')),
+			'captcha' => dolicaptcha('dolifpw'),
+				];
+		wp_send_json_success( $response );
 	} else { 
-	wp_send_json_error( dolialert('error', sprintf(__('Sending message fails for the following reason: %s. Please contact us for help.', 'doliconnect'), $emailSent->get_error_message()) ));	
-	die(); 
+		$response = [
+			'message' => dolialert('error', sprintf(__('Sending message fails for the following reason: %s. Please contact us for help.', 'doliconnect'), $emailSent->get_error_message()) ),
+			'captcha' => dolicaptcha('dolifpw'),
+				];
+		wp_send_json_error( $response );	
+		die(); 
 	}	
 }
 	} else {
-		wp_send_json_error( dolialert('warning', join( '<br />', $gdrf_error ) ));
+		$response = [
+			'message' => dolialert('warning', join( '<br />', $gdrf_error ) ),
+			'captcha' => dolicaptcha('dolifpw'),
+				];
+		wp_send_json_error( $response );
 	}
 	die();
 }
