@@ -294,9 +294,17 @@ function dolicontactinfos_request(){
 		$object = callDoliApi("PUT", "/contacts/".$_POST["contactid"]."?includecount=1&includeroles=1", $contact, 0);
 		
 		if (!isset($object->error)) { 
-			wp_send_json_success( dolialert('success', __( 'Your informations have been updated.', 'doliconnect')));
+			$response = [
+				'message' => dolialert('success', __( 'Your informations have been updated.', 'doliconnect')),
+				'captcha' => dolicaptcha('dolicontactinfos'),
+					];
+			wp_send_json_success( $response );
 		} else {
-			wp_send_json_error( __( 'An error occured:', 'doliconnect').' '.$object->error->message); 
+			$response = [
+				'message' => __( 'An error occured:', 'doliconnect').' '.$object->error->message,
+				'captcha' => dolicaptcha('dolicontactinfos'),
+					];
+			wp_send_json_error( $response ); 
 		}
 
 	} elseif ( isset($_POST['dolicontactinfos-nonce']) && wp_verify_nonce( trim($_POST['dolicontactinfos-nonce']), 'dolicontactinfos-nonce') && isset($_POST['case']) && $_POST['case'] == "create" ) {
@@ -307,14 +315,25 @@ function dolicontactinfos_request(){
 		$object = callDoliApi("POST", "/contacts", $contact, 0);
 		
 		if (!isset($object->error)) { 
-		//$listcontact = callDoliApi("GET", $requestlist, null, dolidelay('contact', true));
-		wp_send_json_success( dolialert('success', __( 'Your informations have been added.', 'doliconnect')));
+			$response = [
+				'message' => dolialert('success', __( 'Your informations have been added.', 'doliconnect')),
+				'captcha' => dolicaptcha('dolicontactinfos'),
+					];
+			wp_send_json_success( $response );
 		} else {
-		wp_send_json_error( __( 'An error occured:', 'doliconnect').' '.$object->error->message); 
+			$response = [
+				'message' => __( 'An error occured:', 'doliconnect').' '.$object->error->message,
+				'captcha' => dolicaptcha('dolicontactinfos'),
+					];
+			wp_send_json_error( $response ); 
 		}
 	
 	} else {
-	wp_send_json_error( dolialert('danger', __( 'A security error occured', 'doliconnect'))); 
+		$response = [
+			'message' => dolialert('danger', __( 'A security error occured', 'doliconnect')),
+			'captcha' => dolicaptcha('doliuserinfos'),
+				];
+		wp_send_json_error( $response ); 
 	}
 }
 
