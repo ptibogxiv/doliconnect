@@ -114,7 +114,7 @@ function doliuserinfos_request(){
 	global $current_user;
 	$ID = $current_user->ID;
 	
-	if ( isset($_POST['doliuserinfos-nonce']) && wp_verify_nonce( trim($_POST['doliuserinfos-nonce']), 'doliuserinfos-nonce') && isset($_POST['case']) && $_POST['case'] == "update" ) {
+	if ( isset($_POST['doliuserinfos-nonce']) && wp_verify_nonce( trim($_POST['doliuserinfos-nonce']), 'doliuserinfos') && isset($_POST['case']) && $_POST['case'] == "update" ) {
 
 		$thirdparty=$_POST['thirdparty'][''.doliconnector($current_user, 'fk_soc').''];
 		$thirdparty = dolisanitize($thirdparty);
@@ -138,7 +138,7 @@ function doliuserinfos_request(){
 			'captcha' => dolicaptcha('doliuserinfos'),
 				];
 		wp_send_json_success( $response );
-	} elseif ( isset($_POST['doliuserinfos-nonce']) && wp_verify_nonce( trim($_POST['doliuserinfos-nonce']), 'doliuserinfos-nonce') && isset($_POST['case']) && $_POST['case'] == "create" ) {
+	} elseif ( isset($_POST['doliuserinfos-nonce']) && wp_verify_nonce( trim($_POST['doliuserinfos-nonce']), 'doliuserinfos') && isset($_POST['case']) && $_POST['case'] == "create" ) {
 
 		$thirdparty=$_POST['thirdparty'];
 		$thirdparty = dolisanitize($thirdparty);
@@ -287,7 +287,7 @@ function dolicontactinfos_request(){
 	global $current_user;
 	$ID = $current_user->ID;
 	
-	if ( isset($_POST['dolicontactinfos-nonce']) && wp_verify_nonce( trim($_POST['dolicontactinfos-nonce']), 'dolicontactinfos-nonce') && isset($_POST['case']) && $_POST['case'] == "update" ) {
+	if ( isset($_POST['dolicontactinfos-nonce']) && wp_verify_nonce( trim($_POST['dolicontactinfos-nonce']), 'dolicontactinfos') && isset($_POST['case']) && $_POST['case'] == "update" ) {
 
 		$contact = $_POST['contact'][''.$_POST['contactid'].''];
 		$contact = dolisanitize($contact);
@@ -307,7 +307,7 @@ function dolicontactinfos_request(){
 			wp_send_json_error( $response ); 
 		}
 
-	} elseif ( isset($_POST['dolicontactinfos-nonce']) && wp_verify_nonce( trim($_POST['dolicontactinfos-nonce']), 'dolicontactinfos-nonce') && isset($_POST['case']) && $_POST['case'] == "create" ) {
+	} elseif ( isset($_POST['dolicontactinfos-nonce']) && wp_verify_nonce( trim($_POST['dolicontactinfos-nonce']), 'dolicontactinfos') && isset($_POST['case']) && $_POST['case'] == "create" ) {
 
 		$contact = $_POST['contact'][''.doliconnector($current_user, 'fk_soc').''];
 		$contact = dolisanitize($contact);
@@ -344,7 +344,7 @@ function dolicontact_request(){
 	global $current_user;
 	$ID = $current_user->ID;
 	
-	if ( wp_verify_nonce( trim($_POST['dolicontact-nonce']), 'dolicontact-nonce') ) {
+	if ( wp_verify_nonce( trim($_POST['dolicontact-nonce']), 'dolicontact') ) {
 			$ContactError = array();
 		if ( sanitize_text_field($_POST['contactName']) === '' ) {
 			$ContactError[] = esc_html__( 'Please enter your name.', 'doliconnect');

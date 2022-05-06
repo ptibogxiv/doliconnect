@@ -331,8 +331,9 @@ if (!empty(doliconst($constante))) {
 
 function doliajax($id, $url = null, $case = null){
   $ajax = "<input type='hidden' name='action' value='".$id."_request'>";
-  $ajax.= "<input type='hidden' name='case' value='".$case."'>";
-  $ajax.= "<input type='hidden' name='".$id."-nonce' value='".wp_create_nonce( $id.'-nonce')."'>";
+  if (!empty($case)) $ajax.= "<input type='hidden' name='case' value='".$case."'>";
+  $ajax.= wp_nonce_field( $id, $id.'-nonce' );
+  //$ajax.= "<input type='hidden' name='".$id."-nonce' value='".wp_create_nonce( $id.'-nonce')."'>";
   $ajax.= "<script>";
   $ajax.= 'jQuery(document).ready(function($) {
     jQuery("#'.$id.'-form").on("submit", function(e) {
