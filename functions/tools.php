@@ -336,8 +336,8 @@ function doliajax($id, $url = null, $case = null){
   $ajax.= "<script>";
   $ajax.= 'jQuery(document).ready(function($) {
     jQuery("#'.$id.'-form").on("submit", function(e) {
+    e.preventDefault();
     jQuery("#DoliconnectLoadingModal").modal("show");
-    e.preventDefault(); 
     var $form = $(this);
     var url = "'.$url.'";
     jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function (e) { 
