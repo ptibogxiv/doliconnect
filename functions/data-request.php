@@ -535,7 +535,7 @@ add_action('wp_ajax_nopriv_dolirpw_request', 'dolirpw_request');
 function dolirpw_request(){
 global $wpdb; 
 
-if ( wp_verify_nonce( trim($_POST['dolirpw-nonce']), 'dolirpw-nonce')) {
+if ( wp_verify_nonce( trim($_POST['dolirpw-nonce']), 'dolirpw')) {
 if (isset($pwd0)) $pwd0 = sanitize_text_field($_POST["pwd0"]);
 $pwd1 = sanitize_text_field($_POST["pwd1"]);
 $pwd2 = sanitize_text_field($_POST["pwd2"]);
