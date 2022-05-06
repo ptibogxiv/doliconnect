@@ -559,19 +559,42 @@ $doliuser = callDoliApi("PUT", "/users/".doliconnector($current_user, 'fk_user')
 if (!is_user_logged_in()) {
 $wpdb->update( $wpdb->users, array( 'user_activation_key' => '' ), array( 'user_login' => $current_user->user_login ) );
 }
-
-wp_send_json_success( dolialert('success', __( 'Your informations have been updated. Now, you will be log out and need to log in again.', 'doliconnect')));
+	$response = [
+		'message' => dolialert('success', __( 'Your informations have been updated. Now, you will be log out and need to log in again.', 'doliconnect')),
+		'captcha' => dolicaptcha('dolirpw'),
+			];	
+	wp_send_json_success( $sresponse );
 } elseif (is_user_logged_in() && isset( $current_user->ID ) && (!isset($pwd0) || (isset($pwd0) && ! wp_check_password( $pwd0, $current_user->user_pass, $current_user->ID ))) ) {
-wp_send_json_error( dolialert('danger', __( 'Your actual password is incorrect', 'doliconnect')));
+	$response = [
+		'message' => dolialert('danger', __( 'Your actual password is incorrect', 'doliconnect')),
+		'captcha' => dolicaptcha('dolirpw'),
+			];		
+	wp_send_json_error( $response );
 } elseif ( $pwd1 != $_POST["pwd2"] ) {
-wp_send_json_error( dolialert('danger',  __( 'The new passwords entered are different', 'doliconnect')));
+	$response = [
+		'message' => dolialert('danger',  __( 'The new passwords entered are different', 'doliconnect')),
+		'captcha' => dolicaptcha('dolirpw'),
+			];	
+	wp_send_json_error( $response );
 } elseif ( !preg_match("#.*^(?=.{8,20})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*$#", $pwd1) ) {
-wp_send_json_error( dolialert('danger',  __( 'Your password must be between 8 and 20 characters, including at least 1 digit, 1 letter, 1 uppercase.', 'doliconnect')));
+	$response = [
+		'message' => dolialert('danger',  __( 'Your password must be between 8 and 20 characters, including at least 1 digit, 1 letter, 1 uppercase.', 'doliconnect')),
+		'captcha' => dolicaptcha('dolirpw'),
+			];		
+	wp_send_json_error( $response );
 } else {
-wp_send_json_error( dolialert('danger',  __( 'A security error occured', 'doliconnect'))); 
+	$response = [
+		'message' => dolialert('danger',  __( 'A security error occured', 'doliconnect')),
+		'captcha' => dolicaptcha('dolirpw'),
+			];	
+	wp_send_json_error( $response ); 
 }
 } else {
-wp_send_json_error( dolialert('danger',  __( 'A security error occured', 'doliconnect'))); 
+	$response = [
+		'message' => dolialert('danger',  __( 'A security error occured', 'doliconnect')),
+		'captcha' => dolicaptcha('dolirpw'),
+			];
+	wp_send_json_error( $response ); 
 }
 }
 
