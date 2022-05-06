@@ -410,7 +410,7 @@ print '<div class="form-floating mb-2">
 print dolicaptcha('dolifpw');
 
 print "</li></lu><div class='card-body'>";
-print '<div class="d-grid gap-2"><button class="btn btn-secondary" type="submit" value="submit">'.__( 'Submit', 'doliconnect').'</button></div>';
+print '<div class="d-grid gap-2"><button id="dolifpw-button" class="btn btn-secondary" type="submit" value="submit">'.__( 'Submit', 'doliconnect').'</button></div>';
 
 print "</form></div></div>";
 
