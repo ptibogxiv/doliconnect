@@ -258,7 +258,7 @@ print '</div>';
 
 print doliuserform( null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'thirdparty', doliCheckRights('societe', 'creer'));
 
-print "<div class='card-body'><div class='d-grid gap-2'><input type='hidden' name='submitted' id='submitted' value='true'><button class='btn btn-secondary' type='submit'";
+print "<div class='card-body'><div class='d-grid gap-2'><button class='btn btn-secondary' type='submit'";
 if ( get_option('users_can_register')=='1' && ( get_site_option( 'registration' ) == 'user' || get_site_option( 'registration' ) == 'all' ) || ( !is_multisite() && get_option( 'users_can_register' )) ) {
 print "";
 } else { print " aria-disabled='true'  disabled"; }
