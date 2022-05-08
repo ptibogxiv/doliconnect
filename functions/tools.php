@@ -401,10 +401,11 @@ function doliSelectForm($name, $request, $selectlang = '- Select -', $valuelang 
    if (isset($postv->zip)&&isset($postv->town)) $postv->label = $postv->zip.' - '.$postv->town;  
     $doliSelect .= ">".(isset($postv->label)?$postv->label:$postv->name)."</option>";
   }
-    $doliSelect .= '</select><label for="'.$name.'"><i class="fas fa-map-marked fa-fw"></i> '.$valuelang.count($object).'</label>';
+    $doliSelect .= '</select><label for="'.$name.'"><i class="fas fa-map-marked fa-fw"></i> '.$valuelang.'</label>';
   } else {
+    $value = explode(",", $value);
       $doliSelect =  '<div class="row g-2"><div class="col-lg"><div class="form-floating" id="town">';
-      $doliSelect .=  '<input type="text" class="form-control" id="'.$idobject.'[town]" name="'.$idobject.'[town]" placeholder="'.__( 'Town', 'doliconnect').'" value="'.(isset($object->town) ? $object->town : null).'" ';
+      $doliSelect .=  '<input type="text" class="form-control" id="'.$idobject.'[town]" name="'.$idobject.'[town]" placeholder="'.__( 'Town', 'doliconnect').'" value="'.(isset($value[1]) ? $value[1] : null).'" ';
       if ($rights) {
         $doliSelect .=  'required';
       } else {
@@ -412,7 +413,7 @@ function doliSelectForm($name, $request, $selectlang = '- Select -', $valuelang 
       }
       $doliSelect .=  '><label for="'.$idobject.'[town]"><i class="fas fa-map-marked fa-fw"></i> '.__( 'Town', 'doliconnect').'</label></div>';  
       $doliSelect .=  '</div><div class="col-lg">';   
-      $doliSelect .= '<div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[zip]" name="'.$idobject.'[zip]" placeholder="'.__( 'Zipcode', 'doliconnect').'" value="'.(isset($object->zip) ? $object->zip : null).'" ';
+      $doliSelect .= '<div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[zip]" name="'.$idobject.'[zip]" placeholder="'.__( 'Zipcode', 'doliconnect').'" value="'.(isset($value[0]) ? $value[0] : null).'" ';
       if ($rights) {
         $doliSelect .=  'required';
       } else {
