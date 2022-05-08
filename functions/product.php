@@ -263,10 +263,10 @@ return -$realstock;//doliconnect_countitems($order);
 function doliProductCart($product) {
 if (current_user_can('administrator') && !empty(get_option('doliconnectbeta')) ) { 
 
-  print '<form id="doliform-product-'.$product->id.'" method="post">';
+$button = '<form id="doliform-product-'.$product->id.'" method="post">';
   
-  print "<script>";
-  print '$(function() {
+$button .= "<script>";
+$button .= '$(function() {
       $("#doliform-product-'.$product->id.' button[type=submit]").on("click", function(e) {
           e.preventDefault();
           var acase = $(this).val();
@@ -287,17 +287,18 @@ if (current_user_can('administrator') && !empty(get_option('doliconnectbeta')) )
   
       });
   });';
-  print "</script>";
+  $button .= "</script>";
   
-  print '<div class="input-group">';
-  print '<button class="btn btn-sm btn-warning" name="minus" value="minus" type="submit"><i class="fa-solid fa-minus"></i></button>
+  $button .= '<div class="input-group">';
+  $button .= '<button class="btn btn-sm btn-warning" name="minus" value="minus" type="submit"><i class="fa-solid fa-minus"></i></button>
   <input type="text" class="form-control" placeholder="" aria-label="Quantity" value="0" style="text-align:center;" readonly>
   <button class="btn btn-sm btn-warning" name="plus" value="plus" type="submit"><i class="fa-solid fa-plus"></i></button>';
   if ( !empty(doliconst('MAIN_MODULE_WISHLIST')) && !empty(get_option('doliconnectbeta')) ) {
-  print '<button class="btn btn-sm btn-light" name="wish" value="wish" type="submit"><i class="fas fa-heart" style="color:Fuchsia"></i></button>';
+    $button .= '<button class="btn btn-sm btn-light" name="wish" value="wish" type="submit"><i class="fas fa-heart" style="color:Fuchsia"></i></button>';
   }
-  print '</div>';
-  print '</form>';
+  $button .= '</div>';
+  $button .= '</form>';
+return $button;
 }}
 
 function doliconnect_addtocart($product, $category = 0, $quantity = 0, $add = 0, $time = 0, $refresh = null) {
