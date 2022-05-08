@@ -489,12 +489,12 @@ html : true
 $button .= "</script>";
 $explication = (empty(get_option('dolibarr_b2bmode'))?__( 'Displayed price is included VAT', 'doliconnect'):__( 'Displayed price is excluded VAT', 'doliconnect'));
 $explication .= sprintf(__( 'VAT rate of %s', 'doliconnect'), $vat);
-//$explication .= '<ul>';
+//$explication .= "<ul>";
 //$explication .= '<li>'.sprintf(__( 'Initial sale price: %s', 'doliconnect'), doliprice( empty(get_option('dolibarr_b2bmode'))?$price_ttc:$price_ht, $currency)).'</li>';
 //if (isset($customer_discount) && !empty($customer_discount) && !empty($discount)) $explication .= '<li>'.sprintf(__( 'Your customer discount is %s percent', 'doliconnect'), $customer_discount).'</li>';
 //if (isset($discountlabel) && !empty($discountlabel)) $explication .= '<li>'.$discountlabel.'</li>';
 //if ($price_ttc != $price_ttc3) $explication .= '<li>'.sprintf(__( 'Discounted price: %s', 'doliconnect'), doliprice( empty(get_option('dolibarr_b2bmode'))?$price_ttc3:$price_ht3, $currency)).'</li>';
-//$explication .= '</ul>';
+//$explication .= "</ul>";
 $button .= "<a tabindex='0' id='popover-price-".$product->id."' class='btn btn-light position-relative top-0 end-0";
 if (!empty($discount)) $button .= " text-danger";
 $button .= "' data-bs-container='body' data-bs-toggle='popover' data-bs-trigger='focus' title='".__( 'About price', 'doliconnect')."' data-bs-content='".$explication."'>";
