@@ -2508,42 +2508,6 @@ print '</div></div>';
 
 if (current_user_can('administrator') && !empty(get_option('doliconnectbeta')) ) { 
 
-print '<form id="doliform-product-7" method="post">';
-
-print "<script>";
-print '$(function() {
-    $("#doliform-product-7 button[type=submit]").on("click", function(e) {
-        e.preventDefault();
-        var acase = $(this).val();
-        //jQuery("#DoliconnectLoadingModal").modal("show");
-        console.log("changed to " + acase);
-        $.ajax({
-            url :"'.admin_url('admin-ajax.php').'",
-            type:"POST",
-            cache:false,
-            data: {
-              "action": "dolicart_request",
-              "case": acase,
-            },
-        }).done(function(response) {
-            //jQuery("#DoliconnectLoadingModal").modal("hide");
-            console.log("updated qty " + response.data);
-        });
-
-    });
-});';
-print "</script>";
-
-print '<div class="input-group">';
-print '<button class="btn btn-sm btn-warning" name="minus" value="minus" type="submit"><i class="fa-solid fa-minus"></i></button>
-<input type="text" class="form-control" placeholder="" aria-label="Quantity" value="0" style="text-align:center;" readonly>
-<button class="btn btn-sm btn-warning" name="plus" value="plus" type="submit"><i class="fa-solid fa-plus"></i></button>';
-if ( !empty(doliconst('MAIN_MODULE_WISHLIST')) && !empty(get_option('doliconnectbeta')) ) {
-print '<button class="btn btn-sm btn-light" name="wish" value="wish" type="submit"><i class="fas fa-heart" style="color:Fuchsia"></i></button>';
-}
-print '</div>';
-print '</form>';
-
 print '<style>';
 ?>
 .blur{

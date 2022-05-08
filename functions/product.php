@@ -260,6 +260,46 @@ return -$realstock;//doliconnect_countitems($order);
 }
 }
 
+function doliProductCart($product) {
+if (current_user_can('administrator') && !empty(get_option('doliconnectbeta')) ) { 
+
+  print '<form id="doliform-product-'.$product->id.'" method="post">';
+  
+  print "<script>";
+  print '$(function() {
+      $("#doliform-product-'.$product->id.' button[type=submit]").on("click", function(e) {
+          e.preventDefault();
+          var acase = $(this).val();
+          //jQuery("#DoliconnectLoadingModal").modal("show");
+          console.log("changed " + '.$product->id.' + " to " + acase);
+          $.ajax({
+              url :"'.admin_url('admin-ajax.php').'",
+              type:"POST",
+              cache:false,
+              data: {
+                "action": "dolicart_request",
+                "case": acase,
+              },
+          }).done(function(response) {
+              //jQuery("#DoliconnectLoadingModal").modal("hide");
+              console.log("updated qty " + response.data);
+          });
+  
+      });
+  });';
+  print "</script>";
+  
+  print '<div class="input-group">';
+  print '<button class="btn btn-sm btn-warning" name="minus" value="minus" type="submit"><i class="fa-solid fa-minus"></i></button>
+  <input type="text" class="form-control" placeholder="" aria-label="Quantity" value="0" style="text-align:center;" readonly>
+  <button class="btn btn-sm btn-warning" name="plus" value="plus" type="submit"><i class="fa-solid fa-plus"></i></button>';
+  if ( !empty(doliconst('MAIN_MODULE_WISHLIST')) && !empty(get_option('doliconnectbeta')) ) {
+  print '<button class="btn btn-sm btn-light" name="wish" value="wish" type="submit"><i class="fas fa-heart" style="color:Fuchsia"></i></button>';
+  }
+  print '</div>';
+  print '</form>';
+}}
+
 function doliconnect_addtocart($product, $category = 0, $quantity = 0, $add = 0, $time = 0, $refresh = null) {
 global $current_user;
 
@@ -490,10 +530,10 @@ $button .= "</script>";
 $explication = (empty(get_option('dolibarr_b2bmode'))?__( 'Displayed price is included VAT', 'doliconnect'):__( 'Displayed price is excluded VAT', 'doliconnect'));
 $explication .= sprintf(__( 'VAT rate of %s', 'doliconnect'), $vat);
 //$explication .= "<ul>";
-//$explication .= '<li>'.sprintf(__( 'Initial sale price: %s', 'doliconnect'), doliprice( empty(get_option('dolibarr_b2bmode'))?$price_ttc:$price_ht, $currency)).'</li>';
-//if (isset($customer_discount) && !empty($customer_discount) && !empty($discount)) $explication .= '<li>'.sprintf(__( 'Your customer discount is %s percent', 'doliconnect'), $customer_discount).'</li>';
-//if (isset($discountlabel) && !empty($discountlabel)) $explication .= '<li>'.$discountlabel.'</li>';
-//if ($price_ttc != $price_ttc3) $explication .= '<li>'.sprintf(__( 'Discounted price: %s', 'doliconnect'), doliprice( empty(get_option('dolibarr_b2bmode'))?$price_ttc3:$price_ht3, $currency)).'</li>';
+$explication .= sprintf(__( 'Initial sale price: %s', 'doliconnect'), doliprice( empty(get_option('dolibarr_b2bmode'))?$price_ttc:$price_ht, $currency));
+if (isset($customer_discount) && !empty($customer_discount) && !empty($discount)) $explication .= sprintf(__( 'Your customer discount is %s percent', 'doliconnect'), $customer_discount);
+if (isset($discountlabel) && !empty($discountlabel)) $explication .= $discountlabel;
+if ($price_ttc != $price_ttc3) $explication .= sprintf(__( 'Discounted price: %s', 'doliconnect'), doliprice( empty(get_option('dolibarr_b2bmode'))?$price_ttc3:$price_ht3, $currency));
 //$explication .= "</ul>";
 $button .= "<a tabindex='0' id='popover-price-".$product->id."' class='btn btn-light position-relative top-0 end-0";
 if (!empty($discount)) $button .= " text-danger";
@@ -694,6 +734,7 @@ $list .= '</p></div>';
 if ( ! empty(doliconnectid('dolicart')) ) { 
 $list .= "<div class='col-12 col-md-4'><center>";
 $list .= doliconnect_addtocart($product, esc_attr(isset($_GET['category'])?$_GET['category']:null), $wish, -1, 0, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+$list .= doliProductCart($product);
 $list .= "</center></div>";
 }
 $list .= "</div></td></tr></table></li>";
@@ -752,6 +793,7 @@ $card .= apply_filters('mydoliconnectproductdesc', $product, 'card');
 if ( ! empty(doliconnectid('dolicart')) ) { 
 $card .= '<br><br><div class="jumbotron">';
 $card .= doliconnect_addtocart($product, 0, 0, !empty($attributes['hideButtonToCart']) ? $attributes['hideButtonToCart'] : 1, isset($attributes['hideDuration']) ? $attributes['hideDuration'] : 0);
+$card .= doliProductCart($product);
 $card .= '</div>';
 }
 $card .= '</div><div class="col-12"><h6>'.__( 'Description', 'doliconnect' ).'</h6><p>'.doliproduct($product, 'description').'</p>';
