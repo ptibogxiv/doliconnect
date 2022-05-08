@@ -487,8 +487,8 @@ html : true
 });
 })(jQuery);";
 $button .= "</script>";
-$explication = (empty(get_option('dolibarr_b2bmode'))?__( 'Displayed price is included VAT', 'doliconnect'):__( 'Displayed price is excluded VAT', 'doliconnect')).'<br>';
-$explication .= sprintf(__( 'VAT rate of %s', 'doliconnect'), $vat).'<br>';
+$explication = (empty(get_option('dolibarr_b2bmode'))?__( 'Displayed price is included VAT', 'doliconnect'):__( 'Displayed price is excluded VAT', 'doliconnect'));
+$explication .= sprintf(__( 'VAT rate of %s', 'doliconnect'), $vat);
 $explication .= '<ul>';
 $explication .= '<li>'.sprintf(__( 'Initial sale price: %s', 'doliconnect'), doliprice( empty(get_option('dolibarr_b2bmode'))?$price_ttc:$price_ht, $currency)).'</li>';
 if (isset($customer_discount) && !empty($customer_discount) && !empty($discount)) $explication .= '<li>'.sprintf(__( 'Your customer discount is %s percent', 'doliconnect'), $customer_discount).'</li>';
