@@ -375,18 +375,21 @@ return $ajax;
 function doliSelectForm($name, $request, $selectlang = '- Select -', $valuelang = 'Value', $value = null, $idobject = 0, $rights = 1, $delay = null, $id = 'id') {
   
   $object = callDoliApi("GET", $request, null, $delay);
-  if ( isset($object) &&!empty($object) ) {
+  if ( isset($object) && (($name=='ziptown' && !empty($object) && !empty(get_option('doliconnectbeta')) && doliconst("MAIN_USE_ZIPTOWN_DICTIONNARY")) || $name!='ziptown') ) {
     $doliSelect = '<select class="form-select" id="'.$name.'" name="'.$idobject.'['.$name.']" aria-label="'.$valuelang.'" ';
-  if ($rights) {
+  if ($rights && !empty($object)) {
     $doliSelect .= 'required';
   } else {
     $doliSelect .= 'disabled';
   }
     $doliSelect .= '>';
     $doliSelect .= "<option value='' disabled ";
-  if ( !isset($value) && empty($value) || empty(array_search($value, array_column($object, 'id')))) {
-    $doliSelect .= "selected ";}
-    $doliSelect .= ">".$selectlang."</option>";
+    if ( !isset($value) && empty($value) || empty(array_search($value, array_column($object, 'id')))) {
+      $doliSelect .= 'selected ';
+    }
+    $doliSelect .= '>';
+  if (!empty($object)) { $doliSelect .= $selectlang; } else { $doliSelect .= __( 'Not available for this country', 'doliconnect'); }
+    $doliSelect .= '</option>';
   foreach ( $object as $postv ) { 
     if (isset($postv->rowid) && $id == 'id') $postv->$id = $postv->rowid;
     if (isset($postv->zip)&&isset($postv->town)) $postv->$id = $postv->zip.','.$postv->town;
@@ -398,16 +401,27 @@ function doliSelectForm($name, $request, $selectlang = '- Select -', $valuelang 
    if (isset($postv->zip)&&isset($postv->town)) $postv->label = $postv->zip.' - '.$postv->town;  
     $doliSelect .= ">".(isset($postv->label)?$postv->label:$postv->name)."</option>";
   }
-    $doliSelect .= '</select><label for="'.$name.'"><i class="fas fa-map-marked fa-fw"></i> '.$valuelang.'</label>';
+    $doliSelect .= '</select>';
   } else {
-    $doliSelect = '<input type="text" class="form-control" id="'.$name.'" placeholder="'.$valuelang.'" name="'.$idobject.'['.$name.']" value="'.$value.'" autocomplete="off" ';
-  if ($rights) {
-    $doliSelect .= 'required';
-  } else {
-    $doliSelect .= 'readonly';
+      $doliSelect =  '<div class="col-lg-8"><div class="form-floating" id="town">';
+      $doliSelect .=  '<input type="text" class="form-control" id="'.$idobject.'[town]" name="'.$idobject.'[town]" placeholder="'.__( 'Town', 'doliconnect').'" value="'.(isset($object->town) ? $object->town : null).'" ';
+      if ($rights) {
+        $doliSelect .=  'required';
+      } else {
+        $doliSelect .=  'readonly';
+      }
+      $doliSelect .=  '><label for="'.$idobject.'[town]"><i class="fas fa-map-marked fa-fw"></i> '.__( 'Town', 'doliconnect').'</label></div>';  
+      $doliSelect .=  '</div><div class="col-lg-4">';   
+      $doliSelect .= '<div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[zip]" name="'.$idobject.'[zip]" placeholder="'.__( 'Zipcode', 'doliconnect').'" value="'.(isset($object->zip) ? $object->zip : null).'" ';
+      if ($rights) {
+        $doliSelect .=  'required';
+      } else {
+        $doliSelect .=  'readonly';
+      }
+      $doliSelect .=  '><label for="'.$idobject.'[zip]"><i class="fas fa-map-marked fa-fw"></i> '.__( 'Zipcode', 'doliconnect').'</label></div>';  
+      $doliSelect .=  '</div>';
   }
-  $doliSelect .= '>';
-  }
+  $doliSelect .= '<label for="'.$name.'"><i class="fas fa-map-marked fa-fw"></i> '.$valuelang.count($object).'</label>';
 return $doliSelect;
 }
 
@@ -877,11 +891,11 @@ print 'jQuery(document).ready(function() {
         "delay": '.$delay.'
       },
     }).done(function(response) {
-      if ( document.getElementById("state_id") ) { 
-        document.getElementById("state_id").innerHTML = response.data.state_id;
+      if ( document.getElementById("state_form") ) { 
+        document.getElementById("state_form").innerHTML = response.data.state_id;
       }
-      if ( document.getElementById("forme_juridique_code") ) { 
-        document.getElementById("forme_juridique_code").innerHTML = response.data.forme_juridique_code;
+      if ( document.getElementById("forme_juridique_code_form") ) { 
+        document.getElementById("forme_juridique_code_form").innerHTML = response.data.forme_juridique_code;
       }
       if ( document.getElementById("ziptown") ) { 
         document.getElementById("ziptown").innerHTML = response.data.ziptown;
@@ -924,29 +938,9 @@ print '</script>';
 
 print '</div><div class="row g-2">';
   
-if (!empty(get_option('doliconnectbeta')) && doliconst("MAIN_USE_ZIPTOWN_DICTIONNARY")) {
   print '<div class="col-12 col-md"><div class="form-floating" id="ziptown_form">';
   print doliSelectForm("ziptown", "/setup/dictionary/towns?sortfield=town&sortorder=ASC&active=1&limit=1000&sqlfilters=(t.fk_pays%3A%3D%3A'".(isset($object->country_id) ? $object->country_id : $company->country_id)."')%20AND%20(t.fk_county%3A%3D%3A'".(isset($object->state_id) ? $object->state_id : null)."')", __( '- Select your town -', 'doliconnect'), __( 'Town', 'doliconnect'), (isset($object->zip) ? $object->zip : null).','.(isset($object->town) ? $object->town : null), $idobject, $rights);
   print '</div></div>';
-} else {
-  print '<div class="col-lg-8"><div class="form-floating" id="town">';
-  print '<input type="text" class="form-control" id="'.$idobject.'[town]" name="'.$idobject.'[town]" placeholder="'.__( 'Town', 'doliconnect').'" value="'.(isset($object->town) ? $object->town : null).'" ';
-  if ($rights) {
-  print 'required';
-  } else {
-  print 'readonly';
-  }
-  print '><label for="'.$idobject.'[town]"><i class="fas fa-map-marked fa-fw"></i> '.__( 'Town', 'doliconnect').'</label></div>';  
-  print '</div><div class="col-lg-4">';   
-  print '<div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[zip]" name="'.$idobject.'[zip]" placeholder="'.__( 'Zipcode', 'doliconnect').'" value="'.(isset($object->zip) ? $object->zip : null).'" ';
-  if ($rights) {
-  print 'required';
-  } else {
-  print 'readonly';
-  }
-  print '><label for="'.$idobject.'[zip]"><i class="fas fa-map-marked fa-fw"></i> '.__( 'Zipcode', 'doliconnect').'</label></div>';  
-  print '</div>';
-}
 
 print "</div></li>";
 
