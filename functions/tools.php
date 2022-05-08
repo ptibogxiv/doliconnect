@@ -375,7 +375,7 @@ return $ajax;
 function doliSelectForm($name, $request, $selectlang = '- Select -', $valuelang = 'Value', $value = null, $idobject = 0, $rights = 1, $delay = null, $id = 'id') {
   
   $object = callDoliApi("GET", $request, null, $delay);
-  if ( isset($object) ) {
+  if ( isset($object) &&!empty($object) ) {
     $doliSelect = '<select class="form-select" id="'.$name.'" name="'.$idobject.'['.$name.']" aria-label="'.$valuelang.'" ';
   if ($rights) {
     $doliSelect .= 'required';
@@ -400,7 +400,7 @@ function doliSelectForm($name, $request, $selectlang = '- Select -', $valuelang 
   }
     $doliSelect .= '</select><label for="'.$name.'"><i class="fas fa-map-marked fa-fw"></i> '.$valuelang.'</label>';
   } else {
-    $doliSelect = '<input type="text" class="form-control" id="'.$name.'" placeholder="'.$valuelang.'" name="'.$idobject.'['.$name.']" value="'.$object->$name.'" autocomplete="off" ';
+    $doliSelect = '<input type="text" class="form-control" id="'.$name.'" placeholder="'.$valuelang.'" name="'.$idobject.'['.$name.']" value="'.$value.'" autocomplete="off" ';
   if ($rights) {
     $doliSelect .= 'required';
   } else {
@@ -647,7 +647,6 @@ print ' autocomplete="off">
 if ( doliversion('15.0.0') ) {
 print '<div class="col-md-6 col-lg-4"><div class="form-floating" id="forme_juridique_code_form">';
 print doliSelectForm("forme_juridique_code", "/setup/dictionary/legal_form?sortfield=libelle&sortorder=ASC&active=1&limit=500&country=".(isset($object->country_id) ? $object->country_id : $company->country_id), __( '- Select your legal form -', 'doliconnect'), __( 'Legal form', 'doliconnect'), (isset($object->forme_juridique_code) ? $object->forme_juridique_code : null), $idobject, $rights, $delay, 'code');
-//print '<label for="yyyy"><i class="fas fa-building fa-fw"></i> '.__( 'Legal form', 'doliconnect').'</label>';
 print '</div></div>';
 }
 
