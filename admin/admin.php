@@ -15,7 +15,8 @@ add_action( 'network_admin_notices', 'doliconnect_admin_notice_error');
 function doliconnect_admin_page1() {
 add_menu_page(__( 'Doliconnect settings', 'doliconnect' ), __( 'Doliconnect', 'Doliconnect' ), 'manage_options', 'ptibogxiv_management_page', 'ptibogxiv_management_page', plugins_url( 'doliconnect/images/icon_16.png' ));
 add_submenu_page(__( 'Doliconnect settings', 'doliconnect' ), "Management", "Management", 'manage_options', 'ptibogxiv_management_page', 'ptibogxiv_management_page');
-add_submenu_page('ptibogxiv_management_page', "Key and settings", "Key and settings", 'manage_options', 'doliconnect_network_page', 'doliconnect_network_page');
+add_submenu_page('ptibogxiv_management_page', __( 'Settings', 'doliconnect' ), __( 'Settings', 'doliconnect' ), 'manage_options', 'doliconnect_network_page', 'doliconnect_network_page');
+add_submenu_page('ptibogxiv_management_page', __( 'Transients and datas', 'doliconnect' ), __( 'Transients and datas', 'doliconnect' ), 'manage_options', 'doliconnect_transients_page', 'doliconnect_transients_page');
 }
 
 function doliconnect_admin_page2() {
@@ -27,8 +28,9 @@ function doliconnect_admin_page3() {
 add_menu_page(__( 'Doliconnect settings', 'doliconnect' ),__( 'Doliconnect', 'Doliconnect' ), 'manage_options', 'ptibogxiv_management_page', 'ptibogxiv_management_page', plugins_url( 'doliconnect/images/icon_16.png' ));
 add_submenu_page(__( 'Doliconnect settings', 'doliconnect' ), "Management", "Management", 'manage_options', 'ptibogxiv_management_page', 'ptibogxiv_management_page');
 }
+
 function doliconnect_admin_page4() {
-add_users_page( 'doliboard', "Gestion des admins", 'manage_options', 'doliconnect_admin_page', 'doliconnect_admin_page');
+    add_users_page( 'doliboard', "Gestion des admins", 'manage_options', 'doliconnect_admin_page', 'doliconnect_admin_page');
 }
 
 if ( is_multisite() ) {
@@ -39,6 +41,10 @@ add_action( 'admin_menu', 'doliconnect_admin_page4' );
 else {
 add_action( 'admin_menu', 'doliconnect_admin_page1' );
 add_action( 'admin_menu', 'doliconnect_admin_page4' );
+}
+
+function doliconnect_transients_page() {
+echo 'test';
 }
 
 function doliconnect_admin_page() {
