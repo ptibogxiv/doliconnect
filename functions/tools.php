@@ -1223,10 +1223,12 @@ elseif ($delay == 'product') { $delay = 8 * HOUR_IN_SECONDS; }
 elseif ($delay == 'cart') { $delay = 20 * MINUTE_IN_SECONDS; }
 elseif ($delay == 'document') { $delay = MONTH_IN_SECONDS; }
 } else {
-$delay = HOUR_IN_SECONDS;
-//$delay = get_site_option('doliconnect_delay_'.$delay);
+if (!empty(get_site_option('doliconnect_delay_'.$delay))) {
+  $delay = get_site_option('doliconnect_delay_'.$delay);
+} else {
+  $delay = HOUR_IN_SECONDS;
 }
- 
+}
 }
 
 $array = get_option('doliconnect_ipkiosk');
