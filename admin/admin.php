@@ -13,10 +13,10 @@ add_action( 'admin_notices', 'doliconnect_admin_notice_error');
 add_action( 'network_admin_notices', 'doliconnect_admin_notice_error');
 
 function doliconnect_admin_page1() {
-add_menu_page(__( 'Doliconnect settings', 'doliconnect' ), __( 'Doliconnect', 'Doliconnect' ), 'manage_options', 'ptibogxiv_management_page', 'ptibogxiv_management_page', plugins_url( 'doliconnect/images/icon_16.png' ));
-add_submenu_page(__( 'Doliconnect settings', 'doliconnect' ), "Management", "Management", 'manage_options', 'ptibogxiv_management_page', 'ptibogxiv_management_page');
-add_submenu_page('ptibogxiv_management_page', __( 'Settings', 'doliconnect' ), __( 'Settings', 'doliconnect' ), 'manage_options', 'doliconnect_network_page', 'doliconnect_network_page');
-add_submenu_page('ptibogxiv_management_page', __( 'Transients and datas', 'doliconnect' ), __( 'Transients and datas', 'doliconnect' ), 'manage_options', 'doliconnect_transients_page', 'doliconnect_transients_page');
+add_menu_page(__( 'Settings', 'doliconnect' ), "Doliconnect", 'manage_options', 'ptibogxiv_management_page', 'ptibogxiv_management_page', plugins_url( 'doliconnect/images/icon_16.png' ));
+add_submenu_page('ptibogxiv_management_page', __( 'Settings', 'doliconnect' ), __( 'Settings', 'doliconnect' ), 'manage_options', 'ptibogxiv_management_page', 'ptibogxiv_management_page');
+add_submenu_page('ptibogxiv_management_page', __( 'Sync with Dolibarr', 'doliconnect' ), __( 'Sync with Dolibarr', 'doliconnect' ), 'manage_options', 'doliconnect_network_page', 'doliconnect_network_page');
+add_submenu_page('ptibogxiv_management_page', __( 'Datas', 'doliconnect' ), __( 'Datas', 'doliconnect' ), 'manage_options', 'doliconnect_transients_page', 'doliconnect_transients_page');
 }
 
 function doliconnect_admin_page2() {
