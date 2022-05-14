@@ -291,7 +291,7 @@ $button .= '$(function() {
   
   $button .= '<div class="input-group">';
   $button .= '<button class="btn btn-sm btn-warning" name="minus" value="minus" type="submit"><i class="fa-solid fa-minus"></i></button>
-  <input type="text" class="form-control" placeholder="" aria-label="Quantity" value="0" style="text-align:center;" readonly>
+  <input type="text" class="form-control form-control-sm" placeholder="" aria-label="Quantity" value="0" style="text-align:center;" readonly>
   <button class="btn btn-sm btn-warning" name="plus" value="plus" type="submit"><i class="fa-solid fa-plus"></i></button>';
   if ( !empty(doliconst('MAIN_MODULE_WISHLIST')) && !empty(get_option('doliconnectbeta')) ) {
     $button .= '<button class="btn btn-sm btn-light" name="wish" value="wish" type="submit"><i class="fas fa-heart" style="color:Fuchsia"></i></button>';
