@@ -36,7 +36,7 @@ return numfmt_format_currency($fmt, $montant, $currency);//.$decimal
 }
 }
 
-function doliproductstock($product, $refresh = false) {
+function doliproductstock($product, $refresh = false, $nohtml = false) {
 
 $stock = "<script>";
 $stock .= "(function ($) {
