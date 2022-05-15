@@ -38,6 +38,7 @@ return numfmt_format_currency($fmt, $montant, $currency);//.$decimal
 
 function doliproductstock($product, $refresh = false, $nohtml = false) {
 
+
 $stock = "<script>";
 $stock .= "(function ($) {
 $(document).ready(function(){
@@ -92,7 +93,7 @@ $stock .= "<a tabindex='0' id='popover-stock-".$product->id."' class='badge roun
 }
 } 
 
-return $stock;//.$realstock
+return $stock;
 }
 
 function doliconnect_countitems($object){
