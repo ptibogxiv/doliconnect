@@ -260,7 +260,8 @@ return -$realstock;//doliconnect_countitems($order);
 }
 }
 
-function doliProductCart($product) {
+function doliProductCart($product, $refresh = null) {
+global $current_user;
 if (current_user_can('administrator') && !empty(get_option('doliconnectbeta')) ) { 
 
 $button = '<form id="doliform-product-'.$product->id.'" method="post">';
@@ -288,10 +289,29 @@ $button .= '$(function() {
       });
   });';
   $button .= "</script>";
+
+  if (doliconnector($current_user, 'fk_order') > 0) {
+    $orderfo = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order'), null, $refresh);
+    //$button .=$orderfo;
+  }
+    
+  if ( isset($orderfo->lines) && $orderfo->lines != null ) {
+    foreach ($orderfo->lines as $line) {
+    if  ($line->fk_product == $product->id) {
+    //$button = var_dump($line);
+    $qty = $line->qty;
+    $ln = $line->id;
+    }
+  }}
   
+  if (!isset($qty) ) {
+    $qty = 0;
+    $ln = null;
+  }
+
   $button .= '<div class="input-group">';
   $button .= '<button class="btn btn-sm btn-warning" name="minus" value="minus" type="submit"><i class="fa-solid fa-minus"></i></button>
-  <input type="text" class="form-control form-control-sm" placeholder="" aria-label="Quantity" value="0" style="text-align:center;" readonly>
+  <input type="text" class="form-control form-control-sm" placeholder="" aria-label="Quantity" value="'.$qty.'" style="text-align:center;" readonly>
   <button class="btn btn-sm btn-warning" name="plus" value="plus" type="submit"><i class="fa-solid fa-plus"></i></button>';
   if ( !empty(doliconst('MAIN_MODULE_WISHLIST')) && !empty(get_option('doliconnectbeta')) ) {
     $button .= '<button class="btn btn-sm btn-light" name="wish" value="wish" type="submit"><i class="fas fa-heart" style="color:Fuchsia"></i></button>';
