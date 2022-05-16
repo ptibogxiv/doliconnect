@@ -1,30 +1,31 @@
-@use 'sass:math';
-
-.flag-icon-background {
+.fib {
   background-size: contain;
   background-position: 50%;
   background-repeat: no-repeat;
 }
 
-.flag-icon {
-  @extend .flag-icon-background;
+.fi {
+  @extend .fib;
   position: relative;
   display: inline-block;
-  width: math.div(4, 3) * 1em;
+  width: 1.333333 * 1em;
   line-height: 1em;
   &:before {
     content: '\00a0';
   }
-  &.flag-icon-squared {
+  &.fis {
     width: 1em;
   }
 }
 
 @mixin flag-icon($country) {
-  .flag-icon-#{$country} {
+  .fi-#{$country} {
     background-image: url(#{$flag-icons-path}#{$flag-icons-rect-path}/#{$country}.svg);
-    &.flag-icon-squared {
-      background-image: url(#{$flag-icons-path}#{$flag-icons-square-path}/#{$country}.svg);
+
+    @if $flag-icons-use-square {
+      &.fis {
+        background-image: url(#{$flag-icons-path}#{$flag-icons-square-path}/#{$country}.svg);
+      }
     }
   }
 }

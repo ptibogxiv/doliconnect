@@ -1,17 +1,25 @@
 {
-  "name": "flag-icon-css",
-  "version": "4.1.4",
+  "name": "flag-icons",
+  "version": "6.4.2",
   "author": "Panayiotis Lipiridis <lipiridis@gmail.com>",
   "license": "MIT",
+  "main": "css/flag-icons.css",
   "repository": {
     "type": "git",
     "url": "http://github.com/lipis/flag-icons"
   },
+  "files": [
+    "css",
+    "flags",
+    "less",
+    "sass",
+    "country.json"
+  ],
   "devDependencies": {
-    "http-server": "14.0.0",
+    "http-server": "14.1.0",
     "less": "4.1.2",
-    "prettier": "2.4.1",
-    "svgo": "2.7.0"
+    "prettier": "2.6.2",
+    "svgo": "2.8.0"
   },
   "scripts": {
     "build": "yarn build:dev && yarn build:min",
