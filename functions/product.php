@@ -741,7 +741,7 @@ $lang = pll_current_language('locale');
 $lang = $current_user->locale;
 }
 $country = callDoliApi("GET", "/setup/dictionary/countries/".$product->country_id."?lang=".$lang, null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-$list .= "<br><small><span class='flag-icon flag-icon-".strtolower($product->country_code)."'></span> ".$country->label;
+$list .= "<br><small><span class='fi fi-".strtolower($product->country_code)."'></span> ".$country->label;
 if ( isset($product->state_id) && !empty($product->state_id) ) { 
 $state = callDoliApi("GET", "/setup/dictionary/states/".$product->state_id."?lang=".$lang, null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))); 
 $list .= " - ".$state->name; } 
@@ -808,7 +808,7 @@ $card .= "<br><small><i class='fas fa-globe-europe fa-fw'></i> ".__( 'Origin:', 
 if ( isset($product->state_id) && !empty($product->state_id) ) { 
 $state = callDoliApi("GET", "/setup/dictionary/states/".$product->state_id."?lang=".$lang, null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))); 
 $card .= " - ".$state->name; } 
-$card .= " <span class='flag-icon flag-icon-".strtolower($product->country_code)."'></span></small>"; }
+$card .= " <span class='fi fi-".strtolower($product->country_code)."'></span></small>"; }
 if( has_filter('mydoliconnectproductdesc') ) {
 $card .= apply_filters('mydoliconnectproductdesc', $product, 'card');
 }

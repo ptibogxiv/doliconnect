@@ -1456,7 +1456,7 @@ $lang = pll_current_language('locale');
 $lang = $current_user->locale;
 }
 $country = callDoliApi("GET", "/setup/dictionary/countries/".$product->country_id."?lang=".$lang, null, dolidelay('constante', $refresh));
-$doliline .= "<center><small><span class='flag-icon flag-icon-".strtolower($product->country_code)."'></span> ".$country->label."</small></center>"; }
+$doliline .= "<center><small><span class='fi fi-".strtolower($product->country_code)."'></span> ".$country->label."</small></center>"; }
 }
 
 $doliline .= '</div><div class="col-4 col-sm-3 col-md-2 text-right"><h6 class="mb-1">'.doliprice($line, (empty(get_option('dolibarr_b2bmode'))?'total_ttc':'total_ht'), isset($line->multicurrency_code) ? $line->multicurrency_code : null).'</h6>';
@@ -1707,7 +1707,7 @@ $translations = pll_the_languages( array( 'raw' => 1 ) );
 foreach ($translations as $key => $value) {
 print "<a href='".$value['url']."?".$_SERVER["QUERY_STRING"]."' onclick='loadingSelectLangModal()' class='list-group-item list-group-item-light list-group-item-action";
 if ( $value['current_lang'] == true ) { print " active"; }
-print "'><span class='flag-icon flag-icon-".strtolower(substr($value['slug'], -2))."'></span> ".$value['name'];
+print "'><span class='fi fi-".strtolower(substr($value['slug'], -2))."'></span> ".$value['name'];
 if ( $value['current_lang'] == true ) { print " <i class='fas fa-language fa-fw'></i>"; }
 print "</a>";
 }      
@@ -1879,7 +1879,7 @@ $paymentmethods .= __( 'Account', 'doliconnect')." ".$method->reference;
 $paymentmethods .= __( 'Card', 'doliconnect').' '.$method->reference;
 }
 if ( $method->default_source && empty($thirdparty->mode_reglement_id) && !in_array($method->type, array('PRE','VIR')) || (!empty($method->default_source) && !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id == $mode_reglement_code[0]->id ) ) { $paymentmethods .= " <i class='fas fa-star fa-fw' style='color:Gold'></i>"; }
-$paymentmethods .= '<br><small class="text-muted">'.$method->holder.'</small></div><span class="flag-icon flag-icon-'.strtolower($method->country).' float-end"></span></button></h2>';
+$paymentmethods .= '<br><small class="text-muted">'.$method->holder.'</small></div><span class="fi fi-'.strtolower($method->country).' float-end"></span></button></h2>';
 $paymentmethods .= '<div id="flush-collapse'.$method->id.'" class="accordion-collapse collapse';
 if ( $method->default_source && empty($thirdparty->mode_reglement_id) && !in_array($method->type, array('PRE','VIR')) || (!empty($method->default_source) && !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id == $mode_reglement_code[0]->id ) ) { $paymentmethods .= " show"; }
 $paymentmethods .= '" aria-labelledby="flush-heading'.$method->id.'" data-bs-parent="#accordionFlushExample"><div class="accordion-body bg-light">';
