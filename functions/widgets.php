@@ -306,7 +306,7 @@ print '<form role="search" method="get" id="shopform" action="' . doliconnecturl
 
 if ( $shop != null && $shop > 0 ) {
 $request = "/categories/".esc_attr($shop)."?include_childs=true";
-} else{
+} else {
 $request = "/categories";
 }
 
