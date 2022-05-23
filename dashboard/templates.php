@@ -567,6 +567,8 @@ function dolifaq_display($content) {
     //print var_dump($faq);
     
     print '<div class="card"><div class="card-header">'.__( 'Knowledge base', 'doliconnect').'</div>';
+    print '<div class="card-body">';
+    print '</div>';
     print '<div class="accordion accordion-flush" id="accordionDolifaq">';
     if ( !isset( $listfaq->error ) && $listfaq != null ) {
         foreach ( $listfaq as $postfaq ) { 
