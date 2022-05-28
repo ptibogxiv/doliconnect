@@ -1,3 +1,12 @@
+# 6.4.4
+
+- Fix colors of Armenia
+- Fix the union jack of Niue
+
+# 6.4.3
+
+- Fix flag of Argentina
+
 # 6.4.2
 
 - Convert text to path in flags: **sm**, **gu**.
