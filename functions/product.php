@@ -630,11 +630,13 @@ $step = 1;
 $thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty', $refresh));
 
 $button .= "<div class='input-group input-group-sm mb-3'><select class='form-control btn-light btn-outline-secondary' id='product-".$product->id."-add-qty' name='product-add-qty' ";
-if (( isset($thirdparty->status) && $thirdparty->status != '1' ) || (( $realstock <= 0 || $m2 < $step) && empty($product->type) && !empty(doliconst('MAIN_MODULE_STOCK')) )) { $button .= " disabled"; }
+if (( isset($thirdparty->status) && $thirdparty->status != '1' ) || (($realstock <= 0 && !empty(doliconst('MAIN_MODULE_STOCK', $refresh)) && (empty($product->type) && empty(doliconst('STOCK_MUST_BE_ENOUGH_FOR_ORDER', $refresh)) && !empty(doliconst('STOCK_MUST_BE_ENOUGH_FOR_ORDER', $refresh)) || (!empty($product->type) && doliconst('STOCK_SUPPORTS_SERVICES', $refresh)) )) || $m2 < $step)) { $button .= " disabled"; }
 $button .= ">";
-if (isset($thirdparty->status) && $thirdparty->status != '1' )  { $button .= "<OPTION value='0' selected>".__( 'Account closed', 'doliconnect')."</OPTION>"; }
-elseif (($realstock <= 0 && !empty(doliconst('MAIN_MODULE_STOCK', $refresh)) && (empty($product->type) || (!empty($product->type) && doliconst('STOCK_SUPPORTS_SERVICES', $refresh)) )) || $m2 < $step)  { $button .= "<OPTION value='0' selected>".__( 'Unavailable', 'doliconnect')."</OPTION>"; }
-elseif (!empty($m2) && $m2 >= $step) {
+if (isset($thirdparty->status) && $thirdparty->status != '1') {
+  $button .= "<OPTION value='0' selected>".__( 'Account closed', 'doliconnect')."</OPTION>"; 
+} elseif (($realstock <= 0 && !empty(doliconst('MAIN_MODULE_STOCK', $refresh)) && (empty($product->type) && empty(doliconst('STOCK_MUST_BE_ENOUGH_FOR_ORDER', $refresh)) && !empty(doliconst('STOCK_MUST_BE_ENOUGH_FOR_ORDER', $refresh)) || (!empty($product->type) && doliconst('STOCK_SUPPORTS_SERVICES', $refresh)) )) || $m2 < $step)  { 
+  $button .= "<OPTION value='0' selected>".__( 'Unavailable', 'doliconnect')."</OPTION>";
+} elseif (!empty($m2) && $m2 >= $step) {
 if ($step >1 && !empty($quantity)) $quantity = round($quantity/$step)*$step; 
 if (empty($qty) && $quantity > $m2) $quantity = $m2; 
 if ($m2 < $step)  { $button .= "<OPTION value='0' >".__( 'Delete', 'doliconnect')."</OPTION>"; } else {
