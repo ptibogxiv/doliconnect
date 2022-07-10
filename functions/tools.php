@@ -1381,7 +1381,7 @@ function doliline($object, $refresh = false, $refreshstock = false) {
 global $current_user;
 
 $doliline = null;
-
+//$doliline .= var_dump($object);
 if ( isset($object) && is_object($object) && isset($object->lines) && $object->lines != null && (doliconnector($current_user, 'fk_soc') == $object->socid) ) {  
 foreach ( $object->lines as $line ) { 
 
@@ -1464,7 +1464,7 @@ $doliline .= "<center><small><span class='fi fi-".strtolower($product->country_c
 }
 
 $doliline .= '</div><div class="col-4 col-sm-3 col-md-2 text-right"><h6 class="mb-1">'.doliprice($line, (empty(get_option('dolibarr_b2bmode'))?'total_ttc':'total_ht'), isset($line->multicurrency_code) ? $line->multicurrency_code : null).'</h6>';
-if ( !empty(doliconst('MAIN_MODULE_FRAISDEPORT', $refresh)) && doliconst('FRAIS_DE_PORT_ID_SERVICE_TO_USE', $refresh) == $line->fk_product ) {
+if (!empty($line->fk_parent_line) || (!empty(doliconst('MAIN_MODULE_FRAISDEPORT', $refresh)) && empty($line->fk_parent_line) && doliconst('FRAIS_DE_PORT_ID_SERVICE_TO_USE', $refresh) == $line->fk_product)) {
 $doliline .= '<h6 class="mb-1">x'.$line->qty.'</h6>';
 } elseif ( $object->statut == 0 && !is_page(doliconnectid('doliaccount')) ) {
 $doliline .= "<input type='hidden' name='updateorderproduct[".$line->fk_product."][product]' value='".$line->fk_product."'><input type='hidden' name='updateorderproduct[".$line->fk_product."][price]' value='".$line->subprice."'>";
