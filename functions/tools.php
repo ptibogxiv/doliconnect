@@ -445,21 +445,16 @@ $password .= "<li class='list-group-item list-group-item-info list-group-item-ac
 } 
 if (is_user_logged_in() && $user) {
 $password .= '<li class="list-group-item list-group-item-light list-group-item-action">';
-$password .= '<div class="form-floating';
-if ( !empty(get_option('doliconnectbeta')) ) {
-$password .= ' input-group';
-}
-$password .= '"><input type="password" class="form-control" id="pwd0" name="pwd0" placeholder="Password" ';
+$password .= '<div class="row g-2"><div class="col-12"><div class="input-group">';
+$password .= '<div class="form-floating"><input type="password" class="form-control" id="pwd0" name="pwd0" placeholder="Password" ';
 if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $user->ID ) {
 $password .= ' readonly';
 } else {
 $password .= ' required';
 }
-$password .= '><label for="pwd0">'.__( 'Confirm your password', 'doliconnect').'</label>';
-if ( !empty(get_option('doliconnectbeta')) ) {
-$password .= '<button id="toggle-password" type="button" onclick="revealpwd0()" class="btn btn-outline-secondary" type="button" aria-label="Show password as plain text. Warning: this will display your password on the screen."><i id="toggle-password-fa" class="far fa-fw fa-eye-slash"></i></button>';
-}
-$password .= '</div></li>';
+$password .= '><label for="pwd0">'.__( 'Confirm your password', 'doliconnect').'</label></div>';
+$password .= '<button id="toggle-password" type="button" onclick="revealpwd0()" class="input-group-text" type="button" aria-label="Show password as plain text. Warning: this will display your password on the screen."><i id="toggle-password-fa" class="far fa-fw fa-eye-slash"></i></button>';
+$password .= '</div></div></div></li>';
 }
 
 if ( !empty(get_option('doliconnectbeta')) ) {
