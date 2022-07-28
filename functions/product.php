@@ -573,12 +573,12 @@ $button .= '</a><br><br>';
 
 //if ( empty($time) && !empty($product->duration_value) ) { $button .='/'.doliduration($product); } 
 //if ( !empty($altdurvalue) ) { $button .= "<tr><td class='text-end'>soit ".doliprice( $altdurvalue*$product->price_ttc, null, $currency)." par ".__( 'hour', 'doliconnect')."</td></tr>"; } 
-if (!empty($product->net_measure) && !empty($product->net_measure_units)) { 
-  $unit = callDoliApi("GET", "/setup/dictionary/units?sortfield=rowid&sortorder=ASC&limit=1&active=1&sqlfilters=(t.rowid%3Alike%3A'".$product->net_measure_units."')", null, dolidelay('constante'));
-  $button .= '<span class="badge rounded-pill bg-light text-dark">'.$product->net_measure;
-  if (!empty($unit)) $button .= " ".$unit[0]->short_label;
-  $button .= '</span> ';
-}
+//if (!empty($product->net_measure) && !empty($product->net_measure_units)) { 
+//  $unit = callDoliApi("GET", "/setup/dictionary/units?sortfield=rowid&sortorder=ASC&limit=1&active=1&sqlfilters=(t.rowid%3Alike%3A'".$product->net_measure_units."')", null, dolidelay('constante'));
+//  $button .= '<span class="badge rounded-pill bg-light text-dark">'.$product->net_measure;
+//  if (!empty($unit)) $button .= " ".$unit[0]->short_label;
+//  $button .= '</span> ';
+//}
   
 
 if ( empty(doliconnectid('dolicart')) ) {
