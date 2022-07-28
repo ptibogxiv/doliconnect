@@ -20,7 +20,8 @@ $versionbase = '5.2.0';
 $version=$versionbase; 
 } else {
 $css='bootswatch/'.get_theme_mod( 'ptibogxivtheme_css').'/';
-$version='5.2.0';  
+$version='5.2.0'; 
+$versionbase=$version;
 }
 
 if (!empty(get_theme_mod( 'ptibogxivtheme_css')) && $version != $versionbase && empty(get_option('doliconnectbeta'))) {
