@@ -2180,7 +2180,7 @@ console.log(response.data);
       if (document.getElementById('DoliPaymentmethodAlert')) {
       document.getElementById('DoliPaymentmethodAlert').innerHTML = response.data;      
       }
-//document.location = '".$url."';
+document.location = '".$url."';
       } else {
       if (document.getElementById('DoliPaymentmethodAlert')) {
       document.getElementById('DoliPaymentmethodAlert').innerHTML = response.data;      
