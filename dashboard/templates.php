@@ -185,7 +185,7 @@ if ( has_action('grh_doliconnect_menu') ) {
 }
 
 if ( has_action('settings_doliconnect_menu') ) {
-  print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__('%s My settings', 'doliconnect'), '<i class="fa-solid fa-user-gear"></i>').'</div><ul class="list-group list-group-flush">';
+  print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__('%s My help & contact', 'doliconnect'), '<i class="fa-solid fa-user-gear"></i>').'</div><ul class="list-group list-group-flush">';
   do_action('settings_doliconnect_menu');
   print "</ul></div><br>";
 }

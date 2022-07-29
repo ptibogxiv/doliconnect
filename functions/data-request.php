@@ -788,7 +788,7 @@ wp_send_json_error( __( 'An error occured:', 'doliconnect').' '.$payinfo->error-
 }
 
 } else {
-wp_send_json_error( __( 'An error occuredtttt'.$_POST['case'], 'doliconnect')); 
+wp_send_json_error( __( 'An error occured', 'doliconnect')); 
 }
 
 }	else {
