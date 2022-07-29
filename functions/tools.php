@@ -1805,7 +1805,7 @@ document.getElementById('DoliPaymentmethodAlert').innerHTML = result.error;
           data: {
             'action': 'dolicart_request',
             'dolicart-nonce': '".wp_create_nonce( 'dolicart-nonce')."',
-            'action_cart': 'pay_cart',
+            'case': 'pay_cart',
             'module': '".$module."',
             'id': '".$object->id."',
             'paymentintent': result.paymentIntent.id,
@@ -2096,7 +2096,7 @@ displayCardError.textContent = result.error.message;
           data: {
             'action': 'dolicart_request',
             'dolicart-nonce': '".wp_create_nonce( 'dolicart-nonce')."',
-            'action_cart': 'pay_cart',
+            'case': 'pay_cart',
             'module': '".$module."',
             'id': '".$object->id."',
             'paymentintent': result.paymentIntent.id,
@@ -2180,7 +2180,7 @@ console.log(response.data);
       if (document.getElementById('DoliPaymentmethodAlert')) {
       document.getElementById('DoliPaymentmethodAlert').innerHTML = response.data;      
       }
-document.location = '".$url."';
+//document.location = '".$url."';
       } else {
       if (document.getElementById('DoliPaymentmethodAlert')) {
       document.getElementById('DoliPaymentmethodAlert').innerHTML = response.data;      
@@ -2298,7 +2298,7 @@ displayCardError.textContent = result.error.message;
           data: {
             'action': 'dolicart_request',
             'dolicart-nonce': '".wp_create_nonce( 'dolicart-nonce')."',
-            'action_cart': 'pay_cart',
+            'case': 'pay_cart',
             'module': '".$module."',
             'id': '".$object->id."',
             'paymentintent': result.paymentIntent.id,
@@ -2470,7 +2470,7 @@ displayCardError.textContent = result.error.message;
           data: {
             'action': 'dolicart_request',
             'dolicart-nonce': '".wp_create_nonce( 'dolicart-nonce')."',
-            'action_cart': 'pay_cart',
+            'case': 'pay_cart',
             'module': '".$module."',
             'id': '".$object->id."',
             'paymentintent': result.paymentIntent.id,
@@ -2708,7 +2708,7 @@ $('#DoliconnectLoadingModal').modal('show');
           data: {
             'action': 'dolicart_request',
             'dolicart-nonce': '".wp_create_nonce( 'dolicart-nonce')."',
-            'action_cart': 'pay_cart',
+            'case': 'pay_cart',
             'module': '".$module."',
             'id': '".$object->id."',
             'paymentintent': null,
@@ -2775,7 +2775,7 @@ document.getElementById('DoliPaymentmethodAlert').innerHTML = result.error.messa
           data: {
             'action': 'dolicart_request',
             'dolicart-nonce': '".wp_create_nonce( 'dolicart-nonce')."',
-            'action_cart': 'pay_cart',
+            'case': 'pay_cart',
             'module': '".$module."',
             'id': '".$object->id."',
             'paymentintent': null,
@@ -2843,7 +2843,7 @@ document.getElementById('DoliPaymentmethodAlert').innerHTML = result.error.messa
           data: {
             'action': 'dolicart_request',
             'dolicart-nonce': '".wp_create_nonce( 'dolicart-nonce')."',
-            'action_cart': 'pay_cart',
+            'case': 'pay_cart',
             'module': '".$module."',
             'id': '".$object->id."',
             'paymentintent': null,
