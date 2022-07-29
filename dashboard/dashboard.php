@@ -2116,6 +2116,26 @@ print "</div><div class='float-end'>";
 print dolihelp('ISSUE');
 print "</div></small>";
 print '</div></div>';
+
+print '<div class="row row-cols-1 row-cols-md-2 g-4">';
+if ( !isset( $representatives->error ) && $representatives != null ) {
+foreach ( $representatives as $representative ) { 
+print '<div class="col"><div class="card" style="max-width: 100%;">
+<div class="row g-0">
+<div class="col-md-4">
+<svg class="bd-placeholder-img img-fluid rounded-start" width="100%" height="200px" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect><text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image</text></svg>
+
+</div>
+<div class="col-md-8">
+<div class="card-body">
+  <h5 class="card-title">'.$representative->firstname.' '.$representative->lastname.'</h5>
+  <p class="card-text">'.$representative->email.'</p>
+  <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+</div>
+</div></div>
+</div></div>';
+}}
+print '</div>';
 }
 
 if ( !empty(doliconst('MAIN_MODULE_TICKET')) ) {
@@ -2126,7 +2146,7 @@ add_action( 'settings_doliconnect_tickets', 'tickets_module');
 function tickets_menu( $arg ) {
 print "<a href='".esc_url( add_query_arg( 'module', 'tickets', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
 if ( $arg == 'tickets' ) { print " active"; }
-print "'>".__( 'Help & Contact', 'doliconnect')."</a>";
+print "'>".__( 'Support Ticket', 'doliconnect')."</a>";
 }
 
 function tickets_module( $url ) {
@@ -2326,7 +2346,7 @@ $request = "/tickets?socid=".doliconnector($current_user, 'fk_soc')."&sortfield=
 $listticket = callDoliApi("GET", $request, null, dolidelay('ticket', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 //print $listticket;
 
-print '<div class="card shadow-sm"><div class="card-header">'.__( 'Help', 'doliconnect');
+print '<div class="card shadow-sm"><div class="card-header">'.__( 'Support Ticket', 'doliconnect');
 print '<a class="float-end text-decoration-none" href="'.esc_url( add_query_arg( 'action', 'create', $url) ).'"><i class="fas fa-plus-circle"></i> '.__( 'Create ticket', 'doliconnect').'</a>';  
 print '</div><ul class="list-group list-group-flush">';  
 
