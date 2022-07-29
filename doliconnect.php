@@ -369,10 +369,7 @@ switch_to_blog(1);
 
     if ( $user && is_object( $user ) ) {
 
-//if ( $user->data->ID == '1' ) {
-
 $avatar = 'YOUR_NEW_IMAGE_URL';
-//$avatar = "<img alt='{$alt}' src='{$avatar}' class='avatar avatar-{$size} photo' height='{$size}' width='{$size}' />";
 
 if ($size=='96') {
 $taille=" class='card-img-top' ";
