@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2022-07-29 19:37+0200\n"
-"PO-Revision-Date: 2022-07-29 19:38+0200\n"
+"POT-Creation-Date: 2022-07-29 20:29+0200\n"
+"PO-Revision-Date: 2022-07-29 20:29+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: nl_BE\n"
@@ -157,8 +157,8 @@ msgstr "één IP per regel zonder ruimte of komma"
 #: admin/admin.php:447 admin/admin.php:459 admin/admin.php:491
 #: admin/admin.php:504 admin/admin.php:519 admin/admin.php:530
 #: admin/admin.php:541 admin/admin.php:554 admin/admin.php:566
-#: dashboard/dashboard.php:2238 dashboard/dashboard.php:2257
-#: dashboard/dashboard.php:2274 dashboard/dashboard.php:2292
+#: dashboard/dashboard.php:2240 dashboard/dashboard.php:2259
+#: dashboard/dashboard.php:2276 dashboard/dashboard.php:2294
 #: dashboard/templates.php:684 dashboard/templates.php:1056
 #: functions/tools.php:601 functions/tools.php:708
 msgid "- Select -"
@@ -449,7 +449,7 @@ msgstr "Contactpersoon bewerken"
 #: dashboard/dashboard.php:299 dashboard/dashboard.php:322
 #: dashboard/dashboard.php:532 dashboard/dashboard.php:665
 #: dashboard/dashboard.php:981 dashboard/dashboard.php:1253
-#: dashboard/dashboard.php:2157 dashboard/dashboard.php:2228
+#: dashboard/dashboard.php:2159 dashboard/dashboard.php:2230
 #: dashboard/templates.php:256 dashboard/templates.php:274
 #: dashboard/templates.php:400
 msgid "Back"
@@ -498,7 +498,7 @@ msgid "Proposal %s"
 msgstr "Voorstel %s"
 
 #: dashboard/dashboard.php:534 dashboard/dashboard.php:1386
-#: dashboard/dashboard.php:1643 dashboard/dashboard.php:2159
+#: dashboard/dashboard.php:1643 dashboard/dashboard.php:2161
 msgid "Date of creation"
 msgstr "Datum van creatie"
 
@@ -836,8 +836,8 @@ msgstr "Lidmaatschap"
 msgid "nothing"
 msgstr "niets"
 
-#: dashboard/dashboard.php:1782 dashboard/dashboard.php:2236
-#: dashboard/dashboard.php:2248 dashboard/templates.php:682
+#: dashboard/dashboard.php:1782 dashboard/dashboard.php:2238
+#: dashboard/dashboard.php:2250 dashboard/templates.php:682
 #: dashboard/templates.php:694 functions/tools.php:595 functions/tools.php:1333
 msgid "Type"
 msgstr "Type"
@@ -944,160 +944,164 @@ msgstr "Geen gekoppeld lid"
 msgid "Your sales representatives"
 msgstr "Uw verkoopvertegenwoordigers"
 
-#: dashboard/dashboard.php:2127
+#: dashboard/dashboard.php:2109
+msgid "No sales representative"
+msgstr "Geen vertegenwoordiger"
+
+#: dashboard/dashboard.php:2129
 msgid "Help & Contact"
 msgstr "Help & Contact"
 
-#: dashboard/dashboard.php:2152
+#: dashboard/dashboard.php:2154
 msgid "Your message has been send."
 msgstr "Uw bericht is verzonden."
 
-#: dashboard/dashboard.php:2157
+#: dashboard/dashboard.php:2159
 #, php-format
 msgid "Ticket %s"
 msgstr "Ticket %s"
 
-#: dashboard/dashboard.php:2160
+#: dashboard/dashboard.php:2162
 msgid "Type and category"
 msgstr "Type en categorie"
 
-#: dashboard/dashboard.php:2161 dashboard/dashboard.php:2272
-#: dashboard/dashboard.php:2282
+#: dashboard/dashboard.php:2163 dashboard/dashboard.php:2274
+#: dashboard/dashboard.php:2284
 msgid "Severity"
 msgstr "Ernst"
 
-#: dashboard/dashboard.php:2163 dashboard/dashboard.php:2342
+#: dashboard/dashboard.php:2165 dashboard/dashboard.php:2344
 msgid "Deleted"
 msgstr "Verwijderd"
 
-#: dashboard/dashboard.php:2164 dashboard/dashboard.php:2343
+#: dashboard/dashboard.php:2166 dashboard/dashboard.php:2345
 msgid "Closed"
 msgstr "Gesloten"
 
-#: dashboard/dashboard.php:2165 dashboard/dashboard.php:2344
+#: dashboard/dashboard.php:2167 dashboard/dashboard.php:2346
 msgid "Waiting"
 msgstr "Wacht"
 
-#: dashboard/dashboard.php:2166
+#: dashboard/dashboard.php:2168
 msgid "In progress"
 msgstr "In uitvoering"
 
-#: dashboard/dashboard.php:2167 dashboard/dashboard.php:2346
+#: dashboard/dashboard.php:2169 dashboard/dashboard.php:2348
 msgid "Assigned"
 msgstr "Toegewezen"
 
-#: dashboard/dashboard.php:2168 dashboard/dashboard.php:2347
+#: dashboard/dashboard.php:2170 dashboard/dashboard.php:2349
 msgid "Answered"
 msgstr "Beantwoordt"
 
-#: dashboard/dashboard.php:2169 dashboard/dashboard.php:2348
+#: dashboard/dashboard.php:2171 dashboard/dashboard.php:2350
 msgid "Read"
 msgstr "Gelezen"
 
-#: dashboard/dashboard.php:2170 dashboard/dashboard.php:2349
+#: dashboard/dashboard.php:2172 dashboard/dashboard.php:2351
 msgid "Unread"
 msgstr "Ongelezen"
 
-#: dashboard/dashboard.php:2174 dashboard/dashboard.php:2306
+#: dashboard/dashboard.php:2176 dashboard/dashboard.php:2308
 msgid "Subject"
 msgstr "Onderwerp"
 
-#: dashboard/dashboard.php:2175
+#: dashboard/dashboard.php:2177
 msgid "Initial message"
 msgstr "Eerste bericht"
 
-#: dashboard/dashboard.php:2185 dashboard/dashboard.php:2309
+#: dashboard/dashboard.php:2187 dashboard/dashboard.php:2311
 #: dashboard/templates.php:699 dashboard/templates.php:1824
 msgid "Message"
 msgstr "Bericht"
 
-#: dashboard/dashboard.php:2187
+#: dashboard/dashboard.php:2189
 msgid "Answer"
 msgstr "Antwoord"
 
-#: dashboard/dashboard.php:2221
+#: dashboard/dashboard.php:2223
 msgid "Your ticket has been submitted."
 msgstr "Uw ticket is verzonden."
 
-#: dashboard/dashboard.php:2228 dashboard/dashboard.php:2328
+#: dashboard/dashboard.php:2230 dashboard/dashboard.php:2330
 msgid "Create ticket"
 msgstr "Ticket maken"
 
-#: dashboard/dashboard.php:2255 dashboard/dashboard.php:2265
+#: dashboard/dashboard.php:2257 dashboard/dashboard.php:2267
 msgid "Category"
 msgstr "Categorie"
 
-#: dashboard/dashboard.php:2290 dashboard/dashboard.php:2299
+#: dashboard/dashboard.php:2292 dashboard/dashboard.php:2301
 msgid "Sales representative"
 msgstr "Vertegenwoordiger"
 
-#: dashboard/dashboard.php:2313 dashboard/templates.php:708
+#: dashboard/dashboard.php:2315 dashboard/templates.php:708
 msgid "Send"
 msgstr "Verzenden"
 
-#: dashboard/dashboard.php:2327
+#: dashboard/dashboard.php:2329
 msgid "Help"
 msgstr "Help"
 
-#: dashboard/dashboard.php:2345
+#: dashboard/dashboard.php:2347
 msgid "Progress"
 msgstr "Voortgang"
 
-#: dashboard/dashboard.php:2353
+#: dashboard/dashboard.php:2355
 msgid "No ticket"
 msgstr "Geen ticket"
 
-#: dashboard/dashboard.php:2372
+#: dashboard/dashboard.php:2374
 msgid "Settings of security"
 msgstr "Instellingen van beveiliging"
 
-#: dashboard/dashboard.php:2402
+#: dashboard/dashboard.php:2404
 msgid "Settings & security"
 msgstr "Instellingen & beveiliging"
 
-#: dashboard/dashboard.php:2407
+#: dashboard/dashboard.php:2409
 msgid "Receive a email notification at each connection"
 msgstr "Een e-mailmelding ontvangen bij elke verbinding"
 
-#: dashboard/dashboard.php:2412
+#: dashboard/dashboard.php:2414
 msgid "I would like to receive the newsletter"
 msgstr "Ik wil graag de nieuwsbrief ontvangen"
 
-#: dashboard/dashboard.php:2416
+#: dashboard/dashboard.php:2418
 msgid "I would like to receive the offers of our partners"
 msgstr "Ik wil graag de aanbiedingen van onze partners ontvangen"
 
-#: dashboard/dashboard.php:2424
+#: dashboard/dashboard.php:2426
 msgid "Privacy policy"
 msgstr "Privacybeleid"
 
-#: dashboard/dashboard.php:2431 dashboard/dashboard.php:2439
+#: dashboard/dashboard.php:2433 dashboard/dashboard.php:2441
 msgid "Default language"
 msgstr "Standaardtaal"
 
-#: dashboard/dashboard.php:2432 dashboard/dashboard.php:2441
-#: dashboard/dashboard.php:2442
+#: dashboard/dashboard.php:2434 dashboard/dashboard.php:2443
+#: dashboard/dashboard.php:2444
 msgid "Default / Browser language"
 msgstr "Standaard/browser taal"
 
-#: dashboard/dashboard.php:2457 dashboard/dashboard.php:2459
-#: dashboard/dashboard.php:2468
+#: dashboard/dashboard.php:2459 dashboard/dashboard.php:2461
+#: dashboard/dashboard.php:2470
 msgid "Default currency"
 msgstr "Standaardvaluta"
 
-#: dashboard/dashboard.php:2479
+#: dashboard/dashboard.php:2481
 msgid "Enabled"
 msgstr "Ingeschakeld"
 
-#: dashboard/dashboard.php:2480
+#: dashboard/dashboard.php:2482
 msgid "Primary"
 msgstr "Primair"
 
-#: dashboard/dashboard.php:2481 functions/product.php:834
+#: dashboard/dashboard.php:2483 functions/product.php:834
 msgid "Description"
 msgstr "Omschrijving"
 
-#: dashboard/dashboard.php:2572 functions/tools.php:2922
+#: dashboard/dashboard.php:2574 functions/tools.php:2922
 msgid "Privacy"
 msgstr "Privacy"
 

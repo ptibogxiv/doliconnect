@@ -2105,7 +2105,9 @@ $representatives = callDoliApi("GET", $request, null, dolidelay('thirdparty', es
 if ( !isset( $representatives->error ) && $representatives != null ) {
 foreach ( $representatives as $representative ) { 
 print "<li class='list-group-item list-group-item-light'><center>".$representative->firstname." ".$representative->lastname."".$representative->job." ".$representative->phone." ".$representative->email."</center></li>";
-}}
+}} else {
+    print "<li class='list-group-item list-group-item-light'><center>".__( 'No sales representative', 'doliconnect')."</center></li>";
+}
 
 print '</ul><div class="card-footer text-muted">';
 print "<small><div class='float-start'>";
