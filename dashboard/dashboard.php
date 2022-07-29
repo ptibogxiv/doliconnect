@@ -2097,26 +2097,11 @@ print "'>".__( 'Your sales representatives', 'doliconnect')."</a>";
 function representatives_module( $url ) {
 global $current_user;
 
-print '<div class="card shadow-sm"><div class="card-header">'.__( 'Your sales representatives', 'doliconnect').'</div><ul class="list-group list-group-flush">';
+print '<div class="card shadow-sm"><div class="card-header">'.__( 'Your sales representatives', 'doliconnect').'</div><div class="card-body">';
 
 $request = "/thirdparties/".doliconnector($current_user, 'fk_soc')."/representatives";
 $representatives = callDoliApi("GET", $request, null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
  
-if ( !isset( $representatives->error ) && $representatives != null ) {
-foreach ( $representatives as $representative ) { 
-print "<li class='list-group-item list-group-item-light'><center>".$representative->firstname." ".$representative->lastname."".$representative->job." ".$representative->phone." ".$representative->email."</center></li>";
-}} else {
-    print "<li class='list-group-item list-group-item-light'><center>".__( 'No sales representative', 'doliconnect')."</center></li>";
-}
-
-print '</ul><div class="card-footer text-muted">';
-print "<small><div class='float-start'>";
-if ( isset($request) ) print dolirefresh($request, $url, dolidelay('thirdparty'));
-print "</div><div class='float-end'>";
-print dolihelp('ISSUE');
-print "</div></small>";
-print '</div></div>';
-
 print '<div class="row row-cols-1 row-cols-md-2 g-4">';
 if ( !isset( $representatives->error ) && $representatives != null ) {
 foreach ( $representatives as $representative ) { 
@@ -2136,6 +2121,15 @@ print '<div class="col"><div class="card" style="max-width: 100%;">
 </div></div>';
 }}
 print '</div>';
+
+print '</div><div class="card-footer text-muted">';
+print "<small><div class='float-start'>";
+if ( isset($request) ) print dolirefresh($request, $url, dolidelay('thirdparty'));
+print "</div><div class='float-end'>";
+print dolihelp('ISSUE');
+print "</div></small>";
+print '</div></div>';
+
 }
 
 if ( !empty(doliconst('MAIN_MODULE_TICKET')) ) {
