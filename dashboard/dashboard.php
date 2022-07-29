@@ -2097,13 +2097,14 @@ print "'>".__( 'Your sales representatives', 'doliconnect')."</a>";
 function representatives_module( $url ) {
 global $current_user;
 
-print '<div class="card shadow-sm"><div class="card-header">'.__( 'Your sales representatives', 'doliconnect').'</div><div class="card-body">';
+print '<div class="card shadow-sm"><div class="card-header">'.__( 'Your sales representatives', 'doliconnect').'</div>';
 
 $request = "/thirdparties/".doliconnector($current_user, 'fk_soc')."/representatives";
 $representatives = callDoliApi("GET", $request, null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
  
 print '<div class="row row-cols-1 row-cols-md-2 g-4">';
 if ( !isset( $representatives->error ) && $representatives != null ) {
+print '<div class="card-body">';
 foreach ( $representatives as $representative ) { 
 print '<div class="col"><div class="card" style="max-width: 100%;">
 <div class="row g-0">
@@ -2119,8 +2120,12 @@ print '<div class="col"><div class="card" style="max-width: 100%;">
 </div>
 </div></div>
 </div></div>';
-}}
+}
 print '</div>';
+} else {
+    print "<ul class='list-group list-group-flush'><li class='list-group-item list-group-item-light'><center>".__( 'No sales representative', 'doliconnect')."</center></li></ul>";
+}
+
 
 print '</div><div class="card-footer text-muted">';
 print "<small><div class='float-start'>";
