@@ -2091,13 +2091,13 @@ add_action( 'settings_doliconnect_representatives', 'representatives_module');
 function representatives_menu( $arg ) {
 print "<a href='".esc_url( add_query_arg( 'module', 'representatives', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
 if ( $arg == 'representatives' ) { print " active"; }
-print "'>".__( 'Your sales representatives', 'doliconnect')."</a>";
+print "'>".__( 'My sales representatives', 'doliconnect')."</a>";
 }
 
 function representatives_module( $url ) {
 global $current_user;
 
-print '<div class="card shadow-sm"><div class="card-header">'.__( 'Your sales representatives', 'doliconnect').'</div>';
+print '<div class="card shadow-sm"><div class="card-header">'.__( 'My sales representatives', 'doliconnect').'</div>';
 
 $request = "/thirdparties/".doliconnector($current_user, 'fk_soc')."/representatives";
 $representatives = callDoliApi("GET", $request, null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
@@ -2145,7 +2145,7 @@ add_action( 'settings_doliconnect_tickets', 'tickets_module');
 function tickets_menu( $arg ) {
 print "<a href='".esc_url( add_query_arg( 'module', 'tickets', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
 if ( $arg == 'tickets' ) { print " active"; }
-print "'>".__( 'Support Ticket', 'doliconnect')."</a>";
+print "'>".__( 'My support tickets', 'doliconnect')."</a>";
 }
 
 function tickets_module( $url ) {
@@ -2345,7 +2345,7 @@ $request = "/tickets?socid=".doliconnector($current_user, 'fk_soc')."&sortfield=
 $listticket = callDoliApi("GET", $request, null, dolidelay('ticket', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 //print $listticket;
 
-print '<div class="card shadow-sm"><div class="card-header">'.__( 'Support Ticket', 'doliconnect');
+print '<div class="card shadow-sm"><div class="card-header">'.__( 'My support tickets', 'doliconnect');
 print '<a class="float-end text-decoration-none" href="'.esc_url( add_query_arg( 'action', 'create', $url) ).'"><i class="fas fa-plus-circle"></i> '.__( 'Create ticket', 'doliconnect').'</a>';  
 print '</div><ul class="list-group list-group-flush">';  
 

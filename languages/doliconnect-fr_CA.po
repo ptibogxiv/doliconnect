@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2022-07-29 23:39+0200\n"
-"PO-Revision-Date: 2022-07-29 23:39+0200\n"
+"POT-Creation-Date: 2022-07-30 09:43+0200\n"
+"PO-Revision-Date: 2022-07-30 09:43+0200\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_CA\n"
@@ -157,8 +157,8 @@ msgstr "une adresse IP par ligne sans espace ni virgule"
 #: admin/admin.php:447 admin/admin.php:459 admin/admin.php:491
 #: admin/admin.php:504 admin/admin.php:519 admin/admin.php:530
 #: admin/admin.php:541 admin/admin.php:554 admin/admin.php:566
-#: dashboard/dashboard.php:2260 dashboard/dashboard.php:2279
-#: dashboard/dashboard.php:2296 dashboard/dashboard.php:2314
+#: dashboard/dashboard.php:2259 dashboard/dashboard.php:2278
+#: dashboard/dashboard.php:2295 dashboard/dashboard.php:2313
 #: dashboard/templates.php:684 dashboard/templates.php:1056
 #: functions/tools.php:601 functions/tools.php:708
 msgid "- Select -"
@@ -449,7 +449,7 @@ msgstr "Modifier le contact"
 #: dashboard/dashboard.php:299 dashboard/dashboard.php:322
 #: dashboard/dashboard.php:532 dashboard/dashboard.php:665
 #: dashboard/dashboard.php:981 dashboard/dashboard.php:1253
-#: dashboard/dashboard.php:2179 dashboard/dashboard.php:2250
+#: dashboard/dashboard.php:2178 dashboard/dashboard.php:2249
 #: dashboard/templates.php:256 dashboard/templates.php:274
 #: dashboard/templates.php:400
 msgid "Back"
@@ -498,7 +498,7 @@ msgid "Proposal %s"
 msgstr "Proposition %s"
 
 #: dashboard/dashboard.php:534 dashboard/dashboard.php:1386
-#: dashboard/dashboard.php:1643 dashboard/dashboard.php:2181
+#: dashboard/dashboard.php:1643 dashboard/dashboard.php:2180
 msgid "Date of creation"
 msgstr "Date de création"
 
@@ -836,8 +836,8 @@ msgstr "Pas d’adhésion"
 msgid "nothing"
 msgstr "rien"
 
-#: dashboard/dashboard.php:1782 dashboard/dashboard.php:2258
-#: dashboard/dashboard.php:2270 dashboard/templates.php:682
+#: dashboard/dashboard.php:1782 dashboard/dashboard.php:2257
+#: dashboard/dashboard.php:2269 dashboard/templates.php:682
 #: dashboard/templates.php:694 functions/tools.php:595 functions/tools.php:1333
 msgid "Type"
 msgstr "Type"
@@ -941,163 +941,163 @@ msgid "No linked member"
 msgstr "Aucun membre lié"
 
 #: dashboard/dashboard.php:2094 dashboard/dashboard.php:2100
-msgid "Your sales representatives"
-msgstr "Vos représentants commerciaux"
+msgid "My sales representatives"
+msgstr "Mes représentants commerciaux"
 
-#: dashboard/dashboard.php:2109
+#: dashboard/dashboard.php:2126
 msgid "No sales representative"
 msgstr "Pas de représentant commercial"
 
-#: dashboard/dashboard.php:2149 dashboard/dashboard.php:2349
-msgid "Support Ticket"
-msgstr "Ticket d'assistance"
+#: dashboard/dashboard.php:2148 dashboard/dashboard.php:2348
+msgid "My support tickets"
+msgstr "Mes tickets d'assistance"
 
-#: dashboard/dashboard.php:2174
+#: dashboard/dashboard.php:2173
 msgid "Your message has been send."
 msgstr "Votre message a été envoyé."
 
-#: dashboard/dashboard.php:2179
+#: dashboard/dashboard.php:2178
 #, php-format
 msgid "Ticket %s"
 msgstr "Ticket %s"
 
-#: dashboard/dashboard.php:2182
+#: dashboard/dashboard.php:2181
 msgid "Type and category"
 msgstr "Type et catégorie"
 
-#: dashboard/dashboard.php:2183 dashboard/dashboard.php:2294
-#: dashboard/dashboard.php:2304
+#: dashboard/dashboard.php:2182 dashboard/dashboard.php:2293
+#: dashboard/dashboard.php:2303
 msgid "Severity"
 msgstr "Gravité"
 
-#: dashboard/dashboard.php:2185 dashboard/dashboard.php:2364
+#: dashboard/dashboard.php:2184 dashboard/dashboard.php:2363
 msgid "Deleted"
 msgstr "Supprimé"
 
-#: dashboard/dashboard.php:2186 dashboard/dashboard.php:2365
+#: dashboard/dashboard.php:2185 dashboard/dashboard.php:2364
 msgid "Closed"
 msgstr "Fermé"
 
-#: dashboard/dashboard.php:2187 dashboard/dashboard.php:2366
+#: dashboard/dashboard.php:2186 dashboard/dashboard.php:2365
 msgid "Waiting"
 msgstr "En attente"
 
-#: dashboard/dashboard.php:2188
+#: dashboard/dashboard.php:2187
 msgid "In progress"
 msgstr "En cours"
 
-#: dashboard/dashboard.php:2189 dashboard/dashboard.php:2368
+#: dashboard/dashboard.php:2188 dashboard/dashboard.php:2367
 msgid "Assigned"
 msgstr "Attribué"
 
-#: dashboard/dashboard.php:2190 dashboard/dashboard.php:2369
+#: dashboard/dashboard.php:2189 dashboard/dashboard.php:2368
 msgid "Answered"
 msgstr "Répondus"
 
-#: dashboard/dashboard.php:2191 dashboard/dashboard.php:2370
+#: dashboard/dashboard.php:2190 dashboard/dashboard.php:2369
 msgid "Read"
 msgstr "Lu"
 
-#: dashboard/dashboard.php:2192 dashboard/dashboard.php:2371
+#: dashboard/dashboard.php:2191 dashboard/dashboard.php:2370
 msgid "Unread"
 msgstr "Non lu"
 
-#: dashboard/dashboard.php:2196 dashboard/dashboard.php:2328
+#: dashboard/dashboard.php:2195 dashboard/dashboard.php:2327
 msgid "Subject"
 msgstr "Sujet"
 
-#: dashboard/dashboard.php:2197
+#: dashboard/dashboard.php:2196
 msgid "Initial message"
 msgstr "Message initial"
 
-#: dashboard/dashboard.php:2207 dashboard/dashboard.php:2331
+#: dashboard/dashboard.php:2206 dashboard/dashboard.php:2330
 #: dashboard/templates.php:699 dashboard/templates.php:1824
 msgid "Message"
 msgstr "Message"
 
-#: dashboard/dashboard.php:2209
+#: dashboard/dashboard.php:2208
 msgid "Answer"
 msgstr "Réponse"
 
-#: dashboard/dashboard.php:2243
+#: dashboard/dashboard.php:2242
 msgid "Your ticket has been submitted."
 msgstr "Votre billet a été soumis."
 
-#: dashboard/dashboard.php:2250 dashboard/dashboard.php:2350
+#: dashboard/dashboard.php:2249 dashboard/dashboard.php:2349
 msgid "Create ticket"
 msgstr "Créer un ticket"
 
-#: dashboard/dashboard.php:2277 dashboard/dashboard.php:2287
+#: dashboard/dashboard.php:2276 dashboard/dashboard.php:2286
 msgid "Category"
 msgstr "Catégorie"
 
-#: dashboard/dashboard.php:2312 dashboard/dashboard.php:2321
+#: dashboard/dashboard.php:2311 dashboard/dashboard.php:2320
 msgid "Sales representative"
 msgstr "Représentant commercial"
 
-#: dashboard/dashboard.php:2335 dashboard/templates.php:708
+#: dashboard/dashboard.php:2334 dashboard/templates.php:708
 msgid "Send"
 msgstr "Envoyer"
 
-#: dashboard/dashboard.php:2367
+#: dashboard/dashboard.php:2366
 msgid "Progress"
 msgstr "Progression"
 
-#: dashboard/dashboard.php:2375
+#: dashboard/dashboard.php:2374
 msgid "No ticket"
 msgstr "Pas de billet"
 
-#: dashboard/dashboard.php:2394
+#: dashboard/dashboard.php:2393
 msgid "Settings of security"
 msgstr "Paramètres de sécurité"
 
-#: dashboard/dashboard.php:2424
+#: dashboard/dashboard.php:2423
 msgid "Settings & security"
 msgstr "Paramètres et sécurité"
 
-#: dashboard/dashboard.php:2429
+#: dashboard/dashboard.php:2428
 msgid "Receive a email notification at each connection"
 msgstr "Recevoir une notification par e-mail à chaque connexion"
 
-#: dashboard/dashboard.php:2434
+#: dashboard/dashboard.php:2433
 msgid "I would like to receive the newsletter"
 msgstr "Je voudrais recevoir le bulletin"
 
-#: dashboard/dashboard.php:2438
+#: dashboard/dashboard.php:2437
 msgid "I would like to receive the offers of our partners"
 msgstr "Je voudrais recevoir les offres de nos partenaires"
 
-#: dashboard/dashboard.php:2446
+#: dashboard/dashboard.php:2445
 msgid "Privacy policy"
 msgstr "Politique de confidentialité"
 
-#: dashboard/dashboard.php:2453 dashboard/dashboard.php:2461
+#: dashboard/dashboard.php:2452 dashboard/dashboard.php:2460
 msgid "Default language"
 msgstr "Langue par défaut"
 
-#: dashboard/dashboard.php:2454 dashboard/dashboard.php:2463
-#: dashboard/dashboard.php:2464
+#: dashboard/dashboard.php:2453 dashboard/dashboard.php:2462
+#: dashboard/dashboard.php:2463
 msgid "Default / Browser language"
 msgstr "Langue par défaut / Navigateur"
 
-#: dashboard/dashboard.php:2479 dashboard/dashboard.php:2481
-#: dashboard/dashboard.php:2490
+#: dashboard/dashboard.php:2478 dashboard/dashboard.php:2480
+#: dashboard/dashboard.php:2489
 msgid "Default currency"
 msgstr "Monnaie par défaut"
 
-#: dashboard/dashboard.php:2501
+#: dashboard/dashboard.php:2500
 msgid "Enabled"
 msgstr "Activé"
 
-#: dashboard/dashboard.php:2502
+#: dashboard/dashboard.php:2501
 msgid "Primary"
 msgstr "Primaire"
 
-#: dashboard/dashboard.php:2503 functions/product.php:834
+#: dashboard/dashboard.php:2502 functions/product.php:834
 msgid "Description"
 msgstr "Description"
 
-#: dashboard/dashboard.php:2594 functions/tools.php:2922
+#: dashboard/dashboard.php:2593 functions/tools.php:2922
 msgid "Privacy"
 msgstr "Confidentialité"
 
@@ -1485,7 +1485,7 @@ msgstr ""
 msgid "Validate"
 msgstr "Valider"
 
-#: doliconnect.php:458
+#: doliconnect.php:455
 msgid "Every 15 minutes"
 msgstr "Chaque 15 minutes"
 
@@ -2780,6 +2780,9 @@ msgstr "ptibogxiv"
 #. Author URI of the plugin/theme
 msgid "https://www.ptibogxiv.net/en"
 msgstr "https://www.ptibogxiv.net/en"
+
+#~ msgid "Your sales representatives"
+#~ msgstr "Vos représentants commerciaux"
 
 #~ msgid "Help & Contact"
 #~ msgstr "Aide et contact"
