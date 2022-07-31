@@ -3059,17 +3059,17 @@ print "<input type='hidden' value='$redirect_to' name='redirect_to'></div>";
 
 print "".doliloading('loginmodal-form');
 
-print '</div><div id="Footerloginmodal-form" class="modal-footer">';
+print '</div><div id="Footerloginmodal-form" class="modal-footer flex-nowrap p-0">';
 if ( get_site_option('doliconnect_mode') == 'one' && function_exists('switch_to_blog') ) {
 switch_to_blog(1);
 } 
 if ((!is_multisite() && get_option( 'users_can_register' )) || ((!is_multisite() && get_option( 'dolicustsupp_can_register' )) || ((get_option( 'dolicustsupp_can_register' ) || get_option('users_can_register') == '1') && (get_site_option( 'registration' ) == 'user' || get_site_option( 'registration' ) == 'all')))) {
-print "<a class='btn btn-secondary' href='".wp_registration_url(get_permalink())."' role='button' title='".__( 'Create an account', 'doliconnect')."'><small>".__( 'Create an account', 'doliconnect')."</small></a>";
+print "<a class='btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0 border-end' href='".wp_registration_url(get_permalink())."' role='button' title='".__( 'Create an account', 'doliconnect')."'><small>".__( 'Create an account', 'doliconnect')."</small></a>";
 }
 if (get_site_option('doliconnect_mode')=='one') {
 restore_current_blog();
 }
-print '<div class="d-grid gap-2"><button class="btn btn-outline-secondary" type="submit" value="submit">'.__( 'Sign in', 'doliconnect').'</button></div>';
+print '<button class="btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0" type="submit" value="submit"><strong>'.__( 'Sign in', 'doliconnect').'</strong></button>';
 print '</form></div>';
 print '</div></div></div>';
 
