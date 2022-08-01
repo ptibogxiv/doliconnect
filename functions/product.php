@@ -115,9 +115,9 @@ if ( isset($order->lines) && $order->lines != null ) {
 $ln = '<table class="table table-hover table-sm"><thead><tr>
 <th scope="col" width="40px">'.__( 'Qty', 'doliconnect').'</th><th scope="col">'.__( 'Item', 'doliconnect').'</th></tr></thead><tbody>';
 foreach ( $order->lines as $line ) { 
-$ln .= '<tr><td scope="row">'.$line->qty.'</td><td>'.doliproduct($line, 'product_label');
+$ln .= '<tr><td scope="row">'.$line->qty.'</td><td><small>'.doliproduct($line, 'product_label');
 if ( !empty(get_option('doliconnectbeta')) ) $ln .= '<div class="float-end"><i class="fa-solid fa-trash-can"></i></div>';
-$ln .= '</td></tr>';
+$ln .= '</small></td></tr>';
 }
 $ln .= '</tbody><tfoot><tr><th colspan="2" class="table-active">'.__( 'Total to be paid', 'doliconnect').' '.doliprice($order, 'ttc', isset($order->multicurrency_code) ? $order->multicurrency_code : null).'</th></tr></tfoot></table><div class="dropdown mt-3">
 <div class="d-grid gap-2">';
