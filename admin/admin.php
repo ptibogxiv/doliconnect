@@ -128,11 +128,6 @@ function doliconnect_network_page() {
 
 /*** License activate button was clicked ***/
     if (isset($_REQUEST['activate_license'])) {
-    
-if ( add_site_option( 'license_key_doliconnect-pro', sanitize_text_field($_REQUEST['license_key_doliconnect-pro'])) ) {
-} else {
-update_site_option('license_key_doliconnect-pro', sanitize_text_field($_REQUEST['license_key_doliconnect-pro'])); 
-}
 if ( add_site_option( 'dolibarr_public_url', esc_url_raw($_REQUEST['dolibarr_public_url'])) ) {
 } else {
 update_site_option('dolibarr_public_url', esc_url_raw($_REQUEST['dolibarr_public_url']) );
@@ -176,14 +171,6 @@ $dolibarr = callDoliApi("GET", "/status", null, -5 * MINUTE_IN_SECONDS);
     <p>Doliconnector <?php echo constant("DOLIBARR_LEGAL_VERSION"); ?> minimum requis à <a href='https://github.com/ptibogxiv/doliconnector/releases' target='_blank'>télécharger ici</a> pour lier WordPress à Dolibarr</p>
     <form action="" method="post">
         <table class="form-table" width="100%">
-            <tr>
-                <th style="width:150px;"><label for="license_key_doliconnect-pro"><?php _e('License Doliconnect', 'doliconnect') ?></label></th>
-                <td ><input class="regular-text" type="text" id="license_key_doliconnect-pro" name="license_key_doliconnect-pro" value="<?php if ( is_plugin_active( 'doliconnect-pro/doliconnect-pro.php' ) ) {
-echo get_site_option('license_key_doliconnect-pro');?> " <?php } else { echo "";?>" disabled <?php } ?> > <b>PRO</b> 
-                </td>
-            </tr>
-                      
-            
             <tr>
                 <th style="width:150px;"><label for="dolibarr_public_url">DOLIBARR URL</label></th>
                 <td ><input class="regular-text" type="text" id="dolibarr_public_url" name="dolibarr_public_url"  value="<?php echo get_site_option('dolibarr_public_url'); ?>" required>/api/index.php<br>ex: https://dolibarr.example.com</td>
