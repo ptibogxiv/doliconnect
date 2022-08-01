@@ -1543,7 +1543,7 @@ var qty = $(this).val();
           data: {
             'action': 'dolicart_request',
             'dolicart-nonce': '".wp_create_nonce( 'dolicart-nonce')."',
-            'action_cart': 'update_cart',
+            'case': 'update_cart',
             'productid': '".$line->fk_product."',
             'qty': qty,
             'price': '".$line->subprice."' 
@@ -1578,7 +1578,7 @@ var qty = $(this).val();
           data: {
             'action': 'dolicart_request',
             'dolicart-nonce': '".wp_create_nonce( 'dolicart-nonce')."',
-            'action_cart': 'update_cart',
+            'case': 'update_cart',
             'productid': '".$line->fk_product."',
             'qty': qty,
             'price': '".$line->subprice."' 
