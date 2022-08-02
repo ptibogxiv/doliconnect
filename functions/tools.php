@@ -198,7 +198,7 @@ $avatar = $imgy->generate_filename($size,$up_dir['basedir']."/doliconnect/".$mod
 $imgy->save($avatar);
 }
 $image .= "<img src='".$up_dir['baseurl'].'/doliconnect/'.$module.$dir.'/'.explode('.', $img->relativename, 2)[0].$size.'.'.explode('.', $img->relativename, 2)[1]."' class='";
-if (empty($options['limit'])) {
+if (empty($options['class'])) {
 $image .= "img-fluid card-img";
 } else {
 $image .=  $class;
@@ -206,7 +206,7 @@ $image .=  $class;
 $image .= "' alt='".$img->relativename."' loading='lazy'>";
 
 } else {
-$image .= "<i class='fa fa-cube fa-fw fa-2x'></i>";
+  $image .= '<svg class="bd-placeholder-img img-fluid rounded-start" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect><text x="50%" y="50%" fill="#dee2e6" dy=".3em">no image</text></svg>';
 }
 } else {
 $picture = '/doliconnect/'.$module.$dir.'/'.$img->relativename;
@@ -233,7 +233,9 @@ $image .= "</div>";
 }
 if (empty($options['limit'])) $image .= "</div>";
 } elseif ($module == 'product' || $module == 'category') {
-$image .= "<div class='col'><i class='fa fa-cube fa-fw fa-2x'></i></div>";
+$image .= "<div class='col'>";
+$image .= '<svg class="bd-placeholder-img img-fluid rounded-start" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect><text x="50%" y="50%" fill="#dee2e6" dy=".3em">no image</text></svg>';
+$image .= "</div>";
 }
 $image .= "</div>";
 } else {
@@ -258,10 +260,10 @@ $file=$up_dir['basedir'].'/doliconnect/'.$module.'/'.$id;
 file_put_contents($file, base64_decode($imgj['content']));
 $image = "<img src='".$up_dir['baseurl'].'/doliconnect/'.$module.'/'.$id."' class='".$class."' alt='".$imgj['filename']."' loading='lazy'>"; 
 } else {
-$image = "<i class='fa fa-cube fa-fw fa-2x'></i>";
+  $image = '<svg class="bd-placeholder-img img-fluid rounded-start" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect><text x="50%" y="50%" fill="#dee2e6" dy=".3em">no image</text></svg>';
 }
 } else {
-$image = "<img src='".$up_dir['baseurl'].'/doliconnect/'.$module.'/'.$id."' class='".$class."' alt='".$up_dir['baseurl'].'/doliconnect/'.$module.'/'.$id."' loading='lazy'>";
+  $image = "<img src='".$up_dir['baseurl'].'/doliconnect/'.$module.'/'.$id."' class='".$class."' alt='".$up_dir['baseurl'].'/doliconnect/'.$module.'/'.$id."' loading='lazy'>";
 }
 }
 return $image;
