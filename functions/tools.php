@@ -206,7 +206,7 @@ $image .=  $class;
 $image .= "' alt='".$img->relativename."' loading='lazy'>";
 
 } else {
-  $image .= '<svg class="bd-placeholder-img '.$class.'" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect><text x="50%" y="50%" fill="#dee2e6" dy=".3em">no image</text></svg>';
+  $image .= '<svg class="bd-placeholder-img '.$class.'" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect></svg>';
 }
 } else {
 $picture = '/doliconnect/'.$module.$dir.'/'.$img->relativename;
@@ -234,7 +234,7 @@ $image .= "</div>";
 if (empty($options['limit'])) $image .= "</div>";
 } elseif ($module == 'product' || $module == 'category') {
 $image .= "<div class='col'>";
-$image .= '<svg class="bd-placeholder-img '.$class.'" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect><text x="50%" y="50%" fill="#dee2e6" dy=".3em">no image</text></svg>';
+$image .= '<svg class="bd-placeholder-img '.$class.'" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect></svg>';
 $image .= "</div>";
 }
 $image .= "</div>";
@@ -260,7 +260,7 @@ $file=$up_dir['basedir'].'/doliconnect/'.$module.'/'.$id;
 file_put_contents($file, base64_decode($imgj['content']));
 $image = "<img src='".$up_dir['baseurl'].'/doliconnect/'.$module.'/'.$id."' class='".$class."' alt='".$imgj['filename']."' loading='lazy'>"; 
 } else {
-  $image = '<svg class="bd-placeholder-img '.$class.'" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect><text x="50%" y="50%" fill="#dee2e6" dy=".3em">no image</text></svg>';
+  $image = '<svg class="bd-placeholder-img '.$class.'" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect></svg>';
 }
 } else {
   $image = "<img src='".$up_dir['baseurl'].'/doliconnect/'.$module.'/'.$id."' class='".$class."' alt='".$up_dir['baseurl'].'/doliconnect/'.$module.'/'.$id."' loading='lazy'>";
