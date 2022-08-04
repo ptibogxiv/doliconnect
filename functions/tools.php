@@ -294,8 +294,8 @@ $cats .= "</a>";
 $cats .= "</span>";
 }
 }
-$cats .= "</small>";
 }
+$cats .= "</small>";
 }
 }
 return $cats;
