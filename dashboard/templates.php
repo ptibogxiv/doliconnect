@@ -577,7 +577,9 @@ function dolifaq_display($content) {
     print $postfaq->question;
     print '</button></h2>
     <div id="flush-collapseDolifaq'.$postfaq->id.'" class="accordion-collapse collapse" aria-labelledby="flush-headingDolifaq'.$postfaq->id.'" data-bs-parent="#accordionDolifaq">
-    <div class="accordion-body">'.$postfaq->answer.'</div></div></div>';
+    <div class="accordion-body">'.$postfaq->answer;
+    if (!empty(doliconnect_categories('knowledgemanagement', $postfaq, doliconnecturl('dolifaq')))) print '<br>'.doliconnect_categories('knowledgemanagement', $postfaq, doliconnecturl('dolifaq'));
+    print '</div></div></div>';
     }}
   print '</div>';
 
