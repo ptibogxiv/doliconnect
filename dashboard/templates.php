@@ -561,7 +561,7 @@ function dolifaq_display($content) {
         $limit=100;
         if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']-1); }  else { $page = 0; }
         $request = "/knowledgemanagement/knowledgerecords?sortfield=t.rowid&sortorder=ASC&limit=".$limit."&page=".$page."&sqlfilters=(t.status%3D'1')%20and%20((t.lang%3D'0')or(t.lang%3D'fr_FR'))"; 
-        if (isset($_GET['category']) && is_numeric(esc_attr($_GET['category'])) && esc_attr($_GET['category']) > 0 ) $request .= "";
+        if (isset($_GET['category']) && is_numeric(esc_attr($_GET['category'])) && esc_attr($_GET['category']) > 0 ) $request .= "&category=".esc_attr($_GET['category']);
         $listfaq = callDoliApi("GET", $request, null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
         $url = doliconnecturl('dolifaq');
 
