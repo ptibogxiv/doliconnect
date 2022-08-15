@@ -131,6 +131,7 @@ function doliuserinfos_request(){
 		update_user_meta( $ID, 'billing_type', sanitize_text_field($thirdparty['morphy']));
 		if ( $thirdparty['morphy'] == 'mor' ) { update_user_meta( $ID, 'billing_company', $thirdparty['name']); }
 		update_user_meta( $ID, 'billing_birth', $thirdparty['birth']);
+		if ( isset($thirdparty['locale']) ) { update_user_meta( $ID, 'locale', sanitize_text_field($thirdparty['locale']) ); }  
 		
 		do_action('wp_dolibarr_sync', $thirdparty);
 		$response = [
@@ -431,17 +432,6 @@ if ( wp_verify_nonce( trim($_POST['dolisettings-nonce']), 'dolisettings-nonce') 
 if ( isset($_POST['loginmailalert'])) { update_user_meta( $ID, 'loginmailalert', sanitize_text_field($_POST['loginmailalert']) ); } else { delete_user_meta($ID, 'loginmailalert'); }
 if ( isset($_POST['optin1'])) { update_user_meta( $ID, 'optin1', sanitize_text_field($_POST['optin1']) ); } else { delete_user_meta($ID, 'optin1'); }
 if ( isset($_POST['optin2'])) { update_user_meta( $ID, 'optin2', sanitize_text_field($_POST['optin2']) ); } else { delete_user_meta($ID, 'optin2'); }
-if ( isset($_POST['locale']) ) { update_user_meta( $ID, 'locale', sanitize_text_field($_POST['locale']) ); }  
-//if (isset($_POST['multicurrency_code'])) { update_user_meta( $ID, 'multicurrency_code', sanitize_text_field($_POST['multicurrency_code']) ); }
-
-if ( doliconnector($current_user, 'fk_soc') > 0 ) {
-
-$info = array(
-      'default_lang' => isset($_POST['locale'])?sanitize_text_field($_POST['locale']):null,
-      'multicurrency_code' => isset($_POST['multicurrency_code'])?sanitize_text_field($_POST['multicurrency_code']):$monnaie,
-            );
-$thirparty = callDoliApi("PUT", "/thirdparties/".doliconnector($current_user, 'fk_soc'), $info, dolidelay('thirdparty', true));
-}
 		
 wp_send_json_success('success');
 } else {

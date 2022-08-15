@@ -941,6 +941,49 @@ print '</div><div class="row g-2">';
 
 print "</div></li>";
 
+print '<li class="list-group-item list-group-item-light list-group-item-action"><div class="form-floating mb-2">';
+if ( function_exists('pll_the_languages') ) {
+print '<select class="form-select" id="'.$idobject.'[default_lang]" name="'.$idobject.'[default_lang]" aria-label="'.__( 'Default language', 'doliconnect').'">';
+print "<option value=''>".__( 'Default / Browser language', 'doliconnect')."</option>";
+$translations = pll_the_languages( array( 'raw' => 1 ) );
+foreach ($translations as $key => $value) {
+print "<option value='".str_replace("-","_",$value['locale'])."' ";
+if  ( $current_user->locale == str_replace("-","_",$value['locale']) ) {print " selected";}
+print ">".$value['name']."</option>";
+}
+print '</select><label for="'.$idobject.'[default_lang]">'.__( 'Default language', 'doliconnect').'</label>';
+} else {
+print '<input type="text" class="form-control" id="'.$idobject.'[default_lang]" value="'.__( 'Default / Browser language', 'doliconnect').'" readonly>
+<label for="'.$idobject.'[default_lang]">'.__( 'Default / Browser language', 'doliconnect').'</label>';
+}
+print '</div>';
+
+if ( doliconnector($current_user, 'fk_soc') > 0 ) {
+$thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+}
+$currencies = callDoliApi("GET", "/setup/dictionary/currencies?multicurrency=1&sortfield=code_iso&sortorder=ASC&limit=100&active=1", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+
+print '<div class="form-floating">';
+$monnaie = doliconst("MAIN_MONNAIE", dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$testvalue='1.99';
+$cur = (!empty($thirdparty->multicurrency_code) ? $thirdparty->multicurrency_code : $monnaie );
+if ( !!empty(doliconst('MAIN_MODULE_MULTICURRENCY', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))) || !doliversion('11.0.0') ) { 
+print '<input type="text" class="form-control" id="'.$idobject.'[multicurrency_code]" value="'.$cur." / ".doliprice($testvalue, null, $cur).'" readonly>
+<label for="'.$idobject.'[multicurrency_code]">'.__( 'Default currency', 'doliconnect').'</label>';
+} else {
+print '<select class="form-select" id="'.$idobject.'[multicurrency_code]" name="'.$idobject.'[multicurrency_code]" aria-label="'.__( 'Default currency', 'doliconnect').'">';
+if ( !isset( $currencies->error ) && $currencies != null && !empty(doliconst('MAIN_MODULE_MULTICURRENCY', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))) && doliversion('11.0.0')) {
+foreach ( $currencies as $currency ) { 
+print "<option value='".$currency->code_iso."' ";
+if ( $currency->code_iso == $thirdparty->multicurrency_code ) { print " selected"; }
+print ">".$currency->code_iso." / ".doliprice(1.99*$currency->rate, null, $currency->code_iso)."</option>";
+}} else {
+print "<option value='".$cur."' selected>".$cur." / ".doliprice($testvalue, null, $cur)."</option>";
+}
+print '</select><label for="'.$idobject.'[multicurrency_code]">'.__( 'Default currency', 'doliconnect').'</label>';
+}
+print '</div></li>';
+
 if( has_filter('mydoliconnectuserform') && !in_array($mode, array('donation')) ) {
 print "<li class='list-group-item list-group-item-light list-group-item-action'>";
 print apply_filters('mydoliconnectuserform', $object, $idobject);

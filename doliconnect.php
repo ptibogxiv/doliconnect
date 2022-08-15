@@ -421,12 +421,13 @@ if (!empty($user)) {
 $current_user = $user;
 }
 
-if (NULL != doliconnector($current_user, 'fk_member')) { 
-$adherent = callDoliApi("PUT", "/adherentsplus/".doliconnector($current_user, 'fk_member'), $object, 0);
-//update_user_meta( $current_user->ID, 'billing_birth', $current_user->billing_birth);
-}
 if ( doliconnector($current_user, 'fk_soc') > 0 ) {
 $thirparty = callDoliApi("PUT", "/thirdparties/".doliconnector($current_user, 'fk_soc'), $object, 0);
+}
+
+if (NULL != doliconnector($current_user, 'fk_member')) { 
+$adherent = callDoliApi("PUT", "/members/".doliconnector($current_user, 'fk_member'), $object, 0);
+//update_user_meta( $current_user->ID, 'billing_birth', $current_user->billing_birth);
 }
 
 }
