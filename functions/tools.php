@@ -948,7 +948,7 @@ print "<option value=''>".__( 'Default / Browser language', 'doliconnect')."</op
 $translations = pll_the_languages( array( 'raw' => 1 ) );
 foreach ($translations as $key => $value) {
 print "<option value='".str_replace("-","_",$value['locale'])."' ";
-if  ( $current_user->locale == str_replace("-","_",$value['locale']) ) {print " selected";}
+if  ( $object->default_lang == str_replace("-","_",$value['locale']) || (empty($object->default_lang) && $current_user->locale == str_replace("-","_",$value['locale'])) ) {print " selected";}
 print ">".$value['name']."</option>";
 }
 print '</select><label for="'.$idobject.'[default_lang]">'.__( 'Default language', 'doliconnect').'</label>';
