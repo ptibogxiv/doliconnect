@@ -941,7 +941,7 @@ print '</div><div class="row g-2">';
 
 print "</div></li>";
 
-print '<li class="list-group-item list-group-item-light list-group-item-action"><div class="form-floating">';
+print '<li class="list-group-item list-group-item-light list-group-item-action"><div class="row g-2"><div class="col"><div class="form-floating">';
 if ( function_exists('pll_the_languages') ) {
 print '<select class="form-select" id="'.$idobject.'[default_lang]" name="'.$idobject.'[default_lang]" aria-label="'.__( 'Default language', 'doliconnect').'">';
 print "<option value=''>".__( 'Default / Browser language', 'doliconnect')."</option>";
@@ -956,12 +956,12 @@ print '</select><label for="'.$idobject.'[default_lang]">'.__( 'Default language
 print '<input type="text" class="form-control" id="'.$idobject.'[default_lang]" value="'.__( 'Default / Browser language', 'doliconnect').'" readonly>
 <label for="'.$idobject.'[default_lang]">'.__( 'Default / Browser language', 'doliconnect').'</label>';
 }
-print '</div>';
+print '</div></div>';
 
 $currencies = callDoliApi("GET", "/setup/dictionary/currencies?multicurrency=1&sortfield=code_iso&sortorder=ASC&limit=100&active=1", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 if ( !in_array($mode, array('contact')) ) {
-print '<div class="form-floating">';
+print '<div class="col-12 col-md"><div class="form-floating">';
 $monnaie = doliconst("MAIN_MONNAIE", dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 $testvalue='1.99';
 $cur = (!empty($object->multicurrency_code) ? $object->multicurrency_code : $monnaie );
@@ -980,9 +980,9 @@ print "<option value='".$cur."' selected>".$cur." / ".doliprice($testvalue, null
 }
 print '</select><label for="'.$idobject.'[multicurrency_code]">'.__( 'Default currency', 'doliconnect').'</label>';
 }
-print '</div>';
+print '</div></div>';
 }
-print '</li>';
+print '</div></li>';
 
 if( has_filter('mydoliconnectuserform') && !in_array($mode, array('donation')) ) {
 print "<li class='list-group-item list-group-item-light list-group-item-action'>";
