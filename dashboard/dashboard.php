@@ -77,7 +77,7 @@ if ( doliconnector($current_user, 'fk_member') > 0 ) {
 $data = [
     'photo' => ''
 	];
-$adherent = callDoliApi("PUT", "/adherentsplus/".doliconnector($current_user, 'fk_member'), $data, dolidelay('member'));
+$adherent = callDoliApi("PUT", "/members/".doliconnector($current_user, 'fk_member'), $data, dolidelay('member'));
 }
 
 } elseif ( $_FILES['inputavatar']['tmp_name'] != null ) {
@@ -194,7 +194,7 @@ if ( doliconnector($current_user, 'fk_member') > 0 ) {
 $data = [
     'photo' => 'avatar.jpg'
 	];
-$adherent = callDoliApi("PUT", "/adherentsplus/".doliconnector($current_user, 'fk_member'), $data, dolidelay('member'));
+$adherent = callDoliApi("PUT", "/members/".doliconnector($current_user, 'fk_member'), $data, dolidelay('member'));
 }
 
 } else {
@@ -470,8 +470,6 @@ $request = "/wishlist?sortfield=t.rang&sortorder=ASC&thirdparty_ids=".doliconnec
 $wishlist = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 if ( isset ($_POST['delete_wish']) && $_POST['delete_wish'] > 0 ) {
-//$memberv = callDoliApi("GET", "/adherentsplus/".esc_attr($_POST['unlink_member']), null, 0);
-//if ( $memberv->socid == doliconnector($current_user, 'fk_soc') ) {
 // try deleting
 $delete = callDoliApi("DELETE", "/wishlist/".esc_attr($_POST['delete_wish']), null, 0);
 
@@ -1728,7 +1726,7 @@ global $wpdb,$current_user;
 
 $time = current_time( 'timestamp',1);
 
-$request = "/adherentsplus/".doliconnector($current_user, 'fk_member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)); 
+$request = "/members/".doliconnector($current_user, 'fk_member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)); 
 
 $productadhesion = doliconst("ADHERENT_PRODUCT_ID_FOR_SUBSCRIPTIONS", dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 //print $productadhesion;
@@ -1736,7 +1734,7 @@ $productadhesion = doliconst("ADHERENT_PRODUCT_ID_FOR_SUBSCRIPTIONS", dolidelay(
 if ( isset($_POST["update_membership"]) && function_exists('doliconnect_membership') ) {
 $typeadherent = isset($_POST["typeadherent"]) ? $_POST["typeadherent"] : null;
 $adherent = doliconnect_membership($current_user, $_POST["update_membership"], $typeadherent, dolidelay('member', true));
-$request = "/adherentsplus/".doliconnector($current_user, 'fk_member', true); 
+$request = "/members/".doliconnector($current_user, 'fk_member', true); 
 
 print dolialert('success', __( 'Your membership has been updated.', 'doliconnect'));
 
@@ -1989,7 +1987,7 @@ $linkedmember = callDoliApi("GET", $request, null, dolidelay('member', true));
 
 $memberv=$_POST['member'][''.$_POST['update_member'].''];
 
-$memberv = callDoliApi("PUT", "/adherentsplus/".esc_attr($_POST['update_member']), $memberv, dolidelay('member', true));
+$memberv = callDoliApi("PUT", "/members/".esc_attr($_POST['update_member']), $memberv, dolidelay('member', true));
 if ( false === $memberv ) {
 // fail deleting
 
