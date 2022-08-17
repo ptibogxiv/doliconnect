@@ -554,7 +554,7 @@ $wpdb->update( $wpdb->users, array( 'user_activation_key' => '' ), array( 'user_
 		'message' => dolialert('success', __( 'Your informations have been updated. Now, you will be log out and need to log in again.', 'doliconnect')),
 		'captcha' => dolicaptcha('dolirpw'),
 			];	
-	wp_send_json_success( $sresponse );
+	wp_send_json_success( $response );
 } elseif (is_user_logged_in() && isset( $current_user->ID ) && (!isset($pwd0) || (isset($pwd0) && ! wp_check_password( $pwd0, $current_user->user_pass, $current_user->ID ))) ) {
 	$response = [
 		'message' => dolialert('danger', __( 'Your actual password is incorrect', 'doliconnect')),
