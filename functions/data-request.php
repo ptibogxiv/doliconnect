@@ -444,42 +444,34 @@ add_action('wp_ajax_nopriv_dolifpw_request', 'dolifpw_request');
 
 function dolifpw_request(){
 	$gdrf_error     = array();
-	$gdrf_email     = sanitize_email( $_POST['user_email'] );
-	$gdrf_nonce     = esc_html( filter_input( INPUT_POST, 'dolifpw-nonce', FILTER_SANITIZE_STRING ) );
+	$fpw_email     = sanitize_email( $_POST['user_email'] );
 
-	if ( ! empty( $gdrf_email ) && ! empty( $_POST['btndolicaptcha'] ) ) {
-		if ( ! wp_verify_nonce( $gdrf_nonce, 'dolifpw-nonce' ) ) {
-			$gdrf_error[] = esc_html__( 'Security check failed, please refresh this page and try to submit the form again.', 'doliconnect');
-		} else {
+	if ( wp_verify_nonce( trim($_POST['dolifpw-nonce']), 'dolifpw') ) {
 			if ( !isset($_POST['btndolicaptcha']) || empty(wp_verify_nonce( $_POST['ctrldolicaptcha'], 'ctrldolicaptcha-'.$_POST['btndolicaptcha'])) ) {
 				$gdrf_error[] = esc_html__( 'Security check failed, invalid human verification field.', 'doliconnect');
 			}
-			if ( ! is_email( $gdrf_email ) ) {
+			if ( ! is_email( $fpw_email ) ) {
 				$gdrf_error[] = esc_html__( 'This is not a valid email address.', 'doliconnect');
 			}
-			if ( ! email_exists( $gdrf_email ) ) {
+			if ( ! email_exists( $fpw_email ) ) {
 				$gdrf_error[] = esc_html__( 'No account seems to be linked to this email address', 'doliconnect');
 			}
-		}
-	} else {
-		$gdrf_error[] = esc_html__( 'All fields are required.', 'doliconnect');
-	}
+
 	if ( empty( $gdrf_error ) ) {
 
-$email = $gdrf_email;
 $emailTo = get_option('tz_email');
 
 if (!isset($emailTo) || ($emailTo == '') ){
 $emailTo = get_option('admin_email');
 }
 
-$user = get_user_by( 'email', $email);   
+$user = get_user_by( 'email', $fpw_email);   
 $key = get_password_reset_key($user);
 
 $arr_params = array( 'action' => 'rpw', 'key' => $key, 'login' => $user->user_login);  
 $url = esc_url( add_query_arg( $arr_params, doliconnecturl('doliaccount')) );
 
-if ( defined("DOLICONNECT_DEMO_EMAIL") && ''.constant("DOLICONNECT_DEMO_EMAIL").'' == $email ) {
+if ( defined("DOLICONNECT_DEMO_EMAIL") && ''.constant("DOLICONNECT_DEMO_EMAIL").'' == $fpw_email ) {
 	$response = [
 		'message' => dolialert('danger', __( 'Reset password is not permitted for this account!', 'doliconnect')),
 		'captcha' => dolicaptcha('dolifpw'),
@@ -492,7 +484,7 @@ if ( defined("DOLICONNECT_DEMO_EMAIL") && ''.constant("DOLICONNECT_DEMO_EMAIL").
     $subject = "[$sitename] ".__( 'Reset Password', 'doliconnect');
     $body = __( 'A request to change your password has been made. You can change it via the single-use link below:', 'doliconnect')."<br><br><a href='".$url."'>".$url."</a><br><br>".__( 'If you have not made this request, please ignore this email.', 'doliconnect')."<br><br>".sprintf(__('Your %s\'s team', 'doliconnect'), $sitename)."<br>$siteurl";				
     $headers = array('Content-Type: text/html; charset=UTF-8');
-    $emailSent =  wp_mail($email, $subject, $body, $headers);
+    $emailSent =  wp_mail($fpw_email, $subject, $body, $headers);
 
 	if ( !is_wp_error( $emailSent )) {
 		$response = [
@@ -517,6 +509,15 @@ if ( defined("DOLICONNECT_DEMO_EMAIL") && ''.constant("DOLICONNECT_DEMO_EMAIL").
 		wp_send_json_error( $response );
 	}
 	die();
+
+} else {
+	$response = [
+		'message' => dolialert('danger', __( 'A security error occured', 'doliconnect')),
+		'captcha' => dolicaptcha('dolifpw'),
+			];
+	wp_send_json_error( $response ); 
+}
+
 }
 
 add_action('wp_ajax_dolirpw_request', 'dolirpw_request');
