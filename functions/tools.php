@@ -984,6 +984,12 @@ print '</div></div>';
 }
 print '</div></li>';
 
+if ( in_array($mode, array('contact')) && doliversion('17.0.0') ) {
+print '<li class="list-group-item list-group-item-light list-group-item-action"><div class="form-check form-switch"><input type="checkbox" class="form-check-input" name="'.$idobject.'[no_email] id="'.$idobject.'[no_email]" ';
+if ( empty($object->no_email) ) { print ' checked'; }        
+print '><label class="form-check-label w-100" for="'.$idobject.'[no_email]">'.__( 'I would like to receive the newsletter', 'doliconnect').'</label></div></li>';
+}
+
 if( has_filter('mydoliconnectuserform') && !in_array($mode, array('donation')) ) {
 print "<li class='list-group-item list-group-item-light list-group-item-action'>";
 print apply_filters('mydoliconnectuserform', $object, $idobject);
