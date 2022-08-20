@@ -118,6 +118,7 @@ function doliuserinfos_request(){
 
 		$thirdparty=$_POST['thirdparty'][''.doliconnector($current_user, 'fk_soc').''];
 		$thirdparty = dolisanitize($thirdparty);
+		//$thirdparty['no_email'] = !$thirdparty['no_email'];
 		
 		wp_update_user( array( 'ID' => $ID,
 		'user_email' => $thirdparty['email'],
@@ -143,6 +144,7 @@ function doliuserinfos_request(){
 
 		$thirdparty=$_POST['thirdparty'];
 		$thirdparty = dolisanitize($thirdparty);
+		//$thirdparty['no_email'] = !$thirdparty['no_email'];
 		$UserError = array();
 
 		if (email_exists($thirdparty['email'])) {
