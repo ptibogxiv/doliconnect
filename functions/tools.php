@@ -986,7 +986,7 @@ print '</div></li>';
 
 if ( in_array($mode, array('contact')) && doliversion('17.0.0') ) {
 print '<li class="list-group-item list-group-item-light list-group-item-action"><div class="form-check form-switch"><input type="checkbox" class="form-check-input" name="'.$idobject.'[no_email] id="'.$idobject.'[no_email]" ';
-if ( empty($object->no_email) ) { print ' checked'; }        
+if ( isset($object->no_email) && empty($object->no_email) ) { print ' checked'; }        
 print '><label class="form-check-label w-100" for="'.$idobject.'[no_email]">'.__( 'I would like to receive the newsletter', 'doliconnect').'</label></div></li>';
 }
 
