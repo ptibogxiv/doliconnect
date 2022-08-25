@@ -1440,7 +1440,7 @@ $payinfo = callDoliApi("POST", "/doliconnector/pay/".$module."/".$object->id, $d
 //print var_dump($payinfo);
   
 doliconnector($current_user, 'fk_order', true);
-$object = callDoliApi("GET", "/".$module."/".$object->id."?contact_list=0", null, dolidelay('cart', true));
+$object = callDoliApi("GET", "/".$module."/".$object->id."?contact_list=0", null, dolidelay('cart'));
 
 print "<div class='card shadow-sm' id='cart-form'><div class='card-body'><center><h2>".__( 'Your order has been registered', 'doliconnect')."</h2>".__( 'Reference', 'doliconnect').": ".$object->ref."<br>".__( 'Payment method', 'doliconnect').": ".$object->mode_reglement_code."<br><br>";
 $TTC = doliprice($object, 'ttc', isset($object->multicurrency_code) ? $object->multicurrency_code : null);
