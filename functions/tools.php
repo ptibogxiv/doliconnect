@@ -1435,10 +1435,10 @@ $product = callDoliApi("GET", "/products/".$line->fk_product."?includestockdata=
 
 $mstock = doliproductstock($product, $refresh, true);
 
-if ($mstock['stock'] <= 0 || ($mstock['stock'] < $mstock['step']) && is_page(doliconnectid('dolicart'))) {
+if ( $mstock['stock'] <= 0 && is_page(doliconnectid('dolicart'))) {
   $doliline .= "<li class='list-group-item list-group-item-danger list-group-item-action'>";
   define('dolilockcart', '1'); 
-} elseif ($mstock['stock'] > 0 && $mstock['stock'] < $line->qty && is_page(doliconnectid('dolicart'))) {
+} elseif ($mstock['stock'] < $line->qty && is_page(doliconnectid('dolicart')) && empty($product->type)) {
   $doliline .= "<li class='list-group-item list-group-item-warning list-group-item-action'>";
   define('dolilockcart', '1'); 
 } else {
