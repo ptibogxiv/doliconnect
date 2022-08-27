@@ -1062,9 +1062,9 @@ print " '".esc_attr($_GET['search'])."'";
 print "</center></div><div class='col-4 col-md-7'>".__( 'All items', 'doliconnect');
 } else {
 print doliconnect_image('category', $category->id, 1, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), $category->entity);
-print "</center></div><div class='col-4 col-md-7'>".doliproduct($category, 'label')."<br><small>".doliproduct($category, 'description').'</small>';
+print "</center></div><div class='col-4 col-md-6'>".doliproduct($category, 'label')."<br><small>".doliproduct($category, 'description').'</small>';
 }
-print '</div><div class="col-4 col-md-3"><div class="input-group">
+print '</div><div class="col-4 col-md-4"><div class="input-group">
   <span class="input-group-text" id="basic-addon1"><i class="fas fa-filter"></i></span><select id="selectbox" class="form-select form-select-sm" aria-label=".form-select-sm example" name="" onchange="javascript:location.href = this.value;">
     <option value="" disabled selected>'.__( '- Select -', 'doliconnect').'</option>
     <option value="'.esc_url( add_query_arg( array( 'search' =>isset($_GET['search'])?esc_attr($_GET['search']):null, 'category' => !empty($cat)?$cat:null, 'subcategory' => !empty($subcat)?$subcat:null, 'pg' => $page+1, 'field' => 'label', 'order' => 'ASC'), doliconnecturl('dolishop')) ).'"';
