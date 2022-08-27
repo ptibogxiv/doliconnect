@@ -1435,19 +1435,17 @@ $product = callDoliApi("GET", "/products/".$line->fk_product."?includestockdata=
 
 $mstock = doliproductstock($product, $refresh, true);
 
-if (empty($product->type) && empty(doliconst('STOCK_ALLOW_NEGATIVE_TRANSFER', $refresh)) && empty(doliconst('STOCK_MUST_BE_ENOUGH_FOR_ORDER', $refresh)) && isset($product->array_options->options_unlimitedsale) && !empty($product->array_options->options_unlimitedsale)) {
-  $doliline .= "<li class='list-group-item list-group-item-light'>";
-  //define('dolilockcart', '0');   
-} elseif ($mstock['stock'] <= 0 || ($mstock['stock'] < $mstock['step']) && is_page(doliconnectid('dolicart'))) {
-$doliline .= "<li class='list-group-item list-group-item-danger list-group-item-action'>";
-define('dolilockcart', '1'); 
+if ($mstock['stock'] <= 0 || ($mstock['stock'] < $mstock['step']) && is_page(doliconnectid('dolicart'))) {
+  $doliline .= "<li class='list-group-item list-group-item-danger list-group-item-action'>";
+  define('dolilockcart', '1'); 
 } elseif ($mstock['stock'] > 0 && $mstock['stock'] < $line->qty && is_page(doliconnectid('dolicart'))) {
-$doliline .= "<li class='list-group-item list-group-item-warning list-group-item-action'>";
-define('dolilockcart', '1'); 
+  $doliline .= "<li class='list-group-item list-group-item-warning list-group-item-action'>";
+    define('dolilockcart', '1'); 
 } else {
-$doliline .= "<li class='list-group-item list-group-item-light list-group-item-action'>";
-define('dolilockcart', '0'); 
-}    
+  $doliline .= "<li class='list-group-item list-group-item-light list-group-item-action'>";
+  define('dolilockcart', '0'); 
+}
+
 if ( $line->date_start != '' && $line->date_end != '' )
 {
 $start = wp_date('d/m/Y', $line->date_start);
