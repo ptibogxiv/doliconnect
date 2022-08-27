@@ -149,7 +149,7 @@ $stock .= "<a tabindex='0' id='popover-stock-".$product->id."' class='badge roun
 if ($nohtml) { 
   return $mstock;
 } else {
-  if (current_user_can('administrator') && !empty(get_option('doliconnectbeta'))) $stock .= var_dump($mstock);
+  //if (current_user_can('administrator') && !empty(get_option('doliconnectbeta'))) $stock .= var_dump($mstock);
   return $stock;
 }
 
@@ -332,12 +332,16 @@ $button .= '$(function() {
   $mstock = doliproductstock($product, $refresh, true);
 
   $button .= '<div class="input-group">';
+if ($mstock['stock'] <= 0 || $mstock['m2'] < $mstock['step'])  { 
+  $button .= '<input type="text" class="form-control form-control-sm" placeholder="'.__( 'Unavailable', 'doliconnect').'" aria-label="Quantity" value="'.__( 'Unavailable', 'doliconnect').'" style="text-align:center;" readonly>';
+} else {
   $button .= '<button class="btn btn-sm btn-warning" name="minus" value="minus" type="submit"><i class="fa-solid fa-minus" ></i></button>
   <input type="text" class="form-control form-control-sm" placeholder="" aria-label="Quantity" value="'.$mstock['qty'].'" style="text-align:center;" readonly>
   <button class="btn btn-sm btn-warning" name="plus" value="plus" type="submit"><i class="fa-solid fa-plus"></i></button>';
   if ( !empty(doliconst('MAIN_MODULE_WISHLIST')) && !empty(get_option('doliconnectbeta')) ) {
     $button .= '<button class="btn btn-sm btn-light" name="wish" value="wish" type="submit"><i class="fas fa-heart" style="color:Fuchsia"></i></button>';
   }
+}
   $button .= '</div>';
   $button .= '</form>';
 return $button;
