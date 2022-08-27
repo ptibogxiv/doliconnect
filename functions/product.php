@@ -23,7 +23,7 @@ $montant = $object;
 } else {
 $montant = 0;
 }
-if (empty((int)$montant)) {
+if ($montant == 0) {
 return __( 'Free', 'doliconnect');
 } else {
 //$objet->multicurrency_code
