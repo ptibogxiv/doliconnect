@@ -1440,10 +1440,10 @@ if ($mstock['stock'] <= 0 || ($mstock['stock'] < $mstock['step']) && is_page(dol
   define('dolilockcart', '1'); 
 } elseif ($mstock['stock'] > 0 && $mstock['stock'] < $line->qty && is_page(doliconnectid('dolicart'))) {
   $doliline .= "<li class='list-group-item list-group-item-warning list-group-item-action'>";
-    define('dolilockcart', '1'); 
+  define('dolilockcart', '1'); 
 } else {
   $doliline .= "<li class='list-group-item list-group-item-light list-group-item-action'>";
-  define('dolilockcart', '0'); 
+  //define('dolilockcart', '0'); 
 }
 
 if ( $line->date_start != '' && $line->date_end != '' )
