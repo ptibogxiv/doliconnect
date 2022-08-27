@@ -42,7 +42,9 @@ function doliproductstock($product, $refresh = false, $nohtml = false) {
 $mstock = array();
 $warehouse = doliconst('DOLICONNECT_ID_WAREHOUSE', $refresh);
 
-if (isset($product->stock_warehouse) && !empty($product->stock_warehouse) && !empty($warehouse) && $warehouse > 0) {
+if (!empty($product->type) && empty(doliconst('STOCK_SUPPORTS_SERVICES', $refresh))) {
+  $mstock['stock'] = 1;
+} elseif (isset($product->stock_warehouse) && !empty($product->stock_warehouse) && !empty($warehouse) && $warehouse > 0) {
   if (isset($product->stock_warehouse->$warehouse)) {
     $mstock['stock'] = min(array($product->stock_reel,$product->stock_warehouse->$warehouse->real,$product->stock_theorique));
   } else {
@@ -625,7 +627,7 @@ $button .= "<option value='$number' selected='selected'>x ".$number."</option>";
 } else {
 $button .= "<option value='$number' >x ".$number."</option>";
 }
-	}
+}
 }}
 $button .= "</select>";
 $button .= "<input type='hidden' name='product-add-vat' value='".$product->tva_tx."'><input type='hidden' name='product-add-remise_percent' value='".$discount."'><input type='hidden' name='product-add-price' value='".$price_ht."'>";

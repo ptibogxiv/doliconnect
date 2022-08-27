@@ -1433,24 +1433,15 @@ if ($refresh || $refreshstock) $refreshstock = true;
 $product = callDoliApi("GET", "/products/".$line->fk_product."?includestockdata=1&includesubproducts=true&includetrans=true", null, dolidelay('cart', $refreshstock));
 }
 
-$warehouse = doliconst('DOLICONNECT_ID_WAREHOUSE', $refresh);
-if (isset($product->stock_warehouse) && !empty($product->stock_warehouse) && !empty($warehouse) && $warehouse > 0) {
-if (isset($product->stock_warehouse->$warehouse)) {
-$realstock = min(array($product->stock_reel,$product->stock_warehouse->$warehouse->real,$product->stock_theorique));
-} else {
-$realstock = 0;
-}
-} else {
-$realstock = min(array($product->stock_theorique,$product->stock_reel));
-}
+$mstock = doliproductstock($product, $refresh, true);
 
 if (empty($product->type) && empty(doliconst('STOCK_ALLOW_NEGATIVE_TRANSFER', $refresh)) && empty(doliconst('STOCK_MUST_BE_ENOUGH_FOR_ORDER', $refresh)) && isset($product->array_options->options_unlimitedsale) && !empty($product->array_options->options_unlimitedsale)) {
   $doliline .= "<li class='list-group-item list-group-item-light'>";
   //define('dolilockcart', '0');   
-} elseif (( $realstock <= 0 || (isset($product->array_options->options_packaging) && $realstock < $product->array_options->options_packaging ) ) && is_page(doliconnectid('dolicart')) && empty($product->type) && !empty(doliconst('MAIN_MODULE_STOCK', $refresh)) && empty(doliconst('STOCK_ALLOW_NEGATIVE_TRANSFER', $refresh)) ) {
+} elseif (( $mstock['stock'] <= 0 || (isset($product->array_options->options_packaging) && $mstock['stock'] < $product->array_options->options_packaging ) ) && is_page(doliconnectid('dolicart')) && empty($product->type) && !empty(doliconst('MAIN_MODULE_STOCK', $refresh)) && empty(doliconst('STOCK_ALLOW_NEGATIVE_TRANSFER', $refresh)) ) {
 $doliline .= "<li class='list-group-item list-group-item-danger list-group-item-action'>";
 define('dolilockcart', '1'); 
-} elseif ($realstock < $line->qty && $realstock > 0 && is_page(doliconnectid('dolicart')) && empty($product->type) && !empty(doliconst('MAIN_MODULE_STOCK', $refresh)) && empty(doliconst('STOCK_ALLOW_NEGATIVE_TRANSFER', $refresh)) ) {
+} elseif ($mstock['stock'] < $line->qty && $realstock > 0 && is_page(doliconnectid('dolicart')) && empty($product->type) && !empty(doliconst('MAIN_MODULE_STOCK', $refresh)) && empty(doliconst('STOCK_ALLOW_NEGATIVE_TRANSFER', $refresh)) ) {
 $doliline .= "<li class='list-group-item list-group-item-warning list-group-item-action'>";
 define('dolilockcart', '1'); 
 } else {
@@ -1485,11 +1476,9 @@ $doliline .= '<p><small><i>'.(isset($dates) ? $dates : null).'</i></small></p>';
 } elseif (doliconnectid('dolishipping')) {
 $doliline .= '<small><a href="'.doliconnecturl('dolishipping').'">'.esc_html__( 'Shipping informations', 'doliconnect').'</a></small>';
 }
-if (empty($product->type) && empty(doliconst('STOCK_ALLOW_NEGATIVE_TRANSFER', $refresh)) && empty(doliconst('STOCK_MUST_BE_ENOUGH_FOR_ORDER', $refresh)) && isset($product->array_options->options_unlimitedsale) && !empty($product->array_options->options_unlimitedsale)) {
-  // 
-} elseif (( $realstock <= 0 || (isset($product->array_options->options_packaging) && $realstock < $product->array_options->options_packaging ) ) && is_page(doliconnectid('dolicart')) && $product->type == '0' && !empty(doliconst('MAIN_MODULE_STOCK', $refresh)) && empty(doliconst('STOCK_ALLOW_NEGATIVE_TRANSFER', $refresh)) ) {
+if ( $mstock['stock'] <= 0 && is_page(doliconnectid('dolicart'))) {
 $doliline .= "<b>".__( "Sorry, this product is no longer available. Please, delete it to finalize your order", 'doliconnect')."</b>";
-} elseif ($realstock < $line->qty && $realstock > 0 && is_page(doliconnectid('dolicart')) && $product->type == '0' && !empty(doliconst('MAIN_MODULE_STOCK', $refresh)) && empty(doliconst('STOCK_ALLOW_NEGATIVE_TRANSFER', $refresh)) ) {
+} elseif ($mstock['stock'] < $line->qty && is_page(doliconnectid('dolicart')) && empty($product->type)) {
 $doliline .= "<b>".__( "Sorry, this product is not available with this quantity. Please, change it to finalize your order", 'doliconnect')."</b>";
 }
 
@@ -1513,66 +1502,22 @@ $doliline .= '<h6 class="mb-1">x'.$line->qty.'</h6>';
 $doliline .= "<input type='hidden' name='updateorderproduct[".$line->fk_product."][product]' value='".$line->fk_product."'><input type='hidden' name='updateorderproduct[".$line->fk_product."][price]' value='".$line->subprice."'>";
 $doliline .= "<input type='hidden' name='updateorderproduct[".$line->fk_product."][remise_percent]' value='".$line->remise_percent."'><input type='hidden' name='updateorderproduct[".$line->fk_product."][date_start]' value='".$line->date_start."'><input type='hidden' name='updateorderproduct[".$line->fk_product."][date_end]' value='".$line->date_end."'>";
 $doliline .= "<div class='input-group input-group-sm mb-3'>";
-if ((empty($realstock) && !empty(doliconst('MAIN_MODULE_STOCK', $refresh)) && (empty($product->type) || (!empty($product->type) && doliconst('STOCK_SUPPORTS_SERVICES', $refresh)) )) )  { 
+if ((empty($mstock['stock']) && !empty(doliconst('MAIN_MODULE_STOCK', $refresh)) && (empty($product->type) || (!empty($product->type) && doliconst('STOCK_SUPPORTS_SERVICES', $refresh)) )) )  { 
 $doliline .= "<button type='button' class='btn btn-danger btn-sm btn-block' id='deleteorderproduct-".$line->fk_product."' name='deleteorderproduct-".$line->fk_product."' value='0' title='".__( 'Delete', 'doliconnect')."'><i class='fas fa-trash fa-fw'></i></button>";
 } else {
 $doliline .= "<button type='button' class='btn btn-danger' id='deleteorderproduct-".$line->fk_product."' name='deleteorderproduct-".$line->fk_product."' value='0' title='".__( 'Delete', 'doliconnect')."'><i class='fas fa-trash fa-fw'></i></button>";
 }
-//} else {
-if (empty($product->type) && !empty(doliconst('STOCK_ALLOW_NEGATIVE_TRANSFER', $refresh)) && empty(doliconst('STOCK_MUST_BE_ENOUGH_FOR_ORDER', $refresh))) {
-    if (isset($product->array_options->options_packaging) && !empty($product->array_options->options_packaging)) {
-    $m0 = 1*$product->array_options->options_packaging;
-    $m1 = get_option('dolicartlist')*$product->array_options->options_packaging;
-    } else {
-    $m0 = 1;
-    $m1 = get_option('dolicartlist');
-    }
-    $m2 = $m1; 
-} elseif (empty($product->type) && empty(doliconst('STOCK_ALLOW_NEGATIVE_TRANSFER', $refresh)) && empty(doliconst('STOCK_MUST_BE_ENOUGH_FOR_ORDER', $refresh)) && isset($product->array_options->options_unlimitedsale) && !empty($product->array_options->options_unlimitedsale)) {
-      if (isset($product->array_options->options_packaging) && !empty($product->array_options->options_packaging)) {
-      $m0 = 1*$product->array_options->options_packaging;
-      $m1 = get_option('dolicartlist')*$product->array_options->options_packaging;
-      } else {
-      $m0 = 1;
-      $m1 = get_option('dolicartlist');
-      }
-      $m2 = $m1; 
-} elseif ( $realstock-$line->qty >= 0 && (empty($product->type) || (!empty($product->type) && doliconst('STOCK_SUPPORTS_SERVICES', $refresh)) ) ) {
-if (isset($product->array_options->options_packaging) && !empty($product->array_options->options_packaging)) {
-$m0 = 1*$product->array_options->options_packaging;
-$m1 = get_option('dolicartlist')*$product->array_options->options_packaging;
-} else {
-$m0 = 1;
-$m1 = get_option('dolicartlist');
-}
-if ( $realstock-$line->qty >= $m1 || empty(doliconst('MAIN_MODULE_STOCK', $refresh)) ) {
-$m2 = $m1;
-} elseif ( $realstock > $line->qty ) {
-$m2 = $realstock;
-} else { $m2 = $line->qty; }
-} else {
-$m0 = 1;
-if ( isset($line) && $line->qty > 1 ) { $m2 = $line->qty; }
-else { $m2 = 1; }
-} 
-if (isset($product->array_options->options_packaging) && !empty($product->array_options->options_packaging)) {
-$step = $product->array_options->options_packaging;
-} else {
-$step = 1;
-}              
-if ((empty($realstock) && !empty(doliconst('MAIN_MODULE_STOCK', $refresh)) && (empty($product->type) || (!empty($product->type) && doliconst('STOCK_SUPPORTS_SERVICES', $refresh)) )) || $m2 < $step)  { 
-//$doliline .= "<option value='0' selected>".__( 'Unavailable', 'doliconnect')."</option></select>"; 
-} elseif (!empty($m2) && $m2 >= $step) {
+              
+if (!empty($mstock['m2']) && $mstock['m2'] >= $mstock['step']) {
 $doliline .= "<select class='form-control btn-light btn-outline-secondary' id='updateorderproduct-".$line->fk_product."' name='updateorderproduct-".$line->fk_product."'>";
-foreach (range($m0, $m2, $step) as $number) {
-if ( ($number == $step && empty($line->qty) ) || $number == $line->qty || ($number == $m0 && empty($line->qty) )) {
-$doliline .= "<option value='$number' selected='selected'";
-if ($realstock < $number && is_page(doliconnectid('dolicart')) && $product->type == '0' && !empty(doliconst('MAIN_MODULE_STOCK', $refresh)) && empty(doliconst('STOCK_ALLOW_NEGATIVE_TRANSFER', $refresh)) ) $doliline .= " disabled";
-$doliline .= ">x ".$number."</option>";
-} else {
-$doliline .= "<option value='$number' >x ".$number."</option>";
+foreach (range(0, $mstock['m2'], $mstock['step']) as $number) {
+  if ($number == 0) { //$doliline .= "<OPTION value='0' >".__( 'Delete', 'doliconnect')."</OPTION>";
+  } elseif ( ($number == $mstock['step'] && empty($mstock['qty'])) || $number == $mstock['qty'] || ($number == $line->qty && empty($mstock['qty'])) || ($number == $mstock['m0'] && empty($mstock['qty']))) {
+    $doliline .= "<option value='$number' selected='selected'>x ".$number."</option>";
+  } else {
+    $doliline .= "<option value='$number' >x ".$number."</option>";
+  }
 }
-	}
 $doliline .= "</select>";
 } else {
 $doliline .= '<h6 class="mb-1">x'.$line->qty.'</h6>';
