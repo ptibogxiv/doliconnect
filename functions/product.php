@@ -122,6 +122,7 @@ if ( ! is_object($product) || empty(doliconst('MAIN_MODULE_STOCK', $refresh)) ||
   $mstock['m0'] = 1*$mstock['step'];
   $mstock['m1'] = get_option('dolicartlist')*$mstock['step'];
   $mstock['m2'] = $mstock['m1'];
+  $mstock['stock'] = $mstock['m2'];
 } else {
 
 if ( $mstock['stock'] <= 0 || (isset($product->array_options->options_packaging) && !empty($product->array_options->options_packaging) && $mstock['stock'] < $product->array_options->options_packaging) ) { $stock .= "<a tabindex='0' id='popover-".$product->id."' class='badge rounded-pill bg-dark text-white text-decoration-none' data-bs-container='body' data-bs-toggle='popover' data-bs-trigger='focus' title='".__( 'Not available', 'doliconnect')."' data-bs-content='".sprintf( __( 'This item is out of stock and can not be ordered or shipped. %s', 'doliconnect'), $shipping)."'><i class='fas fa-warehouse'></i> ".__( 'Not available', 'doliconnect')."</a>"; }  
