@@ -146,7 +146,8 @@ $stock .= "<a tabindex='0' id='popover-stock-".$product->id."' class='badge roun
 if ($nohtml) { 
   return $mstock;
 } else {
-  return $stock.var_dump($mstock);
+  $stock .= var_dump($mstock);
+  return $stock;
 }
 
 }
