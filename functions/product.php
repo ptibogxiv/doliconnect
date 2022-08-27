@@ -75,13 +75,15 @@ if ( isset($orderfo->lines) && $orderfo->lines != null ) {
   if  ($line->fk_product == $product->id) {
   //$button = var_dump($line);
   $mstock['qty'] = $line->qty;
-  $ln = $line->id;
+  $mstock['line'] = $line->id;
   }}
 }
 if (!isset($mstock['qty']) ) {
   $mstock['qty'] = 0;
-  $ln = null;
+  $mstock['line'] = null;
 }
+if (isset($mstock['line']) && !$mstock['line'] > 0) { $mstock['line'] = null; }
+if (! isset($mstock['line'])) { $mstock['line'] = null; }
 
 if ( $mstock['stock']-$mstock['qty'] > 0 && (empty($product->type) || (!empty($product->type) && doliconst('STOCK_SUPPORTS_SERVICES', $refresh)) ) ) {
   $mstock['m0'] = 1*$mstock['step'];
@@ -216,32 +218,20 @@ $order = callDoliApi("POST", "/orders", $rdr, 0);
 
 $order = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order', true)."?contact_list=0", null, dolidelay('order', true));
 
-if ( isset($order->lines) && $order->lines != null ) {
-foreach ( $order->lines as $ln ) {
-if ( $ln->fk_product == $productid ) {
-//$deleteline = callDoliApi("DELETE", "/orders/".$orderid."/lines/".$ln[id], null, 0);
-//$qty=$ln[qty];
-$line=$ln->id;
-}
-}}
-
-if (isset($line) && !$line > 0) { $line = null; }
-if (! isset($line)) { $line = null; }
-
 $prdt = callDoliApi("GET", "/products/".$productid."?includestockdata=1&includesubproducts=true&includetrans=true", null, dolidelay('product', true));
 
 $mstock = doliproductstock($prdt, false, true);
 
 if (empty($prdt->status)) {
 
-if (!empty($line)) $deleteline = callDoliApi("DELETE", "/orders/".doliconnector($current_user, 'fk_order')."/lines/".$line, null, 0);
+if (!empty($mstock['line'])) $deleteline = callDoliApi("DELETE", "/orders/".doliconnector($current_user, 'fk_order')."/lines/".$mstock['line'], null, 0);
 $order = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order', true)."?contact_list=0", null, dolidelay('order', true));
 $dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolidelay('doliconnector', true));
-//delete_transient( 'doliconnect_cartlinelink_'.$line );
+//delete_transient( 'doliconnect_cartlinelink_'.$mstock['line'] );
 
 return -1;
 
-} elseif ( doliconnector($current_user, 'fk_order') > 0 && $quantity > 0 && empty($line) && (empty(doliconst('MAIN_MODULE_STOCK')) || $mstock['stock'] >= $quantity || (is_null($line) && empty(doliconst('STOCK_SUPPORTS_SERVICES')) ))) {
+} elseif ( doliconnector($current_user, 'fk_order') > 0 && $quantity > 0 && empty($mstock['line'])) {
                                                                                      
 $adln = [
     'fk_product' => $prdt->id,
@@ -262,14 +252,14 @@ if ( !empty($url) ) {
 }
 return doliconnect_countitems($order);
 
-} elseif ( doliconnector($current_user, 'fk_order') > 0 && (isset($prdt->array_options->options_unlimitedsale) && !empty($prdt->array_options->options_unlimitedsale) || $mstock['stock'] >= $quantity || empty($quantity) || (is_object($line) && $line->type != '0' && empty(doliconst('STOCK_SUPPORTS_SERVICES')) )) && $line > 0 ) {
+} elseif ( doliconnector($current_user, 'fk_order') > 0 && $mstock['line'] > 0 ) {
 
 if ( $quantity < 1 ) {
 
-$deleteline = callDoliApi("DELETE", "/orders/".doliconnector($current_user, 'fk_order')."/lines/".$line, null, 0);
+$deleteline = callDoliApi("DELETE", "/orders/".doliconnector($current_user, 'fk_order')."/lines/".$mstock['line'], null, 0);
 $order = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order', true)."?contact_list=0", null, dolidelay('order', true));
 $dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolidelay('doliconnector', true));
-//delete_transient( 'doliconnect_cartlinelink_'.$line );
+//delete_transient( 'doliconnect_cartlinelink_'.$mstock['line'] );
 
 return doliconnect_countitems($order);
  
@@ -285,19 +275,19 @@ $uln = [
     'subprice' => $price,
     'array_options' => $array_options
 	];                  
-$updateline = callDoliApi("PUT", "/orders/".doliconnector($current_user, 'fk_order')."/lines/".$line, $uln, 0);
+$updateline = callDoliApi("PUT", "/orders/".doliconnector($current_user, 'fk_order')."/lines/".$mstock['line'], $uln, 0);
 $order = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order', true)."?contact_list=0", null, dolidelay('order', true));
 $dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolidelay('doliconnector', true));
 if ( !empty($url) ) {
-//set_transient( 'doliconnect_cartlinelink_'.$line, esc_url($url), dolidelay(MONTH_IN_SECONDS, true));
+//set_transient( 'doliconnect_cartlinelink_'.$mstock['line'], esc_url($url), dolidelay(MONTH_IN_SECONDS, true));
 } else {
-//delete_transient( 'doliconnect_cartlinelink_'.$line );
+//delete_transient( 'doliconnect_cartlinelink_'.$mstock['line'] );
 
 }
 return doliconnect_countitems($order);
 
 }
-} elseif ( doliconnector($current_user, 'fk_order') > 0 && is_null($line) ) {
+} elseif ( doliconnector($current_user, 'fk_order') > 0 && is_null($mstock['line']) ) {
 
 return doliconnect_countitems($order);
 
