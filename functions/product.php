@@ -230,16 +230,7 @@ if (! isset($line)) { $line = null; }
 
 $prdt = callDoliApi("GET", "/products/".$productid."?includestockdata=1&includesubproducts=true&includetrans=true", null, dolidelay('product', true));
 
-$warehouse = doliconst('DOLICONNECT_ID_WAREHOUSE');
-if (isset($prdt->stock_warehouse) && !empty($prdt->stock_warehouse) && is_numeric($warehouse)) {
-if (isset($prdt->stock_warehouse->$warehouse)) {
-$realstock = min(array($prdt->stock_reel,$prdt->stock_warehouse->$warehouse->real,$prdt->stock_theorique));
-} else {
-$realstock = 0;
-}
-} else {
-$realstock = min(array($prdt->stock_theorique,$prdt->stock_reel));
-}
+$mstock = doliproductstock($prdt, false, true);
 
 if (empty($prdt->status)) {
 
@@ -250,7 +241,7 @@ $dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolide
 
 return -1;
 
-} elseif ( doliconnector($current_user, 'fk_order') > 0 && $quantity > 0 && empty($line) && (empty(doliconst('MAIN_MODULE_STOCK')) || $realstock >= $quantity || (is_null($line) && empty(doliconst('STOCK_SUPPORTS_SERVICES')) ))) {
+} elseif ( doliconnector($current_user, 'fk_order') > 0 && $quantity > 0 && empty($line) && (empty(doliconst('MAIN_MODULE_STOCK')) || $mstock['stock'] >= $quantity || (is_null($line) && empty(doliconst('STOCK_SUPPORTS_SERVICES')) ))) {
                                                                                      
 $adln = [
     'fk_product' => $prdt->id,
@@ -271,7 +262,7 @@ if ( !empty($url) ) {
 }
 return doliconnect_countitems($order);
 
-} elseif ( doliconnector($current_user, 'fk_order') > 0 && (isset($prdt->array_options->options_unlimitedsale) && !empty($prdt->array_options->options_unlimitedsale) || $realstock >= $quantity || empty($quantity) || (is_object($line) && $line->type != '0' && empty(doliconst('STOCK_SUPPORTS_SERVICES')) )) && $line > 0 ) {
+} elseif ( doliconnector($current_user, 'fk_order') > 0 && (isset($prdt->array_options->options_unlimitedsale) && !empty($prdt->array_options->options_unlimitedsale) || $mstock['stock'] >= $quantity || empty($quantity) || (is_object($line) && $line->type != '0' && empty(doliconst('STOCK_SUPPORTS_SERVICES')) )) && $line > 0 ) {
 
 if ( $quantity < 1 ) {
 
@@ -312,7 +303,7 @@ return doliconnect_countitems($order);
 
 } else {
 
-return -$realstock;//doliconnect_countitems($order);
+return $mstock['stock'];//doliconnect_countitems($order);
 
 }
 }
