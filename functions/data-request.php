@@ -667,7 +667,7 @@ $object = callDoliApi("DELETE", "/".trim($_POST['module'])."/".trim($_POST['id']
 if (!isset($object->error)) { 
 $dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolidelay('doliconnector', true));
 $response = [
-    'items' => '0',
+    'items' => 0,
     'lines' => doliline(null, null),
 	'total' => doliprice(),
     'message' => __( 'Your cart has been emptied', 'doliconnect'),
