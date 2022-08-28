@@ -394,6 +394,9 @@ jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function(e){
 });';
 $button .= "</script>";
 
+if (doliconnector($current_user, 'fk_order') > 0) {
+  $orderfo = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order'), null, $refresh);
+}
 $currency=isset($orderfo->multicurrency_code)?$orderfo->multicurrency_code:strtoupper(doliconst("MAIN_MONNAIE", $refresh));
 
 if ( $product->type == '1' && !is_null($product->duration_unit) && '0' < ($product->duration_value)) {
