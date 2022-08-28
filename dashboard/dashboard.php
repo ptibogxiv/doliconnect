@@ -1795,7 +1795,7 @@ if ( $adherent->datefin == null && $adherent->statut == '0' ) {
 //print  "<a href='#' id='subscribe-button2' class='btn btn text-white btn-warning btn-block' data-bs-toggle='modal' data-bs-target='#activatemember'><b>".__( 'Become a member', 'doliconnect')."</b></a>";
 } elseif ($adherent->statut == '1') {
 print '<div class="d-grid gap-2">';
-if ( isset($adherent) && $adherent->datefin != null && $adherent->statut == 1 && $adherent->datefin > $adherent->next_subscription_renew && $adherent->next_subscription_renew > current_time( 'timestamp',1) ) {
+if ( isset($adherent) && $adherent->datefin != null && $adherent->statut == 1 && isset($adherent->next_subscription_renew) && $adherent->datefin > $adherent->next_subscription_renew && $adherent->next_subscription_renew > current_time( 'timestamp',1) ) {
 print "<br><button class='btn btn-light btn-block' disabled>".sprintf(__('Renew from %s', 'doliconnect'), wp_date('d/m/Y', $adherent->next_subscription_renew))."</button>";
 } else { print  "<br><button class='btn btn btn-danger btn-block' data-bs-toggle='modal' data-bs-target='#PaySubscriptionModal'>".__( 'Pay my subscription', 'doliconnect')."</button>";}
 print '</div>';
