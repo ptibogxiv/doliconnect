@@ -418,9 +418,14 @@ $level=doliconnector($current_user, 'price_level');
 $level=1;
 }
  
-$price_min_ttc = $product->multiprices_min->$level; 
+$price_min_ttc = $product->multiprices_min_ttc->$level; 
+$price_min_ht = $product->multiprices_min->$level;  
 $price_ttc = $product->multiprices_ttc->$level;
 $price_ht = $product->multiprices->$level; 
+$price_min_ttc3 = $product->multiprices_min_ttc->$level;
+$price_min_ht3 = $product->multiprices_min->$level;  
+$price_ttc3 = $product->multiprices_ttc->$level;
+$price_ht3 = $product->multiprices->$level;
 $vat = $product->tva_tx;
 $refprice=(empty(get_option('dolibarr_b2bmode'))?$price_ttc:$price_ht);
 
