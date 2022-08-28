@@ -1437,10 +1437,10 @@ $mstock = doliproductstock($product, $refresh, true);
 
 if ( $mstock['stock'] <= 0 && is_page(doliconnectid('dolicart'))) {
   $doliline .= "<li class='list-group-item list-group-item-danger list-group-item-action'>";
-  if (!define('dolilockcart', '1')) define('dolilockcart', '1'); 
+  if (!define('dolilockcart')) define('dolilockcart', '1'); 
 } elseif ($mstock['stock'] < $line->qty && is_page(doliconnectid('dolicart')) && empty($product->type)) {
   $doliline .= "<li class='list-group-item list-group-item-warning list-group-item-action'>";
-  if (!define('dolilockcart', '1')) define('dolilockcart', '1'); 
+  if (!define('dolilockcart')) define('dolilockcart', '1'); 
 } else {
   $doliline .= "<li class='list-group-item list-group-item-light list-group-item-action'>";
   //define('dolilockcart', '0'); not to use
