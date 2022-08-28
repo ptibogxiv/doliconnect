@@ -1767,10 +1767,12 @@ if ( $adherent->datefin == null ) { print  "***";
 } else { print  wp_date('d/m/Y', $adherent->last_subscription_date_start).' '.__( 'to', 'doliconnect').' '.wp_date('d/m/Y', $adherent->last_subscription_date_end); }
 print  "<br><b>".__( 'Renewal', 'doliconnect').":</b> ".__( 'manual', 'doliconnect');
 print  "<br><b>".__( 'Commitment', 'doliconnect').":</b> ";
-if ( (current_time('timestamp') > $adherent->datecommitment) || null == $adherent->datecommitment ) { print  __( 'no', 'doliconnect');
+if ( (isset($adherent->datecommitment) && current_time('timestamp') > $adherent->datecommitment) || !isset($adherent->datecommitment) ) { 
+    print  __( 'no', 'doliconnect');
 } else {
-$datefin =  wp_date('d/m/Y', $adherent->datecommitment);
-print  "$datefin"; }
+    $datefin =  wp_date('d/m/Y', $adherent->datecommitment);
+    print  "$datefin";
+}
 
 print "</div><div class='col-12 col-md-7'>";
 
