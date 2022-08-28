@@ -46,7 +46,9 @@ define('DOLIBARR_LEGAL_VERSION', '15.0.3');
 // ********************************************************
 function doliconnecturl($page) {
 global $wpdb;
-if ( function_exists('pll_get_post') ) { 
+if (empty($page)) {
+    return null;
+} elseif ( function_exists('pll_get_post') ) { 
 return esc_url(get_permalink(pll_get_post(get_option($page))));
 } elseif ( function_exists('wpml_object_id') ) {
 return esc_url(get_permalink(apply_filters( 'wpml_object_id', get_option($page), 'page', true)));
@@ -57,7 +59,9 @@ return esc_url(get_permalink(get_option($page)));
 
 function doliconnectid($page) {
 global $wpdb;
-if (function_exists('pll_get_post')) { 
+if (empty($page)) {
+return null;
+} elseif (function_exists('pll_get_post')) { 
 return pll_get_post(get_option($page));
 } elseif ( function_exists('wpml_object_id') ) {
 return apply_filters( 'wpml_object_id', get_option($page), 'page', true);
@@ -326,7 +330,7 @@ return $dolibarr;
 }
 
 // ********************************************************
-/* Bloquer acc�s aux non-admins */
+/* Bloquer acces aux non-admins */
 add_action('init', 'doliconnect_block_dashboard');
 function doliconnect_block_dashboard() {
 	$file = basename($_SERVER['PHP_SELF']);
