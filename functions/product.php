@@ -562,7 +562,7 @@ $explication .= sprintf(__( 'VAT rate of %s', 'doliconnect'), $vat);
 $explication .= sprintf(__( 'Initial sale price: %s', 'doliconnect'), doliprice( empty(get_option('dolibarr_b2bmode'))?$price_ttc:$price_ht, $currency));
 if (isset($customer_discount) && !empty($customer_discount) && !empty($discount)) $explication .= sprintf(__( 'Your customer discount is %s percent', 'doliconnect'), $customer_discount);
 if (isset($discountlabel) && !empty($discountlabel)) $explication .= $discountlabel;
-if ($price_ttc != $price_ttc3) $explication .= sprintf(__( 'Discounted price: %s', 'doliconnect'), doliprice( empty(get_option('dolibarr_b2bmode'))?$price_ttc3:$price_ht3, $currency));
+if (isset($price_ttc3) && $price_ttc != $price_ttc3) $explication .= sprintf(__( 'Discounted price: %s', 'doliconnect'), doliprice( empty(get_option('dolibarr_b2bmode'))?$price_ttc3:$price_ht3, $currency));
 //$explication .= "</ul>";
 $button .= "<a tabindex='0' id='popover-price-".$product->id."' class='btn btn-light position-relative top-0 end-0";
 if (!empty($discount)) $button .= " text-danger";
