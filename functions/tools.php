@@ -1435,10 +1435,10 @@ $product = callDoliApi("GET", "/products/".$line->fk_product."?includestockdata=
 
 $mstock = doliproductstock($product, $refresh, true);
 
-if ( $mstock['stock'] <= 0 && is_page(doliconnectid('dolicart'))) {
+if ( $mstock['stock'] < 0 && is_page(doliconnectid('dolicart'))) {
   $doliline .= "<li class='list-group-item list-group-item-danger list-group-item-action'>";
   if (!defined('dolilockcart')) define('dolilockcart', '1'); 
-} elseif ($mstock['stock'] < $line->qty && is_page(doliconnectid('dolicart')) && empty($product->type)) {
+} elseif ($mstock['stock'] >= 0 && $mstock['stock'] < $line->qty && is_page(doliconnectid('dolicart'))) {
   $doliline .= "<li class='list-group-item list-group-item-warning list-group-item-action'>";
   if (!defined('dolilockcart')) define('dolilockcart', '1'); 
 } else {
@@ -1474,9 +1474,9 @@ $doliline .= '<p><small><i>'.(isset($dates) ? $dates : null).'</i></small></p>';
 } elseif (doliconnectid('dolishipping')) {
 $doliline .= '<small><a href="'.doliconnecturl('dolishipping').'">'.esc_html__( 'Shipping informations', 'doliconnect').'</a></small>';
 }
-if ( $mstock['stock'] <= 0 && is_page(doliconnectid('dolicart'))) {
+if ( $mstock['stock'] < 0 && is_page(doliconnectid('dolicart'))) {
 $doliline .= "<b>".__( "Sorry, this product is no longer available. Please, delete it to finalize your order", 'doliconnect')."</b>";
-} elseif ($mstock['stock'] < $line->qty && is_page(doliconnectid('dolicart')) && empty($product->type)) {
+} elseif ($mstock['stock'] >= 0 && $mstock['stock'] < $line->qty && is_page(doliconnectid('dolicart'))) {
 $doliline .= "<b>".__( "Sorry, this product is not available with this quantity. Please, change it to finalize your order", 'doliconnect')."</b>";
 }
 
