@@ -619,14 +619,15 @@ if (isset($thirdparty->status) && $thirdparty->status != '1') {
 if ($mstock['step'] >1 && !empty($quantity)) $quantity = round($quantity/$mstock['step'])*$mstock['step']; 
 if (empty($qty) && $quantity > $mstock['step']) $quantity = $mstock['m2']; 
 if ($mstock['m2'] < $mstock['step'])  { $button .= "<OPTION value='0' >".__( 'Delete', 'doliconnect')."</OPTION>"; } else {
-foreach (range(0, $mstock['m2'], $mstock['step']) as $number) {
-if ($number == 0) { $button .= "<OPTION value='0' >".__( 'Delete', 'doliconnect')."</OPTION>";
-} elseif ( ($number == $mstock['step'] && empty($mstock['qty']) && empty($quantity)) || $number == $mstock['qty'] || ($number == $quantity && empty($mstock['qty'])) || ($number == $mstock['m0'] && empty($mstock['qty']) && empty($quantity))) {
-$button .= "<option value='$number' selected='selected'>x ".$number."</option>";
-} else {
-$button .= "<option value='$number' >x ".$number."</option>";
-}
-}
+  $max = max(array($mstock['m2'],$mstock['qty']));
+  foreach (range(0, $max, $mstock['step']) as $number) {
+    if ($number == 0) { $button .= "<OPTION value='0' >".__( 'Delete', 'doliconnect')."</OPTION>";
+    } elseif ( ($number == $mstock['step'] && empty($mstock['qty']) && empty($quantity)) || $number == $mstock['qty'] || ($number == $quantity && empty($mstock['qty'])) || ($number == $mstock['m0'] && empty($mstock['qty']) && empty($quantity))) {
+    $button .= "<option value='$number' selected='selected'>x ".$number."</option>";
+    } else {
+    $button .= "<option value='$number' >x ".$number."</option>";
+    }
+  }
 }}
 $button .= "</select>";
 $button .= "<input type='hidden' name='product-add-vat' value='".$product->tva_tx."'><input type='hidden' name='product-add-remise_percent' value='".$discount."'><input type='hidden' name='product-add-price' value='".$price_ht."'>";
