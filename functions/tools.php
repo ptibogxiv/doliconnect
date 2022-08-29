@@ -1509,11 +1509,14 @@ $doliline .= "<button type='button' class='btn btn-danger' id='deleteorderproduc
 if (!empty($mstock['m2']) && $mstock['m2'] >= $mstock['step']) {
 $doliline .= "<select class='form-control btn-light btn-outline-secondary' id='updateorderproduct-".$line->fk_product."' name='updateorderproduct-".$line->fk_product."'>";
 foreach (range(0, $mstock['m2'], $mstock['step']) as $number) {
-  if ($number == 0) { //$doliline .= "<OPTION value='0' >".__( 'Delete', 'doliconnect')."</OPTION>";
-  } elseif ( ($number == $mstock['step'] && empty($mstock['qty'])) || $number == $mstock['qty'] || ($number == $line->qty && empty($mstock['qty'])) || ($number == $mstock['m0'] && empty($mstock['qty']))) {
-    $doliline .= "<option value='$number' selected='selected'>x ".$number."</option>";
+  if ( ($number == $mstock['step'] && empty($mstock['qty'])) || $number == $mstock['qty'] || ($number == $line->qty && empty($mstock['qty'])) || ($number == $mstock['m0'] && empty($mstock['qty']))) {
+    $doliline .= "<option value='$number' selected";
+    if ($mstock['stock'] < $number) $doliline .= " disabled";
+    $doliline .= ">x ".$number."</option>";
   } else {
-    $doliline .= "<option value='$number' >x ".$number."</option>";
+    $doliline .= "<option value='$number'";
+    if ($mstock['stock'] < $number) $doliline .= " disabled";
+    $doliline .= ">x ".$number."</option>";
   }
 }
 $doliline .= "</select>";
