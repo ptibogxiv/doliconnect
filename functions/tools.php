@@ -1438,7 +1438,7 @@ $mstock = doliproductstock($product, $refresh, true);
 if ( $mstock['stock'] < 0 && is_page(doliconnectid('dolicart'))) {
   $doliline .= "<li class='list-group-item list-group-item-danger list-group-item-action'>";
   if (!defined('dolilockcart')) define('dolilockcart', '1'); 
-} elseif ($mstock['stock'] >= 0 && $mstock['stock'] < $line->qty && is_page(doliconnectid('dolicart'))) {
+} elseif ($mstock['stock'] > 0 && $mstock['stock'] < $line->qty && is_page(doliconnectid('dolicart'))) {
   $doliline .= "<li class='list-group-item list-group-item-warning list-group-item-action'>";
   if (!defined('dolilockcart')) define('dolilockcart', '1'); 
 } else {
@@ -1476,7 +1476,7 @@ $doliline .= '<small><a href="'.doliconnecturl('dolishipping').'">'.esc_html__( 
 }
 if ( $mstock['stock'] < 0 && is_page(doliconnectid('dolicart'))) {
 $doliline .= "<b>".__( "Sorry, this product is no longer available. Please, delete it to finalize your order", 'doliconnect')."</b>";
-} elseif ($mstock['stock'] >= 0 && $mstock['stock'] < $line->qty && is_page(doliconnectid('dolicart'))) {
+} elseif ($mstock['stock'] > 0 && $mstock['stock'] < $line->qty && is_page(doliconnectid('dolicart'))) {
 $doliline .= "<b>".__( "Sorry, this product is not available with this quantity. Please, change it to finalize your order", 'doliconnect')."</b>";
 }
 
@@ -1514,7 +1514,7 @@ foreach (range(0, $max, $mstock['step']) as $number) {
     $doliline .= "<option value='$number' selected";
     if ($mstock['stock'] < $number) $doliline .= " disabled";
     $doliline .= ">x ".$number."</option>";
-  } elseif ($mstock['stock'] >= $number) {
+  } elseif ($mstock['m2'] >= $number) {
     $doliline .= "<option value='$number'>x ".$number."</option>";
   }
 }
