@@ -85,7 +85,7 @@ if (!isset($mstock['qty']) ) {
 if (isset($mstock['line']) && !$mstock['line'] > 0) { $mstock['line'] = null; }
 if (! isset($mstock['line'])) { $mstock['line'] = null; }
 
-$mstock['stock']=$mstock['stock']+$mstock['qty'];
+if (doliconst('CUSTOMER_ORDER_DRAFT_FOR_VIRTUAL_STOCK', $refresh)) $mstock['stock']=$mstock['stock']+$mstock['qty'];
 
 if ( $mstock['stock']-$mstock['qty'] > 0 && (empty($product->type) || (!empty($product->type) && doliconst('STOCK_SUPPORTS_SERVICES', $refresh)) ) ) {
   $mstock['m0'] = 1*$mstock['step'];

@@ -1509,7 +1509,7 @@ $doliline .= "<button type='button' class='btn btn-danger' id='deleteorderproduc
 if (!empty($mstock['m2']) && $mstock['m2'] >= $mstock['step']) {
 $doliline .= "<select class='form-control btn-light btn-outline-secondary' id='updateorderproduct-".$line->fk_product."' name='updateorderproduct-".$line->fk_product."'>";
 $max = max(array($mstock['m2'],$mstock['qty']));
-foreach (range(0, $max, $mstock['step']) as $number) {
+foreach (range($mstock['step'], $max, $mstock['step']) as $number) {
   if ( ($number == $mstock['step'] && empty($mstock['qty'])) || $number == $mstock['qty'] || ($number == $line->qty && empty($mstock['qty'])) || ($number == $mstock['m0'] && empty($mstock['qty']))) {
     $doliline .= "<option value='$number' selected";
     if ($mstock['stock'] < $number) $doliline .= " disabled";
