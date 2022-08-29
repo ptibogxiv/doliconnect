@@ -222,7 +222,6 @@ $order = callDoliApi("POST", "/orders", $rdr, 0);
 $order = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order', true)."?contact_list=0", null, dolidelay('order', true));
 
 $prdt = callDoliApi("GET", "/products/".$productid."?includestockdata=1&includesubproducts=true&includetrans=true", null, dolidelay('product', true));
-
 $mstock = doliproductstock($prdt, false, true);
 
 if (empty($prdt->status)) {
@@ -250,6 +249,7 @@ $adln = [
 $addline = callDoliApi("POST", "/orders/".doliconnector($current_user, 'fk_order')."/lines", $adln, 0);
 $order = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order', true)."?contact_list=0", null, dolidelay('order', true));
 $dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolidelay('doliconnector', true));
+$prdt = callDoliApi("GET", "/products/".$productid."?includestockdata=1&includesubproducts=true&includetrans=true", null, dolidelay('product', true));
 if ( !empty($url) ) {
 //set_transient( 'doliconnect_cartlinelink_'.$addline, esc_url($url), dolidelay(MONTH_IN_SECONDS, true));
 }
@@ -262,6 +262,7 @@ if ( $quantity < 1 ) {
 $deleteline = callDoliApi("DELETE", "/orders/".doliconnector($current_user, 'fk_order')."/lines/".$mstock['line'], null, 0);
 $order = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order', true)."?contact_list=0", null, dolidelay('order', true));
 $dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolidelay('doliconnector', true));
+$prdt = callDoliApi("GET", "/products/".$productid."?includestockdata=1&includesubproducts=true&includetrans=true", null, dolidelay('product', true));
 //delete_transient( 'doliconnect_cartlinelink_'.$mstock['line'] );
 
 return doliconnect_countitems($order);
@@ -281,6 +282,7 @@ $uln = [
 $updateline = callDoliApi("PUT", "/orders/".doliconnector($current_user, 'fk_order')."/lines/".$mstock['line'], $uln, 0);
 $order = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order', true)."?contact_list=0", null, dolidelay('order', true));
 $dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolidelay('doliconnector', true));
+$prdt = callDoliApi("GET", "/products/".$productid."?includestockdata=1&includesubproducts=true&includetrans=true", null, dolidelay('product', true));
 if ( !empty($url) ) {
 //set_transient( 'doliconnect_cartlinelink_'.$mstock['line'], esc_url($url), dolidelay(MONTH_IN_SECONDS, true));
 } else {
