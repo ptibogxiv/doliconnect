@@ -2083,24 +2083,26 @@ global $current_user;
 
 print '<div class="card shadow-sm"><div class="card-header">'.__( 'My sales representatives', 'doliconnect').'</div>';
 
-$request = "/thirdparties/".doliconnector($current_user, 'fk_soc')."/representatives";
+$request = "/thirdparties/".doliconnector($current_user, 'fk_soc')."/representatives?mode=1";
 $representatives = callDoliApi("GET", $request, null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
  
 
 if ( !isset( $representatives->error ) && $representatives != null ) {
     print '<div class="card-body"><div class="row row-cols-1 row-cols-md-2 g-4">';
 foreach ( $representatives as $representative ) { 
+    $request = "/users/".$representative;
+    $user = callDoliApi("GET", $request, null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))); 
 print '<div class="col"><div class="card" style="max-width: 100%;">
 <div class="row g-0">
 <div class="col-md-4">';
-print doliconnect_image('user', $representative->id.'/photos/'.$representative->photo, array('class'=>'bd-placeholder-img img-fluid rounded-start', 'entity'=>$representative->entity, 'size'=>'100x100'), esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+print doliconnect_image('user', $user->id.'/photos/'.$user->photo, array('class'=>'bd-placeholder-img img-fluid rounded-start', 'entity'=>$user->entity, 'size'=>'100x100'), esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 //print '<svg class="bd-placeholder-img img-fluid rounded-start" width="100%" height="200px" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect><text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image</text></svg>';
 print '</div>
 <div class="col-md-8">
 <div class="card-body">
-  <h5 class="card-title">'.$representative->firstname.' '.$representative->lastname.'</h5>
-  <p class="card-text text-muted">'.$representative->job.'</p>
-  <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+  <h5 class="card-title">'.$user->firstname.' '.$user->lastname.'</h5>
+  <p class="card-text text-muted">'.$user->job.'</p>
+  <p class="card-text"><small class="text-muted">'.$user->note_public.'</small></p>
 </div>
 </div></div>
 </div></div>';

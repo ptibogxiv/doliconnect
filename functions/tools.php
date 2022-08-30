@@ -1104,12 +1104,8 @@ print "</li>";
 
 //print "<li class='list-group-item list-group-item-light list-group-item-action'>";
 //print "<div class='form-row'><div class='custom-control custom-checkbox my-1 mr-sm-2'>
-//<input type='checkbox' class='custom-control-input' value='1' id='optin1' name='optin1'>
-//<label class='custom-control-label' for='optin1'> ".__( 'I would like to receive the newsletter', 'doliconnect')."</label></div></div>";
-//print "<div class='form-row'><div class='custom-control custom-checkbox my-1 mr-sm-2'>
 //<input type='checkbox' class='custom-control-input' value='forever' id='validation' name='validation' required>
 //<label class='custom-control-label' for='validation'>".__( 'I read and accept the <a href="#" data-bs-toggle="modal" data-target="#cgvumention">Terms & Conditions</a>.', 'doliconnect')."</label></div></div>";
-
 //if ( get_option( 'wp_page_for_privacy_policy' ) ) {
 //print "<div class='modal fade' id='cgvumention' tabindex='-1' role='dialog' aria-labelledby='cgvumention' aria-hidden='true'><div class='modal-dialog modal-lg modal-dialog-centered' role='document'><div class='modal-content'><div class='modal-header'><h5 class='modal-title' id='cgvumentionLabel'>".__( 'Terms & Conditions', 'doliconnect')."</h5><button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>
 //<div class='modal-body'>";
