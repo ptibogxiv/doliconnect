@@ -2099,7 +2099,7 @@ print '</div>
 <div class="col-md-8">
 <div class="card-body">
   <h5 class="card-title">'.$representative->firstname.' '.$representative->lastname.'</h5>
-  <p class="card-text">'.$representative->email.'</p>
+  <p class="card-text text-muted">'.$representative->job.'</p>
   <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
 </div>
 </div></div>
