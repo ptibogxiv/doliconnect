@@ -372,7 +372,7 @@ function dolicontact_request(){
 			$comments = sanitize_textarea_field($_POST['comments']);
 		}
 		
-		if ( !isset($_POST['btndolicaptcha']) || empty(wp_verify_nonce( $_POST['ctrldolicaptcha'], 'ctrldolicaptcha-'.$_POST['btndolicaptcha'])) ) {
+		if ( !isset($_POST['btndolicaptcha']) || empty(wp_verify_nonce(  trim($_POST['ctrldolicaptcha']), 'ctrldolicaptcha-'. trim($_POST['btndolicaptcha']))) ) {
 			$ContactError[] = esc_html__( 'Security check failed, invalid human verification field.', 'doliconnect');
 		}
 	
