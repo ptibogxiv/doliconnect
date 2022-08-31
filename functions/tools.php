@@ -1368,6 +1368,25 @@ form.submit();
 print "</script>";
 }
 
+function doliusercard($id, $refresh = null) {
+
+  $request = "/users/".$id;
+  $user = callDoliApi("GET", $request, null, dolidelay('thirdparty', $refresh)); 
+  $card = '<div class="col"><div class="card" style="max-width: 100%;"><div class="row g-0"><div class="col-md-4">';
+  $card .= doliconnect_image('user', $user->id.'/photos/'.$user->photo, array('class'=>'bd-placeholder-img img-fluid rounded-start', 'entity'=>$user->entity, 'size'=>'100x100'), $refresh);
+  $card .= '</div>
+<div class="col-md-8">
+<div class="card-body">
+<h6 class="card-title">'.$user->firstname.' '.$user->lastname.'</h6>
+<p class="card-text text-muted">'.$user->job.'<br>
+<small class="text-muted">'.$user->note_public.'</small></p>
+</div>
+</div></div>
+</div></div>';
+
+return $card;  
+}
+
 function doliaddress($object, $refresh = false) {
 global $current_user;
 if ( !empty($object->name) ) {
