@@ -28,7 +28,11 @@ $content .= "<div class='card-footer text-muted'>";
 $content .= "<small><div class='float-start'>";
 $content .= dolirefresh($request, null, dolidelay('product'));
 $content .= "</div><div class='float-end'>";
-
+if (!empty(doliconnecturl('dolishop'))) {
+	$arr_params = array( 'category' => 'discount');
+	$link = esc_url( add_query_arg( $arr_params, doliconnecturl('dolishop')));
+	$content .= "<a href='".$link."' role='button' title='".__( 'See more items', 'doliconnect')."'>".__( 'See more items', 'doliconnect')."</a>";
+}
 $content .= "</div></small>";
 $content .= "</div></div>";
 return $content;
