@@ -16,28 +16,34 @@ return $return;
 }
 
 function doliCheckRights($right1, $right2 = null, $right3 = null, $right4 = null, $version = '13.0.0') {
-$return = false;
+  $return = false;
 if ( doliversion($version) ) {
 if (!empty($right2) && preg_match("/_advance/i", $right2) && !doliconst('MAIN_USE_ADVANCED_PERMS')) { 
-return true;
+  return true;
 } else {
 $user = callDoliApi("GET", "/users/info?includepermissions=1", null, dolidelay('dolibarr')); 
 if (isset($user->rights)) {
-$user = $user->rights->$right1;
+  $user = $user->rights->$right1;
 } else {
-$user = null;
-$return = true;
+  $user = null;
+  $return = true;
 }
 if ($user && !empty($right2) && isset($user->$right2)) { $user = $user->$right2; } elseif (!empty($right2)) { $user = null; }
 if ($user && !empty($right3) && isset($user->$right3)) { $user = $user->$right3; } elseif (!empty($right3)) { $user = null; }
 if ($user && !empty($right4) && isset($user->$right4)) { $user = $user->$right4; } elseif (!empty($right4)) { $user = null; }
 if (isset($user) && !empty($user)) {
-$return = true;
+  $return = true;
 } 
 }} else {
-$return = true;
+  $return = true;
 }
-return $return;
+  return $return;
+}
+
+function doliCheckModules($module) {
+  $return = false;
+
+  return $return;
 }
 
 function dolicaptcha($id = null) {
