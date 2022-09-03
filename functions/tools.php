@@ -40,9 +40,9 @@ if (isset($user) && !empty($user)) {
   return $return;
 }
 
-function doliCheckModules($module) {
+function doliCheckModules($module, $refresh = false) {
   $return = false;
-
+  $list = callDoliApi("GET", "/setup/modules", null, dolidelay('dolibarr', $refresh));
   return $return;
 }
 
