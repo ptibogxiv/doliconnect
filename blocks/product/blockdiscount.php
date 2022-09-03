@@ -28,7 +28,7 @@ $content .= "<div class='card-footer text-muted'>";
 $content .= "<small><div class='float-start'>";
 $content .= dolirefresh($request, null, dolidelay('product'));
 $content .= "</div><div class='float-end'>";
-$content .= dolihelp('ISSUE');
+
 $content .= "</div></small>";
 $content .= "</div></div>";
 return $content;
