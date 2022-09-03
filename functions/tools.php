@@ -1230,10 +1230,10 @@ $document = '<button class="btn '.$style.'" disabled>'.$name.' <i class="fas fa-
 return $document;
 }
 
-function dolihelp($type) {
+function dolihelp($type = null, $category = null) {
 
 if ( is_user_logged_in() && !empty(doliconst('MAIN_MODULE_TICKET')) ) {
-$arr_params = array( 'module' => 'tickets', 'type' => $type, 'action' => 'create'); 
+$arr_params = array( 'module' => 'tickets', 'type' => $type, 'category' => $category, 'action' => 'create'); 
 $link=esc_url( add_query_arg( $arr_params, doliconnecturl('doliaccount'))); 
 } elseif ( !empty(get_option('dolicontact')) ) {
 $arr_params = array( 'action' => 'create'); //'type' => $postorder->id,  
