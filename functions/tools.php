@@ -1078,9 +1078,9 @@ print "</div></li>";
 }
 
 if ( in_array($mode, array('thirdparty','contact')) && doliversion('17.0.0') && !empty(doliconst('MAIN_MODULE_MAILING'))) {
-  print '<li class="list-group-item list-group-item-light list-group-item-action"><div class="form-check form-switch"><input type="checkbox" class="form-check-input" name="'.$idobject.'[no_email] id="'.$idobject.'[no_email]" ';
+  print '<li class="list-group-item list-group-item-light list-group-item-action"><div class="form-check form-switch"><input class="form-check-input" type="checkbox" role="switch" name="'.$idobject.'[no_email] id="'.$idobject.'[no_email]" ';
   if ( isset($object->no_email) && empty($object->no_email) ) { print ' checked'; }        
-  print '><label class="form-check-label w-100" for="'.$idobject.'[no_email]">'.__( 'I would like to receive the newsletter', 'doliconnect').'</label></div></li>';
+  print '><label class="form-check-label" for="'.$idobject.'[no_email]">'.__( 'I would like to receive the newsletter', 'doliconnect').'</label></div></li>';
 }
 
 if ( function_exists('dolikiosk') && ! isset($object) && (! empty(dolikiosk()) && $mode == 'thirdparty') ) {
