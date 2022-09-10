@@ -279,7 +279,7 @@ print '<div class="card-body"><div class="card-group">
     
     <div class="card-body">
       <h5 class="card-title">'.__( 'Create a personnal account', 'doliconnect').'</h5>
-      <p class="card-text"><small class="text-muted">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</small></p>
+      <p class="card-text"><small class="text-muted"></small></p>
       <div class="d-grid gap-2">';
   if (get_option('doliconnect_disablepro') == 'mor') {
     print '<a class="btn btn-primary disabled" href="'.wp_registration_url(get_permalink()).'&morphy=phy" role="button" title="'.__( 'Create a personnal account', 'doliconnect').'" aria-disabled="true">'.__( 'Create a personnal account', 'doliconnect').'</a>';
@@ -293,7 +293,7 @@ print '<div class="card-body"><div class="card-group">
     
     <div class="card-body">
       <h5 class="card-title">'.__( 'Create an enterprise account', 'doliconnect').'</h5>
-      <p class="card-text"><small class="text-muted">his is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</small></p>
+      <p class="card-text"><small class="text-muted"></small></p>
       <div class="d-grid gap-2">';
   if (get_option('doliconnect_disablepro') == 'phy') {
     print '<a class="btn btn-primary disabled" href="'.wp_registration_url(get_permalink()).'&morphy=mor" role="button" title="'.__( 'Create an enterprise account', 'doliconnect').'" aria-disabled="true">'.__( 'Create a personnal account', 'doliconnect').'</a>';
