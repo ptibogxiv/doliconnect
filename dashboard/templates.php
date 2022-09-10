@@ -1485,24 +1485,7 @@ print "</div></div></div>";
 
 if ( isset($_POST['update_thirdparty']) && $_POST['update_thirdparty'] == 'validation' ) {
 
-$thirdparty=$_POST['contact'][''.doliconnector($current_user, 'fk_soc').''];
-$ID = $current_user->ID;
-if ( isset($thirdparty['morphy']) && $thirdparty['morphy'] == 'phy' ) {
-$thirdparty['name'] = ucfirst(strtolower($thirdparty['firstname']))." ".strtoupper($thirdparty['lastname']);
-} 
-wp_update_user( array( 'ID' => $ID, 'user_email' => sanitize_email($thirdparty['email'])));
-if (isset($_POST['user_nicename'])) wp_update_user( array( 'ID' => $ID, 'nickname' => sanitize_user($_POST['user_nicename'])));
-if (isset($_POST['name'])) wp_update_user( array( 'ID' => $ID, 'display_name' => sanitize_user($thirdparty['name'])));
-wp_update_user( array( 'ID' => $ID, 'first_name' => ucfirst(sanitize_user(strtolower($thirdparty['firstname'])))));
-wp_update_user( array( 'ID' => $ID, 'last_name' => strtoupper(sanitize_user($thirdparty['lastname']))));
-if (isset($_POST['description'])) wp_update_user( array( 'ID' => $ID, 'description' => sanitize_textarea_field($_POST['description'])));
-if (isset($_POST['url'])) wp_update_user( array( 'ID' => $ID, 'user_url' => sanitize_textarea_field($thirdparty['url'])));
-update_user_meta( $ID, 'civility_id', sanitize_text_field($thirdparty['civility_id']));
-if (isset($_POST['morphy'])) update_user_meta( $ID, 'billing_type', sanitize_text_field($thirdparty['morphy']));
-if ( isset($_POST['morphy']) && $thirdparty['morphy'] == 'mor' ) { update_user_meta( $ID, 'billing_company', sanitize_text_field($thirdparty['name'])); }
-update_user_meta( $ID, 'billing_birth', $thirdparty['birth']);
 
-do_action('wp_dolibarr_sync', $thirdparty);
                                    
 } elseif ( isset($_POST['info']) && $_POST['info'] == 'validation' ) {
 
