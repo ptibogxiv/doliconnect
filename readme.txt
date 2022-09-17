@@ -69,6 +69,9 @@ We would like to thank this contributors and plugins:
 [gdpr-data-request-form](https://wordpress.org/plugins/gdpr-data-request-form/ "gdpr-data-request-form")
 
 == Changelog ==
+   = 6.7.1 =
+* upgrade bootswatch
+
    = 6.7.0 =
 * fix password changes
 * compatibility with php 8 and dolibarr 16/17
