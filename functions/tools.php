@@ -465,7 +465,6 @@ $password .= '<button id="toggle-password" type="button" onclick="revealpwd0()" 
 $password .= '</div></div></div></li>';
 }
 
-if ( !empty(get_option('doliconnectbeta')) ) {
 $password .= "<script>";
 $password .= 'function revealpwd0() {
   var x = document.getElementById("pwd0");
@@ -479,7 +478,6 @@ $password .= 'function revealpwd0() {
 
 }';
 $password .= "</script>";
-}
 
 $password .= '<li class="list-group-item list-group-item-light list-group-item-action"><p class="text-justify">'.__( 'Your new password must be between 8 and 20 characters, including at least 1 digit, 1 letter, 1 uppercase.', 'doliconnect').'</p>';
 $password .= '<div class="row g-2"><div class="col-md">';
