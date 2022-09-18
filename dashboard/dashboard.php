@@ -2010,7 +2010,7 @@ print dolimodalloaderscript('addmember-form');
 print doliuserform( '', dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'member', doliCheckRights('adherent', 'creer')); 
 
 print "</div>".doliloading('member'.$member->id.'-form');
-     
+
 print "<div id='Footeraddmember-form' class='modal-footer'><button name='update_member' value='".$member->id."' class='btn btn-warning btn-block' type='submit' ";
 if (!doliCheckRights('adherent', 'creer')) { print 'disabled'; }
 print ">".__( 'Update', 'doliconnect')."</button></form></div>
