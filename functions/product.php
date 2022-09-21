@@ -457,15 +457,6 @@ if ( !empty($altdurvalue) ) { $button .= "<td class='text-end'>soit ".doliprice(
 $button .= '</tr>'; 
 }
 }
-
-$button .= '<tr><td colspan="';
-if (!empty($product->net_measure)) { $button .= '2'; } else { $button .= '3'; };
-$button .= '"><small class="fw-lighter">';
-if (!empty($product->net_measure)) { $button .= '<div class="float-end">'.doliprice( $refprice/$product->net_measure, null, $currency).'</div>';
-$unit = callDoliApi("GET", "/setup/dictionary/units?sortfield=rowid&sortorder=ASC&limit=1&active=1&sqlfilters=(t.rowid%3Alike%3A'".$product->net_measure_units."')", null, dolidelay('constante'));
-if (!empty($unit)) $button .= "/".$unit[0]->short_label; }
-$button .= "</small></td></tr>";
-
 $button .= '</tbody></table>';
 } else {
 
