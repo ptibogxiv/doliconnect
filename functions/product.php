@@ -586,9 +586,15 @@ $button .= "' data-bs-container='body' data-bs-toggle='popover' data-bs-trigger=
 $button .= doliprice( empty(get_option('dolibarr_b2bmode'))?$price_ttc3:$price_ht3, $currency);
 $date = new DateTime(); 
 $date->modify('NOW');
-$duration = (!empty(get_option('dolicartnewlist'))?get_option('dolicartnewlist'):'month');
-$date->modify('FIRST DAY OF LAST '.$duration.' MIDNIGHT');
-$lastdate = $date->format('Y-m-d');
+if (!empty(get_option('dolicartnewlist')) && get_option('dolicartnewlist') != 'none') { 
+  $date->modify('FIRST DAY OF LAST '.get_option('dolicartnewlist').' MIDNIGHT');
+  $lastdate = $date->format('Y-m-d');
+} elseif (empty(get_option('dolicartnewlist'))) {
+  $date->modify('FIRST DAY OF LAST MONTH MIDNIGHT');
+  $lastdate = $date->format('Y-m-d');
+} else {
+  $lastdate = $date->format('Y-m-d');
+}
 if ($product->date_creation >= $lastdate) $button .= '<span class="position-absolute top-0 start-0 translate-middle badge rounded-pill bg-warning">'.__( 'Novelty', 'doliconnect').'<span class="visually-hidden">Novelty</span></span>';
 if (!empty($discount)) $button .= '<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">-'.$discount.'%<span class="visually-hidden">discount</span></span>';
 if (!empty($product->net_measure) && !empty($product->net_measure_units)) { 
