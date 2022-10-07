@@ -1036,7 +1036,12 @@ $category = callDoliApi("GET", "/categories/".$cat."?include_childs=true", null,
 if ((is_numeric($cat) && isset($category->id) && $category->id > 0) || (isset($_GET["category"]) && $_GET["category"] == 'all') || (isset($_GET['search'])&& !empty($_GET['search']))) {
 
 if (isset($_GET['search'])&& !empty($_GET['search']))  {
-$request = "/products?sortfield=t.".$field."&sortorder=".$order."&limit=".$limit."&page=".$page."&sqlfilters=((t.label%3Alike%3A'%25".esc_attr($_GET['search'])."%25')%20OR%20(t.description%3Alike%3A'%25".esc_attr($_GET['search'])."%25')%20OR%20(t.ref%3Alike%3A'%25".esc_attr($_GET['search'])."%25')%20OR%20(t.barcode%3Alike%3A'%25".esc_attr($_GET['search'])."%25'))%20AND%20(t.tosell%3A%3D%3A1)";
+$search = explode(' ', esc_attr($_GET['search']));
+$sqlfilters = null;
+foreach($search as $i=>$key) {
+$sqlfilters .= "((t.label%3Alike%3A'%25".esc_attr($key)."%25')%20OR%20(t.description%3Alike%3A'%25".esc_attr($key)."%25')%20OR%20(t.ref%3Alike%3A'%25".esc_attr($key)."%25')%20OR%20(t.barcode%3Alike%3A'%25".esc_attr($key)."%25'))%20AND%20";
+}
+$request = "/products?sortfield=t.".$field."&sortorder=".$order."&limit=".$limit."&page=".$page."&sqlfilters=".$sqlfilters."(t.tosell%3A%3D%3A1)";
 $resultats = callDoliApi("GET", $request, null, dolidelay('search', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 } elseif (isset($_GET["category"]) && $_GET["category"] == 'all') {
 $request = "/products?sortfield=t.".$field."&sortorder=".$order."&limit=".$limit."&page=".$page."&category=".esc_attr($shop)."&sqlfilters=(t.tosell=1)";
