@@ -2361,7 +2361,7 @@ print '</div></div>';
 function settings_menu($arg) {
 print "<a href='".esc_url( add_query_arg( 'module', 'settings', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
 if ($arg=='settings') { print " active"; }
-print "'>".__( 'Settings of security', 'doliconnect')."</a>";
+print "'>".__( 'Safety and appearance', 'doliconnect')."</a>";
 }
 add_action( 'settings_doliconnect_menu', 'settings_menu', 2, 1);
 
