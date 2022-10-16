@@ -381,8 +381,7 @@ return $ajax;
 }
 
 function doliSelectForm($name, $request, $selectlang = '- Select -', $valuelang = 'Value', $value = null, $idobject = 0, $rights = 1, $delay = null, $id = 'id') {
-  
-  $object = callDoliApi("GET", $request, null, $delay);
+
   if ( isset($object) && (($name=='ziptown' && !empty($object) && !empty(get_option('doliconnectbeta')) && doliconst("MAIN_USE_ZIPTOWN_DICTIONNARY")) || $name!='ziptown') ) {
     $doliSelect = '<select class="form-select" id="'.$name.'" name="'.$idobject.'['.$name.']" aria-label="'.$valuelang.'" ';
   if ($rights && !empty($object)) {
@@ -518,24 +517,24 @@ return $password;
 function doliProfId($idprof1 = null, $idprof2 = null, $idprof3 = null, $idprof4 = null, $country_code = 0, $idobject = 0, $rights = 1) {
   $ifprod = '';
 if (is_numeric($country_code)) { 
-$country_code = callDoliApi("GET", "/setup/dictionary/countries/".$country_code, null, dolidelay('constante',))->code;
+$country_code = callDoliApi("GET", "/setup/dictionary/countries/".$country_code, null, dolidelay('constante'))->code;
 }
-$ProfId1 = callDoliApi("GET", "/doliconnector/translation/ProfId1".$country_code."?filename=companies&langcode=".str_replace("-","_",get_bloginfo("language")), null, dolidelay('constante',));
+$ProfId1 = callDoliApi("GET", "/doliconnector/translation/ProfId1".$country_code."?filename=companies&langcode=".str_replace("-","_",get_bloginfo("language")), null, dolidelay('constante'));
 if ($ProfId1 != '-') {
   $ifprod .= '<div class="col-md-6 col-lg"><div class="form-floating"><input type="text" class="form-control" id="idprof1" name="'.$idobject.'[idprof1]" placeholder="'.$ProfId1.'" value="'.(isset($idprof1) ? $idprof1 : null).'" required autocomplete="off">
   <label for="idprof1"><i class="fas fa-building fa-fw"></i> '.$ProfId1.'</label></div></div>'; 
 }
-$ProfId2 = callDoliApi("GET", "/doliconnector/translation/ProfId2".$country_code."?filename=companies&langcode=".str_replace("-","_",get_bloginfo("language")), null, dolidelay('constante',));
+$ProfId2 = callDoliApi("GET", "/doliconnector/translation/ProfId2".$country_code."?filename=companies&langcode=".str_replace("-","_",get_bloginfo("language")), null, dolidelay('constante'));
 if ($ProfId2 != '-') {
   $ifprod .= '<div class="col-md-6 col-lg"><div class="form-floating"><input type="text" class="form-control" id="idprof2" name="'.$idobject.'[idprof2]" placeholder="'.$ProfId1.'" value="'.(isset($idprof2) ? $idprof2 : null).'" required autocomplete="off">
   <label for="idprof2"><i class="fas fa-building fa-fw"></i> '.$ProfId2.'</label></div></div>';
 } 
-$ProfId3 = callDoliApi("GET", "/doliconnector/translation/ProfId2".$country_code."?filename=companies&langcode=".str_replace("-","_",get_bloginfo("language")), null, dolidelay('constante',));
+$ProfId3 = callDoliApi("GET", "/doliconnector/translation/ProfId2".$country_code."?filename=companies&langcode=".str_replace("-","_",get_bloginfo("language")), null, dolidelay('constante'));
 if ($ProfId3 != '-') {
   $ifprod .= '<div class="col-md-6 col-lg"><div class="form-floating"><input type="text" class="form-control" id="idprof3" name="'.$idobject.'[idprof3]" placeholder="'.$ProfId3.'" value="'.(isset($idprof3) ? $idprof3 : null).'" required autocomplete="off">
   <label for="idprof3"><i class="fas fa-building fa-fw"></i> '.$ProfId3.'</label></div></div>';
 } 
-$ProfId4 = callDoliApi("GET", "/doliconnector/translation/ProfId4".$country_code."?filename=companies&langcode=".str_replace("-","_",get_bloginfo("language")), null, dolidelay('constante',));
+$ProfId4 = callDoliApi("GET", "/doliconnector/translation/ProfId4".$country_code."?filename=companies&langcode=".str_replace("-","_",get_bloginfo("language")), null, dolidelay('constante'));
 if ($ProfId4 != '-') {
   $ifprod .= '<div class="col-md-6 col-lg"><div class="form-floating"><input type="text" class="form-control" id="idprof4" name="'.$idobject.'[idprof4]" placeholder="'.$ProfId4.'" value="'.(isset($idprof4) ? $idprof4 : null).'" required autocomplete="off">
   <label for="idprof4"><i class="fas fa-building fa-fw"></i> '.$ProfId4.'</label></div></div>';      
