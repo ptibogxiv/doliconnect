@@ -77,7 +77,7 @@ function dolimembertypelist($typeadhesion, $adherent) {
   if ( !doliversion('14.0.0') || (!isset($postadh->amount)) ) {
   $postadh->amount = $postadh->price;
   } 
-  if ( ( $postadh->subscription == '1' || ( $postadh->subscription != '1' && $adherent->typeid == $postadh->id ) ) && $postadh->statut == '1' || ( $postadh->statut == '0' && $postadh->id == $adherent->typeid && $adherent->statut == '1' ) ) {
+  if ( ( $postadh->subscription == '1' || ( $postadh->subscription != '1' && $adherent->typeid == $postadh->id ) ) && $postadh->statut == '1' || ( $postadh->statut == '0' && isset($adherent->typeid) && $postadh->id == $adherent->typeid && $adherent->statut == '1' ) ) {
   $list .= "<tr><td><div class='row'><div class='col-md-8'><b>";
   if ($postadh->morphy == 'mor') {
     $list .= "<i class='fas fa-user-tie fa-fw'></i> "; 
