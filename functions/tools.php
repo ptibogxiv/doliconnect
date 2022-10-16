@@ -381,7 +381,7 @@ return $ajax;
 }
 
 function doliSelectForm($name, $request, $selectlang = '- Select -', $valuelang = 'Value', $value = null, $idobject = 0, $rights = 1, $delay = null, $id = 'id') {
-
+  $object = callDoliApi("GET", $request, null, $delay);
   if ( isset($object) && (($name=='ziptown' && !empty($object) && !empty(get_option('doliconnectbeta')) && doliconst("MAIN_USE_ZIPTOWN_DICTIONNARY")) || $name!='ziptown') ) {
     $doliSelect = '<select class="form-select" id="'.$name.'" name="'.$idobject.'['.$name.']" aria-label="'.$valuelang.'" ';
   if ($rights && !empty($object)) {
