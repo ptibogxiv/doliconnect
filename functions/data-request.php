@@ -528,7 +528,7 @@ add_action('wp_ajax_dolirpw_request', 'dolirpw_request');
 add_action('wp_ajax_nopriv_dolirpw_request', 'dolirpw_request');
 
 function dolirpw_request(){
-global $wpdb; 
+global $wpdb,$current_user; 
 
 if ( wp_verify_nonce( trim($_POST['dolirpw-nonce']), 'dolirpw')) {
 if (isset($_POST["pwd0"])) $pwd0 = sanitize_text_field($_POST["pwd0"]);
@@ -537,8 +537,6 @@ $pwd2 = sanitize_text_field($_POST["pwd2"]);
 
 if (!is_user_logged_in()) {
 $current_user = check_password_reset_key( esc_attr($_POST["key"]), esc_attr($_POST["login"]) );
-} else {
-global $current_user;
 }
 
 if ( ((is_user_logged_in() && isset($pwd0) && !empty($pwd0) && wp_check_password( $pwd0, $current_user->user_pass, $current_user->ID )) || (!is_user_logged_in()) ) && ($pwd1 == $pwd2) && (preg_match('/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,20}/', $pwd1)) ) {
