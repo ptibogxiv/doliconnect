@@ -1781,9 +1781,7 @@ $paymentmethods .= 'var style = {
   }
 };';
 if ( !empty($listpaymentmethods->stripe->account) && isset($listpaymentmethods->stripe->publishable_key) ) {
-$paymentmethods .= "var stripe = Stripe('".$listpaymentmethods->stripe->publishable_key."', {
-  stripeAccount: '".$listpaymentmethods->stripe->account."'
-});";
+$paymentmethods .= "var stripe = Stripe('".$listpaymentmethods->stripe->publishable_key."', {stripeAccount: '".$listpaymentmethods->stripe->account."'});";
 } elseif ( isset($listpaymentmethods->stripe->publishable_key) ) {
 $paymentmethods .= "var stripe = Stripe('".$listpaymentmethods->stripe->publishable_key."');";
 } 
