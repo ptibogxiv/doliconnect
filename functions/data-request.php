@@ -663,6 +663,12 @@ if (isset($_POST['modify']) && $_POST['modify'] == "plus" && ($_POST['qty']+$mst
 		'message' => __( 'Quantities have been changed', 'doliconnect'),
 		'newqty' => $qty
 			];
+			if (isset($object)) {
+				$response .= [
+				'lines' => doliline($object, true),
+				'total' => doliprice($object, 'ttc', isset($object->multicurrency_code) ? $object->multicurrency_code : null)
+				];	
+				}
 	wp_send_json_success($response);	
 } elseif (isset($_POST['modify']) && $_POST['modify'] == "minus" && $_POST['qty']-$mstock['step']>=0) { 
 	$qty = trim($_POST['qty'])-$mstock['step'];
@@ -671,6 +677,12 @@ if (isset($_POST['modify']) && $_POST['modify'] == "plus" && ($_POST['qty']+$mst
 		'message' => __( 'Quantities have been changed', 'doliconnect'),
 		'newqty' => $qty
 			];
+			if (isset($object)) {
+				$response .= [
+				'lines' => doliline($object, true),
+				'total' => doliprice($object, 'ttc', isset($object->multicurrency_code) ? $object->multicurrency_code : null)
+				];	
+				}
 	wp_send_json_success($response);	
 } else {
 	$qty = trim($_POST['qty']);
