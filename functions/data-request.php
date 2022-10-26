@@ -660,10 +660,12 @@ if ( wp_verify_nonce( trim($_POST['dolicart-nonce']), 'dolicart-nonce')) {
 
 if (isset($_POST['case']) && $_POST['case'] == "updateline") {
 
-if (isset($_POST['modify']) && $_POST['case'] == "plus") { 
+if (isset($_POST['modify']) && $_POST['modify'] == "plus") { 
 	$qty = $_POST['qty']+1;
-} elseif (isset($_POST['modify']) && $_POST['case'] == "minus") { 
+} elseif (isset($_POST['modify']) && $_POST['modify'] == "minus" && $_POST['qty']>0) { 
 	$qty = $_POST['qty']-1;	
+} else {
+	$qty = $_POST['qty'];	
 }
 
 	$response = [
