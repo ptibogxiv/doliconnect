@@ -657,21 +657,23 @@ if (isset($_POST['case']) && $_POST['case'] == "updateline") {
 	$mstock = doliproductstock($product, false, true);
 
 if (isset($_POST['modify']) && $_POST['modify'] == "plus" && ($_POST['qty']+$mstock['step'])<=max(array($mstock['m2'],$mstock['qty']))) { 
-	$qty = $_POST['qty']+$mstock['step'];
+	$qty = trim($_POST['qty'])+$mstock['step'];
+	$result = doliaddtocart(trim($_POST['productid']), $qty, trim($_POST['product-add-price']), trim($_POST['product-add-remise_percent']), isset($_POST['product-add-timestamp_start'])?trim($_POST['product-add-timestamp_start']):null, isset($_POST['product-add-timestamp_end'])?trim($_POST['product-add-timestamp_end']):null);
 	$response = [
 		'message' => __( 'Quantities have been changed', 'doliconnect'),
 		'newqty' => $qty
 			];
 	wp_send_json_success($response);	
 } elseif (isset($_POST['modify']) && $_POST['modify'] == "minus" && $_POST['qty']-$mstock['step']>=0) { 
-	$qty = $_POST['qty']-$mstock['step'];
+	$qty = trim($_POST['qty'])-$mstock['step'];
+	$result = doliaddtocart(trim($_POST['productid']), $qty, trim($_POST['product-add-price']), trim($_POST['product-add-remise_percent']), isset($_POST['product-add-timestamp_start'])?trim($_POST['product-add-timestamp_start']):null, isset($_POST['product-add-timestamp_end'])?trim($_POST['product-add-timestamp_end']):null);
 	$response = [
 		'message' => __( 'Quantities have been changed', 'doliconnect'),
 		'newqty' => $qty
 			];
 	wp_send_json_success($response);	
 } else {
-	$qty = $_POST['qty'];
+	$qty = trim($_POST['qty']);
 	$response = [
 		'message' => ''.__( 'We no longer have this item in this quantity', 'doliconnect').'',
 		'newqty' => $qty
