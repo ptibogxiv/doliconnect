@@ -305,7 +305,7 @@ return $mstock['stock'];//doliconnect_countitems($order);
 }
 }
 
-function doliProductCart($product, $refresh = null) {
+function doliProductCart($product, $refresh = null, $line = null) {
 global $current_user;
 if (current_user_can('administrator') && !empty(get_option('doliconnectbeta')) ) { 
 
@@ -331,7 +331,6 @@ $button .= '$(function() {
                 "modify" : acase
               },
           }).done(function(response) {
-              //jQuery("#DoliconnectLoadingModal").modal("hide");
               if (response.success) { 
                 console.log("updated qty of '.$product->id.' to " + response.data.newqty);
                 if (document.getElementById("qty-prod-'.$product->id.'")) { 
@@ -341,6 +340,7 @@ $button .= '$(function() {
               } else {
                 console.log("error updating qty " + response.data);
               }
+              //jQuery("#DoliconnectLoadingModal").modal("hide");
           });
   
       });
