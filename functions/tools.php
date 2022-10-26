@@ -1515,6 +1515,8 @@ $doliline .= '</div><div class="col-4 col-sm-3 col-md-2 text-right"><h6 class="m
 if (!empty($line->fk_parent_line) || (!empty(doliconst('MAIN_MODULE_FRAISDEPORT', $refresh)) && empty($line->fk_parent_line) && doliconst('FRAIS_DE_PORT_ID_SERVICE_TO_USE', $refresh) == $line->fk_product)) {
 $doliline .= '<h6 class="mb-1">x'.$line->qty.'</h6>';
 } elseif ( isset($object->statut) && empty($object->statut) && !is_page(doliconnectid('doliaccount')) ) {
+$doliline .= doliProductCart($product, $refresh, $line->id);
+/* 
 $doliline .= "<input type='hidden' name='updateorderproduct[".$line->fk_product."][product]' value='".$line->fk_product."'><input type='hidden' name='updateorderproduct[".$line->fk_product."][price]' value='".$line->subprice."'>";
 $doliline .= "<input type='hidden' name='updateorderproduct[".$line->fk_product."][remise_percent]' value='".$line->remise_percent."'><input type='hidden' name='updateorderproduct[".$line->fk_product."][date_start]' value='".$line->date_start."'><input type='hidden' name='updateorderproduct[".$line->fk_product."][date_end]' value='".$line->date_end."'>";
 $doliline .= "<div class='input-group input-group-sm mb-3'>";
@@ -1537,6 +1539,7 @@ foreach (range($mstock['step'], $max, $mstock['step']) as $number) {
   }
 }
 $doliline .= "</select>";
+
 } else {
 $doliline .= '<h6 class="mb-1">x'.$line->qty.'</h6>';
 }
@@ -1618,6 +1621,7 @@ console.log(response.data.message);
 })(jQuery);";
 $doliline .= "</script>";
 //} 
+*/
 } else {
 $doliline .= '<h6 class="mb-1">x'.$line->qty.'</h6>';
 }
