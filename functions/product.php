@@ -300,7 +300,7 @@ return doliconnect_countitems($order);
 
 } else {
 
-return $mstock['stock'];//doliconnect_countitems($order);
+return $mstock['stock'];
 
 }
 }
