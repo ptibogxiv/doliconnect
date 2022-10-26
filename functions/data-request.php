@@ -663,10 +663,10 @@ if (isset($_POST['case']) && $_POST['case'] == "updateline") {
 	$product = callDoliApi("GET", "/products/".trim($_POST['productid'])."?includestockdata=1&includesubproducts=true&includetrans=true", null, dolidelay('cart', true));
 	$mstock = doliproductstock($product, false, true);
 
-if (isset($_POST['modify']) && $_POST['modify'] == "plus" && $_POST['qty']<max(array($mstock['m2'],$mstock['qty']))) { 
-	$qty = $_POST['qty']+1;
-} elseif (isset($_POST['modify']) && $_POST['modify'] == "minus" && $_POST['qty']>0) { 
-	$qty = $_POST['qty']-1;	
+if (isset($_POST['modify']) && $_POST['modify'] == "plus" && ($_POST['qty']+$mstock['step'])<=max(array($mstock['m2'],$mstock['qty']))) { 
+	$qty = $_POST['qty']+$mstock['step'];
+} elseif (isset($_POST['modify']) && $_POST['modify'] == "minus" && $_POST['qty']-$mstock['step']>0) { 
+	$qty = $_POST['qty']-$mstock['step'];	
 } else {
 	$qty = $_POST['qty'];	
 }
