@@ -658,7 +658,17 @@ global $current_user;
 
 if ( wp_verify_nonce( trim($_POST['dolicart-nonce']), 'dolicart-nonce')) {
 
-if ( isset($_POST['case']) && $_POST['case'] == "purge_cart" && isset($_POST['module']) && isset($_POST['id'])) {
+if ( isset($_POST['case']) && $_POST['case'] == "updateline") {
+
+	$response = [
+		'items' => 0,
+		'lines' => 0,
+		'total' => 0,
+		'message' => __( 'This product has been added to basket', 'doliconnect'),
+			];
+	wp_send_json_success($response);	
+
+} elseif ( isset($_POST['case']) && $_POST['case'] == "purge_cart" && isset($_POST['module']) && isset($_POST['id'])) {
 $object = callDoliApi("GET", "/".trim($_POST['module'])."/".trim($_POST['id']), null, dolidelay('order', true));
 if (!isset($object->error) && empty($object->statut)) {
 $object = callDoliApi("DELETE", "/".trim($_POST['module'])."/".trim($_POST['id']), null);
@@ -677,7 +687,7 @@ wp_send_json_error( __( 'An error occured:', 'doliconnect').' '.$object->error->
 } else{
 wp_send_json_error( __( 'An error occured:', 'doliconnect').' '.$object->error->message); 
 }
-} elseif ( isset($_POST['case']) && $_POST['case'] == "update_cart") {
+} elseif ( isset($_POST['case']) && $_POST['case'] == "update_cart" ) {
 
 $result = doliaddtocart($_POST['productid'], $_POST['qty'], $_POST['price'], (isset($_POST['remise_percent'])?$_POST['remise_percent']:null), (isset($_POST['date_start'])?$_POST['date_start']:null), (isset($_POST['date_end'])?$_POST['date_end']:null));
 
@@ -784,7 +794,7 @@ wp_send_json_error( __( 'An error occured:', 'doliconnect').' '.$payinfo->error-
 wp_send_json_error( __( 'An error occured', 'doliconnect')); 
 }
 
-}	else {
+} else {
 wp_send_json_error( __( 'A security error occured', 'doliconnect')); 
 }
 }
@@ -809,7 +819,7 @@ if (!isset($invoice->error->message) || (!isset($order->error->message) && $orde
 wp_send_json_error( __( 'Customer not found', 'doliconnect')); 
 }
 }
-}	else {
+} else {
 wp_send_json_error( __( 'A security error occured', 'doliconnect')); 
 }
 }
