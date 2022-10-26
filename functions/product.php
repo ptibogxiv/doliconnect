@@ -368,6 +368,7 @@ return $button;
 function doliconnect_addtocart($product, $category = 0, $quantity = 0, $add = 0, $time = 0, $refresh = null) {
 global $current_user;
 
+/*
 $button = "<form id='form-product-cart-".$product->id."' class='form-product-cart-".$product->id."' method='post' action='".admin_url('admin-ajax.php')."'>";
 $button .= "<input type='hidden' name='action' value='doliproduct_request'>";
 $button .= "<input type='hidden' name='product-add-nonce' value='".wp_create_nonce( 'product-add-nonce-'.$product->id)."'>";
@@ -411,6 +412,7 @@ jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function(e){
 });
 });';
 $button .= "</script>";
+*/
 
 if (doliconnector($current_user, 'fk_order') > 0) {
   $orderfo = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order'), null, $refresh);
@@ -616,7 +618,7 @@ $button .= '</a><br><br>';
 //  $button .= '</span> ';
 //}
   
-
+/*
 if ( empty(doliconnectid('dolicart')) ) {
 
 $button .= "<div class='input-group'><a class='btn btn-block btn-info' href='".doliconnecturl('dolicontact')."?type=COM' role='button' title='".__( 'Login', 'doliconnect')."'>".__( 'Contact us', 'doliconnect')."</a></div>";
@@ -670,6 +672,7 @@ $button .= '</div>';
 }
 
 $button .= "<div id='message-doliproduct-".$product->id."'></div>";
+*/
 
 return $button;
 }
