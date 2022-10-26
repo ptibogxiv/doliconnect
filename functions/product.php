@@ -334,9 +334,23 @@ $button .= '$(function() {
               if (response.success) { 
                 //console.log("updated qty of '.$product->id.' to " + response.data.newqty);
                 if (document.getElementById("qty-prod-'.$product->id.'")) { 
-                  //console.log("qty-prod-'.$product->id.'"); 
                   document.getElementById("qty-prod-'.$product->id.'").value = response.data.newqty;
                 }
+                if (document.getElementById("DoliHeaderCartItems")) {
+                  document.getElementById("DoliHeaderCartItems").innerHTML = response.data.items;
+                }
+                if (document.getElementById("DoliFooterCartItems")) {  
+                  document.getElementById("DoliFooterCartItems").innerHTML = response.data.items;
+                }
+                if (document.getElementById("DoliCartItemsList")) {  
+                  document.getElementById("DoliCartItemsList").innerHTML = response.data.list;
+                }
+                if (document.getElementById("DoliWidgetCartItems")) {
+                  document.getElementById("DoliWidgetCartItems").innerHTML = response.data.items;      
+                }
+                if (document.getElementById("message-dolicart")) {
+                  document.getElementById("message-dolicart").innerHTML = response.data.message;      
+                }   
               } else {
                 //console.log("error updating qty " + response.data.message);
               }
