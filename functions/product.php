@@ -328,7 +328,11 @@ $button .= '$(function() {
               },
           }).done(function(response) {
               //jQuery("#DoliconnectLoadingModal").modal("hide");
-              console.log("updated qty " + response.data);
+              if (response.success) { 
+                console.log("updated qty " + response.data);
+              } else {
+                console.log("error updating qty");
+              }
           });
   
       });
