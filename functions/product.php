@@ -383,51 +383,6 @@ function doliconnect_addtocart($product, $category = 0, $quantity = 0, $add = 0,
 global $current_user;
 
 $button = null;
-/*
-$button .= "<form id='form-product-cart-".$product->id."' class='form-product-cart-".$product->id."' method='post' action='".admin_url('admin-ajax.php')."'>";
-$button .= "<input type='hidden' name='action' value='doliproduct_request'>";
-$button .= "<input type='hidden' name='product-add-nonce' value='".wp_create_nonce( 'product-add-nonce-'.$product->id)."'>";
-$button .= "<input type='hidden' name='product-add-id' value='".$product->id."'>";
-
-$button .= "<script>";
-$button .= 'jQuery(document).ready(function($) {
-	jQuery(".form-product-cart-'.$product->id.'").on("submit", function(e){
-  jQuery("#DoliconnectLoadingModal").modal("show");
-	e.preventDefault();
-	var $form = $(this);
-    
-jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function(e){ 
-		$.post($form.attr("action"), $form.serialize(), function(response){
-      jQuery("#offcanvasDolicart").offcanvas("show");
-      document.getElementById("message-dolicart").innerHTML = "";
-      jQuery("#DoliconnectLoadingModal").modal("hide");  
-      if (response.success) {
-      if (document.getElementById("DoliHeaderCartItems")) {
-      document.getElementById("DoliHeaderCartItems").innerHTML = response.data.items;
-      }
-      if (document.getElementById("DoliFooterCartItems")) {  
-      document.getElementById("DoliFooterCartItems").innerHTML = response.data.items;
-      }
-      if (document.getElementById("DoliCartItemsList")) {  
-      document.getElementById("DoliCartItemsList").innerHTML = response.data.list;
-      }
-      if (document.getElementById("DoliWidgetCartItems")) {
-      document.getElementById("DoliWidgetCartItems").innerHTML = response.data.items;      
-      }
-      if (document.getElementById("message-dolicart")) {
-      document.getElementById("message-dolicart").innerHTML = response.data.message;      
-      }   
-      } else {
-      if (document.getElementById("message-dolicart")) {
-      document.getElementById("message-dolicart").innerHTML = response.data.message;      
-      }      
-      }
-		}, "json");  
-  });
-});
-});';
-$button .= "</script>";
-*/
 
 if (doliconnector($current_user, 'fk_order') > 0) {
   $orderfo = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order'), null, $refresh);
