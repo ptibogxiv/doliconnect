@@ -3,6 +3,9 @@
  * Data Request Handler.
  */
 
+add_action( 'wp_ajax_doli_gdrf_data_request', 'doli_gdrf_data_request' );
+add_action( 'wp_ajax_nopriv_doli_gdrf_data_request', 'doli_gdrf_data_request' );
+
 function doli_gdrf_data_request() {
 	$gdrf_error     = array();
 	$gdrf_type      = esc_html( filter_input( INPUT_POST, 'gdrf_data_type', FILTER_SANITIZE_STRING ) );
@@ -51,37 +54,7 @@ function doli_gdrf_data_request() {
 	die();
 }
 
-add_action( 'wp_ajax_doli_gdrf_data_request', 'doli_gdrf_data_request' );
-add_action( 'wp_ajax_nopriv_doli_gdrf_data_request', 'doli_gdrf_data_request' );
-
-add_action('wp_ajax_doliproduct_request', 'doliproduct_request');
-add_action('wp_ajax_nopriv_doliproduct_request', 'doliproduct_request');
-
-function doliproduct_request() {
-global $current_user;
-		
-if ( wp_verify_nonce( trim($_POST['product-add-nonce']), 'product-add-nonce-'.trim($_POST['product-add-id']) ) ) {
-$result = doliaddtocart(trim($_POST['product-add-id']), trim($_POST['product-add-qty']), trim($_POST['product-add-price']), trim($_POST['product-add-remise_percent']), isset($_POST['product-add-timestamp_start'])?trim($_POST['product-add-timestamp_start']):null, isset($_POST['product-add-timestamp_end'])?trim($_POST['product-add-timestamp_end']):null);
-if ($result >= 0) {
-$response = [
-    'message' => '<div class="alert alert-success alert-dismissible d-flex align-items-center" role="alert">'.__( 'As our inventory is updated in real time, your items have been put in the basket for 1 hour', 'doliconnect').'</div>',
-    'items' => $result,
-    'list' => doliconnect_CartItemsList()
-        ];
-wp_send_json_success( $response ); 
-} else {
-$response = [
-    'message' => '<div class="alert alert-danger alert-dismissible d-flex align-items-center" role="alert">'.__( 'We no longer have this item in this quantity', 'doliconnect').'</div>',
-        ];
-wp_send_json_error( $response ); 
-}
-} else {
-$response = [
-    'message' => '<div class="alert alert-danger alert-dismissible d-flex align-items-center" role="alert">'.__( 'A security error occured', 'doliconnect').'</div>',
-        ];
-wp_send_json_error( $response ); 
-}
-}
+//*****************************************************************************************
 
 add_action('wp_ajax_doliselectform_request', 'doliselectform_request');
 add_action('wp_ajax_nopriv_doliselectform_request', 'doliselectform_request');
@@ -276,6 +249,8 @@ function doliuserinfos_request(){
 	}
 }
 
+//*****************************************************************************************
+
 add_action('wp_ajax_dolicontactinfos_request', 'dolicontactinfos_request');
 //add_action('wp_ajax_nopriv_dolicontactinfos_request', 'dolicontactinfos_request');
 
@@ -334,6 +309,8 @@ function dolicontactinfos_request(){
 		wp_send_json_error( $response ); 
 	}
 }
+
+//*****************************************************************************************
 
 add_action('wp_ajax_dolicontact_request', 'dolicontact_request');
 add_action('wp_ajax_nopriv_dolicontact_request', 'dolicontact_request');
@@ -417,6 +394,8 @@ function dolicontact_request(){
 		wp_send_json_error( $response ); 
 	}
 }
+
+//*****************************************************************************************
 	
 add_action('wp_ajax_dolisettings_request', 'dolisettings_request');
 //add_action('wp_ajax_nopriv_dolisettings_request', 'dolisettings_request');
@@ -517,6 +496,8 @@ if ( defined("DOLICONNECT_DEMO_EMAIL") && ''.constant("DOLICONNECT_DEMO_EMAIL").
 
 }
 
+//*****************************************************************************************
+
 add_action('wp_ajax_dolirpw_request', 'dolirpw_request');
 add_action('wp_ajax_nopriv_dolirpw_request', 'dolirpw_request');
 
@@ -583,6 +564,8 @@ $wpdb->update( $wpdb->users, array( 'user_activation_key' => '' ), array( 'user_
 	wp_send_json_error( $response ); 
 }
 }
+
+//*****************************************************************************************
 
 add_action('wp_ajax_dolipaymentmethod_request', 'dolipaymentmethod_request');
 //add_action('wp_ajax_nopriv_dolipaymentmethod_request', 'dolipaymentmethod_request');
@@ -659,6 +642,7 @@ if (isset($_POST['case']) && $_POST['case'] == "updateline") {
 if (isset($_POST['modify']) && $_POST['modify'] == "plus" && ($_POST['qty']+$mstock['step'])<=max(array($mstock['m2'],$mstock['qty']))) { 
 	$qty = trim($_POST['qty'])+$mstock['step'];
 	$result = doliaddtocart(trim($_POST['productid']), $qty, trim($_POST['product-add-price']), trim($_POST['product-add-remise_percent']), isset($_POST['product-add-timestamp_start'])?trim($_POST['product-add-timestamp_start']):null, isset($_POST['product-add-timestamp_end'])?trim($_POST['product-add-timestamp_end']):null);
+	if (isset($_POST['module']) && isset($_POST['id']) ) $object = callDoliApi("GET", "/".trim($_POST['module'])."/".trim($_POST['id']), null, dolidelay('order', true));
 	$response = [
 		'message' => __( 'Quantities have been changed', 'doliconnect'),
 		'newqty' => $qty
@@ -673,6 +657,7 @@ if (isset($_POST['modify']) && $_POST['modify'] == "plus" && ($_POST['qty']+$mst
 } elseif (isset($_POST['modify']) && $_POST['modify'] == "minus" && $_POST['qty']-$mstock['step']>=0) { 
 	$qty = trim($_POST['qty'])-$mstock['step'];
 	$result = doliaddtocart(trim($_POST['productid']), $qty, trim($_POST['product-add-price']), trim($_POST['product-add-remise_percent']), isset($_POST['product-add-timestamp_start'])?trim($_POST['product-add-timestamp_start']):null, isset($_POST['product-add-timestamp_end'])?trim($_POST['product-add-timestamp_end']):null);
+	if (isset($_POST['module']) && isset($_POST['id']) ) $object = callDoliApi("GET", "/".trim($_POST['module'])."/".trim($_POST['id']), null, dolidelay('order', true));
 	$response = [
 		'message' => __( 'Quantities have been changed', 'doliconnect'),
 		'newqty' => $qty
@@ -712,31 +697,6 @@ wp_send_json_error( __( 'An error occured:', 'doliconnect').' '.$object->error->
 } else{
 wp_send_json_error( __( 'An error occured:', 'doliconnect').' '.$object->error->message); 
 }
-} elseif ( isset($_POST['case']) && $_POST['case'] == "update_cart" ) {
-
-$result = doliaddtocart($_POST['productid'], $_POST['qty'], $_POST['price'], (isset($_POST['remise_percent'])?$_POST['remise_percent']:null), (isset($_POST['date_start'])?$_POST['date_start']:null), (isset($_POST['date_end'])?$_POST['date_end']:null));
-
-if (isset($_POST['module']) && isset($_POST['id']) ) $object = callDoliApi("GET", "/".trim($_POST['module'])."/".trim($_POST['id']), null, dolidelay('order', true));
-
-if ($result >= 0) {
-		$response = [
-		'items' => $result,
-    	'message' => __( 'Quantities have been changed', 'doliconnect')
-    	];
-		if (isset($object)) {
-		$response .= [
-		'lines' => doliline($object, true),
-		'total' => doliprice($object, 'ttc', isset($object->multicurrency_code) ? $object->multicurrency_code : null)
-		];	
-		}	
-		wp_send_json_success( $response ); 
-	} else {
-	$response = [
-		'message' => '<div class="alert alert-danger alert-dismissible d-flex align-items-center" role="alert">'.__( 'We no longer have this item in this quantity', 'doliconnect').'</div>',
-			];
-	wp_send_json_error( $response ); 
-	}
-
 } elseif ( isset($_POST['case']) && $_POST['case'] == "validate_cart" && isset($_POST['module']) && isset($_POST['id'])) {
 
 $data = [
@@ -824,6 +784,8 @@ wp_send_json_error( __( 'A security error occured', 'doliconnect'));
 }
 }
 
+//*****************************************************************************************
+
 add_action('wp_ajax_dolisignup_request', 'dolisignup_request');
 add_action('wp_ajax_nopriv_dolisignup_request', 'dolisignup_request');
 
@@ -848,6 +810,8 @@ wp_send_json_error( __( 'Customer not found', 'doliconnect'));
 wp_send_json_error( __( 'A security error occured', 'doliconnect')); 
 }
 }
+
+//*****************************************************************************************
 
 add_action('wp_ajax_dolimember_request', 'dolimember_request');
 //add_action('wp_ajax_nopriv_dolimember_request', 'dolimember_request');
