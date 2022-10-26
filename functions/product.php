@@ -338,7 +338,7 @@ $button .= '$(function() {
                   document.getElementById("qty-prod-'.$product->id.'").value = response.data.newqty;
                 }
               } else {
-                console.log("error updating qty " + response.data);
+                console.log("error updating qty " + response.data.message);
               }
               //jQuery("#DoliconnectLoadingModal").modal("hide");
           });

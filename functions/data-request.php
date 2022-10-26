@@ -665,20 +665,26 @@ if (isset($_POST['case']) && $_POST['case'] == "updateline") {
 
 if (isset($_POST['modify']) && $_POST['modify'] == "plus" && ($_POST['qty']+$mstock['step'])<=max(array($mstock['m2'],$mstock['qty']))) { 
 	$qty = $_POST['qty']+$mstock['step'];
-} elseif (isset($_POST['modify']) && $_POST['modify'] == "minus" && $_POST['qty']-$mstock['step']>0) { 
-	$qty = $_POST['qty']-$mstock['step'];	
-} else {
-	$qty = $_POST['qty'];	
-}
-
 	$response = [
-		'items' => 0,
-		'lines' => 0,
-		'total' => 0,
-		'newqty' => $qty,
-		'message' => __( 'This product has been added to basket', 'doliconnect'),
+		'message' => 'This product has been added to basket',
+		'newqty' => $qty
 			];
 	wp_send_json_success($response);	
+} elseif (isset($_POST['modify']) && $_POST['modify'] == "minus" && $_POST['qty']-$mstock['step']>=0) { 
+	$qty = $_POST['qty']-$mstock['step'];
+	$response = [
+		'message' => 'This product has been added to basket',
+		'newqty' => $qty
+			];
+	wp_send_json_success($response);	
+} else {
+	$qty = $_POST['qty'];
+	$response = [
+		'message' => ''.__( 'We no longer have this item in this quantity', 'doliconnect').'',
+		'newqty' => $qty
+			];
+	wp_send_json_error($response);			
+}	
 
 } elseif ( isset($_POST['case']) && $_POST['case'] == "purge_cart" && isset($_POST['module']) && isset($_POST['id'])) {
 $object = callDoliApi("GET", "/".trim($_POST['module'])."/".trim($_POST['id']), null, dolidelay('order', true));
