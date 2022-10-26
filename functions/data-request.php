@@ -654,6 +654,7 @@ if (isset($_POST['modify']) && $_POST['modify'] == "plus" && ($_POST['qty']+$mst
 		];
 	if (isset($object)) {
 		$response .= [
+		'items' => 0,	
 		'lines' => doliline($object, true),
 		'total' => doliprice($object, 'ttc', isset($object->multicurrency_code) ? $object->multicurrency_code : null)
 		];	
@@ -669,6 +670,7 @@ if (isset($_POST['modify']) && $_POST['modify'] == "plus" && ($_POST['qty']+$mst
 		];
 	if (isset($object)) {
 		$response .= [
+		'items' => 0,
 		'lines' => doliline($object, true),
 		'total' => doliprice($object, 'ttc', isset($object->multicurrency_code) ? $object->multicurrency_code : null)
 		];	
