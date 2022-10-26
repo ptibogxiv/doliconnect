@@ -327,14 +327,16 @@ $button .= '$(function() {
                 "dolicart-nonce": "'.wp_create_nonce( 'dolicart-nonce').'",
                 "case": "updateline",
                 "productid" : "'.$product->id.'",
+                "qty" : document.getElementById("qty-prod-'.$product->id.'").value,
                 "modify" : acase
               },
           }).done(function(response) {
               //jQuery("#DoliconnectLoadingModal").modal("hide");
               if (response.success) { 
-                console.log("updated qty of '.$product->id.' to " + response.data.items);
-                if (document.getElementById("qty-prod-'.$product->id.'")) {  
-                  document.getElementById("qty-prod-'.$product->id.'").innerHTML = response.data.items;
+                console.log("updated qty of '.$product->id.' to " + response.data.newqty);
+                if (document.getElementById("qty-prod-'.$product->id.'")) { 
+                  console.log("qty-prod-'.$product->id.'"); 
+                  document.getElementById("qty-prod-'.$product->id.'").value = response.data.newqty;
                 }
               } else {
                 console.log("error updating qty " + response.data);

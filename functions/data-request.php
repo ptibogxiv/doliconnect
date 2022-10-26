@@ -658,12 +658,19 @@ global $current_user;
 
 if ( wp_verify_nonce( trim($_POST['dolicart-nonce']), 'dolicart-nonce')) {
 
-if ( isset($_POST['case']) && $_POST['case'] == "updateline") {
+if (isset($_POST['case']) && $_POST['case'] == "updateline") {
+
+if (isset($_POST['modify']) && $_POST['case'] == "plus") { 
+	$qty = $_POST['qty']+1;
+} elseif (isset($_POST['modify']) && $_POST['case'] == "minus") { 
+	$qty = $_POST['qty']-1;	
+}
 
 	$response = [
 		'items' => 0,
 		'lines' => 0,
 		'total' => 0,
+		'newqty' => $qty,
 		'message' => __( 'This product has been added to basket', 'doliconnect'),
 			];
 	wp_send_json_success($response);	
