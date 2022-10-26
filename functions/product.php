@@ -332,7 +332,10 @@ $button .= '$(function() {
           }).done(function(response) {
               //jQuery("#DoliconnectLoadingModal").modal("hide");
               if (response.success) { 
-                console.log("updated qty " + response.data.message);
+                console.log("updated qty of '.$product->id.' to " + response.data.items);
+                if (document.getElementById("qty-prod-'.$product->id.'")) {  
+                  document.getElementById("qty-prod-'.$product->id.'").innerHTML = response.data.items;
+                }
               } else {
                 console.log("error updating qty " + response.data);
               }
