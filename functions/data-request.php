@@ -652,6 +652,7 @@ if (isset($_POST['modify']) && $_POST['modify'] == "plus" && ($_POST['qty']+$mst
 		'message' => __( 'Quantities have been changed', 'doliconnect'),
 		'newqty' => $qty,
 		'items' => doliconnect_countitems($object),	
+		'list' => doliline($object, true),
 		'lines' => doliline($object, true),
 		'total' => doliprice($object, 'ttc', isset($object->multicurrency_code) ? $object->multicurrency_code : null)
 		];	
@@ -664,6 +665,7 @@ if (isset($_POST['modify']) && $_POST['modify'] == "plus" && ($_POST['qty']+$mst
 		'message' => __( 'Quantities have been changed', 'doliconnect'),
 		'newqty' => $qty,
 		'items' => doliconnect_countitems($object),	
+		'list' => doliline($object, true),
 		'lines' => doliline($object, true),
 		'total' => doliprice($object, 'ttc', isset($object->multicurrency_code) ? $object->multicurrency_code : null)
 		];	
