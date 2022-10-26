@@ -57,7 +57,7 @@ add_action( 'wp_ajax_nopriv_doli_gdrf_data_request', 'doli_gdrf_data_request' );
 add_action('wp_ajax_doliproduct_request', 'doliproduct_request');
 add_action('wp_ajax_nopriv_doliproduct_request', 'doliproduct_request');
 
-function doliproduct_request(){
+function doliproduct_request() {
 global $current_user;
 		
 if ( wp_verify_nonce( trim($_POST['product-add-nonce']), 'product-add-nonce-'.trim($_POST['product-add-id']) ) ) {
@@ -75,13 +75,6 @@ $response = [
         ];
 wp_send_json_error( $response ); 
 }
-}	elseif ( wp_verify_nonce( trim($_POST['product-wish-nonce']), 'product-wish-nonce-'.trim($_POST['product-wish-id']) ) ) {
-$response = [
-    'message' => '<i class="fas fa-heart-broken" style="color:Fuchsia"></i>',
-    'items' => $result,
-    'list' => doliconnect_CartItemsList()
-        ];
-wp_send_json_success( $response ); 
 } else {
 $response = [
     'message' => '<div class="alert alert-danger alert-dismissible d-flex align-items-center" role="alert">'.__( 'A security error occured', 'doliconnect').'</div>',
