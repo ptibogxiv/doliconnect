@@ -73,6 +73,9 @@ if (isset($_POST['case']) && $_POST['case'] == "update" ) {
 }
 
 }
+
+//*****************************************************************************************
+
 add_action('wp_ajax_doliuserinfos_request', 'doliuserinfos_request');
 add_action('wp_ajax_nopriv_doliuserinfos_request', 'doliuserinfos_request');
 
