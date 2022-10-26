@@ -646,7 +646,7 @@ if (isset($_POST['case']) && $_POST['case'] == "updateline") {
 
 if (isset($_POST['modify']) && $_POST['modify'] == "plus" && ($_POST['qty']+$mstock['step'])<=max(array($mstock['m2'],$mstock['qty']))) { 
 	$qty = trim($_POST['qty'])+$mstock['step'];
-	$result = doliaddtocart(trim($_POST['productid']), $qty, trim($_POST['product-add-price']), trim($_POST['product-add-remise_percent']), isset($_POST['product-add-timestamp_start'])?trim($_POST['product-add-timestamp_start']):null, isset($_POST['product-add-timestamp_end'])?trim($_POST['product-add-timestamp_end']):null);
+	$result = doliaddtocart(trim($_POST['productid']), $qty, 1, 0, isset($_POST['product-add-timestamp_start'])?trim($_POST['product-add-timestamp_start']):null, isset($_POST['product-add-timestamp_end'])?trim($_POST['product-add-timestamp_end']):null);
 	if (isset($_POST['module']) && isset($_POST['id']) ) $object = callDoliApi("GET", "/".trim($_POST['module'])."/".trim($_POST['id']), null, dolidelay('order', true));
 		$response = [
 		'message' => __( 'Quantities have been changed', 'doliconnect'),
@@ -658,7 +658,7 @@ if (isset($_POST['modify']) && $_POST['modify'] == "plus" && ($_POST['qty']+$mst
 	wp_send_json_success($response);	
 } elseif (isset($_POST['modify']) && $_POST['modify'] == "minus" && $_POST['qty']-$mstock['step']>=0) { 
 	$qty = trim($_POST['qty'])-$mstock['step'];
-	$result = doliaddtocart(trim($_POST['productid']), $qty, trim($_POST['product-add-price']), trim($_POST['product-add-remise_percent']), isset($_POST['product-add-timestamp_start'])?trim($_POST['product-add-timestamp_start']):null, isset($_POST['product-add-timestamp_end'])?trim($_POST['product-add-timestamp_end']):null);
+	$result = doliaddtocart(trim($_POST['productid']), $qty, 1, 0, isset($_POST['product-add-timestamp_start'])?trim($_POST['product-add-timestamp_start']):null, isset($_POST['product-add-timestamp_end'])?trim($_POST['product-add-timestamp_end']):null);
 	if (isset($_POST['module']) && isset($_POST['id']) ) $object = callDoliApi("GET", "/".trim($_POST['module'])."/".trim($_POST['id']), null, dolidelay('order', true));
 	$response = [
 		'message' => __( 'Quantities have been changed', 'doliconnect'),
