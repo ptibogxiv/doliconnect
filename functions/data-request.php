@@ -666,14 +666,14 @@ if (isset($_POST['case']) && $_POST['case'] == "updateline") {
 if (isset($_POST['modify']) && $_POST['modify'] == "plus" && ($_POST['qty']+$mstock['step'])<=max(array($mstock['m2'],$mstock['qty']))) { 
 	$qty = $_POST['qty']+$mstock['step'];
 	$response = [
-		'message' => 'This product has been added to basket',
+		'message' => __( 'Quantities have been changed', 'doliconnect'),
 		'newqty' => $qty
 			];
 	wp_send_json_success($response);	
 } elseif (isset($_POST['modify']) && $_POST['modify'] == "minus" && $_POST['qty']-$mstock['step']>=0) { 
 	$qty = $_POST['qty']-$mstock['step'];
 	$response = [
-		'message' => 'This product has been added to basket',
+		'message' => __( 'Quantities have been changed', 'doliconnect'),
 		'newqty' => $qty
 			];
 	wp_send_json_success($response);	
