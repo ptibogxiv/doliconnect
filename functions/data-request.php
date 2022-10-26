@@ -626,6 +626,8 @@ wp_send_json_error( __( 'A security error occured', 'doliconnect'));
 }
 }
 
+//*****************************************************************************************
+
 add_action('wp_ajax_dolicart_request', 'dolicart_request');
 //add_action('wp_ajax_nopriv_dolicart_request', 'dolicart_request');
 
