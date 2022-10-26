@@ -317,7 +317,7 @@ $button .= '$(function() {
           e.preventDefault();
           var acase = $(this).val();
           //jQuery("#DoliconnectLoadingModal").modal("show");
-          console.log("changed " + '.$product->id.' + " to " + acase);
+          //console.log("changed " + '.$product->id.' + " to " + acase);
           $.ajax({
               url :"'.admin_url('admin-ajax.php').'",
               type:"POST",
@@ -332,13 +332,13 @@ $button .= '$(function() {
               },
           }).done(function(response) {
               if (response.success) { 
-                console.log("updated qty of '.$product->id.' to " + response.data.newqty);
+                //console.log("updated qty of '.$product->id.' to " + response.data.newqty);
                 if (document.getElementById("qty-prod-'.$product->id.'")) { 
-                  console.log("qty-prod-'.$product->id.'"); 
+                  //console.log("qty-prod-'.$product->id.'"); 
                   document.getElementById("qty-prod-'.$product->id.'").value = response.data.newqty;
                 }
               } else {
-                console.log("error updating qty " + response.data.message);
+                //console.log("error updating qty " + response.data.message);
               }
               //jQuery("#DoliconnectLoadingModal").modal("hide");
           });
