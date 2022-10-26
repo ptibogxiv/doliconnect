@@ -653,7 +653,7 @@ wp_send_json_error( __( 'A security error occured', 'doliconnect'));
 add_action('wp_ajax_dolicart_request', 'dolicart_request');
 //add_action('wp_ajax_nopriv_dolicart_request', 'dolicart_request');
 
-function dolicart_request(){
+function dolicart_request() {
 global $current_user;
 
 if ( wp_verify_nonce( trim($_POST['dolicart-nonce']), 'dolicart-nonce')) {
@@ -840,7 +840,7 @@ function dolimember_request(){
 global $current_user;
 		
 if ( wp_verify_nonce( trim($_POST['dolimember-nonce']), 'dolimember-nonce' ) ) {
-//if ( $_POST['cartaction'] == 'addtocart') {
+
 $productadhesion = doliconst("ADHERENT_PRODUCT_ID_FOR_SUBSCRIPTIONS", dolidelay('constante'));
 $requesta = "/adherentsplus/".doliconnector($current_user, 'fk_member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)); 
 if ( !empty(doliconnector($current_user, 'fk_member')) && doliconnector($current_user, 'fk_member') > 0 ) {
@@ -863,12 +863,7 @@ $response = [
         ];
 wp_send_json_error( $response ); 
 }
-//}	else {
-//$response = [
-//    'message' => __( 'Wish disabled', 'doliconnect').$_POST['cartaction'],
-//        ];
-//wp_send_json_error( $response ); 
-//}
+
 }	else {
 wp_send_json_error( __( 'A security error occured', 'doliconnect')); 
 }
