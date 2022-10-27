@@ -8,7 +8,7 @@ print "'>".__( 'Edit my informations', 'doliconnect')."</a>";
 add_action( 'user_doliconnect_menu', 'informations_menu', 1, 1);
 
 function informations_module($url) {
-global $wpdb, $current_user;
+global $current_user;
 
 $ID = $current_user->ID;
 
@@ -45,6 +45,8 @@ print '</div></div></form>';
 
 }
 add_action( 'user_doliconnect_informations', 'informations_module');
+
+//*****************************************************************************************
 
 function avatars_module($url) {
 global $wpdb,$current_user;
@@ -238,12 +240,16 @@ print '</div></div></form>';
 }
 add_action( 'user_doliconnect_avatars', 'avatars_module');
 
+//*****************************************************************************************
+
+add_action( 'user_doliconnect_menu', 'password_menu', 2, 1);
+add_action( 'user_doliconnect_password', 'password_module');
+
 function password_menu( $arg ){
 print "<a href='".esc_url( add_query_arg( 'module', 'password', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
 if ($arg=='password') { print " active";}
 print "'>".__( 'Edit my password', 'doliconnect')."</a>";
 }
-add_action( 'user_doliconnect_menu', 'password_menu', 2, 1);
 
 function password_module( $url ){
 global $current_user;
@@ -257,7 +263,8 @@ $return = esc_url_raw( $_GET['return']);
 print dolipasswordform($current_user, $url, $return);
 
 }
-add_action( 'user_doliconnect_password', 'password_module');
+
+//*****************************************************************************************
 
 if ( empty(doliconst('MAIN_DISABLE_CONTACTS_TAB')) && doliCheckRights('societe', 'contact', 'lire') ) {
 add_action( 'user_doliconnect_menu', 'contacts_menu', 3, 1);
@@ -370,6 +377,8 @@ print "</div></div>";
 }
 }
 
+//*****************************************************************************************
+
 add_action( 'user_doliconnect_menu', 'paymentmethods_menu', 4, 1);
 add_action( 'user_doliconnect_paymentmethods', 'paymentmethods_module');
 
@@ -388,6 +397,8 @@ function paymentmethods_module( $url ) {
 print doliconnect_paymentmethods(null, null, $url, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 
 }
+
+//*****************************************************************************************
 
 if ( !empty(doliconst('MAIN_MODULE_REWARDS')) ) {
     add_action( 'member_doliconnect_menu', 'rewards_menu', 5, 1);
@@ -504,6 +515,8 @@ print "</div></small>";
 print "</div></div>";
 
 }
+
+//*****************************************************************************************
 
 if ( !empty(doliconst('MAIN_MODULE_PROPALE')) && doliCheckRights('propale', 'lire') ) {
 add_action( 'customer_doliconnect_menu', 'proposals_menu', 1, 1);
@@ -632,6 +645,8 @@ print "</div></div>";
 
 }
 }
+
+//*****************************************************************************************
 
 if ( !empty(doliconst('MAIN_MODULE_COMMANDE')) && doliCheckRights('commande', 'lire') ) {
 add_action( 'customer_doliconnect_menu', 'orders_menu', 2, 1);
@@ -945,6 +960,8 @@ print "</div></div>";
 }
 }
 
+//*****************************************************************************************
+
 if ( !empty(doliconst('MAIN_MODULE_FACTURE')) && get_option('doliconnectdisplayinvoice') && doliCheckRights('facture', 'lire') ) {
 add_action( 'customer_doliconnect_menu', 'invoices_menu', 2, 1);
 add_action( 'customer_doliconnect_invoices', 'invoices_module');
@@ -1214,6 +1231,8 @@ print "</div></div>";
 }
 }
 
+//*****************************************************************************************
+
 if ( !empty(doliconst('MAIN_MODULE_CONTRAT')) && !empty(get_option('doliconnectbeta')) && doliCheckRights('contrat', 'lire') ) {
 add_action( 'customer_doliconnect_menu', 'contracts_menu', 2, 1);
 add_action( 'customer_doliconnect_contracts', 'contracts_module');
@@ -1341,6 +1360,8 @@ print "</div></div>";
 
 }
 }
+
+//*****************************************************************************************
 
 if ( !empty(doliconst('MAIN_MODULE_PROJET')) && !empty(get_option('doliconnectbeta')) && doliCheckRights('projet', 'lire') ) {
 add_action( 'customer_doliconnect_menu', 'projets_menu', 2, 1);
@@ -1471,6 +1492,8 @@ print "</div></div>";
 }
 }
 
+//*****************************************************************************************
+
 if ( !empty(doliconst('MAIN_MODULE_DON')) ) {
 add_action( 'customer_doliconnect_menu', 'donations_menu', 5, 1);
 add_action( 'customer_doliconnect_donations', 'donations_module');
@@ -1593,6 +1616,8 @@ print "</div></div>";
 
 }
 }
+
+//*****************************************************************************************
 
 if ( !empty(doliconst('MAIN_MODULE_RECRUITMENT')) && doliversion('15.0.0') && !empty(get_option('doliconnectbeta')) ) {
     add_action( 'grh_doliconnect_menu', 'recruitment_menu', 3, 1);
@@ -1888,6 +1913,8 @@ print '</div></div>';
 
 }
 
+//*****************************************************************************************
+
 if ( !empty(doliconst('ADHERENT_CONSUMPTION')) && !empty(get_option('doliconnectbeta')) && doliCheckRights('adherent', 'lire') ) {
 add_action( 'member_doliconnect_menu', 'membershipconsumption_menu', 2, 1);
 add_action( 'member_doliconnect_membershipconsumption', 'membershipconsumption_module');
@@ -1939,6 +1966,8 @@ print "</div></small>";
 print '</div></div>';
 
 }
+
+//*****************************************************************************************
 
 if ( !empty(doliconst('ADHERENT_LINKEDMEMBER')) && doliCheckRights('adherent', 'lire') ) {
 add_action( 'member_doliconnect_menu', 'linkedmember_menu', 3, 1);
@@ -2107,6 +2136,8 @@ print "</div></small>";
 print '</div></div>';
 
 }
+
+//*****************************************************************************************
 
 if ( !empty(doliconst('MAIN_MODULE_TICKET')) ) {
 add_action( 'settings_doliconnect_menu', 'tickets_menu', 1, 1);
@@ -2358,12 +2389,16 @@ print '</div></div>';
 }
 }
 
+//*****************************************************************************************
+
+add_action( 'settings_doliconnect_menu', 'settings_menu', 2, 1);
+add_action( 'settings_doliconnect_settings', 'settings_module');
+
 function settings_menu($arg) {
 print "<a href='".esc_url( add_query_arg( 'module', 'settings', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
 if ($arg=='settings') { print " active"; }
 print "'>".__( 'Safety and appearance', 'doliconnect')."</a>";
 }
-add_action( 'settings_doliconnect_menu', 'settings_menu', 2, 1);
 
 function settings_module($url) {
 global $wpdb, $current_user;
@@ -2505,16 +2540,18 @@ function generate_license($suffix = null) {
 }
 
 }
-add_action( 'settings_doliconnect_settings', 'settings_module');
+
+//*****************************************************************************************
+
+add_action( 'settings_doliconnect_menu', 'gdpr_menu', 3, 1);
+add_action( 'settings_doliconnect_gdpr', 'gdpr_module');
 
 function gdpr_menu($arg) {
 print "<a href='".esc_url( add_query_arg( 'module', 'gdpr', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
 if ($arg=='gdpr') { print " active";}
 print "'>".__( 'Privacy', 'doliconnect')."</a>";
 }
-add_action( 'settings_doliconnect_menu', 'gdpr_menu', 3, 1);
-add_action( 'settings_doliconnect_gdpr', 'gdpr_module');
- 
+
 function gdpr_module($url) {
 global $current_user;
 
