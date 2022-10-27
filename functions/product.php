@@ -435,11 +435,6 @@ $price_ht3 = $product->multiprices->$level;
 $vat = $product->tva_tx;
 $refprice=(empty(get_option('dolibarr_b2bmode'))?$price_ttc:$price_ht);
 
-if (isset($add) && $add < 0) {
-$button .= '<table class="table table-bordered table-sm"><tbody>'; 
-$button .= '<tr><td class="text-end"><div class="float-start">'.__( 'Selling Price', 'doliconnect').'</div>';
-$button .= '<div class="float-end">'.doliprice( (empty(get_option('dolibarr_b2bmode'))?$price_ttc:$price_ht), null, $currency)."</div></td></tr>";
-} else {
 $button .= '<table class="table table-sm table-striped table-bordered"><tbody>';
 $multiprix = (empty(get_option('dolibarr_b2bmode'))?$product->multiprices_ttc:$product->multiprices);
 foreach ( $multiprix as $level => $price ) {
@@ -455,7 +450,6 @@ $button .= '</small></td>';
 if ( !empty($altdurvalue) ) { $button .= "<td class='text-end'>soit ".doliprice( $altdurvalue*(empty(get_option('dolibarr_b2bmode'))?$price:$price_ht), null, $currency)." par ".__( 'hour', 'doliconnect')."</td>"; } 
 //$button .= '<small class="float-end">'.__( 'You benefit from the rate', 'doliconnect').' '.doliconst('PRODUIT_MULTIPRICES_LABEL'.$level).'</small>';
 $button .= '</tr>'; 
-}
 }
 $button .= '</tbody></table>';
 } else {
