@@ -344,7 +344,7 @@ function doliajax($id, $url = null, $case = null){
   //$ajax.= "<input type='hidden' name='".$id."-nonce' value='".wp_create_nonce( $id.'-nonce')."'>";
   $ajax.= "<script>";
   $ajax.= 'jQuery(document).ready(function($) {
-    jQuery("#'.$id.'-form").on("submit", function(e) {
+    $("#'.$id.'-form").on("submit", function(e) {
     e.preventDefault();
     if (document.getElementById("'.$id.'-button")) {
       document.getElementById("'.$id.'-button").disabled = true;
@@ -352,7 +352,7 @@ function doliajax($id, $url = null, $case = null){
     jQuery("#DoliconnectLoadingModal").modal("show");
     var $form = $(this);
     var url = "'.$url.'";
-    jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function (e) { 
+    $("#DoliconnectLoadingModal").on("shown.bs.modal", function (e) { 
       $.post($form.attr("action"), $form.serialize(), function(response) {
         $(window).scrollTop(0); 
         if (response.success) {
