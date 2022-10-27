@@ -379,7 +379,9 @@ $button .= 'jQuery(document).ready(function($) {
   $mstock = doliProductStock($product, $refresh, true);
 
 if ( empty(doliconnectid('dolicart')) || empty(doliconnectid('dolicart')) ) {
-  $button .= "<a class='btn btn-block btn-info' href='".doliconnecturl('dolicontact')."?type=COM' role='button' title='".__( 'Login', 'doliconnect')."'>".__( 'Contact us', 'doliconnect').'</a>'; 
+  $button .= '<div class="d-grid gap-2">';
+  $button .= "<a class='btn btn-block btn-info' href='".doliconnecturl('dolicontact')."?type=COM' role='button' title='".__( 'Login', 'doliconnect')."'>".__( 'Contact us', 'doliconnect').'</a>';
+  $button .= '</div>'; 
 } elseif ( is_user_logged_in() && !empty(doliconst('MAIN_MODULE_COMMANDE', $refresh)) && doliconnectid('dolicart') > 0 ) { 
   $button .= '<div class="input-group">';
 if ($mstock['stock'] <= 0 || $mstock['m2'] < $mstock['step'])  { 
