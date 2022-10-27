@@ -576,6 +576,7 @@ if (!empty($product->net_measure) && !empty($product->net_measure_units)) {
 if (!empty($discount)) $button .= '<span class="position-absolute top-100 start-100 translate-middle badge bg-light text-dark"><small><s>'.doliprice( empty(get_option('dolibarr_b2bmode'))?$price_ttc:$price_ht, $currency).'</s><span class="visually-hidden">initial price</span></small></span>';
 $button .= '</a><br><br>';
 
+/*
 //if ( empty($time) && !empty($product->duration_value) ) { $button .='/'.doliduration($product); } 
 //if ( !empty($altdurvalue) ) { $button .= "<tr><td class='text-end'>soit ".doliprice( $altdurvalue*$product->price_ttc, null, $currency)." par ".__( 'hour', 'doliconnect')."</td></tr>"; } 
 //if (!empty($product->net_measure) && !empty($product->net_measure_units)) { 
@@ -585,45 +586,11 @@ $button .= '</a><br><br>';
 //  $button .= '</span> ';
 //}
   
-/*
 if ( empty(doliconnectid('dolicart')) ) {
 
 $button .= "<div class='input-group'><a class='btn btn-block btn-info' href='".doliconnecturl('dolicontact')."?type=COM' role='button' title='".__( 'Login', 'doliconnect')."'>".__( 'Contact us', 'doliconnect')."</a></div>";
 
 } elseif ( is_user_logged_in() && !empty($add) && !empty(doliconst('MAIN_MODULE_COMMANDE', $refresh)) && doliconnectid('dolicart') > 0 ) {
-
-$mstock = doliProductStock($product, $refresh, true);
-
-$thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty', $refresh));
-
-$button .= "<div class='input-group input-group-sm mb-3'><select class='form-control btn-light btn-outline-secondary' id='product-".$product->id."-add-qty' name='product-add-qty' ";
-if (( isset($thirdparty->status) && $thirdparty->status != '1' ) || $mstock['stock'] <= 0 || $mstock['m2'] < $mstock['step']) { $button .= " disabled"; }
-$button .= ">";
-if (isset($thirdparty->status) && $thirdparty->status != '1') {
-  $button .= "<OPTION value='0' selected>".__( 'Account closed', 'doliconnect')."</OPTION>"; 
-} elseif ($mstock['stock'] <= 0 || $mstock['m2'] < $mstock['step'])  { 
-  $button .= "<OPTION value='0' selected>".__( 'Unavailable', 'doliconnect')."</OPTION>";
-} elseif (!empty($mstock['m2']) && $mstock['m2'] >= $mstock['step']) {
-if ($mstock['step'] >1 && !empty($quantity)) $quantity = round($quantity/$mstock['step'])*$mstock['step']; 
-if (empty($qty) && $quantity > $mstock['step']) $quantity = $mstock['m2']; 
-if ($mstock['m2'] < $mstock['step'])  { $button .= "<OPTION value='0' >".__( 'Delete', 'doliconnect')."</OPTION>"; } else {
-  $max = max(array($mstock['m2'],$mstock['qty']));
-  foreach (range(0, $max, $mstock['step']) as $number) {
-    if ($number == 0) { $button .= "<OPTION value='0' >".__( 'Delete', 'doliconnect')."</OPTION>";
-    } elseif ( ($number == $mstock['step'] && empty($mstock['qty']) && empty($quantity)) || $number == $mstock['qty'] || ($number == $quantity && empty($mstock['qty'])) || ($number == $mstock['m0'] && empty($mstock['qty']) && empty($quantity))) {
-    $button .= "<option value='$number' selected='selected'>x ".$number."</option>";
-    } else {
-    $button .= "<option value='$number' >x ".$number."</option>";
-    }
-  }
-}}
-$button .= "</select>";
-$button .= "<input type='hidden' name='product-add-vat' value='".$product->tva_tx."'><input type='hidden' name='product-add-remise_percent' value='".$discount."'><input type='hidden' name='product-add-price' value='".$price_ht."'>";
-
-$button .= "<button class='btn btn-sm btn-warning' type='submit' name='cartaction' value='addtocart' title='".esc_html__( 'Add to cart', 'doliconnect')."' ";
-if (( isset($thirdparty->status) && $thirdparty->status != '1' ) || $mstock['stock'] <= 0 || $mstock['m2'] < $mstock['step']) { $button .= " disabled"; }
-$button .= "><i class='fas fa-cart-plus fa-fw'></i></button></form>";
-$button .= "</div>";
 
 } else {
 $button .= '<div class="d-grid gap-2">';
