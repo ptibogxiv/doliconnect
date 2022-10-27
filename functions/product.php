@@ -380,7 +380,7 @@ $button .= 'jQuery(document).ready(function($) {
 
 if ( empty(doliconnectid('dolicart')) || empty(doliconnectid('dolicart')) ) {
   $button .= '<div class="d-grid gap-2">';
-  $button .= "<a class='btn btn-block btn-info' href='".doliconnecturl('dolicontact')."?type=COM' role='button' title='".__( 'Login', 'doliconnect')."'>".__( 'Contact us', 'doliconnect').'</a>';
+  $button .= "<a class='btn btn-block btn-info' href='".doliconnecturl('dolicontact')."?type=COM' role='button' title='".__( 'Contact us', 'doliconnect')."'>".__( 'Contact us', 'doliconnect').'</a>';
   $button .= '</div>'; 
 } elseif ( is_user_logged_in() && !empty(doliconst('MAIN_MODULE_COMMANDE', $refresh)) && doliconnectid('dolicart') > 0 ) { 
   $button .= '<div class="input-group">';
@@ -401,9 +401,9 @@ if ($mstock['stock'] <= 0 || $mstock['m2'] < $mstock['step'])  {
   $loginurl = esc_url( add_query_arg( $arr_params, wp_login_url( )) );
   
   if ( get_option('doliloginmodal') == '1' ) {       
-  $button .= '<a href="#" data-bs-toggle="modal" class="btn btn-sm btn-outline-secondary" data-bs-target="#DoliconnectLogin" data-bs-dismiss="modal" title="'.__('Sign in', 'ptibogxivtheme').'" role="button">'.__( 'log in', 'doliconnect').'</a>';
+  $button .= '<a href="#" data-bs-toggle="modal" class="btn btn-sm btn-outline-secondary" data-bs-target="#DoliconnectLogin" data-bs-dismiss="modal" title="'.__('Sign in', 'doliconnect').'" role="button">'.__( 'Sign in', 'doliconnect').'</a>';
   } else {
-  $button .= "<a href='".wp_login_url( get_permalink() )."?redirect_to=".get_permalink()."' class='btn btn-sm btn-outline-secondary' type='button'>".__( 'log in', 'doliconnect').'</a>';
+  $button .= "<a href='".wp_login_url( get_permalink() )."?redirect_to=".get_permalink()."' class='btn btn-sm btn-outline-secondary' type='button'>".__( 'Sign in', 'doliconnect').'</a>';
   }
   $button .= '</div>';
 }
