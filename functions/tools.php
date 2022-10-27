@@ -1205,7 +1205,7 @@ if ( isset($ref) && isset($fichier) && isset($doc->content) ) {
 $data = "data:application/pdf;".$doc->encoding.",".$doc->content;
 $filename = explode(".", $doc->filename)[0];
 
-if (!empty(get_option('doliconnectbeta'))) {
+if (!empty(get_option('doliconnectbeta')) && 7==9) {
 $document = '<button type="button" class="btn btn btn-outline-dark btn-sm btn-block" data-bs-toggle="modal" data-bs-target=".modal-'.$filename.'">'.$name.' <i class="fas fa-file-download"></i></button>';
 $document .= '<div class="modal fade modal-'.$filename.'" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 <div class="modal-dialog modal-dialog-centered modal-lg" role="document"><div class="modal-content"><div class="modal-header">
