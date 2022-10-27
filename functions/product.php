@@ -577,6 +577,7 @@ $button .= "<a tabindex='0' id='popover-price-".$product->id."' class='btn btn-l
 if (!empty($price['discount'])) $button .= " text-danger";
 $button .= "' data-bs-container='body' data-bs-toggle='popover' data-bs-trigger='focus' title='".__( 'About price', 'doliconnect')."' data-bs-content='".$explication."'>";
 $button .= doliprice( empty(get_option('dolibarr_b2bmode'))?$price_ttc3:$price_ht3, $currency);
+$price['subprice'] = $price_ht3;
 $date = new DateTime(); 
 $date->modify('NOW');
 if (!empty(get_option('dolicartnewlist')) && get_option('dolicartnewlist') != 'none') { 
