@@ -678,6 +678,7 @@ if (isset($_POST['modify']) && $_POST['modify'] == "plus" && ($_POST['qty']+$mst
 }	
 
 } elseif ( isset($_POST['case']) && $_POST['case'] == "purge_cart" && isset($_POST['module']) && isset($_POST['id'])) {
+
 $object = callDoliApi("GET", "/".trim($_POST['module'])."/".trim($_POST['id']), null, dolidelay('order', true));
 if (!isset($object->error) && empty($object->statut)) {
 $object = callDoliApi("DELETE", "/".trim($_POST['module'])."/".trim($_POST['id']), null);
@@ -696,6 +697,7 @@ wp_send_json_error( __( 'An error occured:', 'doliconnect').' '.$object->error->
 } else{
 wp_send_json_error( __( 'An error occured:', 'doliconnect').' '.$object->error->message); 
 }
+
 } elseif ( isset($_POST['case']) && $_POST['case'] == "validate_cart" && isset($_POST['module']) && isset($_POST['id'])) {
 
 $data = [
@@ -713,6 +715,7 @@ wp_send_json_success($response);
 } else {
 wp_send_json_error( __( 'An error occured:', 'doliconnect').' '.$object->error->message); 
 }
+
 } elseif ( isset($_POST['case']) && $_POST['case'] == "info_cart" && isset($_POST['module']) && isset($_POST['id'])) {
 
 $data = [
