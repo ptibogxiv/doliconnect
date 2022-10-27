@@ -101,9 +101,6 @@ if ( $mstock['stock']-$mstock['qty'] > 0 && (empty($product->type) || (!empty($p
   else { $mstock['m2'] = 1; }
 } 
 
-if ($nohtml) { 
-  return $mstock;
-} else {
 $stock = '<script>';
 $stock .= 'jQuery(document).ready(function($) {
 $("#popover-stock-'.$product->id.'").popover({
@@ -127,7 +124,6 @@ if ( ! is_object($product) || empty(doliconst('MAIN_MODULE_STOCK', $refresh)) ||
   $mstock['m2'] = $mstock['m1'];
   $mstock['stock'] = $mstock['m2'];
 } else {
-
 if ( $mstock['stock'] <= 0 || (isset($product->array_options->options_packaging) && !empty($product->array_options->options_packaging) && $mstock['stock'] < $product->array_options->options_packaging) ) { 
   $stock .= "<a tabindex='0' id='popover-stock-".$product->id."' class='badge rounded-pill bg-dark text-white text-decoration-none' data-bs-container='body' data-bs-toggle='popover' data-bs-trigger='focus' title='".__( 'Not available', 'doliconnect')."' data-bs-content='".sprintf( __( 'This item is out of stock and can not be ordered or shipped. %s', 'doliconnect'), $shipping)."'><i class='fas fa-warehouse'></i> ".__( 'Not available', 'doliconnect')."</a>"; }  
 elseif ( ($mstock['stock'] <= 0 || (isset($product->array_options->options_packaging) && $mstock['stock'] < $product->array_options->options_packaging)) && $product->stock_theorique > $mstock['stock'] ) { 
@@ -151,6 +147,9 @@ $next = null;
 }
 } 
 
+if ($nohtml) { 
+  return $mstock;
+} else {
   //$stock .= var_dump($mstock);
   return $stock;
 }
