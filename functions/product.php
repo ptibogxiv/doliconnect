@@ -328,7 +328,7 @@ if (current_user_can('administrator') && !empty(get_option('doliconnectbeta')) )
 $button = '<form id="doliform-product-'.$product->id.'" method="post">';
   
 $button .= "<script>";
-$button .= '$(function() {
+$button .= 'jQuery(document).ready(function($) {
       $("#doliform-product-'.$product->id.' button[type=submit]").on("click", function(e) {
           e.preventDefault();
           var acase = $(this).val();
