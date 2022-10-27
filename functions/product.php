@@ -316,7 +316,7 @@ $button .= '$(function() {
       $("#doliform-product-'.$product->id.' button[type=submit]").on("click", function(e) {
           e.preventDefault();
           var acase = $(this).val();
-          //jQuery("#DoliconnectLoadingModal").modal("show");
+          jQuery("#DoliconnectLoadingModal").modal("show");
           //console.log("changed " + '.$product->id.' + " to " + acase);
           $.ajax({
               url :"'.admin_url('admin-ajax.php').'",
@@ -354,7 +354,7 @@ $button .= '$(function() {
               } else {
                 //console.log("error updating qty " + response.data.message);
               }
-              //jQuery("#DoliconnectLoadingModal").modal("hide");
+              jQuery("#DoliconnectLoadingModal").modal("hide");
           });
   
       });
