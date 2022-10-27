@@ -233,6 +233,8 @@ $dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolide
 
 $response['message'] = __( 'This item has been deleted to basket', 'doliconnect');
 $response['items'] = doliconnect_countitems($order);
+$response['lines'] = doliline($order);
+$response['list'] = doliconnect_CartItemsList($order);
 return $response;
 
 } elseif ( doliconnector($current_user, 'fk_order') > 0 && $quantity > 0 && empty($mstock['line'])) {
@@ -258,6 +260,7 @@ if ( !empty($url) ) {
 $response['message'] = __( 'This item has been added to basket', 'doliconnect');
 $response['items'] = doliconnect_countitems($order);
 $response['lines'] = doliline($order);
+$response['list'] = doliconnect_CartItemsList($order);
 return $response;
 
 } elseif ( doliconnector($current_user, 'fk_order') > 0 && $mstock['line'] > 0 ) {
@@ -273,6 +276,7 @@ $product = callDoliApi("GET", "/products/".$product->id."?includestockdata=1&inc
 $response['message'] = __( 'This item has been deleted to basket', 'doliconnect');
 $response['items'] = doliconnect_countitems($order);
 $response['lines'] = doliline($order);
+$response['list'] = doliconnect_CartItemsList($order);
 return $response;
  
 } else {
