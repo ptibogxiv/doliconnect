@@ -549,18 +549,17 @@ $price_ht3 = $price_ht-($price_ht*$discount/100);
 
 }
 
-$button .= "<script>";
-$button .= "(function ($) {
-$(document).ready(function(){
-$('#popover-price-".$product->id."').popover({
-placement : 'auto',
-delay: { 'show': 150, 'hide': 150 },
-trigger : 'focus',
+$button = '<script>';
+$button .= 'jQuery(document).ready(function($) {
+$("#popover-price-'.$product->id.'").popover({
+placement : "auto",
+delay: { "show": 150, "hide": 150 },
+trigger : "focus",
 html : true
 })
-});
-})(jQuery);";
-$button .= "</script>";
+});';
+$button .= '</script>';
+
 $explication = (empty(get_option('dolibarr_b2bmode'))?__( 'Displayed price is included VAT', 'doliconnect'):__( 'Displayed price is excluded VAT', 'doliconnect'));
 $explication .= sprintf(__( 'VAT rate of %s', 'doliconnect'), $vat);
 //$explication .= "<ul>";
