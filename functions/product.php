@@ -378,6 +378,9 @@ $button .= 'jQuery(document).ready(function($) {
 
   $mstock = doliProductStock($product, $refresh, true);
 
+if ( empty(doliconnectid('dolicart')) || empty(doliconnectid('dolicart')) ) {
+  $button .= "<a class='btn btn-block btn-info' href='".doliconnecturl('dolicontact')."?type=COM' role='button' title='".__( 'Login', 'doliconnect')."'>".__( 'Contact us', 'doliconnect').'</a>'; 
+} elseif ( is_user_logged_in() && !empty(doliconst('MAIN_MODULE_COMMANDE', $refresh)) && doliconnectid('dolicart') > 0 ) { 
   $button .= '<div class="input-group">';
 if ($mstock['stock'] <= 0 || $mstock['m2'] < $mstock['step'])  { 
   $button .= '<input id="qty-prod-'.$product->id.'" type="text" class="form-control form-control-sm" value="'.__( 'Unavailable', 'doliconnect').'" aria-label="'.__( 'Unavailable', 'doliconnect').'" style="text-align:center;" disabled readonly>';
@@ -388,8 +391,21 @@ if ($mstock['stock'] <= 0 || $mstock['m2'] < $mstock['step'])  {
   if ( !empty(doliconst('MAIN_MODULE_WISHLIST')) && !empty(get_option('doliconnectbeta')) ) {
     $button .= '<button class="btn btn-sm btn-light" name="wish" value="wish" type="submit"><i class="fas fa-heart" style="color:Fuchsia"></i></button>';
   }
-}
+}  
   $button .= '</div>';
+} else {
+  $button .= '<div class="d-grid gap-2">';
+  $arr_params = array( 'redirect_to' => doliconnecturl('dolishop'));
+  $loginurl = esc_url( add_query_arg( $arr_params, wp_login_url( )) );
+  
+  if ( get_option('doliloginmodal') == '1' ) {       
+  $button .= '<a href="#" data-bs-toggle="modal" class="btn btn-sm btn-outline-secondary" data-bs-target="#DoliconnectLogin" data-bs-dismiss="modal" title="'.__('Sign in', 'ptibogxivtheme').'" role="button">'.__( 'log in', 'doliconnect').'</a>';
+  } else {
+  $button .= "<a href='".wp_login_url( get_permalink() )."?redirect_to=".get_permalink()."' class='btn btn-sm btn-outline-secondary' type='button'>".__( 'log in', 'doliconnect').'</a>';
+  }
+  $button .= '</div>';
+}
+
   $button .= '</form>';
   return $button;
 }
@@ -603,17 +619,6 @@ $button .= '</a><br><br>';
 //  if (!empty($unit)) $button .= " ".$unit[0]->short_label;
 //  $button .= '</span> ';
 //}
-  
-$button .= '<div class="d-grid gap-2">';
-$arr_params = array( 'redirect_to' => doliconnecturl('dolishop'));
-$loginurl = esc_url( add_query_arg( $arr_params, wp_login_url( )) );
-
-if ( get_option('doliloginmodal') == '1' ) {       
-$button .= '<a href="#" data-bs-toggle="modal" class="btn btn-sm btn-outline-secondary" data-bs-target="#DoliconnectLogin" data-bs-dismiss="modal" title="'.__('Sign in', 'ptibogxivtheme').'" role="button">'.__( 'log in', 'doliconnect').'</a>';
-} else {
-$button .= "<a href='".wp_login_url( get_permalink() )."?redirect_to=".get_permalink()."' class='btn btn-sm btn-outline-secondary' >".__( 'log in', 'doliconnect').'</a>';
-}
-
 $button .= "<div id='message-doliproduct-".$product->id."'></div>";
 */
 
