@@ -1154,7 +1154,7 @@ print '<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasDolicar
   <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
 </div>
 <div class="offcanvas-body"><div id="message-dolicart"></div>';
-print '<div id="DoliCartItemsList">'.doliconnect_CartItemsList().'</div>';
+print '<div id="DoliCartItemsList"></div>';
 print '</div></div>';
 }
 add_action( 'wp_footer', 'dolicart_modal');
@@ -1632,9 +1632,8 @@ print "</a>";
 print '</ul></div>
 <div id="loadingSelectLang" style="display:none"><br><br><br><center><div class="align-middle"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div><h4>'.__('Loading', 'doliconnect').'</h4></div></center><br><br><br></div>
 </div></div></div></div>';
-
 }    
-print "sexy";
+
 }
 add_action( 'wp_footer', 'doliconnect_langs');
 
