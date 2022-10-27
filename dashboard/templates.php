@@ -1665,22 +1665,30 @@ var actionvalue = $(this).val();
           }
         }).done(function(response) {
 $(window).scrollTop(0); 
-console.log(actionvalue);
+//console.log(actionvalue);
       if (response.success) {
 if (actionvalue == 'purge_cart')  {
 document.getElementById('doliline').innerHTML = response.data.lines;
-document.getElementById('dolitotal').remove();
-document.getElementById('purgebtn_cart').remove();
-document.getElementById('validatebtn_cart').remove();
-
+if (document.getElementById('dolitotal')) {
+  document.getElementById('dolitotal').remove();
+}
+if (document.getElementById('purgebtn_cart')) {
+  document.getElementById('purgebtn_cart').remove();
+}
+if (document.getElementById('validatebtn_cart')) {
+  document.getElementById('validatebtn_cart').remove();
+}
 if (document.getElementById('DoliHeaderCartItems')) {
-document.getElementById('DoliHeaderCartItems').innerHTML = response.data.items;
+  document.getElementById('DoliHeaderCartItems').innerHTML = response.data.items;
 }
-if (document.getElementById('DoliFooterCarItems')) {  
-document.getElementById('DoliFooterCarItems').innerHTML = response.data.items;
+if (document.getElementById('DoliFooterCartItems')) {  
+  document.getElementById('DoliFooterCartItems').innerHTML = response.data.items;
 }
-if (document.getElementById('DoliWidgetCarItems')) {
-document.getElementById('DoliWidgetCartItems').innerHTML = response.data.items;
+if (document.getElementById('DoliCartItemsList')) {  
+  document.getElementById('DoliCartItemsList').innerHTML = response.data.list;
+}
+if (document.getElementById('DoliWidgetCartItems')) {
+  document.getElementById('DoliWidgetCartItems').innerHTML = response.data.items;      
 } 
 $('#a-tab-info').addClass('disabled');
 } else if (actionvalue == 'validate_cart') {
