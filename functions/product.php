@@ -231,10 +231,11 @@ $order = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order', 
 $dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolidelay('doliconnector', true));
 //delete_transient( 'doliconnect_cartlinelink_'.$mstock['line'] );
 
-$response['message'] = __( 'no', 'doliconnect');
+$response['message'] = __( 'This item has been deleted to basket', 'doliconnect');
 $response['items'] = doliconnect_countitems($order);
 $response['lines'] = doliline($order);
 $response['list'] = doliconnect_CartItemsList($order);
+$response['total'] = doliprice($order, 'ttc', isset($order->multicurrency_code) ? $order->multicurrency_code : null)
 return $response;
 
 } elseif ( doliconnector($current_user, 'fk_order') > 0 && $quantity > 0 && empty($mstock['line'])) {
@@ -261,6 +262,7 @@ $response['message'] = __( 'This item has been added to basket', 'doliconnect');
 $response['items'] = doliconnect_countitems($order);
 $response['lines'] = doliline($order);
 $response['list'] = doliconnect_CartItemsList($order);
+$response['total'] = doliprice($order, 'ttc', isset($order->multicurrency_code) ? $order->multicurrency_code : null)
 return $response;
 
 } elseif ( doliconnector($current_user, 'fk_order') > 0 && $mstock['line'] > 0 ) {
@@ -277,6 +279,7 @@ $response['message'] = __( 'This item has been deleted to basket', 'doliconnect'
 $response['items'] = doliconnect_countitems($order);
 $response['lines'] = doliline($order);
 $response['list'] = doliconnect_CartItemsList($order);
+$response['total'] = doliprice($order, 'ttc', isset($order->multicurrency_code) ? $order->multicurrency_code : null)
 return $response;
  
 } else {
@@ -305,6 +308,7 @@ $response['message'] = __( 'Quantities have been changed', 'doliconnect');
 $response['items'] = doliconnect_countitems($order);
 $response['lines'] = doliline($order);
 $response['list'] = doliconnect_CartItemsList($order);
+$response['total'] = doliprice($order, 'ttc', isset($order->multicurrency_code) ? $order->multicurrency_code : null)
 return $response;
 
 }

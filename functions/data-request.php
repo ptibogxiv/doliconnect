@@ -653,7 +653,7 @@ if (isset($_POST['modify']) && $_POST['modify'] == "plus" && ($_POST['qty']+$mst
 		'items' => $result['items'],	
 		'list' => $result['list'],
 		'lines' => $result['lines'],
-		'total' => doliprice($object, 'ttc', isset($object->multicurrency_code) ? $object->multicurrency_code : null)
+		'total' => $result['total']
 		];	
 	wp_send_json_success($response);	
 } elseif (isset($_POST['modify']) && $_POST['modify'] == "minus" && ($_POST['qty']-$mstock['step'])>=0) { 
@@ -665,13 +665,13 @@ if (isset($_POST['modify']) && $_POST['modify'] == "plus" && ($_POST['qty']+$mst
 		'items' => $result['items'],	
 		'list' => $result['list'],
 		'lines' => $result['lines'],
-		'total' => doliprice($object, 'ttc', isset($object->multicurrency_code) ? $object->multicurrency_code : null)
+		'total' => $result['total']
 		];	
 	wp_send_json_success($response);	
 } else {
 	$qty = trim($_POST['qty']);
 	$response = [
-		'message' => ''.__( 'We no longer have this item in this quantity', 'doliconnect').'',
+		'message' => __( "We don't have this item in this quantity", "doliconnect"),
 		'newqty' => $qty
 			];
 	wp_send_json_error($response);			
