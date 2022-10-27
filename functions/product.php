@@ -322,11 +322,9 @@ return $mstock['stock'];
 }
 
 function doliProductCart($product, $refresh = null, $line = null) {
-global $current_user;
-if (current_user_can('administrator') && !empty(get_option('doliconnectbeta')) ) { 
 
 $button = '<form id="doliform-product-'.$product->id.'" method="post">';
-  
+
 $button .= "<script>";
 $button .= 'jQuery(document).ready(function($) {
       $("#doliform-product-'.$product->id.' button[type=submit]").on("click", function(e) {
@@ -393,7 +391,7 @@ if ($mstock['stock'] <= 0 || $mstock['m2'] < $mstock['step'])  {
   $button .= '</div>';
   $button .= '</form>';
   return $button;
-}}
+}
 
 function doliProductPrice($product, $quantity = null, $refresh = false, $nohtml = false) {
 global $current_user;
