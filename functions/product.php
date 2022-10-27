@@ -101,6 +101,9 @@ if ( $mstock['stock']-$mstock['qty'] > 0 && (empty($product->type) || (!empty($p
   else { $mstock['m2'] = 1; }
 } 
 
+if ($nohtml) { 
+  return $mstock;
+} else {
 $stock = '<script>';
 $stock .= 'jQuery(document).ready(function($) {
 $("#popover-stock-'.$product->id.'").popover({
@@ -148,10 +151,7 @@ $next = null;
 }
 } 
 
-if ($nohtml) { 
-  return $mstock;
-} else {
-  //if (current_user_can('administrator') && !empty(get_option('doliconnectbeta'))) $stock .= var_dump($mstock);
+  //$stock .= var_dump($mstock);
   return $stock;
 }
 
@@ -393,10 +393,10 @@ if ($mstock['stock'] <= 0 || $mstock['m2'] < $mstock['step'])  {
 }
   $button .= '</div>';
   $button .= '</form>';
-return $button;
+  return $button;
 }}
 
-function doliProductPrice($product, $quantity = null, $refresh = null) {
+function doliProductPrice($product, $quantity = null, $refresh = false, $nohtml = false) {
 global $current_user;
 
 $button = null;
@@ -552,6 +552,9 @@ $price_ht3 = $price_ht-($price_ht*$discount/100);
 
 }
 
+if ($nohtml) { 
+  return $price;
+} else {
 $button = '<script>';
 $button .= 'jQuery(document).ready(function($) {
 $("#popover-price-'.$product->id.'").popover({
@@ -605,13 +608,6 @@ $button .= '</a><br><br>';
 //  $button .= '</span> ';
 //}
   
-if ( empty(doliconnectid('dolicart')) ) {
-
-$button .= "<div class='input-group'><a class='btn btn-block btn-info' href='".doliconnecturl('dolicontact')."?type=COM' role='button' title='".__( 'Login', 'doliconnect')."'>".__( 'Contact us', 'doliconnect')."</a></div>";
-
-} elseif ( is_user_logged_in() && !empty($add) && !empty(doliconst('MAIN_MODULE_COMMANDE', $refresh)) && doliconnectid('dolicart') > 0 ) {
-
-} else {
 $button .= '<div class="d-grid gap-2">';
 $arr_params = array( 'redirect_to' => doliconnecturl('dolishop'));
 $loginurl = esc_url( add_query_arg( $arr_params, wp_login_url( )) );
@@ -621,14 +617,12 @@ $button .= '<a href="#" data-bs-toggle="modal" class="btn btn-sm btn-outline-sec
 } else {
 $button .= "<a href='".wp_login_url( get_permalink() )."?redirect_to=".get_permalink()."' class='btn btn-sm btn-outline-secondary' >".__( 'log in', 'doliconnect').'</a>';
 }
-$button .= '</div>';
-}
 
 $button .= "<div id='message-doliproduct-".$product->id."'></div>";
 */
 
-return $button;
-}
+  return $button;
+}}
 
 function doliconnect_supplier($product, $refresh = false){
 
