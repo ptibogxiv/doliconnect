@@ -844,7 +844,7 @@ if ( doliversion('16.0.0') ) {
 }
 
 print '<script type="text/javascript">';
-print 'jQuery(document).ready(function() {
+print 'jQuery(document).ready(function($) {
   // Country dependent ajax
   $("#country_id").on("change",function(){
     //jQuery("#DoliconnectLoadingModal").modal("show");
