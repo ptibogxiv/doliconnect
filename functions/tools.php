@@ -348,7 +348,7 @@ function doliajax($id, $url = null, $case = null){
     if (document.getElementById("'.$id.'-button")) {
       document.getElementById("'.$id.'-button").disabled = true;
     }
-    jQuery("#DoliconnectLoadingModal").modal("show");
+    $("#DoliconnectLoadingModal").modal("show");
     var $form = $(this);
     var url = "'.$url.'";
     $("#DoliconnectLoadingModal").on("shown.bs.modal", function (e) { 
@@ -367,7 +367,7 @@ function doliajax($id, $url = null, $case = null){
         if (document.getElementById("'.$id.'-captcha") && response.data.captcha) {
           document.getElementById("'.$id.'-captcha").innerHTML = response.data.captcha;      
         }
-      jQuery("#DoliconnectLoadingModal").modal("hide");
+      $("#DoliconnectLoadingModal").modal("hide");
       if (document.getElementById("'.$id.'-button")) {
         document.getElementById("'.$id.'-button").disabled = false;
       }

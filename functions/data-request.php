@@ -641,7 +641,7 @@ if ( wp_verify_nonce( trim($_POST['dolicart-nonce']), 'dolicart-nonce')) {
 
 if (isset($_POST['case']) && $_POST['case'] == "updateline") {
 
-	$product = callDoliApi("GET", "/products/".trim($_POST['productid'])."?includestockdata=1&includesubproducts=true&includetrans=true", null, dolidelay('product', true));
+	$product = callDoliApi("GET", "/products/".trim($_POST['productId'])."?includestockdata=1&includesubproducts=true&includetrans=true", null, dolidelay('product', true));
 	$mstock = doliProductStock($product, false, true);
 
 if (isset($_POST['modify']) && $_POST['modify'] == "plus" && ($_POST['qty']+$mstock['step'])<=max(array($mstock['m2'],$mstock['qty']))) { 

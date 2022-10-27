@@ -331,8 +331,7 @@ $button .= 'jQuery(document).ready(function($) {
       $("#doliform-product-'.$product->id.' button[type=submit]").on("click", function(e) {
           e.preventDefault();
           var acase = $(this).val();
-          jQuery("#DoliconnectLoadingModal").modal("show");
-          //console.log("changed " + '.$product->id.' + " to " + acase);
+          $("#DoliconnectLoadingModal").modal("show");
           $.ajax({
               url :"'.admin_url('admin-ajax.php').'",
               type:"POST",
@@ -341,7 +340,7 @@ $button .= 'jQuery(document).ready(function($) {
                 "action": "dolicart_request",
                 "dolicart-nonce": "'.wp_create_nonce( 'dolicart-nonce').'",
                 "case": "updateline",
-                "productid" : "'.$product->id.'",
+                "productId" : "'.$product->id.'",
                 "qty" : document.getElementById("qty-prod-'.$product->id.'").value,
                 "modify" : acase
               },
@@ -369,7 +368,7 @@ $button .= 'jQuery(document).ready(function($) {
               } else {
                 //console.log("error updating qty " + response.data.message);
               }
-              jQuery("#DoliconnectLoadingModal").modal("hide");
+              $("#DoliconnectLoadingModal").modal("hide");
           });
   
       });
