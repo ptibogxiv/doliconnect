@@ -397,6 +397,7 @@ function doliProductPrice($product, $quantity = null, $refresh = false, $nohtml 
 global $current_user;
 
 $button = null;
+$price = array();
 
 if (doliconnector($current_user, 'fk_order') > 0) {
   $orderfo = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order'), null, $refresh);
@@ -409,8 +410,8 @@ $altdurvalue=60/$product->duration_value;
 }
 }
 
-$discount = !empty(doliconnector($current_user, 'remise_percent'))?doliconnector($current_user, 'remise_percent'):'0';
-$customer_discount = $discount;
+$price['discount'] = !empty(doliconnector($current_user, 'remise_percent'))?doliconnector($current_user, 'remise_percent'):'0';
+$customer_discount = $price['discount'];
 
 if ( !empty(doliconst("PRODUIT_MULTIPRICES", $refresh)) && !empty($product->multiprices_ttc) ) {
 $lvl=doliconnector($current_user, 'price_level');
@@ -462,7 +463,7 @@ if ( !empty(doliconst("PRODUIT_CUSTOMER_PRICES", $refresh)) && doliconnector($cu
 $product2 = callDoliApi("GET", "/products/".$product->id."/selling_multiprices/per_customer", null, dolidelay('product', $refresh));
 if ( !isset($product2->error) && $product2 != null ) {
 $new_product2 = array_filter($product2, function($obj){
-global $current_user;
+
 $thirdparty_id = doliconnector($current_user, 'fk_soc');
     if (isset($obj->fk_soc)) {
             if ($obj->fk_soc != $thirdparty_id)  { return false; }
@@ -492,19 +493,19 @@ $price_ht3=$product->price-($product->price*$product3[0]->discount/100);
 $price_ttc=$product->price_ttc;
 $price_ht=$product->price;
 $vat = $product->tva_tx;
-$discount = $product3[0]->discount;
+$price['discount'] = $product3[0]->discount;
 } elseif (!empty($product3[0]->price)) {
 $price_ht3=$product3[0]->price; 
 $price_ht=$product->price; 
-$discount = 100-(100*$price_ht3/$price_ht);
-$price_ttc3=$product->price_ttc-($product->price_ttc*$discount/100);
+$price['discount'] = 100-(100*$price_ht3/$price_ht);
+$price_ttc3=$product->price_ttc-($product->price_ttc*$price['discount']/100);
 $price_ttc=$product->price_ttc;
 $vat = $product->tva_tx;
 } elseif (!empty($product3[0]->price_ttc)) {
 $price_ttc3=$product3[0]->price_ttc; 
 $price_ttc=$product->price_ttc; 
-$discount = 100-(100*$price_ttc3/$price_ttc);
-$price_ht3=$product->price-($product->price*$discount/100);
+$price['discount'] = 100-(100*$price_ttc3/$price_ttc);
+$price_ht3=$product->price-($product->price*$price['discount']/100);
 $price_ht=$product->price;
 $vat = $product->tva_tx;
 }
@@ -516,9 +517,9 @@ $discountlabel = $product3[0]->label;
 }
 
 } elseif ( !empty(doliconst("PRODUIT_CUSTOMER_PRICES", $refresh)) && isset($product2) && !empty($product2) && !isset($product2->error) ) {
-  $price_min_ttc3=$product->price_min_ttc-($product2->price_min_ttc*$discount/100);
-  $price_ttc3=$product->price_ttc-($product2->price_ttc*$discount/100);
-  $price_ht3=$product->price-($product2->price*$discount/100);
+  $price_min_ttc3=$product->price_min_ttc-($product2->price_min_ttc*$price['discount']/100);
+  $price_ttc3=$product->price_ttc-($product2->price_ttc*$price['discount']/100);
+  $price_ht3=$product->price-($product2->price*$price['discount']/100);
   $price_min_ttc=$product2->price_min_ttc;
   $price_min_ht=$product2->price_min;
   $price_ttc=$product2->price_ttc;
@@ -526,9 +527,9 @@ $discountlabel = $product3[0]->label;
   $vat = $product2->tva_tx;
   $refprice = (empty(get_option('dolibarr_b2bmode'))?$price_ttc:$price_ht);
 } else {
-  $price_min_ttc3=$product->price_min_ttc-($product->price_min_ttc*$discount/100);
-  $price_ttc3=$product->price_ttc-($product->price_ttc*$discount/100);
-  $price_ht3=$product->price-($product->price*$discount/100);
+  $price_min_ttc3=$product->price_min_ttc-($product->price_min_ttc*$price['discount']/100);
+  $price_ttc3=$product->price_ttc-($product->price_ttc*$price['discount']/100);
+  $price_ht3=$product->price-($product->price*$price['discount']/100);
   $price_min_ttc=$product->price_min_ttc;
   $price_min_ht=$product->price_min;
   $price_ttc=$product->price_ttc;
@@ -538,13 +539,13 @@ $discountlabel = $product3[0]->label;
 }
 
 if ($price_min_ttc == $price_ttc) {
-$discount = 0;
+$price['discount'] = 0;
 $price_ttc3 = $price_min_ttc;
 $price_ht3 = $price_min_ht;
-} elseif ($price_min_ttc > ($price_ttc-($price_ttc*$discount/100))) {
-$discount = 100-(100*$price_min_ttc/$price_ttc);
-$price_ttc3 = $price_ttc-($price_ttc*$discount/100);
-$price_ht3 = $price_ht-($price_ht*$discount/100);
+} elseif ($price_min_ttc > ($price_ttc-($price_ttc*$price['discount']/100))) {
+$price['discount'] = 100-(100*$price_min_ttc/$price_ttc);
+$price_ttc3 = $price_ttc-($price_ttc*$price['discount']/100);
+$price_ht3 = $price_ht-($price_ht*$price['discount']/100);
 }
 
 }
@@ -567,12 +568,12 @@ $explication = (empty(get_option('dolibarr_b2bmode'))?__( 'Displayed price is in
 $explication .= sprintf(__( 'VAT rate of %s', 'doliconnect'), $vat);
 //$explication .= "<ul>";
 $explication .= sprintf(__( 'Initial sale price: %s', 'doliconnect'), doliprice( empty(get_option('dolibarr_b2bmode'))?$price_ttc:$price_ht, $currency));
-if (isset($customer_discount) && !empty($customer_discount) && !empty($discount)) $explication .= sprintf(__( 'Your customer discount is %s percent', 'doliconnect'), $customer_discount);
+if (isset($customer_discount) && !empty($customer_discount) && !empty($price['discount'])) $explication .= sprintf(__( 'Your customer discount is %s percent', 'doliconnect'), $customer_discount);
 if (isset($discountlabel) && !empty($discountlabel)) $explication .= $discountlabel;
 if ($price_ttc != $price_ttc3) $explication .= sprintf(__( 'Discounted price: %s', 'doliconnect'), doliprice( empty(get_option('dolibarr_b2bmode'))?$price_ttc3:$price_ht3, $currency));
 //$explication .= "</ul>";
 $button .= "<a tabindex='0' id='popover-price-".$product->id."' class='btn btn-light position-relative top-0 end-0";
-if (!empty($discount)) $button .= " text-danger";
+if (!empty($price['discount'])) $button .= " text-danger";
 $button .= "' data-bs-container='body' data-bs-toggle='popover' data-bs-trigger='focus' title='".__( 'About price', 'doliconnect')."' data-bs-content='".$explication."'>";
 $button .= doliprice( empty(get_option('dolibarr_b2bmode'))?$price_ttc3:$price_ht3, $currency);
 $date = new DateTime(); 
@@ -587,12 +588,12 @@ if (!empty(get_option('dolicartnewlist')) && get_option('dolicartnewlist') != 'n
   $lastdate = $date->format('Y-m-d');
 }
 if ($product->date_creation >= $lastdate) $button .= '<span class="position-absolute top-0 start-0 translate-middle badge rounded-pill bg-warning">'.__( 'Novelty', 'doliconnect').'<span class="visually-hidden">Novelty</span></span>';
-if (!empty($discount)) $button .= '<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">-'.$discount.'%<span class="visually-hidden">discount</span></span>';
+if (!empty($price['discount'])) $button .= '<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">-'.$price['discount'].'%<span class="visually-hidden">discount</span></span>';
 if (!empty($product->net_measure) && !empty($product->net_measure_units)) { 
   $unit = callDoliApi("GET", "/setup/dictionary/units?sortfield=rowid&sortorder=ASC&limit=1&active=1&sqlfilters=(t.rowid%3Alike%3A'".$product->net_measure_units."')", null, dolidelay('constante'));
   $button .= '<span class="position-absolute top-100 start-0 translate-middle badge rounded-pill bg-info"><small>'.doliprice( $refprice/$product->net_measure, null, $currency).'/'.$unit[0]->short_label.'<span class="visually-hidden">net measure price</span></small></span>';
 }
-if (!empty($discount)) $button .= '<span class="position-absolute top-100 start-100 translate-middle badge bg-light text-dark"><small><s>'.doliprice( empty(get_option('dolibarr_b2bmode'))?$price_ttc:$price_ht, $currency).'</s><span class="visually-hidden">initial price</span></small></span>';
+if (!empty($price['discount'])) $button .= '<span class="position-absolute top-100 start-100 translate-middle badge bg-light text-dark"><small><s>'.doliprice( empty(get_option('dolibarr_b2bmode'))?$price_ttc:$price_ht, $currency).'</s><span class="visually-hidden">initial price</span></small></span>';
 $button .= '</a><br><br>';
 
 /*
