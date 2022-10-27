@@ -658,7 +658,7 @@ if (isset($_POST['modify']) && $_POST['modify'] == "plus" && ($_POST['qty']+$mst
 	wp_send_json_success($response);	
 } elseif (isset($_POST['modify']) && $_POST['modify'] == "minus" && ($_POST['qty']-$mstock['step'])>=0) { 
 	$qty = trim($_POST['qty'])-$mstock['step'];
-	$result = doliaddtocart(trim($_POST['productid']), $qty, 1, 0, isset($_POST['product-add-timestamp_start'])?trim($_POST['product-add-timestamp_start']):null, isset($_POST['product-add-timestamp_end'])?trim($_POST['product-add-timestamp_end']):null);
+	$result = doliaddtocart($product, $mstock, $qty, 1, 0, isset($_POST['product-add-timestamp_start'])?trim($_POST['product-add-timestamp_start']):null, isset($_POST['product-add-timestamp_end'])?trim($_POST['product-add-timestamp_end']):null);
 	$response = [
 		'message' => $result['message'],
 		'newqty' => $qty,

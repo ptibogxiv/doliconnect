@@ -231,7 +231,7 @@ $order = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order', 
 $dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolidelay('doliconnector', true));
 //delete_transient( 'doliconnect_cartlinelink_'.$mstock['line'] );
 
-$response['message'] = __( 'This item has been deleted to basket', 'doliconnect');
+$response['message'] = __( 'no', 'doliconnect');
 $response['items'] = doliconnect_countitems($order);
 $response['lines'] = doliline($order);
 $response['list'] = doliconnect_CartItemsList($order);
