@@ -169,9 +169,7 @@ $qty+=$line->qty;
 return $qty;
 }
 
-function doliconnect_CartItemsList() {
-global $current_user;
-$order = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order', true)."?contact_list=0", null, dolidelay('order'));
+function doliconnect_CartItemsList($order) {
 if ( isset($order->lines) && $order->lines != null ) {
 $ln = '<table class="table table-hover table-sm"><thead><tr>
 <th scope="col" width="40px">'.__( 'Qty', 'doliconnect').'</th><th scope="col">'.__( 'Item', 'doliconnect').'</th></tr></thead><tbody>';
@@ -191,7 +189,7 @@ return '<center class="p-3 text-muted">'.__( 'Your basket is empty', 'doliconnec
 }
 }
 
-function doliaddtocart($product, $mstock, $quantity = null, $price = null, $remise_percent = null, $timestart = null, $timeend = null, $url = null, $array_options = array()) {
+function doliaddtocart($product, $mstock, $quantity, $price = null, $remise_percent = null, $timestart = null, $timeend = null, $url = null, $array_options = array()) {
 global $current_user;
 
 $response = array();
