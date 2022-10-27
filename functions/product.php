@@ -190,7 +190,7 @@ return '<center class="p-3 text-muted">'.__( 'Your basket is empty', 'doliconnec
 }
 }
 
-function doliaddtocart($product, $mstock, $quantity, $price = null, $remise_percent = null, $timestart = null, $timeend = null, $url = null, $array_options = array()) {
+function doliaddtocart($product, $mstock, $quantity, $price, $timestart = null, $timeend = null, $url = null, $array_options = array()) {
 global $current_user;
 
 $response = array();
@@ -246,8 +246,8 @@ $adln = [
     'date_end' => $date_end,
     'qty' => $quantity,
     'tva_tx' => $product->tva_tx, 
-    'remise_percent' => isset($remise_percent) ? $remise_percent : doliconnector($current_user, 'remise_percent'),
-    'subprice' => $price,
+    'remise_percent' => $price['discount'],
+    'subprice' => $price['subprice'],
     'array_options' => $array_options
 	];                 
 $addline = callDoliApi("POST", "/orders/".doliconnector($current_user, 'fk_order')."/lines", $adln, 0);
@@ -289,8 +289,8 @@ $uln = [
     'date_end' => $date_end,
     'qty' => $quantity,
     'tva_tx' => $product->tva_tx, 
-    'remise_percent' => isset($remise_percent) ? $remise_percent : doliconnector($current_user, 'remise_percent'),
-    'subprice' => $price,
+    'remise_percent' => $price['discount'],
+    'subprice' => $price['subprice'],
     'array_options' => $array_options
 	];                  
 $updateline = callDoliApi("PUT", "/orders/".doliconnector($current_user, 'fk_order')."/lines/".$mstock['line'], $uln, 0);
@@ -551,6 +551,8 @@ $price_ht3 = $price_ht-($price_ht*$price['discount']/100);
 
 }
 
+$price['subprice'] = $price_ht3;
+
 if ($nohtml) { 
   return $price;
 } else {
@@ -577,7 +579,7 @@ $button .= "<a tabindex='0' id='popover-price-".$product->id."' class='btn btn-l
 if (!empty($price['discount'])) $button .= " text-danger";
 $button .= "' data-bs-container='body' data-bs-toggle='popover' data-bs-trigger='focus' title='".__( 'About price', 'doliconnect')."' data-bs-content='".$explication."'>";
 $button .= doliprice( empty(get_option('dolibarr_b2bmode'))?$price_ttc3:$price_ht3, $currency);
-$price['subprice'] = $price_ht3;
+
 $date = new DateTime(); 
 $date->modify('NOW');
 if (!empty(get_option('dolicartnewlist')) && get_option('dolicartnewlist') != 'none') { 
