@@ -304,6 +304,7 @@ if ( !empty($url) ) {
 $response['message'] = __( 'Quantities have been changed', 'doliconnect');
 $response['items'] = doliconnect_countitems($order);
 $response['lines'] = doliline($order);
+$response['list'] = doliconnect_CartItemsList($order);
 return $response;
 
 }
