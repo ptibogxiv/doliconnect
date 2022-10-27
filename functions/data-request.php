@@ -641,7 +641,7 @@ if ( wp_verify_nonce( trim($_POST['dolicart-nonce']), 'dolicart-nonce')) {
 
 if (isset($_POST['case']) && $_POST['case'] == "updateline") {
 
-	$product = callDoliApi("GET", "/products/".trim($_POST['productid'])."?includestockdata=1&includesubproducts=true&includetrans=true", null, dolidelay('product'));
+	$product = callDoliApi("GET", "/products/".trim($_POST['productid'])."?includestockdata=1&includesubproducts=true&includetrans=true", null, dolidelay('product', true));
 	$mstock = doliProductStock($product, false, true);
 
 if (isset($_POST['modify']) && $_POST['modify'] == "plus" && ($_POST['qty']+$mstock['step'])<=max(array($mstock['m2'],$mstock['qty']))) { 
@@ -685,8 +685,8 @@ if (!isset($object->error)) {
 $dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolidelay('doliconnector', true));
 $response = [
     'items' => 0,
-    'lines' => doliline(null, null),
-	'total' => doliprice(),
+    'lines' => doliline(0),
+	'total' => doliprice(0),
     'message' => __( 'Your cart has been emptied', 'doliconnect'),
         ];
 wp_send_json_success($response);
