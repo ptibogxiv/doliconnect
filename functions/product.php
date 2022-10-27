@@ -37,7 +37,7 @@ return numfmt_format_currency($fmt, $montant, $currency);//.$decimal
 }
 
 function doliProductStock($product, $refresh = false, $nohtml = false) {
-  global $current_user;
+global $current_user;
 
 $mstock = array();
 $warehouse = doliconst('DOLICONNECT_ID_WAREHOUSE', $refresh);
@@ -167,7 +167,7 @@ return $qty;
 }
 
 function doliconnect_CartItemsList($order = null) {
-
+global $current_user;
 if (empty($order)) $order = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order')."?contact_list=0", null, dolidelay('order'));
 
 if ( isset($order->lines) && $order->lines != null ) {
