@@ -167,7 +167,10 @@ $qty+=$line->qty;
 return $qty;
 }
 
-function doliconnect_CartItemsList($order) {
+function doliconnect_CartItemsList($order = null) {
+
+if (empty($order)) $order = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order')."?contact_list=0", null, dolidelay('order'));
+
 if ( isset($order->lines) && $order->lines != null ) {
 $ln = '<table class="table table-hover table-sm"><thead><tr>
 <th scope="col" width="40px">'.__( 'Qty', 'doliconnect').'</th><th scope="col">'.__( 'Item', 'doliconnect').'</th></tr></thead><tbody>';
