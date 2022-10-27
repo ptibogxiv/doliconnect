@@ -191,7 +191,7 @@ return '<center class="p-3 text-muted">'.__( 'Your basket is empty', 'doliconnec
 }
 }
 
-function doliaddtocart($productid, $quantity = null, $price = null, $remise_percent = null, $timestart = null, $timeend = null, $url = null, $array_options = array()) {
+function doliaddtocart($product, $mstock, $quantity = null, $price = null, $remise_percent = null, $timestart = null, $timeend = null, $url = null, $array_options = array()) {
 global $current_user;
 
 if (!is_null($timestart) && $timestart > 0 ) {
@@ -223,10 +223,7 @@ $order = callDoliApi("POST", "/orders", $rdr, 0);
 
 $order = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order', true)."?contact_list=0", null, dolidelay('order', true));
 
-$prdt = callDoliApi("GET", "/products/".$productid."?includestockdata=1&includesubproducts=true&includetrans=true", null, dolidelay('product', true));
-$mstock = doliproductstock($prdt, false, true);
-
-if (empty($prdt->status)) {
+if (empty($product->status)) {
 
 if (!empty($mstock['line'])) $deleteline = callDoliApi("DELETE", "/orders/".doliconnector($current_user, 'fk_order')."/lines/".$mstock['line'], null, 0);
 $order = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order', true)."?contact_list=0", null, dolidelay('order', true));
@@ -238,12 +235,12 @@ return -1;
 } elseif ( doliconnector($current_user, 'fk_order') > 0 && $quantity > 0 && empty($mstock['line'])) {
                                                                                      
 $adln = [
-    'fk_product' => $prdt->id,
-    'desc' => $prdt->description,
+    'fk_product' => $product->id,
+    'desc' => $product->description,
     'date_start' => $date_start,
     'date_end' => $date_end,
     'qty' => $quantity,
-    'tva_tx' => $prdt->tva_tx, 
+    'tva_tx' => $product->tva_tx, 
     'remise_percent' => isset($remise_percent) ? $remise_percent : doliconnector($current_user, 'remise_percent'),
     'subprice' => $price,
     'array_options' => $array_options
@@ -251,7 +248,7 @@ $adln = [
 $addline = callDoliApi("POST", "/orders/".doliconnector($current_user, 'fk_order')."/lines", $adln, 0);
 $order = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order', true)."?contact_list=0", null, dolidelay('order', true));
 $dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolidelay('doliconnector', true));
-$prdt = callDoliApi("GET", "/products/".$productid."?includestockdata=1&includesubproducts=true&includetrans=true", null, dolidelay('product', true));
+$product = callDoliApi("GET", "/products/".$product->id."?includestockdata=1&includesubproducts=true&includetrans=true", null, dolidelay('product', true));
 if ( !empty($url) ) {
 //set_transient( 'doliconnect_cartlinelink_'.$addline, esc_url($url), dolidelay(MONTH_IN_SECONDS, true));
 }
@@ -264,7 +261,7 @@ if ( $quantity < 1 ) {
 $deleteline = callDoliApi("DELETE", "/orders/".doliconnector($current_user, 'fk_order')."/lines/".$mstock['line'], null, 0);
 $order = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order', true)."?contact_list=0", null, dolidelay('order', true));
 $dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolidelay('doliconnector', true));
-$prdt = callDoliApi("GET", "/products/".$productid."?includestockdata=1&includesubproducts=true&includetrans=true", null, dolidelay('product', true));
+$product = callDoliApi("GET", "/products/".$product->id."?includestockdata=1&includesubproducts=true&includetrans=true", null, dolidelay('product', true));
 //delete_transient( 'doliconnect_cartlinelink_'.$mstock['line'] );
 
 return doliconnect_countitems($order);
@@ -272,11 +269,11 @@ return doliconnect_countitems($order);
 } else {
 
 $uln = [
-    'desc' => $prdt->description,
+    'desc' => $product->description,
     'date_start' => $date_start,
     'date_end' => $date_end,
     'qty' => $quantity,
-    'tva_tx' => $prdt->tva_tx, 
+    'tva_tx' => $product->tva_tx, 
     'remise_percent' => isset($remise_percent) ? $remise_percent : doliconnector($current_user, 'remise_percent'),
     'subprice' => $price,
     'array_options' => $array_options
@@ -284,7 +281,7 @@ $uln = [
 $updateline = callDoliApi("PUT", "/orders/".doliconnector($current_user, 'fk_order')."/lines/".$mstock['line'], $uln, 0);
 $order = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order', true)."?contact_list=0", null, dolidelay('order', true));
 $dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolidelay('doliconnector', true));
-$prdt = callDoliApi("GET", "/products/".$productid."?includestockdata=1&includesubproducts=true&includetrans=true", null, dolidelay('product', true));
+$product = callDoliApi("GET", "/products/".$product->id."?includestockdata=1&includesubproducts=true&includetrans=true", null, dolidelay('product', true));
 if ( !empty($url) ) {
 //set_transient( 'doliconnect_cartlinelink_'.$mstock['line'], esc_url($url), dolidelay(MONTH_IN_SECONDS, true));
 } else {
