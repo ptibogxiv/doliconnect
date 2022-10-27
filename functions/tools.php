@@ -1604,7 +1604,7 @@ function doliconnect_langs($arg) {
 
 if (function_exists('pll_the_languages')) {       
 
-print '<div class="modal fade" id="DoliconnectSelectLang" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="DoliconnectSelectLangLabel" aria-hidden="true">
+print '<div class="modal fade" id="DoliconnectSelectLang" aria-hidden="true" data-bs-show="true" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="DoliconnectSelectLangLabel">
 <div class="modal-dialog modal-fullscreen-md-down modal-dialog-centered modal-dialog-scrollable">
 <div class="modal-content"><div class="modal-header">
 <h5 class="modal-title" id="DoliconnectSelectLangLabel">'.__('Choose your language', 'doliconnect').'</h5><button id="closemodalSelectLang" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></button></div>';
@@ -1634,9 +1634,9 @@ print '</ul></div>
 </div></div></div></div>';
 
 }    
-
+print "sexy";
 }
-add_action( 'wp_footer', 'doliconnect_langs', 10, 1);
+add_action( 'wp_footer', 'doliconnect_langs');
 
 function doliconnect_paymentmethods($object = null, $module = null, $url = null, $refresh = false, $array = array()) {
 global $current_user;
