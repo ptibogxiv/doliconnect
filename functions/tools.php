@@ -341,8 +341,7 @@ function doliajax($id, $url = null, $case = null){
   $ajax = "<input type='hidden' name='action' value='".$id."_request'>";
   if (!empty($case)) $ajax.= "<input type='hidden' name='case' value='".$case."'>";
   $ajax.= wp_nonce_field( $id, $id.'-nonce' );
-  //$ajax.= "<input type='hidden' name='".$id."-nonce' value='".wp_create_nonce( $id.'-nonce')."'>";
-  $ajax.= "<script>";
+  $ajax.= '<script>';
   $ajax.= 'jQuery(document).ready(function($) {
     $("#'.$id.'-form").on("submit", function(e) {
     e.preventDefault();
@@ -376,7 +375,7 @@ function doliajax($id, $url = null, $case = null){
     });
   });
   });';
-  $ajax.= "</script>";
+  $ajax.= '</script>';
 return $ajax;
 }
 
