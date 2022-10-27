@@ -686,6 +686,7 @@ if (!isset($object->error)) {
 $dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolidelay('doliconnector', true));
 $response = [
     'items' => 0,
+    'list' => doliconnect_CartItemsList(),
     'lines' => doliline(0),
 	'total' => doliprice(0),
     'message' => __( 'Your cart has been emptied', 'doliconnect'),
