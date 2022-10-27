@@ -194,12 +194,13 @@ return '<center class="p-3 text-muted">'.__( 'Your basket is empty', 'doliconnec
 function doliaddtocart($product, $mstock, $quantity = null, $price = null, $remise_percent = null, $timestart = null, $timeend = null, $url = null, $array_options = array()) {
 global $current_user;
 
+$response = array();
+
 if (!is_null($timestart) && $timestart > 0 ) {
 $date_start=strftime('%Y-%m-%d 00:00:00', $timestart);
 } else {
 $date_start=null;
 }
-
 if ( !is_null($timeend) && $timeend > 0 ) {
 $date_end=strftime('%Y-%m-%d 00:00:00', $timeend);
 } else {
@@ -252,7 +253,8 @@ $product = callDoliApi("GET", "/products/".$product->id."?includestockdata=1&inc
 if ( !empty($url) ) {
 //set_transient( 'doliconnect_cartlinelink_'.$addline, esc_url($url), dolidelay(MONTH_IN_SECONDS, true));
 }
-return doliconnect_countitems($order);
+$response['message'] = __( 'This item has been added to basket', 'doliconnect');
+return $response;
 
 } elseif ( doliconnector($current_user, 'fk_order') > 0 && $mstock['line'] > 0 ) {
 
@@ -264,7 +266,8 @@ $dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolide
 $product = callDoliApi("GET", "/products/".$product->id."?includestockdata=1&includesubproducts=true&includetrans=true", null, dolidelay('product', true));
 //delete_transient( 'doliconnect_cartlinelink_'.$mstock['line'] );
 
-return doliconnect_countitems($order);
+$response['message'] = __( 'This item has been deleted to basket', 'doliconnect');
+return $response;
  
 } else {
 
@@ -288,7 +291,8 @@ if ( !empty($url) ) {
 //delete_transient( 'doliconnect_cartlinelink_'.$mstock['line'] );
 
 }
-return doliconnect_countitems($order);
+$response['message'] = __( 'Quantities have been changed', 'doliconnect');
+return $response;
 
 }
 } elseif ( doliconnector($current_user, 'fk_order') > 0 && is_null($mstock['line']) ) {
@@ -333,16 +337,16 @@ $button .= '$(function() {
                 if (document.getElementById("qty-prod-'.$product->id.'")) { 
                   document.getElementById("qty-prod-'.$product->id.'").value = response.data.newqty;
                 }
-                if (document.getElementById("DoliHeaderCartItems")) {
+                if (document.getElementById("DoliHeaderCartItems") && response.data.items) {
                   document.getElementById("DoliHeaderCartItems").innerHTML = response.data.items;
                 }
-                if (document.getElementById("DoliFooterCartItems")) {  
+                if (document.getElementById("DoliFooterCartItems") && response.data.items) {  
                   document.getElementById("DoliFooterCartItems").innerHTML = response.data.items;
                 }
                 if (document.getElementById("DoliCartItemsList")) {  
                   document.getElementById("DoliCartItemsList").innerHTML = response.data.list;
                 }
-                if (document.getElementById("DoliWidgetCartItems")) {
+                if (document.getElementById("DoliWidgetCartItems") && response.data.items) {
                   document.getElementById("DoliWidgetCartItems").innerHTML = response.data.items;      
                 }
                 if (document.getElementById("message-dolicart")) {
@@ -376,7 +380,7 @@ if ($mstock['stock'] <= 0 || $mstock['m2'] < $mstock['step'])  {
 return $button;
 }}
 
-function doliconnect_addtocart($product, $category = 0, $quantity = 0, $add = 0, $time = 0, $refresh = null) {
+function doliconnect_addtocart($product, $category = 0, $quantity = 0, $refresh = null) {
 global $current_user;
 
 $button = null;
