@@ -25,7 +25,7 @@ $versionbase=$version;
 }
 
 if (!empty(get_theme_mod( 'ptibogxivtheme_css')) && $version != $versionbase && empty(get_option('doliconnectbeta'))) {
-$css='';
+$css='css';
 $version=$versionbase;
 }
 
