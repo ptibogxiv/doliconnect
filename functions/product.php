@@ -342,7 +342,7 @@ $button .= '$(function() {
           }).done(function(response) {
               if (response.success) { 
                 //console.log("updated qty of '.$product->id.' to " + response.data.newqty);
-                if (document.getElementById("qty-prod-'.$product->id.'")) { 
+                if (document.getElementById("qty-prod-'.$product->id.'") && response.data.newqty) {
                   document.getElementById("qty-prod-'.$product->id.'").value = response.data.newqty;
                 }
                 if (document.getElementById("DoliHeaderCartItems") && response.data.items) {
@@ -351,13 +351,13 @@ $button .= '$(function() {
                 if (document.getElementById("DoliFooterCartItems") && response.data.items) {  
                   document.getElementById("DoliFooterCartItems").innerHTML = response.data.items;
                 }
-                if (document.getElementById("DoliCartItemsList")) {  
+                if (document.getElementById("DoliCartItemsList") && response.data.list) {  
                   document.getElementById("DoliCartItemsList").innerHTML = response.data.list;
                 }
                 if (document.getElementById("DoliWidgetCartItems") && response.data.items) {
                   document.getElementById("DoliWidgetCartItems").innerHTML = response.data.items;      
                 }
-                if (document.getElementById("message-dolicart")) {
+                if (document.getElementById("message-dolicart") && response.data.message) {
                   document.getElementById("message-dolicart").innerHTML = response.data.message;      
                 }   
               } else {
