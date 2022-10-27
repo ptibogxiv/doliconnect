@@ -1451,7 +1451,7 @@ if ($refresh || $refreshstock) $refreshstock = true;
 $product = callDoliApi("GET", "/products/".$line->fk_product."?includestockdata=1&includesubproducts=true&includetrans=true", null, dolidelay('product', $refreshstock));
 }
 
-$mstock = doliproductstock($product, $refresh, true);
+$mstock = doliProductStock($product, $refresh, true);
 
 if ( $mstock['stock'] < 0 && is_page(doliconnectid('dolicart'))) {
   $doliline .= "<li class='list-group-item list-group-item-danger list-group-item-action'>";
@@ -1500,7 +1500,7 @@ $doliline .= "<b>".__( "Sorry, this product is not available with this quantity.
 
 $doliline .= '</div><div class="col d-none d-md-block col-md-3 text-right">';
 if ( isset($object->statut) && empty($object->statut) && !is_page(doliconnectid('doliaccount')) && doliconst('FRAIS_DE_PORT_ID_SERVICE_TO_USE', $refresh) != $line->fk_product  ) {
-$doliline .= '<center>'.doliproductstock($product).'</center>';
+$doliline .= '<center>'.doliProductStock($product).'</center>';
 if ( !empty($product->country_id) ) {  
 if ( function_exists('pll_the_languages') ) { 
 $lang = pll_current_language('locale');

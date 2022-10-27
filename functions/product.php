@@ -36,7 +36,7 @@ return numfmt_format_currency($fmt, $montant, $currency);//.$decimal
 }
 }
 
-function doliproductstock($product, $refresh = false, $nohtml = false) {
+function doliProductStock($product, $refresh = false, $nohtml = false) {
   global $current_user;
 
 $mstock = array();
@@ -358,7 +358,7 @@ $button .= '$(function() {
   });';
   $button .= "</script>";
 
-  $mstock = doliproductstock($product, $refresh, true);
+  $mstock = doliProductStock($product, $refresh, true);
 
   $button .= '<div class="input-group">';
 if ($mstock['stock'] <= 0 || $mstock['m2'] < $mstock['step'])  { 
@@ -592,7 +592,7 @@ $button .= "<div class='input-group'><a class='btn btn-block btn-info' href='".d
 
 } elseif ( is_user_logged_in() && !empty($add) && !empty(doliconst('MAIN_MODULE_COMMANDE', $refresh)) && doliconnectid('dolicart') > 0 ) {
 
-$mstock = doliproductstock($product, $refresh, true);
+$mstock = doliProductStock($product, $refresh, true);
 
 $thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty', $refresh));
 
@@ -700,7 +700,7 @@ if ( !doliconst('MAIN_GENERATE_DOCUMENTS_HIDE_REF') ) { $list .= " | "; }
 $list .= "<i class='fas fa-barcode fa-fw'></i> ".$product->barcode; }
 $list .= "</small>";
 if ( ! empty(doliconnectid('dolicart')) ) { 
-$list .= "<br>".doliproductstock($product);
+$list .= "<br>".doliProductStock($product);
 }
 if ( !empty($product->country_id) ) {  
 if ( function_exists('pll_the_languages') ) { 
@@ -759,7 +759,7 @@ if ( !doliconst('MAIN_GENERATE_DOCUMENTS_HIDE_REF') ) { $card .= " | "; }
 $card .= "<i class='fas fa-barcode fa-fw'></i> ".$product->barcode; }
 $card .= "</small>";
 if ( ! empty(doliconnectid('dolicart')) && !isset($attributes['hideStock']) ) { 
-$card .= '<br>'.doliproductstock($product);
+$card .= '<br>'.doliProductStock($product);
 }
 if (!empty(doliconnect_supplier($product, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)))) {
 $card .= '<br>'.doliconnect_supplier($product, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
