@@ -396,7 +396,7 @@ if ($mstock['stock'] <= 0 || $mstock['m2'] < $mstock['step'])  {
 return $button;
 }}
 
-function doliconnect_addtocart($product, $category = 0, $quantity = 0, $refresh = null) {
+function doliProductPrice($product, $quantity = null, $refresh = null) {
 global $current_user;
 
 $button = null;
@@ -709,7 +709,7 @@ $list .= '</p></div>';
 
 if ( ! empty(doliconnectid('dolicart')) ) { 
 $list .= "<div class='col-12 col-md-4'><center>";
-$list .= doliconnect_addtocart($product, esc_attr(isset($_GET['category'])?$_GET['category']:null), $wish, -1, 0, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+$list .= doliProductPrice($product, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 $list .= doliProductCart($product, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 $list .= "</center></div>";
 }
@@ -768,7 +768,7 @@ $card .= apply_filters('mydoliconnectproductdesc', $product, 'card');
 }
 if ( ! empty(doliconnectid('dolicart')) ) { 
 $card .= '<br><br><div class="jumbotron">';
-$card .= doliconnect_addtocart($product, 0, 0, !empty($attributes['hideButtonToCart']) ? $attributes['hideButtonToCart'] : 1, isset($attributes['hideDuration']) ? $attributes['hideDuration'] : 0);
+$card .= doliProductPrice($product, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 $card .= doliProductCart($product, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 $card .= '</div>';
 }
