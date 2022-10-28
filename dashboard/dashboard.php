@@ -209,7 +209,7 @@ print dolialert ('success', __( 'Your informations have been updated.', 'dolicon
 
 print "<form action='".$url."' id='doliconnect-avatarform' method='post' class='was-validated' enctype='multipart/form-data'><input type='hidden' name='case' value='updateavatar'>";
 
-print doliloaderscript('doliconnect-avatarform');
+//print doliloaderscript('doliconnect-avatarform');
 
 print '<div class="card shadow-sm"><div class="card-header">'.__( 'Edit my avatar', 'doliconnect').'</div>';
 print "<ul class='list-group list-group-flush'><li class='list-group-item'>";
@@ -2019,7 +2019,7 @@ $linkedmember= callDoliApi("GET", $request, null, dolidelay('member', esc_attr(i
 
 print "<form role='form' action='$url' id='doliconnect-linkedmembersform' method='post'>";                      
 
-print doliloaderscript('doliconnect-linkedmembersform');
+//print doliloaderscript('doliconnect-linkedmembersform');
  
 print '<div class="card shadow-sm"><div class="card-header">'.__( 'Manage linked members', 'doliconnect').'</div>';
 print "<ul class='list-group list-group-flush'>";
@@ -2202,7 +2202,7 @@ print "<li class='list-group-item list-group-item-light list-group-item-action'>
 
 print '<form id="doliconnect-msgticketform" action="'.$url.'&id='.$ticketfo->id.'&ref='.$ticketfo->ref.'" method="post" class="was-validated">';
 
-print doliloaderscript('doliconnect-msgticketform'); 
+//print doliloaderscript('doliconnect-msgticketform'); 
 
 print '<div class="form-floating mb-2"><textarea class="form-control" name="ticket_newmessage" id="ticket_newmessage" placeholder="Leave a comment here" style="height: 200px" required></textarea>
 <label for="ticket_newmessage"><i class="fas fa-comment"></i> '.__( 'Message', 'doliconnect').'</label></div>';
@@ -2246,7 +2246,7 @@ print dolialert ('success', __( 'Your ticket has been submitted.', 'doliconnect'
 
 print "<form class='was-validated' id='doliconnect-newticketform' action='".$url."&create' method='post'>";
 
-print doliloaderscript('doliconnect-newticketform'); 
+//print doliloaderscript('doliconnect-newticketform'); 
 
 print '<div class="card shadow-sm"><div class="card-header">'.__( 'Create ticket', 'doliconnect').'<a class="float-end text-decoration-none" href="'.esc_url( add_query_arg( 'module', 'tickets', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><ul class="list-group list-group-flush">';
 
