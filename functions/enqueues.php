@@ -1,6 +1,7 @@
 <?php
 
 add_action( 'wp_enqueue_scripts', 'enqueue_scripts_doli_gdrf_public' );
+
 function enqueue_scripts_doli_gdrf_public() {
 	wp_register_script( 'gdrf-public-scripts', plugins_url( 'doliconnect/includes/js/gdrf-public.js'), array( 'jquery' ), '', false );
 	$translations = array(
@@ -29,20 +30,20 @@ $css='css';
 $version=$versionbase;
 }
 
-	wp_register_style( 'bootstrap.min', plugins_url( 'doliconnect/includes/bootstrap/'.$css.'/bootstrap.min.css'), array(), $version);
+	wp_register_style( 'bootstrap.min', plugins_url( 'doliconnect/includes/bootstrap/'.$css.'/bootstrap.min.css' ), array(), $version );
 	wp_enqueue_style( 'bootstrap.min');
-	wp_register_script( 'bootstrap.bundle.min', plugins_url( 'doliconnect/includes/bootstrap/js/bootstrap.bundle.min.js'), array('jquery'), $version, true);
+	wp_register_script( 'bootstrap.bundle.min', plugins_url( 'doliconnect/includes/bootstrap/js/bootstrap.bundle.min.js' ), array( 'jquery' ), $version, true );
   	wp_enqueue_script( 'bootstrap.bundle.min');
-	//wp_register_script( 'masonry.pkgd.min.js', 'https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js', array(), '4.2.2', true);
-  	//wp_enqueue_script( 'masonry.pkgd.min.js');
-  if (empty(get_option('doliconnectfontawesome'))) {
-  	wp_register_script( 'font-awesome', '//use.fontawesome.com/releases/v6.2.0/js/all.js', array(), '6.2.0' );
-	wp_enqueue_script( 'font-awesome');
-  }
-  	wp_register_style( 'bootstrap-social', plugins_url( 'doliconnect/includes/bootstrap/css/bootstrap-social.css'), array(), $version);
+	wp_enqueue_script( 'jquery-masonry', array( 'jquery' ) );
+	if (empty(get_option('doliconnectfontawesome'))) {
+  		wp_register_script( 'font-awesome', '//use.fontawesome.com/releases/v6.2.0/js/all.js', array(), '6.2.0' );
+		wp_enqueue_script( 'font-awesome');
+	}
+  	wp_register_style( 'bootstrap-social', plugins_url( 'doliconnect/includes/bootstrap/css/bootstrap-social.css' ), array(), $version );
 	wp_enqueue_style( 'bootstrap-social');
-  	wp_register_style( 'flag-icon', plugins_url( 'doliconnect/includes/flag-icon-css/css/flag-icons.css'), array(), '6.6.5'); 
+  	wp_register_style( 'flag-icon', plugins_url( 'doliconnect/includes/flag-icon-css/css/flag-icons.css' ), array(), '6.6.5' ); 
 	wp_enqueue_style( 'flag-icon');
+
 }
 
 ?>
