@@ -635,23 +635,13 @@ print $company->name.'<br>';
 if (isset($company->address) && !empty($company->address)) print $company->address.'<br>';
 if (isset($company->town) && !empty($company->town)) print $company->zip.' '.$company->town.'<br>';
 if ( isset($company->state_id) && !empty($company->state_id) ) {  
-  if ( function_exists('pll_the_languages') ) { 
-  $lang = pll_current_language('locale');
-  } else {
-  $lang = $current_user->locale;
-  }
-  $state = callDoliApi("GET", "/setup/dictionary/states/".$company->state_id."?lang=".$lang, null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))); 
+  $state = callDoliApi("GET", "/setup/dictionary/states/".$company->state_id."?lang=".doliUserLang($current_user), null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))); 
   print $state->name;
 }
 print ' - ';
 if ( isset($company->country_id) && !empty($company->country_id) ) {  
-  if ( function_exists('pll_the_languages') ) { 
-  $lang = pll_current_language('locale');
-  } else {
-  $lang = $current_user->locale;
-  }
-  $country = callDoliApi("GET", "/setup/dictionary/countries/".$company->country_id."?lang=".$lang, null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-print $country->label;
+  $country = callDoliApi("GET", "/setup/dictionary/countries/".$company->country_id."?lang=".doliUserLang($current_user), null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+  print $country->label;
 }
 print '<br>';
 if (isset($company->phone) && !empty($company->phone)) print $company->phone;
@@ -690,7 +680,7 @@ print '>
 <label for="email"><i class="fas fa-at fa-fw"></i> '.__( 'Email', 'doliconnect').'</label>
 </div>';
 
-$type = callDoliApi("GET", "/setup/dictionary/ticket_types?sortfield=pos&sortorder=ASC&limit=100", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$type = callDoliApi("GET", "/setup/dictionary/ticket_types?sortfield=pos&sortorder=ASC&limit=100&lang=".doliUserLang($current_user), null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 if ( isset($type) ) { 
 print '<div class="form-floating mb-2"><select class="form-select" id="ticket_type"  name="ticket_type" aria-label="'.__( 'Type', 'doliconnect').'" required>';
 if ( count($type) > 1 ) {
@@ -768,12 +758,7 @@ print "<div class='row'><div class='col-4 col-md-2'><center>";
 print doliconnect_image('thirdparty', $thirdparty->id.'/logos/'.$thirdparty->logo, array('entity'=> $thirdparty->entity), esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 print "</center></div><div class='col-8 col-md-10'>".(!empty($thirdparty->name_alias)?$thirdparty->name_alias:$thirdparty->name);
 if ( !empty($thirdparty->country_id) ) {  
-if ( function_exists('pll_the_languages') ) { 
-$lang = pll_current_language('locale');
-} else {
-$lang = $current_user->locale;
-}
-$country = callDoliApi("GET", "/setup/dictionary/countries/".$thirdparty->country_id."?lang=".$lang, null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$country = callDoliApi("GET", "/setup/dictionary/countries/".$thirdparty->country_id."?lang=".doliUserLang($current_user), null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 print "<br><span class='flag-icon flag-icon-".strtolower($thirdparty->country_code)."'></span> ".$country->label.""; }
 
 print "</div></div>";

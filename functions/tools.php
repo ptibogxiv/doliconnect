@@ -337,6 +337,15 @@ if (!empty(doliconst($constante))) {
 }
 }
 
+function doliUserLang($user) {
+  if ( function_exists('pll_the_languages') ) { 
+    $lang = pll_current_language('locale');
+    } else {
+    $lang = $user->locale;
+    }
+  return $lang;
+}
+
 function doliajax($id, $url = null, $case = null){
   $ajax = "<input type='hidden' name='action' value='".$id."_request'>";
   if (!empty($case)) $ajax.= "<input type='hidden' name='case' value='".$case."'>";
@@ -826,14 +835,8 @@ print 'readonly';
 print '>'.(isset($object->address) ? stripslashes(htmlspecialchars($object->address, ENT_QUOTES)) : null).'</textarea>
 <label for="'.$idobject.'[address]"><i class="fas fa-map-marked fa-fw"></i> '.__( 'Address', 'doliconnect').'</label></div>';
 
-if ( function_exists('pll_the_languages') ) { 
-$lang = pll_current_language('locale');
-} else {
-$lang = $current_user->locale;
-}
-
 print '<div class="row mb-2 g-2"><div class="col"><div class="form-floating">';
-print doliSelectForm("country_id", "/setup/dictionary/countries?sortfield=favorite%2Clabel&sortorder=DESC%2CASC&limit=500&lang=".$lang, __( '- Select your country -', 'doliconnect'), __( 'Country', 'doliconnect'), (isset($object->country_id) ? $object->country_id : $company->country_id), $idobject, $rights);
+print doliSelectForm("country_id", "/setup/dictionary/countries?sortfield=favorite%2Clabel&sortorder=DESC%2CASC&limit=500&lang=".doliUserLang($current_user), __( '- Select your country -', 'doliconnect'), __( 'Country', 'doliconnect'), (isset($object->country_id) ? $object->country_id : $company->country_id), $idobject, $rights);
 print '</div></div>';
 
 if ( doliversion('16.0.0') ) { 
@@ -1401,12 +1404,7 @@ if ( !empty($object->poste) ) { $address .= ", ".$object->poste; }
 if ( !empty($object->type) ) { $address .= "<br>".__( 'Type', 'doliconnect').": ".$object->type; }
 $address .= "</b><br>";
 if ( !empty($object->country_id) ) {  
-if ( function_exists('pll_the_languages') ) { 
-$lang = pll_current_language('locale');
-} else {
-$lang = $current_user->locale;
-}
-$country = callDoliApi("GET", "/setup/dictionary/countries/".$object->country_id."?lang=".$lang, null, dolidelay('constante', $refresh)); }
+$country = callDoliApi("GET", "/setup/dictionary/countries/".$object->country_id."?lang=".doliUserLang($current_user), null, dolidelay('constante', $refresh)); }
 $address .= "<small class='text-muted'>".$object->address.", ".$object->zip." ".$object->town." - ".$country->label."<br>".$object->email." - ".(isset($object->phone) ? $object->phone : (isset($object->phone_pro)?$object->phone_pro:null))."</small>";
 return $address;
 }
@@ -1420,12 +1418,7 @@ if ( !empty($object->default) ) { $address .= " <i class='fas fa-star fa-1x fa-f
 if ( !empty($object->poste) ) { $address .= ", ".$object->poste; }
 $address .= "</b><br>";
 if ( !empty($object->country_id) ) {  
-if ( function_exists('pll_the_languages') ) { 
-$lang = pll_current_language('locale');
-} else {
-$lang = $current_user->locale;
-}
-$country = callDoliApi("GET", "/setup/dictionary/countries/".$object->country_id."?lang=".$lang, null, dolidelay('constante', $refresh)); }
+$country = callDoliApi("GET", "/setup/dictionary/countries/".$object->country_id."?lang=".doliUserLang($current_user), null, dolidelay('constante', $refresh)); }
 $address .= "<small class='text-muted'>".$object->address.", ".$object->zip." ".$object->town." - ".$country->label."<br>".$object->email." - ".$object->phone_pro."</small>";
 return $address;
 }
@@ -1501,12 +1494,7 @@ $doliline .= '</div><div class="col d-none d-md-block col-md-3 text-right">';
 if ( isset($object->statut) && empty($object->statut) && !is_page(doliconnectid('doliaccount')) && doliconst('FRAIS_DE_PORT_ID_SERVICE_TO_USE', $refresh) != $line->fk_product  ) {
 $doliline .= '<center>'.doliProductStock($product).'</center>';
 if ( !empty($product->country_id) ) {  
-if ( function_exists('pll_the_languages') ) { 
-$lang = pll_current_language('locale');
-} else {
-$lang = $current_user->locale;
-}
-$country = callDoliApi("GET", "/setup/dictionary/countries/".$product->country_id."?lang=".$lang, null, dolidelay('constante', $refresh));
+$country = callDoliApi("GET", "/setup/dictionary/countries/".$product->country_id."?lang=".doliUserLang($current_user), null, dolidelay('constante', $refresh));
 $doliline .= "<center><small><span class='fi fi-".strtolower($product->country_code)."'></span> ".$country->label."</small></center>"; }
 }
 

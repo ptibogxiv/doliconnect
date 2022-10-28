@@ -2254,7 +2254,7 @@ print "<li class='list-group-item list-group-item-light list-group-item-action'>
 
 print '<div class="row mb-2 g-2"><div class="col-md">';
 
-$type = callDoliApi("GET", "/setup/dictionary/ticket_types?sortfield=pos&sortorder=ASC&limit=100", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$type = callDoliApi("GET", "/setup/dictionary/ticket_types?sortfield=pos&sortorder=ASC&limit=100&lang=".doliUserLang($current_user), null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 if ( isset($type) ) { 
 print '<div class="form-floating"><select class="form-select" id="ticket_type"  name="ticket_type" aria-label="'.__( 'Type', 'doliconnect').'" required>';
 if ( count($type) > 1 ) {
@@ -2273,7 +2273,7 @@ print '</select><label for="ticket_type">'.__( 'Type', 'doliconnect').'</label><
 
 print '</div><div class="col-md">';
 
-$cat = callDoliApi("GET", "/setup/dictionary/ticket_categories?sortfield=pos&sortorder=ASC&limit=100", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$cat = callDoliApi("GET", "/setup/dictionary/ticket_categories?sortfield=pos&sortorder=ASC&limit=100&lang=".doliUserLang($current_user), null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 if ( isset($cat) ) { 
 print '<div class="form-floating"><select class="form-select" id="ticket_category"  name="ticket_category" aria-label="'.__( 'Category', 'doliconnect').'" required>';
 if ( count($cat) > 1 ) {
@@ -2290,7 +2290,7 @@ print '</select><label for="ticket_category">'.__( 'Category', 'doliconnect').'<
 
 print '</div><div class="col-md">';
 
-$severity = callDoliApi("GET", "/setup/dictionary/ticket_severities?sortfield=pos&sortorder=ASC&limit=100", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$severity = callDoliApi("GET", "/setup/dictionary/ticket_severities?sortfield=pos&sortorder=ASC&limit=100&lang=".doliUserLang($current_user), null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 if ( isset($severity) ) { 
 print '<div class="form-floating"><select class="form-select" id="ticket_severity"  name="ticket_severity" aria-label="'.__( 'Severity', 'doliconnect').'" required>';
 if ( count($severity) > 1 ) {
