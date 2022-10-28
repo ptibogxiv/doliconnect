@@ -706,9 +706,9 @@ print "</li><li class='list-group-item list-group-item-light list-group-item-act
 print '<div class="row g-2 mb-2">';
 
 if ( doliversion('10.0.0') ) {
-$civility = callDoliApi("GET", "/setup/dictionary/civilities?sortfield=code&sortorder=ASC&limit=100", null, $delay);
+$civility = callDoliApi("GET", "/setup/dictionary/civilities?sortfield=code&sortorder=ASC&limit=100&lang=".doliUserLang($current_user), null, $delay);
 } else {
-$civility = callDoliApi("GET", "/setup/dictionary/civility?sortfield=code&sortorder=ASC&limit=100", null, $delay);
+$civility = callDoliApi("GET", "/setup/dictionary/civility?sortfield=code&sortorder=ASC&limit=100&lang=".doliUserLang($current_user), null, $delay);
 }
 print '<div class="col-md-12 col-lg-3 col-xl-2"><div class="form-floating"><select class="form-select" id="'.$idobject.'[civility_code]"  name="'.$idobject.'[civility_code]" aria-label="'.__( 'Civility', 'doliconnect').'" ';
 if ($rights) {
