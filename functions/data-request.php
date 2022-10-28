@@ -274,9 +274,9 @@ function dolicontactinfos_request(){
 		$contact = $_POST['contact'][''.$_POST['contactid'].''];
 		$contact = dolisanitize($contact);
 		if (empty($contact['no_email'])) {
-			contact['no_email'] = true;
+			$contact['no_email'] = true;
 		} else {
-			contact['no_email'] = false;
+			$contact['no_email'] = false;
 		}
 		$object = callDoliApi("PUT", "/contacts/".$_POST["contactid"]."?includecount=1&includeroles=1", $contact, 0);
 		
@@ -300,9 +300,9 @@ function dolicontactinfos_request(){
 		$contact = dolisanitize($contact);
 		$contact['socid'] = doliconnector($current_user, 'fk_soc');
 		if (empty($contact['no_email'])) {
-			contact['no_email'] = true;
+			$contact['no_email'] = true;
 		} else {
-			contact['no_email'] = false;
+			$contact['no_email'] = false;
 		}
 		$object = callDoliApi("POST", "/contacts", $contact, 0);
 		
