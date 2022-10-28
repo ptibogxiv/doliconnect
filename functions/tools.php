@@ -340,8 +340,10 @@ if (!empty(doliconst($constante))) {
 function doliUserLang($user) {
   if ( function_exists('pll_the_languages') ) { 
     $lang = pll_current_language('locale');
-    } else {
+    } elseif (!empty($user->locale)) {
     $lang = $user->locale;
+    } else {
+    $lang = get_locale();
     }
   return $lang;
 }
