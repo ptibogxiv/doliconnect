@@ -87,7 +87,11 @@ function doliuserinfos_request(){
 
 		$thirdparty=$_POST['thirdparty'][''.doliconnector($current_user, 'fk_soc').''];
 		$thirdparty = dolisanitize($thirdparty);
-		if (isset($thirdparty['no_email'])) $thirdparty['no_email'] = !$thirdparty['no_email'];
+		if (empty($thirdparty['no_email'])) {
+			$thirdparty['no_email'] = true;
+		} else {
+			$thirdparty['no_email'] = false;
+		}
 		
 		wp_update_user( array( 'ID' => $ID,
 		'user_email' => $thirdparty['email'],
@@ -113,7 +117,11 @@ function doliuserinfos_request(){
 
 		$thirdparty=$_POST['thirdparty'];
 		$thirdparty = dolisanitize($thirdparty);
-		if (isset($thirdparty['no_email'])) $thirdparty['no_email'] = !$thirdparty['no_email'];
+		if (empty($thirdparty['no_email'])) {
+			$thirdparty['no_email'] = true;
+		} else {
+			$thirdparty['no_email'] = false;
+		}
 		$UserError = array();
 
 		if (email_exists($thirdparty['email'])) {
@@ -265,7 +273,11 @@ function dolicontactinfos_request(){
 
 		$contact = $_POST['contact'][''.$_POST['contactid'].''];
 		$contact = dolisanitize($contact);
-		if (isset($contact['no_email'])) $contact['no_email'] = !$contact['no_email'];
+		if (empty($contact['no_email'])) {
+			contact['no_email'] = true;
+		} else {
+			contact['no_email'] = false;
+		}
 		$object = callDoliApi("PUT", "/contacts/".$_POST["contactid"]."?includecount=1&includeroles=1", $contact, 0);
 		
 		if (!isset($object->error)) { 
@@ -287,7 +299,11 @@ function dolicontactinfos_request(){
 		$contact = $_POST['contact'][''.doliconnector($current_user, 'fk_soc').''];
 		$contact = dolisanitize($contact);
 		$contact['socid'] = doliconnector($current_user, 'fk_soc');
-		if (isset($contact['no_email'])) $contact['no_email'] = !$contact['no_email'];
+		if (empty($contact['no_email'])) {
+			contact['no_email'] = true;
+		} else {
+			contact['no_email'] = false;
+		}
 		$object = callDoliApi("POST", "/contacts", $contact, 0);
 		
 		if (!isset($object->error)) { 
