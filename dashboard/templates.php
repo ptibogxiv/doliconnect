@@ -823,9 +823,9 @@ $request = "/thirdparties?sortfield=t.nom&sortorder=ASC&limit=".$limit."&page=".
 $resultats = callDoliApi("GET", $request, null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 if (!empty(get_option('dolicartsuppliergrid'))) { 
-print "<div class='card-body'><div class='row' data-masonry='{'percentPosition': true }'>";
+print '<div class="card-body"><div class="row" data-masonry="{"percentPosition": true }">';
 } else {
-print "<ul class='list-group list-group-flush'>";
+print '<ul class="list-group list-group-flush">';
 }
 
 if ( !isset($resultats->error) && $resultats != null ) {
