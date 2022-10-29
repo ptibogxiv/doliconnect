@@ -2534,7 +2534,37 @@ function generate_license($suffix = null) {
     }
     return $license_string;
 }
+print "<script>";
+print 'jQuery(document).ready(function($) {
+    document.querySelector("#buttonmodaltest").addEventListener("click", function() {
+        var m1 = $(makeModal("Text Header", "'.generate_license().'")); // I would want to skip creating an HTML element with jQuery.
+        //document.body.insertAdjacentHTML("beforeend", m1);
+        m1.modal("show");
+      }, false);
+      
+      function makeModal(title, text) {
+        return `<div id="myModal" class="modal fade" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" style="display: none">
+        <div class="modal-dialog modal-fullscreen-md-down modal-dialog-centered modal-dialog-scrollable" role="document">
+      
+          <!-- Modal content-->
+          <div class="modal-content"><div class="modal-header"><h4 class="modal-title">${title}</h4>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p>${text}</p>
+            </div>
+            <div class="modal-footer">
 
+            </div>
+          </div>
+      
+        </div>
+      </div>`;
+      }
+
+});';
+print "</script>";
+print '<button id="buttonmodaltest" class="btn btn-primary" type="button">Click here</button>';
 //print generate_license();	  
 
 }
