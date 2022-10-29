@@ -44,9 +44,9 @@ $data = [
   
 if ($action=='POST') {
 $mbr = callDoliApi("POST", "/members", $data, 0);
-$adhesion = callDoliApi("GET", "/adherentsplus/".doliconnector($current_user, 'fk_member', true), null, dolidelay('member', true));
+$adhesion = callDoliApi("GET", "/members/".doliconnector($current_user, 'fk_member', true), null, dolidelay('member', true));
 } else {
-$adhesion = callDoliApi("PUT", "/adherentsplus/".doliconnector($current_user, 'fk_member', true), $data, 0);
+$adhesion = callDoliApi("PUT", "/members/".doliconnector($current_user, 'fk_member', true), $data, 0);
 }
 
 return $adhesion;
