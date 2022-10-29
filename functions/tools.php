@@ -1208,8 +1208,44 @@ if ( isset($ref) && isset($fichier) && isset($doc->content) ) {
 $data = "data:application/pdf;".$doc->encoding.",".$doc->content;
 $filename = explode(".", $doc->filename)[0];
 
-if (!empty(get_option('doliconnectbeta')) && 7==9) {
+if (!empty(get_option('doliconnectbeta'))) {
 $document = '<button type="button" class="btn btn btn-outline-dark btn-sm btn-block" data-bs-toggle="modal" data-bs-target=".modal-'.$filename.'">'.$name.' <i class="fas fa-file-download"></i></button>';
+$test = "<div><embed id='pdfID' type='text/html' width='1200' height='600' src=''/></div>";
+
+$document .= "<script>";
+$document .= 'jQuery(document).ready(function($) {
+    document.querySelector("#buttonmodaltest-'.$filename.'").addEventListener("click", function() {
+        var m1 = $(makeModal("'.$filename.'", "<div><embed id=\pdfID\' type=\'text/html\' src=\''.$data.'\'/></div>")); // I would want to skip creating an HTML element with jQuery.
+        //document.body.insertAdjacentHTML("beforeend", m1);
+        m1.modal("show");
+      }, false);
+      
+      function makeModal(title, text) {
+        return `<div id="myModal" class="modal fade" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" style="display: none">
+        <div class="modal-dialog modal-xl modal-fullscreen-md-down modal-dialog-centered modal-dialog-scrollable" role="document">
+      
+          <!-- Modal content-->
+          <div class="modal-content"><div class="modal-header"><h4 class="modal-title">${title}</h4>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p>${text}</p>
+            </div>
+            <div class="modal-footer">
+
+            </div>
+          </div>
+      
+        </div>
+      </div>`;
+      }
+
+});';
+$document .= "</script>";
+$document .= '<button id="buttonmodaltest-'.$filename.'" class="btn btn btn-outline-dark btn-sm btn-block" type="button">'.$name.' <i class="fas fa-file-download"></i></button>';
+
+/*
+$document .= '<div><iframe id="pdf-js-viewer" src="'.plugins_url("doliconnect/includes/pdfjs/web/viewer.html").'" title="webviewer" frameborder="0" width="500" height="600"></iframe></div>';
 $document .= '<div class="modal fade modal-'.$filename.'" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 <div class="modal-dialog modal-dialog-centered modal-lg" role="document"><div class="modal-content"><div class="modal-header">
 <h5 class="modal-title" id="exampleModalCenterTitle"><a href="'.$data.'" download="'.$doc->filename.'">'.__( 'Download', 'doliconnect').' '.$doc->filename.'</a></h5><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div><div class="modal-body">';
@@ -1220,6 +1256,7 @@ document.getElementById("pdfjsframe-'.$filename.'").contentWindow.PDFViewerAppli
 };
 </script>';
 $document .= '</div></div></div></div>';
+*/
 } else {
 $document = '<a href="'.$data.'" role="button" class="btn '.$style.'" download="'.$doc->filename.'">'.$name.' <i class="fas fa-file-download"></i></a>';
 }
