@@ -1210,12 +1210,12 @@ $filename = explode(".", $doc->filename)[0];
 
 if (!empty(get_option('doliconnectbeta'))) {
 $document = '<button type="button" class="btn btn btn-outline-dark btn-sm btn-block" data-bs-toggle="modal" data-bs-target=".modal-'.$filename.'">'.$name.' <i class="fas fa-file-download"></i></button>';
-$test = "<div><embed id='pdfID' type='text/html' width='1200' height='600' src=''/></div>";
+//$test = "<embed id=\pdfID\' type=\'text/html\' width=\'100%\' height=\'600\' src=\'https://mozilla.github.io/pdf.js/web/viewer.html\'/>";
 
 $document .= "<script>";
 $document .= 'jQuery(document).ready(function($) {
     document.querySelector("#buttonmodaltest-'.$filename.'").addEventListener("click", function() {
-        var m1 = $(makeModal("'.$filename.'", "<embed id=\pdfID\' type=\'text/html\' width=\'100%\' height=\'600\' src=\'https://mozilla.github.io/pdf.js/web/viewer.html\'/>")); // I would want to skip creating an HTML element with jQuery.
+        var m1 = $(makeModal("'.$filename.'", "")); // I would want to skip creating an HTML element with jQuery.
         //document.body.insertAdjacentHTML("beforeend", m1);
         m1.modal("show");
       }, false);

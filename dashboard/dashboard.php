@@ -409,10 +409,10 @@ function rewards_menu($arg){
     print "<a href='".esc_url(get_permalink()."?module=rewards")."' class='list-group-item list-group-item-light list-group-item-action";
     if ($arg=='rewards') { print " active";}
     print "'>".__( 'Rewards & fidelity', 'doliconnect')."</a>";
-    }
+}
     
-    function rewards_module($url) {
-    global $wpdb,$current_user;
+function rewards_module($url) {
+    global $current_user;
     $entity = get_current_blog_id();
     $ID = $current_user->ID;
     print "<div class='card shadow-sm'>";
@@ -1506,7 +1506,7 @@ print "'>".__( 'Donations tracking', 'doliconnect')."</a>";
 }
 
 function donations_module( $url ) {
-global $wpdb, $current_user;
+global $current_user;
 $entity = get_current_blog_id();
 $ID = $current_user->ID;
 
@@ -1631,7 +1631,7 @@ if ( !empty(doliconst('MAIN_MODULE_RECRUITMENT')) && doliversion('15.0.0') && !e
     }
     
     function recruitment_module( $url ) {
-    global $wpdb, $current_user;
+    global $current_user;
     $entity = get_current_blog_id();
     $ID = $current_user->ID;
     
@@ -1731,7 +1731,7 @@ print "'>".__( 'Manage my subscription', 'doliconnect')."</a>";
 }
 
 function members_module( $url ) {
-global $wpdb,$current_user;
+global $current_user;
 
 $time = current_time( 'timestamp',1);
 
