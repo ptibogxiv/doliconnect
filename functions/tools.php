@@ -1226,7 +1226,7 @@ $document .= 'jQuery(document).ready(function($) {
       
           <div class="modal-content"><div class="modal-header"><h4 class="modal-title">${title}</h4>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
+            </div><iframe class="pdfjs-viewer" style="width:100%;height:70vh" src="'.plugins_url("doliconnect/includes/pdfjs/web/viewer.html").'?file=" id="pdfjsframe-'.$filename.'"></iframe>
             ${text}
             <div class="modal-footer">
             <a href="'.$data.'" role="button" class="btn btn btn-outline-dark btn-sm btn-block" download="'.$doc->filename.'">'.__( 'Download', 'doliconnect').' <i class="fas fa-file-download"></i></a>
