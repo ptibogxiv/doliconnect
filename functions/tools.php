@@ -1215,7 +1215,7 @@ $test = "<div><embed id='pdfID' type='text/html' width='1200' height='600' src='
 $document .= "<script>";
 $document .= 'jQuery(document).ready(function($) {
     document.querySelector("#buttonmodaltest-'.$filename.'").addEventListener("click", function() {
-        var m1 = $(makeModal("'.$filename.'", "<div><embed id=\pdfID\' type=\'text/html\' src=\''.$data.'\'/></div>")); // I would want to skip creating an HTML element with jQuery.
+        var m1 = $(makeModal("'.$filename.'", "<embed id=\pdfID\' type=\'text/html\' width=\'100%\' height=\'600\' src=\'https://mozilla.github.io/pdf.js/web/viewer.html\'/>")); // I would want to skip creating an HTML element with jQuery.
         //document.body.insertAdjacentHTML("beforeend", m1);
         m1.modal("show");
       }, false);
@@ -1224,18 +1224,14 @@ $document .= 'jQuery(document).ready(function($) {
         return `<div id="myModal" class="modal fade" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" style="display: none">
         <div class="modal-dialog modal-xl modal-fullscreen-md-down modal-dialog-centered modal-dialog-scrollable" role="document">
       
-          <!-- Modal content-->
           <div class="modal-content"><div class="modal-header"><h4 class="modal-title">${title}</h4>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-              <p>${text}</p>
-            </div>
+            ${text}
             <div class="modal-footer">
-
+            <a href="'.$data.'" role="button" class="btn btn btn-outline-dark btn-sm btn-block" download="'.$doc->filename.'">Download <i class="fas fa-file-download"></i></a>
             </div>
           </div>
-      
         </div>
       </div>`;
       }
