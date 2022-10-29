@@ -1772,7 +1772,7 @@ $adherenttype = callDoliApi("GET", $request, null, dolidelay('member', esc_attr(
 }
 
 if ( isset($adherent) && !isset($adherent->error) && $adherent != null ) {
-print "<div class='row'><div class='col-12 col-md-5'><b>".__( 'Status', 'doliconnect').":</b> ";
+print "<div class='row'><div class='col-12 col-md-5 border-end'><b>".__( 'Status', 'doliconnect').":</b> ";
 if ( $adherent->statut > 0) {
 if  ($adherent->datefin == null ) { print  "<span class='badge rounded-pill bg-danger'>".__( 'Waiting payment', 'doliconnect')."</span>";}
 else {
