@@ -1,11 +1,11 @@
 <?php
 /**
  * Plugin Name: Doliconnect
- * Plugin URI: https://www.ptibogxiv.net
+ * Plugin URI: https://www.ptibogxiv.eu
  * Description: Connect your Dolibarr (free ERP/CRM) to Wordpress. 
- * Version: 6.7.2
+ * Version: 6.8.0
  * Author: ptibogxiv
- * Author URI: https://www.ptibogxiv.net/en
+ * Author URI: https://www.ptibogxiv.eu
  * Network: true
  * License: GPLv3 or later
  * License URI: http://www.gnu.org/licenses/gpl-3.0.txt
@@ -14,7 +14,7 @@
  * Donate link: https://www.paypal.me/ptibogxiv
  *   
  * @author ptibogxiv.net <support@ptibogxiv.net>
- * @copyright Copyright (c) 2017-2022, ptibogxiv.net
+ * @copyright Copyright (c) 2017-2022, ptibogxiv.eu
 **/
 
 // Exit if accessed directly.
