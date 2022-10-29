@@ -1193,7 +1193,6 @@ $mail =  wp_mail($user->user_email, $subject, $body, $headers);
 add_action('wp_login', 'Doliconnect_MailAlert', 10, 2);
 
 function dolidocdownload($type, $ref=null, $fichier=null, $name=null, $refresh = false, $entity = null, $style = 'btn-outline-dark btn-sm btn-block') {
-global $wpdb;
  
 if ( $name == null ) { $name=$fichier; } 
 
