@@ -1229,7 +1229,7 @@ $document .= 'jQuery(document).ready(function($) {
             </div>
             ${text}
             <div class="modal-footer">
-            <a href="'.$data.'" role="button" class="btn btn btn-outline-dark btn-sm btn-block" download="'.$doc->filename.'">Download <i class="fas fa-file-download"></i></a>
+            <a href="'.$data.'" role="button" class="btn btn btn-outline-dark btn-sm btn-block" download="'.$doc->filename.'">'.__( 'Download', 'doliconnect').' <i class="fas fa-file-download"></i></a>
             </div>
           </div>
         </div>
