@@ -843,7 +843,7 @@ global $current_user;
 if ( wp_verify_nonce( trim($_POST['dolimember-nonce']), 'dolimember-nonce' ) ) {
 
 $productadhesion = doliconst("ADHERENT_PRODUCT_ID_FOR_SUBSCRIPTIONS", dolidelay('constante'));
-$requesta = "/adherentsplus/".doliconnector($current_user, 'fk_member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)); 
+$requesta = "/members/".doliconnector($current_user, 'fk_member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)); 
 if ( !empty(doliconnector($current_user, 'fk_member')) && doliconnector($current_user, 'fk_member') > 0 ) {
 $adherent = callDoliApi("GET", $requesta, null, dolidelay('member'));
 }
