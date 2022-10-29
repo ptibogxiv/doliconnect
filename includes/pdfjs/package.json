@@ -36,7 +36,7 @@
     "gulp-zip": "^5.1.0",
     "jasmine": "^4.3.0",
     "jsdoc": "^3.6.11",
-    "jstransformer-markdown-it": "^2.1.0",
+    "jstransformer-markdown-it": "^3.0.0",
     "merge-stream": "^2.0.0",
     "mkdirp": "^1.0.4",
     "needle": "^3.1.0",
