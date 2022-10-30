@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2022-10-27 13:41+0200\n"
-"PO-Revision-Date: 2022-10-27 13:41+0200\n"
+"POT-Creation-Date: 2022-10-30 19:31+0100\n"
+"PO-Revision-Date: 2022-10-30 19:31+0100\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_FR\n"
@@ -21,7 +21,7 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: includes\n"
 
-#: admin/admin.php:7 dashboard/templates.php:1903
+#: admin/admin.php:7 dashboard/templates.php:1896
 msgid ""
 "It seems that your version of Dolibarr and/or its plugins are not up to date!"
 msgstr ""
@@ -153,10 +153,10 @@ msgstr "une adresse IP par ligne sans espace ni virgule"
 #: admin/admin.php:434 admin/admin.php:446 admin/admin.php:478
 #: admin/admin.php:491 admin/admin.php:506 admin/admin.php:517
 #: admin/admin.php:528 admin/admin.php:541 admin/admin.php:553
-#: dashboard/dashboard.php:2230 dashboard/dashboard.php:2249
-#: dashboard/dashboard.php:2266 dashboard/dashboard.php:2284
-#: dashboard/templates.php:697 dashboard/templates.php:1074
-#: functions/tools.php:606 functions/tools.php:713
+#: dashboard/dashboard.php:2265 dashboard/dashboard.php:2284
+#: dashboard/dashboard.php:2301 dashboard/dashboard.php:2319
+#: dashboard/templates.php:687 dashboard/templates.php:1059
+#: functions/tools.php:616 functions/tools.php:723
 msgid "- Select -"
 msgstr "- Sélectionner -"
 
@@ -325,7 +325,7 @@ msgstr "Masquer la durée"
 msgid "Hide stock"
 msgstr "Masquer le stock"
 
-#: blocks/product/block.php:7 functions/product.php:177
+#: blocks/product/block.php:7 functions/product.php:176
 msgid "Item"
 msgstr "Article"
 
@@ -341,7 +341,7 @@ msgstr "discountProduct"
 msgid "New discounted items"
 msgstr "Nouveaux articles en promotion"
 
-#: blocks/product/blockdiscount.php:24 dashboard/templates.php:987
+#: blocks/product/blockdiscount.php:24 dashboard/templates.php:972
 msgid "No discounted item"
 msgstr "Aucun article en promotion"
 
@@ -357,7 +357,7 @@ msgstr "newProduct"
 msgid "New items"
 msgstr "Nouveaux articles"
 
-#: blocks/product/blocknew.php:24 dashboard/templates.php:943
+#: blocks/product/blocknew.php:24 dashboard/templates.php:928
 msgid "No new item"
 msgstr "Aucun nouvel article"
 
@@ -401,199 +401,199 @@ msgstr "Écrire un bref desc"
 msgid "Edit my informations"
 msgstr "Modifier mes informations"
 
-#: dashboard/dashboard.php:37 dashboard/dashboard.php:229
-#: dashboard/dashboard.php:305 dashboard/dashboard.php:1783
-#: dashboard/dashboard.php:2016 dashboard/dashboard.php:2062
-#: dashboard/templates.php:1328 functions/member.php:136
+#: dashboard/dashboard.php:37 dashboard/dashboard.php:231
+#: dashboard/dashboard.php:312 dashboard/dashboard.php:1852
+#: dashboard/dashboard.php:2049 dashboard/dashboard.php:2095
+#: dashboard/templates.php:1313 functions/member.php:136
 #: functions/member.php:138 functions/member.php:140 functions/member.php:145
-#: functions/tools.php:505
+#: functions/tools.php:515
 msgid "Update"
 msgstr "Modifier"
 
-#: dashboard/dashboard.php:205 dashboard/dashboard.php:476
-#: dashboard/dashboard.php:1965 dashboard/dashboard.php:1981
-#: functions/data-request.php:108 functions/data-request.php:273
+#: dashboard/dashboard.php:207 dashboard/dashboard.php:487
+#: dashboard/dashboard.php:1998 dashboard/dashboard.php:2014
+#: functions/data-request.php:112 functions/data-request.php:285
 msgid "Your informations have been updated."
 msgstr "Vos informations ont été mises à jour."
 
-#: dashboard/dashboard.php:212 dashboard/templates.php:26
+#: dashboard/dashboard.php:214 dashboard/templates.php:26
 msgid "Edit my avatar"
 msgstr "Modifier mon avatar"
 
-#: dashboard/dashboard.php:216
+#: dashboard/dashboard.php:218
 msgid "Select a file"
 msgstr "Sélectionner un fichier"
 
-#: dashboard/dashboard.php:220
+#: dashboard/dashboard.php:222
 msgid "Your avatar must be a .jpg/.jpeg file, <10Mo and 350x350pixels minimum."
 msgstr ""
 "Votre avatar doit être un fichier .jpg/.jpeg, <10Mo et de 350x350 pixels "
 "minimum."
 
-#: dashboard/dashboard.php:226
+#: dashboard/dashboard.php:228
 msgid "Delete your picture"
 msgstr "Supprimer votre photo de profil"
 
-#: dashboard/dashboard.php:244 functions/tools.php:447
+#: dashboard/dashboard.php:251 functions/tools.php:457
 msgid "Edit my password"
 msgstr "Modifier mon mot de passe"
 
-#: dashboard/dashboard.php:270 dashboard/dashboard.php:341
+#: dashboard/dashboard.php:277 dashboard/dashboard.php:348
 msgid "Manage address book"
 msgstr "Gérer le carnet d'adresses"
 
-#: dashboard/dashboard.php:299
+#: dashboard/dashboard.php:306
 msgid "Edit contact"
 msgstr "Modifier le contact"
 
-#: dashboard/dashboard.php:299 dashboard/dashboard.php:322
-#: dashboard/dashboard.php:530 dashboard/dashboard.php:659
-#: dashboard/dashboard.php:971 dashboard/dashboard.php:1239
-#: dashboard/dashboard.php:2149 dashboard/dashboard.php:2220
+#: dashboard/dashboard.php:306 dashboard/dashboard.php:329
+#: dashboard/dashboard.php:543 dashboard/dashboard.php:674
+#: dashboard/dashboard.php:988 dashboard/dashboard.php:1258
+#: dashboard/dashboard.php:2184 dashboard/dashboard.php:2255
 #: dashboard/templates.php:256 dashboard/templates.php:274
 #: dashboard/templates.php:409
 msgid "Back"
 msgstr "Retour"
 
-#: dashboard/dashboard.php:322 dashboard/dashboard.php:342
+#: dashboard/dashboard.php:329 dashboard/dashboard.php:349
 msgid "Create contact"
 msgstr "Créer un contact"
 
-#: dashboard/dashboard.php:328 functions/tools.php:2111
-#: functions/tools.php:2316
+#: dashboard/dashboard.php:335 functions/tools.php:2130
+#: functions/tools.php:2335
 msgid "Add"
 msgstr "Ajouter"
 
-#: dashboard/dashboard.php:357
+#: dashboard/dashboard.php:364
 msgid "No contact"
 msgstr "Pas de contact"
 
-#: dashboard/dashboard.php:383 functions/tools.php:1759
+#: dashboard/dashboard.php:392 functions/tools.php:1778
 msgid "Manage payment methods"
 msgstr "Gérer les modes de paiement"
 
-#: dashboard/dashboard.php:400
+#: dashboard/dashboard.php:411
 msgid "Rewards & fidelity"
 msgstr "Récompenses et fidélité"
 
-#: dashboard/dashboard.php:435
+#: dashboard/dashboard.php:446
 msgid "unlimited"
 msgstr "illimité"
 
-#: dashboard/dashboard.php:461 dashboard/dashboard.php:485
+#: dashboard/dashboard.php:472 dashboard/dashboard.php:496
 msgid "Wishlist"
 msgstr "Liste de souhaits"
 
-#: dashboard/dashboard.php:494
+#: dashboard/dashboard.php:505
 msgid "No product"
 msgstr "Aucun produit"
 
-#: dashboard/dashboard.php:516 dashboard/dashboard.php:601
+#: dashboard/dashboard.php:529 dashboard/dashboard.php:614
 msgid "Proposals tracking"
 msgstr "Suivi des propositions"
 
-#: dashboard/dashboard.php:530
+#: dashboard/dashboard.php:543
 #, php-format
 msgid "Proposal %s"
 msgstr "Proposition %s"
 
-#: dashboard/dashboard.php:532 dashboard/dashboard.php:1368
-#: dashboard/dashboard.php:1625 dashboard/dashboard.php:2151
+#: dashboard/dashboard.php:545 dashboard/dashboard.php:1389
+#: dashboard/dashboard.php:1650 dashboard/dashboard.php:2186
 msgid "Date of creation"
 msgstr "Date de création"
 
-#: dashboard/dashboard.php:533 dashboard/dashboard.php:1382
+#: dashboard/dashboard.php:546 dashboard/dashboard.php:1403
 msgid "Validation"
 msgstr "Validation"
 
-#: dashboard/dashboard.php:536
+#: dashboard/dashboard.php:549
 msgid "refused"
 msgstr "refusée"
 
-#: dashboard/dashboard.php:538 dashboard/dashboard.php:542
-#: dashboard/dashboard.php:559 dashboard/dashboard.php:665
-#: dashboard/dashboard.php:772 dashboard/dashboard.php:977
-#: dashboard/dashboard.php:1083 dashboard/dashboard.php:1262
+#: dashboard/dashboard.php:551 dashboard/dashboard.php:555
+#: dashboard/dashboard.php:572 dashboard/dashboard.php:680
+#: dashboard/dashboard.php:787 dashboard/dashboard.php:994
+#: dashboard/dashboard.php:1100 dashboard/dashboard.php:1281
 msgid "processing"
 msgstr "traitement"
 
-#: dashboard/dashboard.php:540
+#: dashboard/dashboard.php:553
 msgid "sign before"
 msgstr "signer avant"
 
-#: dashboard/dashboard.php:544 dashboard/dashboard.php:675
-#: dashboard/dashboard.php:987 dashboard/dashboard.php:1256
+#: dashboard/dashboard.php:557 dashboard/dashboard.php:690
+#: dashboard/dashboard.php:1004 dashboard/dashboard.php:1275
 msgid "canceled"
 msgstr "annulée"
 
-#: dashboard/dashboard.php:559
+#: dashboard/dashboard.php:572
 msgid "proposal"
 msgstr "proposition"
 
-#: dashboard/dashboard.php:559 dashboard/dashboard.php:1254
+#: dashboard/dashboard.php:572 dashboard/dashboard.php:1273
 msgid "validation"
 msgstr "validation"
 
-#: dashboard/dashboard.php:559
+#: dashboard/dashboard.php:572
 msgid "billing"
 msgstr "facturation"
 
-#: dashboard/dashboard.php:569 dashboard/dashboard.php:782
-#: dashboard/dashboard.php:784 dashboard/dashboard.php:1272
-#: dashboard/dashboard.php:1400
+#: dashboard/dashboard.php:582 dashboard/dashboard.php:797
+#: dashboard/dashboard.php:799 dashboard/dashboard.php:1291
+#: dashboard/dashboard.php:1421
 msgid "Summary"
 msgstr "Récapitulatif"
 
-#: dashboard/dashboard.php:574
+#: dashboard/dashboard.php:587
 msgid "Propal"
 msgstr "Proposition"
 
-#: dashboard/dashboard.php:620
+#: dashboard/dashboard.php:633
 msgid "No proposal"
 msgstr "Aucune proposition"
 
-#: dashboard/dashboard.php:644 dashboard/dashboard.php:909
+#: dashboard/dashboard.php:659 dashboard/dashboard.php:924
 msgid "Orders tracking"
 msgstr "Suivi des commandes"
 
-#: dashboard/dashboard.php:659
+#: dashboard/dashboard.php:674
 #, php-format
 msgid "Order %s"
 msgstr "Commande %s"
 
-#: dashboard/dashboard.php:660 dashboard/dashboard.php:1502
+#: dashboard/dashboard.php:675 dashboard/dashboard.php:1525
 msgid "Date of order"
 msgstr "Date de commande"
 
-#: dashboard/dashboard.php:663 dashboard/dashboard.php:975
+#: dashboard/dashboard.php:678 dashboard/dashboard.php:992
 msgid "shipped"
 msgstr "expédiée"
 
-#: dashboard/dashboard.php:670 dashboard/dashboard.php:982
+#: dashboard/dashboard.php:685 dashboard/dashboard.php:999
 msgid "validated"
 msgstr "validée"
 
-#: dashboard/dashboard.php:673 dashboard/dashboard.php:985
+#: dashboard/dashboard.php:688 dashboard/dashboard.php:1002
 msgid "draft"
 msgstr "brouillon"
 
-#: dashboard/dashboard.php:679 dashboard/dashboard.php:991
-#: dashboard/dashboard.php:1504 dashboard/dashboard.php:1627
-#: dashboard/templates.php:1450 functions/data-request.php:765
+#: dashboard/dashboard.php:694 dashboard/dashboard.php:1008
+#: dashboard/dashboard.php:1527 dashboard/dashboard.php:1652
+#: dashboard/templates.php:1435 functions/data-request.php:803
 msgid "Payment method"
 msgstr "Mode de paiement"
 
-#: dashboard/dashboard.php:680 dashboard/dashboard.php:992
-#: functions/tools.php:1870 functions/tools.php:2532 functions/tools.php:2572
+#: dashboard/dashboard.php:695 dashboard/dashboard.php:1009
+#: functions/tools.php:1889 functions/tools.php:2551 functions/tools.php:2591
 msgid "Payment term"
 msgstr "Conditions de règlement"
 
-#: dashboard/dashboard.php:681
+#: dashboard/dashboard.php:696
 msgid "Shipment method"
 msgstr "Méthode d’expédition"
 
-#: dashboard/dashboard.php:698 dashboard/dashboard.php:1009
-#: dashboard/templates.php:1341 dashboard/templates.php:1464
+#: dashboard/dashboard.php:713 dashboard/dashboard.php:1026
+#: dashboard/templates.php:1326 dashboard/templates.php:1449
 #, php-format
 msgid ""
 "Please send your cheque in the amount of <b>%1$s</b> with reference <b>%2$s</"
@@ -602,8 +602,8 @@ msgstr ""
 "Veuillez envoyer votre chèque d'un montant de <b>%1$s</b> avec la référence "
 "<b>%2$s</b> à l'ordre de <b>%3$s</b> à l'adresse suivante"
 
-#: dashboard/dashboard.php:706 dashboard/dashboard.php:1017
-#: dashboard/templates.php:1350 dashboard/templates.php:1470
+#: dashboard/dashboard.php:721 dashboard/dashboard.php:1034
+#: dashboard/templates.php:1335 dashboard/templates.php:1455
 #, php-format
 msgid ""
 "Please send your transfert in the amount of <b>%1$s</b> with reference <b>"
@@ -612,475 +612,478 @@ msgstr ""
 "Veuillez envoyer votre virement bancaire au montant de <b>%1$s</b> avec la "
 "référence <b>%2$s</b> sur le compte suivant"
 
-#: dashboard/dashboard.php:707 dashboard/dashboard.php:1018
-#: dashboard/templates.php:1351 dashboard/templates.php:1471
-#: functions/tools.php:2515
+#: dashboard/dashboard.php:722 dashboard/dashboard.php:1035
+#: dashboard/templates.php:1336 dashboard/templates.php:1456
+#: functions/tools.php:2534
 msgid "Bank"
 msgstr "Banque"
 
-#: dashboard/dashboard.php:750 dashboard/dashboard.php:1061
-#: dashboard/templates.php:1727 dashboard/templates.php:1780
+#: dashboard/dashboard.php:765 dashboard/dashboard.php:1078
+#: dashboard/templates.php:1720 dashboard/templates.php:1773
 msgid "Billing address"
 msgstr "Adresse de facturation"
 
-#: dashboard/dashboard.php:757 dashboard/dashboard.php:1068
-#: dashboard/templates.php:1754
+#: dashboard/dashboard.php:772 dashboard/dashboard.php:1085
+#: dashboard/templates.php:1747
 msgid "Shipping address"
 msgstr "Adresse d’expédition"
 
-#: dashboard/dashboard.php:765 dashboard/dashboard.php:1076
+#: dashboard/dashboard.php:780 dashboard/dashboard.php:1093
 msgid "Billing and shipping address"
 msgstr "Adresse de facturation et d'expédition"
 
-#: dashboard/dashboard.php:772 dashboard/dashboard.php:1083
-#: dashboard/dashboard.php:1262
+#: dashboard/dashboard.php:787 dashboard/dashboard.php:1100
+#: dashboard/dashboard.php:1281
 msgid "order"
 msgstr "commande"
 
-#: dashboard/dashboard.php:772 dashboard/dashboard.php:1083
-#: dashboard/dashboard.php:1262
+#: dashboard/dashboard.php:787 dashboard/dashboard.php:1100
+#: dashboard/dashboard.php:1281
 msgid "payment"
 msgstr "paiement"
 
-#: dashboard/dashboard.php:772 dashboard/dashboard.php:1083
+#: dashboard/dashboard.php:787 dashboard/dashboard.php:1100
 msgid "shipping"
 msgstr "expédition"
 
-#: dashboard/dashboard.php:772 dashboard/dashboard.php:1083
-#: dashboard/dashboard.php:1262
+#: dashboard/dashboard.php:787 dashboard/dashboard.php:1100
+#: dashboard/dashboard.php:1281
 msgid "delivery"
 msgstr "livraison"
 
-#: dashboard/dashboard.php:789 dashboard/dashboard.php:1390
-#: dashboard/dashboard.php:1514 dashboard/dashboard.php:1637
+#: dashboard/dashboard.php:804 dashboard/dashboard.php:1411
+#: dashboard/dashboard.php:1537 dashboard/dashboard.php:1662
 msgid "Order"
 msgstr "Commande"
 
-#: dashboard/dashboard.php:809 dashboard/dashboard.php:1120
-#: dashboard/dashboard.php:1390 dashboard/dashboard.php:1514
-#: dashboard/dashboard.php:1637 dashboard/templates.php:1571
+#: dashboard/dashboard.php:824 dashboard/dashboard.php:1137
+#: dashboard/dashboard.php:1411 dashboard/dashboard.php:1537
+#: dashboard/dashboard.php:1662 dashboard/templates.php:1556
 msgid "Payment"
 msgstr "Paiement"
 
-#: dashboard/dashboard.php:819 dashboard/dashboard.php:821
-#: dashboard/dashboard.php:838 dashboard/dashboard.php:1093
-#: dashboard/dashboard.php:1095 dashboard/dashboard.php:1100
-#: dashboard/dashboard.php:1130 dashboard/dashboard.php:1132
-#: dashboard/dashboard.php:1149
+#: dashboard/dashboard.php:834 dashboard/dashboard.php:836
+#: dashboard/dashboard.php:853 dashboard/dashboard.php:1110
+#: dashboard/dashboard.php:1112 dashboard/dashboard.php:1117
+#: dashboard/dashboard.php:1147 dashboard/dashboard.php:1149
+#: dashboard/dashboard.php:1166
 msgid "Invoice"
 msgstr "Facture"
 
-#: dashboard/dashboard.php:826 dashboard/dashboard.php:830
-#: dashboard/dashboard.php:1137 dashboard/dashboard.php:1141
+#: dashboard/dashboard.php:841 dashboard/dashboard.php:845
+#: dashboard/dashboard.php:1154 dashboard/dashboard.php:1158
 #: functions/member.php:121 functions/member.php:154
 msgid "Pay"
 msgstr "Payer"
 
-#: dashboard/dashboard.php:860
+#: dashboard/dashboard.php:875
 msgid "of"
 msgstr "de"
 
-#: dashboard/dashboard.php:863
+#: dashboard/dashboard.php:878
 msgid "size"
 msgstr "dimensions"
 
-#: dashboard/dashboard.php:867
+#: dashboard/dashboard.php:882
 msgid "Estimated delivery"
 msgstr "Livraison estimée"
 
-#: dashboard/dashboard.php:871 dashboard/dashboard.php:879
+#: dashboard/dashboard.php:886 dashboard/dashboard.php:894
 msgid "Shipment"
 msgstr "Expédition"
 
-#: dashboard/dashboard.php:873
+#: dashboard/dashboard.php:888
 msgid "Parcel"
 msgstr "Colis"
 
-#: dashboard/dashboard.php:880
+#: dashboard/dashboard.php:895
 msgid "Packaging in progress"
 msgstr "Conditionnement en cours"
 
-#: dashboard/dashboard.php:932
+#: dashboard/dashboard.php:947
 msgid "No order"
 msgstr "Aucune commande"
 
-#: dashboard/dashboard.php:956 dashboard/dashboard.php:1178
+#: dashboard/dashboard.php:973 dashboard/dashboard.php:1195
 msgid "Invoices tracking"
 msgstr "Suivi des factures"
 
-#: dashboard/dashboard.php:971
+#: dashboard/dashboard.php:988
 #, php-format
 msgid "Invoice %s"
 msgstr "Facture %s"
 
-#: dashboard/dashboard.php:972
+#: dashboard/dashboard.php:989
 msgid "Date of invoice"
 msgstr "Date de la facture"
 
-#: dashboard/dashboard.php:1201
+#: dashboard/dashboard.php:1218
 msgid "No invoice"
 msgstr "Aucune Facture"
 
-#: dashboard/dashboard.php:1225 dashboard/dashboard.php:1305
+#: dashboard/dashboard.php:1244 dashboard/dashboard.php:1324
 msgid "Contracts tracking"
 msgstr "Suivi des contrats"
 
-#: dashboard/dashboard.php:1240
+#: dashboard/dashboard.php:1259
 msgid "date of creation"
 msgstr "date de création"
 
-#: dashboard/dashboard.php:1262 dashboard/dashboard.php:1390
-#: dashboard/dashboard.php:1514 dashboard/dashboard.php:1637
+#: dashboard/dashboard.php:1281 dashboard/dashboard.php:1411
+#: dashboard/dashboard.php:1537 dashboard/dashboard.php:1662
 #: functions/product.php:64
 msgid "Shipping"
 msgstr "Expédition"
 
-#: dashboard/dashboard.php:1277 dashboard/dashboard.php:1405
+#: dashboard/dashboard.php:1296 dashboard/dashboard.php:1426
 msgid "contract"
 msgstr "contrat"
 
-#: dashboard/dashboard.php:1329
+#: dashboard/dashboard.php:1348
 msgid "No contract"
 msgstr "Aucun contrat"
 
-#: dashboard/dashboard.php:1353
+#: dashboard/dashboard.php:1374
 msgid "Projets tracking"
 msgstr "Suivi des projets"
 
-#: dashboard/dashboard.php:1384
+#: dashboard/dashboard.php:1405
 msgid "Canceled"
 msgstr "Annulée"
 
-#: dashboard/dashboard.php:1390 dashboard/dashboard.php:1514
-#: dashboard/dashboard.php:1637 functions/tools.php:1142
+#: dashboard/dashboard.php:1411 dashboard/dashboard.php:1537
+#: dashboard/dashboard.php:1662 functions/tools.php:1146
 msgid "Processing"
 msgstr "Traitement"
 
-#: dashboard/dashboard.php:1390 dashboard/dashboard.php:1514
+#: dashboard/dashboard.php:1411 dashboard/dashboard.php:1537
 msgid "Delivery"
 msgstr "Livraison"
 
-#: dashboard/dashboard.php:1433
+#: dashboard/dashboard.php:1454
 msgid "Projects tracking"
 msgstr "Suivi des projets"
 
-#: dashboard/dashboard.php:1458
+#: dashboard/dashboard.php:1479
 msgid "No project"
 msgstr "Aucun projet"
 
-#: dashboard/dashboard.php:1482
+#: dashboard/dashboard.php:1505
 msgid "Donations tracking"
 msgstr "Suivi des dons"
 
-#: dashboard/dashboard.php:1539
+#: dashboard/dashboard.php:1562
 msgid "Amount"
 msgstr "Montant"
 
-#: dashboard/dashboard.php:1561 dashboard/dashboard.php:1659
+#: dashboard/dashboard.php:1584 dashboard/dashboard.php:1684
 msgid "Donate"
 msgstr "Faire un don"
 
-#: dashboard/dashboard.php:1581
+#: dashboard/dashboard.php:1604
 msgid "No donation"
 msgstr "Aucun don"
 
-#: dashboard/dashboard.php:1605
+#: dashboard/dashboard.php:1630
 msgid "List of jobpositions"
 msgstr "Liste des postes à pourvoir"
 
-#: dashboard/dashboard.php:1637
+#: dashboard/dashboard.php:1662
 msgid "Recruited"
 msgstr "Recruté"
 
-#: dashboard/dashboard.php:1679
+#: dashboard/dashboard.php:1704
 msgid "No jobposition"
 msgstr "Pas de poste"
 
-#: dashboard/dashboard.php:1705 dashboard/dashboard.php:1738
+#: dashboard/dashboard.php:1730 dashboard/dashboard.php:1763
 msgid "Manage my subscription"
 msgstr "Gérer mon abonnement"
 
-#: dashboard/dashboard.php:1723
+#: dashboard/dashboard.php:1748
 msgid "Your membership has been updated."
 msgstr "Votre adhésion a été mise à jour."
 
-#: dashboard/dashboard.php:1750
+#: dashboard/dashboard.php:1775
 msgid "Status"
 msgstr "Statut"
 
-#: dashboard/dashboard.php:1752 dashboard/dashboard.php:1754
+#: dashboard/dashboard.php:1777 dashboard/dashboard.php:1779
 msgid "Waiting payment"
 msgstr "En attente de paiement"
 
-#: dashboard/dashboard.php:1754
+#: dashboard/dashboard.php:1779
 msgid "Active"
 msgstr "Actif"
 
-#: dashboard/dashboard.php:1756
+#: dashboard/dashboard.php:1781
 msgid "Terminated"
 msgstr "Résilié"
 
-#: dashboard/dashboard.php:1758
+#: dashboard/dashboard.php:1783
 msgid "Waiting validation"
 msgstr "En attente de validation"
 
-#: dashboard/dashboard.php:1760
+#: dashboard/dashboard.php:1785
 msgid "Excluded"
 msgstr "Exclu"
 
-#: dashboard/dashboard.php:1761
+#: dashboard/dashboard.php:1786
 msgid "No membership"
 msgstr "Pas d'adhésion"
 
-#: dashboard/dashboard.php:1763
+#: dashboard/dashboard.php:1788
 msgid "nothing"
 msgstr "aucun"
 
-#: dashboard/dashboard.php:1764 dashboard/dashboard.php:2228
-#: dashboard/dashboard.php:2240 dashboard/templates.php:695
-#: dashboard/templates.php:707 functions/tools.php:600 functions/tools.php:1402
+#: dashboard/dashboard.php:1789 dashboard/dashboard.php:2263
+#: dashboard/dashboard.php:2275 dashboard/templates.php:685
+#: dashboard/templates.php:697 functions/tools.php:610 functions/tools.php:1437
 msgid "Type"
 msgstr "Type"
 
-#: dashboard/dashboard.php:1765
+#: dashboard/dashboard.php:1790
 msgid "Validity"
 msgstr "Validité"
 
-#: dashboard/dashboard.php:1767 dashboard/dashboard.php:1860
+#: dashboard/dashboard.php:1792 dashboard/dashboard.php:1889
 msgid "to"
 msgstr "au"
 
-#: dashboard/dashboard.php:1768
+#: dashboard/dashboard.php:1793
 msgid "Renewal"
 msgstr "Renouvellement"
 
-#: dashboard/dashboard.php:1768
+#: dashboard/dashboard.php:1793
 msgid "manual"
 msgstr "manuel"
 
-#: dashboard/dashboard.php:1769
+#: dashboard/dashboard.php:1794
 msgid "Commitment"
 msgstr "Engagement"
 
-#: dashboard/dashboard.php:1771
+#: dashboard/dashboard.php:1796
 msgid "no"
 msgstr "aucun"
 
-#: dashboard/dashboard.php:1785
-msgid "Resiliate"
-msgstr "Résilier"
-
-#: dashboard/dashboard.php:1799
+#: dashboard/dashboard.php:1811
 #, php-format
 msgid "Renew from %s"
 msgstr "Renouvellement à partir du %s"
 
-#: dashboard/dashboard.php:1800 functions/widgets.php:122
+#: dashboard/dashboard.php:1812 functions/widgets.php:122
 msgid "Pay my subscription"
 msgstr "Payer mon adhésion"
 
-#: dashboard/dashboard.php:1804
-msgid "Reactivate my subscription"
-msgstr "Réactiver mon adhésion"
-
-#: dashboard/dashboard.php:1810
-msgid "Your request has been registered. You will be notified at validation."
+#: dashboard/dashboard.php:1823
+msgid ""
+"Your request has been registered. You will be notified by email at "
+"validation."
 msgstr ""
-"Votre demande a été enregistrée. Vous serez averti lors de la validation."
+"Votre demande a été enregistrée. Vous serez notifié par email lors de la "
+"validation."
 
-#: dashboard/dashboard.php:1820 dashboard/dashboard.php:1875
+#: dashboard/dashboard.php:1832 dashboard/dashboard.php:1904
 msgid "Personal informations"
 msgstr "Informations personnelles"
 
-#: dashboard/dashboard.php:1865
+#: dashboard/dashboard.php:1850
+msgid "Reactivate my subscription"
+msgstr "Réactiver mon adhésion"
+
+#: dashboard/dashboard.php:1856
+msgid "Resiliate"
+msgstr "Résilier"
+
+#: dashboard/dashboard.php:1894
 msgid "No subscription"
 msgstr "Pas d'adhésion"
 
-#: dashboard/dashboard.php:1877
+#: dashboard/dashboard.php:1906
 msgid "Become a member"
 msgstr "Devenir membre"
 
-#: dashboard/dashboard.php:1899 dashboard/dashboard.php:1907
+#: dashboard/dashboard.php:1930 dashboard/dashboard.php:1938
 msgid "Consumptions monitoring"
 msgstr "Suivi des consommations"
 
-#: dashboard/dashboard.php:1908
+#: dashboard/dashboard.php:1939
 msgid "Next billing date"
 msgstr "Date de la prochaine facture"
 
-#: dashboard/dashboard.php:1930
+#: dashboard/dashboard.php:1961
 msgid "No consumption"
 msgstr "Pas de consommation"
 
-#: dashboard/dashboard.php:1951 dashboard/dashboard.php:1995
+#: dashboard/dashboard.php:1984 dashboard/dashboard.php:2028
 msgid "Manage linked members"
 msgstr "Gérer les membres liés"
 
-#: dashboard/dashboard.php:1999
+#: dashboard/dashboard.php:2032
 msgid "New linked member"
 msgstr "Nouveau membre lié"
 
-#: dashboard/dashboard.php:2000
+#: dashboard/dashboard.php:2033
 msgid "Please contact us to link a pre-existing member"
 msgstr "Veuillez nous contacter pour lier un membre pré-existant"
 
-#: dashboard/dashboard.php:2004 dashboard/dashboard.php:2050
+#: dashboard/dashboard.php:2037 dashboard/dashboard.php:2083
 msgid "Update member"
 msgstr "Mettre à jour le membre"
 
-#: dashboard/dashboard.php:2027
+#: dashboard/dashboard.php:2060
 msgid "Edit"
 msgstr "Éditer"
 
-#: dashboard/dashboard.php:2028
+#: dashboard/dashboard.php:2061
 msgid "Unlink"
 msgstr "Dissocier"
 
-#: dashboard/dashboard.php:2034
+#: dashboard/dashboard.php:2067
 msgid "No linked member"
 msgstr "Aucun membre lié"
 
-#: dashboard/dashboard.php:2078 dashboard/dashboard.php:2084
+#: dashboard/dashboard.php:2111 dashboard/dashboard.php:2117
 msgid "My sales representatives"
 msgstr "Mes représentants commerciaux"
 
-#: dashboard/dashboard.php:2097
+#: dashboard/dashboard.php:2130
 msgid "No sales representative"
 msgstr "Pas de représentant commercial"
 
-#: dashboard/dashboard.php:2119 dashboard/dashboard.php:2319
+#: dashboard/dashboard.php:2154 dashboard/dashboard.php:2354
 msgid "My support tickets"
 msgstr "Mes tickets d'assistance"
 
-#: dashboard/dashboard.php:2144
+#: dashboard/dashboard.php:2179
 msgid "Your message has been send."
 msgstr "Votre message a été envoyé."
 
-#: dashboard/dashboard.php:2149
+#: dashboard/dashboard.php:2184
 #, php-format
 msgid "Ticket %s"
 msgstr "Ticket %s"
 
-#: dashboard/dashboard.php:2152
+#: dashboard/dashboard.php:2187
 msgid "Type and category"
 msgstr "Type et catégorie"
 
-#: dashboard/dashboard.php:2153 dashboard/dashboard.php:2264
-#: dashboard/dashboard.php:2274
+#: dashboard/dashboard.php:2188 dashboard/dashboard.php:2299
+#: dashboard/dashboard.php:2309
 msgid "Severity"
 msgstr "Sévérité"
 
-#: dashboard/dashboard.php:2155 dashboard/dashboard.php:2334
+#: dashboard/dashboard.php:2190 dashboard/dashboard.php:2369
 msgid "Deleted"
 msgstr "Supprimé"
 
-#: dashboard/dashboard.php:2156 dashboard/dashboard.php:2335
+#: dashboard/dashboard.php:2191 dashboard/dashboard.php:2370
 msgid "Closed"
 msgstr "Fermé"
 
-#: dashboard/dashboard.php:2157 dashboard/dashboard.php:2336
+#: dashboard/dashboard.php:2192 dashboard/dashboard.php:2371
 msgid "Waiting"
 msgstr "En attente"
 
-#: dashboard/dashboard.php:2158
+#: dashboard/dashboard.php:2193
 msgid "In progress"
 msgstr "En progression"
 
-#: dashboard/dashboard.php:2159 dashboard/dashboard.php:2338
+#: dashboard/dashboard.php:2194 dashboard/dashboard.php:2373
 msgid "Assigned"
 msgstr "Affecté"
 
-#: dashboard/dashboard.php:2160 dashboard/dashboard.php:2339
+#: dashboard/dashboard.php:2195 dashboard/dashboard.php:2374
 msgid "Answered"
 msgstr "Répondu"
 
-#: dashboard/dashboard.php:2161 dashboard/dashboard.php:2340
+#: dashboard/dashboard.php:2196 dashboard/dashboard.php:2375
 msgid "Read"
 msgstr "Lu"
 
-#: dashboard/dashboard.php:2162 dashboard/dashboard.php:2341
+#: dashboard/dashboard.php:2197 dashboard/dashboard.php:2376
 msgid "Unread"
 msgstr "Non lu"
 
-#: dashboard/dashboard.php:2166 dashboard/dashboard.php:2298
+#: dashboard/dashboard.php:2201 dashboard/dashboard.php:2333
 msgid "Subject"
 msgstr "Sujet"
 
-#: dashboard/dashboard.php:2167
+#: dashboard/dashboard.php:2202
 msgid "Initial message"
 msgstr "Message initial"
 
-#: dashboard/dashboard.php:2177 dashboard/dashboard.php:2301
-#: dashboard/templates.php:712 dashboard/templates.php:1824
+#: dashboard/dashboard.php:2212 dashboard/dashboard.php:2336
+#: dashboard/templates.php:702 dashboard/templates.php:1817
 msgid "Message"
 msgstr "Message"
 
-#: dashboard/dashboard.php:2179
+#: dashboard/dashboard.php:2214
 msgid "Answer"
 msgstr "Répondre"
 
-#: dashboard/dashboard.php:2213
+#: dashboard/dashboard.php:2248
 msgid "Your ticket has been submitted."
 msgstr "Votre ticket a été soumis."
 
-#: dashboard/dashboard.php:2220 dashboard/dashboard.php:2320
+#: dashboard/dashboard.php:2255 dashboard/dashboard.php:2355
 msgid "Create ticket"
 msgstr "Créer un ticket"
 
-#: dashboard/dashboard.php:2247 dashboard/dashboard.php:2257
+#: dashboard/dashboard.php:2282 dashboard/dashboard.php:2292
 msgid "Category"
 msgstr "Catégorie"
 
-#: dashboard/dashboard.php:2282 dashboard/dashboard.php:2291
+#: dashboard/dashboard.php:2317 dashboard/dashboard.php:2326
 msgid "Sales representative"
 msgstr "Commercial"
 
-#: dashboard/dashboard.php:2305 dashboard/templates.php:721
+#: dashboard/dashboard.php:2340 dashboard/templates.php:711
 msgid "Send"
 msgstr "Envoyer"
 
-#: dashboard/dashboard.php:2337
+#: dashboard/dashboard.php:2372
 msgid "Progress"
 msgstr "Progression"
 
-#: dashboard/dashboard.php:2345
+#: dashboard/dashboard.php:2380
 msgid "No ticket"
 msgstr "Aucun ticket"
 
-#: dashboard/dashboard.php:2364
+#: dashboard/dashboard.php:2404
 msgid "Safety and appearance"
 msgstr "Sécurité et apparence"
 
-#: dashboard/dashboard.php:2394
+#: dashboard/dashboard.php:2433
 msgid "Settings & security"
 msgstr "Paramètres et sécurité"
 
-#: dashboard/dashboard.php:2399
+#: dashboard/dashboard.php:2438
 msgid "Receive a email notification at each connection"
 msgstr "Recevoir une notification par email à chaque connexion"
 
-#: dashboard/dashboard.php:2407
+#: dashboard/dashboard.php:2446
 msgid "Privacy policy"
 msgstr "Politique de confidentialité"
 
-#: dashboard/dashboard.php:2420
+#: dashboard/dashboard.php:2459
 msgid "Enabled"
 msgstr "Activé"
 
-#: dashboard/dashboard.php:2421
+#: dashboard/dashboard.php:2460
 msgid "Primary"
 msgstr "Principal"
 
-#: dashboard/dashboard.php:2422 functions/product.php:777
+#: dashboard/dashboard.php:2461 functions/product.php:782
 msgid "Description"
 msgstr "Description"
 
-#: dashboard/dashboard.php:2513 functions/tools.php:2829
+#: dashboard/dashboard.php:2591 functions/tools.php:2848
 msgid "Privacy"
 msgstr "Confidentialité"
 
-#: dashboard/templates.php:30 dashboard/templates.php:1136
-#: functions/product.php:815
+#: dashboard/templates.php:30 dashboard/templates.php:1121
+#: functions/product.php:820
 msgid "Return"
 msgstr "Retour"
 
@@ -1155,16 +1158,16 @@ msgid "Create an enterprise account"
 msgstr "Créer un compte d'entreprise"
 
 #: dashboard/templates.php:265 dashboard/templates.php:273
-#: dashboard/templates.php:528 functions/tools.php:2974
+#: dashboard/templates.php:528 functions/tools.php:2992
 msgid "Create an account"
 msgstr "Créer un compte"
 
-#: dashboard/templates.php:358 functions/data-request.php:436
+#: dashboard/templates.php:358 functions/data-request.php:454
 msgid "No account seems to be linked to this email address"
 msgstr "Aucun compte ne semble être lié à cet adresse email"
 
 #: dashboard/templates.php:408 dashboard/templates.php:521
-#: functions/tools.php:2963
+#: functions/tools.php:2981
 msgid "Forgot password?"
 msgstr "Mot de passe oublié?"
 
@@ -1175,8 +1178,8 @@ msgstr ""
 "compte."
 
 #: dashboard/templates.php:416 dashboard/templates.php:506
-#: dashboard/templates.php:690 functions/tools.php:795 functions/tools.php:2810
-#: functions/tools.php:2948
+#: dashboard/templates.php:680 functions/tools.php:805 functions/tools.php:2829
+#: functions/tools.php:2966
 msgid "Email"
 msgstr "Adresse électronique"
 
@@ -1208,11 +1211,11 @@ msgstr "La clé de sécurité est expirée!"
 msgid "The security key is invalid!"
 msgstr "La clé de sécurité est invalide!"
 
-#: dashboard/templates.php:455 functions/tools.php:2914
+#: dashboard/templates.php:455 functions/tools.php:2932
 msgid "Welcome"
 msgstr "Bienvenue"
 
-#: dashboard/templates.php:457 functions/tools.php:2916
+#: dashboard/templates.php:457 functions/tools.php:2934
 msgid "Access restricted to users"
 msgstr "Accès restreint aux utilisateurs"
 
@@ -1225,7 +1228,7 @@ msgid "You don't have an account"
 msgstr "Vous n'avez pas de compte"
 
 #: dashboard/templates.php:471 dashboard/templates.php:533
-#: functions/tools.php:2979
+#: functions/product.php:417 functions/product.php:419 functions/tools.php:2997
 msgid "Sign in"
 msgstr "Connexion"
 
@@ -1233,16 +1236,16 @@ msgstr "Connexion"
 msgid "You have already an account"
 msgstr "Vous avez déjà un compte"
 
-#: dashboard/templates.php:500 functions/tools.php:2942
+#: dashboard/templates.php:500 functions/tools.php:2960
 msgid "Demo mode is activated"
 msgstr "Le mode démo est activé"
 
-#: dashboard/templates.php:512 functions/tools.php:1084
-#: functions/tools.php:2954
+#: dashboard/templates.php:512 functions/tools.php:1088
+#: functions/tools.php:2972
 msgid "Password"
 msgstr "Mot de passe"
 
-#: dashboard/templates.php:518 functions/tools.php:2960
+#: dashboard/templates.php:518 functions/tools.php:2978
 msgid "Remember me"
 msgstr "Se souvenir de moi"
 
@@ -1250,126 +1253,126 @@ msgstr "Se souvenir de moi"
 msgid "Knowledge base"
 msgstr "Base de connaissances"
 
-#: dashboard/templates.php:632 functions/tools.php:821 functions/tools.php:828
+#: dashboard/templates.php:632 functions/tools.php:831 functions/tools.php:838
 msgid "Address"
 msgstr "Adresse"
 
-#: dashboard/templates.php:658
+#: dashboard/templates.php:648
 msgid "Opening hours"
 msgstr "Heures d’ouverture"
 
-#: dashboard/templates.php:659
+#: dashboard/templates.php:649
 msgid "Monday"
 msgstr "Lundi"
 
-#: dashboard/templates.php:660
+#: dashboard/templates.php:650
 msgid "Tuesday"
 msgstr "Mardi"
 
-#: dashboard/templates.php:661
+#: dashboard/templates.php:651
 msgid "Wednesday"
 msgstr "Mercredi"
 
-#: dashboard/templates.php:662
+#: dashboard/templates.php:652
 msgid "Thursday"
 msgstr "Jeudi"
 
-#: dashboard/templates.php:663
+#: dashboard/templates.php:653
 msgid "Friday"
 msgstr "Vendredi"
 
-#: dashboard/templates.php:664
+#: dashboard/templates.php:654
 msgid "Saturday"
 msgstr "Samedi"
 
-#: dashboard/templates.php:665
+#: dashboard/templates.php:655
 msgid "Sunday"
 msgstr "Dimanche"
 
-#: dashboard/templates.php:683
+#: dashboard/templates.php:673
 msgid "Complete name"
 msgstr "Nom complet"
 
-#: dashboard/templates.php:718
+#: dashboard/templates.php:708
 msgid "I agree to save my personnal informations in order to contact me"
 msgstr ""
 "J'accepte que mes informations personnelles soient sauvegardées afin de me "
 "contacter"
 
-#: dashboard/templates.php:811 dashboard/templates.php:1132
+#: dashboard/templates.php:796 dashboard/templates.php:1117
 msgid "No item currently on sale"
 msgstr "Aucun article actuellement en vente"
 
-#: dashboard/templates.php:850
+#: dashboard/templates.php:835
 msgid "No supplier"
 msgstr "Aucun fournisseur"
 
-#: dashboard/templates.php:903 functions/widgets.php:304
+#: dashboard/templates.php:888 functions/widgets.php:304
 msgid "Name, Ref., Description or Barcode"
 msgstr "Nom, Réf., Description ou Code-barres"
 
-#: dashboard/templates.php:935
+#: dashboard/templates.php:920
 msgid "Here are our new items"
 msgstr "Voici nos nouveaux articles"
 
-#: dashboard/templates.php:979
+#: dashboard/templates.php:964
 msgid "Here are our discounted items"
 msgstr "Voici nos articles en promotion"
 
-#: dashboard/templates.php:1063
+#: dashboard/templates.php:1048
 #, php-format
 msgid "We have found %s item with this search"
 msgid_plural "We have found %s items with this search"
 msgstr[0] "Nous avons trouvé %s article avec cette recherche"
 msgstr[1] "Nous avons trouvé %s articles avec cette recherche"
 
-#: dashboard/templates.php:1067 dashboard/templates.php:1180
+#: dashboard/templates.php:1052 dashboard/templates.php:1165
 #: functions/widgets.php:328
 msgid "All items"
 msgstr "Tous les articles"
 
-#: dashboard/templates.php:1077
+#: dashboard/templates.php:1062
 msgid "Name A->Z"
 msgstr "Nom A->Z"
 
-#: dashboard/templates.php:1080
+#: dashboard/templates.php:1065
 msgid "Name Z->A"
 msgstr "Nom Z->A"
 
-#: dashboard/templates.php:1083 dashboard/templates.php:1198
+#: dashboard/templates.php:1068 dashboard/templates.php:1183
 #: functions/widgets.php:346
 msgid "Novelties"
 msgstr "Nouveautés"
 
-#: dashboard/templates.php:1086
+#: dashboard/templates.php:1071
 msgid "Lowest prices"
 msgstr "Prix les plus bas"
 
-#: dashboard/templates.php:1089
+#: dashboard/templates.php:1074
 msgid "Highest prices"
 msgstr "Prix les plus élevés"
 
-#: dashboard/templates.php:1135
+#: dashboard/templates.php:1120
 msgid "Oops! This category does not appear to exist"
 msgstr "Oups! Cette catégorie ne semble pas exister"
 
-#: dashboard/templates.php:1214 functions/widgets.php:362
+#: dashboard/templates.php:1199 functions/widgets.php:362
 msgid "Discounted items"
 msgstr "Articles en promotion"
 
-#: dashboard/templates.php:1310
+#: dashboard/templates.php:1295
 msgid "Inactive module on Dolibarr"
 msgstr "Module inactif sur Dolibarr"
 
-#: dashboard/templates.php:1341 dashboard/templates.php:1350
+#: dashboard/templates.php:1326 dashboard/templates.php:1335
 msgid "donation"
 msgstr "don"
 
-#: dashboard/templates.php:1357
+#: dashboard/templates.php:1342
 msgid "Tax exemptions"
 msgstr "Exonérations fiscales"
 
-#: dashboard/templates.php:1360
+#: dashboard/templates.php:1345
 msgid "DonationArt200"
 msgstr ""
 "Particuliers, votre don vous donne droit à une déduction fiscale de 66% dans "
@@ -1379,7 +1382,7 @@ msgstr ""
 "sur les cinq années suivantes. Vous bénéficierez de la réduction d’impôt "
 "dans les mêmes conditions. (Art. 200 du Code général des impôts)"
 
-#: dashboard/templates.php:1364
+#: dashboard/templates.php:1349
 msgid "DonationArt238"
 msgstr ""
 "Entreprises, votre don vous donne droit à une déduction fiscale de 60% dans "
@@ -1389,7 +1392,7 @@ msgstr ""
 "sur les cinq années suivantes. Vous bénéficierez de la réduction d’impôt "
 "dans les mêmes conditions. (Art. 238 du Code général des impôts)"
 
-#: dashboard/templates.php:1368
+#: dashboard/templates.php:1353
 msgid "DonationArt835"
 msgstr ""
 "Si vous êtes redevable de l’Impôt sur la Fortune Immobilière, vous "
@@ -1400,53 +1403,53 @@ msgstr ""
 "dispositifs, le donateur pourra choisir l’un ou l’autre ou bien décider de "
 "ventiler son don. (Art. 2835 du Code général des impôts)"
 
-#: dashboard/templates.php:1371
+#: dashboard/templates.php:1356
 msgid "You should't have tax exemptions"
 msgstr "Vous ne devriez pas avoir d'exonérations fiscales"
 
-#: dashboard/templates.php:1432
+#: dashboard/templates.php:1417
 msgid "Oops, Order's module is not available"
 msgstr "Oops, le module de commande n’est pas disponible"
 
-#: dashboard/templates.php:1450 functions/data-request.php:765
+#: dashboard/templates.php:1435 functions/data-request.php:803
 msgid "Your order has been registered"
 msgstr "Votre commande a été enregistrée"
 
-#: dashboard/templates.php:1450 dashboard/templates.php:1457
-#: functions/data-request.php:765 functions/tools.php:591
+#: dashboard/templates.php:1435 dashboard/templates.php:1442
+#: functions/data-request.php:803 functions/tools.php:601
 msgid "Reference"
 msgstr "Référence"
 
-#: dashboard/templates.php:1456
+#: dashboard/templates.php:1441
 msgid "Your payment has been registered"
 msgstr "Votre paiement a été enregistré"
 
-#: dashboard/templates.php:1479
+#: dashboard/templates.php:1464
 msgid "or go to reception desk"
 msgstr "ou aller à la réception"
 
-#: dashboard/templates.php:1558 dashboard/templates.php:1601
-#: functions/tools.php:1153
+#: dashboard/templates.php:1543 dashboard/templates.php:1586
+#: functions/tools.php:1157
 msgid "Cart"
 msgstr "Panier"
 
-#: dashboard/templates.php:1565
+#: dashboard/templates.php:1550
 msgid "Coordinates"
 msgstr "Coordonnées"
 
-#: dashboard/templates.php:1621
+#: dashboard/templates.php:1606
 msgid "Amount outstanding"
 msgstr "Montant impayé"
 
-#: dashboard/templates.php:1621
+#: dashboard/templates.php:1606
 msgid "out of"
 msgstr "sur"
 
-#: dashboard/templates.php:1621
+#: dashboard/templates.php:1606
 msgid "allowed"
 msgstr "autorisé"
 
-#: dashboard/templates.php:1623
+#: dashboard/templates.php:1608
 msgid ""
 "Your account is blocked, this order can't be processed. Please, contact us "
 "to pay overdue unpaid invoices."
@@ -1454,30 +1457,30 @@ msgstr ""
 "Votre compte est bloqué, cette commande ne peut pas être traitée. S’il vous "
 "plaît, contactez-nous pour régler les factures impayées en retard."
 
-#: dashboard/templates.php:1632
+#: dashboard/templates.php:1617
 msgid "Continue shopping"
 msgstr "Continuer vos achats"
 
-#: dashboard/templates.php:1636 functions/product.php:186
+#: dashboard/templates.php:1621 functions/product.php:185
 msgid "Empty the basket"
 msgstr "Vider le panier"
 
-#: dashboard/templates.php:1641
+#: dashboard/templates.php:1626
 msgid "Process"
 msgstr "Finaliser"
 
-#: dashboard/templates.php:1787 dashboard/templates.php:1807
+#: dashboard/templates.php:1780 dashboard/templates.php:1800
 msgid "Shipping method"
 msgstr "Méthode de livraison"
 
-#: dashboard/templates.php:1825
+#: dashboard/templates.php:1818
 msgid ""
 "If you want to send us a message about your order, you can leave one here"
 msgstr ""
 "Si vous voulez nous envoyer un message sur votre commande, vous pouvez en "
 "laisser un ici"
 
-#: dashboard/templates.php:1881 functions/member.php:117
+#: dashboard/templates.php:1874 functions/member.php:117
 #: functions/member.php:124 functions/member.php:125 functions/member.php:128
 #: functions/member.php:129 functions/member.php:147 functions/member.php:156
 #: functions/member.php:157
@@ -1504,12 +1507,12 @@ msgstr ""
 "La vérification de la sécurité a échoué. Actualisez la page et essayez à "
 "nouveau."
 
-#: functions/data-request.php:29 functions/data-request.php:433
+#: functions/data-request.php:29 functions/data-request.php:451
 msgid "This is not a valid email address."
 msgstr "Ceci n'est pas une adresse e-mail valide."
 
-#: functions/data-request.php:32 functions/data-request.php:135
-#: functions/data-request.php:349 functions/data-request.php:430
+#: functions/data-request.php:32 functions/data-request.php:143
+#: functions/data-request.php:365 functions/data-request.php:448
 msgid "Security check failed, invalid human verification field."
 msgstr ""
 "La vérification de sécurité a échoué, champ de vérification humaine invalide."
@@ -1533,41 +1536,41 @@ msgstr ""
 "Impossible d'initier la demande de confirmation. S'il vous plaît contacter "
 "l'administrateur."
 
-#: functions/data-request.php:66 functions/tools.php:842
+#: functions/data-request.php:66 functions/tools.php:846
 msgid "- Select your state -"
 msgstr "- Sélectionnez votre département -"
 
-#: functions/data-request.php:66 functions/tools.php:842
+#: functions/data-request.php:66 functions/tools.php:846
 msgid "State"
 msgstr "Département"
 
-#: functions/data-request.php:67 functions/tools.php:663
+#: functions/data-request.php:67 functions/tools.php:673
 msgid "- Select your legal form -"
 msgstr "- Sélectionnez votre forme juridique -"
 
-#: functions/data-request.php:67 functions/tools.php:663
+#: functions/data-request.php:67 functions/tools.php:673
 msgid "Legal form"
 msgstr "Forme juridique"
 
-#: functions/data-request.php:68 functions/tools.php:942
+#: functions/data-request.php:68 functions/tools.php:946
 msgid "- Select your town -"
 msgstr "- Sélectionnez votre ville -"
 
-#: functions/data-request.php:68 functions/tools.php:415
-#: functions/tools.php:421 functions/tools.php:942
+#: functions/data-request.php:68 functions/tools.php:425
+#: functions/tools.php:431 functions/tools.php:946
 msgid "Town"
 msgstr "Ville"
 
-#: functions/data-request.php:72 functions/data-request.php:248
-#: functions/data-request.php:309 functions/data-request.php:394
-#: functions/data-request.php:417 functions/data-request.php:494
-#: functions/data-request.php:557 functions/data-request.php:564
-#: functions/data-request.php:628 functions/data-request.php:782
-#: functions/data-request.php:809 functions/data-request.php:846
+#: functions/data-request.php:72 functions/data-request.php:256
+#: functions/data-request.php:325 functions/data-request.php:410
+#: functions/data-request.php:433 functions/data-request.php:512
+#: functions/data-request.php:577 functions/data-request.php:584
+#: functions/data-request.php:648 functions/data-request.php:820
+#: functions/data-request.php:847 functions/data-request.php:894
 msgid "A security error occured"
 msgstr "Une erreur de sécurité s’est produite"
 
-#: functions/data-request.php:120
+#: functions/data-request.php:128
 msgid ""
 "This email address is already linked to an account. You can reactivate your "
 "account through this <a href='\".wp_lostpassword_url( get_permalink() ).\"' "
@@ -1577,23 +1580,23 @@ msgstr ""
 "compte via ce <a href = ' \". wp_lostpassword_url (get_permalink ()).\" "
 "'title = 'mot de passe perdu'> Form </a>."
 
-#: functions/data-request.php:127
+#: functions/data-request.php:135
 msgid "Only emails from selected domains are allowed"
 msgstr "Seuls les e-mails provenant de domaines sélectionnés sont autorisés"
 
-#: functions/data-request.php:131
+#: functions/data-request.php:139
 msgid "Create this account is not permitted"
 msgstr "Créer ce compte n’est pas autorisé"
 
-#: functions/data-request.php:139
+#: functions/data-request.php:147
 msgid "Create account is not permitted because the demo mode is active"
 msgstr "Créer un compte n’est pas autorisé parce que le mode démo est actif"
 
-#: functions/data-request.php:148
+#: functions/data-request.php:156
 msgid "Registration confirmation"
 msgstr "Confirmation d'inscription"
 
-#: functions/data-request.php:159
+#: functions/data-request.php:167
 #, php-format
 msgid ""
 "Creating your account fails for the following reason: %s. Please contact us "
@@ -1602,12 +1605,12 @@ msgstr ""
 "La création de votre compte a échoué pour la raison suivante : %s. Veuillez "
 "nous contacter pour obtenir de l'aide."
 
-#: functions/data-request.php:190
+#: functions/data-request.php:198
 #, php-format
 msgid "Thank you for your registration on %s."
 msgstr "Merci de votre inscription sur %s."
 
-#: functions/data-request.php:196
+#: functions/data-request.php:204
 msgid ""
 "To activate your account on and choose your password, please click on the "
 "following link"
@@ -1615,17 +1618,17 @@ msgstr ""
 "Pour activer votre compte et choisir votre mot de passe, veuillez cliquer "
 "sur le lien suivant"
 
-#: functions/data-request.php:197 functions/data-request.php:464
-#: functions/tools.php:1183
+#: functions/data-request.php:205 functions/data-request.php:482
+#: functions/tools.php:1187
 #, php-format
 msgid "Your %s's team"
 msgstr "L'équipe de %s"
 
-#: functions/data-request.php:217
+#: functions/data-request.php:225
 msgid "Your account has been created. Now, you are connected"
 msgstr "Votre compte a été créé. Maintenant, vous êtes connecté"
 
-#: functions/data-request.php:224
+#: functions/data-request.php:232
 msgid ""
 "Your account has been created and an account activation link has been sent "
 "by email. Don't forget to look at your unwanted emails if you can't find our "
@@ -1635,7 +1638,7 @@ msgstr ""
 "mail. N'oubliez pas de regarder dans vos courriers indésirables si vous ne "
 "trouvez pas notre message."
 
-#: functions/data-request.php:230
+#: functions/data-request.php:238
 msgid ""
 "Your account has been created but sending an activation link by email fails. "
 "Please contact us."
@@ -1643,39 +1646,39 @@ msgstr ""
 "Votre compte a été créé mais l'envoi d'un lien d'activation par email "
 "échoue. Veuillez nous contacter."
 
-#: functions/data-request.php:279 functions/data-request.php:301
-#: functions/data-request.php:592 functions/data-request.php:603
-#: functions/data-request.php:624 functions/data-request.php:694
-#: functions/data-request.php:697 functions/data-request.php:714
-#: functions/data-request.php:748 functions/data-request.php:774
+#: functions/data-request.php:291 functions/data-request.php:317
+#: functions/data-request.php:612 functions/data-request.php:623
+#: functions/data-request.php:644 functions/data-request.php:730
+#: functions/data-request.php:733 functions/data-request.php:751
+#: functions/data-request.php:786 functions/data-request.php:812
 msgid "An error occured:"
 msgstr "Une erreur est survenue :"
 
-#: functions/data-request.php:295
+#: functions/data-request.php:311
 msgid "Your informations have been added."
 msgstr "Vos informations ont été ajoutées."
 
-#: functions/data-request.php:328
+#: functions/data-request.php:344
 msgid "Please enter your name."
 msgstr "Veuillez saisir votre nom."
 
-#: functions/data-request.php:334
+#: functions/data-request.php:350
 msgid "Please enter you email."
 msgstr "Veuillez saisir votre adresse e-mail."
 
-#: functions/data-request.php:343
+#: functions/data-request.php:359
 msgid "A message is needed."
 msgstr "Un message est nécessaire."
 
-#: functions/data-request.php:353
+#: functions/data-request.php:369
 msgid "Sending message is not permitted because the demo mode is active"
 msgstr "L'envoi de message n'est pas autorisé car le mode démo est actif"
 
-#: functions/data-request.php:369
+#: functions/data-request.php:385
 msgid "Your message is successful send!"
 msgstr "Votre message a été envoyé avec succès!"
 
-#: functions/data-request.php:376 functions/data-request.php:476
+#: functions/data-request.php:392 functions/data-request.php:494
 #, php-format
 msgid ""
 "Sending message fails for the following reason: %s. Please contact us for "
@@ -1684,15 +1687,15 @@ msgstr ""
 "L'envoi du message échoue pour la raison suivante : %s. Veuillez nous "
 "contacter pour obtenir de l'aide."
 
-#: functions/data-request.php:455
+#: functions/data-request.php:473
 msgid "Reset password is not permitted for this account!"
 msgstr "Réinitialiser le mot de passe de ce compte n'est pas autorisé!"
 
-#: functions/data-request.php:463
+#: functions/data-request.php:481
 msgid "Reset Password"
 msgstr "Réinitialisation du mot de passe"
 
-#: functions/data-request.php:464
+#: functions/data-request.php:482
 msgid ""
 "A request to change your password has been made. You can change it via the "
 "single-use link below:"
@@ -1700,13 +1703,13 @@ msgstr ""
 "Une demande de modification de votre mot de passe a été faite. Vous pouvez "
 "le changer via le lien à utilisation unique ci-dessous:"
 
-#: functions/data-request.php:464
+#: functions/data-request.php:482
 msgid "If you have not made this request, please ignore this email."
 msgstr ""
 "Si vous n'êtes pas à l'origine de cette action, merci de ne pas tenir compte "
 "de cet e-mail."
 
-#: functions/data-request.php:470
+#: functions/data-request.php:488
 msgid ""
 "A password reset link was sent to you by email. Please check your spam "
 "folder if you don't find it."
@@ -1714,7 +1717,7 @@ msgstr ""
 "Un lien de réinitialisation du mot de passe vous a été envoyé par email. "
 "Pensez à regarder vos messages indésirables si vous ne le trouvez pas."
 
-#: functions/data-request.php:533
+#: functions/data-request.php:552
 msgid ""
 "Your informations have been updated. Now, you will be log out and need to "
 "log in again."
@@ -1722,15 +1725,15 @@ msgstr ""
 "Vos informations ont été mises à jour. Maintenant, vous allez être "
 "déconnecté et vous devrez vous reconnecter."
 
-#: functions/data-request.php:539
+#: functions/data-request.php:559
 msgid "Your actual password is incorrect"
 msgstr "Votre mot de passe actuel est incorrect"
 
-#: functions/data-request.php:545
+#: functions/data-request.php:565
 msgid "The new passwords entered are different"
 msgstr "Les nouveaux mots de passe entrés sont différents"
 
-#: functions/data-request.php:551 functions/tools.php:1086
+#: functions/data-request.php:571 functions/tools.php:1090
 msgid ""
 "Your password must be between 8 and 20 characters, including at least 1 "
 "digit, 1 letter, 1 uppercase."
@@ -1738,59 +1741,55 @@ msgstr ""
 "Votre mot de passe doit faire entre 8 et 20 caractères, incluant au moins un "
 "chiffre, une lettre, une majuscule."
 
-#: functions/data-request.php:590
+#: functions/data-request.php:610
 msgid "You changed your default payment method"
 msgstr "Vous avez modifié votre mode de paiement par défaut"
 
-#: functions/data-request.php:601
+#: functions/data-request.php:621
 msgid "You deleted a payment method"
 msgstr "Vous avez supprimé un mode de paiement"
 
-#: functions/data-request.php:622
+#: functions/data-request.php:642
 msgid "You added a new payment method"
 msgstr "Vous avez ajouté un nouveau mode de paiement"
 
-#: functions/data-request.php:674
+#: functions/data-request.php:708
 msgid "We don't have this item in this quantity"
 msgstr "Nous n'avons pas cet article dans cette quantité"
 
-#: functions/data-request.php:690
+#: functions/data-request.php:726
 msgid "Your cart has been emptied"
 msgstr "Votre panier a été vidé"
 
-#: functions/data-request.php:710 functions/data-request.php:744
+#: functions/data-request.php:747 functions/data-request.php:782
 msgid "Your cart has been validated"
 msgstr "Votre panier a été validé"
 
-#: functions/data-request.php:766
+#: functions/data-request.php:804
 msgid "Payment status"
 msgstr "État du paiement"
 
-#: functions/data-request.php:766
+#: functions/data-request.php:804
 msgid "Payment ID"
 msgstr "ID du Paiement"
 
-#: functions/data-request.php:770
+#: functions/data-request.php:808
 msgid "View my receipt"
 msgstr "Voir mon reçu"
 
-#: functions/data-request.php:778
+#: functions/data-request.php:816
 msgid "An error occured"
 msgstr "Une erreur est survenue"
 
-#: functions/data-request.php:798 functions/data-request.php:805
+#: functions/data-request.php:836 functions/data-request.php:843
 msgid "Customer not found"
 msgstr "Client introuvable"
 
-#: functions/data-request.php:833
-msgid "Your subscription have been put in the basket for 1 hour"
-msgstr "Votre souscription a été mis dans le panier pour 1 heure"
-
-#: functions/data-request.php:840
+#: functions/data-request.php:888
 msgid "We no longer have this item in this quantity"
 msgstr "Nous n’avons plus cet article dans cette quantité"
 
-#: functions/enqueues.php:8
+#: functions/enqueues.php:9
 msgid ""
 "Your enquiry have been submitted. Check your email to validate your data "
 "request."
@@ -1798,11 +1797,11 @@ msgstr ""
 "Votre enquête ont été présentés. Vérifiez votre adresse email pour valider "
 "votre demande de données."
 
-#: functions/enqueues.php:9
+#: functions/enqueues.php:10
 msgid "Some errors occurred:"
 msgstr "Quelques erreurs sont survenues :"
 
-#: functions/member.php:97 functions/tools.php:621
+#: functions/member.php:97 functions/tools.php:631
 msgid "then"
 msgstr "puis"
 
@@ -1814,11 +1813,11 @@ msgstr "Gratuit"
 msgid "Including a federal part of"
 msgstr "Incluant une part fédérale de"
 
-#: functions/member.php:106 functions/member.php:239 functions/member.php:242
+#: functions/member.php:106 functions/member.php:239 functions/member.php:243
 msgid "From"
 msgstr "Du"
 
-#: functions/member.php:106 functions/member.php:239 functions/member.php:242
+#: functions/member.php:106 functions/member.php:239 functions/member.php:243
 msgid "until"
 msgstr "jusqu’au"
 
@@ -1827,7 +1826,7 @@ msgstr "jusqu’au"
 msgid "From %s"
 msgstr "A partir du %s"
 
-#: functions/member.php:111
+#: functions/member.php:111 functions/product.php:383
 msgid "Contact us"
 msgstr "Contactez-nous"
 
@@ -1857,20 +1856,20 @@ msgstr "Adhésion"
 msgid "This subscription"
 msgstr "Cet abonnement"
 
-#: functions/member.php:238 functions/member.php:241
+#: functions/member.php:238 functions/member.php:242
 msgid "Price:"
 msgstr "Tarif:"
 
-#: functions/member.php:240
+#: functions/member.php:241
 msgid "Next subscription"
 msgstr "Prochain abonnement"
 
-#: functions/member.php:277 functions/widgets.php:125 functions/widgets.php:131
-msgid "Subscribe"
-msgstr "Souscrire"
+#: functions/member.php:288 functions/product.php:395
+msgid "Add to basket"
+msgstr "Ajouter au panier"
 
 #: functions/product.php:118 functions/product.php:123
-#: functions/product.php:147 functions/product.php:149
+#: functions/product.php:146 functions/product.php:148
 msgid "Available"
 msgstr "Disponible"
 
@@ -1886,31 +1885,31 @@ msgstr ""
 "Cet article est disponible et peut être commandé, mais il peut parfois être "
 "brièvement indisponible"
 
-#: functions/product.php:131
+#: functions/product.php:130
 msgid "Not available"
 msgstr "Non disponible"
 
-#: functions/product.php:131
+#: functions/product.php:130
 #, php-format
 msgid "This item is out of stock and can not be ordered or shipped. %s"
 msgstr ""
 "Cet article est en rupture de stock et ne peut pas être commandé ou expédié. "
 "%s"
 
-#: functions/product.php:134
+#: functions/product.php:133
 msgid "few"
 msgstr "quelques"
 
-#: functions/product.php:138
+#: functions/product.php:137
 #, php-format
 msgid "Reception scheduled on %s."
 msgstr "Réception prévue le %s."
 
-#: functions/product.php:145
+#: functions/product.php:144
 msgid "Available soon"
 msgstr "Disponible prochainement"
 
-#: functions/product.php:145
+#: functions/product.php:144
 #, php-format
 msgid ""
 "This item is not in stock but should be available soon within %s days. %s %s"
@@ -1918,11 +1917,11 @@ msgstr ""
 "Cet article n’est pas en stock, mais devrait être disponible prochainement "
 "sous %s jours. %s %s"
 
-#: functions/product.php:147
+#: functions/product.php:146
 msgid "Limited availability"
 msgstr "Disponibilité limitée"
 
-#: functions/product.php:147
+#: functions/product.php:146
 #, php-format
 msgid ""
 "This item is in stock and can be shipped immediately but only in limited "
@@ -1931,118 +1930,114 @@ msgstr ""
 "Cet article est en stock et peut être expédié immédiatement mais seulement "
 "en quantités limitées. %s"
 
-#: functions/product.php:149
+#: functions/product.php:148
 msgid "Available immediately"
 msgstr "Disponible immédiatement"
 
-#: functions/product.php:149
+#: functions/product.php:148
 #, php-format
 msgid "This item is in stock and can be shipped immediately. %s"
 msgstr "Cet article est en stock et peut être expédié immédiatement. %s"
 
-#: functions/product.php:177
+#: functions/product.php:176
 msgid "Qty"
 msgstr "Qté"
 
-#: functions/product.php:183
+#: functions/product.php:182
 msgid "Total to be paid"
 msgstr "Total à payer"
 
-#: functions/product.php:185
+#: functions/product.php:184
 msgid "Finalize the order"
 msgstr "Finaliser la commande"
 
-#: functions/product.php:190 functions/tools.php:1525
+#: functions/product.php:189 functions/tools.php:1545
 msgid "Your basket is empty"
 msgstr "Votre panier est vide"
 
-#: functions/product.php:234 functions/product.php:278
+#: functions/product.php:233 functions/product.php:277
 msgid "This item has been deleted to basket"
 msgstr "Cet article a été supprimé du panier"
 
-#: functions/product.php:261
+#: functions/product.php:260
 msgid "This item has been added to basket"
 msgstr "Cet article a été ajouté au panier"
 
-#: functions/product.php:307
+#: functions/product.php:306
 msgid "Quantities have been changed"
 msgstr "Les quantités ont été modifiées"
 
-#: functions/product.php:386
+#: functions/product.php:389
 msgid "Unavailable"
 msgstr "Indisponible"
 
-#: functions/product.php:442
-msgid "Selling Price"
-msgstr "Prix de vente"
-
-#: functions/product.php:453
+#: functions/product.php:475
 msgid "Price"
 msgstr "Tarif"
 
-#: functions/product.php:457 functions/tools.php:1562
+#: functions/product.php:479 functions/tools.php:1582
 msgid "hour"
 msgstr "heure"
 
-#: functions/product.php:568
+#: functions/product.php:592
 msgid "Displayed price is included VAT"
 msgstr "Le prix affiché comprend la TVA"
 
-#: functions/product.php:568
+#: functions/product.php:592
 msgid "Displayed price is excluded VAT"
 msgstr "Le prix affiché ne comprend pas TVA"
 
-#: functions/product.php:569
+#: functions/product.php:593
 #, php-format
 msgid "VAT rate of %s"
 msgstr "Taux de TVA de %s"
 
-#: functions/product.php:571
+#: functions/product.php:595
 #, php-format
 msgid "Initial sale price: %s"
 msgstr "Prix de vente initial : %s"
 
-#: functions/product.php:572
+#: functions/product.php:596
 #, php-format
 msgid "Your customer discount is %s percent"
 msgstr "Votre remise client est de %s pour cent"
 
-#: functions/product.php:574
+#: functions/product.php:598
 #, php-format
 msgid "Discounted price: %s"
 msgstr "Prix réduit : %s"
 
-#: functions/product.php:578
+#: functions/product.php:602
 msgid "About price"
 msgstr "A propos du prix"
 
-#: functions/product.php:591
+#: functions/product.php:616
 msgid "Novelty"
 msgstr "Nouveauté"
 
-#: functions/product.php:643
+#: functions/product.php:648
 msgid "Supplier:"
 msgid_plural "Supplier:"
 msgstr[0] "Fournisseur:"
 msgstr[1] "Fournisseurs:"
 
-#: functions/product.php:709
+#: functions/product.php:714
 msgid "Read more..."
 msgstr "Lire la suite…"
 
-#: functions/product.php:763
+#: functions/product.php:768
 msgid "Origin:"
 msgstr "Origine:"
 
-#: functions/product.php:796
+#: functions/product.php:801
 msgid "This item contains:"
 msgstr "Cet article contient :"
 
-#: functions/product.php:805
+#: functions/product.php:810
 msgid "Item not in sale"
 msgstr "Article non en vente"
 
-#: functions/product.php:814
+#: functions/product.php:819
 msgid "Oops! This item does not appear to exist"
 msgstr "Oups! Cet article ne semble pas exister"
 
@@ -2125,27 +2120,27 @@ msgstr "ou"
 msgid "closed"
 msgstr "fermé"
 
-#: functions/tools.php:398
+#: functions/tools.php:408
 msgid "Not available for this country"
 msgstr "Non disponible pour ce pays"
 
-#: functions/tools.php:423 functions/tools.php:429
+#: functions/tools.php:433 functions/tools.php:439
 msgid "Zipcode"
 msgstr "Code postal"
 
-#: functions/tools.php:449
+#: functions/tools.php:459
 msgid "Your password will be synchronized with your Dolibarr account"
 msgstr "Votre mot de passe sera synchronisé avec votre compte Dolibarr"
 
-#: functions/tools.php:451
+#: functions/tools.php:461
 msgid "Password cannot be modified in demo mode"
 msgstr "Le mot de passe ne peut pas être modifié en mode démo"
 
-#: functions/tools.php:462 functions/tools.php:1087 functions/tools.php:1088
+#: functions/tools.php:472 functions/tools.php:1091 functions/tools.php:1092
 msgid "Confirm your password"
 msgstr "Confirmer votre mot de passe"
 
-#: functions/tools.php:481
+#: functions/tools.php:491
 msgid ""
 "Your new password must be between 8 and 20 characters, including at least 1 "
 "digit, 1 letter, 1 uppercase."
@@ -2153,148 +2148,148 @@ msgstr ""
 "Votre nouveau mot de passe doit être entre 8 et 20 caractères, y compris au "
 "moins 1 chiffre, 1 lettre, 1 majuscule."
 
-#: functions/tools.php:489
+#: functions/tools.php:499
 msgid "New password"
 msgstr "Nouveau mot de passe"
 
-#: functions/tools.php:497
+#: functions/tools.php:507
 msgid "Confirm the password"
 msgstr "Confirmer le mot de passe"
 
-#: functions/tools.php:565
+#: functions/tools.php:575
 msgid "Type of account"
 msgstr "Type de compte"
 
-#: functions/tools.php:571
+#: functions/tools.php:581
 msgid "Personnal account"
 msgstr "Compte personnel"
 
-#: functions/tools.php:578
+#: functions/tools.php:588
 msgid "Entreprise account"
 msgstr "Compte entreprise"
 
-#: functions/tools.php:586
+#: functions/tools.php:596
 msgid "Customer"
 msgstr "Client"
 
-#: functions/tools.php:587
+#: functions/tools.php:597
 msgid "Customer code"
 msgstr "Code Client"
 
-#: functions/tools.php:590
+#: functions/tools.php:600
 msgid "Order or Invoice"
 msgstr "Commande ou facture"
 
-#: functions/tools.php:592
+#: functions/tools.php:602
 msgid "Total incl. tax"
 msgstr "Total Taxes Comprises"
 
-#: functions/tools.php:621 functions/tools.php:624
+#: functions/tools.php:631 functions/tools.php:634
 msgid "yearly"
 msgstr "par an"
 
-#: functions/tools.php:635 functions/tools.php:641
+#: functions/tools.php:645 functions/tools.php:651
 msgid "Name of company"
 msgstr "Nom de la société"
 
-#: functions/tools.php:643 functions/tools.php:647
+#: functions/tools.php:653 functions/tools.php:657
 msgid "Commercial name / Brand"
 msgstr "Nom commercial / Marque"
 
-#: functions/tools.php:659
+#: functions/tools.php:669
 msgid "VAT number"
 msgstr "Numéro de TVA"
 
-#: functions/tools.php:670 functions/tools.php:688
+#: functions/tools.php:680 functions/tools.php:698
 msgid "Staff"
 msgstr "Effectif"
 
-#: functions/tools.php:680
+#: functions/tools.php:690
 msgid "- Select your staff -"
 msgstr "- Sélectionnez votre personnel -"
 
-#: functions/tools.php:703 functions/tools.php:732
+#: functions/tools.php:713 functions/tools.php:742
 msgid "Civility"
 msgstr "Civilité"
 
-#: functions/tools.php:726
+#: functions/tools.php:736
 msgid "Miss"
 msgstr "Madame"
 
-#: functions/tools.php:730
+#: functions/tools.php:740
 msgid "Mister"
 msgstr "Monsieur"
 
-#: functions/tools.php:734 functions/tools.php:740 functions/tools.php:742
+#: functions/tools.php:744 functions/tools.php:750 functions/tools.php:752
 msgid "Firstname"
 msgstr "Prénom"
 
-#: functions/tools.php:748
+#: functions/tools.php:758
 msgid "Lastname"
 msgstr "Nom"
 
-#: functions/tools.php:762
+#: functions/tools.php:772
 msgid "Birthday"
 msgstr "Date de naissance"
 
-#: functions/tools.php:773
+#: functions/tools.php:783
 msgid "Display name"
 msgstr "Nom d’affichage"
 
-#: functions/tools.php:782
+#: functions/tools.php:792
 msgid "Title / Job"
 msgstr "Titre / Emploi"
 
-#: functions/tools.php:813
+#: functions/tools.php:823
 msgid "Phone"
 msgstr "Téléphone"
 
-#: functions/tools.php:837
+#: functions/tools.php:841
 msgid "- Select your country -"
 msgstr "- Sélectionnez votre pays -"
 
-#: functions/tools.php:837
+#: functions/tools.php:841
 msgid "Country"
 msgstr "Pays"
 
-#: functions/tools.php:949 functions/tools.php:957
+#: functions/tools.php:953 functions/tools.php:961
 msgid "Default language"
 msgstr "Langue par défaut"
 
-#: functions/tools.php:950 functions/tools.php:959 functions/tools.php:960
+#: functions/tools.php:954 functions/tools.php:963 functions/tools.php:964
 msgid "Default / Browser language"
 msgstr "Langue par défaut / navigateur"
 
-#: functions/tools.php:973 functions/tools.php:975 functions/tools.php:984
+#: functions/tools.php:977 functions/tools.php:979 functions/tools.php:988
 msgid "Default currency"
 msgstr "Monnaie par défaut"
 
-#: functions/tools.php:1023
+#: functions/tools.php:1027
 msgid "Website"
 msgstr "Site web"
 
-#: functions/tools.php:1032
+#: functions/tools.php:1036
 msgid "About Yourself"
 msgstr "À propos de vous"
 
-#: functions/tools.php:1058 functions/tools.php:1062 functions/tools.php:1066
-#: functions/tools.php:1070
+#: functions/tools.php:1062 functions/tools.php:1066 functions/tools.php:1070
+#: functions/tools.php:1074
 msgid "Username"
 msgstr "Pseudo"
 
-#: functions/tools.php:1080
+#: functions/tools.php:1084
 msgid "I would like to receive the newsletter"
 msgstr "Je souhaite recevoir la newsletter"
 
-#: functions/tools.php:1085
+#: functions/tools.php:1089
 msgid "Choose your password"
 msgstr "Choisissez votre mot de passe"
 
-#: functions/tools.php:1130 functions/tools.php:1633
+#: functions/tools.php:1134 functions/tools.php:1653
 msgid "Loading"
 msgstr "Chargement"
 
-#: functions/tools.php:1167
+#: functions/tools.php:1171
 msgid ""
 "Oops, our servers are unreachable.<br>Thank you for coming back in a few "
 "minutes."
@@ -2302,77 +2297,77 @@ msgstr ""
 "Oups, nos serveurs sont injoignables.<br>Merci de revenir dans quelques "
 "minutes."
 
-#: functions/tools.php:1170
+#: functions/tools.php:1174
 msgid "Error code"
 msgstr "Code d’erreur"
 
-#: functions/tools.php:1172
+#: functions/tools.php:1176
 msgid "Request"
 msgstr "Demande"
 
-#: functions/tools.php:1182
+#: functions/tools.php:1186
 msgid "Connection notification"
 msgstr "Notification de connexion"
 
-#: functions/tools.php:1183
+#: functions/tools.php:1187
 msgid ""
 "It appears that you have just logged on to our site the following IP address:"
 msgstr ""
 "Il semble que vous venez de vous connecter à notre site l'adresse IP "
 "suivante :"
 
-#: functions/tools.php:1183
+#: functions/tools.php:1187
 msgid ""
 "If you have not made this action, please change your password immediately."
 msgstr ""
 "Si vous n'avez pas fait cette action, s'il vous plaît changer votre mot de "
 "passe immédiatement."
 
-#: functions/tools.php:1212
+#: functions/tools.php:1231
 msgid "Download"
 msgstr "Téléchargement"
 
-#: functions/tools.php:1242
+#: functions/tools.php:1277
 msgid "Help?"
 msgstr "Assistance?"
 
-#: functions/tools.php:1242
+#: functions/tools.php:1277
 msgid "Need help?"
 msgstr "Besoin d'aide?"
 
-#: functions/tools.php:1305
+#: functions/tools.php:1340
 msgid "Refresh"
 msgstr "Actualiser"
 
-#: functions/tools.php:1309
+#: functions/tools.php:1344
 msgid "Refresh datas"
 msgstr "Actualiser les données"
 
-#: functions/tools.php:1327
+#: functions/tools.php:1362
 msgid "Congratulations!"
 msgstr "Félicitations!"
 
-#: functions/tools.php:1329
+#: functions/tools.php:1364
 msgid "Be carefull"
 msgstr "Attention"
 
-#: functions/tools.php:1331
+#: functions/tools.php:1366
 msgid "Oops"
 msgstr "Oups"
 
-#: functions/tools.php:1436
+#: functions/tools.php:1461
 msgid "Total"
 msgstr "Total"
 
-#: functions/tools.php:1437
+#: functions/tools.php:1462
 msgid "of which VAT"
 msgstr "dont TVA"
 
-#: functions/tools.php:1493
+#: functions/tools.php:1518
 msgid "Shipping informations"
 msgstr "Informations sur l'expédition"
 
-#: functions/tools.php:1496
+#: functions/tools.php:1521
 msgid ""
 "Sorry, this product is no longer available. Please, delete it to finalize "
 "your order"
@@ -2380,7 +2375,7 @@ msgstr ""
 "Désolé, ce produit n’est plus disponible. S’il vous plaît, supprimez-le pour "
 "finaliser votre commande"
 
-#: functions/tools.php:1498
+#: functions/tools.php:1523
 msgid ""
 "Sorry, this product is not available with this quantity. Please, change it "
 "to finalize your order"
@@ -2388,161 +2383,161 @@ msgstr ""
 "Désolé, ce produit n’est pas disponible avec cette quantité. S’il vous "
 "plaît, le changer pour finaliser votre commande"
 
-#: functions/tools.php:1527
+#: functions/tools.php:1547
 msgid "If you already have an account,"
 msgstr "Si vous disposez déjà d'un compte,"
 
-#: functions/tools.php:1531 functions/tools.php:1533
+#: functions/tools.php:1551 functions/tools.php:1553
 msgid "sign in"
 msgstr "se connecter"
 
-#: functions/tools.php:1535
+#: functions/tools.php:1555
 msgid "to see your basket."
 msgstr "pour voir votre panier."
 
-#: functions/tools.php:1551
+#: functions/tools.php:1571
 msgid "years"
 msgstr "ans"
 
-#: functions/tools.php:1552
+#: functions/tools.php:1572
 msgid "months"
 msgstr "mois"
 
-#: functions/tools.php:1553
+#: functions/tools.php:1573
 msgid "weeks"
 msgstr "semaines"
 
-#: functions/tools.php:1554
+#: functions/tools.php:1574
 msgid "days"
 msgstr "jours"
 
-#: functions/tools.php:1555
+#: functions/tools.php:1575
 msgid "hours"
 msgstr "heures"
 
-#: functions/tools.php:1556
+#: functions/tools.php:1576
 msgid "minutes"
 msgstr "minutes"
 
-#: functions/tools.php:1558
+#: functions/tools.php:1578
 msgid "year"
 msgstr "an"
 
-#: functions/tools.php:1559
+#: functions/tools.php:1579
 msgid "month"
 msgstr "mois"
 
-#: functions/tools.php:1560
+#: functions/tools.php:1580
 msgid "week"
 msgstr "semaine"
 
-#: functions/tools.php:1561
+#: functions/tools.php:1581
 msgid "day"
 msgstr "jour"
 
-#: functions/tools.php:1563
+#: functions/tools.php:1583
 msgid "minute"
 msgstr "minute"
 
-#: functions/tools.php:1580 functions/tools.php:1583 functions/tools.php:1586
+#: functions/tools.php:1600 functions/tools.php:1603 functions/tools.php:1606
 #, php-format
 msgid "%s day"
 msgid_plural "%s days"
 msgstr[0] "%s jour"
 msgstr[1] "%s jours"
 
-#: functions/tools.php:1581
+#: functions/tools.php:1601
 msgid "end of month"
 msgstr "fin de mois"
 
-#: functions/tools.php:1584
+#: functions/tools.php:1604
 #, php-format
 msgid "the %s of month"
 msgstr "le %s du mois"
 
-#: functions/tools.php:1599
+#: functions/tools.php:1619
 msgid "Transporter by default"
 msgstr "Transporteur par défaut"
 
-#: functions/tools.php:1610
+#: functions/tools.php:1630
 msgid "Choose your language"
 msgstr "Choisir votre langue"
 
-#: functions/tools.php:1760
+#: functions/tools.php:1779
 msgid "Choose payment method"
 msgstr "Choisir un moyen de paiement"
 
-#: functions/tools.php:1792 functions/tools.php:2519
+#: functions/tools.php:1811 functions/tools.php:2538
 msgid "Account"
 msgstr "Compte"
 
-#: functions/tools.php:1794
+#: functions/tools.php:1813
 msgid "Card"
 msgstr "Carte"
 
-#: functions/tools.php:1842
+#: functions/tools.php:1861
 msgid "Debtor"
 msgstr "Débiteur"
 
-#: functions/tools.php:1843
+#: functions/tools.php:1862
 msgid "Holder:"
 msgstr "Titulaire:"
 
-#: functions/tools.php:1845
+#: functions/tools.php:1864
 msgid "Creation:"
 msgstr "Création:"
 
-#: functions/tools.php:1848
+#: functions/tools.php:1867
 msgid "Expiration:"
 msgstr "Expiration:"
 
-#: functions/tools.php:1855
+#: functions/tools.php:1874
 msgid "Mandate"
 msgstr "Mandat"
 
-#: functions/tools.php:1856
+#: functions/tools.php:1875
 msgid "Reference:"
 msgstr "Référence:"
 
-#: functions/tools.php:1860
+#: functions/tools.php:1879
 msgid "Type:"
 msgstr "Type:"
 
-#: functions/tools.php:1862
+#: functions/tools.php:1881
 msgid "Recurring"
 msgstr "Récurrent"
 
-#: functions/tools.php:1864
+#: functions/tools.php:1883
 msgid "Unique"
 msgstr "Unique"
 
-#: functions/tools.php:1874 functions/tools.php:2536 functions/tools.php:2576
+#: functions/tools.php:1893 functions/tools.php:2555 functions/tools.php:2595
 msgid "immediately"
 msgstr "immédiatement"
 
-#: functions/tools.php:1880 functions/tools.php:1882 functions/tools.php:1884
-#: functions/tools.php:2109 functions/tools.php:2314 functions/tools.php:2485
-#: functions/tools.php:2541 functions/tools.php:2581
+#: functions/tools.php:1899 functions/tools.php:1901 functions/tools.php:1903
+#: functions/tools.php:2128 functions/tools.php:2333 functions/tools.php:2504
+#: functions/tools.php:2560 functions/tools.php:2600
 msgid "I order"
 msgstr "Je commande"
 
-#: functions/tools.php:1890
+#: functions/tools.php:1909
 msgid "Favourite"
 msgstr "Favori"
 
-#: functions/tools.php:1894
+#: functions/tools.php:1913
 msgid "Delete"
 msgstr "Supprimer"
 
-#: functions/tools.php:1908
+#: functions/tools.php:1927
 msgid "Pay by bank card"
 msgstr "Payer par carte bancaire"
 
-#: functions/tools.php:1910
+#: functions/tools.php:1929
 msgid "Add a bank card"
 msgstr "Ajouter une carte bancaire"
 
-#: functions/tools.php:1917 functions/tools.php:2133
+#: functions/tools.php:1936 functions/tools.php:2152
 msgid ""
 "You have reached limit of payment methods. Please delete a payment method "
 "for add a new one."
@@ -2550,31 +2545,31 @@ msgstr ""
 "Vous avez atteint la limite de modes de paiement. Veuillez supprimer un mode "
 "de paiement pour en ajouter un nouveau."
 
-#: functions/tools.php:1920 functions/tools.php:2136 functions/tools.php:2334
+#: functions/tools.php:1939 functions/tools.php:2155 functions/tools.php:2353
 msgid "Stripe's in sandbox mode"
 msgstr "Stripe est en mode bac à sable"
 
-#: functions/tools.php:1920
+#: functions/tools.php:1939
 msgid "Link to test card numbers"
 msgstr "Lien pour tester les numéros de carte"
 
-#: functions/tools.php:1922
+#: functions/tools.php:1941
 msgid "Full name on the card"
 msgstr "Nom complet sur la carte"
 
-#: functions/tools.php:1927
+#: functions/tools.php:1946
 msgid "Not save"
 msgstr "Pas d'enregistrement"
 
-#: functions/tools.php:1936
+#: functions/tools.php:1955
 msgid "Save"
 msgstr "Enregistrer"
 
-#: functions/tools.php:1942
+#: functions/tools.php:1961
 msgid "Save as favourite"
 msgstr "Enregistrer comme favori"
 
-#: functions/tools.php:1945
+#: functions/tools.php:1964
 #, php-format
 msgid ""
 "By providing your card and confirming this form, you are authorizing %s and "
@@ -2593,23 +2588,23 @@ msgstr ""
 "conditions de votre accord avec elle. Un remboursement doit être demandé "
 "dans les 90 jours à compter de la date à laquelle votre carte a été débitée."
 
-#: functions/tools.php:2124
+#: functions/tools.php:2143
 msgid "Pay by SEPA bank debit"
 msgstr "Paiement par débit bancaire SEPA"
 
-#: functions/tools.php:2126
+#: functions/tools.php:2145
 msgid "Add a SEPA bank account"
 msgstr "Ajouter un compte bancaire SEPA"
 
-#: functions/tools.php:2136
+#: functions/tools.php:2155
 msgid "Link to test SEPA account numbers"
 msgstr "Lien pour tester les numéros de compte SEPA"
 
-#: functions/tools.php:2138
+#: functions/tools.php:2157
 msgid "Full name of the owner"
 msgstr "Nom complet du propriétaire"
 
-#: functions/tools.php:2143 functions/tools.php:2338
+#: functions/tools.php:2162 functions/tools.php:2357
 #, php-format
 msgid ""
 "By providing your IBAN and confirming this form, you are authorizing %s and "
@@ -2627,19 +2622,19 @@ msgstr ""
 "elle. Un remboursement doit être demandé dans les 8 semaines à partir de la "
 "date à laquelle votre compte a été débité."
 
-#: functions/tools.php:2328
+#: functions/tools.php:2347
 msgid "Buy now or pay later with Klarna"
 msgstr "Acheter maintenant ou payer plus tard avec Klarna"
 
-#: functions/tools.php:2334
+#: functions/tools.php:2353
 msgid "Link to test Klarna"
 msgstr "Lien pour tester Klarna"
 
-#: functions/tools.php:2500
+#: functions/tools.php:2519
 msgid "Pay by bank transfert"
 msgstr "Payer par virement bancaire"
 
-#: functions/tools.php:2509
+#: functions/tools.php:2528
 #, php-format
 msgid ""
 "Please send your bank transfert in the amount of <b>%1$s</b> at the "
@@ -2648,15 +2643,15 @@ msgstr ""
 "Veuillez envoyer votre virement bancaire au montant de <b>%1$s</b> au compte "
 "suivant:"
 
-#: functions/tools.php:2511
+#: functions/tools.php:2530
 msgid "Please send your bank transfert at the following account:"
 msgstr "Veuillez envoyer votre virement au compte suivant :"
 
-#: functions/tools.php:2553
+#: functions/tools.php:2572
 msgid "Pay by bank check"
 msgstr "Payer par chèque bancaire"
 
-#: functions/tools.php:2561
+#: functions/tools.php:2580
 #, php-format
 msgid ""
 "Please send your money check in the amount of <b>%1$s</b> to <b>%2$s</b> at "
@@ -2665,66 +2660,66 @@ msgstr ""
 "Veuillez envoyer votre chèque d'un montant de <b>%1$s</b> à <b>%2$s</b> à "
 "l’adresse suivante:"
 
-#: functions/tools.php:2563
+#: functions/tools.php:2582
 #, php-format
 msgid "Please send your money check to <b>%s</b> at the following address:"
 msgstr ""
 "Veuillez envoyer votre chèque à l'ordre de <b>%s</b> à l’adresse suivante:"
 
-#: functions/tools.php:2589
+#: functions/tools.php:2608
 msgid "Pay at front desk"
 msgstr "Payer à la réception"
 
-#: functions/tools.php:2807
+#: functions/tools.php:2826
 msgid "Select your request:"
 msgstr "Sélectionnez votre demande :"
 
-#: functions/tools.php:2808
+#: functions/tools.php:2827
 msgid "Export Personal Data"
 msgstr "Exporter vos données personnelles"
 
-#: functions/tools.php:2809
+#: functions/tools.php:2828
 msgid "Remove Personal Data"
 msgstr "Supprimer vos données personnelles"
 
-#: functions/tools.php:2811
+#: functions/tools.php:2830
 msgid "Human verification:"
 msgstr "Vérification humaine :"
 
-#: functions/tools.php:2812
+#: functions/tools.php:2831
 msgid "Send Request"
 msgstr "Envoyer la demande"
 
-#: functions/tools.php:2843
+#: functions/tools.php:2862
 msgid "Export your data"
 msgstr "Exportez vos données"
 
-#: functions/tools.php:2843
+#: functions/tools.php:2862
 msgid "You will receive an email with a secure link to your data"
 msgstr "Vous recevrez un e-mail avec un lien sécurisé vers vos données"
 
-#: functions/tools.php:2853
+#: functions/tools.php:2872
 msgid "Erase your data"
 msgstr "Effacer vos données"
 
-#: functions/tools.php:2853
+#: functions/tools.php:2872
 msgid "You will receive an email with a secure link to confirm the deletion"
 msgstr ""
 "Vous recevrez un e-mail avec un lien sécurisé pour confirmer la suppression"
 
-#: functions/tools.php:2864
+#: functions/tools.php:2883
 msgid "Delete your account"
 msgstr "Supprimer votre compte"
 
-#: functions/tools.php:2864
+#: functions/tools.php:2883
 msgid "Soon, you will be able to delete your account"
 msgstr "Bientôt, vous pourrez supprimer votre compte"
 
-#: functions/tools.php:2886
+#: functions/tools.php:2905
 msgid "Validate the request"
 msgstr "Valider la demande"
 
-#: functions/tools.php:2894
+#: functions/tools.php:2913
 msgid "This plugin requires WordPress 4.9.6."
 msgstr "Ce plugin nécessite WordPress 4.9.6."
 
@@ -2736,6 +2731,10 @@ msgstr "Signaler un bug"
 #: functions/widgets.php:450 functions/widgets.php:524
 msgid "Title:"
 msgstr "Titre:"
+
+#: functions/widgets.php:125 functions/widgets.php:131
+msgid "Subscribe"
+msgstr "Souscrire"
 
 #: functions/widgets.php:196
 msgid "Account & Cart"
@@ -2778,8 +2777,9 @@ msgid "Optional widget description:"
 msgstr "Description de widget facultative :"
 
 #. Plugin URI of the plugin/theme
-msgid "https://www.ptibogxiv.net"
-msgstr "https://www.ptibogxiv.net/fr"
+#. Author URI of the plugin/theme
+msgid "https://www.ptibogxiv.eu"
+msgstr "https://www.ptibogxiv.eu"
 
 #. Description of the plugin/theme
 msgid "Connect your Dolibarr (free ERP/CRM) to Wordpress."
@@ -2788,7 +2788,3 @@ msgstr "Connectez votre Dolibarr (ERP/CRM gratuit) à WordPress."
 #. Author of the plugin/theme
 msgid "ptibogxiv"
 msgstr "ptibogxiv"
-
-#. Author URI of the plugin/theme
-msgid "https://www.ptibogxiv.net/en"
-msgstr "https://www.ptibogxiv.net/fr"
