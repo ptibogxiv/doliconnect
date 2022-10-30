@@ -2537,12 +2537,17 @@ function generate_license($suffix = null) {
 print '<script type="text/javascript">';
 print 'jQuery(document).ready(function($) {
     document.querySelector("#buttonmodaltest").addEventListener("click", function() {
-        var m1 = $(makeModal("Header", "'.generate_license().'", "Footer"));
-        m1.modal("show");
-
-        document.querySelector("#modaltest").addEventListener("hidden.bs.modal", function() {
-        alert("test");
-        });
+        //var m1 = $(makeModal("Header", "'.generate_license().'", "Footer"));
+        const myModal = new bootstrap.Modal("#myModal", {
+            keyboard: false,
+            backdrop: "static"
+          });
+        const modalToggle = document.getElementById("#myModal"); 
+        myModal.show(modalToggle);
+        //m1.modal("show");
+        //alert("test1");
+        //m1.modal("dispose");
+        //alert("test2");
 
       }, false);
       
