@@ -1837,8 +1837,10 @@ if ( intval(86400+(!empty($adherent->datefin)?$adherent->datefin:0)) > $time ) {
 //print  "<button class='btn btn text-white btn-warning btn-block' data-bs-toggle='modal' data-bs-target='#PaySubscriptionModal'>".__( 'Renew my subscription', 'doliconnect')."</button>";
 }
 } elseif ( $adherent->statut == '-1' ) {
-print '<br><div class="clearfix"><div class="spinner-border float-start" role="status">
-<span class="sr-only">Loading...</span></div>'.__('Your request has been registered. You will be notified at validation.', 'doliconnect').'</div>';
+    print '<br><div class="alert alert-primary d-flex align-items-center" role="alert">
+    <i class="fa-solid fa-circle-info fa-beat"></i>
+    <div>'.__('Your request has been registered. You will be notified by email at validation.', 'doliconnect').'</div>
+    </div>';
 } elseif ( $adherent->statut == '-2' ) {
 
 } else { 
