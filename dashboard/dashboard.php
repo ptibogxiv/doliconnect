@@ -2037,7 +2037,7 @@ print "<li class='list-group-item list-group-item-info'><i class='fas fa-info-ci
 
 print '<div class="modal fade" id="addmember" tabindex="-1" role="dialog" aria-labelledby="addmemberTitle" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
 <div class="modal-dialog modal-lg modal-dialog-centered" role="document"><div class="modal-content border-0"><div class="modal-header border-0">
-<h5 class="modal-title" id="addmemberTitle">'.__( 'Update member', 'doliconnect').'</h5><button id="Closememberaddmember-form" type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
+<h5 class="modal-title" id="addmemberTitle">'.__( 'Update member', 'doliconnect').'</h5><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div>
 <div id="addmember-form">';
 print "<form class='was-validated' role='form' action='$url' id='addmember-form' method='post'>";
 
