@@ -285,7 +285,7 @@ jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function (e) {
 });';
 print "</script>";
 
-print '<input type="hidden" name="update_membership" value="renew"><button class="btn btn-danger" type="submit">'.__( 'Subscribe', 'doliconnect').'</button></form>
+print '<input type="hidden" name="update_membership" value="renew"><button class="btn btn-danger" type="submit">'.__( 'Add to basket', 'doliconnect').'</button></form>
 </div></div></div></div>';
 }}
 
