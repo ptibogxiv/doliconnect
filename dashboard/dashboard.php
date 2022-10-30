@@ -2538,15 +2538,11 @@ print '<script type="text/javascript">';
 print 'jQuery(document).ready(function($) {
     document.querySelector("#buttonmodaltest").addEventListener("click", function() {
         var m1 = $(makeModal("Header", "'.generate_license().'", "Footer"));
-        //document.body.insertAdjacentHTML("beforeend", m1);
-        m1.modal("show", function() {
-            console.log(test);
-            alert("modal on");     
-        });
+        m1.modal("show");
 
-        //$("#modaltest").on("hide.bs.modal", function (e) {
-            //alert("modal on");
-        //})
+        document.querySelector("#modaltest").addEventListener("hidden.bs.modal", function() {
+        alert("test");
+        });
 
       }, false);
       
