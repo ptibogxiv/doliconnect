@@ -54,7 +54,7 @@ return $adhesion;
 
 function dolimembertypelist($typeadhesion, $adherent) {
  
-  /**
+  /*
   print '<ul class="list-group list-group-flush">
     <li class="list-group-item d-flex justify-content-between align-items-center">
       <b>Cras justo odio</b><br><small class="text-justify text-muted">test test</small>
