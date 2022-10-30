@@ -54,7 +54,7 @@ return $adhesion;
 
 function dolimembertypelist($typeadhesion, $adherent) {
 
-  $list = "<table class='table table-striped p-0' id ='subscription-table'>";
+  $list = "<table class='table table-hover' id ='subscription-table'><tbody class=' m-0 p-0'>";
   
   if ( !isset($typeadhesion->error) ) {
   foreach ($typeadhesion as $postadh) {
@@ -171,7 +171,7 @@ function dolimembertypelist($typeadhesion, $adherent) {
   } else { 
     $list .= "<li class='list-group-item list-group-item-light'><center>".__( 'No available membership type', 'doliconnect')."</center></li>";
   }
-    $list .= "</table>"; 
+    $list .= "</tbody></table>"; 
 return $list; 
 }
 
@@ -197,12 +197,10 @@ $morphy = '';
 if (!empty($current_user->billing_type)) $morphy = "&sqlfilters=(t.morphy%3A=%3A'')%20or%20(t.morphy%3Ais%3Anull)%20or%20(t.morphy%3A%3D%3A'".$current_user->billing_type."')";
 $typeadhesion = callDoliApi("GET", "/adherentsplus/type?sortfield=t.libelle&sortorder=ASC&nature=all&".$member_id.$morphy, null, $delay);
 //print $typeadhesion;
-print '<h4 class="modal-title" id="myModalLabel">'.__( 'Prices', 'doliconnect').' '.$typeadhesion[0]->season.'</h4><button id="subscription-close" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div>';
+print '<h5 class="modal-title">'.__( 'Prices', 'doliconnect').' '.$typeadhesion[0]->season.'</h5><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div>';
 
 //print '<div class="modal-body">';
-
 print dolimembertypelist($typeadhesion, $adherent);
-
 //print '</div>';
 
 print "<div id='subscription-footer' class='modal-footer'><small class='text-justify'>".__( 'Note: the admins reserve the right to change your membership in relation to your personal situation. A validation of the membership may be necessary depending on the cases.', 'doliconnect')."</small></div></div></div></div>";
