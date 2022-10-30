@@ -1823,7 +1823,10 @@ if ( function_exists('doliconnect_membership_modal') && !empty(doliconst('MAIN_M
         <div>'.__('Your request has been registered. You will be notified by email at validation.', 'doliconnect').'</div>
         </div>';
     } elseif ( $adherent->statut == '-2' ) {
-    
+        print '<div class="alert alert-primary d-flex align-items-center" role="alert">
+        <i class="fa-solid fa-circle-info fa-beat"></i>
+        <div>'.__('Please contact us for more informations or subscribe again.', 'doliconnect').'</div>
+        </div>';
     } else { 
         if ( doliconnector($current_user, 'fk_soc') > 0 ) {
             $thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
