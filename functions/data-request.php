@@ -842,14 +842,21 @@ global $current_user;
 		
 if ( wp_verify_nonce( trim($_POST['dolimember-nonce']), 'dolimember-nonce' ) ) {
 
-$productadhesion = doliconst("ADHERENT_PRODUCT_ID_FOR_SUBSCRIPTIONS", dolidelay('constante'));
+$product = callDoliApi("GET", "/products/".doliconst("ADHERENT_PRODUCT_ID_FOR_SUBSCRIPTIONS", dolidelay('constante'))."?includestockdata=1&includesubproducts=true&includetrans=true", null, dolidelay('product', true));
+$mstock = doliProductStock($product, false, true);
+
 $requesta = "/members/".doliconnector($current_user, 'fk_member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)); 
 if ( !empty(doliconnector($current_user, 'fk_member')) && doliconnector($current_user, 'fk_member') > 0 ) {
 $adherent = callDoliApi("GET", $requesta, null, dolidelay('member'));
 }
 $requestb= "/adherentsplus/type/".$adherent->typeid;
 $adherenttype = callDoliApi("GET", $requestb, null, dolidelay('member'));
-$result = doliaddtocart($productadhesion, 1, $adherenttype->price_prorata, null, $adherenttype->date_begin, $adherenttype->date_end, null, array('options_member_beneficiary' => $adherent->id));
+
+$price = array();
+$price['discount'] = 0;
+$price['subprice'] = $adherenttype->price_prorata;
+
+$result = doliaddtocart($product, $mstock, 1, $price, $adherenttype->date_begin, $adherenttype->date_end, null, array('options_member_beneficiary' => $adherent->id));
 if ($result >= 0) {
 $response = [
     'message' => '<div class="alert alert-success alert-dismissible d-flex align-items-center" role="alert">'.__( 'Your subscription have been put in the basket for 1 hour', 'doliconnect').'</div>',
