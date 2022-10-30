@@ -53,24 +53,8 @@ return $adhesion;
 }
 
 function dolimembertypelist($typeadhesion, $adherent) {
- 
-  /*
-  print '<ul class="list-group list-group-flush">
-    <li class="list-group-item d-flex justify-content-between align-items-center">
-      <b>Cras justo odio</b><br><small class="text-justify text-muted">test test</small>
-      <div class="d-grid gap-2 col-4"><button class="btn btn-primary" type="button">Button</button></div>
-    </li>
-    <li class="list-group-item list-group-item-light list-group-item-action">
-      <div class="d-flex w-100 justify-content-between">
-        <b>Hebdomadaire - 1 semaine</b>
-        <div class="d-grid gap-2 col-4"><button class="btn btn-primary btn-sm" type="button">Button</button></div>
-      </div>
-      <p class="mb-1">8,29 E puis 15,00 E</p>
-      <small>A partir du 21/11/2020 jusquau 22/11/2020</small>
-    </li>
-  </ul>';
-  */
-  $list = "<table class='table table-striped' id ='subscription-table'>";
+
+  $list = "<table class='table table-striped p-0' id ='subscription-table'>";
   
   if ( !isset($typeadhesion->error) ) {
   foreach ($typeadhesion as $postadh) {
@@ -215,11 +199,13 @@ $typeadhesion = callDoliApi("GET", "/adherentsplus/type?sortfield=t.libelle&sort
 //print $typeadhesion;
 print '<h4 class="modal-title" id="myModalLabel">'.__( 'Prices', 'doliconnect').' '.$typeadhesion[0]->season.'</h4><button id="subscription-close" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div>';
 
-print '<div class="modal-body">';
+//print '<div class="modal-body">';
 
 print dolimembertypelist($typeadhesion, $adherent);
 
-print "</div><div id='subscription-footer' class='modal-footer'><small class='text-justify'>".__( 'Note: the admins reserve the right to change your membership in relation to your personal situation. A validation of the membership may be necessary depending on the cases.', 'doliconnect')."</small></div></div></div></div>";
+//print '</div>';
+
+print "<div id='subscription-footer' class='modal-footer'><small class='text-justify'>".__( 'Note: the admins reserve the right to change your membership in relation to your personal situation. A validation of the membership may be necessary depending on the cases.', 'doliconnect')."</small></div></div></div></div>";
 
 if (isset($adherent) && !empty($adherent->typeid)) {
 $request= "/adherentsplus/type/".$adherent->typeid;
