@@ -395,7 +395,7 @@ if ( empty(doliconnectid('dolicart')) || empty(doliconnectid('dolicart')) ) {
       $button .= '</div>';
     } else {
       $button .= '<div class="input-group">';
-      $button .= '<button class="btn btn-sm btn-warning" name="delete" value="delete" type="submit"><i class="fa-solid fa-trash-can"></i></button>';
+      //$button .= '<button class="btn btn-sm btn-warning" name="delete" value="delete" type="submit"><i class="fa-solid fa-trash-can"></i></button>';
       $button .= '<button class="btn btn-sm btn-warning" name="minus" value="minus" type="submit"><i class="fa-solid fa-minus"></i></button>
       <input id="qty-prod-'.$product->id.'" type="number" class="form-control form-control-sm" placeholder="" aria-label="Quantity" value="'.$mstock['qty'].'" style="text-align:center;" readonly>
       <button class="btn btn-sm btn-warning" name="plus" value="plus" type="submit"><i class="fa-solid fa-plus"></i></button>';
