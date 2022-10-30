@@ -257,7 +257,7 @@ jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function (e) {
       document.getElementById("message-dolicart").innerHTML = "";  
 		$.post($form.attr("action"), $form.serialize(), function(response) {
       if (response.success) { 
-        console.log(response.data.message);
+        //console.log(response.data.message);
         if (document.getElementById("DoliHeaderCartItems")) {
           document.getElementById("DoliHeaderCartItems").innerHTML = response.data.items;
         }
