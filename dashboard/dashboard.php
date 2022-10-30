@@ -260,7 +260,7 @@ $url = esc_url( add_query_arg( 'return', $_GET['return'], $url) );
 $return = esc_url_raw( $_GET['return']);
 }
  
-print dolipasswordform($current_user, $url, $return);
+print doliPasswordForm($current_user, $url, $return);
 
 }
 

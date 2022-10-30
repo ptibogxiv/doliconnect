@@ -335,7 +335,7 @@ if ( $user && $user->get_error_code() === 'expired_key' ){
 }
 } else {
 
-print dolipasswordform($user, doliconnecturl('doliaccount'));
+print doliPasswordForm($user, doliconnecturl('doliaccount'));
 
 }}
 

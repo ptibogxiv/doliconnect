@@ -442,40 +442,40 @@ function doliSelectForm($name, $request, $selectlang = '- Select -', $valuelang 
 return $doliSelect;
 }
 
-function dolipasswordform($user, $url, $return = null){
+function doliPasswordForm($user, $url, $return = null){
 if (doliconnector($user, 'fk_user') > 0){  
 $request = "/users/".doliconnector($user, 'fk_user');
 $doliuser = callDoliApi("GET", $request, null, dolidelay('thirdparty'));
 }
 
-$password = "<div id='dolirpw-alert'></div><form id='dolirpw-form' method='post' class='was-validated' action='".admin_url('admin-ajax.php')."'>";
+$doliPassword = "<div id='dolirpw-alert'></div><form id='dolirpw-form' method='post' class='was-validated' action='".admin_url('admin-ajax.php')."'>";
 if (isset($_GET["key"]) && isset($_GET["login"])) {
-$password .= "<input type='hidden' name='key' value='".esc_attr($_GET["key"])."'><input type='hidden' name='login' value='".esc_attr($_GET["login"])."'>";
+  $doliPassword .= "<input type='hidden' name='key' value='".esc_attr($_GET["key"])."'><input type='hidden' name='login' value='".esc_attr($_GET["login"])."'>";
 }
-$password .= doliajax('dolirpw', $return);
+$doliPassword .= doliajax('dolirpw', $return);
 
-$password .= '<div class="card shadow-sm"><div class="card-header">'.__( 'Edit my password', 'doliconnect').'</div><ul class="list-group list-group-flush">';
+$doliPassword .= '<div class="card shadow-sm"><div class="card-header">'.__( 'Edit my password', 'doliconnect').'</div><ul class="list-group list-group-flush">';
 if ( doliconnector($user, 'fk_user') > '0' ) {
-$password .= "<li class='list-group-item list-group-item-info list-group-item-action'><i class='fas fa-info-circle'></i> <b>".__( 'Your password will be synchronized with your Dolibarr account', 'doliconnect')."</b></li>";
+  $doliPassword .= "<li class='list-group-item list-group-item-info list-group-item-action'><i class='fas fa-info-circle'></i> <b>".__( 'Your password will be synchronized with your Dolibarr account', 'doliconnect')."</b></li>";
 } elseif  ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $user->ID ) {
-$password .= "<li class='list-group-item list-group-item-info list-group-item-action'><i class='fas fa-info-circle'></i> <b>".__( 'Password cannot be modified in demo mode', 'doliconnect')."</b></li>";
+  $doliPassword .= "<li class='list-group-item list-group-item-info list-group-item-action'><i class='fas fa-info-circle'></i> <b>".__( 'Password cannot be modified in demo mode', 'doliconnect')."</b></li>";
 } 
 if (is_user_logged_in() && $user) {
-$password .= '<li class="list-group-item list-group-item-light list-group-item-action">';
-$password .= '<div class="row g-2"><div class="col-12"><div class="input-group">';
-$password .= '<div class="form-floating"><input type="password" class="form-control" id="pwd0" name="pwd0" placeholder="Password" ';
+  $doliPassword .= '<li class="list-group-item list-group-item-light list-group-item-action">';
+  $doliPassword .= '<div class="row g-2"><div class="col-12"><div class="input-group">';
+  $doliPassword .= '<div class="form-floating"><input type="password" class="form-control" id="pwd0" name="pwd0" placeholder="Password" ';
 if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $user->ID ) {
-$password .= ' readonly';
+  $doliPassword .= ' readonly';
 } else {
-$password .= ' required';
+  $doliPassword .= ' required';
 }
-$password .= '><label for="pwd0">'.__( 'Confirm your password', 'doliconnect').'</label></div>';
-$password .= '<button id="toggle-password" type="button" onclick="revealpwd0()" class="input-group-text" type="button" aria-label="Show password as plain text. Warning: this will display your password on the screen."><i id="toggle-password-fa" class="far fa-fw fa-eye-slash"></i></button>';
-$password .= '</div></div></div></li>';
+$doliPassword .= '><label for="pwd0">'.__( 'Confirm your password', 'doliconnect').'</label></div>';
+$doliPassword .= '<button id="toggle-password" type="button" onclick="revealpwd0()" class="input-group-text" type="button" aria-label="Show password as plain text. Warning: this will display your password on the screen."><i id="toggle-password-fa" class="far fa-fw fa-eye-slash"></i></button>';
+$doliPassword .= '</div></div></div></li>';
 }
 
-$password .= '<script type="text/javascript">';
-$password .= 'function revealpwd0() {
+$doliPassword .= '<script type="text/javascript">';
+$doliPassword .= 'function revealpwd0() {
   var x = document.getElementById("pwd0");
   if (x.type === "password") {
     x.type = "text";
@@ -486,42 +486,42 @@ $password .= 'function revealpwd0() {
   }
 
 }';
-$password .= '</script>';
+$doliPassword .= '</script>';
 
-$password .= '<li class="list-group-item list-group-item-light list-group-item-action"><p class="text-justify">'.__( 'Your new password must be between 8 and 20 characters, including at least 1 digit, 1 letter, 1 uppercase.', 'doliconnect').'</p>';
-$password .= '<div class="row g-2"><div class="col-md">';
-$password .= '<div class="form-floating"><input type="password" class="form-control" id="pwd1" name="pwd1" placeholder="Password" ';
+$doliPassword .= '<li class="list-group-item list-group-item-light list-group-item-action"><p class="text-justify">'.__( 'Your new password must be between 8 and 20 characters, including at least 1 digit, 1 letter, 1 uppercase.', 'doliconnect').'</p>';
+$doliPassword .= '<div class="row g-2"><div class="col-md">';
+$doliPassword .= '<div class="form-floating"><input type="password" class="form-control" id="pwd1" name="pwd1" placeholder="Password" ';
 if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $user->ID ) {
-$password .= ' readonly';
+  $doliPassword .= ' readonly';
 } else {
-$password .= ' required';
+  $doliPassword .= ' required';
 }
-$password .= '><label for="pwd1">'.__( 'New password', 'doliconnect').'</label></div>';
-$password .= '</div><div class="col-md">';
-$password .= '<div class="form-floating"><input type="password" class="form-control" id="pwd2" name="pwd2" placeholder="Password" ';
+$doliPassword .= '><label for="pwd1">'.__( 'New password', 'doliconnect').'</label></div>';
+$doliPassword .= '</div><div class="col-md">';
+$doliPassword .= '<div class="form-floating"><input type="password" class="form-control" id="pwd2" name="pwd2" placeholder="Password" ';
 if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $user->ID ) {
-$password .= ' readonly';
+  $doliPassword .= ' readonly';
 } else {
-$password .= ' required';
+  $doliPassword .= ' required';
 }
-$password .= '><label for="pwd2">'.__( 'Confirm the password', 'doliconnect').'</label></div>';
-$password .= '</div></div>';
-$password .= '</li>';
-$password .= "</ul><div class='card-body'>";
-$password .= '<div class="d-grid gap-2"><button id="dolirpw-button" class="btn btn-secondary" id="pwd-submit-button" type="submit"';
+$doliPassword .= '><label for="pwd2">'.__( 'Confirm the password', 'doliconnect').'</label></div>';
+$doliPassword .= '</div></div>';
+$doliPassword .= '</li>';
+$doliPassword .= "</ul><div class='card-body'>";
+$doliPassword .= '<div class="d-grid gap-2"><button id="dolirpw-button" class="btn btn-secondary" id="pwd-submit-button" type="submit"';
 if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $user->ID ) {
-$password .= ' disabled';
+  $doliPassword .= ' disabled';
 }
-$password .= '>'.__( 'Update', 'doliconnect').'</button></div></form>';
-$password .= "</div><div class='card-footer text-muted'>";
-$password .= "<small><div class='float-start'>";
-if ( isset($request) ) $password .= dolirefresh($request, $url, dolidelay('thirdparty'));
-$password .= "</div><div class='float-end'>";
-$password .= dolihelp('ISSUE');
-$password .= "</div></small>";
-$password .= '</div></div>';
+$doliPassword .= '>'.__( 'Update', 'doliconnect').'</button></div></form>';
+$doliPassword .= "</div><div class='card-footer text-muted'>";
+$doliPassword .= "<small><div class='float-start'>";
+if ( isset($request) ) $doliPassword .= dolirefresh($request, $url, dolidelay('thirdparty'));
+$doliPassword .= "</div><div class='float-end'>";
+$doliPassword .= dolihelp('ISSUE');
+$doliPassword .= "</div></small>";
+$doliPassword .= '</div></div>';
 
-return $password;
+return $doliPassword;
 }
 
 function doliProfId($idprof1 = null, $idprof2 = null, $idprof3 = null, $idprof4 = null, $country_code = 0, $idobject = 0, $rights = 1) {
