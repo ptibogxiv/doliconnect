@@ -1809,8 +1809,8 @@ if ( function_exists('doliconnect_membership_modal') && !empty(doliconst('MAIN_M
         print '<div class="d-grid gap-2">';
     if ( isset($adherent) && $adherent->datefin != null && $adherent->statut == 1 && isset($adherent->next_subscription_renew) && $adherent->datefin > $adherent->next_subscription_renew && $adherent->next_subscription_renew > current_time( 'timestamp',1) ) {
         print "<button class='btn btn-light btn-block' disabled>".sprintf(__('Renew from %s', 'doliconnect'), wp_date('d/m/Y', $adherent->next_subscription_renew))."</button>";
-    } else { print  "<br><button class='btn btn btn-danger btn-block' data-bs-toggle='modal' data-bs-target='#PaySubscriptionModal'>".__( 'Pay my subscription', 'doliconnect')."</button>";}
-        print '</div>';
+    } else { print "<button class='btn btn btn-danger btn-block' data-bs-toggle='modal' data-bs-target='#PaySubscriptionModal'>".__( 'Pay my subscription', 'doliconnect')."</button>";}
+        print '</div><br>';
     } elseif ( $adherent->statut == '0' ) {
     if ( intval(86400+(!empty($adherent->datefin)?$adherent->datefin:0)) > $time ) {
         //print "<form id='subscription-form' action='".doliconnecturl('doliaccount')."?module=members' method='post'><input type='hidden' name='update_membership' value='4'><button id='resiliation-button' class='btn btn btn-warning btn-block' type='submit'><b>".__( 'Reactivate my subscription', 'doliconnect')."</b></button></form>";
