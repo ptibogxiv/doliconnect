@@ -1215,8 +1215,7 @@ $document = '<button type="button" class="btn btn btn-outline-dark btn-sm btn-bl
 $document .= "<script>";
 $document .= 'jQuery(document).ready(function($) {
     document.querySelector("#buttonmodaltest-'.$filename.'").addEventListener("click", function() {
-        var m1 = $(makeModal("'.$filename.'", "")); // I would want to skip creating an HTML element with jQuery.
-        //document.body.insertAdjacentHTML("beforeend", m1);
+        var m1 = $(makeModal("'.$filename.'", ""));
         m1.modal("show");
       }, false);
       
