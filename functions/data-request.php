@@ -459,7 +459,7 @@ function dolifpw_request(){
 $emailTo = get_option('tz_email');
 
 if (!isset($emailTo) || ($emailTo == '') ){
-$emailTo = get_option('admin_email');
+	$emailTo = get_option('admin_email');
 }
 
 $user = get_user_by( 'email', $fpw_email);   
@@ -526,63 +526,65 @@ function dolirpw_request(){
 global $wpdb,$current_user; 
 
 if ( wp_verify_nonce( trim($_POST['dolirpw-nonce']), 'dolirpw')) {
-if (isset($_POST["pwd0"])) $pwd0 = sanitize_text_field($_POST["pwd0"]);
-$pwd1 = sanitize_text_field($_POST["pwd1"]);
-$pwd2 = sanitize_text_field($_POST["pwd2"]);
+	if (isset($_POST["pwd0"])) $pwd0 = sanitize_text_field($_POST["pwd0"]);
+	$pwd1 = sanitize_text_field($_POST["pwd1"]);
+	$pwd2 = sanitize_text_field($_POST["pwd2"]);
 
-if (!is_user_logged_in()) {
-$current_user = check_password_reset_key( esc_attr($_POST["key"]), esc_attr($_POST["login"]) );
-}
+	if (!is_user_logged_in()) {
+		$current_user = check_password_reset_key( esc_attr($_POST["key"]), esc_attr($_POST["login"]) );
+	}
 
-if ( ((is_user_logged_in() && isset($pwd0) && !empty($pwd0) && wp_check_password( $pwd0, $current_user->user_pass, $current_user->ID )) || (!is_user_logged_in()) ) && ($pwd1 == $pwd2) && (preg_match('/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,20}/', $pwd1)) ) {
-wp_set_password($pwd1, $current_user->ID);
+	if ( ((is_user_logged_in() && isset($pwd0) && !empty($pwd0) && wp_check_password( $pwd0, $current_user->user_pass, $current_user->ID )) || (!is_user_logged_in()) ) && ($pwd1 == $pwd2) && (preg_match('/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,20}/', $pwd1)) ) {
+	wp_set_password($pwd1, $current_user->ID);
 
-if (doliconnector($current_user, 'fk_user') > 0){
-$data = [
-    'pass' => $pwd1
-	];
-$doliuser = callDoliApi("PUT", "/users/".doliconnector($current_user, 'fk_user'), $data, 0);
-}
+	if (doliconnector($current_user, 'fk_user') > 0){
+		$data = [
+    	'pass' => $pwd1
+		];
+		$doliuser = callDoliApi("PUT", "/users/".doliconnector($current_user, 'fk_user'), $data, 0);
+	}
 
-if (!is_user_logged_in()) {
-$wpdb->update( $wpdb->users, array( 'user_activation_key' => '' ), array( 'user_login' => $current_user->user_login ) );
-}
+	if (!is_user_logged_in()) {
+		$wpdb->update( $wpdb->users, array( 'user_activation_key' => '' ), array( 'user_login' => $current_user->user_login ) );
+	}
+	
 	$response = [
-		'message' => dolialert('success', __( 'Your informations have been updated. Now, you will be log out and need to log in again.', 'doliconnect')),
-		'captcha' => dolicaptcha('dolirpw'),
-			];	
+	'message' => dolialert('success', __( 'Your informations have been updated. Now, you will be log out and need to log in again.', 'doliconnect')),
+	'captcha' => dolicaptcha('dolirpw'),
+	];	
 	wp_send_json_success( $response );
-} elseif (is_user_logged_in() && isset( $current_user->ID ) && (!isset($pwd0) || (isset($pwd0) && ! wp_check_password( $pwd0, $current_user->user_pass, $current_user->ID ))) ) {
-	$response = [
+	
+	} elseif (is_user_logged_in() && isset( $current_user->ID ) && (!isset($pwd0) || (isset($pwd0) && ! wp_check_password( $pwd0, $current_user->user_pass, $current_user->ID ))) ) {
+		$response = [
 		'message' => dolialert('danger', __( 'Your actual password is incorrect', 'doliconnect')),
 		'captcha' => dolicaptcha('dolirpw'),
 			];		
-	wp_send_json_error( $response );
-} elseif ( $pwd1 != $_POST["pwd2"] ) {
-	$response = [
+		wp_send_json_error( $response );
+	} elseif ( $pwd1 != $_POST["pwd2"] ) {
+		$response = [
 		'message' => dolialert('danger',  __( 'The new passwords entered are different', 'doliconnect')),
 		'captcha' => dolicaptcha('dolirpw'),
-			];	
-	wp_send_json_error( $response );
-} elseif ( !preg_match("#.*^(?=.{8,20})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*$#", $pwd1) ) {
-	$response = [
+		];	
+		wp_send_json_error( $response );
+	} elseif ( !preg_match("#.*^(?=.{8,20})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*$#", $pwd1) ) {
+		$response = [
 		'message' => dolialert('danger',  __( 'Your password must be between 8 and 20 characters, including at least 1 digit, 1 letter, 1 uppercase.', 'doliconnect')),
 		'captcha' => dolicaptcha('dolirpw'),
-			];		
-	wp_send_json_error( $response );
+		];		
+		wp_send_json_error( $response );
+	} else {
+		$response = [
+		'message' => dolialert('danger',  __( 'A security error occured', 'doliconnect')),
+		'captcha' => dolicaptcha('dolirpw'),
+		];	
+		wp_send_json_error( $response ); 
+	}
 } else {
 	$response = [
 		'message' => dolialert('danger',  __( 'A security error occured', 'doliconnect')),
 		'captcha' => dolicaptcha('dolirpw'),
-			];	
-	wp_send_json_error( $response ); 
-}
-} else {
-	$response = [
-		'message' => dolialert('danger',  __( 'A security error occured', 'doliconnect')),
-		'captcha' => dolicaptcha('dolirpw'),
-			];
-	wp_send_json_error( $response ); 
+		];
+		wp_send_json_error( $response ); 
 }
 }
 
@@ -604,10 +606,10 @@ $data = [
 $object = callDoliApi("PUT", $request."/".sanitize_text_field($_POST['payment_method']), $data, dolidelay( 0, true));
 
 if (!isset($object->error)) {  
-$gateway = callDoliApi("GET", $request, null, dolidelay('paymentmethods', true));
-wp_send_json_success( dolialert('success', __( 'You changed your default payment method', 'doliconnect')));
+	$gateway = callDoliApi("GET", $request, null, dolidelay('paymentmethods', true));
+	wp_send_json_success( dolialert('success', __( 'You changed your default payment method', 'doliconnect')));
 } else {
-wp_send_json_error( __( 'An error occured:', 'doliconnect').' '.$object->error->message); 
+	wp_send_json_error( __( 'An error occured:', 'doliconnect').' '.$object->error->message); 
 }
 
 } elseif ( wp_verify_nonce( trim($_POST['dolipaymentmethod-nonce']), 'dolipaymentmethod-nonce') && isset($_POST['case']) && $_POST['case'] == "delete" ) {
@@ -615,18 +617,18 @@ wp_send_json_error( __( 'An error occured:', 'doliconnect').' '.$object->error->
 $object = callDoliApi("DELETE", $request."/".sanitize_text_field($_POST['payment_method']), null, dolidelay( 0, true));
 
 if (!isset($object->error)) {
-$gateway = callDoliApi("GET", $request, null, dolidelay('paymentmethods', true));
-wp_send_json_success( dolialert('success', __( 'You deleted a payment method', 'doliconnect')));
+	$gateway = callDoliApi("GET", $request, null, dolidelay('paymentmethods', true));
+	wp_send_json_success( dolialert('success', __( 'You deleted a payment method', 'doliconnect')));
 } else {
-wp_send_json_error( __( 'An error occured:', 'doliconnect').' '.$object->error->message); 
+	wp_send_json_error( __( 'An error occured:', 'doliconnect').' '.$object->error->message); 
 }
 
 } elseif ( wp_verify_nonce( trim($_POST['dolipaymentmethod-nonce']), 'dolipaymentmethod-nonce') && isset($_POST['case']) && $_POST['case'] == "create" ) {
 
 if ($_POST['default'] == 2) { 
-$default = 1;
+	$default = 1;
 } else {
-$default = 0;
+	$default = 0;
 }
 
 $data = [
