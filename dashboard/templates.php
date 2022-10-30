@@ -245,7 +245,7 @@ if ( is_multisite() && !get_option( 'users_can_register' ) && (get_site_option( 
 if (isset($_GET["morphy"]) && (($_GET["morphy"] == 'mor' && (empty(get_option('doliconnect_disablepro')) || get_option('doliconnect_disablepro') == 'mor')) || ($_GET["morphy"] == 'phy' && (empty(get_option('doliconnect_disablepro')) || get_option('doliconnect_disablepro') == 'phy')))) {
 print "<div id='doliuserinfos-alert'></div><form action='".admin_url('admin-ajax.php')."' id='doliuserinfos-form' method='post' class='was-validated' enctype='multipart/form-data'>";
 
-print doliajax('doliuserinfos', null, 'create');
+print doliAjax('doliuserinfos', null, 'create');
 
 print '<div class="card shadow-sm"><div class="card-header">';
 if ($_GET["morphy"] == 'phy') {
@@ -403,7 +403,7 @@ catch(\Exception $e) {
 } elseif ( isset($_GET["action"]) && $_GET["action"] == 'fpw' ) { 
 
 print "<div id='dolifpw-alert'></div><form id='dolifpw-form' method='post' class='was-validated' action='".admin_url('admin-ajax.php')."'>";
-print doliajax('dolifpw');
+print doliAjax('dolifpw');
  
 print '<div class="card shadow-sm"><div class="card-header">'.__( 'Forgot password?', 'doliconnect');
 print '<a class="float-end text-decoration-none" href="'.esc_url( doliconnecturl('doliaccount') ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a>';  
@@ -657,7 +657,7 @@ print __( 'Sunday', 'doliconnect').": ".doliopeninghours('MAIN_INFO_OPENINGHOURS
 print "</div><div class='col-md-8'><div id='content'>";
 
 print "<div id='dolicontact-alert'></div><form id='dolicontact-form' method='post' class='was-validated' action='".admin_url('admin-ajax.php')."'>";
-print doliajax('dolicontact');
+print doliAjax('dolicontact');
 
 print "<div class='card shadow-sm'><ul class='list-group list-group-flush'>
 <li class='list-group-item'>";

@@ -26,7 +26,7 @@ $thirdparty = callDoliApi("GET", $request, null, dolidelay('thirdparty', esc_att
 
 print "<div id='doliuserinfos-alert'></div><form action='".admin_url('admin-ajax.php')."' id='doliuserinfos-form' method='post' class='was-validated' enctype='multipart/form-data'>";
 
-print doliajax('doliuserinfos', $return, 'update');
+print doliAjax('doliuserinfos', $return, 'update');
 
 print '<div class="card shadow-sm"><div class="card-header">'.__( 'Edit my informations', 'doliconnect').'</div>';
 
@@ -299,7 +299,7 @@ if ( !isset($contactfo->error) && isset($_GET['id']) && isset($_GET['id']) && is
 
 print "<form action='".admin_url('admin-ajax.php')."' id='dolicontactinfos-form' method='post' class='was-validated' enctype='multipart/form-data'>";
 
-print doliajax('dolicontactinfos', null, 'update');
+print doliAjax('dolicontactinfos', null, 'update');
 
 print "<input type='hidden' name='contactid' value='".$contactfo->id."'>";
 
@@ -322,7 +322,7 @@ print '</div></div></form>';
 
 print "<form action='".admin_url('admin-ajax.php')."' id='dolicontactinfos-form' method='post' class='was-validated' enctype='multipart/form-data'>";
 
-print doliajax('dolicontactinfos', null, 'create');
+print doliAjax('dolicontactinfos', null, 'create');
     
 print "<input type='hidden' name='contactid' value='0'>";
 

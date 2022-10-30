@@ -348,7 +348,7 @@ function doliUserLang($user) {
   return $lang;
 }
 
-function doliajax($id, $url = null, $case = null){
+function doliAjax($id, $url = null, $case = null){
   $ajax = "<input type='hidden' name='action' value='".$id."_request'>";
   if (!empty($case)) $ajax.= "<input type='hidden' name='case' value='".$case."'>";
   $ajax.= wp_nonce_field( $id, $id.'-nonce' );
@@ -452,7 +452,7 @@ $doliPassword = "<div id='dolirpw-alert'></div><form id='dolirpw-form' method='p
 if (isset($_GET["key"]) && isset($_GET["login"])) {
   $doliPassword .= "<input type='hidden' name='key' value='".esc_attr($_GET["key"])."'><input type='hidden' name='login' value='".esc_attr($_GET["login"])."'>";
 }
-$doliPassword .= doliajax('dolirpw', $return);
+$doliPassword .= doliAjax('dolirpw', $return);
 
 $doliPassword .= '<div class="card shadow-sm"><div class="card-header">'.__( 'Edit my password', 'doliconnect').'</div><ul class="list-group list-group-flush">';
 if ( doliconnector($user, 'fk_user') > '0' ) {
