@@ -858,12 +858,15 @@ $price['subprice'] = $adherenttype->price_prorata;
 
 $result = doliaddtocart($product, $mstock, 1, $price, $adherenttype->date_begin, $adherenttype->date_end, null, array('options_member_beneficiary' => $adherent->id));
 if ($result >= 0) {
-$response = [
-    'message' => '<div class="alert alert-success alert-dismissible d-flex align-items-center" role="alert">'.__( 'Your subscription have been put in the basket for 1 hour', 'doliconnect').'</div>',
-    'items' => $result,
-    'list' => doliconnect_CartItemsList()
-        ];
-wp_send_json_success( $response ); 
+	$response = [
+		'message' => $result['message'],
+		'newqty' => $qty,
+		'items' => $result['items'],	
+		'list' => $result['list'],
+		'lines' => $result['lines'],
+		'total' => $result['total']
+		];	
+	wp_send_json_success($response);	
 } else {
 $response = [
     'message' => __( 'We no longer have this item in this quantity', 'doliconnect').$result,
