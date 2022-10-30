@@ -1820,8 +1820,6 @@ print '</div></div></form>';
 
 if ( function_exists('doliconnect_membership_modal') && !empty(doliconst('MAIN_MODULE_COMMANDE')) && !empty($productadhesion) ) {
 
-//print doliloaderscript('doliconnect-memberform');
-
 if ( $adherent->datefin == null && $adherent->statut == '0' ) {
 //print  "<a href='#' id='subscribe-button2' class='btn btn text-white btn-warning btn-block' data-bs-toggle='modal' data-bs-target='#activatemember'><b>".__( 'Become a member', 'doliconnect')."</b></a>";
 } elseif ($adherent->statut == '1') {
@@ -1844,22 +1842,18 @@ if ( intval(86400+(!empty($adherent->datefin)?$adherent->datefin:0)) > $time ) {
 } elseif ( $adherent->statut == '-2' ) {
 
 } else { 
-
-if ( doliconnector($current_user, 'fk_soc') > 0 ) {
-$thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
-}
-
-if ( empty($thirdparty->address) || empty($thirdparty->zip) || empty($thirdparty->town) || empty($thirdparty->country_id) || empty($current_user->billing_type) || empty($current_user->billing_birth) || empty($current_user->user_firstname) || empty($current_user->user_lastname) || empty($current_user->user_email)) {
-print "Pour adhérer, tous les champs doivent être renseignés dans vos <a href='".esc_url( get_permalink(get_option('doliaccount')))."?module=informations&return=".$url."' class='alert-link'>".__( 'Personal informations', 'doliconnect')."</a></div><div class='col-sm-6 col-md-7'>";
-} else { 
-//print "<button class='btn btn text-white btn-warning btn-block' data-bs-toggle='modal' data-bs-target='#activatemember'>".__( 'Become a member', 'doliconnect')."</button>";
-}
+    if ( doliconnector($current_user, 'fk_soc') > 0 ) {
+        $thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
+    }
+    if ( empty($thirdparty->address) || empty($thirdparty->zip) || empty($thirdparty->town) || empty($thirdparty->country_id) || empty($current_user->billing_type) || empty($current_user->billing_birth) || empty($current_user->user_firstname) || empty($current_user->user_lastname) || empty($current_user->user_email)) {
+        print "Pour adhérer, tous les champs doivent être renseignés dans vos <a href='".esc_url( get_permalink(get_option('doliaccount')))."?module=informations&return=".$url."' class='alert-link'>".__( 'Personal informations', 'doliconnect')."</a></div><div class='col-sm-6 col-md-7'>";
+    }
 }
 
 if ( !empty(doliconnector($current_user, 'fk_member')) && doliconnector($current_user, 'fk_member') > 0 && !empty($adherent->typeid) ) { 
-$request= "/adherentsplus/type/".$adherent->typeid;
-$adherenttype = callDoliApi("GET", $request, null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-//print var_dump($adherenttype);
+    $request= "/adherentsplus/type/".$adherent->typeid;
+    $adherenttype = callDoliApi("GET", $request, null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+    //print var_dump($adherenttype);
 }
 
 }
