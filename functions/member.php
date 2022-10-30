@@ -54,7 +54,7 @@ return $adhesion;
 
 function dolimembertypelist($typeadhesion, $adherent) {
 
-  $list = "<table class='table table-hover' id ='subscription-table'><tbody class=' m-0 p-0'>";
+  $list = '<ul class="list-group list-group-flush">';
   
   if ( !isset($typeadhesion->error) ) {
   foreach ($typeadhesion as $postadh) {
@@ -62,7 +62,7 @@ function dolimembertypelist($typeadhesion, $adherent) {
   $postadh->amount = $postadh->price;
   } 
   if ( ( $postadh->subscription == '1' || ( $postadh->subscription != '1' && $adherent->typeid == $postadh->id ) ) && $postadh->statut == '1' || ( $postadh->statut == '0' && isset($adherent->typeid) && $postadh->id == $adherent->typeid && $adherent->statut == '1' ) ) {
-  $list .= "<tr><td><div class='row'><div class='col-md-8'><b>";
+  $list .= '<li class="list-group-item list-group-item-light list-group-item-action"><div class="row"><div class="col-md-8"><b>';
   if ($postadh->morphy == 'mor') {
     $list .= "<i class='fas fa-user-tie fa-fw'></i> "; 
   } elseif ($postadh->morphy == 'phy') {
@@ -166,12 +166,12 @@ function dolimembertypelist($typeadhesion, $adherent) {
   } 
   }
   }
-    $list .= "</div></div></td></tr>"; 
+    $list .= "</div></div></li>"; 
   }
   } else { 
     $list .= "<li class='list-group-item list-group-item-light'><center>".__( 'No available membership type', 'doliconnect')."</center></li>";
   }
-    $list .= "</tbody></table>"; 
+    $list .= "</ul>"; 
 return $list; 
 }
 
