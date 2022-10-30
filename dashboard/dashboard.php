@@ -1805,7 +1805,13 @@ if ( ! empty($adherent) && $adherent->statut != '-2' ) {
 print '<form id="subscription-form" action="'.esc_url( add_query_arg( 'module', 'members', doliconnecturl('doliaccount')) ).'" method="post"><input type="hidden" name="update_membership" value="2"><div class="d-grid gap-2"><div class="btn-group" role="group" aria-label="Update membership">
 <button type="button"  class="btn btn text-white btn-warning" data-bs-toggle="modal" data-bs-target="#activatemember"';
 if ( $adherent->statut == '-1' ) { print ' disabled'; }
-print '>'.__( 'Update', 'doliconnect').'</button>';
+print '>';
+if (empty($adherent->statut)) { 
+    print __( 'Reactivate my subscription', 'doliconnect');
+} else {
+    print __( 'Update', 'doliconnect');
+}
+print '</button>';
 if ( $adherent->statut != '0' ) {
 print "<button class='btn btn-dark' type='submit'>".__( 'Resiliate', 'doliconnect')."</button>";
 }
@@ -1826,7 +1832,7 @@ print "<br><button class='btn btn-light btn-block' disabled>".sprintf(__('Renew 
 print '</div>';
 } elseif ( $adherent->statut == '0' ) {
 if ( intval(86400+(!empty($adherent->datefin)?$adherent->datefin:0)) > $time ) {
-print "<form id='subscription-form' action='".doliconnecturl('doliaccount')."?module=members' method='post'><input type='hidden' name='update_membership' value='4'><button id='resiliation-button' class='btn btn btn-warning btn-block' type='submit'><b>".__( 'Reactivate my subscription', 'doliconnect')."</b></button></form>";
+//print "<form id='subscription-form' action='".doliconnecturl('doliaccount')."?module=members' method='post'><input type='hidden' name='update_membership' value='4'><button id='resiliation-button' class='btn btn btn-warning btn-block' type='submit'><b>".__( 'Reactivate my subscription', 'doliconnect')."</b></button></form>";
 } else {
 //print  "<button class='btn btn text-white btn-warning btn-block' data-bs-toggle='modal' data-bs-target='#PaySubscriptionModal'>".__( 'Renew my subscription', 'doliconnect')."</button>";
 }
@@ -1857,9 +1863,11 @@ $adherenttype = callDoliApi("GET", $request, null, dolidelay('member', esc_attr(
 }
 
 print "</div></div>";
-if ($adherent->ref != $adherent->id ) { 
-print "<label for='license'><small>N° de licence</small></label><div class='input-group mb-2'><div class='input-group-prepend'><div class='input-group-text'><i class='fas fa-key fa-fw'></i></div></div><input class='form-control' type='text' value='".$adherent->ref."' readonly></div>";
-}
+
+//if ($adherent->ref != $adherent->id ) { 
+//print "<label for='license'><small>N° de licence</small></label><div class='input-group mb-2'><div class='input-group-prepend'><div class='input-group-text'><i class='fas fa-key fa-fw'></i></div></div><input class='form-control' type='text' value='".$adherent->ref."' readonly></div>";
+//}
+
 if( has_action('mydoliconnectmemberform') ) {
 print do_action('mydoliconnectmemberform', $adherent);
 }
