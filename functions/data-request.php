@@ -830,21 +830,21 @@ function dolisignup_request(){
 global $current_user;
 		
 if ( wp_verify_nonce( trim($_POST['dolisignup-nonce']), 'dolisignup-nonce') ) {
-$doliuser = callDoliApi("GET", "/thirdparties?sortfield=t.code_client&sortorder=ASC&limit=1&sqlfilters=(t.code_client%3A%3D%3A'".trim($_POST['code_client'])."')", null, 0);
+	$doliuser = callDoliApi("GET", "/thirdparties?sortfield=t.code_client&sortorder=ASC&limit=1&sqlfilters=(t.code_client%3A%3D%3A'".trim($_POST['code_client'])."')", null, 0);
 
-if (isset($doliuser->error->message)) {
-wp_send_json_error( __( 'Customer not found', 'doliconnect')); 
+	if (isset($doliuser->error->message)) {
+	wp_send_json_error( __( 'Customer not found', 'doliconnect')); 
+	} else {
+		$order = callDoliApi("GET", "/orders/ref/".trim($_POST['reference'])."?contact_list=1", null, 0);
+		$invoice = callDoliApi("GET", "/invoices?sortfield=t.ref&sortorder=ASC&limit=1&thirdparty_ids=".$doliuser[0]->id."&sqlfilters=(t.ref%3Alike%3A'".trim($_POST['reference'])."')%20and%20(t.multicurrency_total_ttc%3Alike%3A'".number_format(trim($_POST['amount']), 0, '.', '')."%25')", null, 0);
+		if (!isset($invoice->error->message) || (!isset($order->error->message) && $order->socid == $doliuser[0]->id && preg_match('/'.number_format(trim($_POST['amount']).'/i', 0, '.', '').'/', $order->multicurrency_total_ttc))) {
+ 			wp_send_json_success( 'success'); 
+		} else {
+			wp_send_json_error( __( 'Customer not found', 'doliconnect')); 
+		}
+	}
 } else {
-$order = callDoliApi("GET", "/orders/ref/".trim($_POST['reference'])."?contact_list=1", null, 0);
-$invoice = callDoliApi("GET", "/invoices?sortfield=t.ref&sortorder=ASC&limit=1&thirdparty_ids=".$doliuser[0]->id."&sqlfilters=(t.ref%3Alike%3A'".trim($_POST['reference'])."')%20and%20(t.multicurrency_total_ttc%3Alike%3A'".number_format(trim($_POST['amount']), 0, '.', '')."%25')", null, 0);
-if (!isset($invoice->error->message) || (!isset($order->error->message) && $order->socid == $doliuser[0]->id && preg_match('/'.number_format(trim($_POST['amount']).'/i', 0, '.', '').'/', $order->multicurrency_total_ttc))) {
- wp_send_json_success( 'success'); 
-} else {
-wp_send_json_error( __( 'Customer not found', 'doliconnect')); 
-}
-}
-} else {
-wp_send_json_error( __( 'A security error occured', 'doliconnect')); 
+	wp_send_json_error( __( 'A security error occured', 'doliconnect')); 
 }
 }
 
@@ -863,7 +863,7 @@ $mstock = doliProductStock($product, false, true);
 
 $requesta = "/members/".doliconnector($current_user, 'fk_member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)); 
 if ( !empty(doliconnector($current_user, 'fk_member')) && doliconnector($current_user, 'fk_member') > 0 ) {
-$adherent = callDoliApi("GET", $requesta, null, dolidelay('member'));
+	$adherent = callDoliApi("GET", $requesta, null, dolidelay('member'));
 }
 $requestb= "/adherentsplus/type/".$adherent->typeid;
 $adherenttype = callDoliApi("GET", $requestb, null, dolidelay('member'));
@@ -875,23 +875,23 @@ $price['subprice'] = $adherenttype->price_prorata;
 $result = doliaddtocart($product, $mstock, 1, $price, $adherenttype->date_begin, $adherenttype->date_end, null, array('options_member_beneficiary' => $adherent->id));
 if ($result >= 0) {
 	$response = [
-		'message' => $result['message'],
-		'newqty' => 1,
-		'items' => $result['items'],	
-		'list' => $result['list'],
-		'lines' => $result['lines'],
-		'total' => $result['total']
-		];	
+	'message' => $result['message'],
+	'newqty' => 1,
+	'items' => $result['items'],	
+	'list' => $result['list'],
+	'lines' => $result['lines'],
+	'total' => $result['total']
+	];	
 	wp_send_json_success($response);	
 } else {
-$response = [
+	$response = [
     'message' => __( 'We no longer have this item in this quantity', 'doliconnect').$result,
-        ];
-wp_send_json_error( $response ); 
+     ];
+	wp_send_json_error( $response ); 
 }
 
 }	else {
-wp_send_json_error( __( 'A security error occured', 'doliconnect')); 
+	wp_send_json_error( __( 'A security error occured', 'doliconnect')); 
 }
 
 }
