@@ -729,7 +729,7 @@ print "</div></div></div>";
 } else {
 //print "<button type='button' onclick='ValidDoliCart(\"".wp_create_nonce( 'valid_dolicart-'.$orderfo->id )."\")' id='button-source-payment' class='btn btn-warning btn-block' ><span class='fa fa-credit-card'></span> ".__( 'Pay', 'doliconnect')."</button>";
 }
-print "<script>";
+print '<script type="text/javascript">';
 print "function ValidDoliCart(nonce) {
 jQuery('#DoliconnectLoadingModal').modal('show');
 var form = document.createElement('form');
@@ -1042,7 +1042,7 @@ print "</div></div></div>";
 } else {
 //print "<button type='button' onclick='ValidDoliCart(\"".wp_create_nonce( 'valid_dolicart-'.$invoicefo->id )."\")' id='button-source-payment' class='btn btn-warning btn-block' ><span class='fa fa-credit-card'></span> ".__( 'Pay', 'doliconnect')."</button>";
 }
-print "<script>";
+print '<script type="text/javascript">';
 print "function ValidDoliCart(nonce) {
 jQuery('#DoliconnectLoadingModal').modal('show');
 var form = document.createElement('form');
@@ -1057,7 +1057,7 @@ form.appendChild(inputvar);
 document.body.appendChild(form);
 form.submit();
         }";                  
-print "</script>";
+print '</script>';
 }
 
 print "</div><br>"; 
@@ -2409,7 +2409,7 @@ print "<form id='dolisettings-form' method='post' action='".admin_url('admin-aja
 print "<input type='hidden' name='action' value='dolisettings_request'>";
 print "<input type='hidden' name='dolisettings-nonce' value='".wp_create_nonce( 'dolisettings-nonce')."'>";
 
-print "<script>";
+print '<script type="text/javascript">';
 print 'function DoliSettings(theForm){
 jQuery("#DoliconnectLoadingModal").modal("show");
 jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function (e) { 
@@ -2424,7 +2424,7 @@ jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function (e) {
     });
 }); 
 }';
-print "</script>";
+print '</script>';
 
 print '<div class="card shadow-sm"><div class="card-header">'.__( 'Settings & security', 'doliconnect').'</div><ul class="list-group list-group-flush">';
 print "<li class='list-group-item list-group-item-light list-group-item-action'><div class='form-check form-switch'><input type='checkbox' class='form-check-input' name='loginmailalert' id='loginmailalert' ";
@@ -2534,7 +2534,7 @@ function generate_license($suffix = null) {
     }
     return $license_string;
 }
-print "<script>";
+print '<script type="text/javascript">';
 print 'jQuery(document).ready(function($) {
     document.querySelector("#buttonmodaltest").addEventListener("click", function() {
         var m1 = $(makeModal("Header", "'.generate_license().'", "Footer"));
@@ -2567,7 +2567,7 @@ print 'jQuery(document).ready(function($) {
       }
 
 });';
-print "</script>";
+print '</script>';
 print '<button id="buttonmodaltest" class="btn btn-primary" type="button">Click here</button>';
 //print generate_license();	  
 

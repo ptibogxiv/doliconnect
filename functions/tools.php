@@ -352,7 +352,7 @@ function doliajax($id, $url = null, $case = null){
   $ajax = "<input type='hidden' name='action' value='".$id."_request'>";
   if (!empty($case)) $ajax.= "<input type='hidden' name='case' value='".$case."'>";
   $ajax.= wp_nonce_field( $id, $id.'-nonce' );
-  $ajax.= '<script>';
+  $ajax.= '<script type="text/javascript">';
   $ajax.= 'jQuery(document).ready(function($) {
     $("#'.$id.'-form").on("submit", function(e) {
     e.preventDefault();
@@ -474,7 +474,7 @@ $password .= '<button id="toggle-password" type="button" onclick="revealpwd0()" 
 $password .= '</div></div></div></li>';
 }
 
-$password .= "<script>";
+$password .= '<script type="text/javascript">';
 $password .= 'function revealpwd0() {
   var x = document.getElementById("pwd0");
   if (x.type === "password") {
@@ -486,7 +486,7 @@ $password .= 'function revealpwd0() {
   }
 
 }';
-$password .= "</script>";
+$password .= '</script>';
 
 $password .= '<li class="list-group-item list-group-item-light list-group-item-action"><p class="text-justify">'.__( 'Your new password must be between 8 and 20 characters, including at least 1 digit, 1 letter, 1 uppercase.', 'doliconnect').'</p>';
 $password .= '<div class="row g-2"><div class="col-md">';
@@ -1212,7 +1212,7 @@ if (!empty(get_option('doliconnectbeta'))) {
 $document = '<button type="button" class="btn btn btn-outline-dark btn-sm btn-block" data-bs-toggle="modal" data-bs-target=".modal-'.$filename.'">'.$name.' <i class="fas fa-file-download"></i></button>';
 //$test = "<embed id=\pdfID\' type=\'text/html\' width=\'100%\' height=\'600\' src=\'https://mozilla.github.io/pdf.js/web/viewer.html\'/>";
 
-$document .= "<script>";
+$document .= '<script type="text/javascript">';
 $document .= 'jQuery(document).ready(function($) {
     document.querySelector("#buttonmodaltest-'.$filename.'").addEventListener("click", function() {
         var m1 = $(makeModal("'.$filename.'", ""));
@@ -1236,7 +1236,7 @@ $document .= 'jQuery(document).ready(function($) {
       }
 
 });';
-$document .= "</script>";
+$document .= '</script>';
 $document .= '<button id="buttonmodaltest-'.$filename.'" class="btn btn btn-outline-dark btn-sm btn-block" type="button">'.$name.' <i class="fas fa-file-download"></i></button>';
 
 /*
@@ -1245,7 +1245,7 @@ $document .= '<div class="modal fade modal-'.$filename.'" tabindex="-1" role="di
 <div class="modal-dialog modal-dialog-centered modal-lg" role="document"><div class="modal-content"><div class="modal-header">
 <h5 class="modal-title" id="exampleModalCenterTitle"><a href="'.$data.'" download="'.$doc->filename.'">'.__( 'Download', 'doliconnect').' '.$doc->filename.'</a></h5><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div><div class="modal-body">';
 $document .= '<iframe class="pdfjs-viewer" style="width:100%;height:70vh" src="'.plugins_url("doliconnect/includes/pdfjs/web/viewer.html").'?file=" id="pdfjsframe-'.$filename.'"></iframe>
-<script>
+<script type="text/javascript">
 document.getElementById("pdfjsframe-'.$filename.'").onload = function() {
 document.getElementById("pdfjsframe-'.$filename.'").contentWindow.PDFViewerApplication.open("'.$data.'");
 };
@@ -1324,13 +1324,13 @@ return $delay;
 
 function dolirefresh( $origin, $url, $delay, $element = null) {
 
-$refresh = "<script>";
+$refresh = '<script type="text/javascript">';
 $refresh .= 'function refreshloader(){
 jQuery("#DoliconnectLoadingModal").modal("show");
 jQuery(window).scrollTop(0); 
 this.form.submit();
 }';
-$refresh .= "</script>";
+$refresh .= '</script>';
 
 if ( isset($element->date_modification) && !empty($element->date_modification) ) {
 $refresh .= "<i class='fas fa-database'></i> ".wp_date( get_option( 'date_format' ).' - '.get_option('time_format'), $element->date_modification, false);
@@ -1371,7 +1371,7 @@ return $alert;
 }
 
 function doliloaderscript($idform, $scrolltop = true) {
-$loader = "<script>";
+$loader = '<script type="text/javascript">';
 $loader .= 'window.setTimeout(function () {
     $(".alert-success").fadeTo(500, 0).slideUp(500, function () {
         $(this).remove();
@@ -1385,12 +1385,12 @@ if (!empty($scrolltop)) $loader .= 'jQuery(window).scrollTop(0);';
 $loader .= 'console.log("submit");
 form.submit();
 });';
-$loader .= "</script>";
+$loader .= '</script>';
 return $loader;
 }
 
 function dolimodalloaderscript($idform) {
-print "<script>";
+print '<script type="text/javascript">';
 ?>
 var form = document.getElementById('<?php print $idform; ?>');
 form.addEventListener('submit', function(event) { 
@@ -1403,7 +1403,7 @@ console.log("submit");
 form.submit();
 });
 <?php
-print "</script>";
+print '</script>';
 }
 
 function doliusercard($id, $refresh = null) {
@@ -1629,7 +1629,7 @@ print '<div class="modal fade" id="DoliconnectSelectLang" aria-hidden="true" dat
 <div class="modal-content"><div class="modal-header">
 <h5 class="modal-title" id="DoliconnectSelectLangLabel">'.__('Choose your language', 'doliconnect').'</h5><button id="closemodalSelectLang" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></button></div>';
  
-print '<script>';
+print '<script type="text/javascript">';
 ?>
 function loadingSelectLangModal() {
 jQuery("#closemodalSelectLang").hide();
@@ -1681,7 +1681,7 @@ $paymentmethods = '';
  
 if ( isset($listpaymentmethods->stripe) ) {
 $paymentmethods .= '<script src="https://js.stripe.com/v3/"></script>';
-$paymentmethods .= '<script>';
+$paymentmethods .= '<script type="text/javascript">';
 $paymentmethods .= 'var style = {
   base: {
     color: "#32325d",
@@ -1712,7 +1712,7 @@ $paymentmethods .= '</script>';
 }
 
 if (isset($array["payment_intent"]) && isset($array["payment_intent_client_secret"]) && isset($array["redirect_status"]) ) {
-$paymentmethods .= "<script>";
+$paymentmethods .= '<script type="text/javascript">';
 $paymentmethods .= "(function ($) {
 $(document).ready(function(){
 $('#DoliconnectLoadingModal').modal('show');
@@ -1763,7 +1763,7 @@ document.getElementById('DoliPaymentmethodAlert').innerHTML = response.error;
   });
  });  
 })(jQuery);";
-$paymentmethods .= "</script>";
+$paymentmethods .= '</script>';
 }
 
 //if ( isset($listpaymentmethods->stripe) && in_array('payment_request_api', $listpaymentmethods->stripe->types) && !empty($module) && is_object($object) && isset($object->id) && empty($thirdparty->mode_reglement_id) ) {
@@ -1818,7 +1818,7 @@ $paymentmethods .= '<div id="flush-collapse'.$method->id.'" class="accordion-col
 if ( $method->default_source && empty($thirdparty->mode_reglement_id) && !in_array($method->type, array('PRE','VIR')) || (!empty($method->default_source) && !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id == $mode_reglement_code[0]->id ) ) { $paymentmethods .= " show"; }
 $paymentmethods .= '" aria-labelledby="flush-heading'.$method->id.'" data-bs-parent="#accordionFlushExample"><div class="accordion-body bg-light">';
 if ( empty($module) && !is_object($object) && doliCheckRights('societe', 'thirdparty_paymentinformation_advance', 'write', null, '15.0.0') ) {
-$paymentmethods .= "<script>";
+$paymentmethods .= '<script type="text/javascript">';
 $paymentmethods .= "(function ($) {
 $(document).ready(function(){
 $('#defaultbtn_".$method->id.", #deletebtn_".$method->id."').on('click',function(event){
@@ -1855,7 +1855,7 @@ $('#DoliconnectLoadingModal').modal('hide');
 });
 });
 })(jQuery);";
-$paymentmethods .= "</script>";
+$paymentmethods .= '</script>';
 }
 $paymentmethods .= "<div class='row'><div class='col-12 col-sm-6'>
   <dt>".__( 'Debtor', 'doliconnect')."</dt>
@@ -1963,7 +1963,7 @@ $paymentmethods .= '><label class="form-check-label text-muted" for="cardDefault
 $paymentmethods .= '<p class="text-justify">';
 $paymentmethods .= '<small><strong>Note:</strong> '.sprintf( esc_html__( 'By providing your card and confirming this form, you are authorizing %s and Stripe, our payment service provider, to send instructions to the financial institution that issued your card to take payments from your card account in accordance with those instructions. You are entitled to a refund from your financial institution under the terms and conditions of your agreement with it. A refund must be claimed within 90 days starting from the date on which your card was debited.', 'doliconnect'), get_bloginfo('name')).'</small>';
 $paymentmethods .= '</p>';
-$paymentmethods .= '<script>';
+$paymentmethods .= '<script type="text/javascript">';
 $paymentmethods .= "function dolistripecard(){
 (function ($) {
 $(document).ready(function(){";
@@ -2161,7 +2161,7 @@ $paymentmethods .= "<div id='iban-error-message' class='text-danger' role='alert
 $paymentmethods .= "<p class='text-justify'>";
 $paymentmethods .= "<small><strong>Note:</strong> ".sprintf( esc_html__( 'By providing your IBAN and confirming this form, you are authorizing %s and Stripe, our payment service provider, to send instructions to your bank to debit your account and your bank to debit your account in accordance with those instructions. You are entitled to a refund from your bank under the terms and conditions of your agreement with it. A refund must be claimed within 8 weeks starting from the date on which your account was debited.', 'doliconnect'), get_bloginfo('name'))."</small>";
 $paymentmethods .= "</p>";
-$paymentmethods .= '<script>';
+$paymentmethods .= '<script type="text/javascript">';
 $paymentmethods .= "function dolistripeiban(){
 (function ($) {
 $(document).ready(function(){";
@@ -2356,7 +2356,7 @@ $paymentmethods .= "<div id='klarna-error-message' class='text-danger' role='ale
 $paymentmethods .= "<p class='text-justify'>";
 $paymentmethods .= "<small><strong>Note:</strong> ".sprintf( esc_html__( 'By providing your IBAN and confirming this form, you are authorizing %s and Stripe, our payment service provider, to send instructions to your bank to debit your account and your bank to debit your account in accordance with those instructions. You are entitled to a refund from your bank under the terms and conditions of your agreement with it. A refund must be claimed within 8 weeks starting from the date on which your account was debited.', 'doliconnect'), get_bloginfo('name'))."</small>";
 $paymentmethods .= "</p>";
-$paymentmethods .= '<script>';
+$paymentmethods .= '<script type="text/javascript">';
 $paymentmethods .= "function dolistripeklarna(){
 (function ($) {
 $(document).ready(function(){";
@@ -2623,7 +2623,7 @@ $paymentmethods .= '</div></small>';
 $paymentmethods .= '</div></div>';
 
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
-$paymentmethods .= "<script>";
+$paymentmethods .= '<script type="text/javascript">';
 $paymentmethods .= "function PayPM(pm) {
 (function ($) {
 $(document).ready(function(){
@@ -2807,7 +2807,7 @@ $('#DoliconnectLoadingModal').modal('hide');
 });
 })(jQuery);
 }";
-$paymentmethods .= "</script>";
+$paymentmethods .= '</script>';
 }
 return $paymentmethods;
 }
