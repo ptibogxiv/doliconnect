@@ -44,9 +44,9 @@ $data = [
   
 if ($action=='POST') {
 $mbr = callDoliApi("POST", "/members", $data, 0);
-$adhesion = callDoliApi("GET", "/members/".doliconnector($current_user, 'fk_member', true), null, dolidelay('member', true));
+$adhesion = callDoliApi("GET", "/adherentsplus/".doliconnector($current_user, 'fk_member', true), null, dolidelay('member', true));
 } else {
-$adhesion = callDoliApi("PUT", "/members/".doliconnector($current_user, 'fk_member', true), $data, 0);
+$adhesion = callDoliApi("PUT", "/adherentsplus/".doliconnector($current_user, 'fk_member', true), $data, 0);
 }
 
 return $adhesion;
@@ -197,7 +197,7 @@ global $current_user;
 doliconnect_enqueues();
 
 $delay = dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
-$request = "/members/".doliconnector($current_user, 'fk_member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)); 
+$request = "/adherentsplus/".doliconnector($current_user, 'fk_member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)); 
 if ( !empty(doliconnector($current_user, 'fk_member')) && doliconnector($current_user, 'fk_member') > 0 && doliconnector($current_user, 'fk_soc') > 0 ) {
   $adherent = callDoliApi("GET", $request, null, $delay);
 } else {
