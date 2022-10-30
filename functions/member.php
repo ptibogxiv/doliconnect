@@ -237,6 +237,7 @@ print '<div class="modal fade" id="PaySubscriptionModal" data-bs-backdrop="stati
 <h6>'.__( 'This subscription', 'doliconnect').'</h6>
 '.__( 'Price:', 'doliconnect').' '.doliprice($adherenttype->price_prorata).'<br>
 '.__( 'From', 'doliconnect').' '.wp_date('d/m/Y', $adherenttype->date_begin).' '.__( 'until', 'doliconnect').' '.wp_date('d/m/Y', $adherenttype->date_end).'
+<hr>
 <h6>'.__( 'Next subscription', 'doliconnect').'</h6>
 '.__( 'Price:', 'doliconnect').' '.doliprice($adherenttype->amount).'<br>
 '.__( 'From', 'doliconnect').' '.wp_date('d/m/Y', $adherenttype->date_nextbegin).' '.__( 'until', 'doliconnect').' '.wp_date('d/m/Y', $adherenttype->date_nextend).'
