@@ -1793,7 +1793,7 @@ $i++;
 print "</li>";
 }
 } else {
-$listshipment = callDoliApi("GET", "/setup/dictionary/shipping_methods?limit=100&active=1", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$listshipment = callDoliApi("GET", "/setup/dictionary/shipping_methods?limit=100&active=1&lang=".doliUserLang($current_user), null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 if (!empty($object->shipping_method_id)) { $thirdparty->shipping_method_id = $object->shipping_method_id; }
 if ( !isset($listshipment->error) && $listshipment != null ) {
