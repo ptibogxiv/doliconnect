@@ -51,7 +51,8 @@ $member_id = '';
 if (isset($adherent->id) && $adherent->id > 0) $member_id = "member_id=".$adherent->id;
 $morphy = '';
 
-$request = "/adherentsplus/type?sortfield=t.libelle&sortorder=ASC&nature=all&".$member_id.$morphy;
+if (!empty($current_user->billing_type)) $morphy = "&sqlfilters=(t.morphy%3A=%3A'')%20or%20(t.morphy%3Ais%3Anull)%20or%20(t.morphy%3A%3D%3A'".$current_user->billing_type."')";
+$request = "/adherentsplus/type?sortfield=t.libelle&sortorder=ASC&".$member_id.$morphy;
 $typeadhesion = callDoliApi("GET", $request, null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true));
 
 if ( !isset($typeadhesion->error) ) {
