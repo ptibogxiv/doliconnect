@@ -2537,30 +2537,29 @@ function generate_license($suffix = null) {
 print "<script>";
 print 'jQuery(document).ready(function($) {
     document.querySelector("#buttonmodaltest").addEventListener("click", function() {
-        var m1 = $(makeModal("Text Header", "'.generate_license().'"));
+        var m1 = $(makeModal("Header", "'.generate_license().'", "Footer"));
         //document.body.insertAdjacentHTML("beforeend", m1);
-        m1.modal("show");
+        m1.modal("show", function() {
+            console.log(test);
+            alert("modal on");     
+        });
 
-        $("#modaltest").on("hide.bs.modal", function (e) {
-            alert("modal on");
-        })
+        //$("#modaltest").on("hide.bs.modal", function (e) {
+            //alert("modal on");
+        //})
 
       }, false);
       
-      function makeModal(title, text) {
+      function makeModal(header, body, footer) {
         return `<div id="modaltest" class="modal fade" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" style="display: none">
         <div class="modal-dialog modal-fullscreen-md-down modal-dialog-centered modal-dialog-scrollable" role="document">
       
           <!-- Modal content-->
-          <div class="modal-content"><div class="modal-header"><h4 class="modal-title">${title}</h4>
+          <div class="modal-content"><div class="modal-header"><h4 class="modal-title">${header}</h4>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-              <p>${text}</p>
-            </div>
-            <div class="modal-footer">
-
-            </div>
+            <div class="modal-body">${body}</div>
+            <div class="modal-footer">${footer}</div>
           </div>
       
         </div>
