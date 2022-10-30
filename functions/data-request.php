@@ -424,15 +424,17 @@ global $current_user;
 $ID = $current_user->ID;
 
 if ( wp_verify_nonce( trim($_POST['dolisettings-nonce']), 'dolisettings-nonce') ) {
-if ( isset($_POST['loginmailalert'])) { update_user_meta( $ID, 'loginmailalert', sanitize_text_field($_POST['loginmailalert']) ); } else { delete_user_meta($ID, 'loginmailalert'); }
-if ( isset($_POST['optin1'])) { update_user_meta( $ID, 'optin1', sanitize_text_field($_POST['optin1']) ); } else { delete_user_meta($ID, 'optin1'); }
-if ( isset($_POST['optin2'])) { update_user_meta( $ID, 'optin2', sanitize_text_field($_POST['optin2']) ); } else { delete_user_meta($ID, 'optin2'); }
+	if ( isset($_POST['loginmailalert'])) { update_user_meta( $ID, 'loginmailalert', sanitize_text_field($_POST['loginmailalert']) ); } else { delete_user_meta($ID, 'loginmailalert'); }
+	//if ( isset($_POST['optin1'])) { update_user_meta( $ID, 'optin1', sanitize_text_field($_POST['optin1']) ); } else { delete_user_meta($ID, 'optin1'); }
+	//if ( isset($_POST['optin2'])) { update_user_meta( $ID, 'optin2', sanitize_text_field($_POST['optin2']) ); } else { delete_user_meta($ID, 'optin2'); }
 		
-wp_send_json_success('success');
+	wp_send_json_success('success');
 } else {
-wp_send_json_error( __( 'A security error occured', 'doliconnect')); 
+	wp_send_json_error( __( 'A security error occured', 'doliconnect')); 
 }
 }
+
+//*****************************************************************************************
 
 add_action('wp_ajax_dolifpw_request', 'dolifpw_request');
 add_action('wp_ajax_nopriv_dolifpw_request', 'dolifpw_request');
