@@ -490,7 +490,14 @@ $login_url = site_url()."/".get_site_option('doliconnect_login');
 } else {
 $login_url = site_url()."/wp-login.php"; }
 if ( isset($_GET["redirect_to"])) { $redirect_to=$_GET["redirect_to"]; } else {
-$redirect_to=$_SERVER['HTTP_REFERER'];}
+  if ( function_exists('dolikiosk') && ! empty(dolikiosk()) ) {
+    $redirect_to=doliconnecturl('doliaccount');
+  } elseif (is_front_page()) {
+    $redirect_to=home_url();
+  } else {
+    $redirect_to=get_permalink();
+  }
+}
  
 print "<form class='was-validated' id='doliconnect-loginform' action='".$login_url."' method='post'>";
 print "<ul class='list-group list-group-flush'><li class='list-group-item'>";
