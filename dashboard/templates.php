@@ -541,7 +541,7 @@ if (get_site_option('doliconnect_mode')=='one') {
   restore_current_blog();
 }
 
-print '<input type="hidden" value="$redirect_to" name="redirect_to"><button class="btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0" type="submit" value="submit"><strong>'.__( 'Sign in', 'doliconnect').'</strong></button>';
+print '<input type="hidden" value="'.$redirect_to.'" name="redirect_to"><button class="btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0" type="submit" value="submit"><strong>'.__( 'Sign in', 'doliconnect').'</strong></button>';
 
 do_action( 'login_footer');
 
