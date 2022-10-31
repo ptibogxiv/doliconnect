@@ -504,17 +504,17 @@ print "<ul class='list-group list-group-flush'><li class='list-group-item'>";
 
 print doliloaderscript('doliconnect-loginform'); 
 if  ( defined("DOLICONNECT_DEMO") ) {
-print "<p><i class='fas fa-info-circle fa-fw'></i> <b>".__( 'Demo mode is activated', 'doliconnect')."</b></p>";
+  print "<p><i class='fas fa-info-circle fa-beat'></i> <b>".__( 'Demo mode is activated', 'doliconnect')."</b></p>";
 } 
 print '<div class="form-floating mb-3"><input type="email" class="form-control" id="user_login" name="log" placeholder="name@example.com" value="';
 if ( defined("DOLICONNECT_DEMO") && defined("DOLICONNECT_DEMO_EMAIL") && !empty(constant("DOLICONNECT_DEMO_EMAIL")) ) {
-print constant("DOLICONNECT_DEMO_EMAIL");
+  print constant("DOLICONNECT_DEMO_EMAIL");
 }
 print '" required autofocus><label for="user_login"><i class="fas fa-at fa-fw"></i> '.__( 'Email', 'doliconnect-pro').'</label></div>';
 
 print '<div class="form-floating mb-3"><input type="password" class="form-control" id="user_pass" name="pwd" placeholder="Password" value="';
 if ( defined("DOLICONNECT_DEMO") && defined("DOLICONNECT_DEMO_PASSWORD") && !empty(constant("DOLICONNECT_DEMO_PASSWORD")) ) {
-print constant("DOLICONNECT_DEMO_PASSWORD");
+  print constant("DOLICONNECT_DEMO_PASSWORD");
 }
 print '" required><label for="user_pass"><i class="fas fa-key fa-fw"></i> '.__( 'Password', 'doliconnect-pro').'</label></div>';
 
