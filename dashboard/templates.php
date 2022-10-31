@@ -527,17 +527,21 @@ print '<div class="form-check float-start">
 
 print "<a class='float-end' href='".wp_lostpassword_url(get_permalink())."' role='button' title='".__( 'Forgot password?', 'doliconnect')."'><small>".__( 'Forgot password?', 'doliconnect')."</small></a>"; 
 
-print "</li></lu><div class='card-body'>";
+print '</li></lu><div class="card-body flex-nowrap p-0">';
+
 if ( get_site_option('doliconnect_mode') == 'one' && function_exists('switch_to_blog') ) {
-switch_to_blog(1);
+  switch_to_blog(1);
 } 
+
 if ((!is_multisite() && get_option( 'users_can_register' )) || ((!is_multisite() && get_option( 'dolicustsupp_can_register' )) || ((get_option( 'dolicustsupp_can_register' ) || get_option('users_can_register') == '1') && (get_site_option( 'registration' ) == 'user' || get_site_option( 'registration' ) == 'all')))) {
-print "<a class='btn btn-secondary' href='".wp_registration_url(get_permalink())."' role='button' title='".__( 'Create an account', 'doliconnect')."'>".__( 'Create an account', 'doliconnect')."</a> ";
+  print "<a class='btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0 border-end' href='".wp_registration_url(get_permalink())."' role='button' title='".__( 'Create an account', 'doliconnect')."'><small>".__( 'Create an account', 'doliconnect')."</small></a>";
 }
+  
 if (get_site_option('doliconnect_mode')=='one') {
-restore_current_blog();
+  restore_current_blog();
 }
-print "<input type='hidden' value='$redirect_to' name='redirect_to'><button id='submit' class='btn btn-secondary' type='submit' name='submit' value='Submit'>".__( 'Sign in', 'doliconnect')."</button>";
+
+print '<input type="hidden" value="$redirect_to" name="redirect_to"><button class="btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0" type="submit" value="submit"><strong>'.__( 'Sign in', 'doliconnect').'</strong></button>';
 
 do_action( 'login_footer');
 
