@@ -103,14 +103,17 @@ if ( $mstock['stock']-$mstock['qty'] > 0 && (empty($product->type) || (!empty($p
 
 if (!$nohtml) { 
   $stock = '<script type="text/javascript">';
-  $stock .= 'jQuery(document).ready(function($) {
-    $("#popover-stock-'.$product->id.'").popover({
-      placement : "auto",
-      delay: { "show": 150, "hide": 150 },
-      trigger : "focus",
-      html : true
+  $stock .= '
+  (function ($) {
+    $(document).ready(function () {
+      $("#popover-stock-'.$product->id.'").popover({
+        placement : "auto",
+        delay: { "show": 150, "hide": 150 },
+        trigger : "focus",
+        html : true
       })
-    });';
+    });
+  })(jQuery);';
   $stock .= '</script>';
 }
 
@@ -324,10 +327,12 @@ return $mstock['stock'];
 
 function doliProductCart($product, $refresh = null, $line = null) {
 
-$button = '<form id="doliform-product-'.$product->id.'" method="post">';
+  $button = '<form id="doliform-product-'.$product->id.'" method="post">';
 
-$button .= '<script type="text/javascript">';
-$button .= 'jQuery(document).ready(function($) {
+  $button .= '<script type="text/javascript">';
+  $button .= '
+  (function ($) {
+    $(document).ready(function () {
       $("#doliform-product-'.$product->id.' button[type=submit]").on("click", function(e) {
           e.preventDefault();
           var acase = $(this).val();
@@ -372,8 +377,9 @@ $button .= 'jQuery(document).ready(function($) {
               $("#DoliconnectLoadingModal").modal("hide");
           });
   
+        });
       });
-  });';
+    })(jQuery);';
   $button .= "</script>";
 
   $mstock = doliProductStock($product, $refresh, true);

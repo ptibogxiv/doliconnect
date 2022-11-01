@@ -364,8 +364,8 @@ function doliAjax($id, $url = null, $case = null){
           nonce:  $(this).find("input[name=doliuserinfos-nonce]").val(),
           case:  $(this).find("input[name=case]").val(),
         }
-        console.log(ajaxurl);
-        console.log(data);
+        //console.log(ajaxurl);
+        //console.log(data);
         if (document.getElementById("'.$id.'-button")) {
           document.getElementById("'.$id.'-button").disabled = true;
         }
