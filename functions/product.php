@@ -326,7 +326,7 @@ function doliProductCart($product, $refresh = null, $line = null) {
 
 $button = '<form id="doliform-product-'.$product->id.'" method="post">';
 
-$button .= "<script>";
+$button .= '<script type="text/javascript">';
 $button .= 'jQuery(document).ready(function($) {
       $("#doliform-product-'.$product->id.' button[type=submit]").on("click", function(e) {
           e.preventDefault();
