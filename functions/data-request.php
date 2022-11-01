@@ -564,6 +564,7 @@ if ( defined("DOLICONNECT_DEMO_EMAIL") && ''.constant("DOLICONNECT_DEMO_EMAIL").
 		'captcha' => dolicaptcha('dolifpw'),
 		];
 		wp_send_json_success( $response );
+		die();
 	} else { 
 		$response = [
 		'message' => dolialert('error', sprintf(__('Sending message fails for the following reason: %s. Please contact us for help.', 'doliconnect'), $emailSent->get_error_message()) ),
@@ -587,7 +588,8 @@ if ( defined("DOLICONNECT_DEMO_EMAIL") && ''.constant("DOLICONNECT_DEMO_EMAIL").
 	'message' => dolialert('danger', __( 'A security error occured', 'doliconnect')),
 	'captcha' => dolicaptcha('dolifpw'),
 	];
-	wp_send_json_error( $response ); 
+	wp_send_json_error( $response );
+	die();
 }
 
 }
@@ -628,6 +630,7 @@ if ( wp_verify_nonce( trim($_POST['dolirpw-nonce']), 'dolirpw')) {
 	'captcha' => dolicaptcha('dolirpw'),
 	];	
 	wp_send_json_success( $response );
+	die();
 	
 	} elseif (is_user_logged_in() && isset( $current_user->ID ) && (!isset($pwd0) || (isset($pwd0) && ! wp_check_password( $pwd0, $current_user->user_pass, $current_user->ID ))) ) {
 		$response = [
@@ -641,18 +644,21 @@ if ( wp_verify_nonce( trim($_POST['dolirpw-nonce']), 'dolirpw')) {
 		'captcha' => dolicaptcha('dolirpw'),
 		];	
 		wp_send_json_error( $response );
+		die();
 	} elseif ( !preg_match("#.*^(?=.{8,20})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*$#", $pwd1) ) {
 		$response = [
 		'message' => dolialert('danger',  __( 'Your password must be between 8 and 20 characters, including at least 1 digit, 1 letter, 1 uppercase.', 'doliconnect')),
 		'captcha' => dolicaptcha('dolirpw'),
 		];		
 		wp_send_json_error( $response );
+		die();
 	} else {
 		$response = [
 		'message' => dolialert('danger',  __( 'A security error occured', 'doliconnect')),
 		'captcha' => dolicaptcha('dolirpw'),
 		];	
-		wp_send_json_error( $response ); 
+		wp_send_json_error( $response );
+		die();
 	}
 } else {
 	$response = [
@@ -660,6 +666,7 @@ if ( wp_verify_nonce( trim($_POST['dolirpw-nonce']), 'dolirpw')) {
 	'captcha' => dolicaptcha('dolirpw'),
 	];
 	wp_send_json_error( $response ); 
+	die();
 }
 }
 
@@ -804,6 +811,7 @@ global $current_user;
     		'message' => __( 'Your cart has been emptied', 'doliconnect'),
         	];
 		wp_send_json_success($response);
+		die();
 		} else {
 			wp_send_json_error( __( 'An error occured:', 'doliconnect').' '.$object->error->message); 
 		}	
@@ -825,8 +833,10 @@ global $current_user;
     	'message' => __( 'Your cart has been validated', 'doliconnect'),
         ];
 		wp_send_json_success($response);
+		die();
 	} else {
-		wp_send_json_error( __( 'An error occured:', 'doliconnect').' '.$object->error->message); 
+		wp_send_json_error( __( 'An error occured:', 'doliconnect').' '.$object->error->message);
+		die(); 
 	}
 
 } elseif ( isset($_POST['case']) && $_POST['case'] == "info_cart" && isset($_POST['module']) && isset($_POST['id'])) {
