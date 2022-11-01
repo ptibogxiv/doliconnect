@@ -2193,8 +2193,10 @@ if (empty($ticketfo->fk_statut)) {
 } elseif ($ticketfo->fk_statut >= '8') {
     print dolialert('info', __( 'This ticket is closed so you can not comment it anymore', 'doliconnect'));
 } elseif ( $ticketfo->fk_statut < '8' && $ticketfo->fk_statut > '0' ) {
+    $arr_params = array( 'id' => $ticketfo->id, 'ref' => $ticketfo->ref);  
+    $return = esc_url( add_query_arg( $arr_params, $url) );
     print '<div id="doliticket-alert"></div><form id="doliticket-form" method="post" class="was-validated" action="'.admin_url('admin-ajax.php').'">';
-    print doliAjax('doliticket', $url, 'newMessage');
+    print doliAjax('doliticket', $return, 'newMessage');
     print '<div class="form-floating mb-2"><textarea class="form-control" name="ticket_newmessage" id="ticket_newmessage" placeholder="Leave a comment here" style="height: 200px" required></textarea>
     <label for="ticket_newmessage"><i class="fas fa-comment"></i> '.__( 'Message', 'doliconnect').'</label></div>';
     print '<div class="d-grid gap-2"><input type="hidden" name="id" value="'.$ticketfo->id.'"><input type="hidden" name="track_id" value="'.$ticketfo->track_id.'"><button class="btn btn-outline-secondary" type="submit">'.__( 'Answer', 'doliconnect').'</button></form></div>';
