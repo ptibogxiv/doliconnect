@@ -1356,7 +1356,7 @@ return false;
 }
 }
 
-function dolialert($type, $msg) { //__( 'Oops!', 'doliconnect')
+function dolialert($type, $msg) {
   $alert = '<div class="alert alert-'.$type.' alert-dismissible fade show" role="alert">';
   if ($type == 'success') {
     $alert .= '<strong>'.__( 'Congratulations!', 'doliconnect').'</strong>';
