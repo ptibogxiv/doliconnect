@@ -1357,17 +1357,23 @@ return false;
 }
 
 function dolialert($type, $msg) { //__( 'Oops!', 'doliconnect')
-$alert = '<div class="alert alert-'.$type.' alert-dismissible fade show" role="alert">';
-if ($type == 'success') {
-$alert .= '<strong>'.__( 'Congratulations!', 'doliconnect').'</strong>';
-} elseif ($type == 'warning') {
-$alert .= '<strong>'.__( 'Be carefull', 'doliconnect').'</strong>';
-} else {
-$alert .= '<strong>'.__( 'Oops', 'doliconnect').'</strong>';
-}
-$alert .= ' '.$msg;
-$alert .= '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
-return $alert;
+  $alert = '<div class="alert alert-'.$type.' alert-dismissible fade show" role="alert">';
+  if ($type == 'success') {
+    $alert .= '<strong>'.__( 'Congratulations!', 'doliconnect').'</strong>';
+    $dismissible = true;
+  } elseif ($type == 'warning') {
+    $alert .= '<strong>'.__( 'Be carefull', 'doliconnect').'</strong>';
+    $dismissible = false;
+  } elseif ($type == 'info') {
+    $alert .= '<strong>'.__( 'Please note', 'doliconnect').'</strong>';
+    $dismissible = false;
+  } else {
+    $alert .= '<strong>'.__( 'Oops', 'doliconnect').'</strong>';
+    $dismissible = false;
+  }
+  $alert .= ' '.$msg;
+  if ($dismissible) $alert .= '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
+  return $alert;
 }
 
 function doliloaderscript($idform, $scrolltop = true) {

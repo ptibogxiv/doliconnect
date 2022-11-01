@@ -2187,10 +2187,10 @@ print '<br><div class="progress"><div class="progress-bar bg-success" role="prog
 print "</div><ul class='list-group list-group-flush'>
 <li class='list-group-item list-group-item-light list-group-item-action'><h5 class='mb-1'>".__( 'Subject', 'doliconnect').": ".$ticketfo->subject."</h5>
 <p class='mb-1'>".__( 'Initial message', 'doliconnect').": ".$ticketfo->message."</p></li>";
-
-if ( $ticketfo->fk_statut < '8' && $ticketfo->fk_statut > '0' && !empty(get_option('doliconnectbeta')) ) {
 print "<li class='list-group-item list-group-item-light list-group-item-action'>";
-
+if (empty($ticketfo->fk_statut)) {
+print dolialert('info', __( 'You will be able to post a message after we have read your ticket', 'doliconnect'));
+} elseif ( $ticketfo->fk_statut < '8' && $ticketfo->fk_statut > '0' ) {
 print '<div id="doliticket-alert"></div><form id="doliticket-form" method="post" class="was-validated" action="'.admin_url('admin-ajax.php').'">';
 
 print doliAjax('doliticket', $url, 'newMessage');
@@ -2199,9 +2199,8 @@ print '<div class="form-floating mb-2"><textarea class="form-control" name="tick
 <label for="ticket_newmessage"><i class="fas fa-comment"></i> '.__( 'Message', 'doliconnect').'</label></div>';
 
 print '<div class="d-grid gap-2"><input type="hidden" name="id" value="'.$ticketfo->id.'"><input type="hidden" name="track_id" value="'.$ticketfo->track_id.'"><button class="btn btn-outline-secondary" type="submit">'.__( 'Answer', 'doliconnect').'</button></form></div>';
-print '</li>';
-
 }
+print '</li>';
 
 if ( isset($ticketfo->messages) ) {
 foreach ( $ticketfo->messages as $msg ) {
@@ -2379,14 +2378,14 @@ global $wpdb, $current_user;
 
 print '<div id="dolisettings-alert"></div><form id="dolisettings-form" method="post" class="was-validated" action="'.admin_url('admin-ajax.php').'">';
 
-print doliAjax('dolisettings', $url, 'settings');
+print doliAjax('dolisettings',  null, 'settings');
 
 print '<div class="card shadow-sm"><div class="card-header">'.__( 'Settings & security', 'doliconnect').'</div><ul class="list-group list-group-flush">';
 print "<li class='list-group-item list-group-item-light list-group-item-action'><div class='form-check form-switch'><input type='checkbox' class='form-check-input' name='loginmailalert' id='loginmailalert' ";
 if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $current_user->$ID ) {
 print " disabled";
 } elseif ( $current_user->loginmailalert == 'on' ) { print " checked"; }        
-print " onchange='this.form.submit()'><label class='form-check-label w-100' for='loginmailalert'> ".__( 'Receive a email notification at each connection', 'doliconnect')."</label>
+print " onchange='submit()'><label class='form-check-label w-100' for='loginmailalert'> ".__( 'Receive a email notification at each connection', 'doliconnect')."</label>
 </div></li>";
 
 $privacy=$wpdb->prefix."doliprivacy";
@@ -2429,7 +2428,9 @@ require_once( ABSPATH . 'wp-content/plugins/two-factor/class-two-factor-core.php
 		//do_action( 'show_user_security_settings', $current_user );
 print "</li>";    
 }
-print '</ul></form><div class="card-footer text-muted">';
+print '</ul>';
+print '<button type="submit" class="btn btn-link">'.__( 'test', 'doliconnect').'</button>';
+print '</form><div class="card-footer text-muted">';
 print "<small><div class='float-start'>";
 //print dolirefresh( "/thirdparties".doliconnector($current_user, 'fk_soc'), $url, dolidelay('member'));
 print "</div><div class='float-end'>";
