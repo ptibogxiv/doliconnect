@@ -2161,11 +2161,9 @@ function tickets_module( $url ) {
 global $current_user;
 
 if ( isset($_GET['id']) && $_GET['id'] > 0 ) {  
-
-$request = "/tickets/".esc_attr($_GET['id']);
-
-$ticketfo = callDoliApi("GET", $request, null, dolidelay('ticket', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-//print $ticket;
+    $request = "/tickets/".esc_attr($_GET['id']);
+    $ticketfo = callDoliApi("GET", $request, null, dolidelay('ticket', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+    //print $ticket;
 }
 
 if ( isset($_GET['id']) && isset($_GET['ref']) && ( doliconnector($current_user, 'fk_soc') == $ticketfo->socid ) && ($_GET['ref'] == $ticketfo->ref ) ) {
@@ -2231,7 +2229,6 @@ $rdr = [
 	];
 if (isset($_POST['fk_user_assign']) && !empty($_POST['fk_user_assign'])) $rdr['fk_user_assign'] = $_POST['fk_user_assign'];                    
 $ticketid = callDoliApi("POST", "/tickets", $rdr, dolidelay('ticket', true));
-//print $ticketid;
 
 if ( $ticketid > 0 ) {
 print dolialert ('success', __( 'Your ticket has been submitted.', 'doliconnect'));

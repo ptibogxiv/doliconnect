@@ -337,7 +337,12 @@ add_action('wp_ajax_nopriv_doliticket_request', 'doliticket_request');
 function doliticket_request(){
 	if ( isset($_POST['doliticket-nonce']) && wp_verify_nonce( trim($_POST['doliticket-nonce']), 'doliticket')) {
 		if (isset($_POST['case']) && $_POST['case'] == "newTicket") {
-
+			$response = [
+				'message' => dolialert('danger', __( 'A security error occured', 'doliconnect')),
+				'captcha' => dolicaptcha('doliticket'),
+			];
+			wp_send_json_error( $response );
+			die();
 		} elseif (isset($_POST['case']) && $_POST['case'] == "newMessage") {
 			$rdr = [
 				'track_id' => $_POST['track_id'],
