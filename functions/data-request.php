@@ -282,14 +282,14 @@ function dolicontactinfos_request(){
 		
 		if (!isset($object->error)) { 
 			$response = [
-			'message' => dolialert('success', __( 'Your informations have been updated.', 'doliconnect')),
-			'captcha' => dolicaptcha('dolicontactinfos'),
+				'message' => dolialert('success', __( 'Your informations have been updated.', 'doliconnect')),
+				'captcha' => dolicaptcha('dolicontactinfos'),
 			];
 			wp_send_json_success( $response );
 		} else {
 			$response = [
-			'message' => __( 'An error occured:', 'doliconnect').' '.$object->error->message,
-			'captcha' => dolicaptcha('dolicontactinfos'),
+				'message' => __( 'An error occured:', 'doliconnect').' '.$object->error->message,
+				'captcha' => dolicaptcha('dolicontactinfos'),
 			];
 			wp_send_json_error( $response ); 
 		}
@@ -308,22 +308,22 @@ function dolicontactinfos_request(){
 		
 		if (!isset($object->error)) { 
 			$response = [
-			'message' => dolialert('success', __( 'Your informations have been added.', 'doliconnect')),
-			'captcha' => dolicaptcha('dolicontactinfos'),
+				'message' => dolialert('success', __( 'Your informations have been added.', 'doliconnect')),
+				'captcha' => dolicaptcha('dolicontactinfos'),
 			];
 			wp_send_json_success( $response );
 		} else {
 			$response = [
-			'message' => __( 'An error occured:', 'doliconnect').' '.$object->error->message,
-			'captcha' => dolicaptcha('dolicontactinfos'),
+				'message' => __( 'An error occured:', 'doliconnect').' '.$object->error->message,
+				'captcha' => dolicaptcha('dolicontactinfos'),
 			];
 			wp_send_json_error( $response ); 
 		}
 	
 	} else {
 		$response = [
-		'message' => dolialert('danger', __( 'A security error occured', 'doliconnect')),
-		'captcha' => dolicaptcha('doliuserinfos'),
+			'message' => dolialert('danger', __( 'A security error occured', 'doliconnect')),
+			'captcha' => dolicaptcha('doliuserinfos'),
 		];
 		wp_send_json_error( $response ); 
 	}
@@ -336,15 +336,37 @@ add_action('wp_ajax_nopriv_doliticket_request', 'doliticket_request');
 
 function doliticket_request(){
 	if ( isset($_POST['doliticket-nonce']) && wp_verify_nonce( trim($_POST['doliticket-nonce']), 'doliticket')) {
-		$response = [
-		'message' => dolialert('success', __( 'A security error occured', 'doliconnect')),
-		'captcha' => dolicaptcha('doliticket'),
-		];
-		wp_send_json_success( $response );
+		if (isset($_POST['case']) && $_POST['case'] == "newTicketMessage") {
+			$rdr = [
+				'track_id' => $_POST['track_id'],
+				'message' => sanitize_textarea_field($_POST['ticket_newmessage']),
+			];                  
+			$result = callDoliApi("POST", "/tickets/newmessage", $rdr, dolidelay('ticket', true));
+			if (!isset($result->error)) { 
+				$ticketfo = callDoliApi("GET", $request, null, dolidelay('ticket', true));
+				$response = [
+					'message' => dolialert('success', __( 'Your message has been send', 'doliconnect')),
+					'captcha' => dolicaptcha('doliticket'),
+				];
+				wp_send_json_error( $response );
+			} else {
+				$response = [
+					'message' => __( 'An error occured:', 'doliconnect').' '.$result->error->message,
+					'captcha' => dolicaptcha('doliticket'),
+				];
+				wp_send_json_error( $response ); 
+			}
+		} else {
+			$response = [
+				'message' => dolialert('warning', __( 'This action is not authorized', 'doliconnect')),
+				'captcha' => dolicaptcha('doliticket'),
+			];
+			wp_send_json_error( $response );
+		}
 	} else {
 		$response = [
-		'message' => dolialert('danger', __( 'A security error occured', 'doliconnect')),
-		'captcha' => dolicaptcha('doliticket'),
+			'message' => dolialert('danger', __( 'A security error occured', 'doliconnect')),
+			'captcha' => dolicaptcha('doliticket'),
 		];
 		wp_send_json_error( $response ); 
 	}

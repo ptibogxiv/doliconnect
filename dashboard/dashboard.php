@@ -2170,20 +2170,6 @@ $ticketfo = callDoliApi("GET", $request, null, dolidelay('ticket', esc_attr(isse
 
 if ( isset($_GET['id']) && isset($_GET['ref']) && ( doliconnector($current_user, 'fk_soc') == $ticketfo->socid ) && ($_GET['ref'] == $ticketfo->ref ) ) {
 
-if ( isset($_POST["case"]) && $_POST["case"] == 'messageticket' ) {
-$rdr = [
-    'track_id' => $ticketfo->track_id,
-    'message' => sanitize_textarea_field($_POST['ticket_newmessage']),
-	];                  
-$ticketid = callDoliApi("POST", "/tickets/newmessage", $rdr, dolidelay('ticket', true));
-//print $ticketid;
-
-if ( $ticketid > 0 ) {
-print dolialert ('success', __( 'Your message has been send.', 'doliconnect'));
-$ticketfo = callDoliApi("GET", $request, null, dolidelay('ticket', true));
-//print $ticket;
-} }
-
 print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Ticket %s', 'doliconnect'), $ticketfo->ref).'<a class="float-end text-decoration-none" href="'.esc_url( add_query_arg( 'module', 'tickets', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-6">';
 $dateticket =  wp_date('d/m/Y', $ticketfo->datec);
 print "<b>".__( 'Date of creation', 'doliconnect').": </b> $dateticket<br>";
@@ -2209,12 +2195,12 @@ print "<li class='list-group-item list-group-item-light list-group-item-action'>
 
 print '<div id="doliticket-alert"></div><form id="doliticket-form" method="post" class="was-validated" action="'.admin_url('admin-ajax.php').'">';
 
-print doliAjax('doliticket', $url, 'newticketmessage');
+print doliAjax('doliticket', $url, 'newTicketMessage');
 
 print '<div class="form-floating mb-2"><textarea class="form-control" name="ticket_newmessage" id="ticket_newmessage" placeholder="Leave a comment here" style="height: 200px" required></textarea>
 <label for="ticket_newmessage"><i class="fas fa-comment"></i> '.__( 'Message', 'doliconnect').'</label></div>';
 
-print '<div class="d-grid gap-2"><input type="hidden" name="case" value="messageticket"><button class="btn btn-outline-secondary" type="submit">'.__( 'Answer', 'doliconnect').'</button></form></div>';
+print '<div class="d-grid gap-2"><input type="hidden" name="track_id" value="'.$ticketfo->track_id.'"><button class="btn btn-outline-secondary" type="submit">'.__( 'Answer', 'doliconnect').'</button></form></div>';
 print '</li>';
 
 }
