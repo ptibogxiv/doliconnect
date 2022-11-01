@@ -1638,13 +1638,11 @@ print '<div class="modal fade" id="DoliconnectSelectLang" aria-hidden="true" dat
 <h5 class="modal-title" id="DoliconnectSelectLangLabel">'.__('Choose your language', 'doliconnect').'</h5><button id="closemodalSelectLang" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></button></div>';
  
 print '<script type="text/javascript">';
-?>
-function loadingSelectLangModal() {
+print 'function loadingSelectLangModal() {
 jQuery("#closemodalSelectLang").hide();
 jQuery("#SelectLangmodal-form").hide();
 jQuery("#loadingSelectLang").show();  
-}
-<?php
+}';
 print '</script>';
 
 print '<div class="modal-body"><div class="card" id="SelectLangmodal-form"><ul class="list-group list-group-flush">';
