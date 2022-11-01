@@ -471,7 +471,7 @@ add_action('wp_ajax_dolisettings_request', 'dolisettings_request');
 
 function dolisettings_request(){
 global $current_user;
-$ID = $current_user->ID
+$ID = $current_user->ID;
 	if ( wp_verify_nonce( trim($_POST['dolisettings-nonce']), 'dolisettings-nonce') ) {
 		if ( isset($_POST['loginmailalert'])) { update_user_meta( $ID, 'loginmailalert', sanitize_text_field($_POST['loginmailalert']) ); } else { delete_user_meta($ID, 'loginmailalert'); }
 		//if ( isset($_POST['optin1'])) { update_user_meta( $ID, 'optin1', sanitize_text_field($_POST['optin1']) ); } else { delete_user_meta($ID, 'optin1'); }
