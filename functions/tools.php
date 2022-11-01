@@ -860,7 +860,6 @@ if ( doliversion('16.0.0') ) {
 
 print '<script type="text/javascript">';
 print 'jQuery(document).ready(function($) {
-  // Country dependent ajax
   $("#country_id").on("change",function(){
     //jQuery("#DoliconnectLoadingModal").modal("show");
     var countryId = $(this).val();
@@ -884,7 +883,6 @@ print 'jQuery(document).ready(function($) {
     } else {
       var idprof4 = "'.(isset($object->idprof4) ? $object->idprof4 : '').'";
     } 
-    //console.log("country is changed to " + countryId );
     $.ajax({
       url :"'.admin_url('admin-ajax.php').'",
       type:"POST",
@@ -922,7 +920,6 @@ print 'jQuery(document).ready(function($) {
     });
   });
 
-  // State dependent ajax
   $("#state_id").on("change",function(){
     //jQuery("#DoliconnectLoadingModal").modal("show");
     var stateId = $(this).val();
