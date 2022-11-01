@@ -640,7 +640,7 @@ print dolicheckie($_SERVER['HTTP_USER_AGENT']);
 print "</div></div>";
 } else {
 
-print "<div class='row w-100'><div class='col-md-4'><h4>".__( 'Address', 'doliconnect')."</h4>";
+print "<div class='row mw-100'><div class='col-md-4'><h4>".__( 'Address', 'doliconnect')."</h4>";
 $company = callDoliApi("GET", "/setup/company", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 print $company->name.'<br>';
 if (isset($company->address) && !empty($company->address)) print $company->address.'<br>';
