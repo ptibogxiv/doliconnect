@@ -350,13 +350,15 @@ function doliticket_request(){
 					'message' => dolialert('success', __( 'Your message has been send', 'doliconnect')),
 					'captcha' => dolicaptcha('doliticket'),
 				];
-				wp_send_json_error( $response );
+				wp_send_json_success( $response );
+				die();
 			} else {
 				$response = [
 					'message' => __( 'An error occured:', 'doliconnect').' '.$result->error->message,
 					'captcha' => dolicaptcha('doliticket'),
 				];
-				wp_send_json_error( $response ); 
+				wp_send_json_error( $response );
+				die();
 			}
 		} else {
 			$response = [
@@ -364,13 +366,15 @@ function doliticket_request(){
 				'captcha' => dolicaptcha('doliticket'),
 			];
 			wp_send_json_error( $response );
+			die();
 		}
 	} else {
 		$response = [
 			'message' => dolialert('danger', __( 'A security error occured', 'doliconnect')),
 			'captcha' => dolicaptcha('doliticket'),
 		];
-		wp_send_json_error( $response ); 
+		wp_send_json_error( $response );
+		die();
 	}
 }
 
@@ -427,15 +431,15 @@ function dolicontact_request(){
 
 		if ( !is_wp_error( $emailSent )) {
 			$response = [
-			'message' => dolialert('success', __( 'Your message is successful send!', 'doliconnect')),
-			'captcha' => dolicaptcha('dolicontact'),
+				'message' => dolialert('success', __( 'Your message is successful send!', 'doliconnect')),
+				'captcha' => dolicaptcha('dolicontact'),
 			];
 			wp_send_json_success( $response );
 			die();	
 		} else {
 			$response = [
-			'message' => dolialert('error', sprintf(__('Sending message fails for the following reason: %s. Please contact us for help.', 'doliconnect'), $emailSent->get_error_message()) ),
-			'captcha' => dolicaptcha('dolicontact'),
+				'message' => dolialert('error', sprintf(__('Sending message fails for the following reason: %s. Please contact us for help.', 'doliconnect'), $emailSent->get_error_message()) ),
+				'captcha' => dolicaptcha('dolicontact'),
 			];
 			wp_send_json_error( $response );
 			die();	
@@ -443,8 +447,8 @@ function dolicontact_request(){
 			
 		} else {
 			$response = [
-			'message' => dolialert('danger', join( '<br />', $ContactError )),
-			'captcha' => dolicaptcha('dolicontact'),
+				'message' => dolialert('danger', join( '<br />', $ContactError )),
+				'captcha' => dolicaptcha('dolicontact'),
 			];
 			wp_send_json_error( $response );
 			die();	
@@ -455,7 +459,8 @@ function dolicontact_request(){
 		'message' => dolialert('danger', __( 'A security error occured', 'doliconnect')),
 		'captcha' => dolicaptcha('dolicontact'),
 		];
-		wp_send_json_error( $response ); 
+		wp_send_json_error( $response );
+		die();
 	}
 }
 
@@ -466,17 +471,15 @@ add_action('wp_ajax_dolisettings_request', 'dolisettings_request');
 
 function dolisettings_request(){
 global $current_user;
-$ID = $current_user->ID;
-
-if ( wp_verify_nonce( trim($_POST['dolisettings-nonce']), 'dolisettings-nonce') ) {
-	if ( isset($_POST['loginmailalert'])) { update_user_meta( $ID, 'loginmailalert', sanitize_text_field($_POST['loginmailalert']) ); } else { delete_user_meta($ID, 'loginmailalert'); }
-	//if ( isset($_POST['optin1'])) { update_user_meta( $ID, 'optin1', sanitize_text_field($_POST['optin1']) ); } else { delete_user_meta($ID, 'optin1'); }
-	//if ( isset($_POST['optin2'])) { update_user_meta( $ID, 'optin2', sanitize_text_field($_POST['optin2']) ); } else { delete_user_meta($ID, 'optin2'); }
-		
-	wp_send_json_success('success');
-} else {
-	wp_send_json_error( __( 'A security error occured', 'doliconnect')); 
-}
+$ID = $current_user->ID
+	if ( wp_verify_nonce( trim($_POST['dolisettings-nonce']), 'dolisettings-nonce') ) {
+		if ( isset($_POST['loginmailalert'])) { update_user_meta( $ID, 'loginmailalert', sanitize_text_field($_POST['loginmailalert']) ); } else { delete_user_meta($ID, 'loginmailalert'); }
+		//if ( isset($_POST['optin1'])) { update_user_meta( $ID, 'optin1', sanitize_text_field($_POST['optin1']) ); } else { delete_user_meta($ID, 'optin1'); }
+		//if ( isset($_POST['optin2'])) { update_user_meta( $ID, 'optin2', sanitize_text_field($_POST['optin2']) ); } else { delete_user_meta($ID, 'optin2'); }
+		wp_send_json_success('success');
+	} else {
+		wp_send_json_error( __( 'A security error occured', 'doliconnect')); 
+	}
 }
 
 //*****************************************************************************************
