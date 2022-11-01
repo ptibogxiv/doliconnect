@@ -2218,25 +2218,9 @@ print '</div></div>';
 
 } elseif ( isset($_GET['action']) && $_GET['action'] == 'create' ) {
 
-if ( isset($_POST["case"]) && $_POST["case"] == 'createticket' ) {
-$rdr = [        
-    'fk_soc' => doliconnector($current_user, 'fk_soc'),
-    'type_code' => $_POST['ticket_type'],
-    'category_code' => $_POST['ticket_category'],
-    'severity_code' => $_POST['ticket_severity'],
-    'subject' => sanitize_text_field($_POST['ticket_subject']),
-    'message' => sanitize_textarea_field($_POST['ticket_message']),
-	];
-if (isset($_POST['fk_user_assign']) && !empty($_POST['fk_user_assign'])) $rdr['fk_user_assign'] = $_POST['fk_user_assign'];                    
-$ticketid = callDoliApi("POST", "/tickets", $rdr, dolidelay('ticket', true));
-
-if ( $ticketid > 0 ) {
-print dolialert ('success', __( 'Your ticket has been submitted.', 'doliconnect'));
-} }
-
 print '<div id="doliticket-alert"></div><form id="doliticket-form" method="post" class="was-validated" action="'.admin_url('admin-ajax.php').'">';
 
-print doliAjax('doliticket', $url, 'newTicket');
+print doliAjax('doliticket', $url, 'create');
 
 print '<div class="card shadow-sm"><div class="card-header">'.__( 'Create ticket', 'doliconnect').'<a class="float-end text-decoration-none" href="'.esc_url( add_query_arg( 'module', 'tickets', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><ul class="list-group list-group-flush">';
 
@@ -2323,7 +2307,7 @@ print '<div class="form-floating"><textarea class="form-control" name="ticket_me
 
 print '</li></ul>';
 
-print "<div class='card-body'><div class='d-grid gap-2'><input type='hidden' name='case' value='createticket'><button type='submit' class='btn btn-outline-secondary'>".__( 'Send', 'doliconnect')."</button></div></div>";
+print "<div class='card-body'><div class='d-grid gap-2'><button type='submit' class='btn btn-outline-secondary'>".__( 'Send', 'doliconnect')."</button></div></div>";
 
 print '</div></form>';
 

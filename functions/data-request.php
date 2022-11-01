@@ -335,14 +335,36 @@ add_action('wp_ajax_doliticket_request', 'doliticket_request');
 add_action('wp_ajax_nopriv_doliticket_request', 'doliticket_request');
 
 function doliticket_request(){
+	global $current_user;
+
 	if ( isset($_POST['doliticket-nonce']) && wp_verify_nonce( trim($_POST['doliticket-nonce']), 'doliticket')) {
-		if (isset($_POST['case']) && $_POST['case'] == "newTicket") {
-			$response = [
-				'message' => dolialert('danger', __( 'A security error occured', 'doliconnect')),
-				'captcha' => dolicaptcha('doliticket'),
+		if (isset($_POST['case']) && $_POST['case'] == "create") {
+			$rdr = [        
+				'fk_soc' => doliconnector($current_user, 'fk_soc'),
+				'type_code' => $_POST['ticket_type'],
+				'category_code' => $_POST['ticket_category'],
+				'severity_code' => $_POST['ticket_severity'],
+				'subject' => sanitize_text_field($_POST['ticket_subject']),
+				'message' => sanitize_textarea_field($_POST['ticket_message']),
 			];
-			wp_send_json_error( $response );
-			die();
+			if (isset($_POST['fk_user_assign']) && !empty($_POST['fk_user_assign'])) $rdr['fk_user_assign'] = $_POST['fk_user_assign'];                    
+			$result = callDoliApi("POST", "/tickets", $rdr, dolidelay('ticket', true));
+			if (!isset($result->error)) { 
+				$ticketfo = callDoliApi("GET", "/tickets/".esc_attr($_POST['id']), null, dolidelay('ticket', true));
+				$response = [
+					'message' => dolialert('success', __( 'Your ticket has been submitted', 'doliconnect')),
+					'captcha' => dolicaptcha('doliticket'),
+				];
+				wp_send_json_success( $response );
+				die();
+			} else {
+				$response = [
+					'message' => __( 'An error occured:', 'doliconnect').' '.$result->error->message,
+					'captcha' => dolicaptcha('doliticket'),
+				];
+				wp_send_json_error( $response );
+				die();
+			}
 		} elseif (isset($_POST['case']) && $_POST['case'] == "newMessage") {
 			$rdr = [
 				'track_id' => $_POST['track_id'],
