@@ -180,7 +180,7 @@ $args = array(
     'timeout' => '10',
     'redirection' => '5',
     'method' => $method,
-    'sslverify' => false,
+    'sslverify' => true,
     'headers' => $headers
 ); 
 
@@ -294,42 +294,35 @@ define('DOLICONNECT_CART_ITEM', 0);
 
 }
 // ********************************************************
+
 function doliconnector($current_user = null, $value = null, $refresh = false, $thirdparty = null) {
+    if ( empty($current_user) ) {
+        $current_user = wp_get_current_user();
+    }
+    if ( $current_user ) { 
+        $dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolidelay('doliconnector', $refresh));
+        if ( defined("DOLIBUG") || (is_object($dolibarr) && ! empty($dolibarr->fk_soc) ) )  {
+            if ( ! empty($value) && isset($dolibarr->$value) ) {
+                return $dolibarr->$value;
+            } elseif ( ! empty($value) && !isset($dolibarr->$value) ) {
+                return null;
+            } else {
+                return $dolibarr;
+            }
+        } else {
+            $dolibarr = callDoliApi("POST", "/doliconnector/".$current_user->ID, $thirdparty, dolidelay('doliconnector', true));
 
-if ( empty($current_user) ) {
-$current_user = wp_get_current_user();
-}
-
-if ( $current_user ) { 
-
-$dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolidelay('doliconnector', $refresh));
-
-if ( defined("DOLIBUG") || (is_object($dolibarr) && ! empty($dolibarr->fk_soc) ) )  {
-
-if ( ! empty($value) && isset($dolibarr->$value) ) {
-return $dolibarr->$value;
-} elseif ( ! empty($value) && !isset($dolibarr->$value) ) {
-    return null;
-} else {
-    return $dolibarr;
-}
-} else {
-
-$dolibarr = callDoliApi("POST", "/doliconnector/".$current_user->ID, $thirdparty, dolidelay('doliconnector', true));
-
-if ( ! empty($value) ) {
-return (isset($dolibarr->$value) ? $dolibarr->$value : null );
-} else {
-return $dolibarr;
-}
-
-}
-
-}
-
+            if ( ! empty($value) ) {
+                return (isset($dolibarr->$value) ? $dolibarr->$value : null );
+            } else {
+                return $dolibarr;
+            }
+        }
+    }
 }
 
 // ********************************************************
+
 /* Bloquer acces aux non-admins */
 add_action('init', 'doliconnect_block_dashboard');
 function doliconnect_block_dashboard() {
