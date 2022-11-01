@@ -2209,7 +2209,7 @@ print "<li class='list-group-item list-group-item-light list-group-item-action'>
 
 print '<div id="doliticket-alert"></div><form id="doliticket-form" method="post" class="was-validated" action="'.admin_url('admin-ajax.php').'">';
 
-print doliAjax('doliticket');
+print doliAjax('doliticket', $url, 'newticketmessage');
 
 print '<div class="form-floating mb-2"><textarea class="form-control" name="ticket_newmessage" id="ticket_newmessage" placeholder="Leave a comment here" style="height: 200px" required></textarea>
 <label for="ticket_newmessage"><i class="fas fa-comment"></i> '.__( 'Message', 'doliconnect').'</label></div>';
