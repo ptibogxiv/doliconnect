@@ -353,39 +353,50 @@ function doliAjax($id, $url = null, $case = null){
   if (!empty($case)) $ajax.= "<input type='hidden' name='case' value='".$case."'>";
   $ajax.= wp_nonce_field( $id, $id.'-nonce' );
   $ajax.= '<script type="text/javascript">';
-  $ajax.= 'jQuery(document).ready(function($) {
-    $("#'.$id.'-form").on("submit", function(e) {
-    e.preventDefault();
-    if (document.getElementById("'.$id.'-button")) {
-      document.getElementById("'.$id.'-button").disabled = true;
-    }
-    $("#DoliconnectLoadingModal").modal("show");
-    var $form = $(this);
-    var url = "'.$url.'";
-    $("#DoliconnectLoadingModal").on("shown.bs.modal", function (e) { 
-      $.post($form.attr("action"), $form.serialize(), function(response) {
-        $(window).scrollTop(0); 
-        if (response.success) {
-          if (document.getElementById("'.$id.'-alert")) {
-          document.getElementById("'.$id.'-alert").innerHTML = response.data.message;      
-          }
-          if (!!url) document.location = url;
-        } else {
-          if (document.getElementById("'.$id.'-alert")) {
-          document.getElementById("'.$id.'-alert").innerHTML = response.data.message;      
-          }
+  $ajax.= '
+  (function ($) {
+    $(document).ready(function () {
+      $("#'.$id.'-form").on("submit", function(e) {
+        e.preventDefault();
+        const ajaxurl = $(this).attr("action");
+        const data = {
+          action: "'.$id.'_request", 
+          nonce:  $(this).find("input[name=doliuserinfos-nonce]").val(),
+          case:  $(this).find("input[name=case]").val(),
         }
-        if (document.getElementById("'.$id.'-captcha") && response.data.captcha) {
-          document.getElementById("'.$id.'-captcha").innerHTML = response.data.captcha;      
+        console.log(ajaxurl);
+        console.log(data);
+        if (document.getElementById("'.$id.'-button")) {
+          document.getElementById("'.$id.'-button").disabled = true;
         }
-      $("#DoliconnectLoadingModal").modal("hide");
-      if (document.getElementById("'.$id.'-button")) {
-        document.getElementById("'.$id.'-button").disabled = false;
-      }
-      }, "json");  
+        $("#DoliconnectLoadingModal").modal("show");
+        var $form = $(this);
+        var url = "'.$url.'";
+        $("#DoliconnectLoadingModal").on("shown.bs.modal", function (e) { 
+          $.post($form.attr("action"), $form.serialize(), function(response) {
+            $(window).scrollTop(0); 
+            if (response.success) {
+              if (document.getElementById("'.$id.'-alert")) {
+                document.getElementById("'.$id.'-alert").innerHTML = response.data.message;      
+              }
+              if (!!url) document.location = url;
+            } else {
+              if (document.getElementById("'.$id.'-alert")) {
+                document.getElementById("'.$id.'-alert").innerHTML = response.data.message;      
+              }
+            }
+            if (document.getElementById("'.$id.'-captcha") && response.data.captcha) {
+              document.getElementById("'.$id.'-captcha").innerHTML = response.data.captcha;      
+            }
+            $("#DoliconnectLoadingModal").modal("hide");
+            if (document.getElementById("'.$id.'-button")) {
+              document.getElementById("'.$id.'-button").disabled = false;
+            }
+          }, "json");  
+        });
+      });
     });
-  });
-  });';
+  })(jQuery);';
   $ajax.= '</script>';
 return $ajax;
 }
