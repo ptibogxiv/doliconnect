@@ -1365,7 +1365,7 @@ function dolialert($type, $msg) {
     $alert .= '<strong>'.__( 'Be carefull', 'doliconnect').'</strong>';
     $dismissible = false;
   } elseif ($type == 'info') {
-    $alert .= '<strong>'.__( 'Please note', 'doliconnect').'</strong>';
+    $alert .= '<strong>'.__( 'Informations', 'doliconnect').'</strong>';
     $dismissible = false;
   } else {
     $alert .= '<strong>'.__( 'Oops', 'doliconnect').'</strong>';
