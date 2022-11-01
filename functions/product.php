@@ -102,16 +102,16 @@ if ( $mstock['stock']-$mstock['qty'] > 0 && (empty($product->type) || (!empty($p
 } 
 
 if (!$nohtml) { 
-$stock = '<script>';
-$stock .= 'jQuery(document).ready(function($) {
-$("#popover-stock-'.$product->id.'").popover({
-placement : "auto",
-delay: { "show": 150, "hide": 150 },
-trigger : "focus",
-html : true
-})
-});';
-$stock .= '</script>';
+  $stock = '<script type="text/javascript">';
+  $stock .= 'jQuery(document).ready(function($) {
+    $("#popover-stock-'.$product->id.'").popover({
+      placement : "auto",
+      delay: { "show": 150, "hide": 150 },
+      trigger : "focus",
+      html : true
+      })
+    });';
+  $stock .= '</script>';
 }
 
 if ( ! is_object($product) || empty(doliconst('MAIN_MODULE_STOCK', $refresh)) || (!empty($product->type) && empty(doliconst('STOCK_SUPPORTS_SERVICES', $refresh)) ) || (empty($product->type) && !empty(doliconst('STOCK_ALLOW_NEGATIVE_TRANSFER', $refresh)) && empty(doliconst('STOCK_MUST_BE_ENOUGH_FOR_ORDER', $refresh)) )) {
