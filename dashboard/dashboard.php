@@ -2377,35 +2377,16 @@ print "'>".__( 'Safety and appearance', 'doliconnect')."</a>";
 function settings_module($url) {
 global $wpdb, $current_user;
 
-$ID = $current_user->ID;
+print '<div id="dolisettings-alert"></div><form id="dolisettings-form" method="post" class="was-validated" action="'.admin_url('admin-ajax.php').'">';
 
-print "<form id='dolisettings-form' method='post' action='".admin_url('admin-ajax.php')."'>";
-print "<input type='hidden' name='action' value='dolisettings_request'>";
-print "<input type='hidden' name='dolisettings-nonce' value='".wp_create_nonce( 'dolisettings-nonce')."'>";
-
-print '<script type="text/javascript">';
-print 'function DoliSettings(theForm){
-jQuery("#DoliconnectLoadingModal").modal("show");
-jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function (e) { 
-    $.ajax({ // create an AJAX call...
-        data: $(theForm).serialize(), // get the form data
-        type: $(theForm).attr("method"), // GET or POST
-        url: $(theForm).attr("action"), // the file to call
-        success: function (response) { // on success..
-        jQuery("#DoliconnectLoadingModal").modal("hide");
-        //alert(response.data);
-        }
-    });
-}); 
-}';
-print '</script>';
+print doliAjax('dolisettings', $url, 'settings');
 
 print '<div class="card shadow-sm"><div class="card-header">'.__( 'Settings & security', 'doliconnect').'</div><ul class="list-group list-group-flush">';
 print "<li class='list-group-item list-group-item-light list-group-item-action'><div class='form-check form-switch'><input type='checkbox' class='form-check-input' name='loginmailalert' id='loginmailalert' ";
-if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $ID ) {
+if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $current_user->$ID ) {
 print " disabled";
 } elseif ( $current_user->loginmailalert == 'on' ) { print " checked"; }        
-print " onchange='DoliSettings(this.form)'><label class='form-check-label w-100' for='loginmailalert'> ".__( 'Receive a email notification at each connection', 'doliconnect')."</label>
+print " onchange='this.form.submit()'><label class='form-check-label w-100' for='loginmailalert'> ".__( 'Receive a email notification at each connection', 'doliconnect')."</label>
 </div></li>";
 
 $privacy=$wpdb->prefix."doliprivacy";
@@ -2448,9 +2429,9 @@ require_once( ABSPATH . 'wp-content/plugins/two-factor/class-two-factor-core.php
 		//do_action( 'show_user_security_settings', $current_user );
 print "</li>";    
 }
-print '</ul><div class="card-footer text-muted"></form>';
+print '</ul></form><div class="card-footer text-muted">';
 print "<small><div class='float-start'>";
-print dolirefresh( "/thirdparties/".doliconnector($current_user, 'fk_soc'), $url, dolidelay('member'));
+//print dolirefresh( "/thirdparties".doliconnector($current_user, 'fk_soc'), $url, dolidelay('member'));
 print "</div><div class='float-end'>";
 print dolihelp('ISSUE');
 print "</div></small>";
@@ -2508,6 +2489,7 @@ function generate_license($suffix = null) {
     }
     return $license_string;
 }
+/*
 print '<script type="text/javascript">';
 print 'jQuery(document).ready(function($) {
     document.querySelector("#buttonmodaltest").addEventListener("click", function() {
@@ -2544,7 +2526,8 @@ print 'jQuery(document).ready(function($) {
 });';
 print '</script>';
 print '<button id="buttonmodaltest" class="btn btn-primary" type="button">Click here</button>';
-//print generate_license();	  
+//print generate_license();	 
+*/ 
 
 }
 
