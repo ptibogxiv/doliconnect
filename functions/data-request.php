@@ -343,7 +343,7 @@ function doliticket_request(){
 			];                  
 			$result = callDoliApi("POST", "/tickets/newmessage", $rdr, dolidelay('ticket', true));
 			if (!isset($result->error)) { 
-				$ticketfo = callDoliApi("GET", $request, null, dolidelay('ticket', true));
+				$ticketfo = callDoliApi("GET", "/tickets/".esc_attr($_POST['id']), null, dolidelay('ticket', true));
 				$response = [
 					'message' => dolialert('success', __( 'Your message has been send', 'doliconnect')),
 					'captcha' => dolicaptcha('doliticket'),
