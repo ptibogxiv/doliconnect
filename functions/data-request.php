@@ -331,6 +331,27 @@ function dolicontactinfos_request(){
 
 //*****************************************************************************************
 
+add_action('wp_ajax_doliticket_request', 'doliticket_request');
+add_action('wp_ajax_nopriv_doliticket_request', 'doliticket_request');
+
+function doliticket_request(){
+	if ( isset($_POST['doliticket-nonce']) && wp_verify_nonce( trim($_POST['doliticket-nonce']), 'doliticket')) {
+		$response = [
+		'message' => dolialert('success', __( 'A security error occured', 'doliconnect')),
+		'captcha' => dolicaptcha('doliticket'),
+		];
+		wp_send_json_success( $response );
+	} else {
+		$response = [
+		'message' => dolialert('danger', __( 'A security error occured', 'doliconnect')),
+		'captcha' => dolicaptcha('doliticket'),
+		];
+		wp_send_json_error( $response ); 
+	}
+}
+
+//*****************************************************************************************
+
 add_action('wp_ajax_dolicontact_request', 'dolicontact_request');
 add_action('wp_ajax_nopriv_dolicontact_request', 'dolicontact_request');
 

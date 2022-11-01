@@ -668,6 +668,7 @@ print __( 'Sunday', 'doliconnect').": ".doliopeninghours('MAIN_INFO_OPENINGHOURS
 print "</div><div class='col-md-8'><div id='content'>";
 
 print "<div id='dolicontact-alert'></div><form id='dolicontact-form' method='post' class='was-validated' action='".admin_url('admin-ajax.php')."'>";
+
 print doliAjax('dolicontact');
 
 print "<div class='card shadow-sm'><ul class='list-group list-group-flush'>
