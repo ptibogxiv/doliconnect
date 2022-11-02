@@ -539,6 +539,7 @@ if ( !empty(doliconst("PRODUIT_MULTIPRICES", $refresh)) && !empty($product->mult
       $vat = $product->tva_tx;
     }
     $price_min_ttc=$product->price_min_ttc;
+    $price_min_ht=$product->price_min;
     $refprice=(empty(get_option('dolibarr_b2bmode'))?$price_ttc3:$price_ht3);
 
     if (!empty($product3[0]->label)) {
