@@ -334,10 +334,11 @@ function doliProductCart($product, $refresh = null, $line = null) {
   (function ($) {
     $(document).ready(function () {
       $("#doliform-product-'.$product->id.' button[type=submit]").on("click", function(e) {
-          e.preventDefault();
-          var acase = $(this).val();
+        e.preventDefault();
+        e.stopPropagation();
+        var acase = $(this).val();
           $("#DoliconnectLoadingModal").modal("show");
-          $.ajax({
+            $.ajax({
               url :"'.admin_url('admin-ajax.php').'",
               type:"POST",
               cache:false,
@@ -348,7 +349,7 @@ function doliProductCart($product, $refresh = null, $line = null) {
                 "productId" : "'.$product->id.'",
                 "qty" : document.getElementById("qty-prod-'.$product->id.'").value,
                 "modify" : acase
-              },
+            },
           }).done(function(response) {
               if (response.success) { 
                 console.log(response.data.message);
@@ -571,7 +572,7 @@ if ( !empty(doliconst("PRODUIT_MULTIPRICES", $refresh)) && !empty($product->mult
   if ($price_min_ttc == $price_ttc) {
     $price['discount'] = 0;
     $price_ttc3 = $price_min_ttc;
-    $price_ht3 = $price_min;
+    $price_ht3 = $price_min_ht;
   } elseif ($price_min_ttc > ($price_ttc-($price_ttc*$price['discount']/100))) {
     $price['discount'] = 100-(100*$price_min_ttc/$price_ttc);
     $price_ttc3 = $price_ttc-($price_ttc*$price['discount']/100);
