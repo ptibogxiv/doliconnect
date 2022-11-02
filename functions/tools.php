@@ -1827,7 +1827,8 @@ $paymentmethods .= '<script type="text/javascript">';
 $paymentmethods .= "(function ($) {
 $(document).ready(function(){
 $('#defaultbtn_".$method->id.", #deletebtn_".$method->id."').on('click',function(event){
-event.preventDefault();
+  event.preventDefault();
+  event.stopPropagation();
 $('#DoliconnectLoadingModal').modal('show');
 var actionvalue = $(this).val();
         $.ajax({
@@ -1992,7 +1993,8 @@ cardElement.on('change', function(event) {
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
 // pay with card script
 $paymentmethods .= "$('#PayCardButton').on('click',function(event){
-event.preventDefault();
+  event.preventDefault();
+  event.stopPropagation();
 $('#PayCardButton').disabled = true;
 $('#DoliconnectLoadingModal').modal('show');
 console.log('Click on PayCardButton');
@@ -2068,7 +2070,8 @@ $('#DoliconnectLoadingModal').modal('hide');
 } else {
 // add a card
 $paymentmethods .= "$('#AddCardButton').on('click',function(event){
-event.preventDefault();
+  event.preventDefault();
+  event.stopPropagation();
 $('#AddCardButton').disabled = true;
 $('#DoliconnectLoadingModal').modal('show');
 console.log('Click on AddCardButton');
@@ -2191,7 +2194,8 @@ ibanElement.on('change', function(event) {
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
 // pay with sepa_debit script
 $paymentmethods .= "$('#PayIbanButton').on('click',function(event){
-event.preventDefault();
+  event.preventDefault();
+  event.stopPropagation();
 $('#PayIbanButton').disabled = true;
 $('#DoliconnectLoadingModal').modal('show');
 console.log('Click on PayIbanButton');
@@ -2270,7 +2274,8 @@ $('#DoliconnectLoadingModal').modal('hide');
 } else {
 // add a sepa debit
 $paymentmethods .= "$('#AddIbanButton').on('click',function(event){
-event.preventDefault();
+  event.preventDefault();
+  event.stopPropagation();
 $('#AddIbanButton').disabled = true;
 $('#DoliconnectLoadingModal').modal('show');
 console.log('Click on AddIbanButton');
@@ -2369,7 +2374,8 @@ $paymentmethods .= "var displayKlarnaError = document.getElementById('klarna-err
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
 // pay with sepa_debit script
 $paymentmethods .= "$('#PayKlarnaButton').on('click',function(event){
-event.preventDefault();
+  event.preventDefault();
+  event.stopPropagation();
 $('#DoliconnectLoadingModal').modal('show');
 console.log('Click on PayKlarnaButton');
 if (1 == 7){               
