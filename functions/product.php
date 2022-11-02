@@ -570,7 +570,7 @@ if ( !empty(doliconst("PRODUIT_MULTIPRICES", $refresh)) && !empty($product->mult
   if ($price_min_ttc == $price_ttc) {
     $price['discount'] = 0;
     $price_ttc3 = $price_min_ttc;
-    $price_ht3 = $price_min_ht;
+    $price_ht3 = $price_min;
   } elseif ($price_min_ttc > ($price_ttc-($price_ttc*$price['discount']/100))) {
     $price['discount'] = 100-(100*$price_min_ttc/$price_ttc);
     $price_ttc3 = $price_ttc-($price_ttc*$price['discount']/100);
