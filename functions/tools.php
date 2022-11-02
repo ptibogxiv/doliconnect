@@ -358,6 +358,7 @@ function doliAjax($id, $url = null, $case = null){
     $(document).ready(function () {
       $("#'.$id.'-form").on("submit", function(e) {
         e.preventDefault();
+        e.stopPropagation();
         if (document.getElementById("'.$id.'-button")) {
           document.getElementById("'.$id.'-button").disabled = true;
         }
