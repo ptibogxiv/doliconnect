@@ -1647,7 +1647,8 @@ print "<script>";
 print "(function ($) {
 $(document).ready(function(){
 $('#purgebtn_cart, #validatebtn_cart').on('click',function(event){
-event.preventDefault();
+  event.preventDefault();
+  event.stopPropagation();
 //$('#DoliconnectLoadingModal').modal('show');
 var actionvalue = $(this).val();
         $.ajax({
@@ -1842,7 +1843,8 @@ print "<script>";
 print "(function ($) {
 $(document).ready(function(){
 $('#infobtn_cart').on('click',function(event){
-event.preventDefault();
+  event.preventDefault();
+  event.stopPropagation();
 //$('#DoliconnectLoadingModal').modal('show');
 var actionvalue = $(this).val();
 var note_public = $('#note_public').val();
