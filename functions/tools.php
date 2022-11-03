@@ -47,17 +47,30 @@ function doliCheckModules($module, $refresh = false) {
 }
 
 function dolicaptcha($id = null) {
-  $arrX = array(
-    "car"=>array("label"=>__( "car", "doliconnect"),"icon"=>"car"),
-    "carrot"=>array("label"=>__( "carrot", "doliconnect"),"icon"=>"carrot"),
-    "male"=>array("label"=>__( "male", "doliconnect"),"icon"=>"male"),
-    "laptop"=>array("label"=>__( "laptop", "doliconnect"),"icon"=>"laptop"),
-    "female"=>array("label"=>__( "female", "doliconnect"),"icon"=>"female"),
-    "seedling"=>array("label"=>__( "seedling", "doliconnect"),"icon"=>"seedling"),
-    "bacterium"=>array("label"=>__( "bacterium", "doliconnect"),"icon"=>"bacterium"));
+  $arrX = array();
+  $arrX[] = array("label"=>__( "car", "doliconnect"),"icon"=>"car");
+  $arrX[] = array("label"=>__( "carrot", "doliconnect"),"icon"=>"carrot");
+  $arrX[] = array("label"=>__( "male", "doliconnect"),"icon"=>"male");
+  $arrX[] = array("label"=>__( "laptop", "doliconnect"),"icon"=>"laptop");
+  $arrX[] = array("label"=>__( "female", "doliconnect"),"icon"=>"female");
+  $arrX[] = array("label"=>__( "seedling", "doliconnect"),"icon"=>"seedling");
+  $arrX[] = array("label"=>__( "bacterium", "doliconnect"),"icon"=>"bacterium");
  
-  // get 2 random indexes from array $arrX
-  $randIndex = array_rand($arrX, 4);
+  function shuffle_assoc($list) { 
+    if (!is_array($list)) return $list; 
+  
+    $keys = array_keys($list); 
+    shuffle($keys); 
+    $random = array(); 
+    foreach ($keys as $key) { 
+      $random[$key] = $list[$key]; 
+    }
+    return $random; 
+  }
+
+  $arrX = shuffle_assoc($arrX);
+
+  $randIndex = array_rand($arrX, 5);
   $controle = array_rand($randIndex, 1); 
 
   $captcha = '<div id="'.$id.'-captcha"><input type="hidden" name="ctrldolicaptcha" value="'.wp_create_nonce( 'ctrldolicaptcha-'.$arrX[$randIndex[$controle]]['icon']).'"><label for="btndolicaptcha" class="form-label">'.__( 'Please select the correct icon: ', 'doliconnect').''.$arrX[$randIndex[$controle]]['label'].'</label><div class="d-flex btn-group" role="group" aria-label="Basic radio toggle button group" required>
@@ -72,6 +85,9 @@ function dolicaptcha($id = null) {
 
   <input type="radio" class="btn-check" name="btndolicaptcha" id="btndolicaptcha4" value="'.$arrX[$randIndex[3]]['icon'].'" autocomplete="off">
   <label class="btn btn-outline-secondary" for="btndolicaptcha4"><i class="fas fa-'.$arrX[$randIndex[3]]['icon'].' fa-fw"></i></label>
+
+  <input type="radio" class="btn-check" name="btndolicaptcha" id="btndolicaptcha5" value="'.$arrX[$randIndex[4]]['icon'].'" autocomplete="off">
+  <label class="btn btn-outline-secondary" for="btndolicaptcha5"><i class="fas fa-'.$arrX[$randIndex[4]]['icon'].' fa-fw"></i></label>
 </div></div>';
 
 return $captcha;
