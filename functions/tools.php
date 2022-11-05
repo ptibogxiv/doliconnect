@@ -462,6 +462,28 @@ function doliSelectForm($name, $request, $selectlang = '- Select -', $valuelang 
 return $doliSelect;
 }
 
+function doliFaqForm($category, $refresh = null) {
+  global $current_user;
+   
+  $requestf = "/knowledgemanagement/knowledgerecords?sortfield=t.rowid&sortorder=ASC&limit=100&sqlfilters=(fk_c_ticket_category%3D'".$category."')%20and%20(t.status%3D'1')%20and%20((t.lang%3D'0')or(t.lang%3D'".doliUserLang($current_user)."'))";  
+  $listfaq = callDoliApi("GET", $requestf, null, dolidelay('constante', $refresh));
+    if ( !isset( $listfaq->error ) && $listfaq != null ) {
+      $doliFaq = '';
+      foreach ( $listfaq as $postfaq ) { 
+          $doliFaq .= '<div class="accordion-item"><h2 class="accordion-header" id="flush-headingDolifaq'.$postfaq->id.'">';
+          $doliFaq .= '<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseDolifaq'.$postfaq->id.'" aria-expanded="false" aria-controls="flush-collapseDolifaq'.$postfaq->id.'">';
+          $doliFaq .= $postfaq->question;
+          $doliFaq .= '</button></h2>
+          <div id="flush-collapseDolifaq'.$postfaq->id.'" class="accordion-collapse collapse" aria-labelledby="flush-headingDolifaq'.$postfaq->id.'" data-bs-parent="#accordionDolifaq">
+          <div class="accordion-body">'.$postfaq->answer;
+          //if ( isset($request) ) print dolirefresh($request, $url, dolidelay('constante'));
+          if (!empty(doliconnect_categories('knowledgemanagement', $postfaq, doliconnecturl('dolifaq')))) $doliFaq .= '<br>'.doliconnect_categories('knowledgemanagement', $postfaq, doliconnecturl('dolifaq'));
+          $doliFaq .= '</div></div></div>';
+      }
+  }
+  return $doliFaq;
+}
+
 function doliPasswordForm($user, $url, $return = null){
 if (doliconnector($user, 'fk_user') > 0){  
 $request = "/users/".doliconnector($user, 'fk_user');
