@@ -2297,6 +2297,14 @@ print '</select><label for="fk_user_assign">'.__( 'Sales representative', 'dolic
 }
 }
 
+if (!empty(doliconnectid('dolifaq'))) {
+print '</li><li class="list-group-item list-group-item-light list-group-item-action">';
+
+$cat = callDoliApi("GET", "/setup/dictionary/ticket_categories?sortfield=pos&sortorder=ASC&limit=100&lang=".doliUserLang($current_user), null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+print 'test';
+
+}
+
 print '</li><li class="list-group-item list-group-item-light list-group-item-action">';
 
 print '<div class="form-floating mb-2"><input type="text" class="form-control" id="ticket_subject" name="ticket_subject" value="" placeholder="subject" required>

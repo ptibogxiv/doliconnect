@@ -565,66 +565,63 @@ add_filter( 'the_content', 'doliaccount_display', 10, 2);
 // ********************************************************
 
 function dolifaq_display($content) {
-    global $current_user;
+  global $current_user;
     
-    if ( in_the_loop() && is_main_query() && is_page(doliconnectid('dolifaq')) && !empty(doliconnectid('dolifaq')) ) {
+  if ( in_the_loop() && is_main_query() && is_page(doliconnectid('dolifaq')) && !empty(doliconnectid('dolifaq')) ) {
     
     doliconnect_enqueues();
     
     if (dolicheckie($_SERVER['HTTP_USER_AGENT'])) {
-    print '<div class="card shadow-sm">';
-    print '<div class="card-body">';
-    print dolicheckie($_SERVER['HTTP_USER_AGENT']);
-    print "</div></div>";
+      print '<div class="card shadow-sm">';
+      print '<div class="card-body">';
+      print dolicheckie($_SERVER['HTTP_USER_AGENT']);
+      print "</div></div>";
     } else {
-
-        $limit=100;
-        if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']-1); }  else { $page = 0; }
-        $request = "/knowledgemanagement/knowledgerecords?sortfield=t.rowid&sortorder=ASC&limit=".$limit."&page=".$page."&sqlfilters=(t.status%3D'1')%20and%20((t.lang%3D'0')or(t.lang%3D'fr_FR'))"; 
-        if (isset($_GET['category']) && is_numeric(esc_attr($_GET['category'])) && esc_attr($_GET['category']) > 0 ) $request .= "&category=".esc_attr($_GET['category']);
-        $listfaq = callDoliApi("GET", $request, null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-        $url = doliconnecturl('dolifaq');
-
-    //print var_dump($faq);
-    
-    print '<div class="card"><div class="card-header">'.__( 'Knowledge base', 'doliconnect').'</div>';
-    print '<div class="card-body">';
-    print '</div>';
-    print '<div class="accordion accordion-flush" id="accordionDolifaq">';
-    if ( !isset( $listfaq->error ) && $listfaq != null ) {
+      $limit=100;
+      if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']-1); }  else { $page = 0; }
+      $request = "/knowledgemanagement/knowledgerecords?sortfield=t.rowid&sortorder=ASC&limit=".$limit."&page=".$page."&sqlfilters=(t.status%3D'1')%20and%20((t.lang%3D'0')or(t.lang%3D'fr_FR'))"; 
+      if (isset($_GET['category']) && is_numeric(esc_attr($_GET['category'])) && esc_attr($_GET['category']) > 0 ) $request .= "&category=".esc_attr($_GET['category']);
+      $listfaq = callDoliApi("GET", $request, null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+      $url = doliconnecturl('dolifaq');
+      //print var_dump($faq);
+      print '<div class="card"><div class="card-header">'.__( 'Knowledge base', 'doliconnect').'</div>';
+      print '<div class="card-body">';
+      print '</div>';
+      print '<div class="accordion accordion-flush" id="accordionDolifaq">';
+      if ( !isset( $listfaq->error ) && $listfaq != null ) {
         foreach ( $listfaq as $postfaq ) { 
-    print '<div class="accordion-item"><h2 class="accordion-header" id="flush-headingDolifaq'.$postfaq->id.'">';
-    print '<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseDolifaq'.$postfaq->id.'" aria-expanded="false" aria-controls="flush-collapseDolifaq'.$postfaq->id.'">';
-    print $postfaq->question;
-    print '</button></h2>
-    <div id="flush-collapseDolifaq'.$postfaq->id.'" class="accordion-collapse collapse" aria-labelledby="flush-headingDolifaq'.$postfaq->id.'" data-bs-parent="#accordionDolifaq">
-    <div class="accordion-body">'.$postfaq->answer;
-    //if ( isset($request) ) print dolirefresh($request, $url, dolidelay('constante'));
-    if (!empty(doliconnect_categories('knowledgemanagement', $postfaq, doliconnecturl('dolifaq')))) print '<br>'.doliconnect_categories('knowledgemanagement', $postfaq, doliconnecturl('dolifaq'));
-    print '</div></div></div>';
-    }}
-  print '</div>';
+          print '<div class="accordion-item"><h2 class="accordion-header" id="flush-headingDolifaq'.$postfaq->id.'">';
+          print '<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseDolifaq'.$postfaq->id.'" aria-expanded="false" aria-controls="flush-collapseDolifaq'.$postfaq->id.'">';
+          print $postfaq->question;
+          print '</button></h2>
+          <div id="flush-collapseDolifaq'.$postfaq->id.'" class="accordion-collapse collapse" aria-labelledby="flush-headingDolifaq'.$postfaq->id.'" data-bs-parent="#accordionDolifaq">
+          <div class="accordion-body">'.$postfaq->answer;
+          //if ( isset($request) ) print dolirefresh($request, $url, dolidelay('constante'));
+          if (!empty(doliconnect_categories('knowledgemanagement', $postfaq, doliconnecturl('dolifaq')))) print '<br>'.doliconnect_categories('knowledgemanagement', $postfaq, doliconnecturl('dolifaq'));
+          print '</div></div></div>';
+        }
+      }
+    print '</div>';
 
-  print '<div class="card-body">';
-  print dolipage($listfaq, $url, $page, $limit);
-  print '</div><div class="card-footer text-muted">';
-  print "<small><div class='float-start'>";
-  if ( isset($request) ) print dolirefresh($request, $url, dolidelay('constante'));
-  print "</div><div class='float-end'>";
-  print dolihelp('ISSUE');
-  print "</div></small>";
-  print '</div></div>';
-
-    }
-    } else {
-    return $content;
-    }
+    print '<div class="card-body">';
+    print dolipage($listfaq, $url, $page, $limit);
+    print '</div><div class="card-footer text-muted">';
+    print "<small><div class='float-start'>";
+    if ( isset($request) ) print dolirefresh($request, $url, dolidelay('constante'));
+    print "</div><div class='float-end'>";
+    print dolihelp('ISSUE');
+    print "</div></small>";
+    print '</div></div>';
+  }
+} else {
+  return $content;
+}
     
-    }
+}
     
-    add_filter( 'the_content', 'dolifaq_display');
+add_filter( 'the_content', 'dolifaq_display');
     
-    // ********************************************************
+// ********************************************************
 
 function dolicontact_display($content) {
 global $current_user;
