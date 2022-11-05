@@ -528,7 +528,7 @@ $doliPassword .= '><label for="pwd2">'.__( 'Confirm the password', 'doliconnect'
 $doliPassword .= '</div></div>';
 $doliPassword .= '</li>';
 $doliPassword .= "</ul><div class='card-body'>";
-$doliPassword .= '<div class="d-grid gap-2"><button id="dolirpw-button" class="btn btn-secondary" id="pwd-submit-button" type="submit"';
+$doliPassword .= '<div class="d-grid gap-2"><button id="dolirpw-button" class="btn btn-outline-secondary" id="pwd-submit-button" type="submit"';
 if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $user->ID ) {
   $doliPassword .= ' disabled';
 }
