@@ -2253,12 +2253,15 @@ print '<div class="form-floating"><select class="form-select" id="ticket_categor
 if ( count($cat) > 1 ) {
 print "<option value='' disabled selected >".__( '- Select -', 'doliconnect')."</option>";
 }
+$categoryId = null;
 foreach ( $cat as $postv ) {
-print "<option value='".$postv->code."' ";
-if ( $postv->use_default == 1 ) {
-print "selected ";}
-print ">".$postv->label."</option>";
-}
+    print "<option value='".$postv->code."' ";
+    if ( $postv->use_default == 1 ) {
+        $categoryId = $postv->rowid;
+        print "selected ";
+    }
+    print ">".$postv->label."</option>";
+}   
 print '</select><label for="ticket_category">'.__( 'Category', 'doliconnect').'</label></div>';
 } 
 
@@ -2299,7 +2302,7 @@ print '</select><label for="fk_user_assign">'.__( 'Sales representative', 'dolic
 
 if (!empty(doliconnectid('dolifaq'))) {
     print '</li><li class="list-group-item list-group-item-light list-group-item-action">';
-    print doliFaqForm(1);
+    print doliFaqForm($categoryId);
 }
 
 print '</li><li class="list-group-item list-group-item-light list-group-item-action">';
