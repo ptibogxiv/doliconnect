@@ -2298,11 +2298,22 @@ print '</select><label for="fk_user_assign">'.__( 'Sales representative', 'dolic
 }
 
 if (!empty(doliconnectid('dolifaq'))) {
-print '</li><li class="list-group-item list-group-item-light list-group-item-action">';
-
-$cat = callDoliApi("GET", "/setup/dictionary/ticket_categories?sortfield=pos&sortorder=ASC&limit=100&lang=".doliUserLang($current_user), null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-print 'test';
-
+    print '</li><li class="list-group-item list-group-item-light list-group-item-action">';
+    $requestf = "/knowledgemanagement/knowledgerecords?sortfield=t.rowid&sortorder=ASC&limit=100&sqlfilters=(fk_c_ticket_category%3D'1')%20and%20(t.status%3D'1')%20and%20((t.lang%3D'0')or(t.lang%3D'".doliUserLang($current_user)."'))";  
+    $listfaq = callDoliApi("GET", $requestf, null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+    if ( !isset( $listfaq->error ) && $listfaq != null ) {
+        foreach ( $listfaq as $postfaq ) { 
+            print '<div class="accordion-item"><h2 class="accordion-header" id="flush-headingDolifaq'.$postfaq->id.'">';
+            print '<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseDolifaq'.$postfaq->id.'" aria-expanded="false" aria-controls="flush-collapseDolifaq'.$postfaq->id.'">';
+            print $postfaq->question;
+            print '</button></h2>
+            <div id="flush-collapseDolifaq'.$postfaq->id.'" class="accordion-collapse collapse" aria-labelledby="flush-headingDolifaq'.$postfaq->id.'" data-bs-parent="#accordionDolifaq">
+            <div class="accordion-body">'.$postfaq->answer;
+            //if ( isset($request) ) print dolirefresh($request, $url, dolidelay('constante'));
+            if (!empty(doliconnect_categories('knowledgemanagement', $postfaq, doliconnecturl('dolifaq')))) print '<br>'.doliconnect_categories('knowledgemanagement', $postfaq, doliconnecturl('dolifaq'));
+            print '</div></div></div>';
+        }
+    }
 }
 
 print '</li><li class="list-group-item list-group-item-light list-group-item-action">';
