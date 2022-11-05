@@ -2929,7 +2929,7 @@ global $current_user;
       </li>
       </ul>
 			<div class="card-body">
-          <div class="d-grid gap-2"><button class="btn btn-secondary" id="gdrf-submit-button" type="submit"><?php _e('Validate the request', 'doliconnect'); ?></button></div>
+          <div class="d-grid gap-2"><button class="btn btn-outline-secondary" id="gdrf-submit-button" type="submit"><?php _e('Validate the request', 'doliconnect'); ?></button></div>
       </div>
   </div> 
 </form>
