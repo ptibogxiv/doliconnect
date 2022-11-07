@@ -369,8 +369,7 @@ function doliAjax($id, $url = null, $case = null){
   if (!empty($case)) $ajax.= "<input type='hidden' name='case' value='".$case."'>";
   $ajax.= wp_nonce_field( $id, $id.'-nonce' );
   $ajax.= '<script type="text/javascript">';
-  $ajax.= '
-  (function ($) {
+  $ajax.= '(function ($) {
     $(document).ready(function () {
       $("#'.$id.'-form").on("submit", function(e) {
         e.preventDefault();
@@ -892,7 +891,6 @@ if ( doliversion('16.0.0') ) {
 print '<script type="text/javascript">';
 print 'jQuery(document).ready(function($) {
   $("#country_id").on("change",function(){
-    //jQuery("#DoliconnectLoadingModal").modal("show");
     var countryId = $(this).val();
     if ( typeof(document.getElementById("idprof1")) != "undefined" && document.getElementById("idprof1") != null ) { 
       var idprof1 = $("#idprof1").val();
@@ -947,12 +945,10 @@ print 'jQuery(document).ready(function($) {
       if ( document.getElementById("profids") ) { 
         document.getElementById("profids").innerHTML = response.data.profids;
       }
-      //jQuery("#DoliconnectLoadingModal").modal("hide");
     });
   });
 
   $("#state_id").on("change",function(){
-    //jQuery("#DoliconnectLoadingModal").modal("show");
     var stateId = $(this).val();
     //console.log("state is changed to " +  stateId );
     $.ajax({
@@ -973,7 +969,6 @@ print 'jQuery(document).ready(function($) {
       if ( document.getElementById("ziptown") ) { 
         document.getElementById("ziptown").innerHTML = response.data.ziptown;
       }
-      //jQuery("#DoliconnectLoadingModal").modal("hide");
     });
   });
 });';

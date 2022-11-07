@@ -2303,6 +2303,30 @@ print '</select><label for="fk_user_assign">'.__( 'Sales representative', 'dolic
 if (!empty(doliconnectid('dolifaq'))) {
     print '</li><li class="list-group-item list-group-item-light list-group-item-action">';
     print doliFaqForm($categoryId);
+    print '<script type="text/javascript">';
+    print '(function ($) {
+    $(document).ready(function () {
+      $("#ticket_category").on("change",function(){
+        var ticket_categoryId = $(this).val();
+        $.ajax({
+          url :"'.admin_url('admin-ajax.php').'",
+          type:"POST",
+          cache:false,
+          data: {
+            "action": "doliselectform_request",
+            "case": "update",
+            "ticket_categoryId": ticket_categoryId,
+          },
+        }).done(function(response) {
+        console.log (response);
+          if ( document.getElementById("state_form") ) { 
+            document.getElementById("state_form").innerHTML = response.data.state_id;
+          }
+        });
+      });
+    });
+})(jQuery);';
+    print '</script>';
 }
 
 print '</li><li class="list-group-item list-group-item-light list-group-item-action">';
