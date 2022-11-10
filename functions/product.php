@@ -452,10 +452,9 @@ $price['discount'] = !empty(doliconnector($current_user, 'remise_percent'))?doli
 $customer_discount = $price['discount'];
 
 if ( !empty(doliconst("PRODUIT_MULTIPRICES", $refresh)) && !empty($product->multiprices_ttc) ) {
-  $lvl=doliconnector($current_user, 'price_level');
 
   if (!empty(doliconnector($current_user, 'price_level'))) {
-      $level=doliconnector($current_user, 'price_level');
+    $level=doliconnector($current_user, 'price_level');
   } else {
     $level=1;
   }
@@ -471,23 +470,23 @@ if ( !empty(doliconst("PRODUIT_MULTIPRICES", $refresh)) && !empty($product->mult
   $vat = $product->tva_tx;
   $refprice=(empty(get_option('dolibarr_b2bmode'))?$price_ttc:$price_ht);
 
-  $button .= '<table class="table table-sm table-striped table-bordered"><tbody>';
+  //$button .= '<table class="table table-sm table-striped table-bordered"><tbody>';
   $multiprix = (empty(get_option('dolibarr_b2bmode'))?$product->multiprices_ttc:$product->multiprices);
-  foreach ( $multiprix as $level => $price ) {
-    $button .= '<tr';
-    if ( (empty(doliconnector($current_user, 'price_level')) && $level == 1 ) || doliconnector($current_user, 'price_level') == $level ) {
-      $button .= ' class="table-primary"';  
-    }
-    $button .= '>';   
-    $button .= '<td><small>'.(!empty(doliconst('PRODUIT_MULTIPRICES_LABEL'.$level, $refresh))?doliconst('PRODUIT_MULTIPRICES_LABEL'.$level, $refresh):__( 'Price', 'doliconnect').' '.$level).'</small></td>';
-    $button .= '<td class="text-end"><small>'.doliprice( (empty(get_option('dolibarr_b2bmode'))?$price:$price_ht), null, $currency);
-    if ( empty($time) && !empty($product->duration_value) ) { $button .='/'.doliduration($product); }
-    $button .= '</small></td>';
-    if ( !empty($altdurvalue) ) { $button .= "<td class='text-end'>soit ".doliprice( $altdurvalue*(empty(get_option('dolibarr_b2bmode'))?$price:$price_ht), null, $currency)." par ".__( 'hour', 'doliconnect')."</td>"; } 
+  //foreach ( $multiprix as $level => $pricei ) {
+    //$button .= '<tr';
+    //if ( (empty(doliconnector($current_user, 'price_level')) && $level == 1 ) || doliconnector($current_user, 'price_level') == $level ) {
+      //$button .= ' class="table-primary"';  
+    //}
+    //$button .= '>';   
+    //$button .= '<td><small>'.(!empty(doliconst('PRODUIT_MULTIPRICES_LABEL'.$level, $refresh))?doliconst('PRODUIT_MULTIPRICES_LABEL'.$level, $refresh):__( 'Price', 'doliconnect').' '.$level).'</small></td>';
+    //$button .= '<td class="text-end"><small>'.doliprice( (empty(get_option('dolibarr_b2bmode'))?$price:$price_ht), null, $currency);
+    //if ( empty($time) && !empty($product->duration_value) ) { $button .='/'.doliduration($product); }
+    //$button .= '</small></td>';
+    //if ( !empty($altdurvalue) ) { $button .= "<td class='text-end'>soit ".doliprice( $altdurvalue*(empty(get_option('dolibarr_b2bmode'))?$price:$price_ht), null, $currency)." par ".__( 'hour', 'doliconnect')."</td>"; } 
     //$button .= '<small class="float-end">'.__( 'You benefit from the rate', 'doliconnect').' '.doliconst('PRODUIT_MULTIPRICES_LABEL'.$level).'</small>';
-    $button .= '</tr>'; 
-  }
-  $button .= '</tbody></table>';
+    //$button .= '</tr>'; 
+  //}
+  //$button .= '</tbody></table>';
 } else {
 
   if ( !empty(doliconst("PRODUIT_CUSTOMER_PRICES", $refresh)) && doliconnector($current_user, 'fk_soc', $refresh) > 0 ) {
@@ -513,8 +512,9 @@ if ( !empty(doliconst("PRODUIT_MULTIPRICES", $refresh)) && !empty($product->mult
     $lastdate = $date->format('Y-m-d');
     $requestp = "/discountprice?productid=".$product->id."&sortfield=t.rowid&sortorder=ASC&sqlfilters=(t.date_begin%3A%3C%3D%3A'".$lastdate."')%20AND%20(t.date_end%3A%3E%3D%3A'".$lastdate."')";
     $product3 = callDoliApi("GET", $requestp, null, dolidelay('product', $refresh));
+    //$button .= var_dump($product3);
   }
-  //$button .= var_dump($product3);
+ 
 
   if ( !empty(doliconst('MAIN_MODULE_DISCOUNTPRICE', $refresh)) && isset($product3) && !isset($product3->error) ) {
     if (!empty($product3[0]->discount)) {
