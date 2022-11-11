@@ -85,6 +85,106 @@ add_action( 'widgets_init', function(){
 	register_widget( 'My_doliconnect' );
 });
 
+//*****************************************************************************************
+
+class My_classifieds extends WP_Widget {
+
+	/**
+	 * Sets up the widgets name etc
+	 */
+	public function __construct() {
+		$widget_ops = array( 
+			'classname' => 'my_widget',                               
+			'description' => 'Publication d\'offres d\'emploi',
+      'customize_selective_refresh' => true,
+		);
+		parent::__construct( 'my_widget', 'Offres d\'emploi', $widget_ops );
+	}
+
+	/**
+	 * Outputs the content of the widget
+	 *
+	 * @param array $args
+	 * @param array $instance
+	 */
+	public function widget( $args, $instance ) {
+global $wpdb;
+		// outputs the content of the widget
+    
+  		print $args['before_widget'];
+		if ( ! empty( $instance['title'] ) ) {
+print $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ) . $args['after_title'];
+		}
+
+$time=time();
+$delay = DAY_IN_SECONDS;
+ 
+$listclassi = callDoliApi("GET", "/classifieds?sortfield=t.date_start&sortorder=DESC&limit=5&sqlfilters=(t.approved='2')", null, dolidelay($delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));   
+//print $listclassi;
+
+$counti=count($listclassi);
+print '<div class="list-group">'; 
+if ($counti>'0') {
+foreach ($listclassi as $postticket) {                                                                                 
+$return = esc_url( get_permalink(get_option('doliclassifieds') ))."?id=$postticket->rowid";
+print "<a class='list-group-item list-group-item-action' href='$return'>#$postticket->rowid - $postticket->label</a>";
+} 
+}
+else {
+print "<a href='#' class='list-group-item list-group-item-action disabled'><center>pas d'annonce</center></a>";}
+
+print "<a class='list-group-item list-group-item-action list-group-item-info' href='".doliconnecturl('doliaccount')."?module=classifieds' >Gérer/Déposer une annonce</a>"; 
+print "</div>";
+print $args['after_widget'];  
+    
+	}
+
+	/**
+	 * Outputs the options form on admin
+	 *
+	 * @param array $instance The widget options
+	 */
+	public function form( $instance ) {
+		$title = ! empty( $instance['title'] ) ? $instance['title'] : esc_html__( 'Offre d\'emploi', 'text_domain' );
+		?>
+		<p>
+		<label for="<?php print esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php esc_attr_e( 'Title:', 'text_domain' ); ?></label> 
+		<input class="widefat" id="<?php print esc_attr( $this->get_field_id( 'title' ) ); ?>" name="<?php print esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text" value="<?php print esc_attr( $title ); ?>">
+		</p>
+		<?php 
+	}
+
+	/**
+	 * Processing widget options on save
+	 *
+	 * @param array $new_instance The new options
+	 * @param array $old_instance The previous options
+	 *
+	 * @return array
+	 */
+/**
+	 * Sanitize widget form values as they are saved.
+	 *
+	 * @see WP_Widget::update()
+	 *
+	 * @param array $new_instance Values just sent to be saved.
+	 * @param array $old_instance Previously saved values from database.
+	 *
+	 * @return array Updated safe values to be saved.
+	 */
+	public function update( $new_instance, $old_instance ) {
+		$instance = array();
+		$instance['title'] = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
+
+		return $instance;
+	}
+
+}
+
+add_action( 'widgets_init', function(){
+	register_widget( 'My_classifieds' );
+});
+
 class My_doliconnect_Membership extends WP_Widget {
 
 	/**
