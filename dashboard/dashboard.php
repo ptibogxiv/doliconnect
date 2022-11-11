@@ -1717,6 +1717,7 @@ if ( !empty(doliconst('MAIN_MODULE_RECRUITMENT')) && doliversion('15.0.0') && !e
     }
 }
 
+if ( !empty(doliconst('MAIN_MODULE_CLASSIFIEDS'))) {
 function classifieds_menu($arg) {
     print "<a href='".esc_url( add_query_arg( 'module', 'classifieds', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
     if ($arg=='classifieds') { print " active";}
@@ -1961,6 +1962,7 @@ function classifieds_menu($arg) {
     }
 }
 add_action( 'grh_doliconnect_classifieds', 'classifieds_module' );
+}
 
 //*****************************************************************************************
 
