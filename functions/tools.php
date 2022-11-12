@@ -42,9 +42,15 @@ if (isset($user) && !empty($user)) {
 
 function doliCheckModules($module, $refresh = false) {
   $return = false;
-  $list = callDoliApi("GET", "/setup/modules", null, dolidelay('dolibarr', $refresh));
-  if (in_array($module, $list)) {
-    $return = true;
+  if ( !doliversion('13.0.0') ) {
+    if ( doliconst('MAIN_MODULE_'.strtoupper ($module), $refresh) ) {
+      $return = true;
+    }
+  } else {
+    $list = callDoliApi("GET", "/setup/modules", null, dolidelay('dolibarr', $refresh));
+    if (in_array($module, $list)) {
+      $return = true;
+    }
   }
   return $return;
 }
