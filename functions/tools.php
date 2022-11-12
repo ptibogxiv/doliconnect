@@ -303,7 +303,7 @@ return $image;
 function doliconnect_categories($type, $object, $url = null){
 $cats = "";
 
-if ( !empty(doliconst('MAIN_MODULE_CATEGORIE')) ) {
+if ( doliCheckModules('categorie') ) {
 $categories =  callDoliApi("GET", "/categories/object/".$type."/".$object->id."?sortfield=s.rowid&sortorder=ASC", null, dolidelay($type));
 
 if ( !isset($categories->error) && $categories != null ) {
@@ -1015,12 +1015,12 @@ print '<div class="col-12 col-md"><div class="form-floating">';
 $monnaie = doliconst("MAIN_MONNAIE", dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 $testvalue='1.99';
 $cur = (!empty($object->multicurrency_code) ? $object->multicurrency_code : $monnaie );
-if ( !!empty(doliconst('MAIN_MODULE_MULTICURRENCY', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))) || !doliversion('11.0.0') ) { 
+if ( !doliCheckModules('multicurrency', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)) || !doliversion('11.0.0') ) { 
 print '<input type="text" class="form-control" id="'.$idobject.'[multicurrency_code]" value="'.$cur." / ".doliprice($testvalue, null, $cur).'" readonly>
 <label for="'.$idobject.'[multicurrency_code]">'.__( 'Default currency', 'doliconnect').'</label>';
 } else {
 print '<select class="form-select" id="'.$idobject.'[multicurrency_code]" name="'.$idobject.'[multicurrency_code]" aria-label="'.__( 'Default currency', 'doliconnect').'">';
-if ( !isset( $currencies->error ) && $currencies != null && !empty(doliconst('MAIN_MODULE_MULTICURRENCY', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))) && doliversion('11.0.0')) {
+if ( !isset( $currencies->error ) && $currencies != null && doliCheckModules('multicurrency', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)) && doliversion('11.0.0')) {
 foreach ( $currencies as $currency ) { 
 print "<option value='".$currency->code_iso."' ";
 if ( $currency->code_iso == $object->multicurrency_code ) { print " selected"; }
@@ -1121,7 +1121,7 @@ print "</div></li>";
 
 }
 
-if ( in_array($mode, array('thirdparty','contact')) && doliversion('17.0.0') && !empty(doliconst('MAIN_MODULE_MAILING'))) {
+if ( in_array($mode, array('thirdparty','contact')) && doliversion('17.0.0') && doliCheckModules('mailing', $refresh) ) {
   print '<li class="list-group-item list-group-item-light list-group-item-action"><div class="form-check form-switch"><input class="form-check-input" type="checkbox" role="switch" name="'.$idobject.'[no_email] id="'.$idobject.'[no_email]" ';
   if ( isset($object->no_email) && empty($object->no_email) ) { print ' checked'; }        
   print '><label class="form-check-label" for="'.$idobject.'[no_email]">'.__( 'I would like to receive the newsletter', 'doliconnect').'</label></div></li>';
@@ -1307,7 +1307,7 @@ return $document;
 
 function dolihelp($type = null, $category = null) {
 
-if ( is_user_logged_in() && !empty(doliconst('MAIN_MODULE_TICKET')) ) {
+if ( is_user_logged_in() && doliCheckModules('ticket', $refresh) ) {
 $arr_params = array( 'module' => 'tickets', 'type' => $type, 'category' => $category, 'action' => 'create'); 
 $link=esc_url( add_query_arg( $arr_params, doliconnecturl('doliaccount'))); 
 } elseif ( !empty(get_option('dolicontact')) ) {
@@ -1546,7 +1546,7 @@ $dates =" <i>(Du $start au $end)</i>";
 }
 
 $doliline .= '<div class="w-100 justify-content-between"><div class="row"><div class="d-none d-sm-block col-sm-2 col-lg-1"><center>';
-if ( !empty(doliconst('MAIN_MODULE_FRAISDEPORT', $refresh)) && doliconst('FRAIS_DE_PORT_ID_SERVICE_TO_USE', $refresh) == $line->fk_product ) {
+if ( doliCheckModules('fraisdeport', $refresh) && doliconst('FRAIS_DE_PORT_ID_SERVICE_TO_USE', $refresh) == $line->fk_product ) {
 $doliline .= '<i class="fas fa-shipping-fast fa-2x fa-fw"></i>';
 } else {
 $doliline .= doliconnect_image('product', $line->fk_product, array('limit'=>1, 'size'=>'50x50'), $refresh);
@@ -1581,7 +1581,7 @@ $doliline .= "<center><small><span class='fi fi-".strtolower($product->country_c
 }
 
 $doliline .= '</div><div class="col-4 col-sm-3 col-md-2 text-end"><h6 class="mb-1">'.doliprice($line, (empty(get_option('dolibarr_b2bmode'))?'total_ttc':'total_ht'), isset($line->multicurrency_code) ? $line->multicurrency_code : null).'</h6>';
-if (!empty($line->fk_parent_line) || (!empty(doliconst('MAIN_MODULE_FRAISDEPORT', $refresh)) && empty($line->fk_parent_line) && doliconst('FRAIS_DE_PORT_ID_SERVICE_TO_USE', $refresh) == $line->fk_product)) {
+if (!empty($line->fk_parent_line) || (doliCheckModules('fraisdeport', $refresh) && empty($line->fk_parent_line) && doliconst('FRAIS_DE_PORT_ID_SERVICE_TO_USE', $refresh) == $line->fk_product)) {
 $doliline .= '<h6 class="mb-1">x'.$line->qty.'</h6>';
 } elseif ( isset($object->statut) && empty($object->statut) && !is_page(doliconnectid('doliaccount')) ) {
 $doliline .= doliProductCart($product, $refresh, $line->id);

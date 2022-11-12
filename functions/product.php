@@ -90,7 +90,7 @@ if (doliconst('CUSTOMER_ORDER_DRAFT_FOR_VIRTUAL_STOCK', $refresh)) $mstock['stoc
 if ( $mstock['stock']-$mstock['qty'] > 0 && (empty($product->type) || (!empty($product->type) && doliconst('STOCK_SUPPORTS_SERVICES', $refresh)) ) ) {
   $mstock['m0'] = 1*$mstock['step'];
   $mstock['m1'] = get_option('dolicartlist')*$mstock['step'];
-  if ( $mstock['stock']-$mstock['qty'] >= $mstock['m1'] || empty(doliconst('MAIN_MODULE_STOCK')) ) {
+  if ( $mstock['stock']-$mstock['qty'] >= $mstock['m1'] || !doliCheckModules('stock', $refresh) ) {
     $mstock['m2'] = $mstock['m1'];
   } elseif ( $mstock['stock'] > $mstock['qty'] ) {
     $mstock['m2'] = $mstock['stock'];
@@ -117,7 +117,7 @@ if (!$nohtml) {
   $stock .= '</script>';
 }
 
-if ( ! is_object($product) || empty(doliconst('MAIN_MODULE_STOCK', $refresh)) || (!empty($product->type) && empty(doliconst('STOCK_SUPPORTS_SERVICES', $refresh)) ) || (empty($product->type) && !empty(doliconst('STOCK_ALLOW_NEGATIVE_TRANSFER', $refresh)) && empty(doliconst('STOCK_MUST_BE_ENOUGH_FOR_ORDER', $refresh)) )) {
+if ( ! is_object($product) || !doliCheckModules('stock', $refresh) || (!empty($product->type) && empty(doliconst('STOCK_SUPPORTS_SERVICES', $refresh)) ) || (empty($product->type) && !empty(doliconst('STOCK_ALLOW_NEGATIVE_TRANSFER', $refresh)) && empty(doliconst('STOCK_MUST_BE_ENOUGH_FOR_ORDER', $refresh)) )) {
   if (!$nohtml) $stock .= "<a tabindex='0' id='popover-stock-".$product->id."' class='badge rounded-pill bg-success text-white text-decoration-none' data-bs-container='body' data-bs-toggle='popover' data-bs-trigger='focus' title='".__( 'Available', 'doliconnect')."' data-bs-content='".__( 'This item is available and can be order', 'doliconnect')."'><i class='fas fa-warehouse'></i> ".__( 'Available', 'doliconnect').'</a>';
   $mstock['m0'] = 1*$mstock['step'];
   $mstock['m1'] = get_option('dolicartlist')*$mstock['step'];
@@ -389,7 +389,7 @@ if ( empty(doliconnectid('dolicart')) || empty(doliconnectid('dolicart')) ) {
   $button .= '<div class="d-grid gap-2">';
   $button .= "<a class='btn btn-block btn-info' href='".doliconnecturl('dolicontact')."?type=COM' role='button' title='".__( 'Contact us', 'doliconnect')."'>".__( 'Contact us', 'doliconnect').'</a>';
   $button .= '</div>'; 
-} elseif ( is_user_logged_in() && !empty(doliconst('MAIN_MODULE_COMMANDE', $refresh)) && doliconnectid('dolicart') > 0 ) { 
+} elseif ( is_user_logged_in() && doliCheckModules('commande', $refresh) && doliconnectid('dolicart') > 0 ) { 
 
   if ( $mstock['stock'] <= 0 || $mstock['m2'] < $mstock['step'] ) { 
     $button .= '<div class="input-group">';
@@ -410,7 +410,7 @@ if ( empty(doliconnectid('dolicart')) || empty(doliconnectid('dolicart')) ) {
       $button .= '<button class="btn btn-sm btn-warning" name="minus" value="minus" type="submit"><i class="fa-solid fa-minus"></i></button>
       <input id="qty-prod-'.$product->id.'" type="number" class="form-control form-control-sm" placeholder="" aria-label="Quantity" value="'.$mstock['qty'].'" style="text-align:center;" readonly>
       <button class="btn btn-sm btn-warning" name="plus" value="plus" type="submit"><i class="fa-solid fa-plus"></i></button>';
-      if ( !empty(doliconst('MAIN_MODULE_WISHLIST')) && !empty(get_option('doliconnectbeta')) ) {
+      if ( doliCheckModules('wishlist', $refresh) && !empty(get_option('doliconnectbeta')) ) {
         $button .= '<button class="btn btn-sm btn-light" name="wish" value="wish" type="submit"><i class="fas fa-heart" style="color:Fuchsia"></i></button>';
       }    
       $button .= '</div>';
@@ -506,7 +506,7 @@ if ( !empty(doliconst("PRODUIT_MULTIPRICES", $refresh)) && !empty($product->mult
     }
   }
 
-  if ( !empty(doliconst('MAIN_MODULE_DISCOUNTPRICE', $refresh)) ) {
+  if ( doliCheckModules('discountprice', $refresh) ) {
     $date = new DateTime(); 
     $date->modify('NOW');
     $lastdate = $date->format('Y-m-d');
@@ -516,7 +516,7 @@ if ( !empty(doliconst("PRODUIT_MULTIPRICES", $refresh)) && !empty($product->mult
   }
  
 
-  if ( !empty(doliconst('MAIN_MODULE_DISCOUNTPRICE', $refresh)) && isset($product3) && !isset($product3->error) ) {
+  if ( doliCheckModules('discountprice', $refresh) && isset($product3) && !isset($product3->error) ) {
     if (!empty($product3[0]->discount)) {
       $price_ttc3=$product->price_ttc-($product->price_ttc*$product3[0]->discount/100);
       $price_ht3=$product->price-($product->price*$product3[0]->discount/100);
