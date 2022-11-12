@@ -1748,6 +1748,10 @@ function classifieds_menu($arg) {
      
     if ( isset($_GET['manage']) && ($_GET['manage']=='new' || $_GET['manage'] > 0 && isset($ads->fk_soc) && (doliconnector($current_user, 'fk_soc') == $ads->fk_soc)) ) {
     
+		$product = callDoliApi("GET", "/products/".doliconst("CLASSIFIEDS_PRODUCT_ID")."?includestockdata=1&includesubproducts=true&includetrans=true", null, dolidelay('product', true));
+		$mstock = doliProductStock($product, false, true);
+        $price = doliProductPrice($product, 0, false, true);
+
     if ( isset($_POST['validation']) && $_POST['validation'] == 'validation' && $_GET['manage'] == 'newhhhh') {
     
     $vld = [
@@ -1768,15 +1772,15 @@ function classifieds_menu($arg) {
     $listclassi = callDoliApi("GET", "/classifieds?sortfield=t.rowid&sortorder=DESC&sqlfilters=(t.fk_soc='".doliconnector($current_user, 'fk_soc')."')", null, 0); 
     //$idannonce=$ads;
     if ($ads > '0' ){
-    doliaddtocart(141, 1, 250);
-    wp_redirect(doliconnecturl('dolicart'));
-    exit;
+    doliaddtocart($product, $mstock, 1, $price);
+        wp_redirect(doliconnecturl('dolicart'));
+        exit;
     }
     } elseif ( isset($_POST['validation']) && $_POST['validation']=='validation') {
     
     //$fk_order=$ads->fk_order;
     if ($ads->approved < 1 ) {
-    doliaddtocart(141, 1, 250);
+        doliaddtocart($product, $mstock, 1, $price);
     }
     
     if (empty($_POST['fk_order']) && !empty(doliconnector($current_user, 'fk_order'))) {
@@ -1820,9 +1824,9 @@ function classifieds_menu($arg) {
     $listclassi = callDoliApi("GET", "/classifieds?sortfield=t.rowid&sortorder=DESC&sqlfilters=(t.fk_soc='".doliconnector($current_user, 'fk_soc')."')", null, 0);  
     
     //if ($ads->approved < 1) {
-    doliaddtocart(141, 1, 250);
-    wp_redirect(doliconnecturl('dolicart'));
-    exit;
+        doliaddtocart($product, $mstock, 1, $price);
+        wp_redirect(doliconnecturl('dolicart'));
+        exit;
     //}
     }
     
