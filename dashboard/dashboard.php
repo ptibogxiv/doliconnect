@@ -400,7 +400,7 @@ print doliconnect_paymentmethods(null, null, $url, esc_attr(isset($_GET["refresh
 
 //*****************************************************************************************
 
-if ( !empty(doliconst('MAIN_MODULE_REWARDS')) ) {
+if ( doliCheckModules('rewards') ) {
     add_action( 'member_doliconnect_menu', 'rewards_menu', 5, 1);
     add_action( 'member_doliconnect_rewards', 'rewards_module' );
 }
@@ -461,7 +461,7 @@ function rewards_module($url) {
 
 //*****************************************************************************************
 
-if ( !empty(doliconst('MAIN_MODULE_WISHLIST')) && doliCheckRights('wishlist', 'read') ) {
+if ( doliCheckModules('wishlist') && doliCheckRights('wishlist', 'read') ) {
 add_action( 'customer_doliconnect_menu', 'wishlist_menu', 0, 1);
 add_action( 'customer_doliconnect_wishlist', 'wishlist_module' );
 }  
@@ -518,7 +518,7 @@ print "</div></div>";
 
 //*****************************************************************************************
 
-if ( !empty(doliconst('MAIN_MODULE_PROPALE')) && doliCheckRights('propale', 'lire') ) {
+if ( doliCheckModules('propale') && doliCheckRights('propale', 'lire') ) {
 add_action( 'customer_doliconnect_menu', 'proposals_menu', 1, 1);
 add_action( 'customer_doliconnect_proposals', 'proposals_module');
 }
@@ -648,7 +648,7 @@ print "</div></div>";
 
 //*****************************************************************************************
 
-if ( !empty(doliconst('MAIN_MODULE_COMMANDE')) && doliCheckRights('commande', 'lire') ) {
+if ( doliCheckModules('commande') && doliCheckRights('commande', 'lire') ) {
 add_action( 'customer_doliconnect_menu', 'orders_menu', 2, 1);
 add_action( 'customer_doliconnect_orders', 'orders_module');
 }
@@ -962,7 +962,7 @@ print "</div></div>";
 
 //*****************************************************************************************
 
-if ( !empty(doliconst('MAIN_MODULE_FACTURE')) && get_option('doliconnectdisplayinvoice') && doliCheckRights('facture', 'lire') ) {
+if ( doliCheckModules('facture') && get_option('doliconnectdisplayinvoice') && doliCheckRights('facture', 'lire') ) {
 add_action( 'customer_doliconnect_menu', 'invoices_menu', 2, 1);
 add_action( 'customer_doliconnect_invoices', 'invoices_module');
 }
@@ -1233,7 +1233,7 @@ print "</div></div>";
 
 //*****************************************************************************************
 
-if ( !empty(doliconst('MAIN_MODULE_CONTRAT')) && !empty(get_option('doliconnectbeta')) && doliCheckRights('contrat', 'lire') ) {
+if ( doliCheckModules('contrat') && !empty(get_option('doliconnectbeta')) && doliCheckRights('contrat', 'lire') ) {
 add_action( 'customer_doliconnect_menu', 'contracts_menu', 2, 1);
 add_action( 'customer_doliconnect_contracts', 'contracts_module');
 }
@@ -1363,7 +1363,7 @@ print "</div></div>";
 
 //*****************************************************************************************
 
-if ( !empty(doliconst('MAIN_MODULE_PROJET')) && !empty(get_option('doliconnectbeta')) && doliCheckRights('projet', 'lire') ) {
+if ( doliCheckModules('projet') && !empty(get_option('doliconnectbeta')) && doliCheckRights('projet', 'lire') ) {
 add_action( 'customer_doliconnect_menu', 'projets_menu', 2, 1);
 add_action( 'customer_doliconnect_projets', 'projets_module');
 }
@@ -1494,7 +1494,7 @@ print "</div></div>";
 
 //*****************************************************************************************
 
-if ( !empty(doliconst('MAIN_MODULE_DON')) ) {
+if ( doliCheckModules('don') ) {
 add_action( 'customer_doliconnect_menu', 'donations_menu', 5, 1);
 add_action( 'customer_doliconnect_donations', 'donations_module');
 }  
@@ -1619,7 +1619,7 @@ print "</div></div>";
 
 //*****************************************************************************************
 
-if ( !empty(doliconst('MAIN_MODULE_RECRUITMENT')) && doliversion('15.0.0') && !empty(get_option('doliconnectbeta')) ) {
+if ( doliCheckModules('recruitment') && doliversion('15.0.0') && !empty(get_option('doliconnectbeta')) ) {
     add_action( 'grh_doliconnect_menu', 'recruitment_menu', 3, 1);
     add_action( 'grh_doliconnect_recruitment', 'recruitment_module');
     }  
@@ -1717,7 +1717,7 @@ if ( !empty(doliconst('MAIN_MODULE_RECRUITMENT')) && doliversion('15.0.0') && !e
     }
 }
 
-if ( !empty(doliconst('MAIN_MODULE_CLASSIFIEDS'))) {
+if ( doliCheckModules('classifields') ) {
 function classifieds_menu($arg) {
     print "<a href='".esc_url( add_query_arg( 'module', 'classifieds', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
     if ($arg=='classifieds') { print " active";}
@@ -1966,7 +1966,7 @@ add_action( 'grh_doliconnect_classifieds', 'classifieds_module' );
 
 //*****************************************************************************************
 
-if ( !empty(doliconst('MAIN_MODULE_ADHERENTSPLUS')) && doliCheckRights('adherent', 'lire') ) {
+if ( doliCheckModules('adherentsplus')  && doliCheckRights('adherent', 'lire') ) {
 add_action( 'member_doliconnect_menu', 'members_menu', 1, 1);
 add_action( 'member_doliconnect_members', 'members_module');
 }
@@ -2035,7 +2035,7 @@ if ( (isset($adherent->datecommitment) && current_time('timestamp') > $adherent-
 
 print "</div><div class='col-12 col-md-7'>";
 
-if ( function_exists('doliconnect_membership_modal') && !empty(doliconst('MAIN_MODULE_COMMANDE')) && !empty($productadhesion) ) {
+if ( function_exists('doliconnect_membership_modal') && doliCheckModules('commande') && !empty($productadhesion) ) {
 
     if ( $adherent->datefin == null && $adherent->statut == '0' ) {
         //print  "<a href='#' id='subscribe-button2' class='btn btn text-white btn-warning btn-block' data-bs-toggle='modal' data-bs-target='#activatemember'><b>".__( 'Become a member', 'doliconnect')."</b></a>";
@@ -2380,7 +2380,7 @@ print '</div></div>';
 
 //*****************************************************************************************
 
-if ( !empty(doliconst('MAIN_MODULE_TICKET')) ) {
+if ( doliCheckModules('ticket') ) {
 add_action( 'settings_doliconnect_menu', 'tickets_menu', 1, 1);
 add_action( 'settings_doliconnect_tickets', 'tickets_module');
 }
