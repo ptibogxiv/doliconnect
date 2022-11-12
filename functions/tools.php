@@ -43,6 +43,9 @@ if (isset($user) && !empty($user)) {
 function doliCheckModules($module, $refresh = false) {
   $return = false;
   $list = callDoliApi("GET", "/setup/modules", null, dolidelay('dolibarr', $refresh));
+  if (in_array($module, $list)) {
+    $return = true;
+  }
   return $return;
 }
 
