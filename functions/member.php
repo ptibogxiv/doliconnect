@@ -176,7 +176,7 @@ return $list;
 }
 
 function doliconnect_membership_modal() {
-if ( !empty(doliconst('MAIN_MODULE_ADHERENTSPLUS')) && (is_user_logged_in() && is_page(doliconnectid('doliaccount')) && !empty(doliconnectid('doliaccount')) ) ) {
+if ( doliCheckModules('adherentsplus') && (is_user_logged_in() && is_page(doliconnectid('doliaccount')) && !empty(doliconnectid('doliaccount')) ) ) {
 global $current_user;
 doliconnect_enqueues();
 

@@ -446,7 +446,7 @@ $count = count($listproduct);
 print "'>".__(  'Novelties', 'doliconnect')." <span class='badge bg-secondary rounded-pill'>".$count."</span></a>";
 }
 
-if ( !empty(doliconst('MAIN_MODULE_DISCOUNTPRICE', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))) ) {
+if ( doliCheckModules('discountprice', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)) ) {
 print "<a href='".esc_url( add_query_arg( 'category', 'discount', doliconnecturl('dolishop')) )."' class='list-group-item list-group-item-light list-group-item-action d-flex justify-content-between";
 if (isset($_GET['category']) && $_GET['category'] == 'discount') { print " active"; }
 $date = new DateTime(); 

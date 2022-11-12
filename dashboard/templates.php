@@ -946,7 +946,7 @@ print dolihelp('ISSUE');
 print "</div></small>";
 print "</div></div>";
 
-} elseif (!empty(doliconst('MAIN_MODULE_DISCOUNTPRICE')) && isset($_GET['category']) && $_GET['category'] == 'discount' && !isset($_GET['product'])) {
+} elseif ( doliCheckModules('discountprice') && isset($_GET['category']) && $_GET['category'] == 'discount' && !isset($_GET['product'])) {
 
 print "<ul class='list-group list-group-flush'>";
 
@@ -1192,7 +1192,7 @@ $count = count($listproduct);
 print "'>".__(  'Novelties', 'doliconnect')." <span class='badge bg-secondary rounded-pill'>".$count."</span></a>";
 }
 
-if ( !empty(doliconst('MAIN_MODULE_DISCOUNTPRICE', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))) ) {
+if ( doliCheckModules('discountprice'), esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null) ) {
 print "<a href='".esc_url( add_query_arg( 'category', 'discount', doliconnecturl('dolishop')) )."' class='list-group-item list-group-item-light list-group-item-action d-flex justify-content-between";
 if (isset($_GET['category']) && $_GET['category'] == 'discount') { print " active"; }
 $date = new DateTime(); 
@@ -1254,7 +1254,7 @@ print "'>>".doliproduct($categorie, 'label')." <span class='badge bg-secondary r
 }
 
 $catoption = doliconst("ADHERENT_MEMBER_CATEGORY", esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
-if ( !empty(doliconst('MAIN_MODULE_ADHERENTSPLUS')) && !empty($catoption) && is_user_logged_in() ) {
+if ( doliCheckModules('adherentsplus') && !empty($catoption) && is_user_logged_in() ) {
 print "<a href='".esc_url( add_query_arg( 'category', $catoption, doliconnecturl('dolishop')) )."' class='list-group-item list-group-item-action' >Produits/Services lies a l'adhesion</a>";
 }
 
@@ -1299,7 +1299,7 @@ if ( defined("DOLIBUG") ) {
 
 print dolibug();
 
-} elseif ( !!empty(doliconst('MAIN_MODULE_COMMANDE')) ) {
+} elseif ( !doliCheckModules('commande') ) {
 print "<div class='card shadow-sm'><div class='card-body'>";
 print dolibug(__( 'Inactive module on Dolibarr', 'doliconnect'));
 print "</div></div>";
@@ -1420,7 +1420,7 @@ print "</div></div>";
 
 print dolibug((isset($object->error)?$object->error->message:null));
 
-} elseif ( empty(doliconst('MAIN_MODULE_COMMANDE', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))) ) {
+} elseif ( !doliCheckModules('commande', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)) ) {
 
 print "<div class='card shadow-sm'><div class='card-body'>";
 print dolibug(__( "Oops, Order's module is not available", "doliconnect"));
@@ -1783,7 +1783,7 @@ print "</small></div></div></li>";
 print "<li class='list-group-item list-group-item-info'><h6>".__( 'Billing address', 'doliconnect')."</h6>".doliaddress($thirdparty)."</li>";
 }
 
-if ( !empty(doliconst('MAIN_MODULE_FRAISDEPORT')) ) {
+if ( doliCheckModules('fraisdeport') ) {
 $listshipment = callDoliApi("GET", "/fraisdeport?modulepart=".$module."&id=1", null, dolidelay('order', true));
 if (!empty($object->shipping_method_id)) { $thirdparty->shipping_method_id = $object->shipping_method_id; }
 if ( !isset($listshipment->error) && $listshipment != null ) {
