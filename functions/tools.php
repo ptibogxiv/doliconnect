@@ -1345,6 +1345,7 @@ elseif ($delay == 'ticket') { $delay = HOUR_IN_SECONDS; }
 elseif ($delay == 'product') { $delay = 6 * HOUR_IN_SECONDS; }
 elseif ($delay == 'cart') { $delay = 20 * MINUTE_IN_SECONDS; }
 elseif ($delay == 'document') { $delay = MONTH_IN_SECONDS; }
+elseif ($delay == 'knowledgemanagement') { $delay = MONTH_IN_SECONDS; }
 } else {
 if (!empty(get_site_option('doliconnect_delay_'.$delay))) {
   $delay = get_site_option('doliconnect_delay_'.$delay);
