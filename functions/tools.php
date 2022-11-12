@@ -1307,7 +1307,7 @@ return $document;
 
 function dolihelp($type = null, $category = null) {
 
-if ( is_user_logged_in() && doliCheckModules('ticket', $refresh) ) {
+if ( is_user_logged_in() && doliCheckModules('ticket') ) {
 $arr_params = array( 'module' => 'tickets', 'type' => $type, 'category' => $category, 'action' => 'create'); 
 $link=esc_url( add_query_arg( $arr_params, doliconnecturl('doliaccount'))); 
 } elseif ( !empty(get_option('dolicontact')) ) {
