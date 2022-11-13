@@ -189,7 +189,7 @@ if ( !empty(doliconnector($current_user, 'fk_member')) && doliconnector($current
 }
 
 print "<div class='modal fade' id='activatemember' tabindex='-1' aria-labelledby='activatememberLabel' aria-hidden='true' data-bs-keyboard='false'>
-<div class='modal-dialog modal-lg modal-fullscreen-md-down modal-dialog-centered modal-dialog-scrollable'><div class='modal-content'><div class='modal-header'>";
+<div class='modal-dialog modal-dialog-centered modal-dialog-scrollable modal-fullscreen-md-down'><div class='modal-content'><div class='modal-header'>";
 if ( !isset($adherent->datefin) || ( $adherent->datefin>current_time( 'timestamp',1)) || ( $adherent->datefin < current_time( 'timestamp',1)) ) {
 $member_id = '';
 if (isset($adherent) && $adherent->id > 0) $member_id = "member_id=".$adherent->id;
@@ -199,9 +199,7 @@ $typeadhesion = callDoliApi("GET", "/adherentsplus/type?sortfield=t.libelle&sort
 //print $typeadhesion;
 print '<h5 class="modal-title">'.__( 'Prices', 'doliconnect').' '.$typeadhesion[0]->season.'</h5><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div>';
 
-//print '<div class="modal-body">';
 print dolimembertypelist($typeadhesion, $adherent);
-//print '</div>';
 
 print "<div id='subscription-footer' class='modal-footer'><small class='text-justify'>".__( 'Note: the admins reserve the right to change your membership in relation to your personal situation. A validation of the membership may be necessary depending on the cases.', 'doliconnect')."</small></div></div></div></div>";
 
