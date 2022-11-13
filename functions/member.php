@@ -57,32 +57,36 @@ function dolimembertypelist($typeadhesion, $adherent) {
   $list = '<ul class="list-group list-group-flush">';
   
   if ( !isset($typeadhesion->error) ) {
-  foreach ($typeadhesion as $postadh) {
-  if ( !doliversion('14.0.0') || (!isset($postadh->amount)) ) {
-  $postadh->amount = $postadh->price;
-  } 
-  if ( ( $postadh->subscription == '1' || ( $postadh->subscription != '1' && $adherent->typeid == $postadh->id ) ) && $postadh->statut == '1' || ( $postadh->statut == '0' && isset($adherent->typeid) && $postadh->id == $adherent->typeid && $adherent->statut == '1' ) ) {
-  $list .= '<li class="list-group-item list-group-item-light list-group-item-action"><div class="row"><div class="col-md-8"><b>';
-  if ($postadh->morphy == 'mor') {
-    $list .= "<i class='fas fa-user-tie fa-fw'></i> "; 
-  } elseif ($postadh->morphy == 'phy') {
-    $list .= "<i class='fas fa-user fa-fw'></i> "; 
-  } else { $list .= "<i class='fas fa-user-friends fa-fw'></i> ";}
-  $list .= doliproduct($postadh, 'label');
-  if (! empty ($postadh->duration_value)) $list .= " - ".doliduration($postadh);
-  $list .= " <small>";
-  if ( !empty($postadh->subscription) ) {
-  if ($postadh->date_renew < $postadh->date_welcomefee) { 
-    $list .= "(";
-    $list .= doliprice($postadh->amount);
-  } elseif ($postadh->price_prorata != $postadh->amount) { 
-  $list .= "(";
-  $list .= doliprice($postadh->price_prorata)." ";
-  $list .= __( 'then', 'doliconnect')." ".doliprice($postadh->amount);
-  } else {
-    $list .= "(".doliprice($postadh->price_prorata);
-  } 
-  $list .= ")"; } else { $list .= "<span class='badge badge-pill badge-primary'>".__( 'Free', 'doliconnect')."</span>"; }
+    foreach ($typeadhesion as $postadh) {
+      if ( !doliversion('14.0.0') || (!isset($postadh->amount)) ) {
+        $postadh->amount = $postadh->price;
+      } 
+      if ( ( $postadh->subscription == '1' || ( $postadh->subscription != '1' && $adherent->typeid == $postadh->id ) ) && $postadh->statut == '1' || ( $postadh->statut == '0' && isset($adherent->typeid) && $postadh->id == $adherent->typeid && $adherent->statut == '1' ) ) {
+        $list .= '<li class="list-group-item list-group-item-light list-group-item-action"><div class="row"><div class="col-md-8"><b>';
+        if ($postadh->morphy == 'mor') {
+          $list .= "<i class='fas fa-user-tie fa-fw'></i> "; 
+        } elseif ($postadh->morphy == 'phy') {
+          $list .= "<i class='fas fa-user fa-fw'></i> "; 
+        } else { $list .= "<i class='fas fa-user-friends fa-fw'></i> ";
+        }
+        $list .= doliproduct($postadh, 'label');
+        if (! empty ($postadh->duration_value)) $list .= " - ".doliduration($postadh);
+        $list .= " <small>";
+        if ( !empty($postadh->subscription) ) {
+          if ($postadh->date_renew < $postadh->date_welcomefee) { 
+            $list .= "(";
+            $list .= doliprice($postadh->amount);
+          } elseif ($postadh->price_prorata != $postadh->amount) { 
+            $list .= "(";
+            $list .= doliprice($postadh->price_prorata)." ";
+            $list .= __( 'then', 'doliconnect')." ".doliprice($postadh->amount);
+          } else {
+            $list .= "(".doliprice($postadh->price_prorata);
+          } 
+          $list .= ")"; 
+        } else { 
+          $list .= "<span class='badge badge-pill badge-primary'>".__( 'Free', 'doliconnect')."</span>";
+        }
   $list .= "</small></b>";
   if (isset($postadh->note) && !empty($postadh->note)) $list .= "<br><small class='text-justify text-muted '>".doliproduct($postadh, 'note')."</small>";
   if (isset($postadh->description) && !empty($postadh->description)) $list .= "<br><small class='text-justify text-muted '>".doliproduct($postadh, 'description')."</small>";
