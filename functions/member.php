@@ -102,7 +102,7 @@ function dolimembertypelist($typeadhesion, $adherent) {
   } 
   elseif ( $postadh->automatic == '1' && isset($adherent) && $postadh->id == $adherent->typeid ) {
   if ( isset($adherent) && $adherent->statut == '1' ) {
-  if ( $adherent->datefin == null ) { $list .= "<form id='subscription-form' action='".esc_url( add_query_arg( 'module', 'members', doliconnecturl('doliaccount')) )."' method='post'><input type='hidden' name='cotisation' value='$postadh->price_prorata'><input type='hidden' name='timestamp_start' value='".$postadh->date_begin."'><input type='hidden' name='timestamp_end' value='".$postadh->date_end."'><input type='hidden' name='update_membership' value='4'><input type='hidden' name='typeadherent' value='$postadh->id'><div class='d-grid gap-2'><button class='btn btn-success btn-block' type='submit'>".__( 'Pay', 'doliconnect')."</button></div></form>";}
+  if ( $adherent->datefin == null ) { $list .= "<form id='subscription-form' action='".esc_url( add_query_arg( 'module', 'members', doliconnecturl('doliaccount')) )."' method='post'><input type='hidden' name='cotisation' value='$postadh->price_prorata'><input type='hidden' name='timestamp_start' value='".$postadh->date_begin."'><input type='hidden' name='timestamp_end' value='".$postadh->date_end."'><input type='hidden' name='update_membership' value='4'><input type='hidden' name='typeadherent' value='$postadh->id'><div class='d-grid gap-2'><button class='btn btn-success btn-block' type='submit'>".__( 'Validate', 'doliconnect')."</button></div></form>";}
   
   else {
   if ( $adherent->datefin>current_time( 'timestamp',1) ) { $list .= "<form id='subscription-form' action='".esc_url( add_query_arg( 'module', 'members', doliconnecturl('doliaccount')) )."' method='post'><input type='hidden' name='cotisation' value='$postadh->price_prorata'><input type='hidden' name='timestamp_start' value='".$postadh->date_begin."'><input type='hidden' name='timestamp_end' value='".$postadh->date_end."'><input type='hidden' name='update_membership' value='4'><input type='hidden' name='typeadherent' value='$postadh->id'><div class='d-grid gap-2'><button class='btn btn-success btn-block' type='submit'>".__( 'Validate', 'doliconnect')."</button></div></form>";}else {
@@ -135,7 +135,7 @@ function dolimembertypelist($typeadhesion, $adherent) {
   
   if ( isset($adherent) && isset($adherent->statut) && $adherent->statut == '1' ) {
   
-  if ($adherent->datefin == null ) { $list .= "<form id='subscription-form' action='".esc_url( add_query_arg( 'module', 'members', doliconnecturl('doliaccount')) )."' method='post'><input type='hidden' name='cotisation' value='$postadh->price_prorata'><input type='hidden' name='timestamp_start' value='".$postadh->date_begin."'><input type='hidden' name='timestamp_end' value='".$postadh->date_end."'><input type='hidden' name='update_membership' value='4'><input type='hidden' name='typeadherent' value='$postadh->id'><div class='d-grid gap-2'><button class='btn btn-success btn-block' type='submit'>".__( 'Pay', 'doliconnect')."</button></div></form>";
+  if ($adherent->datefin == null ) { $list .= "<form id='subscription-form' action='".esc_url( add_query_arg( 'module', 'members', doliconnecturl('doliaccount')) )."' method='post'><input type='hidden' name='cotisation' value='$postadh->price_prorata'><input type='hidden' name='timestamp_start' value='".$postadh->date_begin."'><input type='hidden' name='timestamp_end' value='".$postadh->date_end."'><input type='hidden' name='update_membership' value='4'><input type='hidden' name='typeadherent' value='$postadh->id'><div class='d-grid gap-2'><button class='btn btn-success btn-block' type='submit'>".__( 'Validate', 'doliconnect')."</button></div></form>";
   } else {
   if ($adherent->datefin>current_time( 'timestamp',1)) { $list .= "<form id='subscription-form' action='".esc_url( add_query_arg( 'module', 'members', doliconnecturl('doliaccount')) )."' method='post'><input type='hidden' name='cotisation' value='$postadh->price_prorata'><input type='hidden' name='timestamp_start' value='".$postadh->date_begin."'><input type='hidden' name='timestamp_end' value='".$postadh->date_end."'><input type='hidden' name='update_membership' value='4'><input type='hidden' name='typeadherent' value='$postadh->id'><div class='d-grid gap-2'><button class='btn btn-success btn-block' type='submit'>".__( 'Validate', 'doliconnect')."</button></div></form>";}else {
     $list .= "<form id='subscription-form' action='".esc_url( add_query_arg( 'module', 'members', doliconnecturl('doliaccount')) )."' method='post'><input type='hidden' name='cotisation' value='$postadh->price_prorata'><input type='hidden' name='timestamp_start' value='".$postadh->date_begin."'><input type='hidden' name='timestamp_end' value='".$postadh->date_end."'><input type='hidden' name='update_membership' value='4'><input type='hidden' name='typeadherent' value='$postadh->id'><div class='d-grid gap-2'><button class='btn btn-success btn-block' type='submit'>".__( 'Validate', 'doliconnect')."</button></div></form>";}
@@ -188,7 +188,7 @@ if ( !empty(doliconnector($current_user, 'fk_member')) && doliconnector($current
   $adherent = null;
 }
 
-print "<div class='modal fade' id='activatemember' tabindex='-1' aria-labelledby='activatememberLabel' aria-hidden='true' data-bs-keyboard='false'>
+print "<div class='modal fade' id='activatemember' tabindex='-1' aria-labelledby='activatememberLabel' data-bs-backdrop='static' data-bs-keyboard='false' aria-hidden='true'>
 <div class='modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable modal-fullscreen-md-down'><div class='modal-content'><div class='modal-header'>";
 if ( !isset($adherent->datefin) || ( $adherent->datefin>current_time( 'timestamp',1)) || ( $adherent->datefin < current_time( 'timestamp',1)) ) {
 $member_id = '';
@@ -199,7 +199,9 @@ $typeadhesion = callDoliApi("GET", "/adherentsplus/type?sortfield=t.libelle&sort
 //print $typeadhesion;
 print '<h5 class="modal-title">'.__( 'Prices', 'doliconnect').' '.$typeadhesion[0]->season.'</h5><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div>';
 
+print '<div class="modal-body p-0">';
 print dolimembertypelist($typeadhesion, $adherent);
+print '</div>';
 
 print "<div id='subscription-footer' class='modal-footer'><small class='text-justify'>".__( 'Note: the admins reserve the right to change your membership in relation to your personal situation. A validation of the membership may be necessary depending on the cases.', 'doliconnect')."</small></div></div></div></div>";
 
