@@ -2764,7 +2764,7 @@ function generate_license($suffix = null) {
     }
     return $license_string;
 }
-/*
+
 print '<script type="text/javascript">';
 print 'jQuery(document).ready(function($) {
     document.querySelector("#buttonmodaltest").addEventListener("click", function() {
@@ -2802,7 +2802,7 @@ print 'jQuery(document).ready(function($) {
 print '</script>';
 print '<button id="buttonmodaltest" class="btn btn-primary" type="button">Click here</button>';
 //print generate_license();	 
-*/ 
+
 
 }
 
