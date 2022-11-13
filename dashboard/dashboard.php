@@ -1717,7 +1717,7 @@ if ( doliCheckModules('recruitment') && doliversion('15.0.0') && !empty(get_opti
     }
 }
 
-if ( doliCheckModules('classifields') ) {
+if ( doliCheckModules('classifieds') ) {
 function classifieds_menu($arg) {
     print "<a href='".esc_url( add_query_arg( 'module', 'classifieds', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
     if ($arg=='classifieds') { print " active";}
