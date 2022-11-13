@@ -189,7 +189,7 @@ if ( !empty(doliconnector($current_user, 'fk_member')) && doliconnector($current
 }
 
 print "<div class='modal fade' id='activatemember' tabindex='-1' aria-labelledby='activatememberLabel' aria-hidden='true' data-bs-keyboard='false'>
-<div class='modal-dialog modal-dialog-centered modal-dialog-scrollable modal-fullscreen-md-down'><div class='modal-content'><div class='modal-header'>";
+<div class='modal-dialog modale-lg modal-dialog-centered modal-dialog-scrollable modal-fullscreen-md-down'><div class='modal-content'><div class='modal-header'>";
 if ( !isset($adherent->datefin) || ( $adherent->datefin>current_time( 'timestamp',1)) || ( $adherent->datefin < current_time( 'timestamp',1)) ) {
 $member_id = '';
 if (isset($adherent) && $adherent->id > 0) $member_id = "member_id=".$adherent->id;
