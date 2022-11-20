@@ -69,6 +69,11 @@ We would like to thank this contributors and plugins:
 [gdpr-data-request-form](https://wordpress.org/plugins/gdpr-data-request-form/ "gdpr-data-request-form")
 
 == Changelog ==
+   = 6.8.0 =
+* bugs and fixes
+* better and more ajax form
+* better captcha
+
    = 6.7.2 =
 * bugs and fixes
 
