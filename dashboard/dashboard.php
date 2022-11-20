@@ -62,7 +62,7 @@ if ( ! function_exists( 'wp_handle_upload' ) ) {
 
 if ( isset($_POST["case"]) && $_POST["case"] == 'updateavatar' ) {
 
-if ( isset($_POST['deleteavatar']) && $_POST['deleteavatar'] == 'delete' ) {
+if ( isset($_POST['doliavatar']) && empty($_POST['doliavatar']) ) {
 
 $upload_dir = wp_upload_dir();
 $nam=$wpdb->prefix."member_photo";
@@ -82,7 +82,7 @@ $data = [
 $adherent = callDoliApi("PUT", "/members/".doliconnector($current_user, 'fk_member'), $data, dolidelay('member'));
 }
 
-} elseif ( $_FILES['inputavatar']['tmp_name'] != null ) {
+} elseif ( isset($_POST['doliavatar']) && !empty($_POST['doliavatar']) && $_FILES['inputavatar']['tmp_name'] != null ) {
 $types = array('image/jpeg', 'image/jpg');
 if ( $_FILES['inputavatar']['tmp_name'] != null ) {
 list($width, $height) = getimagesize($_FILES['inputavatar']['tmp_name']);
@@ -212,8 +212,21 @@ print "<form action='".$url."' id='doliconnect-avatarform' method='post' class='
 //print doliloaderscript('doliconnect-avatarform');
 
 print '<div class="card shadow-sm"><div class="card-header">'.__( 'Edit my avatar', 'doliconnect').'</div>';
-print "<ul class='list-group list-group-flush'><li class='list-group-item'>";
+print '<ul class="list-group list-group-flush"><li class="list-group-item">';
 
+print '<div class="mb-2"><div class="input-group mb-2"><div class="input-group-text">
+<input id="doliavatar" name="doliavatar" value="1" class="form-check-input mt-0" type="radio" aria-label="Radio button for following text input" checked>
+</div>
+<input type="file" id="inputavatar" name="inputavatar" accept="image/*" class="form-control" id="inputGroupFile03" aria-describedby="doliavatarHelp" aria-label="Upload">
+</div><div id="doliavatarHelp" class="form-text">'.__( 'Your avatar must be a .jpg/.jpeg file, <10Mo and 350x350pixels minimum.', 'doliconnect').'</div></div>';
+
+print '<div class="input-group"><div class="input-group-text">
+<input id="doliavatar" name="doliavatar" value="0" class="form-check-input mt-0" type="radio" aria-label="Radio button for following text input">
+</div>
+<input type="text" class="form-control" aria-label="Text input with radio button" value="'.__( 'Delete your picture', 'doliconnect').'" readonly>
+</div>';
+
+/*
 print '<div class="mb-2">
 <label for="inputavatar" name="inputavatar" class="form-label">'.__( 'Select a file', 'doliconnect').'</label>
 <input class="form-control" type="file" id="inputavatar" name="inputavatar" accept="image/*">
@@ -226,8 +239,9 @@ if ( isset($nam) && null == $current_user->$nam ) {
 print " disabled='disabled'";
 }
 print "><label class='form-checklabel' for='deleteavatar'>".__( 'Delete your picture', 'doliconnect')."</label></div>";
+*/
 
-print "</li>";
+print '</li>';
 print "</ul><div class='card-body'><input type='hidden' name='userid' value='$ID'><div class='d-grid gap-2'><button class='btn btn-outline-secondary' type='submit'>".__( 'Update', 'doliconnect')."</button></div></div>";
 print '<div class="card-footer text-muted">';
 print "<small><div class='float-start'>";
