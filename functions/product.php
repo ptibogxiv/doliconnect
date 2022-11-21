@@ -352,7 +352,7 @@ function doliProductCart($product, $refresh = null, $line = null) {
             },
           }).done(function(response) {
               if (response.success) { 
-                console.log(response.data.message);
+                //console.log(response.data.message);
                 if (document.getElementById("qty-prod-'.$product->id.'")) {
                   document.getElementById("qty-prod-'.$product->id.'").value = response.data.newqty;
                 }
@@ -371,7 +371,7 @@ function doliProductCart($product, $refresh = null, $line = null) {
                 if (document.getElementById("message-dolicart")) {
                   document.getElementById("message-dolicart").innerHTML = response.data.message;      
                 }
-                $("#offcanvasDolicart").offcanvas("show");  
+                //$("#offcanvasDolicart").offcanvas("show");  
               } else {
                 //console.log("error updating qty " + response.data.message);
               }
