@@ -2717,7 +2717,9 @@ require_once( ABSPATH . 'wp-content/plugins/two-factor/class-two-factor-core.php
 print "</li>";    
 }
 print '</ul>';
-print '<button type="submit" class="btn btn-link">'.__( 'test', 'doliconnect').'</button>';
+print "<div class='d-grid gap-2'><button id='doliuserinfos-button' class='btn btn-outline-secondary' type='submit' ";
+if (!doliCheckRights('societe', 'creer')) { print 'disabled'; }
+print ">".__( 'Update', 'doliconnect')."</button></div>";
 print '</form><div class="card-footer text-muted">';
 print "<small><div class='float-start'>";
 //print dolirefresh( "/thirdparties".doliconnector($current_user, 'fk_soc'), $url, dolidelay('member'));
