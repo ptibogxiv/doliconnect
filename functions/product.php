@@ -622,7 +622,7 @@ if ($nohtml) {
     $lastdate = $date->format('Y-m-d');
   }
   if ($product->date_creation >= $lastdate) $button .= '<span class="position-absolute top-0 start-0 translate-middle badge rounded-pill bg-warning">'.__( 'Novelty', 'doliconnect').'<span class="visually-hidden">Novelty</span></span>';
-  if (!empty($price['discount'])) $button .= '<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">-'.$price['discount'].'%<span class="visually-hidden">discount</span></span>';
+  if (!empty($price['discount'])) $button .= '<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">-'.round($price['discount']).'%<span class="visually-hidden">discount</span></span>';
   if (!empty($product->net_measure) && !empty($product->net_measure_units)) { 
     $unit = callDoliApi("GET", "/setup/dictionary/units?sortfield=rowid&sortorder=ASC&limit=1&active=1&sqlfilters=(t.rowid%3Alike%3A'".$product->net_measure_units."')", null, dolidelay('constante'));
     $button .= '<span class="position-absolute top-100 start-0 translate-middle badge rounded-pill bg-info"><small>'.doliprice( $refprice/$product->net_measure, null, $currency).'/'.$unit[0]->short_label.'<span class="visually-hidden">net measure price</span></small></span>';
