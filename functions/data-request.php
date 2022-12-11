@@ -436,6 +436,12 @@ function dolicontact_request(){
 		} else {
 			$comments = sanitize_textarea_field($_POST['comments']);
 		}
+
+		if( str_word_count(sanitize_textarea_field($_POST['comments']), 0) < 10 ) {
+			$ContactError[] = esc_html__( 'Your message is too short!', 'doliconnect');
+		} else {
+			$comments = sanitize_textarea_field($_POST['comments']);
+		}
 		
 		if ( !isset($_POST['btndolicaptcha']) || empty(wp_verify_nonce(  trim($_POST['ctrldolicaptcha']), 'ctrldolicaptcha-'. trim($_POST['btndolicaptcha']))) ) {
 			$ContactError[] = esc_html__( 'Security check failed, invalid human verification field.', 'doliconnect');
