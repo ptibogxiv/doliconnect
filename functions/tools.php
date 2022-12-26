@@ -493,23 +493,22 @@ function doliFaqForm($category, $refresh = null) {
 }
 
 function doliPasswordForm($user, $url, $return = null){
-if (doliconnector($user, 'fk_user') > 0){  
-$request = "/users/".doliconnector($user, 'fk_user');
-$doliuser = callDoliApi("GET", $request, null, dolidelay('thirdparty'));
-}
+  if (doliconnector($user, 'fk_user') > 0){  
+    $request = "/users/".doliconnector($user, 'fk_user');
+    $doliuser = callDoliApi("GET", $request, null, dolidelay('thirdparty'));
+  }
+  $doliPassword = "<div id='dolirpw-alert'></div><form id='dolirpw-form' method='post' class='was-validated' action='".admin_url('admin-ajax.php')."'>";
+  if (isset($_GET["key"]) && isset($_GET["login"])) {
+    $doliPassword .= "<input type='hidden' name='key' value='".esc_attr($_GET["key"])."'><input type='hidden' name='login' value='".esc_attr($_GET["login"])."'>";
+  }
+  $doliPassword .= doliAjax('dolirpw', $return);
+  $doliPassword .= '<div class="card shadow-sm"><div class="card-header">'.__( 'Edit my password', 'doliconnect').'</div><ul class="list-group list-group-flush">';
 
-$doliPassword = "<div id='dolirpw-alert'></div><form id='dolirpw-form' method='post' class='was-validated' action='".admin_url('admin-ajax.php')."'>";
-if (isset($_GET["key"]) && isset($_GET["login"])) {
-  $doliPassword .= "<input type='hidden' name='key' value='".esc_attr($_GET["key"])."'><input type='hidden' name='login' value='".esc_attr($_GET["login"])."'>";
-}
-$doliPassword .= doliAjax('dolirpw', $return);
-
-$doliPassword .= '<div class="card shadow-sm"><div class="card-header">'.__( 'Edit my password', 'doliconnect').'</div><ul class="list-group list-group-flush">';
-if ( doliconnector($user, 'fk_user') > '0' ) {
-  $doliPassword .= "<li class='list-group-item list-group-item-info list-group-item-action'><i class='fas fa-info-circle'></i> <b>".__( 'Your password will be synchronized with your Dolibarr account', 'doliconnect')."</b></li>";
-} elseif  ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $user->ID ) {
-  $doliPassword .= "<li class='list-group-item list-group-item-info list-group-item-action'><i class='fas fa-info-circle'></i> <b>".__( 'Password cannot be modified in demo mode', 'doliconnect')."</b></li>";
-} 
+  if ( doliconnector($user, 'fk_user') > '0' ) {
+    $doliPassword .= "<li class='list-group-item list-group-item-info list-group-item-action'><i class='fas fa-info-circle'></i> <b>".__( 'Your password will be synchronized with your Dolibarr account', 'doliconnect')."</b></li>";
+  } elseif  ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $user->ID ) {
+    $doliPassword .= "<li class='list-group-item list-group-item-info list-group-item-action'><i class='fas fa-info-circle'></i> <b>".__( 'Password cannot be modified in demo mode', 'doliconnect')."</b></li>";
+  } 
 if (is_user_logged_in() && $user) {
   $doliPassword .= '<li class="list-group-item list-group-item-light list-group-item-action">';
   $doliPassword .= '<div class="row g-2"><div class="col-12"><div class="input-group">';
@@ -538,7 +537,11 @@ $doliPassword .= 'function revealpwd0() {
 }';
 $doliPassword .= '</script>';
 
-$doliPassword .= '<li class="list-group-item list-group-item-light list-group-item-action"><p class="text-justify">'.__( 'Your new password must be between 8 and 20 characters, including at least 1 digit, 1 letter, 1 uppercase.', 'doliconnect').'</p>';
+$doliPassword .= '<li class="list-group-item list-group-item-light list-group-item-action"><p class="text-justify">';
+$dolipwd = doliconst("USER_PASSWORD_GENERATED", dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+if ( $dolipwd == 'Perso' ) $doliPassword .= __( 'Your new password must be between 12 and 40 characters, including at least 1 digit, 1 letter, 1 uppercase.', 'doliconnect');
+elseif ( $dolipwd == 'standard' ) $doliPassword .= __( 'Your new password must be between 12 and 40 characters, including at least 1 digit, 1 letter, 1 uppercase.', 'doliconnect');
+$doliPassword .= '</p>';
 $doliPassword .= '<div class="row g-2"><div class="col-md">';
 $doliPassword .= '<div class="form-floating"><input type="password" class="form-control" id="pwd1" name="pwd1" placeholder="Password" ';
 if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $user->ID ) {

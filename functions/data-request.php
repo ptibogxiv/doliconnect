@@ -626,15 +626,17 @@ if ( wp_verify_nonce( trim($_POST['dolirpw-nonce']), 'dolirpw')) {
 	if (!is_user_logged_in()) {
 		$current_user = check_password_reset_key( esc_attr($_POST["key"]), esc_attr($_POST["login"]) );
 	}
+	
+	$dolipwd = doliconst("USER_PASSWORD_GENERATED", dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
-	if ( ((is_user_logged_in() && isset($pwd0) && !empty($pwd0) && wp_check_password( $pwd0, $current_user->user_pass, $current_user->ID )) || (!is_user_logged_in()) ) && ($pwd1 == $pwd2) && (preg_match('/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,20}/', $pwd1)) ) {
+	if ( ((is_user_logged_in() && isset($pwd0) && !empty($pwd0) && wp_check_password( $pwd0, $current_user->user_pass, $current_user->ID )) || (!is_user_logged_in()) ) && ($pwd1 == $pwd2) && (preg_match('/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{12,40}/', $pwd1)) ) {
 	wp_set_password($pwd1, $current_user->ID);
 
-	if (doliconnector($current_user, 'fk_user') > 0){
+	if ( doliconnector($current_user, 'fk_user') > '0' ) {
 		$data = [
     	'pass' => $pwd1
 		];
-		$doliuser = callDoliApi("PUT", "/users/".doliconnector($current_user, 'fk_user'), $data, 0);
+		$doliuser = callDoliApi("PUT", "/users/".doliconnector($current_user, 'fk_user'), $data, dolidelay('thirdparty'));
 	}
 
 	if (!is_user_logged_in()) {
