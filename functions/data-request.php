@@ -630,7 +630,7 @@ if ( wp_verify_nonce( trim($_POST['dolirpw-nonce']), 'dolirpw')) {
 	$dolipwd = doliconst("USER_PASSWORD_GENERATED", dolidelay('constante'));
 	if ( $dolipwd == 'Perso' ) { 
 		$pwdpattern = explode(";", doliconst("USER_PASSWORD_PATTERN", dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))));
-		$doliPassword = '/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{/'.$pwdpattern[0].'/,40}/';
+		$doliPassword = preg_match('/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{/'.$pwdpattern[0].'/,40}/', $pwd1);
 	} elseif ( $dolipwd == 'standard' ) $doliValidatePassword = preg_match('/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{12,40}/', $pwd1);
 
 	if ( ((is_user_logged_in() && isset($pwd0) && !empty($pwd0) && wp_check_password( $pwd0, $current_user->user_pass, $current_user->ID )) || (!is_user_logged_in()) ) && ($pwd1 == $pwd2) && $doliValidatePassword ) {
@@ -655,7 +655,11 @@ if ( wp_verify_nonce( trim($_POST['dolirpw-nonce']), 'dolirpw')) {
 		];	
 		wp_send_json_success( $response );
 	} else {
-		wp_send_json_error( __( 'An error occured:', 'doliconnect').' '.$object->error->message); 
+		$response = [
+			'message' => dolialert('danger', __( 'An error occured:', 'doliconnect').' '.$object->error->message),
+			'captcha' => dolicaptcha('dolirpw'),
+				];	
+		wp_send_json_error( $response ); 
 	}
 
 	die();
