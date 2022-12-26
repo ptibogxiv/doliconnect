@@ -634,24 +634,30 @@ if ( wp_verify_nonce( trim($_POST['dolirpw-nonce']), 'dolirpw')) {
 	} elseif ( $dolipwd == 'standard' ) $doliPassword = '/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{12,40}/';
 
 	if ( ((is_user_logged_in() && isset($pwd0) && !empty($pwd0) && wp_check_password( $pwd0, $current_user->user_pass, $current_user->ID )) || (!is_user_logged_in()) ) && ($pwd1 == $pwd2) && (preg_match($doliPassword, $pwd1)) ) {
-	wp_set_password($pwd1, $current_user->ID);
 
 	if ( doliconnector($current_user, 'fk_user') > '0' ) {
 		$data = [
     	'pass' => $pwd1
 		];
-		$doliuser = callDoliApi("PUT", "/users/".doliconnector($current_user, 'fk_user'), $data, dolidelay('thirdparty'));
+		$object = callDoliApi("PUT", "/users/".doliconnector($current_user, 'fk_user'), $data, dolidelay('thirdparty'));
 	}
 
-	if (!is_user_logged_in()) {
-		$wpdb->update( $wpdb->users, array( 'user_activation_key' => '' ), array( 'user_login' => $current_user->user_login ) );
+	if (!isset($object->error)) { 
+		wp_set_password($pwd1, $current_user->ID);
+		 
+		if (!is_user_logged_in()) {
+			$wpdb->update( $wpdb->users, array( 'user_activation_key' => '' ), array( 'user_login' => $current_user->user_login ) );
+		}
+		
+		$response = [
+		'message' => dolialert('success', __( 'Your informations have been updated. Now, you will be log out and need to log in again.', 'doliconnect')),
+		'captcha' => dolicaptcha('dolirpw'),
+		];	
+		wp_send_json_success( $response );
+	} else {
+		wp_send_json_error( __( 'An error occured:', 'doliconnect').' '.$object->error->message); 
 	}
-	
-	$response = [
-	'message' => dolialert('success', __( 'Your informations have been updated. Now, you will be log out and need to log in again.', 'doliconnect')),
-	'captcha' => dolicaptcha('dolirpw'),
-	];	
-	wp_send_json_success( $response );
+
 	die();
 	
 	} elseif (is_user_logged_in() && isset( $current_user->ID ) && (!isset($pwd0) || (isset($pwd0) && ! wp_check_password( $pwd0, $current_user->user_pass, $current_user->ID ))) ) {
