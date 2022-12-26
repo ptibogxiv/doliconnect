@@ -631,9 +631,9 @@ if ( wp_verify_nonce( trim($_POST['dolirpw-nonce']), 'dolirpw')) {
 	if ( $dolipwd == 'Perso' ) { 
 		$pwdpattern = explode(";", doliconst("USER_PASSWORD_PATTERN", dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))));
 		$doliPassword = '/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{/'.$pwdpattern[0].'/,40}/';
-	} elseif ( $dolipwd == 'standard' ) $doliPassword = '/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{12,40}/';
+	} elseif ( $dolipwd == 'standard' ) $doliValidatePassword = preg_match('/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{12,40}/', $pwd1);
 
-	if ( ((is_user_logged_in() && isset($pwd0) && !empty($pwd0) && wp_check_password( $pwd0, $current_user->user_pass, $current_user->ID )) || (!is_user_logged_in()) ) && ($pwd1 == $pwd2) && (preg_match($doliPassword, $pwd1)) ) {
+	if ( ((is_user_logged_in() && isset($pwd0) && !empty($pwd0) && wp_check_password( $pwd0, $current_user->user_pass, $current_user->ID )) || (!is_user_logged_in()) ) && ($pwd1 == $pwd2) && $doliValidatePassword ) {
 
 	if ( doliconnector($current_user, 'fk_user') > '0' ) {
 		$data = [
@@ -644,7 +644,7 @@ if ( wp_verify_nonce( trim($_POST['dolirpw-nonce']), 'dolirpw')) {
 
 	if (!isset($object->error)) { 
 		wp_set_password($pwd1, $current_user->ID);
-		 
+
 		if (!is_user_logged_in()) {
 			$wpdb->update( $wpdb->users, array( 'user_activation_key' => '' ), array( 'user_login' => $current_user->user_login ) );
 		}
@@ -673,7 +673,7 @@ if ( wp_verify_nonce( trim($_POST['dolirpw-nonce']), 'dolirpw')) {
 		];	
 		wp_send_json_error( $response );
 		die();
-	} elseif ( !preg_match($doliPassword, $pwd1) ) {
+	} elseif ( !$doliValidatePassword ) {
 		$response = [
 		'message' => dolialert('danger',  __( 'Your password must be between 8 and 20 characters, including at least 1 digit, 1 letter, 1 uppercase.', 'doliconnect')),
 		'captcha' => dolicaptcha('dolirpw'),
