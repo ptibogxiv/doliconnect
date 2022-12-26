@@ -539,8 +539,9 @@ $doliPassword .= '</script>';
 
 $doliPassword .= '<li class="list-group-item list-group-item-light list-group-item-action"><p class="text-justify">';
 $dolipwd = doliconst("USER_PASSWORD_GENERATED", dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-if ( $dolipwd == 'Perso' ) $doliPassword .= __( 'Your new password must be between 12 and 40 characters, including at least 1 digit, 1 letter, 1 uppercase.', 'doliconnect');
-elseif ( $dolipwd == 'standard' ) $doliPassword .= __( 'Your new password must be between 12 and 40 characters, including at least 1 digit, 1 letter, 1 uppercase.', 'doliconnect');
+  if ( $dolipwd == 'Perso' ) { 
+    $doliPassword .= sprintf(__('Your new password must be between %s and 40 characters, including at least %s uppercase, %s digit, %s special character and not more than %s times the same character', 'doliconnect'), $sitename);
+  } elseif ( $dolipwd == 'standard' ) $doliPassword .= __( 'Your new password must be between 12 and 40 characters, including at least 1 uppercase, 1 lowercase and 1 digit.', 'doliconnect');
 $doliPassword .= '</p>';
 $doliPassword .= '<div class="row g-2"><div class="col-md">';
 $doliPassword .= '<div class="form-floating"><input type="password" class="form-control" id="pwd1" name="pwd1" placeholder="Password" ';
