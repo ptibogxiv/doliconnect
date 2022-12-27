@@ -630,6 +630,10 @@ if ( wp_verify_nonce( trim($_POST['dolirpw-nonce']), 'dolirpw')) {
 	$dolipwd = doliconst("USER_PASSWORD_GENERATED", dolidelay('constante'));
 	if ( $dolipwd == 'Perso' ) { 
 		$pwdpattern = explode(";", doliconst("USER_PASSWORD_PATTERN", dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))));
+		$password_a = preg_split('//u', $pwd1, null, PREG_SPLIT_NO_EMPTY);
+		$maj = preg_split('//u', $pwdpattern[1], null, PREG_SPLIT_NO_EMPTY);
+		$num = preg_split('//u', $pwdpattern[2], null, PREG_SPLIT_NO_EMPTY);;
+		$spe = preg_split('//u', $pwdpattern[3], null, PREG_SPLIT_NO_EMPTY);
 		$doliValidatePassword = preg_match('/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{12,40}/', $pwd1);
 	} elseif ( $dolipwd == 'standard' ) { $doliValidatePassword = preg_match('/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{12,40}/', $pwd1); } else {
 		$doliValidatePassword = true;
