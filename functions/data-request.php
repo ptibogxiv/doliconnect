@@ -685,7 +685,7 @@ if ( wp_verify_nonce( trim($_POST['dolirpw-nonce']), 'dolirpw')) {
 		die();
 	} elseif ( !$doliValidatePassword ) {
 		$response = [
-		'message' => dolialert('danger',  __( 'Your password must be between 8 and 20 characters, including at least 1 digit, 1 letter, 1 uppercase.', 'doliconnect')),
+		'message' => dolialert('danger',  __( 'Your password must strictly comply with the rules of composition', 'doliconnect')),
 		'captcha' => dolicaptcha('dolirpw'),
 		];		
 		wp_send_json_error( $response );
