@@ -55,6 +55,36 @@ function doliCheckModules($module, $refresh = false) {
   return $return;
 }
 
+function consecutiveDoliIterationSameCharacter($password, $NbRepeat = null)
+	{
+
+		if (empty($NbRepeat)) {
+			return true;
+		}
+
+		$char = preg_split('//u', $password, null, PREG_SPLIT_NO_EMPTY);
+
+		$last = "";
+		$count = 0;
+		foreach ($char as $c) {
+			if ($c != $last) {
+				$last = $c;
+				$count = 1;
+				//print "Char $c - count = $count\n";
+				continue;
+			}
+
+			$count++;
+			//print "Char $c - count = $count\n";
+
+			if ($count > $NbRepeat) {
+				return false;
+			}
+		}
+
+		return true;
+}
+
 function dolicaptcha($id = null) {
   $arrX = array();
   $arrX[] = array("label"=>__( "car", "doliconnect"),"icon"=>"car");
