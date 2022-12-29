@@ -634,7 +634,7 @@ if ( wp_verify_nonce( trim($_POST['dolirpw-nonce']), 'dolirpw')) {
 		$maj = preg_split('//u', "ABCDEFGHIJKLMNOPQRSTUVWXYZ", null, PREG_SPLIT_NO_EMPTY);
 		$num = preg_split('//u',  "0123456789", null, PREG_SPLIT_NO_EMPTY);
 		$spe = preg_split('//u', "!@#$%&*()_-+={}[]\\|:;'/", null, PREG_SPLIT_NO_EMPTY);
-		$doliValidatePassword = (strlen($pwd1) >= $pwdpattern[0]) && ( count(array_intersect($password_a, $maj)) >= $pwdpattern[1]) && (count(array_intersect($password_a, $num)) >= $pwdpattern[2]) && (count(array_intersect($password_a, $spe)) >= $pwdpattern[3]);
+		$doliValidatePassword = (strlen($pwd1) >= $pwdpattern[0]) && ( count(array_intersect($password_a, $maj)) >= $pwdpattern[1]) && (count(array_intersect($password_a, $num)) >= $pwdpattern[2]) && (count(array_intersect($password_a, $spe)) >= $pwdpattern[3]) && consecutiveDoliIterationSameCharacter($pwd1, $pwdpattern[4]);
 	} elseif ( $dolipwd == 'standard' ) { $doliValidatePassword = preg_match('/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{12,40}/', $pwd1); } else {
 		$doliValidatePassword = true;
 	}
