@@ -2784,21 +2784,13 @@ function generate_license($suffix = null) {
 print '<script type="text/javascript">';
 print 'jQuery(document).ready(function($) {
     document.querySelector("#buttonmodaltest").addEventListener("click", function() {
-        //var m1 = $(makeModal("Header", "'.generate_license().'", "Footer"));
-        const myModal = new bootstrap.Modal("#myModal", {
-            keyboard: false,
-            backdrop: "static"
-          });
-        const modalToggle = document.getElementById("#myModal"); 
-        myModal.show(modalToggle);
-        //m1.modal("show");
-        //alert("test1");
-        //m1.modal("dispose");
-        //alert("test2");
+        var m1 = $(makeModal("Something header","Something body","Something footer"));
+        m1.modal("show");
 
-      }, false);
+
+    }, false);
       
-      function makeModal(header, body, footer) {
+    function makeModal(header, body, footer) {
         return `<div id="modaltest" class="modal fade" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" style="display: none">
         <div class="modal-dialog modal-fullscreen-md-down modal-dialog-centered modal-dialog-scrollable" role="document">
       
@@ -2812,7 +2804,7 @@ print 'jQuery(document).ready(function($) {
       
         </div>
       </div>`;
-      }
+    }
 
 });';
 print '</script>';
