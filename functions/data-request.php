@@ -623,7 +623,7 @@ if ( wp_verify_nonce( trim($_POST['dolirpw-nonce']), 'dolirpw')) {
 	$pwd1 = sanitize_text_field($_POST["pwd1"]);
 	$pwd2 = sanitize_text_field($_POST["pwd2"]);
 
-	if (!is_user_logged_in()) {
+	if (isset($_POST["key"]) && isset($_POST["login"])) {
 		$current_user = check_password_reset_key( esc_attr($_POST["key"]), esc_attr($_POST["login"]) );
 	}
 
@@ -639,7 +639,7 @@ if ( wp_verify_nonce( trim($_POST['dolirpw-nonce']), 'dolirpw')) {
 		$doliValidatePassword = true;
 	}
 
-	if ( ((is_user_logged_in() && isset($pwd0) && !empty($pwd0) && wp_check_password( $pwd0, $current_user->user_pass, $current_user->ID )) || (!is_user_logged_in()) ) && ($pwd1 == $pwd2) && $doliValidatePassword ) {
+	if ( (!isset($_POST["key"]) && !isset($_POST["login"]) && isset($pwd0) && !empty($pwd0) && wp_check_password( $pwd0, $current_user->user_pass, $current_user->ID ) && $doliValidatePassword ) || (isset($_POST["key"]) && isset($_POST["login"]) && ($pwd1 == $pwd2) && $doliValidatePassword ) ) {
 
 	if ( doliconnector($current_user, 'fk_user') > '0' ) {
 		$data = [
@@ -651,12 +651,12 @@ if ( wp_verify_nonce( trim($_POST['dolirpw-nonce']), 'dolirpw')) {
 	if (!isset($object->error)) { 
 		wp_set_password($pwd1, $current_user->ID);
 
-		if (!is_user_logged_in()) {
+		if (isset($_POST["key"]) && isset($_POST["login"])) {
 			$wpdb->update( $wpdb->users, array( 'user_activation_key' => '' ), array( 'user_login' => $current_user->user_login ) );
 		}
 		
 		$response = [
-		'message' => dolialert('success', __( 'Your informations have been updated. Now, you will be log out and need to log in again.', 'doliconnect')),
+		'message' => dolialert('success', __( "Your informations have been updated. If connected, you will be log out and need to log in again.", 'doliconnect')),
 		'captcha' => dolicaptcha('dolirpw'),
 		];	
 		wp_send_json_success( $response );
@@ -670,7 +670,7 @@ if ( wp_verify_nonce( trim($_POST['dolirpw-nonce']), 'dolirpw')) {
 
 	die();
 	
-	} elseif (is_user_logged_in() && isset( $current_user->ID ) && (!isset($pwd0) || (isset($pwd0) && ! wp_check_password( $pwd0, $current_user->user_pass, $current_user->ID ))) ) {
+	} elseif (!isset($_POST["key"]) && !isset($_POST["login"]) && isset( $current_user->ID ) && (!isset($pwd0) || (isset($pwd0) && ! wp_check_password( $pwd0, $current_user->user_pass, $current_user->ID ))) ) {
 		$response = [
 		'message' => dolialert('danger', __( 'Your actual password is incorrect', 'doliconnect')),
 		'captcha' => dolicaptcha('dolirpw'),

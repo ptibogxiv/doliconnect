@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2022-12-29 16:23+0100\n"
-"PO-Revision-Date: 2022-12-29 16:23+0100\n"
+"POT-Creation-Date: 2023-01-07 11:25+0100\n"
+"PO-Revision-Date: 2023-01-07 11:25+0100\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: es\n"
@@ -1736,11 +1736,11 @@ msgstr ""
 
 #: functions/data-request.php:659
 msgid ""
-"Your informations have been updated. Now, you will be log out and need to "
-"log in again."
+"Your informations have been updated. If connected, you will be log out and "
+"need to log in again."
 msgstr ""
-"Sus datos han sido actualizados. Ahora, se cerrará la sesión y tendrá que "
-"volver a conectarse."
+"Sus datos han sido actualizados. Si está conectado, se cerrará la sesión y "
+"tendrá que volver a conectarse."
 
 #: functions/data-request.php:675
 msgid "Your actual password is incorrect"
