@@ -30,7 +30,7 @@ add_submenu_page(__( 'Doliconnect settings', 'doliconnect' ), "Management", "Man
 }
 
 function doliconnect_admin_page4() {
-    add_users_page( 'doliboard', "Gestion des admins", 'manage_options', 'doliconnect_admin_page', 'doliconnect_admin_page');
+    //add_users_page( 'doliboard', "Gestion des admins", 'manage_options', 'doliconnect_admin_page', 'doliconnect_admin_page');
 }
 
 if ( is_multisite() ) {
