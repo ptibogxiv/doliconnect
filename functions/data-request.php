@@ -648,7 +648,7 @@ if ( wp_verify_nonce( trim($_POST['dolirpw-nonce']), 'dolirpw')) {
 		$object = callDoliApi("PUT", "/users/".doliconnector($current_user, 'fk_user'), $data, dolidelay('thirdparty'));
 	}
 
-	if (!isset($object->error)) { 
+	if ( !isset($object) || ( isset($object) && !isset($object->error) ) ) { 
 		wp_set_password($pwd1, $current_user->ID);
 
 		if (isset($_POST["key"]) && isset($_POST["login"])) {
