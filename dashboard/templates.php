@@ -1441,7 +1441,9 @@ print var_dump($payinfo);
 doliconnector($current_user, 'fk_order', true);
 $object = callDoliApi("GET", "/".$module."/".$object->id."?contact_list=0", null, dolidelay('cart'));
 
-print "<div class='card shadow-sm' id='cart-form'><div class='card-body'><center><h2>".__( 'Your order has been registered', 'doliconnect')."</h2>".__( 'Reference', 'doliconnect').": ".$object->ref."<br>".__( 'Payment method', 'doliconnect').": ".$object->mode_reglement_code."<br><br>";
+print "<div class='card shadow-sm' id='cart-form'><div class='card-body'><center><h2>".__( 'Your order has been registered', 'doliconnect')."</h2>".__( 'Reference', 'doliconnect').": ".$object->ref;
+$mode_reglement = callDoliApi("GET", "/setup/dictionary/payment_types?sortfield=code&sortorder=ASC&limit=100&active=1&sqlfilters=(t.code%3A%3D%3A'".$object->mode_reglement_code."')", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+if (isset($mode_reglement[0]->label)) print "<br>".__( 'Payment method', 'doliconnect').": ".$mode_reglement[0]->label."<br><br>";
 $TTC = doliprice($object, 'ttc', isset($object->multicurrency_code) ? $object->multicurrency_code : null);
 
 if ( $object->statut == '1' && !isset($_GET['error']) ) {
