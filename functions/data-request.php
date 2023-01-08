@@ -918,7 +918,7 @@ $data = [
   'paymentmethod' => isset($_POST['paymentmethod']) ? $_POST['paymentmethod'] : null,
   'save' => isset($_POST['default']) ? $_POST['default'] : 0 ,
 	];
-$payinfo = callDoliApi("POST", "/doliconnector/pay/".trim($_POST['module'])."/".trim($_POST['id']), $data, 0);
+$payinfo = callDoliApi("POST", "/doliconnector/pay/".trim($_POST['module'])."/".trim($_POST['id']), $data, dolidelay('order'));
 //print var_dump($payinfo);
 
 if (!isset($payinfo->error)) { 
@@ -934,17 +934,15 @@ $return = esc_url( add_query_arg( $arr_params, doliconnecturl('doliaccount')) );
 $message .= "<br><a href='".$return."' class='btn btn-primary'>".__( 'View my receipt', 'doliconnect')."</a>";
 $message .= '</center></div></div>';
 wp_send_json_success( $message ); 
-} else {
-wp_send_json_error( __( 'An error occured:', 'doliconnect').' '.$payinfo->error->message); 
-}
-
+			} else {
+				wp_send_json_error( __( 'An error occured:', 'doliconnect').' '.$payinfo->error->message); 
+			}	
+		} else {
+			wp_send_json_error( __( 'An error occured', 'doliconnect')); 
+		}
 	} else {
-		wp_send_json_error( __( 'An error occured', 'doliconnect')); 
+		wp_send_json_error( __( 'A security error occured', 'doliconnect')); 
 	}
-
-} else {
-	wp_send_json_error( __( 'A security error occured', 'doliconnect')); 
-}
 }
 
 //*****************************************************************************************
