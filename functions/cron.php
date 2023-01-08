@@ -41,20 +41,22 @@ $shop = doliconst("DOLICONNECT_CATSHOP");
 $request = "/categories/".esc_attr($shop)."?include_childs=true";
 $resultatsc = callDoliApi("GET", $request, null, dolidelay('product', $refresh));
 if ( !isset($resultatsc->error) && $resultatsc != null ) {
-foreach ($resultatsc->childs as $category) {
-$categories[$category->id] = $category->id;
-doliconnect_image('category', $category->id, 1, $refresh, $category->entity);
-}}
+    foreach ($resultatsc->childs as $category) {
+        $categories[$category->id] = $category->id;
+        doliconnect_image('category', $category->id, 1, $refresh, $category->entity);
+    }
+}
 
 foreach ($categories as $id => $categorie) {
-$request = "/categories/".$id."?include_childs=true";
-$resultatsc = callDoliApi("GET", $request, null, dolidelay('product', $refresh));
-if ( !isset($resultatsc->error) && $resultatsc != null ) {
-foreach ($resultatsc->childs as $category) {
-$categories[$category->id] = $category->id;
-$subcategories[$category->id] = $category->id;
-doliconnect_image('category', $category->id, 1, $refresh, $category->entity);
-}}
+    $request = "/categories/".$id."?include_childs=true";
+    $resultatsc = callDoliApi("GET", $request, null, dolidelay('product', $refresh));
+    if ( !isset($resultatsc->error) && $resultatsc != null ) {
+        foreach ($resultatsc->childs as $category) {
+            $categories[$category->id] = $category->id;
+            $subcategories[$category->id] = $category->id;
+            doliconnect_image('category', $category->id, 1, $refresh, $category->entity);
+        }
+    }
 }
 
 if (isset($subcategories)) {
