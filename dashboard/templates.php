@@ -1436,7 +1436,7 @@ $data = [
   'save' => isset($_POST['default']) ? $_POST['default'] : 0 ,
 	];
 $payinfo = callDoliApi("POST", "/doliconnector/pay/".$module."/".$object->id, $data, 0);
-print var_dump($payinfo);
+//print var_dump($payinfo);
   
 doliconnector($current_user, 'fk_order', true);
 $object = callDoliApi("GET", "/".$module."/".$object->id."?contact_list=0", null, dolidelay('cart'));
