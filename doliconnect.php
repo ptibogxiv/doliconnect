@@ -200,6 +200,14 @@ $request = wp_remote_get( esc_url_raw($url), $args );
 
 $http_code = wp_remote_retrieve_response_code( $request );
 
+if (true === WP_DEBUG) {
+    if (is_array($request) || is_object($request)) {
+        error_log(print_r(json_decode( wp_remote_retrieve_body($request)), true));
+    } else {
+        error_log(json_decode( wp_remote_retrieve_body($request)));
+    }
+}
+
 if ( $method == 'DELETE' ) {
 delete_transient( $link ); 
 } elseif ( $delay <= 0 || ! in_array( $http_code,array('200', '404') ) ) {
@@ -215,24 +223,18 @@ define('DOLIBUG', $http_code);
 $delay = abs( intval($delay) );
 set_transient( $link, wp_remote_retrieve_body( $request ), $delay);
 }
-
-} else {
-
-set_transient( $link, wp_remote_retrieve_body( $request ), $delay );
-
-}
-
-return json_decode( wp_remote_retrieve_body( $request ) );
-
-} else {
-return json_decode( get_transient( $link ) );   
-}
-} else {
-
-if ( !defined("DOLIBUG") ) {
-define('DOLIBUG', 1);
-}
-}
+            } else {
+                set_transient( $link, wp_remote_retrieve_body( $request ), $delay );
+            }
+            return json_decode( wp_remote_retrieve_body( $request ) );
+        } else {
+            return json_decode( get_transient( $link ) );   
+        }
+    } else {
+        if ( !defined("DOLIBUG") ) {
+            define('DOLIBUG', 1);
+        }
+    }
 }
 // ********************************************************
 add_action( 'init', 'dolibarr', 10);
