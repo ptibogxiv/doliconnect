@@ -85,22 +85,22 @@ foreach ($categories as $id => $categorie) {
 }
  
 foreach ($products as $id => $product) {
-$product1 = callDoliApi("GET", "/products/".$product['id']."?includestockdata=1&includesubproducts=true&includetrans=true", null, dolidelay('product', $refresh));
-doliconnect_image('product', $product['id'], array('limit'=>1, 'entity'=>$product['entity'], 'size'=>'200x200'), $refresh);
-if ( ! empty(doliconnectid('dolicart')) ) {
-if ( is_numeric(doliconst('MAIN_MODULE_DISCOUNTPRICE')) ) {
-$date = new DateTime(); 
-$date->modify('NOW');
-$lastdate = $date->format('Y-m-d');
-$product2 = callDoliApi("GET", "/discountprice?productid=".$product['id']."&sortfield=t.rowid&sortorder=ASC&sqlfilters=(t.date_begin%3A%3C%3D%3A'".$lastdate."')%20AND%20(t.date_end%3A%3E%3D%3A'".$lastdate."')", null, dolidelay('product', $refresh));
-}
-if ( is_numeric(doliconst("PRODUIT_CUSTOMER_PRICES"))) {
-$product3 = callDoliApi("GET", "/products/".$product['id']."/selling_multiprices/per_customer", null, dolidelay('product', $refresh));
-}
-if ( is_numeric(doliconst("PRODUIT_CUSTOMER_PRICES", $refresh))) {
-$product4 = callDoliApi("GET", "/products/".$product['id']."/selling_multiprices/per_customer", null, dolidelay('product', $refresh));
-}
-}
+    $product1 = callDoliApi("GET", "/products/".$product['id']."?includestockdata=1&includesubproducts=true&includetrans=true", null, dolidelay('product', $refresh));
+    doliconnect_image('product', $product['id'], array('limit'=>1, 'entity'=>$product['entity'], 'size'=>'200x200'), $refresh);
+    if ( ! empty(doliconnectid('dolicart')) ) {
+        if ( is_numeric(doliconst('MAIN_MODULE_DISCOUNTPRICE')) ) {
+            $date = new DateTime(); 
+            $date->modify('NOW');
+            $lastdate = $date->format('Y-m-d');
+            $product2 = callDoliApi("GET", "/discountprice?productid=".$product['id']."&sortfield=t.rowid&sortorder=ASC&sqlfilters=(t.date_begin%3A%3C%3D%3A'".$lastdate."')%20AND%20(t.date_end%3A%3E%3D%3A'".$lastdate."')", null, dolidelay('product', $refresh));
+        }
+        if ( is_numeric(doliconst("PRODUIT_CUSTOMER_PRICES"))) {
+            $product3 = callDoliApi("GET", "/products/".$product['id']."/selling_multiprices/per_customer", null, dolidelay('product', $refresh));
+        }
+        if ( is_numeric(doliconst("PRODUIT_CUSTOMER_PRICES", $refresh))) {
+            $product4 = callDoliApi("GET", "/products/".$product['id']."/selling_multiprices/per_customer", null, dolidelay('product', $refresh));
+        }
+    }
 }
 }
 }
