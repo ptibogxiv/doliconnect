@@ -57,16 +57,18 @@ doliconnect_image('category', $category->id, 1, $refresh, $category->entity);
 }}
 }
 
-foreach ($subcategories as $id => $categorie) {
-$request = "/categories/".$id."?include_childs=true";
-$resultatsc = callDoliApi("GET", $request, null, dolidelay('product', $refresh));
-if ( !isset($resultatsc->error) && $resultatsc != null ) {
-foreach ($resultatsc->childs as $category) {
-$categories[$category->id] = $category->id;
-doliconnect_image('category', $category->id, 1, $refresh, $category->entity);
-}}
+if (isset($subcategories)) {
+    foreach ($subcategories as $id => $categorie) {
+        $request = "/categories/".$id."?include_childs=true";
+        $resultatsc = callDoliApi("GET", $request, null, dolidelay('product', $refresh));
+        if ( !isset($resultatsc->error) && $resultatsc != null ) {
+            foreach ($resultatsc->childs as $category) {
+                $categories[$category->id] = $category->id;
+                doliconnect_image('category', $category->id, 1, $refresh, $category->entity);
+            }
+        }
+    }
 }
-
 
 foreach ($categories as $id => $categorie) {
 $requestp = "/products?sortfield=t.rowid&sortorder=DESC&category=".$id."&sqlfilters=(t.tosell=1)&limit=1000";
