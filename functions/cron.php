@@ -25,16 +25,17 @@ $products[$product->id]['entity'] = $product->entity;
 }
 
 if ( is_numeric(doliconst('MAIN_MODULE_DISCOUNTPRICE')) ) {
-$date = new DateTime(); 
-$date->modify('NOW');
-$lastdate = $date->format('Y-m-d');
-$requestp = "/discountprice?sortfield=t.rowid&sortorder=DESC&sqlfilters=(t.date_begin%3A%3C%3D%3A'".$lastdate."')%20AND%20(t.date_end%3A%3E%3D%3A'".$lastdate."')%20AND%20(d.tosell%3A%3D%3A1)";
-$listproduct = callDoliApi("GET", $requestp, null, dolidelay('product', $refresh));
-if ( !isset($listproduct->error) && $listproduct != null ) {
-foreach ($listproduct as $product) {
-$products[$product->fk_product]['id'] = $product->fk_product;
-$products[$product->fk_product]['entity'] = $product->entity;
-}}
+    $date = new DateTime(); 
+    $date->modify('NOW');
+    $lastdate = $date->format('Y-m-d');
+    $requestp = "/discountprice?sortfield=t.rowid&sortorder=DESC&sqlfilters=(t.date_begin%3A%3C%3D%3A'".$lastdate."')%20AND%20(t.date_end%3A%3E%3D%3A'".$lastdate."')%20AND%20(d.tosell%3A%3D%3A1)";
+    $listproduct = callDoliApi("GET", $requestp, null, dolidelay('product', $refresh));
+    if ( !isset($listproduct->error) && $listproduct != null ) {
+        foreach ($listproduct as $product) {
+            $products[$product->fk_product]['id'] = $product->fk_product;
+            $products[$product->fk_product]['entity'] = $product->entity;
+        }
+    }
 }
 
 $shop = doliconst("DOLICONNECT_CATSHOP");
