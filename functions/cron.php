@@ -74,13 +74,14 @@ if (isset($subcategories)) {
 }
 
 foreach ($categories as $id => $categorie) {
-$requestp = "/products?sortfield=t.rowid&sortorder=DESC&category=".$id."&sqlfilters=(t.tosell=1)&limit=1000";
-$listproduct = callDoliApi("GET", $requestp, null, dolidelay('product', $refresh));
-if ( !isset($listproduct->error) && $listproduct != null ) {
-foreach ($listproduct as $product) {
-$products[$product->id]['id'] = $product->id;
-$products[$product->id]['entity'] = $product->entity;
-}}
+    $requestp = "/products?sortfield=t.rowid&sortorder=DESC&category=".$id."&sqlfilters=(t.tosell=1)&limit=1000";
+    $listproduct = callDoliApi("GET", $requestp, null, dolidelay('product', $refresh));
+    if ( !isset($listproduct->error) && $listproduct != null ) {
+        foreach ($listproduct as $product) {
+            $products[$product->id]['id'] = $product->id;
+            $products[$product->id]['entity'] = $product->entity;
+        }
+    }
 }
  
 foreach ($products as $id => $product) {
