@@ -2790,9 +2790,12 @@ print 'jQuery(document).ready(function($) {
         }
         $("#doliModalTest").modal("show");
 
+    $("#doliModalTest").on("hidden.bs.modal", function () {
+        document.getElementById("doliModal").innerHTML = "";
+    });
 
     }, false);
-      
+ 
     function makeModal(header, body, footer) {
         return `<div id="doliModalTest" class="modal fade" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" style="display: none">
         <div class="modal-dialog modal-fullscreen-md-down modal-dialog-centered modal-dialog-scrollable" role="document">
