@@ -1074,7 +1074,7 @@ global $current_user;
 			CH - 1227 GENEVE - Suisse<br>
 			N° TVA: CHE - 103.167.648<br>
 			N° de société: CH - 660 - 0059996 - 1<br>
-			Site Internet: <a href="https://www.infomaniak.com/goto/fr/home?utm_term=5de6793fdf41b">Infomaniak</a></p>';
+			Site Internet: <a href="https://www.infomaniak.com/goto/fr/home?utm_term=5de6793fdf41b">Infomaniak</a>';
 		}
 		$response['body'] .= '</p>';
 		wp_send_json_success($response);	
