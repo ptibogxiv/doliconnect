@@ -3004,6 +3004,41 @@ global $current_user;
 
 }
 
+function doliModalButton($title) {
+
+  $button = '<script type="text/javascript">';
+  $button .= 'jQuery(document).ready(function($) {
+    document.querySelector("#buttonmodaltest").addEventListener("click", function() {
+      if (document.getElementById("doliModalDiv")) {
+        document.getElementById("doliModalDiv").innerHTML = makeModal("'.$title.'","Something body","Something footer");      
+      }
+      $("#doliModalTest").modal("show");
+      $("#doliModalTest").on("hidden.bs.modal", function () {
+        $("#doliModalTest").modal("dispose");
+        document.getElementById("doliModalDiv").innerHTML = "";
+      });
+      }, false);
+   
+      function makeModal(header, body, footer) {
+        return `<div id="doliModalTest" class="modal fade" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" style="display: none">
+          <div class="modal-dialog modal-fullscreen-md-down modal-dialog-centered modal-dialog-scrollable" role="document">
+            <div class="modal-content"><div class="modal-header"><h4 class="modal-title">${header}</h4>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">${body}</div>
+              <div class="modal-footer">${footer}</div>
+            </div>
+          </div>
+        </div>`;
+      }
+  
+  });';
+  $button .= '</script>';
+  $button .= '<button id="buttonmodaltest" class="btn btn-primary" type="button">'.$title.'</button>';
+
+  return $button;
+}
+
 function doliconnect_modalform() {
 global $current_user;
 $year = strftime("%Y", current_time( 'timestamp', 1));
