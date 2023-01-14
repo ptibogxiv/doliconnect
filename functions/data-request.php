@@ -1064,17 +1064,17 @@ global $current_user;
 		if (!empty($company->note_private)) { $response['body'] .= '<br>'.$company->note_private; }
 		$response['body'] .= '</p><p><strong>'.__('Responsible for publishing', 'doliconnect').'</strong><br>'.$company->managers.'</p>';
 		if ( defined('PTIBOGXIV_NET') ) {
-			$response['body'] .= '<p><strong>'.__('Design', 'doliconnect').'</strong><br>Thibault FOUCART - ptibogxiv.eu<br>
-		1 rue de la grande brasserie<br>
-		FR - 59000 LILLE - France<br>
-		SIRET: 83802482600011 - APE6201Z<br>
-		Site Internet: <a href="https://www.ptibogxiv.eu">ptibogxiv.eu</a></p>
-		<p><strong>'.__('Hosting', 'ptibogxivtheme').'</strong><br>Infomaniak Network SA<br>
-		Rue Eugène-Marziano, 25<br>
-		CH - 1227 GENEVE - Suisse<br>
-		N° TVA: CHE - 103.167.648<br>
-		N° de société: CH - 660 - 0059996 - 1<br>
-		Site Internet: <a href="https://www.infomaniak.com/goto/fr/home?utm_term=5de6793fdf41b">Infomaniak</a></p>';
+			$response['body'] .= '<p><strong>'.__('Design & conception', 'doliconnect').'</strong><br>Thibault FOUCART - ptibogxiv.eu<br>
+			1 rue de la grande brasserie<br>
+			FR - 59000 LILLE - France<br>
+			SIRET: 83802482600011 - APE6201Z<br>
+			Site Internet: <a href="https://www.ptibogxiv.eu">ptibogxiv.eu</a></p>
+			<p><strong>'.__('Hosting', 'doliconnect').'</strong><br>Infomaniak Network SA<br>
+			Rue Eugène-Marziano, 25<br>
+			CH - 1227 GENEVE - Suisse<br>
+			N° TVA: CHE - 103.167.648<br>
+			N° de société: CH - 660 - 0059996 - 1<br>
+			Site Internet: <a href="https://www.infomaniak.com/goto/fr/home?utm_term=5de6793fdf41b">Infomaniak</a></p>';
 		}
 		wp_send_json_success($response);	
 		die();
