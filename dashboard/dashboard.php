@@ -2784,17 +2784,17 @@ function generate_license($suffix = null) {
 print '<script type="text/javascript">';
 print 'jQuery(document).ready(function($) {
     document.querySelector("#buttonmodaltest").addEventListener("click", function() {
-        var m1 = $(makeModal("Something header","Something body","Something footer"));
+        //var m1 = $(makeModal("Something header","Something body","Something footer"));
         if (document.getElementById("doliModal")) {
-            document.getElementById("doliModal").innerHTML = m1;      
+            document.getElementById("doliModal").innerHTML = makeModal("Something header","Something body","Something footer");      
         }
-        m1.modal("show");
+        $("#doliModalTest").modal("show");
 
 
     }, false);
       
     function makeModal(header, body, footer) {
-        return `<div id="modaltest" class="modal fade" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" style="display: none">
+        return `<div id="doliModalTest" class="modal fade" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" style="display: none">
         <div class="modal-dialog modal-fullscreen-md-down modal-dialog-centered modal-dialog-scrollable" role="document">
       
           <!-- Modal content-->
