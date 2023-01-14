@@ -1096,7 +1096,17 @@ global $current_user;
 		wp_send_json_success($response);	
 		die();
 	} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "selectlang" ) {
-		$response['body'] = 'selectlang';	
+		$response['body'] = '<div class="modal-body"><div class="card" id="SelectLangmodal-form"><ul class="list-group list-group-flush">';
+		$translations = pll_the_languages( array( 'raw' => 1 ) );
+		foreach ($translations as $key => $value) {
+			$response['body'] .= "<a href='".$value['url']."?".$_SERVER["QUERY_STRING"]."' onclick='loadingSelectLangModal()' class='list-group-item list-group-item-light list-group-item-action";
+		if ( $value['current_lang'] == true ) { $response['body'] .= ' active'; }
+		$response['body'] .= "'><span class='fi fi-".strtolower(substr($value['slug'], -2))."'></span> ".$value['name'];
+		if ( $value['current_lang'] == true ) { $response['body'] .= ' <i class="fas fa-language fa-fw"></i>'; }
+		$response['body'] .= '</a>';
+		}      
+		
+		$response['body'] .= '</ul></div><div id="loadingSelectLang" style="display:none"><br><br><br><center><div class="align-middle"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div><h4>'.__('Loading', 'doliconnect').'</h4></div></center><br><br><br></div>';	
 		wp_send_json_success($response);	
 		die();
 	} else {

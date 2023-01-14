@@ -2781,6 +2781,8 @@ function generate_license($suffix = null) {
     return $license_string;
 }
 
+print doliModalButton('selectlang', 'selectlangheader', 'Test');
+
 //print generate_license();
 
 }
