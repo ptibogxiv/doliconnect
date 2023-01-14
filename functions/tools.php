@@ -3008,6 +3008,8 @@ function doliconnect_modalform() {
 global $current_user;
 $year = strftime("%Y", current_time( 'timestamp', 1));
 
+print '<div id="doliModal"></div>';
+
 if ( (!is_user_logged_in() || !is_user_member_of_blog( $current_user->ID, get_current_blog_id())) && (get_option('doliloginmodal') == '1') ) {
 
 doliconnect_enqueues();

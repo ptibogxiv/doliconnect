@@ -2785,6 +2785,9 @@ print '<script type="text/javascript">';
 print 'jQuery(document).ready(function($) {
     document.querySelector("#buttonmodaltest").addEventListener("click", function() {
         var m1 = $(makeModal("Something header","Something body","Something footer"));
+        if (document.getElementById("doliModal")) {
+            document.getElementById("doliModal").innerHTML = m1;      
+        }
         m1.modal("show");
 
 
