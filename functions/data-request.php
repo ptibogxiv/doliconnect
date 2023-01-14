@@ -1033,6 +1033,7 @@ function dolimodal_request(){
 global $current_user;
 	$response = array();	
 	if ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "legacy" ) {
+		$response['header'] = __('Legal notice', 'doliconnect');
 		$company = callDoliApi("GET", "/setup/company", null, dolidelay('constante'));
 		$response['body'] = '<p><strong>'.__('Editor', 'doliconnect').'</strong>
 		<br>'.$company->name.'
@@ -1100,7 +1101,13 @@ global $current_user;
 		$response['footer'] = null;
 		wp_send_json_success($response);
 		die();
+	} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "document" ) {
+		$response['body'] = 'document';	
+		$response['footer'] = null;
+		wp_send_json_success($response);
+		die();
 	} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "selectlang" ) {
+		$response['header'] = __('Choose your language', 'doliconnect');
 		$response['body'] = '<div class="card" id="SelectLangmodal-form"><ul class="list-group list-group-flush">';
 		$translations = pll_the_languages( array( 'post_id' => $_POST['value1'],'raw' => 1 ) );
 		foreach ($translations as $key => $value) {
