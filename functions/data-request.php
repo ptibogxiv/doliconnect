@@ -1080,11 +1080,23 @@ global $current_user;
 		wp_send_json_success($response);	
 		die();
 	} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "login" ) {
-		$response['body'] = '';	
+		$response['body'] = 'login';	
+		wp_send_json_success($response);	
+		die();
+	} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "editmembership" ) {
+		$response['body'] = 'editmembership';	
+		wp_send_json_success($response);	
+		die();
+	} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "resiliatemembership" ) {
+		$response['body'] = 'resiliatemembership';	
+		wp_send_json_success($response);	
+		die();
+	} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "renewmembership" ) {
+		$response['body'] = 'renewmembership';	
 		wp_send_json_success($response);	
 		die();
 	} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "selectlang" ) {
-		$response['body'] = '';	
+		$response['body'] = 'selectlang';	
 		wp_send_json_success($response);	
 		die();
 	} else {
