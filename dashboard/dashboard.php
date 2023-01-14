@@ -2781,7 +2781,7 @@ function generate_license($suffix = null) {
     return $license_string;
 }
 
-print doliModalButton('legacy', 'Test');
+print doliModalButton('legacy', 'buttonmodaltest', 'Test');
 
 //print generate_license();	 
 
