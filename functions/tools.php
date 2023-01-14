@@ -1705,6 +1705,7 @@ return __('Transporter by default', 'doliconnect');
 }
 }
 
+/*
 function doliconnect_langs($arg) {
 
 if (function_exists('pll_the_languages')) {       
@@ -1739,6 +1740,7 @@ print '</ul></div>
 
 }
 add_action( 'wp_footer', 'doliconnect_langs');
+*/
 
 function doliconnect_paymentmethods($object = null, $module = null, $url = null, $refresh = false, $array = array()) {
 global $current_user;
