@@ -3004,7 +3004,7 @@ global $current_user;
 
 }
 
-function doliModalButton($case, $id, $title, $type = 'button', $class = 'btn btn-primary') {
+function doliModalButton($case, $id, $title, $type = 'button', $class = 'btn btn-primary', $value1 = null, $value2 = null) {
 
   $button = '<script type="text/javascript">';
   $button .= '(function ($) {
@@ -3021,6 +3021,8 @@ function doliModalButton($case, $id, $title, $type = 'button', $class = 'btn btn
               "action": "dolimodal_request",
               "dolimodal-nonce": "'.wp_create_nonce( 'dolimodal-nonce').'",
               "case": "'.$case.'",
+              "value1": "'.$value1.'",
+              "value2": "'.$value2.'",
           },
         }).done(function(response) {
             if (response.success) { 

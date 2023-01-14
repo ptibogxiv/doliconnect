@@ -1096,10 +1096,10 @@ global $current_user;
 		wp_send_json_success($response);	
 		die();
 	} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "selectlang" ) {
-		$response['body'] = '<div class="modal-body"><div class="card" id="SelectLangmodal-form"><ul class="list-group list-group-flush">';
-		$translations = pll_the_languages( array( 'raw' => 1 ) );
+		$response['body'] = '<div class="card" id="SelectLangmodal-form"><ul class="list-group list-group-flush">';
+		$translations = pll_the_languages( array( 'post_id' => $_POST['value1'],'raw' => 1 ) );
 		foreach ($translations as $key => $value) {
-			$response['body'] .= "<a href='".$value['url']."?".$_SERVER["QUERY_STRING"]."' onclick='loadingSelectLangModal()' class='list-group-item list-group-item-light list-group-item-action";
+			$response['body'] .= "<a href='".$value['url']."?".$_POST['value2']."' onclick='loadingSelectLangModal()' class='list-group-item list-group-item-light list-group-item-action";
 		if ( $value['current_lang'] == true ) { $response['body'] .= ' active'; }
 		$response['body'] .= "'><span class='fi fi-".strtolower(substr($value['slug'], -2))."'></span> ".$value['name'];
 		if ( $value['current_lang'] == true ) { $response['body'] .= ' <i class="fas fa-language fa-fw"></i>'; }
