@@ -1033,7 +1033,49 @@ function dolimodal_request(){
 global $current_user;
 	$response = array();	
 	if ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "legacy" ) {
-		$response['body'] = 'body message';
+		$company = callDoliApi("GET", "/setup/company", null, dolidelay('constante'));
+		$response['body'] = '<p><strong>'.__('Editor', 'doliconnect').'</strong>
+		<br>'.$company->name.'
+		<br>'.$company->address.'
+		<br>'.$company->zip.' '.$company->town.'
+		<br>';
+		if ( !empty($company->country_id) ) {  
+		if ( function_exists('pll_the_languages') ) { 
+			$lang = pll_current_language('locale');
+		} else {
+			global $current_user;
+			$lang = $current_user->locale;
+		}
+		$country = callDoliApi("GET", "/setup/dictionary/countries/".$company->country_id."?lang=".$lang, null, dolidelay('constante'));
+		$response['body'] .= $country->label;
+		}
+		if ( !empty($company->state_id) ) {  
+			if ( function_exists('pll_the_languages') ) { 
+				$lang = pll_current_language('locale');
+			} else {
+				$lang = $current_user->locale;
+			}
+			$state = callDoliApi("GET", "/setup/dictionary/states/".$company->state_id."?lang=".$lang, null, dolidelay('constante'));
+			$response['body'] .= ' - '.$state->name;
+		}
+		if (!empty($company->idprof2)) { $response['body'] .= '<br>SIRET: '.$company->idprof2.' - APE: '.$company->idprof3; }
+		if (!empty($company->idprof4)) { $response['body'] .= '<br>RCS: '.$company->idprof4; }
+		if (!empty($company->tva_assuj)) { $response['body'] .= '<br>N° TVA: '.$company->tva_intra; }
+		if (!empty($company->note_private)) { $response['body'] .= '<br>'.$company->note_private; }
+		$response['body'] .= '</p><p><strong>'.__('Responsible for publishing', 'doliconnect').'</strong><br>'.$company->managers.'</p>';
+		if ( defined('PTIBOGXIV_NET') ) {
+			$response['body'] .= '<p><strong>'.__('Design', 'doliconnect').'</strong><br>Thibault FOUCART - ptibogxiv.eu<br>
+		1 rue de la grande brasserie<br>
+		FR - 59000 LILLE - France<br>
+		SIRET: 83802482600011 - APE6201Z<br>
+		Site Internet: <a href="https://www.ptibogxiv.eu">ptibogxiv.eu</a></p>
+		<p><strong>'.__('Hosting', 'ptibogxivtheme').'</strong><br>Infomaniak Network SA<br>
+		Rue Eugène-Marziano, 25<br>
+		CH - 1227 GENEVE - Suisse<br>
+		N° TVA: CHE - 103.167.648<br>
+		N° de société: CH - 660 - 0059996 - 1<br>
+		Site Internet: <a href="https://www.infomaniak.com/goto/fr/home?utm_term=5de6793fdf41b">Infomaniak</a></p>';
+		}
 		wp_send_json_success($response);	
 		die();
 	} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "login" ) {
