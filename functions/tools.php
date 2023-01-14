@@ -3004,7 +3004,7 @@ global $current_user;
 
 }
 
-function doliModalButton($title) {
+function doliModalButton($case, $title) {
 
   $button = '<script type="text/javascript">';
   $button .= 'jQuery(document).ready(function($) {
