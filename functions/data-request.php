@@ -1062,9 +1062,9 @@ global $current_user;
 		if (!empty($company->idprof4)) { $response['body'] .= '<br>RCS: '.$company->idprof4; }
 		if (!empty($company->tva_assuj)) { $response['body'] .= '<br>N° TVA: '.$company->tva_intra; }
 		if (!empty($company->note_private)) { $response['body'] .= '<br>'.$company->note_private; }
-		$response['body'] .= '</p><p><strong>'.__('Responsible for publishing', 'doliconnect').'</strong><br>'.$company->managers.'</p>';
+		if (!empty($company->managers)) $response['body'] .= '</p><p><strong>'.__('Responsible for publishing', 'doliconnect').'</strong><br>'.$company->managers;
 		if ( defined('PTIBOGXIV_NET') ) {
-			$response['body'] .= '<p><strong>'.__('Design & conception', 'doliconnect').'</strong><br>Thibault FOUCART - ptibogxiv.eu<br>
+			$response['body'] .= '</p><p><strong>'.__('Design & conception', 'doliconnect').'</strong><br>Thibault FOUCART - ptibogxiv.eu<br>
 			1 rue de la grande brasserie<br>
 			FR - 59000 LILLE - France<br>
 			SIRET: 83802482600011 - APE6201Z<br>
@@ -1076,6 +1076,7 @@ global $current_user;
 			N° de société: CH - 660 - 0059996 - 1<br>
 			Site Internet: <a href="https://www.infomaniak.com/goto/fr/home?utm_term=5de6793fdf41b">Infomaniak</a></p>';
 		}
+		$response['body'] .= '</p>';
 		wp_send_json_success($response);	
 		die();
 	} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "login" ) {
