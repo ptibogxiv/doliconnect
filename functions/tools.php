@@ -3027,7 +3027,7 @@ function doliModalButton($case, $id, $title, $type = 'button', $class = 'btn btn
         }).done(function(response) {
             if (response.success) { 
               if (document.getElementById("doliModalDiv")) {
-                document.getElementById("doliModalDiv").innerHTML = makeModal("'.$title.'",response.data.body,"Something footer");      
+                document.getElementById("doliModalDiv").innerHTML = makeModal("'.$title.'",response.data.body,response.data.footer);      
               }
               $("#doliModalTest").modal("show");
             } else {
@@ -3045,7 +3045,7 @@ function doliModalButton($case, $id, $title, $type = 'button', $class = 'btn btn
 
         });
    
-      function makeModal(header, body, footer = null) {
+      function makeModal(header, body, footer) {
         $modal = `<div id="doliModalTest" class="modal fade" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" style="display: none">
           <div class="modal-dialog modal-fullscreen-md-down modal-dialog-centered modal-dialog-scrollable" role="document"><div class="modal-content">
           <div class="modal-header"><h4 class="modal-title">${header}</h4><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div>
