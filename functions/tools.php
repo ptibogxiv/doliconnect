@@ -3059,7 +3059,7 @@ function doliModalButton($case, $id, $title) {
     });
   })(jQuery);';
   $button .= '</script>';
-  $button .= '<button id="buttonmodaltest" class="btn btn-primary" type="button">'.$title.'</button>';
+  $button .= '<button id="'.$id.'" class="btn btn-primary" type="button">'.$title.'</button>';
 
   return $button;
 }

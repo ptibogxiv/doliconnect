@@ -2783,8 +2783,7 @@ function generate_license($suffix = null) {
 
 print doliModalButton('legacy', 'buttonmodaltest', 'Test');
 
-//print generate_license();	 
-
+//print generate_license();
 
 }
 
