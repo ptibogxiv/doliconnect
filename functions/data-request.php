@@ -1077,6 +1077,7 @@ global $current_user;
 			Site Internet: <a href="https://www.infomaniak.com/goto/fr/home?utm_term=5de6793fdf41b">Infomaniak</a>';
 		}
 		$response['body'] .= '</p>';
+		$response['footer'] = null;
 		wp_send_json_success($response);	
 		die();
 	} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "login" ) {
@@ -1107,7 +1108,8 @@ global $current_user;
 		}      
 		
 		$response['body'] .= '</ul></div><div id="loadingSelectLang" style="display:none"><br><br><br><center><div class="align-middle"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div><h4>'.__('Loading', 'doliconnect').'</h4></div></center><br><br><br></div>';	
-		wp_send_json_success($response);	
+		$response['footer'] = null;
+		wp_send_json_success($response);
 		die();
 	} else {
 		wp_send_json_error( __( 'A security error occured', 'doliconnect'));	
