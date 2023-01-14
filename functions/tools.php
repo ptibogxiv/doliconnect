@@ -3004,20 +3004,44 @@ global $current_user;
 
 }
 
-function doliModalButton($case, $title) {
+function doliModalButton($case, $id, $title) {
 
   $button = '<script type="text/javascript">';
-  $button .= 'jQuery(document).ready(function($) {
-    document.querySelector("#buttonmodaltest").addEventListener("click", function() {
-      if (document.getElementById("doliModalDiv")) {
-        document.getElementById("doliModalDiv").innerHTML = makeModal("'.$title.'","Something body","Something footer");      
-      }
-      $("#doliModalTest").modal("show");
+  $button .= '(function ($) {
+    $(document).ready(function () {
+    document.querySelector("#'.$id.'").addEventListener("click", function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      var acase = $(this).val();
+          $.ajax({
+            url :"'.admin_url('admin-ajax.php').'",
+            type:"POST",
+            cache:false,
+            data: {
+              "action": "dolimodal_request",
+              "dolimodal-nonce": "'.wp_create_nonce( 'dolimodal-nonce').'",
+              "case": "'.$case.'",
+          },
+        }).done(function(response) {
+            if (response.success) { 
+              if (document.getElementById("doliModalDiv")) {
+                document.getElementById("doliModalDiv").innerHTML = makeModal("'.$title.'",response.data.body,"Something footer");      
+              }
+              $("#doliModalTest").modal("show");
+            } else {
+              if (document.getElementById("doliModalDiv")) {
+                document.getElementById("doliModalDiv").innerHTML = makeModal("'.$title.'","Something body","Something footer");      
+              }
+              $("#doliModalTest").modal("show");    
+            }
+
       $("#doliModalTest").on("hidden.bs.modal", function () {
         $("#doliModalTest").modal("dispose");
         document.getElementById("doliModalDiv").innerHTML = "";
       });
-      }, false);
+      }, false);          
+
+        });
    
       function makeModal(header, body, footer) {
         return `<div id="doliModalTest" class="modal fade" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" style="display: none">
@@ -3032,7 +3056,8 @@ function doliModalButton($case, $title) {
         </div>`;
       }
   
-  });';
+    });
+  })(jQuery);';
   $button .= '</script>';
   $button .= '<button id="buttonmodaltest" class="btn btn-primary" type="button">'.$title.'</button>';
 

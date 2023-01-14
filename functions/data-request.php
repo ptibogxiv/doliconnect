@@ -1023,3 +1023,29 @@ global $current_user;
 		die(); 
 	}
 }
+
+//*****************************************************************************************
+
+add_action('wp_ajax_dolimodal_request', 'dolimodal_request');
+add_action('wp_ajax_nopriv_dolimodal_request', 'dolimodal_request');
+
+function dolimodal_request(){
+global $current_user;
+	$response = array();	
+	if ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "legacy" ) {
+		$response['body'] = 'body message';
+		wp_send_json_success($response);	
+		die();
+	} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "login" ) {
+		$response['body'] = '';	
+		wp_send_json_success($response);	
+		die();
+	} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "selectlang" ) {
+		$response['body'] = '';	
+		wp_send_json_success($response);	
+		die();
+	} else {
+		wp_send_json_error( __( 'A security error occured', 'doliconnect'));	
+		die(); 
+	}
+}
