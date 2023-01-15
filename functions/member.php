@@ -233,7 +233,7 @@ print '<div class="modal fade" id="PaySubscriptionModal" data-bs-backdrop="stati
 </div><div class="modal-footer"><form id="subscribe-form" action="'.admin_url('admin-ajax.php').'" method="post">';
 print "<input type='hidden' name='action' value='dolimember_request'>";
 print "<input type='hidden' name='dolimember-nonce' value='".wp_create_nonce( 'dolimember-nonce')."'>";
-print "<script>";
+print '<script type="text/javascript">';
 print 'jQuery(document).ready(function($) {
 	
 	jQuery("#subscribe-form").on("submit", function(e) { 
