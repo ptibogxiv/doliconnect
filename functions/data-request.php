@@ -1082,6 +1082,7 @@ global $current_user;
 		wp_send_json_success($response);
 		die();
 	} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "renewmembership" ) {
+		$response['header'] = __( 'Pay my subscription', 'doliconnect');
 		$response['body'] = 'renewmembership';	
 		$response['footer'] = null;
 		wp_send_json_success($response);
