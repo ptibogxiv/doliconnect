@@ -1112,7 +1112,7 @@ global $current_user;
 		<h6>'.__( 'Next subscription', 'doliconnect').'</h6>
 		'.__( 'Price:', 'doliconnect').' '.doliprice($adherenttype->amount).'<br>
 		'.__( 'From', 'doliconnect').' '.wp_date('d/m/Y', $adherenttype->date_nextbegin).' '.__( 'until', 'doliconnect').' '.wp_date('d/m/Y', $adherenttype->date_nextend);	
-		$modal['footer'] = null;
+		$modal['footer'] = '<input type="hidden" name="update_membership" value="renew"><button class="btn btn-danger" type="submit">'.__( 'Add to basket', 'doliconnect').'</button>';
 		$response['js'] = null;
 		$response['modal'] = doliModalTemplate($modal['header'], $modal['body'], $modal['footer']);
 		wp_send_json_success($response);
