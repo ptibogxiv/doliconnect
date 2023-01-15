@@ -1031,6 +1031,7 @@ add_action('wp_ajax_nopriv_dolimodal_request', 'dolimodal_request');
 
 function dolimodal_request(){
 global $current_user;
+
 	$response = array();	
 	if ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "legacy" ) {
 		$response['header'] = __('Legal notice', 'doliconnect');
@@ -1062,6 +1063,15 @@ global $current_user;
 		wp_send_json_success($response);	
 		die();
 	} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "editmembership" ) {
+		$delay = dolidelay('member');
+		$request = "/adherentsplus/".doliconnector($current_user, 'fk_member'); 
+		if ( !empty(doliconnector($current_user, 'fk_member')) && doliconnector($current_user, 'fk_member') > 0 && doliconnector($current_user, 'fk_soc') > 0 ) {
+		  $adherent = callDoliApi("GET", $request, null, $delay);
+		} else {
+		  $adherent = null;
+		}
+
+
 		$response['body'] = 'editmembership';	
 		$response['footer'] = null;
 		wp_send_json_success($response);
