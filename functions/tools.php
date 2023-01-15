@@ -1258,7 +1258,7 @@ print '<div id="DoliconnectLoadingModal" class="modal fade bd-example-modal" tab
 }
 add_action( 'wp_footer', 'doliconnect_loading');
 
-function dolicart_modal() {
+function doliCartOffcanvas() {
 
 doliconnect_enqueues();
 
@@ -1271,7 +1271,7 @@ print '<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasDolicar
 print '<div id="DoliCartItemsList">'.doliconnect_CartItemsList().'</div>';
 print '</div></div>';
 }
-add_action( 'wp_footer', 'dolicart_modal');
+add_action( 'wp_footer', 'doliCartOffcanvas');
 
 function dolibug($msg = null, $request = null) {
 //header('Refresh: 180; URL='.esc_url(get_permalink()).'');
