@@ -433,7 +433,7 @@ function rewards_module($url) {
     
     $delay = DAY_IN_SECONDS;
     
-    $presence = callDoliApi("GET", "/assiduity/".constant("DOLIBARR_MEMBER"), null, dolidelay($delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+    $presence = callDoliApi("GET", "/assiduity/".doliconnector($current_user, 'fk_member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)), null, dolidelay($delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
     
     print "<ul class='list-group list-group-flush'><li class='list-group-item list-group-item-";
     if ($presence->actual0>=90 ) {
@@ -466,7 +466,7 @@ function rewards_module($url) {
     print "<div class='card-body'></div>";
     print '<div class="card-footer text-muted">';
     print "<small><div class='float-start'>";
-    print dolirefresh("/assiduity/".constant("DOLIBARR_MEMBER"), $url, $delay);
+    print dolirefresh("/assiduity/".doliconnector($current_user, 'fk_member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)), $url, $delay);
     print "</div><div class='float-end'>";
     print dolihelp('ISSUE');
     print "</div></small>";
