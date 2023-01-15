@@ -1080,6 +1080,7 @@ global $current_user;
 		wp_send_json_success($response);
 		die();
 	} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "resiliatemembership" ) {
+		$response['header'] = __( 'Resiliate', 'doliconnect');
 		$response['body'] = 'resiliatemembership';	
 		$response['footer'] = null;
 		wp_send_json_success($response);

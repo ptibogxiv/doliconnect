@@ -2115,6 +2115,7 @@ print '</button>';
     print doliModalButton('editmembership', 'editmembership', $title, 'button', 'btn btn text-white btn-warning'); 
     if ( $adherent->statut != '0' ) {
         print "<button class='btn btn-dark' type='submit'>".__( 'Resiliate', 'doliconnect')."</button>";
+        print doliModalButton('resiliatemembership', 'resiliatemembership', __( 'Resiliate', 'doliconnect'), 'button', 'btn btn-dark'); 
     }
     print '</div></div></form>';
 }
