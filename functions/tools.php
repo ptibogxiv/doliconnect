@@ -3040,7 +3040,7 @@ global $current_user;
 
 function doliModalTemplate($header, $body, $footer, $size = null, $headercss = null, $bodycss = null, $footercss = null) {
   $modal = '<div id="doliModalTest" class="modal fade" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" style="display: none">
-  <div class="modal-dialog modal-fullscreen-md-down modal-dialog-centered modal-dialog-scrollable" role="document"><div class="modal-content">
+  <div class="modal-dialog '.$size.' modal-fullscreen-md-down modal-dialog-centered modal-dialog-scrollable" role="document"><div class="modal-content">
   <div class="modal-header"><h5 class="modal-title '.$headercss.'">'.$header.'</h5><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div>
   <div class="modal-body '.$bodycss.'">'.$body.'</div>';
   if (!empty($footer)) $modal .= '<div class="modal-footer '.$footercss.'">'.$footer.'</div>';
