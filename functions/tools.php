@@ -3040,7 +3040,8 @@ global $current_user;
 
 function doliModalButton($case, $id, $title, $type = 'button', $class = 'btn btn-primary', $value1 = null, $value2 = null) {
 
-  $button = '<script type="text/javascript">';
+  $button = '<'.$type.' id="'.$id.'" class="'.$class.'" type="button">'.$title.'</'.$type.'>';
+  $button .= '<script type="text/javascript">';
   $button .= '(function ($) {
     $(document).ready(function () {
     document.querySelector("#'.$id.'").addEventListener("click", function(e) {
@@ -3092,7 +3093,6 @@ function doliModalButton($case, $id, $title, $type = 'button', $class = 'btn btn
     });
   })(jQuery);';
   $button .= '</script>';
-  $button .= '<'.$type.' id="'.$id.'" class="'.$class.'" type="button">'.$title.'</'.$type.'>';
 
   return $button;
 }
