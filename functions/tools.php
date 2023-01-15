@@ -404,8 +404,8 @@ function doliUserLang($user) {
 }
 
 function doliCompanyCard($company) {
-  $card = ''.$company->name.'
-  <br>'.$company->address.'
+  $card = $company->name;
+  $card .= '<br>'.$company->address.'
   <br>'.$company->zip.' '.$company->town.'
   <br>';
   if ( !empty($company->country_id) ) {  
