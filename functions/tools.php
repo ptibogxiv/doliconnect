@@ -3047,7 +3047,6 @@ function doliModalButton($case, $id, $title, $type = 'button', $class = 'btn btn
     document.querySelector("#'.$id.'").addEventListener("click", function(e) {
       e.preventDefault();
       e.stopPropagation();
-      var acase = $(this).val();
           $.ajax({
             url :"'.admin_url('admin-ajax.php').'",
             type:"POST",
@@ -3071,14 +3070,12 @@ function doliModalButton($case, $id, $title, $type = 'button', $class = 'btn btn
               }
               $("#doliModalTest").modal("show");    
             }
-
       $("#doliModalTest").on("hidden.bs.modal", function () {
         $("#doliModalTest").modal("dispose");
         document.getElementById("doliModalDiv").innerHTML = "";
       });
       }, false);          
-
-        });
+    });
    
       function makeModal(header, body, footer) {
         $modal = `<div id="doliModalTest" class="modal fade" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" style="display: none">
