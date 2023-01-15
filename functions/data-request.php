@@ -1101,6 +1101,12 @@ global $current_user;
 		$response['footer'] = null;
 		wp_send_json_success($response);
 		die();
+	} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "linkedmember" ) {
+		$response['header'] = __( 'New linked member', 'doliconnect');
+		$response['body'] = doliuserform( '', dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'member', doliCheckRights('adherent', 'creer'));	
+		$response['footer'] = null;
+		wp_send_json_success($response);
+		die();
 	} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "document" ) {
 		$response['body'] = 'document';	
 		$response['footer'] = null;

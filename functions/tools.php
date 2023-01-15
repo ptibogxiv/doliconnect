@@ -3034,7 +3034,7 @@ function doliModalButton($case, $id, $title, $type = 'button', $class = 'btn btn
               $("#doliModalTest").modal("show");
             } else {
               if (document.getElementById("doliModalDiv")) {
-                document.getElementById("doliModalDiv").innerHTML = makeModal("'.$title.'","Something body","Something footer");      
+                document.getElementById("doliModalDiv").innerHTML = makeModal("'.$title.'",response,"Something footer");      
               }
               $("#doliModalTest").modal("show");    
             }

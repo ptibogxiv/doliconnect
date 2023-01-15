@@ -2284,6 +2284,7 @@ print '<div class="card shadow-sm"><div class="card-header">'.__( 'Manage linked
 print "<ul class='list-group list-group-flush'>";
 
 if (doliconnector($current_user, 'fk_member') > 0 && !empty(get_option('doliconnectbeta'))) {
+print doliModalButton('linkedmember', 'addlinkedmember', __( 'New linked member', 'doliconnect'), 'button', 'list-group-item lh-condensed list-group-item-action list-group-item-primary');
 print '<button type="button" class="list-group-item lh-condensed list-group-item-action list-group-item-primary" data-bs-toggle="modal" data-bs-target="#addmember"><center><i class="fas fa-plus-circle"></i> '.__( 'New linked member', 'doliconnect').'</center></button>';
 print "<li class='list-group-item list-group-item-info'><i class='fas fa-info-circle'></i> <b>".__( 'Please contact us to link a pre-existing member', 'doliconnect')."</b></li>"; 
 
