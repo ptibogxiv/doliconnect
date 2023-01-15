@@ -191,9 +191,10 @@ if ( !empty(doliconnector($current_user, 'fk_member')) && doliconnector($current
   $adherent = null;
 }
 
+/*
 print "<div class='modal fade' id='activatemember' tabindex='-1' aria-labelledby='activatememberLabel' data-bs-backdrop='static' data-bs-keyboard='false' aria-hidden='true'>
 <div class='modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable modal-fullscreen-md-down'><div class='modal-content'><div class='modal-header'>";
-if ( !isset($adherent->datefin) || ( $adherent->datefin>current_time( 'timestamp',1)) || ( $adherent->datefin < current_time( 'timestamp',1)) ) {
+//if ( !isset($adherent->datefin) || ( $adherent->datefin>current_time( 'timestamp',1)) || ( $adherent->datefin < current_time( 'timestamp',1)) ) {
 $member_id = '';
 if (isset($adherent) && $adherent->id > 0) $member_id = "member_id=".$adherent->id;
 $morphy = '';
@@ -207,6 +208,7 @@ print dolimembertypelist($typeadhesion, $adherent);
 print '</div>';
 
 print "<div id='subscription-footer' class='modal-footer'><small class='text-justify'>".__( 'Note: the admins reserve the right to change your membership in relation to your personal situation. A validation of the membership may be necessary depending on the cases.', 'doliconnect')."</small></div></div></div></div>";
+*/
 
 if (isset($adherent) && !empty($adherent->typeid)) {
 $request= "/adherentsplus/type/".$adherent->typeid;
@@ -274,7 +276,8 @@ print "</script>";
 
 print '<input type="hidden" name="update_membership" value="renew"><button class="btn btn-danger" type="submit">'.__( 'Add to basket', 'doliconnect').'</button></form>
 </div></div></div></div>';
-}}
+//}
+}
 
 }}
 add_action( 'wp_footer', 'doliconnect_membership_modal');

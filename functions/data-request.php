@@ -1063,17 +1063,20 @@ global $current_user;
 		wp_send_json_success($response);	
 		die();
 	} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "editmembership" ) {
-		$delay = dolidelay('member');
 		$request = "/adherentsplus/".doliconnector($current_user, 'fk_member'); 
 		if ( !empty(doliconnector($current_user, 'fk_member')) && doliconnector($current_user, 'fk_member') > 0 && doliconnector($current_user, 'fk_soc') > 0 ) {
-		  $adherent = callDoliApi("GET", $request, null, $delay);
+		  $adherent = callDoliApi("GET", $request, null, dolidelay('member'));
 		} else {
 		  $adherent = null;
 		}
-
-
-		$response['body'] = 'editmembership';	
-		$response['footer'] = null;
+		$member_id = '';
+		if (isset($adherent) && $adherent->id > 0) $member_id = "member_id=".$adherent->id;
+		$morphy = '';
+		if (!empty($current_user->billing_type)) $morphy = "&sqlfilters=(t.morphy%3A=%3A'')%20or%20(t.morphy%3Ais%3Anull)%20or%20(t.morphy%3A%3D%3A'".$current_user->billing_type."')";
+		$typeadhesion = callDoliApi("GET", "/adherentsplus/type?sortfield=t.libelle&sortorder=ASC&".$member_id.$morphy, null, dolidelay('member'));
+		$response['header'] = __( 'Prices', 'doliconnect').' '.$typeadhesion[0]->season;
+		$response['body'] = dolimembertypelist($typeadhesion, $adherent);	
+		$response['footer'] = __( 'Note: the admins reserve the right to change your membership in relation to your personal situation. A validation of the membership may be necessary depending on the cases.', 'doliconnect');
 		wp_send_json_success($response);
 		die();
 	} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "resiliatemembership" ) {
