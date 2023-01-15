@@ -403,6 +403,38 @@ function doliUserLang($user) {
   return $lang;
 }
 
+function doliCompanyCard($company) {
+  $card = ''.$company->name.'
+  <br>'.$company->address.'
+  <br>'.$company->zip.' '.$company->town.'
+  <br>';
+  if ( !empty($company->country_id) ) {  
+  if ( function_exists('pll_the_languages') ) { 
+    $lang = pll_current_language('locale');
+  } else {
+    global $current_user;
+    $lang = $current_user->locale;
+  }
+  $country = callDoliApi("GET", "/setup/dictionary/countries/".$company->country_id."?lang=".$lang, null, dolidelay('constante'));
+  $card .= $country->label;
+  }
+  if ( !empty($company->state_id) ) {  
+    if ( function_exists('pll_the_languages') ) { 
+      $lang = pll_current_language('locale');
+    } else {
+      $lang = $current_user->locale;
+    }
+    $state = callDoliApi("GET", "/setup/dictionary/states/".$company->state_id."?lang=".$lang, null, dolidelay('constante'));
+    $card .= ' - '.$state->name;
+  }
+  if (!empty($company->idprof2)) { $card .= '<br>SIRET: '.$company->idprof2.' - APE: '.$company->idprof3; }
+  if (!empty($company->idprof4)) { $card .= '<br>RCS: '.$company->idprof4; }
+  if (!empty($company->tva_assuj)) { $card .= '<br>N° TVA: '.$company->tva_intra; }
+
+
+return $card;
+}
+
 function doliAjax($id, $url = null, $case = null){
   $ajax = "<input type='hidden' name='action' value='".$id."_request'>";
   if (!empty($case)) $ajax.= "<input type='hidden' name='case' value='".$case."'>";

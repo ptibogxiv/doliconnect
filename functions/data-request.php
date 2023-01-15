@@ -1035,33 +1035,8 @@ global $current_user;
 	if ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "legacy" ) {
 		$response['header'] = __('Legal notice', 'doliconnect');
 		$company = callDoliApi("GET", "/setup/company", null, dolidelay('constante'));
-		$response['body'] = '<p><strong>'.__('Editor', 'doliconnect').'</strong>
-		<br>'.$company->name.'
-		<br>'.$company->address.'
-		<br>'.$company->zip.' '.$company->town.'
-		<br>';
-		if ( !empty($company->country_id) ) {  
-		if ( function_exists('pll_the_languages') ) { 
-			$lang = pll_current_language('locale');
-		} else {
-			global $current_user;
-			$lang = $current_user->locale;
-		}
-		$country = callDoliApi("GET", "/setup/dictionary/countries/".$company->country_id."?lang=".$lang, null, dolidelay('constante'));
-		$response['body'] .= $country->label;
-		}
-		if ( !empty($company->state_id) ) {  
-			if ( function_exists('pll_the_languages') ) { 
-				$lang = pll_current_language('locale');
-			} else {
-				$lang = $current_user->locale;
-			}
-			$state = callDoliApi("GET", "/setup/dictionary/states/".$company->state_id."?lang=".$lang, null, dolidelay('constante'));
-			$response['body'] .= ' - '.$state->name;
-		}
-		if (!empty($company->idprof2)) { $response['body'] .= '<br>SIRET: '.$company->idprof2.' - APE: '.$company->idprof3; }
-		if (!empty($company->idprof4)) { $response['body'] .= '<br>RCS: '.$company->idprof4; }
-		if (!empty($company->tva_assuj)) { $response['body'] .= '<br>N° TVA: '.$company->tva_intra; }
+		$response['body'] .= '<p><strong>'.__('Editor', 'doliconnect').'</strong><br>';
+		$response['body'] .= doliCompanyCard($company);
 		if (!empty($company->note_private)) { $response['body'] .= '<br>'.$company->note_private; }
 		if (!empty($company->managers)) $response['body'] .= '</p><p><strong>'.__('Responsible for publishing', 'doliconnect').'</strong><br>'.$company->managers;
 		if ( defined('PTIBOGXIV_NET') ) {
