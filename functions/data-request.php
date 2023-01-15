@@ -1093,8 +1093,25 @@ global $current_user;
 		wp_send_json_success($response);
 		die();
 	} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "renewmembership" ) {
+		$request = "/adherentsplus/".doliconnector($current_user, 'fk_member'); 
+		if ( !empty(doliconnector($current_user, 'fk_member')) && doliconnector($current_user, 'fk_member') > 0 && doliconnector($current_user, 'fk_soc') > 0 ) {
+		  $adherent = callDoliApi("GET", $request, null, dolidelay('member'));
+		} else {
+		  $adherent = null;
+		}
+		$member_id = '';
+		if (isset($adherent) && $adherent->id > 0) $member_id = "member_id=".$adherent->id;
+		$morphy = '';
+		if (!empty($current_user->billing_type)) $morphy = "&sqlfilters=(t.morphy%3A=%3A'')%20or%20(t.morphy%3Ais%3Anull)%20or%20(t.morphy%3A%3D%3A'".$current_user->billing_type."')";
+		$typeadhesion = callDoliApi("GET", "/adherentsplus/type?sortfield=t.libelle&sortorder=ASC&".$member_id.$morphy, null, dolidelay('member'));
 		$modal['header'] = __( 'Pay my subscription', 'doliconnect');
-		$modal['body'] = 'renewmembership';	
+		$modal['body'] = '<h6>'.__( 'This subscription', 'doliconnect').'</h6>
+		'.__( 'Price:', 'doliconnect').' '.doliprice($adherenttype->price_prorata).'<br>
+		'.__( 'From', 'doliconnect').' '.wp_date('d/m/Y', $adherenttype->date_begin).' '.__( 'until', 'doliconnect').' '.wp_date('d/m/Y', $adherenttype->date_end).'
+		<hr>
+		<h6>'.__( 'Next subscription', 'doliconnect').'</h6>
+		'.__( 'Price:', 'doliconnect').' '.doliprice($adherenttype->amount).'<br>
+		'.__( 'From', 'doliconnect').' '.wp_date('d/m/Y', $adherenttype->date_nextbegin).' '.__( 'until', 'doliconnect').' '.wp_date('d/m/Y', $adherenttype->date_nextend);	
 		$modal['footer'] = null;
 		$response['js'] = null;
 		$response['modal'] = doliModalTemplate($modal['header'], $modal['body'], $modal['footer']);
