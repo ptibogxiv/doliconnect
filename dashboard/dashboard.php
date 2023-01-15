@@ -2131,32 +2131,6 @@ print do_action('mydoliconnectmemberform', $adherent);
 }
 print "</div>";
 
-if ( doliCheckRights('adherent', 'cotisation', 'lire') ) {
-print "<ul class='list-group list-group-flush'>";
-
-if (doliconnector($current_user, 'fk_member') > 0) {
-$listcotisation = callDoliApi("GET", "/members/".doliconnector($current_user, 'fk_member')."/subscriptions", null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-//print var_dump($listcotisation);
-} 
-
-if ( !isset($listcotisation->error) && $listcotisation != null ) { 
-foreach ( $listcotisation as $cotisation ) {                                                                                 
-$dated =  wp_date('d/m/Y', $cotisation->dateh);
-$datef =  wp_date('d/m/Y', $cotisation->datef);
-print "<li class='list-group-item'><table width='100%' border='0'><tr><td>";
-if ($cotisation->fk_type > 0) {
-$type= callDoliApi("GET", "/memberstypes/".$cotisation->fk_type, null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-}
-print doliproduct($type, 'label');
-print "</td><td>".$dated." ".__( 'to', 'doliconnect')." ".$datef;
-print "</td><td class='text-end'><b>".doliprice($cotisation->amount)."</b></td></tr></table><span></span></li>";
-}
-}
-else { 
-print "<li class='list-group-item list-group-item-light'><center>".__( 'No subscription', 'doliconnect')."</center></li>";
-}
-print '</ul>';
-}
 } else { 
 if ( doliconnector($current_user, 'fk_soc') > 0 ) {
 $thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
@@ -2168,7 +2142,33 @@ print "Pour adhérer, tous les champs doivent être renseignés dans vos <a href
 print "<button class='btn btn text-white btn-warning btn-block' data-bs-toggle='modal' data-bs-target='#activatemember'>".__( 'Become a member', 'doliconnect')."</button>";
 }
 print '</div>';
-}  
+} 
+
+if ( doliCheckRights('adherent', 'cotisation', 'lire') ) {
+    print "<ul class='list-group list-group-flush'>";
+    if (doliconnector($current_user, 'fk_member') > 0) {
+        $listcotisation = callDoliApi("GET", "/members/".doliconnector($current_user, 'fk_member')."/subscriptions", null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+        //print var_dump($listcotisation);
+    } 
+    if ( isset($listcotisation) && !isset($listcotisation->error) && $listcotisation != null ) { 
+    foreach ( $listcotisation as $cotisation ) {                                                                                 
+    $dated =  wp_date('d/m/Y', $cotisation->dateh);
+    $datef =  wp_date('d/m/Y', $cotisation->datef);
+    print "<li class='list-group-item'><table width='100%' border='0'><tr><td>";
+    if ($cotisation->fk_type > 0) {
+        $type= callDoliApi("GET", "/memberstypes/".$cotisation->fk_type, null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+    }
+    print doliproduct($type, 'label');
+    print "</td><td>".$dated." ".__( 'to', 'doliconnect')." ".$datef;
+    print "</td><td class='text-end'><b>".doliprice($cotisation->amount)."</b></td></tr></table><span></span></li>";
+    }
+    }
+    else { 
+        print "<li class='list-group-item list-group-item-light'><center>".__( 'No subscription', 'doliconnect')."</center></li>";
+    }
+    print '</ul>';
+}
+
 print '<div class="card-footer text-muted">';
 print "<small><div class='float-start'>";
 if ( isset($request) ) print dolirefresh($request, $url, dolidelay('member'), (isset($adherent)?$adherent:null));
