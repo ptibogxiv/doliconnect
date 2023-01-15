@@ -429,7 +429,7 @@ function doliCompanyCard($company) {
   }
   if (!empty($company->idprof2)) { $card .= '<br>SIRET: '.$company->idprof2.' - APE: '.$company->idprof3; }
   if (!empty($company->idprof4)) { $card .= '<br>RCS: '.$company->idprof4; }
-  if (!empty($company->tva_assuj)) { $card .= '<br>N° TVA: '.$company->tva_intra; }
+  if (!empty($company->tva_assuj) && !empty($company->tva_intra)) { $card .= '<br>N° TVA: '.$company->tva_intra; }
 
 
 return $card;
