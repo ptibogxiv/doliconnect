@@ -639,20 +639,7 @@ print "</div></div>";
 
 print "<div class='row mw-100'><div class='col-md-4'><h4>".__( 'Address', 'doliconnect')."</h4>";
 $company = callDoliApi("GET", "/setup/company", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-print $company->name.'<br>';
-if (isset($company->address) && !empty($company->address)) print $company->address.'<br>';
-if (isset($company->town) && !empty($company->town)) print $company->zip.' '.$company->town.'<br>';
-if ( isset($company->state_id) && !empty($company->state_id) ) {  
-  $state = callDoliApi("GET", "/setup/dictionary/states/".$company->state_id."?lang=".doliUserLang($current_user), null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))); 
-  print $state->name;
-}
-print ' - ';
-if ( isset($company->country_id) && !empty($company->country_id) ) {  
-  $country = callDoliApi("GET", "/setup/dictionary/countries/".$company->country_id."?lang=".doliUserLang($current_user), null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-  print $country->label;
-}
-print '<br>';
-if (isset($company->phone) && !empty($company->phone)) print $company->phone;
+print doliCompanyCard($company);
 print "<br><h4>".__( 'Opening hours', 'doliconnect')."</h4>";
 print __( 'Monday', 'doliconnect').": ".doliopeninghours('MAIN_INFO_OPENINGHOURS_MONDAY').'<br>';
 print __( 'Tuesday', 'doliconnect').": ".doliopeninghours('MAIN_INFO_OPENINGHOURS_TUESDAY').'<br>';
