@@ -1081,7 +1081,7 @@ global $current_user;
 		$modal['body'] = dolimembertypelist($typeadhesion, $adherent);	
 		$modal['footer'] = __( 'Note: the admins reserve the right to change your membership in relation to your personal situation. A validation of the membership may be necessary depending on the cases.', 'doliconnect');
 		$response['js'] = null;
-		$response['modal'] = doliModalTemplate($modal['header'], $modal['body'], $modal['footer'], 'modal-lg');
+		$response['modal'] = doliModalTemplate($modal['header'], $modal['body'], $modal['footer'], 'modal-lg', null, 'p-0');
 		wp_send_json_success($response);
 		die();
 	} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "resiliatemembership" ) {
