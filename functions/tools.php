@@ -599,7 +599,7 @@ $doliPassword .= 'function revealpwd0() {
 }';
 $doliPassword .= '</script>';
 
-$doliPassword .= '<li class="list-group-item list-group-item-light list-group-item-action">';
+$doliPassword .= '<li class="list-group-item list-group-item-light list-group-item-action"><i class="fa-solid fa-triangle-exclamation fa-fw fa-3x fa-beat-fade float-start text-danger"></i>';
 $dolipwd = doliconst("USER_PASSWORD_GENERATED", dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
   if ( $dolipwd == 'Perso' ) { 
     $pwdpattern = explode(";", doliconst("USER_PASSWORD_PATTERN", dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))));
