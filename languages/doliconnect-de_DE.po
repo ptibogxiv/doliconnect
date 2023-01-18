@@ -95,7 +95,7 @@ msgstr "Deaktivieren, wenn Ihre Vorlage sie bereits lädt"
 
 #: admin/admin.php:324
 msgid "Restricted mode"
-msgstr "Eingeschränkter Bereich"
+msgstr "Eingeschränkter Modus"
 
 #: admin/admin.php:325
 msgid ""
@@ -111,7 +111,7 @@ msgstr "Keine"
 
 #: admin/admin.php:345
 msgid "Dolibarr's entity"
-msgstr "Dolibarr-Einheit"
+msgstr "Dolibarr Mandant"
 
 #: admin/admin.php:367
 msgid "Anyone can register"
@@ -123,7 +123,7 @@ msgstr "Vorhandener Kunde/Lieferant auf Dolibarr kann sich registrieren"
 
 #: admin/admin.php:371
 msgid "B2B mode"
-msgstr "B2B Mod"
+msgstr "B2B Modus"
 
 #: admin/admin.php:372
 msgid "Display all prices excluding VAT"
@@ -135,7 +135,7 @@ msgstr "Anzeigen von Rechnungen im Menü aktivieren"
 
 #: admin/admin.php:379
 msgid "Personnal / Enterprise mode"
-msgstr "Personen- / Enterprise-Modus"
+msgstr "Personal- / Enterprise-Modus"
 
 #: admin/admin.php:388
 msgid "Kiosk mode"
@@ -315,7 +315,7 @@ msgstr "Produkt-ID"
 
 #: blocks/product/block.js:64 blocks/product/blocknew.js:64
 msgid "Hide addition to cart"
-msgstr "Ausblenden der Addition zum Warenkorb"
+msgstr "Hinzufügen zum Warenkorb ausblenden"
 
 #: blocks/product/block.js:71 blocks/product/blocknew.js:71
 msgid "Hide duration"
@@ -395,7 +395,7 @@ msgstr "Untertitel"
 
 #: blocks/profile/block.js:198
 msgid "Write a brief desc"
-msgstr "Schreiben Sie einen kurzen desc"
+msgstr "Schreiben Sie einen kurze Beschreibung"
 
 #: dashboard/dashboard.php:6 dashboard/dashboard.php:31
 msgid "Edit my informations"
@@ -514,7 +514,7 @@ msgstr "wird verarbeitet"
 
 #: dashboard/dashboard.php:567
 msgid "sign before"
-msgstr "Schild vor"
+msgstr "Unterschrift davor"
 
 #: dashboard/dashboard.php:571 dashboard/dashboard.php:704
 #: dashboard/dashboard.php:1018 dashboard/dashboard.php:1289
