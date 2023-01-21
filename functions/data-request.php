@@ -1069,7 +1069,7 @@ global $current_user;
 		$modal['body'] = 'body';
 		$modal['footer'] = null;
 		$response['js'] = null;
-		$response['modal'] = doliModalTemplate($modal['header'], $modal['body'], $modal['footer']);
+		$response['modal'] = doliModalTemplate($modal['header'], $modal['body'], $modal['footer'], null, null, 'flex-nowrap p-0');
 		wp_send_json_success($response);	
 		die();
 	} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "editmembership" ) {
@@ -1087,7 +1087,7 @@ global $current_user;
 		$modal['header'] = __( 'Prices', 'doliconnect').' '.$typeadhesion[0]->season;
 		$modal['body'] = dolimembertypelist($typeadhesion, $adherent);	
 		$modal['footer'] = __( 'Note: the admins reserve the right to change your membership in relation to your personal situation. A validation of the membership may be necessary depending on the cases.', 'doliconnect');
-		$response['js'] = null;
+		$response['js'] = esc_url( plugins_url( 'includes/js/gdrf-public.js', __FILE__ ) );
 		$response['modal'] = doliModalTemplate($modal['header'], $modal['body'], $modal['footer'], 'modal-lg', null, 'p-0');
 		wp_send_json_success($response);
 		die();
@@ -1109,10 +1109,8 @@ global $current_user;
 		$member_id = '';
 		$request= "/adherentsplus/type/".$adherent->typeid;
 		$adherenttype = callDoliApi("GET", $request, null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-		//print var_dump($adherenttype);
-		
 		if ( !doliversion('14.0.0') || !isset($adherenttype->amount)) {
-		$adherenttype->amount = $adherenttype->price;
+			$adherenttype->amount = $adherenttype->price;
 		}
 		$modal['header'] = __( 'Pay my subscription', 'doliconnect');
 		$modal['body'] = '<h6>'.__( 'This subscription', 'doliconnect').'</h6>
