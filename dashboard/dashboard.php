@@ -2001,7 +2001,6 @@ global $current_user;
 $time = current_time( 'timestamp',1);
 
 $request = "/adherentsplus/".doliconnector($current_user, 'fk_member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)); 
-
 $productadhesion = doliconst("ADHERENT_PRODUCT_ID_FOR_SUBSCRIPTIONS", dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 if ( isset($_POST["update_membership"]) && function_exists('doliconnect_membership') ) {
@@ -2010,7 +2009,7 @@ $adherent = doliconnect_membership($current_user, $_POST["update_membership"], $
 $request = "/adherentsplus/".doliconnector($current_user, 'fk_member', true); 
 
 print dolialert('success', __( 'Your membership has been updated.', 'doliconnect'));
-} 
+}
 
 print '<div class="card shadow-sm"><div class="card-header">'.__( 'Manage my subscription', 'doliconnect').'</div><div class="card-body">';
 
