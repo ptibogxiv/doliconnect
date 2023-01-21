@@ -2052,7 +2052,7 @@ if ( (isset($adherent->datecommitment) && current_time('timestamp') > $adherent-
 
 print "</div><div class='col-12 col-md-7'>";
 
-if ( function_exists('doliconnect_membership_modal') && doliCheckModules('commande') && !empty($productadhesion) ) {
+if ( doliCheckModules('commande') && !empty($productadhesion) ) {
 
     if ( $adherent->datefin == null && $adherent->statut == '0' ) {
         //print  "<a href='#' id='subscribe-button2' class='btn btn text-white btn-warning btn-block' data-bs-toggle='modal' data-bs-target='#activatemember'><b>".__( 'Become a member', 'doliconnect')."</b></a>";
