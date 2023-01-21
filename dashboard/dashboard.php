@@ -2100,7 +2100,8 @@ if ( function_exists('doliconnect_membership_modal') && doliCheckModules('comman
     }
 
 if ( ! empty($adherent) && $adherent->statut != '-2' ) {
-print '<form id="subscription-form" action="'.esc_url( add_query_arg( 'module', 'members', doliconnecturl('doliaccount')) ).'" method="post"><input type="hidden" name="update_membership" value="2"><div class="d-grid gap-2"><div class="btn-group" role="group" aria-label="Update membership">';
+//print '<form id="subscription-form" action="'.esc_url( add_query_arg( 'module', 'members', doliconnecturl('doliaccount')) ).'" method="post"><input type="hidden" name="update_membership" value="2">';
+print '<div class="d-grid gap-2"><div class="btn-group" role="group" aria-label="Update membership">';
 /*
 print '<button type="button" class="btn btn text-white btn-warning" data-bs-toggle="modal" data-bs-target="#activatemember"';
 if ( $adherent->statut == '-1' ) { print ' disabled'; }
@@ -2114,10 +2115,11 @@ print '</button>';
     }
     print doliModalButton('editmembership', 'editmembership', $title, 'button', 'btn btn text-white btn-warning'); 
     if ( $adherent->statut != '0' ) {
-        print "<button class='btn btn-dark' type='submit'>".__( 'Resiliate', 'doliconnect')."</button>";
+        //print "<button class='btn btn-dark' type='submit'>".__( 'Resiliate', 'doliconnect')."</button>";
         print doliModalButton('resiliatemembership', 'resiliatemembership', __( 'Resiliate', 'doliconnect'), 'button', 'btn btn-dark'); 
     }
-    print '</div></div></form>';
+    print '</div></div>';
+    //print '</form>';
 }
 
 print "</div></div>";
