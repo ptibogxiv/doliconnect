@@ -233,15 +233,17 @@ print '<div class="modal fade" id="PaySubscriptionModal" data-bs-backdrop="stati
 </div><div class="modal-footer"><form id="subscribe-form" action="'.admin_url('admin-ajax.php').'" method="post">';
 print "<input type='hidden' name='action' value='dolimember_request'>";
 print "<input type='hidden' name='dolimember-nonce' value='".wp_create_nonce( 'dolimember-nonce')."'>";
+
+
+print '<input type="hidden" name="update_membership" value="renew"><button class="btn btn-danger" type="submit">'.__( 'Add to basket', 'doliconnect').'</button></form>';
 print '<script type="text/javascript">';
 print 'jQuery(document).ready(function($) {
 	
 	jQuery("#subscribe-form").on("submit", function(e) { 
+  e.preventDefault();
+  e.stopPropagation();  
   jQuery("#PaySubscriptionModal").modal("hide");
   jQuery("#DoliconnectLoadingModal").modal("show");
-  e.preventDefault();
-  e.stopPropagation();
-
 	var $form = $(this);
   var url = "'.esc_url(doliconnecturl('dolicart')).'";
   jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function (e) {
@@ -274,9 +276,7 @@ print 'jQuery(document).ready(function($) {
 });
 });';
 print "</script>";
-
-print '<input type="hidden" name="update_membership" value="renew"><button class="btn btn-danger" type="submit">'.__( 'Add to basket', 'doliconnect').'</button></form>
-</div></div></div></div>';
+print '</div></div></div></div>';
 //}
 }
 
