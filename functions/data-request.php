@@ -1143,12 +1143,12 @@ global $current_user;
 		$response['modal'] = doliModalTemplate($modal['header'], $modal['body'], $modal['footer']);
 		wp_send_json_success($response);
 		die();
-	} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "selectlang" ) {
+	} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "doliSelectlang" ) {
 		$modal['header'] = __('Choose your language', 'doliconnect');
-		$modal['body'] = '<div class="card" id="SelectLangmodal-form"><ul class="list-group list-group-flush">';
+		$modal['body'] = '<div class="card" id="doliSelectlang-form"><ul class="list-group list-group-flush">';
 		$translations = pll_the_languages( array( 'post_id' => $_POST['value1'],'raw' => 1 ) );
 		foreach ($translations as $key => $value) {
-			$modal['body'] .= "<a href='".$value['url']."?".$_POST['value2']."' onclick='loadingSelectLangModal()' class='list-group-item list-group-item-light list-group-item-action";
+			$modal['body'] .= "<a href='".$value['url']."?".$_POST['value2']."' onclick='loadingDoliSelectlangModal()' class='list-group-item list-group-item-light list-group-item-action";
 			if ( $value['current_lang'] == true ) { $modal['body'] .= ' active'; }
 			$modal['body'] .= "'><span class='fi fi-".strtolower(substr($value['slug'], -2))."'></span> ".$value['name'];
 			if ( $value['current_lang'] == true ) { $modal['body'] .= ' <i class="fas fa-language fa-fw"></i>'; }
