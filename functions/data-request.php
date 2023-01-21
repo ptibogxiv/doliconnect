@@ -1107,10 +1107,13 @@ global $current_user;
 		  $adherent = null;
 		}
 		$member_id = '';
-		if (isset($adherent) && $adherent->id > 0) $member_id = "member_id=".$adherent->id;
-		$morphy = '';
-		if (!empty($current_user->billing_type)) $morphy = "&sqlfilters=(t.morphy%3A=%3A'')%20or%20(t.morphy%3Ais%3Anull)%20or%20(t.morphy%3A%3D%3A'".$current_user->billing_type."')";
-		$typeadhesion = callDoliApi("GET", "/adherentsplus/type?sortfield=t.libelle&sortorder=ASC&".$member_id.$morphy, null, dolidelay('member'));
+		$request= "/adherentsplus/type/".$adherent->typeid;
+		$adherenttype = callDoliApi("GET", $request, null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+		//print var_dump($adherenttype);
+		
+		if ( !doliversion('14.0.0') || !isset($adherenttype->amount)) {
+		$adherenttype->amount = $adherenttype->price;
+		}
 		$modal['header'] = __( 'Pay my subscription', 'doliconnect');
 		$modal['body'] = '<h6>'.__( 'This subscription', 'doliconnect').'</h6>
 		'.__( 'Price:', 'doliconnect').' '.doliprice($adherenttype->price_prorata).'<br>
