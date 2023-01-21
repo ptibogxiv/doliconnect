@@ -1061,8 +1061,15 @@ global $current_user;
 		wp_send_json_success($response);	
 		die();
 	} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "login" ) {
-		$response['body'] = 'login';	
-		$response['footer'] = null;
+		if ( empty(get_option('doliconnectrestrict')) ) {
+			$modal['header'] = __( 'Welcome', 'doliconnect');
+		} else {
+			$modal['header'] = __( 'Access restricted to users', 'doliconnect');
+		}
+		$modal['body'] = 'body';
+		$modal['footer'] = null;
+		$response['js'] = null;
+		$response['modal'] = doliModalTemplate($modal['header'], $modal['body'], $modal['footer']);
 		wp_send_json_success($response);	
 		die();
 	} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "editmembership" ) {
