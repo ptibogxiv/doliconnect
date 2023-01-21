@@ -1087,7 +1087,7 @@ global $current_user;
 		$modal['header'] = __( 'Prices', 'doliconnect').' '.$typeadhesion[0]->season;
 		$modal['body'] = dolimembertypelist($typeadhesion, $adherent);	
 		$modal['footer'] = __( 'Note: the admins reserve the right to change your membership in relation to your personal situation. A validation of the membership may be necessary depending on the cases.', 'doliconnect');
-		$response['js'] = esc_url( plugins_url( 'includes/js/gdrf-public.js', __FILE__ ) );
+		$response['js'] = plugins_url( 'doliconnect/includes/js/gdrf-public.js');
 		$response['modal'] = doliModalTemplate($modal['header'], $modal['body'], $modal['footer'], 'modal-lg', null, 'p-0');
 		wp_send_json_success($response);
 		die();

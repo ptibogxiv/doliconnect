@@ -3071,6 +3071,14 @@ function doliModalButton($case, $id, $title, $type = 'button', $class = 'btn btn
           },
         }).done(function(response) {
             if (response.success) { 
+              if (response.data.js) {
+                $.getScript( response.data.js ).done(function( script, textStatus ) {
+                  console.log( "succes js" );
+                })
+                .fail(function( jqxhr, settings, exception ) {
+                  console.log( "error js" );
+                });
+              }
               if (document.getElementById("doliModalDiv")) {
                 document.getElementById("doliModalDiv").innerHTML = response.data.modal;      
               }
