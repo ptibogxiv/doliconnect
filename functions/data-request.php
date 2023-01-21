@@ -1156,7 +1156,7 @@ global $current_user;
 		}      
 		$modal['body'] .= '</ul></div><div id="loadingSelectLang" style="display:none"><br><br><br><center><div class="align-middle"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div><h4>'.__('Loading', 'doliconnect').'</h4></div></center><br><br><br></div>';	
 		$modal['footer'] = null;
-		$response['js'] = null;
+		$response['js'] = plugins_url( 'doliconnect/includes/js/doliselectlang.js');
 		$response['modal'] = doliModalTemplate($modal['header'], $modal['body'], $modal['footer']);
 		wp_send_json_success($response);
 		die();

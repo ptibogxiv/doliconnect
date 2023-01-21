@@ -1,6 +1,8 @@
 ( function( $ ) {
 	'use strict';
 
+	jQuery(document).ready(function() {
+
 	jQuery("#subscribe-form").on("submit", function(e) { 
 		e.preventDefault();
 		e.stopPropagation();  
@@ -36,4 +38,6 @@
 			  }, "json");  
 		});
 	  });
+
+	});
 })( jQuery );
