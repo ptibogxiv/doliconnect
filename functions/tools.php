@@ -3051,7 +3051,7 @@ function doliModalTemplate($header, $body, $footer, $size = null, $headercss = n
 
 function doliModalButton($case, $id, $title, $type = 'button', $class = 'btn btn-primary', $value1 = null, $value2 = null) {
 
-  $button = '<'.$type.' id="'.$id.'" class="'.$class.'" type="button">'.$title.'</'.$type.'>';
+  $button = '<'.$type.' id="'.$id.'" class="'.$class.'" type="button">';
   $button .= '<script type="text/javascript">';
   $button .= '(function ($) {
     $(document).ready(function () {
@@ -3091,6 +3091,7 @@ function doliModalButton($case, $id, $title, $type = 'button', $class = 'btn btn
     });
   })(jQuery);';
   $button .= '</script>';
+  $button .= $title.'</'.$type.'>';
 
   return $button;
 }
