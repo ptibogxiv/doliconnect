@@ -1093,8 +1093,8 @@ global $current_user;
 		die();
 	} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "resiliatemembership" ) {
 		$modal['header'] = __( 'Resiliate', 'doliconnect');
-		$modal['body'] = 'resiliatemembership';	
-		$modal['footer'] = null;
+		$modal['body'] = null;	
+		$modal['footer'] = "<form id='subscription-form' action='".esc_url( add_query_arg( 'module', 'members', doliconnecturl('doliaccount')) )."' method='post'><input type='hidden' name='update_membership' value='2'><div class='d-grid gap-2'><button class='btn btn-danger' type='submit'>".__( 'Resiliate', 'doliconnect')."</button></div></form>";
 		$response['js'] = null;
 		$response['modal'] = doliModalTemplate($modal['header'], $modal['body'], $modal['footer']);
 		wp_send_json_success($response);
