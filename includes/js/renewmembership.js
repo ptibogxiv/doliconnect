@@ -8,7 +8,7 @@
 		e.stopPropagation();  
 		jQuery("#doliModalTest").modal("hide");
 		jQuery("#DoliconnectLoadingModal").modal("show");
-		  var $form = $(this);
+		var $form = $(this);
 		var url = "'.esc_url(doliconnecturl('dolicart')).'";
 		jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function (e) {
 			document.getElementById("message-dolicart").innerHTML = "";  
