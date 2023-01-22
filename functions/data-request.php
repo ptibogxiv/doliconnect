@@ -1066,10 +1066,65 @@ global $current_user;
 		} else {
 			$modal['header'] = __( 'Access restricted to users', 'doliconnect');
 		}
-		$modal['body'] = 'body';
-		$modal['footer'] = null;
+		$modal['body'] = '<b>'.get_option('doliaccountinfo').'</b>';
+
+		if ( ! function_exists('dolikiosk') || ( function_exists('dolikiosk') && empty(dolikiosk())) ) {
+			$modal['body'] .= socialconnect ( get_permalink() );
+		}
+		
+		if ( function_exists('secupress_get_module_option') && !empty(get_site_option('secupress_active_submodule_move-login')) && secupress_get_module_option('move-login_slug-login', null, 'users-login' )) {
+		  $login_url = site_url()."/".secupress_get_module_option('move-login_slug-login', null, 'users-login' ); 
+		} elseif (get_site_option('doliconnect_login')) {
+		  $login_url = site_url()."/".get_site_option('doliconnect_login');
+		} else {
+		  $login_url = site_url()."/wp-login.php"; }
+		if ( function_exists('dolikiosk') && ! empty(dolikiosk()) ) {
+		  $redirect_to=doliconnecturl('doliaccount');
+		} elseif (is_front_page()) {
+		  $redirect_to=home_url();
+		} else {
+		  $redirect_to=get_permalink();
+		}
+		
+		$modal['body'] .= "<form name='loginmodal-form' action='".$login_url."' method='post' class='was-validated'>";
+		
+		if  ( defined("DOLICONNECT_DEMO") ) {
+			$modal['body'] .= "<p><i class='fas fa-info-circle fa-beat'></i> <b>".__( 'Demo mode is activated', 'doliconnect')."</b></p>";
+		} 
+		$modal['body'] .= '<div class="form-floating mb-3"><input type="email" class="form-control" id="user_login" name="log" placeholder="name@example.com" value="';
+		if ( defined("DOLICONNECT_DEMO") && defined("DOLICONNECT_DEMO_EMAIL") && !empty(constant("DOLICONNECT_DEMO_EMAIL")) ) {
+			$modal['body'] .= constant("DOLICONNECT_DEMO_EMAIL");
+		}
+		$modal['body'] .= '" required autofocus><label for="user_login"><i class="fas fa-at fa-fw"></i> '.__( 'Email', 'doliconnect').'</label></div>';
+		
+		$modal['body'] .= '<div class="form-floating mb-3"><input type="password" class="form-control" id="user_pass" name="pwd" placeholder="Password" value="';
+		if ( defined("DOLICONNECT_DEMO") && defined("DOLICONNECT_DEMO_PASSWORD") && !empty(constant("DOLICONNECT_DEMO_PASSWORD")) ) {
+			$modal['body'] .= constant("DOLICONNECT_DEMO_PASSWORD");
+		}
+		$modal['body'] .= '" required><label for="user_pass"><i class="fas fa-key fa-fw"></i> '.__( 'Password', 'doliconnect').'</label></div>';
+		
+		do_action( 'login_form' );
+		
+		$modal['body'] .= '<div class="form-check float-start">
+		  <input class="form-check-input" type="checkbox" name="rememberme" value="forever" id="rememberme" checked>
+		  <label class="form-check-label" for="rememberme">'.__( 'Remember me', 'doliconnect').'</label>
+		</div>';
+		
+		$modal['body'] .= "<a class='float-end' href='".wp_lostpassword_url(get_permalink())."' role='button' title='".__( 'Forgot password?', 'doliconnect')."'><small>".__( 'Forgot password?', 'doliconnect')."</small></a>"; 
+		
+		$modal['body'] .= "<input type='hidden' value='".$redirect_to."' name='redirect_to'>";
+		if ( get_site_option('doliconnect_mode') == 'one' && function_exists('switch_to_blog') ) {
+			switch_to_blog(1);
+		} 
+		if ((!is_multisite() && get_option( 'users_can_register' )) || ((!is_multisite() && get_option( 'dolicustsupp_can_register' )) || ((get_option( 'dolicustsupp_can_register' ) || get_option('users_can_register') == '1') && (get_site_option( 'registration' ) == 'user' || get_site_option( 'registration' ) == 'all')))) {
+			$modal['footer'] =  "<a class='btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0 border-end' href='".wp_registration_url(get_permalink())."' role='button' title='".__( 'Create an account', 'doliconnect')."'><small>".__( 'Create an account', 'doliconnect')."</small></a>";
+		}
+		if (get_site_option('doliconnect_mode')=='one') {
+			restore_current_blog();
+		}
+		$modal['footer'] .= '<button class="btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0" type="submit" value="submit"><strong>'.__( 'Sign in', 'doliconnect').'</strong></button></form>';
 		$response['js'] = null;
-		$response['modal'] = doliModalTemplate($modal['header'], $modal['body'], $modal['footer'], null, null, 'flex-nowrap p-0');
+		$response['modal'] = doliModalTemplate($modal['header'], $modal['body'], $modal['footer'], null, null, null, 'flex-nowrap p-0');
 		wp_send_json_success($response);	
 		die();
 	} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "editmembership" ) {
