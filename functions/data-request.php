@@ -1086,8 +1086,6 @@ global $current_user;
 		  $redirect_to=get_permalink();
 		}
 		
-		$modal['body'] .= "<form name='loginmodal-form' action='".$login_url."' method='post' class='was-validated'>";
-		
 		if  ( defined("DOLICONNECT_DEMO") ) {
 			$modal['body'] .= "<p><i class='fas fa-info-circle fa-beat'></i> <b>".__( 'Demo mode is activated', 'doliconnect')."</b></p>";
 		} 
@@ -1103,7 +1101,7 @@ global $current_user;
 		}
 		$modal['body'] .= '" required><label for="user_pass"><i class="fas fa-key fa-fw"></i> '.__( 'Password', 'doliconnect').'</label></div>';
 		
-		//do_action( 'login_form' );
+		do_action( 'login_form' );
 		
 		$modal['body'] .= '<div class="form-check float-start">
 		  <input class="form-check-input" type="checkbox" name="rememberme" value="forever" id="rememberme" checked>
@@ -1123,9 +1121,9 @@ global $current_user;
 		if (get_site_option('doliconnect_mode')=='one') {
 			restore_current_blog();
 		}
-		$modal['body'] .= '<button class="btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0" type="submit" value="submit"><strong>'.__( 'Sign in', 'doliconnect').'</strong></button></form>';
+		$modal['footer'] .= '<button class="btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0" type="submit" value="submit"><strong>'.__( 'Sign in', 'doliconnect').'</strong></button>';
 		$response['js'] = plugins_url( 'doliconnect/includes/js/doligeneric.js');
-		$response['modal'] = doliModalTemplate($modal['header'], $modal['body'], $modal['footer'], null, null, null, 'flex-nowrap p-0');
+		$response['modal'] = doliModalTemplate($modal['header'], $modal['body'], $modal['footer'], null, null, null, 'flex-nowrap p-0', $login_url);
 		wp_send_json_success($response);	
 		die();
 	} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "editmembership" ) {
