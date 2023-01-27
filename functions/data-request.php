@@ -1123,7 +1123,7 @@ global $current_user;
 		if (get_site_option('doliconnect_mode')=='one') {
 			restore_current_blog();
 		}
-		$modal['footer'] .= '<button class="btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0" type="submit" value="submit"><strong>'.__( 'Sign in', 'doliconnect').'</strong></button></form>';
+		$modal['body'] .= '<button class="btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0" type="submit" value="submit"><strong>'.__( 'Sign in', 'doliconnect').'</strong></button></form>';
 		$response['js'] = plugins_url( 'doliconnect/includes/js/doligeneric.js');
 		$response['modal'] = doliModalTemplate($modal['header'], $modal['body'], $modal['footer'], null, null, null, 'flex-nowrap p-0');
 		wp_send_json_success($response);	
