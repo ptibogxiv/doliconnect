@@ -3007,7 +3007,13 @@ function doliModalTemplate($header, $body, $footer, $size = null, $headercss = n
 }
 
 function doliModalButton($case, $id, $title, $type = 'button', $class = 'btn btn-primary', $value1 = null, $value2 = null) {
-
+  if ( function_exists('dolikiosk') && !empty(dolikiosk()) ) {
+    $redirect_to=doliconnecturl('doliaccount');
+  } elseif (is_front_page()) {
+    $redirect_to=home_url();
+  } else {
+    $redirect_to=get_permalink();
+  }
   $button = '<'.$type.' id="'.$id.'" class="'.$class.'" type="button">';
   $button .= '<script type="text/javascript">';
   $button .= '(function ($) {
@@ -3025,6 +3031,7 @@ function doliModalButton($case, $id, $title, $type = 'button', $class = 'btn btn
               "case": "'.$case.'",
               "value1": "'.$value1.'",
               "value2": "'.$value2.'",
+              "redirect_to": "'.$redirect_to.'",
           },
         }).done(function(response) {
             if (response.success) { 

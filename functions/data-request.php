@@ -1078,14 +1078,6 @@ global $current_user;
 		  $login_url = site_url()."/".get_site_option('doliconnect_login');
 		} else {
 		  $login_url = site_url()."/wp-login.php"; }
-		if ( function_exists('dolikiosk') && ! empty(dolikiosk()) ) {
-		  $redirect_to=doliconnecturl('doliaccount');
-		} elseif (is_front_page()) {
-		  $redirect_to=home_url();
-		} else {
-		  $redirect_to=get_permalink();
-		}
-		
 		if  ( defined("DOLICONNECT_DEMO") ) {
 			$modal['body'] .= "<p><i class='fas fa-info-circle fa-beat'></i> <b>".__( 'Demo mode is activated', 'doliconnect')."</b></p>";
 		} 
@@ -1110,7 +1102,7 @@ global $current_user;
 		
 		$modal['body'] .= "<a class='float-end' href='".wp_lostpassword_url(get_permalink())."' role='button' title='".__( 'Forgot password?', 'doliconnect')."'><small>".__( 'Forgot password?', 'doliconnect')."</small></a>"; 
 		
-		$modal['body'] .= "<input type='hidden' value='".$redirect_to."' name='redirect_to'>";
+		$modal['body'] .= "<input type='hidden' value='".$_POST['redirect_to']."' name='redirect_to'>";
 		if ( get_site_option('doliconnect_mode') == 'one' && function_exists('switch_to_blog') ) {
 			switch_to_blog(1);
 		}
