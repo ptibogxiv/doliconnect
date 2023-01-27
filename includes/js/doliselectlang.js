@@ -4,7 +4,7 @@
 	jQuery(document).ready(function() {
 
 		function loadingDoliSelectlangModal() {
-			alert("tet");
+			alert("test");
 			//jQuery("#doliModalTest").modal("hide");
 			//jQuery("#DoliconnectLoadingModal").modal("show");
 		}

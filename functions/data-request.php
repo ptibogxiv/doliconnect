@@ -1066,7 +1066,7 @@ global $current_user;
 		} else {
 			$modal['header'] = __( 'Access restricted to users', 'doliconnect');
 		}
-		$modal['body'] = '<b>'.get_option('doliaccountinfo').'</b>';
+		if (!empty(get_option('doliaccountinfo'))) $modal['body'] = '<b>'.get_option('doliaccountinfo').'</b>';
 
 		if ( ! function_exists('dolikiosk') || ( function_exists('dolikiosk') && empty(dolikiosk())) ) {
 			$modal['body'] .= socialconnect ( get_permalink() );
@@ -1103,7 +1103,7 @@ global $current_user;
 		}
 		$modal['body'] .= '" required><label for="user_pass"><i class="fas fa-key fa-fw"></i> '.__( 'Password', 'doliconnect').'</label></div>';
 		
-		do_action( 'login_form' );
+		//do_action( 'login_form' );
 		
 		$modal['body'] .= '<div class="form-check float-start">
 		  <input class="form-check-input" type="checkbox" name="rememberme" value="forever" id="rememberme" checked>
@@ -1115,9 +1115,10 @@ global $current_user;
 		$modal['body'] .= "<input type='hidden' value='".$redirect_to."' name='redirect_to'>";
 		if ( get_site_option('doliconnect_mode') == 'one' && function_exists('switch_to_blog') ) {
 			switch_to_blog(1);
-		} 
+		}
+		$modal['footer'] = null;
 		if ((!is_multisite() && get_option( 'users_can_register' )) || ((!is_multisite() && get_option( 'dolicustsupp_can_register' )) || ((get_option( 'dolicustsupp_can_register' ) || get_option('users_can_register') == '1') && (get_site_option( 'registration' ) == 'user' || get_site_option( 'registration' ) == 'all')))) {
-			$modal['footer'] =  "<a class='btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0 border-end' href='".wp_registration_url(get_permalink())."' role='button' title='".__( 'Create an account', 'doliconnect')."'><small>".__( 'Create an account', 'doliconnect')."</small></a>";
+			$modal['footer'] .=  "<a class='btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0 border-end' href='".wp_registration_url(get_permalink())."' role='button' title='".__( 'Create an account', 'doliconnect')."'><small>".__( 'Create an account', 'doliconnect')."</small></a>";
 		}
 		if (get_site_option('doliconnect_mode')=='one') {
 			restore_current_blog();
