@@ -209,8 +209,6 @@ print dolialert ('success', __( 'Your informations have been updated.', 'dolicon
 
 print "<form action='".$url."' id='doliconnect-avatarform' method='post' class='was-validated' enctype='multipart/form-data'><input type='hidden' name='case' value='updateavatar'>";
 
-//print doliloaderscript('doliconnect-avatarform');
-
 print '<div class="card shadow-sm"><div class="card-header">'.__( 'Edit my avatar', 'doliconnect').'</div>';
 print '<ul class="list-group list-group-flush"><li class="list-group-item">';
 
@@ -225,21 +223,6 @@ print '<div class="input-group"><div class="input-group-text">
 </div>
 <input type="text" class="form-control" aria-label="Text input with radio button" value="'.__( 'Delete your picture', 'doliconnect').'" readonly>
 </div>';
-
-/*
-print '<div class="mb-2">
-<label for="inputavatar" name="inputavatar" class="form-label">'.__( 'Select a file', 'doliconnect').'</label>
-<input class="form-control" type="file" id="inputavatar" name="inputavatar" accept="image/*">
-</div>';
-
-print "<small id='infoavatar' class='form-text text-muted text-justify'>".__( 'Your avatar must be a .jpg/.jpeg file, <10Mo and 350x350pixels minimum.', 'doliconnect')."</small>";
-
-print "<div class='form-check'><input type='checkbox' class='form-check-input' id='deleteavatar' name='deleteavatar' value='delete' ";
-if ( isset($nam) && null == $current_user->$nam ) {
-print " disabled='disabled'";
-}
-print "><label class='form-checklabel' for='deleteavatar'>".__( 'Delete your picture', 'doliconnect')."</label></div>";
-*/
 
 print '</li>';
 print "</ul><div class='card-body'><input type='hidden' name='userid' value='$ID'><div class='d-grid gap-2'><button class='btn btn-outline-secondary' type='submit'>".__( 'Update', 'doliconnect')."</button></div></div>";
@@ -2275,8 +2258,6 @@ $linkedmember= callDoliApi("GET", $request, null, dolidelay('member', esc_attr(i
 }
 
 print "<form role='form' action='$url' id='doliconnect-linkedmembersform' method='post'>";                      
-
-//print doliloaderscript('doliconnect-linkedmembersform');
  
 print '<div class="card shadow-sm"><div class="card-header">'.__( 'Manage linked members', 'doliconnect').'</div>';
 print "<ul class='list-group list-group-flush'>";
