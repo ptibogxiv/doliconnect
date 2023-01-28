@@ -3118,6 +3118,7 @@ $year = strftime("%Y", current_time( 'timestamp', 1));
 
 print '<div id="doliModalDiv"></div>';
 
+/*
 if ( (!is_user_logged_in() || !is_user_member_of_blog( $current_user->ID, get_current_blog_id())) && (get_option('doliloginmodal') == '1') ) {
 
 doliconnect_enqueues();
@@ -3204,6 +3205,7 @@ do_action( 'login_footer' );
 //}
 
 }
+*/
 
 }
 add_action( 'wp_footer', 'doliconnect_modalform' );
