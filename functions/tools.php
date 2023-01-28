@@ -1438,7 +1438,8 @@ function dolialert($type, $msg) {
     $dismissible = false;
   }
   $alert .= ' '.$msg;
-  if ($dismissible) $alert .= '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
+  if ($dismissible) $alert .= '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
+  $alert .= '</div>';
   return $alert;
 }
 
