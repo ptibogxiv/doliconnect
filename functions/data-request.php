@@ -1061,17 +1061,12 @@ global $current_user;
 		wp_send_json_success($response);	
 		die();
 	} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "login" ) {
-		if ( empty(get_option('doliconnectrestrict')) ) {
-			$modal['header'] = __( 'Welcome', 'doliconnect');
-		} else {
-			$modal['header'] = __( 'Access restricted to users', 'doliconnect');
-		}
-		if (!empty(get_option('doliaccountinfo'))) $modal['body'] = '<b>'.get_option('doliaccountinfo').'</b>';
-
+		$modal['header'] = __( 'Welcome', 'doliconnect');
+		$modal['body'] = null;
+		if (!empty(get_option('doliaccountinfo'))) $modal['body'] .= '<b>'.get_option('doliaccountinfo').'</b>';
 		if ( ! function_exists('dolikiosk') || ( function_exists('dolikiosk') && empty(dolikiosk())) ) {
 			$modal['body'] .= socialconnect ( get_permalink() );
 		}
-		
 		if ( function_exists('secupress_get_module_option') && !empty(get_site_option('secupress_active_submodule_move-login')) && secupress_get_module_option('move-login_slug-login', null, 'users-login' )) {
 		  $login_url = site_url()."/".secupress_get_module_option('move-login_slug-login', null, 'users-login' ); 
 		} elseif (get_site_option('doliconnect_login')) {
