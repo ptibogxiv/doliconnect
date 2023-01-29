@@ -1273,7 +1273,8 @@ if ( isset($ref) && isset($fichier) && isset($doc->content) ) {
 $data = "data:application/pdf;".$doc->encoding.",".$doc->content;
 $filename = explode(".", $doc->filename)[0];
 
-if (!empty(get_option('doliconnectbeta'))) {
+/*if (!empty(get_option('doliconnectbeta'))) {
+
 $document = '<button type="button" class="btn btn btn-outline-dark btn-sm btn-block" data-bs-toggle="modal" data-bs-target=".modal-'.$filename.'">'.$name.' <i class="fas fa-file-download"></i></button>';
 //$test = "<embed id=\pdfID\' type=\'text/html\' width=\'100%\' height=\'600\' src=\'https://mozilla.github.io/pdf.js/web/viewer.html\'/>";
 
@@ -1290,7 +1291,7 @@ $document .= 'jQuery(document).ready(function($) {
       
           <div class="modal-content"><div class="modal-header"><h4 class="modal-title">${title}</h4>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div><iframe class="pdfjs-viewer" style="width:100%;height:70vh" src="'.plugins_url("doliconnect/includes/pdfjs/web/viewer.html").'?file=" id="pdfjsframe-'.$filename.'"></iframe>
+            </div><iframe class="pdfjs-viewer" style="width:100%;height:70vh" src="'.plugins_url("doliconnect/includes/pdfjs/web/viewer.html").'?file='.$data.'" id="pdfjsframe-'.$filename.'"></iframe>
             ${text}
             <div class="modal-footer">
             <a href="'.$data.'" role="button" class="btn btn btn-outline-dark btn-sm btn-block" download="'.$doc->filename.'">'.__( 'Download', 'doliconnect').' <i class="fas fa-file-download"></i></a>
@@ -1302,7 +1303,8 @@ $document .= 'jQuery(document).ready(function($) {
 
 });';
 $document .= '</script>';
-$document .= '<button id="buttonmodaltest-'.$filename.'" class="btn btn btn-outline-dark btn-sm btn-block" type="button">'.$name.' <i class="fas fa-file-download"></i></button>';
+*/
+//$document = '<button id="buttonmodaltest-'.$filename.'" class="btn btn btn-outline-dark btn-sm btn-block" type="button">'.$name.' <i class="fas fa-file-download"></i></button>';
 
 /*
 $document .= '<div><iframe id="pdf-js-viewer" src="'.plugins_url("doliconnect/includes/pdfjs/web/viewer.html").'" title="webviewer" frameborder="0" width="500" height="600"></iframe></div>';
@@ -1317,9 +1319,9 @@ document.getElementById("pdfjsframe-'.$filename.'").contentWindow.PDFViewerAppli
 </script>';
 $document .= '</div></div></div></div>';
 */
-} else {
+//} else {
 $document = '<a href="'.$data.'" role="button" class="btn '.$style.'" download="'.$doc->filename.'">'.$name.' <i class="fas fa-file-download"></i></a>';
-}
+//}
 } else {
 $document = '<button class="btn '.$style.'" disabled>'.$name.' <i class="fas fa-file-download"></i></button>';
 }
