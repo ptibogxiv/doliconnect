@@ -3113,7 +3113,7 @@ function doliAjax($id, $url = null, $case = null){
 return $ajax;
 }
 
-function doliconnect_modalform() {
+function doliModalDiv() {
 global $current_user;
 $year = strftime("%Y", current_time( 'timestamp', 1));
 
@@ -3209,6 +3209,6 @@ do_action( 'login_footer' );
 */
 
 }
-add_action( 'wp_footer', 'doliconnect_modalform' );
+add_action( 'wp_footer', 'doliModalDiv' );
 
 ?>
