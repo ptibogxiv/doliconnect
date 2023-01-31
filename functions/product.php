@@ -328,7 +328,6 @@ return $mstock['stock'];
 function doliProductCart($product, $refresh = null, $line = null) {
 
   $button = '<form id="doliform-product-'.$product->id.'" method="post">';
-
   $button .= '<script type="text/javascript">';
   $button .= '
   (function ($) {
