@@ -17,9 +17,8 @@
 			  if (document.getElementById("message-dolicart")) {
 				document.getElementById("message-dolicart").innerHTML = response.data.message;      
 			  }
-			  $("#offcanvasDolicart").offcanvas("show");  
 			} else {
-			  //console.log("error updating qty " + response.data.message);
+			  //error
 			}
 			$("#DoliconnectLoadingModal").modal("hide");
 			  }, "json");  
