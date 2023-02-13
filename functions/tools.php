@@ -1007,9 +1007,9 @@ $doliuser .= '</script>';
 
 $doliuser .= '</div><div class="row g-2">';
   
-  $doliuser .= '<div class="col-12 col-md"><div class="form-floating" id="ziptown_form">';
-  $doliuser .= doliSelectForm("ziptown", "/setup/dictionary/towns?sortfield=town&sortorder=ASC&active=1&limit=1000&sqlfilters=(t.fk_pays%3A%3D%3A'".(isset($object->country_id) ? $object->country_id : $company->country_id)."')%20AND%20(t.fk_county%3A%3D%3A'".(isset($object->state_id) ? $object->state_id : null)."')", __( '- Select your town -', 'doliconnect'), __( 'Town', 'doliconnect'), (isset($object->zip) ? $object->zip : null).','.(isset($object->town) ? $object->town : null), $idobject, $rights);
-  $doliuser .= '</div></div>';
+$doliuser .= '<div class="col-12 col-md"><div class="form-floating" id="ziptown_form">';
+$doliuser .= doliSelectForm("ziptown", "/setup/dictionary/towns?sortfield=town&sortorder=ASC&active=1&limit=1000&sqlfilters=(t.fk_pays%3A%3D%3A'".(isset($object->country_id) ? $object->country_id : $company->country_id)."')%20AND%20(t.fk_county%3A%3D%3A'".(isset($object->state_id) ? $object->state_id : null)."')", __( '- Select your town -', 'doliconnect'), __( 'Town', 'doliconnect'), (isset($object->zip) ? $object->zip : null).','.(isset($object->town) ? $object->town : null), $idobject, $rights);
+$doliuser .= '</div></div>';
 
 $doliuser .= "</div></li>";
 
