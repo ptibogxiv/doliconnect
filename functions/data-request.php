@@ -1176,8 +1176,9 @@ global $current_user;
 			$modal['header'] = __( 'New linked member', 'doliconnect');
 			$object = null;
 		}
-		$modal['body'] = doliuserform( $object, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'member', doliCheckRights('adherent', 'creer'));	
-		$modal['footer'] = null;
+		$modal['body'] = '<form id="member-form" action="'.admin_url('admin-ajax.php').'" method="post" class="was-validated">';
+		$modal['body'] .= doliuserform( $object, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'member', doliCheckRights('adherent', 'creer'));	
+		$modal['footer'] = '<button class="btn btn-danger" type="submit">'.__( 'Submit', 'doliconnect').'</button></form>';
 		$response['js'] = null;
 		$response['modal'] = doliModalTemplate($modal['header'], $modal['body'], $modal['footer'], 'modal-lg', null, 'p-0');
 		wp_send_json_success($response);
