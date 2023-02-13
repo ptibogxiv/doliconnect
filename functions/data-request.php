@@ -1018,8 +1018,8 @@ global $current_user;
 		wp_send_json_error( $response ); 
 		die(); 
 	}
-	} elseif ( isset($_POST['dolimember-nonce']) && wp_verify_nonce( trim($_POST['dolimember-nonce']), 'dolimember-nonce') && isset($_POST['case']) && $_POST['case'] == "subscription" ) {
-		$member=$_POST['thirdparty'][''.trim($_POST['memberid']).''];
+	} elseif ( isset($_POST['dolimember-nonce']) && wp_verify_nonce( trim($_POST['dolimember-nonce']), 'dolimember-nonce') && isset($_POST['case']) && $_POST['case'] == "update" ) {
+		$member=$_POST['member'][''.trim($_POST['memberid']).''];
 		$member = dolisanitize($member);
 		if (empty($member['no_email'])) {
 			$member['no_email'] = true;
@@ -1027,11 +1027,13 @@ global $current_user;
 			$member['no_email'] = false;
 		}
 		
-		if (NULL != doliconnector($current_user, 'fk_member')) { 
+		if (isset($_POST['memberid']) && trim($_POST['memberid']) > 0) { 
 			$object = callDoliApi("PUT", "/members/".trim($_POST['memberid']), $member, 0);
 		}
-
-		wp_send_json_success();	
+		$response = [
+			'message' => 'success',
+		];	
+		wp_send_json_success($response);	
 		die(); 
 	} else {
 		wp_send_json_error( __( 'A security error occured', 'doliconnect'));	
