@@ -1019,10 +1019,16 @@ global $current_user;
 		die(); 
 	}
 	} elseif ( isset($_POST['dolimember-nonce']) && wp_verify_nonce( trim($_POST['dolimember-nonce']), 'dolimember-nonce') && isset($_POST['case']) && $_POST['case'] == "subscription" ) {
-
+		$member=$_POST['thirdparty'][''.doliconnector($current_user, 'fk_soc').''];
+		$member = dolisanitize($member);
+		if (empty($member['no_email'])) {
+			$member['no_email'] = true;
+		} else {
+			$member['no_email'] = false;
+		}
+		
 		if (NULL != doliconnector($current_user, 'fk_member')) { 
-			$object = callDoliApi("PUT", "/members/".doliconnector($current_user, 'fk_member'), $object, 0);
-			//update_user_meta( $current_user->ID, 'billing_birth', $current_user->billing_birth);
+			$object = callDoliApi("PUT", "/members/".doliconnector($current_user, 'fk_member'), $member, 0);
 		}
 
 		wp_send_json_success();	
