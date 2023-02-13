@@ -1018,6 +1018,15 @@ global $current_user;
 		wp_send_json_error( $response ); 
 		die(); 
 	}
+	} elseif ( isset($_POST['dolimember-nonce']) && wp_verify_nonce( trim($_POST['dolimember-nonce']), 'dolimember-nonce') && isset($_POST['case']) && $_POST['case'] == "subscription" ) {
+
+		if (NULL != doliconnector($current_user, 'fk_member')) { 
+			$object = callDoliApi("PUT", "/members/".doliconnector($current_user, 'fk_member'), $object, 0);
+			//update_user_meta( $current_user->ID, 'billing_birth', $current_user->billing_birth);
+		}
+
+		wp_send_json_success();	
+		die(); 
 	} else {
 		wp_send_json_error( __( 'A security error occured', 'doliconnect'));	
 		die(); 
@@ -1178,7 +1187,7 @@ global $current_user;
 			$object = null;
 		}
 		$modal['body'] = '<form id="linkedmember-form" action="'.admin_url('admin-ajax.php').'" method="post" class="was-validated">';
-		$modal['body'] .= '<input type="hidden" name="action" value="dolimember_request"><input type="hidden" name="dolimember-nonce" value="'.wp_create_nonce( 'dolimember-nonce').'">';
+		$modal['body'] .= '<input type="hidden" name="action" value="dolimember_request"><input type="hidden" name="case" value="update"><input type="hidden" name="dolimember-nonce" value="'.wp_create_nonce( 'dolimember-nonce').'">';
 		$modal['body'] .= doliuserform( $object, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'member', doliCheckRights('adherent', 'creer'));	
 		$modal['body'] .= '<ul class="list-group list-group-flush"><li class="list-group-item"><button class="btn btn-danger" type="submit">'.__( 'Submit', 'doliconnect').'</button></form></li></ul';
 		$modal['footer'] = null;

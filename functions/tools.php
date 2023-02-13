@@ -651,8 +651,7 @@ if (!$rights) {
 $doliuser .= ' disabled';
 }
 $doliuser .= " required><label class='form-check-label' for='morphy1'>".__( 'Personnal account', 'doliconnect')."</label>
-</div>
-<div class='form-check form-check-inline'><input type='radio' id='morphy2' name='".$idobject."[morphy]' value='mor' class='form-check-input'";
+</div><div class='form-check form-check-inline'><input type='radio' id='morphy2' name='".$idobject."[morphy]' value='mor' class='form-check-input'";
 if ( $current_user->billing_type == 'mor' ) { $doliuser .= " checked"; }
 if (!$rights) {
 $doliuser .= ' disabled';
