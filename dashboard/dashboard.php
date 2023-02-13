@@ -2272,8 +2272,9 @@ print "<li class='list-group-item d-flex justify-content-between lh-condensed li
 print doliaddress($member);
 if (1 == 1) {
 print "<div class='col-4 col-sm-3 col-md-2 btn-group-vertical' role='group'>";
-print "<button type='button' class='btn btn-light text-primary' data-bs- toggle='modal' data-bs-target='#member-".$member->id."' title='".__( 'Edit', 'doliconnect')." ".$member->firstname." ".$member->lastname."'><i class='fas fa-edit fa-fw'></i></a>
-<button name='unlink_member' value='".$member->id."' class='btn btn-light text-danger' type='submit' title='".__( 'Unlink', 'doliconnect')." ".$member->firstname." ".$member->lastname."'><i class='fas fa-unlink'></i></button>";
+print doliModalButton('linkedmember', 'updatelinkedmember', '<i class="fas fa-edit fa-fw"></i>', 'button', 'btn btn-light text-primary', $member->id);
+//print "<button type='button' class='btn btn-light text-primary' data-bs- toggle='modal' data-bs-target='#member-".$member->id."' title='".__( 'Edit', 'doliconnect')." ".$member->firstname." ".$member->lastname."'><i class='fas fa-edit fa-fw'></i></button>";
+print "<button name='unlink_member' value='".$member->id."' class='btn btn-light text-danger' type='submit' title='".__( 'Unlink', 'doliconnect')." ".$member->firstname." ".$member->lastname."'><i class='fas fa-unlink'></i></button>";
 print "</div>";
 }
 print "</li>";

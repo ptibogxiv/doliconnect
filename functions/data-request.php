@@ -1169,7 +1169,11 @@ global $current_user;
 		wp_send_json_success($response);
 		die();
 	} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "linkedmember" ) {
-		$modal['header'] = __( 'New linked member', 'doliconnect');
+		if (isset($_POST['value1']) && !empty($_POST['value1'])) {
+			$modal['header'] = __( 'Edit member', 'doliconnect');
+		} else {
+			$modal['header'] = __( 'New linked member', 'doliconnect');
+		}
 		$modal['body'] = doliuserform( '', dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'member', doliCheckRights('adherent', 'creer'));	
 		$modal['footer'] = null;
 		$response['js'] = null;
