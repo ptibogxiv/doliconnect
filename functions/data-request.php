@@ -982,8 +982,8 @@ add_action('wp_ajax_dolimember_request', 'dolimember_request');
 
 function dolimember_request(){
 global $current_user;
-		
-	if ( wp_verify_nonce( trim($_POST['dolimember-nonce']), 'dolimember-nonce' ) ) {
+
+	if ( isset($_POST['dolimember-nonce']) && wp_verify_nonce( trim($_POST['dolimember-nonce']), 'dolimember-nonce') && isset($_POST['case']) && $_POST['case'] == "subscription" ) {
 
 	$product = callDoliApi("GET", "/products/".doliconst("ADHERENT_PRODUCT_ID_FOR_SUBSCRIPTIONS", dolidelay('constante'))."?includestockdata=1&includesubproducts=true&includetrans=true", null, dolidelay('product', true));
 	$mstock = doliProductStock($product, false, true);
@@ -1162,7 +1162,8 @@ global $current_user;
 		'.__( 'Price:', 'doliconnect').' '.doliprice($adherenttype->amount).'<br>
 		'.__( 'From', 'doliconnect').' '.wp_date('d/m/Y', $adherenttype->date_nextbegin).' '.__( 'until', 'doliconnect').' '.wp_date('d/m/Y', $adherenttype->date_nextend);	
 		$modal['footer'] = '<form id="subscribe-form" action="'.admin_url('admin-ajax.php').'" method="post">';
-		$modal['footer'] .= '<input type="hidden" name="action" value="dolimember_request"><input type="hidden" name="dolimember-nonce" value="'.wp_create_nonce( 'dolimember-nonce').'"><input type="hidden" name="update_membership" value="renew">';
+		$modal['footer'] .= '<input type="hidden" name="action" value="dolimember_request"><input type="hidden" name="case" value="subscription"><input type="hidden" name="dolimember-nonce" value="'.wp_create_nonce( 'dolimember-nonce').'">';
+		$modal['footer'] .= '<input type="hidden" name="update_membership" value="renew">';
 		$modal['footer'] .= '<button class="btn btn-danger" type="submit">'.__( 'Add to basket', 'doliconnect').'</button></form>';
 		$response['js'] = plugins_url( 'doliconnect/includes/js/renewmembership.js');
 		$response['modal'] = doliModalTemplate($modal['header'], $modal['body'], $modal['footer']);
