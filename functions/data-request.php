@@ -1176,10 +1176,12 @@ global $current_user;
 			$modal['header'] = __( 'New linked member', 'doliconnect');
 			$object = null;
 		}
-		$modal['body'] = '<form id="member-form" action="'.admin_url('admin-ajax.php').'" method="post" class="was-validated">';
+		$modal['body'] = '<form id="linkedmember-form" action="'.admin_url('admin-ajax.php').'" method="post" class="was-validated">';
+		$modal['body'] .= '<input type="hidden" name="action" value="dolimember_request"><input type="hidden" name="dolimember-nonce" value="'.wp_create_nonce( 'dolimember-nonce').'">';
 		$modal['body'] .= doliuserform( $object, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'member', doliCheckRights('adherent', 'creer'));	
-		$modal['footer'] = '<button class="btn btn-danger" type="submit">'.__( 'Submit', 'doliconnect').'</button></form>';
-		$response['js'] = null;
+		$modal['body'] .= '<button class="btn btn-danger" type="submit">'.__( 'Submit', 'doliconnect').'</button></form>';
+		$modal['footer'] = null;
+		$response['js'] = plugins_url( 'doliconnect/includes/js/editlinkedmember.js');
 		$response['modal'] = doliModalTemplate($modal['header'], $modal['body'], $modal['footer'], 'modal-lg', null, 'p-0');
 		wp_send_json_success($response);
 		die();

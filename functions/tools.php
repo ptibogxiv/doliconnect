@@ -1223,7 +1223,7 @@ print '<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasDolicar
   <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
 </div>
 <div class="offcanvas-body"><div id="message-dolicart"></div>';
-$doliuser .= '<div id="DoliCartItemsList">'.doliconnect_CartItemsList().'</div>';
+print '<div id="DoliCartItemsList">'.doliconnect_CartItemsList().'</div>';
 print '</div></div>';
 }
 add_action( 'wp_footer', 'doliCartOffcanvas');
