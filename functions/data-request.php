@@ -1171,10 +1171,12 @@ global $current_user;
 	} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "linkedmember" ) {
 		if (isset($_POST['value1']) && !empty($_POST['value1'])) {
 			$modal['header'] = __( 'Edit member', 'doliconnect');
+			$object = callDoliApi("GET", "/adherentsplus/".$_POST['value1'], null, dolidelay('member'));
 		} else {
 			$modal['header'] = __( 'New linked member', 'doliconnect');
+			$object = null;
 		}
-		$modal['body'] = doliuserform( '', dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'member', doliCheckRights('adherent', 'creer'));	
+		$modal['body'] = doliuserform( $object, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'member', doliCheckRights('adherent', 'creer'));	
 		$modal['footer'] = null;
 		$response['js'] = null;
 		$response['modal'] = doliModalTemplate($modal['header'], $modal['body'], $modal['footer'], 'modal-lg', null, 'p-0');
