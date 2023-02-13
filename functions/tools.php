@@ -1032,7 +1032,7 @@ $doliuser .= '</div></div>';
 
 $currencies = callDoliApi("GET", "/setup/dictionary/currencies?multicurrency=1&sortfield=code_iso&sortorder=ASC&limit=100&active=1", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
-if ( !in_array($mode, array('contact')) ) {
+if ( !in_array($mode, array('contact', 'member')) ) {
 $doliuser .= '<div class="col-12 col-md"><div class="form-floating">';
 $monnaie = doliconst("MAIN_MONNAIE", dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 $testvalue='1.99';
