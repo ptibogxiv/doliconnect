@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
 "POT-Creation-Date: 2023-02-13 14:32+0100\n"
-"PO-Revision-Date: 2023-02-13 14:32+0100\n"
+"PO-Revision-Date: 2023-02-13 14:39+0100\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_FR\n"
@@ -1863,7 +1863,7 @@ msgstr "Ajouter au panier"
 
 #: functions/data-request.php:1173
 msgid "Edit member"
-msgstr "Editer le membre"
+msgstr "Modifier le membre"
 
 #: functions/data-request.php:1194
 msgid "Choose your language"
