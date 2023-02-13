@@ -70,12 +70,12 @@ function consecutiveDoliIterationSameCharacter($password, $NbRepeat = null)
 			if ($c != $last) {
 				$last = $c;
 				$count = 1;
-				//print "Char $c - count = $count\n";
+				//$doliuser .= "Char $c - count = $count\n";
 				continue;
 			}
 
 			$count++;
-			//print "Char $c - count = $count\n";
+			//$doliuser .= "Char $c - count = $count\n";
 
 			if ($count > $NbRepeat) {
 				return false;
@@ -633,294 +633,294 @@ $idobject=$mode."[".$object->id."]";
 
 $company = callDoliApi("GET", "/setup/company", null, dolidelay('constante'));
 
-print "<ul class='list-group list-group-flush'>";
+$doliuser = "<ul class='list-group list-group-flush'>";
 
 if ( ! isset($object) && in_array($mode, array('thirdparty')) && empty(get_option('doliconnect_disablepro')) ) {
 if ( isset($_GET["morphy"]) && $_GET["morphy"] == 'mor' && get_option('doliconnect_disablepro') != 'mor' ) {                                                                                                                                                                                                                                                                                                                                   
-print "<input type='hidden' id='morphy' name='".$idobject."[morphy]' value='mor'>";
+$doliuser .= "<input type='hidden' id='morphy' name='".$idobject."[morphy]' value='mor'>";
 }
 elseif (get_option('doliconnect_disablepro') != 'phy') {
-print "<input type='hidden' id='morphy' name='".$idobject."[morphy]' value='phy'>";
+$doliuser .= "<input type='hidden' id='morphy' name='".$idobject."[morphy]' value='phy'>";
 }
-print "<li class='list-group-item list-group-item-light list-group-item-action'>";
+$doliuser .= "<li class='list-group-item list-group-item-light list-group-item-action'>";
 } elseif ( isset($object) && in_array($mode, array('thirdparty')) && empty(get_option('doliconnect_disablepro')) ) { //|| $mode == 'member'
-print "<li class='list-group-item list-group-item-light list-group-item-action'><div class='form-row'><div class='col-12'><label for='inputMorphy'><small><i class='fas fa-user-tag fa-fw'></i> ".__( 'Type of account', 'doliconnect')."</small></label><br>";
-print "<div class='form-check form-check-inline'><input type='radio' id='morphy1' name='".$idobject."[morphy]' value='phy' class='form-check-input'";
-if ( $current_user->billing_type != 'mor' || empty($current_user->billing_type) ) { print " checked"; }
+$doliuser .= "<li class='list-group-item list-group-item-light list-group-item-action'><div class='form-row'><div class='col-12'><label for='inputMorphy'><small><i class='fas fa-user-tag fa-fw'></i> ".__( 'Type of account', 'doliconnect')."</small></label><br>";
+$doliuser .= "<div class='form-check form-check-inline'><input type='radio' id='morphy1' name='".$idobject."[morphy]' value='phy' class='form-check-input'";
+if ( $current_user->billing_type != 'mor' || empty($current_user->billing_type) ) { $doliuser .= " checked"; }
 if (!$rights) {
-print ' disabled';
+$doliuser .= ' disabled';
 }
-print " required><label class='form-check-label' for='morphy1'>".__( 'Personnal account', 'doliconnect')."</label>
+$doliuser .= " required><label class='form-check-label' for='morphy1'>".__( 'Personnal account', 'doliconnect')."</label>
 </div>
 <div class='form-check form-check-inline'><input type='radio' id='morphy2' name='".$idobject."[morphy]' value='mor' class='form-check-input'";
-if ( $current_user->billing_type == 'mor' ) { print " checked"; }
+if ( $current_user->billing_type == 'mor' ) { $doliuser .= " checked"; }
 if (!$rights) {
-print ' disabled';
+$doliuser .= ' disabled';
 }
-print " required><label class='form-check-label' for='morphy2'>".__( 'Entreprise account', 'doliconnect')."</label>
+$doliuser .= " required><label class='form-check-label' for='morphy2'>".__( 'Entreprise account', 'doliconnect')."</label>
 </div>";
-print "</div></div></li><li class='list-group-item list-group-item-light list-group-item-action'>";
+$doliuser .= "</div></div></li><li class='list-group-item list-group-item-light list-group-item-action'>";
 } elseif ( in_array($mode, array('thirdparty')) ) { //|| $mode == 'member'
-print "<li class='list-group-item list-group-item-light list-group-item-action'><input type='hidden' id='morphy' name='".$idobject."[morphy]' value='phy'>";
+$doliuser .= "<li class='list-group-item list-group-item-light list-group-item-action'><input type='hidden' id='morphy' name='".$idobject."[morphy]' value='phy'>";
 } elseif ( !is_user_logged_in() && in_array($mode, array('linkthirdparty')) ) {
 
-print '<li class="list-group-item list-group-item-light list-group-item-action"><div class="form-group">
+$doliuser .= '<li class="list-group-item list-group-item-light list-group-item-action"><div class="form-group">
   <label for="FormCustomer"><small><i class="fas fa-user-tie"></i> '.__( 'Customer', 'doliconnect').'</small></label><div class="input-group" id="FormCustomer">
   <input type="text" aria-label="Last name" name="code_client" placeholder="'.__( 'Customer code', 'doliconnect').'" class="form-control" required>
 </div><div>';
-print '<div class="form-group">
+$doliuser .= '<div class="form-group">
   <label for="FormObject"><small><i class="fas fa-file-invoice"></i> '.__( 'Order or Invoice', 'doliconnect').'</small></label><div class="input-group" id="FormObject">
   <input type="text" aria-label="Reference" name="reference" placeholder="'.__( 'Reference', 'doliconnect').'" class="form-control" required>
   <input type="number" aria-label="Amount" name="amount" placeholder="'.__( 'Total incl. tax', 'doliconnect').'" class="form-control" required>
 </div><div><li class="list-group-item list-group-item-light list-group-item-action">';
 
 } else {
-print "<li class='list-group-item list-group-item-light list-group-item-action'>";
+$doliuser .= "<li class='list-group-item list-group-item-light list-group-item-action'>";
 }
 
 if ( in_array($mode, array('member')) ) {
-print "<div class='form-row'><div class='col-12'><label for='coordonnees'><small><i class='fas fa-user-tag fa-fw'></i> ".__( 'Type', 'doliconnect')."</small></label><select class='custom-select' id='typeid'  name='".$idobject."[typeid]' required>";
+$doliuser .= "<div class='form-row'><div class='col-12'><label for='coordonnees'><small><i class='fas fa-user-tag fa-fw'></i> ".__( 'Type', 'doliconnect')."</small></label><select class='custom-select' id='typeid'  name='".$idobject."[typeid]' required>";
 $typeadhesion = callDoliApi("GET", "/adherentsplus/type?sortfield=t.libelle&sortorder=ASC&sqlfilters=(t.morphy%3A=%3A'')%20or%20(t.morphy%3Ais%3Anull)%20or%20(t.morphy%3A%3D%3A'".$object->morphy."')", null, $delay);
 //print $typeadhesion;
-print "<option value='' disabled ";
+$doliuser .= "<option value='' disabled ";
 if ( empty($object->typeid) ) {
-print "selected ";}
-print ">".__( '- Select -', 'doliconnect')."</option>";
+$doliuser .= "selected ";}
+$doliuser .= ">".__( '- Select -', 'doliconnect')."</option>";
 if ( !isset($typeadhesion->error) ) {
 foreach ($typeadhesion as $postadh) {
-print "<option value ='".$postadh->id."' ";
+$doliuser .= "<option value ='".$postadh->id."' ";
 if ( isset($object->typeid) && $object->typeid == $postadh->id && $object->typeid != null ) {
-print "selected ";
-} elseif ( $postadh->family == '1' || $postadh->automatic_renew != '1' || $postadh->automatic != '1' ) { print "disabled "; }
-print ">".$postadh->label;
-if (! empty ($postadh->duration_value)) print " - ".doliduration($postadh);
-print " ";
-//if ( ! empty($postadh->note) ) { print ", ".$postadh->note; }
+$doliuser .= "selected ";
+} elseif ( $postadh->family == '1' || $postadh->automatic_renew != '1' || $postadh->automatic != '1' ) { $doliuser .= "disabled "; }
+$doliuser .= ">".$postadh->label;
+if (! empty ($postadh->duration_value)) $doliuser .= " - ".doliduration($postadh);
+$doliuser .= " ";
+//if ( ! empty($postadh->note) ) { $doliuser .= ", ".$postadh->note; }
 $tx=1;
 if ( ( ($postadh->welcome > '0') && ($object->datefin == null )) || (($postadh->welcome > '0') && (current_time( 'timestamp',1) > $object->next_subscription_valid) && (current_time( 'timestamp',1) > $object->datefin) && $object->next_subscription_valid != $object->datefin ) ) { 
-print " (";
-print doliprice(($tx*$postadh->price)+$postadh->welcome)." ";
-print __( 'then', 'doliconnect' )." ".doliprice($postadh->price)." ".__( 'yearly', 'doliconnect' ).")"; 
+  $doliuser .= " (";
+  $doliuser .= doliprice(($tx*$postadh->price)+$postadh->welcome)." ";
+  $doliuser .= __( 'then', 'doliconnect' )." ".doliprice($postadh->price)." ".__( 'yearly', 'doliconnect' ).")"; 
 } else {
-print " (".doliprice($postadh->price);
-print " ".__( 'yearly', 'doliconnect' ).")";
+  $doliuser .= " (".doliprice($postadh->price);
+  $doliuser .= " ".__( 'yearly', 'doliconnect' ).")";
 } 
 
-print "</option>";
+$doliuser .= "</option>";
 }}
-print "</select></div></div></li><li class='list-group-item list-group-item-light list-group-item-action'>";
+$doliuser .= "</select></div></div></li><li class='list-group-item list-group-item-light list-group-item-action'>";
 }
 
 if ( in_array($mode, array('thirdparty', 'donation')) && ($current_user->billing_type == 'mor' || ( isset($_GET["morphy"]) && $_GET["morphy"] == 'mor') || get_option('doliconnect_disablepro') == 'mor' ) ) {
 
-print '<div class="row g-2 mb-2"><div class="col-lg">';    
-print '<div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[name]" name="'.$idobject.'[name]" placeholder="'.__( 'Name of company', 'doliconnect').'" value="'.(isset($object->name) ? stripslashes(htmlspecialchars($object->name, ENT_QUOTES)) : null).'" ';
+$doliuser .= '<div class="row g-2 mb-2"><div class="col-lg">';    
+$doliuser .= '<div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[name]" name="'.$idobject.'[name]" placeholder="'.__( 'Name of company', 'doliconnect').'" value="'.(isset($object->name) ? stripslashes(htmlspecialchars($object->name, ENT_QUOTES)) : null).'" ';
 if ($rights) {
-print 'required';
+$doliuser .= 'required';
 } else {
-print 'readonly';
+$doliuser .= 'readonly';
 }
-print '><label for="'.$idobject.'[name]"><i class="fas fa-building fa-fw"></i> '.__( 'Name of company', 'doliconnect').'</label></div>';   
-print '</div><div class="col-md">';
-print '<div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[name_alias]" name="'.$idobject.'[name_alias]" placeholder="'.__( 'Commercial name / Brand', 'doliconnect').'" value="'.(isset($object->name_alias) ? stripslashes(htmlspecialchars($object->name_alias, ENT_QUOTES)) : null).'" ';
+$doliuser .= '><label for="'.$idobject.'[name]"><i class="fas fa-building fa-fw"></i> '.__( 'Name of company', 'doliconnect').'</label></div>';   
+$doliuser .= '</div><div class="col-md">';
+$doliuser .= '<div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[name_alias]" name="'.$idobject.'[name_alias]" placeholder="'.__( 'Commercial name / Brand', 'doliconnect').'" value="'.(isset($object->name_alias) ? stripslashes(htmlspecialchars($object->name_alias, ENT_QUOTES)) : null).'" ';
 if (!$rights) {
-print 'readonly';
+$doliuser .= 'readonly';
 }
-print '><label for="'.$idobject.'[name_alias]"><i class="fas fa-building fa-fw"></i> '.__( 'Commercial name / Brand', 'doliconnect').'</label></div>';
-print '</div></div>';
+$doliuser .= '><label for="'.$idobject.'[name_alias]"><i class="fas fa-building fa-fw"></i> '.__( 'Commercial name / Brand', 'doliconnect').'</label></div>';
+$doliuser .= '</div></div>';
 
-print '<div id="profids" class="row mb-2 g-2">';
+$doliuser .= '<div id="profids" class="row mb-2 g-2">';
     
 if ( doliversion('15.0.0') ) {
-print doliProfId((isset($object->idprof1)?$object->idprof1:''), (isset($object->idprof2)?$object->idprof2:''), (isset($object->idprof3)?$object->idprof3:''), (isset($object->idprof4)?$object->idprof4:''), (isset($object->country_code)?$object->country_code:$company->country_code), $idobject, $rights);
+  $doliuser .= doliProfId((isset($object->idprof1)?$object->idprof1:''), (isset($object->idprof2)?$object->idprof2:''), (isset($object->idprof3)?$object->idprof3:''), (isset($object->idprof4)?$object->idprof4:''), (isset($object->country_code)?$object->country_code:$company->country_code), $idobject, $rights);
 }
 
-print '</div><div class="row g-2"><div class="col-md-6 col-lg-4"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[tva_intra]" name="'.$idobject.'[tva_intra]" placeholder="tva" value="'.(isset($object->tva_intra) ? $object->tva_intra : null).'"';
-if ((isset($object->tva_intra) && !empty($object->tva_intra)) || !$rights) { print ' readonly'; } else { print ''; }
-print ' autocomplete="off">
+$doliuser .= '</div><div class="row g-2"><div class="col-md-6 col-lg-4"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[tva_intra]" name="'.$idobject.'[tva_intra]" placeholder="tva" value="'.(isset($object->tva_intra) ? $object->tva_intra : null).'"';
+if ((isset($object->tva_intra) && !empty($object->tva_intra)) || !$rights) { $doliuser .= ' readonly'; } else { $doliuser .= ''; }
+$doliuser .= ' autocomplete="off">
 <label for="'.$idobject.'[tva_intra]"><i class="fas fa-building fa-fw"></i> '.__( 'VAT number', 'doliconnect').'</label></div></div>';
 
 if ( doliversion('15.0.0') ) {
-print '<div class="col-md-6 col-lg-4"><div class="form-floating" id="forme_juridique_code_form">';
-print doliSelectForm("forme_juridique_code", "/setup/dictionary/legal_form?sortfield=libelle&sortorder=ASC&active=1&limit=500&country=".(isset($object->country_id) ? $object->country_id : $company->country_id), __( '- Select your legal form -', 'doliconnect'), __( 'Legal form', 'doliconnect'), (isset($object->forme_juridique_code) ? $object->forme_juridique_code : null), $idobject, $rights, $delay, 'code');
-print '</div></div>';
+  $doliuser .= '<div class="col-md-6 col-lg-4"><div class="form-floating" id="forme_juridique_code_form">';
+  $doliuser .= doliSelectForm("forme_juridique_code", "/setup/dictionary/legal_form?sortfield=libelle&sortorder=ASC&active=1&limit=500&country=".(isset($object->country_id) ? $object->country_id : $company->country_id), __( '- Select your legal form -', 'doliconnect'), __( 'Legal form', 'doliconnect'), (isset($object->forme_juridique_code) ? $object->forme_juridique_code : null), $idobject, $rights, $delay, 'code');
+  $doliuser .= '</div></div>';
 }
 
 if ( doliversion('15.0.0') ) {
 $staff = callDoliApi("GET", "/setup/dictionary/staff?sortfield=id&sortorder=ASC&limit=100&active=1", null, $delay);
 if ( isset($staff) ) { 
-print '<div class="col-md-6 col-lg-4"><div class="form-floating"><select class="form-select" id="'.$idobject.'[effectif_id]" name="'.$idobject.'[effectif_id]" aria-label="'.__( 'Staff', 'doliconnect').'" ';
+$doliuser .= '<div class="col-md-6 col-lg-4"><div class="form-floating"><select class="form-select" id="'.$idobject.'[effectif_id]" name="'.$idobject.'[effectif_id]" aria-label="'.__( 'Staff', 'doliconnect').'" ';
 if ($rights) {
-print 'required';
+$doliuser .= 'required';
 } else {
-print 'disabled';
+$doliuser .= 'disabled';
 }
-print '>';
-print "<option value='' disabled ";
+$doliuser .= '>';
+$doliuser .= "<option value='' disabled ";
 if ( (isset($object->effectif_id) && empty($object->effectif_id)) || $staff == 0) {
-print "selected ";}
-print ">".__( '- Select your staff -', 'doliconnect')."</option>";
+$doliuser .= "selected ";}
+$doliuser .= ">".__( '- Select your staff -', 'doliconnect')."</option>";
 foreach ( $staff as $postv ) { 
-print "<option value='".$postv->id."' ";
+$doliuser .= "<option value='".$postv->id."' ";
 if ( isset($object->effectif_id) && $object->effectif_id == $postv->id && $object->effectif_id != null && $postv->id != '0' ) {
-print "selected ";
-} elseif ( $postv->code == '0' ) { print "disabled "; }
-print ">".$postv->libelle."</option>";
+$doliuser .= "selected ";
+} elseif ( $postv->code == '0' ) { $doliuser .= "disabled "; }
+$doliuser .= ">".$postv->libelle."</option>";
 }
-print '</select><label for="'.$idobject.'[effectif_id]"><i class="fas fa-building fa-fw"></i> '.__( 'Staff', 'doliconnect').'</label></div></div>';
+$doliuser .= '</select><label for="'.$idobject.'[effectif_id]"><i class="fas fa-building fa-fw"></i> '.__( 'Staff', 'doliconnect').'</label></div></div>';
 }
-}
-
-print '</div>';
-print "</li><li class='list-group-item list-group-item-light list-group-item-action'>";
 }
 
-print '<div class="row g-2 mb-2">';
+$doliuser .= '</div>';
+$doliuser .= "</li><li class='list-group-item list-group-item-light list-group-item-action'>";
+}
+
+$doliuser .= '<div class="row g-2 mb-2">';
 
 if ( doliversion('10.0.0') ) {
 $civility = callDoliApi("GET", "/setup/dictionary/civilities?sortfield=code&sortorder=ASC&limit=100&lang=".doliUserLang($current_user), null, $delay);
 } else {
 $civility = callDoliApi("GET", "/setup/dictionary/civility?sortfield=code&sortorder=ASC&limit=100&lang=".doliUserLang($current_user), null, $delay);
 }
-print '<div class="col-md-12 col-lg-3 col-xl-2"><div class="form-floating"><select class="form-select" id="'.$idobject.'[civility_code]"  name="'.$idobject.'[civility_code]" aria-label="'.__( 'Civility', 'doliconnect').'" ';
+$doliuser .= '<div class="col-md-12 col-lg-3 col-xl-2"><div class="form-floating"><select class="form-select" id="'.$idobject.'[civility_code]"  name="'.$idobject.'[civility_code]" aria-label="'.__( 'Civility', 'doliconnect').'" ';
 if ($rights) {
-print 'required';
+$doliuser .= 'required';
 } else {
-print 'disabled';
+$doliuser .= 'disabled';
 }
-print '>';
-print "<option value='' disabled ";
+$doliuser .= '>';
+$doliuser .= "<option value='' disabled ";
 if ( empty($object->civility_code) ) {
-print "selected ";}
-print ">".__( '- Select -', 'doliconnect')."</option>";
+$doliuser .= "selected ";}
+$doliuser .= ">".__( '- Select -', 'doliconnect')."</option>";
 if ( !isset($civility->error ) && $civility != null ) { 
 foreach ( $civility as $postv ) {
 
-print "<option value='".$postv->code."' ";
+$doliuser .= "<option value='".$postv->code."' ";
 if ( (isset($object->civility_code) ? $object->civility_code : $current_user->civility_code) == $postv->code && (isset($object->civility_code) ? $object->civility_code : $current_user->civility_code) != null) {
-print "selected "; }
-print ">".$postv->label."</option>";
+$doliuser .= "selected "; }
+$doliuser .= ">".$postv->label."</option>";
 
 }} else {
-print "<option value='MME' ";
+$doliuser .= "<option value='MME' ";
 if ( $current_user->civility_code == 'MME' && $object->civility_code != null) {
-print "selected ";}
-print ">".__( 'Miss', 'doliconnect')."</option>";
-print  "<option value='MR' ";
+$doliuser .= "selected ";}
+$doliuser .= ">".__( 'Miss', 'doliconnect')."</option>";
+$doliuser .= "<option value='MR' ";
 if ( $current_user->civility_code == 'MR' && $object->civility_code != null) {
-print "selected ";}
-print ">".__( 'Mister', 'doliconnect')."</option>";
+$doliuser .= "selected ";}
+$doliuser .= ">".__( 'Mister', 'doliconnect')."</option>";
 }
-print '</select><label for="'.$idobject.'[civility_code]"><i class="fas fa-user fa-fw"></i> '.__( 'Civility', 'doliconnect').'</label></div></div>';
+$doliuser .= '</select><label for="'.$idobject.'[civility_code]"><i class="fas fa-user fa-fw"></i> '.__( 'Civility', 'doliconnect').'</label></div></div>';
                                                                                                                                                             
-print '<div class="col-md-6 col-lg-4 col-xl-5"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[firstname]" name="'.$idobject.'[firstname]" placeholder="'.__( 'Firstname', 'doliconnect').'" value="'.(isset($object->firstname) ? $object->firstname : stripslashes(htmlspecialchars($current_user->user_firstname, ENT_QUOTES))).'" ';
+$doliuser .= '<div class="col-md-6 col-lg-4 col-xl-5"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[firstname]" name="'.$idobject.'[firstname]" placeholder="'.__( 'Firstname', 'doliconnect').'" value="'.(isset($object->firstname) ? $object->firstname : stripslashes(htmlspecialchars($current_user->user_firstname, ENT_QUOTES))).'" ';
 if ($rights) {
-print 'required';
+$doliuser .= 'required';
 } else {
-print 'readonly';
+$doliuser .= 'readonly';
 }
-print '><label for="'.$idobject.'[firstname]"><i class="fas fa-user fa-fw"></i> '.__( 'Firstname', 'doliconnect').'</label></div></div>';
+$doliuser .= '><label for="'.$idobject.'[firstname]"><i class="fas fa-user fa-fw"></i> '.__( 'Firstname', 'doliconnect').'</label></div></div>';
 
-print '<div class="col-md-6 col-lg-5 col-xl-5"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[lastname]" name="'.$idobject.'[lastname]" placeholder="'.__( 'Firstname', 'doliconnect').'" value="'.(isset($object->lastname) ? $object->lastname : stripslashes(htmlspecialchars($current_user->user_lastname, ENT_QUOTES))).'" ';
+$doliuser .= '<div class="col-md-6 col-lg-5 col-xl-5"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[lastname]" name="'.$idobject.'[lastname]" placeholder="'.__( 'Firstname', 'doliconnect').'" value="'.(isset($object->lastname) ? $object->lastname : stripslashes(htmlspecialchars($current_user->user_lastname, ENT_QUOTES))).'" ';
 if ($rights) {
-print 'required';
+$doliuser .= 'required';
 } else {
-print 'readonly';
+$doliuser .= 'readonly';
 }
-print '><label for="'.$idobject.'[lastname]"><i class="fas fa-user fa-fw"></i> '.__( 'Lastname', 'doliconnect').'</label></div></div>';   
+$doliuser .= '><label for="'.$idobject.'[lastname]"><i class="fas fa-user fa-fw"></i> '.__( 'Lastname', 'doliconnect').'</label></div></div>';   
 
-print '</div>';
+$doliuser .= '</div>';
 
 if ( !in_array($mode, array('donation')) ) {
-print '<div class="row g-2 mb-2">';
+$doliuser .= '<div class="row g-2 mb-2">';
 
 if ( !empty($object->birth) ) { $birth = wp_date('Y-m-d', $object->birth); }
-print '<div class="col-md-6"><div class="form-floating"><input type="date" class="form-control" id="'.$idobject.'[birth]" name="'.$idobject.'[birth]" placeholder="yyyy-mm-dd" value="'.(isset($birth) ? $birth : $current_user->billing_birth).'"';
+$doliuser .= '<div class="col-md-6"><div class="form-floating"><input type="date" class="form-control" id="'.$idobject.'[birth]" name="'.$idobject.'[birth]" placeholder="yyyy-mm-dd" value="'.(isset($birth) ? $birth : $current_user->billing_birth).'"';
 if (($mode != 'contact' && $rights) || $rights) {
-print 'required';
+$doliuser .= 'required';
 } else {
-print 'readonly';
+$doliuser .= 'readonly';
 }
-print '><label for="'.$idobject.'[birth]"><i class="fas fa-user fa-fw"></i> '.__( 'Birthday', 'doliconnect').'</label></div></div>';   
+$doliuser .= '><label for="'.$idobject.'[birth]"><i class="fas fa-user fa-fw"></i> '.__( 'Birthday', 'doliconnect').'</label></div></div>';   
 
-print '<div class="col-md-6">';
+$doliuser .= '<div class="col-md-6">';
 if ( $mode != 'contact' ) {
-print '<div class="form-floating"><input type="text" class="form-control" id="user_nicename" name="user_nicename" placeholder="DirectExample" value="'.stripslashes(htmlspecialchars($current_user->nickname, ENT_QUOTES)).'" autocomplete="off" ';
+$doliuser .= '<div class="form-floating"><input type="text" class="form-control" id="user_nicename" name="user_nicename" placeholder="DirectExample" value="'.stripslashes(htmlspecialchars($current_user->nickname, ENT_QUOTES)).'" autocomplete="off" ';
 if ($rights) {
-print 'required';
+$doliuser .= 'required';
 } else {
-print 'readonly';
+$doliuser .= 'readonly';
 }
-print '>
+$doliuser .= '>
 <label for="user_nicename"><i class="fas fa-user-secret fa-fw"></i> '.__( 'Display name', 'doliconnect').'</label></div>';  
 } else {
-print '<div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[poste]" name="'.$idobject.'[poste]" placeholder="Director" value="'.stripslashes(htmlspecialchars(isset($object->poste) ? $object->poste : null, ENT_QUOTES)).'" autocomplete="off" ';
+$doliuser .= '<div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[poste]" name="'.$idobject.'[poste]" placeholder="Director" value="'.stripslashes(htmlspecialchars(isset($object->poste) ? $object->poste : null, ENT_QUOTES)).'" autocomplete="off" ';
 if ($rights) {
-print 'required';
+$doliuser .= 'required';
 } else {
-print 'readonly';
+$doliuser .= 'readonly';
 }
-print '>
+$doliuser .= '>
 <label for="'.$idobject.'[poste]"><i class="fas fa-user-secret fa-fw"></i> '.__( 'Title / Job', 'doliconnect').'</label></div>';  
 }
-print '</div>';
-print '</div>';
+$doliuser .= '</div>';
+$doliuser .= '</div>';
 }
 
-print '<div class="row g-2">';
-print '<div class="col-md"><div class="form-floating"><input type="email" class="form-control" id="'.$idobject.'[email]" placeholder="name@example.com" name="'.$idobject.'[email]" value="'.(isset($object->email) ? $object->email : $current_user->user_email).'" autocomplete="off" ';
+$doliuser .= '<div class="row g-2">';
+$doliuser .= '<div class="col-md"><div class="form-floating"><input type="email" class="form-control" id="'.$idobject.'[email]" placeholder="name@example.com" name="'.$idobject.'[email]" value="'.(isset($object->email) ? $object->email : $current_user->user_email).'" autocomplete="off" ';
 if ( !$rights || (defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $current_user->ID && is_user_logged_in() && in_array($mode, array('thirdparty'))) || (defined("DOLICONNECT_SELECTEDEMAIL") && is_array(constant("DOLICONNECT_SELECTEDEMAIL")) && is_user_logged_in())) {
-print 'readonly';
+$doliuser .= 'readonly';
 } else {
-print 'required';
+$doliuser .= 'required';
 }
-print '><label for="'.$idobject.'[email]"><i class="fas fa-at fa-fw"></i> '.__( 'Email', 'doliconnect').'</label>';
+$doliuser .= '><label for="'.$idobject.'[email]"><i class="fas fa-at fa-fw"></i> '.__( 'Email', 'doliconnect').'</label>';
 if (defined("DOLICONNECT_SELECTEDEMAIL") && is_array(constant("DOLICONNECT_SELECTEDEMAIL")) && !is_user_logged_in()) {
-print '<small><i class="fas fa-info-circle"></i> Only emails from these domains are allowed:';
+$doliuser .= '<small><i class="fas fa-info-circle"></i> Only emails from these domains are allowed:';
 $array = constant("DOLICONNECT_SELECTEDEMAIL");
 $i = 0;
 foreach($array as $val) { 
-if (!empty($i)) print ',';
-print ' @'.$val; 
+if (!empty($i)) $doliuser .= ',';
+$doliuser .= ' @'.$val; 
 $i++; }
-print '</small>';
+$doliuser .= '</small>';
 }
-print '</div></div>';
+$doliuser .= '</div></div>';
 
 if ( ( !is_user_logged_in() && ((isset($_GET["morphy"])&& $_GET["morphy"] == "mor" && get_option('doliconnect_disablepro') != 'phy') || get_option('doliconnect_disablepro') == 'mor' || (function_exists('dolikiosk') && ! empty(dolikiosk())) ) && in_array($mode, array('thirdparty'))) || (is_user_logged_in() && in_array($mode, array('thirdparty','contact','member','donation'))) ) {
-print '<div class="col-md"><div class="form-floating"><input type="tel" class="form-control" id="'.$idobject.'[phone]" placeholder="0012345678" name="'.$idobject.'[phone]" value="'.(isset($object->phone) ? $object->phone : (isset($object->phone_pro) ? $object->phone_pro : null)).'" autocomplete="off" ';
+$doliuser .= '<div class="col-md"><div class="form-floating"><input type="tel" class="form-control" id="'.$idobject.'[phone]" placeholder="0012345678" name="'.$idobject.'[phone]" value="'.(isset($object->phone) ? $object->phone : (isset($object->phone_pro) ? $object->phone_pro : null)).'" autocomplete="off" ';
 if (!$rights) {
-print 'readonly';
+$doliuser .= 'readonly';
 }
-print '><label for="'.$idobject.'[phone]"><i class="fas fa-phone fa-fw"></i> '.__( 'Phone', 'doliconnect').'</label></div></div>';
+$doliuser .= '><label for="'.$idobject.'[phone]"><i class="fas fa-phone fa-fw"></i> '.__( 'Phone', 'doliconnect').'</label></div></div>';
 }
 
-print "</div></li>";
+$doliuser .= "</div></li>";
 
 if ( ( !is_user_logged_in() && ((isset($_GET["morphy"])&& $_GET["morphy"] == "mor" && get_option('doliconnect_disablepro') != 'phy') || get_option('doliconnect_disablepro') == 'mor' || (function_exists('dolikiosk') && ! empty(dolikiosk())) ) && in_array($mode, array('thirdparty'))) || (is_user_logged_in() && in_array($mode, array('thirdparty','contact','member','donation'))) ) {       
-print "<li class='list-group-item list-group-item-light list-group-item-action'>";
+$doliuser .= "<li class='list-group-item list-group-item-light list-group-item-action'>";
 
-print '<div class="form-floating mb-2"><textarea class="form-control" placeholder="'.__( 'Address', 'doliconnect').'"  name="'.$idobject.'[address]" id="'.$idobject.'[address]" style="height: 100px" ';
+$doliuser .= '<div class="form-floating mb-2"><textarea class="form-control" placeholder="'.__( 'Address', 'doliconnect').'"  name="'.$idobject.'[address]" id="'.$idobject.'[address]" style="height: 100px" ';
 if ($rights) {
-print 'required';
+$doliuser .= 'required';
 } else {
-print 'readonly';
+$doliuser .= 'readonly';
 }
-print '>'.(isset($object->address) ? stripslashes(htmlspecialchars($object->address, ENT_QUOTES)) : null).'</textarea>
+$doliuser .= '>'.(isset($object->address) ? stripslashes(htmlspecialchars($object->address, ENT_QUOTES)) : null).'</textarea>
 <label for="'.$idobject.'[address]"><i class="fas fa-map-marked fa-fw"></i> '.__( 'Address', 'doliconnect').'</label></div>';
 
-print '<div class="row mb-2 g-2"><div class="col"><div class="form-floating">';
-print doliSelectForm("country_id", "/setup/dictionary/countries?sortfield=favorite%2Clabel&sortorder=DESC%2CASC&limit=500&lang=".doliUserLang($current_user), __( '- Select your country -', 'doliconnect'), __( 'Country', 'doliconnect'), (isset($object->country_id) ? $object->country_id : $company->country_id), $idobject, $rights);
-print '</div></div>';
+$doliuser .= '<div class="row mb-2 g-2"><div class="col"><div class="form-floating">';
+$doliuser .= doliSelectForm("country_id", "/setup/dictionary/countries?sortfield=favorite%2Clabel&sortorder=DESC%2CASC&limit=500&lang=".doliUserLang($current_user), __( '- Select your country -', 'doliconnect'), __( 'Country', 'doliconnect'), (isset($object->country_id) ? $object->country_id : $company->country_id), $idobject, $rights);
+$doliuser .= '</div></div>';
 
 if ( doliversion('16.0.0') ) { 
-  print '<div class="col-12 col-md"><div class="form-floating" id="state_form">';
-  print doliSelectForm("state_id", "/setup/dictionary/states?sortfield=code_departement&sortorder=ASC&limit=500&country=".(isset($object->country_id) ? $object->country_id : $company->country_id), __( '- Select your state -', 'doliconnect'), __( 'State', 'doliconnect'), (isset($object->state_id) ? $object->state_id : $company->state_id), $idobject, $rights);
-  print '</div></div>';
+  $doliuser .= '<div class="col-12 col-md"><div class="form-floating" id="state_form">';
+  $doliuser .= doliSelectForm("state_id", "/setup/dictionary/states?sortfield=code_departement&sortorder=ASC&limit=500&country=".(isset($object->country_id) ? $object->country_id : $company->country_id), __( '- Select your state -', 'doliconnect'), __( 'State', 'doliconnect'), (isset($object->state_id) ? $object->state_id : $company->state_id), $idobject, $rights);
+  $doliuser .= '</div></div>';
 }
 
-print '<script type="text/javascript">';
-print 'jQuery(document).ready(function($) {
+$doliuser .= '<script type="text/javascript">';
+$doliuser .= 'jQuery(document).ready(function($) {
   $("#country_id").on("change",function(){
     var countryId = $(this).val();
     if ( typeof(document.getElementById("idprof1")) != "undefined" && document.getElementById("idprof1") != null ) { 
@@ -1003,68 +1003,68 @@ print 'jQuery(document).ready(function($) {
     });
   });
 });';
-print '</script>';
+$doliuser .= '</script>';
 
-print '</div><div class="row g-2">';
+$doliuser .= '</div><div class="row g-2">';
   
-  print '<div class="col-12 col-md"><div class="form-floating" id="ziptown_form">';
-  print doliSelectForm("ziptown", "/setup/dictionary/towns?sortfield=town&sortorder=ASC&active=1&limit=1000&sqlfilters=(t.fk_pays%3A%3D%3A'".(isset($object->country_id) ? $object->country_id : $company->country_id)."')%20AND%20(t.fk_county%3A%3D%3A'".(isset($object->state_id) ? $object->state_id : null)."')", __( '- Select your town -', 'doliconnect'), __( 'Town', 'doliconnect'), (isset($object->zip) ? $object->zip : null).','.(isset($object->town) ? $object->town : null), $idobject, $rights);
-  print '</div></div>';
+  $doliuser .= '<div class="col-12 col-md"><div class="form-floating" id="ziptown_form">';
+  $doliuser .= doliSelectForm("ziptown", "/setup/dictionary/towns?sortfield=town&sortorder=ASC&active=1&limit=1000&sqlfilters=(t.fk_pays%3A%3D%3A'".(isset($object->country_id) ? $object->country_id : $company->country_id)."')%20AND%20(t.fk_county%3A%3D%3A'".(isset($object->state_id) ? $object->state_id : null)."')", __( '- Select your town -', 'doliconnect'), __( 'Town', 'doliconnect'), (isset($object->zip) ? $object->zip : null).','.(isset($object->town) ? $object->town : null), $idobject, $rights);
+  $doliuser .= '</div></div>';
 
-print "</div></li>";
+$doliuser .= "</div></li>";
 
-print '<li class="list-group-item list-group-item-light list-group-item-action"><div class="row g-2"><div class="col"><div class="form-floating">';
+$doliuser .= '<li class="list-group-item list-group-item-light list-group-item-action"><div class="row g-2"><div class="col"><div class="form-floating">';
 if ( function_exists('pll_the_languages') ) {
-print '<select class="form-select" id="'.$idobject.'[default_lang]" name="'.$idobject.'[default_lang]" aria-label="'.__( 'Default language', 'doliconnect').'">';
-print "<option value=''>".__( 'Default / Browser language', 'doliconnect')."</option>";
+$doliuser .= '<select class="form-select" id="'.$idobject.'[default_lang]" name="'.$idobject.'[default_lang]" aria-label="'.__( 'Default language', 'doliconnect').'">';
+$doliuser .= "<option value=''>".__( 'Default / Browser language', 'doliconnect')."</option>";
 $translations = pll_the_languages( array( 'raw' => 1 ) );
 foreach ($translations as $key => $value) {
-print "<option value='".str_replace("-","_",$value['locale'])."' ";
-if  ( (isset($object->default_lang) && $object->default_lang == str_replace("-","_",$value['locale'])) || ( isset($object->default_lang) && empty($object->default_lang) && $current_user->locale == str_replace("-","_",$value['locale'])) ) {print " selected";}
-print ">".$value['name']."</option>";
+$doliuser .= "<option value='".str_replace("-","_",$value['locale'])."' ";
+if  ( (isset($object->default_lang) && $object->default_lang == str_replace("-","_",$value['locale'])) || ( isset($object->default_lang) && empty($object->default_lang) && $current_user->locale == str_replace("-","_",$value['locale'])) ) {$doliuser .= " selected";}
+$doliuser .= ">".$value['name']."</option>";
 }
-print '</select><label for="'.$idobject.'[default_lang]">'.__( 'Default language', 'doliconnect').'</label>';
+$doliuser .= '</select><label for="'.$idobject.'[default_lang]">'.__( 'Default language', 'doliconnect').'</label>';
 } else {
-print '<input type="text" class="form-control" id="'.$idobject.'[default_lang]" value="'.__( 'Default / Browser language', 'doliconnect').'" readonly>
+$doliuser .= '<input type="text" class="form-control" id="'.$idobject.'[default_lang]" value="'.__( 'Default / Browser language', 'doliconnect').'" readonly>
 <label for="'.$idobject.'[default_lang]">'.__( 'Default / Browser language', 'doliconnect').'</label>';
 }
-print '</div></div>';
+$doliuser .= '</div></div>';
 
 $currencies = callDoliApi("GET", "/setup/dictionary/currencies?multicurrency=1&sortfield=code_iso&sortorder=ASC&limit=100&active=1", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 if ( !in_array($mode, array('contact')) ) {
-print '<div class="col-12 col-md"><div class="form-floating">';
+$doliuser .= '<div class="col-12 col-md"><div class="form-floating">';
 $monnaie = doliconst("MAIN_MONNAIE", dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 $testvalue='1.99';
 $cur = (!empty($object->multicurrency_code) ? $object->multicurrency_code : $monnaie );
 if ( !doliCheckModules('multicurrency', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)) || !doliversion('11.0.0') ) { 
-print '<input type="text" class="form-control" id="'.$idobject.'[multicurrency_code]" value="'.$cur." / ".doliprice($testvalue, null, $cur).'" readonly>
+$doliuser .= '<input type="text" class="form-control" id="'.$idobject.'[multicurrency_code]" value="'.$cur." / ".doliprice($testvalue, null, $cur).'" readonly>
 <label for="'.$idobject.'[multicurrency_code]">'.__( 'Default currency', 'doliconnect').'</label>';
 } else {
-print '<select class="form-select" id="'.$idobject.'[multicurrency_code]" name="'.$idobject.'[multicurrency_code]" aria-label="'.__( 'Default currency', 'doliconnect').'">';
+$doliuser .= '<select class="form-select" id="'.$idobject.'[multicurrency_code]" name="'.$idobject.'[multicurrency_code]" aria-label="'.__( 'Default currency', 'doliconnect').'">';
 if ( !isset( $currencies->error ) && $currencies != null && doliCheckModules('multicurrency', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)) && doliversion('11.0.0')) {
 foreach ( $currencies as $currency ) { 
-print "<option value='".$currency->code_iso."' ";
-if ( $currency->code_iso == $object->multicurrency_code ) { print " selected"; }
-print ">".$currency->code_iso." / ".doliprice(1.99*$currency->rate, null, $currency->code_iso)."</option>";
+$doliuser .= "<option value='".$currency->code_iso."' ";
+if ( $currency->code_iso == $object->multicurrency_code ) { $doliuser .= " selected"; }
+$doliuser .= ">".$currency->code_iso." / ".doliprice(1.99*$currency->rate, null, $currency->code_iso)."</option>";
 }} else {
-print "<option value='".$cur."' selected>".$cur." / ".doliprice($testvalue, null, $cur)."</option>";
+$doliuser .= "<option value='".$cur."' selected>".$cur." / ".doliprice($testvalue, null, $cur)."</option>";
 }
-print '</select><label for="'.$idobject.'[multicurrency_code]">'.__( 'Default currency', 'doliconnect').'</label>';
+$doliuser .= '</select><label for="'.$idobject.'[multicurrency_code]">'.__( 'Default currency', 'doliconnect').'</label>';
 }
-print '</div></div>';
+$doliuser .= '</div></div>';
 }
-print '</div></li>';
+$doliuser .= '</div></li>';
 
 if( has_filter('mydoliconnectuserform') && !in_array($mode, array('donation')) ) {
-print "<li class='list-group-item list-group-item-light list-group-item-action'>";
-print apply_filters('mydoliconnectuserform', $object, $idobject);
-print "</li>";
+$doliuser .= "<li class='list-group-item list-group-item-light list-group-item-action'>";
+$doliuser .= apply_filters('mydoliconnectuserform', $object, $idobject);
+$doliuser .= "</li>";
 }
 
 if ( in_array($mode, array('contact')) && doliversion('12.0.0') ) {
 $contact_types = callDoliApi("GET", "/setup/dictionary/contact_types?sortfield=code&sortorder=ASC&limit=100&active=1&lang=".doliUserLang($current_user)."&sqlfilters=(t.source%3A%3D%3A'external')%20AND%20(t.element%3A%3D%3A'commande')", null, $delay);//%20OR%20(t.element%3A%3D%3A'propal')
-print "<li class='list-group-item list-group-item-light list-group-item-action'>";
+$doliuser .= "<li class='list-group-item list-group-item-light list-group-item-action'>";
 if ( !isset($contact_types->error ) && $contact_types != null ) {
 $typecontact = array();
 if ( isset($object->roles) && $object->roles != null ) {
@@ -1072,124 +1072,125 @@ foreach ( $object->roles as $role ) {
 $typecontact[] .= $role->id; 
 }}
 foreach ( $contact_types as $contacttype ) {                                                          
-print "<div class='form-check'><input type='checkbox' class='form-check-input' id='".$idobject."[roles][".$contacttype->rowid."]' name='".$idobject."[roles][]' value='".$contacttype->rowid."' ";
-if ( isset($object->roles) && $object->roles != null && in_array($contacttype->rowid, $typecontact)) { print ' checked'; }
+$doliuser .= "<div class='form-check'><input type='checkbox' class='form-check-input' id='".$idobject."[roles][".$contacttype->rowid."]' name='".$idobject."[roles][]' value='".$contacttype->rowid."' ";
+if ( isset($object->roles) && $object->roles != null && in_array($contacttype->rowid, $typecontact)) { $doliuser .= ' checked'; }
 if (!$rights) {
-print ' disabled';
+$doliuser .= ' disabled';
 }
-print "><label class='form-check-label' for='".$idobject."[roles][".$contacttype->rowid."]'>".$contacttype->label.'</label></div>';
+$doliuser .= "><label class='form-check-label' for='".$idobject."[roles][".$contacttype->rowid."]'>".$contacttype->label.'</label></div>';
 }}
 }
 
 if ( !in_array($mode, array('donation', 'linkthirdparty')) ) {
-print "<li class='list-group-item list-group-item-light list-group-item-action'>";
+$doliuser .= "<li class='list-group-item list-group-item-light list-group-item-action'>";
 
 if ( !in_array($mode, array('member', 'contact', 'linkthirdparty')) ) {
-print '<div class="form-floating mb-2"><input type="url" class="form-control" id="'.$idobject.'[url]" name="'.$idobject.'[url]" placeholder="www.example.com" value="'.stripslashes(htmlspecialchars((isset($object->url) ? $object->url : null), ENT_QUOTES)).'" ';
+$doliuser .= '<div class="form-floating mb-2"><input type="url" class="form-control" id="'.$idobject.'[url]" name="'.$idobject.'[url]" placeholder="www.example.com" value="'.stripslashes(htmlspecialchars((isset($object->url) ? $object->url : null), ENT_QUOTES)).'" ';
 if (!$rights) {
-print 'readonly';
+$doliuser .= 'readonly';
 }
-print '><label for="'.$idobject.'[url]">'.__( 'Website', 'doliconnect').'</label></div>';
+$doliuser .= '><label for="'.$idobject.'[url]">'.__( 'Website', 'doliconnect').'</label></div>';
 }
 
 if ( !in_array($mode, array('member', 'linkthirdparty')) ) {
-print '<div class="form-floating"><textarea class="form-control" placeholder="Leave a comment here"  name="'.$idobject.'[note_public]" id="note_public" style="height: 100px" ';
+$doliuser .= '<div class="form-floating"><textarea class="form-control" placeholder="Leave a comment here"  name="'.$idobject.'[note_public]" id="note_public" style="height: 100px" ';
 if (!$rights) {
-print 'readonly';
+$doliuser .= 'readonly';
 }
-print '>'.stripslashes(htmlspecialchars(isset($object->note_public)?$object->note_public:$current_user->description, ENT_QUOTES)).'</textarea>
+$doliuser .= '>'.stripslashes(htmlspecialchars(isset($object->note_public)?$object->note_public:$current_user->description, ENT_QUOTES)).'</textarea>
 <label for="note_public">'.__( 'About Yourself', 'doliconnect').'</label></div>';
 }
 
-print "</li>";
+$doliuser .= "</li>";
 }
 
 
 if ( doliversion('11.0.0') ) { 
 $socialnetworks = callDoliApi("GET", "/setup/dictionary/socialnetworks?sortfield=rowid&sortorder=ASC&limit=100&active=1", null, $delay);
 if ( !isset($socialnetworks->error) && $socialnetworks != null ) { 
-print "<li class='list-group-item list-group-item-light list-group-item-action'><div class='row g-2'>";
+$doliuser .= "<li class='list-group-item list-group-item-light list-group-item-action'><div class='row g-2'>";
 foreach ( $socialnetworks as $social ) { 
 $code = $social->code;
-print '<div class="col-12 col-sm-6 col-lg-4"><div class="form-floating"><input type="text" class="form-control form-control-sm" id="'.$idobject.'[socialnetworks]['.$social->code.']" name="'.$idobject.'[socialnetworks]['.$social->code.']" placeholder="'.$social->label.'" value="'.stripslashes(htmlspecialchars((isset($object->socialnetworks->$code) ? $object->socialnetworks->$code : null), ENT_QUOTES)).'" ';
+$doliuser .= '<div class="col-12 col-sm-6 col-lg-4"><div class="form-floating"><input type="text" class="form-control form-control-sm" id="'.$idobject.'[socialnetworks]['.$social->code.']" name="'.$idobject.'[socialnetworks]['.$social->code.']" placeholder="'.$social->label.'" value="'.stripslashes(htmlspecialchars((isset($object->socialnetworks->$code) ? $object->socialnetworks->$code : null), ENT_QUOTES)).'" ';
 if (!$rights) {
-print 'readonly';
+$doliuser .= 'readonly';
 }
-print '><label for="'.$idobject.'[socialnetworks]['.$social->code.']"><i class="fab fa-'.$social->code.' fa-fw"></i> '.$social->label.'</label></div></div>';
+$doliuser .= '><label for="'.$idobject.'[socialnetworks]['.$social->code.']"><i class="fab fa-'.$social->code.' fa-fw"></i> '.$social->label.'</label></div></div>';
 }
-print "</div></li>";
+$doliuser .= "</div></li>";
 }
 
 } else { 
-print "<li class='list-group-item list-group-item-light list-group-item-action'><div class='form-row'>";
+$doliuser .= "<li class='list-group-item list-group-item-light list-group-item-action'><div class='form-row'>";
 if ( !empty(doliconst("SOCIALNETWORKS_FACEBOOK", $delay)) ) {
-print "<div class='col-12 col-md'><label for='inlineFormInputGroup'><small><i class='fab fa-facebook fa-fw'></i> Facebook</small></label>
+$doliuser .= "<div class='col-12 col-md'><label for='inlineFormInputGroup'><small><i class='fab fa-facebook fa-fw'></i> Facebook</small></label>
 <input type='text' name='".$idobject."[facebook]' class='form-control form-control-sm' id='inlineFormInputGroup' placeholder='".__( 'Username', 'doliconnect')."' value='".stripslashes(htmlspecialchars((isset($object->facebook) ? $object->facebook : null), ENT_QUOTES))."'></div>";
 }
 if ( !empty(doliconst("SOCIALNETWORKS_TWITTER", $delay)) ) {
-print "<div class='col-12 col-md'><label for='inlineFormInputGroup'><small><i class='fab fa-twitter fa-fw'></i> Twitter</small></label>
+$doliuser .= "<div class='col-12 col-md'><label for='inlineFormInputGroup'><small><i class='fab fa-twitter fa-fw'></i> Twitter</small></label>
 <input type='text' name='".$idobject."[twitter]' class='form-control form-control-sm' id='inlineFormInputGroup' placeholder='".__( 'Username', 'doliconnect')."' value='".stripslashes(htmlspecialchars((isset($object->twitter) ? $object->twitter : null), ENT_QUOTES))."'></div>";
 }
 if ( !empty(doliconst("SOCIALNETWORKS_SKYPE", $delay)) ) {
-print "<div class='col-12 col-md'><label for='inlineFormInputGroup'><small><i class='fab fa-skype fa-fw'></i> Skype</small></label>
+$doliuser .= "<div class='col-12 col-md'><label for='inlineFormInputGroup'><small><i class='fab fa-skype fa-fw'></i> Skype</small></label>
 <input type='text' name='".$idobject."[skype]' class='form-control form-control-sm' id='inlineFormInputGroup' placeholder='".__( 'Username', 'doliconnect')."' value='".stripslashes(htmlspecialchars((isset($object->skype) ? $object->skype : null), ENT_QUOTES))."'></div>";
 }
 if ( !empty(doliconst("SOCIALNETWORKS_LINKEDIN", $delay)) ) {
-print "<div class='col-12 col-md'><label for='inlineFormInputGroup'><small><i class='fab fa-linkedin-in fa-fw'></i> Linkedin</small></label>
+$doliuser .= "<div class='col-12 col-md'><label for='inlineFormInputGroup'><small><i class='fab fa-linkedin-in fa-fw'></i> Linkedin</small></label>
 <input type='text' name='".$idobject."[linkedin]' class='form-control form-control-sm' id='inlineFormInputGroup' placeholder='".__( 'Username', 'doliconnect')."' value='".stripslashes(htmlspecialchars((isset($object->linkedin) ? $object->linkedin : null), ENT_QUOTES))."'></div>";
 }
-print "</div></li>";
+$doliuser .= "</div></li>";
 }
 
 }
 
 if ( in_array($mode, array('thirdparty','contact')) && doliversion('17.0.0') && doliCheckModules('mailing') ) {
-  print '<li class="list-group-item list-group-item-light list-group-item-action"><div class="form-check form-switch"><input class="form-check-input" type="checkbox" role="switch" name="'.$idobject.'[no_email] id="'.$idobject.'[no_email]" ';
-  if ( isset($object->no_email) && empty($object->no_email) ) { print ' checked'; }        
-  print '><label class="form-check-label" for="'.$idobject.'[no_email]">'.__( 'I would like to receive the newsletter', 'doliconnect').'</label></div></li>';
+  $doliuser .= '<li class="list-group-item list-group-item-light list-group-item-action"><div class="form-check form-switch"><input class="form-check-input" type="checkbox" role="switch" name="'.$idobject.'[no_email] id="'.$idobject.'[no_email]" ';
+  if ( isset($object->no_email) && empty($object->no_email) ) { $doliuser .= ' checked'; }        
+  $doliuser .= '><label class="form-check-label" for="'.$idobject.'[no_email]">'.__( 'I would like to receive the newsletter', 'doliconnect').'</label></div></li>';
 }
 
 if ( function_exists('dolikiosk') && ! isset($object) && (! empty(dolikiosk()) && $mode == 'thirdparty') ) {
-print "<li class='list-group-item list-group-item-light list-group-item-action'><div class='form-row'><div class='col'><label for='pwd1'><small><i class='fas fa-key fa-fw'></i> ".__( 'Password', 'doliconnect')."</small></label>
+$doliuser .= "<li class='list-group-item list-group-item-light list-group-item-action'><div class='form-row'><div class='col'><label for='pwd1'><small><i class='fas fa-key fa-fw'></i> ".__( 'Password', 'doliconnect')."</small></label>
 <input class='form-control' id='pwd1' type='password' name='pwd1' value ='' placeholder='".__( 'Choose your password', 'doliconnect')."' autocomplete='off' required>
 <small id='pwd1' class='form-text text-justify text-muted'>".__( 'Your password must be between 8 and 20 characters, including at least 1 digit, 1 letter, 1 uppercase.', 'doliconnect')."</small></div></div>
 <div class='form-row'><div class='col'><label for='pwd2'><small><i class='fas fa-key fa-fw'></i> ".__( 'Confirm your password', 'doliconnect')."</small></label>
 <input class='form-control' id='pwd2' type='password' name='pwd2' value ='' placeholder='".__( 'Confirm your password', 'doliconnect')."' autocomplete='off' required></div>";
-print "</div></li>";
+$doliuser .= "</div></li>";
 }
 
 if ( !is_user_logged_in() ) {
-  print "<li class='list-group-item list-group-item-light list-group-item-action'>";
-  print dolicaptcha();
-  print "</li>";
+  $doliuser .= "<li class='list-group-item list-group-item-light list-group-item-action'>";
+  $doliuser .= dolicaptcha();
+  $doliuser .= "</li>";
 }
 
 if ( !is_user_logged_in() && in_array($mode, array('thirdparty','linkthirdparty')) ) {
 
 if( has_action('register_form') ) {
 if (!empty(do_action( 'register_form'))){
-print "<li class='list-group-item list-group-item-light list-group-item-action'>";
-print do_action( 'register_form');
-print "</li>";
+$doliuser .= "<li class='list-group-item list-group-item-light list-group-item-action'>";
+$doliuser .= do_action( 'register_form');
+$doliuser .= "</li>";
 }
 }
 
-//print "<li class='list-group-item list-group-item-light list-group-item-action'>";
-//print "<div class='form-row'><div class='custom-control custom-checkbox my-1 mr-sm-2'>
+//$doliuser .= "<li class='list-group-item list-group-item-light list-group-item-action'>";
+//$doliuser .= "<div class='form-row'><div class='custom-control custom-checkbox my-1 mr-sm-2'>
 //<input type='checkbox' class='custom-control-input' value='forever' id='validation' name='validation' required>
 //<label class='custom-control-label' for='validation'>".__( 'I read and accept the <a href="#" data-bs-toggle="modal" data-target="#cgvumention">Terms & Conditions</a>.', 'doliconnect')."</label></div></div>";
 //if ( get_option( 'wp_page_for_privacy_policy' ) ) {
-//print "<div class='modal fade' id='cgvumention' tabindex='-1' role='dialog' aria-labelledby='cgvumention' aria-hidden='true'><div class='modal-dialog modal-lg modal-dialog-centered' role='document'><div class='modal-content'><div class='modal-header'><h5 class='modal-title' id='cgvumentionLabel'>".__( 'Terms & Conditions', 'doliconnect')."</h5><button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>
+//$doliuser .= "<div class='modal fade' id='cgvumention' tabindex='-1' role='dialog' aria-labelledby='cgvumention' aria-hidden='true'><div class='modal-dialog modal-lg modal-dialog-centered' role='document'><div class='modal-content'><div class='modal-header'><h5 class='modal-title' id='cgvumentionLabel'>".__( 'Terms & Conditions', 'doliconnect')."</h5><button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>
 //<div class='modal-body'>";
 //$post = get_post(get_option( 'wp_page_for_privacy_policy' ));
 //print $post->post_content;
 //print apply_filters('the_content', get_post_field('post_content', get_option( 'wp_page_for_privacy_policy' )));
 //print get_the_content( 'Read more', '', get_option( 'wp_page_for_privacy_policy' )); 
-//print "</div></div></div>";}
-//print "</li>";
+//$doliuser .= "</div></div></div>";}
+//$doliuser .= "</li>";
 }
 
-print "</ul>";
+$doliuser .= "</ul>";
+return $doliuser;
 }
 //add_action( 'wp_loaded', 'doliconnectuserform', 10, 2);
 
@@ -1203,7 +1204,6 @@ return $loading;
 function doliconnect_loading() {
 
 doliconnect_enqueues();
-
 print '<div id="DoliconnectLoadingModal" class="modal fade bd-example-modal" tabindex="-1" aria-labelledby="myLargeModalLabel" aria-hidden="true" data-bs-show="true" data-bs-backdrop="static" data-keyboard="false">
 <div class="modal-dialog modal-fullscreen modal-dialog-centered">
 <div class="text-center text-light w-100">
@@ -1223,7 +1223,7 @@ print '<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasDolicar
   <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
 </div>
 <div class="offcanvas-body"><div id="message-dolicart"></div>';
-print '<div id="DoliCartItemsList">'.doliconnect_CartItemsList().'</div>';
+$doliuser .= '<div id="DoliCartItemsList">'.doliconnect_CartItemsList().'</div>';
 print '</div></div>';
 }
 add_action( 'wp_footer', 'doliCartOffcanvas');
@@ -1716,11 +1716,11 @@ print '</script>';
 print '<div class="modal-body"><div class="card" id="SelectLangmodal-form"><ul class="list-group list-group-flush">';
 $translations = pll_the_languages( array( 'raw' => 1 ) );
 foreach ($translations as $key => $value) {
-print "<a href='".$value['url']."?".$_SERVER["QUERY_STRING"]."' onclick='loadingSelectLangModal()' class='list-group-item list-group-item-light list-group-item-action";
-if ( $value['current_lang'] == true ) { print " active"; }
-print "'><span class='fi fi-".strtolower(substr($value['slug'], -2))."'></span> ".$value['name'];
-if ( $value['current_lang'] == true ) { print " <i class='fas fa-language fa-fw'></i>"; }
-print "</a>";
+$doliuser .= "<a href='".$value['url']."?".$_SERVER["QUERY_STRING"]."' onclick='loadingSelectLangModal()' class='list-group-item list-group-item-light list-group-item-action";
+if ( $value['current_lang'] == true ) { $doliuser .= " active"; }
+$doliuser .= "'><span class='fi fi-".strtolower(substr($value['slug'], -2))."'></span> ".$value['name'];
+if ( $value['current_lang'] == true ) { $doliuser .= " <i class='fas fa-language fa-fw'></i>"; }
+$doliuser .= "</a>";
 }      
 
 print '</ul></div>
@@ -3128,13 +3128,13 @@ doliconnect_enqueues();
 
 do_action( 'login_head' );
 
-print "<div class='modal fade' id='DoliconnectLogin' data-bs-backdrop='static' data-bs-keyboard='false' tabindex='-1' role='dialog' aria-labelledby='DoliconnectLoginTitle' aria-hidden='true'>";
-print "<div class='modal-dialog modal-fullscreen-md-down modal-dialog-centered modal-dialog-scrollable' role='document'><div class='modal-content'><div class='modal-header'>";
+$doliuser .= "<div class='modal fade' id='DoliconnectLogin' data-bs-backdrop='static' data-bs-keyboard='false' tabindex='-1' role='dialog' aria-labelledby='DoliconnectLoginTitle' aria-hidden='true'>";
+$doliuser .= "<div class='modal-dialog modal-fullscreen-md-down modal-dialog-centered modal-dialog-scrollable' role='document'><div class='modal-content'><div class='modal-header'>";
 
 if ( empty(get_option('doliconnectrestrict')) ) {
-print "<h5 class='modal-title' id='DoliconnectLoginTitle'>".__( 'Welcome', 'doliconnect')."</h5>";
+$doliuser .= "<h5 class='modal-title' id='DoliconnectLoginTitle'>".__( 'Welcome', 'doliconnect')."</h5>";
 } else {
-print "<h5 class='modal-title' id='DoliconnectLoginTitle'>".__( 'Access restricted to users', 'doliconnect')."</h5>";
+$doliuser .= "<h5 class='modal-title' id='DoliconnectLoginTitle'>".__( 'Access restricted to users', 'doliconnect')."</h5>";
 }
 
 print '<button type="button" id="Closeloginmodal-form" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div><div class="modal-body"><div id="loginmodal-form">';
@@ -3158,11 +3158,11 @@ if ( function_exists('dolikiosk') && ! empty(dolikiosk()) ) {
   $redirect_to=get_permalink();
 }
 
-print "<form name='loginmodal-form' action='".$login_url."' method='post' class='was-validated'>";
+$doliuser .= "<form name='loginmodal-form' action='".$login_url."' method='post' class='was-validated'>";
 
 print dolimodalloaderscript('loginmodal-form');
 if  ( defined("DOLICONNECT_DEMO") ) {
-print "<p><i class='fas fa-info-circle fa-beat'></i> <b>".__( 'Demo mode is activated', 'doliconnect')."</b></p>";
+$doliuser .= "<p><i class='fas fa-info-circle fa-beat'></i> <b>".__( 'Demo mode is activated', 'doliconnect')."</b></p>";
 } 
 print '<div class="form-floating mb-3"><input type="email" class="form-control" id="user_login" name="log" placeholder="name@example.com" value="';
 if ( defined("DOLICONNECT_DEMO") && defined("DOLICONNECT_DEMO_EMAIL") && !empty(constant("DOLICONNECT_DEMO_EMAIL")) ) {
@@ -3183,18 +3183,18 @@ print '<div class="form-check float-start">
   <label class="form-check-label" for="rememberme">'.__( 'Remember me', 'doliconnect').'</label>
 </div>';
 
-print "<a class='float-end' href='".wp_lostpassword_url(get_permalink())."' role='button' title='".__( 'Forgot password?', 'doliconnect')."'><small>".__( 'Forgot password?', 'doliconnect')."</small></a>"; 
+$doliuser .= "<a class='float-end' href='".wp_lostpassword_url(get_permalink())."' role='button' title='".__( 'Forgot password?', 'doliconnect')."'><small>".__( 'Forgot password?', 'doliconnect')."</small></a>"; 
 
-print "<input type='hidden' value='$redirect_to' name='redirect_to'></div>";
+$doliuser .= "<input type='hidden' value='$redirect_to' name='redirect_to'></div>";
 
-print "".doliloading('loginmodal-form');
+$doliuser .= "".doliloading('loginmodal-form');
 
 print '</div><div id="Footerloginmodal-form" class="modal-footer flex-nowrap p-0">';
 if ( get_site_option('doliconnect_mode') == 'one' && function_exists('switch_to_blog') ) {
 switch_to_blog(1);
 } 
 if ((!is_multisite() && get_option( 'users_can_register' )) || ((!is_multisite() && get_option( 'dolicustsupp_can_register' )) || ((get_option( 'dolicustsupp_can_register' ) || get_option('users_can_register') == '1') && (get_site_option( 'registration' ) == 'user' || get_site_option( 'registration' ) == 'all')))) {
-print "<a class='btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0 border-end' href='".wp_registration_url(get_permalink())."' role='button' title='".__( 'Create an account', 'doliconnect')."'><small>".__( 'Create an account', 'doliconnect')."</small></a>";
+$doliuser .= "<a class='btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0 border-end' href='".wp_registration_url(get_permalink())."' role='button' title='".__( 'Create an account', 'doliconnect')."'><small>".__( 'Create an account', 'doliconnect')."</small></a>";
 }
 if (get_site_option('doliconnect_mode')=='one') {
 restore_current_blog();
