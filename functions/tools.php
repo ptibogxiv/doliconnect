@@ -679,7 +679,7 @@ $doliuser .= "<li class='list-group-item list-group-item-light list-group-item-a
 }
 
 if ( in_array($mode, array('member')) ) {
-$doliuser .= "<div class='form-row'><div class='col-12'><label for='coordonnees'><small><i class='fas fa-user-tag fa-fw'></i> ".__( 'Type', 'doliconnect')."</small></label><select class='custom-select' id='typeid'  name='".$idobject."[typeid]' required>";
+$doliuser .= "<div class='form-row'><div class='form-floating'><select class='form-select' id='typeid'  name='".$idobject."[typeid]' required>";
 $typeadhesion = callDoliApi("GET", "/adherentsplus/type?sortfield=t.libelle&sortorder=ASC&sqlfilters=(t.morphy%3A=%3A'')%20or%20(t.morphy%3Ais%3Anull)%20or%20(t.morphy%3A%3D%3A'".$object->morphy."')", null, $delay);
 //print $typeadhesion;
 $doliuser .= "<option value='' disabled ";
@@ -708,7 +708,7 @@ if ( ( ($postadh->welcome > '0') && ($object->datefin == null )) || (($postadh->
 
 $doliuser .= "</option>";
 }}
-$doliuser .= "</select></div></div></li><li class='list-group-item list-group-item-light list-group-item-action'>";
+$doliuser .= "</select><label for='typeid'><small><i class='fas fa-user-tag fa-fw'></i> ".__( 'Type', 'doliconnect')."</small></label></div></div></li><li class='list-group-item list-group-item-light list-group-item-action'>";
 }
 
 if ( in_array($mode, array('thirdparty', 'donation')) && ($current_user->billing_type == 'mor' || ( isset($_GET["morphy"]) && $_GET["morphy"] == 'mor') || get_option('doliconnect_disablepro') == 'mor' ) ) {
