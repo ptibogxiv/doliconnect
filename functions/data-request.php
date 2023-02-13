@@ -1019,7 +1019,7 @@ global $current_user;
 		die(); 
 	}
 	} elseif ( isset($_POST['dolimember-nonce']) && wp_verify_nonce( trim($_POST['dolimember-nonce']), 'dolimember-nonce') && isset($_POST['case']) && $_POST['case'] == "subscription" ) {
-		$member=$_POST['thirdparty'][''.doliconnector($current_user, 'fk_soc').''];
+		$member=$_POST['thirdparty'][''.trim($_POST['memberid']).''];
 		$member = dolisanitize($member);
 		if (empty($member['no_email'])) {
 			$member['no_email'] = true;
@@ -1028,7 +1028,7 @@ global $current_user;
 		}
 		
 		if (NULL != doliconnector($current_user, 'fk_member')) { 
-			$object = callDoliApi("PUT", "/members/".doliconnector($current_user, 'fk_member'), $member, 0);
+			$object = callDoliApi("PUT", "/members/".trim($_POST['memberid']), $member, 0);
 		}
 
 		wp_send_json_success();	
@@ -1187,14 +1187,15 @@ global $current_user;
 	} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "linkedmember" ) {
 		if (isset($_POST['value1']) && !empty($_POST['value1'])) {
 			$modal['header'] = __( 'Edit member', 'doliconnect');
-			$object = callDoliApi("GET", "/adherentsplus/".$_POST['value1'], null, dolidelay('member'));
+			$object = callDoliApi("GET", "/adherentsplus/".trim($_POST['value1']), null, dolidelay('member'));
 		} else {
 			$modal['header'] = __( 'New linked member', 'doliconnect');
 			$object = null;
 		}
 		$modal['body'] = '<form id="linkedmember-form" action="'.admin_url('admin-ajax.php').'" method="post" class="was-validated">';
-		$modal['body'] .= '<input type="hidden" name="action" value="dolimember_request"><input type="hidden" name="case" value="update"><input type="hidden" name="dolimember-nonce" value="'.wp_create_nonce( 'dolimember-nonce').'">';
-		$modal['body'] .= doliuserform( $object, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'member', doliCheckRights('adherent', 'creer'));	
+		$modal['body'] .= '<input type="hidden" name="action" value="dolimember_request"><input type="hidden" name="case" value="update">'
+		$modal['body'] .= '<input type="hidden" name="memberid" value="'.trim($_POST['value1'])).'"><input type="hidden" name="dolimember-nonce" value="'.wp_create_nonce( 'dolimember-nonce').'">';
+		$modal['body'] .= doliuserform( $object, dolidelay('constante'), 'member', doliCheckRights('adherent', 'creer'));	
 		$modal['body'] .= '<ul class="list-group list-group-flush"><li class="list-group-item"><button class="btn btn-danger" type="submit">'.__( 'Submit', 'doliconnect').'</button></form></li></ul';
 		$modal['footer'] = null;
 		$response['js'] = plugins_url( 'doliconnect/includes/js/editlinkedmember.js');
