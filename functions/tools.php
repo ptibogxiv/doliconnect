@@ -1082,7 +1082,7 @@ $doliuser .= "><label class='form-check-label' for='".$idobject."[roles][".$cont
 }}
 }
 
-if ( !in_array($mode, array('donation', 'linkthirdparty')) ) {
+if ( !in_array($mode, array('donation', 'member', 'linkthirdparty')) ) {
 $doliuser .= "<li class='list-group-item list-group-item-light list-group-item-action'>";
 
 if ( !in_array($mode, array('member', 'contact', 'linkthirdparty')) ) {
