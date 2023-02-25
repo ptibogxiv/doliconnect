@@ -1748,7 +1748,7 @@ $stripeAmount=($object->multicurrency_total_ttc?$object->multicurrency_total_ttc
 }
 
 $listpaymentmethods = callDoliApi("GET", $request, null, dolidelay('paymentmethods', $refresh));
-//print $listpaymentmethods;
+//print var_dump($listpaymentmethods);
 $thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty', $refresh)); 
 //print $thirdparty;
 

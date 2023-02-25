@@ -207,10 +207,11 @@ if ( !is_null($timeend) && $timeend > 0 ) {
 $date_end=strftime('%Y-%m-%d 00:00:00', $timeend);
 } else {
 $date_end=null;
-} 
+}
 
-if ( empty(doliconnector($current_user, 'fk_order', true)) ) {
 $thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty'));
+if ( empty(doliconnector($current_user, 'fk_order', true)) ) {
+
 $rdr = [
     'socid' => doliconnector($current_user, 'fk_soc'),
     'date' => time(),
@@ -222,6 +223,10 @@ $rdr = [
     'pos_source' => get_current_blog_id(),
 	];                  
 $order = callDoliApi("POST", "/orders", $rdr, 0);
+}
+
+if (empty($thirdparty->tva_assuj)) {
+  $product->tva_tx = 0;
 }
 
 $order = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order', true)."?contact_list=0", null, dolidelay('order', true));
@@ -407,7 +412,7 @@ if ( empty(doliconnectid('dolicart')) || empty(doliconnectid('dolicart')) ) {
       $button .= '<div class="input-group">';
       //$button .= '<button class="btn btn-sm btn-warning" name="delete" value="delete" type="submit"><i class="fa-solid fa-trash-can"></i></button>';
       $button .= '<button class="btn btn-sm btn-warning" name="minus" value="minus" type="submit"><i class="fa-solid fa-minus"></i></button>
-      <input id="qty-prod-'.$product->id.'" type="number" class="form-control form-control-sm" placeholder="" aria-label="Quantity" value="'.$mstock['qty'].'" style="text-align:center;" readonly>
+      <input id="qty-prod-'.$product->id.'" type="number" class="form-control form-control-sm" placeholder="" aria-label="Quantity" value="'.$mstock['qty'].'" style="text-align:center;">
       <button class="btn btn-sm btn-warning" name="plus" value="plus" type="submit"><i class="fa-solid fa-plus"></i></button>';
       if ( doliCheckModules('wishlist', $refresh) && !empty(get_option('doliconnectbeta')) ) {
         $button .= '<button class="btn btn-sm btn-light" name="wish" value="wish" type="submit"><i class="fas fa-heart" style="color:Fuchsia"></i></button>';
