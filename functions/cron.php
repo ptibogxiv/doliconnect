@@ -77,7 +77,7 @@ function doliconnect_cron_process($refresh = false) {
         }
 
         foreach ($categories as $id => $categorie) {
-            $requestp = "/products?sortfield=t.rowid&sortorder=DESC&category=".$id."&sqlfilters=(t.tosell=1)&limit=1000";
+            $requestp = "/products?sortfield=t.rowid&sortorder=DESC&category=".$id."&sqlfilters=(t.tosell:=:1)&limit=1000";
             $listproduct = callDoliApi("GET", $requestp, null, dolidelay('product', $refresh));
             if ( !isset($listproduct->error) && $listproduct != null ) {
                 foreach ($listproduct as $product) {
