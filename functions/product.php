@@ -225,8 +225,8 @@ $rdr = [
 $order = callDoliApi("POST", "/orders", $rdr, 0);
 }
 
-if (empty($thirdparty->tva_assuj)) {
-  $product->tva_tx = 0;
+if (isset($thirdparty->tva_assuj) && empty($thirdparty->tva_assuj)) {
+  if (isset($product->tva_tx))$product->tva_tx = 0;
 }
 
 $order = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order', true)."?contact_list=0", null, dolidelay('order', true));
