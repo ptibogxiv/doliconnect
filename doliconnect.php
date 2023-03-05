@@ -41,7 +41,7 @@ require_once plugin_dir_path(__FILE__).'/blocks/index.php';
 //include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 
 define('DOLIBARR_MINIMUM_VERSION', '13.0.5');
-define('DOLIBARR_LEGAL_VERSION', '16.0.4');
+define('DOLIBARR_LEGAL_VERSION', '17.0.0');
 
 // ********************************************************
 function doliconnecturl($page) {
