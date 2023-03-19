@@ -5,7 +5,7 @@ Tags: erp, crm, ecommerce, dolibarr, payment, interface, customer, subscription,
 Requires at least: 5.0
 Tested up to: 6.2
 Stable tag: 7.0.0
-Requires PHP: 7.0
+Requires PHP: 7.4
 License: GPL v3 or later
 Donate link: https://www.paypal.me/ptibogxiv
 
@@ -15,7 +15,7 @@ This plugin will interface your Dolibarr within a customer interface in WordPres
 
 Use this plugin to greatly improve relations with yours customers. No Woocommerce or another e-shop need!
 
-If you like the plugin, feel free to rate it (on the right side of this page)! :)
+If you like the plugin, feel free to rate it (on the right side of this page)!
 
 You can test it live on [https://demo.ptibogxiv.net](https://demo.ptibogxiv.net)
 
