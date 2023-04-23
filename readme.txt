@@ -69,6 +69,9 @@ We would like to thank this contributors and plugins:
 [gdpr-data-request-form](https://wordpress.org/plugins/gdpr-data-request-form/ "gdpr-data-request-form")
 
 == Changelog ==
+   = 7.0.1 =
+* bugs and fixes
+
    = 7.0.0 =
 * bugs and fixes
 * better fix password changes and sync with Dolibarr
