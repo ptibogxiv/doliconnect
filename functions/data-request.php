@@ -1054,7 +1054,7 @@ global $current_user;
 	if ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "legacy" ) {
 		$modal['header'] = __('Legal notice', 'doliconnect');
 		$company = callDoliApi("GET", "/setup/company", null, dolidelay('constante'));
-		$modal['body'] .= '<p><strong>'.__('Editor', 'doliconnect').'</strong><br>';
+		$modal['body'] = '<p><strong>'.__('Editor', 'doliconnect').'</strong><br>';
 		$modal['body'] .= doliCompanyCard($company);
 		if (!empty($company->note_private)) { $modal['body'] .= '<br>'.$company->note_private; }
 		if (!empty($company->managers)) $modal['body'] .= '</p><p><strong>'.__('Responsible for publishing', 'doliconnect').'</strong><br>'.$company->managers;
