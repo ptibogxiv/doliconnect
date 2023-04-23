@@ -562,9 +562,8 @@ function doliconnect_profile_url($profile_url, $user_object) {
 return doliconnecturl('doliaccount');
 }
 // ********************************************************
-function doliconnect_account_login_fail( $username ) {
-$referrer = $_SERVER['HTTP_REFERER'];  
-if ( !empty($referrer) && !strstr($referrer,'wp-login') && !strstr($referrer,'wp-admin') ) {
+function doliconnect_account_login_fail( $username ) { 
+if ( isset($_SERVER['HTTP_REFERER']) && !empty($_SERVER['HTTP_REFERER']) && !strstr($_SERVER['HTTP_REFERER'],'wp-login') && !strstr($_SERVER['HTTP_REFERER'],'wp-admin') ) {
 wp_redirect( esc_url( add_query_arg( 'login', 'failed', doliconnecturl('doliaccount')) ) );
 exit;}
 }
