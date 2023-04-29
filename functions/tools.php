@@ -490,10 +490,10 @@ return $doliSelect;
 function doliFaqForm($category, $refresh = null) {
   global $current_user;
    
-  $requestf = "/knowledgemanagement/knowledgerecords?sortfield=t.rowid&sortorder=ASC&limit=100&sqlfilters=(fk_c_ticket_category%3D'".$category."')%20and%20(t.status%3D'1')%20and%20((t.lang%3D'0')or(t.lang%3D'".doliUserLang($current_user)."'))";  
+  $requestf = "/knowledgemanagement/knowledgerecords?sortfield=t.rowid&sortorder=ASC&limit=100&sqlfilters=(t.fk_c_ticket_category%3A%3D%3A'".$category."')%20and%20(t.status%3A%3D%3A'1')%20and%20((t.lang%3A%3D%3A'0')%20or%20(t.lang%3A%3D%3A'".doliUserLang($current_user)."'))";  
   $listfaq = callDoliApi("GET", $requestf, null, dolidelay('constante', $refresh));
+  $doliFaq = '';
     if ( !isset( $listfaq->error ) && $listfaq != null ) {
-      $doliFaq = '';
       foreach ( $listfaq as $postfaq ) { 
           $doliFaq .= '<div class="accordion-item"><h2 class="accordion-header" id="flush-headingDolifaq'.$postfaq->id.'">';
           $doliFaq .= '<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseDolifaq'.$postfaq->id.'" aria-expanded="false" aria-controls="flush-collapseDolifaq'.$postfaq->id.'">';
