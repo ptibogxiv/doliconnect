@@ -1610,7 +1610,7 @@ print "</b></li>";
 
 print "</ul>"; 
  
-if ( get_option('dolishop') || (!get_option('dolishop') && isset($object) && $object->lines != null) ) {
+if ( get_option('dolishop') || (!get_option('dolishop') && isset($object) && isset($object->lines) && $object->lines != null) ) {
 print "<div class='card-body'><ul class='list-group list-group-horizontal-sm'>";
 if ( get_option('dolishop') ) {
 print "<a href='".doliconnecturl('dolishop')."' class='list-group-item list-group-item-action flex-fill'><center>".__( 'Continue shopping', 'doliconnect')."</center></a>";
