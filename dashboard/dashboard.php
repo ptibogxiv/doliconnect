@@ -1230,7 +1230,7 @@ print "</div></div>";
 
 //*****************************************************************************************
 
-if ( doliCheckModules('contrat') && !empty(get_option('doliconnectbeta')) && doliCheckRights('contrat', 'lire') ) {
+if ( doliCheckModules('contrat') && doliCheckRights('contrat', 'lire') ) {
 add_action( 'customer_doliconnect_menu', 'contracts_menu', 2, 1);
 add_action( 'customer_doliconnect_contracts', 'contracts_module');
 }
