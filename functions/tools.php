@@ -1564,7 +1564,7 @@ if ( $mstock['stock'] < 0 && is_page(doliconnectid('dolicart'))) {
   //define('dolilockcart', '0'); not to use
 }
 
-if ( $line->date_start != '' && $line->date_end != '' )
+if ( isset($line->date_start) && $line->date_start != '' && $line->date_end != '' )
 {
 $start = wp_date('d/m/Y', $line->date_start);
 $end = wp_date('d/m/Y', $line->date_end);
