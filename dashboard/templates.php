@@ -777,15 +777,11 @@ $request = "/products/purchase_prices?sortfield=t.ref&sortorder=ASC&limit=".$lim
 $resultats2 = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 $resultats = array();
 if ( !isset($resultats2->error) && $resultats2 != null ) {
-$count = count($resultats);
-$includestock = 0;
-if ( ! empty(doliconnectid('dolicart')) ) {
-$includestock = 1;
-}
+
 foreach ($resultats2 as $product) {
 
 $resultats[$product[0]->id] = 1; 
-$product = callDoliApi("GET", "/products/".$product[0]->id."?includestockdata=".$includestock."&includesubproducts=true&includetrans=true", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$product = callDoliApi("GET", "/products/".$product[0]->id."?includestockdata=".doliIncludeStock()."&includesubproducts=true&includetrans=true", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 print apply_filters( 'doliproductlist', $product);
 
 }
