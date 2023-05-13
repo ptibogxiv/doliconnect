@@ -36,6 +36,14 @@ return numfmt_format_currency($fmt, $montant, $currency);//.$decimal
 }
 }
 
+function doliIncludeStock() {
+  $includestock = 0;
+  if ( ! empty(doliconnectid('dolicart')) ) {
+  $includestock = 1;
+  }
+  return $includestock;
+}
+
 function doliProductStock($product, $refresh = false, $nohtml = false) {
 global $current_user;
 
