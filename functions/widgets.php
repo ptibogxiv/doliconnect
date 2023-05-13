@@ -468,7 +468,7 @@ $resultatsc = $resultatsc->childs;
 
 foreach ($resultatsc as $categorie) {
 
-$requestp = "/products?sortfield=t.rowid&sortorder=DESC&category=".$categorie->id."&sqlfilters=(t.tosell=1)&limit=1000";
+$requestp = "/products?sortfield=t.rowid&sortorder=DESC&category=".$categorie->id."&sqlfilters=(t.tosell%3A%3D%3A1)&limit=1000";
 $listproduct = callDoliApi("GET", $requestp, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 if (empty($listproduct) || isset($listproduct->error)) {
 $count = 0;
@@ -488,7 +488,7 @@ $resultatsc = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(i
 if ( !isset($resultatsc->error) && $resultatsc != null ) {
 foreach ($resultatsc->childs as $scategorie) {
 
-$requestp = "/products?sortfield=t.rowid&sortorder=DESC&category=".$scategorie->id."&sqlfilters=(t.tosell=1)&limit=1000";
+$requestp = "/products?sortfield=t.rowid&sortorder=DESC&category=".$scategorie->id."&sqlfilters=(t.tosell%3A%3D%3A1)&limit=1000";
 $listproduct = callDoliApi("GET", $requestp, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 if (empty($listproduct) || isset($listproduct->error)) {
 $count = 0;
@@ -511,7 +511,7 @@ $resultatsc = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(i
 if ( !isset($resultatsc->error) && $resultatsc != null) {
 foreach ($resultatsc->childs as $sscategorie) {
 
-$requestp = "/products?sortfield=t.rowid&sortorder=DESC&category=".$sscategorie->id."&sqlfilters=(t.tosell=1)&limit=1000";
+$requestp = "/products?sortfield=t.rowid&sortorder=DESC&category=".$sscategorie->id."&sqlfilters=(t.tosell%3A%3D%3A1)&limit=1000";
 $listproduct = callDoliApi("GET", $requestp, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 if (empty($listproduct) || isset($listproduct->error)) {
 $count = 0;
