@@ -171,6 +171,11 @@ return $ret;
 }
 add_action( 'admin_init', 'doliversion', 5, 1); 
 
+function doliPG($pg = 0) {
+  if ( is_numeric(esc_attr($pg)) && esc_attr($pg) > 0 ) { $pg = esc_attr($pg-1); }
+  return $pg;
+}
+
 function dolipage($object, $url, $page = 0, $limit = 8) {
 
 if (empty($object) || isset($object->error)) {
