@@ -2743,8 +2743,6 @@ function generate_license($suffix = null) {
     return $license_string;
 }
 
-print doliModalButton('selectlang', 'selectlangbody', 'Test', 'button', 'btn btn-primary', get_the_ID(), $_SERVER["QUERY_STRING"]);
-
 //print generate_license();
 
 }
