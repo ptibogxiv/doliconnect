@@ -72,6 +72,7 @@ We would like to thank this contributors and plugins:
    = 7.2.0 =
 * bugs and fixes
 * better online shop
+* upgrade bootstrap
 
    = 7.1.7 =
 * bugs and fixes contracts
