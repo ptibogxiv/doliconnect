@@ -17,7 +17,7 @@ function doliconnect_enqueues() {
 /* Styles */
 if ( empty(get_theme_mod( 'ptibogxivtheme_css')) || get_theme_mod( 'ptibogxivtheme_css') == 'css' ) {
 $css='css';
-$versionbase = '5.2.3'; 
+$versionbase = '5.3.0'; 
 $version=$versionbase; 
 } else {
 $css='bootswatch/'.get_theme_mod( 'ptibogxivtheme_css');
