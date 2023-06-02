@@ -1131,8 +1131,8 @@ global $current_user;
 		wp_send_json_success($response);	
 		die();
 	} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "editmembership" ) {
-		$request = "/members/".doliconnector($current_user, 'fk_member'); 
 		if ( !empty(doliconnector($current_user, 'fk_member')) && doliconnector($current_user, 'fk_member') > 0 && doliconnector($current_user, 'fk_soc') > 0 ) {
+		  $request = "/members/".doliconnector($current_user, 'fk_member');
 		  $adherent = callDoliApi("GET", $request, null, dolidelay('member'));
 		} else {
 		  $adherent = null;
@@ -1158,11 +1158,12 @@ global $current_user;
 		wp_send_json_success($response);
 		die();
 	} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "renewmembership" ) {
-		$request = "/members/".doliconnector($current_user, 'fk_member'); 
 		if ( !empty(doliconnector($current_user, 'fk_member')) && doliconnector($current_user, 'fk_member') > 0 && doliconnector($current_user, 'fk_soc') > 0 ) {
-		  $adherent = callDoliApi("GET", $request, null, dolidelay('member'));
+		  	$request = "/members/".doliconnector($current_user, 'fk_member');
+		  	$adherent = callDoliApi("GET", $request, null, dolidelay('member'));
 		} else {
-		  $adherent = null;
+			$adherent = (object) 0;
+			$adherent->typeid = 0;
 		}
 		$member_id = '';
 		$request= "/adherentsplus/type/".$adherent->typeid;

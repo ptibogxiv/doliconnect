@@ -52,7 +52,7 @@ $adhesion = callDoliApi("PUT", "/adherentsplus/".doliconnector($current_user, 'f
 return $adhesion;
 }
 
-function dolimembertypelist($typeadhesion, $adherent) {
+function dolimembertypelist($typeadhesion, $adherent = null) {
 
   $list = '<ul class="list-group list-group-flush">';
   
