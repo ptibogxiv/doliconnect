@@ -2750,14 +2750,13 @@ function generate_license($suffix = null) {
 }
 
 //*****************************************************************************************
-
 add_action( 'settings_doliconnect_menu', 'gdpr_menu', 3, 1);
 add_action( 'settings_doliconnect_gdpr', 'gdpr_module');
 
 function gdpr_menu($arg) {
-print "<a href='".esc_url( add_query_arg( 'module', 'gdpr', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
-if ($arg=='gdpr') { print " active";}
-print "'>".__( 'Privacy', 'doliconnect')."</a>";
+    print "<a href='".esc_url( add_query_arg( 'module', 'gdpr', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
+    if ($arg=='gdpr') { print " active";}
+    print "'>".__( 'Privacy', 'doliconnect')."</a>";
 }
 
 function gdpr_module($url) {
@@ -2772,7 +2771,6 @@ global $current_user;
 			}
 		}
 		print doli_gdrf_data_request_form( $params ); 
-
 }
 
 ?>
