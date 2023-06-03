@@ -508,20 +508,23 @@ function generate_modify_author_display()
 return false;
 }
 // ********************************************************
+if (get_option('doliaccount')) {
+    add_filter( 'register_url', 'doliconnect_register_page', 80, 1);
+}
 function doliconnect_register_page( $register_url ) {
 return esc_url( add_query_arg( 'action', 'signup', doliconnecturl('doliaccount')) ); 
 }
-if (get_option('doliaccount')) {
-add_filter( 'register_url', 'doliconnect_register_page', 80, 1);
-}
 // ********************************************************
+if (get_option('doliaccount')) {
+    add_filter( 'lostpassword_url', 'doliconnect_lost_password_page', 80, 1);
+}
 function doliconnect_lost_password_page( $lostpassword_url ) {
-return esc_url( add_query_arg( 'action', 'fpw', doliconnecturl('doliaccount')) ); 
-}
-if (get_option('doliaccount')) {
-add_filter( 'lostpassword_url', 'doliconnect_lost_password_page', 80, 1);
+    return esc_url( add_query_arg( 'action', 'fpw', doliconnecturl('doliaccount')) ); 
 }
 // ********************************************************
+if (get_option('doliaccount')) {
+    add_filter( 'login_url', 'doliconnect_login_link_url', 80, 3 );
+}
 function doliconnect_login_link_url( $login_url, $redirect, $force_reauth ) {
     if (get_option('doliaccount') && !preg_match('/action=confirm_admin_email/i', $redirect)) {
         $login_url = doliconnecturl('doliaccount');
@@ -544,47 +547,43 @@ function doliconnect_login_link_url( $login_url, $redirect, $force_reauth ) {
     }
     return $login_url;
     }
-if (get_option('doliaccount')) {
-    add_filter( 'login_url', 'doliconnect_login_link_url', 80, 3 );
-}
 // ********************************************************
 add_filter( 'logout_url', 'doliconnect_logout_url', 10, 2 );
 function doliconnect_logout_url( $logout_url, $redirect ) {
-if (get_site_option('doliconnect_login')) {
-$logout_url = site_url()."/".get_site_option('doliconnect_login');
-} else {
-$logout_url = site_url()."/wp-login.php";
-};
-$logout_url = add_query_arg( 'action', 'logout', $logout_url );
-if ( ! empty( $redirect ) ) {
-$logout_url = add_query_arg( 'redirect_to', urlencode( $redirect ), $logout_url );
-}
-$logout_url = wp_nonce_url( $logout_url, 'log-out' );
-return $logout_url;
+    if (get_site_option('doliconnect_login')) {
+        $logout_url = site_url()."/".get_site_option('doliconnect_login');
+    } else {
+        $logout_url = site_url()."/wp-login.php";
+    };
+    $logout_url = add_query_arg( 'action', 'logout', $logout_url );
+    if ( ! empty( $redirect ) ) {
+        $logout_url = add_query_arg( 'redirect_to', urlencode( $redirect ), $logout_url );
+    }
+    $logout_url = wp_nonce_url( $logout_url, 'log-out' );
+    return $logout_url;
 }
 // ********************************************************
 add_filter('asgarosforum_filter_profile_link', 'doliconnect_profile_url', 10, 2);
 function doliconnect_profile_url($profile_url, $user_object) {
-return doliconnecturl('doliaccount');
+    return doliconnecturl('doliaccount');
 }
 // ********************************************************
+add_action( 'wp_login_failed', 'doliconnect_account_login_fail' );
 function doliconnect_account_login_fail( $username ) { 
-if ( isset($_SERVER['HTTP_REFERER']) && !empty($_SERVER['HTTP_REFERER']) && !strstr($_SERVER['HTTP_REFERER'],'wp-login') && !strstr($_SERVER['HTTP_REFERER'],'wp-admin') ) {
-wp_redirect( esc_url( add_query_arg( 'login', 'failed', doliconnecturl('doliaccount')) ) );
-exit;}
+    if ( isset($_SERVER['HTTP_REFERER']) && !empty($_SERVER['HTTP_REFERER']) && !strstr($_SERVER['HTTP_REFERER'],'wp-login') && !strstr($_SERVER['HTTP_REFERER'],'wp-admin') ) {
+        wp_redirect( esc_url( add_query_arg( 'login', 'failed', doliconnecturl('doliaccount')) ) );
+        exit;
+    }
 }
-add_action( 'wp_login_failed', 'doliconnect_account_login_fail' );  // hook failed login
 // ********************************************************
 function passresetmodif_login ($url, $redirect) { 
-if (get_site_option('doliconnect_login')) {
-$login_url=site_url()."/" . get_site_option('doliconnect_login');
-} else {
-$login_url=site_url()."/wp-login.php"; 
-}
+    if (get_site_option('doliconnect_login')) {
+        $login_url=site_url()."/" . get_site_option('doliconnect_login');
+    } else {
+        $login_url=site_url()."/wp-login.php"; 
+    }
     $args = array( 'action' => 'lostpassword' );
-
-    if ( !empty($redirect) )
-        $args['redirect_to'] = $redirect;
+    if ( !empty($redirect) ) $args['redirect_to'] = $redirect;
     return add_query_arg( $args, $login_url );
 }
 
