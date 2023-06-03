@@ -526,6 +526,15 @@ function doliconnect_login_link_url( $login_url, $redirect, $force_reauth ) {
     if (get_option('doliaccount') && !preg_match('/action=confirm_admin_email/i', $redirect)) {
         $login_url = doliconnecturl('doliaccount');
         $login_url = add_query_arg( 'redirect_to', urlencode( $redirect ), $login_url );
+    } elseif (preg_match('/action=confirm_admin_email/i', $redirect)) {
+        if ( function_exists('secupress_get_module_option') && !empty(get_site_option('secupress_active_submodule_move-login')) && secupress_get_module_option('move-login_slug-login', null, 'users-login' )) {
+            $login_url = site_url()."/".secupress_get_module_option('move-login_slug-login', null, 'users-login' ); 
+        } elseif (get_site_option('doliconnect_login')) {
+            $login_url = site_url()."/".get_site_option('doliconnect_login');
+        } else {
+            $login_url = site_url()."/wp-login.php"; 
+        }
+        $login_url = add_query_arg( 'redirect_to', urlencode( $redirect ), $login_url );
     }
     if ( ! empty( $redirect ) ) {
         $login_url = add_query_arg( 'redirect_to', urlencode( $redirect ), $login_url );
