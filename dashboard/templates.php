@@ -1750,40 +1750,41 @@ print "<li class='list-group-item list-group-item-info'><h6>".__( 'Billing addre
 }
 
 if ( doliCheckModules('fraisdeport') ) {
-$listshipment = callDoliApi("GET", "/fraisdeport?modulepart=".$module."&id=1", null, dolidelay('order', true));
-if (!empty($object->shipping_method_id)) { $thirdparty->shipping_method_id = $object->shipping_method_id; }
-if ( !isset($listshipment->error) && $listshipment != null ) {
-print "<li class='list-group-item list-group-item-action'><h6>".__( 'Shipping method', 'doliconnect')."</h6>";
-$i=0;
-foreach ( $listshipment as $shipment ) {
-if (isset($object->total_ht) && $object->total_ht >= $shipment->palier && !isset($controlefdp[$shipment->fk_shipment_mode])) {
-print '<div class="form-check"><input type="radio" id="shipment-'.$shipment->id.'" name="shipping_method_id" class="form-check-input" value="'.$shipment->fk_shipment_mode.'" ';
-if ( empty($i) || $thirdparty->shipping_method_id == $shipment->fk_shipment_mode ) { print " checked"; }
-print '><label class="form-check-label" for="shipment-'.$shipment->id.'">'.dolishipmentmethods($shipment->fk_shipment_mode).' - '.doliprice($shipment, (empty(get_option('dolibarr_b2bmode'))?'price_ttc':'price_ht'));
-if (!empty($shipment->description)) //print ' <small>('.$shipment->description.')</small>';
-print '</label></div>';
-$controlefdp[$shipment->fk_shipment_mode] = true;
-$i++;
-}
-}
-print "</li>";
-}
+  $listshipment = callDoliApi("GET", "/fraisdeport?modulepart=".$module."&id=1", null, dolidelay('order', true));
+  //print var_dump($listshipment);
+  if (!empty($object->shipping_method_id)) { $thirdparty->shipping_method_id = $object->shipping_method_id; }
+  if ( !isset($listshipment->error) && $listshipment != null ) {
+    print "<li class='list-group-item list-group-item-action'><h6>".__( 'Shipping method', 'doliconnect')."</h6>";
+    $i=0;
+    foreach ( $listshipment as $shipment ) {
+      if (isset($object->total_ht) && $object->total_ht >= $shipment->palier && !isset($controlefdp[$shipment->fk_shipment_mode])) {
+        print '<div class="form-check"><input type="radio" id="shipment-'.$shipment->id.'" name="shipping_method_id" class="form-check-input" value="'.$shipment->fk_shipment_mode.'" ';
+        if ( empty($i) || $thirdparty->shipping_method_id == $shipment->fk_shipment_mode ) { print " checked"; }
+        print '><label class="form-check-label" for="shipment-'.$shipment->id.'">'.dolishipmentmethods($shipment->fk_shipment_mode).' - '.doliprice($shipment, (empty(get_option('dolibarr_b2bmode'))?'price_ttc':'price_ht'));
+        if (!empty($shipment->description)) //print ' <small>('.$shipment->description.')</small>';
+        print '</label></div>';
+        $controlefdp[$shipment->fk_shipment_mode] = true;
+        $i++;
+      }
+    }
+    print "</li>";
+  }
 } else {
-$listshipment = callDoliApi("GET", "/setup/dictionary/shipping_methods?limit=100&active=1&lang=".doliUserLang($current_user), null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-
-if (!empty($object->shipping_method_id)) { $thirdparty->shipping_method_id = $object->shipping_method_id; }
-if ( !isset($listshipment->error) && $listshipment != null ) {
-print "<li class='list-group-item list-group-item-action'><h6>".__( 'Shipping method', 'doliconnect')."</h6>";
-foreach ( $listshipment as $shipment ) {
-print '<div class="form-check"><input type="radio" id="shipment-'.$shipment->id.'" name="shipping_method_id" class="form-check-input" value="'.$shipment->id.'" ';
-if ( $thirdparty->shipping_method_id == $shipment->id ) { print " checked"; }
-print '><label class="form-check-label" for="shipment-'.$shipment->id.'">'.$shipment->label;
-if (!empty($shipment->description)) //print ' <small>('.$shipment->description.')</small>';
-print '</label></div>';
-$controlefdp[$shipment->id] = true;
-}
-print "</li>";
-}
+  $listshipment = callDoliApi("GET", "/setup/dictionary/shipping_methods?limit=100&active=1&lang=".doliUserLang($current_user), null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+  //print var_dump($listshipment);
+  if (!empty($object->shipping_method_id)) { $thirdparty->shipping_method_id = $object->shipping_method_id; }
+  if ( !isset($listshipment->error) && $listshipment != null ) {
+    print "<li class='list-group-item list-group-item-action'><h6>".__( 'Shipping method', 'doliconnect')."</h6>";
+    foreach ( $listshipment as $shipment ) {
+      print '<div class="form-check"><input type="radio" id="shipment-'.$shipment->id.'" name="shipping_method_id" class="form-check-input" value="'.$shipment->id.'" ';
+      if ( $thirdparty->shipping_method_id == $shipment->id ) { print " checked"; }
+      print '><label class="form-check-label" for="shipment-'.$shipment->id.'">'.$shipment->label;
+      if (!empty($shipment->description)) //print ' <small>('.$shipment->description.')</small>';
+      print '</label></div>';
+      $controlefdp[$shipment->id] = true;
+    }
+    print "</li>";
+  }
 }
 
 $note_public = isset($_POST['note_public']) ? $_POST['note_public'] : (isset($object->note_public) ? $object->note_public: null);
