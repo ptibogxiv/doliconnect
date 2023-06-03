@@ -495,7 +495,7 @@ return get_bloginfo( 'url' );
 add_filter( 'login_headerurl', 'doliconnect_login_logo_url' );
 
 function doliconnect_login_logo_url_title() {
-return 'nom du site';
+    return 'nom du site';
 }
 add_filter( 'login_headertext', 'doliconnect_login_logo_url_title' );
 
@@ -512,7 +512,7 @@ if (get_option('doliaccount')) {
     add_filter( 'register_url', 'doliconnect_register_page', 80, 1);
 }
 function doliconnect_register_page( $register_url ) {
-return esc_url( add_query_arg( 'action', 'signup', doliconnecturl('doliaccount')) ); 
+    return esc_url( add_query_arg( 'action', 'signup', doliconnecturl('doliaccount')) ); 
 }
 // ********************************************************
 if (get_option('doliaccount')) {
