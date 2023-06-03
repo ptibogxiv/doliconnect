@@ -1700,43 +1700,6 @@ return __('Transporter by default', 'doliconnect');
 }
 }
 
-/*
-function doliconnect_langs($arg) {
-
-if (function_exists('pll_the_languages')) {       
-
-print '<div class="modal fade" id="DoliconnectSelectLang" aria-hidden="true" data-bs-show="true" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="DoliconnectSelectLangLabel">
-<div class="modal-dialog modal-fullscreen-md-down modal-dialog-centered modal-dialog-scrollable">
-<div class="modal-content"><div class="modal-header">
-<h5 class="modal-title" id="DoliconnectSelectLangLabel">'.__('Choose your language', 'doliconnect').'</h5><button id="closemodalSelectLang" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></button></div>';
- 
-print '<script type="text/javascript">';
-print 'function loadingSelectLangModal() {
-jQuery("#closemodalSelectLang").hide();
-jQuery("#SelectLangmodal-form").hide();
-jQuery("#loadingSelectLang").show();  
-}';
-print '</script>';
-
-print '<div class="modal-body"><div class="card" id="SelectLangmodal-form"><ul class="list-group list-group-flush">';
-$translations = pll_the_languages( array( 'raw' => 1 ) );
-foreach ($translations as $key => $value) {
-$doliuser .= "<a href='".$value['url']."?".$_SERVER["QUERY_STRING"]."' onclick='loadingSelectLangModal()' class='list-group-item list-group-item-light list-group-item-action";
-if ( $value['current_lang'] == true ) { $doliuser .= " active"; }
-$doliuser .= "'><span class='fi fi-".strtolower(substr($value['slug'], -2))."'></span> ".$value['name'];
-if ( $value['current_lang'] == true ) { $doliuser .= " <i class='fas fa-language fa-fw'></i>"; }
-$doliuser .= "</a>";
-}      
-
-print '</ul></div>
-<div id="loadingSelectLang" style="display:none"><br><br><br><center><div class="align-middle"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div><h4>'.__('Loading', 'doliconnect').'</h4></div></center><br><br><br></div>
-</div></div></div></div>';
-}    
-
-}
-add_action( 'wp_footer', 'doliconnect_langs');
-*/
-
 function doliconnect_paymentmethods($object = null, $module = null, $url = null, $refresh = false, $array = array()) {
 global $current_user;
 
@@ -3121,100 +3084,7 @@ return $ajax;
 }
 
 function doliModalDiv() {
-global $current_user;
-$year = strftime("%Y", current_time( 'timestamp', 1));
-
-print '<div id="doliModalDiv"></div>';
-
-/*
-if ( (!is_user_logged_in() || !is_user_member_of_blog( $current_user->ID, get_current_blog_id())) && (get_option('doliloginmodal') == '1') ) {
-
-doliconnect_enqueues();
-
-do_action( 'login_head' );
-
-$doliuser .= "<div class='modal fade' id='DoliconnectLogin' data-bs-backdrop='static' data-bs-keyboard='false' tabindex='-1' role='dialog' aria-labelledby='DoliconnectLoginTitle' aria-hidden='true'>";
-$doliuser .= "<div class='modal-dialog modal-fullscreen-md-down modal-dialog-centered modal-dialog-scrollable' role='document'><div class='modal-content'><div class='modal-header'>";
-
-if ( empty(get_option('doliconnectrestrict')) ) {
-$doliuser .= "<h5 class='modal-title' id='DoliconnectLoginTitle'>".__( 'Welcome', 'doliconnect')."</h5>";
-} else {
-$doliuser .= "<h5 class='modal-title' id='DoliconnectLoginTitle'>".__( 'Access restricted to users', 'doliconnect')."</h5>";
-}
-
-print '<button type="button" id="Closeloginmodal-form" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div><div class="modal-body"><div id="loginmodal-form">';
-print '<b>'.get_option('doliaccountinfo').'</b>';
-
-if ( ! function_exists('dolikiosk') || ( function_exists('dolikiosk') && empty(dolikiosk())) ) {
-print socialconnect ( get_permalink() );
-}
-
-if ( function_exists('secupress_get_module_option') && !empty(get_site_option('secupress_active_submodule_move-login')) && secupress_get_module_option('move-login_slug-login', null, 'users-login' )) {
-  $login_url = site_url()."/".secupress_get_module_option('move-login_slug-login', null, 'users-login' ); 
-} elseif (get_site_option('doliconnect_login')) {
-  $login_url = site_url()."/".get_site_option('doliconnect_login');
-} else {
-  $login_url = site_url()."/wp-login.php"; }
-if ( function_exists('dolikiosk') && ! empty(dolikiosk()) ) {
-  $redirect_to=doliconnecturl('doliaccount');
-} elseif (is_front_page()) {
-  $redirect_to=home_url();
-} else {
-  $redirect_to=get_permalink();
-}
-
-$doliuser .= "<form name='loginmodal-form' action='".$login_url."' method='post' class='was-validated'>";
-
-print dolimodalloaderscript('loginmodal-form');
-if  ( defined("DOLICONNECT_DEMO") ) {
-$doliuser .= "<p><i class='fas fa-info-circle fa-beat'></i> <b>".__( 'Demo mode is activated', 'doliconnect')."</b></p>";
-} 
-print '<div class="form-floating mb-3"><input type="email" class="form-control" id="user_login" name="log" placeholder="name@example.com" value="';
-if ( defined("DOLICONNECT_DEMO") && defined("DOLICONNECT_DEMO_EMAIL") && !empty(constant("DOLICONNECT_DEMO_EMAIL")) ) {
-print constant("DOLICONNECT_DEMO_EMAIL");
-}
-print '" required autofocus><label for="user_login"><i class="fas fa-at fa-fw"></i> '.__( 'Email', 'doliconnect').'</label></div>';
-
-print '<div class="form-floating mb-3"><input type="password" class="form-control" id="user_pass" name="pwd" placeholder="Password" value="';
-if ( defined("DOLICONNECT_DEMO") && defined("DOLICONNECT_DEMO_PASSWORD") && !empty(constant("DOLICONNECT_DEMO_PASSWORD")) ) {
-print constant("DOLICONNECT_DEMO_PASSWORD");
-}
-print '" required><label for="user_pass"><i class="fas fa-key fa-fw"></i> '.__( 'Password', 'doliconnect').'</label></div>';
-
-do_action( 'login_form' );
-
-print '<div class="form-check float-start">
-  <input class="form-check-input" type="checkbox" name="rememberme" value="forever" id="rememberme" checked>
-  <label class="form-check-label" for="rememberme">'.__( 'Remember me', 'doliconnect').'</label>
-</div>';
-
-$doliuser .= "<a class='float-end' href='".wp_lostpassword_url(get_permalink())."' role='button' title='".__( 'Forgot password?', 'doliconnect')."'><small>".__( 'Forgot password?', 'doliconnect')."</small></a>"; 
-
-$doliuser .= "<input type='hidden' value='$redirect_to' name='redirect_to'></div>";
-
-$doliuser .= "".doliloading('loginmodal-form');
-
-print '</div><div id="Footerloginmodal-form" class="modal-footer flex-nowrap p-0">';
-if ( get_site_option('doliconnect_mode') == 'one' && function_exists('switch_to_blog') ) {
-switch_to_blog(1);
-} 
-if ((!is_multisite() && get_option( 'users_can_register' )) || ((!is_multisite() && get_option( 'dolicustsupp_can_register' )) || ((get_option( 'dolicustsupp_can_register' ) || get_option('users_can_register') == '1') && (get_site_option( 'registration' ) == 'user' || get_site_option( 'registration' ) == 'all')))) {
-$doliuser .= "<a class='btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0 border-end' href='".wp_registration_url(get_permalink())."' role='button' title='".__( 'Create an account', 'doliconnect')."'><small>".__( 'Create an account', 'doliconnect')."</small></a>";
-}
-if (get_site_option('doliconnect_mode')=='one') {
-restore_current_blog();
-}
-print '<button class="btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0" type="submit" value="submit"><strong>'.__( 'Sign in', 'doliconnect').'</strong></button>';
-print '</form></div>';
-print '</div></div></div>';
-
-//if( !array_key_exists( 'login_footer' , $GLOBALS['wp_filter']) ) { 
-do_action( 'login_footer' );
-//}
-
-}
-*/
-
+  print '<div id="doliModalDiv"></div>';
 }
 add_action( 'wp_footer', 'doliModalDiv' );
 
