@@ -1769,7 +1769,7 @@ if ( doliCheckModules('fraisdeport') ) {
     }
     print "</li>";
   }
-} else {
+} elseif ( doliCheckModules('expedition') ) {
   $listshipment = callDoliApi("GET", "/setup/dictionary/shipping_methods?limit=100&active=1&lang=".doliUserLang($current_user), null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
   //print var_dump($listshipment);
   if (!empty($object->shipping_method_id)) { $thirdparty->shipping_method_id = $object->shipping_method_id; }
