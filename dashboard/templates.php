@@ -1778,7 +1778,7 @@ if ( doliCheckModules('fraisdeport') ) {
     foreach ( $listshipment as $shipment ) {
       print '<div class="form-check"><input type="radio" id="shipment-'.$shipment->id.'" name="shipping_method_id" class="form-check-input" value="'.$shipment->id.'" ';
       if ( $thirdparty->shipping_method_id == $shipment->id ) { print " checked"; }
-      print '><label class="form-check-label" for="shipment-'.$shipment->id.'">'.$shipment->label;
+      print '><label class="form-check-label" for="shipment-'.$shipment->id.'">'.dolishipmentmethods($shipment->id);
       if (!empty($shipment->description)) //print ' <small>('.$shipment->description.')</small>';
       print '</label></div>';
       $controlefdp[$shipment->id] = true;
