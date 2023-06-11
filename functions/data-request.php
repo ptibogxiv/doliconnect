@@ -186,8 +186,8 @@ function doliuserinfos_request(){
 		'nickname' => sanitize_user($_POST['user_nicename']),
 		'first_name' => $thirdparty['firstname'],
 		'last_name' => $thirdparty['lastname'],
-		'description' => $thirdparty['note_public'],
-		'user_url' => $thirdparty['url'],
+		'description' => (isset($thirdparty['note_public'])?$thirdparty['note_public']:null),
+		'user_url' => (isset($thirdparty['url'])?$thirdparty['url']:null),
 		'display_name' => $thirdparty['name']));
 		update_user_meta( $ID, 'civility_code', sanitize_text_field($thirdparty['civility_code']));
 		update_user_meta( $ID, 'billing_type', sanitize_text_field($thirdparty['morphy']));
