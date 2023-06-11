@@ -17,7 +17,11 @@ $statut='1';
 $action='POST';
 } 
 
-list($year, $month, $day) = explode("-", $current_user->billing_birth);
+if (preg_match('/\//', $current_user->billing_birth)) { 
+  list($year, $month, $day) = explode("/", $current_user->billing_birth);
+} elseif (preg_match('/-/', $current_user->billing_birth)) {
+  list($year, $month, $day) = explode("-", $current_user->billing_birth);
+}
 $birth = mktime(0, 0, 0, $month, $day, $year); // debug si non conforme
 
 $thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty'));  
