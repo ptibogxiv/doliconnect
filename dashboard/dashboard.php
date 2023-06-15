@@ -1990,8 +1990,9 @@ $productadhesion = doliconst("ADHERENT_PRODUCT_ID_FOR_SUBSCRIPTIONS", dolidelay(
 if ( isset($_POST["update_membership"]) && function_exists('doliconnect_membership') ) {
 $typeadherent = isset($_POST["typeadherent"]) ? $_POST["typeadherent"] : null;
 $adherent = doliconnect_membership($current_user, $_POST["update_membership"], $typeadherent, dolidelay('member', true));
+//print var_dump($adherent);
 $request = "/adherentsplus/".doliconnector($current_user, 'fk_member', true); 
-
+$adherent = callDoliApi("GET", $request, null, dolidelay('member', true));
 print dolialert('success', __( 'Your membership has been updated.', 'doliconnect'));
 }
 

@@ -17,12 +17,16 @@ $statut='1';
 $action='POST';
 } 
 
-if (preg_match('/\//', $current_user->billing_birth)) { 
-  list($year, $month, $day) = explode("/", $current_user->billing_birth);
-} elseif (preg_match('/-/', $current_user->billing_birth)) {
+//if (preg_match('/\//', $current_user->billing_birth)) { 
+//  list($year, $month, $day) = explode("/", $current_user->billing_birth);
+//} elseif (preg_match('/-/', $current_user->billing_birth)) {
   list($year, $month, $day) = explode("-", $current_user->billing_birth);
-}
-$birth = mktime(0, 0, 0, $month, $day, $year); // debug si non conforme
+//} else {
+//  $month = null;
+//  $day = null;
+//  $year = null;
+//}
+$birth = mktime(0, 0, 0, $month, $day, $year);
 
 $thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty'));  
 
@@ -48,9 +52,9 @@ $data = [
   
 if ($action=='POST') {
 $mbr = callDoliApi("POST", "/members", $data, 0);
-$adhesion = callDoliApi("GET", "/adherentsplus/".doliconnector($current_user, 'fk_member', true), null, dolidelay('member', true));
+$adhesion = callDoliApi("GET", "/members/".doliconnector($current_user, 'fk_member', true), null, dolidelay('member', true));
 } else {
-$adhesion = callDoliApi("PUT", "/adherentsplus/".doliconnector($current_user, 'fk_member', true), $data, 0);
+$adhesion = callDoliApi("PUT", "/members/".doliconnector($current_user, 'fk_member', true), $data, 0);
 }
 
 return $adhesion;
