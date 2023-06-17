@@ -608,23 +608,35 @@ $country_code = callDoliApi("GET", "/setup/dictionary/countries/".$country_code,
 }
 $ProfId1 = callDoliApi("GET", "/doliconnector/translation/ProfId1".$country_code."?filename=companies&langcode=".str_replace("-","_",get_bloginfo("language")), null, dolidelay('constante'));
 if ($ProfId1 != '-') {
-  $ifprod .= '<div class="col-md-6 col-lg"><div class="form-floating"><input type="text" class="form-control" id="idprof1" name="'.$idobject.'[idprof1]" placeholder="'.$ProfId1.'" value="'.(isset($idprof1) ? $idprof1 : null).'" required autocomplete="off">
-  <label for="idprof1"><i class="fas fa-building fa-fw"></i> '.$ProfId1.'</label></div></div>'; 
+  $ifprod .= '<div class="col-md-6 col-lg"><div class="form-floating"><input type="text" class="form-control" id="idprof1" name="'.$idobject.'[idprof1]" placeholder="'.$ProfId1.'" value="'.(isset($idprof1) ? $idprof1 : null).'" required autocomplete="off"';
+  if (!$rights) {
+    $ifprod .= ' disabled';
+  }
+  $ifprod .= '><label for="idprof1"><i class="fas fa-building fa-fw"></i> '.$ProfId1.'</label></div></div>'; 
 }
 $ProfId2 = callDoliApi("GET", "/doliconnector/translation/ProfId2".$country_code."?filename=companies&langcode=".str_replace("-","_",get_bloginfo("language")), null, dolidelay('constante'));
 if ($ProfId2 != '-') {
-  $ifprod .= '<div class="col-md-6 col-lg"><div class="form-floating"><input type="text" class="form-control" id="idprof2" name="'.$idobject.'[idprof2]" placeholder="'.$ProfId1.'" value="'.(isset($idprof2) ? $idprof2 : null).'" required autocomplete="off">
-  <label for="idprof2"><i class="fas fa-building fa-fw"></i> '.$ProfId2.'</label></div></div>';
+  $ifprod .= '<div class="col-md-6 col-lg"><div class="form-floating"><input type="text" class="form-control" id="idprof2" name="'.$idobject.'[idprof2]" placeholder="'.$ProfId1.'" value="'.(isset($idprof2) ? $idprof2 : null).'" required autocomplete="off"';
+  if (!$rights) {
+    $ifprod.= ' disabled';
+  }
+  $ifprod .= '><label for="idprof2"><i class="fas fa-building fa-fw"></i> '.$ProfId2.'</label></div></div>';
 } 
 $ProfId3 = callDoliApi("GET", "/doliconnector/translation/ProfId3".$country_code."?filename=companies&langcode=".str_replace("-","_",get_bloginfo("language")), null, dolidelay('constante'));
 if ($ProfId3 != '-') {
-  $ifprod .= '<div class="col-md-6 col-lg"><div class="form-floating"><input type="text" class="form-control" id="idprof3" name="'.$idobject.'[idprof3]" placeholder="'.$ProfId3.'" value="'.(isset($idprof3) ? $idprof3 : null).'" required autocomplete="off">
-  <label for="idprof3"><i class="fas fa-building fa-fw"></i> '.$ProfId3.'</label></div></div>';
+  $ifprod .= '<div class="col-md-6 col-lg"><div class="form-floating"><input type="text" class="form-control" id="idprof3" name="'.$idobject.'[idprof3]" placeholder="'.$ProfId3.'" value="'.(isset($idprof3) ? $idprof3 : null).'" required autocomplete="off"';
+  if (!$rights) {
+    $ifprod .= ' disabled';
+  }
+  $ifprod .= '><label for="idprof3"><i class="fas fa-building fa-fw"></i> '.$ProfId3.'</label></div></div>';
 } 
 $ProfId4 = callDoliApi("GET", "/doliconnector/translation/ProfId4".$country_code."?filename=companies&langcode=".str_replace("-","_",get_bloginfo("language")), null, dolidelay('constante'));
 if ($ProfId4 != '-') {
-  $ifprod .= '<div class="col-md-6 col-lg"><div class="form-floating"><input type="text" class="form-control" id="idprof4" name="'.$idobject.'[idprof4]" placeholder="'.$ProfId4.'" value="'.(isset($idprof4) ? $idprof4 : null).'" required autocomplete="off">
-  <label for="idprof4"><i class="fas fa-building fa-fw"></i> '.$ProfId4.'</label></div></div>';      
+  $ifprod .= '<div class="col-md-6 col-lg"><div class="form-floating"><input type="text" class="form-control" id="idprof4" name="'.$idobject.'[idprof4]" placeholder="'.$ProfId4.'" value="'.(isset($idprof4) ? $idprof4 : null).'" required autocomplete="off"';
+  if (!$rights) {
+    $ifprod .= ' disabled';
+  }
+  $ifprod .= '><label for="idprof4"><i class="fas fa-building fa-fw"></i> '.$ProfId4.'</label></div></div>';      
 } 
 return $ifprod;
 }
@@ -722,13 +734,13 @@ $doliuser .= '<div class="form-floating"><input type="text" class="form-control"
 if ($rights) {
 $doliuser .= 'required';
 } else {
-$doliuser .= 'readonly';
+  $doliuser .= 'disabled';
 }
 $doliuser .= '><label for="'.$idobject.'[name]"><i class="fas fa-building fa-fw"></i> '.__( 'Name of company', 'doliconnect').'</label></div>';   
 $doliuser .= '</div><div class="col-md">';
 $doliuser .= '<div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[name_alias]" name="'.$idobject.'[name_alias]" placeholder="'.__( 'Commercial name / Brand', 'doliconnect').'" value="'.(isset($object->name_alias) ? stripslashes(htmlspecialchars($object->name_alias, ENT_QUOTES)) : null).'" ';
 if (!$rights) {
-$doliuser .= 'readonly';
+  $doliuser .= 'disabled';
 }
 $doliuser .= '><label for="'.$idobject.'[name_alias]"><i class="fas fa-building fa-fw"></i> '.__( 'Commercial name / Brand', 'doliconnect').'</label></div>';
 $doliuser .= '</div></div>';
@@ -740,7 +752,9 @@ if ( doliversion('15.0.0') ) {
 }
 
 $doliuser .= '</div><div class="row g-2"><div class="col-md-6 col-lg-4"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[tva_intra]" name="'.$idobject.'[tva_intra]" placeholder="tva" value="'.(isset($object->tva_intra) ? $object->tva_intra : null).'"';
-if ((isset($object->tva_intra) && !empty($object->tva_intra)) || !$rights) { $doliuser .= ' readonly'; } else { $doliuser .= ''; }
+if ((isset($object->tva_intra) && !empty($object->tva_intra)) || !$rights) {  
+  $doliuser .= ' disabled'; 
+} 
 $doliuser .= ' autocomplete="off">
 <label for="'.$idobject.'[tva_intra]"><i class="fas fa-building fa-fw"></i> '.__( 'VAT number', 'doliconnect').'</label></div></div>';
 
@@ -753,11 +767,11 @@ if ( doliversion('15.0.0') ) {
 if ( doliversion('15.0.0') ) {
 $staff = callDoliApi("GET", "/setup/dictionary/staff?sortfield=id&sortorder=ASC&limit=100&active=1", null, $delay);
 if ( isset($staff) ) { 
-$doliuser .= '<div class="col-md-6 col-lg-4"><div class="form-floating"><select class="form-select" id="'.$idobject.'[effectif_id]" name="'.$idobject.'[effectif_id]" aria-label="'.__( 'Staff', 'doliconnect').'" ';
+$doliuser .= '<div class="col-md-6 col-lg-4"><div class="form-floating"><select class="form-select" id="'.$idobject.'[effectif_id]" name="'.$idobject.'[effectif_id]" aria-label="'.__( 'Staff', 'doliconnect').'"';
 if ($rights) {
-$doliuser .= 'required';
+$doliuser .= ' required';
 } else {
-$doliuser .= 'disabled';
+$doliuser .= ' disabled';
 }
 $doliuser .= '>';
 $doliuser .= "<option value='' disabled ";
@@ -817,19 +831,19 @@ $doliuser .= ">".__( 'Mister', 'doliconnect')."</option>";
 }
 $doliuser .= '</select><label for="'.$idobject.'[civility_code]"><i class="fas fa-user fa-fw"></i> '.__( 'Civility', 'doliconnect').'</label></div></div>';
                                                                                                                                                             
-$doliuser .= '<div class="col-md-6 col-lg-4 col-xl-5"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[firstname]" name="'.$idobject.'[firstname]" placeholder="'.__( 'Firstname', 'doliconnect').'" value="'.(isset($object->firstname) ? $object->firstname : stripslashes(htmlspecialchars($current_user->user_firstname, ENT_QUOTES))).'" ';
+$doliuser .= '<div class="col-md-6 col-lg-4 col-xl-5"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[firstname]" name="'.$idobject.'[firstname]" placeholder="'.__( 'Firstname', 'doliconnect').'" value="'.(isset($object->firstname) ? $object->firstname : stripslashes(htmlspecialchars($current_user->user_firstname, ENT_QUOTES))).'"';
 if ($rights) {
-$doliuser .= 'required';
+$doliuser .= ' required';
 } else {
-$doliuser .= 'readonly';
+  $doliuser .= ' disabled';
 }
 $doliuser .= '><label for="'.$idobject.'[firstname]"><i class="fas fa-user fa-fw"></i> '.__( 'Firstname', 'doliconnect').'</label></div></div>';
 
-$doliuser .= '<div class="col-md-6 col-lg-5 col-xl-5"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[lastname]" name="'.$idobject.'[lastname]" placeholder="'.__( 'Firstname', 'doliconnect').'" value="'.(isset($object->lastname) ? $object->lastname : stripslashes(htmlspecialchars($current_user->user_lastname, ENT_QUOTES))).'" ';
+$doliuser .= '<div class="col-md-6 col-lg-5 col-xl-5"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[lastname]" name="'.$idobject.'[lastname]" placeholder="'.__( 'Firstname', 'doliconnect').'" value="'.(isset($object->lastname) ? $object->lastname : stripslashes(htmlspecialchars($current_user->user_lastname, ENT_QUOTES))).'"';
 if ($rights) {
-$doliuser .= 'required';
+$doliuser .= ' required';
 } else {
-$doliuser .= 'readonly';
+  $doliuser .= ' disabled';
 }
 $doliuser .= '><label for="'.$idobject.'[lastname]"><i class="fas fa-user fa-fw"></i> '.__( 'Lastname', 'doliconnect').'</label></div></div>';   
 
@@ -843,7 +857,7 @@ $doliuser .= '<div class="col-md-6"><div class="form-floating"><input type="date
 if (($mode != 'contact' && $rights) || $rights) {
 $doliuser .= 'required';
 } else {
-$doliuser .= 'readonly';
+  $doliuser .= ' disabled';
 }
 $doliuser .= '><label for="'.$idobject.'[birth]"><i class="fas fa-user fa-fw"></i> '.__( 'Birthday', 'doliconnect').'</label></div></div>';   
 
@@ -853,7 +867,7 @@ $doliuser .= '<div class="form-floating"><input type="text" class="form-control"
 if ($rights) {
 $doliuser .= 'required';
 } else {
-$doliuser .= 'readonly';
+  $doliuser .= ' disabled';
 }
 $doliuser .= '>
 <label for="user_nicename"><i class="fas fa-user-secret fa-fw"></i> '.__( 'Display name', 'doliconnect').'</label></div>';  
@@ -862,7 +876,7 @@ $doliuser .= '<div class="form-floating"><input type="text" class="form-control"
 if ($rights) {
 $doliuser .= 'required';
 } else {
-$doliuser .= 'readonly';
+  $doliuser .= ' disabled';
 }
 $doliuser .= '>
 <label for="'.$idobject.'[poste]"><i class="fas fa-user-secret fa-fw"></i> '.__( 'Title / Job', 'doliconnect').'</label></div>';  
@@ -874,7 +888,7 @@ $doliuser .= '</div>';
 $doliuser .= '<div class="row g-2">';
 $doliuser .= '<div class="col-md"><div class="form-floating"><input type="email" class="form-control" id="'.$idobject.'[email]" placeholder="name@example.com" name="'.$idobject.'[email]" value="'.(isset($object->email) ? $object->email : $current_user->user_email).'" autocomplete="off" ';
 if ( !$rights || (defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $current_user->ID && is_user_logged_in() && in_array($mode, array('thirdparty'))) || (defined("DOLICONNECT_SELECTEDEMAIL") && is_array(constant("DOLICONNECT_SELECTEDEMAIL")) && is_user_logged_in())) {
-$doliuser .= 'readonly';
+  $doliuser .= ' disabled';
 } else {
 $doliuser .= 'required';
 }
@@ -894,7 +908,7 @@ $doliuser .= '</div></div>';
 if ( ( !is_user_logged_in() && ((isset($_GET["morphy"])&& $_GET["morphy"] == "mor" && get_option('doliconnect_disablepro') != 'phy') || get_option('doliconnect_disablepro') == 'mor' || (function_exists('dolikiosk') && ! empty(dolikiosk())) ) && in_array($mode, array('thirdparty'))) || (is_user_logged_in() && in_array($mode, array('thirdparty','contact','member','donation'))) ) {
 $doliuser .= '<div class="col-md"><div class="form-floating"><input type="tel" class="form-control" id="'.$idobject.'[phone]" placeholder="0012345678" name="'.$idobject.'[phone]" value="'.(isset($object->phone) ? $object->phone : (isset($object->phone_pro) ? $object->phone_pro : null)).'" autocomplete="off" ';
 if (!$rights) {
-$doliuser .= 'readonly';
+  $doliuser .= ' disabled';
 }
 $doliuser .= '><label for="'.$idobject.'[phone]"><i class="fas fa-phone fa-fw"></i> '.__( 'Phone', 'doliconnect').'</label></div></div>';
 }
@@ -908,7 +922,7 @@ $doliuser .= '<div class="form-floating mb-2"><textarea class="form-control" pla
 if ($rights) {
 $doliuser .= 'required';
 } else {
-$doliuser .= 'readonly';
+  $doliuser .= ' disabled';
 }
 $doliuser .= '>'.(isset($object->address) ? stripslashes(htmlspecialchars($object->address, ENT_QUOTES)) : null).'</textarea>
 <label for="'.$idobject.'[address]"><i class="fas fa-map-marked fa-fw"></i> '.__( 'Address', 'doliconnect').'</label></div>';
@@ -1096,7 +1110,7 @@ $doliuser .= "<li class='list-group-item list-group-item-light list-group-item-a
 if ( !in_array($mode, array('member', 'contact', 'linkthirdparty')) ) {
 $doliuser .= '<div class="form-floating mb-2"><input type="url" class="form-control" id="'.$idobject.'[url]" name="'.$idobject.'[url]" placeholder="www.example.com" value="'.stripslashes(htmlspecialchars((isset($object->url) ? $object->url : null), ENT_QUOTES)).'" ';
 if (!$rights) {
-$doliuser .= 'readonly';
+  $doliuser .= ' disabled';
 }
 $doliuser .= '><label for="'.$idobject.'[url]">'.__( 'Website', 'doliconnect').'</label></div>';
 }
@@ -1104,7 +1118,7 @@ $doliuser .= '><label for="'.$idobject.'[url]">'.__( 'Website', 'doliconnect').'
 if ( !in_array($mode, array('member', 'linkthirdparty')) ) {
 $doliuser .= '<div class="form-floating"><textarea class="form-control" placeholder="Leave a comment here"  name="'.$idobject.'[note_public]" id="note_public" style="height: 100px" ';
 if (!$rights) {
-$doliuser .= 'readonly';
+  $doliuser .= ' disabled';
 }
 $doliuser .= '>'.stripslashes(htmlspecialchars(isset($object->note_public)?$object->note_public:$current_user->description, ENT_QUOTES)).'</textarea>
 <label for="note_public">'.__( 'About Yourself', 'doliconnect').'</label></div>';
@@ -1122,7 +1136,7 @@ foreach ( $socialnetworks as $social ) {
 $code = $social->code;
 $doliuser .= '<div class="col-12 col-sm-6 col-lg-4"><div class="form-floating"><input type="text" class="form-control form-control-sm" id="'.$idobject.'[socialnetworks]['.$social->code.']" name="'.$idobject.'[socialnetworks]['.$social->code.']" placeholder="'.$social->label.'" value="'.stripslashes(htmlspecialchars((isset($object->socialnetworks->$code) ? $object->socialnetworks->$code : null), ENT_QUOTES)).'" ';
 if (!$rights) {
-$doliuser .= 'readonly';
+  $doliuser .= ' disabled';
 }
 $doliuser .= '><label for="'.$idobject.'[socialnetworks]['.$social->code.']"><i class="fab fa-'.$social->code.' fa-fw"></i> '.$social->label.'</label></div></div>';
 }
