@@ -1060,8 +1060,13 @@ $monnaie = doliconst("MAIN_MONNAIE", dolidelay('constante', esc_attr(isset($_GET
 $testvalue='1.99';
 $cur = (!empty($object->multicurrency_code) ? $object->multicurrency_code : $monnaie );
 if ( !doliCheckModules('multicurrency', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)) || !doliversion('11.0.0') ) { 
-  $doliuser .= '<input type="text" class="form-control" id="'.$idobject.'[multicurrency_code]" value="'.$cur." / ".doliprice($testvalue, null, $cur).'" readonly>';
-  $doliuser .= '<label for="'.$idobject.'[multicurrency_code]">'.__( 'Default currency', 'doliconnect').'</label>';
+  $doliuser .= '<input type="text" class="form-control" id="'.$idobject.'[multicurrency_code]" value="'.$cur." / ".doliprice($testvalue, null, $cur).'"';
+  if (!$rights) {
+    $doliuser .= ' disabled';
+  } else {
+    $doliuser .= ' readonly'; 
+  }
+  $doliuser .= '><label for="'.$idobject.'[multicurrency_code]">'.__( 'Default currency', 'doliconnect').'</label>';
 } else {  
   $doliuser .= '<select class="form-select" id="'.$idobject.'[multicurrency_code]" name="'.$idobject.'[multicurrency_code]" aria-label="'.__( 'Default currency', 'doliconnect').'">';
   if ( !isset( $currencies->error ) && $currencies != null && doliCheckModules('multicurrency', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)) && doliversion('11.0.0')) {
