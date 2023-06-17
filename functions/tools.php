@@ -476,7 +476,7 @@ function doliSelectForm($name, $request, $selectlang = '- Select -', $valuelang 
       if ($rights) {
         $doliSelect .=  'required';
       } else {
-        $doliSelect .=  'readonly';
+        $doliSelect .=  'disabled';
       }
       $doliSelect .=  '><label for="'.$idobject.'[town]"><i class="fas fa-map-marked fa-fw"></i> '.__( 'Town', 'doliconnect').'</label></div>';  
       $doliSelect .=  '</div><div class="col-lg">';   
@@ -484,7 +484,7 @@ function doliSelectForm($name, $request, $selectlang = '- Select -', $valuelang 
       if ($rights) {
         $doliSelect .=  'required';
       } else {
-        $doliSelect .=  'readonly';
+        $doliSelect .=  'disabled';
       }
       $doliSelect .=  '><label for="'.$idobject.'[zip]"><i class="fas fa-map-marked fa-fw"></i> '.__( 'Zipcode', 'doliconnect').'</label></div>';  
       $doliSelect .=  '</div></div>';
