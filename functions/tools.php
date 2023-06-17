@@ -1019,7 +1019,11 @@ $doliuser .= "</div></li>";
 
 $doliuser .= '<li class="list-group-item list-group-item-light list-group-item-action"><div class="row g-2"><div class="col"><div class="form-floating">';
 if ( function_exists('pll_the_languages') ) {
-$doliuser .= '<select class="form-select" id="'.$idobject.'[default_lang]" name="'.$idobject.'[default_lang]" aria-label="'.__( 'Default language', 'doliconnect').'">';
+$doliuser .= '<select class="form-select" id="'.$idobject.'[default_lang]" name="'.$idobject.'[default_lang]" aria-label="'.__( 'Default language', 'doliconnect').'"';
+  if (!$rights) {
+    $doliuser .= ' disabled';
+  }
+  $doliuser .= '>';
 $doliuser .= "<option value=''>".__( 'Default / Browser language', 'doliconnect')."</option>";
 $translations = pll_the_languages( array( 'raw' => 1 ) );
 foreach ($translations as $key => $value) {
@@ -1149,8 +1153,13 @@ $doliuser .= "</div></li>";
 }
 
 if ( in_array($mode, array('thirdparty','contact')) && doliversion('17.0.0') && doliCheckModules('mailing') ) {
-  $doliuser .= '<li class="list-group-item list-group-item-light list-group-item-action"><div class="form-check form-switch"><input class="form-check-input" type="checkbox" role="switch" name="'.$idobject.'[no_email] id="'.$idobject.'[no_email]" ';
-  if ( isset($object->no_email) && empty($object->no_email) ) { $doliuser .= ' checked'; }        
+  $doliuser .= '<li class="list-group-item list-group-item-light list-group-item-action"><div class="form-check form-switch"><input class="form-check-input" type="checkbox" role="switch" name="'.$idobject.'[no_email] id="'.$idobject.'[no_email]"';
+  if ( isset($object->no_email) && empty($object->no_email) ) { 
+    $doliuser .= ' checked'; 
+  }
+  if (!$rights) {
+    $doliuser .= ' disabled';
+  }        
   $doliuser .= '><label class="form-check-label" for="'.$idobject.'[no_email]">'.__( 'I would like to receive the newsletter', 'doliconnect').'</label></div></li>';
 }
 
