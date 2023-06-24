@@ -3016,53 +3016,51 @@ function doliModalButton($case, $id, $title, $type = 'button', $class = 'btn btn
   $button .= '<script type="text/javascript">';
   $button .= '(function ($) {
     $(document).ready(function () {
-    document.querySelector("#'.$id.'").addEventListener("click", function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-          $.ajax({
-            url :"'.admin_url('admin-ajax.php').'",
-            type:"POST",
-            cache:false,
-            data: {
-              "action": "dolimodal_request",
-              "dolimodal-nonce": "'.wp_create_nonce( 'dolimodal-nonce').'",
-              "case": "'.$case.'",
-              "value1": "'.$value1.'",
-              "value2": "'.$value2.'",
-              "redirect_to": "'.$redirect_to.'",
-          },
-        }).done(function(response) {
-            if (response.success) { 
-              if (response.data.js) {
-                $.getScript( response.data.js ).done(function( script, textStatus ) {
-                  console.log( "succes js" );
-                })
-                .fail(function( jqxhr, settings, exception ) {
-                  console.log( "error js" );
-                });
-              }
-              if (document.getElementById("doliModalDiv")) {
-                document.getElementById("doliModalDiv").innerHTML = response.data.modal;      
-              }
-              $("#doliModalTest").modal("show");
-            } else {
-              if (document.getElementById("doliModalDiv")) {
-                document.getElementById("doliModalDiv").innerHTML = response;      
-              }
-              $("#doliModalTest").modal("show");    
-            }
-      $("#doliModalTest").on("hidden.bs.modal", function () {
-        $("#doliModalTest").modal("dispose");
-        document.getElementById("doliModalDiv").innerHTML = "";
+      document.querySelector("#'.$id.'").addEventListener("click", function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+            $.ajax({
+              url :"'.admin_url('admin-ajax.php').'",
+              type:"POST",
+              cache:false,
+              data: {
+                "action": "dolimodal_request",
+                "dolimodal-nonce": "'.wp_create_nonce( 'dolimodal-nonce').'",
+                "case": "'.$case.'",
+                "value1": "'.$value1.'",
+                "value2": "'.$value2.'",
+                "redirect_to": "'.$redirect_to.'",
+            },
+          }).done(function(response) {
+              if (response.success) { 
+                if (response.data.js) {
+                  $.getScript( response.data.js ).done(function( script, textStatus ) {
+                    console.log( "succes js" );
+                  })
+                  .fail(function( jqxhr, settings, exception ) {
+                    console.log( "error js" );
+                  });
+                }
+               if (document.getElementById("doliModalDiv")) {
+                 document.getElementById("doliModalDiv").innerHTML = response.data.modal;      
+                }
+               $("#doliModalTest").modal("show");
+              } else {
+               if (document.getElementById("doliModalDiv")) {
+                 document.getElementById("doliModalDiv").innerHTML = response;      
+               }
+                $("#doliModalTest").modal("show");    
+             }
+            $("#doliModalTest").on("hidden.bs.modal", function () {
+              $("#doliModalTest").modal("dispose");
+              document.getElementById("doliModalDiv").innerHTML = "";
+            });
+        }, false);          
       });
-      }, false);          
-    });
-  
     });
   })(jQuery);';
   $button .= '</script>';
   $button .= $title.'</'.$type.'>';
-
   return $button;
 }
 
