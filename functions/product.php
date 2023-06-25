@@ -214,8 +214,11 @@ global $current_user;
   } else {
     $date_end=null;
   }
-  if (!is_numeric($quantity) || $quantity < 0) $quantity = 0;
-  if ($quantity > $mstock['m2']) $quantity = $mstock['m2'];
+  if ($quantity < 0) {
+    $quantity = 0;
+  } elseif ($quantity > $mstock['m2']) {
+    $quantity = $mstock['m2'];
+  }
   $thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty'));
   if ( empty(doliconnector($current_user, 'fk_order', true)) ) {
     $rdr = [

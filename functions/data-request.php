@@ -798,6 +798,7 @@ global $current_user;
 			wp_send_json_success($response);	
 			die(); 
 		} elseif (isset($_POST['modify']) && ($_POST['modify'] == "plus" || $_POST['modify'] == "minus" || $_POST['modify'] == "modify")) { 
+			if (!is_numeric(trim($_POST['qty']))) $_POST['qty'] = $mstock['qty'];
 			if ($_POST['modify'] == "plus") {
 				$qty = trim($_POST['qty'])+$mstock['step'];
 			} elseif ($_POST['modify'] == "minus") {
