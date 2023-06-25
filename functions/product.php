@@ -203,22 +203,19 @@ return '<center class="p-3 text-muted">'.__( 'Your basket is empty', 'doliconnec
 
 function doliaddtocart($product, $mstock, $quantity, $price, $timestart = null, $timeend = null, $url = null, $array_options = array()) {
 global $current_user;
-
-$response = array();
-
-if (!is_null($timestart) && $timestart > 0 ) {
-  $date_start=strftime('%Y-%m-%d 00:00:00', $timestart);
-} else {
-  $date_start=null;
-}
-if ( !is_null($timeend) && $timeend > 0 ) {
-  $date_end=strftime('%Y-%m-%d 00:00:00', $timeend);
-} else {
-  $date_end=null;
-}
-
-$thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty'));
-if ( empty(doliconnector($current_user, 'fk_order', true)) ) {
+  $response = array();
+  if (!is_null($timestart) && $timestart > 0 ) {
+   $date_start=strftime('%Y-%m-%d 00:00:00', $timestart);
+  } else {
+   $date_start=null;
+  }
+  if ( !is_null($timeend) && $timeend > 0 ) {
+   $date_end=strftime('%Y-%m-%d 00:00:00', $timeend);
+  } else {
+    $date_end=null;
+  }
+  $thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty'));
+  if ( empty(doliconnector($current_user, 'fk_order', true)) ) {
 
 $rdr = [
     'socid' => doliconnector($current_user, 'fk_soc'),
@@ -276,6 +273,7 @@ if ( !empty($url) ) {
 $response['message'] = __( 'This item has been added to basket', 'doliconnect');
 $response['items'] = doliconnect_countitems($order);
 $response['lines'] = doliline($order);
+$response['newqty'] = $quantity;
 $response['list'] = doliconnect_CartItemsList($order);
 $response['total'] = doliprice($order, 'ttc', isset($order->multicurrency_code) ? $order->multicurrency_code : null);
 return $response;
