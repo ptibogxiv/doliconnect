@@ -207,14 +207,14 @@ global $current_user;
 $response = array();
 
 if (!is_null($timestart) && $timestart > 0 ) {
-$date_start=strftime('%Y-%m-%d 00:00:00', $timestart);
+  $date_start=strftime('%Y-%m-%d 00:00:00', $timestart);
 } else {
-$date_start=null;
+  $date_start=null;
 }
 if ( !is_null($timeend) && $timeend > 0 ) {
-$date_end=strftime('%Y-%m-%d 00:00:00', $timeend);
+  $date_end=strftime('%Y-%m-%d 00:00:00', $timeend);
 } else {
-$date_end=null;
+  $date_end=null;
 }
 
 $thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty'));
@@ -293,6 +293,7 @@ $product = callDoliApi("GET", "/products/".$product->id."?includestockdata=1&inc
 $response['message'] = __( 'This item has been deleted to basket', 'doliconnect');
 $response['items'] = doliconnect_countitems($order);
 $response['lines'] = doliline($order);
+$response['newqty'] = $quantity;
 $response['list'] = doliconnect_CartItemsList($order);
 $response['total'] = doliprice($order, 'ttc', isset($order->multicurrency_code) ? $order->multicurrency_code : null);
 return $response;
@@ -322,6 +323,7 @@ if ( !empty($url) ) {
 $response['message'] = __( 'Quantities have been changed', 'doliconnect');
 $response['items'] = doliconnect_countitems($order);
 $response['lines'] = doliline($order);
+$response['newqty'] = $quantity;
 $response['list'] = doliconnect_CartItemsList($order);
 $response['total'] = doliprice($order, 'ttc', isset($order->multicurrency_code) ? $order->multicurrency_code : null);
 return $response;

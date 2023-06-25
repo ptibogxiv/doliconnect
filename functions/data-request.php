@@ -789,7 +789,7 @@ global $current_user;
 			$result = doliaddtocart($product, $mstock, 0, $price, isset($_POST['product-add-timestamp_start'])?trim($_POST['product-add-timestamp_start']):null, isset($_POST['product-add-timestamp_end'])?trim($_POST['product-add-timestamp_end']):null);
 				$response = [
 					'message' => dolialert('success', $result['message']),
-					'newqty' => $qty,
+					'newqty' => $result['newqty'],
 					'items' => $result['items'],	
 					'list' => $result['list'],
 					'lines' => $result['lines'],
@@ -803,13 +803,14 @@ global $current_user;
 			} elseif ($_POST['modify'] == "minus") {
 				$qty = trim($_POST['qty'])-$mstock['step'];	
 			} else {
-				$qty = trim($_POST['qty']);
+				$qty = trim($_POST['qty'])/$mstock['step'];
+				$qty = floor($qty)*$mstock['step'];
 			}
 			$price = doliProductPrice($product, $qty, false, true);
 			$result = doliaddtocart($product, $mstock, $qty, $price, isset($_POST['product-add-timestamp_start'])?trim($_POST['product-add-timestamp_start']):null, isset($_POST['product-add-timestamp_end'])?trim($_POST['product-add-timestamp_end']):null);
 				$response = [
 					'message' => dolialert('success', $result['message']),
-					'newqty' => $qty,
+					'newqty' => $result['newqty'],
 					'items' => $result['items'],	
 					'list' => $result['list'],
 					'lines' => $result['lines'],
