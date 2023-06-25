@@ -21,7 +21,7 @@ $versionbase = '5.3.0';
 $version=$versionbase; 
 } else {
 $css='bootswatch/'.get_theme_mod( 'ptibogxivtheme_css');
-$version='5.2.3'; 
+$version='5.3.0'; 
 $versionbase=$version;
 }
 
