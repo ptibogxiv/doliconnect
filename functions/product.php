@@ -319,7 +319,6 @@ global $current_user;
 }
 
 function doliProductCart($product, $refresh = null, $line = null) {
-
   $button = '<form id="doliform-product-'.$product->id.'" method="post">';
   $button .= '<script type="text/javascript">';
   $button .= '(function ($) {
@@ -348,7 +347,6 @@ if ( empty(doliconnectid('dolicart')) || empty(doliconnectid('dolicart')) ) {
   $button .= "<a class='btn btn-block btn-info' href='".doliconnecturl('dolicontact')."?type=COM' role='button' title='".__( 'Contact us', 'doliconnect')."'>".__( 'Contact us', 'doliconnect').'</a>';
   $button .= '</div>'; 
 } elseif ( is_user_logged_in() && doliCheckModules('commande', $refresh) && doliconnectid('dolicart') > 0 ) { 
-
   if ( $mstock['stock'] <= 0 || $mstock['m2'] < $mstock['step'] ) { 
     $button .= '<div class="input-group">';
     $button .= '<input id="qty-prod-'.$product->id.'" type="text" class="form-control form-control-sm" value="'.__( 'Unavailable', 'doliconnect').'" aria-label="'.__( 'Unavailable', 'doliconnect').'" style="text-align:center;" disabled readonly>';
