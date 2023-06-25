@@ -797,7 +797,7 @@ global $current_user;
 				];	
 			wp_send_json_success($response);	
 			die(); 
-		} elseif (isset($_POST['modify']) && ($_POST['modify'] == "plus" || $_POST['modify'] == "minus" || $_POST['modify'] == "modify") && (($_POST['modify'] == "minus" && $_POST['qty']-$mstock['step']>=0) || (($_POST['modify'] == "modify" || $_POST['modify'] == "plus") && $_POST['qty']>=0)) && ($_POST['qty']+$mstock['step'])<=max(array($mstock['m2'],$mstock['qty']))) { 
+		} elseif (isset($_POST['modify']) && ($_POST['modify'] == "plus" || $_POST['modify'] == "minus" || $_POST['modify'] == "modify")) { 
 			if ($_POST['modify'] == "plus") {
 				$qty = trim($_POST['qty'])+$mstock['step'];
 			} elseif ($_POST['modify'] == "minus") {
