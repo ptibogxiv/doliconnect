@@ -317,7 +317,13 @@ global $current_user;
       return $response;
     }
   } elseif ( doliconnector($current_user, 'fk_order') > 0 && is_null($mstock['line']) ) {
-    return doliconnect_countitems($order);
+    $response['message'] = __( 'Quantities have been changed', 'doliconnect');
+    $response['items'] = doliconnect_countitems($order);
+    $response['lines'] = doliline($order);
+    $response['newqty'] = $quantity;
+    $response['list'] = doliconnect_CartItemsList($order);
+    $response['total'] = doliprice($order, 'ttc', isset($order->multicurrency_code) ? $order->multicurrency_code : null);
+    return $response;
   } else {
     return $mstock['stock'];
   }
