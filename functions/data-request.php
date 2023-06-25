@@ -797,8 +797,14 @@ global $current_user;
 				];	
 			wp_send_json_success($response);	
 			die(); 
-		} elseif (isset($_POST['modify']) && $_POST['modify'] == "plus" && ($_POST['qty']+$mstock['step'])<=max(array($mstock['m2'],$mstock['qty']))) { 
-			$qty = trim($_POST['qty'])+$mstock['step'];
+		} elseif (isset($_POST['modify']) && ($_POST['modify'] == "plus" || $_POST['modify'] == "minus" || $_POST['modify'] == "modify") && ($_POST['qty']+$mstock['step'])<=max(array($mstock['m2'],$mstock['qty']))) { 
+			if ($_POST['modify'] == "plus") {
+				$qty = trim($_POST['qty'])+$mstock['step'];
+			} elseif ($_POST['modify'] == "minus") {
+				$qty = trim($_POST['qty'])-$mstock['step'];	
+			} else {
+				$qty = trim($_POST['qty']);
+			}
 			$price = doliProductPrice($product, $qty, false, true);
 			$result = doliaddtocart($product, $mstock, $qty, $price, isset($_POST['product-add-timestamp_start'])?trim($_POST['product-add-timestamp_start']):null, isset($_POST['product-add-timestamp_end'])?trim($_POST['product-add-timestamp_end']):null);
 				$response = [
@@ -810,21 +816,7 @@ global $current_user;
 					'total' => $result['total']
 				];	
 			wp_send_json_success($response);
-			die(); 
-		} elseif (isset($_POST['modify']) && $_POST['modify'] == "minus" && ($_POST['qty']-$mstock['step'])>=0) { 
-			$qty = trim($_POST['qty'])-$mstock['step'];
-			$price = doliProductPrice($product, $qty, false, true);
-			$result = doliaddtocart($product, $mstock, $qty, $price, isset($_POST['product-add-timestamp_start'])?trim($_POST['product-add-timestamp_start']):null, isset($_POST['product-add-timestamp_end'])?trim($_POST['product-add-timestamp_end']):null);
-				$response = [
-					'message' => dolialert('success', $result['message']),
-					'newqty' => $qty,
-					'items' => $result['items'],	
-					'list' => $result['list'],
-					'lines' => $result['lines'],
-					'total' => $result['total']
-				];	
-			wp_send_json_success($response);	
-			die(); 
+			die();
 		} else {
 			$qty = trim($_POST['qty']);
 				$response = [
@@ -1048,7 +1040,6 @@ add_action('wp_ajax_nopriv_dolimodal_request', 'dolimodal_request');
 
 function dolimodal_request(){
 global $current_user;
-
 	$response = array();
 	$modal = array();	
 	if ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "legacy" ) {

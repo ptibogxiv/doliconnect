@@ -347,9 +347,15 @@ function doliProductCart($product, $refresh = null, $line = null) {
       $("#doliform-product-'.$product->id.' button[type=submit]").on("click", function(e) {
         e.preventDefault();
         e.stopPropagation();
-        var qty = document.getElementById("qty-prod-'.$product->id.'").value
+        var qty = document.getElementById("qty-prod-'.$product->id.'").value;
         var acase = $(this).val();
         dolitest('.$product->id.', qty, acase);
+      });
+      $("#qty-prod-'.$product->id.'").on("change", function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var qty = document.getElementById("qty-prod-'.$product->id.'").value;
+        dolitest('.$product->id.', qty, "modify");
       });
     });
    })(jQuery);';
