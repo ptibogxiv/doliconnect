@@ -342,57 +342,17 @@ function doliProductCart($product, $refresh = null, $line = null) {
 
   $button = '<form id="doliform-product-'.$product->id.'" method="post">';
   $button .= '<script type="text/javascript">';
-  $button .= '
-  (function ($) {
+  $button .= '(function ($) {
     $(document).ready(function () {
       $("#doliform-product-'.$product->id.' button[type=submit]").on("click", function(e) {
         e.preventDefault();
         e.stopPropagation();
+        var qty = document.getElementById("qty-prod-'.$product->id.'").value
         var acase = $(this).val();
-          $("#DoliconnectLoadingModal").modal("show");
-            $.ajax({
-              url :"'.admin_url('admin-ajax.php').'",
-              type:"POST",
-              cache:false,
-              data: {
-                "action": "dolicart_request",
-                "dolicart-nonce": "'.wp_create_nonce( 'dolicart-nonce').'",
-                "case": "updateline",
-                "productId" : "'.$product->id.'",
-                "qty" : document.getElementById("qty-prod-'.$product->id.'").value,
-                "modify" : acase
-            },
-          }).done(function(response) {
-              if (response.success) { 
-                //console.log(response.data.message);
-                if (document.getElementById("qty-prod-'.$product->id.'")) {
-                  document.getElementById("qty-prod-'.$product->id.'").value = response.data.newqty;
-                }
-                if (document.getElementById("DoliHeaderCartItems")) {
-                  document.getElementById("DoliHeaderCartItems").innerHTML = response.data.items;
-                }
-                if (document.getElementById("DoliFooterCartItems")) {  
-                  document.getElementById("DoliFooterCartItems").innerHTML = response.data.items;
-                }
-                if (document.getElementById("DoliCartItemsList")) {  
-                  document.getElementById("DoliCartItemsList").innerHTML = response.data.list;
-                }
-                if (document.getElementById("DoliWidgetCartItems")) {
-                  document.getElementById("DoliWidgetCartItems").innerHTML = response.data.items;      
-                }
-                if (document.getElementById("message-dolicart")) {
-                  document.getElementById("message-dolicart").innerHTML = response.data.message;      
-                }
-                //$("#offcanvasDolicart").offcanvas("show");  
-              } else {
-                //console.log("error updating qty " + response.data.message);
-              }
-              $("#DoliconnectLoadingModal").modal("hide");
-          });
-  
-        });
+        dolitest('.$product->id.', qty, acase);
       });
-    })(jQuery);';
+    });
+   })(jQuery);';
   $button .= "</script>";
 
   $mstock = doliProductStock($product, $refresh, true);

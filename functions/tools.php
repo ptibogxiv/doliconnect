@@ -3111,6 +3111,54 @@ return $ajax;
 
 function doliModalDiv() {
   print '<div id="doliModalDiv"></div>';
+  print'<script type="text/javascript">';
+  print 'function dolitest(pdtid, qty, acase) {
+          (function ($) {
+            $(document).ready(function () {
+              $("#DoliconnectLoadingModal").modal("show");
+              $.ajax({
+                url :"'.admin_url('admin-ajax.php').'",
+                type:"POST",
+                cache:false,
+                data: {
+                  "action": "dolicart_request",
+                  "dolicart-nonce": "'.wp_create_nonce( 'dolicart-nonce').'",
+                  "case": "updateline",
+                  "productId" : pdtid,
+                  "qty" : qty,
+                  "modify" : acase
+                },
+              }).done(function(response) {
+                if (response.success) { 
+                  //console.log(response.data.message);
+                  if (document.getElementById("qty-prod-" + pdtid)) {
+                    document.getElementById("qty-prod-" + pdtid).value = response.data.newqty;
+                  }
+                  if (document.getElementById("DoliHeaderCartItems")) {
+                    document.getElementById("DoliHeaderCartItems").innerHTML = response.data.items;
+                  }
+                  if (document.getElementById("DoliFooterCartItems")) {  
+                    document.getElementById("DoliFooterCartItems").innerHTML = response.data.items;
+                  }
+                  if (document.getElementById("DoliCartItemsList")) {  
+                    document.getElementById("DoliCartItemsList").innerHTML = response.data.list;
+                  }
+                  if (document.getElementById("DoliWidgetCartItems")) {
+                    document.getElementById("DoliWidgetCartItems").innerHTML = response.data.items;      
+                  }
+                  if (document.getElementById("message-dolicart")) {
+                    document.getElementById("message-dolicart").innerHTML = response.data.message;      
+                  }
+                  //$("#offcanvasDolicart").offcanvas("show");  
+                } else {
+                  //console.log("error updating qty " + response.data.message);
+                }
+                $("#DoliconnectLoadingModal").modal("hide");
+              });
+            })
+          })(jQuery);
+        }';
+  print '</script>';
 }
 add_action( 'wp_footer', 'doliModalDiv' );
 
