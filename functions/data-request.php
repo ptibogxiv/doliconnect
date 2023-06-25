@@ -797,7 +797,7 @@ global $current_user;
 				];	
 			wp_send_json_success($response);	
 			die(); 
-		} elseif (isset($_POST['modify']) && ($_POST['modify'] == "plus" || $_POST['modify'] == "minus" || $_POST['modify'] == "modify") && ($_POST['qty']+$mstock['step'])<=max(array($mstock['m2'],$mstock['qty']))) { 
+		} elseif (isset($_POST['modify']) && ($_POST['modify'] == "plus" || $_POST['modify'] == "minus" || $_POST['modify'] == "modify") && $_POST['qty']-$mstock['step']>=0 && ($_POST['qty']+$mstock['step'])<=max(array($mstock['m2'],$mstock['qty']))) { 
 			if ($_POST['modify'] == "plus") {
 				$qty = trim($_POST['qty'])+$mstock['step'];
 			} elseif ($_POST['modify'] == "minus") {
@@ -817,6 +817,14 @@ global $current_user;
 				];	
 			wp_send_json_success($response);
 			die();
+		} elseif (isset($_POST['modify']) && ($_POST['modify'] == "wish" || $_POST['modify'] == "unwish")) {
+			$qty = trim($_POST['qty']);
+				$response = [
+					'message' => dolialert('alert', __( "We don't have this item in this quantity", "doliconnect")),
+					'newqty' => $qty
+				];
+			wp_send_json_error($response);			
+			die(); 
 		} else {
 			$qty = trim($_POST['qty']);
 				$response = [
