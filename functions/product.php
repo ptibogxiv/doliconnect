@@ -216,126 +216,106 @@ global $current_user;
   }
   $thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty'));
   if ( empty(doliconnector($current_user, 'fk_order', true)) ) {
-
-$rdr = [
-    'socid' => doliconnector($current_user, 'fk_soc'),
-    'date' => time(),
-    'demand_reason_id' => 1,
-    'cond_reglement_id' => $thirdparty->cond_reglement_id,
-    'shipping_method_id' => $thirdparty->shipping_method_id,
-    'module_source' => 'doliconnect',
-    'modelpdf' =>  doliconst("COMMANDE_ADDON_PDF"),
-    'pos_source' => get_current_blog_id(),
-	];                  
-$order = callDoliApi("POST", "/orders", $rdr, 0);
-}
-
-if (isset($thirdparty->tva_assuj) && empty($thirdparty->tva_assuj)) {
-  if (isset($product->tva_tx))$product->tva_tx = 0;
-}
-
-$order = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order', true)."?contact_list=0", null, dolidelay('order', true));
-
-if (empty($product->status)) {
-
-if (!empty($mstock['line'])) $deleteline = callDoliApi("DELETE", "/orders/".doliconnector($current_user, 'fk_order')."/lines/".$mstock['line'], null, 0);
-$order = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order', true)."?contact_list=0", null, dolidelay('order', true));
-//$dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolidelay('doliconnector', true));
-//delete_transient( 'doliconnect_cartlinelink_'.$mstock['line'] );
-
-$response['message'] = __( 'This item has been deleted to basket', 'doliconnect');
-$response['items'] = doliconnect_countitems($order);
-$response['lines'] = doliline($order);
-$response['list'] = doliconnect_CartItemsList($order);
-$response['total'] = doliprice($order, 'ttc', isset($order->multicurrency_code) ? $order->multicurrency_code : null);
-return $response;
-
-} elseif ( doliconnector($current_user, 'fk_order') > 0 && $quantity > 0 && empty($mstock['line'])) {
-                                                                                     
-$adln = [
-    'fk_product' => $product->id,
-    'desc' => $product->description,
-    'date_start' => $date_start,
-    'date_end' => $date_end,
-    'qty' => $quantity,
-    'tva_tx' => $product->tva_tx, 
-    'remise_percent' => $price['discount'],
-    'subprice' => $price['subprice'],
-    'array_options' => $array_options
-	];                 
-$addline = callDoliApi("POST", "/orders/".doliconnector($current_user, 'fk_order')."/lines", $adln, 0);
-$order = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order', true)."?contact_list=0", null, dolidelay('order', true));
-//$dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolidelay('doliconnector', true));
-$product = callDoliApi("GET", "/products/".$product->id."?includestockdata=1&includesubproducts=true&includetrans=true", null, dolidelay('product', true));
-if ( !empty($url) ) {
-//set_transient( 'doliconnect_cartlinelink_'.$addline, esc_url($url), dolidelay(MONTH_IN_SECONDS, true));
-}
-$response['message'] = __( 'This item has been added to basket', 'doliconnect');
-$response['items'] = doliconnect_countitems($order);
-$response['lines'] = doliline($order);
-$response['newqty'] = $quantity;
-$response['list'] = doliconnect_CartItemsList($order);
-$response['total'] = doliprice($order, 'ttc', isset($order->multicurrency_code) ? $order->multicurrency_code : null);
-return $response;
-
-} elseif ( doliconnector($current_user, 'fk_order') > 0 && $mstock['line'] > 0 ) {
-
-if ( $quantity < 1 ) {
-
-$deleteline = callDoliApi("DELETE", "/orders/".doliconnector($current_user, 'fk_order')."/lines/".$mstock['line'], null, 0);
-$order = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order', true)."?contact_list=0", null, dolidelay('order', true));
-//$dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolidelay('doliconnector', true));
-$product = callDoliApi("GET", "/products/".$product->id."?includestockdata=1&includesubproducts=true&includetrans=true", null, dolidelay('product', true));
-//delete_transient( 'doliconnect_cartlinelink_'.$mstock['line'] );
-
-$response['message'] = __( 'This item has been deleted to basket', 'doliconnect');
-$response['items'] = doliconnect_countitems($order);
-$response['lines'] = doliline($order);
-$response['newqty'] = $quantity;
-$response['list'] = doliconnect_CartItemsList($order);
-$response['total'] = doliprice($order, 'ttc', isset($order->multicurrency_code) ? $order->multicurrency_code : null);
-return $response;
- 
-} else {
-
-$uln = [
-    'desc' => $product->description,
-    'date_start' => $date_start,
-    'date_end' => $date_end,
-    'qty' => $quantity,
-    'tva_tx' => $product->tva_tx, 
-    'remise_percent' => $price['discount'],
-    'subprice' => $price['subprice'],
-    'array_options' => $array_options
-	];                  
-$updateline = callDoliApi("PUT", "/orders/".doliconnector($current_user, 'fk_order')."/lines/".$mstock['line'], $uln, 0);
-$order = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order', true)."?contact_list=0", null, dolidelay('order', true));
-//$dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolidelay('doliconnector', true));
-$product = callDoliApi("GET", "/products/".$product->id."?includestockdata=1&includesubproducts=true&includetrans=true", null, dolidelay('product', true));
-if ( !empty($url) ) {
-//set_transient( 'doliconnect_cartlinelink_'.$mstock['line'], esc_url($url), dolidelay(MONTH_IN_SECONDS, true));
-} else {
-//delete_transient( 'doliconnect_cartlinelink_'.$mstock['line'] );
-
-}
-$response['message'] = __( 'Quantities have been changed', 'doliconnect');
-$response['items'] = doliconnect_countitems($order);
-$response['lines'] = doliline($order);
-$response['newqty'] = $quantity;
-$response['list'] = doliconnect_CartItemsList($order);
-$response['total'] = doliprice($order, 'ttc', isset($order->multicurrency_code) ? $order->multicurrency_code : null);
-return $response;
-
-}
-} elseif ( doliconnector($current_user, 'fk_order') > 0 && is_null($mstock['line']) ) {
-
-return doliconnect_countitems($order);
-
-} else {
-
-return $mstock['stock'];
-
-}
+    $rdr = [
+      'socid' => doliconnector($current_user, 'fk_soc'),
+      'date' => time(),
+      'demand_reason_id' => 1,
+      'cond_reglement_id' => $thirdparty->cond_reglement_id,
+      'shipping_method_id' => $thirdparty->shipping_method_id,
+      'module_source' => 'doliconnect',
+      'modelpdf' =>  doliconst("COMMANDE_ADDON_PDF"),
+      'pos_source' => get_current_blog_id(),
+	  ];                  
+    $order = callDoliApi("POST", "/orders", $rdr, 0);
+  }
+  if (isset($thirdparty->tva_assuj) && empty($thirdparty->tva_assuj)) {
+    if (isset($product->tva_tx))  $product->tva_tx = 0;
+  }
+  $order = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order', true)."?contact_list=0", null, dolidelay('order', true));
+  if (empty($product->status)) {
+    if (!empty($mstock['line'])) $deleteline = callDoliApi("DELETE", "/orders/".doliconnector($current_user, 'fk_order')."/lines/".$mstock['line'], null, 0);
+    $order = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order', true)."?contact_list=0", null, dolidelay('order', true));
+    //$dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolidelay('doliconnector', true));
+    //delete_transient( 'doliconnect_cartlinelink_'.$mstock['line'] );
+    $response['message'] = __( 'This item has been deleted to basket', 'doliconnect');
+    $response['items'] = doliconnect_countitems($order);
+    $response['lines'] = doliline($order);
+    $response['list'] = doliconnect_CartItemsList($order);
+    $response['total'] = doliprice($order, 'ttc', isset($order->multicurrency_code) ? $order->multicurrency_code : null);
+    return $response;
+  } elseif ( doliconnector($current_user, 'fk_order') > 0 && $quantity > 0 && empty($mstock['line'])) {                                                                                  
+    $adln = [
+      'fk_product' => $product->id,
+      'desc' => $product->description,
+      'date_start' => $date_start,
+      'date_end' => $date_end,
+      'qty' => $quantity,
+      'tva_tx' => $product->tva_tx, 
+      'remise_percent' => $price['discount'],
+      'subprice' => $price['subprice'],
+      'array_options' => $array_options
+	  ];                 
+    $addline = callDoliApi("POST", "/orders/".doliconnector($current_user, 'fk_order')."/lines", $adln, 0);
+    $order = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order', true)."?contact_list=0", null, dolidelay('order', true));
+    //$dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolidelay('doliconnector', true));
+    $product = callDoliApi("GET", "/products/".$product->id."?includestockdata=1&includesubproducts=true&includetrans=true", null, dolidelay('product', true));
+    if ( !empty($url) ) {
+      //set_transient( 'doliconnect_cartlinelink_'.$addline, esc_url($url), dolidelay(MONTH_IN_SECONDS, true));
+    }
+    $response['message'] = __( 'This item has been added to basket', 'doliconnect');
+    $response['items'] = doliconnect_countitems($order);
+    $response['lines'] = doliline($order);
+    $response['newqty'] = $quantity;
+    $response['list'] = doliconnect_CartItemsList($order);
+    $response['total'] = doliprice($order, 'ttc', isset($order->multicurrency_code) ? $order->multicurrency_code : null);
+    return $response;
+  } elseif ( doliconnector($current_user, 'fk_order') > 0 && $mstock['line'] > 0 ) {
+    if ( $quantity < 1 ) {
+      $deleteline = callDoliApi("DELETE", "/orders/".doliconnector($current_user, 'fk_order')."/lines/".$mstock['line'], null, 0);
+      $order = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order', true)."?contact_list=0", null, dolidelay('order', true));
+      //$dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolidelay('doliconnector', true));
+      $product = callDoliApi("GET", "/products/".$product->id."?includestockdata=1&includesubproducts=true&includetrans=true", null, dolidelay('product', true));
+      //delete_transient( 'doliconnect_cartlinelink_'.$mstock['line'] );
+      $response['message'] = __( 'This item has been deleted to basket', 'doliconnect');
+      $response['items'] = doliconnect_countitems($order);
+      $response['lines'] = doliline($order);
+      $response['newqty'] = $quantity;
+      $response['list'] = doliconnect_CartItemsList($order);
+      $response['total'] = doliprice($order, 'ttc', isset($order->multicurrency_code) ? $order->multicurrency_code : null);
+      return $response;
+    } else {
+      $uln = [
+        'desc' => $product->description,
+        'date_start' => $date_start,
+        'date_end' => $date_end,
+        'qty' => $quantity,
+        'tva_tx' => $product->tva_tx, 
+        'remise_percent' => $price['discount'],
+        'subprice' => $price['subprice'],
+        'array_options' => $array_options
+	    ];                  
+      $updateline = callDoliApi("PUT", "/orders/".doliconnector($current_user, 'fk_order')."/lines/".$mstock['line'], $uln, 0);
+      $order = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order', true)."?contact_list=0", null, dolidelay('order', true));
+      //$dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolidelay('doliconnector', true));
+      $product = callDoliApi("GET", "/products/".$product->id."?includestockdata=1&includesubproducts=true&includetrans=true", null, dolidelay('product', true));
+      if ( !empty($url) ) {
+        //set_transient( 'doliconnect_cartlinelink_'.$mstock['line'], esc_url($url), dolidelay(MONTH_IN_SECONDS, true));
+      } else {
+        //delete_transient( 'doliconnect_cartlinelink_'.$mstock['line'] );
+      }
+      $response['message'] = __( 'Quantities have been changed', 'doliconnect');
+      $response['items'] = doliconnect_countitems($order);
+      $response['lines'] = doliline($order);
+      $response['newqty'] = $quantity;
+      $response['list'] = doliconnect_CartItemsList($order);
+      $response['total'] = doliprice($order, 'ttc', isset($order->multicurrency_code) ? $order->multicurrency_code : null);
+      return $response;
+    }
+  } elseif ( doliconnector($current_user, 'fk_order') > 0 && is_null($mstock['line']) ) {
+    return doliconnect_countitems($order);
+  } else {
+    return $mstock['stock'];
+  }
 }
 
 function doliProductCart($product, $refresh = null, $line = null) {
