@@ -805,7 +805,7 @@ global $current_user;
 				$qty = trim($_POST['qty'])-$mstock['step'];	
 			} else {
 				$qty = trim($_POST['qty'])/$mstock['step'];
-				$qty = floor($qty)*$mstock['step'];
+				$qty = ceil($qty)*$mstock['step'];
 			}
 			$price = doliProductPrice($product, $qty, false, true);
 			$result = doliaddtocart($product, $mstock, $qty, $price, isset($_POST['product-add-timestamp_start'])?trim($_POST['product-add-timestamp_start']):null, isset($_POST['product-add-timestamp_end'])?trim($_POST['product-add-timestamp_end']):null);
