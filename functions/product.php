@@ -367,9 +367,9 @@ if ( empty(doliconnectid('dolicart')) || empty(doliconnectid('dolicart')) ) {
     } else {
       $button .= '<div class="input-group">';
       $button .= '<button class="btn btn-sm btn-warning" name="delete" value="delete" type="submit" onclick="dolitest('.$product->id.', 0, \'delete\');"><i class="fa-solid fa-trash-can"></i></button>';
-      $button .= '<button class="btn btn-sm btn-warning" name="minus" value="minus" type="submit" onclick="dolitest('.$product->id.', 0, \'minus\');"><i class="fa-solid fa-minus"></i></button>
+      $button .= '<button class="btn btn-sm btn-warning" name="minus" value="minus" type="submit" onclick="dolitest('.$product->id.', document.getElementById(\'qty-prod-'.$product->id.'\').value, \'minus\');"><i class="fa-solid fa-minus"></i></button>
       <input id="qty-prod-'.$product->id.'" type="number" class="form-control form-control-sm" placeholder="" aria-label="Quantity" value="'.$mstock['qty'].'" style="text-align:center;">
-      <button class="btn btn-sm btn-warning" name="plus" value="plus" type="submit" onclick="dolitest('.$product->id.', 0, \'plus\');"><i class="fa-solid fa-plus"></i></button>';
+      <button class="btn btn-sm btn-warning" name="plus" value="plus" type="submit" onclick="dolitest('.$product->id.', document.getElementById(\'qty-prod-'.$product->id.'\').value, \'plus\');"><i class="fa-solid fa-plus"></i></button>';
       if ( doliCheckModules('wishlist', $refresh) && !empty(get_option('doliconnectbeta')) ) {
         $button .= '<button class="btn btn-sm btn-light" name="wish" value="wish" type="submit" onclick="dolitest('.$product->id.', 1, \'wish\');"><i class="fas fa-heart" style="color:Fuchsia"></i></button>';
       }    
