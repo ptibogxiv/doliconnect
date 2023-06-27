@@ -942,27 +942,25 @@ add_action('wp_ajax_nopriv_dolisignup_request', 'dolisignup_request');
 
 function dolisignup_request(){
 global $current_user;
-		
-if ( wp_verify_nonce( trim($_POST['dolisignup-nonce']), 'dolisignup-nonce') ) {
-	$doliuser = callDoliApi("GET", "/thirdparties?sortfield=t.code_client&sortorder=ASC&limit=1&sqlfilters=(t.code_client%3A%3D%3A'".trim($_POST['code_client'])."')", null, 0);
-
-	if (isset($doliuser->error->message)) {
-	wp_send_json_error( __( 'Customer not found', 'doliconnect')); 
-	} else {
-		$order = callDoliApi("GET", "/orders/ref/".trim($_POST['reference'])."?contact_list=1", null, 0);
-		$invoice = callDoliApi("GET", "/invoices?sortfield=t.ref&sortorder=ASC&limit=1&thirdparty_ids=".$doliuser[0]->id."&sqlfilters=(t.ref%3Alike%3A'".trim($_POST['reference'])."')%20and%20(t.multicurrency_total_ttc%3Alike%3A'".number_format(trim($_POST['amount']), 0, '.', '')."%25')", null, 0);
-		if (!isset($invoice->error->message) || (!isset($order->error->message) && $order->socid == $doliuser[0]->id && preg_match('/'.number_format(trim($_POST['amount']).'/i', 0, '.', '').'/', $order->multicurrency_total_ttc))) {
- 			wp_send_json_success( 'success'); 
-			 die(); 
-	} else {
+	if ( wp_verify_nonce( trim($_POST['dolisignup-nonce']), 'dolisignup-nonce') ) {
+		$doliuser = callDoliApi("GET", "/thirdparties?sortfield=t.code_client&sortorder=ASC&limit=1&sqlfilters=(t.code_client%3A%3D%3A'".trim($_POST['code_client'])."')", null, 0);
+		if (isset($doliuser->error->message)) {
 			wp_send_json_error( __( 'Customer not found', 'doliconnect')); 
-			die(); 
+		} else {
+			$order = callDoliApi("GET", "/orders/ref/".trim($_POST['reference'])."?contact_list=1", null, 0);
+			$invoice = callDoliApi("GET", "/invoices?sortfield=t.ref&sortorder=ASC&limit=1&thirdparty_ids=".$doliuser[0]->id."&sqlfilters=(t.ref%3Alike%3A'".trim($_POST['reference'])."')%20and%20(t.multicurrency_total_ttc%3Alike%3A'".number_format(trim($_POST['amount']), 0, '.', '')."%25')", null, 0);
+			if (!isset($invoice->error->message) || (!isset($order->error->message) && $order->socid == $doliuser[0]->id && preg_match('/'.number_format(trim($_POST['amount']).'/i', 0, '.', '').'/', $order->multicurrency_total_ttc))) {
+ 				wp_send_json_success( 'success'); 
+			 	die(); 
+			} else {
+				wp_send_json_error( __( 'Customer not found', 'doliconnect')); 
+				die(); 
+			}
 		}
+	} else {
+		wp_send_json_error( __( 'A security error occured', 'doliconnect')); 
+		die(); 
 	}
-} else {
-	wp_send_json_error( __( 'A security error occured', 'doliconnect')); 
-	die(); 
-}
 }
 
 //*****************************************************************************************
