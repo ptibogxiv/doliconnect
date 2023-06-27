@@ -180,25 +180,23 @@ return $qty;
 
 function doliconnect_CartItemsList($order = null) {
 global $current_user;
-if (empty($order)) $order = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order')."?contact_list=0", null, dolidelay('order'));
-
-if ( isset($order->lines) && $order->lines != null ) {
-$ln = '<table class="table table-hover table-sm"><thead><tr>
-<th scope="col" width="40px">'.__( 'Qty', 'doliconnect').'</th><th scope="col">'.__( 'Item', 'doliconnect').'</th></tr></thead><tbody>';
-foreach ( $order->lines as $line ) { 
-$ln .= '<tr><td scope="row">'.$line->qty.'</td><td><small>'.doliproduct($line, 'product_label');
-$ln .= '<div class="float-end"><a type="button" onclick="doliJavaCartAction(\'updateLine\', '.$line->fk_product.', 0, \'delete\');"><i class="fa-solid fa-trash-can"></i></a></div>';
-$ln .= '</small></td></tr>';
-}
-$ln .= '</tbody><tfoot><tr><th colspan="2" class="table-active">'.__( 'Total to be paid', 'doliconnect').' '.doliprice($order, 'ttc', isset($order->multicurrency_code) ? $order->multicurrency_code : null).'</th></tr></tfoot></table><div class="dropdown mt-3">
-<div class="d-grid gap-2">';
-$ln .= '<a class="btn btn-primary" role="button" href="'.esc_url(doliconnecturl('dolicart')).'" >'.__( 'Finalize the order', 'doliconnect').'</a>';
-$ln .= '<button type="button" class="btn btn-outline-secondary" onclick="doliJavaCartAction('.$line->fk_product.', 0, \'delete\');">'.__( 'Empty the basket', 'doliconnect').'</button>';
-$ln .= '</div></div>';
-return $ln;
-} else {
-return '<center class="p-3 text-muted">'.__( 'Your basket is empty', 'doliconnect').'</center>';
-}
+  if (empty($order)) $order = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order')."?contact_list=0", null, dolidelay('order'));
+    if ( isset($order->lines) && $order->lines != null ) {
+      $ln = '<table class="table table-hover table-sm"><thead><tr><th scope="col" width="40px">'.__( 'Qty', 'doliconnect').'</th><th scope="col">'.__( 'Item', 'doliconnect').'</th></tr></thead><tbody>';
+      foreach ( $order->lines as $line ) { 
+        $ln .= '<tr><td scope="row">'.$line->qty.'</td><td><small>'.doliproduct($line, 'product_label');
+        $ln .= '<div class="float-end"><a type="button" onclick="doliJavaCartAction(\'updateLine\', '.$line->fk_product.', 0, \'delete\');"><i class="fa-solid fa-trash-can"></i></a></div>';
+        $ln .= '</small></td></tr>';
+      }
+      $ln .= '</tbody><tfoot><tr><th colspan="2" class="table-active">'.__( 'Total to be paid', 'doliconnect').' '.doliprice($order, 'ttc', isset($order->multicurrency_code) ? $order->multicurrency_code : null).'</th></tr></tfoot></table>';
+      $ln .= '<div class="dropdown mt-3"><div class="d-grid gap-2">';
+      $ln .= '<a class="btn btn-primary" role="button" href="'.esc_url(doliconnecturl('dolicart')).'" >'.__( 'Finalize the order', 'doliconnect').'</a>';
+      $ln .= '<button type="button" class="btn btn-outline-secondary" onclick="doliJavaCartAction(\'update\', '.$order->id.', 0, \'delete\');">'.__( 'Empty the basket', 'doliconnect').'</button>';
+      $ln .= '</div></div>';
+      return $ln;
+  } else {
+    return '<center class="p-3 text-muted">'.__( 'Your basket is empty', 'doliconnect').'</center>';
+  }
 }
 
 function doliaddtocart($product, $mstock, $quantity, $price, $timestart = null, $timeend = null, $url = null, $array_options = array()) {
