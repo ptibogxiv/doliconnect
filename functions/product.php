@@ -169,13 +169,13 @@ if ($nohtml) {
 }
 
 function doliconnect_countitems($object){
-$qty=0;
-if ( is_object($object) && isset($object->lines) && $object->lines != null ) {
-foreach ($object->lines as $line) {
-$qty+=$line->qty;
-}
-}
-return $qty;
+  $qty=0;
+  if ( is_object($object) && isset($object->lines) && $object->lines != null ) {
+    foreach ($object->lines as $line) {
+      $qty+=$line->qty;
+    }
+  }
+  return $qty;
 }
 
 function doliconnect_CartItemsList($order = null) {
