@@ -187,13 +187,13 @@ $ln = '<table class="table table-hover table-sm"><thead><tr>
 <th scope="col" width="40px">'.__( 'Qty', 'doliconnect').'</th><th scope="col">'.__( 'Item', 'doliconnect').'</th></tr></thead><tbody>';
 foreach ( $order->lines as $line ) { 
 $ln .= '<tr><td scope="row">'.$line->qty.'</td><td><small>'.doliproduct($line, 'product_label');
-$ln .= '<div class="float-end"><a type="button" onclick="dolitest('.$line->fk_product.', 0, \'delete\');"><i class="fa-solid fa-trash-can"></i></a></div>';
+$ln .= '<div class="float-end"><a type="button" onclick="doliJavaCartAction('.$line->fk_product.', 0, \'delete\');"><i class="fa-solid fa-trash-can"></i></a></div>';
 $ln .= '</small></td></tr>';
 }
 $ln .= '</tbody><tfoot><tr><th colspan="2" class="table-active">'.__( 'Total to be paid', 'doliconnect').' '.doliprice($order, 'ttc', isset($order->multicurrency_code) ? $order->multicurrency_code : null).'</th></tr></tfoot></table><div class="dropdown mt-3">
 <div class="d-grid gap-2">';
 $ln .= '<a class="btn btn-primary" role="button" href="'.esc_url(doliconnecturl('dolicart')).'" >'.__( 'Finalize the order', 'doliconnect').'</a>';
-$ln .= '<button type="button" class="btn btn-outline-secondary" dolitest('.$line->fk_product.', 0, \'delete\');">'.__( 'Empty the basket', 'doliconnect').'</button>';
+$ln .= '<button type="button" class="btn btn-outline-secondary" onclick="doliJavaCartAction('.$line->fk_product.', 0, \'delete\');">'.__( 'Empty the basket', 'doliconnect').'</button>';
 $ln .= '</div></div>';
 return $ln;
 } else {
@@ -352,12 +352,12 @@ function doliProductCart($product, $refresh = null, $line = null) {
           $button .= '</div>';
       } else {
         $button .= '<div class="input-group">';
-        $button .= '<button class="btn btn-sm btn-warning" name="delete" value="delete" type="submit" onclick="dolitest('.$product->id.', 0, \'delete\');"><i class="fa-solid fa-trash-can"></i></button>';
-        $button .= '<button class="btn btn-sm btn-warning" name="minus" value="minus" type="submit" onclick="dolitest('.$product->id.', document.getElementById(\'qty-prod-'.$product->id.'\').value, \'minus\');"><i class="fa-solid fa-minus"></i></button>
-        <input id="qty-prod-'.$product->id.'" type="number" onchange="dolitest('.$product->id.', document.getElementById(\'qty-prod-'.$product->id.'\').value, \'modify\');" class="form-control form-control-sm" placeholder="" aria-label="Quantity" value="'.$mstock['qty'].'" style="text-align:center;">
-        <button class="btn btn-sm btn-warning" name="plus" value="plus" type="submit" onclick="dolitest('.$product->id.', document.getElementById(\'qty-prod-'.$product->id.'\').value, \'plus\');"><i class="fa-solid fa-plus"></i></button>';
+        $button .= '<button class="btn btn-sm btn-warning" name="delete" value="delete" type="submit" onclick="doliJavaCartAction('.$product->id.', 0, \'delete\');"><i class="fa-solid fa-trash-can"></i></button>';
+        $button .= '<button class="btn btn-sm btn-warning" name="minus" value="minus" type="submit" onclick="doliJavaCartAction('.$product->id.', document.getElementById(\'qty-prod-'.$product->id.'\').value, \'minus\');"><i class="fa-solid fa-minus"></i></button>
+        <input id="qty-prod-'.$product->id.'" type="number" onchange="doliJavaCartAction('.$product->id.', document.getElementById(\'qty-prod-'.$product->id.'\').value, \'modify\');" class="form-control form-control-sm" placeholder="" aria-label="Quantity" value="'.$mstock['qty'].'" style="text-align:center;">
+        <button class="btn btn-sm btn-warning" name="plus" value="plus" type="submit" onclick="doliJavaCartAction('.$product->id.', document.getElementById(\'qty-prod-'.$product->id.'\').value, \'plus\');"><i class="fa-solid fa-plus"></i></button>';
         if ( doliCheckModules('wishlist', $refresh) && !empty(get_option('doliconnectbeta')) ) {
-          $button .= '<button class="btn btn-sm btn-light" name="wish" value="wish" type="submit" onclick="dolitest('.$product->id.', 1, \'wish\');"><i class="fas fa-heart" style="color:Fuchsia"></i></button>';
+          $button .= '<button class="btn btn-sm btn-light" name="wish" value="wish" type="submit" onclick="doliJavaCartAction('.$product->id.', 1, \'wish\');"><i class="fas fa-heart" style="color:Fuchsia"></i></button>';
         }    
         $button .= '</div>';
       }  
