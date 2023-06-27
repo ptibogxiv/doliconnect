@@ -3112,7 +3112,7 @@ return $ajax;
 function doliModalDiv() {
   print '<div id="doliModalDiv"></div>';
   print '<script type="text/javascript">';
-  print 'function doliJavaCartAction(pdtid, qty, acase) {
+  print 'function doliJavaCartAction(form, pdtid, qty, acase) {
           (function ($) {
             $(document).ready(function () {
               $("#DoliconnectLoadingModal").modal("show");
@@ -3123,7 +3123,7 @@ function doliModalDiv() {
                 data: {
                   "action": "dolicart_request",
                   "dolicart-nonce": "'.wp_create_nonce( 'dolicart-nonce').'",
-                  "case": "updateline",
+                  "case": form,
                   "productId" : pdtid,
                   "qty" : qty,
                   "modify" : acase

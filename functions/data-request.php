@@ -779,8 +779,7 @@ global $current_user;
 
 	if ( wp_verify_nonce( trim($_POST['dolicart-nonce']), 'dolicart-nonce')) {
 
-	if (isset($_POST['case']) && $_POST['case'] == "updateline") {
-
+	if (isset($_POST['case']) && $_POST['case'] == "updateLine") {
 		$product = callDoliApi("GET", "/products/".trim($_POST['productId'])."?includestockdata=1&includesubproducts=true&includetrans=true", null, dolidelay('product', true));
 		$mstock = doliProductStock($product, false, true);
 
@@ -837,49 +836,45 @@ global $current_user;
 			die(); 
 		}	
 	} elseif ( isset($_POST['case']) && $_POST['case'] == "purge_cart" && isset($_POST['module']) && isset($_POST['id'])) {
-
-	$object = callDoliApi("GET", "/".trim($_POST['module'])."/".trim($_POST['id']), null, dolidelay('order', true));
-	if (!isset($object->error) && empty($object->statut)) {
-		$object = callDoliApi("DELETE", "/".trim($_POST['module'])."/".trim($_POST['id']), null);
-		if (!isset($object->error)) { 
-		$dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolidelay('doliconnector', true));
-			$response = [
-    		'items' => 0,
-    		'list' => doliconnect_CartItemsList(),
-    		'lines' => doliline(0),
-			'total' => doliprice(0),
-    		'message' => __( 'Your cart has been emptied', 'doliconnect'),
-        	];
-		wp_send_json_success($response);
-		die();
+		$object = callDoliApi("GET", "/".trim($_POST['module'])."/".trim($_POST['id']), null, dolidelay('order', true));
+		if (!isset($object->error) && empty($object->statut)) {
+			$object = callDoliApi("DELETE", "/".trim($_POST['module'])."/".trim($_POST['id']), null);
+			if (!isset($object->error)) { 
+			$dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolidelay('doliconnector', true));
+				$response = [
+    				'items' => 0,
+    				'list' => doliconnect_CartItemsList(),
+    				'lines' => doliline(0),
+					'total' => doliprice(0),
+    				'message' => __( 'Your cart has been emptied', 'doliconnect'),
+        		];
+			wp_send_json_success($response);
+			die();
+			} else {
+				wp_send_json_error( __( 'An error occured:', 'doliconnect').' '.$object->error->message); 
+			}	
 		} else {
 			wp_send_json_error( __( 'An error occured:', 'doliconnect').' '.$object->error->message); 
-		}	
-	} else{
-		wp_send_json_error( __( 'An error occured:', 'doliconnect').' '.$object->error->message); 
-	}
+		}
+	} elseif ( isset($_POST['case']) && $_POST['case'] == "validate_cart" && isset($_POST['module']) && isset($_POST['id'])) {
+		$data = [
+    	'demand_reason_id' => 1,
+    	'module_source' => 'doliconnect',
+    	'pos_source' => get_current_blog_id(),
+		];                 
+		$object = callDoliApi("PUT", "/".trim($_POST['module'])."/".trim($_POST['id']), $data, dolidelay('order', true));
 
-} elseif ( isset($_POST['case']) && $_POST['case'] == "validate_cart" && isset($_POST['module']) && isset($_POST['id'])) {
-
-	$data = [
-    'demand_reason_id' => 1,
-    'module_source' => 'doliconnect',
-    'pos_source' => get_current_blog_id(),
-	];                 
-	$object = callDoliApi("PUT", "/".trim($_POST['module'])."/".trim($_POST['id']), $data, dolidelay('order', true));
-
-	if (!isset($object->error)) {
-		$response = [
-    	'message' => __( 'Your cart has been validated', 'doliconnect'),
-        ];
-		wp_send_json_success($response);
-		die();
-	} else {
-		wp_send_json_error( __( 'An error occured:', 'doliconnect').' '.$object->error->message);
-		die(); 
-	}
-
-} elseif ( isset($_POST['case']) && $_POST['case'] == "info_cart" && isset($_POST['module']) && isset($_POST['id'])) {
+		if (!isset($object->error)) {
+			$response = [
+    			'message' => __( 'Your cart has been validated', 'doliconnect'),
+        	];
+			wp_send_json_success($response);
+			die();
+		} else {
+			wp_send_json_error( __( 'An error occured:', 'doliconnect').' '.$object->error->message);
+			die(); 
+		}
+	} elseif ( isset($_POST['case']) && $_POST['case'] == "info_cart" && isset($_POST['module']) && isset($_POST['id'])) {
 
 $data = [
     'demand_reason_id' => 1,
