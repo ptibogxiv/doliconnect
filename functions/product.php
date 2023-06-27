@@ -1,12 +1,12 @@
 <?php
 
 function doliproduct($object, $value) {
-if ( function_exists('pll_the_languages') ) { 
-$lang = pll_current_language('locale');
-return !empty($object->multilangs->$lang->$value) ? $object->multilangs->$lang->$value : $object->$value;
-} else {
-if (isset($object->$value)) return $object->$value;
-}
+  if ( function_exists('pll_the_languages') ) { 
+    $lang = pll_current_language('locale');
+    return !empty($object->multilangs->$lang->$value) ? $object->multilangs->$lang->$value : $object->$value;
+  } else {
+    if (isset($object->$value)) return $object->$value;
+  }
 }
 
 function doliprice($object = null, $mode = "ttc", $currency = null) {
@@ -39,7 +39,7 @@ return numfmt_format_currency($fmt, $montant, $currency);//.$decimal
 function doliIncludeStock() {
   $includestock = 0;
   if ( ! empty(doliconnectid('dolicart')) ) {
-  $includestock = 1;
+    $includestock = 1;
   }
   return $includestock;
 }
