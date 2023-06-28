@@ -1673,7 +1673,6 @@ console.log(response.data.message);
 })(jQuery);";
 print "</script>";
 
-
 print '<div class="card-footer text-muted">';
 print "<small><div class='float-start'>";
 if ( isset($request) ) print dolirefresh($request, doliconnecturl('dolicart'), dolidelay('cart'));
