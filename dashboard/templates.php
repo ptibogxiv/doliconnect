@@ -1593,7 +1593,7 @@ print "<a href='".doliconnecturl('dolishop')."' class='list-group-item list-grou
 } 
 if ( isset($object) && is_object($object) && isset($object->lines) && $object->lines != null && (doliconnector($current_user, 'fk_soc') == $object->socid) ) { 
 if ( $object->lines != null && $object->statut == 0 ) {
-print "<button button type='button' id='purgebtn_cart' name='purge_cart' value='purge_cart' class='list-group-item list-group-item-action flex-fill'><center>".__( 'Empty the basket', 'doliconnect')."</center></button>";
+print "<button type='button' id='purgebtn_cart' name='purge_cart' value='purge_cart' class='list-group-item list-group-item-action flex-fill'><center>".__( 'Empty the basket', 'doliconnect')."</center></button>";
 }
 if ( $object->lines != null ) {
 print "<button type='button' id='validatebtn_cart' name='validate_cart' value='validate_cart' class='list-group-item list-group-item-action list-group-item-warning flex-fill ' ";
@@ -1603,6 +1603,7 @@ print "><center>".__( 'Process', 'doliconnect')."</center></button>";
 }
 print "</ul></div>";
 }
+
 $nonce = wp_create_nonce( 'dolicart-nonce');
 $arr_params = array( 'stage' => 'informations', 'security' => $nonce);  
 $return = add_query_arg( $arr_params, doliconnecturl('dolicart'));
@@ -1671,6 +1672,7 @@ console.log(response.data.message);
 });
 })(jQuery);";
 print "</script>";
+
 
 print '<div class="card-footer text-muted">';
 print "<small><div class='float-start'>";
