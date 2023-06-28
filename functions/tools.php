@@ -3132,7 +3132,7 @@ function doliModalDiv() {
                 if (response.success) { 
                   //console.log(response.data.message);
                   if (document.getElementById("qty-prod-" + id)) {
-                    document.getElementById("qty-prod-" + pdtid).value = response.data.newqty;
+                    document.getElementById("qty-prod-" + id).value = response.data.newqty;
                   }
                   if (document.getElementById("DoliHeaderCartItems")) {
                     document.getElementById("DoliHeaderCartItems").innerHTML = response.data.items;
