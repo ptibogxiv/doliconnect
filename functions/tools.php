@@ -3117,7 +3117,7 @@ function doliModalDiv() {
             $(document).ready(function () {
               $("#DoliconnectLoadingModal").modal("show");
               $.ajax({
-                url :"'.admin_url('admin-ajax.php').'",
+                url:"'.admin_url('admin-ajax.php').'",
                 type:"POST",
                 cache:false,
                 data: {
@@ -3130,7 +3130,6 @@ function doliModalDiv() {
                 },
               }).done(function(response) {
                 if (response.success) { 
-                  //console.log(response.data.message);
                   if (document.getElementById("qty-prod-" + id)) {
                     document.getElementById("qty-prod-" + id).value = response.data.newqty;
                   }
@@ -3151,7 +3150,6 @@ function doliModalDiv() {
                   }
                   //$("#offcanvasDolicart").offcanvas("show");  
                 } else {
-                  //console.log("error updating qty " + response.data.message);
                 }
                 $("#DoliconnectLoadingModal").modal("hide");
               });
