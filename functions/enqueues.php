@@ -39,6 +39,8 @@ $version=$versionbase;
   		wp_register_script( 'font-awesome', '//use.fontawesome.com/releases/v6.2.1/js/all.js', array(), '6.2.1' );
 		wp_enqueue_script( 'font-awesome');
 	}
+	//wp_register_script( 'doliconnect-dolicart', plugins_url( 'doliconnect/includes/js/dolicart.js'), array( 'jquery' ), '', false );
+	//wp_enqueue_script( 'doliconnect-dolicart' );
   	wp_register_style( 'bootstrap-social', plugins_url( 'doliconnect/includes/bootstrap/css/bootstrap-social.css' ), array(), $version );
 	wp_enqueue_style( 'bootstrap-social');
   	wp_register_style( 'flag-icon', plugins_url( 'doliconnect/includes/flag-icon-css/css/flag-icons.css' ), array(), '6.6.5' ); 
