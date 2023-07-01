@@ -374,7 +374,7 @@ function doliProductCart($product, $refresh = null, $line = null) {
     $arr_params = array( 'redirect_to' => doliconnecturl('dolishop'));
     $loginurl = esc_url( add_query_arg( $arr_params, wp_login_url( )) );
     if ( get_option('doliloginmodal') == '1' ) {       
-      $button .= '<a href="#" data-bs-toggle="modal" class="btn btn-sm btn-outline-secondary" data-bs-target="#DoliconnectLogin" data-bs-dismiss="modal" title="'.__('Sign in', 'doliconnect').'" role="button">'.__( 'Sign in', 'doliconnect').'</a>';
+      $button .= doliModalButton('login', 'doliloginproduct-'.$product->id, __('Sign in', 'doliconnect'), 'button', 'btn btn-sm btn-outline-secondary');
     } else {
       $button .= "<a href='".wp_login_url( get_permalink() )."?redirect_to=".get_permalink()."' class='btn btn-sm btn-outline-secondary' type='button'>".__( 'Sign in', 'doliconnect').'</a>';
     }
