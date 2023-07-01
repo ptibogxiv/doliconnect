@@ -18,7 +18,7 @@ function doliconnect_cron_process($refresh = false) {
             $date->modify('FIRST DAY OF LAST '.$duration.' MIDNIGHT');
             $lastdate = $date->format('Y-m-d');
             $requestp = "/products?sortfield=t.datec&sortorder=DESC&sqlfilters=(t.datec%3A%3E%3A'".$lastdate."')%20AND%20(t.tosell%3A%3D%3A1)&limit=1000";
-            $listproduct = callDoliApi("GET", $requestp, null, dolidelay('product', $refresh));
+            $listproduct = callDoliApi("GET", $requestp, null, dolidelay('category', $refresh));
             if ( !isset($listproduct->error) && $listproduct != null ) {
                 foreach ($listproduct as $product) {
                     $products[$product->id]['id'] = $product->id;
@@ -32,7 +32,7 @@ function doliconnect_cron_process($refresh = false) {
             $date->modify('NOW');
             $lastdate = $date->format('Y-m-d');
             $requestp = "/discountprice?sortfield=t.rowid&sortorder=DESC&sqlfilters=(t.date_begin%3A%3C%3D%3A'".$lastdate."')%20AND%20(t.date_end%3A%3E%3D%3A'".$lastdate."')%20AND%20(d.tosell%3A%3D%3A1)";
-            $listproduct = callDoliApi("GET", $requestp, null, dolidelay('product', $refresh));
+            $listproduct = callDoliApi("GET", $requestp, null, dolidelay('category', $refresh));
             if ( !isset($listproduct->error) && $listproduct != null ) {
                 foreach ($listproduct as $product) {
                     $products[$product->fk_product]['id'] = $product->fk_product;
@@ -43,7 +43,7 @@ function doliconnect_cron_process($refresh = false) {
 
         $shop = doliconst("DOLICONNECT_CATSHOP");
         $request = "/categories/".esc_attr($shop)."?include_childs=true";
-        $resultatsc = callDoliApi("GET", $request, null, dolidelay('product', $refresh));
+        $resultatsc = callDoliApi("GET", $request, null, dolidelay('category', $refresh));
         if ( !isset($resultatsc->error) && $resultatsc != null ) {
             foreach ($resultatsc->childs as $category) {
                 $categories[$category->id] = $category->id;
@@ -53,7 +53,7 @@ function doliconnect_cron_process($refresh = false) {
 
         foreach ($categories as $id => $categorie) {
             $request = "/categories/".$id."?include_childs=true";
-            $resultatsc = callDoliApi("GET", $request, null, dolidelay('product', $refresh));
+            $resultatsc = callDoliApi("GET", $request, null, dolidelay('category', $refresh));
             if ( !isset($resultatsc->error) && $resultatsc != null ) {
                 foreach ($resultatsc->childs as $category) {
                     $categories[$category->id] = $category->id;
@@ -66,7 +66,7 @@ function doliconnect_cron_process($refresh = false) {
         if (isset($subcategories)) {
             foreach ($subcategories as $id => $categorie) {
                 $request = "/categories/".$id."?include_childs=true";
-                $resultatsc = callDoliApi("GET", $request, null, dolidelay('product', $refresh));
+                $resultatsc = callDoliApi("GET", $request, null, dolidelay('category', $refresh));
                 if ( !isset($resultatsc->error) && $resultatsc != null ) {
                     foreach ($resultatsc->childs as $category) {
                         $categories[$category->id] = $category->id;

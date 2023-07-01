@@ -1391,6 +1391,7 @@ elseif ($delay == 'doliconnector') { $delay = HOUR_IN_SECONDS; }
 elseif ($delay == 'search') { $delay = HOUR_IN_SECONDS; }
 elseif ($delay == 'paymentmethods') { $delay = WEEK_IN_SECONDS; }
 elseif ($delay == 'thirdparty' || $delay == 'customer' || $delay == 'supplier' || $delay == 'contact') { $delay = DAY_IN_SECONDS; }
+elseif ($delay == 'category') { $delay = WEEK_IN_SECONDS; }
 elseif ($delay == 'proposal') { $delay = HOUR_IN_SECONDS; }
 elseif ($delay == 'order') { $delay = HOUR_IN_SECONDS; }
 elseif ($delay == 'invoice') { $delay = HOUR_IN_SECONDS; }
