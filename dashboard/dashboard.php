@@ -380,19 +380,17 @@ add_action( 'user_doliconnect_menu', 'paymentmethods_menu', 4, 1);
 add_action( 'user_doliconnect_paymentmethods', 'paymentmethods_module');
 
 function dolipaymentmodes_lock() {
-return apply_filters( 'doliconnect_paymentmethods_lock', null);
+    return apply_filters( 'doliconnect_paymentmethods_lock', null);
 }
 
 function paymentmethods_menu( $arg ) {
-print "<a href='".esc_url( add_query_arg( 'module', 'paymentmethods', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
-if ($arg=='paymentmethods') { print " active";}
-print "'>".__( 'Manage payment methods', 'doliconnect')."</a>";
+    print "<a href='".esc_url( add_query_arg( 'module', 'paymentmethods', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
+    if ($arg=='paymentmethods') { print " active";}
+    print "'>".__( 'Manage payment methods', 'doliconnect')."</a>";
 }
 
 function paymentmethods_module( $url ) {
-
-print doliconnect_paymentmethods(null, null, $url, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
-
+    print doliconnect_paymentmethods(null, null, $url, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 }
 
 //*****************************************************************************************
