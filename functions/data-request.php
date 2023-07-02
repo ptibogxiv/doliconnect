@@ -1216,7 +1216,7 @@ global $current_user;
 		$response['modal'] = doliModalTemplate($modal['header'], $modal['body'], $modal['footer'], 'modal-lg', null, 'p-0');
 		wp_send_json_success($response);
 		die();
-	} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "document" ) {
+	} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "doliDownload" ) {
 		$modal['header'] = __( 'New linked member', 'doliconnect');
 		$modal['body'] = 'document';	
 		$modal['footer'] = null;

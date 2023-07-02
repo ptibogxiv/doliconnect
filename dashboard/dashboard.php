@@ -2210,14 +2210,14 @@ print '</div></div>';
 //*****************************************************************************************
 
 if ( !empty(doliconst('ADHERENT_LINKEDMEMBER')) && doliCheckRights('adherent', 'lire') ) {
-add_action( 'member_doliconnect_menu', 'linkedmember_menu', 3, 1);
-add_action( 'member_doliconnect_linkedmember', 'linkedmember_module');
+    add_action( 'member_doliconnect_menu', 'linkedmember_menu', 3, 1);
+    add_action( 'member_doliconnect_linkedmember', 'linkedmember_module');
 }  
 
 function linkedmember_menu( $arg ) {
-print "<a href='".esc_url( add_query_arg( 'module', 'linkedmember', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
-if ($arg=='linkedmember') { print " active";}
-print "'>".__( 'Manage linked members', 'doliconnect')."</a>";
+    print "<a href='".esc_url( add_query_arg( 'module', 'linkedmember', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
+    if ($arg=='linkedmember') { print " active";}
+    print "'>".__( 'Manage linked members', 'doliconnect')."</a>";
 }
 
 function linkedmember_module( $url ) {
@@ -2273,7 +2273,6 @@ print doliaddress($member);
 if (1 == 1) {
 print "<div class='col-4 col-sm-3 col-md-2 btn-group-vertical' role='group'>";
 print doliModalButton('linkedmember', 'updatelinkedmember'.$member->id, '<i class="fas fa-edit fa-fw"></i>', 'button', 'btn btn-light text-primary', $member->id);
-//print "<button type='button' class='btn btn-light text-primary' data-bs-toggle='modal' data-bs-target='#member-".$member->id."' title='".__( 'Edit', 'doliconnect')." ".$member->firstname." ".$member->lastname."'><i class='fas fa-edit fa-fw'></i></button>";
 print "<button name='unlink_member' value='".$member->id."' class='btn btn-light text-danger' type='submit' title='".__( 'Unlink', 'doliconnect')." ".$member->firstname." ".$member->lastname."'><i class='fas fa-unlink'></i></button>";
 print "</div>";
 }

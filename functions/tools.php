@@ -1276,75 +1276,29 @@ $mail =  wp_mail($user->user_email, $subject, $body, $headers);
 add_action('wp_login', 'Doliconnect_MailAlert', 10, 2);
 
 function dolidocdownload($type, $ref=null, $fichier=null, $name=null, $refresh = false, $entity = null, $style = 'btn-outline-dark btn-sm btn-block') {
- 
-if ( $name == null ) { $name=$fichier; } 
-
-if ( doliversion('11.0.0') ) {
-$doc = callDoliApi("GET", "/documents/download?modulepart=".$type."&original_file=".$ref."/".$fichier, null, 0, $entity);
-} else {
-$doc = callDoliApi("GET", "/documents/download?module_part=".$type."&original_file=".$ref."/".$fichier, null, 0, $entity);
-}
-//print var_dump($doc);
-
-if ( isset($ref) && isset($fichier) && isset($doc->content) ) { 
-
-$data = "data:application/pdf;".$doc->encoding.",".$doc->content;
-$filename = explode(".", $doc->filename)[0];
-
-/*if (!empty(get_option('doliconnectbeta'))) {
-
+  if ( $name == null ) { $name=$fichier; } 
+  if ( doliversion('11.0.0') ) {
+    $doc = callDoliApi("GET", "/documents/download?modulepart=".$type."&original_file=".$ref."/".$fichier, null, 0, $entity);
+  } else {
+    $doc = callDoliApi("GET", "/documents/download?module_part=".$type."&original_file=".$ref."/".$fichier, null, 0, $entity);
+  }
+  //print var_dump($doc);
+  if ( isset($ref) && isset($fichier) && isset($doc->content) ) { 
+    $data = "data:application/pdf;".$doc->encoding.",".$doc->content;
+    $filename = explode(".", $doc->filename)[0];
+    if (!empty(get_option('doliconnectbeta'))) {
+/*
 $document = '<button type="button" class="btn btn btn-outline-dark btn-sm btn-block" data-bs-toggle="modal" data-bs-target=".modal-'.$filename.'">'.$name.' <i class="fas fa-file-download"></i></button>';
 //$test = "<embed id=\pdfID\' type=\'text/html\' width=\'100%\' height=\'600\' src=\'https://mozilla.github.io/pdf.js/web/viewer.html\'/>";
-
-$document .= '<script type="text/javascript">';
-$document .= 'jQuery(document).ready(function($) {
-    document.querySelector("#buttonmodaltest-'.$filename.'").addEventListener("click", function() {
-        var m1 = $(makeModal("'.$filename.'", ""));
-        m1.modal("show");
-      }, false);
-      
-      function makeModal(title, text) {
-        return `<div id="myModal" class="modal fade" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" style="display: none">
-        <div class="modal-dialog modal-xl modal-fullscreen-md-down modal-dialog-centered modal-dialog-scrollable" role="document">
-      
-          <div class="modal-content"><div class="modal-header"><h4 class="modal-title">${title}</h4>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div><iframe class="pdfjs-viewer" style="width:100%;height:70vh" src="'.plugins_url("doliconnect/includes/pdfjs/web/viewer.html").'?file='.$data.'" id="pdfjsframe-'.$filename.'"></iframe>
-            ${text}
-            <div class="modal-footer">
-            <a href="'.$data.'" role="button" class="btn btn btn-outline-dark btn-sm btn-block" download="'.$doc->filename.'">'.__( 'Download', 'doliconnect').' <i class="fas fa-file-download"></i></a>
-            </div>
-          </div>
-        </div>
-      </div>`;
-      }
-
-});';
-$document .= '</script>';
 */
-//$document = '<button id="buttonmodaltest-'.$filename.'" class="btn btn btn-outline-dark btn-sm btn-block" type="button">'.$name.' <i class="fas fa-file-download"></i></button>';
-
-/*
-$document .= '<div><iframe id="pdf-js-viewer" src="'.plugins_url("doliconnect/includes/pdfjs/web/viewer.html").'" title="webviewer" frameborder="0" width="500" height="600"></iframe></div>';
-$document .= '<div class="modal fade modal-'.$filename.'" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-<div class="modal-dialog modal-dialog-centered modal-lg" role="document"><div class="modal-content"><div class="modal-header">
-<h5 class="modal-title" id="exampleModalCenterTitle"><a href="'.$data.'" download="'.$doc->filename.'">'.__( 'Download', 'doliconnect').' '.$doc->filename.'</a></h5><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div><div class="modal-body">';
-$document .= '<iframe class="pdfjs-viewer" style="width:100%;height:70vh" src="'.plugins_url("doliconnect/includes/pdfjs/web/viewer.html").'?file=" id="pdfjsframe-'.$filename.'"></iframe>
-<script type="text/javascript">
-document.getElementById("pdfjsframe-'.$filename.'").onload = function() {
-document.getElementById("pdfjsframe-'.$filename.'").contentWindow.PDFViewerApplication.open("'.$data.'");
-};
-</script>';
-$document .= '</div></div></div></div>';
-*/
-//} else {
-$document = '<a href="'.$data.'" role="button" class="btn '.$style.'" download="'.$doc->filename.'">'.$name.' <i class="fas fa-file-download"></i></a>';
-//}
-} else {
-$document = '<button class="btn '.$style.'" disabled>'.$name.' <i class="fas fa-file-download"></i></button>';
-}
-
-return $document;
+      $document = doliModalButton('doliDownload', 'dolidownload-'.$ref, $name.' <i class="fas fa-file-download"></i>', 'button', 'btn '.$style, $doc->filename);
+    } else {
+      $document = '<a href="'.$data.'" role="button" class="btn '.$style.'" download="'.$doc->filename.'">'.$name.' <i class="fas fa-file-download"></i></a>';
+    }
+  } else {
+    $document = '<button class="btn '.$style.'" disabled>'.$name.' <i class="fas fa-file-download"></i></button>';
+  }
+  return $document;
 }
 
 function dolihelp($type = null, $category = null) {
