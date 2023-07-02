@@ -17,7 +17,7 @@ function doliconnect_cron_process($refresh = false) {
             $duration = (!empty(get_option('dolicartnewlist'))?get_option('dolicartnewlist'):'month');
             $date->modify('FIRST DAY OF LAST '.$duration.' MIDNIGHT');
             $lastdate = $date->format('Y-m-d');
-            $requestp = "/products?sortfield=t.datec&sortorder=DESC&sqlfilters=(t.datec%3A%3E%3A'".$lastdate."')%20AND%20(t.tosell%3A%3D%3A1)&limit=1000";
+            $requestp = "/products?sortfield=t.datec&sortorder=DESC&category=".doliconst("DOLICONNECT_CATSHOP")."&limit=1000&sqlfilters=(t.datec%3A%3E%3A'".$lastdate."')%20AND%20(t.tosell%3A%3D%3A1)&limit=1000";
             $listproduct = callDoliApi("GET", $requestp, null, dolidelay('category', $refresh));
             if ( !isset($listproduct->error) && $listproduct != null ) {
                 foreach ($listproduct as $product) {
