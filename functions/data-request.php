@@ -1217,11 +1217,12 @@ global $current_user;
 		wp_send_json_success($response);
 		die();
 	} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "doliDownload" ) {
+		$data = "data:application/pdf;base64,".$_POST['value2'];
 		$modal['header'] = __( 'Download', 'doliconnect');
-		$modal['body'] = $_POST['value1'];	
-		$modal['footer'] = null;
+		$modal['body'] = null;
+		$modal['footer'] = $_POST['value1'];
 		$response['js'] = null;
-		$response['modal'] = doliModalTemplate($modal['header'], $modal['body'], $modal['footer'], 'modal-lg');
+		$response['modal'] = doliModalTemplate($modal['header'], $modal['body'], $modal['footer'], 'modal-lg', null, 'p-0');
 		wp_send_json_success($response);
 		die();
 	} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "doliSelectlang" ) {

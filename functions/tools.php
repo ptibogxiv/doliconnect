@@ -1262,16 +1262,14 @@ return $bug;
 }
 
 function Doliconnect_MailAlert( $user_login, $user) {
-
-if ( $user->loginmailalert == 'on' ) { //&& $user->ID != ''.constant("DOLICONNECT_DEMO").''
-$sitename = get_option('blogname');
-$siteurl = get_option('siteurl');
-$subject = "[$sitename] ".__( 'Connection notification', 'doliconnect');
-$body = __( 'It appears that you have just logged on to our site the following IP address:', 'doliconnect')."<br /><br />".$_SERVER['REMOTE_ADDR']."<br /><br />".__( 'If you have not made this action, please change your password immediately.', 'doliconnect')."<br /><br />".sprintf(__('Your %s\'s team', 'doliconnect'), $sitename)."<br />$siteurl";				
-$headers = array('Content-Type: text/html; charset=UTF-8');
-$mail =  wp_mail($user->user_email, $subject, $body, $headers);
-}
-
+  if ( $user->loginmailalert == 'on' ) { //&& $user->ID != ''.constant("DOLICONNECT_DEMO").''
+    $sitename = get_option('blogname');
+    $siteurl = get_option('siteurl');
+    $subject = "[$sitename] ".__( 'Connection notification', 'doliconnect');
+    $body = __( 'It appears that you have just logged on to our site the following IP address:', 'doliconnect')."<br /><br />".$_SERVER['REMOTE_ADDR']."<br /><br />".__( 'If you have not made this action, please change your password immediately.', 'doliconnect')."<br /><br />".sprintf(__('Your %s\'s team', 'doliconnect'), $sitename)."<br />$siteurl";				
+    $headers = array('Content-Type: text/html; charset=UTF-8');
+    $mail =  wp_mail($user->user_email, $subject, $body, $headers);
+  }
 }
 add_action('wp_login', 'Doliconnect_MailAlert', 10, 2);
 
@@ -1287,11 +1285,7 @@ function dolidocdownload($type, $ref=null, $fichier=null, $name=null, $refresh =
     $data = "data:application/pdf;".$doc->encoding.",".$doc->content;
     $filename = explode(".", $doc->filename)[0];
     if (!empty(get_option('doliconnectbeta'))) {
-/*
-$document = '<button type="button" class="btn btn btn-outline-dark btn-sm btn-block" data-bs-toggle="modal" data-bs-target=".modal-'.$filename.'">'.$name.' <i class="fas fa-file-download"></i></button>';
-//$test = "<embed id=\pdfID\' type=\'text/html\' width=\'100%\' height=\'600\' src=\'https://mozilla.github.io/pdf.js/web/viewer.html\'/>";
-*/
-      $document = doliModalButton('doliDownload', 'dolidownload-'.$ref, $name.' <i class="fas fa-file-download"></i>', 'button', 'btn '.$style, $doc->filename);
+      $document = doliModalButton('doliDownload', 'dolidownload-'.$ref, $name.' <i class="fas fa-file-download"></i>', 'button', 'btn '.$style, $doc->filename, $doc->content);
     } else {
       $document = '<a href="'.$data.'" role="button" class="btn '.$style.'" download="'.$doc->filename.'">'.$name.' <i class="fas fa-file-download"></i></a>';
     }
