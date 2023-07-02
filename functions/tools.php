@@ -6,13 +6,13 @@ function dolimenu($name, $traduction, $right, $content) {
 }
 
 function dolicheckie($server) {
-$return = false;
-$ua = htmlentities($server, ENT_QUOTES, 'UTF-8');
-if (preg_match('~MSIE|Internet Explorer~i', $ua) || (strpos($ua, 'Trident/7.0') !== false && strpos($ua, 'rv:11.0') !== false)) {
-$return = '<div class="float-start"><i class="fab fa-internet-explorer fa-3x a-fw"></i> </div><div class="text-justify">'.__( 'Dear user, you are using Internet Explorer. We regret to inform you that it is no longer supported by our site. You must now use a modern browser.', 'doliconnect').'</div>';
-$return .= '<p class="text-center"><a href="https://www.microsoft.com/edge" target="_blank"><i class="fab fa-edge"></i> '.__( 'Download Edge', 'doliconnect').'</a> | <a href="https://www.mozilla.org/firefox/new/" target="_blank"><i class="fab fa-firefox"></i> '.__( 'Download Firefox', 'doliconnect').'</a> | <a href="https://www.google.com/chrome/" target="_blank"><i class="fab fa-chrome"></i> '.__( 'Download Chrome', 'doliconnect').'</a></p>';
-}
-return $return;
+  $return = false;
+  $ua = htmlentities($server, ENT_QUOTES, 'UTF-8');
+  if (preg_match('~MSIE|Internet Explorer~i', $ua) || (strpos($ua, 'Trident/7.0') !== false && strpos($ua, 'rv:11.0') !== false)) {
+    $return = '<div class="float-start"><i class="fab fa-internet-explorer fa-3x a-fw"></i> </div><div class="text-justify">'.__( 'Dear user, you are using Internet Explorer. We regret to inform you that it is no longer supported by our site. You must now use a modern browser.', 'doliconnect').'</div>';
+    $return .= '<p class="text-center"><a href="https://www.microsoft.com/edge" target="_blank"><i class="fab fa-edge"></i> '.__( 'Download Edge', 'doliconnect').'</a> | <a href="https://www.mozilla.org/firefox/new/" target="_blank"><i class="fab fa-firefox"></i> '.__( 'Download Firefox', 'doliconnect').'</a> | <a href="https://www.google.com/chrome/" target="_blank"><i class="fab fa-chrome"></i> '.__( 'Download Chrome', 'doliconnect').'</a></p>';
+  }
+  return $return;
 }
 
 function doliCheckRights($right1, $right2 = null, $right3 = null, $right4 = null, $version = '13.0.0') {
@@ -55,15 +55,11 @@ function doliCheckModules($module, $refresh = false) {
   return $return;
 }
 
-function consecutiveDoliIterationSameCharacter($password, $NbRepeat = null)
-	{
-
+function consecutiveDoliIterationSameCharacter($password, $NbRepeat = null) {
 		if (empty($NbRepeat)) {
 			return true;
 		}
-
 		$char = preg_split('//u', $password, null, PREG_SPLIT_NO_EMPTY);
-
 		$last = "";
 		$count = 0;
 		foreach ($char as $c) {
@@ -73,7 +69,6 @@ function consecutiveDoliIterationSameCharacter($password, $NbRepeat = null)
 				//$doliuser .= "Char $c - count = $count\n";
 				continue;
 			}
-
 			$count++;
 			//$doliuser .= "Char $c - count = $count\n";
 
@@ -81,7 +76,6 @@ function consecutiveDoliIterationSameCharacter($password, $NbRepeat = null)
 				return false;
 			}
 		}
-
 		return true;
 }
 
@@ -97,7 +91,6 @@ function dolicaptcha($id = null) {
  
   function shuffle_assoc($list) { 
     if (!is_array($list)) return $list; 
-  
     $keys = array_keys($list); 
     shuffle($keys); 
     $random = array(); 
@@ -108,7 +101,6 @@ function dolicaptcha($id = null) {
   }
 
   $arrX = shuffle_assoc($arrX);
-
   $randIndex = array_rand($arrX, 5);
   $controle = array_rand($randIndex, 1); 
 
@@ -127,47 +119,45 @@ function dolicaptcha($id = null) {
 
   <input type="radio" class="btn-check" name="btndolicaptcha" id="btndolicaptcha5" value="'.$arrX[$randIndex[4]]['icon'].'" autocomplete="off">
   <label class="btn btn-outline-secondary" for="btndolicaptcha5"><i class="fas fa-'.$arrX[$randIndex[4]]['icon'].' fa-fw"></i></label>
-</div></div>';
-
-return $captcha;
+  </div></div>';
+  return $captcha;
 }
 
 function dolisanitize($object) {
-
-if (isset($object['firstname'])) $object['firstname'] = ucfirst(strtolower(stripslashes(sanitize_text_field($object['firstname']))));
-if (isset($object['lastname'])) $object['lastname'] = strtoupper(stripslashes(sanitize_text_field($object['lastname'])));
-if (isset($object['name'])) { $object['name'] = strtoupper(stripslashes(sanitize_text_field($object['name'])));
-} elseif (isset($object['morphy']) && $object['morphy'] != 'mor' && get_option('doliconnect_disablepro') != 'mor' ) {
-$object['name'] = $object['firstname']." ".$object['lastname'];
-} else {
-$object['name'] = null;
-} 
-if (isset($object['name_alias'])) $object['name_alias'] = strtoupper(stripslashes(sanitize_text_field($object['name_alias'])));
-if (isset($object['address'])) $object['address'] = stripslashes(sanitize_textarea_field($object['address']));
-if (isset($object['ziptown'])) {
-  $object['zip'] = explode(',', $object['ziptown'])[0];
-  $object['town'] = explode(',', $object['ziptown'])[1];
-} 
-if (isset($object['zip'])) $object['zip'] = strtoupper(stripslashes(sanitize_text_field($object['zip'])));
-if (isset($object['town'])) $object['town'] = strtoupper(stripslashes(sanitize_text_field($object['town'])));
-if (isset($object['email'])) $object['email'] = sanitize_email($object['email']);
-if (isset($object['url'])) $object['url'] = sanitize_text_field($object['url']);
-if (isset($object['note_public'])) $object['note_public'] = stripslashes(sanitize_textarea_field($object['note_public']));
-if (isset($object['tva_intra'])) $object['tva_intra'] = strtoupper(sanitize_text_field($object['tva_intra']));
-
-return $object;
+  if (isset($object['firstname'])) $object['firstname'] = ucfirst(strtolower(stripslashes(sanitize_text_field($object['firstname']))));
+  if (isset($object['lastname'])) $object['lastname'] = strtoupper(stripslashes(sanitize_text_field($object['lastname'])));
+  if (isset($object['name'])) { 
+    $object['name'] = strtoupper(stripslashes(sanitize_text_field($object['name'])));
+  } elseif (isset($object['morphy']) && $object['morphy'] != 'mor' && get_option('doliconnect_disablepro') != 'mor' ) {
+    $object['name'] = $object['firstname']." ".$object['lastname'];
+  } else {
+    $object['name'] = null;
+  } 
+  if (isset($object['name_alias'])) $object['name_alias'] = strtoupper(stripslashes(sanitize_text_field($object['name_alias'])));
+  if (isset($object['address'])) $object['address'] = stripslashes(sanitize_textarea_field($object['address']));
+  if (isset($object['ziptown'])) {
+    $object['zip'] = explode(',', $object['ziptown'])[0];
+    $object['town'] = explode(',', $object['ziptown'])[1];
+  } 
+  if (isset($object['zip'])) $object['zip'] = strtoupper(stripslashes(sanitize_text_field($object['zip'])));
+  if (isset($object['town'])) $object['town'] = strtoupper(stripslashes(sanitize_text_field($object['town'])));
+  if (isset($object['email'])) $object['email'] = sanitize_email($object['email']);
+  if (isset($object['url'])) $object['url'] = sanitize_text_field($object['url']);
+  if (isset($object['note_public'])) $object['note_public'] = stripslashes(sanitize_textarea_field($object['note_public']));
+  if (isset($object['tva_intra'])) $object['tva_intra'] = strtoupper(sanitize_text_field($object['tva_intra']));
+  return $object;
 }
 
 function doliversion($version) {
-$ret = false;
-if (!empty(get_site_option('dolibarr_public_url')) && !empty(get_site_option('dolibarr_private_key'))) {
-$dolibarr = callDoliApi("GET", "/status", null, dolidelay('dolibarr'));
-if ( is_object($dolibarr) && isset($dolibarr->success) && isset($dolibarr->success->dolibarr_version)) $versiondoli = explode("-", $dolibarr->success->dolibarr_version);
-if ( is_object($dolibarr) && isset($versiondoli) && version_compare($versiondoli[0], $version) >= 0 ) {
-$ret = $versiondoli[0];
-}
-}
-return $ret;
+  $ret = false;
+  if (!empty(get_site_option('dolibarr_public_url')) && !empty(get_site_option('dolibarr_private_key'))) {
+    $dolibarr = callDoliApi("GET", "/status", null, dolidelay('dolibarr'));
+    if ( is_object($dolibarr) && isset($dolibarr->success) && isset($dolibarr->success->dolibarr_version)) $versiondoli = explode("-", $dolibarr->success->dolibarr_version);
+    if ( is_object($dolibarr) && isset($versiondoli) && version_compare($versiondoli[0], $version) >= 0 ) {
+      $ret = $versiondoli[0];
+    }
+  }
+  return $ret;
 }
 add_action( 'admin_init', 'doliversion', 5, 1); 
 
@@ -390,38 +380,36 @@ return $connect;
 }
 
 function doliopeninghours($constante){
-if (!empty(doliconst($constante))) { 
-  return doliconst($constante);
-} else {
-  return __( 'closed', 'doliconnect');
-}
+  if (!empty(doliconst($constante))) { 
+    return doliconst($constante);
+  } else {
+    return __( 'closed', 'doliconnect');
+  }
 }
 
 function doliUserLang($user) {
   if ( function_exists('pll_the_languages') ) { 
-    $lang = pll_current_language('locale');
+      $lang = pll_current_language('locale');
     } elseif (!empty($user->locale)) {
-    $lang = $user->locale;
+      $lang = $user->locale;
     } else {
-    $lang = get_locale();
+      $lang = get_locale();
     }
   return $lang;
 }
 
 function doliCompanyCard($company) {
   $card = $company->name;
-  $card .= '<br>'.$company->address.'
-  <br>'.$company->zip.' '.$company->town.'
-  <br>';
+  $card .= '<br>'.$company->address.'<br>'.$company->zip.' '.$company->town.'<br>';
   if ( !empty($company->country_id) ) {  
-  if ( function_exists('pll_the_languages') ) { 
-    $lang = pll_current_language('locale');
-  } else {
-    global $current_user;
-    $lang = $current_user->locale;
-  }
-  $country = callDoliApi("GET", "/setup/dictionary/countries/".$company->country_id."?lang=".$lang, null, dolidelay('constante'));
-  $card .= $country->label;
+    if ( function_exists('pll_the_languages') ) { 
+      $lang = pll_current_language('locale');
+    } else {
+      global $current_user;
+      $lang = $current_user->locale;
+    }
+    $country = callDoliApi("GET", "/setup/dictionary/countries/".$company->country_id."?lang=".$lang, null, dolidelay('constante'));
+    $card .= $country->label;
   }
   if ( !empty($company->state_id) ) {  
     if ( function_exists('pll_the_languages') ) { 
@@ -435,9 +423,7 @@ function doliCompanyCard($company) {
   if (!empty($company->idprof2)) { $card .= '<br>SIRET: '.$company->idprof2.' - APE: '.$company->idprof3; }
   if (!empty($company->idprof4)) { $card .= '<br>RCS: '.$company->idprof4; }
   if (!empty($company->tva_assuj) && !empty($company->tva_intra)) { $card .= '<br>N° TVA: '.$company->tva_intra; }
-
-
-return $card;
+  return $card;
 }
 
 function doliSelectForm($name, $request, $selectlang = '- Select -', $valuelang = 'Value', $value = null, $idobject = 0, $rights = 1, $delay = null, $id = 'id') {
@@ -493,8 +479,7 @@ return $doliSelect;
 }
 
 function doliFaqForm($category, $refresh = null) {
-  global $current_user;
-   
+global $current_user; 
   $requestf = "/knowledgemanagement/knowledgerecords?sortfield=t.rowid&sortorder=ASC&limit=100&sqlfilters=(t.fk_c_ticket_category%3A%3D%3A'".$category."')%20and%20(t.status%3A%3D%3A'1')%20and%20((t.lang%3A%3D%3A'0')%20or%20(t.lang%3A%3D%3A'".doliUserLang($current_user)."'))";  
   $listfaq = callDoliApi("GET", $requestf, null, dolidelay('constante', $refresh));
   $doliFaq = '';
@@ -1363,99 +1348,87 @@ return $document;
 }
 
 function dolihelp($type = null, $category = null) {
-
-if ( is_user_logged_in() && doliCheckModules('ticket') ) {
-$arr_params = array( 'module' => 'tickets', 'type' => $type, 'category' => $category, 'action' => 'create'); 
-$link=esc_url( add_query_arg( $arr_params, doliconnecturl('doliaccount'))); 
-} elseif ( !empty(get_option('dolicontact')) ) {
-$arr_params = array( 'action' => 'create'); //'type' => $postorder->id,  
-$link=esc_url( add_query_arg( $arr_params, doliconnecturl('dolicontact')));
-} else {
-$link='#';
-}
-
-$help = "<a href='".$link."' role='button' title='".__( 'Help?', 'doliconnect')."'><div class='d-block d-sm-block d-xs-block d-md-none'><i class='fas fa-question-circle'></i></div><div class='d-none d-md-block'><i class='fas fa-question-circle'></i> ".__( 'Need help?', 'doliconnect')."</div></a>";
-
-return $help;
+  if ( is_user_logged_in() && doliCheckModules('ticket') ) {
+    $arr_params = array( 'module' => 'tickets', 'type' => $type, 'category' => $category, 'action' => 'create'); 
+    $link=esc_url( add_query_arg( $arr_params, doliconnecturl('doliaccount'))); 
+  } elseif ( !empty(get_option('dolicontact')) ) {
+    $arr_params = array( 'action' => 'create'); //'type' => $postorder->id,  
+    $link=esc_url( add_query_arg( $arr_params, doliconnecturl('dolicontact')));
+  } else {
+    $link='#';
+  }
+  $help = "<a href='".$link."' role='button' title='".__( 'Help?', 'doliconnect')."'><div class='d-block d-sm-block d-xs-block d-md-none'><i class='fas fa-question-circle'></i></div><div class='d-none d-md-block'><i class='fas fa-question-circle'></i> ".__( 'Need help?', 'doliconnect')."</div></a>";
+  return $help;
 }
 
 function dolidelay($delay = null, $refresh = false, $protect = false) {
-
-if (! is_numeric($delay)) {
-
-if (false ===  get_site_option('doliconnect_delay_'.$delay) ) {
-
-if ($delay == 'constante' || $delay == 'constantes') { $delay = MONTH_IN_SECONDS; }
-elseif ($delay == 'dolibarr') { $delay = DAY_IN_SECONDS; }
-elseif ($delay == 'doliconnector') { $delay = HOUR_IN_SECONDS; }
-elseif ($delay == 'search') { $delay = HOUR_IN_SECONDS; }
-elseif ($delay == 'paymentmethods') { $delay = WEEK_IN_SECONDS; }
-elseif ($delay == 'thirdparty' || $delay == 'customer' || $delay == 'supplier' || $delay == 'contact') { $delay = DAY_IN_SECONDS; }
-elseif ($delay == 'category') { $delay = WEEK_IN_SECONDS; }
-elseif ($delay == 'proposal') { $delay = HOUR_IN_SECONDS; }
-elseif ($delay == 'order') { $delay = HOUR_IN_SECONDS; }
-elseif ($delay == 'invoice') { $delay = HOUR_IN_SECONDS; }
-elseif ($delay == 'contract') { $delay = HOUR_IN_SECONDS; }
-elseif ($delay == 'project') { $delay = HOUR_IN_SECONDS; }
-elseif ($delay == 'member') { $delay = DAY_IN_SECONDS; }
-elseif ($delay == 'donation') { $delay = DAY_IN_SECONDS; }
-elseif ($delay == 'ticket') { $delay = HOUR_IN_SECONDS; }
-elseif ($delay == 'product') { $delay = 6 * HOUR_IN_SECONDS; }
-elseif ($delay == 'cart') { $delay = 20 * MINUTE_IN_SECONDS; }
-elseif ($delay == 'document') { $delay = MONTH_IN_SECONDS; }
-elseif ($delay == 'knowledgemanagement') { $delay = MONTH_IN_SECONDS; }
-} else {
-if (!empty(get_site_option('doliconnect_delay_'.$delay))) {
-  $delay = get_site_option('doliconnect_delay_'.$delay);
-} else {
-  $delay = HOUR_IN_SECONDS;
-}
-}
-}
-
-$array = get_option('doliconnect_ipkiosk');
-if ( is_array($array) && in_array($_SERVER['REMOTE_ADDR'], $array) ) {
-$delay=0;
-}
-if ( $refresh && is_user_logged_in() ) {
-$delay=$delay*-1;
-}
-
-return $delay;
+  if (! is_numeric($delay)) { 
+    if (false ===  get_site_option('doliconnect_delay_'.$delay) ) {
+      if ($delay == 'constante' || $delay == 'constantes') { $delay = MONTH_IN_SECONDS; }
+      elseif ($delay == 'dolibarr') { $delay = DAY_IN_SECONDS; }
+      elseif ($delay == 'doliconnector') { $delay = HOUR_IN_SECONDS; }
+      elseif ($delay == 'search') { $delay = HOUR_IN_SECONDS; }
+      elseif ($delay == 'paymentmethods') { $delay = WEEK_IN_SECONDS; }
+      elseif ($delay == 'thirdparty' || $delay == 'customer' || $delay == 'supplier' || $delay == 'contact') { $delay = DAY_IN_SECONDS; }
+      elseif ($delay == 'category') { $delay = WEEK_IN_SECONDS; }
+      elseif ($delay == 'proposal') { $delay = HOUR_IN_SECONDS; }
+      elseif ($delay == 'order') { $delay = HOUR_IN_SECONDS; }
+      elseif ($delay == 'invoice') { $delay = HOUR_IN_SECONDS; }
+      elseif ($delay == 'contract') { $delay = HOUR_IN_SECONDS; }
+      elseif ($delay == 'project') { $delay = HOUR_IN_SECONDS; }
+      elseif ($delay == 'member') { $delay = DAY_IN_SECONDS; }
+      elseif ($delay == 'donation') { $delay = DAY_IN_SECONDS; }
+      elseif ($delay == 'ticket') { $delay = HOUR_IN_SECONDS; }
+      elseif ($delay == 'product') { $delay = 6 * HOUR_IN_SECONDS; }
+      elseif ($delay == 'cart') { $delay = 20 * MINUTE_IN_SECONDS; }
+      elseif ($delay == 'document') { $delay = MONTH_IN_SECONDS; }
+      elseif ($delay == 'knowledgemanagement') { $delay = MONTH_IN_SECONDS; }
+    } else {
+      if (!empty(get_site_option('doliconnect_delay_'.$delay))) {
+        $delay = get_site_option('doliconnect_delay_'.$delay);
+      } else {
+        $delay = HOUR_IN_SECONDS;
+      }
+    }
+  }
+  $array = get_option('doliconnect_ipkiosk');
+  if ( is_array($array) && in_array($_SERVER['REMOTE_ADDR'], $array) ) {
+    $delay=0;
+  }
+  if ( $refresh && is_user_logged_in() ) {
+    $delay=$delay*-1;
+  }
+  return $delay;
 }
 
 function dolirefresh( $origin, $url, $delay, $element = null) {
-
-$refresh = '<script type="text/javascript">';
-$refresh .= 'function refreshloader(){
-jQuery("#DoliconnectLoadingModal").modal("show");
-jQuery(window).scrollTop(0); 
-this.form.submit();
-}';
-$refresh .= '</script>';
-
-if ( isset($element->date_modification) && !empty($element->date_modification) ) {
-$refresh .= "<i class='fas fa-database'></i> ".wp_date( get_option( 'date_format' ).' - '.get_option('time_format'), $element->date_modification, false);
-} elseif ( get_option("_transient_timeout_".$origin) > 0 ) {
-$refresh .= "<i class='fas fa-database'></i> ".wp_date( get_option( 'date_format' ).' - '.get_option('time_format'), get_option("_transient_timeout_".$origin)-$delay, false);
-} elseif (is_user_logged_in() ) {
-$refresh .= __( 'Refresh', 'doliconnect');
-}
- 
-if (is_user_logged_in() ) {
-$refresh .= " <a onClick='refreshloader()' href='".esc_url( add_query_arg( 'refresh', true, $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']) )."' title='".__( 'Refresh datas', 'doliconnect')."'><i class='fas fa-sync-alt'></i></a>";
-}
-
-return $refresh;
+  $refresh = '<script type="text/javascript">';
+  $refresh .= 'function refreshloader(){
+  jQuery("#DoliconnectLoadingModal").modal("show");
+  jQuery(window).scrollTop(0); 
+  this.form.submit();
+  }';
+  $refresh .= '</script>';
+  if ( isset($element->date_modification) && !empty($element->date_modification) ) {
+    $refresh .= "<i class='fas fa-database'></i> ".wp_date( get_option( 'date_format' ).' - '.get_option('time_format'), $element->date_modification, false);
+  } elseif ( get_option("_transient_timeout_".$origin) > 0 ) {
+    $refresh .= "<i class='fas fa-database'></i> ".wp_date( get_option( 'date_format' ).' - '.get_option('time_format'), get_option("_transient_timeout_".$origin)-$delay, false);
+  } elseif (is_user_logged_in() ) {
+    $refresh .= __( 'Refresh', 'doliconnect');
+  }
+  if (is_user_logged_in() ) {
+    $refresh .= " <a onClick='refreshloader()' href='".esc_url( add_query_arg( 'refresh', true, $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']) )."' title='".__( 'Refresh datas', 'doliconnect')."'><i class='fas fa-sync-alt'></i></a>";
+  }
+  return $refresh;
 }
 
 function dolikiosk() {
-$array = get_option('doliconnect_ipkiosk');
-if ( is_array($array) && in_array($_SERVER['REMOTE_ADDR'], $array) ) {
-return true;
-} else {
-return false;
-}
+  $array = get_option('doliconnect_ipkiosk');
+  if ( is_array($array) && in_array($_SERVER['REMOTE_ADDR'], $array) ) {
+    return true;
+  } else {
+    return false;
+  }
 }
 
 function dolialert($type, $msg) {
@@ -1516,60 +1489,60 @@ print '</script>';
 }
 
 function doliusercard($id, $refresh = null) {
-
   $request = "/users/".$id;
   $user = callDoliApi("GET", $request, null, dolidelay('thirdparty', $refresh)); 
   $card = '<div class="col"><div class="card" style="max-width: 100%;"><div class="row g-0"><div class="col-md-4">';
   $card .= doliconnect_image('user', $user->id.'/photos/'.$user->photo, array('class'=>'bd-placeholder-img img-fluid rounded-start', 'entity'=>$user->entity, 'size'=>'100x100'), $refresh);
-  $card .= '</div>
-<div class="col-md-8">
-<div class="card-body">
-<h6 class="card-title">'.$user->firstname.' '.$user->lastname.'</h6>
-<p class="card-text text-muted">'.$user->job.'<br>
-<small class="text-muted">'.$user->note_public.'</small></p>
-</div>
-</div></div>
-</div></div>';
-
+  $card .= '</div><div class="col-md-8"><div class="card-body">';
+  $card .= '<h6 class="card-title">'.$user->firstname.' '.$user->lastname.'</h6>';
+  $card .= '<p class="card-text text-muted">'.$user->job.'<br>';
+  $card .= '<small class="text-muted">'.$user->note_public.'</small></p>';
+  $card .= '</div></div></div></div></div>';
 return $card;  
 }
 
 function doliaddress($object, $refresh = false) {
 global $current_user;
-if ( !empty($object->name) ) {
-$address = "<b><i class='fas fa-building fa-fw'></i> ".$object->name;
-} else {
-$address = "<b><i class='fas fa-building fa-fw'></i> ".($object->civility ? $object->civility : $object->civility_code)." ".$object->firstname." ".$object->lastname;
-}
-if ( !empty($object->default) ) { $address .= " <i class='fas fa-star fa-1x fa-fw' style='color:Gold'></i>"; }
-if ( !empty($object->poste) ) { $address .= ", ".$object->poste; }
-if ( !empty($object->type) ) { $address .= "<br>".__( 'Type', 'doliconnect').": ".$object->type; }
-$address .= "</b><br>";
-if ( !empty($object->country_id) ) {  
-$country = callDoliApi("GET", "/setup/dictionary/countries/".$object->country_id."?lang=".doliUserLang($current_user), null, dolidelay('constante', $refresh)); }
-$address .= "<small class='text-muted'>".$object->address.", ".$object->zip." ".$object->town." - ".$country->label."<br>".$object->email." - ".(isset($object->phone) ? $object->phone : (isset($object->phone_pro)?$object->phone_pro:null))."</small>";
-return $address;
+  if ( !empty($object->name) ) {
+    $address = "<b><i class='fas fa-building fa-fw'></i> ".$object->name;
+  } else {
+    $address = "<b><i class='fas fa-building fa-fw'></i> ".($object->civility ? $object->civility : $object->civility_code)." ".$object->firstname." ".$object->lastname;
+  }
+  if ( !empty($object->default) ) { $address .= " <i class='fas fa-star fa-1x fa-fw' style='color:Gold'></i>"; }
+  if ( !empty($object->poste) ) { $address .= ", ".$object->poste; }
+  if ( !empty($object->type) ) { $address .= "<br>".__( 'Type', 'doliconnect').": ".$object->type; }
+  $address .= "</b><br>";
+  if ( !empty($object->country_id) ) {  
+    $country = callDoliApi("GET", "/setup/dictionary/countries/".$object->country_id."?lang=".doliUserLang($current_user), null, dolidelay('constante', $refresh));
+  }
+  $address .= "<small class='text-muted'>".$object->address.", ".$object->zip." ".$object->town." - ".$country->label."<br>".$object->email." - ".(isset($object->phone) ? $object->phone : (isset($object->phone_pro)?$object->phone_pro:null))."</small>";
+  return $address;
 }
 
 function dolicontact($id, $refresh = false) {
 global $current_user;
-$object = callDoliApi("GET", "/contacts/".$id, null, dolidelay('contact', esc_attr(isset($refresh) ? $refresh : null)));  
-if (isset($object->id)) {
-$address = "<b><i class='fas fa-address-book fa-fw'></i> ".($object->civility ? $object->civility : $object->civility_code)." ".$object->firstname." ".$object->lastname;
-if ( !empty($object->default) ) { $address .= " <i class='fas fa-star fa-1x fa-fw' style='color:Gold'></i>"; }
-if ( !empty($object->poste) ) { $address .= ", ".$object->poste; }
-$address .= "</b><br>";
-if ( !empty($object->country_id) ) {  
-$country = callDoliApi("GET", "/setup/dictionary/countries/".$object->country_id."?lang=".doliUserLang($current_user), null, dolidelay('constante', $refresh)); }
-$address .= "<small class='text-muted'>".$object->address.", ".$object->zip." ".$object->town." - ".$country->label."<br>".$object->email." - ".$object->phone_pro."</small>";
-return $address;
-}
+  $object = callDoliApi("GET", "/contacts/".$id, null, dolidelay('contact', esc_attr(isset($refresh) ? $refresh : null)));  
+  if (isset($object->id)) {
+    $address = "<b><i class='fas fa-address-book fa-fw'></i> ".($object->civility ? $object->civility : $object->civility_code)." ".$object->firstname." ".$object->lastname;
+    if ( !empty($object->default) ) { 
+      $address .= " <i class='fas fa-star fa-1x fa-fw' style='color:Gold'></i>";
+    }
+    if ( !empty($object->poste) ) { 
+      $address .= ", ".$object->poste;
+    }
+    $address .= "</b><br>";
+    if ( !empty($object->country_id) ) {  
+      $country = callDoliApi("GET", "/setup/dictionary/countries/".$object->country_id."?lang=".doliUserLang($current_user), null, dolidelay('constante', $refresh));
+    }
+  $address .= "<small class='text-muted'>".$object->address.", ".$object->zip." ".$object->town." - ".$country->label."<br>".$object->email." - ".$object->phone_pro."</small>";
+  return $address;
+  }
 }
 
 function dolitotal($object) { 
-$total = "<li class='list-group-item list-group-item-primary'><b>".__( 'Total', 'doliconnect').": ".doliprice($object, 'ttc', isset($object->multicurrency_code) ? $object->multicurrency_code : null)."</b><br>";
-$total .= "<small><b>(".__( 'of which VAT', 'doliconnect').": ".doliprice($object, 'tva', isset($object->multicurrency_code) ? $object->multicurrency_code : null).")</b></small></li>";
-return $total;
+  $total = "<li class='list-group-item list-group-item-primary'><b>".__( 'Total', 'doliconnect').": ".doliprice($object, 'ttc', isset($object->multicurrency_code) ? $object->multicurrency_code : null)."</b><br>";
+  $total .= "<small><b>(".__( 'of which VAT', 'doliconnect').": ".doliprice($object, 'tva', isset($object->multicurrency_code) ? $object->multicurrency_code : null).")</b></small></li>";
+  return $total;
 }
 
 function doliline($object, $refresh = false, $refreshstock = false) {
@@ -1669,52 +1642,50 @@ return $doliline;
 }
 
 function doliunit($scale, $type, $refresh = null) {
-$unit = callDoliApi("GET", "/setup/dictionary/units?sortfield=rowid&sortorder=ASC&limit=1&active=1&sqlfilters=(t.scale%3A%3D%3A'".$scale."')%20AND%20(t.unit_type%3A%3D%3A'".$type."')", null, dolidelay('constante', $refresh));
-return $unit[0]->short_label;
+  $unit = callDoliApi("GET", "/setup/dictionary/units?sortfield=rowid&sortorder=ASC&limit=1&active=1&sqlfilters=(t.scale%3A%3D%3A'".$scale."')%20AND%20(t.unit_type%3A%3D%3A'".$type."')", null, dolidelay('constante', $refresh));
+  return $unit[0]->short_label;
 }
 
 function doliduration($object) {
-if ( !is_null($object->duration_unit) && 0 < ($object->duration_value)) {
-$duration = $object->duration_value.' ';
-if ( $object->duration_value > 1 ) {
-if ( $object->duration_unit == 'y' ) { $duration .=__( 'years', 'doliconnect'); }
-elseif ( $object->duration_unit == 'm' )  { $duration .=__( 'months', 'doliconnect'); }
-elseif ( $object->duration_unit == 'w' )  { $duration .=__( 'weeks', 'doliconnect'); }
-elseif ( $object->duration_unit == 'd' )  { $duration .=__( 'days', 'doliconnect'); }
-elseif ( $object->duration_unit == 'h' )  { $duration .=__( 'hours', 'doliconnect'); }
-elseif ( $object->duration_unit == 'i' )  { $duration .=__( 'minutes', 'doliconnect'); }
-} else {
-if ( $object->duration_unit == 'y' ) { $duration .=__( 'year', 'doliconnect');}
-elseif ( $object->duration_unit == 'm' )  { $duration .=__( 'month', 'doliconnect'); }
-elseif ( $object->duration_unit == 'w' )  { $duration .=__( 'week', 'doliconnect'); }
-elseif ( $object->duration_unit == 'd' )  { $duration .=__( 'day', 'doliconnect'); }
-elseif ( $object->duration_unit == 'h' )  { $duration .=__( 'hour', 'doliconnect'); }
-elseif ( $object->duration_unit == 'i' )  { $duration .=__( 'minute', 'doliconnect'); }
-}
-
-if ( $object->duration_unit == 'i' ) {
-$altdurvalue=60/$object->duration_value; 
-}
-
-} else {
-$duration = '';
-}
-return $duration;
+  if ( !is_null($object->duration_unit) && 0 < ($object->duration_value)) {
+    $duration = $object->duration_value.' ';
+    if ( $object->duration_value > 1 ) {
+      if ( $object->duration_unit == 'y' ) { $duration .=__( 'years', 'doliconnect'); }
+      elseif ( $object->duration_unit == 'm' )  { $duration .=__( 'months', 'doliconnect'); }
+      elseif ( $object->duration_unit == 'w' )  { $duration .=__( 'weeks', 'doliconnect'); }
+      elseif ( $object->duration_unit == 'd' )  { $duration .=__( 'days', 'doliconnect'); }
+      elseif ( $object->duration_unit == 'h' )  { $duration .=__( 'hours', 'doliconnect'); }
+      elseif ( $object->duration_unit == 'i' )  { $duration .=__( 'minutes', 'doliconnect'); }
+    } else {
+      if ( $object->duration_unit == 'y' ) { $duration .=__( 'year', 'doliconnect');}
+      elseif ( $object->duration_unit == 'm' )  { $duration .=__( 'month', 'doliconnect'); }
+      elseif ( $object->duration_unit == 'w' )  { $duration .=__( 'week', 'doliconnect'); }
+      elseif ( $object->duration_unit == 'd' )  { $duration .=__( 'day', 'doliconnect'); }
+      elseif ( $object->duration_unit == 'h' )  { $duration .=__( 'hour', 'doliconnect'); }
+      elseif ( $object->duration_unit == 'i' )  { $duration .=__( 'minute', 'doliconnect'); }
+    }
+    if ( $object->duration_unit == 'i' ) {
+      $altdurvalue=60/$object->duration_value; 
+    }
+  } else {
+    $duration = '';
+  }
+  return $duration;
 }
 
 function dolipaymentterm($id, $refresh = false) {
-$paymenterm = callDoliApi("GET", "/setup/dictionary/payment_terms?sortfield=rowid&sortorder=ASC&limit=100&active=1&sqlfilters=(t.rowid%3A%3D%3A'".$id."')", null, dolidelay('constante', $refresh)); 
-//print var_dump($paymenterm[0]);
-if ($paymenterm[0]->type_cdr == 1) {
-$term = sprintf( _n( '%s day', '%s days', $paymenterm[0]->nbjour, 'doliconnect'), $paymenterm[0]->nbjour);
-$term .= ", ".__( 'end of month', 'doliconnect');
-} elseif ($paymenterm[0]->type_cdr == 2) {
-$term = sprintf( _n( '%s day', '%s days', $paymenterm[0]->nbjour, 'doliconnect'), $paymenterm[0]->nbjour);
-$term .= ", ".sprintf( __( 'the %s of month', 'doliconnect'), $paymenterm[0]->decalage);
-} else {
-$term = sprintf( _n( '%s day', '%s days', $paymenterm[0]->nbjour, 'doliconnect'), $paymenterm[0]->nbjour);
-}
-return $term;
+  $paymenterm = callDoliApi("GET", "/setup/dictionary/payment_terms?sortfield=rowid&sortorder=ASC&limit=100&active=1&sqlfilters=(t.rowid%3A%3D%3A'".$id."')", null, dolidelay('constante', $refresh)); 
+  //print var_dump($paymenterm[0]);
+  if ($paymenterm[0]->type_cdr == 1) {
+    $term = sprintf( _n( '%s day', '%s days', $paymenterm[0]->nbjour, 'doliconnect'), $paymenterm[0]->nbjour);
+    $term .= ", ".__( 'end of month', 'doliconnect');
+  } elseif ($paymenterm[0]->type_cdr == 2) {
+    $term = sprintf( _n( '%s day', '%s days', $paymenterm[0]->nbjour, 'doliconnect'), $paymenterm[0]->nbjour);
+    $term .= ", ".sprintf( __( 'the %s of month', 'doliconnect'), $paymenterm[0]->decalage);
+  } else {
+    $term = sprintf( _n( '%s day', '%s days', $paymenterm[0]->nbjour, 'doliconnect'), $paymenterm[0]->nbjour);
+  }
+  return $term;
 }
 
 function dolishipmentmethods($id, $refresh = false) {
