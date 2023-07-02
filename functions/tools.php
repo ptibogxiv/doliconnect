@@ -1284,7 +1284,7 @@ function dolidocdownload($type, $ref=null, $fichier=null, $name=null, $refresh =
   if ( isset($ref) && isset($fichier) && isset($doc->content) ) { 
     $data = "data:application/pdf;".$doc->encoding.",".$doc->content;
     $filename = explode(".", $doc->filename)[0];
-    if (!empty(get_option('doliconnectbeta'))) {
+    if (current_user_can('administrator') && !empty(get_option('doliconnectbeta'))) {
       $document = doliModalButton('doliDownload', 'dolidownload-'.$ref, $name.' <i class="fas fa-file-download"></i>', 'button', 'btn '.$style, $doc->filename, $doc->content);
     } else {
       $document = '<a href="'.$data.'" role="button" class="btn '.$style.'" download="'.$doc->filename.'">'.$name.' <i class="fas fa-file-download"></i></a>';
