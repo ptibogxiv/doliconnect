@@ -1210,7 +1210,7 @@ global $current_user;
 		$modal['body'] .= '<input type="hidden" name="action" value="dolimember_request"><input type="hidden" name="case" value="update">';
 		$modal['body'] .= '<input type="hidden" name="memberid" value="'.trim($_POST['value1']).'"><input type="hidden" name="dolimember-nonce" value="'.wp_create_nonce( 'dolimember-nonce').'">';
 		$modal['body'] .= doliuserform( $object, dolidelay('constante'), 'member', doliCheckRights('adherent', 'creer'));	
-		$modal['body'] .= '<ul class="list-group list-group-flush"><li class="list-group-item"><button class="btn btn-danger" type="submit">'.__( 'Submit', 'doliconnect').'</button></form></li></ul';
+		$modal['body'] .= '<ul class="list-group list-group-flush"><li class="list-group-item"><button class="btn btn-danger" type="submit">'.__( 'Submit', 'doliconnect').'</button></form></li></ul>';
 		$modal['footer'] = null;
 		$response['js'] = plugins_url( 'doliconnect/includes/js/editlinkedmember.js');
 		$response['modal'] = doliModalTemplate($_POST['id'], $modal['header'], $modal['body'], $modal['footer'], 'modal-lg', null, 'p-0');
