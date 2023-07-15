@@ -2952,7 +2952,7 @@ function doliModalButton($case, $id, $title, $type = 'button', $class = 'btn btn
               if (response.success) { 
                 if (response.data.js) {
                   $.getScript( response.data.js ).done(function( script, textStatus ) {
-                    console.log( "succes js" );
+                    console.log( "success js" );
                   })
                   .fail(function( jqxhr, settings, exception ) {
                     console.log( "error js" );
