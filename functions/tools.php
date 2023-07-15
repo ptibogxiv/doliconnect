@@ -2958,15 +2958,15 @@ function doliModalButton($case, $id, $title, $type = 'button', $class = 'btn btn
                     console.log( "error js" );
                   });
                 }
-               if (document.getElementById("doliModalDiv")) {
+                if (document.getElementById("doliModalDiv")) {
                  document.getElementById("doliModalDiv").innerHTML = response.data.modal;      
+                 $("#doliModal'.$id.'").modal("show");
                 }
-               $("#doliModal'.$id.'").modal("show");
               } else {
-               if (document.getElementById("doliModalDiv")) {
-                 document.getElementById("doliModalDiv").innerHTML = response;      
-               }
-                $("#doliModal'.$id.'").modal("show");    
+                if (document.getElementById("doliModalDiv")) {
+                  document.getElementById("doliModalDiv").innerHTML = response.data.modal;      
+                  $("#doliModal'.$id.'").modal("show");
+                }
              }
             $("#doliModal'.$id.'").on("hidden.bs.modal", function () {
               $("#doliModal'.$id.'").modal("dispose");
@@ -3050,20 +3050,28 @@ function doliModalDiv() {
                   if (document.getElementById("qty-prod-" + id)) {
                     document.getElementById("qty-prod-" + id).value = response.data.newqty;
                   }
-                  if (document.getElementById("DoliHeaderCartItems")) {
+                  if (document.getElementById("DoliHeaderCartItems") && response.data.items) {
                     document.getElementById("DoliHeaderCartItems").innerHTML = response.data.items;
                   }
-                  if (document.getElementById("DoliFooterCartItems")) {  
+                  if (document.getElementById("DoliFooterCartItems") && response.data.items) {  
                     document.getElementById("DoliFooterCartItems").innerHTML = response.data.items;
                   }
-                  if (document.getElementById("DoliCartItemsList")) {  
+                  if (document.getElementById("DoliCartItemsList") && response.data.list) {  
                     document.getElementById("DoliCartItemsList").innerHTML = response.data.list;
                   }
-                  if (document.getElementById("DoliWidgetCartItems")) {
+                  if (document.getElementById("DoliWidgetCartItems") && response.data.items) {
                     document.getElementById("DoliWidgetCartItems").innerHTML = response.data.items;      
+                  }
+                  if (document.getElementById("doliModalDiv") && response.data.modal) {
+                    document.getElementById("doliModalDiv").innerHTML = response.data.modal;      
+                    $("#doliModalCartInfos").modal("show");
                   }
                   //$("#offcanvasDolicart").offcanvas("show");  
                 } else {
+                  if (document.getElementById("doliModalDiv") && response.data.modal) {
+                    document.getElementById("doliModalDiv").innerHTML = response.data.modal;      
+                    $("#doliModalCartInfos").modal("show");
+                  }
                 }
                 $("#DoliconnectLoadingModal").modal("hide");
               });

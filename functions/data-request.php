@@ -576,15 +576,15 @@ if ( defined("DOLICONNECT_DEMO_EMAIL") && ''.constant("DOLICONNECT_DEMO_EMAIL").
 
 	if ( !is_wp_error( $emailSent )) {
 		$response = [
-		'message' => dolialert('success', __( 'A password reset link was sent to you by email. Please check your spam folder if you don\'t find it.', 'doliconnect')),
-		'captcha' => dolicaptcha('dolifpw'),
+			'message' => dolialert('success', __( 'A password reset link was sent to you by email. Please check your spam folder if you don\'t find it.', 'doliconnect')),
+			'captcha' => dolicaptcha('dolifpw'),
 		];
 		wp_send_json_success( $response );
 		die();
 	} else { 
 		$response = [
-		'message' => dolialert('error', sprintf(__('Sending message fails for the following reason: %s. Please contact us for help.', 'doliconnect'), $emailSent->get_error_message()) ),
-		'captcha' => dolicaptcha('dolifpw'),
+			'message' => dolialert('error', sprintf(__('Sending message fails for the following reason: %s. Please contact us for help.', 'doliconnect'), $emailSent->get_error_message()) ),
+			'captcha' => dolicaptcha('dolifpw'),
 		];
 		wp_send_json_error( $response );	
 		die(); 
@@ -592,8 +592,8 @@ if ( defined("DOLICONNECT_DEMO_EMAIL") && ''.constant("DOLICONNECT_DEMO_EMAIL").
 }
 	} else {
 		$response = [
-		'message' => dolialert('warning', join( '<br />', $gdrf_error ) ),
-		'captcha' => dolicaptcha('dolifpw'),
+			'message' => dolialert('warning', join( '<br />', $gdrf_error ) ),
+			'captcha' => dolicaptcha('dolifpw'),
 		];
 		wp_send_json_error( $response );
 	}
@@ -601,8 +601,8 @@ if ( defined("DOLICONNECT_DEMO_EMAIL") && ''.constant("DOLICONNECT_DEMO_EMAIL").
 
 } else {
 	$response = [
-	'message' => dolialert('danger', __( 'A security error occured', 'doliconnect')),
-	'captcha' => dolicaptcha('dolifpw'),
+		'message' => dolialert('danger', __( 'A security error occured', 'doliconnect')),
+		'captcha' => dolicaptcha('dolifpw'),
 	];
 	wp_send_json_error( $response );
 	die();
@@ -656,8 +656,8 @@ if ( wp_verify_nonce( trim($_POST['dolirpw-nonce']), 'dolirpw')) {
 		}
 		
 		$response = [
-		'message' => dolialert('success', __( "Your informations have been updated. If connected, you will be log out and need to log in again.", 'doliconnect')),
-		'captcha' => dolicaptcha('dolirpw'),
+			'message' => dolialert('success', __( "Your informations have been updated. If connected, you will be log out and need to log in again.", 'doliconnect')),
+			'captcha' => dolicaptcha('dolirpw'),
 		];	
 		wp_send_json_success( $response );
 	} else {
@@ -672,28 +672,28 @@ if ( wp_verify_nonce( trim($_POST['dolirpw-nonce']), 'dolirpw')) {
 	
 	} elseif (!isset($_POST["key"]) && !isset($_POST["login"]) && isset( $current_user->ID ) && (!isset($pwd0) || (isset($pwd0) && ! wp_check_password( $pwd0, $current_user->user_pass, $current_user->ID ))) ) {
 		$response = [
-		'message' => dolialert('danger', __( 'Your actual password is incorrect', 'doliconnect')),
-		'captcha' => dolicaptcha('dolirpw'),
-			];		
+			'message' => dolialert('danger', __( 'Your actual password is incorrect', 'doliconnect')),
+			'captcha' => dolicaptcha('dolirpw'),
+		];		
 		wp_send_json_error( $response );
 	} elseif ( $pwd1 != $_POST["pwd2"] ) {
 		$response = [
-		'message' => dolialert('danger',  __( 'The new passwords entered are different', 'doliconnect')),
-		'captcha' => dolicaptcha('dolirpw'),
+			'message' => dolialert('danger',  __( 'The new passwords entered are different', 'doliconnect')),
+			'captcha' => dolicaptcha('dolirpw'),
 		];	
 		wp_send_json_error( $response );
 		die();
 	} elseif ( !$doliValidatePassword ) {
 		$response = [
-		'message' => dolialert('danger',  __( 'Your password must strictly comply with the rules of composition', 'doliconnect')),
-		'captcha' => dolicaptcha('dolirpw'),
+			'message' => dolialert('danger',  __( 'Your password must strictly comply with the rules of composition', 'doliconnect')),
+			'captcha' => dolicaptcha('dolirpw'),
 		];		
 		wp_send_json_error( $response );
 		die();
 	} else {
 		$response = [
-		'message' => dolialert('danger',  __( 'A security error occured', 'doliconnect')),
-		'captcha' => dolicaptcha('dolirpw'),
+			'message' => dolialert('danger',  __( 'A security error occured', 'doliconnect')),
+			'captcha' => dolicaptcha('dolirpw'),
 		];	
 		wp_send_json_error( $response );
 		die();
@@ -819,15 +819,14 @@ global $current_user;
 				$qty = trim($_POST['qty']);
 				$response = [
 					'message' => dolialert('alert', __( "We don't have this item in this quantity", "doliconnect")),
-					'newqty' => $qty
+					'newqty' => $qty,
+					'modal' => doliModalTemplate('CartInfos', __( "Wishlist", "doliconnect"), 'soon body', '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">'.__( "Close", "doliconnect").'</button>')
 				];
-				wp_send_json_error($response);			
+				wp_send_json_success($response);			
 				die(); 
 			} else {
-				$qty = trim($_POST['qty']);
 				$response = [
-					'message' => dolialert('alert', __( "This action is not authorized", "doliconnect")),
-					'newqty' => $qty
+					'modal' => doliModalTemplate('CartInfos', __( "Error", "doliconnect"), __( "This action is not authorized", "doliconnect"), '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">'.__( "Close", "doliconnect").'</button>')
 				];
 				wp_send_json_error($response);			
 				die(); 
