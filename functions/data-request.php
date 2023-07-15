@@ -819,7 +819,6 @@ global $current_user;
 				$qty = trim($_POST['qty']);
 				$response = [
 					'message' => dolialert('alert', __( "We don't have this item in this quantity", "doliconnect")),
-					'newqty' => $qty,
 					'modal' => doliModalTemplate('CartInfos', __( "Wishlist", "doliconnect"), 'soon body', '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">'.__( "Close", "doliconnect").'</button>')
 				];
 				wp_send_json_success($response);			
