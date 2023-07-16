@@ -1220,45 +1220,42 @@ return $loading;
 }
 
 function doliconnect_loading() {
-
-doliconnect_enqueues();
-print '<div id="DoliconnectLoadingModal" class="modal fade bd-example-modal" tabindex="-1" aria-labelledby="myLargeModalLabel" aria-hidden="true" data-bs-show="true" data-bs-backdrop="static" data-keyboard="false">
-<div class="modal-dialog modal-fullscreen modal-dialog-centered">
-<div class="text-center text-light w-100">
-<div class="spinner-border" role="status"><span class="sr-only">loading...</span></div>
-<h4>'.__( 'Processing', 'doliconnect').'</h4>
-</div></div></div>';
+  doliconnect_enqueues();
+  print '<div id="DoliconnectLoadingModal" class="modal fade bd-example-modal" tabindex="-1" aria-labelledby="myLargeModalLabel" aria-hidden="true" data-bs-show="true" data-bs-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-fullscreen modal-dialog-centered">
+  <div class="text-center text-light w-100">
+  <div class="spinner-border" role="status"><span class="sr-only">loading...</span></div>
+  <h4>'.__( 'Processing', 'doliconnect').'</h4>
+  </div></div></div>';
 }
 add_action( 'wp_footer', 'doliconnect_loading');
 
 function doliCartOffcanvas() {
-
-doliconnect_enqueues();
-
-print '<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasDolicart" aria-labelledby="offcanvasDolicartLabel">
-<div class="offcanvas-header">
+  doliconnect_enqueues();
+  print '<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasDolicart" aria-labelledby="offcanvasDolicartLabel">
+  <div class="offcanvas-header">
   <h5 class="offcanvas-title" id="offcanvasDolicartLabel">'.__( 'Cart', 'doliconnect').'</h5>
   <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-</div>
-<div class="offcanvas-body"><div id="message-dolicart"></div>';
-print '<div id="DoliCartItemsList">'.doliconnect_CartItemsList().'</div>';
-print '</div></div>';
+  </div>
+  <div class="offcanvas-body">';
+  print '<div id="DoliCartItemsList">'.doliconnect_CartItemsList().'</div>';
+  print '</div></div>';
 }
 add_action( 'wp_footer', 'doliCartOffcanvas');
 
 function dolibug($msg = null, $request = null) {
-//header('Refresh: 180; URL='.esc_url(get_permalink()).'');
-$bug = '<div id="dolibug" ><br><br><br><br><center><div class="align-middle"><i class="fas fa-bug fa-7x fa-fw"></i><h4>';
-if ( ! empty($msg) ) {
-$bug .= var_dump($msg);
-} else { $bug .= __( 'Oops, our servers are unreachable.<br>Thank you for coming back in a few minutes.', 'doliconnect'); }
-$bug .= '</h4>';
-if ( defined("DOLIBUG") && ! empty(constant("DOLIBUG")) ) {
-$bug .= '<h6>'.__( 'Error code', 'doliconnect').' #'.constant("DOLIBUG").'</h6>';
-}
-if ($request) $bug .= '<h6>'.__( 'Request', 'doliconnect').' '.$request.'</h6>';
-$bug .='</div></center><br><br><br><br></div>';
-return $bug;
+  //header('Refresh: 180; URL='.esc_url(get_permalink()).'');
+  $bug = '<div id="dolibug" ><br><br><br><br><center><div class="align-middle"><i class="fas fa-bug fa-7x fa-fw"></i><h4>';
+  if ( ! empty($msg) ) {
+    $bug .= var_dump($msg);
+  } else { $bug .= __( 'Oops, our servers are unreachable.<br>Thank you for coming back in a few minutes.', 'doliconnect'); }
+    $bug .= '</h4>';
+  if ( defined("DOLIBUG") && ! empty(constant("DOLIBUG")) ) {
+    $bug .= '<h6>'.__( 'Error code', 'doliconnect').' #'.constant("DOLIBUG").'</h6>';
+  }
+  if ($request) $bug .= '<h6>'.__( 'Request', 'doliconnect').' '.$request.'</h6>';
+    $bug .='</div></center><br><br><br><br></div>';
+  return $bug;
 }
 
 function Doliconnect_MailAlert( $user_login, $user) {
@@ -3065,9 +3062,6 @@ function doliModalDiv() {
                   }
                   if (document.getElementById("DoliWidgetCartItems") && response.data.items) {
                     document.getElementById("DoliWidgetCartItems").innerHTML = response.data.items;      
-                  }
-                  if (document.getElementById("message-dolicart") && response.data.message) {
-                    document.getElementById("message-dolicart").innerHTML = response.data.message;      
                   }
                   if (document.getElementById("doliModalDiv") && response.data.modal) {
                     document.getElementById("doliModalDiv").innerHTML = response.data.modal; 
