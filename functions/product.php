@@ -332,7 +332,7 @@ global $current_user;
     $response['total'] = doliprice($order, 'ttc', isset($order->multicurrency_code) ? $order->multicurrency_code : null);
     return $response;
   } else {
-    return $mstock['stock'];
+    return false;
   }
 }
 

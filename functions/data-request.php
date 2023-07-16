@@ -1084,7 +1084,7 @@ global $current_user;
 		$modal['body'] .= '</p>';
 		$modal['footer'] = null;
 		$response['js'] = null;
-		$response['modal'] = doliModalTemplate($modal['header'], $modal['body'], $modal['footer']);
+		$response['modal'] = doliModalTemplate($_POST['id'], $modal['header'], $modal['body'], $modal['footer']);
 		wp_send_json_success($response);	
 		die();
 	} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "login" ) {
@@ -1137,7 +1137,7 @@ global $current_user;
 		}
 		$modal['footer'] .= '<button class="btn btn-lg btn-link fs-6 text-primary text-decoration-none col-6 m-0 rounded-0" type="submit" value="submit"><strong>'.__( 'Sign in', 'doliconnect').'</strong></button>';
 		$response['js'] = plugins_url( 'doliconnect/includes/js/doligeneric.js');
-		$response['modal'] = doliModalTemplate($modal['header'], $modal['body'], $modal['footer'], null, null, null, 'flex-nowrap p-0', $login_url);
+		$response['modal'] = doliModalTemplate($_POST['id'], $modal['header'], $modal['body'], $modal['footer'], null, null, null, 'flex-nowrap p-0', $login_url);
 		wp_send_json_success($response);	
 		die();
 	} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "editmembership" ) {
@@ -1157,7 +1157,7 @@ global $current_user;
 		$modal['body'] = dolimembertypelist($typeadhesion, $adherent);	
 		$modal['footer'] = __( 'Note: the admins reserve the right to change your membership in relation to your personal situation. A validation of the membership may be necessary depending on the cases.', 'doliconnect');
 		$response['js'] = null;
-		$response['modal'] = doliModalTemplate($modal['header'], $modal['body'], $modal['footer'], 'modal-lg', null, 'p-0');
+		$response['modal'] = doliModalTemplate($_POST['id'], $modal['header'], $modal['body'], $modal['footer'], 'modal-lg', null, 'p-0');
 		wp_send_json_success($response);
 		die();
 	} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "resiliatemembership" ) {
@@ -1165,7 +1165,7 @@ global $current_user;
 		$modal['body'] = null;	
 		$modal['footer'] = "<form id='subscription-form' action='".esc_url( add_query_arg( 'module', 'members', doliconnecturl('doliaccount')) )."' method='post'><input type='hidden' name='update_membership' value='2'><div class='d-grid gap-2'><button class='btn btn-danger' type='submit'>".__( 'Resiliate', 'doliconnect')."</button></div></form>";
 		$response['js'] = null;
-		$response['modal'] = doliModalTemplate($modal['header'], $modal['body'], $modal['footer']);
+		$response['modal'] = doliModalTemplate($_POST['id'], $modal['header'], $modal['body'], $modal['footer']);
 		wp_send_json_success($response);
 		die();
 	} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "renewmembership" ) {
@@ -1195,7 +1195,7 @@ global $current_user;
 		$modal['footer'] .= '<input type="hidden" name="update_membership" value="renew">';
 		$modal['footer'] .= '<button class="btn btn-danger" type="submit">'.__( 'Add to basket', 'doliconnect').'</button></form>';
 		$response['js'] = plugins_url( 'doliconnect/includes/js/renewmembership.js');
-		$response['modal'] = doliModalTemplate($modal['header'], $modal['body'], $modal['footer']);
+		$response['modal'] = doliModalTemplate($_POST['id'], $modal['header'], $modal['body'], $modal['footer']);
 		wp_send_json_success($response);
 		die();
 	} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "linkedmember" ) {
@@ -1213,7 +1213,7 @@ global $current_user;
 		$modal['body'] .= '<ul class="list-group list-group-flush"><li class="list-group-item"><button class="btn btn-danger" type="submit">'.__( 'Submit', 'doliconnect').'</button></form></li></ul';
 		$modal['footer'] = null;
 		$response['js'] = plugins_url( 'doliconnect/includes/js/editlinkedmember.js');
-		$response['modal'] = doliModalTemplate($modal['header'], $modal['body'], $modal['footer'], 'modal-lg', null, 'p-0');
+		$response['modal'] = doliModalTemplate($_POST['id'], $modal['header'], $modal['body'], $modal['footer'], 'modal-lg', null, 'p-0');
 		wp_send_json_success($response);
 		die();
 	} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "doliDownload" ) {
@@ -1222,7 +1222,7 @@ global $current_user;
 		$modal['body'] = null;
 		$modal['footer'] = $_POST['value1'];
 		$response['js'] = null;
-		$response['modal'] = doliModalTemplate($modal['header'], $modal['body'], $modal['footer'], 'modal-lg', null, 'p-0');
+		$response['modal'] = doliModalTemplate($_POST['id'], $modal['header'], $modal['body'], $modal['footer'], 'modal-lg', null, 'p-0');
 		wp_send_json_success($response);
 		die();
 	} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "doliSelectlang" ) {
@@ -1239,7 +1239,7 @@ global $current_user;
 		$modal['body'] .= '</ul></div><div id="loadingSelectLang" style="display:none"><br><br><br><center><div class="align-middle"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div><h4>'.__('Loading', 'doliconnect').'</h4></div></center><br><br><br></div>';	
 		$modal['footer'] = null;
 		$response['js'] = plugins_url( 'doliconnect/includes/js/doliselectlang.js');
-		$response['modal'] = doliModalTemplate($modal['header'], $modal['body'], $modal['footer']);
+		$response['modal'] = doliModalTemplate($_POST['id'], $modal['header'], $modal['body'], $modal['footer']);
 		wp_send_json_success($response);
 		die();
 	} else {
