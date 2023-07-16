@@ -3048,19 +3048,19 @@ function doliModalDiv() {
                 },
               }).done(function(response) {
                 if (response.success) { 
-                  if (document.getElementById("qty-prod-" + id) && response.data.newqty) {
+                  if (document.getElementById("qty-prod-" + id)) {
                     document.getElementById("qty-prod-" + id).value = response.data.newqty;
                   }
-                  if (document.getElementById("DoliHeaderCartItems") && response.data.items) {
+                  if (document.getElementById("DoliHeaderCartItems")) {
                     document.getElementById("DoliHeaderCartItems").innerHTML = response.data.items;
                   }
-                  if (document.getElementById("DoliFooterCartItems") && response.data.items) {  
+                  if (document.getElementById("DoliFooterCartItems")) {  
                     document.getElementById("DoliFooterCartItems").innerHTML = response.data.items;
                   }
                   if (document.getElementById("DoliCartItemsList") && response.data.list) {  
                     document.getElementById("DoliCartItemsList").innerHTML = response.data.list;
                   }
-                  if (document.getElementById("DoliWidgetCartItems") && response.data.items) {
+                  if (document.getElementById("DoliWidgetCartItems")) {
                     document.getElementById("DoliWidgetCartItems").innerHTML = response.data.items;      
                   }
                   if (document.getElementById("doliModalDiv") && response.data.modal) {
