@@ -812,7 +812,8 @@ global $current_user;
 					'list' => $result['list'],
 					'lines' => $result['lines'],
 					'total' => $result['total']
-				];	
+				];
+				if ($qty != $result['newqty']) $response['modal'] = doliModalTemplate('CartInfos', __( 'Informations', 'doliconnect'), 'Soon...', '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">'.__( "Close", "doliconnect").'</button>');
 				wp_send_json_success($response);
 				die();
 			} elseif (isset($_POST['modify']) && ($_POST['modify'] == "wish" || $_POST['modify'] == "unwish")) {
