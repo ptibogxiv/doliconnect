@@ -1,22 +1,21 @@
 <?php
 function doliconnect_membership($current_user, $statut, $type, $delay) {
-if ($statut=='1') {
-$statut='-1';
-$action='POST';
-} elseif ($statut=='2') {
-$statut='0';
-$action='PUT';
-} elseif ($statut=='3') {
-$statut='-1';
-$action='PUT';
-} elseif ($statut=='4') {
-$statut='1';
-$action='PUT';
-} elseif ($statut=='5') {
-$statut='1';
-$action='POST';
-} 
-
+  if ($statut=='1') {
+    $statut='-1';
+    $action='POST';
+  } elseif ($statut=='2') {
+    $statut='0';
+    $action='PUT';
+  } elseif ($statut=='3') {
+    $statut='-1';
+    $action='PUT';
+  } elseif ($statut=='4') {
+    $statut='1';
+    $action='PUT';
+  } elseif ($statut=='5') {
+    $statut='1';
+    $action='POST';
+  } 
 //if (preg_match('/\//', $current_user->billing_birth)) { 
 //  list($year, $month, $day) = explode("/", $current_user->billing_birth);
 //} elseif (preg_match('/-/', $current_user->billing_birth)) {
@@ -27,9 +26,7 @@ $action='POST';
 //  $year = null;
 //}
 $birth = mktime(0, 0, 0, $month, $day, $year);
-
 $thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty'));  
-
 $data = [
     'login' => $current_user->user_login,
     'company'  => $current_user->billing_company,
@@ -49,21 +46,17 @@ $data = [
     'array_options' => $thirdparty->array_options,
 		'statut'	=> $statut,
 	];
-  
-if ($action=='POST') {
-$mbr = callDoliApi("POST", "/members", $data, 0);
-$adhesion = callDoliApi("GET", "/members/".doliconnector($current_user, 'fk_member', true), null, dolidelay('member', true));
-} else {
-$adhesion = callDoliApi("PUT", "/members/".doliconnector($current_user, 'fk_member', true), $data, 0);
-}
-
-return $adhesion;
+  if ($action=='POST') {
+    $mbr = callDoliApi("POST", "/members", $data, 0);
+    $adhesion = callDoliApi("GET", "/members/".doliconnector($current_user, 'fk_member', true), null, dolidelay('member', true));
+  } else {
+    $adhesion = callDoliApi("PUT", "/members/".doliconnector($current_user, 'fk_member', true), $data, 0);
+  }
+  return $adhesion;
 }
 
 function dolimembertypelist($typeadhesion, $adherent = null) {
-
   $list = '<ul class="list-group list-group-flush">';
-  
   if ( !isset($typeadhesion->error) ) {
     foreach ($typeadhesion as $postadh) {
       if ( !doliversion('14.0.0') || (!isset($postadh->amount)) ) {
@@ -183,8 +176,8 @@ function dolimembertypelist($typeadhesion, $adherent = null) {
   } else { 
     $list .= "<li class='list-group-item list-group-item-light'><center>".__( 'No available membership type', 'doliconnect')."</center></li>";
   }
-    $list .= "</ul>"; 
-return $list; 
+  $list .= "</ul>"; 
+  return $list; 
 }
 
 ?>

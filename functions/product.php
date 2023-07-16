@@ -211,6 +211,7 @@ global $current_user;
 function doliaddtocart($product, $mstock, $quantity, $price, $timestart = null, $timeend = null, $url = null, $array_options = array()) {
 global $current_user;
   $response = array();
+  $newResponse = new stdClass;
   if (!is_null($timestart) && $timestart > 0 ) {
    $date_start=strftime('%Y-%m-%d 00:00:00', $timestart);
   } else {
