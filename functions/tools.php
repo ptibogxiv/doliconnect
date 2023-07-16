@@ -2947,6 +2947,7 @@ function doliModalButton($case, $id, $title, $type = 'button', $class = 'btn btn
                 "action": "dolimodal_request",
                 "dolimodal-nonce": "'.wp_create_nonce( 'dolimodal-nonce').'",
                 "case": "'.$case.'",
+                "id": "'.$id.'",
                 "value1": "'.$value1.'",
                 "value2": "'.$value2.'",
                 "redirect_to": "'.$redirect_to.'",
@@ -3071,10 +3072,13 @@ function doliModalDiv() {
                   if (document.getElementById("doliModalDiv")) {
                     document.getElementById("doliModalDiv").innerHTML = response.data.modal; 
                     $("#doliModalCartInfos").modal("show");     
-                   }
+                  }
                   //$("#offcanvasDolicart").offcanvas("show");  
                 } else {
-
+                  if (document.getElementById("doliModalDiv")) {
+                    document.getElementById("doliModalDiv").innerHTML = response.data.modal; 
+                    $("#doliModalCartInfos").modal("show");     
+                  }
                 }
                 $("#DoliconnectLoadingModal").modal("hide");
               });
