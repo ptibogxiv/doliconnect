@@ -2961,15 +2961,15 @@ function doliModalButton($case, $id, $title, $type = 'button', $class = 'btn btn
                     console.log( "error js" );
                   });
                 }
-               if (document.getElementById("doliModalDiv")) {
-                 document.getElementById("doliModalDiv").innerHTML = response.data.modal;      
-                }
-               $("#doliModal'.$id.'").modal("show");
+              if (document.getElementById("doliModalDiv")) {
+                document.getElementById("doliModalDiv").innerHTML = response.data.modal; 
+                $("#doliModal'.$id.'").modal("show");     
+              }
               } else {
-               if (document.getElementById("doliModalDiv")) {
-                 document.getElementById("doliModalDiv").innerHTML = response;      
-               }
-                $("#doliModal'.$id.'").modal("show");    
+                if (document.getElementById("doliModalDiv")) {
+                  document.getElementById("doliModalDiv").innerHTML = response.data.modal;
+                  $("#doliModal'.$id.'").modal("show");         
+                }
              }
             $("#doliModal'.$id.'").on("hidden.bs.modal", function () {
               $("#doliModal'.$id.'").modal("dispose");
@@ -3072,7 +3072,6 @@ function doliModalDiv() {
                     document.getElementById("doliModalDiv").innerHTML = response.data.modal; 
                     $("#doliModalCartInfos").modal("show");     
                    }
-
                   //$("#offcanvasDolicart").offcanvas("show");  
                 } else {
 
