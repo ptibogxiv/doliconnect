@@ -187,7 +187,7 @@ function doliconnect_countitems($object){
   return $qty;
 }
 
-function doliCartItemsList($order = null) {
+function doliconnect_CartItemsList($order = null) {
 global $current_user;
   if (empty($order)) $order = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order')."?contact_list=0", null, dolidelay('order'));
     if ( isset($order->lines) && $order->lines != null ) {
@@ -252,7 +252,7 @@ global $current_user;
     $response['message'] = __( 'This item has been deleted to basket', 'doliconnect');
     $response['items'] = doliconnect_countitems($order);
     $response['lines'] = doliline($order);
-    $response['list'] = doliCartItemsList($order);
+    $response['list'] = doliconnect_CartItemsList($order);
     $response['total'] = doliprice($order, 'ttc', isset($order->multicurrency_code) ? $order->multicurrency_code : null);
     return $response;
   } elseif ( doliconnector($current_user, 'fk_order') > 0 && $quantity > 0 && empty($mstock['line'])) {                                                                                  
@@ -278,7 +278,7 @@ global $current_user;
     $response['items'] = doliconnect_countitems($order);
     $response['lines'] = doliline($order);
     $response['newqty'] = $quantity;
-    $response['list'] = doliCartItemsList($order);
+    $response['list'] = doliconnect_CartItemsList($order);
     $response['total'] = doliprice($order, 'ttc', isset($order->multicurrency_code) ? $order->multicurrency_code : null);
     return $response;
   } elseif ( doliconnector($current_user, 'fk_order') > 0 && $mstock['line'] > 0 ) {
@@ -292,7 +292,7 @@ global $current_user;
       $response['items'] = doliconnect_countitems($order);
       $response['lines'] = doliline($order);
       $response['newqty'] = $quantity;
-      $response['list'] = doliCartItemsList($order);
+      $response['list'] = doliconnect_CartItemsList($order);
       $response['total'] = doliprice($order, 'ttc', isset($order->multicurrency_code) ? $order->multicurrency_code : null);
       return $response;
     } else {
@@ -319,7 +319,7 @@ global $current_user;
       $response['items'] = doliconnect_countitems($order);
       $response['lines'] = doliline($order);
       $response['newqty'] = $quantity;
-      $response['list'] = doliCartItemsList($order);
+      $response['list'] = doliconnect_CartItemsList($order);
       $response['total'] = doliprice($order, 'ttc', isset($order->multicurrency_code) ? $order->multicurrency_code : null);
       return $response;
     }
@@ -328,11 +328,11 @@ global $current_user;
     $response['items'] = doliconnect_countitems($order);
     $response['lines'] = doliline($order);
     $response['newqty'] = $quantity;
-    $response['list'] = doliCartItemsList($order);
+    $response['list'] = doliconnect_CartItemsList($order);
     $response['total'] = doliprice($order, 'ttc', isset($order->multicurrency_code) ? $order->multicurrency_code : null);
     return $response;
   } else {
-    return false;
+    return $mstock['stock'];
   }
 }
 

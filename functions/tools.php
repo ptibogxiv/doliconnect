@@ -1213,48 +1213,52 @@ return $doliuser;
 //add_action( 'wp_loaded', 'doliconnectuserform', 10, 2);
 
 function doliloading($id=loading) {
-  $loading = '<div id="doliloading-'.$id.'" style="display:none"><br><br><br><br><center><div class="align-middle">';
-  $loading .= '<div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div>'; 
-  $loading .= '<h4>'.__( 'Loading', 'doliconnect').'</h4></div></center><br><br><br><br></div>';
-  return $loading;
+$loading = '<div id="doliloading-'.$id.'" style="display:none"><br><br><br><br><center><div class="align-middle">';
+$loading .= '<div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div>'; 
+$loading .= '<h4>'.__( 'Loading', 'doliconnect').'</h4></div></center><br><br><br><br></div>';
+return $loading;
 }
 
 function doliconnect_loading() {
-  doliconnect_enqueues();
-  print '<div id="DoliconnectLoadingModal" class="modal fade bd-example-modal" tabindex="-1" aria-labelledby="myLargeModalLabel" aria-hidden="true" data-bs-show="true" data-bs-backdrop="static" data-keyboard="false">
-  <div class="modal-dialog modal-fullscreen modal-dialog-centered">
-  <div class="text-center text-light w-100">
-  <div class="spinner-border" role="status"><span class="sr-only">loading...</span></div>
-  <h4>'.__( 'Processing', 'doliconnect').'</h4>
-  </div></div></div>';
+
+doliconnect_enqueues();
+print '<div id="DoliconnectLoadingModal" class="modal fade bd-example-modal" tabindex="-1" aria-labelledby="myLargeModalLabel" aria-hidden="true" data-bs-show="true" data-bs-backdrop="static" data-keyboard="false">
+<div class="modal-dialog modal-fullscreen modal-dialog-centered">
+<div class="text-center text-light w-100">
+<div class="spinner-border" role="status"><span class="sr-only">loading...</span></div>
+<h4>'.__( 'Processing', 'doliconnect').'</h4>
+</div></div></div>';
 }
 add_action( 'wp_footer', 'doliconnect_loading');
 
 function doliCartOffcanvas() {
-  doliconnect_enqueues();
-  print '<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasDolicart" aria-labelledby="offcanvasDolicartLabel">';
-  print '<div class="offcanvas-header">
-  <h5 class="offcanvas-title" id="offcanvasDolicartLabel">'.__( 'Cart', 'doliconnect').'</h5><button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-  </div>';
-  print '<div class="offcanvas-body">';
-  print '<div id="DoliCartItemsList">'.doliconnect_CartItemsList().'</div>';
-  print '</div></div>';
+
+doliconnect_enqueues();
+
+print '<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasDolicart" aria-labelledby="offcanvasDolicartLabel">
+<div class="offcanvas-header">
+  <h5 class="offcanvas-title" id="offcanvasDolicartLabel">'.__( 'Cart', 'doliconnect').'</h5>
+  <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+</div>
+<div class="offcanvas-body"><div id="message-dolicart"></div>';
+print '<div id="DoliCartItemsList">'.doliconnect_CartItemsList().'</div>';
+print '</div></div>';
 }
 add_action( 'wp_footer', 'doliCartOffcanvas');
 
 function dolibug($msg = null, $request = null) {
-  //header('Refresh: 180; URL='.esc_url(get_permalink()).'');
-  $bug = '<div id="dolibug" ><br><br><br><br><center><div class="align-middle"><i class="fas fa-bug fa-7x fa-fw"></i><h4>';
-  if ( ! empty($msg) ) {
-    $bug .= var_dump($msg);
-  } else { $bug .= __( 'Oops, our servers are unreachable.<br>Thank you for coming back in a few minutes.', 'doliconnect'); }
-    $bug .= '</h4>';
-  if ( defined("DOLIBUG") && ! empty(constant("DOLIBUG")) ) {
-    $bug .= '<h6>'.__( 'Error code', 'doliconnect').' #'.constant("DOLIBUG").'</h6>';
-  }
-  if ($request) $bug .= '<h6>'.__( 'Request', 'doliconnect').' '.$request.'</h6>';
-    $bug .='</div></center><br><br><br><br></div>';
-  return $bug;
+//header('Refresh: 180; URL='.esc_url(get_permalink()).'');
+$bug = '<div id="dolibug" ><br><br><br><br><center><div class="align-middle"><i class="fas fa-bug fa-7x fa-fw"></i><h4>';
+if ( ! empty($msg) ) {
+$bug .= var_dump($msg);
+} else { $bug .= __( 'Oops, our servers are unreachable.<br>Thank you for coming back in a few minutes.', 'doliconnect'); }
+$bug .= '</h4>';
+if ( defined("DOLIBUG") && ! empty(constant("DOLIBUG")) ) {
+$bug .= '<h6>'.__( 'Error code', 'doliconnect').' #'.constant("DOLIBUG").'</h6>';
+}
+if ($request) $bug .= '<h6>'.__( 'Request', 'doliconnect').' '.$request.'</h6>';
+$bug .='</div></center><br><br><br><br></div>';
+return $bug;
 }
 
 function Doliconnect_MailAlert( $user_login, $user) {
@@ -2908,8 +2912,8 @@ global $current_user;
 
 }
 
-function doliModalTemplate($id, $header, $body, $footer, $size = null, $headercss = null, $bodycss = null, $footercss = null, $formurl = null) {
-  $modal = '<div id="doliModal'.$id.'" class="modal fade" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" style="display: none">
+function doliModalTemplate($header, $body, $footer, $size = null, $headercss = null, $bodycss = null, $footercss = null, $formurl = null) {
+  $modal = '<div id="doliModalTest" class="modal fade" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" style="display: none">
   <div class="modal-dialog '.$size.' modal-fullscreen-md-down modal-dialog-centered modal-dialog-scrollable" role="document"><div class="modal-content">';
   if (!empty($formurl)) $modal .= '<form id="loginmodal-form" name="loginmodal-form" action="'.$formurl.'" method="post" class="was-validated">';
   if (!empty($header)) $modal .= '<div class="modal-header"><h5 class="modal-title '.$headercss.'">'.$header.'</h5><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div>';
@@ -2942,7 +2946,6 @@ function doliModalButton($case, $id, $title, $type = 'button', $class = 'btn btn
               data: {
                 "action": "dolimodal_request",
                 "dolimodal-nonce": "'.wp_create_nonce( 'dolimodal-nonce').'",
-                "id": "'.$id.'",
                 "case": "'.$case.'",
                 "value1": "'.$value1.'",
                 "value2": "'.$value2.'",
@@ -2952,24 +2955,24 @@ function doliModalButton($case, $id, $title, $type = 'button', $class = 'btn btn
               if (response.success) { 
                 if (response.data.js) {
                   $.getScript( response.data.js ).done(function( script, textStatus ) {
-                    console.log( "success js" );
+                    console.log( "succes js" );
                   })
                   .fail(function( jqxhr, settings, exception ) {
                     console.log( "error js" );
                   });
                 }
-                if (document.getElementById("doliModalDiv")) {
+               if (document.getElementById("doliModalDiv")) {
                  document.getElementById("doliModalDiv").innerHTML = response.data.modal;      
-                 $("#doliModal'.$id.'").modal("show");
                 }
+               $("#doliModalTest").modal("show");
               } else {
-                if (document.getElementById("doliModalDiv")) {
-                  document.getElementById("doliModalDiv").innerHTML = response.data.modal;      
-                  $("#doliModal'.$id.'").modal("show");
-                }
+               if (document.getElementById("doliModalDiv")) {
+                 document.getElementById("doliModalDiv").innerHTML = response;      
+               }
+                $("#doliModalTest").modal("show");    
              }
-            $("#doliModal'.$id.'").on("hidden.bs.modal", function () {
-              $("#doliModal'.$id.'").modal("dispose");
+            $("#doliModalTest").on("hidden.bs.modal", function () {
+              $("#doliModalTest").modal("dispose");
               document.getElementById("doliModalDiv").innerHTML = "";
             });
         }, false);          
@@ -3050,28 +3053,23 @@ function doliModalDiv() {
                   if (document.getElementById("qty-prod-" + id)) {
                     document.getElementById("qty-prod-" + id).value = response.data.newqty;
                   }
-                  if (document.getElementById("DoliHeaderCartItems") && response.data.items) {
+                  if (document.getElementById("DoliHeaderCartItems")) {
                     document.getElementById("DoliHeaderCartItems").innerHTML = response.data.items;
                   }
-                  if (document.getElementById("DoliFooterCartItems") && response.data.items) {  
+                  if (document.getElementById("DoliFooterCartItems")) {  
                     document.getElementById("DoliFooterCartItems").innerHTML = response.data.items;
                   }
-                  if (document.getElementById("DoliCartItemsList") && response.data.list) {  
+                  if (document.getElementById("DoliCartItemsList")) {  
                     document.getElementById("DoliCartItemsList").innerHTML = response.data.list;
                   }
-                  if (document.getElementById("DoliWidgetCartItems") && response.data.items) {
+                  if (document.getElementById("DoliWidgetCartItems")) {
                     document.getElementById("DoliWidgetCartItems").innerHTML = response.data.items;      
                   }
-                  if (document.getElementById("doliModalDiv") && response.data.modal) {
-                    document.getElementById("doliModalDiv").innerHTML = response.data.modal;      
-                    $("#doliModalCartInfos").modal("show");
+                  if (document.getElementById("message-dolicart") && response.data.message) {
+                    document.getElementById("message-dolicart").innerHTML = response.data.message;      
                   }
                   //$("#offcanvasDolicart").offcanvas("show");  
                 } else {
-                  if (document.getElementById("doliModalDiv") && response.data.modal) {
-                    document.getElementById("doliModalDiv").innerHTML = response.data.modal;      
-                    $("#doliModalCartInfos").modal("show");
-                  }
                 }
                 $("#DoliconnectLoadingModal").modal("hide");
               });
