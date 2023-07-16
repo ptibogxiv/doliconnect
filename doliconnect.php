@@ -59,15 +59,15 @@ if (empty($page)) {
 
 function doliconnectid($page) {
 global $wpdb;
-if (empty($page)) {
-return null;
-} elseif (function_exists('pll_get_post')) { 
-return pll_get_post(get_option($page));
-} elseif ( function_exists('wpml_object_id') ) {
-return apply_filters( 'wpml_object_id', get_option($page), 'page', true);
-} else {
-return get_option($page);
-}  
+    if (empty($page)) {
+        return null;
+    } elseif (function_exists('pll_get_post')) { 
+        return pll_get_post(get_option($page));
+    } elseif ( function_exists('wpml_object_id') ) {
+        return apply_filters( 'wpml_object_id', get_option($page), 'page', true);
+    } else {
+        return get_option($page);
+    }  
 }
 // ********************************************************
 add_action('init', 'app_output_buffer');
