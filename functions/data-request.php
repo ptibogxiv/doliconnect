@@ -222,21 +222,21 @@ function doliuserinfos_request(){
 			wp_set_auth_cookie( $ID, false);
 			do_action( 'wp_login', $user->user_login, $user);
 			$response = [
-				'message' => dolialert('success', __( "Your account has been created. Now, you are connected", 'doliconnect')),
-				'captcha' => dolicaptcha('doliuserinfos'),
+			'message' => dolialert('success', __( "Your account has been created. Now, you are connected", 'doliconnect')),
+			'captcha' => dolicaptcha('doliuserinfos'),
 			];
 			wp_send_json_success( $response );	
 			die();		   	 
 		} elseif ( !is_wp_error( $emailSent )) {
 			$response = [
-				'message' => dolialert('success', __( "Your account has been created and an account activation link has been sent by email. Don't forget to look at your unwanted emails if you can't find our message.", 'doliconnect')),
-				'captcha' => dolicaptcha('doliuserinfos'),
+			'message' => dolialert('success', __( "Your account has been created and an account activation link has been sent by email. Don't forget to look at your unwanted emails if you can't find our message.", 'doliconnect')),
+			'captcha' => dolicaptcha('doliuserinfos'),
 			];
 			wp_send_json_success( $response );
 		} else {
 			$response = [
-				'message' => dolialert('danger', __( 'Your account has been created but sending an activation link by email fails. Please contact us.', 'doliconnect')),
-				'captcha' => dolicaptcha('doliuserinfos'),
+			'message' => dolialert('danger', __( 'Your account has been created but sending an activation link by email fails. Please contact us.', 'doliconnect')),
+			'captcha' => dolicaptcha('doliuserinfos'),
 			];
 			wp_send_json_error( $response ); 
 			die();
@@ -244,8 +244,8 @@ function doliuserinfos_request(){
 
 		} else {
 			$response = [
-				'message' => dolialert('danger', join( '<br />', $UserError )),
-				'captcha' => dolicaptcha('doliuserinfos'),
+			'message' => dolialert('danger', join( '<br />', $UserError )),
+			'captcha' => dolicaptcha('doliuserinfos'),
 			];
 			wp_send_json_error( $response );
 			die();
