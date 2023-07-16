@@ -225,6 +225,7 @@ global $current_user;
   if ($quantity < 0) {
     $quantity = 0;
   } elseif ($quantity > $mstock['m2']) {
+    $oldquantity = $quantity;
     $quantity = $mstock['m2'];
   }
   $thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty'));
