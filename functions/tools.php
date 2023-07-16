@@ -3080,6 +3080,10 @@ function doliModalDiv() {
                     $("#doliModalCartInfos").modal("show");     
                   }
                 }
+                $("#doliModalCartInfos").on("hidden.bs.modal", function () {
+                  $("#ddoliModalCartInfos").modal("dispose");
+                  document.getElementById("doliModalDiv").innerHTML = "";
+                });
                 $("#DoliconnectLoadingModal").modal("hide");
               });
             })
