@@ -817,10 +817,7 @@ global $current_user;
 				die();
 			} elseif (isset($_POST['modify']) && ($_POST['modify'] == "wish" || $_POST['modify'] == "unwish")) {
 				$qty = trim($_POST['qty']);
-				$response = [
-					'message' => dolialert('alert', __( "We don't have this item in this quantity", "doliconnect")),
-					'newqty' => $qty
-				];
+				$response['modal'] = doliModalTemplate('CartInfos', __( 'Wishlist', 'doliconnect'), 'Soon...', '');
 				wp_send_json_error($response);			
 				die(); 
 			} else {

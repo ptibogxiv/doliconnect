@@ -2956,10 +2956,10 @@ function doliModalButton($case, $id, $title, $type = 'button', $class = 'btn btn
               if (response.success) { 
                 if (response.data.js) {
                   $.getScript( response.data.js ).done(function( script, textStatus ) {
-                    console.log( "success js" );
+                    console.log( "success loading modal js" );
                   })
                   .fail(function( jqxhr, settings, exception ) {
-                    console.log( "error js" );
+                    console.log( "error loading modal js" );
                   });
                 }
               if (document.getElementById("doliModalDiv")) {
