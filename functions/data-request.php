@@ -816,16 +816,11 @@ global $current_user;
 				wp_send_json_success($response);
 				die();
 			} elseif (isset($_POST['modify']) && ($_POST['modify'] == "wish" || $_POST['modify'] == "unwish")) {
-				$qty = trim($_POST['qty']);
-				$response['modal'] = doliModalTemplate('CartInfos', __( 'Wishlist', 'doliconnect'), 'Soon...', '');
-				wp_send_json_error($response);			
+				$response['modal'] = doliModalTemplate('CartInfos', __( 'Wishlist', 'doliconnect'), 'Soon...', '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">'.__( "Close", "doliconnect").'</button>');
+				wp_send_json_success($response);			
 				die(); 
 			} else {
-				$qty = trim($_POST['qty']);
-				$response = [
-					'message' => dolialert('alert', __( "This action is not authorized", "doliconnect")),
-					'newqty' => $qty
-				];
+				$response['modal'] = doliModalTemplate('CartInfos', __( 'Error', 'doliconnect'), __( "This action is not authorized", "doliconnect"), '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">'.__( "Close", "doliconnect").'</button>');
 				wp_send_json_error($response);			
 				die(); 
 			}

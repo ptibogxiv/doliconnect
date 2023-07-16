@@ -3051,31 +3051,31 @@ function doliModalDiv() {
                 },
               }).done(function(response) {
                 if (response.success) { 
-                  if (document.getElementById("qty-prod-" + id)) {
+                  if (document.getElementById("qty-prod-" + id) && response.data.newqty) {
                     document.getElementById("qty-prod-" + id).value = response.data.newqty;
                   }
-                  if (document.getElementById("DoliHeaderCartItems")) {
+                  if (document.getElementById("DoliHeaderCartItems") && response.data.items) {
                     document.getElementById("DoliHeaderCartItems").innerHTML = response.data.items;
                   }
-                  if (document.getElementById("DoliFooterCartItems")) {  
+                  if (document.getElementById("DoliFooterCartItems") && response.data.items) {  
                     document.getElementById("DoliFooterCartItems").innerHTML = response.data.items;
                   }
-                  if (document.getElementById("DoliCartItemsList")) {  
+                  if (document.getElementById("DoliCartItemsList") && response.data.list) {  
                     document.getElementById("DoliCartItemsList").innerHTML = response.data.list;
                   }
-                  if (document.getElementById("DoliWidgetCartItems")) {
+                  if (document.getElementById("DoliWidgetCartItems") && response.data.items) {
                     document.getElementById("DoliWidgetCartItems").innerHTML = response.data.items;      
                   }
                   if (document.getElementById("message-dolicart") && response.data.message) {
                     document.getElementById("message-dolicart").innerHTML = response.data.message;      
                   }
-                  if (document.getElementById("doliModalDiv")) {
+                  if (document.getElementById("doliModalDiv") && response.data.modal) {
                     document.getElementById("doliModalDiv").innerHTML = response.data.modal; 
                     $("#doliModalCartInfos").modal("show");     
                   }
                   //$("#offcanvasDolicart").offcanvas("show");  
                 } else {
-                  if (document.getElementById("doliModalDiv")) {
+                  if (document.getElementById("doliModalDiv") && response.data.modal) {
                     document.getElementById("doliModalDiv").innerHTML = response.data.modal; 
                     $("#doliModalCartInfos").modal("show");     
                   }
