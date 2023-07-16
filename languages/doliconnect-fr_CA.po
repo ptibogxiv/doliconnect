@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2023-07-16 19:23+0200\n"
-"PO-Revision-Date: 2023-07-16 19:23+0200\n"
+"POT-Creation-Date: 2023-07-16 22:04+0200\n"
+"PO-Revision-Date: 2023-07-16 22:04+0200\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_CA\n"
@@ -286,11 +286,11 @@ msgstr "Adhésion"
 msgid "A block for displaying membership."
 msgstr "Un bloc pour afficher l’appartenance."
 
-#: blocks/membership/block.php:60 functions/data-request.php:1148
+#: blocks/membership/block.php:60 functions/data-request.php:1149
 msgid "Prices"
 msgstr "Prix"
 
-#: blocks/membership/block.php:62 functions/data-request.php:1150
+#: blocks/membership/block.php:62 functions/data-request.php:1151
 msgid ""
 "Note: the admins reserve the right to change your membership in relation to "
 "your personal situation. A validation of the membership may be necessary "
@@ -477,7 +477,7 @@ msgid "unlimited"
 msgstr "illimité"
 
 #: dashboard/dashboard.php:467 dashboard/dashboard.php:491
-#: functions/data-request.php:819
+#: functions/data-request.php:820
 msgid "Wishlist"
 msgstr "Liste de souhaits"
 
@@ -576,7 +576,7 @@ msgstr "brouillon"
 
 #: dashboard/dashboard.php:689 dashboard/dashboard.php:1003
 #: dashboard/dashboard.php:1523 dashboard/dashboard.php:1648
-#: dashboard/templates.php:1410 functions/data-request.php:934
+#: dashboard/templates.php:1410 functions/data-request.php:935
 msgid "Payment method"
 msgstr "Méthode de paiement"
 
@@ -801,7 +801,7 @@ msgstr "Ce champ est requis."
 
 #: dashboard/dashboard.php:1890 dashboard/templates.php:416
 #: dashboard/templates.php:514 dashboard/templates.php:677
-#: functions/data-request.php:1102 functions/tools.php:880
+#: functions/data-request.php:1103 functions/tools.php:880
 #: functions/tools.php:2823
 msgid "Email"
 msgstr "Courriel"
@@ -885,7 +885,7 @@ msgstr "non"
 msgid "Renew from %s"
 msgstr "Renouveler à partir de %s"
 
-#: dashboard/dashboard.php:2047 functions/data-request.php:1177
+#: dashboard/dashboard.php:2047 functions/data-request.php:1178
 #: functions/widgets.php:222
 msgid "Pay my subscription"
 msgstr "Payer mon abonnement"
@@ -910,8 +910,8 @@ msgstr "Renseignements personnels"
 msgid "Reactivate my subscription"
 msgstr "Réactiver mon abonnement"
 
-#: dashboard/dashboard.php:2092 functions/data-request.php:1156
-#: functions/data-request.php:1158
+#: dashboard/dashboard.php:2092 functions/data-request.php:1157
+#: functions/data-request.php:1159
 msgid "Resiliate"
 msgstr "Résilier"
 
@@ -939,7 +939,7 @@ msgstr "Pas de consommation"
 msgid "Manage linked members"
 msgstr "Gérer les membres liés"
 
-#: dashboard/dashboard.php:2266 functions/data-request.php:1198
+#: dashboard/dashboard.php:2266 functions/data-request.php:1199
 msgid "New linked member"
 msgstr "Nouveau membre lié"
 
@@ -1086,7 +1086,7 @@ msgstr "Activé"
 msgid "Primary"
 msgstr "Primaire"
 
-#: dashboard/dashboard.php:2659 functions/product.php:744
+#: dashboard/dashboard.php:2659 functions/product.php:745
 msgid "Description"
 msgstr "Description"
 
@@ -1095,7 +1095,7 @@ msgid "Privacy"
 msgstr "Confidentialité"
 
 #: dashboard/templates.php:30 dashboard/templates.php:1094
-#: functions/product.php:782
+#: functions/product.php:783
 msgid "Return"
 msgstr "Retour"
 
@@ -1170,7 +1170,7 @@ msgid "Create an enterprise account"
 msgstr "Créer un compte d'entreprise"
 
 #: dashboard/templates.php:265 dashboard/templates.php:273
-#: dashboard/templates.php:538 functions/data-request.php:1125
+#: dashboard/templates.php:538 functions/data-request.php:1126
 msgid "Create an account"
 msgstr "Créer mon compte"
 
@@ -1179,7 +1179,7 @@ msgid "No account seems to be linked to this email address"
 msgstr "Aucun compte ne semble être lié à cette adresse e-mail"
 
 #: dashboard/templates.php:408 dashboard/templates.php:529
-#: functions/data-request.php:1117
+#: functions/data-request.php:1118
 msgid "Forgot password?"
 msgstr "Mot de passe oublié?"
 
@@ -1188,7 +1188,7 @@ msgid "Please enter the email address by which you registered your account."
 msgstr ""
 "Entrez l’adresse e-mail par laquelle vous avez enregistré votre compte."
 
-#: dashboard/templates.php:422 functions/data-request.php:1205
+#: dashboard/templates.php:422 functions/data-request.php:1206
 msgid "Submit"
 msgstr "Soumettre"
 
@@ -1216,7 +1216,7 @@ msgstr "La clé de sécurité est expirée!"
 msgid "The security key is invalid!"
 msgstr "La clé de sécurité n’est pas valide !"
 
-#: dashboard/templates.php:455 functions/data-request.php:1083
+#: dashboard/templates.php:455 functions/data-request.php:1084
 msgid "Welcome"
 msgstr "Bienvenue"
 
@@ -1236,21 +1236,21 @@ msgstr "Vous n’avez pas de compte"
 msgid "You have already an account"
 msgstr "Vous avez déjà un compte"
 
-#: dashboard/templates.php:508 functions/data-request.php:1096
+#: dashboard/templates.php:508 functions/data-request.php:1097
 msgid "Demo mode is activated"
 msgstr "Le mode démo est activé"
 
-#: dashboard/templates.php:520 functions/data-request.php:1108
+#: dashboard/templates.php:520 functions/data-request.php:1109
 #: functions/tools.php:1171
 msgid "Password"
 msgstr "Mot de passe"
 
-#: dashboard/templates.php:526 functions/data-request.php:1114
+#: dashboard/templates.php:526 functions/data-request.php:1115
 msgid "Remember me"
 msgstr "Se souvenir de moi"
 
-#: dashboard/templates.php:545 functions/data-request.php:1130
-#: functions/product.php:377 functions/product.php:379
+#: dashboard/templates.php:545 functions/data-request.php:1131
+#: functions/product.php:378 functions/product.php:380
 msgid "Sign in"
 msgstr "Connexion"
 
@@ -1396,12 +1396,12 @@ msgstr "Vous ne devriez pas avoir d’exonérations fiscales"
 msgid "Oops, Order's module is not available"
 msgstr "Oups, le module de Order n’est pas disponible"
 
-#: dashboard/templates.php:1408 functions/data-request.php:934
+#: dashboard/templates.php:1408 functions/data-request.php:935
 msgid "Your order has been registered"
 msgstr "Votre commande a été enregistrée"
 
 #: dashboard/templates.php:1408 dashboard/templates.php:1417
-#: functions/data-request.php:934 functions/tools.php:674
+#: functions/data-request.php:935 functions/tools.php:674
 msgid "Reference"
 msgstr "Référence"
 
@@ -1552,8 +1552,8 @@ msgstr "Ville"
 #: functions/data-request.php:492 functions/data-request.php:520
 #: functions/data-request.php:604 functions/data-request.php:695
 #: functions/data-request.php:703 functions/data-request.php:768
-#: functions/data-request.php:949 functions/data-request.php:976
-#: functions/data-request.php:1042 functions/data-request.php:1238
+#: functions/data-request.php:950 functions/data-request.php:977
+#: functions/data-request.php:1043 functions/data-request.php:1239
 msgid "A security error occured"
 msgstr "Une erreur de sécurité s’est produite"
 
@@ -1637,10 +1637,10 @@ msgstr ""
 #: functions/data-request.php:362 functions/data-request.php:384
 #: functions/data-request.php:665 functions/data-request.php:732
 #: functions/data-request.php:743 functions/data-request.php:764
-#: functions/data-request.php:844 functions/data-request.php:847
-#: functions/data-request.php:866 functions/data-request.php:869
-#: functions/data-request.php:885 functions/data-request.php:917
-#: functions/data-request.php:943
+#: functions/data-request.php:845 functions/data-request.php:848
+#: functions/data-request.php:867 functions/data-request.php:870
+#: functions/data-request.php:886 functions/data-request.php:918
+#: functions/data-request.php:944
 msgid "An error occured:"
 msgstr "Une erreur s’est produite :"
 
@@ -1656,7 +1656,7 @@ msgstr "Votre ticket a été soumis"
 msgid "Your message has been send"
 msgstr "Votre message a été envoyé"
 
-#: functions/data-request.php:392 functions/data-request.php:823
+#: functions/data-request.php:392 functions/data-request.php:824
 msgid "This action is not authorized"
 msgstr "Cette action n'est pas autorisée"
 
@@ -1758,105 +1758,114 @@ msgstr "Vous avez supprimé un mode de paiement"
 msgid "You added a new payment method"
 msgstr "Vous avez ajouté un nouveau mode de paiement"
 
-#: functions/data-request.php:819 functions/data-request.php:823
+#: functions/data-request.php:816 functions/tools.php:1388
+msgid "Informations"
+msgstr "Informations"
+
+#: functions/data-request.php:816
+msgid "This item is not available in this quantity!"
+msgstr "Cet article n'est pas disponible dans cette quantité !"
+
+#: functions/data-request.php:816 functions/data-request.php:820
+#: functions/data-request.php:824
 msgid "Close"
 msgstr "Fermer"
 
-#: functions/data-request.php:823
+#: functions/data-request.php:824
 msgid "Error"
 msgstr "Erreur"
 
-#: functions/data-request.php:839 functions/data-request.php:861
+#: functions/data-request.php:840 functions/data-request.php:862
 msgid "Your cart has been emptied"
 msgstr "Votre chariot a été vidé"
 
-#: functions/data-request.php:880 functions/data-request.php:913
+#: functions/data-request.php:881 functions/data-request.php:914
 msgid "Your cart has been validated"
 msgstr "Votre panier a été validé"
 
-#: functions/data-request.php:935
+#: functions/data-request.php:936
 msgid "Payment status"
 msgstr "Statut de paiement"
 
-#: functions/data-request.php:935
+#: functions/data-request.php:936
 msgid "Payment ID"
 msgstr "ID de paiement"
 
-#: functions/data-request.php:939
+#: functions/data-request.php:940
 msgid "View my receipt"
 msgstr "Afficher mon reçu"
 
-#: functions/data-request.php:946
+#: functions/data-request.php:947
 msgid "An error occured"
 msgstr "Une erreur s’est produite"
 
-#: functions/data-request.php:963 functions/data-request.php:971
+#: functions/data-request.php:964 functions/data-request.php:972
 msgid "Customer not found"
 msgstr "Client non trouvé"
 
-#: functions/data-request.php:1019
+#: functions/data-request.php:1020
 msgid "We no longer have this item in this quantity"
 msgstr "Nous n’avons plus cet article dans cette quantité"
 
-#: functions/data-request.php:1057
+#: functions/data-request.php:1058
 msgid "Legal notice"
 msgstr "Forme juridique"
 
-#: functions/data-request.php:1059
+#: functions/data-request.php:1060
 msgid "Editor"
 msgstr "Editeur"
 
-#: functions/data-request.php:1062
+#: functions/data-request.php:1063
 msgid "Responsible for publishing"
 msgstr "Responsable de la publication"
 
-#: functions/data-request.php:1064
+#: functions/data-request.php:1065
 msgid "Design & conception"
 msgstr "Design & conception"
 
-#: functions/data-request.php:1069
+#: functions/data-request.php:1070
 msgid "Hosting"
 msgstr "Hébergement"
 
-#: functions/data-request.php:1178
+#: functions/data-request.php:1179
 msgid "This subscription"
 msgstr "Cet abonnement"
 
-#: functions/data-request.php:1179 functions/data-request.php:1183
+#: functions/data-request.php:1180 functions/data-request.php:1184
 msgid "Price:"
 msgstr "Prix:"
 
-#: functions/data-request.php:1180 functions/data-request.php:1184
+#: functions/data-request.php:1181 functions/data-request.php:1185
 #: functions/member.php:95
 msgid "From"
 msgstr "Du"
 
-#: functions/data-request.php:1180 functions/data-request.php:1184
+#: functions/data-request.php:1181 functions/data-request.php:1185
 #: functions/member.php:95
 msgid "until"
 msgstr "jusqu'au"
 
-#: functions/data-request.php:1182
+#: functions/data-request.php:1183
 msgid "Next subscription"
 msgstr "Prochain abonnement"
 
-#: functions/data-request.php:1188 functions/product.php:357
+#: functions/data-request.php:1189 functions/product.php:358
 msgid "Add to basket"
 msgstr "Ajouter au panier"
 
-#: functions/data-request.php:1195
+#: functions/data-request.php:1196
 msgid "Edit member"
 msgstr "Modifier le membre"
 
-#: functions/data-request.php:1213
+#: functions/data-request.php:1214
 msgid "Download"
 msgstr "Télécharger"
 
-#: functions/data-request.php:1221
+#: functions/data-request.php:1222
 msgid "Choose your language"
 msgstr "Choisissez votre langue"
 
-#: functions/data-request.php:1231 functions/tools.php:1218
+#: functions/data-request.php:1232 functions/tools.php:1218
 msgid "Loading"
 msgstr "Chargement"
 
@@ -1889,7 +1898,7 @@ msgstr "Y compris une partie fédérale de"
 msgid "From %s"
 msgstr "À partir du %s"
 
-#: functions/member.php:101 functions/product.php:346
+#: functions/member.php:101 functions/product.php:347
 msgid "Contact us"
 msgstr "Contactez-nous"
 
@@ -1998,81 +2007,81 @@ msgstr "Finaliser la commande"
 msgid "Your basket is empty"
 msgstr "Votre panier est vide"
 
-#: functions/product.php:254 functions/product.php:293
+#: functions/product.php:254 functions/product.php:294
 msgid "This item has been deleted to basket"
 msgstr "Cet article a été supprimé du panier"
 
-#: functions/product.php:279
+#: functions/product.php:280
 msgid "This item has been added to basket"
 msgstr "Cet article a été ajouté au panier"
 
-#: functions/product.php:320 functions/product.php:329
+#: functions/product.php:321 functions/product.php:330
 msgid "Quantities have been changed"
 msgstr "Les quantités ont été modifiées"
 
-#: functions/product.php:351
+#: functions/product.php:352
 msgid "Unavailable"
 msgstr "Indisponible"
 
-#: functions/product.php:554
+#: functions/product.php:555
 msgid "Displayed price is included VAT"
 msgstr "Le prix affiché comprend la TVA"
 
-#: functions/product.php:554
+#: functions/product.php:555
 msgid "Displayed price is excluded VAT"
 msgstr "Le prix affiché est hors TVA"
 
-#: functions/product.php:555
+#: functions/product.php:556
 #, php-format
 msgid "VAT rate of %s"
 msgstr "Taux de TVA de %s"
 
-#: functions/product.php:557
+#: functions/product.php:558
 #, php-format
 msgid "Initial sale price: %s"
 msgstr "Prix de vente initial : %s"
 
-#: functions/product.php:558
+#: functions/product.php:559
 #, php-format
 msgid "Your customer discount is %s percent"
 msgstr "Votre remise client est de %s pour cent"
 
-#: functions/product.php:560
+#: functions/product.php:561
 #, php-format
 msgid "Discounted price: %s"
 msgstr "Prix réduit : %s"
 
-#: functions/product.php:564
+#: functions/product.php:565
 msgid "About price"
 msgstr "A propos du prix"
 
-#: functions/product.php:578
+#: functions/product.php:579
 msgid "Novelty"
 msgstr "Nouveauté"
 
-#: functions/product.php:610
+#: functions/product.php:611
 msgid "Supplier:"
 msgid_plural "Supplier:"
 msgstr[0] "Fournisseur:"
 msgstr[1] "Fournisseurs:"
 
-#: functions/product.php:676
+#: functions/product.php:677
 msgid "Read more..."
 msgstr "Lire plus..."
 
-#: functions/product.php:730
+#: functions/product.php:731
 msgid "Origin:"
 msgstr "Origine:"
 
-#: functions/product.php:763
+#: functions/product.php:764
 msgid "This item contains:"
 msgstr "Cet article contient :"
 
-#: functions/product.php:772
+#: functions/product.php:773
 msgid "Item not in sale"
 msgstr "Article non en vente"
 
-#: functions/product.php:781
+#: functions/product.php:782
 msgid "Oops! This item does not appear to exist"
 msgstr "Oups! Cet élément ne semble pas exister"
 
@@ -2396,10 +2405,6 @@ msgstr "Félicitations!"
 #: functions/tools.php:1385
 msgid "Be carefull"
 msgstr "Attention"
-
-#: functions/tools.php:1388
-msgid "Informations"
-msgstr "Informations"
 
 #: functions/tools.php:1391
 msgid "Oops"
