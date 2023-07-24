@@ -813,7 +813,7 @@ global $current_user;
 					'lines' => $result['lines'],
 					'total' => $result['total']
 				];
-				if ($qty != $result['newqty']) $response['modal'] = doliModalTemplate('CartInfos', __( 'Informations', 'doliconnect'), __( 'This item is not available in this quantity!', 'doliconnect'), '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">'.__( "Close", "doliconnect").'</button>');
+				if ($qty != $result['newqty']) $response['modal'] = doliModalTemplate('CartInfos', __( 'Cart', 'doliconnect'), __( 'This item is not available in this quantity!', 'doliconnect'), '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">'.__( "Continue shopping", "doliconnect").'</button>', 'modal-lg');
 				wp_send_json_success($response);
 				die();
 			} elseif (isset($_POST['modify']) && ($_POST['modify'] == "wish" || $_POST['modify'] == "unwish")) {
