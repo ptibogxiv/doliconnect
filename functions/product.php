@@ -55,126 +55,115 @@ function doliIncludeStock() {
 
 function doliProductStock($product, $refresh = false, $nohtml = false) {
 global $current_user;
-
-$mstock = array();
-$warehouse = doliconst('DOLICONNECT_ID_WAREHOUSE', $refresh);
-
-if (!empty($product->type) && empty(doliconst('STOCK_SUPPORTS_SERVICES', $refresh))) {
-  $mstock['stock'] = 1;
-} elseif (isset($product->stock_warehouse) && !empty($product->stock_warehouse) && !empty($warehouse) && $warehouse > 0) {
-  if (isset($product->stock_warehouse->$warehouse)) {
-    $mstock['stock'] = min(array($product->stock_reel,$product->stock_warehouse->$warehouse->real,$product->stock_theorique));
+  $mstock = array();
+  $warehouse = doliconst('DOLICONNECT_ID_WAREHOUSE', $refresh);
+  if (!empty($product->type) && empty(doliconst('STOCK_SUPPORTS_SERVICES', $refresh))) {
+    $mstock['stock'] = 1;
+  } elseif (isset($product->stock_warehouse) && !empty($product->stock_warehouse) && !empty($warehouse) && $warehouse > 0) {
+    if (isset($product->stock_warehouse->$warehouse)) {
+      $mstock['stock'] = min(array($product->stock_reel,$product->stock_warehouse->$warehouse->real,$product->stock_theorique));
+    } else {
+      $mstock['stock'] = 0;
+    }
   } else {
-    $mstock['stock'] = 0;
+    $mstock['stock'] = min(array($product->stock_theorique,$product->stock_reel));
   }
-} else {
-  $mstock['stock'] = min(array($product->stock_theorique,$product->stock_reel));
-}
-
-if (isset($product->array_options->options_packaging) && !empty($product->array_options->options_packaging)) {
-  $mstock['step'] = $product->array_options->options_packaging;
-} else {
-  $mstock['step'] = 1;
-}
-
-if (!empty(doliconnectid('dolishipping'))) {
-  $shipping = '<a href="'.doliconnecturl('dolishipping').'" class="btn btn-link btn-block btn-sm">'.__( 'Shipping', 'doliconnect').'</a>';
-} else {
-  $shipping = null;
-}
-
-if (doliconnector($current_user, 'fk_order') > 0) {
-  $orderfo = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order'), null, $refresh);
-}
-
-if ( isset($orderfo->lines) && $orderfo->lines != null ) {
-  foreach ($orderfo->lines as $line) {
-  if  ($line->fk_product == $product->id) {
-  //$button = var_dump($line);
-  $mstock['qty'] = $line->qty;
-  $mstock['line'] = $line->id;
-  }}
-}
-if (!isset($mstock['qty']) ) {
-  $mstock['qty'] = 0;
-  $mstock['line'] = null;
-}
-if (isset($mstock['line']) && !$mstock['line'] > 0) { $mstock['line'] = null; }
-if (! isset($mstock['line'])) { $mstock['line'] = null; }
-
-if (doliconst('CUSTOMER_ORDER_DRAFT_FOR_VIRTUAL_STOCK', $refresh)) $mstock['stock']=$mstock['stock']+$mstock['qty'];
-
-if ( $mstock['stock']-$mstock['qty'] > 0 && (empty($product->type) || (!empty($product->type) && doliconst('STOCK_SUPPORTS_SERVICES', $refresh)) ) ) {
-  $mstock['m0'] = 1*$mstock['step'];
-  $mstock['m1'] = get_option('dolicartlist')*$mstock['step'];
-  if ( $mstock['stock']-$mstock['qty'] >= $mstock['m1'] || !doliCheckModules('stock', $refresh) ) {
+  if (isset($product->array_options->options_packaging) && !empty($product->array_options->options_packaging)) {
+    $mstock['step'] = $product->array_options->options_packaging;
+  } else {
+    $mstock['step'] = 1;
+  }
+  if (!empty(doliconnectid('dolishipping'))) {
+    $shipping = '<a href="'.doliconnecturl('dolishipping').'" class="btn btn-link btn-block btn-sm">'.__( 'Shipping', 'doliconnect').'</a>';
+  } else {
+    $shipping = null;
+  }
+  if (doliconnector($current_user, 'fk_order') > 0) {
+    $order = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order')."?contact_list=0", null, $refresh);
+  }
+  if ( isset($order->lines) && $order->lines != null ) {
+    foreach ($order->lines as $line) {
+      if ($line->fk_product == $product->id) {
+        //$button = var_dump($line);
+        $mstock['qty'] = $line->qty;
+        $mstock['line'] = $line->id;
+      }
+    }
+  }
+  if (!isset($mstock['qty']) ) {
+    $mstock['qty'] = 0;
+    $mstock['line'] = null;
+  }
+  if (isset($mstock['line']) && !$mstock['line'] > 0) { $mstock['line'] = null; }
+  if (! isset($mstock['line'])) { $mstock['line'] = null; }
+  if (doliconst('CUSTOMER_ORDER_DRAFT_FOR_VIRTUAL_STOCK', $refresh)) $mstock['stock']=$mstock['stock']+$mstock['qty'];
+  if ( $mstock['stock']-$mstock['qty'] > 0 && (empty($product->type) || (!empty($product->type) && doliconst('STOCK_SUPPORTS_SERVICES', $refresh)) ) ) {
+    $mstock['m0'] = 1*$mstock['step'];
+    $mstock['m1'] = get_option('dolicartlist')*$mstock['step'];
+    if ( $mstock['stock']-$mstock['qty'] >= $mstock['m1'] || !doliCheckModules('stock', $refresh) ) {
+      $mstock['m2'] = $mstock['m1'];
+    } elseif ( $mstock['stock'] > $mstock['qty'] ) {
+      $mstock['m2'] = $mstock['stock'];
+    } else { $mstock['m2'] = $mstock['qty']; }
+  } else {
+    $mstock['m0'] = 1;
+    if ( isset($line) && $line->qty > 1 ) { $mstock['m2'] = $mstock['qty']; }
+    else { $mstock['m2'] = 1; }
+  } 
+  if (!$nohtml) { 
+    $stock = '<script type="text/javascript">';
+    $stock .= '
+    (function ($) {
+     $(document).ready(function () {
+       $("#popover-stock-'.$product->id.'").popover({
+         placement : "auto",
+          delay: { "show": 150, "hide": 150 },
+          trigger : "focus",
+          html : true
+        })
+      });
+    })(jQuery);';
+    $stock .= '</script>';
+  }
+  if ( ! is_object($product) || !doliCheckModules('stock', $refresh) || (!empty($product->type) && empty(doliconst('STOCK_SUPPORTS_SERVICES', $refresh)) ) || (empty($product->type) && !empty(doliconst('STOCK_ALLOW_NEGATIVE_TRANSFER', $refresh)) && empty(doliconst('STOCK_MUST_BE_ENOUGH_FOR_ORDER', $refresh)) )) {
+    if (!$nohtml) $stock .= "<a tabindex='0' id='popover-stock-".$product->id."' class='badge rounded-pill bg-success text-white text-decoration-none' data-bs-container='body' data-bs-toggle='popover' data-bs-trigger='focus' title='".__( 'Available', 'doliconnect')."' data-bs-content='".__( 'This item is available and can be order', 'doliconnect')."'><i class='fas fa-warehouse'></i> ".__( 'Available', 'doliconnect').'</a>';
+    $mstock['m0'] = 1*$mstock['step'];
+    $mstock['m1'] = get_option('dolicartlist')*$mstock['step'];
     $mstock['m2'] = $mstock['m1'];
-  } elseif ( $mstock['stock'] > $mstock['qty'] ) {
-    $mstock['m2'] = $mstock['stock'];
-  } else { $mstock['m2'] = $mstock['qty']; }
-} else {
-  $mstock['m0'] = 1;
-  if ( isset($line) && $line->qty > 1 ) { $mstock['m2'] = $mstock['qty']; }
-  else { $mstock['m2'] = 1; }
-} 
-
-if (!$nohtml) { 
-  $stock = '<script type="text/javascript">';
-  $stock .= '
-  (function ($) {
-    $(document).ready(function () {
-      $("#popover-stock-'.$product->id.'").popover({
-        placement : "auto",
-        delay: { "show": 150, "hide": 150 },
-        trigger : "focus",
-        html : true
-      })
-    });
-  })(jQuery);';
-  $stock .= '</script>';
-}
-
-if ( ! is_object($product) || !doliCheckModules('stock', $refresh) || (!empty($product->type) && empty(doliconst('STOCK_SUPPORTS_SERVICES', $refresh)) ) || (empty($product->type) && !empty(doliconst('STOCK_ALLOW_NEGATIVE_TRANSFER', $refresh)) && empty(doliconst('STOCK_MUST_BE_ENOUGH_FOR_ORDER', $refresh)) )) {
-  if (!$nohtml) $stock .= "<a tabindex='0' id='popover-stock-".$product->id."' class='badge rounded-pill bg-success text-white text-decoration-none' data-bs-container='body' data-bs-toggle='popover' data-bs-trigger='focus' title='".__( 'Available', 'doliconnect')."' data-bs-content='".__( 'This item is available and can be order', 'doliconnect')."'><i class='fas fa-warehouse'></i> ".__( 'Available', 'doliconnect').'</a>';
-  $mstock['m0'] = 1*$mstock['step'];
-  $mstock['m1'] = get_option('dolicartlist')*$mstock['step'];
-  $mstock['m2'] = $mstock['m1'];
-} elseif (empty($product->type) && empty(doliconst('STOCK_ALLOW_NEGATIVE_TRANSFER', $refresh)) && empty(doliconst('STOCK_MUST_BE_ENOUGH_FOR_ORDER', $refresh)) && isset($product->array_options->options_unlimitedsale) && !empty($product->array_options->options_unlimitedsale)) {
-  if (!$nohtml) $stock .= "<a tabindex='0' id='popover-stock-".$product->id."' class='badge rounded-pill bg-info text-white text-decoration-none' data-bs-container='body' data-bs-toggle='popover' data-bs-trigger='focus' title='".__( 'Available', 'doliconnect')."' data-bs-content='".__( 'This item is available and can be order but it can sometimes be briefly unavailable', 'doliconnect')."'><i class='fas fa-warehouse'></i> ".__( 'Available', 'doliconnect').'</a>';
-  $mstock['m0'] = 1*$mstock['step'];
-  $mstock['m1'] = get_option('dolicartlist')*$mstock['step'];
-  $mstock['m2'] = $mstock['m1'];
-  $mstock['stock'] = $mstock['m2'];
-} elseif (!$nohtml) {
-if ( $mstock['stock'] <= 0 || (isset($product->array_options->options_packaging) && !empty($product->array_options->options_packaging) && $mstock['stock'] < $product->array_options->options_packaging) ) { 
-  $stock .= "<a tabindex='0' id='popover-stock-".$product->id."' class='badge rounded-pill bg-dark text-white text-decoration-none' data-bs-container='body' data-bs-toggle='popover' data-bs-trigger='focus' title='".__( 'Not available', 'doliconnect')."' data-bs-content='".sprintf( __( 'This item is out of stock and can not be ordered or shipped. %s', 'doliconnect'), $shipping)."'><i class='fas fa-warehouse'></i> ".__( 'Not available', 'doliconnect')."</a>"; }  
-elseif ( ($mstock['stock'] <= 0 || (isset($product->array_options->options_packaging) && $mstock['stock'] < $product->array_options->options_packaging)) && $product->stock_theorique > $mstock['stock'] ) { 
-$delay =  callDoliApi("GET", "/products/".$product->id."/purchase_prices", null, dolidelay('product', $refresh));
-if (empty($delay[0]->delivery_time_days)) { $delay = esc_html__( 'few', 'doliconnect'); } else { $delay = $delay[0]->delivery_time_days;}
-if (doliversion('12.0.0')) {
-$datelivraison =  callDoliApi("GET", "/supplierorders?sortfield=t.date_livraison&sortorder=ASC&limit=1&product_ids=".$product->id."&sqlfilters=(t.fk_statut%3A%3D%3A'2')", null, dolidelay('order', $refresh));
-if (!empty($datelivraison) && is_array($datelivraison) && isset($datelivraison[0]->date_livraison) && !empty($datelivraison[0]->date_livraison)) {
-$next = sprintf( "<br>".esc_html__( 'Reception scheduled on %s.', 'doliconnect'), wp_date('d/m/Y', $datelivraison[0]->date_livraison));
-} else {
-$next = null;
-}
-} else {
-$next = null;
-}
-  $stock .= "<a tabindex='0' id='popover-stock-".$product->id."' class='badge rounded-pill bg-danger text-white text-decoration-none' title='".__( 'Available soon', 'doliconnect')."' data-bs-container='body' data-bs-toggle='popover' data-bs-trigger='focus' data-bs-content='".sprintf( __( 'This item is not in stock but should be available soon within %s days. %s %s', 'doliconnect'), $delay, $next, $shipping)."'><i class='fas fa-warehouse'></i> ".__( 'Available soon', 'doliconnect')."</a>"; 
-} elseif ( $mstock['stock'] >= 0 && $mstock['stock'] <= $product->seuil_stock_alerte ) { 
-  $stock .= "<a tabindex='0' id='popover-stock-".$product->id."' class='badge rounded-pill bg-warning text-white text-decoration-none' data-bs-container='body' data-bs-toggle='popover' data-bs-trigger='focus' title='".__( 'Limited availability', 'doliconnect')."' data-bs-content='".sprintf( __( 'This item is in stock and can be shipped immediately but only in limited quantities. %s', 'doliconnect'), $shipping)."'><i class='fas fa-warehouse'></i> ".__( 'Available', 'doliconnect')."</a>";
-} else {
-  $stock .= "<a tabindex='0' id='popover-stock-".$product->id."' class='badge rounded-pill bg-success text-white text-decoration-none' data-bs-container='body' data-bs-toggle='popover' data-bs-trigger='focus' title='".__( 'Available immediately', 'doliconnect')."' data-bs-content='".sprintf( __( 'This item is in stock and can be shipped immediately. %s', 'doliconnect'), $shipping)."'><i class='fas fa-warehouse'></i> ".__( 'Available', 'doliconnect').'</a>';
-}
-} 
-
-if ($nohtml) { 
-  return $mstock;
-} else {
-  return $stock;
-}
-
+  } elseif (empty($product->type) && empty(doliconst('STOCK_ALLOW_NEGATIVE_TRANSFER', $refresh)) && empty(doliconst('STOCK_MUST_BE_ENOUGH_FOR_ORDER', $refresh)) && isset($product->array_options->options_unlimitedsale) && !empty($product->array_options->options_unlimitedsale)) {
+    if (!$nohtml) $stock .= "<a tabindex='0' id='popover-stock-".$product->id."' class='badge rounded-pill bg-info text-white text-decoration-none' data-bs-container='body' data-bs-toggle='popover' data-bs-trigger='focus' title='".__( 'Available', 'doliconnect')."' data-bs-content='".__( 'This item is available and can be order but it can sometimes be briefly unavailable', 'doliconnect')."'><i class='fas fa-warehouse'></i> ".__( 'Available', 'doliconnect').'</a>';
+    $mstock['m0'] = 1*$mstock['step'];
+    $mstock['m1'] = get_option('dolicartlist')*$mstock['step'];
+    $mstock['m2'] = $mstock['m1'];
+    $mstock['stock'] = $mstock['m2'];
+  } elseif (!$nohtml) {
+    if ( $mstock['stock'] <= 0 || (isset($product->array_options->options_packaging) && !empty($product->array_options->options_packaging) && $mstock['stock'] < $product->array_options->options_packaging) ) { 
+      $stock .= "<a tabindex='0' id='popover-stock-".$product->id."' class='badge rounded-pill bg-dark text-white text-decoration-none' data-bs-container='body' data-bs-toggle='popover' data-bs-trigger='focus' title='".__( 'Not available', 'doliconnect')."' data-bs-content='".sprintf( __( 'This item is out of stock and can not be ordered or shipped. %s', 'doliconnect'), $shipping)."'><i class='fas fa-warehouse'></i> ".__( 'Not available', 'doliconnect')."</a>";
+    } elseif ( ($mstock['stock'] <= 0 || (isset($product->array_options->options_packaging) && $mstock['stock'] < $product->array_options->options_packaging)) && $product->stock_theorique > $mstock['stock'] ) { 
+      $delay =  callDoliApi("GET", "/products/".$product->id."/purchase_prices", null, dolidelay('product', $refresh));
+      if (empty($delay[0]->delivery_time_days)) { $delay = esc_html__( 'few', 'doliconnect'); } else { $delay = $delay[0]->delivery_time_days;}
+      if (doliversion('12.0.0')) {
+        $datelivraison =  callDoliApi("GET", "/supplierorders?sortfield=t.date_livraison&sortorder=ASC&limit=1&product_ids=".$product->id."&sqlfilters=(t.fk_statut%3A%3D%3A'2')", null, dolidelay('order', $refresh));
+        if (!empty($datelivraison) && is_array($datelivraison) && isset($datelivraison[0]->date_livraison) && !empty($datelivraison[0]->date_livraison)) {
+          $next = sprintf( "<br>".esc_html__( 'Reception scheduled on %s.', 'doliconnect'), wp_date('d/m/Y', $datelivraison[0]->date_livraison));
+        } else {
+          $next = null;
+        }
+      } else {
+        $next = null;
+      }
+      $stock .= "<a tabindex='0' id='popover-stock-".$product->id."' class='badge rounded-pill bg-danger text-white text-decoration-none' title='".__( 'Available soon', 'doliconnect')."' data-bs-container='body' data-bs-toggle='popover' data-bs-trigger='focus' data-bs-content='".sprintf( __( 'This item is not in stock but should be available soon within %s days. %s %s', 'doliconnect'), $delay, $next, $shipping)."'><i class='fas fa-warehouse'></i> ".__( 'Available soon', 'doliconnect')."</a>"; 
+    } elseif ( $mstock['stock'] >= 0 && $mstock['stock'] <= $product->seuil_stock_alerte ) { 
+      $stock .= "<a tabindex='0' id='popover-stock-".$product->id."' class='badge rounded-pill bg-warning text-white text-decoration-none' data-bs-container='body' data-bs-toggle='popover' data-bs-trigger='focus' title='".__( 'Limited availability', 'doliconnect')."' data-bs-content='".sprintf( __( 'This item is in stock and can be shipped immediately but only in limited quantities. %s', 'doliconnect'), $shipping)."'><i class='fas fa-warehouse'></i> ".__( 'Available', 'doliconnect')."</a>";
+    } else {
+      $stock .= "<a tabindex='0' id='popover-stock-".$product->id."' class='badge rounded-pill bg-success text-white text-decoration-none' data-bs-container='body' data-bs-toggle='popover' data-bs-trigger='focus' title='".__( 'Available immediately', 'doliconnect')."' data-bs-content='".sprintf( __( 'This item is in stock and can be shipped immediately. %s', 'doliconnect'), $shipping)."'><i class='fas fa-warehouse'></i> ".__( 'Available', 'doliconnect').'</a>';
+    }
+  } 
+  if ($nohtml) { 
+    return $mstock;
+  } else {
+    return $stock;
+  }
 }
 
 function doliconnect_countitems($object){
@@ -215,12 +204,12 @@ global $current_user;
   if (!is_null($timestart) && $timestart > 0 ) {
    $date_start=strftime('%Y-%m-%d 00:00:00', $timestart);
   } else {
-   $date_start=null;
+   $date_start = null;
   }
   if ( !is_null($timeend) && $timeend > 0 ) {
    $date_end=strftime('%Y-%m-%d 00:00:00', $timeend);
   } else {
-    $date_end=null;
+    $date_end = null;
   }
   if ($quantity < 0) {
     $quantity = 0;
@@ -245,7 +234,6 @@ global $current_user;
   if (isset($thirdparty->tva_assuj) && empty($thirdparty->tva_assuj)) {
     if (isset($product->tva_tx))  $product->tva_tx = 0;
   }
-  $order = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order', true)."?contact_list=0", null, dolidelay('order', true));
   if (empty($product->status)) {
     if (!empty($mstock['line'])) $deleteline = callDoliApi("DELETE", "/orders/".doliconnector($current_user, 'fk_order')."/lines/".$mstock['line'], null, 0);
     $order = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order', true)."?contact_list=0", null, dolidelay('order', true));
@@ -305,8 +293,22 @@ global $current_user;
         'date_end' => $date_end,
         'qty' => $quantity,
         'tva_tx' => $product->tva_tx, 
+        'price_base_type' => 'HT', 
         'remise_percent' => $price['discount'],
         'subprice' => $price['subprice'],
+        'localtax1_tx'=> $price['subprice'],
+        'localtax2_tx',
+        'info_bits',
+        'product_type',
+        'fk_parent_line',
+        'fk_fournprice',
+        'pa_ht',
+        'label',
+        'special_code',
+        'fk_unit',
+        'multicurrency_subprice',
+        'ef_ext',
+        'rang'
         'array_options' => $array_options
 	    ];                  
       $updateline = callDoliApi("PUT", "/orders/".doliconnector($current_user, 'fk_order')."/lines/".$mstock['line'], $uln, 0);
@@ -327,6 +329,7 @@ global $current_user;
       return $response;
     }
   } elseif ( doliconnector($current_user, 'fk_order') > 0 && is_null($mstock['line']) ) {
+    $order = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order', true)."?contact_list=0", null, dolidelay('order', true));
     $response['message'] = __( 'Quantities have been changed', 'doliconnect');
     $response['items'] = doliconnect_countitems($order);
     $response['lines'] = doliline($order);
