@@ -321,7 +321,6 @@ global $current_user;
         'fk_unit' => (isset($mstock['fk_unit'])?$mstock['fk_unit']: null),
         'multicurrency_subprice' => (isset($mstock['multicurrency_subprice'])?$mstock['multicurrency_subprice']: null),
         'ref_ext' => (isset($mstock['ref_ext'])?$mstock['ref_ext']: null),
-        'rang' => (isset($mstock['rang'])?$mstock['rang']: null),
         'array_options' => $array_options
 	    ];                  
       $updateline = callDoliApi("PUT", "/orders/".doliconnector($current_user, 'fk_order')."/lines/".$mstock['line'], $uln, 0);
