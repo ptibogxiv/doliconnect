@@ -256,6 +256,19 @@ global $current_user;
       'tva_tx' => $product->tva_tx, 
       'remise_percent' => $price['discount'],
       'subprice' => $price['subprice'],
+      'localtax1_tx'=> (isset($mstock['localtax1_tx'])?$mstock['localtax1_tx']: null),
+      'localtax2_tx' => (isset($mstock['localtax2_tx'])?$mstock['localtax2_tx']: null),
+      'info_bits' => (isset($mstock['info_bits'])?$mstock['info_bits']: null),
+      'product_type' => (isset($mstock['product_type'])?$mstock['product_type']: null),
+      'fk_parent_line' => (isset($mstock['fk_parent_line'])?$mstock['lfk_parent_line']: null),
+      'fk_fournprice' => (isset($mstock['fk_fournprice'])?$mstock['fk_fournprice']: null),
+      'pa_ht'=> (isset($mstock['pa_ht'])?$mstock['pa_ht']: null),
+      'label' => (isset($mstock['label'])?$mstock['label']: null),
+      'special_code' => (isset($mstock['special_code'])?$mstock['special_code']: null),
+      'fk_unit' => (isset($mstock['fk_unit'])?$mstock['fk_unit']: null),
+      'multicurrency_subprice' => (isset($mstock['multicurrency_subprice'])?$mstock['multicurrency_subprice']: null),
+      'ref_ext' => (isset($mstock['ref_ext'])?$mstock['ref_ext']: null),
+      'rang' => (isset($mstock['rang'])?$mstock['rang']: null),
       'array_options' => $array_options
 	  ];                 
     $addline = callDoliApi("POST", "/orders/".doliconnector($current_user, 'fk_order')."/lines", $adln, 0);
