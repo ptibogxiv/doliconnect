@@ -604,32 +604,28 @@ if ($nohtml) {
 }}
 
 function doliconnect_supplier($product, $refresh = false){
-
-$brands =  callDoliApi("GET", "/products/".$product->id."/purchase_prices", null, dolidelay('product', $refresh));
-
-$supplier = "";
-
-if ( !isset($brands->error) && $brands != null ) {
-$supplier .= "<small><i class='fas fa-industry fa-fw'></i> ";
-$supplier .= _n( 'Supplier:', 'Supplier:', count($brands), 'doliconnect' );
-$i = 0;
-foreach ($brands as $brand) {
-if ($i > 0) $supplier .= ",";
-$thirdparty =  callDoliApi("GET", "/thirdparties/".$brand->fourn_id, null, dolidelay('product', $refresh));
- $supplier .= " ";
-if (!empty(doliconnectid('dolisupplier'))) {
-$supplier .= "<a href='".doliconnecturl('dolisupplier')."?supplier=".$thirdparty->id."'>";
-}
-$supplier .= (!empty($thirdparty->name_alias)?$thirdparty->name_alias:$thirdparty->name);
-if (!empty(doliconnectid('dolisupplier'))) {
-$supplier .= "</a>";
-}
-$i++;
-}
-$supplier .= "</small>";
-}
-
-return $supplier;
+  $brands =  callDoliApi("GET", "/products/".$product->id."/purchase_prices", null, dolidelay('product', $refresh));
+  $supplier = "";
+  if ( !isset($brands->error) && $brands != null ) {
+    $supplier .= "<small><i class='fas fa-industry fa-fw'></i> ";
+    $supplier .= _n( 'Supplier:', 'Supplier:', count($brands), 'doliconnect' );
+    $i = 0;
+    foreach ($brands as $brand) {
+      if ($i > 0) $supplier .= ",";
+      $thirdparty =  callDoliApi("GET", "/thirdparties/".$brand->fourn_id, null, dolidelay('product', $refresh));
+      $supplier .= " ";
+      if (!empty(doliconnectid('dolisupplier'))) {
+        $supplier .= "<a href='".doliconnecturl('dolisupplier')."?supplier=".$thirdparty->id."'>";
+      }
+      $supplier .= (!empty($thirdparty->name_alias)?$thirdparty->name_alias:$thirdparty->name);
+      if (!empty(doliconnectid('dolisupplier'))) {
+        $supplier .= "</a>";
+      }
+      $i++;
+    }
+    $supplier .= "</small>";
+  }
+  return $supplier;
 }
 
 // list of products filter
