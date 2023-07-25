@@ -1230,19 +1230,6 @@ function doliconnect_loading() {
 }
 add_action( 'wp_footer', 'doliconnect_loading');
 
-function doliCartOffcanvas() {
-  doliconnect_enqueues();
-  print '<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasDolicart" aria-labelledby="offcanvasDolicartLabel">
-  <div class="offcanvas-header">
-  <h5 class="offcanvas-title" id="offcanvasDolicartLabel">'.__( 'Cart', 'doliconnect').'</h5>
-  <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-  </div>
-  <div class="offcanvas-body">';
-  print '<div id="DoliCartItemsList">'.doliconnect_CartItemsList().'</div>';
-  print '</div></div>';
-}
-add_action( 'wp_footer', 'doliCartOffcanvas');
-
 function dolibug($msg = null, $request = null) {
   //header('Refresh: 180; URL='.esc_url(get_permalink()).'');
   $bug = '<div id="dolibug" ><br><br><br><br><center><div class="align-middle"><i class="fas fa-bug fa-7x fa-fw"></i><h4>';
