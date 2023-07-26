@@ -1219,7 +1219,7 @@ $loading .= '<h4>'.__( 'Loading', 'doliconnect').'</h4></div></center><br><br><b
 return $loading;
 }
 
-function doliconnect_loading() {
+function doliModalLoading() {
   doliconnect_enqueues();
   print '<div id="DoliconnectLoadingModal" class="modal fade bd-example-modal" tabindex="-1" aria-labelledby="myLargeModalLabel" aria-hidden="true" data-bs-show="true" data-bs-backdrop="static" data-keyboard="false">
   <div class="modal-dialog modal-fullscreen modal-dialog-centered">
@@ -1228,7 +1228,7 @@ function doliconnect_loading() {
   <h4>'.__( 'Processing', 'doliconnect').'</h4>
   </div></div></div>';
 }
-add_action( 'wp_footer', 'doliconnect_loading');
+add_action( 'wp_footer', 'doliModalLoading');
 
 function dolibug($msg = null, $request = null) {
   //header('Refresh: 180; URL='.esc_url(get_permalink()).'');
@@ -2923,6 +2923,7 @@ function doliModalButton($case, $id, $title, $type = 'button', $class = 'btn btn
       document.querySelector("#'.$id.'").addEventListener("click", function(e) {
         e.preventDefault();
         e.stopPropagation();
+        $("#DoliconnectLoadingModal").modal("toggle");
             $.ajax({
               url :"'.admin_url('admin-ajax.php').'",
               type:"POST",
@@ -2946,16 +2947,17 @@ function doliModalButton($case, $id, $title, $type = 'button', $class = 'btn btn
                     console.log( "error loading modal js" );
                   });
                 }
-              if (document.getElementById("doliModalDiv")) {
-                document.getElementById("doliModalDiv").innerHTML = response.data.modal; 
-                $("#doliModal'.$id.'").modal("show");     
-              }
+                if (document.getElementById("doliModalDiv")) {
+                  document.getElementById("doliModalDiv").innerHTML = response.data.modal;
+                  $("#doliModal'.$id.'").modal("toggle");     
+                }
               } else {
                 if (document.getElementById("doliModalDiv")) {
                   document.getElementById("doliModalDiv").innerHTML = response.data.modal;
-                  $("#doliModal'.$id.'").modal("show");         
+                  $("#doliModal'.$id.'").modal("toggle");         
                 }
-             }
+              }
+              $("#DoliconnectLoadingModal").modal("hide");
             $("#doliModal'.$id.'").on("hidden.bs.modal", function () {
               $("#doliModal'.$id.'").modal("dispose");
               document.getElementById("doliModalDiv").innerHTML = "";
@@ -3020,7 +3022,7 @@ function doliModalDiv() {
   print 'function doliJavaCartAction(form, id, qty, acase) {
           (function ($) {
             $(document).ready(function () {
-              $("#DoliconnectLoadingModal").modal("show");
+              $("#DoliconnectLoadingModal").modal("toggle");
               $.ajax({
                 url:"'.admin_url('admin-ajax.php').'",
                 type:"POST",
@@ -3052,13 +3054,12 @@ function doliModalDiv() {
                   }
                   if (document.getElementById("doliModalDiv") && response.data.modal) {
                     document.getElementById("doliModalDiv").innerHTML = response.data.modal; 
-                    $("#doliModalCartInfos").modal("show");     
-                  }
-                  //$("#offcanvasDolicart").offcanvas("show");  
+                    $("#doliModalCartInfos").modal("toggle");     
+                  } 
                 } else {
                   if (document.getElementById("doliModalDiv") && response.data.modal) {
                     document.getElementById("doliModalDiv").innerHTML = response.data.modal; 
-                    $("#doliModalCartInfos").modal("show");     
+                    $("#doliModalCartInfos").modal("toggle");     
                   }
                 }
                 $("#doliModalCartInfos").on("hidden.bs.modal", function () {
