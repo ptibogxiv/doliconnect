@@ -2923,7 +2923,7 @@ function doliModalButton($case, $id, $title, $type = 'button', $class = 'btn btn
       document.querySelector("#'.$id.'").addEventListener("click", function(e) {
         e.preventDefault();
         e.stopPropagation();
-        $("#DoliconnectLoadingModal").modal("toggle");
+        $("#DoliconnectLoadingModal").modal("show");
             $.ajax({
               url :"'.admin_url('admin-ajax.php').'",
               type:"POST",
@@ -2949,19 +2949,19 @@ function doliModalButton($case, $id, $title, $type = 'button', $class = 'btn btn
                 }
                 if (document.getElementById("doliModalDiv")) {
                   document.getElementById("doliModalDiv").innerHTML = response.data.modal;
-                  $("#doliModal'.$id.'").modal("toggle");     
+                  $("#doliModal'.$id.'").modal("show");     
                 }
               } else {
                 if (document.getElementById("doliModalDiv")) {
                   document.getElementById("doliModalDiv").innerHTML = response.data.modal;
-                  $("#doliModal'.$id.'").modal("toggle");         
+                  $("#doliModal'.$id.'").modal("show");         
                 }
               }
-              $("#DoliconnectLoadingModal").modal("hide");
             $("#doliModal'.$id.'").on("hidden.bs.modal", function () {
               $("#doliModal'.$id.'").modal("dispose");
               document.getElementById("doliModalDiv").innerHTML = "";
-            });
+            }); 
+            $("#DoliconnectLoadingModal").modal("hide");
         }, false);          
       });
     });
