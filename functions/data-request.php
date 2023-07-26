@@ -817,9 +817,18 @@ global $current_user;
 				wp_send_json_success($response);
 				die();
 			} elseif (isset($_POST['modify']) && ($_POST['modify'] == "wish" || $_POST['modify'] == "unwish")) {
+				if (!is_numeric(trim($_POST['qty']))) $_POST['qty'] = $mstock['qty'];
+				$qty = trim($_POST['qty'])/$mstock['step'];
+				$qty = ceil($qty)*$mstock['step'];
+				$price = doliProductPrice($product, $qty, false, true);
+				$result = doliaddtocart($product, $mstock, $qty, $price, isset($_POST['product-add-timestamp_start'])?trim($_POST['product-add-timestamp_start']):null, isset($_POST['product-add-timestamp_end'])?trim($_POST['product-add-timestamp_end']):null);
 				$response = [
-					'newqty' => trim($_POST['qty']),
+					'message' => dolialert('success', $result['message']),
+					'newqty' => $result['newqty'],
 					'items' => $result['items'],	
+					'list' => $result['list'],
+					'lines' => $result['lines'],
+					'total' => $result['total'],	
 					'modal' => doliModalTemplate('CartInfos', __( 'Wishlist', 'doliconnect'), 'Soon...', '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">'.__( "Close", "doliconnect").'</button>'),
 				];
 				wp_send_json_success($response);			
