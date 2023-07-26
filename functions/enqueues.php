@@ -36,14 +36,14 @@ $version=$versionbase;
   	wp_enqueue_script( 'bootstrap.bundle.min');
 	wp_enqueue_script( 'jquery-masonry', array( 'jquery' ) );
 	if (empty(get_option('doliconnectfontawesome'))) {
-  		wp_register_script( 'font-awesome', '//use.fontawesome.com/releases/v6.2.1/js/all.js', array(), '6.2.1' );
+  		wp_register_script( 'font-awesome', '//use.fontawesome.com/releases/v6.4.0/js/all.js', array(), '6.4.0' );
 		wp_enqueue_script( 'font-awesome');
 	}
 	//wp_register_script( 'doliconnect-dolicart', plugins_url( 'doliconnect/includes/js/dolicart.js'), array( 'jquery' ), '', false );
 	//wp_enqueue_script( 'doliconnect-dolicart' );
   	wp_register_style( 'bootstrap-social', plugins_url( 'doliconnect/includes/bootstrap/css/bootstrap-social.css' ), array(), $version );
 	wp_enqueue_style( 'bootstrap-social');
-  	wp_register_style( 'flag-icon', plugins_url( 'doliconnect/includes/flag-icon-css/css/flag-icons.css' ), array(), '6.6.5' ); 
+  	wp_register_style( 'flag-icon', plugins_url( 'doliconnect/includes/flag-icon-css/css/flag-icons.css' ), array(), '6.9.2' ); 
 	wp_enqueue_style( 'flag-icon');
 
 }
