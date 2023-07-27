@@ -16,18 +16,18 @@ function doliconnect_enqueues() {
 
 /* Styles */
 if ( empty(get_theme_mod( 'ptibogxivtheme_css')) || get_theme_mod( 'ptibogxivtheme_css') == 'css' ) {
-$css='css';
-$versionbase = '5.3.0'; 
-$version=$versionbase; 
+	$css = 'css';
+	$versionbase = '5.3.1'; 
+	$version = $versionbase; 
 } else {
-$css='bootswatch/'.get_theme_mod( 'ptibogxivtheme_css');
-$version='5.3.0'; 
-$versionbase=$version;
+	$css = 'bootswatch/'.get_theme_mod( 'ptibogxivtheme_css');
+	$version = '5.3.0'; 
+	$versionbase = $version;
 }
 
 if (!empty(get_theme_mod( 'ptibogxivtheme_css')) && $version != $versionbase && empty(get_option('doliconnectbeta'))) {
-$css='css';
-$version=$versionbase;
+	$css = 'css';
+	$version = $versionbase;
 }
 
 	wp_register_style( 'bootstrap.min', plugins_url( 'doliconnect/includes/bootstrap/'.$css.'/bootstrap.min.css' ), array(), $version );
