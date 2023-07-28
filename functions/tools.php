@@ -1884,7 +1884,7 @@ $paymentmethods .= "</div>";
 $paymentmethods .= '</div></div></div></div>';
 }}
 
-if (isset($listpaymentmethods->stripe) && !empty(array_intersect(array('card'), $listpaymentmethods->stripe->types)) && empty($thirdparty->mode_reglement_id) ) {
+if (isset($listpaymentmethods->stripe) && isset($listpaymentmethods->stripe->types) && !empty(array_intersect(array('card'), $listpaymentmethods->stripe->types)) && empty($thirdparty->mode_reglement_id) ) {
 $paymentmethods .= '<div class="accordion-item"><h2 class="accordion-header" id="flush-headingnewcard"><button class="accordion-button';
 if (empty($countPM)) { $paymentmethods .= ""; } else { $paymentmethods .= " collapsed"; }
 $paymentmethods .= '" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapsenewcard" aria-expanded="';
