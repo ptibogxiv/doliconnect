@@ -2102,7 +2102,7 @@ $paymentmethods .= "<button type='button' id='AddCardButton' class='btn btn-warn
 $paymentmethods .= '</div></div></div></div>';
 }
 
-if (isset($listpaymentmethods->stripe) && !empty(array_intersect(array('sepa_debit'), $listpaymentmethods->stripe->types)) && empty($thirdparty->mode_reglement_id) ) {
+if (isset($listpaymentmethods->stripe) && isset($listpaymentmethods->stripe->types) && !empty(array_intersect(array('sepa_debit'), $listpaymentmethods->stripe->types)) && empty($thirdparty->mode_reglement_id) ) {
 $paymentmethods .= '<div class="accordion-item"><h2 class="accordion-header" id="flush-headingnewsepa"><button class="accordion-button';
 if (empty($countPM) && empty(array_intersect(array('card'), $listpaymentmethods->stripe->types))) { $paymentmethods .= ""; } else { $paymentmethods .= " collapsed"; }
 $paymentmethods .= '" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapsenewsepa" aria-expanded="';
@@ -2115,7 +2115,7 @@ $paymentmethods .= '<i class="fas fa-plus-circle fa-3x fa-fw float-start"></i> '
 }
 $paymentmethods .= '</button></h2>';
 $paymentmethods .= '<div id="flush-collapsenewsepa" class="accordion-collapse collapse';
-if (empty($countPM) && empty(array_intersect(array('card'), $listpaymentmethods->stripe->types))) { $paymentmethods .= " show"; }
+if (empty($countPM) && isset($listpaymentmethods->stripe) && isset($listpaymentmethods->stripe->types) && empty(array_intersect(array('card'), $listpaymentmethods->stripe->types))) { $paymentmethods .= " show"; }
 $paymentmethods .= '" aria-labelledby="flush-headingnewsepa" data-bs-parent="#accordionFlushExample"><div class="accordion-body bg-light">';
 if ($countPM >= $maxPM && empty($object)) {
 $paymentmethods .= '<div class="text-justify"><i class="fas fa-times-circle fa-3x fa-fw float-start"></i>'.__( "You have reached limit of payment methods. Please delete a payment method for add a new one.", 'doliconnect').'</div></div></div>';
@@ -2309,7 +2309,7 @@ $paymentmethods .= "<button id='AddIbanButton' class='btn btn-warning btn-block'
 $paymentmethods .= '</div></div></div></div>';
 }
 
-if (isset($listpaymentmethods->stripe) && !empty(array_intersect(array('klarna'), $listpaymentmethods->stripe->types)) && empty($thirdparty->mode_reglement_id) && !empty($module) && is_object($object) && isset($object->id) ) {
+if (isset($listpaymentmethods->stripe) && isset($listpaymentmethods->stripe->types) && !empty(array_intersect(array('klarna'), $listpaymentmethods->stripe->types)) && empty($thirdparty->mode_reglement_id) && !empty($module) && is_object($object) && isset($object->id) ) {
 $paymentmethods .= '<div class="accordion-item"><h2 class="accordion-header" id="flush-headingklarna"><button class="accordion-button';
 if (empty($countPM) && empty(array_intersect(array('card'), $listpaymentmethods->stripe->types))) { $paymentmethods .= ""; } else { $paymentmethods .= " collapsed"; }
 $paymentmethods .= '" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseklarna" aria-expanded="';
@@ -2318,7 +2318,7 @@ $paymentmethods .= '" aria-controls="flush-collapseklarna">';
 $paymentmethods .= '<i class="fas fa-university fa-3x fa-fw float-start"></i> '.__( 'Buy now or pay later with Klarna', 'doliconnect');
 $paymentmethods .= '</button></h2>';
 $paymentmethods .= '<div id="flush-collapseklarna" class="accordion-collapse collapse';
-if (empty($countPM) && empty(array_intersect(array('card'), $listpaymentmethods->stripe->types))) { $paymentmethods .= " show"; }
+if (empty($countPM) && isset($listpaymentmethods->stripe) && isset($listpaymentmethods->stripe->types) && empty(array_intersect(array('card'), $listpaymentmethods->stripe->types))) { $paymentmethods .= " show"; }
 $paymentmethods .= '" aria-labelledby="flush-headingklarna" data-bs-parent="#accordionFlushExample"><div class="accordion-body bg-light">';
 if (empty($listpaymentmethods->stripe->live)) {
 $paymentmethods .= "<i class='fas fa-info-circle'></i> <b>".__( "Stripe's in sandbox mode", 'doliconnect')."</b> <small>(<a href='https://stripe.com/docs/payments/klarna/accept-a-payment?platform=web#repayment-method' target='_blank' rel='noopener'>".__( "Link to test Klarna", 'doliconnect')."</a>)</small>";
