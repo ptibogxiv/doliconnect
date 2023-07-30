@@ -1562,11 +1562,6 @@ print "<div class='card shadow-sm' id='cart-form'><div class='card-header'>".__(
 
 print doliline($object, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), false);
 
-if ( isset($object) && is_object($object) && isset($object->socid) &&(doliconnector($current_user, 'fk_soc') == $object->socid) ) {
-//print "</ul><ul id='dolitotal' class='list-group list-group-flush'>";
-print dolitotal($object);  
-}
-
 if ( has_filter('mydoliconnectcartfilter') ) {
 print "<li class='list-group-item bg-light'>";
 print apply_filters('mydoliconnectcartfilter', $object);
