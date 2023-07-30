@@ -1235,7 +1235,7 @@ global $current_user;
 		$object = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order', true)."?contact_list=0", null, dolidelay('order'));
 		$modal['header'] = __( 'Cart', 'doliconnect');
 		$modal['body'] = doliline($object, false, false);
-		$modal['footer'] = '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">'.__( "Continue shopping", "doliconnect").'</button> <button type="button" class="btn btn-outline-secondary" onclick="doliJavaCartAction(\'update\', '.$object->id.', 0, \'delete\');">'.__( 'Empty the basket', 'doliconnect').'</button> <a class="btn btn-primary" role="button" href="'.esc_url(doliconnecturl('dolicart')).'" >'.__( 'Finalize the order', 'doliconnect').'</a>';
+		$modal['footer'] = doliCartButton($object);
 		$response['js'] = null;
 		$response['modal'] = doliModalTemplate($_POST['id'], $modal['header'], $modal['body'], $modal['footer'], 'modal-lg', null, 'p-0');
 		wp_send_json_success($response);

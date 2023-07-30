@@ -1477,6 +1477,12 @@ function dolitotal($object) {
   return $total;
 }
 
+function doliCartButton ($object) {
+  $button = '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">'.__( "Continue shopping", "doliconnect").'</button>';
+  if (isset($object->lines) && !empty($object->lines)) $button .= '<button type="button" class="btn btn-outline-secondary" onclick="doliJavaCartAction(\'update\', '.$object->id.', 0, \'delete\');">'.__( 'Empty the basket', 'doliconnect').'</button> <a class="btn btn-primary" role="button" href="'.esc_url(doliconnecturl('dolicart')).'" >'.__( 'Finalize the order', 'doliconnect').'</a>';
+return $button;
+}
+
 function doliline($object, $refresh = false, $refreshstock = false) {
 global $current_user;
   $doliline = null;
