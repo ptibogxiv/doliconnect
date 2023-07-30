@@ -1232,7 +1232,7 @@ global $current_user;
 		wp_send_json_success($response);
 		die();
 	} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "doliCart" ) {
-		$object = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order')."?contact_list=0", null, dolidelay('order'));
+		$object = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order', true)."?contact_list=0", null, dolidelay('order'));
 		$modal['header'] = __( 'Cart', 'doliconnect');
 		$modal['body'] = doliline($object, false, false);
 		$modal['footer'] = '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">'.__( "Continue shopping", "doliconnect").'</button> <a class="btn btn-primary" role="button" href="'.esc_url(doliconnecturl('dolicart')).'" >'.__( 'Finalize the order', 'doliconnect').'</a>';
