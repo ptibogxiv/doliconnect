@@ -10,8 +10,7 @@
 		jQuery("#DoliconnectLoadingModal").modal("show");
 		var $form = $(this);
 		var url = "'.esc_url(doliconnecturl('dolicart')).'";
-		jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function (e) {
-			document.getElementById("message-dolicart").innerHTML = "";  
+		jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function (e) {  
 			  $.post($form.attr("action"), $form.serialize(), function(response) {
 			if (response.success) { 
 			  //console.log(response.data.message);
@@ -26,11 +25,7 @@
 			  }
 			  if (document.getElementById("DoliWidgetCartItems")) {
 				document.getElementById("DoliWidgetCartItems").innerHTML = response.data.items;      
-			  }
-			  if (document.getElementById("message-dolicart")) {
-				document.getElementById("message-dolicart").innerHTML = response.data.message;      
-			  }
-			  $("#offcanvasDolicart").offcanvas("show");  
+			  } 
 			} else {
 			  //console.log("error updating qty " + response.data.message);
 			}
