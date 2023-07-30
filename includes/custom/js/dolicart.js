@@ -31,10 +31,6 @@ function doliJavaCartAction(form, id, qty, acase) {
 			if (document.getElementById("DoliWidgetCartItems")) {
 			  document.getElementById("DoliWidgetCartItems").innerHTML = response.data.items;      
 			}
-			if (document.getElementById("message-dolicart")) {
-			  document.getElementById("message-dolicart").innerHTML = response.data.message;      
-			}
-			//$("#offcanvasDolicart").offcanvas("show");  
 		  } else {
 		  }
 		  $("#DoliconnectLoadingModal").modal("hide");
