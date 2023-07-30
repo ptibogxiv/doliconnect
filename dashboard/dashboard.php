@@ -570,8 +570,6 @@ print "</div><ul class='list-group list-group-flush'>";
  
 print doliline($proposalfo, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 
-print dolitotal($proposalfo);
-
 if ( $proposalfo->last_main_doc != null ) {
 $doc = array_reverse( explode("/", $proposalfo->last_main_doc) );      
 $document = dolidocdownload($doc[2], $doc[1], $doc[0], __( 'Summary', 'doliconnect'), true, $proposalfo->entity);
@@ -784,8 +782,6 @@ print "<div class='w-auto text-muted d-none d-sm-block' ><div style='display:inl
 print "</div><ul class='list-group list-group-flush'>";
  
 print doliline($orderfo, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
-
-print dolitotal($orderfo);
 
 if ( $orderfo->last_main_doc != null ) {
 $doc = array_reverse(explode("/", $orderfo->last_main_doc)); 
@@ -1098,8 +1094,6 @@ print "</div><ul class='list-group list-group-flush'>";
  
 print doliline($invoicefo, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 
-print dolitotal($invoicefo);
-
 if ( $invoicefo->last_main_doc != null ) {
 $doc = array_reverse(explode("/", $invoicefo->last_main_doc)); 
 $document_order = dolidocdownload($doc[2], $doc[1], $doc[0], __( 'Invoice', 'doliconnect'), true, $invoicefo->entity);
@@ -1279,8 +1273,6 @@ print "</div><ul class='list-group list-group-flush'>";
 
 print doliline($contractfo, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 
-print dolitotal($contractfo);
-
 if ( $contractfo->last_main_doc != null ) {
 $doc = array_reverse( explode("/", $contractfo->last_main_doc) );      
 $document = dolidocdownload($doc[2], $doc[1], $doc[0], __( 'Summary', 'doliconnect'), true, $contractfo->entity);
@@ -1409,8 +1401,6 @@ print "<div class='w-auto text-muted d-none d-sm-block' ><div style='display:inl
 print "</div><ul class='list-group list-group-flush'>";
 
 print doliline($contractfo, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
-
-print dolitotal($contractfo);
 
 if ( $contractfo->last_main_doc != null ) {
 $doc = array_reverse( explode("/", $contractfo->last_main_doc) );      
