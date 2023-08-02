@@ -411,28 +411,23 @@ function doliProducPriceTaxAssuj ($price_ht, $price_ttc, $vat) {
 
 function doliProductPrice($product, $quantity = null, $refresh = false, $nohtml = false) {
 global $current_user;
-
-$button = null;
-$price = array();
-
-$thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty', $refresh));
-if (isset($thirdparty->tva_assuj) && empty($thirdparty->tva_assuj)) {
-  if (isset($product->tva_tx))  $product->tva_tx = 0;
-}
-
-if (doliconnector($current_user, 'fk_order') > 0) {
-  $orderfo = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order'), null, $refresh);
-}
-$currency=isset($orderfo->multicurrency_code)?$orderfo->multicurrency_code:strtoupper(doliconst("MAIN_MONNAIE", $refresh));
-
-if ( $product->type == '1' && !is_null($product->duration_unit) && '0' < ($product->duration_value)) {
-  if ( $product->duration_unit == 'i' ) {
-    $altdurvalue=60/$product->duration_value; 
+  $button = null;
+  $price = array();
+  $thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty', $refresh));
+  if (isset($thirdparty->tva_assuj) && empty($thirdparty->tva_assuj)) {
+    if (isset($product->tva_tx))  $product->tva_tx = 0;
   }
-}
-
-$price['discount'] = !empty(doliconnector($current_user, 'remise_percent'))?doliconnector($current_user, 'remise_percent'):'0';
-$customer_discount = $price['discount'];
+  if (doliconnector($current_user, 'fk_order') > 0) {
+    $orderfo = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order'), null, $refresh);
+  }
+  $currency=isset($orderfo->multicurrency_code)?$orderfo->multicurrency_code:strtoupper(doliconst("MAIN_MONNAIE", $refresh));
+  if ( $product->type == '1' && !is_null($product->duration_unit) && '0' < ($product->duration_value)) {
+    if ( $product->duration_unit == 'i' ) {
+      $altdurvalue=60/$product->duration_value; 
+    }
+  }
+  $price['discount'] = !empty(doliconnector($current_user, 'remise_percent'))?doliconnector($current_user, 'remise_percent'):'0';
+  $customer_discount = $price['discount'];
 
 if ( !empty(doliconst("PRODUIT_MULTIPRICES", $refresh)) && !empty($product->multiprices_ttc) ) {
 
