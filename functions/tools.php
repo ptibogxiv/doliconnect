@@ -2890,7 +2890,6 @@ global $current_user;
 		// Display error message
 		return esc_html__( 'This plugin requires WordPress 4.9.6.', 'doliconnect');
 	}
-
 }
 
 function doliModalTemplate($id, $header, $body, $footer, $size = null, $headercss = null, $bodycss = null, $footercss = null, $formurl = null) {
@@ -3040,9 +3039,6 @@ function doliModalDiv() {
                   }
                   if (document.getElementById("DoliFooterCartItems")) {  
                     document.getElementById("DoliFooterCartItems").innerHTML = response.data.items;
-                  }
-                  if (document.getElementById("DoliCartItemsList") && response.data.list) {  
-                    document.getElementById("DoliCartItemsList").innerHTML = response.data.list;
                   }
                   if (document.getElementById("DoliWidgetCartItems")) {
                     document.getElementById("DoliWidgetCartItems").innerHTML = response.data.items;      
