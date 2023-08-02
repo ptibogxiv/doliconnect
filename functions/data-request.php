@@ -786,8 +786,7 @@ global $current_user;
 				$response = [
 					'message' => dolialert('success', $result['message']),
 					'newqty' => $result['newqty'],
-					'items' => $result['items'],	
-					'list' => $result['list'],
+					'items' => $result['items'],
 					'lines' => $result['lines'],
 					'total' => $result['total']
 				];	
@@ -808,8 +807,7 @@ global $current_user;
 				$response = [
 					'message' => dolialert('success', $result['message']),
 					'newqty' => $result['newqty'],
-					'items' => $result['items'],	
-					'list' => $result['list'],
+					'items' => $result['items'],
 					'lines' => $result['lines'],
 					'total' => $result['total']
 				];
@@ -825,8 +823,7 @@ global $current_user;
 				$response = [
 					'message' => dolialert('success', $result['message']),
 					'newqty' => $result['newqty'],
-					'items' => $result['items'],	
-					'list' => $result['list'],
+					'items' => $result['items'],
 					'lines' => $result['lines'],
 					'total' => $result['total'],	
 					'modal' => doliModalTemplate('CartInfos', __( 'Wishlist', 'doliconnect'), 'Soon...', '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">'.__( "Close", "doliconnect").'</button>'),
@@ -847,7 +844,6 @@ global $current_user;
 						$dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolidelay('doliconnector', true));
 						$response = [
 							'items' => 0,
-							'list' => doliconnect_CartItemsList(),
 							'lines' => doliline(0),
 							'total' => doliprice(0),
 							'message' => __( 'Your cart has been emptied', 'doliconnect'),
@@ -869,7 +865,6 @@ global $current_user;
 					$dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolidelay('doliconnector', true));
 					$response = [
     					'items' => 0,
-    					'list' => doliconnect_CartItemsList(),
     					'lines' => doliline(0),
 						'total' => doliprice(0),
     					'message' => __( 'Your cart has been emptied', 'doliconnect'),
@@ -1253,7 +1248,7 @@ global $current_user;
 		}      
 		$modal['body'] .= '</ul></div><div id="loadingSelectLang" style="display:none"><br><br><br><center><div class="align-middle"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div><h4>'.__('Loading', 'doliconnect').'</h4></div></center><br><br><br></div>';	
 		$modal['footer'] = null;
-		$response['js'] = plugins_url( 'doliconnect/includes/js/doliselectlang.js');
+		$response['js'] = plugins_url( 'doliconnect/includes/custom/js/doliselectlang.js');
 		$response['modal'] = doliModalTemplate($_POST['id'], $modal['header'], $modal['body'], $modal['footer']);
 		wp_send_json_success($response);
 		die();
