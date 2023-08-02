@@ -375,7 +375,7 @@ function doliProductCart($product, $refresh = null, $line = null) {
   return $button;
 }
 
-function doliProducPriceTaxAssuj ($price_ht, $price_ttc, $vat) {
+function doliProducPriceTaxAssuj($price_ht, $price_ttc, $vat) {
   if (!empty(get_option('dolibarr_b2bmode')) || empty($vat)) {
     return $price_ht;
   } else {
