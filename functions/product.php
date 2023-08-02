@@ -415,7 +415,7 @@ global $current_user;
 $button = null;
 $price = array();
 
-$thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty'));
+$thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty', $refresh));
 if (isset($thirdparty->tva_assuj) && empty($thirdparty->tva_assuj)) {
   if (isset($product->tva_tx))  $product->tva_tx = 0;
 }
