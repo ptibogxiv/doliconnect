@@ -493,8 +493,6 @@ if ( !empty(doliconst("PRODUIT_MULTIPRICES", $refresh)) && !empty($product->mult
     $product3 = callDoliApi("GET", $requestp, null, dolidelay('product', $refresh));
     //$button .= var_dump($product3);
   }
- 
-
   if ( doliCheckModules('discountprice', $refresh) && isset($product3) && !isset($product3->error) ) {
     if (!empty($product3[0]->discount)) {
       $price_ttc3=$product->price_ttc-($product->price_ttc*$product3[0]->discount/100);
