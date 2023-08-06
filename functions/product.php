@@ -577,7 +577,11 @@ $price['subprice'] = $price_ht;
       $button .= '<span class="position-absolute top-100 start-0 translate-middle badge rounded-pill bg-info"><small>'.doliprice( $refprice/$product->net_measure, null, $currency).'/'.$unit[0]->short_label.'<span class="visually-hidden">net measure price</span></small></span>';
     }
     if (!empty($price['discount'])) $button .= '<span class="position-absolute top-100 start-100 translate-middle badge bg-light text-dark"><small><s>'.doliprice(doliProducPriceTaxAssuj($price_ht, $price_ttc, $product->tva_tx), $currency).'</s><span class="visually-hidden">initial price</span></small></span>';
-    $button .= '</a><br><br>';
+    $button .= '</a><br>';
+    if (isset($mstock['step']) && $mstock['step']>1) {
+      $button .= sprintf(__( 'Sold by %s', 'doliconnect'), $mstock['step']);
+    }
+    $button .= '<br>';
     /*
     //if ( empty($time) && !empty($product->duration_value) ) { $button .='/'.doliduration($product); } 
     //if ( !empty($altdurvalue) ) { $button .= "<tr><td class='text-end'>soit ".doliprice( $altdurvalue*$product->price_ttc, null, $currency)." par ".__( 'hour', 'doliconnect')."</td></tr>"; } 
