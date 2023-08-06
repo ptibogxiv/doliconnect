@@ -342,7 +342,7 @@ function doliProductCart($product, $refresh = null, $line = null) {
       $button .= '<input id="qty-prod-'.$product->id.'" type="text" class="form-control form-control-sm" value="'.__( 'Unavailable', 'doliconnect').'" aria-label="'.__( 'Unavailable', 'doliconnect').'" style="text-align:center;" disabled readonly>';
       $button .= '</div>';
     } else {
-      if ( $product->id == doliconst("ADHERENT_PRODUCT_ID_FOR_SUBSCRIPTIONS", dolidelay('constante')) ) {
+      if ( doliCheckModules('adherentsplus', $refresh) && $product->id == doliconst("ADHERENT_PRODUCT_ID_FOR_SUBSCRIPTIONS", dolidelay('constante')) ) {
         $button .= '<div class="d-grid gap-2">';
         if (empty($mstock['qty'])) {
           $button .= '<button class="btn btn-sm btn-warning mw-100" name="plus" value="plus" type="submit">'.__( 'Add to basket', 'doliconnect').'</button><input id="qty-prod-'.$product->id.'" type="hidden" aria-label="Quantity" value="'.$mstock['qty'].'" readonly>';
@@ -360,6 +360,7 @@ function doliProductCart($product, $refresh = null, $line = null) {
           $button .= '<button class="btn btn-sm btn-light" name="wish" value="wish" type="submit" onclick="doliJavaCartAction(\'updateLine\', '.$product->id.', 1, \'wish\');"><i class="fas fa-heart" style="color:Fuchsia"></i></button>';
         }    
         $button .= '</div>';
+        if (isset($mstock['step']) && $mstock['step']>1) $button .= '<div class="form-text" id="basic-addon4">'.sprintf(__( 'Sold by %s', 'doliconnect'), $mstock['step']).'</div>';
       }  
     }  
   } else {
@@ -577,11 +578,7 @@ $price['subprice'] = $price_ht;
       $button .= '<span class="position-absolute top-100 start-0 translate-middle badge rounded-pill bg-info"><small>'.doliprice( $refprice/$product->net_measure, null, $currency).'/'.$unit[0]->short_label.'<span class="visually-hidden">net measure price</span></small></span>';
     }
     if (!empty($price['discount'])) $button .= '<span class="position-absolute top-100 start-100 translate-middle badge bg-light text-dark"><small><s>'.doliprice(doliProducPriceTaxAssuj($price_ht, $price_ttc, $product->tva_tx), $currency).'</s><span class="visually-hidden">initial price</span></small></span>';
-    $button .= '</a><br>';
-    if (isset($mstock['step']) && $mstock['step']>1) {
-      $button .= sprintf(__( 'Sold by %s', 'doliconnect'), $mstock['step']);
-    }
-    $button .= '<br>';
+    $button .= '</a><br><br>';
     /*
     //if ( empty($time) && !empty($product->duration_value) ) { $button .='/'.doliduration($product); } 
     //if ( !empty($altdurvalue) ) { $button .= "<tr><td class='text-end'>soit ".doliprice( $altdurvalue*$product->price_ttc, null, $currency)." par ".__( 'hour', 'doliconnect')."</td></tr>"; } 
