@@ -3,7 +3,7 @@
 Contributors: ptibogxiv, audrasjb
 Tags: erp, crm, ecommerce, dolibarr, payment, interface, customer, subscription, membership, doliconnect, dashboard, paypal, stripe, doliconnect, invoice, order, donation, GDPR, RGPD, LGPD, CCPA
 Requires at least: 5.0
-Tested up to: 6.3
+Tested up to: 6.4
 Stable tag: 7.6.7
 Requires PHP: 7.4
 License: GPL v3 or later
