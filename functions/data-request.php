@@ -1229,7 +1229,7 @@ global $current_user;
 	} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "doliCart" ) {
 		$object = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order', true)."?contact_list=0", null, dolidelay('order'));
 		$modal['header'] = __( 'Cart', 'doliconnect');
-		$modal['body'] = doliline($object, false, false);
+		$modal['body'] = doliline($object, false, false, false);
 		$modal['footer'] = doliCartButton($object);
 		$response['js'] = null;
 		$response['modal'] = doliModalTemplate($_POST['id'], $modal['header'], $modal['body'], $modal['footer'], 'modal-lg', null, 'p-0');
