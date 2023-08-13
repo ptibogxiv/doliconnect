@@ -2279,28 +2279,6 @@ print "</div><div class='float-end'>";
 print dolihelp('ISSUE');
 print "</div></small>";
 print '</div></div>';
-
-if ( isset($linkedmember) && !isset($linkedmember->error) && $linkedmember != null ) { 
-foreach ( $linkedmember as $member ) {
-
-print '<div class="modal fade" id="member-'.$member->id.'" tabindex="-1" role="dialog" aria-labelledby="member-'.$member->id.'Title" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-<div class="modal-dialog modal-lg modal-dialog-centered" role="document"><div class="modal-content border-0"><div class="modal-header border-0">
-<h5 class="modal-title" id="member-'.$member->id.'Title">'.__( 'Update member', 'doliconnect').'</h5><button id="Closemember'.$member->id.'-form" type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
-<div id="member'.$member->id.'-form">';
-print "<form class='was-validated' role='form' action='$url' id='member-".$member->id."-form' method='post'>";
-
-print dolimodalloaderscript('member'.$member->id.'-form');
-
-print doliuserform($member, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'member', doliCheckRights('adherent', 'creer')); 
-
-print "</div>".doliloading('member'.$member->id.'-form');
-     
-print "<div id='Footermember".$member->id."-form' class='modal-footer'><button name='update_member' value='".$member->id."' class='btn btn-warning btn-block' type='submit' ";
-if (!doliCheckRights('adherent', 'creer')) { print 'disabled'; }
-print ">".__( 'Update', 'doliconnect')."</button></form></div>
-</div></div></div>";
-}}
-
 }
 
 //*****************************************************************************************
