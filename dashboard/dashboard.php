@@ -2216,25 +2216,13 @@ global $current_user;
 $request = "/adherentsplus/".doliconnector($current_user, 'fk_member')."/linkedmembers";
 
 if ( isset ($_POST['unlink_member']) && $_POST['unlink_member'] > 0 ) {
-//$memberv = callDoliApi("GET", "/adherentsplus/".esc_attr($_POST['unlink_member']), null, 0);
-//if ( $memberv->socid == doliconnector($current_user, 'fk_soc') ) {
-// try deleting
 $delete = callDoliApi("DELETE", $request."/".esc_attr($_POST['unlink_member']), null, 0);
-
 print dolialert ('success', __( 'Your informations have been updated.', 'doliconnect'));
-
-//} else {
-// fail deleting
-//}
 $linkedmember = callDoliApi("GET", $request, null, dolidelay('member', true));
-
 } elseif ( isset ($_POST['update_member']) && $_POST['update_member'] > 0 ) {
-
 $memberv=$_POST['member'][''.$_POST['update_member'].''];
-
 $memberv = callDoliApi("PUT", "/members/".esc_attr($_POST['update_member']), $memberv, dolidelay('member', true));
 if ( false === $memberv ) {
-// fail deleting
 
 } else {
 print dolialert ('success', __( 'Your informations have been updated.', 'doliconnect'));
