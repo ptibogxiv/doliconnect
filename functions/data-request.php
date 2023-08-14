@@ -1170,10 +1170,11 @@ global $current_user;
 		wp_send_json_success($response);
 		die();
 	} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "renewmembership" ) {
-		if ( !empty(doliconnector($current_user, 'fk_member')) && doliconnector($current_user, 'fk_member') > 0 && doliconnector($current_user, 'fk_soc') > 0 ) {
-		  	$request = "/members/".doliconnector($current_user, 'fk_member');
-		  	$adherent = callDoliApi("GET", $request, null, dolidelay('member'));
-		} else {
+		if (isset($_POST['value1']) && !empty($_POST['value1']) && isset($_POST['value2']) && empty($_POST['value2'])) {
+			$adherent = callDoliApi("GET", "/members/".trim($_POST['value1']), null, dolidelay('member'));
+	  	} elseif ( isset($_POST['value1']) && !empty($_POST['value1']) && isset($_POST['value2']) && !empty($_POST['value2']) ) {
+		$adherent = callDoliApi("GET", "/members/".trim($_POST['value2']), null, dolidelay('member'));
+  		} else {
 			$adherent = (object) 0;
 			$adherent->typeid = 0;
 		}
