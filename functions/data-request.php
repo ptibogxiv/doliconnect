@@ -999,11 +999,12 @@ global $current_user;
 
 	$product = callDoliApi("GET", "/products/".doliconst("ADHERENT_PRODUCT_ID_FOR_SUBSCRIPTIONS", dolidelay('constante'))."?includestockdata=1&includesubproducts=true&includetrans=true", null, dolidelay('product', true));
 	$mstock = doliProductStock($product, false, true);
-
-	$requesta = "/members/".doliconnector($current_user, 'fk_member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)); 
-	if ( !empty(doliconnector($current_user, 'fk_member')) && doliconnector($current_user, 'fk_member') > 0 ) {
-		$adherent = callDoliApi("GET", $requesta, null, dolidelay('member'));
+	if (isset($_POST['memberid']) && is_numeric($_POST['memberid']) && $_POST['memberid'] > 0 ) {
+		$memberid = trim($_POST['memberid']);
+	} else {
+		$memberid = doliconnector($current_user, 'fk_member');
 	}
+	$adherent = callDoliApi("GET", "/members/".$memberid, null, dolidelay('member'));
 	$requestb= "/adherentsplus/type/".$adherent->typeid;
 	$adherenttype = callDoliApi("GET", $requestb, null, dolidelay('member'));
 
@@ -1177,8 +1178,8 @@ global $current_user;
   		} else {
 			$adherent = (object) 0;
 			$adherent->typeid = 0;
+			$adherent->id = 0;
 		}
-		$member_id = '';
 		$request= "/adherentsplus/type/".$adherent->typeid;
 		$adherenttype = callDoliApi("GET", $request, null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 		if ( !doliversion('14.0.0') || !isset($adherenttype->amount)) {
@@ -1194,7 +1195,7 @@ global $current_user;
 		'.__( 'From', 'doliconnect').' '.wp_date('d/m/Y', $adherenttype->date_nextbegin).' '.__( 'until', 'doliconnect').' '.wp_date('d/m/Y', $adherenttype->date_nextend);	
 		$modal['footer'] = '<form id="subscribe-form" action="'.admin_url('admin-ajax.php').'" method="post">';
 		$modal['footer'] .= '<input type="hidden" name="action" value="dolimember_request"><input type="hidden" name="case" value="subscription"><input type="hidden" name="dolimember-nonce" value="'.wp_create_nonce( 'dolimember-nonce').'">';
-		$modal['footer'] .= '<input type="hidden" name="update_membership" value="renew">';
+		$modal['footer'] .= '<input type="hidden" name="update_membership" value="renew"><input type="hidden" name="memberid" value="'.$adherent->id.'">';
 		$modal['footer'] .= '<div class="d-grid gap-2"><button class="btn btn-danger" type="submit">'.__( 'Add to basket', 'doliconnect').'</button></div></form>';
 		$response['js'] = plugins_url( 'doliconnect/includes/custom/js/renewmembership.js');
 		$response['modal'] = doliModalTemplate($_POST['id'], $modal['header'], $modal['body'], $modal['footer']);
