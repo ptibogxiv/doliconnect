@@ -1184,18 +1184,18 @@ global $current_user;
 		if ( !doliversion('14.0.0') || !isset($adherenttype->amount)) {
 			$adherenttype->amount = $adherenttype->price;
 		}
-		$modal['header'] = __( 'Pay my subscription', 'doliconnect');
-		$modal['body'] = '<h6>'.__( 'This subscription', 'doliconnect').'</h6>
+		$modal['header'] = __( 'Renew membership', 'doliconnect');
+		$modal['body'] = '<h6>'.__( 'This membership', 'doliconnect').'</h6>
 		'.__( 'Price:', 'doliconnect').' '.doliprice($adherenttype->price_prorata).'<br>
 		'.__( 'From', 'doliconnect').' '.wp_date('d/m/Y', $adherenttype->date_begin).' '.__( 'until', 'doliconnect').' '.wp_date('d/m/Y', $adherenttype->date_end).'
 		<hr>
-		<h6>'.__( 'Next subscription', 'doliconnect').'</h6>
+		<h6>'.__( 'Next membership', 'doliconnect').'</h6>
 		'.__( 'Price:', 'doliconnect').' '.doliprice($adherenttype->amount).'<br>
 		'.__( 'From', 'doliconnect').' '.wp_date('d/m/Y', $adherenttype->date_nextbegin).' '.__( 'until', 'doliconnect').' '.wp_date('d/m/Y', $adherenttype->date_nextend);	
 		$modal['footer'] = '<form id="subscribe-form" action="'.admin_url('admin-ajax.php').'" method="post">';
 		$modal['footer'] .= '<input type="hidden" name="action" value="dolimember_request"><input type="hidden" name="case" value="subscription"><input type="hidden" name="dolimember-nonce" value="'.wp_create_nonce( 'dolimember-nonce').'">';
 		$modal['footer'] .= '<input type="hidden" name="update_membership" value="renew">';
-		$modal['footer'] .= '<button class="btn btn-danger" type="submit">'.__( 'Add to basket', 'doliconnect').'</button></form>';
+		$modal['footer'] .= '<div class="d-grid gap-2"><button class="btn btn-danger" type="submit">'.__( 'Add to basket', 'doliconnect').'</button></div></form>';
 		$response['js'] = plugins_url( 'doliconnect/includes/custom/js/renewmembership.js');
 		$response['modal'] = doliModalTemplate($_POST['id'], $modal['header'], $modal['body'], $modal['footer']);
 		wp_send_json_success($response);
