@@ -214,6 +214,11 @@ global $current_user;
   if (isset($thirdparty->tva_assuj) && empty($thirdparty->tva_assuj)) {
     if (isset($product->tva_tx))  $product->tva_tx = 0;
   }
+  if ( doliCheckModules('adherent') && $product->id == doliconst("ADHERENT_PRODUCT_ID_FOR_SUBSCRIPTIONS", dolidelay('constante'))) {
+    $price_base_type = 'TTC';
+  } else {
+    $price_base_type = 'HT';
+  }
   if (empty($product->status)) {
     if (!empty($mstock['line'])) $deleteline = callDoliApi("DELETE", "/orders/".doliconnector($current_user, 'fk_order')."/lines/".$mstock['line'], null, 0);
     $order = callDoliApi("GET", "/orders/".$orderid."?contact_list=0", null, dolidelay('order', true));
@@ -233,7 +238,7 @@ global $current_user;
       'date_end' => $date_end,
       'qty' => $quantity,
       'tva_tx' => $product->tva_tx, 
-      'price_base_type' => 'HT', 
+      'price_base_type' => $price_base_type, 
       'remise_percent' => $price['discount'],
       'subprice' => $price['subprice'],
       'localtax1_tx'=> (isset($mstock['localtax1_tx'])?$mstock['localtax1_tx']: null),
@@ -284,7 +289,7 @@ global $current_user;
         'date_end' => $date_end,
         'qty' => $quantity,
         'tva_tx' => $product->tva_tx, 
-        'price_base_type' => 'HT', 
+        'price_base_type' => $price_base_type, 
         'remise_percent' => $price['discount'],
         'subprice' => $price['subprice'],
         'localtax1_tx'=> (isset($mstock['localtax1_tx'])?$mstock['localtax1_tx']: null),
