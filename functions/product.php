@@ -83,7 +83,7 @@ global $current_user;
   }
   if ( isset($order->lines) && $order->lines != null ) {
     foreach ($order->lines as $line) {
-      if ($line->fk_product == $product->id) {
+      if ($line->fk_product == $product->id && $line->array_options == $array_options) {
         //$button = var_dump($line);
         $mstock['qty'] = $line->qty;
         $mstock['line'] = $line->id;
