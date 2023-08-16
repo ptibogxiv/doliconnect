@@ -214,7 +214,7 @@ global $current_user;
   if (isset($thirdparty->tva_assuj) && empty($thirdparty->tva_assuj)) {
     if (isset($product->tva_tx))  $product->tva_tx = 0;
   }
-  if ( doliCheckModules('adherent') && $product->id == doliconst("ADHERENT_PRODUCT_ID_FOR_SUBSCRIPTIONS", dolidelay('constante'))) {
+  if ( doliCheckModules('adherent') && $product->id == doliconst("ADHERENT_PRODUCT_ID_FOR_SUBSCRIPTIONS", dolidelay('constante')) && !empty(doliconst("FACTURE_TVAOPTION", dolidelay('constante'))) && !empty(doliconst("ADHERENT_VAT_FOR_SUBSCRIPTIONS", dolidelay('constante')))) {
     $price_base_type = 'TTC';
   } else {
     $price_base_type = 'HT';
