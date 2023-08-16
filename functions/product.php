@@ -233,6 +233,7 @@ global $current_user;
       'date_end' => $date_end,
       'qty' => $quantity,
       'tva_tx' => $product->tva_tx, 
+      'price_base_type' => 'HT', 
       'remise_percent' => $price['discount'],
       'subprice' => $price['subprice'],
       'localtax1_tx'=> (isset($mstock['localtax1_tx'])?$mstock['localtax1_tx']: null),
