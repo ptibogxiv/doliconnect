@@ -87,6 +87,7 @@ global $current_user;
         //$button = var_dump($line);
         $mstock['qty'] = $line->qty;
         $mstock['line'] = $line->id;
+        $mstock['array_options'] = $line->array_options;
       }
     }
   }
