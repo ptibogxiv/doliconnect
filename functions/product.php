@@ -53,7 +53,7 @@ function doliIncludeStock() {
   return $includestock;
 }
 
-function doliProductStock($product, $refresh = false, $nohtml = false) {
+function doliProductStock($product, $refresh = false, $nohtml = false, $array_options = null) {
 global $current_user;
   $mstock = array();
   $warehouse = doliconst('DOLICONNECT_ID_WAREHOUSE', $refresh);
