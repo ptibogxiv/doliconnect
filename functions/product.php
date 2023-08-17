@@ -83,7 +83,8 @@ global $current_user;
   }
   if ( isset($order->lines) && $order->lines != null ) {
     foreach ($order->lines as $line) {
-      if ($line->fk_product == $product->id && $line->array_options == $array_options) {
+      $line_array_options = (array) $line->array_options;
+      if ($line->fk_product == $product->id && $line_array_options == $array_options) {
         //$button = var_dump($line);
         $mstock['qty'] = $line->qty;
         $mstock['line'] = $line->id;
@@ -94,6 +95,7 @@ global $current_user;
   if (!isset($mstock['qty']) ) {
     $mstock['qty'] = 0;
     $mstock['line'] = null;
+    $mstock['array_options'] = null;
   }
   if (isset($mstock['line']) && !$mstock['line'] > 0) { $mstock['line'] = null; }
   if (! isset($mstock['line'])) { $mstock['line'] = null; }

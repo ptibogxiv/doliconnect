@@ -998,7 +998,6 @@ global $current_user;
 	if ( isset($_POST['dolimember-nonce']) && wp_verify_nonce( trim($_POST['dolimember-nonce']), 'dolimember-nonce') && isset($_POST['case']) && $_POST['case'] == "subscription" ) {
 
 	$product = callDoliApi("GET", "/products/".doliconst("ADHERENT_PRODUCT_ID_FOR_SUBSCRIPTIONS", dolidelay('constante'))."?includestockdata=1&includesubproducts=true&includetrans=true", null, dolidelay('product', true));
-	$mstock = doliProductStock($product, false, true);
 	if (isset($_POST['memberid']) && is_numeric($_POST['memberid']) && $_POST['memberid'] > 0 ) {
 		$memberid = trim($_POST['memberid']);
 	} else {
@@ -1011,7 +1010,7 @@ global $current_user;
 	$price = array();
 	$price['discount'] = 0;
 	$price['subprice'] = $adherenttype->price_prorata;
-
+	$mstock = doliProductStock($product, false, true, array('options_member_beneficiary' => $adherent->id));
 	$result = doliaddtocart($product, $mstock, 1, $price, $adherenttype->date_begin, $adherenttype->date_end, null, array('options_member_beneficiary' => $adherent->id));
 	if ($result >= 0) {
 		$response = [
