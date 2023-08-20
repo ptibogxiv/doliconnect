@@ -823,7 +823,7 @@ global $current_user;
 						'priv' => 0
 					];
 					$addwish = callDoliApi("POST", "/wishlist", $data, 0);
-				} elseif ($_POST['modify'] == "unwish" && doliWishlist(doliconnector($current_user, 'fk_soc'), trim($_POST['id']), false, true)) {
+				} elseif ($_POST['modify'] == "unwish") {
 					$deletewish = callDoliApi("DELETE", "/wishlist/".trim($_POST['id']), null, 0);
 				}
 				$request = "/wishlist?sortfield=t.rang&sortorder=ASC&thirdparty_ids=".doliconnector($current_user, 'fk_soc')."&sqlfilters=(t.priv%3A%3D%3A0)";
