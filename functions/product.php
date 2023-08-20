@@ -357,7 +357,7 @@ function doliProductCart($product, $refresh = null, $wishlist = true) {
         if (empty($mstock['qty'])) {
           $button .= '<button class="btn btn-sm btn-warning mw-100" name="plus" value="plus" type="submit">'.__( 'Add to basket', 'doliconnect').'</button><input id="qty-prod-'.$product->id.'" type="hidden" aria-label="Quantity" value="'.$mstock['qty'].'" readonly>';
         } else {
-          $button .= '<button class="btn btn-sm btn-warning mw-100" name="delete" value="delete" type="submit"><i class="fa-solid fa-trash-can"></i></button><input id="qty-prod-'.$product->id.'" type="hidden" aria-label="Quantity" value="'.$mstock['qty'].'" readonly>';
+          $button .= '<button class="btn btn-sm btn-warning" name="delete" value="delete" type="submit" onclick="doliJavaCartAction(\'updateLine\', '.$product->id.', 0, \'delete\');"><i class="fa-solid fa-trash-can"></i></button>';
         }
           $button .= '</div>';
       } else {
