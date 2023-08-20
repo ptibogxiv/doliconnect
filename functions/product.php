@@ -339,6 +339,7 @@ global $current_user;
 }
 
 function doliProductCart($product, $refresh = null, $wishlist = true) {
+  global $current_user;
   $button = '<div id="doliform-product-'.$product->id.'">';
   $mstock = doliProductStock($product, $refresh, true);
   if ( empty(doliconnectid('dolicart')) || empty(doliconnectid('dolicart')) ) {
@@ -366,7 +367,7 @@ function doliProductCart($product, $refresh = null, $wishlist = true) {
         <input id="qty-prod-'.$product->id.'" type="tel" onchange="doliJavaCartAction(\'updateLine\', '.$product->id.', document.getElementById(\'qty-prod-'.$product->id.'\').value, \'modify\');" class="form-control form-control-sm" placeholder="" aria-label="Quantity" value="'.$mstock['qty'].'" style="text-align:center;">
         <button class="btn btn-sm btn-warning" name="plus" value="plus" type="submit" onclick="doliJavaCartAction(\'updateLine\', '.$product->id.', document.getElementById(\'qty-prod-'.$product->id.'\').value, \'plus\');"><i class="fa-solid fa-plus"></i></button>';
         if ( !empty($wishlist) && doliCheckModules('wishlist', $refresh)) {
-          $button .= '<button class="btn btn-sm btn-light" name="wish" value="wish" type="submit" onclick="doliJavaCartAction(\'updateLine\', '.$product->id.', 1, \'wish\');"><i class="fas fa-heart" style="color:Fuchsia"></i></button>';
+          $button .= doliWishlist(doliconnector($current_user, 'fk_soc'), $product->id, $refresh);
         }    
         $button .= '</div>';
         if (isset($mstock['step']) && $mstock['step']>1) $button .= '<div class="form-text" id="basic-addon4">'.sprintf(__( 'Sold by %s', 'doliconnect'), $mstock['step']).'</div>';

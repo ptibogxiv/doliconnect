@@ -1630,10 +1630,10 @@ return __('Transporter by default', 'doliconnect');
 }
 }
 
-function doliWishlist ($thirdpartyid, $productid, $refresh = false) {
+function doliWishlist($thirdpartyid, $productid, $refresh = false) {
   $request = "/wishlist?sortfield=t.rang&sortorder=ASC&thirdparty_ids=".$thirdpartyid."&sqlfilters=(t.priv%3A%3D%3A0)";
   $wishlist = callDoliApi("GET", $request, null, dolidelay('product', $refresh));
-  $wish = false;
+  $wish = '<button class="btn btn-sm btn-light" name="wish" value="wish" type="submit" onclick="doliJavaCartAction(\'updateLine\', '.$productid.', 1, \'wish\');"><i class="fas fa-heart" style="color:Fuchsia"></i></button>';
 
   return $wish;
 }
