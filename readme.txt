@@ -71,6 +71,10 @@ We would like to thank this contributors and plugins:
 == Changelog ==
    = 7.6.7 =
 * fix php error
+* wishlist and memberlinked functionnalities
+
+   = 7.6.7 =
+* fix php error
 * compatibility with dolibarr 17.0.3
 
    = 7.6.6 =
