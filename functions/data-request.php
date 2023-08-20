@@ -822,14 +822,14 @@ global $current_user;
 						'qty' => trim($_POST['qty']),
 						'priv' => 0
 					];
-					$addwish = callDoliApi("POST", "/wishlist", $data, dolidelay('doliconnector'));
+					$addwish = callDoliApi("POST", "/wishlist", $data, 0);
 				} elseif ($_POST['modify'] == "unwish" && doliWishlist(doliconnector($current_user, 'fk_soc'), trim($_POST['id']), false, true)) {
 					$deletewish = callDoliApi("DELETE", "/wishlist/".trim($_POST['id']), null, 0);
 				}
 				$request = "/wishlist?sortfield=t.rang&sortorder=ASC&thirdparty_ids=".doliconnector($current_user, 'fk_soc')."&sqlfilters=(t.priv%3A%3D%3A0)";
 				$wishlist = callDoliApi("GET", $request, null, dolidelay('product', true));
 				$response = [
-					'modal' => doliModalTemplate('CartInfos', __( 'Wishlist', 'doliconnect'), 'Message to do', '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">'.__( "Close", "doliconnect").'</button>'),
+					//'modal' => doliModalTemplate('CartInfos', __( 'Wishlist', 'doliconnect'), 'Message to do', '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">'.__( "Close", "doliconnect").'</button>'),
 				];
 				wp_send_json_success($response);			
 				die(); 
