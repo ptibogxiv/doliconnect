@@ -1636,7 +1636,7 @@ function doliWishlist($thirdpartyid, $productid, $refresh = false) {
   $wish = '<button class="btn btn-sm btn-light" name="wish" value="wish" type="submit" onclick="doliJavaCartAction(\'updateLine\', '.$productid.', 1, \'wish\');"><i class="fa-solid fa-heart"></i></button>';
   foreach ($wishlist as $wsh) {
     if ($productid == $wsh->fk_product) {
-      $wish = '<button class="btn btn-sm btn-light" name="wish" value="unwish" type="submit" onclick="doliJavaCartAction(\'updateLine\', '.$wsh->id.', 1, \'wish\');"><i class="fa-solid fa-heart-crack" style="color:Fuchsia"></i></button>';
+      $wish = '<button class="btn btn-sm btn-light" name="wish" value="unwish" type="submit" onclick="doliJavaCartAction(\'updateLine\', '.$wsh->id.', 1, \'unwish\');"><i class="fa-solid fa-heart-crack" style="color:Fuchsia"></i></button>';
     }
   }
   return $wish;

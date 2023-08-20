@@ -820,13 +820,23 @@ global $current_user;
 				$qty = ceil($qty)*$mstock['step'];
 				$price = doliProductPrice($product, $qty, false, true);
 				$result = doliaddtocart($product, $mstock, $qty, $price, isset($_POST['product-add-timestamp_start'])?trim($_POST['product-add-timestamp_start']):null, isset($_POST['product-add-timestamp_end'])?trim($_POST['product-add-timestamp_end']):null);
+				if ($_POST['modify'] == "wish") {
+					$data = [
+						'fk_product' => trim($_POST['id']),
+						'fk_soc' => doliconnector($current_user, 'fk_soc'),
+						'qty' => trim($_POST['qty'])
+					];
+					$addwish = callDoliApi("PUT", "/wishlist", $data, dolidelay('doliconnector'));
+				} elseif ($_POST['modify'] == "unwish") {
+					$deletewish = callDoliApi("DELETE", "/wishlist/".$_POST['id'], null, 0);
+				}
 				$response = [
 					'message' => dolialert('success', $result['message']),
 					'newqty' => $result['newqty'],
 					'items' => $result['items'],
 					'lines' => $result['lines'],
 					'total' => $result['total'],	
-					'modal' => doliModalTemplate('CartInfos', __( 'Wishlist', 'doliconnect'), 'Soon...', '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">'.__( "Close", "doliconnect").'</button>'),
+					'modal' => doliModalTemplate('CartInfos', __( 'Wishlist', 'doliconnect'), $_POST['id'], '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">'.__( "Close", "doliconnect").'</button>'),
 				];
 				wp_send_json_success($response);			
 				die(); 
