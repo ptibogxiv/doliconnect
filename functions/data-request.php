@@ -815,11 +815,6 @@ global $current_user;
 				wp_send_json_success($response);
 				die();
 			} elseif (isset($_POST['modify']) && ($_POST['modify'] == "wish" || $_POST['modify'] == "unwish")) {
-				if (!is_numeric(trim($_POST['qty']))) $_POST['qty'] = $mstock['qty'];
-				$qty = trim($_POST['qty'])/$mstock['step'];
-				$qty = ceil($qty)*$mstock['step'];
-				$price = doliProductPrice($product, $qty, false, true);
-				$result = doliaddtocart($product, $mstock, $qty, $price, isset($_POST['product-add-timestamp_start'])?trim($_POST['product-add-timestamp_start']):null, isset($_POST['product-add-timestamp_end'])?trim($_POST['product-add-timestamp_end']):null);
 				if ($_POST['modify'] == "wish") {
 					$data = [
 						'fk_product' => trim($_POST['id']),
@@ -831,13 +826,10 @@ global $current_user;
 				} elseif ($_POST['modify'] == "unwish") {
 					$deletewish = callDoliApi("DELETE", "/wishlist/".trim($_POST['id']), null, 0);
 				}
+				$request = "/wishlist?sortfield=t.rang&sortorder=ASC&thirdparty_ids=".doliconnector($current_user, 'fk_soc')."&sqlfilters=(t.priv%3A%3D%3A0)";
+				$wishlist = callDoliApi("GET", $request, null, dolidelay('product', true));
 				$response = [
-					'message' => dolialert('success', $result['message']),
-					'newqty' => $result['newqty'],
-					'items' => $result['items'],
-					'lines' => $result['lines'],
-					'total' => $result['total'],	
-					'modal' => doliModalTemplate('CartInfos', __( 'Wishlist', 'doliconnect'), $_POST['id'], '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">'.__( "Close", "doliconnect").'</button>'),
+					'modal' => doliModalTemplate('CartInfos', __( 'Wishlist', 'doliconnect'), 'Message to do', '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">'.__( "Close", "doliconnect").'</button>'),
 				];
 				wp_send_json_success($response);			
 				die(); 

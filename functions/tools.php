@@ -3044,24 +3044,24 @@ function doliModalDiv() {
                 },
               }).done(function(response) {
                 if (response.success) { 
-                  if (document.getElementById("qty-prod-" + id)) {
+                  if (document.getElementById("qty-prod-" + id) && response.data.hasOwnProperty("newqty")) {
                     document.getElementById("qty-prod-" + id).value = response.data.newqty;
                   }
-                  if (document.getElementById("DoliHeaderCartItems")) {
+                  if (document.getElementById("DoliHeaderCartItems") && response.data.hasOwnProperty("items")) {
                     document.getElementById("DoliHeaderCartItems").innerHTML = response.data.items;
                   }
-                  if (document.getElementById("DoliFooterCartItems")) {  
+                  if (document.getElementById("DoliFooterCartItems") && response.data.hasOwnProperty("items")) {  
                     document.getElementById("DoliFooterCartItems").innerHTML = response.data.items;
                   }
-                  if (document.getElementById("DoliWidgetCartItems")) {
+                  if (document.getElementById("DoliWidgetCartItems") && response.data.hasOwnProperty("items")) {
                     document.getElementById("DoliWidgetCartItems").innerHTML = response.data.items;      
                   }
-                  if (document.getElementById("doliModalDiv") && response.data.modal) {
+                  if (document.getElementById("doliModalDiv") && response.data.hasOwnProperty("modal")) {
                     document.getElementById("doliModalDiv").innerHTML = response.data.modal; 
                     $("#doliModalCartInfos").modal("toggle");     
                   } 
                 } else {
-                  if (document.getElementById("doliModalDiv") && response.data.modal) {
+                  if (document.getElementById("doliModalDiv") && response.data.hasOwnProperty("modal")) {
                     document.getElementById("doliModalDiv").innerHTML = response.data.modal; 
                     $("#doliModalCartInfos").modal("toggle");     
                   }
