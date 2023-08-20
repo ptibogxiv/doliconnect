@@ -824,11 +824,12 @@ global $current_user;
 					$data = [
 						'fk_product' => trim($_POST['id']),
 						'fk_soc' => doliconnector($current_user, 'fk_soc'),
-						'qty' => trim($_POST['qty'])
+						'qty' => trim($_POST['qty']),
+						'priv' => 0
 					];
-					$addwish = callDoliApi("PUT", "/wishlist", $data, dolidelay('doliconnector'));
+					$addwish = callDoliApi("POST", "/wishlist", $data, dolidelay('doliconnector'));
 				} elseif ($_POST['modify'] == "unwish") {
-					$deletewish = callDoliApi("DELETE", "/wishlist/".$_POST['id'], null, 0);
+					$deletewish = callDoliApi("DELETE", "/wishlist/".trim($_POST['id']), null, 0);
 				}
 				$response = [
 					'message' => dolialert('success', $result['message']),
