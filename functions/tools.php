@@ -1639,7 +1639,7 @@ function doliWishlist($thirdpartyid, $productid, $refresh = false, $nohtml = fal
     $wish = false;
   }
   foreach ($wishlist as $wsh) {
-    if ($productid == $wsh->fk_product) {
+    if (isset($wsh->fk_product) && $productid == $wsh->fk_product) {
       if (!$nohtml) {
         $wish = '<button class="btn btn-sm btn-light" name="wish" value="unwish" type="submit" onclick="doliJavaCartAction(\'updateLine\', '.$wsh->id.', 1, \'unwish\');"><i class="fa-solid fa-heart-crack" style="color:Fuchsia"></i></button>';
       } else {
