@@ -2955,12 +2955,12 @@ function doliModalButton($case, $id, $title, $type = 'button', $class = 'btn btn
                     console.log( "error loading modal js" );
                   });
                 }
-              if (document.getElementById("doliModalDiv")) {
+              if (document.getElementById("doliModalDiv") && response.data.hasOwnProperty("modal")) {
                 document.getElementById("doliModalDiv").innerHTML = response.data.modal; 
                 $("#doliModal'.$id.'").modal("show");     
               }
               } else {
-                if (document.getElementById("doliModalDiv")) {
+                if (document.getElementById("doliModalDiv") && response.data.hasOwnProperty("modal")) {
                   document.getElementById("doliModalDiv").innerHTML = response.data.modal;
                   $("#doliModal'.$id.'").modal("show");         
                 }
@@ -2998,16 +2998,16 @@ function doliAjax($id, $url = null, $case = null){
           $.post($form.attr("action"), $form.serialize(), function(response) {
             $(window).scrollTop(0); 
             if (response.success) {
-              if (document.getElementById("'.$id.'-alert")) {
+              if (document.getElementById("'.$id.'-alert") && response.data.hasOwnProperty("message")) {
                 document.getElementById("'.$id.'-alert").innerHTML = response.data.message;      
               }
               if (!!url) document.location = url;
             } else {
-              if (document.getElementById("'.$id.'-alert")) {
+              if (document.getElementById("'.$id.'-alert") && response.data.hasOwnProperty("message")) {
                 document.getElementById("'.$id.'-alert").innerHTML = response.data.message;      
               }
             }
-            if (document.getElementById("'.$id.'-captcha") && response.data.captcha) {
+            if (document.getElementById("'.$id.'-captcha") && response.data.hasOwnProperty("captcha")) {
               document.getElementById("'.$id.'-captcha").innerHTML = response.data.captcha;      
             }
             $("#DoliconnectLoadingModal").modal("hide");
