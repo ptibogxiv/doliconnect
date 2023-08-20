@@ -815,7 +815,7 @@ global $current_user;
 				wp_send_json_success($response);
 				die();
 			} elseif (isset($_POST['modify']) && ($_POST['modify'] == "wish" || $_POST['modify'] == "unwish")) {
-				if ($_POST['modify'] == "wish") {
+				if ($_POST['modify'] == "wish" && !doliWishlist(doliconnector($current_user, 'fk_soc'), trim($_POST['id']), false, true)) {
 					$data = [
 						'fk_product' => trim($_POST['id']),
 						'fk_soc' => doliconnector($current_user, 'fk_soc'),
@@ -823,7 +823,7 @@ global $current_user;
 						'priv' => 0
 					];
 					$addwish = callDoliApi("POST", "/wishlist", $data, dolidelay('doliconnector'));
-				} elseif ($_POST['modify'] == "unwish") {
+				} elseif ($_POST['modify'] == "unwish" && doliWishlist(doliconnector($current_user, 'fk_soc'), trim($_POST['id']), false, true)) {
 					$deletewish = callDoliApi("DELETE", "/wishlist/".trim($_POST['id']), null, 0);
 				}
 				$request = "/wishlist?sortfield=t.rang&sortorder=ASC&thirdparty_ids=".doliconnector($current_user, 'fk_soc')."&sqlfilters=(t.priv%3A%3D%3A0)";
