@@ -1212,7 +1212,7 @@ return $doliuser;
 }
 //add_action( 'wp_loaded', 'doliconnectuserform', 10, 2);
 
-function doliloading($id=loading) {
+function doliloading($id) {
 $loading = '<div id="doliloading-'.$id.'" style="display:none"><br><br><br><br><center><div class="align-middle">';
 $loading .= '<div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div>'; 
 $loading .= '<h4>'.__( 'Loading', 'doliconnect').'</h4></div></center><br><br><br><br></div>';
@@ -1628,6 +1628,14 @@ return $term;
 } else {
 return __('Transporter by default', 'doliconnect'); 
 }
+}
+
+function doliWishlist ($thirdpartyid, $productid, $refresh = false) {
+  $request = "/wishlist?sortfield=t.rang&sortorder=ASC&thirdparty_ids=".$thirdpartyid."&sqlfilters=(t.priv%3A%3D%3A0)";
+  $wishlist = callDoliApi("GET", $request, null, dolidelay('product', $refresh));
+  $wish = false;
+
+  return $wish;
 }
 
 function doliconnect_paymentmethods($object = null, $module = null, $url = null, $refresh = false, $array = array()) {
