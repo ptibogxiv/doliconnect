@@ -475,29 +475,14 @@ if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['
 $request = "/wishlist?sortfield=t.rang&sortorder=ASC&thirdparty_ids=".doliconnector($current_user, 'fk_soc')."&sqlfilters=(t.priv%3A%3D%3A0)";
 $wishlist = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
-if ( isset ($_POST['delete_wish']) && $_POST['delete_wish'] > 0 ) {
-// try deleting
-$delete = callDoliApi("DELETE", "/wishlist/".esc_attr($_POST['delete_wish']), null, 0);
-
-$msg = dolialert ('success', __( 'Your informations have been updated.', 'doliconnect'));
-
-//} else {
-// fail deleting
-//}
-$wishlist = callDoliApi("GET", $request, null, dolidelay('product', true));
-
-}
-
 print '<div class="card shadow-sm"><div class="card-header">'.__( 'Wishlist', 'doliconnect').'</div><ul class="list-group list-group-flush">';
   
 if ( !isset( $wishlist->error ) && $wishlist != null ) {
-foreach ( $wishlist as $wish ) { 
-
-print apply_filters( 'doliproductlist', $wish);
- 
-}
+    foreach ( $wishlist as $wish ) { 
+        print apply_filters( 'doliproductlist', $wish);
+    }
 } else {
-print "<li class='list-group-item list-group-item-light'><center>".__( 'No product', 'doliconnect')."</center></li>";
+    print "<li class='list-group-item list-group-item-light'><center>".__( 'No product', 'doliconnect')."</center></li>";
 }
 print "</ul><div class='card-body'>";
 print dolipage($wishlist, $url, $page, $limit);
