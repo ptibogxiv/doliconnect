@@ -14,18 +14,18 @@
 			  $.post($form.attr("action"), $form.serialize(), function(response) {
 			if (response.success) { 
 			  //console.log(response.data.message);
-			  if (document.getElementById("DoliHeaderCartItems")) {
+			  if (document.getElementById("DoliHeaderCartItems") && response.data.hasOwnProperty("items")) {
 				document.getElementById("DoliHeaderCartItems").innerHTML = response.data.items;
 			  }
-			  if (document.getElementById("DoliFooterCartItems")) {  
+			  if (document.getElementById("DoliFooterCartItems") && response.data.hasOwnProperty("items")) {  
 				document.getElementById("DoliFooterCartItems").innerHTML = response.data.items;
 			  }
-			  if (document.getElementById("DoliCartItemsList")) {  
+			  if (document.getElementById("DoliWidgetCartItems") && response.data.hasOwnProperty("items")) {
+				document.getElementById("DoliWidgetCartItems").innerHTML = response.data.items;      
+			  }
+			  if (document.getElementById("DoliCartItemsList") && response.data.hasOwnProperty("list")) {  
 				document.getElementById("DoliCartItemsList").innerHTML = response.data.list;
 			  }
-			  if (document.getElementById("DoliWidgetCartItems")) {
-				document.getElementById("DoliWidgetCartItems").innerHTML = response.data.items;      
-			  } 
 			} else {
 			  //console.log("error updating qty " + response.data.message);
 			}
