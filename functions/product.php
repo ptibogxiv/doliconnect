@@ -350,6 +350,9 @@ function doliProductCart($product, $refresh = null, $wishlist = true) {
     if ( $mstock['stock'] <= 0 || $mstock['m2'] < $mstock['step'] ) { 
       $button .= '<div class="input-group">';
       $button .= '<input id="qty-prod-'.$product->id.'" type="text" class="form-control form-control-sm" value="'.__( 'Unavailable', 'doliconnect').'" aria-label="'.__( 'Unavailable', 'doliconnect').'" style="text-align:center;" disabled readonly>';
+      if ( !empty($wishlist) && doliCheckModules('wishlist', $refresh)) {
+        $button .= doliWishlist(doliconnector($current_user, 'fk_soc'), $product->id, $refresh);
+      }
       $button .= '</div>';
     } else {
       if ( doliCheckModules('adherentsplus', $refresh) && $product->id == doliconst("ADHERENT_PRODUCT_ID_FOR_SUBSCRIPTIONS", dolidelay('constante')) ) {
