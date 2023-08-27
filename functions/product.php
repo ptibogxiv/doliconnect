@@ -53,7 +53,7 @@ function doliIncludeStock() {
   return $includestock;
 }
 
-function doliProductStock($product, $refresh = false, $nohtml = false, $array_options = null) {
+function doliProductStock($product, $refresh = false, $nohtml = false, $array_options = array()) {
 global $current_user;
   $mstock = array();
   $warehouse = doliconst('DOLICONNECT_ID_WAREHOUSE', $refresh);
@@ -83,9 +83,9 @@ global $current_user;
   }
   if ( isset($order->lines) && $order->lines != null ) {
     foreach ($order->lines as $line) {
-      //if (is_object($array_options)) $line_array_options = (object) $line->array_options;
-      if ($line->fk_product == $product->id ) {//&& $line->array_options == $array_options
-        //$button = var_dump($line);
+      //if (is_array($array_options)) $array_options = (object) $array_options;
+      if ($line->fk_product == $product->id && $line->array_options == $array_options) {
+        //$stock = var_dump($line);
         $mstock['qty'] = $line->qty;
         $mstock['line'] = $line->id;
         $mstock['array_options'] = $line->array_options;
