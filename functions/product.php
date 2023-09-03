@@ -342,12 +342,10 @@ global $current_user;
 
 function doliProductCart($product, $refresh = null, $wishlist = true) {
   global $current_user;
-  $button = '<div id="doliform-product-'.$product->id.'">';
+  $button = '<div class="d-grid gap-2" id="doliform-product-'.$product->id.'">';
   $mstock = doliProductStock($product, $refresh, true);
   if ( empty(doliconnectid('dolicart')) || empty(doliconnectid('dolicart')) ) {
-    $button .= '<div class="d-grid gap-2">';
     $button .= "<a class='btn btn-block btn-info' href='".doliconnecturl('dolicontact')."?type=COM' role='button' title='".__( 'Contact us', 'doliconnect')."'>".__( 'Contact us', 'doliconnect').'</a>';
-    $button .= '</div>'; 
   } elseif ( is_user_logged_in() && doliCheckModules('commande', $refresh) && doliconnectid('dolicart') > 0 ) {
     if ($mstock['fk_parent_line']) {
 
@@ -360,13 +358,11 @@ function doliProductCart($product, $refresh = null, $wishlist = true) {
       $button .= '</div>';
     } else {
       if ( doliCheckModules('adherentsplus', $refresh) && $product->id == doliconst("ADHERENT_PRODUCT_ID_FOR_SUBSCRIPTIONS", dolidelay('constante')) ) {
-        $button .= '<div class="d-grid gap-2">';
         if (empty($mstock['qty'])) {
           $button .= '<button class="btn btn-sm btn-warning mw-100" name="plus" value="plus" type="submit">'.__( 'Add to basket', 'doliconnect').'</button><input id="qty-prod-'.$product->id.'" type="hidden" aria-label="Quantity" value="'.$mstock['qty'].'" readonly>';
         } else {
           $button .= '<button class="btn btn-sm btn-warning" name="delete" value="delete" type="submit" onclick="doliJavaCartAction(\'updateLine\', '.$product->id.', 0, \'delete\');"><i class="fa-solid fa-trash-can"></i></button>';
         }
-          $button .= '</div>';
       } else {
         $button .= '<div class="input-group">';
         $button .= '<button class="btn btn-sm btn-warning" name="delete" value="delete" type="submit" onclick="doliJavaCartAction(\'updateLine\', '.$product->id.', 0, \'delete\');"><i class="fa-solid fa-trash-can"></i></button>';
