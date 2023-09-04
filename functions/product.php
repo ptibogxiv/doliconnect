@@ -342,7 +342,7 @@ global $current_user;
 
 function doliProductCart($product, $refresh = null, $wishlist = true) {
   global $current_user;
-  $button = '<div class="d-grid gap-2" id="doliform-product-'.$product->id.'">';
+  $button = '<div id="doliform-product-'.$product->id.'" class="d-grid gap-2">';
   $mstock = doliProductStock($product, $refresh, true);
   if ( empty(doliconnectid('dolicart')) || empty(doliconnectid('dolicart')) ) {
     $button .= "<a class='btn btn-block btn-info' href='".doliconnecturl('dolicontact')."?type=COM' role='button' title='".__( 'Contact us', 'doliconnect')."'>".__( 'Contact us', 'doliconnect').'</a>';
