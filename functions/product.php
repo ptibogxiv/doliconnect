@@ -19,6 +19,20 @@ function doliCheckRelatedProducts($id) {
   }
 }
 
+function doliRelatedProducts($id) {
+  $request = "/relatedproducts/".$id;
+  $relatedproducts = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
+  if ( !isset( $relatedproducts->error ) && $relatedproducts != null ) {
+    $related = null;
+    foreach ( $relatedproducts as $product ) { 
+      $related .= apply_filters( 'doliproductlist', $product->id);
+  }
+  return $related;
+  } else {
+      return false;
+  }
+}
+
 function doliprice($object = null, $mode = "ttc", $currency = null) {
 global $current_user;
   if ( is_object($object) ) {
