@@ -25,7 +25,7 @@ function doliRelatedProducts($id) {
   if ( !isset( $relatedproducts->error ) && $relatedproducts != null ) {
     $related = null;
     foreach ( $relatedproducts as $product ) { 
-      $related .= apply_filters( 'doliproductlist', $product->id);
+      $related .= apply_filters( 'doliproductlist', $product);
   }
   return $related;
   } else {
@@ -659,7 +659,7 @@ function doliproductlist($product) {
 global $current_user;
 
 $wish = 0;
-if (!empty($product->qty)) {
+if (isset($product->fk_product) && !empty($product->qty)) {
 $wish = $product->qty;
 $product = callDoliApi("GET", "/products/".$product->fk_product."?includestockdata=1&includesubproducts=true&includetrans=true", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 } else {
