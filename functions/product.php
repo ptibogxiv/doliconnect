@@ -9,6 +9,16 @@ function doliproduct($object, $value) {
   }
 }
 
+function doliCheckRelatedProducts($id) {
+  $request = "/relatedproducts/".$id;
+  $relatedproducts = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
+  if ( !isset( $relatedproducts->error ) && $relatedproducts != null ) {
+      return true;
+  } else {
+      return false;
+  }
+}
+
 function doliprice($object = null, $mode = "ttc", $currency = null) {
 global $current_user;
   if ( is_object($object) ) {
