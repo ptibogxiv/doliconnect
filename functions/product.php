@@ -20,8 +20,8 @@ function doliRequiredRelatedProducts($id, $qty = null, $valid = false) {
           $qty2 = $qty*$product->qty;
           $product = callDoliApi("GET", "/products/".$product->id."?includestockdata=1&includesubproducts=true&includetrans=true", null, dolidelay('product', true));
           $mstock = doliProductStock($product, false, true);
-          $price = doliProductPrice($product, $qty, false, true);
-          $related = doliaddtocart($product, $mstock, $qty, $price, null, null);
+          $price = doliProductPrice($product, $qty2, false, true);
+          $related = doliaddtocart($product, $mstock, $qty2, $price, null, null, $id);
         }
         return $related;
       }
@@ -226,7 +226,7 @@ function doliconnect_countitems($object){
   return $qty;
 }
 
-function doliaddtocart($product, $mstock, $quantity, $price, $timestart = null, $timeend = null, $url = null, $array_options = array()) {
+function doliaddtocart($product, $mstock, $quantity, $price, $timestart = null, $timeend = null, $relatedproduct = null, $array_options = array()) {
 global $current_user;
   $response = array();
   $orderid = doliconnector($current_user, 'fk_order', true);
@@ -295,7 +295,7 @@ global $current_user;
       'localtax2_tx' => (isset($mstock['localtax2_tx'])?$mstock['localtax2_tx']: null),
       'info_bits' => (isset($mstock['info_bits'])?$mstock['info_bits']: null),
       'product_type' => (isset($mstock['product_type'])?$mstock['product_type']: null),
-      'fk_parent_line' => (isset($mstock['fk_parent_line'])?$mstock['fk_parent_line']: null),
+      'fk_parent_line' => $relatedproduct,
       'fk_fournprice' => (isset($mstock['fk_fournprice'])?$mstock['fk_fournprice']: null),
       'pa_ht'=> (isset($mstock['pa_ht'])?$mstock['pa_ht']: null),
       'label' => (isset($mstock['label'])?$mstock['label']: null),
@@ -310,9 +310,6 @@ global $current_user;
     $order = callDoliApi("GET", "/orders/".$orderid."?contact_list=0", null, dolidelay('order', true));
     //$dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolidelay('doliconnector', true));
     $product = callDoliApi("GET", "/products/".$product->id."?includestockdata=1&includesubproducts=true&includetrans=true", null, dolidelay('product', true));
-    if ( !empty($url) ) {
-      //set_transient( 'doliconnect_cartlinelink_'.$addline, esc_url($url), dolidelay(MONTH_IN_SECONDS, true));
-    }
     $response['message'] = __( 'This item has been added to basket', 'doliconnect');
     $response['items'] = doliconnect_countitems($order);
     $response['lines'] = doliline($order);
@@ -360,11 +357,6 @@ global $current_user;
       $order = callDoliApi("GET", "/orders/".$orderid."?contact_list=0", null, dolidelay('order', true));
       //$dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolidelay('doliconnector', true));
       $product = callDoliApi("GET", "/products/".$product->id."?includestockdata=1&includesubproducts=true&includetrans=true", null, dolidelay('product', true));
-      if ( !empty($url) ) {
-        //set_transient( 'doliconnect_cartlinelink_'.$mstock['line'], esc_url($url), dolidelay(MONTH_IN_SECONDS, true));
-      } else {
-        //delete_transient( 'doliconnect_cartlinelink_'.$mstock['line'] );
-      }
       $response['message'] = __( 'Quantities have been changed', 'doliconnect');
       $response['items'] = doliconnect_countitems($order);
       $response['lines'] = doliline($order);
