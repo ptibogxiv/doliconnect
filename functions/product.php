@@ -46,7 +46,7 @@ function doliRelatedProducts($id) {
   if ( !isset( $relatedproducts->error ) && $relatedproducts != null ) {
     $related = null;
     foreach ( $relatedproducts as $product ) { 
-      $related .= apply_filters( 'doliproductlist', $product);
+      $related .= apply_filters( 'doliproductlist', $product, $id);
     }
   return $related;
   } else {
