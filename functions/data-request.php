@@ -804,8 +804,8 @@ global $current_user;
 				}
 				$price = doliProductPrice($product, $qty, false, true);
 				$result = doliaddtocart($product, $mstock, $qty, $price, isset($_POST['product-add-timestamp_start'])?trim($_POST['product-add-timestamp_start']):null, isset($_POST['product-add-timestamp_end'])?trim($_POST['product-add-timestamp_end']):null);
-				if (doliRequiredRelatedProducts($product->id, false)) {
-					doliRequiredRelatedProducts($product->id, true);
+				if (!empty(doliRequiredRelatedProducts($product->id, false))) {
+					$result2 = doliRequiredRelatedProducts($product->id, true);
 				}
 				$response = [
 					'message' => dolialert('success', $result['message']),

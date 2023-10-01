@@ -16,9 +16,14 @@ function doliRequiredRelatedProducts($id, $valid = false) {
       if (empty($valid)) { 
         return true;
       } else {
-        foreach ( $relatedproducts as $product ) { 
-          //$related = apply_filters( 'doliproductlist', $product);
+        foreach ( $relatedproducts as $product ) {
+          $qty = $product->qty;
+          $product = callDoliApi("GET", "/products/".$product->id."?includestockdata=1&includesubproducts=true&includetrans=true", null, dolidelay('product', true));
+          $mstock = doliProductStock($product, false, true);
+          $price = doliProductPrice($product, $qty, false, true);
+          $related = doliaddtocart($product, $mstock, $qty, $price, null, null);
         }
+        return $related;
       }
   } else {
       return false;
