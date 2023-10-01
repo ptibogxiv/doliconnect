@@ -9,7 +9,7 @@ function doliproduct($object, $value) {
   }
 }
 
-function doliRequiredRelatedProducts($id, $valid = false) {
+function doliRequiredRelatedProducts($id, $qty = null, $valid = false) {
   $request = "/relatedproducts/".$id."?required=true";
   $relatedproducts = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
   if ( !isset( $relatedproducts->error ) && $relatedproducts != null ) {
@@ -17,7 +17,7 @@ function doliRequiredRelatedProducts($id, $valid = false) {
         return true;
       } else {
         foreach ( $relatedproducts as $product ) {
-          $qty = $product->qty;
+          $qty2 = $qty*$product->qty;
           $product = callDoliApi("GET", "/products/".$product->id."?includestockdata=1&includesubproducts=true&includetrans=true", null, dolidelay('product', true));
           $mstock = doliProductStock($product, false, true);
           $price = doliProductPrice($product, $qty, false, true);
