@@ -19,7 +19,7 @@ function doliRequiredRelatedProducts($id, $qty = null, $valid = false) {
         foreach ( $relatedproducts as $product ) {
           $qty2 = $qty*$product->qty;
           $product = callDoliApi("GET", "/products/".$product->id."?includestockdata=1&includesubproducts=true&includetrans=true", null, dolidelay('product', true));
-          $mstock = doliProductStock($product, false, true);
+          $mstock = doliProductStock($product, false, true, array(), $id);
           $price = doliProductPrice($product, $qty2, false, true);
           $related = doliaddtocart($product, $mstock, $qty2, $price, null, null, $id);
         }
@@ -40,13 +40,13 @@ function doliCheckRelatedProducts($id) {
   }
 }
 
-function doliRelatedProducts($id) {
-  $request = "/relatedproducts/".$id;
+function doliRelatedProducts($fk_parent_line) {
+  $request = "/relatedproducts/".$fk_parent_line;
   $relatedproducts = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
   if ( !isset( $relatedproducts->error ) && $relatedproducts != null ) {
     $related = null;
     foreach ( $relatedproducts as $product ) { 
-      $related .= apply_filters( 'doliproductlist', $product, $id);
+      $related .= apply_filters( 'doliproductlist', $product, $fk_parent_line);
     }
   return $related;
   } else {
@@ -98,7 +98,7 @@ function doliIncludeStock() {
   return $includestock;
 }
 
-function doliProductStock($product, $refresh = false, $nohtml = false, $array_options = array()) {
+function doliProductStock($product, $refresh = false, $nohtml = false, $array_options = array(), $fk_parent_line = null) {
 global $current_user;
   $mstock = array();
   $warehouse = doliconst('DOLICONNECT_ID_WAREHOUSE', $refresh);
@@ -129,7 +129,7 @@ global $current_user;
   if ( isset($order->lines) && $order->lines != null ) {
     foreach ($order->lines as $line) {
       //if (is_array($array_options)) $array_options = (object) $array_options;
-      if ($line->fk_product == $product->id && $line->array_options == $array_options) {
+      if ($line->fk_product == $product->id && $line->array_options == $array_options && $line->fk_parent_line == $fk_parent_line) {
         //$stock = var_dump($line);
         $mstock['qty'] = $line->qty;
         $mstock['line'] = $line->id;
@@ -377,14 +377,14 @@ global $current_user;
   }
 }
 
-function doliProductCart($product, $refresh = null, $wishlist = true, $related = null) {
+function doliProductCart($product, $refresh = null, $wishlist = true, $fk_parent_line = null) {
   global $current_user;
   $button = '<div id="doliform-product-'.$product->id.'" class="d-grid gap-2">';
   $mstock = doliProductStock($product, $refresh, true);
   if ( empty(doliconnectid('dolicart')) || empty(doliconnectid('dolicart')) ) {
     $button .= "<a class='btn btn-block btn-info' href='".doliconnecturl('dolicontact')."?type=COM' role='button' title='".__( 'Contact us', 'doliconnect')."'>".__( 'Contact us', 'doliconnect').'</a>';
   } elseif ( is_user_logged_in() && doliCheckModules('commande', $refresh) && doliconnectid('dolicart') > 0 ) {
-    if (!empty($related) && !empty($mstock['fk_parent_line'])) {
+    if (!empty($fk_parent_line) && !empty($mstock['fk_parent_line'])) {
       $button .= '<input id="qty-prod-'.$product->id.'" type="text" class="form-control form-control-sm" value="'.__( 'Linked item', 'doliconnect').'" aria-label="'.__( 'Linked item', 'doliconnect').'" style="text-align:center;" disabled readonly>';
     } elseif ( $mstock['stock'] <= 0 || $mstock['m2'] < $mstock['step'] ) { 
       $button .= '<div class="input-group">';
@@ -668,7 +668,7 @@ function doliconnect_supplier($product, $refresh = false){
 }
 
 // list of products filter
-function doliproductlist($product, $related = null) {
+function doliproductlist($product, $fk_parent_line = null) {
 global $current_user;
 
 $wish = 0;
@@ -718,7 +718,7 @@ $list .= '</p></div>';
 if ( ! empty(doliconnectid('dolicart')) ) { 
 $list .= "<div class='col-12 col-md-4'><center>";
 $list .= doliProductPrice($product, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
-$list .= doliProductCart($product, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), $related);
+$list .= doliProductCart($product, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), $fk_parent_line);
 $list .= "</center></div>";
 }
 $list .= "</div></td></tr></table></li>";
