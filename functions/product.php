@@ -380,7 +380,7 @@ global $current_user;
 function doliProductCart($product, $refresh = null, $wishlist = true, $fk_parent_line = null) {
   global $current_user;
   $button = '<div id="doliform-product-'.$product->id.'" class="d-grid gap-2">';
-  $mstock = doliProductStock($product, $refresh, true);
+  $mstock = doliProductStock($product, $refresh, true, array(), $fk_parent_line);
   if ( empty(doliconnectid('dolicart')) || empty(doliconnectid('dolicart')) ) {
     $button .= "<a class='btn btn-block btn-info' href='".doliconnecturl('dolicontact')."?type=COM' role='button' title='".__( 'Contact us', 'doliconnect')."'>".__( 'Contact us', 'doliconnect').'</a>';
   } elseif ( is_user_logged_in() && doliCheckModules('commande', $refresh) && doliconnectid('dolicart') > 0 ) {
