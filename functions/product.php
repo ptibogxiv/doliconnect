@@ -40,7 +40,7 @@ function doliCheckRelatedProducts($id) {
   }
 }
 
-function doliRelatedProducts($fk_parent_line) {
+function doliRelatedProducts($fk_parent_line, $refresh = false) {
   $request = "/relatedproducts/".$fk_parent_line;
   $relatedproducts = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
   if ( !isset( $relatedproducts->error ) && $relatedproducts != null ) {
@@ -668,7 +668,7 @@ function doliconnect_supplier($product, $refresh = false){
 }
 
 // list of products filter
-function doliproductlist($product, $fk_parent_line = null) {
+function doliproductlist($product, $refresh = false, $fk_parent_line = null) {
 global $current_user;
 
 $wish = 0;
@@ -724,7 +724,7 @@ $list .= "</center></div>";
 $list .= "</div></td></tr></table></li>";
 return $list;
 }
-add_filter( 'doliproductlist', 'doliproductlist', 10, 2);
+add_filter( 'doliproductlist', 'doliproductlist', 10, 3);
 
 // list of products filter
 function doliproductcard($product, $attributes) {
