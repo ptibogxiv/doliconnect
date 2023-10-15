@@ -788,11 +788,11 @@ global $current_user;
 				}
 				$response = [
 					'message' => dolialert('success', $result['message']),
-					'newqty' => $result['newqty'],
 					'items' => $result['items'],
 					'lines' => $result['lines'],
 					'total' => $result['total']
 				];	
+				if (isset($result['newqty'])) $response['newqty'] = $result['newqty'];
 				wp_send_json_success($response);	
 				die(); 
 			} elseif (isset($_POST['modify']) && ($_POST['modify'] == "plus" || $_POST['modify'] == "minus" || $_POST['modify'] == "modify")) { 
@@ -812,11 +812,11 @@ global $current_user;
 				}
 				$response = [
 					'message' => dolialert('success', $result['message']),
-					'newqty' => $result['newqty'],
 					'items' => $result['items'],
 					'lines' => $result['lines'],
 					'total' => $result['total']
 					];
+				if (isset($result['newqty'])) $response['newqty'] = $result['newqty'];
 				
 				//if ($qty != $result['newqty']) { $response['modal'] = doliModalTemplate('CartInfos', __( 'Cart', 'doliconnect'), __( 'This item is not available in this quantity!', 'doliconnect'), '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">'.__( "Continue shopping", "doliconnect").'</button> <a class="btn btn-primary" role="button" href="'.esc_url(doliconnecturl('dolicart')).'" >'.__( 'Finalize the order', 'doliconnect').'</a>', 'modal-lg'); }
 				if (doliCheckModules('relatedproducts') && doliCheckRelatedProducts($product->id)) { $response['modal'] = doliModalTemplate('CartInfos', __( 'Related products', 'doliconnect'), doliRelatedProducts($product->id, true), '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">'.__( "Close", "doliconnect").'</button>', 'modal-lg', null, 'p-0'); }

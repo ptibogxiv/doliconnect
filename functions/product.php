@@ -277,7 +277,7 @@ global $current_user;
     $response['message'] = __( 'This item has been deleted to basket', 'doliconnect');
     $response['items'] = doliconnect_countitems($order);
     $response['lines'] = doliline($order);
-    $response['newqty'] = $quantity;
+    if (empty($relatedproduct)) $response['newqty'] = $quantity;
     $response['total'] = doliprice($order, 'ttc', isset($order->multicurrency_code) ? $order->multicurrency_code : null);
     return $response;
   } elseif ( $orderid > 0 && $quantity > 0 && empty($mstock['line'])) {                                                                                  
@@ -313,7 +313,7 @@ global $current_user;
     $response['message'] = __( 'This item has been added to basket', 'doliconnect');
     $response['items'] = doliconnect_countitems($order);
     $response['lines'] = doliline($order);
-    $response['newqty'] = $quantity;
+    if (empty($relatedproduct)) $response['newqty'] = $quantity;
     $response['total'] = doliprice($order, 'ttc', isset($order->multicurrency_code) ? $order->multicurrency_code : null);
     return $response;
   } elseif ( $orderid > 0 && $mstock['line'] > 0 ) {
@@ -326,7 +326,7 @@ global $current_user;
       $response['message'] = __( 'This item has been deleted to basket', 'doliconnect');
       $response['items'] = doliconnect_countitems($order);
       $response['lines'] = doliline($order);
-      $response['newqty'] = 0;
+      if (empty($relatedproduct)) $response['newqty'] = 0;
       $response['total'] = doliprice($order, 'ttc', isset($order->multicurrency_code) ? $order->multicurrency_code : null);
       return $response;
     } else {
@@ -360,7 +360,7 @@ global $current_user;
       $response['message'] = __( 'Quantities have been changed', 'doliconnect');
       $response['items'] = doliconnect_countitems($order);
       $response['lines'] = doliline($order);
-      $response['newqty'] = $quantity;
+      if (empty($relatedproduct)) $response['newqty'] = $quantity;
       $response['total'] = doliprice($order, 'ttc', isset($order->multicurrency_code) ? $order->multicurrency_code : null);
       return $response;
     }
@@ -369,7 +369,7 @@ global $current_user;
     $response['message'] = __( 'Quantities have been changed', 'doliconnect');
     $response['items'] = doliconnect_countitems($order);
     $response['lines'] = doliline($order);
-    $response['newqty'] = $quantity;
+    if (empty($relatedproduct)) $response['newqty'] = $quantity;
     $response['total'] = doliprice($order, 'ttc', isset($order->multicurrency_code) ? $order->multicurrency_code : null);
     return $response;
   } else {
