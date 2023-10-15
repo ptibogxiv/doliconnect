@@ -3037,7 +3037,7 @@ function doliModalDiv() {
   print 'function doliJavaCartAction(form, id, qty, acase) {
           (function ($) {
             $(document).ready(function () {
-              //$("#DoliconnectLoadingModal").modal("toggle");
+              $("#DoliconnectLoadingModal").modal("toggle");
               $.ajax({
                 url:"'.admin_url('admin-ajax.php').'",
                 type:"POST",
@@ -3078,7 +3078,7 @@ function doliModalDiv() {
                   $("#ddoliModalCartInfos").modal("dispose");
                   document.getElementById("doliModalDiv").innerHTML = "";
                 });
-                //$("#DoliconnectLoadingModal").modal("hide");
+                $("#DoliconnectLoadingModal").modal("hide");
               });
             })
           })(jQuery);
