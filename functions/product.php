@@ -46,7 +46,7 @@ function doliRelatedProducts($fk_parent_line, $refresh = false) {
   if ( !isset( $relatedproducts->error ) && $relatedproducts != null ) {
     $related = null;
     foreach ( $relatedproducts as $product ) { 
-      $related .= apply_filters( 'doliproductlist', $product, $fk_parent_line);
+      $related .= apply_filters( 'doliproductlist', $product, false, $fk_parent_line);
     }
   return $related;
   } else {
@@ -718,7 +718,7 @@ $list .= '</p></div>';
 if ( ! empty(doliconnectid('dolicart')) ) { 
 $list .= "<div class='col-12 col-md-4'><center>";
 $list .= doliProductPrice($product, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
-$list .= doliProductCart($product, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), $fk_parent_line);
+$list .= doliProductCart($product, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true, $fk_parent_line);
 $list .= "</center></div>";
 }
 $list .= "</div></td></tr></table></li>";
