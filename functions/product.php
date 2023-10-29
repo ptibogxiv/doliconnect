@@ -110,8 +110,10 @@ global $current_user;
     } else {
       $mstock['stock'] = 0;
     }
-  } else {
+  } elseif (isset($product->stock_theoriqu) && isset($product->stock_reel)) {
     $mstock['stock'] = min(array($product->stock_theorique,$product->stock_reel));
+  } else {
+    $mstock['stock'] = 99;
   }
   if (isset($product->array_options->options_packaging) && !empty($product->array_options->options_packaging)) {
     $mstock['step'] = $product->array_options->options_packaging;
