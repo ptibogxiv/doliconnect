@@ -1590,7 +1590,7 @@ print "</div></div>";
 
 //*****************************************************************************************
 
-if ( doliCheckModules('recruitment') && doliversion('15.0.0') && !empty(get_option('doliconnectbeta')) ) {
+if ( doliCheckModules('recruitment') && doliversion('19.0.0') && !empty(get_option('doliconnectbeta')) ) {
     add_action( 'grh_doliconnect_menu', 'recruitment_menu', 3, 1);
     add_action( 'grh_doliconnect_recruitment', 'recruitment_module');
     }  
@@ -1608,7 +1608,7 @@ if ( doliCheckModules('recruitment') && doliversion('15.0.0') && !empty(get_opti
     
     if ( isset($_GET['id']) && $_GET['id'] > 0 ) { 
      
-    $request = "/recruitment/jobposition/".esc_attr($_GET['id']);
+    $request = "/recruitments/jobposition/".esc_attr($_GET['id']);
     
     $donationfo = callDoliApi("GET", $request, null, dolidelay('donation', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
     //print $donationfo;
@@ -1646,7 +1646,7 @@ if ( doliCheckModules('recruitment') && doliversion('15.0.0') && !empty(get_opti
     
     $limit=8;
     if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']-1); }  else { $page = 0; }
-    $request= "/recruitment/jobposition?sortfield=t.rowid&sortorder=DESC&limit=".$limit."&page=".$page."&sqlfilters=(t.fk_soc%3A%3D%3A'".doliconnector($current_user, 'fk_soc')."')";//    ."&sqlfilters=(t.fk_statut!=0)"
+    $request= "/recruitments/jobposition?sortfield=t.rowid&sortorder=DESC&limit=".$limit."&page=".$page."&sqlfilters=(t.fk_soc%3A%3D%3A'".doliconnector($current_user, 'fk_soc')."')";//    ."&sqlfilters=(t.fk_statut!=0)"
     $listdonation = callDoliApi("GET", $request, null, dolidelay('donation', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
     //print var_dump($listdonation);
     
