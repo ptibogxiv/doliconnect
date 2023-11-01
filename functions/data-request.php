@@ -785,7 +785,7 @@ global $current_user;
 				$result = doliaddtocart($product, $mstock, 0, $price, null, null);
 				$newqty = $result['newqty'];
 				if (!empty(doliRequiredRelatedProducts($product->id, null, false))) {
-					$result = doliRequiredRelatedProducts($product->id, $qty, true);
+					$result = doliRequiredRelatedProducts($product->id, 0, true);
 				}
 				$response = [
 					'message' => dolialert('success', $result['message']),
