@@ -110,7 +110,7 @@ global $current_user;
     } else {
       $mstock['stock'] = 0;
     }
-  } elseif (isset($product->stock_theoriqu) && isset($product->stock_reel)) {
+  } elseif (isset($product->stock_theorique) && isset($product->stock_reel)) {
     $mstock['stock'] = min(array($product->stock_theorique,$product->stock_reel));
   } else {
     $mstock['stock'] = 99;
