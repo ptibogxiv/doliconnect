@@ -103,7 +103,7 @@ global $current_user;
   $mstock = array();
   $warehouse = doliconst('DOLICONNECT_ID_WAREHOUSE', $refresh);
   if (!empty($product->type) && empty(doliconst('STOCK_SUPPORTS_SERVICES', $refresh))) {
-    $mstock['stock'] = 1;
+    $mstock['stock'] = 999999;
   } elseif (isset($product->stock_warehouse) && !empty($product->stock_warehouse) && !empty($warehouse) && $warehouse > 0) {
     if (isset($product->stock_warehouse->$warehouse)) {
       $mstock['stock'] = min(array($product->stock_reel,$product->stock_warehouse->$warehouse->real,$product->stock_theorique));
@@ -113,7 +113,7 @@ global $current_user;
   } elseif (isset($product->stock_theorique) && isset($product->stock_reel)) {
     $mstock['stock'] = min(array($product->stock_theorique,$product->stock_reel));
   } else {
-    $mstock['stock'] = 99;
+    $mstock['stock'] = 999999;
   }
   if (isset($product->array_options->options_packaging) && !empty($product->array_options->options_packaging)) {
     $mstock['step'] = $product->array_options->options_packaging;
