@@ -1,3 +1,16 @@
+# 6.14.0
+
+- Build with SASS instead of Less the generated CSS (#1172)
+
+# 6.13.2
+
+- Fix paths for sh-ta
+- Action for pubishing to npm
+
+# 6.13.0
+
+- Saint Helena, Ascension and Tristan da Cunha updates (#1169)
+
 # 6.12.0
 
 - Add flag for Pacific Community (#1165)
