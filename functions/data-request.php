@@ -413,9 +413,8 @@ add_action('wp_ajax_nopriv_dolicontact_request', 'dolicontact_request');
 function dolicontact_request(){
 	global $current_user;
 	$ID = $current_user->ID;
-	
+	$ContactError = array();
 	if ( wp_verify_nonce( trim($_POST['dolicontact-nonce']), 'dolicontact') ) {
-			$ContactError = array();
 		if ( sanitize_text_field($_POST['contactName']) === '' ) {
 			$ContactError[] = esc_html__( 'Please enter your name.', 'doliconnect');
 		} else {
@@ -425,7 +424,7 @@ function dolicontact_request(){
 		if ( sanitize_email($_POST['email']) === '' )  {
 			$ContactError[] = esc_html__( 'Please enter you email.', 'doliconnect');
 		} elseif (!preg_match("/^[[:alnum:]][a-z0-9_.-]*@[a-z0-9.-]+\.[a-z]{2,4}$/i", sanitize_email($_POST['email']))) {
-			$ContactError = 'You entered an invalid email address.';
+			$ContactError[] = esc_html__( 'You entered an invalid email address.', 'doliconnect');
 			$hasError = true;
 		} else {
 			$email = sanitize_email($_POST['email']);
