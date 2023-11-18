@@ -1,3 +1,15 @@
+# 7.0.2
+
+- Fix Jersey flag (#1180)
+
+# 7.0.1
+
+- Remove `<use>`` tags without href (#1179)
+
+# 7.0.0
+
+- Remove Less support (#1174)
+
 # 6.15.0
 
 - Run the latest SVGO to all files (#1176)
