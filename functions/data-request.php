@@ -1037,7 +1037,6 @@ global $current_user;
 			'message' => $result['message'],
 			'newqty' => 1,
 			'items' => $result['items'],	
-			'list' => $result['list'],
 			'lines' => $result['lines'],
 			'total' => $result['total']
 		];	
