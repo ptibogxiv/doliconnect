@@ -38,7 +38,7 @@ function doliconnect_enqueues() {
 	//wp_enqueue_script( 'doliconnect-dolicart' );
   	wp_register_style( 'bootstrap-social', plugins_url( 'doliconnect/includes/custom/css/bootstrap-social.css' ), array(), $version );
 	wp_enqueue_style( 'bootstrap-social');
-  	wp_register_style( 'flag-icons', plugins_url( 'doliconnect/includes/flag-icons/css/flag-icons.css' ), array(), '7.0.2' ); 
+  	wp_register_style( 'flag-icons', plugins_url( 'doliconnect/includes/flag-icons/css/flag-icons.css' ), array(), '7.0.3' ); 
 	wp_enqueue_style( 'flag-icons');
 }
 
