@@ -23,9 +23,6 @@
 			  if (document.getElementById("DoliWidgetCartItems") && response.data.hasOwnProperty("items")) {
 				document.getElementById("DoliWidgetCartItems").innerHTML = response.data.items;      
 			  }
-			  if (document.getElementById("DoliCartItemsList") && response.data.hasOwnProperty("list")) {  
-				document.getElementById("DoliCartItemsList").innerHTML = response.data.list;
-			  }
 			} else {
 			  //console.log("error updating qty " + response.data.message);
 			}
