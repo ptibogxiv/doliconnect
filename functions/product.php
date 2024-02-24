@@ -398,7 +398,7 @@ function doliProductCart($product, $refresh = null, $wishlist = true, $fk_parent
     } else {
       if ( doliCheckModules('adherentsplus', $refresh) && $product->id == doliconst("ADHERENT_PRODUCT_ID_FOR_SUBSCRIPTIONS", dolidelay('constante')) ) {
         if (empty($mstock['qty'])) {
-          $button .= '<button class="btn btn-sm btn-warning mw-100" name="plus" value="plus" type="submit" onclick="doliJavaCartAction(\'updateLine\', '.$product->id.', 1, \'plus\');">'.__( 'Add to basket', 'doliconnect').'</button><input id="qty-prod-'.$product->id.'" type="hidden" aria-label="Quantity" value="'.$mstock['qty'].'" readonly>';
+          //$button .= '<button class="btn btn-sm btn-warning mw-100" name="plus" value="plus" type="submit" onclick="doliJavaCartAction(\'updateLine\', '.$product->id.', 1, \'plus\');">'.__( 'Add to basket', 'doliconnect').'</button><input id="qty-prod-'.$product->id.'" type="hidden" aria-label="Quantity" value="'.$mstock['qty'].'" readonly>';
         } else {
           $button .= '<button class="btn btn-sm btn-warning" name="delete" value="delete" type="submit" onclick="doliJavaCartAction(\'updateLine\', '.$product->id.', 0, \'delete\');"><i class="fa-solid fa-trash-can"></i></button>';
         }
