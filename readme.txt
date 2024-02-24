@@ -70,6 +70,10 @@ We would like to thank this contributors and plugins:
 [gdpr-data-request-form](https://wordpress.org/plugins/gdpr-data-request-form/ "gdpr-data-request-form")
 
 == Changelog ==
+   = 8.0.0 =
+* upgrade bootstrap 5.3.3
+* fix php bugs & error
+
    = 7.8.6 =
 * fix php error
 * upgrade libraries
