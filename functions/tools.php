@@ -1446,6 +1446,8 @@ global $current_user;
   $address .= "</b><br>";
   if ( !empty($object->country_id) ) {  
     $country = callDoliApi("GET", "/setup/dictionary/countries/".$object->country_id."?lang=".doliUserLang($current_user), null, dolidelay('constante', $refresh));
+  } else {
+    $country->label = null;
   }
   $address .= "<small class='text-muted'>".$object->address.", ".$object->zip." ".$object->town." - ".$country->label."<br>".$object->email." - ".(isset($object->phone) ? $object->phone : (isset($object->phone_pro)?$object->phone_pro:null))."</small>";
   return $address;
