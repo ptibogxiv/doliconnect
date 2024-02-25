@@ -3040,6 +3040,10 @@ function doliModalDiv() {
           (function ($) {
             $(document).ready(function () {
               $("#DoliconnectLoadingModal").modal("toggle");
+              if (document.getElementById("doliModalDiv")) {
+                document.getElementById("doliModalDiv").innerHTML = ""; 
+                $("#doliModalCartInfos").modal("handleUpdate");   
+              } 
               $.ajax({
                 url:"'.admin_url('admin-ajax.php').'",
                 type:"POST",
