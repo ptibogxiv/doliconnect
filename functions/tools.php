@@ -3039,10 +3039,12 @@ function doliModalDiv() {
   print 'function doliJavaCartAction(form, id, qty, acase) {
           (function ($) {
             $(document).ready(function () {
+              var DisplayCart = false;
               $("#DoliconnectLoadingModal").modal("toggle");
               if (document.getElementById("doliModalDiv")) {
                 document.getElementById("doliModalDiv").innerHTML = ""; 
-                $("#doliModalCartInfos").modal("handleUpdate");   
+                $("#doliModalCartInfos").modal("handleUpdate"); 
+                DisplayCart = true;  
               } 
               $.ajax({
                 url:"'.admin_url('admin-ajax.php').'",
@@ -3054,7 +3056,8 @@ function doliModalDiv() {
                   "case": form,
                   "id" : id,
                   "qty" : qty,
-                  "modify" : acase
+                  "modify" : acase,
+                  "DisplayCart" : DisplayCart
                 },
               }).done(function(response) {
                 if (response.success) { 
