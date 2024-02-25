@@ -3039,12 +3039,12 @@ function doliModalDiv() {
   print 'function doliJavaCartAction(form, id, qty, acase) {
           (function ($) {
             $(document).ready(function () {
-              var DisplayCart = false;
+              var DisplayCart = 0;
               $("#DoliconnectLoadingModal").modal("toggle");
-              if (document.getElementById("doliModalDiv")) {
+              if (document.getElementById("doliModalCartInfos")) {
                 document.getElementById("doliModalDiv").innerHTML = ""; 
                 $("#doliModalCartInfos").modal("handleUpdate"); 
-                DisplayCart = true;  
+                DisplayCart = 1;  
               } 
               $.ajax({
                 url:"'.admin_url('admin-ajax.php').'",
