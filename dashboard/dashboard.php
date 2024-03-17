@@ -2105,7 +2105,11 @@ if ( doliCheckRights('adherent', 'cotisation', 'lire') ) {
     $datef =  wp_date('d/m/Y', $cotisation->datef);
     print "<li class='list-group-item'><table width='100%' border='0'><tr><td>";
     if ($cotisation->fk_type > 0) {
-        $type= callDoliApi("GET", "/memberstypes/".$cotisation->fk_type, null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+        if (doliversion('20.0.0')){ 
+            $type= callDoliApi("GET", "/members/types/".$cotisation->fk_type, null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+        } else {
+            $type= callDoliApi("GET", "/memberstypes/".$cotisation->fk_type, null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+        }
     }
     print doliproduct($type, 'label');
     print "</td><td>".$dated." ".__( 'to', 'doliconnect')." ".$datef;
