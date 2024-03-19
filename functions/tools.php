@@ -48,7 +48,7 @@ function doliCheckModules($module, $refresh = false) {
     }
   } else {
     $list = callDoliApi("GET", "/setup/modules", null, dolidelay('dolibarr', $refresh));
-    if (in_array($module, $list)) {
+    if (is_array($list) && in_array($module, $list)) {
       $return = true;
     }
   }
