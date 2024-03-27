@@ -1,6 +1,6 @@
 {
   "name": "flag-icons",
-  "version": "7.2.0",
+  "version": "7.2.1",
   "author": "Panayiotis Lipiridis <lipiridis@gmail.com>",
   "license": "MIT",
   "main": "css/flag-icons.css",
@@ -17,7 +17,7 @@
   "devDependencies": {
     "http-server": "14.1.1",
     "prettier": "3.2.5",
-    "sass": "1.71.1",
+    "sass": "1.72.0",
     "svgo": "3.2.0"
   },
   "scripts": {
