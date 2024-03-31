@@ -43,9 +43,9 @@ if (isset($user) && !empty($user)) {
 function doliCheckModules($module, $refresh = false) {
   $return = false;
   if ( !doliversion('20.0.0') ) {
-    if ($module == 'commande') { $module = 'order' }
-    if ($module == 'facture') { $module = 'invoice' }
-    if ($module == 'projet') { $module = 'project' }
+    if ($module == 'commande') { $module = 'order'; }
+    if ($module == 'facture') { $module = 'invoice'; }
+    if ($module == 'projet') { $module = 'project'; }
   }
   if ( !doliversion('13.0.0') ) {
     if ( doliconst('MAIN_MODULE_'.strtoupper ($module), $refresh) ) {
