@@ -476,7 +476,36 @@ $request = "/wishlist?sortfield=t.rang&sortorder=ASC&thirdparty_ids=".doliconnec
 $wishlist = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 print '<div class="card shadow-sm"><div class="card-header">'.__( 'Wishlist', 'doliconnect').'</div><ul class="list-group list-group-flush">';
-  
+
+$file = tmpfile();
+//Inserting the table headers
+$header_data=array('Reference','Quantity','Product');
+fputcsv($file,$header_data);
+ 
+//Data to be inserted
+$fdata = array();
+if ( !isset( $wishlist->error ) && $wishlist != null ) {
+    foreach ( $wishlist as $wish ) { 
+        $fdata[] = array($wish->ref, 0, $wish->label);
+    }
+}
+ 
+// save each row of the data
+foreach ($fdata as $row)
+{
+fputcsv($file, $row);
+}
+
+$tmpfile_path = stream_get_meta_data($file)['uri'];
+// ... write to tmpfile ...
+$tmpfile_content = file_get_contents($tmpfile_path);
+
+// Closing the file
+fclose($file);
+$filename = "orderbycsv.csv";
+$base64 = 'data:text/csv;base64,' . base64_encode($tmpfile_content);
+print '<li class="list-group-item list-group-item-light"><center><a href="'.$base64.'" role="button" class="btn" download="'.$filename.'">'.$filename.' <i class="fas fa-file-download"></i></a></center></li>';
+
 if ( !isset( $wishlist->error ) && $wishlist != null ) {
     foreach ( $wishlist as $wish ) { 
         print apply_filters( 'doliproductlist', $wish);
@@ -626,7 +655,7 @@ print "</div></div>";
 
 //*****************************************************************************************
 
-if ( doliCheckModules('commande') && doliCheckRights('commande', 'lire') ) {
+if ( doliCheckModules('order') && doliCheckRights('commande', 'lire') ) {
 add_action( 'customer_doliconnect_menu', 'orders_menu', 2, 1);
 add_action( 'customer_doliconnect_orders', 'orders_module');
 }
@@ -853,7 +882,7 @@ $poids = " ".__( 'of', 'doliconnect')." ".$ship->trueWeight." ".doliunit($ship->
 if ( $ship->trueSize != null && $ship->trueSize != 'xx' ) {
 $dimensions = " - ".__( 'size', 'doliconnect')." ".$ship->trueSize." ".doliunit($ship->size_units, 'size');
 } else  { $dimensions = ''; }
-if ( $ship->statut > 0 ) {
+if ( $ship->status > 0 ) {
 if ( !empty($ship->date_delivery) ) {
 $datedelivery = "<br>".__( 'Estimated delivery', 'doliconnect').": ".wp_date( get_option( 'date_format' ), $ship->date_delivery, false);
 } else { $datedelivery = ''; }
@@ -938,7 +967,7 @@ print "</div></div>";
 
 //*****************************************************************************************
 
-if ( doliCheckModules('facture') && get_option('doliconnectdisplayinvoice') && doliCheckRights('facture', 'lire') ) {
+if ( doliCheckModules('invoice') && get_option('doliconnectdisplayinvoice') && doliCheckRights('facture', 'lire') ) {
 add_action( 'customer_doliconnect_menu', 'invoices_menu', 2, 1);
 add_action( 'customer_doliconnect_invoices', 'invoices_module');
 }
@@ -1336,7 +1365,7 @@ print "</div></div>";
 
 //*****************************************************************************************
 
-if ( doliCheckModules('projet') && !empty(get_option('doliconnectbeta')) && doliCheckRights('projet', 'lire') ) {
+if ( doliCheckModules('project') && !empty(get_option('doliconnectbeta')) && doliCheckRights('projet', 'lire') ) {
 add_action( 'customer_doliconnect_menu', 'projets_menu', 2, 1);
 add_action( 'customer_doliconnect_projets', 'projets_module');
 }
@@ -2010,7 +2039,7 @@ if ( (isset($adherent->datecommitment) && current_time('timestamp') > $adherent-
 
 print "</div><div class='col-12 col-md-7'>";
 
-if ( doliCheckModules('commande') && !empty($productadhesion) ) {
+if ( doliCheckModules('order') && !empty($productadhesion) ) {
 
     if ( $adherent->datefin == null && $adherent->statut == '0' ) {
         //print  "<a href='#' id='subscribe-button2' class='btn btn text-white btn-warning btn-block' data-bs-toggle='modal' data-bs-target='#activatemember'><b>".__( 'Become a member', 'doliconnect')."</b></a>";
