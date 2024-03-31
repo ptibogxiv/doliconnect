@@ -42,6 +42,11 @@ if (isset($user) && !empty($user)) {
 
 function doliCheckModules($module, $refresh = false) {
   $return = false;
+  if ( !doliversion('20.0.0') ) {
+    if ($module == 'commande') { $module = 'order' }
+    if ($module == 'facture') { $module = 'invoice' }
+    if ($module == 'projet') { $module = 'project' }
+  }
   if ( !doliversion('13.0.0') ) {
     if ( doliconst('MAIN_MODULE_'.strtoupper ($module), $refresh) ) {
       $return = true;
@@ -124,7 +129,7 @@ function dolicaptcha($id = null) {
 }
 
 function dolisanitize($object) {
-  if (isset($object['firstname'])) $object['firstname'] = ucfirst(strtolower(stripslashes(sanitize_text_field($object['firstname']))));
+  if (isset($objectx)) $object['firstname'] = ucfirst(strtolower(stripslashes(sanitize_text_field($object['firstname']))));
   if (isset($object['lastname'])) $object['lastname'] = strtoupper(stripslashes(sanitize_text_field($object['lastname'])));
   if (isset($object['name'])) { 
     $object['name'] = strtoupper(stripslashes(sanitize_text_field($object['name'])));
