@@ -95,7 +95,7 @@ function dolimembertypelist($typeadhesion, $adherent = null) {
         $list .= "<br><small class='text-justify text-muted '>".__( 'From', 'doliconnect')." ".wp_date('d/m/Y', $postadh->date_begin)." ".__( 'until', 'doliconnect')." ".wp_date('d/m/Y', $postadh->date_end)."</small>";
         $list .= "</div><div class='col-md-4'>";
         if (!isset($adherent->next_subscription_renew)) $adherent->next_subscription_renew = null;
-        if ( isset($adherent) && isset($adherent->datefin) && $adherent->datefin != null && $adherent->statut == 1 && $adherent->datefin > $adherent->next_subscription_renew && $adherent->next_subscription_renew > current_time( 'timestamp',1) ) {
+        if ( isset($adherent) && isset($adherent->datefin) && $adherent->datefin != null && $adherent->status == 1 && $adherent->datefin > $adherent->next_subscription_renew && $adherent->next_subscription_renew > current_time( 'timestamp',1) ) {
           $list .= "<div class='d-grid gap-2'><button class='btn btn-light' disabled>".sprintf(__('From %s', 'doliconnect'), wp_date('d/m/Y', $adherent->next_subscription_renew))."</button></div>";
         } elseif ( $postadh->family == '1' ) {
           $list .= "<div class='d-grid gap-2'><a href='".doliconnecturl('doliaccount')."?module=ticket&type=COM&create' class='btn btn-info' role='button'>".__( 'Contact us', 'doliconnect')."</a></div>";
@@ -104,7 +104,7 @@ function dolimembertypelist($typeadhesion, $adherent = null) {
         } elseif ( $postadh->automatic_renew != '1' && isset($adherent) && $postadh->id == $adherent->typeid ) { //to do add security for avoid loop  in revali
           $list .= "<form id='subscription-form' action='".esc_url( add_query_arg( 'module', 'members', doliconnecturl('doliaccount')) )."' method='post'><input type='hidden' name='cotisation' value='$postadh->price_prorata'><input type='hidden' name='timestamp_start' value='".$postadh->date_begin."'><input type='hidden' name='timestamp_end' value='".$postadh->date_end."'><input type='hidden' name='update_membership' value='4'><input type='hidden' name='typeadherent' value='$postadh->id'><div class='d-grid gap-2'><button class='btn btn-warning btn-block' type='submit'>".__( 'Validate', 'doliconnect')."</button></div></form>";
         } elseif ( $postadh->automatic == '1' && isset($adherent) && $postadh->id == $adherent->typeid ) {
-          if ( isset($adherent) && $adherent->statut == '1' ) {
+          if ( isset($adherent) && $adherent->status == '1' ) {
             if ( $adherent->datefin == null ) { 
               $list .= "<form id='subscription-form' action='".esc_url( add_query_arg( 'module', 'members', doliconnecturl('doliaccount')) )."' method='post'><input type='hidden' name='cotisation' value='$postadh->price_prorata'><input type='hidden' name='timestamp_start' value='".$postadh->date_begin."'><input type='hidden' name='timestamp_end' value='".$postadh->date_end."'><input type='hidden' name='update_membership' value='4'><input type='hidden' name='typeadherent' value='$postadh->id'><div class='d-grid gap-2'><button class='btn btn-success btn-block' type='submit'>".__( 'Validate', 'doliconnect')."</button></div></form>";
             } else {
