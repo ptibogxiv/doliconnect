@@ -4,7 +4,7 @@ Contributors: ptibogxiv, audrasjb
 Tags: erp, crm, ecommerce, dolibarr, payment, interface, customer, subscription, membership, doliconnect, dashboard, paypal, stripe, doliconnect, invoice, order, donation, GDPR, RGPD, LGPD, CCPA
 Requires at least: 5.0
 Tested up to: 6.5
-Stable tag: 8.0.0
+Stable tag: 7.8.6
 Requires PHP: 7.4
 License: GPL v3 or later
 Donate link: https://www.paypal.me/ptibogxiv
@@ -73,6 +73,7 @@ We would like to thank this contributors and plugins:
    = 8.0.0 =
 * upgrade bootstrap 5.3.3
 * fix php bugs & error
+* support dolibarr v19 & 20
 
    = 7.8.6 =
 * fix php error
