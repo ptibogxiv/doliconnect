@@ -475,6 +475,35 @@ if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['
 $request = "/wishlist?sortfield=t.rang&sortorder=ASC&thirdparty_ids=".doliconnector($current_user, 'fk_soc')."&sqlfilters=(t.priv%3A%3D%3A0)";
 $wishlist = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
+if ( isset($_POST["case"]) && $_POST["case"] == 'importcsv' ) {
+    if ( $_FILES['inputavatar']['tmp_name'] != null ) {
+    $types = array('text/csv');
+    if ( $_FILES['inputavatar']['tmp_name'] != null ) {
+    list($width, $height) = getimagesize($_FILES['inputavatar']['tmp_name']);
+    }
+   print  $_FILES['inputavatar']['type'];
+    if ( ( isset($_FILES['inputavatar']['tmp_name'])) && (in_array($_FILES['inputavatar']['type'], $types)) && ($_FILES['inputavatar']['size'] <= 10000000)) {
+    $row = 1;
+if (($handle = fopen($_FILES['inputavatar']['tmp_name'], "r")) !== FALSE) {
+while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+$num = count($data);
+print "<p> $num fields in line $row: <br /></p>\n";
+$row++;
+for ($c=0; $c < $num; $c++) {
+print $data[$c] . "<br />\n";
+}
+}
+fclose($handle);
+}
+    
+    } else {
+    print dolialert ('warning', "VMerci de respecter le format CSV du fichier guide!");
+    }
+    }
+    
+    print dolialert ('success', __( 'Your informations have been updated.', 'doliconnect'));
+    }
+
 print '<div class="card shadow-sm"><div class="card-header">'.__( 'Wishlist', 'doliconnect').'</div><ul class="list-group list-group-flush">';
 
 $file = tmpfile();
@@ -504,7 +533,15 @@ $tmpfile_content = file_get_contents($tmpfile_path);
 fclose($file);
 $filename = "orderbycsv.csv";
 $base64 = 'data:text/csv;base64,' . base64_encode($tmpfile_content);
-print '<li class="list-group-item list-group-item-light"><center><a href="'.$base64.'" role="button" class="btn" download="'.$filename.'">'.$filename.' <i class="fas fa-file-download"></i></a></center></li>';
+print '<li class="list-group-item list-group-item-light"><center><a href="'.$base64.'" role="button" class="btn" download="'.$filename.'">'.$filename.' <i class="fas fa-file-download"></i></a></center>';
+print "<form action='".$url."' id='doliconnect-avatarform' method='post' class='was-validated' enctype='multipart/form-data'><input type='hidden' name='case' value='importcsv'>";
+
+print '<div class="mb-2"><div class="input-group mb-2">
+<input type="file" id="inputavatar" name="inputavatar" accept=".csv" class="form-control" id="inputGroupFile03" aria-describedby="doliavatarHelp" aria-label="Upload" required>
+</div><div id="doliavatarHelp" class="form-text">'.__( 'Your upload must be a .csv file following the guidelines.', 'doliconnect').'</div></div>';
+
+print "<div class='d-grid gap-2'><button class='btn btn-outline-secondary' type='submit'>".__( 'Submit', 'doliconnect')."</button></div></div></form>";
+print '</li>';
 
 if ( !isset( $wishlist->error ) && $wishlist != null ) {
     foreach ( $wishlist as $wish ) { 
