@@ -543,7 +543,7 @@ print '<div class="mb-2"><div class="input-group mb-2">
 <input type="file" id="inputcsv" name="inputcsv" accept=".csv" class="form-control" id="inputGroupFile03" aria-describedby="doliavatarHelp" aria-label="Upload" required>
 </div><div id="doliavatarHelp" class="form-text">'.__( 'Your upload must be a .csv file following the guidelines.', 'doliconnect').'</div></div>';
 
-print "<div class='d-grid gap-2'><button class='btn btn-outline-secondary' type='submit'>".__( 'Submit', 'doliconnect')."</button></div></div></form>";
+print "<div class='d-grid gap-2'><button class='btn btn-outline-secondary' type='submit'>".__( 'Submit', 'doliconnect')."</button></div></form>";
 print '</li>';
 
 if ( !isset( $wishlist->error ) && $wishlist != null ) {
