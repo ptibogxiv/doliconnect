@@ -489,16 +489,23 @@ while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
 $num = count($data);
 //print "<p> $num fields in line $row: <br /></p>\n";
 $row++;
-$product = callDoliApi("GET", "/products/ref/".trim($data[0])."?includestockdata=1&includesubproducts=true&includetrans=true", null, dolidelay('product', true));
+$product = callDoliApi("GET", "/products/ref/".trim($data[0]), null, dolidelay('product', true));
+if (isset($product->id) && is_numeric($product->id) && $product->id > 0) {
+$product = callDoliApi("GET", "/products/".$product->id."?includestockdata=1&includesubproducts=true&includetrans=true", null, dolidelay('product', true));
 $mstock = doliProductStock($product, false, true);
-//print var_dump($mstock);
-$price = doliProductPrice($product, $data[1], false, true);
-$result = doliaddtocart($product, $mstock, $data[1], $price, null, null);
-if (!empty(doliRequiredRelatedProducts($product->id, null, false))) {
-    $result = doliRequiredRelatedProducts($product->id, $data[1], true);
+print var_dump($mstock);
+if ( $mstock['stock'] <= 0 || $mstock['m2'] < $mstock['step'] ) { 
+    // todo
+} else {
+    $price = doliProductPrice($product, $data[1], false, true);
+    $result = doliaddtocart($product, $mstock, $data[1], $price, null, null);
+    if (!empty(doliRequiredRelatedProducts($product->id, null, false))) {
+        $result = doliRequiredRelatedProducts($product->id, $data[1], true);
+    }    
 }
 for ($c=0; $c < $num; $c++) {
 //print $data[$c] . "<br />\n";
+}
 }
 }
 fclose($handle);
