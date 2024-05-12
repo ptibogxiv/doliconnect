@@ -481,21 +481,24 @@ if ( isset($_POST["case"]) && $_POST["case"] == 'importcsv' ) {
     if ( $_FILES['inputcsv']['tmp_name'] != null ) {
     list($width, $height) = getimagesize($_FILES['inputcsv']['tmp_name']);
     }
-   print  $_FILES['inputcsv']['type'];
+   //print  $_FILES['inputcsv']['type'];
     if ( ( isset($_FILES['inputcsv']['tmp_name'])) && (in_array($_FILES['inputcsv']['type'], $types)) && ($_FILES['inputcsv']['size'] <= 10000000)) {
     $row = 1;
 if (($handle = fopen($_FILES['inputcsv']['tmp_name'], "r")) !== FALSE) {
 while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
 $num = count($data);
-print "<p> $num fields in line $row: <br /></p>\n";
+//print "<p> $num fields in line $row: <br /></p>\n";
 $row++;
 $product = callDoliApi("GET", "/products/ref/".trim($data[0])."?includestockdata=1&includesubproducts=true&includetrans=true", null, dolidelay('product', true));
 $mstock = doliProductStock($product, false, true);
-print var_dump($mstock);
+//print var_dump($mstock);
 $price = doliProductPrice($product, $data[1], false, true);
 $result = doliaddtocart($product, $mstock, $data[1], $price, null, null);
+if (!empty(doliRequiredRelatedProducts($product->id, null, false))) {
+    $result = doliRequiredRelatedProducts($product->id, $data[1], true);
+}
 for ($c=0; $c < $num; $c++) {
-print $data[$c] . "<br />\n";
+//print $data[$c] . "<br />\n";
 }
 }
 fclose($handle);
@@ -520,7 +523,7 @@ fputcsv($file,$header_data);
 $fdata = array();
 if ( !isset( $wishlist->error ) && $wishlist != null ) {
     foreach ( $wishlist as $wish ) { 
-        $fdata[] = array($wish->ref, 0, $wish->label);
+        $fdata[] = array($wish->ref, 1, $wish->label);
     }
 }
  
