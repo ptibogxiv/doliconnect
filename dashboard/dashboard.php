@@ -493,7 +493,7 @@ $product = callDoliApi("GET", "/products/ref/".trim($data[0]), null, dolidelay('
 if (isset($product->id) && is_numeric($product->id) && $product->id > 0) {
 $product = callDoliApi("GET", "/products/".$product->id."?includestockdata=1&includesubproducts=true&includetrans=true", null, dolidelay('product', true));
 $mstock = doliProductStock($product, false, true);
-print var_dump($mstock);
+//print var_dump($mstock);
 if ( $mstock['stock'] <= 0 || $mstock['m2'] < $mstock['step'] ) { 
     // todo
 } else {
@@ -512,11 +512,11 @@ fclose($handle);
 }
     
     } else {
-    print dolialert ('warning', "VMerci de respecter le format CSV du fichier guide!");
+    print dolialert ('warning', __( 'Please, follow the guidelines for the file!', 'doliconnect'));
     }
     }
     
-    print dolialert ('success', __( 'Your informations have been updated.', 'doliconnect'));
+    print dolialert ('success', __( 'Your cart have been updated.', 'doliconnect'));
     }
 
 print '<div class="card shadow-sm"><div class="card-header">'.__( 'Wishlist', 'doliconnect').'</div><ul class="list-group list-group-flush">';
