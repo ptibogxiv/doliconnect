@@ -492,6 +492,8 @@ $row++;
 $product = callDoliApi("GET", "/products/ref/".trim($data[0])."?includestockdata=1&includesubproducts=true&includetrans=true", null, dolidelay('product', true));
 $mstock = doliProductStock($product, false, true);
 print var_dump($mstock);
+$price = doliProductPrice($product, $data[1], false, true);
+$result = doliaddtocart($product, $mstock, $data[1], $price, null, null);
 for ($c=0; $c < $num; $c++) {
 print $data[$c] . "<br />\n";
 }
