@@ -476,19 +476,22 @@ $request = "/wishlist?sortfield=t.rang&sortorder=ASC&thirdparty_ids=".doliconnec
 $wishlist = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 if ( isset($_POST["case"]) && $_POST["case"] == 'importcsv' ) {
-    if ( $_FILES['inputavatar']['tmp_name'] != null ) {
+    if ( $_FILES['inputcsv']['tmp_name'] != null ) {
     $types = array('text/csv');
-    if ( $_FILES['inputavatar']['tmp_name'] != null ) {
-    list($width, $height) = getimagesize($_FILES['inputavatar']['tmp_name']);
+    if ( $_FILES['inputcsv']['tmp_name'] != null ) {
+    list($width, $height) = getimagesize($_FILES['inputcsv']['tmp_name']);
     }
-   print  $_FILES['inputavatar']['type'];
-    if ( ( isset($_FILES['inputavatar']['tmp_name'])) && (in_array($_FILES['inputavatar']['type'], $types)) && ($_FILES['inputavatar']['size'] <= 10000000)) {
+   print  $_FILES['inputcsv']['type'];
+    if ( ( isset($_FILES['inputcsv']['tmp_name'])) && (in_array($_FILES['inputcsv']['type'], $types)) && ($_FILES['inputcsv']['size'] <= 10000000)) {
     $row = 1;
-if (($handle = fopen($_FILES['inputavatar']['tmp_name'], "r")) !== FALSE) {
+if (($handle = fopen($_FILES['inputcsv']['tmp_name'], "r")) !== FALSE) {
 while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
 $num = count($data);
 print "<p> $num fields in line $row: <br /></p>\n";
 $row++;
+$product = callDoliApi("GET", "/products/ref/".trim($data[0])."?includestockdata=1&includesubproducts=true&includetrans=true", null, dolidelay('product', true));
+$mstock = doliProductStock($product, false, true);
+print var_dump($product);
 for ($c=0; $c < $num; $c++) {
 print $data[$c] . "<br />\n";
 }
@@ -537,7 +540,7 @@ print '<li class="list-group-item list-group-item-light"><center><a href="'.$bas
 print "<form action='".$url."' id='doliconnect-avatarform' method='post' class='was-validated' enctype='multipart/form-data'><input type='hidden' name='case' value='importcsv'>";
 
 print '<div class="mb-2"><div class="input-group mb-2">
-<input type="file" id="inputavatar" name="inputavatar" accept=".csv" class="form-control" id="inputGroupFile03" aria-describedby="doliavatarHelp" aria-label="Upload" required>
+<input type="file" id="inputcsv" name="inputcsv" accept=".csv" class="form-control" id="inputGroupFile03" aria-describedby="doliavatarHelp" aria-label="Upload" required>
 </div><div id="doliavatarHelp" class="form-text">'.__( 'Your upload must be a .csv file following the guidelines.', 'doliconnect').'</div></div>';
 
 print "<div class='d-grid gap-2'><button class='btn btn-outline-secondary' type='submit'>".__( 'Submit', 'doliconnect')."</button></div></div></form>";
