@@ -72,6 +72,10 @@ We would like to thank this contributors and plugins:
 == Changelog ==
    = 8.0.1 =
 * fix php bugs & error
+* order wishlist with csv
+
+   = 8.0.1 =
+* fix php bugs & error
 
    = 8.0.0 =
 * upgrade bootstrap 5.3.3
