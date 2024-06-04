@@ -1547,7 +1547,7 @@ global $current_user;
         $doliline .= '<center>'.doliProductStock($product).'</center>';
         if ( !empty($product->country_id) ) {  
           $country = callDoliApi("GET", "/setup/dictionary/countries/".$product->country_id."?lang=".doliUserLang($current_user), null, dolidelay('constante', $refresh));
-          $doliline .= "<center><small><span class='fi fi-".strtolower($product->country_code)."'></span> ".$country->label."</small></center>"; 
+          if (isset($product->country_code)) $doliline .= "<center><small><span class='fi fi-".strtolower($product->country_code)."'></span></small></center>"; 
         }
       }
       $doliline .= '</div><div class="col-4 col-sm-3 col-md-3 col-lg-3 text-end"><h6 class="mb-1">'.doliprice($line, (empty(get_option('dolibarr_b2bmode'))?'total_ttc':'total_ht'), isset($line->multicurrency_code) ? $line->multicurrency_code : null).'</h6>';
