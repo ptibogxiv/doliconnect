@@ -14,7 +14,7 @@
  */
 
 import { arrayBuffersToBytes, MissingDataException } from "./core_utils.js";
-import { assert, PromiseCapability } from "../shared/util.js";
+import { assert } from "../shared/util.js";
 import { Stream } from "./stream.js";
 
 class ChunkedStream extends Stream {
@@ -207,7 +207,7 @@ class ChunkedStream extends Stream {
       if (start + length > this.progressiveDataLength) {
         this.ensureRange(start, start + length);
       }
-    } else {
+    } else if (start >= this.progressiveDataLength) {
       // When the `length` is undefined you do *not*, under any circumstances,
       // want to fallback on calling `this.ensureRange(start, this.end)` since
       // that would force the *entire* PDF file to be loaded, thus completely
@@ -217,9 +217,7 @@ class ChunkedStream extends Stream {
       // time/resources during e.g. parsing, since `MissingDataException`s will
       // require data to be re-parsed, which we attempt to minimize by at least
       // checking that the *beginning* of the data is available here.
-      if (start >= this.progressiveDataLength) {
-        this.ensureByte(start);
-      }
+      this.ensureByte(start);
     }
 
     function ChunkedStreamSubstream() {}
@@ -275,7 +273,7 @@ class ChunkedStreamManager {
     this.progressiveDataLength = 0;
     this.aborted = false;
 
-    this._loadedStreamCapability = new PromiseCapability();
+    this._loadedStreamCapability = Promise.withResolvers();
   }
 
   sendRequest(begin, end) {
@@ -349,7 +347,7 @@ class ChunkedStreamManager {
       return Promise.resolve();
     }
 
-    const capability = new PromiseCapability();
+    const capability = Promise.withResolvers();
     this._promisesByRequest.set(requestId, capability);
 
     const chunksToRequest = [];
@@ -548,9 +546,8 @@ class ChunkedStreamManager {
 
   abort(reason) {
     this.aborted = true;
-    if (this.pdfNetworkStream) {
-      this.pdfNetworkStream.cancelAllRequests(reason);
-    }
+    this.pdfNetworkStream?.cancelAllRequests(reason);
+
     for (const capability of this._promisesByRequest.values()) {
       capability.reject(reason);
     }

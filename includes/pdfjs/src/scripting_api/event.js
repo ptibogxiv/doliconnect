@@ -81,6 +81,15 @@ class EventDispatcher {
   }
 
   dispatch(baseEvent) {
+    if (
+      typeof PDFJSDev !== "undefined" &&
+      PDFJSDev.test("TESTING") &&
+      baseEvent.name === "sandboxtripbegin"
+    ) {
+      this._externalCall("send", [{ command: "sandboxTripEnd" }]);
+      return;
+    }
+
     const id = baseEvent.id;
     if (!(id in this._objects)) {
       let event;
@@ -233,7 +242,7 @@ class EventDispatcher {
     // Run format actions if any for all the fields.
     const event = (globalThis.event = new Event({}));
     for (const source of Object.values(this._objects)) {
-      event.value = source.obj.value;
+      event.value = source.obj._getValue();
       this.runActions(source, source, event, "Format");
     }
   }
@@ -245,8 +254,7 @@ class EventDispatcher {
 
       this.runCalculate(source, event);
 
-      const savedValue = source.obj._getValue();
-      event.value = source.obj.value;
+      const savedValue = (event.value = source.obj._getValue());
       let formattedValue = null;
 
       if (this.runActions(source, source, event, "Format")) {
@@ -335,7 +343,7 @@ class EventDispatcher {
 
       event.value = null;
       const target = this._objects[targetId];
-      let savedValue = target.obj.value;
+      let savedValue = target.obj._getValue();
       this.runActions(source, target, event, "Calculate");
       if (!event.rc) {
         continue;
@@ -344,18 +352,23 @@ class EventDispatcher {
       if (event.value !== null) {
         // A new value has been calculated so set it.
         target.obj.value = event.value;
+      } else {
+        event.value = target.obj._getValue();
       }
 
-      event.value = target.obj.value;
       this.runActions(target, target, event, "Validate");
       if (!event.rc) {
-        if (target.obj.value !== savedValue) {
+        if (target.obj._getValue() !== savedValue) {
           target.wrapped.value = savedValue;
         }
         continue;
       }
 
-      savedValue = event.value = target.obj.value;
+      if (event.value === null) {
+        event.value = target.obj._getValue();
+      }
+
+      savedValue = target.obj._getValue();
       let formattedValue = null;
       if (this.runActions(target, target, event, "Format")) {
         formattedValue = event.value?.toString?.();

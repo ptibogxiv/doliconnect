@@ -23,6 +23,10 @@
 /** @typedef {import("./interfaces").IDownloadManager} IDownloadManager */
 /** @typedef {import("./interfaces").IL10n} IL10n */
 /** @typedef {import("./interfaces").IPDFLinkService} IPDFLinkService */
+// eslint-disable-next-line max-len
+/** @typedef {import("./pdf_find_controller").PDFFindController} PDFFindController */
+// eslint-disable-next-line max-len
+/** @typedef {import("./pdf_scripting_manager").PDFScriptingManager} PDFScriptingManager */
 
 import {
   AnnotationEditorType,
@@ -30,7 +34,7 @@ import {
   AnnotationMode,
   PermissionFlag,
   PixelsPerInch,
-  PromiseCapability,
+  shadow,
   version,
 } from "pdfjs-lib";
 import {
@@ -58,7 +62,7 @@ import {
   VERTICAL_PADDING,
   watchScroll,
 } from "./ui_utils.js";
-import { NullL10n } from "./l10n_utils.js";
+import { GenericL10n } from "web-null_l10n";
 import { PDFPageView } from "./pdf_page_view.js";
 import { PDFRenderingQueue } from "./pdf_rendering_queue.js";
 import { SimpleLinkService } from "./pdf_link_service.js";
@@ -104,17 +108,15 @@ function isValidAnnotationEditorMode(mode) {
  * @property {number} [annotationEditorMode] - Enables the creation and editing
  *   of new Annotations. The constants from {@link AnnotationEditorType} should
  *   be used. The default value is `AnnotationEditorType.NONE`.
+ * @property {string} [annotationEditorHighlightColors] - A comma separated list
+ *   of colors to propose to highlight some text in the pdf.
  * @property {string} [imageResourcesPath] - Path for image resources, mainly
  *   mainly for annotation icons. Include trailing slash.
  * @property {boolean} [enablePrintAutoRotate] - Enables automatic rotation of
  *   landscape pages upon printing. The default is `false`.
- * @property {boolean} [useOnlyCssZoom] - Enables CSS only zooming. The default
- *   value is `false`.
- * @property {boolean} [isOffscreenCanvasSupported] - Allows to use an
- *   OffscreenCanvas if needed.
  * @property {number} [maxCanvasPixels] - The maximum supported canvas size in
- *   total pixels, i.e. width * height. Use -1 for no limit. The default value
- *   is 4096 * 4096 (16 mega-pixels).
+ *   total pixels, i.e. width * height. Use `-1` for no limit, or `0` for
+ *   CSS-only zooming. The default value is 4096 * 8192 (32 mega-pixels).
  * @property {IL10n} [l10n] - Localization service.
  * @property {boolean} [enablePermissions] - Enables PDF document permissions,
  *   when they exist. The default value is `false`.
@@ -197,6 +199,10 @@ class PDFPageViewBuffer {
 class PDFViewer {
   #buffer = null;
 
+  #altTextManager = null;
+
+  #annotationEditorHighlightColors = null;
+
   #annotationEditorMode = AnnotationEditorType.NONE;
 
   #annotationEditorUIManager = null;
@@ -205,9 +211,13 @@ class PDFViewer {
 
   #containerTopLeft = null;
 
-  #copyCallbackBound = null;
+  #enableHighlightFloatingButton = false;
 
   #enablePermissions = false;
+
+  #eventAbortController = null;
+
+  #mlManager = null;
 
   #getAllTextInProgress = false;
 
@@ -220,8 +230,6 @@ class PDFViewer {
   #resizeObserver = new ResizeObserver(this.#resizeObserverCallback.bind(this));
 
   #scrollModePageState = null;
-
-  #onVisibilityChange = null;
 
   #scaleTimeoutId = null;
 
@@ -259,6 +267,7 @@ class PDFViewer {
     this.linkService = options.linkService || new SimpleLinkService();
     this.downloadManager = options.downloadManager || null;
     this.findController = options.findController || null;
+    this.#altTextManager = options.altTextManager || null;
 
     if (this.findController) {
       this.findController.onIsPageVisible = pageNumber =>
@@ -270,18 +279,23 @@ class PDFViewer {
       options.annotationMode ?? AnnotationMode.ENABLE_FORMS;
     this.#annotationEditorMode =
       options.annotationEditorMode ?? AnnotationEditorType.NONE;
+    this.#annotationEditorHighlightColors =
+      options.annotationEditorHighlightColors || null;
+    this.#enableHighlightFloatingButton =
+      options.enableHighlightFloatingButton === true;
     this.imageResourcesPath = options.imageResourcesPath || "";
     this.enablePrintAutoRotate = options.enablePrintAutoRotate || false;
     if (typeof PDFJSDev === "undefined" || PDFJSDev.test("GENERIC")) {
       this.removePageBorders = options.removePageBorders || false;
     }
-    this.useOnlyCssZoom = options.useOnlyCssZoom || false;
-    this.isOffscreenCanvasSupported =
-      options.isOffscreenCanvasSupported ?? true;
     this.maxCanvasPixels = options.maxCanvasPixels;
-    this.l10n = options.l10n || NullL10n;
+    this.l10n = options.l10n;
+    if (typeof PDFJSDev === "undefined" || PDFJSDev.test("GENERIC")) {
+      this.l10n ||= new GenericL10n();
+    }
     this.#enablePermissions = options.enablePermissions || false;
     this.pageColors = options.pageColors || null;
+    this.#mlManager = options.mlManager || null;
 
     this.defaultRenderingQueue = !options.renderingQueue;
     if (
@@ -297,7 +311,6 @@ class PDFViewer {
 
     this.scroll = watchScroll(this.container, this._scrollUpdate.bind(this));
     this.presentationModeState = PresentationModeState.UNKNOWN;
-    this._onBeforeDraw = this._onAfterDraw = null;
     this._resetView();
 
     if (
@@ -317,6 +330,14 @@ class PDFViewer {
         pdfPage?.cleanup();
       }
     });
+
+    if (
+      (typeof PDFJSDev === "undefined" || PDFJSDev.test("GENERIC")) &&
+      !options.l10n
+    ) {
+      // Ensure that Fluent is connected in e.g. the COMPONENTS build.
+      this.l10n.translate(this.container);
+    }
   }
 
   get pagesCount() {
@@ -337,10 +358,7 @@ class PDFViewer {
   get pageViewsReady() {
     // Prevent printing errors when 'disableAutoFetch' is set, by ensuring
     // that *all* pages have in fact been completely loaded.
-    return (
-      this._pagesCapability.settled &&
-      this._pages.every(pageView => pageView?.pdfPage)
-    );
+    return this._pages.every(pageView => pageView?.pdfPage);
   }
 
   /**
@@ -538,9 +556,9 @@ class PDFViewer {
     return this.pdfDocument ? this._pagesCapability.promise : null;
   }
 
-  #layerProperties() {
+  get _layerProperties() {
     const self = this;
-    return {
+    return shadow(this, "_layerProperties", {
       get annotationEditorUIManager() {
         return self.#annotationEditorUIManager;
       },
@@ -565,7 +583,7 @@ class PDFViewer {
       get linkService() {
         return self.linkService;
       },
-    };
+    });
   }
 
   /**
@@ -604,7 +622,7 @@ class PDFViewer {
     return params;
   }
 
-  #onePageRenderedOrForceFetch() {
+  async #onePageRenderedOrForceFetch(signal) {
     // Unless the viewer *and* its pages are visible, rendering won't start and
     // `this._onePageRenderedCapability` thus won't be resolved.
     // To ensure that automatic printing, on document load, still works even in
@@ -620,31 +638,27 @@ class PDFViewer {
       !this.container.offsetParent ||
       this._getVisiblePages().views.length === 0
     ) {
-      return Promise.resolve();
+      return;
     }
 
     // Handle the window/tab becoming inactive *after* rendering has started;
     // fixes (another part of) bug 1746213.
-    const visibilityChangePromise = new Promise(resolve => {
-      this.#onVisibilityChange = () => {
-        if (document.visibilityState !== "hidden") {
-          return;
-        }
-        resolve();
-
-        document.removeEventListener(
-          "visibilitychange",
-          this.#onVisibilityChange
-        );
-        this.#onVisibilityChange = null;
-      };
-      document.addEventListener("visibilitychange", this.#onVisibilityChange);
+    const hiddenCapability = Promise.withResolvers();
+    function onVisibilityChange() {
+      if (document.visibilityState === "hidden") {
+        hiddenCapability.resolve();
+      }
+    }
+    document.addEventListener("visibilitychange", onVisibilityChange, {
+      signal,
     });
 
-    return Promise.race([
+    await Promise.race([
       this._onePageRenderedCapability.promise,
-      visibilityChangePromise,
+      hiddenCapability.promise,
     ]);
+    // Ensure that the "visibilitychange" listener is removed immediately.
+    document.removeEventListener("visibilitychange", onVisibilityChange);
   }
 
   async getAllText() {
@@ -763,10 +777,17 @@ class PDFViewer {
     const pagesCount = pdfDocument.numPages;
     const firstPagePromise = pdfDocument.getPage(1);
     // Rendering (potentially) depends on this, hence fetching it immediately.
-    const optionalContentConfigPromise = pdfDocument.getOptionalContentConfig();
+    const optionalContentConfigPromise = pdfDocument.getOptionalContentConfig({
+      intent: "display",
+    });
     const permissionsPromise = this.#enablePermissions
       ? pdfDocument.getPermissions()
       : Promise.resolve();
+
+    const { eventBus, pageColors, viewer } = this;
+
+    this.#eventAbortController = new AbortController();
+    const { signal } = this.#eventAbortController;
 
     // Given that browsers don't handle huge amounts of DOM-elements very well,
     // enforce usage of PAGE-scrolling when loading *very* long/large documents.
@@ -775,19 +796,19 @@ class PDFViewer {
         "Forcing PAGE-scrolling for performance reasons, given the length of the document."
       );
       const mode = (this._scrollMode = ScrollMode.PAGE);
-      this.eventBus.dispatch("scrollmodechanged", { source: this, mode });
+      eventBus.dispatch("scrollmodechanged", { source: this, mode });
     }
 
     this._pagesCapability.promise.then(
       () => {
-        this.eventBus.dispatch("pagesloaded", { source: this, pagesCount });
+        eventBus.dispatch("pagesloaded", { source: this, pagesCount });
       },
       () => {
         /* Prevent "Uncaught (in promise)"-messages in the console. */
       }
     );
 
-    this._onBeforeDraw = evt => {
+    const onBeforeDraw = evt => {
       const pageView = this._pages[evt.pageNumber - 1];
       if (!pageView) {
         return;
@@ -796,26 +817,17 @@ class PDFViewer {
       // evicted from the buffer and destroyed even if we pause its rendering.
       this.#buffer.push(pageView);
     };
-    this.eventBus._on("pagerender", this._onBeforeDraw);
+    eventBus._on("pagerender", onBeforeDraw, { signal });
 
-    this._onAfterDraw = evt => {
-      if (evt.cssTransform || this._onePageRenderedCapability.settled) {
+    const onAfterDraw = evt => {
+      if (evt.cssTransform) {
         return;
       }
       this._onePageRenderedCapability.resolve({ timestamp: evt.timestamp });
 
-      this.eventBus._off("pagerendered", this._onAfterDraw);
-      this._onAfterDraw = null;
-
-      if (this.#onVisibilityChange) {
-        document.removeEventListener(
-          "visibilitychange",
-          this.#onVisibilityChange
-        );
-        this.#onVisibilityChange = null;
-      }
+      eventBus._off("pagerendered", onAfterDraw); // Remove immediately.
     };
-    this.eventBus._on("pagerendered", this._onAfterDraw);
+    eventBus._on("pagerendered", onAfterDraw, { signal });
 
     // Fetch a single page so we can get a viewport that will be the default
     // viewport for all pages
@@ -834,7 +846,7 @@ class PDFViewer {
           const element = (this.#hiddenCopyElement =
             document.createElement("div"));
           element.id = "hiddenCopyElement";
-          this.viewer.before(element);
+          viewer.before(element);
         }
 
         if (annotationEditorMode !== AnnotationEditorType.DISABLE) {
@@ -845,9 +857,19 @@ class PDFViewer {
           } else if (isValidAnnotationEditorMode(mode)) {
             this.#annotationEditorUIManager = new AnnotationEditorUIManager(
               this.container,
-              this.eventBus,
-              pdfDocument?.annotationStorage
+              viewer,
+              this.#altTextManager,
+              eventBus,
+              pdfDocument,
+              pageColors,
+              this.#annotationEditorHighlightColors,
+              this.#enableHighlightFloatingButton,
+              this.#mlManager
             );
+            eventBus.dispatch("annotationeditoruimanager", {
+              source: this,
+              uiManager: this.#annotationEditorUIManager,
+            });
             if (mode !== AnnotationEditorType.NONE) {
               this.#annotationEditorUIManager.updateMode(mode);
             }
@@ -856,27 +878,37 @@ class PDFViewer {
           }
         }
 
-        const layerProperties = this.#layerProperties.bind(this);
         const viewerElement =
-          this._scrollMode === ScrollMode.PAGE ? null : this.viewer;
+          this._scrollMode === ScrollMode.PAGE ? null : viewer;
         const scale = this.currentScale;
         const viewport = firstPdfPage.getViewport({
           scale: scale * PixelsPerInch.PDF_TO_CSS_UNITS,
         });
         // Ensure that the various layers always get the correct initial size,
         // see issue 15795.
-        this.viewer.style.setProperty("--scale-factor", viewport.scale);
+        viewer.style.setProperty("--scale-factor", viewport.scale);
         if (
-          this.pageColors?.foreground === "CanvasText" ||
-          this.pageColors?.background === "Canvas"
+          pageColors?.foreground === "CanvasText" ||
+          pageColors?.background === "Canvas"
         ) {
-          this.viewer.style.setProperty(
-            "--hcm-highligh-filter",
+          viewer.style.setProperty(
+            "--hcm-highlight-filter",
             pdfDocument.filterFactory.addHighlightHCMFilter(
+              "highlight",
               "CanvasText",
               "Canvas",
               "HighlightText",
               "Highlight"
+            )
+          );
+          viewer.style.setProperty(
+            "--hcm-highlight-selected-filter",
+            pdfDocument.filterFactory.addHighlightHCMFilter(
+              "highlight_selected",
+              "CanvasText",
+              "Canvas",
+              "HighlightText",
+              "ButtonText"
             )
           );
         }
@@ -884,7 +916,7 @@ class PDFViewer {
         for (let pageNum = 1; pageNum <= pagesCount; ++pageNum) {
           const pageView = new PDFPageView({
             container: viewerElement,
-            eventBus: this.eventBus,
+            eventBus,
             id: pageNum,
             scale,
             defaultViewport: viewport.clone(),
@@ -893,23 +925,17 @@ class PDFViewer {
             textLayerMode,
             annotationMode,
             imageResourcesPath: this.imageResourcesPath,
-            useOnlyCssZoom: this.useOnlyCssZoom,
-            isOffscreenCanvasSupported: this.isOffscreenCanvasSupported,
             maxCanvasPixels: this.maxCanvasPixels,
-            pageColors: this.pageColors,
+            pageColors,
             l10n: this.l10n,
-            layerProperties,
+            layerProperties: this._layerProperties,
           });
           this._pages.push(pageView);
         }
         // Set the first `pdfPage` immediately, since it's already loaded,
         // rather than having to repeat the `PDFDocumentProxy.getPage` call in
         // the `this.#ensurePdfPageLoaded` method before rendering can start.
-        const firstPageView = this._pages[0];
-        if (firstPageView) {
-          firstPageView.setPdfPage(firstPdfPage);
-          this.linkService.cachePageRef(1, firstPdfPage.ref);
-        }
+        this._pages[0]?.setPdfPage(firstPdfPage);
 
         if (this._scrollMode === ScrollMode.PAGE) {
           // Ensure that the current page becomes visible on document load.
@@ -921,21 +947,24 @@ class PDFViewer {
         // Fetch all the pages since the viewport is needed before printing
         // starts to create the correct size canvas. Wait until one page is
         // rendered so we don't tie up too many resources early on.
-        this.#onePageRenderedOrForceFetch().then(async () => {
+        this.#onePageRenderedOrForceFetch(signal).then(async () => {
+          if (pdfDocument !== this.pdfDocument) {
+            return; // The document was closed while the first page rendered.
+          }
           this.findController?.setDocument(pdfDocument); // Enable searching.
           this._scriptingManager?.setDocument(pdfDocument); // Enable scripting.
 
           if (this.#hiddenCopyElement) {
-            this.#copyCallbackBound = this.#copyCallback.bind(
-              this,
-              textLayerMode
+            document.addEventListener(
+              "copy",
+              this.#copyCallback.bind(this, textLayerMode),
+              { signal }
             );
-            document.addEventListener("copy", this.#copyCallbackBound);
           }
 
           if (this.#annotationEditorUIManager) {
             // Ensure that the Editor buttons, in the toolbar, are updated.
-            this.eventBus.dispatch("annotationeditormodechanged", {
+            eventBus.dispatch("annotationeditormodechanged", {
               source: this,
               mode: this.#annotationEditorMode,
             });
@@ -964,7 +993,6 @@ class PDFViewer {
                 if (!pageView.pdfPage) {
                   pageView.setPdfPage(pdfPage);
                 }
-                this.linkService.cachePageRef(pageNum, pdfPage.ref);
                 if (--getPagesLeft === 0) {
                   this._pagesCapability.resolve();
                 }
@@ -986,14 +1014,14 @@ class PDFViewer {
           }
         });
 
-        this.eventBus.dispatch("pagesinit", { source: this });
+        eventBus.dispatch("pagesinit", { source: this });
 
         pdfDocument.getMetadata().then(({ info }) => {
           if (pdfDocument !== this.pdfDocument) {
             return; // The document was closed while the metadata resolved.
           }
           if (info.Language) {
-            this.viewer.lang = info.Language;
+            viewer.lang = info.Language;
           }
         });
 
@@ -1041,9 +1069,9 @@ class PDFViewer {
     this._location = null;
     this._pagesRotation = 0;
     this._optionalContentConfigPromise = null;
-    this._firstPageCapability = new PromiseCapability();
-    this._onePageRenderedCapability = new PromiseCapability();
-    this._pagesCapability = new PromiseCapability();
+    this._firstPageCapability = Promise.withResolvers();
+    this._onePageRenderedCapability = Promise.withResolvers();
+    this._pagesCapability = Promise.withResolvers();
     this._scrollMode = ScrollMode.VERTICAL;
     this._previousScrollMode = ScrollMode.UNKNOWN;
     this._spreadMode = SpreadMode.NONE;
@@ -1054,21 +1082,9 @@ class PDFViewer {
       pages: [],
     };
 
-    if (this._onBeforeDraw) {
-      this.eventBus._off("pagerender", this._onBeforeDraw);
-      this._onBeforeDraw = null;
-    }
-    if (this._onAfterDraw) {
-      this.eventBus._off("pagerendered", this._onAfterDraw);
-      this._onAfterDraw = null;
-    }
-    if (this.#onVisibilityChange) {
-      document.removeEventListener(
-        "visibilitychange",
-        this.#onVisibilityChange
-      );
-      this.#onVisibilityChange = null;
-    }
+    this.#eventAbortController?.abort();
+    this.#eventAbortController = null;
+
     // Remove the pages from the DOM...
     this.viewer.textContent = "";
     // ... and reset the Scroll mode CSS class(es) afterwards.
@@ -1076,13 +1092,8 @@ class PDFViewer {
 
     this.viewer.removeAttribute("lang");
 
-    if (this.#hiddenCopyElement) {
-      document.removeEventListener("copy", this.#copyCallbackBound);
-      this.#copyCallbackBound = null;
-
-      this.#hiddenCopyElement.remove();
-      this.#hiddenCopyElement = null;
-    }
+    this.#hiddenCopyElement?.remove();
+    this.#hiddenCopyElement = null;
   }
 
   #ensurePageViewVisible() {
@@ -1208,7 +1219,7 @@ class PDFViewer {
   #setScaleUpdatePages(
     newScale,
     newValue,
-    { noScroll = false, preset = false, drawingDelay = -1 }
+    { noScroll = false, preset = false, drawingDelay = -1, origin = null }
   ) {
     this._currentScaleValue = newValue.toString();
 
@@ -1241,6 +1252,7 @@ class PDFViewer {
       }, drawingDelay);
     }
 
+    const previousScale = this._currentScale;
     this._currentScale = newScale;
 
     if (!noScroll) {
@@ -1264,6 +1276,15 @@ class PDFViewer {
         destArray: dest,
         allowNegativeOffset: true,
       });
+      if (Array.isArray(origin)) {
+        // If the origin of the scaling transform is specified, preserve its
+        // location on screen. If not specified, scaling will fix the top-left
+        // corner of the visible PDF area.
+        const scaleDiff = newScale / previousScale - 1;
+        const [top, left] = this.containerTopLeft;
+        this.container.scrollLeft += (origin[0] - left) * scaleDiff;
+        this.container.scrollTop += (origin[1] - top) * scaleDiff;
+      }
     }
 
     this.eventBus.dispatch("scalechanging", {
@@ -1688,9 +1709,6 @@ class PDFViewer {
       if (!pageView.pdfPage) {
         pageView.setPdfPage(pdfPage);
       }
-      if (!this.linkService._cachedPageNumber?.(pdfPage.ref)) {
-        this.linkService.cachePageRef(pageView.id, pdfPage.ref);
-      }
       return pdfPage;
     } catch (reason) {
       console.error("Unable to get page for page view", reason);
@@ -1795,7 +1813,7 @@ class PDFViewer {
       console.error("optionalContentConfigPromise: Not initialized yet.");
       // Prevent issues if the getter is accessed *before* the `onePageRendered`
       // promise has resolved; won't (normally) happen in the default viewer.
-      return this.pdfDocument.getOptionalContentConfig();
+      return this.pdfDocument.getOptionalContentConfig({ intent: "display" });
     }
     return this._optionalContentConfigPromise;
   }
@@ -2114,54 +2132,52 @@ class PDFViewer {
    * @property {number} [drawingDelay]
    * @property {number} [scaleFactor]
    * @property {number} [steps]
+   * @property {Array} [origin] x and y coordinates of the scale
+   *                            transformation origin.
    */
+
+  /**
+   * Changes the current zoom level by the specified amount.
+   * @param {ChangeScaleOptions} [options]
+   */
+  updateScale({ drawingDelay, scaleFactor = null, steps = null, origin }) {
+    if (steps === null && scaleFactor === null) {
+      throw new Error(
+        "Invalid updateScale options: either `steps` or `scaleFactor` must be provided."
+      );
+    }
+    if (!this.pdfDocument) {
+      return;
+    }
+    let newScale = this._currentScale;
+    if (scaleFactor > 0 && scaleFactor !== 1) {
+      newScale = Math.round(newScale * scaleFactor * 100) / 100;
+    } else if (steps) {
+      const delta = steps > 0 ? DEFAULT_SCALE_DELTA : 1 / DEFAULT_SCALE_DELTA;
+      const round = steps > 0 ? Math.ceil : Math.floor;
+      steps = Math.abs(steps);
+      do {
+        newScale = round((newScale * delta).toFixed(2) * 10) / 10;
+      } while (--steps > 0);
+    }
+    newScale = Math.max(MIN_SCALE, Math.min(MAX_SCALE, newScale));
+    this.#setScale(newScale, { noScroll: false, drawingDelay, origin });
+  }
 
   /**
    * Increase the current zoom level one, or more, times.
    * @param {ChangeScaleOptions} [options]
    */
-  increaseScale({ drawingDelay, scaleFactor, steps } = {}) {
-    if (!this.pdfDocument) {
-      return;
-    }
-    let newScale = this._currentScale;
-    if (scaleFactor > 1) {
-      newScale = Math.round(newScale * scaleFactor * 100) / 100;
-    } else {
-      steps ??= 1;
-      do {
-        newScale =
-          Math.ceil((newScale * DEFAULT_SCALE_DELTA).toFixed(2) * 10) / 10;
-      } while (--steps > 0 && newScale < MAX_SCALE);
-    }
-    this.#setScale(Math.min(MAX_SCALE, newScale), {
-      noScroll: false,
-      drawingDelay,
-    });
+  increaseScale(options = {}) {
+    this.updateScale({ ...options, steps: options.steps ?? 1 });
   }
 
   /**
    * Decrease the current zoom level one, or more, times.
    * @param {ChangeScaleOptions} [options]
    */
-  decreaseScale({ drawingDelay, scaleFactor, steps } = {}) {
-    if (!this.pdfDocument) {
-      return;
-    }
-    let newScale = this._currentScale;
-    if (scaleFactor > 0 && scaleFactor < 1) {
-      newScale = Math.round(newScale * scaleFactor * 100) / 100;
-    } else {
-      steps ??= 1;
-      do {
-        newScale =
-          Math.floor((newScale / DEFAULT_SCALE_DELTA).toFixed(2) * 10) / 10;
-      } while (--steps > 0 && newScale > MIN_SCALE);
-    }
-    this.#setScale(Math.max(MIN_SCALE, newScale), {
-      noScroll: false,
-      drawingDelay,
-    });
+  decreaseScale(options = {}) {
+    this.updateScale({ ...options, steps: -(options.steps ?? 1) });
   }
 
   #updateContainerHeightCss(height = this.container.clientHeight) {
@@ -2190,9 +2206,6 @@ class PDFViewer {
     ]);
   }
 
-  /**
-   * @type {number}
-   */
   get annotationEditorMode() {
     return this.#annotationEditorUIManager
       ? this.#annotationEditorMode
@@ -2200,9 +2213,17 @@ class PDFViewer {
   }
 
   /**
-   * @param {number} mode - AnnotationEditor mode (None, FreeText, Ink, ...)
+   * @typedef {Object} AnnotationEditorModeOptions
+   * @property {number} mode - The editor mode (none, FreeText, ink, ...).
+   * @property {string|null} [editId] - ID of the existing annotation to edit.
+   * @property {boolean} [isFromKeyboard] - True if the mode change is due to a
+   *   keyboard action.
    */
-  set annotationEditorMode(mode) {
+
+  /**
+   * @param {AnnotationEditorModeOptions} options
+   */
+  set annotationEditorMode({ mode, editId = null, isFromKeyboard = false }) {
     if (!this.#annotationEditorUIManager) {
       throw new Error(`The AnnotationEditor is not enabled.`);
     }
@@ -2221,7 +2242,7 @@ class PDFViewer {
       mode,
     });
 
-    this.#annotationEditorUIManager.updateMode(mode);
+    this.#annotationEditorUIManager.updateMode(mode, editId, isFromKeyboard);
   }
 
   // eslint-disable-next-line accessor-pairs

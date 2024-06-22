@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import { assert, PromiseCapability, stringToBytes } from "../shared/util.js";
+import { assert, stringToBytes } from "../shared/util.js";
 import {
   createResponseStatusError,
   extractFilenameFromHeader,
@@ -255,7 +255,7 @@ class PDFNetworkStreamFullRequestReader {
     };
     this._url = source.url;
     this._fullRequestId = manager.requestFull(args);
-    this._headersReceivedCapability = new PromiseCapability();
+    this._headersReceivedCapability = Promise.withResolvers();
     this._disableRange = source.disableRange || false;
     this._contentLength = source.length; // Optional
     this._rangeChunkSize = source.rangeChunkSize;
@@ -279,9 +279,8 @@ class PDFNetworkStreamFullRequestReader {
     const fullRequestXhrId = this._fullRequestId;
     const fullRequestXhr = this._manager.getRequestXhr(fullRequestXhrId);
 
-    const getResponseHeader = name => {
-      return fullRequestXhr.getResponseHeader(name);
-    };
+    const getResponseHeader = name => fullRequestXhr.getResponseHeader(name);
+
     const { allowRangeRequests, suggestedLength } =
       validateRangeRequestCapabilities({
         getResponseHeader,
@@ -376,7 +375,7 @@ class PDFNetworkStreamFullRequestReader {
     if (this._done) {
       return { value: undefined, done: true };
     }
-    const requestCapability = new PromiseCapability();
+    const requestCapability = Promise.withResolvers();
     this._requests.push(requestCapability);
     return requestCapability.promise;
   }
@@ -467,7 +466,7 @@ class PDFNetworkStreamRangeRequestReader {
     if (this._done) {
       return { value: undefined, done: true };
     }
-    const requestCapability = new PromiseCapability();
+    const requestCapability = Promise.withResolvers();
     this._requests.push(requestCapability);
     return requestCapability.promise;
   }

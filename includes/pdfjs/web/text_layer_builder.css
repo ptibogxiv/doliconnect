@@ -13,98 +13,113 @@
  * limitations under the License.
  */
 
-:root {
-  --highlight-bg-color: rgba(180, 0, 170, 1);
-  --highlight-selected-bg-color: rgba(0, 100, 0, 1);
-}
-
-@media screen and (forced-colors: active) {
-  :root {
-    --highlight-bg-color: Highlight;
-    --highlight-selected-bg-color: ButtonText;
-  }
-}
-
 .textLayer {
   position: absolute;
   text-align: initial;
   inset: 0;
-  overflow: hidden;
-  opacity: 0.25;
+  overflow: clip;
+  opacity: 1;
   line-height: 1;
   text-size-adjust: none;
   forced-color-adjust: none;
   transform-origin: 0 0;
-  z-index: 2;
-}
+  caret-color: CanvasText;
+  z-index: 0;
 
-.textLayer :is(span, br) {
-  color: transparent;
-  position: absolute;
-  white-space: pre;
-  cursor: text;
-  transform-origin: 0% 0%;
-}
+  &.highlighting {
+    touch-action: none;
+  }
 
-/* Only necessary in Google Chrome, see issue 14205, and most unfortunately
- * the problem doesn't show up in "text" reference tests. */
-/*#if !MOZCENTRAL*/
-.textLayer span.markedContent {
-  top: 0;
-  height: 0;
-}
-/*#endif*/
+  :is(span, br) {
+    color: transparent;
+    position: absolute;
+    white-space: pre;
+    cursor: text;
+    transform-origin: 0% 0%;
+  }
 
-.textLayer .highlight {
-  margin: -1px;
-  padding: 1px;
-  background-color: var(--highlight-bg-color);
-  border-radius: 4px;
-}
+  > :not(.markedContent),
+  .markedContent span:not(.markedContent) {
+    z-index: 1;
+  }
 
-.textLayer .highlight.appended {
-  position: initial;
-}
-
-.textLayer .highlight.begin {
-  border-radius: 4px 0 0 4px;
-}
-
-.textLayer .highlight.end {
-  border-radius: 0 4px 4px 0;
-}
-
-.textLayer .highlight.middle {
-  border-radius: 0;
-}
-
-.textLayer .highlight.selected {
-  background-color: var(--highlight-selected-bg-color);
-}
-
-.textLayer ::selection {
+  /* Only necessary in Google Chrome, see issue 14205, and most unfortunately
+   * the problem doesn't show up in "text" reference tests. */
   /*#if !MOZCENTRAL*/
-  background: blue;
+  span.markedContent {
+    top: 0;
+    height: 0;
+  }
   /*#endif*/
-  background: AccentColor;
-}
 
-/* Avoids https://github.com/mozilla/pdf.js/issues/13840 in Chrome */
-/*#if !MOZCENTRAL*/
-.textLayer br::selection {
-  background: transparent;
-}
-/*#endif*/
+  .highlight {
+    --highlight-bg-color: rgb(180 0 170 / 0.25);
+    --highlight-selected-bg-color: rgb(0 100 0 / 0.25);
+    --highlight-backdrop-filter: none;
+    --highlight-selected-backdrop-filter: none;
 
-.textLayer .endOfContent {
-  display: block;
-  position: absolute;
-  inset: 100% 0 0;
-  z-index: -1;
-  cursor: default;
-  user-select: none;
-}
+    @media screen and (forced-colors: active) {
+      --highlight-bg-color: transparent;
+      --highlight-selected-bg-color: transparent;
+      --highlight-backdrop-filter: var(--hcm-highlight-filter);
+      --highlight-selected-backdrop-filter: var(
+        --hcm-highlight-selected-filter
+      );
+    }
 
-.textLayer .endOfContent.active {
-  top: 0;
+    margin: -1px;
+    padding: 1px;
+    background-color: var(--highlight-bg-color);
+    backdrop-filter: var(--highlight-backdrop-filter);
+    border-radius: 4px;
+
+    &.appended {
+      position: initial;
+    }
+
+    &.begin {
+      border-radius: 4px 0 0 4px;
+    }
+
+    &.end {
+      border-radius: 0 4px 4px 0;
+    }
+
+    &.middle {
+      border-radius: 0;
+    }
+
+    &.selected {
+      background-color: var(--highlight-selected-bg-color);
+      backdrop-filter: var(--highlight-selected-backdrop-filter);
+    }
+  }
+
+  ::selection {
+    /*#if !MOZCENTRAL*/
+    background: rgba(0 0 255 / 0.25);
+    /*#endif*/
+    /* stylelint-disable-next-line declaration-block-no-duplicate-properties */
+    background: color-mix(in srgb, AccentColor, transparent 75%);
+  }
+
+  /* Avoids https://github.com/mozilla/pdf.js/issues/13840 in Chrome */
+  /*#if !MOZCENTRAL*/
+  br::selection {
+    background: transparent;
+  }
+  /*#endif*/
+
+  .endOfContent {
+    display: block;
+    position: absolute;
+    inset: 100% 0 0;
+    z-index: 0;
+    cursor: default;
+    user-select: none;
+
+    &.active {
+      top: 0;
+    }
+  }
 }

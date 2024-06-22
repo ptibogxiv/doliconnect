@@ -43,6 +43,7 @@ import {
 } from "../../src/display/api.js";
 import { Dict, Name, Ref, RefSetCache } from "../../src/core/primitives.js";
 import { Lexer, Parser } from "../../src/core/parser.js";
+import { FlateStream } from "../../src/core/flate_stream.js";
 import { PartialEvaluator } from "../../src/core/evaluator.js";
 import { StringStream } from "../../src/core/stream.js";
 import { WorkerTask } from "../../src/core/worker.js";
@@ -50,13 +51,13 @@ import { WorkerTask } from "../../src/core/worker.js";
 describe("annotation", function () {
   class PDFManagerMock {
     constructor(params) {
-      this.docBaseUrl = params.docBaseUrl || null;
       this.pdfDocument = {
         catalog: {
-          acroForm: new Dict(),
+          baseUrl: params.docBaseUrl || null,
         },
       };
       this.evaluatorOptions = {
+        isEvalSupported: true,
         isOffscreenCanvasSupported: false,
       };
     }
@@ -85,27 +86,32 @@ describe("annotation", function () {
     baseUrl: STANDARD_FONT_DATA_URL,
   });
 
-  function HandlerMock() {
-    this.inputs = [];
-  }
-  HandlerMock.prototype = {
+  class HandlerMock {
+    constructor() {
+      this.inputs = [];
+    }
+
     send(name, data) {
       this.inputs.push({ name, data });
-    },
+    }
+
     sendWithPromise(name, data) {
       if (name !== "FetchStandardFontData") {
         return Promise.reject(new Error(`Unsupported mock ${name}.`));
       }
       return fontDataReader.fetch(data);
-    },
-  };
+    }
+  }
 
-  let pdfManagerMock, idFactoryMock, partialEvaluator;
+  let annotationGlobalsMock, pdfManagerMock, idFactoryMock, partialEvaluator;
 
   beforeAll(async function () {
     pdfManagerMock = new PDFManagerMock({
       docBaseUrl: null,
     });
+
+    annotationGlobalsMock =
+      await AnnotationFactory.createGlobals(pdfManagerMock);
 
     const CMapReaderFactory = new DefaultCMapReaderFactory({
       baseUrl: CMAP_URL,
@@ -135,6 +141,7 @@ describe("annotation", function () {
   });
 
   afterAll(function () {
+    annotationGlobalsMock = null;
     pdfManagerMock = null;
     idFactoryMock = null;
     partialEvaluator = null;
@@ -152,7 +159,7 @@ describe("annotation", function () {
       const { data } = await AnnotationFactory.create(
         xref,
         annotationRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       expect(data.annotationType).toEqual(AnnotationType.LINK);
@@ -173,7 +180,7 @@ describe("annotation", function () {
         const annotation1 = AnnotationFactory.create(
           xref,
           annotationDict,
-          pdfManagerMock,
+          annotationGlobalsMock,
           idFactory
         ).then(({ data }) => {
           expect(data.annotationType).toEqual(AnnotationType.LINK);
@@ -183,7 +190,7 @@ describe("annotation", function () {
         const annotation2 = AnnotationFactory.create(
           xref,
           annotationDict,
-          pdfManagerMock,
+          annotationGlobalsMock,
           idFactory
         ).then(({ data }) => {
           expect(data.annotationType).toEqual(AnnotationType.LINK);
@@ -204,7 +211,7 @@ describe("annotation", function () {
       const { data } = await AnnotationFactory.create(
         xref,
         annotationRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       expect(data.annotationType).toBeUndefined();
@@ -314,35 +321,60 @@ describe("annotation", function () {
     });
 
     it("should set and get valid contents", function () {
-      const annotation = new Annotation({ dict, ref });
+      const annotation = new Annotation({
+        dict,
+        ref,
+        annotationGlobals: annotationGlobalsMock,
+        evaluatorOptions: pdfManagerMock.evaluatorOptions,
+      });
       annotation.setContents("Foo bar baz");
 
       expect(annotation._contents).toEqual({ str: "Foo bar baz", dir: "ltr" });
     });
 
     it("should not set and get invalid contents", function () {
-      const annotation = new Annotation({ dict, ref });
+      const annotation = new Annotation({
+        dict,
+        ref,
+        annotationGlobals: annotationGlobalsMock,
+        evaluatorOptions: pdfManagerMock.evaluatorOptions,
+      });
       annotation.setContents(undefined);
 
       expect(annotation._contents).toEqual({ str: "", dir: "ltr" });
     });
 
     it("should set and get a valid modification date", function () {
-      const annotation = new Annotation({ dict, ref });
+      const annotation = new Annotation({
+        dict,
+        ref,
+        annotationGlobals: annotationGlobalsMock,
+        evaluatorOptions: pdfManagerMock.evaluatorOptions,
+      });
       annotation.setModificationDate("D:20190422");
 
       expect(annotation.modificationDate).toEqual("D:20190422");
     });
 
     it("should not set and get an invalid modification date", function () {
-      const annotation = new Annotation({ dict, ref });
+      const annotation = new Annotation({
+        dict,
+        ref,
+        annotationGlobals: annotationGlobalsMock,
+        evaluatorOptions: pdfManagerMock.evaluatorOptions,
+      });
       annotation.setModificationDate(undefined);
 
       expect(annotation.modificationDate).toEqual(null);
     });
 
     it("should set and get flags", function () {
-      const annotation = new Annotation({ dict, ref });
+      const annotation = new Annotation({
+        dict,
+        ref,
+        annotationGlobals: annotationGlobalsMock,
+        evaluatorOptions: pdfManagerMock.evaluatorOptions,
+      });
       annotation.setFlags(13);
 
       expect(annotation.hasFlag(AnnotationFlag.INVISIBLE)).toEqual(true);
@@ -353,63 +385,108 @@ describe("annotation", function () {
     });
 
     it("should be viewable and not printable by default", function () {
-      const annotation = new Annotation({ dict, ref });
+      const annotation = new Annotation({
+        dict,
+        ref,
+        annotationGlobals: annotationGlobalsMock,
+        evaluatorOptions: pdfManagerMock.evaluatorOptions,
+      });
 
       expect(annotation.viewable).toEqual(true);
       expect(annotation.printable).toEqual(false);
     });
 
     it("should set and get a valid rectangle", function () {
-      const annotation = new Annotation({ dict, ref });
+      const annotation = new Annotation({
+        dict,
+        ref,
+        annotationGlobals: annotationGlobalsMock,
+        evaluatorOptions: pdfManagerMock.evaluatorOptions,
+      });
       annotation.setRectangle([117, 694, 164.298, 720]);
 
       expect(annotation.rectangle).toEqual([117, 694, 164.298, 720]);
     });
 
     it("should not set and get an invalid rectangle", function () {
-      const annotation = new Annotation({ dict, ref });
+      const annotation = new Annotation({
+        dict,
+        ref,
+        annotationGlobals: annotationGlobalsMock,
+        evaluatorOptions: pdfManagerMock.evaluatorOptions,
+      });
       annotation.setRectangle([117, 694, 164.298]);
 
       expect(annotation.rectangle).toEqual([0, 0, 0, 0]);
     });
 
     it("should reject a color if it is not an array", function () {
-      const annotation = new Annotation({ dict, ref });
+      const annotation = new Annotation({
+        dict,
+        ref,
+        annotationGlobals: annotationGlobalsMock,
+        evaluatorOptions: pdfManagerMock.evaluatorOptions,
+      });
       annotation.setColor("red");
 
       expect(annotation.color).toEqual(new Uint8ClampedArray([0, 0, 0]));
     });
 
     it("should set and get a transparent color", function () {
-      const annotation = new Annotation({ dict, ref });
+      const annotation = new Annotation({
+        dict,
+        ref,
+        annotationGlobals: annotationGlobalsMock,
+        evaluatorOptions: pdfManagerMock.evaluatorOptions,
+      });
       annotation.setColor([]);
 
       expect(annotation.color).toEqual(null);
     });
 
     it("should set and get a grayscale color", function () {
-      const annotation = new Annotation({ dict, ref });
+      const annotation = new Annotation({
+        dict,
+        ref,
+        annotationGlobals: annotationGlobalsMock,
+        evaluatorOptions: pdfManagerMock.evaluatorOptions,
+      });
       annotation.setColor([0.4]);
 
       expect(annotation.color).toEqual(new Uint8ClampedArray([102, 102, 102]));
     });
 
     it("should set and get an RGB color", function () {
-      const annotation = new Annotation({ dict, ref });
+      const annotation = new Annotation({
+        dict,
+        ref,
+        annotationGlobals: annotationGlobalsMock,
+        evaluatorOptions: pdfManagerMock.evaluatorOptions,
+      });
       annotation.setColor([0, 0, 1]);
 
       expect(annotation.color).toEqual(new Uint8ClampedArray([0, 0, 255]));
     });
 
     it("should set and get a CMYK color", function () {
-      const annotation = new Annotation({ dict, ref });
+      const annotation = new Annotation({
+        dict,
+        ref,
+        annotationGlobals: annotationGlobalsMock,
+        evaluatorOptions: pdfManagerMock.evaluatorOptions,
+      });
       annotation.setColor([0.1, 0.92, 0.84, 0.02]);
 
       expect(annotation.color).toEqual(new Uint8ClampedArray([234, 59, 48]));
     });
 
     it("should not set and get an invalid color", function () {
-      const annotation = new Annotation({ dict, ref });
+      const annotation = new Annotation({
+        dict,
+        ref,
+        annotationGlobals: annotationGlobalsMock,
+        evaluatorOptions: pdfManagerMock.evaluatorOptions,
+      });
       annotation.setColor([0.4, 0.6]);
 
       expect(annotation.color).toEqual(new Uint8ClampedArray([0, 0, 0]));
@@ -472,6 +549,15 @@ describe("annotation", function () {
       expect(borderStyle.dashArray).toEqual([3]);
     });
 
+    it("should not set the width to zero if the dash array is empty (issue 17904)", function () {
+      const borderStyle = new AnnotationBorderStyle();
+      borderStyle.setWidth(3);
+      borderStyle.setDashArray([]);
+
+      expect(borderStyle.width).toEqual(3);
+      expect(borderStyle.dashArray).toEqual([]);
+    });
+
     it("should set and get a valid horizontal corner radius", function () {
       const borderStyle = new AnnotationBorderStyle();
       borderStyle.setHorizontalCornerRadius(3);
@@ -514,14 +600,24 @@ describe("annotation", function () {
     });
 
     it("should set and get a valid creation date", function () {
-      const markupAnnotation = new MarkupAnnotation({ dict, ref });
+      const markupAnnotation = new MarkupAnnotation({
+        dict,
+        ref,
+        annotationGlobals: annotationGlobalsMock,
+        evaluatorOptions: pdfManagerMock.evaluatorOptions,
+      });
       markupAnnotation.setCreationDate("D:20190422");
 
       expect(markupAnnotation.creationDate).toEqual("D:20190422");
     });
 
     it("should not set and get an invalid creation date", function () {
-      const markupAnnotation = new MarkupAnnotation({ dict, ref });
+      const markupAnnotation = new MarkupAnnotation({
+        dict,
+        ref,
+        annotationGlobals: annotationGlobalsMock,
+        evaluatorOptions: pdfManagerMock.evaluatorOptions,
+      });
       markupAnnotation.setCreationDate(undefined);
 
       expect(markupAnnotation.creationDate).toEqual(null);
@@ -535,7 +631,7 @@ describe("annotation", function () {
       const { data } = await AnnotationFactory.create(
         xref,
         ref,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       expect(data.inReplyTo).toBeUndefined();
@@ -564,7 +660,7 @@ describe("annotation", function () {
       const { data } = await AnnotationFactory.create(
         xref,
         replyRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       expect(data.inReplyTo).toEqual(annotationRef.toString());
@@ -613,7 +709,7 @@ describe("annotation", function () {
       const { data } = await AnnotationFactory.create(
         xref,
         replyRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       expect(data.inReplyTo).toEqual(annotationRef.toString());
@@ -668,7 +764,7 @@ describe("annotation", function () {
       const { data } = await AnnotationFactory.create(
         xref,
         replyRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       expect(data.inReplyTo).toEqual(annotationRef.toString());
@@ -708,7 +804,7 @@ describe("annotation", function () {
       const { data } = await AnnotationFactory.create(
         xref,
         replyRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       expect(data.stateModel).toBeNull();
@@ -740,7 +836,7 @@ describe("annotation", function () {
       const { data } = await AnnotationFactory.create(
         xref,
         replyRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       expect(data.stateModel).toEqual("Review");
@@ -766,7 +862,7 @@ describe("annotation", function () {
       const { data } = await AnnotationFactory.create(
         xref,
         annotationRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       expect(data.annotationType).toEqual(AnnotationType.LINK);
@@ -799,7 +895,7 @@ describe("annotation", function () {
         const { data } = await AnnotationFactory.create(
           xref,
           annotationRef,
-          pdfManagerMock,
+          annotationGlobalsMock,
           idFactoryMock
         );
         expect(data.annotationType).toEqual(AnnotationType.LINK);
@@ -839,7 +935,7 @@ describe("annotation", function () {
         const { data } = await AnnotationFactory.create(
           xref,
           annotationRef,
-          pdfManagerMock,
+          annotationGlobalsMock,
           idFactoryMock
         );
         expect(data.annotationType).toEqual(AnnotationType.LINK);
@@ -874,7 +970,7 @@ describe("annotation", function () {
       const { data } = await AnnotationFactory.create(
         xref,
         annotationRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       expect(data.annotationType).toEqual(AnnotationType.LINK);
@@ -907,7 +1003,7 @@ describe("annotation", function () {
         const { data } = await AnnotationFactory.create(
           xref,
           annotationRef,
-          pdfManagerMock,
+          annotationGlobalsMock,
           idFactoryMock
         );
         expect(data.annotationType).toEqual(AnnotationType.LINK);
@@ -940,11 +1036,13 @@ describe("annotation", function () {
         const pdfManager = new PDFManagerMock({
           docBaseUrl: "http://www.example.com/test/pdfs/qwerty.pdf",
         });
+        const annotationGlobals =
+          await AnnotationFactory.createGlobals(pdfManager);
 
         const { data } = await AnnotationFactory.create(
           xref,
           annotationRef,
-          pdfManager,
+          annotationGlobals,
           idFactoryMock
         );
         expect(data.annotationType).toEqual(AnnotationType.LINK);
@@ -974,7 +1072,7 @@ describe("annotation", function () {
       const { data } = await AnnotationFactory.create(
         xref,
         annotationRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       expect(data.annotationType).toEqual(AnnotationType.LINK);
@@ -1002,7 +1100,7 @@ describe("annotation", function () {
       const { data } = await AnnotationFactory.create(
         xref,
         annotationRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       expect(data.annotationType).toEqual(AnnotationType.LINK);
@@ -1047,11 +1145,13 @@ describe("annotation", function () {
         const pdfManager = new PDFManagerMock({
           docBaseUrl: "http://www.example.com/test/pdfs/qwerty.pdf",
         });
+        const annotationGlobals =
+          await AnnotationFactory.createGlobals(pdfManager);
 
         const { data } = await AnnotationFactory.create(
           xref,
           annotationRef,
-          pdfManager,
+          annotationGlobals,
           idFactoryMock
         );
         expect(data.annotationType).toEqual(AnnotationType.LINK);
@@ -1092,7 +1192,7 @@ describe("annotation", function () {
           return AnnotationFactory.create(
             xref,
             annotationRef,
-            pdfManagerMock,
+            annotationGlobalsMock,
             idFactoryMock
           ).then(({ data }) => {
             expect(data.annotationType).toEqual(AnnotationType.LINK);
@@ -1150,7 +1250,7 @@ describe("annotation", function () {
       const { data } = await AnnotationFactory.create(
         xref,
         annotationRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       expect(data.annotationType).toEqual(AnnotationType.LINK);
@@ -1171,7 +1271,7 @@ describe("annotation", function () {
       const { data } = await AnnotationFactory.create(
         xref,
         annotationRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       expect(data.annotationType).toEqual(AnnotationType.LINK);
@@ -1198,7 +1298,7 @@ describe("annotation", function () {
       const { data } = await AnnotationFactory.create(
         xref,
         annotationRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       expect(data.annotationType).toEqual(AnnotationType.LINK);
@@ -1237,7 +1337,7 @@ describe("annotation", function () {
         const { data } = await AnnotationFactory.create(
           xref,
           annotationRef,
-          pdfManagerMock,
+          annotationGlobalsMock,
           idFactoryMock
         );
         expect(data.annotationType).toEqual(AnnotationType.LINK);
@@ -1258,7 +1358,7 @@ describe("annotation", function () {
       const { data } = await AnnotationFactory.create(
         xref,
         annotationRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       expect(data.annotationType).toEqual(AnnotationType.LINK);
@@ -1278,7 +1378,7 @@ describe("annotation", function () {
       const { data } = await AnnotationFactory.create(
         xref,
         annotationRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       expect(data.annotationType).toEqual(AnnotationType.LINK);
@@ -1313,7 +1413,7 @@ describe("annotation", function () {
       const { data } = await AnnotationFactory.create(
         xref,
         widgetRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       expect(data.annotationType).toEqual(AnnotationType.WIDGET);
@@ -1329,7 +1429,7 @@ describe("annotation", function () {
       const { data } = await AnnotationFactory.create(
         xref,
         widgetRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       expect(data.annotationType).toEqual(AnnotationType.WIDGET);
@@ -1353,7 +1453,7 @@ describe("annotation", function () {
       const { data } = await AnnotationFactory.create(
         xref,
         widgetRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       expect(data.annotationType).toEqual(AnnotationType.WIDGET);
@@ -1377,7 +1477,7 @@ describe("annotation", function () {
         const { data } = await AnnotationFactory.create(
           xref,
           widgetRef,
-          pdfManagerMock,
+          annotationGlobalsMock,
           idFactoryMock
         );
         expect(data.annotationType).toEqual(AnnotationType.WIDGET);
@@ -1452,7 +1552,7 @@ describe("annotation", function () {
       const { data } = await AnnotationFactory.create(
         xref,
         textWidgetRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       expect(data.annotationType).toEqual(AnnotationType.WIDGET);
@@ -1476,7 +1576,7 @@ describe("annotation", function () {
       const { data } = await AnnotationFactory.create(
         xref,
         textWidgetRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       expect(data.annotationType).toEqual(AnnotationType.WIDGET);
@@ -1502,7 +1602,7 @@ describe("annotation", function () {
       const { data } = await AnnotationFactory.create(
         xref,
         textWidgetRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       expect(data.annotationType).toEqual(AnnotationType.WIDGET);
@@ -1522,7 +1622,7 @@ describe("annotation", function () {
       const { data } = await AnnotationFactory.create(
         xref,
         textWidgetRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       expect(data.annotationType).toEqual(AnnotationType.WIDGET);
@@ -1539,7 +1639,7 @@ describe("annotation", function () {
       const { data } = await AnnotationFactory.create(
         xref,
         textWidgetRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       expect(data.annotationType).toEqual(AnnotationType.WIDGET);
@@ -1575,7 +1675,7 @@ describe("annotation", function () {
           return AnnotationFactory.create(
             xref,
             textWidgetRef,
-            pdfManagerMock,
+            annotationGlobalsMock,
             idFactoryMock
           ).then(({ data }) => {
             expect(data.annotationType).toEqual(AnnotationType.WIDGET);
@@ -1605,7 +1705,7 @@ describe("annotation", function () {
       const annotation = await AnnotationFactory.create(
         xref,
         textWidgetRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       const annotationStorage = new Map();
@@ -1638,7 +1738,7 @@ describe("annotation", function () {
       const annotation = await AnnotationFactory.create(
         xref,
         textWidgetRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       const annotationStorage = new Map();
@@ -1682,7 +1782,7 @@ describe("annotation", function () {
       const annotation = await AnnotationFactory.create(
         xref,
         textWidgetRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       const annotationStorage = new Map();
@@ -1724,7 +1824,7 @@ describe("annotation", function () {
       const annotation = await AnnotationFactory.create(
         xref,
         textWidgetRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       const annotationStorage = new Map();
@@ -1757,7 +1857,7 @@ describe("annotation", function () {
       const annotation = await AnnotationFactory.create(
         xref,
         textWidgetRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       const annotationStorage = new Map();
@@ -1793,7 +1893,7 @@ describe("annotation", function () {
       const annotation = await AnnotationFactory.create(
         xref,
         textWidgetRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       const annotationStorage = new Map();
@@ -1822,7 +1922,7 @@ describe("annotation", function () {
       const annotation = await AnnotationFactory.create(
         xref,
         textWidgetRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       const annotationStorage = new Map();
@@ -1866,7 +1966,7 @@ describe("annotation", function () {
       const annotation = await AnnotationFactory.create(
         xref,
         textWidgetRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       const annotationStorage = new Map();
@@ -1924,7 +2024,7 @@ describe("annotation", function () {
       const annotation = await AnnotationFactory.create(
         xref,
         textWidgetRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       const annotationStorage = new Map();
@@ -1965,7 +2065,7 @@ describe("annotation", function () {
       const annotation = await AnnotationFactory.create(
         xref,
         textWidgetRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       const annotationStorage = new Map();
@@ -2004,7 +2104,7 @@ describe("annotation", function () {
       const annotation = await AnnotationFactory.create(
         xref,
         textWidgetRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       const annotationStorage = new Map();
@@ -2039,7 +2139,7 @@ describe("annotation", function () {
       const annotation = await AnnotationFactory.create(
         xref,
         textWidgetRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       const annotationStorage = new Map();
@@ -2082,7 +2182,7 @@ describe("annotation", function () {
       const annotation = await AnnotationFactory.create(
         xref,
         textWidgetRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       const annotationStorage = new Map();
@@ -2128,7 +2228,7 @@ describe("annotation", function () {
       const annotation = await AnnotationFactory.create(
         xref,
         textWidgetRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       const annotationStorage = new Map();
@@ -2153,18 +2253,27 @@ describe("annotation", function () {
           `/V (${value}) /AP << /N 2 0 R>> /M (date)>>\nendobj\n`
       );
 
-      const compressedData = [
-        120, 156, 211, 15, 169, 80, 112, 242, 117, 86, 40, 84, 112, 10, 81, 208,
-        247, 72, 205, 41, 83, 48, 85, 8, 73, 83, 48, 84, 48, 0, 66, 8, 25, 146,
-        171, 96, 164, 96, 172, 103, 96, 174, 16, 146, 162, 160, 145, 56, 194,
-        129, 166, 66, 72, 150, 130, 107, 136, 66, 160, 130, 171, 175, 51, 0,
-        222, 235, 111, 133,
-      ];
-      const compressedStream = String.fromCharCode(...compressedData);
+      const compressedStream = newData.data.substring(
+        newData.data.indexOf("stream\n") + "stream\n".length,
+        newData.data.indexOf("\nendstream")
+      );
+      // Ensure that the data was in fact (significantly) compressed.
+      expect(compressedStream.length).toBeLessThan(value.length / 3);
+
       expect(newData.data).toEqual(
         "2 0 obj\n<< /Subtype /Form /Resources " +
-          "<< /Font << /Helv 314 0 R>>>> /BBox [0 0 32 10] /Filter /FlateDecode /Length 68>> stream\n" +
+          "<< /Font << /Helv 314 0 R>>>> /BBox [0 0 32 10] " +
+          `/Filter /FlateDecode /Length ${compressedStream.length}>> stream\n` +
           `${compressedStream}\nendstream\nendobj\n`
+      );
+
+      // Given that the exact compression-output may differ between environments
+      // and browsers, ensure that the resulting data can be correctly decoded
+      // by our `FlateStream`-implementation since that simulates opening the
+      // generated data with the PDF.js library.
+      const flateStream = new FlateStream(new StringStream(compressedStream));
+      expect(flateStream.getString()).toEqual(
+        `/Tx BMC q BT /Helv 5 Tf 1 0 0 1 0 0 Tm 2 3.07 Td (${value}) Tj ET Q EMC`
       );
     });
 
@@ -2233,7 +2342,7 @@ describe("annotation", function () {
       const annotation = await AnnotationFactory.create(
         xref,
         textWidgetRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       const fieldObject = await annotation.getFieldObject();
@@ -2264,7 +2373,7 @@ describe("annotation", function () {
       const annotation = await AnnotationFactory.create(
         xref,
         textWidgetRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       const annotationStorage = new Map();
@@ -2334,7 +2443,7 @@ describe("annotation", function () {
       const { data } = await AnnotationFactory.create(
         xref,
         buttonWidgetRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       expect(data.annotationType).toEqual(AnnotationType.WIDGET);
@@ -2357,7 +2466,7 @@ describe("annotation", function () {
       const { data } = await AnnotationFactory.create(
         xref,
         buttonWidgetRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       expect(data.annotationType).toEqual(AnnotationType.WIDGET);
@@ -2386,7 +2495,7 @@ describe("annotation", function () {
       const { data } = await AnnotationFactory.create(
         xref,
         buttonWidgetRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       expect(data.annotationType).toEqual(AnnotationType.WIDGET);
@@ -2427,7 +2536,7 @@ describe("annotation", function () {
       const annotation = await AnnotationFactory.create(
         xref,
         buttonWidgetRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       const annotationStorage = new Map();
@@ -2488,7 +2597,7 @@ describe("annotation", function () {
       const annotation = await AnnotationFactory.create(
         xref,
         buttonWidgetRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       const annotationStorage = new Map();
@@ -2572,7 +2681,7 @@ describe("annotation", function () {
       const annotation = await AnnotationFactory.create(
         xref,
         buttonWidgetRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       const annotationStorage = new Map();
@@ -2637,7 +2746,7 @@ describe("annotation", function () {
       const annotation = await AnnotationFactory.create(
         xref,
         buttonWidgetRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       const annotationStorage = new Map();
@@ -2686,7 +2795,7 @@ describe("annotation", function () {
       const annotation = await AnnotationFactory.create(
         xref,
         buttonWidgetRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       const annotationStorage = new Map();
@@ -2737,7 +2846,7 @@ describe("annotation", function () {
       const annotation = await AnnotationFactory.create(
         xref,
         buttonWidgetRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       const annotationStorage = new Map();
@@ -2789,7 +2898,7 @@ describe("annotation", function () {
       const { data } = await AnnotationFactory.create(
         xref,
         buttonWidgetRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       expect(data.annotationType).toEqual(AnnotationType.WIDGET);
@@ -2821,7 +2930,7 @@ describe("annotation", function () {
       const { data } = await AnnotationFactory.create(
         xref,
         buttonWidgetRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       expect(data.annotationType).toEqual(AnnotationType.WIDGET);
@@ -2849,7 +2958,7 @@ describe("annotation", function () {
       const { data } = await AnnotationFactory.create(
         xref,
         buttonWidgetRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       expect(data.annotationType).toEqual(AnnotationType.WIDGET);
@@ -2890,7 +2999,7 @@ describe("annotation", function () {
       const annotation = await AnnotationFactory.create(
         xref,
         buttonWidgetRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       const annotationStorage = new Map();
@@ -2975,7 +3084,7 @@ describe("annotation", function () {
       const annotation = await AnnotationFactory.create(
         xref,
         buttonWidgetRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       const annotationStorage = new Map();
@@ -3035,7 +3144,7 @@ describe("annotation", function () {
       const annotation = await AnnotationFactory.create(
         xref,
         buttonWidgetRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       const annotationStorage = new Map();
@@ -3098,7 +3207,7 @@ describe("annotation", function () {
       const annotation = await AnnotationFactory.create(
         xref,
         buttonWidgetRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       const annotationStorage = new Map();
@@ -3135,7 +3244,7 @@ describe("annotation", function () {
       const annotation = await AnnotationFactory.create(
         xref,
         buttonWidgetRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       const annotationStorage = new Map();
@@ -3164,7 +3273,7 @@ describe("annotation", function () {
       const { data } = await AnnotationFactory.create(
         xref,
         buttonWidgetRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       expect(data.annotationType).toEqual(AnnotationType.WIDGET);
@@ -3184,7 +3293,7 @@ describe("annotation", function () {
       const { data } = await AnnotationFactory.create(
         xref,
         buttonWidgetRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       expect(data.annotationType).toEqual(AnnotationType.WIDGET);
@@ -3211,7 +3320,7 @@ describe("annotation", function () {
       const { data } = await AnnotationFactory.create(
         xref,
         buttonWidgetRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       expect(data.url).toEqual("https://developer.mozilla.org/en-US/");
@@ -3239,7 +3348,7 @@ describe("annotation", function () {
       const { data } = await AnnotationFactory.create(
         xref,
         buttonWidgetRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       expect(data.url).toEqual("https://developer.mozilla.org/en-US/");
@@ -3285,7 +3394,7 @@ describe("annotation", function () {
       const { data } = await AnnotationFactory.create(
         xref,
         choiceWidgetRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       expect(data.annotationType).toEqual(AnnotationType.WIDGET);
@@ -3316,7 +3425,7 @@ describe("annotation", function () {
       const { data } = await AnnotationFactory.create(
         xref,
         choiceWidgetRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       expect(data.annotationType).toEqual(AnnotationType.WIDGET);
@@ -3344,7 +3453,7 @@ describe("annotation", function () {
       const { data } = await AnnotationFactory.create(
         xref,
         choiceWidgetRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       expect(data.annotationType).toEqual(AnnotationType.WIDGET);
@@ -3374,7 +3483,7 @@ describe("annotation", function () {
       const { data } = await AnnotationFactory.create(
         xref,
         choiceWidgetRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       expect(data.annotationType).toEqual(AnnotationType.WIDGET);
@@ -3397,7 +3506,7 @@ describe("annotation", function () {
       const { data } = await AnnotationFactory.create(
         xref,
         choiceWidgetRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       expect(data.annotationType).toEqual(AnnotationType.WIDGET);
@@ -3425,7 +3534,7 @@ describe("annotation", function () {
           return AnnotationFactory.create(
             xref,
             choiceWidgetRef,
-            pdfManagerMock,
+            annotationGlobalsMock,
             idFactoryMock
           ).then(({ data }) => {
             expect(data.annotationType).toEqual(AnnotationType.WIDGET);
@@ -3445,7 +3554,7 @@ describe("annotation", function () {
       const { data } = await AnnotationFactory.create(
         xref,
         choiceWidgetRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       expect(data.annotationType).toEqual(AnnotationType.WIDGET);
@@ -3466,7 +3575,7 @@ describe("annotation", function () {
       const { data } = await AnnotationFactory.create(
         xref,
         choiceWidgetRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       expect(data.annotationType).toEqual(AnnotationType.WIDGET);
@@ -3492,7 +3601,7 @@ describe("annotation", function () {
       const { data } = await AnnotationFactory.create(
         xref,
         choiceWidgetRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       expect(data.annotationType).toEqual(AnnotationType.WIDGET);
@@ -3514,7 +3623,7 @@ describe("annotation", function () {
       const annotation = await AnnotationFactory.create(
         xref,
         choiceWidgetRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       const annotationStorage = new Map();
@@ -3559,7 +3668,7 @@ describe("annotation", function () {
       const annotation = await AnnotationFactory.create(
         xref,
         choiceWidgetRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       const annotationStorage = new Map();
@@ -3608,7 +3717,7 @@ describe("annotation", function () {
       const annotation = await AnnotationFactory.create(
         xref,
         choiceWidgetRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       const annotationStorage = new Map();
@@ -3652,7 +3761,7 @@ describe("annotation", function () {
       const annotation = await AnnotationFactory.create(
         xref,
         choiceWidgetRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       const annotationStorage = new Map();
@@ -3713,7 +3822,7 @@ describe("annotation", function () {
       const annotation = await AnnotationFactory.create(
         xref,
         choiceWidgetRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       const annotationStorage = new Map();
@@ -3778,7 +3887,7 @@ describe("annotation", function () {
       const annotation = await AnnotationFactory.create(
         xref,
         choiceWidgetRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       const annotationStorage = new Map();
@@ -3840,7 +3949,7 @@ describe("annotation", function () {
       const { data } = await AnnotationFactory.create(
         xref,
         lineRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       expect(data.annotationType).toEqual(AnnotationType.LINE);
@@ -3861,7 +3970,7 @@ describe("annotation", function () {
       const { data } = await AnnotationFactory.create(
         xref,
         lineRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       expect(data.annotationType).toEqual(AnnotationType.LINE);
@@ -3896,7 +4005,7 @@ describe("annotation", function () {
       const fileSpecRef = Ref.get(19, 0);
       const fileSpecDict = new Dict();
       fileSpecDict.set("Type", Name.get("Filespec"));
-      fileSpecDict.set("Desc", "");
+      fileSpecDict.set("Desc", "abc");
       fileSpecDict.set("EF", embeddedFileDict);
       fileSpecDict.set("UF", "Test.txt");
 
@@ -3920,12 +4029,16 @@ describe("annotation", function () {
       const { data } = await AnnotationFactory.create(
         xref,
         fileAttachmentRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       expect(data.annotationType).toEqual(AnnotationType.FILEATTACHMENT);
-      expect(data.file.filename).toEqual("Test.txt");
-      expect(data.file.content).toEqual(stringToBytes("Test attachment"));
+      expect(data.file).toEqual({
+        rawFilename: "Test.txt",
+        filename: "Test.txt",
+        content: stringToBytes("Test attachment"),
+        description: "abc",
+      });
     });
   });
 
@@ -3948,7 +4061,7 @@ describe("annotation", function () {
       const { data } = await AnnotationFactory.create(
         xref,
         popupRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       expect(data.annotationType).toEqual(AnnotationType.POPUP);
@@ -3972,7 +4085,7 @@ describe("annotation", function () {
       const { data } = await AnnotationFactory.create(
         xref,
         popupRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       expect(data.annotationType).toEqual(AnnotationType.POPUP);
@@ -3992,7 +4105,7 @@ describe("annotation", function () {
         const popupDict = new Dict();
         popupDict.set("Type", Name.get("Annot"));
         popupDict.set("Subtype", Name.get("Popup"));
-        popupDict.set("F", 25); // not viewable
+        popupDict.set("F", 56); // not viewable
         popupDict.set("Parent", parentDict);
 
         const popupRef = Ref.get(13, 0);
@@ -4001,13 +4114,13 @@ describe("annotation", function () {
         const { data, viewable } = await AnnotationFactory.create(
           xref,
           popupRef,
-          pdfManagerMock,
+          annotationGlobalsMock,
           idFactoryMock
         );
         expect(data.annotationType).toEqual(AnnotationType.POPUP);
         // We should not modify the `annotationFlags` returned through
         // e.g., the API.
-        expect(data.annotationFlags).toEqual(25);
+        expect(data.annotationFlags).toEqual(56);
         // The popup should inherit the `viewable` property of the parent.
         expect(viewable).toEqual(true);
       }
@@ -4060,7 +4173,7 @@ describe("annotation", function () {
         const { data } = await AnnotationFactory.create(
           xref,
           popupRef,
-          pdfManagerMock,
+          annotationGlobalsMock,
           idFactoryMock
         );
         expect(data.titleObj).toEqual({ str: "Correct Title", dir: "ltr" });
@@ -4110,14 +4223,16 @@ describe("annotation", function () {
       const appearance = data.dependencies[1].data;
       expect(appearance).toEqual(
         "3 0 obj\n" +
-          "<< /FormType 1 /Subtype /Form /Type /XObject /BBox [0 0 44 44] " +
-          "/Resources << /Font << /Helv 1 0 R>>>> /Length 101>> stream\n" +
+          "<< /FormType 1 /Subtype /Form /Type /XObject /BBox [12 34 56 78] " +
+          "/Resources << /Font << /Helv 1 0 R>>>> /Matrix [1 0 0 1 -12 -34] " +
+          "/Length 98>> stream\n" +
           "q\n" +
-          "0 0 44 44 re W n\n" +
+          "1 0 0 1 0 0 cm\n" +
+          "12 34 44 44 re W n\n" +
           "BT\n" +
-          "1 0 0 1 0 47.5 Tm 0 Tc 0 g\n" +
-          "/Helv 10 Tf\n" +
-          "0 -13.5 Td (Hello PDF.js World!) Tj\n" +
+          "0 g\n" +
+          "0 Tc /Helv 10 Tf\n" +
+          "12 68 Td (Hello PDF.js World!) Tj\n" +
           "ET\n" +
           "Q\n" +
           "endstream\n" +
@@ -4129,16 +4244,21 @@ describe("annotation", function () {
       partialEvaluator.xref = new XRefMock();
       const task = new WorkerTask("test FreeText printing");
       const freetextAnnotation = (
-        await AnnotationFactory.printNewAnnotations(partialEvaluator, task, [
-          {
-            annotationType: AnnotationEditorType.FREETEXT,
-            rect: [12, 34, 56, 78],
-            rotation: 0,
-            fontSize: 10,
-            color: [0, 0, 0],
-            value: "A",
-          },
-        ])
+        await AnnotationFactory.printNewAnnotations(
+          annotationGlobalsMock,
+          partialEvaluator,
+          task,
+          [
+            {
+              annotationType: AnnotationEditorType.FREETEXT,
+              rect: [12, 34, 56, 78],
+              rotation: 0,
+              fontSize: 10,
+              color: [0, 0, 0],
+              value: "A",
+            },
+          ]
+        )
       )[0];
 
       const { opList } = await freetextAnnotation.getOperatorList(
@@ -4153,13 +4273,13 @@ describe("annotation", function () {
       expect(opList.fnArray).toEqual([
         OPS.beginAnnotation,
         OPS.save,
+        OPS.transform,
         OPS.constructPath,
         OPS.clip,
         OPS.endPath,
         OPS.beginText,
-        OPS.setTextMatrix,
-        OPS.setCharSpacing,
         OPS.setFillRGBColor,
+        OPS.setCharSpacing,
         OPS.dependency,
         OPS.setFont,
         OPS.moveText,
@@ -4174,16 +4294,21 @@ describe("annotation", function () {
       partialEvaluator.xref = new XRefMock();
       const task = new WorkerTask("test FreeText text extraction");
       const freetextAnnotation = (
-        await AnnotationFactory.printNewAnnotations(partialEvaluator, task, [
-          {
-            annotationType: AnnotationEditorType.FREETEXT,
-            rect: [12, 34, 56, 78],
-            rotation: 0,
-            fontSize: 10,
-            color: [0, 0, 0],
-            value: "Hello PDF.js\nWorld !",
-          },
-        ])
+        await AnnotationFactory.printNewAnnotations(
+          annotationGlobalsMock,
+          partialEvaluator,
+          task,
+          [
+            {
+              annotationType: AnnotationEditorType.FREETEXT,
+              rect: [12, 34, 56, 78],
+              rotation: 0,
+              fontSize: 10,
+              color: [0, 0, 0],
+              value: "Hello PDF.js\nWorld !",
+            },
+          ]
+        )
       )[0];
 
       await freetextAnnotation.extractTextContent(partialEvaluator, task, [
@@ -4213,7 +4338,7 @@ describe("annotation", function () {
       const { data } = await AnnotationFactory.create(
         xref,
         inkRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       expect(data.annotationType).toEqual(AnnotationType.INK);
@@ -4241,7 +4366,7 @@ describe("annotation", function () {
       const { data } = await AnnotationFactory.create(
         xref,
         inkRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       expect(data.annotationType).toEqual(AnnotationType.INK);
@@ -4384,23 +4509,28 @@ describe("annotation", function () {
       partialEvaluator.xref = new XRefMock();
       const task = new WorkerTask("test Ink printing");
       const inkAnnotation = (
-        await AnnotationFactory.printNewAnnotations(partialEvaluator, task, [
-          {
-            annotationType: AnnotationEditorType.INK,
-            rect: [12, 34, 56, 78],
-            rotation: 0,
-            thickness: 3,
-            opacity: 1,
-            color: [0, 255, 0],
-            paths: [
-              {
-                bezier: [1, 2, 3, 4, 5, 6, 7, 8],
-                // Useless in the printing case.
-                points: [1, 2, 3, 4, 5, 6, 7, 8],
-              },
-            ],
-          },
-        ])
+        await AnnotationFactory.printNewAnnotations(
+          annotationGlobalsMock,
+          partialEvaluator,
+          task,
+          [
+            {
+              annotationType: AnnotationEditorType.INK,
+              rect: [12, 34, 56, 78],
+              rotation: 0,
+              thickness: 3,
+              opacity: 1,
+              color: [0, 255, 0],
+              paths: [
+                {
+                  bezier: [1, 2, 3, 4, 5, 6, 7, 8],
+                  // Useless in the printing case.
+                  points: [1, 2, 3, 4, 5, 6, 7, 8],
+                },
+              ],
+            },
+          ]
+        )
       )[0];
 
       const { opList } = await inkAnnotation.getOperatorList(
@@ -4435,11 +4565,11 @@ describe("annotation", function () {
       expect(opList.argsArray[5][0]).toEqual([OPS.moveTo, OPS.curveTo]);
       expect(opList.argsArray[5][1]).toEqual([1, 2, 3, 4, 5, 6, 7, 8]);
       // Min-max.
-      expect(opList.argsArray[5][2]).toEqual([1, 1, 2, 2]);
+      expect(opList.argsArray[5][2]).toEqual([1, 2, 1, 2]);
     });
   });
 
-  describe("HightlightAnnotation", function () {
+  describe("HighlightAnnotation", function () {
     it("should set quadpoints to null if not defined", async function () {
       const highlightDict = new Dict();
       highlightDict.set("Type", Name.get("Annot"));
@@ -4451,7 +4581,7 @@ describe("annotation", function () {
       const { data } = await AnnotationFactory.create(
         xref,
         highlightRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       expect(data.annotationType).toEqual(AnnotationType.HIGHLIGHT);
@@ -4471,7 +4601,7 @@ describe("annotation", function () {
       const { data } = await AnnotationFactory.create(
         xref,
         highlightRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       expect(data.annotationType).toEqual(AnnotationType.HIGHLIGHT);
@@ -4498,11 +4628,221 @@ describe("annotation", function () {
       const { data } = await AnnotationFactory.create(
         xref,
         highlightRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       expect(data.annotationType).toEqual(AnnotationType.HIGHLIGHT);
       expect(data.quadPoints).toEqual(null);
+    });
+
+    it("should create a new Highlight annotation", async function () {
+      partialEvaluator.xref = new XRefMock();
+      const task = new WorkerTask("test Highlight creation");
+      const data = await AnnotationFactory.saveNewAnnotations(
+        partialEvaluator,
+        task,
+        [
+          {
+            annotationType: AnnotationEditorType.HIGHLIGHT,
+            rect: [12, 34, 56, 78],
+            rotation: 0,
+            opacity: 1,
+            color: [0, 0, 0],
+            quadPoints: [1, 2, 3, 4, 5, 6, 7],
+            outlines: [
+              [8, 9, 10, 11],
+              [12, 13, 14, 15],
+            ],
+          },
+        ]
+      );
+
+      const base = data.annotations[0].data.replace(/\(D:\d+\)/, "(date)");
+      expect(base).toEqual(
+        "1 0 obj\n" +
+          "<< /Type /Annot /Subtype /Highlight /CreationDate (date) /Rect [12 34 56 78] " +
+          "/F 4 /Border [0 0 0] /Rotate 0 /QuadPoints [1 2 3 4 5 6 7] /C [0 0 0] " +
+          "/CA 1 /AP << /N 2 0 R>>>>\n" +
+          "endobj\n"
+      );
+
+      const appearance = data.dependencies[0].data;
+      expect(appearance).toEqual(
+        "2 0 obj\n" +
+          "<< /FormType 1 /Subtype /Form /Type /XObject /BBox [12 34 56 78] " +
+          "/Length 47 /Resources << /ExtGState << /R0 << /BM /Multiply>>>>>>>> stream\n" +
+          "0 g\n" +
+          "/R0 gs\n" +
+          "8 9 m\n" +
+          "10 11 l\n" +
+          "h\n" +
+          "12 13 m\n" +
+          "14 15 l\n" +
+          "h\n" +
+          "f*\n" +
+          "endstream\n" +
+          "endobj\n"
+      );
+    });
+
+    it("should render a new Highlight annotation for printing", async function () {
+      partialEvaluator.xref = new XRefMock();
+      const task = new WorkerTask("test Highlight printing");
+      const highlightAnnotation = (
+        await AnnotationFactory.printNewAnnotations(
+          annotationGlobalsMock,
+          partialEvaluator,
+          task,
+          [
+            {
+              annotationType: AnnotationEditorType.HIGHLIGHT,
+              rect: [12, 34, 56, 78],
+              rotation: 0,
+              opacity: 0.5,
+              color: [0, 255, 0],
+              quadPoints: [1, 2, 3, 4, 5, 6, 7],
+              outlines: [[8, 9, 10, 11]],
+            },
+          ]
+        )
+      )[0];
+
+      const { opList } = await highlightAnnotation.getOperatorList(
+        partialEvaluator,
+        task,
+        RenderingIntentFlag.PRINT,
+        false,
+        null
+      );
+
+      expect(opList.argsArray.length).toEqual(6);
+      expect(opList.fnArray).toEqual([
+        OPS.beginAnnotation,
+        OPS.setFillRGBColor,
+        OPS.setGState,
+        OPS.constructPath,
+        OPS.eoFill,
+        OPS.endAnnotation,
+      ]);
+    });
+
+    it("should create a new free Highlight annotation", async function () {
+      partialEvaluator.xref = new XRefMock();
+      const task = new WorkerTask("test free Highlight creation");
+      const data = await AnnotationFactory.saveNewAnnotations(
+        partialEvaluator,
+        task,
+        [
+          {
+            annotationType: AnnotationEditorType.HIGHLIGHT,
+            rect: [12, 34, 56, 78],
+            rotation: 0,
+            opacity: 1,
+            color: [0, 0, 0],
+            thickness: 3.14,
+            quadPoints: null,
+            outlines: {
+              outline: Float64Array.from([
+                NaN,
+                NaN,
+                8,
+                9,
+                10,
+                11,
+                NaN,
+                NaN,
+                12,
+                13,
+                14,
+                15,
+              ]),
+              points: [Float64Array.from([16, 17, 18, 19])],
+            },
+          },
+        ]
+      );
+
+      const base = data.annotations[0].data.replace(/\(D:\d+\)/, "(date)");
+      expect(base).toEqual(
+        "1 0 obj\n" +
+          "<< /Type /Annot /Subtype /Ink /CreationDate (date) /Rect [12 34 56 78] " +
+          "/InkList [[16 17 18 19]] /F 4 /Rotate 0 /IT /InkHighlight /BS << /W 3.14>> " +
+          "/C [0 0 0] /CA 1 /AP << /N 2 0 R>>>>\n" +
+          "endobj\n"
+      );
+
+      const appearance = data.dependencies[0].data;
+      expect(appearance).toEqual(
+        "2 0 obj\n" +
+          "<< /FormType 1 /Subtype /Form /Type /XObject /BBox [12 34 56 78] " +
+          "/Length 30 /Resources << /ExtGState << /R0 << /BM /Multiply>>>>>>>> " +
+          "stream\n" +
+          "0 g\n" +
+          "/R0 gs\n" +
+          "10 11 m\n" +
+          "14 15 l\n" +
+          "h f\n" +
+          "endstream\n" +
+          "endobj\n"
+      );
+    });
+
+    it("should render a new free Highlight annotation for printing", async function () {
+      partialEvaluator.xref = new XRefMock();
+      const task = new WorkerTask("test free Highlight printing");
+      const highlightAnnotation = (
+        await AnnotationFactory.printNewAnnotations(
+          annotationGlobalsMock,
+          partialEvaluator,
+          task,
+          [
+            {
+              annotationType: AnnotationEditorType.HIGHLIGHT,
+              rect: [12, 34, 56, 78],
+              rotation: 0,
+              opacity: 0.5,
+              color: [0, 255, 0],
+              thickness: 3.14,
+              quadPoints: null,
+              outlines: {
+                outline: Float64Array.from([
+                  NaN,
+                  NaN,
+                  8,
+                  9,
+                  10,
+                  11,
+                  NaN,
+                  NaN,
+                  12,
+                  13,
+                  14,
+                  15,
+                ]),
+                points: [Float64Array.from([16, 17, 18, 19])],
+              },
+            },
+          ]
+        )
+      )[0];
+
+      const { opList } = await highlightAnnotation.getOperatorList(
+        partialEvaluator,
+        task,
+        RenderingIntentFlag.PRINT,
+        false,
+        null
+      );
+
+      expect(opList.argsArray.length).toEqual(6);
+      expect(opList.fnArray).toEqual([
+        OPS.beginAnnotation,
+        OPS.setFillRGBColor,
+        OPS.setGState,
+        OPS.constructPath,
+        OPS.fill,
+        OPS.endAnnotation,
+      ]);
     });
   });
 
@@ -4518,7 +4858,7 @@ describe("annotation", function () {
       const { data } = await AnnotationFactory.create(
         xref,
         underlineRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       expect(data.annotationType).toEqual(AnnotationType.UNDERLINE);
@@ -4538,7 +4878,7 @@ describe("annotation", function () {
       const { data } = await AnnotationFactory.create(
         xref,
         underlineRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       expect(data.annotationType).toEqual(AnnotationType.UNDERLINE);
@@ -4565,7 +4905,7 @@ describe("annotation", function () {
       const { data } = await AnnotationFactory.create(
         xref,
         squigglyRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       expect(data.annotationType).toEqual(AnnotationType.SQUIGGLY);
@@ -4585,7 +4925,7 @@ describe("annotation", function () {
       const { data } = await AnnotationFactory.create(
         xref,
         squigglyRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       expect(data.annotationType).toEqual(AnnotationType.SQUIGGLY);
@@ -4612,7 +4952,7 @@ describe("annotation", function () {
       const { data } = await AnnotationFactory.create(
         xref,
         strikeOutRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       expect(data.annotationType).toEqual(AnnotationType.STRIKEOUT);
@@ -4632,7 +4972,7 @@ describe("annotation", function () {
       const { data } = await AnnotationFactory.create(
         xref,
         strikeOutRef,
-        pdfManagerMock,
+        annotationGlobalsMock,
         idFactoryMock
       );
       expect(data.annotationType).toEqual(AnnotationType.STRIKEOUT);

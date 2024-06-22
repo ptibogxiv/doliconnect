@@ -22,6 +22,7 @@ import {
 } from "./base_factory.js";
 import {
   BaseException,
+  FeatureTest,
   shadow,
   stringToBytes,
   Util,
@@ -29,8 +30,6 @@ import {
 } from "../shared/util.js";
 
 const SVG_NS = "http://www.w3.org/2000/svg";
-
-const AnnotationPrefix = "pdfjs_internal_id_";
 
 class PixelsPerInch {
   static CSS = 96.0;
@@ -58,17 +57,7 @@ class DOMFilterFactory extends BaseFilterFactory {
 
   #document;
 
-  #hcmFilter;
-
-  #hcmKey;
-
-  #hcmUrl;
-
-  #hcmHighlightFilter;
-
-  #hcmHighlightKey;
-
-  #hcmHighlightUrl;
+  #_hcmCache;
 
   #id = 0;
 
@@ -80,6 +69,10 @@ class DOMFilterFactory extends BaseFilterFactory {
 
   get #cache() {
     return (this.#_cache ||= new Map());
+  }
+
+  get #hcmCache() {
+    return (this.#_hcmCache ||= new Map());
   }
 
   get #defs() {
@@ -104,6 +97,30 @@ class DOMFilterFactory extends BaseFilterFactory {
     return this.#_defs;
   }
 
+  #createTables(maps) {
+    if (maps.length === 1) {
+      const mapR = maps[0];
+      const buffer = new Array(256);
+      for (let i = 0; i < 256; i++) {
+        buffer[i] = mapR[i] / 255;
+      }
+
+      const table = buffer.join(",");
+      return [table, table, table];
+    }
+
+    const [mapR, mapG, mapB] = maps;
+    const bufferR = new Array(256);
+    const bufferG = new Array(256);
+    const bufferB = new Array(256);
+    for (let i = 0; i < 256; i++) {
+      bufferR[i] = mapR[i] / 255;
+      bufferG[i] = mapG[i] / 255;
+      bufferB[i] = mapB[i] / 255;
+    }
+    return [bufferR.join(","), bufferG.join(","), bufferB.join(",")];
+  }
+
   addFilter(maps) {
     if (!maps) {
       return "none";
@@ -116,29 +133,8 @@ class DOMFilterFactory extends BaseFilterFactory {
       return value;
     }
 
-    let tableR, tableG, tableB, key;
-    if (maps.length === 1) {
-      const mapR = maps[0];
-      const buffer = new Array(256);
-      for (let i = 0; i < 256; i++) {
-        buffer[i] = mapR[i] / 255;
-      }
-      key = tableR = tableG = tableB = buffer.join(",");
-    } else {
-      const [mapR, mapG, mapB] = maps;
-      const bufferR = new Array(256);
-      const bufferG = new Array(256);
-      const bufferB = new Array(256);
-      for (let i = 0; i < 256; i++) {
-        bufferR[i] = mapR[i] / 255;
-        bufferG[i] = mapG[i] / 255;
-        bufferB[i] = mapB[i] / 255;
-      }
-      tableR = bufferR.join(",");
-      tableG = bufferG.join(",");
-      tableB = bufferB.join(",");
-      key = `${tableR}${tableG}${tableB}`;
-    }
+    const [tableR, tableG, tableB] = this.#createTables(maps);
+    const key = maps.length === 1 ? tableR : `${tableR}${tableG}${tableB}`;
 
     value = this.#cache.get(key);
     if (value) {
@@ -162,16 +158,28 @@ class DOMFilterFactory extends BaseFilterFactory {
 
   addHCMFilter(fgColor, bgColor) {
     const key = `${fgColor}-${bgColor}`;
-    if (this.#hcmKey === key) {
-      return this.#hcmUrl;
+    const filterName = "base";
+    let info = this.#hcmCache.get(filterName);
+    if (info?.key === key) {
+      return info.url;
     }
 
-    this.#hcmKey = key;
-    this.#hcmUrl = "none";
-    this.#hcmFilter?.remove();
+    if (info) {
+      info.filter?.remove();
+      info.key = key;
+      info.url = "none";
+      info.filter = null;
+    } else {
+      info = {
+        key,
+        url: "none",
+        filter: null,
+      };
+      this.#hcmCache.set(filterName, info);
+    }
 
     if (!fgColor || !bgColor) {
-      return this.#hcmUrl;
+      return info.url;
     }
 
     const fgRGB = this.#getRGB(fgColor);
@@ -184,7 +192,7 @@ class DOMFilterFactory extends BaseFilterFactory {
       (fgColor === "#000000" && bgColor === "#ffffff") ||
       fgColor === bgColor
     ) {
-      return this.#hcmUrl;
+      return info.url;
     }
 
     // https://developer.mozilla.org/en-US/docs/Web/Accessibility/Understanding_Colors_and_Luminance
@@ -204,7 +212,7 @@ class DOMFilterFactory extends BaseFilterFactory {
     const table = map.join(",");
 
     const id = `g_${this.#docId}_hcm_filter`;
-    const filter = (this.#hcmHighlightFilter = this.#createFilter(id));
+    const filter = (info.filter = this.#createFilter(id));
     this.#addTransferMapConversion(table, table, table, filter);
     this.#addGrayConversion(filter);
 
@@ -224,22 +232,97 @@ class DOMFilterFactory extends BaseFilterFactory {
       filter
     );
 
-    this.#hcmUrl = `url(#${id})`;
-    return this.#hcmUrl;
+    info.url = `url(#${id})`;
+    return info.url;
   }
 
-  addHighlightHCMFilter(fgColor, bgColor, newFgColor, newBgColor) {
-    const key = `${fgColor}-${bgColor}-${newFgColor}-${newBgColor}`;
-    if (this.#hcmHighlightKey === key) {
-      return this.#hcmHighlightUrl;
+  addAlphaFilter(map) {
+    // When a page is zoomed the page is re-drawn but the maps are likely
+    // the same.
+    let value = this.#cache.get(map);
+    if (value) {
+      return value;
     }
 
-    this.#hcmHighlightKey = key;
-    this.#hcmHighlightUrl = "none";
-    this.#hcmHighlightFilter?.remove();
+    const [tableA] = this.#createTables([map]);
+    const key = `alpha_${tableA}`;
+
+    value = this.#cache.get(key);
+    if (value) {
+      this.#cache.set(map, value);
+      return value;
+    }
+
+    const id = `g_${this.#docId}_alpha_map_${this.#id++}`;
+    const url = `url(#${id})`;
+    this.#cache.set(map, url);
+    this.#cache.set(key, url);
+
+    const filter = this.#createFilter(id);
+    this.#addTransferMapAlphaConversion(tableA, filter);
+
+    return url;
+  }
+
+  addLuminosityFilter(map) {
+    // When a page is zoomed the page is re-drawn but the maps are likely
+    // the same.
+    let value = this.#cache.get(map || "luminosity");
+    if (value) {
+      return value;
+    }
+
+    let tableA, key;
+    if (map) {
+      [tableA] = this.#createTables([map]);
+      key = `luminosity_${tableA}`;
+    } else {
+      key = "luminosity";
+    }
+
+    value = this.#cache.get(key);
+    if (value) {
+      this.#cache.set(map, value);
+      return value;
+    }
+
+    const id = `g_${this.#docId}_luminosity_map_${this.#id++}`;
+    const url = `url(#${id})`;
+    this.#cache.set(map, url);
+    this.#cache.set(key, url);
+
+    const filter = this.#createFilter(id);
+    this.#addLuminosityConversion(filter);
+    if (map) {
+      this.#addTransferMapAlphaConversion(tableA, filter);
+    }
+
+    return url;
+  }
+
+  addHighlightHCMFilter(filterName, fgColor, bgColor, newFgColor, newBgColor) {
+    const key = `${fgColor}-${bgColor}-${newFgColor}-${newBgColor}`;
+    let info = this.#hcmCache.get(filterName);
+    if (info?.key === key) {
+      return info.url;
+    }
+
+    if (info) {
+      info.filter?.remove();
+      info.key = key;
+      info.url = "none";
+      info.filter = null;
+    } else {
+      info = {
+        key,
+        url: "none",
+        filter: null,
+      };
+      this.#hcmCache.set(filterName, info);
+    }
 
     if (!fgColor || !bgColor) {
-      return this.#hcmHighlightUrl;
+      return info.url;
     }
 
     const [fgRGB, bgRGB] = [fgColor, bgColor].map(this.#getRGB.bind(this));
@@ -295,8 +378,8 @@ class DOMFilterFactory extends BaseFilterFactory {
       return arr.join(",");
     };
 
-    const id = `g_${this.#docId}_hcm_highlight_filter`;
-    const filter = (this.#hcmHighlightFilter = this.#createFilter(id));
+    const id = `g_${this.#docId}_hcm_${filterName}_filter`;
+    const filter = (info.filter = this.#createFilter(id));
 
     this.#addGrayConversion(filter);
     this.#addTransferMapConversion(
@@ -306,12 +389,12 @@ class DOMFilterFactory extends BaseFilterFactory {
       filter
     );
 
-    this.#hcmHighlightUrl = `url(#${id})`;
-    return this.#hcmHighlightUrl;
+    info.url = `url(#${id})`;
+    return info.url;
   }
 
   destroy(keepHCM = false) {
-    if (keepHCM && (this.#hcmUrl || this.#hcmHighlightUrl)) {
+    if (keepHCM && this.#hcmCache.size !== 0) {
       return;
     }
     if (this.#_defs) {
@@ -323,6 +406,19 @@ class DOMFilterFactory extends BaseFilterFactory {
       this.#_cache = null;
     }
     this.#id = 0;
+  }
+
+  #addLuminosityConversion(filter) {
+    const feColorMatrix = this.#document.createElementNS(
+      SVG_NS,
+      "feColorMatrix"
+    );
+    feColorMatrix.setAttribute("type", "matrix");
+    feColorMatrix.setAttribute(
+      "values",
+      "0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.3 0.59 0.11 0 0"
+    );
+    filter.append(feColorMatrix);
   }
 
   #addGrayConversion(filter) {
@@ -365,6 +461,15 @@ class DOMFilterFactory extends BaseFilterFactory {
     this.#appendFeFunc(feComponentTransfer, "feFuncB", bTable);
   }
 
+  #addTransferMapAlphaConversion(aTable, filter) {
+    const feComponentTransfer = this.#document.createElementNS(
+      SVG_NS,
+      "feComponentTransfer"
+    );
+    filter.append(feComponentTransfer);
+    this.#appendFeFunc(feComponentTransfer, "feFuncA", aTable);
+  }
+
   #getRGB(color) {
     this.#defs.style.color = color;
     return getRGB(getComputedStyle(this.#defs).getPropertyValue("color"));
@@ -388,7 +493,7 @@ class DOMCanvasFactory extends BaseCanvasFactory {
   }
 }
 
-async function fetchData(url, asTypedArray = false) {
+async function fetchData(url, type = "text") {
   if (
     (typeof PDFJSDev !== "undefined" && PDFJSDev.test("MOZCENTRAL")) ||
     isValidFetchUrl(url, document.baseURI)
@@ -397,34 +502,37 @@ async function fetchData(url, asTypedArray = false) {
     if (!response.ok) {
       throw new Error(response.statusText);
     }
-    return asTypedArray
-      ? new Uint8Array(await response.arrayBuffer())
-      : stringToBytes(await response.text());
+    switch (type) {
+      case "arraybuffer":
+        return response.arrayBuffer();
+      case "blob":
+        return response.blob();
+      case "json":
+        return response.json();
+    }
+    return response.text();
   }
 
   // The Fetch API is not supported.
   return new Promise((resolve, reject) => {
     const request = new XMLHttpRequest();
-    request.open("GET", url, /* asTypedArray = */ true);
+    request.open("GET", url, /* async = */ true);
+    request.responseType = type;
 
-    if (asTypedArray) {
-      request.responseType = "arraybuffer";
-    }
     request.onreadystatechange = () => {
       if (request.readyState !== XMLHttpRequest.DONE) {
         return;
       }
       if (request.status === 200 || request.status === 0) {
-        let data;
-        if (asTypedArray && request.response) {
-          data = new Uint8Array(request.response);
-        } else if (!asTypedArray && request.responseText) {
-          data = stringToBytes(request.responseText);
+        switch (type) {
+          case "arraybuffer":
+          case "blob":
+          case "json":
+            resolve(request.response);
+            return;
         }
-        if (data) {
-          resolve(data);
-          return;
-        }
+        resolve(request.responseText);
+        return;
       }
       reject(new Error(request.statusText));
     };
@@ -438,9 +546,16 @@ class DOMCMapReaderFactory extends BaseCMapReaderFactory {
    * @ignore
    */
   _fetchData(url, compressionType) {
-    return fetchData(url, /* asTypedArray = */ this.isCompressed).then(data => {
-      return { cMapData: data, compressionType };
-    });
+    return fetchData(
+      url,
+      /* type = */ this.isCompressed ? "arraybuffer" : "text"
+    ).then(data => ({
+      cMapData:
+        data instanceof ArrayBuffer
+          ? new Uint8Array(data)
+          : stringToBytes(data),
+      compressionType,
+    }));
   }
 }
 
@@ -449,7 +564,9 @@ class DOMStandardFontDataFactory extends BaseStandardFontDataFactory {
    * @ignore
    */
   _fetchData(url) {
-    return fetchData(url, /* asTypedArray = */ true);
+    return fetchData(url, /* type = */ "arraybuffer").then(
+      data => new Uint8Array(data)
+    );
   }
 }
 
@@ -686,13 +803,10 @@ function isPdfFile(filename) {
 /**
  * Gets the filename from a given URL.
  * @param {string} url
- * @param {boolean} [onlyStripPath]
  * @returns {string}
  */
-function getFilenameFromUrl(url, onlyStripPath = false) {
-  if (!onlyStripPath) {
-    [url] = url.split(/[#?]/, 1);
-  }
+function getFilenameFromUrl(url) {
+  [url] = url.split(/[#?]/, 1);
   return url.substring(url.lastIndexOf("/") + 1);
 }
 
@@ -791,26 +905,10 @@ function isValidFetchUrl(url, baseUrl) {
 }
 
 /**
- * @param {string} src
- * @param {boolean} [removeScriptElement]
- * @returns {Promise<void>}
+ * Event handler to suppress context menu.
  */
-function loadScript(src, removeScriptElement = false) {
-  return new Promise((resolve, reject) => {
-    const script = document.createElement("script");
-    script.src = src;
-
-    script.onload = function (evt) {
-      if (removeScriptElement) {
-        script.remove();
-      }
-      resolve(evt);
-    };
-    script.onerror = function () {
-      reject(new Error(`Cannot load script at: ${script.src}`));
-    };
-    (document.head || document.documentElement).append(script);
-  });
+function noContextMenu(e) {
+  e.preventDefault();
 }
 
 // Deprecated API function -- display regardless of the `verbosity` setting.
@@ -982,15 +1080,12 @@ function setLayerDimensions(
   if (viewport instanceof PageViewport) {
     const { pageWidth, pageHeight } = viewport.rawDims;
     const { style } = div;
+    const useRound = FeatureTest.isCSSRoundSupported;
 
-    // TODO: Investigate if it could be interesting to use the css round
-    // function (https://developer.mozilla.org/en-US/docs/Web/CSS/round):
-    // const widthStr =
-    //   `round(down, var(--scale-factor) * ${pageWidth}px, 1px)`;
-    // const heightStr =
-    //   `round(down, var(--scale-factor) * ${pageHeight}px, 1px)`;
-    const widthStr = `calc(var(--scale-factor) * ${pageWidth}px)`;
-    const heightStr = `calc(var(--scale-factor) * ${pageHeight}px)`;
+    const w = `var(--scale-factor) * ${pageWidth}px`,
+      h = `var(--scale-factor) * ${pageHeight}px`;
+    const widthStr = useRound ? `round(${w}, 1px)` : `calc(${w})`,
+      heightStr = useRound ? `round(${h}, 1px)` : `calc(${h})`;
 
     if (!mustFlip || viewport.rotation % 180 === 0) {
       style.width = widthStr;
@@ -1007,13 +1102,13 @@ function setLayerDimensions(
 }
 
 export {
-  AnnotationPrefix,
   deprecated,
   DOMCanvasFactory,
   DOMCMapReaderFactory,
   DOMFilterFactory,
   DOMStandardFontDataFactory,
   DOMSVGFactory,
+  fetchData,
   getColorValues,
   getCurrentTransform,
   getCurrentTransformInverse,
@@ -1024,7 +1119,7 @@ export {
   isDataScheme,
   isPdfFile,
   isValidFetchUrl,
-  loadScript,
+  noContextMenu,
   PageViewport,
   PDFDateString,
   PixelsPerInch,

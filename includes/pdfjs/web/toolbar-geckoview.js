@@ -25,28 +25,18 @@ class Toolbar {
 
   #eventBus;
 
-  #externalServices;
-
   /**
    * @param {ToolbarOptions} options
    * @param {EventBus} eventBus
-   * @param {IL10n} _l10n - Localization service.
    * @param {Object} nimbusData - Nimbus configuration.
-   * @param {Object} externalServices - Interface for external services.
    */
-  constructor(options, eventBus, _l10n, nimbusData, externalServices) {
+  constructor(options, eventBus, nimbusData) {
     this.#eventBus = eventBus;
-    this.#externalServices = externalServices;
     const buttons = [
       {
         element: options.download,
         eventName: "download",
         nimbusName: "download-button",
-      },
-      {
-        element: options.openInApp,
-        eventName: "openinexternalapp",
-        nimbusName: "open-in-app-button",
       },
     ];
 
@@ -88,9 +78,12 @@ class Toolbar {
       element.addEventListener("click", evt => {
         if (eventName !== null) {
           this.#eventBus.dispatch(eventName, { source: this, ...eventDetails });
-          this.#externalServices.reportTelemetry({
-            type: "gv-buttons",
-            data: { id: `${element.id}_tapped` },
+          this.#eventBus.dispatch("reporttelemetry", {
+            source: this,
+            details: {
+              type: "gv-buttons",
+              data: { id: `${element.id}_tapped` },
+            },
           });
         }
       });

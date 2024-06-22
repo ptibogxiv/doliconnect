@@ -13,9 +13,9 @@
  * limitations under the License.
  */
 
-import { DefaultExternalServices, PDFViewerApplication } from "./app.js";
+import { AppOptions } from "./app_options.js";
+import { BaseExternalServices } from "./external_services.js";
 import { BasePreferences } from "./preferences.js";
-import { DownloadManager } from "./download_manager.js";
 import { GenericL10n } from "./genericl10n.js";
 import { GenericScripting } from "./generic_scripting.js";
 
@@ -25,35 +25,32 @@ if (typeof PDFJSDev !== "undefined" && !PDFJSDev.test("GENERIC")) {
   );
 }
 
-const GenericCom = {};
+function initCom(app) {}
 
-class GenericPreferences extends BasePreferences {
+class Preferences extends BasePreferences {
   async _writeToStorage(prefObj) {
     localStorage.setItem("pdfjs.preferences", JSON.stringify(prefObj));
   }
 
   async _readFromStorage(prefObj) {
-    return JSON.parse(localStorage.getItem("pdfjs.preferences"));
+    return { prefs: JSON.parse(localStorage.getItem("pdfjs.preferences")) };
   }
 }
 
-class GenericExternalServices extends DefaultExternalServices {
-  static createDownloadManager() {
-    return new DownloadManager();
+class ExternalServices extends BaseExternalServices {
+  async createL10n() {
+    return new GenericL10n(AppOptions.get("locale"));
   }
 
-  static createPreferences() {
-    return new GenericPreferences();
-  }
-
-  static createL10n({ locale = "en-US" }) {
-    return new GenericL10n(locale);
-  }
-
-  static createScripting({ sandboxBundleSrc }) {
-    return new GenericScripting(sandboxBundleSrc);
+  createScripting() {
+    return new GenericScripting(AppOptions.get("sandboxBundleSrc"));
   }
 }
-PDFViewerApplication.externalServices = GenericExternalServices;
 
-export { GenericCom };
+class MLManager {
+  async guess() {
+    return null;
+  }
+}
+
+export { ExternalServices, initCom, MLManager, Preferences };

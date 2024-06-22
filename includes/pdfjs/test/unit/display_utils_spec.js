@@ -13,6 +13,7 @@
  * limitations under the License.
  */
 
+import { bytesToString, isNodeJS } from "../../src/shared/util.js";
 import {
   DOMCanvasFactory,
   DOMSVGFactory,
@@ -21,8 +22,6 @@ import {
   isValidFetchUrl,
   PDFDateString,
 } from "../../src/display/display_utils.js";
-import { bytesToString } from "../../src/shared/util.js";
-import { isNodeJS } from "../../src/shared/is_node.js";
 
 describe("display_utils", function () {
   describe("DOMCanvasFactory", function () {
@@ -189,13 +188,6 @@ describe("display_utils", function () {
     it("should get the filename from a URL with query parameters", function () {
       const url = "https://server.org/filename.pdf?foo=bar";
       expect(getFilenameFromUrl(url)).toEqual("filename.pdf");
-    });
-
-    it("should get the filename from a relative URL, keeping the anchor", function () {
-      const url = "../../part1#part2.pdf";
-      expect(getFilenameFromUrl(url, /* onlyStripPath = */ true)).toEqual(
-        "part1#part2.pdf"
-      );
     });
   });
 

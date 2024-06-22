@@ -35,39 +35,32 @@ const WaitOnType = {
  * @param {WaitOnEventOrTimeoutParameters}
  * @returns {Promise} A promise that is resolved with a {WaitOnType} value.
  */
-function waitOnEventOrTimeout({ target, name, delay = 0 }) {
-  return new Promise(function (resolve, reject) {
-    if (
-      typeof target !== "object" ||
-      !(name && typeof name === "string") ||
-      !(Number.isInteger(delay) && delay >= 0)
-    ) {
-      throw new Error("waitOnEventOrTimeout - invalid parameters.");
-    }
+async function waitOnEventOrTimeout({ target, name, delay = 0 }) {
+  if (
+    typeof target !== "object" ||
+    !(name && typeof name === "string") ||
+    !(Number.isInteger(delay) && delay >= 0)
+  ) {
+    throw new Error("waitOnEventOrTimeout - invalid parameters.");
+  }
+  const { promise, resolve } = Promise.withResolvers();
+  const ac = new AbortController();
 
-    function handler(type) {
-      if (target instanceof EventBus) {
-        target._off(name, eventHandler);
-      } else {
-        target.removeEventListener(name, eventHandler);
-      }
+  function handler(type) {
+    ac.abort(); // Remove event listener.
+    clearTimeout(timeout);
 
-      if (timeout) {
-        clearTimeout(timeout);
-      }
-      resolve(type);
-    }
+    resolve(type);
+  }
 
-    const eventHandler = handler.bind(null, WaitOnType.EVENT);
-    if (target instanceof EventBus) {
-      target._on(name, eventHandler);
-    } else {
-      target.addEventListener(name, eventHandler);
-    }
-
-    const timeoutHandler = handler.bind(null, WaitOnType.TIMEOUT);
-    const timeout = setTimeout(timeoutHandler, delay);
+  const evtMethod = target instanceof EventBus ? "_on" : "addEventListener";
+  target[evtMethod](name, handler.bind(null, WaitOnType.EVENT), {
+    signal: ac.signal,
   });
+
+  const timeout = setTimeout(handler.bind(null, WaitOnType.TIMEOUT), delay);
+
+  return promise;
 }
 
 /**
@@ -86,6 +79,7 @@ class EventBus {
     this._on(eventName, listener, {
       external: true,
       once: options?.once,
+      signal: options?.signal,
     });
   }
 
@@ -95,10 +89,7 @@ class EventBus {
    * @param {Object} [options]
    */
   off(eventName, listener, options = null) {
-    this._off(eventName, listener, {
-      external: true,
-      once: options?.once,
-    });
+    this._off(eventName, listener);
   }
 
   /**
@@ -137,11 +128,25 @@ class EventBus {
    * @ignore
    */
   _on(eventName, listener, options = null) {
+    let rmAbort = null;
+    if (options?.signal instanceof AbortSignal) {
+      const { signal } = options;
+      if (signal.aborted) {
+        console.error("Cannot use an `aborted` signal.");
+        return;
+      }
+      const onAbort = () => this._off(eventName, listener);
+      rmAbort = () => signal.removeEventListener("abort", onAbort);
+
+      signal.addEventListener("abort", onAbort);
+    }
+
     const eventListeners = (this.#listeners[eventName] ||= []);
     eventListeners.push({
       listener,
       external: options?.external === true,
       once: options?.once === true,
+      rmAbort,
     });
   }
 
@@ -154,7 +159,9 @@ class EventBus {
       return;
     }
     for (let i = 0, ii = eventListeners.length; i < ii; i++) {
-      if (eventListeners[i].listener === listener) {
+      const evt = eventListeners[i];
+      if (evt.listener === listener) {
+        evt.rmAbort?.(); // Ensure that the `AbortSignal` listener is removed.
         eventListeners.splice(i, 1);
         return;
       }

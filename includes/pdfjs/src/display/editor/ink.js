@@ -20,24 +20,16 @@ import {
 } from "../../shared/util.js";
 import { AnnotationEditor } from "./editor.js";
 import { InkAnnotationElement } from "../annotation_layer.js";
+import { noContextMenu } from "../display_utils.js";
 import { opacityToHex } from "./tools.js";
-
-// The dimensions of the resizer is 15x15:
-// https://searchfox.org/mozilla-central/rev/1ce190047b9556c3c10ab4de70a0e61d893e2954/toolkit/content/minimal-xul.css#136-137
-// so each dimension must be greater than RESIZER_SIZE.
-const RESIZER_SIZE = 16;
 
 /**
  * Basic draw editor in order to generate an Ink annotation.
  */
 class InkEditor extends AnnotationEditor {
-  #aspectRatio = 0;
-
   #baseHeight = 0;
 
   #baseWidth = 0;
-
-  #boundCanvasContextMenu = this.canvasContextMenu.bind(this);
 
   #boundCanvasPointermove = this.canvasPointermove.bind(this);
 
@@ -46,6 +38,8 @@ class InkEditor extends AnnotationEditor {
   #boundCanvasPointerup = this.canvasPointerup.bind(this);
 
   #boundCanvasPointerdown = this.canvasPointerdown.bind(this);
+
+  #canvasContextMenuTimeoutId = null;
 
   #currentPath2D = new Path2D();
 
@@ -69,9 +63,9 @@ class InkEditor extends AnnotationEditor {
 
   static _defaultThickness = 1;
 
-  static _l10nPromise;
-
   static _type = "ink";
+
+  static _editorType = AnnotationEditorType.INK;
 
   constructor(params) {
     super({ ...params, name: "inkEditor" });
@@ -86,17 +80,15 @@ class InkEditor extends AnnotationEditor {
     this.translationX = this.translationY = 0;
     this.x = 0;
     this.y = 0;
+    this._willKeepAspectRatio = true;
   }
 
-  static initialize(l10n) {
-    this._l10nPromise = new Map(
-      ["editor_ink_canvas_aria_label", "editor_ink2_aria_label"].map(str => [
-        str,
-        l10n.get(str),
-      ])
-    );
+  /** @inheritdoc */
+  static initialize(l10n, uiManager) {
+    AnnotationEditor.initialize(l10n, uiManager);
   }
 
+  /** @inheritdoc */
   static updateDefaultParams(type, value) {
     switch (type) {
       case AnnotationEditorParamsType.INK_THICKNESS:
@@ -126,6 +118,7 @@ class InkEditor extends AnnotationEditor {
     }
   }
 
+  /** @inheritdoc */
   static get defaultPropertiesToUpdate() {
     return [
       [AnnotationEditorParamsType.INK_THICKNESS, InkEditor._defaultThickness],
@@ -165,16 +158,15 @@ class InkEditor extends AnnotationEditor {
    * @param {number} thickness
    */
   #updateThickness(thickness) {
+    const setThickness = th => {
+      this.thickness = th;
+      this.#fitToContent();
+    };
     const savedThickness = this.thickness;
     this.addCommands({
-      cmd: () => {
-        this.thickness = thickness;
-        this.#fitToContent();
-      },
-      undo: () => {
-        this.thickness = savedThickness;
-        this.#fitToContent();
-      },
+      cmd: setThickness.bind(this, thickness),
+      undo: setThickness.bind(this, savedThickness),
+      post: this._uiManager.updateUI.bind(this._uiManager, this),
       mustExec: true,
       type: AnnotationEditorParamsType.INK_THICKNESS,
       overwriteIfSameType: true,
@@ -187,16 +179,15 @@ class InkEditor extends AnnotationEditor {
    * @param {string} color
    */
   #updateColor(color) {
+    const setColor = col => {
+      this.color = col;
+      this.#redraw();
+    };
     const savedColor = this.color;
     this.addCommands({
-      cmd: () => {
-        this.color = color;
-        this.#redraw();
-      },
-      undo: () => {
-        this.color = savedColor;
-        this.#redraw();
-      },
+      cmd: setColor.bind(this, color),
+      undo: setColor.bind(this, savedColor),
+      post: this._uiManager.updateUI.bind(this._uiManager, this),
       mustExec: true,
       type: AnnotationEditorParamsType.INK_COLOR,
       overwriteIfSameType: true,
@@ -209,17 +200,16 @@ class InkEditor extends AnnotationEditor {
    * @param {number} opacity
    */
   #updateOpacity(opacity) {
+    const setOpacity = op => {
+      this.opacity = op;
+      this.#redraw();
+    };
     opacity /= 100;
     const savedOpacity = this.opacity;
     this.addCommands({
-      cmd: () => {
-        this.opacity = opacity;
-        this.#redraw();
-      },
-      undo: () => {
-        this.opacity = savedOpacity;
-        this.#redraw();
-      },
+      cmd: setOpacity.bind(this, opacity),
+      undo: setOpacity.bind(this, savedOpacity),
+      post: this._uiManager.updateUI.bind(this._uiManager, this),
       mustExec: true,
       type: AnnotationEditorParamsType.INK_OPACITY,
       overwriteIfSameType: true,
@@ -229,6 +219,9 @@ class InkEditor extends AnnotationEditor {
 
   /** @inheritdoc */
   rebuild() {
+    if (!this.parent) {
+      return;
+    }
     super.rebuild();
     if (this.div === null) {
       return;
@@ -262,6 +255,11 @@ class InkEditor extends AnnotationEditor {
     this.canvas.width = this.canvas.height = 0;
     this.canvas.remove();
     this.canvas = null;
+
+    if (this.#canvasContextMenuTimeoutId) {
+      clearTimeout(this.#canvasContextMenuTimeoutId);
+      this.#canvasContextMenuTimeoutId = null;
+    }
 
     this.#observer.disconnect();
     this.#observer = null;
@@ -297,7 +295,7 @@ class InkEditor extends AnnotationEditor {
     }
 
     super.enableEditMode();
-    this.div.draggable = false;
+    this._isDraggable = false;
     this.canvas.addEventListener("pointerdown", this.#boundCanvasPointerdown);
   }
 
@@ -308,7 +306,7 @@ class InkEditor extends AnnotationEditor {
     }
 
     super.disableEditMode();
-    this.div.draggable = !this.isEmpty();
+    this._isDraggable = !this.isEmpty();
     this.div.classList.remove("editing");
 
     this.canvas.removeEventListener(
@@ -319,7 +317,7 @@ class InkEditor extends AnnotationEditor {
 
   /** @inheritdoc */
   onceAdded() {
-    this.div.draggable = !this.isEmpty();
+    this._isDraggable = !this.isEmpty();
   }
 
   /** @inheritdoc */
@@ -365,7 +363,7 @@ class InkEditor extends AnnotationEditor {
    * @param {number} y
    */
   #startDrawing(x, y) {
-    this.canvas.addEventListener("contextmenu", this.#boundCanvasContextMenu);
+    this.canvas.addEventListener("contextmenu", noContextMenu);
     this.canvas.addEventListener("pointerleave", this.#boundCanvasPointerleave);
     this.canvas.addEventListener("pointermove", this.#boundCanvasPointermove);
     this.canvas.addEventListener("pointerup", this.#boundCanvasPointerup);
@@ -473,7 +471,7 @@ class InkEditor extends AnnotationEditor {
       this.allRawPaths.push(currentPath);
       this.paths.push(bezier);
       this.bezierPath2D.push(path2D);
-      this.rebuild();
+      this._uiManager.rebuild(this);
     };
 
     const undo = () => {
@@ -623,12 +621,13 @@ class InkEditor extends AnnotationEditor {
     this.div.classList.add("disabled");
 
     this.#fitToContent(/* firstTime = */ true);
+    this.select();
 
     this.parent.addInkEditorIfNeeded(/* isCommitting = */ true);
 
-    // When commiting, the position of this editor is changed, hence we must
+    // When committing, the position of this editor is changed, hence we must
     // move it to the right position in the DOM.
-    this.parent.moveEditorInDOM(this);
+    this.moveInDOM();
     this.div.focus({
       preventScroll: true /* See issue #15744 */,
     });
@@ -636,6 +635,9 @@ class InkEditor extends AnnotationEditor {
 
   /** @inheritdoc */
   focusin(event) {
+    if (!this._focusEventsAllowed) {
+      return;
+    }
     super.focusin(event);
     this.enableEditMode();
   }
@@ -655,19 +657,13 @@ class InkEditor extends AnnotationEditor {
 
     event.preventDefault();
 
-    if (event.type !== "mouse") {
-      this.div.focus();
+    if (!this.div.contains(document.activeElement)) {
+      this.div.focus({
+        preventScroll: true /* See issue #17327 */,
+      });
     }
 
     this.#startDrawing(event.offsetX, event.offsetY);
-  }
-
-  /**
-   * oncontextmenu callback for the canvas we're drawing on.
-   * @param {PointerEvent} event
-   */
-  canvasContextMenu(event) {
-    event.preventDefault();
   }
 
   /**
@@ -714,11 +710,12 @@ class InkEditor extends AnnotationEditor {
 
     // Slight delay to avoid the context menu to appear (it can happen on a long
     // tap with a pen).
-    setTimeout(() => {
-      this.canvas.removeEventListener(
-        "contextmenu",
-        this.#boundCanvasContextMenu
-      );
+    if (this.#canvasContextMenuTimeoutId) {
+      clearTimeout(this.#canvasContextMenuTimeoutId);
+    }
+    this.#canvasContextMenuTimeoutId = setTimeout(() => {
+      this.#canvasContextMenuTimeoutId = null;
+      this.canvas.removeEventListener("contextmenu", noContextMenu);
     }, 10);
 
     this.#stopDrawing(event.offsetX, event.offsetY);
@@ -737,10 +734,8 @@ class InkEditor extends AnnotationEditor {
     this.canvas = document.createElement("canvas");
     this.canvas.width = this.canvas.height = 0;
     this.canvas.className = "inkEditorCanvas";
+    this.canvas.setAttribute("data-l10n-id", "pdfjs-ink-canvas");
 
-    InkEditor._l10nPromise
-      .get("editor_ink_canvas_aria_label")
-      .then(msg => this.canvas?.setAttribute("aria-label", msg));
     this.div.append(this.canvas);
     this.ctx = this.canvas.getContext("2d");
   }
@@ -759,6 +754,11 @@ class InkEditor extends AnnotationEditor {
   }
 
   /** @inheritdoc */
+  get isResizable() {
+    return !this.isEmpty() && this.#disableEditing;
+  }
+
+  /** @inheritdoc */
   render() {
     if (this.div) {
       return this.div;
@@ -772,9 +772,7 @@ class InkEditor extends AnnotationEditor {
 
     super.render();
 
-    InkEditor._l10nPromise
-      .get("editor_ink2_aria_label")
-      .then(msg => this.div?.setAttribute("aria-label", msg));
+    this.div.setAttribute("data-l10n-id", "pdfjs-ink");
 
     const [x, y, w, h] = this.#getInitialBBox();
     this.setAt(x, y, 0, 0);
@@ -785,6 +783,7 @@ class InkEditor extends AnnotationEditor {
     if (this.width) {
       // This editor was created in using copy (ctrl+c).
       const [parentWidth, parentHeight] = this.parentDimensions;
+      this.setAspectRatio(this.width * parentWidth, this.height * parentHeight);
       this.setAt(
         baseX * parentWidth,
         baseY * parentHeight,
@@ -795,7 +794,6 @@ class InkEditor extends AnnotationEditor {
       this.#setCanvasDims();
       this.setDims(this.width * parentWidth, this.height * parentHeight);
       this.#redraw();
-      this.#setMinDims();
       this.div.classList.add("disabled");
     } else {
       this.div.classList.add("editing");
@@ -839,17 +837,10 @@ class InkEditor extends AnnotationEditor {
 
     this.canvas.style.visibility = "hidden";
 
-    if (
-      this.#aspectRatio &&
-      Math.abs(this.#aspectRatio - width / height) > 1e-2
-    ) {
-      height = Math.ceil(width / this.#aspectRatio);
-      this.setDims(width, height);
-    }
-
     const [parentWidth, parentHeight] = this.parentDimensions;
     this.width = width / parentWidth;
     this.height = height / parentHeight;
+    this.fixAndSetPosition();
 
     if (this.#disableEditing) {
       this.#setScaleFactor(width, height);
@@ -889,7 +880,7 @@ class InkEditor extends AnnotationEditor {
 
   /**
    * Convert into a Path2D.
-   * @param {Arra<Array<number>} bezier
+   * @param {Array<Array<number>>} bezier
    * @returns {Path2D}
    */
   static #buildPath2D(bezier) {
@@ -1000,6 +991,14 @@ class InkEditor extends AnnotationEditor {
       const points = [];
       for (let j = 0, jj = bezier.length; j < jj; j++) {
         const [first, control1, control2, second] = bezier[j];
+        if (first[0] === second[0] && first[1] === second[1] && jj === 1) {
+          // We have only one point.
+          const p0 = s * first[0] + shiftX;
+          const p1 = s * first[1] + shiftY;
+          buffer.push(p0, p1);
+          points.push(p0, p1);
+          break;
+        }
         const p10 = s * first[0] + shiftX;
         const p11 = s * first[1] + shiftY;
         const p20 = s * control1[0] + shiftX;
@@ -1086,8 +1085,8 @@ class InkEditor extends AnnotationEditor {
 
     const bbox = this.#getBbox();
     const padding = this.#getPadding();
-    this.#baseWidth = Math.max(RESIZER_SIZE, bbox[2] - bbox[0]);
-    this.#baseHeight = Math.max(RESIZER_SIZE, bbox[3] - bbox[1]);
+    this.#baseWidth = Math.max(AnnotationEditor.MIN_SIZE, bbox[2] - bbox[0]);
+    this.#baseHeight = Math.max(AnnotationEditor.MIN_SIZE, bbox[3] - bbox[1]);
 
     const width = Math.ceil(padding + this.#baseWidth * this.scaleFactor);
     const height = Math.ceil(padding + this.#baseHeight * this.scaleFactor);
@@ -1096,8 +1095,7 @@ class InkEditor extends AnnotationEditor {
     this.width = width / parentWidth;
     this.height = height / parentHeight;
 
-    this.#aspectRatio = width / height;
-    this.#setMinDims();
+    this.setAspectRatio(width, height);
 
     const prevTranslationX = this.translationX;
     const prevTranslationY = this.translationY;
@@ -1118,17 +1116,6 @@ class InkEditor extends AnnotationEditor {
     );
   }
 
-  #setMinDims() {
-    const { style } = this.div;
-    if (this.#aspectRatio >= 1) {
-      style.minHeight = `${RESIZER_SIZE}px`;
-      style.minWidth = `${Math.round(this.#aspectRatio * RESIZER_SIZE)}px`;
-    } else {
-      style.minWidth = `${RESIZER_SIZE}px`;
-      style.minHeight = `${Math.round(RESIZER_SIZE / this.#aspectRatio)}px`;
-    }
-  }
-
   /** @inheritdoc */
   static deserialize(data, parent, uiManager) {
     if (data instanceof InkAnnotationElement) {
@@ -1146,7 +1133,6 @@ class InkEditor extends AnnotationEditor {
     const scaleFactor = editor.parentScale;
     const padding = data.thickness / 2;
 
-    editor.#aspectRatio = width / height;
     editor.#disableEditing = true;
     editor.#realWidth = Math.round(width);
     editor.#realHeight = Math.round(height);
@@ -1180,8 +1166,8 @@ class InkEditor extends AnnotationEditor {
     }
 
     const bbox = editor.#getBbox();
-    editor.#baseWidth = Math.max(RESIZER_SIZE, bbox[2] - bbox[0]);
-    editor.#baseHeight = Math.max(RESIZER_SIZE, bbox[3] - bbox[1]);
+    editor.#baseWidth = Math.max(AnnotationEditor.MIN_SIZE, bbox[2] - bbox[0]);
+    editor.#baseHeight = Math.max(AnnotationEditor.MIN_SIZE, bbox[3] - bbox[1]);
     editor.#setScaleFactor(width, height);
 
     return editor;
@@ -1210,6 +1196,7 @@ class InkEditor extends AnnotationEditor {
       pageIndex: this.pageIndex,
       rect,
       rotation: this.rotation,
+      structTreeParentId: this._structTreeParentId,
     };
   }
 }

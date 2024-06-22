@@ -262,6 +262,14 @@ class Dict {
 
     return mergedDict.size > 0 ? mergedDict : Dict.empty;
   }
+
+  clone() {
+    const dict = new Dict(this.xref);
+    for (const key of this.getKeys()) {
+      dict.set(key, this.getRaw(key));
+    }
+    return dict;
+  }
 }
 
 class Ref {
@@ -369,6 +377,12 @@ class RefSetCache {
 
   clear() {
     this._map.clear();
+  }
+
+  *items() {
+    for (const [ref, value] of this._map) {
+      yield [Ref.fromString(ref), value];
+    }
   }
 }
 

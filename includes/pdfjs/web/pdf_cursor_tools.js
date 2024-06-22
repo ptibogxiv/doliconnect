@@ -13,6 +13,8 @@
  * limitations under the License.
  */
 
+/** @typedef {import("./event_utils.js").EventBus} EventBus */
+
 import { AnnotationEditorType, shadow } from "pdfjs-lib";
 import { CursorTool, PresentationModeState } from "./ui_utils.js";
 import { GrabToPan } from "./grab_to_pan.js";
@@ -106,7 +108,14 @@ class PDFCursorTools {
 
   #addEventListeners() {
     this.eventBus._on("switchcursortool", evt => {
-      this.switchTool(evt.tool);
+      if (!evt.reset) {
+        this.switchTool(evt.tool);
+      } else if (this.#prevActive !== null) {
+        annotationEditorMode = AnnotationEditorType.NONE;
+        presentationModeState = PresentationModeState.NORMAL;
+
+        enableActive();
+      }
     });
 
     let annotationEditorMode = AnnotationEditorType.NONE,
@@ -130,15 +139,6 @@ class PDFCursorTools {
         this.switchTool(prevActive);
       }
     };
-
-    this.eventBus._on("secondarytoolbarreset", evt => {
-      if (this.#prevActive !== null) {
-        annotationEditorMode = AnnotationEditorType.NONE;
-        presentationModeState = PresentationModeState.NORMAL;
-
-        enableActive();
-      }
-    });
 
     this.eventBus._on("annotationeditormodechanged", ({ mode }) => {
       annotationEditorMode = mode;

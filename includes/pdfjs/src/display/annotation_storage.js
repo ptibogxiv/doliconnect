@@ -20,7 +20,7 @@ import { MurmurHash3_64 } from "../shared/murmurhash3.js";
 const SerializableEmpty = Object.freeze({
   map: null,
   hash: "",
-  transfers: undefined,
+  transfer: undefined,
 });
 
 /**
@@ -181,23 +181,72 @@ class AnnotationStorage {
     }
     const map = new Map(),
       hash = new MurmurHash3_64(),
-      transfers = [];
+      transfer = [];
+    const context = Object.create(null);
+    let hasBitmap = false;
+
     for (const [key, val] of this.#storage) {
       const serialized =
-        val instanceof AnnotationEditor ? val.serialize() : val;
+        val instanceof AnnotationEditor
+          ? val.serialize(/* isForCopying = */ false, context)
+          : val;
       if (serialized) {
         map.set(key, serialized);
 
         hash.update(`${key}:${JSON.stringify(serialized)}`);
+        hasBitmap ||= !!serialized.bitmap;
+      }
+    }
 
-        if (serialized.bitmap) {
-          transfers.push(serialized.bitmap);
+    if (hasBitmap) {
+      // We must transfer the bitmap data separately, since it can be changed
+      // during serialization with SVG images.
+      for (const value of map.values()) {
+        if (value.bitmap) {
+          transfer.push(value.bitmap);
         }
       }
     }
+
     return map.size > 0
-      ? { map, hash: hash.hexdigest(), transfers }
+      ? { map, hash: hash.hexdigest(), transfer }
       : SerializableEmpty;
+  }
+
+  get editorStats() {
+    let stats = null;
+    const typeToEditor = new Map();
+    for (const value of this.#storage.values()) {
+      if (!(value instanceof AnnotationEditor)) {
+        continue;
+      }
+      const editorStats = value.telemetryFinalData;
+      if (!editorStats) {
+        continue;
+      }
+      const { type } = editorStats;
+      if (!typeToEditor.has(type)) {
+        typeToEditor.set(type, Object.getPrototypeOf(value).constructor);
+      }
+      stats ||= Object.create(null);
+      const map = (stats[type] ||= new Map());
+      for (const [key, val] of Object.entries(editorStats)) {
+        if (key === "type") {
+          continue;
+        }
+        let counters = map.get(key);
+        if (!counters) {
+          counters = new Map();
+          map.set(key, counters);
+        }
+        const count = counters.get(val) ?? 0;
+        counters.set(val, count + 1);
+      }
+    }
+    for (const [type, editor] of typeToEditor) {
+      stats[type] = editor.computeTelemetryFinalData(stats[type]);
+    }
+    return stats;
   }
 }
 
@@ -211,17 +260,11 @@ class PrintAnnotationStorage extends AnnotationStorage {
 
   constructor(parent) {
     super();
-    const { map, hash, transfers } = parent.serializable;
+    const { map, hash, transfer } = parent.serializable;
     // Create a *copy* of the data, since Objects are passed by reference in JS.
-    const clone = structuredClone(
-      map,
-      (typeof PDFJSDev === "undefined" ||
-        PDFJSDev.test("SKIP_BABEL || TESTING")) &&
-        transfers
-        ? { transfer: transfers }
-        : null
-    );
-    this.#serializable = { map: clone, hash, transfers };
+    const clone = structuredClone(map, transfer ? { transfer } : null);
+
+    this.#serializable = { map: clone, hash, transfer };
   }
 
   /**

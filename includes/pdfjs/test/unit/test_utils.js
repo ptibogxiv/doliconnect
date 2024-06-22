@@ -13,10 +13,17 @@
  * limitations under the License.
  */
 
+import { assert, isNodeJS } from "../../src/shared/util.js";
 import { NullStream, StringStream } from "../../src/core/stream.js";
 import { Page, PDFDocument } from "../../src/core/document.js";
-import { isNodeJS } from "../../src/shared/is_node.js";
 import { Ref } from "../../src/core/primitives.js";
+
+let fs, http;
+if (isNodeJS) {
+  // Native packages.
+  fs = await __non_webpack_import__("fs");
+  http = await __non_webpack_import__("http");
+}
 
 const TEST_PDFS_PATH = isNodeJS ? "./test/pdfs/" : "../pdfs/";
 
@@ -38,8 +45,6 @@ class DOMFileReaderFactory {
 
 class NodeFileReaderFactory {
   static async fetch(params) {
-    const fs = require("fs");
-
     return new Promise((resolve, reject) => {
       fs.readFile(params.path, (error, data) => {
         if (error || !data) {
@@ -140,10 +145,54 @@ function createIdFactory(pageIndex) {
   return page._localIdFactory;
 }
 
+function createTemporaryNodeServer() {
+  assert(isNodeJS, "Should only be used in Node.js environments.");
+
+  // Create http server to serve pdf data for tests.
+  const server = http
+    .createServer((request, response) => {
+      const filePath = process.cwd() + "/test/pdfs" + request.url;
+      fs.lstat(filePath, (error, stat) => {
+        if (error) {
+          response.writeHead(404);
+          response.end(`File ${request.url} not found!`);
+          return;
+        }
+        if (!request.headers.range) {
+          const contentLength = stat.size;
+          const stream = fs.createReadStream(filePath);
+          response.writeHead(200, {
+            "Content-Type": "application/pdf",
+            "Content-Length": contentLength,
+            "Accept-Ranges": "bytes",
+          });
+          stream.pipe(response);
+        } else {
+          const [start, end] = request.headers.range
+            .split("=")[1]
+            .split("-")
+            .map(x => Number(x));
+          const stream = fs.createReadStream(filePath, { start, end });
+          response.writeHead(206, {
+            "Content-Type": "application/pdf",
+          });
+          stream.pipe(response);
+        }
+      });
+    })
+    .listen(0); /* Listen on a random free port */
+
+  return {
+    server,
+    port: server.address().port,
+  };
+}
+
 export {
   buildGetDocumentParams,
   CMAP_URL,
   createIdFactory,
+  createTemporaryNodeServer,
   DefaultFileReaderFactory,
   STANDARD_FONT_DATA_URL,
   TEST_PDFS_PATH,

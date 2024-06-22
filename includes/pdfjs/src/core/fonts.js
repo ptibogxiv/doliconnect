@@ -292,6 +292,13 @@ function signedInt16(b0, b1) {
   return value & (1 << 15) ? value - 0x10000 : value;
 }
 
+function writeUint32(bytes, index, value) {
+  bytes[index + 3] = value & 0xff;
+  bytes[index + 2] = value >>> 8;
+  bytes[index + 1] = value >>> 16;
+  bytes[index] = value >>> 24;
+}
+
 function int32(b0, b1, b2, b3) {
   return (b0 << 24) + (b1 << 16) + (b2 << 8) + b3;
 }
@@ -376,17 +383,9 @@ function getFontFileType(file, { type, subtype, composite }) {
   let fileType, fileSubtype;
 
   if (isTrueTypeFile(file) || isTrueTypeCollectionFile(file)) {
-    if (composite) {
-      fileType = "CIDFontType2";
-    } else {
-      fileType = "TrueType";
-    }
+    fileType = composite ? "CIDFontType2" : "TrueType";
   } else if (isOpenTypeFile(file)) {
-    if (composite) {
-      fileType = "CIDFontType2";
-    } else {
-      fileType = "OpenType";
-    }
+    fileType = composite ? "CIDFontType2" : "OpenType";
   } else if (isType1File(file)) {
     if (composite) {
       fileType = "CIDFontType0";
@@ -485,8 +484,7 @@ function adjustMapping(charCodeToGlyphId, hasGlyph, newGlyphZeroId, toUnicode) {
   const isInPrivateArea = code =>
     (PRIVATE_USE_AREAS[0][0] <= code && code <= PRIVATE_USE_AREAS[0][1]) ||
     (PRIVATE_USE_AREAS[1][0] <= code && code <= PRIVATE_USE_AREAS[1][1]);
-  for (let originalCharCode in charCodeToGlyphId) {
-    originalCharCode |= 0;
+  for (const originalCharCode in charCodeToGlyphId) {
     let glyphId = charCodeToGlyphId[originalCharCode];
     // For missing glyphs don't create the mappings so the glyph isn't
     // drawn.
@@ -969,7 +967,7 @@ class Font {
     // Fallback to checking the font name, in order to improve text-selection,
     // since the /Flags-entry is often wrong (fixes issue13845.pdf).
     if (!isSerifFont && !properties.isSimulatedFlags) {
-      const baseName = name.replaceAll(/[,_]/g, "-").split("-")[0],
+      const baseName = name.replaceAll(/[,_]/g, "-").split("-", 1)[0],
         serifFonts = getSerifFonts();
       for (const namePart of baseName.split("+")) {
         if (serifFonts[namePart]) {
@@ -1287,7 +1285,7 @@ class Font {
     }
 
     amendFallbackToUnicode(properties);
-    this.loadedName = fontName.split("-")[0];
+    this.loadedName = fontName.split("-", 1)[0];
   }
 
   checkAndRepair(name, font, properties) {
@@ -2094,9 +2092,7 @@ class Font {
           endOffset: 0,
         });
       }
-      locaEntries.sort((a, b) => {
-        return a.offset - b.offset;
-      });
+      locaEntries.sort((a, b) => a.offset - b.offset);
       // Now the offsets are sorted, calculate the end offset of each glyph.
       // The last loca entry's endOffset is not calculated since it's the end
       // of the data and will be stored on the previous entry's endOffset.
@@ -2104,9 +2100,7 @@ class Font {
         locaEntries[i].endOffset = locaEntries[i + 1].offset;
       }
       // Re-sort so glyphs aren't out of order.
-      locaEntries.sort((a, b) => {
-        return a.index - b.index;
-      });
+      locaEntries.sort((a, b) => a.index - b.index);
       // Calculate the endOffset of the "first" glyph correctly when there are
       // *multiple* empty ones at the start of the data (fixes issue14618.pdf).
       for (i = 0; i < numGlyphs; i++) {
@@ -2120,6 +2114,14 @@ class Font {
         }
         locaEntries[i].endOffset = nextOffset;
         break;
+      }
+
+      // If the last offset is 0 in the loca table then we can't compute the
+      // endOffset for the last glyph. So in such a case we set the endOffset
+      // to the end of the data (fixes issue #17671).
+      const last = locaEntries.at(-2);
+      if (last.offset !== 0 && last.endOffset === 0) {
+        last.endOffset = oldGlyfDataLength;
       }
 
       const missingGlyphs = Object.create(null);
@@ -2650,8 +2652,20 @@ class Font {
     }
 
     font.pos = (font.start || 0) + tables.maxp.offset;
-    const version = font.getInt32();
+    let version = font.getInt32();
     const numGlyphs = font.getUint16();
+
+    if (version !== 0x00010000 && version !== 0x00005000) {
+      // https://learn.microsoft.com/en-us/typography/opentype/spec/maxp
+      if (tables.maxp.length === 6) {
+        version = 0x0005000;
+      } else if (tables.maxp.length >= 32) {
+        version = 0x00010000;
+      } else {
+        throw new FormatError(`"maxp" table has a wrong version number`);
+      }
+      writeUint32(tables.maxp.data, 0, version);
+    }
 
     if (properties.scaleFactors?.length === numGlyphs && isTrueType) {
       const { scaleFactors } = properties;
@@ -2703,7 +2717,7 @@ class Font {
     }
     let maxFunctionDefs = 0;
     let maxSizeOfInstructions = 0;
-    if (version >= 0x00010000 && tables.maxp.length >= 22) {
+    if (version >= 0x00010000 && tables.maxp.length >= 32) {
       // maxZones can be invalid
       font.pos += 8;
       const maxZones = font.getUint16();
@@ -2769,7 +2783,7 @@ class Font {
 
       // Some fonts have incorrect maxSizeOfInstructions values, so we use
       // the computed value instead.
-      if (version >= 0x00010000 && tables.maxp.length >= 22) {
+      if (version >= 0x00010000 && tables.maxp.length >= 32) {
         tables.maxp.data[26] = glyphsInfo.maxSizeOfInstructions >> 8;
         tables.maxp.data[27] = glyphsInfo.maxSizeOfInstructions & 255;
       }
@@ -2819,7 +2833,7 @@ class Font {
       data: createPostTable(properties),
     };
 
-    const charCodeToGlyphId = [];
+    const charCodeToGlyphId = Object.create(null);
 
     // Helper function to try to skip mapping of empty glyphs.
     function hasGlyph(glyphId) {
@@ -2940,10 +2954,7 @@ class Font {
         // Always prefer the BaseEncoding/Differences arrays, when they exist
         // (fixes issue13433.pdf).
         forcePostTable = true;
-      } else {
-        // When there is only a (1, 0) cmap table, the char code is a single
-        // byte and it is used directly as the char code.
-
+      } else if (cmapPlatformId === 3 && cmapEncodingId === 0) {
         // When a (3, 0) cmap table is present, it is used instead but the
         // spec has special rules for char codes in the range of 0xF000 to
         // 0xF0FF and it says the (3, 0) table should map the values from
@@ -2954,14 +2965,16 @@ class Font {
         // cmap.
         for (const mapping of cmapMappings) {
           let charCode = mapping.charCode;
-          if (
-            cmapPlatformId === 3 &&
-            charCode >= 0xf000 &&
-            charCode <= 0xf0ff
-          ) {
+          if (charCode >= 0xf000 && charCode <= 0xf0ff) {
             charCode &= 0xff;
           }
           charCodeToGlyphId[charCode] = mapping.glyphId;
+        }
+      } else {
+        // When there is only a (1, 0) cmap table, the char code is a single
+        // byte and it is used directly as the char code.
+        for (const mapping of cmapMappings) {
+          charCodeToGlyphId[mapping.charCode] = mapping.glyphId;
         }
       }
 
@@ -3273,44 +3286,6 @@ class Font {
     builder.addTable("post", createPostTable(properties));
 
     return builder.toArray();
-  }
-
-  get spaceWidth() {
-    // trying to estimate space character width
-    const possibleSpaceReplacements = ["space", "minus", "one", "i", "I"];
-    let width;
-    for (const glyphName of possibleSpaceReplacements) {
-      // if possible, getting width by glyph name
-      if (glyphName in this.widths) {
-        width = this.widths[glyphName];
-        break;
-      }
-      const glyphsUnicodeMap = getGlyphsUnicode();
-      const glyphUnicode = glyphsUnicodeMap[glyphName];
-      // finding the charcode via unicodeToCID map
-      let charcode = 0;
-      if (this.composite && this.cMap.contains(glyphUnicode)) {
-        charcode = this.cMap.lookup(glyphUnicode);
-
-        if (typeof charcode === "string") {
-          charcode = convertCidString(glyphUnicode, charcode);
-        }
-      }
-      // ... via toUnicode map
-      if (!charcode && this.toUnicode) {
-        charcode = this.toUnicode.charCodeOf(glyphUnicode);
-      }
-      // setting it to unicode if negative or undefined
-      if (charcode <= 0) {
-        charcode = glyphUnicode;
-      }
-      // trying to get width via charcode
-      width = this.widths[charcode];
-      if (width) {
-        break; // the non-zero width found
-      }
-    }
-    return shadow(this, "spaceWidth", width || this.defaultWidth);
   }
 
   /**

@@ -12,18 +12,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/* globals __non_webpack_require__ */
 
-import {
-  AbortException,
-  assert,
-  MissingPDFException,
-  PromiseCapability,
-} from "../shared/util.js";
+import { AbortException, assert, MissingPDFException } from "../shared/util.js";
 import {
   extractFilenameFromHeader,
   validateRangeRequestCapabilities,
 } from "./network_utils.js";
+import { NodePackages } from "./node_utils.js";
 
 if (typeof PDFJSDev !== "undefined" && PDFJSDev.test("MOZCENTRAL")) {
   throw new Error(
@@ -31,14 +26,10 @@ if (typeof PDFJSDev !== "undefined" && PDFJSDev.test("MOZCENTRAL")) {
   );
 }
 
-const fs = __non_webpack_require__("fs");
-const http = __non_webpack_require__("http");
-const https = __non_webpack_require__("https");
-const url = __non_webpack_require__("url");
-
 const fileUriRegex = /^file:\/\/\/[a-zA-Z]:\//;
 
 function parseUrl(sourceUrl) {
+  const url = NodePackages.get("url");
   const parsedUrl = url.parse(sourceUrl);
   if (parsedUrl.protocol === "file:" || parsedUrl.host) {
     return parsedUrl;
@@ -124,8 +115,8 @@ class BaseFullReader {
     this._isRangeSupported = !source.disableRange;
 
     this._readableStream = null;
-    this._readCapability = new PromiseCapability();
-    this._headersCapability = new PromiseCapability();
+    this._readCapability = Promise.withResolvers();
+    this._headersCapability = Promise.withResolvers();
   }
 
   get headersReady() {
@@ -159,7 +150,7 @@ class BaseFullReader {
 
     const chunk = this._readableStream.read();
     if (chunk === null) {
-      this._readCapability = new PromiseCapability();
+      this._readCapability = Promise.withResolvers();
       return this.read();
     }
     this._loaded += chunk.length;
@@ -226,7 +217,7 @@ class BaseRangeReader {
     this.onProgress = null;
     this._loaded = 0;
     this._readableStream = null;
-    this._readCapability = new PromiseCapability();
+    this._readCapability = Promise.withResolvers();
     const source = stream.source;
     this._isStreamingSupported = !source.disableStream;
   }
@@ -246,7 +237,7 @@ class BaseRangeReader {
 
     const chunk = this._readableStream.read();
     if (chunk === null) {
-      this._readCapability = new PromiseCapability();
+      this._readCapability = Promise.withResolvers();
       return this.read();
     }
     this._loaded += chunk.length;
@@ -322,11 +313,11 @@ class PDFNodeStreamFullReader extends BaseFullReader {
       this._headersCapability.resolve();
       this._setReadableStream(response);
 
-      const getResponseHeader = name => {
-        // Make sure that headers name are in lower case, as mentioned
-        // here: https://nodejs.org/api/http.html#http_message_headers.
-        return this._readableStream.headers[name.toLowerCase()];
-      };
+      // Make sure that headers name are in lower case, as mentioned
+      // here: https://nodejs.org/api/http.html#http_message_headers.
+      const getResponseHeader = name =>
+        this._readableStream.headers[name.toLowerCase()];
+
       const { allowRangeRequests, suggestedLength } =
         validateRangeRequestCapabilities({
           getResponseHeader,
@@ -344,11 +335,13 @@ class PDFNodeStreamFullReader extends BaseFullReader {
 
     this._request = null;
     if (this._url.protocol === "http:") {
+      const http = NodePackages.get("http");
       this._request = http.request(
         createRequestOptions(this._url, stream.httpHeaders),
         handleResponse
       );
     } else {
+      const https = NodePackages.get("https");
       this._request = https.request(
         createRequestOptions(this._url, stream.httpHeaders),
         handleResponse
@@ -391,11 +384,13 @@ class PDFNodeStreamRangeReader extends BaseRangeReader {
 
     this._request = null;
     if (this._url.protocol === "http:") {
+      const http = NodePackages.get("http");
       this._request = http.request(
         createRequestOptions(this._url, this._httpHeaders),
         handleResponse
       );
     } else {
+      const https = NodePackages.get("https");
       this._request = https.request(
         createRequestOptions(this._url, this._httpHeaders),
         handleResponse
@@ -420,21 +415,23 @@ class PDFNodeStreamFsFullReader extends BaseFullReader {
       path = path.replace(/^\//, "");
     }
 
-    fs.lstat(path, (error, stat) => {
-      if (error) {
+    const fs = NodePackages.get("fs");
+    fs.promises.lstat(path).then(
+      stat => {
+        // Setting right content length.
+        this._contentLength = stat.size;
+
+        this._setReadableStream(fs.createReadStream(path));
+        this._headersCapability.resolve();
+      },
+      error => {
         if (error.code === "ENOENT") {
           error = new MissingPDFException(`Missing PDF "${path}".`);
         }
         this._storedError = error;
         this._headersCapability.reject(error);
-        return;
       }
-      // Setting right content length.
-      this._contentLength = stat.size;
-
-      this._setReadableStream(fs.createReadStream(path));
-      this._headersCapability.resolve();
-    });
+    );
   }
 }
 
@@ -449,6 +446,7 @@ class PDFNodeStreamFsRangeReader extends BaseRangeReader {
       path = path.replace(/^\//, "");
     }
 
+    const fs = NodePackages.get("fs");
     this._setReadableStream(fs.createReadStream(path, { start, end: end - 1 }));
   }
 }

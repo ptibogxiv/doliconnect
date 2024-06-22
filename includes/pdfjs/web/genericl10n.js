@@ -15,63 +15,110 @@
 
 /** @typedef {import("./interfaces").IL10n} IL10n */
 
-import "../external/webL10n/l10n.js";
-import { getL10nFallback } from "./l10n_utils.js";
+import { FluentBundle, FluentResource } from "fluent-bundle";
+import { DOMLocalization } from "fluent-dom";
+import { fetchData } from "pdfjs-lib";
+import { L10n } from "./l10n.js";
 
-const PARTIAL_LANG_CODES = {
-  en: "en-US",
-  es: "es-ES",
-  fy: "fy-NL",
-  ga: "ga-IE",
-  gu: "gu-IN",
-  hi: "hi-IN",
-  hy: "hy-AM",
-  nb: "nb-NO",
-  ne: "ne-NP",
-  nn: "nn-NO",
-  pa: "pa-IN",
-  pt: "pt-PT",
-  sv: "sv-SE",
-  zh: "zh-CN",
-};
-
-// Try to support "incompletely" specified language codes (see issue 13689).
-function fixupLangCode(langCode) {
-  return PARTIAL_LANG_CODES[langCode?.toLowerCase()] || langCode;
+function createBundle(lang, text) {
+  const resource = new FluentResource(text);
+  const bundle = new FluentBundle(lang);
+  const errors = bundle.addResource(resource);
+  if (errors.length) {
+    console.error("L10n errors", errors);
+  }
+  return bundle;
 }
 
 /**
  * @implements {IL10n}
  */
-class GenericL10n {
+class GenericL10n extends L10n {
   constructor(lang) {
-    const { webL10n } = document;
-    this._lang = lang;
-    this._ready = new Promise((resolve, reject) => {
-      webL10n.setLanguage(fixupLangCode(lang), () => {
-        resolve(webL10n);
-      });
-    });
+    super({ lang });
+
+    const generateBundles = !lang
+      ? GenericL10n.#generateBundlesFallback.bind(
+          GenericL10n,
+          this.getLanguage()
+        )
+      : GenericL10n.#generateBundles.bind(
+          GenericL10n,
+          "en-us",
+          this.getLanguage()
+        );
+    this._setL10n(new DOMLocalization([], generateBundles));
   }
 
-  async getLanguage() {
-    const l10n = await this._ready;
-    return l10n.getLanguage();
+  /**
+   * Generate the bundles for Fluent.
+   * @param {String} defaultLang - The fallback language to use for
+   *   translations.
+   * @param {String} baseLang - The base language to use for translations.
+   */
+  static async *#generateBundles(defaultLang, baseLang) {
+    const { baseURL, paths } = await this.#getPaths();
+
+    const langs = [baseLang];
+    if (defaultLang !== baseLang) {
+      // Also fallback to the short-format of the base language
+      // (see issue 17269).
+      const shortLang = baseLang.split("-", 1)[0];
+
+      if (shortLang !== baseLang) {
+        langs.push(shortLang);
+      }
+      langs.push(defaultLang);
+    }
+    for (const lang of langs) {
+      const bundle = await this.#createBundle(lang, baseURL, paths);
+      if (bundle) {
+        yield bundle;
+      }
+      if (lang === "en-us") {
+        yield this.#createBundleFallback(lang);
+      }
+    }
   }
 
-  async getDirection() {
-    const l10n = await this._ready;
-    return l10n.getDirection();
+  static async #createBundle(lang, baseURL, paths) {
+    const path = paths[lang];
+    if (!path) {
+      return null;
+    }
+    const url = new URL(path, baseURL);
+    const text = await fetchData(url, /* type = */ "text");
+
+    return createBundle(lang, text);
   }
 
-  async get(key, args = null, fallback = getL10nFallback(key, args)) {
-    const l10n = await this._ready;
-    return l10n.get(key, args, fallback);
+  static async #getPaths() {
+    try {
+      const { href } = document.querySelector(`link[type="application/l10n"]`);
+      const paths = await fetchData(href, /* type = */ "json");
+
+      return { baseURL: href.replace(/[^/]*$/, "") || "./", paths };
+    } catch {}
+    return { baseURL: "./", paths: Object.create(null) };
   }
 
-  async translate(element) {
-    const l10n = await this._ready;
-    return l10n.translate(element);
+  static async *#generateBundlesFallback(lang) {
+    yield this.#createBundleFallback(lang);
+  }
+
+  static async #createBundleFallback(lang) {
+    if (typeof PDFJSDev !== "undefined" && PDFJSDev.test("TESTING")) {
+      throw new Error("Not implemented: #createBundleFallback");
+    }
+    const text =
+      typeof PDFJSDev === "undefined"
+        ? await fetchData(
+            new URL("../l10n/en-US/viewer.ftl", window.location.href),
+            /* type = */ "text"
+          )
+        : PDFJSDev.eval("DEFAULT_FTL");
+
+    return createBundle(lang, text);
   }
 }
 

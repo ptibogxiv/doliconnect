@@ -13,7 +13,6 @@
  * limitations under the License.
  */
 
-import "web-com";
 import { RenderingStates, ScrollMode, SpreadMode } from "./ui_utils.js";
 import { AppOptions } from "./app_options.js";
 import { LinkTarget } from "./pdf_link_service.js";
@@ -45,7 +44,6 @@ function getViewerConfiguration() {
       mainContainer,
       container: document.getElementById("floatingToolbar"),
       download: document.getElementById("download"),
-      openInApp: document.getElementById("openInApp"),
     },
 
     passwordOverlay: {
@@ -55,10 +53,7 @@ function getViewerConfiguration() {
       submitButton: document.getElementById("passwordSubmit"),
       cancelButton: document.getElementById("passwordCancel"),
     },
-    openFileInput:
-      typeof PDFJSDev === "undefined" || PDFJSDev.test("GENERIC")
-        ? document.getElementById("fileInput")
-        : null,
+    printContainer: document.getElementById("printContainer"),
   };
 }
 
