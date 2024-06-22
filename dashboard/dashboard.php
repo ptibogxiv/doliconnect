@@ -485,7 +485,7 @@ if ( isset($_POST["case"]) && $_POST["case"] == 'importcsv' ) {
     if ( ( isset($_FILES['inputcsv']['tmp_name'])) && (in_array($_FILES['inputcsv']['type'], $types)) && ($_FILES['inputcsv']['size'] <= 10000000)) {
     $row = 1;
 if (($handle = fopen($_FILES['inputcsv']['tmp_name'], "r")) !== FALSE) {
-while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
 $num = count($data);
 //print "<p> $num fields in line $row: <br /></p>\n";
 $row++;
@@ -524,7 +524,7 @@ print '<div class="card shadow-sm"><div class="card-header">'.__( 'Wishlist', 'd
 $file = tmpfile();
 //Inserting the table headers
 $header_data=array('Reference','Quantity','Product');
-fputcsv($file,$header_data);
+fputcsv($file,$header_data, ";");
  
 //Data to be inserted
 $fdata = array();
@@ -537,7 +537,7 @@ if ( !isset( $wishlist->error ) && $wishlist != null ) {
 // save each row of the data
 foreach ($fdata as $row)
 {
-fputcsv($file, $row);
+fputcsv($file, $row, ";");
 }
 
 $tmpfile_path = stream_get_meta_data($file)['uri'];
