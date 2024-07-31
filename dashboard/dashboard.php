@@ -579,7 +579,7 @@ print "</div></div>";
 
 //*****************************************************************************************
 
-if ( doliCheckModules('propale') && doliCheckRights('propale', 'lire') ) {
+if ( doliCheckModules('propal') && doliCheckRights('propal', 'lire') ) {
 add_action( 'customer_doliconnect_menu', 'proposals_menu', 1, 1);
 add_action( 'customer_doliconnect_proposals', 'proposals_module');
 }
@@ -707,7 +707,7 @@ print "</div></div>";
 
 //*****************************************************************************************
 
-if ( doliCheckModules('order') && doliCheckRights('commande', 'lire') ) {
+if ( doliCheckModules('commande') && doliCheckRights('commande', 'lire') ) {
 add_action( 'customer_doliconnect_menu', 'orders_menu', 2, 1);
 add_action( 'customer_doliconnect_orders', 'orders_module');
 }
