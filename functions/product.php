@@ -131,7 +131,7 @@ global $current_user;
   if ( isset($order->lines) && $order->lines != null ) {
     foreach ($order->lines as $line) {
       //if (is_array($array_options)) $array_options = (object) $array_options;
-      if (isset($product->id) && $line->fk_product == $product->id && $line->array_options == $array_options && $line->fk_parent_line == $fk_parent_line) {
+      if (isset($product->id) && $line->fk_product == $product->id && $line->fk_parent_line == $fk_parent_line) { //&& $line->array_options == $array_options 
         //$stock = var_dump($line);
         $mstock['qty'] = $line->qty;
         $mstock['line'] = $line->id;
