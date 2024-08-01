@@ -206,6 +206,7 @@ function doliPagination($object, $url, $page = 0) {
       } else { 
       $count = count($object);
       }
+      $limit = 8;
       
       $pagination = "<nav aria-label='Page navigation example'><ul class='pagination pagination-sm'>";
       if ($page > '1') {
