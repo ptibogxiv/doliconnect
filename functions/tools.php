@@ -173,7 +173,7 @@ function doliPG($pg = 0) {
 
 function doliPagination($object, $url, $page = 0) {
 
-  if ( doliversion('19.0.0') && isset($object->pagination) && isset($object->pagination) ) { 
+  if ( doliversion('19.0.0') && isset($object->pagination) && isset($object->data) ) { 
 
     $pagination = "<nav aria-label='Page navigation example'><ul class='pagination pagination-sm'>";
     $pagination .= '<li class="page-item';
@@ -199,7 +199,7 @@ function doliPagination($object, $url, $page = 0) {
       </li>';
     $pagination .= "</ul></nav>";
 
-  } else {
+} else {
 
     if (empty($object) || isset($object->error)) {
       $count = 0;
