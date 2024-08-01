@@ -400,6 +400,11 @@ print $args['before_title'] . apply_filters( 'widget_title', $instance['title'] 
 $shop = doliconst("DOLICONNECT_CATSHOP", esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 //print $shop;
 
+$limit=25;
+if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']-1); } else { $page = 0; }
+if ( isset($_GET['field']) ) { $field = esc_attr($_GET['field']); } else { $field = 'label'; }
+if ( isset($_GET['order']) ) { $order = esc_attr($_GET['order']); } else { $order = 'ASC'; }
+
 print '<form role="search" method="get" id="shopform" action="' . doliconnecturl('dolishop') . '" ><div class="input-group mb-3">
 <input type="text" name="search" id="search" class="form-control" placeholder="' . esc_attr__('Name, Ref., Description or Barcode', 'doliconnect') . '" aria-label="' . esc_attr__('Name, Ref., Description or Barcode', 'doliconnect') . '" aria-describedby="searchproduct">
 <button class="btn btn-primary" type="submit" id="searchproduct"><i class="fas fa-search"></i></button></div></form>';
@@ -418,13 +423,22 @@ print "<div class='list-group'>";
 if (doliconst("CATEGORIE_RECURSIV_ADD", esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))) { 
 print "<a href='".esc_url( add_query_arg( 'category', 'all', doliconnecturl('dolishop')) )."' class='list-group-item list-group-item-light list-group-item-action d-flex justify-content-between";
 if (isset($_GET['category']) && $_GET['category'] == 'all') { print " active"; }
-$requestp = "/products?sortfield=t.rowid&sortorder=DESC&category=".esc_attr($shop)."&sqlfilters=(t.tosell%3A%3D%3A1)&limit=1000";
-$listproduct = callDoliApi("GET", $requestp, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-if (empty($listproduct) || isset($listproduct->error)) {
-$count = 0;
-} else {
-$count = count($listproduct);
-}
+//$requestp = "/products?sortfield=t.rowid&sortorder=DESC&category=".esc_attr($shop)."&sqlfilters=(t.tosell%3A%3D%3A1)&limit=1000";
+//$listproduct = callDoliApi("GET", $requestp, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+
+if ( doliversion('19.0.0') ) { 
+	$requestp = "/products?sortfield=t.".$field."&sortorder=".$order."&limit=".$limit."&page=".$page."&category=".esc_attr($shop)."&pagination_data=true&sqlfilters=(t.tosell%3A%3D%3A1)";
+	$listproduct = callDoliApi("GET", $requestp, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
+	$count = $listproduct->pagination->total;
+} else { 
+	$requestp = "/products?sortfield=t.".$field."&sortorder=".$order."&category=".esc_attr($shop)."&pagination_data=true&sqlfilters=(t.tosell%3A%3D%3A1)";
+	$listproduct = callDoliApi("GET", $requestp, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+	if (empty($listproduct) || isset($listproduct->error)) {
+	  $count = 0;
+	} else {
+	  $count = count($listproduct);
+	}
+  }
 print "'>".__(  'All items', 'doliconnect')." <span class='badge bg-secondary rounded-pill'>".$count."</span></a>";
 }
 
