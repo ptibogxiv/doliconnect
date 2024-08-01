@@ -3139,7 +3139,7 @@ function doliModalDiv() {
               }).done(function(response) {
                 if (response.success) { 
                   if (document.getElementById("qty-prod-" + id) && response.data.hasOwnProperty("newqty")) {
-                    document.getElementById("qty-prod-" + id).value = response.data.newqty;
+                     document.getElementById("qty-prod-" + id).value = response.data.newqty;
                   }
                   if (document.getElementById("DoliHeaderCartItems") && response.data.hasOwnProperty("items")) {
                     document.getElementById("DoliHeaderCartItems").innerHTML = response.data.items;
@@ -3161,7 +3161,7 @@ function doliModalDiv() {
                   }
                 }
                 $("#doliModalCartInfos").on("hidden.bs.modal", function () {
-                  $("#ddoliModalCartInfos").modal("dispose");
+                  $("#doliModalCartInfos").modal("dispose");
                   document.getElementById("doliModalDiv").innerHTML = "";
                 });
                 $("#DoliconnectLoadingModal").modal("hide");
