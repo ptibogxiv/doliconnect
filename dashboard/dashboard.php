@@ -1245,8 +1245,9 @@ print '</div></div>';
 
 $limit=8;
 if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']-1); }  else { $page = 0; }
-$request= "/invoices?sortfield=t.datec&sortorder=DESC&limit=".$limit."&page=".$page."&thirdparty_ids=".doliconnector($current_user, 'fk_soc')."&sqlfilters=(t.fk_statut%3A!%3D%3A0)";
-$listinvoice = callDoliApi("GET", $request, null, dolidelay('invoice', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$request= "/invoices?sortfield=t.datec&sortorder=DESC&limit=".$limit."&page=".$page."&thirdparty_ids=".doliconnector($current_user, 'fk_soc')."&pagination_data=true&sqlfilters=(t.fk_statut%3A!%3D%3A0)";
+$object = callDoliApi("GET", $request, null, dolidelay('invoice', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+if ( doliversion('20.0.0') && isset($object->data) ) { $listinvoice = $object->data; } else { $listinvoice = $object; }
 
 print '<div class="card shadow-sm"><div class="card-header">'.__( 'Invoices tracking', 'doliconnect').'</div><ul class="list-group list-group-flush">';
 
@@ -1275,7 +1276,7 @@ print "<li class='list-group-item list-group-item-light'><center>".__( 'No invoi
 }
 
 print "</ul><div class='card-body'>";
-print dolipage($listinvoice, $url, $page, $limit);
+print doliPagination($object, $url, $page);
 print "</div><div class='card-footer text-muted'>";
 print "<small><div class='float-start'>";
 if ( isset($request) ) print dolirefresh($request, $url, dolidelay('invoice'));
@@ -1372,9 +1373,9 @@ print '</div></div>';
 
 $limit=8;
 if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']-1); }  else { $page = 0; }
-$request = "/contracts?sortfield=t.rowid&sortorder=ASC&limit=".$limit."&page=".$page."&thirdparty_ids=".doliconnector($current_user, 'fk_soc');                              
-$listcontract = callDoliApi("GET", $request, null, dolidelay('contract', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-//print $listcontract;
+$request = "/contracts?sortfield=t.rowid&sortorder=ASC&limit=".$limit."&page=".$page."&thirdparty_ids=".doliconnector($current_user, 'fk_soc')."&pagination_data=true";                              
+$object = callDoliApi("GET", $request, null, dolidelay('contract', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+if ( doliversion('20.0.0') && isset($object->data) ) { $listcontract = $object->data; } else { $listcontract = $object; }
 
 print '<div class="card shadow-sm"><div class="card-header">'.__( 'Contracts tracking', 'doliconnect').'</div><ul class="list-group list-group-flush">';
 
@@ -1404,7 +1405,7 @@ print "<li class='list-group-item list-group-item-light'><center>".__( 'No contr
 }
 
 print "</ul><div class='card-body'>";
-print dolipage($listcontract, $url, $page, $limit);
+print doliPagination($object, $url, $page);
 print "</div><div class='card-footer text-muted'>";
 print "<small><div class='float-start'>";
 if ( isset($request) ) print dolirefresh($request, $url, dolidelay('contract'));
