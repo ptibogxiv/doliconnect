@@ -1019,9 +1019,16 @@ if ( doliversion('19.0.0') && isset($object->data) ) { $resultats = $object->dat
 print "<li class='list-group-item'>";
 print "<div class='row'><div class='col-4 col-md-2'><center>";
 if (isset($_GET['search'])&& !empty($_GET['search'])) {
-if ( !isset($resultats->error) && $resultats != null ) {
-$count = count($resultats);
-} else $count = 0;
+
+if ( doliversion('19.0.0') && isset($object->pagination) ) { 
+  $count = $object->pagination->total;
+} else { 
+  if (empty($object) || isset($object->error)) {
+    $count = 0;
+  } else {
+    $count = count($object);
+  }
+}
 //print doliconnect_image('category', $category->id, 1, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), $category->entity);
 print '</center></div><div class="col-4 col-md-6">';
 printf( _n( 'We have found %s item with this search', 'We have found %s items with this search', $count, 'doliconnect' ), number_format_i18n( $count ) );
