@@ -422,7 +422,7 @@ print "<div class='list-group'>";
 
 if (doliconst("CATEGORIE_RECURSIV_ADD", esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))) { 
 print "<a href='".esc_url( add_query_arg( 'category', 'all', doliconnecturl('dolishop')) )."' class='list-group-item list-group-item-light list-group-item-action d-flex justify-content-between";
-if (isset($_GET['category']) && $_GET['category'] == 'all') { print " active"; }
+if (!isset($_GET['category']) || isset($_GET['category']) && $_GET['category'] == 'all') { print " active"; }
 //$requestp = "/products?sortfield=t.rowid&sortorder=DESC&category=".esc_attr($shop)."&sqlfilters=(t.tosell%3A%3D%3A1)&limit=1000";
 //$listproduct = callDoliApi("GET", $requestp, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
