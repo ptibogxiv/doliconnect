@@ -976,8 +976,8 @@ print '</div></div>';
 $limit=8;
 if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']-1); }  else { $page = 0; }
 $request= "/orders?sortfield=t.date_valid&sortorder=DESC&limit=".$limit."&page=".$page."&thirdparty_ids=".doliconnector($current_user, 'fk_soc')."&pagination_data=true&sqlfilters=(t.fk_statut%3A!%3D%3A'0')";
-$listorder = callDoliApi("GET", $request, null, dolidelay('order', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-if ( doliversion('20.0.0') ) { $listorder = $listorder->data; }
+$object = callDoliApi("GET", $request, null, dolidelay('order', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+if ( doliversion('20.0.0') && isset($object->data) ) { $listorder = $object->data; }
 print '<div class="card shadow-sm"><div class="card-header">'.__( 'Orders tracking', 'doliconnect').'</div><ul class="list-group list-group-flush">';
 
 if ( !isset($listorder->error) && $listorder != null ) {
@@ -1005,7 +1005,7 @@ print "<li class='list-group-item list-group-item-light'><center>".__( 'No order
 }
 
 print "</ul><div class='card-body'>";
-print dolipage($listorder, $url, $page, $limit);
+print doliPagination($object, $url, $page);
 print "</div><div class='card-footer text-muted'>";
 print "<small><div class='float-start'>";
 if ( isset($request) ) print dolirefresh($request, $url, dolidelay('order'));
