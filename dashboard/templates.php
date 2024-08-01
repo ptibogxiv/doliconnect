@@ -900,9 +900,9 @@ $date->modify('NOW');
 $duration = (!empty(get_option('dolicartnewlist'))?get_option('dolicartnewlist'):'month');
 $date->modify('FIRST DAY OF LAST '.$duration.' MIDNIGHT');
 $lastdate = $date->format('Y-m-d');
-$request = "/products?sortfield=t.datec&sortorder=DESC&category=".doliconst("DOLICONNECT_CATSHOP")."&limit=".$limit."&page=".$page."&sqlfilters=(t.datec%3A%3E%3A'".$lastdate."')%20AND%20(t.tosell%3A%3D%3A1)";
-$resultats = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-//print $resultatso;
+$request = "/products?sortfield=t.datec&sortorder=DESC&category=".esc_attr($shop)."&limit=".$limit."&page=".$page."&pagination_data=true&sqlfilters=(t.datec%3A%3E%3A'".$lastdate."')%20AND%20(t.tosell%3A%3D%3A1)";
+$object = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+if ( doliversion('19.0.0') && isset($object->data) ) { $resultats = $object->data; } else { $resultats = $object; }
 
 if ( !isset($resultats->error) && $resultats != null ) {
 
@@ -917,7 +917,7 @@ print apply_filters( 'doliproductlist', $product);
 print "<li class='list-group-item list-group-item-light'><center>".__(  'No new item', 'doliconnect')."</center></li>";
 }
 print "</ul><div class='card-body'>";
-print doliPagination($resultats, $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], $page, $limit);
+print doliPagination($object, $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], $page, $limit);
 print "</div><div class='card-footer text-muted'>";
 print "<small><div class='float-start'>";
 if ( isset($request) ) print dolirefresh($request, get_permalink(), dolidelay('product'));
