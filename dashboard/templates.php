@@ -1027,21 +1027,16 @@ if ( doliversion('19.0.0') && isset($object->pagination) ) {
 }
 
 print "<li class='list-group-item'>";
-print "<div class='row'><div class='col-4 col-md-2'><center>";
+print "<div class='row'><div class='col-6 col-md-6'>";
 if (isset($_GET['search'])&& !empty($_GET['search'])) {
-  //print doliconnect_image('category', $category->id, 1, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), $category->entity);
-  print '</center></div><div class="col-4 col-md-6">';
   printf( _n( 'We have found %s item with this search', 'We have found %s items with this search', $count, 'doliconnect' ), number_format_i18n( $count ) );
   print " '".esc_attr($_GET['search'])."'";
 } elseif ( !isset($_GET["category"]) || isset($_GET["category"]) && $_GET["category"] == 'all') {
-  //print doliconnect_image('category', $category->id, 1, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), $category->entity);
-  print "</center></div><div class='col-4 col-md-6'>";
   printf( _n( 'There is %s item', 'There are %s items', $count, 'doliconnect' ), number_format_i18n( $count ) );
 } else {
-  print doliconnect_image('category', $category->id, 1, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), $category->entity);
-  print "</center></div><div class='col-4 col-md-6'>".doliproduct($category, 'label')."<br><small>".doliproduct($category, 'description').'</small>';
+  print doliproduct($category, 'label')."<br><small>".doliproduct($category, 'description').'</small>';
 }
-print '</div><div class="col-4 col-md-4"><div class="input-group">
+print '</div><div class="col-6 col-md-6"><div class="input-group">
   <span class="input-group-text" id="basic-addon1"><i class="fas fa-filter"></i></span><select id="selectbox" class="form-select form-select-sm" aria-label=".form-select-sm example" name="" onchange="javascript:location.href = this.value;">
     <option value="" disabled selected>'.__( '- Select -', 'doliconnect').'</option>
     <option value="'.esc_url( add_query_arg( array( 'search' =>isset($_GET['search'])?esc_attr($_GET['search']):null, 'category' => !empty($cat)?$cat:null, 'subcategory' => !empty($subcat)?$subcat:null, 'pg' => $page+1, 'field' => 'label', 'order' => 'ASC'), doliconnecturl('dolishop')) ).'"';
