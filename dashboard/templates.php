@@ -1110,7 +1110,7 @@ print "<br><br><br></center></li>";
 print '</ul>';
 if ((is_numeric($cat) && isset($category->id) && $category->id > 0) || (isset($_GET["category"]) && $_GET["category"] == 'all') || (isset($_GET['search'])&& !empty($_GET['search']))) {
 print '<div class="card-body">';
-if ( isset($resultats) ) print doliPagination($object, $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], $page, $limit);
+print doliPagination($object, $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], $page, $limit);
 print '</div>';
 }
 print '<div class="card-footer text-muted">';
