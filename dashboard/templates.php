@@ -889,7 +889,7 @@ print dolihelp('ISSUE');
 print "</div></small>";
 print "</div></div>";
 
-} elseif (get_option('dolicartnewlist') != 'none' && isset($_GET['category']) && $_GET['category'] == 'new' && !isset($_GET['product'])) {
+} elseif (get_option('dolicartnewlist') != 'none' && isset($_GET['category']) && $_GET['category'] == 'newf' && !isset($_GET['product'])) {
 
 print "<ul class='list-group list-group-flush'>";
 
@@ -994,26 +994,33 @@ $subcat = esc_attr(isset($_GET["subcategory"]) ? $_GET["subcategory"] : $cat);
 $subsubcat = esc_attr(isset($_GET["subsubcategory"]) ? $_GET["subsubcategory"] : $cat);
 $category = callDoliApi("GET", "/categories/".$cat."?include_childs=true", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
-if ((is_numeric($cat) && isset($category->id) && $category->id > 0) || (isset($_GET["category"]) && $_GET["category"] == 'all') || !isset($_GET["category"]) || (isset($_GET['search'])&& !empty($_GET['search']))) {
+if ((is_numeric($cat) && isset($category->id) && $category->id > 0) || (isset($_GET["category"]) && $_GET["category"] == 'all') || (isset($_GET["category"]) && $_GET["category"] == 'new') || !isset($_GET["category"]) || (isset($_GET['search'])&& !empty($_GET['search']))) {
 
 if (isset($_GET['search'])&& !empty($_GET['search']))  {
-$search = explode(' ', esc_attr($_GET['search']));
-$sqlfilters = null;
-foreach($search as $i=>$key) {
-$sqlfilters .= "((t.label%3Alike%3A'%25".esc_attr($key)."%25')%20OR%20(t.description%3Alike%3A'%25".esc_attr($key)."%25')%20OR%20(t.ref%3Alike%3A'%25".esc_attr($key)."%25')%20OR%20(t.barcode%3Alike%3A'%25".esc_attr($key)."%25'))%20AND%20";
-}
-$request = "/products?sortfield=t.".$field."&sortorder=".$order."&limit=".$limit."&page=".$page."&pagination_data=true&sqlfilters=".$sqlfilters."(t.tosell%3A%3D%3A1)";
-$object = callDoliApi("GET", $request, null, dolidelay('search', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-if ( doliversion('19.0.0') && isset($object->data) ) { $resultats = $object->data; } else { $resultats = $object; }
+  $search = explode(' ', esc_attr($_GET['search']));
+  $sqlfilters = null;
+  foreach($search as $i=>$key) {
+    $sqlfilters .= "((t.label%3Alike%3A'%25".esc_attr($key)."%25')%20OR%20(t.description%3Alike%3A'%25".esc_attr($key)."%25')%20OR%20(t.ref%3Alike%3A'%25".esc_attr($key)."%25')%20OR%20(t.barcode%3Alike%3A'%25".esc_attr($key)."%25'))%20AND%20";
+  }
+  $request = "/products?sortfield=t.".$field."&sortorder=".$order."&limit=".$limit."&page=".$page."&pagination_data=true&sqlfilters=".$sqlfilters."(t.tosell%3A%3D%3A1)";
+  $object = callDoliApi("GET", $request, null, dolidelay('search', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+} elseif (get_option('dolicartnewlist') != 'none' && isset($_GET['category']) && $_GET['category'] == 'new' && !isset($_GET['product'])) {
+  $date = new DateTime(); 
+  $date->modify('NOW');
+  $duration = (!empty(get_option('dolicartnewlist'))?get_option('dolicartnewlist'):'month');
+  $date->modify('FIRST DAY OF LAST '.$duration.' MIDNIGHT');
+  $lastdate = $date->format('Y-m-d');
+  $request = "/products?sortfield=t.datec&sortorder=DESC&category=".esc_attr($shop)."&limit=".$limit."&page=".$page."&pagination_data=true&sqlfilters=(t.datec%3A%3E%3A'".$lastdate."')%20AND%20(t.tosell%3A%3D%3A1)";
+  $object = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 } elseif (isset($_GET["category"]) && $_GET["category"] == 'all') {
-$request = "/products?sortfield=t.".$field."&sortorder=".$order."&limit=".$limit."&page=".$page."&category=".esc_attr($shop)."&pagination_data=true&sqlfilters=(t.tosell%3A%3D%3A1)";
-$object= callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-if ( doliversion('19.0.0') && isset($object->data) ) { $resultats = $object->data; } else { $resultats = $object; }
+  $request = "/products?sortfield=t.".$field."&sortorder=".$order."&limit=".$limit."&page=".$page."&category=".esc_attr($shop)."&pagination_data=true&sqlfilters=(t.tosell%3A%3D%3A1)";
+  $object= callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 } else {
-$request = "/products?sortfield=t.".$field."&sortorder=".$order."&limit=".$limit."&page=".$page."&category=".$cat."&pagination_data=true&sqlfilters=(t.tosell%3A%3D%3A1)";
-$object = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+  $request = "/products?sortfield=t.".$field."&sortorder=".$order."&limit=".$limit."&page=".$page."&category=".$cat."&pagination_data=true&sqlfilters=(t.tosell%3A%3D%3A1)";
+  $object = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+ 
+} 
 if ( doliversion('19.0.0') && isset($object->data) ) { $resultats = $object->data; } else { $resultats = $object; }
-}
 //print $resultats;
 
 if ( doliversion('19.0.0') && isset($object->pagination) ) { 
