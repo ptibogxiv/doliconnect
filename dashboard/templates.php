@@ -1027,7 +1027,7 @@ if ( doliversion('19.0.0') && isset($object->pagination) ) {
 }
 
 print "<li class='list-group-item'>";
-print "<div class='row'><div class='col-6 col-md-6'>";
+print "<div class='row'><div class='col-6 col-md-7'>";
 if (isset($_GET['search'])&& !empty($_GET['search'])) {
   printf( _n( 'We have found %s item with this search', 'We have found %s items with this search', $count, 'doliconnect' ), number_format_i18n( $count ) );
   print " '".esc_attr($_GET['search'])."'";
@@ -1036,7 +1036,7 @@ if (isset($_GET['search'])&& !empty($_GET['search'])) {
 } else {
   print doliproduct($category, 'label')."<br><small>".doliproduct($category, 'description').'</small>';
 }
-print '</div><div class="col-6 col-md-6"><div class="input-group">
+print '</div><div class="col-6 col-md-5"><div class="input-group">
   <span class="input-group-text" id="basic-addon1"><i class="fas fa-filter"></i></span><select id="selectbox" class="form-select form-select-sm" aria-label=".form-select-sm example" name="" onchange="javascript:location.href = this.value;">
     <option value="" disabled selected>'.__( '- Select -', 'doliconnect').'</option>
     <option value="'.esc_url( add_query_arg( array( 'search' =>isset($_GET['search'])?esc_attr($_GET['search']):null, 'category' => !empty($cat)?$cat:null, 'subcategory' => !empty($subcat)?$subcat:null, 'pg' => $page+1, 'field' => 'label', 'order' => 'ASC'), doliconnecturl('dolishop')) ).'"';
