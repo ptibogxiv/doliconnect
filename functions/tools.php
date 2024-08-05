@@ -179,7 +179,7 @@ function doliPagination($object, $url, $page = 0) {
     $pagination .= '<li class="page-item';
     if (empty($page)) { $pagination .= ' disabled'; }
     $pagination .= '">
-          <a class="page-link" href="'.esc_url( add_query_arg( array( 'pg' => esc_attr($page)), $url) ).'" aria-label="Previous">
+          <a class="page-link" href="'.esc_url( add_query_arg( array( 'pg' => esc_attr($page-1)), $url) ).'" aria-label="Previous">
             <span aria-hidden="true">'.__( 'Previous', 'doliconnect').'</span>
             <span class="sr-only">'.__( 'Previous', 'doliconnect').'</span>
          </a>
@@ -192,7 +192,7 @@ function doliPagination($object, $url, $page = 0) {
     $pagination .= '<li class="page-item';
     if (($object->pagination->page + 1) >= $object->pagination->page_count) { $pagination .= ' disabled'; }
     $pagination .= '">
-          <a class="page-link" href="'.esc_url( add_query_arg( array( 'pg' => esc_attr($page+2)), $url) ).'" aria-label="Next">
+          <a class="page-link" href="'.esc_url( add_query_arg( array( 'pg' => esc_attr($page+1)), $url) ).'" aria-label="Next">
             <span aria-hidden="true">'.__( 'Next', 'doliconnect').'</span>
             <span class="sr-only">'.__( 'Next', 'doliconnect').'</span>
           </a>
