@@ -973,7 +973,7 @@ if (isset($_GET['search'])&& !empty($_GET['search']))  {
   $duration = (!empty(get_option('dolicartnewlist'))?get_option('dolicartnewlist'):'month');
   $date->modify('FIRST DAY OF LAST '.$duration.' MIDNIGHT');
   $lastdate = $date->format('Y-m-d');
-  $request = "/products?sortfield=t.datec&sortorder=DESC&category=".esc_attr($shop)."&limit=".$limit."&page=".$page."&pagination_data=true&sqlfilters=(t.datec%3A%3E%3A'".$lastdate."')%20AND%20(t.tosell%3A%3D%3A1)";
+  $request = "/products?sortfield=t.".$field."&sortorder=".$order."&category=".esc_attr($shop)."&limit=".$limit."&page=".$page."&pagination_data=true&sqlfilters=(t.datec%3A%3E%3A'".$lastdate."')%20AND%20(t.tosell%3A%3D%3A1)";
   $object = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 } elseif (isset($_GET["category"]) && $_GET["category"] == 'all') {
   $request = "/products?sortfield=t.".$field."&sortorder=".$order."&limit=".$limit."&page=".$page."&category=".esc_attr($shop)."&pagination_data=true&sqlfilters=(t.tosell%3A%3D%3A1)";
@@ -981,7 +981,6 @@ if (isset($_GET['search'])&& !empty($_GET['search']))  {
 } else {
   $request = "/products?sortfield=t.".$field."&sortorder=".$order."&limit=".$limit."&page=".$page."&category=".$cat."&pagination_data=true&sqlfilters=(t.tosell%3A%3D%3A1)";
   $object = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
- 
 } 
 if ( doliversion('19.0.0') && isset($object->data) ) { $resultats = $object->data; } else { $resultats = $object; }
 //print $resultats;
