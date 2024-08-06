@@ -42,7 +42,11 @@ function doliconnect_cron_process($refresh = false) {
         }
 
         $shop = doliconst("DOLICONNECT_CATSHOP");
-        $request = "/categories/".esc_attr($shop)."?include_childs=true";
+        if ( $shop != null && $shop > 0 ) {
+            $request = "/categories?sortfield=t.label&sortorder=ASC&limit=100&type=product&sqlfilters=(t.fk_parent%3A%3D%3A".esc_attr($shop).")";
+        } else {
+            $request = "/categories?sortfield=t.label&sortorder=ASC&limit=100&type=product&sqlfilters=(t.fk_parent%3A%3D%3A0)";
+        }
         $resultatsc = callDoliApi("GET", $request, null, dolidelay('category', $refresh));
         if ( !isset($resultatsc->error) && $resultatsc != null ) {
             foreach ($resultatsc->childs as $category) {

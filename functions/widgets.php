@@ -415,7 +415,7 @@ if ( $shop != null && $shop > 0 ) {
 	$request = "/categories?sortfield=t.label&sortorder=ASC&limit=100&type=product&sqlfilters=(t.fk_parent%3A%3D%3A0)";
 }
 
-$resultatsc = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$resultatsc = callDoliApi("GET", $request, null, dolidelay('category', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 if ( !isset($resultatsc->error) && $resultatsc != null ) {
 	print "<div class='list-group'>";
@@ -473,7 +473,7 @@ if ( doliCheckModules('discountprice', esc_attr(isset($_GET["refresh"]) ? $_GET[
 }
 
 if ( $shop != null && $shop > 0 ) {
-$resultatsc = $resultatsc->childs;
+	$resultatsc = $resultatsc->childs;
 } 
 
 foreach ($resultatsc as $categorie) {
@@ -499,7 +499,7 @@ print "'>".doliproduct($categorie, 'label')." <span class='badge bg-secondary ro
 if ( isset($_GET['category']) && $categorie->id == $_GET['category'] ) {
 
 $request = "/categories/".esc_attr(isset($_GET["category"]) ? $_GET["category"] : $shop)."?include_childs=true";
-$resultatsc = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$resultatsc = callDoliApi("GET", $request, null, dolidelay('category', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 if ( !isset($resultatsc->error) && $resultatsc != null ) {
 foreach ($resultatsc->childs as $scategorie) {
@@ -528,7 +528,7 @@ print "'>>".doliproduct($scategorie, 'label')." <span class='badge bg-secondary 
 if ( isset($_GET['subcategory']) && isset($scategorie) && $scategorie->id == $_GET['subcategory'] ) {
 
 $request = "/categories/".esc_attr(isset($_GET["subcategory"]) ? $_GET["subcategory"] : $_GET["category"])."?include_childs=true";
-$resultatsc = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$resultatsc = callDoliApi("GET", $request, null, dolidelay('category', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 if ( !isset($resultatsc->error) && $resultatsc != null) {
 foreach ($resultatsc->childs as $sscategorie) {

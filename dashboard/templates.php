@@ -1004,7 +1004,7 @@ function dolishop_display($content) {
 
         if (!isset($_GET['search']) && isset($_GET["category"])) {
           $request2 = "/categories/".$cat."?include_childs=true";
-          $resultats2 = callDoliApi("GET", $request2, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+          $resultats2 = callDoliApi("GET", $request2, null, dolidelay('category', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
           if ( !isset($resultats2->error) && $resultats2 != null && isset($resultats2->childs) && !empty($resultats2->childs) ) {
             print '<li class="list-group-item">';
