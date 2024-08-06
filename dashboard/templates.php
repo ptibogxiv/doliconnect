@@ -897,9 +897,7 @@ function dolishop_display($content) {
       print apply_filters( 'doliproductcard', $product, null);
       print "</div>";
 
-      print "</ul><div class='card-body'>";
-
-      print "</div><div class='card-footer text-muted'>";
+      print "<div class='card-footer text-muted'>";
       print "<small><div class='float-start'>";
       if ( isset($request) ) print dolirefresh($request, get_permalink(), dolidelay('product'));
       print "</div><div class='float-end'>";
