@@ -752,8 +752,9 @@ global $current_user;
         print doliconnect_image('thirdparty', $thirdparty->id.'/logos/'.$thirdparty->logo, array('entity'=> $thirdparty->entity), esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
         print "</center></div><div class='col-8 col-md-10'>".(!empty($thirdparty->name_alias)?$thirdparty->name_alias:$thirdparty->name);
         if ( !empty($thirdparty->country_id) ) {  
-        $country = callDoliApi("GET", "/setup/dictionary/countries/".$thirdparty->country_id."?lang=".doliUserLang($current_user), null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-        print "<br><span class='flag-icon flag-icon-".strtolower($thirdparty->country_code)."'></span> ".$country->label.""; }
+          $country = callDoliApi("GET", "/setup/dictionary/countries/".$thirdparty->country_id."?lang=".doliUserLang($current_user), null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+          print "<br><span class='flag-icon flag-icon-".strtolower($thirdparty->country_code)."'></span> ".$country->label.""; 
+        }
         print "</div></div>";
         print "<p class='text-justify'>".$thirdparty->note_private."</p>";
         $photos = callDoliApi("GET", "/documents?modulepart=thirdparty&id=".$thirdparty->id, null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
@@ -766,6 +767,7 @@ global $current_user;
         if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']); }  else { $page = "0"; }
         $request = "/products/purchase_prices?sortfield=t.ref&sortorder=ASC&limit=".$limit."&page=".$page."&supplier=".esc_attr($_GET["supplier"])."&pagination_data=true&sqlfilters=(t.tosell%3A%3D%3A1)";
         $resultats2 = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+        //if ( doliversion('20.0.0') && isset($object->data) ) { $resultats = $object->data; } else { $resultats = $object; }
         $resultats = array();
         if ( !isset($resultats2->error) && $resultats2 != null ) {
           foreach ($resultats2 as $product) {
