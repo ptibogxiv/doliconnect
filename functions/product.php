@@ -729,34 +729,35 @@ return $list;
 add_filter( 'doliproductlist', 'doliproductlist', 10, 3);
 
 // list of products filter
-function doliproductcard($product, $attributes) {
+function doliproductcard($product, $return = null, $attributes= null) {
 global $current_user;
 
-if (isset($product->id) && $product->id > 0) {
+  if (isset($product->id) && $product->id > 0) {
 
-$card = "<div class='row'>";
-if (defined("DOLIBUG")) {
-$card = dolibug();
-} elseif ($product->id > 0 && !empty($product->status)) {
-$card .= "<div class='col-12 d-block d-sm-block d-xs-block d-md-none'><center>";
-$card .= doliconnect_image('product', $product->id, array('limit'=>1, 'entity'=>$product->entity, 'size'=>'200x200'), esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
-$card .= "</center>";
-//$card .= wp_get_attachment_image( $attributes['mediaID'], "ptibogxiv_large", "", array( "class" => "img-fluid" ) );
-$card .= '</div>';
-$card .= '<div class="col-md-4 d-none d-md-block"><center>';
-$card .= doliconnect_image('product', $product->id, array('limit'=>1, 'entity'=>$product->entity, 'size'=>'200x200'), esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
-$card .= '</center>';
-//$card .= wp_get_attachment_image( $attributes['mediaID'], "ptibogxiv_square", "", array( "class" => "img-fluid" ) );
-$card .= '</div>';
-$card .= "<div class='col-12 col-md-8'><h6 itemprop='name'><b>".doliproduct($product, 'label')."</b></h6><small>";
-if ( !doliconst('MAIN_GENERATE_DOCUMENTS_HIDE_REF') ) { $card .= "<i class='fas fa-toolbox fa-fw'></i> <span itemprop='sku'>".(!empty($product->ref)?$product->ref:'-').'</span>'; }
-if ( !empty($product->barcode) ) { 
-if ( !doliconst('MAIN_GENERATE_DOCUMENTS_HIDE_REF') ) { $card .= " | "; }
-$card .= "<i class='fas fa-barcode fa-fw'></i> ".$product->barcode; }
-$card .= "</small>";
-if ( ! empty(doliconnectid('dolicart')) && !isset($attributes['hideStock']) ) { 
-$card .= '<br>'.doliProductStock($product);
-}
+  $card = '';
+  if (defined("DOLIBUG")) {
+    $card = dolibug();
+  } elseif ($product->id > 0 && !empty($product->status)) {
+    $card .= '<div class="card-header">'.doliproduct($product, 'label').'</div><div class="card-body"><div class="row">';
+    $card .= "<div class='col-12 d-block d-sm-block d-xs-block d-md-none'><center>";
+    $card .= doliconnect_image('product', $product->id, array('limit'=>1, 'entity'=>$product->entity, 'size'=>'200x200'), esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+    $card .= "</center>";
+    //$card .= wp_get_attachment_image( $attributes['mediaID'], "ptibogxiv_large", "", array( "class" => "img-fluid" ) );
+    $card .= '</div>';
+    $card .= '<div class="col-md-4 d-none d-md-block"><center>';
+    $card .= doliconnect_image('product', $product->id, array('limit'=>1, 'entity'=>$product->entity, 'size'=>'200x200'), esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+    $card .= '</center>';
+    //$card .= wp_get_attachment_image( $attributes['mediaID'], "ptibogxiv_square", "", array( "class" => "img-fluid" ) );
+    $card .= '</div>';
+    $card .= "<div class='col-12 col-md-8'><small>";
+    if ( !doliconst('MAIN_GENERATE_DOCUMENTS_HIDE_REF') ) { $card .= "<i class='fas fa-toolbox fa-fw'></i> <span itemprop='sku'>".(!empty($product->ref)?$product->ref:'-').'</span>'; }
+    if ( !empty($product->barcode) ) { 
+    if ( !doliconst('MAIN_GENERATE_DOCUMENTS_HIDE_REF') ) { $card .= " | "; }
+    $card .= "<i class='fas fa-barcode fa-fw'></i> ".$product->barcode; }
+    $card .= "</small>";
+    if ( ! empty(doliconnectid('dolicart')) && !isset($attributes['hideStock']) ) { 
+      $card .= '<br>'.doliProductStock($product);
+    }
 if (!empty(doliconnect_supplier($product, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)))) {
 $card .= '<br>'.doliconnect_supplier($product, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 }
@@ -776,53 +777,53 @@ $card .= " <span class='fi fi-".strtolower($product->country_code)."'></span></s
 if( has_filter('mydoliconnectproductdesc') ) {
 $card .= apply_filters('mydoliconnectproductdesc', $product, 'card');
 }
-if ( ! empty(doliconnectid('dolicart')) ) { 
-$card .= '<br><br><div class="jumbotron">';
-$card .= doliProductPrice($product, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
-$card .= doliProductCart($product, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
-$card .= '</div>';
-}
-$card .= '</div><div class="col-12"><h6>'.__( 'Description', 'doliconnect' ).'</h6><p>'.doliproduct($product, 'description').'</p>';
+      if ( ! empty(doliconnectid('dolicart')) ) { 
+        $card .= '<br><br><div class="jumbotron">';
+        $card .= doliProductPrice($product, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+        $card .= doliProductCart($product, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+        $card .= '</div>';
+      }
+      $card .= '</div><div class="col-12"><h6>'.__( 'Description', 'doliconnect' ).'</h6><p>'.doliproduct($product, 'description').'</p>';
 
-if (!empty(doliconnect_supplier($product))) {
-$brands =  callDoliApi("GET", "/products/".$product->id."/purchase_prices", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-if ( !isset($brands->error) && $brands != null ) {
-$i = 0;
-foreach ($brands as $brand) {
-if (!empty($brand->desc_supplier)) {
-$thirdparty =  callDoliApi("GET", "/thirdparties/".$brand->fourn_id, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-$card .= '<p>';
-$card .= (!empty($thirdparty->name_alias)?$thirdparty->name_alias:$thirdparty->name).'<br>';
-$card .= $brand->desc_supplier;
-$card .= '</p>';
-}
-$i++;
-}
-}}
+      if (!empty(doliconnect_supplier($product))) {
+        $brands =  callDoliApi("GET", "/products/".$product->id."/purchase_prices", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+        if ( !isset($brands->error) && $brands != null ) {
+          $i = 0;
+          foreach ($brands as $brand) {
+            if (!empty($brand->desc_supplier)) {
+              $thirdparty =  callDoliApi("GET", "/thirdparties/".$brand->fourn_id, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+              $card .= '<p>';
+              $card .= (!empty($thirdparty->name_alias)?$thirdparty->name_alias:$thirdparty->name).'<br>';
+              $card .= $brand->desc_supplier;
+              $card .= '</p>';
+            }
+            $i++;
+          }
+        }
+      }
 
-if (!empty($product->sousprods)) {
-$card .= '</div><div class="col-12"><h6>'.__( 'This item contains:', 'doliconnect' ).'</h6>';
-foreach ($product->sousprods as $subprod) {
-  $card .= '<li>'.$subprod->qty.'x '.$subprod->label.'</li>';
-}
+      if (!empty($product->sousprods)) {
+      $card .= '</div><div class="col-12"><h6>'.__( 'This item contains:', 'doliconnect' ).'</h6>';
+        foreach ($product->sousprods as $subprod) {
+          $card .= '<li>'.$subprod->qty.'x '.$subprod->label.'</li>';
+        }
+      }
 
-}
+      $card .= '</div></div>';
+    } else {
+      $card .= '<div class="col-12"><p><center>'.__( 'Item not in sale', 'doliconnect' ).'</center></p></div>';
+    } 
 
-$card .= '</div>';
-} else {
-$card .= '<div class="col-12"><p><center>'.__( 'Item not in sale', 'doliconnect' ).'</center></p></div>';
-} 
+    if( has_filter('mydoliconnectproductcard') ) {
+      $card .= apply_filters('mydoliconnectproductcard', $product, 'card');
+    }
 
-if( has_filter('mydoliconnectproductcard') ) {
-$card .= apply_filters('mydoliconnectproductcard', $product, 'card');
-}
-
-$card .= '</div>';
-} else {
-$card = "<center><br><br><br><br><div class='align-middle'><i class='fas fa-bomb fa-7x fa-fw'></i><h4>".__( 'Oops! This item does not appear to exist', 'doliconnect' )."</h4></div><br>";
-$card .= '<button type="button" class="btn btn-link" onclick="window.history.back()">'.__( 'Return', 'doliconnect').'</button>';
-$card .= "<br><br><br></center>";
-}
+    $card .= '</div>';
+  } else {
+    $card = "<center><br><br><br><br><div class='align-middle'><i class='fas fa-bomb fa-7x fa-fw'></i><h4>".__( 'Oops! This item does not appear to exist', 'doliconnect' )."</h4></div><br>";
+    $card .= '<button type="button" class="btn btn-link" onclick="window.history.back()">'.__( 'Return', 'doliconnect').'</button>';
+    $card .= "<br><br><br></center>";
+  }
 
 return $card;
 }
