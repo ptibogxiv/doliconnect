@@ -910,8 +910,6 @@ function dolishop_display($content) {
       if ( isset($_GET['field']) ) { $field = esc_attr($_GET['field']); } else { $field = 'label'; }
       if ( isset($_GET['order']) ) { $order = esc_attr($_GET['order']); } else { $order = 'ASC'; }
 
-      print "<ul class='list-group list-group-flush'>";
-
       $cat = esc_attr(isset($_GET["subsubcategory"]) ? $_GET["subsubcategory"] : (isset($_GET["subcategory"]) ? $_GET["subcategory"] : (isset($_GET["category"]) ? $_GET["category"] : null)));
       $subcat = esc_attr(isset($_GET["subcategory"]) ? $_GET["subcategory"] : $cat);
       $subsubcat = esc_attr(isset($_GET["subsubcategory"]) ? $_GET["subsubcategory"] : $cat);
@@ -959,23 +957,26 @@ function dolishop_display($content) {
             $count = count($object);
           }
         }
-
-        print "<li class='list-group-item'>";
-        print "<div class='row'><div class='col-6 col-md-7'>";
+        
+        print '<div class="card-header">';
         if (isset($_GET['search'])&& !empty($_GET['search'])) {
           printf( _n( 'We have found %s item with this search', 'We have found %s items with this search', $count, 'doliconnect' ), number_format_i18n( $count ) );
           print " '".esc_attr($_GET['search'])."'";
         } elseif ( !isset($_GET["category"]) || isset($_GET["category"]) && $_GET["category"] == 'all') {
-          printf( _n( 'There is %s item', 'There are %s items', $count, 'doliconnect' ), number_format_i18n( $count ) );
+          print __(  'All items', 'doliconnect');
+          //printf( _n( 'There is %s item', 'There are %s items', $count, 'doliconnect' ), number_format_i18n( $count ) );
         } elseif (get_option('dolicartnewlist') != 'none' && isset($_GET['category']) && $_GET['category'] == 'new' && !isset($_GET['product'])) {  
-          //print __(  'Novelties', 'doliconnect');
-          printf( _n( 'There is %s new item', 'There are %s new items', $count, 'doliconnect' ), number_format_i18n( $count ) );
+          print __(  'Novelties', 'doliconnect');
+          //printf( _n( 'There is %s new item', 'There are %s new items', $count, 'doliconnect' ), number_format_i18n( $count ) );
         } elseif ( doliCheckModules('discountprice') && isset($_GET['category']) && $_GET['category'] == 'discount' && !isset($_GET['product'])) { 
-          //print __(  'Novelties', 'doliconnect');
-          printf( _n( 'There is %s discounted item', 'There are %s discounted items', $count, 'doliconnect' ), number_format_i18n( $count ) );
+          print __(  'Discounted items', 'doliconnect');
+          //printf( _n( 'There is %s discounted item', 'There are %s discounted items', $count, 'doliconnect' ), number_format_i18n( $count ) );
         } else {
           print doliproduct($category, 'label');
-        }
+        } 
+        print "</div><ul class='list-group list-group-flush'><li class='list-group-item'>";
+        print "<div class='row'><div class='col-6 col-md-7'>";
+        printf( _n( 'There is %s item', 'There are %s items', $count, 'doliconnect' ), number_format_i18n( $count ) );
         print '</div><div class="col-6 col-md-5"><div class="input-group">
           <span class="input-group-text" id="basic-addon1"><i class="fas fa-filter"></i></span><select id="selectbox" class="form-select form-select-sm" aria-label=".form-select-sm example" name="" onchange="javascript:location.href = this.value;">
             <option value="" disabled selected>'.__( '- Select -', 'doliconnect').'</option>
