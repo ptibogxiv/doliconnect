@@ -922,7 +922,7 @@ if ( in_the_loop() && is_main_query() && is_page(doliconnectid('dolishop')) && !
       $subsubcat = esc_attr(isset($_GET["subsubcategory"]) ? $_GET["subsubcategory"] : $cat);
       $category = callDoliApi("GET", "/categories/".$cat."?include_childs=true", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
-      if ((is_numeric($cat) && isset($category->id) && $category->id > 0) || (isset($_GET["category"]) && $_GET["category"] == 'all') || (isset($_GET["category"]) && $_GET["category"] == 'new') || !isset($_GET["category"]) || (isset($_GET['search'])&& !empty($_GET['search']))) {
+      if ((is_numeric($cat) && isset($category->id) && $category->id > 0) || (isset($_GET["category"]) && $_GET["category"] == 'all' && !isset($_GET['product'])) || (isset($_GET["category"]) && $_GET["category"] == 'new' && !isset($_GET['product'])) || (isset($_GET['category']) && $_GET['category'] == 'discount' && !isset($_GET['product'])) || !isset($_GET["category"]) || (isset($_GET['search'])&& !empty($_GET['search']) && !isset($_GET['product']))) {
 
         if (isset($_GET['search'])&& !empty($_GET['search']))  {
           $search = explode(' ', esc_attr($_GET['search']));
