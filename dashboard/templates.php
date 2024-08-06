@@ -1003,7 +1003,7 @@ if ( in_the_loop() && is_main_query() && is_page(doliconnectid('dolishop')) && !
         </select></div></div>';
         print '</div></li>'; 
 
-        if (!empty(doliproduct($category, 'description'))) {
+        if (isset($category->description) && !empty(doliproduct($category, 'description'))) {
         print '<li class="list-group-item"><small>'.doliproduct($category, 'description').'</small></li>';
         }
 
