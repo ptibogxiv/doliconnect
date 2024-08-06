@@ -398,7 +398,6 @@ if ( ! empty( $instance['title'] ) ) {
 }
 
 $shop = doliconst("DOLICONNECT_CATSHOP", esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
-//print $shop;
 
 $limit=20;
 if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']); } else { $page = 0; }
