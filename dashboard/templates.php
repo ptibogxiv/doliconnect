@@ -974,6 +974,19 @@ function dolishop_display($content) {
         } else {
           print doliproduct($category, 'label');
         } 
+        if (strpos(esc_url($_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']), 'subsubcategory') !== false) {
+          $arr_params = array( 'subsubcategory');
+          $return =  esc_url( remove_query_arg( $arr_params ), $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+          print '<a class="float-end text-decoration-none" href="'.esc_url( $return ).'"><i class="fas fa-arrow-left"></i>'.__( 'Back', 'doliconnect').'</a>';
+        } elseif (strpos(esc_url($_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']), 'subcategory') !== false) {
+          $arr_params = array( 'subcategory');
+          $return =  esc_url( remove_query_arg( $arr_params ), $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+          print '<a class="float-end text-decoration-none" href="'.esc_url( $return ).'"><i class="fas fa-arrow-left"></i>'.__( 'Back', 'doliconnect').'</a>';
+        } elseif (strpos(esc_url($_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']), 'category') !== false) {
+          $arr_params = array( 'category');
+          $return =  esc_url( remove_query_arg( $arr_params ), $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+          print '<a class="float-end text-decoration-none" href="'.esc_url( $return ).'"><i class="fas fa-arrow-left"></i>'.__( 'Back', 'doliconnect').'</a>';
+        }
         print "</div><ul class='list-group list-group-flush'><li class='list-group-item'>";
         print "<div class='row'><div class='col-6 col-md-7'>";
         printf( _n( 'There is %s item', 'There are %s items', $count, 'doliconnect' ), number_format_i18n( $count ) );
