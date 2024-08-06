@@ -889,39 +889,6 @@ if ( in_the_loop() && is_main_query() && is_page(doliconnectid('dolishop')) && !
       print "</div></small>";
       print "</div></div>";
 
-    } elseif ( doliCheckModules('discountprice') && isset($_GET['category']) && $_GET['category'] == 'discount' && !isset($_GET['product'])) {
-
-      print "<ul class='list-group list-group-flush'>";
-
-      $limit=25;
-      if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']-1); }  else { $page = 0; }
-      $date = new DateTime(); 
-      $date->modify('NOW');
-      $lastdate = $date->format('Y-m-d');
-      $request = "/discountprice?sortfield=t.rowid&sortorder=DESC&limit=".$limit."&page=".$page."&sqlfilters=(t.date_begin%3A%3C%3D%3A'".$lastdate."')%20AND%20(t.date_end%3A%3E%3D%3A'".$lastdate."')%20AND%20(d.tosell%3A%3D%3A1)";
-      $resultats = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-      //print $resultatso;
-
-      if ( !isset($resultats->error) && $resultats != null ) {
-
-        print "<li class='list-group-item list-group-item-light'><center>".__(  'Here are our discounted items', 'doliconnect')."</center></li>";
-        foreach ($resultats as $product) {
-          $product = callDoliApi("GET", "/products/".$product->fk_product."?includestockdata=".doliIncludeStock()."&includesubproducts=true&includetrans=true", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-          print apply_filters( 'doliproductlist', $product);
-        }
-      } else {
-        print "<li class='list-group-item list-group-item-light'><center>".__(  'No discounted item', 'doliconnect')."</center></li>";
-      }
-      print "</ul><div class='card-body'>";
-      print doliPagination($resultats, $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], $page, $limit);
-      print "</div><div class='card-footer text-muted'>";
-      print "<small><div class='float-start'>";
-      if ( isset($request) ) print dolirefresh($request, get_permalink(), dolidelay('product'));
-      print "</div><div class='float-end'>";
-      //print dolihelp('ISSUE');
-      print "</div></small>";
-      print "</div></div>";
-
     } elseif ( isset($_GET['product']) && is_numeric(esc_attr($_GET['product'])) ) {
 
       $request = "/products/".esc_attr($_GET['product'])."?includestockdata=".doliIncludeStock()."&includesubproducts=true&includetrans=true";
@@ -973,6 +940,12 @@ if ( in_the_loop() && is_main_query() && is_page(doliconnectid('dolishop')) && !
           $lastdate = $date->format('Y-m-d');
           $request = "/products?sortfield=t.".$field."&sortorder=".$order."&limit=".$limit."&page=".$page."&category=".esc_attr($shop)."&pagination_data=true&sqlfilters=(t.datec%3A%3E%3A'".$lastdate."')%20AND%20(t.tosell%3A%3D%3A1)";
           $object = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+        } elseif ( doliCheckModules('discountprice') && isset($_GET['category']) && $_GET['category'] == 'discount' && !isset($_GET['product'])) { 
+          $date = new DateTime(); 
+          $date->modify('NOW');
+          $lastdate = $date->format('Y-m-d');
+          $request = "/discountprice?sortfield=t.".$field."&sortorder=".$order."&limit=".$limit."&page=".$page."&pagination_data=true&sqlfilters=(t.date_begin%3A%3C%3D%3A'".$lastdate."')%20AND%20(t.date_end%3A%3E%3D%3A'".$lastdate."')%20AND%20(d.tosell%3A%3D%3A1)";
+          $object = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
         } elseif (isset($_GET["category"]) && $_GET["category"] == 'all') {
           $request = "/products?sortfield=t.".$field."&sortorder=".$order."&limit=".$limit."&page=".$page."&category=".esc_attr($shop)."&pagination_data=true&sqlfilters=(t.tosell%3A%3D%3A1)";
           $object= callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
@@ -1003,6 +976,9 @@ if ( in_the_loop() && is_main_query() && is_page(doliconnectid('dolishop')) && !
         } elseif (get_option('dolicartnewlist') != 'none' && isset($_GET['category']) && $_GET['category'] == 'new' && !isset($_GET['product'])) {  
           //print __(  'Novelties', 'doliconnect');
           printf( _n( 'There is %s new item', 'There are %s new items', $count, 'doliconnect' ), number_format_i18n( $count ) );
+        } elseif ( doliCheckModules('discountprice') && isset($_GET['category']) && $_GET['category'] == 'discount' && !isset($_GET['product'])) { 
+          //print __(  'Novelties', 'doliconnect');
+          printf( _n( 'There is %s discounted item', 'There are %s discounted items', $count, 'doliconnect' ), number_format_i18n( $count ) );
         } else {
           print doliproduct($category, 'label');
         }
