@@ -729,7 +729,7 @@ return $list;
 add_filter( 'doliproductlist', 'doliproductlist', 10, 3);
 
 // list of products filter
-function doliproductcard($product, $attributes= null) {
+function doliproductcard($product, $return = null, $attributes= null) {
 global $current_user;
 
   if (isset($product->id) && $product->id > 0) {
@@ -738,13 +738,7 @@ global $current_user;
     if (defined("DOLIBUG")) {
       $card = dolibug();
     } elseif ($product->id > 0 && !empty($product->status)) {
-      $card .= '<div class="card-header">'.doliproduct($product, 'label'); 
-      if (isset($return) && !empty($return)) {
-        $arr_params = array( 'product');
-        $return =  esc_url( remove_query_arg( $arr_params ) );
-        $card .= '<a class="float-end text-decoration-none" href="'.esc_url( $return ).'"><i class="fas fa-arrow-left"></i>'.__( 'Back', 'doliconnect').'</a>';
-      }
-      $card .= '</div><div class="card-body"><div class="row">';
+      $card .= '<div class="card-header">'.doliproduct($product, 'label').'</div><div class="card-body"><div class="row">';
       $card .= "<div class='col-12 d-block d-sm-block d-xs-block d-md-none'><center>";
       $card .= doliconnect_image('product', $product->id, array('limit'=>1, 'entity'=>$product->entity, 'size'=>'200x200'), esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
       $card .= "</center>";

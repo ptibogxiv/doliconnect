@@ -6,7 +6,7 @@ function doliconnect_product_block_render( $attributes, $content) {
 	if (isset($attributes['productID']) && $attributes['productID'] > 0) {
 		$request = "/products/".$attributes['productID']."?includestockdata=1&includesubproducts=true&includetrans=true";
 		$product = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-		$content .= doliproductcard($product, $attributes);
+		$content .= doliproductcard($product, null, $attributes);
 	} else {
 		$content .= '<div class="card-header">'.__( 'Item', 'doliconnect').'</div><div class="card-body"><center>'.__( 'No item', 'doliconnect' ).'</center></div>';
 	}
