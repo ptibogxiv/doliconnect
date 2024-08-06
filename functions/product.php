@@ -734,49 +734,52 @@ global $current_user;
 
   if (isset($product->id) && $product->id > 0) {
 
-  $card = '';
-  if (defined("DOLIBUG")) {
-    $card = dolibug();
-  } elseif ($product->id > 0 && !empty($product->status)) {
-    $card .= '<div class="card-header">'.doliproduct($product, 'label').'</div><div class="card-body"><div class="row">';
-    $card .= "<div class='col-12 d-block d-sm-block d-xs-block d-md-none'><center>";
-    $card .= doliconnect_image('product', $product->id, array('limit'=>1, 'entity'=>$product->entity, 'size'=>'200x200'), esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
-    $card .= "</center>";
-    //$card .= wp_get_attachment_image( $attributes['mediaID'], "ptibogxiv_large", "", array( "class" => "img-fluid" ) );
-    $card .= '</div>';
-    $card .= '<div class="col-md-4 d-none d-md-block"><center>';
-    $card .= doliconnect_image('product', $product->id, array('limit'=>1, 'entity'=>$product->entity, 'size'=>'200x200'), esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
-    $card .= '</center>';
-    //$card .= wp_get_attachment_image( $attributes['mediaID'], "ptibogxiv_square", "", array( "class" => "img-fluid" ) );
-    $card .= '</div>';
-    $card .= "<div class='col-12 col-md-8'><small>";
-    if ( !doliconst('MAIN_GENERATE_DOCUMENTS_HIDE_REF') ) { $card .= "<i class='fas fa-toolbox fa-fw'></i> <span itemprop='sku'>".(!empty($product->ref)?$product->ref:'-').'</span>'; }
-    if ( !empty($product->barcode) ) { 
-    if ( !doliconst('MAIN_GENERATE_DOCUMENTS_HIDE_REF') ) { $card .= " | "; }
-    $card .= "<i class='fas fa-barcode fa-fw'></i> ".$product->barcode; }
-    $card .= "</small>";
-    if ( ! empty(doliconnectid('dolicart')) && !isset($attributes['hideStock']) ) { 
-      $card .= '<br>'.doliProductStock($product);
-    }
-if (!empty(doliconnect_supplier($product, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)))) {
-$card .= '<br>'.doliconnect_supplier($product, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
-}
-if (!empty(doliconnect_categories('product', $product, doliconnecturl('dolishop')))) $card .= '<br>'.doliconnect_categories('product', $product, doliconnecturl('dolishop'));
-if ( !empty($product->country_id) ) {  
-if ( function_exists('pll_the_languages') ) { 
-$lang = pll_current_language('locale');
-} else {
-$lang = $current_user->locale;
-}
-$country = callDoliApi("GET", "/setup/dictionary/countries/".$product->country_id."?lang=".$lang, null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-$card .= "<br><small><i class='fas fa-globe-europe fa-fw'></i> ".__( 'Origin:', 'doliconnect')." ".$country->label;
-if ( isset($product->state_id) && !empty($product->state_id) ) { 
-$state = callDoliApi("GET", "/setup/dictionary/states/".$product->state_id."?lang=".$lang, null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))); 
-$card .= " - ".$state->name; } 
-$card .= " <span class='fi fi-".strtolower($product->country_code)."'></span></small>"; }
-if( has_filter('mydoliconnectproductdesc') ) {
-$card .= apply_filters('mydoliconnectproductdesc', $product, 'card');
-}
+    $card = '';
+    if (defined("DOLIBUG")) {
+      $card = dolibug();
+    } elseif ($product->id > 0 && !empty($product->status)) {
+      $card .= '<div class="card-header">'.doliproduct($product, 'label').'</div><div class="card-body"><div class="row">';
+      $card .= "<div class='col-12 d-block d-sm-block d-xs-block d-md-none'><center>";
+      $card .= doliconnect_image('product', $product->id, array('limit'=>1, 'entity'=>$product->entity, 'size'=>'200x200'), esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+      $card .= "</center>";
+      //$card .= wp_get_attachment_image( $attributes['mediaID'], "ptibogxiv_large", "", array( "class" => "img-fluid" ) );
+      $card .= '</div>';
+      $card .= '<div class="col-md-4 d-none d-md-block"><center>';
+      $card .= doliconnect_image('product', $product->id, array('limit'=>1, 'entity'=>$product->entity, 'size'=>'200x200'), esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+      $card .= '</center>';
+      //$card .= wp_get_attachment_image( $attributes['mediaID'], "ptibogxiv_square", "", array( "class" => "img-fluid" ) );
+      $card .= '</div>';
+      $card .= "<div class='col-12 col-md-8'><small>";
+      if ( !doliconst('MAIN_GENERATE_DOCUMENTS_HIDE_REF') ) { $card .= "<i class='fas fa-toolbox fa-fw'></i> <span itemprop='sku'>".(!empty($product->ref)?$product->ref:'-').'</span>'; }
+      if ( !empty($product->barcode) ) { 
+        if ( !doliconst('MAIN_GENERATE_DOCUMENTS_HIDE_REF') ) { $card .= " | "; }
+        $card .= "<i class='fas fa-barcode fa-fw'></i> ".$product->barcode;
+      }
+      $card .= "</small>";
+      if ( ! empty(doliconnectid('dolicart')) && !isset($attributes['hideStock']) ) { 
+        $card .= '<br>'.doliProductStock($product);
+      }
+      if (!empty(doliconnect_supplier($product, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)))) {
+        $card .= '<br>'.doliconnect_supplier($product, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+      }
+      if (!empty(doliconnect_categories('product', $product, doliconnecturl('dolishop')))) $card .= '<br>'.doliconnect_categories('product', $product, doliconnecturl('dolishop'));
+      if ( !empty($product->country_id) ) {  
+        if ( function_exists('pll_the_languages') ) { 
+          $lang = pll_current_language('locale');
+        } else {
+          $lang = $current_user->locale;
+        }
+        $country = callDoliApi("GET", "/setup/dictionary/countries/".$product->country_id."?lang=".$lang, null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+        $card .= "<br><small><i class='fas fa-globe-europe fa-fw'></i> ".__( 'Origin:', 'doliconnect')." ".$country->label;
+        if ( isset($product->state_id) && !empty($product->state_id) ) { 
+          $state = callDoliApi("GET", "/setup/dictionary/states/".$product->state_id."?lang=".$lang, null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))); 
+          $card .= " - ".$state->name;
+        } 
+        $card .= " <span class='fi fi-".strtolower($product->country_code)."'></span></small>";
+      }
+      if( has_filter('mydoliconnectproductdesc') ) {
+        $card .= apply_filters('mydoliconnectproductdesc', $product, 'card');
+      }
       if ( ! empty(doliconnectid('dolicart')) ) { 
         $card .= '<br><br><div class="jumbotron">';
         $card .= doliProductPrice($product, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
