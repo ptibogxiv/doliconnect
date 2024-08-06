@@ -893,7 +893,7 @@ function dolishop_display($content) {
       $request = "/products/".esc_attr($_GET['product'])."?includestockdata=".doliIncludeStock()."&includesubproducts=true&includetrans=true";
       $product = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
-      print apply_filters( 'doliproductcard', $product, $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], null);
+      print apply_filters( 'doliproductcard', $product, null);
 
       print "<div class='card-footer text-muted'>";
       print "<small><div class='float-start'>";
