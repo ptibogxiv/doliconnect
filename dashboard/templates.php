@@ -1006,7 +1006,7 @@ if (isset($_GET['search'])&& !empty($_GET['search'])) {
   //print __(  'Novelties', 'doliconnect');
   printf( _n( 'There is %s new item', 'There are %s new items', $count, 'doliconnect' ), number_format_i18n( $count ) );
 } else {
-  print doliproduct($category, 'label')."<br><small>".doliproduct($category, 'description').'</small>';
+  print doliproduct($category, 'label');
 }
 print '</div><div class="col-6 col-md-5"><div class="input-group">
   <span class="input-group-text" id="basic-addon1"><i class="fas fa-filter"></i></span><select id="selectbox" class="form-select form-select-sm" aria-label=".form-select-sm example" name="" onchange="javascript:location.href = this.value;">
@@ -1028,6 +1028,10 @@ print '</div><div class="col-6 col-md-5"><div class="input-group">
     print '>'.__( 'Highest prices', 'doliconnect').'</option>
 </select></div></div>';
 print '</div></li>'; 
+
+if (!empty(doliproduct($category, 'description'))) {
+ print '<li class="list-group-item"><small>'.doliproduct($category, 'description').'</small></li>';
+}
 
 if (!isset($_GET['search']) && isset($_GET["category"])) {
 $request2 = "/categories/".$cat."?include_childs=true";
