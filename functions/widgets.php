@@ -446,11 +446,11 @@ if (get_option('dolicartnewlist') != 'none') {
 	$date->modify('FIRST DAY OF LAST '.$duration.' MIDNIGHT');
 	$lastdate = $date->format('Y-m-d');
 	if ( doliversion('19.0.0') ) { 
-		$requestp = "/products?sortfield=t.".$field."&sortorder=".$order."&limit=".$limit."&page=".$page."&category=".$scategorie->id."&ids_only=true&pagination_data=true&sqlfilters=(t.datec%3A%3E%3A'".$lastdate."')%20AND%20(t.tosell%3A%3D%3A1)";
+		$requestp = "/products?sortfield=t.".$field."&sortorder=".$order."&limit=".$limit."&page=".$page."&category=".$categorie->id."&ids_only=true&pagination_data=true&sqlfilters=(t.datec%3A%3E%3A'".$lastdate."')%20AND%20(t.tosell%3A%3D%3A1)";
 		$listproduct = callDoliApi("GET", $requestp, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
 		$count = $listproduct->pagination->total;
 	} else { 
-		$requestp = "/products?sortfield=t.".$field."&sortorder=".$order."&limit=1000&category=".$scategorie->id."&ids_only=true&sqlfilters=(t.datec%3A%3E%3A'".$lastdate."')%20AND%20(t.tosell%3A%3D%3A1)";
+		$requestp = "/products?sortfield=t.".$field."&sortorder=".$order."&limit=1000&category=".$categorie->id."&ids_only=true&sqlfilters=(t.datec%3A%3E%3A'".$lastdate."')%20AND%20(t.tosell%3A%3D%3A1)";
 		$listproduct = callDoliApi("GET", $requestp, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 		if (empty($listproduct) || isset($listproduct->error)) {
 		  $count = 0;
