@@ -1042,6 +1042,7 @@ if ( in_the_loop() && is_main_query() && is_page(doliconnectid('dolishop')) && !
 
         if ( !isset($resultats->error) && $resultats != null ) {
           foreach ($resultats as $product) {
+            if ( doliCheckModules('discountprice') && isset($_GET['category']) && $_GET['category'] == 'discount' && !isset($_GET['product'])) { $product->id = $product->fk_product; }
             $product = callDoliApi("GET", "/products/".$product->id."?includestockdata=".doliIncludeStock()."&includesubproducts=true&includetrans=true", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
             print apply_filters( 'doliproductlist', $product);
 
