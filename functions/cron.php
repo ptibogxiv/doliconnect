@@ -33,7 +33,7 @@ function doliconnect_cron_process($refresh = false) {
         }
         $resultatsc = callDoliApi("GET", $request, null, dolidelay('category', $refresh));
         if ( !isset($resultatsc->error) && $resultatsc != null ) {
-            foreach ($resultatsc->childs as $category) {
+            foreach ($resultatsc as $category) {
                 $categories[$category->id] = $category->id;
                 doliconnect_image('category', $category->id, 1, $refresh, $category->entity);
             }

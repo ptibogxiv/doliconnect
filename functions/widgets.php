@@ -477,10 +477,6 @@ if ( doliCheckModules('discountprice', esc_attr(isset($_GET["refresh"]) ? $_GET[
 	print "'>".__(  'Discounted items', 'doliconnect')." <span class='badge bg-secondary rounded-pill'>".$count."</span></a>";
 }
 
-if ( $shop != null && $shop > 0 ) {
-	$resultatsc = $resultatsc->childs;
-} 
-
 foreach ($resultatsc as $categorie) {
 
 if ( doliversion('19.0.0') ) { 
