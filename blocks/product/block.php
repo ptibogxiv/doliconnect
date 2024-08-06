@@ -14,7 +14,7 @@ function doliconnect_product_block_render( $attributes, $content) {
 	$content .= "<small><div class='float-start'>";
 	$content .= dolirefresh($request, get_permalink(), dolidelay('product'));
 	$content .= "</div><div class='float-end'>";
-	$content .= dolihelp('ISSUE');
+	//$content .= dolihelp('ISSUE');
 	$content .= "</div></small>";
 	$content .= "</div></div>";
 	return $content;
