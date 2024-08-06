@@ -211,23 +211,23 @@ function doliPagination($object, $url, $page = 0) {
       $pagination = "<nav aria-label='Page navigation example'><ul class='pagination pagination-sm'>";
       if ($page > '1') {
       $pagination .= '<li class="page-item">
-            <a class="page-link" href="'.esc_url( add_query_arg( array( 'pg' => esc_attr($page)), $url) ).'" aria-label="Previous">
+            <a class="page-link" href="'.esc_url( add_query_arg( array( 'pg' => esc_attr($page-1)), $url) ).'" aria-label="Previous">
               <span aria-hidden="true">'.__( 'Previous', 'doliconnect').'</span>
               <span class="sr-only">'.__( 'Previous', 'doliconnect').'</span>
            </a>
         </li>';
       }
       if ($page > 0) {
-      $pagination .= '<li class="page-item"><a class="page-link" href="'.esc_url( add_query_arg( array( 'pg' => esc_attr($page)), $url) ).'">'.esc_attr($page).'</a></li>';
+      $pagination .= '<li class="page-item"><a class="page-link" href="'.esc_url( add_query_arg( array( 'pg' => esc_attr($page-1)), $url) ).'">'.esc_attr($page).'</a></li>';
       }    
-      $pagination .= '<li class="page-item active"><a class="page-link" href="'.esc_url( add_query_arg( array( 'pg' => esc_attr($page+1)), $url) ).'">'.esc_attr($page+1).'</a></li>';
+      $pagination .= '<li class="page-item active"><a class="page-link" href="'.esc_url( add_query_arg( array( 'pg' => esc_attr($page)), $url) ).'">'.esc_attr($page+1).'</a></li>';
       if ($count >= $limit) {
-      $pagination .= '<li class="page-item"><a class="page-link" href="'.esc_url( add_query_arg( array( 'pg' => esc_attr($page+2)), $url) ).'">'.esc_attr($page+2).'</a></li>';
+      $pagination .= '<li class="page-item"><a class="page-link" href="'.esc_url( add_query_arg( array( 'pg' => esc_attr($page+1)), $url) ).'">'.esc_attr($page+2).'</a></li>';
       if ($page < 1) {
       //$pagination .= '<li class="page-item"><a class="page-link" href="'.esc_url( add_query_arg( array( 'pg' => esc_attr($page+3)), $url) ).'">'.esc_attr($page+3).'</a></li>';
       } 
       $pagination .= '<li class="page-item">
-            <a class="page-link" href="'.esc_url( add_query_arg( array( 'pg' => esc_attr($page+2)), $url) ).'" aria-label="Next">
+            <a class="page-link" href="'.esc_url( add_query_arg( array( 'pg' => esc_attr($page+1)), $url) ).'" aria-label="Next">
               <span aria-hidden="true">'.__( 'Next', 'doliconnect').'</span>
               <span class="sr-only">'.__( 'Next', 'doliconnect').'</span>
             </a>
