@@ -841,16 +841,18 @@ global $current_user;
 						'fk_product' => trim($_POST['id']),
 						'fk_soc' => doliconnector($current_user, 'fk_soc'),
 						'qty' => trim($_POST['qty']),
-						'priv' => 0
+						'priv' => 0 
 					];
 					$addwish = callDoliApi("POST", "/wishlist", $data, 0);
-					$response = [
-						'modal' => doliModalTemplate('CartInfos', __( 'Wishlist', 'doliconnect'), __( "This item has been added to your wishlist.", "doliconnect"), '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">'.__( "Close", "doliconnect").'</button>'),
+					$response = [ 
+						'newwish' => '<i class="fa-solid fa-heart-crack" style="color:Fuchsia"></i>',
+						//'modal' => doliModalTemplate('CartInfos', __( 'Wishlist', 'doliconnect'), __( "This item has been added to your wishlist.", "doliconnect"), '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">'.__( "Close", "doliconnect").'</button>'),
 					];
 				} elseif ($_POST['modify'] == "unwish") {
 					$deletewish = callDoliApi("DELETE", "/wishlist/".trim($_POST['id']), null, 0);
 					$response = [
-						'modal' => doliModalTemplate('CartInfos', __( 'Wishlist', 'doliconnect'), __( "This item has been deleted to your wishlist.", "doliconnect"), '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">'.__( "Close", "doliconnect").'</button>'),
+						'newwish' => '<i class="fa-solid fa-heart"></i>',
+						//'modal' => doliModalTemplate('CartInfos', __( 'Wishlist', 'doliconnect'), __( "This item has been deleted to your wishlist.", "doliconnect"), '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">'.__( "Close", "doliconnect").'</button>'),
 					];
 				}
 				$request = "/wishlist?sortfield=t.rang&sortorder=ASC&thirdparty_ids=".doliconnector($current_user, 'fk_soc')."&sqlfilters=(t.priv%3A%3D%3A0)";

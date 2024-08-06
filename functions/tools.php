@@ -1720,7 +1720,7 @@ function doliWishlist($thirdpartyid, $productid, $refresh = false, $nohtml = fal
   foreach ($wishlist as $wsh) {
     if (isset($wsh->fk_product) && $productid == $wsh->fk_product) {
       if (!$nohtml) {
-        $wish = '<button class="btn btn-sm btn-light" id="wish-prod-'.$productid.'" name="wish" value="unwish" type="submit" onclick="doliJavaCartAction(\'updateLine\', '.$wsh->id.', 1, \'unwish\');"><i class="fa-solid fa-heart-crack" style="color:Fuchsia"></i></button>';
+        $wish = '<button class="btn btn-sm btn-light" id="wish-prod-'.$productid.'" name="wish" value="unwish" type="submit" onclick="doliJavaCartAction(\'updateLine\', '.$productid.', 1, \'unwish\');"><i class="fa-solid fa-heart-crack" style="color:Fuchsia"></i></button>';
       } else {
         $wish = true;
       }
@@ -3140,6 +3140,9 @@ function doliModalDiv() {
                 if (response.success) { 
                   if (document.getElementById("qty-prod-" + id) && response.data.hasOwnProperty("newqty")) {
                      document.getElementById("qty-prod-" + id).value = response.data.newqty;
+                  }
+                  if (document.getElementById("wish-prod-" + id) && response.data.hasOwnProperty("newwish")) {
+                     document.getElementById("wish-prod-" + id).innerHTML = response.data.newwish;
                   }
                   if (document.getElementById("DoliHeaderCartItems") && response.data.hasOwnProperty("items")) {
                     document.getElementById("DoliHeaderCartItems").innerHTML = response.data.items;
