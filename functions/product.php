@@ -739,10 +739,11 @@ global $current_user;
       $card = dolibug();
     } elseif ($product->id > 0 && !empty($product->status)) {
       $card .= '<div class="card-header">'.doliproduct($product, 'label'); 
-
-      $arr_params = array( 'product');
-      $return =  esc_url( remove_query_arg( $arr_params ), $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
-      $card .= '<a class="float-end text-decoration-none" href="'.esc_url( $return ).'"><i class="fas fa-arrow-left"></i>'.__( 'Back', 'doliconnect').'</a>';
+      if (strpos(esc_url($_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']), 'product') !== false) {
+        $arr_params = array( 'product');
+        $return =  esc_url( remove_query_arg( $arr_params ), $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+        $card .= '<a class="float-end text-decoration-none" href="'.esc_url( $return ).'"><i class="fas fa-arrow-left"></i>'.__( 'Back', 'doliconnect').'</a>';
+      }
       $card .= '</div><div class="card-body"><div class="row">';
       $card .= "<div class='col-12 d-block d-sm-block d-xs-block d-md-none'><center>";
       $card .= doliconnect_image('product', $product->id, array('limit'=>1, 'entity'=>$product->entity, 'size'=>'200x200'), esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
