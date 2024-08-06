@@ -723,71 +723,61 @@ add_filter( 'the_content', 'dolicontact_display');
 function dolisupplier_display($content) {
 global $current_user;
 
-if ( in_the_loop() && is_main_query() && is_page(doliconnectid('dolisupplier')) && !empty(doliconnectid('dolisupplier')) ) {
+  if ( in_the_loop() && is_main_query() && is_page(doliconnectid('dolisupplier')) && !empty(doliconnectid('dolisupplier')) ) {
 
-doliconnect_enqueues();
+    doliconnect_enqueues();
 
-$shopsupplier = doliconst("DOLICONNECT_CATSHOP_SUPPLIER", esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
-$category = "";
+    $shopsupplier = doliconst("DOLICONNECT_CATSHOP_SUPPLIER", esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+    $category = "";
 
-if (dolicheckie($_SERVER['HTTP_USER_AGENT'])) {
-print '<div class="card shadow-sm">';
-print '<div class="card-body">';
-print dolicheckie($_SERVER['HTTP_USER_AGENT']);
-print "</div></div>";
-} else {
+    if (dolicheckie($_SERVER['HTTP_USER_AGENT'])) {
+      print '<div class="card shadow-sm">';
+      print '<div class="card-body">';
+      print dolicheckie($_SERVER['HTTP_USER_AGENT']);
+      print "</div></div>";
+    } else {
 
-if ( isset($_GET['supplier']) && is_numeric(esc_attr($_GET['supplier'])) && esc_attr($_GET['supplier']) > 0 ) { 
- 
-$request = "/thirdparties/".esc_attr($_GET['supplier']);
-$module = 'thirdparty';
-$thirdparty = callDoliApi("GET", $request, null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-//print $thirdparty;
-}
-
-print "<div class='card shadow-sm'>";
-
-if ( !isset($thirdparty->error) && isset($_GET['supplier']) && isset($thirdparty->id) && ($_GET['supplier'] == $thirdparty->id) && $thirdparty->status == 1 && $thirdparty->fournisseur == 1 ) {
-
-print "<ul class='list-group list-group-flush'><li class='list-group-item'>";
-
-print "<div class='row'><div class='col-4 col-md-2'><center>";
-print doliconnect_image('thirdparty', $thirdparty->id.'/logos/'.$thirdparty->logo, array('entity'=> $thirdparty->entity), esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
-print "</center></div><div class='col-8 col-md-10'>".(!empty($thirdparty->name_alias)?$thirdparty->name_alias:$thirdparty->name);
-if ( !empty($thirdparty->country_id) ) {  
-$country = callDoliApi("GET", "/setup/dictionary/countries/".$thirdparty->country_id."?lang=".doliUserLang($current_user), null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-print "<br><span class='flag-icon flag-icon-".strtolower($thirdparty->country_code)."'></span> ".$country->label.""; }
-
-print "</div></div>";
-
-print "<p class='text-justify'>".$thirdparty->note_private."</p>";
-
-$photos = callDoliApi("GET", "/documents?modulepart=thirdparty&id=".$thirdparty->id, null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-
-if (!empty(doliconnect_categories('supplier', $thirdparty))) print doliconnect_categories('supplier', $thirdparty, doliconnecturl('dolisupplier'))."<br><br>";
-
-print doliconnect_image('thirdparty', $thirdparty->id, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), $thirdparty->entity);
-
-print "</li>"; 
-
-$module = 'product';
-$limit=20;
-if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']); }  else { $page = "0"; }
-$request = "/products/purchase_prices?sortfield=t.ref&sortorder=ASC&limit=".$limit."&page=".$page."&supplier=".esc_attr($_GET["supplier"])."&sqlfilters=(t.tosell%3A%3D%3A1)";
-$resultats2 = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-$resultats = array();
-if ( !isset($resultats2->error) && $resultats2 != null ) {
-
-        foreach ($resultats2 as $product) {
-          $resultats[$product[0]->id] = 1; 
-          $product = callDoliApi("GET", "/products/".$product[0]->id."?includestockdata=".doliIncludeStock()."&includesubproducts=true&includetrans=true", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-          print apply_filters( 'doliproductlist', $product);
-        }
-      } else {
-        print "<li class='list-group-item list-group-item-light'><center>".__( 'No item currently on sale', 'doliconnect')."</center></li>";
+      if ( isset($_GET['supplier']) && is_numeric(esc_attr($_GET['supplier'])) && esc_attr($_GET['supplier']) > 0 ) { 
+        $request = "/thirdparties/".esc_attr($_GET['supplier']);
+        $module = 'thirdparty';
+        $thirdparty = callDoliApi("GET", $request, null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
       }
 
-      print "</ul>";
+      print "<div class='card shadow-sm'>";
+
+      if ( !isset($thirdparty->error) && isset($_GET['supplier']) && isset($thirdparty->id) && ($_GET['supplier'] == $thirdparty->id) && $thirdparty->status == 1 && $thirdparty->fournisseur == 1 ) {
+
+        print "<ul class='list-group list-group-flush'><li class='list-group-item'>";
+        print "<div class='row'><div class='col-4 col-md-2'><center>";
+        print doliconnect_image('thirdparty', $thirdparty->id.'/logos/'.$thirdparty->logo, array('entity'=> $thirdparty->entity), esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+        print "</center></div><div class='col-8 col-md-10'>".(!empty($thirdparty->name_alias)?$thirdparty->name_alias:$thirdparty->name);
+        if ( !empty($thirdparty->country_id) ) {  
+        $country = callDoliApi("GET", "/setup/dictionary/countries/".$thirdparty->country_id."?lang=".doliUserLang($current_user), null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+        print "<br><span class='flag-icon flag-icon-".strtolower($thirdparty->country_code)."'></span> ".$country->label.""; }
+        print "</div></div>";
+        print "<p class='text-justify'>".$thirdparty->note_private."</p>";
+        $photos = callDoliApi("GET", "/documents?modulepart=thirdparty&id=".$thirdparty->id, null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+        if (!empty(doliconnect_categories('supplier', $thirdparty))) print doliconnect_categories('supplier', $thirdparty, doliconnecturl('dolisupplier'))."<br><br>";
+        print doliconnect_image('thirdparty', $thirdparty->id, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), $thirdparty->entity);
+        print "</li>"; 
+
+        $module = 'product';
+        $limit=20;
+        if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']); }  else { $page = "0"; }
+        $request = "/products/purchase_prices?sortfield=t.ref&sortorder=ASC&limit=".$limit."&page=".$page."&supplier=".esc_attr($_GET["supplier"])."&pagination_data=true&sqlfilters=(t.tosell%3A%3D%3A1)";
+        $resultats2 = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+        $resultats = array();
+        if ( !isset($resultats2->error) && $resultats2 != null ) {
+          foreach ($resultats2 as $product) {
+            $resultats[$product[0]->id] = 1; 
+            $product = callDoliApi("GET", "/products/".$product[0]->id."?includestockdata=".doliIncludeStock()."&includesubproducts=true&includetrans=true", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+            print apply_filters( 'doliproductlist', $product);
+          }
+        } else {
+          print "<li class='list-group-item list-group-item-light'><center>".__( 'No item currently on sale', 'doliconnect')."</center></li>";
+        }
+
+        print "</ul>";
 
       } else {
 
@@ -866,14 +856,13 @@ add_filter( 'the_content', 'dolisupplier_display');
 
 function dolishop_display($content) {
 
-if ( in_the_loop() && is_main_query() && is_page(doliconnectid('dolishop')) && !empty(doliconnectid('dolishop')) ) {
+  if ( in_the_loop() && is_main_query() && is_page(doliconnectid('dolishop')) && !empty(doliconnectid('dolishop')) ) {
 
-  doliconnect_enqueues();
+    doliconnect_enqueues();
 
-  $shop = doliconst("DOLICONNECT_CATSHOP", esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
-  //print $shop;
+    $shop = doliconst("DOLICONNECT_CATSHOP", esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 
-  print "<div class='card shadow-sm'>";
+    print "<div class='card shadow-sm'>";
 
     if (dolicheckie($_SERVER['HTTP_USER_AGENT'])) {
       print '<div class="card shadow-sm">';
