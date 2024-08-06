@@ -787,7 +787,7 @@ if ( !isset($resultats2->error) && $resultats2 != null ) {
         print "<li class='list-group-item list-group-item-light'><center>".__( 'No item currently on sale', 'doliconnect')."</center></li>";
       }
 
-      print "</ul><div class='card-body'>";
+      print "</ul>";
 
       } else {
 
