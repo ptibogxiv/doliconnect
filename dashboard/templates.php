@@ -1003,7 +1003,7 @@ if (isset($_GET['search'])&& !empty($_GET['search'])) {
 } elseif ( !isset($_GET["category"]) || isset($_GET["category"]) && $_GET["category"] == 'all') {
   printf( _n( 'There is %s item', 'There are %s items', $count, 'doliconnect' ), number_format_i18n( $count ) );
 } elseif (get_option('dolicartnewlist') != 'none' && isset($_GET['category']) && $_GET['category'] == 'new' && !isset($_GET['product'])) {  
-  print __(  'Novelties', 'doliconnect');
+  //print __(  'Novelties', 'doliconnect');
   printf( _n( 'There is %s new item', 'There are %s new items', $count, 'doliconnect' ), number_format_i18n( $count ) );
 } else {
   print doliproduct($category, 'label')."<br><small>".doliproduct($category, 'description').'</small>';
