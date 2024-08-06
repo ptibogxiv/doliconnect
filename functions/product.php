@@ -381,42 +381,37 @@ global $current_user;
 
 function doliProductCart($product, $line = null, $refresh = null, $wishlist = true, $fk_parent_line = null) {
   global $current_user;
-  $button = '<div id="doliform-product-'.$product->id.'" class="d-grid gap-2">';
+  $button = '<div id="doliform-product-'.$product->id.'-'.$line.'" class="d-grid gap-2">';
   $mstock = doliProductStock($product, $refresh, true, array(), $fk_parent_line);
   if ( empty(doliconnectid('dolicart')) || empty(doliconnectid('dolicart')) ) {
     $button .= "<a class='btn btn-block btn-info' href='".doliconnecturl('dolicontact')."?type=COM' role='button' title='".__( 'Contact us', 'doliconnect')."'>".__( 'Contact us', 'doliconnect').'</a>';
   } elseif ( is_user_logged_in() && doliCheckModules('commande', $refresh) && doliconnectid('dolicart') > 0 ) {
+    $button .= '<div class="input-group">';
     if (!empty($fk_parent_line) && !empty($mstock['fk_parent_line'])) {
       $button .= '<input id="qty-prod-'.$product->id.'" type="text" class="form-control form-control-sm" value="'.__( 'Linked item', 'doliconnect').'" aria-label="'.__( 'Linked item', 'doliconnect').'" style="text-align:center;" disabled readonly>';
     } elseif ( $mstock['stock'] <= 0 || $mstock['m2'] < $mstock['step'] ) { 
-      $button .= '<div class="input-group">';
       $button .= '<input id="qty-prod-'.$product->id.'" type="text" class="form-control form-control-sm" value="'.__( 'Unavailable', 'doliconnect').'" aria-label="'.__( 'Unavailable', 'doliconnect').'" style="text-align:center;" disabled readonly>';
-      if ( !empty($wishlist) && doliCheckModules('wishlist', $refresh)) {
-        $button .= doliWishlist(doliconnector($current_user, 'fk_soc'), $product->id, $refresh);
-      }
-      $button .= '</div>';
     } else {
       if ( doliCheckModules('adherentsplus', $refresh) && $product->id == doliconst("ADHERENT_PRODUCT_ID_FOR_SUBSCRIPTIONS", dolidelay('constante')) ) {
         if (empty($mstock['qty'])) {
-          //$button .= '<button class="btn btn-sm btn-warning mw-100" name="plus" value="plus" type="submit" onclick="doliJavaCartAction(\'updateLine\', '.$product->id.', 1, \'plus\');">'.__( 'Add to basket', 'doliconnect').'</button><input id="qty-prod-'.$product->id.'" type="hidden" aria-label="Quantity" value="'.$mstock['qty'].'" readonly>';
+          // to do link to membership modal $button .= '<button class="btn btn-sm btn-warning mw-100" name="plus" value="plus" type="submit" onclick="doliJavaCartAction(\'updateLine\', '.$product->id.', 1, \'plus\');">'.__( 'Add to basket', 'doliconnect').'</button><input id="qty-prod-'.$product->id.'" type="hidden" aria-label="Quantity" value="'.$mstock['qty'].'" readonly>';
         } else {
           $button .= '<button class="btn btn-sm btn-warning" name="delete" value="delete" type="submit" onclick="doliJavaCartAction(\'updateLine\', '.$product->id.', 0, \'delete\');"><i class="fa-solid fa-trash-can"></i></button>';
         }
       } else {
-        $button .= '<div class="input-group">';
         if (!empty($mstock['qty'])) $button .= '<button class="btn btn-sm btn-dark" name="delete" value="delete" type="submit" onclick="doliJavaCartAction(\'updateLine\', '.$product->id.', 0, \'delete\');"><i class="fa-solid fa-trash-can"></i></button>';
         $button .= '<button class="btn btn-sm btn-warning';
         if (empty($mstock['qty'])) $button .= ' disabled';
         $button .= '" name="minus" value="minus" type="submit" onclick="doliJavaCartAction(\'updateLine\', '.$product->id.', document.getElementById(\'qty-prod-'.$product->id.'\').value, \'minus\');"><i class="fa-solid fa-minus"></i></button>
         <input id="qty-prod-'.$product->id.'" type="tel" onchange="doliJavaCartAction(\'updateLine\', '.$product->id.', document.getElementById(\'qty-prod-'.$product->id.'\').value, \'modify\');" class="form-control form-control-sm" placeholder="" aria-label="Quantity" value="'.$mstock['qty'].'" style="text-align:center;">
         <button class="btn btn-sm btn-warning" name="plus" value="plus" type="submit" onclick="doliJavaCartAction(\'updateLine\', '.$product->id.', document.getElementById(\'qty-prod-'.$product->id.'\').value, \'plus\');"><i class="fa-solid fa-plus"></i></button>';
-        if ( !empty($wishlist) && doliCheckModules('wishlist', $refresh)) {
-          $button .= doliWishlist(doliconnector($current_user, 'fk_soc'), $product->id, $refresh);
-        }    
-        $button .= '</div>';
-        if (isset($mstock['step']) && $mstock['step']>1) $button .= '<div class="form-text" id="basic-addon4">'.sprintf(__( 'Sold by %s', 'doliconnect'), $mstock['step']).'</div>';
       }  
-    }  
+    } 
+    if ( !empty($wishlist) && doliCheckModules('wishlist', $refresh)) {
+      $button .= doliWishlist(doliconnector($current_user, 'fk_soc'), $product->id, $refresh);
+    }    
+    $button .= '</div>';
+    if (isset($mstock['step']) && $mstock['step']>1) $button .= '<div class="form-text" id="basic-addon4">'.sprintf(__( 'Sold by %s', 'doliconnect'), $mstock['step']).'</div>'; 
   } else {
     if ( get_option('doliloginmodal') == '1' ) {       
       $button .= doliModalButton('login', 'doliloginproduct-'.$product->id, __('Sign in', 'doliconnect'), 'button', 'btn btn-sm btn-outline-secondary');
