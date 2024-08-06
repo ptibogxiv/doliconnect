@@ -835,8 +835,8 @@ global $current_user;
 				}
 				wp_send_json_success($response);
 				die();
-			} elseif (isset($_POST['modify']) && ($_POST['modify'] == "wish" || $_POST['modify'] == "unwish")) {
-				if ($_POST['modify'] == "wish" && !doliWishlist(doliconnector($current_user, 'fk_soc'), trim($_POST['id']), false, true)) {
+			} elseif (isset($_POST['modify']) && ($_POST['modify'] == "wish")) {
+				if (!doliWishlist(doliconnector($current_user, 'fk_soc'), trim($_POST['id']), true, true)) {
 					$data = [
 						'fk_product' => trim($_POST['id']),
 						'fk_soc' => doliconnector($current_user, 'fk_soc'),
@@ -845,14 +845,12 @@ global $current_user;
 					];
 					$addwish = callDoliApi("POST", "/wishlist", $data, 0);
 					$response = [ 
-						'newwish' => '<i class="fa-solid fa-heart-crack" style="color:Fuchsia"></i>',
-						//'modal' => doliModalTemplate('CartInfos', __( 'Wishlist', 'doliconnect'), __( "This item has been added to your wishlist.", "doliconnect"), '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">'.__( "Close", "doliconnect").'</button>'),
+						'newwish' => '<i class="fa-solid fa-heart" style="color:Fuchsia"></i>'
 					];
-				} elseif ($_POST['modify'] == "unwish") {
-					$deletewish = callDoliApi("DELETE", "/wishlist/".trim($_POST['id']), null, 0);
+				} elseif (doliWishlist(doliconnector($current_user, 'fk_soc'), trim($_POST['id']), true, true)) {
+					$deletewish = callDoliApi("DELETE", "/wishlist/".doliWishlist(doliconnector($current_user, 'fk_soc'), trim($_POST['id']), false, true), null, 0);
 					$response = [
-						'newwish' => '<i class="fa-solid fa-heart"></i>',
-						//'modal' => doliModalTemplate('CartInfos', __( 'Wishlist', 'doliconnect'), __( "This item has been deleted to your wishlist.", "doliconnect"), '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">'.__( "Close", "doliconnect").'</button>'),
+						'newwish' => '<i class="fa-regular fa-heart"></i>'
 					];
 				}
 				$request = "/wishlist?sortfield=t.rang&sortorder=ASC&thirdparty_ids=".doliconnector($current_user, 'fk_soc')."&sqlfilters=(t.priv%3A%3D%3A0)";
