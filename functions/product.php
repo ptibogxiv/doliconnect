@@ -379,7 +379,7 @@ global $current_user;
   }
 }
 
-function doliProductCart($product, $refresh = null, $wishlist = true, $fk_parent_line = null) {
+function doliProductCart($product, $line = null, $refresh = null, $wishlist = true, $fk_parent_line = null) {
   global $current_user;
   $button = '<div id="doliform-product-'.$product->id.'" class="d-grid gap-2">';
   $mstock = doliProductStock($product, $refresh, true, array(), $fk_parent_line);
@@ -722,7 +722,7 @@ $list .= '</p></div>';
 if ( ! empty(doliconnectid('dolicart')) ) { 
 $list .= "<div class='col-12 col-md-4'><center>";
 $list .= doliProductPrice($product, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
-$list .= doliProductCart($product, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true, $fk_parent_line);
+$list .= doliProductCart($product, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true, $fk_parent_line);
 $list .= "</center></div>";
 }
 $list .= "</div></td></tr></table></li>";
@@ -791,7 +791,7 @@ global $current_user;
       if ( ! empty(doliconnectid('dolicart')) ) { 
         $card .= '<br><br><div class="jumbotron">';
         $card .= doliProductPrice($product, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
-        $card .= doliProductCart($product, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+        $card .= doliProductCart($product, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
         $card .= '</div>';
       }
       $card .= '</div><div class="col-12"><h6>'.__( 'Description', 'doliconnect' ).'</h6><p>'.doliproduct($product, 'description').'</p>';

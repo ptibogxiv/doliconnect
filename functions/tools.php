@@ -1626,7 +1626,7 @@ global $current_user;
       if (!empty($line->fk_parent_line) || (doliCheckModules('fraisdeport', $refresh) && empty($line->fk_parent_line) && doliconst('FRAIS_DE_PORT_ID_SERVICE_TO_USE', $refresh) == $line->fk_product)) {
         $doliline .= '<h6 class="mb-1">x'.$line->qty.'</h6>';
       } elseif ( isset($object->statut) && empty($object->statut) && !is_page(doliconnectid('doliaccount')) ) {
-        $doliline .= doliProductCart($product, $refresh, $wishlist);
+        $doliline .= doliProductCart($product, $line->id, $refresh, $wishlist);
       } else {
         $doliline .= '<h6 class="mb-1">x'.$line->qty.'</h6>';
       }
