@@ -860,242 +860,238 @@ function dolishop_display($content) {
 
 if ( in_the_loop() && is_main_query() && is_page(doliconnectid('dolishop')) && !empty(doliconnectid('dolishop')) ) {
 
-doliconnect_enqueues();
+  doliconnect_enqueues();
 
-$shop = doliconst("DOLICONNECT_CATSHOP", esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
-//print $shop;
+  $shop = doliconst("DOLICONNECT_CATSHOP", esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+  //print $shop;
 
-print "<div class='card shadow-sm'>";
+  print "<div class='card shadow-sm'>";
 
-if (dolicheckie($_SERVER['HTTP_USER_AGENT'])) {
-print '<div class="card shadow-sm">';
-print '<div class="card-body">';
-print dolicheckie($_SERVER['HTTP_USER_AGENT']);
-print "</div></div>";
-} elseif ( isset($_GET['search']) && !isset($_GET['product']) && empty($_GET['search'])) {
+    if (dolicheckie($_SERVER['HTTP_USER_AGENT'])) {
+      print '<div class="card shadow-sm">';
+      print '<div class="card-body">';
+      print dolicheckie($_SERVER['HTTP_USER_AGENT']);
+      print "</div></div>";
+    } elseif ( isset($_GET['search']) && !isset($_GET['product']) && empty($_GET['search'])) {
 
-print "<ul class='list-group list-group-flush'>";
-print "<div class='card-body'>";
+      print "<ul class='list-group list-group-flush'>";
+      print "<div class='card-body'>";
 
-print '<form role="search" method="get" id="shopform" action="' . doliconnecturl('dolishop') . '" ><div class="input-group">
-<input type="text" class="form-control" name="search" id="search" placeholder="' . esc_attr__('Name, Ref., Description or Barcode', 'doliconnect') . '" aria-label="Search for..." aria-describedby="searchproduct">
-<button class="btn btn-primary" type="submit" id="searchproduct" ><i class="fas fa-search"></i></button></div></form>';
+      print '<form role="search" method="get" id="shopform" action="' . doliconnecturl('dolishop') . '" ><div class="input-group">
+      <input type="text" class="form-control" name="search" id="search" placeholder="' . esc_attr__('Name, Ref., Description or Barcode', 'doliconnect') . '" aria-label="Search for..." aria-describedby="searchproduct">
+      <button class="btn btn-primary" type="submit" id="searchproduct" ><i class="fas fa-search"></i></button></div></form>';
 
-print "</div><div class='card-footer text-muted'>";
-print "<small><div class='float-start'>";
-if ( isset($request) ) print dolirefresh($request, get_permalink(), dolidelay('product'));
-print "</div><div class='float-end'>";
-print dolihelp('ISSUE');
-print "</div></small>";
-print "</div></div>";
+      print "</div><div class='card-footer text-muted'>";
+      print "<small><div class='float-start'>";
+      if ( isset($request) ) print dolirefresh($request, get_permalink(), dolidelay('product'));
+      print "</div><div class='float-end'>";
+      print dolihelp('ISSUE');
+      print "</div></small>";
+      print "</div></div>";
 
-} elseif ( doliCheckModules('discountprice') && isset($_GET['category']) && $_GET['category'] == 'discount' && !isset($_GET['product'])) {
+    } elseif ( doliCheckModules('discountprice') && isset($_GET['category']) && $_GET['category'] == 'discount' && !isset($_GET['product'])) {
 
-print "<ul class='list-group list-group-flush'>";
+      print "<ul class='list-group list-group-flush'>";
 
-$limit=25;
-if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']-1); }  else { $page = 0; }
-$date = new DateTime(); 
-$date->modify('NOW');
-$lastdate = $date->format('Y-m-d');
-$request = "/discountprice?sortfield=t.rowid&sortorder=DESC&limit=".$limit."&page=".$page."&sqlfilters=(t.date_begin%3A%3C%3D%3A'".$lastdate."')%20AND%20(t.date_end%3A%3E%3D%3A'".$lastdate."')%20AND%20(d.tosell%3A%3D%3A1)";
-$resultats = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-//print $resultatso;
+      $limit=25;
+      if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']-1); }  else { $page = 0; }
+      $date = new DateTime(); 
+      $date->modify('NOW');
+      $lastdate = $date->format('Y-m-d');
+      $request = "/discountprice?sortfield=t.rowid&sortorder=DESC&limit=".$limit."&page=".$page."&sqlfilters=(t.date_begin%3A%3C%3D%3A'".$lastdate."')%20AND%20(t.date_end%3A%3E%3D%3A'".$lastdate."')%20AND%20(d.tosell%3A%3D%3A1)";
+      $resultats = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+      //print $resultatso;
 
-if ( !isset($resultats->error) && $resultats != null ) {
+      if ( !isset($resultats->error) && $resultats != null ) {
 
-print "<li class='list-group-item list-group-item-light'><center>".__(  'Here are our discounted items', 'doliconnect')."</center></li>";
-foreach ($resultats as $product) {
-
-$product = callDoliApi("GET", "/products/".$product->fk_product."?includestockdata=".doliIncludeStock()."&includesubproducts=true&includetrans=true", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-print apply_filters( 'doliproductlist', $product);
- 
-}
-} else {
-print "<li class='list-group-item list-group-item-light'><center>".__(  'No discounted item', 'doliconnect')."</center></li>";
-}
-print "</ul><div class='card-body'>";
-print doliPagination($resultats, $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], $page, $limit);
-print "</div><div class='card-footer text-muted'>";
-print "<small><div class='float-start'>";
-if ( isset($request) ) print dolirefresh($request, get_permalink(), dolidelay('product'));
-print "</div><div class='float-end'>";
-//print dolihelp('ISSUE');
-print "</div></small>";
-print "</div></div>";
-
-} elseif ( isset($_GET['product']) && is_numeric(esc_attr($_GET['product'])) ) {
-
-$request = "/products/".esc_attr($_GET['product'])."?includestockdata=".doliIncludeStock()."&includesubproducts=true&includetrans=true";
-$product = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-
-print "<div class='card-body'>";
-print apply_filters( 'doliproductcard', $product, null);
-print "</div>";
-
-print "</ul><div class='card-body'>";
-
-print "</div><div class='card-footer text-muted'>";
-print "<small><div class='float-start'>";
-if ( isset($request) ) print dolirefresh($request, get_permalink(), dolidelay('product'));
-print "</div><div class='float-end'>";
-//print dolihelp('ISSUE');
-print "</div></small>";
-print "</div></div>";
-
-} else {
-
-$limit=25;
-if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']-1); } else { $page = 0; }
-if ( isset($_GET['field']) ) { $field = esc_attr($_GET['field']); } else { $field = 'label'; }
-if ( isset($_GET['order']) ) { $order = esc_attr($_GET['order']); } else { $order = 'ASC'; }
-
-print "<ul class='list-group list-group-flush'>";
-
-$cat = esc_attr(isset($_GET["subsubcategory"]) ? $_GET["subsubcategory"] : (isset($_GET["subcategory"]) ? $_GET["subcategory"] : (isset($_GET["category"]) ? $_GET["category"] : null)));
-$subcat = esc_attr(isset($_GET["subcategory"]) ? $_GET["subcategory"] : $cat);
-$subsubcat = esc_attr(isset($_GET["subsubcategory"]) ? $_GET["subsubcategory"] : $cat);
-$category = callDoliApi("GET", "/categories/".$cat."?include_childs=true", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-
-if ((is_numeric($cat) && isset($category->id) && $category->id > 0) || (isset($_GET["category"]) && $_GET["category"] == 'all') || (isset($_GET["category"]) && $_GET["category"] == 'new') || !isset($_GET["category"]) || (isset($_GET['search'])&& !empty($_GET['search']))) {
-
-if (isset($_GET['search'])&& !empty($_GET['search']))  {
-  $search = explode(' ', esc_attr($_GET['search']));
-  $sqlfilters = null;
-  foreach($search as $i=>$key) {
-    $sqlfilters .= "((t.label%3Alike%3A'%25".esc_attr($key)."%25')%20OR%20(t.description%3Alike%3A'%25".esc_attr($key)."%25')%20OR%20(t.ref%3Alike%3A'%25".esc_attr($key)."%25')%20OR%20(t.barcode%3Alike%3A'%25".esc_attr($key)."%25'))%20AND%20";
-  }
-  $request = "/products?sortfield=t.".$field."&sortorder=".$order."&limit=".$limit."&page=".$page."&pagination_data=true&sqlfilters=".$sqlfilters."(t.tosell%3A%3D%3A1)";
-  $object = callDoliApi("GET", $request, null, dolidelay('search', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-} elseif (get_option('dolicartnewlist') != 'none' && isset($_GET['category']) && $_GET['category'] == 'new' && !isset($_GET['product'])) {
-  $date = new DateTime(); 
-  $date->modify('NOW');
-  $duration = (!empty(get_option('dolicartnewlist'))?get_option('dolicartnewlist'):'month');
-  $date->modify('FIRST DAY OF LAST '.$duration.' MIDNIGHT');
-  $lastdate = $date->format('Y-m-d');
-  $request = "/products?sortfield=t.".$field."&sortorder=".$order."&limit=".$limit."&page=".$page."&category=".esc_attr($shop)."&pagination_data=true&sqlfilters=(t.datec%3A%3E%3A'".$lastdate."')%20AND%20(t.tosell%3A%3D%3A1)";
-  $object = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-} elseif (isset($_GET["category"]) && $_GET["category"] == 'all') {
-  $request = "/products?sortfield=t.".$field."&sortorder=".$order."&limit=".$limit."&page=".$page."&category=".esc_attr($shop)."&pagination_data=true&sqlfilters=(t.tosell%3A%3D%3A1)";
-  $object= callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-} else {
-  $request = "/products?sortfield=t.".$field."&sortorder=".$order."&limit=".$limit."&page=".$page."&category=".$cat."&pagination_data=true&sqlfilters=(t.tosell%3A%3D%3A1)";
-  $object = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-} 
-if ( doliversion('19.0.0') && isset($object->data) ) { $resultats = $object->data; } else { $resultats = $object; }
-//print $resultats;
-
-if ( doliversion('19.0.0') && isset($object->pagination) ) { 
-  $count = $object->pagination->total;
-} else { 
-  if (empty($object) || isset($object->error)) {
-    $count = 0;
-  } else {
-    $count = count($object);
-  }
-}
-
-print "<li class='list-group-item'>";
-print "<div class='row'><div class='col-6 col-md-7'>";
-if (isset($_GET['search'])&& !empty($_GET['search'])) {
-  printf( _n( 'We have found %s item with this search', 'We have found %s items with this search', $count, 'doliconnect' ), number_format_i18n( $count ) );
-  print " '".esc_attr($_GET['search'])."'";
-} elseif ( !isset($_GET["category"]) || isset($_GET["category"]) && $_GET["category"] == 'all') {
-  printf( _n( 'There is %s item', 'There are %s items', $count, 'doliconnect' ), number_format_i18n( $count ) );
-} elseif (get_option('dolicartnewlist') != 'none' && isset($_GET['category']) && $_GET['category'] == 'new' && !isset($_GET['product'])) {  
-  //print __(  'Novelties', 'doliconnect');
-  printf( _n( 'There is %s new item', 'There are %s new items', $count, 'doliconnect' ), number_format_i18n( $count ) );
-} else {
-  print doliproduct($category, 'label');
-}
-print '</div><div class="col-6 col-md-5"><div class="input-group">
-  <span class="input-group-text" id="basic-addon1"><i class="fas fa-filter"></i></span><select id="selectbox" class="form-select form-select-sm" aria-label=".form-select-sm example" name="" onchange="javascript:location.href = this.value;">
-    <option value="" disabled selected>'.__( '- Select -', 'doliconnect').'</option>
-    <option value="'.esc_url( add_query_arg( array( 'search' =>isset($_GET['search'])?esc_attr($_GET['search']):null, 'category' => !empty($cat)?$cat:null, 'subcategory' => !empty($subcat)?$subcat:null, 'pg' => $page+1, 'field' => 'label', 'order' => 'ASC'), doliconnecturl('dolishop')) ).'"';
-    if ($field == 'label' && $order == 'ASC') { print 'selected'; }
-    print '>'.__( 'Name A->Z', 'doliconnect').'</option>
-    <option value="'.esc_url( add_query_arg( array( 'search' =>isset($_GET['search'])?esc_attr($_GET['search']):null, 'category' => !empty($cat)?$cat:null, 'subcategory' => !empty($subcat)?$subcat:null, 'pg' => $page+1, 'field' => 'label', 'order' => 'DESC'), doliconnecturl('dolishop')) ).'"';
-    if ($field == 'label' && $order == 'DESC') { print 'selected'; }
-    print '>'.__( 'Name Z->A', 'doliconnect').'</option>
-    <option value="'.esc_url( add_query_arg( array( 'search' =>isset($_GET['search'])?esc_attr($_GET['search']):null, 'category' => !empty($cat)?$cat:null, 'subcategory' => !empty($subcat)?$subcat:null, 'pg' => $page+1, 'field' => 'rowid', 'order' => 'DESC'), doliconnecturl('dolishop')) ).'"';
-    if ($field == 'rowid' && $order == 'DESC') { print 'selected'; }
-    print '>'.__( 'Novelties', 'doliconnect').'</option>
-    <option value="'.esc_url( add_query_arg( array( 'search' =>isset($_GET['search'])?esc_attr($_GET['search']):null,'category' => !empty($cat)?$cat:null, 'subcategory' => !empty($subcat)?$subcat:null, 'pg' => $page+1, 'field' => 'price', 'order' => 'ASC'), doliconnecturl('dolishop')) ).'"';
-    if ($field == 'price' && $order == 'ASC') { print 'selected'; }
-    print '>'.__( 'Lowest prices', 'doliconnect').'</option>
-    <option value="'.esc_url( add_query_arg( array( 'search' =>isset($_GET['search'])?esc_attr($_GET['search']):null, 'category' => !empty($cat)?$cat:null, 'subcategory' => !empty($subcat)?$subcat:null, 'pg' => $page+1, 'field' => 'price', 'order' => 'DESC'), doliconnecturl('dolishop')) ).'"';
-    if ($field == 'price' && $order == 'DESC') { print 'selected'; }
-    print '>'.__( 'Highest prices', 'doliconnect').'</option>
-</select></div></div>';
-print '</div></li>'; 
-
-if (!empty(doliproduct($category, 'description'))) {
- print '<li class="list-group-item"><small>'.doliproduct($category, 'description').'</small></li>';
-}
-
-if (!isset($_GET['search']) && isset($_GET["category"])) {
-  $request2 = "/categories/".$cat."?include_childs=true";
-  $resultats2 = callDoliApi("GET", $request2, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-
-  if ( !isset($resultats2->error) && $resultats2 != null && isset($resultats2->childs) && !empty($resultats2->childs) ) {
-    print '<li class="list-group-item">';
-    foreach ($resultats2->childs as $categorie) {
-      if ( doliversion('19.0.0') && isset($object->data) ) { 
-        $requestp = "/products?sortfield=t.".$field."&sortorder=".$order."&limit=".$limit."&page=".$page."&category=".$categorie->id."&ids_only=true&pagination_data=true&sqlfilters=(t.tosell%3A%3D%3A1)";
-        $listproduct = callDoliApi("GET", $requestp, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
-        $count = $listproduct->pagination->total;
-     } else { 
-        $requestp = "/products?sortfield=t.".$field."&sortorder=".$order."&category=".$categorie->id."&ids_only=true&pagination_data=true&sqlfilters=(t.tosell%3A%3D%3A1)";
-        $listproduct = callDoliApi("GET", $requestp, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-        if (empty($listproduct) || isset($listproduct->error)) {
-       $count = 0;
-        } else {
-         $count = count($listproduct);
-       }
-      }
-      $arg['category'] = esc_attr($_GET['category']);
-      if (isset($_GET["subcategory"]) && isset($_GET["category"])) {
-       $arg['subcategory'] = esc_attr($_GET['subcategory']);
-        $arg['subsubcategory'] = $categorie->id;
+        print "<li class='list-group-item list-group-item-light'><center>".__(  'Here are our discounted items', 'doliconnect')."</center></li>";
+        foreach ($resultats as $product) {
+          $product = callDoliApi("GET", "/products/".$product->fk_product."?includestockdata=".doliIncludeStock()."&includesubproducts=true&includetrans=true", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+          print apply_filters( 'doliproductlist', $product);
+        }
       } else {
-       $arg['subcategory'] = $categorie->id;
+        print "<li class='list-group-item list-group-item-light'><center>".__(  'No discounted item', 'doliconnect')."</center></li>";
       }
-     print "<a href='".esc_url( add_query_arg( $arg, doliconnecturl('dolishop')) )."' class='btn btn-link'>".doliproduct($categorie, 'label')." (".$count.")</a>";
-    }
-    print '</li>';
-  }
-}
+      print "</ul><div class='card-body'>";
+      print doliPagination($resultats, $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], $page, $limit);
+      print "</div><div class='card-footer text-muted'>";
+      print "<small><div class='float-start'>";
+      if ( isset($request) ) print dolirefresh($request, get_permalink(), dolidelay('product'));
+      print "</div><div class='float-end'>";
+      //print dolihelp('ISSUE');
+      print "</div></small>";
+      print "</div></div>";
 
-if ( !isset($resultats->error) && $resultats != null ) {
-  foreach ($resultats as $product) {
-    $product = callDoliApi("GET", "/products/".$product->id."?includestockdata=".doliIncludeStock()."&includesubproducts=true&includetrans=true", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-    print apply_filters( 'doliproductlist', $product);
+    } elseif ( isset($_GET['product']) && is_numeric(esc_attr($_GET['product'])) ) {
 
-  }
-} else {
-  print "<li class='list-group-item list-group-item-light'><center>".__( 'No item currently on sale', 'doliconnect')."</center></li>";
-}
-} else {
-    print "<li class='list-group-item list-group-item-white'><center><br><br><br><br><div class='align-middle'><i class='fas fa-bomb fa-7x fa-fw'></i><h4>".__( 'Oops! This category does not appear to exist', 'doliconnect' )."</h4></div><br>";
-  print '<button type="button" class="btn btn-link" onclick="window.history.back()">'.__( 'Return', 'doliconnect').'</button>';
-  print "<br><br><br></center></li>";
-}
+      $request = "/products/".esc_attr($_GET['product'])."?includestockdata=".doliIncludeStock()."&includesubproducts=true&includetrans=true";
+      $product = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
-print '</ul>';
+      print "<div class='card-body'>";
+      print apply_filters( 'doliproductcard', $product, null);
+      print "</div>";
 
-if (isset($object)) { 
-  print '<div class="card-body">';
-  print doliPagination($object, $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], $page, $limit);
-  print '</div>';
-}
-print '<div class="card-footer text-muted">';
-print '<small><div class="float-start">';
-if ( isset($request) ) print dolirefresh($request, get_permalink(), dolidelay('product'));
-print '</div><div class="float-end">';
-//print dolihelp('ISSUE');
-print '</div></small>';
-print '</div></div>';
+      print "</ul><div class='card-body'>";
 
+      print "</div><div class='card-footer text-muted'>";
+      print "<small><div class='float-start'>";
+      if ( isset($request) ) print dolirefresh($request, get_permalink(), dolidelay('product'));
+      print "</div><div class='float-end'>";
+      //print dolihelp('ISSUE');
+      print "</div></small>";
+      print "</div></div>";
+
+    } else {
+
+      $limit=25;
+      if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']-1); } else { $page = 0; }
+      if ( isset($_GET['field']) ) { $field = esc_attr($_GET['field']); } else { $field = 'label'; }
+      if ( isset($_GET['order']) ) { $order = esc_attr($_GET['order']); } else { $order = 'ASC'; }
+
+      print "<ul class='list-group list-group-flush'>";
+
+      $cat = esc_attr(isset($_GET["subsubcategory"]) ? $_GET["subsubcategory"] : (isset($_GET["subcategory"]) ? $_GET["subcategory"] : (isset($_GET["category"]) ? $_GET["category"] : null)));
+      $subcat = esc_attr(isset($_GET["subcategory"]) ? $_GET["subcategory"] : $cat);
+      $subsubcat = esc_attr(isset($_GET["subsubcategory"]) ? $_GET["subsubcategory"] : $cat);
+      $category = callDoliApi("GET", "/categories/".$cat."?include_childs=true", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+
+      if ((is_numeric($cat) && isset($category->id) && $category->id > 0) || (isset($_GET["category"]) && $_GET["category"] == 'all') || (isset($_GET["category"]) && $_GET["category"] == 'new') || !isset($_GET["category"]) || (isset($_GET['search'])&& !empty($_GET['search']))) {
+
+        if (isset($_GET['search'])&& !empty($_GET['search']))  {
+          $search = explode(' ', esc_attr($_GET['search']));
+          $sqlfilters = null;
+          foreach($search as $i=>$key) {
+            $sqlfilters .= "((t.label%3Alike%3A'%25".esc_attr($key)."%25')%20OR%20(t.description%3Alike%3A'%25".esc_attr($key)."%25')%20OR%20(t.ref%3Alike%3A'%25".esc_attr($key)."%25')%20OR%20(t.barcode%3Alike%3A'%25".esc_attr($key)."%25'))%20AND%20";
+          }
+          $request = "/products?sortfield=t.".$field."&sortorder=".$order."&limit=".$limit."&page=".$page."&pagination_data=true&sqlfilters=".$sqlfilters."(t.tosell%3A%3D%3A1)";
+          $object = callDoliApi("GET", $request, null, dolidelay('search', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+        } elseif (get_option('dolicartnewlist') != 'none' && isset($_GET['category']) && $_GET['category'] == 'new' && !isset($_GET['product'])) {
+          $date = new DateTime(); 
+          $date->modify('NOW');
+          $duration = (!empty(get_option('dolicartnewlist'))?get_option('dolicartnewlist'):'month');
+          $date->modify('FIRST DAY OF LAST '.$duration.' MIDNIGHT');
+          $lastdate = $date->format('Y-m-d');
+          $request = "/products?sortfield=t.".$field."&sortorder=".$order."&limit=".$limit."&page=".$page."&category=".esc_attr($shop)."&pagination_data=true&sqlfilters=(t.datec%3A%3E%3A'".$lastdate."')%20AND%20(t.tosell%3A%3D%3A1)";
+          $object = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+        } elseif (isset($_GET["category"]) && $_GET["category"] == 'all') {
+          $request = "/products?sortfield=t.".$field."&sortorder=".$order."&limit=".$limit."&page=".$page."&category=".esc_attr($shop)."&pagination_data=true&sqlfilters=(t.tosell%3A%3D%3A1)";
+          $object= callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+        } else {
+          $request = "/products?sortfield=t.".$field."&sortorder=".$order."&limit=".$limit."&page=".$page."&category=".$cat."&pagination_data=true&sqlfilters=(t.tosell%3A%3D%3A1)";
+          $object = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+        } 
+        if ( doliversion('19.0.0') && isset($object->data) ) { $resultats = $object->data; } else { $resultats = $object; }
+        //print $resultats;
+
+        if ( doliversion('19.0.0') && isset($object->pagination) ) { 
+          $count = $object->pagination->total;
+        } else { 
+          if (empty($object) || isset($object->error)) {
+            $count = 0;
+          } else {
+            $count = count($object);
+          }
+        }
+
+        print "<li class='list-group-item'>";
+        print "<div class='row'><div class='col-6 col-md-7'>";
+        if (isset($_GET['search'])&& !empty($_GET['search'])) {
+          printf( _n( 'We have found %s item with this search', 'We have found %s items with this search', $count, 'doliconnect' ), number_format_i18n( $count ) );
+          print " '".esc_attr($_GET['search'])."'";
+        } elseif ( !isset($_GET["category"]) || isset($_GET["category"]) && $_GET["category"] == 'all') {
+          printf( _n( 'There is %s item', 'There are %s items', $count, 'doliconnect' ), number_format_i18n( $count ) );
+        } elseif (get_option('dolicartnewlist') != 'none' && isset($_GET['category']) && $_GET['category'] == 'new' && !isset($_GET['product'])) {  
+          //print __(  'Novelties', 'doliconnect');
+          printf( _n( 'There is %s new item', 'There are %s new items', $count, 'doliconnect' ), number_format_i18n( $count ) );
+        } else {
+          print doliproduct($category, 'label');
+        }
+        print '</div><div class="col-6 col-md-5"><div class="input-group">
+          <span class="input-group-text" id="basic-addon1"><i class="fas fa-filter"></i></span><select id="selectbox" class="form-select form-select-sm" aria-label=".form-select-sm example" name="" onchange="javascript:location.href = this.value;">
+            <option value="" disabled selected>'.__( '- Select -', 'doliconnect').'</option>
+            <option value="'.esc_url( add_query_arg( array( 'search' =>isset($_GET['search'])?esc_attr($_GET['search']):null, 'category' => !empty($cat)?$cat:null, 'subcategory' => !empty($subcat)?$subcat:null, 'pg' => $page+1, 'field' => 'label', 'order' => 'ASC'), doliconnecturl('dolishop')) ).'"';
+            if ($field == 'label' && $order == 'ASC') { print 'selected'; }
+            print '>'.__( 'Name A->Z', 'doliconnect').'</option>
+            <option value="'.esc_url( add_query_arg( array( 'search' =>isset($_GET['search'])?esc_attr($_GET['search']):null, 'category' => !empty($cat)?$cat:null, 'subcategory' => !empty($subcat)?$subcat:null, 'pg' => $page+1, 'field' => 'label', 'order' => 'DESC'), doliconnecturl('dolishop')) ).'"';
+            if ($field == 'label' && $order == 'DESC') { print 'selected'; }
+            print '>'.__( 'Name Z->A', 'doliconnect').'</option>
+            <option value="'.esc_url( add_query_arg( array( 'search' =>isset($_GET['search'])?esc_attr($_GET['search']):null, 'category' => !empty($cat)?$cat:null, 'subcategory' => !empty($subcat)?$subcat:null, 'pg' => $page+1, 'field' => 'rowid', 'order' => 'DESC'), doliconnecturl('dolishop')) ).'"';
+            if ($field == 'rowid' && $order == 'DESC') { print 'selected'; }
+            print '>'.__( 'Novelties', 'doliconnect').'</option>
+            <option value="'.esc_url( add_query_arg( array( 'search' =>isset($_GET['search'])?esc_attr($_GET['search']):null,'category' => !empty($cat)?$cat:null, 'subcategory' => !empty($subcat)?$subcat:null, 'pg' => $page+1, 'field' => 'price', 'order' => 'ASC'), doliconnecturl('dolishop')) ).'"';
+            if ($field == 'price' && $order == 'ASC') { print 'selected'; }
+            print '>'.__( 'Lowest prices', 'doliconnect').'</option>
+            <option value="'.esc_url( add_query_arg( array( 'search' =>isset($_GET['search'])?esc_attr($_GET['search']):null, 'category' => !empty($cat)?$cat:null, 'subcategory' => !empty($subcat)?$subcat:null, 'pg' => $page+1, 'field' => 'price', 'order' => 'DESC'), doliconnecturl('dolishop')) ).'"';
+            if ($field == 'price' && $order == 'DESC') { print 'selected'; }
+            print '>'.__( 'Highest prices', 'doliconnect').'</option>
+        </select></div></div>';
+        print '</div></li>'; 
+
+        if (!empty(doliproduct($category, 'description'))) {
+        print '<li class="list-group-item"><small>'.doliproduct($category, 'description').'</small></li>';
+        }
+
+        if (!isset($_GET['search']) && isset($_GET["category"])) {
+          $request2 = "/categories/".$cat."?include_childs=true";
+          $resultats2 = callDoliApi("GET", $request2, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+
+          if ( !isset($resultats2->error) && $resultats2 != null && isset($resultats2->childs) && !empty($resultats2->childs) ) {
+            print '<li class="list-group-item">';
+            foreach ($resultats2->childs as $categorie) {
+              if ( doliversion('19.0.0') && isset($object->data) ) { 
+                $requestp = "/products?sortfield=t.".$field."&sortorder=".$order."&limit=".$limit."&page=".$page."&category=".$categorie->id."&ids_only=true&pagination_data=true&sqlfilters=(t.tosell%3A%3D%3A1)";
+                $listproduct = callDoliApi("GET", $requestp, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
+                $count = $listproduct->pagination->total;
+            } else { 
+                $requestp = "/products?sortfield=t.".$field."&sortorder=".$order."&category=".$categorie->id."&ids_only=true&pagination_data=true&sqlfilters=(t.tosell%3A%3D%3A1)";
+                $listproduct = callDoliApi("GET", $requestp, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+                if (empty($listproduct) || isset($listproduct->error)) {
+              $count = 0;
+                } else {
+                $count = count($listproduct);
+              }
+              }
+              $arg['category'] = esc_attr($_GET['category']);
+              if (isset($_GET["subcategory"]) && isset($_GET["category"])) {
+              $arg['subcategory'] = esc_attr($_GET['subcategory']);
+                $arg['subsubcategory'] = $categorie->id;
+              } else {
+              $arg['subcategory'] = $categorie->id;
+              }
+            print "<a href='".esc_url( add_query_arg( $arg, doliconnecturl('dolishop')) )."' class='btn btn-link'>".doliproduct($categorie, 'label')." (".$count.")</a>";
+            }
+            print '</li>';
+          }
+        }
+
+        if ( !isset($resultats->error) && $resultats != null ) {
+          foreach ($resultats as $product) {
+            $product = callDoliApi("GET", "/products/".$product->id."?includestockdata=".doliIncludeStock()."&includesubproducts=true&includetrans=true", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+            print apply_filters( 'doliproductlist', $product);
+
+          }
+        } else {
+          print "<li class='list-group-item list-group-item-light'><center>".__( 'No item currently on sale', 'doliconnect')."</center></li>";
+        }
+      } else {
+          print "<li class='list-group-item list-group-item-white'><center><br><br><br><br><div class='align-middle'><i class='fas fa-bomb fa-7x fa-fw'></i><h4>".__( 'Oops! This category does not appear to exist', 'doliconnect' )."</h4></div><br>";
+        print '<button type="button" class="btn btn-link" onclick="window.history.back()">'.__( 'Return', 'doliconnect').'</button>';
+        print "<br><br><br></center></li>";
+      }
+      print '</ul>';
+
+      if (isset($object)) { 
+        print '<div class="card-body">';
+        print doliPagination($object, $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], $page, $limit);
+        print '</div>';
+      }
+      print '<div class="card-footer text-muted">';
+      print '<small><div class="float-start">';
+      if ( isset($request) ) print dolirefresh($request, get_permalink(), dolidelay('product'));
+      print '</div><div class="float-end">';
+      //print dolihelp('ISSUE');
+      print '</div></small>';
+      print '</div></div>';
     } 
   } else {
     return $content;
