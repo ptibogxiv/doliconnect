@@ -958,7 +958,7 @@ function dolishop_display($content) {
             $count = count($object);
           }
         }
-        
+        //print var_dump($object);
         print '<div class="card-header">';
         if (isset($_GET['search'])&& !empty($_GET['search'])) {
           printf( _n( 'We have found %s item with this search', 'We have found %s items with this search', $count, 'doliconnect' ), number_format_i18n( $count ) );
