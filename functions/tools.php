@@ -3142,7 +3142,7 @@ function doliModalDiv() {
                      document.getElementById("qty-prod-" + id).value = response.data.newqty;
                   }
                   if (document.getElementById("wish-prod-" + id) && response.data.hasOwnProperty("newwish")) {
-                     document.getElementById("wish-prod-" + id).innerHTML = response.data.newwish;
+                     document.getElementById("doliform-product-" + id).outerHTML = response.data.newwish;
                   }
                   if (document.getElementById("DoliHeaderCartItems") && response.data.hasOwnProperty("items")) {
                     document.getElementById("DoliHeaderCartItems").innerHTML = response.data.items;
