@@ -380,8 +380,9 @@ global $current_user;
 }
 
 function doliWishlist($thirdpartyid, $productid, $refresh = false, $nohtml = false) {
-  $request = "/wishlist?sortfield=t.rang&sortorder=ASC&thirdparty_ids=".$thirdpartyid."&sqlfilters=(t.priv%3A%3D%3A0)";
-  $wishlist = callDoliApi("GET", $request, null, dolidelay('product', $refresh));
+  $request = "/wishlist?sortfield=p.label&sortorder=ASC&thirdparty_ids=".$thirdpartyid."&pagination_data=true&sqlfilters=(t.priv%3A%3D%3A0)";
+  $object = callDoliApi("GET", $request, null, dolidelay('product', $refresh));
+  if ( doliversion('19.0.0') && isset($object->data) ) { $wishlist = $object->data; } else { $wishlist = $object; }
   if (!$nohtml) {
     $wish = '<button class="btn btn-sm btn-light" id="wish-prod-'.$productid.'" value="wish" type="submit" onclick="doliJavaCartAction(\'updateLine\', '.$productid.', 1, \'wish\');"><i class="fa-regular fa-heart"></i></button>';
   } else {
