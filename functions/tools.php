@@ -1379,7 +1379,7 @@ function dolidelay($delay = null, $refresh = false, $protect = false) {
       elseif ($delay == 'search') { $delay = HOUR_IN_SECONDS; }
       elseif ($delay == 'paymentmethods') { $delay = WEEK_IN_SECONDS; }
       elseif ($delay == 'thirdparty' || $delay == 'customer' || $delay == 'supplier' || $delay == 'contact') { $delay = DAY_IN_SECONDS; }
-      elseif ($delay == 'category') { $delay = WEEK_IN_SECONDS; }
+      elseif ($delay == 'category') { $delay = MONTH_IN_SECONDS; }
       elseif ($delay == 'proposal') { $delay = HOUR_IN_SECONDS; }
       elseif ($delay == 'order') { $delay = HOUR_IN_SECONDS; }
       elseif ($delay == 'invoice') { $delay = HOUR_IN_SECONDS; }
@@ -1389,6 +1389,7 @@ function dolidelay($delay = null, $refresh = false, $protect = false) {
       elseif ($delay == 'donation') { $delay = DAY_IN_SECONDS; }
       elseif ($delay == 'ticket') { $delay = HOUR_IN_SECONDS; }
       elseif ($delay == 'product') { $delay = 48 * HOUR_IN_SECONDS; }
+      elseif ($delay == 'stock') { $delay = HOUR_IN_SECONDS; }
       elseif ($delay == 'cart') { $delay = 20 * MINUTE_IN_SECONDS; }
       elseif ($delay == 'document') { $delay = MONTH_IN_SECONDS; }
       elseif ($delay == 'knowledgemanagement') { $delay = MONTH_IN_SECONDS; }
