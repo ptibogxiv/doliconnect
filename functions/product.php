@@ -401,7 +401,7 @@ function doliWishlist($thirdpartyid, $productid, $refresh = false, $nohtml = fal
 
 function doliProductCart($product, $line = null, $refresh = null, $wishlist = true, $fk_parent_line = null) {
   global $current_user;
-  $button = '<div id="doliform-product-'.$product->id.'" class="d-grid gap-2">';
+  $button = '<div id="doliform-product-'.$product->id.'-'.$line.'" class="d-grid gap-2">';
   $mstock = doliProductStock($product, $refresh, true, array(), $fk_parent_line);
   if ( empty(doliconnectid('dolicart')) || empty(doliconnectid('dolicart')) ) {
     $button .= "<a class='btn btn-block btn-info' href='".doliconnecturl('dolicontact')."?type=COM' role='button' title='".__( 'Contact us', 'doliconnect')."'>".__( 'Contact us', 'doliconnect').'</a>';
