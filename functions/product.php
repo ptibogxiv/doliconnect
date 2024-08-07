@@ -431,7 +431,7 @@ function doliProductCart($product, $line = null, $refresh = null, $wishlist = tr
       $button .= doliWishlist(doliconnector($current_user, 'fk_soc'), $product->id, $refresh);
     }   
     $button .= '</div>';
-    if (isset($mstock['step']) && $mstock['step']>0) $button .= '<div class="form-text" id="basic-addon4"><small>'.sprintf(__( 'Sold by %s', 'doliconnect'), $mstock['step']).'</small></div>';  
+    if (isset($mstock['step']) && $mstock['step']>1) $button .= '<div class="form-text" id="basic-addon4"><small>'.sprintf(__( 'Sold by %s', 'doliconnect'), $mstock['step']).'</small></div>';  
   } else {
     if ( get_option('doliloginmodal') == '1' ) {       
       $button .= doliModalButton('login', 'doliloginproduct-'.$product->id, __('Sign in', 'doliconnect'), 'button', 'btn btn-sm btn-outline-secondary');
