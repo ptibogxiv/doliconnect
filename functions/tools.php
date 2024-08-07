@@ -1709,26 +1709,6 @@ return __('Transporter by default', 'doliconnect');
 }
 }
 
-function doliWishlist($thirdpartyid, $productid, $refresh = false, $nohtml = false) {
-  $request = "/wishlist?sortfield=t.rang&sortorder=ASC&thirdparty_ids=".$thirdpartyid."&sqlfilters=(t.priv%3A%3D%3A0)";
-  $wishlist = callDoliApi("GET", $request, null, dolidelay('product', $refresh));
-  if (!$nohtml) {
-    $wish = '<button class="btn btn-sm btn-light" id="wish-prod-'.$productid.'" value="wish" type="submit" onclick="doliJavaCartAction(\'updateLine\', '.$productid.', 1, \'wish\');"><i class="fa-regular fa-heart"></i></button>';
-  } else {
-    $wish = false;
-  }
-  foreach ($wishlist as $wsh) {
-    if (isset($wsh->fk_product) && $productid == $wsh->fk_product) {
-      if (!$nohtml) {
-        $wish = '<button class="btn btn-sm btn-light" id="wish-prod-'.$productid.'" value="wish" type="submit" onclick="doliJavaCartAction(\'updateLine\', '.$productid.', 1, \'wish\');"><i class="fa-solid fa-heart" style="color:Fuchsia"></i></button>';
-      } else {
-        $wish = $wsh->id;
-      }
-    }
-  }
-  return $wish;
-}
-
 function doliconnect_paymentmethods($object = null, $module = null, $url = null, $refresh = false, $array = array()) {
 global $current_user;
 
