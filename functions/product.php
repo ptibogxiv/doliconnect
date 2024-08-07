@@ -101,8 +101,8 @@ function doliIncludeStock() {
 function doliProductStock($product, $refresh = false, $nohtml = false, $array_options = array(), $fk_parent_line = null) {
 global $current_user;
   $mstock = array();
-  $warehouse = doliconst('DOLICONNECT_ID_WAREHOUSE', $refresh);
-  if (!empty($product->type) && empty(doliconst('STOCK_SUPPORTS_SERVICES', $refresh))) {
+  $warehouse = doliconst('DOLICONNECT_ID_WAREHOUSE');
+  if (!empty($product->type) && empty(doliconst('STOCK_SUPPORTS_SERVICES'))) {
     $mstock['stock'] = 999999;
   } elseif (isset($product->stock_warehouse) && !empty($product->stock_warehouse) && !empty($warehouse) && $warehouse > 0) {
     if (isset($product->stock_warehouse->$warehouse)) {
@@ -149,10 +149,10 @@ global $current_user;
   if (isset($mstock['line']) && !$mstock['line'] > 0) { $mstock['line'] = null; }
   if (! isset($mstock['line'])) { $mstock['line'] = null; }
   if (doliconst('CUSTOMER_ORDER_DRAFT_FOR_VIRTUAL_STOCK', $refresh)) $mstock['stock']=$mstock['stock']+$mstock['qty'];
-  if ( $mstock['stock']-$mstock['qty'] > 0 && (empty($product->type) || (!empty($product->type) && doliconst('STOCK_SUPPORTS_SERVICES', $refresh)) ) ) {
+  if ( $mstock['stock']-$mstock['qty'] > 0 && (empty($product->type) || (!empty($product->type) && doliconst('STOCK_SUPPORTS_SERVICES')) ) ) {
     $mstock['m0'] = 1*$mstock['step'];
     $mstock['m1'] = get_option('dolicartlist')*$mstock['step'];
-    if ( $mstock['stock']-$mstock['qty'] >= $mstock['m1'] || !doliCheckModules('stock', $refresh) ) {
+    if ( $mstock['stock']-$mstock['qty'] >= $mstock['m1'] || !doliCheckModules('stock') ) {
       $mstock['m2'] = $mstock['m1'];
     } elseif ( $mstock['stock'] > $mstock['qty'] ) {
       $mstock['m2'] = $mstock['stock'];
@@ -177,12 +177,12 @@ global $current_user;
     })(jQuery);';
     $stock .= '</script>';
   }
-  if ( ! is_object($product) || !doliCheckModules('stock', $refresh) || (!empty($product->type) && empty(doliconst('STOCK_SUPPORTS_SERVICES', $refresh)) ) || (empty($product->type) && !empty(doliconst('STOCK_ALLOW_NEGATIVE_TRANSFER', $refresh)) && empty(doliconst('STOCK_MUST_BE_ENOUGH_FOR_ORDER', $refresh)) )) {
+  if ( ! is_object($product) || !doliCheckModules('stock') || (!empty($product->type) && empty(doliconst('STOCK_SUPPORTS_SERVICES')) ) || (empty($product->type) && !empty(doliconst('STOCK_ALLOW_NEGATIVE_TRANSFER')) && empty(doliconst('STOCK_MUST_BE_ENOUGH_FOR_ORDER')) )) {
     if (!$nohtml) $stock .= "<a tabindex='0' id='popover-stock-".$product->id."' class='badge rounded-pill bg-success text-white text-decoration-none' data-bs-container='body' data-bs-toggle='popover' data-bs-trigger='focus' title='".__( 'Available', 'doliconnect')."' data-bs-content='".__( 'This item is available and can be order', 'doliconnect')."'><i class='fas fa-warehouse'></i> ".__( 'Available', 'doliconnect').'</a>';
     $mstock['m0'] = 1*$mstock['step'];
     $mstock['m1'] = get_option('dolicartlist')*$mstock['step'];
     $mstock['m2'] = $mstock['m1'];
-  } elseif (empty($product->type) && empty(doliconst('STOCK_ALLOW_NEGATIVE_TRANSFER', $refresh)) && empty(doliconst('STOCK_MUST_BE_ENOUGH_FOR_ORDER', $refresh)) && isset($product->array_options->options_unlimitedsale) && !empty($product->array_options->options_unlimitedsale)) {
+  } elseif (empty($product->type) && empty(doliconst('STOCK_ALLOW_NEGATIVE_TRANSFER')) && empty(doliconst('STOCK_MUST_BE_ENOUGH_FOR_ORDER')) && isset($product->array_options->options_unlimitedsale) && !empty($product->array_options->options_unlimitedsale)) {
     if (!$nohtml) $stock .= "<a tabindex='0' id='popover-stock-".$product->id."' class='badge rounded-pill bg-info text-white text-decoration-none' data-bs-container='body' data-bs-toggle='popover' data-bs-trigger='focus' title='".__( 'Available', 'doliconnect')."' data-bs-content='".__( 'This item is available and can be order but it can sometimes be briefly unavailable', 'doliconnect')."'><i class='fas fa-warehouse'></i> ".__( 'Available', 'doliconnect').'</a>';
     $mstock['m0'] = 1*$mstock['step'];
     $mstock['m1'] = get_option('dolicartlist')*$mstock['step'];
