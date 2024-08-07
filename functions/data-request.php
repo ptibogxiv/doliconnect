@@ -787,16 +787,11 @@ global $current_user;
 					$result = doliRequiredRelatedProducts($product->id, 0, true);
 				}
 				$response = [
-					'message' => dolialert('success', $result['message']),
 					'items' => $result['items'],
 					'lines' => $result['lines'],
 					'total' => $result['total']
 				];	
-				if (isset($result['newqty'])) { 
-					$response['newqty'] = $result['newqty']; 
-				} else {
-					$response['newqty'] = $newqty; 
-				}
+				$response['newwish'] = doliProductCart($product, null, false); 
 				wp_send_json_success($response);	
 				die(); 
 			} elseif (isset($_POST['modify']) && ($_POST['modify'] == "plus" || $_POST['modify'] == "minus" || $_POST['modify'] == "modify")) { 
@@ -816,16 +811,11 @@ global $current_user;
 					$result = doliRequiredRelatedProducts($product->id, $qty, true);
 				}
 				$response = [
-					'message' => dolialert('success', $result['message']),
 					'items' => $result['items'],
 					'lines' => $result['lines'],
 					'total' => $result['total']
 					];
-				if (isset($result['newqty'])) { 
-					$response['newqty'] = $result['newqty']; 
-				} else {
-					$response['newqty'] = $newqty; 
-				}
+				$response['newwish'] = doliProductCart($product, null, false); 
 				if (isset($_POST['DisplayCart']) && !empty($_POST['DisplayCart'])) {
 					$object = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order', true)."?contact_list=0", null, dolidelay('order'));
 					$response['js'] = null;
@@ -847,13 +837,13 @@ global $current_user;
 					$addwish = callDoliApi("POST", "/wishlist", $data, 0);
 					$product = callDoliApi("GET", "/products/".trim($_POST['id'])."?includestockdata=1&includesubproducts=true&includetrans=true", null, dolidelay('product', true));
 					$response = [ 
-						'newwish' => doliProductCart($product, null, true)
+						'newwish' => doliProductCart($product, null, false)
 					];
 				} elseif (!empty($wish)) {
 					$deletewish = callDoliApi("DELETE", "/wishlist/".$wish, null, 0);
 					$product = callDoliApi("GET", "/products/".trim($_POST['id'])."?includestockdata=1&includesubproducts=true&includetrans=true", null, dolidelay('product', true));
 					$response = [
-						'newwish' => doliProductCart($product, null, true)
+						'newwish' => doliProductCart($product, null, false)
 					];
 				}
 				$request = "/wishlist?sortfield=t.rang&sortorder=ASC&thirdparty_ids=".doliconnector($current_user, 'fk_soc')."&sqlfilters=(t.priv%3A%3D%3A0)";

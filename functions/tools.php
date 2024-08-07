@@ -3138,9 +3138,6 @@ function doliModalDiv() {
                 },
               }).done(function(response) {
                 if (response.success) { 
-                  if (document.getElementById("qty-prod-" + id) && response.data.hasOwnProperty("newqty")) {
-                     document.getElementById("qty-prod-" + id).value = response.data.newqty;
-                  }
                   if (document.getElementById("wish-prod-" + id) && response.data.hasOwnProperty("newwish")) {
                      document.getElementById("doliform-product-" + id).outerHTML = response.data.newwish;
                   }
