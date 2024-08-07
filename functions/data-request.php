@@ -836,7 +836,7 @@ global $current_user;
 					];
 					$addwish = callDoliApi("POST", "/wishlist", $data, 0);
 					$product = callDoliApi("GET", "/products/".trim($_POST['id'])."?includestockdata=1&includesubproducts=true&includetrans=true", null, dolidelay('product', true));
-					$response['newwish'] = doliProductCart($product, null, false); 
+					$response['newwish'] = doliProductCart($product, null, false);
 				} elseif (!empty($wish)) {
 					$deletewish = callDoliApi("DELETE", "/wishlist/".$wish, null, 0);
 					$product = callDoliApi("GET", "/products/".trim($_POST['id'])."?includestockdata=1&includesubproducts=true&includetrans=true", null, dolidelay('product', true));
