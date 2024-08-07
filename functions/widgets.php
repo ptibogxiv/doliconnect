@@ -467,12 +467,18 @@ if ( !isset($resultatsc->error) && $resultatsc != null ) {
 		$date = new DateTime(); 
 		$date->modify('NOW');
 		$lastdate = $date->format('Y-m-d');
-		$requestp = "/discountprice?sortfield=t.rowid&sortorder=DESC&sqlfilters=(t.date_begin%3A%3C%3D%3A'".$lastdate."')%20AND%20(t.date_end%3A%3E%3D%3A'".$lastdate."')%20AND%20(d.tosell%3A%3D%3A1)";
-		$listproduct = callDoliApi("GET", $requestp, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-		if (empty($listproduct) || isset($listproduct->error)) {
-			$count = 0;
-		} else {
-			$count = count($listproduct);
+		if ( doliversion('19.0.0') ) { 
+			$requestp = "/discountprice?sortfield=t.".$field."&sortorder=".$order."&limit=".$limit."&page=".$page."&pagination_data=true&sqlfilters=(t.date_begin%3A%3C%3D%3A'".$lastdate."')%20AND%20(t.date_end%3A%3E%3D%3A'".$lastdate."')%20AND%20(d.tosell%3A%3D%3A1)";
+			$listproduct = callDoliApi("GET", $requestp, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
+			$count = $listproduct->pagination->total;
+		} else { 
+			$requestp = "/discountprice?sortfield=t.rowid&sortorder=DESC&sqlfilters=(t.date_begin%3A%3C%3D%3A'".$lastdate."')%20AND%20(t.date_end%3A%3E%3D%3A'".$lastdate."')%20AND%20(d.tosell%3A%3D%3A1)";
+			$listproduct = callDoliApi("GET", $requestp, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+			if (empty($listproduct) || isset($listproduct->error)) {
+				$count = 0;
+			} else {
+				$count = count($listproduct);
+			}
 		}
 		print "'>".__(  'Discounted items', 'doliconnect')." <span class='badge bg-secondary rounded-pill'>".$count."</span></a>";
 	}
