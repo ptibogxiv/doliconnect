@@ -148,7 +148,7 @@ global $current_user;
   }
   if (isset($mstock['line']) && !$mstock['line'] > 0) { $mstock['line'] = null; }
   if (! isset($mstock['line'])) { $mstock['line'] = null; }
-  if (doliconst('CUSTOMER_ORDER_DRAFT_FOR_VIRTUAL_STOCK', $refresh)) $mstock['stock']=$mstock['stock']+$mstock['qty'];
+  if (doliconst('CUSTOMER_ORDER_DRAFT_FOR_VIRTUAL_STOCK')) $mstock['stock']=$mstock['stock']+$mstock['qty'];
   if ( $mstock['stock']-$mstock['qty'] > 0 && (empty($product->type) || (!empty($product->type) && doliconst('STOCK_SUPPORTS_SERVICES')) ) ) {
     $mstock['m0'] = 1*$mstock['step'];
     $mstock['m1'] = get_option('dolicartlist')*$mstock['step'];
