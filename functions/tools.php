@@ -3097,7 +3097,6 @@ function doliModalDiv() {
           (function ($) {
             $(document).ready(function () {
               var DisplayCart = 0;
-              $("#DoliconnectLoadingModal").modal("toggle");
               if (document.getElementById("doliModalCartInfos")) {
                 document.getElementById("doliModalDiv").innerHTML = ""; 
                 $("#doliModalCartInfos").modal("handleUpdate"); 
@@ -3144,7 +3143,6 @@ function doliModalDiv() {
                   $("#doliModalCartInfos").modal("dispose");
                   document.getElementById("doliModalDiv").innerHTML = "";
                 });
-                $("#DoliconnectLoadingModal").modal("hide");
               });
             })
           })(jQuery);
