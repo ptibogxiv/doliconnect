@@ -427,7 +427,7 @@ function doliProductCart($product, $line = null, $refresh = null, $wishlist = tr
         <button class="btn btn-sm btn-warning" name="plus" value="plus" type="submit" onclick="doliJavaCartAction(\'updateLine\', '.$product->id.', document.getElementById(\'qty-prod-'.$product->id.'\').value, \'plus\');"><i class="fa-solid fa-plus"></i></button>';
       }  
     } 
-    if ( !empty($wishlist) && doliCheckModules('wishlist', $refresh)) {
+    if ( !empty($wishlist) && doliCheckModules('wishlist')) {
       $button .= doliWishlist(doliconnector($current_user, 'fk_soc'), $product->id, $refresh);
     }   
     $button .= '</div>';
