@@ -1195,7 +1195,7 @@ $doliuser .= "</li>";
 }
 
 
-if ( doliversion('11.0.0') ) { 
+if (doliCheckModules('socialnetworks') && doliversion('11.0.0') ) { 
 $socialnetworks = callDoliApi("GET", "/setup/dictionary/socialnetworks?sortfield=rowid&sortorder=ASC&limit=100&active=1", null, $delay);
 if ( !isset($socialnetworks->error) && $socialnetworks != null ) { 
 $doliuser .= "<li class='list-group-item list-group-item-light list-group-item-action'><div class='row g-2'>";
@@ -1210,7 +1210,7 @@ $doliuser .= '><label for="'.$idobject.'[socialnetworks]['.$social->code.']"><i 
 $doliuser .= "</div></li>";
 }
 
-} else { 
+} elseif ( !doliversion('11.0.0') ) { 
 $doliuser .= "<li class='list-group-item list-group-item-light list-group-item-action'><div class='form-row'>";
 if ( !empty(doliconst("SOCIALNETWORKS_FACEBOOK", $delay)) ) {
 $doliuser .= "<div class='col-12 col-md'><label for='inlineFormInputGroup'><small><i class='fab fa-facebook fa-fw'></i> Facebook</small></label>
