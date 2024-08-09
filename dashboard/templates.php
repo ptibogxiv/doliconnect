@@ -610,7 +610,7 @@ function dolifaq_display($content) {
     print "<small><div class='float-start'>";
     if ( isset($request) ) print dolirefresh($request, $url, dolidelay('constante'));
     print "</div><div class='float-end'>";
-    print dolihelp('ISSUE');
+    //print dolihelp('ISSUE');
     print "</div></small>";
     print '</div></div>';
   }
