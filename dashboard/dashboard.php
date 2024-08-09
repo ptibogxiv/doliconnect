@@ -402,8 +402,9 @@ function notifications_module( $url ) {
             $nonce = wp_create_nonce( 'doli-notifications-'. $postnotif->id.'-'.$postnotif->event);
             $arr_params = array( 'id' => $postnotif->id, 'ref' => $postnotif->event, 'security' => $nonce);  
             $return = esc_url( add_query_arg( $arr_params, $url) );
-                            
-            print "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'><div><i class='fa-solid fa-bell fa-3x fa-fw'></i></div><div><h6 class='my-0'>".$postnotif->event."</h6><small class='text-muted'>".wp_date('d/m/Y', $postnotif->datec)."</small></div><span>".$postnotif->type."</span>";
+            $request = "/contacts/".esc_attr($postnotif->contact_id)."?includecount=1&includeroles=1";
+            $contactfo = callDoliApi("GET", $request, null, dolidelay('contact', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));                
+            print "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'><div><i class='fa-solid fa-bell fa-3x fa-fw'></i></div><div><h6 class='my-0'>".$postnotif->event."</h6><small class='text-muted'><span>".$postnotif->type."</span></small></div><span>".($contactfo->civility ? $contactfo->civility : $contactfo->civility_code)." ".$contactfo->firstname." ".$contactfo->lastname."<br>".$contactfo->email."</span>";
             print "</a>";
         }
     } else {
