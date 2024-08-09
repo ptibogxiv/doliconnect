@@ -375,8 +375,24 @@ print "</div></div>";
 }
 
 //*****************************************************************************************
+if ( doliCheckModules('notification')) {
+    add_action( 'user_doliconnect_menu', 'notifications_menu', 4, 1);
+    add_action( 'user_doliconnect_notifications', 'notifications_module');
+}
 
-add_action( 'user_doliconnect_menu', 'paymentmethods_menu', 4, 1);
+function notifications_menu( $arg ) {
+    print "<a href='".esc_url( add_query_arg( 'module', 'notifications', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
+    if ($arg=='notifications') { print " active";}
+    print "'>".__( 'Manage notifications', 'doliconnect')."</a>";
+}
+
+function notifications_module( $url ) {
+    //print doliconnect_paymentmethods(null, null, $url, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+}
+
+//*****************************************************************************************
+
+add_action( 'user_doliconnect_menu', 'paymentmethods_menu', 5, 1);
 add_action( 'user_doliconnect_paymentmethods', 'paymentmethods_module');
 
 function dolipaymentmodes_lock() {
@@ -396,7 +412,7 @@ function paymentmethods_module( $url ) {
 //*****************************************************************************************
 
 if ( doliCheckModules('rewards') ) {
-    add_action( 'member_doliconnect_menu', 'rewards_menu', 5, 1);
+    add_action( 'member_doliconnect_menu', 'rewards_menu', 6, 1);
     add_action( 'member_doliconnect_rewards', 'rewards_module' );
 }
     
