@@ -2676,7 +2676,7 @@ $paymentmethods .= '</div><div class="card-footer text-muted">';
 $paymentmethods .= '<small><div class="float-start">';
 $paymentmethods .= dolirefresh($request, $url, dolidelay('paymentmethods'));
 $paymentmethods .= '</div><div class="float-end">';
-$paymentmethods .= dolihelp('ISSUE');
+//$paymentmethods .= dolihelp('ISSUE');
 $paymentmethods .= '</div></small>';
 $paymentmethods .= '</div></div>';
 
