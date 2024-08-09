@@ -375,7 +375,7 @@ print "</div></div>";
 }
 
 //*****************************************************************************************
-if ( doliCheckModules('notification') && !empty(get_option('doliconnectbeta')) ) {
+if ( doliversion('20.0.0') && doliCheckModules('notification') && !empty(get_option('doliconnectbeta')) ) {
     add_action( 'user_doliconnect_menu', 'notifications_menu', 4, 1);
     add_action( 'user_doliconnect_notifications', 'notifications_module');
 }
