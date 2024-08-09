@@ -536,7 +536,7 @@ if ( !empty(doliconst("PRODUIT_MULTIPRICES", $refresh)) && !empty($product->mult
     $object = callDoliApi("GET", $requestp, null, dolidelay('product', $refresh));
     if ( doliversion('19.0.0') && isset($object->data) ) { $product3 = $object->data; } else { $product3 = $object; }
   }
-  if ( doliCheckModules('discountprice', $refresh) && isset($product3) && !isset($product3->error) ) {
+  if ( doliCheckModules('discountprice', $refresh) && isset($product3) && !isset($product3->error) && isset($product3[0])) {
     if (!empty($product3[0]->discount)) {
       $price_ttc3=$product->price_ttc-($product->price_ttc*$product3[0]->discount/100);
       $price_ht3=$product->price-($product->price*$product3[0]->discount/100);
