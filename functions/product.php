@@ -532,9 +532,9 @@ if ( !empty(doliconst("PRODUIT_MULTIPRICES", $refresh)) && !empty($product->mult
     $date = new DateTime(); 
     $date->modify('NOW');
     $lastdate = $date->format('Y-m-d');
-    $requestp = "/discountprice?productid=".$product->id."&sortfield=t.rowid&sortorder=ASC&sqlfilters=(t.date_begin%3A%3C%3D%3A'".$lastdate."')%20AND%20(t.date_end%3A%3E%3D%3A'".$lastdate."')";
-    $product3 = callDoliApi("GET", $requestp, null, dolidelay('product', $refresh));
-    //$button .= var_dump($product3);
+    $requestp = "/discountprice?productid=".$product->id."&sortfield=t.rowid&sortorder=ASC&sqlfilters=(t.date_begin%3A%3C%3D%3A'".$lastdate."')%20AND%20(t.date_end%3A%3E%3D%3A'".$lastdate."')%20AND%20(d.tosell%3A%3D%3A1)";
+    $object = callDoliApi("GET", $requestp, null, dolidelay('product', $refresh));
+    if ( doliversion('19.0.0') && isset($object->data) ) { $product3 = $object->data; } else { $product3 = $object; }
   }
   if ( doliCheckModules('discountprice', $refresh) && isset($product3) && !isset($product3->error) ) {
     if (!empty($product3[0]->discount)) {
@@ -552,7 +552,7 @@ if ( !empty(doliconst("PRODUIT_MULTIPRICES", $refresh)) && !empty($product->mult
       $price_ttc=$product->price_ttc;
       $vat = $product->tva_tx;
     } elseif (!empty($product3[0]->price_ttc)) {
-      $price_ttc3=$product3[0]->price_ttc; 
+      $price_ttc3=$product3[0]->price_ttc;
       $price_ttc=$product->price_ttc; 
       $price['discount'] = 100-(100*$price_ttc3/$price_ttc);
       $price_ht3=$product->price-($product->price*$price['discount']/100);
