@@ -403,7 +403,7 @@ function notifications_module( $url ) {
             $arr_params = array( 'id' => $postnotif->id, 'ref' => $postnotif->event, 'security' => $nonce);  
             $return = esc_url( add_query_arg( $arr_params, $url) );
                             
-            print "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'><div><i class='fa fa-file-signature fa-3x fa-fw'></i></div><div><h6 class='my-0'>".$postnotif->event."</h6><small class='text-muted'>".wp_date('d/m/Y', $postnotif->datec)."</small></div><span>".$postnotif->type."</span>";
+            print "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'><div><i class='fa-solid fa-bell fa-3x fa-fw'></i></div><div><h6 class='my-0'>".$postnotif->event."</h6><small class='text-muted'>".wp_date('d/m/Y', $postnotif->datec)."</small></div><span>".$postnotif->type."</span>";
             print "</a>";
         }
     } else {
