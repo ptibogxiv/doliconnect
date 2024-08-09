@@ -2641,7 +2641,7 @@ $paymentmethods .= "<p class='text-justify'>".sprintf( __( 'Please send your mon
   if (isset($listpaymentmethods->CHQ->proprio))$paymentmethods .= "<p class='text-justify'>".sprintf( __( 'Please send your money check to <b>%s</b> at the following address:', 'doliconnect'), $listpaymentmethods->CHQ->proprio)."</p>";
 }
 $paymentmethods .= "<div class='row'>";
-$paymentmethods .= "<div class='col-12'><dl class='param'><dt>Address</dt>";
+$paymentmethods .= "<div class='col-12'><dl class='param'><dt>".__( 'Address', 'doliconnect')."</dt>";
 if (isset($listpaymentmethods->CHQ->proprio) && isset($listpaymentmethods->CHQ->owner_address)) $paymentmethods .= "<dd>".$listpaymentmethods->CHQ->proprio." - ".$listpaymentmethods->CHQ->owner_address."</dd>";
 $paymentmethods .= "</dl></div>";
 $paymentmethods .= "</div>";
