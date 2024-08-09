@@ -278,7 +278,7 @@ function contacts_module($url){
 global $current_user;
 
 $limit=8;
-if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']-1); }  else { $page = 0; }
+if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']); }  else { $page = 0; }
 
 $requestlist = "/contacts?sortfield=t.rowid&sortorder=DESC&limit=".$limit."&page=".$page."&thirdparty_ids=".doliconnector($current_user, 'fk_soc');    
 
@@ -387,7 +387,38 @@ function notifications_menu( $arg ) {
 }
 
 function notifications_module( $url ) {
-    //print doliconnect_paymentmethods(null, null, $url, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+    global $current_user;
+
+    $limit=8;
+    if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']); }  else { $page = 0; }
+    $request = "/thirdparties/".doliconnector($current_user, 'fk_soc')."/notifications";   
+    $object = callDoliApi("GET", $request, null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+    if ( doliversion('21.0.0') && isset($object->data) ) { $listnotif = $object->data; } else { $listnotif = $object; }
+
+    print '<div class="card shadow-sm"><div class="card-header">'.__( 'Manage notifications', 'doliconnect').'</div><ul class="list-group list-group-flush">';
+    
+    if ( !isset($listnotif->error) && $listnotif != null ) {
+        foreach ( $listnotif as $postnotif ) { 
+            $nonce = wp_create_nonce( 'doli-notifications-'. $postnotif->id.'-'.$postnotif->event);
+            $arr_params = array( 'id' => $postnotif->id, 'ref' => $postnotif->event, 'security' => $nonce);  
+            $return = esc_url( add_query_arg( $arr_params, $url) );
+                            
+            print "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'><div><i class='fa fa-file-signature fa-3x fa-fw'></i></div><div><h6 class='my-0'>".$postnotif->event."</h6><small class='text-muted'>".wp_date('d/m/Y', $postnotif->datec)."</small></div><span>".$postnotif->type."</span>";
+            print "</a>";
+        }
+    } else {
+        print "<li class='list-group-item list-group-item-light'><center>".__( 'No proposal', 'doliconnect')."</center></li>";
+    }
+
+    print "</ul><div class='card-body'>";
+    print doliPagination($object, $url, $page);
+    print "</div><div class='card-footer text-muted'>";
+    print "<small><div class='float-start'>";
+    if ( isset($request) ) print dolirefresh($request, $url, dolidelay('proposal'));
+    print "</div><div class='float-end'>";
+    //print dolihelp('ISSUE');
+    print "</div></small>";
+    print "</div></div>";
 }
 
 //*****************************************************************************************
@@ -716,7 +747,7 @@ print "</div><div class='card-footer text-muted'>";
 print "<small><div class='float-start'>";
 if ( isset($request) ) print dolirefresh($request, $url, dolidelay('proposal'));
 print "</div><div class='float-end'>";
-print dolihelp('ISSUE');
+//print dolihelp('ISSUE');
 print "</div></small>";
 print "</div></div>";
 
