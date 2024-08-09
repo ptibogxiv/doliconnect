@@ -1426,7 +1426,7 @@ function dolirefresh( $origin, $url, $delay, $element = null) {
   } elseif (is_user_logged_in() ) {
     $refresh .= __( 'Refresh', 'doliconnect');
   }
-  if (is_user_logged_in() ) {
+  if (is_user_logged_in() && !empty(get_option('doliconnectbeta')) ) {
     $refresh .= " <a onClick='refreshloader()' href='".esc_url( add_query_arg( 'refresh', true, $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']) )."' title='".__( 'Refresh datas', 'doliconnect')."'><i class='fas fa-sync-alt'></i></a>";
   }
   return $refresh;
