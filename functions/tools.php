@@ -2638,13 +2638,12 @@ $mode_reglement_code = callDoliApi("GET", "/setup/dictionary/payment_types?sortf
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
 $paymentmethods .= "<p class='text-justify'>".sprintf( __( 'Please send your money check in the amount of <b>%1$s</b> to <b>%2$s</b> at the following address:', 'doliconnect'), doliprice($object, 'ttc', isset($object->multicurrency_code) ? $object->multicurrency_code : null), $listpaymentmethods->CHQ->proprio)."</p>";
 } else {
-$paymentmethods .= "<p class='text-justify'>".sprintf( __( 'Please send your money check to <b>%s</b> at the following address:', 'doliconnect'), $listpaymentmethods->CHQ->proprio)."</p>";
+  if (isset($listpaymentmethods->CHQ->proprio))$paymentmethods .= "<p class='text-justify'>".sprintf( __( 'Please send your money check to <b>%s</b> at the following address:', 'doliconnect'), $listpaymentmethods->CHQ->proprio)."</p>";
 }
 $paymentmethods .= "<div class='row'>";
-$paymentmethods .= "<div class='col-12'><dl class='param'>
-  <dt>Address</dt>
-  <dd>".$listpaymentmethods->CHQ->proprio." - ".$listpaymentmethods->CHQ->owner_address."</dd>
-</dl></div>";
+$paymentmethods .= "<div class='col-12'><dl class='param'><dt>Address</dt>";
+if (isset($listpaymentmethods->CHQ->proprio) && isset($listpaymentmethods->CHQ->owner_address)) $paymentmethods .= "<dd>".$listpaymentmethods->CHQ->proprio." - ".$listpaymentmethods->CHQ->owner_address."</dd>";
+$paymentmethods .= "</dl></div>";
 $paymentmethods .= "</div>";
 $paymentmethods .= "<p class='text-justify'>";
 $paymentmethods .= "<small><b>".__( 'Payment term', 'doliconnect').":</b> ";
