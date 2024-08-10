@@ -701,7 +701,7 @@ $list = "<li class='list-group-item list-group-item-light list-group-item-action
 $list .= '<a href="'.$producturl.'" class="text-decoration-none">'.doliconnect_image('product', $product->id, array('limit'=>1, 'entity'=>$product->entity, 'size'=>'150x150'), esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)).'</a>';
 $list .= "</center></td>";
 //$list .= var_dump($product);
-$list .= '<td width="80%" style="border:0px"><a href="'.$producturl.'" class="text-decoration-none"><b>'.doliproduct($product, 'label').'</b></a>';
+$list .= '<td width="80%" style="border:0px"><a href="'.$producturl.'" class="text-body text-decoration-none"><b>'.doliproduct($product, 'label').'</b></a>';
 $list .= "<div class='row'><div class='col'><p><small>";
 if ( !doliconst('MAIN_GENERATE_DOCUMENTS_HIDE_REF') ) { $list .= "<i class='fas fa-toolbox fa-fw'></i> ".(!empty($product->ref)?$product->ref:'-'); }
 if ( !empty($product->barcode) ) { 
