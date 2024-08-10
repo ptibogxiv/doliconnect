@@ -413,13 +413,12 @@ function doliProductCart($product, $line = null, $refresh = null, $wishlist = tr
     } elseif ( $mstock['stock'] <= 0 || $mstock['m2'] < $mstock['step'] ) { 
       $button .= '<input id="qty-prod-'.$product->id.'" type="text" class="form-control form-control-sm" value="'.__( 'Unavailable', 'doliconnect').'" aria-label="'.__( 'Unavailable', 'doliconnect').'" style="text-align:center;" disabled readonly>';
     } else {
+      if (!empty($mstock['qty'])) $button .= '<button class="btn btn-sm btn-dark" name="delete" value="delete" type="submit" onclick="doliJavaCartAction(\'updateLine\', '.$product->id.', 0, \'delete\');"><i class="fa-solid fa-trash-can"></i></button>';
       if ( doliCheckModules('adherent', $refresh) && $product->id == doliconst("ADHERENT_PRODUCT_ID_FOR_SUBSCRIPTIONS", dolidelay('constante')) ) {
-        if (!empty($mstock['qty'])) $button .= '<button class="btn btn-sm btn-dark" name="delete" value="delete" type="submit" onclick="doliJavaCartAction(\'updateLine\', '.$product->id.', 0, \'delete\');"><i class="fa-solid fa-trash-can"></i></button>';
         //if (empty($mstock['qty'])) {
           $button .= '<input id="qty-prod-'.$product->id.'" type="text" class="form-control form-control-sm" value="'.__( 'Soon', 'doliconnect').'" aria-label="'.__( 'Soon', 'doliconnect').'" style="text-align:center;" disabled readonly>';
         //}
         } else {
-        if (!empty($mstock['qty'])) $button .= '<button class="btn btn-sm btn-dark" name="delete" value="delete" type="submit" onclick="doliJavaCartAction(\'updateLine\', '.$product->id.', 0, \'delete\');"><i class="fa-solid fa-trash-can"></i></button>';
         $button .= '<button class="btn btn-sm btn-warning';
         if (empty($mstock['qty'])) $button .= ' disabled';
         $button .= '" name="minus" value="minus" type="submit" onclick="doliJavaCartAction(\'updateLine\', '.$product->id.', document.getElementById(\'qty-prod-'.$product->id.'\').value, \'minus\');"><i class="fa-solid fa-minus"></i></button>
