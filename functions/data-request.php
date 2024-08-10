@@ -791,6 +791,7 @@ global $current_user;
 					'lines' => $result['lines'],
 					'total' => $result['total']
 				];	
+				$product = callDoliApi("GET", "/products/".trim($_POST['id'])."?includestockdata=1&includesubproducts=true&includetrans=true", null, dolidelay('product', true));
 				$response['newwish'] = doliProductCart($product, null, false); 
 				wp_send_json_success($response);	
 				die(); 
