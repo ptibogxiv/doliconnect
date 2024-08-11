@@ -1147,12 +1147,12 @@ global $current_user;
 		}
 		$modal['footer'] = null;
 		if ((!is_multisite() && get_option( 'users_can_register' )) || ((!is_multisite() && get_option( 'dolicustsupp_can_register' )) || ((get_option( 'dolicustsupp_can_register' ) || get_option('users_can_register') == '1') && (get_site_option( 'registration' ) == 'user' || get_site_option( 'registration' ) == 'all')))) {
-			$modal['footer'] .=  "<a class='btn btn-lg btn-link fs-6 text-primary text-decoration-none col-6 m-0 rounded-0 border-end' href='".wp_registration_url(get_permalink())."' role='button' title='".__( 'Create an account', 'doliconnect')."'><small>".__( 'Create an account', 'doliconnect')."</small></a>";
+			$modal['footer'] .=  "<a class='btn btn-lg btn-link fs-6 text-primary text-decoration-none col-6 m-0 rounded-0' href='".wp_registration_url(get_permalink())."' role='button' title='".__( 'Create an account', 'doliconnect')."'><small>".__( 'Create an account', 'doliconnect')."</small></a>";
 		}
 		if (get_site_option('doliconnect_mode')=='one') {
 			restore_current_blog();
 		}
-		$modal['footer'] .= '<button class="btn btn-lg btn-link fs-6 text-primary text-decoration-none col-6 m-0 rounded-0" type="submit" value="submit"><strong>'.__( 'Sign in', 'doliconnect').'</strong></button>';
+		$modal['footer'] .= '<button class="btn btn-lg btn-link fs-6 text-primary text-decoration-none col-6 m-0 rounded-0 border-start" type="submit" value="submit"><strong>'.__( 'Sign in', 'doliconnect').'</strong></button>';
 		$response['js'] = plugins_url( 'doliconnect/includes/custom/js/doligeneric.js');
 		$response['modal'] = doliModalTemplate($_POST['id'], $modal['header'], $modal['body'], $modal['footer'], null, null, null, 'flex-nowrap p-0', $login_url);
 		wp_send_json_success($response);	
