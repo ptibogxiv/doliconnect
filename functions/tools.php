@@ -2974,7 +2974,9 @@ global $current_user;
 
 function doliModalTemplate($id, $header, $body, $footer, $size = null, $headercss = null, $bodycss = null, $footercss = null, $formurl = null) {
   $modal = '<div id="doliModal'.$id.'" class="modal fade" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" style="display: none">
-  <div class="modal-dialog '.$size.' modal-fullscreen-md-down modal-dialog-centered modal-dialog-scrollable" role="document"><div class="modal-content">';
+  <div class="modal-dialog '.$size.' ';
+  if (!str_contains($id, 'login'))$modal .= 'modal-fullscreen-md-down ';
+  $modal .= 'modal-dialog-centered modal-dialog-scrollable" role="document"><div class="modal-content">';
   if (!empty($formurl)) $modal .= '<form id="loginmodal-form" name="loginmodal-form" action="'.$formurl.'" method="post" class="was-validated">';
   if (!empty($header)) $modal .= '<div class="modal-header"><h5 class="modal-title '.$headercss.'">'.$header.'</h5><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div>';
   if (!empty($body)) $modal .= '<div class="modal-body '.$bodycss.'">'.$body.'</div>';
