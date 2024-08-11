@@ -78,111 +78,28 @@ We would like to thank this contributors and plugins:
 * better eshop
 * fix php bugs & error
 
-   = 8.1.3 =
-* fix php bugs & error
-
-   = 8.1.2 =
-* fix php bugs & error
-
-   = 8.1.1 =
-* better code
-* fix php bugs & error
-
-   = 8.1.0 =
+   = 8.1.x =
 * New pagination with new Dolibarr API
 * fix php bugs & error
 
-   = 8.0.3 =
-* fix php bugs & error
-
-   = 8.0.2 =
-* fix php bugs & error
-* order wishlist with csv
-
-   = 8.0.1 =
-* fix php bugs & error
-
-   = 8.0.0 =
+   = 8.0.x =
 * upgrade bootstrap 5.3.3
 * fix php bugs & error
 * support dolibarr v19 & 20
 
-   = 7.8.6 =
-* fix php error
-* upgrade libraries
-
-   = 7.8.6 =
-* fix php error
-* upgrade libraries
-
-   = 7.8.5 =
-* fix php error
-* upgrade libraries
-
-   = 7.8.4 =
-* fix php error
-* upgrade libraries
-* support dolibarr 18.0.3
-
-   = 7.8.3 =
-* fix php error 
-
-  = 7.8.2 =
-* fix php error
-* Upgrade libraries
-
-   = 7.8.1 =
-* fix php error
-
-  = 7.8.0 =
+  = 7.8.x =
 * fix php error
 * upgrade libraries
 * support related product
 
-   = 7.7.1 =
-* fix php error
-* better cssupgrade libraries
-
-   = 7.7.0 =
+   = 7.7.x =
 * fix php error
 * wishlist and memberlinked functionnalities
 
-   = 7.6.7 =
-* fix php error
-* compatibility with dolibarr 17.0.3
-
-   = 7.6.6 =
-* fix php error
-* upgrade libraries
-
-   = 7.6.5 =
-* fix critical error 
-
-   = 7.6.4 =
-* fix critical error 
-
-   = 7.6.3 =
-* fix critical error 
-
-   = 7.6.2 =
-* fix critical error 
-
-   = 7.6.1 =
-* better eshop and less php errors
-
-   = 7.6.0 =
+   = 7.6.x =
 * better eshop and modal info
 
-   = 7.5.3 =
-* better eshop
-
-   = 7.5.2 =
-* better eshop
-
-   = 7.5.1 =
-* better eshop
-
-   = 7.5.0 =
+   = 7.5.x =
 * better eshop
 
    = 7.4.0 =
@@ -192,41 +109,12 @@ We would like to thank this contributors and plugins:
 * bugs and fixes for php 8
 * better eshop
 
-   = 7.2.3 =
-* bugs and fixes for php 8
-* fix bugs for membership
-
-   = 7.2.2 =
-* bugs and fixes for php 8
-
-   = 7.2.1 =
-* fix membership modal
-
-   = 7.2.0 =
+   = 7.2.x =
 * bugs and fixes
 * better online shop
 * upgrade bootstrap
 
-   = 7.1.7 =
-* bugs and fixes contracts
-
-   = 7.1.6 =
-* bugs and fixes
-
-   = 7.1.5 =
-* bugs and fixes API
-
-   = 7.1.3 =
-* bugs and fixes FAQ
-
-   = 7.1.2 =
-* bugs and fixes
-
-   = 7.1.0 & 7.1.1 =
-* bugs and fixes
-* new modal via ajax
-
-   = 7.0.0 =
+   = 7.0.x =
 * bugs and fixes
 * better fix password changes and sync with Dolibarr
 * use dolibarr's password rules
@@ -236,23 +124,12 @@ We would like to thank this contributors and plugins:
 * fix password changes and sync with Dolibarr
 * use dolibarr's password rules
 
-   = 6.8.1 =
-* bugs and fixes
-* better contact form
-* update boostrap
-
-   = 6.8.0 =
+   = 6.8.x =
 * bugs and fixes
 * better and more ajax form
 * better captcha
 
-   = 6.7.2 =
-* bugs and fixes
-
-   = 6.7.1 =
-* upgrade bootswatch
-
-   = 6.7.0 =
+   = 6.7.x =
 * fix password changes
 * compatibility with php 8 and dolibarr 16/17
 * update libraries
