@@ -96,15 +96,16 @@ $args = array(
 'order'        => 'ASC',
 );
 }
-elseif ($i>$total['administrator']){ echo "editeur";
-echo "<select name='doliboard[".$i."]'>";
-$args = array( 
-'blog_id'      => $GLOBALS['blog_id'],
-'role'         => 'editor',
-'meta_key' => 'first_name',
-'orderby' => 'meta_value',
-'order'        => 'ASC',
-);
+elseif ($i>$total['administrator']) { 
+    echo "editeur";
+    echo "<select name='doliboard[".$i."]'>";
+    $args = array( 
+    'blog_id'      => $GLOBALS['blog_id'],
+    'role'         => 'editor',
+    'meta_key' => 'first_name',
+    'orderby' => 'meta_value',
+    'order'        => 'ASC',
+    );
 }
 $user_query = new WP_User_Query( $args );
 
@@ -187,6 +188,7 @@ $dolibarr = callDoliApi("GET", "/status", null, -5 * MINUTE_IN_SECONDS);
                 <p class="text-success">Status: <?php echo $dolibarr->success->code; ?></p>
                 <p class="text-success">Version: <?php echo $dolibarr->success->dolibarr_version; ?></p>
                 <p class="text-success">Access Locked: <?php echo $dolibarr->success->access_locked; ?></p>
+                <p class="text-success">Environment: <?php echo $dolibarr->success->environment; ?></p>
 <?php } else { ?><p class="text-danger">Offline</p><?php } ?></td>
             </tr>
             <tr>
