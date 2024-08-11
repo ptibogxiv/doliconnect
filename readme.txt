@@ -748,24 +748,8 @@ Fix php8 bugs
 * new thirdparty / contact form
 * prepare transient duration manager
 * clean code
-
-= 3.3.4 =
-* clean code
-* new thirdparty / contact form
-
-= 3.3.3 =
-* clean code
-* update contact/adress list
-* transform compta block to customer block
-* fix contact form
-
-= 3.3.2 =
-* clean code
-
-= 3.3.1 =
-* fix creation account
  
-= 3.3.0 =
+= 3.3.x =
 * clean code & debug
 * WIP donations
 * add better date_modification
@@ -773,54 +757,12 @@ Fix php8 bugs
 * fix reset password
 * better management of thirdparty's fields
 
-= 3.2.6 =
-* WIP support multi-network
-* clean code & debug
-* WIP donations
-
-= 3.2.5 =
-* fix password reset
-
-= 3.2.4 =
-* clean code & optimization
-* fix lang
-
-= 3.2.3 =
-* clean code
-* fix download main doc / regenerate
-
-= 3.2.2 =
-* clean code
-* update bootswatch
- 
-= 3.2.1 =
-* update translation
-* bootstrap 4.3.1 & fontawesome 5.7.2
-
-* = 3.2.0 =
+* = 3.2.x =
 * update readme
 * bootstrap 4.3 & fontawesome 5.7.1
 * fix loader in login form
 
-= 3.1.5 =
-* clean code
-* fix forgotten password form
-
-= 3.1.4 =
-* clean code
-* optimize contact form
-
-= 3.1.3 =
-* clean code
-* fix civility if Dolibarr < v9
-
-= 3.1.2 =
-* clean code
-
-= 3.1.1 =
-* fix CSS and call Dolibarr api
-
-= 3.1.0 =
+= 3.1.x =
 * First public version on wordpress.org
 
 = 3.0.X =
