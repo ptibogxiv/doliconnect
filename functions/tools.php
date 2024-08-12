@@ -1412,6 +1412,7 @@ function dolidelay($delay = null, $refresh = false, $protect = false) {
 }
 
 function dolirefresh( $origin, $url, $delay, $element = null) {
+  if ( empty($url) ) $url = $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
   $refresh = '<script type="text/javascript">';
   $refresh .= 'function refreshloader(){
   jQuery("#DoliconnectLoadingModal").modal("show");
@@ -1427,7 +1428,7 @@ function dolirefresh( $origin, $url, $delay, $element = null) {
     $refresh .= __( 'Refresh', 'doliconnect');
   }
   if (is_user_logged_in() && !empty(get_option('doliconnectbeta')) ) {
-    $refresh .= " <a onClick='refreshloader()' href='".esc_url( add_query_arg( 'refresh', true, $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']) )."' title='".__( 'Refresh datas', 'doliconnect')."'><i class='fas fa-sync-alt'></i></a>";
+    $refresh .= " <a onClick='refreshloader()' href='".esc_url( add_query_arg( 'refresh', true, $url) )."' title='".__( 'Refresh datas', 'doliconnect')."'><i class='fas fa-sync-alt'></i></a>";
   }
   return $refresh;
 }

@@ -1069,12 +1069,12 @@ function dolishop_display($content) {
 
       if (isset($object)) { 
         print '<div class="card-body">';
-        print doliPagination($object, $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], $page, $limit);
+        print doliPagination($object, get_permalink().$_SERVER['REQUEST_URI'], $page, $limit);
         print '</div>';
       }
       print '<div class="card-footer text-muted">';
       print '<small><div class="float-start">';
-      if ( isset($request) ) print dolirefresh($request, get_permalink(), dolidelay('product'));
+      if ( isset($request) ) print dolirefresh($request, get_permalink().$_SERVER['REQUEST_URI'], dolidelay('product'));
       print '</div><div class="float-end">';
       //print dolihelp('ISSUE');
       print '</div></small>';
