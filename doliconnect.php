@@ -263,7 +263,9 @@ if ( is_user_logged_in() ) {
 
             $rdr = [
                 'name'  => $name,
-                'email' => $current_user->user_email
+                'email' => $current_user->user_email,
+                'client' => 1,
+                'status' => 1,
                 ];
             $dolibarr = callDoliApi("POST", "/doliconnector/".$user, $rdr, dolidelay('doliconnector'));
             define('DOLIBARR', $dolibarr->fk_soc);
