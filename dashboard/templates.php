@@ -995,19 +995,19 @@ function dolishop_display($content) {
         print '<div class="input-group">
           <span class="input-group-text" id="basic-addon1"><i class="fas fa-filter"></i></span><select id="selectbox" class="form-select form-select-sm" aria-label=".form-select-sm example" name="" onchange="javascript:location.href = this.value;">
             <option value="" disabled selected>'.__( '- Select -', 'doliconnect').'</option>
-            <option value="'.esc_url( add_query_arg( array( 'search' =>isset($_GET['search'])?esc_attr($_GET['search']):null, 'category' => !empty($cat)?$cat:null, 'subcategory' => !empty($subcat)?$subcat:null, 'pg' => $page, 'field' => 'label', 'order' => 'ASC'), doliconnecturl('dolishop')) ).'"';
+            <option value="'.esc_url( add_query_arg( array( 'search' =>isset($_GET['search'])?esc_attr($_GET['search']):null, 'pg' => $page, 'field' => 'label', 'order' => 'ASC'), get_permalink().$_SERVER['REQUEST_URI']) ).'"';
             if ($field == 'label' && $order == 'ASC') { print 'selected'; }
             print '>'.__( 'Name A->Z', 'doliconnect').'</option>
-            <option value="'.esc_url( add_query_arg( array( 'search' =>isset($_GET['search'])?esc_attr($_GET['search']):null, 'category' => !empty($cat)?$cat:null, 'subcategory' => !empty($subcat)?$subcat:null, 'pg' => $page, 'field' => 'label', 'order' => 'DESC'), doliconnecturl('dolishop')) ).'"';
+            <option value="'.esc_url( add_query_arg( array( 'search' =>isset($_GET['search'])?esc_attr($_GET['search']):null, 'pg' => $page, 'field' => 'label', 'order' => 'DESC'), get_permalink().$_SERVER['REQUEST_URI']) ).'"';
             if ($field == 'label' && $order == 'DESC') { print 'selected'; }
             print '>'.__( 'Name Z->A', 'doliconnect').'</option>
-            <option value="'.esc_url( add_query_arg( array( 'search' =>isset($_GET['search'])?esc_attr($_GET['search']):null, 'category' => !empty($cat)?$cat:null, 'subcategory' => !empty($subcat)?$subcat:null, 'pg' => $page, 'field' => 'rowid', 'order' => 'DESC'), doliconnecturl('dolishop')) ).'"';
+            <option value="'.esc_url( add_query_arg( array( 'search' =>isset($_GET['search'])?esc_attr($_GET['search']):null, 'pg' => $page, 'field' => 'rowid', 'order' => 'DESC'), get_permalink().$_SERVER['REQUEST_URI']) ).'"';
             if ($field == 'rowid' && $order == 'DESC') { print 'selected'; }
             print '>'.__( 'Novelties', 'doliconnect').'</option>
-            <option value="'.esc_url( add_query_arg( array( 'search' =>isset($_GET['search'])?esc_attr($_GET['search']):null,'category' => !empty($cat)?$cat:null, 'subcategory' => !empty($subcat)?$subcat:null, 'pg' => $page, 'field' => 'price', 'order' => 'ASC'), doliconnecturl('dolishop')) ).'"';
+            <option value="'.esc_url( add_query_arg( array( 'search' =>isset($_GET['search'])?esc_attr($_GET['search']):null, 'pg' => $page, 'field' => 'price', 'order' => 'ASC'), get_permalink().$_SERVER['REQUEST_URI']) ).'"';
             if ($field == 'price' && $order == 'ASC') { print 'selected'; }
             print '>'.__( 'Lowest prices', 'doliconnect').'</option>
-            <option value="'.esc_url( add_query_arg( array( 'search' =>isset($_GET['search'])?esc_attr($_GET['search']):null, 'category' => !empty($cat)?$cat:null, 'subcategory' => !empty($subcat)?$subcat:null, 'pg' => $page, 'field' => 'price', 'order' => 'DESC'), doliconnecturl('dolishop')) ).'"';
+            <option value="'.esc_url( add_query_arg( array( 'search' =>isset($_GET['search'])?esc_attr($_GET['search']):null, 'pg' => $page, 'field' => 'price', 'order' => 'DESC'), get_permalink().$_SERVER['REQUEST_URI']) ).'"';
             if ($field == 'price' && $order == 'DESC') { print 'selected'; }
             print '>'.__( 'Highest prices', 'doliconnect').'</option>
         </select></div>';
