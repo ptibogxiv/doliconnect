@@ -239,58 +239,55 @@ function dolibarr() {
 global $current_user;  
 
 if ( is_user_logged_in() ) { 
-$user=get_current_user_id(); 
+    $user=get_current_user_id(); 
+    $dolibarr = callDoliApi("GET", "/doliconnector/".$user, null, dolidelay('doliconnector', false));
 
-$dolibarr = callDoliApi("GET", "/doliconnector/".$user, null, dolidelay('doliconnector', false));
+    if ( defined("DOLIBUG") || !is_object($dolibarr) ) {
+        define('DOLIBARR', null);
+        define('PRICE_LEVEL', 0);
+        define('REMISE_PERCENT', 0);
+        define('DOLIBARR_MEMBER', null);
+        define('DOLIBARR_TRAINEE', null);
+        define('DOLIBARR_USER', null);
+        define('DOLICONNECT_CART', 0);
+        define('DOLICONNECT_CART_ITEM', 0); 
+    } else {  
+        if ( empty($dolibarr->fk_soc) ) {
+            if ( $current_user->billing_type == 'mor' ) { 
+            if (!empty($current_user->billing_company)) { $name = $current_user->billing_company; }
+            else { $name = $current_user->user_login; }
+            } else {
+            if (!empty($current_user->user_firstname) && !empty($current_user->user_lastname)) { $name = $current_user->user_firstname." ".$current_user->user_lastname; }
+            else { $name = $current_user->user_login; }
+            } 
 
-if ( defined("DOLIBUG") || !is_object($dolibarr) ) {
-define('DOLIBARR', null);
-define('PRICE_LEVEL', 0);
-define('REMISE_PERCENT', 0);
-define('DOLIBARR_MEMBER', null);
-define('DOLIBARR_TRAINEE', null);
-define('DOLIBARR_USER', null);
-define('DOLICONNECT_CART', 0);
-define('DOLICONNECT_CART_ITEM', 0); 
-} else {  
-if ( empty($dolibarr->fk_soc) ) {
-
-if ( $current_user->billing_type == 'mor' ) { 
-if (!empty($current_user->billing_company)) { $name = $current_user->billing_company; }
-else { $name = $current_user->user_login; }
-} else {
-if (!empty($current_user->user_firstname) && !empty($current_user->user_lastname)) { $name = $current_user->user_firstname." ".$current_user->user_lastname; }
-else { $name = $current_user->user_login; }
-} 
-
-$rdr = [
-    'name'  => $name,
-    'email' => $current_user->user_email
-	];
-$dolibarr = callDoliApi("POST", "/doliconnector/".$user, $rdr, dolidelay('doliconnector'));
-define('DOLIBARR', $dolibarr->fk_soc);
-} else {   
-define('DOLIBARR', $dolibarr->fk_soc);}
-if (isset($dolibarr->price_level)) define('PRICE_LEVEL', $dolibarr->price_level);
-if (isset($dolibarr->remise_percent)) define('REMISE_PERCENT', $dolibarr->remise_percent);
-if (isset($dolibarr->fk_member)) define('DOLIBARR_MEMBER', $dolibarr->fk_member);
-if (isset($dolibarr->fk_trainee)) define('DOLIBARR_TRAINEE', $dolibarr->fk_trainee);
-if (isset($dolibarr->fk_user)) define('DOLIBARR_USER', $dolibarr->fk_user); 
-define('DOLICONNECT_CART', $dolibarr->fk_order);
-define('DOLICONNECT_CART_ITEM', $dolibarr->fk_order_nb_item);
-} 
-
+            $rdr = [
+                'name'  => $name,
+                'email' => $current_user->user_email
+                ];
+            $dolibarr = callDoliApi("POST", "/doliconnector/".$user, $rdr, dolidelay('doliconnector'));
+            define('DOLIBARR', $dolibarr->fk_soc);
+        } else {   
+            define('DOLIBARR', $dolibarr->fk_soc);
+        }
+        if (isset($dolibarr->price_level)) define('PRICE_LEVEL', $dolibarr->price_level);
+        if (isset($dolibarr->remise_percent)) define('REMISE_PERCENT', $dolibarr->remise_percent);
+        if (isset($dolibarr->fk_member)) define('DOLIBARR_MEMBER', $dolibarr->fk_member);
+        if (isset($dolibarr->fk_trainee)) define('DOLIBARR_TRAINEE', $dolibarr->fk_trainee);
+        if (isset($dolibarr->fk_user)) define('DOLIBARR_USER', $dolibarr->fk_user); 
+        define('DOLICONNECT_CART', $dolibarr->fk_order);
+        define('DOLICONNECT_CART_ITEM', $dolibarr->fk_order_nb_item);
+    } 
 } else {     
-define('DOLIBARR', null);
-define('PRICE_LEVEL', 0);
-define('REMISE_PERCENT', 0);
-define('DOLIBARR_MEMBER', null);
-define('DOLIBARR_TRAINEE', null);
-define('DOLIBARR_USER', null);
-define('DOLICONNECT_CART', 0);
-define('DOLICONNECT_CART_ITEM', 0);
+    define('DOLIBARR', null);
+    define('PRICE_LEVEL', 0);
+    define('REMISE_PERCENT', 0);
+    define('DOLIBARR_MEMBER', null);
+    define('DOLIBARR_TRAINEE', null);
+    define('DOLIBARR_USER', null);
+    define('DOLICONNECT_CART', 0);
+    define('DOLICONNECT_CART_ITEM', 0);
 } 
-
 }
 // ********************************************************
 
