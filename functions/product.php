@@ -490,21 +490,6 @@ global $current_user;
     $refprice=doliProducPriceTaxAssuj($price_ht, $price_ttc, $product->tva_tx);
     //$button .= '<table class="table table-sm table-striped table-bordered"><tbody>';
     $multiprix = doliProducPriceTaxAssuj($product->multiprices, $product->multiprices_ttc, $product->tva_tx);
-    //foreach ( $multiprix as $level => $pricei ) {
-      //$button .= '<tr';
-      //if ( (empty(doliconnector($current_user, 'price_level')) && $level == 1 ) || doliconnector($current_user, 'price_level') == $level ) {
-        //$button .= ' class="table-primary"';  
-      //}
-      //$button .= '>';   
-      //$button .= '<td><small>'.(!empty(doliconst('PRODUIT_MULTIPRICES_LABEL'.$level, $refresh))?doliconst('PRODUIT_MULTIPRICES_LABEL'.$level, $refresh):__( 'Price', 'doliconnect').' '.$level).'</small></td>';
-      //$button .= '<td class="text-end"><small>'.doliprice(doliProducPriceTaxAssuj($price_ht, $price_ttc, $product->tva_tx), null, $currency);
-      //if ( empty($time) && !empty($product->duration_value) ) { $button .='/'.doliduration($product); }
-      //$button .= '</small></td>';
-      //if ( !empty($altdurvalue) ) { $button .= "<td class='text-end'>soit ".doliprice( $altdurvalue*(doliProducPriceTaxAssuj($price_ht, $price_ttc, $product->tva_tx)), null, $currency)." par ".__( 'hour', 'doliconnect')."</td>"; } 
-      //$button .= '<small class="float-end">'.__( 'You benefit from the rate', 'doliconnect').' '.doliconst('PRODUIT_MULTIPRICES_LABEL'.$level).'</small>';
-      //$button .= '</tr>'; 
-      //}
-      //$button .= '</tbody></table>';
   } else {
     if ( !empty(doliconst("PRODUIT_CUSTOMER_PRICES", $refresh)) && doliconnector($current_user, 'fk_soc', $refresh) > 0 ) {
       $product2 = callDoliApi("GET", "/products/".$product->id."/selling_multiprices/per_customer", null, dolidelay('product', $refresh));
@@ -523,7 +508,7 @@ global $current_user;
           }
         }
     }
-    if ( doliCheckModules('discountprice', $refresh) ) {
+    if ( doliCheckModules('discountprice') ) {
       $date = new DateTime(); 
       $date->modify('NOW');
       $lastdate = $date->format('Y-m-d');
@@ -531,7 +516,7 @@ global $current_user;
       $object = callDoliApi("GET", $requestp, null, dolidelay('product', $refresh));
       if ( doliversion('19.0.0') && isset($object->data) ) { $product3 = $object->data; } else { $product3 = $object; }
     }
-    if ( doliCheckModules('discountprice', $refresh) && isset($product3) && !isset($product3->error) && isset($product3[0])) {
+    if ( doliCheckModules('discountprice') && isset($product3) && !isset($product3->error) && isset($product3[0])) {
       if (!empty($product3[0]->discount)) {
         $price_ttc3=$product->price_ttc-($product->price_ttc*$product3[0]->discount/100);
         $price_ht3=$product->price-($product->price*$product3[0]->discount/100);
@@ -641,17 +626,6 @@ global $current_user;
     }
     if (!empty($price['discount'])) $button .= '<span class="position-absolute top-100 start-100 translate-middle badge bg-light text-dark"><small><s>'.doliprice(doliProducPriceTaxAssuj($price_ht, $price_ttc, $product->tva_tx), $currency).'</s><span class="visually-hidden">initial price</span></small></span>';
     $button .= '</a><br><br>';
-    /*
-    //if ( empty($time) && !empty($product->duration_value) ) { $button .='/'.doliduration($product); } 
-    //if ( !empty($altdurvalue) ) { $button .= "<tr><td class='text-end'>soit ".doliprice( $altdurvalue*$product->price_ttc, null, $currency)." par ".__( 'hour', 'doliconnect')."</td></tr>"; } 
-    //if (!empty($product->net_measure) && !empty($product->net_measure_units)) { 
-    //  $unit = callDoliApi("GET", "/setup/dictionary/units?sortfield=rowid&sortorder=ASC&limit=1&active=1&sqlfilters=(t.rowid%3Alike%3A'".$product->net_measure_units."')", null, dolidelay('constante'));
-    //  $button .= '<span class="badge rounded-pill bg-light text-dark">'.$product->net_measure;
-    //  if (!empty($unit)) $button .= " ".$unit[0]->short_label;
-    //  $button .= '</span> ';
-    //}
-    $button .= "<div id='message-doliproduct-".$product->id."'></div>";
-    */
     return $button;
   }
 }
@@ -733,7 +707,7 @@ $list .= '</p></div>';
 
 if ( ! empty(doliconnectid('dolicart')) ) { 
 $list .= "<div class='col-12 col-md-4'><center>";
-////$list .= doliProductPrice($product, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+$list .= doliProductPrice($product, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 $list .= doliProductCart($product, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true, $fk_parent_line);
 $list .= "</center></div>";
 }
