@@ -18,7 +18,7 @@ function doliRequiredRelatedProducts($id, $qty = null, $valid = false) {
       } else {
         foreach ( $relatedproducts as $product ) {
           $qty2 = $qty*$product->qty;
-          $product = callDoliApi("GET", "/products/".$product->id."?includestockdata=1&includesubproducts=true&includetrans=true", null, dolidelay('product', true));
+          $product = callDoliApi("GET", "/products/".$product->id."?includesubproducts=true&includetrans=true", null, dolidelay('product', true));
           $mstock = doliProductStock($product, false, true, array(), $id);
           $price = doliProductPrice($product, $qty2, false, true);
           $related = doliaddtocart($product, $mstock, $qty2, $price, null, null, $id);
@@ -102,16 +102,17 @@ function doliProductStock($product, $refresh = false, $nohtml = false, $array_op
 global $current_user;
   $mstock = array();
   $warehouse = doliconst('DOLICONNECT_ID_WAREHOUSE');
+  $stock = callDoliApi("GET", "/products/stock/".$product->id, null, dolidelay('stock', $refresh));
   if (!empty($product->type) && empty(doliconst('STOCK_SUPPORTS_SERVICES'))) {
     $mstock['stock'] = 999999;
-  } elseif (isset($product->stock_warehouse) && !empty($product->stock_warehouse) && !empty($warehouse) && $warehouse > 0) {
-    if (isset($product->stock_warehouse->$warehouse)) {
-      $mstock['stock'] = min(array($product->stock_reel,$product->stock_warehouse->$warehouse->real,$product->stock_theorique));
+  } elseif (isset($stock->stock_warehouse) && !empty($stock->stock_warehouse) && !empty($warehouse) && $warehouse > 0) {
+    if (isset($stock->stock_warehouse->$warehouse)) {
+      $mstock['stock'] = min(array($stock->stock_reel,$stock->stock_warehouse->$warehouse->real,$stock->stock_theorique));
     } else {
       $mstock['stock'] = 0;
     }
-  } elseif (isset($product->stock_theorique) && isset($product->stock_reel)) {
-    $mstock['stock'] = min(array($product->stock_theorique,$product->stock_reel));
+  } elseif (isset($stock->stock_theorique) && isset($stock->stock_reel)) {
+    $mstock['stock'] = min(array($stock->stock_theorique,$stock->stock_reel));
   } else {
     $mstock['stock'] = 999999;
   }
@@ -192,15 +193,15 @@ global $current_user;
     if ( $mstock['stock'] <= 0 || (isset($product->array_options->options_packaging) && !empty($product->array_options->options_packaging) && $mstock['stock'] < $product->array_options->options_packaging) ) { 
       $stock .= "<a tabindex='0' id='popover-stock-".$product->id."' class='badge rounded-pill bg-dark text-white text-decoration-none' data-bs-container='body' data-bs-toggle='popover' data-bs-trigger='focus' title='".__( 'Not available', 'doliconnect')."' data-bs-content='".sprintf( __( 'This item is out of stock and can not be ordered or shipped. %s', 'doliconnect'), $shipping)."'><i class='fas fa-warehouse'></i> ".__( 'Not available', 'doliconnect')."</a>";
     } elseif ( ($mstock['stock'] <= 0 || (isset($product->array_options->options_packaging) && $mstock['stock'] < $product->array_options->options_packaging)) && $product->stock_theorique > $mstock['stock'] ) { 
-      $delay =  callDoliApi("GET", "/products/".$product->id."/purchase_prices", null, dolidelay('product', $refresh));
-      if (empty($delay[0]->delivery_time_days)) { $delay = esc_html__( 'few', 'doliconnect'); } else { $delay = $delay[0]->delivery_time_days;}
-      if (doliversion('12.0.0')) {
-        $datelivraison =  callDoliApi("GET", "/supplierorders?sortfield=t.date_livraison&sortorder=ASC&limit=1&product_ids=".$product->id."&sqlfilters=(t.fk_statut%3A%3D%3A'2')", null, dolidelay('order', $refresh));
-        if (!empty($datelivraison) && is_array($datelivraison) && isset($datelivraison[0]->date_livraison) && !empty($datelivraison[0]->date_livraison)) {
-          $next = sprintf( "<br>".esc_html__( 'Reception scheduled on %s.', 'doliconnect'), wp_date('d/m/Y', $datelivraison[0]->date_livraison));
-        } else {
+      //$delay =  callDoliApi("GET", "/products/".$product->id."/purchase_prices", null, dolidelay('product', $refresh));
+      //if (empty($delay[0]->delivery_time_days)) { $delay = esc_html__( 'few', 'doliconnect'); } else { $delay = $delay[0]->delivery_time_days;}
+      if (doliversion('12.0.0') && 7 == 3) {
+        //$datelivraison =  callDoliApi("GET", "/supplierorders?sortfield=t.date_livraison&sortorder=ASC&limit=1&product_ids=".$product->id."&sqlfilters=(t.fk_statut%3A%3D%3A'2')", null, dolidelay('order', $refresh));
+        //if (!empty($datelivraison) && is_array($datelivraison) && isset($datelivraison[0]->date_livraison) && !empty($datelivraison[0]->date_livraison)) {
+        //  $next = sprintf( "<br>".esc_html__( 'Reception scheduled on %s.', 'doliconnect'), wp_date('d/m/Y', $datelivraison[0]->date_livraison));
+        //} else {
           $next = null;
-        }
+        //}
       } else {
         $next = null;
       }
@@ -311,7 +312,7 @@ global $current_user;
     $addline = callDoliApi("POST", "/orders/".$orderid."/lines", $adln, 0);
     $order = callDoliApi("GET", "/orders/".$orderid."?contact_list=0", null, dolidelay('order', true));
     //$dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolidelay('doliconnector', true));
-    $product = callDoliApi("GET", "/products/".$product->id."?includestockdata=1&includesubproducts=true&includetrans=true", null, dolidelay('product', true));
+    $product = callDoliApi("GET", "/products/stock/".$product->id, null, dolidelay('product', true));
     $response['message'] = __( 'This item has been added to basket', 'doliconnect');
     $response['items'] = doliconnect_countitems($order);
     $response['lines'] = doliline($order);
@@ -323,7 +324,7 @@ global $current_user;
       $deleteline = callDoliApi("DELETE", "/orders/".$orderid."/lines/".$mstock['line'], null, 0);
       $order = callDoliApi("GET", "/orders/".$orderid."?contact_list=0", null, dolidelay('order', true));
       //$dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolidelay('doliconnector', true));
-      $product = callDoliApi("GET", "/products/".$product->id."?includestockdata=1&includesubproducts=true&includetrans=true", null, dolidelay('product', true));
+      $product = callDoliApi("GET", "/products/stock/".$product->id, null, dolidelay('product', true));
       //delete_transient( 'doliconnect_cartlinelink_'.$mstock['line'] );
       $response['message'] = __( 'This item has been deleted to basket', 'doliconnect');
       $response['items'] = doliconnect_countitems($order);
@@ -358,7 +359,7 @@ global $current_user;
       $updateline = callDoliApi("PUT", "/orders/".$orderid."/lines/".$mstock['line'], $uln, 0);
       $order = callDoliApi("GET", "/orders/".$orderid."?contact_list=0", null, dolidelay('order', true));
       //$dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolidelay('doliconnector', true));
-      $product = callDoliApi("GET", "/products/".$product->id."?includestockdata=1&includesubproducts=true&includetrans=true", null, dolidelay('product', true));
+      $product = callDoliApi("GET", "/products/stock/".$product->id, null, dolidelay('product', true));
       $response['message'] = __( 'Quantities have been changed', 'doliconnect');
       $response['items'] = doliconnect_countitems($order);
       $response['lines'] = doliline($order);
@@ -687,9 +688,9 @@ global $current_user;
 $wish = 0;
 if (isset($product->fk_product) && !empty($product->qty)) {
 $wish = $product->qty;
-$product = callDoliApi("GET", "/products/".$product->fk_product."?includestockdata=1&includesubproducts=true&includetrans=true", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$product = callDoliApi("GET", "/products/".$product->fk_product."?includesubproducts=true&includetrans=true", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 } else {
-$product = callDoliApi("GET", "/products/".$product->id."?includestockdata=1&includesubproducts=true&includetrans=true", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$product = callDoliApi("GET", "/products/".$product->id."?includesubproducts=true&includetrans=true", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 }
 
 $arr_params = array( 'search' => isset($_GET['search'])?$_GET['search']:null, 'category' => isset($_GET['category'])?$_GET['category']:null, 'subcategory' => isset($_GET['subcategory'])?$_GET['subcategory']:null, 'product' => $product->id);  
@@ -709,16 +710,18 @@ $list .= "</small>";
 if ( ! empty(doliconnectid('dolicart')) ) { 
 $list .= "<br>".doliProductStock($product);
 }
-if ( !empty($product->country_id) ) {  
+if ( isset($product->country_id) && !empty($product->country_id) ) {  
 if ( function_exists('pll_the_languages') ) { 
 $lang = pll_current_language('locale');
 } else {
 $lang = $current_user->locale;
 }
-$country = callDoliApi("GET", "/setup/dictionary/countries/".$product->country_id."?lang=".$lang, null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+if ( isset($product->country_id) && !empty($product->country_id) ) { 
+$country = callDoliApi("GET", "/setup/dictionary/countries/".$product->country_id."?lang=".$lang, null, dolidelay('constante'));
 $list .= "<br><small><span class='fi fi-".strtolower($product->country_code)."'></span> ".$country->label;
+}
 if ( isset($product->state_id) && !empty($product->state_id) ) { 
-$state = callDoliApi("GET", "/setup/dictionary/states/".$product->state_id."?lang=".$lang, null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))); 
+$state = callDoliApi("GET", "/setup/dictionary/states/".$product->state_id."?lang=".$lang, null, dolidelay('constante')); 
 $list .= " - ".$state->name; } 
 $list .= "</small>"; }
 if( has_filter('mydoliconnectproductdesc') ) {
@@ -730,7 +733,7 @@ $list .= '</p></div>';
 
 if ( ! empty(doliconnectid('dolicart')) ) { 
 $list .= "<div class='col-12 col-md-4'><center>";
-$list .= doliProductPrice($product, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+////$list .= doliProductPrice($product, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 $list .= doliProductCart($product, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true, $fk_parent_line);
 $list .= "</center></div>";
 }

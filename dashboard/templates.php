@@ -772,7 +772,7 @@ global $current_user;
         if ( !isset($resultats2->error) && $resultats2 != null ) {
           foreach ($resultats2 as $product) {
             $resultats[$product[0]->id] = 1; 
-            $product = callDoliApi("GET", "/products/".$product[0]->id."?includestockdata=".doliIncludeStock()."&includesubproducts=true&includetrans=true", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+            $product = callDoliApi("GET", "/products/".$product[0]->id."?includesubproducts=true&includetrans=true", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
             print apply_filters( 'doliproductlist', $product);
           }
         } else {
@@ -890,7 +890,7 @@ function dolishop_display($content) {
 
     } elseif ( isset($_GET['product']) && is_numeric(esc_attr($_GET['product'])) ) {
 
-      $request = "/products/".esc_attr($_GET['product'])."?includestockdata=".doliIncludeStock()."&includesubproducts=true&includetrans=true";
+      $request = "/products/".esc_attr($_GET['product'])."?includesubproducts=true&includetrans=true";
       $product = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
       print apply_filters( 'doliproductcard', $product, null);
@@ -1053,7 +1053,7 @@ function dolishop_display($content) {
         if ( !isset($resultats->error) && $resultats != null ) {
           foreach ($resultats as $product) {
             if ( doliCheckModules('discountprice') && isset($_GET['category']) && $_GET['category'] == 'discount' && !isset($_GET['product'])) { $product->id = $product->fk_product; }
-            $product = callDoliApi("GET", "/products/".$product->id."?includestockdata=".doliIncludeStock()."&includesubproducts=true&includetrans=true", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+            $product = callDoliApi("GET", "/products/".$product->id."?includesubproducts=true&includetrans=true", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
             print apply_filters( 'doliproductlist', $product);
 
           }

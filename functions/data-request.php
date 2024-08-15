@@ -777,8 +777,8 @@ function dolicart_request() {
 global $current_user;
 	if ( wp_verify_nonce( trim($_POST['dolicart-nonce']), 'dolicart-nonce')) {
 		if (isset($_POST['case']) && $_POST['case'] == "updateLine") {
-			$product = callDoliApi("GET", "/products/".trim($_POST['id'])."?includestockdata=1&includesubproducts=true&includetrans=true", null, dolidelay('product', true));
-			$mstock = doliProductStock($product, false, true);
+			$product = callDoliApi("GET", "/products/".trim($_POST['id'])."?includesubproducts=true&includetrans=true", null, dolidelay('product'));
+			$mstock = doliProductStock($product, true, true);
 			if (isset($_POST['modify']) && $_POST['modify'] == "delete") { 
 				$price = doliProductPrice($product, 0, false, true);
 				$result = doliaddtocart($product, $mstock, 0, $price, null, null);
@@ -791,7 +791,7 @@ global $current_user;
 					'lines' => $result['lines'],
 					'total' => $result['total']
 				];	
-				$product = callDoliApi("GET", "/products/".trim($_POST['id'])."?includestockdata=1&includesubproducts=true&includetrans=true", null, dolidelay('product', true));
+				//$product = callDoliApi("GET", "/products/stock/".trim($_POST['id']), null, dolidelay('product', true));
 				$response['newwish'] = doliProductCart($product, null, false); 
 				wp_send_json_success($response);	
 				die(); 

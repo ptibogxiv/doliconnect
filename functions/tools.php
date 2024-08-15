@@ -1388,7 +1388,7 @@ function dolidelay($delay = null, $refresh = false, $protect = false) {
       elseif ($delay == 'member') { $delay = DAY_IN_SECONDS; }
       elseif ($delay == 'donation') { $delay = DAY_IN_SECONDS; }
       elseif ($delay == 'ticket') { $delay = HOUR_IN_SECONDS; }
-      elseif ($delay == 'product') { $delay = DAY_IN_SECONDS; }
+      elseif ($delay == 'product') { $delay = WEEK_IN_SECONDS; }
       elseif ($delay == 'stock') { $delay = HOUR_IN_SECONDS; }
       elseif ($delay == 'cart') { $delay = 20 * MINUTE_IN_SECONDS; }
       elseif ($delay == 'document') { $delay = MONTH_IN_SECONDS; }
