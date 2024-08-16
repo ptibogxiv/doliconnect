@@ -2244,7 +2244,7 @@ if ( doliCheckRights('adherent', 'cotisation', 'lire') ) {
         }
     }
     print doliproduct($type, 'label');
-    print "</td><td>".$dated." ".__( 'to', 'doliconnect')." ".$datef;
+    print "</td><td class='text-center'>".$dated." ".__( 'to', 'doliconnect')." ".$datef;
     print "</td><td class='text-end'><b>".doliprice($cotisation->amount)."</b></td></tr></table><span></span></li>";
     }
     }
