@@ -1459,7 +1459,7 @@ print "</div><div class='card-footer text-muted'>";
 print "<small><div class='float-start'>";
 if ( isset($request) ) print dolirefresh($request, $url, dolidelay('contract'));
 print "</div><div class='float-end'>";
-print dolihelp('ISSUE');
+//print dolihelp('ISSUE');
 print "</div></small>";
 print "</div></div>";
 
@@ -2643,8 +2643,8 @@ if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['
 
 $request = "/tickets?socid=".doliconnector($current_user, 'fk_soc')."&sortfield=t.rowid&sortorder=DESC&limit=".$limit."&page=".$page;
 
-$listticket = callDoliApi("GET", $request, null, dolidelay('ticket', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-//print $listticket;
+$object= callDoliApi("GET", $request, null, dolidelay('ticket', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+if ( doliversion('21.0.0') && isset($object->data) ) { $listticket = $object->data; } else { $listticket = $object; }
 
 print '<div class="card shadow-sm"><div class="card-header">'.__( 'My support tickets', 'doliconnect');
 print '<a class="float-end text-decoration-none" href="'.esc_url( add_query_arg( 'action', 'create', $url) ).'"><i class="fas fa-plus-circle"></i> '.__( 'Create ticket', 'doliconnect').'</a>';  
@@ -2676,12 +2676,12 @@ print "<li class='list-group-item list-group-item-light'><center>".__( 'No ticke
 }
 
 print '</ul><div class="card-body">';
-print dolipage($listticket, $url, $page, $limit);
+print doliPagination($object, $url, $page);
 print '</div><div class="card-footer text-muted">';
 print "<small><div class='float-start'>";
 if ( isset($request) ) print dolirefresh($request, $url, dolidelay('ticket'));
 print "</div><div class='float-end'>";
-print dolihelp('ISSUE');
+//print dolihelp('ISSUE');
 print "</div></small>";
 print '</div></div>';
 
