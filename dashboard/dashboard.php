@@ -1626,8 +1626,8 @@ if ( !isset($donationfo->error) && isset($_GET['id']) && isset($_GET['ref']) && 
 print "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>$donationfo->ref</h5><div class='row'><div class='col-md-5'>";
 $datecommande =  wp_date('d/m/Y', $donationfo->date_creation);
 print "<b>".__( 'Date of order', 'doliconnect').":</b> $datecommande<br>";
-
-print "<b>".__( 'Payment method', 'doliconnect').":</b> ".__( $donationfo->mode_reglement, 'doliconnect')."<br><br></div><div class='col-md-7'>";
+$mode_reglement = callDoliApi("GET", "/setup/dictionary/payment_types?sortfield=code&sortorder=ASC&limit=100&active=1&sqlfilters=(t.code%3A%3D%3A'".$donationfo->mode_reglement_code."')", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+if (!empty($donationfo->mode_reglement_id)) print "<b>".__( 'Payment method', 'doliconnect').":</b> ".$mode_reglement[0]->label."<br><br></div><div class='col-md-7'>";
 
 if ( isset($orderinfo) ) {
 print "<h3 class='text-end'>".$orderinfo."</h3>";
