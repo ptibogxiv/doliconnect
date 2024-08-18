@@ -1682,7 +1682,7 @@ $request= "/donations?sortfield=t.date_valid&sortorder=DESC&limit=".$limit."&pag
 $listdonation = callDoliApi("GET", $request, null, dolidelay('donation', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 //print var_dump($listdonation);
 
-print '<div class="card shadow-sm"><ul class="list-group list-group-flush">'; 
+print '<div class="card shadow-sm"><div class="card-header">'.__( 'Donations tracking', 'doliconnect').'</div><ul class="list-group list-group-flush">'; 
 if ( !empty(doliconnectid('dolidonation'))) {
 print '<a href="'.doliconnecturl('dolidonation').'" class="list-group-item lh-condensed list-group-item-action list-group-item-primary "><center><i class="fas fa-plus-circle"></i> '.__( 'Donate', 'doliconnect').'</center></a>';  
 }
@@ -1713,7 +1713,7 @@ print "</div><div class='card-footer text-muted'>";
 print "<small><div class='float-start'>";
 if ( isset($request) ) print dolirefresh($request, $url, dolidelay('donation'));
 print "</div><div class='float-end'>";
-print dolihelp('ISSUE');
+//print dolihelp('ISSUE');
 print "</div></small>";
 print "</div></div>";
 
@@ -1819,6 +1819,8 @@ if ( doliCheckModules('recruitment') && doliversion('19.0.0') && !empty(get_opti
     
     }
 }
+
+//*****************************************************************************************
 
 if ( doliCheckModules('classifieds') ) {
 function classifieds_menu($arg) {
