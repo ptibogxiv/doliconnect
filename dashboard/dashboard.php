@@ -277,11 +277,6 @@ print "'>".__( 'Manage address book', 'doliconnect')."</a>";
 function contacts_module($url){
 global $current_user;
 
-$limit=12;
-if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']); }  else { $page = 0; }
-
-$requestlist = "/contacts?sortfield=t.rowid&sortorder=DESC&limit=".$limit."&page=".$page."&thirdparty_ids=".doliconnector($current_user, 'fk_soc');    
-
 if ( isset($_GET['id']) && $_GET['id'] > 0 ) {  
 $request = "/contacts/".esc_attr($_GET['id'])."?includecount=1&includeroles=1";
 $contactfo = callDoliApi("GET", $request, null, dolidelay('contact', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
@@ -339,8 +334,13 @@ print '</div></small>';
 print '</div></div></form>';
 
 } else {
-                           
-$listcontact = callDoliApi("GET", $requestlist, null, dolidelay('contact', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+
+$limit=12;
+if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']); }  else { $page = 0; }
+
+$request = "/contacts?sortfield=t.rowid&sortorder=DESC&limit=".$limit."&page=".$page."&thirdparty_ids=".doliconnector($current_user, 'fk_soc')."&pagination_data=true";                              
+$object = callDoliApi("GET", $request, null, dolidelay('contact', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+if ( doliversion('21.0.0') && isset($object->data) ) { $listcontact  = $object->data; } else { $listcontact  = $object; }
 
 print '<div class="card shadow-sm"><div class="card-header">'.__( 'Manage address book', 'doliconnect');
 if (doliCheckRights('societe', 'contact', 'creer')) print '<a class="float-end text-decoration-none" href="'.esc_url( add_query_arg( 'action', 'create', $url) ).'"><i class="fas fa-plus-circle"></i> '.__( 'Create contact', 'doliconnect').'</a>';  
@@ -362,10 +362,10 @@ print "<li class='list-group-item list-group-item-light'><center>".__( 'No conta
 }
 
 print "</ul><div class='card-body'>";
-print dolipage($listcontact, $url, $page, $limit);
+print doliPagination($object, $url, $page);
 print "</div><div class='card-footer text-muted'>";
 print "<small><div class='float-start'>";
-if ( isset($requestlist) ) print dolirefresh($requestlist, $url, dolidelay('contact'));
+if ( isset($request) ) print dolirefresh($request, $url, dolidelay('contact'));
 print "</div><div class='float-end'>";
 //print dolihelp('ISSUE');
 print "</div></small>";
