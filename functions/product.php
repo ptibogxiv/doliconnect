@@ -455,14 +455,14 @@ function doliProductPrice($product, $quantity = null, $refresh = false, $nohtml 
 global $current_user;
   $button = null;
   $price = array();
-  $thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty', $refresh));
+  $thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty'));
   if (isset($thirdparty->tva_assuj) && empty($thirdparty->tva_assuj)) {
     if (isset($product->tva_tx))  $product->tva_tx = 0;
   }
   if (doliconnector($current_user, 'fk_order') > 0) {
     $orderfo = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order'), null, $refresh);
   }
-  $currency=isset($orderfo->multicurrency_code)?$orderfo->multicurrency_code:strtoupper(doliconst("MAIN_MONNAIE", $refresh));
+  $currency=isset($orderfo->multicurrency_code)?$orderfo->multicurrency_code:strtoupper(doliconst("MAIN_MONNAIE"));
   if ( $product->type == '1' && !is_null($product->duration_unit) && '0' < ($product->duration_value)) {
     if ( $product->duration_unit == 'i' ) {
       $altdurvalue=60/$product->duration_value; 
@@ -471,7 +471,7 @@ global $current_user;
   $price['discount'] = !empty(doliconnector($current_user, 'remise_percent'))?doliconnector($current_user, 'remise_percent'):'0';
   $customer_discount = $price['discount'];
 
-  if ( !empty(doliconst("PRODUIT_MULTIPRICES", $refresh)) && !empty($product->multiprices_ttc) ) {
+  if ( !empty(doliconst("PRODUIT_MULTIPRICES")) && !empty($product->multiprices_ttc) ) {
 
     if (!empty(doliconnector($current_user, 'price_level'))) {
       $level=doliconnector($current_user, 'price_level');
@@ -491,7 +491,7 @@ global $current_user;
     //$button .= '<table class="table table-sm table-striped table-bordered"><tbody>';
     $multiprix = doliProducPriceTaxAssuj($product->multiprices, $product->multiprices_ttc, $product->tva_tx);
   } else {
-    if ( !empty(doliconst("PRODUIT_CUSTOMER_PRICES", $refresh)) && doliconnector($current_user, 'fk_soc', $refresh) > 0 ) {
+    if ( !empty(doliconst("PRODUIT_CUSTOMER_PRICES")) && doliconnector($current_user, 'fk_soc', $refresh) > 0 ) {
       $product2 = callDoliApi("GET", "/products/".$product->id."/selling_multiprices/per_customer", null, dolidelay('product', $refresh));
       if ( !isset($product2->error) && $product2 != null ) {
         $new_product2 = array_filter($product2, function($obj){
