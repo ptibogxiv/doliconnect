@@ -2230,8 +2230,8 @@ print '</div>';
 if ( doliCheckRights('adherent', 'cotisation', 'lire') ) {
     print "<ul class='list-group list-group-flush'>";
     if (doliconnector($current_user, 'fk_member') > 0) {
-        $listcotisation = callDoliApi("GET", "/members/".doliconnector($current_user, 'fk_member')."/subscriptions", null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-        //print var_dump($listcotisation);
+        $object = callDoliApi("GET", "/members/".doliconnector($current_user, 'fk_member')."/subscriptions", null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+        if ( doliversion('21.0.0') && isset($object->data) ) { $listcotisation = $object->data; } else { $listcotisation = $object; }
     } 
     if ( isset($listcotisation) && !isset($listcotisation->error) && $listcotisation != null ) { 
     foreach ( $listcotisation as $cotisation ) {                                                                                 
@@ -2240,9 +2240,9 @@ if ( doliCheckRights('adherent', 'cotisation', 'lire') ) {
     print "<li class='list-group-item'><table width='100%' border='0'><tr><td>";
     if ($cotisation->fk_type > 0) {
         if (doliversion('20.0.0')){ 
-            $type= callDoliApi("GET", "/members/types/".$cotisation->fk_type, null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+            $type= callDoliApi("GET", "/members/types/".$cotisation->fk_type, null, dolidelay('member'));
         } else {
-            $type= callDoliApi("GET", "/memberstypes/".$cotisation->fk_type, null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+            $type= callDoliApi("GET", "/memberstypes/".$cotisation->fk_type, null, dolidelay('member'));
         }
     }
     print doliproduct($type, 'label');
@@ -2253,9 +2253,10 @@ if ( doliCheckRights('adherent', 'cotisation', 'lire') ) {
     else { 
         print "<li class='list-group-item list-group-item-light'><center>".__( 'No subscription', 'doliconnect')."</center></li>";
     }
-    print '</ul>';
+    print '</ul><div class="card-body">';
+    print doliPagination($object, $url, $page);
+    print '</div>';
 }
-
 print '<div class="card-footer text-muted">';
 print "<small><div class='float-start'>";
 if ( isset($request) ) print dolirefresh($request, $url, dolidelay('member'), (isset($adherent)?$adherent:null));
