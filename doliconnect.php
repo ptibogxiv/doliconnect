@@ -210,11 +210,11 @@ delete_transient( $link );
 } elseif ( $delay <= 0 || ! in_array( $http_code,array('200', '404') ) ) {
 delete_transient( $link );
 
-if (! in_array($http_code,array('200', '400', '404')) ) {
+if (! in_array($http_code,array('200', '400', '404', '600')) ) {
 
-if ( !defined("DOLIBUG") ) {
-define('DOLIBUG', $http_code);
-}
+    if ( !defined("DOLIBUG") ) {
+        define('DOLIBUG', $http_code);
+    }
 
 } elseif ( $delay != 0 ) {
 $delay = abs( intval($delay) );
