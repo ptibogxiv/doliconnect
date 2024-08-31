@@ -1888,8 +1888,8 @@ if ( doliCheckModules('expensereport') && doliversion('19.0.0') && !empty(get_op
     $request= "/expensereports?sortfield=t.rowid&sortorder=ASC&limit=".$limit."&page=".$page."&user_ids=".doliconnector($current_user, 'fk_soc')."&pagination_data=true";
     $object = callDoliApi("GET", $request, null, dolidelay('expensereport', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
     if ( doliversion('21.0.0') && isset($object->data) ) { $listjobposition = $object->data; } else { $listjobposition = $object; }
+    print '<div class="card shadow-sm"><div class="card-header">'.__( 'List of expense reports', 'doliconnect').'</div><ul class="list-group list-group-flush">';
     
-    print '<div class="card shadow-sm"><ul class="list-group list-group-flush">'; 
     if ( !empty(doliconnectid('dolidonation'))) {
     print '<a href="'.doliconnecturl('dolidonation').'" class="list-group-item lh-condensed list-group-item-action list-group-item-primary "><center><i class="fas fa-plus-circle"></i> '.__( 'Donate', 'doliconnect').'</center></a>';  
     }
