@@ -1853,7 +1853,7 @@ if ( doliCheckModules('expensereport') && doliversion('19.0.0') ) {
     $orderavancement=100;
     print '<div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: '.$orderavancement.'%" aria-valuenow="'.$orderavancement.'" aria-valuemin="0" aria-valuemax="100"></div></div>';
     print "<div class='w-auto text-muted d-none d-sm-block' ><div style='display:inline-block;width:25%'>".__( 'Draft', 'doliconnect')."</div><div style='display:inline-block;width:25%'>".__( 'Submitted', 'doliconnect')."</div><div style='display:inline-block;width:25%'>".__( 'Validated', 'doliconnect')."</div><div class='text-end' style='display:inline-block;width:25%'>".__( 'Paid', 'doliconnect')."</div></div>";
-    
+    print '</div><ul class="list-group list-group-flush">';
     if ( $expensereportfo->lines != null ) {
         foreach ( $expensereportfo->lines as $line ) {
         print "<li class='list-group-item'>";     
@@ -1867,7 +1867,7 @@ if ( doliCheckModules('expensereport') && doliversion('19.0.0') ) {
         }
     }
     print dolitotal($expensereportfo);
-    print "</div><div class='card-footer text-muted'>";
+    print "</ul><div class='card-footer text-muted'>";
     print "<small><div class='float-start'>";
     if ( isset($request) ) print dolirefresh($request, $url, dolidelay('donation'));
     print "</div><div class='float-end'>";
