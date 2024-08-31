@@ -1723,7 +1723,7 @@ print "</div></div>";
 //*****************************************************************************************
 
 if ( doliCheckModules('recruitment') && doliversion('19.0.0') && !empty(get_option('doliconnectbeta')) ) {
-    add_action( 'grh_doliconnect_menu', 'recruitment_menu', 3, 1);
+    add_action( 'grh_doliconnect_menu', 'recruitment_menu', 1, 1);
     add_action( 'grh_doliconnect_recruitment', 'recruitment_module');
 }  
     
@@ -1821,7 +1821,7 @@ if ( doliCheckModules('recruitment') && doliversion('19.0.0') && !empty(get_opti
 }
 
 if ( doliCheckModules('expensereport') && doliversion('19.0.0') && !empty(get_option('doliconnectbeta')) ) {
-    add_action( 'grh_doliconnect_menu', 'expensereport_menu', 3, 1);
+    add_action( 'grh_doliconnect_menu', 'expensereport_menu', 2, 1);
     add_action( 'grh_doliconnect_expensereport', 'expensereport_module');
 }  
     
