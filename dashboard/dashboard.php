@@ -1847,9 +1847,9 @@ if ( doliCheckModules('expensereport') && doliversion('19.0.0') && !empty(get_op
     print "<b>".__( 'Period', 'doliconnect').":</b> ".wp_date('d/m/Y', $donationfo->date_debut)." au ".wp_date('d/m/Y', $donationfo->date_fin)."<br>";
     print "<b>".__( 'Date of submition', 'doliconnect').":</b> ".wp_date('d/m/Y', $donationfo->date_validation)."<br>";
     print "<b>".__( 'Date of approbation', 'doliconnect').":</b> ".wp_date('d/m/Y', $donationfo->date_approbation)."<br>";
-    print "<b>".__( 'Approbator', 'doliconnect').":</b> ".wp_date('d/m/Y', $donationfo->date_debut)." au ".wp_date('d/m/Y', $donationfo->date_fin)."<br>";
+    print "<b>".__( 'Approbator', 'doliconnect').":</b> ".$donationfo->user_validator_infos."<br>";
     print "<br></div></div>";
-    
+
     $orderavancement=100;
     print '<div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: '.$orderavancement.'%" aria-valuenow="'.$orderavancement.'" aria-valuemin="0" aria-valuemax="100"></div></div>';
     print "<div class='w-auto text-muted d-none d-sm-block' ><div style='display:inline-block;width:25%'>".__( 'Draft', 'doliconnect')."</div><div style='display:inline-block;width:25%'>".__( 'Submitted', 'doliconnect')."</div><div style='display:inline-block;width:25%'>".__( 'Validated', 'doliconnect')."</div><div class='text-end' style='display:inline-block;width:25%'>".__( 'Paid', 'doliconnect')."</div></div>";
