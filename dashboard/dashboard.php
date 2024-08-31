@@ -1822,7 +1822,7 @@ if ( doliCheckModules('recruitment') && doliversion('19.0.0') && !empty(get_opti
 
 //*****************************************************************************************
 
-if ( doliCheckModules('expensereport') && doliversion('20.0.0') && doliCheckRights('expensereport', 'lire') ) {
+if ( doliCheckModules('expensereport') && doliversion('19.0.0') && doliCheckRights('expensereport', 'lire') ) {
     add_action( 'grh_doliconnect_menu', 'expensereport_menu', 2, 1);
     add_action( 'grh_doliconnect_expensereport', 'expensereport_module');
 }  
