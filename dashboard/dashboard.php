@@ -1871,8 +1871,8 @@ if ( doliCheckModules('expensereport') && doliversion('19.0.0') && !empty(get_op
         print '<h5 class="mb-1">x'.$line->qty.'</h5>'; 
         print "</div></div></li>";
         }
-        }
-
+    }
+    print dolitotal($donationfo);
     print "</div><div class='card-footer text-muted'>";
     print "<small><div class='float-start'>";
     if ( isset($request) ) print dolirefresh($request, $url, dolidelay('donation'));
