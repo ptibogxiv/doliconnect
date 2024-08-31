@@ -1414,7 +1414,7 @@ function dolidelay($delay = null, $refresh = false, $protect = false) {
 }
 
 function dolirefresh( $origin, $url, $delay, $element = null) {
-  if ( empty($url) ) $url = $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+  $url = $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
   $refresh = '<script type="text/javascript">';
   $refresh .= 'function refreshloader(){
   jQuery("#DoliconnectLoadingModal").modal("show");
