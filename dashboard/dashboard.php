@@ -1768,7 +1768,7 @@ if ( doliCheckModules('recruitment') && doliversion('19.0.0') && !empty(get_opti
 
     print "</div><div class='card-footer text-muted'>";
     print "<small><div class='float-start'>";
-    if ( isset($request) ) print dolirefresh($request, $url, dolidelay('donation'));
+    if ( isset($request) ) print dolirefresh($request, $url, dolidelay('donation'), $donationfo);
     print "</div><div class='float-end'>";
     print dolihelp('COM');
     print "</div></small>";
@@ -1859,7 +1859,7 @@ if ( doliCheckModules('expensereport') && doliversion('19.0.0') && doliCheckRigh
         print "<li class='list-group-item'>";     
         print '<div class="w-100 justify-content-between"><div class="row"><div class="col-8 col-md-10"> 
         <h6 class="mb-1">'.'</h6>
-        <p class="mb-1">'.$line->description.'</p>
+        <p class="mb-1">'.$line->comments.'</p>
         <small><i>('.wp_date("d/m/Y", $line->dates).')</i></small>'; 
         print '</div><div class="col-4 col-md-2 text-end"><h5 class="mb-1">'.doliprice($line, 'ttc', isset($line->multicurrency_code) ? $line->multicurrency_code : null).'</h5>';
         print '<h5 class="mb-1">x'.$line->qty.'</h5>'; 
@@ -1869,7 +1869,7 @@ if ( doliCheckModules('expensereport') && doliversion('19.0.0') && doliCheckRigh
     print dolitotal($expensereportfo);
     print "</ul><div class='card-footer text-muted'>";
     print "<small><div class='float-start'>";
-    if ( isset($request) ) print dolirefresh($request, $url, dolidelay('donation'));
+    if ( isset($request) ) print dolirefresh($request, $url, dolidelay('expensereport'),  $expensereportfo);
     print "</div><div class='float-end'>";
     //print dolihelp('COM');
     print "</div></small>";
