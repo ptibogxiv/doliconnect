@@ -1844,17 +1844,13 @@ if ( doliCheckModules('expensereport') && doliversion('19.0.0') && !empty(get_op
     
     if ( !isset($donationfo->error) && isset($_GET['id']) && isset($_GET['ref']) && (doliconnector($current_user, 'fk_soc') == $donationfo->fk_user_author ) && ($_GET['ref'] == $donationfo->ref) && $donationfo->status != 0 && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doli-expensereports-'.$donationfo->id.'-'.$donationfo->ref)) {
     print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Expense report %s', 'doliconnect'), $donationfo->ref).'<a class="float-end text-decoration-none" href="'.esc_url( add_query_arg( 'module', 'expensereport', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-6">';
-    $datecreation =  wp_date('d/m/Y', $donationfo->date_creation);
-    print "<b>".__( 'Date of creation', 'doliconnect').":</b> $datecreation<br>";
-    print "<b>".__( 'Payment method', 'doliconnect').":</b> <br><br></div><div class='col-md-7'>";
-    
-    if ( isset($orderinfo) ) {
-    print "<h3 class='text-end'>".$orderinfo."</h3>";
-    }
+    print "<b>".__( 'Period', 'doliconnect').":</b> ".wp_date('d/m/Y', $donationfo->date_debut)." au ".wp_date('d/m/Y', $donationfo->date_fin)."<br>";
+    print "<b>".__( 'Date of submition', 'doliconnect').":</b> ".wp_date('d/m/Y', $donationfo->date_validation)."<br>";
+    print "<b>".__( 'Date of approbation', 'doliconnect').":</b> ".wp_date('d/m/Y', $donationfo->date_approbation)."<br>";
+    print "<b>".__( 'Approbator', 'doliconnect').":</b> ".wp_date('d/m/Y', $donationfo->date_debut)." au ".wp_date('d/m/Y', $donationfo->date_fin)."<br>";
+    print "<br></div></div>";
     
     $orderavancement=100;
-    
-    print "</div></div>";
     print '<div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: '.$orderavancement.'%" aria-valuenow="'.$orderavancement.'" aria-valuemin="0" aria-valuemax="100"></div></div>';
     print "<div class='w-auto text-muted d-none d-sm-block' ><div style='display:inline-block;width:25%'>".__( 'Draft', 'doliconnect')."</div><div style='display:inline-block;width:25%'>".__( 'Submitted', 'doliconnect')."</div><div style='display:inline-block;width:25%'>".__( 'Validated', 'doliconnect')."</div><div class='text-end' style='display:inline-block;width:25%'>".__( 'Paid', 'doliconnect')."</div></div>";
     
