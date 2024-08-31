@@ -1884,7 +1884,7 @@ if ( doliCheckModules('expensereport') && doliversion('19.0.0') && doliCheckRigh
     if ( doliversion('21.0.0') && isset($object->data) ) { $listexpensereport = $object->data; } else { $listexpensereport = $object; }
     print '<div class="card shadow-sm"><div class="card-header">'.__( 'List of expense reports', 'doliconnect').'</div><ul class="list-group list-group-flush">';
     
-    if ( doliCheckRights('expensereport', 'creer')) {
+    if ( doliCheckRights('expensereport', 'creer') && !empty(get_option('doliconnectbeta'))) {
         print '<a href="" class="list-group-item lh-condensed list-group-item-action list-group-item-primary" disabled><center><i class="fas fa-plus-circle"></i> '.__( 'Create an expense report', 'doliconnect').'</center></a>';  
     }
     
