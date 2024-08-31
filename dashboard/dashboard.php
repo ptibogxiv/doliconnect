@@ -1858,9 +1858,9 @@ if ( doliCheckModules('expensereport') && doliversion('19.0.0') && doliCheckRigh
         foreach ( $expensereportfo->lines as $line ) {
         print "<li class='list-group-item'>";     
         print '<div class="w-100 justify-content-between"><div class="row"><div class="col-8 col-md-10"> 
-        <h6 class="mb-1">'.'</h6>
-        <p class="mb-1">'.$line->comments.'</p>
-        <small><i>('.wp_date("d/m/Y", $line->dates).')</i></small>'; 
+        <h6 class="mb-1">'.'</h6>';
+        if (isset($line->comments)) print '<p class="mb-1">'.$line->comments.'</p>';
+        print '<small><i>('.wp_date("d/m/Y", $line->dates).')</i></small>'; 
         print '</div><div class="col-4 col-md-2 text-end"><h5 class="mb-1">'.doliprice($line, 'ttc', isset($line->multicurrency_code) ? $line->multicurrency_code : null).'</h5>';
         print '<h5 class="mb-1">x'.$line->qty.'</h5>'; 
         print "</div></div></li>";
