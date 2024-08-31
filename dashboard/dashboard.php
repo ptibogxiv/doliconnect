@@ -1833,18 +1833,16 @@ if ( doliCheckModules('expensereport') && doliversion('19.0.0') && !empty(get_op
     
     function expensereport_module( $url ) {
     global $current_user;
-    $entity = get_current_blog_id();
-    $ID = $current_user->ID;
     
     if ( isset($_GET['id']) && $_GET['id'] > 0 ) { 
      
-    $request = "/recruitments/jobposition/".esc_attr($_GET['id']);
+    $request = "/expensereports/".esc_attr($_GET['id']);
     
-    $donationfo = callDoliApi("GET", $request, null, dolidelay('donation', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+    $donationfo = callDoliApi("GET", $request, null, dolidelay('expensereport', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
     //print $donationfo;
     }
     
-    if ( !isset($donationfo->error) && isset($_GET['id']) && isset($_GET['ref']) && (doliconnector($current_user, 'fk_soc') == $donationfo->fk_soc ) && ($_GET['ref'] == $donationfo->ref) && $donationfo->status != 0 ) {
+    if ( !isset($donationfo->error) && isset($_GET['id']) && isset($_GET['ref']) && (doliconnector($current_user, 'fk_soc') == $donationfo->fk_user_author ) && ($_GET['ref'] == $donationfo->ref) && $donationfo->status != 0 ) {
     
     print "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>$donationfo->ref</h5><div class='row'><div class='col-md-5'>";
     $datecreation =  wp_date('d/m/Y', $donationfo->date_creation);
