@@ -1822,7 +1822,7 @@ if ( doliCheckModules('recruitment') && doliversion('19.0.0') && !empty(get_opti
 
 //*****************************************************************************************
 
-if ( doliCheckModules('expensereport') && doliversion('19.0.0') && doliCheckRights('expensereport', 'lire') ) {
+if ( doliCheckModules('expensereport') && doliversion('20.0.0') && doliCheckRights('expensereport', 'lire') ) {
     add_action( 'grh_doliconnect_menu', 'expensereport_menu', 2, 1);
     add_action( 'grh_doliconnect_expensereport', 'expensereport_module');
 }  
@@ -1879,7 +1879,7 @@ if ( doliCheckModules('expensereport') && doliversion('19.0.0') && doliCheckRigh
     
     $limit=12;
     if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']); }  else { $page = 0; }
-    $request= "/expensereports?sortfield=t.rowid&sortorder=DESC&limit=".$limit."&page=".$page."&user_ids=".doliconnector($current_user, 'fk_soc')."&pagination_data=true";
+    $request= "/expensereports?sortfield=t.rowid&sortorder=DESC&limit=".$limit."&page=".$page."&user_ids=".doliconnector($current_user, 'fk_user')."&pagination_data=true";
     $object = callDoliApi("GET", $request, null, dolidelay('expensereport', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
     if ( doliversion('21.0.0') && isset($object->data) ) { $listexpensereport = $object->data; } else { $listexpensereport = $object; }
     print '<div class="card shadow-sm"><div class="card-header">'.__( 'List of expense reports', 'doliconnect').'</div><ul class="list-group list-group-flush">';
