@@ -1768,7 +1768,7 @@ if ( doliCheckModules('recruitment') && doliversion('19.0.0') && !empty(get_opti
 
     print "</div><div class='card-footer text-muted'>";
     print "<small><div class='float-start'>";
-    if ( isset($request) ) print dolirefresh($request, $url, dolidelay('donation'), $donationfo);
+    if ( isset($request) ) print dolirefresh($request, $url, dolidelay('donation'));
     print "</div><div class='float-end'>";
     print dolihelp('COM');
     print "</div></small>";
@@ -1858,15 +1858,26 @@ if ( doliCheckModules('expensereport') && doliversion('19.0.0') && !empty(get_op
     
     print "</div></div>";
     print '<div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: '.$orderavancement.'%" aria-valuenow="'.$orderavancement.'" aria-valuemin="0" aria-valuemax="100"></div></div>';
-    print "<div class='w-auto text-muted d-none d-sm-block' ><div style='display:inline-block;width:20%'>".__( 'Order', 'doliconnect')."</div><div style='display:inline-block;width:15%'>".__( 'Payment', 'doliconnect')."</div><div style='display:inline-block;width:25%'>".__( 'Processing', 'doliconnect')."</div><div style='display:inline-block;width:20%'>".__( 'Shipping', 'doliconnect')."</div><div class='text-end' style='display:inline-block;width:20%'>".__( 'Recruited', 'doliconnect')."</div></div>";
+    print "<div class='w-auto text-muted d-none d-sm-block' ><div style='display:inline-block;width:20%'>".__( 'Order', 'doliconnect')."</div><div style='display:inline-block;width:15%'>".__( 'Payment', 'doliconnect')."</div><div style='display:inline-block;width:25%'>".__( 'Processing', 'doliconnect')."</div><div style='display:inline-block;width:20%'>".__( 'Shipping', 'doliconnect')."</div><div class='text-end' style='display:inline-block;width:20%'>".__( 'Paid', 'doliconnect')."</div></div>";
     
-    print $donationfo->description;
+    if ( $donationfo->lines != null ) {
+        foreach ( $donationfo->lines as $line ) {
+        print "<li class='list-group-item'>";     
+        print '<div class="w-100 justify-content-between"><div class="row"><div class="col-8 col-md-10"> 
+        <h6 class="mb-1">'.'</h6>
+        <p class="mb-1">'.$line->description.'</p>
+        <small><i>('.wp_date("d/m/Y", $line->dates).')</i></small>'; 
+        print '</div><div class="col-4 col-md-2 text-end"><h5 class="mb-1">'.doliprice($line, 'ttc', isset($line->multicurrency_code) ? $line->multicurrency_code : null).'</h5>';
+        print '<h5 class="mb-1">x'.$line->qty.'</h5>'; 
+        print "</div></div></li>";
+        }
+        }
 
     print "</div><div class='card-footer text-muted'>";
     print "<small><div class='float-start'>";
-    if ( isset($request) ) print dolirefresh($request, $url, dolidelay('donation'), $donationfo);
+    if ( isset($request) ) print dolirefresh($request, $url, dolidelay('donation'));
     print "</div><div class='float-end'>";
-    print dolihelp('COM');
+    //print dolihelp('COM');
     print "</div></small>";
     print "</div></div>";
     
