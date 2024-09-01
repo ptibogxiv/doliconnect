@@ -1687,6 +1687,7 @@ function doliduration($object) {
 }
 
 function dolipaymentterm($id, $refresh = false) {
+  global $current_user;
   $paymenterm = callDoliApi("GET", "/setup/dictionary/payment_terms?sortfield=rowid&sortorder=ASC&limit=100&active=1&sqlfilters=(t.rowid%3A%3D%3A'".$id."')", null, dolidelay('constante', $refresh)); 
   //print var_dump($paymenterm[0]);
   if ($paymenterm[0]->type_cdr == 1) {
@@ -1702,15 +1703,16 @@ function dolipaymentterm($id, $refresh = false) {
 }
 
 function doliShipmentMethods($id, $refresh = false) {
-if ( !empty($id) && $id > 0) {
-$paymenterm = callDoliApi("GET", "/setup/dictionary/shipping_methods?sortfield=rowid&sortorder=ASC&limit=100&active=1&sqlfilters=(t.rowid%3A%3D%3A'".$id."')", null, dolidelay('constante', $refresh)); 
-//print var_dump($paymenterm[0]);
-$term = (isset($paymenterm[0]->label)?$paymenterm[0]->label:$paymenterm[0]->libelle); 
-//if (isset($paymenterm[0]->description) && !empty($paymenterm[0]->description)) $term .= ' <small>('.$paymenterm[0]->description.')</small>'; 
-return $term;
-} else {
-return __('Transporter by default', 'doliconnect'); 
-}
+  global $current_user;
+  if ( !empty($id) && $id > 0) {
+    $paymenterm = callDoliApi("GET", "/setup/dictionary/shipping_methods?sortfield=rowid&sortorder=ASC&limit=100&active=1&lang=".doliUserLang($current_user)."&sqlfilters=(t.rowid%3A%3D%3A'".$id."')", null, dolidelay('constante', $refresh)); 
+    //print var_dump($paymenterm[0]);
+    $term = (isset($paymenterm[0]->label)?$paymenterm[0]->label:$paymenterm[0]->libelle); 
+    //if (isset($paymenterm[0]->description) && !empty($paymenterm[0]->description)) $term .= ' <small>('.$paymenterm[0]->description.')</small>'; 
+    return $term;
+  } else {
+    return __('Transporter by default', 'doliconnect'); 
+  }
 }
 
 function doliconnect_paymentmethods($object = null, $module = null, $url = null, $refresh = false, $array = array()) {
