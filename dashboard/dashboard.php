@@ -19,7 +19,8 @@ $return = esc_url_raw( $_GET['return']);
 }
 
 if ( doliConnect('thirdparty', $current_user)->id > '0' ) {
-$thirdparty = callDoliApi("GET", $request, null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
+//$thirdparty = callDoliApi("GET", $request, null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
+$thirdparty = doliConnect('thirdparty', $current_user);
 }
 
 print "<div id='doliuserinfos-alert'></div><form action='".admin_url('admin-ajax.php')."' id='doliuserinfos-form' method='post' class='was-validated' enctype='multipart/form-data'>";
