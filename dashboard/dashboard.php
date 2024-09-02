@@ -1834,7 +1834,6 @@ if ( doliCheckModules('expensereport') && doliversion('19.0.0') && doliCheckRigh
     }
     
     function expensereport_module( $url ) {
-    global $current_user;
     
     if ( isset($_GET['id']) && $_GET['id'] > 0 ) { 
         $request = "/expensereports/".esc_attr($_GET['id']);
@@ -1842,7 +1841,7 @@ if ( doliCheckModules('expensereport') && doliversion('19.0.0') && doliCheckRigh
         //print $expensereportfo;
     }
     
-    if ( !isset($expensereportfo->error) && isset($_GET['id']) && isset($_GET['ref']) && (doliconnector($current_user, 'fk_user') == $expensereportfo->fk_user_author ) && ($_GET['ref'] == $expensereportfo->ref) && $expensereportfo->status != 0 && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doli-expensereports-'.$expensereportfo->id.'-'.$expensereportfo->ref)) {
+    if ( !isset($expensereportfo->error) && isset($_GET['id']) && isset($_GET['ref']) && (doliConnect('user')->id == $expensereportfo->fk_user_author ) && ($_GET['ref'] == $expensereportfo->ref) && $expensereportfo->status != 0 && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doli-expensereports-'.$expensereportfo->id.'-'.$expensereportfo->ref)) {
     print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Expense report %s', 'doliconnect'), $expensereportfo->ref).'<a class="float-end text-decoration-none" href="'.esc_url( add_query_arg( 'module', 'expensereport', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-6">';
     print "<b>".__( 'Period', 'doliconnect').":</b> ".wp_date('d/m/Y', $expensereportfo->date_debut)." au ".wp_date('d/m/Y', $expensereportfo->date_fin)."<br>";
     print "<b>".__( 'Date of submition', 'doliconnect').":</b> ".wp_date('d/m/Y', $expensereportfo->date_validation)."<br>";
@@ -1879,7 +1878,7 @@ if ( doliCheckModules('expensereport') && doliversion('19.0.0') && doliCheckRigh
     
     $limit=12;
     if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']); }  else { $page = 0; }
-    $request= "/expensereports?sortfield=t.rowid&sortorder=DESC&limit=".$limit."&page=".$page."&user_ids=".doliconnector($current_user, 'fk_user')."&pagination_data=true";
+    $request= "/expensereports?sortfield=t.rowid&sortorder=DESC&limit=".$limit."&page=".$page."&user_ids=".doliConnect('user')->id."&pagination_data=true";
     $object = callDoliApi("GET", $request, null, dolidelay('expensereport', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
     if ( doliversion('21.0.0') && isset($object->data) ) { $listexpensereport = $object->data; } else { $listexpensereport = $object; }
     print '<div class="card shadow-sm"><div class="card-header">'.__( 'List of expense reports', 'doliconnect').'</div><ul class="list-group list-group-flush">';

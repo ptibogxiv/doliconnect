@@ -40,6 +40,27 @@ if (isset($user) && !empty($user)) {
   return $return;
 }
 
+//add_action( 'init', 'doliConnect', 10, 2);
+//add_action( 'admin_init', 'doliConnect', 5, 2); 
+function doliConnect($fonction, $current_user = null, $boolean = false) {
+  if ( empty($current_user) ) {
+      global $current_user;  
+  }
+  if ($fonction == 'thirdparty') {
+      $return = callDoliApi("GET", "/thirdparties/email/".$current_user->user_email, null, dolidelay('doliconnector'));
+  } elseif ($fonction == 'member') {
+      $return = callDoliApi("GET", "/members/thirdparty/email/".$current_user->user_email, null, dolidelay('doliconnector'));
+  } elseif ($fonction == 'user') {
+      $return = callDoliApi("GET", "/users/email/".$current_user->user_email, null, dolidelay('doliconnector'));
+  } else {
+      $return = null;
+  }
+  if (isset($return->error))  {
+      $return = null;
+  }
+return $return;
+}
+
 function doliCheckModules($module, $refresh = false) {
   $return = false;
   if ( !doliversion('20.0.0') ) {
