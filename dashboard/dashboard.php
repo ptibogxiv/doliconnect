@@ -10,9 +10,7 @@ add_action( 'user_doliconnect_menu', 'informations_menu', 1, 1);
 function informations_module($url) {
 global $current_user;
 
-$ID = $current_user->ID;
-
-$request = "/thirdparties/".doliconnector($current_user, 'fk_soc');
+$request = "/thirdparties/".doliConnect('thirdparty', $current_user)->id;
 
 $return = null;
 if ( isset($_GET['return']) ) {
@@ -20,7 +18,7 @@ $url = esc_url( add_query_arg( 'return', $_GET['return'], $url) );
 $return = esc_url_raw( $_GET['return']);
 }
 
-if ( doliconnector($current_user, 'fk_soc') > '0' ) {
+if ( doliConnect('thirdparty', $current_user)->id > '0' ) {
 $thirdparty = callDoliApi("GET", $request, null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
 }
 
@@ -39,7 +37,7 @@ print '<div class="card-footer text-muted">';
 print "<small><div class='float-start'>";
 if ( isset($request) ) print dolirefresh($request, $url, dolidelay('thirdparty'), $thirdparty);
 print '</div><div class="float-end">';
-print dolihelp('ISSUE');
+//print dolihelp('ISSUE');
 print '</div></small>';
 print '</div></div></form>';
 
@@ -282,12 +280,12 @@ $request = "/contacts/".esc_attr($_GET['id'])."?includecount=1&includeroles=1";
 $contactfo = callDoliApi("GET", $request, null, dolidelay('contact', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 //print $contractfo;
 } elseif ( isset($_GET['action']) && $_GET['action'] == 'create' && doliconnector($current_user, 'fk_soc') > 0 ) {
-$thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
+$thirdparty = callDoliApi("GET", "/thirdparties/".doliConnect('thirdparty', $current_user)->id, null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
 }
 
 print "<div id='dolicontactinfos-alert'></div>";
 
-if ( !isset($contactfo->error) && isset($_GET['id']) && isset($_GET['id']) && isset($_GET['ref']) && (doliconnector($current_user, 'fk_soc') == $contactfo->socid) && ($_GET['ref'] == $contactfo->ref) && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doli-contacts-'.$contactfo->id.'-'.$contactfo->ref)) {
+if ( !isset($contactfo->error) && isset($_GET['id']) && isset($_GET['id']) && isset($_GET['ref']) && (doliConnect('thirdparty', $current_user)->id == $contactfo->socid) && ($_GET['ref'] == $contactfo->ref) && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doli-contacts-'.$contactfo->id.'-'.$contactfo->ref)) {
 
 print "<form action='".admin_url('admin-ajax.php')."' id='dolicontactinfos-form' method='post' class='was-validated' enctype='multipart/form-data'>";
 
@@ -520,7 +518,7 @@ global $current_user;
 
 $limit=12;
 if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']); }  else { $page = 0; }
-$request = "/wishlist?sortfield=p.label&sortorder=ASC&thirdparty_ids=".doliconnector($current_user, 'fk_soc')."&pagination_data=true&sqlfilters=(t.priv%3A%3D%3A0)";
+$request = "/wishlist?sortfield=p.label&sortorder=ASC&thirdparty_ids=".doliConnect('thirdparty', $current_user)->id."&pagination_data=true&sqlfilters=(t.priv%3A%3D%3A0)";
 $object = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 if ( doliversion('19.0.0') && isset($object->data) ) { $wishlist = $object->data; } else { $wishlist = $object; }
 
@@ -620,7 +618,7 @@ print "</div><div class='card-footer text-muted'>";
 print "<small><div class='float-start'>";
 print dolirefresh( $request, $url, dolidelay('product'));
 print "</div><div class='float-end'>";
-print dolihelp('ISSUE');
+//print dolihelp('ISSUE');
 print "</div></small>";
 print "</div></div>";
 
