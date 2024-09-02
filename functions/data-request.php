@@ -791,7 +791,6 @@ global $current_user;
 					'lines' => $result['lines'],
 					'total' => $result['total']
 				];	
-				//$product = callDoliApi("GET", "/products/stock/".trim($_POST['id']), null, dolidelay('product', true));
 				$response['newwish'] = doliProductCart($product, null, false); 
 				wp_send_json_success($response);	
 				die(); 
@@ -837,12 +836,12 @@ global $current_user;
 					];
 					$addwish = callDoliApi("POST", "/wishlist", $data, 0);
 					$wish = doliWishlist(doliconnector($current_user, 'fk_soc'), trim($_POST['id']), true, false);
-					$product = callDoliApi("GET", "/products/".trim($_POST['id'])."?includesubproducts=true&includetrans=true", null, dolidelay('product', true));
+					$mstock = doliProductStock($product, true, true);
 					$response['newwish'] = doliProductCart($product, null, false);
 				} elseif (!empty($wish)) {
 					$deletewish = callDoliApi("DELETE", "/wishlist/".$wish, null, 0);
 					$wish = doliWishlist(doliconnector($current_user, 'fk_soc'), trim($_POST['id']), true, false);
-					$product = callDoliApi("GET", "/products/".trim($_POST['id'])."?includesubproducts=true&includetrans=true", null, dolidelay('product', true));
+					$mstock = doliProductStock($product, true, true);
 					$response['newwish'] = doliProductCart($product, null, false); 
 				}
 				wp_send_json_success($response);			
