@@ -540,7 +540,7 @@ $num = count($data);
 $row++;
 $product = callDoliApi("GET", "/products/ref/".trim($data[0]), null, dolidelay('product', true));
 if (isset($product->id) && is_numeric($product->id) && $product->id > 0) {
-$product = callDoliApi("GET", "/products/".$product->id."?includestockdata=1&includesubproducts=true&includetrans=true", null, dolidelay('product', true));
+$product = callDoliApi("GET", "/products/".$product->id."?includesubproducts=true&includetrans=true", null, dolidelay('product', true));
 $mstock = doliProductStock($product, false, true);
 //print var_dump($mstock);
 if ( $mstock['stock'] <= 0 || $mstock['m2'] < $mstock['step'] ) { 

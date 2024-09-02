@@ -837,12 +837,12 @@ global $current_user;
 					];
 					$addwish = callDoliApi("POST", "/wishlist", $data, 0);
 					$wish = doliWishlist(doliconnector($current_user, 'fk_soc'), trim($_POST['id']), true, false);
-					$product = callDoliApi("GET", "/products/".trim($_POST['id'])."?includestockdata=1&includesubproducts=true&includetrans=true", null, dolidelay('product', true));
+					$product = callDoliApi("GET", "/products/".trim($_POST['id'])."?includesubproducts=true&includetrans=true", null, dolidelay('product', true));
 					$response['newwish'] = doliProductCart($product, null, false);
 				} elseif (!empty($wish)) {
 					$deletewish = callDoliApi("DELETE", "/wishlist/".$wish, null, 0);
 					$wish = doliWishlist(doliconnector($current_user, 'fk_soc'), trim($_POST['id']), true, false);
-					$product = callDoliApi("GET", "/products/".trim($_POST['id'])."?includestockdata=1&includesubproducts=true&includetrans=true", null, dolidelay('product', true));
+					$product = callDoliApi("GET", "/products/".trim($_POST['id'])."?includesubproducts=true&includetrans=true", null, dolidelay('product', true));
 					$response['newwish'] = doliProductCart($product, null, false); 
 				}
 				wp_send_json_success($response);			
@@ -1014,7 +1014,7 @@ global $current_user;
 
 	if ( isset($_POST['dolimember-nonce']) && wp_verify_nonce( trim($_POST['dolimember-nonce']), 'dolimember-nonce') && isset($_POST['case']) && $_POST['case'] == "subscription" ) {
 
-	$product = callDoliApi("GET", "/products/".doliconst("ADHERENT_PRODUCT_ID_FOR_SUBSCRIPTIONS", dolidelay('constante'))."?includestockdata=1&includesubproducts=true&includetrans=true", null, dolidelay('product', true));
+	$product = callDoliApi("GET", "/products/".doliconst("ADHERENT_PRODUCT_ID_FOR_SUBSCRIPTIONS", dolidelay('constante'))."?includesubproducts=true&includetrans=true", null, dolidelay('product', true));
 	if (isset($_POST['memberid']) && is_numeric($_POST['memberid']) && $_POST['memberid'] > 0 ) {
 		$memberid = trim($_POST['memberid']);
 	} else {
