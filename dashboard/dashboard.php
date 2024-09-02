@@ -1887,7 +1887,7 @@ if ( doliCheckModules('expensereport') && doliversion('19.0.0') && doliCheckRigh
         print '<a href="" class="list-group-item lh-condensed list-group-item-action list-group-item-primary" disabled><center><i class="fas fa-plus-circle"></i> '.__( 'Create an expense report', 'doliconnect').'</center></a>';  
     }
     
-    if ( !isset( $listexpensereport->error ) && $listexpensereport != null ) {
+    if ( !isset( $listexpensereport->error ) && $listexpensereport != null && !empty(doliConnect('user'))) {
         foreach ( $listexpensereport as $postexpensereport ) { 
             $nonce = wp_create_nonce( 'doli-expensereports-'. $postexpensereport->id.'-'.$postexpensereport->ref);
             $arr_params = array( 'id' => $postexpensereport->id, 'ref' => $postexpensereport->ref, 'security' => $nonce);  
