@@ -792,8 +792,7 @@ $orderinfo=null;
 $orderavancement=25;
 $orderinfo=__( 'validated', 'doliconnect');
 }
-}
-elseif ( $orderfo->statut == 0 ) { $orderinfo=__( 'draft', 'doliconnect');
+} elseif ( $orderfo->statut == 0 ) { $orderinfo=__( 'draft', 'doliconnect');
 $orderavancement=7; }
 elseif ( $orderfo->statut == -1 ) { $orderinfo=__( 'canceled', 'doliconnect');
 $orderavancement=0;  }
