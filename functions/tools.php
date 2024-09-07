@@ -677,7 +677,7 @@ $doliPassword .= "</div><div class='card-footer text-muted'>";
 $doliPassword .= "<small><div class='float-start'>";
 if ( isset($request) ) $doliPassword .= dolirefresh($request, $url, dolidelay('thirdparty'));
 $doliPassword .= "</div><div class='float-end'>";
-$doliPassword .= dolihelp('ISSUE');
+//$doliPassword .= dolihelp('ISSUE');
 $doliPassword .= "</div></small>";
 $doliPassword .= '</div></div>';
 

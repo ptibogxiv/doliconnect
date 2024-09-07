@@ -242,22 +242,20 @@ add_action( 'user_doliconnect_menu', 'password_menu', 2, 1);
 add_action( 'user_doliconnect_password', 'password_module');
 
 function password_menu( $arg ){
-print "<a href='".esc_url( add_query_arg( 'module', 'password', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
-if ($arg=='password') { print " active";}
-print "'>".__( 'Edit my password', 'doliconnect')."</a>";
+    print "<a href='".esc_url( add_query_arg( 'module', 'password', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
+    if ($arg=='password') { print " active";}
+    print "'>".__( 'Edit my password', 'doliconnect')."</a>";
 }
 
 function password_module( $url ){
 global $current_user;
 
-$return = null;
-if ( isset($_GET['return']) ) {
-$url = esc_url( add_query_arg( 'return', $_GET['return'], $url) );
-$return = esc_url_raw( $_GET['return']);
-}
- 
-print doliPasswordForm($current_user, $url, $return);
-
+    $return = null;
+    if ( isset($_GET['return']) ) {
+        $url = esc_url( add_query_arg( 'return', $_GET['return'], $url) );
+        $return = esc_url_raw( $_GET['return']);
+    }
+    print doliPasswordForm($current_user, $url, $return);
 }
 
 //*****************************************************************************************
