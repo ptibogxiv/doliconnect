@@ -339,7 +339,7 @@ print '</div></div></form>';
         if ( doliversion('21.0.0') && isset($object->data) ) { $listcontact  = $object->data; } else { $listcontact  = $object; }
 
         print '<div class="card shadow-sm"><div class="card-header">'.__( 'Manage address book', 'doliconnect').'</div><ul class="list-group list-group-flush">';
-        if ( doliCheckRights('expensereport', 'creer') && !empty(get_option('doliconnectbeta'))) {
+        if ( doliCheckRights('societe', 'contact', 'creer') ) {
             print '<a href="'.esc_url( add_query_arg( 'action', 'create', $url) ).'" class="list-group-item lh-condensed list-group-item-action list-group-item-primary" disabled><center><i class="fas fa-plus-circle"></i> '.__( 'Create a contact', 'doliconnect').'</center></a>';  
         }
         if ( !isset($listcontact->error) && $listcontact != null ) {
@@ -2451,7 +2451,7 @@ print '</div></form>';
         if ( doliversion('21.0.0') && isset($object->data) ) { $listticket = $object->data; } else { $listticket = $object; }
 
         print '<div class="card shadow-sm"><div class="card-header">'.__( 'My support tickets', 'doliconnect').'</div><ul class="list-group list-group-flush">';  
-        //if ( doliCheckRights('expensereport', 'creer') && !empty(get_option('doliconnectbeta'))) {
+        //if ( doliCheckRights('expensereport', 'creer') ) {
             print '<a href="'.esc_url( add_query_arg( 'action', 'create', $url) ).'" class="list-group-item lh-condensed list-group-item-action list-group-item-primary" disabled><center><i class="fas fa-plus-circle"></i> '.__( 'Create a ticket', 'doliconnect').'</center></a>';  
         //}
         if ( !isset($listticket->error) && $listticket != null ) {
