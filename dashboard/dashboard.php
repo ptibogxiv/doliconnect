@@ -1535,53 +1535,50 @@ print dolihelp('ISSUE');
 print "</div></small>";
 print '</div></div>';
 
-} else {
+    } else {
+        $limit=12;
+        if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']); }  else { $page = 0; }
+        $request = "/projects?sortfield=t.rowid&sortorder=DESC&limit=".$limit."&page=".$page."&thirdparty_ids=".doliconnector($current_user, 'fk_soc')."&pagination_data=true";                                
+        $object = callDoliApi("GET", $request, null, dolidelay('project', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+        if ( doliversion('21.0.0') && isset($object->data) ) { $listproject = $object->data; } else { $listproject = $object; }
 
-$limit=12;
-if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']); }  else { $page = 0; }
-$request = "/projects?sortfield=t.rowid&sortorder=DESC&limit=".$limit."&page=".$page."&thirdparty_ids=".doliconnector($current_user, 'fk_soc');                                
-$object = callDoliApi("GET", $request, null, dolidelay('project', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-if ( doliversion('21.0.0') && isset($object->data) ) { $listproject = $object->data; } else { $listproject = $object; }
+        print '<div class="card shadow-sm"><div class="card-header">'.__( 'Projects tracking', 'doliconnect').'</div><ul class="list-group list-group-flush">';
 
-print '<div class="card shadow-sm"><div class="card-header">'.__( 'Projects tracking', 'doliconnect').'</div><ul class="list-group list-group-flush">';
+        if ( !isset($listproject->error) && $listproject != null ) {
+            foreach ($listproject  as $postproject) {                                                                              
+                $nonce = wp_create_nonce( 'doli-projects-'. $postproject->id.'-'.$postproject->ref);
+                $arr_params = array( 'id' => $postproject->id, 'ref' => $postproject->ref, 'security' => $nonce);  
+                $return = esc_url( add_query_arg( $arr_params, $url) );
+                                                                                                                                                                    
+                print "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'><div><i class='fa fa-sitemap fa-3x fa-fw'></i></div><div><h6 class='my-0'>".$postproject->ref."</h6><small class='text-muted'>du ".wp_date('d/m/Y', $postproject->date_creation)."</small></div><span></span><span>";
+                if ( $postproject->statut > 0 ) { print "<span class='fas fa-check-circle fa-fw text-success'></span> ";
+                //if ( $postcontract->billed == 1 ) { print "<span class='fas fa-money-bill-alt fa-fw text-success'></span> "; 
+                //if ( $postcontract->statut > 1 ) { print "<span class='fas fa-shipping-fast fa-fw text-success'></span> "; }
+                //else { print "<span class='fas fa-shipping-fast fa-fw text-warning'></span> "; }
+                //}
+                //else { print "<span class='fas fa-money-bill-alt fa-fw text-warning'></span> "; 
+                //if ( $postcontract->statut > 1 ) { print "<span class='fas fa-shipping-fast fa-fw text-success'></span> "; }
+                //else { print "<span class='fas fa-shipping-fast fa-fw text-danger'></span> "; }
+                //}
+                }
+                elseif ( $postproject->statut == 0 ) { print "<span class='fas fa-check-circle fa-fw text-warning'></span> <span class='fas fa-money-bill-alt fa-fw text-danger'></span> <span class='fas fa-shipping-fast fa-fw text-danger'></span>";}
+                elseif ( $postproject->statut == -1 ) {print "<span class='fas fa-check-circle fa-fw text-secondary'></span> <span class='fas fa-money-bill-alt fa-fw text-secondary'></span> <span class='fas fa-shipping-fast fa-fw text-secondary'></span>";}
+                print "</span></a>";
+            }
+        } else {
+            print "<li class='list-group-item list-group-item-light'><center>".__( 'No project', 'doliconnect')."</center></li>";
+        }
 
-if ( !isset($listproject->error) && $listproject != null ) {
-foreach ($listproject  as $postproject) { 
-                                                                                
-$nonce = wp_create_nonce( 'doli-projects-'. $postproject->id.'-'.$postproject->ref);
-$arr_params = array( 'id' => $postproject->id, 'ref' => $postproject->ref, 'security' => $nonce);  
-$return = esc_url( add_query_arg( $arr_params, $url) );
-                                                                                                                                                      
-print "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'><div><i class='fa fa-sitemap fa-3x fa-fw'></i></div><div><h6 class='my-0'>".$postproject->ref."</h6><small class='text-muted'>du ".wp_date('d/m/Y', $postproject->date_creation)."</small></div><span></span><span>";
-if ( $postproject->statut > 0 ) { print "<span class='fas fa-check-circle fa-fw text-success'></span> ";
-//if ( $postcontract->billed == 1 ) { print "<span class='fas fa-money-bill-alt fa-fw text-success'></span> "; 
-//if ( $postcontract->statut > 1 ) { print "<span class='fas fa-shipping-fast fa-fw text-success'></span> "; }
-//else { print "<span class='fas fa-shipping-fast fa-fw text-warning'></span> "; }
-//}
-//else { print "<span class='fas fa-money-bill-alt fa-fw text-warning'></span> "; 
-//if ( $postcontract->statut > 1 ) { print "<span class='fas fa-shipping-fast fa-fw text-success'></span> "; }
-//else { print "<span class='fas fa-shipping-fast fa-fw text-danger'></span> "; }
-//}
-}
-elseif ( $postproject->statut == 0 ) { print "<span class='fas fa-check-circle fa-fw text-warning'></span> <span class='fas fa-money-bill-alt fa-fw text-danger'></span> <span class='fas fa-shipping-fast fa-fw text-danger'></span>";}
-elseif ( $postproject->statut == -1 ) {print "<span class='fas fa-check-circle fa-fw text-secondary'></span> <span class='fas fa-money-bill-alt fa-fw text-secondary'></span> <span class='fas fa-shipping-fast fa-fw text-secondary'></span>";}
-print "</span></a>";
-}
-} else {
-print "<li class='list-group-item list-group-item-light'><center>".__( 'No project', 'doliconnect')."</center></li>";
-}
-
-print "</ul><div class='card-body'>";
-print doliPagination($object, $url, $page);
-print "</div><div class='card-footer text-muted'>";
-print "<small><div class='float-start'>";
-if ( isset($request) ) print dolirefresh($request, $url, dolidelay('project'));
-print "</div><div class='float-end'>";
-//print dolihelp('ISSUE');
-print "</div></small>";
-print "</div></div>";
-
-}
+        print "</ul><div class='card-body'>";
+        print doliPagination($object, $url, $page);
+        print "</div><div class='card-footer text-muted'>";
+        print "<small><div class='float-start'>";
+        if ( isset($request) ) print dolirefresh($request, $url, dolidelay('project'));
+        print "</div><div class='float-end'>";
+        //print dolihelp('ISSUE');
+        print "</div></small>";
+        print "</div></div>";
+    }
 }
 
 //*****************************************************************************************
