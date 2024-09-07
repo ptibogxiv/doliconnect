@@ -1725,53 +1725,48 @@ if ( doliCheckModules('recruitment') && doliversion('19.0.0') && !empty(get_opti
     add_action( 'grh_doliconnect_recruitment', 'recruitment_module');
 }  
     
-    function recruitment_menu( $arg ) {
+function recruitment_menu( $arg ) {
     print "<a href='".esc_url( add_query_arg( 'module', 'recruitment', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
     if ($arg=='recruitment') { print " active";}
     print "'>".__( 'List of jobpositions', 'doliconnect')."</a>";
-    }
+}
     
-    function recruitment_module( $url ) {
+function recruitment_module( $url ) {
     global $current_user;
     $entity = get_current_blog_id();
     $ID = $current_user->ID;
     
     if ( isset($_GET['id']) && $_GET['id'] > 0 ) { 
-     
-    $request = "/recruitments/jobposition/".esc_attr($_GET['id']);
-    
-    $donationfo = callDoliApi("GET", $request, null, dolidelay('donation', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-    //print $donationfo;
+        $request = "/recruitments/jobposition/".esc_attr($_GET['id']);
+        $donationfo = callDoliApi("GET", $request, null, dolidelay('donation', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+        //print $donationfo;
     }
     
     if ( !isset($donationfo->error) && isset($_GET['id']) && isset($_GET['ref']) && (doliconnector($current_user, 'fk_soc') == $donationfo->fk_soc ) && ($_GET['ref'] == $donationfo->ref) && $donationfo->status != 0 ) {
-    
-    print "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>$donationfo->ref</h5><div class='row'><div class='col-md-5'>";
-    $datecreation =  wp_date('d/m/Y', $donationfo->date_creation);
-    print "<b>".__( 'Date of creation', 'doliconnect').":</b> $datecreation<br>";
-    
-    print "<b>".__( 'Payment method', 'doliconnect').":</b> <br><br></div><div class='col-md-7'>";
-    
-    if ( isset($orderinfo) ) {
-    print "<h3 class='text-end'>".$orderinfo."</h3>";
-    }
-    
-    $orderavancement=100;
-    
-    print "</div></div>";
-    print '<div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: '.$orderavancement.'%" aria-valuenow="'.$orderavancement.'" aria-valuemin="0" aria-valuemax="100"></div></div>';
-    print "<div class='w-auto text-muted d-none d-sm-block' ><div style='display:inline-block;width:20%'>".__( 'Order', 'doliconnect')."</div><div style='display:inline-block;width:15%'>".__( 'Payment', 'doliconnect')."</div><div style='display:inline-block;width:25%'>".__( 'Processing', 'doliconnect')."</div><div style='display:inline-block;width:20%'>".__( 'Shipping', 'doliconnect')."</div><div class='text-end' style='display:inline-block;width:20%'>".__( 'Recruited', 'doliconnect')."</div></div>";
-    
-    print $donationfo->description;
+        print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Job position %s', 'doliconnect'), $donationfo->ref).'<a class="float-end text-decoration-none" href="'.esc_url( add_query_arg( 'module', 'expensereport', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-6">';
+        $datecreation =  wp_date('d/m/Y', $donationfo->date_creation);
+        print "<b>".__( 'Date of creation', 'doliconnect').":</b> $datecreation<br>";
+        print "<b>".__( 'Payment method', 'doliconnect').":</b> <br><br></div><div class='col-md-7'>";
+        
+        if ( isset($orderinfo) ) {
+        print "<h3 class='text-end'>".$orderinfo."</h3>";
+        }
+        
+        $orderavancement=100;
+        
+        print "</div></div>";
+        print '<div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: '.$orderavancement.'%" aria-valuenow="'.$orderavancement.'" aria-valuemin="0" aria-valuemax="100"></div></div>';
+        print "<div class='w-auto text-muted d-none d-sm-block' ><div style='display:inline-block;width:20%'>".__( 'Order', 'doliconnect')."</div><div style='display:inline-block;width:15%'>".__( 'Payment', 'doliconnect')."</div><div style='display:inline-block;width:25%'>".__( 'Processing', 'doliconnect')."</div><div style='display:inline-block;width:20%'>".__( 'Shipping', 'doliconnect')."</div><div class='text-end' style='display:inline-block;width:20%'>".__( 'Recruited', 'doliconnect')."</div></div>";
+        
+        print $donationfo->description;
 
-    print "</div><div class='card-footer text-muted'>";
-    print "<small><div class='float-start'>";
-    if ( isset($request) ) print dolirefresh($request, $url, dolidelay('donation'), $donationfo);
-    print "</div><div class='float-end'>";
-    print dolihelp('COM');
-    print "</div></small>";
-    print "</div></div>";
-    
+        print "</div><div class='card-footer text-muted'>";
+        print "<small><div class='float-start'>";
+        if ( isset($request) ) print dolirefresh($request, $url, dolidelay('donation'), $donationfo);
+        print "</div><div class='float-end'>";
+        //print dolihelp('COM');
+        print "</div></small>";
+        print "</div></div>";
     } else {
         $limit=12;
         if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']); }  else { $page = 0; }
@@ -1821,13 +1816,13 @@ if ( doliCheckModules('expensereport') && doliversion('19.0.0') && doliCheckRigh
     add_action( 'grh_doliconnect_expensereport', 'expensereport_module');
 }  
     
-    function expensereport_menu( $arg ) {
+function expensereport_menu( $arg ) {
     print "<a href='".esc_url( add_query_arg( 'module', 'expensereport', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
     if ($arg=='expensereport') { print " active";}
     print "'>".__( 'List of expense reports', 'doliconnect')."</a>";
-    }
+}
     
-    function expensereport_module( $url ) {
+function expensereport_module( $url ) {
     
     if ( isset($_GET['id']) && $_GET['id'] > 0 ) { 
         $request = "/expensereports/".esc_attr($_GET['id']);
@@ -1836,38 +1831,37 @@ if ( doliCheckModules('expensereport') && doliversion('19.0.0') && doliCheckRigh
     }
     
     if ( !isset($expensereportfo->error) && isset($_GET['id']) && isset($_GET['ref']) && (doliConnect('user')->id == $expensereportfo->fk_user_author ) && ($_GET['ref'] == $expensereportfo->ref) && $expensereportfo->status != 0 && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doli-expensereports-'.$expensereportfo->id.'-'.$expensereportfo->ref)) {
-    print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Expense report %s', 'doliconnect'), $expensereportfo->ref).'<a class="float-end text-decoration-none" href="'.esc_url( add_query_arg( 'module', 'expensereport', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-6">';
-    print "<b>".__( 'Period', 'doliconnect').":</b> ".wp_date('d/m/Y', $expensereportfo->date_debut)." au ".wp_date('d/m/Y', $expensereportfo->date_fin)."<br>";
-    print "<b>".__( 'Date of submition', 'doliconnect').":</b> ".wp_date('d/m/Y', $expensereportfo->date_validation)."<br>";
-    print "<b>".__( 'Date of approbation', 'doliconnect').":</b> ".wp_date('d/m/Y', $expensereportfo->date_approbation)."<br>";
-    print "<b>".__( 'Approbator', 'doliconnect').":</b> ".$expensereportfo->user_validator_infos."<br>";
-    print "<br></div></div>";
+        print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Expense report %s', 'doliconnect'), $expensereportfo->ref).'<a class="float-end text-decoration-none" href="'.esc_url( add_query_arg( 'module', 'expensereport', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-6">';
+        print "<b>".__( 'Period', 'doliconnect').":</b> ".wp_date('d/m/Y', $expensereportfo->date_debut)." au ".wp_date('d/m/Y', $expensereportfo->date_fin)."<br>";
+        print "<b>".__( 'Date of submition', 'doliconnect').":</b> ".wp_date('d/m/Y', $expensereportfo->date_validation)."<br>";
+        print "<b>".__( 'Date of approbation', 'doliconnect').":</b> ".wp_date('d/m/Y', $expensereportfo->date_approbation)."<br>";
+        print "<b>".__( 'Approbator', 'doliconnect').":</b> ".$expensereportfo->user_validator_infos."<br>";
+        print "<br></div></div>";
 
-    $orderavancement=100;
-    print '<div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: '.$orderavancement.'%" aria-valuenow="'.$orderavancement.'" aria-valuemin="0" aria-valuemax="100"></div></div>';
-    print "<div class='w-auto text-muted d-none d-sm-block' ><div style='display:inline-block;width:25%'>".__( 'Draft', 'doliconnect')."</div><div style='display:inline-block;width:25%'>".__( 'Submitted', 'doliconnect')."</div><div style='display:inline-block;width:25%'>".__( 'Validated', 'doliconnect')."</div><div class='text-end' style='display:inline-block;width:25%'>".__( 'Paid', 'doliconnect')."</div></div>";
-    print '</div><ul class="list-group list-group-flush">';
-    if ( $expensereportfo->lines != null ) {
-        foreach ( $expensereportfo->lines as $line ) {
-        print "<li class='list-group-item'>";     
-        print '<div class="w-100 justify-content-between"><div class="row"><div class="col-8 col-md-10"> 
-        <h6 class="mb-1">'.'</h6>';
-        if (isset($line->comments)) print '<p class="mb-1">'.$line->comments.'</p>';
-        print '<small><i>('.wp_date("d/m/Y", $line->dates).')</i></small>'; 
-        print '</div><div class="col-4 col-md-2 text-end"><h5 class="mb-1">'.doliprice($line, 'ttc', isset($line->multicurrency_code) ? $line->multicurrency_code : null).'</h5>';
-        print '<h5 class="mb-1">x'.$line->qty.'</h5>'; 
-        print "</div></div></li>";
+        $orderavancement=100;
+        print '<div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: '.$orderavancement.'%" aria-valuenow="'.$orderavancement.'" aria-valuemin="0" aria-valuemax="100"></div></div>';
+        print "<div class='w-auto text-muted d-none d-sm-block' ><div style='display:inline-block;width:25%'>".__( 'Draft', 'doliconnect')."</div><div style='display:inline-block;width:25%'>".__( 'Submitted', 'doliconnect')."</div><div style='display:inline-block;width:25%'>".__( 'Validated', 'doliconnect')."</div><div class='text-end' style='display:inline-block;width:25%'>".__( 'Paid', 'doliconnect')."</div></div>";
+        print '</div><ul class="list-group list-group-flush">';
+        if ( $expensereportfo->lines != null ) {
+            foreach ( $expensereportfo->lines as $line ) {
+            print "<li class='list-group-item'>";     
+            print '<div class="w-100 justify-content-between"><div class="row"><div class="col-8 col-md-10"> 
+            <h6 class="mb-1">'.'</h6>';
+            if (isset($line->comments)) print '<p class="mb-1">'.$line->comments.'</p>';
+            print '<small><i>('.wp_date("d/m/Y", $line->dates).')</i></small>'; 
+            print '</div><div class="col-4 col-md-2 text-end"><h5 class="mb-1">'.doliprice($line, 'ttc', isset($line->multicurrency_code) ? $line->multicurrency_code : null).'</h5>';
+            print '<h5 class="mb-1">x'.$line->qty.'</h5>'; 
+            print "</div></div></li>";
+            }
         }
-    }
-    print dolitotal($expensereportfo);
-    print "</ul><div class='card-footer text-muted'>";
-    print "<small><div class='float-start'>";
-    if ( isset($request) ) print dolirefresh($request, $url, dolidelay('expensereport'),  $expensereportfo);
-    print "</div><div class='float-end'>";
-    //print dolihelp('COM');
-    print "</div></small>";
-    print "</div></div>";
-    
+        print dolitotal($expensereportfo);
+        print "</ul><div class='card-footer text-muted'>";
+        print "<small><div class='float-start'>";
+        if ( isset($request) ) print dolirefresh($request, $url, dolidelay('expensereport'),  $expensereportfo);
+        print "</div><div class='float-end'>";
+        //print dolihelp('COM');
+        print "</div></small>";
+        print "</div></div>";
     } else {
         $limit=12;
         if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']); }  else { $page = 0; }
