@@ -263,26 +263,26 @@ print doliPasswordForm($current_user, $url, $return);
 //*****************************************************************************************
 
 if ( empty(doliconst('MAIN_DISABLE_CONTACTS_TAB')) && doliCheckRights('societe', 'contact', 'lire') ) {
-add_action( 'user_doliconnect_menu', 'contacts_menu', 3, 1);
-add_action( 'user_doliconnect_contacts', 'contacts_module');
+    add_action( 'user_doliconnect_menu', 'contacts_menu', 3, 1);
+    add_action( 'user_doliconnect_contacts', 'contacts_module');
 }
 
 function contacts_menu($arg) {
-print "<a href='".esc_url( add_query_arg( 'module', 'contacts', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
-if ( $arg == 'contacts' ) { print " active"; }
-print "'>".__( 'Manage address book', 'doliconnect')."</a>";
+    print "<a href='".esc_url( add_query_arg( 'module', 'contacts', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
+    if ( $arg == 'contacts' ) { print " active"; }
+    print "'>".__( 'Manage address book', 'doliconnect')."</a>";
 }
 
 function contacts_module($url){
 global $current_user;
 
-if ( isset($_GET['id']) && $_GET['id'] > 0 ) {  
-$request = "/contacts/".esc_attr($_GET['id'])."?includecount=1&includeroles=1";
-$contactfo = callDoliApi("GET", $request, null, dolidelay('contact', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-//print $contractfo;
-} elseif ( isset($_GET['action']) && $_GET['action'] == 'create' && doliconnector($current_user, 'fk_soc') > 0 ) {
-$thirdparty = callDoliApi("GET", "/thirdparties/".doliConnect('thirdparty', $current_user)->id, null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
-}
+    if ( isset($_GET['id']) && $_GET['id'] > 0 ) {  
+        $request = "/contacts/".esc_attr($_GET['id'])."?includecount=1&includeroles=1";
+        $contactfo = callDoliApi("GET", $request, null, dolidelay('contact', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+        //print $contractfo;
+    } elseif ( isset($_GET['action']) && $_GET['action'] == 'create' && doliconnector($current_user, 'fk_soc') > 0 ) {
+        $thirdparty = callDoliApi("GET", "/thirdparties/".doliConnect('thirdparty', $current_user)->id, null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
+    }
 
 print "<div id='dolicontactinfos-alert'></div>";
 
@@ -332,45 +332,42 @@ print '</div><div class="float-end">';
 print '</div></small>';
 print '</div></div></form>';
 
-} else {
+    } else {
+        $limit=12;
+        if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']); }  else { $page = 0; }
 
-$limit=12;
-if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']); }  else { $page = 0; }
+        $request = "/contacts?sortfield=t.rowid&sortorder=DESC&limit=".$limit."&page=".$page."&thirdparty_ids=".doliconnector($current_user, 'fk_soc')."&pagination_data=true";                              
+        $object = callDoliApi("GET", $request, null, dolidelay('contact', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+        if ( doliversion('21.0.0') && isset($object->data) ) { $listcontact  = $object->data; } else { $listcontact  = $object; }
 
-$request = "/contacts?sortfield=t.rowid&sortorder=DESC&limit=".$limit."&page=".$page."&thirdparty_ids=".doliconnector($current_user, 'fk_soc')."&pagination_data=true";                              
-$object = callDoliApi("GET", $request, null, dolidelay('contact', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-if ( doliversion('21.0.0') && isset($object->data) ) { $listcontact  = $object->data; } else { $listcontact  = $object; }
+        print '<div class="card shadow-sm"><div class="card-header">'.__( 'Manage address book', 'doliconnect').'</div><ul class="list-group list-group-flush">';
+        if ( doliCheckRights('expensereport', 'creer') && !empty(get_option('doliconnectbeta'))) {
+            print '<a href="'.esc_url( add_query_arg( 'action', 'create', $url) ).'" class="list-group-item lh-condensed list-group-item-action list-group-item-primary" disabled><center><i class="fas fa-plus-circle"></i> '.__( 'Create a contact', 'doliconnect').'</center></a>';  
+        }
+        if ( !isset($listcontact->error) && $listcontact != null ) {
+            foreach ($listcontact  as $postcontact) {                                                                            
+                $nonce = wp_create_nonce( 'doli-contacts-'. $postcontact->id.'-'.$postcontact->ref);
+                $arr_params = array( 'id' => $postcontact->id, 'ref' => $postcontact->ref, 'security' => $nonce);  
+                $return = esc_url( add_query_arg( $arr_params, $url) );
+                                                                                                                                                                    
+                print "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'>
+                <div><i class='fa fa-address-card fa-3x fa-fw'></i></div><div><h6 class='my-0'>".($postcontact->civility ? $postcontact->civility : $postcontact->civility_code)." ".$postcontact->firstname." ".$postcontact->lastname."</h6>
+                <small class='text-muted'>".$postcontact->poste."</small></div><span></span><span></span></a>";
+            }
+        } else {
+            print "<li class='list-group-item list-group-item-light'><center>".__( 'No contact', 'doliconnect')."</center></li>";
+        }
 
-print '<div class="card shadow-sm"><div class="card-header">'.__( 'Manage address book', 'doliconnect');
-if (doliCheckRights('societe', 'contact', 'creer')) print '<a class="float-end text-decoration-none" href="'.esc_url( add_query_arg( 'action', 'create', $url) ).'"><i class="fas fa-plus-circle"></i> '.__( 'Create contact', 'doliconnect').'</a>';  
-print '</div><ul class="list-group list-group-flush">';
-
-if ( !isset($listcontact->error) && $listcontact != null ) {
-foreach ($listcontact  as $postcontact) { 
-                                                                                
-$nonce = wp_create_nonce( 'doli-contacts-'. $postcontact->id.'-'.$postcontact->ref);
-$arr_params = array( 'id' => $postcontact->id, 'ref' => $postcontact->ref, 'security' => $nonce);  
-$return = esc_url( add_query_arg( $arr_params, $url) );
-                                                                                                                                                      
-print "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'>
-<div><i class='fa fa-address-card fa-3x fa-fw'></i></div><div><h6 class='my-0'>".($postcontact->civility ? $postcontact->civility : $postcontact->civility_code)." ".$postcontact->firstname." ".$postcontact->lastname."</h6>
-<small class='text-muted'>".$postcontact->poste."</small></div><span></span><span></span></a>";
-}
-} else {
-print "<li class='list-group-item list-group-item-light'><center>".__( 'No contact', 'doliconnect')."</center></li>";
-}
-
-print "</ul><div class='card-body'>";
-print doliPagination($object, $url, $page);
-print "</div><div class='card-footer text-muted'>";
-print "<small><div class='float-start'>";
-if ( isset($request) ) print dolirefresh($request, $url, dolidelay('contact'));
-print "</div><div class='float-end'>";
-//print dolihelp('ISSUE');
-print "</div></small>";
-print "</div></div>";
-
-}
+        print "</ul><div class='card-body'>";
+        print doliPagination($object, $url, $page);
+        print "</div><div class='card-footer text-muted'>";
+        print "<small><div class='float-start'>";
+        if ( isset($request) ) print dolirefresh($request, $url, dolidelay('contact'));
+        print "</div><div class='float-end'>";
+        //print dolihelp('ISSUE');
+        print "</div></small>";
+        print "</div></div>";
+    }
 }
 
 //*****************************************************************************************
@@ -613,16 +610,15 @@ if ( !isset( $wishlist->error ) && $wishlist != null ) {
 } else {
     print "<li class='list-group-item list-group-item-light'><center>".__( 'No product', 'doliconnect')."</center></li>";
 }
-print "</ul><div class='card-body'>";
-print doliPagination($object, $url, $page);
-print "</div><div class='card-footer text-muted'>";
-print "<small><div class='float-start'>";
-print dolirefresh( $request, $url, dolidelay('product'));
-print "</div><div class='float-end'>";
-//print dolihelp('ISSUE');
-print "</div></small>";
-print "</div></div>";
-
+    print "</ul><div class='card-body'>";
+    print doliPagination($object, $url, $page);
+    print "</div><div class='card-footer text-muted'>";
+    print "<small><div class='float-start'>";
+    print dolirefresh( $request, $url, dolidelay('product'));
+    print "</div><div class='float-end'>";
+    //print dolihelp('ISSUE');
+    print "</div></small>";
+    print "</div></div>";
 }
 
 //*****************************************************************************************
@@ -1768,7 +1764,6 @@ function recruitment_module( $url ) {
         if ( doliCheckRights('recruitment', 'recruitmentjobposition', 'write') && !empty(get_option('doliconnectbeta'))) {
             print '<a href="" class="list-group-item lh-condensed list-group-item-action list-group-item-primary" disabled><center><i class="fas fa-plus-circle"></i> '.__( 'Create a job position', 'doliconnect').'</center></a>';  
         }
-        
         if ( !isset( $listjobposition->error ) && $listjobposition != null ) {
             foreach ( $listjobposition as $postjobposition ) { 
                 $arr_params = array( 'id' => $postjobposition->id, 'ref' => $postjobposition->ref);  
@@ -1862,7 +1857,6 @@ function expensereport_module( $url ) {
         if ( doliCheckRights('expensereport', 'creer') && !empty(get_option('doliconnectbeta'))) {
             print '<a href="" class="list-group-item lh-condensed list-group-item-action list-group-item-primary" disabled><center><i class="fas fa-plus-circle"></i> '.__( 'Create an expense report', 'doliconnect').'</center></a>';  
         }
-        
         if ( !isset( $listexpensereport->error ) && $listexpensereport != null && !empty(doliConnect('user'))) {
             foreach ( $listexpensereport as $postexpensereport ) { 
                 $nonce = wp_create_nonce( 'doli-expensereports-'. $postexpensereport->id.'-'.$postexpensereport->ref);
@@ -2462,8 +2456,7 @@ print '</div></form>';
         $object= callDoliApi("GET", $request, null, dolidelay('ticket', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
         if ( doliversion('21.0.0') && isset($object->data) ) { $listticket = $object->data; } else { $listticket = $object; }
 
-        print '<div class="card shadow-sm"><div class="card-header">'.__( 'My support tickets', 'doliconnect');
-        print '</div><ul class="list-group list-group-flush">';  
+        print '<div class="card shadow-sm"><div class="card-header">'.__( 'My support tickets', 'doliconnect').'</div><ul class="list-group list-group-flush">';  
         //if ( doliCheckRights('expensereport', 'creer') && !empty(get_option('doliconnectbeta'))) {
             print '<a href="'.esc_url( add_query_arg( 'action', 'create', $url) ).'" class="list-group-item lh-condensed list-group-item-action list-group-item-primary" disabled><center><i class="fas fa-plus-circle"></i> '.__( 'Create a ticket', 'doliconnect').'</center></a>';  
         //}
