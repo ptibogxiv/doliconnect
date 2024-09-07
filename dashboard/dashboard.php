@@ -1466,7 +1466,7 @@ print "</div></div>";
 
 //*****************************************************************************************
 
-if ( doliCheckModules('project') && !empty(get_option('doliconnectbeta')) && doliCheckRights('projet', 'lire') ) {
+if ( doliCheckModules('projet') && !empty(get_option('doliconnectbeta')) && doliCheckRights('projet', 'lire') ) {
 add_action( 'customer_doliconnect_menu', 'projets_menu', 2, 1);
 add_action( 'customer_doliconnect_projets', 'projets_module');
 }
