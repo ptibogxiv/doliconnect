@@ -2231,31 +2231,27 @@ function representatives_menu( $arg ) {
 function representatives_module( $url ) {
 global $current_user;
 
-print '<div class="card shadow-sm"><div class="card-header">'.__( 'My sales representatives', 'doliconnect').'</div>';
+    print '<div class="card shadow-sm"><div class="card-header">'.__( 'My sales representatives', 'doliconnect').'</div>';
 
-$request = "/thirdparties/".doliconnector($current_user, 'fk_soc')."/representatives?mode=1";
-$representatives = callDoliApi("GET", $request, null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+    $request = "/thirdparties/".doliconnector($current_user, 'fk_soc')."/representatives?mode=1";
+    $representatives = callDoliApi("GET", $request, null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
  
-
-if ( !isset( $representatives->error ) && $representatives != null ) {
-    print '<div class="card-body"><div class="row row-cols-1 row-cols-md-2 g-4">';
-foreach ( $representatives as $representative ) { 
-    print doliusercard($representative, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
-}
+    if ( !isset( $representatives->error ) && $representatives != null ) {
+        print '<div class="card-body"><div class="row row-cols-1 row-cols-md-2 g-4">';
+        foreach ( $representatives as $representative ) { 
+            print doliusercard($representative, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+        }
+        print '</div></div>';
+    } else {
+        print "<ul class='list-group list-group-flush'><li class='list-group-item list-group-item-light'><center>".__( 'No sales representative', 'doliconnect')."</center></li></ul>";
+    }
+    print '<div class="card-footer text-muted">';
+    print "<small><div class='float-start'>";
+    if ( isset($request) ) print dolirefresh($request, $url, dolidelay('thirdparty'));
+    print "</div><div class='float-end'>";
+    //print dolihelp('ISSUE');
+    print "</div></small>";
     print '</div></div>';
-} else {
-    print "<ul class='list-group list-group-flush'><li class='list-group-item list-group-item-light'><center>".__( 'No sales representative', 'doliconnect')."</center></li></ul>";
-}
-
-
-print '<div class="card-footer text-muted">';
-print "<small><div class='float-start'>";
-if ( isset($request) ) print dolirefresh($request, $url, dolidelay('thirdparty'));
-print "</div><div class='float-end'>";
-print dolihelp('ISSUE');
-print "</div></small>";
-print '</div></div>';
-
 }
 
 //*****************************************************************************************
