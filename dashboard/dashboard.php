@@ -2223,9 +2223,9 @@ add_action( 'settings_doliconnect_representatives', 'representatives_module');
 //}
 
 function representatives_menu( $arg ) {
-print "<a href='".esc_url( add_query_arg( 'module', 'representatives', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
-if ( $arg == 'representatives' ) { print " active"; }
-print "'>".__( 'My sales representatives', 'doliconnect')."</a>";
+    print "<a href='".esc_url( add_query_arg( 'module', 'representatives', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
+    if ( $arg == 'representatives' ) { print " active"; }
+    print "'>".__( 'My sales representatives', 'doliconnect')."</a>";
 }
 
 function representatives_module( $url ) {
@@ -2261,14 +2261,14 @@ print '</div></div>';
 //*****************************************************************************************
 
 if ( doliCheckModules('ticket') ) {
-add_action( 'settings_doliconnect_menu', 'tickets_menu', 1, 1);
-add_action( 'settings_doliconnect_tickets', 'tickets_module');
+    add_action( 'settings_doliconnect_menu', 'tickets_menu', 1, 1);
+    add_action( 'settings_doliconnect_tickets', 'tickets_module');
 }
 
 function tickets_menu( $arg ) {
-print "<a href='".esc_url( add_query_arg( 'module', 'tickets', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
-if ( $arg == 'tickets' ) { print " active"; }
-print "'>".__( 'My support tickets', 'doliconnect')."</a>";
+    print "<a href='".esc_url( add_query_arg( 'module', 'tickets', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
+    if ( $arg == 'tickets' ) { print " active"; }
+    print "'>".__( 'My support tickets', 'doliconnect')."</a>";
 }
 
 function tickets_module( $url ) {
@@ -2326,7 +2326,7 @@ print '</ul><div class="card-footer text-muted">';
 print "<small><div class='float-start'>";
 if ( isset($request) ) print dolirefresh($request, $url, dolidelay('ticket'), $ticketfo);
 print "</div><div class='float-end'>";
-print dolihelp('ISSUE');
+//print dolihelp('ISSUE');
 print "</div></small>";
 print '</div></div>';
 
@@ -2471,9 +2471,10 @@ $object= callDoliApi("GET", $request, null, dolidelay('ticket', esc_attr(isset($
 if ( doliversion('21.0.0') && isset($object->data) ) { $listticket = $object->data; } else { $listticket = $object; }
 
 print '<div class="card shadow-sm"><div class="card-header">'.__( 'My support tickets', 'doliconnect');
-print '<a class="float-end text-decoration-none" href="'.esc_url( add_query_arg( 'action', 'create', $url) ).'"><i class="fas fa-plus-circle"></i> '.__( 'Create ticket', 'doliconnect').'</a>';  
 print '</div><ul class="list-group list-group-flush">';  
-
+//if ( doliCheckRights('expensereport', 'creer') && !empty(get_option('doliconnectbeta'))) {
+    print '<a href="'.esc_url( add_query_arg( 'action', 'create', $url) ).'" class="list-group-item lh-condensed list-group-item-action list-group-item-primary" disabled><center><i class="fas fa-plus-circle"></i> '.__( 'Create a ticket', 'doliconnect').'</center></a>';  
+//}
 if ( !isset($listticket->error) && $listticket != null ) {
 foreach ($listticket as $postticket) {                                                                                 
 
