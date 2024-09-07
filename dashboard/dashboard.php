@@ -1780,7 +1780,7 @@ if ( doliCheckModules('recruitment') && doliversion('19.0.0') && !empty(get_opti
     $object = callDoliApi("GET", $request, null, dolidelay('recruitment', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
     if ( doliversion('21.0.0') && isset($object->data) ) { $listjobposition = $object->data; } else { $listjobposition = $object; }
     
-    print '<div class="card shadow-sm"><ul class="list-group list-group-flush">'; 
+    print '<div class="card shadow-sm"><div class="card-header">'.__( 'List of jobpositions', 'doliconnect').'</div><ul class="list-group list-group-flush">';
     if ( !empty(doliconnectid('dolidonation'))) {
     print '<a href="'.doliconnecturl('dolidonation').'" class="list-group-item lh-condensed list-group-item-action list-group-item-primary "><center><i class="fas fa-plus-circle"></i> '.__( 'Donate', 'doliconnect').'</center></a>';  
     }
