@@ -885,7 +885,7 @@ function dolishop_display($content) {
       print "<small><div class='float-start'>";
       if ( isset($request) ) print dolirefresh($request, get_permalink(), dolidelay('product'));
       print "</div><div class='float-end'>";
-      print dolihelp('ISSUE');
+      //print dolihelp('ISSUE');
       print "</div></small>";
       print "</div></div>";
 
@@ -1179,7 +1179,7 @@ print '<div class="card-footer text-muted">';
 print "<small><div class='float-start'>";
 if ( isset($request) ) print dolirefresh($request, doliconnecturl('dolidonation'), dolidelay('constante'));
 print "</div><div class='float-end'>";
-print dolihelp('COM');
+//print dolihelp('COM');
 print "</div></small></div>";
 
 }
@@ -1515,7 +1515,7 @@ print '<div class="card-footer text-muted">';
 print "<small><div class='float-start'>";
 if ( isset($request) ) print dolirefresh($request, doliconnecturl('dolicart'), dolidelay('cart'));
 print "</div><div class='float-end'>";
-print dolihelp('ISSUE');
+//print dolihelp('ISSUE');
 print "</div></small>";
 print "</div></div>";
 
@@ -1693,7 +1693,7 @@ print "<div class='card-footer text-muted'>";
 print "<small><div class='float-start'>";
 if ( isset($request) ) print dolirefresh($request, get_permalink(), dolidelay('cart'));
 print "</div><div class='float-end'>";
-print dolihelp('ISSUE');
+//print dolihelp('ISSUE');
 print "</div></small>";
 print "</div></div>";
 
@@ -1790,7 +1790,7 @@ function doliclassifieds_display($content) {
   print "<small><div class='float-start'>";
   print dolirefresh($request, esc_url( add_query_arg( 'id', esc_attr($_GET["id"]), get_permalink(get_option('doliclassifieds'))) ), $delay);
   print "</div><div class='float-end'>";
-  print dolihelp('COM');
+  //print dolihelp('COM');
   print "</div></small>";
   
   } else {
@@ -1817,15 +1817,13 @@ function doliclassifieds_display($content) {
   print "<small><div class='float-start'>";
   print dolirefresh($request, esc_url( get_permalink(get_option('doliclassifieds') )), $delay);
   print "</div><div class='float-end'>";
-  print dolihelp('COM');
+  //print dolihelp('COM');
   print "</div></small>";
   print '</div>';
   print '</div>';
   }
   } else {
-  
-  return $content;
-  
+    return $content;
   }
   
 }
