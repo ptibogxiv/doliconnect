@@ -1467,17 +1467,17 @@ print "</div></div>";
 //*****************************************************************************************
 
 if ( doliCheckModules('projet') && !empty(get_option('doliconnectbeta')) && doliCheckRights('projet', 'lire') ) {
-add_action( 'customer_doliconnect_menu', 'projets_menu', 2, 1);
-add_action( 'customer_doliconnect_projets', 'projets_module');
+    add_action( 'customer_doliconnect_menu', 'projects_menu', 2, 1);
+    add_action( 'customer_doliconnect_projects', 'projects_module');
 }
 
-function projets_menu( $arg ) {
-print "<a href='".esc_url( add_query_arg( 'module', 'projets', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
-if ( $arg == 'projets' ) { print " active"; }
-print "'>".__( 'Projets tracking', 'doliconnect')."</a>";
+function projects_menu( $arg ) {
+    print "<a href='".esc_url( add_query_arg( 'module', 'projects', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
+    if ( $arg == 'projects' ) { print " active"; }
+    print "'>".__( 'Projets tracking', 'doliconnect')."</a>";
 }
 
-function projets_module( $url ) {
+function projects_module( $url ) {
 global $current_user;
 
 if ( isset($_GET['id']) && $_GET['id'] > 0 ) {  
@@ -1557,7 +1557,7 @@ print '<div class="card shadow-sm"><div class="card-header">'.__( 'Projects trac
 if ( !isset($listproject->error) && $listproject != null ) {
 foreach ($listproject  as $postproject) { 
                                                                                 
-$nonce = wp_create_nonce( 'doli-contracts-'. $postproject->id.'-'.$postproject->ref);
+$nonce = wp_create_nonce( 'doli-projects-'. $postproject->id.'-'.$postproject->ref);
 $arr_params = array( 'id' => $postproject->id, 'ref' => $postproject->ref, 'security' => $nonce);  
 $return = esc_url( add_query_arg( $arr_params, $url) );
                                                                                                                                                       
