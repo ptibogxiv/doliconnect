@@ -2584,7 +2584,7 @@ print '</form><div class="card-footer text-muted">';
 print "<small><div class='float-start'>";
 //print dolirefresh( "/thirdparties".doliconnector($current_user, 'fk_soc'), $url, dolidelay('member'));
 print "</div><div class='float-end'>";
-print dolihelp('ISSUE');
+//print dolihelp('ISSUE');
 print "</div></small>";
 print '</div></div>';
 
