@@ -1781,8 +1781,9 @@ if ( doliCheckModules('recruitment') && doliversion('19.0.0') && !empty(get_opti
     if ( doliversion('21.0.0') && isset($object->data) ) { $listjobposition = $object->data; } else { $listjobposition = $object; }
     
     print '<div class="card shadow-sm"><div class="card-header">'.__( 'List of jobpositions', 'doliconnect').'</div><ul class="list-group list-group-flush">';
-    if ( !empty(doliconnectid('dolidonation'))) {
-    print '<a href="'.doliconnecturl('dolidonation').'" class="list-group-item lh-condensed list-group-item-action list-group-item-primary "><center><i class="fas fa-plus-circle"></i> '.__( 'Donate', 'doliconnect').'</center></a>';  
+
+    if ( doliCheckRights('recruitment', 'recruitmentjobposition', 'write') && !empty(get_option('doliconnectbeta'))) {
+        print '<a href="" class="list-group-item lh-condensed list-group-item-action list-group-item-primary" disabled><center><i class="fas fa-plus-circle"></i> '.__( 'Create a job position', 'doliconnect').'</center></a>';  
     }
     
     if ( !isset( $listjobposition->error ) && $listjobposition != null ) {
