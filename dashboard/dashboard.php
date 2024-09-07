@@ -1596,14 +1596,14 @@ print "</div></div>";
 //*****************************************************************************************
 
 if ( doliCheckModules('don') ) {
-add_action( 'customer_doliconnect_menu', 'donations_menu', 5, 1);
-add_action( 'customer_doliconnect_donations', 'donations_module');
+    add_action( 'customer_doliconnect_menu', 'donations_menu', 5, 1);
+    add_action( 'customer_doliconnect_donations', 'donations_module');
 }  
 
 function donations_menu( $arg ) {
-print "<a href='".esc_url( add_query_arg( 'module', 'donations', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
-if ($arg=='donations') { print " active";}
-print "'>".__( 'Donations tracking', 'doliconnect')."</a>";
+    print "<a href='".esc_url( add_query_arg( 'module', 'donations', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
+    if ($arg=='donations') { print " active";}
+    print "'>".__( 'Donations tracking', 'doliconnect')."</a>";
 }
 
 function donations_module( $url ) {
@@ -1611,111 +1611,104 @@ global $current_user;
 $entity = get_current_blog_id();
 $ID = $current_user->ID;
 
-if ( isset($_GET['id']) && $_GET['id'] > 0 ) { 
+    if ( isset($_GET['id']) && $_GET['id'] > 0 ) { 
+        $request = "/donations/".esc_attr($_GET['id']);
+        $donationfo = callDoliApi("GET", $request, null, dolidelay('donation', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+        //print $donationfo;
+    }
+
+    if ( !isset($donationfo->error) && isset($_GET['id']) && isset($_GET['ref']) && (doliconnector($current_user, 'fk_soc') == $donationfo->socid ) && ($_GET['ref'] == $donationfo->ref) && $donationfo->statut != 0 ) {
+        print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Donation %s', 'doliconnect'), $donationfo->ref).'<a class="float-end text-decoration-none" href="'.esc_url( add_query_arg( 'module', 'donations', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-6">';
+        $datecommande =  wp_date('d/m/Y', $donationfo->date_creation);
+        print "<b>".__( 'Date of order', 'doliconnect').":</b> $datecommande<br>";
+        $mode_reglement = callDoliApi("GET", "/setup/dictionary/payment_types?sortfield=code&sortorder=ASC&limit=100&active=1&sqlfilters=(t.code%3A%3D%3A'".$donationfo->mode_reglement_code."')", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+        if (!empty($donationfo->mode_reglement_id)) print "<b>".__( 'Payment method', 'doliconnect').":</b> ".$mode_reglement[0]->label."<br><br></div><div class='col-md-7'>";
+
+        if ( isset($orderinfo) ) {
+        print "<h3 class='text-end'>".$orderinfo."</h3>";
+        }
+
+        $orderavancement=100;
+
+        print "</div></div>";
+        print '<div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: '.$orderavancement.'%" aria-valuenow="'.$orderavancement.'" aria-valuemin="0" aria-valuemax="100"></div></div>';
+        print "<div class='w-auto text-muted d-none d-sm-block' ><div style='display:inline-block;width:20%'>".__( 'Order', 'doliconnect')."</div><div style='display:inline-block;width:15%'>".__( 'Payment', 'doliconnect')."</div><div style='display:inline-block;width:25%'>".__( 'Processing', 'doliconnect')."</div><div style='display:inline-block;width:20%'>".__( 'Shipping', 'doliconnect')."</div><div class='text-end' style='display:inline-block;width:20%'>".__( 'Delivery', 'doliconnect')."</div></div>";
+
+        print "</div><ul class='list-group list-group-flush'>";
  
-$request = "/donations/".esc_attr($_GET['id']);
+        if ( $donationfo->lines != null ) {
+        foreach ( $donationfo->lines as $line ) {
+        print "<li class='list-group-item'>";     
+        if ( $line->date_start != '' && $line->date_end != '' )
+        {
+        $start = wp_date('d/m/Y', $line->date_start);
+        $end = wp_date('d/m/Y', $line->date_end);
+        $dates =" <i>(Du $start au $end)</i>";
+        }
 
-$donationfo = callDoliApi("GET", $request, null, dolidelay('donation', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-//print $donationfo;
-}
+        print '<div class="w-100 justify-content-between"><div class="row"><div class="col-8 col-md-10"> 
+        <h6 class="mb-1">'.$line->libelle.'</h6>
+        <p class="mb-1">'.$line->description.'</p>
+        <small>'.$dates.'</small>'; 
+        print '</div><div class="col-4 col-md-2 text-end"><h5 class="mb-1">'.doliprice($line, 'ttc', isset($line->multicurrency_code) ? $line->multicurrency_code : null).'</h5>';
+        print '<h5 class="mb-1">x'.$line->qty.'</h5>'; 
+        print "</div></div></li>";
+        }
+        }
 
-if ( !isset($donationfo->error) && isset($_GET['id']) && isset($_GET['ref']) && (doliconnector($current_user, 'fk_soc') == $donationfo->socid ) && ($_GET['ref'] == $donationfo->ref) && $donationfo->statut != 0 ) {
+        print "<li class='list-group-item list-group-item-info'>";
+        print "<b>".__( 'Amount', 'doliconnect').": ".doliprice($donationfo, 'amount', isset($donationfo->multicurrency_code) ? $donationfo->multicurrency_code : null)."</b>";
+        print "</li>";
+        print "</ul>";
 
-print "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>$donationfo->ref</h5><div class='row'><div class='col-md-5'>";
-$datecommande =  wp_date('d/m/Y', $donationfo->date_creation);
-print "<b>".__( 'Date of order', 'doliconnect').":</b> $datecommande<br>";
-$mode_reglement = callDoliApi("GET", "/setup/dictionary/payment_types?sortfield=code&sortorder=ASC&limit=100&active=1&sqlfilters=(t.code%3A%3D%3A'".$donationfo->mode_reglement_code."')", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-if (!empty($donationfo->mode_reglement_id)) print "<b>".__( 'Payment method', 'doliconnect').":</b> ".$mode_reglement[0]->label."<br><br></div><div class='col-md-7'>";
+        print "<div class='card-footer text-muted'>";
+        print "<small><div class='float-start'>";
+        if ( isset($request) ) print dolirefresh($request, $url, dolidelay('donation'), $donationfo);
+        print "</div><div class='float-end'>";
+        //print dolihelp('COM');
+        print "</div></small>";
+        print "</div></div>";
+    } else {
+        $limit=12;
+        if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']); }  else { $page = 0; }
+        $request= "/donations?sortfield=t.date_valid&sortorder=DESC&limit=".$limit."&page=".$page."&thirdparty_ids=".doliconnector($current_user, 'fk_soc')."&pagination_data=true";// ".$page."   ."&sqlfilters=(t.fk_statut!=0)"
+        $object = callDoliApi("GET", $request, null, dolidelay('donation', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+        if ( doliversion('21.0.0') && isset($object->data) ) { $listdonation = $object->data; } else { $listdonation = $object; }
 
-if ( isset($orderinfo) ) {
-print "<h3 class='text-end'>".$orderinfo."</h3>";
-}
+        print '<div class="card shadow-sm"><div class="card-header">'.__( 'Donations tracking', 'doliconnect').'</div><ul class="list-group list-group-flush">'; 
+        if ( !empty(doliconnectid('dolidonation'))) {
+        print '<a href="'.doliconnecturl('dolidonation').'" class="list-group-item lh-condensed list-group-item-action list-group-item-primary "><center><i class="fas fa-plus-circle"></i> '.__( 'Donate', 'doliconnect').'</center></a>';  
+        }
 
-$orderavancement=100;
+        if ( !isset( $listdonation->error ) && $listdonation != null ) {
+            foreach ( $listdonation as $postdonation ) { 
+                $arr_params = array( 'id' => $postdonation->id, 'ref' => $postdonation->ref);  
+                $return = esc_url( add_query_arg( $arr_params, $url) );
+                        
+                print "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'><div><i class='fa fa-donate fa-3x fa-fw'></i></div><div><h6 class='my-0'>".$postdonation->ref."</h6><small class='text-muted'>du ".wp_date('d/m/Y', $postdonation->date_creation)."</small></div><span>".doliprice($postdonation, 'amount', isset($postdonation->multicurrency_code) ? $postdonation->multicurrency_code : null)."</span><span>";
+                if ( $postdonation->statut == 3 ) {
+                if ( $postdonation->billed == 1 ) { print "<span class='fa fa-check-circle fa-fw text-success'></span><span class='fa fa-eur fa-fw text-success'></span><span class='fa fa-truck fa-fw text-success'></span><span class='fa fa-file-text fa-fw text-success'></span>"; } 
+                else { print "<span class='fa fa-check-circle fa-fw text-success'></span><span class='fa fa-eur fa-fw text-success'></span><span class='fa fa-truck fa-fw text-success'></span><span class='fa fa-file-text fa-fw text-warning'></span>"; } }
+                elseif ( $postdonation->statut == 2 ) { print "<span class='fa fa-check-circle fa-fw text-success'></span><span class='fa fa-eur fa-fw text-success'></span><span class='fa fa-truck fa-fw text-warning'></span><span class='fa fa-file-text fa-fw text-danger'></span>"; }
+                elseif ( $postdonation->statut == 1 ) { print "<span class='fa fa-check-circle fa-fw text-success'></span><span class='fa fa-eur fa-fw text-warning'></span><span class='fa fa-truck fa-fw text-danger'></span><span class='fa fa-file-text fa-fw text-danger'></span>"; }
+                elseif ( $postdonation->statut == 0 ) { print "<span class='fa fa-check-circle fa-fw text-warning'></span><span class='fa fa-eur fa-fw text-danger'></span><span class='fa fa-truck fa-fw text-danger'></span><span class='fa fa-file-text fa-fw text-danger'></span>"; }
+                elseif ( $postdonation->statut == -1 ) { print "<span class='fa fa-check-circle fa-fw text-secondary'></span><span class='fa fa-eur fa-fw text-secondary'></span><span class='fa fa-truck fa-fw text-secondary'></span><span class='fa fa-file-text fa-fw text-secondary'></span>"; }
+                print "</span></a>";
+            }
+        } else{
+            print "<li class='list-group-item list-group-item-light'><center>".__( 'No donation', 'doliconnect')."</center></li>";
+        }
 
-print "</div></div>";
-print '<div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: '.$orderavancement.'%" aria-valuenow="'.$orderavancement.'" aria-valuemin="0" aria-valuemax="100"></div></div>';
-print "<div class='w-auto text-muted d-none d-sm-block' ><div style='display:inline-block;width:20%'>".__( 'Order', 'doliconnect')."</div><div style='display:inline-block;width:15%'>".__( 'Payment', 'doliconnect')."</div><div style='display:inline-block;width:25%'>".__( 'Processing', 'doliconnect')."</div><div style='display:inline-block;width:20%'>".__( 'Shipping', 'doliconnect')."</div><div class='text-end' style='display:inline-block;width:20%'>".__( 'Delivery', 'doliconnect')."</div></div>";
-
-print "</div><ul class='list-group list-group-flush'>";
- 
-if ( $donationfo->lines != null ) {
-foreach ( $donationfo->lines as $line ) {
-print "<li class='list-group-item'>";     
-if ( $line->date_start != '' && $line->date_end != '' )
-{
-$start = wp_date('d/m/Y', $line->date_start);
-$end = wp_date('d/m/Y', $line->date_end);
-$dates =" <i>(Du $start au $end)</i>";
-}
-
-print '<div class="w-100 justify-content-between"><div class="row"><div class="col-8 col-md-10"> 
-<h6 class="mb-1">'.$line->libelle.'</h6>
-<p class="mb-1">'.$line->description.'</p>
-<small>'.$dates.'</small>'; 
-print '</div><div class="col-4 col-md-2 text-end"><h5 class="mb-1">'.doliprice($line, 'ttc', isset($line->multicurrency_code) ? $line->multicurrency_code : null).'</h5>';
-print '<h5 class="mb-1">x'.$line->qty.'</h5>'; 
-print "</div></div></li>";
-}
-}
-
-print "<li class='list-group-item list-group-item-info'>";
-print "<b>".__( 'Amount', 'doliconnect').": ".doliprice($donationfo, 'amount', isset($donationfo->multicurrency_code) ? $donationfo->multicurrency_code : null)."</b>";
-print "</li>";
-print "</ul>";
-
-print "<div class='card-footer text-muted'>";
-print "<small><div class='float-start'>";
-if ( isset($request) ) print dolirefresh($request, $url, dolidelay('donation'), $donationfo);
-print "</div><div class='float-end'>";
-//print dolihelp('COM');
-print "</div></small>";
-print "</div></div>";
-
-} else {
-
-$limit=12;
-if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']); }  else { $page = 0; }
-$request= "/donations?sortfield=t.date_valid&sortorder=DESC&limit=".$limit."&page=".$page."&thirdparty_ids=".doliconnector($current_user, 'fk_soc')."&pagination_data=true";// ".$page."   ."&sqlfilters=(t.fk_statut!=0)"
-$object = callDoliApi("GET", $request, null, dolidelay('donation', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-if ( doliversion('21.0.0') && isset($object->data) ) { $listdonation = $object->data; } else { $listdonation = $object; }
-
-print '<div class="card shadow-sm"><div class="card-header">'.__( 'Donations tracking', 'doliconnect').'</div><ul class="list-group list-group-flush">'; 
-if ( !empty(doliconnectid('dolidonation'))) {
-print '<a href="'.doliconnecturl('dolidonation').'" class="list-group-item lh-condensed list-group-item-action list-group-item-primary "><center><i class="fas fa-plus-circle"></i> '.__( 'Donate', 'doliconnect').'</center></a>';  
-}
-
-if ( !isset( $listdonation->error ) && $listdonation != null ) {
-foreach ( $listdonation as $postdonation ) { 
-
-$arr_params = array( 'id' => $postdonation->id, 'ref' => $postdonation->ref);  
-$return = esc_url( add_query_arg( $arr_params, $url) );
-                
-print "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'><div><i class='fa fa-donate fa-3x fa-fw'></i></div><div><h6 class='my-0'>".$postdonation->ref."</h6><small class='text-muted'>du ".wp_date('d/m/Y', $postdonation->date_creation)."</small></div><span>".doliprice($postdonation, 'amount', isset($postdonation->multicurrency_code) ? $postdonation->multicurrency_code : null)."</span><span>";
-if ( $postdonation->statut == 3 ) {
-if ( $postdonation->billed == 1 ) { print "<span class='fa fa-check-circle fa-fw text-success'></span><span class='fa fa-eur fa-fw text-success'></span><span class='fa fa-truck fa-fw text-success'></span><span class='fa fa-file-text fa-fw text-success'></span>"; } 
-else { print "<span class='fa fa-check-circle fa-fw text-success'></span><span class='fa fa-eur fa-fw text-success'></span><span class='fa fa-truck fa-fw text-success'></span><span class='fa fa-file-text fa-fw text-warning'></span>"; } }
-elseif ( $postdonation->statut == 2 ) { print "<span class='fa fa-check-circle fa-fw text-success'></span><span class='fa fa-eur fa-fw text-success'></span><span class='fa fa-truck fa-fw text-warning'></span><span class='fa fa-file-text fa-fw text-danger'></span>"; }
-elseif ( $postdonation->statut == 1 ) { print "<span class='fa fa-check-circle fa-fw text-success'></span><span class='fa fa-eur fa-fw text-warning'></span><span class='fa fa-truck fa-fw text-danger'></span><span class='fa fa-file-text fa-fw text-danger'></span>"; }
-elseif ( $postdonation->statut == 0 ) { print "<span class='fa fa-check-circle fa-fw text-warning'></span><span class='fa fa-eur fa-fw text-danger'></span><span class='fa fa-truck fa-fw text-danger'></span><span class='fa fa-file-text fa-fw text-danger'></span>"; }
-elseif ( $postdonation->statut == -1 ) { print "<span class='fa fa-check-circle fa-fw text-secondary'></span><span class='fa fa-eur fa-fw text-secondary'></span><span class='fa fa-truck fa-fw text-secondary'></span><span class='fa fa-file-text fa-fw text-secondary'></span>"; }
-print "</span></a>";
-}}
-else{
-print "<li class='list-group-item list-group-item-light'><center>".__( 'No donation', 'doliconnect')."</center></li>";
-}
-
-print "</ul><div class='card-body'>";
-print doliPagination($object, $url, $page);
-print "</div><div class='card-footer text-muted'>";
-print "<small><div class='float-start'>";
-if ( isset($request) ) print dolirefresh($request, $url, dolidelay('donation'));
-print "</div><div class='float-end'>";
-//print dolihelp('ISSUE');
-print "</div></small>";
-print "</div></div>";
-
-}
+        print "</ul><div class='card-body'>";
+        print doliPagination($object, $url, $page);
+        print "</div><div class='card-footer text-muted'>";
+        print "<small><div class='float-start'>";
+        if ( isset($request) ) print dolirefresh($request, $url, dolidelay('donation'));
+        print "</div><div class='float-end'>";
+        //print dolihelp('ISSUE');
+        print "</div></small>";
+        print "</div></div>";
+    }
 }
 
 //*****************************************************************************************
@@ -1743,7 +1736,7 @@ function recruitment_module( $url ) {
     }
     
     if ( !isset($donationfo->error) && isset($_GET['id']) && isset($_GET['ref']) && (doliconnector($current_user, 'fk_soc') == $donationfo->fk_soc ) && ($_GET['ref'] == $donationfo->ref) && $donationfo->status != 0 ) {
-        print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Job position %s', 'doliconnect'), $donationfo->ref).'<a class="float-end text-decoration-none" href="'.esc_url( add_query_arg( 'module', 'expensereport', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-6">';
+        print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Job position %s', 'doliconnect'), $donationfo->ref).'<a class="float-end text-decoration-none" href="'.esc_url( add_query_arg( 'module', 'recruitment', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-6">';
         $datecreation =  wp_date('d/m/Y', $donationfo->date_creation);
         print "<b>".__( 'Date of creation', 'doliconnect').":</b> $datecreation<br>";
         print "<b>".__( 'Payment method', 'doliconnect').":</b> <br><br></div><div class='col-md-7'>";
