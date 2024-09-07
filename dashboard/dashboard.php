@@ -1550,7 +1550,8 @@ print '</div></div>';
 $limit=12;
 if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']); }  else { $page = 0; }
 $request = "/projects?sortfield=t.rowid&sortorder=DESC&limit=".$limit."&page=".$page."&thirdparty_ids=".doliconnector($current_user, 'fk_soc');                                
-$listproject = callDoliApi("GET", $request, null, dolidelay('project', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$object = callDoliApi("GET", $request, null, dolidelay('project', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+if ( doliversion('21.0.0') && isset($object->data) ) { $listproject = $object->data; } else { $listproject = $object; }
 
 print '<div class="card shadow-sm"><div class="card-header">'.__( 'Projects tracking', 'doliconnect').'</div><ul class="list-group list-group-flush">';
 
@@ -1581,7 +1582,7 @@ print "<li class='list-group-item list-group-item-light'><center>".__( 'No proje
 }
 
 print "</ul><div class='card-body'>";
-print dolipage($listproject, $url, $page, $limit);
+print doliPagination($object, $url, $page);
 print "</div><div class='card-footer text-muted'>";
 print "<small><div class='float-start'>";
 if ( isset($request) ) print dolirefresh($request, $url, dolidelay('project'));
