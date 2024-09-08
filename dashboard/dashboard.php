@@ -1471,12 +1471,12 @@ function projects_module( $url ) {
 global $current_user;
 
     if ( isset($_GET['id']) && $_GET['id'] > 0 ) {  
-        $request = "/contracts/".esc_attr($_GET['id'])."?contact_list=0";
+        $request = "/projects/".esc_attr($_GET['id'])."?contact_list=0";
         $contractfo = callDoliApi("GET", $request, null, dolidelay('contract', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
         //print $contractfo;
     }
 
-        if ( !isset($contractfo->error) && isset($_GET['id']) && isset($_GET['id']) && isset($_GET['ref']) && (doliconnector($current_user, 'fk_soc') == $contractfo->socid) && ($_GET['ref'] == $contractfo->ref) && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doli-contracts-'.$contractfo->id.'-'.$contractfo->ref)) {
+        if ( !isset($contractfo->error) && isset($_GET['id']) && isset($_GET['id']) && isset($_GET['ref']) && (doliconnector($current_user, 'fk_soc') == $contractfo->socid) && ($_GET['ref'] == $contractfo->ref) && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doli-projects-'.$contractfo->id.'-'.$contractfo->ref)) {
         print "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>$contractfo->ref</h5><div class='row'><div class='col-md-5'>";
         print "<b>".__( 'Date of creation', 'doliconnect').": </b> ".wp_date('d/m/Y', $contractfo->date_creation)."<br>";
         if ( $contractfo->statut > 0 ) {
