@@ -517,7 +517,7 @@ print '</ul><div class="card-footer text-muted">';
 print "<small><div class='float-start'>";
 if ( isset($request) ) print dolirefresh($request, $url, dolidelay('proposal'), $proposalfo);
 print "</div><div class='float-end'>";
-print dolihelp('ISSUE');
+//print dolihelp('ISSUE');
 print "</div></small>";
 print '</div></div>';
 
@@ -825,7 +825,7 @@ print '</ul><div class="card-footer text-muted">';
 print "<small><div class='float-start'>";
 if ( isset($request) ) print dolirefresh($request, $url, dolidelay('order'), $orderfo);
 print "</div><div class='float-end'>";
-print dolihelp('ISSUE');
+//print dolihelp('ISSUE');
 print "</div></small>";
 print '</div></div>';
 
@@ -1094,7 +1094,7 @@ print '</ul><div class="card-footer text-muted">';
 print "<small><div class='float-start'>";
 if ( isset($request) ) print dolirefresh($request, $url, dolidelay('invoice'), $invoicefo);
 print "</div><div class='float-end'>";
-print dolihelp('ISSUE');
+//print dolihelp('ISSUE');
 print "</div></small>";
 print '</div></div>';
 
@@ -1941,7 +1941,7 @@ print '</ul><div class="card-body"></div><div class="card-footer text-muted">';
 print "<small><div class='float-start'>";
 if ( isset($request) ) print dolirefresh($request, $url, dolidelay('member'));
 print "</div><div class='float-end'>";
-print dolihelp('ISSUE');
+//print dolihelp('ISSUE');
 print "</div></small>";
 print '</div></div>';
 
@@ -2015,7 +2015,7 @@ print '</ul><div class="card-body"></div><div class="card-footer text-muted">';
 print "<small><div class='float-start'>";
 if ( isset($request) ) print dolirefresh($request, $url, dolidelay('member'));
 print "</div><div class='float-end'>";
-print dolihelp('ISSUE');
+//print dolihelp('ISSUE');
 print "</div></small>";
 print '</div></div>';
 }
