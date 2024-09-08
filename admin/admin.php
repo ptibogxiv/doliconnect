@@ -536,7 +536,7 @@ echo "<input id='dolibarr_entity'  name='dolibarr_entity' type='text' value='".(
            $args = array(
     'name' => 'doliagenda', 
     'show_option_none' => __( '- Select -', 'doliconnect' ), 
-    'option_none_value' => '0', 
+    'option_none_value' => '0',
     'selected' => get_option('doliagenda') 
 );
            wp_dropdown_pages($args); ?></td>
