@@ -88,7 +88,7 @@ function doliconnect_agenda_block_init() {
 			'doliconnect/agenda-block',
 			array(
 				'editor_script'   => 'agenda-block',
-				'render_callback' => 'doliconnect_agenda-block_render',
+				'render_callback' => 'doliconnect_agenda_block_render',
 			)
 		);
 	}
