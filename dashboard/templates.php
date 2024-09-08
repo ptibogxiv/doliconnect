@@ -1811,11 +1811,11 @@ function doliagenda_display($content) {
       print "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
 
       if ( !isset($listagenda->error) && $listagenda != null ) {
-        foreach ($listagenda as $postticket) {
-          print "<a href='".esc_url( add_query_arg( 'id', $postticket->rowid, get_permalink(get_option('doliclassifieds'))) )."' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-action'>";
-          print "<div><i class='fa-solid fa-id-card-clip fa-3x fa-fw'></i></div><div>";                                                                                
-          print "<h6 class='my-0'>$postticket->label</h6><small class='text-muted'>$postticket->title</small>";
-          print "</div><span>$postticket->city</span></a>";
+        foreach ($listagenda as $postagenda) {
+          print "<a href='".esc_url( add_query_arg( 'id', $postagenda->id, get_permalink(get_option('doliclassifieds'))) )."' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-action'>";
+          print "<div><i class='fa-solid fa-calendar-days fa-3x fa-fw'></i></div><div>";                                                                                
+          print "<h6 class='my-0'>$postagenda->label</h6><small class='text-muted'>$postagenda->location</small>";
+          print "</div></a>";
         }
       } else {
         print "<li class='list-group-item list-group-item-light'><center>Pas d'annonces</center></li>";
