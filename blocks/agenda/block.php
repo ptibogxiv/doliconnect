@@ -93,4 +93,4 @@ function doliconnect_agenda_block_init() {
 		);
 	}
 }
-add_action( 'init', 'doliconnect_agenda-block_init' );
+add_action( 'init', 'doliconnect_agenda_block_init' );
