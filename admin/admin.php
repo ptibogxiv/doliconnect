@@ -486,7 +486,6 @@ echo "<input id='dolibarr_entity'  name='dolibarr_entity' type='text' value='".(
             <tr>
                 <th style="width:150px;"><label for="dolibarr_shop">dolibarr_donation</label></th>
                 <td >
-<?php if ( is_plugin_active( 'doliconnect-pro/doliconnect-pro.php' ) ) { ?>
 <?php 
            $args = array(
     'name' => 'dolidonation', 
@@ -495,9 +494,7 @@ echo "<input id='dolibarr_entity'  name='dolibarr_entity' type='text' value='".(
     'selected' => get_option('dolidonation') 
 );
            wp_dropdown_pages($args); ?>
-<?php } else { ?>
-<select name="dolidonation" type="checkbox" id="dolidonation" value="0" disabled><option> --- </option></select>
-<?php } ?> <b>PRO</b></td>
+            </td>
             </tr>                          
             <tr>
                 <th style="width:150px;"><label for="dolibarr_contact">dolibarr_contact</label></th>
