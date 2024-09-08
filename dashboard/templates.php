@@ -1812,13 +1812,13 @@ function doliagenda_display($content) {
 
       if ( !isset($listagenda->error) && $listagenda != null ) {
         foreach ($listagenda as $postagenda) {
-          print "<a href='".esc_url( add_query_arg( 'id', $postagenda->id, get_permalink(get_option('doliclassifieds'))) )."' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-action'>";
+          print "<a href='".esc_url( add_query_arg( 'id', $postagenda->id, get_permalink(get_option('doliclassifieds'))) )."' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'>";
           print "<div><i class='fa-solid fa-calendar-days fa-3x fa-fw'></i></div><div>";                                                                                
           print "<h6 class='my-0'>$postagenda->label</h6><small class='text-muted'>$postagenda->location</small>";
           print "</div></a>";
         }
       } else {
-        print "<li class='list-group-item list-group-item-light'><center>Pas d'annonces</center></li>";
+        print "<li class='list-group-item list-group-item-light'><center>".__( 'No event', 'doliconnect')."</center></li>";
       }
       print "</ul><div class='card-body'>";
       print doliPagination($object, $_SERVER['REQUEST_URI'], $page);
