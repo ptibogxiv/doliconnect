@@ -1409,6 +1409,7 @@ function dolidelay($delay = null, $refresh = false, $protect = false) {
       elseif ($delay == 'member') { $delay = DAY_IN_SECONDS; }
       elseif ($delay == 'donation') { $delay = DAY_IN_SECONDS; }
       elseif ($delay == 'ticket') { $delay = HOUR_IN_SECONDS; }
+      elseif ($delay == 'agenda') { $delay = HOUR_IN_SECONDS; }
       elseif ($delay == 'recruitment') { $delay = HOUR_IN_SECONDS; }
       elseif ($delay == 'expensereport') { $delay = HOUR_IN_SECONDS; }
       elseif ($delay == 'product') { $delay = WEEK_IN_SECONDS; }
