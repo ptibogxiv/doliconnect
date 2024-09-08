@@ -1239,7 +1239,7 @@ global $current_user;
                 $arr_params = array( 'id' => $postcontract->id, 'ref' => $postcontract->ref, 'security' => $nonce);  
                 $return = esc_url( add_query_arg( $arr_params, $url) );
                                                                                                                                                                     
-                print "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'><div><i class='fa fa-file-contract fa-3x fa-fw'></i></div><div><h6 class='my-0'>".$postcontract->ref."</h6><small class='text-muted'>du ".wp_date('d/m/Y', $postcontract->date_creation)."</small></div><span>".doliprice($postcontract, 'ttc', isset($postcontract->multicurrency_code) ? $postcontract->multicurrency_code : null)."</span><span>";
+                print "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'><div><i class='fa-solid fa-suitcase fa-3x fa-fw'></i></div><div><h6 class='my-0'>".$postcontract->ref."</h6><small class='text-muted'>du ".wp_date('d/m/Y', $postcontract->date_creation)."</small></div><span>".doliprice($postcontract, 'ttc', isset($postcontract->multicurrency_code) ? $postcontract->multicurrency_code : null)."</span><span>";
                 if ( $postcontract->statut > 0 ) {print "<span class='fas fa-check-circle fa-fw text-success'></span> ";
                 //if ( $postcontract->billed == 1 ) { print "<span class='fas fa-money-bill-alt fa-fw text-success'></span> "; 
                 //if ( $postcontract->statut > 1 ) { print "<span class='fas fa-shipping-fast fa-fw text-success'></span> "; }
@@ -1366,7 +1366,7 @@ global $current_user;
                 $arr_params = array( 'id' => $postproject->id, 'ref' => $postproject->ref, 'security' => $nonce);  
                 $return = esc_url( add_query_arg( $arr_params, $url) );
                                                                                                                                                                     
-                print "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'><div><i class='fa fa-sitemap fa-3x fa-fw'></i></div><div><h6 class='my-0'>".$postproject->ref."</h6><small class='text-muted'>du ".wp_date('d/m/Y', $postproject->date_creation)."</small></div><span></span><span>";
+                print "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'><div><i class='fa-solid fa-diagram-project fa-3x fa-fw'></i></div><div><h6 class='my-0'>".$postproject->ref."</h6><small class='text-muted'>du ".wp_date('d/m/Y', $postproject->date_creation)."</small></div><span></span><span>";
                 if ( $postproject->statut > 0 ) { print "<span class='fas fa-check-circle fa-fw text-success'></span> ";
                 //if ( $postcontract->billed == 1 ) { print "<span class='fas fa-money-bill-alt fa-fw text-success'></span> "; 
                 //if ( $postcontract->statut > 1 ) { print "<span class='fas fa-shipping-fast fa-fw text-success'></span> "; }
