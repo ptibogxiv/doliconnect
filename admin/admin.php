@@ -396,7 +396,8 @@ echo "<input id='dolibarr_entity'  name='dolibarr_entity' type='text' value='".(
            $args = array(
     'name' => 'doliaccount', 
     'show_option_none' => __( '- Select -', 'doliconnect' ), 
-    'option_none_value' => '0', 
+    'option_none_value' => '0',
+    'lang' => strtolower(str_replace("_", "-", get_locale())),
     'selected' => get_option('doliaccount') 
 );
            wp_dropdown_pages($args); ?>
@@ -410,7 +411,8 @@ echo "<input id='dolibarr_entity'  name='dolibarr_entity' type='text' value='".(
            $args = array(
     'name' => 'dolishop', 
     'show_option_none' => __( '- Select -', 'doliconnect' ), 
-    'option_none_value' => '0', 
+    'option_none_value' => '0',
+    'lang' => strtolower(str_replace("_", "-", get_locale())),
     'selected' => get_option('dolishop') 
 );
            wp_dropdown_pages($args); ?></td>
@@ -422,7 +424,8 @@ echo "<input id='dolibarr_entity'  name='dolibarr_entity' type='text' value='".(
            $args = array(
     'name' => 'dolishipping', 
     'show_option_none' => __( '- Select -', 'doliconnect' ), 
-    'option_none_value' => '0', 
+    'option_none_value' => '0',
+    'lang' => strtolower(str_replace("_", "-", get_locale())),
     'selected' => get_option('dolishipping') 
 );
            wp_dropdown_pages($args); ?></td>
@@ -434,7 +437,8 @@ echo "<input id='dolibarr_entity'  name='dolibarr_entity' type='text' value='".(
            $args = array(
     'name' => 'dolisupplier', 
     'show_option_none' => __( '- Select -', 'doliconnect' ), 
-    'option_none_value' => '0', 
+    'option_none_value' => '0',
+    'lang' => strtolower(str_replace("_", "-", get_locale())),
     'selected' => get_option('dolisupplier') 
 );
            wp_dropdown_pages($args); ?><input name="dolicartsuppliergrid" type="checkbox" id="dolicartsuppliergrid" value="1" <?php checked('1', get_option('dolicartsuppliergrid')); ?> /> <?php _e('Display in grid rather than a list', 'doliconnect') ?></td>
@@ -446,7 +450,8 @@ echo "<input id='dolibarr_entity'  name='dolibarr_entity' type='text' value='".(
            $args = array(
     'name' => 'dolicart', 
     'show_option_none' => __( '- Select -', 'doliconnect' ), 
-    'option_none_value' => '0', 
+    'option_none_value' => '0',
+    'lang' => strtolower(str_replace("_", "-", get_locale())),
     'selected' => get_option('dolicart') 
 );
            wp_dropdown_pages($args); ?>
@@ -478,7 +483,8 @@ echo "<input id='dolibarr_entity'  name='dolibarr_entity' type='text' value='".(
            $args = array(
     'name' => 'dolifaq', 
     'show_option_none' => __( '- Select -', 'doliconnect' ), 
-    'option_none_value' => '0', 
+    'option_none_value' => '0',
+    'lang' => strtolower(str_replace("_", "-", get_locale())),
     'selected' => get_option('dolifaq')  
 );
            wp_dropdown_pages($args); ?> <?php _e('(Display your knowledge base)', 'doliconnect') ?></td>
@@ -490,7 +496,8 @@ echo "<input id='dolibarr_entity'  name='dolibarr_entity' type='text' value='".(
            $args = array(
     'name' => 'dolidonation', 
     'show_option_none' => __( '- Select -', 'doliconnect' ), 
-    'option_none_value' => '0', 
+    'option_none_value' => '0',
+    'lang' => strtolower(str_replace("_", "-", get_locale())),
     'selected' => get_option('dolidonation') 
 );
            wp_dropdown_pages($args); ?>
@@ -503,7 +510,8 @@ echo "<input id='dolibarr_entity'  name='dolibarr_entity' type='text' value='".(
            $args = array(
     'name' => 'dolicontact', 
     'show_option_none' => __( '- Select -', 'doliconnect' ), 
-    'option_none_value' => '0', 
+    'option_none_value' => '0',
+    'lang' => strtolower(str_replace("_", "-", get_locale())),
     'selected' => get_option('dolicontact') 
 );
            wp_dropdown_pages($args); ?> </td>
@@ -514,7 +522,8 @@ echo "<input id='dolibarr_entity'  name='dolibarr_entity' type='text' value='".(
            $args = array(
     'name' => 'wp_page_for_privacy_policy', 
     'show_option_none' => __( '- Select -', 'doliconnect' ), 
-    'option_none_value' => '0', 
+    'option_none_value' => '0',
+    'lang' => strtolower(str_replace("_", "-", get_locale())),
     'selected' => get_option( 'wp_page_for_privacy_policy' ) 
 );
            wp_dropdown_pages($args); ?> <?php _e('(set your default wordpress legacy page)', 'doliconnect') ?></td>
@@ -525,7 +534,8 @@ echo "<input id='dolibarr_entity'  name='dolibarr_entity' type='text' value='".(
            $args = array(
     'name' => 'dolitos', 
     'show_option_none' => __( '- Select -', 'doliconnect' ), 
-    'option_none_value' => '0', 
+    'option_none_value' => '0',
+    'lang' => strtolower(str_replace("_", "-", get_locale())),
     'selected' => get_option('dolitos')
 );
            wp_dropdown_pages($args); ?> <?php _e('(Terms of service)', 'doliconnect') ?></td>
@@ -537,6 +547,7 @@ echo "<input id='dolibarr_entity'  name='dolibarr_entity' type='text' value='".(
     'name' => 'doliagenda', 
     'show_option_none' => __( '- Select -', 'doliconnect' ), 
     'option_none_value' => '0',
+    'lang' => strtolower(str_replace("_", "-", get_locale())),
     'selected' => get_option('doliagenda') 
 );
            wp_dropdown_pages($args); ?></td>
@@ -548,7 +559,8 @@ if (is_plugin_active( 'doliconnect-classifieds/doliconnect-classifieds.php' ) ) 
            $args = array(
     'name' => 'doliclassifieds', 
     'show_option_none' => __( '- Select -', 'doliconnect' ), 
-    'option_none_value' => '0', 
+    'option_none_value' => '0',
+    'lang' => strtolower(str_replace("_", "-", get_locale())),
     'selected' => get_option('doliclassifieds') 
 );
            wp_dropdown_pages($args); ?></td>
