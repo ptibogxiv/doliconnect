@@ -285,8 +285,8 @@ delete_option('doliconnect_google');}
             if (isset($_REQUEST['dolibarr_entity'])) update_option('dolibarr_entity', sanitize_text_field($_REQUEST['dolibarr_entity']));
             update_option('dolicart', sanitize_text_field($_REQUEST['dolicart']));
             update_option('dolitos', sanitize_text_field($_REQUEST['dolitos']));
-            if (isset($_REQUEST['dolidonation'])) update_option('dolidonation', sanitize_text_field($_REQUEST['dolidonation']));
-            if (isset($_REQUEST['doliticket'])) update_option('doliticket', sanitize_text_field($_REQUEST['doliticket']));
+            update_option('dolidonation', sanitize_text_field($_REQUEST['dolidonation']));
+            update_option('doliagenda', sanitize_text_field($_REQUEST['doliagenda']));
             if (isset($_REQUEST['doliclassifieds'])) update_option('doliclassifieds', sanitize_text_field($_REQUEST['doliclassifieds'])); 
             update_option('doliconnect_ipkiosk', array_values(array_filter(array_map('trim', explode(PHP_EOL, $_REQUEST['doliconnect_ipkiosk'])))));             
             update_option('wp_page_for_privacy_policy', sanitize_text_field($_REQUEST['wp_page_for_privacy_policy']));
@@ -530,20 +530,18 @@ echo "<input id='dolibarr_entity'  name='dolibarr_entity' type='text' value='".(
 );
            wp_dropdown_pages($args); ?> <?php _e('(Terms of service)', 'doliconnect') ?></td>
             </tr>
-<?php            
-if (is_plugin_active( 'doliconnect-ticket/doliconnect-ticket.php' ) ) { ?>
             <tr>
-                <th style="width:150px;"><label for="dolibarr_ticket">dolibarr_ticket</label></th>
+                <th style="width:150px;"><label for="dolibarr_agenda">dolibarr_agenda</label></th>
                 <td ><?php 
            $args = array(
-    'name' => 'doliticket', 
+    'name' => 'doliagenda', 
     'show_option_none' => __( '- Select -', 'doliconnect' ), 
     'option_none_value' => '0', 
-    'selected' => get_option('doliticket') 
+    'selected' => get_option('doliagenda') 
 );
            wp_dropdown_pages($args); ?></td>
             </tr> 
-<?php }            
+<?php           
 if (is_plugin_active( 'doliconnect-classifieds/doliconnect-classifieds.php' ) ) { ?>                        <tr>
                 <th style="width:150px;"><label for="dolibarr_classified">dolibarr_classified</label></th>
                 <td ><?php 
