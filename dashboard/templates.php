@@ -1730,6 +1730,115 @@ add_filter( 'the_content', 'dolicart_display');
 
 //*****************************************************************************************
 
+function doliagenda_display($content) {
+  global $current_user;
+  
+  if ( in_the_loop() && is_main_query() && is_page(doliconnectid('doliagenda')) && !empty(doliconnectid('doliagenda')) ) {
+  
+    doliconnect_enqueues();
+    
+    $current_offset = get_option('gmt_offset');
+    $tzstring = get_option('timezone_string');
+    $check_zone_info = true;
+    if ( false !== strpos($tzstring,'Etc/GMT') )
+      $tzstring = '';
+    
+    if ( empty($tzstring) ) { // Create a UTC+- zone if no timezone string exists
+      $check_zone_info = false;
+      if ( 0 == $current_offset )
+        $tzstring = 'UTC+0';
+      elseif ($current_offset < 0)
+        $tzstring = 'UTC' . $current_offset;
+      else
+        $tzstring = 'UTC+' . $current_offset;
+    }
+    date_default_timezone_set($tzstring);
+    
+    $delay = HOUR_IN_SECONDS;
+
+    if ( isset($_GET['id']) && $_GET['id'] > 0 ) {  
+      $request = "/agendaevents/".esc_attr($_GET['id']);
+      $agendafo = callDoliApi("GET", $request, null, dolidelay('agenda', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+      //print $contractfo;
+    }
+  
+    if ( !isset($agendafo->error) && isset($_GET['id']) && isset($_GET['id']) && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doli-agenda-'.$agendafo->id)) {
+      print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Project %s', 'doliconnect'), $projectfo->ref).'<a class="float-end text-decoration-none" href="'.esc_url( add_query_arg( 'module', 'projects', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-6">';
+     
+      
+      
+      $request= "/classifieds/".esc_attr($_GET["id"]);
+      $ads = callDoliApi("GET", $request, null, dolidelay($delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+      //print $ads;
+      
+      if ( isset($ads->approved) && $ads->approved == 2 && $ads->date_start < current_time('timestamp',1) && $ads->date_end > current_time('timestamp',1) ) {
+        print "<div class='row'><div class='col-xs-12 col-sm-12 col-md-4'><div class='row'><div class='col-5 col-xs-5 col-sm-12 col-md-12 col-xl-12'><div class='card shadow-sm'>";
+        print get_avatar($ads->wordpress);
+        print "<ul class='list-group list-group-flush'><li class='list-group-item'><i class='fas fa-eye fa-fw'></i> $ads->views vues</li></ul>";
+        
+        print "</div><br></div><div class='col-7 col-xs-7 col-sm-12 col-md-12 col-xl-12'><div class='card shadow-sm' style='width: 100%'>";
+        print "<ul class='list-group list-group-flush'><li class='list-group-item'><i class='fas fa-euro-sign fa-fw'></i> $ads->eclassf_price</li><li class='list-group-item'><i class='fas fa-phone fa-fw'></i> $ads->phone</li><li class='list-group-item'><i class='fas fa-envelope fa-fw'></i> $ads->email</li></ul>";
+        print "</div></div></div></div><div class='col-xs-12 col-sm-12 col-md-8'><div class='card shadow-sm'><div class='card-body'><h4>$ads->label";
+        if ( $ads->fk_soc == doliconnector($current_user, 'fk_soc') ) {
+          print " <a href='".esc_url( get_permalink(get_option('doliaccount') ))."?module=classifieds&manage=$ads->rowid'>[Editer]</a>";
+        }
+        print "</h4><small class='text-muted'>$ads->category - $ads->city</small><h5>Description</h5>$ads->description";
+        if ( !isset($ads->details) || $ads->details != null ) {
+          print "<br /><br /><h5>Détails</h5>$ads->details";
+        }
+        if ( !isset($ads->profil) || $ads->profil != null ) {
+          print "<br /><br /><h5>Profil</h5>$ads->profil";
+        }
+        print "</div></div></div></div>";
+      } else {
+        print "<div class='card shadow-sm'><br><br><br><br><br><center><h4>Il semble que cette annonce ne soit pas active</h4>";
+        print "<a href='".esc_url( get_permalink(get_option('doliclassifieds') ))."'>Retour à la liste des annonces</a></center>";
+        print "<br><br><br><br><br></div>";
+      }
+      
+      print "<small><div class='float-start'>";
+      print dolirefresh($request, esc_url( add_query_arg( 'id', esc_attr($_GET["id"]), get_permalink(get_option('doliclassifieds'))) ), $delay);
+      print "</div><div class='float-end'>";
+      //print dolihelp('COM');
+      print "</div></small>";
+    } else {
+      $limit=12;
+      if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']); }  else { $page = 0; }
+      $request= "/agendaevents?sortfield=t.id&sortorder=ASC&limit=".$limit."&page=".$page."&pagination_data=true";
+      $object = callDoliApi("GET", $request, null, dolidelay($delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
+      if ( doliversion('21.0.0') && isset($object->data) ) { $listagenda = $object->data; } else { $listagenda = $object; }
+
+      print "<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
+
+      if ( !isset($listagenda->error) && $listagenda != null ) {
+        foreach ($listagenda as $postticket) {
+          print "<a href='".esc_url( add_query_arg( 'id', $postticket->rowid, get_permalink(get_option('doliclassifieds'))) )."' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-action'>";
+          print "<div><i class='fa-solid fa-id-card-clip fa-3x fa-fw'></i></div><div>";                                                                                
+          print "<h6 class='my-0'>$postticket->label</h6><small class='text-muted'>$postticket->title</small>";
+          print "</div><span>$postticket->city</span></a>";
+        }
+      } else {
+        print "<li class='list-group-item list-group-item-light'><center>Pas d'annonces</center></li>";
+      }
+      print "</ul><div class='card-body'>";
+      print doliPagination($object, $_SERVER['REQUEST_URI'], $page);
+      print "</div><div class='card-footer text-muted'>";
+      print "<small><div class='float-start'>";
+      if ( isset($request) ) print dolirefresh($request, $_SERVER['REQUEST_URI'], dolidelay('contract'));
+      print "</div><div class='float-end'>";
+      //print dolihelp('ISSUE');
+      print "</div></small>";
+      print "</div></div>";
+    }
+  } else {
+    return $content;
+  }
+}
+  
+add_filter( 'the_content', 'doliagenda_display');
+
+//*****************************************************************************************
+
 function doliclassifieds_display($content) {
   global $current_user;
   
