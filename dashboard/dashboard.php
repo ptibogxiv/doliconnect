@@ -1472,14 +1472,15 @@ global $current_user;
 
     if ( isset($_GET['id']) && $_GET['id'] > 0 ) {  
         $request = "/projects/".esc_attr($_GET['id'])."?contact_list=0";
-        $contractfo = callDoliApi("GET", $request, null, dolidelay('contract', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+        $projectfo = callDoliApi("GET", $request, null, dolidelay('contract', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
         //print $contractfo;
     }
 
-        if ( !isset($contractfo->error) && isset($_GET['id']) && isset($_GET['id']) && isset($_GET['ref']) && (doliconnector($current_user, 'fk_soc') == $contractfo->socid) && ($_GET['ref'] == $contractfo->ref) && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doli-projects-'.$contractfo->id.'-'.$contractfo->ref)) {
-        print "<div class='card shadow-sm'><div class='card-body'><h5 class='card-title'>$contractfo->ref</h5><div class='row'><div class='col-md-5'>";
-        print "<b>".__( 'Date of creation', 'doliconnect').": </b> ".wp_date('d/m/Y', $contractfo->date_creation)."<br>";
-        if ( $contractfo->statut > 0 ) {
+        if ( !isset($projectfo->error) && isset($_GET['id']) && isset($_GET['id']) && isset($_GET['ref']) && (doliconnector($current_user, 'fk_soc') == $projectfo->socid) && ($_GET['ref'] == $projectfo->ref) && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doli-projects-'.$projectfo->id.'-'.$projectfo->ref)) {
+        print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Project %s', 'doliconnect'), $projectfo->ref).'<a class="float-end text-decoration-none" href="'.esc_url( add_query_arg( 'module', 'projects', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-6">';
+       
+        print "<b>".__( 'Date of creation', 'doliconnect').": </b> ".wp_date('d/m/Y', $projectfo->date_creation)."<br>";
+        if ( $projectfo->statut > 0 ) {
         //if ( $contractfo->billed == 1 ) {
         //if ( $contractfo->statut > 1 ) { $contractfo=__( 'Shipped', 'doliconnect'); 
         //$orderavancement=100; }
@@ -1492,9 +1493,9 @@ global $current_user;
         //}
         $contractavancement=0; 
         }
-        elseif ( $contractfo->statut == 0 ) { $contractinfo=__( 'Validation', 'doliconnect');
+        elseif ( $projectfo->statut == 0 ) { $contractinfo=__( 'Validation', 'doliconnect');
         $contractavancement=7; }
-        elseif ( $contractfo->statut == -1) { $contractinfo=__( 'Canceled', 'doliconnect');
+        elseif ( $projectfo->statut == -1) { $contractinfo=__( 'Canceled', 'doliconnect');
         $contractavancement=0; }
 
         print "</div></div>";
@@ -1504,17 +1505,17 @@ global $current_user;
 
         print "</div><ul class='list-group list-group-flush'>";
 
-        print doliline($contractfo, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+        print doliline($projectfo, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 
-        if ( $contractfo->last_main_doc != null ) {
-            $doc = array_reverse( explode("/", $contractfo->last_main_doc) );      
-            $document = dolidocdownload($doc[2], $doc[1], $doc[0], __( 'Summary', 'doliconnect'), true, $contractfo->entity);
+        if ( $projectfo->last_main_doc != null ) {
+            $doc = array_reverse( explode("/", $projectfo->last_main_doc) );      
+            $document = dolidocdownload($doc[2], $doc[1], $doc[0], __( 'Summary', 'doliconnect'), true, $projectfo->entity);
         } 
             
-        $fruits[$contractfo->date_creation.'p'] = array(
-        "timestamp" => $contractfo->date_creation,
+        $fruits[$projectfo->date_creation.'p'] = array(
+        "timestamp" => $projectfo->date_creation,
         "type" => __( 'contract', 'doliconnect'),  
-        "label" => $contractfo->ref,
+        "label" => $projectfo->ref,
         "document" => "",
         "description" => null,
         );
@@ -1528,7 +1529,7 @@ global $current_user;
         //var_dump($fruits);
         print '</ul><div class="card-body"></div><div class="card-footer text-muted">';
         print "<small><div class='float-start'>";
-        if ( isset($request) ) print dolirefresh($request, $url, dolidelay('contract'), $contractfo);
+        if ( isset($request) ) print dolirefresh($request, $url, dolidelay('project'), $projectfo);
         print "</div><div class='float-end'>";
         //print dolihelp('ISSUE');
         print "</div></small>";
