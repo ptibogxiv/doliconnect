@@ -1791,7 +1791,7 @@ function doliagenda_display($content) {
 
           print "<a href='".$return."' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'>";
           print "<div><i class='fa-solid fa-calendar-days fa-3x fa-fw'></i></div><div>";                                                                                
-          print "<h6 class='my-0'>$postagenda->label</h6><small class='text-muted'>$postagenda->location ".date('d/m/Y',$postagenda->datep)."</small>";
+          print "<h6 class='my-0'>$postagenda->label</h6><small class='text-muted'>$postagenda->location ".date('d/m/Y',$postagenda->datep)." ".date('d/m/Y',$postagenda->datef)."</small>";
           print "</div></a>";
         }
       } else {
