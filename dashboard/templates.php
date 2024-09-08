@@ -1763,10 +1763,9 @@ function doliagenda_display($content) {
     }
   
     if ( !isset($agendafo->error) && isset($_GET['id']) && isset($_GET['id']) && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doli-agenda-'.$agendafo->id)) {
-      print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Project %s', 'doliconnect'), $projectfo->ref).'<a class="float-end text-decoration-none" href="'.esc_url( add_query_arg( 'module', 'projects', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-6">';
+      print '<div class="card shadow-sm"><div class="card-header">'.$agendafo->label.'<a class="float-end text-decoration-none" href="'.esc_url( add_query_arg( 'module', 'projects', doliconnecturl('doliagenda')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-6">';
      
-      
-      
+
       $request= "/classifieds/".esc_attr($_GET["id"]);
       $ads = callDoliApi("GET", $request, null, dolidelay($delay, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
       //print $ads;
@@ -1814,7 +1813,7 @@ function doliagenda_display($content) {
         foreach ($listagenda as $postagenda) {
           $nonce = wp_create_nonce( 'doli-agenda-'.$postagenda->id);
           $arr_params = array( 'id' => $postagenda->id, 'security' => $nonce);  
-          $return = esc_url( add_query_arg( $arr_params, $_SERVER['REQUEST_URI']) );
+          $return = esc_url( add_query_arg( $arr_params, $_SERVER['REQUEST_URL']) );
 
           print "<a href='".$return."' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'>";
           print "<div><i class='fa-solid fa-calendar-days fa-3x fa-fw'></i></div><div>";                                                                                
