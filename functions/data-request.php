@@ -1256,7 +1256,12 @@ global $current_user;
 		$modal['body'] = '<div class="card" id="doliSelectlang-form"><ul class="list-group list-group-flush">';
 		$translations = pll_the_languages( array( 'post_id' => $_POST['value1'],'raw' => 1 ) );
 		foreach ($translations as $key => $value) {
-			$modal['body'] .= "<a href='".$value['url']."?".$_POST['value2']."' onclick='loadingDoliSelectlangModal()' class='list-group-item list-group-item-light list-group-item-action";
+			if ($value['no_translation']) {
+				$url = home_url();
+			} else {
+				$url = $value['url']."?".$_POST['value2'];
+			}
+			$modal['body'] .= "<a href='".$url."' onclick='loadingDoliSelectlangModal()' class='list-group-item list-group-item-light list-group-item-action";
 			if ( $value['current_lang'] == true ) { $modal['body'] .= ' active'; }
 			$modal['body'] .= "'><span class='fi fi-".strtolower(substr($value['slug'], -2))."'></span> ".$value['name'];
 			if ( $value['current_lang'] == true ) { $modal['body'] .= ' <i class="fas fa-language fa-fw"></i>'; }
