@@ -55,7 +55,7 @@
     "typescript": "^5.4.5",
     "typogr": "^0.6.8",
     "vinyl": "^3.0.0",
-    "webpack": "^5.91.0",
+    "webpack": "^5.94.0",
     "webpack-stream": "^7.0.0",
     "wintersmith": "^2.5.0",
     "yargs": "^17.7.2"
