@@ -369,6 +369,7 @@ print '</div></div></form>';
 }
 
 //*****************************************************************************************
+
 if ( doliversion('20.0.0') && doliCheckModules('notification') && !empty(get_option('doliconnectbeta')) ) {
     add_action( 'user_doliconnect_menu', 'notifications_menu', 4, 1);
     add_action( 'user_doliconnect_notifications', 'notifications_module');
@@ -397,8 +398,9 @@ function notifications_module( $url ) {
             $arr_params = array( 'id' => $postnotif->id, 'ref' => $postnotif->event, 'security' => $nonce);  
             $return = esc_url( add_query_arg( $arr_params, $url) );
             $request = "/contacts/".esc_attr($postnotif->contact_id)."?includecount=1&includeroles=1";
-            $contactfo = callDoliApi("GET", $request, null, dolidelay('contact', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));                
-            print "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'><div><i class='fa-solid fa-bell fa-3x fa-fw'></i></div><div><h6 class='my-0'>".$postnotif->event."</h6><small class='text-muted'><span>".$postnotif->type."</span></small></div><span>".($contactfo->civility ? $contactfo->civility : $contactfo->civility_code)." ".$contactfo->firstname." ".$contactfo->lastname."<br>".$contactfo->email."</span>";
+            $contactfo = callDoliApi("GET", $request, null, dolidelay('contact', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))); 
+            $unit = callDoliApi("GET", "/setup/actiontriggers?sortfield=t.rowid&sortorder=ASC&limit=100&lang=fr_fr".$postnotif->event, null, dolidelay('constante'));           
+            print "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'><div><i class='fa-solid fa-bell fa-3x fa-fw'></i></div><div><h6 class='my-0'>".$unit[0]->label."</h6><small class='text-muted'><span>".$postnotif->type."</span></small></div><span>".($contactfo->civility ? $contactfo->civility : $contactfo->civility_code)." ".$contactfo->firstname." ".$contactfo->lastname."<br>".$contactfo->email."</span>";
             print "</a>";
         }
     } else {
@@ -1769,7 +1771,7 @@ if ( (isset($adherent->datecommitment) && current_time('timestamp') > $adherent-
 
 print "</div><div class='col-12 col-md-7'>";
 
-if ( doliCheckModules('order') && !empty($productadhesion) ) {
+if ( doliCheckModules('commande') && !empty($productadhesion) ) {
 
     if ( $adherent->datefin == null && $adherent->statut == '0' ) {
         //print  "<a href='#' id='subscribe-button2' class='btn btn text-white btn-warning btn-block' data-bs-toggle='modal' data-bs-target='#activatemember'><b>".__( 'Become a member', 'doliconnect')."</b></a>";
