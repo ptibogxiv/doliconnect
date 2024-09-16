@@ -44,7 +44,7 @@ WordPress configuration steps:
 
 = Dolibarr compatibility =
 
-Doliconnect v8.x -> Dolibarr >14.x
+Doliconnect v8.x -> Dolibarr >15.x
 Doliconnect v6.7 -> Dolibarr >13.x
 Doliconnect v6.x -> Dolibarr >12.x
 Doliconnect v5.x -> Dolibarr >11.x
