@@ -1719,7 +1719,7 @@ global $current_user;
 $time = current_time( 'timestamp',1);
 
 $request = "/adherentsplus/".doliconnector($current_user, 'fk_member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)); 
-$productadhesion = doliconst("ADHERENT_PRODUCT_ID_FOR_SUBSCRIPTIONS", dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$productadhesion = doliconst("ADHERENT_PRODUCT_ID_FOR_SUBSCRIPTIONS", dolidelay('constante'));
 
 if ( isset($_POST["update_membership"]) && function_exists('doliconnect_membership') ) {
 $typeadherent = isset($_POST["typeadherent"]) ? $_POST["typeadherent"] : null;
@@ -1814,7 +1814,7 @@ if ( doliCheckModules('commande') && !empty($productadhesion) ) {
         //print var_dump($adherenttype);
     }
     
-    }
+}
 
 if ( ! empty($adherent) && $adherent->statut != '-2' ) {
 print '<div class="d-grid gap-2"><div class="btn-group" role="group" aria-label="Update membership">';
