@@ -421,7 +421,7 @@ function dolicontact_request(){
 			$name = sanitize_text_field($_POST['contactName']);
 		}
 	
-		if ( sanitize_email($_POST['email']) === '' )  {
+		if ( isset($_POST['email']) && sanitize_email($_POST['email']) === '' )  {
 			$ContactError[] = esc_html__( 'Please enter you email.', 'doliconnect');
 		} elseif (!preg_match("/^[[:alnum:]][a-z0-9_.-]*@[a-z0-9.-]+\.[a-z]{2,4}$/i", sanitize_email($_POST['email']))) {
 			$ContactError[] = esc_html__( 'You entered an invalid email address.', 'doliconnect');
@@ -430,13 +430,13 @@ function dolicontact_request(){
 			$email = sanitize_email($_POST['email']);
 		}
 	
-		if( sanitize_textarea_field($_POST['comments']) === '') {
+		if( isset($_POST['comments']) && sanitize_textarea_field($_POST['comments']) === '') {
 			$ContactError[] = esc_html__( 'A message is needed.', 'doliconnect');
 		} else {
 			$comments = sanitize_textarea_field($_POST['comments']);
 		}
 
-		if( str_word_count(sanitize_textarea_field($_POST['comments']), 0) < 10 ) {
+		if( isset($_POST['comments']) && str_word_count(sanitize_textarea_field($_POST['comments']), 0) < 10 ) {
 			$ContactError[] = esc_html__( 'Your message is too short!', 'doliconnect');
 		} else {
 			$comments = sanitize_textarea_field($_POST['comments']);
