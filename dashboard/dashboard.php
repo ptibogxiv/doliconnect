@@ -1167,13 +1167,9 @@ global $current_user;
         } 
 
         //var_dump($fruits);
-        print '</ul><div class="card-footer text-muted">';
-        print "<small><div class='float-start'>";
-        if ( isset($request) ) print dolirefresh($request, $url, dolidelay('contract'), $contractfo);
-        print "</div><div class='float-end'>";
-        //print dolihelp('ISSUE');
-        print "</div></small>";
-        print '</div></div>';
+        print '</ul>';
+        print doliCardFooter($request, $url, 'contract', $contractfo);
+        print '</div>';
     } else {
         $limit=12;
         if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']); }  else { $page = 0; }
@@ -1210,13 +1206,9 @@ global $current_user;
 
         print "</ul><div class='card-body'>";
         print doliPagination($object, $url, $page);
-        print "</div><div class='card-footer text-muted'>";
-        print "<small><div class='float-start'>";
-        if ( isset($request) ) print dolirefresh($request, $url, dolidelay('contract'));
-        print "</div><div class='float-end'>";
-        //print dolihelp('ISSUE');
-        print "</div></small>";
-        print "</div></div>";
+        print "</div>";
+        print doliCardFooter($request, $url, 'contract', $object);
+        print "</div>";
     }
 }
 
@@ -1293,13 +1285,9 @@ global $current_user;
         } 
 
         //var_dump($fruits);
-        print '</ul><div class="card-body"></div><div class="card-footer text-muted">';
-        print "<small><div class='float-start'>";
-        if ( isset($request) ) print dolirefresh($request, $url, dolidelay('project'), $projectfo);
-        print "</div><div class='float-end'>";
-        //print dolihelp('ISSUE');
-        print "</div></small>";
-        print '</div></div>';
+        print '</ul>';
+        print doliCardFooter($request, $url, 'project', $projectfo);
+        print '</div>';
 
     } else {
         $limit=12;
@@ -1337,13 +1325,9 @@ global $current_user;
 
         print "</ul><div class='card-body'>";
         print doliPagination($object, $url, $page);
-        print "</div><div class='card-footer text-muted'>";
-        print "<small><div class='float-start'>";
-        if ( isset($request) ) print dolirefresh($request, $url, dolidelay('project'));
-        print "</div><div class='float-end'>";
-        //print dolihelp('ISSUE');
-        print "</div></small>";
-        print "</div></div>";
+        print "</div>";
+        print doliCardFooter($request, $url, 'project', $object);
+        print "</div>";
     }
 }
 
@@ -1545,13 +1529,9 @@ function recruitment_module( $url ) {
         
         print "</ul><div class='card-body'>";
         print doliPagination($object, $url, $page);
-        print "</div><div class='card-footer text-muted'>";
-        print "<small><div class='float-start'>";
-        if ( isset($request) ) print dolirefresh($request, $url, dolidelay('recruitment'));
-        print "</div><div class='float-end'>";
-        //print dolihelp('ISSUE');
-        print "</div></small>";
-        print "</div></div>";
+        print "</div>";
+        print doliCardFooter($request, $url, 'recruitment', $object);
+        print "/div>";
     }
 }
 
@@ -1638,13 +1618,9 @@ function expensereport_module( $url ) {
         }
         print "</ul><div class='card-body'>";
         print doliPagination($object, $url, $page);
-        print "</div><div class='card-footer text-muted'>";
-        print "<small><div class='float-start'>";
-        if ( isset($request) ) print dolirefresh($request, $url, dolidelay('expensereport'));
-        print "</div><div class='float-end'>";
-        //print dolihelp('ISSUE');
-        print "</div></small>";
-        print "</div></div>";
+        print "</div>";
+        print doliCardFooter($request, $url, 'expensereport', $object);
+        print "</div>";
     }
 }
 
@@ -1833,13 +1809,8 @@ if ( doliCheckRights('adherent', 'cotisation', 'lire') ) {
     print doliPagination($object, $url, $page);
     print '</div>';
 }
-print '<div class="card-footer text-muted">';
-print "<small><div class='float-start'>";
-if ( isset($request) ) print dolirefresh($request, $url, dolidelay('member'), (isset($adherent)?$adherent:null));
-print "</div><div class='float-end'>";
-//print dolihelp('ISSUE');
-print "</div></small>";
-print '</div></div>';
+print doliCardFooter($request, $url, 'member', (isset($adherent)?$adherent:null));
+print '</div>';
 
 }
 
@@ -1887,13 +1858,9 @@ print "</td></tr></table><span></span></li>";
 print "<li class='list-group-item list-group-item-light'><center>".__( 'No consumption', 'doliconnect')."</center></li>";
 }
 
-print '</ul><div class="card-body"></div><div class="card-footer text-muted">';
-print "<small><div class='float-start'>";
-if ( isset($request) ) print dolirefresh($request, $url, dolidelay('member'));
-print "</div><div class='float-end'>";
-//print dolihelp('ISSUE');
-print "</div></small>";
-print '</div></div>';
+print '</ul>';
+print doliCardFooter($request, $url, 'member', $listconsumption);
+print '</div>';
 
 }
 
@@ -2000,13 +1967,8 @@ global $current_user;
     } else {
         print "<ul class='list-group list-group-flush'><li class='list-group-item list-group-item-light'><center>".__( 'No sales representative', 'doliconnect')."</center></li></ul>";
     }
-    print '<div class="card-footer text-muted">';
-    print "<small><div class='float-start'>";
-    if ( isset($request) ) print dolirefresh($request, $url, dolidelay('thirdparty'));
-    print "</div><div class='float-end'>";
-    //print dolihelp('ISSUE');
-    print "</div></small>";
-    print '</div></div>';
+    print doliCardFooter($request, $url, 'thirdparty', $representatives);
+    print '</div>';
 }
 
 //*****************************************************************************************
