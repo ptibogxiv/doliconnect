@@ -1435,6 +1435,17 @@ function dolidelay($delay = null, $refresh = false, $protect = false) {
   return $delay;
 }
 
+function doliCardFooter ($request, $url = null, $delay, $object) {
+  $footer = '<div class="card-footer text-muted">';
+  $footer .= "<small><div class='float-start'>";
+  if ( isset($request) )   $footer .= dolirefresh($request, $url, dolidelay($delay), $object);
+  $footer .= '</div><div class="float-end">';
+  // $footer .= dolihelp('ISSUE');
+  $footer .= '</div></small>';
+  $footer .= '</div>';
+return $footer;
+}
+
 function dolirefresh( $origin, $url, $delay, $element = null) {
   $url = $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
   $refresh = '<script type="text/javascript">';

@@ -34,13 +34,8 @@ print doliuserform( $thirdparty, dolidelay('constante', esc_attr(isset($_GET["re
 print "<div class='card-body'><div class='d-grid gap-2'><button id='doliuserinfos-button' class='btn btn-outline-secondary' type='submit' ";
 if (!doliCheckRights('societe', 'creer')) { print 'disabled'; }
 print ">".__( 'Update', 'doliconnect')."</button></div></div>";
-print '<div class="card-footer text-muted">';
-print "<small><div class='float-start'>";
-if ( isset($request) ) print dolirefresh($request, $url, dolidelay('thirdparty'), $thirdparty);
-print '</div><div class="float-end">';
-//print dolihelp('ISSUE');
-print '</div></small>';
-print '</div></div></form>';
+print doliCardFooter ($request, $url, 'thirdparty', $thirdparty);
+print '</div></form>';
 
 }
 add_action( 'user_doliconnect_informations', 'informations_module');
