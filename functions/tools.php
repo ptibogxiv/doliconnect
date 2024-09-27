@@ -589,7 +589,7 @@ global $current_user;
           $doliFaq .= '</button></h2>
           <div id="flush-collapseDolifaq'.$postfaq->id.'" class="accordion-collapse collapse" aria-labelledby="flush-headingDolifaq'.$postfaq->id.'" data-bs-parent="#accordionDolifaq">
           <div class="accordion-body">'.$postfaq->answer;
-          //if ( isset($request) ) print dolirefresh($request, $url, dolidelay('constante'));
+          //$doliFaq .= doliCardFooter($request, $url, 'thirdparty', $doliuser);
           if (!empty(doliconnect_categories('knowledgemanagement', $postfaq, doliconnecturl('dolifaq')))) $doliFaq .= '<br>'.doliconnect_categories('knowledgemanagement', $postfaq, doliconnecturl('dolifaq'));
           $doliFaq .= '</div></div></div>';
       }
@@ -673,13 +673,9 @@ if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $user-
   $doliPassword .= ' disabled';
 }
 $doliPassword .= '>'.__( 'Update', 'doliconnect').'</button></div></form>';
-$doliPassword .= "</div><div class='card-footer text-muted'>";
-$doliPassword .= "<small><div class='float-start'>";
-if ( isset($request) ) $doliPassword .= dolirefresh($request, $url, dolidelay('thirdparty'));
-$doliPassword .= "</div><div class='float-end'>";
-//$doliPassword .= dolihelp('ISSUE');
-$doliPassword .= "</div></small>";
-$doliPassword .= '</div></div>';
+$doliPassword .= "</div>";
+$doliPassword .= doliCardFooter($request, $url, 'thirdparty', $doliuser);
+$doliPassword .= '</div>';
 
 return $doliPassword;
 }
@@ -1435,7 +1431,7 @@ function dolidelay($delay = null, $refresh = false, $protect = false) {
   return $delay;
 }
 
-function doliCardFooter ($request, $url = null, $delay, $object) {
+function doliCardFooter ($request, $url = null, $delay, $object= null) {
   $footer = '<div class="card-footer text-muted">';
   $footer .= "<small><div class='float-start'>";
   if ( isset($request) )   $footer .= dolirefresh($request, $url, dolidelay($delay), $object);
@@ -2710,13 +2706,10 @@ $paymentmethods .= '<div class="accordion-item"><h2 class="accordion-header" id=
   </div>';
 }
   
-$paymentmethods .= '</div><div class="card-footer text-muted">';
-$paymentmethods .= '<small><div class="float-start">';
-$paymentmethods .= dolirefresh($request, $url, dolidelay('paymentmethods'));
-$paymentmethods .= '</div><div class="float-end">';
-//$paymentmethods .= dolihelp('ISSUE');
-$paymentmethods .= '</div></small>';
-$paymentmethods .= '</div></div>';
+$paymentmethods .= '</div>';
+$paymentmethods .= doliCardFooter($request, $url, 'paymentmethods');
+
+$paymentmethods .= '</div>';
 
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
 $paymentmethods .= '<script type="text/javascript">';
