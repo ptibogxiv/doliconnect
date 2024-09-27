@@ -220,13 +220,8 @@ print '<div class="input-group"><div class="input-group-text">
 
 print '</li>';
 print "</ul><div class='card-body'><input type='hidden' name='userid' value='$ID'><div class='d-grid gap-2'><button class='btn btn-outline-secondary' type='submit'>".__( 'Update', 'doliconnect')."</button></div></div>";
-print '<div class="card-footer text-muted">';
-print "<small><div class='float-start'>";
-if ( isset($request) ) print dolirefresh($request, $url, dolidelay('thirdparty'), $thirdparty);
-print "</div><div class='float-end'>";
-//print dolihelp('ISSUE');
-print "</div></small>";
-print '</div></div></form>';
+print doliCardFooter ($request, $url, 'thirdparty', $thirdparty);
+print '</div></form>';
 
 }
 add_action( 'user_doliconnect_avatars', 'avatars_module');
@@ -317,13 +312,9 @@ print doliuserform( $thirdparty, dolidelay('constante', esc_attr(isset($_GET["re
 print "<div class='card-body'><div class='d-grid gap-2'><button class='btn btn-outline-secondary' type='submit' ";
 if (!doliCheckRights('societe', 'contact', 'creer')) { print 'disabled'; }
 print ">".__( 'Add', 'doliconnect')."</button></div></div>";
-print '<div class="card-footer text-muted">';
-print '<small><div class="float-start">';
-if ( isset($request) ) print dolirefresh($request, $url, dolidelay('contact'), $contactfo);
-print '</div><div class="float-end">';
-//print dolihelp('ISSUE');
+print doliCardFooter ($request, $url, 'contact', $contactfo);
 print '</div></small>';
-print '</div></div></form>';
+print '</div></form>';
 
     } else {
         $limit=12;
@@ -353,13 +344,9 @@ print '</div></div></form>';
 
         print "</ul><div class='card-body'>";
         print doliPagination($object, $url, $page);
-        print "</div><div class='card-footer text-muted'>";
-        print "<small><div class='float-start'>";
-        if ( isset($request) ) print dolirefresh($request, $url, dolidelay('contact'));
-        print "</div><div class='float-end'>";
-        //print dolihelp('ISSUE');
-        print "</div></small>";
-        print "</div></div>";
+        print "</div>";
+        print doliCardFooter ($request, $url, 'contact', $object);
+        print "</div>";
     }
 }
 
@@ -404,13 +391,9 @@ function notifications_module( $url ) {
 
     print "</ul><div class='card-body'>";
     print doliPagination($object, $url, $page);
-    print "</div><div class='card-footer text-muted'>";
-    print "<small><div class='float-start'>";
-    if ( isset($request) ) print dolirefresh($request, $url, dolidelay('proposal'));
-    print "</div><div class='float-end'>";
-    //print dolihelp('ISSUE');
-    print "</div></small>";
-    print "</div></div>";
+    print "</div>";
+    print doliCardFooter ($request, $url, 'thirdparty', $object);
+    print "</div>";
 }
 
 //*****************************************************************************************
@@ -550,13 +533,9 @@ print "<li class='list-group-item list-group-item-light'><center>".__( 'No propo
 
 print "</ul><div class='card-body'>";
 print doliPagination($object, $url, $page);
-print "</div><div class='card-footer text-muted'>";
-print "<small><div class='float-start'>";
-if ( isset($request) ) print dolirefresh($request, $url, dolidelay('proposal'));
-print "</div><div class='float-end'>";
-//print dolihelp('ISSUE');
-print "</div></small>";
-print "</div></div>";
+print "</div>";
+print doliCardFooter ($request, $url, 'proposal', $object);
+print "</div>";
 
 }
 }
