@@ -415,31 +415,39 @@ function dolicontact_request(){
 	$ID = $current_user->ID;
 	$ContactError = array();
 	if ( wp_verify_nonce( trim($_POST['dolicontact-nonce']), 'dolicontact') ) {
-		if ( sanitize_text_field($_POST['contactName']) === '' ) {
+		if ( isset($_POST['contactName']) && sanitize_text_field($_POST['contactName']) === '' ) {
 			$ContactError[] = esc_html__( 'Please enter your name.', 'doliconnect');
-		} else {
+		} elseif ( isset($_POST['contactName']) ) {
 			$name = sanitize_text_field($_POST['contactName']);
+		} else {
+			$ContactError[] = esc_html__( 'Please enter your name.', 'doliconnect');
 		}
 	
 		if ( isset($_POST['email']) && sanitize_email($_POST['email']) === '' )  {
 			$ContactError[] = esc_html__( 'Please enter you email.', 'doliconnect');
-		} elseif (!preg_match("/^[[:alnum:]][a-z0-9_.-]*@[a-z0-9.-]+\.[a-z]{2,4}$/i", sanitize_email($_POST['email']))) {
+		} elseif (isset($_POST['email']) && !preg_match("/^[[:alnum:]][a-z0-9_.-]*@[a-z0-9.-]+\.[a-z]{2,4}$/i", sanitize_email($_POST['email']))) {
 			$ContactError[] = esc_html__( 'You entered an invalid email address.', 'doliconnect');
 			$hasError = true;
-		} else {
+		} elseif ( isset($_POST['email']) ) {
 			$email = sanitize_email($_POST['email']);
+		} else {
+			$ContactError[] = esc_html__( 'Please enter you email.', 'doliconnect');
 		}
 	
 		if( isset($_POST['comments']) && sanitize_textarea_field($_POST['comments']) === '') {
 			$ContactError[] = esc_html__( 'A message is needed.', 'doliconnect');
-		} else {
+		} elseif ( isset($_POST['comments']) ) {
 			$comments = sanitize_textarea_field($_POST['comments']);
+		} else {
+			$ContactError[] = esc_html__( 'A message is needed.', 'doliconnect');
 		}
 
 		if( isset($_POST['comments']) && str_word_count(sanitize_textarea_field($_POST['comments']), 0) < 10 ) {
 			$ContactError[] = esc_html__( 'Your message is too short!', 'doliconnect');
-		} else {
+		} elseif ( isset($_POST['comments']) ) {
 			$comments = sanitize_textarea_field($_POST['comments']);
+		} else {
+			$ContactError[] = esc_html__( 'A message is needed.', 'doliconnect');
 		}
 		
 		if ( !isset($_POST['btndolicaptcha']) || empty(wp_verify_nonce(  trim($_POST['ctrldolicaptcha']), 'ctrldolicaptcha-'. trim($_POST['btndolicaptcha']))) ) {
