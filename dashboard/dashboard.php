@@ -1098,14 +1098,14 @@ print '</div>';
 //*****************************************************************************************
 
 if ( doliCheckModules('contrat') && doliCheckRights('contrat', 'lire') ) {
-add_action( 'customer_doliconnect_menu', 'contracts_menu', 2, 1);
-add_action( 'customer_doliconnect_contracts', 'contracts_module');
+    add_action( 'customer_doliconnect_menu', 'contracts_menu', 2, 1);
+    add_action( 'customer_doliconnect_contracts', 'contracts_module');
 }
 
 function contracts_menu( $arg ) {
-print "<a href='".esc_url( add_query_arg( 'module', 'contracts', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
-if ( $arg == 'contracts' ) { print " active"; }
-print "'>".__( 'Contracts tracking', 'doliconnect')."</a>";
+    print "<a href='".esc_url( add_query_arg( 'module', 'contracts', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
+    if ( $arg == 'contracts' ) { print " active"; }
+    print "'>".__( 'Contracts tracking', 'doliconnect')."</a>";
 }
 
 function contracts_module( $url ) {
