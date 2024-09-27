@@ -288,13 +288,8 @@ print doliuserform( $contactfo, dolidelay('constante', esc_attr(isset($_GET["ref
 print "<div class='card-body'><div class='d-grid gap-2'><button class='btn btn-outline-secondary' type='submit' ";
 if (!doliCheckRights('societe', 'contact', 'creer')) { print 'disabled'; }
 print ">".__( 'Update', 'doliconnect')."</button></div></div>";
-print '<div class="card-footer text-muted">';
-print '<small><div class="float-start">';
-if ( isset($request) ) print dolirefresh($request, $url, dolidelay('contact'), $contactfo);
-print '</div><div class="float-end">';
-//print dolihelp('ISSUE');
-print '</div></small>';
-print '</div></div></form>';
+print doliCardFooter($request, $url, 'contact', $contactfo);
+print '</div></form>';
 
 } elseif ( isset($_GET['action']) && $_GET['action'] == 'create' ) {
 
@@ -1398,14 +1393,8 @@ $ID = $current_user->ID;
         print "<b>".__( 'Amount', 'doliconnect').": ".doliprice($donationfo, 'amount', isset($donationfo->multicurrency_code) ? $donationfo->multicurrency_code : null)."</b>";
         print "</li>";
         print "</ul>";
-
-        print "<div class='card-footer text-muted'>";
-        print "<small><div class='float-start'>";
-        if ( isset($request) ) print dolirefresh($request, $url, dolidelay('donation'), $donationfo);
-        print "</div><div class='float-end'>";
-        //print dolihelp('COM');
-        print "</div></small>";
-        print "</div></div>";
+        print doliCardFooter($request, $url, 'donation', $donationfo);
+        print "</div>";
     } else {
         $limit=12;
         if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']); }  else { $page = 0; }
@@ -1439,13 +1428,9 @@ $ID = $current_user->ID;
 
         print "</ul><div class='card-body'>";
         print doliPagination($object, $url, $page);
-        print "</div><div class='card-footer text-muted'>";
-        print "<small><div class='float-start'>";
-        if ( isset($request) ) print dolirefresh($request, $url, dolidelay('donation'));
-        print "</div><div class='float-end'>";
-        //print dolihelp('ISSUE');
-        print "</div></small>";
-        print "</div></div>";
+        print "</div>";
+        print doliCardFooter($request, $url, 'donation', $object);
+        print "</div>";
     }
 }
 
@@ -1491,13 +1476,9 @@ function recruitment_module( $url ) {
         
         print $donationfo->description;
 
-        print "</div><div class='card-footer text-muted'>";
-        print "<small><div class='float-start'>";
-        if ( isset($request) ) print dolirefresh($request, $url, dolidelay('donation'), $donationfo);
-        print "</div><div class='float-end'>";
-        //print dolihelp('COM');
-        print "</div></small>";
-        print "</div></div>";
+        print "</div>";
+        print doliCardFooter($request, $url, 'donation', $edonationfo);
+        print "</div>";
     } else {
         $limit=12;
         if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']); }  else { $page = 0; }
@@ -1581,13 +1562,9 @@ function expensereport_module( $url ) {
             }
         }
         print dolitotal($expensereportfo);
-        print "</ul><div class='card-footer text-muted'>";
-        print "<small><div class='float-start'>";
-        if ( isset($request) ) print dolirefresh($request, $url, dolidelay('expensereport'),  $expensereportfo);
-        print "</div><div class='float-end'>";
-        //print dolihelp('COM');
-        print "</div></small>";
-        print "</div></div>";
+        print "</ul>";
+        print doliCardFooter($request, $url, 'expensereport', $expensereportfo);
+        print "</div>";
     } else {
         $limit=12;
         if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']); }  else { $page = 0; }
@@ -1928,13 +1905,9 @@ print "</li>";
 print "<li class='list-group-item list-group-item-light'><center>".__( 'No linked member', 'doliconnect')."</center></li>";
 }
 print "</form>";
-print '</ul><div class="card-body"></div><div class="card-footer text-muted">';
-print "<small><div class='float-start'>";
-if ( isset($request) ) print dolirefresh($request, $url, dolidelay('member'));
-print "</div><div class='float-end'>";
-//print dolihelp('ISSUE');
-print "</div></small>";
-print '</div></div>';
+print '</ul>';
+print doliCardFooter($request, $url, 'member', $linkedmember);
+print '</div>';
 }
 
 //*****************************************************************************************
@@ -2035,13 +2008,9 @@ foreach ( $ticketfo->messages as $msg ) {
 $datemsg =  wp_date('d/m/Y - H:i', $msg->datec);  
 print  "<li class='list-group-item list-group-item-light list-group-item-action'><b>$datemsg $msg->fk_user_action_string</b><br>$msg->message</li>";
 }} 
-print '</ul><div class="card-footer text-muted">';
-print "<small><div class='float-start'>";
-if ( isset($request) ) print dolirefresh($request, $url, dolidelay('ticket'), $ticketfo);
-print "</div><div class='float-end'>";
-//print dolihelp('ISSUE');
-print "</div></small>";
-print '</div></div>';
+print '</ul>';
+print doliCardFooter($request, $url, 'ticket', $ticketfo);
+print '</div>';
 
 } elseif ( isset($_GET['action']) && $_GET['action'] == 'create' ) {
 
@@ -2205,13 +2174,9 @@ print '</div></form>';
 
         print '</ul><div class="card-body">';
         print doliPagination($object, $url, $page);
-        print '</div><div class="card-footer text-muted">';
-        print "<small><div class='float-start'>";
-        if ( isset($request) ) print dolirefresh($request, $url, dolidelay('ticket'));
-        print "</div><div class='float-end'>";
-        //print dolihelp('ISSUE');
-        print "</div></small>";
-        print '</div></div>';
+        print '</div>';
+        print doliCardFooter($request, $url, 'ticket', $object);
+        print '</div>';
     }
 }
 
@@ -2284,14 +2249,10 @@ print "</li>";
 print '</ul>';
 print "<div class='card-body'><div class='d-grid gap-2'><button id='doliuserinfos-button' class='btn btn-outline-secondary' type='submit' ";
 if (!doliCheckRights('societe', 'creer')) { print 'disabled'; }
-print ">".__( 'Update', 'doliconnect')."</button></div></div>";
-print '</form><div class="card-footer text-muted">';
-print "<small><div class='float-start'>";
-//print dolirefresh( "/thirdparties".doliconnector($current_user, 'fk_soc'), $url, dolidelay('member'));
-print "</div><div class='float-end'>";
-//print dolihelp('ISSUE');
-print "</div></small>";
-print '</div></div>';
+print ">".__( 'Update', 'doliconnect')."</button></div>";
+print '</form></div>';
+//print doliCardFooter($request, $url, 'expensereport', $expensereportfo);
+print '</div>';
 
 if (current_user_can('administrator') && !empty(get_option('doliconnectbeta')) ) { 
 
