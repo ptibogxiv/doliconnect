@@ -1461,6 +1461,37 @@ function doliCardFooter ($request, $delay, $object = null) {
 return $footer;
 }
 
+function doliObjectStatus($object, $type, $mode = 0) {
+  if ($type == 'order') {
+    if ( $object->status > 0 ) {
+      if ( $object->billed == 1 ) {
+        if ( $object->status > 1 ) { 
+          $status = __( 'shipped', 'doliconnect'); 
+          $avancement=100; 
+        } else { 
+          $status = __( 'processing', 'doliconnect');
+          $avancement=40; 
+        }
+      } else {
+        $status = __( 'validated', 'doliconnect');
+        $avancement=25;
+      }
+    } elseif ( $object->status == 0 ) { 
+      $status = __( 'draft', 'doliconnect');
+      $avancement=7; 
+    } elseif ( $object->status == -1 ) { 
+      $status = __( 'canceled', 'doliconnect');
+      $avancement=0;
+    }
+  }
+  if ($mode == '1') {
+    $status = '<h3 class="text-end">'.$status.'</h3>';
+  } elseif ($mode == '2') {
+    $status = '<span class="badge rounded-pill text-bg-primary">'.$status.'</span>';
+  }
+return $status;
+}
+
 function dolikiosk() {
   $array = get_option('doliconnect_ipkiosk');
   if ( is_array($array) && in_array($_SERVER['REMOTE_ADDR'], $array) ) {

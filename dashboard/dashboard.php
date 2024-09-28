@@ -579,10 +579,7 @@ if (!empty($orderfo->cond_reglement_id)) print "<b>".__( 'Payment term', 'dolico
 if (!empty($orderfo->shipping_method_id)) print "<b>".__( 'Shipment method', 'doliconnect').":</b> ".doliShipmentMethods($orderfo->shipping_method_id)."<br>";
 
 print "<br></div><div class='col-md-7'>";
-
-if ( isset($orderinfo) ) {
-print "<h3 class='text-end'>".$orderinfo."</h3>";
-}
+print doliObjectStatus($orderfo, 'order', 1);
 print "</div>";
  
 if ( $orderfo->billed != 1 && $orderfo->statut > 0 ) {
@@ -805,17 +802,7 @@ $fruits[$ship->date_creation] = array(
                 $return = esc_url( add_query_arg( $arr_params, $url) );
                                                                                                                                                                     
                 print "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'><div><i class='fa fa-file-invoice fa-3x fa-fw'></i></div><div><h6 class='my-0'>".$postorder->ref."</h6><small class='text-muted'>du ".wp_date('d/m/Y', $postorder->date_commande)."</small></div><span>".doliprice($postorder, 'ttc', isset($postorder->multicurrency_code) ? $postorder->multicurrency_code : null)."</span><span>";
-                if ( $postorder->statut > 0 ) { print "<span class='fas fa-check-circle fa-fw text-success'></span> ";
-                if ( $postorder->billed == 1 ) { print "<span class='fas fa-money-bill-alt fa-fw text-success'></span> "; 
-                if ( $postorder->statut > 1 ) { print "<span class='fas fa-dolly fa-fw text-success'></span> "; }
-                else { print "<span class='fas fa-dolly fa-fw text-warning'></span> "; }
-                }
-                else { print "<span class='fas fa-money-bill-alt fa-fw text-warning'></span> "; 
-                if ( $postorder->statut > 1 ) { print "<span class='fas fa-dolly fa-fw text-success'></span> "; }
-                else { print "<span class='fas fa-dolly fa-fw text-danger'></span> "; }
-                }}
-                elseif ( $postorder->statut == 0 ) { print "<span class='fas fa-check-circle fa-fw text-warning'></span> <span class='fas fa-money-bill-alt fa-fw text-danger'></span> <span class='fas fa-dolly fa-fw text-danger'></span>"; }
-                elseif ( $postorder->statut == -1 ) { print "<span class='fas fa-check-circle fa-fw text-secondary'></span> <span class='fas fa-money-bill-alt fa-fw text-secondary'></span> <span class='fas fa-dolly fa-fw text-secondary'></span>"; }
+                print doliObjectStatus($postorder, 'order', 2);
                 print "</span></a>";
             }
         } else {
