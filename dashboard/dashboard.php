@@ -474,37 +474,34 @@ print '</ul>';
 print doliCardFooter($request, 'proposal', $proposalfo);
 print '</div>';
 
-} else {
+    } else {
+        $limit=12;
+        if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']); }  else { $page = 0; }
+        $request = "/proposals?sortfield=t.date_valid&sortorder=DESC&limit=".$limit."&page=".$page."&thirdparty_ids=".doliconnector($current_user, 'fk_soc')."&pagination_data=true&sqlfilters=(t.fk_statut%3A!%3D%3A0)";
+        $object = callDoliApi("GET", $request, null, dolidelay('proposal', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+        if ( doliversion('20.0.0') && isset($object->data) ) { $listpropal = $object->data; } else { $listpropal = $object; }
 
-$limit=12;
-if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']); }  else { $page = 0; }
-$request = "/proposals?sortfield=t.date_valid&sortorder=DESC&limit=".$limit."&page=".$page."&thirdparty_ids=".doliconnector($current_user, 'fk_soc')."&pagination_data=true&sqlfilters=(t.fk_statut%3A!%3D%3A0)";
-$object = callDoliApi("GET", $request, null, dolidelay('proposal', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-if ( doliversion('20.0.0') && isset($object->data) ) { $listpropal = $object->data; } else { $listpropal = $object; }
-
-print '<div class="card shadow-sm"><div class="card-header">'.__( 'Proposals tracking', 'doliconnect').'</div><ul class="list-group list-group-flush">';
-  
-if ( !isset($listpropal->error) && $listpropal != null ) {
-foreach ( $listpropal as $postproposal ) { 
-$nonce = wp_create_nonce( 'doli-proposals-'. $postproposal->id.'-'.$postproposal->ref);
-$arr_params = array( 'id' => $postproposal->id, 'ref' => $postproposal->ref, 'security' => $nonce);  
-$return = esc_url( add_query_arg( $arr_params, $url) );
-                
-print "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'><div><i class='fa fa-file-signature fa-3x fa-fw'></i></div><div><h6 class='my-0'>".$postproposal->ref."</h6><small class='text-muted'>du ".wp_date('d/m/Y', $postproposal->date_creation)."</small></div><span>".doliprice($postproposal, 'ttc', isset($postproposal->multicurrency_code) ? $postproposal->multicurrency_code : null)."</span><span>";
-print doliObjectStatus($postproposal, 'proposal', 2);
-print "</span></a>";
-}
-} else {
-print "<li class='list-group-item list-group-item-light'><center>".__( 'No proposal', 'doliconnect')."</center></li>";
-}
-
-print "</ul><div class='card-body'>";
-print doliPagination($object, $url, $page);
-print "</div>";
-print doliCardFooter($request, 'proposal', $object);
-print "</div>";
-
-}
+        print '<div class="card shadow-sm"><div class="card-header">'.__( 'Proposals tracking', 'doliconnect').'</div><ul class="list-group list-group-flush">';
+        
+        if ( !isset($listpropal->error) && $listpropal != null ) {
+            foreach ( $listpropal as $postproposal ) { 
+                $nonce = wp_create_nonce( 'doli-proposals-'. $postproposal->id.'-'.$postproposal->ref);
+                $arr_params = array( 'id' => $postproposal->id, 'ref' => $postproposal->ref, 'security' => $nonce);  
+                $return = esc_url( add_query_arg( $arr_params, $url) );
+                                
+                print "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'><div><i class='fa fa-file-signature fa-3x fa-fw'></i></div><div><h6 class='my-0'>".$postproposal->ref."</h6><small class='text-muted'>du ".wp_date('d/m/Y', $postproposal->date_creation)."</small></div><span>".doliprice($postproposal, 'ttc', isset($postproposal->multicurrency_code) ? $postproposal->multicurrency_code : null)."</span><span>";
+                print doliObjectStatus($postproposal, 'proposal', 2);
+                print "</span></a>";
+            }
+        } else {
+            print "<li class='list-group-item list-group-item-light'><center>".__( 'No proposal', 'doliconnect')."</center></li>";
+        }
+        print "</ul><div class='card-body'>";
+        print doliPagination($object, $url, $page);
+        print "</div>";
+        print doliCardFooter($request, 'proposal', $object);
+        print "</div>";
+    }
 }
 
 //*****************************************************************************************
@@ -754,6 +751,7 @@ $fruits[$ship->date_creation] = array(
         $request= "/orders?sortfield=t.date_valid&sortorder=DESC&limit=".$limit."&page=".$page."&thirdparty_ids=".doliconnector($current_user, 'fk_soc')."&pagination_data=true&sqlfilters=(t.fk_statut%3A!%3D%3A'0')";
         $object = callDoliApi("GET", $request, null, dolidelay('order', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
         if ( doliversion('20.0.0') && isset($object->data) ) { $listorder = $object->data; } else { $listorder = $object; }
+        
         print '<div class="card shadow-sm"><div class="card-header">'.__( 'Orders tracking', 'doliconnect').'</div><ul class="list-group list-group-flush">';
 
         if ( !isset($listorder->error) && $listorder != null ) {
@@ -769,7 +767,6 @@ $fruits[$ship->date_creation] = array(
         } else {
             print "<li class='list-group-item list-group-item-light'><center>".__( 'No order', 'doliconnect')."</center></li>";
         }
-
         print "</ul><div class='card-body'>";
         print doliPagination($object, $url, $page);
         print "</div>";
