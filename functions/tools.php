@@ -589,7 +589,7 @@ global $current_user;
           $doliFaq .= '</button></h2>
           <div id="flush-collapseDolifaq'.$postfaq->id.'" class="accordion-collapse collapse" aria-labelledby="flush-headingDolifaq'.$postfaq->id.'" data-bs-parent="#accordionDolifaq">
           <div class="accordion-body">'.$postfaq->answer;
-          //$doliFaq .= doliCardFooter($request, $url, 'thirdparty', $doliuser);
+          //$doliFaq .= doliCardFooter($request, 'thirdparty', $doliuser);
           if (!empty(doliconnect_categories('knowledgemanagement', $postfaq, doliconnecturl('dolifaq')))) $doliFaq .= '<br>'.doliconnect_categories('knowledgemanagement', $postfaq, doliconnecturl('dolifaq'));
           $doliFaq .= '</div></div></div>';
       }
@@ -674,7 +674,7 @@ if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $user-
 }
 $doliPassword .= '>'.__( 'Update', 'doliconnect').'</button></div></form>';
 $doliPassword .= "</div>";
-$doliPassword .= doliCardFooter($request, $url, 'thirdparty', $doliuser);
+$doliPassword .= doliCardFooter($request, 'thirdparty', $doliuser);
 $doliPassword .= '</div>';
 
 return $doliPassword;
@@ -1431,10 +1431,10 @@ function dolidelay($delay = null, $refresh = false, $protect = false) {
   return $delay;
 }
 
-function doliCardFooter ($request, $url = null, $delay, $object= null) {
+function doliCardFooter ($request, $delay, $object= null) {
   $footer = '<div class="card-footer text-muted">';
   $footer .= "<small><div class='float-start'>";
-  if ( isset($request) )   $footer .= dolirefresh($request, $url, dolidelay($delay), $object);
+  if ( isset($request) )   $footer .= dolirefresh($request, dolidelay($delay), $object);
   $footer .= '</div><div class="float-end">';
   // $footer .= dolihelp('ISSUE');
   $footer .= '</div></small>';
@@ -1442,8 +1442,8 @@ function doliCardFooter ($request, $url = null, $delay, $object= null) {
 return $footer;
 }
 
-function dolirefresh( $origin, $url, $delay, $element = null) {
-  $url = $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+function dolirefresh( $origin, $delay, $element = null) {
+  $url = 'https://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
   $refresh = '<script type="text/javascript">';
   $refresh .= 'function refreshloader(){
   jQuery("#DoliconnectLoadingModal").modal("show");
@@ -2707,7 +2707,7 @@ $paymentmethods .= '<div class="accordion-item"><h2 class="accordion-header" id=
 }
   
 $paymentmethods .= '</div>';
-$paymentmethods .= doliCardFooter($request, $url, 'paymentmethods');
+$paymentmethods .= doliCardFooter($request, 'paymentmethods');
 
 $paymentmethods .= '</div>';
 

@@ -598,7 +598,7 @@ function dolifaq_display($content) {
           print '</button></h2>
           <div id="flush-collapseDolifaq'.$postfaq->id.'" class="accordion-collapse collapse" aria-labelledby="flush-headingDolifaq'.$postfaq->id.'" data-bs-parent="#accordionDolifaq">
           <div class="accordion-body">'.$postfaq->answer;
-          //print doliCardFooter($request, $_SERVER['REQUEST_URI'], 'agenda', $object);
+          //print doliCardFooter($request, 'agenda', $object);
           if (!empty(doliconnect_categories('knowledgemanagement', $postfaq, doliconnecturl('dolifaq')))) print '<br>'.doliconnect_categories('knowledgemanagement', $postfaq, doliconnecturl('dolifaq'));
           print '</div></div></div>';
         }
@@ -608,7 +608,7 @@ function dolifaq_display($content) {
     print '<div class="card-body">';
     print doliPagination($object, $url, $page);
     print '</div>';
-    print doliCardFooter($request, $_SERVER['REQUEST_URI'], 'constante', $object);
+    print doliCardFooter($request, 'constante', $object);
     print '</div>';
   }
 } else {
@@ -835,7 +835,7 @@ global $current_user;
         print doliPagination($object, $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], $page, $limit);
         print '</div>';
       }
-      print doliCardFooter($request, get_permalink(), $module);
+      print doliCardFooter($request, $module);
       print '</div>';
     }
   } else {
@@ -873,7 +873,7 @@ function dolishop_display($content) {
       <button class="btn btn-primary" type="submit" id="searchproduct" ><i class="fas fa-search"></i></button></div></form>';
 
       print "</div>";
-      print doliCardFooter($request, get_permalink(), 'product');
+      print doliCardFooter($request, 'product');
       print "</div>";
 
     } elseif ( isset($_GET['product']) && is_numeric(esc_attr($_GET['product'])) ) {
@@ -883,7 +883,7 @@ function dolishop_display($content) {
 
       print apply_filters( 'doliproductcard', $product, null);
 
-      print doliCardFooter($request, $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], 'product');
+      print doliCardFooter($request, 'product');
       print "</div>";
 
     } else {
@@ -1055,7 +1055,7 @@ function dolishop_display($content) {
         print doliPagination($object, $_SERVER['REQUEST_URI'], $page, $limit);
         print '</div>';
       }
-      print doliCardFooter($request, $_SERVER['REQUEST_URI'], 'product');
+      print doliCardFooter($request, 'product');
       print '</div>';
     } 
   } else {
@@ -1151,7 +1151,7 @@ print __( "You should't have tax exemptions", 'doliconnect');
 print "</div>";
 }
 
-print doliCardFooter($request, doliconnecturl('dolidonation'), 'thirdparty');
+print doliCardFooter($request, 'thirdparty');
 }
 } else {
 return $content;
@@ -1481,7 +1481,7 @@ console.log(response.data.message);
 })(jQuery);";
 print "</script>";
 
-print doliCardFooter($request, doliconnecturl('dolicart'), 'cart');
+print doliCardFooter($request, 'cart');
 print "</div>";
 
 print "</div>";
@@ -1654,7 +1654,7 @@ console.log(response.data.message);
 print "</script>";
 
 print "<div class='card-body'><div class='d-grid gap-2'><button type='button' id='infobtn_cart' name='info_cart' value='info_cart'  class='btn btn-secondary'>".__( 'Validate', 'doliconnect')."</button></div></div>";
-print doliCardFooter($request, get_permalink(), 'cart');
+print doliCardFooter($request, 'cart');
 print "</div>";
 
 print "</div>";
@@ -1735,7 +1735,7 @@ function doliagenda_display($content) {
       print $agendafo->note_private;
       
       print '</div>';
-      print doliCardFooter($request, $_SERVER['REQUEST_URI'], 'agenda', $agendafo);
+      print doliCardFooter($request, 'agenda', $agendafo);
       print '</div>';
     } else {
       $limit=12;
@@ -1763,7 +1763,7 @@ function doliagenda_display($content) {
       print "</ul><div class='card-body'>";
       print doliPagination($object, $_SERVER['REQUEST_URI'], $page);
       print "</div>";
-      print doliCardFooter($request, $_SERVER['REQUEST_URI'], 'agenda', $object);
+      print doliCardFooter($request, 'agenda', $object);
       print "</div>";
     }
   } else {
