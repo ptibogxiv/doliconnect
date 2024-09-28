@@ -436,7 +436,7 @@ if ( !isset($proposalfo->error) && isset($_GET['id']) && isset($_GET['ref']) && 
 print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Proposal %s', 'doliconnect'), $proposalfo->ref).'<a class="float-end text-decoration-none" href="'.esc_url( add_query_arg( 'module', 'proposals', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-5">';
 
 print "<b>".__( 'Date of creation', 'doliconnect').":</b> ".wp_date('d/m/Y', $proposalfo->date_creation)."<br>";
-print "<b>".__( 'Date of enf of validity', 'doliconnect').":</b> ".wp_date('d/m/Y', $proposalfo->fin_validite)."<br>";
+print "<b>".__( 'Date of end of validity', 'doliconnect').":</b> ".wp_date('d/m/Y', $proposalfo->fin_validite)."<br>";
 print "<b>".__( 'Date of validation', 'doliconnect')." : </b> ".wp_date('d/m/Y', $proposalfo->date_validation);
 
 print "<br></div><div class='col-md-7'>";
