@@ -438,33 +438,16 @@ print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Propo
 print "<b>".__( 'Date of creation', 'doliconnect').":</b> ".wp_date('d/m/Y', $proposalfo->date_creation)."<br>";
 print "<b>".__( 'Date of enf of validity', 'doliconnect').":</b> ".wp_date('d/m/Y', $proposalfo->fin_validite)."<br>";
 print "<b>".__( 'Date of validation', 'doliconnect')." : </b> ".wp_date('d/m/Y', $proposalfo->date_validation);
-//print "<b>".__( 'Status', 'doliconnect')." : </b> ";
-if ( $proposalfo->statut == 3 ) { $propalinfo=__( 'refused', 'doliconnect');
-$propalavancement=0; }
-elseif ( $proposalfo->statut == 2 ) { $propalinfo=__( 'processing', 'doliconnect');
-$propalavancement=65; }
-elseif ( $proposalfo->statut == 1 ) { $propalinfo=__( 'to be signed', 'doliconnect');
-$propalavancement=42; }
-elseif ( $proposalfo->statut == 0 ) { $propalinfo=__( 'processing', 'doliconnect');
-$propalavancement=22; }
-elseif ( $proposalfo->statut == -1 ) { $propalinfo=__( 'canceled', 'doliconnect');
-$propalavancement=0; }
-print "<br><br>";
-//print "<b>Moyen de paiement : </b> $proposalfo[mode_reglement]<br>";
-print "</div><div class='col-md-7'>";
 
-if ( isset($propalinfo) ) {
-print "<h3 class='text-end'>".$propalinfo."</h3>";
-}
+print "<br></div><div class='col-md-7'>";
+print doliObjectStatus($proposalfo, 'proposal', 1);
+print "</div>";
 
-$TTC = number_format($proposalfo->multicurrency_total_ttc, 2, ',', ' ');
-$currency = strtolower($proposalfo->multicurrency_code);
-print "</div></div>";
+print "</div><div class='row'>"; 
 
-print '<div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: '.$propalavancement.'%" aria-valuenow="'.$propalavancement.'" aria-valuemin="0" aria-valuemax="100"></div></div>';
-print "<div class='w-auto text-muted d-none d-sm-block' ><div style='display:inline-block;width:16%'>".__( 'proposal', 'doliconnect')."</div><div style='display:inline-block;width:21%'>".__( 'processing', 'doliconnect')."</div><div style='display:inline-block;width:19%'>".__( 'validation', 'doliconnect')."</div><div style='display:inline-block;width:24%'>".__( 'processing', 'doliconnect')."</div><div class='text-end' style='display:inline-block;width:20%'>".__( 'billing', 'doliconnect')."</div></div>";
+print doliObjectStatus($proposalfo, 'proposal', 3);
 
-print "</div><ul class='list-group list-group-flush'>";
+print "</div></div><ul class='list-group list-group-flush'>";
  
 print doliline($proposalfo, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 
@@ -508,13 +491,7 @@ $arr_params = array( 'id' => $postproposal->id, 'ref' => $postproposal->ref, 'se
 $return = esc_url( add_query_arg( $arr_params, $url) );
                 
 print "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'><div><i class='fa fa-file-signature fa-3x fa-fw'></i></div><div><h6 class='my-0'>".$postproposal->ref."</h6><small class='text-muted'>du ".wp_date('d/m/Y', $postproposal->date_creation)."</small></div><span>".doliprice($postproposal, 'ttc', isset($postproposal->multicurrency_code) ? $postproposal->multicurrency_code : null)."</span><span>";
-if ( $postproposal->statut == 3 ) {
-if ( $postproposal->billed == 1 ) { print "<span class='fa fa-check-circle fa-fw text-success'></span><span class='fa fa-eur fa-fw text-success'></span><span class='fa fa-truck fa-fw text-success'></span><span class='fa fa-file-text fa-fw text-success'></span>"; } 
-else { print "<span class='fa fa-check-circle fa-fw text-success'></span><span class='fa fa-eur fa-fw text-success'></span><span class='fa fa-truck fa-fw text-success'></span><span class='fa fa-file-text fa-fw text-warning'></span>"; } }
-elseif ( $postproposal->statut == 2 ) { print "<span class='fa fa-check-circle fa-fw text-success'></span><span class='fa fa-eur fa-fw text-success'></span><span class='fa fa-truck fa-fw text-warning'></span><span class='fa fa-file-text fa-fw text-danger'></span>"; }
-elseif ( $postproposal->statut == 1 ) { print "<span class='fa fa-check-circle fa-fw text-success'></span><span class='fa fa-eur fa-fw text-warning'></span><span class='fa fa-truck fa-fw text-danger'></span><span class='fa fa-file-text fa-fw text-danger'></span>"; }
-elseif ( $postproposal->statut == 0 ) { print "<span class='fa fa-check-circle fa-fw text-warning'></span><span class='fa fa-eur fa-fw text-danger'></span><span class='fa fa-truck fa-fw text-danger'></span><span class='fa fa-file-text fa-fw text-danger'></span>"; }
-elseif ( $postproposal->statut == -1 ) { print "<span class='fa fa-check-circle fa-fw text-secondary'></span><span class='fa fa-eur fa-fw text-secondary'></span><span class='fa fa-truck fa-fw text-secondary'></span><span class='fa fa-file-text fa-fw text-secondary'></span>"; }
+print doliObjectStatus($postproposal, 'proposal', 2);
 print "</span></a>";
 }
 } else {

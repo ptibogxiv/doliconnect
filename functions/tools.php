@@ -1463,9 +1463,23 @@ return $footer;
 
 function doliObjectStatus($object, $type, $mode = 0) {
   if (!isset($object->status) && isset($object->statut)) $object->status = $object->statut;
-  if ($type == 'order') {
+  if ($type == 'proposal') {
+    if ( $object->status == '4' ) { 
+      $status = __( 'billed', 'doliconnect');
+      $avancement=0;
+    } elseif ( $object->status == '3' ) { 
+      $status = __( 'not signed', 'doliconnect');
+      $avancement=0;
+    } elseif ( $object->status == '2 ') { 
+      $status = __( 'signed', 'doliconnect');
+      $avancement=64;
+    } elseif ( $object->status == '1' ) { 
+      $status = __( 'to be signed', 'doliconnect');
+      $pavancement=33;
+    }
+  } elseif ($type == 'order') {
     if ( $object->status > 0 ) {
-      if ( $object->billed == 1 ) {
+      if ( $object->billed == '1' ) {
         if ( $object->status > 1 ) { 
           $status = __( 'shipped', 'doliconnect'); 
           $avancement=100; 
@@ -1477,13 +1491,14 @@ function doliObjectStatus($object, $type, $mode = 0) {
         $status = __( 'validated', 'doliconnect');
         $avancement=25;
       }
-    } elseif ( $object->status == 0 ) { 
-      $status = __( 'draft', 'doliconnect');
-      $avancement=7; 
-    } elseif ( $object->status == -1 ) { 
-      $status = __( 'canceled', 'doliconnect');
-      $avancement=0;
-    }
+    } 
+  }
+  if ( $object->status == 0 ) { 
+    $status = __( 'draft', 'doliconnect');
+    $avancement=7; 
+  } elseif ( $object->status == -1 ) { 
+    $status = __( 'canceled', 'doliconnect');
+    $avancement=0;
   }
   if ($mode == '1') {
     $status = '<h3 class="text-end">'.$status.'</h3>';
