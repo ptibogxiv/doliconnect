@@ -24,7 +24,7 @@ $content .= apply_filters( 'doliproductlist', $product);
 $content .= "<li class='list-group-item'><center><center>".__( 'No new item', 'doliconnect' )."</center></li>";
 }
 $content .= '</ul>';
-$content .= doliCardFooter($request, get_permalink(), 'product');
+$content .= doliCardFooter($request, 'product');
 //if (!empty(doliconnecturl('dolishop'))) {
 //	$arr_params = array( 'category' => 'new');
 //	$link = esc_url( add_query_arg( $arr_params, doliconnecturl('dolishop')));
