@@ -1472,7 +1472,7 @@ function doliObjectStatus($object, $type, $mode = 0) {
       $avancement=0;
     } elseif ( $object->status == '2 ') { 
       $status = __( 'signed', 'doliconnect');
-      $avancement=64;
+      $avancement=66;
     } elseif ( $object->status == '1' ) { 
       $status = __( 'to be signed', 'doliconnect');
       $avancement=33;
@@ -1498,7 +1498,7 @@ function doliObjectStatus($object, $type, $mode = 0) {
         $avancement=100;
       } elseif ( $object->status == '1') { 
         $status = __( 'validated', 'doliconnect');
-        $avancement=64;
+        $avancement=50;
       } elseif ( $object->status == '9' ) { 
         $status = __( 'canceled', 'doliconnect');
         $avancement=0;
@@ -1506,16 +1506,16 @@ function doliObjectStatus($object, $type, $mode = 0) {
   } elseif ($type == 'expensereport') {
     if ( $object->status == '2') { 
       $status = __( 'validated', 'doliconnect');
-      $avancement=64; 
+      $avancement=33; 
     } elseif ( $object->status == '4' ) { 
       $status = __( 'canceled', 'doliconnect');
-      $avancement=100;
+      $avancement=0;
     } elseif ( $object->status == '5') { 
       $status = __( 'approved', 'doliconnect');
-      $avancement=64;
+      $avancement=66;
     } elseif ( $object->status == '6') { 
-      $status = __( 'closed', 'doliconnect');
-      $avancement=64;
+      $status = __( 'paid', 'doliconnect');
+      $avancement=100;
     } elseif ( $object->status == '99' ) { 
       $status = __( 'refused', 'doliconnect');
       $avancement=0;
