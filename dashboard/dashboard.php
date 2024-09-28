@@ -1936,10 +1936,11 @@ if (empty($ticketfo->fk_statut)) {
 print '</li>';
 
 if ( isset($ticketfo->messages) ) {
-foreach ( $ticketfo->messages as $msg ) {
-$datemsg =  wp_date('d/m/Y - H:i', $msg->datec);  
-print  "<li class='list-group-item list-group-item-light list-group-item-action'><b>$datemsg $msg->fk_user_action_string</b><br>$msg->message</li>";
-}} 
+    foreach ( $ticketfo->messages as $msg ) {
+        $datemsg =  wp_date('d/m/Y - H:i', $msg->datec);  
+        print  "<li class='list-group-item list-group-item-light list-group-item-action'><b>$datemsg $msg->fk_user_action_string</b><br>$msg->message</li>";
+    }
+} 
 print '</ul>';
 print doliCardFooter($request, 'ticket', $ticketfo);
 print '</div>';
