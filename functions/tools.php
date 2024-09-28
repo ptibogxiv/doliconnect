@@ -1493,17 +1493,32 @@ function doliObjectStatus($object, $type, $mode = 0) {
       }
     } 
   } elseif ($type == 'recruitmentjobposition') {
-    if ( $object->status > 0 ) {
       if ( $object->status == '3' ) { 
         $status = __( 'recruited', 'doliconnect');
         $avancement=100;
-      } elseif ( $object->status == '1 ') { 
+      } elseif ( $object->status == '1') { 
         $status = __( 'validated', 'doliconnect');
         $avancement=64;
       } elseif ( $object->status == '9' ) { 
         $status = __( 'canceled', 'doliconnect');
         $avancement=0;
       }
+  } elseif ($type == 'expensereport') {
+    if ( $object->status == '2') { 
+      $status = __( 'validated', 'doliconnect');
+      $avancement=64; 
+    } elseif ( $object->status == '4' ) { 
+      $status = __( 'canceled', 'doliconnect');
+      $avancement=100;
+    } elseif ( $object->status == '5') { 
+      $status = __( 'approved', 'doliconnect');
+      $avancement=64;
+    } elseif ( $object->status == '6') { 
+      $status = __( 'closed', 'doliconnect');
+      $avancement=64;
+    } elseif ( $object->status == '99' ) { 
+      $status = __( 'refused', 'doliconnect');
+      $avancement=0;
     }
   }
   if ( $object->status == 0 ) { 
