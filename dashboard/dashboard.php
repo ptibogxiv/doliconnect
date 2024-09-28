@@ -1512,7 +1512,7 @@ function recruitment_module( $url ) {
         print doliPagination($object, $url, $page);
         print "</div>";
         print doliCardFooter($request, 'recruitment', $object);
-        print "/div>";
+        print "</div>";
     }
 }
 
