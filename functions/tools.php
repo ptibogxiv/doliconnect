@@ -674,7 +674,7 @@ if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $user-
 }
 $doliPassword .= '>'.__( 'Update', 'doliconnect').'</button></div></form>';
 $doliPassword .= "</div>";
-$doliPassword .= doliCardFooter($request, 'thirdparty', $doliuser);
+if (isset($request) && isset($doliuser)) $doliPassword .= doliCardFooter($request, 'thirdparty', $doliuser);
 $doliPassword .= '</div>';
 
 return $doliPassword;
