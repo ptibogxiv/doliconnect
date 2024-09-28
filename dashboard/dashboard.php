@@ -1407,15 +1407,19 @@ function recruitment_module( $url ) {
         print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Job position %s', 'doliconnect'), $donationfo->ref).'<a class="float-end text-decoration-none" href="'.esc_url( add_query_arg( 'module', 'recruitment', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-5">';
         $datecreation =  wp_date('d/m/Y', $donationfo->date_creation);
         print "<b>".__( 'Date of creation', 'doliconnect').":</b> $datecreation<br>";
-        print "<b>".__( 'Payment method', 'doliconnect').":</b> <br><br></div><div class='col-md-7'>";
+        print "<b>".__( 'Payment method', 'doliconnect').":</b>";
         
+        print "<br></div><div class='col-md-7'>";
         print doliObjectStatus($donationfo, 'recruitmentjobposition', 1);
         print "</div>";
+        
+        print "</div><div class='row'><div class='col-12'>"; 
+        
         print doliObjectStatus($donationfo, 'recruitmentjobposition', 3);
 
         print $donationfo->description;
 
-        print "</div>";
+        print "</div></div>";
         print doliCardFooter($request, 'donation', $donationfo);
         print "</div>";
     } else {
