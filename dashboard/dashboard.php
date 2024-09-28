@@ -1903,22 +1903,19 @@ if ( isset($_GET['id']) && $_GET['id'] > 0 ) {
 
 if ( isset($_GET['id']) && isset($_GET['ref']) && ( doliconnector($current_user, 'fk_soc') == $ticketfo->socid ) && ($_GET['ref'] == $ticketfo->ref ) ) {
 
-print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Ticket %s', 'doliconnect'), $ticketfo->ref).'<a class="float-end text-decoration-none" href="'.esc_url( add_query_arg( 'module', 'tickets', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-6">';
+print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Ticket %s', 'doliconnect'), $ticketfo->ref).'<a class="float-end text-decoration-none" href="'.esc_url( add_query_arg( 'module', 'tickets', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-5">';
 $dateticket =  wp_date('d/m/Y', $ticketfo->datec);
 print "<b>".__( 'Date of creation', 'doliconnect').": </b> $dateticket<br>";
 print "<b>".__( 'Type and category', 'doliconnect').": </b> ".__($ticketfo->type_label, 'doliconnect').", ".__($ticketfo->category_label, 'doliconnect')."<br>";
 print "<b>".__( 'Severity', 'doliconnect').": </b> ".__($ticketfo->severity_label, 'doliconnect')."<br>";
-print "</div><div class='col-md-6'><h3 class='text-end'>";
-if ( $ticketfo->fk_statut == 9 ) { print "<span class='label label-default'>".__( 'Deleted', 'doliconnect')."</span>"; }
-elseif ( $ticketfo->fk_statut == 8 ) { print "<span class='label label-success'>".__( 'Closed', 'doliconnect')."</span>"; }
-elseif ( $ticketfo->fk_statut == 6 ) { print "<span class='label label-warning'>".__( 'Waiting', 'doliconnect')."</span>"; }
-elseif ( $ticketfo->fk_statut == 5 ) { print "<span class='label label-warning'>".__( 'In progress', 'doliconnect')."</span>"; }
-elseif ( $ticketfo->fk_statut == 4 ) { print "<span class='label label-warning'>".__( 'Assigned', 'doliconnect')."</span>"; }
-elseif ( $ticketfo->fk_statut == 3 ) { print "<span class='label label-warning'>".__( 'Answered', 'doliconnect')."</span>"; }
-elseif ( $ticketfo->fk_statut == 1 ) { print "<span class='label label-warning'>".__( 'Read', 'doliconnect')."</span>"; }
-elseif ( $ticketfo->fk_statut == 0 ) { print "<span class='label label-danger'>".__( 'Unread', 'doliconnect')."</span>"; }
-print "</h3></div></div>";
-print '<br><div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: '.$ticketfo->progress.'%" aria-valuenow="'.$ticketfo->progress.'" aria-valuemin="0" aria-valuemax="100"></div></div>';
+print "</div><div class='col-md-7'>";
+
+print doliObjectStatus($ticketfo, 'ticket', 1);
+
+print "</div></div>";
+
+print doliObjectStatus($ticketfo, 'ticket', 3);
+
 print "</div><ul class='list-group list-group-flush'>
 <li class='list-group-item list-group-item-light list-group-item-action'><h5 class='mb-1'>".__( 'Subject', 'doliconnect').": ".$ticketfo->subject."</h5>
 <p class='mb-1'>".__( 'Initial message', 'doliconnect').": ".$ticketfo->message."</p></li>";
@@ -2093,20 +2090,12 @@ print '</div></form>';
                 $return = esc_url( add_query_arg( $arr_params, $url) );
 
                 print "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'><div><i class='fas fa-question-circle fa-3x fa-fw'></i></div><div><h6 class='my-0'>$postticket->subject</h6><small class='text-muted'>".wp_date('d/m/Y', $postticket->datec)."</small></div><span class='text-center'>".__($postticket->type_label, 'doliconnect')."<br/>".__($postticket->category_label, 'doliconnect')."</span><span>";
-                if ( $postticket->fk_statut == 9 ) { print "<span class='label label-default'>".__( 'Canceled', 'doliconnect')."</span>"; }
-                elseif ( $postticket->fk_statut == 8 ) { print "<span class='label label-success'>".__( 'Closed', 'doliconnect')."</span>"; }
-                elseif ( $postticket->fk_statut == 6 ) { print "<span class='label label-warning'>".__( 'Waiting', 'doliconnect')."</span>"; }
-                elseif ( $postticket->fk_statut == 5 ) { print "<span class='label label-warning'>".__( 'Progress', 'doliconnect')."</span>"; }
-                elseif ( $postticket->fk_statut == 4 ) { print "<span class='label label-warning'>".__( 'Assigned', 'doliconnect')."</span>"; }
-                elseif ( $postticket->fk_statut == 3 ) { print "<span class='label label-warning'>".__( 'Answered', 'doliconnect')."</span>"; }
-                elseif ( $postticket->fk_statut == 1 ) { print "<span class='label label-warning'>".__( 'Read', 'doliconnect')."</span>"; }
-                elseif ( $postticket->fk_statut == 0 ) { print "<span class='label label-danger'>".__( 'Unread', 'doliconnect')."</span>"; }
+                print doliObjectStatus($postticket, 'ticket', 2);
                 print "</span></a>";
             }
         } else {
             print "<li class='list-group-item list-group-item-light'><center>".__( 'No ticket', 'doliconnect')."</center></li>";
         }
-
         print '</ul><div class="card-body">';
         print doliPagination($object, $url, $page);
         print '</div>';

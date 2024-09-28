@@ -1520,6 +1520,32 @@ function doliObjectStatus($object, $type, $mode = 0) {
       $status = __( 'refused', 'doliconnect');
       $avancement=0;
     }
+  } elseif ($type == 'ticket') {
+    if ( $object->status == '0') { 
+      $status = __( 'unread', 'doliconnect');
+      $avancement=10; 
+    } elseif ( $object->status == '1') { 
+      $status = __( 'read', 'doliconnect');
+      $avancement=20; 
+    } elseif ( $object->status == '2' ) { 
+      $status = __( 'assigned', 'doliconnect');
+      $avancement=40;
+    } elseif ( $object->status == '3') { 
+      $status = __( 'answered', 'doliconnect');
+      $avancement=64;
+    } elseif ( $object->status == '5') { 
+      $status = __( 'progress', 'doliconnect');
+      $avancement=64;
+    } elseif ( $object->status == '7') { 
+      $status = __( 'waiting', 'doliconnect');
+      $avancement=64;
+    } elseif ( $object->status == '8') { 
+      $status = __( 'closed', 'doliconnect');
+      $avancement=100;
+    } elseif ( $object->status == '9' ) { 
+      $status = __( 'canceled', 'doliconnect');
+      $avancement=0;
+    }
   }
   if ( $object->status == 0 ) { 
     $status = __( 'draft', 'doliconnect');
