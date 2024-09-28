@@ -464,7 +464,8 @@ function dolicontact_request(){
 			if (!isset($emailTo) || ($emailTo == '') ) {
 				$emailTo = get_option('admin_email');
 			}
-			$subject = "[".get_bloginfo( 'name' )."] ".$_POST['ticket_type'];
+			$subject = "[".get_bloginfo( 'name' )."]";
+			if (isset($_POST['ticket_type'])) $subject .= " ".$_POST['ticket_type'];
 			$body = "Nom: $name <br>Email: $email <br>Message: $comments";
 			$headers = array("Content-Type: text/html; charset=UTF-8","From: ".$name." <".$email.">","Cc: ".$name." <".$email.">"); 
 			$emailSent = wp_mail($emailTo, $subject, $body, $headers);
