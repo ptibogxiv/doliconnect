@@ -433,17 +433,17 @@ $proposalfo = callDoliApi("GET", $request, null, dolidelay('proposal', esc_attr(
 }
 
 if ( !isset($proposalfo->error) && isset($_GET['id']) && isset($_GET['ref']) && ( doliconnector($current_user, 'fk_soc') == $proposalfo->socid ) && ( $_GET['ref'] == $proposalfo->ref ) && $proposalfo->statut != 0 && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doli-proposals-'.$proposalfo->id.'-'.$proposalfo->ref)) {
-print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Proposal %s', 'doliconnect'), $proposalfo->ref).'<a class="float-end text-decoration-none" href="'.esc_url( add_query_arg( 'module', 'proposals', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-6">';
-$datevalidation =  wp_date('d/m/Y', $proposalfo->date_validation);
+print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Proposal %s', 'doliconnect'), $proposalfo->ref).'<a class="float-end text-decoration-none" href="'.esc_url( add_query_arg( 'module', 'proposals', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-5">';
+
 print "<b>".__( 'Date of creation', 'doliconnect').":</b> ".wp_date('d/m/Y', $proposalfo->date_creation)."<br>";
-print "<b>".__( 'Validation', 'doliconnect')." : </b> $datevalidation<br>";
-//print "<b>Date de fin de validité:</b> $datevalidite";
+print "<b>".__( 'Date of enf of validity', 'doliconnect').":</b> ".wp_date('d/m/Y', $proposalfo->fin_validite)."<br>";
+print "<b>".__( 'Date of validation', 'doliconnect')." : </b> ".wp_date('d/m/Y', $proposalfo->date_validation);
 //print "<b>".__( 'Status', 'doliconnect')." : </b> ";
 if ( $proposalfo->statut == 3 ) { $propalinfo=__( 'refused', 'doliconnect');
 $propalavancement=0; }
 elseif ( $proposalfo->statut == 2 ) { $propalinfo=__( 'processing', 'doliconnect');
 $propalavancement=65; }
-elseif ( $proposalfo->statut == 1 ) { $propalinfo=__( 'sign before', 'doliconnect')." ".wp_date('d/m/Y', $proposalfo->fin_validite);
+elseif ( $proposalfo->statut == 1 ) { $propalinfo=__( 'to be signed', 'doliconnect');
 $propalavancement=42; }
 elseif ( $proposalfo->statut == 0 ) { $propalinfo=__( 'processing', 'doliconnect');
 $propalavancement=22; }
@@ -555,7 +555,7 @@ $orderfo = callDoliApi("GET", $request, null, dolidelay('order', esc_attr(isset(
 
 if ( !isset($orderfo->error) && isset($_GET['id']) && isset($_GET['ref']) && (doliconnector($current_user, 'fk_soc') == $orderfo->socid ) && ($_GET['ref'] == $orderfo->ref) && $orderfo->statut != 0 && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doli-orders-'.$orderfo->id.'-'.$orderfo->ref)) {
 
-print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Order %s', 'doliconnect'), $orderfo->ref).'<a class="float-end text-decoration-none" href="'.esc_url( add_query_arg( 'module', 'orders', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-6">';
+print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Order %s', 'doliconnect'), $orderfo->ref).'<a class="float-end text-decoration-none" href="'.esc_url( add_query_arg( 'module', 'orders', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-5">';
 print "<b>".__( 'Date of order', 'doliconnect').":</b> ".wp_date('d/m/Y', $orderfo->date_creation)."<br>";
 if ( $orderfo->statut > 0 ) {
 if ( $orderfo->billed == 1 ) {
@@ -578,7 +578,7 @@ if (!empty($orderfo->mode_reglement_id)) print "<b>".__( 'Payment method', 'doli
 if (!empty($orderfo->cond_reglement_id)) print "<b>".__( 'Payment term', 'doliconnect').":</b> ".dolipaymentterm($orderfo->cond_reglement_id)."<br>";
 if (!empty($orderfo->shipping_method_id)) print "<b>".__( 'Shipment method', 'doliconnect').":</b> ".doliShipmentMethods($orderfo->shipping_method_id)."<br>";
 
-print "<br></div><div class='col-md-6'>";
+print "<br></div><div class='col-md-7'>";
 
 if ( isset($orderinfo) ) {
 print "<h3 class='text-end'>".$orderinfo."</h3>";
@@ -855,7 +855,7 @@ $invoicefo = callDoliApi("GET", $request, null, dolidelay('invoice', esc_attr(is
 
 if ( !isset($orderfo->error) && isset($_GET['id']) && isset($_GET['ref']) && (doliconnector($current_user, 'fk_soc') == $invoicefo->socid ) && ($_GET['ref'] == $invoicefo->ref) && $invoicefo->statut != 0 && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doli-invoices-'.$invoicefo->id.'-'.$invoicefo->ref)) {
 
-print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Invoice %s', 'doliconnect'), $invoicefo->ref).'<a class="float-end text-decoration-none" href="'.esc_url( add_query_arg( 'module', 'invoices', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-6">';
+print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Invoice %s', 'doliconnect'), $invoicefo->ref).'<a class="float-end text-decoration-none" href="'.esc_url( add_query_arg( 'module', 'invoices', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-5">';
 print "<b>".__( 'Date of invoice', 'doliconnect').":</b> ".wp_date('d/m/Y', $invoicefo->date_creation)."<br>";
 if ( $invoicefo->statut > 0 ) {
 if ( $invoicefo->paye == 1 ) {
@@ -878,7 +878,7 @@ $mode_reglement = callDoliApi("GET", "/setup/dictionary/payment_types?sortfield=
 if (!empty($invoicefo->mode_reglement_id)) print "<b>".__( 'Payment method', 'doliconnect').":</b> ".$mode_reglement[0]->label."<br>";
 if (!empty($invoicefo->cond_reglement_id)) print "<b>".__( 'Payment term', 'doliconnect').":</b> ".dolipaymentterm($invoicefo->cond_reglement_id)."<br>";
 
-print "<br></div><div class='col-md-6'>";
+print "<br></div><div class='col-md-7'>";
 
 if ( isset($orderinfo) ) {
 print "<h3 class='text-end'>".$orderinfo."</h3>";
