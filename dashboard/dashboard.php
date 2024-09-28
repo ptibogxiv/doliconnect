@@ -443,11 +443,11 @@ print "<br></div><div class='col-md-7'>";
 print doliObjectStatus($proposalfo, 'proposal', 1);
 print "</div>";
 
-print "</div><div class='row'>"; 
+print "</div><div class='row'><div class='col-12'>"; 
 
 print doliObjectStatus($proposalfo, 'proposal', 3);
 
-print "</div></div><ul class='list-group list-group-flush'>";
+print "</div></div></div><ul class='list-group list-group-flush'>";
  
 print doliline($proposalfo, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 

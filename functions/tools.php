@@ -1466,7 +1466,7 @@ function doliObjectStatus($object, $type, $mode = 0) {
   if ($type == 'proposal') {
     if ( $object->status == '4' ) { 
       $status = __( 'billed', 'doliconnect');
-      $avancement=0;
+      $avancement=100;
     } elseif ( $object->status == '3' ) { 
       $status = __( 'not signed', 'doliconnect');
       $avancement=0;
@@ -1475,7 +1475,7 @@ function doliObjectStatus($object, $type, $mode = 0) {
       $avancement=64;
     } elseif ( $object->status == '1' ) { 
       $status = __( 'to be signed', 'doliconnect');
-      $pavancement=33;
+      $avancement=33;
     }
   } elseif ($type == 'order') {
     if ( $object->status > 0 ) {
