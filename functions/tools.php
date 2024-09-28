@@ -1490,7 +1490,8 @@ function doliObjectStatus($object, $type, $mode = 0) {
   } elseif ($mode == '2') {
     $status = '<span class="badge rounded-pill text-bg-primary">'.$status.'</span>';
   } elseif ($mode == '3') {
-    $status = '<span class="badge rounded-pill text-bg-primary">'.$status.'</span>';
+    $status = '<div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: '.$avancement.'%" aria-valuenow="'.$avancement.'" aria-valuemin="0" aria-valuemax="100"></div></div>';
+
   }
 return $status;
 }
