@@ -1443,7 +1443,7 @@ return $footer;
 }
 
 function dolirefresh( $origin, $delay, $element = null) {
-  $url = 'https://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+  $url = $_SERVER['REQUEST_SCHEME'] . '://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
   $refresh = '<script type="text/javascript">';
   $refresh .= 'function refreshloader(){
   jQuery("#DoliconnectLoadingModal").modal("show");
