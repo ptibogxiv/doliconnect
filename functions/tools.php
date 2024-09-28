@@ -1431,37 +1431,34 @@ function dolidelay($delay = null, $refresh = false, $protect = false) {
   return $delay;
 }
 
-function doliCardFooter ($request, $delay, $object= null) {
+function doliCardFooter ($request, $delay, $object = null) {
   $footer = '<div class="card-footer text-muted">';
   $footer .= "<small><div class='float-start'>";
-  if ( isset($request) )   $footer .= dolirefresh($request, dolidelay($delay), $object);
+  if ( isset($request) )  {
+    $url = $_SERVER['REQUEST_SCHEME'] . '://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+    $footer .= '<script type="text/javascript">';
+    $footer .='function refreshloader(){
+    jQuery("#DoliconnectLoadingModal").modal("show");
+    jQuery(window).scrollTop(0); 
+    this.form.submit();
+    }';
+    $footer .= '</script>';
+    if ( isset($object->date_modification) && !empty($object->date_modification) ) {
+      $footer .= "<i class='fas fa-database'></i> ".wp_date( get_option( 'date_format' ).' - '.get_option('time_format'), $object->date_modification, false);
+    } elseif ( get_option("_transient_timeout_".$request) > 0 ) {
+      $footer .= "<i class='fas fa-database'></i> ".wp_date( get_option( 'date_format' ).' - '.get_option('time_format'), get_option("_transient_timeout_".$request)-$delay, false);
+    } elseif (is_user_logged_in() ) {
+      $footer .= __( 'Refresh', 'doliconnect');
+    }
+    if (is_user_logged_in() && !empty(get_option('doliconnectbeta')) ) {
+      $footer .= .= " <a onClick='refreshloader()' href='".esc_url( add_query_arg( 'refresh', true, $url) )."' title='".__( 'Refresh datas', 'doliconnect')."'><i class='fas fa-sync-alt'></i></a>";
+    }
+  };
   $footer .= '</div><div class="float-end">';
   // $footer .= dolihelp('ISSUE');
   $footer .= '</div></small>';
   $footer .= '</div>';
 return $footer;
-}
-
-function dolirefresh( $origin, $delay, $element = null) {
-  $url = $_SERVER['REQUEST_SCHEME'] . '://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
-  $refresh = '<script type="text/javascript">';
-  $refresh .= 'function refreshloader(){
-  jQuery("#DoliconnectLoadingModal").modal("show");
-  jQuery(window).scrollTop(0); 
-  this.form.submit();
-  }';
-  $refresh .= '</script>';
-  if ( isset($element->date_modification) && !empty($element->date_modification) ) {
-    $refresh .= "<i class='fas fa-database'></i> ".wp_date( get_option( 'date_format' ).' - '.get_option('time_format'), $element->date_modification, false);
-  } elseif ( get_option("_transient_timeout_".$origin) > 0 ) {
-    $refresh .= "<i class='fas fa-database'></i> ".wp_date( get_option( 'date_format' ).' - '.get_option('time_format'), get_option("_transient_timeout_".$origin)-$delay, false);
-  } elseif (is_user_logged_in() ) {
-    $refresh .= __( 'Refresh', 'doliconnect');
-  }
-  if (is_user_logged_in() && !empty(get_option('doliconnectbeta')) ) {
-    $refresh .= " <a onClick='refreshloader()' href='".esc_url( add_query_arg( 'refresh', true, $url) )."' title='".__( 'Refresh datas', 'doliconnect')."'><i class='fas fa-sync-alt'></i></a>";
-  }
-  return $refresh;
 }
 
 function dolikiosk() {
