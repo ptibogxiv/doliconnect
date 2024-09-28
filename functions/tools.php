@@ -1478,7 +1478,6 @@ function doliObjectStatus($object, $type, $mode = 0) {
       $avancement=33;
     }
   } elseif ($type == 'order') {
-    if ( $object->status > 0 ) {
       if ( $object->billed == '1' ) {
         if ( $object->status > 1 ) { 
           $status = __( 'shipped', 'doliconnect'); 
@@ -1491,7 +1490,14 @@ function doliObjectStatus($object, $type, $mode = 0) {
         $status = __( 'validated', 'doliconnect');
         $avancement=25;
       }
-    } 
+  } elseif ($type == 'donation') {
+    if ( $object->status == '2' ) {
+        $status = __( 'paid', 'doliconnect');
+        $avancement=100;
+      } elseif ( $object->status == '1' ) {
+        $status = __( 'submitted', 'doliconnect');
+        $avancement=50;
+    }
   } elseif ($type == 'recruitmentjobposition') {
       if ( $object->status == '3' ) { 
         $status = __( 'recruited', 'doliconnect');
