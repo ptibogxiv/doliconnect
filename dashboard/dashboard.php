@@ -1419,7 +1419,7 @@ function recruitment_module( $url ) {
 
         print $donationfo->description;
 
-        print "</div></div>";
+        print "</div></div></div>";
         print doliCardFooter($request, 'donation', $donationfo);
         print "</div>";
     } else {
