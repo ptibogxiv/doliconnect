@@ -557,21 +557,6 @@ if ( !isset($orderfo->error) && isset($_GET['id']) && isset($_GET['ref']) && (do
 
 print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Order %s', 'doliconnect'), $orderfo->ref).'<a class="float-end text-decoration-none" href="'.esc_url( add_query_arg( 'module', 'orders', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-5">';
 print "<b>".__( 'Date of order', 'doliconnect').":</b> ".wp_date('d/m/Y', $orderfo->date_creation)."<br>";
-if ( $orderfo->statut > 0 ) {
-if ( $orderfo->billed == 1 ) {
-if ( $orderfo->statut > 1 ) { $orderinfo=__( 'shipped', 'doliconnect'); 
-$orderavancement=100; }
-else { $orderinfo=__( 'processing', 'doliconnect');
-$orderavancement=40; }
-} else { $orderinfo=null;
-$orderinfo=null;
-$orderavancement=25;
-$orderinfo=__( 'validated', 'doliconnect');
-}
-} elseif ( $orderfo->statut == 0 ) { $orderinfo=__( 'draft', 'doliconnect');
-$orderavancement=7; }
-elseif ( $orderfo->statut == -1 ) { $orderinfo=__( 'canceled', 'doliconnect');
-$orderavancement=0;  }
 
 $mode_reglement = callDoliApi("GET", "/setup/dictionary/payment_types?sortfield=code&sortorder=ASC&limit=100&active=1&sqlfilters=(t.code%3A%3D%3A'".$orderfo->mode_reglement_code."')", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 if (!empty($orderfo->mode_reglement_id)) print "<b>".__( 'Payment method', 'doliconnect').":</b> ".$mode_reglement[0]->label."<br>";
@@ -664,7 +649,6 @@ print "</small></div></div>";
 print "</div><br>";
 
 print doliObjectStatus($orderfo, 'order', 3);
-print "<div class='w-auto text-muted d-none d-sm-block' ><div style='display:inline-block;width:20%'>".__( 'order', 'doliconnect')."</div><div style='display:inline-block;width:15%'>".__( 'payment', 'doliconnect')."</div><div style='display:inline-block;width:25%'>".__( 'processing', 'doliconnect')."</div><div style='display:inline-block;width:20%'>".__( 'shipping', 'doliconnect')."</div><div class='text-end' style='display:inline-block;width:20%'>".__( 'delivery', 'doliconnect')."</div></div>";
 
 print "</div><ul class='list-group list-group-flush'>";
  

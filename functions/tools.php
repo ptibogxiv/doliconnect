@@ -1491,6 +1491,7 @@ function doliObjectStatus($object, $type, $mode = 0) {
     $status = '<span class="badge rounded-pill text-bg-primary">'.$status.'</span>';
   } elseif ($mode == '3') {
     $status = '<div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: '.$avancement.'%" aria-valuenow="'.$avancement.'" aria-valuemin="0" aria-valuemax="100"></div></div>';
+    $status .= "<div class='w-auto text-muted d-none d-sm-block' ><div style='display:inline-block;width:20%'>".__( 'order', 'doliconnect')."</div><div style='display:inline-block;width:15%'>".__( 'payment', 'doliconnect')."</div><div style='display:inline-block;width:25%'>".__( 'processing', 'doliconnect')."</div><div style='display:inline-block;width:20%'>".__( 'shipping', 'doliconnect')."</div><div class='text-end' style='display:inline-block;width:20%'>".__( 'delivery', 'doliconnect')."</div></div>";
 
   }
 return $status;
