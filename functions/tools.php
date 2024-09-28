@@ -1462,6 +1462,7 @@ return $footer;
 }
 
 function doliObjectStatus($object, $type, $mode = 0) {
+  if (!isset($object->status) && isset($object->statut)) $object->status = $object->statut;
   if ($type == 'order') {
     if ( $object->status > 0 ) {
       if ( $object->billed == 1 ) {
@@ -1487,6 +1488,8 @@ function doliObjectStatus($object, $type, $mode = 0) {
   if ($mode == '1') {
     $status = '<h3 class="text-end">'.$status.'</h3>';
   } elseif ($mode == '2') {
+    $status = '<span class="badge rounded-pill text-bg-primary">'.$status.'</span>';
+  } elseif ($mode == '3') {
     $status = '<span class="badge rounded-pill text-bg-primary">'.$status.'</span>';
   }
 return $status;
