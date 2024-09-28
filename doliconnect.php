@@ -13,7 +13,7 @@
  * Domain Path: /languages
  * Donate link: https://www.paypal.me/ptibogxiv
  *   
- * @author ptibogxiv.net <support@ptibogxiv.net>
+ * @author ptibogxiv.eu <support@ptibogxiv.eu>
  * @copyright Copyright (c) 2017-2023, ptibogxiv.eu
 **/
 
