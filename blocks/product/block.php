@@ -10,13 +10,8 @@ function doliconnect_product_block_render( $attributes, $content) {
 	} else {
 		$content .= '<div class="card-header">'.__( 'Item', 'doliconnect').'</div><div class="card-body"><center>'.__( 'No item', 'doliconnect' ).'</center></div>';
 	}
-	$content .= "<div class='card-footer text-muted'>";
-	$content .= "<small><div class='float-start'>";
-	$content .= dolirefresh($request, get_permalink(), dolidelay('product'));
-	$content .= "</div><div class='float-end'>";
-	//$content .= dolihelp('ISSUE');
-	$content .= "</div></small>";
-	$content .= "</div></div>";
+	$content .= doliCardFooter($request, get_permalink(), 'product');
+	$content .= "</div>";
 	return $content;
 }
 

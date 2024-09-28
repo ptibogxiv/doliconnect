@@ -61,12 +61,7 @@ if ( !isset($typeadhesion->error) ) {
 	$html .= '<div class="card-body"><small>'.__( 'Note: the admins reserve the right to change your membership in relation to your personal situation. A validation of the membership may be necessary depending on the cases.', 'doliconnect').'</small></div>';
 }
 
-$html .= "<div class='card-footer text-muted'>";
-$html .= "<small><div class='float-start'>";
-$html .= dolirefresh($request, get_permalink(), dolidelay('thirdparty'), $typeadhesion);
-$html .= "</div><div class='float-end'>";
-//$html .= dolihelp('ISSUE');
-$html .= "</div></small>";
+$html .= doliCardFooter($request, get_permalink(), 'thirdparty', $typeadhesion);
 $html .= "</div></div>";
 return $html;
 }

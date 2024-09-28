@@ -24,17 +24,13 @@ $content .= apply_filters( 'doliproductlist', $product);
 $content .= "<li class='list-group-item'><center>".__( 'No discounted item', 'doliconnect' )."</center></li>";
 }
 $content .= '</ul>';
-$content .= "<div class='card-footer text-muted'>";
-$content .= "<small><div class='float-start'>";
-$content .= dolirefresh($request, null, dolidelay('product'));
-$content .= "</div><div class='float-end'>";
-if (!empty(doliconnecturl('dolishop'))) {
-	$arr_params = array( 'category' => 'discount');
-	$link = esc_url( add_query_arg( $arr_params, doliconnecturl('dolishop')));
-	$content .= "<a href='".$link."' role='button' title='".__( 'See more items', 'doliconnect')."'>".__( 'See more items', 'doliconnect')."</a>";
-}
-$content .= "</div></small>";
-$content .= "</div></div>";
+$content .= doliCardFooter($request, get_permalink(), 'product');
+//if (!empty(doliconnecturl('dolishop'))) {
+//	$arr_params = array( 'category' => 'discount');
+//	$link = esc_url( add_query_arg( $arr_params, doliconnecturl('dolishop')));
+//	$content .= "<a href='".$link."' role='button' title='".__( 'See more items', 'doliconnect')."'>".__( 'See more items', 'doliconnect')."</a>";
+//}
+$content .= "</div>";
 return $content;
 }
 function doliconnect_discountproduct_block_init() {
