@@ -777,7 +777,11 @@ global $current_user;
         }
 
         print "</ul>";
-
+        if (isset($resultats2)) { 
+          print '<div class="card-body">';
+          //print doliPagination($resultats2, $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], $page, $limit);
+          print '</div>';
+        }
       } else {
 
         if (isset($shopsupplier) && !empty($shopsupplier)) $category = "&category=".$shopsupplier;
@@ -841,7 +845,6 @@ global $current_user;
   } else {
     return $content;
   }
-
 }
 
 add_filter( 'the_content', 'dolisupplier_display');
