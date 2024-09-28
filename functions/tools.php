@@ -1446,7 +1446,7 @@ function doliCardFooter ($request, $delay, $object = null) {
     if ( isset($object->date_modification) && !empty($object->date_modification) ) {
       $footer .= "<i class='fas fa-database'></i> ".wp_date( get_option( 'date_format' ).' - '.get_option('time_format'), $object->date_modification, false);
     } elseif ( get_option("_transient_timeout_".$request) > 0 ) {
-      $footer .= "<i class='fas fa-database'></i> ".wp_date( get_option( 'date_format' ).' - '.get_option('time_format'), get_option("_transient_timeout_".$request)-$delay, false);
+      $footer .= "<i class='fas fa-database'></i> ".wp_date( get_option( 'date_format' ).' - '.get_option('time_format'), get_option("_transient_timeout_".$request)-dolidelay($delay), false);
     } elseif (is_user_logged_in() ) {
       $footer .= __( 'Refresh', 'doliconnect');
     }
