@@ -1492,6 +1492,19 @@ function doliObjectStatus($object, $type, $mode = 0) {
         $avancement=25;
       }
     } 
+  } elseif ($type == 'recruitmentjobposition') {
+    if ( $object->status > 0 ) {
+      if ( $object->status == '3' ) { 
+        $status = __( 'recruited', 'doliconnect');
+        $avancement=100;
+      } elseif ( $object->status == '1 ') { 
+        $status = __( 'validated', 'doliconnect');
+        $avancement=64;
+      } elseif ( $object->status == '9' ) { 
+        $status = __( 'canceled', 'doliconnect');
+        $avancement=0;
+      }
+    }
   }
   if ( $object->status == 0 ) { 
     $status = __( 'draft', 'doliconnect');
@@ -1506,8 +1519,7 @@ function doliObjectStatus($object, $type, $mode = 0) {
     $status = '<span class="badge rounded-pill text-bg-primary">'.$status.'</span>';
   } elseif ($mode == '3') {
     $status = '<div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: '.$avancement.'%" aria-valuenow="'.$avancement.'" aria-valuemin="0" aria-valuemax="100"></div></div>';
-    $status .= "<div class='w-auto text-muted d-none d-sm-block' ><div style='display:inline-block;width:20%'>".__( 'order', 'doliconnect')."</div><div style='display:inline-block;width:15%'>".__( 'payment', 'doliconnect')."</div><div style='display:inline-block;width:25%'>".__( 'processing', 'doliconnect')."</div><div style='display:inline-block;width:20%'>".__( 'shipping', 'doliconnect')."</div><div class='text-end' style='display:inline-block;width:20%'>".__( 'delivery', 'doliconnect')."</div></div>";
-
+    //$status .= "<div class='w-auto text-muted d-none d-sm-block' ><div style='display:inline-block;width:20%'>".__( 'order', 'doliconnect')."</div><div style='display:inline-block;width:15%'>".__( 'payment', 'doliconnect')."</div><div style='display:inline-block;width:25%'>".__( 'processing', 'doliconnect')."</div><div style='display:inline-block;width:20%'>".__( 'shipping', 'doliconnect')."</div><div class='text-end' style='display:inline-block;width:20%'>".__( 'delivery', 'doliconnect')."</div></div>";
   }
 return $status;
 }

@@ -1404,25 +1404,20 @@ function recruitment_module( $url ) {
     }
     
     if ( !isset($donationfo->error) && isset($_GET['id']) && isset($_GET['ref']) && (doliconnector($current_user, 'fk_soc') == $donationfo->fk_soc ) && ($_GET['ref'] == $donationfo->ref) && $donationfo->status != 0 ) {
-        print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Job position %s', 'doliconnect'), $donationfo->ref).'<a class="float-end text-decoration-none" href="'.esc_url( add_query_arg( 'module', 'recruitment', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-6">';
+        print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Job position %s', 'doliconnect'), $donationfo->ref).'<a class="float-end text-decoration-none" href="'.esc_url( add_query_arg( 'module', 'recruitment', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-5">';
         $datecreation =  wp_date('d/m/Y', $donationfo->date_creation);
         print "<b>".__( 'Date of creation', 'doliconnect').":</b> $datecreation<br>";
         print "<b>".__( 'Payment method', 'doliconnect').":</b> <br><br></div><div class='col-md-7'>";
         
-        if ( isset($orderinfo) ) {
-        print "<h3 class='text-end'>".$orderinfo."</h3>";
-        }
-        
-        $orderavancement=100;
+        print doliObjectStatus($donationfo, 'recruitmentjobposition', 1);
         
         print "</div></div>";
-        print '<div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: '.$orderavancement.'%" aria-valuenow="'.$orderavancement.'" aria-valuemin="0" aria-valuemax="100"></div></div>';
-        print "<div class='w-auto text-muted d-none d-sm-block' ><div style='display:inline-block;width:20%'>".__( 'Order', 'doliconnect')."</div><div style='display:inline-block;width:15%'>".__( 'Payment', 'doliconnect')."</div><div style='display:inline-block;width:25%'>".__( 'Processing', 'doliconnect')."</div><div style='display:inline-block;width:20%'>".__( 'Shipping', 'doliconnect')."</div><div class='text-end' style='display:inline-block;width:20%'>".__( 'Recruited', 'doliconnect')."</div></div>";
-        
+        print doliObjectStatus($donationfo, 'recruitmentjobposition', 3);
+
         print $donationfo->description;
 
         print "</div>";
-        print doliCardFooter($request, 'donation', $edonationfo);
+        print doliCardFooter($request, 'donation', $donationfo);
         print "</div>";
     } else {
         $limit=12;
@@ -1440,13 +1435,7 @@ function recruitment_module( $url ) {
                 $arr_params = array( 'id' => $postjobposition->id, 'ref' => $postjobposition->ref);  
                 $return = esc_url( add_query_arg( $arr_params, $url) );              
                 print "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'><div><i class='fa-solid fa-id-card-clip fa-3x fa-fw'></i></div><div><h6 class='my-0'>".$postjobposition->ref."</h6><small class='text-muted'>".wp_date('d/m/Y', $postjobposition->date_creation)."</small></div><span></span><span>";
-                if ( $postjobposition->statut == 3 ) {
-                if ( $postjobposition->billed == 1 ) { print "<span class='fa fa-check-circle fa-fw text-success'></span><span class='fa fa-eur fa-fw text-success'></span><span class='fa fa-truck fa-fw text-success'></span><span class='fa fa-file-text fa-fw text-success'></span>"; } 
-                else { print "<span class='fa fa-check-circle fa-fw text-success'></span><span class='fa fa-eur fa-fw text-success'></span><span class='fa fa-truck fa-fw text-success'></span><span class='fa fa-file-text fa-fw text-warning'></span>"; } }
-                elseif ( $postjobposition->statut == 2 ) { print "<span class='fa fa-check-circle fa-fw text-success'></span><span class='fa fa-eur fa-fw text-success'></span><span class='fa fa-truck fa-fw text-warning'></span><span class='fa fa-file-text fa-fw text-danger'></span>"; }
-                elseif ( $postjobposition->statut == 1 ) { print "<span class='fa fa-check-circle fa-fw text-success'></span><span class='fa fa-eur fa-fw text-warning'></span><span class='fa fa-truck fa-fw text-danger'></span><span class='fa fa-file-text fa-fw text-danger'></span>"; }
-                elseif ( $postjobposition->statut == 0 ) { print "<span class='fa fa-check-circle fa-fw text-warning'></span><span class='fa fa-eur fa-fw text-danger'></span><span class='fa fa-truck fa-fw text-danger'></span><span class='fa fa-file-text fa-fw text-danger'></span>"; }
-                elseif ( $postjobposition->statut == -1 ) { print "<span class='fa fa-check-circle fa-fw text-secondary'></span><span class='fa fa-eur fa-fw text-secondary'></span><span class='fa fa-truck fa-fw text-secondary'></span><span class='fa fa-file-text fa-fw text-secondary'></span>"; }
+                print doliObjectStatus($postjobposition, 'recruitmentjobposition', 2);
                 print "</span></a>";
             }
         } else{
