@@ -1858,7 +1858,7 @@ global $current_user;
     if ( !isset( $representatives->error ) && $representatives != null ) {
         print '<div class="card-body"><div class="row row-cols-1 row-cols-md-2 g-4">';
         foreach ( $representatives as $representative ) { 
-            print doliusercard($representative, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+            print doliUserCard($representative, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
         }
         print '</div></div>';
     } else {
