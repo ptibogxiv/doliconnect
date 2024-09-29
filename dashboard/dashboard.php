@@ -219,7 +219,7 @@ print '<div class="input-group"><div class="input-group-text">
 
 print '</li>';
 print "</ul><div class='card-body'><input type='hidden' name='userid' value='$ID'><div class='d-grid gap-2'><button class='btn btn-outline-secondary' type='submit'>".__( 'Update', 'doliconnect')."</button></div></div>";
-print doliCardFooter($request, 'thirdparty', $thirdparty);
+if (isset($request) && isset($thirdparty)) print doliCardFooter($request, 'thirdparty', $thirdparty);
 print '</div></form>';
 
 }
