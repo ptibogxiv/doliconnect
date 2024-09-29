@@ -306,7 +306,7 @@ print doliuserform( $thirdparty, dolidelay('constante', esc_attr(isset($_GET["re
 print "<div class='card-body'><div class='d-grid gap-2'><button class='btn btn-outline-secondary' type='submit' ";
 if (!doliCheckRights('societe', 'contact', 'creer')) { print 'disabled'; }
 print ">".__( 'Add', 'doliconnect')."</button></div></div>";
-print doliCardFooter ($request, $url, 'contact', $contactfo);
+if (isset($request) && isset($contactfo) ) print doliCardFooter ($request, $url, 'contact', $contactfo);
 print '</div></small>';
 print '</div></form>';
 
