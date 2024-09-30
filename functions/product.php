@@ -120,14 +120,23 @@ global $current_user;
   }
   if (doliconnector($current_user, 'fk_order') > 0) {
     $order = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order')."?contact_list=0", null, $refresh);
-    $array = callDoliApi("GET", "/setup/extrafields?sortfield=t.pos&sortorder=ASC&elementtype=commandedet", null, dolidelay('constante'));
+  }  
+  $array = callDoliApi("GET", "/setup/extrafields?sortfield=t.pos&sortorder=ASC&elementtype=commandedet", null, dolidelay('constante'));  
+  if ( isset($array->commandedet) && $array->commandedet != null ) {
+      foreach ($array->commandedet as $name => $value) {
+        $name = 'options_'.$name;
+        if (is_array($array_options) && !isset($array_options[$name])) {
+          $array_options[$name] = $value->default;
+        }
+      }
   }
   if ( isset($order->lines) && $order->lines != null ) {
     foreach ($order->lines as $line) {
-      if (isset($product->id) && $line->fk_product == $product->id && $line->fk_parent_line == $fk_parent_line) { //&& $line->array_options == $array_options 
+      $linearray_options = (array) $line->array_options;
+      if (isset($product->id) && $line->fk_product == $product->id && $line->fk_parent_line == $fk_parent_line && $linearray_options == $array_options) { 
         $mstock['qty'] = $line->qty;
         $mstock['line'] = $line->id;
-        $mstock['array_options'] = $line->array_options;
+        $mstock['array_options'] = $linearray_options;
         $mstock['fk_parent_line'] = $line->fk_parent_line;
       }
     }
@@ -135,7 +144,7 @@ global $current_user;
   if (!isset($mstock['qty']) ) {
     $mstock['qty'] = 0;
     $mstock['line'] = null;
-    $mstock['array_options'] = null;
+    $mstock['array_options'] = $array_options;
     $mstock['fk_parent_line'] = null;
   }
   if (isset($mstock['line']) && !$mstock['line'] > 0) { $mstock['line'] = null; }
@@ -155,7 +164,7 @@ global $current_user;
     else { $mstock['m2'] = 1; }
   } 
   if (!$nohtml) {
-    $stock = '<script type="text/javascript">';
+    $stock = '<script type="text/javascript">';//.var_dump($array_options).var_dump($mstock['array_options']);
     $stock .= '
     (function ($) {
      $(document).ready(function () {
