@@ -120,6 +120,7 @@ global $current_user;
   }
   if (doliconnector($current_user, 'fk_order') > 0) {
     $order = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order')."?contact_list=0", null, $refresh);
+    $array = callDoliApi("GET", "/setup/extrafields?sortfield=t.pos&sortorder=ASC&elementtype=commandedet", null, dolidelay('constante'));
   }
   if ( isset($order->lines) && $order->lines != null ) {
     foreach ($order->lines as $line) {
