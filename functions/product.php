@@ -408,7 +408,7 @@ function doliProductCart($product, $line = null, $refresh = null, $wishlist = tr
         //if (empty($mstock['qty'])) {
           $button .= '<input id="qty-prod-'.$product->id.'" type="text" class="form-control form-control-sm" value="'.__( 'Soon', 'doliconnect').'" aria-label="'.__( 'Soon', 'doliconnect').'" style="text-align:center;" disabled readonly>';
         //}
-        } else {
+      } else {
         $button .= '<button class="btn btn-sm btn-warning';
         if (empty($mstock['qty'])) $button .= ' disabled';
         $button .= '" name="minus" value="minus" type="submit" onclick="doliJavaCartAction(\'updateLine\', '.$product->id.', document.getElementById(\'qty-prod-'.$product->id.'\').value, \'minus\');"><i class="fa-solid fa-minus"></i></button>
