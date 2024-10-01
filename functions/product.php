@@ -392,13 +392,23 @@ function doliWishlist($thirdpartyid, $productid, $refresh = false, $nohtml = fal
 
 function doliProductCart($product, $line = null, $refresh = null, $wishlist = true, $fk_parent_line = null) {
   global $current_user;
-  $button = '<div id="doliform-product-'.$product->id.'-'.$line.'" class="d-grid gap-2">';
-  $mstock = doliProductStock($product, $refresh, true, array(), $fk_parent_line);
+  if (isset($line->array_options)) { 
+    $lineid = $line->id;
+  }  else {
+    $lineid = null;
+  }
+  $button = '<div id="doliform-product-'.$product->id.'-'.$lineid.'" class="d-grid gap-2">';
+  if (isset($line->array_options)) { 
+    $linearray_options = (array) $line->array_options;
+  }  else {
+    $linearray_options = array();
+  }
+  $mstock = doliProductStock($product, $refresh, true, $linearray_options, $fk_parent_line);
   if ( empty(doliconnectid('dolicart')) || empty(doliconnectid('dolicart')) ) {
     $button .= "<a class='btn btn-block btn-info' href='".doliconnecturl('dolicontact')."?type=COM' role='button' title='".__( 'Contact us', 'doliconnect')."'>".__( 'Contact us', 'doliconnect').'</a>';
   } elseif ( is_user_logged_in() && doliCheckModules('commande') && doliconnectid('dolicart') > 0 ) {
     $button .= '<div class="input-group">';
-    if (!empty($fk_parent_line) && !empty($mstock['fk_parent_line'])) {
+    if (!empty($line->fk_parent_line) && !empty($mstock['fk_parent_line'])) {
       $button .= '<input id="qty-prod-'.$product->id.'" type="text" class="form-control form-control-sm" value="'.__( 'Linked item', 'doliconnect').'" aria-label="'.__( 'Linked item', 'doliconnect').'" style="text-align:center;" disabled readonly>';
     } elseif ( $mstock['stock'] <= 0 || $mstock['m2'] < $mstock['step'] ) { 
       $button .= '<input id="qty-prod-'.$product->id.'" type="text" class="form-control form-control-sm" value="'.__( 'Unavailable', 'doliconnect').'" aria-label="'.__( 'Unavailable', 'doliconnect').'" style="text-align:center;" disabled readonly>';

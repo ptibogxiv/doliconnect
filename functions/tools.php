@@ -1742,8 +1742,8 @@ global $current_user;
           $doliline .= "<i class='fas fa-barcode fa-fw'></i> ".$product->barcode; 
         }
         $doliline .= "</small></p>";
+        if (isset($dates)) $doliline .= '<p><small><i>'.$dates.'</i></small></p>';
         if(!empty(doliconst('PRODUIT_DESC_IN_FORM', $refresh)) && !doliconst('MAIN_GENERATE_DOCUMENTS_HIDE_DESC', $refresh) ) { $doliline .= '<p class="mb-1"><small>'.doliproduct($line, 'product_desc').'</small></p>'; }
-        $doliline .= '<p><small><i>'.(isset($dates) ? $dates : null).'</i></small></p>';
       } elseif (doliconnectid('dolishipping')) {
         $doliline .= '<small><a href="'.doliconnecturl('dolishipping').'">'.esc_html__( 'Shipping informations', 'doliconnect').'</a></small>';
       }
@@ -1764,7 +1764,7 @@ global $current_user;
       if (!empty($line->fk_parent_line) || (doliCheckModules('fraisdeport', $refresh) && empty($line->fk_parent_line) && doliconst('FRAIS_DE_PORT_ID_SERVICE_TO_USE', $refresh) == $line->fk_product)) {
         $doliline .= '<h6 class="mb-1">x'.$line->qty.'</h6>';
       } elseif ( isset($object->statut) && empty($object->statut) && !is_page(doliconnectid('doliaccount')) ) {
-        $doliline .= doliProductCart($product, $line->id, $refresh, $wishlist);
+        $doliline .= doliProductCart($product, $line, $refresh, $wishlist);
       } else {
         $doliline .= '<h6 class="mb-1">x'.$line->qty.'</h6>';
       }
