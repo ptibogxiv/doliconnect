@@ -394,16 +394,15 @@ function doliProductCart($product, $line = null, $refresh = null, $wishlist = tr
   global $current_user;
   if (isset($line->array_options)) { 
     $lineid = $line->id;
-  }  else {
-    $lineid = null;
-  }
-  $button = '<div id="doliform-product-'.$product->id.'-'.$lineid.'" class="d-grid gap-2">';
-  if (isset($line->array_options)) { 
+    $linefk_parent_line = $line->fk_parent_line;
     $linearray_options = (array) $line->array_options;
   }  else {
+    $lineid = null;
+    $linefk_parent_line = null;
     $linearray_options = array();
   }
-  $mstock = doliProductStock($product, $refresh, true, $linearray_options, $fk_parent_line);
+  $button = '<div id="doliform-product-'.$product->id.'-'.$lineid.'" class="d-grid gap-2">';
+  $mstock = doliProductStock($product, $refresh, true, $linearray_options, $linefk_parent_line);
   if ( empty(doliconnectid('dolicart')) || empty(doliconnectid('dolicart')) ) {
     $button .= "<a class='btn btn-block btn-info' href='".doliconnecturl('dolicontact')."?type=COM' role='button' title='".__( 'Contact us', 'doliconnect')."'>".__( 'Contact us', 'doliconnect').'</a>';
   } elseif ( is_user_logged_in() && doliCheckModules('commande') && doliconnectid('dolicart') > 0 ) {
@@ -413,7 +412,7 @@ function doliProductCart($product, $line = null, $refresh = null, $wishlist = tr
     } elseif ( $mstock['stock'] <= 0 || $mstock['m2'] < $mstock['step'] ) { 
       $button .= '<input id="qty-prod-'.$product->id.'" type="text" class="form-control form-control-sm" value="'.__( 'Unavailable', 'doliconnect').'" aria-label="'.__( 'Unavailable', 'doliconnect').'" style="text-align:center;" disabled readonly>';
     } else {
-      if (!empty($mstock['qty'])) $button .= '<button class="btn btn-sm btn-dark" name="delete" value="delete" type="submit" onclick="doliJavaCartAction(\'updateLine\', '.$product->id.', 0, \'delete\');"><i class="fa-solid fa-trash-can"></i></button>';
+      if (!empty($mstock['qty'])) $button .= $lineid.'<button class="btn btn-sm btn-dark" name="delete" value="delete" type="submit" onclick="doliJavaCartAction(\'updateLine\', '.$product->id.', 0, \'delete\');"><i class="fa-solid fa-trash-can"></i></button>';
       if ( doliCheckModules('adherent', $refresh) && $product->id == doliconst("ADHERENT_PRODUCT_ID_FOR_SUBSCRIPTIONS", dolidelay('constante')) ) {
         //if (empty($mstock['qty'])) {
           $button .= '<input id="qty-prod-'.$product->id.'" type="text" class="form-control form-control-sm" value="'.__( 'Soon', 'doliconnect').'" aria-label="'.__( 'Soon', 'doliconnect').'" style="text-align:center;" disabled readonly>';
