@@ -579,36 +579,35 @@ if ( $orderfo->billed != 1 && $orderfo->statut > 0 ) {
 print "</div><br>";
 
 $thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-
 print "<div class='card-group'>"; 
 if (!empty($orderfo->contacts_ids) && is_array($orderfo->contacts_ids)) {
+    foreach ($orderfo->contacts_ids as $contact) {
+    if ('BILLING' == $contact->code) {
+    $billingcard = dolicontact($contact->id, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+    }
+    if ('SHIPPING' == $contact->code) {
+    $shippingcard = dolicontact($contact->id, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+    }
+    }
 
-foreach ($orderfo->contacts_ids as $contact) {
-if ('BILLING' == $contact->code) {
-$billingcard = dolicontact($contact->id, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
-}
-if ('SHIPPING' == $contact->code) {
-$shippingcard = dolicontact($contact->id, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
-}
-}
-print "<div class='card bg-light' style='border:0'><div class='card-body'><h6>".__( 'Billing address', 'doliconnect')."</h6><small class='text-muted'>";
-if (isset($billingcard) && !empty($billingcard)) {
-print $billingcard;
+    print "<div class='card bg-light' style='border:0'><div class='card-body'><h6>".__( 'Billing address', 'doliconnect')."</h6><small class='text-muted'>";
+    if (isset($billingcard) && !empty($billingcard)) {
+    print $billingcard;
+    } else {
+    print doliaddress($thirdparty, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+    }
+    print "</small></div></div>";
+    print "<div class='card bg-light' style='border:0'><div class='card-body'><h6>".__( 'Shipping address', 'doliconnect')."</h6><small class='text-muted'>";
+    if (isset($shippingcard) && !empty($shippingcard)) {
+    print $shippingcard;
+    } else {
+    print doliaddress($thirdparty, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+    }
+    print "</small></div></div>";
 } else {
-print doliaddress($thirdparty, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
-}
-print "</small></div></div>";
-print "<div class='card bg-light' style='border:0'><div class='card-body'><h6>".__( 'Shipping address', 'doliconnect')."</h6><small class='text-muted'>";
-if (isset($shippingcard) && !empty($shippingcard)) {
-print $shippingcard;
-} else {
-print doliaddress($thirdparty, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
-}
-print "</small></div></div>";
-} else {
-print "<div class='card bg-light' style='border:0'><div class='card-body'><h6>".__( 'Billing and shipping address', 'doliconnect')."</h6><small class='text-muted'>";
-print doliaddress($thirdparty, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
-print "</small></div></div>";
+    print "<div class='card bg-light' style='border:0'><div class='card-body'><h6>".__( 'Billing and shipping address', 'doliconnect')."</h6><small class='text-muted'>";
+    print doliaddress($thirdparty, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+    print "</small></div></div>";
 }
 print "</div><br>";
 
