@@ -434,12 +434,8 @@ $proposalfo = callDoliApi("GET", $request, null, dolidelay('proposal', esc_attr(
 
 if ( !isset($proposalfo->error) && isset($_GET['id']) && isset($_GET['ref']) && ( doliconnector($current_user, 'fk_soc') == $proposalfo->socid ) && ( $_GET['ref'] == $proposalfo->ref ) && $proposalfo->statut != 0 && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doli-proposals-'.$proposalfo->id.'-'.$proposalfo->ref)) {
 print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Proposal %s', 'doliconnect'), $proposalfo->ref).'<a class="float-end text-decoration-none" href="'.esc_url( add_query_arg( 'module', 'proposals', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-5">';
-
-print "<b>".__( 'Date of creation', 'doliconnect').":</b> ".wp_date('d/m/Y', $proposalfo->date_creation)."<br>";
-print "<b>".__( 'Date of end of validity', 'doliconnect').":</b> ".wp_date('d/m/Y', $proposalfo->fin_validite)."<br>";
-print "<b>".__( 'Date of validation', 'doliconnect')." : </b> ".wp_date('d/m/Y', $proposalfo->date_validation);
-
-print "<br></div><div class='col-md-7'>";
+print doliObjectInfos($proposalfo);
+print "</div><div class='col-md-7'>";
 print doliObjectStatus($proposalfo, 'proposal', 1);
 print "</div>";
 
@@ -530,14 +526,8 @@ $orderfo = callDoliApi("GET", $request, null, dolidelay('order', esc_attr(isset(
 if ( !isset($orderfo->error) && isset($_GET['id']) && isset($_GET['ref']) && (doliconnector($current_user, 'fk_soc') == $orderfo->socid ) && ($_GET['ref'] == $orderfo->ref) && $orderfo->statut != 0 && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doli-orders-'.$orderfo->id.'-'.$orderfo->ref)) {
 
 print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Order %s', 'doliconnect'), $orderfo->ref).'<a class="float-end text-decoration-none" href="'.esc_url( add_query_arg( 'module', 'orders', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-5">';
-print "<b>".__( 'Date of order', 'doliconnect').":</b> ".wp_date('d/m/Y', $orderfo->date_creation)."<br>";
-
-$mode_reglement = callDoliApi("GET", "/setup/dictionary/payment_types?sortfield=code&sortorder=ASC&limit=100&active=1&sqlfilters=(t.code%3A%3D%3A'".$orderfo->mode_reglement_code."')", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-if (!empty($orderfo->mode_reglement_code) && isset($mode_reglement[0]->label)) print "<b>".__( 'Payment method', 'doliconnect').":</b> ".$mode_reglement[0]->label."<br>";
-if (!empty($orderfo->cond_reglement_id)) print "<b>".__( 'Payment term', 'doliconnect').":</b> ".dolipaymentterm($orderfo->cond_reglement_id)."<br>";
-if (!empty($orderfo->shipping_method_id)) print "<b>".__( 'Shipment method', 'doliconnect').":</b> ".doliShipmentMethods($orderfo->shipping_method_id)."<br>";
-
-print "<br></div><div class='col-md-7'>";
+print doliObjectInfos($orderfo);
+print "</div><div class='col-md-7'>";
 print doliObjectStatus($orderfo, 'order', 1);
 print "</div>";
  
@@ -801,7 +791,8 @@ $invoicefo = callDoliApi("GET", $request, null, dolidelay('invoice', esc_attr(is
 if ( !isset($orderfo->error) && isset($_GET['id']) && isset($_GET['ref']) && (doliconnector($current_user, 'fk_soc') == $invoicefo->socid ) && ($_GET['ref'] == $invoicefo->ref) && $invoicefo->statut != 0 && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doli-invoices-'.$invoicefo->id.'-'.$invoicefo->ref)) {
 
 print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Invoice %s', 'doliconnect'), $invoicefo->ref).'<a class="float-end text-decoration-none" href="'.esc_url( add_query_arg( 'module', 'invoices', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-5">';
-print "<b>".__( 'Date of invoice', 'doliconnect').":</b> ".wp_date('d/m/Y', $invoicefo->date_creation)."<br>";
+print doliObjectInfos($invoicefo);
+print "</div><div class='col-md-7'>";
 if ( $invoicefo->statut > 0 ) {
 if ( $invoicefo->paye == 1 ) {
 if ( $invoicefo->statut > 1 ) { $orderinfo=__( 'shipped', 'doliconnect'); 
@@ -819,11 +810,7 @@ $orderavancement=7; }
 elseif ( $invoicefo->statut == -1 ) { $orderinfo=__( 'canceled', 'doliconnect');
 $orderavancement=0;  }
 
-$mode_reglement = callDoliApi("GET", "/setup/dictionary/payment_types?sortfield=code&sortorder=ASC&limit=100&active=1&sqlfilters=(t.code%3A%3D%3A'".$invoicefo->mode_reglement_code."')", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-if (!empty($invoicefo->mode_reglement_id)) print "<b>".__( 'Payment method', 'doliconnect').":</b> ".$mode_reglement[0]->label."<br>";
-if (!empty($invoicefo->cond_reglement_id)) print "<b>".__( 'Payment term', 'doliconnect').":</b> ".dolipaymentterm($invoicefo->cond_reglement_id)."<br>";
-
-print "<br></div><div class='col-md-7'>";
+print "</div><div class='col-md-7'>";
 
 if ( isset($orderinfo) ) {
 print "<h3 class='text-end'>".$orderinfo."</h3>";
@@ -1059,9 +1046,8 @@ global $current_user;
 
     if ( !isset($contractfo->error) && isset($_GET['id']) && isset($_GET['id']) && isset($_GET['ref']) && (doliconnector($current_user, 'fk_soc') == $contractfo->socid) && ($_GET['ref'] == $contractfo->ref) && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doli-contracts-'.$contractfo->id.'-'.$contractfo->ref)) {
         print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Contract %s', 'doliconnect'), $contractfo->ref).'<a class="float-end text-decoration-none" href="'.esc_url( add_query_arg( 'module', 'contracts', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-5">';
-        print "<b>".__( 'date of creation', 'doliconnect').": </b> ".wp_date('d/m/Y', $contractfo->date_creation)."<br>";
-        
-        print "<br></div><div class='col-md-7'>";
+        print doliObjectInfos($contractfo);
+        print "</div><div class='col-md-7'>";
         print doliObjectStatus($contractfo, 'contract', 1);
         print "</div>";
 
@@ -1151,10 +1137,8 @@ global $current_user;
 
         if ( !isset($projectfo->error) && isset($_GET['id']) && isset($_GET['id']) && isset($_GET['ref']) && (doliconnector($current_user, 'fk_soc') == $projectfo->socid) && ($_GET['ref'] == $projectfo->ref) && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doli-projects-'.$projectfo->id.'-'.$projectfo->ref)) {
         print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Project %s', 'doliconnect'), $projectfo->ref).'<a class="float-end text-decoration-none" href="'.esc_url( add_query_arg( 'module', 'projects', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-5">';
-       
-        print "<b>".__( 'Date of creation', 'doliconnect').": </b> ".wp_date('d/m/Y', $projectfo->date_creation)."<br>";
-        
-        print "<br></div><div class='col-md-7'>";
+        print doliObjectInfos($projectfo);
+        print "</div><div class='col-md-7'>";
         print doliObjectStatus($projectfo, 'project', 1);
         print "</div>";
 
@@ -1246,10 +1230,7 @@ $ID = $current_user->ID;
 
     if ( !isset($donationfo->error) && isset($_GET['id']) && isset($_GET['ref']) && (doliconnector($current_user, 'fk_soc') == $donationfo->socid ) && ($_GET['ref'] == $donationfo->ref) && $donationfo->statut != 0 ) {
         print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Donation %s', 'doliconnect'), $donationfo->ref).'<a class="float-end text-decoration-none" href="'.esc_url( add_query_arg( 'module', 'donations', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-5">';
-        $datecommande =  wp_date('d/m/Y', $donationfo->date_creation);
-        print "<b>".__( 'Date of order', 'doliconnect').":</b> $datecommande<br>";
-        $mode_reglement = callDoliApi("GET", "/setup/dictionary/payment_types?sortfield=code&sortorder=ASC&limit=100&active=1&sqlfilters=(t.code%3A%3D%3A'".$donationfo->mode_reglement_code."')", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-        if (!empty($donationfo->mode_reglement_id)) print "<b>".__( 'Payment method', 'doliconnect').":</b> ".$mode_reglement[0]->label."<br><br>";
+        print doliObjectInfos($donationfo);
         print "</div><div class='col-md-7'>";
 
         print doliObjectStatus($donationfo, 'donation', 1);
