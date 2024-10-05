@@ -1058,30 +1058,16 @@ global $current_user;
     }
 
     if ( !isset($contractfo->error) && isset($_GET['id']) && isset($_GET['id']) && isset($_GET['ref']) && (doliconnector($current_user, 'fk_soc') == $contractfo->socid) && ($_GET['ref'] == $contractfo->ref) && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doli-contracts-'.$contractfo->id.'-'.$contractfo->ref)) {
-        print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Contract %s', 'doliconnect'), $contractfo->ref).'<a class="float-end text-decoration-none" href="'.esc_url( add_query_arg( 'module', 'contracts', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-6">';
+        print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Contract %s', 'doliconnect'), $contractfo->ref).'<a class="float-end text-decoration-none" href="'.esc_url( add_query_arg( 'module', 'contracts', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-5">';
         print "<b>".__( 'date of creation', 'doliconnect').": </b> ".wp_date('d/m/Y', $contractfo->date_creation)."<br>";
-        if ( $contractfo->statut > 0 ) {
-        //if ( $contractfo->billed == 1 ) {
-        //if ( $contractfo->statut > 1 ) { $contractfo=__( 'Shipped', 'doliconnect'); 
-        //$orderavancement=100; }
-        //else { $orderinfo=__( 'Processing', 'doliconnect');
-        //$contractavancement=40; }
-        //}
-        //else { $contractinfo=null;
-        //$contractinfo=null;
-        //$contractavancement=25;
-        //}
-        $contractavancement=0; 
-        }
-        elseif ( $contractfo->statut == 0 ) { $contractinfo=__( 'validation', 'doliconnect');
-        $contractavancement=7; }
-        elseif ( $contractfo->statut == -1) { $contractinfo=__( 'canceled', 'doliconnect');
-        $contractavancement=0; }
+        
+        print "<br></div><div class='col-md-7'>";
+        print doliObjectStatus($contractfo, 'contract', 1);
+        print "</div>";
 
-        print "</div></div>";
+        print "</div>";
 
-        print '<div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: '.$contractavancement.'%" aria-valuenow="'.$contractavancement.'" aria-valuemin="0" aria-valuemax="100"></div></div>';
-        print "<div class='w-auto text-muted d-none d-sm-block' ><div style='display:inline-block;width:20%'>".__( 'order', 'doliconnect')."</div><div style='display:inline-block;width:15%'>".__( 'payment', 'doliconnect')."</div><div style='display:inline-block;width:25%'>".__( 'processing', 'doliconnect')."</div><div style='display:inline-block;width:20%'>".__( 'Shipping', 'doliconnect')."</div><div class='text-end' style='display:inline-block;width:20%'>".__( 'delivery', 'doliconnect')."</div></div>";
+        print doliObjectStatus($contractfo, 'contract', 3);
 
         print "</div><ul class='list-group list-group-flush'>";
 
@@ -1164,32 +1150,17 @@ global $current_user;
     }
 
         if ( !isset($projectfo->error) && isset($_GET['id']) && isset($_GET['id']) && isset($_GET['ref']) && (doliconnector($current_user, 'fk_soc') == $projectfo->socid) && ($_GET['ref'] == $projectfo->ref) && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doli-projects-'.$projectfo->id.'-'.$projectfo->ref)) {
-        print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Project %s', 'doliconnect'), $projectfo->ref).'<a class="float-end text-decoration-none" href="'.esc_url( add_query_arg( 'module', 'projects', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-6">';
+        print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Project %s', 'doliconnect'), $projectfo->ref).'<a class="float-end text-decoration-none" href="'.esc_url( add_query_arg( 'module', 'projects', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-5">';
        
         print "<b>".__( 'Date of creation', 'doliconnect').": </b> ".wp_date('d/m/Y', $projectfo->date_creation)."<br>";
-        if ( $projectfo->statut > 0 ) {
-        //if ( $contractfo->billed == 1 ) {
-        //if ( $contractfo->statut > 1 ) { $contractfo=__( 'Shipped', 'doliconnect'); 
-        //$orderavancement=100; }
-        //else { $orderinfo=__( 'Processing', 'doliconnect');
-        //$contractavancement=40; }
-        //}
-        //else { $contractinfo=null;
-        //$contractinfo=null;
-        //$contractavancement=25;
-        //}
-        $contractavancement=0; 
-        }
-        elseif ( $projectfo->statut == 0 ) { $contractinfo=__( 'Validation', 'doliconnect');
-        $contractavancement=7; }
-        elseif ( $projectfo->statut == -1) { $contractinfo=__( 'Canceled', 'doliconnect');
-        $contractavancement=0; }
+        
+        print "<br></div><div class='col-md-7'>";
+        print doliObjectStatus($projectfo, 'project', 1);
+        print "</div>";
 
-        print "</div></div>";
+        print "</div>";
 
-        print '<div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: '.$contractavancement.'%" aria-valuenow="'.$contractavancement.'" aria-valuemin="0" aria-valuemax="100"></div></div>';
-        print "<div class='w-auto text-muted d-none d-sm-block' ><div style='display:inline-block;width:20%'>".__( 'Order', 'doliconnect')."</div><div style='display:inline-block;width:15%'>".__( 'Payment', 'doliconnect')."</div><div style='display:inline-block;width:25%'>".__( 'Processing', 'doliconnect')."</div><div style='display:inline-block;width:20%'>".__( 'Shipping', 'doliconnect')."</div><div class='text-end' style='display:inline-block;width:20%'>".__( 'Delivery', 'doliconnect')."</div></div>";
-
+        print doliObjectStatus($projectfo, 'project', 3);
         print "</div><ul class='list-group list-group-flush'>";
 
         print doliline($projectfo, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
