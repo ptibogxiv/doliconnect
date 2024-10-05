@@ -439,11 +439,11 @@ print "</div><div class='col-md-7'>";
 print doliObjectStatus($proposalfo, 'proposal', 1);
 print "</div>";
 
-print "</div><div class='row'><div class='col-12'>"; 
+print "</div><br>"; 
 
 print doliObjectStatus($proposalfo, 'proposal', 3);
 
-print "</div></div></div><ul class='list-group list-group-flush'>";
+print "</div><ul class='list-group list-group-flush'>";
  
 print doliline($proposalfo, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 
@@ -531,6 +531,7 @@ print "</div><div class='col-md-7'>";
 print doliObjectStatus($orderfo, 'order', 1);
 print "</div>";
  
+/*
 if ( $orderfo->billed != 1 && $orderfo->statut > 0 ) {
 $nonce = wp_create_nonce( 'valid_dolicart-'.$orderfo->id );
 $arr_params = array( 'cart' => $nonce, 'step' => 'payment', 'module' => $_GET["module"], 'id' => $orderfo->id,'ref' => $orderfo->ref);  
@@ -575,7 +576,7 @@ form.submit();
         }";                  
 print "</script>";
 }
-
+*/
 print "</div><br>"; 
 
 $thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
@@ -1033,7 +1034,7 @@ global $current_user;
         print doliObjectStatus($contractfo, 'contract', 1);
         print "</div>";
 
-        print "</div>";
+        print "</div><br>";
 
         print doliObjectStatus($contractfo, 'contract', 3);
 
@@ -1124,7 +1125,7 @@ global $current_user;
         print doliObjectStatus($projectfo, 'project', 1);
         print "</div>";
 
-        print "</div>";
+        print "</div><br>";
 
         print doliObjectStatus($projectfo, 'project', 3);
         print "</div><ul class='list-group list-group-flush'>";
@@ -1212,10 +1213,11 @@ $ID = $current_user->ID;
         print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Donation %s', 'doliconnect'), $donationfo->ref).'<a class="float-end text-decoration-none" href="'.esc_url( add_query_arg( 'module', 'donations', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-5">';
         print doliObjectInfos($donationfo);
         print "</div><div class='col-md-7'>";
-
         print doliObjectStatus($donationfo, 'donation', 1);
+        print "</div>";
 
-        print "</div></div>";
+        print "</div><br>"; 
+
         print doliObjectStatus($donationfo, 'donation', 3);
         print "</div><ul class='list-group list-group-flush'>";
  
