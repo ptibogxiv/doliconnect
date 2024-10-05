@@ -793,28 +793,10 @@ if ( !isset($orderfo->error) && isset($_GET['id']) && isset($_GET['ref']) && (do
 print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Invoice %s', 'doliconnect'), $invoicefo->ref).'<a class="float-end text-decoration-none" href="'.esc_url( add_query_arg( 'module', 'invoices', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-5">';
 print doliObjectInfos($invoicefo);
 print "</div><div class='col-md-7'>";
-if ( $invoicefo->statut > 0 ) {
-if ( $invoicefo->paye == 1 ) {
-if ( $invoicefo->statut > 1 ) { $orderinfo=__( 'shipped', 'doliconnect'); 
-$orderavancement=100; }
-else { $orderinfo=__( 'processing', 'doliconnect');
-$orderavancement=40; }
-} else { $orderinfo=null;
-$orderinfo=null;
-$orderavancement=25;
-$orderinfo=__( 'validated', 'doliconnect');
-}
-}
-elseif ( $invoicefo->statut == 0 ) { $orderinfo=__( 'draft', 'doliconnect');
-$orderavancement=7; }
-elseif ( $invoicefo->statut == -1 ) { $orderinfo=__( 'canceled', 'doliconnect');
-$orderavancement=0;  }
+print doliObjectStatus($invoicefo, 'invoice', 1);
+print "</div>";
 
-print "</div><div class='col-md-7'>";
-
-if ( isset($orderinfo) ) {
-print "<h3 class='text-end'>".$orderinfo."</h3>";
-}
+print doliObjectStatus($invoicefo, 'invoice', 3);
 print "</div>";
  
 if ( $invoicefo->paye != 1 && $invoicefo->statut > 0 ) {
