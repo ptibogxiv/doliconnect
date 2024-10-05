@@ -221,12 +221,12 @@ function doliPG($pg = 0) {
 
 function doliObjectInfos($object) {
   $info = "<b>".__( 'Date of order', 'doliconnect').":</b> ".wp_date('d/m/Y', $object->date_creation)."<br>";
-  if (isset($object->fin_validite)) $info .= "<b>".__( 'Date of end of validity', 'doliconnect').":</b> ".wp_date('d/m/Y', $object->fin_validite)."<br>";
-  if (isset($object->date_validation)) $info .= "<b>".__( 'Date of validation', 'doliconnect')." : </b> ".wp_date('d/m/Y', $object->date_validation)."<br>";
-  $mode_reglement = callDoliApi("GET", "/setup/dictionary/payment_types?sortfield=code&sortorder=ASC&limit=100&active=1&sqlfilters=(t.code%3A%3D%3A'".$object->mode_reglement_code."')", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-  if (!empty($object->mode_reglement_code) && isset($mode_reglement[0]->label)) $info .= "<b>".__( 'Payment method', 'doliconnect').":</b> ".$mode_reglement[0]->label."<br>";
-  if (!empty($object->cond_reglement_id)) $info .= "<b>".__( 'Payment term', 'doliconnect').":</b> ".dolipaymentterm($object->cond_reglement_id)."<br>";
-  if (!empty($object->shipping_method_id)) $info .= "<b>".__( 'Shipment method', 'doliconnect').":</b> ".doliShipmentMethods($object->shipping_method_id)."<br>";
+  if (isset($object->fin_validite) && !empty($object->fin_validite)) $info .= "<b>".__( 'Date of end of validity', 'doliconnect').":</b> ".wp_date('d/m/Y', $object->fin_validite)."<br>";
+  if (isset($object->date_validation) && !empty($object->date_validation)) $info .= "<b>".__( 'Date of validation', 'doliconnect')." : </b> ".wp_date('d/m/Y', $object->date_validation)."<br>";
+  if (isset($object->mode_reglement_code)) $mode_reglement = callDoliApi("GET", "/setup/dictionary/payment_types?sortfield=code&sortorder=ASC&limit=100&active=1&sqlfilters=(t.code%3A%3D%3A'".$object->mode_reglement_code."')", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+  if (isset($object->mode_reglement_code) && !empty($object->mode_reglement_code) && isset($mode_reglement[0]->label)) $info .= "<b>".__( 'Payment method', 'doliconnect').":</b> ".$mode_reglement[0]->label."<br>";
+  if (isset($object->cond_reglement_id) && !empty($object->cond_reglement_id)) $info .= "<b>".__( 'Payment term', 'doliconnect').":</b> ".dolipaymentterm($object->cond_reglement_id)."<br>";
+  if (isset($object->shipping_method_id) && !empty($object->shipping_method_id)) $info .= "<b>".__( 'Shipment method', 'doliconnect').":</b> ".doliShipmentMethods($object->shipping_method_id)."<br>";
 
 return $info;
 }
