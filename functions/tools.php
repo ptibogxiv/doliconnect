@@ -730,7 +730,9 @@ $idobject=$mode."[".$object->id."]";
 $company = callDoliApi("GET", "/setup/company", null, dolidelay('constante'));
 
 $doliuser = "<ul class='list-group list-group-flush'>";
-
+if ( in_array($mode, array('thirdparty')) ) { //|| $mode == 'member'
+  $doliuser .= '<li class="list-group-item list-group-item-light list-group-item-action">'.__( 'Status', 'doliconnect').' '.$object->client.'</li>';
+}
 if ( ! isset($object) && in_array($mode, array('thirdparty')) && empty(get_option('doliconnect_disablepro')) ) {
 if ( isset($_GET["morphy"]) && $_GET["morphy"] == 'mor' && get_option('doliconnect_disablepro') != 'mor' ) {                                                                                                                                                                                                                                                                                                                                   
 $doliuser .= "<input type='hidden' id='morphy' name='".$idobject."[morphy]' value='mor'>";
@@ -1476,18 +1478,34 @@ function doliObjectStatus($object, $type, $mode = 0) {
       $avancement=33;
     }
   } elseif ($type == 'order') {
-      if ( $object->billed == '1' ) {
-        if ( $object->status > 1 ) { 
-          $status = __( 'shipped', 'doliconnect'); 
-          $avancement=100; 
-        } else { 
-          $status = __( 'processing', 'doliconnect');
-          $avancement=40; 
-        }
-      } else {
-        $status = __( 'validated', 'doliconnect');
-        $avancement=25;
+    if ( $object->billed == '1' ) {
+      if ( $object->status > 1 ) { 
+        $status = __( 'shipped', 'doliconnect'); 
+        $avancement=100; 
+      } else { 
+        $status = __( 'processing', 'doliconnect');
+        $avancement=40; 
       }
+    } else {
+      $status = __( 'validated', 'doliconnect');
+      $avancement=25;
+    }
+  } elseif ($type == 'contract') {
+    if ( $object->status == 1 ) { 
+      $status = __( 'validated', 'doliconnect'); 
+      $avancement=100; 
+    } else { 
+      $status = __( 'processing', 'doliconnect');
+      $avancement=50; 
+    }
+  } elseif ($type == 'project') {
+    if ( $object->status == 1 ) { 
+      $status = __( 'validated', 'doliconnect'); 
+      $avancement=100; 
+    } else { 
+      $status = __( 'processing', 'doliconnect');
+      $avancement=50; 
+    }
   } elseif ($type == 'donation') {
     if ( $object->status == '2' ) {
         $status = __( 'paid', 'doliconnect');
