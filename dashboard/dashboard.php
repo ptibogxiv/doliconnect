@@ -1129,8 +1129,6 @@ global $current_user;
         print doliObjectStatus($projectfo, 'project', 3);
         print "</div><ul class='list-group list-group-flush'>";
 
-        print doliline($projectfo, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
-
         if ( $projectfo->last_main_doc != null ) {
             $doc = array_reverse( explode("/", $projectfo->last_main_doc) );      
             $document = dolidocdownload($doc[2], $doc[1], $doc[0], __( 'Summary', 'doliconnect'), true, $projectfo->entity);
