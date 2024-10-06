@@ -388,19 +388,19 @@ global $current_user;
   }
 }
 
-function doliWishlist($thirdpartyid, $productid, $refresh = false, $nohtml = false) {
+function doliWishlist($thirdpartyid, $productid, $lineid, $refresh = false, $nohtml = false) {
   $request = "/wishlist?sortfield=p.label&sortorder=ASC&thirdparty_ids=".$thirdpartyid."&pagination_data=true&sqlfilters=(t.priv%3A%3D%3A0)";
   $object = callDoliApi("GET", $request, null, dolidelay('product', $refresh));
   if ( doliversion('19.0.0') && isset($object->data) ) { $wishlist = $object->data; } else { $wishlist = $object; }
   if (!$nohtml) {
-    $wish = '<button class="btn btn-sm btn-light" id="wish-prod-'.$productid.'" value="wish" type="submit" onclick="doliJavaCartAction(\'updateLine\', '.$productid.', 1, \'wish\');"><i class="fa-regular fa-heart"></i></button>';
+    $wish = '<button class="btn btn-sm btn-light" id="wish-prod-'.$productid.'" value="wish" type="submit" onclick="doliJavaCartAction(\'updateLine\', '.$productid.', '.$lineid.', 1, \'wish\');"><i class="fa-regular fa-heart"></i></button>';
   } else {
     $wish = false;
   }
   foreach ($wishlist as $wsh) {
     if (isset($wsh->fk_product) && $productid == $wsh->fk_product) {
       if (!$nohtml) {
-        $wish = '<button class="btn btn-sm btn-light" id="wish-prod-'.$productid.'" value="wish" type="submit" onclick="doliJavaCartAction(\'updateLine\', '.$productid.', 1, \'wish\');"><i class="fa-solid fa-heart" style="color:Fuchsia"></i></button>';
+        $wish = '<button class="btn btn-sm btn-light" id="wish-prod-'.$productid.'" value="wish" type="submit" onclick="doliJavaCartAction(\'updateLine\', '.$productid.', '.$lineid.', 1, \'wish\');"><i class="fa-solid fa-heart" style="color:Fuchsia"></i></button>';
       } else {
         $wish = $wsh->id;
       }
@@ -443,7 +443,7 @@ function doliProductCart($product, $line = null, $refresh = null, $wishlist = tr
       }  
     } 
     if ( !empty($wishlist) && doliCheckModules('wishlist')) {
-      $button .= doliWishlist(doliconnector($current_user, 'fk_soc'), $product->id, $refresh);
+      $button .= doliWishlist(doliconnector($current_user, 'fk_soc'), $product->id, $mstock['line'], $refresh);
     }   
     $button .= '</div>';
     if (isset($mstock['step']) && $mstock['step']>1) $button .= '<div class="form-text" id="basic-addon4"><small>'.sprintf(__( 'Sold by %s', 'doliconnect'), $mstock['step']).'</small></div>';  
