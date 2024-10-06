@@ -3313,8 +3313,8 @@ function doliModalDiv() {
                 },
               }).done(function(response) {
                 if (response.success) { 
-                  if (document.getElementById("wish-prod-" + id) && response.data.hasOwnProperty("newwish")) {
-                     document.getElementById("doliform-product-" + id + "-").outerHTML = response.data.newwish;
+                  if (document.getElementById("doliform-product-" + id + "-" + lineid) && response.data.hasOwnProperty("newwish")) {
+                     document.getElementById("doliform-product-" + id + "-" + lineid).outerHTML = response.data.newwish;
                   }
                   if (document.getElementById("DoliHeaderCartItems") && response.data.hasOwnProperty("items")) {
                     document.getElementById("DoliHeaderCartItems").innerHTML = response.data.items;
