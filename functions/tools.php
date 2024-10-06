@@ -3288,7 +3288,7 @@ return $ajax;
 function doliModalDiv() {
   print '<div id="doliModalDiv"></div>';
   print '<script type="text/javascript">';
-  print 'function doliJavaCartAction(form, id, qty, acase) {
+  print 'function doliJavaCartAction(form, id, lineid, qty, acase) {
           (function ($) {
             $(document).ready(function () {
               var DisplayCart = 0;
@@ -3306,6 +3306,7 @@ function doliModalDiv() {
                   "dolicart-nonce": "'.wp_create_nonce( 'dolicart-nonce').'",
                   "case": form,
                   "id" : id,
+                  "lineid" : lineid,
                   "qty" : qty,
                   "modify" : acase,
                   "DisplayCart" : DisplayCart
