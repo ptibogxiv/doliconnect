@@ -8,7 +8,7 @@
  * @param string $sep   Optional separator.
  * @return string Filtered title.
  */
-
+/*
 function doliFilterTitle( $title, $sep ) {
 	global $paged, $page;
 
@@ -30,7 +30,7 @@ function doliFilterTitle( $title, $sep ) {
 	//return $title." ".$sep." test test ";
 }
 add_filter( 'wp_title', 'doliFilterTitle', 10, 2 );
-
+*/
 
 function dolicheckie($server) {
   $return = false;
