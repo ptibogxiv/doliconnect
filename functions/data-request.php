@@ -836,7 +836,7 @@ global $current_user;
 				wp_send_json_success($response);
 				die();
 			} elseif (isset($_POST['modify']) && ($_POST['modify'] == "wish")) {
-				$wish = doliWishlist(doliconnector($current_user, 'fk_soc'), trim($_POST['id']), true, true);
+				$wish = doliWishlist(doliconnector($current_user, 'fk_soc'), trim($_POST['id']), trim($_POST['lineid']), true, true);
 				if (empty($wish)) {
 					$data = [
 						'fk_product' => trim($_POST['id']),
@@ -845,12 +845,12 @@ global $current_user;
 						'priv' => 0 
 					];
 					$addwish = callDoliApi("POST", "/wishlist", $data, 0);
-					$wish = doliWishlist(doliconnector($current_user, 'fk_soc'), trim($_POST['id']), true, false);
+					$wish = doliWishlist(doliconnector($current_user, 'fk_soc'), trim($_POST['id']), trim($_POST['lineid']), true, false);
 					$mstock = doliProductStock($product, true, true);
 					$response['newwish'] = doliProductCart($product, null, null); 
 				} elseif (!empty($wish)) {
 					$deletewish = callDoliApi("DELETE", "/wishlist/".$wish, null, 0);
-					$wish = doliWishlist(doliconnector($current_user, 'fk_soc'), trim($_POST['id']), true, false);
+					$wish = doliWishlist(doliconnector($current_user, 'fk_soc'), trim($_POST['id']), trim($_POST['lineid']), true, false);
 					$mstock = doliProductStock($product, true, true);
 					$response['newwish'] = doliProductCart($product, null, null); 
 				}
