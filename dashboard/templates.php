@@ -1055,7 +1055,7 @@ function dolishop_display($content) {
 
       if (isset($object)) { 
         print '<div class="card-body">';
-        print doliPagination($object, $_SERVER['REQUEST_URI'], $page, $limit);
+        print doliPagination($object, $_SERVER['REQUEST_URI'], $page);
         print '</div>';
       }
       print doliCardFooter($request, 'product');
