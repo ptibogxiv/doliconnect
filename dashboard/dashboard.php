@@ -1455,6 +1455,8 @@ $time = current_time( 'timestamp',1);
 
 $request = "/adherentsplus/".doliconnector($current_user, 'fk_member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)); 
 $productadhesion = doliconst("ADHERENT_PRODUCT_ID_FOR_SUBSCRIPTIONS", dolidelay('constante'));
+$requestp = "/products/".$productadhesion."?includesubproducts=true&includetrans=true";
+$product = callDoliApi("GET", $requestp, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 if ( isset($_POST["update_membership"]) && function_exists('doliconnect_membership') ) {
 $typeadherent = isset($_POST["typeadherent"]) ? $_POST["typeadherent"] : null;
@@ -1515,6 +1517,7 @@ if ( doliCheckModules('commande') && !empty($productadhesion) ) {
     if ( isset($adherent) && $adherent->datefin != null && $adherent->statut == 1 && isset($adherent->next_subscription_renew) && $adherent->datefin > $adherent->next_subscription_renew && $adherent->next_subscription_renew > current_time( 'timestamp',1) ) {
         print "<button class='btn btn-light btn-block' disabled>".sprintf(__('Renew from %s', 'doliconnect'), wp_date('d/m/Y', $adherent->next_subscription_renew))."</button>";
     } else { 
+        print doliProductCart($product, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
         print doliModalButton('renewmembership', 'renewmembership', __('Pay my subscription', 'doliconnect'), 'button' , 'btn btn btn-danger btn-block', $adherent->id);
     }
         print '</div><br>';
