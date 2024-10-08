@@ -1518,7 +1518,7 @@ if ( doliCheckModules('commande') && !empty($productadhesion) ) {
         print "<button class='btn btn-light btn-block' disabled>".sprintf(__('Renew from %s', 'doliconnect'), wp_date('d/m/Y', $adherent->next_subscription_renew))."</button>";
     } else { 
         print doliProductCart($product, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
-        print doliModalButton('renewmembership', 'renewmembership', __('Pay my subscription', 'doliconnect'), 'button' , 'btn btn btn-danger btn-block', $adherent->id);
+        //print doliModalButton('renewmembership', 'renewmembership', __('Pay my subscription', 'doliconnect'), 'button' , 'btn btn btn-danger btn-block', $adherent->id);
     }
         print '</div><br>';
     } elseif ( $adherent->statut == '0' ) {
