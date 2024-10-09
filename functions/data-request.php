@@ -1095,10 +1095,10 @@ global $current_user;
 		if (!empty($company->note_private)) { $modal['body'] .= '<br>'.$company->note_private; }
 		if (!empty($company->managers)) $modal['body'] .= '</p><p><strong>'.__('Responsible for publishing', 'doliconnect').'</strong><br>'.$company->managers;
 		if ( defined('PTIBOGXIV_NET') ) {
-			$modal['body'] .= '</p><p><strong>'.__('Design & conception', 'doliconnect').'</strong><br>Thibault FOUCART - ptibogxiv.eu<br>
-			1 rue de la grande brasserie<br>
-			FR - 59000 LILLE - France<br>
-			SIRET: 83802482600011 - APE6201Z<br>
+			$modal['body'] .= '</p><p><strong>'.__('Design & conception', 'doliconnect').'</strong><br>EI FOUCART THIBAULT<br>
+			790 Boulevard Carnot<br>
+			FR - 59800 LILLE - France<br>
+			SIRET: 83802482600029 - APE6201Z<br>
 			Site Internet: <a href="https://www.ptibogxiv.eu">ptibogxiv.eu</a></p>
 			<p><strong>'.__('Hosting', 'doliconnect').'</strong><br>Infomaniak Network SA<br>
 			Rue Eugène-Marziano, 25<br>
