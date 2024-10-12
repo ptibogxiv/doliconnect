@@ -1194,7 +1194,7 @@ global $current_user;
 		$response['modal'] = doliModalTemplate($_POST['id'], $modal['header'], $modal['body'], $modal['footer']);
 		wp_send_json_success($response);
 		die();
-	} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "renewmembership" ) {
+	/*} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "renewmembership" ) {
 		if (isset($_POST['value1']) && !empty($_POST['value1']) && isset($_POST['value2']) && empty($_POST['value2'])) {
 			$adherent = callDoliApi("GET", "/members/".trim($_POST['value1']), null, dolidelay('member'));
 	  	} elseif ( isset($_POST['value1']) && !empty($_POST['value1']) && isset($_POST['value2']) && !empty($_POST['value2']) ) {
@@ -1225,6 +1225,7 @@ global $current_user;
 		$response['modal'] = doliModalTemplate($_POST['id'], $modal['header'], $modal['body'], $modal['footer']);
 		wp_send_json_success($response);
 		die();
+		*/
 	} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "linkedmember" ) {
 		if (isset($_POST['value1']) && !empty($_POST['value1'])) {
 			$modal['header'] = __( 'Edit member', 'doliconnect');
