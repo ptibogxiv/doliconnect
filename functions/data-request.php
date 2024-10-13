@@ -789,6 +789,21 @@ global $current_user;
 			$product = callDoliApi("GET", "/products/".trim($_POST['id'])."?includesubproducts=true&includetrans=true", null, dolidelay('product'));
 			$mstock = doliProductStock($product, true, true);
 			if (isset($_POST['lineid']) && !empty(trim($_POST['lineid']))) $mstock['line'] = trim($_POST['lineid']);
+			/*if (isset($_POST['memberid']) && is_numeric($_POST['memberid']) && $_POST['memberid'] > 0 ) {
+				$memberid = trim($_POST['memberid']);
+			} else {
+				$memberid = doliconnector($current_user, 'fk_member');
+			}
+			$adherent = callDoliApi("GET", "/members/".$memberid, null, dolidelay('member'));
+			$requestb= "/adherentsplus/type/".$adherent->typeid;
+			$adherenttype = callDoliApi("GET", $requestb, null, dolidelay('member'));
+		
+			$price = array();
+			$price['discount'] = 0;
+			$price['subprice'] = $adherenttype->price_prorata;
+			$mstock = doliProductStock($product, false, true, array('options_member_beneficiary' => $adherent->id));
+			$result = doliaddtocart($product, $mstock, 1, $price, $adherenttype->date_begin, $adherenttype->date_end, null, array('options_member_beneficiary' => $adherent->id));
+			*/
 			if (isset($_POST['modify']) && $_POST['modify'] == "delete") { 
 				$price = doliProductPrice($product, 0, false, true);
 				$result = doliaddtocart($product, $mstock, 0, $price, null, null);
@@ -815,7 +830,7 @@ global $current_user;
 					$qty = ceil($qty)*$mstock['step'];
 				}
 				$price = doliProductPrice($product, $qty, false, true);
-				$result = doliaddtocart($product, $mstock, $qty, $price, isset($_POST['product-add-timestamp_start'])?trim($_POST['product-add-timestamp_start']):null, isset($_POST['product-add-timestamp_end'])?trim($_POST['product-add-timestamp_end']):null);
+				$result = doliaddtocart($product, $mstock, $qty, $price, isset($_POST['product-add-timestamp_start'])?trim($_POST['product-add-timestamp_start']):null, isset($_POST['product-add-timestamp_end'])?trim($_POST['product-add-timestamp_end']):null, null, isset($_POST['product-array'])?trim($_POST['product-array']):array());
 				$newqty = $result['newqty'];
 				if (doliCheckModules('relatedproducts') && !empty(doliRequiredRelatedProducts($product->id, null, false))) {
 					$result = doliRequiredRelatedProducts($product->id, $qty, true);
