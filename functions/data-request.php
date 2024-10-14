@@ -787,7 +787,7 @@ global $current_user;
 	if ( wp_verify_nonce( trim($_POST['dolicart-nonce']), 'dolicart-nonce')) {
 		if (isset($_POST['case']) && $_POST['case'] == "updateLine") {
 			$product = callDoliApi("GET", "/products/".trim($_POST['id'])."?includesubproducts=true&includetrans=true", null, dolidelay('product'));
-			$mstock = doliProductStock($product, true, true);
+			$mstock = doliProductStock($product, true, true, isset($_POST['product-array'])?trim($_POST['product-array']):array());
 			if (isset($_POST['lineid']) && !empty(trim($_POST['lineid']))) $mstock['line'] = trim($_POST['lineid']);
 			/*if (isset($_POST['memberid']) && is_numeric($_POST['memberid']) && $_POST['memberid'] > 0 ) {
 				$memberid = trim($_POST['memberid']);
@@ -819,6 +819,38 @@ global $current_user;
 				$response['newwish'] = doliProductCart($product, null, null);  
 				wp_send_json_success($response);	
 				die(); 
+			} elseif (isset($_POST['modify']) && $_POST['modify'] == "membership") { 
+				if (isset($_POST['product-array']['options_member_beneficiary']) && is_numeric($_POST['product-array']['options_member_beneficiary']) && $_POST['product-array']['options_member_beneficiary'] > 0 ) {
+					$memberid = trim($_POST['product-array']['options_member_beneficiary']);
+				} else {
+					$memberid = doliconnector($current_user, 'fk_member');
+				}
+				$adherent = callDoliApi("GET", "/members/".$memberid, null, dolidelay('member'));
+				$requestb= "/adherentsplus/type/".$adherent->typeid;
+				$adherenttype = callDoliApi("GET", $requestb, null, dolidelay('member'));
+				$price = array();
+				$price['discount'] = 0;
+				$price['subprice'] = $adherenttype->price_prorata;
+				$result = doliaddtocart($product, $mstock, 1, $price, $adherenttype->date_begin, $adherenttype->date_end, null, isset($_POST['product-array'])?trim($_POST['product-array']):array());
+				$newqty = $result['newqty'];
+				if (doliCheckModules('relatedproducts') && !empty(doliRequiredRelatedProducts($product->id, null, false))) {
+					$result = doliRequiredRelatedProducts($product->id, $qty, true);
+				}
+				$response = [
+					'items' => $result['items'],
+					'lines' => $result['lines'],
+					'total' => $result['total']
+					];
+				$response['newwish'] = doliProductCart($product, null, null); 
+				if (isset($_POST['DisplayCart']) && !empty($_POST['DisplayCart'])) {
+					$object = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order', true)."?contact_list=0", null, dolidelay('order'));
+					$response['js'] = null;
+					$response['modal'] = doliModalTemplate('CartInfos', __( 'Cart', 'doliconnect'), doliline($object, false, false, false), doliCartButton($object), 'modal-lg');
+				} elseif (doliCheckModules('relatedproducts') && doliCheckRelatedProducts($product->id)) { 
+					$response['modal'] = doliModalTemplate('CartInfos', __( 'Related products', 'doliconnect'), doliRelatedProducts($product->id, true), '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">'.__( "Close", "doliconnect").'</button>', 'modal-lg', null, 'p-0');
+				}
+				wp_send_json_success($response);
+				die();
 			} elseif (isset($_POST['modify']) && ($_POST['modify'] == "plus" || $_POST['modify'] == "minus" || $_POST['modify'] == "modify")) { 
 				if (!is_numeric(trim($_POST['qty']))) $_POST['qty'] = $mstock['qty'];
 				if ($_POST['modify'] == "plus") {
