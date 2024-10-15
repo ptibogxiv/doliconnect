@@ -435,7 +435,7 @@ function doliProductCart($product, $line = null, $refresh = null, $wishlist = tr
         $button .= '<button class="btn btn-sm btn-danger" name="plus" value="plus" type="submit" onclick="doliJavaCartAction(\'updateLine\', '.$product->id.', '.$mstock['line'].', 1, \'membership\');">'.__('Pay my subscription', 'doliconnect').'</button>';
       }
       //$button .= '<input id="qty-prod-'.$product->id.'" type="text" class="form-control form-control-sm" value="'.__('Pay my subscription', 'doliconnect').'" aria-label="'.__( 'Soon', 'doliconnect').'" style="text-align:center;" disabled readonly>';
-        //}
+      $button .= '</div>';
     } else {
       $button .= '<div class="input-group mb-3">';
       if (!empty($mstock['qty'])) $button .= '<button class="btn btn-sm btn-dark" name="delete" value="delete" type="submit" onclick="doliJavaCartAction(\'updateLine\', '.$product->id.', '.$mstock['line'].', 0, \'delete\');"><i class="fa-solid fa-trash-can"></i></button>';
@@ -448,6 +448,7 @@ function doliProductCart($product, $line = null, $refresh = null, $wishlist = tr
       if ( !empty($wishlist) && doliCheckModules('wishlist')) {
         $button .= doliWishlist(doliconnector($current_user, 'fk_soc'), $product->id, $mstock['line'], $refresh);
       } 
+      $button .= '</div>';
       if (isset($mstock['step']) && $mstock['step']>1) $button .= '<div class="form-text" id="basic-addon4"><small>'.sprintf(__( 'Sold by %s', 'doliconnect'), $mstock['step']).'</small></div>';  
     } 
     //$button .= '</div>';
@@ -458,7 +459,7 @@ function doliProductCart($product, $line = null, $refresh = null, $wishlist = tr
       $button .= "<a href='".wp_login_url( get_permalink() )."?redirect_to=".get_permalink()."' class='btn btn-sm btn-outline-secondary' type='button'>".__( 'Sign in', 'doliconnect').'</a>';
     }
   }
-  $button .= '</div></div>';
+  $button .= '</div>';
   return $button;
 }
 
