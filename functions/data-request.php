@@ -827,13 +827,9 @@ global $current_user;
 					'total' => $result['total']
 					];
 				$response['newwish'] = doliProductCart($product, null, null); 
-				if (isset($_POST['DisplayCart']) && !empty($_POST['DisplayCart'])) {
 					$object = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order', true)."?contact_list=0", null, dolidelay('order'));
 					$response['js'] = null;
 					$response['modal'] = doliModalTemplate('CartInfos', __( 'Cart', 'doliconnect'), doliline($object, false, false, false), doliCartButton($object), 'modal-lg');
-				} elseif (doliCheckModules('relatedproducts') && doliCheckRelatedProducts($product->id)) { 
-					$response['modal'] = doliModalTemplate('CartInfos', __( 'Related products', 'doliconnect'), doliRelatedProducts($product->id, true), '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">'.__( "Close", "doliconnect").'</button>', 'modal-lg', null, 'p-0');
-				}
 				wp_send_json_success($response);
 				die();
 			} elseif (isset($_POST['modify']) && ($_POST['modify'] == "plus" || $_POST['modify'] == "minus" || $_POST['modify'] == "modify")) { 
