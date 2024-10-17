@@ -805,8 +805,12 @@ global $current_user;
 				wp_send_json_success($response);	
 				die(); 
 			} elseif (isset($_POST['modify']) && $_POST['modify'] == "membership") { 
-				if (isset($_POST['productarray'])) $_POST['productarray'] = unserialize($_POST['productarray']);
-				if (isset($_POST['productarray']['options_member_beneficiary']) && is_numeric($_POST['productarray']['options_member_beneficiary']) && $_POST['productarray']['options_member_beneficiary'] > 0 ) {
+				if (isset($_POST['productarray'])) {
+					$productarray = unserialize($_POST['productarray']);
+				} else {
+					$productarray = array();
+				}
+				if (isset($productarray['options_member_beneficiary']) && is_numeric($productarray['options_member_beneficiary']) && $productarray['options_member_beneficiary'] > 0 ) {
 					$memberid = trim($_POST['product-array']['options_member_beneficiary']);
 				} else {
 					$memberid = doliconnector($current_user, 'fk_member');
@@ -817,7 +821,7 @@ global $current_user;
 				$price = array();
 				$price['discount'] = 0;
 				$price['subprice'] = $adherenttype->price_prorata;
-				$result = doliaddtocart($product, $mstock, 1, $price, $adherenttype->date_begin, $adherenttype->date_end, null, isset($_POST['productarray'])?trim($_POST['productarray']):array('options_member_beneficiary' => $adherent->id));
+				$result = doliaddtocart($product, $mstock, 1, $price, $adherenttype->date_begin, $adherenttype->date_end, null, isset($productarray)?$productarray:array('options_member_beneficiary' => $adherent->id));
 				$newqty = $result['newqty'];
 				if (doliCheckModules('relatedproducts') && !empty(doliRequiredRelatedProducts($product->id, null, false))) {
 					$result = doliRequiredRelatedProducts($product->id, $qty, true);
