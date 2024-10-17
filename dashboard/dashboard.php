@@ -1694,6 +1694,9 @@ function linkedmember_module( $url ) {
 global $current_user;
 
 $request = "/adherentsplus/".doliconnector($current_user, 'fk_member')."/linkedmembers";
+$productadhesion = doliconst("ADHERENT_PRODUCT_ID_FOR_SUBSCRIPTIONS", dolidelay('constante'));
+$requestp = "/products/".$productadhesion."?includesubproducts=true&includetrans=true";
+$product = callDoliApi("GET", $requestp, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
 if ( isset ($_POST['unlink_member']) && $_POST['unlink_member'] > 0 ) {
 $delete = callDoliApi("DELETE", $request."/".esc_attr($_POST['unlink_member']), null, 0);
@@ -1720,30 +1723,31 @@ print "<form role='form' action='$url' id='doliconnect-linkedmembersform' method
 print '<div class="card shadow-sm"><div class="card-header">'.__( 'Manage linked members', 'doliconnect').'</div>';
 print "<ul class='list-group list-group-flush'>";
 
-if (doliconnector($current_user, 'fk_member') > 0 && !empty(get_option('doliconnectbeta'))) {
-    print doliModalButton('linkedmember', 'addlinkedmember', __( 'New linked member', 'doliconnect'), 'button', 'list-group-item lh-condensed list-group-item-action list-group-item-primary');
-}
+    if (doliconnector($current_user, 'fk_member') > 0 && !empty(get_option('doliconnectbeta'))) {
+        print doliModalButton('linkedmember', 'addlinkedmember', __( 'New linked member', 'doliconnect'), 'button', 'list-group-item lh-condensed list-group-item-action list-group-item-primary');
+    }
 
-if ( isset($linkedmember) && !isset($linkedmember->error) && $linkedmember != null ) { 
-foreach ( $linkedmember as $member ) {                                                                                 
-print "<li class='list-group-item d-flex justify-content-between lh-condensed list-group-item-action'>";
-print doliaddress($member);
-if (1 == 1) {
-print "<div class='col-4 col-sm-3 col-md-2 btn-group-vertical' role='group'>";
-print doliModalButton('linkedmember', 'updatelinkedmember'.$member->id, '<i class="fa-solid fa-edit fa-fw"></i>', 'button', 'btn btn-light text-primary', $member->id);
-print doliModalButton('renewmembership', 'renewlinkedmember'.$member->id, '<i class="fa-solid fa-cart-plus"></i>', 'button', 'btn btn-light text-primary', $member->id);
-print "<button name='unlink_member' value='".$member->id."' class='btn btn-light text-danger' type='submit' title='".__( 'Unlink', 'doliconnect')." ".$member->firstname." ".$member->lastname."'><i class='fas fa-unlink'></i></button>";
-print "</div>";
-}
-print "</li>";
-}
-} else { 
-print "<li class='list-group-item list-group-item-light'><center>".__( 'No linked member', 'doliconnect')."</center></li>";
-}
-print "</form>";
-print '</ul>';
-print doliCardFooter($request, 'member', $linkedmember);
-print '</div>';
+    if ( isset($linkedmember) && !isset($linkedmember->error) && $linkedmember != null ) { 
+        foreach ( $linkedmember as $member ) {                                                                                 
+            print "<li class='list-group-item d-flex justify-content-between lh-condensed list-group-item-action'>";
+            print doliaddress($member);
+            if (1 == 1) {
+                print doliProductCart($product, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+                print "<div class='col-4 col-sm-3 col-md-2 btn-group-vertical' role='group'>";
+                print doliModalButton('linkedmember', 'updatelinkedmember'.$member->id, '<i class="fa-solid fa-edit fa-fw"></i>', 'button', 'btn btn-light text-primary', $member->id);
+                print doliModalButton('renewmembership', 'renewlinkedmember'.$member->id, '<i class="fa-solid fa-cart-plus"></i>', 'button', 'btn btn-light text-primary', $member->id);
+                print "<button name='unlink_member' value='".$member->id."' class='btn btn-light text-danger' type='submit' title='".__( 'Unlink', 'doliconnect')." ".$member->firstname." ".$member->lastname."'><i class='fas fa-unlink'></i></button>";
+                print "</div>";
+            }
+            print "</li>";
+        }
+    } else { 
+        print "<li class='list-group-item list-group-item-light'><center>".__( 'No linked member', 'doliconnect')."</center></li>";
+    }
+    print "</form>";
+    print '</ul>';
+    print doliCardFooter($request, 'member', $linkedmember);
+    print '</div>';
 }
 
 //*****************************************************************************************
