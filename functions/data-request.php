@@ -805,6 +805,7 @@ global $current_user;
 				wp_send_json_success($response);	
 				die(); 
 			} elseif (isset($_POST['modify']) && $_POST['modify'] == "membership") { 
+				if (isset($_POST['productarray'])) $_POST['productarray'] = unserialize($_POST['productarray']);
 				if (isset($_POST['productarray']['options_member_beneficiary']) && is_numeric($_POST['productarray']['options_member_beneficiary']) && $_POST['productarray']['options_member_beneficiary'] > 0 ) {
 					$memberid = trim($_POST['product-array']['options_member_beneficiary']);
 				} else {
