@@ -3288,7 +3288,7 @@ return $ajax;
 function doliModalDiv() {
   print '<div id="doliModalDiv"></div>';
   print '<script type="text/javascript">';
-  print 'function doliJavaCartAction(form, id, lineid, qty, acase) {
+  print 'function doliJavaCartAction(form, id, lineid, qty, productarray, acase) {
           (function ($) {
             $(document).ready(function () {
               var DisplayCart = 0;
@@ -3308,6 +3308,7 @@ function doliModalDiv() {
                   "id" : id,
                   "lineid" : lineid,
                   "qty" : qty,
+                  "productarray" : productarray,
                   "modify" : acase,
                   "DisplayCart" : DisplayCart
                 },

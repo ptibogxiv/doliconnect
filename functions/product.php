@@ -430,21 +430,21 @@ function doliProductCart($product, $line = null, $refresh = null, $wishlist = tr
       } elseif (doliCheckModules('adherent', $refresh) && $product->id == doliconst("ADHERENT_PRODUCT_ID_FOR_SUBSCRIPTIONS", dolidelay('constante'))) {
         $button .= '<div class="btn-group" role="group" aria-label="Basic example">';
         if (!empty($mstock['qty'])) {
-          $button .= '<button class="btn btn-sm btn-dark" name="delete" value="delete" type="submit" onclick="doliJavaCartAction(\'updateLine\', '.$product->id.', '.$mstock['line'].', 0, \'delete\');"><i class="fa-solid fa-trash-can"></i></button>';
+          $button .= '<button class="btn btn-sm btn-dark" name="delete" value="delete" type="submit" onclick="doliJavaCartAction(\'updateLine\', '.$product->id.', '.$mstock['line'].', 0, '.array().', \'delete\');"><i class="fa-solid fa-trash-can"></i></button>';
         } else {
-          $button .= '<button class="btn btn-sm btn-danger" name="plus" value="plus" type="submit" onclick="doliJavaCartAction(\'updateLine\', '.$product->id.', '.$mstock['line'].', 1, \'membership\');">'.__('Pay my subscription', 'doliconnect').'</button>';
+          $button .= '<button class="btn btn-sm btn-danger" name="plus" value="plus" type="submit" onclick="doliJavaCartAction(\'updateLine\', '.$product->id.', '.$mstock['line'].', 1, '.array().', \'membership\');">'.__('Pay my subscription', 'doliconnect').'</button>';
         }
         //$button .= '<input id="qty-prod-'.$product->id.'" type="text" class="form-control form-control-sm" value="'.__('Pay my subscription', 'doliconnect').'" aria-label="'.__( 'Soon', 'doliconnect').'" style="text-align:center;" disabled readonly>';
         $button .= '</div>';
       } else {
         $button .= '<div class="mb-3"><div class="input-group">';
-        if (!empty($mstock['qty'])) $button .= '<button class="btn btn-sm btn-dark" name="delete" value="delete" type="submit" onclick="doliJavaCartAction(\'updateLine\', '.$product->id.', '.$mstock['line'].', 0, \'delete\');"><i class="fa-solid fa-trash-can"></i></button>';
+        if (!empty($mstock['qty'])) $button .= '<button class="btn btn-sm btn-dark" name="delete" value="delete" type="submit" onclick="doliJavaCartAction(\'updateLine\', '.$product->id.', '.$mstock['line'].', 0, '.array().', \'delete\');"><i class="fa-solid fa-trash-can"></i></button>';
 
         $button .= '<button class="btn btn-sm btn-warning';
         if (empty($mstock['qty'])) $button .= ' disabled';
-        $button .= '" name="minus" value="minus" type="submit" onclick="doliJavaCartAction(\'updateLine\', '.$product->id.', '.$mstock['line'].', document.getElementById(\'qty-prod-'.$product->id.'\').value, \'minus\');"><i class="fa-solid fa-minus"></i></button>
-        <input id="qty-prod-'.$product->id.'" type="tel" onchange="doliJavaCartAction(\'updateLine\', '.$product->id.', '.$mstock['line'].', document.getElementById(\'qty-prod-'.$product->id.'\').value, \'modify\');" class="form-control form-control-sm" placeholder="" aria-label="Quantity" value="'.$mstock['qty'].'" style="text-align:center;">
-        <button class="btn btn-sm btn-warning" name="plus" value="plus" type="submit" onclick="doliJavaCartAction(\'updateLine\', '.$product->id.', '.$mstock['line'].', document.getElementById(\'qty-prod-'.$product->id.'\').value, \'plus\');"><i class="fa-solid fa-plus"></i></button>'; 
+        $button .= '" name="minus" value="minus" type="submit" onclick="doliJavaCartAction(\'updateLine\', '.$product->id.', '.$mstock['line'].', document.getElementById(\'qty-prod-'.$product->id.'\').value, '.array().', \'minus\');"><i class="fa-solid fa-minus"></i></button>
+        <input id="qty-prod-'.$product->id.'" type="tel" onchange="doliJavaCartAction(\'updateLine\', '.$product->id.', '.$mstock['line'].', document.getElementById(\'qty-prod-'.$product->id.'\').value, '.array().', \'modify\');" class="form-control form-control-sm" placeholder="" aria-label="Quantity" value="'.$mstock['qty'].'" style="text-align:center;">
+        <button class="btn btn-sm btn-warning" name="plus" value="plus" type="submit" onclick="doliJavaCartAction(\'updateLine\', '.$product->id.', '.$mstock['line'].', document.getElementById(\'qty-prod-'.$product->id.'\').value, '.array().', \'plus\');"><i class="fa-solid fa-plus"></i></button>'; 
         if ( !empty($wishlist) && doliCheckModules('wishlist')) {
           $button .= doliWishlist(doliconnector($current_user, 'fk_soc'), $product->id, $mstock['line'], $refresh);
         } 
