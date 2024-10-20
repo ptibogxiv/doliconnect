@@ -1732,7 +1732,7 @@ print "<ul class='list-group list-group-flush'>";
             print "<li class='list-group-item d-flex justify-content-between lh-condensed list-group-item-action'>";
             print doliaddress($member);
             if (1 == 1) {
-                print doliProductCart($product, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+                print doliProductCart($product, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), false, array('options_member_beneficiary' => $member->id));
                 print "<div class='col-4 col-sm-3 col-md-2 btn-group-vertical' role='group'>";
                 print doliModalButton('linkedmember', 'updatelinkedmember'.$member->id, '<i class="fa-solid fa-edit fa-fw"></i>', 'button', 'btn btn-light text-primary', $member->id);
                 print doliModalButton('renewmembership', 'renewlinkedmember'.$member->id, '<i class="fa-solid fa-cart-plus"></i>', 'button', 'btn btn-light text-primary', $member->id);
