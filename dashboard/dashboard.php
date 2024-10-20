@@ -1718,7 +1718,7 @@ $linkedmember= callDoliApi("GET", $request, null, dolidelay('member', esc_attr(i
 
 }
 
-print "<form role='form' action='$url' id='doliconnect-linkedmembersform' method='post'>";                      
+//print "<form role='form' action='$url' id='doliconnect-linkedmembersform' method='post'>";                      
  
 print '<div class="card shadow-sm"><div class="card-header">'.__( 'Manage linked members', 'doliconnect').'</div>';
 print "<ul class='list-group list-group-flush'>";
@@ -1744,7 +1744,7 @@ print "<ul class='list-group list-group-flush'>";
     } else { 
         print "<li class='list-group-item list-group-item-light'><center>".__( 'No linked member', 'doliconnect')."</center></li>";
     }
-    print "</form>";
+    //print "</form>";
     print '</ul>';
     print doliCardFooter($request, 'member', $linkedmember);
     print '</div>';
