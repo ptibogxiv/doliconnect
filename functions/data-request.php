@@ -821,7 +821,7 @@ global $current_user;
 				$price = array();
 				$price['discount'] = 0;
 				$price['subprice'] = $adherenttype->price_prorata;
-				$result = doliaddtocart($product, $mstock, 1, $price, $adherenttype->date_begin, $adherenttype->date_end, null, isset($productarray)?$productarray:array('options_member_beneficiary' => $adherent->id));
+				$result = doliaddtocart($product, $mstock, 1, $price, $adherenttype->date_begin, $adherenttype->date_end, null, $productarray);
 				$newqty = $result['newqty'];
 				if (doliCheckModules('relatedproducts') && !empty(doliRequiredRelatedProducts($product->id, null, false))) {
 					$result = doliRequiredRelatedProducts($product->id, $qty, true);
