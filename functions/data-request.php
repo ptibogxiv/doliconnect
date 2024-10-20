@@ -806,7 +806,7 @@ global $current_user;
 				die(); 
 			} elseif (isset($_POST['modify']) && $_POST['modify'] == "membership") { 
 				if (isset($_POST['productarray'])) {
-					$productarray = unserialize($_POST['productarray']);
+					$productarray = json_decode(unserialize($_POST['productarray']));
 				} else {
 					$productarray = array();
 				}
