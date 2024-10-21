@@ -806,7 +806,7 @@ global $current_user;
 				die(); 
 			} elseif (isset($_POST['modify']) && $_POST['modify'] == "membership") { 
 				if (isset($_POST['productarray'])) {
-					$productarray = trim($_POST['productarray']);
+					$productarray = $_POST['productarray'];
 				} else {
 					$productarray = array();
 				}
@@ -839,7 +839,7 @@ global $current_user;
 				die();
 			} elseif (isset($_POST['modify']) && ($_POST['modify'] == "plus" || $_POST['modify'] == "minus" || $_POST['modify'] == "modify")) { 
 				if (isset($_POST['productarray'])) {
-					$productarray = trim($_POST['productarray']);
+					$productarray = $_POST['productarray'];
 				} else {
 					$productarray = array();
 				}
