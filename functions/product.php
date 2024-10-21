@@ -118,16 +118,17 @@ global $current_user;
   } else {
     $shipping = null;
   }  
-  
+  $array_options2 = array();
   $array = callDoliApi("GET", "/setup/extrafields?sortfield=t.pos&sortorder=ASC&elementtype=commandedet", null, dolidelay('constante'));  
   if ( isset($array->commandedet) && $array->commandedet != null ) {
       foreach ($array->commandedet as $name => $value) {
         $name = 'options_'.$name;
         if (is_array($array_options) && !isset($array_options[$name])) {
-          $array_options[$name] = $value->default;
+          $array_options2[$name] = $value->default;
         }
       }
   }
+  $array_options = array_merge($array_options2, $array_options);
 
   if (isset($fk_line->id) && !empty($fk_line)) {
     $linearray_options = (array) $fk_line->array_options;
@@ -145,7 +146,7 @@ global $current_user;
            $mstock['line'] = $line->id;
            $mstock['array_options'] = $linearray_options;
            $mstock['fk_parent_line'] = $line->fk_parent_line;
-        } elseif (isset($product->id) && $line->fk_product == $product->id && $linearray_options == $array_options) { 
+        } elseif (isset($product->id) && $line->fk_product == $product->id && $linearray_options == $array_options) {
           $mstock['qty'] = $line->qty;
           $mstock['line'] = $line->id;
           $mstock['array_options'] = $linearray_options;
@@ -727,7 +728,7 @@ $list .= '</p></div>';
 if ( ! empty(doliconnectid('dolicart')) ) { 
 $list .= "<div class='col-12 col-md-4'><center>";
 $list .= doliProductPrice($product, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
-$list .= doliProductCart($product, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true, $fk_parent_line);
+$list .= doliProductCart($product, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true, array(), $fk_parent_line);
 $list .= "</center></div>";
 }
 $list .= "</div></td></tr></table></li>";
