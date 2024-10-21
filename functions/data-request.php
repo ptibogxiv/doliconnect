@@ -806,7 +806,7 @@ global $current_user;
 				die(); 
 			} elseif (isset($_POST['modify']) && $_POST['modify'] == "membership") { 
 				if (isset($_POST['productarray'])) {
-					$productarray = $_POST['productarray'];
+					$productarray = trim($_POST['productarray']);
 				} else {
 					$productarray = array();
 				}
@@ -838,6 +838,11 @@ global $current_user;
 				wp_send_json_success($response);
 				die();
 			} elseif (isset($_POST['modify']) && ($_POST['modify'] == "plus" || $_POST['modify'] == "minus" || $_POST['modify'] == "modify")) { 
+				if (isset($_POST['productarray'])) {
+					$productarray = trim($_POST['productarray']);
+				} else {
+					$productarray = array();
+				}
 				if (!is_numeric(trim($_POST['qty']))) $_POST['qty'] = $mstock['qty'];
 				if ($_POST['modify'] == "plus") {
 					$qty = trim($_POST['qty'])+$mstock['step'];
@@ -848,7 +853,7 @@ global $current_user;
 					$qty = ceil($qty)*$mstock['step'];
 				}
 				$price = doliProductPrice($product, $qty, false, true);
-				$result = doliaddtocart($product, $mstock, $qty, $price, isset($_POST['product-add-timestamp_start'])?trim($_POST['product-add-timestamp_start']):null, isset($_POST['product-add-timestamp_end'])?trim($_POST['product-add-timestamp_end']):null, null, isset($_POST['product-array'])?trim($_POST['product-array']):array());
+				$result = doliaddtocart($product, $mstock, $qty, $price, isset($_POST['product-add-timestamp_start'])?trim($_POST['product-add-timestamp_start']):null, isset($_POST['product-add-timestamp_end'])?trim($_POST['product-add-timestamp_end']):null, null, $productarray);
 				$newqty = $result['newqty'];
 				if (doliCheckModules('relatedproducts') && !empty(doliRequiredRelatedProducts($product->id, null, false))) {
 					$result = doliRequiredRelatedProducts($product->id, $qty, true);
