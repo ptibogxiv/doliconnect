@@ -769,14 +769,13 @@ $idobject=$mode."[".$object->id."]";
 $company = callDoliApi("GET", "/setup/company", null, dolidelay('constante'));
 
 $doliuser = "<ul class='list-group list-group-flush'>";
-if ( in_array($mode, array('thirdparty')) ) { //|| $mode == 'member'
+if ( isset($object) && in_array($mode, array('thirdparty')) ) {
   $doliuser .= '<li class="list-group-item list-group-item-light list-group-item-action">';
-  $doliuser .= '<div class="form-floating"><input type="text" class="form-control" placeholder="'.__( 'Status', 'doliconnect').'" value="';
+  $doliuser .= '<div class="input-group"><span class="input-group-text">'.__( 'Status', 'doliconnect').'</span><input type="text" class="form-control" placeholder="'.__( 'Status', 'doliconnect').'" value="';
   if ($object->client == 1) {
     $doliuser .= __( 'Customer', 'doliconnect');
   }
-  $doliuser .= '" disabled>';
-  $doliuser .= '<label for="'.$idobject.'[name]"><i class="fas fa-building fa-fw"></i> '.__( 'Status', 'doliconnect').'</label></div>';   
+  $doliuser .= '" disabled></div>';   
   $doliuser .= '</li>';
 }
 if ( ! isset($object) && in_array($mode, array('thirdparty')) && empty(get_option('doliconnect_disablepro')) ) {
@@ -787,7 +786,7 @@ elseif (get_option('doliconnect_disablepro') != 'phy') {
 $doliuser .= "<input type='hidden' id='morphy' name='".$idobject."[morphy]' value='phy'>";
 }
 $doliuser .= "<li class='list-group-item list-group-item-light list-group-item-action'>";
-} elseif ( isset($object) && in_array($mode, array('thirdparty')) && empty(get_option('doliconnect_disablepro')) ) { //|| $mode == 'member'
+} elseif ( isset($object) && in_array($mode, array('thirdparty')) && empty(get_option('doliconnect_disablepro')) ) {
 $doliuser .= "<li class='list-group-item list-group-item-light list-group-item-action'><div class='form-row'><div class='col-12'><label for='inputMorphy'><small><i class='fas fa-user-tag fa-fw'></i> ".__( 'Type of account', 'doliconnect')."</small></label><br>";
 $doliuser .= "<div class='form-check form-check-inline'><input type='radio' id='morphy1' name='".$idobject."[morphy]' value='phy' class='form-check-input'";
 if ( $current_user->billing_type != 'mor' || empty($current_user->billing_type) ) { $doliuser .= " checked"; }
