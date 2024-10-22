@@ -770,7 +770,14 @@ $company = callDoliApi("GET", "/setup/company", null, dolidelay('constante'));
 
 $doliuser = "<ul class='list-group list-group-flush'>";
 if ( in_array($mode, array('thirdparty')) ) { //|| $mode == 'member'
-  $doliuser .= '<li class="list-group-item list-group-item-light list-group-item-action">'.__( 'Status', 'doliconnect').' '.$object->client.'</li>';
+  $doliuser .= '<li class="list-group-item list-group-item-light list-group-item-action">';
+  $doliuser .= '<div class="form-floating"><input type="text" class="form-control" placeholder="'.__( 'Status', 'doliconnect').'" value="';
+  if ($object->client == 1) {
+    $doliuser .= __( 'Customer', 'doliconnect');
+  }
+  $doliuser .= '" disabled>';
+  $doliuser .= '<label for="'.$idobject.'[name]"><i class="fas fa-building fa-fw"></i> '.__( 'Status', 'doliconnect').'</label></div>';   
+  $doliuser .= '</li>';
 }
 if ( ! isset($object) && in_array($mode, array('thirdparty')) && empty(get_option('doliconnect_disablepro')) ) {
 if ( isset($_GET["morphy"]) && $_GET["morphy"] == 'mor' && get_option('doliconnect_disablepro') != 'mor' ) {                                                                                                                                                                                                                                                                                                                                   
