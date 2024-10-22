@@ -435,7 +435,6 @@ function doliProductCart($product, $line = null, $refresh = null, $wishlist = tr
         } else {
           $button .= "<button class='btn btn-sm btn-danger' name='plus' value='plus' type='submit' onclick='doliJavaCartAction(\"updateLine\", ".$product->id.", ".$mstock['line'].", 1, ".json_encode($linearray_options, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES).", \"membership\");'>".__('Pay my subscription', 'doliconnect')."</button>";
         }
-        //$button .= '<input id="qty-prod-'.$product->id.'" type="text" class="form-control form-control-sm" value="'.__('Pay my subscription', 'doliconnect').'" aria-label="'.__( 'Soon', 'doliconnect').'" style="text-align:center;" disabled readonly>';
         $button .= '</div>';
       } else {
         $button .= '<div class="mb-3"><div class="input-group">';
