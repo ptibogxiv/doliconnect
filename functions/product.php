@@ -439,7 +439,7 @@ function doliProductCart($product, $line = null, $refresh = null, $wishlist = tr
         $button .= '</div>';
       } else {
         $button .= '<div class="mb-3"><div class="input-group">';
-        if (!empty($mstock['qty'])) $button .= '<button class="btn btn-sm btn-dark" name="delete" value="delete" type="submit" onclick="doliJavaCartAction(\'updateLine\', '.$product->id.', '.$mstock['line'].', 0, \''.json_encode($linearray_options, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES).'\', \'delete\');"><i class="fa-solid fa-trash-can"></i></button>';
+        if (!empty($mstock['qty'])) $button .= "<button class='btn btn-sm btn-dark' name='delete' value='delete' type='submit' onclick='doliJavaCartAction(\"updateLine\", ".$product->id.", ".$mstock['line'].", 0, ".json_encode($linearray_options, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES).", \"delete\");'><i class='fa-solid fa-trash-can'></i></button>";
 
         $button .= '<button class="btn btn-sm btn-warning';
         if (empty($mstock['qty'])) $button .= ' disabled';
