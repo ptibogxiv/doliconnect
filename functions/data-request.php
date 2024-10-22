@@ -811,7 +811,7 @@ global $current_user;
 					$productarray = array();
 				}
 				if (isset($productarray['options_member_beneficiary']) && is_numeric($productarray['options_member_beneficiary']) && $productarray['options_member_beneficiary'] > 0 ) {
-					$memberid = trim($_POST['product-array']['options_member_beneficiary']);
+					$memberid = $productarray['options_member_beneficiary'];
 				} else {
 					$memberid = doliconnector($current_user, 'fk_member');
 				}
