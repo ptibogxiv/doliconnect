@@ -394,14 +394,14 @@ function doliWishlist($thirdpartyid, $productid, $lineid, $refresh = false, $noh
   $object = callDoliApi("GET", $request, null, dolidelay('product', $refresh));
   if ( doliversion('19.0.0') && isset($object->data) ) { $wishlist = $object->data; } else { $wishlist = $object; }
   if (!$nohtml) {
-    $wish = '<button class="btn btn-sm btn-light" id="wish-prod-'.$productid.'" value="wish" type="submit" onclick="doliJavaCartAction(\'updateLine\', '.$productid.', '.$lineid.', 1, \'wish\');"><i class="fa-regular fa-heart"></i></button>';
+    $wish = '<button class="btn btn-sm btn-light" id="wish-prod-'.$productid.'" value="wish" type="submit" onclick="doliJavaCartAction(\'updateLine\', '.$productid.', '.$lineid.', 1, null, \'wish\');"><i class="fa-regular fa-heart"></i></button>';
   } else {
     $wish = false;
   }
   foreach ($wishlist as $wsh) {
     if (isset($wsh->fk_product) && $productid == $wsh->fk_product) {
       if (!$nohtml) {
-        $wish = '<button class="btn btn-sm btn-light" id="wish-prod-'.$productid.'" value="wish" type="submit" onclick="doliJavaCartAction(\'updateLine\', '.$productid.', '.$lineid.', 1, \'wish\');"><i class="fa-solid fa-heart" style="color:Fuchsia"></i></button>';
+        $wish = '<button class="btn btn-sm btn-light" id="wish-prod-'.$productid.'" value="wish" type="submit" onclick="doliJavaCartAction(\'updateLine\', '.$productid.', '.$lineid.', 1, null, \'wish\');"><i class="fa-solid fa-heart" style="color:Fuchsia"></i></button>';
       } else {
         $wish = $wsh->id;
       }
