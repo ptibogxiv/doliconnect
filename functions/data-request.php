@@ -831,7 +831,7 @@ global $current_user;
 					'lines' => $result['lines'],
 					'total' => $result['total']
 					];
-				$response['newwish'] = doliProductCart($product, null, null); 
+				$response['newwish'] = doliProductCart($product, null, null, true, $productarray);
 					$object = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order', true)."?contact_list=0", null, dolidelay('order'));
 					$response['js'] = null;
 					$response['modal'] = doliModalTemplate('CartInfos', __( 'Cart', 'doliconnect'), doliline($object, false, false, false), doliCartButton($object), 'modal-lg');
@@ -863,7 +863,7 @@ global $current_user;
 					'lines' => $result['lines'],
 					'total' => $result['total']
 					];
-				$response['newwish'] = doliProductCart($product, null, null); 
+				$response['newwish'] = doliProductCart($product, null, null, true, $productarray);
 				if (isset($_POST['DisplayCart']) && !empty($_POST['DisplayCart'])) {
 					$object = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order', true)."?contact_list=0", null, dolidelay('order'));
 					$response['js'] = null;
