@@ -128,7 +128,7 @@ global $current_user;
         }
       }
   }
-  $array_options = array_merge($array_options2, $array_options);
+  if (isset($array_options) && is_array($array_options)) $array_options = array_merge($array_options2, $array_options);
 
   if (isset($fk_line->id) && !empty($fk_line)) {
     $linearray_options = (array) $fk_line->array_options;
@@ -439,13 +439,13 @@ function doliProductCart($product, $line = null, $refresh = null, $wishlist = tr
         $button .= '</div>';
       } else {
         $button .= '<div class="mb-3"><div class="input-group">';
-        if (!empty($mstock['qty'])) $button .= '<button class="btn btn-sm btn-dark" name="delete" value="delete" type="submit" onclick="doliJavaCartAction(\'updateLine\', '.$product->id.', '.$mstock['line'].', 0, \''.serialize($linearray_options).'\', \'delete\');"><i class="fa-solid fa-trash-can"></i></button>';
+        if (!empty($mstock['qty'])) $button .= '<button class="btn btn-sm btn-dark" name="delete" value="delete" type="submit" onclick="doliJavaCartAction(\'updateLine\', '.$product->id.', '.$mstock['line'].', 0, \''.json_encode($linearray_options, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES).'\', \'delete\');"><i class="fa-solid fa-trash-can"></i></button>';
 
         $button .= '<button class="btn btn-sm btn-warning';
         if (empty($mstock['qty'])) $button .= ' disabled';
-        $button .= '" name="minus" value="minus" type="submit" onclick="doliJavaCartAction(\'updateLine\', '.$product->id.', '.$mstock['line'].', document.getElementById(\'qty-prod-'.$product->id.'\').value, \''.serialize($linearray_options).'\', \'minus\');"><i class="fa-solid fa-minus"></i></button>
-        <input id="qty-prod-'.$product->id.'" type="tel" onchange="doliJavaCartAction(\'updateLine\', '.$product->id.', '.$mstock['line'].', document.getElementById(\'qty-prod-'.$product->id.'\').value, \''. serialize($linearray_options).'\', \'modify\');" class="form-control form-control-sm" placeholder="" aria-label="Quantity" value="'.$mstock['qty'].'" style="text-align:center;">
-        <button class="btn btn-sm btn-warning" name="plus" value="plus" type="submit" onclick="doliJavaCartAction(\'updateLine\', '.$product->id.', '.$mstock['line'].', document.getElementById(\'qty-prod-'.$product->id.'\').value, \''.serialize($linearray_options).'\', \'plus\');"><i class="fa-solid fa-plus"></i></button>'; 
+        $button .= '" name="minus" value="minus" type="submit" onclick="doliJavaCartAction(\'updateLine\', '.$product->id.', '.$mstock['line'].', document.getElementById(\'qty-prod-'.$product->id.'\').value, \''.json_encode($linearray_options, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES).'\', \'minus\');"><i class="fa-solid fa-minus"></i></button>
+        <input id="qty-prod-'.$product->id.'" type="tel" onchange="doliJavaCartAction(\'updateLine\', '.$product->id.', '.$mstock['line'].', document.getElementById(\'qty-prod-'.$product->id.'\').value, \''.json_encode($linearray_options, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES).'\', \'modify\');" class="form-control form-control-sm" placeholder="" aria-label="Quantity" value="'.$mstock['qty'].'" style="text-align:center;">
+        <button class="btn btn-sm btn-warning" name="plus" value="plus" type="submit" onclick="doliJavaCartAction(\'updateLine\', '.$product->id.', '.$mstock['line'].', document.getElementById(\'qty-prod-'.$product->id.'\').value, \''.json_encode($linearray_options, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES).'\', \'plus\');"><i class="fa-solid fa-plus"></i></button>'; 
         if ( !empty($wishlist) && doliCheckModules('wishlist')) {
           $button .= doliWishlist(doliconnector($current_user, 'fk_soc'), $product->id, $mstock['line'], $refresh);
         } 

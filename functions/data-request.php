@@ -853,7 +853,7 @@ global $current_user;
 					$qty = ceil($qty)*$mstock['step'];
 				}
 				$price = doliProductPrice($product, $qty, false, true);
-				$result = doliaddtocart($product, $mstock, $qty, $price, isset($_POST['product-add-timestamp_start'])?trim($_POST['product-add-timestamp_start']):null, isset($_POST['product-add-timestamp_end'])?trim($_POST['product-add-timestamp_end']):null, null, $productarray);
+				$result = doliaddtocart($product, $mstock, $qty, $price, isset($_POST['product-add-timestamp_start'])?trim($_POST['product-add-timestamp_start']):null, isset($_POST['product-add-timestamp_end'])?trim($_POST['product-add-timestamp_end']):null, null, isset($_POST['product-array'])?trim($_POST['product-array']):array());
 				$newqty = $result['newqty'];
 				if (doliCheckModules('relatedproducts') && !empty(doliRequiredRelatedProducts($product->id, null, false))) {
 					$result = doliRequiredRelatedProducts($product->id, $qty, true);
