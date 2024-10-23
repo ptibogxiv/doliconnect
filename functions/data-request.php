@@ -885,12 +885,12 @@ global $current_user;
 					$addwish = callDoliApi("POST", "/wishlist", $data, 0);
 					$wish = doliWishlist(doliconnector($current_user, 'fk_soc'), trim($_POST['id']), trim($_POST['lineid']), true, false);
 					$mstock = doliProductStock($product, true, true);
-					$response['newwish'] = doliProductCart($product, null, null); 
+					$response['newwish'] = doliProductCart($product, $result['line'], true); 
 				} elseif (!empty($wish)) {
 					$deletewish = callDoliApi("DELETE", "/wishlist/".$wish, null, 0);
 					$wish = doliWishlist(doliconnector($current_user, 'fk_soc'), trim($_POST['id']), trim($_POST['lineid']), true, false);
 					$mstock = doliProductStock($product, true, true);
-					$response['newwish'] = doliProductCart($product, null, null); 
+					$response['newwish'] = doliProductCart($product, $result['line'], true); 
 				}
 				wp_send_json_success($response);			
 				die(); 
