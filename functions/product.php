@@ -134,6 +134,7 @@ global $current_user;
     $linearray_options = (array) $fk_line->array_options;
     $mstock['qty'] = $fk_line->qty;
     $mstock['lineid'] = $fk_line->id;
+    $mstock['line'] = $line;
     $mstock['array_options'] = $linearray_options;
     $mstock['fk_parent_line'] = $fk_line->fk_parent_line;
   } elseif (doliconnector($current_user, 'fk_order') > 0) {
@@ -144,11 +145,13 @@ global $current_user;
         if (isset($product->id) && $line->fk_product == $product->id && isset($fk_line->id) && $line->id == $fk_line->id ) {
            $mstock['qty'] = $line->qty;
            $mstock['lineid'] = $line->id;
+           $mstock['line'] = $line;
            $mstock['array_options'] = $linearray_options;
            $mstock['fk_parent_line'] = $line->fk_parent_line;
         } elseif (isset($product->id) && $line->fk_product == $product->id && $linearray_options == $array_options) {
           $mstock['qty'] = $line->qty;
           $mstock['lineid'] = $line->id;
+          $mstock['line'] = $line;
           $mstock['array_options'] = $linearray_options;
           $mstock['fk_parent_line'] = $line->fk_parent_line;
         }
@@ -157,6 +160,7 @@ global $current_user;
   } else {
     $mstock['qty'] = 0;
     $mstock['lineid'] = 0;
+    $mstock['line'] = null;
     $mstock['array_options'] = $array_options;
     $mstock['fk_parent_line'] = null;
   }
@@ -164,6 +168,7 @@ global $current_user;
   if (!isset($mstock['qty']) ) {
     $mstock['qty'] = 0;
     $mstock['lineid'] = 0;
+    $mstock['line'] = null;
     $mstock['array_options'] = $array_options;
     $mstock['fk_parent_line'] = null;
   }
@@ -326,7 +331,7 @@ global $current_user;
     $response['message'] = __( 'This item has been added to basket', 'doliconnect');
     $response['items'] = doliconnect_countitems($order);
     $response['lines'] = doliline($order);
-    $response['line'] = $updateline;
+    $response['line'] = doliProductStock($product, true, true, $array_options)['line'];
     if (empty($relatedproduct)) $response['newqty'] = $quantity;
     $response['total'] = doliprice($order, 'ttc', isset($order->multicurrency_code) ? $order->multicurrency_code : null);
     return $response;
@@ -375,7 +380,7 @@ global $current_user;
       $response['message'] = __( 'Quantities have been changed', 'doliconnect');
       $response['items'] = doliconnect_countitems($order);
       $response['lines'] = doliline($order);
-      $response['line'] = $updateline;
+      $response['line'] = doliProductStock($product, true, true, $array_options)['line'];
       if (empty($relatedproduct)) $response['newqty'] = $quantity;
       $response['total'] = doliprice($order, 'ttc', isset($order->multicurrency_code) ? $order->multicurrency_code : null);
       return $response;
