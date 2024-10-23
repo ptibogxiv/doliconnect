@@ -32,7 +32,7 @@ function doliRequiredRelatedProducts($id, $qty = null, $valid = false) {
 
 function doliCheckRelatedProducts($id) {
   $request = "/relatedproducts/".$id;
-  $relatedproducts = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
+  $relatedproducts = callDoliApi("GET", $request, null, dolidelay('product'));  
   if ( !isset( $relatedproducts->error ) && $relatedproducts != null ) {
       return true;
   } else {
