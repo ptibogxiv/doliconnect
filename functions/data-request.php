@@ -789,6 +789,11 @@ global $current_user;
 			$product = callDoliApi("GET", "/products/".trim($_POST['id'])."?includesubproducts=true&includetrans=true", null, dolidelay('product'));
 			$mstock = doliProductStock($product, true, true, isset($_POST['product-array'])?$_POST['product-array']:array());
 			if (isset($_POST['lineid']) && !empty(trim($_POST['lineid']))) $mstock['lineid'] = trim($_POST['lineid']);
+			if (isset($_POST['productarray'])) {
+					$productarray = $_POST['productarray'];
+				} else {
+					$productarray = array();
+				}
 			if (isset($_POST['modify']) && $_POST['modify'] == "delete") { 
 				$price = doliProductPrice($product, 0, false, true);
 				$result = doliaddtocart($product, $mstock, 0, $price, null, null);
@@ -805,11 +810,6 @@ global $current_user;
 				wp_send_json_success($response);	
 				die(); 
 			} elseif (isset($_POST['modify']) && $_POST['modify'] == "membership") { 
-				if (isset($_POST['productarray'])) {
-					$productarray = $_POST['productarray'];
-				} else {
-					$productarray = array();
-				}
 				if (isset($productarray['options_member_beneficiary']) && is_numeric($productarray['options_member_beneficiary']) && $productarray['options_member_beneficiary'] > 0 ) {
 					$memberid = $productarray['options_member_beneficiary'];
 				} else {
@@ -838,11 +838,6 @@ global $current_user;
 				wp_send_json_success($response);
 				die();
 			} elseif (isset($_POST['modify']) && ($_POST['modify'] == "plus" || $_POST['modify'] == "minus" || $_POST['modify'] == "modify")) { 
-				if (isset($_POST['productarray'])) {
-					$productarray = $_POST['productarray'];
-				} else {
-					$productarray = array();
-				}
 				if (!is_numeric(trim($_POST['qty']))) $_POST['qty'] = $mstock['qty'];
 				if ($_POST['modify'] == "plus") {
 					$qty = trim($_POST['qty'])+$mstock['step'];
