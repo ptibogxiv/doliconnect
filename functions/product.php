@@ -294,7 +294,7 @@ global $current_user;
     $response['message'] = __( 'This item has been deleted to basket', 'doliconnect');
     $response['items'] = doliconnect_countitems($order);
     $response['lines'] = doliline($order);
-    $response['line'] = null;
+    $response['line'] = doliProductStock($product, true, true, $array_options)['line'];
     if (empty($relatedproduct)) $response['newqty'] = $quantity;
     $response['total'] = doliprice($order, 'ttc', isset($order->multicurrency_code) ? $order->multicurrency_code : null);
     return $response;
