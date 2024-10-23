@@ -412,7 +412,7 @@ function doliWishlist($thirdpartyid, $productid, $lineid, $refresh = false, $noh
 
 function doliProductCart($product, $line = null, $refresh = null, $wishlist = true, $array_options = array()) {
   global $current_user;
-  if (isset($line->array_options)) { 
+  if (is_object($line) && isset($line->array_options)) { 
     $lineid = $line->id;
     $linearray_options = (array) $line->array_options;
   }  else {
