@@ -1424,7 +1424,6 @@ $(document).ready(function(){
 $('#purgebtn_cart, #validatebtn_cart').on('click',function(event){
   event.preventDefault();
   event.stopPropagation();
-//$('#DoliconnectLoadingModal').modal('show');
 var actionvalue = $(this).val();
         $.ajax({
           url: '".esc_url( admin_url( 'admin-ajax.php' ) )."',
