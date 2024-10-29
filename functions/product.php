@@ -842,7 +842,7 @@ global $current_user;
         }
       }
 
-      $card .= '</div></div>';
+      $card .= '</div>';
     } else {
       $card .= '<div class="col-12"><p><center>'.__( 'Item not in sale', 'doliconnect' ).'</center></p></div>';
     } 
