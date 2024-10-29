@@ -774,15 +774,15 @@ if (in_array($mode, array('thirdparty')) ) {
   $doliuser .= '<div class="input-group"><span class="input-group-text">'.__( 'Status', 'doliconnect').'</span>';
   if (!isset($object->client) || (isset($object->client) && !empty($object->client))) {
     $doliuser .= '<select class="form-select" id="client" name="'.$idobject.'[client]" disabled><option value="1"';
-    if ((!isset($object->client) && 1 == 1) || (isset($object->client) && $object->client == 1)) { 
+    if ((!isset($object->client) && get_option('doliDefaultclient') == 1) || (isset($object->client) && $object->client == 1)) { 
       $doliuser .= ' selected';
     }
     $doliuser .= '>'.__( 'Customer', 'doliconnect').'</option><option value="2"';
-    if (isset($object->client) && $object->client == 2) { 
+    if ((!isset($object->client) && get_option('doliDefaultclient') == 2) || (isset($object->client) && $object->client == 2)) { 
       $doliuser .= ' selected';
     }
     $doliuser .= '>'.__( 'Prospect', 'doliconnect').'</option><option value="3"';
-    if (isset($object->client) && $object->client == 3) { 
+    if ((!isset($object->client) && get_option('doliDefaultclient') == 3) || (isset($object->client) && $object->client == 3)) { 
       $doliuser .= ' selected';
     }
     $doliuser .= '>'.__( 'Customer and Prospect', 'doliconnect').'</option>';
