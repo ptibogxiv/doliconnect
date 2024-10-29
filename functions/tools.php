@@ -69,7 +69,7 @@ if (isset($user) && !empty($user)) {
 
 //add_action( 'init', 'doliConnect', 10, 2);
 //add_action( 'admin_init', 'doliConnect', 5, 2); 
-function doliConnect($fonction, $current_user = null, $boolean = false) {
+function doliConnect($fonction, $current_user = null, $boolean = false, $refresh = false) {
   if ( empty($current_user) ) {
       global $current_user;  
   }
@@ -772,7 +772,7 @@ $doliuser = "<ul class='list-group list-group-flush'>";
 if (in_array($mode, array('thirdparty')) ) {
   $doliuser .= '<li class="list-group-item list-group-item-light list-group-item-action">';
   $doliuser .= '<div class="input-group"><span class="input-group-text">'.__( 'Status', 'doliconnect').'</span>';
-  $doliuser .= '<select class="form-select" id="client" name="'.$idobject.'[client]"><option value="1"';
+  $doliuser .= '<select class="form-select" id="client" name="'.$idobject.'[client]" disabled><option value="1"';
   if ((!isset($object->client) && 1 == 1) || (isset($object->client) && $object->client == 1)) { 
     $doliuser .= ' selected';
   }
