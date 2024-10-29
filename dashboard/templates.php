@@ -582,7 +582,7 @@ function dolifaq_display($content) {
       if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']); }  else { $page = 0; }
       $request = "/knowledgemanagement/knowledgerecords?sortfield=t.rowid&sortorder=ASC&limit=".$limit."&page=".$page."&pagination_data=true&sqlfilters=(t.status%3A%3D%3A'1')%20and%20((t.lang%3A%3D%3A'0')%20or%20(t.lang%3A%3D%3A'".doliUserLang($current_user)."'))";
       if (isset($_GET['category']) && is_numeric(esc_attr($_GET['category'])) && esc_attr($_GET['category']) > 0 ) $request .= "&category=".esc_attr($_GET['category']);
-      $object = callDoliApi("GET", $request, null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+      $object = callDoliApi("GET", $request, null, dolidelay('knowledgemanagement', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
       if ( doliversion('21.0.0') && isset($object->data) ) { $listfaq = $object->data; } else { $listfaq = $object; }
 
       $url = doliconnecturl('dolifaq');

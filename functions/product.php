@@ -134,7 +134,7 @@ global $current_user;
     $linearray_options = (array) $fk_line->array_options;
     $mstock['qty'] = $fk_line->qty;
     $mstock['lineid'] = $fk_line->id;
-    $mstock['line'] = $line;
+    $mstock['line'] = $fk_line;
     $mstock['array_options'] = $linearray_options;
     $mstock['fk_parent_line'] = $fk_line->fk_parent_line;
   } elseif (doliconnector($current_user, 'fk_order') > 0) {
