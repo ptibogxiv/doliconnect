@@ -396,7 +396,12 @@ global $current_user;
   }
 }
 
-function doliWishlist($thirdpartyid, $productid, $lineid, $refresh = false, $nohtml = false) {
+function doliWishlist($thirdparty, $productid, $lineid, $refresh = false, $nohtml = false) {
+  if (isset($thirdparty->id)) {
+    $thirdpartyid = $thirdparty->id;
+  } else {
+    $thirdpartyid = null;
+  }
   $request = "/wishlist?sortfield=p.label&sortorder=ASC&thirdparty_ids=".$thirdpartyid."&pagination_data=true&sqlfilters=(t.priv%3A%3D%3A0)";
   $object = callDoliApi("GET", $request, null, dolidelay('product', $refresh));
   if ( doliversion('19.0.0') && isset($object->data) ) { $wishlist = $object->data; } else { $wishlist = $object; }
@@ -426,6 +431,7 @@ function doliProductCart($product, $line = null, $refresh = null, $wishlist = tr
     $lineid = 0;
     $linearray_options = $array_options;
   }
+  $thirdparty = doliConnect('thirdparty', $current_user, false, $refresh);
   $mstock = doliProductStock($product, $refresh, true, $linearray_options, $line);
   $button = '<div id="doliform-product-'.$product->id.'-'.$mstock['lineid'].'" class="d-grid gap-2">';
   if ( empty(doliconnectid('dolicart')) || empty(doliconnectid('dolicart')) ) {
@@ -453,7 +459,7 @@ function doliProductCart($product, $line = null, $refresh = null, $wishlist = tr
         $button .= "<input id='qty-prod-".$product->id."' type='tel' onchange='doliJavaCartAction(\"updateLine\", ".$product->id.", ".$mstock['lineid'].", document.getElementById(\"qty-prod-".$product->id."\").value, ".json_encode($linearray_options, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES).", \"modify\");' class='form-control form-control-sm' placeholder='' aria-label='Quantity' value='".$mstock['qty']."' style='text-align:center;'>";
         $button .= "<button class='btn btn-sm btn-warning' name='plus' value='plus' type='submit' onclick='doliJavaCartAction(\"updateLine\", ".$product->id.", ".$mstock['lineid'].", document.getElementById(\"qty-prod-".$product->id."\").value, ".json_encode($linearray_options, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES).", \"plus\");'><i class='fa-solid fa-plus'></i></button>"; 
         if ( !empty($wishlist) && doliCheckModules('wishlist')) {
-          $button .= doliWishlist(doliconnector($current_user, 'fk_soc'), $product->id, $mstock['lineid'], $refresh);
+          $button .= doliWishlist($thirdparty, $product->id, $mstock['lineid'], $refresh);
         } 
         $button .= '</div>';
         if (isset($mstock['step']) && $mstock['step']>1) $button .= '<div class="form-text" id="basic-addon4"><small>'.sprintf(__( 'Sold by %s', 'doliconnect'), $mstock['step']).'</small></div>';  
