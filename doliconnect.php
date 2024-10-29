@@ -264,7 +264,7 @@ if ( is_user_logged_in() ) {
             $rdr = [
                 'name'  => $name,
                 'email' => $current_user->user_email,
-                'client' => 1,
+                'client' => isset(get_option('doliDefaultclient'))?get_option('doliDefaultclient'):1,
                 'status' => 1,
                 ];
             $dolibarr = callDoliApi("POST", "/doliconnector/".$user, $rdr, dolidelay('doliconnector'));
