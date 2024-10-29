@@ -74,11 +74,11 @@ function doliConnect($fonction, $current_user = null, $boolean = false, $refresh
       global $current_user;  
   }
   if ($fonction == 'thirdparty') {
-      $return = callDoliApi("GET", "/thirdparties/email/".$current_user->user_email, null, dolidelay('doliconnector'));
+      $return = callDoliApi("GET", "/thirdparties/email/".$current_user->user_email, null, dolidelay('doliconnector', $refresh));
   } elseif ($fonction == 'member') {
-      $return = callDoliApi("GET", "/members/thirdparty/email/".$current_user->user_email, null, dolidelay('doliconnector'));
+      $return = callDoliApi("GET", "/members/thirdparty/email/".$current_user->user_email, null, dolidelay('doliconnector', $refresh));
   } elseif ($fonction == 'user') {
-      $return = callDoliApi("GET", "/users/email/".$current_user->user_email, null, dolidelay('doliconnector'));
+      $return = callDoliApi("GET", "/users/email/".$current_user->user_email, null, dolidelay('doliconnector', $refresh));
   } else {
       $return = null;
   }
@@ -800,49 +800,20 @@ if (in_array($mode, array('thirdparty')) ) {
     $doliuser .= ' selected';
   }
   $doliuser .= '>'.__( 'Professional account', 'doliconnect').'</option>';
-  $doliuser .= '</select></div></li>';
+  $doliuser .= '</select></div><input type="hidden" id="morphy" name="'.$idobject.'[morphy]" value="'.$current_user->billing_type.'"></li>';
 }
-if ( ! isset($object) && in_array($mode, array('thirdparty')) && empty(get_option('doliconnect_disablepro')) ) {
-/*if ( isset($_GET["morphy"]) && $_GET["morphy"] == 'mor' && get_option('doliconnect_disablepro') != 'mor' ) {                                                                                                                                                                                                                                                                                                                                   
-$doliuser .= "<input type='hidden' id='morphy' name='".$idobject."[morphy]' value='mor'>";
-}
-elseif (get_option('doliconnect_disablepro') != 'phy') {
-$doliuser .= "<input type='hidden' id='morphy' name='".$idobject."[morphy]' value='phy'>";
-}
-$doliuser .= "<li class='list-group-item list-group-item-light list-group-item-action'>";
-} elseif ( isset($object) && in_array($mode, array('thirdparty')) && empty(get_option('doliconnect_disablepro')) ) {
-$doliuser .= "<li class='list-group-item list-group-item-light list-group-item-action'><div class='form-row'><div class='col-12'><label for='inputMorphy'><small><i class='fas fa-user-tag fa-fw'></i> ".__( 'Type of account', 'doliconnect')."</small></label><br>";
-$doliuser .= "<div class='form-check form-check-inline'><input type='radio' id='morphy1' name='".$idobject."[morphy]' value='phy' class='form-check-input'";
-if ( $current_user->billing_type != 'mor' || empty($current_user->billing_type) ) { $doliuser .= " checked"; }
-if (!$rights) {
-$doliuser .= ' disabled';
-}
-$doliuser .= " required><label class='form-check-label' for='morphy1'>".__( 'Personnal account', 'doliconnect')."</label>
-</div><div class='form-check form-check-inline'><input type='radio' id='morphy2' name='".$idobject."[morphy]' value='mor' class='form-check-input'";
-if ( $current_user->billing_type == 'mor' ) { $doliuser .= " checked"; }
-if (!$rights) {
-$doliuser .= ' disabled';
-}
-$doliuser .= " required><label class='form-check-label' for='morphy2'>".__( 'Professional account', 'doliconnect')."</label>
-</div>";
-$doliuser .= "</div></div></li>";*/
-$doliuser .= "<li class='list-group-item list-group-item-light list-group-item-action'>";
-} elseif ( in_array($mode, array('thirdparty')) ) { //|| $mode == 'member'
-$doliuser .= "<li class='list-group-item list-group-item-light list-group-item-action'><input type='hidden' id='morphy' name='".$idobject."[morphy]' value='phy'>";
-} elseif ( !is_user_logged_in() && in_array($mode, array('linkthirdparty')) ) {
-
-$doliuser .= '<li class="list-group-item list-group-item-light list-group-item-action"><div class="form-group">
-  <label for="FormCustomer"><small><i class="fas fa-user-tie"></i> '.__( 'Customer', 'doliconnect').'</small></label><div class="input-group" id="FormCustomer">
-  <input type="text" aria-label="Last name" name="code_client" placeholder="'.__( 'Customer code', 'doliconnect').'" class="form-control" required>
-</div><div>';
-$doliuser .= '<div class="form-group">
-  <label for="FormObject"><small><i class="fas fa-file-invoice"></i> '.__( 'Order or Invoice', 'doliconnect').'</small></label><div class="input-group" id="FormObject">
-  <input type="text" aria-label="Reference" name="reference" placeholder="'.__( 'Reference', 'doliconnect').'" class="form-control" required>
-  <input type="number" aria-label="Amount" name="amount" placeholder="'.__( 'Total incl. tax', 'doliconnect').'" class="form-control" required>
-</div><div><li class="list-group-item list-group-item-light list-group-item-action">';
-
+if ( !is_user_logged_in() && in_array($mode, array('linkthirdparty')) ) {
+  $doliuser .= '<li class="list-group-item list-group-item-light list-group-item-action"><div class="form-group">
+    <label for="FormCustomer"><small><i class="fas fa-user-tie"></i> '.__( 'Customer', 'doliconnect').'</small></label><div class="input-group" id="FormCustomer">
+    <input type="text" aria-label="Last name" name="code_client" placeholder="'.__( 'Customer code', 'doliconnect').'" class="form-control" required>
+  </div><div>';
+  $doliuser .= '<div class="form-group">
+    <label for="FormObject"><small><i class="fas fa-file-invoice"></i> '.__( 'Order or Invoice', 'doliconnect').'</small></label><div class="input-group" id="FormObject">
+    <input type="text" aria-label="Reference" name="reference" placeholder="'.__( 'Reference', 'doliconnect').'" class="form-control" required>
+    <input type="number" aria-label="Amount" name="amount" placeholder="'.__( 'Total incl. tax', 'doliconnect').'" class="form-control" required>
+  </div><div><li class="list-group-item list-group-item-light list-group-item-action">';
 } else {
-$doliuser .= "<li class='list-group-item list-group-item-light list-group-item-action'>";
+  $doliuser .= "<li class='list-group-item list-group-item-light list-group-item-action'>";
 }
 
 if ( in_array($mode, array('member')) ) {

@@ -258,7 +258,7 @@ print '</div>';
 
 print doliuserform( null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'thirdparty', doliCheckRights('societe', 'creer'));
 
-print "<div class='card-body'><div class='d-grid gap-2'><button class='btn btn-secondary' type='submit'";
+print "<div class='card-body'><div class='d-grid gap-2'><button class='btn btn-outline-secondary' type='submit'";
 if ( get_option('users_can_register')=='1' && ( get_site_option( 'registration' ) == 'user' || get_site_option( 'registration' ) == 'all' ) || ( !is_multisite() && get_option( 'users_can_register' )) ) {
 print "";
 } else { print " aria-disabled='true'  disabled"; }
@@ -282,9 +282,9 @@ print '<div class="card-body"><div class="card-group">
       <p class="card-text"><small class="text-muted"></small></p>
       <div class="d-grid gap-2">';
   if (get_option('doliconnect_disablepro') == 'mor') {
-    print '<a class="btn btn-primary disabled" href="'.wp_registration_url(get_permalink()).'&morphy=phy" role="button" title="'.__( 'Create a personnal account', 'doliconnect').'" aria-disabled="true">'.__( 'Create a personnal account', 'doliconnect').'</a>';
+    print '<a class="btn btn-outline-secondary disabled" href="'.wp_registration_url(get_permalink()).'&morphy=phy" role="button" title="'.__( 'Create a personnal account', 'doliconnect').'" aria-disabled="true">'.__( 'Create a personnal account', 'doliconnect').'</a>';
   } else {
-    print '<a class="btn btn-primary" href="'.wp_registration_url(get_permalink()).'&morphy=phy" role="button" title="'.__( 'Create a personnal account', 'doliconnect').'">'.__( 'Create a personnal account', 'doliconnect').'</a>';    
+    print '<a class="btn btn-outline-secondary" href="'.wp_registration_url(get_permalink()).'&morphy=phy" role="button" title="'.__( 'Create a personnal account', 'doliconnect').'">'.__( 'Create a personnal account', 'doliconnect').'</a>';    
   }
       print '</div>
     </div>
@@ -296,9 +296,9 @@ print '<div class="card-body"><div class="card-group">
       <p class="card-text"><small class="text-muted"></small></p>
       <div class="d-grid gap-2">';
   if (get_option('doliconnect_disablepro') == 'phy') {
-    print '<a class="btn btn-primary disabled" href="'.wp_registration_url(get_permalink()).'&morphy=mor" role="button" title="'.__( 'Create an enterprise account', 'doliconnect').'" aria-disabled="true">'.__( 'Create a personnal account', 'doliconnect').'</a>';
+    print '<a class="btn btn-outline-secondary disabled" href="'.wp_registration_url(get_permalink()).'&morphy=mor" role="button" title="'.__( 'Create an enterprise account', 'doliconnect').'" aria-disabled="true">'.__( 'Create a personnal account', 'doliconnect').'</a>';
   } else {
-    print '<a class="btn btn-primary" href="'.wp_registration_url(get_permalink()).'&morphy=mor" role="button" title="'.__( 'Create an enterprise account', 'doliconnect').'">'.__( 'Create an enterprise account', 'doliconnect').'</a>';    
+    print '<a class="btn btn-outline-secondary" href="'.wp_registration_url(get_permalink()).'&morphy=mor" role="button" title="'.__( 'Create an enterprise account', 'doliconnect').'">'.__( 'Create an enterprise account', 'doliconnect').'</a>';    
   }
       print '</div>
   </div>
