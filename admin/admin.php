@@ -286,6 +286,7 @@ if (isset($_REQUEST['doliconnect_google']) && $_REQUEST['doliconnect_google']>0)
 }                                 
             update_option('doliaccount', sanitize_text_field($_REQUEST['doliaccount']));  
             if (isset($_REQUEST['doliDefaultclient'])) update_option('doliDefaultclient', sanitize_text_field($_REQUEST['doliDefaultclient']));
+            if (isset($_REQUEST['doliProductclient'])) update_option('doliProductclient', sanitize_text_field($_REQUEST['doliProductclient']));
             update_option('doliaccountinfo', sanitize_text_field($_REQUEST['doliaccountinfo'])); 
             update_option('doliconnect_disablepro', sanitize_text_field($_REQUEST['doliconnect_disablepro']));
             if (isset($_REQUEST['doliconnect_cronjob'])) update_option('doliconnect_cronjob', sanitize_text_field($_REQUEST['doliconnect_cronjob']));
