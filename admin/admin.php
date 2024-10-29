@@ -265,10 +265,16 @@ if (isset($_REQUEST['doliconnectrestrict']) && $_REQUEST['doliconnectrestrict']=
 update_option('doliconnectrestrict', sanitize_text_field($_REQUEST['doliconnectrestrict']));
 }else {
 delete_option('doliconnectrestrict');}
-if (isset($_REQUEST['dolicartsuppliergrid']) && $_REQUEST['dolicartsuppliergrid']==1){
-update_option('dolicartsuppliergrid', sanitize_text_field($_REQUEST['dolicartsuppliergrid']));
+if (isset($_REQUEST['dolicartproductgrid']) && $_REQUEST['dolicartproductgrid']==1){
+    update_option('dolicartproductgrid', sanitize_text_field($_REQUEST['dolicartproductgrid']));
 }else {
-delete_option('dolicartsuppliergrid');}
+    delete_option('dolicartproductgrid');
+}
+if (isset($_REQUEST['dolicartsuppliergrid']) && $_REQUEST['dolicartsuppliergrid']==1){
+    update_option('dolicartsuppliergrid', sanitize_text_field($_REQUEST['dolicartsuppliergrid']));
+}else {
+    delete_option('dolicartsuppliergrid');
+}
 if (isset($_REQUEST['doliconnect_facebook']) && $_REQUEST['doliconnect_facebook']>0){
 update_option('doliconnect_facebook', sanitize_text_field($_REQUEST['doliconnect_facebook']));
 }else {
@@ -442,6 +448,10 @@ echo "<input id='dolibarr_entity'  name='dolibarr_entity' type='text' value='".(
            <option value="day" <?php selected('day', get_option('dolicartnewlist'));?>><?php _e('Last day', 'doliconnect') ?></option>
            <option value="none" <?php selected('none', get_option('dolicartnewlist'));?>><?php _e('None', 'doliconnect') ?></option>
            </select> <?php _e('Duration of new product', 'doliconnect') ?>
+           <select name="dolicartproductgrid" id="dolicartproductgrid">
+            <option value="0" <?php selected('0', get_option('dolicartproductgrid'));?>><?php _e('List', 'doliconnect') ?> (<?php _e('by default', 'doliconnect') ?>)</option>
+            <option value="1" <?php selected('1', get_option('dolicartproductgrid'));?>><?php _e('Grid', 'doliconnect') ?></option>
+            </select> 
            </td>
             </tr>
             <tr>
@@ -468,7 +478,12 @@ echo "<input id='dolibarr_entity'  name='dolibarr_entity' type='text' value='".(
     'lang' => strtolower(str_replace("_", "-", get_locale())),
     'selected' => get_option('dolisupplier') 
 );
-           wp_dropdown_pages($args); ?><input name="dolicartsuppliergrid" type="checkbox" id="dolicartsuppliergrid" value="1" <?php checked('1', get_option('dolicartsuppliergrid')); ?> /> <?php _e('Display in grid rather than a list', 'doliconnect') ?></td>
+           wp_dropdown_pages($args); ?>
+            <select name="dolicartsuppliergrid" id="dolicartsuppliergrid">
+            <option value="0" <?php selected('0', get_option('dolicartsuppliergrid'));?>><?php _e('List', 'doliconnect') ?> (<?php _e('by default', 'doliconnect') ?>)</option>
+            <option value="1" <?php selected('1', get_option('dolicartsuppliergrid'));?>><?php _e('Grid', 'doliconnect') ?></option>
+            </select> 
+            </td>
             </tr> 
             <tr>
                 <th style="width:150px;"><label for="dolibarr_cart">dolibarr_cart</label></th>
