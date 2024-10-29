@@ -463,7 +463,7 @@ function doliProductCart($product, $line = null, $refresh = null, $wishlist = tr
         if ( !empty($wishlist) && doliCheckModules('wishlist')) {
           $button .= doliWishlist($thirdparty, $product->id, $mstock['lineid'], $refresh);
         } 
-        $button .= '</div>';
+        $button .= '</div></div>';
         if (isset($mstock['step']) && $mstock['step']>1) $button .= '<div class="form-text" id="basic-addon4"><small>'.sprintf(__( 'Sold by %s', 'doliconnect'), $mstock['step']).'</small></div>';  
       } 
     } else {
