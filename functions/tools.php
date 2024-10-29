@@ -771,11 +771,21 @@ $company = callDoliApi("GET", "/setup/company", null, dolidelay('constante'));
 $doliuser = "<ul class='list-group list-group-flush'>";
 if (in_array($mode, array('thirdparty')) ) {
   $doliuser .= '<li class="list-group-item list-group-item-light list-group-item-action">';
-  $doliuser .= '<div class="input-group"><span class="input-group-text">'.__( 'Status', 'doliconnect').'</span><input type="text" class="form-control" placeholder="'.__( 'Status', 'doliconnect').'" value="';
-  if (1 == 1  || isset($object->client) && $object->client == 1) {
-    $doliuser .= __( 'Customer', 'doliconnect');
+  $doliuser .= '<div class="input-group"><span class="input-group-text">'.__( 'Status', 'doliconnect').'</span>';
+  $doliuser .= '<select class="form-select" id="client" name="'.$idobject.'[client]" disabled><option value="1"';
+  if (1 == 1  || isset($object->client) && $object->client == 1) { 
+    $doliuser .= ' selected';
   }
-  $doliuser .= '" disabled><select class="form-select" id="morphy"2" name="'.$idobject.'[morphy]" disabled><option ';
+  $doliuser .= '>'.__( 'Customer', 'doliconnect').'</option><option value="2"';
+  if (isset($object->client) && $object->client == 2) { 
+    $doliuser .= ' selected';
+  }
+  $doliuser .= '>'.__( 'Prospect', 'doliconnect').'</option><option value="3"';
+  if (isset($object->client) && $object->client == 3) { 
+    $doliuser .= ' selected';
+  }
+  $doliuser .= '>'.__( 'Customer and Prospect', 'doliconnect').'</option>';
+  $doliuser .= '</select><select class="form-select" id="morphy" name="'.$idobject.'[morphy]" disabled><option ';
   if ((!isset ($current_user->billing_type)) || ( !isset($_GET["morphy"])) ) { 
     $doliuser .= ' selected';
   }
