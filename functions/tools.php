@@ -800,7 +800,7 @@ if (in_array($mode, array('thirdparty')) ) {
     $doliuser .= ' selected';
   }
   $doliuser .= '>'.__( 'Professional account', 'doliconnect').'</option>';
-  $doliuser .= '</select></div><input type="hidden" id="morphy" name="'.$idobject.'[morphy]" value="'.$current_user->billing_type.'"></li>';
+  $doliuser .= '</select></div><input type="hidden" id="morphy" name="'.$idobject.'[morphy]" value="'.(isset($current_user->billing_type)?$current_user->billing_type:$_GET["morphy"]).'"></li>';
 }
 if ( !is_user_logged_in() && in_array($mode, array('linkthirdparty')) ) {
   $doliuser .= '<li class="list-group-item list-group-item-light list-group-item-action"><div class="form-group">
