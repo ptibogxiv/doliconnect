@@ -772,8 +772,8 @@ $doliuser = "<ul class='list-group list-group-flush'>";
 if (in_array($mode, array('thirdparty')) ) {
   $doliuser .= '<li class="list-group-item list-group-item-light list-group-item-action">';
   $doliuser .= '<div class="input-group"><span class="input-group-text">'.__( 'Status', 'doliconnect').'</span>';
-  $doliuser .= '<select class="form-select" id="client" name="'.$idobject.'[client]" disabled><option value="1"';
-  if (1 == 1  || isset($object->client) && $object->client == 1) { 
+  $doliuser .= '<select class="form-select" id="client" name="'.$idobject.'[client]"><option value="1"';
+  if ((!isset($object->client) && 1 == 1) || (isset($object->client) && $object->client == 1)) { 
     $doliuser .= ' selected';
   }
   $doliuser .= '>'.__( 'Customer', 'doliconnect').'</option><option value="2"';
