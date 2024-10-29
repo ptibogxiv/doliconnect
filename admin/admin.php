@@ -442,16 +442,22 @@ echo "<input id='dolibarr_entity'  name='dolibarr_entity' type='text' value='".(
            <option value="100" <?php if (get_option('dolicartlist') == '100') { ?> selected <?php } ?>>100</option>
            </select> <?php _e('choices of the amount of product', 'doliconnect') ?>
            
-           <select name="dolicartnewlist" id="dolicartnewlist">
-           <option value="month" <?php selected('month', get_option('dolicartnewlist'));?>><?php _e('Last month', 'doliconnect') ?> (<?php _e('by default', 'doliconnect') ?>)</option>
-           <option value="week" <?php selected('week', get_option('dolicartnewlist'));?>><?php _e('Last week', 'doliconnect') ?></option>
-           <option value="day" <?php selected('day', get_option('dolicartnewlist'));?>><?php _e('Last day', 'doliconnect') ?></option>
-           <option value="none" <?php selected('none', get_option('dolicartnewlist'));?>><?php _e('None', 'doliconnect') ?></option>
-           </select> <?php _e('Duration of new product', 'doliconnect') ?>
-           <select name="dolicartproductgrid" id="dolicartproductgrid">
-            <option value="0" <?php selected('0', get_option('dolicartproductgrid'));?>><?php _e('List', 'doliconnect') ?> (<?php _e('by default', 'doliconnect') ?>)</option>
-            <option value="1" <?php selected('1', get_option('dolicartproductgrid'));?>><?php _e('Grid', 'doliconnect') ?></option>
+            <select name="dolicartnewlist" id="dolicartnewlist">
+                <option value="month" <?php selected('month', get_option('dolicartnewlist'));?>><?php _e('Last month', 'doliconnect') ?> (<?php _e('by default', 'doliconnect') ?>)</option>
+                <option value="week" <?php selected('week', get_option('dolicartnewlist'));?>><?php _e('Last week', 'doliconnect') ?></option>
+                <option value="day" <?php selected('day', get_option('dolicartnewlist'));?>><?php _e('Last day', 'doliconnect') ?></option>
+                <option value="none" <?php selected('none', get_option('dolicartnewlist'));?>><?php _e('None', 'doliconnect') ?></option>
+            </select> <?php _e('Duration of new product', 'doliconnect') ?>
+            <select name="dolicartproductgrid" id="dolicartproductgrid">
+                <option value="0" <?php selected('0', get_option('dolicartproductgrid'));?>><?php _e('List', 'doliconnect') ?> (<?php _e('by default', 'doliconnect') ?>)</option>
+                <option value="1" <?php selected('1', get_option('dolicartproductgrid'));?>><?php _e('Grid', 'doliconnect') ?></option>
             </select> 
+            <select name="doliProductclient" id="doliProductclient">
+                <option value="0" <?php selected('0', get_option('doliProductclient'));?>><?php _e('Everybody', 'doliconnect') ?> (<?php _e('by default', 'doliconnect') ?>)</option>
+                <option value="1" <?php selected('1', get_option('doliProductclient'));?>><?php _e('Only for customer', 'doliconnect') ?></option>
+                <option value="2" <?php selected('2', get_option('doliProductclient'));?>><?php _e('Only for Prospect', 'doliconnect') ?></option>
+                <option value="3" <?php selected('3', get_option('doliProductclient'));?>><?php _e('Customer or Prospect', 'doliconnect') ?></option>
+            </select>
            </td>
             </tr>
             <tr>
