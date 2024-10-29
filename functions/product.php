@@ -138,7 +138,7 @@ global $current_user;
     $mstock['array_options'] = $linearray_options;
     $mstock['fk_parent_line'] = $fk_line->fk_parent_line;
   } elseif (doliconnector($current_user, 'fk_order') > 0) {
-    $order = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order')."?contact_list=0", null, $refresh);
+    $order = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order')."?contact_list=0", null, dolidelay('order', $refresh));
     if ( isset($order->lines) && $order->lines != null ) {
       foreach ($order->lines as $line) {
         $linearray_options = (array) $line->array_options;
@@ -494,7 +494,7 @@ global $current_user;
     if (isset($product->tva_tx))  $product->tva_tx = 0;
   }
   if (doliconnector($current_user, 'fk_order') > 0) {
-    $orderfo = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order'), null, $refresh);
+    $orderfo = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order')."?contact_list=0", null, dolidelay('order', $refresh));
   }
   $currency=isset($orderfo->multicurrency_code)?$orderfo->multicurrency_code:strtoupper(doliconst("MAIN_MONNAIE"));
   if ( $product->type == '1' && !is_null($product->duration_unit) && '0' < ($product->duration_value)) {
@@ -779,7 +779,7 @@ global $current_user;
       $card .= '</center>';
       //$card .= wp_get_attachment_image( $attributes['mediaID'], "ptibogxiv_square", "", array( "class" => "img-fluid" ) );
       $card .= '</div>';
-      $card .= "<div class='col-12 col-md-8'><small>";
+      $card .= "<div class='col-12 col-md-4'><small>";
       if ( !doliconst('MAIN_GENERATE_DOCUMENTS_HIDE_REF') ) { $card .= "<i class='fas fa-toolbox fa-fw'></i> <span itemprop='sku'>".(!empty($product->ref)?$product->ref:'-').'</span>'; }
       if ( !empty($product->barcode) ) { 
         if ( !doliconst('MAIN_GENERATE_DOCUMENTS_HIDE_REF') ) { $card .= " | "; }
@@ -811,7 +811,7 @@ global $current_user;
         $card .= apply_filters('mydoliconnectproductdesc', $product, 'card');
       }
       if ( ! empty(doliconnectid('dolicart')) ) { 
-        $card .= '<br><br><div class="jumbotron">';
+        $card .= '<br><br>';
         $card .= doliProductPrice($product, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
         $card .= doliProductCart($product, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
         $card .= '</div>';
@@ -842,7 +842,7 @@ global $current_user;
         }
       }
 
-      $card .= '</div></div></div>';
+      $card .= '</div></div>';
     } else {
       $card .= '<div class="col-12"><p><center>'.__( 'Item not in sale', 'doliconnect' ).'</center></p></div>';
     } 
