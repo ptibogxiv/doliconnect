@@ -775,8 +775,13 @@ if ( isset($object) && in_array($mode, array('thirdparty')) ) {
   if ($object->client == 1) {
     $doliuser .= __( 'Customer', 'doliconnect');
   }
-  $doliuser .= '" disabled></div>';   
-  $doliuser .= '</li>';
+  $doliuser .= '" disabled><input type="text" class="form-control" placeholder="'.__( 'Type', 'doliconnect').'" value="';
+  if ($current_user->billing_type == 'phy') { 
+    $doliuser .= __( 'Personnal account', 'doliconnect');
+  } elseif ($current_user->billing_type == 'mor') {
+    $doliuser .= __( 'Professional account', 'doliconnect');
+  }
+  $doliuser .= '" disabled></div></li>';
 }
 if ( ! isset($object) && in_array($mode, array('thirdparty')) && empty(get_option('doliconnect_disablepro')) ) {
 if ( isset($_GET["morphy"]) && $_GET["morphy"] == 'mor' && get_option('doliconnect_disablepro') != 'mor' ) {                                                                                                                                                                                                                                                                                                                                   
@@ -799,7 +804,7 @@ if ( $current_user->billing_type == 'mor' ) { $doliuser .= " checked"; }
 if (!$rights) {
 $doliuser .= ' disabled';
 }
-$doliuser .= " required><label class='form-check-label' for='morphy2'>".__( 'Entreprise account', 'doliconnect')."</label>
+$doliuser .= " required><label class='form-check-label' for='morphy2'>".__( 'Professional account', 'doliconnect')."</label>
 </div>";
 $doliuser .= "</div></div></li><li class='list-group-item list-group-item-light list-group-item-action'>";
 } elseif ( in_array($mode, array('thirdparty')) ) { //|| $mode == 'member'
