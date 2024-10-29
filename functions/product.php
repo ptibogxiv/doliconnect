@@ -618,6 +618,8 @@ global $current_user;
 
   if ($nohtml) { 
     return $price;
+  } elseif ( isset($thirdparty->status) && $thirdparty->status != '1' ) {
+    $button = '';
   } else {
     $button = '<script type="text/javascript">';
     $button .= 'jQuery(document).ready(function($) {
