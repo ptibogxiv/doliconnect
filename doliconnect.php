@@ -162,65 +162,62 @@ add_filter( 'rest_authentication_errors', 'json_basic_auth_error' );
 // ********************************************************
 add_action( 'admin_init', 'callDoliApi', 5, 5); 
 function callDoliApi($method = null, $link = null, $body = null, $delay = HOUR_IN_SECONDS, $entity = null) {
-//echo $link;
-$headers = array(
-        'DOLAPIENTITY' => dolibarr_entity($entity),
-        'DOLAPIKEY' => get_site_option('dolibarr_private_key')
+    //echo $link;
+    $headers = array(
+         'DOLAPIENTITY' => dolibarr_entity($entity),
+         'DOLAPIKEY' => get_site_option('dolibarr_private_key')
     );
 
-$url=get_site_option('dolibarr_public_url').'/api/index.php'.$link;
+    $url=get_site_option('dolibarr_public_url').'/api/index.php'.$link;
 
-if ( !empty(get_site_option('dolibarr_public_url')) && !empty(get_site_option('dolibarr_private_key')) ) {
-if ( !empty( $link ) && ( false ===  get_transient( $link ) || $method!='GET' || $delay <= 0 ) ) {
+    if ( !empty(get_site_option('dolibarr_public_url')) && !empty(get_site_option('dolibarr_private_key')) ) {
+        if ( !empty( $link ) && ( false ===  get_transient( $link ) || $method!='GET' || $delay <= 0 ) ) {
+            $args = array(
+                'timeout' => '10',
+                'redirection' => '5',
+                'method' => $method,
+                'sslverify' => true,
+                'headers' => $headers
+            ); 
 
-$args = array(
-    'timeout' => '10',
-    'redirection' => '5',
-    'method' => $method,
-    'sslverify' => true,
-    'headers' => $headers
-); 
-
-if ( $method == 'POST' ) {
-$args['body'] = $body;
-delete_transient( $link );  
-$request = wp_remote_post( esc_url_raw($url), $args );
-} elseif ( $method == 'PUT' ) {
-$args['body'] = $body;
-delete_transient( $link ); 
-$request = wp_remote_request( esc_url_raw($url), $args );
-} elseif ( $method == 'DELETE' ) { 
-$request = wp_remote_request( esc_url_raw($url), $args );
-} else {
-$request = wp_remote_get( esc_url_raw($url), $args );
-}
-
-$http_code = wp_remote_retrieve_response_code( $request );
-
-if (true === WP_DEBUG) {
-    if (is_array($request) || is_object($request)) {
-        error_log(print_r(json_decode( wp_remote_retrieve_body($request)), true));
-    } else {
-        error_log(json_decode( wp_remote_retrieve_body($request)));
-    }
-}
-
-if ( $method == 'DELETE' ) {
-delete_transient( $link ); 
-} elseif ( $delay <= 0 || ! in_array( $http_code,array('200', '404') ) ) {
-delete_transient( $link );
-
-if (! in_array($http_code,array('200', '400', '404', '600')) ) {
-
-    if ( !defined("DOLIBUG") ) {
-        define('DOLIBUG', $http_code);
-    }
-
-} elseif ( $delay != 0 ) {
-$delay = abs( intval($delay) );
-set_transient( $link, wp_remote_retrieve_body( $request ), $delay);
-}
+            if ( $method == 'POST' ) {
+                $args['body'] = $body;
+                delete_transient( $link );  
+                $request = wp_remote_post( esc_url_raw($url), $args );
+            } elseif ( $method == 'PUT' ) {
+                $args['body'] = $body;
+                delete_transient( $link ); 
+                $request = wp_remote_request( esc_url_raw($url), $args );
+            } elseif ( $method == 'DELETE' ) { 
+                $request = wp_remote_request( esc_url_raw($url), $args );
             } else {
+                $request = wp_remote_get( esc_url_raw($url), $args );
+            }
+
+            $http_code = wp_remote_retrieve_response_code( $request );
+
+            if (true === WP_DEBUG) {
+                if (is_array($request) || is_object($request)) {
+                    error_log(print_r(json_decode( wp_remote_retrieve_body($request)), true));
+                } else {
+                    error_log(json_decode( wp_remote_retrieve_body($request)));
+                }
+            }
+
+            if ( $method == 'DELETE' ) {
+                delete_transient( $link ); 
+            } elseif ( $delay <= 0 || ! in_array( $http_code,array('200', '404') ) ) {
+                delete_transient( $link );
+                if (! in_array($http_code,array('200', '400', '404', '600')) ) {
+                    if ( !defined("DOLIBUG") ) {
+                        define('DOLIBUG', $http_code);
+                    }
+                } elseif ( $delay != 0 ) {
+                $delay = abs( intval($delay) );
+                set_transient( $link, wp_remote_retrieve_body( $request ), $delay);
+                }
+            } else {
+                $delay = abs( intval($delay) );
                 set_transient( $link, wp_remote_retrieve_body( $request ), $delay );
             }
             return json_decode( wp_remote_retrieve_body( $request ) );
