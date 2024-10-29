@@ -382,7 +382,7 @@ echo "<input id='dolibarr_entity'  name='dolibarr_entity' type='text' value='".(
             <tr>
                 <th style="width:150px;"><label for="doliconnect_disablepro"><?php _e('Personnal / Enterprise mode', 'doliconnect') ?></label></th>
                 <td ><select name="doliconnect_disablepro" type="checkbox" id="doliconnect_disablepro">
-                <option value="0" <?php selected('O', get_option('doliconnect_disablepro'));?>>Perso & Pro</option>
+                <option value="0" <?php selected('O', get_option('doliconnect_disablepro'));?>>Perso & Pro (<?php _e('by default', 'doliconnect') ?>)</option>
                 <option value="phy" <?php selected('phy', get_option('doliconnect_disablepro'));?>>Only Perso</option>
                 <option value="mor" <?php selected('mor', get_option('doliconnect_disablepro'));?>>Only PRO</option>
                 </select>
@@ -422,7 +422,27 @@ echo "<input id='dolibarr_entity'  name='dolibarr_entity' type='text' value='".(
     'lang' => strtolower(str_replace("_", "-", get_locale())),
     'selected' => get_option('dolishop') 
 );
-           wp_dropdown_pages($args); ?></td>
+           wp_dropdown_pages($args); ?>
+                      <select name="dolicartlist" id="dolicartlist">
+           <option value="5" <?php if (get_option('dolicartlist') == '5') { ?> selected <?php } ?>>5</option>
+           <option value="10" <?php if (get_option('dolicartlist') == '10' || empty(get_option('dolicartlist'))) { ?> selected <?php } ?>>10 (<?php _e('by default', 'doliconnect') ?>)</option>
+           <option value="15" <?php if (get_option('dolicartlist') == '15') { ?> selected <?php } ?>>15</option>
+           <option value="20" <?php if (get_option('dolicartlist') == '20') { ?> selected <?php } ?>>20</option>
+           <option value="25" <?php if (get_option('dolicartlist') == '25') { ?> selected <?php } ?>>25</option>
+           <option value="30" <?php if (get_option('dolicartlist') == '30') { ?> selected <?php } ?>>30</option>
+           <option value="40" <?php if (get_option('dolicartlist') == '40') { ?> selected <?php } ?>>40</option>
+           <option value="50" <?php if (get_option('dolicartlist') == '50') { ?> selected <?php } ?>>50</option>
+           <option value="75" <?php if (get_option('dolicartlist') == '75') { ?> selected <?php } ?>>75</option>
+           <option value="100" <?php if (get_option('dolicartlist') == '100') { ?> selected <?php } ?>>100</option>
+           </select> <?php _e('choices of the amount of product', 'doliconnect') ?>
+           
+           <select name="dolicartnewlist" id="dolicartnewlist">
+           <option value="month" <?php selected('month', get_option('dolicartnewlist'));?>><?php _e('Last month', 'doliconnect') ?> (<?php _e('by default', 'doliconnect') ?>)</option>
+           <option value="week" <?php selected('week', get_option('dolicartnewlist'));?>><?php _e('Last week', 'doliconnect') ?></option>
+           <option value="day" <?php selected('day', get_option('dolicartnewlist'));?>><?php _e('Last day', 'doliconnect') ?></option>
+           <option value="none" <?php selected('none', get_option('dolicartnewlist'));?>><?php _e('None', 'doliconnect') ?></option>
+           </select> <?php _e('Duration of new product', 'doliconnect') ?>
+           </td>
             </tr>
             <tr>
                 <th style="width:150px;"><label for="dolibarr_dolishipping">dolibarr_dolishipping</label></th>
@@ -462,26 +482,6 @@ echo "<input id='dolibarr_entity'  name='dolibarr_entity' type='text' value='".(
     'selected' => get_option('dolicart') 
 );
            wp_dropdown_pages($args); ?>
-           
-           <select name="dolicartlist" id="dolicartlist">
-           <option value="5" <?php if (get_option('dolicartlist') == '5') { ?> selected <?php } ?>>5</option>
-           <option value="10" <?php if (get_option('dolicartlist') == '10' || empty(get_option('dolicartlist'))) { ?> selected <?php } ?>>10 (<?php _e('by default', 'doliconnect') ?>)</option>
-           <option value="15" <?php if (get_option('dolicartlist') == '15') { ?> selected <?php } ?>>15</option>
-           <option value="20" <?php if (get_option('dolicartlist') == '20') { ?> selected <?php } ?>>20</option>
-           <option value="25" <?php if (get_option('dolicartlist') == '25') { ?> selected <?php } ?>>25</option>
-           <option value="30" <?php if (get_option('dolicartlist') == '30') { ?> selected <?php } ?>>30</option>
-           <option value="40" <?php if (get_option('dolicartlist') == '40') { ?> selected <?php } ?>>40</option>
-           <option value="50" <?php if (get_option('dolicartlist') == '50') { ?> selected <?php } ?>>50</option>
-           <option value="75" <?php if (get_option('dolicartlist') == '75') { ?> selected <?php } ?>>75</option>
-           <option value="100" <?php if (get_option('dolicartlist') == '100') { ?> selected <?php } ?>>100</option>
-           </select> <?php _e('choices of the amount of product', 'doliconnect') ?>
-           
-           <select name="dolicartnewlist" id="dolicartnewlist">
-           <option value="month" <?php selected('month', get_option('dolicartnewlist'));?>><?php _e('Last month', 'doliconnect') ?> (<?php _e('by default', 'doliconnect') ?>)</option>
-           <option value="week" <?php selected('week', get_option('dolicartnewlist'));?>><?php _e('Last week', 'doliconnect') ?></option>
-           <option value="day" <?php selected('day', get_option('dolicartnewlist'));?>><?php _e('Last day', 'doliconnect') ?></option>
-           <option value="none" <?php selected('none', get_option('dolicartnewlist'));?>><?php _e('None', 'doliconnect') ?></option>
-           </select> <?php _e('Duration of new product', 'doliconnect') ?>
            </td>
             </tr>
             <tr>
