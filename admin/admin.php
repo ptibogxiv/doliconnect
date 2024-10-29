@@ -404,7 +404,7 @@ echo "<input id='dolibarr_entity'  name='dolibarr_entity' type='text' value='".(
 );
            wp_dropdown_pages($args); ?>
                 <select name="doliDefaultclient" id="doliDefaultclient">
-                <option value="1" <?php selected('1', get_option('doliDefaultclient'));?>><?php _e('Customer', 'doliconnect') ?></option>
+                <option value="1" <?php selected('1', get_option('doliDefaultclient'));?>><?php _e('Customer', 'doliconnect') ?> (<?php _e('by default', 'doliconnect') ?>)</option>
                 <option value="2" <?php selected('2', get_option('doliDefaultclient'));?>><?php _e('Prospect', 'doliconnect') ?></option>
                 <option value="3" <?php selected('3', get_option('doliDefaultclient'));?>><?php _e('Customer and Prospect', 'doliconnect') ?></option>
                 </select>
@@ -477,10 +477,10 @@ echo "<input id='dolibarr_entity'  name='dolibarr_entity' type='text' value='".(
            </select> <?php _e('choices of the amount of product', 'doliconnect') ?>
            
            <select name="dolicartnewlist" id="dolicartnewlist">
-           <option value="month" <?php if (get_option('dolicartnewlist') == 'month' || empty(get_option('dolicartnewlist'))) { ?> selected <?php } ?>><?php _e('Last month', 'doliconnect') ?> (<?php _e('by default', 'doliconnect') ?>)</option>
-           <option value="week" <?php if (get_option('dolicartnewlist') == 'week') { ?> selected <?php } ?>><?php _e('Last week', 'doliconnect') ?></option>
-           <option value="day" <?php if (get_option('dolicartnewlist') == 'day') { ?> selected <?php } ?>><?php _e('Last day', 'doliconnect') ?></option>
-           <option value="none" <?php if (get_option('dolicartnewlist') == 'none') { ?> selected <?php } ?>><?php _e('None', 'doliconnect') ?></option>
+           <option value="month" <?php selected('month', get_option('dolicartnewlist'));?>><?php _e('Last month', 'doliconnect') ?> (<?php _e('by default', 'doliconnect') ?>)</option>
+           <option value="week" <?php selected('week', get_option('dolicartnewlist'));?>><?php _e('Last week', 'doliconnect') ?></option>
+           <option value="day" <?php selected('day', get_option('dolicartnewlist'));?>><?php _e('Last day', 'doliconnect') ?></option>
+           <option value="none" <?php selected('none', get_option('dolicartnewlist'));?>><?php _e('None', 'doliconnect') ?></option>
            </select> <?php _e('Duration of new product', 'doliconnect') ?>
            </td>
             </tr>

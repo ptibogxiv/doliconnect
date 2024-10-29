@@ -260,11 +260,11 @@ if ( is_user_logged_in() ) {
             if (!empty($current_user->user_firstname) && !empty($current_user->user_lastname)) { $name = $current_user->user_firstname." ".$current_user->user_lastname; }
             else { $name = $current_user->user_login; }
             } 
-
+            $client = (!empty(get_option('doliDefaultclient'))?get_option('doliDefaultclient'):1);
             $rdr = [
                 'name'  => $name,
                 'email' => $current_user->user_email,
-                'client' => isset(get_option('doliDefaultclient'))?get_option('doliDefaultclient'):1,
+                'client' => $client,
                 'status' => 1,
                 ];
             $dolibarr = callDoliApi("POST", "/doliconnector/".$user, $rdr, dolidelay('doliconnector'));
