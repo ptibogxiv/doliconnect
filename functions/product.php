@@ -434,9 +434,11 @@ function doliProductCart($product, $line = null, $refresh = null, $wishlist = tr
   $thirdparty = doliConnect('thirdparty', $current_user, false, $refresh);
   $mstock = doliProductStock($product, $refresh, true, $linearray_options, $line);
   $button = '<div id="doliform-product-'.$product->id.'-'.$mstock['lineid'].'" class="d-grid gap-2">';
-  if ( empty(doliconnectid('dolicart')) || empty(doliconnectid('dolicart')) ) {
-    $button .= "<a class='btn btn-block btn-info' href='".doliconnecturl('dolicontact')."?type=COM' role='button' title='".__( 'Contact us', 'doliconnect')."'>".__( 'Contact us', 'doliconnect').'</a>';
-  } elseif ( is_user_logged_in() && doliCheckModules('commande') && doliconnectid('dolicart') > 0 ) {
+    if ( empty(doliconnectid('dolicart')) || empty(doliconnectid('dolicart')) ) {
+      $button .= "<a class='btn btn-block btn-info' href='".doliconnecturl('dolicontact')."?type=COM' role='button' title='".__( 'Contact us', 'doliconnect')."'>".__( 'Contact us', 'doliconnect').'</a>';
+    } elseif ( isset($thirdparty->status) && $thirdparty->status != '1' ) {
+      $button .= "<a class='btn btn-block btn-outline-secondary disabled' href='".doliconnecturl('dolicontact')."?type=COM' role='button' title='".__( 'Account closed', 'doliconnect')."' disabled>".__( 'Account closed', 'doliconnect').'</a>';
+    } elseif ( is_user_logged_in() && doliCheckModules('commande') && doliconnectid('dolicart') > 0 ) {
       if (!empty($line->fk_parent_line) && !empty($mstock['fk_parent_line'])) {
         $button .= '<input id="qty-prod-'.$product->id.'" type="text" class="form-control form-control-sm" value="'.__( 'Linked item', 'doliconnect').'" aria-label="'.__( 'Linked item', 'doliconnect').'" style="text-align:center;" disabled readonly>';
       } elseif ( $mstock['stock'] <= 0 || $mstock['m2'] < $mstock['step'] ) { 
