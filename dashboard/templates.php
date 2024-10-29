@@ -71,7 +71,7 @@ if ( has_action('user_doliconnect_'.esc_attr($_GET['module'])) ) {
     print "</div></div></div>";
     print "<div class='col-xs-12 col-sm-12 col-md-9'>";
     do_action( 'user_doliconnect_'.esc_attr($_GET['module']), esc_url( add_query_arg( 'module', esc_attr($_GET['module']), doliconnecturl('doliaccount')) ) ); 
-} elseif ( has_action('customer_doliconnect_'.esc_attr($_GET['module'])) && $thirdparty->client == '1' ) {
+} elseif ( has_action('customer_doliconnect_'.esc_attr($_GET['module'])) && isset($thirdparty->client) && !empty($thirdparty->client)) {
     if ( has_action('customer_doliconnect_menu') ) {
     print "<div class='list-group shadow-sm'>";
     do_action('customer_doliconnect_menu', esc_attr($_GET['module']));
@@ -89,7 +89,7 @@ if ( has_action('user_doliconnect_'.esc_attr($_GET['module'])) ) {
     print "</div></div></div>";
     print "<div class='col-xs-12 col-sm-12 col-md-9'>";
     do_action( 'member_doliconnect_'.esc_attr($_GET['module']), esc_url( add_query_arg( 'module', esc_attr($_GET['module']), doliconnecturl('doliaccount')) ) ); 
-} elseif ( has_action('supplier_doliconnect_'.esc_attr($_GET['module'])) && $thirdparty->fournisseur == '1' ) {
+} elseif ( has_action('supplier_doliconnect_'.esc_attr($_GET['module'])) && isset($thirdparty->fournisseur) && !empty($thirdparty->fournisseur)) {
     if ( has_action('supplier_doliconnect_menu') ) {
     print "<div class='list-group shadow-sm'>";
     do_action('supplier_doliconnect_menu', esc_attr($_GET['module']));
@@ -160,7 +160,7 @@ if ( has_action('user_doliconnect_menu') ) {
   print "</ul></div><br>";
 }  
 
-if ( has_action('customer_doliconnect_menu') && isset($thirdparty->client) && $thirdparty->client == '1' ) {
+if ( has_action('customer_doliconnect_menu') && isset($thirdparty->client) && !empty($thirdparty->client)) {
   print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__('%s My purchases', 'doliconnect'), '<i class="fa-solid fa-bag-shopping"></i>').'</div><ul class="list-group list-group-flush">';
   do_action('customer_doliconnect_menu');
   print "</ul></div><br>";
@@ -172,7 +172,7 @@ if ( has_action('member_doliconnect_menu') ) {
   print "</ul></div><br>";
 }
 
-if ( has_action('supplier_doliconnect_menu') && isset($thirdparty->fournisseur) && $thirdparty->fournisseur == '1' ) {
+if ( has_action('supplier_doliconnect_menu') && isset($thirdparty->fournisseur) && !empty($thirdparty->fournisseur)) {
   print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__('%s My supplies', 'doliconnect'), '<i class="fa-solid fa-boxes-packing"></i>').'</div><ul class="list-group list-group-flush">';
   do_action('supplier_doliconnect_menu');
   print "</ul></div><br>";
