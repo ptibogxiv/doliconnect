@@ -218,7 +218,7 @@ function callDoliApi($method = null, $link = null, $body = null, $delay = HOUR_I
                 }
             } else {
                 $delay = abs( intval($delay) );
-                set_transient( $link, wp_remote_retrieve_body( $request ), $delay );
+                set_transient( $link, wp_remote_retrieve_body( $request ), $delay);
             }
             return json_decode( wp_remote_retrieve_body( $request ) );
         } else {
