@@ -1735,7 +1735,6 @@ print "<ul class='list-group list-group-flush'>";
                 print doliProductCart($product, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), false, array('options_member_beneficiary' => $member->id));
                 print "<div class='col-4 col-sm-3 col-md-2 btn-group-vertical' role='group'>";
                 print doliModalButton('linkedmember', 'updatelinkedmember'.$member->id, '<i class="fa-solid fa-edit fa-fw"></i>', 'button', 'btn btn-light text-primary', $member->id);
-                print doliModalButton('renewmembership', 'renewlinkedmember'.$member->id, '<i class="fa-solid fa-cart-plus"></i>', 'button', 'btn btn-light text-primary', $member->id);
                 print "<button name='unlink_member' value='".$member->id."' class='btn btn-light text-danger' type='submit' title='".__( 'Unlink', 'doliconnect')." ".$member->firstname." ".$member->lastname."'><i class='fas fa-unlink'></i></button>";
                 print "</div>";
             }
