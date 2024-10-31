@@ -1448,7 +1448,7 @@ print '<div class="tab-pane fade';
 if (isset($_GET['stage']) && $_GET['stage'] == 'informations' && isset($object) && is_object($object) && isset($object->lines) && $object->lines != null) { print ' show active'; }
 print '" role="tabpanel" id="nav-tab-info">';
   
-$thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))); 
+$thirdparty = doliConnect('thirdparty', $current_user, false, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 
 print "<div class='card'><ul class='list-group list-group-flush'>";
 
