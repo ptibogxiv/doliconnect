@@ -580,7 +580,7 @@ function dolifaq_display($content) {
     } else {
       $limit=10;
       if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']); }  else { $page = 0; }
-      $request = "/knowledgemanagement/knowledgerecords?sortfield=t.rowid&sortorder=ASC&limit=".$limit."&page=".$page."&pagination_data=true&sqlfilters=(t.status%3A%3D%3A'1')%20and%20((t.lang%3A%3D%3A'0')%20or%20(t.lang%3A%3D%3A'".doliUserLang($current_user)."'))";
+      $request = "/knowledgemanagement/knowledgerecords?sortfield=t.rowid&sortorder=ASC&limit=".$limit."&page=".$page."&pagination_data=true&sqlfilters=(t.status%3A%3D%3A'1')and((t.lang%3A%3D%3A'0')%20or%20(t.lang%3A%3D%3A'".doliUserLang($current_user)."'))";
       if (isset($_GET['category']) && is_numeric(esc_attr($_GET['category'])) && esc_attr($_GET['category']) > 0 ) $request .= "&category=".esc_attr($_GET['category']);
       $object = callDoliApi("GET", $request, null, dolidelay('knowledgemanagement', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
       if ( doliversion('21.0.0') && isset($object->data) ) { $listfaq = $object->data; } else { $listfaq = $object; }
@@ -908,7 +908,7 @@ function dolishop_display($content) {
           $search = explode(' ', esc_attr($_GET['search']));
           $sqlfilters = null;
           foreach($search as $i=>$key) {
-            $sqlfilters .= "((t.label%3Alike%3A'%25".esc_attr($key)."%25')%20OR%20(t.description%3Alike%3A'%25".esc_attr($key)."%25')%20OR%20(t.ref%3Alike%3A'%25".esc_attr($key)."%25')%20OR%20(t.barcode%3Alike%3A'%25".esc_attr($key)."%25'))%20AND%20";
+            $sqlfilters .= "((t.label%3Alike%3A'%25".esc_attr($key)."%25')%20OR%20(t.description%3Alike%3A'%25".esc_attr($key)."%25')%20OR%20(t.ref%3Alike%3A'%25".esc_attr($key)."%25')%20OR%20(t.barcode%3Alike%3A'%25".esc_attr($key)."%25'))and";
           }
           $request = "/products?sortfield=t.".$field."&sortorder=".$order."&limit=".$limit."&page=".$page."&pagination_data=true&sqlfilters=".$sqlfilters."(t.tosell%3A%3D%3A1)";
           $object = callDoliApi("GET", $request, null, dolidelay('search', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
@@ -918,13 +918,13 @@ function dolishop_display($content) {
           $duration = (!empty(get_option('dolicartnewlist'))?get_option('dolicartnewlist'):'month');
           $date->modify('FIRST DAY OF LAST '.$duration.' MIDNIGHT');
           $lastdate = $date->format('Y-m-d');
-          $request = "/products?sortfield=t.".$field."&sortorder=".$order."&limit=".$limit."&page=".$page."&category=".esc_attr($shop)."&pagination_data=true&sqlfilters=(t.datec%3A%3E%3A'".$lastdate."')%20AND%20(t.tosell%3A%3D%3A1)";
+          $request = "/products?sortfield=t.".$field."&sortorder=".$order."&limit=".$limit."&page=".$page."&category=".esc_attr($shop)."&pagination_data=true&sqlfilters=(t.datec%3A%3E%3A'".$lastdate."')and(t.tosell%3A%3D%3A1)";
           $object = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
         } elseif ( doliCheckModules('discountprice') && isset($_GET['category']) && $_GET['category'] == 'discount' && !isset($_GET['product'])) { 
           $date = new DateTime(); 
           $date->modify('NOW');
           $lastdate = $date->format('Y-m-d');
-          $request = "/discountprice?sortfield=t.".$field."&sortorder=".$order."&limit=".$limit."&page=".$page."&pagination_data=true&sqlfilters=(t.date_begin%3A%3C%3D%3A'".$lastdate."')%20AND%20(t.date_end%3A%3E%3D%3A'".$lastdate."')%20AND%20(d.tosell%3A%3D%3A1)";
+          $request = "/discountprice?sortfield=t.".$field."&sortorder=".$order."&limit=".$limit."&page=".$page."&pagination_data=true&sqlfilters=(t.date_begin%3A%3C%3D%3A'".$lastdate."')and(t.date_end%3A%3E%3D%3A'".$lastdate."')and(d.tosell%3A%3D%3A1)";
           $object = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
         } elseif (!isset($_GET["category"]) || isset($_GET["category"]) && $_GET["category"] == 'all') {
           $request = "/products?sortfield=t.".$field."&sortorder=".$order."&limit=".$limit."&page=".$page."&category=".esc_attr($shop)."&pagination_data=true&sqlfilters=(t.tosell%3A%3D%3A1)";
@@ -1721,7 +1721,7 @@ function doliagenda_display($content) {
     $sqlfilter = null;
     if ( !isset($listfo->error) && $listfo != null ) {
       foreach ($listfo as $postlist) {
-        $sqlfilter .= "%20and%20(t.fk_action:!=:'". $postlist->id."')";
+        $sqlfilter .= "and(t.fk_action:!=:'". $postlist->id."')";
       }
     }
 

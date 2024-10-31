@@ -617,7 +617,7 @@ return $doliSelect;
 
 function doliFaqForm($category, $refresh = null) {
 global $current_user; 
-  $requestf = "/knowledgemanagement/knowledgerecords?sortfield=t.rowid&sortorder=ASC&limit=100&sqlfilters=(t.fk_c_ticket_category%3A%3D%3A'".$category."')%20and%20(t.status%3A%3D%3A'1')%20and%20((t.lang%3A%3D%3A'0')%20or%20(t.lang%3A%3D%3A'".doliUserLang($current_user)."'))";  
+  $requestf = "/knowledgemanagement/knowledgerecords?sortfield=t.rowid&sortorder=ASC&limit=100&sqlfilters=(t.fk_c_ticket_category%3A%3D%3A'".$category."')and(t.status%3A%3D%3A'1')and((t.lang%3A%3D%3A'0')%20or%20(t.lang%3A%3D%3A'".doliUserLang($current_user)."'))";  
   $listfaq = callDoliApi("GET", $requestf, null, dolidelay('constante', $refresh));
   $doliFaq = '';
     if ( !isset( $listfaq->error ) && $listfaq != null ) {
@@ -1151,7 +1151,7 @@ $doliuser .= '</script>';
 $doliuser .= '</div><div class="row g-2">';
   
 $doliuser .= '<div class="col-12 col-md"><div class="form-floating" id="ziptown_form">';
-$doliuser .= doliSelectForm("ziptown", "/setup/dictionary/towns?sortfield=town&sortorder=ASC&active=1&limit=1000&sqlfilters=(t.fk_pays%3A%3D%3A'".(isset($object->country_id) ? $object->country_id : $company->country_id)."')%20AND%20(t.fk_county%3A%3D%3A'".(isset($object->state_id) ? $object->state_id : null)."')", __( '- Select your town -', 'doliconnect'), __( 'Town', 'doliconnect'), (isset($object->zip) ? $object->zip : null).','.(isset($object->town) ? $object->town : null), $idobject, $rights);
+$doliuser .= doliSelectForm("ziptown", "/setup/dictionary/towns?sortfield=town&sortorder=ASC&active=1&limit=1000&sqlfilters=(t.fk_pays%3A%3D%3A'".(isset($object->country_id) ? $object->country_id : $company->country_id)."')and(t.fk_county%3A%3D%3A'".(isset($object->state_id) ? $object->state_id : null)."')", __( '- Select your town -', 'doliconnect'), __( 'Town', 'doliconnect'), (isset($object->zip) ? $object->zip : null).','.(isset($object->town) ? $object->town : null), $idobject, $rights);
 $doliuser .= '</div></div>';
 
 $doliuser .= "</div></li>";
@@ -1216,7 +1216,7 @@ $doliuser .= "</li>";
 }
 
 if ( in_array($mode, array('contact')) && doliversion('12.0.0') ) {
-$contact_types = callDoliApi("GET", "/setup/dictionary/contact_types?sortfield=code&sortorder=ASC&limit=100&active=1&lang=".doliUserLang($current_user)."&sqlfilters=(t.source%3A%3D%3A'external')%20AND%20(t.element%3A%3D%3A'commande')", null, $delay);//%20OR%20(t.element%3A%3D%3A'propal')
+$contact_types = callDoliApi("GET", "/setup/dictionary/contact_types?sortfield=code&sortorder=ASC&limit=100&active=1&lang=".doliUserLang($current_user)."&sqlfilters=(t.source%3A%3D%3A'external')and(t.element%3A%3D%3A'commande')", null, $delay);//%20OR%20(t.element%3A%3D%3A'propal')
 $doliuser .= "<li class='list-group-item list-group-item-light list-group-item-action'>";
 if ( !isset($contact_types->error ) && $contact_types != null ) {
 $typecontact = array();
@@ -1851,7 +1851,7 @@ global $current_user;
 }
 
 function doliunit($scale, $type, $refresh = null) {
-  $unit = callDoliApi("GET", "/setup/dictionary/units?sortfield=rowid&sortorder=ASC&limit=1&active=1&sqlfilters=(t.scale%3A%3D%3A'".$scale."')%20AND%20(t.unit_type%3A%3D%3A'".$type."')", null, dolidelay('constante', $refresh));
+  $unit = callDoliApi("GET", "/setup/dictionary/units?sortfield=rowid&sortorder=ASC&limit=1&active=1&sqlfilters=(t.scale%3A%3D%3A'".$scale."')and(t.unit_type%3A%3D%3A'".$type."')", null, dolidelay('constante', $refresh));
   return $unit[0]->short_label;
 }
 

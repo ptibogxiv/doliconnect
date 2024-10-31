@@ -422,11 +422,11 @@ if ( !isset($resultatsc->error) && $resultatsc != null ) {
 			print "<a href='".esc_url( add_query_arg( 'category', 'all', doliconnecturl('dolishop')) )."' class='list-group-item list-group-item-light list-group-item-action d-flex justify-content-between";
 			if (!isset($_GET['category']) || isset($_GET['category']) && $_GET['category'] == 'all') { print " active"; }
 			if ( doliversion('19.0.0') ) { 
-				$requestp = "/products?sortfield=t.".$field."&sortorder=".$order."&limit=".$limit."&page=".$page."&category=".esc_attr($shop)."&ids_only=true&pagination_data=true&sqlfilters=(t.tosell%3A%3D%3A1)";
+				$requestp = "/products?sortfield=t.".$field."&sortorder=".$order."&limit=".$limit."&page=".$page."&category=".esc_attr($shop)."&ids_only=true&pagination_data=true&sqlfilters=(t.tosell:=:1)";
 				$listproduct = callDoliApi("GET", $requestp, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
 				$count = $listproduct->pagination->total;
 			} else { 
-				$requestp = "/products?sortfield=t.".$field."&sortorder=".$order."&limit=1000&category=".esc_attr($shop)."&ids_only=true&sqlfilters=(t.tosell%3A%3D%3A1)";
+				$requestp = "/products?sortfield=t.".$field."&sortorder=".$order."&limit=1000&category=".esc_attr($shop)."&ids_only=true&sqlfilters=(t.tosell:=:1)";
 				$listproduct = callDoliApi("GET", $requestp, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 				if (empty($listproduct) || isset($listproduct->error)) {
 				$count = 0;
@@ -446,11 +446,11 @@ if ( !isset($resultatsc->error) && $resultatsc != null ) {
 		$date->modify('FIRST DAY OF LAST '.$duration.' MIDNIGHT');
 		$lastdate = $date->format('Y-m-d');
 		if ( doliversion('19.0.0') ) { 
-			$requestp = "/products?sortfield=t.".$field."&sortorder=".$order."&limit=".$limit."&page=".$page."&category=".esc_attr($shop)."&ids_only=true&pagination_data=true&sqlfilters=(t.datec%3A%3E%3A'".$lastdate."')%20AND%20(t.tosell%3A%3D%3A1)";
+			$requestp = "/products?sortfield=t.".$field."&sortorder=".$order."&limit=".$limit."&page=".$page."&category=".esc_attr($shop)."&ids_only=true&pagination_data=true&sqlfilters=(t.datec%3A%3E%3A'".$lastdate."')and(t.tosell:=:1)";
 			$listproduct = callDoliApi("GET", $requestp, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
 			$count = $listproduct->pagination->total;
 		} else { 
-			$requestp = "/products?sortfield=t.".$field."&sortorder=".$order."&limit=1000&category=".esc_attr($shop)."&ids_only=true&sqlfilters=(t.datec%3A%3E%3A'".$lastdate."')%20AND%20(t.tosell%3A%3D%3A1)";
+			$requestp = "/products?sortfield=t.".$field."&sortorder=".$order."&limit=1000&category=".esc_attr($shop)."&ids_only=true&sqlfilters=(t.datec%3A%3E%3A'".$lastdate."')and(t.tosell:=:1)";
 			$listproduct = callDoliApi("GET", $requestp, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 			if (empty($listproduct) || isset($listproduct->error)) {
 			$count = 0;
@@ -468,11 +468,11 @@ if ( !isset($resultatsc->error) && $resultatsc != null ) {
 		$date->modify('NOW');
 		$lastdate = $date->format('Y-m-d');
 		if ( doliversion('19.0.0') ) { 
-			$requestp = "/discountprice?sortfield=t.".$field."&sortorder=".$order."&limit=".$limit."&page=".$page."&pagination_data=true&sqlfilters=(t.date_begin%3A%3C%3D%3A'".$lastdate."')%20AND%20(t.date_end%3A%3E%3D%3A'".$lastdate."')%20AND%20(d.tosell%3A%3D%3A1)";
+			$requestp = "/discountprice?sortfield=t.".$field."&sortorder=".$order."&limit=".$limit."&page=".$page."&pagination_data=true&sqlfilters=(t.date_begin%3A%3C%3D%3A'".$lastdate."')and(t.date_end%3A%3E%3D%3A'".$lastdate."')and(d.tosell:=:1)";
 			$listproduct = callDoliApi("GET", $requestp, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
 			$count = $listproduct->pagination->total;
 		} else { 
-			$requestp = "/discountprice?sortfield=t.rowid&sortorder=DESC&sqlfilters=(t.date_begin%3A%3C%3D%3A'".$lastdate."')%20AND%20(t.date_end%3A%3E%3D%3A'".$lastdate."')%20AND%20(d.tosell%3A%3D%3A1)";
+			$requestp = "/discountprice?sortfield=t.rowid&sortorder=DESC&sqlfilters=(t.date_begin%3A%3C%3D%3A'".$lastdate."')and(t.date_end%3A%3E%3D%3A'".$lastdate."')and(d.tosell:=:1)";
 			$listproduct = callDoliApi("GET", $requestp, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 			if (empty($listproduct) || isset($listproduct->error)) {
 				$count = 0;
@@ -486,11 +486,11 @@ if ( !isset($resultatsc->error) && $resultatsc != null ) {
 	foreach ($resultatsc as $categorie) {
 
 		if ( doliversion('19.0.0') ) { 
-			$requestp = "/products?sortfield=t.".$field."&sortorder=".$order."&limit=".$limit."&page=".$page."&category=".$categorie->id."&ids_only=true&pagination_data=true&sqlfilters=(t.tosell%3A%3D%3A1)";
+			$requestp = "/products?sortfield=t.".$field."&sortorder=".$order."&limit=".$limit."&page=".$page."&category=".$categorie->id."&ids_only=true&pagination_data=true&sqlfilters=(t.tosell:=:1)";
 			$listproduct = callDoliApi("GET", $requestp, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
 			$count = $listproduct->pagination->total;
 		} else { 
-			$requestp = "/products?sortfield=t.".$field."&sortorder=".$order."&limit=1000&category=".$categorie->id."&ids_only=true&sqlfilters=(t.tosell%3A%3D%3A1)";
+			$requestp = "/products?sortfield=t.".$field."&sortorder=".$order."&limit=1000&category=".$categorie->id."&ids_only=true&sqlfilters=(t.tosell:=:1)";
 			$listproduct = callDoliApi("GET", $requestp, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 			if (empty($listproduct) || isset($listproduct->error)) {
 			$count = 0;
@@ -509,11 +509,11 @@ if ( !isset($resultatsc->error) && $resultatsc != null ) {
 			if ( !isset($resultatsc->error) && $resultatsc != null ) {
 				foreach ($resultatsc->childs as $scategorie) {
 				if ( doliversion('19.0.0') ) { 
-					$requestp = "/products?sortfield=t.".$field."&sortorder=".$order."&limit=".$limit."&page=".$page."&category=".$scategorie->id."&ids_only=true&pagination_data=true&sqlfilters=(t.tosell%3A%3D%3A1)";
+					$requestp = "/products?sortfield=t.".$field."&sortorder=".$order."&limit=".$limit."&page=".$page."&category=".$scategorie->id."&ids_only=true&pagination_data=true&sqlfilters=(t.tosell:=:1)";
 					$listproduct = callDoliApi("GET", $requestp, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
 					$count = $listproduct->pagination->total;
 				} else { 
-					$requestp = "/products?sortfield=t.".$field."&sortorder=".$order."&limit=1000&category=".$scategorie->id."&ids_only=true&sqlfilters=(t.tosell%3A%3D%3A1)";
+					$requestp = "/products?sortfield=t.".$field."&sortorder=".$order."&limit=1000&category=".$scategorie->id."&ids_only=true&sqlfilters=(t.tosell:=:1)";
 					$listproduct = callDoliApi("GET", $requestp, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 					if (empty($listproduct) || isset($listproduct->error)) {
 					$count = 0;
@@ -533,11 +533,11 @@ if ( !isset($resultatsc->error) && $resultatsc != null ) {
 					if ( !isset($resultatsc->error) && $resultatsc != null) {
 						foreach ($resultatsc->childs as $sscategorie) {
 								if ( doliversion('19.0.0') ) { 
-									$requestp = "/products?sortfield=t.".$field."&sortorder=".$order."&limit=".$limit."&page=".$page."&category=".$categorie->id."&ids_only=true&pagination_data=true&sqlfilters=(t.tosell%3A%3D%3A1)";
+									$requestp = "/products?sortfield=t.".$field."&sortorder=".$order."&limit=".$limit."&page=".$page."&category=".$categorie->id."&ids_only=true&pagination_data=true&sqlfilters=(t.tosell:=:1)";
 									$listproduct = callDoliApi("GET", $requestp, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
 									$count = $listproduct->pagination->total;
 								} else { 
-									$requestp = "/products?sortfield=t.".$field."&sortorder=".$order."&limit=1000&category=".$categorie->id."&ids_only=true&sqlfilters=(t.tosell%3A%3D%3A1)";
+									$requestp = "/products?sortfield=t.".$field."&sortorder=".$order."&limit=1000&category=".$categorie->id."&ids_only=true&sqlfilters=(t.tosell:=:1)";
 									$listproduct = callDoliApi("GET", $requestp, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 									if (empty($listproduct) || isset($listproduct->error)) {
 									$count = 0;
