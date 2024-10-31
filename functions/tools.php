@@ -139,13 +139,18 @@ function consecutiveDoliIterationSameCharacter($password, $NbRepeat = null) {
 function dolicaptcha($id = null) {
   $arrX = array();
   $arrX[] = array("label"=>__( "car", "doliconnect"),"icon"=>"car");
+  $arrX[] = array("label"=>__( "plane", "doliconnect"),"icon"=>"plane");
   $arrX[] = array("label"=>__( "carrot", "doliconnect"),"icon"=>"carrot");
   $arrX[] = array("label"=>__( "male", "doliconnect"),"icon"=>"male");
   $arrX[] = array("label"=>__( "laptop", "doliconnect"),"icon"=>"laptop");
   $arrX[] = array("label"=>__( "female", "doliconnect"),"icon"=>"female");
   $arrX[] = array("label"=>__( "seedling", "doliconnect"),"icon"=>"seedling");
   $arrX[] = array("label"=>__( "bacterium", "doliconnect"),"icon"=>"bacterium");
- 
+  $arrX[] = array("label"=>__( "fire", "doliconnect"),"icon"=>"fire");
+  $arrX[] = array("label"=>__( "key", "doliconnect"),"icon"=>"key");
+  $arrX[] = array("label"=>__( "lemon", "doliconnect"),"icon"=>"lemon");
+  $arrX[] = array("label"=>__( "tooth", "doliconnect"),"icon"=>"tooth");
+
   function shuffle_assoc($list) { 
     if (!is_array($list)) return $list; 
     $keys = array_keys($list); 
