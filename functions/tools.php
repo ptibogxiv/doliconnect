@@ -1766,7 +1766,8 @@ function doliline($object, $refresh = false, $refreshstock = false, $wishlist = 
 global $current_user;
   $doliline = null;
   //$doliline .= var_dump($object);
-  if ( isset($object) && is_object($object) && isset($object->lines) && $object->lines != null && (doliconnector($current_user, 'fk_soc') == $object->socid) ) {  
+  $thirdparty = doliConnect('thirdparty', $current_user, false, $refresh);
+  if ( isset($object) && is_object($object) && isset($object->lines) && $object->lines != null && ($thirdparty->id == $object->socid) ) {  
     foreach ( $object->lines as $line ) { 
       if ( $line->fk_product > 0 ) {
         if ($refresh || $refreshstock) $refreshstock = true;
@@ -1914,24 +1915,23 @@ function doliShipmentMethods($id, $refresh = false) {
 function doliconnect_paymentmethods($object = null, $module = null, $url = null, $refresh = false, $array = array()) {
 global $current_user;
 
-$request = "/doliconnector/".doliconnector($current_user, 'fk_soc')."/paymentmethods";
- 
-if ( !empty($module) && is_object($object) && isset($object->id) ) {
-if ($module == 'orders') { $module2 = 'order'; }
-elseif ($module == 'invoices') { $module2 = 'invoice'; }
-elseif ($module == 'donations') { $module2 = 'donation'; }
-else { $module2 = $module; }
-$request .= "?type=".$module2."&rowid=".$object->id;
-$currency=strtolower($object->multicurrency_code?$object->multicurrency_code:'eur');  
-$stripeAmount=($object->multicurrency_total_ttc?$object->multicurrency_total_ttc:$object->total_ttc)*100;
-}
+  $thirdparty = doliConnect('thirdparty', $current_user, false, $refresh);
+  $request = "/doliconnector/".$thirdparty->id."/paymentmethods";
+  
+  if ( !empty($module) && is_object($object) && isset($object->id) ) {
+    if ($module == 'orders') { $module2 = 'order'; }
+    elseif ($module == 'invoices') { $module2 = 'invoice'; }
+    elseif ($module == 'donations') { $module2 = 'donation'; }
+    else { $module2 = $module; }
+    $request .= "?type=".$module2."&rowid=".$object->id;
+    $currency=strtolower($object->multicurrency_code?$object->multicurrency_code:'eur');  
+    $stripeAmount=($object->multicurrency_total_ttc?$object->multicurrency_total_ttc:$object->total_ttc)*100;
+  }
 
-$listpaymentmethods = callDoliApi("GET", $request, null, dolidelay('paymentmethods', $refresh));
-//print var_dump($listpaymentmethods);
-$thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty', $refresh)); 
-//print $thirdparty;
+  $listpaymentmethods = callDoliApi("GET", $request, null, dolidelay('paymentmethods', $refresh));
+  //print var_dump($listpaymentmethods);
 
-$paymentmethods = '';
+  $paymentmethods = '';
  
 if ( isset($listpaymentmethods->stripe) ) {
 $paymentmethods .= '<script src="https://js.stripe.com/v3/"></script>';

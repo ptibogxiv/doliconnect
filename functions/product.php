@@ -263,10 +263,10 @@ global $current_user;
     $oldquantity = $quantity;
     $quantity = $mstock['m2'];
   }
-  $thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty'));
+  $thirdparty = doliConnect('thirdparty', $current_user, false);
   if ( empty($orderid) ) {
     $rdr = [
-      'socid' => doliconnector($current_user, 'fk_soc'),
+      'socid' => $thirdparty->id,
       'date' => time(),
       'demand_reason_id' => 1,
       'cond_reglement_id' => $thirdparty->cond_reglement_id,
@@ -489,7 +489,7 @@ function doliProductPrice($product, $quantity = null, $refresh = false, $nohtml 
 global $current_user;
   $button = null;
   $price = array();
-  $thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty'));
+  $thirdparty = doliConnect('thirdparty', $current_user, false);
   if (isset($thirdparty->tva_assuj) && empty($thirdparty->tva_assuj)) {
     if (isset($product->tva_tx))  $product->tva_tx = 0;
   }
