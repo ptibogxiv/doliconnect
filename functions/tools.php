@@ -232,9 +232,7 @@ return $info;
 }
 
 function doliPagination($object, $url, $page = 0) {
-
   if ( doliversion('19.0.0') && isset($object->pagination) && isset($object->data) ) { 
-
     $pagination = "<nav aria-label='Page navigation example'><ul class='pagination pagination-sm'>";
     $pagination .= '<li class="page-item';
     if (empty($page)) { $pagination .= ' disabled'; }
@@ -258,57 +256,50 @@ function doliPagination($object, $url, $page = 0) {
           </a>
       </li>';
     $pagination .= "</ul></nav>";
-
-} else {
-
+  } else {
     if (empty($object) || isset($object->error)) {
       $count = 0;
-      } else { 
+    } else { 
       $count = count($object);
-      }
-      $limit = 8;
-      
-      $pagination = "<nav aria-label='Page navigation example'><ul class='pagination pagination-sm'>";
-      if ($page > '1') {
+    }
+    $limit = 8;
+    $pagination = "<nav aria-label='Page navigation example'><ul class='pagination pagination-sm'>";
+    if ($page > '1') {
       $pagination .= '<li class="page-item">
-            <a class="page-link" href="'.esc_url( add_query_arg( array( 'pg' => esc_attr($page-1)), $url) ).'" aria-label="Previous">
-              <span aria-hidden="true">'.__( 'Previous', 'doliconnect').'</span>
-              <span class="sr-only">'.__( 'Previous', 'doliconnect').'</span>
-           </a>
-        </li>';
-      }
-      if ($page > 0) {
+      <a class="page-link" href="'.esc_url( add_query_arg( array( 'pg' => esc_attr($page-1)), $url) ).'" aria-label="Previous">
+      <span aria-hidden="true">'.__( 'Previous', 'doliconnect').'</span>
+      <span class="sr-only">'.__( 'Previous', 'doliconnect').'</span>
+      </a>
+      </li>';
+    }
+    if ($page > 0) {
       $pagination .= '<li class="page-item"><a class="page-link" href="'.esc_url( add_query_arg( array( 'pg' => esc_attr($page-1)), $url) ).'">'.esc_attr($page).'</a></li>';
-      }    
-      $pagination .= '<li class="page-item active"><a class="page-link" href="'.esc_url( add_query_arg( array( 'pg' => esc_attr($page)), $url) ).'">'.esc_attr($page+1).'</a></li>';
-      if ($count >= $limit) {
+    }    
+    $pagination .= '<li class="page-item active"><a class="page-link" href="'.esc_url( add_query_arg( array( 'pg' => esc_attr($page)), $url) ).'">'.esc_attr($page+1).'</a></li>';
+    if ($count >= $limit) {
       $pagination .= '<li class="page-item"><a class="page-link" href="'.esc_url( add_query_arg( array( 'pg' => esc_attr($page+1)), $url) ).'">'.esc_attr($page+2).'</a></li>';
       if ($page < 1) {
       //$pagination .= '<li class="page-item"><a class="page-link" href="'.esc_url( add_query_arg( array( 'pg' => esc_attr($page+3)), $url) ).'">'.esc_attr($page+3).'</a></li>';
       } 
       $pagination .= '<li class="page-item">
-            <a class="page-link" href="'.esc_url( add_query_arg( array( 'pg' => esc_attr($page+1)), $url) ).'" aria-label="Next">
-              <span aria-hidden="true">'.__( 'Next', 'doliconnect').'</span>
-              <span class="sr-only">'.__( 'Next', 'doliconnect').'</span>
-            </a>
-        </li>';
-      }
-      $pagination .= "</ul></nav>";
-
+      <a class="page-link" href="'.esc_url( add_query_arg( array( 'pg' => esc_attr($page+1)), $url) ).'" aria-label="Next">
+      <span aria-hidden="true">'.__( 'Next', 'doliconnect').'</span>
+       <span class="sr-only">'.__( 'Next', 'doliconnect').'</span>
+      </a>
+      </li>';
+    }
+    $pagination .= "</ul></nav>";
   }
-
   return $pagination;
 }
 
 function dolipage($object, $url, $page = 0, $limit = 8) {
-
   if ( doliversion('20.0.0') && isset($object->pagination) ) { $pagination .= $object->pagination->page_count; }
-
-if (empty($object) || isset($object->error)) {
-$count = 0;
-} else { 
-$count = count($object);
-}
+    if (empty($object) || isset($object->error)) {
+      $count = 0;
+    } else { 
+      $count = count($object);
+    }
 
 $pagination = "<nav aria-label='Page navigation example'><ul class='pagination pagination-sm'>";
 if ($page > '1') {
