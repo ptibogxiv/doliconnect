@@ -73,13 +73,17 @@ function doliConnect($fonction, $current_user = null, $boolean = false, $refresh
   if ( empty($current_user) ) {
       global $current_user;  
   }
-  if ($fonction == 'thirdparty') {
+  if ($fonction == 'thirdparty' && isset($current_user->user_email) && !empty($current_user->user_email)) {
       $return = callDoliApi("GET", "/thirdparties/email/".$current_user->user_email, null, dolidelay('doliconnector', $refresh));
-  } elseif ($fonction == 'member') {
+  } elseif ($fonction == 'member' && isset($current_user->user_email) && !empty($current_user->user_email)) {
       $return = callDoliApi("GET", "/members/thirdparty/email/".$current_user->user_email, null, dolidelay('doliconnector', $refresh));
-  } elseif ($fonction == 'user') {
+  } elseif ($fonction == 'user' && isset($current_user->user_email) && !empty($current_user->user_email)) {
       $return = callDoliApi("GET", "/users/email/".$current_user->user_email, null, dolidelay('doliconnector', $refresh));
   } else {
+      //$adherent = (object) 0;
+      //$adherent->id = 0;
+      //$adherent->email = null;
+			//$adherent->typeid = 0;
       $return = null;
   }
   if (isset($return->error))  {
