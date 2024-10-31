@@ -268,7 +268,7 @@ add_action('wp_ajax_dolicontactinfos_request', 'dolicontactinfos_request');
 function dolicontactinfos_request(){
 	global $current_user;
 	$ID = $current_user->ID;
-	
+	$thirdparty = doliConnect('thirdparty', $current_user);
 	if ( isset($_POST['dolicontactinfos-nonce']) && wp_verify_nonce( trim($_POST['dolicontactinfos-nonce']), 'dolicontactinfos') && isset($_POST['case']) && $_POST['case'] == "update" ) {
 
 		$contact = $_POST['contact'][''.$_POST['contactid'].''];
@@ -296,9 +296,9 @@ function dolicontactinfos_request(){
 
 	} elseif ( isset($_POST['dolicontactinfos-nonce']) && wp_verify_nonce( trim($_POST['dolicontactinfos-nonce']), 'dolicontactinfos') && isset($_POST['case']) && $_POST['case'] == "create" ) {
 
-		$contact = $_POST['contact'][''.doliconnector($current_user, 'fk_soc').''];
+		$contact = $_POST['contact'][''.$thirdparty->id.''];
 		$contact = dolisanitize($contact);
-		$contact['socid'] = doliconnector($current_user, 'fk_soc');
+		$contact['socid'] = $thirdparty->id;
 		if (empty($contact['no_email'])) {
 			$contact['no_email'] = true;
 		} else {
@@ -335,12 +335,12 @@ add_action('wp_ajax_doliticket_request', 'doliticket_request');
 add_action('wp_ajax_nopriv_doliticket_request', 'doliticket_request');
 
 function doliticket_request(){
-	global $current_user;
-
+global $current_user;
+	$thirdparty = doliConnect('thirdparty', $current_user);
 	if ( isset($_POST['doliticket-nonce']) && wp_verify_nonce( trim($_POST['doliticket-nonce']), 'doliticket')) {
 		if (isset($_POST['case']) && $_POST['case'] == "create") {
 			$rdr = [        
-				'fk_soc' => doliconnector($current_user, 'fk_soc'),
+				'fk_soc' => $thirdparty->id,
 				'type_code' => $_POST['ticket_type'],
 				'category_code' => $_POST['ticket_category'],
 				'severity_code' => $_POST['ticket_severity'],
@@ -723,8 +723,8 @@ add_action('wp_ajax_dolipaymentmethod_request', 'dolipaymentmethod_request');
 
 function dolipaymentmethod_request(){
 global $current_user;
-
-$request = "/doliconnector/".doliconnector($current_user, 'fk_soc')."/paymentmethods"; 
+	$thirdparty = doliConnect('thirdparty', $current_user);
+	$request = "/doliconnector/".$thirdparty->id."/paymentmethods"; 
 
 if ( wp_verify_nonce( trim($_POST['dolipaymentmethod-nonce']), 'dolipaymentmethod-nonce') && isset($_POST['case']) && $_POST['case'] == "default" ) {
 
