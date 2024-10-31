@@ -206,7 +206,7 @@ class My_doliconnect_Membership extends WP_Widget {
 	 * @param array $instance
 	 */
 public function widget( $args, $instance ) {
-global $current_user, $wpdb;
+global $current_user;
     
   	print $args['before_widget'];
 	if ( ! empty( $instance['title'] ) ) {
