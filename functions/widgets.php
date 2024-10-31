@@ -207,34 +207,27 @@ class My_doliconnect_Membership extends WP_Widget {
 	 */
 public function widget( $args, $instance ) {
 global $current_user, $wpdb;
-		// outputs the content of the widget
     
-  		print $args['before_widget'];
-		if ( ! empty( $instance['title'] ) ) {
-print $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ) . $args['after_title'];
-		}
-
-if (doliconnector($current_user, 'fk_member') > 0) {
-$adherent = callDoliApi("GET", "/adherentsplus/".doliconnector($current_user, 'fk_member'), null);
-}
- 
-if ($adherent->statut == '1' && $adherent->datefin < current_time('timestamp')) {
-print "<A class='btn btn-block btn-success' href='".esc_url( add_query_arg( 'module', 'members', doliconnecturl('doliaccount')) )."' >".__( 'Pay my subscription', 'doliconnect')."</a>"; 
-}
-elseif ($adherent->statut == '0') {
-print "<a class='btn btn-block btn-info' href='".esc_url( add_query_arg( 'module', 'members', doliconnecturl('doliaccount')) )."' >".__( 'Subscribe', 'doliconnect')."</a>"; 
-}
-elseif ($adherent->statut == '-1') {
-print "<a class='btn btn-block btn-warning disabled' href='".esc_url( add_query_arg( 'module', 'members', doliconnecturl('doliaccount')) )."' >".__( 'Membership', 'doliconnect')."</a>";//requested 
-}
-elseif (!$adherent->id > 0) {
-print "<a class='btn btn-block btn-success' href='".esc_url( add_query_arg( 'module', 'members', doliconnecturl('doliaccount')) )."' >".__( 'Subscribe', 'doliconnect')."</a>"; 
-}
-
-
-print $args['after_widget'];  
-    
+  	print $args['before_widget'];
+	if ( ! empty( $instance['title'] ) ) {
+		print $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ) . $args['after_title'];
 	}
+	$thirdparty = doliConnect('member', $current_user, false, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+ 
+	if (isset($adherent->statut) && $adherent->statut == '1' && $adherent->datefin < current_time('timestamp')) {
+		print "<A class='btn btn-block btn-success' href='".esc_url( add_query_arg( 'module', 'members', doliconnecturl('doliaccount')) )."' >".__( 'Pay my subscription', 'doliconnect')."</a>"; 
+	}
+	elseif (isset($adherent->statut) && $adherent->statut == '0') {
+		print "<a class='btn btn-block btn-info' href='".esc_url( add_query_arg( 'module', 'members', doliconnecturl('doliaccount')) )."' >".__( 'Subscribe', 'doliconnect')."</a>"; 
+	}
+	elseif (isset($adherent->statut) && $adherent->statut == '-1') {
+		print "<a class='btn btn-block btn-warning disabled' href='".esc_url( add_query_arg( 'module', 'members', doliconnecturl('doliaccount')) )."' >".__( 'Membership', 'doliconnect')."</a>";//requested 
+	}
+	elseif (!isset($adherent->id)) {
+		print "<a class='btn btn-block btn-success' href='".esc_url( add_query_arg( 'module', 'members', doliconnecturl('doliaccount')) )."' >".__( 'Subscribe', 'doliconnect')."</a>"; 
+	}
+	print $args['after_widget'];  
+}
 
 	/**
 	 * Outputs the options form on admin
