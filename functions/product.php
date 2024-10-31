@@ -546,7 +546,7 @@ global $current_user;
       $date = new DateTime(); 
       $date->modify('NOW');
       $lastdate = $date->format('Y-m-d');
-      $requestp = "/discountprice?productid=".$product->id."&sortfield=t.rowid&sortorder=ASC&sqlfilters=(t.date_begin:>=:'".$lastdate."')and(t.date_end%:<=:'".$lastdate."')and(d.tosell:=:1)";
+      $requestp = "/discountprice?productid=".$product->id."&sortfield=t.rowid&sortorder=ASC&sqlfilters=(t.date_begin:>=:'".$lastdate."')and(t.date_end:<=:'".$lastdate."')and(d.tosell:=:1)";
       $object = callDoliApi("GET", $requestp, null, dolidelay('product', $refresh));
       if ( doliversion('19.0.0') && isset($object->data) ) { $product3 = $object->data; } else { $product3 = $object; }
     }
