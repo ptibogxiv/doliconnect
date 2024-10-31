@@ -649,12 +649,12 @@ if ( wp_verify_nonce( trim($_POST['dolirpw-nonce']), 'dolirpw')) {
 
 	if ( (!isset($_POST["key"]) && !isset($_POST["login"]) && isset($pwd0) && !empty($pwd0) && wp_check_password( $pwd0, $current_user->user_pass, $current_user->ID ) && $doliValidatePassword ) || (isset($_POST["key"]) && isset($_POST["login"]) && ($pwd1 == $pwd2) && $doliValidatePassword ) ) {
 
-	if ( doliconnector($current_user, 'fk_user') > '0' ) {
-		$data = [
-    	'pass' => $pwd1
-		];
-		$object = callDoliApi("PUT", "/users/".doliconnector($current_user, 'fk_user'), $data, dolidelay('thirdparty'));
-	}
+		if ( doliconnector($current_user, 'fk_user') > '0' ) {
+			$data = [
+			'pass' => $pwd1
+			];
+			$object = callDoliApi("PUT", "/users/".doliconnector($current_user, 'fk_user'), $data, dolidelay('thirdparty'));
+		}
 
 	if ( !isset($object) || ( isset($object) && !isset($object->error) ) ) { 
 		wp_set_password($pwd1, $current_user->ID);
