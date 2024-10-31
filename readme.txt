@@ -75,6 +75,8 @@ We would like to thank this contributors and plugins:
 * better support agenda event
 * better cart
 * better shop
+* better transient
+* better captcha
 * fix php bugs & error
 
    = 8.9.x =
