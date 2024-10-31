@@ -502,15 +502,15 @@ global $current_user;
       $altdurvalue=60/$product->duration_value; 
     }
   }
-  $price['discount'] = !empty(doliconnector($current_user, 'remise_percent'))?doliconnector($current_user, 'remise_percent'):'0';
+  $price['discount'] = isset($thirdparty->remise_percent)?$thirdparty->remise_percent:'0';
   $customer_discount = $price['discount'];
 
   if ( !empty(doliconst("PRODUIT_MULTIPRICES")) && !empty($product->multiprices_ttc) ) {
 
-    if (!empty(doliconnector($current_user, 'price_level'))) {
-      $level=doliconnector($current_user, 'price_level');
+    if (isset($thirdparty->price_level) && !empty($thirdparty->price_level)) {
+      $level = $thirdparty->price_level;
     } else {
-      $level=1;
+      $level = 1;
     }
     $price_min_ttc = $product->multiprices_min_ttc->$level; 
     $price_min_ht = $product->multiprices_min->$level;  
@@ -525,14 +525,14 @@ global $current_user;
     //$button .= '<table class="table table-sm table-striped table-bordered"><tbody>';
     $multiprix = doliProducPriceTaxAssuj($product->multiprices, $product->multiprices_ttc, $product->tva_tx);
   } else {
-    if ( !empty(doliconst("PRODUIT_CUSTOMER_PRICES")) && doliconnector($current_user, 'fk_soc', $refresh) > 0 ) {
+    if ( !empty(doliconst("PRODUIT_CUSTOMER_PRICES")) && isset($thirdparty->id) && !empty($thirdparty->id) ) {
       $product2 = callDoliApi("GET", "/products/".$product->id."/selling_multiprices/per_customer", null, dolidelay('product', $refresh));
       if ( !isset($product2->error) && $product2 != null ) {
         $new_product2 = array_filter($product2, function($obj){
-          global $current_user;
-          $thirdparty_id = doliconnector($current_user, 'fk_soc');
+          //global $current_user;
+          //$thirdparty_id = doliconnector($current_user, 'fk_soc');
           if (isset($obj->fk_soc)) {
-            if ($obj->fk_soc != $thirdparty_id)  { return false; }
+            if ($obj->fk_soc != $thirdparty->id)  { return false; }
           }
           return true;
           });
