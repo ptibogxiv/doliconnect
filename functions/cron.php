@@ -15,7 +15,7 @@ function doliconnect_cron_process($refresh = false) {
             $date = new DateTime(); 
             $date->modify('NOW');
             $lastdate = $date->format('Y-m-d');
-            $requestp = "/discountprice?sortfield=t.rowid&sortorder=DESC&sqlfilters=(t.date_begin%3A%3C%3D%3A'".$lastdate."')and(t.date_end%3A%3E%3D%3A'".$lastdate."')and(d.tosell:=:1)";
+            $requestp = "/discountprice?sortfield=t.rowid&sortorder=DESC&sqlfilters=(t.date_begin:>=:'".$lastdate."')and(t.date_end:<=:'".$lastdate."')and(d.tosell:=:1)";
             $listproduct = callDoliApi("GET", $requestp, null, dolidelay('category', $refresh));
             if ( !isset($listproduct->error) && $listproduct != null ) {
                 foreach ($listproduct as $product) {
@@ -27,9 +27,9 @@ function doliconnect_cron_process($refresh = false) {
 
         $shop = doliconst("DOLICONNECT_CATSHOP");
         if ( $shop != null && $shop > 0 ) {
-            $request = "/categories?sortfield=t.label&sortorder=ASC&limit=100&type=product&sqlfilters=(t.fk_parent%3A%3D%3A".esc_attr($shop).")";
+            $request = "/categories?sortfield=t.label&sortorder=ASC&limit=100&type=product&sqlfilters=(t.fk_parent:=:".esc_attr($shop).")";
         } else {
-            $request = "/categories?sortfield=t.label&sortorder=ASC&limit=100&type=product&sqlfilters=(t.fk_parent%3A%3D%3A0)";
+            $request = "/categories?sortfield=t.label&sortorder=ASC&limit=100&type=product&sqlfilters=(t.fk_parent:=:0)";
         }
         $resultatsc = callDoliApi("GET", $request, null, dolidelay('category', $refresh));
         if ( !isset($resultatsc->error) && $resultatsc != null ) {
@@ -83,7 +83,7 @@ function doliconnect_cron_process($refresh = false) {
                     $date = new DateTime(); 
                     $date->modify('NOW');
                     $lastdate = $date->format('Y-m-d');
-                    $requestp = "/discountprice?productid=".$product->id."&sortfield=t.rowid&sortorder=ASC&sqlfilters=(t.date_begin%3A%3C%3D%3A'".$lastdate."')and(t.date_end%3A%3E%3D%3A'".$lastdate."')and(d.tosell:=:1)";
+                    $requestp = "/discountprice?productid=".$product->id."&sortfield=t.rowid&sortorder=ASC&sqlfilters=(t.date_begin:>=:'".$lastdate."')and(t.date_end:<=:'".$lastdate."')and(d.tosell:=:1)";
                     $product2 = callDoliApi("GET",$requestp, null, dolidelay('product', $refresh));
                 }
                 if ( !empty(doliconst("PRODUIT_CUSTOMER_PRICES", $refresh))) {
