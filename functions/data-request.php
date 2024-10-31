@@ -85,7 +85,7 @@ function doliuserinfos_request(){
 	
 	if ( isset($_POST['doliuserinfos-nonce']) && wp_verify_nonce( trim($_POST['doliuserinfos-nonce']), 'doliuserinfos') && isset($_POST['case']) && $_POST['case'] == "update" ) {
 
-		$thirdparty=$_POST['thirdparty'][''.doliconnector($current_user, 'fk_soc').''];
+		$thirdparty=$_POST['thirdparty'][''.doliConnect('thirdparty', $current_user)->id.''];
 		$thirdparty = dolisanitize($thirdparty);
 		if (empty($thirdparty['no_email'])) {
 			$thirdparty['no_email'] = true;
