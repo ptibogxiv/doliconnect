@@ -785,6 +785,7 @@ add_action('wp_ajax_dolicart_request', 'dolicart_request');
 function dolicart_request() {
 global $current_user;
 	if ( wp_verify_nonce( trim($_POST['dolicart-nonce']), 'dolicart-nonce')) {
+		$thirdparty = doliConnect('thirdparty', $current_user);
 		if (isset($_POST['case']) && $_POST['case'] == "updateLine") {
 			$product = callDoliApi("GET", "/products/".trim($_POST['id'])."?includesubproducts=true&includetrans=true", null, dolidelay('product'));
 			$mstock = doliProductStock($product, true, true, isset($_POST['product-array'])?$_POST['product-array']:array());
@@ -813,7 +814,7 @@ global $current_user;
 				if (isset($productarray['options_member_beneficiary']) && is_numeric($productarray['options_member_beneficiary']) && $productarray['options_member_beneficiary'] > 0 ) {
 					$memberid = $productarray['options_member_beneficiary'];
 				} else {
-					$memberid = doliconnector($current_user, 'fk_member');
+					$memberid = doliConnect('member', $current_user)->id;
 				}
 				$adherent = callDoliApi("GET", "/members/".$memberid, null, dolidelay('member'));
 				$requestb= "/adherentsplus/type/".$adherent->typeid;
@@ -869,21 +870,21 @@ global $current_user;
 				wp_send_json_success($response);
 				die();
 			} elseif (isset($_POST['modify']) && ($_POST['modify'] == "wish")) {
-				$wish = doliWishlist(doliconnector($current_user, 'fk_soc'), trim($_POST['id']), trim($_POST['lineid']), true, true);
+				$wish = doliWishlist($thirdparty->id, trim($_POST['id']), trim($_POST['lineid']), true, true);
 				if (empty($wish)) {
 					$data = [
 						'fk_product' => trim($_POST['id']),
-						'fk_soc' => doliconnector($current_user, 'fk_soc'),
+						'fk_soc' => $thirdparty->id,
 						'qty' => trim($_POST['qty']),
 						'priv' => 0 
 					];
 					$addwish = callDoliApi("POST", "/wishlist", $data, 0);
-					$wish = doliWishlist(doliconnector($current_user, 'fk_soc'), trim($_POST['id']), trim($_POST['lineid']), true, false);
+					$wish = doliWishlist($thirdparty->id, trim($_POST['id']), trim($_POST['lineid']), true, false);
 					$mstock = doliProductStock($product, true, true);
 					$response['newwish'] = doliProductCart($product, $mstock['lineid'], true); 
 				} elseif (!empty($wish)) {
 					$deletewish = callDoliApi("DELETE", "/wishlist/".$wish, null, 0);
-					$wish = doliWishlist(doliconnector($current_user, 'fk_soc'), trim($_POST['id']), trim($_POST['lineid']), true, false);
+					$wish = doliWishlist($thirdparty->id, trim($_POST['id']), trim($_POST['lineid']), true, false);
 					$mstock = doliProductStock($product, true, true);
 					$response['newwish'] = doliProductCart($product, $mstock['lineid'], true); 
 				}
