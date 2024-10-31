@@ -10,18 +10,14 @@ add_action( 'user_doliconnect_menu', 'informations_menu', 1, 1);
 function informations_module($url) {
     global $current_user;
 
-    $request = "/thirdparties/".doliConnect('thirdparty', $current_user)->id;
-
     $return = null;
     if ( isset($_GET['return']) ) {
         $url = esc_url( add_query_arg( 'return', $_GET['return'], $url) );
         $return = esc_url_raw( $_GET['return']);
     }
 
-    if ( doliConnect('thirdparty', $current_user)->id > '0' ) {
-        //$thirdparty = callDoliApi("GET", $request, null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
-        $thirdparty = doliConnect('thirdparty', $current_user, false, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
-    }
+    $thirdparty = doliConnect('thirdparty', $current_user, false, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+    $request = "/thirdparties/".$thirdparty->id;
 
     print "<div id='doliuserinfos-alert'></div><form action='".admin_url('admin-ajax.php')."' id='doliuserinfos-form' method='post' class='was-validated' enctype='multipart/form-data'>";
 

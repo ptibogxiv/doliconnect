@@ -5,247 +5,221 @@ global $wpdb, $current_user;
 
 if ( (in_the_loop() && is_main_query() && is_page(doliconnectid('doliaccount')) && !empty(doliconnectid('doliaccount')) ) || ( (!is_user_logged_in() && !empty(get_option('doliconnectrestrict')) && !is_page(doliconnectid('doliaccount')) && !empty($controle) ) || (!is_user_member_of_blog( $current_user->ID, get_current_blog_id()) && !empty(get_option('doliconnectrestrict')) && !is_page(doliconnectid('doliaccount')) && !empty($controle) ) )) {
 
-doliconnect_enqueues();
+  doliconnect_enqueues();
 
-if (dolicheckie($_SERVER['HTTP_USER_AGENT'])) {
-print '<div class="card shadow-sm">';
-print '<div class="card-body">';
-print dolicheckie($_SERVER['HTTP_USER_AGENT']);
-print "</div></div>";
-} else {
+  if (dolicheckie($_SERVER['HTTP_USER_AGENT'])) {
+    print '<div class="card shadow-sm">';
+    print '<div class="card-body">';
+    print dolicheckie($_SERVER['HTTP_USER_AGENT']);
+    print "</div></div>";
+  } else {
 
-$ID = $current_user->ID;
-$time = current_time( 'timestamp', 1);
+    $ID = $current_user->ID;
+    $time = current_time( 'timestamp', 1);
 
-print "<div class='row'>";
-if ( empty(get_option('doliconnectrestrict')) || is_user_logged_in() ) {
-print "<div class='col-xs-12 col-sm-12 col-md-3'><div class='row'><div class='col-3 col-xs-4 col-sm-4 col-md-12 col-xl-12'><div class='card shadow-sm' style='width: 100%'>";
-print get_avatar($ID);
+    print "<div class='row'>";
+    if ( empty(get_option('doliconnectrestrict')) || is_user_logged_in() ) {
+      print "<div class='col-xs-12 col-sm-12 col-md-3'><div class='row'><div class='col-3 col-xs-4 col-sm-4 col-md-12 col-xl-12'><div class='card shadow-sm' style='width: 100%'>";
+      print get_avatar($ID);
 
-if ( !defined("DOLIBUG") && is_user_logged_in() && is_user_member_of_blog( $current_user->ID, get_current_blog_id())) {
-print "<a href='".esc_url( add_query_arg( 'module', 'avatars', doliconnecturl('doliaccount')) )."' title='".__( 'Edit my avatar', 'doliconnect')."' class='card-img-overlay'><div class='d-block d-sm-block d-xs-block d-md-none'></div><div class='d-none d-md-block'><i class='fas fa-camera fa-2x'></i></div></a>";
-} 
-print '<ul class="list-group list-group-flush">';
-if ( isset($_GET['module']) && !empty($_GET['module'])) {
-print "<a href='".esc_url( doliconnecturl('doliaccount') )."' class='list-group-item list-group-item-light list-group-item-action'><center><div class='d-block d-sm-block d-xs-block d-md-none'><i class='fas fa-arrow-circle-left fa-fw'></i></div><div class='d-none d-md-block'><i class='fas fa-arrow-circle-left fa-fw'></i> ".__( 'Return', 'doliconnect')."</div></center></a>";
-} else {
-print "<a href='".esc_url(home_url())."' class='list-group-item list-group-item-light list-group-item-action'><center><div class='d-block d-sm-block d-xs-block d-md-none'><i class='fas fa-home'></i></div><div class='d-none d-md-block'><i class='fas fa-home fa-fw'></i> ".__( 'Home', 'doliconnect')."</div></center></a>";
-}
-print '</ul>';
+      if ( !defined("DOLIBUG") && is_user_logged_in() && is_user_member_of_blog( $current_user->ID, get_current_blog_id())) {
+      print "<a href='".esc_url( add_query_arg( 'module', 'avatars', doliconnecturl('doliaccount')) )."' title='".__( 'Edit my avatar', 'doliconnect')."' class='card-img-overlay'><div class='d-block d-sm-block d-xs-block d-md-none'></div><div class='d-none d-md-block'><i class='fas fa-camera fa-2x'></i></div></a>";
+      } 
+      print '<ul class="list-group list-group-flush">';
+      if ( isset($_GET['module']) && !empty($_GET['module'])) {
+      print "<a href='".esc_url( doliconnecturl('doliaccount') )."' class='list-group-item list-group-item-light list-group-item-action'><center><div class='d-block d-sm-block d-xs-block d-md-none'><i class='fas fa-arrow-circle-left fa-fw'></i></div><div class='d-none d-md-block'><i class='fas fa-arrow-circle-left fa-fw'></i> ".__( 'Return', 'doliconnect')."</div></center></a>";
+      } else {
+      print "<a href='".esc_url(home_url())."' class='list-group-item list-group-item-light list-group-item-action'><center><div class='d-block d-sm-block d-xs-block d-md-none'><i class='fas fa-home'></i></div><div class='d-none d-md-block'><i class='fas fa-home fa-fw'></i> ".__( 'Home', 'doliconnect')."</div></center></a>";
+      }
+      print '</ul>';
 
-print '</div><br></div>';
-print "<div class='col-9 col-xs-8 col-sm-8 col-md-12 col-xl-12'>";
-} else {
-print "<div class='col-md-6 offset-md-3'>";
-}
-if ( is_user_logged_in() && is_user_member_of_blog( $current_user->ID, get_current_blog_id())) {
-
-$thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-
-if ( defined("DOLIBUG") ) {
-
-print "</div></div></div>";
-print "<div class='col-xs-12 col-sm-12 col-md-9'><div class='card shadow-sm'><div class='card-body'>";
-print dolibug(isset($thirdparty->error->message)?$thirdparty->error->message:$thirdparty);
-print "</div></div></div></div>";
-
-} elseif ( isset($thirdparty->status) && $thirdparty->status != '1' ) {
-
-print "</div></div></div>";
-print "<div class='col-xs-12 col-sm-12 col-md-9'><div class='card shadow-sm'><div class='card-body'>";
-print '<br><br><br><br><br><center><div class="align-middle"><i class="fas fa-bug fa-3x fa-fw"></i><h4>'.__( 'This account is closed. Please contact us for reopen it.', 'doliconnect').'</h4></div></center><br><br><br><br><br>';
-print "</div></div></div></div>";
-
-$thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty', true));
-
-} else { 
-
-if ( isset($_GET['module']) && !empty($_GET['module'])) {
-//****
-if ( has_action('user_doliconnect_'.esc_attr($_GET['module'])) ) {
-    if ( has_action('user_doliconnect_menu') ) {
-    print "<div class='list-group shadow-sm'>";
-    do_action('user_doliconnect_menu', esc_attr($_GET['module']));
-    print "</div><br>";
+      print '</div><br></div>';
+      print "<div class='col-9 col-xs-8 col-sm-8 col-md-12 col-xl-12'>";
+    } else {
+      print "<div class='col-md-6 offset-md-3'>";
     }
-    print "</div></div></div>";
-    print "<div class='col-xs-12 col-sm-12 col-md-9'>";
-    do_action( 'user_doliconnect_'.esc_attr($_GET['module']), esc_url( add_query_arg( 'module', esc_attr($_GET['module']), doliconnecturl('doliaccount')) ) ); 
-} elseif ( has_action('customer_doliconnect_'.esc_attr($_GET['module'])) && isset($thirdparty->client) && !empty($thirdparty->client)) {
-    if ( has_action('customer_doliconnect_menu') ) {
-    print "<div class='list-group shadow-sm'>";
-    do_action('customer_doliconnect_menu', esc_attr($_GET['module']));
-    print "</div><br>";
-    }
-    print "</div></div></div>";
-    print "<div class='col-xs-12 col-sm-12 col-md-9'>";
-    do_action( 'customer_doliconnect_'.esc_attr($_GET['module']), esc_url( add_query_arg( 'module', esc_attr($_GET['module']), doliconnecturl('doliaccount')) ) ); 
-} elseif ( has_action('member_doliconnect_'.esc_attr($_GET['module'])) ) {
-    if ( has_action('member_doliconnect_menu') ) {
-    print "<div class='list-group shadow-sm'>";
-    do_action('member_doliconnect_menu', esc_attr($_GET['module']));
-    print "</div><br>";
-    }
-    print "</div></div></div>";
-    print "<div class='col-xs-12 col-sm-12 col-md-9'>";
-    do_action( 'member_doliconnect_'.esc_attr($_GET['module']), esc_url( add_query_arg( 'module', esc_attr($_GET['module']), doliconnecturl('doliaccount')) ) ); 
-} elseif ( has_action('supplier_doliconnect_'.esc_attr($_GET['module'])) && isset($thirdparty->fournisseur) && !empty($thirdparty->fournisseur)) {
-    if ( has_action('supplier_doliconnect_menu') ) {
-    print "<div class='list-group shadow-sm'>";
-    do_action('supplier_doliconnect_menu', esc_attr($_GET['module']));
-    print "</div><br>";
-    }
-    print "</div></div></div>";
-    print "<div class='col-xs-12 col-sm-12 col-md-9'>";
-    do_action('supplier_doliconnect_'.esc_attr($_GET['module']), esc_url( add_query_arg( 'module', esc_attr($_GET['module']), doliconnecturl('doliaccount')) ) ); 
-} elseif ( has_action('grh_doliconnect_'.esc_attr($_GET['module'])) ) {
-    if ( has_action('grh_doliconnect_menu') ) {
-    print "<div class='list-group shadow-sm'>";
-    do_action('grh_doliconnect_menu', esc_attr($_GET['module']));
-    print "</div><br>";
-    }
-    print "</div></div></div>";
-    print "<div class='col-xs-12 col-sm-12 col-md-9'>";
-    do_action('grh_doliconnect_'.esc_attr($_GET['module']), esc_url( add_query_arg( 'module', esc_attr($_GET['module']), doliconnecturl('doliaccount')) ) ); 
-} elseif ( has_action('settings_doliconnect_'.esc_attr($_GET['module'])) ) {
-    if ( has_action('settings_doliconnect_menu') ) {
-    print "<div class='list-group shadow-sm'>";
-    do_action('settings_doliconnect_menu', esc_attr($_GET['module']));
-    print "</div><br>";
-    }
-    print "</div></div></div>";
-    print "<div class='col-xs-12 col-sm-12 col-md-9'>";
-    do_action( 'settings_doliconnect_'.esc_attr($_GET['module']), esc_url( add_query_arg( 'module', esc_attr($_GET['module']), doliconnecturl('doliaccount')) ) ); 
-} else {
-wp_redirect( esc_url(doliconnecturl('doliaccount')) );
-exit;
-}
-//****
-print "</div>";
+    if ( is_user_logged_in() && is_user_member_of_blog( $current_user->ID, get_current_blog_id())) {
 
-} elseif ( isset($_GET["action"]) && $_GET["action"] == 'confirmaction' ) {
-print "<p class='font-weight-light' align='justify'><h5>".sprintf(__('Hello %s', 'doliconnect'), $current_user->first_name)."</h5><small class='text-muted'>".__( 'Manage your account, your informations, orders and much more via this secure client area.', 'doliconnect')."</small></p></div></div></div>";
-print "<div class='col-xs-12 col-sm-12 col-md-9'>";
-print "<div class='card shadow-sm'><div class='card-body'>";
-		if ( ! isset( $_GET['request_id'] ) ) {
-			print __( 'Missing request ID.');
-		}
+      $thirdparty = doliConnect('thirdparty', $current_user, false, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+      $request = "/thirdparties/".$thirdparty->id;
 
-		if ( ! isset( $_GET['confirm_key'] ) ) {
-			print __( 'Missing confirm key.');
-		}   
+      if ( defined("DOLIBUG") ) {
+        print "</div></div></div>";
+        print "<div class='col-xs-12 col-sm-12 col-md-9'><div class='card shadow-sm'><div class='card-body'>";
+        print dolibug(isset($thirdparty->error->message)?$thirdparty->error->message:$thirdparty);
+        print "</div></div></div></div>";
+      } elseif ( isset($thirdparty->status) && $thirdparty->status != '1' ) {
+        print "</div></div></div>";
+        print "<div class='col-xs-12 col-sm-12 col-md-9'><div class='card shadow-sm'><div class='card-body'>";
+        print '<br><br><br><br><br><center><div class="align-middle"><i class="fas fa-bug fa-3x fa-fw"></i><h4>'.__( 'This account is closed. Please contact us for reopen it.', 'doliconnect').'</h4></div></center><br><br><br><br><br>';
+        print "</div></div></div></div>";
+      } else { 
+        if ( isset($_GET['module']) && !empty($_GET['module'])) {
+          if ( has_action('user_doliconnect_'.esc_attr($_GET['module'])) ) {
+            if ( has_action('user_doliconnect_menu') ) {
+              print "<div class='list-group shadow-sm'>";
+              do_action('user_doliconnect_menu', esc_attr($_GET['module']));
+              print "</div><br>";
+            }
+            print "</div></div></div>";
+            print "<div class='col-xs-12 col-sm-12 col-md-9'>";
+            do_action( 'user_doliconnect_'.esc_attr($_GET['module']), esc_url( add_query_arg( 'module', esc_attr($_GET['module']), doliconnecturl('doliaccount')) ) ); 
+          } elseif ( has_action('customer_doliconnect_'.esc_attr($_GET['module'])) && isset($thirdparty->client) && !empty($thirdparty->client)) {
+            if ( has_action('customer_doliconnect_menu') ) {
+              print "<div class='list-group shadow-sm'>";
+              do_action('customer_doliconnect_menu', esc_attr($_GET['module']));
+              print "</div><br>";
+            }
+            print "</div></div></div>";
+            print "<div class='col-xs-12 col-sm-12 col-md-9'>";
+            do_action( 'customer_doliconnect_'.esc_attr($_GET['module']), esc_url( add_query_arg( 'module', esc_attr($_GET['module']), doliconnecturl('doliaccount')) ) ); 
+          } elseif ( has_action('member_doliconnect_'.esc_attr($_GET['module'])) ) {
+            if ( has_action('member_doliconnect_menu') ) {
+              print "<div class='list-group shadow-sm'>";
+              do_action('member_doliconnect_menu', esc_attr($_GET['module']));
+              print "</div><br>";
+            }
+            print "</div></div></div>";
+            print "<div class='col-xs-12 col-sm-12 col-md-9'>";
+            do_action( 'member_doliconnect_'.esc_attr($_GET['module']), esc_url( add_query_arg( 'module', esc_attr($_GET['module']), doliconnecturl('doliaccount')) ) ); 
+          } elseif ( has_action('supplier_doliconnect_'.esc_attr($_GET['module'])) && isset($thirdparty->fournisseur) && !empty($thirdparty->fournisseur)) {
+            if ( has_action('supplier_doliconnect_menu') ) {
+              print "<div class='list-group shadow-sm'>";
+              do_action('supplier_doliconnect_menu', esc_attr($_GET['module']));
+              print "</div><br>";
+            }
+            print "</div></div></div>";
+            print "<div class='col-xs-12 col-sm-12 col-md-9'>";
+            do_action('supplier_doliconnect_'.esc_attr($_GET['module']), esc_url( add_query_arg( 'module', esc_attr($_GET['module']), doliconnecturl('doliaccount')) ) ); 
+          } elseif ( has_action('grh_doliconnect_'.esc_attr($_GET['module'])) ) {
+            if ( has_action('grh_doliconnect_menu') ) {
+              print "<div class='list-group shadow-sm'>";
+              do_action('grh_doliconnect_menu', esc_attr($_GET['module']));
+              print "</div><br>";
+            }
+            print "</div></div></div>";
+            print "<div class='col-xs-12 col-sm-12 col-md-9'>";
+            do_action('grh_doliconnect_'.esc_attr($_GET['module']), esc_url( add_query_arg( 'module', esc_attr($_GET['module']), doliconnecturl('doliaccount')) ) ); 
+          } elseif ( has_action('settings_doliconnect_'.esc_attr($_GET['module'])) ) {
+            if ( has_action('settings_doliconnect_menu') ) {
+              print "<div class='list-group shadow-sm'>";
+              do_action('settings_doliconnect_menu', esc_attr($_GET['module']));
+              print "</div><br>";
+            }
+            print "</div></div></div>";
+            print "<div class='col-xs-12 col-sm-12 col-md-9'>";
+            do_action( 'settings_doliconnect_'.esc_attr($_GET['module']), esc_url( add_query_arg( 'module', esc_attr($_GET['module']), doliconnecturl('doliaccount')) ) ); 
+          } else {
+            wp_redirect( esc_url(doliconnecturl('doliaccount')) );
+            exit;
+          }
+          print "</div>";
+        } elseif ( isset($_GET["action"]) && $_GET["action"] == 'confirmaction' ) {
+          print "<p class='font-weight-light' align='justify'><h5>".sprintf(__('Hello %s', 'doliconnect'), $current_user->first_name)."</h5><small class='text-muted'>".__( 'Manage your account, your informations, orders and much more via this secure client area.', 'doliconnect')."</small></p></div></div></div>";
+          print "<div class='col-xs-12 col-sm-12 col-md-9'>";
+          print "<div class='card shadow-sm'><div class='card-body'>";
+          if ( ! isset( $_GET['request_id'] ) ) {
+            print __( 'Missing request ID.');
+          }
+          if ( ! isset( $_GET['confirm_key'] ) ) {
+            print __( 'Missing confirm key.');
+          }   
+          if ( isset( $_GET['request_id'] ) && isset( $_GET['confirm_key'] ) ) {
+            $request_id = (int) $_GET['request_id'];
+            $key        = sanitize_text_field( wp_unslash( $_GET['confirm_key'] ) );
+            $result     = wp_validate_user_request_key( $request_id, $key );
+            //if ( !is_wp_error( $result ) ) {
+            do_action( 'user_request_action_confirmed', $request_id );
+            $message = _wp_privacy_account_request_confirmed_message( $request_id );
+            print $message;
+            //}
+          }
+          print "</div></div></div>";
+        } else {
+          print "<p class='font-weight-light' align='justify'><h5>".sprintf(__('Hello %s', 'doliconnect'), $current_user->first_name)."</h5><small class='text-muted'>".__( 'Manage your account, your informations, orders and much more via this secure client area.', 'doliconnect')."</small></p></div></div></div>";
+          print "<div class='col-xs-12 col-sm-12 col-md-9'>";
 
-if ( isset( $_GET['request_id'] ) && isset( $_GET['confirm_key'] ) ) {
-		$request_id = (int) $_GET['request_id'];
-		$key        = sanitize_text_field( wp_unslash( $_GET['confirm_key'] ) );
-		$result     = wp_validate_user_request_key( $request_id, $key );
+          if ( has_action('user_doliconnect_menu') ) {
+            print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__('%s My profil', 'doliconnect'), '<i class="fa-solid fa-user"></i>').'</div><ul class="list-group list-group-flush">';
+            do_action('user_doliconnect_menu');
+            print "</ul></div><br>";
+          }  
+          if ( has_action('customer_doliconnect_menu') && isset($thirdparty->client) && !empty($thirdparty->client)) {
+            print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__('%s My purchases', 'doliconnect'), '<i class="fa-solid fa-bag-shopping"></i>').'</div><ul class="list-group list-group-flush">';
+            do_action('customer_doliconnect_menu');
+            print "</ul></div><br>";
+          }
+          if ( has_action('member_doliconnect_menu') ) {
+            print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__('%s My membership', 'doliconnect'), '<i class="fa-solid fa-user-plus"></i>').'</div><ul class="list-group list-group-flush">';
+            do_action('member_doliconnect_menu');
+            print "</ul></div><br>";
+          }
+          if ( has_action('supplier_doliconnect_menu') && isset($thirdparty->fournisseur) && !empty($thirdparty->fournisseur)) {
+            print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__('%s My supplies', 'doliconnect'), '<i class="fa-solid fa-boxes-packing"></i>').'</div><ul class="list-group list-group-flush">';
+            do_action('supplier_doliconnect_menu');
+            print "</ul></div><br>";
+          }
+          if ( has_action('grh_doliconnect_menu') ) {
+            print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__('%s My human resources', 'doliconnect'), '<i class="fa-solid fa-user-tie"></i>').'</div><ul class="list-group list-group-flush">';
+            do_action('grh_doliconnect_menu');
+            print "</ul></div><br>";
+          }
+          if ( has_action('settings_doliconnect_menu') ) {
+            print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__('%s My settings & contacts', 'doliconnect'), '<i class="fa-solid fa-user-gear"></i>').'</div><ul class="list-group list-group-flush">';
+            do_action('settings_doliconnect_menu');
+            print "</ul></div><br>";
+          }
+          print "</div>";
+        }
+        print "</div>";
+      }
+    } else { 
+      print "</div></div></div>";
+      if ( empty(get_option('doliconnectrestrict')) ) {
+        print "<div class='col-xs-12 col-sm-12 col-md-9'>";
+      } else {
+        print "<div class='col-md-6 offset-md-3'>";
+      }
 
-//if ( !is_wp_error( $result ) ) {
-do_action( 'user_request_action_confirmed', $request_id );
-$message = _wp_privacy_account_request_confirmed_message( $request_id );
-print $message;
-//}
-}
+      if (dolicheckie($_SERVER['HTTP_USER_AGENT'])) {
+        print '<div class="card shadow-sm">';
+        print '<div class="card-body">';
+        print dolicheckie($_SERVER['HTTP_USER_AGENT']);
+        print "</div></div>";
+      } elseif ( isset($_GET["action"]) && $_GET["action"] == 'confirmaction' ) {
 
-print "</div></div></div>";
+        if ( ! isset( $_GET['request_id'] ) ) {
+           print __( 'Missing request ID.');
+        }
+        if ( ! isset( $_GET['confirm_key'] ) ) {
+           print __( 'Missing confirm key.');
+        }   
 
-} else {
+        if ( isset( $_GET['request_id'] ) && isset( $_GET['confirm_key'] ) ) {
+          $request_id = (int) $_GET['request_id'];
+          $key = sanitize_text_field( wp_unslash( $_GET['confirm_key'] ) );
+          $result = wp_validate_user_request_key( $request_id, $key );
 
-print "<p class='font-weight-light' align='justify'><h5>".sprintf(__('Hello %s', 'doliconnect'), $current_user->first_name)."</h5><small class='text-muted'>".__( 'Manage your account, your informations, orders and much more via this secure client area.', 'doliconnect')."</small></p></div></div></div>";
-print "<div class='col-xs-12 col-sm-12 col-md-9'>";
+          //if ( !is_wp_error( $result ) ) {
+          do_action( 'user_request_action_confirmed', $request_id );
+          $message = _wp_privacy_account_request_confirmed_message( $request_id );
+          print $message;
+          //}
+        }
+        print "</div></div>";
+      } elseif ( isset($_GET["action"]) && $_GET["action"] == 'signup' && !is_user_logged_in() ) {
+      if ( is_multisite() && !get_option( 'users_can_register' ) && (get_site_option( 'registration' ) != 'user' or get_site_option( 'registration' ) != 'all') ) {
+        //wp_redirect(esc_url(doliconnecturl('doliaccount')));
+        //exit;
+      } elseif ( !get_option( 'users_can_register' ) ) {
+        //wp_redirect(esc_url(doliconnecturl('doliaccount')));
+        //exit;
+      }
 
-if ( has_action('user_doliconnect_menu') ) {
-  print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__('%s My profil', 'doliconnect'), '<i class="fa-solid fa-user"></i>').'</div><ul class="list-group list-group-flush">';
-  do_action('user_doliconnect_menu');
-  print "</ul></div><br>";
-}  
+      if (isset($_GET["morphy"]) && (($_GET["morphy"] == 'mor' && (empty(get_option('doliconnect_disablepro')) || get_option('doliconnect_disablepro') == 'mor')) || ($_GET["morphy"] == 'phy' && (empty(get_option('doliconnect_disablepro')) || get_option('doliconnect_disablepro') == 'phy')))) {
+      print "<div id='doliuserinfos-alert'></div><form action='".admin_url('admin-ajax.php')."' id='doliuserinfos-form' method='post' class='was-validated' enctype='multipart/form-data'>";
 
-if ( has_action('customer_doliconnect_menu') && isset($thirdparty->client) && !empty($thirdparty->client)) {
-  print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__('%s My purchases', 'doliconnect'), '<i class="fa-solid fa-bag-shopping"></i>').'</div><ul class="list-group list-group-flush">';
-  do_action('customer_doliconnect_menu');
-  print "</ul></div><br>";
-}
-
-if ( has_action('member_doliconnect_menu') ) {
-  print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__('%s My membership', 'doliconnect'), '<i class="fa-solid fa-user-plus"></i>').'</div><ul class="list-group list-group-flush">';
-  do_action('member_doliconnect_menu');
-  print "</ul></div><br>";
-}
-
-if ( has_action('supplier_doliconnect_menu') && isset($thirdparty->fournisseur) && !empty($thirdparty->fournisseur)) {
-  print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__('%s My supplies', 'doliconnect'), '<i class="fa-solid fa-boxes-packing"></i>').'</div><ul class="list-group list-group-flush">';
-  do_action('supplier_doliconnect_menu');
-  print "</ul></div><br>";
-}
-
-if ( has_action('grh_doliconnect_menu') ) {
-  print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__('%s My human resources', 'doliconnect'), '<i class="fa-solid fa-user-tie"></i>').'</div><ul class="list-group list-group-flush">';
-  do_action('grh_doliconnect_menu');
-  print "</ul></div><br>";
-}
-
-if ( has_action('settings_doliconnect_menu') ) {
-  print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__('%s My settings & contacts', 'doliconnect'), '<i class="fa-solid fa-user-gear"></i>').'</div><ul class="list-group list-group-flush">';
-  do_action('settings_doliconnect_menu');
-  print "</ul></div><br>";
-}
-
-print "</div>";
-}
-// fin de sous page
-print "</div>";
-}
-} else { 
-//print "<p class='font-weight-light' align='justify'><small class='text-muted'>".__( 'Manage your account, your informations, orders and much more via this secure client area.', 'doliconnect')."</p>";
-print "</div></div></div>";
-
-if ( empty(get_option('doliconnectrestrict')) ) {
-print "<div class='col-xs-12 col-sm-12 col-md-9'>";
-} else {
-print "<div class='col-md-6 offset-md-3'>";
-}
-
-if (dolicheckie($_SERVER['HTTP_USER_AGENT'])) {
-print '<div class="card shadow-sm">';
-print '<div class="card-body">';
-print dolicheckie($_SERVER['HTTP_USER_AGENT']);
-print "</div></div>";
-} elseif ( isset($_GET["action"]) && $_GET["action"] == 'confirmaction' ) {
-
-		if ( ! isset( $_GET['request_id'] ) ) {
-			print __( 'Missing request ID.');
-		}
-
-		if ( ! isset( $_GET['confirm_key'] ) ) {
-			print __( 'Missing confirm key.');
-		}   
-
-if ( isset( $_GET['request_id'] ) && isset( $_GET['confirm_key'] ) ) {
-		$request_id = (int) $_GET['request_id'];
-		$key        = sanitize_text_field( wp_unslash( $_GET['confirm_key'] ) );
-		$result     = wp_validate_user_request_key( $request_id, $key );
-
-//if ( !is_wp_error( $result ) ) {
-do_action( 'user_request_action_confirmed', $request_id );
-$message = _wp_privacy_account_request_confirmed_message( $request_id );
-print $message;
-//}
-}
-print "</div></div>";
-} elseif ( isset($_GET["action"]) && $_GET["action"] == 'signup' && !is_user_logged_in() ) {
-
-if ( is_multisite() && !get_option( 'users_can_register' ) && (get_site_option( 'registration' ) != 'user' or get_site_option( 'registration' ) != 'all') ) {
-//wp_redirect(esc_url(doliconnecturl('doliaccount')));
-//exit;
-} elseif ( !get_option( 'users_can_register' ) ) {
-//wp_redirect(esc_url(doliconnecturl('doliaccount')));
-//exit;
-}
-
-if (isset($_GET["morphy"]) && (($_GET["morphy"] == 'mor' && (empty(get_option('doliconnect_disablepro')) || get_option('doliconnect_disablepro') == 'mor')) || ($_GET["morphy"] == 'phy' && (empty(get_option('doliconnect_disablepro')) || get_option('doliconnect_disablepro') == 'phy')))) {
-print "<div id='doliuserinfos-alert'></div><form action='".admin_url('admin-ajax.php')."' id='doliuserinfos-form' method='post' class='was-validated' enctype='multipart/form-data'>";
-
-print doliAjax('doliuserinfos', null, 'create');
+      print doliAjax('doliuserinfos', null, 'create');
 
 print '<div class="card shadow-sm"><div class="card-header">';
 if ($_GET["morphy"] == 'phy') {
@@ -1092,10 +1066,8 @@ print dolibug(__( 'Inactive module on Dolibarr', 'doliconnect'));
 print "</div></div>";
 } elseif (is_user_logged_in())  {
 
-if ( doliconnector($current_user, 'fk_soc') > '0') {
-$request = "/thirdparties/".doliconnector($current_user, 'fk_soc');
-$thirdparty = callDoliApi("GET", $request, null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
-}
+  $thirdparty = doliConnect('thirdparty', $current_user, false, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+  $request = "/thirdparties/".$thirdparty->id;
 
 print "<form action='".doliconnecturl('dolidonation')."' id='doliconnect-donationform' method='post' class='was-validated' enctype='multipart/form-data'>";
 
