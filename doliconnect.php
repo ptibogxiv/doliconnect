@@ -167,9 +167,9 @@ function callDoliApi($method = null, $link = null, $body = null, $delay = HOUR_I
          'DOLAPIENTITY' => dolibarr_entity($entity),
          'DOLAPIKEY' => get_site_option('dolibarr_private_key')
     );
-
+    
     $url=get_site_option('dolibarr_public_url').'/api/index.php'.$link;
-
+    $link = substr($link, 0, 171);
     if ( !empty(get_site_option('dolibarr_public_url')) && !empty(get_site_option('dolibarr_private_key')) ) {
         if ( !empty( $link ) && ( false ===  get_transient( $link ) || $method!='GET' || $delay <= 0 ) ) {
             $args = array(
