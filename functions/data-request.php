@@ -645,12 +645,12 @@ global $wpdb,$current_user;
 			$doliValidatePassword = true;
 		}
 		if ( (!isset($_POST["key"]) && !isset($_POST["login"]) && isset($pwd0) && !empty($pwd0) && wp_check_password( $pwd0, $current_user->user_pass, $current_user->ID ) && $doliValidatePassword ) || (isset($_POST["key"]) && isset($_POST["login"]) && ($pwd1 == $pwd2) && $doliValidatePassword ) ) {
-			$user = doliConnect('user', $current_user);
-			if ( doliconnector($current_user, 'fk_user') > '0' ) {
+			$object = doliConnect('user', $current_user);
+			if ( isset($object) && !isset($object->error) && isset($object->id) && $object->id > 0 ) {
 				$data = [
 				'pass' => $pwd1
 				];
-				$object = callDoliApi("PUT", "/users/".doliconnector($current_user, 'fk_user'), $data, dolidelay('thirdparty'));
+				$object = callDoliApi("PUT", "/users/".$object->id, $data, dolidelay('thirdparty'));
 			}
 			if ( !isset($object) || ( isset($object) && !isset($object->error) ) ) { 
 				wp_set_password($pwd1, $current_user->ID);
