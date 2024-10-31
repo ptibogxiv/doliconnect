@@ -1,7 +1,7 @@
 <?php
 
 function doliaccount_display($content, $controle = false) {
-global $wpdb, $current_user;
+global $current_user;
 
   if ( (in_the_loop() && is_main_query() && is_page(doliconnectid('doliaccount')) && !empty(doliconnectid('doliaccount')) ) || ( (!is_user_logged_in() && !empty(get_option('doliconnectrestrict')) && !is_page(doliconnectid('doliaccount')) && !empty($controle) ) || (!is_user_member_of_blog( $current_user->ID, get_current_blog_id()) && !empty(get_option('doliconnectrestrict')) && !is_page(doliconnectid('doliaccount')) && !empty($controle) ) )) {
 
@@ -1122,7 +1122,7 @@ add_filter( 'the_content', 'dolidonation_display');
 //*****************************************************************************************
  
 function dolicart_display($content) {
-global $wpdb, $current_user;
+global $current_user;
 
 if ( in_the_loop() && is_main_query() && is_page(doliconnectid('dolicart')) && !empty(doliconnectid('dolicart')) )  {
 
