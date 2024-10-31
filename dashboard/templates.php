@@ -1129,6 +1129,7 @@ if ( in_the_loop() && is_main_query() && is_page(doliconnectid('dolicart')) && !
 doliconnect_enqueues();
 
 $time = current_time( 'timestamp', 1);
+$thirdparty = doliConnect('thirdparty', $current_user, false, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 
 if ( isset($_GET['module']) && ($_GET['module'] == 'orders' || $_GET['module'] == 'invoices') && isset($_GET['id']) && isset($_GET['ref']) ) {
 $request = "/".esc_attr($_GET['module'])."/".esc_attr($_GET['id'])."?contact_list=0";
@@ -1447,8 +1448,6 @@ if ( is_user_logged_in() ) {
 print '<div class="tab-pane fade';
 if (isset($_GET['stage']) && $_GET['stage'] == 'informations' && isset($object) && is_object($object) && isset($object->lines) && $object->lines != null) { print ' show active'; }
 print '" role="tabpanel" id="nav-tab-info">';
-  
-$thirdparty = doliConnect('thirdparty', $current_user, false, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 
 print "<div class='card'><ul class='list-group list-group-flush'>";
 
@@ -1460,10 +1459,11 @@ $listcontact = callDoliApi("GET", "/contacts?sortfield=t.rowid&sortorder=ASC&lim
 
 $contactbilling = array(); 
 if (!empty($object->contacts_ids) && is_array($object->contacts_ids)) { 
-foreach ($object->contacts_ids as $contact) {
-if ('BILLING' == $contact->code) {
-$contactbilling[] = $contact->id;
-}}
+  foreach ($object->contacts_ids as $contact) {
+    if ('BILLING' == $contact->code) {
+      $contactbilling[] = $contact->id;
+    }
+  }
 }
 
 print '<div class="form-check"><input type="checkbox" id="billing-0" name="contact_billing" class="form-check-input" value="0" ';
@@ -1505,9 +1505,8 @@ print '</label></div>';
 }
 }
 print "</small></div></div></li>";
-
 } else {
-print "<li class='list-group-item list-group-item-info'><h6>".__( 'Billing address', 'doliconnect')."</h6>".doliaddress($thirdparty)."</li>";
+  print "<li class='list-group-item list-group-item-info'><h6>".__( 'Billing address', 'doliconnect')."</h6>".doliaddress($thirdparty)."</li>";
 }
 
 if ( doliCheckModules('fraisdeport') ) {
