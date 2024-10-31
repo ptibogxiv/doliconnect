@@ -223,7 +223,7 @@ function doliObjectInfos($object) {
   $info = "<b>".__( 'Date of order', 'doliconnect').":</b> ".wp_date('d/m/Y', $object->date_creation)."<br>";
   if (isset($object->fin_validite) && !empty($object->fin_validite)) $info .= "<b>".__( 'Date of end of validity', 'doliconnect').":</b> ".wp_date('d/m/Y', $object->fin_validite)."<br>";
   if (isset($object->date_validation) && !empty($object->date_validation)) $info .= "<b>".__( 'Date of validation', 'doliconnect')." : </b> ".wp_date('d/m/Y', $object->date_validation)."<br>";
-  if (isset($object->mode_reglement_code)) $mode_reglement = callDoliApi("GET", "/setup/dictionary/payment_types?sortfield=code&sortorder=ASC&limit=100&active=1&sqlfilters=(t.code%3A%3D%3A'".$object->mode_reglement_code."')", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+  if (isset($object->mode_reglement_code)) $mode_reglement = callDoliApi("GET", "/setup/dictionary/payment_types?sortfield=code&sortorder=ASC&limit=100&active=1&sqlfilters=(t.code:=:'".$object->mode_reglement_code."')", null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
   if (isset($object->mode_reglement_code) && !empty($object->mode_reglement_code) && isset($mode_reglement[0]->label)) $info .= "<b>".__( 'Payment method', 'doliconnect').":</b> ".$mode_reglement[0]->label."<br>";
   if (isset($object->cond_reglement_id) && !empty($object->cond_reglement_id)) $info .= "<b>".__( 'Payment term', 'doliconnect').":</b> ".dolipaymentterm($object->cond_reglement_id)."<br>";
   if (isset($object->shipping_method_id) && !empty($object->shipping_method_id)) $info .= "<b>".__( 'Shipment method', 'doliconnect').":</b> ".doliShipmentMethods($object->shipping_method_id)."<br>";
@@ -617,7 +617,7 @@ return $doliSelect;
 
 function doliFaqForm($category, $refresh = null) {
 global $current_user; 
-  $requestf = "/knowledgemanagement/knowledgerecords?sortfield=t.rowid&sortorder=ASC&limit=100&sqlfilters=(t.fk_c_ticket_category%3A%3D%3A'".$category."')and(t.status%3A%3D%3A'1')and((t.lang%3A%3D%3A'0')%20or%20(t.lang%3A%3D%3A'".doliUserLang($current_user)."'))";  
+  $requestf = "/knowledgemanagement/knowledgerecords?sortfield=t.rowid&sortorder=ASC&limit=100&sqlfilters=(t.fk_c_ticket_category:=:'".$category."')and(t.status:=:'1')and((t.lang:=:'0')%20or%20(t.lang:=:'".doliUserLang($current_user)."'))";  
   $listfaq = callDoliApi("GET", $requestf, null, dolidelay('constante', $refresh));
   $doliFaq = '';
     if ( !isset( $listfaq->error ) && $listfaq != null ) {
@@ -821,7 +821,7 @@ if ( !is_user_logged_in() && in_array($mode, array('linkthirdparty')) ) {
 
 if ( in_array($mode, array('member')) ) {
 $doliuser .= "<div class='form-row'><div class='form-floating'><select class='form-select' id='typeid'  name='".$idobject."[typeid]' required>";
-$typeadhesion = callDoliApi("GET", "/adherentsplus/type?sortfield=t.libelle&sortorder=ASC&sqlfilters=(t.morphy%3A=%3A'')%20or%20(t.morphy%3Ais%3Anull)%20or%20(t.morphy%3A%3D%3A'".$object->morphy."')", null, $delay);
+$typeadhesion = callDoliApi("GET", "/adherentsplus/type?sortfield=t.libelle&sortorder=ASC&sqlfilters=(t.morphy:=:'')or(t.morphy:is:null)or(t.morphy:=:'".$object->morphy."')", null, $delay);
 //print $typeadhesion;
 $doliuser .= "<option value='' disabled ";
 if ( empty($object->typeid) ) {
@@ -1151,7 +1151,7 @@ $doliuser .= '</script>';
 $doliuser .= '</div><div class="row g-2">';
   
 $doliuser .= '<div class="col-12 col-md"><div class="form-floating" id="ziptown_form">';
-$doliuser .= doliSelectForm("ziptown", "/setup/dictionary/towns?sortfield=town&sortorder=ASC&active=1&limit=1000&sqlfilters=(t.fk_pays%3A%3D%3A'".(isset($object->country_id) ? $object->country_id : $company->country_id)."')and(t.fk_county%3A%3D%3A'".(isset($object->state_id) ? $object->state_id : null)."')", __( '- Select your town -', 'doliconnect'), __( 'Town', 'doliconnect'), (isset($object->zip) ? $object->zip : null).','.(isset($object->town) ? $object->town : null), $idobject, $rights);
+$doliuser .= doliSelectForm("ziptown", "/setup/dictionary/towns?sortfield=town&sortorder=ASC&active=1&limit=1000&sqlfilters=(t.fk_pays:=:'".(isset($object->country_id) ? $object->country_id : $company->country_id)."')and(t.fk_county:=:'".(isset($object->state_id) ? $object->state_id : null)."')", __( '- Select your town -', 'doliconnect'), __( 'Town', 'doliconnect'), (isset($object->zip) ? $object->zip : null).','.(isset($object->town) ? $object->town : null), $idobject, $rights);
 $doliuser .= '</div></div>';
 
 $doliuser .= "</div></li>";
@@ -1216,7 +1216,7 @@ $doliuser .= "</li>";
 }
 
 if ( in_array($mode, array('contact')) && doliversion('12.0.0') ) {
-$contact_types = callDoliApi("GET", "/setup/dictionary/contact_types?sortfield=code&sortorder=ASC&limit=100&active=1&lang=".doliUserLang($current_user)."&sqlfilters=(t.source%3A%3D%3A'external')and(t.element%3A%3D%3A'commande')", null, $delay);//%20OR%20(t.element%3A%3D%3A'propal')
+$contact_types = callDoliApi("GET", "/setup/dictionary/contact_types?sortfield=code&sortorder=ASC&limit=100&active=1&lang=".doliUserLang($current_user)."&sqlfilters=(t.source:=:'external')and(t.element:=:'commande')", null, $delay);//%20OR%20(t.element:=:'propal')
 $doliuser .= "<li class='list-group-item list-group-item-light list-group-item-action'>";
 if ( !isset($contact_types->error ) && $contact_types != null ) {
 $typecontact = array();
@@ -1851,7 +1851,7 @@ global $current_user;
 }
 
 function doliunit($scale, $type, $refresh = null) {
-  $unit = callDoliApi("GET", "/setup/dictionary/units?sortfield=rowid&sortorder=ASC&limit=1&active=1&sqlfilters=(t.scale%3A%3D%3A'".$scale."')and(t.unit_type%3A%3D%3A'".$type."')", null, dolidelay('constante', $refresh));
+  $unit = callDoliApi("GET", "/setup/dictionary/units?sortfield=rowid&sortorder=ASC&limit=1&active=1&sqlfilters=(t.scale:=:'".$scale."')and(t.unit_type:=:'".$type."')", null, dolidelay('constante', $refresh));
   return $unit[0]->short_label;
 }
 
@@ -1884,7 +1884,7 @@ function doliduration($object) {
 
 function dolipaymentterm($id, $refresh = false) {
   global $current_user;
-  $paymenterm = callDoliApi("GET", "/setup/dictionary/payment_terms?sortfield=rowid&sortorder=ASC&limit=100&active=1&sqlfilters=(t.rowid%3A%3D%3A'".$id."')", null, dolidelay('constante', $refresh)); 
+  $paymenterm = callDoliApi("GET", "/setup/dictionary/payment_terms?sortfield=rowid&sortorder=ASC&limit=100&active=1&sqlfilters=(t.rowid:=:'".$id."')", null, dolidelay('constante', $refresh)); 
   //print var_dump($paymenterm[0]);
   if ($paymenterm[0]->type_cdr == 1) {
     $term = sprintf( _n( '%s day', '%s days', $paymenterm[0]->nbjour, 'doliconnect'), $paymenterm[0]->nbjour);
@@ -1901,7 +1901,7 @@ function dolipaymentterm($id, $refresh = false) {
 function doliShipmentMethods($id, $refresh = false) {
   global $current_user;
   if ( !empty($id) && $id > 0) {
-    $paymenterm = callDoliApi("GET", "/setup/dictionary/shipping_methods?sortfield=rowid&sortorder=ASC&limit=100&active=1&lang=".doliUserLang($current_user)."&sqlfilters=(t.rowid%3A%3D%3A'".$id."')", null, dolidelay('constante', $refresh)); 
+    $paymenterm = callDoliApi("GET", "/setup/dictionary/shipping_methods?sortfield=rowid&sortorder=ASC&limit=100&active=1&lang=".doliUserLang($current_user)."&sqlfilters=(t.rowid:=:'".$id."')", null, dolidelay('constante', $refresh)); 
     //print var_dump($paymenterm[0]);
     $term = (isset($paymenterm[0]->label)?$paymenterm[0]->label:$paymenterm[0]->libelle); 
     //if (isset($paymenterm[0]->description) && !empty($paymenterm[0]->description)) $term .= ' <small>('.$paymenterm[0]->description.')</small>'; 
@@ -2048,7 +2048,7 @@ $minPM = apply_filters( 'doliconnect_force_minipaymentmethod', $listpaymentmetho
 }
 if ( isset($listpaymentmethods->payment_methods) && $listpaymentmethods->payment_methods != null ) {
 foreach ( $listpaymentmethods->payment_methods as $method ) { 
-$mode_reglement_code = callDoliApi("GET", "/setup/dictionary/payment_types?sortfield=code&sortorder=ASC&limit=100&active=1&sqlfilters=(t.code%3A%3D%3A'PRE')", null, dolidelay('constante'));
+$mode_reglement_code = callDoliApi("GET", "/setup/dictionary/payment_types?sortfield=code&sortorder=ASC&limit=100&active=1&sqlfilters=(t.code:=:'PRE')", null, dolidelay('constante'));
 $paymentmethods .= '<div class="accordion-item"><h2 class="accordion-header" id="flush-heading'.$method->id.'"><button class="accordion-button';
 if ( $method->default_source && empty($thirdparty->mode_reglement_id) && !in_array($method->type, array('PRE','VIR')) || (!empty($method->default_source) && !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id == $mode_reglement_code[0]->id ) ) { $paymentmethods .= ""; } else { $paymentmethods .= " collapsed"; }
 $paymentmethods .= '" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse'.$method->id.'" aria-expanded="';
@@ -2770,7 +2770,7 @@ $paymentmethods .= '<li class="nav-item"><a class="nav-link" data-bs-toggle="pil
 <i class="fab fa-paypal float-start"></i> Paypal</a></li>';
 }
 if ( isset($listpaymentmethods->VIR) && !empty($listpaymentmethods->VIR) ) {
-$mode_reglement_code = callDoliApi("GET", "/setup/dictionary/payment_types?sortfield=code&sortorder=ASC&limit=100&active=1&sqlfilters=(t.code%3A%3D%3A'VIR')", null, dolidelay('constante'));
+$mode_reglement_code = callDoliApi("GET", "/setup/dictionary/payment_types?sortfield=code&sortorder=ASC&limit=100&active=1&sqlfilters=(t.code:=:'VIR')", null, dolidelay('constante'));
 $paymentmethods .= '<div class="accordion-item"><h2 class="accordion-header" id="flush-headingvir"><button class="accordion-button';
 if ( !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id == $mode_reglement_code[0]->id ) { $paymentmethods .= ""; } else { $paymentmethods .= " collapsed"; }
 $paymentmethods .= '" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapsevir" aria-expanded="';
@@ -2783,7 +2783,7 @@ $paymentmethods .= '<div id="flush-collapsevir" class="accordion-collapse collap
 if ( !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id == $mode_reglement_code[0]->id ) { $paymentmethods .= " show"; }
 $paymentmethods .= '" aria-labelledby="flush-headingvir" data-bs-parent="#accordionFlushExample"><div class="accordion-body bg-light">';
 
-$mode_reglement_code = callDoliApi("GET", "/setup/dictionary/payment_types?sortfield=code&sortorder=ASC&limit=100&active=1&sqlfilters=(t.code%3A%3D%3A'VIR')", null, dolidelay('constante'));
+$mode_reglement_code = callDoliApi("GET", "/setup/dictionary/payment_types?sortfield=code&sortorder=ASC&limit=100&active=1&sqlfilters=(t.code:=:'VIR')", null, dolidelay('constante'));
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
 $paymentmethods .= "<p class='text-justify'>".sprintf( __( 'Please send your bank transfert in the amount of <b>%1$s</b> at the following account:', 'doliconnect'), doliprice($object, 'ttc', isset($object->multicurrency_code) ? $object->multicurrency_code : null))."</p>";
 } else {
@@ -2823,7 +2823,7 @@ $paymentmethods .= '</div></div></div>';
 }
 
 if ( isset($listpaymentmethods->CHQ) && !empty($listpaymentmethods->CHQ) ) {
-$mode_reglement_code = callDoliApi("GET", "/setup/dictionary/payment_types?sortfield=code&sortorder=ASC&limit=100&active=1&sqlfilters=(t.code%3A%3D%3A'CHQ')", null, dolidelay('constante'));
+$mode_reglement_code = callDoliApi("GET", "/setup/dictionary/payment_types?sortfield=code&sortorder=ASC&limit=100&active=1&sqlfilters=(t.code:=:'CHQ')", null, dolidelay('constante'));
 $paymentmethods .= '<div class="accordion-item"><h2 class="accordion-header" id="flush-headingvir"><button class="accordion-button';
 if ( !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id == $mode_reglement_code[0]->id ) { $paymentmethods .= ""; } else { $paymentmethods .= " collapsed"; }
 $paymentmethods .= '" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapsechq" aria-expanded="';
@@ -2835,7 +2835,7 @@ $paymentmethods .= '</button></h2>';
 $paymentmethods .= '<div id="flush-collapsechq" class="accordion-collapse collapse';
 if ( !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id == $mode_reglement_code[0]->id ) { $paymentmethods .= " show"; }
 $paymentmethods .= '" aria-labelledby="flush-headingchq" data-bs-parent="#accordionFlushExample"><div class="accordion-body bg-light">';
-$mode_reglement_code = callDoliApi("GET", "/setup/dictionary/payment_types?sortfield=code&sortorder=ASC&limit=100&active=1&sqlfilters=(t.code%3A%3D%3A'CHQ')", null, dolidelay('constante'));
+$mode_reglement_code = callDoliApi("GET", "/setup/dictionary/payment_types?sortfield=code&sortorder=ASC&limit=100&active=1&sqlfilters=(t.code:=:'CHQ')", null, dolidelay('constante'));
 if ( !empty($module) && is_object($object) && isset($object->id) ) {
 $paymentmethods .= "<p class='text-justify'>".sprintf( __( 'Please send your money check in the amount of <b>%1$s</b> to <b>%2$s</b> at the following address:', 'doliconnect'), doliprice($object, 'ttc', isset($object->multicurrency_code) ? $object->multicurrency_code : null), $listpaymentmethods->CHQ->proprio)."</p>";
 } else {

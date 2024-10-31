@@ -65,7 +65,7 @@ if (isset($_POST['case']) && $_POST['case'] == "update" ) {
 	$response = array();
 	if (isset($_POST['legalformId'])) $response['state_id'] = doliSelectForm("state_id", "/setup/dictionary/states?sortfield=code_departement&sortorder=ASC&limit=500&country=".$_POST['countryId'], __( '- Select your state -', 'doliconnect'), __( 'State', 'doliconnect'), $_POST['stateId'], $_POST['objectId'], $_POST['rights'], $_POST['delay']);
 	if (isset($_POST['legalformId'])) $response['forme_juridique_code'] = doliSelectForm("forme_juridique_code", "/setup/dictionary/legal_form?sortfield=libelle&sortorder=ASC&active=1&limit=500&country=".$_POST['countryId'], __( '- Select your legal form -', 'doliconnect'), __( 'Legal form', 'doliconnect'), $_POST['legalformId'], $_POST['objectId'], $_POST['rights'], $_POST['delay'], 'code');
-	$response['ziptown'] = doliSelectForm("ziptown", "/setup/dictionary/towns?sortfield=town&sortorder=ASC&active=1&limit=1000&sqlfilters=(t.fk_pays%3A%3D%3A'".$_POST['countryId']."')and(t.fk_county%3A%3D%3A'".$_POST['stateId']."')", __( '- Select your town -', 'doliconnect'), __( 'Town', 'doliconnect'), $_POST['ziptownId'], $_POST['objectId'], $_POST['rights'], $_POST['delay']);
+	$response['ziptown'] = doliSelectForm("ziptown", "/setup/dictionary/towns?sortfield=town&sortorder=ASC&active=1&limit=1000&sqlfilters=(t.fk_pays:=:'".$_POST['countryId']."')and(t.fk_county:=:'".$_POST['stateId']."')", __( '- Select your town -', 'doliconnect'), __( 'Town', 'doliconnect'), $_POST['ziptownId'], $_POST['objectId'], $_POST['rights'], $_POST['delay']);
 	$response['profids'] = doliProfId((isset($_POST['idprof1'])?$_POST['idprof1']:null), (isset($_POST['idprof2'])?$_POST['idprof2']:null), (isset($_POST['idprof3'])?$_POST['idprof3']:null), (isset($_POST['idprof4'])?$_POST['idprof4']:null), (isset($_POST['country_code'])?$_POST['country_code']:null), (isset($_POST['objectId'])?$_POST['objectId']:null), (isset($_POST['rights'])?$_POST['rights']:null));
 	wp_send_json_success( $response );
 } else {
@@ -997,7 +997,7 @@ $payinfo = callDoliApi("POST", "/doliconnector/pay/".trim($_POST['module'])."/".
 if (!isset($payinfo->error)) { 
 doliconnector($current_user, 'fk_order', true);
 $object = callDoliApi("GET", "/".trim($_POST['module'])."/".trim($_POST['id'])."?contact_list=0", null, dolidelay('cart', true));
-$mode_reglement = callDoliApi("GET", "/setup/dictionary/payment_types?sortfield=code&sortorder=ASC&limit=100&active=1&sqlfilters=(t.code%3A%3D%3A'".$payinfo->mode_reglement_code."')", null, dolidelay('constante'));
+$mode_reglement = callDoliApi("GET", "/setup/dictionary/payment_types?sortfield=code&sortorder=ASC&limit=100&active=1&sqlfilters=(t.code:=:'".$payinfo->mode_reglement_code."')", null, dolidelay('constante'));
 $message = '<div class="card"><div class="card-body"><center><i class="fas fa-check-circle fa-9x fa-fw text-success"></i>
 <p class="card-text"><h2>'.__( 'Your order has been registered', 'doliconnect').'</h2>'.__( 'Reference', 'doliconnect').': '.$payinfo->ref.'<br>'.__( 'Payment method', 'doliconnect').': '.$mode_reglement[0]->label.'</p>';
 $message .= '<p class="card-text">'.__( 'Payment status', 'doliconnect').': '.$payinfo->charge_status.'<br>'.__( 'Payment ID', 'doliconnect').': '.$payinfo->charge.'</p>';
@@ -1026,12 +1026,12 @@ add_action('wp_ajax_nopriv_dolisignup_request', 'dolisignup_request');
 function dolisignup_request(){
 global $current_user;
 	if ( wp_verify_nonce( trim($_POST['dolisignup-nonce']), 'dolisignup-nonce') ) {
-		$doliuser = callDoliApi("GET", "/thirdparties?sortfield=t.code_client&sortorder=ASC&limit=1&sqlfilters=(t.code_client%3A%3D%3A'".trim($_POST['code_client'])."')", null, 0);
+		$doliuser = callDoliApi("GET", "/thirdparties?sortfield=t.code_client&sortorder=ASC&limit=1&sqlfilters=(t.code_client:=:'".trim($_POST['code_client'])."')", null, 0);
 		if (isset($doliuser->error->message)) {
 			wp_send_json_error( __( 'Customer not found', 'doliconnect')); 
 		} else {
 			$order = callDoliApi("GET", "/orders/ref/".trim($_POST['reference'])."?contact_list=1", null, 0);
-			$invoice = callDoliApi("GET", "/invoices?sortfield=t.ref&sortorder=ASC&limit=1&thirdparty_ids=".$doliuser[0]->id."&sqlfilters=(t.ref%3Alike%3A'".trim($_POST['reference'])."')and(t.multicurrency_total_ttc%3Alike%3A'".number_format(trim($_POST['amount']), 0, '.', '')."%25')", null, 0);
+			$invoice = callDoliApi("GET", "/invoices?sortfield=t.ref&sortorder=ASC&limit=1&thirdparty_ids=".$doliuser[0]->id."&sqlfilters=(t.ref:like:'".trim($_POST['reference'])."')and(t.multicurrency_total_ttc:like:'".number_format(trim($_POST['amount']), 0, '.', '')."%25')", null, 0);
 			if (!isset($invoice->error->message) || (!isset($order->error->message) && $order->socid == $doliuser[0]->id && preg_match('/'.number_format(trim($_POST['amount']).'/i', 0, '.', '').'/', $order->multicurrency_total_ttc))) {
  				wp_send_json_success( 'success'); 
 			 	die(); 
@@ -1176,7 +1176,7 @@ global $current_user;
 		$member_id = '';
 		if (isset($adherent) && isset($adherent->id) && $adherent->id > 0) $member_id = "member_id=".$adherent->id;
 		$morphy = '';
-		if (!empty($current_user->billing_type)) $morphy = "&sqlfilters=(t.morphy%3A=%3A'')%20or%20(t.morphy%3Ais%3Anull)%20or%20(t.morphy%3A%3D%3A'".$current_user->billing_type."')";
+		if (!empty($current_user->billing_type)) $morphy = "&sqlfilters=(t.morphy:=:'')or(t.morphy:is:null)or(t.morphy:=:'".$current_user->billing_type."')";
 		$typeadhesion = callDoliApi("GET", "/adherentsplus/type?sortfield=t.libelle&sortorder=ASC&".$member_id.$morphy, null, dolidelay('member'));
 		$modal['header'] = __( 'Prices', 'doliconnect').' '.$typeadhesion[0]->season;
 		$modal['body'] = dolimembertypelist($typeadhesion, $adherent);	
