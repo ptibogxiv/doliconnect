@@ -79,6 +79,8 @@ function doliConnect($fonction, $current_user = null, $boolean = false, $refresh
       $return = callDoliApi("GET", "/members/thirdparty/email/".$current_user->user_email, null, dolidelay('doliconnector', $refresh));
   } elseif ($fonction == 'user' && isset($current_user->user_email) && !empty($current_user->user_email)) {
       $return = callDoliApi("GET", "/users/email/".$current_user->user_email, null, dolidelay('doliconnector', $refresh));
+    } elseif ($fonction == 'order' && isset($current_user->user_email) && !empty($current_user->user_email)) {
+      $return = callDoliApi("GET", "/users/email/".$current_user->user_email, null, dolidelay('doliconnector', $refresh));
   } else {
       //$adherent = (object) 0;
       //$adherent->id = 0;
@@ -224,8 +226,8 @@ function doliversion($version) {
 add_action( 'admin_init', 'doliversion', 5, 1); 
 
 function doliPG($pg = 0) {
-  if ( is_numeric(esc_attr($pg)) && esc_attr($pg) > 0 ) { $pg = esc_attr($pg-1); }
-  return $pg;
+  if ( isset($pg) && is_numeric(esc_attr($pg)) && esc_attr($pg) > 0 ) { $page = esc_attr($pg); }  else { $page = 0; }
+  return $page;
 }
 
 function doliObjectInfos($object) {
