@@ -1780,7 +1780,7 @@ global $current_user;
         $doliline .= "<b>".__( "Sorry, this product is not available with this quantity. Please, change it to finalize your order", 'doliconnect')."</b>";
       }
       $doliline .= '</div><div class="col d-none d-md-block col-md-3 text-end">';
-      if ( isset($object->statut) && empty($object->statut) && !is_page(doliconnectid('doliaccount')) && doliconst('FRAIS_DE_PORT_ID_SERVICE_TO_USE', $refresh) != $line->fk_product  ) {
+      if ( isset($object->statut) && empty($object->statut) && !is_page(doliconnectid('doliaccount')) && doliconst('FRAIS_DE_PORT_ID_SERVICE_TO_USE') != $line->fk_product  ) {
         $doliline .= '<center>'.doliProductStock($product).'</center>';
         if ( !empty($product->country_id) ) {  
           $country = callDoliApi("GET", "/setup/dictionary/countries/".$product->country_id."?lang=".doliUserLang($current_user), null, dolidelay('constante', $refresh));
@@ -1788,7 +1788,7 @@ global $current_user;
         }
       }
       $doliline .= '</div><div class="col-4 col-sm-3 col-md-3 col-lg-3 text-end"><h6 class="mb-1">'.doliprice($line, (empty(get_option('dolibarr_b2bmode'))?'total_ttc':'total_ht'), isset($line->multicurrency_code) ? $line->multicurrency_code : null).'</h6>';
-      if (!empty($line->fk_parent_line) || (doliCheckModules('fraisdeport', $refresh) && empty($line->fk_parent_line) && doliconst('FRAIS_DE_PORT_ID_SERVICE_TO_USE', $refresh) == $line->fk_product)) {
+      if (!empty($line->fk_parent_line) || (doliCheckModules('fraisdeport', $refresh) && empty($line->fk_parent_line) && doliconst('FRAIS_DE_PORT_ID_SERVICE_TO_USE') == $line->fk_product)) {
         $doliline .= '<h6 class="mb-1">x'.$line->qty.'</h6>';
       } elseif ( isset($object->statut) && empty($object->statut) && !is_page(doliconnectid('doliaccount')) ) {
         $doliline .= doliProductCart($product, $line, $refresh, $wishlist);
