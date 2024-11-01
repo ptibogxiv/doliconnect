@@ -83,7 +83,7 @@ function doliConnect($fonction, $current_user = null, $boolean = false, $refresh
     $thirdparty = callDoliApi("GET", "/thirdparties/email/".$current_user->user_email, null, dolidelay('doliconnector'));
     $object = callDoliApi("GET", "/orders?sortfield=t.rowid&sortorder=DESC&limit=1&thirdparty_ids=".$thirdparty->id."&sqlfilters=(t.fk_statut%3A%3D%3A'0')and(t.module_source%3A%3D%3A'doliconnect')&pagination_data=true", null, dolidelay('doliconnector', $refresh));
     if ( doliversion('20.0.0') && isset($object->data) ) { $object = $object->data; } else { $object = $object; }
-    $return = $object[0];
+    $return = isset($object[0])?$object[0]:null;
   } else {
     //$adherent = (object) 0;
     //$adherent->id = 0;
