@@ -827,7 +827,7 @@ global $current_user;
 					'total' => $result['total']
 					];
 				$response['newwish'] = doliProductCart($product, $result['line'], true, false, $productarray);
-					$object = doliConnect('order', $current_user, false, true);
+					$object = doliConnect('order', $current_user);
 					$response['js'] = null;
 					$response['modal'] = doliModalTemplate('CartInfos', __( 'Cart', 'doliconnect'), doliline($object, false, false, false), doliCartButton($object), 'modal-lg');
 				wp_send_json_success($response);
@@ -855,7 +855,7 @@ global $current_user;
 					];
 				$response['newwish'] = doliProductCart($product, $result['line'], true, true, $productarray);
 				if (isset($_POST['DisplayCart']) && !empty($_POST['DisplayCart'])) {
-					$object = doliConnect('order', $current_user, false, true);
+					$object = doliConnect('order', $current_user);
 					$response['js'] = null;
 					$response['modal'] = doliModalTemplate('CartInfos', __( 'Cart', 'doliconnect'), doliline($object, false, false, false), doliCartButton($object), 'modal-lg');
 				} elseif (doliCheckModules('relatedproducts') && doliCheckRelatedProducts($product->id)) { 
@@ -895,7 +895,7 @@ global $current_user;
 				if (!isset($object->error) && empty($object->statut)) {
 					$object = callDoliApi("DELETE", "/orders/".trim($_POST['id']), null);
 					if (!isset($object->error)) { 
-						$dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolidelay('doliconnector', true));
+						$object = doliConnect('order', $current_user, false, true);
 						$response = [
 							'items' => 0,
 							'lines' => doliline(0),
@@ -916,7 +916,7 @@ global $current_user;
 			if (!isset($object->error) && empty($object->statut)) {
 				$object = callDoliApi("DELETE", "/".trim($_POST['module'])."/".trim($_POST['id']), null);
 				if (!isset($object->error)) { 
-					$dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolidelay('doliconnector', true));
+					$object = doliConnect('order', $current_user, false, true);
 					$response = [
     					'items' => 0,
     					'lines' => doliline(0),
@@ -990,7 +990,7 @@ $payinfo = callDoliApi("POST", "/doliconnector/pay/".trim($_POST['module'])."/".
 //print var_dump($payinfo);
 
 if (!isset($payinfo->error)) { 
-doliconnector($current_user, 'fk_order', true);
+	$object = doliConnect('order', $current_user, false, true);
 $object = callDoliApi("GET", "/".trim($_POST['module'])."/".trim($_POST['id'])."?contact_list=0", null, dolidelay('cart', true));
 $mode_reglement = callDoliApi("GET", "/setup/dictionary/payment_types?sortfield=code&sortorder=ASC&limit=100&active=1&sqlfilters=(t.code:=:'".$payinfo->mode_reglement_code."')", null, dolidelay('constante'));
 $message = '<div class="card"><div class="card-body"><center><i class="fas fa-check-circle fa-9x fa-fw text-success"></i>
