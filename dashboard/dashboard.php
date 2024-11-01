@@ -1741,10 +1741,8 @@ print "<ul class='list-group list-group-flush'>";
 
 //*****************************************************************************************
 
-//if ( !empty( callDoliApi("GET",'/thirdparties/'.doliconnector( null, 'fk_soc').'/representatives')) ) {
 add_action( 'settings_doliconnect_menu', 'representatives_menu', 1, 1);
 add_action( 'settings_doliconnect_representatives', 'representatives_module');
-//}
 
 function representatives_menu( $arg ) {
     print "<a href='".esc_url( add_query_arg( 'module', 'representatives', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
@@ -1755,9 +1753,11 @@ function representatives_menu( $arg ) {
 function representatives_module( $url ) {
 global $current_user;
 
+    $thirdparty = doliConnect('thirdparty', $current_user, false, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+
     print '<div class="card shadow-sm"><div class="card-header">'.__( 'My sales representatives', 'doliconnect').'</div>';
 
-    $request = "/thirdparties/".doliconnector($current_user, 'fk_soc')."/representatives?mode=1";
+    $request = "/thirdparties/".$thirdparty->id."/representatives?mode=1";
     $representatives = callDoliApi("GET", $request, null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
  
     if ( !isset( $representatives->error ) && $representatives != null ) {
@@ -1795,7 +1795,9 @@ if ( isset($_GET['id']) && $_GET['id'] > 0 ) {
     //print $ticket;
 }
 
-if ( isset($_GET['id']) && isset($_GET['ref']) && ( doliconnector($current_user, 'fk_soc') == $ticketfo->socid ) && ($_GET['ref'] == $ticketfo->ref ) ) {
+$thirdparty = doliConnect('thirdparty', $current_user, false, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+
+if ( isset($_GET['id']) && isset($_GET['ref']) && ( $thirdparty->id == $ticketfo->socid ) && ($_GET['ref'] == $ticketfo->ref ) ) {
 
 print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Ticket %s', 'doliconnect'), $ticketfo->ref).'<a class="float-end text-decoration-none" href="'.esc_url( add_query_arg( 'module', 'tickets', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-5">';
 $dateticket =  wp_date('d/m/Y', $ticketfo->datec);
@@ -1908,7 +1910,7 @@ print '</select><label for="ticket_severity">'.__( 'Severity', 'doliconnect').'<
 print '</div></div>';
 
 if ( doliversion('11.0.0') ) {
-$representatives = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc')."/representatives?mode=0", null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
+$representatives = callDoliApi("GET", "/thirdparties/".$thirdparty->id."/representatives?mode=0", null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
 if ( !isset($representatives->error) && $representatives != null ) {
 print '<div class="form-floating"><select class="form-select" id="fk_user_assign"  name="fk_user_assign" aria-label="'.__( 'Sales representative', 'doliconnect').'" required>';
 if ( count($representatives) > 1 ) {
@@ -1971,7 +1973,7 @@ print '</div></form>';
     } else {
         $limit=12;
         $page = doliPG(isset($_GET['pg'])?$_GET['pg']:null);
-        $request = "/tickets?socid=".doliconnector($current_user, 'fk_soc')."&sortfield=t.rowid&sortorder=DESC&limit=".$limit."&page=".$page."&pagination_data=true";
+        $request = "/tickets?socid=".$thirdparty->id."&sortfield=t.rowid&sortorder=DESC&limit=".$limit."&page=".$page."&pagination_data=true";
         $object= callDoliApi("GET", $request, null, dolidelay('ticket', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
         if ( doliversion('21.0.0') && isset($object->data) ) { $listticket = $object->data; } else { $listticket = $object; }
 
