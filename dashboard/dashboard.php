@@ -42,6 +42,7 @@ global $wpdb,$current_user;
 
 $ID = $current_user->ID;
 $time = current_time( 'timestamp', 1);
+$adherent = doliConnect('member', $current_user, false, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 
 require_once ABSPATH . WPINC . '/class-phpass.php';
 
@@ -64,11 +65,11 @@ unlink($file);
 
 delete_user_meta( $ID, $nam,$current_user->$nam);
 
-if ( doliconnector($current_user, 'fk_member') > 0 ) {
+if ( isset($adherent->id) && $adherent->id > 0 ) {
 $data = [
     'photo' => ''
 	];
-$adherent = callDoliApi("PUT", "/members/".doliconnector($current_user, 'fk_member'), $data, dolidelay('member'));
+$adherent = callDoliApi("PUT", "/members/".$adherent->id, $data, dolidelay('member'));
 }
 
 } elseif ( isset($_POST['doliavatar']) && !empty($_POST['doliavatar']) && $_FILES['inputavatar']['tmp_name'] != null ) {
@@ -149,7 +150,7 @@ $imgData = base64_encode(file_get_contents("$avatarfile"));
 $datat = [
   'filename' => 'avatar.jpg',
   'modulepart' => 'member',
-  'subdir' => doliconnector($current_user, 'fk_member').'/photos',
+  'subdir' => $adherent->id.'/photos',
   'filecontent' => $imgData,
   'fileencoding' => 'base64',
   'overwriteifexists'=> 1
@@ -161,7 +162,7 @@ $imgData = base64_encode(file_get_contents("$minifile"));
 $datat = [
   'filename' => 'avatar_mini.jpg',
   'modulepart' => 'member',
-  'subdir' => doliconnector($current_user, 'fk_member').'/photos/thumbs',
+  'subdir' => $adherent->id.'/photos/thumbs',
   'filecontent' => $imgData,
   'fileencoding' => 'base64',
   'overwriteifexists'=> 1
@@ -173,7 +174,7 @@ $imgData = base64_encode(file_get_contents("$smallfile"));
 $datat = [
   'filename' => 'avatar_small.jpg',
   'modulepart' => 'member',
-  'subdir' => doliconnector($current_user, 'fk_member').'/photos/thumbs',
+  'subdir' => $adherent->id.'/photos/thumbs',
   'filecontent' => $imgData,
   'fileencoding' => 'base64',
   'overwriteifexists'=> 1
@@ -181,11 +182,11 @@ $datat = [
 $photo = callDoliApi("POST", "/documents/upload", $datat, 0);
 }
 
-if ( doliconnector($current_user, 'fk_member') > 0 ) {
+if ( isset($adherent->id) && $adherent->id > 0 ) {
 $data = [
     'photo' => 'avatar.jpg'
 	];
-$adherent = callDoliApi("PUT", "/members/".doliconnector($current_user, 'fk_member'), $data, dolidelay('member'));
+$adherent = callDoliApi("PUT", "/members/".$adherent->id, $data, dolidelay('member'));
 }
 
 } else {
