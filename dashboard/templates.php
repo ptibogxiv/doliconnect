@@ -1159,7 +1159,7 @@ print "</div></div>";
 
 } else {
 
-if ( isset($_GET['step']) && $_GET['step'] == 'validation' && isset($_GET['cart']) && wp_verify_nonce( $_GET['cart'], 'valid_dolicart-'.$object->id) && ((doliconnector($current_user, 'fk_order_nb_item') > 0 && $object->statut == 0 && !isset($_GET['module']) ) || ( ($_GET['module'] == 'orders' && $object->billed != 1 ) || ($_GET['module'] == 'invoices' && $object->paye != 1) )) && $object->socid == doliconnector($current_user, 'fk_soc') ) {
+if ( isset($_GET['step']) && $_GET['step'] == 'validation' && isset($_GET['cart']) && wp_verify_nonce( $_GET['cart'], 'valid_dolicart-'.$object->id) && ((doliconnector($current_user, 'fk_order_nb_item') > 0 && $object->statut == 0 && !isset($_GET['module']) ) || ( ($_GET['module'] == 'orders' && $object->billed != 1 ) || ($_GET['module'] == 'invoices' && $object->paye != 1) )) && $object->socid == $thirdparty->id ) {
 
 $data = [
   'paymentintent' => isset($_POST['paymentintent']) ? $_POST['paymentintent'] : null,
@@ -1321,8 +1321,8 @@ $timeout=$object->date_modification-current_time('timestamp',1)+1200;
 //print wp_date('d/m/Y H:i', $object[date_modification]);
 }
 
-if ( doliconnector($current_user, 'fk_order')>0 && isset($object->lines) && $object->lines != null ) {  //&& $timeout>'0'                                                                                         
-//print "<div id='timer' class='text-center'><small>".sprintf( esc_html__('Your basket #%s is reserved for', 'doliconnect'), doliconnector($current_user, 'fk_order'))." <span class='duration'></span></small></div>";
+if ( isset($object->id) && $object->id > 0 && isset($object->lines) && $object->lines != null ) {  //&& $timeout>'0'                                                                                         
+  //print "<div id='timer' class='text-center'><small>".sprintf( esc_html__('Your basket #%s is reserved for', 'doliconnect'), $object->id)." <span class='duration'></span></small></div>";
 }
 
 print "<div class='card shadow-sm' id='cart-form'><div class='card-header'>".__( 'Cart', 'doliconnect')."</div><ul id='doliline' class='list-group list-group-flush'>";
