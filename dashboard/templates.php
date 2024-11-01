@@ -1126,36 +1126,30 @@ global $current_user;
 
 if ( in_the_loop() && is_main_query() && is_page(doliconnectid('dolicart')) && !empty(doliconnectid('dolicart')) )  {
 
-doliconnect_enqueues();
+  doliconnect_enqueues();
 
-$time = current_time( 'timestamp', 1);
-$thirdparty = doliConnect('thirdparty', $current_user, false, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+  $time = current_time( 'timestamp', 1);
+  $thirdparty = doliConnect('thirdparty', $current_user, false, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 
-if ( isset($_GET['module']) && ($_GET['module'] == 'orders' || $_GET['module'] == 'invoices') && isset($_GET['id']) && isset($_GET['ref']) ) {
-$request = "/".esc_attr($_GET['module'])."/".esc_attr($_GET['id'])."?contact_list=0";
-$module = esc_attr($_GET['module']);
-$id = $_GET['id']; 
-} elseif (doliconnector($current_user, 'fk_order') > 0) {
-$request = "/orders/".doliconnector($current_user, 'fk_order')."?contact_list=0";
-$module = 'orders';
-$id = doliconnector($current_user, 'fk_order'); 
-} else {
-$request = "/orders/-1";
-$module = 'orders';
-$id = null;
-}
-
-$object = callDoliApi("GET", $request, null, dolidelay('cart', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+  if ( isset($_GET['module']) && ($_GET['module'] == 'orders' || $_GET['module'] == 'invoices') && isset($_GET['id']) && isset($_GET['ref']) ) {
+    $request = "/".esc_attr($_GET['module'])."/".esc_attr($_GET['id'])."?contact_list=0";
+    $module = esc_attr($_GET['module']);
+    $id = $_GET['id']; 
+    $object = callDoliApi("GET", $request, null, dolidelay('cart', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+  } else {
+    $object = doliConnect('order', $current_user, false, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+    $request = "/orders/".$object->id."?contact_list=0";
+    $module = 'orders';
+    $id = $object->id; 
+  }
 
 if (dolicheckie($_SERVER['HTTP_USER_AGENT'])) {
-print '<div class="card shadow-sm">';
-print '<div class="card-body">';
-print dolicheckie($_SERVER['HTTP_USER_AGENT']);
-print "</div></div>";
+  print '<div class="card shadow-sm">';
+  print '<div class="card-body">';
+  print dolicheckie($_SERVER['HTTP_USER_AGENT']);
+  print "</div></div>";
 } elseif ( defined("DOLIBUG") ) {
-
-print dolibug((isset($object->error)?$object->error->message:null));
-
+  print dolibug((isset($object->error)?$object->error->message:null));
 } elseif ( !doliCheckModules('commande', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)) ) {
 
 print "<div class='card shadow-sm'><div class='card-body'>";
