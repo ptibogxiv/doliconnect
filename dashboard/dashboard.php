@@ -1437,6 +1437,7 @@ function members_module( $url ) {
 global $current_user;
 
     $time = current_time( 'timestamp',1);
+    $thirdparty = doliConnect('thirdparty', $current_user, false, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
     $adherent = doliConnect('member', $current_user, false, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 
     $request = "/adherentsplus/".$adherent->id; 
@@ -1519,10 +1520,7 @@ if ( doliCheckModules('commande') && !empty($productadhesion) ) {
         <div>'.__('Please contact us for more informations or subscribe again.', 'doliconnect').'</div>
         </div>';
     } else { 
-        if ( doliconnector($current_user, 'fk_soc') > 0 ) {
-            $thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
-        }
-        if ( empty($thirdparty->address) || empty($thirdparty->zip) || empty($thirdparty->town) || empty($thirdparty->country_id) || empty($current_user->billing_type) || empty($current_user->billing_birth) || empty($current_user->user_firstname) || empty($current_user->user_lastname) || empty($current_user->user_email)) {
+        if ( isset($thirdparty->id) && (empty($thirdparty->address) || empty($thirdparty->zip) || empty($thirdparty->town) || empty($thirdparty->country_id) || empty($current_user->billing_type) || empty($current_user->billing_birth) || empty($current_user->user_firstname) || empty($current_user->user_lastname) || empty($current_user->user_email))) {
             print "Pour adhérer, tous les champs doivent être renseignés dans vos <a href='".esc_url( get_permalink(get_option('doliaccount')))."?module=informations&return=".$url."' class='alert-link'>".__( 'Personal informations', 'doliconnect')."</a></div><div class='col-sm-6 col-md-7'>";
         }
     }
@@ -1561,9 +1559,6 @@ print do_action('mydoliconnectmemberform', $adherent);
 print "</div>";
 
 } else { 
-if ( doliconnector($current_user, 'fk_soc') > 0 ) {
-$thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
-}
 
 if ( empty($thirdparty->address) || empty($thirdparty->zip) || empty($thirdparty->town) || empty($thirdparty->country_id) || empty($current_user->billing_type) || empty($current_user->billing_birth) || empty($current_user->user_firstname) || empty($current_user->user_lastname) || empty($current_user->user_email)) {
 print "Pour adhérer, tous les champs doivent être renseignés dans vos <a href='".esc_url( get_permalink(get_option('doliaccount')))."?module=informations&return=".$url."' class='alert-link'>".__( 'Personal informations', 'doliconnect')."</a></div><div class='col-sm-6 col-md-7'>";
@@ -1625,38 +1620,34 @@ print "'>".__( 'Consumptions monitoring', 'doliconnect')."</a>";
 function membershipconsumption_module( $url ) {
 global $current_user;
 
-$request = "/adherentsplus/".doliconnector($current_user, 'fk_member')."/consumptions";
+    $adherent = doliConnect('member', $current_user, false, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+    $request = "/adherentsplus/".$adherent->id."/consumptions";
 
-print '<div class="card shadow-sm"><div class="card-header">'.__( 'Consumptions monitoring', 'doliconnect').'</div><div class="card-body">';
-print "<b>".__( 'Next billing date', 'doliconnect').": </b> <br>";
+    print '<div class="card shadow-sm"><div class="card-header">'.__( 'Consumptions monitoring', 'doliconnect').'</div><div class="card-body">';
+    print "<b>".__( 'Next billing date', 'doliconnect').": </b> <br>";
+    print "</div><ul class='list-group list-group-flush'>";
 
-print "</div><ul class='list-group list-group-flush'>";
+    if (isset($adherent->id) && $adherent->id > 0) {
+        $listconsumption = callDoliApi("GET", $request, null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+    } 
 
-if (doliconnector($current_user, 'fk_member') > 0) {
-$listconsumption = callDoliApi("GET", $request, null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-} 
-
-if ( isset($listconsumption) && !isset($listconsumption->error) && $listconsumption != null ) { 
-foreach ( $listconsumption as $consumption ) {                                                                                 
-$datestart =  wp_date('d/m/Y H:i', $consumption->date_start);
-print "<li class='list-group-item'><table width='100%'><tr><td>$datestart</td><td>$consumption->label</td><td>";
-
-if ( !empty($consumption->value) ) {
-print $consumption->value." ".$consumption->unit;
-} else {
-print "x$consumption->qty";
-}
-
-print "</td></tr></table><span></span></li>";
-}
-} else { 
-print "<li class='list-group-item list-group-item-light'><center>".__( 'No consumption', 'doliconnect')."</center></li>";
-}
-
-print '</ul>';
-print doliCardFooter($request, 'member', $listconsumption);
-print '</div>';
-
+    if ( isset($listconsumption) && !isset($listconsumption->error) && $listconsumption != null ) { 
+        foreach ( $listconsumption as $consumption ) {                                                                                 
+            $datestart =  wp_date('d/m/Y H:i', $consumption->date_start);
+            print "<li class='list-group-item'><table width='100%'><tr><td>$datestart</td><td>$consumption->label</td><td>";
+            if ( !empty($consumption->value) ) {
+                print $consumption->value." ".$consumption->unit;
+            } else {
+                print "x$consumption->qty";
+            }
+            print "</td></tr></table><span></span></li>";
+        }
+    } else { 
+        print "<li class='list-group-item list-group-item-light'><center>".__( 'No consumption', 'doliconnect')."</center></li>";
+    }
+    print '</ul>';
+    print doliCardFooter($request, 'member', $listconsumption);
+    print '</div>';
 }
 
 //*****************************************************************************************
@@ -1675,7 +1666,9 @@ function linkedmember_menu( $arg ) {
 function linkedmember_module( $url ) {
 global $current_user;
 
-$request = "/adherentsplus/".doliconnector($current_user, 'fk_member')."/linkedmembers";
+    $adherent = doliConnect('member', $current_user, false, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+
+$request = "/adherentsplus/".$adherent->id."/linkedmembers";
 $productadhesion = doliconst("ADHERENT_PRODUCT_ID_FOR_SUBSCRIPTIONS");
 $requestp = "/products/".$productadhesion."?includesubproducts=true&includetrans=true";
 $product = callDoliApi("GET", $requestp, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
@@ -1694,7 +1687,7 @@ print dolialert ('success', __( 'Your informations have been updated.', 'dolicon
 $linkedmember = callDoliApi("GET", $request, null, dolidelay('member', true));
 }
 
-} elseif (doliconnector($current_user, 'fk_member') > 0) {
+} elseif ( isset($adherent->id) && $adherent->id > 0 ) {
 
 $linkedmember= callDoliApi("GET", $request, null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
@@ -1705,7 +1698,7 @@ $linkedmember= callDoliApi("GET", $request, null, dolidelay('member', esc_attr(i
 print '<div class="card shadow-sm"><div class="card-header">'.__( 'Manage linked members', 'doliconnect').'</div>';
 print "<ul class='list-group list-group-flush'>";
 
-    if (doliconnector($current_user, 'fk_member') > 0 && !empty(get_option('doliconnectbeta'))) {
+    if ( isset($adherent->id) && $adherent->id > 0 && !empty(get_option('doliconnectbeta'))) {
         print doliModalButton('linkedmember', 'addlinkedmember', '<center><i class="fas fa-plus-circle"></i> '.__( 'New linked member', 'doliconnect').'</center>', 'button', 'list-group-item lh-condensed list-group-item-action list-group-item-primary');
     }
 
