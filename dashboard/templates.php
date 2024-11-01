@@ -1034,9 +1034,9 @@ if ( in_the_loop() && is_main_query() && is_page(doliconnectid('dolidonation')) 
 
 doliconnect_enqueues();
 
-$art200 = doliconst("DONATION_ART200", dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-$art238 = doliconst("DONATION_ART238", dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-$art835 = doliconst("DONATION_ART835", dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$art200 = doliconst("DONATION_ART200",esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+$art238 = doliconst("DONATION_ART238",esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+$art835 = doliconst("DONATION_ART835", esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 //print $shop;
 
 if ( defined("DOLIBUG") ) {
@@ -1070,7 +1070,7 @@ print "<h5><i class='fas fa-donate fa-fw'></i> Don hors ligne</h5>";
 
 //if ( $object->mode_reglement_code == 'CHQ') {
 
-$chq = doliconst("FACTURE_CHQ_NUMBER", dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$chq = doliconst("FACTURE_CHQ_NUMBER",esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 
 $bank = callDoliApi("GET", "/bankaccounts/".$chq, null, dolidelay('constante'));
 
@@ -1079,7 +1079,7 @@ print "<div class='alert alert-info' role='alert'><p align='justify'>".sprintf( 
 //} 
 //if ($object->mode_reglement_code == 'VIR') {
 
-$vir = doliconst("FACTURE_RIB_NUMBER", dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$vir = doliconst("FACTURE_RIB_NUMBER", esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 
 $bank = callDoliApi("GET", "/bankaccounts/".$vir, null, dolidelay('constante'));
 

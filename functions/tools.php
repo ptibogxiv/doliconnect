@@ -647,9 +647,9 @@ function doliPasswordForm($user, $url, $return = null){
   $doliPassword .= '</script>';
 
   $doliPassword .= '<li class="list-group-item list-group-item-light list-group-item-action"><i class="fa-solid fa-triangle-exclamation fa-fw fa-3x fa-beat-fade float-start text-danger"></i>';
-  $dolipwd = doliconst("USER_PASSWORD_GENERATED", dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+  $dolipwd = doliconst("USER_PASSWORD_GENERATED", esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
     if ( $dolipwd == 'Perso' ) { 
-      $pwdpattern = explode(";", doliconst("USER_PASSWORD_PATTERN", dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))));
+      $pwdpattern = explode(";", doliconst("USER_PASSWORD_PATTERN", esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
       $doliPassword .= sprintf(__('Your new password must be between %s and 40 characters, including at least %s uppercase, %s digit, %s special character and not more than %s times the same character', 'doliconnect'), $pwdpattern[0], $pwdpattern[1], $pwdpattern[2], $pwdpattern[3], $pwdpattern[4]);
     } elseif ( $dolipwd == 'standard' ) $doliPassword .= __( 'Your new password must be between 12 and 40 characters, including at least 1 uppercase, 1 lowercase and 1 digit.', 'doliconnect');
   $doliPassword .= '</li><li class="list-group-item list-group-item-light list-group-item-action">';
@@ -1145,7 +1145,7 @@ $currencies = callDoliApi("GET", "/setup/dictionary/currencies?multicurrency=1&s
 
 if ( !in_array($mode, array('contact', 'member')) ) {
 $doliuser .= '<div class="col-12 col-md"><div class="form-floating">';
-$monnaie = doliconst("MAIN_MONNAIE", dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$monnaie = doliconst("MAIN_MONNAIE", esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 $testvalue='1.99';
 $cur = (!empty($object->multicurrency_code) ? $object->multicurrency_code : $monnaie );
 if ( !doliCheckModules('multicurrency', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)) || !doliversion('11.0.0') ) { 
@@ -1239,19 +1239,19 @@ $doliuser .= "</div></li>";
 
 } elseif ( !doliversion('11.0.0') ) { 
 $doliuser .= "<li class='list-group-item list-group-item-light list-group-item-action'><div class='form-row'>";
-if ( !empty(doliconst("SOCIALNETWORKS_FACEBOOK", $delay)) ) {
+if ( !empty(doliconst("SOCIALNETWORKS_FACEBOOK", esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))) ) {
 $doliuser .= "<div class='col-12 col-md'><label for='inlineFormInputGroup'><small><i class='fab fa-facebook fa-fw'></i> Facebook</small></label>
 <input type='text' name='".$idobject."[facebook]' class='form-control form-control-sm' id='inlineFormInputGroup' placeholder='".__( 'Username', 'doliconnect')."' value='".stripslashes(htmlspecialchars((isset($object->facebook) ? $object->facebook : null), ENT_QUOTES))."'></div>";
 }
-if ( !empty(doliconst("SOCIALNETWORKS_TWITTER", $delay)) ) {
+if ( !empty(doliconst("SOCIALNETWORKS_TWITTER",esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))) ) {
 $doliuser .= "<div class='col-12 col-md'><label for='inlineFormInputGroup'><small><i class='fab fa-twitter fa-fw'></i> Twitter</small></label>
 <input type='text' name='".$idobject."[twitter]' class='form-control form-control-sm' id='inlineFormInputGroup' placeholder='".__( 'Username', 'doliconnect')."' value='".stripslashes(htmlspecialchars((isset($object->twitter) ? $object->twitter : null), ENT_QUOTES))."'></div>";
 }
-if ( !empty(doliconst("SOCIALNETWORKS_SKYPE", $delay)) ) {
+if ( !empty(doliconst("SOCIALNETWORKS_SKYPE", esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))) ) {
 $doliuser .= "<div class='col-12 col-md'><label for='inlineFormInputGroup'><small><i class='fab fa-skype fa-fw'></i> Skype</small></label>
 <input type='text' name='".$idobject."[skype]' class='form-control form-control-sm' id='inlineFormInputGroup' placeholder='".__( 'Username', 'doliconnect')."' value='".stripslashes(htmlspecialchars((isset($object->skype) ? $object->skype : null), ENT_QUOTES))."'></div>";
 }
-if ( !empty(doliconst("SOCIALNETWORKS_LINKEDIN", $delay)) ) {
+if ( !empty(doliconst("SOCIALNETWORKS_LINKEDIN", esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))) ) {
 $doliuser .= "<div class='col-12 col-md'><label for='inlineFormInputGroup'><small><i class='fab fa-linkedin-in fa-fw'></i> Linkedin</small></label>
 <input type='text' name='".$idobject."[linkedin]' class='form-control form-control-sm' id='inlineFormInputGroup' placeholder='".__( 'Username', 'doliconnect')."' value='".stripslashes(htmlspecialchars((isset($object->linkedin) ? $object->linkedin : null), ENT_QUOTES))."'></div>";
 }

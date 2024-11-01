@@ -633,9 +633,9 @@ global $wpdb,$current_user;
 		if (isset($_POST["key"]) && isset($_POST["login"])) {
 			$current_user = check_password_reset_key( esc_attr($_POST["key"]), esc_attr($_POST["login"]) );
 		}
-		$dolipwd = doliconst("USER_PASSWORD_GENERATED", dolidelay('constante'));
+		$dolipwd = doliconst("USER_PASSWORD_GENERATED");
 		if ( $dolipwd == 'Perso' ) { 
-			$pwdpattern = explode(";", doliconst("USER_PASSWORD_PATTERN", dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))));
+			$pwdpattern = explode(";", doliconst("USER_PASSWORD_PATTERN"));
 			$password_a = preg_split('//u', $pwd1, null, PREG_SPLIT_NO_EMPTY);
 			$maj = preg_split('//u', "ABCDEFGHIJKLMNOPQRSTUVWXYZ", null, PREG_SPLIT_NO_EMPTY);
 			$num = preg_split('//u',  "0123456789", null, PREG_SPLIT_NO_EMPTY);
