@@ -1735,7 +1735,7 @@ global $current_user;
     foreach ( $object->lines as $line ) { 
       if ( $line->fk_product > 0 ) {
         if ($refresh || $refreshstock) $refreshstock = true;
-        $product = callDoliApi("GET", "/products/".$line->fk_product."?includestockdata=1&includesubproducts=true&includetrans=true", null, dolidelay('product', $refreshstock));
+        $product = callDoliApi("GET", "/products/".$line->fk_product."?includesubproducts=true&includetrans=true", null, dolidelay('product', $refreshstock));
       }
       $mstock = doliProductStock($product, $refresh, true, $line->array_options);
       if ( $mstock['stock'] < 0 && is_page(doliconnectid('dolicart'))) {
