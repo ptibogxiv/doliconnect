@@ -246,7 +246,12 @@ function doliconnect_countitems($object){
 function doliaddtocart($product, $mstock, $quantity, $price, $timestart = null, $timeend = null, $relatedproduct = null, $array_options = array()) {
 global $current_user;
   $response = array();
-  $orderid = doliConnect('order', $current_user, false, true)->id;
+  $order = doliConnect('order', $current_user, false, true)->id;
+  if ( isset($order->id) && $order->id > 0 ) {
+    $orderid = $order->id;
+  } else {
+    $orderid = null;
+  }
   if (!is_null($timestart) && $timestart > 0 ) {
    $date_start=strftime('%Y-%m-%d 00:00:00', $timestart);
   } else {
