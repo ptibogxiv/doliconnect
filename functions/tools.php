@@ -80,8 +80,10 @@ function doliConnect($fonction, $current_user = null, $boolean = false, $refresh
   } elseif ($fonction == 'user' && isset($current_user->user_email) && !empty($current_user->user_email)) {
       $return = callDoliApi("GET", "/users/email/".$current_user->user_email, null, dolidelay('doliconnector', $refresh));
     } elseif ($fonction == 'order' && isset($current_user->user_email) && !empty($current_user->user_email)) {
-      $return = callDoliApi("GET", "/users/email/".$current_user->user_email, null, dolidelay('doliconnector', $refresh));
-  } else {
+      $thirdparty = callDoliApi("GET", "/thirdparties/email/".$current_user->user_email, null, dolidelay('doliconnector'));
+      $lastorder = callDoliApi("GET", "/orders?sortfield=t.rowid&sortorder=DESC&limit=1&thirdparty_ids=".$thirdparty->id."&sqlfilters=(t.fk_statut%3A%3D%3A'0')and(t.module_source%3A%3D%3A'doliconnect')&pagination_data=true", null, dolidelay('doliconnector', $refresh));
+      $return = $lastorder->data[0];
+    } else {
       //$adherent = (object) 0;
       //$adherent->id = 0;
       //$adherent->email = null;
