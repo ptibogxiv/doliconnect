@@ -1670,7 +1670,7 @@ function doliagenda_display($content) {
     }
     date_default_timezone_set($tzstring);
 
-    $request = "/setup/dictionary/event_types?sortfield=code&sortorder=ASC&limit=100&active=1&sqlfilters=(t.type:=:'systemauto')";
+    $request = "/setup/dictionary/event_types?sortfield=code&sortorder=ASC&limit=100&active=1&sqlfilters=(t.type:!=:'systemauto')";
     $listfo = callDoliApi("GET", $request, null, dolidelay('agenda', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
     $sqlfilter = null;
     if ( !isset($listfo->error) && $listfo != null ) {
@@ -1696,7 +1696,7 @@ function doliagenda_display($content) {
     } else {
       $limit=12;
       $page = doliPG(isset($_GET['pg'])?$_GET['pg']:null);
-      $request= "/agendaevents?sortfield=t.datep&sortorder=ASC&limit=".$limit."&page=".$page."&sqlfilters=(t.datep2%3A%3E%3D%3A'".date("Ymd")."')".$sqlfilter."pagination_data=true";
+      $request= "/agendaevents?sortfield=t.datep&sortorder=ASC&limit=".$limit."&page=".$page."&sqlfilters=(t.datep2%3A%3E%3D%3A'".date("Ymd")."')".$sqlfilter."&pagination_data=true";
       $object = callDoliApi("GET", $request, null, dolidelay('agenda', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
       if ( doliversion('21.0.0') && isset($object->data) ) { $listagenda = $object->data; } else { $listagenda = $object; }
 
