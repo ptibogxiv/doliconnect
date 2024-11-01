@@ -1455,7 +1455,7 @@ if ( doliversion('10.0.0') ) {
 
 print "<li class='list-group-item list-group-item-action'><div class='row'><div class='col-12 col-md-6'><h6>".__( 'Billing address', 'doliconnect')."</h6><small class='text-muted'>";
 
-$listcontact = callDoliApi("GET", "/contacts?sortfield=t.rowid&sortorder=ASC&limit=100&thirdparty_ids=".$thirdparty->id."&includecount=1&sqlfilters=t.statut=1", null, dolidelay('contact', true));
+$listcontact = callDoliApi("GET", "/contacts?sortfield=t.rowid&sortorder=ASC&limit=100&thirdparty_ids=".$thirdparty->id."&includecount=1&sqlfilters=(t.statut:=:1)", null, dolidelay('contact', true));
 
 $contactbilling = array(); 
 if (!empty($object->contacts_ids) && is_array($object->contacts_ids)) { 
