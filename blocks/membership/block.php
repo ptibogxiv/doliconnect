@@ -40,18 +40,19 @@ doliconnect_enqueues();
 
 $html = "";
 
-if (is_user_logged_in() && doliconnector($current_user, 'fk_member') > 0){
-$adherent = callDoliApi("GET", "/adherentsplus/".doliconnector($current_user, 'fk_member'), null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true));
+$member = doliConnect('member', $current_user, false, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+
+if (isset($adherent->id) && $adherent->id > 0) {
+	$member_id = "member_id=".$adherent->id;
 } else {
-$adherent = (object) 0;
-$adherent->typeid = 0;
+	$member_id = '';
 }
 
-$member_id = '';
-if (isset($adherent->id) && $adherent->id > 0) $member_id = "member_id=".$adherent->id;
-$morphy = '';
-
-if (!empty($current_user->billing_type)) $morphy = "&sqlfilters=(t.morphy:=:'')or(t.morphy:is:null)or(t.morphy:=:'".$current_user->billing_type."')";
+if (!empty($current_user->billing_type)) {
+	$morphy = "&sqlfilters=(t.morphy:=:'')or(t.morphy:is:null)or(t.morphy:=:'".$current_user->billing_type."')";
+} else {
+	$morphy = '';
+}
 $request = "/adherentsplus/type?sortfield=t.libelle&sortorder=ASC&".$member_id.$morphy;
 $typeadhesion = callDoliApi("GET", $request, null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true));
 
