@@ -85,11 +85,11 @@ function doliConnect($fonction, $current_user = null, $boolean = false, $refresh
     if ( doliversion('20.0.0') && isset($object->data) ) { $object = $object->data; } else { $object = $object; }
     $return = isset($object[0])?$object[0]:null;
   } else {
-    //$adherent = (object) 0;
-    //$adherent->id = 0;
-    //$adherent->email = null;
-		//$adherent->typeid = 0;
-    $return = null;
+    $object = (object) 0;
+    $object->id = 0;
+    $object->email = null;
+		$object->typeid = 0;
+    $return = $object;
   }
   if (isset($return->error)) {
     $return = null;
