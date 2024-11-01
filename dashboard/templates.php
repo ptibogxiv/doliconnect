@@ -1696,7 +1696,7 @@ function doliagenda_display($content) {
     } else {
       $limit=12;
       $page = doliPG(isset($_GET['pg'])?$_GET['pg']:null);
-      $request= "/agendaevents?sortfield=t.datep&sortorder=ASC&limit=".$limit."&page=".$page."&sqlfilters=(t.datep2%3A%3E%3D%3A'".date("Ymd")."')".$sqlfilter."&pagination_data=true";
+      $request= "/agendaevents?sortfield=t.datep&sortorder=ASC&limit=".$limit."&page=".$page."&sqlfilters=(t.datep2%3A%3E%3D%3A'".date("Ymd")."')&pagination_data=true";//".$sqlfilter."
       $object = callDoliApi("GET", $request, null, dolidelay('agenda', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
       if ( doliversion('21.0.0') && isset($object->data) ) { $listagenda = $object->data; } else { $listagenda = $object; }
 
