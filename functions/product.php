@@ -245,8 +245,9 @@ function doliconnect_countitems($object){
 
 function doliaddtocart($product, $mstock, $quantity, $price, $timestart = null, $timeend = null, $relatedproduct = null, $array_options = array()) {
 global $current_user;
+
   $response = array();
-  $order = doliConnect('order', $current_user, false, true)->id;
+  $order = doliConnect('order', $current_user, false, true);
   if ( isset($order->id) && $order->id > 0 ) {
     $orderid = $order->id;
   } else {
