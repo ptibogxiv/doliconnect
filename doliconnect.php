@@ -409,19 +409,20 @@ add_action('wp_dolibarr_sync','update_synctodolibarr', 1, 2);
 function update_synctodolibarr($object, $user = null) {
 global $current_user;
 
-if (!empty($user)) {
-$current_user = $user;
-}
+    if (!empty($user)) {
+        $current_user = $user;
+    }
 
-if ( doliconnector($current_user, 'fk_soc') > 0 ) {
-$thirparty = callDoliApi("PUT", "/thirdparties/".doliconnector($current_user, 'fk_soc'), $object, 0);
-}
+    $thirdparty = doliConnect('thirdparty', $current_user);
+    if ( isset($thirdparty->id) && $thirdparty->id > 0 ) {
+        $thirparty = callDoliApi("PUT", "/thirdparties/".$thirdparty->id, $object, 0);
+    }
 
-if (NULL != doliconnector($current_user, 'fk_member')) { 
-$adherent = callDoliApi("PUT", "/members/".doliconnector($current_user, 'fk_member'), $object, 0);
-//update_user_meta( $current_user->ID, 'billing_birth', $current_user->billing_birth);
-}
-
+    $member = doliConnect('thirdparty', $current_user);
+    if ( isset($member->id) && $member->id > 0 ) {
+        $member = callDoliApi("PUT", "/members/".$member->id, $object, 0);
+        //update_user_meta( $current_user->ID, 'billing_birth', $current_user->billing_birth);
+    }
 }
 // ********************************************************
 add_filter( 'template_include', 'doliconnect_accessrestricted' );
