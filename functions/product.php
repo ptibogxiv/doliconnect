@@ -93,6 +93,7 @@ global $current_user;
 function doliProductStock($product, $refresh = false, $nohtml = false, $array_options = array(), $fk_line = null) {
 global $current_user;
   $mstock = array();
+  $order = doliConnect('order', $current_user, false, $refresh);
   $warehouse = doliconst('DOLICONNECT_ID_WAREHOUSE');
   $stock = callDoliApi("GET", "/products/".$product->id."/stock?selected_warehouse_id=".$warehouse, null, dolidelay('stock', $refresh));
   if (!empty($product->type) && empty(doliconst('STOCK_SUPPORTS_SERVICES'))) {
@@ -137,8 +138,7 @@ global $current_user;
     $mstock['line'] = $fk_line;
     $mstock['array_options'] = $linearray_options;
     $mstock['fk_parent_line'] = $fk_line->fk_parent_line;
-  } elseif (doliconnector($current_user, 'fk_order') > 0) {
-    $order = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order')."?contact_list=0", null, dolidelay('order', $refresh));
+  } elseif (isset($order->id) && $order->id > 0) {
     if ( isset($order->lines) && $order->lines != null ) {
       foreach ($order->lines as $line) {
         $linearray_options = (array) $line->array_options;
@@ -264,6 +264,7 @@ global $current_user;
     $quantity = $mstock['m2'];
   }
   $thirdparty = doliConnect('thirdparty', $current_user, false);
+  $order = doliConnect('order', $current_user, false, true);
   if ( empty($orderid) ) {
     $rdr = [
       'socid' => $thirdparty->id,
@@ -288,8 +289,7 @@ global $current_user;
   }
   if (empty($product->status)) {
     if (!empty($mstock['lineid'])) $deleteline = callDoliApi("DELETE", "/orders/".doliconnector($current_user, 'fk_order')."/lines/".$mstock['lineid'], null, 0);
-    $order = callDoliApi("GET", "/orders/".$orderid."?contact_list=0", null, dolidelay('order', true));
-    //$dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolidelay('doliconnector', true));
+    $order = doliConnect('order', $current_user, false, true);
     $response['message'] = __( 'This item has been deleted to basket', 'doliconnect');
     $response['items'] = doliconnect_countitems($order);
     $response['lines'] = doliline($order);
@@ -324,8 +324,7 @@ global $current_user;
       'array_options' => $array_options
 	  ];                 
     $addline = callDoliApi("POST", "/orders/".$orderid."/lines", $adln, 0);
-    $order = callDoliApi("GET", "/orders/".$orderid."?contact_list=0", null, dolidelay('order', true));
-    //$dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolidelay('doliconnector', true));
+    $order = doliConnect('order', $current_user, false, true);
     $warehouse = doliconst('DOLICONNECT_ID_WAREHOUSE');
     $stock = callDoliApi("GET", "/products/".$product->id."/stock?selected_warehouse_id=".$warehouse, null, dolidelay('stock', true));
     $response['message'] = __( 'This item has been added to basket', 'doliconnect');
@@ -338,8 +337,7 @@ global $current_user;
   } elseif ( $orderid > 0 && $mstock['lineid'] > 0 ) {
     if ( $quantity < 1 ) {
       $deleteline = callDoliApi("DELETE", "/orders/".$orderid."/lines/".$mstock['lineid'], null, 0);
-      $order = callDoliApi("GET", "/orders/".$orderid."?contact_list=0", null, dolidelay('order', true));
-      //$dolibarr = callDoliApi("GET", "/doliconnector/".$current_user->ID, null, dolidelay('doliconnector', true));
+      $order = doliConnect('order', $current_user, false, true);
       $warehouse = doliconst('DOLICONNECT_ID_WAREHOUSE');
       $stock = callDoliApi("GET", "/products/".$product->id."/stock?selected_warehouse_id=".$warehouse, null, dolidelay('stock', true));
       $response['message'] = __( 'This item has been deleted to basket', 'doliconnect');
@@ -496,9 +494,7 @@ global $current_user;
   if (isset($thirdparty->tva_assuj) && empty($thirdparty->tva_assuj)) {
     if (isset($product->tva_tx))  $product->tva_tx = 0;
   }
-  if (doliconnector($current_user, 'fk_order') > 0) {
-    $orderfo = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order')."?contact_list=0", null, dolidelay('order', $refresh));
-  }
+  $orderfo = doliConnect('order', $current_user, false, $refresh);
   $currency=isset($orderfo->multicurrency_code)?$orderfo->multicurrency_code:strtoupper(doliconst("MAIN_MONNAIE"));
   if ( $product->type == '1' && !is_null($product->duration_unit) && '0' < ($product->duration_value)) {
     if ( $product->duration_unit == 'i' ) {

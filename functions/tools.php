@@ -82,7 +82,7 @@ function doliConnect($fonction, $current_user = null, $boolean = false, $refresh
   } elseif ($fonction == 'order' && isset($current_user->user_email) && !empty($current_user->user_email)) {
     $thirdparty = callDoliApi("GET", "/thirdparties/email/".$current_user->user_email, null, dolidelay('doliconnector'));
     $object = callDoliApi("GET", "/orders?sortfield=t.rowid&sortorder=DESC&limit=1&thirdparty_ids=".$thirdparty->id."&sqlfilters=(t.fk_statut%3A%3D%3A'0')and(t.module_source%3A%3D%3A'doliconnect')&pagination_data=true", null, dolidelay('doliconnector', $refresh));
-    if ( doliversion('20.0.0') && isset($object->data) ) { $listorder = $object->data; } else { $listorder = $object; }
+    if ( doliversion('20.0.0') && isset($object->data) ) { $object = $object->data; } else { $object = $object; }
     $return = $object[0];
   } else {
     //$adherent = (object) 0;

@@ -827,7 +827,7 @@ global $current_user;
 					'total' => $result['total']
 					];
 				$response['newwish'] = doliProductCart($product, $result['line'], true, false, $productarray);
-					$object = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order', true)."?contact_list=0", null, dolidelay('order'));
+					$object = doliConnect('order', $current_user, false, true);
 					$response['js'] = null;
 					$response['modal'] = doliModalTemplate('CartInfos', __( 'Cart', 'doliconnect'), doliline($object, false, false, false), doliCartButton($object), 'modal-lg');
 				wp_send_json_success($response);
@@ -855,7 +855,7 @@ global $current_user;
 					];
 				$response['newwish'] = doliProductCart($product, $result['line'], true, true, $productarray);
 				if (isset($_POST['DisplayCart']) && !empty($_POST['DisplayCart'])) {
-					$object = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order', true)."?contact_list=0", null, dolidelay('order'));
+					$object = doliConnect('order', $current_user, false, true);
 					$response['js'] = null;
 					$response['modal'] = doliModalTemplate('CartInfos', __( 'Cart', 'doliconnect'), doliline($object, false, false, false), doliCartButton($object), 'modal-lg');
 				} elseif (doliCheckModules('relatedproducts') && doliCheckRelatedProducts($product->id)) { 
@@ -1248,7 +1248,7 @@ global $current_user;
 		wp_send_json_success($response);
 		die();
 	} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "doliCart" ) {
-		$object = callDoliApi("GET", "/orders/".doliconnector($current_user, 'fk_order', true)."?contact_list=0", null, dolidelay('order'));
+		$object = doliConnect('order', $current_user, false, true);
 		$modal['header'] = __( 'Cart', 'doliconnect');
 		$modal['body'] = doliline($object, false, false, false);
 		$modal['footer'] = doliCartButton($object);
