@@ -40,7 +40,7 @@ doliconnect_enqueues();
 
 $html = "";
 
-$member = doliConnect('member', $current_user, false, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+$adherent = doliConnect('member', $current_user, false, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 
 if (isset($adherent->id) && $adherent->id > 0) {
 	$member_id = "member_id=".$adherent->id;
