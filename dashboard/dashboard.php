@@ -1436,29 +1436,26 @@ print "'>".__( 'Manage my subscription', 'doliconnect')."</a>";
 function members_module( $url ) {
 global $current_user;
 
-$time = current_time( 'timestamp',1);
+    $time = current_time( 'timestamp',1);
+    $adherent = doliConnect('member', $current_user, false, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 
-$request = "/adherentsplus/".doliconnector($current_user, 'fk_member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)); 
-$productadhesion = doliconst("ADHERENT_PRODUCT_ID_FOR_SUBSCRIPTIONS");
-$requestp = "/products/".$productadhesion."?includesubproducts=true&includetrans=true";
-$product = callDoliApi("GET", $requestp, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+    $request = "/adherentsplus/".$adherent->id; 
+    $productadhesion = doliconst("ADHERENT_PRODUCT_ID_FOR_SUBSCRIPTIONS");
+    $requestp = "/products/".$productadhesion."?includesubproducts=true&includetrans=true";
+    $product = callDoliApi("GET", $requestp, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
-if ( isset($_POST["update_membership"]) && function_exists('doliconnect_membership') ) {
-$typeadherent = isset($_POST["typeadherent"]) ? $_POST["typeadherent"] : null;
-$adherent = doliconnect_membership($current_user, $_POST["update_membership"], $typeadherent, dolidelay('member', true));
-//print var_dump($adherent);
-$request = "/adherentsplus/".doliconnector($current_user, 'fk_member', true); 
-$adherent = callDoliApi("GET", $request, null, dolidelay('member', true));
-print dolialert('success', __( 'Your membership has been updated.', 'doliconnect'));
-}
+    if ( isset($_POST["update_membership"]) && function_exists('doliconnect_membership') ) {
+        $typeadherent = isset($_POST["typeadherent"]) ? $_POST["typeadherent"] : null;
+        $adherent = doliconnect_membership($current_user, $_POST["update_membership"], $typeadherent, dolidelay('member', true));
+        //print var_dump($adherent);
+        $request = "/adherentsplus/".$adherent->id; 
+        $adherent = callDoliApi("GET", $request, null, dolidelay('member', true));
+        print dolialert('success', __( 'Your membership has been updated.', 'doliconnect'));
+    }
 
-print '<div class="card shadow-sm"><div class="card-header">'.__( 'Manage my subscription', 'doliconnect').'</div><div class="card-body">';
+    print '<div class="card shadow-sm"><div class="card-header">'.__( 'Manage my subscription', 'doliconnect').'</div><div class="card-body">';
 
-if ( !empty(doliconnector($current_user, 'fk_member')) && doliconnector($current_user, 'fk_member') > 0 && doliconnector($current_user, 'fk_soc') > 0 ) { 
-$adherent = callDoliApi("GET", $request, null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-}
-
-if ( !empty(doliconnector($current_user, 'fk_member')) && doliconnector($current_user, 'fk_member') > 0 && !empty($adherent->typeid) ) { 
+if ( isset($adherent->id) && $adherent->id > 0 && !empty($adherent->typeid) ) { 
 $request= "/adherentsplus/type/".$adherent->typeid;
 $adherenttype = callDoliApi("GET", $request, null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 }
@@ -1530,7 +1527,7 @@ if ( doliCheckModules('commande') && !empty($productadhesion) ) {
         }
     }
     
-    if ( !empty(doliconnector($current_user, 'fk_member')) && doliconnector($current_user, 'fk_member') > 0 && !empty($adherent->typeid) ) { 
+    if ( isset($adherent->id) && $adherent->id > 0 && !empty($adherent->typeid) ) { 
         $request= "/adherentsplus/type/".$adherent->typeid;
         $adherenttype = callDoliApi("GET", $request, null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
         //print var_dump($adherenttype);
@@ -1580,8 +1577,8 @@ if ( doliCheckRights('adherent', 'cotisation', 'lire') ) {
     print "<ul class='list-group list-group-flush'>";
     $limit=12;
     $page = doliPG(isset($_GET['pg'])?$_GET['pg']:null);
-    if (doliconnector($current_user, 'fk_member') > 0) {
-        $object = callDoliApi("GET", "/subscriptions?sortfield=dateadh&sortorder=DESC&limit=".$limit."&page=".$page."&pagination_data=true&sqlfilters=t.fk_adherent:=:".doliconnector($current_user, 'fk_member'), null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+    if (isset($adherent->id) && $adherent->id > 0) {
+        $object = callDoliApi("GET", "/subscriptions?sortfield=dateadh&sortorder=DESC&limit=".$limit."&page=".$page."&pagination_data=true&sqlfilters=t.fk_adherent:=:".$adherent->id, null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
         if ( doliversion('21.0.0') && isset($object->data) ) { $listcotisation = $object->data; } else { $listcotisation = $object; }
     } 
     if ( isset($listcotisation) && !isset($listcotisation->error) && $listcotisation != null ) { 
