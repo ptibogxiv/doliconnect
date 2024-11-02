@@ -470,8 +470,9 @@ function doliProductCart($product, $line = null, $refresh = null, $wishlist = tr
         if ( !empty($wishlist) && doliCheckModules('wishlist')) {
           $button .= doliWishlist($thirdparty, $product->id, $mstock['lineid'], $refresh);
         } 
-        $button .= '</div></div>';
+        $button .= '</div>';
         if (isset($mstock['step']) && $mstock['step']>1) $button .= '<div class="form-text" id="basic-addon4"><small>'.sprintf(__( 'Sold by %s', 'doliconnect'), $mstock['step']).'</small></div>';  
+        $button .= '</div>';
       } 
     } else {
     if ( get_option('doliloginmodal') == '1' ) {       
