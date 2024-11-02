@@ -465,7 +465,7 @@ if ( !isset($resultatsc->error) && $resultatsc != null ) {
 			$listproduct = callDoliApi("GET", $requestp, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
 			$count = $listproduct->pagination->total;
 		} else { 
-			$requestp = "/discountprice?sortfield=t.rowid&sortorder=DESC&sqlfilters=(t.date_begin%3A%3E%3D%3A'".$lastdate."')and(t.date_end:<=:'".$lastdate."')and(d.tosell:=:1)";
+			$requestp = "/discountprice?sortfield=t.rowid&sortorder=DESC&sqlfilters=(t.date_begin%3A%3E%3D%3A'".$lastdate."')and(t.date_end%3A%3C%3D%3A'".$lastdate."')and(d.tosell:=:1)";
 			$listproduct = callDoliApi("GET", $requestp, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 			if (empty($listproduct) || isset($listproduct->error)) {
 				$count = 0;
