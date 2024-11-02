@@ -778,9 +778,11 @@ add_action('wp_ajax_dolicart_request', 'dolicart_request');
 
 function dolicart_request() {
 global $current_user;
-	if ( wp_verify_nonce( trim($_POST['dolicart-nonce']), 'dolicart-nonce')) {
+	if ( wp_verify_nonce( trim($_POST['dolicart-nonce']), 'dolicart-nonce') ) {
 		$thirdparty = doliConnect('thirdparty', $current_user);
-		if (isset($_POST['case']) && $_POST['case'] == "updateLine") {
+		$link = trim($_POST['dolicart-nonce']);
+		if ( isset($_POST['case']) && $_POST['case'] == "updateLine" && false === get_transient( $link ) ) {
+			set_transient( $link, true, 5);
 			$product = callDoliApi("GET", "/products/".trim($_POST['id'])."?includesubproducts=true&includetrans=true", null, dolidelay('product'));
 			$mstock = doliProductStock($product, true, true, isset($_POST['product-array'])?$_POST['product-array']:array());
 			if (isset($_POST['lineid']) && !empty($_POST['lineid'])) $mstock['lineid'] = trim($_POST['lineid']);
@@ -789,7 +791,7 @@ global $current_user;
 				} else {
 					$productarray = array();
 				}
-			if (isset($_POST['modify']) && $_POST['modify'] == "delete") { 
+			if ( isset($_POST['modify']) && $_POST['modify'] == "delete" ) { 
 				$price = doliProductPrice($product, 0, false, true);
 				$result = doliaddtocart($product, $mstock, 0, $price, null, null);
 				$newqty = $result['newqty'];
@@ -801,7 +803,8 @@ global $current_user;
 					'lines' => $result['lines'],
 					'total' => $result['total']
 				];	
-				$response['newwish'] = doliProductCart($product, null, null);  
+				$response['newwish'] = doliProductCart($product, null, null);
+				delete_transient( $link );  
 				wp_send_json_success($response);	
 				die(); 
 			} elseif (isset($_POST['modify']) && $_POST['modify'] == "membership") { 
@@ -825,14 +828,16 @@ global $current_user;
 					'items' => $result['items'],
 					'lines' => $result['lines'],
 					'total' => $result['total']
-					];
-				$response['newwish'] = doliProductCart($product, $result['line'], true, false, $productarray);
-					$object = doliConnect('order', $current_user);
-					$response['js'] = null;
-					$response['modal'] = doliModalTemplate('CartInfos', __( 'Cart', 'doliconnect'), doliline($object, false, false, false), doliCartButton($object), 'modal-lg');
+				];
+				$mstock = doliProductStock($product, true, true, $productarray);
+				$response['newwish'] = doliProductCart($product, $mstock['line'], true, true, $productarray);
+				$object = doliConnect('order', $current_user);
+				$response['js'] = null;
+				$response['modal'] = doliModalTemplate('CartInfos', __( 'Cart', 'doliconnect'), doliline($object, false, false, false), doliCartButton($object), 'modal-lg');
+				delete_transient( $link );
 				wp_send_json_success($response);
 				die();
-			} elseif (isset($_POST['modify']) && ($_POST['modify'] == "plus" || $_POST['modify'] == "minus" || $_POST['modify'] == "modify")) { 
+			} elseif ( isset($_POST['modify']) && ($_POST['modify'] == "plus" || $_POST['modify'] == "minus" || $_POST['modify'] == "modify") ) { 
 				if (!is_numeric(trim($_POST['qty']))) $_POST['qty'] = $mstock['qty'];
 				if ($_POST['modify'] == "plus") {
 					$qty = trim($_POST['qty'])+$mstock['step'];
@@ -853,7 +858,8 @@ global $current_user;
 					'lines' => $result['lines'],
 					'total' => $result['total']
 					];
-				$response['newwish'] = doliProductCart($product, $result['line'], true, true, $productarray);
+				$mstock = doliProductStock($product, true, true, $productarray);
+				$response['newwish'] = doliProductCart($product, $mstock['line'], true, true, $productarray);
 				if (isset($_POST['DisplayCart']) && !empty($_POST['DisplayCart'])) {
 					$object = doliConnect('order', $current_user);
 					$response['js'] = null;
@@ -861,9 +867,10 @@ global $current_user;
 				} elseif (doliCheckModules('relatedproducts') && doliCheckRelatedProducts($product->id)) { 
 					$response['modal'] = doliModalTemplate('CartInfos', __( 'Related products', 'doliconnect'), doliRelatedProducts($product->id, true), '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">'.__( "Close", "doliconnect").'</button>', 'modal-lg', null, 'p-0');
 				}
+				delete_transient( $link );
 				wp_send_json_success($response);
 				die();
-			} elseif (isset($_POST['modify']) && ($_POST['modify'] == "wish")) {
+			} elseif ( isset($_POST['modify']) && ($_POST['modify'] == "wish") ) {
 				$wish = doliWishlist($thirdparty->id, trim($_POST['id']), trim($_POST['lineid']), true, true);
 				if (empty($wish)) {
 					$data = [
@@ -874,22 +881,24 @@ global $current_user;
 					];
 					$addwish = callDoliApi("POST", "/wishlist", $data, 0);
 					$wish = doliWishlist($thirdparty->id, trim($_POST['id']), trim($_POST['lineid']), true, false);
-					$mstock = doliProductStock($product, true, true);
-					$response['newwish'] = doliProductCart($product, $mstock['lineid'], true); 
+					$mstock = doliProductStock($product, true, true, $productarray);
+					$response['newwish'] = doliProductCart($product, $mstock['line'], true, true, $productarray);
 				} elseif (!empty($wish)) {
 					$deletewish = callDoliApi("DELETE", "/wishlist/".$wish, null, 0);
 					$wish = doliWishlist($thirdparty->id, trim($_POST['id']), trim($_POST['lineid']), true, false);
-					$mstock = doliProductStock($product, true, true);
-					$response['newwish'] = doliProductCart($product, $mstock['lineid'], true); 
+					$mstock = doliProductStock($product, true, true, $productarray);
+					$response['newwish'] = doliProductCart($product, $mstock['line'], true, true, $productarray);
 				}
+				delete_transient( $link );
 				wp_send_json_success($response);			
 				die(); 
 			} else {
 				$response['modal'] = doliModalTemplate('CartInfos', __( 'Error', 'doliconnect'), __( "This action is not authorized", "doliconnect"), '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">'.__( "Close", "doliconnect").'</button>');
+				delete_transient( $link );
 				wp_send_json_error($response);			
 				die(); 
 			}
-		} elseif (isset($_POST['case']) && $_POST['case'] == "update") {	
+		} elseif ( isset($_POST['case']) && $_POST['case'] == "update" && false === get_transient( $link ) ) {	
 			if (isset($_POST['modify']) && $_POST['modify'] == "delete") {
 				$object = callDoliApi("GET", "/orders/".trim($_POST['id']), null, dolidelay('order', true));
 				if (!isset($object->error) && empty($object->statut)) {
@@ -911,7 +920,7 @@ global $current_user;
 					wp_send_json_error( __( 'An error occured:', 'doliconnect').' '.$object->error->message); 
 				}	
 			}
-		} elseif (isset($_POST['case']) && $_POST['case'] == "purge_cart" && isset($_POST['module']) && isset($_POST['id'])) {
+		} elseif ( isset($_POST['case']) && $_POST['case'] == "purge_cart" && isset($_POST['module']) && isset($_POST['id']) && false === get_transient( $link ) ) {
 			$object = callDoliApi("GET", "/".trim($_POST['module'])."/".trim($_POST['id']), null, dolidelay('order', true));
 			if (!isset($object->error) && empty($object->statut)) {
 				$object = callDoliApi("DELETE", "/".trim($_POST['module'])."/".trim($_POST['id']), null);
@@ -931,7 +940,7 @@ global $current_user;
 			} else {
 				wp_send_json_error( __( 'An error occured:', 'doliconnect').' '.$object->error->message); 
 			}
-		} elseif ( isset($_POST['case']) && $_POST['case'] == "validate_cart" && isset($_POST['module']) && isset($_POST['id'])) {
+		} elseif ( isset($_POST['case']) && $_POST['case'] == "validate_cart" && isset($_POST['module']) && isset($_POST['id']) && false === get_transient( $link ) ) {
 			$data = [
     			'demand_reason_id' => 1,
     			'module_source' => 'doliconnect',
@@ -948,7 +957,7 @@ global $current_user;
 				wp_send_json_error( __( 'An error occured:', 'doliconnect').' '.$object->error->message);
 				die(); 
 			}
-		} elseif ( isset($_POST['case']) && $_POST['case'] == "info_cart" && isset($_POST['module']) && isset($_POST['id'])) {
+		} elseif ( isset($_POST['case']) && $_POST['case'] == "info_cart" && isset($_POST['module']) && isset($_POST['id']) && false === get_transient( $link ) ) {
 			$data = [
    				'demand_reason_id' => 1,
     			'module_source' => 'doliconnect',
@@ -979,7 +988,7 @@ wp_send_json_success($response);
 } else {
 wp_send_json_error( __( 'An error occured:', 'doliconnect').' '.$object->error->message); 
 }
-} elseif ( isset($_POST['case']) && $_POST['case'] == "pay_cart" && isset($_POST['module']) && isset($_POST['id'])) {
+} elseif ( isset($_POST['case']) && $_POST['case'] == "pay_cart" && isset($_POST['module']) && isset($_POST['id']) && false === get_transient( $link ) ) {
 
 $data = [
   'paymentintent' => isset($_POST['paymentintent']) ? $_POST['paymentintent'] : null,
