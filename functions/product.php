@@ -448,7 +448,7 @@ global $current_user;
    } elseif ( isset($thirdparty->status) && $thirdparty->status != '1' ) {
       $button .= "<a class='btn btn-block btn-outline-secondary disabled' href='".doliconnecturl('dolicontact')."?type=COM' role='button' title='".__( 'Account closed', 'doliconnect')."' disabled>".__( 'Account closed', 'doliconnect').'</a>';
   } elseif ( isset($thirdparty->client) && ( ($thirdparty->client == '2' && get_option('doliProductclient') != '2' ) ) ) {
-
+    $button .= '<input id="qty-prod-'.$product->id.'" type="text" class="form-control form-control-sm" value="'.__( 'Only for our customers', 'doliconnect').'" aria-label="'.__( 'Only for our customers', 'doliconnect').'" style="text-align:center;" disabled readonly>';
   } elseif ( is_user_logged_in() && doliCheckModules('commande') && doliconnectid('dolicart') > 0 && isset($thirdparty->status) && $thirdparty->status == '1' ) {
     if (!empty($line->fk_parent_line) && !empty($mstock['fk_parent_line'])) {
       $button .= '<input id="qty-prod-'.$product->id.'" type="text" class="form-control form-control-sm" value="'.__( 'Linked item', 'doliconnect').'" aria-label="'.__( 'Linked item', 'doliconnect').'" style="text-align:center;" disabled readonly>';
