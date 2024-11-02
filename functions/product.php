@@ -534,6 +534,8 @@ global $current_user;
       $product2 = callDoliApi("GET", "/products/".$product->id."/selling_multiprices/per_customer", null, dolidelay('product', $refresh));
       if ( !isset($product2->error) && $product2 != null ) {
         $new_product2 = array_filter($product2, function($obj){
+          global $current_user;
+          $thirdparty = doliConnect('thirdparty', $current_user, false);
           if (isset($obj->fk_soc)) {
             if ($obj->fk_soc != $thirdparty->id)  { return false; }
           }
