@@ -1151,7 +1151,7 @@ if (dolicheckie($_SERVER['HTTP_USER_AGENT'])) {
   print "</div></div>";
 } elseif ( defined("DOLIBUG") ) {
   print dolibug((isset($object->error)?$object->error->message:null));
-} elseif ( !doliCheckModules('commande', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)) ) {
+} elseif ( !doliCheckModules('commande') ) {
 
 print "<div class='card shadow-sm'><div class='card-body'>";
 print dolibug(__( "Oops, Order's module is not available", "doliconnect"));

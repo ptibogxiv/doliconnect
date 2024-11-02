@@ -1765,7 +1765,7 @@ global $current_user;
         $dates = " <i>(Du $start au $end)</i>";
       }
       $doliline .= '<div class="w-100 justify-content-between"><div class="row"><div class="d-none d-sm-block col-sm-2 col-lg-1"><center>';
-      if ( doliCheckModules('fraisdeport', $refresh) && doliconst('FRAIS_DE_PORT_ID_SERVICE_TO_USE', $refresh) == $line->fk_product ) {
+      if ( doliCheckModules('fraisdeport') && doliconst('FRAIS_DE_PORT_ID_SERVICE_TO_USE', $refresh) == $line->fk_product ) {
         $doliline .= '<i class="fas fa-shipping-fast fa-2x fa-fw"></i>';
       } else {
         $doliline .= doliconnect_image('product', $line->fk_product, array('limit'=>1, 'size'=>'50x50'), $refresh);
@@ -1798,7 +1798,7 @@ global $current_user;
         }
       }
       $doliline .= '</div><div class="col-4 col-sm-3 col-md-3 col-lg-3 text-end"><h6 class="mb-1">'.doliprice($line, (empty(get_option('dolibarr_b2bmode'))?'total_ttc':'total_ht'), isset($line->multicurrency_code) ? $line->multicurrency_code : null).'</h6>';
-      if (!empty($line->fk_parent_line) || (doliCheckModules('fraisdeport', $refresh) && empty($line->fk_parent_line) && doliconst('FRAIS_DE_PORT_ID_SERVICE_TO_USE') == $line->fk_product)) {
+      if (!empty($line->fk_parent_line) || (doliCheckModules('fraisdeport') && empty($line->fk_parent_line) && doliconst('FRAIS_DE_PORT_ID_SERVICE_TO_USE') == $line->fk_product)) {
         $doliline .= '<h6 class="mb-1">x'.$line->qty.'</h6>';
       } elseif ( isset($object->statut) && empty($object->statut) && !is_page(doliconnectid('doliaccount')) ) {
         $doliline .= doliProductCart($product, $line, $refresh, $wishlist);

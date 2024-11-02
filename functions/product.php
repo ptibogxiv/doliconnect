@@ -450,7 +450,7 @@ function doliProductCart($product, $line = null, $refresh = null, $wishlist = tr
         $button .= '<input id="qty-prod-'.$product->id.'" type="text" class="form-control form-control-sm" value="'.__( 'Linked item', 'doliconnect').'" aria-label="'.__( 'Linked item', 'doliconnect').'" style="text-align:center;" disabled readonly>';
       } elseif ( $mstock['stock'] <= 0 || $mstock['m2'] < $mstock['step'] ) { 
         $button .= '<input id="qty-prod-'.$product->id.'" type="text" class="form-control form-control-sm" value="'.__( 'Unavailable', 'doliconnect').'" aria-label="'.__( 'Unavailable', 'doliconnect').'" style="text-align:center;" disabled readonly>';
-      } elseif (doliCheckModules('adherent', $refresh) && $product->id == doliconst("ADHERENT_PRODUCT_ID_FOR_SUBSCRIPTIONS")) {
+      } elseif (doliCheckModules('adherent') && $product->id == doliconst("ADHERENT_PRODUCT_ID_FOR_SUBSCRIPTIONS")) {
         $button .= '<div class="btn-group" role="group" aria-label="Basic example">';
         if (!empty($mstock['qty'])) {
           $button .= "<button class='btn btn-sm btn-dark' name='delete' value='delete' type='submit' onclick='doliJavaCartAction(\"updateLine\", ".$product->id.", ".$mstock['lineid'].", 0, ".json_encode($linearray_options, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES).", \"delete\");'><i class='fa-solid fa-trash-can'></i></button>";
