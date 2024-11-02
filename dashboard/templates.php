@@ -1668,9 +1668,12 @@ function doliagenda_display($content) {
     $listfo = callDoliApi("GET", $request, null, dolidelay('agenda', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
     $sqlfilter = null;
     if ( !isset($listfo->error) && $listfo != null ) {
-      $sqlfilter .= "and(t.fk_action:!=:";
-      foreach ($listfo as $postlist) {
-        $sqlfilter .= "'". $postlist->id."',";
+      $sqlfilter .= "and(t.fk_action:in:";
+      $i = 0;
+      foreach ($listfo as $postlist) {        
+        if (!empty($i)) $sqlfilter .= ",";
+        $sqlfilter .= "'". $postlist->id."'";
+        $i++;
       }
       $sqlfilter .= ")";
     }
