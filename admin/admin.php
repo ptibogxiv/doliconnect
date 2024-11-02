@@ -137,6 +137,10 @@ if ( add_site_option( 'dolibarr_private_key', sanitize_text_field($_REQUEST['dol
 } else {
 update_site_option('dolibarr_private_key', sanitize_text_field($_REQUEST['dolibarr_private_key'])); 
 }
+if ( add_site_option( 'doliconnectPRO', sanitize_text_field($_REQUEST['doliconnectPRO'])) ) {
+} else {
+update_site_option('doliconnectPRO', sanitize_text_field($_REQUEST['doliconnectPRO'])); 
+}
 if ( add_site_option( 'doliconnect_login', sanitize_text_field($_REQUEST['doliconnect_login'])) ) {
 } else {
 update_site_option('doliconnect_login', sanitize_text_field($_REQUEST['doliconnect_login']));
@@ -174,11 +178,15 @@ $dolibarr = callDoliApi("GET", "/status", null, -5 * MINUTE_IN_SECONDS);
         <table class="form-table" width="100%">
             <tr>
                 <th style="width:150px;"><label for="dolibarr_public_url">DOLIBARR URL</label></th>
-                <td ><input class="regular-text" type="text" id="dolibarr_public_url" name="dolibarr_public_url"  value="<?php echo get_site_option('dolibarr_public_url'); ?>" required>/api/index.php<br>ex: https://dolibarr.example.com</td>
+                <td ><input class="regular-text" type="text" id="dolibarr_public_url" name="dolibarr_public_url"  value="<?php echo get_site_option('dolibarr_public_url'); ?>" required> required<br>ex: https://dolibarr.example.com</td>
             </tr>
             <tr>
                 <th style="width:150px;"><label for="dolibarr_private_key">DOLIBARR REST API USER KEY</label></th>
-                <td ><input class="regular-text" type="text" id="dolibarr_private_key" name="dolibarr_private_key"  value="<?php echo get_site_option('dolibarr_private_key'); ?>" required></td>
+                <td ><input class="regular-text" type="text" id="dolibarr_private_key" name="dolibarr_private_key"  value="<?php echo get_site_option('dolibarr_private_key'); ?>" required> required</td>
+            </tr>
+            <tr>
+                <th style="width:150px;"><label for="doliconnectPRO">DOLICONNECT PRO</label></th>
+                <td ><input class="regular-text" type="text" id="doliconnectPRO" name="doliconnectPRO"  value="<?php echo get_site_option('doliconnectPRO'); ?>"> optionnal</td>
             </tr>
             <tr>          
                 <th style="width:150px;"><label for="status"><?php _e('Status Dolibarr', 'doliconnect') ?></label></th>
