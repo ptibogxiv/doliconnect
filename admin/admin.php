@@ -403,12 +403,12 @@ echo "<input id='dolibarr_entity'  name='dolibarr_entity' type='text' value='".(
                 <th style="width:150px;"><label for="dolibarr_account">dolibarr_account</label></th>
                 <td ><?php 
            $args = array(
-    'name' => 'doliaccount', 
-    'show_option_none' => __( '- Select -', 'doliconnect' ), 
-    'option_none_value' => '0',
-    'lang' => strtolower(str_replace("_", "-", get_locale())),
-    'selected' => get_option('doliaccount') 
-);
+                'name' => 'doliaccount', 
+                'show_option_none' => __( '- Select -', 'doliconnect' ), 
+                'option_none_value' => '0',
+                'lang' => strtolower(str_replace("_", "-", get_locale())),
+                'selected' => get_option('doliaccount')
+            );
            wp_dropdown_pages($args); ?>
                 <select name="doliDefaultclient" id="doliDefaultclient">
                 <option value="1" <?php selected('1', get_option('doliDefaultclient'));?>><?php _e('Customer', 'doliconnect') ?> (<?php _e('by default', 'doliconnect') ?>)</option>
