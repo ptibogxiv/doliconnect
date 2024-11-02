@@ -1669,13 +1669,14 @@ function doliagenda_display($content) {
     $sqlfilter = null;
     if ( !isset($listfo->error) && $listfo != null ) {
       $sqlfilter .= "and(t.fk_action:in:";
+      $typearray = null;
       $i = 0;
       foreach ($listfo as $postlist) {        
-        if (!empty($i)) $sqlfilter .= ",";
-        $sqlfilter .= "'". $postlist->id."'";
+        if (!empty($i)) $typearray .= ",";
+        $typearray .= "'". $postlist->id."'";
         $i++;
       }
-      $sqlfilter .= ")";
+      $sqlfilter .= $typearray.")";
     }
 
     if ( isset($_GET['id']) && $_GET['id'] > 0 ) {  
@@ -1684,7 +1685,7 @@ function doliagenda_display($content) {
       //print $contractfo;
     }
   
-    if ( !isset($agendafo->error) && isset($_GET['id']) && isset($_GET['id']) && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doli-agenda-'.$agendafo->id)) {
+    if ( !isset($agendafo->error) && isset($_GET['id']) && isset($_GET['id']) && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doli-agenda-'.$agendafo->id) && !empty($agendafo->status) && in_array($typearray, $agendafo->type_id) ) {
       print '<div class="card shadow-sm"><div class="card-header">'.$agendafo->label.'<a class="float-end text-decoration-none" href="'.doliconnecturl('doliagenda').'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body">';
      
       print $agendafo->note_private;
