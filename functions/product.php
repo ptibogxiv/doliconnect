@@ -714,7 +714,7 @@ $list .= '<a href="'.$producturl.'" class="text-decoration-none">'.doliconnect_i
 $list .= "</center></td>";
 //$list .= var_dump($product);
 $list .= '<td width="80%" style="border:0px"><a href="'.$producturl.'" class="text-body text-decoration-none"><b>'.doliproduct($product, 'label').'</b></a>';
-$list .= "<div class='row'><div class='col'><p><small>";
+$list .= "<div class='row'><div class='col position-relative'><p><small>";
 if ( !doliconst('MAIN_GENERATE_DOCUMENTS_HIDE_REF') ) { $list .= "<i class='fas fa-toolbox fa-fw'></i> ".(!empty($product->ref)?$product->ref:'-'); }
 if ( !empty($product->barcode) ) { 
 if ( !doliconst('MAIN_GENERATE_DOCUMENTS_HIDE_REF') ) { $list .= " | "; }
@@ -736,7 +736,7 @@ if( has_filter('mydoliconnectproductdesc') ) {
 $list .= apply_filters('mydoliconnectproductdesc', $product, 'list');
 }
 $list .= '</p>';
-$list .= '<p class="d-flex"><a href="'.$producturl.'" class="text-body text-decoration-none">'.substr(doliproduct($product, 'description'), 0, 172).'... ['.__( 'Read more...', 'doliconnect').']</a></p>';
+$list .= '<p>'.substr(doliproduct($product, 'description'), 0, 172).'... <a href="'.$producturl.'" class="stretched-link">['.__( 'Read more...', 'doliconnect').']</a></p>';
 $list .= '</div>';
 
 if ( ! empty(doliconnectid('dolicart')) ) { 
