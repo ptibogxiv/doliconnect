@@ -1,6 +1,8 @@
 <?php
 
 function doliproduct($object, $value) {
+global $current_user;
+
   if ( function_exists('pll_the_languages') ) { 
     $lang = pll_current_language('locale');
     return !empty($object->multilangs->$lang->$value) ? $object->multilangs->$lang->$value : $object->$value;

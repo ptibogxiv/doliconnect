@@ -1269,7 +1269,7 @@ global $current_user;
 	} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "doliSelectlang" ) {
 		$modal['header'] = __('Choose your language', 'doliconnect');
 		$modal['body'] = '<div class="card" id="doliSelectlang-form"><ul class="list-group list-group-flush">';
-		$translations = pll_the_languages( array( 'post_id' => $_POST['value1'],'raw' => 1 ) );
+		$translations = pll_the_languages( array( 'post_id' => $_POST['value1'], 'raw' => 1 ) );
 		foreach ($translations as $key => $value) {
 			if ($value['no_translation']) {
 				$url = home_url();

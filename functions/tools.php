@@ -1125,22 +1125,22 @@ $doliuser .= "</div></li>";
 
 $doliuser .= '<li class="list-group-item list-group-item-light list-group-item-action"><div class="row g-2"><div class="col"><div class="form-floating">';
 if ( function_exists('pll_the_languages') ) {
-$doliuser .= '<select class="form-select" id="'.$idobject.'[default_lang]" name="'.$idobject.'[default_lang]" aria-label="'.__( 'Default language', 'doliconnect').'"';
-  if (!$rights) {
-    $doliuser .= ' disabled';
+  $doliuser .= '<select class="form-select" id="'.$idobject.'[default_lang]" name="'.$idobject.'[default_lang]" aria-label="'.__( 'Default language', 'doliconnect').'"';
+    if (!$rights) {
+      $doliuser .= ' disabled';
+    }
+    $doliuser .= '>';
+  $doliuser .= "<option value=''>".__( 'Default / Browser language', 'doliconnect')."</option>";
+  $translations = pll_the_languages( array( 'raw' => 1 ) );
+  foreach ($translations as $key => $value) {
+    $doliuser .= "<option value='".str_replace("-","_",$value['locale'])."' ";
+    if  ( (isset($object->default_lang) && $object->default_lang == str_replace("-","_",$value['locale'])) || ( isset($object->default_lang) && empty($object->default_lang) && $current_user->locale == str_replace("-","_",$value['locale'])) ) {$doliuser .= " selected";}
+    $doliuser .= ">".$value['name']."</option>";
   }
-  $doliuser .= '>';
-$doliuser .= "<option value=''>".__( 'Default / Browser language', 'doliconnect')."</option>";
-$translations = pll_the_languages( array( 'raw' => 1 ) );
-foreach ($translations as $key => $value) {
-$doliuser .= "<option value='".str_replace("-","_",$value['locale'])."' ";
-if  ( (isset($object->default_lang) && $object->default_lang == str_replace("-","_",$value['locale'])) || ( isset($object->default_lang) && empty($object->default_lang) && $current_user->locale == str_replace("-","_",$value['locale'])) ) {$doliuser .= " selected";}
-$doliuser .= ">".$value['name']."</option>";
-}
-$doliuser .= '</select><label for="'.$idobject.'[default_lang]">'.__( 'Default language', 'doliconnect').'</label>';
+  $doliuser .= '</select><label for="'.$idobject.'[default_lang]">'.__( 'Default language', 'doliconnect').'</label>';
 } else {
-$doliuser .= '<input type="text" class="form-control" id="'.$idobject.'[default_lang]" value="'.__( 'Default / Browser language', 'doliconnect').'" readonly>
-<label for="'.$idobject.'[default_lang]">'.__( 'Default / Browser language', 'doliconnect').'</label>';
+  $doliuser .= '<input type="text" class="form-control" id="'.$idobject.'[default_lang]" value="'.__( 'Default / Browser language', 'doliconnect').'" readonly>
+  <label for="'.$idobject.'[default_lang]">'.__( 'Default / Browser language', 'doliconnect').'</label>';
 }
 $doliuser .= '</div></div>';
 
