@@ -188,7 +188,7 @@ $dolibarr = callDoliApi("GET", "/status", null, -5 * MINUTE_IN_SECONDS);
                 <p class="text-success">Status: <?php echo $dolibarr->success->code; ?></p>
                 <p class="text-success">Version: <?php echo $dolibarr->success->dolibarr_version; ?></p>
                 <p class="text-success">Access Locked: <?php echo $dolibarr->success->access_locked; ?></p>
-                <p class="text-success">Environment: <?php echo $dolibarr->success->environment; ?></p>
+                <p class="text-success">Environment: <?php echo (isset($dolibarr->success->environment)?$dolibarr->success->environment:' -- '); ?></p>
 <?php } else { ?><p class="text-danger">Offline</p><?php } ?></td>
             </tr>
             <tr>
