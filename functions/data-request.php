@@ -1088,6 +1088,7 @@ add_action('wp_ajax_nopriv_dolimodal_request', 'dolimodal_request');
 
 function dolimodal_request(){
 global $current_user;
+
 	$response = array();
 	$modal = array();	
 	if ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "legacy" ) {
