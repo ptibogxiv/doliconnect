@@ -514,7 +514,6 @@ function doliUserLang($user, $type = 'locale') {
 }
 
 function doliListLang($array = array()) {
-
   $lang = array();
   if ( function_exists('pll_the_languages') ) { 
       $lang = pll_the_languages($array);
@@ -1135,7 +1134,7 @@ $doliuser .= '</div></div>';
 $doliuser .= "</div></li>";
 
 $doliuser .= '<li class="list-group-item list-group-item-light list-group-item-action"><div class="row g-2"><div class="col"><div class="form-floating">';
-if ( function_exists('pll_the_languages') ) {
+if ( !empty(doliListLang()) ) {
   $doliuser .= '<select class="form-select" id="'.$idobject.'[default_lang]" name="'.$idobject.'[default_lang]" aria-label="'.__( 'Default language', 'doliconnect').'"';
     if (!$rights) {
       $doliuser .= ' disabled';
