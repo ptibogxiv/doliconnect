@@ -504,11 +504,22 @@ function doliUserLang($user, $type = 'locale') {
   if ( function_exists('pll_current_language') ) { 
       $lang = pll_current_language($type);
     } elseif ( function_exists('wpml_object_id') ) {
-      return get_locale(); // to do
+      $lang = get_locale(); // to do
     } elseif (isset($user->locale) && !empty($user->locale)) {
       $lang = $user->locale;
     } else {
       $lang = get_locale();
+    }
+  return $lang;
+}
+
+function doliListLang($array = array()) {
+
+  $lang = array();
+  if ( function_exists('pll_the_languages') ) { 
+      $lang = pll_the_languages($array);
+    } elseif ( function_exists('wpml_object_id') ) {
+      //$lang =  get_locale(); // to do
     }
   return $lang;
 }
@@ -1131,7 +1142,7 @@ if ( function_exists('pll_the_languages') ) {
     }
     $doliuser .= '>';
   $doliuser .= "<option value=''>".__( 'Default / Browser language', 'doliconnect')."</option>";
-  $translations = pll_the_languages( array( 'raw' => 1 ) );
+  $translations = doliListLang( array( 'raw' => 1 ) );
   foreach ($translations as $key => $value) {
     $doliuser .= "<option value='".str_replace("-","_",$value['locale'])."' ";
     if  ( (isset($object->default_lang) && $object->default_lang == str_replace("-","_",$value['locale'])) || ( isset($object->default_lang) && empty($object->default_lang) && $current_user->locale == str_replace("-","_",$value['locale'])) ) {$doliuser .= " selected";}
