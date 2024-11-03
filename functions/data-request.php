@@ -881,13 +881,13 @@ global $current_user;
 					];
 					$addwish = callDoliApi("POST", "/wishlist", $data, 0);
 					$wish = doliWishlist($thirdparty->id, trim($_POST['id']), trim($_POST['lineid']), true, false);
-					$mstock = doliProductStock($product, true, true, $productarray);
-					$response['newwish'] = doliProductCart($product, $mstock['line'], true, true, $productarray);
+					$mstock = doliProductStock($product, true, true);
+					$response['newwish'] = doliProductCart($product, $result['line'], true); 
 				} elseif (!empty($wish)) {
 					$deletewish = callDoliApi("DELETE", "/wishlist/".$wish, null, 0);
 					$wish = doliWishlist($thirdparty->id, trim($_POST['id']), trim($_POST['lineid']), true, false);
-					$mstock = doliProductStock($product, true, true, $productarray);
-					$response['newwish'] = doliProductCart($product, $mstock['line'], true, true, $productarray);
+					$mstock = doliProductStock($product, true, true);
+					$response['newwish'] = doliProductCart($product, $result['line'], true); 
 				}
 				delete_transient( $link );
 				wp_send_json_success($response);			
