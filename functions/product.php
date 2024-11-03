@@ -56,6 +56,7 @@ function doliRelatedProducts($fk_parent_line, $refresh = false) {
 
 function doliprice($object = null, $mode = "ttc", $currency = null) {
 global $current_user;
+
   if ( is_object($object) ) {
     $total='multicurrency_total_'.$mode;
     if ( isset($object->$mode) ) { 
@@ -76,16 +77,7 @@ global $current_user;
     if ( is_null($currency) ) { 
       $currency = strtoupper(doliconst("MAIN_MONNAIE"));
     }
-    if ( function_exists('pll_the_languages') ) { 
-      $locale = pll_current_language('locale');
-    } else {
-      if ( $current_user->locale == null ) { 
-        $locale = get_locale(); 
-      } else { 
-        $locale = $current_user->locale; 
-      } 
-    }
-    $fmt = numfmt_create( $locale, NumberFormatter::CURRENCY );
+    $fmt = numfmt_create( doliUserLang($current_user, 'locale'), NumberFormatter::CURRENCY );
     return numfmt_format_currency($fmt, $montant, $currency);//.$decimal
   }
 }

@@ -77,6 +77,7 @@ We would like to thank this contributors and plugins:
 * better shop
 * better transient
 * better captcha
+* better multilang with polylang & wpml
 * fix php bugs & error
 
    = 8.9.x =
