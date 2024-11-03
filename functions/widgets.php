@@ -625,7 +625,7 @@ if ( ! empty( $instance['title'] ) ) {
 print $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ) . $args['after_title'];
 }
 
-if ( ( function_exists('doliModalButton') && function_exists('doliListLang') && !empty(doliListLang()) ) ) {      
+if ( ( function_exists('doliModalButton') && function_exists('doliListLang') && !empty(doliListLang(array( 'raw' => 1 ))) ) ) {      
 print '<a href="#" class="text-decoration-none" data-toggle="modal" data-target="#DoliconnectSelectLang" data-dismiss="modal" title="'.__('Choose language', 'doliconnect').'"><span class="flag-icon flag-icon-'.strtolower(substr(pll_current_language('slug'), -2)).'"></span> '.pll_current_language('name').'</a>';
 }
 

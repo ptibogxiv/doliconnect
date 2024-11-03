@@ -1134,7 +1134,7 @@ $doliuser .= '</div></div>';
 $doliuser .= "</div></li>";
 
 $doliuser .= '<li class="list-group-item list-group-item-light list-group-item-action"><div class="row g-2"><div class="col"><div class="form-floating">';
-if ( !empty(doliListLang()) ) {
+if ( !empty(doliListLang(array( 'raw' => 1 ))) ) {
   $doliuser .= '<select class="form-select" id="'.$idobject.'[default_lang]" name="'.$idobject.'[default_lang]" aria-label="'.__( 'Default language', 'doliconnect').'"';
     if (!$rights) {
       $doliuser .= ' disabled';
