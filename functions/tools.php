@@ -500,12 +500,12 @@ function doliopeninghours($constante){
   }
 }
 
-function doliUserLang($user) {
+function doliUserLang($user, $short = false) {
   if ( function_exists('pll_current_language') ) { 
       $lang = pll_current_language('locale');
     } elseif ( function_exists('wpml_object_id') ) {
       return get_locale(); // to do
-    } elseif (!empty($user->locale)) {
+    } elseif (isset($user->locale) && !empty($user->locale)) {
       $lang = $user->locale;
     } else {
       $lang = get_locale();
