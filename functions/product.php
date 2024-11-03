@@ -736,7 +736,7 @@ if( has_filter('mydoliconnectproductdesc') ) {
 $list .= apply_filters('mydoliconnectproductdesc', $product, 'list');
 }
 $list .= '</p>';
-$list .= '<p class="d-flex"><a href="'.$producturl.'" class="text-body">'.substr(doliproduct($product, 'description'), 0, 172).'... ['.__( 'Read more...', 'doliconnect').']</a></p>';
+$list .= '<p class="d-flex"><a href="'.$producturl.'" class="text-body text-decoration-none">'.substr(doliproduct($product, 'description'), 0, 172).'... ['.__( 'Read more...', 'doliconnect').']</a></p>';
 $list .= '</div>';
 
 if ( ! empty(doliconnectid('dolicart')) ) { 
