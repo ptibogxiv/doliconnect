@@ -501,8 +501,10 @@ function doliopeninghours($constante){
 }
 
 function doliUserLang($user) {
-  if ( function_exists('pll_the_languages') ) { 
+  if ( function_exists('pll_current_language') ) { 
       $lang = pll_current_language('locale');
+    } elseif ( function_exists('wpml_object_id') ) {
+      return get_locale(); // to do
     } elseif (!empty($user->locale)) {
       $lang = $user->locale;
     } else {
@@ -512,25 +514,15 @@ function doliUserLang($user) {
 }
 
 function doliCompanyCard($company) {
+global $current_user;
   $card = $company->name;
   $card .= '<br>'.$company->address.'<br>'.$company->zip.' '.$company->town.'<br>';
   if ( !empty($company->country_id) ) {  
-    if ( function_exists('pll_the_languages') ) { 
-      $lang = pll_current_language('locale');
-    } else {
-      global $current_user;
-      $lang = $current_user->locale;
-    }
-    $country = callDoliApi("GET", "/setup/dictionary/countries/".$company->country_id."?lang=".$lang, null, dolidelay('constante'));
+    $country = callDoliApi("GET", "/setup/dictionary/countries/".$company->country_id."?lang=".doliUserLang($current_user), null, dolidelay('constante'));
     $card .= $country->label;
   }
   if ( !empty($company->state_id) ) {  
-    if ( function_exists('pll_the_languages') ) { 
-      $lang = pll_current_language('locale');
-    } else {
-      $lang = $current_user->locale;
-    }
-    $state = callDoliApi("GET", "/setup/dictionary/states/".$company->state_id."?lang=".$lang, null, dolidelay('constante'));
+    $state = callDoliApi("GET", "/setup/dictionary/states/".$company->state_id."?lang=".doliUserLang($current_user), null, dolidelay('constante'));
     $card .= ' - '.$state->name;
   }
   if (!empty($company->idprof2)) { $card .= '<br>SIRET: '.$company->idprof2.' - APE: '.$company->idprof3; }

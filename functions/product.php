@@ -730,17 +730,12 @@ if ( ! empty(doliconnectid('dolicart')) ) {
 $list .= "<br>".doliProductStock($product);
 }
 if ( isset($product->country_id) && !empty($product->country_id) ) {  
-if ( function_exists('pll_the_languages') ) { 
-$lang = pll_current_language('locale');
-} else {
-$lang = $current_user->locale;
-}
 if ( isset($product->country_id) && !empty($product->country_id) ) { 
-$country = callDoliApi("GET", "/setup/dictionary/countries/".$product->country_id."?lang=".$lang, null, dolidelay('constante'));
+$country = callDoliApi("GET", "/setup/dictionary/countries/".$product->country_id."?lang=".doliUserLang($current_user), null, dolidelay('constante'));
 $list .= "<br><small><span class='fi fi-".strtolower($product->country_code)."'></span> ".$country->label;
 }
 if ( isset($product->state_id) && !empty($product->state_id) ) { 
-$state = callDoliApi("GET", "/setup/dictionary/states/".$product->state_id."?lang=".$lang, null, dolidelay('constante')); 
+$state = callDoliApi("GET", "/setup/dictionary/states/".$product->state_id."?lang=".doliUserLang($current_user), null, dolidelay('constante')); 
 $list .= " - ".$state->name; } 
 $list .= "</small>"; }
 if( has_filter('mydoliconnectproductdesc') ) {
@@ -803,15 +798,10 @@ global $current_user;
       }
       if (!empty(doliconnect_categories('product', $product, doliconnecturl('dolishop')))) $card .= '<br>'.doliconnect_categories('product', $product, doliconnecturl('dolishop'));
       if ( !empty($product->country_id) ) {  
-        if ( function_exists('pll_the_languages') ) { 
-          $lang = pll_current_language('locale');
-        } else {
-          $lang = $current_user->locale;
-        }
-        $country = callDoliApi("GET", "/setup/dictionary/countries/".$product->country_id."?lang=".$lang, null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+        $country = callDoliApi("GET", "/setup/dictionary/countries/".$product->country_id."?lang=".doliUserLang($current_user), null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
         $card .= "<br><small><i class='fas fa-globe-europe fa-fw'></i> ".__( 'Origin:', 'doliconnect')." ".$country->label;
         if ( isset($product->state_id) && !empty($product->state_id) ) { 
-          $state = callDoliApi("GET", "/setup/dictionary/states/".$product->state_id."?lang=".$lang, null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))); 
+          $state = callDoliApi("GET", "/setup/dictionary/states/".$product->state_id."?lang=".doliUserLang($current_user), null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))); 
           $card .= " - ".$state->name;
         } 
         $card .= " <span class='fi fi-".strtolower($product->country_code)."'></span></small>";
