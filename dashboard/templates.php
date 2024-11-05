@@ -881,7 +881,7 @@ function dolishop_display($content) {
           $date = new DateTime(); 
           $date->modify('NOW');
           $lastdate = $date->format('Y-m-d');
-          $request = "/discountprice?sortfield=t.".$field."&sortorder=".$order."&limit=".$limit."&page=".$page."&pagination_data=true&sqlfilters=(t.date_begin%3A%3E%3D%3A'".$lastdate."')and(t.date_end%3A%3C%3D%3A'".$lastdate."')and(d.tosell:=:1)";
+          $request = "/discountprice?sortfield=t.".$field."&sortorder=".$order."&limit=".$limit."&page=".$page."&pagination_data=true&sqlfilters=(t.date_begin%3A%3C%3D%3A'".$lastdate."')and(t.date_end%3A%3E%3D%3A'".$lastdate."')and(d.tosell:=:1)";
           $object = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
         } elseif (!isset($_GET["category"]) || isset($_GET["category"]) && $_GET["category"] == 'all') {
           $request = "/products?sortfield=t.".$field."&sortorder=".$order."&limit=".$limit."&page=".$page."&category=".esc_attr($shop)."&pagination_data=true&sqlfilters=(t.tosell:=:1)";
