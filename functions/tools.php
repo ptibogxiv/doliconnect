@@ -89,7 +89,11 @@ function doliConnect($fonction, $current_user = null, $boolean = false, $refresh
   } elseif ($fonction == 'user' && isset($current_user->user_email) && !empty($current_user->user_email)) {
     $return = callDoliApi("GET", "/users/email/".$current_user->user_email, null, dolidelay('doliconnector', $refresh));
   } elseif ($fonction == 'order' && isset($current_user->user_email) && !empty($current_user->user_email)) {
-    $thirdparty = callDoliApi("GET", "/thirdparties/email/".$current_user->user_email, null, dolidelay('doliconnector'));
+    if ( doliversion('21.0.0') ) {
+      $thirdparty = callDoliApi("GET", "/thirdparties/accounts/wordpress/".$current_user->ID, null, dolidelay('doliconnector', $refresh));
+    } else {
+      $thirdparty = callDoliApi("GET", "/thirdparties/email/".$current_user->user_email, null, dolidelay('doliconnector', $refresh));
+    }
     if (isset($thirdparty->id)) $object = callDoliApi("GET", "/orders?sortfield=t.rowid&sortorder=DESC&limit=1&thirdparty_ids=".$thirdparty->id."&sqlfilters=(t.fk_statut%3A%3D%3A'0')and(t.module_source%3A%3D%3A'doliconnect')&pagination_data=true", null, dolidelay('doliconnector', $refresh));
     if ( doliversion('20.0.0') && isset($object->data) ) { $object = $object->data; } elseif ( isset($object) ) { $object = $object; } else  { $object = null; }
     if (isset($object[0])) {
