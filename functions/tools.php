@@ -77,13 +77,15 @@ function doliConnect($fonction, $current_user = null, $boolean = false, $refresh
   if ($fonction == 'thirdparty' && isset($current_user->user_email) && !empty($current_user->user_email)) {
     if ( doliversion('21.0.0') ) {
       $return = callDoliApi("GET", "/thirdparties/accounts/wordpress/".$current_user->ID, null, dolidelay('doliconnector', $refresh));
-    } else {
-      $return = callDoliApi("GET", "/thirdparties/email/".$current_user->user_email, null, dolidelay('doliconnector', $refresh));
+    } else { 
+      $id = doliconnector($current_user, 'fk_soc', $refresh);
+      $return = callDoliApi("GET", "/thirdparties/".$id, null, dolidelay('doliconnector', $refresh));
     }
   } elseif ($fonction == 'member' && isset($current_user->user_email) && !empty($current_user->user_email)) {
     if ( doliversion('21.0.0') ) {
       $return = callDoliApi("GET", "/members/thirdparty/accounts/wordpress/".$current_user->ID, null, dolidelay('doliconnector', $refresh));
     } else {
+      $id = doliconnector($current_user, 'fk_member', $refresh);
       $return = callDoliApi("GET", "/members/thirdparty/email/".$current_user->user_email, null, dolidelay('doliconnector', $refresh));
     }
   } elseif ($fonction == 'user' && isset($current_user->user_email) && !empty($current_user->user_email)) {
@@ -92,7 +94,8 @@ function doliConnect($fonction, $current_user = null, $boolean = false, $refresh
     if ( doliversion('21.0.0') ) {
       $thirdparty = callDoliApi("GET", "/thirdparties/accounts/wordpress/".$current_user->ID, null, dolidelay('doliconnector', $refresh));
     } else {
-      $thirdparty = callDoliApi("GET", "/thirdparties/email/".$current_user->user_email, null, dolidelay('doliconnector', $refresh));
+      $id = doliconnector($current_user, 'fk_soc', $refresh);
+      $thirdparty = callDoliApi("GET", "/thirdparties/".$id, null, dolidelay('doliconnector', $refresh));
     }
     if (isset($thirdparty->id)) $object = callDoliApi("GET", "/orders?sortfield=t.rowid&sortorder=DESC&limit=1&thirdparty_ids=".$thirdparty->id."&sqlfilters=(t.fk_statut%3A%3D%3A'0')and(t.module_source%3A%3D%3A'doliconnect')&pagination_data=true", null, dolidelay('doliconnector', $refresh));
     if ( doliversion('20.0.0') && isset($object->data) ) { $object = $object->data; } elseif ( isset($object) ) { $object = $object; } else  { $object = null; }
