@@ -73,10 +73,19 @@ function doliConnect($fonction, $current_user = null, $boolean = false, $refresh
   if ( empty($current_user) ) {
     global $current_user;  
   }
+
   if ($fonction == 'thirdparty' && isset($current_user->user_email) && !empty($current_user->user_email)) {
-    $return = callDoliApi("GET", "/thirdparties/email/".$current_user->user_email, null, dolidelay('doliconnector', $refresh));
+    if ( doliversion('21.0.0') ) {
+      $return = callDoliApi("GET", "/thirdparties/accounts/wordpress/".$current_user->ID, null, dolidelay('doliconnector', $refresh));
+    } else {
+      $return = callDoliApi("GET", "/thirdparties/email/".$current_user->user_email, null, dolidelay('doliconnector', $refresh));
+    }
   } elseif ($fonction == 'member' && isset($current_user->user_email) && !empty($current_user->user_email)) {
-    $return = callDoliApi("GET", "/members/thirdparty/email/".$current_user->user_email, null, dolidelay('doliconnector', $refresh));
+    if ( doliversion('21.0.0') ) {
+      $return = callDoliApi("GET", "/members/thirdparty/accounts/wordpress/".$current_user->ID, null, dolidelay('doliconnector', $refresh));
+    } else {
+      $return = callDoliApi("GET", "/members/thirdparty/email/".$current_user->user_email, null, dolidelay('doliconnector', $refresh));
+    }
   } elseif ($fonction == 'user' && isset($current_user->user_email) && !empty($current_user->user_email)) {
     $return = callDoliApi("GET", "/users/email/".$current_user->user_email, null, dolidelay('doliconnector', $refresh));
   } elseif ($fonction == 'order' && isset($current_user->user_email) && !empty($current_user->user_email)) {
