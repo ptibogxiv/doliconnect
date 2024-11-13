@@ -14,7 +14,7 @@
  * Donate link: https://www.paypal.me/ptibogxiv
  *   
  * @author ptibogxiv.eu <support@ptibogxiv.eu>
- * @copyright Copyright (c) 2017-2023, ptibogxiv.eu
+ * @copyright Copyright (c) 2017-2024, ptibogxiv.eu
 **/
 
 // Exit if accessed directly.
@@ -41,7 +41,7 @@ require_once plugin_dir_path(__FILE__).'/blocks/index.php';
 //include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 
 define('DOLIBARR_MINIMUM_VERSION', '15.0.0');
-define('DOLIBARR_LEGAL_VERSION', '20.0.1');
+define('DOLIBARR_LEGAL_VERSION', '20.0.2');
 
 // ********************************************************
 function doliconnecturl($page) {
