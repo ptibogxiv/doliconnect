@@ -787,8 +787,8 @@ global $current_user;
       if ( ! empty(doliconnectid('dolicart')) && !isset($attributes['hideStock']) ) { 
         $card .= '<br>'.doliProductStock($product);
       }
-      if (!empty(doliconnect_supplier($product, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)))) {
-        $card .= '<br>'.doliconnect_supplier($product, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+      if (!empty(doliconnectid('dolisupplier')) && !empty(doliconnect_supplier($product, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)))) {
+        $card .= '<br>'.doliconnect_supplier($product);
       }
       if (!empty(doliconnect_categories('product', $product, doliconnecturl('dolishop')))) $card .= '<br>'.doliconnect_categories('product', $product, doliconnecturl('dolishop'));
       if ( !empty($product->country_id) ) {  
