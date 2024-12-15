@@ -792,7 +792,7 @@ global $current_user;
 					$productarray = array();
 				}
 			if ( isset($_POST['modify']) && $_POST['modify'] == "delete" ) { 
-				$price = doliProductPrice($product, 0, false, true);
+				$price = doliProductPrice($product, 0, false);
 				$result = doliaddtocart($product, $mstock, 0, $price, null, null);
 				$newqty = $result['newqty'];
 				if (doliCheckModules('relatedproducts') && !empty(doliRequiredRelatedProducts($product->id, null, false))) {
@@ -847,7 +847,7 @@ global $current_user;
 					$qty = trim($_POST['qty'])/$mstock['step'];
 					$qty = ceil($qty)*$mstock['step'];
 				}
-				$price = doliProductPrice($product, $qty, false, true);
+				$price = doliProductPrice($product, $qty, false);
 				$result = doliaddtocart($product, $mstock, $qty, $price, isset($_POST['product-add-timestamp_start'])?trim($_POST['product-add-timestamp_start']):null, isset($_POST['product-add-timestamp_end'])?trim($_POST['product-add-timestamp_end']):null, null, $productarray);
 				$newqty = $result['newqty'];
 				if (doliCheckModules('relatedproducts') && !empty(doliRequiredRelatedProducts($product->id, null, false))) {
