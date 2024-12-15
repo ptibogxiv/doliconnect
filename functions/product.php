@@ -492,6 +492,14 @@ function doliProducPriceTaxAssuj($price_ht, $price_ttc, $vat) {
 
 function doliProductDisplayPrice($product, $price, $refresh = false) {
   global $current_user;
+
+  $thirdparty = doliConnect('thirdparty', $current_user, false);
+  if (isset($thirdparty->tva_assuj) && empty($thirdparty->tva_assuj)) {
+    if (isset($product->tva_tx))  $product->tva_tx = 0;
+  }
+  $orderfo = doliConnect('order', $current_user, false, $refresh);
+  $currency=isset($orderfo->multicurrency_code)?$orderfo->multicurrency_code:strtoupper(doliconst("MAIN_MONNAIE"));
+
   $button = '<script type="text/javascript">';
   $button .= 'jQuery(document).ready(function($) {
   $("#popover-price-'.$product->id.'").popover({
