@@ -22,7 +22,7 @@ function doliRequiredRelatedProducts($id, $qty = null, $valid = false) {
           $qty2 = $qty*$product->qty;
           $product = callDoliApi("GET", "/products/".$product->id."?includesubproducts=true&includetrans=true", null, dolidelay('product', true));
           $mstock = doliProductStock($product, false, true, array(), $id);
-          $price = doliProductPrice($product, $qty2, false, true);
+          $price = doliProductPrice($product, $qty2, false);
           $related = doliaddtocart($product, $mstock, $qty2, $price, null, null, $id);
         }
         return $related;
@@ -398,7 +398,6 @@ global $current_user;
 }
 
 function doliWishlist($thirdparty, $productid, $lineid, $refresh = false, $nohtml = false) {
-
   if (isset($thirdparty->id)) {
     $thirdpartyid = $thirdparty->id;
   } else {
@@ -424,7 +423,7 @@ function doliWishlist($thirdparty, $productid, $lineid, $refresh = false, $nohtm
   return $wish;
 }
 
-function doliProductCart($product, $line = null, $refresh = null, $wishlist = true, $array_options = array()) {
+function doliProductCart($product, $price, $line = null, $refresh = null, $wishlist = true, $array_options = array()) {
 global $current_user;
 
   if (is_object($line) && isset($line->array_options)) { 
@@ -443,6 +442,8 @@ global $current_user;
     $button .= "<a class='btn btn-block btn-outline-secondary disabled' href='".doliconnecturl('dolicontact')."?type=COM' role='button' title='".__( 'Account closed', 'doliconnect')."' disabled>".__( 'Account closed', 'doliconnect').'</a>';
   } elseif ( isset($thirdparty->client) && ( ($thirdparty->client == '2' && get_option('doliProductclient') != '2' ) ) ) {
     $button .= '<input id="qty-prod-'.$product->id.'" type="text" class="form-control form-control-sm" value="'.__( 'Only for our customers', 'doliconnect').'" aria-label="'.__( 'Only for our customers', 'doliconnect').'" style="text-align:center;" disabled readonly>';
+  } elseif ( $price['refprice'] < 0 ) {
+    $button .= '<input id="qty-prod-'.$product->id.'" type="text" class="form-control form-control-sm" value="'.__( 'Please contact us', 'doliconnect').'" aria-label="'.__( 'Please contact us', 'doliconnect').'" style="text-align:center;" disabled readonly>';
   } elseif ( is_user_logged_in() && doliCheckModules('commande') && doliconnectid('dolicart') > 0 && isset($thirdparty->status) && $thirdparty->status == '1' ) {
     if (!empty($line->fk_parent_line) && !empty($mstock['fk_parent_line'])) {
       $button .= '<input id="qty-prod-'.$product->id.'" type="text" class="form-control form-control-sm" value="'.__( 'Linked item', 'doliconnect').'" aria-label="'.__( 'Linked item', 'doliconnect').'" style="text-align:center;" disabled readonly>';
@@ -510,37 +511,41 @@ function doliProductDisplayPrice($product, $price, $refresh = false) {
   })
   });';
   $button .= '</script>';
-  $explication = doliProducPriceTaxAssuj(__( 'Displayed price is excluded VAT', 'doliconnect'), __( 'Displayed price is included VAT', 'doliconnect'), $product->tva_tx);
-  $explication .= sprintf(__( 'VAT rate of %s', 'doliconnect'), $vat);
-  //$explication .= "<ul>";
-  $explication .= sprintf(__( 'Initial sale price: %s', 'doliconnect'), doliprice(doliProducPriceTaxAssuj($price_ht, $price_ttc, $product->tva_tx), $currency));
-  if (isset($customer_discount) && !empty($customer_discount) && !empty($price['discount'])) $explication .= sprintf(__( 'Your customer discount is %s percent', 'doliconnect'), $customer_discount);
-  if (isset($discountlabel) && !empty($discountlabel)) $explication .= $discountlabel;
-  if ($price_ttc != $price_ttc3) $explication .= sprintf(__( 'Discounted price: %s', 'doliconnect'), doliprice( doliProducPriceTaxAssuj($price_ht3, $price_ttc3, $product->tva_tx), $currency));
-  //$explication .= "</ul>";
-  $button .= "<a tabindex='0' id='popover-price-".$product->id."' class='btn btn-light position-relative top-0 end-0";
-  if (!empty($price['discount'])) $button .= " text-danger";
-  $button .= "' data-bs-container='body' data-bs-toggle='popover' data-bs-trigger='focus' title='".__( 'About price', 'doliconnect')."' data-bs-content='".$explication."'>";
-  $button .= doliprice(doliProducPriceTaxAssuj($price_ht3, $price_ttc3, $product->tva_tx), $currency);
-  $date = new DateTime(); 
-  $date->modify('NOW');
-  if (!empty(get_option('dolicartnewlist')) && get_option('dolicartnewlist') != 'none') { 
-    $date->modify('FIRST DAY OF LAST '.get_option('dolicartnewlist').' MIDNIGHT');
-    $lastdate = $date->format('Y-m-d');
-  } elseif (empty(get_option('dolicartnewlist'))) {
-    $date->modify('FIRST DAY OF LAST MONTH MIDNIGHT');
-    $lastdate = $date->format('Y-m-d');
+  if ( $price['refprice'] < 0 ) {
+
   } else {
-    $lastdate = $date->format('Y-m-d');
+    $explication = doliProducPriceTaxAssuj(__( 'Displayed price is excluded VAT', 'doliconnect'), __( 'Displayed price is included VAT', 'doliconnect'), $product->tva_tx);
+    $explication .= sprintf(__( 'VAT rate of %s', 'doliconnect'), $price['vat']);
+    //$explication .= "<ul>";
+    $explication .= sprintf(__( 'Initial sale price: %s', 'doliconnect'), doliprice(doliProducPriceTaxAssuj($price['ht'], $price['ttc'], $product->tva_tx), $currency));
+    if (isset($customer_discount) && !empty($customer_discount) && !empty($price['discount'])) $explication .= sprintf(__( 'Your customer discount is %s percent', 'doliconnect'), $customer_discount);
+    if (isset($discountlabel) && !empty($discountlabel)) $explication .= $discountlabel;
+    if ($price['ttc'] != $price['ttc3']) $explication .= sprintf(__( 'Discounted price: %s', 'doliconnect'), doliprice( doliProducPriceTaxAssuj($price['ht3'], $price['ttc3'], $product->tva_tx), $currency));
+    //$explication .= "</ul>";
+    $button .= "<a tabindex='0' id='popover-price-".$product->id."' class='btn btn-light position-relative top-0 end-0";
+    if (!empty($price['discount'])) $button .= " text-danger";
+    $button .= "' data-bs-container='body' data-bs-toggle='popover' data-bs-trigger='focus' title='".__( 'About price', 'doliconnect')."' data-bs-content='".$explication."'>";
+    $button .= doliprice(doliProducPriceTaxAssuj($price['ht3'], $price['ttc3'], $product->tva_tx), $currency);
+    $date = new DateTime(); 
+    $date->modify('NOW');
+    if (!empty(get_option('dolicartnewlist')) && get_option('dolicartnewlist') != 'none') { 
+      $date->modify('FIRST DAY OF LAST '.get_option('dolicartnewlist').' MIDNIGHT');
+      $lastdate = $date->format('Y-m-d');
+    } elseif (empty(get_option('dolicartnewlist'))) {
+      $date->modify('FIRST DAY OF LAST MONTH MIDNIGHT');
+      $lastdate = $date->format('Y-m-d');
+    } else {
+      $lastdate = $date->format('Y-m-d');
+    }
+    if ($product->date_creation >= $lastdate) $button .= '<span class="position-absolute top-0 start-0 translate-middle badge rounded-pill bg-warning">'.__( 'Novelty', 'doliconnect').'<span class="visually-hidden">Novelty</span></span>';
+    if (!empty($price['discount'])) $button .= '<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">-'.round($price['discount']).'%<span class="visually-hidden">discount</span></span>';
+    if (!empty($product->net_measure) && !empty($product->net_measure_units)) { 
+      $unit = callDoliApi("GET", "/setup/dictionary/units?sortfield=rowid&sortorder=ASC&limit=1&active=1&sqlfilters=(t.rowid:like:'".$product->net_measure_units."')", null, dolidelay('constante'));
+      $button .= '<span class="position-absolute top-100 start-0 translate-middle badge rounded-pill bg-info"><small>'.doliprice( $price['refprice']/$product->net_measure, null, $currency).'/'.$unit[0]->short_label.'<span class="visually-hidden">net measure price</span></small></span>';
+    }
+    if (!empty($price['discount'])) $button .= '<span class="position-absolute top-100 start-100 translate-middle badge bg-light text-dark"><small><s>'.doliprice(doliProducPriceTaxAssuj($price['ht'], $price['ttc'], $product->tva_tx), $currency).'</s><span class="visually-hidden">initial price</span></small></span>';
+    $button .= '</a><br><br>';
   }
-  if ($product->date_creation >= $lastdate) $button .= '<span class="position-absolute top-0 start-0 translate-middle badge rounded-pill bg-warning">'.__( 'Novelty', 'doliconnect').'<span class="visually-hidden">Novelty</span></span>';
-  if (!empty($price['discount'])) $button .= '<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">-'.round($price['discount']).'%<span class="visually-hidden">discount</span></span>';
-  if (!empty($product->net_measure) && !empty($product->net_measure_units)) { 
-    $unit = callDoliApi("GET", "/setup/dictionary/units?sortfield=rowid&sortorder=ASC&limit=1&active=1&sqlfilters=(t.rowid:like:'".$product->net_measure_units."')", null, dolidelay('constante'));
-    $button .= '<span class="position-absolute top-100 start-0 translate-middle badge rounded-pill bg-info"><small>'.doliprice( $refprice/$product->net_measure, null, $currency).'/'.$unit[0]->short_label.'<span class="visually-hidden">net measure price</span></small></span>';
-  }
-  if (!empty($price['discount'])) $button .= '<span class="position-absolute top-100 start-100 translate-middle badge bg-light text-dark"><small><s>'.doliprice(doliProducPriceTaxAssuj($price_ht, $price_ttc, $product->tva_tx), $currency).'</s><span class="visually-hidden">initial price</span></small></span>';
-  $button .= '</a><br><br>';
   return $button;
 }
 
@@ -613,7 +618,7 @@ global $current_user;
         $price_ht3=$product->price-($product->price*$product3[0]->discount/100);
         $price_ttc=$product->price_ttc;
         $price_ht=$product->price;
-        $vat = $product->tva_tx;
+        $price['vat'] = $product->tva_tx;
         $price['discount'] = $product3[0]->discount;
       } elseif (!empty($product3[0]->price)) {
         $price_ht3=$product3[0]->price; 
@@ -621,14 +626,14 @@ global $current_user;
         $price['discount'] = 100-(100*$price_ht3/$price_ht);
         $price_ttc3=$product->price_ttc-($product->price_ttc*$price['discount']/100);
         $price_ttc=$product->price_ttc;
-        $vat = $product->tva_tx;
+        $price['vat'] = $product->tva_tx;
       } elseif (!empty($product3[0]->price_ttc)) {
         $price_ttc3=$product3[0]->price_ttc;
         $price_ttc=$product->price_ttc; 
         $price['discount'] = 100-(100*$price_ttc3/$price_ttc);
         $price_ht3=$product->price-($product->price*$price['discount']/100);
         $price_ht=$product->price;
-        $vat = $product->tva_tx;
+        $price['vat'] = $product->tva_tx;
       }
       $price_min_ttc=$product->price_min_ttc;
       $price_min_ht=$product->price_min;
@@ -646,7 +651,7 @@ global $current_user;
       $price_min_ht=$product2->price_min;
       $price_ttc=$product2->price_ttc;
       $price_ht=$product2->price;
-      $vat = $product2->tva_tx;
+      $price['vat'] = $product2->tva_tx;
       $refprice = doliProducPriceTaxAssuj($price_ht, $price_ttc, $product->tva_tx);
     } else {
       $price_min_ttc3=$product->price_min_ttc-($product->price_min_ttc*$price['discount']/100);
@@ -656,7 +661,7 @@ global $current_user;
       $price_min_ht=$product->price_min;
       $price_ttc=$product->price_ttc;
       $price_ht=$product->price;
-      $vat=$product->tva_tx;
+      $price['vat'] = $product->tva_tx;
       $refprice = doliProducPriceTaxAssuj($price_ht, $price_ttc, $product->tva_tx);
     }
 
@@ -676,7 +681,11 @@ global $current_user;
     }
 
   }
-
+  $price['refprice'] = $refprice;
+  $price['ttc'] = $price_ttc;
+  $price['ht'] = $price_ht;
+  $price['ttc3'] = $price_ttc3;
+  $price['ht3'] = $price_ht3;
   $price['subprice'] = $price_ht;
 
   return $price;
@@ -758,8 +767,9 @@ $list .= '</div>';
 
 if ( ! empty(doliconnectid('dolicart')) ) { 
 $list .= "<div class='col-12 col-md-4'><center>";
-$list .= doliProductPrice($product, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
-$list .= doliProductCart($product, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true, array(), $fk_parent_line);
+$price = doliProductPrice($product, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+$list .= doliProductDisplayPrice($product ,$price, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+$list .= doliProductCart($product, $price, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true, array(), $fk_parent_line);
 $list .= "</center></div>";
 }
 $list .= "</div></td></tr></table></li>";
@@ -822,8 +832,9 @@ global $current_user;
       }
       if ( ! empty(doliconnectid('dolicart')) ) { 
         $card .= '<br><br>';
-        $card .= doliProductPrice($product, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
-        $card .= doliProductCart($product, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+        $price = doliProductPrice($product, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+        $card .= doliProductDisplayPrice($product ,$price, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+        $card .= doliProductCart($product, $price, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
         $card .= '</div>';
       }
       $card .= '</div><div class="col-12"><h6>'.__( 'Description', 'doliconnect' ).'</h6><p>'.doliproduct($product, 'description').'</p>';

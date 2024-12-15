@@ -803,7 +803,7 @@ global $current_user;
 					'lines' => $result['lines'],
 					'total' => $result['total']
 				];	
-				$response['newwish'] = doliProductCart($product, null, null);
+				$response['newwish'] = doliProductCart($product, $price, null, null);
 				delete_transient( $link );  
 				wp_send_json_success($response);	
 				die(); 
@@ -830,7 +830,7 @@ global $current_user;
 					'total' => $result['total']
 				];
 				$mstock = doliProductStock($product, true, true, $productarray);
-				$response['newwish'] = doliProductCart($product, $mstock['line'], true, true, $productarray);
+				$response['newwish'] = doliProductCart($product, $price, $mstock['line'], true, true, $productarray);
 				$object = doliConnect('order', $current_user);
 				$response['js'] = null;
 				$response['modal'] = doliModalTemplate('CartInfos', __( 'Cart', 'doliconnect'), doliline($object, false, false, false), doliCartButton($object), 'modal-lg');
@@ -859,7 +859,7 @@ global $current_user;
 					'total' => $result['total']
 					];
 				$mstock = doliProductStock($product, true, true, $productarray);
-				$response['newwish'] = doliProductCart($product, $mstock['line'], true, true, $productarray);
+				$response['newwish'] = doliProductCart($product, $price, $mstock['line'], true, true, $productarray);
 				if (isset($_POST['DisplayCart']) && !empty($_POST['DisplayCart'])) {
 					$object = doliConnect('order', $current_user);
 					$response['js'] = null;
@@ -882,12 +882,12 @@ global $current_user;
 					$addwish = callDoliApi("POST", "/wishlist", $data, 0);
 					$wish = doliWishlist($thirdparty->id, trim($_POST['id']), trim($_POST['lineid']), true, false);
 					$mstock = doliProductStock($product, true, true);
-					$response['newwish'] = doliProductCart($product, $result['line'], true); 
+					$response['newwish'] = doliProductCart($product, $price, $result['line'], true); 
 				} elseif (!empty($wish)) {
 					$deletewish = callDoliApi("DELETE", "/wishlist/".$wish, null, 0);
 					$wish = doliWishlist($thirdparty->id, trim($_POST['id']), trim($_POST['lineid']), true, false);
 					$mstock = doliProductStock($product, true, true);
-					$response['newwish'] = doliProductCart($product, $result['line'], true); 
+					$response['newwish'] = doliProductCart($product, $price, $result['line'], true); 
 				}
 				delete_transient( $link );
 				wp_send_json_success($response);			

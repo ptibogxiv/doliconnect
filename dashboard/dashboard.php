@@ -1501,7 +1501,7 @@ if ( doliCheckModules('commande') && !empty($productadhesion) ) {
         if ( isset($adherent) && $adherent->datefin != null && $adherent->statut == 1 && isset($adherent->next_subscription_renew) && $adherent->datefin > $adherent->next_subscription_renew && $adherent->next_subscription_renew > current_time( 'timestamp',1) ) {
             print "<button class='btn btn-light btn-block' disabled>".sprintf(__('Renew from %s', 'doliconnect'), wp_date('d/m/Y', $adherent->next_subscription_renew))."</button>";
         } else { 
-            print doliProductCart($product, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), false, array('options_member_beneficiary' => $adherent->id));
+            print doliProductCart($product, null, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), false, array('options_member_beneficiary' => $adherent->id));
         }
         print '</div><br>';
     } elseif ( $adherent->statut == '0' ) {
@@ -1708,7 +1708,7 @@ print "<ul class='list-group list-group-flush'>";
             print "<li class='list-group-item d-flex justify-content-between lh-condensed list-group-item-action'>";
             print doliaddress($member);
             if (1 == 1) {
-                print doliProductCart($product, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), false, array('options_member_beneficiary' => $member->id));
+                print doliProductCart($product, null, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), false, array('options_member_beneficiary' => $member->id));
                 print "<div class='col-4 col-sm-3 col-md-2 btn-group-vertical' role='group'>";
                 print doliModalButton('linkedmember', 'updatelinkedmember'.$member->id, '<i class="fa-solid fa-edit fa-fw"></i>', 'button', 'btn btn-light text-primary', $member->id);
                 print "<button name='unlink_member' value='".$member->id."' class='btn btn-light text-danger' type='submit' title='".__( 'Unlink', 'doliconnect')." ".$member->firstname." ".$member->lastname."'><i class='fas fa-unlink'></i></button>";
