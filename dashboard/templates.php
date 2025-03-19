@@ -1435,7 +1435,7 @@ console.log(response.data.message);
 })(jQuery);";
 print "</script>";
 
-print doliCardFooter($request, 'cart');
+if (isset($request)) print doliCardFooter($request, 'cart');
 print "</div>";
 
 print "</div>";
