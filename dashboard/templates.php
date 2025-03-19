@@ -1138,10 +1138,12 @@ if ( in_the_loop() && is_main_query() && is_page(doliconnectid('dolicart')) && !
     $object = callDoliApi("GET", $request, null, dolidelay('cart', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
   } else {
     $object = doliConnect('order', $current_user, false, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
-    $request = "/orders/".$object->id."?contact_list=0";
-    $object = callDoliApi("GET", $request, null, dolidelay('cart', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-    $module = 'orders';
-    $id = $object->id; 
+    if (isset($object->id)) {
+      $request = "/orders/".$object->id."?contact_list=0";
+      $object = callDoliApi("GET", $request, null, dolidelay('cart', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+      $module = 'orders';
+      $id = $object->id;  
+    }
   }
 
 if (dolicheckie($_SERVER['HTTP_USER_AGENT'])) {
