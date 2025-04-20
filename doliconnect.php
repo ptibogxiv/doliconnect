@@ -513,7 +513,7 @@ function doliconnect_lost_password_page( $lostpassword_url ) {
 }
 // ********************************************************
 if (get_option('doliaccount')) {
-    add_filter( 'login_url', 'doliconnect_login_link_url', 80, 3 );
+    //add_filter( 'login_url', 'doliconnect_login_link_url', 80, 3 );
 }
 function doliconnect_login_link_url( $login_url, $redirect, $force_reauth ) {
     if (get_option('doliaccount') && !preg_match('/action=confirm_admin_email/i', $redirect)) {

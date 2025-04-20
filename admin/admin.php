@@ -319,8 +319,8 @@ if (isset($_REQUEST['doliconnect_google']) && $_REQUEST['doliconnect_google']>0)
     <form action="" method="post">
         <table class="form-table" width="100%">
             <tr>
-                <th style="width:150px;"><label for="doliloginmodal"><?php _e('Modal login', 'doliconnect') ?></label></th>
-                <td ><input name="doliloginmodal" type="checkbox" id="doliloginmodal" value="1" <?php checked('1', get_option('doliloginmodal')); ?> />           
+                 <th style="width:150px;"><label for="doliloginmodal"><?php _e('Modal login', 'doliconnect') ?></label></th>
+                <td ><input name="doliloginmodal" type="checkbox" id="doliloginmodal" value="1" <?php checked('1', get_option('doliloginmodal')); ?>>          
                 </td>
             </tr> 
             <tr>
