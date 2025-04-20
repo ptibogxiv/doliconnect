@@ -367,7 +367,7 @@ global $current_user;
             $return = esc_url( add_query_arg( $arr_params, $url) );
             $request = "/contacts/".esc_attr($postnotif->contact_id)."?includecount=1&includeroles=1";
             $contactfo = callDoliApi("GET", $request, null, dolidelay('contact', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))); 
-            $unit = callDoliApi("GET", "/setup/actiontriggers?sortfield=t.rowid&sortorder=ASC&limit=100&lang=fr_fr".$postnotif->event, null, dolidelay('constante'));           
+            $unit = callDoliApi("GET", "/setup/actiontriggers?sortfield=t.rowid&sortorder=ASC&limit=100&lang=fr_fr&sqlfilters=(t.rowid:=:'".$postnotif->event."')", null, dolidelay('constante'));           
             print "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'><div><i class='fa-solid fa-bell fa-3x fa-fw'></i></div><div><h6 class='my-0'>".$unit[0]->label."</h6><small class='text-muted'><span>".$postnotif->type."</span></small></div><span>".($contactfo->civility ? $contactfo->civility : $contactfo->civility_code)." ".$contactfo->firstname." ".$contactfo->lastname."<br>".$contactfo->email."</span>";
             print "</a>";
         }
