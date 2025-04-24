@@ -436,7 +436,9 @@ global $current_user;
   $thirdparty = doliConnect('thirdparty', $current_user, false, $refresh);
   $mstock = doliProductStock($product, $refresh, true, $linearray_options, $line);
   $button = '<div id="doliform-product-'.$product->id.'-'.$mstock['lineid'].'" class="d-grid gap-2">';
-  if ( empty(doliconnectid('dolicart')) || empty(doliconnectid('dolicart')) ) {
+  if (empty($product->status)) {
+    $button .= "<a class='btn btn-block btn-outline-secondary disabled' href='#' role='button' title='".__( 'Item not in sale', 'doliconnect')."' disabled>".__( 'Item not in sale', 'doliconnect').'</a>';
+  } elseif ( empty(doliconnectid('dolicart')) || empty(doliconnectid('dolicart')) ) {
     $button .= "<a class='btn btn-block btn-info' href='".doliconnecturl('dolicontact')."?type=COM' role='button' title='".__( 'Contact us', 'doliconnect')."'>".__( 'Contact us', 'doliconnect').'</a>';
   } elseif ( isset($thirdparty->status) && $thirdparty->status != '1' ) {
     $button .= "<a class='btn btn-block btn-outline-secondary disabled' href='".doliconnecturl('dolicontact')."?type=COM' role='button' title='".__( 'Account closed', 'doliconnect')."' disabled>".__( 'Account closed', 'doliconnect').'</a>';
@@ -786,7 +788,7 @@ global $current_user;
     $card = '';
     if (defined("DOLIBUG")) {
       $card = dolibug();
-    } elseif ($product->id > 0 && !empty($product->status)) {
+    } elseif ($product->id > 0) {
       $card .= '<div class="card-header">'.doliproduct($product, 'label'); 
       if (strpos(esc_url($_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']), 'product') !== false) {
         $arr_params = array( 'product');
