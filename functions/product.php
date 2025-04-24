@@ -90,7 +90,9 @@ global $current_user;
   $order = doliConnect('order', $current_user, false, $refresh);
   $warehouse = doliconst('DOLICONNECT_ID_WAREHOUSE');
   $stock = callDoliApi("GET", "/products/".$product->id."/stock?selected_warehouse_id=".$warehouse, null, dolidelay('stock', $refresh));
-  if (!empty($product->type) && empty(doliconst('STOCK_SUPPORTS_SERVICES'))) {
+  if (empty($product->status)) {   
+    $mstock['stock'] = 0;
+  } elseif (!empty($product->type) && empty(doliconst('STOCK_SUPPORTS_SERVICES'))) {
     $mstock['stock'] = 999999;
   } elseif (isset($stock->stock_warehouse) && !empty($stock->stock_warehouse) && !empty($warehouse) && $warehouse > 0) {
     if (isset($stock->stock_warehouse->$warehouse->real)) {
