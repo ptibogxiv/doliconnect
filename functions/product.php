@@ -833,7 +833,7 @@ global $current_user;
       if ( ! empty(doliconnectid('dolicart')) ) { 
         $card .= '<br><br>';
         $price = doliProductPrice($product, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
-        $card .= doliProductDisplayPrice($product ,$price, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+        $card .= doliProductDisplayPrice($product, $price, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
         $card .= doliProductCart($product, $price, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
         $card .= '</div>';
       }
