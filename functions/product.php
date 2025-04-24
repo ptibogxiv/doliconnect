@@ -514,7 +514,9 @@ function doliProductDisplayPrice($product, $price, $refresh = false) {
   });';
   $button .= '</script>';
   if ( $price['refprice'] < 0 ) {
-
+    $button .= '';
+  } elseif (empty($product->status)) {
+    $button .= '';
   } else {
     $explication = doliProducPriceTaxAssuj(__( 'Displayed price is excluded VAT', 'doliconnect'), __( 'Displayed price is included VAT', 'doliconnect'), $product->tva_tx);
     $explication .= sprintf(__( 'VAT rate of %s', 'doliconnect'), $price['vat']);
