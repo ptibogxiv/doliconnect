@@ -70,6 +70,10 @@ We would like to thank this contributors and plugins:
 [gdpr-data-request-form](https://wordpress.org/plugins/gdpr-data-request-form/ "gdpr-data-request-form")
 
 == Changelog ==
+   = 9.0.x =
+* better UX/UI
+* fix php bugs & error
+
    = 8.11.x =
 * better UX/UI
 * better shop with negative price
