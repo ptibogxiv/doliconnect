@@ -439,7 +439,12 @@ global $current_user;
   $mstock = doliProductStock($product, $refresh, true, $linearray_options, $line);
   $button = '<div id="doliform-product-'.$product->id.'-'.$mstock['lineid'].'" class="d-grid gap-2">';
   if (empty($product->status)) {
-    $button .= "<a class='btn btn-block btn-outline-secondary disabled' href='#' role='button' title='".__( 'Item not in sale', 'doliconnect')."' disabled>".__( 'Item not in sale', 'doliconnect').'</a>';
+    $button .= '<div class="btn-group" role="group" aria-label="Basic example">';
+    $button .= '<input id="qty-prod-'.$product->id.'" type="text" class="form-control form-control-sm" value="'.__( 'Item not in sale', 'doliconnect').'" aria-label="'.__( 'Item not in sale', 'doliconnect').'" style="text-align:center;" disabled readonly>';
+    if ( !empty($wishlist) && doliCheckModules('wishlist')) {
+      $button .= doliWishlist($thirdparty, $product->id, $mstock['lineid'], $refresh);
+    }
+    $button .= '</div>';
   } elseif ( empty(doliconnectid('dolicart')) || empty(doliconnectid('dolicart')) ) {
     $button .= "<a class='btn btn-block btn-info' href='".doliconnecturl('dolicontact')."?type=COM' role='button' title='".__( 'Contact us', 'doliconnect')."'>".__( 'Contact us', 'doliconnect').'</a>';
   } elseif ( isset($thirdparty->status) && $thirdparty->status != '1' ) {
