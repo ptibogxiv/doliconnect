@@ -736,12 +736,15 @@ function doliproductlist($product, $refresh = false, $fk_parent_line = null) {
 global $current_user;
 
 $wish = 0;
+$required = 0;
+if (isset($product->required)) $required = $product->required;
 if (isset($product->fk_product) && !empty($product->qty)) {
 $wish = $product->qty;
 $product = callDoliApi("GET", "/products/".$product->fk_product."?includesubproducts=true&includetrans=true", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 } else {
 $product = callDoliApi("GET", "/products/".$product->id."?includesubproducts=true&includetrans=true", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 }
+$product->required = $required;
 
 $arr_params = array( 'search' => isset($_GET['search'])?$_GET['search']:null, 'category' => isset($_GET['category'])?$_GET['category']:null, 'subcategory' => isset($_GET['subcategory'])?$_GET['subcategory']:null, 'product' => $product->id);  
 $producturl = esc_url( add_query_arg( $arr_params, doliconnecturl('dolishop')) );
