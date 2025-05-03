@@ -445,6 +445,13 @@ global $current_user;
       $button .= doliWishlist($thirdparty, $product->id, $mstock['lineid'], $refresh);
     }
     $button .= '</div>';
+  } elseif (isset($product->required) && !empty($product->required)) {
+    $button .= '<div class="btn-group" role="group" aria-label="Basic example">';
+    $button .= '<input id="qty-prod-'.$product->id.'" type="text" class="form-control form-control-sm" value="'.$mstock['qty'].'" aria-label="'.$mstock['qty'].'" style="text-align:center;" disabled readonly>';
+    if ( !empty($wishlist) && doliCheckModules('wishlist')) {
+      //$button .= doliWishlist($thirdparty, $product->id, $mstock['lineid'], $refresh);
+    }
+    $button .= '</div>';
   } elseif ( empty(doliconnectid('dolicart')) || empty(doliconnectid('dolicart')) ) {
     $button .= "<a class='btn btn-block btn-info' href='".doliconnecturl('dolicontact')."?type=COM' role='button' title='".__( 'Contact us', 'doliconnect')."'>".__( 'Contact us', 'doliconnect').'</a>';
   } elseif ( isset($thirdparty->status) && $thirdparty->status != '1' ) {
