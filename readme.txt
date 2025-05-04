@@ -5,7 +5,7 @@ Tags: erp, crm, ecommerce, dolibarr, payment, interface, customer, subscription,
 Requires at least: 5.0
 Tested up to: 6.8
 Stable tag: 9.1.0
-Requires PHP: 8.0
+Requires PHP: 8.1
 License: GPL v3 or later
 Donate link: https://www.paypal.me/ptibogxiv
 
