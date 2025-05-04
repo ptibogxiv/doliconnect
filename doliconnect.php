@@ -99,16 +99,11 @@ return get_current_blog_id();
 }
 // ********************************************************
 function doliconst( $constante, $refresh = null ) {
-    if (doliversion('13.0.0')){ 
-        $const = callDoliApi("GET", "/setup/conf/".$constante, null, dolidelay('constante', $refresh));
-        if (!isset($const->error) && $const != null) {
-            return $const;
-        } else {
-            return null; 
-        }
+    $const = callDoliApi("GET", "/setup/conf/".$constante, null, dolidelay('constante', $refresh));
+    if (!isset($const->error) && $const != null) {
+        return $const;
     } else {
-        $const = callDoliApi("GET", "/doliconnector/constante/".$constante, null, dolidelay('constante', $refresh));
-        return isset($const->value)?$const->value:null;
+        return null; 
     }
 }
 // ********************************************************
