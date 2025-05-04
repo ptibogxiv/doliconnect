@@ -237,14 +237,7 @@ global $current_user;
         $dolibarr = callDoliApi("GET", "/doliconnector/".$user, null, dolidelay('doliconnector', false));
 
         if ( defined("DOLIBUG") || !is_object($dolibarr) ) {
-            define('DOLIBARR', null);
-            define('PRICE_LEVEL', 0);
-            define('REMISE_PERCENT', 0);
-            define('DOLIBARR_MEMBER', null);
-            define('DOLIBARR_TRAINEE', null);
-            define('DOLIBARR_USER', null);
-            define('DOLICONNECT_CART', 0);
-            define('DOLICONNECT_CART_ITEM', 0); 
+
         } else {  
             if ( empty($dolibarr->fk_soc) ) {
                 if ( $current_user->billing_type == 'mor' ) { 
@@ -262,17 +255,8 @@ global $current_user;
                     'status' => 1,
                     ];
                 $dolibarr = callDoliApi("POST", "/doliconnector/".$user, $rdr, dolidelay('doliconnector'));
-                define('DOLIBARR', $dolibarr->fk_soc);
             } else {   
-                define('DOLIBARR', $dolibarr->fk_soc);
             }
-            if (isset($dolibarr->price_level)) define('PRICE_LEVEL', $dolibarr->price_level);
-            if (isset($dolibarr->remise_percent)) define('REMISE_PERCENT', $dolibarr->remise_percent);
-            if (isset($dolibarr->fk_member)) define('DOLIBARR_MEMBER', $dolibarr->fk_member);
-            if (isset($dolibarr->fk_trainee)) define('DOLIBARR_TRAINEE', $dolibarr->fk_trainee);
-            if (isset($dolibarr->fk_user)) define('DOLIBARR_USER', $dolibarr->fk_user); 
-            define('DOLICONNECT_CART', $dolibarr->fk_order);
-            define('DOLICONNECT_CART_ITEM', $dolibarr->fk_order_nb_item);
         } 
     }
 }
