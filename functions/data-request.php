@@ -216,7 +216,7 @@ function doliuserinfos_request(){
 		if ( !is_wp_error( $emailSent ) && ($thirdparty['morphy'] == 'mor' && $user) || (function_exists('dolikiosk') && ! empty(dolikiosk()) && $user) ) {  
 		
 			$dolibarrid = doliconnector($user, 'fk_soc', true, $thirdparty);
-			$thirdpartys = doliConnect('thirdparty', $user, false, true);
+			$thirdpartys = doliConnect('thirdparty', $user, $thirdparty, true);
 			do_action('wp_dolibarr_sync', $thirdparty, $user);
 			
 			wp_set_current_user( $ID, $user->user_login );
