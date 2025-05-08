@@ -602,7 +602,6 @@ global $current_user;
     $price_ht3 = $product->multiprices->$level;
     $vat = $product->tva_tx;
     $refprice=doliProducPriceTaxAssuj($price_ht, $price_ttc, $product->tva_tx);
-    //$button .= '<table class="table table-sm table-striped table-bordered"><tbody>';
     $multiprix = doliProducPriceTaxAssuj($product->multiprices, $product->multiprices_ttc, $product->tva_tx);
   } else {
     if ( !empty(doliconst("PRODUIT_CUSTOMER_PRICES")) && isset($thirdparty->id) && !empty($thirdparty->id) ) {
@@ -636,7 +635,7 @@ global $current_user;
         $price_ht3=$product->price-($product->price*$product3[0]->discount/100);
         $price_ttc=$product->price_ttc;
         $price_ht=$product->price;
-        $price['vat'] = $product->tva_tx;
+        $vat = $product->tva_tx;
         $price['discount'] = $product3[0]->discount;
       } elseif (!empty($product3[0]->price)) {
         $price_ht3=$product3[0]->price; 
@@ -644,14 +643,14 @@ global $current_user;
         $price['discount'] = 100-(100*$price_ht3/$price_ht);
         $price_ttc3=$product->price_ttc-($product->price_ttc*$price['discount']/100);
         $price_ttc=$product->price_ttc;
-        $price['vat'] = $product->tva_tx;
+        $vat = $product->tva_tx;
       } elseif (!empty($product3[0]->price_ttc)) {
         $price_ttc3=$product3[0]->price_ttc;
         $price_ttc=$product->price_ttc; 
         $price['discount'] = 100-(100*$price_ttc3/$price_ttc);
         $price_ht3=$product->price-($product->price*$price['discount']/100);
         $price_ht=$product->price;
-        $price['vat'] = $product->tva_tx;
+        $vat = $product->tva_tx;
       }
       $price_min_ttc=$product->price_min_ttc;
       $price_min_ht=$product->price_min;
@@ -669,7 +668,7 @@ global $current_user;
       $price_min_ht=$product2->price_min;
       $price_ttc=$product2->price_ttc;
       $price_ht=$product2->price;
-      $price['vat'] = $product2->tva_tx;
+      $vat = $product2->tva_tx;
       $refprice = doliProducPriceTaxAssuj($price_ht, $price_ttc, $product->tva_tx);
     } else {
       $price_min_ttc3=$product->price_min_ttc-($product->price_min_ttc*$price['discount']/100);
@@ -679,7 +678,7 @@ global $current_user;
       $price_min_ht=$product->price_min;
       $price_ttc=$product->price_ttc;
       $price_ht=$product->price;
-      $price['vat'] = $product->tva_tx;
+      $vat = $product->tva_tx;
       $refprice = doliProducPriceTaxAssuj($price_ht, $price_ttc, $product->tva_tx);
     }
 
@@ -699,6 +698,7 @@ global $current_user;
     }
 
   }
+  $price['vat'] = $vat;
   $price['refprice'] = $refprice;
   $price['ttc'] = $price_ttc;
   $price['ht'] = $price_ht;
@@ -707,10 +707,6 @@ global $current_user;
   $price['subprice'] = $price_ht;
 
   return $price;
-  //} elseif ( isset($thirdparty->status) && $thirdparty->status != '1' ) {
-  //  $button = '';
-  ////  $button = '';
-  //} else {
 }
 
 function doliconnect_supplier($product, $refresh = false){
