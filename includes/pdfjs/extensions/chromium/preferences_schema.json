@@ -45,7 +45,37 @@
       "type": "boolean",
       "default": false
     },
-    "enableML": {
+    "enableHWA": {
+      "title": "Enable hardware acceleration",
+      "description": "Whether to enable hardware acceleration.",
+      "type": "boolean",
+      "default": true
+    },
+    "enableAltText": {
+      "type": "boolean",
+      "default": false
+    },
+    "enableGuessAltText": {
+      "type": "boolean",
+      "default": true
+    },
+    "enableAltTextModelDownload": {
+      "type": "boolean",
+      "default": true
+    },
+    "enableNewAltTextWhenAddingImage": {
+      "type": "boolean",
+      "default": true
+    },
+    "altTextLearnMoreUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "enableSignatureEditor": {
+      "type": "boolean",
+      "default": false
+    },
+    "enableUpdatedAddImage": {
       "type": "boolean",
       "default": false
     },
@@ -68,10 +98,6 @@
       "description": "Whether to allow execution of active content (JavaScript) by PDF files.",
       "default": false
     },
-    "enableHighlightEditor": {
-      "type": "boolean",
-      "default": false
-    },
     "enableHighlightFloatingButton": {
       "type": "boolean",
       "default": false
@@ -79,10 +105,6 @@
     "highlightEditorColors": {
       "type": "string",
       "default": "yellow=#FFFF98,green=#53FFBC,blue=#80EBFF,pink=#FFCBE6,red=#FF4F5F"
-    },
-    "enableStampEditor": {
-      "type": "boolean",
-      "default": true
     },
     "disableRange": {
       "title": "Disable range requests",
@@ -202,6 +224,11 @@
       "description": "The color is a string as defined in CSS. Its goal is to help improve readability in high contrast mode",
       "type": "string",
       "default": "CanvasText"
+    },
+    "enableAutoLinking": {
+      "description": "Enable creation of hyperlinks from text that look like URLs.",
+      "type": "boolean",
+      "default": true
     }
   }
 }

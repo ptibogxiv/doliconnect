@@ -17,6 +17,7 @@ import {
   AnnotationEditorPrefix,
   assert,
   BaseException,
+  hexNumbers,
   objectSize,
   stringToPDFString,
   Util,
@@ -26,6 +27,27 @@ import { Dict, isName, Ref, RefSet } from "./primitives.js";
 import { BaseStream } from "./base_stream.js";
 
 const PDF_VERSION_REGEXP = /^[1-9]\.\d$/;
+const MAX_INT_32 = 2 ** 31 - 1;
+const MIN_INT_32 = -(2 ** 31);
+
+const IDENTITY_MATRIX = [1, 0, 0, 1, 0, 0];
+
+const RESOURCES_KEYS_OPERATOR_LIST = [
+  "ColorSpace",
+  "ExtGState",
+  "Font",
+  "Pattern",
+  "Properties",
+  "Shading",
+  "XObject",
+];
+
+const RESOURCES_KEYS_TEXT_CONTENT = [
+  "ExtGState",
+  "Font",
+  "Properties",
+  "XObject",
+];
 
 function getLookupTableFactory(initializer) {
   let lookup;
@@ -100,6 +122,16 @@ function arrayBuffersToBytes(arr) {
   return data;
 }
 
+async function fetchBinaryData(url) {
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error(
+      `Failed to fetch file "${url}" with "${response.statusText}".`
+    );
+  }
+  return new Uint8Array(await response.arrayBuffer());
+}
+
 /**
  * Get the value of an inheritable property.
  *
@@ -145,6 +177,36 @@ function getInheritableProperty({
   return values;
 }
 
+/**
+ * Get the parent dictionary to update when a property is set.
+ *
+ * @param {Dict} dict - Dictionary from where to start the traversal.
+ * @param {Ref} ref - The reference to the dictionary.
+ * @param {XRef} xref - The `XRef` instance.
+ */
+function getParentToUpdate(dict, ref, xref) {
+  const visited = new RefSet();
+  const firstDict = dict;
+  const result = { dict: null, ref: null };
+
+  while (dict instanceof Dict && !visited.has(ref)) {
+    visited.put(ref);
+    if (dict.has("T")) {
+      break;
+    }
+    ref = dict.getRaw("Parent");
+    if (!(ref instanceof Ref)) {
+      return result;
+    }
+    dict = xref.fetch(ref);
+  }
+  if (dict instanceof Dict && dict !== firstDict) {
+    result.dict = dict;
+    result.ref = ref;
+  }
+  return result;
+}
+
 // prettier-ignore
 const ROMAN_NUMBER_MAP = [
   "", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM",
@@ -164,40 +226,28 @@ function toRomanNumerals(number, lowerCase = false) {
     Number.isInteger(number) && number > 0,
     "The number should be a positive integer."
   );
-  const romanBuf = [];
-  let pos;
-  // Thousands
-  while (number >= 1000) {
-    number -= 1000;
-    romanBuf.push("M");
-  }
-  // Hundreds
-  pos = (number / 100) | 0;
-  number %= 100;
-  romanBuf.push(ROMAN_NUMBER_MAP[pos]);
-  // Tens
-  pos = (number / 10) | 0;
-  number %= 10;
-  romanBuf.push(ROMAN_NUMBER_MAP[10 + pos]);
-  // Ones
-  romanBuf.push(ROMAN_NUMBER_MAP[20 + number]); // eslint-disable-line unicorn/no-array-push-push
 
-  const romanStr = romanBuf.join("");
-  return lowerCase ? romanStr.toLowerCase() : romanStr;
+  const roman =
+    "M".repeat((number / 1000) | 0) +
+    ROMAN_NUMBER_MAP[((number % 1000) / 100) | 0] +
+    ROMAN_NUMBER_MAP[10 + (((number % 100) / 10) | 0)] +
+    ROMAN_NUMBER_MAP[20 + (number % 10)];
+  return lowerCase ? roman.toLowerCase() : roman;
 }
 
 // Calculate the base 2 logarithm of the number `x`. This differs from the
 // native function in the sense that it returns the ceiling value and that it
 // returns 0 instead of `Infinity`/`NaN` for `x` values smaller than/equal to 0.
 function log2(x) {
-  if (x <= 0) {
-    return 0;
-  }
-  return Math.ceil(Math.log2(x));
+  return x > 0 ? Math.ceil(Math.log2(x)) : 0;
 }
 
 function readInt8(data, offset) {
   return (data[offset] << 24) >> 24;
+}
+
+function readInt16(data, offset) {
+  return ((data[offset] << 24) | (data[offset + 1] << 16)) >> 16;
 }
 
 function readUint16(data, offset) {
@@ -242,10 +292,19 @@ function isBooleanArray(arr, len) {
  * @returns {boolean}
  */
 function isNumberArray(arr, len) {
+  if (Array.isArray(arr)) {
+    return (
+      (len === null || arr.length === len) &&
+      arr.every(x => typeof x === "number")
+    );
+  }
+
+  // This check allows us to have typed arrays but not the
+  // BigInt64Array/BigUint64Array types (their elements aren't "number").
   return (
-    Array.isArray(arr) &&
-    (len === null || arr.length === len) &&
-    arr.every(x => typeof x === "number")
+    ArrayBuffer.isView(arr) &&
+    !(arr instanceof BigInt64Array || arr instanceof BigUint64Array) &&
+    (len === null || arr.length === len)
   );
 }
 
@@ -563,13 +622,10 @@ function recoverJsURL(str) {
 
   const jsUrl = regex.exec(str);
   if (jsUrl?.[2]) {
-    const url = jsUrl[2];
-    let newWindow = false;
-
-    if (jsUrl[3] === "true" && jsUrl[1] === "app.launchURL") {
-      newWindow = true;
-    }
-    return { url, newWindow };
+    return {
+      url: jsUrl[2],
+      newWindow: jsUrl[1] === "app.launchURL" && jsUrl[3] === "true",
+    };
   }
 
   return null;
@@ -613,6 +669,10 @@ function getNewAnnotationsMap(annotationStorage) {
   return newAnnotationsByPage.size > 0 ? newAnnotationsByPage : null;
 }
 
+function stringToAsciiOrUTF16BE(str) {
+  return isAscii(str) ? str : stringToUTF16String(str, /* bigEndian = */ true);
+}
+
 function isAscii(str) {
   return /^[\x00-\x7F]*$/.test(str);
 }
@@ -621,10 +681,7 @@ function stringToUTF16HexString(str) {
   const buf = [];
   for (let i = 0, ii = str.length; i < ii; i++) {
     const char = str.charCodeAt(i);
-    buf.push(
-      ((char >> 8) & 0xff).toString(16).padStart(2, "0"),
-      (char & 0xff).toString(16).padStart(2, "0")
-    );
+    buf.push(hexNumbers[(char >> 8) & 0xff], hexNumbers[char & 0xff]);
   }
   return buf.join("");
 }
@@ -677,11 +734,14 @@ export {
   encodeToXmlString,
   escapePDFName,
   escapeString,
+  fetchBinaryData,
   getInheritableProperty,
   getLookupTableFactory,
   getNewAnnotationsMap,
+  getParentToUpdate,
   getRotationMatrix,
   getSizeInBytes,
+  IDENTITY_MATRIX,
   isAscii,
   isBooleanArray,
   isNumberArray,
@@ -690,15 +750,21 @@ export {
   lookupMatrix,
   lookupNormalRect,
   lookupRect,
+  MAX_INT_32,
+  MIN_INT_32,
   MissingDataException,
   numberToString,
   ParserEOFException,
   parseXFAPath,
   PDF_VERSION_REGEXP,
+  readInt16,
   readInt8,
   readUint16,
   readUint32,
   recoverJsURL,
+  RESOURCES_KEYS_OPERATOR_LIST,
+  RESOURCES_KEYS_TEXT_CONTENT,
+  stringToAsciiOrUTF16BE,
   stringToUTF16HexString,
   stringToUTF16String,
   toRomanNumerals,

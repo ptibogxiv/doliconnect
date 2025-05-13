@@ -16,13 +16,14 @@
 import {
   assert,
   FormatError,
-  IDENTITY_MATRIX,
   info,
+  MathClamp,
   unreachable,
   Util,
   warn,
 } from "../shared/util.js";
 import {
+  IDENTITY_MATRIX,
   isBooleanArray,
   isNumberArray,
   lookupMatrix,
@@ -30,7 +31,7 @@ import {
   MissingDataException,
 } from "./core_utils.js";
 import { BaseStream } from "./base_stream.js";
-import { ColorSpace } from "./colorspace.js";
+import { ColorSpaceUtils } from "./colorspace_utils.js";
 
 const ShadingType = {
   FUNCTION_BASED: 1,
@@ -52,6 +53,7 @@ class Pattern {
     xref,
     res,
     pdfFunctionFactory,
+    globalColorSpaceCache,
     localColorSpaceCache
   ) {
     const dict = shading instanceof BaseStream ? shading.dict : shading;
@@ -66,6 +68,7 @@ class Pattern {
             xref,
             res,
             pdfFunctionFactory,
+            globalColorSpaceCache,
             localColorSpaceCache
           );
         case ShadingType.FREE_FORM_MESH:
@@ -77,6 +80,7 @@ class Pattern {
             xref,
             res,
             pdfFunctionFactory,
+            globalColorSpaceCache,
             localColorSpaceCache
           );
         default:
@@ -98,7 +102,10 @@ class BaseShading {
   static SMALL_NUMBER = 1e-6;
 
   constructor() {
-    if (this.constructor === BaseShading) {
+    if (
+      (typeof PDFJSDev === "undefined" || PDFJSDev.test("TESTING")) &&
+      this.constructor === BaseShading
+    ) {
       unreachable("Cannot initialize BaseShading.");
     }
   }
@@ -111,7 +118,14 @@ class BaseShading {
 // Radial and axial shading have very similar implementations
 // If needed, the implementations can be broken into two classes.
 class RadialAxialShading extends BaseShading {
-  constructor(dict, xref, resources, pdfFunctionFactory, localColorSpaceCache) {
+  constructor(
+    dict,
+    xref,
+    resources,
+    pdfFunctionFactory,
+    globalColorSpaceCache,
+    localColorSpaceCache
+  ) {
     super();
     this.shadingType = dict.get("ShadingType");
     let coordsLen = 0;
@@ -124,11 +138,12 @@ class RadialAxialShading extends BaseShading {
     if (!isNumberArray(this.coordsArr, coordsLen)) {
       throw new FormatError("RadialAxialShading: Invalid /Coords array.");
     }
-    const cs = ColorSpace.parse({
+    const cs = ColorSpaceUtils.parse({
       cs: dict.getRaw("CS") || dict.getRaw("ColorSpace"),
       xref,
       resources,
       pdfFunctionFactory,
+      globalColorSpaceCache,
       localColorSpaceCache,
     });
     this.bbox = lookupNormalRect(dict.getArray("BBox"), null);
@@ -164,7 +179,7 @@ class RadialAxialShading extends BaseShading {
     this.extendEnd = extendEnd;
 
     const fnObj = dict.getRaw("Function");
-    const fn = pdfFunctionFactory.createFromArray(fnObj);
+    const fn = pdfFunctionFactory.create(fnObj, /* parseArray = */ true);
 
     // Use lcm(1,2,3,4,5,6,7,8,10) = 840 (including 9 increases this to 2520)
     // to catch evenly spaced stops. oeis.org/A003418
@@ -337,24 +352,19 @@ class MeshStreamReader {
   }
 
   readBits(n) {
-    let buffer = this.buffer;
-    let bufferLength = this.bufferLength;
+    const { stream } = this;
+    let { buffer, bufferLength } = this;
+
     if (n === 32) {
       if (bufferLength === 0) {
-        return (
-          ((this.stream.getByte() << 24) |
-            (this.stream.getByte() << 16) |
-            (this.stream.getByte() << 8) |
-            this.stream.getByte()) >>>
-          0
-        );
+        return stream.getInt32() >>> 0;
       }
       buffer =
         (buffer << 24) |
-        (this.stream.getByte() << 16) |
-        (this.stream.getByte() << 8) |
-        this.stream.getByte();
-      const nextByte = this.stream.getByte();
+        (stream.getByte() << 16) |
+        (stream.getByte() << 8) |
+        stream.getByte();
+      const nextByte = stream.getByte();
       this.buffer = nextByte & ((1 << bufferLength) - 1);
       return (
         ((buffer << (8 - bufferLength)) |
@@ -363,10 +373,10 @@ class MeshStreamReader {
       );
     }
     if (n === 8 && bufferLength === 0) {
-      return this.stream.getByte();
+      return stream.getByte();
     }
     while (bufferLength < n) {
-      buffer = (buffer << 8) | this.stream.getByte();
+      buffer = (buffer << 8) | stream.getByte();
       bufferLength += 8;
     }
     bufferLength -= n;
@@ -385,10 +395,9 @@ class MeshStreamReader {
   }
 
   readCoordinate() {
-    const bitsPerCoordinate = this.context.bitsPerCoordinate;
+    const { bitsPerCoordinate, decode } = this.context;
     const xi = this.readBits(bitsPerCoordinate);
     const yi = this.readBits(bitsPerCoordinate);
-    const decode = this.context.decode;
     const scale =
       bitsPerCoordinate < 32
         ? 1 / ((1 << bitsPerCoordinate) - 1)
@@ -400,23 +409,20 @@ class MeshStreamReader {
   }
 
   readComponents() {
-    const numComps = this.context.numComps;
-    const bitsPerComponent = this.context.bitsPerComponent;
+    const { bitsPerComponent, colorFn, colorSpace, decode, numComps } =
+      this.context;
     const scale =
       bitsPerComponent < 32
         ? 1 / ((1 << bitsPerComponent) - 1)
         : 2.3283064365386963e-10; // 2 ^ -32
-    const decode = this.context.decode;
     const components = this.tmpCompsBuf;
     for (let i = 0, j = 4; i < numComps; i++, j += 2) {
       const ci = this.readBits(bitsPerComponent);
       components[i] = ci * scale * (decode[j + 1] - decode[j]) + decode[j];
     }
     const color = this.tmpCsCompsBuf;
-    if (this.context.colorFn) {
-      this.context.colorFn(components, 0, color, 0);
-    }
-    return this.context.colorSpace.getRgb(color, 0);
+    colorFn?.(components, 0, color, 0);
+    return colorSpace.getRgb(color, 0);
   }
 }
 
@@ -454,6 +460,7 @@ class MeshShading extends BaseShading {
     xref,
     resources,
     pdfFunctionFactory,
+    globalColorSpaceCache,
     localColorSpaceCache
   ) {
     super();
@@ -463,11 +470,12 @@ class MeshShading extends BaseShading {
     const dict = stream.dict;
     this.shadingType = dict.get("ShadingType");
     this.bbox = lookupNormalRect(dict.getArray("BBox"), null);
-    const cs = ColorSpace.parse({
+    const cs = ColorSpaceUtils.parse({
       cs: dict.getRaw("CS") || dict.getRaw("ColorSpace"),
       xref,
       resources,
       pdfFunctionFactory,
+      globalColorSpaceCache,
       localColorSpaceCache,
     });
     this.background = dict.has("Background")
@@ -475,7 +483,9 @@ class MeshShading extends BaseShading {
       : null;
 
     const fnObj = dict.getRaw("Function");
-    const fn = fnObj ? pdfFunctionFactory.createFromArray(fnObj) : null;
+    const fn = fnObj
+      ? pdfFunctionFactory.create(fnObj, /* parseArray = */ true)
+      : null;
 
     this.coords = [];
     this.colors = [];
@@ -832,17 +842,19 @@ class MeshShading extends BaseShading {
       ((figureMaxX - figureMinX) * MeshShading.TRIANGLE_DENSITY) /
         (this.bounds[2] - this.bounds[0])
     );
-    splitXBy = Math.max(
+    splitXBy = MathClamp(
+      splitXBy,
       MeshShading.MIN_SPLIT_PATCH_CHUNKS_AMOUNT,
-      Math.min(MeshShading.MAX_SPLIT_PATCH_CHUNKS_AMOUNT, splitXBy)
+      MeshShading.MAX_SPLIT_PATCH_CHUNKS_AMOUNT
     );
     let splitYBy = Math.ceil(
       ((figureMaxY - figureMinY) * MeshShading.TRIANGLE_DENSITY) /
         (this.bounds[3] - this.bounds[1])
     );
-    splitYBy = Math.max(
+    splitYBy = MathClamp(
+      splitYBy,
       MeshShading.MIN_SPLIT_PATCH_CHUNKS_AMOUNT,
-      Math.min(MeshShading.MAX_SPLIT_PATCH_CHUNKS_AMOUNT, splitYBy)
+      MeshShading.MAX_SPLIT_PATCH_CHUNKS_AMOUNT
     );
 
     const verticesPerRow = splitXBy + 1;

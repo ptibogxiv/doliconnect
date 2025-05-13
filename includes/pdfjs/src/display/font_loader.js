@@ -15,11 +15,11 @@
 
 import {
   assert,
-  bytesToString,
-  FontRenderOps,
+  FeatureTest,
   isNodeJS,
   shadow,
   string32,
+  toBase64Util,
   unreachable,
   warn,
 } from "../shared/util.js";
@@ -80,12 +80,16 @@ class FontLoader {
     }
   }
 
-  async loadSystemFont({ systemFontInfo: info, _inspectFont }) {
+  async loadSystemFont({
+    systemFontInfo: info,
+    disableFontFace,
+    _inspectFont,
+  }) {
     if (!info || this.#systemFonts.has(info.loadedName)) {
       return;
     }
     assert(
-      !this.disableFontFace,
+      !disableFontFace,
       "loadSystemFont shouldn't be called when `disableFontFace` is set."
     );
 
@@ -177,23 +181,14 @@ class FontLoader {
       return shadow(this, "isSyncFontLoadingSupported", true);
     }
 
-    let supported = false;
-    if (typeof PDFJSDev === "undefined" || !PDFJSDev.test("CHROME")) {
-      if (isNodeJS) {
-        // Node.js - we can pretend that sync font loading is supported.
-        supported = true;
-      } else if (
-        typeof navigator !== "undefined" &&
-        typeof navigator?.userAgent === "string" &&
-        // User agent string sniffing is bad, but there is no reliable way to
-        // tell if the font is fully loaded and ready to be used with canvas.
-        /Mozilla\/5.0.*?rv:\d+.*? Gecko/.test(navigator.userAgent)
-      ) {
-        // Firefox, from version 14, supports synchronous font loading.
-        supported = true;
-      }
-    }
-    return shadow(this, "isSyncFontLoadingSupported", supported);
+    // Node.js - we can pretend that sync font loading is supported.
+    // Firefox, from version 14, supports synchronous font loading.
+    return shadow(
+      this,
+      "isSyncFontLoadingSupported",
+      (typeof PDFJSDev === "undefined" || !PDFJSDev.test("CHROME")) &&
+        (isNodeJS || FeatureTest.platform.isFirefox)
+    );
   }
 
   _queueLoadingCallback(callback) {
@@ -360,13 +355,20 @@ class FontLoader {
 }
 
 class FontFaceObject {
-  constructor(translatedData, { disableFontFace = false, inspectFont = null }) {
+  constructor(translatedData, inspectFont = null) {
     this.compiledGlyphs = Object.create(null);
     // importing translated data
     for (const i in translatedData) {
       this[i] = translatedData[i];
     }
-    this.disableFontFace = disableFontFace === true;
+    if (typeof PDFJSDev === "undefined" || PDFJSDev.test("TESTING")) {
+      if (typeof this.disableFontFace !== "boolean") {
+        unreachable("disableFontFace must be available.");
+      }
+      if (typeof this.fontExtraProperties !== "boolean") {
+        unreachable("fontExtraProperties must be available.");
+      }
+    }
     this._inspectFont = inspectFont;
   }
 
@@ -399,9 +401,8 @@ class FontFaceObject {
     if (!this.data || this.disableFontFace) {
       return null;
     }
-    const data = bytesToString(this.data);
     // Add the @font-face rule to the document.
-    const url = `url(data:${this.mimetype};base64,${btoa(data)});`;
+    const url = `url(data:${this.mimetype};base64,${toBase64Util(this.data)});`;
     let rule;
     if (!this.cssFontInfo) {
       rule = `@font-face {font-family:"${this.loadedName}";src:${url}}`;
@@ -422,92 +423,20 @@ class FontFaceObject {
       return this.compiledGlyphs[character];
     }
 
+    const objId = this.loadedName + "_path_" + character;
     let cmds;
     try {
-      cmds = objs.get(this.loadedName + "_path_" + character);
+      cmds = objs.get(objId);
     } catch (ex) {
       warn(`getPathGenerator - ignoring character: "${ex}".`);
     }
+    const path = new Path2D(cmds || "");
 
-    if (!Array.isArray(cmds) || cmds.length === 0) {
-      return (this.compiledGlyphs[character] = function (c, size) {
-        // No-op function, to allow rendering to continue.
-      });
+    if (!this.fontExtraProperties) {
+      // Remove the raw path-string, since we don't need it anymore.
+      objs.delete(objId);
     }
-
-    const commands = [];
-    for (let i = 0, ii = cmds.length; i < ii; ) {
-      switch (cmds[i++]) {
-        case FontRenderOps.BEZIER_CURVE_TO:
-          {
-            const [a, b, c, d, e, f] = cmds.slice(i, i + 6);
-            commands.push(ctx => ctx.bezierCurveTo(a, b, c, d, e, f));
-            i += 6;
-          }
-          break;
-        case FontRenderOps.MOVE_TO:
-          {
-            const [a, b] = cmds.slice(i, i + 2);
-            commands.push(ctx => ctx.moveTo(a, b));
-            i += 2;
-          }
-          break;
-        case FontRenderOps.LINE_TO:
-          {
-            const [a, b] = cmds.slice(i, i + 2);
-            commands.push(ctx => ctx.lineTo(a, b));
-            i += 2;
-          }
-          break;
-        case FontRenderOps.QUADRATIC_CURVE_TO:
-          {
-            const [a, b, c, d] = cmds.slice(i, i + 4);
-            commands.push(ctx => ctx.quadraticCurveTo(a, b, c, d));
-            i += 4;
-          }
-          break;
-        case FontRenderOps.RESTORE:
-          commands.push(ctx => ctx.restore());
-          break;
-        case FontRenderOps.SAVE:
-          commands.push(ctx => ctx.save());
-          break;
-        case FontRenderOps.SCALE:
-          // The scale command must be at the third position, after save and
-          // transform (for the font matrix) commands (see also
-          // font_renderer.js).
-          // The goal is to just scale the canvas and then run the commands loop
-          // without the need to pass the size parameter to each command.
-          assert(
-            commands.length === 2,
-            "Scale command is only valid at the third position."
-          );
-          break;
-        case FontRenderOps.TRANSFORM:
-          {
-            const [a, b, c, d, e, f] = cmds.slice(i, i + 6);
-            commands.push(ctx => ctx.transform(a, b, c, d, e, f));
-            i += 6;
-          }
-          break;
-        case FontRenderOps.TRANSLATE:
-          {
-            const [a, b] = cmds.slice(i, i + 2);
-            commands.push(ctx => ctx.translate(a, b));
-            i += 2;
-          }
-          break;
-      }
-    }
-
-    return (this.compiledGlyphs[character] = function glyphDrawer(ctx, size) {
-      commands[0](ctx);
-      commands[1](ctx);
-      ctx.scale(size, -size);
-      for (let i = 2, ii = commands.length; i < ii; i++) {
-        commands[i](ctx);
-      }
-    });
+    return (this.compiledGlyphs[character] = path);
   }
 }
 

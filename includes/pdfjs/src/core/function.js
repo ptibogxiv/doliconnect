@@ -18,6 +18,7 @@ import {
   FeatureTest,
   FormatError,
   info,
+  MathClamp,
   shadow,
   unreachable,
 } from "../shared/util.js";
@@ -32,78 +33,41 @@ class PDFFunctionFactory {
     this.isEvalSupported = isEvalSupported !== false;
   }
 
-  create(fn) {
-    const cachedFunction = this.getCached(fn);
-    if (cachedFunction) {
-      return cachedFunction;
-    }
-    const parsedFunction = PDFFunction.parse({
-      xref: this.xref,
-      isEvalSupported: this.isEvalSupported,
-      fn: fn instanceof Ref ? this.xref.fetch(fn) : fn,
-    });
+  create(fn, parseArray = false) {
+    let fnRef, parsedFn;
 
-    // Attempt to cache the parsed Function, by reference.
-    this._cache(fn, parsedFunction);
-
-    return parsedFunction;
-  }
-
-  createFromArray(fnObj) {
-    const cachedFunction = this.getCached(fnObj);
-    if (cachedFunction) {
-      return cachedFunction;
-    }
-    const parsedFunction = PDFFunction.parseArray({
-      xref: this.xref,
-      isEvalSupported: this.isEvalSupported,
-      fnObj: fnObj instanceof Ref ? this.xref.fetch(fnObj) : fnObj,
-    });
-
-    // Attempt to cache the parsed Function, by reference.
-    this._cache(fnObj, parsedFunction);
-
-    return parsedFunction;
-  }
-
-  getCached(cacheKey) {
-    let fnRef;
-    if (cacheKey instanceof Ref) {
-      fnRef = cacheKey;
-    } else if (cacheKey instanceof Dict) {
-      fnRef = cacheKey.objId;
-    } else if (cacheKey instanceof BaseStream) {
-      fnRef = cacheKey.dict?.objId;
+    // Check if the Function is cached first, to avoid re-parsing it.
+    if (fn instanceof Ref) {
+      fnRef = fn;
+    } else if (fn instanceof Dict) {
+      fnRef = fn.objId;
+    } else if (fn instanceof BaseStream) {
+      fnRef = fn.dict?.objId;
     }
     if (fnRef) {
-      const localFunction = this._localFunctionCache.getByRef(fnRef);
-      if (localFunction) {
-        return localFunction;
+      const cachedFn = this._localFunctionCache.getByRef(fnRef);
+      if (cachedFn) {
+        return cachedFn;
       }
     }
-    return null;
-  }
 
-  /**
-   * @private
-   */
-  _cache(cacheKey, parsedFunction) {
-    if (!parsedFunction) {
-      throw new Error(
-        'PDFFunctionFactory._cache - expected "parsedFunction" argument.'
-      );
+    const fnObj = this.xref.fetchIfRef(fn);
+    if (Array.isArray(fnObj)) {
+      if (!parseArray) {
+        throw new Error(
+          'PDFFunctionFactory.create - expected "parseArray" argument.'
+        );
+      }
+      parsedFn = PDFFunction.parseArray(this, fnObj);
+    } else {
+      parsedFn = PDFFunction.parse(this, fnObj);
     }
-    let fnRef;
-    if (cacheKey instanceof Ref) {
-      fnRef = cacheKey;
-    } else if (cacheKey instanceof Dict) {
-      fnRef = cacheKey.objId;
-    } else if (cacheKey instanceof BaseStream) {
-      fnRef = cacheKey.dict?.objId;
-    }
+
+    // Attempt to cache the parsed Function, by reference.
     if (fnRef) {
-      this._localFunctionCache.set(/* name = */ null, fnRef, parsedFunction);
+      this._localFunctionCache.set(/* name = */ null, fnRef, parsedFn);
     }
+    return parsedFn;
   }
 
   /**
@@ -155,36 +119,31 @@ class PDFFunction {
     return array;
   }
 
-  static parse({ xref, isEvalSupported, fn }) {
+  static parse(factory, fn) {
     const dict = fn.dict || fn;
     const typeNum = dict.get("FunctionType");
 
     switch (typeNum) {
       case 0:
-        return this.constructSampled({ xref, isEvalSupported, fn, dict });
+        return this.constructSampled(factory, fn, dict);
       case 1:
         break;
       case 2:
-        return this.constructInterpolated({ xref, isEvalSupported, dict });
+        return this.constructInterpolated(factory, dict);
       case 3:
-        return this.constructStiched({ xref, isEvalSupported, dict });
+        return this.constructStiched(factory, dict);
       case 4:
-        return this.constructPostScript({ xref, isEvalSupported, fn, dict });
+        return this.constructPostScript(factory, fn, dict);
     }
     throw new FormatError("Unknown type of function");
   }
 
-  static parseArray({ xref, isEvalSupported, fnObj }) {
-    if (!Array.isArray(fnObj)) {
-      // not an array -- parsing as regular function
-      return this.parse({ xref, isEvalSupported, fn: fnObj });
-    }
+  static parseArray(factory, fnObj) {
+    const { xref } = factory;
 
     const fnArray = [];
     for (const fn of fnObj) {
-      fnArray.push(
-        this.parse({ xref, isEvalSupported, fn: xref.fetchIfRef(fn) })
-      );
+      fnArray.push(this.parse(factory, xref.fetchIfRef(fn)));
     }
     return function (src, srcOffset, dest, destOffset) {
       for (let i = 0, ii = fnArray.length; i < ii; i++) {
@@ -193,7 +152,7 @@ class PDFFunction {
     };
   }
 
-  static constructSampled({ xref, isEvalSupported, fn, dict }) {
+  static constructSampled(factory, fn, dict) {
     function toMultiArray(arr) {
       const inputLength = arr.length;
       const out = [];
@@ -252,12 +211,9 @@ class PDFFunction {
       // Building the cube vertices: its part and sample index
       // http://rjwagner49.com/Mathematics/Interpolation.pdf
       const cubeVertices = 1 << inputSize;
-      const cubeN = new Float64Array(cubeVertices);
+      const cubeN = new Float64Array(cubeVertices).fill(1);
       const cubeVertex = new Uint32Array(cubeVertices);
       let i, j;
-      for (j = 0; j < cubeVertices; j++) {
-        cubeN[j] = 1;
-      }
 
       let k = outputSize,
         pos = 1;
@@ -266,10 +222,7 @@ class PDFFunction {
         // x_i' = min(max(x_i, Domain_2i), Domain_2i+1)
         const domain_2i = domain[i][0];
         const domain_2i_1 = domain[i][1];
-        const xi = Math.min(
-          Math.max(src[srcOffset + i], domain_2i),
-          domain_2i_1
-        );
+        const xi = MathClamp(src[srcOffset + i], domain_2i, domain_2i_1);
 
         // e_i = Interpolate(x_i', Domain_2i, Domain_2i+1,
         //                   Encode_2i, Encode_2i+1)
@@ -283,7 +236,7 @@ class PDFFunction {
 
         // e_i' = min(max(e_i, 0), Size_i - 1)
         const size_i = size[i];
-        e = Math.min(Math.max(e, 0), size_i - 1);
+        e = MathClamp(e, 0, size_i - 1);
 
         // Adjusting the cube: N and vertex sample index
         const e0 = e < size_i - 1 ? Math.floor(e) : e - 1; // e1 = e0 + 1;
@@ -317,12 +270,12 @@ class PDFFunction {
         rj = interpolate(rj, 0, 1, decode[j][0], decode[j][1]);
 
         // y_j = min(max(r_j, range_2j), range_2j+1)
-        dest[destOffset + j] = Math.min(Math.max(rj, range[j][0]), range[j][1]);
+        dest[destOffset + j] = MathClamp(rj, range[j][0], range[j][1]);
       }
     };
   }
 
-  static constructInterpolated({ xref, isEvalSupported, dict }) {
+  static constructInterpolated(factory, dict) {
     const c0 = toNumberArray(dict.getArray("C0")) || [0];
     const c1 = toNumberArray(dict.getArray("C1")) || [1];
     const n = dict.get("N");
@@ -342,7 +295,7 @@ class PDFFunction {
     };
   }
 
-  static constructStiched({ xref, isEvalSupported, dict }) {
+  static constructStiched(factory, dict) {
     const domain = toNumberArray(dict.getArray("Domain"));
 
     if (!domain) {
@@ -353,10 +306,11 @@ class PDFFunction {
     if (inputSize !== 1) {
       throw new FormatError("Bad domain for stiched function");
     }
+    const { xref } = factory;
 
     const fns = [];
     for (const fn of dict.get("Functions")) {
-      fns.push(this.parse({ xref, isEvalSupported, fn: xref.fetchIfRef(fn) }));
+      fns.push(this.parse(factory, xref.fetchIfRef(fn)));
     }
 
     const bounds = toNumberArray(dict.getArray("Bounds"));
@@ -364,17 +318,8 @@ class PDFFunction {
     const tmpBuf = new Float32Array(1);
 
     return function constructStichedFn(src, srcOffset, dest, destOffset) {
-      const clip = function constructStichedFromIRClip(v, min, max) {
-        if (v > max) {
-          v = max;
-        } else if (v < min) {
-          v = min;
-        }
-        return v;
-      };
-
-      // clip to domain
-      const v = clip(src[srcOffset], domain[0], domain[1]);
+      // Clamp to domain.
+      const v = MathClamp(src[srcOffset], domain[0], domain[1]);
       // calculate which bound the value is in
       const length = bounds.length;
       let i;
@@ -409,7 +354,7 @@ class PDFFunction {
     };
   }
 
-  static constructPostScript({ xref, isEvalSupported, fn, dict }) {
+  static constructPostScript(factory, fn, dict) {
     const domain = toNumberArray(dict.getArray("Domain"));
     const range = toNumberArray(dict.getArray("Range"));
 
@@ -425,7 +370,7 @@ class PDFFunction {
     const parser = new PostScriptParser(lexer);
     const code = parser.parse();
 
-    if (isEvalSupported && FeatureTest.isEvalSupported) {
+    if (factory.isEvalSupported && FeatureTest.isEvalSupported) {
       const compiled = new PostScriptCompiler().compile(code, domain, range);
       if (compiled) {
         // Compiled function consists of simple expressions such as addition,

@@ -14,7 +14,14 @@
  */
 
 import { BaseException, shadow } from "../shared/util.js";
-import { log2, readInt8, readUint16, readUint32 } from "./core_utils.js";
+import {
+  log2,
+  MAX_INT_32,
+  MIN_INT_32,
+  readInt8,
+  readUint16,
+  readUint32,
+} from "./core_utils.js";
 import { ArithmeticDecoder } from "./arithmetic_decoder.js";
 import { CCITTFaxDecoder } from "./ccitt.js";
 
@@ -51,9 +58,6 @@ class DecodingContext {
     return shadow(this, "contextCache", cache);
   }
 }
-
-const MAX_INT_32 = 2 ** 31 - 1;
-const MIN_INT_32 = -(2 ** 31);
 
 // Annex A. Arithmetic Integer Decoding Procedure
 // A.2 Procedure for decoding values
@@ -370,9 +374,7 @@ function decodeBitmap(
   // Sorting is non-standard, and it is not required. But sorting increases
   // the number of template bits that can be reused from the previous
   // contextLabel in the main loop.
-  template.sort(function (a, b) {
-    return a.y - b.y || a.x - b.x;
-  });
+  template.sort((a, b) => a.y - b.y || a.x - b.x);
 
   const templateLength = template.length;
   const templateX = new Int8Array(templateLength);
@@ -801,9 +803,7 @@ function decodeTextRegion(
   for (i = 0; i < height; i++) {
     row = new Uint8Array(width);
     if (defaultPixelValue) {
-      for (let j = 0; j < width; j++) {
-        row[j] = defaultPixelValue;
-      }
+      row.fill(defaultPixelValue);
     }
     bitmap.push(row);
   }
@@ -1037,9 +1037,7 @@ function decodeHalftoneRegion(
   for (i = 0; i < regionHeight; i++) {
     row = new Uint8Array(regionWidth);
     if (defaultPixelValue) {
-      for (j = 0; j < regionWidth; j++) {
-        row[j] = defaultPixelValue;
-      }
+      row.fill(defaultPixelValue);
     }
     regionBitmap.push(row);
   }

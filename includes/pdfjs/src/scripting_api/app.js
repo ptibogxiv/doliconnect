@@ -88,9 +88,10 @@ class App extends PDFObject {
   }
 
   _evalCallback({ callbackId, interval }) {
+    const documentObj = this._document.obj;
     if (callbackId === USERACTIVATION_CALLBACKID) {
       // Special callback id for userActivation stuff.
-      this._document.obj._userActivation = false;
+      documentObj._userActivation = false;
       return;
     }
     const expr = this._timeoutCallbackIds.get(callbackId);
@@ -99,7 +100,12 @@ class App extends PDFObject {
     }
 
     if (expr) {
+      const saveUserActivation = documentObj._userActivation;
+      // A setTimeout/setInterval callback is executed so it can't be a user
+      // choice.
+      documentObj._userActivation = false;
       this._globalEval(expr);
+      documentObj._userActivation = saveUserActivation;
     }
   }
 
@@ -202,18 +208,15 @@ class App extends PDFObject {
   }
 
   get constants() {
-    if (!this._constants) {
-      this._constants = Object.freeze({
-        align: Object.freeze({
-          left: 0,
-          center: 1,
-          right: 2,
-          top: 3,
-          bottom: 4,
-        }),
-      });
-    }
-    return this._constants;
+    return (this._constants ??= Object.freeze({
+      align: Object.freeze({
+        left: 0,
+        center: 1,
+        right: 2,
+        top: 3,
+        bottom: 4,
+      }),
+    }));
   }
 
   set constants(_) {
@@ -447,6 +450,9 @@ class App extends PDFObject {
       cMsg = cMsg.cMsg;
     }
     cMsg = (cMsg || "").toString();
+    if (!cMsg) {
+      return 0;
+    }
     nType =
       typeof nType !== "number" || isNaN(nType) || nType < 0 || nType > 3
         ? 0

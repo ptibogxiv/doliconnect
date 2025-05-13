@@ -15,7 +15,6 @@
 
 import {
   info,
-  objectFromMap,
   RenderingIntentFlag,
   unreachable,
   warn,
@@ -33,13 +32,14 @@ class OptionalContentGroup {
 
   #visible = true;
 
-  constructor(renderingIntent, { name, intent, usage }) {
+  constructor(renderingIntent, { name, intent, usage, rbGroups }) {
     this.#isDisplay = !!(renderingIntent & RenderingIntentFlag.DISPLAY);
     this.#isPrint = !!(renderingIntent & RenderingIntentFlag.PRINT);
 
     this.name = name;
     this.intent = intent;
     this.usage = usage;
+    this.rbGroups = rbGroups;
   }
 
   /**
@@ -229,12 +229,26 @@ class OptionalContentConfig {
     return true;
   }
 
-  setVisibility(id, visible = true) {
+  setVisibility(id, visible = true, preserveRB = true) {
     const group = this.#groups.get(id);
     if (!group) {
       warn(`Optional content group not found: ${id}`);
       return;
     }
+
+    // If the visibility is about to be set to `true` and the group belongs to
+    // any radiobutton groups, hide all other OCGs in these radiobutton groups,
+    // provided that radiobutton state relationships are to be preserved.
+    if (preserveRB && visible && group.rbGroups.length) {
+      for (const rbGroup of group.rbGroups) {
+        for (const otherId of rbGroup) {
+          if (otherId !== id) {
+            this.#groups.get(otherId)?._setVisible(INTERNAL, false, true);
+          }
+        }
+      }
+    }
+
     group._setVisible(INTERNAL, !!visible, /* userSet = */ true);
 
     this.#cachedGetHash = null;
@@ -258,13 +272,13 @@ class OptionalContentConfig {
       }
       switch (operator) {
         case "ON":
-          group._setVisible(INTERNAL, true);
+          this.setVisibility(elem, true, preserveRB);
           break;
         case "OFF":
-          group._setVisible(INTERNAL, false);
+          this.setVisibility(elem, false, preserveRB);
           break;
         case "Toggle":
-          group._setVisible(INTERNAL, !group.visible);
+          this.setVisibility(elem, !group.visible, preserveRB);
           break;
       }
     }
@@ -286,10 +300,6 @@ class OptionalContentConfig {
     return [...this.#groups.keys()];
   }
 
-  getGroups() {
-    return this.#groups.size > 0 ? objectFromMap(this.#groups) : null;
-  }
-
   getGroup(id) {
     return this.#groups.get(id) || null;
   }
@@ -304,6 +314,10 @@ class OptionalContentConfig {
       hash.update(`${id}:${group.visible}`);
     }
     return (this.#cachedGetHash = hash.hexdigest());
+  }
+
+  [Symbol.iterator]() {
+    return this.#groups.entries();
   }
 }
 

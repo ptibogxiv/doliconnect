@@ -105,6 +105,14 @@ pdfjs-document-properties-button-label = Belge özellikleri…
 pdfjs-document-properties-file-name = Dosya adı:
 pdfjs-document-properties-file-size = Dosya boyutu:
 # Variables:
+#   $kb (Number) - the PDF file size in kilobytes
+#   $b (Number) - the PDF file size in bytes
+pdfjs-document-properties-size-kb = { NUMBER($kb, maximumSignificantDigits: 3) } KB ({ $b } bayt)
+# Variables:
+#   $mb (Number) - the PDF file size in megabytes
+#   $b (Number) - the PDF file size in bytes
+pdfjs-document-properties-size-mb = { NUMBER($mb, maximumSignificantDigits: 3) } MB ({ $b } bayt)
+# Variables:
 #   $size_kb (Number) - the PDF file size in kilobytes
 #   $size_b (Number) - the PDF file size in bytes
 pdfjs-document-properties-kb = { $size_kb } KB ({ $size_b } bayt)
@@ -118,6 +126,9 @@ pdfjs-document-properties-subject = Konu:
 pdfjs-document-properties-keywords = Anahtar kelimeler:
 pdfjs-document-properties-creation-date = Oluşturma tarihi:
 pdfjs-document-properties-modification-date = Değiştirme tarihi:
+# Variables:
+#   $dateObj (Date) - the creation/modification date and time of the PDF file
+pdfjs-document-properties-date-time-string = { DATETIME($dateObj, dateStyle: "short", timeStyle: "medium") }
 # Variables:
 #   $date (Date) - the creation/modification date of the PDF file
 #   $time (Time) - the creation/modification time of the PDF file
@@ -275,6 +286,9 @@ pdfjs-annotation-date-string = { $date } { $time }
 # Some common types are e.g.: "Check", "Text", "Comment", "Note"
 pdfjs-text-annotation-type =
     .alt = [{ $type } işareti]
+# Variables:
+#   $dateObj (Date) - the modification date and time of the annotation
+pdfjs-annotation-date-time-string = { DATETIME($dateObj, dateStyle: "short", timeStyle: "medium") }
 
 ## Password
 
@@ -298,12 +312,29 @@ pdfjs-editor-stamp-button-label = Resim ekle veya düzenle
 pdfjs-editor-highlight-button =
     .title = Vurgula
 pdfjs-editor-highlight-button-label = Vurgula
-pdfjs-highlight-floating-button =
-    .title = Vurgula
 pdfjs-highlight-floating-button1 =
     .title = Vurgula
     .aria-label = Vurgula
 pdfjs-highlight-floating-button-label = Vurgula
+pdfjs-editor-signature-button =
+    .title = İmza ekle
+pdfjs-editor-signature-button-label = İmza ekle
+
+## Default editor aria labels
+
+# “Highlight” is a noun, the string is used on the editor for highlights.
+pdfjs-editor-highlight-editor =
+    .aria-label = Vurgu düzenleyici
+# “Drawing” is a noun, the string is used on the editor for drawings.
+pdfjs-editor-ink-editor =
+    .aria-label = Çizim düzenleyici
+# Used when a signature editor is selected/hovered.
+# Variables:
+#   $description (String) - a string describing/labeling the signature.
+pdfjs-editor-signature-editor1 =
+    .aria-description = İmza düzenleyici: { $description }
+pdfjs-editor-stamp-editor =
+    .aria-label = Resim düzenleyici
 
 ## Remove button for the various kind of editor.
 
@@ -315,6 +346,8 @@ pdfjs-editor-remove-stamp-button =
     .title = Resmi kaldır
 pdfjs-editor-remove-highlight-button =
     .title = Vurgulamayı kaldır
+pdfjs-editor-remove-signature-button =
+    .title = İmzayı kaldır
 
 ##
 
@@ -331,6 +364,20 @@ pdfjs-editor-stamp-add-image-button-label = Resim ekle
 pdfjs-editor-free-highlight-thickness-input = Kalınlık
 pdfjs-editor-free-highlight-thickness-title =
     .title = Metin dışındaki öğeleri vurgularken kalınlığı değiştir
+pdfjs-editor-add-signature-container =
+    .aria-label = İmza yönetimi ve kayıtlı imzalar
+pdfjs-editor-signature-add-signature-button =
+    .title = Yeni imza ekle
+pdfjs-editor-signature-add-signature-button-label = Yeni imza ekle
+# Used on the button to use an already saved signature.
+# Variables:
+#   $description (String) - a string describing/labeling the signature.
+pdfjs-editor-add-saved-signature-button =
+    .title = Kayıtlı imza: { $description }
+# .default-content is used as a placeholder in an empty text editor.
+pdfjs-free-text2 =
+    .aria-label = Metin düzenleyicisi
+    .default-content = Yazmaya başlayın…
 pdfjs-free-text =
     .aria-label = Metin düzenleyicisi
 pdfjs-free-text-default-content = Yazmaya başlayın…
@@ -341,8 +388,9 @@ pdfjs-ink-canvas =
 
 ## Alt-text dialog
 
-# Alternative text (alt text) helps when people can't see the image.
 pdfjs-editor-alt-text-button-label = Alternatif metin
+pdfjs-editor-alt-text-edit-button =
+    .aria-label = Alternatif metni düzenle
 pdfjs-editor-alt-text-edit-button-label = Alternatif metni düzenle
 pdfjs-editor-alt-text-dialog-label = Bir seçenek seçin
 pdfjs-editor-alt-text-dialog-description = Alternatif metin, insanlar resmi göremediğinde veya resim yüklenmediğinde işe yarar.
@@ -356,6 +404,9 @@ pdfjs-editor-alt-text-decorative-tooltip = Dekoratif olarak işaretlendi
 # .placeholder: This is a placeholder for the alt text input area
 pdfjs-editor-alt-text-textarea =
     .placeholder = Örneğin, “Genç bir adam yemek yemek için masaya oturuyor”
+# Alternative text (alt text) helps when people can't see the image.
+pdfjs-editor-alt-text-button =
+    .aria-label = Alternatif metin
 
 ## Editor resizers
 ## This is used in an aria label to help to understand the role of the resizer.
@@ -368,6 +419,22 @@ pdfjs-editor-resizer-label-bottom-right = Sağ alt köşe — yeniden boyutland�
 pdfjs-editor-resizer-label-bottom-middle = Alt orta — yeniden boyutlandır
 pdfjs-editor-resizer-label-bottom-left = Sol alt köşe — yeniden boyutlandır
 pdfjs-editor-resizer-label-middle-left = Orta sol — yeniden boyutlandır
+pdfjs-editor-resizer-top-left =
+    .aria-label = Sol üst köşe — yeniden boyutlandır
+pdfjs-editor-resizer-top-middle =
+    .aria-label = Üst orta — yeniden boyutlandır
+pdfjs-editor-resizer-top-right =
+    .aria-label = Sağ üst köşe — yeniden boyutlandır
+pdfjs-editor-resizer-middle-right =
+    .aria-label = Orta sağ — yeniden boyutlandır
+pdfjs-editor-resizer-bottom-right =
+    .aria-label = Sağ alt köşe — yeniden boyutlandır
+pdfjs-editor-resizer-bottom-middle =
+    .aria-label = Alt orta — yeniden boyutlandır
+pdfjs-editor-resizer-bottom-left =
+    .aria-label = Sol alt köşe — yeniden boyutlandır
+pdfjs-editor-resizer-middle-left =
+    .aria-label = Orta sol — yeniden boyutlandır
 
 ## Color picker
 
@@ -394,3 +461,155 @@ pdfjs-editor-colorpicker-red =
 pdfjs-editor-highlight-show-all-button-label = Tümünü göster
 pdfjs-editor-highlight-show-all-button =
     .title = Tümünü göster
+
+## New alt-text dialog
+## Group note for entire feature: Alternative text (alt text) helps when people can't see the image. This feature includes a tool to create alt text automatically using an AI model that works locally on the user's device to preserve privacy.
+
+# Modal header positioned above a text box where users can edit the alt text.
+pdfjs-editor-new-alt-text-dialog-edit-label = Alt metni düzenle (resim açıklaması)
+# Modal header positioned above a text box where users can add the alt text.
+pdfjs-editor-new-alt-text-dialog-add-label = Alt metin ekle (resim açıklaması)
+pdfjs-editor-new-alt-text-textarea =
+    .placeholder = Açıklamanızı buraya yazın…
+# This text refers to the alt text box above this description. It offers a definition of alt text.
+pdfjs-editor-new-alt-text-description = Görme engelli kişilere gösterilecek veya resmin yüklenemediği durumlarda gösterilecek kısa açıklama.
+# This is a required legal disclaimer that refers to the automatically created text inside the alt text box above this text. It disappears if the text is edited by a human.
+pdfjs-editor-new-alt-text-disclaimer1 = Bu alt metin otomatik olarak oluşturulmuştur ve hatalı olabilir.
+pdfjs-editor-new-alt-text-disclaimer-learn-more-url = Daha fazla bilgi alın
+pdfjs-editor-new-alt-text-create-automatically-button-label = Otomatik olarak alt metin oluştur
+pdfjs-editor-new-alt-text-not-now-button = Şimdi değil
+pdfjs-editor-new-alt-text-error-title = Alt metin otomatik olarak oluşturulamadı
+pdfjs-editor-new-alt-text-error-description = Lütfen kendi alt metninizi yazın veya daha sonra yeniden deneyin.
+pdfjs-editor-new-alt-text-error-close-button = Kapat
+# Variables:
+#   $totalSize (Number) - the total size (in MB) of the AI model.
+#   $downloadedSize (Number) - the downloaded size (in MB) of the AI model.
+pdfjs-editor-new-alt-text-ai-model-downloading-progress = Alt metin yapay zekâ modeli indiriliyor ({ $downloadedSize } / { $totalSize } MB)
+    .aria-valuetext = Alt metin yapay zekâ modeli indiriliyor ({ $downloadedSize } / { $totalSize } MB)
+# This is a button that users can click to edit the alt text they have already added.
+pdfjs-editor-new-alt-text-added-button =
+    .aria-label = Alternatif metin eklendi
+pdfjs-editor-new-alt-text-added-button-label = Alt metin eklendi
+# This is a button that users can click to open the alt text editor and add alt text when it is not present.
+pdfjs-editor-new-alt-text-missing-button =
+    .aria-label = Alternatif metin eksik
+pdfjs-editor-new-alt-text-missing-button-label = Alt metin eksik
+# This is a button that opens up the alt text modal where users should review the alt text that was automatically generated.
+pdfjs-editor-new-alt-text-to-review-button =
+    .aria-label = Alternatif metni incele
+pdfjs-editor-new-alt-text-to-review-button-label = Alt metni incele
+# "Created automatically" is a prefix that will be added to the beginning of any alt text that has been automatically generated. After the colon, the user will see/hear the actual alt text description. If the alt text has been edited by a human, this prefix will not appear.
+# Variables:
+#   $generatedAltText (String) - the generated alt-text.
+pdfjs-editor-new-alt-text-generated-alt-text-with-disclaimer = Otomatik olarak oluşturuldu: { $generatedAltText }
+
+## Image alt-text settings
+
+pdfjs-image-alt-text-settings-button =
+    .title = Resim alt metni ayarları
+pdfjs-image-alt-text-settings-button-label = Resim alt metni ayarları
+pdfjs-editor-alt-text-settings-dialog-label = Resim alt metni ayarları
+pdfjs-editor-alt-text-settings-automatic-title = Otomatik alt metin
+pdfjs-editor-alt-text-settings-create-model-button-label = Otomatik olarak alt metin oluştur
+pdfjs-editor-alt-text-settings-create-model-description = Görme engelli kişilere gösterilecek veya resmin yüklenemediği durumlarda gösterilecek açıklamalar önerir.
+# Variables:
+#   $totalSize (Number) - the total size (in MB) of the AI model.
+pdfjs-editor-alt-text-settings-download-model-label = Alt metin yapay zekâ modeli ({ $totalSize } MB)
+pdfjs-editor-alt-text-settings-ai-model-description = Verilerinizin gizli kalması için cihazınızda yerel olarak çalışır. Otomatik alt metin için gereklidir.
+pdfjs-editor-alt-text-settings-delete-model-button = Sil
+pdfjs-editor-alt-text-settings-download-model-button = İndir
+pdfjs-editor-alt-text-settings-downloading-model-button = İndiriliyor…
+pdfjs-editor-alt-text-settings-editor-title = Alt metin düzenleyicisi
+pdfjs-editor-alt-text-settings-show-dialog-button-label = Resim eklerken alt metin düzenleyicisini hemen göster
+pdfjs-editor-alt-text-settings-show-dialog-description = Tüm resimlerinizin alt metne sahip olduğundan emin olmanızı sağlar.
+pdfjs-editor-alt-text-settings-close-button = Kapat
+
+## "Annotations removed" bar
+
+pdfjs-editor-undo-bar-message-highlight = Vurgulama silindi
+pdfjs-editor-undo-bar-message-freetext = Metin silindi
+pdfjs-editor-undo-bar-message-ink = Çizim silindi
+pdfjs-editor-undo-bar-message-stamp = Görsel silindi
+pdfjs-editor-undo-bar-message-signature = İmza kaldırıldı
+# Variables:
+#   $count (Number) - the number of removed annotations.
+pdfjs-editor-undo-bar-message-multiple =
+    { $count ->
+        [one] { $count } ek açıklama silindi
+       *[other] { $count } ek açıklama silindi
+    }
+pdfjs-editor-undo-bar-undo-button =
+    .title = Geri al
+pdfjs-editor-undo-bar-undo-button-label = Geri al
+pdfjs-editor-undo-bar-close-button =
+    .title = Kapat
+pdfjs-editor-undo-bar-close-button-label = Kapat
+
+## Add a signature dialog
+
+pdfjs-editor-add-signature-dialog-label = Bu pencereden PDF belgesine eklemek üzere imza oluşturabilirsiniz. Adınızı düzenleyebilir (adınız alt metin olarak da kullanılır) ve isterseniz ileride tekrar kullanmak üzere imzayı kaydedebilirsiniz.
+pdfjs-editor-add-signature-dialog-title = İmza ekle
+
+## Tab names
+
+# Type is a verb (you can type your name as signature)
+pdfjs-editor-add-signature-type-button = Yaz
+    .title = Yaz
+# Draw is a verb (you can draw your signature)
+pdfjs-editor-add-signature-draw-button = Çiz
+    .title = Çiz
+pdfjs-editor-add-signature-image-button = Resim
+    .title = Resim
+
+## Tab panels
+
+pdfjs-editor-add-signature-type-input =
+    .aria-label = İmzanızı yazın
+    .placeholder = İmzanızı yazın
+pdfjs-editor-add-signature-draw-placeholder = İmzanızı çizin
+pdfjs-editor-add-signature-draw-thickness-range-label = Kalınlık
+# Variables:
+#   $thickness (Number) - the thickness (in pixels) of the line used to draw a signature.
+pdfjs-editor-add-signature-draw-thickness-range =
+    .title = Çizgi kalınlığı: { $thickness }
+pdfjs-editor-add-signature-image-placeholder = Yüklenecek dosyayı buraya sürükleyin
+pdfjs-editor-add-signature-image-browse-link =
+    { PLATFORM() ->
+        [macos] Veya resim dosyalarına göz atın
+       *[other] Veya resim dosyalarına göz atın
+    }
+
+## Controls
+
+pdfjs-editor-add-signature-description-label = Açıklama (alt metin)
+pdfjs-editor-add-signature-description-input =
+    .title = Açıklama (alt metin)
+pdfjs-editor-add-signature-description-default-when-drawing = İmza
+pdfjs-editor-add-signature-clear-button-label = İmzayı temizle
+pdfjs-editor-add-signature-clear-button =
+    .title = İmzayı temizle
+pdfjs-editor-add-signature-save-checkbox = İmzayı kaydet
+pdfjs-editor-add-signature-save-warning-message = Kayıtlı 5 imza sınırına ulaştınız. Daha fazla imza kaydetmek için imzalardan birini kaldırın.
+pdfjs-editor-add-signature-image-upload-error-title = Resim yüklenemedi
+pdfjs-editor-add-signature-image-upload-error-description = Ağ bağlantınızı kontrol edin veya başka bir resim deneyin.
+pdfjs-editor-add-signature-error-close-button = Kapat
+
+## Dialog buttons
+
+pdfjs-editor-add-signature-cancel-button = Vazgeç
+pdfjs-editor-add-signature-add-button = Ekle
+pdfjs-editor-edit-signature-update-button = Güncelle
+
+## Main menu for adding/removing signatures
+
+pdfjs-editor-delete-signature-button1 =
+    .title = Kayıtlı imza kaldırdı
+pdfjs-editor-delete-signature-button-label1 = Kayıtlı imzayı kaldır
+
+## Editor toolbar
+
+pdfjs-editor-add-signature-edit-button-label = Açıklamayı düzenle
+
+## Edit signature description dialog
+
+pdfjs-editor-edit-signature-dialog-title = Açıklamayı düzenle

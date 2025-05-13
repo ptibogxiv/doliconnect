@@ -310,12 +310,7 @@ class EventDispatcher {
     const source = this._objects[first];
     globalThis.event = new Event({});
 
-    try {
-      this.runCalculate(source, globalThis.event);
-    } catch (error) {
-      this._isCalculating = false;
-      throw error;
-    }
+    this.runCalculate(source, globalThis.event);
 
     this._isCalculating = false;
   }
@@ -345,6 +340,7 @@ class EventDispatcher {
       const target = this._objects[targetId];
       let savedValue = target.obj._getValue();
       this.runActions(source, target, event, "Calculate");
+
       if (!event.rc) {
         continue;
       }

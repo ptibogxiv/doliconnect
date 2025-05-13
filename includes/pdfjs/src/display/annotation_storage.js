@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import { objectFromMap, unreachable } from "../shared/util.js";
+import { shadow, unreachable } from "../shared/util.js";
 import { AnnotationEditor } from "./editor/editor.js";
 import { MurmurHash3_64 } from "../shared/murmurhash3.js";
 
@@ -29,6 +29,8 @@ const SerializableEmpty = Object.freeze({
 class AnnotationStorage {
   #modified = false;
 
+  #modifiedIds = null;
+
   #storage = new Map();
 
   constructor() {
@@ -39,6 +41,17 @@ class AnnotationStorage {
     this.onSetModified = null;
     this.onResetModified = null;
     this.onAnnotationEditor = null;
+
+    if (typeof PDFJSDev === "undefined" || PDFJSDev.test("TESTING")) {
+      // For testing purposes.
+      Object.defineProperty(this, "_setValues", {
+        value: obj => {
+          for (const [key, val] of Object.entries(obj)) {
+            this.setValue(key, val);
+          }
+        },
+      });
+    }
   }
 
   /**
@@ -124,22 +137,6 @@ class AnnotationStorage {
    */
   has(key) {
     return this.#storage.has(key);
-  }
-
-  /**
-   * @returns {Object | null}
-   */
-  getAll() {
-    return this.#storage.size > 0 ? objectFromMap(this.#storage) : null;
-  }
-
-  /**
-   * @param {Object} obj
-   */
-  setAll(obj) {
-    for (const [key, val] of Object.entries(obj)) {
-      this.setValue(key, val);
-    }
   }
 
   get size() {
@@ -248,6 +245,38 @@ class AnnotationStorage {
     }
     return stats;
   }
+
+  resetModifiedIds() {
+    this.#modifiedIds = null;
+  }
+
+  /**
+   * @returns {{ids: Set<string>, hash: string}}
+   */
+  get modifiedIds() {
+    if (this.#modifiedIds) {
+      return this.#modifiedIds;
+    }
+    const ids = [];
+    for (const value of this.#storage.values()) {
+      if (
+        !(value instanceof AnnotationEditor) ||
+        !value.annotationElementId ||
+        !value.serialize()
+      ) {
+        continue;
+      }
+      ids.push(value.annotationElementId);
+    }
+    return (this.#modifiedIds = {
+      ids: new Set(ids),
+      hash: ids.join(","),
+    });
+  }
+
+  [Symbol.iterator]() {
+    return this.#storage.entries();
+  }
 }
 
 /**
@@ -281,6 +310,13 @@ class PrintAnnotationStorage extends AnnotationStorage {
    */
   get serializable() {
     return this.#serializable;
+  }
+
+  get modifiedIds() {
+    return shadow(this, "modifiedIds", {
+      ids: new Set(),
+      hash: "",
+    });
   }
 }
 

@@ -14,6 +14,8 @@
  */
 
 import { assert, BaseException, warn } from "../shared/util.js";
+import { ColorSpaceUtils } from "./colorspace_utils.js";
+import { DeviceCmykCS } from "./colorspace.js";
 import { grayToRGBA } from "../shared/image_utils.js";
 import { readUint16 } from "./core_utils.js";
 
@@ -744,55 +746,138 @@ function findNextFileMarker(data, currentPos, startPos = currentPos) {
   };
 }
 
+function prepareComponents(frame) {
+  const mcusPerLine = Math.ceil(frame.samplesPerLine / 8 / frame.maxH);
+  const mcusPerColumn = Math.ceil(frame.scanLines / 8 / frame.maxV);
+  for (const component of frame.components) {
+    const blocksPerLine = Math.ceil(
+      (Math.ceil(frame.samplesPerLine / 8) * component.h) / frame.maxH
+    );
+    const blocksPerColumn = Math.ceil(
+      (Math.ceil(frame.scanLines / 8) * component.v) / frame.maxV
+    );
+    const blocksPerLineForMcu = mcusPerLine * component.h;
+    const blocksPerColumnForMcu = mcusPerColumn * component.v;
+
+    const blocksBufferSize =
+      64 * blocksPerColumnForMcu * (blocksPerLineForMcu + 1);
+    component.blockData = new Int16Array(blocksBufferSize);
+    component.blocksPerLine = blocksPerLine;
+    component.blocksPerColumn = blocksPerColumn;
+  }
+  frame.mcusPerLine = mcusPerLine;
+  frame.mcusPerColumn = mcusPerColumn;
+}
+
+function readDataBlock(data, offset) {
+  const length = readUint16(data, offset);
+  offset += 2;
+  let endOffset = offset + length - 2;
+
+  const fileMarker = findNextFileMarker(data, endOffset, offset);
+  if (fileMarker?.invalid) {
+    warn(
+      "readDataBlock - incorrect length, current marker is: " +
+        fileMarker.invalid
+    );
+    endOffset = fileMarker.offset;
+  }
+
+  const array = data.subarray(offset, endOffset);
+  return {
+    appData: array,
+    oldOffset: offset,
+    newOffset: offset + array.length,
+  };
+}
+
+function skipData(data, offset) {
+  const length = readUint16(data, offset);
+  offset += 2;
+  const endOffset = offset + length - 2;
+
+  const fileMarker = findNextFileMarker(data, endOffset, offset);
+  if (fileMarker?.invalid) {
+    return fileMarker.offset;
+  }
+  return endOffset;
+}
+
 class JpegImage {
   constructor({ decodeTransform = null, colorTransform = -1 } = {}) {
     this._decodeTransform = decodeTransform;
     this._colorTransform = colorTransform;
   }
 
-  parse(data, { dnlScanLines = null } = {}) {
-    function readDataBlock() {
-      const length = readUint16(data, offset);
+  static canUseImageDecoder(data, colorTransform = -1) {
+    let exifOffsets = null;
+    let offset = 0;
+    let numComponents = null;
+    let fileMarker = readUint16(data, offset);
+    offset += 2;
+    if (fileMarker !== /* SOI (Start of Image) = */ 0xffd8) {
+      throw new JpegError("SOI not found");
+    }
+    fileMarker = readUint16(data, offset);
+    offset += 2;
+
+    markerLoop: while (fileMarker !== /* EOI (End of Image) = */ 0xffd9) {
+      switch (fileMarker) {
+        case 0xffe1: // APP1 - Exif
+          // TODO: Remove this once https://github.com/w3c/webcodecs/issues/870
+          //       is fixed.
+          const { appData, oldOffset, newOffset } = readDataBlock(data, offset);
+          offset = newOffset;
+
+          // 'Exif\x00\x00'
+          if (
+            appData[0] === 0x45 &&
+            appData[1] === 0x78 &&
+            appData[2] === 0x69 &&
+            appData[3] === 0x66 &&
+            appData[4] === 0 &&
+            appData[5] === 0
+          ) {
+            if (exifOffsets) {
+              throw new JpegError("Duplicate EXIF-blocks found.");
+            }
+            // Don't do the EXIF-block replacement here, see `JpegStream`,
+            // since that can modify the original PDF document.
+            exifOffsets = { exifStart: oldOffset + 6, exifEnd: newOffset };
+          }
+          fileMarker = readUint16(data, offset);
+          offset += 2;
+          continue;
+        case 0xffc0: // SOF0 (Start of Frame, Baseline DCT)
+        case 0xffc1: // SOF1 (Start of Frame, Extended DCT)
+        case 0xffc2: // SOF2 (Start of Frame, Progressive DCT)
+          // Skip marker length.
+          // Skip precision.
+          // Skip scanLines.
+          // Skip samplesPerLine.
+          numComponents = data[offset + (2 + 1 + 2 + 2)];
+          break markerLoop;
+        case 0xffff: // Fill bytes
+          if (data[offset] !== 0xff) {
+            // Avoid skipping a valid marker.
+            offset--;
+          }
+          break;
+      }
+      offset = skipData(data, offset);
+      fileMarker = readUint16(data, offset);
       offset += 2;
-      let endOffset = offset + length - 2;
-
-      const fileMarker = findNextFileMarker(data, endOffset, offset);
-      if (fileMarker?.invalid) {
-        warn(
-          "readDataBlock - incorrect length, current marker is: " +
-            fileMarker.invalid
-        );
-        endOffset = fileMarker.offset;
-      }
-
-      const array = data.subarray(offset, endOffset);
-      offset += array.length;
-      return array;
     }
-
-    function prepareComponents(frame) {
-      const mcusPerLine = Math.ceil(frame.samplesPerLine / 8 / frame.maxH);
-      const mcusPerColumn = Math.ceil(frame.scanLines / 8 / frame.maxV);
-      for (const component of frame.components) {
-        const blocksPerLine = Math.ceil(
-          (Math.ceil(frame.samplesPerLine / 8) * component.h) / frame.maxH
-        );
-        const blocksPerColumn = Math.ceil(
-          (Math.ceil(frame.scanLines / 8) * component.v) / frame.maxV
-        );
-        const blocksPerLineForMcu = mcusPerLine * component.h;
-        const blocksPerColumnForMcu = mcusPerColumn * component.v;
-
-        const blocksBufferSize =
-          64 * blocksPerColumnForMcu * (blocksPerLineForMcu + 1);
-        component.blockData = new Int16Array(blocksBufferSize);
-        component.blocksPerLine = blocksPerLine;
-        component.blocksPerColumn = blocksPerColumn;
-      }
-      frame.mcusPerLine = mcusPerLine;
-      frame.mcusPerColumn = mcusPerColumn;
+    if (numComponents === 4) {
+      return null;
     }
+    if (numComponents === 3 && colorTransform === 0) {
+      return null;
+    }
+    return exifOffsets || {};
+  }
 
+  parse(data, { dnlScanLines = null } = {}) {
     let offset = 0;
     let jfif = null;
     let adobe = null;
@@ -830,7 +915,8 @@ class JpegImage {
         case 0xffee: // APP14
         case 0xffef: // APP15
         case 0xfffe: // COM (Comment)
-          const appData = readDataBlock();
+          const { appData, newOffset } = readDataBlock(data, offset);
+          offset = newOffset;
 
           if (fileMarker === 0xffe0) {
             // 'JFIF\x00'
@@ -1233,141 +1319,13 @@ class JpegImage {
   }
 
   _convertYcckToRgb(data) {
-    let Y, Cb, Cr, k;
-    let offset = 0;
-    for (let i = 0, length = data.length; i < length; i += 4) {
-      Y = data[i];
-      Cb = data[i + 1];
-      Cr = data[i + 2];
-      k = data[i + 3];
-
-      data[offset++] =
-        -122.67195406894 +
-        Cb *
-          (-6.60635669420364e-5 * Cb +
-            0.000437130475926232 * Cr -
-            5.4080610064599e-5 * Y +
-            0.00048449797120281 * k -
-            0.154362151871126) +
-        Cr *
-          (-0.000957964378445773 * Cr +
-            0.000817076911346625 * Y -
-            0.00477271405408747 * k +
-            1.53380253221734) +
-        Y *
-          (0.000961250184130688 * Y -
-            0.00266257332283933 * k +
-            0.48357088451265) +
-        k * (-0.000336197177618394 * k + 0.484791561490776);
-
-      data[offset++] =
-        107.268039397724 +
-        Cb *
-          (2.19927104525741e-5 * Cb -
-            0.000640992018297945 * Cr +
-            0.000659397001245577 * Y +
-            0.000426105652938837 * k -
-            0.176491792462875) +
-        Cr *
-          (-0.000778269941513683 * Cr +
-            0.00130872261408275 * Y +
-            0.000770482631801132 * k -
-            0.151051492775562) +
-        Y *
-          (0.00126935368114843 * Y -
-            0.00265090189010898 * k +
-            0.25802910206845) +
-        k * (-0.000318913117588328 * k - 0.213742400323665);
-
-      data[offset++] =
-        -20.810012546947 +
-        Cb *
-          (-0.000570115196973677 * Cb -
-            2.63409051004589e-5 * Cr +
-            0.0020741088115012 * Y -
-            0.00288260236853442 * k +
-            0.814272968359295) +
-        Cr *
-          (-1.53496057440975e-5 * Cr -
-            0.000132689043961446 * Y +
-            0.000560833691242812 * k -
-            0.195152027534049) +
-        Y *
-          (0.00174418132927582 * Y -
-            0.00255243321439347 * k +
-            0.116935020465145) +
-        k * (-0.000343531996510555 * k + 0.24165260232407);
-    }
-    // Ensure that only the converted RGB data is returned.
-    return data.subarray(0, offset);
+    this._convertYcckToCmyk(data);
+    return this._convertCmykToRgb(data);
   }
 
   _convertYcckToRgba(data) {
-    for (let i = 0, length = data.length; i < length; i += 4) {
-      const Y = data[i];
-      const Cb = data[i + 1];
-      const Cr = data[i + 2];
-      const k = data[i + 3];
-
-      data[i] =
-        -122.67195406894 +
-        Cb *
-          (-6.60635669420364e-5 * Cb +
-            0.000437130475926232 * Cr -
-            5.4080610064599e-5 * Y +
-            0.00048449797120281 * k -
-            0.154362151871126) +
-        Cr *
-          (-0.000957964378445773 * Cr +
-            0.000817076911346625 * Y -
-            0.00477271405408747 * k +
-            1.53380253221734) +
-        Y *
-          (0.000961250184130688 * Y -
-            0.00266257332283933 * k +
-            0.48357088451265) +
-        k * (-0.000336197177618394 * k + 0.484791561490776);
-
-      data[i + 1] =
-        107.268039397724 +
-        Cb *
-          (2.19927104525741e-5 * Cb -
-            0.000640992018297945 * Cr +
-            0.000659397001245577 * Y +
-            0.000426105652938837 * k -
-            0.176491792462875) +
-        Cr *
-          (-0.000778269941513683 * Cr +
-            0.00130872261408275 * Y +
-            0.000770482631801132 * k -
-            0.151051492775562) +
-        Y *
-          (0.00126935368114843 * Y -
-            0.00265090189010898 * k +
-            0.25802910206845) +
-        k * (-0.000318913117588328 * k - 0.213742400323665);
-
-      data[i + 2] =
-        -20.810012546947 +
-        Cb *
-          (-0.000570115196973677 * Cb -
-            2.63409051004589e-5 * Cr +
-            0.0020741088115012 * Y -
-            0.00288260236853442 * k +
-            0.814272968359295) +
-        Cr *
-          (-1.53496057440975e-5 * Cr -
-            0.000132689043961446 * Y +
-            0.000560833691242812 * k -
-            0.195152027534049) +
-        Y *
-          (0.00174418132927582 * Y -
-            0.00255243321439347 * k +
-            0.116935020465145) +
-        k * (-0.000343531996510555 * k + 0.24165260232407);
-      data[i + 3] = 255;
-    }
-    return data;
+    this._convertYcckToCmyk(data);
+    return this._convertCmykToRgba(data);
   }
 
   _convertYcckToCmyk(data) {
@@ -1385,139 +1343,19 @@ class JpegImage {
   }
 
   _convertCmykToRgb(data) {
-    let c, m, y, k;
-    let offset = 0;
-    for (let i = 0, length = data.length; i < length; i += 4) {
-      c = data[i];
-      m = data[i + 1];
-      y = data[i + 2];
-      k = data[i + 3];
-
-      data[offset++] =
-        255 +
-        c *
-          (-0.00006747147073602441 * c +
-            0.0008379262121013727 * m +
-            0.0002894718188643294 * y +
-            0.003264231057537806 * k -
-            1.1185611867203937) +
-        m *
-          (0.000026374107616089405 * m -
-            0.00008626949158638572 * y -
-            0.0002748769067499491 * k -
-            0.02155688794978967) +
-        y *
-          (-0.00003878099212869363 * y -
-            0.0003267808279485286 * k +
-            0.0686742238595345) -
-        k * (0.0003361971776183937 * k + 0.7430659151342254);
-
-      data[offset++] =
-        255 +
-        c *
-          (0.00013596372813588848 * c +
-            0.000924537132573585 * m +
-            0.00010567359618683593 * y +
-            0.0004791864687436512 * k -
-            0.3109689587515875) +
-        m *
-          (-0.00023545346108370344 * m +
-            0.0002702845253534714 * y +
-            0.0020200308977307156 * k -
-            0.7488052167015494) +
-        y *
-          (0.00006834815998235662 * y +
-            0.00015168452363460973 * k -
-            0.09751927774728933) -
-        k * (0.0003189131175883281 * k + 0.7364883807733168);
-
-      data[offset++] =
-        255 +
-        c *
-          (0.000013598650411385307 * c +
-            0.00012423956175490851 * m +
-            0.0004751985097583589 * y -
-            0.0000036729317476630422 * k -
-            0.05562186980264034) +
-        m *
-          (0.00016141380598724676 * m +
-            0.0009692239130725186 * y +
-            0.0007782692450036253 * k -
-            0.44015232367526463) +
-        y *
-          (5.068882914068769e-7 * y +
-            0.0017778369011375071 * k -
-            0.7591454649749609) -
-        k * (0.0003435319965105553 * k + 0.7063770186160144);
-    }
-    // Ensure that only the converted RGB data is returned.
-    return data.subarray(0, offset);
+    const count = data.length / 4;
+    ColorSpaceUtils.cmyk.getRgbBuffer(data, 0, count, data, 0, 8, 0);
+    return data.subarray(0, count * 3);
   }
 
   _convertCmykToRgba(data) {
-    for (let i = 0, length = data.length; i < length; i += 4) {
-      const c = data[i];
-      const m = data[i + 1];
-      const y = data[i + 2];
-      const k = data[i + 3];
+    ColorSpaceUtils.cmyk.getRgbBuffer(data, 0, data.length / 4, data, 0, 8, 1);
 
-      data[i] =
-        255 +
-        c *
-          (-0.00006747147073602441 * c +
-            0.0008379262121013727 * m +
-            0.0002894718188643294 * y +
-            0.003264231057537806 * k -
-            1.1185611867203937) +
-        m *
-          (0.000026374107616089405 * m -
-            0.00008626949158638572 * y -
-            0.0002748769067499491 * k -
-            0.02155688794978967) +
-        y *
-          (-0.00003878099212869363 * y -
-            0.0003267808279485286 * k +
-            0.0686742238595345) -
-        k * (0.0003361971776183937 * k + 0.7430659151342254);
-
-      data[i + 1] =
-        255 +
-        c *
-          (0.00013596372813588848 * c +
-            0.000924537132573585 * m +
-            0.00010567359618683593 * y +
-            0.0004791864687436512 * k -
-            0.3109689587515875) +
-        m *
-          (-0.00023545346108370344 * m +
-            0.0002702845253534714 * y +
-            0.0020200308977307156 * k -
-            0.7488052167015494) +
-        y *
-          (0.00006834815998235662 * y +
-            0.00015168452363460973 * k -
-            0.09751927774728933) -
-        k * (0.0003189131175883281 * k + 0.7364883807733168);
-
-      data[i + 2] =
-        255 +
-        c *
-          (0.000013598650411385307 * c +
-            0.00012423956175490851 * m +
-            0.0004751985097583589 * y -
-            0.0000036729317476630422 * k -
-            0.05562186980264034) +
-        m *
-          (0.00016141380598724676 * m +
-            0.0009692239130725186 * y +
-            0.0007782692450036253 * k -
-            0.44015232367526463) +
-        y *
-          (5.068882914068769e-7 * y +
-            0.0017778369011375071 * k -
-            0.7591454649749609) -
-        k * (0.0003435319965105553 * k + 0.7063770186160144);
-      data[i + 3] = 255;
+    if (ColorSpaceUtils.cmyk instanceof DeviceCmykCS) {
+      // The alpha-component isn't updated by `DeviceCmykCS`, doing it manually.
+      for (let i = 3, ii = data.length; i < ii; i += 4) {
+        data[i] = 255;
+      }
     }
     return data;
   }

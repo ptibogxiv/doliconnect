@@ -14,6 +14,7 @@
  */
 
 import { BaseException, warn } from "../shared/util.js";
+import { fetchBinaryData } from "./core_utils.js";
 import OpenJPEG from "../../external/openjpeg/openjpeg.js";
 import { Stream } from "./stream.js";
 
@@ -24,19 +25,129 @@ class JpxError extends BaseException {
 }
 
 class JpxImage {
-  static #module = null;
+  static #buffer = null;
 
-  static decode(data, ignoreColorSpace = false) {
-    this.#module ||= OpenJPEG({ warn });
-    const imageData = this.#module.decode(data, ignoreColorSpace);
-    if (typeof imageData === "string") {
-      throw new JpxError(imageData);
+  static #handler = null;
+
+  static #modulePromise = null;
+
+  static #useWasm = true;
+
+  static #useWorkerFetch = true;
+
+  static #wasmUrl = null;
+
+  static setOptions({ handler, useWasm, useWorkerFetch, wasmUrl }) {
+    this.#useWasm = useWasm;
+    this.#useWorkerFetch = useWorkerFetch;
+    this.#wasmUrl = wasmUrl;
+
+    if (!useWorkerFetch) {
+      this.#handler = handler;
     }
-    return imageData;
+  }
+
+  static async #getJsModule(fallbackCallback) {
+    const path =
+      typeof PDFJSDev === "undefined"
+        ? `../${this.#wasmUrl}openjpeg_nowasm_fallback.js`
+        : `${this.#wasmUrl}openjpeg_nowasm_fallback.js`;
+
+    let instance = null;
+    try {
+      const mod = await (typeof PDFJSDev === "undefined"
+        ? import(path) // eslint-disable-line no-unsanitized/method
+        : __raw_import__(path));
+      instance = mod.default();
+    } catch (e) {
+      warn(`JpxImage#getJsModule: ${e}`);
+    }
+    fallbackCallback(instance);
+  }
+
+  static async #instantiateWasm(fallbackCallback, imports, successCallback) {
+    const filename = "openjpeg.wasm";
+    try {
+      if (!this.#buffer) {
+        if (this.#useWorkerFetch) {
+          this.#buffer = await fetchBinaryData(`${this.#wasmUrl}${filename}`);
+        } else {
+          this.#buffer = await this.#handler.sendWithPromise(
+            "FetchBinaryData",
+            { type: "wasmFactory", filename }
+          );
+        }
+      }
+      const results = await WebAssembly.instantiate(this.#buffer, imports);
+      return successCallback(results.instance);
+    } catch (reason) {
+      warn(`JpxImage#instantiateWasm: ${reason}`);
+
+      this.#getJsModule(fallbackCallback);
+      return null;
+    } finally {
+      this.#handler = null;
+    }
+  }
+
+  static async decode(
+    bytes,
+    { numComponents = 4, isIndexedColormap = false, smaskInData = false } = {}
+  ) {
+    if (!this.#modulePromise) {
+      const { promise, resolve } = Promise.withResolvers();
+      const promises = [promise];
+      if (!this.#useWasm) {
+        this.#getJsModule(resolve);
+      } else {
+        promises.push(
+          OpenJPEG({
+            warn,
+            instantiateWasm: this.#instantiateWasm.bind(this, resolve),
+          })
+        );
+      }
+      this.#modulePromise = Promise.race(promises);
+    }
+    const module = await this.#modulePromise;
+
+    if (!module) {
+      throw new JpxError("OpenJPEG failed to initialize");
+    }
+    let ptr;
+
+    try {
+      const size = bytes.length;
+      ptr = module._malloc(size);
+      module.HEAPU8.set(bytes, ptr);
+      const ret = module._jp2_decode(
+        ptr,
+        size,
+        numComponents > 0 ? numComponents : 0,
+        !!isIndexedColormap,
+        !!smaskInData
+      );
+      if (ret) {
+        const { errorMessages } = module;
+        if (errorMessages) {
+          delete module.errorMessages;
+          throw new JpxError(errorMessages);
+        }
+        throw new JpxError("Unknown error");
+      }
+      const { imageData } = module;
+      module.imageData = null;
+
+      return imageData;
+    } finally {
+      if (ptr) {
+        module._free(ptr);
+      }
+    }
   }
 
   static cleanup() {
-    this.#module = null;
+    this.#modulePromise = null;
   }
 
   static parseImageProperties(stream) {
