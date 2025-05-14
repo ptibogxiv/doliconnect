@@ -16,6 +16,22 @@
     "type": "other"
   },
   {
+    "id": "issue18503",
+    "file": "pdfs/issue18503.pdf",
+    "md5": "b6c7c8db3505d07ce8eabe6712641a94",
+    "rounds": 1,
+    "link": true,
+    "type": "other"
+  },
+  {
+    "id": "issue19835",
+    "file": "pdfs/issue19835.pdf",
+    "md5": "2940a2f8a41fae299b9a599b8364d05c",
+    "rounds": 1,
+    "link": true,
+    "type": "other"
+  },
+  {
     "id": "filled-background-range",
     "file": "pdfs/filled-background.pdf",
     "md5": "2e3120255d9c3e79b96d2543b12d2589",
@@ -699,6 +715,13 @@
     "type": "load"
   },
   {
+    "id": "issue19695",
+    "file": "pdfs/issue19695.pdf",
+    "md5": "963474b8847afc9eeda4ff4635f7a523",
+    "rounds": 1,
+    "type": "eq"
+  },
+  {
     "id": "openofficearabiccidtruetype-pdf",
     "file": "pdfs/arial_unicode_ab_cidfont.pdf",
     "md5": "35090fa7d29e7196ae3421812e554988",
@@ -959,7 +982,6 @@
     "id": "pdkids",
     "file": "pdfs/pdkids.pdf",
     "md5": "278982bf016dbe46d2066f9245d9b3e6",
-    "link": true,
     "rounds": 1,
     "type": "eq"
   },
@@ -985,7 +1007,7 @@
     "password": "ELXRTQWS",
     "md5": "db2fedbd36d6fa27d4e52f9bd2d96b8c",
     "rounds": 1,
-    "type": "load"
+    "type": "eq"
   },
   {
     "id": "issue5334",
@@ -1243,6 +1265,14 @@
     "rounds": 1,
     "type": "eq",
     "about": "XObject with BBox array containing indirect object."
+  },
+  {
+    "id": "issue19389",
+    "file": "pdfs/issue19389.pdf",
+    "md5": "419357cd829b067347c64b9ae838af4a",
+    "rounds": 1,
+    "type": "eq",
+    "forms": true
   },
   {
     "id": "issue7115",
@@ -2051,6 +2081,15 @@
     "type": "eq"
   },
   {
+    "id": "issue18973",
+    "file": "pdfs/issue18973.pdf",
+    "md5": "b9bbd312269862bf39bb2a31023a9d02",
+    "link": true,
+    "rounds": 1,
+    "firstPage": 45,
+    "type": "eq"
+  },
+  {
     "id": "issue9262",
     "file": "pdfs/issue9262_reduced.pdf",
     "md5": "5347ce2d7b3866625c22e115fd90e0de",
@@ -2343,6 +2382,15 @@
     "link": true,
     "firstPage": 3,
     "lastPage": 3,
+    "type": "eq"
+  },
+  {
+    "id": "issue18941",
+    "file": "pdfs/issue18941.pdf",
+    "md5": "6288e69c1dd240859c1d49c22a53a5c7",
+    "rounds": 1,
+    "link": true,
+    "lastPage": 1,
     "type": "eq"
   },
   {
@@ -2710,6 +2758,28 @@
     "about": "TrueType font with (0, 1) cmap."
   },
   {
+    "id": "issue19176",
+    "file": "pdfs/issue19176.pdf",
+    "md5": "c307418412a72997671518fa978439e0",
+    "rounds": 1,
+    "type": "eq"
+  },
+  {
+    "id": "bug1947248-text",
+    "file": "pdfs/bug1947248_text.pdf",
+    "md5": "491f1df75b77d2762ff96ce51f5e019b",
+    "rounds": 1,
+    "type": "text"
+  },
+  {
+    "id": "bug1947248-forms",
+    "file": "pdfs/bug1947248_forms.pdf",
+    "md5": "456c974d7d4351719f36ef10e603d29c",
+    "rounds": 1,
+    "type": "eq",
+    "forms": true
+  },
+  {
     "id": "issue4801",
     "file": "pdfs/issue4801.pdf",
     "md5": "7f32764717447a8b5c8eac08c9ab8380",
@@ -2768,6 +2838,31 @@
     "id": "simpletype3font",
     "file": "pdfs/simpletype3font.pdf",
     "md5": "b374c7543920840c61999e9e86939f99",
+    "link": false,
+    "rounds": 1,
+    "type": "eq"
+  },
+  {
+    "id": "bug810214",
+    "file": "pdfs/bug810214.pdf",
+    "md5": "2b7243178f5dd5fd3edc7b6649e4bdf3",
+    "link": true,
+    "rounds": 1,
+    "lastPage": 1,
+    "type": "eq"
+  },
+  {
+    "id": "Type3WordSpacing",
+    "file": "pdfs/Type3WordSpacing.pdf",
+    "md5": "8c75440e5b95cf521d186f862b404516",
+    "link": false,
+    "rounds": 1,
+    "type": "eq"
+  },
+  {
+    "id": "IndexedCS_negative_and_high",
+    "file": "pdfs/IndexedCS_negative_and_high.pdf",
+    "md5": "3bbf5e6f1cf49acb075fabb0726b5fe4",
     "link": false,
     "rounds": 1,
     "type": "eq"
@@ -2906,6 +3001,15 @@
     "type": "eq"
   },
   {
+    "id": "cmykjpeg_nowasm",
+    "file": "pdfs/cmykjpeg.pdf",
+    "md5": "85d162b48ce98503a382d96f574f70a2",
+    "link": false,
+    "rounds": 1,
+    "type": "eq",
+    "useWasm": false
+  },
+  {
     "id": "issue4402_reduced",
     "file": "pdfs/issue4402_reduced.pdf",
     "md5": "6cc7e61a581889eec3ed7402d87161c4",
@@ -2981,6 +3085,55 @@
     "file": "pdfs/issue11403_reduced.pdf",
     "md5": "08287b64f442cb7c329b97c4774aa1cd",
     "rounds": 1,
+    "type": "eq"
+  },
+  {
+    "id": "issue11403-text",
+    "file": "pdfs/issue11403_reduced.pdf",
+    "md5": "08287b64f442cb7c329b97c4774aa1cd",
+    "rounds": 1,
+    "type": "text"
+  },
+  {
+    "id": "issue18059",
+    "file": "pdfs/issue18059.pdf",
+    "md5": "b70373894edfcd571a41caa1a0776b6f",
+    "rounds": 1,
+    "type": "eq"
+  },
+  {
+    "id": "issue18059-text",
+    "file": "pdfs/issue18059.pdf",
+    "md5": "b70373894edfcd571a41caa1a0776b6f",
+    "rounds": 1,
+    "type": "text"
+  },
+  {
+    "id": "issue18208",
+    "file": "pdfs/issue18208.pdf",
+    "md5": "d07311117b5cc970159b09977898996b",
+    "link": true,
+    "rounds": 1,
+    "lastPage": 1,
+    "type": "eq"
+  },
+  {
+    "id": "issue18765",
+    "file": "pdfs/issue18765.pdf",
+    "md5": "7763ead2aa69db3a5263f92bb1922e31",
+    "link": true,
+    "talos": false,
+    "rounds": 1,
+    "lastPage": 1,
+    "type": "eq"
+  },
+  {
+    "id": "issue18801",
+    "file": "pdfs/issue18801.pdf",
+    "md5": "580258d9a282bfbec7b74da076bbccc9",
+    "link": true,
+    "rounds": 1,
+    "lastPage": 1,
     "type": "eq"
   },
   {
@@ -3526,6 +3679,14 @@
     "type": "text"
   },
   {
+    "id": "issue19484_1",
+    "file": "pdfs/issue19484_1.pdf",
+    "md5": "4e9e78a84226dbdddbd735388ccc2dcd",
+    "rounds": 1,
+    "link": false,
+    "type": "eq"
+  },
+  {
     "id": "issue5644",
     "file": "pdfs/issue5644.pdf",
     "md5": "6f9313c5043b3ecb0ab2df321d3e1847",
@@ -3719,6 +3880,27 @@
     "about": "LinkAnnotation with a relative link, and a /Catalog Base-URI."
   },
   {
+    "id": "issue19802",
+    "file": "pdfs/issue19802.pdf",
+    "md5": "7a431fb7951ad605f676c80636bbe5d3",
+    "rounds": 1,
+    "type": "eq"
+  },
+  {
+    "id": "issue19848-eq",
+    "file": "pdfs/issue19848.pdf",
+    "md5": "a6b05b61c883542e647b9a5a628e6422",
+    "rounds": 1,
+    "type": "eq"
+  },
+  {
+    "id": "issue19848-text",
+    "file": "pdfs/issue19848.pdf",
+    "md5": "a6b05b61c883542e647b9a5a628e6422",
+    "rounds": 1,
+    "type": "text"
+  },
+  {
     "id": "issue14824",
     "file": "pdfs/issue14824.pdf",
     "md5": "7b8d061ab0a342e3606a3b3ba1925d5b",
@@ -3793,6 +3975,30 @@
     "optionalContent": {
       "7R": false
     }
+  },
+  {
+    "id": "issue19550",
+    "file": "pdfs/issue19550.pdf",
+    "md5": "4c978bd99348789e05dad1d2a919ddf0",
+    "rounds": 1,
+    "type": "eq"
+  },
+  {
+    "id": "issue19611",
+    "file": "pdfs/issue19611.pdf",
+    "md5": "169dc6df1c43dcb4659b2ddb6a4b39e4",
+    "rounds": 1,
+    "link": true,
+    "type": "eq"
+  },
+  {
+    "id": "issue19624-text",
+    "file": "pdfs/issue19624.pdf",
+    "md5": "087ac2141dbfa218be833efcc143925a",
+    "rounds": 1,
+    "link": true,
+    "firstPage": 2,
+    "type": "text"
   },
   {
     "id": "issue1127-text",
@@ -4654,6 +4860,13 @@
     "type": "eq"
   },
   {
+    "id": "issue18986",
+    "file": "pdfs/issue18986.pdf",
+    "md5": "e147084fabd9677366f6ae3586dd311b",
+    "rounds": 1,
+    "type": "load"
+  },
+  {
     "id": "issue6652",
     "file": "pdfs/issue6652.pdf",
     "md5": "1c8e2953f84623bc773eb720c87a9331",
@@ -4933,6 +5146,14 @@
     "type": "eq"
   },
   {
+    "id": "issue19484_2",
+    "file": "pdfs/issue19484_2.pdf",
+    "md5": "cd3050eda9fa18a7e6a78c702f9890bb",
+    "rounds": 1,
+    "link": false,
+    "type": "eq"
+  },
+  {
     "id": "bug894572",
     "file": "pdfs/bug894572.pdf",
     "md5": "e54a6b0451939f685ed37e3d46e16158",
@@ -5165,6 +5386,13 @@
     "rounds": 1,
     "lastPage": 2,
     "link": true,
+    "type": "eq"
+  },
+  {
+    "id": "issue14200",
+    "file": "pdfs/issue14200.pdf",
+    "md5": "4dba2cde1c6e65abe53e66eefc97a7f1",
+    "rounds": 1,
     "type": "eq"
   },
   {
@@ -5439,6 +5667,15 @@
     "type": "eq"
   },
   {
+    "id": "issue18298",
+    "file": "pdfs/issue18298.pdf",
+    "md5": "30a6108220c41ec88fa92ff45924a6cb",
+    "rounds": 1,
+    "link": true,
+    "lastPage": 1,
+    "type": "eq"
+  },
+  {
     "id": "issue18138",
     "file": "pdfs/issue18138.pdf",
     "md5": "06136495b2dee5faed2e87c4e49d17fd",
@@ -5487,6 +5724,23 @@
     "id": "issue11124",
     "file": "pdfs/issue11124.pdf",
     "md5": "9bde831515dc6b8bb2c7c00c8189aca9",
+    "rounds": 1,
+    "type": "eq"
+  },
+  {
+    "id": "issue19494",
+    "file": "pdfs/issue19494.pdf",
+    "md5": "2ec2ccbe6aa7e622ef981ca5ca443d55",
+    "link": true,
+    "rounds": 1,
+    "type": "eq",
+    "lastPage": 1
+  },
+  {
+    "id": "issue19510",
+    "file": "pdfs/issue19510.pdf",
+    "md5": "3ff133f633cea3e2f13f08f8c3414cc6",
+    "link": true,
     "rounds": 1,
     "type": "eq"
   },
@@ -5617,6 +5871,13 @@
     "type": "eq"
   },
   {
+    "id": "issue16287",
+    "file": "pdfs/issue16287.pdf",
+    "md5": "cd3e0859140465ae8b8bde0c95cb4929",
+    "rounds": 1,
+    "type": "eq"
+  },
+  {
     "id": "issue2006",
     "file": "pdfs/issue2006.pdf",
     "md5": "71ec73831ece9b508ad20efa6ff28642",
@@ -5645,6 +5906,13 @@
     "id": "issue7074_reduced",
     "file": "pdfs/issue7074_reduced.pdf",
     "md5": "46893f8aa33620a05acdc27e3b79469d",
+    "rounds": 1,
+    "type": "eq"
+  },
+  {
+    "id": "issue19532",
+    "file": "pdfs/issue19532.pdf",
+    "md5": "87bf39acbb306479fa8994f441a5cb1e",
     "rounds": 1,
     "type": "eq"
   },
@@ -5762,7 +6030,7 @@
     "md5": "b58adce5dbb08936ddb0d904f0da8716",
     "rounds": 1,
     "link": false,
-    "type": "load",
+    "type": "eq",
     "password": "abc"
   },
   {
@@ -5771,7 +6039,7 @@
     "md5": "73a8091d0ab2a47af5ca45047f04da99",
     "rounds": 1,
     "link": false,
-    "type": "load",
+    "type": "eq",
     "password": "\u00E6\u00F8\u00E5",
     "about": "The password (æøå) is UTF8 encoded."
   },
@@ -6253,6 +6521,29 @@
     "about": "Fixes one part of bug 1731483."
   },
   {
+    "id": "issue19326",
+    "file": "pdfs/issue19326.pdf",
+    "md5": "b4d937017daf439a6318501428e0c6ba",
+    "rounds": 1,
+    "type": "eq"
+  },
+  {
+    "id": "issue19326_nowasm",
+    "file": "pdfs/issue19326.pdf",
+    "md5": "b4d937017daf439a6318501428e0c6ba",
+    "rounds": 1,
+    "type": "eq",
+    "useWasm": false
+  },
+  {
+    "id": "issue19326_main_thread_fetch",
+    "file": "pdfs/issue19326.pdf",
+    "md5": "b4d937017daf439a6318501428e0c6ba",
+    "rounds": 1,
+    "type": "eq",
+    "useWorkerFetch": false
+  },
+  {
     "id": "bug1140761",
     "file": "pdfs/bug1140761.pdf",
     "md5": "b74eced7634d4f248dc6265f8225d432",
@@ -6471,6 +6762,14 @@
     "about": "Has a 4 bit per component image with mask and decode."
   },
   {
+    "id": "issue2770-text",
+    "file": "pdfs/issue2770.pdf",
+    "md5": "36070d756d06eaa35c2227efb069fb1b",
+    "rounds": 1,
+    "link": true,
+    "type": "text"
+  },
+  {
     "id": "issue2984",
     "file": "pdfs/issue2984.pdf",
     "md5": "a8e81e7b7c6d8b0ec26bbfee9954f110",
@@ -6619,6 +6918,20 @@
     "firstPage": 2,
     "lastPage": 2,
     "type": "eq"
+  },
+  {
+    "id": "issue19800-eq",
+    "file": "pdfs/issue19800.pdf",
+    "md5": "92825d3178196bdd01096c4081609efd",
+    "rounds": 1,
+    "type": "eq"
+  },
+  {
+    "id": "issue19800-text",
+    "file": "pdfs/issue19800.pdf",
+    "md5": "92825d3178196bdd01096c4081609efd",
+    "rounds": 1,
+    "type": "text"
   },
   {
     "id": "issue3438",
@@ -6791,6 +7104,23 @@
     "type": "eq",
     "optionalContent": {
       "7R": false
+    }
+  },
+  {
+    "id": "issue18823-default",
+    "file": "pdfs/issue18823.pdf",
+    "md5": "f5246c476516c96df106ced0c5839da3",
+    "rounds": 1,
+    "type": "eq"
+  },
+  {
+    "id": "issue18823-group-three",
+    "file": "pdfs/issue18823.pdf",
+    "md5": "f5246c476516c96df106ced0c5839da3",
+    "rounds": 1,
+    "type": "eq",
+    "optionalContent": {
+      "15R": true
     }
   },
   {
@@ -7924,6 +8254,13 @@
     }
   },
   {
+    "id": "issue18645",
+    "file": "pdfs/issue18645.pdf",
+    "md5": "ad05b63db4f21f612adb0900093a3e34",
+    "rounds": 1,
+    "type": "eq"
+  },
+  {
     "id": "bug857031",
     "file": "pdfs/bug857031.pdf",
     "md5": "f11ecd7f75675e0cafbc9880c1a586c7",
@@ -8114,24 +8451,44 @@
         "color": [255, 0, 0],
         "thickness": 3,
         "opacity": 1,
-        "paths": [
-          {
-            "bezier": [
-              73, 560.2277710847244, 74.30408044851005, 561.5318515332344,
-              76.89681158113368, 557.7555609512324, 77.5, 557.2277710847244,
-              81.95407020558315, 553.3304596548392, 87.4811839685984,
-              550.8645311043504, 92.5, 547.7277710847244, 97.38795894206055,
-              544.6727967459365, 109.48854351637208, 540.2392275683522, 113.5,
+        "paths": {
+          "lines": [
+            [
+              null,
+              null,
+              null,
+              null,
+              73,
+              560.2277710847244,
+              74.30408044851005,
+              561.5318515332344,
+              76.89681158113368,
+              557.7555609512324,
+              77.5,
+              557.2277710847244,
+              81.95407020558315,
+              553.3304596548392,
+              87.4811839685984,
+              550.8645311043504,
+              92.5,
+              547.7277710847244,
+              97.38795894206055,
+              544.6727967459365,
+              109.48854351637208,
+              540.2392275683522,
+              113.5,
               536.2277710847244
-            ],
-            "points": [
+            ]
+          ],
+          "points": [
+            [
               73, 560.2277710847244, 76.7257911988625, 558.1025687477292,
               75.5128345111164, 559.4147224528562, 77.5, 557.2277710847244,
               92.5, 547.7277710847244, 109.21378602219673, 539.2873735223628,
               103.32868842191223, 542.3364518890394, 113.5, 536.2277710847244
             ]
-          }
-        ],
+          ]
+        },
         "pageIndex": 0,
         "rect": [71.5, 534.5, 115, 562],
         "rotation": 0
@@ -8200,22 +8557,37 @@
         "color": [255, 0, 0],
         "thickness": 1,
         "opacity": 1,
-        "paths": [
-          {
-            "bezier": [
-              417.61538461538464, 520.3461538461538, 419.15384615384613,
-              520.3461538461538, 421.0769230769231, 520.3461538461538,
-              423.38461538461536, 520.3461538461538, 425.6923076923077,
-              520.3461538461538, 429.15384615384613, 519.9615384615385,
-              433.7692307692308, 519.1923076923076
-            ],
-            "points": [
+        "paths": {
+          "lines": [
+            [
+              null,
+              null,
+              null,
+              null,
+              417.61538461538464,
+              520.3461538461538,
+              419.15384615384613,
+              520.3461538461538,
+              421.0769230769231,
+              520.3461538461538,
+              423.38461538461536,
+              520.3461538461538,
+              425.6923076923077,
+              520.3461538461538,
+              429.15384615384613,
+              519.9615384615385,
+              433.7692307692308,
+              519.1923076923076
+            ]
+          ],
+          "points": [
+            [
               417.61538461538464, 520.3461538461538, 419.15384615384613,
               520.3461538461538, 425.6923076923077, 520.3461538461538,
               433.7692307692308, 519.1923076923076
             ]
-          }
-        ],
+          ]
+        },
         "pageIndex": 0,
         "rect": [
           417.11538461538464, 510.46153846153845, 434.42307692307696,
@@ -8228,22 +8600,37 @@
         "color": [0, 255, 0],
         "thickness": 1,
         "opacity": 1,
-        "paths": [
-          {
-            "bezier": [
-              449.92307692307696, 526.6538461538462, 449.92307692307696,
-              527.423076923077, 449.6346153846154, 528.8653846153846,
-              449.0576923076924, 530.9807692307693, 448.4807692307693,
-              533.0961538461539, 447.8076923076924, 536.6538461538462,
-              447.0384615384616, 541.6538461538462
-            ],
-            "points": [
+        "paths": {
+          "lines": [
+            [
+              null,
+              null,
+              null,
+              null,
+              449.92307692307696,
+              526.6538461538462,
+              449.92307692307696,
+              527.423076923077,
+              449.6346153846154,
+              528.8653846153846,
+              449.0576923076924,
+              530.9807692307693,
+              448.4807692307693,
+              533.0961538461539,
+              447.8076923076924,
+              536.6538461538462,
+              447.0384615384616,
+              541.6538461538462
+            ]
+          ],
+          "points": [
+            [
               449.92307692307696, 526.6538461538462, 449.92307692307696,
               527.423076923077, 448.4807692307693, 533.0961538461539,
               447.0384615384616, 541.6538461538462
             ]
-          }
-        ],
+          ]
+        },
         "pageIndex": 0,
         "rect": [
           446.5384615384616, 526.1538461538462, 456.92307692307696,
@@ -8256,22 +8643,37 @@
         "color": [0, 0, 255],
         "thickness": 1,
         "opacity": 1,
-        "paths": [
-          {
-            "bezier": [
-              482.8461538461538, 511.6538461538462, 482.07692307692304,
-              511.6538461538462, 480.53846153846155, 511.6538461538462,
-              478.23076923076917, 511.6538461538462, 475.9230769230769,
-              511.6538461538462, 472.46153846153845, 511.6538461538462,
-              467.8461538461538, 511.6538461538462
-            ],
-            "points": [
+        "paths": {
+          "lines": [
+            [
+              null,
+              null,
+              null,
+              null,
+              482.8461538461538,
+              511.6538461538462,
+              482.07692307692304,
+              511.6538461538462,
+              480.53846153846155,
+              511.6538461538462,
+              478.23076923076917,
+              511.6538461538462,
+              475.9230769230769,
+              511.6538461538462,
+              472.46153846153845,
+              511.6538461538462,
+              467.8461538461538,
+              511.6538461538462
+            ]
+          ],
+          "points": [
+            [
               482.8461538461538, 511.6538461538462, 482.07692307692304,
               511.6538461538462, 475.9230769230769, 511.6538461538462,
               467.8461538461538, 511.6538461538462
             ]
-          }
-        ],
+          ]
+        },
         "pageIndex": 0,
         "rect": [
           467.1923076923077, 511.1538461538462, 483.3461538461538,
@@ -8284,22 +8686,37 @@
         "color": [0, 255, 255],
         "thickness": 1,
         "opacity": 1,
-        "paths": [
-          {
-            "bezier": [
-              445.9230769230769, 509.3846153846154, 445.5384615384615,
-              509.3846153846154, 445.15384615384613, 508.1346153846154,
-              444.7692307692307, 505.6346153846154, 444.38461538461536,
-              503.1346153846154, 443.23076923076917, 499.00000000000006,
-              441.30769230769226, 493.2307692307693
-            ],
-            "points": [
+        "paths": {
+          "lines": [
+            [
+              null,
+              null,
+              null,
+              null,
+              445.9230769230769,
+              509.3846153846154,
+              445.5384615384615,
+              509.3846153846154,
+              445.15384615384613,
+              508.1346153846154,
+              444.7692307692307,
+              505.6346153846154,
+              444.38461538461536,
+              503.1346153846154,
+              443.23076923076917,
+              499.00000000000006,
+              441.30769230769226,
+              493.2307692307693
+            ]
+          ],
+          "points": [
+            [
               445.9230769230769, 509.3846153846154, 445.5384615384615,
               509.3846153846154, 444.38461538461536, 503.1346153846154,
               441.30769230769226, 493.2307692307693
             ]
-          }
-        ],
+          ]
+        },
         "pageIndex": 0,
         "rect": [
           436.03846153846155, 492.5769230769231, 446.4230769230769,
@@ -8388,13 +8805,13 @@
         "value": "Hello World"
       },
       "33R": {
-        "value": "Hello World\nDlrow Olleh\nHello World"
+        "value": "\nHello World\nDlrow Olleh\nHello World"
       },
       "36R": {
-        "value": "Hello World\nDlrow Olleh\nHello World"
+        "value": "\nHello World\nDlrow Olleh\nHello World"
       },
       "39R": {
-        "value": "Hello World\nDlrow Olleh\nHello World"
+        "value": "\nHello World\nDlrow Olleh\nHello World"
       }
     }
   },
@@ -8757,6 +9174,13 @@
     "md5": "f71e89ebe3d6e75e0c83ce41cd72df1f",
     "link": true,
     "type": "other"
+  },
+  {
+    "id": "bug1942064",
+    "file": "pdfs/bug1942064.pdf",
+    "md5": "d50b5ebb8cab1211609d16faa54ec47d",
+    "rounds": 1,
+    "type": "eq"
   },
   {
     "id": "issue16221-text",
@@ -9469,12 +9893,12 @@
         "color": [53, 228, 47],
         "thickness": 20,
         "opacity": 1,
-        "paths": [
-          {
-            "bezier": [279.9183673469388, 477.0105263157895],
-            "points": [279.9183673469388, 477.0105263157895]
-          }
-        ],
+        "paths": {
+          "lines": [
+            [null, null, null, null, 279.9183673469388, 477.0105263157895]
+          ],
+          "points": [[279.9183673469388, 477.0105263157895]]
+        },
         "pageIndex": 0,
         "rect": [
           269.9183673469388, 443.93684210526317, 312.9387755102041,
@@ -9855,6 +10279,13 @@
     "type": "eq"
   },
   {
+    "id": "issue18816",
+    "file": "pdfs/issue18816.pdf",
+    "md5": "45f863f5b227f700ffea1210e4f80403",
+    "rounds": 1,
+    "type": "eq"
+  },
+  {
     "id": "issue17794",
     "file": "pdfs/issue17794.pdf",
     "md5": "a66b5b938cb44ae241cad845cc3b5d2d",
@@ -10012,6 +10443,7 @@
     "id": "issue17779",
     "file": "pdfs/issue17779.pdf",
     "md5": "764b72e8e56e22662b321b308254fd2b",
+    "talos": false,
     "rounds": 1,
     "link": true,
     "type": "eq"
@@ -10030,6 +10462,1636 @@
     "md5": "bbd7d7f75f51a477b56b6e3f69174d06",
     "rounds": 1,
     "link": true,
+    "type": "eq"
+  },
+  {
+    "id": "issue16782",
+    "file": "pdfs/issue16782.pdf",
+    "md5": "b203313ae62c0dac2585fae1c5fa6f8b",
+    "rounds": 1,
+    "link": true,
+    "type": "eq"
+  },
+  {
+    "id": "issue11306",
+    "file": "pdfs/issue11306.pdf",
+    "md5": "dfc626ee307f9488d74341d21641db9e",
+    "rounds": 1,
+    "link": true,
+    "lastPage": 1,
+    "type": "eq"
+  },
+  {
+    "id": "isssue18194",
+    "file": "pdfs/isssue18194.pdf",
+    "md5": "dbc12624353401deac99d94a2962df4d",
+    "rounds": 1,
+    "link": true,
+    "type": "eq"
+  },
+  {
+    "id": "bug1901253",
+    "file": "pdfs/bug1901253.pdf",
+    "md5": "0d903ece5a3c60f868a3f3217be0353d",
+    "rounds": 1,
+    "link": true,
+    "type": "eq"
+  },
+  {
+    "id": "bug1953099",
+    "file": "pdfs/bug1953099.pdf",
+    "md5": "15295cfa4999ccc08442423fca96c28f",
+    "rounds": 1,
+    "link": false,
+    "type": "eq"
+  },
+  {
+    "id": "bug1899804_print",
+    "file": "pdfs/bug1899804.pdf",
+    "md5": "53d82575d6d5d314404ede8970073e1b",
+    "rounds": 1,
+    "link": true,
+    "type": "eq",
+    "print": true
+  },
+  {
+    "id": "bug1899804",
+    "file": "pdfs/bug1899804.pdf",
+    "md5": "53d82575d6d5d314404ede8970073e1b",
+    "rounds": 1,
+    "link": true,
+    "type": "eq"
+  },
+  {
+    "id": "bug1539074",
+    "file": "pdfs/bug1539074.pdf",
+    "md5": "73922be020083d54747af18a4d5e0768",
+    "rounds": 1,
+    "type": "eq"
+  },
+  {
+    "id": "bug1539074_1",
+    "file": "pdfs/bug1539074.1.pdf",
+    "md5": "d15c49142fda433323d3d35f2762cd33",
+    "rounds": 1,
+    "type": "eq"
+  },
+  {
+    "id": "bug1903731",
+    "file": "pdfs/bug1903731.pdf",
+    "md5": "c90d1b03a62d0221e5f5609e3db16a38",
+    "rounds": 1,
+    "link": true,
+    "type": "eq"
+  },
+  {
+    "id": "bug1905623",
+    "file": "pdfs/bug1905623.pdf",
+    "md5": "6c180a4353bda6b3cb0c693c5e5b32c4",
+    "rounds": 1,
+    "link": true,
+    "firstPage": 2,
+    "lastPage": 2,
+    "type": "eq"
+  },
+  {
+    "id": "issue18444",
+    "file": "pdfs/issue18444.pdf",
+    "md5": "233b7b72d67133044338a728d52d58a9",
+    "rounds": 1,
+    "link": true,
+    "firstPage": 1,
+    "lastPage": 1,
+    "type": "eq"
+  },
+  {
+    "id": "issue18466",
+    "file": "pdfs/issue18466.pdf",
+    "md5": "251197bf19b237e084551d19f885c6b6",
+    "rounds": 1,
+    "link": true,
+    "type": "eq"
+  },
+  {
+    "id": "highlight-update-print",
+    "file": "pdfs/highlight.pdf",
+    "md5": "74671e2d9541931a606e886114bf3efa",
+    "rounds": 1,
+    "type": "eq",
+    "print": true,
+    "annotationStorage": {
+      "pdfjs_internal_editor_0": {
+        "annotationType": 9,
+        "color": [83, 255, 188],
+        "opacity": 1,
+        "thickness": 12,
+        "quadPoints": [
+          224.95899963378906, 649.6790161132812, 257.0950012207031,
+          649.6790161132812, 224.95899963378906, 665.8670043945312,
+          257.0950012207031, 665.8670043945312
+        ],
+        "outlines": [
+          [
+            224.62632386, 649.4661241, 224.62632386, 666.0718055, 257.44364369,
+            666.0718055, 257.44364369, 649.4661241
+          ]
+        ],
+        "pageIndex": 0,
+        "rect": [224.62632386, 649.4661241, 257.44364369, 666.0718055],
+        "rotation": 0,
+        "structTreeParentId": null,
+        "id": "24R"
+      },
+      "pdfjs_internal_editor_1": {
+        "annotationType": 9,
+        "color": [128, 235, 255],
+        "opacity": 1,
+        "thickness": 12,
+        "quadPoints": null,
+        "outlines": {
+          "outline": [
+            null,
+            null,
+            null,
+            null,
+            231.02000427246094,
+            575.9500122070312,
+            234.9244860593802,
+            575.8426675799172,
+            235.67976763594078,
+            575.8027971554493,
+            236.50453905085675,
+            575.765994157359,
+            237.32931046577278,
+            575.7291911592689,
+            238.15139102232476,
+            575.6967454939373,
+            238.97078072051278,
+            575.6686571613642,
+            null,
+            null,
+            null,
+            null,
+            240.19986526779482,
+            575.6265246625046,
+            null,
+            null,
+            null,
+            null,
+            248.19520403340397,
+            575.3534715117306,
+            null,
+            null,
+            null,
+            null,
+            248.6047837595648,
+            587.3464796601443,
+            null,
+            null,
+            null,
+            null,
+            240.60944499395563,
+            587.6195328109183,
+            238.6632878655088,
+            587.6857348021831,
+            237.88825461323634,
+            587.7160188758909,
+            237.11665096007022,
+            587.7501062268005,
+            236.3450473069041,
+            587.7841935777101,
+            235.50103901924535,
+            587.8260330788092,
+            234.5846260970941,
+            587.875624730098,
+            null,
+            null,
+            null,
+            null,
+            231.02000427246094,
+            587.9500122070312
+          ],
+          "points": [
+            [
+              231.02000427246094, 581.9500122070312, 241.21000671386722,
+              581.9500122070312, 243.60000610351562, 581.3499755859375, 246,
+              581.3499755859375, 248.39999389648438, 581.3499755859375,
+              248.39999389648438, 581.3499755859375
+            ]
+          ]
+        },
+        "pageIndex": 0,
+        "rect": [
+          230.69150427246095, 575.1494715117307, 248.9332837595648,
+          588.1540122070312
+        ],
+        "rotation": 0,
+        "structTreeParentId": null,
+        "id": "41R"
+      }
+    }
+  },
+  {
+    "id": "highlight-update-save-print",
+    "file": "pdfs/highlight.pdf",
+    "md5": "74671e2d9541931a606e886114bf3efa",
+    "rounds": 1,
+    "type": "eq",
+    "save": true,
+    "print": true,
+    "annotationStorage": {
+      "pdfjs_internal_editor_0": {
+        "annotationType": 9,
+        "color": [83, 255, 188],
+        "opacity": 1,
+        "thickness": 12,
+        "quadPoints": [
+          224.95899963378906, 649.6790161132812, 257.0950012207031,
+          649.6790161132812, 224.95899963378906, 665.8670043945312,
+          257.0950012207031, 665.8670043945312
+        ],
+        "outlines": [
+          [
+            224.62632386, 649.4661241, 224.62632386, 666.0718055, 257.44364369,
+            666.0718055, 257.44364369, 649.4661241
+          ]
+        ],
+        "pageIndex": 0,
+        "rect": [224.62632386, 649.4661241, 257.44364369, 666.0718055],
+        "rotation": 0,
+        "structTreeParentId": null,
+        "id": "24R"
+      },
+      "pdfjs_internal_editor_1": {
+        "annotationType": 9,
+        "color": [128, 235, 255],
+        "opacity": 1,
+        "thickness": 12,
+        "quadPoints": null,
+        "outlines": {
+          "outline": [
+            null,
+            null,
+            null,
+            null,
+            231.02000427246094,
+            575.9500122070312,
+            234.9244860593802,
+            575.8426675799172,
+            235.67976763594078,
+            575.8027971554493,
+            236.50453905085675,
+            575.765994157359,
+            237.32931046577278,
+            575.7291911592689,
+            238.15139102232476,
+            575.6967454939373,
+            238.97078072051278,
+            575.6686571613642,
+            null,
+            null,
+            null,
+            null,
+            240.19986526779482,
+            575.6265246625046,
+            null,
+            null,
+            null,
+            null,
+            248.19520403340397,
+            575.3534715117306,
+            null,
+            null,
+            null,
+            null,
+            248.6047837595648,
+            587.3464796601443,
+            null,
+            null,
+            null,
+            null,
+            240.60944499395563,
+            587.6195328109183,
+            238.6632878655088,
+            587.6857348021831,
+            237.88825461323634,
+            587.7160188758909,
+            237.11665096007022,
+            587.7501062268005,
+            236.3450473069041,
+            587.7841935777101,
+            235.50103901924535,
+            587.8260330788092,
+            234.5846260970941,
+            587.875624730098,
+            null,
+            null,
+            null,
+            null,
+            231.02000427246094,
+            587.9500122070312
+          ],
+          "points": [
+            [
+              231.02000427246094, 581.9500122070312, 241.21000671386722,
+              581.9500122070312, 243.60000610351562, 581.3499755859375, 246,
+              581.3499755859375, 248.39999389648438, 581.3499755859375,
+              248.39999389648438, 581.3499755859375
+            ]
+          ]
+        },
+        "pageIndex": 0,
+        "rect": [
+          230.69150427246095, 575.1494715117307, 248.9332837595648,
+          588.1540122070312
+        ],
+        "rotation": 0,
+        "structTreeParentId": null,
+        "id": "41R"
+      }
+    }
+  },
+  {
+    "id": "highlight-delete-print",
+    "file": "pdfs/highlight.pdf",
+    "md5": "74671e2d9541931a606e886114bf3efa",
+    "rounds": 1,
+    "type": "eq",
+    "print": true,
+    "annotationStorage": {
+      "pdfjs_internal_editor_0": {
+        "annotationType": 9,
+        "id": "24R",
+        "deleted": true,
+        "pageIndex": 0
+      }
+    }
+  },
+  {
+    "id": "highlight-delete-save-print",
+    "file": "pdfs/highlight.pdf",
+    "md5": "74671e2d9541931a606e886114bf3efa",
+    "rounds": 1,
+    "type": "eq",
+    "print": true,
+    "save": true,
+    "annotationStorage": {
+      "pdfjs_internal_editor_1": {
+        "annotationType": 9,
+        "id": "41R",
+        "deleted": true,
+        "pageIndex": 0
+      }
+    }
+  },
+  {
+    "id": "issue18058",
+    "file": "pdfs/issue18058.pdf",
+    "md5": "da8fcdf25c83ecb2d4be315be5affc3c",
+    "rounds": 1,
+    "link": true,
+    "type": "eq"
+  },
+  {
+    "id": "bug1919513",
+    "file": "pdfs/bug1919513.pdf",
+    "md5": "83d1a7fab2c81e632910c334879e7334",
+    "rounds": 1,
+    "talos": false,
+    "type": "eq"
+  },
+  {
+    "id": "issue16444",
+    "file": "pdfs/issue16444.pdf",
+    "md5": "b3f594ad122e281c615bb2d62c5ccd4d",
+    "rounds": 1,
+    "link": true,
+    "type": "eq"
+  },
+  {
+    "id": "issue16038",
+    "file": "pdfs/issue16038.pdf",
+    "md5": "47262993e04689c327b7ce85396bce99",
+    "rounds": 1,
+    "type": "eq"
+  },
+  {
+    "id": "issue18072-save-print",
+    "file": "pdfs/issue18072.pdf",
+    "md5": "231fe6f035da1f2ddf84f2a78ada20c5",
+    "rounds": 1,
+    "type": "eq",
+    "save": true,
+    "print": true,
+    "annotationStorage": {
+      "28R": {
+        "noView": true,
+        "noPrint": true
+      },
+      "29R": {
+        "noView": true,
+        "noPrint": false
+      },
+      "30R": {
+        "noView": false,
+        "noPrint": true
+      },
+      "31R": {
+        "noView": false,
+        "noPrint": false
+      }
+    }
+  },
+  {
+    "id": "issue18072-save-annotations",
+    "file": "pdfs/issue18072.pdf",
+    "md5": "231fe6f035da1f2ddf84f2a78ada20c5",
+    "rounds": 1,
+    "type": "eq",
+    "save": true,
+    "annotations": true,
+    "annotationStorage": {
+      "28R": {
+        "noView": true,
+        "noPrint": true
+      },
+      "29R": {
+        "noView": true,
+        "noPrint": false
+      },
+      "30R": {
+        "noView": false,
+        "noPrint": true
+      },
+      "31R": {
+        "noView": false,
+        "noPrint": false
+      }
+    }
+  },
+  {
+    "id": "stamps-editor-save-print",
+    "file": "pdfs/stamps.pdf",
+    "md5": "0f8e16d204d4863be159f77aa8045938",
+    "rounds": 1,
+    "lastPage": 1,
+    "type": "eq",
+    "save": true,
+    "print": true,
+    "annotationStorage": {
+      "pdfjs_internal_editor_0": {
+        "annotationType": 13,
+        "pageIndex": 0,
+        "rect": [87, 72, 251, 382],
+        "rotation": 0,
+        "isSvg": false,
+        "structTreeParentId": null,
+        "id": "25R"
+      },
+      "pdfjs_internal_editor_1": {
+        "annotationType": 13,
+        "pageIndex": 0,
+        "rect": [350, 337, 524, 522],
+        "rotation": 0,
+        "isSvg": false,
+        "structTreeParentId": null,
+        "id": "34R"
+      },
+      "pdfjs_internal_editor_2": {
+        "annotationType": 13,
+        "pageIndex": 0,
+        "rect": [82, 608, 234, 735],
+        "rotation": 0,
+        "isSvg": false,
+        "structTreeParentId": null,
+        "id": "58R"
+      },
+      "pdfjs_internal_editor_3": {
+        "pageIndex": 0,
+        "deleted": true,
+        "id": "37R",
+        "popupRef": "44R"
+      }
+    }
+  },
+  {
+    "id": "stamps-editor-print",
+    "file": "pdfs/stamps.pdf",
+    "md5": "0f8e16d204d4863be159f77aa8045938",
+    "rounds": 1,
+    "lastPage": 1,
+    "type": "eq",
+    "print": true,
+    "annotationStorage": {
+      "pdfjs_internal_editor_0": {
+        "annotationType": 13,
+        "pageIndex": 0,
+        "rect": [87, 72, 251, 382],
+        "rotation": 0,
+        "isSvg": false,
+        "structTreeParentId": null,
+        "id": "25R"
+      },
+      "pdfjs_internal_editor_1": {
+        "annotationType": 13,
+        "pageIndex": 0,
+        "rect": [350, 337, 524, 522],
+        "rotation": 0,
+        "isSvg": false,
+        "structTreeParentId": null,
+        "id": "34R"
+      },
+      "pdfjs_internal_editor_2": {
+        "annotationType": 13,
+        "pageIndex": 0,
+        "rect": [82, 608, 234, 735],
+        "rotation": 0,
+        "isSvg": false,
+        "structTreeParentId": null,
+        "id": "58R"
+      },
+      "pdfjs_internal_editor_3": {
+        "pageIndex": 0,
+        "deleted": true,
+        "id": "37R",
+        "popupRef": "44R"
+      }
+    }
+  },
+  {
+    "id": "issue15096",
+    "file": "pdfs/issue15096.pdf",
+    "md5": "5c3515177acd6e146d177adac802277d",
+    "rounds": 1,
+    "type": "eq",
+    "save": true,
+    "annotations": true,
+    "annotationStorage": {
+      "62R": {
+        "value": true
+      },
+      "66R": {
+        "value": false
+      }
+    }
+  },
+  {
+    "id": "issue18036",
+    "file": "pdfs/issue18036.pdf",
+    "md5": "940ad97fc1a6f8d288a213af80313c7e",
+    "rounds": 1,
+    "type": "eq",
+    "annotations": true
+  },
+  {
+    "id": "issue18894",
+    "file": "pdfs/issue18894.pdf",
+    "md5": "5cd744bf8c0800e93c22ed92d1c162f4",
+    "rounds": 1,
+    "type": "eq",
+    "talos": false
+  },
+  {
+    "id": "issue18896",
+    "file": "pdfs/issue18896.pdf",
+    "md5": "4acb4df0f38c976dce5e841e6de1f875",
+    "rounds": 1,
+    "type": "eq",
+    "link": true,
+    "talos": false
+  },
+  {
+    "id": "issue18956",
+    "file": "pdfs/issue18956.pdf",
+    "md5": "73e8cd32bd063e42fcc4b270c78549b1",
+    "rounds": 1,
+    "type": "eq"
+  },
+  {
+    "id": "issue19022",
+    "file": "pdfs/issue19022.pdf",
+    "md5": "7d7a9c45f93a9db269800855ccffe7cd",
+    "rounds": 1,
+    "type": "eq",
+    "link": true
+  },
+  {
+    "id": "issue19083",
+    "file": "pdfs/issue19083.pdf",
+    "md5": "2e2aa6c1904c1e6a89a5a6ec95d5ce7e",
+    "rounds": 1,
+    "forms": true,
+    "talos": false,
+    "type": "eq"
+  },
+  {
+    "id": "issue17190",
+    "file": "pdfs/issue17190.pdf",
+    "md5": "06e3ce6492dc0b5815a63965b5d7144c",
+    "rounds": 1,
+    "talos": false,
+    "type": "eq",
+    "link": true
+  },
+  {
+    "id": "issue17190_1",
+    "file": "pdfs/issue17190_1.pdf",
+    "md5": "63bbc71a6c2cdec11bb20c5744232c47",
+    "rounds": 1,
+    "talos": false,
+    "type": "eq",
+    "link": true
+  },
+  {
+    "id": "inks_basic-editor-save-print",
+    "file": "pdfs/inks_basic.pdf",
+    "md5": "2615610de59b4849993dcc2614ebb266",
+    "rounds": 1,
+    "lastPage": 1,
+    "type": "eq",
+    "save": true,
+    "print": true,
+    "annotationStorage": {
+      "pdfjs_internal_editor_0": {
+        "annotationType": 15,
+        "color": [241, 17, 41],
+        "opacity": 1,
+        "thickness": 20,
+        "paths": {
+          "lines": [
+            [
+              null,
+              null,
+              null,
+              null,
+              114,
+              691.5,
+              null,
+              null,
+              null,
+              null,
+              159.75,
+              631.5
+            ]
+          ],
+          "points": [[114, 691.5, 159.75, 631.5]]
+        },
+        "pageIndex": 0,
+        "rect": [
+          104.0000076523194, 621.5000049701105, 169.7500193485847,
+          701.5000020036331
+        ],
+        "rotation": 0,
+        "structTreeParentId": null,
+        "id": "16R"
+      },
+      "pdfjs_internal_editor_1": {
+        "id": "17R",
+        "deleted": true,
+        "pageIndex": 0,
+        "popupRef": ""
+      },
+      "pdfjs_internal_editor_2": {
+        "annotationType": 15,
+        "color": [0, 0, 0],
+        "opacity": 1,
+        "thickness": 3,
+        "paths": {
+          "lines": [
+            [
+              null,
+              null,
+              null,
+              null,
+              475.0961608886719,
+              647.4615478515625,
+              null,
+              null,
+              null,
+              null,
+              520.8461303710938,
+              587.4615478515625
+            ]
+          ],
+          "points": [
+            [
+              475.0961608886719, 647.4615478515625, 520.8461303710938,
+              587.4615478515625
+            ]
+          ]
+        },
+        "pageIndex": 0,
+        "rect": [
+          473.59618278650134, 585.9615278473268, 522.3461772570244,
+          648.9615135559669
+        ],
+        "rotation": 0,
+        "structTreeParentId": null,
+        "id": "18R"
+      },
+      "pdfjs_internal_editor_3": {
+        "annotationType": 15,
+        "color": [250, 23, 28],
+        "opacity": 0.55,
+        "thickness": 3,
+        "paths": {
+          "lines": [
+            [
+              null,
+              null,
+              null,
+              null,
+              79.04861450195312,
+              532.353759765625,
+              null,
+              null,
+              null,
+              null,
+              198.18736267089844,
+              378.6045837402344
+            ]
+          ],
+          "points": [
+            [
+              79.04861450195312, 532.353759765625, 198.18736267089844,
+              378.6045837402344
+            ]
+          ]
+        },
+        "pageIndex": 0,
+        "rect": [
+          77.54861622361037, 377.10462435392236, 199.6873893210521,
+          533.8537948498359
+        ],
+        "rotation": 0,
+        "structTreeParentId": null,
+        "id": "19R"
+      },
+      "pdfjs_internal_editor_4": {
+        "annotationType": 15,
+        "color": [70, 108, 241],
+        "opacity": 0.7,
+        "thickness": 20,
+        "paths": {
+          "lines": [
+            [
+              null,
+              null,
+              null,
+              null,
+              273.6300048828125,
+              535.47998046875,
+              null,
+              null,
+              null,
+              null,
+              319.3800048828125,
+              475.4800109863281
+            ]
+          ],
+          "points": [
+            [
+              273.6300048828125, 535.47998046875, 319.3800048828125,
+              475.4800109863281
+            ]
+          ]
+        },
+        "pageIndex": 0,
+        "rect": [
+          263.629992209948, 465.48002000955444, 329.38000390621335,
+          545.4799757370582
+        ],
+        "rotation": 0,
+        "structTreeParentId": null,
+        "id": "20R"
+      }
+    }
+  },
+  {
+    "id": "inks_basic-editor-print",
+    "file": "pdfs/inks_basic.pdf",
+    "md5": "2615610de59b4849993dcc2614ebb266",
+    "rounds": 1,
+    "lastPage": 1,
+    "type": "eq",
+    "print": true,
+    "annotationStorage": {
+      "pdfjs_internal_editor_0": {
+        "annotationType": 15,
+        "color": [241, 17, 41],
+        "opacity": 1,
+        "thickness": 20,
+        "paths": {
+          "lines": [
+            [
+              null,
+              null,
+              null,
+              null,
+              114,
+              691.5,
+              null,
+              null,
+              null,
+              null,
+              159.75,
+              631.5
+            ]
+          ],
+          "points": [[114, 691.5, 159.75, 631.5]]
+        },
+        "pageIndex": 0,
+        "rect": [
+          104.0000076523194, 621.5000049701105, 169.7500193485847,
+          701.5000020036331
+        ],
+        "rotation": 0,
+        "structTreeParentId": null,
+        "id": "16R"
+      },
+      "pdfjs_internal_editor_1": {
+        "id": "17R",
+        "deleted": true,
+        "pageIndex": 0,
+        "popupRef": ""
+      },
+      "pdfjs_internal_editor_2": {
+        "annotationType": 15,
+        "color": [0, 0, 0],
+        "opacity": 1,
+        "thickness": 3,
+        "paths": {
+          "lines": [
+            [
+              null,
+              null,
+              null,
+              null,
+              475.0961608886719,
+              647.4615478515625,
+              null,
+              null,
+              null,
+              null,
+              520.8461303710938,
+              587.4615478515625
+            ]
+          ],
+          "points": [
+            [
+              475.0961608886719, 647.4615478515625, 520.8461303710938,
+              587.4615478515625
+            ]
+          ]
+        },
+        "pageIndex": 0,
+        "rect": [
+          473.59618278650134, 585.9615278473268, 522.3461772570244,
+          648.9615135559669
+        ],
+        "rotation": 0,
+        "structTreeParentId": null,
+        "id": "18R"
+      },
+      "pdfjs_internal_editor_3": {
+        "annotationType": 15,
+        "color": [250, 23, 28],
+        "opacity": 0.55,
+        "thickness": 3,
+        "paths": {
+          "lines": [
+            [
+              null,
+              null,
+              null,
+              null,
+              79.04861450195312,
+              532.353759765625,
+              null,
+              null,
+              null,
+              null,
+              198.18736267089844,
+              378.6045837402344
+            ]
+          ],
+          "points": [
+            [
+              79.04861450195312, 532.353759765625, 198.18736267089844,
+              378.6045837402344
+            ]
+          ]
+        },
+        "pageIndex": 0,
+        "rect": [
+          77.54861622361037, 377.10462435392236, 199.6873893210521,
+          533.8537948498359
+        ],
+        "rotation": 0,
+        "structTreeParentId": null,
+        "id": "19R"
+      },
+      "pdfjs_internal_editor_4": {
+        "annotationType": 15,
+        "color": [70, 108, 241],
+        "opacity": 0.7,
+        "thickness": 20,
+        "paths": {
+          "lines": [
+            [
+              null,
+              null,
+              null,
+              null,
+              273.6300048828125,
+              535.47998046875,
+              null,
+              null,
+              null,
+              null,
+              319.3800048828125,
+              475.4800109863281
+            ]
+          ],
+          "points": [
+            [
+              273.6300048828125, 535.47998046875, 319.3800048828125,
+              475.4800109863281
+            ]
+          ]
+        },
+        "pageIndex": 0,
+        "rect": [
+          263.629992209948, 465.48002000955444, 329.38000390621335,
+          545.4799757370582
+        ],
+        "rotation": 0,
+        "structTreeParentId": null,
+        "id": "20R"
+      }
+    }
+  },
+  {
+    "id": "issue19182",
+    "file": "pdfs/issue19182.pdf",
+    "md5": "497370ab55cbb9c60bb0ea4b5d9e4d08",
+    "rounds": 1,
+    "type": "eq"
+  },
+  {
+    "id": "tracemonkey-disableFontFace-eq",
+    "file": "pdfs/tracemonkey.pdf",
+    "md5": "9a192d8b1a7dc652a19835f6f08098bd",
+    "rounds": 1,
+    "disableFontFace": true,
+    "type": "eq"
+  },
+  {
+    "id": "issue19234",
+    "file": "pdfs/issue19234.pdf",
+    "md5": "2b57e3c43fa0ae4a606c13df007c202f",
+    "rounds": 1,
+    "link": true,
+    "disableFontFace": true,
+    "type": "eq"
+  },
+  {
+    "id": "issue19281",
+    "file": "pdfs/issue19281.pdf",
+    "md5": "c5db558965e4189cc6db2720cdaa3e55",
+    "rounds": 1,
+    "link": true,
+    "type": "other"
+  },
+  {
+    "id": "issue19319",
+    "file": "pdfs/issue19319.pdf",
+    "md5": "8612d3f0cf2dd067ea4aec9c8bf98763",
+    "rounds": 1,
+    "link": true,
+    "firstPage": 2,
+    "lastPage": 2,
+    "type": "eq"
+  },
+  {
+    "id": "issue19360",
+    "file": "pdfs/issue19360.pdf",
+    "md5": "b2de376f7e96fa2b6afc00dac016c40a",
+    "rounds": 1,
+    "type": "eq"
+  },
+  {
+    "id": "signature-rotation-print",
+    "file": "pdfs/tracemonkey.pdf",
+    "md5": "9a192d8b1a7dc652a19835f6f08098bd",
+    "rounds": 1,
+    "lastPage": 1,
+    "type": "eq",
+    "print": true,
+    "annotationStorage": {
+      "pdfjs_internal_editor_0": {
+        "annotationType": 101,
+        "isSignature": true,
+        "areContours": true,
+        "color": [0, 0, 0],
+        "thickness": 0,
+        "pageIndex": 0,
+        "rect": [
+          30.33709076317874, 528.4258915511044, 92.2465096088973,
+          605.8765082034198
+        ],
+        "rotation": 0,
+        "structTreeParentId": null,
+        "lines": [
+          [
+            null,
+            null,
+            null,
+            null,
+            30.337093353271484,
+            605.8765258789062,
+            30.337093353271484,
+            598.2304077148438,
+            34.63264083862305,
+            596.6561889648438,
+            43.22381591796875,
+            596.5662841796875,
+            51.8149528503418,
+            596.476318359375,
+            56.11055374145508,
+            585.0970458984375,
+            56.11055374145508,
+            562.4286499023438,
+            56.11055374145508,
+            539.7601928710938,
+            57.83761978149414,
+            528.4259643554688,
+            61.29179763793945,
+            528.4259643554688,
+            64.74597930908203,
+            528.4259643554688,
+            66.4730453491211,
+            539.7601928710938,
+            66.4730453491211,
+            562.4286499023438,
+            66.4730453491211,
+            585.0970458984375,
+            70.76863098144531,
+            596.476318359375,
+            79.35980224609375,
+            596.5662841796875,
+            87.9509048461914,
+            596.6561889648438,
+            92.24649810791016,
+            598.2304077148438,
+            92.24649810791016,
+            601.288818359375,
+            92.24649810791016,
+            604.3472900390625,
+            81.9282455444336,
+            605.8765258789062,
+            61.29179763793945,
+            605.8765258789062
+          ]
+        ]
+      },
+      "pdfjs_internal_editor_1": {
+        "annotationType": 101,
+        "isSignature": true,
+        "areContours": true,
+        "color": [0, 0, 0],
+        "thickness": 0,
+        "pageIndex": 0,
+        "rect": [
+          115.2826878157529, 438.45786562832916, 250.9453054937449,
+          540.3920820626346
+        ],
+        "rotation": 90,
+        "structTreeParentId": null,
+        "lines": [
+          [
+            null,
+            null,
+            null,
+            null,
+            115.2826919555664,
+            438.4578552246094,
+            128.67564392089844,
+            438.4578552246094,
+            131.4329833984375,
+            445.5304870605469,
+            131.59056091308594,
+            459.6759033203125,
+            131.7481231689453,
+            473.8213806152344,
+            151.6800079345703,
+            480.8940734863281,
+            191.38607788085938,
+            480.8940734863281,
+            231.09228515625,
+            480.8940734863281,
+            250.94525146484375,
+            483.7376708984375,
+            250.94525146484375,
+            489.425048828125,
+            250.94525146484375,
+            495.1123046875,
+            231.09228515625,
+            497.955810546875,
+            191.38607788085938,
+            497.955810546875,
+            151.6800079345703,
+            497.955810546875,
+            131.7481231689453,
+            505.0286865234375,
+            131.59056091308594,
+            519.1740112304688,
+            131.4329833984375,
+            533.3192749023438,
+            128.67564392089844,
+            540.3919067382812,
+            123.31848907470703,
+            540.3919067382812,
+            117.96131134033203,
+            540.3919067382812,
+            115.2826919555664,
+            523.4029541015625,
+            115.2826919555664,
+            489.425048828125
+          ]
+        ],
+        "accessibilityData": {
+          "type": "Figure",
+          "alt": "T"
+        }
+      },
+      "pdfjs_internal_editor_2": {
+        "annotationType": 101,
+        "isSignature": true,
+        "areContours": true,
+        "color": [0, 0, 0],
+        "thickness": 0,
+        "pageIndex": 0,
+        "rect": [
+          394.41588899764145, 521.6146706667813, 429.2137094410983,
+          565.6428880366412
+        ],
+        "rotation": 180,
+        "structTreeParentId": null,
+        "lines": [
+          [
+            null,
+            null,
+            null,
+            null,
+            429.2137145996094,
+            521.6146850585938,
+            429.2137145996094,
+            525.9612426757812,
+            426.7992858886719,
+            526.8561401367188,
+            421.97039794921875,
+            526.9072265625,
+            417.1415100097656,
+            526.9583740234375,
+            414.72705078125,
+            533.4271240234375,
+            414.72705078125,
+            546.3134155273438,
+            414.72705078125,
+            559.1997680664062,
+            413.7563171386719,
+            565.6429443359375,
+            411.8147888183594,
+            565.6429443359375,
+            409.873291015625,
+            565.6429443359375,
+            408.9025573730469,
+            559.1997680664062,
+            408.9025573730469,
+            546.3134155273438,
+            408.9025573730469,
+            533.4271240234375,
+            406.48809814453125,
+            526.9583740234375,
+            401.6592102050781,
+            526.9072265625,
+            396.8303527832031,
+            526.8561401367188,
+            394.4158935546875,
+            525.9612426757812,
+            394.4158935546875,
+            524.2225952148438,
+            394.4158935546875,
+            522.4840087890625,
+            400.2155456542969,
+            521.6146850585938,
+            411.8147888183594,
+            521.6146850585938
+          ]
+        ],
+        "accessibilityData": {
+          "type": "Figure",
+          "alt": "T"
+        }
+      },
+      "pdfjs_internal_editor_3": {
+        "annotationType": 101,
+        "isSignature": true,
+        "areContours": true,
+        "color": [0, 0, 0],
+        "thickness": 0,
+        "pageIndex": 0,
+        "rect": [
+          527.772727521983, 549.8299978104504, 563.1363680037585,
+          575.0790592106906
+        ],
+        "rotation": 270,
+        "structTreeParentId": null,
+        "lines": [
+          [
+            null,
+            null,
+            null,
+            null,
+            563.1363525390625,
+            575.0791015625,
+            559.6452026367188,
+            575.0791015625,
+            558.9263916015625,
+            573.3272094726562,
+            558.8853149414062,
+            569.8233642578125,
+            558.8442993164062,
+            566.319580078125,
+            553.6485595703125,
+            564.5676879882812,
+            543.2982177734375,
+            564.5676879882812,
+            532.9478759765625,
+            564.5676879882812,
+            527.772705078125,
+            563.86328125,
+            527.772705078125,
+            562.4545288085938,
+            527.772705078125,
+            561.0458374023438,
+            532.9478759765625,
+            560.3414306640625,
+            543.2982177734375,
+            560.3414306640625,
+            553.6485595703125,
+            560.3414306640625,
+            558.8442993164062,
+            558.5894775390625,
+            558.8853149414062,
+            555.085693359375,
+            558.9263916015625,
+            551.5819091796875,
+            559.6452026367188,
+            549.8300170898438,
+            561.0416259765625,
+            549.8300170898438,
+            562.4381103515625,
+            549.8300170898438,
+            563.1363525390625,
+            554.0382080078125,
+            563.1363525390625,
+            562.4545288085938
+          ]
+        ],
+        "accessibilityData": {
+          "type": "Figure",
+          "alt": "T"
+        }
+      }
+    }
+  },
+  {
+    "id": "signature-rotation-save",
+    "file": "pdfs/tracemonkey.pdf",
+    "md5": "9a192d8b1a7dc652a19835f6f08098bd",
+    "rounds": 1,
+    "lastPage": 1,
+    "type": "eq",
+    "print": true,
+    "save": true,
+    "annotationStorage": {
+      "pdfjs_internal_editor_0": {
+        "annotationType": 101,
+        "isSignature": true,
+        "areContours": true,
+        "color": [0, 0, 0],
+        "thickness": 0,
+        "pageIndex": 0,
+        "rect": [
+          30.33709076317874, 528.4258915511044, 92.2465096088973,
+          605.8765082034198
+        ],
+        "rotation": 0,
+        "structTreeParentId": null,
+        "lines": [
+          [
+            null,
+            null,
+            null,
+            null,
+            30.337093353271484,
+            605.8765258789062,
+            30.337093353271484,
+            598.2304077148438,
+            34.63264083862305,
+            596.6561889648438,
+            43.22381591796875,
+            596.5662841796875,
+            51.8149528503418,
+            596.476318359375,
+            56.11055374145508,
+            585.0970458984375,
+            56.11055374145508,
+            562.4286499023438,
+            56.11055374145508,
+            539.7601928710938,
+            57.83761978149414,
+            528.4259643554688,
+            61.29179763793945,
+            528.4259643554688,
+            64.74597930908203,
+            528.4259643554688,
+            66.4730453491211,
+            539.7601928710938,
+            66.4730453491211,
+            562.4286499023438,
+            66.4730453491211,
+            585.0970458984375,
+            70.76863098144531,
+            596.476318359375,
+            79.35980224609375,
+            596.5662841796875,
+            87.9509048461914,
+            596.6561889648438,
+            92.24649810791016,
+            598.2304077148438,
+            92.24649810791016,
+            601.288818359375,
+            92.24649810791016,
+            604.3472900390625,
+            81.9282455444336,
+            605.8765258789062,
+            61.29179763793945,
+            605.8765258789062
+          ]
+        ]
+      },
+      "pdfjs_internal_editor_1": {
+        "annotationType": 101,
+        "isSignature": true,
+        "areContours": true,
+        "color": [0, 0, 0],
+        "thickness": 0,
+        "pageIndex": 0,
+        "rect": [
+          115.2826878157529, 438.45786562832916, 250.9453054937449,
+          540.3920820626346
+        ],
+        "rotation": 90,
+        "structTreeParentId": null,
+        "lines": [
+          [
+            null,
+            null,
+            null,
+            null,
+            115.2826919555664,
+            438.4578552246094,
+            128.67564392089844,
+            438.4578552246094,
+            131.4329833984375,
+            445.5304870605469,
+            131.59056091308594,
+            459.6759033203125,
+            131.7481231689453,
+            473.8213806152344,
+            151.6800079345703,
+            480.8940734863281,
+            191.38607788085938,
+            480.8940734863281,
+            231.09228515625,
+            480.8940734863281,
+            250.94525146484375,
+            483.7376708984375,
+            250.94525146484375,
+            489.425048828125,
+            250.94525146484375,
+            495.1123046875,
+            231.09228515625,
+            497.955810546875,
+            191.38607788085938,
+            497.955810546875,
+            151.6800079345703,
+            497.955810546875,
+            131.7481231689453,
+            505.0286865234375,
+            131.59056091308594,
+            519.1740112304688,
+            131.4329833984375,
+            533.3192749023438,
+            128.67564392089844,
+            540.3919067382812,
+            123.31848907470703,
+            540.3919067382812,
+            117.96131134033203,
+            540.3919067382812,
+            115.2826919555664,
+            523.4029541015625,
+            115.2826919555664,
+            489.425048828125
+          ]
+        ],
+        "accessibilityData": {
+          "type": "Figure",
+          "alt": "T"
+        }
+      },
+      "pdfjs_internal_editor_2": {
+        "annotationType": 101,
+        "isSignature": true,
+        "areContours": true,
+        "color": [0, 0, 0],
+        "thickness": 0,
+        "pageIndex": 0,
+        "rect": [
+          394.41588899764145, 521.6146706667813, 429.2137094410983,
+          565.6428880366412
+        ],
+        "rotation": 180,
+        "structTreeParentId": null,
+        "lines": [
+          [
+            null,
+            null,
+            null,
+            null,
+            429.2137145996094,
+            521.6146850585938,
+            429.2137145996094,
+            525.9612426757812,
+            426.7992858886719,
+            526.8561401367188,
+            421.97039794921875,
+            526.9072265625,
+            417.1415100097656,
+            526.9583740234375,
+            414.72705078125,
+            533.4271240234375,
+            414.72705078125,
+            546.3134155273438,
+            414.72705078125,
+            559.1997680664062,
+            413.7563171386719,
+            565.6429443359375,
+            411.8147888183594,
+            565.6429443359375,
+            409.873291015625,
+            565.6429443359375,
+            408.9025573730469,
+            559.1997680664062,
+            408.9025573730469,
+            546.3134155273438,
+            408.9025573730469,
+            533.4271240234375,
+            406.48809814453125,
+            526.9583740234375,
+            401.6592102050781,
+            526.9072265625,
+            396.8303527832031,
+            526.8561401367188,
+            394.4158935546875,
+            525.9612426757812,
+            394.4158935546875,
+            524.2225952148438,
+            394.4158935546875,
+            522.4840087890625,
+            400.2155456542969,
+            521.6146850585938,
+            411.8147888183594,
+            521.6146850585938
+          ]
+        ],
+        "accessibilityData": {
+          "type": "Figure",
+          "alt": "T"
+        }
+      },
+      "pdfjs_internal_editor_3": {
+        "annotationType": 101,
+        "isSignature": true,
+        "areContours": true,
+        "color": [0, 0, 0],
+        "thickness": 0,
+        "pageIndex": 0,
+        "rect": [
+          527.772727521983, 549.8299978104504, 563.1363680037585,
+          575.0790592106906
+        ],
+        "rotation": 270,
+        "structTreeParentId": null,
+        "lines": [
+          [
+            null,
+            null,
+            null,
+            null,
+            563.1363525390625,
+            575.0791015625,
+            559.6452026367188,
+            575.0791015625,
+            558.9263916015625,
+            573.3272094726562,
+            558.8853149414062,
+            569.8233642578125,
+            558.8442993164062,
+            566.319580078125,
+            553.6485595703125,
+            564.5676879882812,
+            543.2982177734375,
+            564.5676879882812,
+            532.9478759765625,
+            564.5676879882812,
+            527.772705078125,
+            563.86328125,
+            527.772705078125,
+            562.4545288085938,
+            527.772705078125,
+            561.0458374023438,
+            532.9478759765625,
+            560.3414306640625,
+            543.2982177734375,
+            560.3414306640625,
+            553.6485595703125,
+            560.3414306640625,
+            558.8442993164062,
+            558.5894775390625,
+            558.8853149414062,
+            555.085693359375,
+            558.9263916015625,
+            551.5819091796875,
+            559.6452026367188,
+            549.8300170898438,
+            561.0416259765625,
+            549.8300170898438,
+            562.4381103515625,
+            549.8300170898438,
+            563.1363525390625,
+            554.0382080078125,
+            563.1363525390625,
+            562.4545288085938
+          ]
+        ],
+        "accessibilityData": {
+          "type": "Figure",
+          "alt": "T"
+        }
+      }
+    }
+  },
+  {
+    "id": "issue2856",
+    "file": "pdfs/issue2856.pdf",
+    "md5": "a13033722b99d7b24a1383ac793d2b51",
+    "rounds": 1,
+    "link": true,
+    "type": "eq"
+  },
+  {
+    "id": "issue19633",
+    "file": "pdfs/issue19633.pdf",
+    "md5": "9993aa298c0214a3d3ff5f90ce0d40bb",
+    "rounds": 1,
+    "type": "eq"
+  },
+  {
+    "id": "bug1946953",
+    "file": "pdfs/bug1946953.pdf",
+    "md5": "a71fb64e348b9c7161945e48e75c6681",
+    "rounds": 1,
+    "link": true,
+    "firstPage": 1,
+    "lastPage": 1,
+    "type": "eq"
+  },
+  {
+    "id": "issue18529",
+    "file": "pdfs/issue18529.pdf",
+    "md5": "f95d2cbdd904f5acf922e088cc3cb153",
+    "rounds": 1,
+    "type": "eq"
+  },
+  {
+    "id": "issue16742",
+    "file": "pdfs/issue16742.pdf",
+    "md5": "98b19e944339c01c10c503685eee3ad2",
+    "rounds": 1,
     "type": "eq"
   }
 ]

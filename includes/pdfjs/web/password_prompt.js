@@ -84,14 +84,12 @@ class PasswordPrompt {
     }
     this.label.setAttribute(
       "data-l10n-id",
-      `pdfjs-password-${passwordIncorrect ? "invalid" : "label"}`
+      passwordIncorrect ? "pdfjs-password-invalid" : "pdfjs-password-label"
     );
   }
 
   async close() {
-    if (this.overlayManager.active === this.dialog) {
-      this.overlayManager.close(this.dialog);
-    }
+    this.overlayManager.closeIfActive(this.dialog);
   }
 
   #verify() {

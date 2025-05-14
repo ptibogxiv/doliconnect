@@ -25,9 +25,11 @@ const MATCHES_COUNT_LIMIT = 1000;
  * is done by PDFFindController.
  */
 class PDFFindBar {
+  #mainContainer;
+
   #resizeObserver = new ResizeObserver(this.#resizeObserverCallback.bind(this));
 
-  constructor(options, eventBus) {
+  constructor(options, mainContainer, eventBus) {
     this.opened = false;
 
     this.bar = options.bar;
@@ -42,6 +44,14 @@ class PDFFindBar {
     this.findPreviousButton = options.findPreviousButton;
     this.findNextButton = options.findNextButton;
     this.eventBus = eventBus;
+    this.#mainContainer = mainContainer;
+
+    const checkedInputs = new Map([
+      [this.highlightAll, "highlightallchange"],
+      [this.caseSensitive, "casesensitivitychange"],
+      [this.entireWord, "entirewordchange"],
+      [this.matchDiacritics, "diacriticmatchingchange"],
+    ]);
 
     // Add event listeners to the DOM elements.
     this.toggleButton.addEventListener("click", () => {
@@ -52,11 +62,14 @@ class PDFFindBar {
       this.dispatchEvent("");
     });
 
-    this.bar.addEventListener("keydown", e => {
-      switch (e.keyCode) {
+    this.bar.addEventListener("keydown", ({ keyCode, shiftKey, target }) => {
+      switch (keyCode) {
         case 13: // Enter
-          if (e.target === this.findField) {
-            this.dispatchEvent("again", e.shiftKey);
+          if (target === this.findField) {
+            this.dispatchEvent("again", shiftKey);
+          } else if (checkedInputs.has(target)) {
+            target.checked = !target.checked;
+            this.dispatchEvent(/* evtName = */ checkedInputs.get(target));
           }
           break;
         case 27: // Escape
@@ -68,26 +81,15 @@ class PDFFindBar {
     this.findPreviousButton.addEventListener("click", () => {
       this.dispatchEvent("again", true);
     });
-
     this.findNextButton.addEventListener("click", () => {
       this.dispatchEvent("again", false);
     });
 
-    this.highlightAll.addEventListener("click", () => {
-      this.dispatchEvent("highlightallchange");
-    });
-
-    this.caseSensitive.addEventListener("click", () => {
-      this.dispatchEvent("casesensitivitychange");
-    });
-
-    this.entireWord.addEventListener("click", () => {
-      this.dispatchEvent("entirewordchange");
-    });
-
-    this.matchDiacritics.addEventListener("click", () => {
-      this.dispatchEvent("diacriticmatchingchange");
-    });
+    for (const [elem, evtName] of checkedInputs) {
+      elem.addEventListener("click", () => {
+        this.dispatchEvent(evtName);
+      });
+    }
   }
 
   reset() {
@@ -123,7 +125,9 @@ class PDFFindBar {
         status = "notFound";
         break;
       case FindState.WRAPPED:
-        findMsgId = `pdfjs-find-reached-${previous ? "top" : "bottom"}`;
+        findMsgId = previous
+          ? "pdfjs-find-reached-top"
+          : "pdfjs-find-reached-bottom";
         break;
     }
     findField.setAttribute("data-status", status);
@@ -148,7 +152,9 @@ class PDFFindBar {
 
       findResultsCount.setAttribute(
         "data-l10n-id",
-        `pdfjs-find-match-count${total > limit ? "-limit" : ""}`
+        total > limit
+          ? "pdfjs-find-match-count-limit"
+          : "pdfjs-find-match-count"
       );
       findResultsCount.setAttribute(
         "data-l10n-args",
@@ -166,7 +172,7 @@ class PDFFindBar {
       //  - The width of the viewer itself changes.
       //  - The width of the findbar changes, by toggling the visibility
       //    (or localization) of find count/status messages.
-      this.#resizeObserver.observe(this.bar.parentNode);
+      this.#resizeObserver.observe(this.#mainContainer);
       this.#resizeObserver.observe(this.bar);
 
       this.opened = true;
@@ -196,7 +202,7 @@ class PDFFindBar {
     }
   }
 
-  #resizeObserverCallback(entries) {
+  #resizeObserverCallback() {
     const { bar } = this;
     // The find bar has an absolute position and thus the browser extends
     // its width to the maximum possible width once the find bar does not fit

@@ -23,6 +23,8 @@
 /** @typedef {import("./interfaces").IL10n} IL10n */
 // eslint-disable-next-line max-len
 /** @typedef {import("../src/display/annotation_layer.js").AnnotationLayer} AnnotationLayer */
+// eslint-disable-next-line max-len
+/** @typedef {import("../src/display/struct_tree_layer_builder.js").StructTreeLayerBuilder} StructTreeLayerBuilder */
 
 import { AnnotationEditorLayer } from "pdfjs-lib";
 import { GenericL10n } from "web-null_l10n";
@@ -32,11 +34,18 @@ import { GenericL10n } from "web-null_l10n";
  * @property {AnnotationEditorUIManager} [uiManager]
  * @property {PDFPageProxy} pdfPage
  * @property {IL10n} [l10n]
+ * @property {StructTreeLayerBuilder} [structTreeLayer]
  * @property {TextAccessibilityManager} [accessibilityManager]
  * @property {AnnotationLayer} [annotationLayer]
  * @property {TextLayer} [textLayer]
  * @property {DrawLayer} [drawLayer]
  * @property {function} [onAppend]
+ */
+
+/**
+ * @typedef {Object} AnnotationEditorLayerBuilderRenderOptions
+ * @property {PageViewport} viewport
+ * @property {string} [intent] - The default value is "display".
  */
 
 class AnnotationEditorLayerBuilder {
@@ -45,6 +54,8 @@ class AnnotationEditorLayerBuilder {
   #drawLayer = null;
 
   #onAppend = null;
+
+  #structTreeLayer = null;
 
   #textLayer = null;
 
@@ -68,13 +79,14 @@ class AnnotationEditorLayerBuilder {
     this.#textLayer = options.textLayer || null;
     this.#drawLayer = options.drawLayer || null;
     this.#onAppend = options.onAppend || null;
+    this.#structTreeLayer = options.structTreeLayer || null;
   }
 
   /**
-   * @param {PageViewport} viewport
-   * @param {string} intent (default value is 'display')
+   * @param {AnnotationEditorLayerBuilderRenderOptions} options
+   * @returns {Promise<void>}
    */
-  async render(viewport, intent = "display") {
+  async render({ viewport, intent = "display" }) {
     if (intent !== "display") {
       return;
     }
@@ -100,6 +112,7 @@ class AnnotationEditorLayerBuilder {
     this.annotationEditorLayer = new AnnotationEditorLayer({
       uiManager: this.#uiManager,
       div,
+      structTreeLayer: this.#structTreeLayer,
       accessibilityManager: this.accessibilityManager,
       pageIndex: this.pdfPage.pageNumber - 1,
       l10n: this.l10n,
@@ -133,6 +146,7 @@ class AnnotationEditorLayerBuilder {
     if (!this.div) {
       return;
     }
+    this.annotationEditorLayer.pause(/* on */ true);
     this.div.hidden = true;
   }
 
@@ -141,6 +155,7 @@ class AnnotationEditorLayerBuilder {
       return;
     }
     this.div.hidden = false;
+    this.annotationEditorLayer.pause(/* on */ false);
   }
 }
 

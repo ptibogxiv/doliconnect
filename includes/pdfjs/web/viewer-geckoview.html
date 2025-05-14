@@ -42,6 +42,12 @@ See https://github.com/adobe-type-tools/cmap-resources
 <!--#endif-->
 
 <!--#if !MOZCENTRAL-->
+    <script>
+      if (typeof PDFJSDev === "undefined") {
+        window.isGECKOVIEW = true;
+      }
+    </script>
+
     <script type="importmap">
       {
         "imports": {
@@ -53,6 +59,9 @@ See https://github.com/adobe-type-tools/cmap-resources
           "fluent-dom": "../node_modules/@fluent/dom/esm/index.js",
           "cached-iterable": "../node_modules/cached-iterable/src/index.mjs",
 
+          "display-cmap_reader_factory": "../src/display/cmap_reader_factory.js",
+          "display-standard_fontdata_factory": "../src/display/standard_fontdata_factory.js",
+          "display-wasm_factory": "../src/display/wasm_factory.js",
           "display-fetch_stream": "../src/display/fetch_stream.js",
           "display-network": "../src/display/network.js",
           "display-node_stream": "../src/display/stubs.js",
@@ -62,6 +71,7 @@ See https://github.com/adobe-type-tools/cmap-resources
           "web-annotation_editor_params": "./stubs-geckoview.js",
           "web-download_manager": "./download_manager.js",
           "web-external_services": "./genericcom.js",
+          "web-new_alt_text_manager": "./stubs-geckoview.js",
           "web-null_l10n": "./genericl10n.js",
           "web-pdf_attachment_viewer": "./stubs-geckoview.js",
           "web-pdf_cursor_tools": "./stubs-geckoview.js",
@@ -75,6 +85,7 @@ See https://github.com/adobe-type-tools/cmap-resources
           "web-preferences": "./genericcom.js",
           "web-print_service": "./pdf_print_service.js",
           "web-secondary_toolbar": "./stubs-geckoview.js",
+          "web-signature_manager": "./stubs-geckoview.js",
           "web-toolbar": "./toolbar-geckoview.js"
         }
       }
@@ -86,14 +97,14 @@ See https://github.com/adobe-type-tools/cmap-resources
 
   </head>
 
-  <body tabindex="1">
+  <body tabindex="0">
     <div id="outerContainer">
 
       <div id="mainContainer">
 
         <div id="floatingToolbar">
-          <button id="download" class="toolbarButton" title="Download" tabindex="31" data-l10n-id="pdfjs-download-button">
-            <span data-l10n-id="pdfjs-download-button-label">Download</span>
+          <button id="download" class="toolbarButton" type="button" tabindex="0" data-l10n-id="pdfjs-download-button">
+            <span data-l10n-id="pdfjs-download-button-label"></span>
           </button>
         </div>
 
@@ -105,14 +116,14 @@ See https://github.com/adobe-type-tools/cmap-resources
       <div id="dialogContainer">
         <dialog id="passwordDialog">
           <div class="row">
-            <label for="password" id="passwordText" data-l10n-id="pdfjs-password-label">Enter the password to open this PDF file:</label>
+            <label for="password" id="passwordText" data-l10n-id="pdfjs-password-label"></label>
           </div>
           <div class="row">
             <input type="password" id="password" class="toolbarField">
           </div>
           <div class="buttonRow">
-            <button id="passwordCancel" class="dialogButton"><span data-l10n-id="pdfjs-password-cancel-button">Cancel</span></button>
-            <button id="passwordSubmit" class="dialogButton"><span data-l10n-id="pdfjs-password-ok-button">OK</span></button>
+            <button id="passwordCancel" class="dialogButton" type="button"><span data-l10n-id="pdfjs-password-cancel-button"></span></button>
+            <button id="passwordSubmit" class="dialogButton" type="button"><span data-l10n-id="pdfjs-password-ok-button"></span></button>
           </div>
         </dialog>
       </div>  <!-- dialogContainer -->

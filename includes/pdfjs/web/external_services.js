@@ -17,7 +17,10 @@
 
 class BaseExternalServices {
   constructor() {
-    if (this.constructor === BaseExternalServices) {
+    if (
+      (typeof PDFJSDev === "undefined" || PDFJSDev.test("TESTING")) &&
+      this.constructor === BaseExternalServices
+    ) {
       throw new Error("Cannot initialize BaseExternalServices.");
     }
   }
@@ -41,11 +44,15 @@ class BaseExternalServices {
     throw new Error("Not implemented: createScripting");
   }
 
+  createSignatureStorage() {
+    throw new Error("Not implemented: createSignatureStorage");
+  }
+
   updateEditorStates(data) {
     throw new Error("Not implemented: updateEditorStates");
   }
 
-  async getNimbusExperimentData() {}
+  dispatchGlobalEvent(_event) {}
 }
 
 export { BaseExternalServices };

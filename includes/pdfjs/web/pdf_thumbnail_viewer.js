@@ -39,9 +39,19 @@ const THUMBNAIL_SELECTED_CLASS = "selected";
  * @property {EventBus} eventBus - The application event bus.
  * @property {IPDFLinkService} linkService - The navigation/linking service.
  * @property {PDFRenderingQueue} renderingQueue - The rendering queue object.
+ * @property {number} [maxCanvasPixels] - The maximum supported canvas size in
+ *   total pixels, i.e. width * height. Use `-1` for no limit, or `0` for
+ *   CSS-only zooming. The default value is 4096 * 8192 (32 mega-pixels).
+ * @property {number} [maxCanvasDim] - The maximum supported canvas dimension,
+ *   in either width or height. Use `-1` for no limit.
+ *   The default value is 32767.
  * @property {Object} [pageColors] - Overwrites background and foreground colors
  *   with user defined ones in order to improve readability in high contrast
  *   mode.
+ * @property {AbortSignal} [abortSignal] - The AbortSignal for the window
+ *   events.
+ * @property {boolean} [enableHWA] - Enables hardware acceleration for
+ *   rendering. The default value is `false`.
  */
 
 /**
@@ -56,15 +66,26 @@ class PDFThumbnailViewer {
     eventBus,
     linkService,
     renderingQueue,
+    maxCanvasPixels,
+    maxCanvasDim,
     pageColors,
+    abortSignal,
+    enableHWA,
   }) {
     this.container = container;
     this.eventBus = eventBus;
     this.linkService = linkService;
     this.renderingQueue = renderingQueue;
+    this.maxCanvasPixels = maxCanvasPixels;
+    this.maxCanvasDim = maxCanvasDim;
     this.pageColors = pageColors || null;
+    this.enableHWA = enableHWA || false;
 
-    this.scroll = watchScroll(this.container, this.#scrollUpdated.bind(this));
+    this.scroll = watchScroll(
+      this.container,
+      this.#scrollUpdated.bind(this),
+      abortSignal
+    );
     this.#resetView();
   }
 
@@ -198,7 +219,10 @@ class PDFThumbnailViewer {
             optionalContentConfigPromise,
             linkService: this.linkService,
             renderingQueue: this.renderingQueue,
+            maxCanvasPixels: this.maxCanvasPixels,
+            maxCanvasDim: this.maxCanvasDim,
             pageColors: this.pageColors,
+            enableHWA: this.enableHWA,
           });
           this._thumbnails.push(thumbnail);
         }
@@ -280,7 +304,9 @@ class PDFThumbnailViewer {
     const thumbView = this.renderingQueue.getHighestPriority(
       visibleThumbs,
       this._thumbnails,
-      scrollAhead
+      scrollAhead,
+      /* preRenderExtra */ false,
+      /* ignoreDetailViews */ true
     );
     if (thumbView) {
       this.#ensurePdfPageLoaded(thumbView).then(() => {

@@ -13,19 +13,27 @@
  * limitations under the License.
  */
 
-import { Dict, Name, Ref } from "../../src/core/primitives.js";
+import { Dict, Name, Ref, RefSetCache } from "../../src/core/primitives.js";
 import { incrementalUpdate, writeDict } from "../../src/core/writer.js";
 import { bytesToString } from "../../src/shared/util.js";
 import { StringStream } from "../../src/core/stream.js";
 
 describe("Writer", function () {
+  beforeAll(function () {
+    jasmine.clock().install();
+    jasmine.clock().mockDate(new Date(0));
+  });
+
+  afterAll(function () {
+    jasmine.clock().uninstall();
+  });
+
   describe("Incremental update", function () {
     it("should update a file with new objects", async function () {
       const originalData = new Uint8Array();
-      const newRefs = [
-        { ref: Ref.get(123, 0x2d), data: "abc\n" },
-        { ref: Ref.get(456, 0x4e), data: "defg\n" },
-      ];
+      const changes = new RefSetCache();
+      changes.put(Ref.get(123, 0x2d), { data: "abc\n" });
+      changes.put(Ref.get(456, 0x4e), { data: "defg\n" });
       const xrefInfo = {
         newRef: Ref.get(789, 0),
         startXRef: 314,
@@ -34,13 +42,14 @@ describe("Writer", function () {
         infoRef: null,
         encryptRef: null,
         filename: "foo.pdf",
-        info: {},
+        infoMap: new Map(),
       };
 
       let data = await incrementalUpdate({
         originalData,
         xrefInfo,
-        newRefs,
+        changes,
+        xref: {},
         useXrefStream: true,
       });
       data = bytesToString(data);
@@ -50,7 +59,7 @@ describe("Writer", function () {
         "defg\n" +
         "789 0 obj\n" +
         "<< /Prev 314 /Size 790 /Type /XRef /Index [123 1 456 1 789 1] " +
-        "/W [1 1 1] /ID [(id) (\x01#Eg\x89\xab\xcd\xef\xfe\xdc\xba\x98vT2\x10)] " +
+        "/W [1 1 1] /ID [(id) (\xeb\x4b\x2a\xe7\x31\x36\xf0\xcd\x83\x35\x94\x2a\x36\xcf\xaa\xb0)] " +
         "/Length 9>> stream\n" +
         "\x01\x01\x2d" +
         "\x01\x05\x4e" +
@@ -65,7 +74,8 @@ describe("Writer", function () {
       data = await incrementalUpdate({
         originalData,
         xrefInfo,
-        newRefs,
+        changes,
+        xref: {},
         useXrefStream: false,
       });
       data = bytesToString(data);
@@ -82,7 +92,7 @@ describe("Writer", function () {
         "0000000010 00000 n\r\n" +
         "trailer\n" +
         "<< /Prev 314 /Size 789 " +
-        "/ID [(id) (\x01#Eg\x89\xab\xcd\xef\xfe\xdc\xba\x98vT2\x10)]>>\n" +
+        "/ID [(id) (\xeb\x4b\x2a\xe7\x31\x36\xf0\xcd\x83\x35\x94\x2a\x36\xcf\xaa\xb0)]>>\n" +
         "startxref\n" +
         "10\n" +
         "%%EOF\n";
@@ -91,7 +101,8 @@ describe("Writer", function () {
 
     it("should update a file, missing the /ID-entry, with new objects", async function () {
       const originalData = new Uint8Array();
-      const newRefs = [{ ref: Ref.get(123, 0x2d), data: "abc\n" }];
+      const changes = new RefSetCache();
+      changes.put(Ref.get(123, 0x2d), { data: "abc\n" });
       const xrefInfo = {
         newRef: Ref.get(789, 0),
         startXRef: 314,
@@ -100,13 +111,14 @@ describe("Writer", function () {
         infoRef: null,
         encryptRef: null,
         filename: "foo.pdf",
-        info: {},
+        infoMap: new Map(),
       };
 
       let data = await incrementalUpdate({
         originalData,
         xrefInfo,
-        newRefs,
+        changes,
+        xref: {},
         useXrefStream: true,
       });
       data = bytesToString(data);
@@ -185,7 +197,7 @@ describe("Writer", function () {
   describe("XFA", function () {
     it("should update AcroForm when no datasets in XFA array", async function () {
       const originalData = new Uint8Array();
-      const newRefs = [];
+      const changes = new RefSetCache();
 
       const acroForm = new Dict(null);
       acroForm.set("XFA", [
@@ -206,13 +218,13 @@ describe("Writer", function () {
         infoRef: null,
         encryptRef: null,
         filename: "foo.pdf",
-        info: {},
+        infoMap: new Map(),
       };
 
       let data = await incrementalUpdate({
         originalData,
         xrefInfo,
-        newRefs,
+        changes,
         hasXfa: true,
         xfaDatasetsRef,
         hasXfaDatasetsEntry: false,
@@ -230,8 +242,7 @@ describe("Writer", function () {
         "<< /XFA [(preamble) 123 0 R (datasets) 101112 0 R (postamble) 456 0 R]>>\n" +
         "endobj\n" +
         "101112 0 obj\n" +
-        "<< /Type /EmbeddedFile /Length 20>>\n" +
-        "stream\n" +
+        "<< /Type /EmbeddedFile /Length 20>> stream\n" +
         "<hello>world</hello>\n" +
         "endstream\n" +
         "endobj\n" +
@@ -250,10 +261,9 @@ describe("Writer", function () {
 
   it("should update a file with a deleted object", async function () {
     const originalData = new Uint8Array();
-    const newRefs = [
-      { ref: Ref.get(123, 0x2d), data: null },
-      { ref: Ref.get(456, 0x4e), data: "abc\n" },
-    ];
+    const changes = new RefSetCache();
+    changes.put(Ref.get(123, 0x2d), { data: null });
+    changes.put(Ref.get(456, 0x4e), { data: "abc\n" });
     const xrefInfo = {
       newRef: Ref.get(789, 0),
       startXRef: 314,
@@ -262,13 +272,14 @@ describe("Writer", function () {
       infoRef: null,
       encryptRef: null,
       filename: "foo.pdf",
-      info: {},
+      infoMap: new Map(),
     };
 
     let data = await incrementalUpdate({
       originalData,
       xrefInfo,
-      newRefs,
+      changes,
+      xref: {},
       useXrefStream: true,
     });
     data = bytesToString(data);
@@ -277,7 +288,7 @@ describe("Writer", function () {
       "\nabc\n" +
       "789 0 obj\n" +
       "<< /Prev 314 /Size 790 /Type /XRef /Index [123 1 456 1 789 1] " +
-      "/W [1 1 1] /ID [(id) (\x01#Eg\x89\xab\xcd\xef\xfe\xdc\xba\x98vT2\x10)] " +
+      "/W [1 1 1] /ID [(id) (\x5f\xd1\x43\x8e\xf8\x62\x79\x80\xbb\xd6\xf7\xb6\xd2\xb5\x6f\xd8)] " +
       "/Length 9>> stream\n" +
       "\x00\x00\x2e" +
       "\x01\x01\x4e" +
@@ -292,7 +303,8 @@ describe("Writer", function () {
     data = await incrementalUpdate({
       originalData,
       xrefInfo,
-      newRefs,
+      changes,
+      xref: {},
       useXrefStream: false,
     });
     data = bytesToString(data);
@@ -308,7 +320,7 @@ describe("Writer", function () {
       "0000000005 00000 n\r\n" +
       "trailer\n" +
       "<< /Prev 314 /Size 789 " +
-      "/ID [(id) (\x01#Eg\x89\xab\xcd\xef\xfe\xdc\xba\x98vT2\x10)]>>\n" +
+      "/ID [(id) (\x5f\xd1\x43\x8e\xf8\x62\x79\x80\xbb\xd6\xf7\xb6\xd2\xb5\x6f\xd8)]>>\n" +
       "startxref\n" +
       "5\n" +
       "%%EOF\n";

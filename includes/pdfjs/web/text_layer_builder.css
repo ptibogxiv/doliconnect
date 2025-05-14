@@ -52,6 +52,11 @@
   }
   /*#endif*/
 
+  span[role="img"] {
+    user-select: none;
+    cursor: default;
+  }
+
   .highlight {
     --highlight-bg-color: rgb(180 0 170 / 0.25);
     --highlight-selected-bg-color: rgb(0 100 0 / 0.25);
@@ -96,10 +101,11 @@
   }
 
   ::selection {
+    /* stylelint-disable declaration-block-no-duplicate-properties */
     /*#if !MOZCENTRAL*/
     background: rgba(0 0 255 / 0.25);
     /*#endif*/
-    /* stylelint-disable-next-line declaration-block-no-duplicate-properties */
+    /* stylelint-enable declaration-block-no-duplicate-properties */
     background: color-mix(in srgb, AccentColor, transparent 75%);
   }
 
@@ -117,9 +123,9 @@
     z-index: 0;
     cursor: default;
     user-select: none;
+  }
 
-    &.active {
-      top: 0;
-    }
+  &.selecting .endOfContent {
+    top: 0;
   }
 }

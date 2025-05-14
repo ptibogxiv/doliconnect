@@ -117,10 +117,12 @@ function normalize(text) {
     }
   }
 
+  const hasSyllables = syllablePositions.length > 0;
+
   let normalizationRegex;
-  if (syllablePositions.length === 0 && noSyllablesRegExp) {
+  if (!hasSyllables && noSyllablesRegExp) {
     normalizationRegex = noSyllablesRegExp;
-  } else if (syllablePositions.length > 0 && withSyllablesRegExp) {
+  } else if (hasSyllables && withSyllablesRegExp) {
     normalizationRegex = withSyllablesRegExp;
   } else {
     // Compile the regular expression for text normalization once.
@@ -131,21 +133,33 @@ function normalize(text) {
     // 30A0-30FF: Katakana
     const CJK = "(?:\\p{Ideographic}|[\u3040-\u30FF])";
     const HKDiacritics = "(?:\u3099|\u309A)";
-    const regexp = `([${replace}])|([${toNormalizeWithNFKC}])|(${HKDiacritics}\\n)|(\\p{M}+(?:-\\n)?)|(\\S-\\n)|(${CJK}\\n)|(\\n)`;
+    const BrokenWord = `\\p{Ll}-\\n(?=\\p{Ll})|\\p{Lu}-\\n(?=\\p{L})`;
 
-    if (syllablePositions.length === 0) {
-      // Most of the syllables belong to Hangul so there are no need
-      // to search for them in a non-Hangul document.
-      // We use the \0 in order to have the same number of groups.
-      normalizationRegex = noSyllablesRegExp = new RegExp(
-        regexp + "|(\\u0000)",
-        "gum"
-      );
+    const regexps = [
+      /* p1 */ `[${replace}]`,
+      /* p2 */ `[${toNormalizeWithNFKC}]`,
+      /* p3 */ `${HKDiacritics}\\n`,
+      /* p4 */ "\\p{M}+(?:-\\n)?",
+      /* p5 */ `${BrokenWord}`,
+      /* p6 */ "\\S-\\n",
+      /* p7 */ `${CJK}\\n`,
+      /* p8 */ "\\n",
+      /* p9 */ hasSyllables
+        ? FIRST_CHAR_SYLLABLES_REG_EXP
+        : // Most of the syllables belong to Hangul so there are no need
+          // to search for them in a non-Hangul document.
+          // We use the \0 in order to have the same number of groups.
+          "\\u0000",
+    ];
+    normalizationRegex = new RegExp(
+      regexps.map(r => `(${r})`).join("|"),
+      "gum"
+    );
+
+    if (hasSyllables) {
+      withSyllablesRegExp = normalizationRegex;
     } else {
-      normalizationRegex = withSyllablesRegExp = new RegExp(
-        regexp + `|(${FIRST_CHAR_SYLLABLES_REG_EXP})`,
-        "gum"
-      );
+      noSyllablesRegExp = normalizationRegex;
     }
   }
 
@@ -183,7 +197,7 @@ function normalize(text) {
   }
 
   let normalized = text.normalize("NFD");
-  const positions = [[0, 0]];
+  const positions = [0, 0];
   let rawDiacriticsIndex = 0;
   let syllableIndex = 0;
   let shift = 0;
@@ -193,14 +207,14 @@ function normalize(text) {
 
   normalized = normalized.replace(
     normalizationRegex,
-    (match, p1, p2, p3, p4, p5, p6, p7, p8, i) => {
+    (match, p1, p2, p3, p4, p5, p6, p7, p8, p9, i) => {
       i -= shiftOrigin;
       if (p1) {
         // Maybe fractions or quotations mark...
         const replacement = CHARACTERS_TO_NORMALIZE[p1];
         const jj = replacement.length;
         for (let j = 1; j < jj; j++) {
-          positions.push([i - shift + j, shift - j]);
+          positions.push(i - shift + j, shift - j);
         }
         shift -= jj - 1;
         return replacement;
@@ -215,7 +229,7 @@ function normalize(text) {
         }
         const jj = replacement.length;
         for (let j = 1; j < jj; j++) {
-          positions.push([i - shift + j, shift - j]);
+          positions.push(i - shift + j, shift - j);
         }
         shift -= jj - 1;
         return replacement;
@@ -232,13 +246,13 @@ function normalize(text) {
         } else {
           // i is the position of the first diacritic
           // so (i - 1) is the position for the letter before.
-          positions.push([i - 1 - shift + 1, shift - 1]);
+          positions.push(i - 1 - shift + 1, shift - 1);
           shift -= 1;
           shiftOrigin += 1;
         }
 
         // End-of-line.
-        positions.push([i - shift + 1, shift]);
+        positions.push(i - shift + 1, shift);
         shiftOrigin += 1;
         eol += 1;
 
@@ -260,16 +274,16 @@ function normalize(text) {
         for (let j = 1; j <= jj; j++) {
           // i is the position of the first diacritic
           // so (i - 1) is the position for the letter before.
-          positions.push([i - 1 - shift + j, shift - j]);
+          positions.push(i - 1 - shift + j, shift - j);
         }
         shift -= jj;
         shiftOrigin += jj;
 
         if (hasTrailingDashEOL) {
           // Diacritics are followed by a -\n.
-          // See comments in `if (p5)` block.
+          // See comments in `if (p6)` block.
           i += len - 1;
-          positions.push([i - shift + 1, 1 + shift]);
+          positions.push(i - shift + 1, 1 + shift);
           shift += 1;
           shiftOrigin += 1;
           eol += 1;
@@ -280,14 +294,13 @@ function normalize(text) {
       }
 
       if (p5) {
-        // "X-\n" is removed because an hyphen at the end of a line
-        // with not a space before is likely here to mark a break
-        // in a word.
+        // In "X-\ny", "-\n" is removed because an hyphen at the end of a line
+        // between two letters is likely here to mark a break in a word.
         // If X is encoded with UTF-32 then it can have a length greater than 1.
         // The \n isn't in the original text so here y = i, n = X.len - 2 and
         // o = X.len - 1.
         const len = p5.length - 2;
-        positions.push([i - shift + len, 1 + shift]);
+        positions.push(i - shift + len, 1 + shift);
         shift += 1;
         shiftOrigin += 1;
         eol += 1;
@@ -295,45 +308,61 @@ function normalize(text) {
       }
 
       if (p6) {
-        // An ideographic at the end of a line doesn't imply adding an extra
-        // white space.
-        // A CJK can be encoded in UTF-32, hence their length isn't always 1.
-        const len = p6.length - 1;
-        positions.push([i - shift + len, shift]);
+        // A - following a non-space character that is not detected as the
+        // hyphen breaking a word in two lines needs to be preserved. It could
+        // be, for example, in a compound word or in a date.
+        // Only remove the newline.
         shiftOrigin += 1;
         eol += 1;
         return p6.slice(0, -1);
       }
 
       if (p7) {
+        // An ideographic at the end of a line doesn't imply adding an extra
+        // white space.
+        // A CJK can be encoded in UTF-32, hence their length isn't always 1.
+        const len = p7.length - 1;
+        positions.push(i - shift + len, shift);
+        shiftOrigin += 1;
+        eol += 1;
+        return p7.slice(0, -1);
+      }
+
+      if (p8) {
         // eol is replaced by space: "foo\nbar" is likely equivalent to
         // "foo bar".
-        positions.push([i - shift + 1, shift - 1]);
+        positions.push(i - shift + 1, shift - 1);
         shift -= 1;
         shiftOrigin += 1;
         eol += 1;
         return " ";
       }
 
-      // p8
+      // p9
       if (i + eol === syllablePositions[syllableIndex]?.[1]) {
         // A syllable (1 char) is replaced with several chars (n) so
         // newCharsLen = n - 1.
         const newCharLen = syllablePositions[syllableIndex][0] - 1;
         ++syllableIndex;
         for (let j = 1; j <= newCharLen; j++) {
-          positions.push([i - (shift - j), shift - j]);
+          positions.push(i - (shift - j), shift - j);
         }
         shift -= newCharLen;
         shiftOrigin += newCharLen;
       }
-      return p8;
+      return p9;
     }
   );
 
-  positions.push([normalized.length, shift]);
+  positions.push(normalized.length, shift);
+  const starts = new Uint32Array(positions.length >> 1);
+  const shifts = new Int32Array(positions.length >> 1);
+  for (let i = 0, ii = positions.length; i < ii; i += 2) {
+    starts[i >> 1] = positions[i];
+    shifts[i >> 1] = positions[i + 1];
+  }
 
-  return [normalized, positions, hasDiacritics];
+  return [normalized, [starts, shifts], hasDiacritics];
 }
 
 // Determine the original, non-normalized, match index such that highlighting of
@@ -344,25 +373,26 @@ function getOriginalIndex(diffs, pos, len) {
     return [pos, len];
   }
 
+  const [starts, shifts] = diffs;
   // First char in the new string.
   const start = pos;
   // Last char in the new string.
   const end = pos + len - 1;
-  let i = binarySearchFirstItem(diffs, x => x[0] >= start);
-  if (diffs[i][0] > start) {
+  let i = binarySearchFirstItem(starts, x => x >= start);
+  if (starts[i] > start) {
     --i;
   }
 
-  let j = binarySearchFirstItem(diffs, x => x[0] >= end, i);
-  if (diffs[j][0] > end) {
+  let j = binarySearchFirstItem(starts, x => x >= end, i);
+  if (starts[j] > end) {
     --j;
   }
 
   // First char in the old string.
-  const oldStart = start + diffs[i][1];
+  const oldStart = start + shifts[i];
 
   // Last char in the old string.
-  const oldEnd = end + diffs[j][1];
+  const oldEnd = end + shifts[j];
   const oldLen = oldEnd + 1 - oldStart;
 
   return [oldStart, oldLen];
@@ -670,37 +700,6 @@ class PDFFindController {
     return true;
   }
 
-  #calculateRegExpMatch(query, entireWord, pageIndex, pageContent) {
-    const matches = (this._pageMatches[pageIndex] = []);
-    const matchesLength = (this._pageMatchesLength[pageIndex] = []);
-    if (!query) {
-      // The query can be empty because some chars like diacritics could have
-      // been stripped out.
-      return;
-    }
-    const diffs = this._pageDiffs[pageIndex];
-    let match;
-    while ((match = query.exec(pageContent)) !== null) {
-      if (
-        entireWord &&
-        !this.#isEntireWord(pageContent, match.index, match[0].length)
-      ) {
-        continue;
-      }
-
-      const [matchPos, matchLen] = getOriginalIndex(
-        diffs,
-        match.index,
-        match[0].length
-      );
-
-      if (matchLen) {
-        matches.push(matchPos);
-        matchesLength.push(matchLen);
-      }
-    }
-  }
-
   #convertToRegExpString(query, hasDiacritics) {
     const { matchDiacritics } = this.#state;
     let isUnicode = false;
@@ -772,12 +771,67 @@ class PDFFindController {
   }
 
   #calculateMatch(pageIndex) {
-    let query = this.#query;
+    if (!this.#state) {
+      return;
+    }
+    const query = this.#query;
     if (query.length === 0) {
       return; // Do nothing: the matches should be wiped out already.
     }
-    const { caseSensitive, entireWord } = this.#state;
     const pageContent = this._pageContents[pageIndex];
+    const matcherResult = this.match(query, pageContent, pageIndex);
+
+    const matches = (this._pageMatches[pageIndex] = []);
+    const matchesLength = (this._pageMatchesLength[pageIndex] = []);
+    const diffs = this._pageDiffs[pageIndex];
+
+    matcherResult?.forEach(({ index, length }) => {
+      const [matchPos, matchLen] = getOriginalIndex(diffs, index, length);
+      if (matchLen) {
+        matches.push(matchPos);
+        matchesLength.push(matchLen);
+      }
+    });
+
+    // When `highlightAll` is set, ensure that the matches on previously
+    // rendered (and still active) pages are correctly highlighted.
+    if (this.#state.highlightAll) {
+      this.#updatePage(pageIndex);
+    }
+    if (this._resumePageIdx === pageIndex) {
+      this._resumePageIdx = null;
+      this.#nextPageMatch();
+    }
+
+    // Update the match count.
+    const pageMatchesCount = matches.length;
+    this._matchesCountTotal += pageMatchesCount;
+    if (this.#updateMatchesCountOnProgress) {
+      if (pageMatchesCount > 0) {
+        this.#updateUIResultsCount();
+      }
+    } else if (++this.#visitedPagesCount === this._linkService.pagesCount) {
+      // For example, in GeckoView we want to have only the final update because
+      // the Java side provides only one object to update the counts.
+      this.#updateUIResultsCount();
+    }
+  }
+
+  /**
+   * @typedef {Object} FindMatch
+   * @property {number} index - The start of the matched text in the page's
+   *   string contents.
+   * @property {number} length - The length of the matched text.
+   */
+
+  /**
+   * @param {string | string[]} query - The search query.
+   * @param {string} pageContent - The text content of the page to search in.
+   * @param {number} pageIndex - The index of the page that is being processed.
+   * @returns {FindMatch[] | undefined} An array of matches in the provided
+   *   page.
+   */
+  match(query, pageContent, pageIndex) {
     const hasDiacritics = this._hasDiacritics[pageIndex];
 
     let isUnicode = false;
@@ -799,34 +853,28 @@ class PDFFindController {
         })
         .join("|");
     }
+    if (!query) {
+      // The query can be empty because some chars like diacritics could have
+      // been stripped out.
+      return undefined;
+    }
 
+    const { caseSensitive, entireWord } = this.#state;
     const flags = `g${isUnicode ? "u" : ""}${caseSensitive ? "" : "i"}`;
-    query = query ? new RegExp(query, flags) : null;
+    query = new RegExp(query, flags);
 
-    this.#calculateRegExpMatch(query, entireWord, pageIndex, pageContent);
-
-    // When `highlightAll` is set, ensure that the matches on previously
-    // rendered (and still active) pages are correctly highlighted.
-    if (this.#state.highlightAll) {
-      this.#updatePage(pageIndex);
-    }
-    if (this._resumePageIdx === pageIndex) {
-      this._resumePageIdx = null;
-      this.#nextPageMatch();
-    }
-
-    // Update the match count.
-    const pageMatchesCount = this._pageMatches[pageIndex].length;
-    this._matchesCountTotal += pageMatchesCount;
-    if (this.#updateMatchesCountOnProgress) {
-      if (pageMatchesCount > 0) {
-        this.#updateUIResultsCount();
+    const matches = [];
+    let match;
+    while ((match = query.exec(pageContent)) !== null) {
+      if (
+        entireWord &&
+        !this.#isEntireWord(pageContent, match.index, match[0].length)
+      ) {
+        continue;
       }
-    } else if (++this.#visitedPagesCount === this._linkService.pagesCount) {
-      // For example, in GeckoView we want to have only the final update because
-      // the Java side provides only one object to update the counts.
-      this.#updateUIResultsCount();
+      matches.push({ index: match.index, length: match[0].length });
     }
+    return matches;
   }
 
   #extractText() {
@@ -837,13 +885,17 @@ class PDFFindController {
 
     let deferred = Promise.resolve();
     const textOptions = { disableNormalization: true };
+    const pdfDoc = this._pdfDocument;
     for (let i = 0, ii = this._linkService.pagesCount; i < ii; i++) {
       const { promise, resolve } = Promise.withResolvers();
       this._extractTextPromises[i] = promise;
 
-      // eslint-disable-next-line arrow-body-style
-      deferred = deferred.then(() => {
-        return this._pdfDocument
+      deferred = deferred.then(async () => {
+        if (pdfDoc !== this._pdfDocument) {
+          resolve();
+          return;
+        }
+        await pdfDoc
           .getPage(i + 1)
           .then(pdfPage => pdfPage.getTextContent(textOptions))
           .then(
@@ -1103,7 +1155,7 @@ class PDFFindController {
       current += matchIdx + 1;
     }
     // When searching starts, this method may be called before the `pageMatches`
-    // have been counted (in `_calculateMatch`). Ensure that the UI won't show
+    // have been counted (in `#calculateMatch`). Ensure that the UI won't show
     // temporarily broken state when the active find result doesn't make sense.
     if (current < 1 || current > total) {
       current = total = 0;
@@ -1133,10 +1185,11 @@ class PDFFindController {
       source: this,
       state,
       previous,
+      entireWord: this.#state?.entireWord ?? null,
       matchesCount: this.#requestMatchesCount(),
       rawQuery: this.#state?.query ?? null,
     });
   }
 }
 
-export { FindState, PDFFindController };
+export { FindState, getOriginalIndex, normalize, PDFFindController };

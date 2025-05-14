@@ -20,7 +20,7 @@
 // eslint-disable-next-line max-len
 /** @typedef {import("./text_accessibility.js").TextAccessibilityManager} TextAccessibilityManager */
 
-import { normalizeUnicode, TextLayer } from "pdfjs-lib";
+import { normalizeUnicode, stopEvent, TextLayer } from "pdfjs-lib";
 import { removeNullCharacters } from "./ui_utils.js";
 
 /**
@@ -29,7 +29,14 @@ import { removeNullCharacters } from "./ui_utils.js";
  * @property {TextHighlighter} [highlighter] - Optional object that will handle
  *   highlighting text from the find controller.
  * @property {TextAccessibilityManager} [accessibilityManager]
+ * @property {boolean} [enablePermissions]
  * @property {function} [onAppend]
+ */
+
+/**
+ * @typedef {Object} TextLayerBuilderRenderOptions
+ * @property {PageViewport} viewport
+ * @property {Object} [textContentParams]
  */
 
 /**
@@ -50,6 +57,9 @@ class TextLayerBuilder {
 
   static #selectionChangeAbortController = null;
 
+  /**
+   * @param {TextLayerBuilderOptions} options
+   */
   constructor({
     pdfPage,
     highlighter = null,
@@ -68,22 +78,12 @@ class TextLayerBuilder {
     this.div.className = "textLayer";
   }
 
-  #finishRendering() {
-    this.#renderingDone = true;
-
-    const endOfContent = document.createElement("div");
-    endOfContent.className = "endOfContent";
-    this.div.append(endOfContent);
-
-    this.#bindMouse(endOfContent);
-  }
-
   /**
    * Renders the text layer.
-   * @param {PageViewport} viewport
-   * @param {Object} [textContentParams]
+   * @param {TextLayerBuilderRenderOptions} options
+   * @returns {Promise<void>}
    */
-  async render(viewport, textContentParams = null) {
+  async render({ viewport, textContentParams = null }) {
     if (this.#renderingDone && this.#textLayer) {
       this.#textLayer.update({
         viewport,
@@ -110,7 +110,13 @@ class TextLayerBuilder {
     this.accessibilityManager?.setTextMapping(textDivs);
 
     await this.#textLayer.render();
-    this.#finishRendering();
+    this.#renderingDone = true;
+
+    const endOfContent = document.createElement("div");
+    endOfContent.className = "endOfContent";
+    this.div.append(endOfContent);
+
+    this.#bindMouse(endOfContent);
     // Ensure that the textLayer is appended to the DOM *before* handling
     // e.g. a pending search operation.
     this.#onAppend?.(this.div);
@@ -154,8 +160,8 @@ class TextLayerBuilder {
   #bindMouse(end) {
     const { div } = this;
 
-    div.addEventListener("mousedown", evt => {
-      end.classList.add("active");
+    div.addEventListener("mousedown", () => {
+      div.classList.add("selecting");
     });
 
     div.addEventListener("copy", event => {
@@ -166,8 +172,7 @@ class TextLayerBuilder {
           removeNullCharacters(normalizeUnicode(selection.toString()))
         );
       }
-      event.preventDefault();
-      event.stopPropagation();
+      stopEvent(event);
     });
 
     TextLayerBuilder.#textLayers.set(div, end);
@@ -197,13 +202,39 @@ class TextLayerBuilder {
         end.style.width = "";
         end.style.height = "";
       }
-      end.classList.remove("active");
+      textLayer.classList.remove("selecting");
     };
 
+    let isPointerDown = false;
+    document.addEventListener(
+      "pointerdown",
+      () => {
+        isPointerDown = true;
+      },
+      { signal }
+    );
     document.addEventListener(
       "pointerup",
       () => {
+        isPointerDown = false;
         this.#textLayers.forEach(reset);
+      },
+      { signal }
+    );
+    window.addEventListener(
+      "blur",
+      () => {
+        isPointerDown = false;
+        this.#textLayers.forEach(reset);
+      },
+      { signal }
+    );
+    document.addEventListener(
+      "keyup",
+      () => {
+        if (!isPointerDown) {
+          this.#textLayers.forEach(reset);
+        }
       },
       { signal }
     );
@@ -241,7 +272,7 @@ class TextLayerBuilder {
 
         for (const [textLayerDiv, endDiv] of this.#textLayers) {
           if (activeTextLayers.has(textLayerDiv)) {
-            endDiv.classList.add("active");
+            textLayerDiv.classList.add("selecting");
           } else {
             reset(endDiv, textLayerDiv);
           }
@@ -276,8 +307,16 @@ class TextLayerBuilder {
         if (anchor.nodeType === Node.TEXT_NODE) {
           anchor = anchor.parentNode;
         }
+        if (!modifyStart && range.endOffset === 0) {
+          do {
+            while (!anchor.previousSibling) {
+              anchor = anchor.parentNode;
+            }
+            anchor = anchor.previousSibling;
+          } while (!anchor.childNodes.length);
+        }
 
-        const parentTextLayer = anchor.parentElement.closest(".textLayer");
+        const parentTextLayer = anchor.parentElement?.closest(".textLayer");
         const endDiv = this.#textLayers.get(parentTextLayer);
         if (endDiv) {
           endDiv.style.width = parentTextLayer.style.width;

@@ -15,6 +15,8 @@
 
 const AltTextManager = null;
 const AnnotationEditorParams = null;
+const ImageAltTextSettings = null;
+const NewAltTextManager = null;
 const PDFAttachmentViewer = null;
 const PDFCursorTools = null;
 const PDFDocumentProperties = null;
@@ -25,10 +27,13 @@ const PDFPresentationMode = null;
 const PDFSidebar = null;
 const PDFThumbnailViewer = null;
 const SecondaryToolbar = null;
+const SignatureManager = null;
 
 export {
   AltTextManager,
   AnnotationEditorParams,
+  ImageAltTextSettings,
+  NewAltTextManager,
   PDFAttachmentViewer,
   PDFCursorTools,
   PDFDocumentProperties,
@@ -39,4 +44,5 @@ export {
   PDFSidebar,
   PDFThumbnailViewer,
   SecondaryToolbar,
+  SignatureManager,
 };

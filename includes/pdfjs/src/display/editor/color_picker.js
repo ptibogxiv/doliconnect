@@ -18,10 +18,6 @@ import { KeyboardManager } from "./tools.js";
 import { noContextMenu } from "../display_utils.js";
 
 class ColorPicker {
-  #boundKeyDown = this.#keyDown.bind(this);
-
-  #boundPointerDown = this.#pointerDown.bind(this);
-
   #button = null;
 
   #buttonSwatch = null;
@@ -38,9 +34,13 @@ class ColorPicker {
 
   #eventBus;
 
+  #openDropdownAC = null;
+
   #uiManager = null;
 
   #type;
+
+  static #l10nColor = null;
 
   static get _keyboardManager() {
     return shadow(
@@ -81,6 +81,14 @@ class ColorPicker {
       editor?.color ||
       this.#uiManager?.highlightColors.values().next().value ||
       "#FFFF98";
+
+    ColorPicker.#l10nColor ||= Object.freeze({
+      blue: "pdfjs-editor-colorpicker-blue",
+      green: "pdfjs-editor-colorpicker-green",
+      pink: "pdfjs-editor-colorpicker-pink",
+      red: "pdfjs-editor-colorpicker-red",
+      yellow: "pdfjs-editor-colorpicker-yellow",
+    });
   }
 
   renderButton() {
@@ -89,8 +97,9 @@ class ColorPicker {
     button.tabIndex = "0";
     button.setAttribute("data-l10n-id", "pdfjs-editor-colorpicker-button");
     button.setAttribute("aria-haspopup", true);
-    button.addEventListener("click", this.#openDropdown.bind(this));
-    button.addEventListener("keydown", this.#boundKeyDown);
+    const signal = this.#uiManager._signal;
+    button.addEventListener("click", this.#openDropdown.bind(this), { signal });
+    button.addEventListener("keydown", this.#keyDown.bind(this), { signal });
     const swatch = (this.#buttonSwatch = document.createElement("span"));
     swatch.className = "swatch";
     swatch.setAttribute("aria-hidden", true);
@@ -109,7 +118,8 @@ class ColorPicker {
 
   #getDropdownRoot() {
     const div = document.createElement("div");
-    div.addEventListener("contextmenu", noContextMenu);
+    const signal = this.#uiManager._signal;
+    div.addEventListener("contextmenu", noContextMenu, { signal });
     div.className = "dropdown";
     div.role = "listbox";
     div.setAttribute("aria-multiselectable", false);
@@ -121,17 +131,19 @@ class ColorPicker {
       button.role = "option";
       button.setAttribute("data-color", color);
       button.title = name;
-      button.setAttribute("data-l10n-id", `pdfjs-editor-colorpicker-${name}`);
+      button.setAttribute("data-l10n-id", ColorPicker.#l10nColor[name]);
       const swatch = document.createElement("span");
       button.append(swatch);
       swatch.className = "swatch";
       swatch.style.backgroundColor = color;
       button.setAttribute("aria-selected", color === this.#defaultColor);
-      button.addEventListener("click", this.#colorSelect.bind(this, color));
+      button.addEventListener("click", this.#colorSelect.bind(this, color), {
+        signal,
+      });
       div.append(button);
     }
 
-    div.addEventListener("keydown", this.#boundKeyDown);
+    div.addEventListener("keydown", this.#keyDown.bind(this), { signal });
 
     return div;
   }
@@ -211,7 +223,14 @@ class ColorPicker {
       return;
     }
     this.#dropdownWasFromKeyboard = event.detail === 0;
-    window.addEventListener("pointerdown", this.#boundPointerDown);
+
+    if (!this.#openDropdownAC) {
+      this.#openDropdownAC = new AbortController();
+
+      window.addEventListener("pointerdown", this.#pointerDown.bind(this), {
+        signal: this.#uiManager.combinedSignal(this.#openDropdownAC),
+      });
+    }
     if (this.#dropdown) {
       this.#dropdown.classList.remove("hidden");
       return;
@@ -229,7 +248,8 @@ class ColorPicker {
 
   hideDropdown() {
     this.#dropdown?.classList.add("hidden");
-    window.removeEventListener("pointerdown", this.#boundPointerDown);
+    this.#openDropdownAC?.abort();
+    this.#openDropdownAC = null;
   }
 
   get #isDropdownVisible() {

@@ -12,6 +12,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+@import url(message_bar.css);
 @import url(dialog.css);
 @import url(text_layer_builder.css);
 @import url(annotation_layer_builder.css);
@@ -20,20 +21,23 @@
 @import url(annotation_editor_layer_builder.css);
 
 :root {
+  color-scheme: light dark;
+
   --viewer-container-height: 0;
   --pdfViewer-padding-bottom: 0;
   --page-margin: 1px auto -8px;
   --page-border: 9px solid transparent;
   --spreadHorizontalWrapped-margin-LR: -3.5px;
   --loading-icon-delay: 400ms;
-}
+  --focus-ring-color: light-dark(#0060df, #0df);
+  --focus-ring-outline: 2px solid var(--focus-ring-color);
 
-@media screen and (forced-colors: active) {
-  :root {
+  @media screen and (forced-colors: active) {
     --pdfViewer-padding-bottom: 9px;
     --page-margin: 8px auto -1px;
     --page-border: 1px solid CanvasText;
     --spreadHorizontalWrapped-margin-LR: 3.5px;
+    --focus-ring-color: CanvasText;
   }
 }
 
@@ -61,6 +65,7 @@
   /* Define this variable here and not in :root to avoid to reflow all the UI
      when scaling (see #15929). */
   --scale-factor: 1;
+  --page-bg-color: unset;
 
   padding-bottom: var(--pdfViewer-padding-bottom);
 
@@ -71,23 +76,24 @@
     --hcm-highlight-filter: invert(100%);
   }
 
+  &.copyAll {
+    cursor: wait;
+  }
+
   .canvasWrapper {
     overflow: hidden;
     width: 100%;
     height: 100%;
 
     canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
       margin: 0;
       display: block;
-
-      &[hidden] {
-        display: none;
-      }
-
-      &[zooming] {
-        width: 100%;
-        height: 100%;
-      }
+      width: 100%;
+      height: 100%;
+      contain: content;
 
       .structTree {
         contain: strict;
@@ -97,6 +103,11 @@
 }
 
 .pdfViewer .page {
+  --user-unit: 1;
+  --total-scale-factor: calc(var(--scale-factor) * var(--user-unit));
+  --scale-round-x: 1px;
+  --scale-round-y: 1px;
+
   direction: ltr;
   width: 816px;
   height: 1056px;
@@ -105,7 +116,7 @@
   overflow: visible;
   border: var(--page-border);
   background-clip: content-box;
-  background-color: rgb(255 255 255);
+  background-color: var(--page-bg-color, rgb(255 255 255));
 }
 
 .pdfViewer .dummyPage {

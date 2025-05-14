@@ -14,8 +14,7 @@
  */
 
 import { CMap, CMapFactory, IdentityCMap } from "../../src/core/cmap.js";
-import { CMAP_URL } from "./test_utils.js";
-import { DefaultCMapReaderFactory } from "../../src/display/api.js";
+import { CMAP_URL, DefaultCMapReaderFactory } from "./test_utils.js";
 import { Name } from "../../src/core/primitives.js";
 import { StringStream } from "../../src/core/stream.js";
 
@@ -222,8 +221,7 @@ describe("cmap", function () {
     } catch (reason) {
       expect(reason instanceof Error).toEqual(true);
       expect(reason.message).toEqual(
-        'The CMap "baseUrl" parameter must be specified, ensure that ' +
-          'the "cMapUrl" and "cMapPacked" API parameters are provided.'
+        "Ensure that the `cMapUrl` and `cMapPacked` API parameters are provided."
       );
     }
   });

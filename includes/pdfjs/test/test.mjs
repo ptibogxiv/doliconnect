@@ -26,7 +26,6 @@ import path from "path";
 import puppeteer from "puppeteer";
 import readline from "readline";
 import { translateFont } from "./font/ttxdriver.mjs";
-import url from "url";
 import { WebServer } from "./webserver.mjs";
 import yargs from "yargs";
 
@@ -68,6 +67,11 @@ function parseOptions() {
     .option("noChrome", {
       default: false,
       describe: "Skip Chrome when running tests.",
+      type: "boolean",
+    })
+    .option("noFirefox", {
+      default: false,
+      describe: "Skip Firefox when running tests.",
       type: "boolean",
     })
     .option("noDownload", {
@@ -157,7 +161,7 @@ function parseOptions() {
       );
     })
     .check(argv => {
-      if (argv.testfilter && argv.testfilter.length > 0 && argv.xfaOnly) {
+      if (argv.testfilter?.length > 0 && argv.xfaOnly) {
         throw new Error("--testfilter and --xfaOnly cannot be used together.");
       }
       return true;
@@ -670,8 +674,7 @@ function checkRefTestResults(browser, id, results) {
   });
 }
 
-function refTestPostHandler(req, res) {
-  var parsedUrl = url.parse(req.url, true);
+function refTestPostHandler(parsedUrl, req, res) {
   var pathname = parsedUrl.pathname;
   if (
     pathname !== "/tellMeToQuit" &&
@@ -691,7 +694,7 @@ function refTestPostHandler(req, res) {
 
     var session;
     if (pathname === "/tellMeToQuit") {
-      session = getSession(parsedUrl.query.browser);
+      session = getSession(parsedUrl.searchParams.get("browser"));
       monitorBrowserTimeout(session, null);
       closeSession(session.name);
       return;
@@ -803,7 +806,7 @@ async function startIntegrationTest() {
   onAllSessionsClosed = onAllSessionsClosedAfterTests("integration");
   startServer();
 
-  const { runTests } = await import("./integration-boot.mjs");
+  const { runTests } = await import("./integration/jasmine-boot.js");
   await startBrowsers({
     baseUrl: null,
     initializeSession: session => {
@@ -821,8 +824,7 @@ async function startIntegrationTest() {
   await Promise.all(sessions.map(session => closeSession(session.name)));
 }
 
-function unitTestPostHandler(req, res) {
-  var parsedUrl = url.parse(req.url);
+function unitTestPostHandler(parsedUrl, req, res) {
   var pathname = parsedUrl.pathname;
   if (
     pathname !== "/tellMeToQuit" &&
@@ -882,12 +884,13 @@ async function startBrowser({
   extraPrefsFirefox = {},
 }) {
   const options = {
-    product: browserName,
-    protocol: "cdp",
+    browser: browserName,
+    protocol: "webDriverBiDi",
     headless,
+    dumpio: true,
     defaultViewport: null,
     ignoreDefaultArgs: ["--disable-extensions"],
-    // The timeout for individual protocol (CDP) calls should always be lower
+    // The timeout for individual protocol (BiDi) calls should always be lower
     // than the Jasmine timeout. This way protocol errors are always raised in
     // the context of the tests that actually triggered them and don't leak
     // through to other tests (causing unrelated failures or tracebacks). The
@@ -903,6 +906,10 @@ async function startBrowser({
   const printFile = path.join(tempDir, "print.pdf");
 
   if (browserName === "chrome") {
+    // Run tests with the CDP protocol for Chrome only given that the Linux bot
+    // crashes with timeouts or OOM if WebDriver BiDi is used (issue #17961).
+    options.protocol = "cdp";
+
     // avoid crash
     options.args = ["--no-sandbox", "--disable-setuid-sandbox"];
     // silent printing in a pdf
@@ -910,11 +917,9 @@ async function startBrowser({
   }
 
   if (browserName === "firefox") {
-    // Run tests with the WebDriver BiDi protocol enabled only for Firefox for
-    // now given that for Chrome further fixes are needed first.
-    options.protocol = "webDriverBiDi";
-
     options.extraPrefsFirefox = {
+      // Disable system addon updates.
+      "extensions.systemAddon.update.enabled": false,
       // avoid to have a prompt when leaving a page with a form
       "dom.disable_beforeunload": true,
       // Disable dialog when saving a pdf
@@ -943,6 +948,12 @@ async function startBrowser({
       "dom.events.asyncClipboard.clipboardItem": true,
       // It's helpful to see where the caret is.
       "accessibility.browsewithcaret": true,
+      // Disable the newtabpage stuff.
+      "browser.newtabpage.enabled": false,
+      // Disable network connections to Contile.
+      "browser.topsites.contile.enabled": false,
+      // Disable logging for remote settings.
+      "services.settings.loglevel": "off",
       ...extraPrefsFirefox,
     };
   }
@@ -964,9 +975,13 @@ async function startBrowsers({ baseUrl, initializeSession }) {
   // prevent the disk from filling up over time.
   await puppeteer.trimCache();
 
-  const browserNames = options.noChrome ? ["firefox"] : ["firefox", "chrome"];
-
-  sessions = [];
+  const browserNames = ["firefox", "chrome"];
+  if (options.noChrome) {
+    browserNames.splice(1, 1);
+  }
+  if (options.noFirefox) {
+    browserNames.splice(0, 1);
+  }
   for (const browserName of browserNames) {
     // The session must be pushed first and augmented with the browser once
     // it's initialized. The reason for this is that browser initialization
@@ -1036,9 +1051,7 @@ async function closeSession(browser) {
       await session.browser.close();
     }
     session.closed = true;
-    const allClosed = sessions.every(function (s) {
-      return s.closed;
-    });
+    const allClosed = sessions.every(s => s.closed);
     if (allClosed) {
       if (tempDir) {
         fs.rmSync(tempDir, { recursive: true, force: true });
@@ -1073,25 +1086,33 @@ async function main() {
     stats = [];
   }
 
-  if (options.downloadOnly) {
-    await ensurePDFsDownloaded();
-  } else if (options.unitTest) {
-    // Allows linked PDF files in unit-tests as well.
-    await ensurePDFsDownloaded();
-    startUnitTest("/test/unit/unit_test.html", "unit");
-  } else if (options.fontTest) {
-    startUnitTest("/test/font/font_test.html", "font");
-  } else if (options.integration) {
-    // Allows linked PDF files in integration-tests as well.
-    await ensurePDFsDownloaded();
-    startIntegrationTest();
-  } else {
-    startRefTest(options.masterMode, options.reftest);
+  try {
+    if (options.downloadOnly) {
+      await ensurePDFsDownloaded();
+    } else if (options.unitTest) {
+      // Allows linked PDF files in unit-tests as well.
+      await ensurePDFsDownloaded();
+      await startUnitTest("/test/unit/unit_test.html", "unit");
+    } else if (options.fontTest) {
+      await startUnitTest("/test/font/font_test.html", "font");
+    } else if (options.integration) {
+      // Allows linked PDF files in integration-tests as well.
+      await ensurePDFsDownloaded();
+      await startIntegrationTest();
+    } else {
+      await startRefTest(options.masterMode, options.reftest);
+    }
+  } catch (e) {
+    // Close the browsers if uncaught exceptions occur, otherwise the spawned
+    // processes can become orphaned and keep running after `test.mjs` exits
+    // because the teardown logic of the tests did not get a chance to run.
+    console.error(e);
+    await Promise.all(sessions.map(session => closeSession(session.name)));
   }
 }
 
 var server;
-var sessions;
+var sessions = [];
 var onAllSessionsClosed;
 var host = "127.0.0.1";
 var options = parseOptions();

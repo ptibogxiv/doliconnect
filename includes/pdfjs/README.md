@@ -1,4 +1,4 @@
-# PDF.js [![Build Status](https://github.com/mozilla/pdf.js/workflows/CI/badge.svg?branch=master)](https://github.com/mozilla/pdf.js/actions?query=workflow%3ACI+branch%3Amaster)
+# PDF.js [![CI](https://github.com/mozilla/pdf.js/actions/workflows/ci.yml/badge.svg?query=branch%3Amaster)](https://github.com/mozilla/pdf.js/actions/workflows/ci.yml?query=branch%3Amaster)
 
 [PDF.js](https://mozilla.github.io/pdf.js/) is a Portable Document Format (PDF) viewer that is built with HTML5.
 
@@ -14,7 +14,7 @@ get involved, visit:
 + [Issue Reporting Guide](https://github.com/mozilla/pdf.js/blob/master/.github/CONTRIBUTING.md)
 + [Code Contribution Guide](https://github.com/mozilla/pdf.js/wiki/Contributing)
 + [Frequently Asked Questions](https://github.com/mozilla/pdf.js/wiki/Frequently-Asked-Questions)
-+ [Good Beginner Bugs](https://github.com/mozilla/pdf.js/issues?direction=desc&labels=good-beginner-bug&page=1&sort=created&state=open)
++ [Good Beginner Bugs](https://github.com/mozilla/pdf.js/issues?q=is%3Aissue%20state%3Aopen%20label%3Agood-beginner-bug)
 + [Projects](https://github.com/mozilla/pdf.js/projects)
 
 Feel free to stop by our [Matrix room](https://chat.mozilla.org/#/room/#pdfjs:mozilla.org) for questions or guidance.
@@ -40,7 +40,7 @@ PDF.js is built into version 19+ of Firefox.
 
 + The official extension for Chrome can be installed from the [Chrome Web Store](https://chrome.google.com/webstore/detail/pdf-viewer/oemmndcbldboiebfnladdacbdfmadadm).
 *This extension is maintained by [@Rob--W](https://github.com/Rob--W).*
-+ Build Your Own - Get the code as explained below and issue `gulp chromium`. Then open
++ Build Your Own - Get the code as explained below and issue `npx gulp chromium`. Then open
 Chrome, go to `Tools > Extension` and load the (unpackaged) extension from the
 directory `build/chromium`.
 
@@ -52,24 +52,15 @@ To get a local copy of the current code, clone it using git:
     $ cd pdf.js
 
 Next, install Node.js via the [official package](https://nodejs.org) or via
-[nvm](https://github.com/creationix/nvm). You need to install the gulp package
-globally (see also [gulp's getting started](https://github.com/gulpjs/gulp/tree/master/docs/getting-started)):
-
-    $ npm install -g gulp-cli@^2.3.0
-
-If you prefer to not install `gulp-cli` globally, you have to prefix all the `gulp` commands with `npx` (for example, `npx gulp server` instead of `gulp server`).
-
-If everything worked out, install all dependencies for PDF.js:
+[nvm](https://github.com/creationix/nvm). If everything worked out, install
+all dependencies for PDF.js:
 
     $ npm install
-
-> [!NOTE]
-> On MacOS M1/M2 you may see some `node-gyp`-related errors when running `npm install`. This is because one of our dependencies, `"canvas"`, does not provide pre-built binaries for this platform and instead `npm` will try to build it from source. Please make sure to first install the necessary native dependencies using `brew`: https://github.com/Automattic/node-canvas#compiling.
 
 Finally, you need to start a local web server as some browsers do not allow opening
 PDF files using a `file://` URL. Run:
 
-    $ gulp server
+    $ npx gulp server
 
 and then you can open:
 
@@ -86,11 +77,11 @@ It is also possible to view all test PDF files on the right side by opening:
 In order to bundle all `src/` files into two production scripts and build the generic
 viewer, run:
 
-    $ gulp generic
+    $ npx gulp generic
 
 If you need to support older browsers, run:
 
-    $ gulp generic-legacy
+    $ npx gulp generic-legacy
 
 This will generate `pdf.js` and `pdf.worker.js` in the `build/generic/build/` directory (respectively `build/generic-legacy/build/`).
 Both scripts are needed but only `pdf.js` needs to be included since `pdf.worker.js` will
@@ -99,7 +90,7 @@ be loaded by `pdf.js`. The PDF.js files are large and should be minified for pro
 ## Using PDF.js in a web application
 
 To use PDF.js in a web application you can choose to use a pre-built version of the library
-or to build it from source. We supply pre-built versions for usage with NPM and Bower under
+or to build it from source. We supply pre-built versions for usage with NPM under
 the `pdfjs-dist` name. For more information and examples please refer to the
 [wiki page](https://github.com/mozilla/pdf.js/wiki/Setup-pdf.js-in-a-website) on this subject.
 
@@ -116,7 +107,7 @@ You can play with the PDF.js API directly from your browser using the live demos
 
 + [Interactive examples](https://mozilla.github.io/pdf.js/examples/index.html#interactive-examples)
 
-More examples can be found in the [examples folder](https://github.com/mozilla/pdf.js/tree/master/examples/). Some of them are using the pdfjs-dist package, which can be built and installed in this repo directory via `gulp dist-install` command.
+More examples can be found in the [examples folder](https://github.com/mozilla/pdf.js/tree/master/examples/). Some of them are using the pdfjs-dist package, which can be built and installed in this repo directory via `npx gulp dist-install` command.
 
 For an introduction to the PDF.js code, check out the presentation by our
 contributor Julian Viereck:
@@ -143,4 +134,4 @@ Talk to us on Matrix:
 
 File an issue:
 
-+ https://github.com/mozilla/pdf.js/issues/new
++ https://github.com/mozilla/pdf.js/issues/new/choose
