@@ -73,7 +73,10 @@ function doliConnect($fonction, $current_user = null, $boolean = false, $refresh
   if ( empty($current_user) ) {
     global $current_user;  
   }
-
+  $object = (object) 0;
+  $object->id = 0;
+  $object->email = null;
+	$object->typeid = 0;
   if ($fonction == 'thirdparty' && isset($current_user->ID) && !empty($current_user->ID)) {
     if ( doliversion('21.0.0') ) {
       $return = callDoliApi("GET", "/thirdparties/accounts/wordpress/".$current_user->ID, null, dolidelay('doliconnector', $refresh));
@@ -83,7 +86,7 @@ function doliConnect($fonction, $current_user = null, $boolean = false, $refresh
     }
   } elseif ($fonction == 'member' && isset($current_user->ID) && !empty($current_user->ID)) {
     if ( doliversion('21.0.0') ) {
-      $return = callDoliApi("GET", "/members/thirdparty/accounts/wordpress/".$current_user->ID, null, dolidelay('doliconnector', $refresh));
+        $return = callDoliApi("GET", "/members/thirdparty/accounts/wordpress/".$current_user->ID, null, dolidelay('doliconnector', $refresh));
     } else {
       $id = doliconnector($current_user, 'fk_member', $refresh);
       $return = callDoliApi("GET", "/members/".$id, null, dolidelay('doliconnector', $refresh));
@@ -105,10 +108,6 @@ function doliConnect($fonction, $current_user = null, $boolean = false, $refresh
       $return= null;
     }
   } else {
-    $object = (object) 0;
-    $object->id = 0;
-    $object->email = null;
-		$object->typeid = 0;
     $return = $object;
   }
   if (isset($return->error)) {
