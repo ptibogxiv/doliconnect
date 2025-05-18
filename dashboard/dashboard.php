@@ -1391,7 +1391,7 @@ function expensereport_module( $url ) {
         print "</ul>";
         print doliCardFooter($request, 'expensereport', $expensereportfo);
         print "</div>";
-    } else {
+    } elseif (isset(doliConnect('user')->id)) {
         $limit=12;
         $page = doliPG(isset($_GET['pg'])?$_GET['pg']:null);
         $request= "/expensereports?sortfield=t.rowid&sortorder=DESC&limit=".$limit."&page=".$page."&user_ids=".doliConnect('user')->id."&pagination_data=true";
