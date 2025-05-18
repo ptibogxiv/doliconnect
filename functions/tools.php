@@ -626,7 +626,7 @@ return $doliFaq;
 
 function doliPasswordForm($user, $url, $return = null){
   $doliuser = doliConnect('user', $user);
-  $request = "/users/".$doliuser->id;
+  if (isset($doliuser->id)) $request = "/users/".$doliuser->id;
   $doliPassword = "<div id='dolirpw-alert'></div><form id='dolirpw-form' method='post' class='was-validated' action='".admin_url('admin-ajax.php')."'>";
   if (isset($_GET["key"]) && isset($_GET["login"])) {
     $doliPassword .= "<input type='hidden' name='key' value='".esc_attr($_GET["key"])."'><input type='hidden' name='login' value='".esc_attr($_GET["login"])."'>";
