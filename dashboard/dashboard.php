@@ -1441,7 +1441,7 @@ global $current_user;
     $thirdparty = doliConnect('thirdparty', $current_user, false, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
     $adherent = doliConnect('member', $current_user, false, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 
-    $request = "/adherentsplus/".$adherent->id; 
+    //$request = "/adherentsplus/".$adherent->id; 
     $productadhesion = doliconst("ADHERENT_PRODUCT_ID_FOR_SUBSCRIPTIONS");
     $requestp = "/products/".$productadhesion."?includesubproducts=true&includetrans=true";
     $product = callDoliApi("GET", $requestp, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
@@ -1599,10 +1599,10 @@ if ( doliCheckRights('adherent', 'cotisation', 'lire') ) {
         print "<li class='list-group-item list-group-item-light'><center>".__( 'No subscription', 'doliconnect')."</center></li>";
     }
     print '</ul><div class="card-body">';
-    print doliPagination($object, $url, $page);
+    if (isset($object)) print doliPagination($object, $url, $page);
     print '</div>';
 }
-print doliCardFooter($request, 'member', (isset($adherent)?$adherent:null));
+if (isset($request)) print doliCardFooter($request, 'member', (isset($adherent)?$adherent:null));
 print '</div>';
 
 }
