@@ -94,7 +94,7 @@ function dolimembertypelist($typeadhesion, $adherent = null) {
         if (!empty(number_format($postadh->federal))) $list .= "<br><small class='text-justify text-muted '>".__( 'Including a federal part of', 'doliconnect')." ".doliprice($postadh->federal)."</small>";
         $list .= "<br><small class='text-justify text-muted '>".__( 'From', 'doliconnect')." ".wp_date('d/m/Y', $postadh->date_begin)." ".__( 'until', 'doliconnect')." ".wp_date('d/m/Y', $postadh->date_end)."</small>";
         $list .= "</div><div class='col-md-4'>";
-        if (!isset($adherent->next_subscription_renew)) $adherent->next_subscription_renew = null;
+        if (!isset($adherent->next_subscription_renew) && isset($adherent)) $adherent->next_subscription_renew = null;
         if ( isset($adherent) && isset($adherent->datefin) && $adherent->datefin != null && $adherent->status == 1 && $adherent->datefin > $adherent->next_subscription_renew && $adherent->next_subscription_renew > current_time( 'timestamp',1) ) {
           $list .= "<div class='d-grid gap-2'><button class='btn btn-light' disabled>".sprintf(__('From %s', 'doliconnect'), wp_date('d/m/Y', $adherent->next_subscription_renew))."</button></div>";
         } elseif ( $postadh->family == '1' ) {
