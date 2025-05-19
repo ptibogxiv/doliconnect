@@ -1463,20 +1463,28 @@ $request= "/adherentsplus/type/".$adherent->typeid;
 $adherenttype = callDoliApi("GET", $request, null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 }
 
-if ( isset($adherent) && !isset($adherent->error) && $adherent != null ) {
+//if ( isset($adherent) && !isset($adherent->error) && $adherent != null ) {
 print "<div class='row'><div class='col-12 col-md-5 border-end'><b>".__( 'Status', 'doliconnect').":</b> ";
-if ( $adherent->statut > 0) {
-if  ($adherent->datefin == null ) { print  "<span class='badge rounded-pill bg-danger'>".__( 'Waiting payment', 'doliconnect')."</span>";}
-else {
-if ( $adherent->datefin+86400>$time){ print  "<span class='badge rounded-pill bg-success'>".__( 'Active', 'doliconnect')."</span>"; } else { print  "<span class='badge rounded-pill bg-danger'>".__( 'Waiting payment', 'doliconnect')."</span>";}
-}} elseif ( empty($adherent->statut) ) {
-print  "<span class='badge rounded-pill bg-dark'>".__( 'Terminated', 'doliconnect')."</span>";}
-elseif ( $adherent->statut == '-1' ) {
-print "<span class='badge rounded-pill bg-warning'>".__( 'Waiting validation', 'doliconnect')."</span>"; }
-elseif ( $adherent->statut == '-2' ) {
-print "<span class='badge rounded-pill bg-dark'>".__( 'Excluded', 'doliconnect')."</span>"; }
-else { print  "<span class='badge rounded-pill bg-dark'>".__( 'No membership', 'doliconnect')."</span>"; }
-print  "<br>";
+if ( isset($adherent->statut) && $adherent->statut > 0) {
+    if  ($adherent->datefin == null ) {
+        print  "<span class='badge rounded-pill bg-danger'>".__( 'Waiting payment', 'doliconnect')."</span>";
+    } else {
+        if ( $adherent->datefin+86400>$time) {
+            print  "<span class='badge rounded-pill bg-success'>".__( 'Active', 'doliconnect')."</span>";
+        } else { 
+            print  "<span class='badge rounded-pill bg-danger'>".__( 'Waiting payment', 'doliconnect')."</span>";
+        }
+    }
+} elseif ( isset($adherent->statut) && empty($adherent->statut) ) {
+    print  "<span class='badge rounded-pill bg-dark'>".__( 'Terminated', 'doliconnect')."</span>";
+} elseif ( isset($adherent->statut) && $adherent->statut == '-1' ) {
+    print "<span class='badge rounded-pill bg-warning'>".__( 'Waiting validation', 'doliconnect')."</span>"; }
+elseif ( isset($adherent->statut) && $adherent->statut == '-2' ) {
+    print "<span class='badge rounded-pill bg-dark'>".__( 'Excluded', 'doliconnect')."</span>";
+} else { 
+    print  "<span class='badge rounded-pill bg-dark'>".__( 'No membership', 'doliconnect')."</span>"; 
+}
+    print  "<br>";
 $type=(! empty($adherent->typeid) ? doliproduct($adherenttype, 'label') : __( 'nothing', 'doliconnect'));
 print  "<b>".__( 'Type', 'doliconnect').":</b> ".$type." - ".doliduration($adherenttype)."<br>";
 print  "<b>".__( 'Validity', 'doliconnect').":</b> ";
@@ -1561,7 +1569,7 @@ print do_action('mydoliconnectmemberform', $adherent);
 }
 print "</div>";
 
-} else { 
+//} else { 
 
 if ( empty($thirdparty->address) || empty($thirdparty->zip) || empty($thirdparty->town) || empty($thirdparty->country_id) || empty($current_user->billing_type) || empty($current_user->billing_birth) || empty($current_user->user_firstname) || empty($current_user->user_lastname) || empty($current_user->user_email)) {
 print "Pour adhérer, tous les champs doivent être renseignés dans vos <a href='".esc_url( get_permalink(get_option('doliaccount')))."?module=informations&return=".$url."' class='alert-link'>".__( 'Personal informations', 'doliconnect')."</a></div><div class='col-sm-6 col-md-7'>";
@@ -1569,7 +1577,7 @@ print "Pour adhérer, tous les champs doivent être renseignés dans vos <a href
     print doliModalButton('editmembership', 'editmembership', __('Become a member', 'doliconnect'), 'button' , 'btn btn text-white btn-warning btn-block');
 }
 print '</div>';
-} 
+//} 
 
 if ( doliCheckRights('adherent', 'cotisation', 'lire') ) {
     print "<ul class='list-group list-group-flush'>";
