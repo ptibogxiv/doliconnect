@@ -1488,7 +1488,7 @@ elseif ( isset($adherent->status) && $adherent->status == '-2' ) {
 $type=(! empty($adherent->typeid) ? doliproduct($adherenttype, 'label') : __( 'nothing', 'doliconnect'));
 if ( isset($adherenttype) ) print  "<b>".__( 'Type', 'doliconnect').":</b> ".$type." - ".doliduration($adherenttype)."<br>";
 print  "<b>".__( 'Validity', 'doliconnect').":</b> ";
-if ( $adherent->datefin == null ) { 
+if ( !isset($adherent->datefin) || empty($adherent->datefin) ) { 
     print  "***";
 } else { 
     print  wp_date('d/m/Y', $adherent->last_subscription_date_start).' '.__( 'to', 'doliconnect').' '.wp_date('d/m/Y', $adherent->last_subscription_date_end); 
