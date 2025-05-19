@@ -1506,29 +1506,29 @@ print "</div><div class='col-12 col-md-7'>";
 
 if ( doliCheckModules('commande') && !empty($productadhesion) ) {
 
-    if ( $adherent->datefin == null && $adherent->statut == '0' ) {
+    if ( isset($adherent->status) && $adherent->datefin == null && $adherent->status == '0' ) {
         //print  "<a href='#' id='subscribe-button2' class='btn btn text-white btn-warning btn-block' data-bs-toggle='modal' data-bs-target='#activatemember'><b>".__( 'Become a member', 'doliconnect')."</b></a>";
-    } elseif ($adherent->statut == '1') {
+    } elseif (isset($adherent->status) && $adherent->status == '1') {
         print '<div class="d-grid gap-2">';
-        if ( isset($adherent) && $adherent->datefin != null && $adherent->statut == 1 && isset($adherent->next_subscription_renew) && $adherent->datefin > $adherent->next_subscription_renew && $adherent->next_subscription_renew > current_time( 'timestamp',1) ) {
+        if ( isset($adherent) && $adherent->datefin != null && $adherent->status == 1 && isset($adherent->next_subscription_renew) && $adherent->datefin > $adherent->next_subscription_renew && $adherent->next_subscription_renew > current_time( 'timestamp',1) ) {
             print "<button class='btn btn-light btn-block' disabled>".sprintf(__('Renew from %s', 'doliconnect'), wp_date('d/m/Y', $adherent->next_subscription_renew))."</button>";
         } else {
             $price = doliProductPrice($product, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)); 
             print doliProductCart($product, $price, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), false, array('options_member_beneficiary' => $adherent->id));
         }
         print '</div><br>';
-    } elseif ( $adherent->statut == '0' ) {
+    } elseif ( isset($adherent->status) && $adherent->status == '0' ) {
         if ( intval(86400+(!empty($adherent->datefin)?$adherent->datefin:0)) > $time ) {
             //print "<form id='subscription-form' action='".doliconnecturl('doliaccount')."?module=members' method='post'><input type='hidden' name='update_membership' value='4'><button id='resiliation-button' class='btn btn btn-warning btn-block' type='submit'><b>".__( 'Reactivate my subscription', 'doliconnect')."</b></button></form>";
         } else {
             //print  "<button class='btn btn text-white btn-warning btn-block' data-bs-toggle='modal' data-bs-target='#PaySubscriptionModal'>".__( 'Renew my subscription', 'doliconnect')."</button>";
         }
-    } elseif ( $adherent->statut == '-1' ) {
+    } elseif ( isset($adherent->status) && $adherent->status == '-1' ) {
         print '<div class="alert alert-primary d-flex align-items-center" role="alert">
         <i class="fa-solid fa-circle-info fa-beat"></i>
         <div>'.__('Your request has been registered. You will be notified by email at validation.', 'doliconnect').'</div>
         </div>';
-    } elseif ( $adherent->statut == '-2' ) {
+    } elseif ( isset($adherent->status) && $adherent->status == '-2' ) {
         print '<div class="alert alert-primary d-flex align-items-center" role="alert">
         <i class="fa-solid fa-circle-info fa-beat"></i>
         <div>'.__('Please contact us for more informations or subscribe again.', 'doliconnect').'</div>
