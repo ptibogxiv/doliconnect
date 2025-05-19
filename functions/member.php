@@ -47,12 +47,15 @@ function doliconnect_membership($current_user, $statut, $type, $delay) {
 		'statut'	=> $statut,
 	];
   if ($action=='POST') {
-    $mbr = callDoliApi("POST", "/members", $data, 0);
-    $adhesion = callDoliApi("GET", "/members/".doliconnector($current_user, 'fk_member', true), null, dolidelay('member', true));
+    $newmember = callDoliApi("POST", "/members", $data, 0);
+    $member = callDoliApi("GET", "/members/".$newmember, null, dolidelay('member', true));
+    $member = doliConnect('member', $current_user, false, true);
   } else {
-    $adhesion = callDoliApi("PUT", "/members/".doliconnector($current_user, 'fk_member', true), $data, 0);
+    $member = doliConnect('member', $current_user, false);
+    $member = callDoliApi("PUT", "/members/".$member->id, $data, 0);
+    $member = doliConnect('member', $current_user, false, true);
   }
-  return $adhesion;
+  return $member;
 }
 
 function dolimembertypelist($typeadhesion, $adherent = null) {
