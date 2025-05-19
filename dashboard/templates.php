@@ -796,7 +796,7 @@ global $current_user;
         print doliPagination($object, $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], $page, $limit);
         print '</div>';
       }
-      print doliCardFooter($request, $module);
+      print doliCardFooter($object, $module, $request);
       print '</div>';
     }
   } else {
