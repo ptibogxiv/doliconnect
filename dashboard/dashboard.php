@@ -298,7 +298,7 @@ global $current_user;
         print "<div class='card-body'><div class='d-grid gap-2'><button class='btn btn-outline-secondary' type='submit' ";
         if (!doliCheckRights('societe', 'contact', 'creer')) { print 'disabled'; }
         print ">".__( 'Add', 'doliconnect')."</button></div></div>";
-        if (isset($request) && isset($contactfo) ) print doliCardFooter ($request, $url, 'contact', $contactfo);
+        print doliCardFooter ($contactfo, 'contact');
         print '</div></small>';
         print '</div></form>';
     } else {
@@ -378,7 +378,7 @@ global $current_user;
     print "</ul><div class='card-body'>";
     print doliPagination($object, $url, $page);
     print "</div>";
-    print doliCardFooter($request, 'thirdparty', $object);
+    print doliCardFooter($object, 'thirdparty');
     print "</div>";
 }
 
