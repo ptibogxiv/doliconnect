@@ -330,7 +330,7 @@ global $current_user;
         print "</ul><div class='card-body'>";
         print doliPagination($object, $url, $page);
         print "</div>";
-        print doliCardFooter($request, 'contact', $object);
+        print doliCardFooter($object, 'contact');
         print "</div>";
     }
 }
@@ -458,7 +458,7 @@ print "<div class='col-md-7'><h6>" . $val['label'] . "</h6>" . $val['description
 } 
 //var_dump($fruits);
 print '</ul>';
-print doliCardFooter($request, 'proposal', $proposalfo);
+print doliCardFooter($proposalfo, 'proposal');
 print '</div>';
 
     } else {
@@ -486,7 +486,7 @@ print '</div>';
         print "</ul><div class='card-body'>";
         print doliPagination($object, $url, $page);
         print "</div>";
-        print doliCardFooter($request, 'proposal', $object);
+        print doliCardFooter($object, 'proposal');
         print "</div>";
     }
 }
@@ -721,7 +721,7 @@ $fruits[$ship->date_creation] = array(
     } 
     //var_dump($fruits);
     print '</ul>';
-    print doliCardFooter($request, 'order', $orderfo);
+    print doliCardFooter($orderfo, 'order');
     print '</div>';
     } else {
         $limit=12;
@@ -748,7 +748,7 @@ $fruits[$ship->date_creation] = array(
         print "</ul><div class='card-body'>";
         print doliPagination($object, $url, $page);
         print "</div>";
-        print doliCardFooter($request, 'order', $object);
+        print doliCardFooter($object, 'order');
         print "</div>";
     }
 }
@@ -945,7 +945,7 @@ print "<div class='col-md-7'><h6>".$val['label']."</h6>" . $val['description'] .
 } 
 //var_dump($fruits);
 print '</ul>';
-print doliCardFooter($request, 'invoice', $invoicefo);
+print doliCardFooter($invoicefo, 'invoice');
 print '</div>';
 
     } else {
@@ -984,7 +984,7 @@ print '</div>';
         print "</ul><div class='card-body'>";
         print doliPagination($object, $url, $page);
         print "</div>";
-        print doliCardFooter($request, 'invoice', $object);
+        print doliCardFooter($object, 'invoice');
         print "</div>";
     }
 }
@@ -1047,7 +1047,7 @@ global $current_user;
 
         //var_dump($fruits);
         print '</ul>';
-        print doliCardFooter($request, 'contract', $contractfo);
+        print doliCardFooter($contractfo, 'contract');
         print '</div>';
     } else {
         $limit=12;
@@ -1075,7 +1075,7 @@ global $current_user;
         print "</ul><div class='card-body'>";
         print doliPagination($object, $url, $page);
         print "</div>";
-        print doliCardFooter($request, 'contract', $object);
+        print doliCardFooter($object, 'contract');
         print "</div>";
     }
 }
@@ -1135,7 +1135,7 @@ global $current_user;
 
         //var_dump($fruits);
         print '</ul>';
-        print doliCardFooter($request, 'project', $projectfo);
+        print doliCardFooter($projectfo, 'project');
         print '</div>';
 
     } else {
@@ -1164,7 +1164,7 @@ global $current_user;
         print "</ul><div class='card-body'>";
         print doliPagination($object, $url, $page);
         print "</div>";
-        print doliCardFooter($request, 'project', $object);
+        print doliCardFooter($object, 'project');
         print "</div>";
     }
 }
@@ -1229,7 +1229,7 @@ $ID = $current_user->ID;
         print "<b>".__( 'Amount', 'doliconnect').": ".doliprice($donationfo, 'amount', isset($donationfo->multicurrency_code) ? $donationfo->multicurrency_code : null)."</b>";
         print "</li>";
         print "</ul>";
-        print doliCardFooter($request, 'donation', $donationfo);
+        print doliCardFooter($donationfo, 'donation');
         print "</div>";
     } else {
         $limit=12;
@@ -1259,7 +1259,7 @@ $ID = $current_user->ID;
         print "</ul><div class='card-body'>";
         print doliPagination($object, $url, $page);
         print "</div>";
-        print doliCardFooter($request, 'donation', $object);
+        print doliCardFooter($object, 'donation');
         print "</div>";
     }
 }
@@ -1389,7 +1389,7 @@ function expensereport_module( $url ) {
         }
         print dolitotal($expensereportfo);
         print "</ul>";
-        print doliCardFooter($request, 'expensereport', $expensereportfo);
+        print doliCardFooter($expensereportfo, 'expensereport');
         print "</div>";
     } elseif (isset(doliConnect('user')->id)) {
         $limit=12;
@@ -1416,7 +1416,7 @@ function expensereport_module( $url ) {
         print "</ul><div class='card-body'>";
         print doliPagination($object, $url, $page);
         print "</div>";
-        print doliCardFooter($request, 'expensereport', $object);
+        print doliCardFooter($object, 'expensereport');
         print "</div>";
     }
 }
@@ -1607,7 +1607,7 @@ if ( doliCheckRights('adherent', 'cotisation', 'lire') ) {
     if (isset($object)) print doliPagination($object, $url, $page);
     print '</div>';
 }
-if (isset($request)) print doliCardFooter($request, 'member', (isset($adherent)?$adherent:null));
+print doliCardFooter($adherent, 'member');
 print '</div>';
 
 }

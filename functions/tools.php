@@ -2867,7 +2867,7 @@ $paymentmethods .= '<div class="accordion-item"><h2 class="accordion-header" id=
 }
   
 $paymentmethods .= '</div>';
-$paymentmethods .= doliCardFooter($request, 'paymentmethods');
+$paymentmethods .= doliCardFooter($request, 'thirdparty');
 
 $paymentmethods .= '</div>';
 
