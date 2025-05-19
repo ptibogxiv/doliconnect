@@ -16,6 +16,7 @@ function doliconnect_membership($current_user, $statut, $type, $delay) {
     $statut='1';
     $action='POST';
   } 
+  $thirdparty = doliConnect('thirdparty', $current_user);
 //if (preg_match('/\//', $current_user->billing_birth)) { 
 //  list($year, $month, $day) = explode("/", $current_user->billing_birth);
 //} elseif (preg_match('/-/', $current_user->billing_birth)) {
@@ -25,9 +26,8 @@ function doliconnect_membership($current_user, $statut, $type, $delay) {
 //  $day = null;
 //  $year = null;
 //}
-$birth = mktime(0, 0, 0, $month, $day, $year);
-$thirdparty = callDoliApi("GET", "/thirdparties/".doliconnector($current_user, 'fk_soc'), null, dolidelay('thirdparty'));  
-$data = [
+  $birth = mktime(0, 0, 0, $month, $day, $year);
+  $data = [
     'login' => $current_user->user_login,
     'company'  => $current_user->billing_company,
     'morphy' => $current_user->billing_type,
@@ -42,7 +42,7 @@ $data = [
     'phone' => $thirdparty->phone,
     'birth' => $birth,
     'typeid' => $type,
-    'socid' => doliconnector($current_user, 'fk_soc'),
+    'socid' => $thirdparty->id,
     'array_options' => $thirdparty->array_options,
 		'statut'	=> $statut,
 	];
