@@ -1465,7 +1465,7 @@ $adherenttype = callDoliApi("GET", $request, null, dolidelay('member', esc_attr(
 
 //if ( isset($adherent) && !isset($adherent->error) && $adherent != null ) {
 print "<div class='row'><div class='col-12 col-md-5 border-end'><b>".__( 'Status', 'doliconnect').":</b> ";
-if ( isset($adherent->statut) && $adherent->statut > 0) {
+if ( isset($adherent->status) && $adherent->status > 0) {
     if  ($adherent->datefin == null ) {
         print  "<span class='badge rounded-pill bg-danger'>".__( 'Waiting payment', 'doliconnect')."</span>";
     } else {
@@ -1475,21 +1475,24 @@ if ( isset($adherent->statut) && $adherent->statut > 0) {
             print  "<span class='badge rounded-pill bg-danger'>".__( 'Waiting payment', 'doliconnect')."</span>";
         }
     }
-} elseif ( isset($adherent->statut) && empty($adherent->statut) ) {
+} elseif ( isset($adherent->status) && empty($adherent->status) ) {
     print  "<span class='badge rounded-pill bg-dark'>".__( 'Terminated', 'doliconnect')."</span>";
-} elseif ( isset($adherent->statut) && $adherent->statut == '-1' ) {
+} elseif ( isset($adherent->status) && $adherent->status == '-1' ) {
     print "<span class='badge rounded-pill bg-warning'>".__( 'Waiting validation', 'doliconnect')."</span>"; }
-elseif ( isset($adherent->statut) && $adherent->statut == '-2' ) {
+elseif ( isset($adherent->status) && $adherent->status == '-2' ) {
     print "<span class='badge rounded-pill bg-dark'>".__( 'Excluded', 'doliconnect')."</span>";
 } else { 
     print  "<span class='badge rounded-pill bg-dark'>".__( 'No membership', 'doliconnect')."</span>"; 
 }
     print  "<br>";
 $type=(! empty($adherent->typeid) ? doliproduct($adherenttype, 'label') : __( 'nothing', 'doliconnect'));
-print  "<b>".__( 'Type', 'doliconnect').":</b> ".$type." - ".doliduration($adherenttype)."<br>";
+if ( isset($adherenttype) ) print  "<b>".__( 'Type', 'doliconnect').":</b> ".$type." - ".doliduration($adherenttype)."<br>";
 print  "<b>".__( 'Validity', 'doliconnect').":</b> ";
-if ( $adherent->datefin == null ) { print  "***";
-} else { print  wp_date('d/m/Y', $adherent->last_subscription_date_start).' '.__( 'to', 'doliconnect').' '.wp_date('d/m/Y', $adherent->last_subscription_date_end); }
+if ( $adherent->datefin == null ) { 
+    print  "***";
+} else { 
+    print  wp_date('d/m/Y', $adherent->last_subscription_date_start).' '.__( 'to', 'doliconnect').' '.wp_date('d/m/Y', $adherent->last_subscription_date_end); 
+}
 print  "<br><b>".__( 'Renewal', 'doliconnect').":</b> ".__( 'manual', 'doliconnect');
 print  "<br><b>".__( 'Commitment', 'doliconnect').":</b> ";
 if ( (isset($adherent->datecommitment) && current_time('timestamp') > $adherent->datecommitment) || !isset($adherent->datecommitment) ) { 
