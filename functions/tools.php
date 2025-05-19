@@ -700,7 +700,7 @@ function doliPasswordForm($user, $url, $return = null){
   }
   $doliPassword .= '>'.__( 'Update', 'doliconnect').'</button></div></form>';
   $doliPassword .= "</div>";
-  if (isset($request) && isset($doliuser)) $doliPassword .= doliCardFooter($request, 'doliconnector', $doliuser);
+  $doliPassword .= doliCardFooter($doliuser, 'doliconnector');
   $doliPassword .= '</div>';
 return $doliPassword;
 }
@@ -1465,7 +1465,8 @@ function dolidelay($delay = null, $refresh = false, $protect = false) {
   return $delay;
 }
 
-function doliCardFooter($request, $delay, $object = null) {
+function doliCardFooter($object, $delay, $request = null) {
+  if (isset($object->request)) $request = $object->request;
   $request = substr($request, 0, 172);
   $footer = '<div class="card-footer text-muted">';
   $footer .= "<small><div class='float-start'>";

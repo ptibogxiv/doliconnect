@@ -30,7 +30,7 @@ function informations_module($url) {
     print "<div class='card-body'><div class='d-grid gap-2'><button id='doliuserinfos-button' class='btn btn-outline-secondary' type='submit' ";
     if (!doliCheckRights('societe', 'creer')) { print 'disabled'; }
     print ">".__( 'Update', 'doliconnect')."</button></div></div>";
-    print doliCardFooter($request, 'thirdparty', $thirdparty);
+    print doliCardFooter($thirdparty, 'thirdparty');
     print '</div></form>';
 }
 add_action( 'user_doliconnect_informations', 'informations_module');
