@@ -565,7 +565,7 @@ function dolifaq_display($content) {
     print '<div class="card-body">';
     print doliPagination($object, $url, $page);
     print '</div>';
-    print doliCardFooter($request, 'constante', $object);
+    print doliCardFooter($object, 'knowledgemanagement');
     print '</div>';
   }
 } else {
@@ -1694,7 +1694,7 @@ function doliagenda_display($content) {
       print $agendafo->note_private;
       
       print '</div>';
-      print doliCardFooter($request, 'agenda', $agendafo);
+      print doliCardFooter($agendafo, 'agenda');
       print '</div>';
     } else {
       $limit=12;
@@ -1722,7 +1722,7 @@ function doliagenda_display($content) {
       print "</ul><div class='card-body'>";
       print doliPagination($object, $_SERVER['REQUEST_URI'], $page);
       print "</div>";
-      print doliCardFooter($request, 'agenda', $object);
+      print doliCardFooter($object, 'agenda');
       print "</div>";
     }
   } else {
