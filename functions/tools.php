@@ -699,7 +699,7 @@ function doliPasswordForm($user, $url, $return = null){
   }
   $doliPassword .= '>'.__( 'Update', 'doliconnect').'</button></div></form>';
   $doliPassword .= "</div>";
-  if (isset($request) && isset($doliuser)) $doliPassword .= doliCardFooter($request, 'thirdparty', $doliuser);
+  if (isset($request) && isset($doliuser)) $doliPassword .= doliCardFooter($request, 'doliconnector', $doliuser);
   $doliPassword .= '</div>';
 return $doliPassword;
 }
@@ -1477,7 +1477,9 @@ function doliCardFooter($request, $delay, $object = null) {
     this.form.submit();
     }';
     $footer .= '</script>';
-    if ( isset($object->date_modification) && !empty($object->date_modification) ) {
+    if ( isset($object->datem) && !empty($object->datem) ) {
+      $footer .= "<i class='fas fa-database'></i> ".wp_date( get_option( 'date_format' ).' - '.get_option('time_format'), $object->datem, false);
+    } elseif ( isset($object->date_modification) && !empty($object->date_modification) ) {
       $footer .= "<i class='fas fa-database'></i> ".wp_date( get_option( 'date_format' ).' - '.get_option('time_format'), $object->date_modification, false);
     } elseif ( get_option("_transient_timeout_".$request) > 0 ) {
       $footer .= "<i class='fas fa-database'></i> ".wp_date( get_option( 'date_format' ).' - '.get_option('time_format'), get_option("_transient_timeout_".$request)-dolidelay($delay), false);
