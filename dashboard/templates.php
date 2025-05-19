@@ -843,7 +843,7 @@ function dolishop_display($content) {
 
       print apply_filters( 'doliproductcard', $product, null);
 
-      print doliCardFooter($request, 'product');
+      print doliCardFooter($product, 'product');
       print "</div>";
 
     } else {
@@ -1015,7 +1015,7 @@ function dolishop_display($content) {
         print doliPagination($object, $_SERVER['REQUEST_URI'], $page);
         print '</div>';
       }
-      print doliCardFooter($request, 'product');
+      print doliCardFooter($object, 'product', $request);
       print '</div>';
     } 
   } else {
