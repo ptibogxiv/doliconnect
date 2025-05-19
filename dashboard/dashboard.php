@@ -1305,7 +1305,7 @@ function recruitment_module( $url ) {
         print $donationfo->description;
 
         print "</div></div></div>";
-        print doliCardFooter($request, 'donation', $donationfo);
+        print doliCardFooter($donationfo, 'donation');
         print "</div>";
     } else {
         $limit=12;
@@ -1333,7 +1333,7 @@ function recruitment_module( $url ) {
         print "</ul><div class='card-body'>";
         print doliPagination($object, $url, $page);
         print "</div>";
-        print doliCardFooter($request, 'recruitment', $object);
+        print doliCardFooter($object, 'recruitment');
         print "</div>";
     }
 }
@@ -1654,7 +1654,7 @@ global $current_user;
         print "<li class='list-group-item list-group-item-light'><center>".__( 'No consumption', 'doliconnect')."</center></li>";
     }
     print '</ul>';
-    print doliCardFooter($request, 'member', $listconsumption);
+    print doliCardFooter($listconsumption, 'member');
     print '</div>';
 }
 
@@ -1763,7 +1763,7 @@ global $current_user;
     } else {
         print "<ul class='list-group list-group-flush'><li class='list-group-item list-group-item-light'><center>".__( 'No sales representative', 'doliconnect')."</center></li></ul>";
     }
-    print doliCardFooter($request, 'thirdparty', $representatives);
+    print doliCardFooter($representatives, 'thirdparty');
     print '</div>';
 }
 
@@ -1832,7 +1832,7 @@ if ( isset($ticketfo->messages) ) {
     }
 } 
 print '</ul>';
-print doliCardFooter($request, 'ticket', $ticketfo);
+print doliCardFooter($ticketfo, 'ticket');
 print '</div>';
 
 } elseif ( isset($_GET['action']) && $_GET['action'] == 'create' ) {
@@ -1990,7 +1990,7 @@ print '</div></form>';
         print '</ul><div class="card-body">';
         print doliPagination($object, $url, $page);
         print '</div>';
-        print doliCardFooter($request, 'ticket', $object);
+        print doliCardFooter($object, 'ticket');
         print '</div>';
     }
 }
