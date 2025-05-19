@@ -62,7 +62,7 @@ if ( !isset($typeadhesion->error) ) {
 	$html .= '<div class="card-body"><small>'.__( 'Note: the admins reserve the right to change your membership in relation to your personal situation. A validation of the membership may be necessary depending on the cases.', 'doliconnect').'</small></div>';
 }
 
-$html .= doliCardFooter($request, 'thirdparty', $typeadhesion);
+$html .= doliCardFooter($typeadhesion, 'member');
 $html .= "</div>";
 return $html;
 }

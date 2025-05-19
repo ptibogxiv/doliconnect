@@ -10,7 +10,7 @@ function doliconnect_product_block_render( $attributes, $content) {
 	} else {
 		$content .= '<div class="card-header">'.__( 'Item', 'doliconnect').'</div><div class="card-body"><center>'.__( 'No item', 'doliconnect' ).'</center></div>';
 	}
-	$content .= doliCardFooter($request, 'product');
+	$content .= doliCardFooter($product, 'product');
 	$content .= "</div>";
 	return $content;
 }
