@@ -77,6 +77,7 @@ function doliConnect($fonction, $current_user = null, $boolean = false, $refresh
   $object->id = 0;
   $object->email = null;
 	$object->typeid = 0;
+  $object->request = null;
   if ($fonction == 'thirdparty' && isset($current_user->ID) && !empty($current_user->ID)) {
     if ( doliversion('21.0.0') ) {
       $return = callDoliApi("GET", "/thirdparties/accounts/wordpress/".$current_user->ID, null, dolidelay('doliconnector', $refresh));

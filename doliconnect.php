@@ -217,9 +217,13 @@ function callDoliApi($method = null, $link = null, $body = null, $delay = HOUR_I
                 $delay = abs( intval($delay) );
                 set_transient( $link, wp_remote_retrieve_body( $request ), $delay);
             }
-            return json_decode( wp_remote_retrieve_body( $request ) );
+            $return = json_decode( wp_remote_retrieve_body( $request ) );
+            if (is_object($return)) $return->request = $link;
+            return $return;
         } else {
-            return json_decode( get_transient( $link ) );   
+            $return = json_decode( get_transient( $link ) );
+            if (is_object($return)) $return->request = $link;
+            return $return;   
         }
     } else {
         if ( !defined("DOLIBUG") ) {
