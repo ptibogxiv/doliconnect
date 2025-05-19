@@ -40,7 +40,7 @@ require_once plugin_dir_path(__FILE__).'/admin/admin.php';
 require_once plugin_dir_path(__FILE__).'/blocks/index.php';
 //include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 
-define('DOLIBARR_MINIMUM_VERSION', '16.0.0');
+define('DOLIBARR_MINIMUM_VERSION', '17.0.0');
 define('DOLIBARR_LEGAL_VERSION', '21.0.1');
 
 // ********************************************************
