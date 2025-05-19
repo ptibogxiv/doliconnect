@@ -1464,7 +1464,8 @@ $adherenttype = callDoliApi("GET", $request, null, dolidelay('member', esc_attr(
 }
 
 //if ( isset($adherent) && !isset($adherent->error) && $adherent != null ) {
-print "<div class='row'><div class='col-12 col-md-5 border-end'><b>".__( 'Status', 'doliconnect').":</b> ";
+print "<div class='row'><div class='col-12 col-md-5 border-end'>";
+print "<b>".__( 'Status', 'doliconnect').":</b> ";
 if ( isset($adherent->status) && $adherent->status > 0) {
     if  ($adherent->datefin == null ) {
         print  "<span class='badge rounded-pill bg-danger'>".__( 'Waiting payment', 'doliconnect')."</span>";
@@ -1484,10 +1485,15 @@ elseif ( isset($adherent->status) && $adherent->status == '-2' ) {
 } else { 
     print  "<span class='badge rounded-pill bg-dark'>".__( 'No membership', 'doliconnect')."</span>"; 
 }
-    print  "<br>";
+print "<br><b>".__( 'Reference', 'doliconnect').":</b> ";
+if ( isset($adherent->ref) ) { 
+    print $adherent->ref;
+} else {
+    print  "***"; 
+}
 $type=(! empty($adherent->typeid) ? doliproduct($adherenttype, 'label') : __( 'nothing', 'doliconnect'));
-if ( isset($adherenttype) ) print  "<b>".__( 'Type', 'doliconnect').":</b> ".$type." - ".doliduration($adherenttype)."<br>";
-print  "<b>".__( 'Validity', 'doliconnect').":</b> ";
+if ( isset($adherenttype) ) print  "<br><b>".__( 'Type', 'doliconnect').":</b> ".$type." - ".doliduration($adherenttype);
+print  "<br><b>".__( 'Validity', 'doliconnect').":</b> ";
 if ( !isset($adherent->datefin) || empty($adherent->datefin) ) { 
     print  "***";
 } else { 
@@ -1564,10 +1570,6 @@ print '<div class="d-grid gap-2"><div class="btn-group" role="group" aria-label=
 }
 
 print "</div></div>";
-
-//if ($adherent->ref != $adherent->id ) { 
-//print "<label for='license'><small>N° de licence</small></label><div class='input-group mb-2'><div class='input-group-prepend'><div class='input-group-text'><i class='fas fa-key fa-fw'></i></div></div><input class='form-control' type='text' value='".$adherent->ref."' readonly></div>";
-//}
 
 if( has_action('mydoliconnectmemberform') ) {
 print do_action('mydoliconnectmemberform', $adherent);
