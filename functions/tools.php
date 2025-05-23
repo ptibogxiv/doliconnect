@@ -78,6 +78,7 @@ function doliConnect($fonction, $current_user = null, $boolean = false, $refresh
   $object->email = null;
 	$object->typeid = 0;
   $object->request = null;
+  $object->lines = array();
   if ($fonction == 'thirdparty' && isset($current_user->ID) && !empty($current_user->ID)) {
     if ( doliversion('21.0.0') ) {
       $return = callDoliApi("GET", "/thirdparties/accounts/wordpress/".$current_user->ID, null, dolidelay('doliconnector', $refresh));
@@ -101,12 +102,13 @@ function doliConnect($fonction, $current_user = null, $boolean = false, $refresh
       $id = doliconnector($current_user, 'fk_soc', $refresh);
       $thirdparty = callDoliApi("GET", "/thirdparties/".$id, null, dolidelay('doliconnector', $refresh));
     }
-    if (isset($thirdparty->id)) $object = callDoliApi("GET", "/orders?sortfield=t.rowid&sortorder=DESC&limit=1&thirdparty_ids=".$thirdparty->id."&sqlfilters=(t.fk_statut%3A%3D%3A'0')and(t.module_source%3A%3D%3A'doliconnect')&pagination_data=true", null, dolidelay('doliconnector', $refresh));
-    if ( doliversion('20.0.0') && isset($object->data) ) { $object = $object->data; } elseif ( isset($object) ) { $object = $object; } else  { $object = null; }
-    if (isset($object[0])) {
-      $return = $object[0];
+    if (isset($thirdparty->id)) $object2 = callDoliApi("GET", "/orders?sortfield=t.rowid&sortorder=DESC&limit=1&thirdparty_ids=".$thirdparty->id."&sqlfilters=(t.fk_statut%3A%3D%3A'0')and(t.module_source%3A%3D%3A'doliconnect')&pagination_data=true", null, dolidelay('doliconnector', $refresh));
+    if ( doliversion('20.0.0') && isset($object2->data) && !empty($object2->data) ) { 
+      $return = $object2->data; 
+    } elseif ( !doliversion('20.0.0') && isset($object2[0]) && !empty($object2[0]) ) { 
+      $return = $object2; 
     } else {
-      $return= null;
+      $return = $object;
     }
   } else {
     $return = $object;
