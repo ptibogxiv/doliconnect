@@ -215,10 +215,9 @@ function doliuserinfos_request(){
 
 		if ( !is_wp_error( $emailSent ) && ($thirdparty['morphy'] == 'mor' && $user) || (function_exists('dolikiosk') && ! empty(dolikiosk()) && $user) ) {  
 		
-			//$dolibarrid = doliconnector($user, 'fk_soc', true, $thirdparty);
 			do_action('wp_dolibarr_sync', $thirdparty, $user);
 			$thirdparty = doliConnect('thirdparty', $user, $thirdparty, true);
-			
+
 			wp_set_current_user( $ID, $user->user_login );
 			wp_set_auth_cookie( $ID, false);
 			do_action( 'wp_login', $user->user_login, $user);
