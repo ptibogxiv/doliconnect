@@ -1729,7 +1729,7 @@ print "<ul class='list-group list-group-flush'>";
     }
     //print "</form>";
     print '</ul>';
-    print doliCardFooter($request, 'member', $linkedmember);
+    print doliCardFooter($request, $linkedmember);
     print '</div>';
 }
 
