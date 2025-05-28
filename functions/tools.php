@@ -95,7 +95,7 @@ function doliConnect($fonction, $current_user = null, $boolean = false, $refresh
             if (!empty($current_user->user_firstname) && !empty($current_user->user_lastname)) { 
               $name = $current_user->user_firstname." ".$current_user->user_lastname; 
             } else { $name = $current_user->user_login; }
-      }
+          }
           $client = (!empty(get_option('doliDefaultclient'))?get_option('doliDefaultclient'):1);
           $rdr = [
             'name'  => $name,
