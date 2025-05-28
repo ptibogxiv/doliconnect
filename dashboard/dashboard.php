@@ -468,7 +468,7 @@ print '</div>';
         $object = callDoliApi("GET", $request, null, dolidelay('proposal', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
         if ( doliversion('20.0.0') && isset($object->data) ) { $listpropal = $object->data; } else { $listpropal = $object; }
 
-        print '<div class="card shadow-sm"><div class="card-header">'.__( 'Proposals tracking', 'doliconnect').'</div><ul class="list-group list-group-flush">';
+        print '<div class="card shadow-sm"><div class="card-header">'.__( 'Proposals tracking', 'doliconnect').' ('.$object->pagination->total.')</div><ul class="list-group list-group-flush">';
         
         if ( !isset($listpropal->error) && $listpropal != null ) {
             foreach ( $listpropal as $postproposal ) { 
@@ -730,7 +730,7 @@ $fruits[$ship->date_creation] = array(
         $object = callDoliApi("GET", $request, null, dolidelay('order', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
         if ( doliversion('20.0.0') && isset($object->data) ) { $listorder = $object->data; } else { $listorder = $object; }
         
-        print '<div class="card shadow-sm"><div class="card-header">'.__( 'Orders tracking', 'doliconnect').'</div><ul class="list-group list-group-flush">';
+        print '<div class="card shadow-sm"><div class="card-header">'.__( 'Orders tracking', 'doliconnect').' ('.$object->pagination->total.')</div><ul class="list-group list-group-flush">';
 
         if ( !isset($listorder->error) && $listorder != null ) {
             foreach ( $listorder as $postorder ) {
@@ -955,7 +955,7 @@ print '</div>';
         $object = callDoliApi("GET", $request, null, dolidelay('invoice', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
         if ( doliversion('20.0.0') && isset($object->data) ) { $listinvoice = $object->data; } else { $listinvoice = $object; }
 
-        print '<div class="card shadow-sm"><div class="card-header">'.__( 'Invoices tracking', 'doliconnect').'</div><ul class="list-group list-group-flush">';
+        print '<div class="card shadow-sm"><div class="card-header">'.__( 'Invoices tracking', 'doliconnect').' ('.$object->pagination->total.')</div><ul class="list-group list-group-flush">';
 
         if ( !isset($listinvoice->error) && $listinvoice != null ) {
             foreach ( $listinvoice as $postinvoice ) {
@@ -1056,7 +1056,7 @@ global $current_user;
         $object = callDoliApi("GET", $request, null, dolidelay('contract', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
         if ( doliversion('20.0.0') && isset($object->data) ) { $listcontract = $object->data; } else { $listcontract = $object; }
 
-        print '<div class="card shadow-sm"><div class="card-header">'.__( 'Contracts tracking', 'doliconnect').'</div><ul class="list-group list-group-flush">';
+        print '<div class="card shadow-sm"><div class="card-header">'.__( 'Contracts tracking', 'doliconnect').' ('.$object->pagination->total.')</div><ul class="list-group list-group-flush">';
 
         if ( !isset($listcontract->error) && $listcontract != null ) {
             foreach ($listcontract  as $postcontract) {                                                                                 
@@ -1145,7 +1145,7 @@ global $current_user;
         $object = callDoliApi("GET", $request, null, dolidelay('project', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
         if ( doliversion('21.0.0') && isset($object->data) ) { $listproject = $object->data; } else { $listproject = $object; }
 
-        print '<div class="card shadow-sm"><div class="card-header">'.__( 'Projects tracking', 'doliconnect').'</div><ul class="list-group list-group-flush">';
+        print '<div class="card shadow-sm"><div class="card-header">'.__( 'Projects tracking', 'doliconnect').' ('.$object->pagination->total.')</div><ul class="list-group list-group-flush">';
 
         if ( !isset($listproject->error) && $listproject != null ) {
             foreach ($listproject  as $postproject) {                                                                              
@@ -1238,7 +1238,7 @@ $ID = $current_user->ID;
         $object = callDoliApi("GET", $request, null, dolidelay('donation', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
         if ( doliversion('21.0.0') && isset($object->data) ) { $listdonation = $object->data; } else { $listdonation = $object; }
 
-        print '<div class="card shadow-sm"><div class="card-header">'.__( 'Donations tracking', 'doliconnect').'</div><ul class="list-group list-group-flush">'; 
+        print '<div class="card shadow-sm"><div class="card-header">'.__( 'Donations tracking', 'doliconnect').' ('.$object->pagination->total.')</div><ul class="list-group list-group-flush">'; 
         if ( !empty(doliconnectid('dolidonation'))) {
         print '<a href="'.doliconnecturl('dolidonation').'" class="list-group-item lh-condensed list-group-item-action list-group-item-primary "><center><i class="fas fa-plus-circle"></i> '.__( 'Donate', 'doliconnect').'</center></a>';  
         }
@@ -1314,7 +1314,7 @@ function recruitment_module( $url ) {
         $object = callDoliApi("GET", $request, null, dolidelay('recruitment', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
         if ( doliversion('21.0.0') && isset($object->data) ) { $listjobposition = $object->data; } else { $listjobposition = $object; }
         
-        print '<div class="card shadow-sm"><div class="card-header">'.__( 'List of jobpositions', 'doliconnect').'</div><ul class="list-group list-group-flush">';
+        print '<div class="card shadow-sm"><div class="card-header">'.__( 'List of jobpositions', 'doliconnect').' ('.$object->pagination->total.')</div><ul class="list-group list-group-flush">';
         if ( doliCheckRights('recruitment', 'recruitmentjobposition', 'write') && !empty(get_option('doliconnectbeta'))) {
             print '<a href="" class="list-group-item lh-condensed list-group-item-action list-group-item-primary" disabled><center><i class="fas fa-plus-circle"></i> '.__( 'Create a job position', 'doliconnect').'</center></a>';  
         }
@@ -1397,7 +1397,7 @@ function expensereport_module( $url ) {
         $request= "/expensereports?sortfield=t.rowid&sortorder=DESC&limit=".$limit."&page=".$page."&user_ids=".doliConnect('user')->id."&pagination_data=true";
         $object = callDoliApi("GET", $request, null, dolidelay('expensereport', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
         if ( doliversion('21.0.0') && isset($object->data) ) { $listexpensereport = $object->data; } else { $listexpensereport = $object; }
-        print '<div class="card shadow-sm"><div class="card-header">'.__( 'List of expense reports', 'doliconnect').'</div><ul class="list-group list-group-flush">';
+        print '<div class="card shadow-sm"><div class="card-header">'.__( 'List of expense reports', 'doliconnect').' ('.$object->pagination->total.')</div><ul class="list-group list-group-flush">';
         if ( doliCheckRights('expensereport', 'creer') && !empty(get_option('doliconnectbeta'))) {
             print '<a href="" class="list-group-item lh-condensed list-group-item-action list-group-item-primary" disabled><center><i class="fas fa-plus-circle"></i> '.__( 'Create an expense report', 'doliconnect').'</center></a>';  
         }

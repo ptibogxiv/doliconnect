@@ -1801,12 +1801,12 @@ global $current_user;
       if ( $line->fk_product > 0 ) {
         if ($refresh || $refreshstock) $refreshstock = true;
         $product = callDoliApi("GET", "/products/".$line->fk_product."?includesubproducts=true&includetrans=true", null, dolidelay('product', $refreshstock));
+        $mstock = doliProductStock($product, $refresh, true, $line->array_options);
       }
-      $mstock = doliProductStock($product, $refresh, true, $line->array_options);
-      if ( $mstock['stock'] < 0 && is_page(doliconnectid('dolicart'))) {
+      if ( isset($mstock) && $mstock['stock'] < 0 && is_page(doliconnectid('dolicart'))) {
         $doliline .= "<li class='list-group-item list-group-item-danger list-group-item-action'>";
         if (!defined('dolilockcart')) define('dolilockcart', '1'); 
-      } elseif ($mstock['stock'] > 0 && $mstock['stock'] < $line->qty && is_page(doliconnectid('dolicart'))) {
+      } elseif ( isset($mstock) &&$mstock['stock'] > 0 && $mstock['stock'] < $line->qty && is_page(doliconnectid('dolicart'))) {
         $doliline .= "<li class='list-group-item list-group-item-warning list-group-item-action'>";
         if (!defined('dolilockcart')) define('dolilockcart', '1'); 
       } else {
@@ -1839,9 +1839,9 @@ global $current_user;
       } elseif (doliconnectid('dolishipping')) {
         $doliline .= '<small><a href="'.doliconnecturl('dolishipping').'">'.esc_html__( 'Shipping informations', 'doliconnect').'</a></small>';
       }
-      if ( $mstock['stock'] < 0 && is_page(doliconnectid('dolicart'))) {
+      if ( isset($mstock) && $mstock['stock'] < 0 && is_page(doliconnectid('dolicart'))) {
         $doliline .= "<b>".__( "Sorry, this product is no longer available. Please, delete it to finalize your order", 'doliconnect')."</b>";
-      } elseif ($mstock['stock'] > 0 && $mstock['stock'] < $line->qty && is_page(doliconnectid('dolicart'))) {
+      } elseif ( isset($mstock) && $mstock['stock'] > 0 && $mstock['stock'] < $line->qty && is_page(doliconnectid('dolicart'))) {
         $doliline .= "<b>".__( "Sorry, this product is not available with this quantity. Please, change it to finalize your order", 'doliconnect')."</b>";
       }
       $doliline .= '</div><div class="col d-none d-md-block col-md-3 text-end">';

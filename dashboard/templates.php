@@ -931,7 +931,7 @@ function dolishop_display($content) {
           $return =  esc_url( remove_query_arg( $arr_params ), $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
           print '<a class="float-end text-decoration-none" href="'.esc_url( $return ).'"><i class="fas fa-arrow-left"></i>'.__( 'Back', 'doliconnect').'</a>';
         }
-                print '<div class="input-group w-25 float-end">
+                print '<div class="input-group w-50 float-end">
           <span class="input-group-text" id="basic-addon1"><i class="fas fa-filter"></i></span><select id="selectbox" class="form-select form-select-sm" aria-label=".form-select-sm example" name="" onchange="javascript:location.href = this.value;">
             <option value="" disabled selected>'.__( '- Select -', 'doliconnect').'</option>
             <option value="'.esc_url( add_query_arg( array( 'search' =>isset($_GET['search'])?esc_attr($_GET['search']):null, 'pg' => $page, 'field' => 'label', 'order' => 'ASC'), $_SERVER['REQUEST_URI']) ).'"';
