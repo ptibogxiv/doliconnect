@@ -1831,7 +1831,9 @@ global $current_user;
         if ($line->product_type == 9) {
             $doliline .= $line->description;
         } elseif ( !doliconst('MAIN_GENERATE_DOCUMENTS_HIDE_REF') ) { $doliline .= "<i class='fas fa-toolbox fa-fw'></i> ".(!empty($product->ref)?$product->ref:'-'); }
-        if ( !empty($product->barcode) ) { 
+        if ($line->product_type == 9) {
+            $doliline .= '';
+        } elseif ( !empty($product->barcode) ) { 
           if ( !doliconst('MAIN_GENERATE_DOCUMENTS_HIDE_REF') ) { $doliline .= " | "; }
           $doliline .= "<i class='fas fa-barcode fa-fw'></i> ".$product->barcode; 
         }
