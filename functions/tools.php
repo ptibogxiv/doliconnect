@@ -1822,7 +1822,7 @@ global $current_user;
       $doliline .= '<div class="w-100 justify-content-between"><div class="row"><div class="d-none d-sm-block col-sm-2 col-lg-1"><center>';
       if ( doliCheckModules('fraisdeport') && doliconst('FRAIS_DE_PORT_ID_SERVICE_TO_USE', $refresh) == $line->fk_product ) {
         $doliline .= '<i class="fas fa-shipping-fast fa-2x fa-fw"></i>';
-      } else {
+      } elseif ( $line->fk_product > 0 ) {
         $doliline .= doliconnect_image('product', $line->fk_product, array('limit'=>1, 'size'=>'50x50'), $refresh);
       }
       $doliline .= '</center></div><div class="col-8 col-sm-7 col-md-5 col-lg-5"><h6 class="mb-1">'.doliproduct($line, 'product_label').'</h6>';
