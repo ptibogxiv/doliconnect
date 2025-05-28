@@ -81,7 +81,28 @@ function doliConnect($fonction, $current_user = null, $boolean = false, $refresh
   $object->lines = array();
   if ($fonction == 'thirdparty' && isset($current_user->ID) && !empty($current_user->ID)) {
     if ( doliversion('21.0.0') ) {
-      $return = callDoliApi("GET", "/thirdparties/accounts/wordpress/".$current_user->ID, null, dolidelay('doliconnector', $refresh));
+      $thirdparty = callDoliApi("GET", "/thirdparties/accounts/wordpress/".$current_user->ID, null, dolidelay('doliconnector', $refresh));
+      if (!isset($thirdparty->id)) {
+        $thirdparty = callDoliApi("GET", "/thirdparties/email/".$current_user->email, null, dolidelay('doliconnector', $refresh));
+        if (!isset($thirdparty->id)) {
+          $client = (!empty(get_option('doliDefaultclient'))?get_option('doliDefaultclient'):1);
+          $rdr = [
+            'name'  => $name,
+            'email' => $current_user->user_email,
+            'client' => $client,
+            'status' => 1
+          ];
+          $thirdparty = callDoliApi("POST", "/thirdparties", $rdr, dolidelay('doliconnector', $refresh));
+          $thirdparty = callDoliApi("GET", "/thirdparties/email/".$current_user->email, null, dolidelay('doliconnector', $refresh));
+        }
+        $rdr = [
+          'key_account'  => $current_user->ID,
+          'site' => 'wordpress'
+        ];
+        $thirdparty = callDoliApi("GET", "/thirdparties/".$thirdparty->id."/accounts", $rdr, dolidelay('doliconnector', $refresh));
+        $thirdparty = callDoliApi("GET", "/thirdparties/accounts/wordpress/".$current_user->ID, null, dolidelay('doliconnector', $refresh));
+      }
+      $return = $thirdparty;
     } else { 
       $id = doliconnector($current_user, 'fk_soc', $refresh);
       $return = callDoliApi("GET", "/thirdparties/".$id, null, dolidelay('doliconnector', $refresh));
