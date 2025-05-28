@@ -849,7 +849,7 @@ function dolishop_display($content) {
     } else {
 
       $limit=20;
-      if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']); } else { $page = 0; }
+      $page = doliPG(isset($_GET['pg'])?$_GET['pg']:null);
       if ( isset($_GET['field']) ) { $field = esc_attr($_GET['field']); } else { $field = 'label'; }
       if ( isset($_GET['order']) ) { $order = esc_attr($_GET['order']); } else { $order = 'ASC'; }
 

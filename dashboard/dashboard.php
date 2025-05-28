@@ -1394,6 +1394,8 @@ function expensereport_module( $url ) {
     } elseif (isset(doliConnect('user')->id)) {
         $limit=12;
         $page = doliPG(isset($_GET['pg'])?$_GET['pg']:null);
+        if ( isset($_GET['field']) ) { $field = esc_attr($_GET['field']); } else { $field = 'label'; }
+        if ( isset($_GET['order']) ) { $order = esc_attr($_GET['order']); } else { $order = 'ASC'; }
         $request= "/expensereports?sortfield=t.rowid&sortorder=DESC&limit=".$limit."&page=".$page."&user_ids=".doliConnect('user')->id."&pagination_data=true";
         $object = callDoliApi("GET", $request, null, dolidelay('expensereport', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
         if ( doliversion('21.0.0') && isset($object->data) ) { $listexpensereport = $object->data; } else { $listexpensereport = $object; }
