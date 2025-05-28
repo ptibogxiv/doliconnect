@@ -236,7 +236,7 @@ add_action( 'init', 'dolibarr', 10);
 function dolibarr() {
 global $current_user;  
 
-    if ( is_user_logged_in() ) { 
+    if ( is_user_logged_in() && !doliversion('21.0.0')) { 
         $user=get_current_user_id(); 
         $dolibarr = callDoliApi("GET", "/doliconnector/".$user, null, dolidelay('doliconnector', false));
 
