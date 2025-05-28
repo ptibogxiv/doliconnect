@@ -378,7 +378,7 @@ global $current_user;
     print "</ul><div class='card-body'>";
     print doliPagination($object, $url, $page);
     print "</div>";
-    print doliCardFooter($object, 'thirdparty');
+    print doliCardFooter($object, 'thirdparty', $request);
     print "</div>";
 }
 
