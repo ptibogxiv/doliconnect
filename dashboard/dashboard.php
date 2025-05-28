@@ -282,7 +282,7 @@ global $current_user;
         print "<div class='card-body'><div class='d-grid gap-2'><button class='btn btn-outline-secondary' type='submit' ";
         if (!doliCheckRights('societe', 'contact', 'creer')) { print 'disabled'; }
         print ">".__( 'Update', 'doliconnect')."</button></div></div>";
-        print doliCardFooter($request, 'contact', $contactfo);
+        print doliCardFooter($contactfo, 'contact', $request);
         print '</div></form>';
     } elseif ( isset($_GET['action']) && $_GET['action'] == 'create' ) {
         print "<form action='".admin_url('admin-ajax.php')."' id='dolicontactinfos-form' method='post' class='was-validated' enctype='multipart/form-data'>";
