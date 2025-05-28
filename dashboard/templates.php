@@ -931,11 +931,7 @@ function dolishop_display($content) {
           $return =  esc_url( remove_query_arg( $arr_params ), $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
           print '<a class="float-end text-decoration-none" href="'.esc_url( $return ).'"><i class="fas fa-arrow-left"></i>'.__( 'Back', 'doliconnect').'</a>';
         }
-        print "</div><ul class='list-group list-group-flush'><li class='list-group-item'>";
-        print "<div class='row'><div class='col-6 col-md-7'>";
-        printf( _n( 'There is %s item', 'There are %s items', $count, 'doliconnect' ), number_format_i18n( $count ) );
-        print '</div><div class="col-6 col-md-5">';
-        print '<div class="input-group">
+                print '<div class="input-group w-25 float-end">
           <span class="input-group-text" id="basic-addon1"><i class="fas fa-filter"></i></span><select id="selectbox" class="form-select form-select-sm" aria-label=".form-select-sm example" name="" onchange="javascript:location.href = this.value;">
             <option value="" disabled selected>'.__( '- Select -', 'doliconnect').'</option>
             <option value="'.esc_url( add_query_arg( array( 'search' =>isset($_GET['search'])?esc_attr($_GET['search']):null, 'pg' => $page, 'field' => 'label', 'order' => 'ASC'), $_SERVER['REQUEST_URI']) ).'"';
@@ -954,6 +950,11 @@ function dolishop_display($content) {
             if ($field == 'price' && $order == 'DESC') { print 'selected'; }
             print '>'.__( 'Highest prices', 'doliconnect').'</option>
         </select></div>';
+        print "</div><ul class='list-group list-group-flush'><li class='list-group-item'>";
+        print "<div class='row'><div class='col-6 col-md-7'>";
+        printf( _n( 'There is %s item', 'There are %s items', $count, 'doliconnect' ), number_format_i18n( $count ) );
+        print '</div><div class="col-6 col-md-5">';
+// old select
         print '</div></div></li>'; 
 
         if (isset($category->description) && !empty(doliproduct($category, 'description'))) {
