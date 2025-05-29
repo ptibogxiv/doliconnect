@@ -1,3 +1,33 @@
+# 7.4.0
+
+- Migrate SASS imports to @use-based code (#1356)
+- Modern and minimalist UI redesign with new features (#1358)
+- Fix flag of Palestine (#1366)
+
+# 7.3.2
+
+- Add new flag for Association of Southeast Asian Nations (#1325)
+
+# 7.3.1
+
+- Fix Kyrgyzstan Flag (#1323)
+
+# 7.3.0
+
+- Run the latest svgo on all files (#1322)
+
+# 7.2.4
+
+- Fix Syrian Flag (#1310)
+
+# 7.2.3
+
+- Fix overlapping paths in at, bg, ee, lu, nl, ru flags (#1251)
+
+# 7.2.2
+
+- Fix Malta Flag (#1248)
+
 # 7.2.1
 
 - Fix Belarus Flag (#1230)

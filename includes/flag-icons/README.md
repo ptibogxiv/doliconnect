@@ -25,9 +25,26 @@ or use CDN:
 ```html
 <link
   rel="stylesheet"
-  href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.0.0/css/flag-icons.min.css"
+  href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.3.2/css/flag-icons.min.css"
 />
 ```
+
+or use SASS:
+
+```scss
+@use "node_modules/flag-icons/sass/flag-icons";
+
+// or with custom configuration
+@use "node_modules/flag-icons/sass/flag-icons" with (
+  // Override path to flags directory
+  $flag-icons-path: "node_modules/flag-icons/flags",
+
+  // Include only specific country flags
+  $flag-icons-included-countries: ("gr", "de", "gb")
+);
+```
+
+You can find all available variables in [`sass/_variables.scss`](sass/_variables.scss).
 
 For using the flags inline with text add the classes `.fi` and `.fi-xx` (where `xx` is the [ISO 3166-1-alpha-2 code](https://www.iso.org/obp/ui/#search/code/) of a country) to an empty `<span>`. If you want to have a squared version flag then add the class `fis` as well. Example:
 
