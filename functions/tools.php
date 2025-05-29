@@ -311,6 +311,7 @@ function doliPagination($object, $url, $page = 0) {
             <span class="sr-only">'.__( 'Previous', 'doliconnect').'</span>
          </a>
       </li>';
+    if (empty($object->pagination->page_count)) $object->pagination->page_count = 1;
     for ($i = 1; $i <= $object->pagination->page_count; $i++) {
       $pagination .= '<li class="page-item';
       if ($object->pagination->page == $i-1) { $pagination .= ' active'; }
