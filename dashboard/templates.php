@@ -719,7 +719,7 @@ global $current_user;
         $module = 'product';
         $limit=20;
         if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']); }  else { $page = "0"; }
-        $request = "/products/purchase_prices?sortfield=t.ref&sortorder=ASC&limit=".$limit."&page=".$page."&supplier=".esc_attr($_GET["supplier"])."&pagination_data=true&sqlfilters=(t.tosell:=:1)";
+        $request = "/products/purchase_prices?sortfield=t.ref&sortorder=ASC&limit=".$limit."&page=".$page."&supplier=".esc_attr($_GET["supplier"])."&ids_only=true&pagination_data=true&sqlfilters=(t.tosell:=:1)";
         $resultats2 = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
         //if ( doliversion('20.0.0') && isset($object->data) ) { $resultats = $object->data; } else { $resultats = $object; }
         $resultats = array();
@@ -867,7 +867,7 @@ function dolishop_display($content) {
           foreach($search as $i=>$key) {
             $sqlfilters .= "((t.label:like:'%25".esc_attr($key)."%25')or(t.description:like:'%25".esc_attr($key)."%25')or(t.ref:like:'%25".esc_attr($key)."%25')or(t.barcode:like:'%25".esc_attr($key)."%25'))and";
           }
-          $request = "/products?sortfield=t.".$field."&sortorder=".$order."&limit=".$limit."&page=".$page."&pagination_data=true&sqlfilters=".$sqlfilters."(t.tosell:=:1)";
+          $request = "/products?sortfield=t.".$field."&sortorder=".$order."&limit=".$limit."&page=".$page."&ids_only=true&pagination_data=true&sqlfilters=".$sqlfilters."(t.tosell:=:1)";
           $object = callDoliApi("GET", $request, null, dolidelay('search', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
         } elseif (get_option('dolicartnewlist') != 'none' && isset($_GET['category']) && $_GET['category'] == 'new' && !isset($_GET['product'])) {
           $date = new DateTime(); 
@@ -884,10 +884,10 @@ function dolishop_display($content) {
           $request = "/discountprice?sortfield=t.".$field."&sortorder=".$order."&limit=".$limit."&page=".$page."&pagination_data=true&sqlfilters=(t.date_begin%3A%3C%3D%3A'".$lastdate."')and(t.date_end%3A%3E%3D%3A'".$lastdate."')and(d.tosell:=:1)";
           $object = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
         } elseif (!isset($_GET["category"]) || isset($_GET["category"]) && $_GET["category"] == 'all') {
-          $request = "/products?sortfield=t.".$field."&sortorder=".$order."&limit=".$limit."&page=".$page."&category=".esc_attr($shop)."&pagination_data=true&sqlfilters=(t.tosell:=:1)";
+          $request = "/products?sortfield=t.".$field."&sortorder=".$order."&limit=".$limit."&page=".$page."&category=".esc_attr($shop)."&ids_only=true&pagination_data=true&sqlfilters=(t.tosell:=:1)";
           $object= callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
         } else {
-          $request = "/products?sortfield=t.".$field."&sortorder=".$order."&limit=".$limit."&page=".$page."&category=".$cat."&pagination_data=true&sqlfilters=(t.tosell:=:1)";
+          $request = "/products?sortfield=t.".$field."&sortorder=".$order."&limit=".$limit."&page=".$page."&category=".$cat."&ids_only=true&pagination_data=true&sqlfilters=(t.tosell:=:1)";
           $object = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
         } 
         if ( doliversion('19.0.0') && isset($object->data) ) { $resultats = $object->data; } else { $resultats = $object; }
@@ -931,24 +931,24 @@ function dolishop_display($content) {
           $return =  esc_url( remove_query_arg( $arr_params ), $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
           print '<a class="float-end text-decoration-none" href="'.esc_url( $return ).'"><i class="fas fa-arrow-left"></i>'.__( 'Back', 'doliconnect').'</a>';
         }
-                print '<div class="input-group w-50 float-end">
-          <span class="input-group-text" id="basic-addon1"><i class="fas fa-filter"></i></span><select id="selectbox" class="form-select form-select-sm" aria-label=".form-select-sm example" name="" onchange="javascript:location.href = this.value;">
-            <option value="" disabled selected>'.__( '- Select -', 'doliconnect').'</option>
-            <option value="'.esc_url( add_query_arg( array( 'search' =>isset($_GET['search'])?esc_attr($_GET['search']):null, 'pg' => $page, 'field' => 'label', 'order' => 'ASC'), $_SERVER['REQUEST_URI']) ).'"';
-            if ($field == 'label' && $order == 'ASC') { print 'selected'; }
-            print '>'.__( 'Name A->Z', 'doliconnect').'</option>
-            <option value="'.esc_url( add_query_arg( array( 'search' =>isset($_GET['search'])?esc_attr($_GET['search']):null, 'pg' => $page, 'field' => 'label', 'order' => 'DESC'), $_SERVER['REQUEST_URI']) ).'"';
-            if ($field == 'label' && $order == 'DESC') { print 'selected'; }
-            print '>'.__( 'Name Z->A', 'doliconnect').'</option>
-            <option value="'.esc_url( add_query_arg( array( 'search' =>isset($_GET['search'])?esc_attr($_GET['search']):null, 'pg' => $page, 'field' => 'rowid', 'order' => 'DESC'), $_SERVER['REQUEST_URI']) ).'"';
-            if ($field == 'rowid' && $order == 'DESC') { print 'selected'; }
-            print '>'.__( 'Novelties', 'doliconnect').'</option>
-            <option value="'.esc_url( add_query_arg( array( 'search' =>isset($_GET['search'])?esc_attr($_GET['search']):null, 'pg' => $page, 'field' => 'price', 'order' => 'ASC'), $_SERVER['REQUEST_URI']) ).'"';
-            if ($field == 'price' && $order == 'ASC') { print 'selected'; }
-            print '>'.__( 'Lowest prices', 'doliconnect').'</option>
-            <option value="'.esc_url( add_query_arg( array( 'search' =>isset($_GET['search'])?esc_attr($_GET['search']):null, 'pg' => $page, 'field' => 'price', 'order' => 'DESC'), $_SERVER['REQUEST_URI']) ).'"';
-            if ($field == 'price' && $order == 'DESC') { print 'selected'; }
-            print '>'.__( 'Highest prices', 'doliconnect').'</option>
+        print '<div class="input-group w-50 float-end">
+        <span class="input-group-text" id="basic-addon1"><i class="fas fa-filter"></i></span><select id="selectbox" class="form-select form-select-sm" aria-label=".form-select-sm example" name="" onchange="javascript:location.href = this.value;">
+        <option value="" disabled selected>'.__( '- Select -', 'doliconnect').'</option>
+        <option value="'.esc_url( add_query_arg( array( 'search' =>isset($_GET['search'])?esc_attr($_GET['search']):null, 'pg' => $page, 'field' => 'label', 'order' => 'ASC'), $_SERVER['REQUEST_URI']) ).'"';
+        if ($field == 'label' && $order == 'ASC') { print 'selected'; }
+        print '>'.__( 'Name A->Z', 'doliconnect').'</option>
+        <option value="'.esc_url( add_query_arg( array( 'search' =>isset($_GET['search'])?esc_attr($_GET['search']):null, 'pg' => $page, 'field' => 'label', 'order' => 'DESC'), $_SERVER['REQUEST_URI']) ).'"';
+        if ($field == 'label' && $order == 'DESC') { print 'selected'; }
+        print '>'.__( 'Name Z->A', 'doliconnect').'</option>
+        <option value="'.esc_url( add_query_arg( array( 'search' =>isset($_GET['search'])?esc_attr($_GET['search']):null, 'pg' => $page, 'field' => 'rowid', 'order' => 'DESC'), $_SERVER['REQUEST_URI']) ).'"';
+        if ($field == 'rowid' && $order == 'DESC') { print 'selected'; }
+        print '>'.__( 'Novelties', 'doliconnect').'</option>
+        <option value="'.esc_url( add_query_arg( array( 'search' =>isset($_GET['search'])?esc_attr($_GET['search']):null, 'pg' => $page, 'field' => 'price', 'order' => 'ASC'), $_SERVER['REQUEST_URI']) ).'"';
+        if ($field == 'price' && $order == 'ASC') { print 'selected'; }
+        print '>'.__( 'Lowest prices', 'doliconnect').'</option>
+        <option value="'.esc_url( add_query_arg( array( 'search' =>isset($_GET['search'])?esc_attr($_GET['search']):null, 'pg' => $page, 'field' => 'price', 'order' => 'DESC'), $_SERVER['REQUEST_URI']) ).'"';
+        if ($field == 'price' && $order == 'DESC') { print 'selected'; }
+        print '>'.__( 'Highest prices', 'doliconnect').'</option>
         </select></div>';
         print "</div><ul class='list-group list-group-flush'><li class='list-group-item'>";
         print "<div class='row'><div class='col-6 col-md-7'>";
@@ -995,9 +995,9 @@ function dolishop_display($content) {
         }
 
         if ( !isset($resultats->error) && $resultats != null ) {
-          foreach ($resultats as $product) {
+          foreach ($resultats as $productid) {
             if ( doliCheckModules('discountprice') && isset($_GET['category']) && $_GET['category'] == 'discount' && !isset($_GET['product'])) { $product->id = $product->fk_product; }
-            $product = callDoliApi("GET", "/products/".$product->id."?includesubproducts=true&includetrans=true", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+            $product = callDoliApi("GET", "/products/".$productid."?includesubproducts=true&includetrans=true", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
             print apply_filters( 'doliproductlist', $product);
 
           }
