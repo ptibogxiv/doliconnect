@@ -11,7 +11,7 @@ function doliconnect_cron_process($refresh = false) {
         $products = array();
         $categories = array();
 
-        if ( !empty(doliconst('MAIN_MODULE_DISCOUNTPRICE')) ) {
+        if ( doliCheckModules('discountprice') ) {
             $date = new DateTime(); 
             $date->modify('NOW');
             $lastdate = $date->format('Y-m-d');
@@ -79,7 +79,7 @@ function doliconnect_cron_process($refresh = false) {
             $product1 = callDoliApi("GET", "/products/".$product['id']."?includesubproducts=true&includetrans=true", null, dolidelay('product', $refresh));
             doliconnect_image('product', $product['id'], array('limit'=>1, 'entity'=>$product['entity'], 'size'=>'200x200'), $refresh);
             if ( ! empty(doliconnectid('dolicart')) ) {
-                if ( !empty(doliconst('MAIN_MODULE_DISCOUNTPRICE')) ) {
+                if ( doliCheckModules('discountprice') ) {
                     $date = new DateTime(); 
                     $date->modify('NOW');
                     $lastdate = $date->format('Y-m-d');
