@@ -468,7 +468,7 @@ print '</div>';
         $object = callDoliApi("GET", $request, null, dolidelay('proposal', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
         if ( doliversion('20.0.0') && isset($object->data) ) { $listpropal = $object->data; } else { $listpropal = $object; }
 
-        print '<div class="card shadow-sm"><div class="card-header">'.__( 'Proposals tracking', 'doliconnect').' ('.$object->pagination->total.')</div><ul class="list-group list-group-flush">';
+        print '<div class="card shadow-sm"><div class="card-header">'.__( 'Proposals tracking', 'doliconnect').' ('.(isset($object->pagination->total)?$object->pagination->total:'x').')</div><ul class="list-group list-group-flush">';
         
         if ( !isset($listpropal->error) && $listpropal != null ) {
             foreach ( $listpropal as $postproposal ) { 
@@ -730,7 +730,7 @@ $fruits[$ship->date_creation] = array(
         $object = callDoliApi("GET", $request, null, dolidelay('order', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
         if ( doliversion('20.0.0') && isset($object->data) ) { $listorder = $object->data; } else { $listorder = $object; }
         
-        print '<div class="card shadow-sm"><div class="card-header">'.__( 'Orders tracking', 'doliconnect').' ('.$object->pagination->total.')</div><ul class="list-group list-group-flush">';
+        print '<div class="card shadow-sm"><div class="card-header">'.__( 'Orders tracking', 'doliconnect').' ('.(isset($object->pagination->total)?$object->pagination->total:'x').')</div><ul class="list-group list-group-flush">';
 
         if ( !isset($listorder->error) && $listorder != null ) {
             foreach ( $listorder as $postorder ) {
