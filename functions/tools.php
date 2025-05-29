@@ -2192,7 +2192,7 @@ $paymentmethods .= '<button type="button" onclick="PaySepaDebitPM(\''.$method->i
 } else {
 $paymentmethods .= '<button type="button" onclick="PayPM(\''.$method->type.'\')" class="btn btn-danger btn-block">'.__( 'I order', 'doliconnect').'</button>';
 }
-} elseif (doliCheckRights('societe', 'thirdparty_paymentinformation_advance', 'write', null, '15.0.0')) {
+} elseif (doliCheckRights('societe', 'thirdparty_paymentinformation', 'write', null, '15.0.0')) {
 $paymentmethods .= '<div class="btn-group btn-block" role="group" aria-label="actions buttons">';
 if ( !isset($method->default_source) && !in_array($method->type, array('VIR')) && empty($thirdparty->mode_reglement_id) ) {
 $paymentmethods .= "<button type='button' id='defaultbtn_".$method->id."' name='default_payment_method' value='default' class='btn btn-outline-secondary'";
