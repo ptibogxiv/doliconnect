@@ -275,7 +275,7 @@ global $current_user;
 
         print "<input type='hidden' name='contactid' value='".$contactfo->id."'>";
 
-        print '<div class="card shadow-sm"><div class="card-header">'.__( 'Edit contact', 'doliconnect').'<a class="float-end text-decoration-none" href="'.esc_url( add_query_arg( 'module', 'contacts', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div>';
+        print '<div class="card shadow-sm"><div class="card-header">'.__( 'Edit contact', 'doliconnect').'<a class="btn btn-sm btn-outline-secondary border border-0 float-end" href="'.esc_url( add_query_arg( 'module', 'contacts', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div>';
 
         print doliuserform( $contactfo, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'contact', doliCheckRights('societe', 'contact', 'creer'));
 
@@ -291,7 +291,7 @@ global $current_user;
             
         print "<input type='hidden' name='contactid' value='0'>";
 
-        print '<div class="card shadow-sm"><div class="card-header">'.__( 'Create contact', 'doliconnect').'<a class="float-end text-decoration-none" href="'.esc_url( add_query_arg( 'module', 'contacts', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div>';
+        print '<div class="card shadow-sm"><div class="card-header">'.__( 'Create contact', 'doliconnect').'<a class="btn btn-sm btn-outline-secondary border border-0 float-end" href="'.esc_url( add_query_arg( 'module', 'contacts', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div>';
 
         print doliuserform( $thirdparty, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'contact', doliCheckRights('societe', 'contact', 'creer'));
 
@@ -424,7 +424,7 @@ global $current_user;
     $thirdparty = doliConnect('thirdparty', $current_user, false, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 
 if ( !isset($proposalfo->error) && isset($_GET['id']) && isset($_GET['ref']) && ( $thirdparty->id == $proposalfo->socid ) && ( $_GET['ref'] == $proposalfo->ref ) && $proposalfo->statut != 0 && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doli-proposals-'.$proposalfo->id.'-'.$proposalfo->ref)) {
-print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Proposal %s', 'doliconnect'), $proposalfo->ref).'<a class="float-end text-decoration-none" href="'.esc_url( add_query_arg( 'module', 'proposals', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-5">';
+print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Proposal %s', 'doliconnect'), $proposalfo->ref).'<a class="btn btn-sm btn-outline-secondary border border-0 float-end" href="'.esc_url( add_query_arg( 'module', 'proposals', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-5">';
 print doliObjectInfos($proposalfo);
 print "</div><div class='col-md-7'>";
 print doliObjectStatus($proposalfo, 'proposal', 1);
@@ -515,7 +515,7 @@ global $current_user;
 
 if ( !isset($orderfo->error) && isset($_GET['id']) && isset($_GET['ref']) && ($thirdparty->id == $orderfo->socid ) && ($_GET['ref'] == $orderfo->ref) && $orderfo->statut != 0 && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doli-orders-'.$orderfo->id.'-'.$orderfo->ref)) {
 
-print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Order %s', 'doliconnect'), $orderfo->ref).'<a class="float-end text-decoration-none" href="'.esc_url( add_query_arg( 'module', 'orders', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-5">';
+print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Order %s', 'doliconnect'), $orderfo->ref).'<a class="btn btn-sm btn-outline-secondary border border-0 float-end" href="'.esc_url( add_query_arg( 'module', 'orders', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-5">';
 print doliObjectInfos($orderfo);
 print "</div><div class='col-md-7'>";
 print doliObjectStatus($orderfo, 'order', 1);
@@ -777,7 +777,7 @@ global $current_user;
 
 if ( !isset($orderfo->error) && isset($_GET['id']) && isset($_GET['ref']) && ($thirdparty->id == $invoicefo->socid ) && ($_GET['ref'] == $invoicefo->ref) && $invoicefo->statut != 0 && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doli-invoices-'.$invoicefo->id.'-'.$invoicefo->ref)) {
 
-print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Invoice %s', 'doliconnect'), $invoicefo->ref).'<a class="float-end text-decoration-none" href="'.esc_url( add_query_arg( 'module', 'invoices', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-5">';
+print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Invoice %s', 'doliconnect'), $invoicefo->ref).'<a class="btn btn-sm btn-outline-secondary border border-0 float-end" href="'.esc_url( add_query_arg( 'module', 'invoices', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-5">';
 print doliObjectInfos($invoicefo);
 print "</div><div class='col-md-7'>";
 print doliObjectStatus($invoicefo, 'invoice', 1);
@@ -1012,7 +1012,7 @@ global $current_user;
     $thirdparty = doliConnect('thirdparty', $current_user, false, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 
     if ( !isset($contractfo->error) && isset($_GET['id']) && isset($_GET['id']) && isset($_GET['ref']) && ($thirdparty->id == $contractfo->socid) && ($_GET['ref'] == $contractfo->ref) && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doli-contracts-'.$contractfo->id.'-'.$contractfo->ref)) {
-        print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Contract %s', 'doliconnect'), $contractfo->ref).'<a class="float-end text-decoration-none" href="'.esc_url( add_query_arg( 'module', 'contracts', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-5">';
+        print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Contract %s', 'doliconnect'), $contractfo->ref).'<a class="btn btn-sm btn-outline-secondary border border-0 float-end" href="'.esc_url( add_query_arg( 'module', 'contracts', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-5">';
         print doliObjectInfos($contractfo);
         print "</div><div class='col-md-7'>";
         print doliObjectStatus($contractfo, 'contract', 1);
@@ -1103,7 +1103,7 @@ global $current_user;
     $thirdparty = doliConnect('thirdparty', $current_user, false, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 
     if ( !isset($projectfo->error) && isset($_GET['id']) && isset($_GET['id']) && isset($_GET['ref']) && ($thirdparty->id == $projectfo->socid) && ($_GET['ref'] == $projectfo->ref) && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doli-projects-'.$projectfo->id.'-'.$projectfo->ref)) {
-        print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Project %s', 'doliconnect'), $projectfo->ref).'<a class="float-end text-decoration-none" href="'.esc_url( add_query_arg( 'module', 'projects', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-5">';
+        print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Project %s', 'doliconnect'), $projectfo->ref).'<a class="btn btn-sm btn-outline-secondary border border-0 float-end" href="'.esc_url( add_query_arg( 'module', 'projects', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-5">';
         print doliObjectInfos($projectfo);
         print "</div><div class='col-md-7'>";
         print doliObjectStatus($projectfo, 'project', 1);
@@ -1194,7 +1194,7 @@ $ID = $current_user->ID;
     $thirdparty = doliConnect('thirdparty', $current_user, false, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 
     if ( !isset($donationfo->error) && isset($_GET['id']) && isset($_GET['ref']) && ($thirdparty->id == $donationfo->socid ) && ($_GET['ref'] == $donationfo->ref) && $donationfo->statut != 0 ) {
-        print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Donation %s', 'doliconnect'), $donationfo->ref).'<a class="float-end text-decoration-none" href="'.esc_url( add_query_arg( 'module', 'donations', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-5">';
+        print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Donation %s', 'doliconnect'), $donationfo->ref).'<a class="btn btn-sm btn-outline-secondary border border-0 float-end" href="'.esc_url( add_query_arg( 'module', 'donations', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-5">';
         print doliObjectInfos($donationfo);
         print "</div><div class='col-md-7'>";
         print doliObjectStatus($donationfo, 'donation', 1);
@@ -1289,7 +1289,7 @@ function recruitment_module( $url ) {
     $thirdparty = doliConnect('thirdparty', $current_user, false, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
     
     if ( !isset($donationfo->error) && isset($_GET['id']) && isset($_GET['ref']) && ($thirdparty->id == $donationfo->fk_soc ) && ($_GET['ref'] == $donationfo->ref) && $donationfo->status != 0 ) {
-        print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Job position %s', 'doliconnect'), $donationfo->ref).'<a class="float-end text-decoration-none" href="'.esc_url( add_query_arg( 'module', 'recruitment', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-5">';
+        print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Job position %s', 'doliconnect'), $donationfo->ref).'<a class="btn btn-sm btn-outline-secondary border border-0 float-end" href="'.esc_url( add_query_arg( 'module', 'recruitment', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-5">';
         $datecreation =  wp_date('d/m/Y', $donationfo->date_creation);
         print "<b>".__( 'Date of creation', 'doliconnect').":</b> $datecreation<br>";
         print "<b>".__( 'Payment method', 'doliconnect').":</b>";
@@ -1360,7 +1360,7 @@ function expensereport_module( $url ) {
     }
     
     if ( !isset($expensereportfo->error) && isset($_GET['id']) && isset($_GET['ref']) && (doliConnect('user')->id == $expensereportfo->fk_user_author ) && ($_GET['ref'] == $expensereportfo->ref) && $expensereportfo->status != 0 && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doli-expensereports-'.$expensereportfo->id.'-'.$expensereportfo->ref)) {
-        print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Expense report %s', 'doliconnect'), $expensereportfo->ref).'<a class="float-end text-decoration-none" href="'.esc_url( add_query_arg( 'module', 'expensereport', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-5">';
+        print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Expense report %s', 'doliconnect'), $expensereportfo->ref).'<a class="btn btn-sm btn-outline-secondary border border-0 float-end" href="'.esc_url( add_query_arg( 'module', 'expensereport', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-5">';
         print "<b>".__( 'Period', 'doliconnect').":</b> ".wp_date('d/m/Y', $expensereportfo->date_debut)." au ".wp_date('d/m/Y', $expensereportfo->date_fin)."<br>";
         print "<b>".__( 'Date of submition', 'doliconnect').":</b> ".wp_date('d/m/Y', $expensereportfo->date_validation)."<br>";
         print "<b>".__( 'Date of approbation', 'doliconnect').":</b> ".wp_date('d/m/Y', $expensereportfo->date_approbation)."<br>";
@@ -1795,7 +1795,7 @@ $thirdparty = doliConnect('thirdparty', $current_user, false, esc_attr(isset($_G
 
 if ( isset($_GET['id']) && isset($_GET['ref']) && ( $thirdparty->id == $ticketfo->socid ) && ($_GET['ref'] == $ticketfo->ref ) ) {
 
-print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Ticket %s', 'doliconnect'), $ticketfo->ref).'<a class="float-end text-decoration-none" href="'.esc_url( add_query_arg( 'module', 'tickets', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-5">';
+print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Ticket %s', 'doliconnect'), $ticketfo->ref).'<a class="btn btn-sm btn-outline-secondary border border-0 float-end" href="'.esc_url( add_query_arg( 'module', 'tickets', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-5">';
 $dateticket =  wp_date('d/m/Y', $ticketfo->datec);
 print "<b>".__( 'Date of creation', 'doliconnect').": </b> $dateticket<br>";
 print "<b>".__( 'Type and category', 'doliconnect').": </b> ".__($ticketfo->type_label, 'doliconnect').", ".__($ticketfo->category_label, 'doliconnect')."<br>";
@@ -1843,7 +1843,7 @@ print '<div id="doliticket-alert"></div><form id="doliticket-form" method="post"
 
 print doliAjax('doliticket', $url, 'create');
 
-print '<div class="card shadow-sm"><div class="card-header">'.__( 'Create ticket', 'doliconnect').'<a class="float-end text-decoration-none" href="'.esc_url( add_query_arg( 'module', 'tickets', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><ul class="list-group list-group-flush">';
+print '<div class="card shadow-sm"><div class="card-header">'.__( 'Create ticket', 'doliconnect').'<a class="btn btn-sm btn-outline-secondary border border-0 float-end" href="'.esc_url( add_query_arg( 'module', 'tickets', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><ul class="list-group list-group-flush">';
 
 print "<li class='list-group-item list-group-item-light list-group-item-action'>";
 
