@@ -15,12 +15,26 @@ registerBlockType('doliconnect/agenda-block', {
     },
     edit: (props) => {
         return createElement(
-            TextControl,
+            'div',
             {
-                label: 'Texte à afficher',
-                value: props.attributes.content,
-                onChange: (value) => props.setAttributes({ content: value })
-            }
+                className: 'data-request-form-wrapper',
+                style: {
+                    fontStyle: 'italic',
+                    color: '#333333',
+                    backgroundColor: '#eaeaea',
+                    paddingTop: '1em',
+                    paddingBottom: '1.5em',
+                    marginBottom: '0'
+                }
+            },
+            createElement(
+                TextControl,
+                {
+                    label: 'Texte à afficher',
+                    value: props.attributes.content,
+                    onChange: (value) => props.setAttributes({ content: value })
+                }
+            )
         );
     },
     save: (props) => createElement('p', null, props.attributes.content),
