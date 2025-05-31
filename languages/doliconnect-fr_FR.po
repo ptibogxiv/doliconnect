@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2025-05-31 12:19+0200\n"
-"PO-Revision-Date: 2025-05-31 12:19+0200\n"
+"POT-Creation-Date: 2025-05-31 14:50+0200\n"
+"PO-Revision-Date: 2025-05-31 14:50+0200\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_FR\n"
@@ -10,14 +10,13 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.6\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-Flags-xgettext: --add-comments=translators:\n"
 "X-Poedit-WPHeader: doliconnect.php\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
-"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
-"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-KeywordsList: "
+"__;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: includes\n"
 
@@ -1274,7 +1273,7 @@ msgid_plural "We have found %s items with this search"
 msgstr[0] "Nous avons trouvé %s article avec cette recherche"
 msgstr[1] "Nous avons trouvé %s articles avec cette recherche"
 
-#: dashboard/templates.php:910 doliconnect.php:98 functions/widgets.php:430
+#: dashboard/templates.php:910 doliconnect.php:100 functions/widgets.php:430
 msgid "All items"
 msgstr "Tous les articles"
 
@@ -1441,88 +1440,88 @@ msgstr "Valider"
 msgid "No event"
 msgstr "Pas d'événement"
 
-#: doliconnect.php:89
+#: doliconnect.php:91
 msgctxt "Post type general name"
 msgid "Items"
 msgstr "Articles"
 
-#: doliconnect.php:90
+#: doliconnect.php:92
 msgctxt "Post type singular name"
 msgid "Item"
 msgstr "Article"
 
-#: doliconnect.php:91
+#: doliconnect.php:93
 msgctxt "Admin Menu text"
 msgid "Items"
 msgstr "Articles"
 
-#: doliconnect.php:92
+#: doliconnect.php:94
 msgctxt "Add New on Toolbar"
 msgid "Item"
 msgstr "Article"
 
-#: doliconnect.php:93
+#: doliconnect.php:95
 msgid "Add New"
 msgstr "Ajouter"
 
-#: doliconnect.php:94
+#: doliconnect.php:96
 msgid "Add New item"
 msgstr "Ajouter un nouvel élément"
 
-#: doliconnect.php:95
+#: doliconnect.php:97
 msgid "New item"
 msgstr "Nouvel élément"
 
-#: doliconnect.php:96
+#: doliconnect.php:98
 msgid "Edit item"
 msgstr "Modifier élément"
 
-#: doliconnect.php:97
+#: doliconnect.php:99
 msgid "View item"
 msgstr "Voir"
 
-#: doliconnect.php:99
+#: doliconnect.php:101
 msgid "Search recipes"
 msgstr "Recettes"
 
-#: doliconnect.php:100
+#: doliconnect.php:102
 #, fuzzy
 msgid "Parent recipes:"
 msgstr "Recettes des parents :"
 
-#: doliconnect.php:101
+#: doliconnect.php:103
 msgid "No recipes found."
 msgstr "Aucune recette trouvée."
 
-#: doliconnect.php:102
+#: doliconnect.php:104
 msgid "No recipes found in Trash."
 msgstr "Aucun recette trouvée dans la corbeille."
 
-#: doliconnect.php:103
+#: doliconnect.php:105
 msgctxt ""
 "Overrides the “Featured Image” phrase for this post type. Added in 4.3"
 msgid "Recipe Cover Image"
 msgstr "Image de couverture de la recette"
 
-#: doliconnect.php:104
+#: doliconnect.php:106
 msgctxt ""
 "Overrides the “Set featured image” phrase for this post type. Added in 4.3"
 msgid "Set cover image"
 msgstr "Définir une image de couverture"
 
-#: doliconnect.php:105
+#: doliconnect.php:107
 msgctxt ""
 "Overrides the “Remove featured image” phrase for this post type. Added in 4.3"
 msgid "Remove cover image"
 msgstr "Retirer l'image de couverture"
 
-#: doliconnect.php:106
+#: doliconnect.php:108
 msgctxt ""
 "Overrides the “Use as featured image” phrase for this post type. Added in 4.3"
 msgid "Use as cover image"
 msgstr "Utiliser comme image de couverture"
 
-#: doliconnect.php:107
+#: doliconnect.php:109
 #, fuzzy
 msgctxt ""
 "The post type archive label used in nav menus. Default “Post Archives”. "
@@ -1530,42 +1529,42 @@ msgctxt ""
 msgid "Recipe archives"
 msgstr "Archives des recettes"
 
-#: doliconnect.php:108
+#: doliconnect.php:110
 msgctxt ""
 "Overrides the “Insert into post”/”Insert into page” phrase (used when "
 "inserting media into a post). Added in 4.4"
 msgid "Insert into recipe"
 msgstr "Insérer dans la recette"
 
-#: doliconnect.php:109
+#: doliconnect.php:111
 msgctxt ""
 "Overrides the “Uploaded to this post”/”Uploaded to this page” phrase (used "
 "when viewing media attached to a post). Added in 4.4"
 msgid "Uploaded to this recipe"
 msgstr "Téléchargé sur cette recette"
 
-#: doliconnect.php:110
+#: doliconnect.php:112
 msgctxt ""
 "Screen reader text for the filter links heading on the post type listing "
 "screen. Default “Filter posts list”/”Filter pages list”. Added in 4.4"
 msgid "Filter recipes list"
 msgstr "Liste des recettes de filtre"
 
-#: doliconnect.php:111
+#: doliconnect.php:113
 msgctxt ""
 "Screen reader text for the pagination heading on the post type listing "
 "screen. Default “Posts list navigation”/”Pages list navigation”. Added in 4.4"
 msgid "Recipes list navigation"
 msgstr "Liste de recettes de navigation"
 
-#: doliconnect.php:112
+#: doliconnect.php:114
 msgctxt ""
 "Screen reader text for the items list heading on the post type listing "
 "screen. Default “Posts list”/”Pages list”. Added in 4.4"
 msgid "Recipes list"
 msgstr "Liste des recettes"
 
-#: doliconnect.php:474
+#: doliconnect.php:499
 msgid "Every 15 minutes"
 msgstr "Toutes les 15 minutes"
 
@@ -3057,78 +3056,3 @@ msgstr "Connectez votre Dolibarr (ERP/CRM gratuit) à WordPress."
 #. Author of the plugin/theme
 msgid "ptibogxiv"
 msgstr "ptibogxiv"
-
-#~ msgid "Default"
-#~ msgstr "Défaut"
-
-#~ msgid "Display in grid rather than a list"
-#~ msgstr "Afficher une grille plutôt qu’une liste"
-
-#~ msgid "Type of account"
-#~ msgstr "Type de compte"
-
-#~ msgid "Date of invoice"
-#~ msgstr "Date de la facture"
-
-#~ msgid "date of creation"
-#~ msgstr "date de création"
-
-#~ msgid "validation"
-#~ msgstr "validation"
-
-#~ msgid "Validation"
-#~ msgstr "Validation"
-
-#~ msgid "Canceled"
-#~ msgstr "Annulée"
-
-#~ msgid "Delivery"
-#~ msgstr "Livraison"
-
-#~ msgid "We no longer have this item in this quantity"
-#~ msgstr "Nous n’avons plus cet article dans cette quantité"
-
-#~ msgid "Renew membership"
-#~ msgstr "Renouveler l'adhésion"
-
-#~ msgid "This membership"
-#~ msgstr "Cette adhésion"
-
-#~ msgid "Price:"
-#~ msgstr "Tarif:"
-
-#~ msgid "Next membership"
-#~ msgstr "Adhésion suivante"
-
-#~ msgid "Add to basket"
-#~ msgstr "Ajouter au panier"
-
-#~ msgid "Soon"
-#~ msgstr "Bientôt"
-
-#~ msgid "Entreprise account"
-#~ msgstr "Compte entreprise"
-
-#~ msgid "Refresh"
-#~ msgstr "Actualiser"
-
-#~ msgid "Draft"
-#~ msgstr "Brouillon"
-
-#~ msgid "Validated"
-#~ msgstr "Validé"
-
-#~ msgid "Paid"
-#~ msgstr "Payé"
-
-#~ msgid "Deleted"
-#~ msgstr "Supprimé"
-
-#~ msgid "Closed"
-#~ msgstr "Fermé"
-
-#~ msgid "In progress"
-#~ msgstr "En progression"
-
-#~ msgid "Read"
-#~ msgstr "Lu"
