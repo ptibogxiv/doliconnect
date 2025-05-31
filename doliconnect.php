@@ -56,8 +56,6 @@ require_once plugin_dir_path(__FILE__).'/blocks/index.php';
 
 // ********************************************************
 function doliconnecturl($page) {
-global $wpdb;
-
     if (empty($page)) {
         return null;
     } elseif ( function_exists('pll_get_post') ) { 
@@ -68,11 +66,8 @@ global $wpdb;
         return esc_url(get_permalink(get_option($page)));
     }  
 }
-add_action( 'init', 'doliconnecturl' );
 
 function doliconnectid($page) {
-global $wpdb;
-
     if (empty($page)) {
         return null;
     } elseif (function_exists('pll_get_post')) { 
@@ -83,7 +78,6 @@ global $wpdb;
         return get_option($page);
     }  
 }
-add_action( 'init', 'doliconnectid' );
 // ********************************************************
 add_action('init', 'app_output_buffer');
 function app_output_buffer() {
