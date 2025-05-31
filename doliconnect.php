@@ -26,6 +26,19 @@ add_action( 'plugins_loaded', 'doliconnect_textdomain' );
 function doliconnect_textdomain() {
     load_plugin_textdomain( 'doliconnect', false, basename( dirname( __FILE__ ) ) . '/languages/' );
 }
+// ********************************************************
+
+/*
+ * Dolibarr minimum and legal version
+ * 
+ * @since 9.2.3
+ * @version 9.2.3
+ */
+
+define('DOLIBARR_MINIMUM_VERSION', '17.0.0');
+define('DOLIBARR_LEGAL_VERSION', '21.0.1');
+
+// ********************************************************
 
 require_once plugin_dir_path(__FILE__).'/functions/enqueues.php';
 require_once plugin_dir_path(__FILE__).'/functions/data-request.php';
@@ -38,10 +51,8 @@ require_once plugin_dir_path(__FILE__).'/dashboard/dashboard.php';
 require_once plugin_dir_path(__FILE__).'/functions/product.php';
 require_once plugin_dir_path(__FILE__).'/admin/admin.php'; 
 require_once plugin_dir_path(__FILE__).'/blocks/index.php';
-//include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 
-define('DOLIBARR_MINIMUM_VERSION', '17.0.0');
-define('DOLIBARR_LEGAL_VERSION', '21.0.1');
+
 
 // ********************************************************
 function doliconnecturl($page) {
@@ -57,6 +68,7 @@ global $wpdb;
         return esc_url(get_permalink(get_option($page)));
     }  
 }
+add_action( 'init', 'doliconnecturl' );
 
 function doliconnectid($page) {
 global $wpdb;
@@ -71,6 +83,7 @@ global $wpdb;
         return get_option($page);
     }  
 }
+add_action( 'init', 'doliconnectid' );
 // ********************************************************
 add_action('init', 'app_output_buffer');
 function app_output_buffer() {
@@ -84,6 +97,72 @@ $current_user->set_role(get_option('doliconnectrestrict_role'));
 }
 }
 } 
+function wpdocs_kantbtrue_init() {
+    $labels = array(
+        'name'                  => _x( 'Items', 'Post type general name', 'doliconnect' ),
+        'singular_name'         => _x( 'Item', 'Post type singular name', 'doliconnect' ),
+        'menu_name'             => _x( 'Items', 'Admin Menu text', 'doliconnect' ),
+        'name_admin_bar'        => _x( 'Item', 'Add New on Toolbar', 'doliconnect' ),
+        'add_new'               => __( 'Add New', 'doliconnect' ),
+        'add_new_item'          => __( 'Add New item', 'doliconnect' ),
+        'new_item'              => __( 'New item', 'doliconnect' ),
+        'edit_item'             => __( 'Edit item', 'doliconnect' ),
+        'view_item'             => __( 'View item', 'doliconnect' ),
+        'all_items'             => __( 'All items', 'doliconnect' ),
+        'search_items'          => __( 'Search recipes', 'doliconnect' ),
+        'parent_item_colon'     => __( 'Parent recipes:', 'doliconnect' ),
+        'not_found'             => __( 'No recipes found.', 'doliconnect' ),
+        'not_found_in_trash'    => __( 'No recipes found in Trash.', 'doliconnect' ),
+        'featured_image'        => _x( 'Recipe Cover Image', 'Overrides the “Featured Image” phrase for this post type. Added in 4.3', 'doliconnect' ),
+        'set_featured_image'    => _x( 'Set cover image', 'Overrides the “Set featured image” phrase for this post type. Added in 4.3', 'doliconnect' ),
+        'remove_featured_image' => _x( 'Remove cover image', 'Overrides the “Remove featured image” phrase for this post type. Added in 4.3', 'doliconnect' ),
+        'use_featured_image'    => _x( 'Use as cover image', 'Overrides the “Use as featured image” phrase for this post type. Added in 4.3', 'doliconnect' ),
+        'archives'              => _x( 'Recipe archives', 'The post type archive label used in nav menus. Default “Post Archives”. Added in 4.4', 'doliconnect' ),
+        'insert_into_item'      => _x( 'Insert into recipe', 'Overrides the “Insert into post”/”Insert into page” phrase (used when inserting media into a post). Added in 4.4', 'rdoliconnect' ),
+        'uploaded_to_this_item' => _x( 'Uploaded to this recipe', 'Overrides the “Uploaded to this post”/”Uploaded to this page” phrase (used when viewing media attached to a post). Added in 4.4', 'doliconnect' ),
+        'filter_items_list'     => _x( 'Filter recipes list', 'Screen reader text for the filter links heading on the post type listing screen. Default “Filter posts list”/”Filter pages list”. Added in 4.4', 'doliconnect' ),
+        'items_list_navigation' => _x( 'Recipes list navigation', 'Screen reader text for the pagination heading on the post type listing screen. Default “Posts list navigation”/”Pages list navigation”. Added in 4.4', 'doliconnect' ),
+        'items_list'            => _x( 'Recipes list', 'Screen reader text for the items list heading on the post type listing screen. Default “Posts list”/”Pages list”. Added in 4.4', 'doliconnect' ),
+    ); 
+    $post_slug = get_post_field( 'post_name', get_option('dolishop') );    
+    $args = array(
+        'labels'             => $labels,
+        'description'        => 'Item custom post type.',
+        'menu_icon'          => 'dashicons-products',
+        'public'             => true,
+        'publicly_queryable' => true,
+        'show_ui'            => true,
+        'show_in_menu'       => true,
+        'query_var'          => true,
+        'rewrite'            => array( 'slug' => $post_slug ),
+        'capability_type'    => 'page',
+        'has_archive'        => false,
+        'hierarchical'       => false,
+        'menu_position'      => 80,
+        'supports'           => array( 'title', 'author', 'thumbnail','comments'),
+        //'taxonomies'         => array( 'category', 'post_tag' ),
+        'show_in_rest'       => true
+    );
+     
+    register_post_type( 'dolibarrproduct', $args );
+}
+add_action( 'init', 'wpdocs_kantbtrue_init' );
+
+add_filter( 'template_include', 'item_page_template', 99 );
+function item_page_template( $template ) {
+    if ( get_query_var('post_type') == 'dolibarrproduct'  ) {
+        //$new_template = locate_template( array( 'page.php' ) );
+        $file_name = 'page.php';
+        if ( locate_template( $file_name ) ) {
+            $template = locate_template( $file_name );
+        } else {
+            // Template not found in theme's folder, use plugin's template as a fallback
+            //$template = dirname( __FILE__ ) . '/templates/' . $file_name;
+            $template = plugin_dir_path( __FILE__ ) . 'templates/'. $file_name;
+        }
+    }
+    return $template;
+}
 // ********************************************************
 add_action( 'admin_init', 'dolibarr_entity', 5);
 function dolibarr_entity( $entity = null ) {
@@ -304,13 +383,13 @@ function doliconnect_block_dashboard() {
 	}
 }
 // ********************************************************
-/*add_filter( 'pll_custom_flag', 'doliconnect_pll_custom_flag', 10, 2 );
+add_filter( 'pll_custom_flag', 'doliconnect_pll_custom_flag', 10, 2 );
 function doliconnect_pll_custom_flag( $flag, $code ) {
     $flag['url']    = esc_url( plugins_url( '/includes/flag-icon-css/flags/4x3/'.$code.'.svg', dirname(__FILE__) ) );
     $flag['width']  = 24;
     $flag['height'] = 18;
     return $flag;
-}*/
+}
 // ********************************************************
 add_filter( 'get_avatar' , 'doliconnect_custom_avatar' , 1 , 5 );
 function doliconnect_custom_avatar( $avatar, $id_or_email, $size, $default, $alt ) {
@@ -412,9 +491,15 @@ function doliconnect_accessrestricted( $template )
     $eviction = array();
     }
     if ( (!empty(get_option('doliconnectrestrict')) && !is_user_logged_in() && !in_array(get_the_ID(), $eviction)) || (!empty(get_option('doliconnectrestrict')) && !is_user_member_of_blog( $current_user->ID, get_current_blog_id()) && !in_array(get_the_ID(), $eviction)) ) {
-    $template = plugin_dir_path( __FILE__ ) . 'templates/restricted.php';
+        $file_name = 'restricted.php';
+        if ( locate_template( $file_name ) ) {
+            $template = locate_template( $file_name );
+        } else {
+            // Template not found in theme's folder, use plugin's template as a fallback
+            //$template = dirname( __FILE__ ) . '/templates/' . $file_name;
+            $template = plugin_dir_path( __FILE__ ) . 'templates/'. $file_name;
+        }
     }
-
     return $template;
 }
 // ********************************************************
