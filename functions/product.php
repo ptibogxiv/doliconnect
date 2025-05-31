@@ -808,7 +808,7 @@ global $current_user;
       if (strpos(esc_url($_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']), 'product') !== false) {
         $arr_params = array( 'product');
         $return =  esc_url( remove_query_arg( $arr_params ), $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
-        $card .= '<a class="float-end text-decoration-none" href="'.esc_url( $return ).'"><i class="fas fa-arrow-left"></i>'.__( 'Back', 'doliconnect').'</a>';
+        $card .= '<a class="btn btn-sm btn-outline-secondary border border-0 float-end" href="'.esc_url( $return ).'"><i class="fas fa-arrow-left"></i>'.__( 'Back', 'doliconnect').'</a>';
       }
       $card .= '</div><div class="card-body"><div class="row">';
       $card .= "<div class='col-12 d-block d-sm-block d-xs-block d-md-none'><center>";
@@ -816,12 +816,12 @@ global $current_user;
       $card .= "</center>";
       //$card .= wp_get_attachment_image( $attributes['mediaID'], "ptibogxiv_large", "", array( "class" => "img-fluid" ) );
       $card .= '</div>';
-      $card .= '<div class="col-md-4 d-none d-md-block"><center>';
+      $card .= '<div class="col-md-6 d-none d-md-block"><center>';
       $card .= doliconnect_image('product', $product->id, array('limit'=>1, 'entity'=>$product->entity, 'size'=>'200x200'), esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
       $card .= '</center>';
       //$card .= wp_get_attachment_image( $attributes['mediaID'], "ptibogxiv_square", "", array( "class" => "img-fluid" ) );
       $card .= '</div>';
-      $card .= "<div class='col-12 col-md-4'><small>";
+      $card .= "<div class='col-12 col-md-6'><small>";
       if ( !doliconst('MAIN_GENERATE_DOCUMENTS_HIDE_REF') ) { $card .= "<i class='fas fa-toolbox fa-fw'></i> <span itemprop='sku'>".(!empty($product->ref)?$product->ref:'-').'</span>'; }
       if ( !empty($product->barcode) ) { 
         if ( !doliconst('MAIN_GENERATE_DOCUMENTS_HIDE_REF') ) { $card .= " | "; }
