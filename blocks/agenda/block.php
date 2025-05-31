@@ -76,6 +76,7 @@ $html .= "</div></div></div><div class='card-footer'><h6>" . esc_html( $user->us
 $html .= "</div>";
 return $html;
 }
+/*
 function doliconnect_agenda_block_init() {
 	if ( function_exists( 'register_block_type' ) ) {
 		wp_register_script(
@@ -94,3 +95,28 @@ function doliconnect_agenda_block_init() {
 	}
 }
 add_action( 'init', 'doliconnect_agenda_block_init' );
+*/
+
+function agenda_block_render_callback( $attributes ) {
+    return '<div class="agenda-block">Dynamic content goes here!</div>';
+}
+
+function agenda_block_register() {
+    // Register the block editor script
+    wp_register_script(
+        'agenda-block-script',
+        plugins_url( 'block.js', __FILE__ ),
+        array( 'wp-blocks', 'wp-element', 'wp-editor' ),
+        '1.0.0',
+        true
+    );
+
+    // Register the block
+    register_block_type( 'doliconnect/agenda-block', array(
+        'editor_script' => 'agenda-block-script',
+        'render_callback' => 'agenda_block_render_callback', // Optional for dynamic blocks
+    ) );
+}
+add_action( 'init', 'agenda_block_register' );
+
+
