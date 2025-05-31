@@ -2035,7 +2035,7 @@ print "</li>";
 
 if ( is_plugin_active( 'two-factor/two-factor.php' ) && current_user_can('administrator') && !empty(get_option('doliconnectbeta')) ) {
 print '<li class="list-group-item list-group-item-light list-group-item-action">';
-require_once( ABSPATH . 'wp-content/plugins/two-factor/class-two-factor-core.php')
+require_once( ABSPATH . 'wp-content/plugins/two-factor/class-two-factor-core.php');
 
 		?>
 					<table class="table">
