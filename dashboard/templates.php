@@ -921,15 +921,15 @@ function dolishop_display($content) {
         if ( strpos(esc_url($_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']), 'subsubcategory') !== false ) {
           $arr_params = array( 'subsubcategory');
           $return =  esc_url( remove_query_arg( $arr_params ), $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
-          print '<a class="float-end text-decoration-none" href="'.esc_url( $return ).'"><i class="fas fa-arrow-left"></i>'.__( 'Back', 'doliconnect').'</a>';
+          print '<a class="btn btn-sm btn-outline-secondary border border-0 float-end" href="'.esc_url( $return ).'"><i class="fas fa-arrow-left"></i>'.__( 'Back', 'doliconnect').'</a>';
         } elseif ( strpos(esc_url($_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']), 'subcategory') !== false ) {
           $arr_params = array( 'subcategory');
           $return =  esc_url( remove_query_arg( $arr_params ), $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
-          print '<a class="float-end text-decoration-none" href="'.esc_url( $return ).'"><i class="fas fa-arrow-left"></i>'.__( 'Back', 'doliconnect').'</a>';
+          print '<a class="fbtn btn-sm btn-outline-secondary border border-0 float-end" href="'.esc_url( $return ).'"><i class="fas fa-arrow-left"></i>'.__( 'Back', 'doliconnect').'</a>';
         } elseif ( strpos(esc_url($_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']), 'category') !== false && $_GET['category'] != 'all' ) {
           $arr_params = array( 'category');
           $return =  esc_url( remove_query_arg( $arr_params ), $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
-          print '<a class="float-end text-decoration-none" href="'.esc_url( $return ).'"><i class="fas fa-arrow-left"></i>'.__( 'Back', 'doliconnect').'</a>';
+          print '<a class="btn btn-sm btn-outline-secondary border border-0 float-end" href="'.esc_url( $return ).'"><i class="fas fa-arrow-left"></i>'.__( 'Back', 'doliconnect').'</a>';
         }
         print '<div class="input-group w-50 float-end">
         <span class="input-group-text" id="basic-addon1"><i class="fas fa-filter"></i></span><select id="selectbox" class="form-select form-select-sm" aria-label=".form-select-sm example" name="" onchange="javascript:location.href = this.value;">
@@ -1005,7 +1005,7 @@ function dolishop_display($content) {
         }
       } else {
         print "<li class='list-group-item list-group-item-white'><center><br><br><br><br><div class='align-middle'><i class='fas fa-bomb fa-7x fa-fw'></i><h4>".__( 'Oops! This category does not appear to exist', 'doliconnect' )."</h4></div><br>";
-        print '<button type="button" class="btn btn-link" onclick="window.history.back()">'.__( 'Return', 'doliconnect').'</button>';
+        print '<button type="button" class="btn btn-sm btn-outline-secondary border border-0 float-end" onclick="window.history.back()">'.__( 'Return', 'doliconnect').'</button>';
         print "<br><br><br></center></li>";
       }
       print '</ul>';
