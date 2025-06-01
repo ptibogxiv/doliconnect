@@ -1689,7 +1689,7 @@ function doliagenda_display($content) {
     }
   
     if ( !isset($agendafo->error) && isset($_GET['id']) && isset($_GET['id']) && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doli-agenda-'.$agendafo->id) && in_array($agendafo->type_id, $typearray) ) {
-      print '<div class="card shadow-sm"><div class="card-header">'.$agendafo->label.'<a class="float-end text-decoration-none" href="'.doliconnecturl('doliagenda').'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body">';
+      print '<div class="card shadow-sm"><div class="card-header">'.$agendafo->label.'<a class="btn btn-sm btn-outline-secondary border border-0 float-end" href="'.doliconnecturl('doliagenda').'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body">';
      
       print $agendafo->note_private;
       
