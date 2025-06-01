@@ -145,7 +145,6 @@ add_action( 'init', 'wpdocs_kantbtrue_init' );
 add_filter( 'template_include', 'item_page_template', 99 );
 function item_page_template( $template ) {
     if ( get_query_var('post_type') == 'dolibarrproduct'  ) {
-        //$new_template = locate_template( array( 'page.php' ) );
         $file_name = 'page.php';
         if ( locate_template( $file_name ) ) {
             $template = locate_template( $file_name );
