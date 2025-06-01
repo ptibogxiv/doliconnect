@@ -91,7 +91,8 @@ $current_user->set_role(get_option('doliconnectrestrict_role'));
 }
 }
 } 
-function wpdocs_kantbtrue_init() {
+if ( !empty(get_option('doliconnectbeta')) && ( doliCheckModules('product') || doliCheckModules('service') ) ) {
+function doliconnect_dolibarrproduct_init() {
     $labels = array(
         'name'                  => _x( 'Items', 'Post type general name', 'doliconnect' ),
         'singular_name'         => _x( 'Item', 'Post type singular name', 'doliconnect' ),
@@ -140,10 +141,10 @@ function wpdocs_kantbtrue_init() {
      
     register_post_type( 'dolibarrproduct', $args );
 }
-add_action( 'init', 'wpdocs_kantbtrue_init' );
+add_action( 'init', 'doliconnect_dolibarrproduct_init' );
 
-add_filter( 'template_include', 'item_page_template', 99 );
-function item_page_template( $template ) {
+add_filter( 'template_include', 'dolibarrproduct_page_template', 99 );
+function dolibarrproduct_page_template( $template ) {
     if ( get_query_var('post_type') == 'dolibarrproduct'  ) {
         $file_name = 'page.php';
         if ( locate_template( $file_name ) ) {
@@ -155,6 +156,7 @@ function item_page_template( $template ) {
         }
     }
     return $template;
+}
 }
 // ********************************************************
 add_action( 'admin_init', 'dolibarr_entity', 5);
