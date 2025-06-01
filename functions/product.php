@@ -288,7 +288,7 @@ global $current_user;
   } else {
     $price_base_type = 'HT';
   }
-  $order = doliConnect('order', $current_user, false, true);
+  //$order = doliConnect('order', $current_user, false, true);
   if (empty($product->status)) {
     if (!empty($mstock['lineid'])) $deleteline = callDoliApi("DELETE", "/orders/".$order->id."/lines/".$mstock['lineid'], null, 0);
     $order = doliConnect('order', $current_user, false, true);

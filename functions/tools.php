@@ -1,37 +1,5 @@
 <?php
 
-/**
- * Creates a nicely formatted and more specific title element text
- * for output in head of document, based on current view.
- *
- * @param string $title Default title text for current view.
- * @param string $sep   Optional separator.
- * @return string Filtered title.
- */
-/*
-function doliFilterTitle( $title, $sep ) {
-	global $paged, $page;
-
-	if ( is_feed() )
-		return $title;
-
-	// Add the site name.
-	$title .= get_bloginfo( 'name' );
-
-	// Add the site description for the home/front page.
-	$site_description = get_bloginfo( 'description', 'display' );
-	if ( $site_description && ( is_home() || is_front_page() ) )
-		$title = "$title $sep $site_description";
-
-	// Add a page number if necessary.
-	if ( $paged >= 2 || $page >= 2 )
-		$title = "$title $sep " . sprintf( __( 'Pageggrgregregergre %s', 'twentytwelve' ), max( $paged, $page ) );
-
-	//return $title." ".$sep." test test ";
-}
-add_filter( 'wp_title', 'doliFilterTitle', 10, 2 );
-*/
-
 function dolicheckie($server) {
   $return = false;
   $ua = htmlentities($server, ENT_QUOTES, 'UTF-8');
@@ -137,9 +105,9 @@ function doliConnect($fonction, $current_user = null, $boolean = false, $refresh
     }
     if (isset($thirdparty->id)) $object2 = callDoliApi("GET", "/orders?sortfield=t.rowid&sortorder=DESC&limit=1&thirdparty_ids=".$thirdparty->id."&sqlfilters=(t.fk_statut%3A%3D%3A'0')and(t.module_source%3A%3D%3A'doliconnect')&pagination_data=true", null, dolidelay('doliconnector', $refresh));
     if ( doliversion('20.0.0') && isset($object2->data) && !empty($object2->data) ) { 
-      $return = $object2->data; 
+      $return = $object2->data[0]; 
     } elseif ( !doliversion('20.0.0') && isset($object2[0]) && !empty($object2[0]) ) { 
-      $return = $object2; 
+      $return = $object2[0]; 
     } else {
       $return = $object;
     }
