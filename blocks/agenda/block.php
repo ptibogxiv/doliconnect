@@ -23,7 +23,7 @@ function agenda_block_render_callback( $attributes ) {
     $object = callDoliApi("GET", $request, null, dolidelay('agenda', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
     if ( doliversion('21.0.0') && isset($object->data) ) { $listagenda = $object->data; } else { $listagenda = $object; }
 
-      $block ="<div class='card shadow-sm'><ul class='list-group list-group-flush'>";
+      $block ="<div class='card shadow-sm'><div class='card-header'>".sprintf(__( 'Next %s events', 'doliconnect'), $limit)."</div><ul class='list-group list-group-flush'>";
 
       if ( !isset($listagenda->error) && $listagenda != null ) {
         foreach ($listagenda as $postagenda) {
