@@ -45,10 +45,14 @@ require_once plugin_dir_path(__FILE__).'/functions/data-request.php';
 require_once plugin_dir_path(__FILE__).'/functions/tools.php';
 require_once plugin_dir_path(__FILE__).'/functions/widgets.php';
 require_once plugin_dir_path(__FILE__).'/functions/cron.php';
-require_once plugin_dir_path(__FILE__).'/functions/member.php';
 require_once plugin_dir_path(__FILE__).'/dashboard/templates.php';
 require_once plugin_dir_path(__FILE__).'/dashboard/dashboard.php';
-require_once plugin_dir_path(__FILE__).'/functions/product.php';
+if ( doliCheckModules('product') || doliCheckModules('service') ) {
+    require_once plugin_dir_path(__FILE__).'/functions/product.php';
+}
+if ( doliCheckModules('adherent') ) {
+    require_once plugin_dir_path(__FILE__).'/functions/member.php';
+}
 require_once plugin_dir_path(__FILE__).'/admin/admin.php'; 
 require_once plugin_dir_path(__FILE__).'/blocks/index.php';
 
