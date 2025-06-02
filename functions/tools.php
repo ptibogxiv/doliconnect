@@ -1,5 +1,8 @@
 <?php
-
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 function dolicheckie($server) {
   $return = false;
   $ua = htmlentities($server, ENT_QUOTES, 'UTF-8');

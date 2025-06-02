@@ -1,4 +1,76 @@
 <?php
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+if ( !empty(get_option('doliconnectbeta')) ) {
+  function doliconnect_dolibarrproduct_init() {
+      $labels = array(
+          'name'                  => _x( 'Items', 'Post type general name', 'doliconnect' ),
+          'singular_name'         => _x( 'Item', 'Post type singular name', 'doliconnect' ),
+          'menu_name'             => _x( 'Items', 'Admin Menu text', 'doliconnect' ),
+          'name_admin_bar'        => _x( 'Item', 'Add New on Toolbar', 'doliconnect' ),
+          'add_new'               => __( 'Add New', 'doliconnect' ),
+          'add_new_item'          => __( 'Add New item', 'doliconnect' ),
+          'new_item'              => __( 'New item', 'doliconnect' ),
+          'edit_item'             => __( 'Edit item', 'doliconnect' ),
+          'view_item'             => __( 'View item', 'doliconnect' ),
+          'all_items'             => __( 'All items', 'doliconnect' ),
+          'search_items'          => __( 'Search recipes', 'doliconnect' ),
+          'parent_item_colon'     => __( 'Parent recipes:', 'doliconnect' ),
+          'not_found'             => __( 'No recipes found.', 'doliconnect' ),
+          'not_found_in_trash'    => __( 'No recipes found in Trash.', 'doliconnect' ),
+          'featured_image'        => _x( 'Recipe Cover Image', 'Overrides the “Featured Image” phrase for this post type. Added in 4.3', 'doliconnect' ),
+          'set_featured_image'    => _x( 'Set cover image', 'Overrides the “Set featured image” phrase for this post type. Added in 4.3', 'doliconnect' ),
+          'remove_featured_image' => _x( 'Remove cover image', 'Overrides the “Remove featured image” phrase for this post type. Added in 4.3', 'doliconnect' ),
+          'use_featured_image'    => _x( 'Use as cover image', 'Overrides the “Use as featured image” phrase for this post type. Added in 4.3', 'doliconnect' ),
+          'archives'              => _x( 'Recipe archives', 'The post type archive label used in nav menus. Default “Post Archives”. Added in 4.4', 'doliconnect' ),
+          'insert_into_item'      => _x( 'Insert into recipe', 'Overrides the “Insert into post”/”Insert into page” phrase (used when inserting media into a post). Added in 4.4', 'rdoliconnect' ),
+          'uploaded_to_this_item' => _x( 'Uploaded to this recipe', 'Overrides the “Uploaded to this post”/”Uploaded to this page” phrase (used when viewing media attached to a post). Added in 4.4', 'doliconnect' ),
+          'filter_items_list'     => _x( 'Filter recipes list', 'Screen reader text for the filter links heading on the post type listing screen. Default “Filter posts list”/”Filter pages list”. Added in 4.4', 'doliconnect' ),
+          'items_list_navigation' => _x( 'Recipes list navigation', 'Screen reader text for the pagination heading on the post type listing screen. Default “Posts list navigation”/”Pages list navigation”. Added in 4.4', 'doliconnect' ),
+          'items_list'            => _x( 'Recipes list', 'Screen reader text for the items list heading on the post type listing screen. Default “Posts list”/”Pages list”. Added in 4.4', 'doliconnect' ),
+      ); 
+      $post_slug = get_post_field( 'post_name', get_option('dolishop') );    
+      $args = array(
+          'labels'             => $labels,
+          'description'        => 'Item custom post type.',
+          'menu_icon'          => 'dashicons-products',
+          'public'             => true,
+          'publicly_queryable' => true,
+          'show_ui'            => true,
+          'show_in_menu'       => true,
+          'query_var'          => true,
+          'rewrite'            => array( 'slug' => $post_slug ),
+          'capability_type'    => 'page',
+          'has_archive'        => false,
+          'hierarchical'       => false,
+          'menu_position'      => 80,
+          'supports'           => array( 'title', 'author', 'thumbnail','comments'),
+          //'taxonomies'         => array( 'category', 'post_tag' ),
+          'show_in_rest'       => true
+      );
+      
+      register_post_type( 'dolibarrproduct', $args );
+  }
+  add_action( 'init', 'doliconnect_dolibarrproduct_init' );
+
+  add_filter( 'template_include', 'dolibarrproduct_page_template', 99 );
+  function dolibarrproduct_page_template( $template ) {
+      if ( get_query_var('post_type') == 'dolibarrproduct'  ) {
+          $file_name = 'page.php';
+          if ( locate_template( $file_name ) ) {
+              $template = locate_template( $file_name );
+          } else {
+              // Template not found in theme's folder, use plugin's template as a fallback
+              //$template = dirname( __FILE__ ) . '/templates/' . $file_name;
+              $template = plugin_dir_path( __FILE__ ) . 'templates/'. $file_name;
+          }
+      }
+      return $template;
+  }
+}
 
 function doliproduct($object, $value) {
 global $current_user;
