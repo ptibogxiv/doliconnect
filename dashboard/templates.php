@@ -722,12 +722,12 @@ global $current_user;
         $request = "/products/purchase_prices?sortfield=t.ref&sortorder=ASC&limit=".$limit."&page=".$page."&supplier=".esc_attr($_GET["supplier"])."&pagination_data=true&sqlfilters=(t.tosell:=:1)";
         $resultats2 = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
         //if ( doliversion('20.0.0') && isset($object->data) ) { $resultats = $object->data; } else { $resultats = $object; }
-        $resultats = array();
         if ( !isset($resultats2->error) && $resultats2 != null ) {
           foreach ($resultats2 as $product) {
-            $resultats[$product[0]->id] = 1; 
-            $product = callDoliApi("GET", "/products/".$product[0]->id."?includesubproducts=true&includetrans=true", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-            print apply_filters( 'doliproductlist', $product);
+            if (isset($product[0]->id) && !empty($product[0]->id)) {            
+              $product = callDoliApi("GET", "/products/".$product[0]->id."?includesubproducts=true&includetrans=true", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+              print apply_filters( 'doliproductlist', $product);
+            }
           }
         } else {
           print "<li class='list-group-item list-group-item-light'><center>".__( 'No item currently on sale', 'doliconnect')."</center></li>";
@@ -796,7 +796,7 @@ global $current_user;
         print doliPagination($object, $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], $page, $limit);
         print '</div>';
       }
-      print doliCardFooter($object, $module, $request);
+      if (isset($object)) print doliCardFooter($object, $module, $request);
       print '</div>';
     }
   } else {
