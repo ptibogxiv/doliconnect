@@ -136,11 +136,7 @@ update_site_option('dolibarr_public_url', esc_url_raw($_REQUEST['dolibarr_public
 if ( add_site_option( 'dolibarr_private_key', sanitize_text_field($_REQUEST['dolibarr_private_key'])) ) {
 } else {
 update_site_option('dolibarr_private_key', sanitize_text_field($_REQUEST['dolibarr_private_key'])); 
-}
-if ( add_site_option( 'doliconnect_login', sanitize_text_field($_REQUEST['doliconnect_login'])) ) {
-} else {
-update_site_option('doliconnect_login', sanitize_text_field($_REQUEST['doliconnect_login']));
-}       
+}     
 if ( isset($_REQUEST['dolibarr_entity']) ) {
 update_site_option( 'dolibarr_entity', sanitize_text_field($_REQUEST['dolibarr_entity']));
 } else {
@@ -190,10 +186,6 @@ $dolibarr = callDoliApi("GET", "/status", null, -5 * MINUTE_IN_SECONDS);
                 <p class="text-success">Access Locked: <?php echo $dolibarr->success->access_locked; ?></p>
                 <p class="text-success">Environment: <?php echo (isset($dolibarr->success->environment)?$dolibarr->success->environment:' -- '); ?></p>
 <?php } else { ?><p class="text-danger">Offline</p><?php } ?></td>
-            </tr>
-            <tr>
-                <th style="width:150px;"><label for="dolibarr_login">Wordpress Login Page</label></th>
-                <td ><?php echo site_url(); ?>/<input class="regular-text" type="text" id="dolibarr_login" name="doliconnect_login"  value="<?php echo get_site_option('doliconnect_login'); ?>" required><br>ex: wp-login.php (wordpress default)</td>
             </tr>
 <?php if ( is_multisite() ) { ?>       
             <tr>
@@ -249,10 +241,6 @@ if (isset($_REQUEST['doliconnectdisplayinvoice']) && $_REQUEST['doliconnectdispl
 update_option('doliconnectdisplayinvoice', sanitize_text_field($_REQUEST['doliconnectdisplayinvoice']));
 }else {
 delete_option('doliconnectdisplayinvoice');}
-if (isset($_REQUEST['doliloginmodal']) && $_REQUEST['doliloginmodal']==1){
-update_option('doliloginmodal', sanitize_text_field($_REQUEST['doliloginmodal']));
-}else {
-delete_option('doliloginmodal');}
 if (isset($_REQUEST['doliconnectbeta']) && $_REQUEST['doliconnectbeta']==1){
 update_option('doliconnectbeta', sanitize_text_field($_REQUEST['doliconnectbeta']));
 }else {
@@ -318,11 +306,6 @@ if (isset($_REQUEST['doliconnect_google']) && $_REQUEST['doliconnect_google']>0)
     ?>
     <form action="" method="post">
         <table class="form-table" width="100%">
-            <tr>
-                 <th style="width:150px;"><label for="doliloginmodal"><?php _e('Modal login', 'doliconnect') ?></label></th>
-                <td ><input name="doliloginmodal" type="checkbox" id="doliloginmodal" value="1" <?php checked('1', get_option('doliloginmodal')); ?>>          
-                </td>
-            </tr> 
             <tr>
                 <th style="width:150px;"><label for="doliconnectbeta"><?php _e('Beta mode', 'doliconnect') ?></label></th>
                 <td ><input name="doliconnectbeta" type="checkbox" id="doliconnectbeta" value="1" <?php checked('1', get_option('doliconnectbeta')); ?> /> <?php _e('Active beta functions, can be unstable', 'doliconnect') ?></td>
