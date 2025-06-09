@@ -335,32 +335,39 @@ function doliPagination($object, $url, $page = 0) {
 }
 
 function doliconnect_image($module, $id, $options = array(), $refresh = false) {
- /*     $card .= '<div id="carouselExampleIndicators" class="carousel slide">
-  <div class="carousel-indicators">
-    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-  </div>
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      <img src="..." class="d-block w-100" alt="...">
-    </div>
-    <div class="carousel-item">
-      <img src="..." class="d-block w-100" alt="...">
-    </div>
-    <div class="carousel-item">
-      <img src="..." class="d-block w-100" alt="...">
-    </div>
-  </div>
-  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-  </button>
-</div>';*/
+  if ( doliversion('22.0.0') ) {
+    $object = callDoliApi("GET", "/documents?modulepart=".$module."&id=".$id."&limit=100&content_type=image%2Fjpeg&pagination_data=true", null, dolidelay('document', $refresh));   
+    $class = isset($options['class']) ? $options['class'] : 'img-fluid rounded-lg';
+    if ( doliversion('22.0.0') && isset($object->data) ) { $object = $object->data; } else { $object = $object; }
+    $image = '<div id="carouselExampleIndicators" class="carousel slide">
+      <div class="carousel-indicators">';
+    if ( !isset($object->error) && $object != null ) {
+      foreach ($object as $img) {                                                                                 
+        $image .= '<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>';
+      }
+    } else {
+      //$image = '<svg class="bd-placeholder-img '.$class.'" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect></svg>';
+    }
+     $image .= '</div>
+      <div class="carousel-inner">';
+    if ( !isset($object->error) && $object != null ) {
+      foreach ($object as $img) {                                                                                 
+        $image .= '<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>';
+      }
+    } else {
+      $image .= '<div class="carousel-item active"><img src="https://th.bing.com/th/id/R.a9734a11a2cc2e80f07bd058f6bf9a51?rik=F1Z9UVwwlfALEg&riu=http%3a%2f%2fwww.lamaisonbio.com%2fwp-content%2fuploads%2f2018%2f05%2fcomment-reconnaitre-produits-bio.jpg&ehk=rQuHr%2ft5Ex5%2f4Bqt3DW39D7GfUHdya%2fPE5pBa7rHRa8%3d&risl=&pid=ImgRaw&r=0" class="d-block w-100" alt="..."></div>';
+    }
+    $image .= '</div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>';
+ } else {
 $class = isset($options['class']) ? $options['class'] : 'img-fluid rounded-lg';
 $entity = dolibarr_entity(isset($options['entity'])?$options['entity']:null);
 if (is_numeric($id)) {
@@ -478,6 +485,7 @@ $image = "<img src='".$up_dir['baseurl'].'/doliconnect/'.$module.'/'.$id."' clas
   $image = "<img src='".$up_dir['baseurl'].'/doliconnect/'.$module.'/'.$id."' class='".$class."' alt='".$up_dir['baseurl'].'/doliconnect/'.$module.'/'.$id."' loading='lazy'>";
 }
 }
+ }
 return $image;
 }
 
