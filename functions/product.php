@@ -52,7 +52,7 @@ if ( !empty(get_option('doliconnectbeta')) ) {
           'show_in_rest'       => true
       );
       
-      register_post_type( 'dolibarrproduct', $args );
+      register_post_type( 'doliproduct', $args );
   }
   add_action( 'init', 'doliconnect_dolibarrproduct_init' );
 
