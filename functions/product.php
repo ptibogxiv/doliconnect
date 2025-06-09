@@ -546,17 +546,19 @@ global $current_user;
       }
       $button .= '</div>';
     } else {
-      $button .= '<div class="mb-3"><div class="input-group">';
+      $button .= '<div class="mb-3"><div class="input-group btn-outline-secondary">';
       if (!empty($mstock['qty'])) $button .= "<button class='btn btn-sm btn-dark' name='delete' value='delete' type='submit' onclick='doliJavaCartAction(\"updateLine\", ".$product->id.", ".$mstock['lineid'].", 0, ".json_encode($linearray_options, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES).", \"delete\");'><i class='fa-solid fa-trash-can'></i></button>";
-      $button .= "<button class='btn btn-sm btn-warning";
+      $button .= "<span class='input-group-text p-0'><button class='btn btn-sm";
       if (empty($mstock['qty'])) $button .= " disabled";
-      $button .= "' name='minus' value='minus' type='submit' onclick='doliJavaCartAction(\"updateLine\", ".$product->id.", ".$mstock['lineid'].", document.getElementById(\"qty-prod-".$product->id."\").value, ".json_encode($linearray_options, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES).", \"minus\");'><i class='fa-solid fa-minus'></i></button>";
+      $button .= "' name='minus' value='minus' type='submit' onclick='doliJavaCartAction(\"updateLine\", ".$product->id.", ".$mstock['lineid'].", document.getElementById(\"qty-prod-".$product->id."\").value, ".json_encode($linearray_options, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES).", \"minus\");'><i class='fa-solid fa-minus'></i></button></span>";
       $button .= "<input id='qty-prod-".$product->id."' type='tel' onchange='doliJavaCartAction(\"updateLine\", ".$product->id.", ".$mstock['lineid'].", document.getElementById(\"qty-prod-".$product->id."\").value, ".json_encode($linearray_options, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES).", \"modify\");' class='form-control form-control-sm' placeholder='' aria-label='Quantity' value='".$mstock['qty']."' style='text-align:center;'>";
-      $button .= "<button class='btn btn-sm btn-warning' name='plus' value='plus' type='submit' onclick='doliJavaCartAction(\"updateLine\", ".$product->id.", ".$mstock['lineid'].", document.getElementById(\"qty-prod-".$product->id."\").value, ".json_encode($linearray_options, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES).", \"plus\");'><i class='fa-solid fa-plus'></i></button>"; 
+      $button .= "<span class='input-group-text p-0'><button class='btn btn-sm' name='plus' value='plus' type='submit' onclick='doliJavaCartAction(\"updateLine\", ".$product->id.", ".$mstock['lineid'].", document.getElementById(\"qty-prod-".$product->id."\").value, ".json_encode($linearray_options, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES).", \"plus\");'><i class='fa-solid fa-plus'></i></button></span>"; 
       if ( !empty($wishlist) && doliCheckModules('wishlist')) {
         $button .= doliWishlist($thirdparty, $product->id, $mstock['lineid'], $refresh);
       } 
         $button .= '</div>';
+      $button .= '<div class="form-text" id="basic-addon4"><button type="button" class="btn btn-sm btn-link p-0">Supprimer cet article</button></div>';
+
       if (isset($mstock['step']) && $mstock['step']>1) $button .= '<div class="form-text" id="basic-addon4"><small>'.sprintf(__( 'Sold by %s', 'doliconnect'), $mstock['step']).'</small></div>';  
       $button .= '</div>';
     } 
@@ -955,7 +957,23 @@ global $current_user;
       $card .= '</div>';
     } else {
       $card .= '<div class="col-12"><p><center>'.__( 'Item not in sale', 'doliconnect' ).'</center></p>';
-    } 
+    }
+
+    if ( doliversion('22.0.0') ) {
+      $request= "/documents?modulepart=product&id=".$product->id."&limit=100&content_type=application%2Fpdfhh&pagination_data=true";
+      $downloads = callDoliApi("GET", $request, null, dolidelay('document', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));   
+      if ( doliversion('22.0.0') && isset($downloads->data) ) { $downloads = $downloads->data; } else { $downloads = $downloads; }
+      
+      if ( !isset($downloads->error) && $downloads != null ) {
+        $card .= '<div class="col-12"><h6>'.__( 'Download documents', 'doliconnect' ).'</h6>';
+        foreach ($downloads as $download) {                                                                                 
+          $card .= 'test';
+        }
+        $card .= '</div>';
+      } else {
+        $card .= 'non pdf';
+      }
+    }
 
     if( has_filter('mydoliconnectproductcard') ) {
       $card .= apply_filters('mydoliconnectproductcard', $product, 'card');
