@@ -878,7 +878,7 @@ function dolishop_display($content) {
           $duration = (!empty(get_option('dolicartnewlist'))?get_option('dolicartnewlist'):'month');
           $date->modify('FIRST DAY OF LAST '.$duration.' MIDNIGHT');
           $lastdate = $date->format('Y-m-d');
-          $request = "/products?sortfield=t.".$field."&sortorder=".$order."&limit=".$limit."&page=".$page."&category=".esc_attr($shop)."&pagination_data=true&sqlfilters=(t.datec%3A%3E%3D%3A'".$lastdate."')and(t.tosell:=:1)";
+          $request = "/products?sortfield=t.".$field."&sortorder=".$order."&limit=".$limit."&page=".$page."&category=".esc_attr($shop)."&ids_only=true&pagination_data=true&sqlfilters=(t.datec%3A%3E%3D%3A'".$lastdate."')and(t.tosell:=:1)";
           $object = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
         } elseif ( doliCheckModules('discountprice') && isset($_GET['category']) && $_GET['category'] == 'discount' && !isset($_GET['product'])) { 
           $date = new DateTime(); 
