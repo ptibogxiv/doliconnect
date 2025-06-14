@@ -58,7 +58,7 @@ if ( !empty(get_option('doliconnectbeta')) ) {
 
   add_filter( 'template_include', 'dolibarrproduct_page_template', 99 );
   function dolibarrproduct_page_template( $template ) {
-      if ( get_query_var('post_type') == 'dolibarrproduct'  ) {
+      if ( get_query_var('post_type') == 'doliproduct'  ) {
           $file_name = 'page.php';
           if ( locate_template( $file_name ) ) {
               $template = locate_template( $file_name );
