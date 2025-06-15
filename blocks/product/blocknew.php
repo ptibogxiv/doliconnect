@@ -12,19 +12,19 @@ $duration = (!empty(get_option('dolicartnewlist'))?get_option('dolicartnewlist')
 $date->modify('FIRST DAY OF LAST '.$duration.' MIDNIGHT');
 $lastdate = $date->format('Y-m-d');
 $request = "/products?sortfield=t.datec&sortorder=DESC&category=".doliconst("DOLICONNECT_CATSHOP")."&limit=5&sqlfilters=(t.datec%3A%3E%3D%3A'".$lastdate."')and(t.tosell:=:1)";
-$resultats = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+$object = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 //print $resultatso;
 
-if ( !isset($resultats->error) && $resultats != null ) {
-$count = count($resultats);
-foreach ($resultats as $product) {
+if ( !isset($object->error) && $object != null ) {
+$count = count($object);
+foreach ($object as $product) {
 $content .= apply_filters( 'doliproductlist', $product);
 }
 } else {
 $content .= "<li class='list-group-item'><center><center>".__( 'No new item', 'doliconnect' )."</center></li>";
 }
 $content .= '</ul>';
-$content .= doliCardFooter($resultats, 'product');
+$content .= doliCardFooter($object, 'product', $request);
 //if (!empty(doliconnecturl('dolishop'))) {
 //	$arr_params = array( 'category' => 'new');
 //	$link = esc_url( add_query_arg( $arr_params, doliconnecturl('dolishop')));
