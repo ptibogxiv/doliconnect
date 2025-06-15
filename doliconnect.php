@@ -427,7 +427,7 @@ function doliconnect_accessrestricted( $template )
         if ( locate_template( $file_name ) ) {
             $template = locate_template( $file_name );
         } else {
-            $template = plugin_dir_path( __DIR__ ) . 'templates/'. $file_name;
+            $template = plugin_dir_path( __FILE__ ) . 'templates/'. $file_name;
         }
     }
     return $template;
