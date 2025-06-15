@@ -44,7 +44,8 @@ add_action( 'admin_menu', 'doliconnect_admin_page4' );
 }
 
 function doliconnect_transients_page() {
-echo 'test';
+    echo '<div class="wrap">';
+    echo '<h2>'.__( 'Datas', 'doliconnect' ).'</h2>';
 }
 
 function doliconnect_admin_page() {
@@ -125,7 +126,7 @@ echo "<br /><br /><input type='submit' name='activate_license' value='Mettre a j
 
 function doliconnect_network_page() {
     echo '<div class="wrap">';
-    echo '<h2>Key and settings</h2>';
+    echo '<h2>'.__( 'Sync with Dolibarr', 'doliconnect' ).'</h2>';
 
 /*** License activate button was clicked ***/
     if (isset($_REQUEST['activate_license'])) {
