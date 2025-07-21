@@ -36,7 +36,7 @@ function doliconnect_textdomain() {
  */
 
 define('DOLIBARR_MINIMUM_VERSION', '17.0.0');
-define('DOLIBARR_LEGAL_VERSION', '21.0.1');
+define('DOLIBARR_LEGAL_VERSION', '21.0.2');
 
 // ********************************************************
 
