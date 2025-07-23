@@ -73,7 +73,8 @@ function doliConnect($fonction, $current_user = null, $boolean = false, $refresh
             'name'  => $name,
             'email' => $current_user->user_email,
             'client' => $client,
-            'status' => 1
+            'status' => 1,
+            'code_client' => -1
           ];
           $thirdparty = callDoliApi("POST", "/thirdparties", $rdr, dolidelay('doliconnector', $refresh));
           $thirdparty = callDoliApi("GET", "/thirdparties/email/".$current_user->email, null, dolidelay('doliconnector', $refresh));
