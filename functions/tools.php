@@ -815,10 +815,17 @@ if (in_array($mode, array('thirdparty')) ) {
     $doliuser .= '>'.__( 'Customer and Prospect', 'doliconnect').'</option>';
     $doliuser .= '</select>';
   }
-  $doliuser .= '<select class="form-select" id="morphy" name="'.$idobject.'[morphy]" disabled><option ';
+  $doliuser .= '<select class="form-select" id="morphy" name="'.$idobject.'[morphy]" ';
+  if (empty($current_user->billing_type)) {
+    $doliuser .= ' required';
+  } else {
+    $doliuser .= ' disabled';
+  }
+  $doliuser .= '><option ';
   if ((!isset ($current_user->billing_type)) && ( !isset($_GET["morphy"])) ) { 
     $doliuser .= ' selected';
   }
+  $morphy = null;
   $doliuser .= '>'.__( '- Select your type -', 'doliconnect').'</option>
     <option value="phy"';
   if ( (get_option('doliconnect_disablepro')== 'phy') || (isset ($current_user->billing_type) && $current_user->billing_type == 'phy') || ( isset($_GET["morphy"]) && $_GET["morphy"] == 'phy') ) { 
@@ -832,7 +839,10 @@ if (in_array($mode, array('thirdparty')) ) {
     $morphy = 'mor';
   }
   $doliuser .= '>'.__( 'Professional account', 'doliconnect').'</option>';
-  $doliuser .= '</select></div><input type="hidden" id="morphy" name="'.$idobject.'[morphy]" value="'.$morphy.'"></li>';
+  $doliuser .= '</select></div>';
+  if (!empty($current_user->billing_type)) {
+    $doliuser .= '<input type="hidden" id="morphy" name="'.$idobject.'[morphy]" value="'.$morphy.'"></li>';
+  }
 }
 if ( !is_user_logged_in() && in_array($mode, array('linkthirdparty')) ) {
   $doliuser .= '<li class="list-group-item list-group-item-light list-group-item-action"><div class="form-group">
