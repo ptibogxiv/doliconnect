@@ -958,8 +958,9 @@ global $current_user;
     }
 
     if ( doliversion('22.0.0') ) {
-      $request= "/documents?modulepart=product&id=".$product->id."&limit=100&content_type=application/pdf&pagination_data=true";
-      $downloads = callDoliApi("GET", $request, null, dolidelay('document', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));   
+      $request= "/documents?modulepart=product&id=".$product->id."&limit=100&content_type=application/pdf";
+      $downloads = callDoliApi("GET", $request, null, dolidelay('document', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
+      $downloads = (object) $downloads; 
       if ( doliversion('22.0.0') && isset($downloads->data) ) { $downloads = $downloads->data; } else { $downloads = $downloads; }
       
       if ( !isset($downloads->error) && $downloads != null ) {
