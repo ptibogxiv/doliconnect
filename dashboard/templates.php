@@ -455,7 +455,7 @@ global $current_user;
             $login_url = site_url()."/".get_site_option('doliconnect_login');
             } else {
             $login_url = site_url()."/wp-login.php"; }
-            if ( isset(sanitize_text_field($_GET["redirect_to"]))) { $redirect_to = sanitize_text_field($_GET["redirect_to"]); } else {
+            if ( isset($_GET["redirect_to"])) { $redirect_to = sanitize_text_field($_GET["redirect_to"]); } else {
               if ( function_exists('dolikiosk') && ! empty(dolikiosk()) ) {
                 $redirect_to = doliconnecturl('doliaccount');
               } elseif (is_front_page()) {
