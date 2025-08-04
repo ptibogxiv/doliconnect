@@ -1154,7 +1154,7 @@ global $current_user;
 		
 		$modal['body'] .= "<a class='float-end' href='".wp_lostpassword_url(get_permalink())."' role='button' title='".__( 'Forgot password?', 'doliconnect')."'><small>".__( 'Forgot password?', 'doliconnect')."</small></a>"; 
 		
-		$modal['body'] .= "<input type='hidden' value='".$_POST['redirect_to']."' name='redirect_to'>";
+		$modal['body'] .= "<input type='hidden' value='".sanitize_text_field($_POST['redirect_to'])."' name='redirect_to'>";
 		if ( get_site_option('doliconnect_mode') == 'one' && function_exists('switch_to_blog') ) {
 			switch_to_blog(1);
 		}

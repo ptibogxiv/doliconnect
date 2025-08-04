@@ -455,13 +455,13 @@ global $current_user;
             $login_url = site_url()."/".get_site_option('doliconnect_login');
             } else {
             $login_url = site_url()."/wp-login.php"; }
-            if ( isset($_GET["redirect_to"])) { $redirect_to=$_GET["redirect_to"]; } else {
+            if ( isset(sanitize_text_field($_GET["redirect_to"]))) { $redirect_to = sanitize_text_field($_GET["redirect_to"]); } else {
               if ( function_exists('dolikiosk') && ! empty(dolikiosk()) ) {
-                $redirect_to=doliconnecturl('doliaccount');
+                $redirect_to = doliconnecturl('doliaccount');
               } elseif (is_front_page()) {
-                $redirect_to=home_url();
+                $redirect_to = home_url();
               } else {
-                $redirect_to=get_permalink();
+                $redirect_to = get_permalink();
               }
             }
           
@@ -507,7 +507,7 @@ global $current_user;
               restore_current_blog();
             }
 
-            print '<input type="hidden" value="'.$redirect_to.'" name="redirect_to"><button class="btn btn-lg btn-link fs-6 text-primary text-decoration-none col-6 m-0 rounded-0" type="submit" value="submit"><strong>'.__( 'Sign in', 'doliconnect').'</strong></button>';
+            print '<input type="hidden" value="'.sanitize_text_field($redirect_to).'" name="redirect_to"><button class="btn btn-lg btn-link fs-6 text-primary text-decoration-none col-6 m-0 rounded-0" type="submit" value="submit"><strong>'.__( 'Sign in', 'doliconnect').'</strong></button>';
 
             do_action( 'login_footer');
 
