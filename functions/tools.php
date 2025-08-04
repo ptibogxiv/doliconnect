@@ -336,7 +336,7 @@ function doliPagination($object, $url, $page = 0) {
 }
 
 function doliconnect_image($module, $id, $options = array(), $refresh = false) {
-  if ( doliversion('22.0.0') ) {
+  if ( doliversion('22.0.0') && !empty(get_option('doliconnectbeta')) ) {
     $object = callDoliApi("GET", "/documents?modulepart=".$module."&id=".$id."&limit=100&content_type=image%2Fjpeg&pagination_data=true", null, dolidelay('document', $refresh));   
     $class = isset($options['class']) ? $options['class'] : 'img-fluid rounded-lg';
     if ( doliversion('22.0.0') && isset($object->data) ) { $object = $object->data; } else { $object = $object; }
@@ -368,124 +368,124 @@ function doliconnect_image($module, $id, $options = array(), $refresh = false) {
         <span class="visually-hidden">Next</span>
       </button>
     </div>';
- } else {
-$class = isset($options['class']) ? $options['class'] : 'img-fluid rounded-lg';
-$entity = dolibarr_entity(isset($options['entity'])?$options['entity']:null);
-if (is_numeric($id)) {
-$imgs = callDoliApi("GET", "/documents?modulepart=".$module."&id=".$id, null, dolidelay('document', $refresh), $entity);   
-$image = "<div class='row'>";
-$subdir = '';
-$dir = '/'.$id;
-if ($module == 'category') {
-$num = preg_replace('/([^0-9])/i', '', $id);
-$subdir = substr($num, 1, 1).'/'.substr($num, 0, 1).'/'.$id.'/';
-$dir = '/'.substr($num, 1, 1).'/'.substr($num, 0, 1).'/'.$id;
-}
-if ( !isset($imgs->error) && $imgs != null ) {
-$imgs = array_slice((array) $imgs, 0, isset($options['limit'])?$options['limit']:null);
-if (empty($options['limit'])) $image .= "<div class='card-columns'>";
-foreach ($imgs as $img) {
-$up_dir = wp_upload_dir();
-if (empty($options['limit'])) { $image .= "<div class='card'>";
 } else {
-$image .= "<div class='col'>";
-}
-$file=$up_dir['basedir'].'/doliconnect/'.$module.$dir.'/'.$img->relativename;
-if (!is_file($file)) {
-$imgj =  callDoliApi("GET", "/documents/download?modulepart=".$module."&original_file=".$subdir.$img->level1name."/".$img->relativename, null, dolidelay('document', $refresh), $entity);
-//$image .= var_dump($imgj);
-$imgj = (array) $imgj; 
-if (is_array($imgj) && !isset($imgj['error']) && preg_match('/^image/', $imgj['content-type'])) {
-//$data = "data:".$imgj['content-type'].";".$imgj['encoding'].",".$imgj['content'];
+  $class = isset($options['class']) ? $options['class'] : 'img-fluid rounded-lg';
+  $entity = dolibarr_entity(isset($options['entity'])?$options['entity']:null);
+  if (is_numeric($id)) {
+  $imgs = callDoliApi("GET", "/documents?modulepart=".$module."&id=".$id, null, dolidelay('document', $refresh), $entity);   
+  $image = "<div class='row'>";
+  $subdir = '';
+  $dir = '/'.$id;
+  if ($module == 'category') {
+  $num = preg_replace('/([^0-9])/i', '', $id);
+  $subdir = substr($num, 1, 1).'/'.substr($num, 0, 1).'/'.$id.'/';
+  $dir = '/'.substr($num, 1, 1).'/'.substr($num, 0, 1).'/'.$id;
+  }
+  if ( !isset($imgs->error) && $imgs != null ) {
+  $imgs = array_slice((array) $imgs, 0, isset($options['limit'])?$options['limit']:null);
+  if (empty($options['limit'])) $image .= "<div class='card-columns'>";
+  foreach ($imgs as $img) {
+  $up_dir = wp_upload_dir();
+  if (empty($options['limit'])) { $image .= "<div class='card'>";
+  } else {
+  $image .= "<div class='col'>";
+  }
+  $file=$up_dir['basedir'].'/doliconnect/'.$module.$dir.'/'.$img->relativename;
+  if (!is_file($file)) {
+  $imgj =  callDoliApi("GET", "/documents/download?modulepart=".$module."&original_file=".$subdir.$img->level1name."/".$img->relativename, null, dolidelay('document', $refresh), $entity);
+  //$image .= var_dump($imgj);
+  $imgj = (array) $imgj; 
+  if (is_array($imgj) && !isset($imgj['error']) && preg_match('/^image/', $imgj['content-type'])) {
+  //$data = "data:".$imgj['content-type'].";".$imgj['encoding'].",".$imgj['content'];
 
-if (!is_dir($up_dir['basedir'].'/doliconnect/'.$module.$dir)) {
-mkdir($up_dir['basedir'].'/doliconnect/'.$module.$dir, 0755, true);
-}
-$size = null;
-if (isset($options['size'])) $size = '-'.$options['size'];
-//$files = glob($up_dir['basedir'].'/doliconnect/'.$module.'/'.$id."/*");
-//foreach($files as $file){
-//if(is_file($file))
-//unlink($file); 
-//}
-$file=$up_dir['basedir'].'/doliconnect/'.$module.$dir.'/'.$img->relativename;
-file_put_contents($file, base64_decode($imgj['content']));
+  if (!is_dir($up_dir['basedir'].'/doliconnect/'.$module.$dir)) {
+  mkdir($up_dir['basedir'].'/doliconnect/'.$module.$dir, 0755, true);
+  }
+  $size = null;
+  if (isset($options['size'])) $size = '-'.$options['size'];
+  //$files = glob($up_dir['basedir'].'/doliconnect/'.$module.'/'.$id."/*");
+  //foreach($files as $file){
+  //if(is_file($file))
+  //unlink($file); 
+  //}
+  $file=$up_dir['basedir'].'/doliconnect/'.$module.$dir.'/'.$img->relativename;
+  file_put_contents($file, base64_decode($imgj['content']));
 
-if (!is_file($up_dir['basedir'].'/doliconnect/'.$module.$dir.'/'.explode('.', $img->relativename, 2)[0].$size.'.'.explode('.', $img->relativename, 2)[1])) {
-$imgy = wp_get_image_editor($file); 
-$imgy->resize( 350, 350, true );
-$avatar = $imgy->generate_filename($size,$up_dir['basedir']."/doliconnect/".$module.$dir."/", NULL );
-$imgy->save($avatar);
-}
-$image .= "<img src='".$up_dir['baseurl'].'/doliconnect/'.$module.$dir.'/'.explode('.', $img->relativename, 2)[0].$size.'.'.explode('.', $img->relativename, 2)[1]."' class='";
-if (empty($options['class'])) {
-$image .= "img-fluid card-img";
-} else {
-$image .=  $class;
-}
-$image .= "' alt='".$img->relativename."' loading='lazy'>";
+  if (!is_file($up_dir['basedir'].'/doliconnect/'.$module.$dir.'/'.explode('.', $img->relativename, 2)[0].$size.'.'.explode('.', $img->relativename, 2)[1])) {
+  $imgy = wp_get_image_editor($file); 
+  $imgy->resize( 350, 350, true );
+  $avatar = $imgy->generate_filename($size,$up_dir['basedir']."/doliconnect/".$module.$dir."/", NULL );
+  $imgy->save($avatar);
+  }
+  $image .= "<img src='".$up_dir['baseurl'].'/doliconnect/'.$module.$dir.'/'.explode('.', $img->relativename, 2)[0].$size.'.'.explode('.', $img->relativename, 2)[1]."' class='";
+  if (empty($options['class'])) {
+  $image .= "img-fluid card-img";
+  } else {
+  $image .=  $class;
+  }
+  $image .= "' alt='".$img->relativename."' loading='lazy'>";
 
-} else {
+  } else {
+    $image .= '<svg class="bd-placeholder-img '.$class.'" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect></svg>';
+  }
+  } else {
+  $picture = '/doliconnect/'.$module.$dir.'/'.$img->relativename;
+  if (isset($options['size'])) {
+  $picture2 = '/doliconnect/'.$module.$dir.'/'.explode('.', $img->relativename, 2)[0].'-'.$options['size'].'.'.explode('.', $img->relativename, 2)[1];
+  $picture = $picture2;
+  }
+  if (isset($options['size']) && !is_file($up_dir['basedir'].$picture)) {
+  $imgy = wp_get_image_editor($file); 
+  $imgy->resize( 350, 350, true );
+  $avatar = $imgy->generate_filename($options['size'],$up_dir['basedir']."/doliconnect/".$module.$dir."/", NULL );
+  $imgy->save($avatar);
+  }
+  $image .= "<img src='".$up_dir['baseurl'].$picture."' class='";
+  if (empty($options['limit'])) {
+  $image .= "img-fluid card-img";
+  } else {
+  $image .=  $class;
+  }
+  $image .= "' alt='".$img->relativename."' loading='lazy'>";
+
+  }
+  $image .= "</div>";
+  }
+  if (empty($options['limit'])) $image .= "</div>";
+  } elseif ($module == 'product' || $module == 'category') {
+  $image .= "<div class='col'>";
   $image .= '<svg class="bd-placeholder-img '.$class.'" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect></svg>';
-}
-} else {
-$picture = '/doliconnect/'.$module.$dir.'/'.$img->relativename;
-if (isset($options['size'])) {
-$picture2 = '/doliconnect/'.$module.$dir.'/'.explode('.', $img->relativename, 2)[0].'-'.$options['size'].'.'.explode('.', $img->relativename, 2)[1];
-$picture = $picture2;
-}
-if (isset($options['size']) && !is_file($up_dir['basedir'].$picture)) {
-$imgy = wp_get_image_editor($file); 
-$imgy->resize( 350, 350, true );
-$avatar = $imgy->generate_filename($options['size'],$up_dir['basedir']."/doliconnect/".$module.$dir."/", NULL );
-$imgy->save($avatar);
-}
-$image .= "<img src='".$up_dir['baseurl'].$picture."' class='";
-if (empty($options['limit'])) {
-$image .= "img-fluid card-img";
-} else {
-$image .=  $class;
-}
-$image .= "' alt='".$img->relativename."' loading='lazy'>";
+  $image .= "</div>";
+  }
+  $image .= "</div>";
+  } else {
+  $up_dir = wp_upload_dir();
+  $file=$up_dir['basedir'].'/doliconnect/'.$module.'/'.$id;
+  if (!is_file($file)) {
+  $imgj =  callDoliApi("GET", "/documents/download?modulepart=".$module."&original_file=".$id, null, dolidelay('document', $refresh), $entity);
+  //$image .= var_dump($imgj);
+  $imgj = (array) $imgj; 
+  if (is_array($imgj) && isset($imgj['content-type']) && preg_match('/^image/', $imgj['content-type'])) {
+  //$data = "data:".$imgj['content-type'].";".$imgj['encoding'].",".$imgj['content'];
 
-}
-$image .= "</div>";
-}
-if (empty($options['limit'])) $image .= "</div>";
-} elseif ($module == 'product' || $module == 'category') {
-$image .= "<div class='col'>";
-$image .= '<svg class="bd-placeholder-img '.$class.'" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect></svg>';
-$image .= "</div>";
-}
-$image .= "</div>";
-} else {
-$up_dir = wp_upload_dir();
-$file=$up_dir['basedir'].'/doliconnect/'.$module.'/'.$id;
-if (!is_file($file)) {
-$imgj =  callDoliApi("GET", "/documents/download?modulepart=".$module."&original_file=".$id, null, dolidelay('document', $refresh), $entity);
-//$image .= var_dump($imgj);
-$imgj = (array) $imgj; 
-if (is_array($imgj) && isset($imgj['content-type']) && preg_match('/^image/', $imgj['content-type'])) {
-//$data = "data:".$imgj['content-type'].";".$imgj['encoding'].",".$imgj['content'];
-
-if (!is_dir($up_dir['basedir'].'/doliconnect/'.$module.'/'.$id)) {
-mkdir($up_dir['basedir'].'/doliconnect/'.$module.'/'.explode('/'.$imgj['filename'], $id, 2)[0], 0755, true);
-}
-//$files = glob($up_dir['basedir'].'/doliconnect/'.$module.'/'.$id."/*");
-//foreach($files as $file){
-//if(is_file($file))
-//unlink($file); 
-//}
-$file=$up_dir['basedir'].'/doliconnect/'.$module.'/'.$id;
-file_put_contents($file, base64_decode($imgj['content']));
-$image = "<img src='".$up_dir['baseurl'].'/doliconnect/'.$module.'/'.$id."' class='".$class."' alt='".$imgj['filename']."' loading='lazy'>"; 
-} else {
-  $image = '<svg class="bd-placeholder-img '.$class.'" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect></svg>';
-}
-} else {
-  $image = "<img src='".$up_dir['baseurl'].'/doliconnect/'.$module.'/'.$id."' class='".$class."' alt='".$up_dir['baseurl'].'/doliconnect/'.$module.'/'.$id."' loading='lazy'>";
-}
-}
+  if (!is_dir($up_dir['basedir'].'/doliconnect/'.$module.'/'.$id)) {
+  mkdir($up_dir['basedir'].'/doliconnect/'.$module.'/'.explode('/'.$imgj['filename'], $id, 2)[0], 0755, true);
+  }
+  //$files = glob($up_dir['basedir'].'/doliconnect/'.$module.'/'.$id."/*");
+  //foreach($files as $file){
+  //if(is_file($file))
+  //unlink($file); 
+  //}
+  $file=$up_dir['basedir'].'/doliconnect/'.$module.'/'.$id;
+  file_put_contents($file, base64_decode($imgj['content']));
+  $image = "<img src='".$up_dir['baseurl'].'/doliconnect/'.$module.'/'.$id."' class='".$class."' alt='".$imgj['filename']."' loading='lazy'>"; 
+  } else {
+    $image = '<svg class="bd-placeholder-img '.$class.'" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect></svg>';
+  }
+  } else {
+    $image = "<img src='".$up_dir['baseurl'].'/doliconnect/'.$module.'/'.$id."' class='".$class."' alt='".$up_dir['baseurl'].'/doliconnect/'.$module.'/'.$id."' loading='lazy'>";
+  }
+  }
  }
 return $image;
 }
