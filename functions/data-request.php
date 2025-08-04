@@ -341,9 +341,9 @@ global $current_user;
 		if (isset($_POST['case']) && $_POST['case'] == "create") {
 			$rdr = [        
 				'fk_soc' => $thirdparty->id,
-				'type_code' => $_POST['ticket_type'],
-				'category_code' => $_POST['ticket_category'],
-				'severity_code' => $_POST['ticket_severity'],
+				'type_code' => esc_attr($_POST['ticket_type']),
+				'category_code' => esc_attr($_POST['ticket_category']),
+				'severity_code' => esc_attr($_POST['ticket_severity']),
 				'subject' => sanitize_text_field($_POST['ticket_subject']),
 				'message' => sanitize_textarea_field($_POST['ticket_message']),
 			];
@@ -1187,7 +1187,7 @@ global $current_user;
 		$modal['body'] = dolimembertypelist($typeadhesion, $adherent);	
 		$modal['footer'] = __( 'Note: the admins reserve the right to change your membership in relation to your personal situation. A validation of the membership may be necessary depending on the cases.', 'doliconnect');
 		$response['js'] = null;
-		$response['modal'] = doliModalTemplate($_POST['id'], $modal['header'], $modal['body'], $modal['footer'], 'modal-lg', null, 'p-0');
+		$response['modal'] = doliModalTemplate(sanitize_text_field($_POST['id']), $modal['header'], $modal['body'], $modal['footer'], 'modal-lg', null, 'p-0');
 		wp_send_json_success($response);
 		die();
 	} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "resiliatemembership" ) {
@@ -1195,7 +1195,7 @@ global $current_user;
 		$modal['body'] = null;	
 		$modal['footer'] = "<form id='subscription-form' action='".esc_url( add_query_arg( 'module', 'members', doliconnecturl('doliaccount')) )."' method='post'><input type='hidden' name='update_membership' value='2'><div class='d-grid gap-2'><button class='btn btn-danger' type='submit'>".__( 'Resiliate', 'doliconnect')."</button></div></form>";
 		$response['js'] = null;
-		$response['modal'] = doliModalTemplate($_POST['id'], $modal['header'], $modal['body'], $modal['footer']);
+		$response['modal'] = doliModalTemplate(sanitize_text_field($_POST['id']), $modal['header'], $modal['body'], $modal['footer']);
 		wp_send_json_success($response);
 		die();
 	/*} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "renewmembership" ) {
@@ -1254,7 +1254,7 @@ global $current_user;
 		$modal['body'] = null;
 		$modal['footer'] = $_POST['value1'];
 		$response['js'] = null;
-		$response['modal'] = doliModalTemplate($_POST['id'], $modal['header'], $modal['body'], $modal['footer'], 'modal-lg', null, 'p-0');
+		$response['modal'] = doliModalTemplate(sanitize_text_field($_POST['id']), $modal['header'], $modal['body'], $modal['footer'], 'modal-lg', null, 'p-0');
 		wp_send_json_success($response);
 		die();
 	} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "doliCart" ) {
@@ -1263,7 +1263,7 @@ global $current_user;
 		$modal['body'] = doliline($object, false, false, false);
 		$modal['footer'] = doliCartButton($object);
 		$response['js'] = null;
-		$response['modal'] = doliModalTemplate($_POST['id'], $modal['header'], $modal['body'], $modal['footer'], 'modal-lg');
+		$response['modal'] = doliModalTemplate(sanitize_text_field($_POST['id']), $modal['header'], $modal['body'], $modal['footer'], 'modal-lg');
 		wp_send_json_success($response);
 		die();
 	} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "doliSelectlang" ) {
@@ -1285,7 +1285,7 @@ global $current_user;
 		$modal['body'] .= '</ul></div><div id="loadingSelectLang" style="display:none"><br><br><br><center><div class="align-middle"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div><h4>'.__('Loading', 'doliconnect').'</h4></div></center><br><br><br></div>';	
 		$modal['footer'] = null;
 		$response['js'] = plugins_url( 'doliconnect/includes/custom/js/doliselectlang.js');
-		$response['modal'] = doliModalTemplate($_POST['id'], $modal['header'], $modal['body'], $modal['footer']);
+		$response['modal'] = doliModalTemplate(sanitize_text_field($_POST['id']), $modal['header'], $modal['body'], $modal['footer']);
 		wp_send_json_success($response);
 		die();
 	} else {
