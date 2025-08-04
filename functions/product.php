@@ -958,16 +958,14 @@ global $current_user;
     }
 
     if ( doliversion('22.0.0') ) {
-      $request= "/documents?modulepart=product&id=".$product->id."&limit=100&content_type=application/pdf";
-      $downloads = callDoliApi("GET", $request, null, dolidelay('document', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
-      //$downloads = (object) $downloads; 
-      //$card .= var_dump($downloads);
+      $request= "/documents?modulepart=product&id=".$product->id."&limit=100&content_type=application/pdf&pagination_data=true";
+      $downloads = callDoliApi("GET", $request, null, dolidelay('document', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));   
       if ( doliversion('22.0.0') && isset($downloads->data) ) { $downloads = $downloads->data; } else { $downloads = $downloads; }
-      
+
       if ( !isset($downloads->error) && $downloads != null ) {
         $card .= '<div class="col-12"><h6>'.__( 'Download documents', 'doliconnect' ).'</h6>';
         foreach ($downloads as $download) {                                                                                 
-          $card .= 'test';
+          $card .= $download->relativename;
         }
         $card .= '</div>';
       } else {

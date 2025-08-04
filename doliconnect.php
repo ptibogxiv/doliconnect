@@ -167,7 +167,30 @@ function json_basic_auth_error( $error ) {
 	return $wp_json_basic_auth_error;
 }
 add_filter( 'rest_authentication_errors', 'json_basic_auth_error' );
+
 // ********************************************************
+// Add the Dolibarr API call function
+// This function is used to call the Dolibarr API with the specified method, link,
+// body, delay, and entity. It handles caching the response using transients.
+// It also logs the request and response in debug mode.
+// It returns the response as a JSON object, or an error if the API call fails.
+// It is used to interact with the Dolibarr API from WordPress.
+// It is called by various functions in the plugin to retrieve or update data in Dolibarr
+// such as products, services, contacts, etc.
+//// @param string $method The HTTP method to use for the API call (GET, POST, PUT, DELETE).
+//// @param string $link The API endpoint to call.
+//// @param mixed $body The body of the request, if applicable (for POST or PUT requests).
+//// @param int $delay The delay in seconds for caching the response. Default is 1 hour (HOUR_IN_SECONDS).
+//// @param int $entity The Dolibarr entity ID to use for the API call. Default is null, which uses the current blog ID.
+//// @return object The response from the Dolibarr API as a JSON object, or an error if the API call fails.
+// @since 9.2.3
+// @version 9.2.3
+// ********************************************************
+function is_json_string($json_str)
+{
+	json_decode($json_str);
+    return json_last_error() === JSON_ERROR_NONE;
+}
 add_action( 'admin_init', 'callDoliApi', 5, 5); 
 function callDoliApi($method = null, $link = null, $body = null, $delay = HOUR_IN_SECONDS, $entity = null) {
     //echo $link;
@@ -203,7 +226,7 @@ function callDoliApi($method = null, $link = null, $body = null, $delay = HOUR_I
             }
 
             $http_code = wp_remote_retrieve_response_code( $request );
-            $transient = wp_remote_retrieve_body( $request );
+            $transient = wp_unslash(wp_remote_retrieve_body( $request ));
 
             if (true === WP_DEBUG) {
                 if (is_array($request) || is_object($request)) {
@@ -222,18 +245,30 @@ function callDoliApi($method = null, $link = null, $body = null, $delay = HOUR_I
                         define('DOLIBUG', $http_code);
                     }
                 } elseif ( $delay != 0 ) {
-                $delay = abs( intval($delay) );
-                set_transient( $link, $transient, $delay);
+                    $delay = abs(intval($delay));
+                    // ENCODE EN JSON SI NÉCESSAIRE
+                    if (!is_json_string($transient)) {
+                        $transient = json_encode($transient);
+                    }
+                    set_transient($link, $transient, $delay);
+                } else {
+                    if ( !defined("DOLIBUG") ) {
+                        define('DOLIBUG', 1);
+                    }
                 }
             } else {
-                $delay = abs( intval($delay) );
-                set_transient( $link, $transient, $delay);
+                $delay = abs(intval($delay));
+                // ENCODE EN JSON SI NÉCESSAIRE
+                if (!is_json_string($transient)) {
+                    $transient = json_encode($transient);
+                }
+                set_transient($link, $transient, $delay);
             }
             $return = json_decode( $transient );
             if (is_object($return)) $return->request = $link;
             return $return;
         } else {
-            $return = json_decode( get_transient( $link ) );
+            $return = json_decode( get_transient( $link ));
             if (is_object($return)) $return->request = $link;
             return $return;   
         }
