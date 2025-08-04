@@ -186,11 +186,7 @@ add_filter( 'rest_authentication_errors', 'json_basic_auth_error' );
 // @since 9.2.3
 // @version 9.2.3
 // ********************************************************
-function is_json_string($json_str)
-{
-	json_decode($json_str);
-    return json_last_error() === JSON_ERROR_NONE;
-}
+
 add_action( 'admin_init', 'callDoliApi', 5, 5); 
 function callDoliApi($method = null, $link = null, $body = null, $delay = HOUR_IN_SECONDS, $entity = null) {
     //echo $link;
@@ -246,10 +242,6 @@ function callDoliApi($method = null, $link = null, $body = null, $delay = HOUR_I
                     }
                 } elseif ( $delay != 0 ) {
                     $delay = abs(intval($delay));
-                    // ENCODE EN JSON SI NÉCESSAIRE
-                    if (!is_json_string($transient)) {
-                        $transient = json_encode($transient);
-                    }
                     set_transient($link, $transient, $delay);
                 } else {
                     if ( !defined("DOLIBUG") ) {
@@ -258,10 +250,6 @@ function callDoliApi($method = null, $link = null, $body = null, $delay = HOUR_I
                 }
             } else {
                 $delay = abs(intval($delay));
-                // ENCODE EN JSON SI NÉCESSAIRE
-                if (!is_json_string($transient)) {
-                    $transient = json_encode($transient);
-                }
                 set_transient($link, $transient, $delay);
             }
             $return = json_decode( $transient );
