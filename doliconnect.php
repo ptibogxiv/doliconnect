@@ -203,12 +203,13 @@ function callDoliApi($method = null, $link = null, $body = null, $delay = HOUR_I
             }
 
             $http_code = wp_remote_retrieve_response_code( $request );
+            $transient = wp_remote_retrieve_body( $request );
 
             if (true === WP_DEBUG) {
                 if (is_array($request) || is_object($request)) {
-                    error_log(print_r(json_decode( wp_remote_retrieve_body($request)), true));
+                    error_log(print_r(json_decode( $transient), true));
                 } else {
-                    error_log(json_decode( wp_remote_retrieve_body($request)));
+                    error_log(json_decode( $transient));
                 }
             }
 
@@ -222,13 +223,13 @@ function callDoliApi($method = null, $link = null, $body = null, $delay = HOUR_I
                     }
                 } elseif ( $delay != 0 ) {
                 $delay = abs( intval($delay) );
-                set_transient( $link, wp_remote_retrieve_body( $request ), $delay);
+                set_transient( $link, $transient, $delay);
                 }
             } else {
                 $delay = abs( intval($delay) );
-                set_transient( $link, wp_remote_retrieve_body( $request ), $delay);
+                set_transient( $link, $transient, $delay);
             }
-            $return = json_decode( wp_remote_retrieve_body( $request ) );
+            $return = json_decode( $transient );
             if (is_object($return)) $return->request = $link;
             return $return;
         } else {
