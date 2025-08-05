@@ -71,6 +71,12 @@ We would like to thank this contributors and plugins:
 [gdpr-data-request-form](https://wordpress.org/plugins/gdpr-data-request-form/ "gdpr-data-request-form")
 
 == Changelog ==
+   = 9.5.x =
+* better UX/UI
+* upgrade Dolibarr version
+* more customization with child theme template
+* fix php bugs & error
+
    = 9.4.x =
 * better UX/UI
 * fix vulnerability
