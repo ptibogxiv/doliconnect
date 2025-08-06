@@ -1307,24 +1307,6 @@ print "</ul><br><div id='tab-cart-content' class='tab-content'>";
 print '<div class="tab-pane fade';
 if (!isset($_GET['stage']) || !isset($object) || !is_object($object) || !isset($object->lines)) { print ' show active'; }
 print '" role="tabpanel" id="nav-tab-cart">';
- 
-if ( isset($object) && is_object($object) && isset($object->date_modification) && !empty($object->date_modification)) {
-$timeout=$object->date_modification-current_time('timestamp',1)+1200;
-//print "<script>";
-//var tmp=<?php print ($timeout)*10;
-// 
-//var chrono=setInterval(function (){
-//     min=Math.floor(tmp/600);
-//     sec=Math.floor((tmp-min*600)/10);
-//     dse=tmp-((min*60)+sec)*10;
-//     tmp--;
-//     jQuery('#duration').text(min+'mn '+sec+'sec');
-//},100);
-//print "</script>";
-//header('Refresh: 120; URL='.esc_url(get_permalink()).'');
-//header('Refresh: '.$timeout.'; URL='.esc_url(get_permalink()).'');
-//print wp_date('d/m/Y H:i', $object[date_modification]);
-}
 
 if ( isset($object->id) && $object->id > 0 && isset($object->lines) && $object->lines != null ) {  //&& $timeout>'0'                                                                                         
   //print "<div id='timer' class='text-center'><small>".sprintf( esc_html__('Your basket #%s is reserved for', 'doliconnect'), $object->id)." <span class='duration'></span></small></div>";
