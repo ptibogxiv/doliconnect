@@ -1141,10 +1141,11 @@ if ( in_the_loop() && is_main_query() && is_page(doliconnectid('dolicart')) && !
     $object = callDoliApi("GET", $request, null, dolidelay('cart', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
   } else {
     $object = doliConnect('order', $current_user, false, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+    //print var_dump($object);
     if (isset($object->id)) {
-      $request = "/orders/".$object->id."?contact_list=0";
-      $object = callDoliApi("GET", $request, null, dolidelay('cart', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-      $module = 'orders';
+      //$request = "/orders/".$object->id."?contact_list=0";
+      //$object = callDoliApi("GET", $request, null, dolidelay('cart', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+      //$module = 'orders';
       $id = $object->id;  
     }
   }
@@ -1438,7 +1439,7 @@ console.log(response.data.message);
 })(jQuery);";
 print "</script>";
 
-if (isset($request)) print doliCardFooter($request, 'cart');
+print doliCardFooter($object, 'doliconnector');
 print "</div>";
 
 print "</div>";
@@ -1609,7 +1610,8 @@ console.log(response.data.message);
 print "</script>";
 
 print "<div class='card-body'><div class='d-grid gap-2'><button type='button' id='infobtn_cart' name='info_cart' value='info_cart'  class='btn btn-secondary'>".__( 'Validate', 'doliconnect')."</button></div></div>";
-print doliCardFooter($request, 'cart');
+print doliCardFooter($object, 'doliconnector');
+print var_dump($object);
 print "</div>";
 
 print "</div>";
