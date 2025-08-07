@@ -1000,8 +1000,7 @@ function dolishop_display($content) {
         if ( !isset($resultats->error) && $resultats != null ) {
           foreach ($resultats as $productid) {
             if ( doliCheckModules('discountprice') && isset($_GET['category']) && $_GET['category'] == 'discount' && !isset($_GET['product'])) { $productid = $productid->fk_product; }
-            $product = callDoliApi("GET", "/products/".$productid."?includesubproducts=true&includetrans=true", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-            print apply_filters( 'doliproductlist', $product);
+            print apply_filters( 'doliproductlist', $productid);
           }
         } else {
           print "<li class='list-group-item list-group-item-light'><center>".__( 'No item currently on sale', 'doliconnect')."</center></li>";
