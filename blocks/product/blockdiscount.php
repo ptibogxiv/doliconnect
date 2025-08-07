@@ -11,15 +11,12 @@ $date->modify('NOW');
 $lastdate = $date->format('Y-m-d');
 $request = "/discountprice?sortfield=t.rowid&sortorder=DESC&limit=5&sqlfilters=(t.date_begin%3A%3C%3D%3A'".$lastdate."')and(t.date_end%3A%3E%3D%3A'".$lastdate."')and(d.tosell:=:1)";
 $resultats = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-//print $resultatso;
 
 if ( !isset($resultats->error) && $resultats != null ) {
-$count = count($resultats);
-foreach ($resultats as $product) {
-$request2 = "/products/".$product->fk_product."?includestockdata=1&includesubproducts=true&includetrans=true";
-$product = callDoliApi("GET", $request2, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-$content .= apply_filters( 'doliproductlist', $product);
-}
+	$count = count($resultats);
+	foreach ($resultats as $product) {
+		$content .= apply_filters( 'doliproductlist', $product->fk_product);
+	}
 } else {
 $content .= "<li class='list-group-item'><center>".__( 'No discounted item', 'doliconnect' )."</center></li>";
 }

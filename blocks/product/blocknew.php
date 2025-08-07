@@ -16,10 +16,10 @@ $object = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset
 //print $resultatso;
 
 if ( !isset($object->error) && $object != null ) {
-$count = count($object);
-foreach ($object as $product) {
-$content .= apply_filters( 'doliproductlist', $product);
-}
+	$count = count($object);
+	foreach ($object as $product) {
+		$content .= apply_filters( 'doliproductlist', $product->id);
+	}
 } else {
 $content .= "<li class='list-group-item'><center><center>".__( 'No new item', 'doliconnect' )."</center></li>";
 }

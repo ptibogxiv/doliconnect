@@ -855,7 +855,7 @@ if (isset($productid) && is_numeric($productid) && $productid > 0) {
   }
   $list .= "</div></td></tr></table></li>";
 } else {
-  $list = "<li class='list-group-item list-group-item-light list-group-item-action'>".__( 'No product found', 'doliconnect')."</li>";
+  $list = "<li class='list-group-item list-group-item-light list-group-item-action'>".__( 'Product not found', 'doliconnect')."</li>";
 }
 return $list;
 }
