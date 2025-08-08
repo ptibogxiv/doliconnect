@@ -56,7 +56,24 @@ if ( doliCheckModules('adherent') ) {
 require_once plugin_dir_path(__FILE__).'/admin/admin.php'; 
 require_once plugin_dir_path(__FILE__).'/blocks/index.php';
 
+//add_action( 'plugins_loaded', 'doliconnect_run66', 10, 0 );
+function doliconnect_run66() {
+	if ( file_exists( WP_CONTENT_DIR . '/maintenance.php' ) ) {
+		require_once WP_CONTENT_DIR . '/maintenance.php';
+		die();
+	}
 
+	require_once ABSPATH . WPINC . '/functions.php';
+	wp_load_translations_early();
+
+	header( 'Retry-After: 600' );
+
+	wp_die(
+		__( 'Briefly unavailable for scheduled maintenance. Check back in a minute.' ),
+		__( 'Maintenance' ),
+		503
+	);
+}
 
 // ********************************************************
 function doliconnecturl($page) {

@@ -952,7 +952,7 @@ global $current_user;
       $card .= '<div class="col-12"><p><center>'.__( 'Item not in sale', 'doliconnect' ).'</center></p>';
     }
 
-    if ( doliversion('22.0.0') ) {
+    if ( doliversion('22.0.0') && !empty(get_option('doliconnectbeta')) ) {
       $request= "/documents?modulepart=product&id=".$product->id."&limit=100&content_type=application/pdf&pagination_data=true";
       $downloads = callDoliApi("GET", $request, null, dolidelay('document', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));   
       if ( doliversion('22.0.0') && isset($downloads->data) ) { $downloads = $downloads->data; } else { $downloads = $downloads; }
