@@ -118,7 +118,7 @@ function doliRelatedProducts($fk_parent_line, $refresh = false) {
   if ( !isset( $relatedproducts->error ) && $relatedproducts != null ) {
     $related = null;
     foreach ( $relatedproducts as $product ) { 
-      $related .= apply_filters( 'doliproductlist', $product, false, $fk_parent_line, true);
+      $related .= apply_filters( 'doliproductlist', $product->id, false, $fk_parent_line, true);
     }
   return $related;
   } else {
