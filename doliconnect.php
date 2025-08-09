@@ -240,10 +240,11 @@ function callDoliApi($method = null, $link = null, $body = null, $delay = HOUR_I
 
             $http_code = wp_remote_retrieve_response_code( $request );
             $transient = wp_remote_retrieve_body( $request );
-            //$transient = wp_unslash( $request );
             $transient = json_decode( $transient, true);
             $transient = json_encode( $transient, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
-            //$transient = stripslashes( $transient);
+            //$transient = wp_unslash( $request );JSON_UNESCAPED_SLASHES | 
+            if (str_contains($link, '/documents')) $transient = stripslashes( $transient);
+            
 
             if (true === WP_DEBUG) {
                 if (is_array($request) || is_object($request)) {
