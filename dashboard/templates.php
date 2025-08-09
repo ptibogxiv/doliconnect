@@ -1144,7 +1144,7 @@ if ( in_the_loop() && is_main_query() && is_page(doliconnectid('dolicart')) && !
     if (isset($object->id)) {
       //$request = "/orders/".$object->id."?contact_list=0";
       //$object = callDoliApi("GET", $request, null, dolidelay('cart', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-      //$module = 'orders';
+      $module = 'orders';
       $id = $object->id;  
     }
   }
