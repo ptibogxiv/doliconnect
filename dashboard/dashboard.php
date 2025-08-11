@@ -2076,7 +2076,12 @@ print '</form></div>';
 print '</div>';
 
 if (current_user_can('administrator') && !empty(get_option('doliconnectbeta')) ) { 
-
+//print '<div class="audio-player">
+//    <audio controls>
+//        <source src="'.esc_url( get_option('doliconnect_audio_file') ).'" type="audio/mpeg">
+//        '._e('Votre navigateur ne supporte pas l\'élément audio.', 'doliconnect').'
+//    </audio>
+//</div>';
 print '<style>';
 ?>
 .blur{
