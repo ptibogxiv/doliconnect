@@ -584,17 +584,16 @@ function doliOffcanvasCart($current_user) {
     <h5 class="offcanvas-title" id="offcanvasDoliCartLabel">'.__('Cart', 'ptibogxivtheme').'</h5>
     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>';
-
   $offcanvas .= '<div class="offcanvas-body">';
   $offcanvas .= doliline(doliConnect('order', $current_user), esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), false);
   $offcanvas .= '</div>';
-
-  $offcanvas .= '<div class="offcanvas-footer m-3">';
-    $arr_params = array( 'checkout' => wp_create_nonce( 'dolicart-'. doliConnect('order', $current_user)->id.'-'.$current_user->id));  
-    $return = esc_url( add_query_arg( $arr_params, doliconnecturl('dolicart')) );
+  if (doliConnect('order', $current_user)->id > 0 && isset(doliConnect('order', $current_user)->lines) && !empty(doliConnect('order', $current_user)->lines)) {
+    $offcanvas .= '<div class="offcanvas-footer m-3">';
+      $arr_params = array( 'checkout' => wp_create_nonce( 'dolicart-'. doliConnect('order', $current_user)->id.'-'.$current_user->id));  
+      $return = esc_url( add_query_arg( $arr_params, doliconnecturl('dolicart')) );
     $offcanvas .= '<a type="button" class="btn btn-primary w-100" href="'.$return.'">'.__('Finaliser la commande', 'ptibogxivtheme').'</a>';
-  $offcanvas .= '</div>';
-
+    $offcanvas .= '</div>';
+  }
   return $offcanvas;
 }
 
