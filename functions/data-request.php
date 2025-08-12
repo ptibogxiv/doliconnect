@@ -1257,15 +1257,6 @@ global $current_user;
 		$response['modal'] = doliModalTemplate(sanitize_text_field($_POST['id']), $modal['header'], $modal['body'], $modal['footer'], 'modal-lg', null, 'p-0');
 		wp_send_json_success($response);
 		die();
-	} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "doliCart" ) {
-		$object = doliConnect('order', $current_user, false, true);
-		$modal['header'] = __( 'Cart', 'doliconnect');
-		$modal['body'] = doliline($object, false, false, false);
-		$modal['footer'] = doliCartButton($object);
-		$response['js'] = null;
-		$response['modal'] = doliModalTemplate(sanitize_text_field($_POST['id']), $modal['header'], $modal['body'], $modal['footer'], 'modal-lg');
-		wp_send_json_success($response);
-		die();
 	} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "doliSelectlang" ) {
 		$modal['header'] = __('Choose your language', 'doliconnect');
 		$modal['body'] = '<div class="card" id="doliSelectlang-form"><ul class="list-group list-group-flush">';
