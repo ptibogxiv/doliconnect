@@ -1312,13 +1312,13 @@ if ( isset($object->id) && $object->id > 0 && isset($object->lines) && $object->
 }
 
 print "<div class='card shadow-sm' id='cart-form'><div class='card-header'>".__( 'Cart', 'doliconnect')."</div><ul id='doliline' class='list-group list-group-flush'>";
-
+//print doliOffcanvasCart( $current_user, $object, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 print doliline($object, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), false);
 
 if ( has_filter('mydoliconnectcartfilter') ) {
-print "<li class='list-group-item bg-light'>";
-print apply_filters('mydoliconnectcartfilter', $object);
-print "</li>";
+  print "<li class='list-group-item bg-light'>";
+  print apply_filters('mydoliconnectcartfilter', $object);
+  print "</li>";
 }
 
 if (isset($thirdparty->id) && $thirdparty->id > 0) {
