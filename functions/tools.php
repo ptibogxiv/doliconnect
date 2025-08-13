@@ -3381,6 +3381,9 @@ function doliModalDiv() {
                   if (document.getElementById("DoliWidgetCartItems") && response.data.hasOwnProperty("items")) {
                     document.getElementById("DoliWidgetCartItems").innerHTML = response.data.items;      
                   }
+                  if (document.getElementById("offcanvasDoliCartLabel") && response.data.hasOwnProperty("dolicart")) {
+                    document.getElementById("offcanvasDoliCartLabel").innerHTML = response.data.dolicart;      
+                  }
                   if (document.getElementById("doliModalDiv") && response.data.hasOwnProperty("modal")) {
                     document.getElementById("doliModalDiv").innerHTML = response.data.modal; 
                     $("#doliModalCartInfos").modal("toggle");     

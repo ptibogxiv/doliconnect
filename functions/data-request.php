@@ -801,6 +801,7 @@ global $current_user;
 				$response = [
 					'items' => $result['items'],
 					'lines' => $result['lines'],
+					'dolicart' => $result['dolicart'],
 					'total' => $result['total']
 				];	
 				$response['newwish'] = doliProductCart($product, $price, null, null);
@@ -827,6 +828,7 @@ global $current_user;
 				$response = [
 					'items' => $result['items'],
 					'lines' => $result['lines'],
+					'dolicart' => $result['dolicart'],
 					'total' => $result['total']
 				];
 				$mstock = doliProductStock($product, true, true, $productarray);
@@ -856,6 +858,7 @@ global $current_user;
 				$response = [
 					'items' => $result['items'],
 					'lines' => $result['lines'],
+					'dolicart' => $result['dolicart'],
 					'total' => $result['total']
 					];
 				$mstock = doliProductStock($product, true, true, $productarray);
