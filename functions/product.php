@@ -594,7 +594,7 @@ function doliOffcanvasCart($current_user) {
   $offcanvas .= '</div>';
   if (doliConnect('order', $current_user)->id > 0 && isset(doliConnect('order', $current_user)->lines) && !empty(doliConnect('order', $current_user)->lines)) {
     $offcanvas .= '<div class="offcanvas-footer m-3"><div class="d-grid gap-2">';
-    $offcanvas .= '<a type="button" class="btn btn-outline-secondary" href="#">'.__('Empty the basket', 'doliconnect').'</a>';
+    $offcanvas .= "<a type='button' class='btn btn-outline-secondary' href='#' type='submit' onclick='doliJavaCartAction(\"updateCart\", 0, 0, 0, null, \"delete\");'>".__('Empty the basket', 'doliconnect').'</a>';
       $arr_params = array( 'checkout' => wp_create_nonce( 'dolicart-'. doliConnect('order', $current_user)->id.'-'.$current_user->id));  
       $return = esc_url( add_query_arg( $arr_params, doliconnecturl('dolicart')) );
     $offcanvas .= '<a type="button" class="btn btn-primary" href="'.$return.'">'.__('Finaliser la commande', 'doliconnect').'</a>';

@@ -3351,7 +3351,8 @@ function doliModalDiv() {
                 document.getElementById("doliModalDiv").innerHTML = ""; 
                 $("#doliModalCartInfos").modal("handleUpdate"); 
                 DisplayCart = 1;  
-              } 
+              }
+              console.log( form + acase );
               $.ajax({
                 url:"'.admin_url('admin-ajax.php').'",
                 type:"POST",

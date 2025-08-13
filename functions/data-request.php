@@ -894,24 +894,24 @@ global $current_user;
 				}
 				delete_transient( $link );
 				wp_send_json_success($response);			
-				die(); 
+				die();
 			} else {
 				$response['modal'] = doliModalTemplate('CartInfos', __( 'Error', 'doliconnect'), __( "This action is not authorized", "doliconnect"), '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">'.__( "Close", "doliconnect").'</button>');
 				delete_transient( $link );
 				wp_send_json_error($response);			
 				die(); 
 			}
-		} elseif ( isset($_POST['case']) && $_POST['case'] == "update" && false === get_transient( $link ) ) {	
+		} elseif ( isset($_POST['case']) && $_POST['case'] == "updateCart" && false === get_transient( $link ) ) {	
 			if (isset($_POST['modify']) && $_POST['modify'] == "delete") {
-				$object = callDoliApi("GET", "/orders/".trim($_POST['id']), null, dolidelay('order', true));
+				$object = doliConnect('order', $current_user, false, true);
 				if (!isset($object->error) && empty($object->statut)) {
-					$object = callDoliApi("DELETE", "/orders/".trim($_POST['id']), null);
+					$object = callDoliApi("DELETE", "/orders/".trim($object->id), null);
 					if (!isset($object->error)) { 
 						$object = doliConnect('order', $current_user, false, true);
 						$response = [
 							'items' => 0,
 							'lines' => doliline(0),
-							'total' => doliprice(0),
+							'dolicart' => doliOffcanvasCart( $current_user ),
 							'message' => __( 'Your cart has been emptied', 'doliconnect'),
 						];
 						wp_send_json_success($response);
