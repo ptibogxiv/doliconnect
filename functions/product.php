@@ -584,19 +584,22 @@ function doliProducPriceTaxAssuj($price_ht, $price_ttc, $vat) {
   }
 }
 
-function doliOffcanvasCart($current_user) {
+function doliOffcanvasCart($current_user, $object = null) {
+  if (empty($object)) {
+    $object = doliConnect('order', $current_user, false);
+  }
   $offcanvas = '<div class="offcanvas-header">
     <h5 class="offcanvas-title" id="offcanvasDoliCartLabel">'.__('Cart', 'doliconnect').'</h5>
     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>';
   $offcanvas .= '<div class="offcanvas-body">';
-  $offcanvas .= doliline(doliConnect('order', $current_user), esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), false);
+  $offcanvas .= doliline($object, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), false);
   $offcanvas .= '</div>';
-  if (doliConnect('order', $current_user)->id > 0 && isset(doliConnect('order', $current_user)->lines) && !empty(doliConnect('order', $current_user)->lines)) {
+  if ($object->id > 0 && isset($object->lines) && !empty($object->lines)) {
     $offcanvas .= '<div class="offcanvas-footer m-3">';
     $offcanvas .= '<div class="d-grid gap-2">';
     $offcanvas .= "<a type='button' class='btn btn-outline-secondary' href='#' type='submit' onclick='doliJavaCartAction(\"updateCart\", 0, 0, 0, null, \"delete\");'>".__('Empty the basket', 'doliconnect').'</a>';
-      $arr_params = array( 'checkout' => wp_create_nonce( 'dolicart-'. doliConnect('order', $current_user)->id.'-'.$current_user->id));  
+      $arr_params = array( 'checkout' => wp_create_nonce( 'dolicart-'. $object->id.'-'.$current_user->id));  
       $return = esc_url( add_query_arg( $arr_params, doliconnecturl('dolicart')) );
     $offcanvas .= '<a type="button" class="btn btn-primary" href="'.$return.'">'.__('Finaliser la commande', 'doliconnect').'</a>';
     $offcanvas .= '</div>';
