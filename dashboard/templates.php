@@ -1592,7 +1592,6 @@ print "</script>";
 
 print "<div class='card-body'><div class='d-grid gap-2'><button type='button' id='infobtn_cart' name='info_cart' value='info_cart'  class='btn btn-secondary'>".__( 'Validate', 'doliconnect')."</button></div></div>";
 print doliCardFooter($object, 'doliconnector');
-print var_dump($object);
 print "</div>";
 
 print "</div>";
