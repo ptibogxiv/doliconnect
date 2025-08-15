@@ -1456,13 +1456,13 @@ if (empty($contactbilling)) print ' checked ';
 print 'disabled><label class="form-check-label" for="billing-0">'.doliaddress($thirdparty).'</label></div>';
 
 if ( !isset($listcontact->error) && $listcontact != null ) {
-foreach ( $listcontact as $contact ) {
-print '<div class="form-check"><input type="checkbox" id="billing-'.$contact->id.'" name="contact_billing" class="form-check-input" value="'.$contact->id.'" ';
-if ( (isset($contact->default) && !empty($contact->default)) || in_array($contact->id, $contactbilling) ) { print "checked"; }
-print ' disabled><label class="form-check-label" for="billing-'.$contact->id.'">';
-print dolicontact($contact->id, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
-print '</label></div>';
-}
+  foreach ( $listcontact as $contact ) {
+    print '<div class="form-check"><input type="checkbox" id="billing-'.$contact->id.'" name="contact_billing" class="form-check-input" value="'.$contact->id.'" ';
+    if ( (isset($contact->default) && !empty($contact->default)) || in_array($contact->id, $contactbilling) ) { print "checked"; }
+    print ' disabled><label class="form-check-label" for="billing-'.$contact->id.'">';
+    print dolicontact($contact->id, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+    print '</label></div>';
+  }
 }
 print "</small></div>";
 
@@ -1482,13 +1482,13 @@ if (empty($contactshipping)) print ' checked ';
 print 'disabled><label class="form-check-label" for="shipping-0">'.doliaddress($thirdparty).'</label></div>';
 
 if ( !isset($listcontact->error) && $listcontact != null ) {
-foreach ( $listcontact as $contact ) {
-print '<div class="form-check"><input type="checkbox" id="shipping-'.$contact->id.'" name="contact_shipping" class="form-check-input" value="'.$contact->id.'" ';
-if ( (isset($contact->default) && !empty($contact->default)) || in_array($contact->id, $contactshipping) ) { print "checked"; }
-print ' disabled><label class="form-check-label" for="shipping-'.$contact->id.'">';
-print dolicontact($contact->id, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
-print '</label></div>';
-}
+  foreach ( $listcontact as $contact ) {
+    print '<div class="form-check"><input type="checkbox" id="shipping-'.$contact->id.'" name="contact_shipping" class="form-check-input" value="'.$contact->id.'" ';
+    if ( (isset($contact->default) && !empty($contact->default)) || in_array($contact->id, $contactshipping) ) { print "checked"; }
+    print ' disabled><label class="form-check-label" for="shipping-'.$contact->id.'">';
+    print dolicontact($contact->id, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+    print '</label></div>';
+  }
 }
 print "</small></div></div></li>";
 
@@ -1533,12 +1533,12 @@ if ( doliCheckModules('fraisdeport') ) {
 $note_public = isset($_POST['note_public']) ? $_POST['note_public'] : (isset($object->note_public) ? $object->note_public: null);
 
 if ( empty(doliconst('MAIN_DISABLE_NOTES_TAB')) ) {
-print "<li class='list-group-item list-group-item-action'>";
-print '<div class="form-floating"><textarea class="form-control" placeholder="'.__( 'Message', 'doliconnect').'" id="note_public" name="note_public" style="height: 100px">'.$note_public.'</textarea>
-<label for="floatingTextarea"><i class="fas fa-comment fa-fw"></i> '.__( 'If you want to send us a message about your order, you can leave one here', 'doliconnect').'</label></div>';
-print "</li>";
+  print "<li class='list-group-item list-group-item-action'>";
+  print '<div class="form-floating"><textarea class="form-control" placeholder="'.__( 'Message', 'doliconnect').'" id="note_public" name="note_public" style="height: 100px">'.$note_public.'</textarea>
+  <label for="floatingTextarea"><i class="fas fa-comment fa-fw"></i> '.__( 'If you want to send us a message about your order, you can leave one here', 'doliconnect').'</label></div>';
+  print "</li>";
 } else {
-print '<input type="hidden" id="note_public" name="note_public" value="'.$note_public.'">';
+  print '<input type="hidden" id="note_public" name="note_public" value="'.$note_public.'">';
 }
 
 print "</ul>";
