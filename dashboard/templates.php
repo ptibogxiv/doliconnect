@@ -1473,7 +1473,7 @@ print "<div class='col-12 col-md-6'><h6>".__( 'Shipping address', 'doliconnect')
 $contactshipping = array(); 
 if (!empty($object->contacts_ids) && is_array($object->contacts_ids)) {
 foreach ($object->contacts_ids as $contact) {
-if ('SHIPPING' == $contact->code) {
+if (isset($contact->code) && 'SHIPPING' == $contact->code) {
 $contactshipping[] = $contact->id;
 }}
 }
