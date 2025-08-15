@@ -1438,8 +1438,6 @@ print '" role="tabpanel" id="nav-tab-info">';
 
 print "<div class='card'><ul class='list-group list-group-flush'>";
 
-if ( doliversion('10.0.0') ) {
-
 print "<li class='list-group-item list-group-item-action'><div class='row'><div class='col-12 col-md-6'><h6>".__( 'Billing address', 'doliconnect')."</h6><small class='text-muted'>";
 
 $listcontact = callDoliApi("GET", "/contacts?sortfield=t.rowid&sortorder=ASC&limit=100&thirdparty_ids=".$thirdparty->id."&includecount=1&sqlfilters=(t.statut:=:1)", null, dolidelay('contact', true));
@@ -1472,10 +1470,11 @@ print "<div class='col-12 col-md-6'><h6>".__( 'Shipping address', 'doliconnect')
 
 $contactshipping = array(); 
 if (!empty($object->contacts_ids) && is_array($object->contacts_ids)) {
-foreach ($object->contacts_ids as $contact) {
-if (isset($contact->code) && 'SHIPPING' == $contact->code) {
-$contactshipping[] = $contact->id;
-}}
+  foreach ($object->contacts_ids as $contact) {
+    if (isset($contact->code) && 'SHIPPING' == $contact->code) {
+      $contactshipping[] = $contact->id;
+    }
+  }
 }
 
 print '<div class="form-check"><input type="checkbox" id="shipping-0" name="contact_shipping" class="form-check-input" value="0" ';
@@ -1492,9 +1491,6 @@ print '</label></div>';
 }
 }
 print "</small></div></div></li>";
-} else {
-  print "<li class='list-group-item list-group-item-info'><h6>".__( 'Billing address', 'doliconnect')."</h6>".doliaddress($thirdparty)."</li>";
-}
 
 if ( doliCheckModules('fraisdeport') ) {
   $listshipment = callDoliApi("GET", "/fraisdeport?modulepart=".$module."&id=1", null, dolidelay('order', true));
