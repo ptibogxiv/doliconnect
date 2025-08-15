@@ -1157,13 +1157,19 @@ if (dolicheckie($_SERVER['HTTP_USER_AGENT'])) {
 } elseif ( defined("DOLIBUG") ) {
   print dolibug((isset($object->error)?$object->error->message:null));
 } elseif ( !doliCheckModules('commande') ) {
-
-print "<div class='card shadow-sm'><div class='card-body'>";
-print dolibug(__( "Oops, Order's module is not available", "doliconnect"));
-print "</div></div>";
-
+  print "<div class='card shadow-sm'><div class='card-body'>";
+  print dolibug(__( "Oops, Order's module is not available", "doliconnect"));
+  print "</div></div>";
 } else {
+  if ( current_user_can('administrator') && !empty(get_option('doliconnectbeta')) ) {
 
+if ( isset($_GET['checkout']) && wp_verify_nonce( $_GET['checkout'], 'dolicart-'.$object->id.'-'.$current_user->id) && ((isset($object->lines) && $object->lines != null && $object->statut == 0 && !isset($_GET['module']) ) || ( ($_GET['module'] == 'orders' && $object->billed != 1 ) || ($_GET['module'] == 'invoices' && $object->paye != 1) )) && $object->socid == $thirdparty->id ) {
+ print 'finish checkout';
+} else {
+ print doliOffcanvasCart($current_user);
+}
+
+  } else {
 if ( isset($_GET['step']) && $_GET['step'] == 'validation' && isset($_GET['cart']) && wp_verify_nonce( $_GET['cart'], 'valid_dolicart-'.$object->id) && ((isset($object->lines) && $object->lines != null && $object->statut == 0 && !isset($_GET['module']) ) || ( ($_GET['module'] == 'orders' && $object->billed != 1 ) || ($_GET['module'] == 'invoices' && $object->paye != 1) )) && $object->socid == $thirdparty->id ) {
 
 $data = [
@@ -1441,7 +1447,7 @@ $listcontact = callDoliApi("GET", "/contacts?sortfield=t.rowid&sortorder=ASC&lim
 $contactbilling = array(); 
 if (!empty($object->contacts_ids) && is_array($object->contacts_ids)) { 
   foreach ($object->contacts_ids as $contact) {
-    if ('BILLING' == $contact->code) {
+    if (isset($contact->code) && 'BILLING' == $contact->code) {
       $contactbilling[] = $contact->id;
     }
   }
@@ -1616,11 +1622,10 @@ print "</div>";
 print "</div>";
 }
 }
-
-} else {
-return $content;
-}
-
+    }
+  } else {
+    return $content;
+  }
 }
 
 add_filter( 'the_content', 'dolicart_display');
