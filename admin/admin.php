@@ -176,7 +176,7 @@ $dolibarr = callDoliApi("GET", "/status", null, -5 * MINUTE_IN_SECONDS);
         <table class="form-table" width="100%">
             <tr>
                 <th style="width:150px;"><label for="dolibarr_public_url">DOLIBARR URL</label></th>
-                <td ><input class="regular-text" type="text" id="dolibarr_public_url" name="dolibarr_public_url"  value="<?php echo esc_attr(get_site_option('dolibarr_public_url')); ?>" required>/api/index.php<br>ex: https://dolibarr.example.com</td>
+                <td ><input class="regular-text" type="text" id="dolibarr_public_url" name="dolibarr_public_url"  value="<?php echo esc_url(get_site_option('dolibarr_public_url')); ?>" required>/api/index.php<br>ex: https://dolibarr.example.com</td>
             </tr>
             <tr>
                 <th style="width:150px;"><label for="dolibarr_private_key">DOLIBARR REST API USER KEY</label></th>
