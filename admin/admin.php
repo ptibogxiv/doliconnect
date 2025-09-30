@@ -130,26 +130,30 @@ function doliconnect_network_page() {
 
 /*** License activate button was clicked ***/
     if (isset($_REQUEST['activate_license'])) {
-if ( add_site_option( 'dolibarr_public_url', esc_url_raw($_REQUEST['dolibarr_public_url'])) ) {
-} else {
-update_site_option('dolibarr_public_url', esc_url_raw($_REQUEST['dolibarr_public_url']) );
-} 
-if ( add_site_option( 'dolibarr_private_key', sanitize_text_field($_REQUEST['dolibarr_private_key'])) ) {
-} else {
-update_site_option('dolibarr_private_key', sanitize_text_field($_REQUEST['dolibarr_private_key'])); 
-}     
-if ( isset($_REQUEST['dolibarr_entity']) ) {
-update_site_option( 'dolibarr_entity', sanitize_text_field($_REQUEST['dolibarr_entity']));
-} else {
-delete_site_option('dolibarr_entity');
-}
-if ( isset($_REQUEST['doliconnect_cronjob_multisite']) ) {
-update_site_option( 'doliconnect_cronjob_multisite', sanitize_text_field($_REQUEST['doliconnect_cronjob_multisite']));
-} else {
-delete_site_option('doliconnect_cronjob_multisite');
-}
-
-    }
+        if (isset($_POST['doliconnect_settings_nonce']) && wp_verify_nonce($_POST['doliconnect_settings_nonce'], 'doliconnect_settings_action')) {
+            if (add_site_option('dolibarr_public_url', esc_url_raw($_REQUEST['dolibarr_public_url']))) {
+            } else {
+                update_site_option('dolibarr_public_url', esc_url_raw($_REQUEST['dolibarr_public_url']));
+            }
+            if (add_site_option('dolibarr_private_key', sanitize_text_field($_REQUEST['dolibarr_private_key']))) {
+            } else {
+                update_site_option('dolibarr_private_key', sanitize_text_field($_REQUEST['dolibarr_private_key']));
+            }
+            if (isset($_REQUEST['dolibarr_entity'])) {
+                update_site_option('dolibarr_entity', sanitize_text_field($_REQUEST['dolibarr_entity']));
+            } else {
+                delete_site_option('dolibarr_entity');
+            }
+            if (isset($_REQUEST['doliconnect_cronjob_multisite'])) {
+                update_site_option('doliconnect_cronjob_multisite', sanitize_text_field($_REQUEST['doliconnect_cronjob_multisite']));
+            } else {
+                delete_site_option('doliconnect_cronjob_multisite');
+            }
+        } else {
+            // Nonce invalide, affichez un message d'erreur ou bloquez l'action
+            wp_die(__('Action forbidden', 'doliconnect'));
+        }
+    } 
     /*** End of license activation ***/
     
     /*** End of sample license deactivation ***/    
@@ -168,6 +172,7 @@ $dolibarr = callDoliApi("GET", "/status", null, -5 * MINUTE_IN_SECONDS);
     <p>Version Dolibarr <a href='https://sourceforge.net/projects/dolibarr/files/Dolibarr%20ERP-CRM/<?php echo constant("DOLIBARR_MINIMUM_VERSION"); ?>/' target='_blank'><?php echo constant("DOLIBARR_MINIMUM_VERSION"); ?></a> minimum - <a href='https://sourceforge.net/projects/dolibarr/files/Dolibarr%20ERP-CRM/<?php echo constant("DOLIBARR_LEGAL_VERSION"); ?>/' target='_blank'><?php echo constant("DOLIBARR_LEGAL_VERSION"); ?></a> recommandée - votre version est <?php echo $dolibarr->success->dolibarr_version; ?></p>
     <p>Doliconnector <?php echo constant("DOLIBARR_LEGAL_VERSION"); ?> minimum requis à <a href='https://github.com/ptibogxiv/doliconnector/releases' target='_blank'>télécharger ici</a> pour lier WordPress à Dolibarr</p>
     <form action="" method="post">
+        <?php wp_nonce_field('doliconnect_settings_action', 'doliconnect_settings_nonce'); ?>
         <table class="form-table" width="100%">
             <tr>
                 <th style="width:150px;"><label for="dolibarr_public_url">DOLIBARR URL</label></th>
