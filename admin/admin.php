@@ -185,8 +185,7 @@ $dolibarr = callDoliApi("GET", "/status", null, -5 * MINUTE_IN_SECONDS);
             <tr>          
                 <th style="width:150px;"><label for="status"><?php _e('Status Dolibarr', 'doliconnect') ?></label></th>
                 <td>
-<?php if ( is_object($dolibarr) ) {
-?>                 
+<?php if ( is_object($dolibarr) ) { ?>                 
                 <p class="text-success">Status: <?php echo $dolibarr->success->code; ?></p>
                 <p class="text-success">Version: <?php echo $dolibarr->success->dolibarr_version; ?></p>
                 <p class="text-success">Access Locked: <?php echo $dolibarr->success->access_locked; ?></p>
@@ -230,7 +229,10 @@ $dolibarr = callDoliApi("GET", "/multicompany/".dolibarr_entity(), null, -5 * MI
 	<div class="inside">
 <?php                                                    
 
-if (isset($_REQUEST['doliconnect_settings'])) {            
+if (isset($_REQUEST['doliconnect_settings'])) {   
+    if (isset($_POST['doliconnect_management_page_nonce']) && wp_verify_nonce($_POST['doliconnect_management_page_nonce'], 'doliconnect_settings_action')) {
+
+         
 if (isset($_REQUEST['users_can_register']) && $_REQUEST['users_can_register']==1){
 update_option('users_can_register', sanitize_text_field($_REQUEST['users_can_register']));
 }else {
@@ -308,9 +310,12 @@ if (isset($_REQUEST['doliconnect_google']) && $_REQUEST['doliconnect_google']>0)
             update_option('doliconnect_twitter_secret', sanitize_text_field($_REQUEST['doliconnect_twitter_secret']));     
             update_option('doliconnect_linkedin_key', sanitize_text_field($_REQUEST['doliconnect_linkedin_key']));
             update_option('doliconnect_linkedin_secret', sanitize_text_field($_REQUEST['doliconnect_linkedin_secret']));                          
-    }   
+    
+    }    
+}   
     ?>
     <form action="" method="post">
+        <?php wp_nonce_field('doliconnect_management_page_nonce', 'doliconnect_management_page_nonce'); ?>
         <table class="form-table" width="100%">
             <tr>
                 <th style="width:150px;"><label for="doliconnectbeta"><?php _e('Beta mode', 'doliconnect') ?></label></th>
