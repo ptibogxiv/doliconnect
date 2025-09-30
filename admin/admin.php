@@ -409,7 +409,7 @@ echo "<input id='dolibarr_entity'  name='dolibarr_entity' type='text' value='".(
                 <option value="2" <?php selected('2', get_option('doliDefaultclient'));?>><?php _e('Prospect', 'doliconnect') ?></option>
                 <option value="3" <?php selected('3', get_option('doliDefaultclient'));?>><?php _e('Customer and Prospect', 'doliconnect') ?></option>
                 </select>
-<br><br><textarea name="doliaccountinfo" placeholder="<?php _e('Message on login page', 'doliconnect') ?>" class="form-control" id="exampleFormControlTextarea1" rows="3" cols="75"><?php echo get_option('doliaccountinfo'); ?></textarea>   
+<br><br><textarea name="doliaccountinfo" placeholder="<?php _e('Message on login page', 'doliconnect') ?>" class="form-control" id="exampleFormControlTextarea1" rows="3" cols="75"><?php echo esc_attr(get_option('doliaccountinfo')); ?></textarea>   
            </td>
             </tr>
             <tr>
