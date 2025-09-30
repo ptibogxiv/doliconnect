@@ -601,21 +601,21 @@ if (is_plugin_active( 'doliconnect-classifieds/doliconnect-classifieds.php' ) ) 
         <tr>
             <th style="width:100px;"><label for="doliconnect_sociallogin">Social login</label></th>
             <td><input name="doliconnect_facebook" type="checkbox" id="doliconnect_facebook" value="1" <?php checked('1', get_option('doliconnect_facebook')); ?> /> Facebook<br>
-            Key<input class="regular-text" type="text" id="doliconnect_facebook_key" name="doliconnect_facebook_key"  value="<?php echo get_option('doliconnect_facebook_key'); ?>"><br> 
-            Secret<input class="regular-text" type="text" id="doliconnect_facebook_secret" name="doliconnect_facebook_secret"  value="<?php  echo get_option('doliconnect_facebook_secret'); ?>"><br> 
+            Key<input class="regular-text" type="text" id="doliconnect_facebook_key" name="doliconnect_facebook_key"  value="<?php echo esc_attr(get_option('doliconnect_facebook_key')); ?>"><br> 
+            Secret<input class="regular-text" type="text" id="doliconnect_facebook_secret" name="doliconnect_facebook_secret"  value="<?php  echo esc_attr(get_option('doliconnect_facebook_secret')); ?>"><br> 
 
             <input name="doliconnect_google" type="checkbox" id="doliconnect_google" value="1" <?php checked('1', get_option('doliconnect_google')); ?> /> Google<br>      
-            Key<input class="regular-text" type="text" id="doliconnect_google_key" name="doliconnect_google_key" value="<?php echo get_option('doliconnect_google_key'); ?>"><br> 
-            Secret<input class="regular-text" type="text" id="doliconnect_google_secret" name="doliconnect_google_secret"  value="<?php echo get_option('doliconnect_google_secret'); ?>"><br>  
+            Key<input class="regular-text" type="text" id="doliconnect_google_key" name="doliconnect_google_key" value="<?php echo esc_attr(get_option('doliconnect_google_key')); ?>"><br> 
+            Secret<input class="regular-text" type="text" id="doliconnect_google_secret" name="doliconnect_google_secret"  value="<?php echo esc_attr(get_option('doliconnect_google_secret')); ?>"><br>  
 
             <input name="doliconnect_twitter" type="checkbox" id="doliconnect_twitter" value="1" <?php checked('1', get_option('doliconnect_twitter')); ?> /> Twitter<br>      
-            Key<input class="regular-text" type="text" id="doliconnect_twitter_key" name="doliconnect_twitter_key" value="<?php echo get_option('doliconnect_twitter_key'); ?>"><br> 
-            Secret<input class="regular-text" type="text" id="doliconnect_twitter_secret" name="doliconnect_twitter_secret"  value="<?php echo get_option('doliconnect_twitter_secret'); ?>"><br>  
-           
+            Key<input class="regular-text" type="text" id="doliconnect_twitter_key" name="doliconnect_twitter_key" value="<?php echo esc_attr(get_option('doliconnect_twitter_key')); ?>"><br> 
+            Secret<input class="regular-text" type="text" id="doliconnect_twitter_secret" name="doliconnect_twitter_secret"  value="<?php echo esc_attr(get_option('doliconnect_twitter_secret')); ?>"><br>  
+
             <input name="doliconnect_linkedin" type="checkbox" id="doliconnect_linkedin" value="1" <?php checked('1', get_option('doliconnect_linkedin')); ?> /> LinkedIn<br>      
-            Key<input class="regular-text" type="text" id="doliconnect_linkedin_key" name="doliconnect_linkedin_key" value="<?php echo get_option('doliconnect_linkedin_key'); ?>"><br> 
-            Secret<input class="regular-text" type="text" id="doliconnect_linkedin_secret" name="doliconnect_linkedin_secret"  value="<?php echo get_option('doliconnect_linkedin_secret'); ?>"><br>  
-                     
+            Key<input class="regular-text" type="text" id="doliconnect_linkedin_key" name="doliconnect_linkedin_key" value="<?php echo esc_attr(get_option('doliconnect_linkedin_key')); ?>"><br> 
+            Secret<input class="regular-text" type="text" id="doliconnect_linkedin_secret" name="doliconnect_linkedin_secret"  value="<?php echo esc_attr(get_option('doliconnect_linkedin_secret')); ?>"><br>  
+
             </td>
         </tr>     
         </table>
