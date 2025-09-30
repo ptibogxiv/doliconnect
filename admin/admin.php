@@ -130,7 +130,7 @@ function doliconnect_network_page() {
 
 /*** License activate button was clicked ***/
     if (isset($_REQUEST['activate_license'])) {
-        if (isset($_POST['doliconnect_settings_nonce']) && wp_verify_nonce($_POST['doliconnect_settings_nonce'], 'doliconnect_settings_action')) {
+        if (isset($_POST['doliconnect_network_page_nonce']) && wp_verify_nonce($_POST['doliconnect_network_page_nonce'], 'doliconnect_settings_action')) {
             if (add_site_option('dolibarr_public_url', esc_url_raw($_REQUEST['dolibarr_public_url']))) {
             } else {
                 update_site_option('dolibarr_public_url', esc_url_raw($_REQUEST['dolibarr_public_url']));
@@ -172,7 +172,7 @@ $dolibarr = callDoliApi("GET", "/status", null, -5 * MINUTE_IN_SECONDS);
     <p>Version Dolibarr <a href='https://sourceforge.net/projects/dolibarr/files/Dolibarr%20ERP-CRM/<?php echo constant("DOLIBARR_MINIMUM_VERSION"); ?>/' target='_blank'><?php echo constant("DOLIBARR_MINIMUM_VERSION"); ?></a> minimum - <a href='https://sourceforge.net/projects/dolibarr/files/Dolibarr%20ERP-CRM/<?php echo constant("DOLIBARR_LEGAL_VERSION"); ?>/' target='_blank'><?php echo constant("DOLIBARR_LEGAL_VERSION"); ?></a> recommandée - votre version est <?php echo $dolibarr->success->dolibarr_version; ?></p>
     <p>Doliconnector <?php echo constant("DOLIBARR_LEGAL_VERSION"); ?> minimum requis à <a href='https://github.com/ptibogxiv/doliconnector/releases' target='_blank'>télécharger ici</a> pour lier WordPress à Dolibarr</p>
     <form action="" method="post">
-        <?php wp_nonce_field('doliconnect_settings_action', 'doliconnect_settings_nonce'); ?>
+        <?php wp_nonce_field('doliconnect_network_page_nonce', 'doliconnect_network_page_nonce'); ?>
         <table class="form-table" width="100%">
             <tr>
                 <th style="width:150px;"><label for="dolibarr_public_url">DOLIBARR URL</label></th>
