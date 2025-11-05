@@ -130,7 +130,7 @@ function doliconnect_network_page() {
 
 /*** License activate button was clicked ***/
     if (isset($_REQUEST['activate_license'])) {
-        if (isset($_POST['doliconnect_network_page_nonce']) && wp_verify_nonce($_POST['doliconnect_network_page_nonce'], 'doliconnect_settings_action')) {
+        if (isset($_POST['doliconnect_network_page_nonce']) && wp_verify_nonce($_POST['doliconnect_network_page_nonce'], 'doliconnect_network_page_nonce')) {
             if (add_site_option('dolibarr_public_url', esc_url_raw($_REQUEST['dolibarr_public_url']))) {
             } else {
                 update_site_option('dolibarr_public_url', esc_url_raw($_REQUEST['dolibarr_public_url']));
