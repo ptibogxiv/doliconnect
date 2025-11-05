@@ -230,7 +230,7 @@ $dolibarr = callDoliApi("GET", "/multicompany/".dolibarr_entity(), null, -5 * MI
 <?php                                                    
 
 if (isset($_REQUEST['doliconnect_settings'])) {   
-    if (isset($_POST['doliconnect_management_page_nonce']) && wp_verify_nonce($_POST['doliconnect_management_page_nonce'], 'doliconnect_settings_action')) {
+    if (isset($_POST['doliconnect_management_page_nonce']) && wp_verify_nonce($_POST['doliconnect_management_page_nonce'], 'doliconnect_management_page_nonce')) {
 
          
 if (isset($_REQUEST['users_can_register']) && $_REQUEST['users_can_register']==1){
@@ -311,7 +311,10 @@ if (isset($_REQUEST['doliconnect_google']) && $_REQUEST['doliconnect_google']>0)
             update_option('doliconnect_linkedin_key', sanitize_text_field($_REQUEST['doliconnect_linkedin_key']));
             update_option('doliconnect_linkedin_secret', sanitize_text_field($_REQUEST['doliconnect_linkedin_secret']));                          
     
-    }    
+        } else {
+            // Nonce invalide, affichez un message d'erreur ou bloquez l'action
+            wp_die(__('Action forbidden', 'doliconnect'));
+        }  
 }   
     ?>
     <form action="" method="post">
