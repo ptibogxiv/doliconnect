@@ -759,7 +759,7 @@ $fruits[$ship->date_creation] = array(
 
 //*****************************************************************************************
 
-if ( doliCheckModules('invoice') && get_option('doliconnectdisplayinvoice') && doliCheckRights('facture', 'lire') ) {
+if ( doliCheckModules('facture') && get_option('doliconnectdisplayinvoice') && doliCheckRights('facture', 'lire') ) {
     add_action( 'customer_doliconnect_menu', 'invoices_menu', 2, 1);
     add_action( 'customer_doliconnect_invoices', 'invoices_module');
 }
