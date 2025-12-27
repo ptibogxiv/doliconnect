@@ -1019,7 +1019,7 @@ function doliproduct_add_custom_meta_box() {
         __('N° of item', 'doliconnect'),
         'doliproduct_custom_field_callback',
         'doliproduct',
-        'normal',
+        'side',
         'default'
     );
 }
