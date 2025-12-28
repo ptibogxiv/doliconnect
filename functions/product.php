@@ -82,7 +82,7 @@ if ( !empty(get_option('doliconnectbeta')) ) {
   }
   add_action('add_meta_boxes', 'doliproduct_add_custom_meta_box');
 
-  function doliproduct_custom_field_callback($post) {
+  function doliproduct_productid_callback($post) {
       // Récupérer la valeur actuelle du champ personnalisé
       $custom_field_value = get_post_meta($post->ID, '_doliproduct_productid', true);
       echo '<label for="doliproduct_productid">' . __('Enter value:', 'doliconnect') . '</label>';
