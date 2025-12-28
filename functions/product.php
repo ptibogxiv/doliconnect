@@ -72,9 +72,9 @@ if ( !empty(get_option('doliconnectbeta')) ) {
   // Ajout d'un champ personnalisé au type de post doliproduct
   function doliproduct_add_custom_meta_box() {
       add_meta_box(
-          'doliproduct_custom_field',
+          'doliproduct_productid_callback',
           __('N° of item', 'doliconnect'),
-          'doliproduct_custom_field_callback',
+          'doliproduct_productid_callback',
           'doliproduct',
           'side',
           'default'
@@ -84,9 +84,9 @@ if ( !empty(get_option('doliconnectbeta')) ) {
 
   function doliproduct_custom_field_callback($post) {
       // Récupérer la valeur actuelle du champ personnalisé
-      $custom_field_value = get_post_meta($post->ID, '_doliproduct_custom_field', true);
-      echo '<label for="doliproduct_custom_field">' . __('Enter value:', 'doliconnect') . '</label>';
-      echo '<input type="text" id="doliproduct_custom_field" name="doliproduct_custom_field" value="' . esc_attr($custom_field_value) . '" size="25" />';
+      $custom_field_value = get_post_meta($post->ID, '_doliproduct_productid', true);
+      echo '<label for="doliproduct_productid">' . __('Enter value:', 'doliconnect') . '</label>';
+      echo '<input type="text" id="doliproduct_productid" name="doliproduct_productid" value="' . esc_attr($custom_field_value) . '" size="25" />';
   }
 
   function doliproduct_save_custom_field($post_id) {
@@ -97,8 +97,8 @@ if ( !empty(get_option('doliconnectbeta')) ) {
       if (!current_user_can('edit_post', $post_id)) {
           return;
       }
-      if (isset($_POST['doliproduct_custom_field'])) {
-          update_post_meta($post_id, '_doliproduct_custom_field', sanitize_text_field($_POST['doliproduct_custom_field']));
+      if (isset($_POST['doliproduct_productid'])) {
+          update_post_meta($post_id, '_doliproduct_productid', sanitize_text_field($_POST['doliproduct_productid']));
       }
   }
   add_action('save_post', 'doliproduct_save_custom_field');
