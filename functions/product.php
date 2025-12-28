@@ -89,7 +89,7 @@ if ( !empty(get_option('doliconnectbeta')) ) {
       echo '<input type="text" id="doliproduct_productid" name="doliproduct_productid" value="' . esc_attr($custom_field_value) . '" size="25" />';
   }
 
-  function doliproduct_save_custom_field($post_id) {
+  function doliproduct_save_productid($post_id) {
       // Vérifier les autorisations et la validité
       if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
           return;
@@ -101,7 +101,7 @@ if ( !empty(get_option('doliconnectbeta')) ) {
           update_post_meta($post_id, '_doliproduct_productid', sanitize_text_field($_POST['doliproduct_productid']));
       }
   }
-  add_action('save_post', 'doliproduct_save_custom_field');
+  add_action('save_post', 'doliproduct_save_productid');
 }
 
 function doliproduct($object, $value) {
