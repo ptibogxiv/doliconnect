@@ -248,8 +248,8 @@ global $current_user;
   } else {
     $mstock['stock'] = 999999;
   }
-  if (isset($product->array_options->options_packaging) && !empty($product->array_options->options_packaging)) {
-    $mstock['step'] = $product->array_options->options_packaging;
+  if (!empty(doliconst('(PRODUCT_USE_CUSTOMER_PACKAGING')) && !empty($product->packaging)) {
+    $mstock['step'] = $product->packaging;
   } else {
     $mstock['step'] = 1;
   }
