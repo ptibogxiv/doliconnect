@@ -248,7 +248,7 @@ global $current_user;
   } else {
     $mstock['stock'] = 999999;
   }
-  if (!empty(doliconst('(PRODUCT_USE_CUSTOMER_PACKAGING')) && isset($product->packaging) && !empty($product->packaging)) {
+  if (!empty(doliconst('PRODUCT_USE_CUSTOMER_PACKAGING')) && isset($product->packaging) && !empty($product->packaging)) {
     $mstock['step'] = $product->packaging;
   } else {
     $mstock['step'] = 1;
@@ -354,7 +354,7 @@ global $current_user;
     $mstock['m2'] = $mstock['m1'];
     $mstock['stock'] = $mstock['m2'];
   } elseif (!$nohtml) {
-    if ( $mstock['stock'] <= 0 || (!empty(doliconst('(PRODUCT_USE_CUSTOMER_PACKAGING')) && isset($product->packaging) && !empty($product->packaging) && $mstock['stock'] < $product->packaging) ) { 
+    if ( $mstock['stock'] <= 0 || (!empty(doliconst('PRODUCT_USE_CUSTOMER_PACKAGING')) && isset($product->packaging) && !empty($product->packaging) && $mstock['stock'] < $product->packaging) ) { 
       $stock .= "<a tabindex='0' id='popover-stock-".$product->id."' class='badge rounded-pill bg-dark text-white text-decoration-none' data-bs-container='body' data-bs-toggle='popover' data-bs-trigger='focus' title='".__( 'Not available', 'doliconnect')."' data-bs-content='".sprintf( __( 'This item is out of stock and can not be ordered or shipped. %s', 'doliconnect'), $shipping)."'><i class='fas fa-warehouse'></i> ".__( 'Not available', 'doliconnect')."</a>";
     } elseif ( ($mstock['stock'] <= 0 || (!empty(doliconst('(PRODUCT_USE_CUSTOMER_PACKAGING')) && isset($product->packaging) && $mstock['stock'] < $product->packaging)) && $product->stock_theorique > $mstock['stock'] ) { 
         $next = null;
