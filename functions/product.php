@@ -102,6 +102,45 @@ if ( !empty(get_option('doliconnectbeta')) ) {
       }
   }
   add_action('save_post', 'doliproduct_save_productid');
+
+  function doliproduct_conditional_display( $content) {
+    global $post;
+      if ( is_singular( 'doliproduct' ) && in_the_loop() && is_main_query() ) {
+          $custom_field_value = get_post_meta( $post->ID, '_doliproduct_productid', true );
+          $custom_message = '<div class="doliproduct-message">' . sprintf( __( 'This is a doliproduct post. Item N°: %s', 'doliconnect' ), esc_html( $custom_field_value ) ) . '</div>';
+          $request = "/products/".esc_attr($custom_field_value)."?includesubproducts=true&includetrans=true";
+      $product = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+
+          $custom_message .= apply_filters( 'doliproductcard', $product);
+          return $custom_message . $content;
+      }
+      return $content;
+  }
+  add_filter( 'the_content', 'doliproduct_conditional_display', 10);
+
+add_filter('single_template', 'my_custom_single_template');
+
+/**
+ * Callback to change the single post template.
+ *
+ * @param string $single Path to the default single template.
+ * @return string Path to the custom template.
+ */
+function my_custom_single_template($single) {
+    // Check if we're viewing a specific post type
+    if ( is_singular( 'doliproduct' ) && in_the_loop() && is_main_query() ) {
+        // Path to your custom template file inside your theme
+        $custom_template = get_stylesheet_directory() . '/content-item.php';
+
+        // If the file exists, use it
+        if (file_exists($custom_template)) {
+            return $custom_template;
+        }
+    }
+    // Fallback to the default template
+    return $single;
+}
+
 }
 
 function doliproduct($object, $value) {
@@ -1015,7 +1054,7 @@ global $current_user;
       $card .= '<div class="col-12"><p><center>'.__( 'Item not in sale', 'doliconnect' ).'</center></p>';
     }
 
-    if ( doliversion('22.0.0') && !empty(get_option('doliconnectbeta')) ) {
+    if ( doliversion('23.0.0') && !empty(get_option('doliconnectbeta')) ) {
       $request= "/documents?modulepart=product&id=".$product->id."&limit=100&content_type=application/pdf&pagination_data=true";
       $downloads = callDoliApi("GET", $request, null, dolidelay('document', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));   
       if ( doliversion('22.0.0') && isset($downloads->data) ) { $downloads = $downloads->data; } else { $downloads = $downloads; }
