@@ -354,9 +354,9 @@ global $current_user;
     $mstock['m2'] = $mstock['m1'];
     $mstock['stock'] = $mstock['m2'];
   } elseif (!$nohtml) {
-    if ( $mstock['stock'] <= 0 || (isset($product->array_options->options_packaging) && !empty($product->array_options->options_packaging) && $mstock['stock'] < $product->array_options->options_packaging) ) { 
+    if ( $mstock['stock'] <= 0 || (!empty(doliconst('(PRODUCT_USE_CUSTOMER_PACKAGING')) && isset($product->packaging) && !empty($product->packaging) && $mstock['stock'] < $product->packaging) ) { 
       $stock .= "<a tabindex='0' id='popover-stock-".$product->id."' class='badge rounded-pill bg-dark text-white text-decoration-none' data-bs-container='body' data-bs-toggle='popover' data-bs-trigger='focus' title='".__( 'Not available', 'doliconnect')."' data-bs-content='".sprintf( __( 'This item is out of stock and can not be ordered or shipped. %s', 'doliconnect'), $shipping)."'><i class='fas fa-warehouse'></i> ".__( 'Not available', 'doliconnect')."</a>";
-    } elseif ( ($mstock['stock'] <= 0 || (isset($product->array_options->options_packaging) && $mstock['stock'] < $product->array_options->options_packaging)) && $product->stock_theorique > $mstock['stock'] ) { 
+    } elseif ( ($mstock['stock'] <= 0 || (!empty(doliconst('(PRODUCT_USE_CUSTOMER_PACKAGING')) && isset($product->packaging) && $mstock['stock'] < $product->packaging)) && $product->stock_theorique > $mstock['stock'] ) { 
         $next = null;
       $stock .= "<a tabindex='0' id='popover-stock-".$product->id."' class='badge rounded-pill bg-danger text-white text-decoration-none' title='".__( 'Available soon', 'doliconnect')."' data-bs-container='body' data-bs-toggle='popover' data-bs-trigger='focus' data-bs-content='".sprintf( __( 'This item is not in stock but should be available soon within %s days. %s %s', 'doliconnect'), $delay, $next, $shipping)."'><i class='fas fa-warehouse'></i> ".__( 'Available soon', 'doliconnect')."</a>"; 
     } elseif ( $mstock['stock'] >= 0 && $mstock['stock'] <= $product->seuil_stock_alerte ) { 
