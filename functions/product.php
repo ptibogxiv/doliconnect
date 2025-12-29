@@ -248,7 +248,7 @@ global $current_user;
   } else {
     $mstock['stock'] = 999999;
   }
-  if (!empty(doliconst('(PRODUCT_USE_CUSTOMER_PACKAGING')) && !empty($product->packaging)) {
+  if (!empty(doliconst('(PRODUCT_USE_CUSTOMER_PACKAGING')) && isset($product->packaging) && !empty($product->packaging)) {
     $mstock['step'] = $product->packaging;
   } else {
     $mstock['step'] = 1;
