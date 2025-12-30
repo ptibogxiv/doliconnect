@@ -144,7 +144,6 @@ function doliCheckModules($module, $refresh = false) {
   return $return;
 }
 
-  // Ajout d'un champ personnalisé au type de post doliproduct
   function doliLockPost_meta_box() {
       add_meta_box(
           'doliLock_meta_box_callback',
@@ -156,7 +155,6 @@ function doliCheckModules($module, $refresh = false) {
       );
   }
   add_action('add_meta_boxes', 'doliLockPost_meta_box');
-    // Ajout d'un champ personnalisé au type de post doliproduct
   function doliLockPage_meta_box() {
       add_meta_box(
           'doliLock_meta_box_callback',
