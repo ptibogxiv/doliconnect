@@ -194,7 +194,7 @@ function doliCheckModules($module, $refresh = false) {
     function doliLock_display( $content) {
     global $post;
     $dropdown_value = get_post_meta($post->ID, '_doliLock_dropdown_field', true);
-      if ( (is_singular( 'post' ) || is_singular( 'page' ) ) && in_the_loop() && is_main_query() ) {
+      if ( (is_singular( 'post' ) || is_singular( 'page' ) ) && in_the_loop() && is_main_query() && !empty($dropdown_value) ) {
           $custom_field_value = get_post_meta( $post->ID, '_doliproduct_productid', true );
           $custom_message = '<div class="doliproduct-message">' . sprintf( __( 'This is a doliproduct post. Item N°: %s', 'doliconnect' ), esc_html( $custom_field_value ) ) . '</div>';
           return $custom_message;
