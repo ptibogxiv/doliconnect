@@ -171,9 +171,9 @@ function doliCheckModules($module, $refresh = false) {
     $dropdown_value = get_post_meta($post->ID, '_doliLock_dropdown_field', true);
     echo '<label for="doliLock_dropdown_field">' . __('Select an option:', 'doliconnect') . '</label>';
     echo '<select id="doliLock_dropdown_field" name="doliLock_dropdown_field">';
-    echo '<option value=""' . selected($dropdown_value, 'option1', false) . '>Free access</option>';
-    echo '<option value="option2"' . selected($dropdown_value, 'option2', false) . '>Option 2</option>';
-    echo '<option value="option3"' . selected($dropdown_value, 'option3', false) . '>Option 3</option>';
+    echo '<option value=""' . selected($dropdown_value, '', false) . '>Free access</option>';
+    echo '<option value="user"' . selected($dropdown_value, 'user', false) . '>User only</option>';
+    echo '<option value="member"' . selected($dropdown_value, 'member', false) . '>Member only</option>';
     echo '</select>';
   }
 
