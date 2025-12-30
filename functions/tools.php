@@ -168,13 +168,16 @@ function doliCheckModules($module, $refresh = false) {
   add_action('add_meta_boxes', 'doliLockPage_meta_box');
 
   function doliLock_meta_box_callback($post) {
-      // Récupérer la valeur actuelle du champ personnalisé
-      $custom_field_value = get_post_meta($post->ID, '_doliproduct_productid', true);
-      echo '<label for="doliproduct_productid">' . __('Enter value:', 'doliconnect') . '</label>';
-      echo '<input type="text" id="doliproduct_productid" name="doliproduct_productid" value="' . esc_attr($custom_field_value) . '" size="25" />';
+    $dropdown_value = get_post_meta($post->ID, '_doliLock_dropdown_field', true);
+    echo '<label for="doliLock_dropdown_field">' . __('Select an option:', 'doliconnect') . '</label>';
+    echo '<select id="doliLock_dropdown_field" name="doliLock_dropdown_field">';
+    echo '<option value=""' . selected($dropdown_value, 'option1', false) . '>Free access</option>';
+    echo '<option value="option2"' . selected($dropdown_value, 'option2', false) . '>Option 2</option>';
+    echo '<option value="option3"' . selected($dropdown_value, 'option3', false) . '>Option 3</option>';
+    echo '</select>';
   }
 
-  function doliproduct2_save_productid($post_id) {
+  function doliLock_meta_box_save($post_id) {
       // Vérifier les autorisations et la validité
       if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
           return;
@@ -182,11 +185,11 @@ function doliCheckModules($module, $refresh = false) {
       if (!current_user_can('edit_post', $post_id)) {
           return;
       }
-      if (isset($_POST['doliproduct_productid'])) {
-          update_post_meta($post_id, '_doliproduct_productid', sanitize_text_field($_POST['doliproduct_productid']));
+      if (isset($_POST['doliLock_dropdown_field'])) {
+          update_post_meta($post_id, '_doliLock_dropdown_field', sanitize_text_field($_POST['doliLock_dropdown_field']));
       }
   }
-  add_action('save_post', 'doliproduct2_save_productid');
+  add_action('save_post', 'doliLock_meta_box_save');
 
 function consecutiveDoliIterationSameCharacter($password, $NbRepeat = null) {
 		if (empty($NbRepeat)) {
