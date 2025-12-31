@@ -57,11 +57,11 @@ if ( !empty(get_option('doliconnectbeta')) ) {
   add_action( 'init', 'doliconnect_dolibarrproduct_init' );
   // Limiter le filtre à la page admin des custom post_type doliproduct
   add_filter('use_block_editor_for_post', function($use_block_editor, $post) {
-      if ($post && $post->post_type === 'doliproduct') {
-          return false;
-      }
-      return $use_block_editor;
-  }, 10, 2);
+    if ($post && $post->post_type === 'doliproduct') {
+        return false;
+    }
+    return $use_block_editor;
+}, 10, 2);
   add_filter( 'template_include', 'dolibarrproduct_page_template', 99 );
   function dolibarrproduct_page_template( $template ) {
       if ( get_query_var('post_type') == 'doliproduct'  ) {
