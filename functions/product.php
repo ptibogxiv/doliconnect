@@ -95,19 +95,19 @@ if ( !empty(get_option('doliconnectbeta')) ) {
       echo '<input type="text" id="doliproduct_productid" name="doliproduct_productid" value="' . esc_attr($custom_field_value) . '" size="25" />';
   }
 
-  function doliproduct_save_productid($post_id) {
-      // Vérifier les autorisations et la validité
-      if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
-          return;
-      }
-      if (!current_user_can('edit_post', $post_id)) {
-          return;
-      }
-      if (isset($_POST['doliproduct_productid'])) {
-          update_post_meta($post_id, '_doliproduct_productid', sanitize_text_field($_POST['doliproduct_productid']));
-      }
-  }
-  add_action('save_post', 'doliproduct_save_productid');
+  // Vérification des capacités utilisateur avant d'enregistrer les métadonnées
+  function doliproduct_save_meta_box($post_id) {
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+        return;
+    }
+    if (!current_user_can('edit_post', $post_id)) {
+        return;
+    }
+    if (isset($_POST['doliproduct_productid'])) {
+        update_post_meta($post_id, '_doliproduct_productid', sanitize_text_field($_POST['doliproduct_productid']));
+    }
+}
+add_action('save_post', 'doliproduct_save_meta_box');
 
   function doliproduct_conditional_display( $content) {
     global $post;
