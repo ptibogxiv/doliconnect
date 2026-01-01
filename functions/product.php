@@ -90,7 +90,7 @@ if ( !empty(get_option('doliconnectbeta')) ) {
 
   function doliproduct_productid_callback($post) {
       // Récupérer la valeur actuelle du champ personnalisé
-      $custom_field_value = get_post_meta($post->ID, '_doliproduct_productid', true);
+      $custom_field_value = get_post_meta($post->ID, 'doliproduct_productid', true);
       echo '<label for="doliproduct_productid">' . __('Enter value:', 'doliconnect') . '</label>';
       echo '<input type="text" id="doliproduct_productid" name="doliproduct_productid" value="' . esc_attr($custom_field_value) . '" size="25" />';
   }
@@ -162,7 +162,7 @@ function getDoliProductUrl($productid) {
                 'compare' => '='
             )
         ),
-        'posts_per_page' => 1 // Limiter à un seul résultat pour des performances optimales
+        'posts_per_page' => 1
     );
 
     $query = new WP_Query($args);
