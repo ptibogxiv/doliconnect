@@ -983,9 +983,13 @@ if (isset($productid) && is_numeric($productid) && $productid > 0) {
   $product = callDoliApi("GET", "/products/".$productid."?includesubproducts=true&includetrans=true", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
   $product->required = $required;
 
-  $arr_params = array( 'search' => isset($_GET['search'])?$_GET['search']:null, 'category' => isset($_GET['category'])?$_GET['category']:null, 'subcategory' => isset($_GET['subcategory'])?$_GET['subcategory']:null, 'product' => $product->id);  
-  $url = getDoliProductUrl($product->id);
-  $producturl = esc_url( add_query_arg( $arr_params, doliconnecturl('dolishop')) );
+  $arr_params = array( 'search' => isset($_GET['search'])?$_GET['search']:null, 'category' => isset($_GET['category'])?$_GET['category']:null, 'subcategory' => isset($_GET['subcategory'])?$_GET['subcategory']:null);  
+  if (!empty(get_option('doliconnectbeta'))) {
+    $producturl = esc_url( add_query_arg( $arr_params, getDoliProductUrl($product->id)) );
+  } else {
+    $arr_params .= array( 'product' => $product->id);
+    $producturl = esc_url( add_query_arg( $arr_params, doliconnecturl('dolishop')) );
+  }
 
   $list = "<li class='list-group-item list-group-item-light list-group-item-action' id='prod-li-".$product->id."'><table width='100%' style='border:0px'><tr><td width='20%' style='border:0px'><center>";
   $list .= '<a href="'.$producturl.'" class="text-decoration-none">'.doliconnect_image('product', $product->id, array('limit'=>1, 'entity'=>$product->entity, 'size'=>'150x150'), esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)).'</a>';
