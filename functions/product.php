@@ -104,7 +104,7 @@ if ( !empty(get_option('doliconnectbeta')) ) {
         return;
     }
     if (isset($_POST['doliproduct_productid'])) {
-        update_post_meta($post_id, '_doliproduct_productid', sanitize_text_field($_POST['doliproduct_productid']));
+        update_post_meta($post_id, 'doliproduct_productid', sanitize_text_field($_POST['doliproduct_productid']));
     }
 }
 add_action('save_post', 'doliproduct_save_meta_box');
@@ -112,8 +112,8 @@ add_action('save_post', 'doliproduct_save_meta_box');
   function doliproduct_conditional_display( $content) {
     global $post;
       if ( is_singular( 'doliproduct' ) && in_the_loop() && is_main_query() ) {
-          $custom_field_value = get_post_meta( $post->ID, '_doliproduct_productid', true );
-          $custom_message = '<div class="doliproduct-message">' . sprintf( __( 'This is a doliproduct post. Item N°: %s', 'doliconnect' ), esc_html( $custom_field_value ) ) . '</div>';
+          $custom_field_value = get_post_meta( $post->ID, 'doliproduct_productid', true );
+          $custom_message = '<div>' . sprintf( __( 'This is a doliproduct post. Item N°: %s', 'doliconnect' ), esc_html( $custom_field_value ) ) . '</div>' . getDoliProductUrl($custom_field_value);
           $request = "/products/".esc_attr($custom_field_value)."?includesubproducts=true&includetrans=true";
       $product = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
@@ -145,6 +145,36 @@ function my_custom_single_template($single) {
     }
     // Fallback to the default template
     return $single;
+}
+
+function getDoliProductUrl($productid) {
+    // Vérifier que l'ID du produit est valide
+    if (empty($productid)) {
+        return 'Invalid product ID';
+    }
+
+    $args = array(
+        'post_type'  => 'doliproduct',
+        'meta_query' => array(
+            array(
+                'key'     => 'doliproduct_productid',
+                'value'   => sanitize_text_field($productid),
+                'compare' => '='
+            )
+        ),
+        'posts_per_page' => 1 // Limiter à un seul résultat pour des performances optimales
+    );
+
+    $query = new WP_Query($args);
+
+    // Vérifier si un post correspondant a été trouvé
+    if ($query->have_posts()) {
+        $url = get_permalink($query->posts[0]->ID);
+        wp_reset_postdata(); // Réinitialiser la requête globale
+        return $url;
+    }
+
+    return 'No URL found';
 }
 
 }
