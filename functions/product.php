@@ -173,10 +173,14 @@ function getDoliProductUrl($productid) {
       wp_reset_postdata(); // Réinitialiser la requête globale
       return $url;
     } else {
-      // Vérifier que les paramètres nécessaires sont fournis
-      if (empty($title) || empty($product_id)) {
+      // Si aucun post n'a été trouvé, créer un nouveau post doliproduct
+      $product = callDoliApi("GET", "/products/".$productid."?includesubproducts=true&includetrans=true", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+        if (isset($product->id) && !empty($product->id)) {
           return 'Title and Product ID are required';
-      }
+        }
+      
+      $title = doliproduct($product, 'label');
+      $content = doliproduct($product, 'description');
 
       // Préparer les données du post
       $post_data = array(
@@ -185,7 +189,7 @@ function getDoliProductUrl($productid) {
           'post_status'  => 'publish',
           'post_type'    => 'doliproduct',
           'meta_input'   => array(
-              'doliproduct_productid' => sanitize_text_field($product_id),
+              'doliproduct_productid' => sanitize_text_field($productid),
           ),
       );
 
