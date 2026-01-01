@@ -113,7 +113,7 @@ add_action('save_post', 'doliproduct_save_meta_box');
     global $post;
       if ( is_singular( 'doliproduct' ) && in_the_loop() && is_main_query() ) {
           $custom_field_value = get_post_meta( $post->ID, 'doliproduct_productid', true );
-          $custom_message = '<div>' . sprintf( __( 'This is a doliproduct post. Item N°: %s', 'doliconnect' ), esc_html( $custom_field_value ) ) . '</div>' . getDoliProductUrl($custom_field_value);
+          $custom_message = '<div>' . sprintf( __( 'This is a doliproduct post. Item N°: %s', 'doliconnect' ), esc_html( $custom_field_value ) ) . '</div>';
           $request = "/products/".esc_attr($custom_field_value)."?includesubproducts=true&includetrans=true";
       $product = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
@@ -984,6 +984,7 @@ if (isset($productid) && is_numeric($productid) && $productid > 0) {
   $product->required = $required;
 
   $arr_params = array( 'search' => isset($_GET['search'])?$_GET['search']:null, 'category' => isset($_GET['category'])?$_GET['category']:null, 'subcategory' => isset($_GET['subcategory'])?$_GET['subcategory']:null, 'product' => $product->id);  
+  $url = getDoliProductUrl($product->id);
   $producturl = esc_url( add_query_arg( $arr_params, doliconnecturl('dolishop')) );
 
   $list = "<li class='list-group-item list-group-item-light list-group-item-action' id='prod-li-".$product->id."'><table width='100%' style='border:0px'><tr><td width='20%' style='border:0px'><center>";
