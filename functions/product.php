@@ -175,7 +175,7 @@ function getDoliProductUrl($productid) {
     } else {
       // Si aucun post n'a été trouvé, créer un nouveau post doliproduct
       $product = callDoliApi("GET", "/products/".$productid."?includesubproducts=true&includetrans=true", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-        if (isset($product->id) && !empty($product->id)) {
+        if (!isset($product->id) || empty($product->id)) {
           return 'Title and Product ID are required';
         }
       
@@ -200,7 +200,7 @@ function getDoliProductUrl($productid) {
           return 'Error creating post: ' . $post_id->get_error_message();
       }
 
-      $url = get_permalink($post_id->ID);
+      $url = get_permalink($post_id);
       wp_reset_postdata(); // Réinitialiser la requête globale
       return $url;
   }
