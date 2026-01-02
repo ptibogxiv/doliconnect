@@ -75,6 +75,22 @@ function doliconnect_run66() {
 	);
 }
 
+//Ajouter un lien « Réglages » à votre plugin dans la liste des extensions WordPress
+add_filter( 'plugin_action_links_'.plugin_basename( __FILE__ ), 'brm_settings_action_links', 10, 2 );
+function brm_settings_action_links( $links, $file ) {
+  // lien vers les widgets
+  $mylink = '<a href="' . admin_url( 'widgets.php' ) . '">' . __( 'Widgets' ) . '</a>'; 
+  array_push( $links, $mylink );
+
+    // liens vers les articles
+  $links[] = '<a href="' . admin_url( 'edit.php' ) . '">' . __( 'Posts' ) . '</a>';
+
+  // lien vers la page de config de ce plugin
+  array_unshift( $links, '<a href="' . admin_url( 'admin.php?page=ptibogxiv_management_page' ) . '">' . __( 'Settings' ) . '</a>' );
+
+  return $links;
+}
+
 // ********************************************************
 function doliconnecturl($page) {
     if (empty($page)) {
