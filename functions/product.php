@@ -63,18 +63,6 @@ if ( !empty(get_option('doliconnectbeta')) ) {
     }
     return $use_block_editor;
 }, 10, 2);
-  add_filter( 'template_include', 'dolibarrproduct_page_template', 99 );
-  function dolibarrproduct_page_template( $template ) {
-      if ( get_query_var('post_type') == 'doliproduct'  ) {
-          $file_name = 'page.php';
-          if ( locate_template( $file_name ) ) {
-              $template = locate_template( $file_name );
-          } else {
-              $template = plugin_dir_path( __DIR__ ) . 'templates/'. $file_name;
-          }
-      }
-      return $template;
-  }
 
   add_action( 'init', 'doliproduct_taxonomies', 0 );  
     function doliproduct_taxonomies() { 
@@ -97,6 +85,29 @@ if ( !empty(get_option('doliconnectbeta')) ) {
         )  
     );  
   }
+
+  function doliproduct_category_add_custom_field($term) {
+    $custom_field_value = get_term_meta($term->term_id, 'doliproduct_custom_field', true);
+    ?>
+    <tr class="form-field">
+        <th scope="row">
+            <label for="doliproduct_custom_field"><?php _e('Custom Field', 'doliconnect'); ?></label>
+        </th>
+        <td>
+            <input type="text" name="doliproduct_custom_field" id="doliproduct_custom_field" value="<?php echo esc_attr($custom_field_value); ?>" />
+            <p class="description"><?php _e('Enter a custom value for this category.', 'doliconnect'); ?></p>
+        </td>
+    </tr>
+    <?php
+}
+add_action('doliproduct_category_edit_form_fields', 'doliproduct_category_add_custom_field');
+
+function doliproduct_category_save_custom_field($term_id) {
+    if (isset($_POST['doliproduct_custom_field'])) {
+        update_term_meta($term_id, 'doliproduct_custom_field', sanitize_text_field($_POST['doliproduct_custom_field']));
+    }
+}
+add_action('edited_doliproduct_category', 'doliproduct_category_save_custom_field');
 
   // Ajout d'un champ personnalisé au type de post doliproduct
   function doliproduct_add_custom_meta_box() {
@@ -147,8 +158,20 @@ add_action('save_post', 'doliproduct_save_meta_box');
   }
   add_filter( 'the_content', 'doliproduct_conditional_display', 10);
 
-add_filter('single_template', 'my_custom_single_template');
+  add_filter( 'template_include', 'dolibarrproduct_page_template', 99 );
+  function dolibarrproduct_page_template( $template ) {
+      if ( get_query_var('post_type') == 'doliproduct'  ) {
+          $file_name = 'page.php';
+          if ( locate_template( $file_name ) ) {
+              $template = locate_template( $file_name );
+          } else {
+              $template = plugin_dir_path( __DIR__ ) . 'templates/'. $file_name;
+          }
+      }
+      return $template;
+  }
 
+add_filter('single_template', 'my_custom_single_template');
 /**
  * Callback to change the single post template.
  *
