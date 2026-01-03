@@ -90,6 +90,7 @@ if ( !empty(get_option('doliconnectbeta')) ) {
             'publicly_queryable' => true,
             'show_ui' => true,
             'show_in_menu' => true,
+            'show_in_nav_menu' => true,
             'query_var' => true,  
             'rewrite' => array( 'slug' => $taxonomy_slug ),
             'show_in_rest' => true
