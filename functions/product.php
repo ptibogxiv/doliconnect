@@ -85,7 +85,7 @@ if ( !empty(get_option('doliconnectbeta')) ) {
         array(  
             'hierarchical' => true,  
             'labels' => __( 'Categories', 'doliconnect' ), 
-            'description' => 'Item custom category', 
+            'description' => __( 'Items category', 'doliconnect' ), 
             'public' => true,
             'publicly_queryable' => true,
             'show_ui' => true,
