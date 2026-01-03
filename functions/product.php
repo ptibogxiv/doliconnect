@@ -78,7 +78,7 @@ if ( !empty(get_option('doliconnectbeta')) ) {
 
   add_action( 'init', 'doliproduct_taxonomies', 0 );  
     function doliproduct_taxonomies() { 
-      $taxonomy_slug = get_post_field( 'post_name', get_option('dolishop') ).'/category';  
+      $taxonomy_slug = get_post_field( 'post_name', get_option('dolishop') ).'/'.__( 'category', 'doliconnect' );  
         register_taxonomy(  
         'doliproduct_category',  
         'doliproduct',
@@ -86,6 +86,10 @@ if ( !empty(get_option('doliconnectbeta')) ) {
             'hierarchical' => true,  
             'labels' => __( 'Categories', 'doliconnect' ), 
             'description' => 'Item custom category', 
+            'public' => true,
+            'publicly_queryable' => true,
+            'show_ui' => true,
+            'show_in_menu' => true,
             'query_var' => true,  
             'rewrite' => array( 'slug' => $taxonomy_slug ),
         )  
