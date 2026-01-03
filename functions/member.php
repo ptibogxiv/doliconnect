@@ -3,6 +3,7 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+
 function doliconnect_membership($current_user, $statut, $type, $delay) {
   if ($statut=='1') {
     $statut='-1';
