@@ -72,8 +72,8 @@ if ( !empty(get_option('doliconnectbeta')) ) {
         'doliproduct',
         array(  
             'hierarchical' => true,  
-            'labels' => __( 'Categories', 'doliconnect' ), 
-            'description' => __( 'Items category', 'doliconnect' ), 
+            'labels' => __( 'Categories of items', 'doliconnect' ), 
+            'description' => __( 'Categories of items for Dolibarr', 'doliconnect' ), 
             'public' => true,
             'publicly_queryable' => true,
             'show_ui' => true,
@@ -87,7 +87,7 @@ if ( !empty(get_option('doliconnectbeta')) ) {
   }
 
   function doliproduct_category_add_custom_field($term) {
-    $custom_field_value = get_term_meta($term->term_id, 'doliproduct_custom_field', true);
+    $custom_field_value = isset($term->term_id,) ? get_term_meta($term->term_id, 'doliproduct_custom_field', true) : '';
     ?>
     <tr class="form-field">
         <th scope="row">
@@ -101,6 +101,7 @@ if ( !empty(get_option('doliconnectbeta')) ) {
     <?php
 }
 add_action('doliproduct_category_edit_form_fields', 'doliproduct_category_add_custom_field');
+add_action('doliproduct_category_add_form_fields', 'doliproduct_category_add_custom_field');
 
 function doliproduct_category_save_custom_field($term_id) {
     if (isset($_POST['doliproduct_custom_field'])) {
