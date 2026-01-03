@@ -77,15 +77,17 @@ if ( !empty(get_option('doliconnectbeta')) ) {
   }
 
   add_action( 'init', 'doliproduct_taxonomies', 0 );  
-    function doliproduct_taxonomies() {  
+    function doliproduct_taxonomies() { 
+      $taxonomy_slug = get_post_field( 'post_name', get_option('dolishop') ).'/category';  
         register_taxonomy(  
         'doliproduct_category',  
         'doliproduct',
         array(  
             'hierarchical' => true,  
-            'label' => __( 'Categories', 'doliconnect' ),  
+            'labels' => __( 'Categories', 'doliconnect' ), 
+            'description' => 'Item custom category', 
             'query_var' => true,  
-            'rewrite' => true  
+            'rewrite' => array( 'slug' => $taxonomy_slug ),
         )  
     );  
   }
