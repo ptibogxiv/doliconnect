@@ -35,7 +35,7 @@ if ( !empty(get_option('doliconnectbeta')) ) {
       $post_slug = get_post_field( 'post_name', get_option('dolishop') );    
       $args = array(
           'labels'             => $labels,
-          'description'        => 'Item custom post type.',
+          'description'        => __( 'Item custom post type.', 'doliconnect' ), 
           'menu_icon'          => 'dashicons-products',
           'public'             => true,
           'publicly_queryable' => true,
@@ -92,6 +92,7 @@ if ( !empty(get_option('doliconnectbeta')) ) {
             'show_in_menu' => true,
             'query_var' => true,  
             'rewrite' => array( 'slug' => $taxonomy_slug ),
+            'show_in_rest' => true
         )  
     );  
   }
