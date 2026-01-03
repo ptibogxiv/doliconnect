@@ -55,6 +55,7 @@ if ( !empty(get_option('doliconnectbeta')) ) {
       register_post_type( 'doliproduct', $args );
   }
   add_action( 'init', 'doliconnect_dolibarrproduct_init' );
+
   // Limiter le filtre à la page admin des custom post_type doliproduct
   add_filter('use_block_editor_for_post', function($use_block_editor, $post) {
     if ($post && $post->post_type === 'doliproduct') {
@@ -73,6 +74,20 @@ if ( !empty(get_option('doliconnectbeta')) ) {
           }
       }
       return $template;
+  }
+
+  add_action( 'init', 'doliproduct_taxonomies', 0 );  
+    function doliproduct_taxonomies() {  
+        register_taxonomy(  
+        'doliproduct_category',  
+        'doliproduct',
+        array(  
+            'hierarchical' => true,  
+            'label' => __( 'Categories', 'doliconnect' ),  
+            'query_var' => true,  
+            'rewrite' => true  
+        )  
+    );  
   }
 
   // Ajout d'un champ personnalisé au type de post doliproduct
