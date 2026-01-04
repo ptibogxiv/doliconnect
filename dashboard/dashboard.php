@@ -50,16 +50,16 @@ function password_menu( $menu, $arg){
 }
 add_filter( 'user_doliconnect_menu', 'password_menu', 20, 2);
 
-function password_module( $url ){
+function password_module($content, $url) {
 global $current_user;
     $return = null;
     if ( isset($_GET['return']) ) {
         $url = esc_url( add_query_arg( 'return', $_GET['return'], $url) );
         $return = esc_url_raw( $_GET['return']);
     }
-    print doliPasswordForm($current_user, $url, $return);
+    return doliPasswordForm($current_user, $url, $return);
 }
-add_action( 'user_doliconnect_password', 'password_module');
+add_filter( 'user_doliconnect_password', 'password_module', 10, 2);
 
 //*****************************************************************************************
 
