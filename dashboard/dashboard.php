@@ -1300,7 +1300,6 @@ function recruitment_module( $content,$url ) {
     if ( !isset($donationfo->error) && isset($_GET['id']) && isset($_GET['ref']) && ($thirdparty->id == $donationfo->fk_soc ) && ($_GET['ref'] == $donationfo->ref) && $donationfo->status != 0 ) {
         $content ='<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Job position %s', 'doliconnect'), $donationfo->ref).'<a class="btn btn-sm btn-outline-secondary border border-0 float-end" href="'.esc_url( add_query_arg( 'module', 'recruitment', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-5">';
         $datecreation =  wp_date('d/m/Y', $donationfo->date_creation);
-        if (!isset($donationfo->error) && isset($_GET['id']) && isset($_GET['ref']) && ($thirdparty->id == $donationfo->fk_soc ) && ($_GET['ref'] == $donationfo->ref) && $donationfo->status != 0 ) {
         $content .="<b>".__( 'Date of creation', 'doliconnect').":</b> $datecreation<br>";
         $content .= "<b>".__( 'Payment method', 'doliconnect').":</b>";
         
@@ -1316,6 +1315,7 @@ function recruitment_module( $content,$url ) {
         $content .= "</div></div></div>";
         $content .= doliCardFooter($donationfo, 'donation');
         $content .= "</div>";
+
     } else {
         $limit=12;
         $page = doliPG(isset($_GET['pg'])?$_GET['pg']:null);
@@ -1345,7 +1345,7 @@ function recruitment_module( $content,$url ) {
         $content .= doliCardFooter($object, 'recruitment');
         $content .= "</div>";
     }
-}
+
 return $content;
 }
 add_filter( 'grh_doliconnect_recruitment', 'recruitment_module', 10, 2);
