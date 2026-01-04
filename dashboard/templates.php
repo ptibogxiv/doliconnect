@@ -68,36 +68,36 @@ global $current_user;
               }
               $content .=  "</div></div></div>";
               $content .=  "<div class='col-xs-12 col-sm-12 col-md-9'>";
-              do_action( 'customer_doliconnect_'.esc_attr($_GET['module']), esc_url( add_query_arg( 'module', esc_attr($_GET['module']), doliconnecturl('doliaccount')) ) ); 
-            } elseif ( has_action('member_doliconnect_'.esc_attr($_GET['module'])) ) {
-              if ( has_action('member_doliconnect_menu') ) {
+              $content .= apply_filters( 'customer_doliconnect_'.esc_attr($_GET['module']), $content, esc_url( add_query_arg( 'module', esc_attr($_GET['module']), doliconnecturl('doliaccount')) ) ); 
+            } elseif ( has_filter('member_doliconnect_'.esc_attr($_GET['module'])) ) {
+              if ( has_filter('member_doliconnect_menu') ) {
                 $content .=  "<div class='list-group shadow-sm'>";
-                do_action('member_doliconnect_menu', esc_attr($_GET['module']));
+                $content .= apply_filters('member_doliconnect_menu', null, esc_attr($_GET['module']));
                 $content .=  "</div><br>";
               }
               $content .=  "</div></div></div>";
               $content .=  "<div class='col-xs-12 col-sm-12 col-md-9'>";
-              do_action( 'member_doliconnect_'.esc_attr($_GET['module']), esc_url( add_query_arg( 'module', esc_attr($_GET['module']), doliconnecturl('doliaccount')) ) ); 
-            } elseif ( has_action('supplier_doliconnect_'.esc_attr($_GET['module'])) && isset($thirdparty->fournisseur) && !empty($thirdparty->fournisseur)) {
-              if ( has_action('supplier_doliconnect_menu') ) {
+              $content .= apply_filters('member_doliconnect_'.esc_attr($_GET['module']), $content, esc_url( add_query_arg( 'module', esc_attr($_GET['module']), doliconnecturl('doliaccount')) ) ); 
+            } elseif ( has_filter('supplier_doliconnect_'.esc_attr($_GET['module'])) && isset($thirdparty->fournisseur) && !empty($thirdparty->fournisseur)) {
+              if ( has_filter('supplier_doliconnect_menu') ) {
                 $content .=  "<div class='list-group shadow-sm'>";
-                do_action('supplier_doliconnect_menu', esc_attr($_GET['module']));
+                $content .= apply_filters('supplier_doliconnect_menu', null, esc_attr($_GET['module']));
                 $content .=  "</div><br>";
               }
               $content .=  "</div></div></div>";
               $content .=  "<div class='col-xs-12 col-sm-12 col-md-9'>";
-              do_action('supplier_doliconnect_'.esc_attr($_GET['module']), esc_url( add_query_arg( 'module', esc_attr($_GET['module']), doliconnecturl('doliaccount')) ) ); 
-            } elseif ( has_action('grh_doliconnect_'.esc_attr($_GET['module'])) ) {
-              if ( has_action('grh_doliconnect_menu') ) {
+              $content .= apply_filters('supplier_doliconnect_'.esc_attr($_GET['module']), $content, esc_url( add_query_arg( 'module', esc_attr($_GET['module']), doliconnecturl('doliaccount')) ) ); 
+            } elseif ( has_filter('grh_doliconnect_'.esc_attr($_GET['module'])) ) {
+              if ( has_filter('grh_doliconnect_menu') ) {
                 $content .=  "<div class='list-group shadow-sm'>";
-                do_action('grh_doliconnect_menu', esc_attr($_GET['module']));
+                $content .= apply_filters('grh_doliconnect_menu', null, esc_attr($_GET['module']));
                 $content .=  "</div><br>";
               }
               $content .=  "</div></div></div>";
               $content .=  "<div class='col-xs-12 col-sm-12 col-md-9'>";
-              do_action('grh_doliconnect_'.esc_attr($_GET['module']), esc_url( add_query_arg( 'module', esc_attr($_GET['module']), doliconnecturl('doliaccount')) ) ); 
-            } elseif ( has_action('settings_doliconnect_'.esc_attr($_GET['module'])) ) {
-              if ( has_action('settings_doliconnect_menu') ) {
+              $content .= apply_filters('grh_doliconnect_'.esc_attr($_GET['module']), $content, esc_url( add_query_arg( 'module', esc_attr($_GET['module']), doliconnecturl('doliaccount')) ) ); 
+            } elseif ( has_filter('settings_doliconnect_'.esc_attr($_GET['module'])) ) {
+              if ( has_filter('settings_doliconnect_menu') ) {
                 $content .=  "<div class='list-group shadow-sm'>";
                 $content .= apply_filters('settings_doliconnect_menu', null, esc_attr($_GET['module']));
                 $content .=  "</div><br>";
