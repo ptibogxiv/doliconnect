@@ -4,14 +4,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-function informations_menu($arg) {
-    print "<a href='".esc_url( add_query_arg( 'module', 'informations', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
-    if ($arg=='informations') { print " active";}
-    print "'>".__( 'Edit my informations', 'doliconnect')."</a>";
+function informations_menu( $menu, $arg) {
+    $menu .= "<a href='".esc_url( add_query_arg( 'module', 'informations', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
+    if ($arg == 'informations') { $menu .= " active";}
+    $menu .= "'>".__( 'Edit my informations', 'doliconnect')."</a>";
+    return $menu;
 }
-add_action( 'user_doliconnect_menu', 'informations_menu', 1, 1);
+add_filter( 'user_doliconnect_menu', 'informations_menu', 10, 2);
 
-function informations_module($url) {
+function informations_module($content, $url) {
     global $current_user;
 
     $return = null;
@@ -23,21 +24,42 @@ function informations_module($url) {
     $thirdparty = doliConnect('thirdparty', $current_user, false, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
     $request = "/thirdparties/".$thirdparty->id;
 
-    print "<div id='doliuserinfos-alert'></div><form action='".admin_url('admin-ajax.php')."' id='doliuserinfos-form' method='post' class='was-validated' enctype='multipart/form-data'>";
+    $content = "<div id='doliuserinfos-alert'></div><form action='".admin_url('admin-ajax.php')."' id='doliuserinfos-form' method='post' class='was-validated' enctype='multipart/form-data'>";
 
-    print doliAjax('doliuserinfos', $return, 'update');
+    $content .= doliAjax('doliuserinfos', $return, 'update');
 
-    print '<div class="card shadow-sm"><div class="card-header">'.__( 'Edit my informations', 'doliconnect').'</div>';
+    $content .= '<div class="card shadow-sm"><div class="card-header">'.__( 'Edit my informations', 'doliconnect').'</div>';
+    $content .= doliuserform( $thirdparty, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'thirdparty', doliCheckRights('societe', 'creer'));
 
-    print doliuserform( $thirdparty, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'thirdparty', doliCheckRights('societe', 'creer'));
-
-    print "<div class='card-body'><div class='d-grid gap-2'><button id='doliuserinfos-button' class='btn btn-outline-secondary' type='submit' ";
-    if (!doliCheckRights('societe', 'creer')) { print 'disabled'; }
-    print ">".__( 'Update', 'doliconnect')."</button></div></div>";
-    print doliCardFooter($thirdparty, 'thirdparty');
-    print '</div></form>';
+    $content .= "<div class='card-body'><div class='d-grid gap-2'><button id='doliuserinfos-button' class='btn btn-outline-secondary' type='submit' ";
+    if (!doliCheckRights('societe', 'creer')) { $content .= 'disabled'; }
+    $content .= ">".__( 'Update', 'doliconnect')."</button></div></div>";
+    $content .= doliCardFooter($thirdparty, 'thirdparty');
+    $content .= '</div></form>';
+    return $content;
 }
-add_action( 'user_doliconnect_informations', 'informations_module');
+add_filter( 'user_doliconnect_informations', 'informations_module', 10, 2);
+
+//*****************************************************************************************
+
+function password_menu( $menu, $arg){
+    $menu .= "<a href='".esc_url( add_query_arg( 'module', 'password', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
+    if ($arg == 'password') { $menu .= " active";}
+    $menu .= "'>".__( 'Edit my password', 'doliconnect')."</a>";
+    return $menu;
+}
+add_filter( 'user_doliconnect_menu', 'password_menu', 20, 2);
+
+function password_module( $url ){
+global $current_user;
+    $return = null;
+    if ( isset($_GET['return']) ) {
+        $url = esc_url( add_query_arg( 'return', $_GET['return'], $url) );
+        $return = esc_url_raw( $_GET['return']);
+    }
+    print doliPasswordForm($current_user, $url, $return);
+}
+add_action( 'user_doliconnect_password', 'password_module');
 
 //*****************************************************************************************
 
@@ -225,27 +247,6 @@ print '</div></form>';
 
 }
 add_action( 'user_doliconnect_avatars', 'avatars_module');
-
-//*****************************************************************************************
-
-add_action( 'user_doliconnect_menu', 'password_menu', 2, 1);
-add_action( 'user_doliconnect_password', 'password_module');
-
-function password_menu( $arg ){
-    print "<a href='".esc_url( add_query_arg( 'module', 'password', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
-    if ($arg=='password') { print " active";}
-    print "'>".__( 'Edit my password', 'doliconnect')."</a>";
-}
-
-function password_module( $url ){
-global $current_user;
-    $return = null;
-    if ( isset($_GET['return']) ) {
-        $url = esc_url( add_query_arg( 'return', $_GET['return'], $url) );
-        $return = esc_url_raw( $_GET['return']);
-    }
-    print doliPasswordForm($current_user, $url, $return);
-}
 
 //*****************************************************************************************
 
