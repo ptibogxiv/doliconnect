@@ -1354,7 +1354,6 @@ add_filter( 'grh_doliconnect_recruitment', 'recruitment_module', 10, 2);
 //*****************************************************************************************
 
 if ( doliCheckModules('expensereport') && doliversion('19.0.0') && doliCheckRights('expensereport', 'lire') ) {
-    add_action( 'grh_doliconnect_expensereport', 'expensereport_module'); 
     
 function expensereport_menu( $menu, $arg ) {
     $menu .= "<a href='".esc_url( add_query_arg( 'module', 'expensereport', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
@@ -1364,7 +1363,7 @@ function expensereport_menu( $menu, $arg ) {
 }
 add_filter( 'grh_doliconnect_menu', 'expensereport_menu', 20, 2);
     
-function expensereport_module( $url ) {
+function expensereport_module( $content, $url ) {
     
     if ( isset($_GET['id']) && $_GET['id'] > 0 ) { 
         $request = "/expensereports/".esc_attr($_GET['id']);
@@ -1373,37 +1372,35 @@ function expensereport_module( $url ) {
     }
     
     if ( !isset($expensereportfo->error) && isset($_GET['id']) && isset($_GET['ref']) && (doliConnect('user')->id == $expensereportfo->fk_user_author ) && ($_GET['ref'] == $expensereportfo->ref) && $expensereportfo->status != 0 && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doli-expensereports-'.$expensereportfo->id.'-'.$expensereportfo->ref)) {
-        print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Expense report %s', 'doliconnect'), $expensereportfo->ref).'<a class="btn btn-sm btn-outline-secondary border border-0 float-end" href="'.esc_url( add_query_arg( 'module', 'expensereport', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-5">';
-        print "<b>".__( 'Period', 'doliconnect').":</b> ".wp_date('d/m/Y', $expensereportfo->date_debut)." au ".wp_date('d/m/Y', $expensereportfo->date_fin)."<br>";
-        print "<b>".__( 'Date of submition', 'doliconnect').":</b> ".wp_date('d/m/Y', $expensereportfo->date_validation)."<br>";
-        print "<b>".__( 'Date of approbation', 'doliconnect').":</b> ".wp_date('d/m/Y', $expensereportfo->date_approbation)."<br>";
-        print "<b>".__( 'Approbator', 'doliconnect').":</b> ".$expensereportfo->user_validator_infos."<br>";
+        $content = '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Expense report %s', 'doliconnect'), $expensereportfo->ref).'<a class="btn btn-sm btn-outline-secondary border border-0 float-end" href="'.esc_url( add_query_arg( 'module', 'expensereport', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-5">';
+        $content .= "<b>".__( 'Period', 'doliconnect').":</b> ".wp_date('d/m/Y', $expensereportfo->date_debut)." au ".wp_date('d/m/Y', $expensereportfo->date_fin)."<br>";
+        $content .= "<b>".__( 'Date of submition', 'doliconnect').":</b> ".wp_date('d/m/Y', $expensereportfo->date_validation)."<br>";
+        $content .= "<b>".__( 'Date of approbation', 'doliconnect').":</b> ".wp_date('d/m/Y', $expensereportfo->date_approbation)."<br>";
+        $content .= "<b>".__( 'Approbator', 'doliconnect').":</b> ".$expensereportfo->user_validator_infos."<br>";
+        $content .= "<br></div><div class='col-md-7'>";
+        $content .= doliObjectStatus($expensereportfo, 'expensereport', 1);
+        $content .= "</div>";
         
-        print "<br></div><div class='col-md-7'>";
-        print doliObjectStatus($expensereportfo, 'expensereport', 1);
-        print "</div>";
-        
-        print "</div><div class='row'><div class='col-12'>"; 
-        
-        print doliObjectStatus($expensereportfo, 'expensereport', 3);
-        
-        print "</div></div></div><ul class='list-group list-group-flush'>";
+        $content .= "</div><div class='row'><div class='col-12'>"; 
+        $content .= doliObjectStatus($expensereportfo, 'expensereport', 3);
+
+        $content .= "</div></div></div><ul class='list-group list-group-flush'>";
         if ( $expensereportfo->lines != null ) {
             foreach ( $expensereportfo->lines as $line ) {
-            print "<li class='list-group-item'>";     
-            print '<div class="w-100 justify-content-between"><div class="row"><div class="col-8 col-md-10"> 
+            $content .= "<li class='list-group-item'>";     
+            $content .= '<div class="w-100 justify-content-between"><div class="row"><div class="col-8 col-md-10"> 
             <h6 class="mb-1">'.'</h6>';
-            if (isset($line->comments)) print '<p class="mb-1">'.$line->comments.'</p>';
-            print '<small><i>('.wp_date("d/m/Y", $line->dates).')</i></small>'; 
-            print '</div><div class="col-4 col-md-2 text-end"><h5 class="mb-1">'.doliprice($line, 'ttc', isset($line->multicurrency_code) ? $line->multicurrency_code : null).'</h5>';
-            print '<h5 class="mb-1">x'.$line->qty.'</h5>'; 
-            print "</div></div></li>";
+            if (isset($line->comments)) $content .= '<p class="mb-1">'.$line->comments.'</p>';
+            $content .= '<small><i>('.wp_date("d/m/Y", $line->dates).')</i></small>'; 
+            $content .= '</div><div class="col-4 col-md-2 text-end"><h5 class="mb-1">'.doliprice($line, 'ttc', isset($line->multicurrency_code) ? $line->multicurrency_code : null).'</h5>';
+            $content .= '<h5 class="mb-1">x'.$line->qty.'</h5>'; 
+            $content .= "</div></div></li>";
             }
         }
-        print dolitotal($expensereportfo);
-        print "</ul>";
-        print doliCardFooter($expensereportfo, 'expensereport');
-        print "</div>";
+        $content .= dolitotal($expensereportfo);
+        $content .= "</ul>";
+        $content .= doliCardFooter($expensereportfo, 'expensereport');
+        $content .= "</div>";
     } elseif (isset(doliConnect('user')->id)) {
         $limit=12;
         $page = doliPG(isset($_GET['pg'])?$_GET['pg']:null);
@@ -1412,29 +1409,31 @@ function expensereport_module( $url ) {
         $request= "/expensereports?sortfield=t.rowid&sortorder=DESC&limit=".$limit."&page=".$page."&user_ids=".doliConnect('user')->id."&pagination_data=true";
         $object = callDoliApi("GET", $request, null, dolidelay('expensereport', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
         if ( doliversion('21.0.0') && isset($object->data) ) { $listexpensereport = $object->data; } else { $listexpensereport = $object; }
-        print '<div class="card shadow-sm"><div class="card-header">'.__( 'List of expense reports', 'doliconnect').' ('.(isset($object->pagination->total)?$object->pagination->total:'x').')</div><ul class="list-group list-group-flush">';
+        $content = '<div class="card shadow-sm"><div class="card-header">'.__( 'List of expense reports', 'doliconnect').' ('.(isset($object->pagination->total)?$object->pagination->total:'x').')</div><ul class="list-group list-group-flush">';
         if ( doliCheckRights('expensereport', 'creer') && !empty(get_option('doliconnectbeta'))) {
-            print '<a href="" class="list-group-item lh-condensed list-group-item-action list-group-item-primary" disabled><center><i class="fas fa-plus-circle"></i> '.__( 'Create an expense report', 'doliconnect').'</center></a>';  
+            $content .= '<a href="" class="list-group-item lh-condensed list-group-item-action list-group-item-primary" disabled><center><i class="fas fa-plus-circle"></i> '.__( 'Create an expense report', 'doliconnect').'</center></a>';  
         }
         if ( !isset( $listexpensereport->error ) && $listexpensereport != null && !empty(doliConnect('user'))) {
             foreach ( $listexpensereport as $postexpensereport ) { 
                 $nonce = wp_create_nonce( 'doli-expensereports-'. $postexpensereport->id.'-'.$postexpensereport->ref);
                 $arr_params = array( 'id' => $postexpensereport->id, 'ref' => $postexpensereport->ref, 'security' => $nonce);  
                 $return = esc_url( add_query_arg( $arr_params, $url) );          
-                print "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'><div><i class='fa-solid fa-wallet fa-3x fa-fw'></i></div><div><h6 class='my-0'>".$postexpensereport->ref."</h6><small class='text-muted'>".wp_date('d/m/Y', $postexpensereport->date_debut)." au ".wp_date('d/m/Y', $postexpensereport->date_fin)."</small></div><span></span><span>";
-                print doliObjectStatus($postexpensereport, 'expensereport', 2);
-                print "</span></a>";
+                $content .= "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'><div><i class='fa-solid fa-wallet fa-3x fa-fw'></i></div><div><h6 class='my-0'>".$postexpensereport->ref."</h6><small class='text-muted'>".wp_date('d/m/Y', $postexpensereport->date_debut)." au ".wp_date('d/m/Y', $postexpensereport->date_fin)."</small></div><span></span><span>";
+                $content .= doliObjectStatus($postexpensereport, 'expensereport', 2);
+                $content .= "</span></a>";
             }
         } else{
-            print "<li class='list-group-item list-group-item-light'><center>".__( 'No expense report', 'doliconnect')."</center></li>";
+            $content .= "<li class='list-group-item list-group-item-light'><center>".__( 'No expense report', 'doliconnect')."</center></li>";
         }
-        print "</ul><div class='card-body'>";
-        print doliPagination($object, $url, $page);
-        print "</div>";
-        print doliCardFooter($object, 'expensereport');
-        print "</div>";
+        $content .= "</ul><div class='card-body'>";
+        $content .= doliPagination($object, $url, $page);
+        $content .= "</div>";
+        $content .= doliCardFooter($object, 'expensereport');
+        $content .= "</div>";
     }
+return $content;
 }
+add_filter( 'grh_doliconnect_expensereport', 'expensereport_module', 10, 2);
 }
 
 //*****************************************************************************************
