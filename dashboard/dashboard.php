@@ -1277,17 +1277,16 @@ $ID = $current_user->ID;
 //*****************************************************************************************
 
 if ( doliCheckModules('recruitment') && doliversion('19.0.0') && !empty(get_option('doliconnectbeta')) ) {
-    add_action( 'grh_doliconnect_menu', 'recruitment_menu', 1, 1);
-    add_action( 'grh_doliconnect_recruitment', 'recruitment_module');
-}  
     
-function recruitment_menu( $arg ) {
-    print "<a href='".esc_url( add_query_arg( 'module', 'recruitment', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
-    if ($arg=='recruitment') { print " active";}
-    print "'>".__( 'List of jobpositions', 'doliconnect')."</a>";
+function recruitment_menu( $menu, $arg ) {
+    $menu .= "<a href='".esc_url( add_query_arg( 'module', 'recruitment', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
+    if ($arg=='recruitment') { $menu .= " active";}
+    $menu .= "'>".__( 'List of jobpositions', 'doliconnect')."</a>";
+    return $menu;
 }
+add_filter( 'grh_doliconnect_menu', 'recruitment_menu', 10, 2);
     
-function recruitment_module( $url ) {
+function recruitment_module( $content,$url ) {
     global $current_user;
     $entity = get_current_blog_id();
     $ID = $current_user->ID;
@@ -1299,24 +1298,24 @@ function recruitment_module( $url ) {
     $thirdparty = doliConnect('thirdparty', $current_user, false, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
     
     if ( !isset($donationfo->error) && isset($_GET['id']) && isset($_GET['ref']) && ($thirdparty->id == $donationfo->fk_soc ) && ($_GET['ref'] == $donationfo->ref) && $donationfo->status != 0 ) {
-        print '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Job position %s', 'doliconnect'), $donationfo->ref).'<a class="btn btn-sm btn-outline-secondary border border-0 float-end" href="'.esc_url( add_query_arg( 'module', 'recruitment', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-5">';
+        $content ='<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Job position %s', 'doliconnect'), $donationfo->ref).'<a class="btn btn-sm btn-outline-secondary border border-0 float-end" href="'.esc_url( add_query_arg( 'module', 'recruitment', doliconnecturl('doliaccount')) ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-5">';
         $datecreation =  wp_date('d/m/Y', $donationfo->date_creation);
-        print "<b>".__( 'Date of creation', 'doliconnect').":</b> $datecreation<br>";
-        print "<b>".__( 'Payment method', 'doliconnect').":</b>";
+        if (!isset($donationfo->error) && isset($_GET['id']) && isset($_GET['ref']) && ($thirdparty->id == $donationfo->fk_soc ) && ($_GET['ref'] == $donationfo->ref) && $donationfo->status != 0 ) {
+        $content .="<b>".__( 'Date of creation', 'doliconnect').":</b> $datecreation<br>";
+        $content .= "<b>".__( 'Payment method', 'doliconnect').":</b>";
         
-        print "<br></div><div class='col-md-7'>";
-        print doliObjectStatus($donationfo, 'recruitmentjobposition', 1);
-        print "</div>";
+        $content .= "<br></div><div class='col-md-7'>";
+        $content .= doliObjectStatus($donationfo, 'recruitmentjobposition', 1);
+        $content .= "</div>";
         
-        print "</div><div class='row'><div class='col-12'>"; 
+        $content .= "</div><div class='row'><div class='col-12'>"; 
         
-        print doliObjectStatus($donationfo, 'recruitmentjobposition', 3);
+        $content .= doliObjectStatus($donationfo, 'recruitmentjobposition', 3);
+        $content .= $donationfo->description;
 
-        print $donationfo->description;
-
-        print "</div></div></div>";
-        print doliCardFooter($donationfo, 'donation');
-        print "</div>";
+        $content .= "</div></div></div>";
+        $content .= doliCardFooter($donationfo, 'donation');
+        $content .= "</div>";
     } else {
         $limit=12;
         $page = doliPG(isset($_GET['pg'])?$_GET['pg']:null);
@@ -1324,42 +1323,46 @@ function recruitment_module( $url ) {
         $object = callDoliApi("GET", $request, null, dolidelay('recruitment', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
         if ( doliversion('21.0.0') && isset($object->data) ) { $listjobposition = $object->data; } else { $listjobposition = $object; }
         
-        print '<div class="card shadow-sm"><div class="card-header">'.__( 'List of jobpositions', 'doliconnect').' ('.(isset($object->pagination->total)?$object->pagination->total:'x').')</div><ul class="list-group list-group-flush">';
+        $content = '<div class="card shadow-sm"><div class="card-header">'.__( 'List of jobpositions', 'doliconnect').' ('.(isset($object->pagination->total)?$object->pagination->total:'x').')</div><ul class="list-group list-group-flush">';
         if ( doliCheckRights('recruitment', 'recruitmentjobposition', 'write') && !empty(get_option('doliconnectbeta'))) {
-            print '<a href="" class="list-group-item lh-condensed list-group-item-action list-group-item-primary" disabled><center><i class="fas fa-plus-circle"></i> '.__( 'Create a job position', 'doliconnect').'</center></a>';  
+            $content .= '<a href="" class="list-group-item lh-condensed list-group-item-action list-group-item-primary" disabled><center><i class="fas fa-plus-circle"></i> '.__( 'Create a job position', 'doliconnect').'</center></a>';  
         }
         if ( !isset( $listjobposition->error ) && $listjobposition != null ) {
             foreach ( $listjobposition as $postjobposition ) { 
                 $arr_params = array( 'id' => $postjobposition->id, 'ref' => $postjobposition->ref);  
                 $return = esc_url( add_query_arg( $arr_params, $url) );              
-                print "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'><div><i class='fa-solid fa-id-card-clip fa-3x fa-fw'></i></div><div><h6 class='my-0'>".$postjobposition->ref."</h6><small class='text-muted'>".wp_date('d/m/Y', $postjobposition->date_creation)."</small></div><span></span><span>";
-                print doliObjectStatus($postjobposition, 'recruitmentjobposition', 2);
-                print "</span></a>";
+                $content .=  "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'><div><i class='fa-solid fa-id-card-clip fa-3x fa-fw'></i></div><div><h6 class='my-0'>".$postjobposition->ref."</h6><small class='text-muted'>".wp_date('d/m/Y', $postjobposition->date_creation)."</small></div><span></span><span>";
+                $content .= doliObjectStatus($postjobposition, 'recruitmentjobposition', 2);
+                $content .= "</span></a>";
             }
         } else{
-            print "<li class='list-group-item list-group-item-light'><center>".__( 'No jobposition', 'doliconnect')."</center></li>";
+            $content .= "<li class='list-group-item list-group-item-light'><center>".__( 'No jobposition', 'doliconnect')."</center></li>";
         }
-        
-        print "</ul><div class='card-body'>";
-        print doliPagination($object, $url, $page);
-        print "</div>";
-        print doliCardFooter($object, 'recruitment');
-        print "</div>";
+
+        $content .= "</ul><div class='card-body'>";
+        $content .= doliPagination($object, $url, $page);
+        $content .= "</div>";
+        $content .= doliCardFooter($object, 'recruitment');
+        $content .= "</div>";
     }
+}
+return $content;
+}
+add_filter( 'grh_doliconnect_recruitment', 'recruitment_module', 10, 2);
 }
 
 //*****************************************************************************************
 
 if ( doliCheckModules('expensereport') && doliversion('19.0.0') && doliCheckRights('expensereport', 'lire') ) {
-    add_action( 'grh_doliconnect_menu', 'expensereport_menu', 2, 1);
-    add_action( 'grh_doliconnect_expensereport', 'expensereport_module');
-}  
+    add_action( 'grh_doliconnect_expensereport', 'expensereport_module'); 
     
-function expensereport_menu( $arg ) {
-    print "<a href='".esc_url( add_query_arg( 'module', 'expensereport', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
-    if ($arg=='expensereport') { print " active";}
-    print "'>".__( 'List of expense reports', 'doliconnect')."</a>";
+function expensereport_menu( $menu, $arg ) {
+    $menu .= "<a href='".esc_url( add_query_arg( 'module', 'expensereport', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
+    if ($arg=='expensereport') { $menu .= " active";}
+    $menu .= "'>".__( 'List of expense reports', 'doliconnect')."</a>";
+    return $menu;
 }
+add_filter( 'grh_doliconnect_menu', 'expensereport_menu', 20, 2);
     
 function expensereport_module( $url ) {
     
@@ -1431,6 +1434,7 @@ function expensereport_module( $url ) {
         print doliCardFooter($object, 'expensereport');
         print "</div>";
     }
+}
 }
 
 //*****************************************************************************************
