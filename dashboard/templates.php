@@ -1163,7 +1163,7 @@ if (dolicheckie($_SERVER['HTTP_USER_AGENT'])) {
 } else {
   if ( current_user_can('administrator') && !empty(get_option('doliconnectbeta')) ) {
 
-if ( isset($_GET['checkout']) && wp_verify_nonce( $_GET['checkout'], 'dolicart-'.$object->id.'-'.$current_user->id) && ((isset($object->lines) && $object->lines != null && $object->statut == 0 && !isset($_GET['module']) ) || ( ($_GET['module'] == 'orders' && $object->billed != 1 ) || ($_GET['module'] == 'invoices' && $object->paye != 1) )) && $object->socid == $thirdparty->id ) {
+if ( isset($_GET['checkout']) && wp_verify_nonce( $_GET['checkout'], 'dolicart-'.$object->id.'-'.$current_user->ID) && ((isset($object->lines) && $object->lines != null && $object->statut == 0 && !isset($_GET['module']) ) || ( ($_GET['module'] == 'orders' && $object->billed != 1 ) || ($_GET['module'] == 'invoices' && $object->paye != 1) )) && $object->socid == $thirdparty->id ) {
  print 'finish checkout';
 } else {
  print doliOffcanvasCart($current_user);
