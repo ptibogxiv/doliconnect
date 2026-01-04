@@ -63,8 +63,8 @@ add_filter( 'user_doliconnect_password', 'password_module', 10, 2);
 
 //*****************************************************************************************
 
-function avatars_module($url) {
-global $wpdb,$current_user;
+function avatars_module( $content, $url) {
+global $wpdb, $current_user;
 
 $ID = $current_user->ID;
 $time = current_time( 'timestamp', 1);
@@ -246,7 +246,7 @@ if (isset($request) && isset($thirdparty)) print doliCardFooter($request, 'third
 print '</div></form>';
 
 }
-add_action( 'user_doliconnect_avatars', 'avatars_module');
+add_filter( 'user_doliconnect_avatars', 'avatars_module', 10, 2);
 
 //*****************************************************************************************
 
