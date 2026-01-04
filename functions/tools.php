@@ -1356,18 +1356,18 @@ $doliuser .= "</li>";
 
 
 if (doliCheckModules('socialnetworks') && doliversion('11.0.0') ) { 
-$socialnetworks = callDoliApi("GET", "/setup/dictionary/socialnetworks?sortfield=rowid&sortorder=ASC&limit=100&active=1", null, $delay);
-if ( !isset($socialnetworks->error) && $socialnetworks != null ) { 
-$doliuser .= "<li class='list-group-item list-group-item-light list-group-item-action'><div class='row g-2'>";
-foreach ( $socialnetworks as $social ) { 
-$code = $social->code;
-$doliuser .= '<div class="col-12 col-sm-6 col-lg-4"><div class="form-floating"><input type="text" class="form-control form-control-sm" id="'.$idobject.'[socialnetworks]['.$social->code.']" name="'.$idobject.'[socialnetworks]['.$social->code.']" placeholder="'.$social->label.'" value="'.stripslashes(htmlspecialchars((isset($object->socialnetworks->$code) ? $object->socialnetworks->$code : null), ENT_QUOTES)).'" ';
-if (!$rights) {
-  $doliuser .= ' disabled';
-}
-$doliuser .= '><label for="'.$idobject.'[socialnetworks]['.$social->code.']"><i class="fab fa-'.$social->code.' fa-fw"></i> '.$social->label.'</label></div></div>';
-}
-$doliuser .= "</div></li>";
+  $socialnetworks = callDoliApi("GET", "/setup/dictionary/socialnetworks?sortfield=rowid&sortorder=ASC&limit=100&active=1", null, $delay);
+  if ( !isset($socialnetworks->error) && $socialnetworks != null ) { 
+  $doliuser .= "<li class='list-group-item list-group-item-light list-group-item-action'><div class='row g-2'>";
+  foreach ( $socialnetworks as $social ) { 
+    $code = $social->code;
+    $doliuser .= '<div class="col-12 col-sm-6 col-lg-4"><div class="form-floating"><input type="text" class="form-control form-control-sm" id="'.$idobject.'[socialnetworks]['.$social->code.']" name="'.$idobject.'[socialnetworks]['.$social->code.']" placeholder="'.$social->label.'" value="'.(isset($object->socialnetworks->$code) ? stripslashes(htmlspecialchars( $object->socialnetworks->$code, ENT_QUOTES)) : null).'" ';
+    if (!$rights) {
+      $doliuser .= ' disabled';
+    }
+    $doliuser .= '><label for="'.$idobject.'[socialnetworks]['.$social->code.']"><i class="fab fa-'.$social->code.' fa-fw"></i> '.$social->label.'</label></div></div>';
+  }
+  $doliuser .= "</div></li>";
 }
 
 } elseif ( !doliversion('11.0.0') ) { 
