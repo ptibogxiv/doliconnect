@@ -526,64 +526,48 @@ add_filter( 'the_content', 'doliaccount_display', 10, 2);
 //*****************************************************************************************
 
 function dolifaq_display($content) {
-    global $current_user;
+  global $current_user;
+    
+  if ( in_the_loop() && is_main_query() && is_page(doliconnectid('dolifaq')) && !empty(doliconnectid('dolifaq')) ) {
+    
+    doliconnect_enqueues();
+      $limit=10;
+      if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']); }  else { $page = 0; }
+      $request = "/knowledgemanagement/knowledgerecords?sortfield=t.rowid&sortorder=ASC&limit=".$limit."&page=".$page."&pagination_data=true&sqlfilters=(t.status:=:'1')and((t.lang:in:'0','".doliUserLang($current_user)."'))";
+      if (isset($_GET['category']) && is_numeric(esc_attr($_GET['category'])) && esc_attr($_GET['category']) > 0 ) $request .= "&category=".esc_attr($_GET['category']);
+      $object = callDoliApi("GET", $request, null, dolidelay('knowledgemanagement', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+      if ( doliversion('21.0.0') && isset($object->data) ) { $listfaq = $object->data; } else { $listfaq = $object; }
 
-    if ( in_the_loop() && is_main_query() && is_page(doliconnectid('dolifaq')) && !empty(doliconnectid('dolifaq')) ) {
-        doliconnect_enqueues();
-        $limit = 10;
-        $page = isset($_GET['pg']) && is_numeric($_GET['pg']) && $_GET['pg'] > 0 ? intval($_GET['pg']) : 0;
-        $category = isset($_GET['category']) && is_numeric($_GET['category']) && $_GET['category'] > 0 ? '&category=' . intval($_GET['category']) : '';
-
-        $request = sprintf(
-            "/knowledgemanagement/knowledgerecords?sortfield=t.rowid&sortorder=ASC&limit=%d&page=%d&pagination_data=true&sqlfilters=(t.status:=:'1')and((t.lang:in:'0','%s'))%s",
-            $limit,
-            $page,
-            doliUserLang($current_user),
-            $category
-        );
-
-        $object = callDoliApi("GET", $request, null, dolidelay('knowledgemanagement', $_GET['refresh'] ?? null));
-        $listfaq = doliversion('21.0.0') && isset($object->data) ? $object->data : $object;
-
-        $url = doliconnecturl('dolifaq');
-        $content = '<div class="card"><div class="card-header">' . __( 'Knowledge base', 'doliconnect') . '</div>';
-        $content .= '<div class="card-body"></div>';
-        $content .= '<div class="accordion accordion-flush" id="accordionDolifaq">';
-
-        if (!isset($listfaq->error) && $listfaq) {
-            foreach ($listfaq as $postfaq) {
-                $content .= sprintf(
-                    '<div class="accordion-item">
-                        <h2 class="accordion-header" id="flush-headingDolifaq%d">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseDolifaq%d" aria-expanded="false" aria-controls="flush-collapseDolifaq%d">
-                                %s
-                            </button>
-                        </h2>
-                        <div id="flush-collapseDolifaq%d" class="accordion-collapse collapse" aria-labelledby="flush-headingDolifaq%d" data-bs-parent="#accordionDolifaq">
-                            <div class="accordion-body">%s%s</div>
-                        </div>
-                    </div>',
-                    $postfaq->id,
-                    $postfaq->id,
-                    $postfaq->id,
-                    $postfaq->question,
-                    $postfaq->id,
-                    $postfaq->id,
-                    $postfaq->answer,
-                    !empty(doliconnect_categories('knowledgemanagement', $postfaq, $url)) ? '<br>' . doliconnect_categories('knowledgemanagement', $postfaq, $url) : ''
-                );
-            }
+      $url = doliconnecturl('dolifaq');
+      $content = '<div class="card"><div class="card-header">'.__( 'Knowledge base', 'doliconnect').'</div>';
+      $content .= '<div class="card-body">';
+      $content .= '</div>';
+      $content .= '<div class="accordion accordion-flush" id="accordionDolifaq">';
+      if ( !isset( $listfaq->error ) && $listfaq != null ) {
+        foreach ( $listfaq as $postfaq ) { 
+          $content .= '<div class="accordion-item"><h2 class="accordion-header" id="flush-headingDolifaq'.$postfaq->id.'">';
+          $content .= '<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseDolifaq'.$postfaq->id.'" aria-expanded="false" aria-controls="flush-collapseDolifaq'.$postfaq->id.'">';
+          $content .= $postfaq->question;
+          $content .= '</button></h2>
+          <div id="flush-collapseDolifaq'.$postfaq->id.'" class="accordion-collapse collapse" aria-labelledby="flush-headingDolifaq'.$postfaq->id.'" data-bs-parent="#accordionDolifaq">
+          <div class="accordion-body">'.$postfaq->answer;
+          //print doliCardFooter($request, 'agenda', $object);
+          if (!empty(doliconnect_categories('knowledgemanagement', $postfaq, doliconnecturl('dolifaq')))) $content .= '<br>'.doliconnect_categories('knowledgemanagement', $postfaq, doliconnecturl('dolifaq'));
+          $content .= '</div></div></div>';
         }
+      }
+    $content .= '</div>';
 
-        $content .= '</div>'; // Close accordion
-        $content .= '<div class="card-body">' . doliPagination($object, $url, $page) . '</div>';
-        $content .= doliCardFooter($object, 'knowledgemanagement');
-        $content .= '</div>'; // Close card
-
-        return $content;
-    }
-
-    return $content;
+    $content .= '<div class="card-body">';
+    $content .= doliPagination($object, $url, $page);
+    $content .= '</div>';
+    $content .= doliCardFooter($object, 'knowledgemanagement');
+    $content .= '</div>';
+  return $content;
+} else {
+  return $content;
+}
+    
 }
     
 add_filter( 'the_content', 'dolifaq_display');
@@ -676,9 +660,10 @@ print "<div class='card-body'><div class='d-grid gap-2'><button id='dolicontact-
 print "</div>";
 
 }
-  } else {
-    return $content;
-  }
+} else {
+return $content;
+}
+
 }
 
 add_filter( 'the_content', 'dolicontact_display');
@@ -1592,6 +1577,7 @@ document.location = '".$return."';
 }
 
 console.log(response.data.message);
+}
 //$('#DoliconnectLoadingModal').modal('hide');
         });
 });
@@ -1625,9 +1611,10 @@ print "</div>";
 print "</div>";
 }
 }
-    } else {
-      return $content;
     }
+  } else {
+    return $content;
+  }
 }
 
 add_filter( 'the_content', 'dolicart_display');
