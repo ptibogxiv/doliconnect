@@ -229,7 +229,7 @@ function callDoliApi($method = null, $link = null, $body = null, $delay = HOUR_I
     );
     
     $url=get_site_option('dolibarr_public_url').'/api/index.php'.$link;
-    $link = substr($link, 0, 172);
+    if (!empty($link)) $link = substr($link, 0, 172);
     if ( !empty(get_site_option('dolibarr_public_url')) && !empty(get_site_option('dolibarr_private_key')) ) {
         if ( !empty( $link ) && ( false === get_transient( $link ) || $method!='GET' || $delay <= 0 ) ) {
             $args = array(
