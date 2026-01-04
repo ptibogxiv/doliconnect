@@ -1889,41 +1889,42 @@ add_filter( 'settings_doliconnect_tickets', 'tickets_module', 10, 2);
 //*****************************************************************************************
 
 add_action( 'settings_doliconnect_menu', 'settings_menu', 2, 1);
-add_action( 'settings_doliconnect_settings', 'settings_module');
 
-function settings_menu($arg) {
-print "<a href='".esc_url( add_query_arg( 'module', 'settings', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
-if ($arg=='settings') { print " active"; }
-print "'>".__( 'Safety and appearance', 'doliconnect')."</a>";
+function settings_menu( $menu, $arg) {
+    $menu .= "<a href='".esc_url( add_query_arg( 'module', 'settings', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
+    if ($arg=='settings') { $menu .= " active"; }
+    $menu .= "'>".__( 'Safety and appearance', 'doliconnect')."</a>";
+    return $menu;
 }
+add_filter( 'settings_doliconnect_menu', 'representatives_menu', 10, 2);
 
-function settings_module($url) {
+function settings_module( $content,$url) {
 global $wpdb, $current_user;
 
-print '<div id="dolisettings-alert"></div><form id="dolisettings-form" method="post" class="was-validated" action="'.admin_url('admin-ajax.php').'">';
+$content = '<div id="dolisettings-alert"></div><form id="dolisettings-form" method="post" class="was-validated" action="'.admin_url('admin-ajax.php').'">';
 
-print doliAjax('dolisettings',  null, 'settings');
+$content .= doliAjax('dolisettings',  null, 'settings');
 
-print '<div class="card shadow-sm"><div class="card-header">'.__( 'Settings & security', 'doliconnect').'</div><ul class="list-group list-group-flush">';
-print "<li class='list-group-item list-group-item-light list-group-item-action'><div class='form-check form-switch'><input type='checkbox' class='form-check-input' name='loginmailalert' id='loginmailalert' ";
+$content .= '<div class="card shadow-sm"><div class="card-header">'.__( 'Settings & security', 'doliconnect').'</div><ul class="list-group list-group-flush">';
+$content .= "<li class='list-group-item list-group-item-light list-group-item-action'><div class='form-check form-switch'><input type='checkbox' class='form-check-input' name='loginmailalert' id='loginmailalert' ";
 if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $current_user->$ID ) {
-print " disabled";
-} elseif ( $current_user->loginmailalert == 'on' ) { print " checked"; }        
-print " onchange='submit()'><label class='form-check-label w-100' for='loginmailalert'> ".__( 'Receive a email notification at each connection', 'doliconnect')."</label>
+$content .= " disabled";
+} elseif ( $current_user->loginmailalert == 'on' ) { $content .= " checked"; }        
+$content .= " onchange='submit()'><label class='form-check-label w-100' for='loginmailalert'> ".__( 'Receive a email notification at each connection', 'doliconnect')."</label>
 </div></li>";
 
 $privacy=$wpdb->prefix."doliprivacy";
 if ( $current_user->$privacy ) {
-print "<li class='list-group-item list-group-item-light list-group-item-action'>";
-print '<div class="form-floating">
+$content .= "<li class='list-group-item list-group-item-light list-group-item-action'>";
+$content .= '<div class="form-floating">
 <input type="text" class="form-control" id="floatingInput" value="'.wp_date( get_option( 'date_format' ).' - '.get_option('time_format'), $current_user->$privacy, false).'" readonly>
 <label for="floatingInput">'.__( 'Privacy policy', 'doliconnect').'</label>
 </div>';
-print "</li>";
+$content .= "</li>";
 }
 
 if ( is_plugin_active( 'two-factor/two-factor.php' ) && current_user_can('administrator') && !empty(get_option('doliconnectbeta')) ) {
-print '<li class="list-group-item list-group-item-light list-group-item-action">';
+$content .= '<li class="list-group-item list-group-item-light list-group-item-action">';
 require_once( ABSPATH . 'wp-content/plugins/two-factor/class-two-factor-core.php');
 
 		?>
@@ -1950,24 +1951,24 @@ require_once( ABSPATH . 'wp-content/plugins/two-factor/class-two-factor-core.php
 					</table>
 		<?php
 		//do_action( 'show_user_security_settings', $current_user );
-print "</li>";    
+$content .= "</li>";    
 }
-print '</ul>';
-print "<div class='card-body'><div class='d-grid gap-2'><button id='doliuserinfos-button' class='btn btn-outline-secondary' type='submit' ";
-if (!doliCheckRights('societe', 'creer')) { print 'disabled'; }
-print ">".__( 'Update', 'doliconnect')."</button></div>";
-print '</form></div>';
-//print doliCardFooter($request, 'expensereport', $expensereportfo);
-print '</div>';
+$content .= '</ul>';
+$content .= "<div class='card-body'><div class='d-grid gap-2'><button id='doliuserinfos-button' class='btn btn-outline-secondary' type='submit' ";
+if (!doliCheckRights('societe', 'creer')) { $content .= 'disabled'; }
+$content .= ">".__( 'Update', 'doliconnect')."</button></div>";
+$content .= '</form></div>';
+//$content .= doliCardFooter($request, 'expensereport', $expensereportfo);
+$content .= '</div>';
 
 if (current_user_can('administrator') && !empty(get_option('doliconnectbeta')) ) { 
-//print '<div class="audio-player">
+//$content .=  '<div class="audio-player">
 //    <audio controls>
 //        <source src="'.esc_url( get_option('doliconnect_audio_file') ).'" type="audio/mpeg">
 //        '._e('Votre navigateur ne supporte pas l\'élément audio.', 'doliconnect').'
 //    </audio>
 //</div>';
-print '<style>';
+$content .=  '<style>';
 ?>
 .blur{
   -webkit-filter: blur(5px);
@@ -1977,7 +1978,7 @@ print '<style>';
   filter: blur(5px);
 }
 <?php
-print '</style>';
+$content .=  '</style>';
 
 function generate_license($suffix = null) {
     // Default tokens contain no "ambiguous" characters: 1,i,0,o
@@ -2022,7 +2023,9 @@ function generate_license($suffix = null) {
 
 }
 
+return $content;
 }
+add_filter( 'settings_doliconnect_settings', 'settings_module', 30, 2);
 
 //*****************************************************************************************
 
