@@ -1669,7 +1669,7 @@ function tickets_menu( $menu, $arg ) {
     $menu .= "'>".__( 'My support tickets', 'doliconnect')."</a>";
     return $menu;
 }
-add_filter( 'settings_doliconnect_menu', 'tickets_menu', 10, 2);
+add_filter( 'settings_doliconnect_menu', 'tickets_menu', 20, 2);
 
 function tickets_module( $content, $url ) {
 global $current_user;
@@ -1888,15 +1888,13 @@ add_filter( 'settings_doliconnect_tickets', 'tickets_module', 10, 2);
 
 //*****************************************************************************************
 
-add_action( 'settings_doliconnect_menu', 'settings_menu', 2, 1);
-
 function settings_menu( $menu, $arg) {
     $menu .= "<a href='".esc_url( add_query_arg( 'module', 'settings', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
     if ($arg=='settings') { $menu .= " active"; }
     $menu .= "'>".__( 'Safety and appearance', 'doliconnect')."</a>";
     return $menu;
 }
-add_filter( 'settings_doliconnect_menu', 'representatives_menu', 10, 2);
+add_filter( 'settings_doliconnect_menu', 'settings_menu', 30, 2);
 
 function settings_module( $content,$url) {
 global $wpdb, $current_user;
@@ -1907,7 +1905,7 @@ $content .= doliAjax('dolisettings',  null, 'settings');
 
 $content .= '<div class="card shadow-sm"><div class="card-header">'.__( 'Settings & security', 'doliconnect').'</div><ul class="list-group list-group-flush">';
 $content .= "<li class='list-group-item list-group-item-light list-group-item-action'><div class='form-check form-switch'><input type='checkbox' class='form-check-input' name='loginmailalert' id='loginmailalert' ";
-if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $current_user->$ID ) {
+if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $current_user->ID ) {
 $content .= " disabled";
 } elseif ( $current_user->loginmailalert == 'on' ) { $content .= " checked"; }        
 $content .= " onchange='submit()'><label class='form-check-label w-100' for='loginmailalert'> ".__( 'Receive a email notification at each connection', 'doliconnect')."</label>
@@ -1968,6 +1966,7 @@ if (current_user_can('administrator') && !empty(get_option('doliconnectbeta')) )
 //        '._e('Votre navigateur ne supporte pas l\'élément audio.', 'doliconnect').'
 //    </audio>
 //</div>';
+/*
 $content .=  '<style>';
 ?>
 .blur{
@@ -1979,6 +1978,7 @@ $content .=  '<style>';
 }
 <?php
 $content .=  '</style>';
+*/
 
 function generate_license($suffix = null) {
     // Default tokens contain no "ambiguous" characters: 1,i,0,o
