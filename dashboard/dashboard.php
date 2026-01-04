@@ -1627,37 +1627,37 @@ add_filter( 'member_doliconnect_members', 'members_module', 10, 2);
 
 //*****************************************************************************************
 
-add_action( 'settings_doliconnect_menu', 'representatives_menu', 1, 1);
-add_action( 'settings_doliconnect_representatives', 'representatives_module');
-
-function representatives_menu( $arg ) {
-    print "<a href='".esc_url( add_query_arg( 'module', 'representatives', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
-    if ( $arg == 'representatives' ) { print " active"; }
-    print "'>".__( 'My sales representatives', 'doliconnect')."</a>";
+function representatives_menu( $menu, $arg ) {
+    $menu .= "<a href='".esc_url( add_query_arg( 'module', 'representatives', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
+    if ( $arg == 'representatives' ) { $menu .= " active"; }
+    $menu .= "'>".__( 'My sales representatives', 'doliconnect')."</a>";
+    return $menu;
 }
+add_filter( 'settings_doliconnect_menu', 'representatives_menu', 10, 2);
 
 function representatives_module( $url ) {
 global $current_user;
-
     $thirdparty = doliConnect('thirdparty', $current_user, false, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
-
-    print '<div class="card shadow-sm"><div class="card-header">'.__( 'My sales representatives', 'doliconnect').'</div>';
+    
+    $content ='<div class="card shadow-sm"><div class="card-header">'.__( 'My sales representatives', 'doliconnect').'</div>';
 
     $request = "/thirdparties/".$thirdparty->id."/representatives?mode=1";
     $representatives = callDoliApi("GET", $request, null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
  
     if ( !isset( $representatives->error ) && $representatives != null ) {
-        print '<div class="card-body"><div class="row row-cols-1 row-cols-md-2 g-4">';
+        $content .= '<div class="card-body"><div class="row row-cols-1 row-cols-md-2 g-4">';
         foreach ( $representatives as $representative ) { 
-            print doliUserCard($representative, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+            $content .= doliUserCard($representative, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
         }
-        print '</div></div>';
+        $content .= '</div></div>';
     } else {
-        print "<ul class='list-group list-group-flush'><li class='list-group-item list-group-item-light'><center>".__( 'No sales representative', 'doliconnect')."</center></li></ul>";
+        $content .= "<ul class='list-group list-group-flush'><li class='list-group-item list-group-item-light'><center>".__( 'No sales representative', 'doliconnect')."</center></li></ul>";
     }
-    print doliCardFooter($representatives, 'thirdparty');
-    print '</div>';
+    $content .= doliCardFooter($representatives, 'thirdparty');
+    $content .= '</div>';
+return $content;
 }
+add_filter( 'settings_doliconnect_representatives', 'representatives_module', 10, 2);
 
 //*****************************************************************************************
 
@@ -2048,6 +2048,6 @@ global $current_user;
 		}
 		return doli_gdrf_data_request_form( $params ); 
 }
-add_filter( 'settings_doliconnect_gdpr', 'gdpr_module', 10, 2);
+add_filter( 'settings_doliconnect_gdpr', 'gdpr_module', 80, 2);
 
 ?>
