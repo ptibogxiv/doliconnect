@@ -99,12 +99,12 @@ global $current_user;
             } elseif ( has_action('settings_doliconnect_'.esc_attr($_GET['module'])) ) {
               if ( has_action('settings_doliconnect_menu') ) {
                 $content .=  "<div class='list-group shadow-sm'>";
-                do_action('settings_doliconnect_menu', esc_attr($_GET['module']));
+                $content .= apply_filters('settings_doliconnect_menu', null, esc_attr($_GET['module']));
                 $content .=  "</div><br>";
               }
               $content .=  "</div></div></div>";
               $content .=  "<div class='col-xs-12 col-sm-12 col-md-9'>";
-              do_action( 'settings_doliconnect_'.esc_attr($_GET['module']), esc_url( add_query_arg( 'module', esc_attr($_GET['module']), doliconnecturl('doliaccount')) ) ); 
+              $content .= apply_filters('settings_doliconnect_'.esc_attr($_GET['module']), $content, esc_url( add_query_arg( 'module', esc_attr($_GET['module']), doliconnecturl('doliaccount')) ) ); 
             } else {
               wp_redirect( esc_url(doliconnecturl('doliaccount')) );
               exit;
