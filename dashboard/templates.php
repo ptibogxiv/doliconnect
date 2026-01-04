@@ -531,13 +531,6 @@ function dolifaq_display($content) {
   if ( in_the_loop() && is_main_query() && is_page(doliconnectid('dolifaq')) && !empty(doliconnectid('dolifaq')) ) {
     
     doliconnect_enqueues();
-    
-    if (dolicheckie($_SERVER['HTTP_USER_AGENT'])) {
-      print '<div class="card shadow-sm">';
-      print '<div class="card-body">';
-      print dolicheckie($_SERVER['HTTP_USER_AGENT']);
-      print "</div></div>";
-    } else {
       $limit=10;
       if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']); }  else { $page = 0; }
       $request = "/knowledgemanagement/knowledgerecords?sortfield=t.rowid&sortorder=ASC&limit=".$limit."&page=".$page."&pagination_data=true&sqlfilters=(t.status:=:'1')and((t.lang:in:'0','".doliUserLang($current_user)."'))";
@@ -546,31 +539,31 @@ function dolifaq_display($content) {
       if ( doliversion('21.0.0') && isset($object->data) ) { $listfaq = $object->data; } else { $listfaq = $object; }
 
       $url = doliconnecturl('dolifaq');
-      print '<div class="card"><div class="card-header">'.__( 'Knowledge base', 'doliconnect').'</div>';
-      print '<div class="card-body">';
-      print '</div>';
-      print '<div class="accordion accordion-flush" id="accordionDolifaq">';
+      $content = '<div class="card"><div class="card-header">'.__( 'Knowledge base', 'doliconnect').'</div>';
+      $content .= '<div class="card-body">';
+      $content .= '</div>';
+      $content .= '<div class="accordion accordion-flush" id="accordionDolifaq">';
       if ( !isset( $listfaq->error ) && $listfaq != null ) {
         foreach ( $listfaq as $postfaq ) { 
-          print '<div class="accordion-item"><h2 class="accordion-header" id="flush-headingDolifaq'.$postfaq->id.'">';
-          print '<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseDolifaq'.$postfaq->id.'" aria-expanded="false" aria-controls="flush-collapseDolifaq'.$postfaq->id.'">';
-          print $postfaq->question;
-          print '</button></h2>
+          $content .= '<div class="accordion-item"><h2 class="accordion-header" id="flush-headingDolifaq'.$postfaq->id.'">';
+          $content .= '<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseDolifaq'.$postfaq->id.'" aria-expanded="false" aria-controls="flush-collapseDolifaq'.$postfaq->id.'">';
+          $content .= $postfaq->question;
+          $content .= '</button></h2>
           <div id="flush-collapseDolifaq'.$postfaq->id.'" class="accordion-collapse collapse" aria-labelledby="flush-headingDolifaq'.$postfaq->id.'" data-bs-parent="#accordionDolifaq">
           <div class="accordion-body">'.$postfaq->answer;
           //print doliCardFooter($request, 'agenda', $object);
-          if (!empty(doliconnect_categories('knowledgemanagement', $postfaq, doliconnecturl('dolifaq')))) print '<br>'.doliconnect_categories('knowledgemanagement', $postfaq, doliconnecturl('dolifaq'));
-          print '</div></div></div>';
+          if (!empty(doliconnect_categories('knowledgemanagement', $postfaq, doliconnecturl('dolifaq')))) $content .= '<br>'.doliconnect_categories('knowledgemanagement', $postfaq, doliconnecturl('dolifaq'));
+          $content .= '</div></div></div>';
         }
       }
-    print '</div>';
+    $content .= '</div>';
 
-    print '<div class="card-body">';
-    print doliPagination($object, $url, $page);
-    print '</div>';
-    print doliCardFooter($object, 'knowledgemanagement');
-    print '</div>';
-  }
+    $content .= '<div class="card-body">';
+    $content .= doliPagination($object, $url, $page);
+    $content .= '</div>';
+    $content .= doliCardFooter($object, 'knowledgemanagement');
+    $content .= '</div>';
+  return $content;
 } else {
   return $content;
 }
