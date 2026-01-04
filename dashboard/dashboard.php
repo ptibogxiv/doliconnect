@@ -251,15 +251,17 @@ add_action( 'user_doliconnect_avatars', 'avatars_module');
 //*****************************************************************************************
 
 if ( empty(doliconst('MAIN_DISABLE_CONTACTS_TAB')) && doliCheckRights('societe', 'contact', 'lire') ) {
-    add_action( 'user_doliconnect_menu', 'contacts_menu', 3, 1);
+
     add_action( 'user_doliconnect_contacts', 'contacts_module');
 }
 
-function contacts_menu($arg) {
-    print "<a href='".esc_url( add_query_arg( 'module', 'contacts', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
-    if ( $arg == 'contacts' ) { print " active"; }
-    print "'>".__( 'Manage address book', 'doliconnect')."</a>";
+function contacts_menu( $menu, $arg) {
+    $menu .= "<a href='".esc_url( add_query_arg( 'module', 'contacts', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
+    if ( $arg == 'contacts' ) { $menu .= " active"; }
+    $menu .= "'>".__( 'Manage address book', 'doliconnect')."</a>";
+    return $menu;
 }
+add_filter( 'user_doliconnect_menu', 'contacts_menu', 30, 2);
 
 function contacts_module($url){
 global $current_user;
@@ -343,15 +345,16 @@ global $current_user;
 //*****************************************************************************************
 
 if ( doliversion('20.0.0') && doliCheckModules('notification') && !empty(get_option('doliconnectbeta')) ) {
-    add_action( 'user_doliconnect_menu', 'notifications_menu', 4, 1);
     add_action( 'user_doliconnect_notifications', 'notifications_module');
 }
 
-function notifications_menu( $arg ) {
-    print "<a href='".esc_url( add_query_arg( 'module', 'notifications', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
-    if ($arg=='notifications') { print " active";}
-    print "'>".__( 'Manage notifications', 'doliconnect')."</a>";
+function notifications_menu( $menu, $arg ) {
+    $menu .= "<a href='".esc_url( add_query_arg( 'module', 'notifications', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
+    if ($arg == 'notifications') { $menu .= " active";}
+    $menu .= "'>".__( 'Manage notifications', 'doliconnect')."</a>";
+    return $menu;
 }
+add_filter( 'user_doliconnect_menu', 'notifications_menu', 40, 2);
 
 function notifications_module( $url ) {
 global $current_user;
@@ -389,18 +392,19 @@ global $current_user;
 
 //*****************************************************************************************
 
-add_action( 'user_doliconnect_menu', 'paymentmethods_menu', 5, 1);
 add_action( 'user_doliconnect_paymentmethods', 'paymentmethods_module');
 
 function dolipaymentmodes_lock() {
     return apply_filters( 'doliconnect_paymentmethods_lock', null);
 }
 
-function paymentmethods_menu( $arg ) {
-    print "<a href='".esc_url( add_query_arg( 'module', 'paymentmethods', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
-    if ($arg=='paymentmethods') { print " active";}
-    print "'>".__( 'Manage payment methods', 'doliconnect')."</a>";
+function paymentmethods_menu( $menu, $arg ) {
+    $menu .= "<a href='".esc_url( add_query_arg( 'module', 'paymentmethods', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
+    if ($arg == 'paymentmethods') { $menu .= " active";}
+    $menu .= "'>".__( 'Manage payment methods', 'doliconnect')."</a>";
+    return $menu;
 }
+add_filter( 'user_doliconnect_menu', 'paymentmethods_menu', 50, 2);
 
 function paymentmethods_module( $url ) {
     print doliconnect_paymentmethods(null, null, $url, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
