@@ -71,7 +71,7 @@ $time = current_time( 'timestamp', 1);
 $adherent = doliConnect('member', $current_user, false, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 
 require_once ABSPATH . WPINC . '/class-phpass.php';
-
+$content = null;
 if ( ! function_exists( 'wp_handle_upload' ) ) {
     require_once( ABSPATH . 'wp-admin/includes/file.php' );
 }
@@ -216,35 +216,35 @@ $adherent = callDoliApi("PUT", "/members/".$adherent->id, $data, dolidelay('memb
 }
 
 } else {
-print dolialert ('warning', "Votre photo n'a pu être chargée. Elle doit obligatoirement être au format .jpg et faire moins de 10 Mo. Taille minimum requise 350x350 pixels.");
+$content .= dolialert ('warning', "Votre photo n'a pu être chargée. Elle doit obligatoirement être au format .jpg et faire moins de 10 Mo. Taille minimum requise 350x350 pixels.");
 }
 }
 
-print dolialert ('success', __( 'Your informations have been updated.', 'doliconnect'));
+$content .= dolialert ('success', __( 'Your informations have been updated.', 'doliconnect'));
 }
 
-print "<form action='".$url."' id='doliconnect-avatarform' method='post' class='was-validated' enctype='multipart/form-data'><input type='hidden' name='case' value='updateavatar'>";
+$content .= "<form action='".$url."' id='doliconnect-avatarform' method='post' class='was-validated' enctype='multipart/form-data'><input type='hidden' name='case' value='updateavatar'>";
 
-print '<div class="card shadow-sm"><div class="card-header">'.__( 'Edit my avatar', 'doliconnect').'</div>';
-print '<ul class="list-group list-group-flush"><li class="list-group-item">';
+$content .='<div class="card shadow-sm"><div class="card-header">'.__( 'Edit my avatar', 'doliconnect').'</div>';
+$content .='<ul class="list-group list-group-flush"><li class="list-group-item">';
 
-print '<div class="mb-2"><div class="input-group mb-2"><div class="input-group-text">
+$content .='<div class="mb-2"><div class="input-group mb-2"><div class="input-group-text">
 <input id="doliavatar" name="doliavatar" value="1" class="form-check-input mt-0" type="radio" aria-label="Radio button for following text input" checked>
 </div>
 <input type="file" id="inputavatar" name="inputavatar" accept="image/*" class="form-control" id="inputGroupFile03" aria-describedby="doliavatarHelp" aria-label="Upload">
 </div><div id="doliavatarHelp" class="form-text">'.__( 'Your avatar must be a .jpg/.jpeg file, <10Mo and 350x350pixels minimum.', 'doliconnect').'</div></div>';
 
-print '<div class="input-group"><div class="input-group-text">
+$content .='<div class="input-group"><div class="input-group-text">
 <input id="doliavatar" name="doliavatar" value="0" class="form-check-input mt-0" type="radio" aria-label="Radio button for following text input">
 </div>
 <input type="text" class="form-control" aria-label="Text input with radio button" value="'.__( 'Delete your picture', 'doliconnect').'" readonly>
 </div>';
 
-print '</li>';
-print "</ul><div class='card-body'><input type='hidden' name='userid' value='$ID'><div class='d-grid gap-2'><button class='btn btn-outline-secondary' type='submit'>".__( 'Update', 'doliconnect')."</button></div></div>";
-if (isset($request) && isset($thirdparty)) print doliCardFooter($request, 'thirdparty', $thirdparty);
-print '</div></form>';
-
+$content .='</li>';
+$content .="</ul><div class='card-body'><input type='hidden' name='userid' value='$ID'><div class='d-grid gap-2'><button class='btn btn-outline-secondary' type='submit'>".__( 'Update', 'doliconnect')."</button></div></div>";
+if (isset($request) && isset($thirdparty)) $content .= doliCardFooter($request, 'thirdparty', $thirdparty);
+$content .='</div></form>';
+return $content;
 }
 add_filter( 'user_doliconnect_avatars', 'avatars_module', 10, 2);
 
