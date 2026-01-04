@@ -252,8 +252,6 @@ add_action( 'user_doliconnect_avatars', 'avatars_module');
 
 if ( empty(doliconst('MAIN_DISABLE_CONTACTS_TAB')) && doliCheckRights('societe', 'contact', 'lire') ) {
 
-}
-
 function contacts_menu( $menu, $arg) {
     $menu .= "<a href='".esc_url( add_query_arg( 'module', 'contacts', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
     if ( $arg == 'contacts' ) { $menu .= " active"; }
@@ -341,6 +339,8 @@ global $current_user;
     return $content;
 }
 add_filter( 'user_doliconnect_contacts', 'contacts_module', 10, 2);
+
+}
 
 //*****************************************************************************************
 
