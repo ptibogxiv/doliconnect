@@ -338,7 +338,7 @@ function doliPagination($object, $url, $page = 0) {
     if (!empty($page)) {
     $pagination .= '<li class="page-item">
         <a class="page-link" href="'.esc_url( add_query_arg( array( 'pg' => esc_attr($page-1)), $url) ).'" aria-label="Previous">
-          <span class="sr-only"><i class="fas fa-angle-left"></i> '.__( 'Previous','doliconnect').'</span>
+          <i class="fas fa-angle-left"></i> '.__( 'Previous','doliconnect').'
         </a>
       </li>';
     }
@@ -351,7 +351,7 @@ function doliPagination($object, $url, $page = 0) {
     if (($object->pagination->page + 1) < $object->pagination->page_count) {
     $pagination .= '<li class="page-item">
         <a class="page-link" href="'.esc_url( add_query_arg( array( 'pg' => esc_attr($page+1)), $url) ).'" aria-label="Next">
-          <span class="sr-only">'.__( 'Next', 'doliconnect').' <i class="fas fa-angle-right"></i></span>
+          '.__( 'Next', 'doliconnect').' <i class="fas fa-angle-right"></i>
         </a>
       </li>';
     }
