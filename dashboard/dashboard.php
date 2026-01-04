@@ -2168,13 +2168,4 @@ global $current_user;
 		}
 		print doli_gdrf_data_request_form( $params ); 
 }
-
-//*****************************************************************************************
-add_action( 'settings_doliconnect_menu', 'logout_menu', 4, 1);
-
-function logout_menu($arg) {
-    print "<a href='".wp_logout_url( home_url() )."' class='list-group-item list-group-item-light list-group-item-action";
-    if ($arg=='logout') { print " active";}
-    print "'>".__( 'Sign out', 'doliconnect')."</a>";
-}
 ?>

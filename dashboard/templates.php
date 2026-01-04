@@ -150,21 +150,21 @@ global $current_user;
               $content .=  apply_filters('member_doliconnect_menu', null, null);
               $content .=  "</ul></div><br>";
             }
-            if ( has_action('supplier_doliconnect_menu') && isset($thirdparty->fournisseur) && !empty($thirdparty->fournisseur)) {
+            if ( has_filter('supplier_doliconnect_menu') && isset($thirdparty->fournisseur) && !empty($thirdparty->fournisseur)) {
               $content .=  '<div class="card shadow-sm"><div class="card-header">'.sprintf(__('%s My supplies', 'doliconnect'), '<i class="fa-solid fa-boxes-packing"></i>').'</div><ul class="list-group list-group-flush">';
-              do_action('supplier_doliconnect_menu');
+              $content .=  apply_filters('supplier_doliconnect_menu', null, null);
               $content .=  "</ul></div><br>";
             }
-            if ( has_action('grh_doliconnect_menu') ) {
+            if ( has_filter('grh_doliconnect_menu') ) {
               $content .=  '<div class="card shadow-sm"><div class="card-header">'.sprintf(__('%s My human resources', 'doliconnect'), '<i class="fa-solid fa-user-tie"></i>').'</div><ul class="list-group list-group-flush">';
-              do_action('grh_doliconnect_menu');
+              $content .=  apply_filters('grh_doliconnect_menu', null, null);
               $content .=  "</ul></div><br>";
             }
-            if ( has_action('settings_doliconnect_menu') ) {
-              $content .=  '<div class="card shadow-sm"><div class="card-header">'.sprintf(__('%s My settings & contacts', 'doliconnect'), '<i class="fa-solid fa-user-gear"></i>').'</div><ul class="list-group list-group-flush">';
-              do_action('settings_doliconnect_menu');
-              $content .=  "</ul></div><br>";
-            }
+            $content .=  '<div class="card shadow-sm"><div class="card-header">'.sprintf(__('%s My settings & contacts', 'doliconnect'), '<i class="fa-solid fa-user-gear"></i>').'</div><ul class="list-group list-group-flush">';
+            $content .=  apply_filters('settings_doliconnect_menu', null, null);
+            $content .=  "<a href='".wp_logout_url( home_url() )."' class='list-group-item list-group-item-light list-group-item-action";
+            $content .=  "'>".__( 'Sign out', 'doliconnect')."</a>";
+            $content .=  "</ul></div><br>";
             $content .=  "</div>";
           }
           $content .=  "</div>";
