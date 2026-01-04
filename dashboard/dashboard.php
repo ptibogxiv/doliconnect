@@ -2146,16 +2146,16 @@ function generate_license($suffix = null) {
 }
 
 //*****************************************************************************************
-add_action( 'settings_doliconnect_menu', 'gdpr_menu', 3, 1);
-add_action( 'settings_doliconnect_gdpr', 'gdpr_module');
 
-function gdpr_menu($arg) {
-    print "<a href='".esc_url( add_query_arg( 'module', 'gdpr', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
-    if ($arg=='gdpr') { print " active";}
-    print "'>".__( 'Privacy', 'doliconnect')."</a>";
+function gdpr_menu( $menu, $arg) {
+    $menu .= "<a href='".esc_url( add_query_arg( 'module', 'gdpr', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
+    if ($arg=='gdpr') { $menu .= " active";}
+    $menu .= "'>".__( 'Privacy', 'doliconnect')."</a>";
+    return $menu;
 }
+add_filter( 'settings_doliconnect_menu', 'gdpr_menu', 30, 2);
 
-function gdpr_module($url) {
+function gdpr_module( $content, $url) {
 global $current_user;
 
 		$params = array();
@@ -2166,6 +2166,8 @@ global $current_user;
 				$params['request_type'] = 'remove';
 			}
 		}
-		print doli_gdrf_data_request_form( $params ); 
+		return doli_gdrf_data_request_form( $params ); 
 }
+add_filter( 'settings_doliconnect_gdpr', 'gdpr_module', 10, 2);
+
 ?>
