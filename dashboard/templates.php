@@ -1118,13 +1118,11 @@ if ( defined("DOLIBUG") ) {
   $content .=  "</div></div>";
 } else {
   if ( current_user_can('administrator') && !empty(get_option('doliconnectbeta')) ) {
-
-if ( isset($_GET['checkout']) && wp_verify_nonce( $_GET['checkout'], 'dolicart-'.$object->id.'-'.$current_user->ID) && ((isset($object->lines) && $object->lines != null && $object->statut == 0 && !isset($_GET['module']) ) || ( ($_GET['module'] == 'orders' && $object->billed != 1 ) || ($_GET['module'] == 'invoices' && $object->paye != 1) )) && $object->socid == $thirdparty->id ) {
- $content .=  'finish checkout';
-} else {
- $content .=  doliOffcanvasCart($current_user);
-}
-
+    if ( isset($_GET['checkout']) && wp_verify_nonce( $_GET['checkout'], 'dolicart-'.$object->id.'-'.$current_user->ID) && ((isset($object->lines) && $object->lines != null && $object->statut == 0 && !isset($_GET['module']) ) || ( ($_GET['module'] == 'orders' && $object->billed != 1 ) || ($_GET['module'] == 'invoices' && $object->paye != 1) )) && $object->socid == $thirdparty->id ) {
+    $content .=  'finish checkout';
+    } else {
+    $content .=  doliOffcanvasCart($current_user);
+    }
   } else {
 if ( isset($_GET['step']) && $_GET['step'] == 'validation' && isset($_GET['cart']) && wp_verify_nonce( $_GET['cart'], 'valid_dolicart-'.$object->id) && ((isset($object->lines) && $object->lines != null && $object->statut == 0 && !isset($_GET['module']) ) || ( ($_GET['module'] == 'orders' && $object->billed != 1 ) || ($_GET['module'] == 'invoices' && $object->paye != 1) )) && $object->socid == $thirdparty->id ) {
 
