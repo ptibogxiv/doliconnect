@@ -54,7 +54,7 @@ global $current_user;
             if ( has_filter('user_doliconnect_'.esc_attr($_GET['module'])) ) {
               if ( has_filter('user_doliconnect_menu') ) {
                 $content .= "<div class='list-group shadow-sm'>";
-                $content .= apply_filters('user_doliconnect_menu', $content, esc_attr($_GET['module']));
+                $content .= apply_filters('user_doliconnect_menu', null, esc_attr($_GET['module']));
                 $content .= "</div><br>";
               }
               $content .=  "</div></div></div>";
@@ -63,7 +63,7 @@ global $current_user;
             } elseif ( has_filter('customer_doliconnect_'.esc_attr($_GET['module'])) && isset($thirdparty->client) && !empty($thirdparty->client)) {
               if ( has_filter('customer_doliconnect_menu') ) {
                 $content .=  "<div class='list-group shadow-sm'>";
-                $content .= apply_filters('customer_doliconnect_menu', $content, esc_attr($_GET['module']));
+                $content .= apply_filters('customer_doliconnect_menu', null, esc_attr($_GET['module']));
                 $content .=  "</div><br>";
               }
               $content .=  "</div></div></div>";
@@ -137,17 +137,17 @@ global $current_user;
 
             if ( has_filter('user_doliconnect_menu') ) {
               $content .=  '<div class="card shadow-sm"><div class="card-header">'.sprintf(__('%s My profil', 'doliconnect'), '<i class="fa-solid fa-user"></i>').'</div><ul class="list-group list-group-flush">';
-              $content .=  apply_filters('user_doliconnect_menu', $content, null);
+              $content .=  apply_filters('user_doliconnect_menu', null, null);
               $content .=  "</ul></div><br>";
             }  
             if ( has_filter('customer_doliconnect_menu') && isset($thirdparty->client) && !empty($thirdparty->client)) {
               $content .=  '<div class="card shadow-sm"><div class="card-header">'.sprintf(__('%s My purchases', 'doliconnect'), '<i class="fa-solid fa-bag-shopping"></i>').'</div><ul class="list-group list-group-flush">';
-              $content .=  apply_filters('customer_doliconnect_menu', $content, null);
+              $content .=  apply_filters('customer_doliconnect_menu', null, null);
               $content .=  "</ul></div><br>";
             }
             if ( has_filter('member_doliconnect_menu') ) {
               $content .=  '<div class="card shadow-sm"><div class="card-header">'.sprintf(__('%s My membership', 'doliconnect'), '<i class="fa-solid fa-user-plus"></i>').'</div><ul class="list-group list-group-flush">';
-              $content .=  apply_filters('member_doliconnect_menu', $content, null);
+              $content .=  apply_filters('member_doliconnect_menu', null, null);
               $content .=  "</ul></div><br>";
             }
             if ( has_action('supplier_doliconnect_menu') && isset($thirdparty->fournisseur) && !empty($thirdparty->fournisseur)) {
