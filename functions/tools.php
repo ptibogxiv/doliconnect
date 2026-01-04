@@ -1576,7 +1576,7 @@ function dolidelay($delay = null, $refresh = false, $protect = false) {
 
 function doliCardFooter($object, $delay, $request = null) {
   if (isset($object->request)) $request = $object->request;
-  $request = substr($request, 0, 172);
+  if (!empty($request)) $request = substr($request, 0, 172);
   $footer = '<div class="card-footer text-muted">';
   $footer .= "<small><div class='float-start'>";
   if ( isset($request) )  {
