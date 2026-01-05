@@ -414,15 +414,15 @@ add_filter( 'user_doliconnect_paymentmethods', 'paymentmethods_module', 10, 2);
 //*****************************************************************************************
 
 if ( doliCheckModules('propal') && doliCheckRights('propal', 'lire') ) {
-    add_action( 'customer_doliconnect_menu', 'proposals_menu', 1, 1);
     add_action( 'customer_doliconnect_proposals', 'proposals_module');
-}
 
-function proposals_menu( $arg ) {
-    print "<a href='".esc_url( add_query_arg( 'module', 'proposals', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
-    if ( $arg == 'proposals' ) { print " active";}
-    print "'>".__( 'Proposals tracking', 'doliconnect')."</a>";
+function proposals_menu( $menu, $arg ) {
+    $menu .= "<a href='".esc_url( add_query_arg( 'module', 'proposals', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
+    if ( $arg == 'proposals' ) { $menu .= " active";}
+    $menu .= "'>".__( 'Proposals tracking', 'doliconnect')."</a>";
+    return $menu;
 }
+add_filter( 'customer_doliconnect_menu', 'proposals_menu', 10, 2);
 
 function proposals_module( $url ) {
 global $current_user;
@@ -500,19 +500,20 @@ print '</div>';
         print "</div>";
     }
 }
+}
 
 //*****************************************************************************************
 
 if ( doliCheckModules('commande') && doliCheckRights('commande', 'lire') ) {
-    add_action( 'customer_doliconnect_menu', 'orders_menu', 2, 1);
     add_action( 'customer_doliconnect_orders', 'orders_module');
-}
 
-function orders_menu( $arg ) {
-print "<a href='".esc_url( add_query_arg( 'module', 'orders', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
-if ( $arg == 'orders' ) { print " active"; }
-print "'>".__( 'Orders tracking', 'doliconnect')."</a>";
+function orders_menu( $menu, $arg ) {
+    $menu .= "<a href='".esc_url( add_query_arg( 'module', 'orders', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
+    if ( $arg == 'orders' ) { $menu .= " active"; }
+    $menu .= "'>".__( 'Orders tracking', 'doliconnect')."</a>";
+    return $menu;
 }
+add_filter( 'customer_doliconnect_menu', 'orders_menu', 20, 2);
 
 function orders_module( $url ) {
 global $current_user;
@@ -762,19 +763,20 @@ $fruits[$ship->date_creation] = array(
         print "</div>";
     }
 }
+}
 
 //*****************************************************************************************
 
 if ( doliCheckModules('facture') && get_option('doliconnectdisplayinvoice') && doliCheckRights('facture', 'lire') ) {
-    add_action( 'customer_doliconnect_menu', 'invoices_menu', 2, 1);
     add_action( 'customer_doliconnect_invoices', 'invoices_module');
-}
 
-function invoices_menu( $arg ) {
-    print "<a href='".esc_url( add_query_arg( 'module', 'invoices', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
-    if ( $arg == 'invoices' ) { print " active"; }
-    print "'>".__( 'Invoices tracking', 'doliconnect')."</a>";
+function invoices_menu( $menu, $arg ) {
+    $menu .= "<a href='".esc_url( add_query_arg( 'module', 'invoices', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
+    if ( $arg == 'invoices' ) { $menu .= " active"; }
+    $menu .= "'>".__( 'Invoices tracking', 'doliconnect')."</a>";
+    return $menu;
 }
+add_filter( 'customer_doliconnect_menu', 'invoices_menu', 30, 2);
 
 function invoices_module( $url ) {
 global $current_user;
@@ -998,19 +1000,20 @@ print '</div>';
         print "</div>";
     }
 }
+}
 
 //*****************************************************************************************
 
 if ( doliCheckModules('contrat') && doliCheckRights('contrat', 'lire') ) {
-    add_action( 'customer_doliconnect_menu', 'contracts_menu', 2, 1);
     add_action( 'customer_doliconnect_contracts', 'contracts_module');
-}
 
-function contracts_menu( $arg ) {
-    print "<a href='".esc_url( add_query_arg( 'module', 'contracts', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
-    if ( $arg == 'contracts' ) { print " active"; }
-    print "'>".__( 'Contracts tracking', 'doliconnect')."</a>";
+function contracts_menu( $menu, $arg ) {
+    $menu .= "<a href='".esc_url( add_query_arg( 'module', 'contracts', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
+    if ( $arg == 'contracts' ) { $menu .= " active"; }
+    $menu .= "'>".__( 'Contracts tracking', 'doliconnect')."</a>";
+    return $menu;
 }
+add_filter( 'customer_doliconnect_menu', 'contracts_menu', 40, 2);
 
 function contracts_module( $url ) {
 global $current_user;
@@ -1089,19 +1092,20 @@ global $current_user;
         print "</div>";
     }
 }
+}
 
 //*****************************************************************************************
 
 if ( doliCheckModules('projet') && !empty(get_option('doliconnectbeta')) && doliCheckRights('projet', 'lire') ) {
-    add_action( 'customer_doliconnect_menu', 'projects_menu', 2, 1);
     add_action( 'customer_doliconnect_projects', 'projects_module');
-}
 
-function projects_menu( $arg ) {
-    print "<a href='".esc_url( add_query_arg( 'module', 'projects', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
-    if ( $arg == 'projects' ) { print " active"; }
-    print "'>".__( 'Projets tracking', 'doliconnect')."</a>";
+function projects_menu( $menu, $arg ) {
+    $menu .= "<a href='".esc_url( add_query_arg( 'module', 'projects', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
+    if ( $arg == 'projects' ) { $menu .= " active"; }
+    $menu .= "'>".__( 'Projets tracking', 'doliconnect')."</a>";
+    return $menu;
 }
+add_filter( 'customer_doliconnect_menu', 'projects_menu', 50, 2);
 
 function projects_module( $url ) {
 global $current_user;
@@ -1178,19 +1182,20 @@ print var_dump(doliConnect('order', $current_user, false, true)->id);
         print "</div>";
     }
 }
+}
 
 //*****************************************************************************************
 
 if ( doliCheckModules('don') ) {
-    add_action( 'customer_doliconnect_menu', 'donations_menu', 5, 1);
     add_action( 'customer_doliconnect_donations', 'donations_module');
-}  
 
-function donations_menu( $arg ) {
-    print "<a href='".esc_url( add_query_arg( 'module', 'donations', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
-    if ($arg=='donations') { print " active";}
-    print "'>".__( 'Donations tracking', 'doliconnect')."</a>";
+function donations_menu( $menu, $arg ) {
+    $menu .= "<a href='".esc_url( add_query_arg( 'module', 'donations', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
+    if ($arg=='donations') { $menu .= " active";}
+    $menu .= "'>".__( 'Donations tracking', 'doliconnect')."</a>";
+    return $menu;
 }
+add_filter( 'customer_doliconnect_menu', 'donations_menu', 60, 2);
 
 function donations_module( $url ) {
 global $current_user;
@@ -1272,6 +1277,7 @@ $ID = $current_user->ID;
         print doliCardFooter($object, 'donation');
         print "</div>";
     }
+}
 }
 
 //*****************************************************************************************
