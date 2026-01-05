@@ -798,9 +798,6 @@ $content .= doliObjectInfos($invoicefo);
 $content .= "</div><div class='col-md-7'>";
 $content .= doliObjectStatus($invoicefo, 'invoice', 1);
 $content .= "</div>";
-
-$content .= doliObjectStatus($invoicefo, 'invoice', 3);
-$content .= "</div>";
  
 if ( $invoicefo->paye != 1 && $invoicefo->statut > 0 ) {
 $nonce = wp_create_nonce( 'valid_dolicart-'.$invoicefo->id );
@@ -881,8 +878,7 @@ $content .= "</small></div></div>";
 }
 $content .= "</div><br>";
 
-$content .= '<div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: '.$orderavancement.'%" aria-valuenow="'.$orderavancement.'" aria-valuemin="0" aria-valuemax="100"></div></div>';
-$content .= "<div class='w-auto text-muted d-none d-sm-block' ><div style='display:inline-block;width:20%'>".__( 'order', 'doliconnect')."</div><div style='display:inline-block;width:15%'>".__( 'payment', 'doliconnect')."</div><div style='display:inline-block;width:25%'>".__( 'processing', 'doliconnect')."</div><div style='display:inline-block;width:20%'>".__( 'shipping', 'doliconnect')."</div><div class='text-end' style='display:inline-block;width:20%'>".__( 'delivery', 'doliconnect')."</div></div>";
+$content .= doliObjectStatus($invoicefo, 'invoice', 3);
 
 $content .= "</div><ul class='list-group list-group-flush'>";
  
