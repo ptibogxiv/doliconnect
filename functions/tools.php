@@ -1638,12 +1638,15 @@ function doliObjectStatus($object, $type, $mode = 0) {
       $avancement=25;
     }
     } elseif ($type == 'invoice') {
-      if ( $object->status > 1 ) { 
-        $status = __( 'shipped', 'doliconnect'); 
-        $avancement=100; 
-      } else {
-      $status = __( 'validated', 'doliconnect');
-      $avancement=25;
+    if ( $object->status == '3' ) { 
+      $status = __( 'abandoned', 'doliconnect');
+      $avancement=0;
+    } elseif ( $object->status == '2 ') { 
+      $status = __( 'billed', 'doliconnect');
+      $avancement=100;
+    } elseif ( $object->status == '1' ) { 
+      $status = __( 'to be paid', 'doliconnect');
+      $avancement=33;
     }
   } elseif ($type == 'contract') {
     if ( $object->status == 1 ) { 
