@@ -87,14 +87,14 @@ if ( !empty(get_option('doliconnectbeta')) ) {
   }
 
   function doliproduct_category_add_custom_field($term) {
-    $custom_field_value = isset($term->term_id,) ? get_term_meta($term->term_id, 'doliproduct_custom_field', true) : '';
+    $custom_field_value = isset($term->term_id,) ? get_term_meta($term->term_id, 'doliproduct_category_id', true) : '';
     ?>
     <tr class="form-field">
         <th scope="row">
-            <label for="doliproduct_custom_field"><?php _e('Custom Field', 'doliconnect'); ?></label>
+            <label for="doliproduct_category_id"><?php _e('Category ID', 'doliconnect'); ?></label>
         </th>
         <td>
-            <input type="text" name="doliproduct_custom_field" id="doliproduct_custom_field" value="<?php echo esc_attr($custom_field_value); ?>" />
+            <input type="text" name="doliproduct_category_id" id="doliproduct_category_id" value="<?php echo esc_attr($custom_field_value); ?>" />
             <p class="description"><?php _e('Enter a custom value for this category.', 'doliconnect'); ?></p>
         </td>
     </tr>
@@ -104,8 +104,8 @@ add_action('doliproduct_category_edit_form_fields', 'doliproduct_category_add_cu
 add_action('doliproduct_category_add_form_fields', 'doliproduct_category_add_custom_field');
 
 function doliproduct_category_save_custom_field($term_id) {
-    if (isset($_POST['doliproduct_custom_field'])) {
-        update_term_meta($term_id, 'doliproduct_custom_field', sanitize_text_field($_POST['doliproduct_custom_field']));
+    if (isset($_POST['doliproduct_category_id'])) {
+        update_term_meta($term_id, 'doliproduct_category_id', sanitize_text_field($_POST['doliproduct_category_id']));
     }
 }
 add_action('edited_doliproduct_category', 'doliproduct_category_save_custom_field');
@@ -148,7 +148,7 @@ add_action('save_post', 'doliproduct_save_meta_box');
     global $post;
       if ( is_singular( 'doliproduct' ) && in_the_loop() && is_main_query() ) {
           $custom_field_value = get_post_meta( $post->ID, 'doliproduct_productid', true );
-          $custom_message = '<div>' . sprintf( __( 'This is a doliproduct post. Item N°: %s', 'doliconnect' ), esc_html( $custom_field_value ) ) . '</div>';
+          $custom_message = get_term_link(getDoliProductCategory(4)).'<div>' . sprintf( __( 'This is a doliproduct post. Item N°: %s', 'doliconnect' ), esc_html( $custom_field_value ) ) . '</div>';
           $request = "/products/".esc_attr($custom_field_value)."?includesubproducts=true&includetrans=true";
       $product = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
@@ -253,6 +253,29 @@ function getDoliProductUrl($productid) {
   }
 
   return 'No URL found';
+}
+
+function getDoliProductCategory($catid) {
+  $args = array(
+      'taxonomy'   => 'doliproduct_category',
+      'hide_empty' => false,              
+      'meta_query' => array(
+          array(
+              'key'     => 'doliproduct_category_id',   
+              'value'   => $catid,        
+              'compare' => '=',      
+          ),
+      ),
+  );
+  $terms = get_terms($args);
+  if (is_wp_error($terms)) {
+      return 'Error: ' . $terms->get_error_message();
+  }
+  if (!empty($terms)) {
+      return $terms[0]->term_id;
+  } else {
+      return null;
+  }
 }
 
 }
