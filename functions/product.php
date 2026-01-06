@@ -148,7 +148,7 @@ add_action('save_post', 'doliproduct_save_meta_box');
     global $post;
       if ( is_singular( 'doliproduct' ) && in_the_loop() && is_main_query() ) {
           $custom_field_value = get_post_meta( $post->ID, 'doliproduct_productid', true );
-          $custom_message = get_term_link(getDoliProductCategory(4)).'<div>' . sprintf( __( 'This is a doliproduct post. Item N°: %s', 'doliconnect' ), esc_html( $custom_field_value ) ) . '</div>';
+          $custom_message = '<div>' . sprintf( __( 'This is a doliproduct post. Item N°: %s', 'doliconnect' ), esc_html( $custom_field_value ) ) . '</div>';//get_term_link(getDoliProductCategory(4));
           $request = "/products/".esc_attr($custom_field_value)."?includesubproducts=true&includetrans=true";
       $product = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
@@ -255,29 +255,43 @@ function getDoliProductUrl($productid) {
   return 'No URL found';
 }
 
-function getDoliProductCategory($catid) {
+function getDoliProductCategory($category) {
   $args = array(
       'taxonomy'   => 'doliproduct_category',
       'hide_empty' => false,              
       'meta_query' => array(
           array(
               'key'     => 'doliproduct_category_id',   
-              'value'   => $catid,        
+              'value'   => $category->id,        
               'compare' => '=',      
           ),
       ),
   );
   $terms = get_terms($args);
   if (is_wp_error($terms)) {
-      return 'Error: ' . $terms->get_error_message();
+    return 'Error: ' . $terms->get_error_message();
   }
   if (!empty($terms)) {
-      return $terms[0]->term_id;
+    return $terms[0]->term_id;
   } else {
-      return null;
-  }
-}
+    $term = $category->label;
+    $taxonomy = 'doliproduct_category';
+    $args = array(
+      'description' => $category->description,
+      //'slug' => 'football-blogs',
+      //'parent' => 0
+    );
 
+    $result = wp_insert_term($term, $taxonomy, $args);
+
+    if (is_wp_error($result)) {
+      return 'Error: ' . $result->get_error_message();
+    } else {
+      return $result['term_id'];
+    }
+  }  
+
+  }
 }
 
 function doliproduct($object, $value) {

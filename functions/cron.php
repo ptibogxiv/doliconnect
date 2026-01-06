@@ -74,7 +74,7 @@ function doliconnect_cron_process($refresh = false) {
                     $products[$product->id]['entity'] = $product->entity;
                 }
             }
-            getDoliProductCategory($id);
+            //getDoliProductCategory($id);
         }
  
         foreach ($products as $id => $product) {
