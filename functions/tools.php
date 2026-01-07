@@ -82,7 +82,8 @@ function doliConnect($fonction, $current_user = null, $boolean = false, $refresh
         }
         $rdr = [
           'key_account'  => $current_user->ID,
-          'site' => 'wordpress'
+          'site' => 'wordpress',
+          'status' => 1
         ];
         $thirdparty = callDoliApi("POST", "/thirdparties/".$thirdparty->id."/accounts", $rdr, dolidelay('doliconnector', $refresh));
         $thirdparty = callDoliApi("GET", "/thirdparties/accounts/wordpress/".$current_user->ID, null, dolidelay('doliconnector', true));
