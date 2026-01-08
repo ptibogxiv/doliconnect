@@ -279,7 +279,6 @@ function getDoliProductCategory($category) {
     $args = array(
       'description' => $category->description,
       //'slug' => 'football-blogs',
-      //'parent' => 0
     );
 
     $result = wp_insert_term($term, $taxonomy, $args);
@@ -287,6 +286,7 @@ function getDoliProductCategory($category) {
     if (is_wp_error($result)) {
       return 'Error: ' . $result->get_error_message();
     } else {
+      update_term_meta($result['term_id'], 'doliproduct_category_id', sanitize_text_field($category->id));
       return $result['term_id'];
     }
   }  
