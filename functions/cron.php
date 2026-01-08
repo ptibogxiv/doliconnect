@@ -47,6 +47,7 @@ function doliconnect_cron_process($refresh = false) {
                     $categories[$category->id] = $category->id;
                     $subcategories[$category->id] = $category->id;
                     doliconnect_image('category', $category->id, 1, $refresh, $category->entity);
+                    getDoliProductCategory($category);
                 }
             }
         }
@@ -59,6 +60,7 @@ function doliconnect_cron_process($refresh = false) {
                     foreach ($resultatsc->childs as $category) {
                         $categories[$category->id] = $category->id;
                         doliconnect_image('category', $category->id, 1, $refresh, $category->entity);
+                        getDoliProductCategory($category);
                     }
                 }
             }
