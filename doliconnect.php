@@ -80,11 +80,11 @@ function doliconnect_run66() {
 add_filter( 'plugin_action_links_'.plugin_basename( __FILE__ ), 'doliconnect_settings_action_links', 10, 2 );
 function doliconnect_settings_action_links( $links, $file ) {
   // lien vers les widgets
-  $mylink = '<a href="' . admin_url( 'widgets.php' ) . '">' . __( 'Widgets' ) . '</a>'; 
-  array_push( $links, $mylink );
+  //$mylink = '<a href="' . admin_url( 'widgets.php' ) . '">' . __( 'Widgets' ) . '</a>'; 
+  //array_push( $links, $mylink );
 
     // liens vers les articles
-  $links[] = '<a href="' . admin_url( 'edit.php' ) . '">' . __( 'Posts' ) . '</a>';
+  //$links[] = '<a href="' . admin_url( 'edit.php' ) . '">' . __( 'Posts' ) . '</a>';
 
   // lien vers la page de config de ce plugin
   array_unshift( $links, '<a href="' . admin_url( 'admin.php?page=ptibogxiv_management_page' ) . '">' . __( 'Settings' ) . '</a>' );
@@ -96,7 +96,7 @@ add_filter( 'plugin_row_meta', 'doliconnect_plugin_row_meta', 10, 2 );
 function doliconnect_plugin_row_meta( $links, $file ) {    
     if ( plugin_basename( __FILE__ ) == $file ) {
         $row_meta = array(
-            'docs'    => '<a href="' . esc_url( 'https://webkul.com/blog/' ) . '" target="_blank" aria-label="' . esc_attr__( 'Plugin Additional Links', 'doliconnect' ) . '" style="color:green;">' . esc_html__( 'Docs', 'doliconnect' ) . '</a>',
+            'docs'    => '<a href="' . esc_url( 'https://ptibogxiv.eu' ) . '" target="_blank" aria-label="' . esc_attr__( 'Plugin Additional Links', 'doliconnect' ) . '" style="color:green;">' . esc_html__( 'Docs', 'doliconnect' ) . '</a>',
             'github'    => '<a href="' . esc_url( 'https://github.com/ptibogxiv/doliconnect' ) . '" target="_blank" aria-label="' . esc_attr__( 'Plugin Additional Links', 'doliconnect' ) . '" style="color:green;">' . esc_html__( 'GitHub', 'doliconnect' ) . '</a>',
         );
         return array_merge( $links, $row_meta );
