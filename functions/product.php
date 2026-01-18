@@ -382,6 +382,7 @@ global $current_user;
   $order = doliConnect('order', $current_user, false, $refresh);
   $warehouse = doliconst('DOLICONNECT_ID_WAREHOUSE');
   $stock = callDoliApi("GET", "/products/".$product->id."/stock?selected_warehouse_id=".$warehouse, null, dolidelay('stock', $refresh));
+  $mstock['orderid'] = $order->id;
   if (empty($product->status)) {   
     $mstock['stock'] = 0;
   } elseif (!empty($product->type) && empty(doliconst('STOCK_SUPPORTS_SERVICES'))) {
@@ -442,8 +443,14 @@ global $current_user;
           $mstock['line'] = $line;
           $mstock['array_options'] = $linearray_options;
           $mstock['fk_parent_line'] = $line->fk_parent_line;
+         } elseif (isset($product->id) && $line->fk_product == $product->id) {
+           $mstock['qty'] = $line->qty;
+           $mstock['lineid'] = $line->id;
+           $mstock['line'] = $line;
+           $mstock['array_options'] = $linearray_options;
+           $mstock['fk_parent_line'] = $line->fk_parent_line;
+         }
         }
-      }
     } 
   } else {
     $mstock['qty'] = 0;
@@ -737,6 +744,7 @@ global $current_user;
   }
   $thirdparty = doliConnect('thirdparty', $current_user, false, $refresh);
   $mstock = doliProductStock($product, $refresh, true, $linearray_options, $line);
+  //var_dump($mstock);
   $button = '<div id="doliform-product-'.$product->id.'-'.$mstock['lineid'].'" name="doliform-product-'.$product->id.'" class="d-grid gap-2">';
   if (empty($product->status)) {
     $button .= '<div class="btn-group" role="group" aria-label="Basic example">';
