@@ -147,7 +147,7 @@ add_action('save_post', 'doliproduct_save_meta_box');
     global $post;
       if ( is_singular( 'doliproduct' ) && in_the_loop() && is_main_query() ) {
           $custom_field_value = get_post_meta( $post->ID, 'doliproduct_productid', true );
-          $custom_message = '<div>' . sprintf( __( 'This is a doliproduct post. Item N°: %s', 'doliconnect' ), esc_html( $custom_field_value ) ) . '</div>';
+          $custom_message = '';//<div>' . sprintf( __( 'This is a doliproduct post. Item N°: %s', 'doliconnect' ), esc_html( $custom_field_value ) ) . '</div>';
           $request = "/products/".esc_attr($custom_field_value)."?includesubproducts=true&includetrans=true";
       $product = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
