@@ -4,7 +4,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( !empty(get_option('doliconnectbeta')) ) {
   function doliconnect_dolibarrproduct_init() {
       $labels = array(
           'name'                  => _x( 'Items', 'Post type general name', 'doliconnect' ),
@@ -292,7 +291,6 @@ function getDoliProductCategory($category) {
   }  
 
   }
-}
 
 function doliproduct($object, $value) {
 global $current_user;
