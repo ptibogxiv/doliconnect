@@ -690,6 +690,7 @@ global $current_user;
     $response['items'] = doliconnect_countitems($order);
     $response['lines'] = doliline($order);
     $mstock = doliProductStock($product, true, true, $array_options);
+    $response['line'] = $mstock['lineid'];
     $response['dolicart'] = doliOffcanvasCart( $current_user );
     if (empty($relatedproduct)) $response['newqty'] = $quantity;
     $response['total'] = doliprice($order, 'ttc', isset($order->multicurrency_code) ? $order->multicurrency_code : null);
