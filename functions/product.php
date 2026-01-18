@@ -634,12 +634,12 @@ global $current_user;
     if ( $quantity < 1 ) {
       $deleteline = callDoliApi("DELETE", "/orders/".$order->id."/lines/".$mstock['lineid'], null, 0);
       $order = doliConnect('order', $current_user, false, true);
-      $mstock = doliProductStock($product, true, true, $array_options, 0);
+      $mstock = doliProductStock($product, true, true, $array_options, null);
       $response['message'] = __( 'This item has been deleted to basket', 'doliconnect');
       $response['items'] = doliconnect_countitems($order);
       $response['lines'] = doliline($order);
       $response['dolicart'] = doliOffcanvasCart( $current_user );
-      $response['line'] = 0;
+      $response['line'] = null;
       if (empty($relatedproduct)) $response['newqty'] = 0;
       $response['total'] = doliprice($order, 'ttc', isset($order->multicurrency_code) ? $order->multicurrency_code : null);
       $response['newwish'] = doliProductCart($product, $price, $mstock['line'], true, true, $array_options);
