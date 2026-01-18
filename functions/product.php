@@ -622,8 +622,7 @@ global $current_user;
 	  ];                 
     $addline = callDoliApi("POST", "/orders/".$order->id."/lines", $adln, 0);
     $order = doliConnect('order', $current_user, false, true);
-    $warehouse = doliconst('DOLICONNECT_ID_WAREHOUSE');
-    $stock = callDoliApi("GET", "/products/".$product->id."/stock?selected_warehouse_id=".$warehouse, null, dolidelay('stock', true));
+    $mstock = doliProductStock($product, true, true, $array_options);
     $response['message'] = __( 'This item has been added to basket', 'doliconnect');
     $response['items'] = doliconnect_countitems($order);
     $response['lines'] = doliline($order);
@@ -631,13 +630,13 @@ global $current_user;
     $response['line'] = $addline;
     if (empty($relatedproduct)) $response['newqty'] = $quantity;
     $response['total'] = doliprice($order, 'ttc', isset($order->multicurrency_code) ? $order->multicurrency_code : null);
+    $response['newwish'] = doliProductCart($product, $price, $mstock['line'], true, true, $array_options);
     return $response;
   } elseif ( $order->id > 0 && $mstock['lineid'] > 0 ) {
     if ( $quantity < 1 ) {
       $deleteline = callDoliApi("DELETE", "/orders/".$order->id."/lines/".$mstock['lineid'], null, 0);
       $order = doliConnect('order', $current_user, false, true);
-      $warehouse = doliconst('DOLICONNECT_ID_WAREHOUSE');
-      $stock = callDoliApi("GET", "/products/".$product->id."/stock?selected_warehouse_id=".$warehouse, null, dolidelay('stock', true));
+      $mstock = doliProductStock($product, true, true, $array_options);
       $response['message'] = __( 'This item has been deleted to basket', 'doliconnect');
       $response['items'] = doliconnect_countitems($order);
       $response['lines'] = doliline($order);
@@ -645,6 +644,7 @@ global $current_user;
       $response['line'] = null;
       if (empty($relatedproduct)) $response['newqty'] = 0;
       $response['total'] = doliprice($order, 'ttc', isset($order->multicurrency_code) ? $order->multicurrency_code : null);
+      $response['newwish'] = doliProductCart($product, $price, $mstock['line'], true, true, $array_options);
       return $response;
     } else {
       $uln = [
@@ -673,15 +673,15 @@ global $current_user;
       $updateline = callDoliApi("PUT", "/orders/".$order->id."/lines/".$mstock['lineid'], $uln, 0);
       $order = doliConnect('order', $current_user, false, true);
       $warehouse = doliconst('DOLICONNECT_ID_WAREHOUSE');
-      $stock = callDoliApi("GET", "/products/".$product->id."/stock?selected_warehouse_id=".$warehouse, null, dolidelay('stock', true));
       $response['message'] = __( 'Quantities have been changed', 'doliconnect');
       $response['items'] = doliconnect_countitems($order);
       $response['lines'] = doliline($order);
-      $response['line'] = doliProductStock($product, true, true, $array_options)['line'];
+      $mstock = doliProductStock($product, true, true, $array_options);
       $response['line'] = $mstock['lineid'];
       $response['dolicart'] = doliOffcanvasCart( $current_user );
       if (empty($relatedproduct)) $response['newqty'] = $quantity;
       $response['total'] = doliprice($order, 'ttc', isset($order->multicurrency_code) ? $order->multicurrency_code : null);
+			$response['newwish'] = doliProductCart($product, $price, $mstock['line'], true, true, $array_options);
       return $response;
     }
   } elseif ( $order->id > 0 && is_null($mstock['lineid']) ) {
@@ -689,9 +689,11 @@ global $current_user;
     $response['message'] = __( 'Quantities have been changed', 'doliconnect');
     $response['items'] = doliconnect_countitems($order);
     $response['lines'] = doliline($order);
+    $mstock = doliProductStock($product, true, true, $array_options);
     $response['dolicart'] = doliOffcanvasCart( $current_user );
     if (empty($relatedproduct)) $response['newqty'] = $quantity;
     $response['total'] = doliprice($order, 'ttc', isset($order->multicurrency_code) ? $order->multicurrency_code : null);
+    $response['newwish'] = doliProductCart($product, $price, $mstock['line'], true, true, $array_options);
     return $response;
   } else {
     return false;
