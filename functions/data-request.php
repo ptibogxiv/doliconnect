@@ -802,9 +802,9 @@ global $current_user;
 					'items' => $result['items'],
 					'lines' => $result['lines'],
 					'dolicart' => $result['dolicart'],
-					'total' => $result['total']
-				];	
-				$response['newwish'] = doliProductCart($product, $price, null, null);
+					'total' => $result['total'],
+					'newwish' => $result['newwish'],
+				];
 				delete_transient( $link );  
 				wp_send_json_success($response);	
 				die(); 
@@ -829,10 +829,9 @@ global $current_user;
 					'items' => $result['items'],
 					'lines' => $result['lines'],
 					'dolicart' => $result['dolicart'],
-					'total' => $result['total']
+					'total' => $result['total'],
+					'newwish' => $result['newwish'],
 				];
-				$mstock = doliProductStock($product, true, true, $productarray);
-				$response['newwish'] = doliProductCart($product, $price, $mstock['line'], true, true, $productarray);
 				$object = doliConnect('order', $current_user);
 				$response['js'] = null;
 				$response['modal'] = doliModalTemplate('CartInfos', __( 'Cart', 'doliconnect'), doliline($object, false, false, false), doliCartButton($object), 'modal-lg');
@@ -859,10 +858,9 @@ global $current_user;
 					'items' => $result['items'],
 					'lines' => $result['lines'],
 					'dolicart' => $result['dolicart'],
-					'total' => $result['total']
+					'total' => $result['total'],
+					'newwish' => $result['newwish'],
 					];
-				$mstock = doliProductStock($product, true, true, $productarray);
-				$response['newwish'] = doliProductCart($product, $price, $mstock['line'], true, true, $productarray);
 				if (isset($_POST['DisplayCart']) && !empty($_POST['DisplayCart'])) {
 					$object = doliConnect('order', $current_user);
 					$response['js'] = null;
