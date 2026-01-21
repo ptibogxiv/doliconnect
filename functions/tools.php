@@ -2049,7 +2049,7 @@ global $current_user;
     else { $module2 = $module; }
     $request .= "?type=".$module2."&rowid=".$object->id;
     $currency=strtolower(isset($object->multicurrency_code)?$object->multicurrency_code:'eur');  
-    $stripeAmount=(isset($object->multicurrency_total_ttc)?$object->multicurrency_total_ttc:$object->total_ttc)*100;
+    $stripeAmount=(isset($object->multicurrency_total_ttc)?$object->multicurrency_total_ttc:(isset($object->total_ttc)?$object->total_ttc:0))*100;
   }
 
   $listpaymentmethods = callDoliApi("GET", $request, null, dolidelay('paymentmethods', $refresh));
