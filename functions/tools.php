@@ -4,6 +4,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+
+
 function dolicheckie($server) {
   $return = false;
   $ua = htmlentities($server, ENT_QUOTES, 'UTF-8');
@@ -145,6 +147,7 @@ function doliCheckModules($module, $refresh = false) {
   }
   return $return;
 }
+add_action( 'admin_init', 'doliCheckModules', 5, 1); 
 
   function doliLockPost_meta_box() {
       add_meta_box(
@@ -561,7 +564,7 @@ $cats .= _n( 'Category:', 'Categories:', count($categories), 'doliconnect' );
 foreach ($categories as $category) {
 if ($category->id != doliconst("DOLICONNECT_CATSHOP")) {
 if (!empty($url)) {
-$cats .= " <a href='".esc_url( add_query_arg( 'category', $category->id, $url) )."'";
+$cats .= " <a href='".get_term_link(getDoliProductCategory($category))."'";
 } else { 
 $cats .= " <span ";
 }
@@ -2045,8 +2048,8 @@ global $current_user;
     elseif ($module == 'donations') { $module2 = 'donation'; }
     else { $module2 = $module; }
     $request .= "?type=".$module2."&rowid=".$object->id;
-    $currency=strtolower($object->multicurrency_code?$object->multicurrency_code:'eur');  
-    $stripeAmount=($object->multicurrency_total_ttc?$object->multicurrency_total_ttc:$object->total_ttc)*100;
+    $currency=strtolower(isset($object->multicurrency_code)?$object->multicurrency_code:'eur');  
+    $stripeAmount=(isset($object->multicurrency_total_ttc)?$object->multicurrency_total_ttc:$object->total_ttc)*100;
   }
 
   $listpaymentmethods = callDoliApi("GET", $request, null, dolidelay('paymentmethods', $refresh));
@@ -3477,5 +3480,33 @@ function doliModalDiv() {
   print '</script>';
 }
 add_action( 'wp_footer', 'doliModalDiv' );
+
+/**
+ * Supprime tous les transients du site WordPress
+ * 
+ * @return int Nombre de transients supprimés
+ */
+function doliconnect_delete_all_transients() {
+	global $wpdb;
+	
+	// Supprimer tous les transients normaux
+	$deleted_count = $wpdb->query(
+		"DELETE FROM {$wpdb->options} 
+		WHERE option_name LIKE '\_transient\_%' 
+		OR option_name LIKE '\_transient_timeout\_%'"
+	);
+	
+	// Supprimer tous les site transients (multisite)
+	$deleted_count += $wpdb->query(
+		"DELETE FROM {$wpdb->options} 
+		WHERE option_name LIKE '\_site_transient\_%' 
+		OR option_name LIKE '\_site_transient_timeout\_%'"
+	);
+	
+	// Vider le cache WordPress après suppression
+	wp_cache_flush();
+	
+	return $deleted_count;
+}
 
 ?>
