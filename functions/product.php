@@ -47,7 +47,7 @@ if ( ! defined( 'ABSPATH' ) ) {
           'hierarchical'       => false,
           'menu_position'      => 80,
           'supports'           => array( 'title', 'author', 'editor', 'thumbnail'), //,'comments'
-          //'taxonomies'         => array( 'category', 'post_tag' ),
+          'taxonomies'         => array( 'doliproduct_category' ),
           'show_in_rest'       => true
       );
       
