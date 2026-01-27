@@ -390,7 +390,7 @@ if ( !isset($resultatsc->error) && $resultatsc != null ) {
 	}
 
 	foreach ($resultatsc as $categorie) {
-
+		getDoliProductCategory($categorie);
 		if ( doliversion('19.0.0') ) { 
 			$requestp = "/products?sortfield=t.".$field."&sortorder=".$order."&limit=".$limit."&page=".$page."&category=".$categorie->id."&ids_only=true&pagination_data=true&sqlfilters=(t.tosell:=:1)";
 			$listproduct = callDoliApi("GET", $requestp, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
@@ -405,7 +405,7 @@ if ( !isset($resultatsc->error) && $resultatsc != null ) {
 			}
 		}
 
-		print "<a href='".esc_url( add_query_arg( 'category', $categorie->id, doliconnecturl('dolishop')) )."' class='list-group-item list-group-item-light list-group-item-action d-flex justify-content-between";
+		print "<a href='".get_term_link(getDoliProductCategory($categorie))."' class='list-group-item list-group-item-light list-group-item-action d-flex justify-content-between";
 		if ( isset($_GET['category']) && !isset($_GET['subcategory']) && $categorie->id == $_GET['category']) { print " active"; }
 		print "'>".doliproduct($categorie, 'label')." <span class='badge bg-secondary rounded-pill'>".$count."</span></a>";
 
@@ -427,7 +427,7 @@ if ( !isset($resultatsc->error) && $resultatsc != null ) {
 					$count = count($listproduct);
 					}
 				}
-				print "<a href='".esc_url( add_query_arg( array( 'category' => $_GET['category'], 'subcategory' => $scategorie->id), doliconnecturl('dolishop')) )."' class='list-group-item list-group-item-light list-group-item-action d-flex justify-content-between";
+				print "<a href='".get_term_link(getDoliProductCategory($scategorie))."' class='list-group-item list-group-item-light list-group-item-action d-flex justify-content-between";
 				if ( isset($_GET['subcategory']) && $scategorie->id == $_GET['subcategory'] ) { print " active"; }
 				print "'>>".doliproduct($scategorie, 'label')." <span class='badge bg-secondary rounded-pill'>".$count."</span></a>";
 				}
@@ -438,6 +438,7 @@ if ( !isset($resultatsc->error) && $resultatsc != null ) {
 					$resultatsc = callDoliApi("GET", $request, null, dolidelay('category', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 					if ( !isset($resultatsc->error) && $resultatsc != null) {
 						foreach ($resultatsc->childs as $sscategorie) {
+							getDoliProductCategory($sscategorie);
 								if ( doliversion('19.0.0') ) { 
 									$requestp = "/products?sortfield=t.".$field."&sortorder=".$order."&limit=".$limit."&page=".$page."&category=".$categorie->id."&ids_only=true&pagination_data=true&sqlfilters=(t.tosell:=:1)";
 									$listproduct = callDoliApi("GET", $requestp, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
@@ -451,7 +452,7 @@ if ( !isset($resultatsc->error) && $resultatsc != null ) {
 									$count = count($listproduct);
 									}
 								}
-							print "<a href='".esc_url( add_query_arg( array( 'category' => $_GET['category'], 'subcategory' => $_GET['subcategory'], 'subsubcategory' => $sscategorie->id), doliconnecturl('dolishop')) )."' class='list-group-item list-group-item-light list-group-item-action d-flex justify-content-between";
+							print "<a href='".get_term_link(getDoliProductCategory($sscategorie))."' class='list-group-item list-group-item-light list-group-item-action d-flex justify-content-between";
 							if ( isset($_GET['subsubcategory']) && $sscategorie->id == $_GET['subsubcategory'] ) { print " active"; }
 							print "'>>> ".doliproduct($sscategorie, 'label')." <span class='badge bg-secondary rounded-pill'>".$count."</span></a>";
 						} 
