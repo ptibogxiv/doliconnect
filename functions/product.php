@@ -193,7 +193,7 @@ function my_custom_single_template($single) {
     return $single;
 }
 
-function getDoliProductUrl($productid, $refresh) {
+function getDoliProductUrl($productid, $refresh = false) {
     // Vérifier que l'ID du produit est valide
     if (empty($productid)) {
         return 'Invalid product ID';
