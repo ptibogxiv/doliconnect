@@ -80,6 +80,7 @@ function doliconnect_cron_process($refresh = false) {
         }
  
         foreach ($products as $id => $product) {
+            getDoliProductUrl($product['id'], true);
             $product1 = callDoliApi("GET", "/products/".$product['id']."?includesubproducts=true&includetrans=true", null, dolidelay('product', $refresh));
             doliconnect_image('product', $product['id'], array('limit'=>1, 'entity'=>$product['entity'], 'size'=>'200x200'), $refresh);
             if ( ! empty(doliconnectid('dolicart')) ) {
