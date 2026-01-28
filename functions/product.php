@@ -815,7 +815,8 @@ global $current_user;
       if (!empty($mstock['qty'])) {
         $button .= "<button class='btn btn-sm btn-dark' name='delete' value='delete' type='submit' onclick='doliJavaCartAction(\"updateLine\", ".$product->id.", ".$mstock['lineid'].", 0, ".json_encode($linearray_options, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES).", \"delete\");'><i class='fa-solid fa-trash-can'></i></button>";
       } else {
-        $button .= "<button class='btn btn-sm btn-danger' name='plus' value='plus' type='submit' onclick='doliJavaCartAction(\"updateLine\", ".$product->id.", ".$mstock['lineid'].", 1, ".json_encode($linearray_options, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES).", \"membership\");'>".__('Pay my subscription', 'doliconnect')."</button>";
+        $button .= "<a class='btn btn-block btn-info' href='".esc_url( add_query_arg( 'module', 'members', doliconnecturl('doliaccount')) )."' role='button' title='".__( 'Subscribe', 'doliconnect')."'>".__( 'Subscribe', 'doliconnect').'</a>';
+        //$button .= "<button class='btn btn-sm btn-danger' name='plus' value='plus' type='submit' onclick='doliJavaCartAction(\"updateLine\", ".$product->id.", ".$mstock['lineid'].", 1, ".json_encode($linearray_options, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES).", \"membership\");'>".__('Pay my subscription', 'doliconnect')."</button>";
       }
       $button .= '</div>';
     } else {
