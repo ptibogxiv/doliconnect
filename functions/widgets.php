@@ -326,7 +326,7 @@ if ( !isset($resultatsc->error) && $resultatsc != null ) {
 		print "<div class='list-group'>";
 		if (doliconst("CATEGORIE_RECURSIV_ADD", esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))) { 
 			print "<a href='".esc_url( add_query_arg( 'category', 'all', doliconnecturl('dolishop')) )."' class='list-group-item list-group-item-light list-group-item-action d-flex justify-content-between";
-			if (!isset($_GET['category']) || isset($_GET['category']) && $_GET['category'] == 'all') { print " active"; }
+			if (is_page(doliconnectid('dolishop')) || (isset($_GET['category']) && $_GET['category'] == 'all')) { print " active"; }
 			if ( doliversion('19.0.0') ) { 
 				$requestp = "/products?sortfield=t.".$field."&sortorder=".$order."&limit=".$limit."&page=".$page."&category=".esc_attr($shop)."&ids_only=true&pagination_data=true&sqlfilters=(t.tosell:=:1)";
 				$listproduct = callDoliApi("GET", $requestp, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
@@ -406,7 +406,7 @@ if ( !isset($resultatsc->error) && $resultatsc != null ) {
 		}
 
 		print "<a href='".get_term_link(getDoliProductCategory($categorie))."' class='list-group-item list-group-item-light list-group-item-action d-flex justify-content-between";
-		if ( isset($_GET['category']) && !isset($_GET['subcategory']) && $categorie->id == $_GET['category']) { print " active"; }
+		if ( is_tax('doliproduct_category', getDoliProductCategory($categorie)) || (isset($_GET['category']) && !isset($_GET['subcategory']) && $categorie->id == $_GET['category']) ) { print " active"; }
 		print "'>".doliproduct($categorie, 'label')." <span class='badge bg-secondary rounded-pill'>".$count."</span></a>";
 
 		if ( isset($_GET['category']) && $categorie->id == $_GET['category'] ) {
@@ -428,7 +428,7 @@ if ( !isset($resultatsc->error) && $resultatsc != null ) {
 					}
 				}
 				print "<a href='".get_term_link(getDoliProductCategory($scategorie))."' class='list-group-item list-group-item-light list-group-item-action d-flex justify-content-between";
-				if ( isset($_GET['subcategory']) && $scategorie->id == $_GET['subcategory'] ) { print " active"; }
+				if ( is_tax('doliproduct_category', getDoliProductCategory($scategorie)) || (isset($_GET['subcategory']) && $scategorie->id == $_GET['subcategory'] ) ) { print " active"; }
 				print "'>>".doliproduct($scategorie, 'label')." <span class='badge bg-secondary rounded-pill'>".$count."</span></a>";
 				}
 
@@ -453,7 +453,7 @@ if ( !isset($resultatsc->error) && $resultatsc != null ) {
 									}
 								}
 							print "<a href='".get_term_link(getDoliProductCategory($sscategorie))."' class='list-group-item list-group-item-light list-group-item-action d-flex justify-content-between";
-							if ( isset($_GET['subsubcategory']) && $sscategorie->id == $_GET['subsubcategory'] ) { print " active"; }
+							if ( is_tax('doliproduct_category', getDoliProductCategory($sscategorie)) || (isset($_GET['subsubcategory']) && $sscategorie->id == $_GET['subsubcategory'])) { print " active"; }
 							print "'>>> ".doliproduct($sscategorie, 'label')." <span class='badge bg-secondary rounded-pill'>".$count."</span></a>";
 						} 
 					}
