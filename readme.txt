@@ -7,7 +7,7 @@ Tested up to: 7.0
 Stable tag: 10.0.2
 Requires PHP: 8.2
 License: GPL v3 or later
-Donate link: https://www.paypal.me/ptibogxiv
+Donate link: https://ptibogxiv.eu
 
 This plugin will interface your Dolibarr within a customer interface in WordPress
 
