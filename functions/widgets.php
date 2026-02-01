@@ -409,7 +409,7 @@ if ( !isset($resultatsc->error) && $resultatsc != null ) {
 		if ( is_tax('doliproduct_category', getDoliProductCategory($categorie)) || (isset($_GET['category']) && !isset($_GET['subcategory']) && $categorie->id == $_GET['category']) ) { print " active"; }
 		print "'>".doliproduct($categorie, 'label')." <span class='badge bg-secondary rounded-pill'>".$count."</span></a>";
 
-		if ( isset($_GET['category']) && $categorie->id == $_GET['category'] ) {
+		if ( is_tax('doliproduct_category', getDoliProductCategory($categorie)) || (isset($_GET['category']) && $categorie->id == $_GET['category']) ) {
 			$request = "/categories/".esc_attr(isset($_GET["category"]) ? $_GET["category"] : $shop)."?include_childs=true";
 			$resultatsc = callDoliApi("GET", $request, null, dolidelay('category', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 			if ( !isset($resultatsc->error) && $resultatsc != null ) {
@@ -432,7 +432,7 @@ if ( !isset($resultatsc->error) && $resultatsc != null ) {
 				print "'>>".doliproduct($scategorie, 'label')." <span class='badge bg-secondary rounded-pill'>".$count."</span></a>";
 				}
 
-				if ( isset($_GET['subcategory']) && isset($scategorie) && $scategorie->id == $_GET['subcategory'] ) {
+				if ( is_tax('doliproduct_category', getDoliProductCategory($scategorie)) || isset($_GET['subcategory']) && isset($scategorie) && $scategorie->id == $_GET['subcategory'] ) {
 
 					$request = "/categories/".esc_attr(isset($_GET["subcategory"]) ? $_GET["subcategory"] : $_GET["category"])."?include_childs=true";
 					$resultatsc = callDoliApi("GET", $request, null, dolidelay('category', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
