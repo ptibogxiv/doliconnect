@@ -310,10 +310,6 @@ if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['
 if ( isset($_GET['field']) ) { $field = esc_attr($_GET['field']); } else { $field = 'label'; }
 if ( isset($_GET['order']) ) { $order = esc_attr($_GET['order']); } else { $order = 'ASC'; }
 
-print '<form role="search" method="get" id="shopform" action="' . doliconnecturl('dolishop') . '" ><div class="input-group mb-3">
-<input type="text" name="search" id="search" class="form-control" placeholder="' . esc_attr__('Name, Ref., Description or Barcode', 'doliconnect') . '" aria-label="' . esc_attr__('Name, Ref., Description or Barcode', 'doliconnect') . '" aria-describedby="searchproduct">
-<button class="btn btn-primary" type="submit" id="searchproduct"><i class="fas fa-search"></i></button></div></form>';
-
 if ( $shop != null && $shop > 0 ) {
 	$request = "/categories?sortfield=t.label&sortorder=ASC&limit=100&type=product&sqlfilters=(t.fk_parent:=:".esc_attr($shop).")";
 } else {
