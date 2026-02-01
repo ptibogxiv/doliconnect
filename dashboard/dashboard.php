@@ -1568,11 +1568,11 @@ if ( doliCheckModules('commande') && !empty($productadhesion) ) {
         <div>'.__('Please contact us for more informations or subscribe again.', 'doliconnect').'</div>
         </div>';
     } else { 
-        if ( empty($thirdparty->address) || empty($thirdparty->zip) || empty($thirdparty->town) || empty($thirdparty->country_id) || empty($current_user->billing_type) || empty($current_user->billing_birth) || empty($current_user->user_firstname) || empty($current_user->user_lastname) || empty($current_user->user_email)) {
-            $content .= "Pour adhérer, tous les champs doivent être renseignés dans vos <a href='".esc_url( get_permalink(get_option('doliaccount')))."?module=informations&return=".$url."' class='alert-link'>".__( 'Personal informations', 'doliconnect')."</a></div><div class='col-sm-6 col-md-7'>";
-        } else { 
+        //if ( empty($thirdparty->address) || empty($thirdparty->zip) || empty($thirdparty->town) || empty($thirdparty->country_id) || empty($current_user->billing_type) || empty($current_user->billing_birth) || empty($current_user->user_firstname) || empty($current_user->user_lastname) || empty($current_user->user_email)) {
+            //$content .= "Pour adhérer, tous les champs doivent être renseignés dans vos <a href='".esc_url( get_permalink(get_option('doliaccount')))."?module=informations&return=".$url."' class='alert-link'>".__( 'Personal informations', 'doliconnect')."</a></div><div class='col-sm-6 col-md-7'>";
+        //} else { 
             $content .= doliModalButton('editmembership', 'editmembership', __('Become a member', 'doliconnect'), 'button' , 'btn btn text-white btn-warning btn-block');
-        }
+        //}
     }
     
     if ( isset($adherent->id) && $adherent->id > 0 && !empty($adherent->typeid) ) { 
