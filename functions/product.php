@@ -36,7 +36,8 @@ if ( ! defined( 'ABSPATH' ) ) {
           'labels'             => $labels,
           'description'        => __( 'Item custom post type.', 'doliconnect' ), 
           'menu_icon'          => 'dashicons-products',
-          'public'             => true,
+          'public' => true,
+          'exclude_from_search' => false,
           'publicly_queryable' => true,
           'show_ui'            => true,
           'show_in_menu'       => true,
@@ -192,6 +193,15 @@ function my_custom_single_template($single) {
     // Fallback to the default template
     return $single;
 }
+
+function themesdna_add_custom_post_types_to_search( $query ) {
+    // Check if it's the main search query and not in the admin area
+    if ( $query->is_search() && $query->is_main_query() && !is_admin() ) {
+        // Include the 'recipes' post type in search results
+        $query->set( 'post_type', array( 'post', 'doliproduct' ) );
+    }
+}
+add_action( 'pre_get_posts', 'themesdna_add_custom_post_types_to_search' );
 
 function getDoliProductUrl($productid, $refresh = false) {
     // Vérifier que l'ID du produit est valide
