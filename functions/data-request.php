@@ -784,13 +784,7 @@ global $current_user;
 		if ( isset($_POST['case']) && $_POST['case'] == "updateLine" && false === get_transient( $link ) ) {
 			set_transient( $link, true, 5);
 			$product = callDoliApi("GET", "/products/".trim($_POST['id'])."?includesubproducts=true&includetrans=true", null, dolidelay('product'));
-			$mstock = doliProductStock($product, true, true, isset($_POST['product-array'])?$_POST['product-array']:array());
-			if (isset($_POST['lineid']) && !empty($_POST['lineid'])) $mstock['lineid'] = trim($_POST['lineid']);
-			if (isset($_POST['productarray'])) {
-					$productarray = $_POST['productarray'];
-				} else {
-					$productarray = array();
-				}
+			$mstock = doliProductStock($product, true, true, isset($_POST['product-array'])?$_POST['product-array']:array(), isset($_POST['lineid'])?trim($_POST['lineid']):null);
 			if ( isset($_POST['modify']) && $_POST['modify'] == "delete" ) { 
 				$price = doliProductPrice($product, 0, false);
 				$result = doliaddtocart($product, $mstock, 0, $price, null, null);
