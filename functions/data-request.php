@@ -817,7 +817,7 @@ global $current_user;
 				$result = doliaddtocart($product, $mstock, 1, $price, $adherenttype->date_begin, $adherenttype->date_end, null, $productarray);
 				$newqty = $result['newqty'];
 				if (doliCheckModules('relatedproducts') && !empty(doliRequiredRelatedProducts($product->id, null, false))) {
-					$result = doliRequiredRelatedProducts($product->id, $qty, true);
+					$result = doliRequiredRelatedProducts($product->id, 1, true);
 				}
 				$response = [
 					'items' => $result['items'],
