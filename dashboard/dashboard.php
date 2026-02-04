@@ -1571,7 +1571,9 @@ if ( doliCheckModules('commande') && !empty($productadhesion) ) {
         //if ( empty($thirdparty->address) || empty($thirdparty->zip) || empty($thirdparty->town) || empty($thirdparty->country_id) || empty($current_user->billing_type) || empty($current_user->billing_birth) || empty($current_user->user_firstname) || empty($current_user->user_lastname) || empty($current_user->user_email)) {
             //$content .= "Pour adhérer, tous les champs doivent être renseignés dans vos <a href='".esc_url( get_permalink(get_option('doliaccount')))."?module=informations&return=".$url."' class='alert-link'>".__( 'Personal informations', 'doliconnect')."</a></div><div class='col-sm-6 col-md-7'>";
         //} else { 
-            $content .= doliModalButton('editmembership', 'editmembership', __('Become a member', 'doliconnect'), 'button' , 'btn btn text-white btn-warning btn-block');
+            $content .= '<div class="d-grid gap-2">';
+            $content .= doliModalButton('editmembership', 'editmembership', __('Become a member', 'doliconnect'), 'button' , 'btn text-white btn-warning btn-block');
+            $content .= '</div>';
         //}
     }
     
@@ -1634,7 +1636,11 @@ if ( isset($adherent->id) && doliCheckRights('adherent', 'cotisation', 'lire') )
     $content .= '</ul><div class="card-body">';
     $content .= doliPagination($object, $url, $page);
     $content .= '</div>';
-}
+    } else { 
+        $content .= "<ul class='list-group list-group-flush'>";
+        $content .= "<li class='list-group-item list-group-item-light'><center>".__( 'No subscription', 'doliconnect')."</center></li>";
+        $content .= '</ul>';
+    }
 $content .= doliCardFooter($adherent, 'member');
 $content .= '</div>';
 return $content;
