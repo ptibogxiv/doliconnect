@@ -667,8 +667,7 @@ global $current_user;
       'array_options' => $array_options
 	  ];                 
     $addline = callDoliApi("POST", "/orders/".$order->id."/lines", $adln, 0);
-    //wp_mail('support@ptibogxiv.eu', "debug", "lines: ".print_r(var_dump($addline), true), array('Content-Type: text/html; charset=UTF-8'));
- 
+    
     $addline = callDoliApi("GET", "/orders/".$order->id."/lines/".$addline, null, 0);
     $order = doliConnect('order', $current_user, false, true);
     $mstock = doliProductStock($product, true, true, $array_options, $addline);
