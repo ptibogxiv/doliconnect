@@ -87,7 +87,7 @@ if ( ! defined( 'ABSPATH' ) ) {
   }
 
   function doliproduct_category_add_custom_field($term) {
-    $custom_field_value = isset($term->term_id,) ? get_term_meta($term->term_id, 'doliproduct_category_id', true) : '';
+    $custom_field_value = isset($term->term_id) ? get_term_meta($term->term_id, 'doliproduct_category_id', true) : '';
     ?>
     <tr class="form-field">
         <th scope="row">
@@ -466,8 +466,7 @@ global $current_user;
       }
   }
   if (isset($array_options) && is_array($array_options)) $array_options = array_merge($array_options2, $array_options);
-
-  if (isset($fk_line->id) && !empty($fk_line)) {
+  if (isset($fk_line->id) && !empty($fk_line->id)) {
     $linearray_options = (array) $fk_line->array_options;
     $mstock['qty'] = $fk_line->qty;
     $mstock['lineid'] = $fk_line->id;
@@ -478,7 +477,7 @@ global $current_user;
     if ( isset($order->lines) && $order->lines != null ) {
       foreach ($order->lines as $line) {
         $linearray_options = (array) $line->array_options;
-        if (isset($product->id) && $line->fk_product == $product->id && isset($fk_line->id) && $line->id == $fk_line->id ) {
+        if (isset($product->id) && $line->fk_product == $product->id && isset($fk_line->id) && $line->id == $fk_line->id) {
            $mstock['qty'] = $line->qty;
            $mstock['lineid'] = $line->id;
            $mstock['line'] = $line;
@@ -490,12 +489,6 @@ global $current_user;
           $mstock['line'] = $line;
           $mstock['array_options'] = $linearray_options;
           $mstock['fk_parent_line'] = $line->fk_parent_line;
-         } elseif (isset($product->id) && $line->fk_product == $product->id) {
-           $mstock['qty'] = $line->qty;
-           $mstock['lineid'] = $line->id;
-           $mstock['line'] = $line;
-           $mstock['array_options'] = $linearray_options;
-           $mstock['fk_parent_line'] = $line->fk_parent_line;
          }
         }
     } 
@@ -559,7 +552,7 @@ global $current_user;
   } elseif (!$nohtml) {
     if ( $mstock['stock'] <= 0 || (!empty(doliconst('PRODUCT_USE_CUSTOMER_PACKAGING')) && isset($product->packaging) && !empty($product->packaging) && $mstock['stock'] < $product->packaging) ) { 
       $stock .= "<a tabindex='0' id='popover-stock-".$product->id."' class='badge rounded-pill bg-dark text-white text-decoration-none' data-bs-container='body' data-bs-toggle='popover' data-bs-trigger='focus' title='".__( 'Not available', 'doliconnect')."' data-bs-content='".sprintf( __( 'This item is out of stock and can not be ordered or shipped. %s', 'doliconnect'), $shipping)."'><i class='fas fa-warehouse'></i> ".__( 'Not available', 'doliconnect')."</a>";
-    } elseif ( ($mstock['stock'] <= 0 || (!empty(doliconst('(PRODUCT_USE_CUSTOMER_PACKAGING')) && isset($product->packaging) && $mstock['stock'] < $product->packaging)) && $product->stock_theorique > $mstock['stock'] ) { 
+    } elseif ( ($mstock['stock'] <= 0 || (!empty(doliconst('PRODUCT_USE_CUSTOMER_PACKAGING')) && isset($product->packaging) && $mstock['stock'] < $product->packaging)) && $product->stock_theorique > $mstock['stock'] ) { 
         $next = null;
       $stock .= "<a tabindex='0' id='popover-stock-".$product->id."' class='badge rounded-pill bg-danger text-white text-decoration-none' title='".__( 'Available soon', 'doliconnect')."' data-bs-container='body' data-bs-toggle='popover' data-bs-trigger='focus' data-bs-content='".sprintf( __( 'This item is not in stock but should be available soon within %s days. %s %s', 'doliconnect'), $delay, $next, $shipping)."'><i class='fas fa-warehouse'></i> ".__( 'Available soon', 'doliconnect')."</a>"; 
     } elseif ( $mstock['stock'] >= 0 && $mstock['stock'] <= $product->seuil_stock_alerte ) { 
@@ -625,6 +618,7 @@ global $current_user;
       'pos_source' => get_current_blog_id(),
 	  ];                  
     $order = callDoliApi("POST", "/orders", $rdr, 0);
+    $order = doliConnect('order', $current_user, false, true);
   }
   if (isset($thirdparty->tva_assuj) && empty($thirdparty->tva_assuj)) {
     if (isset($product->tva_tx))  $product->tva_tx = 0;
@@ -634,7 +628,7 @@ global $current_user;
   } else {
     $price_base_type = 'HT';
   }
-  $order = doliConnect('order', $current_user, false, true);
+  
   if (empty($product->status)) {
     if (!empty($mstock['lineid'])) $deleteline = callDoliApi("DELETE", "/orders/".$order->id."/lines/".$mstock['lineid'], null, 0);
     $order = doliConnect('order', $current_user, false, true);
@@ -673,6 +667,9 @@ global $current_user;
       'array_options' => $array_options
 	  ];                 
     $addline = callDoliApi("POST", "/orders/".$order->id."/lines", $adln, 0);
+    //wp_mail('support@ptibogxiv.eu', "debug", "lines: ".print_r(var_dump($addline), true), array('Content-Type: text/html; charset=UTF-8'));
+ 
+    $addline = callDoliApi("GET", "/orders/".$order->id."/lines/".$addline, null, 0);
     $order = doliConnect('order', $current_user, false, true);
     $mstock = doliProductStock($product, true, true, $array_options, $addline);
     $response['message'] = __( 'This item has been added to basket', 'doliconnect');
@@ -728,7 +725,7 @@ global $current_user;
       $response['message'] = __( 'Quantities have been changed', 'doliconnect');
       $response['items'] = doliconnect_countitems($order);
       $response['lines'] = doliline($order);
-      $mstock = doliProductStock($product, true, true, $array_options, $mstock['lineid']);
+      $mstock = doliProductStock($product, true, true, $array_options, $mstock['line']);
       $response['line'] = $mstock['lineid'];
       $response['dolicart'] = doliOffcanvasCart( $current_user );
       if (empty($relatedproduct)) $response['newqty'] = $quantity;
@@ -741,7 +738,7 @@ global $current_user;
     $response['message'] = __( 'Quantities have been changed', 'doliconnect');
     $response['items'] = doliconnect_countitems($order);
     $response['lines'] = doliline($order);
-    $mstock = doliProductStock($product, true, true, $array_options, $mstock['lineid']);
+    $mstock = doliProductStock($product, true, true, $array_options, $mstock['line']);
     $response['line'] = $mstock['lineid'];
     $response['dolicart'] = doliOffcanvasCart( $current_user );
     if (empty($relatedproduct)) $response['newqty'] = $quantity;
