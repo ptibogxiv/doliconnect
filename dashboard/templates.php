@@ -39,12 +39,7 @@ global $current_user;
         $thirdparty = doliConnect('thirdparty', $current_user, false, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
         $request = "/thirdparties/".$thirdparty->id;
 
-        if ( defined("DOLIBUG") ) {
-          $content .=  "</div></div></div>";
-          $content .=  "<div class='col-xs-12 col-sm-12 col-md-9'><div class='card shadow-sm'><div class='card-body'>";
-          $content .=  dolibug(isset($thirdparty->error->message)?$thirdparty->error->message:$thirdparty);
-          $content .=  "</div></div></div></div>";
-        } elseif ( isset($thirdparty->status) && $thirdparty->status != '1' ) {
+        if ( isset($thirdparty->status) && $thirdparty->status != '1' ) {
           $content .=  "</div></div></div>";
           $content .=  "<div class='col-xs-12 col-sm-12 col-md-9'><div class='card shadow-sm'><div class='card-body'>";
           $content .=  '<br><br><br><br><br><center><div class="align-middle"><i class="fas fa-bug fa-3x fa-fw"></i><h4>'.__( 'This account is closed. Please contact us for reopen it.', 'doliconnect').'</h4></div></center><br><br><br><br><br>';
@@ -953,11 +948,7 @@ $art238 = doliconst("DONATION_ART238",esc_attr(isset($_GET["refresh"]) ? $_GET["
 $art835 = doliconst("DONATION_ART835", esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 //$content .=  $shop;
 
-if ( defined("DOLIBUG") ) {
-
-$content .=  dolibug();
-
-} elseif ( !doliCheckModules('commande') ) {
+if ( !doliCheckModules('commande') ) {
 $content .=  "<div class='card shadow-sm'><div class='card-body'>";
 $content .=  dolibug(__( 'Inactive module on Dolibarr', 'doliconnect'));
 $content .=  "</div></div>";
@@ -1062,9 +1053,7 @@ if ( in_the_loop() && is_main_query() && is_page(doliconnectid('dolicart')) && !
     }
   }
 
-if ( defined("DOLIBUG") ) {
-  $content .=  dolibug((isset($object->error)?$object->error->message:null));
-} elseif ( !doliCheckModules('commande') ) {
+if ( !doliCheckModules('commande') ) {
   $content .=  "<div class='card shadow-sm'><div class='card-body'>";
   $content .=  dolibug(__( "Oops, Order's module is not available", "doliconnect"));
   $content .=  "</div></div>";
