@@ -683,7 +683,7 @@ function doliSelectForm($name, $request, $selectlang = '- Select -', $valuelang 
     } elseif ( $postv->$id == '0' ) { 
       $doliSelect .= "disabled ";
     }
-    if (isset($postv->libelle)) { 
+    if (!isset($postv->label) && isset($postv->libelle)) { 
       $postv->label = $postv->libelle;
     } elseif (isset($postv->zip)&&isset($postv->town)) {
       $postv->label = $postv->zip.' - '.$postv->town;
