@@ -112,6 +112,7 @@ function doliuserinfos_request(){
 		'message' => dolialert('success', __( 'Your informations have been updated.', 'doliconnect')),
 		'captcha' => dolicaptcha('doliuserinfos'),
 		];
+		$thirdparty = doliConnect('thirdparty', $user, false, true);
 		wp_send_json_success( $response );
 	} elseif ( isset($_POST['doliuserinfos-nonce']) && wp_verify_nonce( trim($_POST['doliuserinfos-nonce']), 'doliuserinfos') && isset($_POST['case']) && $_POST['case'] == "create" ) {
 
@@ -216,8 +217,6 @@ function doliuserinfos_request(){
 		if ( !is_wp_error( $emailSent ) && ($thirdparty['morphy'] == 'mor' && $user) || (function_exists('dolikiosk') && ! empty(dolikiosk()) && $user) ) {  
 		
 			do_action('wp_dolibarr_sync', $thirdparty, $user);
-			$thirdparty = doliConnect('thirdparty', $user, $thirdparty, true);
-
 			wp_set_current_user( $ID, $user->user_login );
 			wp_set_auth_cookie( $ID, false);
 			do_action( 'wp_login', $user->user_login, $user);
@@ -225,6 +224,7 @@ function doliuserinfos_request(){
 			'message' => dolialert('success', __( "Your account has been created. Now, you are connected", 'doliconnect')),
 			'captcha' => dolicaptcha('doliuserinfos'),
 			];
+			$thirdparty = doliConnect('thirdparty', $user, false, true);
 			wp_send_json_success( $response );	
 			die();		   	 
 		} elseif ( !is_wp_error( $emailSent )) {
