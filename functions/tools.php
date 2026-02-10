@@ -685,7 +685,7 @@ function doliSelectForm($name, $request, $selectlang = '- Select -', $valuelang 
     }
     if (!isset($postv->label) && isset($postv->libelle)) { 
       $postv->label = $postv->libelle;
-    } elseif (isset($postv->zip)&&isset($postv->town)) {
+    } elseif (!isset($postv->label) && isset($postv->zip) && isset($postv->town)) {
       $postv->label = $postv->zip.' - '.$postv->town;
     } 
     $doliSelect .= ">".(isset($postv->label)?$postv->label:$postv->name)."</option>";
