@@ -674,15 +674,20 @@ function doliSelectForm($name, $request, $selectlang = '- Select -', $valuelang 
     $doliSelect .= '</option>';
   foreach ( $object as $postv ) { 
     if (isset($postv->rowid) && $id == 'id') $postv->$id = $postv->rowid;
-    if (isset($postv->zip)&&isset($postv->town)) $postv->$id = $postv->zip.','.$postv->town;
+    if (isset($postv->zip)&&isset($postv->town)) {
+      $postv->$id = $postv->zip.','.$postv->town;
+    }
     $doliSelect .= "<option value='".$postv->$id."' ";
     if ( isset($value) && !empty($value) && $value == $postv->$id && $postv->$id != '0' ) {
       $doliSelect .= "selected ";
     } elseif ( $postv->$id == '0' ) { 
       $doliSelect .= "disabled ";
     }
-    if (isset($postv->libelle)) $postv->label = $postv->libelle;
-    if (isset($postv->zip)&&isset($postv->town)) $postv->label = $postv->zip.' - '.$postv->town;  
+    if (isset($postv->libelle)) { 
+      $postv->label = $postv->libelle;
+    } elseif (isset($postv->zip)&&isset($postv->town)) {
+      $postv->label = $postv->zip.' - '.$postv->town;
+    } 
     $doliSelect .= ">".(isset($postv->label)?$postv->label:$postv->name)."</option>";
   }
     $doliSelect .= '</select><label for="'.$name.'"><i class="fas fa-map-marked fa-fw"></i> '.$valuelang.'</label>';
