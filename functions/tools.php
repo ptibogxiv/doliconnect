@@ -674,7 +674,7 @@ function doliSelectForm($name, $request, $selectlang = '- Select -', $valuelang 
     $doliSelect .= '</option>';
   foreach ( $object as $postv ) { 
     if (isset($postv->rowid) && $id == 'id') $postv->$id = $postv->rowid;
-    if (isset($postv->zip)&&isset($postv->town)) {
+    if (!isset($postv->label) && isset($postv->zip) && isset($postv->town)) {
       $postv->$id = $postv->zip.','.$postv->town;
     }
     $doliSelect .= "<option value='".$postv->$id."' ";
