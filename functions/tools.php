@@ -906,6 +906,13 @@ if (in_array($mode, array('thirdparty')) ) {
     $doliuser .= '<input type="hidden" id="morphy" name="'.$idobject.'[morphy]" value="'.$morphy.'"></li>';
   }
 }
+
+if ( doliCheckModules('multicompany') && in_array($mode, array('thirdparty')) ) {
+  $doliuser .= '<li class="list-group-item list-group-item-light list-group-item-action"><div class="col-12 col-md"><div class="form-floating" id="entity_form">';
+  $doliuser .= doliSelectForm("entity", "/multicompany?sortfield=t.rowid&sortorder=ASC", __( '- Select your entity -', 'doliconnect'), __( 'Entity', 'doliconnect'), $object->entity, $idobject, $rights);
+  $doliuser .= '</div></div></li>';
+} 
+
 if ( !is_user_logged_in() && in_array($mode, array('linkthirdparty')) ) {
   $doliuser .= '<li class="list-group-item list-group-item-light list-group-item-action"><div class="form-group">
     <label for="FormCustomer"><small><i class="fas fa-user-tie"></i> '.__( 'Customer', 'doliconnect').'</small></label><div class="input-group" id="FormCustomer">
