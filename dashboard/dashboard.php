@@ -1481,7 +1481,7 @@ global $current_user;
         //$content .= var_dump($adherent);
         $request = "/adherentsplus/".$adherent->id; 
         $adherent = callDoliApi("GET", $request, null, dolidelay('member', true));
-        $content .=dolialert('success', __( 'Your membership has been updated.', 'doliconnect'));
+        $content .= dolialert('success', __( 'Your membership has been updated.', 'doliconnect'));
     }
 
     $content = '<div class="card shadow-sm"><div class="card-header">'.__( 'Manage my subscription', 'doliconnect').'</div><div class="card-body">';
