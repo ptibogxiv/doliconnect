@@ -112,7 +112,7 @@ function doliuserinfos_request(){
 		'message' => dolialert('success', __( 'Your informations have been updated.', 'doliconnect')),
 		'captcha' => dolicaptcha('doliuserinfos'),
 		];
-		$thirdparty = doliConnect('thirdparty', $user, false, true);
+		$thirdparty = doliConnect('thirdparty', $current_user, false, true);
 		wp_send_json_success( $response );
 	} elseif ( isset($_POST['doliuserinfos-nonce']) && wp_verify_nonce( trim($_POST['doliuserinfos-nonce']), 'doliuserinfos') && isset($_POST['case']) && $_POST['case'] == "create" ) {
 
