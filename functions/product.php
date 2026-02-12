@@ -302,6 +302,7 @@ if (!empty($refresh)) {
 }
 
 function getDoliProductCategory($category) {
+  if (isset($category->id) && !empty($category->id)) {
   $args = array(
       'taxonomy'   => 'doliproduct_category',
       'hide_empty' => false,              
@@ -335,6 +336,7 @@ function getDoliProductCategory($category) {
       update_term_meta($result['term_id'], 'doliproduct_category_id', sanitize_text_field($category->id));
       return $result['term_id'];
     }
+  }
   }
 }
 
