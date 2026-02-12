@@ -335,9 +335,8 @@ function getDoliProductCategory($category) {
       update_term_meta($result['term_id'], 'doliproduct_category_id', sanitize_text_field($category->id));
       return $result['term_id'];
     }
-  }  
-
   }
+}
 
 function doliproduct($object, $value) {
 global $current_user;
