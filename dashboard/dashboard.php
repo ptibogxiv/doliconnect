@@ -1599,7 +1599,7 @@ $content .= '<div class="d-grid gap-2"><div class="btn-group" role="group" aria-
     $content .= '</div></div>';
 }
 
-$content .="</div></div>";
+$content .= "</div></div>";
 
 if( has_action('mydoliconnectmemberform') ) {
 $content .= do_action('mydoliconnectmemberform', $adherent);
