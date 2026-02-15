@@ -136,7 +136,7 @@ global $current_user;
               $content .=  "</ul></div><br>";
             }  
             if ( has_filter('customer_doliconnect_menu') && isset($thirdparty->client) && !empty($thirdparty->client)) {
-              $content .=  '<div class="card shadow-sm"><div class="card-header">'.sprintf(__('%s My purchases', 'doliconnect'), '<i class="fa-solid fa-bag-shopping"></i>').'</div><ul class="list-group list-group-flush">';
+              $content .=  '<div class="card shadow-sm"><div class="card-header">'.sprintf(__('%s My purchases', 'doliconnect'), '<i class="fa-solid fa-user-tag"></i>').'</div><ul class="list-group list-group-flush">';
               $content .=  apply_filters('customer_doliconnect_menu', null, null);
               $content .=  "</ul></div><br>";
             }
