@@ -5,34 +5,29 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function doliconnect_membership($current_user, $statut, $type, $delay) {
+  $data['typeid'] = $type;
   if ($statut=='1') {
-    $statut='-1';
+    $data['statut'] = '-1';
     $action='POST';
   } elseif ($statut=='2') {
-    $statut='0';
+    $data['statut'] = '0';
     $action='PUT';
   } elseif ($statut=='3') {
-    $statut='-1';
+    $data['statut'] = '-1';
     $action='PUT';
   } elseif ($statut=='4') {
-    $statut='1';
+    $data['statut'] = '1';
     $action='PUT';
   } elseif ($statut=='5') {
-    $statut='1';
+    $data['statut'] = '1';
     $action='POST';
   } 
   $thirdparty = doliConnect('thirdparty', $current_user);
-//if (preg_match('/\//', $current_user->billing_birth)) { 
-//  list($year, $month, $day) = explode("/", $current_user->billing_birth);
-//} elseif (preg_match('/-/', $current_user->billing_birth)) {
   list($year, $month, $day) = explode("-", $current_user->billing_birth);
-//} else {
-//  $month = null;
-//  $day = null;
-//  $year = null;
-//}
   $birth = mktime(0, 0, 0, $month, $day, $year);
-  $data = [
+
+  if ($action=='POST') {  
+  $data .= [
     'login' => $current_user->user_login,
     'company'  => $current_user->billing_company,
     'morphy' => $current_user->billing_type,
@@ -46,19 +41,14 @@ function doliconnect_membership($current_user, $statut, $type, $delay) {
     'email' => $thirdparty->email,
     'phone' => $thirdparty->phone,
     'birth' => $birth,
-    'typeid' => $type,
     'socid' => $thirdparty->id,
-    'array_options' => $thirdparty->array_options,
-		'statut'	=> $statut,
+    'array_options' => $thirdparty->array_options
 	];
-  if ($action=='POST') {
     $newmember = callDoliApi("POST", "/members", $data, 0);
     $member = callDoliApi("GET", "/members/".$newmember, null, dolidelay('member', true));
-    $member = doliConnect('member', $current_user, false, true);
   } else {
-    $member = doliConnect('member', $current_user, false);
-    $member = callDoliApi("PUT", "/members/".$member->id, $data, 0);
     $member = doliConnect('member', $current_user, false, true);
+    $member = callDoliApi("PUT", "/members/".$member->id, $data, 0);
   }
   return $member;
 }

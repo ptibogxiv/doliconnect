@@ -1469,7 +1469,6 @@ global $current_user;
     $thirdparty = doliConnect('thirdparty', $current_user, false, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
     $adherent = doliConnect('member', $current_user, false, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 
-    //$request = "/adherentsplus/".$adherent->id; 
     $productadhesion = doliconst("ADHERENT_PRODUCT_ID_FOR_SUBSCRIPTIONS");
     $requestp = "/products/".$productadhesion."?includesubproducts=true&includetrans=true";
     $product = callDoliApi("GET", $requestp, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
@@ -1478,9 +1477,7 @@ global $current_user;
     if ( isset($_POST["update_membership"]) && function_exists('doliconnect_membership') ) {
         $typeadherent = isset($_POST["typeadherent"]) ? $_POST["typeadherent"] : null;
         $adherent = doliconnect_membership($current_user, $_POST["update_membership"], $typeadherent, dolidelay('member', true));
-        //$content .= var_dump($adherent);
-        $request = "/adherentsplus/".$adherent->id; 
-        $adherent = callDoliApi("GET", $request, null, dolidelay('member', true));
+        //$content .= var_dump($_POST["update_membership"]);
         $content .= dolialert('success', __( 'Your membership has been updated.', 'doliconnect'));
         $adherent = doliConnect('member', $current_user, false, true);
     }
@@ -1492,7 +1489,6 @@ $request= "/adherentsplus/type/".$adherent->typeid;
 $adherenttype = callDoliApi("GET", $request, null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 }
 
-//if ( isset($adherent) && !isset($adherent->error) && $adherent != null ) {
 $content .= "<div class='row'><div class='col-12 col-md-5 border-end'>";
 $content .="<b>".__( 'Status', 'doliconnect').":</b> ";
 if ( isset($adherent->status) && $adherent->status > 0) {
