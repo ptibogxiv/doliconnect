@@ -1554,7 +1554,10 @@ if ( doliCheckModules('commande') && !empty($productadhesion) ) {
         }
         $content .= '</div>';
     } elseif ( isset($adherent->status) && empty($adherent->status) ) {
-        $content .=  "<span class='badge rounded-pill bg-dark'>".__( 'Terminated', 'doliconnect')."</span>";
+        $content .= '<div class="alert alert-primary d-flex align-items-center" role="alert">';
+        $content .= '<i class="fa-solid fa-circle-info fa-beat"></i>';
+        $content .= '<div>'.__('Your subscription is terminated. For keeping your benefits, please renew it.', 'doliconnect').'</div>';
+        $content .= '</div>';
     } elseif ( isset($adherent->status) && $adherent->status == '-1' ) {
         $content .= '<div class="alert alert-primary d-flex align-items-center" role="alert">';
         $content .= '<i class="fa-solid fa-circle-info fa-beat"></i>';
