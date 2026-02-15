@@ -1539,50 +1539,36 @@ if ( (isset($adherent->datecommitment) && current_time('timestamp') > $adherent-
 $content .= "</div><div class='col-12 col-md-7'>";
 
 if ( doliCheckModules('commande') && !empty($productadhesion) ) {
-if ( isset($adherent->status) && $adherent->status > 0) {
-    $content .= '<div class="d-grid gap-2">';
-    if  ($adherent->datefin == null ) {
-        $price = doliProductPrice($product, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)); 
-        $content .= doliProductCart($product, $price, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), false, array('options_member_beneficiary' => $adherent->id));
-    } else {
-        if ( $adherent->datefin+86400>$time) {
-            $content .= "<button class='btn btn-light btn-block' disabled>".sprintf(__('Renew from %s', 'doliconnect'), wp_date('d/m/Y', $adherent->datefin))."</button>";
-        } else { 
+    if ( isset($adherent->status) && $adherent->status > 0) {
+        $content .= '<div class="d-grid gap-2">';
+        if  ($adherent->datefin == null ) {
             $price = doliProductPrice($product, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)); 
             $content .= doliProductCart($product, $price, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), false, array('options_member_beneficiary' => $adherent->id));
-        }
-    }
-    $content .= '</div>';
-} elseif ( isset($adherent->status) && empty($adherent->status) ) {
-    $content .=  "<span class='badge rounded-pill bg-dark'>".__( 'Terminated', 'doliconnect')."</span>";
-} elseif ( isset($adherent->status) && $adherent->status == '-1' ) {
-    $content .= '<div class="alert alert-primary d-flex align-items-center" role="alert">';
-    $content .= '<i class="fa-solid fa-circle-info fa-beat"></i>';
-    $content .= '<div>'.__('Your request has been registered. You will be notified by email at validation.', 'doliconnect').'</div>';
-    $content .= '</div>';
-} elseif ( isset($adherent->status) && $adherent->status == '-2' ) {
-    $content .= '<div class="alert alert-primary d-flex align-items-center" role="alert">';
-    $content .= '<i class="fa-solid fa-circle-info fa-beat"></i>';
-    $content .= '<div>'.__('Please contact us for more informations or subscribe again.', 'doliconnect').'</div>';
-    $content .= '</div>';
-} else { 
-    $content .= '<div class="d-grid gap-2">';
-    $content .= doliModalButton('editmembership', 'editmembership', __('Become a member', 'doliconnect'), 'button' , 'btn text-white btn-warning btn-block');
-    $content .= '</div>';
-}
-
-
-    if ( isset($adherent->status) && $adherent->datefin == null && $adherent->status == '0' ) {
-        //$content .=  "<a href='#' id='subscribe-button2' class='btn btn text-white btn-warning btn-block' data-bs-toggle='modal' data-bs-target='#activatemember'><b>".__( 'Become a member', 'doliconnect')."</b></a>";
-    } elseif (isset($adherent->status) && $adherent->status == '1') {
-        //$content .= '<div class="d-grid gap-2">';
-        if ( isset($adherent) && $adherent->datefin != null && isset($adherent->next_subscription_renew) && $adherent->datefin > $adherent->next_subscription_renew && $adherent->next_subscription_renew > current_time( 'timestamp',1) ) {
-            //$content .= "<button class='btn btn-light btn-block' disabled>".sprintf(__('Renew from %s', 'doliconnect'), wp_date('d/m/Y', $adherent->next_subscription_renew))."</button>";
         } else {
-            //$price = doliProductPrice($product, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)); 
-            //$content .= doliProductCart($product, $price, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), false, array('options_member_beneficiary' => $adherent->id));
+            if ( $adherent->datefin+86400>$time) {
+                $content .= "<button class='btn btn-light btn-block' disabled>".sprintf(__('Renew from %s', 'doliconnect'), wp_date('d/m/Y', $adherent->datefin))."</button>";
+            } else { 
+                $price = doliProductPrice($product, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)); 
+                $content .= doliProductCart($product, $price, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), false, array('options_member_beneficiary' => $adherent->id));
+            }
         }
-        //$content .= '</div><br>';
+        $content .= '</div>';
+    } elseif ( isset($adherent->status) && empty($adherent->status) ) {
+        $content .=  "<span class='badge rounded-pill bg-dark'>".__( 'Terminated', 'doliconnect')."</span>";
+    } elseif ( isset($adherent->status) && $adherent->status == '-1' ) {
+        $content .= '<div class="alert alert-primary d-flex align-items-center" role="alert">';
+        $content .= '<i class="fa-solid fa-circle-info fa-beat"></i>';
+        $content .= '<div>'.__('Your request has been registered. You will be notified by email at validation.', 'doliconnect').'</div>';
+        $content .= '</div>';
+    } elseif ( isset($adherent->status) && $adherent->status == '-2' ) {
+        $content .= '<div class="alert alert-primary d-flex align-items-center" role="alert">';
+        $content .= '<i class="fa-solid fa-circle-info fa-beat"></i>';
+        $content .= '<div>'.__('Please contact us for more informations or subscribe again.', 'doliconnect').'</div>';
+        $content .= '</div>';
+    } else { 
+        $content .= '<div class="d-grid gap-2">';
+        $content .= doliModalButton('editmembership', 'editmembership', __('Become a member', 'doliconnect'), 'button' , 'btn text-white btn-warning btn-block');
+        $content .= '</div>';
     }
 }
 
@@ -1603,7 +1589,7 @@ $content .= '<br><div class="d-grid gap-2"><div class="btn-group" role="group" a
 $content .= "</div></div>";
 
 if( has_action('mydoliconnectmemberform') ) {
-$content .= do_action('mydoliconnectmemberform', $adherent);
+    $content .= do_action('mydoliconnectmemberform', $adherent);
 }
 $content .= "</div>";
 
