@@ -1482,6 +1482,7 @@ global $current_user;
         $request = "/adherentsplus/".$adherent->id; 
         $adherent = callDoliApi("GET", $request, null, dolidelay('member', true));
         $content .= dolialert('success', __( 'Your membership has been updated.', 'doliconnect'));
+        $adherent = doliConnect('member', $current_user, false, true);
     }
 
     $content = '<div class="card shadow-sm"><div class="card-header">'.__( 'Manage my subscription', 'doliconnect').'</div><div class="card-body">';
@@ -1568,15 +1569,11 @@ if ( doliCheckModules('commande') && !empty($productadhesion) ) {
         $content .= '<i class="fa-solid fa-circle-info fa-beat"></i>';
         $content .= '<div>'.__('Please contact us for more informations or subscribe again.', 'doliconnect').'</div>';
         $content .= '</div>';
-    } else { 
-        $content .= '<div class="d-grid gap-2">';
-        $content .= doliModalButton('editmembership', 'editmembership', __('Become a member', 'doliconnect'), 'button' , 'btn text-white btn-warning btn-block');
-        $content .= '</div>';
     }
 }
-
+$content .= '<br><div class="d-grid gap-2">';
 if ( ! empty($adherent) && $adherent->statut != '-2' ) {
-$content .= '<br><div class="d-grid gap-2"><div class="btn-group" role="group" aria-label="Update membership">';
+$content .= '<div class="btn-group" role="group" aria-label="Update membership">';
     if (empty($adherent->statut)) { 
         $title = __( 'Reactivate my subscription', 'doliconnect');
     } else {
@@ -1586,8 +1583,13 @@ $content .= '<br><div class="d-grid gap-2"><div class="btn-group" role="group" a
     if ( $adherent->statut != '0' ) {
         $content .= doliModalButton('resiliatemembership', 'resiliatemembership', __( 'Resiliate', 'doliconnect'), 'button', 'btn btn-dark'); 
     }
-    $content .= '</div></div>';
+    $content .= '</div>';
+ } else { 
+    $content .= '<div class="d-grid gap-2">';
+    $content .= doliModalButton('editmembership', 'editmembership', __('Become a member', 'doliconnect'), 'button' , 'btn text-white btn-warning btn-block');
+    $content .= '</div>';
 }
+$content .= '</div>';
 
 $content .= "</div></div>";
 
