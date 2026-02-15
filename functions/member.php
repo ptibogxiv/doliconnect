@@ -49,11 +49,11 @@ $data['typeid'] = $type;
     $member = callDoliApi("GET", "/members/".$newmember, null, dolidelay('member', true));
   } else {
     $member = doliConnect('member', $current_user, false, true);
-    if (doliCheckModules('adherentsplus') && isset($member->id) && !empty($member->id)) {
-       $member = callDoliApi("PUT", "/adherentsplus/".$member->id, $data, 0); 
-    } else {
+    //if (doliCheckModules('adherentsplus') && isset($member->id) && !empty($member->id)) {
+       //$member = callDoliApi("PUT", "/adherentsplus/".$member->id, $data, 0); 
+    //} else {
       $member = callDoliApi("PUT", "/members/".$member->id, $data, 0); 
-    }
+    //}
   }
   return $member;
 }
