@@ -1477,7 +1477,7 @@ global $current_user;
     if ( isset($_POST["update_membership"]) && function_exists('doliconnect_membership') ) {
         $typeadherent = isset($_POST["typeadherent"]) ? $_POST["typeadherent"] : null;
         $adherent = doliconnect_membership($current_user, $_POST["update_membership"], $typeadherent, dolidelay('member', true));
-        $content .= var_dump($_POST["update_membership"]);
+        //$content .= var_dump($_POST["update_membership"]);
         $content .= dolialert('success', __( 'Your membership has been updated.', 'doliconnect'));
         $adherent = doliConnect('member', $current_user, false, true);
     }

@@ -48,7 +48,6 @@ $data['typeid'] = $type;
     $newmember = callDoliApi("POST", "/members", $data, 0);
     $member = callDoliApi("GET", "/members/".$newmember, null, dolidelay('member', true));
   } else {
-    $data['statut'] = '-1';
     $member = doliConnect('member', $current_user, false, true);
     if (doliCheckModules('adherentsplus') && isset($member->id) && !empty($member->id)) {
        $member = callDoliApi("PUT", "/adherentsplus/".$member->id, $data, 0); 
