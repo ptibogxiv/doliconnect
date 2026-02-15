@@ -99,7 +99,7 @@ function doliConnect($fonction, $current_user = null, $boolean = false, $refresh
     if ( doliversion('21.0.0') ) {
         $return = callDoliApi("GET", "/members/thirdparty/accounts/wordpress/".$current_user->ID, null, dolidelay('doliconnector', $refresh));
         if (doliCheckModules('adherentsplus') &&isset($return->id) && !empty($return->id)) {
-          $return = callDoliApi("GET", "/adherentsplus/".$return->id, null, dolidelay('doliconnector', $refresh));
+          //$return = callDoliApi("GET", "/adherentsplus/".$return->id, null, dolidelay('doliconnector', $refresh));
         }
     } else {
       $id = doliconnector($current_user, 'fk_member', $refresh);
