@@ -1575,14 +1575,14 @@ $content .= '<div class="btn-group" role="group" aria-label="Update membership">
     } else {
         $title = __( 'Update', 'doliconnect');
     }
-    $content .= doliModalButton('editmembership', 'editmembership', $title, 'button', 'btn btn text-white btn-warning'); 
+    $content .= doliModalButton('editmembership', 'editmembership', $title, 'button', 'btn btn-outline-secondary'); 
     if ( $adherent->statut != '0' ) {
-        $content .= doliModalButton('resiliatemembership', 'resiliatemembership', __( 'Resiliate', 'doliconnect'), 'button', 'btn btn-dark'); 
+        $content .= doliModalButton('resiliatemembership', 'resiliatemembership', __( 'Resiliate', 'doliconnect'), 'button', 'btn btn-outline-secondary'); 
     }
     $content .= '</div>';
  } else { 
     $content .= '<div class="d-grid gap-2">';
-    $content .= doliModalButton('editmembership', 'editmembership', __('Become a member', 'doliconnect'), 'button' , 'btn text-white btn-warning btn-block');
+    $content .= doliModalButton('editmembership', 'editmembership', __('Become a member', 'doliconnect'), 'button' , 'btn btn-outline-secondary btn-block');
     $content .= '</div>';
 }
 $content .= '</div>';
