@@ -6,7 +6,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 function doliconnect_membership($current_user, $statut, $type, $delay) {
 $data = array();
-$data['typeid'] = $type;
   if ($statut == 1) {
     $data['statut'] = '-1';
     $action='POST';
@@ -28,7 +27,7 @@ $data['typeid'] = $type;
   $birth = mktime(0, 0, 0, $month, $day, $year);
 
   if ($action=='POST') {  
-  $data .= [
+  $data = [
     'login' => $current_user->user_login,
     'company'  => $current_user->billing_company,
     'morphy' => $current_user->billing_type,
@@ -43,16 +42,20 @@ $data['typeid'] = $type;
     'phone' => $thirdparty->phone,
     'birth' => $birth,
     'socid' => $thirdparty->id,
-    'array_options' => $thirdparty->array_options
+    'typeid' => $type,
+    'array_options' => $thirdparty->array_options,
 	];
     $newmember = callDoliApi("POST", "/members", $data, 0);
+    //print var_dump($newmember);
     $member = callDoliApi("GET", "/members/".$newmember, null, dolidelay('member', true));
   } else {
+    $data['typeid'] = $type;
     $member = doliConnect('member', $current_user, false, true);
     //if (doliCheckModules('adherentsplus') && isset($member->id) && !empty($member->id)) {
        //$member = callDoliApi("PUT", "/adherentsplus/".$member->id, $data, 0); 
     //} else {
       $member = callDoliApi("PUT", "/members/".$member->id, $data, 0); 
+      //print var_dump($member);
     //}
   }
   return $member;
