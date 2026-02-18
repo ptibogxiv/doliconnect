@@ -627,6 +627,15 @@ function doliUserLang($user, $type = 'locale') {
   return $lang;
 }
 
+function doliExtrafields($type, $delay) {
+  $extrafields = callDoliApi("GET", "/setup/extrafields?sortfield=t.pos&sortorder=ASC&elementtype=".$type, null, dolidelay($delay));
+  if ( !isset($extrafields->error) && $extrafields != null ) {
+    return $extrafields;
+  } else {
+    return null;
+  }
+}
+
 function doliListLang($array = array()) {
   $lang = array();
   if ( function_exists('pll_the_languages') ) { 
