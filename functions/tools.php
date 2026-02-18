@@ -651,7 +651,7 @@ function doliExtrafields($object, $type, $delay) {
           $form .= '</select><label for="floatingSelect">'.$field->label.'</label>';
           $form .= '</div>';
         } else {
-          return null;
+          $form .= 'to do';
         }
       }
     return $form;
