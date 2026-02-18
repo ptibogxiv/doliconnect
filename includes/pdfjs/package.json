@@ -47,7 +47,7 @@
     "puppeteer": "^24.7.2",
     "stylelint": "^16.19.1",
     "stylelint-prettier": "^5.0.3",
-    "svglint": "^3.1.0",
+    "svglint": "^4.2.0",
     "terser-webpack-plugin": "^5.3.14",
     "tsc-alias": "^1.8.15",
     "ttest": "^4.0.0",
