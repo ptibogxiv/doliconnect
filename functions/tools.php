@@ -627,7 +627,7 @@ function doliUserLang($user, $type = 'locale') {
   return $lang;
 }
 
-function doliExtrafields($type, $delay) {
+function doliExtrafields($object, $type, $delay) {
   $extrafields = callDoliApi("GET", "/setup/extrafields?sortfield=t.pos&sortorder=ASC&elementtype=".$type, null, dolidelay($delay));
   if ( !isset($extrafields->error) && $extrafields != null ) {
     return 'test';//$extrafields;
@@ -1336,7 +1336,7 @@ $doliuser .= '</div></li>';
 if( !in_array($mode, array('donation')) ) {
 $doliuser .= "<li class='list-group-item list-group-item-light list-group-item-action'>";
 //$doliuser .= apply_filters('mydoliconnectuserform', $object, $idobject);
-$doliuser .= doliExtrafields($mode, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+$doliuser .= doliExtrafields($object,$mode, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 $doliuser .= "</li>";
 }
 
