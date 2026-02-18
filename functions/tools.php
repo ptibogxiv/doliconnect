@@ -631,9 +631,9 @@ function doliExtrafields($object, $type, $delay) {
   $extrafields = callDoliApi("GET", "/setup/extrafields?sortfield=t.pos&sortorder=ASC&elementtype=".$type, null, dolidelay($delay));
   if ( !isset($extrafields->error) && $extrafields != null ) {
     if ( is_object($object) && $object->id > 0 ) {
-      $idobject=$mode."[".$object->id."]";
+      $idobject = $type."[".$object->id."]";
     } else { 
-      $idobject=$mode;
+      $idobject = $type;
     }
     foreach ($extrafields as $extrafield => $id) {
       foreach ($id as $extra => $field) {
