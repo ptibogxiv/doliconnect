@@ -636,24 +636,25 @@ function doliExtrafields($object, $type, $delay) {
       $idobject = $type;
     }
     foreach ($extrafields as $extrafield => $id) {
+      $form = '';
       foreach ($id as $extra => $field) {
-      if (isset($field->type) && $field->type == 'select') {
-        $form = '<div class="form-floating"><select class="form-select" id="'.$idobject.'['.$extra.']" name="'.$idobject.'['.$extra.']" aria-label="Default select example">';
-        $form .= '<option disabled>'.__( '- Select -', 'doliconnect').'</option>';
-        foreach ($field->param->options as $id => $option) {
-          $form .= '<option value="'.$id.'"';
-          if (isset($object->array_options->{'options_'.$extra}) && $object->array_options->{'options_'.$extra} == $id) {
-            $form .= ' selected';
+        if (isset($field->type) && $field->type == 'select') {
+          $form .= '<div class="form-floating"><select class="form-select" id="'.$idobject.'['.$extra.']" name="'.$idobject.'['.$extra.']" aria-label="Default select example">';
+          $form .= '<option disabled>'.__( '- Select -', 'doliconnect').'</option>';
+          foreach ($field->param->options as $id => $option) {
+            $form .= '<option value="'.$id.'"';
+            if (isset($object->array_options->{'options_'.$extra}) && $object->array_options->{'options_'.$extra} == $id) {
+              $form .= ' selected';
+            }
+            $form .= '>'.$option.'</option>';
           }
-          $form .= '>'.$option.'</option>';
+          $form .= '</select><label for="floatingSelect">'.$field->label.'</label>';
+          $form .= '</div>';
+        } else {
+          return null;
         }
-        $form .= '</select><label for="floatingSelect">'.$field->label.'</label>';
-        $form .= '</div>';
-      } else {
-        return null;
       }
-      return $form;
-      }
+    return $form;
     }
   } else {
     return null;
