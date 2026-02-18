@@ -639,7 +639,7 @@ function doliExtrafields($object, $type, $delay) {
       $form = '';
       foreach ($id as $extra => $field) {
         if (isset($field->type) && $field->type == 'select') {
-          $form .= '<div class="form-floating"><select class="form-select" id="'.$idobject.'['.$extra.']" name="'.$idobject.'['.$extra.']" aria-label="Default select example">';
+          $form .= '<div class="form-floating"><select class="form-select" id="'.$idobject.'[array_options]['.$extra.']" name="'.$idobject.'[array_options]['.$extra.']" aria-label="Default select example">';
           $form .= '<option disabled>'.__( '- Select -', 'doliconnect').'</option>';
           foreach ($field->param->options as $id => $option) {
             $form .= '<option value="'.$id.'"';
