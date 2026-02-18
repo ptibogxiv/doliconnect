@@ -630,10 +630,15 @@ function doliUserLang($user, $type = 'locale') {
 function doliExtrafields($object, $type, $delay) {
   $extrafields = callDoliApi("GET", "/setup/extrafields?sortfield=t.pos&sortorder=ASC&elementtype=".$type, null, dolidelay($delay));
   if ( !isset($extrafields->error) && $extrafields != null ) {
+    if ( is_object($object) && $object->id > 0 ) {
+      $idobject=$mode."[".$object->id."]";
+    } else { 
+      $idobject=$mode;
+    }
     foreach ($extrafields as $extrafield => $id) {
       foreach ($id as $extra => $field) {
       if (isset($field->type) && $field->type == 'select') {
-        $form = '<div class="form-floating"><select class="form-select" aria-label="Default select example">';
+        $form = '<div class="form-floating"><select class="form-select" id="'.$idobject.'['.$extra.']" name="'.$idobject.'['.$extra.']" aria-label="Default select example">';
         $form .= '<option disabled>'.__( '- Select -', 'doliconnect').'</option>';
         foreach ($field->param->options as $id => $option) {
           $form .= '<option value="'.$id.'"';
