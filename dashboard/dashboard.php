@@ -302,7 +302,8 @@ global $current_user;
         }
         if ( !isset($listcontact->error) && $listcontact != null ) {
             foreach ($listcontact  as $postcontact) { 
-                $content .= doliModalButton('contact', 'editcontact'.$postcontact->id, '<center><i class="fas fa-plus-circle"></i> '.__( 'Edit a contact', 'doliconnect').'</center>', 'button', 'list-group-item lh-condensed list-group-item-action list-group-item-primary', $postcontact->id);                                                                           
+                $content .= doliModalButton('contact', 'editcontact'.$postcontact->id, '<div><i class="fa fa-address-card fa-3x fa-fw"></i></div><div><h6 class="my-0">'.($postcontact->civility ? $postcontact->civility : $postcontact->civility_code).' '.$postcontact->firstname.' '.$postcontact->lastname.'</h6>
+                <small class="text-muted">'.$postcontact->poste.'</small></div><span></span><span></span>', 'button', 'list-group-item lh-condensed list-group-item-action list-group-item-light', $postcontact->id);                                                                           
                 $nonce = wp_create_nonce( 'doli-contacts-'. $postcontact->id.'-'.$postcontact->ref);
                 $arr_params = array( 'id' => $postcontact->id, 'ref' => $postcontact->ref, 'security' => $nonce);  
                 $return = esc_url( add_query_arg( $arr_params, $url) );
