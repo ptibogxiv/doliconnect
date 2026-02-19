@@ -3397,10 +3397,10 @@ function doliModalButton($case, $id, $title, $type = 'button', $class = 'btn btn
               if (response.success) { 
                 if (response.data.js) {
                   $.getScript( response.data.js ).done(function( script, textStatus ) {
-                    console.log( "success loading modal js" );
+                    console.log( "success loading modal js" + " - case: " + "'.$id.'" );
                   })
                   .fail(function( jqxhr, settings, exception ) {
-                    console.log( "error loading modal js" );
+                    console.log( "error loading modal js" + " - case: " + "'.$id.'" );
                   });
                 }
               if (document.getElementById("doliModalDiv") && response.data.hasOwnProperty("modal")) {

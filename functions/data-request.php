@@ -1232,7 +1232,7 @@ global $current_user;
 		$modal['body'] .= '<input type="hidden" name="contactid" value="'.trim($_POST['value1']).'"><input type="hidden" name="dolicontactinfos-nonce" value="'.wp_create_nonce( 'dolicontactinfos-nonce').'">';
 		$modal['body'] .= doliuserform( $object, dolidelay('constante', true, true), 'contact', doliCheckRights('societe', 'contact', 'creer'));
 		$modal['footer'] = '<button class="btn btn-danger" type="submit">'.__( 'Submit', 'doliconnect').'</button></form>';
-		$response['js'] = plugins_url( 'doliconnect/includes/custom/js/editcontact.js');
+		$response['js'] = plugins_url( 'doliconnect/includes/custom/js/dolicontactinfos.js');
 		$response['modal'] = doliModalTemplate($_POST['id'], $modal['header'], $modal['body'], $modal['footer'], 'modal-lg', null, 'p-0');
 		wp_send_json_success($response);
 		die();
