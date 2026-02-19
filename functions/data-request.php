@@ -1229,7 +1229,7 @@ global $current_user;
 			$modal['header'] = __( "Create contact", 'doliconnect');
 			$object = null;
 		}
-		$modal['body'] = '<form id="contact-form" action="'.admin_url('admin-ajax.php').'" method="post" class="was-validated" enctype="multipart/form-data">';
+		$modal['body'] = '<form id="dolicontactinfos-form" action="'.admin_url('admin-ajax.php').'" method="post" class="was-validated" enctype="multipart/form-data">';
 		$modal['body'] .= '<input type="hidden" name="action" value="dolicontact_request"><input type="hidden" name="case" value="update">';
 		$modal['body'] .= '<input type="hidden" name="contactid" value="'.trim($_POST['value1']).'"><input type="hidden" name="dolicontact-nonce" value="'.wp_create_nonce( 'dolicontact-nonce').'">';
 		$modal['body'] .= doliuserform( $object, dolidelay('constante', true, true), 'contact', doliCheckRights('societe', 'contact', 'creer'));
