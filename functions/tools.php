@@ -1010,7 +1010,6 @@ if ( !isset($typeadhesion->error) ) {
       $doliuser .= " (".doliprice($postadh->price);
       $doliuser .= " ".__( 'yearly', 'doliconnect' ).")";
     } 
-
   $doliuser .= "</option>";
   }
 }
@@ -1079,7 +1078,6 @@ if ( doliversion('15.0.0') ) {
   $doliuser .= '</select><label for="'.$idobject.'[effectif_id]"><i class="fas fa-building fa-fw"></i> '.__( 'Staff', 'doliconnect').'</label></div></div>';
   }
 }
-
 $doliuser .= '</div>';
 $doliuser .= "</li><li class='list-group-item list-group-item-light list-group-item-action'>";
 }
