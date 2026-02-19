@@ -1667,7 +1667,7 @@ function doliCardFooter($object, $delay, $request = null) {
     $footer .= "<i class='fas fa-database'></i> ".__( 'No data', 'doliconnect');
   }
   $footer .= '</div><div class="float-end">';
-  // $footer .= dolihelp('ISSUE');
+  //$footer .= dolihelp('ISSUE');
   $footer .= '</div></small>';
   $footer .= '</div>';
 return $footer;
