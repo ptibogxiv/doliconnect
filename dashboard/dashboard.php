@@ -314,6 +314,8 @@ global $current_user;
 
         $content .= '<div class="card shadow-sm"><div class="card-header">'.__( 'Manage address book', 'doliconnect').'</div><ul class="list-group list-group-flush">';
         if ( doliCheckRights('societe', 'contact', 'creer') ) {
+            $content .= doliModalButton('contact', 'addcontact', '<center><i class="fas fa-plus-circle"></i> '.__( 'Create a contact', 'doliconnect').'</center>', 'button', 'list-group-item lh-condensed list-group-item-action list-group-item-primary');
+    
             $content .= '<a href="'.esc_url( add_query_arg( 'action', 'create', $url) ).'" class="list-group-item lh-condensed list-group-item-action list-group-item-primary" disabled><center><i class="fa-solid fa-plus-circle"></i> '.__( 'Create a contact', 'doliconnect').'</center></a>';  
         }
         if ( !isset($listcontact->error) && $listcontact != null ) {
