@@ -60,18 +60,16 @@ add_action('wp_ajax_doliselectform_request', 'doliselectform_request');
 add_action('wp_ajax_nopriv_doliselectform_request', 'doliselectform_request');
 
 function doliselectform_request(){
-
-if (isset($_POST['case']) && $_POST['case'] == "update" ) {	
-	$response = array();
-	if (isset($_POST['legalformId'])) $response['state_id'] = doliSelectForm("state_id", "/setup/dictionary/states?sortfield=code_departement&sortorder=ASC&limit=500&country=".$_POST['countryId'], __( '- Select your state -', 'doliconnect'), __( 'State', 'doliconnect'), $_POST['stateId'], $_POST['objectId'], $_POST['rights'], $_POST['delay']);
-	if (isset($_POST['legalformId'])) $response['forme_juridique_code'] = doliSelectForm("forme_juridique_code", "/setup/dictionary/legal_form?sortfield=libelle&sortorder=ASC&active=1&limit=500&country=".$_POST['countryId'], __( '- Select your legal form -', 'doliconnect'), __( 'Legal form', 'doliconnect'), $_POST['legalformId'], $_POST['objectId'], $_POST['rights'], $_POST['delay'], 'code');
-	$response['ziptown'] = doliSelectForm("ziptown", "/setup/dictionary/towns?sortfield=town&sortorder=ASC&active=1&limit=1000&sqlfilters=(t.fk_pays:=:'".$_POST['countryId']."')and(t.fk_county:=:'".$_POST['stateId']."')", __( '- Select your town -', 'doliconnect'), __( 'Town', 'doliconnect'), $_POST['ziptownId'], $_POST['objectId'], $_POST['rights'], $_POST['delay']);
-	$response['profids'] = doliProfId((isset($_POST['idprof1'])?$_POST['idprof1']:null), (isset($_POST['idprof2'])?$_POST['idprof2']:null), (isset($_POST['idprof3'])?$_POST['idprof3']:null), (isset($_POST['idprof4'])?$_POST['idprof4']:null), (isset($_POST['country_code'])?$_POST['country_code']:null), (isset($_POST['objectId'])?$_POST['objectId']:null), (isset($_POST['rights'])?$_POST['rights']:null));
-	wp_send_json_success( $response );
-} else {
-	wp_send_json_error( dolialert('danger', __( 'A security error occured', 'doliconnect'))); 
-}
-
+	if (isset($_POST['case']) && $_POST['case'] == "update" ) {	
+		$response = array();
+		if (isset($_POST['legalformId'])) $response['state_id'] = doliSelectForm("state_id", "/setup/dictionary/states?sortfield=code_departement&sortorder=ASC&limit=500&country=".$_POST['countryId'], __( '- Select your state -', 'doliconnect'), __( 'State', 'doliconnect'), $_POST['stateId'], $_POST['objectId'], $_POST['rights'], $_POST['delay']);
+		if (isset($_POST['legalformId'])) $response['forme_juridique_code'] = doliSelectForm("forme_juridique_code", "/setup/dictionary/legal_form?sortfield=libelle&sortorder=ASC&active=1&limit=500&country=".$_POST['countryId'], __( '- Select your legal form -', 'doliconnect'), __( 'Legal form', 'doliconnect'), $_POST['legalformId'], $_POST['objectId'], $_POST['rights'], $_POST['delay'], 'code');
+		$response['ziptown'] = doliSelectForm("ziptown", "/setup/dictionary/towns?sortfield=town&sortorder=ASC&active=1&limit=1000&sqlfilters=(t.fk_pays:=:'".$_POST['countryId']."')and(t.fk_county:=:'".$_POST['stateId']."')", __( '- Select your town -', 'doliconnect'), __( 'Town', 'doliconnect'), $_POST['ziptownId'], $_POST['objectId'], $_POST['rights'], $_POST['delay']);
+		$response['profids'] = doliProfId((isset($_POST['idprof1'])?$_POST['idprof1']:null), (isset($_POST['idprof2'])?$_POST['idprof2']:null), (isset($_POST['idprof3'])?$_POST['idprof3']:null), (isset($_POST['idprof4'])?$_POST['idprof4']:null), (isset($_POST['country_code'])?$_POST['country_code']:null), (isset($_POST['objectId'])?$_POST['objectId']:null), (isset($_POST['rights'])?$_POST['rights']:null));
+		wp_send_json_success( $response );
+	} else {
+		wp_send_json_error( dolialert('danger', __( 'A security error occured', 'doliconnect'))); 
+	}
 }
 
 //*****************************************************************************************
@@ -150,98 +148,97 @@ function doliuserinfos_request(){
 	
 		if ( empty($UserError) ) {
 			$emailTo = get_option('tz_email');
-			if (!isset($emailTo) || ($emailTo == '') ) {
-			$emailTo = get_option('admin_email');
-		}
-		$sitename = get_option('blogname');
-		$subject = "[".$sitename."] ".__( 'Registration confirmation', 'doliconnect')."";
-		if ( !empty($_POST['pwd1']) && $_POST['pwd1'] == $_POST['pwd2'] ) {
-		$password=sanitize_text_field($_POST['pwd1']);
-		} else {
-		$password = wp_generate_password( 12, false ); 
-		}
-			  
-		$ID = wp_create_user(uniqid(), $password, $email );
+				if (!isset($emailTo) || ($emailTo == '') ) {
+				$emailTo = get_option('admin_email');
+			}
+			$sitename = get_option('blogname');
+			$subject = "[".$sitename."] ".__( 'Registration confirmation', 'doliconnect')."";
+			if ( !empty($_POST['pwd1']) && $_POST['pwd1'] == $_POST['pwd2'] ) {
+				$password=sanitize_text_field($_POST['pwd1']);
+			} else {
+				$password = wp_generate_password( 12, false ); 
+			}
+				
+			$ID = wp_create_user(uniqid(), $password, $email );
 		
-		if ( is_wp_error( $ID )) {
-			$response = [
-			'message' => dolialert('error', sprintf(__('Creating your account fails for the following reason: %s. Please contact us for help.', 'doliconnect'), $ID->get_error_message()) ),
-			'captcha' => dolicaptcha('doliuserinfos'),
-			];
-			wp_send_json_error( $response );	
-			die();		   
-		} 
+			if ( is_wp_error( $ID )) {
+				$response = [
+				'message' => dolialert('error', sprintf(__('Creating your account fails for the following reason: %s. Please contact us for help.', 'doliconnect'), $ID->get_error_message()) ),
+				'captcha' => dolicaptcha('doliuserinfos'),
+				];
+				wp_send_json_error( $response );	
+				die();		   
+			} 
 
-		$role = get_option( 'default_role' );
+			$role = get_option( 'default_role' );
+			
+			if ( is_multisite() ) {
+				$entity = dolibarr_entity(); 
+				add_user_to_blog($entity,$ID,$role);
+			} else {
+				$user = get_user_by( 'ID', $ID);
+				$user->set_role($role);
+			}
 		
-		if ( is_multisite() ) {
-		$entity = dolibarr_entity(); 
-		add_user_to_blog($entity,$ID,$role);
-		} else {
-		$user = get_user_by( 'ID', $ID);
-		$user->set_role($role);
-		}
-		
-		wp_update_user( array( 'ID' => $ID,
-		'user_email' => $thirdparty['email'],
-		'nickname' => sanitize_user($_POST['user_nicename']),
-		'first_name' => $thirdparty['firstname'],
-		'last_name' => $thirdparty['lastname'],
-		'description' => (isset($thirdparty['note_public'])?$thirdparty['note_public']:null),
-		'user_url' => (isset($thirdparty['url'])?$thirdparty['url']:null),
-		'display_name' => $thirdparty['name']));
-		update_user_meta( $ID, 'civility_code', sanitize_text_field($thirdparty['civility_code']));
-		update_user_meta( $ID, 'billing_type', sanitize_text_field($thirdparty['morphy']));
-		if ( $thirdparty['morphy'] == 'mor' ) { update_user_meta( $ID, 'billing_company', $thirdparty['name']); }
-		update_user_meta( $ID, 'billing_birth', $thirdparty['birth']);
-		if ( isset($_POST['optin1']) ) { update_user_meta( $ID, 'optin1', $_POST['optin1'] ); }
-		
-		$body = sprintf(__('Thank you for your registration on %s.', 'doliconnect'), $sitename);
-		$user = get_user_by( 'ID', $ID);
-		$key = get_password_reset_key($user);
-		$arr_params = array( 'action' => 'rpw', 'key' => $key, 'login' => $user->user_login);  
-		$url = esc_url( add_query_arg( $arr_params, doliconnecturl('doliaccount')) );
-		
-		$body .= "<br><br>".__('To activate your account on and choose your password, please click on the following link', 'doliconnect').":<br><br><a href='".$url."'>".$url."</a>";
-		$body .= "<br><br>".sprintf(__("Your %s's team", 'doliconnect'), $sitename)."<br>".get_option('siteurl');
-		
-		if ( has_filter( 'doliconnect_templatesignupemail') ) {
-		if (!empty(apply_filters( 'doliconnect_templatesignupemail', $sitename, $url))){
-		$body = apply_filters( 'doliconnect_templatesignupemail', $sitename, $url);
-		}
-		}
-		
-		$headers = array('Content-Type: text/html; charset=UTF-8'); 
-		$emailSent = wp_mail($email, $subject, $body, $headers);
+			wp_update_user( array( 'ID' => $ID,
+			'user_email' => $thirdparty['email'],
+			'nickname' => sanitize_user($_POST['user_nicename']),
+			'first_name' => $thirdparty['firstname'],
+			'last_name' => $thirdparty['lastname'],
+			'description' => (isset($thirdparty['note_public'])?$thirdparty['note_public']:null),
+			'user_url' => (isset($thirdparty['url'])?$thirdparty['url']:null),
+			'display_name' => $thirdparty['name']));
+			update_user_meta( $ID, 'civility_code', sanitize_text_field($thirdparty['civility_code']));
+			update_user_meta( $ID, 'billing_type', sanitize_text_field($thirdparty['morphy']));
+			if ( $thirdparty['morphy'] == 'mor' ) { update_user_meta( $ID, 'billing_company', $thirdparty['name']); }
+			update_user_meta( $ID, 'billing_birth', $thirdparty['birth']);
+			if ( isset($_POST['optin1']) ) { update_user_meta( $ID, 'optin1', $_POST['optin1'] ); }
+			
+			$body = sprintf(__('Thank you for your registration on %s.', 'doliconnect'), $sitename);
+			$user = get_user_by( 'ID', $ID);
+			$key = get_password_reset_key($user);
+			$arr_params = array( 'action' => 'rpw', 'key' => $key, 'login' => $user->user_login);  
+			$url = esc_url( add_query_arg( $arr_params, doliconnecturl('doliaccount')) );
+			
+			$body .= "<br><br>".__('To activate your account on and choose your password, please click on the following link', 'doliconnect').":<br><br><a href='".$url."'>".$url."</a>";
+			$body .= "<br><br>".sprintf(__("Your %s's team", 'doliconnect'), $sitename)."<br>".get_option('siteurl');
+			
+			if ( has_filter( 'doliconnect_templatesignupemail') ) {
+			if (!empty(apply_filters( 'doliconnect_templatesignupemail', $sitename, $url))){
+			$body = apply_filters( 'doliconnect_templatesignupemail', $sitename, $url);
+			}
+			}
+			
+			$headers = array('Content-Type: text/html; charset=UTF-8'); 
+			$emailSent = wp_mail($email, $subject, $body, $headers);
 
-		if ( !is_wp_error( $emailSent ) && ($thirdparty['morphy'] == 'mor' && $user) || (function_exists('dolikiosk') && ! empty(dolikiosk()) && $user) ) {  
-		
-			do_action('wp_dolibarr_sync', $thirdparty, $user);
-			wp_set_current_user( $ID, $user->user_login );
-			wp_set_auth_cookie( $ID, false);
-			do_action( 'wp_login', $user->user_login, $user);
-			$response = [
-			'message' => dolialert('success', __( "Your account has been created. Now, you are connected", 'doliconnect')),
-			'captcha' => dolicaptcha('doliuserinfos'),
-			];
-			$thirdparty = doliConnect('thirdparty', $user, false, true);
-			wp_send_json_success( $response );	
-			die();		   	 
-		} elseif ( !is_wp_error( $emailSent )) {
-			$response = [
-			'message' => dolialert('success', __( "Your account has been created and an account activation link has been sent by email. Don't forget to look at your unwanted emails if you can't find our message.", 'doliconnect')),
-			'captcha' => dolicaptcha('doliuserinfos'),
-			];
-			wp_send_json_success( $response );
-		} else {
-			$response = [
-			'message' => dolialert('danger', __( 'Your account has been created but sending an activation link by email fails. Please contact us.', 'doliconnect')),
-			'captcha' => dolicaptcha('doliuserinfos'),
-			];
-			wp_send_json_error( $response ); 
-			die();
-		}
-
+			if ( !is_wp_error( $emailSent ) && ($thirdparty['morphy'] == 'mor' && $user) || (function_exists('dolikiosk') && ! empty(dolikiosk()) && $user) ) {  
+			
+				do_action('wp_dolibarr_sync', $thirdparty, $user);
+				wp_set_current_user( $ID, $user->user_login );
+				wp_set_auth_cookie( $ID, false);
+				do_action( 'wp_login', $user->user_login, $user);
+				$response = [
+				'message' => dolialert('success', __( "Your account has been created. Now, you are connected", 'doliconnect')),
+				'captcha' => dolicaptcha('doliuserinfos'),
+				];
+				$thirdparty = doliConnect('thirdparty', $user, false, true);
+				wp_send_json_success( $response );	
+				die();		   	 
+			} elseif ( !is_wp_error( $emailSent )) {
+				$response = [
+				'message' => dolialert('success', __( "Your account has been created and an account activation link has been sent by email. Don't forget to look at your unwanted emails if you can't find our message.", 'doliconnect')),
+				'captcha' => dolicaptcha('doliuserinfos'),
+				];
+				wp_send_json_success( $response );
+			} else {
+				$response = [
+				'message' => dolialert('danger', __( 'Your account has been created but sending an activation link by email fails. Please contact us.', 'doliconnect')),
+				'captcha' => dolicaptcha('doliuserinfos'),
+				];
+				wp_send_json_error( $response ); 
+				die();
+			}
 		} else {
 			$response = [
 			'message' => dolialert('danger', join( '<br />', $UserError )),
@@ -250,7 +247,6 @@ function doliuserinfos_request(){
 			wp_send_json_error( $response );
 			die();
 		}
-	
 	} else {
 		$response = [
 		'message' => dolialert('danger', __( 'A security error occured', 'doliconnect')),
