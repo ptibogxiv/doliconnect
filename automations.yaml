@@ -1,0 +1,893 @@
+# ====================================================================================
+# MODES LUMIÈRES - DÉCLENCHEMENT DES AMBIANCES ET ANIMATIONS
+# ====================================================================================
+- alias: Modes lumières - Sélection unique + couleurs
+  description: Applique l'ambiance ou l'animation selon le mode activé ou l'IA
+  mode: parallel
+
+  trigger:
+    - platform: state
+      entity_id:
+        - input_boolean.mode_noel
+        - input_boolean.mode_halloween
+        - input_boolean.mode_octobrerose
+        - input_boolean.mode_pride
+        - input_boolean.mode_urbans
+        - input_boolean.mode_ice
+        - input_boolean.modeanim_noel
+        - input_boolean.modeanim_halloween
+        - input_boolean.modeanim_octobrerose
+        - input_boolean.modeanim_pride
+        - input_boolean.modeanim_urbans
+        - input_boolean.modeanim_ice
+        - input_boolean.modeanim_disco
+        - input_boolean.mode_ia
+        - input_boolean.modeanim_ia
+      to: "on"
+
+  action:
+    - choose:
+        # ANIMATIONS
+        - conditions: "{{ trigger.entity_id == 'input_boolean.modeanim_noel' }}"
+          sequence: !include lighting/animations/noel.yaml
+
+        - conditions: "{{ trigger.entity_id == 'input_boolean.modeanim_halloween' }}"
+          sequence: !include lighting/animations/halloween.yaml
+
+        - conditions: "{{ trigger.entity_id == 'input_boolean.modeanim_octobrerose' }}"
+          sequence: !include lighting/animations/octobrerose.yaml
+
+        - conditions: "{{ trigger.entity_id == 'input_boolean.modeanim_pride' }}"
+          sequence: !include lighting/animations/pride.yaml
+
+        - conditions: "{{ trigger.entity_id == 'input_boolean.modeanim_urbans' }}"
+          sequence: !include lighting/animations/urbans.yaml
+
+        - conditions: "{{ trigger.entity_id == 'input_boolean.modeanim_ice' }}"
+          sequence: !include lighting/animations/ice.yaml
+
+        - conditions: "{{ trigger.entity_id == 'input_boolean.modeanim_disco' }}"
+          sequence: !include lighting/animations/disco.yaml
+
+        # AMBIANCES
+        - conditions: "{{ trigger.entity_id == 'input_boolean.mode_noel' }}"
+          sequence: !include lighting/ambiances/noel.yaml
+
+        - conditions: "{{ trigger.entity_id == 'input_boolean.mode_halloween' }}"
+          sequence: !include lighting/ambiances/halloween.yaml
+
+        - conditions: "{{ trigger.entity_id == 'input_boolean.mode_octobrerose' }}"
+          sequence: !include lighting/ambiances/octobrerose.yaml
+
+        - conditions: "{{ trigger.entity_id == 'input_boolean.mode_pride' }}"
+          sequence: !include lighting/ambiances/pride.yaml
+
+        - conditions: "{{ trigger.entity_id == 'input_boolean.mode_urbans' }}"
+          sequence: !include lighting/ambiances/urbans.yaml
+
+        - conditions: "{{ trigger.entity_id == 'input_boolean.mode_ice' }}"
+          sequence: !include lighting/ambiances/ice.yaml
+
+        # IA MODES
+        - conditions: "{{ trigger.entity_id == 'input_boolean.mode_ia' }}"
+          sequence:
+            - repeat:
+                while:
+                  - condition: state
+                    entity_id: input_boolean.mode_ia
+                    state: "on"
+                sequence:
+                  - variables:
+                      m: "{{ now().month }}"
+                      d: "{{ now().day }}"
+                      ia_label_ambiance: >-
+                        {% if (m == 12 and d >= 26) or (m == 1 and d <= 5) %}Hiver - Fêtes de fin d'année (26/12-05/01)
+                        {% elif m == 1 and d <= 7 %}Nouvel An (01-07 janvier)
+                        {% elif m == 2 and d >= 13 and d <= 20 %}Saint-Valentin (13-20 février)
+                        {% elif m == 3 and d >= 20 and d <= 24 %}Journée de l'eau (20-24 mars)
+                        {% elif m == 3 and d >= 19 and d <= 27 %}Arrivée du printemps (19-27 mars)
+                        {% elif m == 4 and d >= 20 and d <= 24 %}Journée de la Terre (20-24 avril)
+                        {% elif m == 6 and d >= 19 and d <= 27 %}Arrivée de l'été (19-27 juin)
+                        {% elif (m == 6 and d >= 29) or (m == 7 and d <= 3) %}Canada Day (29/06-03/07)
+                        {% elif m == 7 and d >= 19 and d <= 23 %}Fête nationale belge (19-23 juillet)
+                        {% elif (m == 8 and d >= 28) or (m == 9 and d <= 10) %}Rentrée (28/08-10/09)
+                        {% elif m == 9 and d >= 20 and d <= 28 %}Arrivée de l'automne (20-28 septembre)
+                        {% elif m == 11 and d >= 1 and d <= 30 %}Movember (novembre)
+                        {% elif m == 1 or m == 2 %}Ice (Janvier/Février)
+                        {% elif m == 12 %}Noël (Décembre)
+                        {% elif m == 11 %}Halloween (Novembre)
+                        {% elif m == 10 %}Octobre Rose (Octobre)
+                        {% else %}Urban's (défaut)
+                        {% endif %}
+                  - service: input_text.set_value
+                    target:
+                      entity_id: input_text.ia_choix_ambiance
+                    data:
+                      value: "{{ ia_label_ambiance }}"
+                  - choose:
+                      - conditions: "{{ (m == 12 and d >= 26) or (m == 1 and d <= 5) }}"
+                        sequence:
+                          - variables: { extra_mode: "hiver_fetes_fin_annee" }
+                          - sequence: !include lighting/ambiances/extra.yaml
+                      - conditions: "{{ m == 1 and d <= 7 }}"
+                        sequence:
+                          - variables: { extra_mode: "nouvelan" }
+                          - sequence: !include lighting/ambiances/extra.yaml
+                      - conditions: "{{ m == 2 and d >= 13 and d <= 20 }}"
+                        sequence:
+                          - variables: { extra_mode: "saintvalentin" }
+                          - sequence: !include lighting/ambiances/extra.yaml
+                      - conditions: "{{ m == 3 and d >= 20 and d <= 24 }}"
+                        sequence:
+                          - variables: { extra_mode: "journee_eau" }
+                          - sequence: !include lighting/ambiances/extra.yaml
+                      - conditions: "{{ m == 3 and d >= 19 and d <= 27 }}"
+                        sequence:
+                          - variables: { extra_mode: "printemps" }
+                          - sequence: !include lighting/ambiances/extra.yaml
+                      - conditions: "{{ m == 4 and d >= 20 and d <= 24 }}"
+                        sequence:
+                          - variables: { extra_mode: "journee_terre" }
+                          - sequence: !include lighting/ambiances/extra.yaml
+                      - conditions: "{{ m == 6 and d >= 19 and d <= 27 }}"
+                        sequence:
+                          - variables: { extra_mode: "ete" }
+                          - sequence: !include lighting/ambiances/extra.yaml
+                      - conditions: "{{ (m == 6 and d >= 29) or (m == 7 and d <= 3) }}"
+                        sequence:
+                          - variables: { extra_mode: "canada_day" }
+                          - sequence: !include lighting/ambiances/extra.yaml
+                      - conditions: "{{ m == 7 and d >= 19 and d <= 23 }}"
+                        sequence:
+                          - variables: { extra_mode: "fete_nationale_belgique" }
+                          - sequence: !include lighting/ambiances/extra.yaml
+                      - conditions: "{{ (m == 8 and d >= 28) or (m == 9 and d <= 10) }}"
+                        sequence:
+                          - variables: { extra_mode: "rentree" }
+                          - sequence: !include lighting/ambiances/extra.yaml
+                      - conditions: "{{ m == 9 and d >= 20 and d <= 28 }}"
+                        sequence:
+                          - variables: { extra_mode: "automne" }
+                          - sequence: !include lighting/ambiances/extra.yaml
+                      - conditions: "{{ m == 11 and d >= 1 and d <= 30 }}"
+                        sequence:
+                          - variables: { extra_mode: "movember" }
+                          - sequence: !include lighting/ambiances/extra.yaml
+                      - conditions: "{{ m == 1 or m == 2 }}"
+                        sequence: !include lighting/ambiances/ice.yaml
+                      - conditions: "{{ m == 12 }}"
+                        sequence: !include lighting/ambiances/noel.yaml
+                      - conditions: "{{ m == 11 }}"
+                        sequence: !include lighting/ambiances/halloween.yaml
+                      - conditions: "{{ m == 10 }}"
+                        sequence: !include lighting/ambiances/octobrerose.yaml
+                    default: !include lighting/ambiances/urbans.yaml
+                  - delay: "00:10:00"
+
+        - conditions: "{{ trigger.entity_id == 'input_boolean.modeanim_ia' }}"
+          sequence:
+            - repeat:
+                while:
+                  - condition: state
+                    entity_id: input_boolean.modeanim_ia
+                    state: "on"
+                sequence:
+                  - variables:
+                      m: "{{ now().month }}"
+                      d: "{{ now().day }}"
+                      ia_label_animation: >-
+                        {% if (m == 12 and d >= 26) or (m == 1 and d <= 5) %}Hiver - Fêtes de fin d'année (26/12-05/01)
+                        {% elif m == 1 and d <= 7 %}Nouvel An (01-07 janvier)
+                        {% elif m == 2 and d >= 13 and d <= 20 %}Saint-Valentin (13-20 février)
+                        {% elif m == 3 and d >= 20 and d <= 24 %}Journée de l'eau (20-24 mars)
+                        {% elif m == 3 and d >= 19 and d <= 27 %}Arrivée du printemps (19-27 mars)
+                        {% elif m == 4 and d >= 20 and d <= 24 %}Journée de la Terre (20-24 avril)
+                        {% elif m == 6 and d >= 19 and d <= 27 %}Arrivée de l'été (19-27 juin)
+                        {% elif (m == 6 and d >= 29) or (m == 7 and d <= 3) %}Canada Day (29/06-03/07)
+                        {% elif m == 7 and d >= 19 and d <= 23 %}Fête nationale belge (19-23 juillet)
+                        {% elif (m == 8 and d >= 28) or (m == 9 and d <= 10) %}Rentrée (28/08-10/09)
+                        {% elif m == 9 and d >= 20 and d <= 28 %}Arrivée de l'automne (20-28 septembre)
+                        {% elif m == 11 and d >= 1 and d <= 30 %}Movember (novembre)
+                        {% elif m == 1 or m == 2 %}Ice (Janvier/Février)
+                        {% elif m == 12 %}Noël (Décembre)
+                        {% elif m == 11 %}Halloween (Novembre)
+                        {% elif m == 10 %}Octobre Rose (Octobre)
+                        {% else %}Urban's (défaut)
+                        {% endif %}
+                  - service: input_text.set_value
+                    target:
+                      entity_id: input_text.ia_choix_animation
+                    data:
+                      value: "{{ ia_label_animation }}"
+                  - choose:
+                      - conditions: "{{ (m == 12 and d >= 26) or (m == 1 and d <= 5) }}"
+                        sequence:
+                          - variables: { extra_mode: "hiver_fetes_fin_annee" }
+                          - sequence: !include lighting/animations/extra.yaml
+                      - conditions: "{{ m == 1 and d <= 7 }}"
+                        sequence:
+                          - variables: { extra_mode: "nouvelan" }
+                          - sequence: !include lighting/animations/extra.yaml
+                      - conditions: "{{ m == 2 and d >= 13 and d <= 20 }}"
+                        sequence:
+                          - variables: { extra_mode: "saintvalentin" }
+                          - sequence: !include lighting/animations/extra.yaml
+                      - conditions: "{{ m == 3 and d >= 20 and d <= 24 }}"
+                        sequence:
+                          - variables: { extra_mode: "journee_eau" }
+                          - sequence: !include lighting/animations/extra.yaml
+                      - conditions: "{{ m == 3 and d >= 19 and d <= 27 }}"
+                        sequence:
+                          - variables: { extra_mode: "printemps" }
+                          - sequence: !include lighting/animations/extra.yaml
+                      - conditions: "{{ m == 4 and d >= 20 and d <= 24 }}"
+                        sequence:
+                          - variables: { extra_mode: "journee_terre" }
+                          - sequence: !include lighting/animations/extra.yaml
+                      - conditions: "{{ m == 6 and d >= 19 and d <= 27 }}"
+                        sequence:
+                          - variables: { extra_mode: "ete" }
+                          - sequence: !include lighting/animations/extra.yaml
+                      - conditions: "{{ (m == 6 and d >= 29) or (m == 7 and d <= 3) }}"
+                        sequence:
+                          - variables: { extra_mode: "canada_day" }
+                          - sequence: !include lighting/animations/extra.yaml
+                      - conditions: "{{ m == 7 and d >= 19 and d <= 23 }}"
+                        sequence:
+                          - variables: { extra_mode: "fete_nationale_belgique" }
+                          - sequence: !include lighting/animations/extra.yaml
+                      - conditions: "{{ (m == 8 and d >= 28) or (m == 9 and d <= 10) }}"
+                        sequence:
+                          - variables: { extra_mode: "rentree" }
+                          - sequence: !include lighting/animations/extra.yaml
+                      - conditions: "{{ m == 9 and d >= 20 and d <= 28 }}"
+                        sequence:
+                          - variables: { extra_mode: "automne" }
+                          - sequence: !include lighting/animations/extra.yaml
+                      - conditions: "{{ m == 11 and d >= 1 and d <= 30 }}"
+                        sequence:
+                          - variables: { extra_mode: "movember" }
+                          - sequence: !include lighting/animations/extra.yaml
+                      - conditions: "{{ m == 1 or m == 2 }}"
+                        sequence: !include lighting/animations/ice.yaml
+                      - conditions: "{{ m == 12 }}"
+                        sequence: !include lighting/animations/noel.yaml
+                      - conditions: "{{ m == 11 }}"
+                        sequence: !include lighting/animations/halloween.yaml
+                      - conditions: "{{ m == 10 }}"
+                        sequence: !include lighting/animations/octobrerose.yaml
+                    default: !include lighting/animations/urbans.yaml
+
+# ====================================================================================
+# SYSTÈME D'EXCLUSION MUTUELLE DES MODES
+# ====================================================================================
+
+# ------------------------------------------------------------------------------------
+# Quand CYCLE CIRCADIEN est activé → Désactive TOUT et applique immédiatement
+# ------------------------------------------------------------------------------------
+- alias: Cycle Circadien - Désactiver tous les autres modes et appliquer
+  description: Désactive ambiances, animations et boosts puis applique le cycle immédiatement
+  mode: single
+
+  trigger:
+    - platform: state
+      entity_id: input_boolean.cycle_circadien_master
+      to: "on"
+
+  action:
+    # Désactive toutes les ambiances
+    - service: input_boolean.turn_off
+      target:
+        entity_id:
+          - input_boolean.mode_noel
+          - input_boolean.mode_halloween
+          - input_boolean.mode_octobrerose
+          - input_boolean.mode_pride
+          - input_boolean.mode_urbans
+          - input_boolean.mode_ice
+          - input_boolean.mode_ia
+
+    # Désactive toutes les animations
+    - service: input_boolean.turn_off
+      target:
+        entity_id:
+          - input_boolean.modeanim_noel
+          - input_boolean.modeanim_halloween
+          - input_boolean.modeanim_octobrerose
+          - input_boolean.modeanim_pride
+          - input_boolean.modeanim_urbans
+          - input_boolean.modeanim_ice
+          - input_boolean.modeanim_disco
+          - input_boolean.modeanim_ia
+
+    # Désactive les boosts
+    - service: input_boolean.turn_off
+      target:
+        entity_id:
+          - input_boolean.boost_enabled
+          - input_boolean.boost_manual_override
+    
+    # APPLIQUE IMMÉDIATEMENT LE CYCLE CIRCADIEN
+    - delay:
+        milliseconds: 500
+    
+    - variables:
+        temp_kelvin: "{{ states('sensor.cycle_temp_couleur_actuelle') | int }}"
+        brightness_pct: "{{ states('sensor.cycle_luminosite_actuelle') | int }}"
+    
+    - service: light.turn_on
+      target:
+        entity_id:
+          - light.zone_1
+          - light.zone_2
+          - light.zone_3
+          - light.zone_4
+          - light.tzb210_1alquo2j_ts0505b_2
+          - light.tzb210_1alquo2j_ts0505b_3
+          - light.tzb210_1alquo2j_ts0505b_4
+          - light.tzb210_1alquo2j_ts0505b_5
+          - light.tzb210_1alquo2j_ts0505b_6
+          - light.tzb210_1alquo2j_ts0505b_7
+          - light.tzb210_1alquo2j_ts0505b_8
+          - light.tzb210_1alquo2j_ts0505b_9
+          - light.tzb210_1alquo2j_ts0505b_10
+          - light.tzb210_1alquo2j_ts0505b_11
+          - light.tzb210_1alquo2j_ts0505b_12
+          - light.tzb210_1alquo2j_ts0505b_13
+          - light.tzb210_1alquo2j_ts0505b_14
+          - light.ruban_led
+          - light.gros_spot_1
+          - light.gros_spot_2
+          - light.gros_spot_3
+          - light.gros_spot_4
+      data:
+        brightness_pct: "{{ brightness_pct }}"
+        kelvin: "{{ temp_kelvin }}"
+        transition: 2
+
+# ------------------------------------------------------------------------------------
+# Quand AMBIANCE/ANIMATION est activée → Désactive le cycle circadien et les boosts
+# ------------------------------------------------------------------------------------
+- alias: Ambiance/Animation - Désactiver cycle et boosts
+  description: Désactive le cycle circadien et boosts quand ambiance/animation activée
+  mode: restart
+
+  trigger:
+    # Ambiances
+    - platform: state
+      entity_id:
+        - input_boolean.mode_noel
+        - input_boolean.mode_halloween
+        - input_boolean.mode_octobrerose
+        - input_boolean.mode_pride
+        - input_boolean.mode_urbans
+        - input_boolean.mode_ice
+        - input_boolean.mode_ia
+      to: "on"
+
+    # Animations
+    - platform: state
+      entity_id:
+        - input_boolean.modeanim_noel
+        - input_boolean.modeanim_halloween
+        - input_boolean.modeanim_octobrerose
+        - input_boolean.modeanim_pride
+        - input_boolean.modeanim_urbans
+        - input_boolean.modeanim_ice
+        - input_boolean.modeanim_disco
+        - input_boolean.modeanim_ia
+      to: "on"
+
+  action:
+    # Exclusivité stricte : un seul mode ambiance/animation/IA à la fois
+    - variables:
+        all_light_modes:
+          - input_boolean.mode_noel
+          - input_boolean.mode_halloween
+          - input_boolean.mode_octobrerose
+          - input_boolean.mode_pride
+          - input_boolean.mode_urbans
+          - input_boolean.mode_ice
+          - input_boolean.mode_ia
+          - input_boolean.modeanim_noel
+          - input_boolean.modeanim_halloween
+          - input_boolean.modeanim_octobrerose
+          - input_boolean.modeanim_pride
+          - input_boolean.modeanim_urbans
+          - input_boolean.modeanim_ice
+          - input_boolean.modeanim_disco
+          - input_boolean.modeanim_ia
+        modes_to_disable: "{{ all_light_modes | reject('equalto', trigger.entity_id) | list }}"
+
+    - service: input_boolean.turn_off
+      target:
+        entity_id: "{{ modes_to_disable }}"
+
+    # Désactive le cycle circadien
+    - service: input_boolean.turn_off
+      target:
+        entity_id: input_boolean.cycle_circadien_master
+
+    # Désactive les boosts
+    - service: input_boolean.turn_off
+      target:
+        entity_id:
+          - input_boolean.boost_enabled
+          - input_boolean.boost_manual_override
+
+# ------------------------------------------------------------------------------------
+# Quand BOOST MANUEL est activé → Désactive ET ARRÊTE TOUT
+# ------------------------------------------------------------------------------------
+- alias: Boost Manuel - Désactiver et arrêter tous les modes
+  description: Désactive et arrête cycle, ambiances et animations quand boost manuel activé
+  mode: single
+
+  trigger:
+    - platform: state
+      entity_id: input_boolean.boost_manual_override
+      to: "on"
+
+  action:
+    # Désactive le cycle circadien
+    - service: input_boolean.turn_off
+      target:
+        entity_id: input_boolean.cycle_circadien_master
+
+    # Désactive toutes les ambiances
+    - service: input_boolean.turn_off
+      target:
+        entity_id:
+          - input_boolean.mode_noel
+          - input_boolean.mode_halloween
+          - input_boolean.mode_octobrerose
+          - input_boolean.mode_pride
+          - input_boolean.mode_urbans
+          - input_boolean.mode_ice
+          - input_boolean.mode_ia
+
+    # Désactive toutes les animations
+    - service: input_boolean.turn_off
+      target:
+        entity_id:
+          - input_boolean.modeanim_noel
+          - input_boolean.modeanim_halloween
+          - input_boolean.modeanim_octobrerose
+          - input_boolean.modeanim_pride
+          - input_boolean.modeanim_urbans
+          - input_boolean.modeanim_ice
+          - input_boolean.modeanim_disco
+          - input_boolean.modeanim_ia
+
+    # Désactive le boost planifié
+    - service: input_boolean.turn_off
+      target:
+        entity_id: input_boolean.boost_enabled
+    
+    # ATTENDRE que les animations s'arrêtent
+    - delay:
+        milliseconds: 500
+    
+    # ÉTEINDRE toutes les lumières pour arrêter net les animations
+    - service: light.turn_off
+      target:
+        entity_id:
+          - light.zone_1
+          - light.zone_2
+          - light.zone_3
+          - light.zone_4
+          - light.tzb210_1alquo2j_ts0505b_2
+          - light.tzb210_1alquo2j_ts0505b_3
+          - light.tzb210_1alquo2j_ts0505b_4
+          - light.tzb210_1alquo2j_ts0505b_5
+          - light.tzb210_1alquo2j_ts0505b_6
+          - light.tzb210_1alquo2j_ts0505b_7
+          - light.tzb210_1alquo2j_ts0505b_8
+          - light.tzb210_1alquo2j_ts0505b_9
+          - light.tzb210_1alquo2j_ts0505b_10
+          - light.tzb210_1alquo2j_ts0505b_11
+          - light.tzb210_1alquo2j_ts0505b_12
+          - light.tzb210_1alquo2j_ts0505b_13
+          - light.tzb210_1alquo2j_ts0505b_14
+          - light.ruban_led
+          - light.gros_spot_1
+          - light.gros_spot_2
+          - light.gros_spot_3
+          - light.gros_spot_4
+      data:
+        transition: 0
+    
+    # Pause avant de démarrer le boost
+    - delay:
+        milliseconds: 300
+
+# ------------------------------------------------------------------------------------
+# Quand BOOST PLANIFIÉ est activé → Désactive cycle, ambiances et animations
+# ------------------------------------------------------------------------------------
+- alias: Boost Planifié - Désactiver tous les autres modes
+  description: Désactive cycle, ambiances et animations quand boost planifié activé
+  mode: single
+
+  trigger:
+    - platform: state
+      entity_id: input_boolean.boost_enabled
+      to: "on"
+
+  action:
+    # Désactive le cycle circadien
+    - service: input_boolean.turn_off
+      target:
+        entity_id: input_boolean.cycle_circadien_master
+
+    # Désactive toutes les ambiances
+    - service: input_boolean.turn_off
+      target:
+        entity_id:
+          - input_boolean.mode_noel
+          - input_boolean.mode_halloween
+          - input_boolean.mode_octobrerose
+          - input_boolean.mode_pride
+          - input_boolean.mode_urbans
+          - input_boolean.mode_ice
+          - input_boolean.mode_ia
+
+    # Désactive toutes les animations
+    - service: input_boolean.turn_off
+      target:
+        entity_id:
+          - input_boolean.modeanim_noel
+          - input_boolean.modeanim_halloween
+          - input_boolean.modeanim_octobrerose
+          - input_boolean.modeanim_pride
+          - input_boolean.modeanim_urbans
+          - input_boolean.modeanim_ice
+          - input_boolean.modeanim_disco
+          - input_boolean.modeanim_ia
+
+# ====================================================================================
+# APPLICATION DU CYCLE CIRCADIEN
+# ====================================================================================
+
+# ------------------------------------------------------------------------------------
+# Applique l'éclairage circadien automatiquement
+# ------------------------------------------------------------------------------------
+- alias: Cycle Circadien - Application automatique
+  description: Applique les paramètres lumineux selon la phase du cycle
+  mode: restart
+
+  trigger:
+    # Déclenchement toutes les 5 minutes
+    - platform: time_pattern
+      minutes: "/5"
+
+    # Déclenchement au changement de phase
+    - platform: state
+      entity_id: sensor.cycle_circadien_phase
+
+  condition:
+    # Ne s'exécute QUE si le mode circadien est ON
+    - condition: state
+      entity_id: input_boolean.cycle_circadien_master
+      state: "on"
+
+    # Ne s'exécute pas si une ambiance est active
+    - condition: state
+      entity_id: input_boolean.mode_noel
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.mode_halloween
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.mode_octobrerose
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.mode_pride
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.mode_urbans
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.mode_ice
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.mode_ia
+      state: "off"
+
+    # Ne s'exécute pas si une animation est active
+    - condition: state
+      entity_id: input_boolean.modeanim_noel
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.modeanim_halloween
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.modeanim_octobrerose
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.modeanim_pride
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.modeanim_urbans
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.modeanim_ice
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.modeanim_disco
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.modeanim_ia
+      state: "off"
+
+    # Ne s'exécute pas si boost manuel ou planifié actif
+    - condition: state
+      entity_id: input_boolean.boost_manual_override
+      state: "off"
+    - condition: state
+      entity_id: input_boolean.boost_enabled
+      state: "off"
+
+  action:
+    - variables:
+        temp_kelvin: "{{ states('sensor.cycle_temp_couleur_actuelle') | int }}"
+        brightness_pct: "{{ states('sensor.cycle_luminosite_actuelle') | int }}"
+
+    # Applique à TOUTES les lumières de la salle de réunion
+    - service: light.turn_on
+      target:
+        entity_id:
+          - light.zone_1
+          - light.zone_2
+          - light.zone_3
+          - light.zone_4
+          - light.tzb210_1alquo2j_ts0505b_2
+          - light.tzb210_1alquo2j_ts0505b_3
+          - light.tzb210_1alquo2j_ts0505b_4
+          - light.tzb210_1alquo2j_ts0505b_5
+          - light.tzb210_1alquo2j_ts0505b_6
+          - light.tzb210_1alquo2j_ts0505b_7
+          - light.tzb210_1alquo2j_ts0505b_8
+          - light.tzb210_1alquo2j_ts0505b_9
+          - light.tzb210_1alquo2j_ts0505b_10
+          - light.tzb210_1alquo2j_ts0505b_11
+          - light.tzb210_1alquo2j_ts0505b_12
+          - light.tzb210_1alquo2j_ts0505b_13
+          - light.tzb210_1alquo2j_ts0505b_14
+          - light.ruban_led
+          - light.gros_spot_1
+          - light.gros_spot_2
+          - light.gros_spot_3
+          - light.gros_spot_4
+      data:
+        brightness_pct: "{{ brightness_pct }}"
+        kelvin: "{{ temp_kelvin }}"
+        transition: 3
+
+# ====================================================================================
+# BOOST LUMINEUX - 3 SEC ROUGE / 1 SEC ÉTEINT
+# ====================================================================================
+
+# ------------------------------------------------------------------------------------
+# BOOST - Mode Manuel (3 SEC ROUGE / 1 SEC ÉTEINT - FIXE)
+# ------------------------------------------------------------------------------------
+- alias: Boost - Mode Manuel Activé
+  description: 3 secondes ROUGE, 1 seconde ÉTEINT, cycle infini
+  mode: restart
+  
+  trigger:
+    - platform: state
+      entity_id: input_boolean.boost_manual_override
+      to: "on"
+  
+  action:
+    # Attend que l'automatisation de nettoyage soit terminée
+    - delay:
+        milliseconds: 900
+    
+    - service: input_boolean.turn_on
+      entity_id: input_boolean.boost_running
+    
+    # Boucle de clignotement infinie
+    - repeat:
+        while:
+          - condition: state
+            entity_id: input_boolean.boost_manual_override
+            state: "on"
+        sequence:
+          # ========== PHASE 1 : 3 SECONDES ROUGE ==========
+          - service: light.turn_on
+            target:
+              entity_id:
+                - light.zone_1
+                - light.zone_2
+                - light.zone_3
+                - light.zone_4
+                - light.tzb210_1alquo2j_ts0505b_2
+                - light.tzb210_1alquo2j_ts0505b_3
+                - light.tzb210_1alquo2j_ts0505b_4
+                - light.tzb210_1alquo2j_ts0505b_5
+                - light.tzb210_1alquo2j_ts0505b_6
+                - light.tzb210_1alquo2j_ts0505b_7
+                - light.tzb210_1alquo2j_ts0505b_8
+                - light.tzb210_1alquo2j_ts0505b_9
+                - light.tzb210_1alquo2j_ts0505b_10
+                - light.tzb210_1alquo2j_ts0505b_11
+                - light.tzb210_1alquo2j_ts0505b_12
+                - light.tzb210_1alquo2j_ts0505b_13
+                - light.tzb210_1alquo2j_ts0505b_14
+                - light.ruban_led
+                - light.gros_spot_1
+                - light.gros_spot_2
+                - light.gros_spot_3
+                - light.gros_spot_4
+            data:
+              brightness: 255
+              rgb_color: [255, 0, 0]
+              transition: 0
+          
+          # Attente 3 secondes (ROUGE ALLUMÉ)
+          - delay:
+              seconds: 3
+          
+          # ========== PHASE 2 : 1 SECONDE ÉTEINT ==========
+          - service: light.turn_off
+            target:
+              entity_id:
+                - light.zone_1
+                - light.zone_2
+                - light.zone_3
+                - light.zone_4
+                - light.tzb210_1alquo2j_ts0505b_2
+                - light.tzb210_1alquo2j_ts0505b_3
+                - light.tzb210_1alquo2j_ts0505b_4
+                - light.tzb210_1alquo2j_ts0505b_5
+                - light.tzb210_1alquo2j_ts0505b_6
+                - light.tzb210_1alquo2j_ts0505b_7
+                - light.tzb210_1alquo2j_ts0505b_8
+                - light.tzb210_1alquo2j_ts0505b_9
+                - light.tzb210_1alquo2j_ts0505b_10
+                - light.tzb210_1alquo2j_ts0505b_11
+                - light.tzb210_1alquo2j_ts0505b_12
+                - light.tzb210_1alquo2j_ts0505b_13
+                - light.tzb210_1alquo2j_ts0505b_14
+                - light.ruban_led
+                - light.gros_spot_1
+                - light.gros_spot_2
+                - light.gros_spot_3
+                - light.gros_spot_4
+            data:
+              transition: 0
+          
+          # Attente 1 seconde (ÉTEINT)
+          - delay:
+              seconds: 1
+    
+    # Arrête le boost
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.boost_running
+
+# ------------------------------------------------------------------------------------
+# BOOST - Mode Manuel Désactivé
+# ------------------------------------------------------------------------------------
+- alias: Boost - Mode Manuel Désactivé
+  description: Arrête les flashs immédiatement
+  mode: single
+
+  trigger:
+    - platform: state
+      entity_id: input_boolean.boost_manual_override
+      to: "off"
+
+  action:
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.boost_running
+
+# ------------------------------------------------------------------------------------
+# BOOST - Planification Automatique (utilise intervalle configuré)
+# ------------------------------------------------------------------------------------
+- alias: Boost - Planification Automatique
+  description: Lance le boost à l'heure planifiée avec intervalle configurable
+  mode: restart
+
+  trigger:
+    - platform: time
+      at: input_datetime.boost_time
+
+  condition:
+    - condition: state
+      entity_id: input_boolean.boost_enabled
+      state: "on"
+    - condition: state
+      entity_id: input_boolean.boost_manual_override
+      state: "off"
+
+  action:
+    - service: input_boolean.turn_on
+      entity_id: input_boolean.boost_running
+
+    - repeat:
+        while:
+          - condition: state
+            entity_id: input_boolean.boost_running
+            state: "on"
+          - condition: state
+            entity_id: input_boolean.boost_manual_override
+            state: "off"
+          - condition: template
+            value_template: >
+              {% set start = states('input_datetime.boost_time') %}
+              {% set duration = states('input_number.boost_duration_min') | int %}
+              {% set now_time = now() %}
+              {% set start_time = today_at(start) %}
+              {% set end_time = start_time + timedelta(minutes=duration) %}
+              {{ now_time < end_time }}
+        sequence:
+          # ROUGE ON
+          - service: light.turn_on
+            target:
+              entity_id:
+                - light.zone_1
+                - light.zone_2
+                - light.zone_3
+                - light.zone_4
+                - light.tzb210_1alquo2j_ts0505b_2
+                - light.tzb210_1alquo2j_ts0505b_3
+                - light.tzb210_1alquo2j_ts0505b_4
+                - light.tzb210_1alquo2j_ts0505b_5
+                - light.tzb210_1alquo2j_ts0505b_6
+                - light.tzb210_1alquo2j_ts0505b_7
+                - light.tzb210_1alquo2j_ts0505b_8
+                - light.tzb210_1alquo2j_ts0505b_9
+                - light.tzb210_1alquo2j_ts0505b_10
+                - light.tzb210_1alquo2j_ts0505b_11
+                - light.tzb210_1alquo2j_ts0505b_12
+                - light.tzb210_1alquo2j_ts0505b_13
+                - light.tzb210_1alquo2j_ts0505b_14
+                - light.ruban_led
+                - light.gros_spot_1
+                - light.gros_spot_2
+                - light.gros_spot_3
+                - light.gros_spot_4
+            data:
+              brightness: 255
+              rgb_color: [255, 0, 0]
+              transition: 0
+
+          # Attente ON (utilise l'intervalle configuré)
+          - delay:
+              seconds: "{{ states('input_number.boost_interval_sec') | float }}"
+
+          # ÉTEINT
+          - service: light.turn_off
+            target:
+              entity_id:
+                - light.zone_1
+                - light.zone_2
+                - light.zone_3
+                - light.zone_4
+                - light.tzb210_1alquo2j_ts0505b_2
+                - light.tzb210_1alquo2j_ts0505b_3
+                - light.tzb210_1alquo2j_ts0505b_4
+                - light.tzb210_1alquo2j_ts0505b_5
+                - light.tzb210_1alquo2j_ts0505b_6
+                - light.tzb210_1alquo2j_ts0505b_7
+                - light.tzb210_1alquo2j_ts0505b_8
+                - light.tzb210_1alquo2j_ts0505b_9
+                - light.tzb210_1alquo2j_ts0505b_10
+                - light.tzb210_1alquo2j_ts0505b_11
+                - light.tzb210_1alquo2j_ts0505b_12
+                - light.tzb210_1alquo2j_ts0505b_13
+                - light.tzb210_1alquo2j_ts0505b_14
+                - light.ruban_led
+                - light.gros_spot_1
+                - light.gros_spot_2
+                - light.gros_spot_3
+                - light.gros_spot_4
+            data:
+              transition: 0
+
+          # Attente OFF (utilise l'intervalle configuré)
+          - delay:
+              seconds: "{{ states('input_number.boost_interval_sec') | float }}"
+
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.boost_running
