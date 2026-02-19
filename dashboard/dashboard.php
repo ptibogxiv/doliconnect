@@ -262,11 +262,6 @@ if ( empty(doliconst('MAIN_DISABLE_CONTACTS_TAB')) && doliCheckRights('societe',
     function contacts_module($content, $url){
     global $current_user;
 
-        if ( isset($_GET['id']) && $_GET['id'] > 0 ) {  
-            $request = "/contacts/".esc_attr($_GET['id'])."?includecount=1&includeroles=1";
-            $contactfo = callDoliApi("GET", $request, null, dolidelay('contact', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-            //$content .= $contractfo;
-        }
         $thirdparty = doliConnect('thirdparty', $current_user, false, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 
         $content = "<div id='dolicontactinfos-alert'></div>";

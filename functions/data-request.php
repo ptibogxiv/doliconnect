@@ -1220,7 +1220,7 @@ global $current_user;
 	} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "contact" ) {
 		if (isset($_POST['value1']) && !empty($_POST['value1'])) {
 			$modal['header'] = __( 'Edit contact', 'doliconnect');
-			$object = callDoliApi("GET", "/contacts/".trim($_POST['value1']), null, dolidelay('contact', true));
+			$object = callDoliApi("GET", "/contacts/".trim($_POST['value1'])."?includecount=1&includeroles=1", null, dolidelay('contact', true));
 			$case = 'update';
 		} else {
 			$modal['header'] = __( "Create contact", 'doliconnect');
