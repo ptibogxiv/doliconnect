@@ -905,10 +905,12 @@ return $ifprod;
 
 function doliuserform($object, $delay, $mode, $rights) {
 global $current_user;
-//$rights = 0;
+
 if ( is_object($object) && $object->id > 0 ) {
-$idobject=$mode."[".$object->id."]";
-} else { $idobject=$mode; }
+  $idobject = $mode."[".$object->id."]";
+} else { 
+  $idobject = $mode;
+}
 
 $company = callDoliApi("GET", "/setup/company", null, dolidelay('constante'));
 
