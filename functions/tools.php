@@ -654,7 +654,16 @@ function doliExtrafields($object, $type, $delay) {
           }
           $form .= '</select><label for="floatingSelect">'.$field->label.'</label>';
           $form .= '</div>';
-        } else {
+        } elseif (isset($field->type) && $field->type == 'text') {
+          $form .= '<div class="form-floating"><textarea class="form-control" id="'.$idobject.'[array_options]['.$extra.']" name="'.$idobject.'[array_options]['.$extra.']" aria-label="Default select example"';
+          if (isset($field->required) && !empty($field->required)) {
+            $form .= ' required';
+          }
+          $form .= '>';
+          $form .= $object->array_options->{'options_'.$extra};
+          $form .= '</textarea><label for="floatingSelect">'.$field->label.'</label>';
+          $form .= '</div>';
+        } else {     
           $form .= 'to do';
         }
       }
