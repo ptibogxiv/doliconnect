@@ -1663,7 +1663,9 @@ function doliCardFooter($object, $delay, $request = null) {
     if (is_user_logged_in() && !empty(get_option('doliconnectbeta')) ) {
       $footer .= " <a onClick='refreshloader()' href='".esc_url( add_query_arg( 'refresh', true, $url) )."' title='".__( 'Refresh datas', 'doliconnect')."'><i class='fas fa-sync-alt'></i></a>";
     }
-  };
+  } else {
+    $footer .= "<i class='fas fa-database'></i> ".__( 'No data', 'doliconnect');
+  }
   $footer .= '</div><div class="float-end">';
   // $footer .= dolihelp('ISSUE');
   $footer .= '</div></small>';

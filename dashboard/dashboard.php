@@ -301,7 +301,7 @@ global $current_user;
         $content .= "<div class='card-body'><div class='d-grid gap-2'><button class='btn btn-outline-secondary' type='submit' ";
         if (!doliCheckRights('societe', 'contact', 'creer')) { $content .= 'disabled'; }
         $content .= ">".__( 'Add', 'doliconnect')."</button></div></div>";
-        $content .= doliCardFooter (null, 'contact');
+        $content .= doliCardFooter(null, 'contact');
         $content .= '</div></small>';
         $content .= '</div></form>';
     } else {
