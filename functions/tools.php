@@ -1021,9 +1021,9 @@ if ( in_array($mode, array('thirdparty', 'donation')) && ($current_user->billing
 $doliuser .= '<div class="row g-2 mb-2"><div class="col-lg">';    
 $doliuser .= '<div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[name]" name="'.$idobject.'[name]" placeholder="'.__( 'Name of company', 'doliconnect').'" value="'.(isset($object->name) ? stripslashes(htmlspecialchars($object->name, ENT_QUOTES)) : null).'" ';
 if ($rights) {
-$doliuser .= 'required';
+  $doliuser .= ' required';
 } else {
-  $doliuser .= 'disabled';
+  $doliuser .= ' disabled';
 }
 $doliuser .= '><label for="'.$idobject.'[name]"><i class="fas fa-building fa-fw"></i> '.__( 'Name of company', 'doliconnect').'</label></div>';   
 $doliuser .= '</div><div class="col-md">';
@@ -1057,11 +1057,11 @@ if ( doliversion('15.0.0') ) {
   $staff = callDoliApi("GET", "/setup/dictionary/staff?sortfield=id&sortorder=ASC&limit=100&active=1", null, $delay);
   if ( isset($staff) ) { 
   $doliuser .= '<div class="col-md-6 col-lg-4"><div class="form-floating"><select class="form-select" id="'.$idobject.'[effectif_id]" name="'.$idobject.'[effectif_id]" aria-label="'.__( 'Staff', 'doliconnect').'"';
-  if ($rights) {
+if ($rights) {
   $doliuser .= ' required';
-  } else {
+} else {
   $doliuser .= ' disabled';
-  }
+}
   $doliuser .= '>';
   $doliuser .= "<option value='' disabled ";
   if ( (isset($object->effectif_id) && empty($object->effectif_id)) || $staff == 0) {
@@ -1091,9 +1091,9 @@ $civility = callDoliApi("GET", "/setup/dictionary/civility?sortfield=code&sortor
 }
 $doliuser .= '<div class="col-md-12 col-lg-3 col-xl-2"><div class="form-floating"><select class="form-select" id="'.$idobject.'[civility_code]"  name="'.$idobject.'[civility_code]" aria-label="'.__( 'Civility', 'doliconnect').'" ';
 if ($rights) {
-$doliuser .= 'required';
+  $doliuser .= ' required';
 } else {
-$doliuser .= 'disabled';
+  $doliuser .= ' disabled';
 }
 $doliuser .= '>';
 $doliuser .= "<option value='' disabled ";
@@ -1122,7 +1122,7 @@ $doliuser .= '</select><label for="'.$idobject.'[civility_code]"><i class="fas f
                                                                                                                                                             
 $doliuser .= '<div class="col-md-6 col-lg-4 col-xl-5"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[firstname]" name="'.$idobject.'[firstname]" placeholder="'.__( 'Firstname', 'doliconnect').'" value="'.(isset($object->firstname) ? $object->firstname : stripslashes(htmlspecialchars($current_user->user_firstname, ENT_QUOTES))).'"';
 if ($rights) {
-$doliuser .= ' required';
+  $doliuser .= ' required';
 } else {
   $doliuser .= ' disabled';
 }
@@ -1130,7 +1130,7 @@ $doliuser .= '><label for="'.$idobject.'[firstname]"><i class="fas fa-user fa-fw
 
 $doliuser .= '<div class="col-md-6 col-lg-5 col-xl-5"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[lastname]" name="'.$idobject.'[lastname]" placeholder="'.__( 'Firstname', 'doliconnect').'" value="'.(isset($object->lastname) ? $object->lastname : stripslashes(htmlspecialchars($current_user->user_lastname, ENT_QUOTES))).'"';
 if ($rights) {
-$doliuser .= ' required';
+  $doliuser .= ' required';
 } else {
   $doliuser .= ' disabled';
 }
@@ -1144,7 +1144,7 @@ $doliuser .= '<div class="row g-2 mb-2">';
 if ( !empty($object->birth) ) { $birth = wp_date('Y-m-d', $object->birth); }
 $doliuser .= '<div class="col-md-6"><div class="form-floating"><input type="date" class="form-control" id="'.$idobject.'[birth]" name="'.$idobject.'[birth]" placeholder="yyyy-mm-dd" value="'.(isset($birth) ? $birth : $current_user->billing_birth).'"';
 if (($mode != 'contact' && $rights) || $rights) {
-$doliuser .= 'required';
+$doliuser .= ' required';
 } else {
   $doliuser .= ' disabled';
 }
@@ -1163,7 +1163,7 @@ $doliuser .= '>
 } else {
 $doliuser .= '<div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[poste]" name="'.$idobject.'[poste]" placeholder="Director" value="'.stripslashes(htmlspecialchars(isset($object->poste) ? $object->poste : '', ENT_QUOTES)).'" autocomplete="off" ';
 if ($rights) {
-$doliuser .= 'required';
+  $doliuser .= 'required';
 } else {
   $doliuser .= ' disabled';
 }
