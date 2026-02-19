@@ -1225,6 +1225,25 @@ global $current_user;
 		wp_send_json_success($response);
 		die();
 		*/
+	} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "contact" ) {
+		if (isset($_POST['value1']) && !empty($_POST['value1'])) {
+			$modal['header'] = __( 'Edit contact', 'doliconnect');
+			$object = callDoliApi("GET", "/contacts/".trim($_POST['value1']), null, dolidelay('contact'));
+		} else {
+			$modal['header'] = __( "Create contact", 'doliconnect');
+			$object = null;
+		}
+		$modal['body'] = '<form id="contact-form" action="'.admin_url('admin-ajax.php').'" method="post" class="was-validated">';
+		$modal['body'] .= '<input type="hidden" name="action" value="dolimember_request"><input type="hidden" name="case" value="update">';
+		$modal['body'] .= '<input type="hidden" name="memberid" value="'.trim($_POST['value1']).'"><input type="hidden" name="dolicontact-nonce" value="'.wp_create_nonce( 'dolicontact-nonce').'">';
+		$modal['body'] .= doliuserform( $contactfo, dolidelay('constante'), true, 'contact', doliCheckRights('societe', 'contact', 'creer'));
+		$modal['body'] .= '<ul class="list-group list-group-flush"><li class="list-group-item"><button class="btn btn-danger" type="submit">'.__( 'Submit', 'doliconnect').'</button></form></li></ul';
+		$modal['footer'] = null;
+		$response['js'] = plugins_url( 'doliconnect/includes/custom/js/editlinkedmember.js');
+		$response['modal'] = doliModalTemplate($_POST['id'], $modal['header'], $modal['body'], $modal['footer'], 'modal-lg', null, 'p-0');
+		wp_send_json_success($response);
+		die();
+	} 
 	} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "linkedmember" ) {
 		if (isset($_POST['value1']) && !empty($_POST['value1'])) {
 			$modal['header'] = __( 'Edit member', 'doliconnect');
