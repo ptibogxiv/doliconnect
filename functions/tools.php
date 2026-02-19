@@ -282,7 +282,7 @@ function dolicaptcha($id = null) {
 }
 
 function dolisanitize($object) {
-  if (isset($objectx)) $object['firstname'] = ucfirst(strtolower(stripslashes(sanitize_text_field($object['firstname']))));
+  if (isset($object['firstname'])) $object['firstname'] = ucfirst(strtolower(stripslashes(sanitize_text_field($object['firstname']))));
   if (isset($object['lastname'])) $object['lastname'] = strtoupper(stripslashes(sanitize_text_field($object['lastname'])));
   if (isset($object['name'])) { 
     $object['name'] = strtoupper(stripslashes(sanitize_text_field($object['name'])));
