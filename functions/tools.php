@@ -3397,22 +3397,22 @@ function doliModalButton($case, $id, $title, $type = 'button', $class = 'btn btn
               if (response.success) { 
                 if (response.data.js) {
                   $.getScript( response.data.js ).done(function( script, textStatus ) {
-                    console.log( "success loading modal js" + " - case: " + "'.$id.'" );
+                    console.log( "success loading modal & js" + " - case: " + "'.$id.'" );
                   })
                   .fail(function( jqxhr, settings, exception ) {
-                    console.log( "error loading modal js" + " - case: " + "'.$id.'" );
+                    console.log( "error loading modal & js" + " - case: " + "'.$id.'" );
                   });
                 }
-              if (document.getElementById("doliModalDiv") && response.data.hasOwnProperty("modal")) {
-                document.getElementById("doliModalDiv").innerHTML = response.data.modal; 
-                $("#doliModal'.$id.'").modal("show");     
-              }
+                if (document.getElementById("doliModalDiv") && response.data.hasOwnProperty("modal")) {
+                  document.getElementById("doliModalDiv").innerHTML = response.data.modal; 
+                  $("#doliModal'.$id.'").modal("show");     
+                }
               } else {
                 if (document.getElementById("doliModalDiv") && response.data.hasOwnProperty("modal")) {
                   document.getElementById("doliModalDiv").innerHTML = response.data.modal;
                   $("#doliModal'.$id.'").modal("show");         
                 }
-             }
+              }
             $("#doliModal'.$id.'").on("hidden.bs.modal", function () {
               $("#doliModal'.$id.'").modal("dispose");
               document.getElementById("doliModalDiv").innerHTML = "";
