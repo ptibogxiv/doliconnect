@@ -3537,12 +3537,17 @@ function doliModalDiv() {
   print '</script>';
 }
 add_action( 'wp_footer', 'doliModalDiv' );
-
 /**
  * Supprime tous les transients du site WordPress
  * 
  * @return int Nombre de transients supprimés
  */
+/**
+ * Supprime tous les transients du site WordPress
+ * 
+ * @return int Nombre de transients supprimés
+ */
+/*
 function doliconnect_delete_all_transients() {
 	global $wpdb;
 	
@@ -3565,5 +3570,5 @@ function doliconnect_delete_all_transients() {
 	
 	return $deleted_count;
 }
-
+*/
 ?>
