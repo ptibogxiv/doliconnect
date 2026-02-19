@@ -288,22 +288,6 @@ global $current_user;
         $content .= ">".__( 'Update', 'doliconnect')."</button></div></div>";
         $content .= doliCardFooter($contactfo, 'contact', $request);
         $content .= '</div></form>';
-    } elseif ( isset($_GET['action']) && $_GET['action'] == 'create' ) {
-        $content .= "<form action='".admin_url('admin-ajax.php')."' id='dolicontactinfos-form' method='post' class='was-validated' enctype='multipart/form-data'>";
-
-        $content .= doliAjax('dolicontactinfos', null, 'create');
-            
-        $content .= "<input type='hidden' name='contactid' value='0'>";
-        $content .= '<div class="card shadow-sm"><div class="card-header">'.__( 'Create contact', 'doliconnect').'<a class="btn btn-sm btn-outline-secondary border border-0 float-end" href="'.esc_url( add_query_arg( 'module', 'contacts', doliconnecturl('doliaccount')) ).'"><i class="fa-solid fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div>';
-
-        $content .= doliuserform( $thirdparty, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'contact', doliCheckRights('societe', 'contact', 'creer'));
-
-        $content .= "<div class='card-body'><div class='d-grid gap-2'><button class='btn btn-outline-secondary' type='submit' ";
-        if (!doliCheckRights('societe', 'contact', 'creer')) { $content .= 'disabled'; }
-        $content .= ">".__( 'Add', 'doliconnect')."</button></div></div>";
-        $content .= doliCardFooter(null, 'contact');
-        $content .= '</div></small>';
-        $content .= '</div></form>';
     } else {
         $limit=12;
         if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']); }  else { $page = 0; }
@@ -315,8 +299,6 @@ global $current_user;
         $content .= '<div class="card shadow-sm"><div class="card-header">'.__( 'Manage address book', 'doliconnect').'</div><ul class="list-group list-group-flush">';
         if ( doliCheckRights('societe', 'contact', 'creer') ) {
             $content .= doliModalButton('contact', 'addcontact', '<center><i class="fas fa-plus-circle"></i> '.__( 'Create a contact', 'doliconnect').'</center>', 'button', 'list-group-item lh-condensed list-group-item-action list-group-item-primary');
-    
-            $content .= '<a href="'.esc_url( add_query_arg( 'action', 'create', $url) ).'" class="list-group-item lh-condensed list-group-item-action list-group-item-primary" disabled><center><i class="fa-solid fa-plus-circle"></i> '.__( 'Create a contact', 'doliconnect').'</center></a>';  
         }
         if ( !isset($listcontact->error) && $listcontact != null ) {
             foreach ($listcontact  as $postcontact) {                                                                            
