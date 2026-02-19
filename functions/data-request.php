@@ -1221,12 +1221,14 @@ global $current_user;
 		if (isset($_POST['value1']) && !empty($_POST['value1'])) {
 			$modal['header'] = __( 'Edit contact', 'doliconnect');
 			$object = callDoliApi("GET", "/contacts/".trim($_POST['value1']), null, dolidelay('contact'));
+			$case = 'update';
 		} else {
 			$modal['header'] = __( "Create contact", 'doliconnect');
 			$object = null;
+			$case = 'create';
 		}
 		$modal['body'] = '<form id="dolicontactinfos-form" action="'.admin_url('admin-ajax.php').'" method="post" class="was-validated" enctype="multipart/form-data">';
-		$modal['body'] .= '<input type="hidden" name="action" value="dolicontactinfos_request"><input type="hidden" name="case" value="update">';
+		$modal['body'] .= '<input type="hidden" name="action" value="dolicontactinfos_request"><input type="hidden" name="case" value="'.$case.'">';
 		$modal['body'] .= '<input type="hidden" name="contactid" value="'.trim($_POST['value1']).'"><input type="hidden" name="dolicontactinfos-nonce" value="'.wp_create_nonce( 'dolicontactinfos-nonce').'">';
 		$modal['body'] .= doliuserform( $object, dolidelay('constante', true, true), 'contact', doliCheckRights('societe', 'contact', 'creer'));
 		$modal['footer'] = '<button class="btn btn-danger" type="submit">'.__( 'Submit', 'doliconnect').'</button></form>';
