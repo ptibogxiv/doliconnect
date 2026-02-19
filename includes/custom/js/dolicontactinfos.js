@@ -7,24 +7,25 @@
 		e.preventDefault();
 		e.stopPropagation(); 
 		jQuery("#DoliconnectLoadingModal").modal("show");
-		jQuery("#doliModaldolicontactinfos").modal("hide");
 		var $form = $(this);
-		var url = "'.esc_url(doliconnecturl('dolicart')).'";
-		jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function (e) { 
-			  $.post($form.attr("action"), $form.serialize(), function(response) {
-			if (response.success) {
-				//console.log( "success update" + " - case: " + "dolicontactinfos" ); 
-				if (document.getElementById("dolicontactinfos-alert") && response.data.hasOwnProperty("message")) {
-                	document.getElementById("dolicontactinfos-alert").innerHTML = response.data.message;      
-              	}
-			} else {
-				//console.log( "error update" + " - case: " + "dolicontactinfos" + " - error: " + response.data.message );
-				if (document.getElementById("dolicontactinfos-alert") && response.data.hasOwnProperty("message")) {
-                	document.getElementById("dolicontactinfos-alert").innerHTML = response.data.message;      
-              	}
-			}
-			$("#DoliconnectLoadingModal").modal("hide");
-			  }, "json");  
+		var modalId = $form.find('input[name="modalid"]').val();
+		console.log("dolicontactinfos form id: " + modalId);
+		if (modalId) {
+			jQuery("#doliModal" + modalId).modal("hide");
+		}
+		jQuery("#DoliconnectLoadingModal").one("shown.bs.modal", function (e) { 
+			jQuery.post($form.attr("action"), $form.serialize(), function(response) {
+				if (response.success) {
+					if (document.getElementById("dolicontactinfos-alert") && response.data.hasOwnProperty("message")) {
+						document.getElementById("dolicontactinfos-alert").innerHTML = response.data.message;      
+					}
+				} else {
+					if (document.getElementById("dolicontactinfos-alert") && response.data.hasOwnProperty("message")) {
+						document.getElementById("dolicontactinfos-alert").innerHTML = response.data.message;      
+					}
+				}
+				jQuery("#DoliconnectLoadingModal").modal("hide");
+			}, "json");  
 		});
 	  });
 
