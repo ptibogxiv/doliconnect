@@ -6,8 +6,8 @@
 	jQuery("#dolicontactinfos-form").on("submit", function(e) { 
 		e.preventDefault();
 		e.stopPropagation(); 
-		jQuery("#doliModalTest").modal("hide");
 		jQuery("#DoliconnectLoadingModal").modal("show");
+		jQuery("#doliModaldolicontactinfos").modal("hide");
 		var $form = $(this);
 		var url = "'.esc_url(doliconnecturl('dolicart')).'";
 		jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function (e) { 
