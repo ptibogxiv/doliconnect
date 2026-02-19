@@ -2,10 +2,10 @@
 	'use strict';
 
 	jQuery(document).ready(function() {
-
+	console.log( "success js" + " - case: " + "dolicontactinfos" );
 	jQuery("#dolicontactinfos-form").on("submit", function(e) { 
 		e.preventDefault();
-		e.stopPropagation();  
+		e.stopPropagation(); 
 		jQuery("#doliModalTest").modal("hide");
 		jQuery("#DoliconnectLoadingModal").modal("show");
 		var $form = $(this);
