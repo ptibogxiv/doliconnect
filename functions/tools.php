@@ -636,7 +636,7 @@ function doliExtrafields($object, $type, $delay) {
       $idobject = $type;
     }
     foreach ($extrafields as $extrafield => $id) {
-      $form = '';
+      $form = '<li class="list-group-item list-group-item-light list-group-item-action">';
       foreach ($id as $extra => $field) {
         if (isset($field->type) && $field->type == 'select') {
           $form .= '<div class="form-floating"><select class="form-select" id="'.$idobject.'[array_options]['.$extra.']" name="'.$idobject.'[array_options]['.$extra.']" aria-label="Default select example"';
@@ -658,6 +658,7 @@ function doliExtrafields($object, $type, $delay) {
           $form .= 'to do';
         }
       }
+      $form .= '</li>';
     return $form;
     }
   } else {
@@ -1363,10 +1364,7 @@ $doliuser .= '</div></div>';
 $doliuser .= '</div></li>';
 
 if( !in_array($mode, array('donation')) ) {
-$doliuser .= "<li class='list-group-item list-group-item-light list-group-item-action'>";
-//$doliuser .= apply_filters('mydoliconnectuserform', $object, $idobject);
 $doliuser .= doliExtrafields($object,$mode, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
-$doliuser .= "</li>";
 }
 
 if ( in_array($mode, array('contact')) && doliversion('12.0.0') ) {
@@ -1389,28 +1387,24 @@ $doliuser .= "><label class='form-check-label' for='".$idobject."[roles][".$cont
 }
 
 if ( !in_array($mode, array('donation', 'member', 'linkthirdparty')) ) {
-$doliuser .= "<li class='list-group-item list-group-item-light list-group-item-action'>";
-
-if ( !in_array($mode, array('member', 'contact', 'linkthirdparty')) ) {
-$doliuser .= '<div class="form-floating mb-2"><input type="url" class="form-control" id="'.$idobject.'[url]" name="'.$idobject.'[url]" placeholder="www.example.com" value="'.stripslashes(htmlspecialchars((isset($object->url) ? $object->url : null), ENT_QUOTES)).'" ';
-if (!$rights) {
-  $doliuser .= ' disabled';
+  $doliuser .= "<li class='list-group-item list-group-item-light list-group-item-action'>";
+  if ( !in_array($mode, array('member', 'contact', 'linkthirdparty')) ) {
+    $doliuser .= '<div class="form-floating mb-2"><input type="url" class="form-control" id="'.$idobject.'[url]" name="'.$idobject.'[url]" placeholder="www.example.com" value="'.stripslashes(htmlspecialchars((isset($object->url) ? $object->url : null), ENT_QUOTES)).'" ';
+    if (!$rights) {
+      $doliuser .= ' disabled';
+    }
+    $doliuser .= '><label for="'.$idobject.'[url]">'.__( 'Website', 'doliconnect').'</label></div>';
+  }
+  if ( !in_array($mode, array('member', 'linkthirdparty')) ) {
+    $doliuser .= '<div class="form-floating"><textarea class="form-control" placeholder="Leave a comment here"  name="'.$idobject.'[note_public]" id="note_public" style="height: 100px" ';
+    if (!$rights) {
+      $doliuser .= ' disabled';
+    }
+    $doliuser .= '>'.stripslashes(htmlspecialchars(isset($object->note_public)?$object->note_public:$current_user->description, ENT_QUOTES)).'</textarea>
+    <label for="note_public">'.__( 'About Yourself', 'doliconnect').'</label></div>';
+  }
+  $doliuser .= "</li>";
 }
-$doliuser .= '><label for="'.$idobject.'[url]">'.__( 'Website', 'doliconnect').'</label></div>';
-}
-
-if ( !in_array($mode, array('member', 'linkthirdparty')) ) {
-$doliuser .= '<div class="form-floating"><textarea class="form-control" placeholder="Leave a comment here"  name="'.$idobject.'[note_public]" id="note_public" style="height: 100px" ';
-if (!$rights) {
-  $doliuser .= ' disabled';
-}
-$doliuser .= '>'.stripslashes(htmlspecialchars(isset($object->note_public)?$object->note_public:$current_user->description, ENT_QUOTES)).'</textarea>
-<label for="note_public">'.__( 'About Yourself', 'doliconnect').'</label></div>';
-}
-
-$doliuser .= "</li>";
-}
-
 
 if (doliCheckModules('socialnetworks') && doliversion('11.0.0') ) { 
   $socialnetworks = callDoliApi("GET", "/setup/dictionary/socialnetworks?sortfield=rowid&sortorder=ASC&limit=100&active=1", null, $delay);
