@@ -266,7 +266,6 @@ function dolicontactinfos_request(){
 	$ID = $current_user->ID;
 	$thirdparty = doliConnect('thirdparty', $current_user);
 	if ( isset($_POST['dolicontactinfos-nonce']) && wp_verify_nonce( trim($_POST['dolicontactinfos-nonce']), 'dolicontactinfos') && isset($_POST['case']) && $_POST['case'] == "update" ) {
-
 		$contact = $_POST['contact'][''.$_POST['contactid'].''];
 		$contact = dolisanitize($contact);
 		if (empty($contact['no_email'])) {
@@ -289,9 +288,7 @@ function dolicontactinfos_request(){
 			];
 			wp_send_json_error( $response ); 
 		}
-
 	} elseif ( isset($_POST['dolicontactinfos-nonce']) && wp_verify_nonce( trim($_POST['dolicontactinfos-nonce']), 'dolicontactinfos') && isset($_POST['case']) && $_POST['case'] == "create" ) {
-
 		$contact = $_POST['contact'][''.$thirdparty->id.''];
 		$contact = dolisanitize($contact);
 		$contact['socid'] = $thirdparty->id;
@@ -315,11 +312,10 @@ function dolicontactinfos_request(){
 			];
 			wp_send_json_error( $response ); 
 		}
-	
 	} else {
 		$response = [
 			'message' => dolialert('danger', __( 'A security error occured', 'doliconnect')),
-			'captcha' => dolicaptcha('doliuserinfos'),
+			'captcha' => dolicaptcha('dolicontactinfos'),
 		];
 		wp_send_json_error( $response ); 
 	}
@@ -1230,11 +1226,11 @@ global $current_user;
 			$object = null;
 		}
 		$modal['body'] = '<form id="dolicontactinfos-form" action="'.admin_url('admin-ajax.php').'" method="post" class="was-validated" enctype="multipart/form-data">';
-		$modal['body'] .= '<input type="hidden" name="action" value="dolicontact_request"><input type="hidden" name="case" value="update">';
-		$modal['body'] .= '<input type="hidden" name="contactid" value="'.trim($_POST['value1']).'"><input type="hidden" name="dolicontact-nonce" value="'.wp_create_nonce( 'dolicontact-nonce').'">';
+		$modal['body'] .= '<input type="hidden" name="action" value="dolicontactinfos_request"><input type="hidden" name="case" value="update">';
+		$modal['body'] .= '<input type="hidden" name="contactid" value="'.trim($_POST['value1']).'"><input type="hidden" name="dolicontactinfos-nonce" value="'.wp_create_nonce( 'dolicontactinfos-nonce').'">';
 		$modal['body'] .= doliuserform( $object, dolidelay('constante', true, true), 'contact', doliCheckRights('societe', 'contact', 'creer'));
 		$modal['footer'] = '<button class="btn btn-danger" type="submit">'.__( 'Submit', 'doliconnect').'</button></form>';
-		$response['js'] = plugins_url( 'doliconnect/includes/custom/js/editlinkedmember.js');
+		$response['js'] = plugins_url( 'doliconnect/includes/custom/js/editcontact.js');
 		$response['modal'] = doliModalTemplate($_POST['id'], $modal['header'], $modal['body'], $modal['footer'], 'modal-lg', null, 'p-0');
 		wp_send_json_success($response);
 		die();
