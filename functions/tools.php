@@ -1483,28 +1483,26 @@ if ( !is_user_logged_in() ) {
 }
 
 if ( !is_user_logged_in() && in_array($mode, array('thirdparty','linkthirdparty')) ) {
-
-if( has_action('register_form') ) {
-  if (!empty(do_action( 'register_form'))){
-    $doliuser .= "<li class='list-group-item list-group-item-light list-group-item-action'>";
-    $doliuser .= do_action( 'register_form');
-    $doliuser .= "</li>";
+  if( has_action('register_form') ) {
+    if (!empty(do_action( 'register_form'))){
+      $doliuser .= "<li class='list-group-item list-group-item-light list-group-item-action'>";
+      $doliuser .= do_action( 'register_form');
+      $doliuser .= "</li>";
+    }
   }
-}
-
-//$doliuser .= "<li class='list-group-item list-group-item-light list-group-item-action'>";
-//$doliuser .= "<div class='form-row'><div class='custom-control custom-checkbox my-1 mr-sm-2'>
-//<input type='checkbox' class='custom-control-input' value='forever' id='validation' name='validation' required>
-//<label class='custom-control-label' for='validation'>".__( 'I read and accept the <a href="#" data-bs-toggle="modal" data-target="#cgvumention">Terms & Conditions</a>.', 'doliconnect')."</label></div></div>";
-//if ( get_option( 'wp_page_for_privacy_policy' ) ) {
-//$doliuser .= "<div class='modal fade' id='cgvumention' tabindex='-1' role='dialog' aria-labelledby='cgvumention' aria-hidden='true'><div class='modal-dialog modal-lg modal-dialog-centered' role='document'><div class='modal-content'><div class='modal-header'><h5 class='modal-title' id='cgvumentionLabel'>".__( 'Terms & Conditions', 'doliconnect')."</h5><button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>
-//<div class='modal-body'>";
-//$post = get_post(get_option( 'wp_page_for_privacy_policy' ));
-//print $post->post_content;
-//print apply_filters('the_content', get_post_field('post_content', get_option( 'wp_page_for_privacy_policy' )));
-//print get_the_content( 'Read more', '', get_option( 'wp_page_for_privacy_policy' )); 
-//$doliuser .= "</div></div></div>";}
-//$doliuser .= "</li>";
+  //$doliuser .= "<li class='list-group-item list-group-item-light list-group-item-action'>";
+  //$doliuser .= "<div class='form-row'><div class='custom-control custom-checkbox my-1 mr-sm-2'>
+  //<input type='checkbox' class='custom-control-input' value='forever' id='validation' name='validation' required>
+  //<label class='custom-control-label' for='validation'>".__( 'I read and accept the <a href="#" data-bs-toggle="modal" data-target="#cgvumention">Terms & Conditions</a>.', 'doliconnect')."</label></div></div>";
+  //if ( get_option( 'wp_page_for_privacy_policy' ) ) {
+  //$doliuser .= "<div class='modal fade' id='cgvumention' tabindex='-1' role='dialog' aria-labelledby='cgvumention' aria-hidden='true'><div class='modal-dialog modal-lg modal-dialog-centered' role='document'><div class='modal-content'><div class='modal-header'><h5 class='modal-title' id='cgvumentionLabel'>".__( 'Terms & Conditions', 'doliconnect')."</h5><button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>
+  //<div class='modal-body'>";
+  //$post = get_post(get_option( 'wp_page_for_privacy_policy' ));
+  //print $post->post_content;
+  //print apply_filters('the_content', get_post_field('post_content', get_option( 'wp_page_for_privacy_policy' )));
+  //print get_the_content( 'Read more', '', get_option( 'wp_page_for_privacy_policy' )); 
+  //$doliuser .= "</div></div></div>";}
+  //$doliuser .= "</li>";
 }
 
 $doliuser .= "</ul>";
