@@ -627,7 +627,7 @@ function doliUserLang($user, $type = 'locale') {
   return $lang;
 }
 
-function doliExtrafields($object, $type, $delay) {
+function doliExtrafields($object, $type, $rights, $delay) {
   $extrafields = callDoliApi("GET", "/setup/extrafields?sortfield=t.pos&sortorder=ASC&elementtype=".$type, null, dolidelay($delay));
   if ( !isset($extrafields->error) && $extrafields != null ) {
     if ( is_object($object) && $object->id > 0 ) {
@@ -988,30 +988,32 @@ $typeadhesion = callDoliApi("GET", "/adherentsplus/type?sortfield=t.libelle&sort
 //print $typeadhesion;
 $doliuser .= "<option value='' disabled ";
 if ( empty($object->typeid) ) {
-$doliuser .= "selected ";}
+  $doliuser .= "selected ";
+}
 $doliuser .= ">".__( '- Select -', 'doliconnect')."</option>";
 if ( !isset($typeadhesion->error) ) {
-foreach ($typeadhesion as $postadh) {
-$doliuser .= "<option value ='".$postadh->id."' ";
-if ( isset($object->typeid) && $object->typeid == $postadh->id && $object->typeid != null ) {
-$doliuser .= "selected ";
-} elseif ( $postadh->family == '1' || $postadh->automatic_renew != '1' || $postadh->automatic != '1' ) { $doliuser .= "disabled "; }
-$doliuser .= ">".$postadh->label;
-if (! empty ($postadh->duration_value)) $doliuser .= " - ".doliduration($postadh);
-$doliuser .= " ";
-//if ( ! empty($postadh->note) ) { $doliuser .= ", ".$postadh->note; }
-$tx=1;
-if ( ( ($postadh->welcome > '0') && ($object->datefin == null )) || (($postadh->welcome > '0') && (current_time( 'timestamp',1) > $object->next_subscription_valid) && (current_time( 'timestamp',1) > $object->datefin) && $object->next_subscription_valid != $object->datefin ) ) { 
-  $doliuser .= " (";
-  $doliuser .= doliprice(($tx*$postadh->price)+$postadh->welcome)." ";
-  $doliuser .= __( 'then', 'doliconnect' )." ".doliprice($postadh->price)." ".__( 'yearly', 'doliconnect' ).")"; 
-} else {
-  $doliuser .= " (".doliprice($postadh->price);
-  $doliuser .= " ".__( 'yearly', 'doliconnect' ).")";
-} 
+  foreach ($typeadhesion as $postadh) {
+    $doliuser .= "<option value ='".$postadh->id."' ";
+    if ( isset($object->typeid) && $object->typeid == $postadh->id && $object->typeid != null ) {
+    $doliuser .= "selected ";
+    } elseif ( $postadh->family == '1' || $postadh->automatic_renew != '1' || $postadh->automatic != '1' ) { $doliuser .= "disabled "; }
+    $doliuser .= ">".$postadh->label;
+    if (! empty ($postadh->duration_value)) $doliuser .= " - ".doliduration($postadh);
+    $doliuser .= " ";
+    //if ( ! empty($postadh->note) ) { $doliuser .= ", ".$postadh->note; }
+    $tx=1;
+    if ( ( ($postadh->welcome > '0') && ($object->datefin == null )) || (($postadh->welcome > '0') && (current_time( 'timestamp',1) > $object->next_subscription_valid) && (current_time( 'timestamp',1) > $object->datefin) && $object->next_subscription_valid != $object->datefin ) ) { 
+      $doliuser .= " (";
+      $doliuser .= doliprice(($tx*$postadh->price)+$postadh->welcome)." ";
+      $doliuser .= __( 'then', 'doliconnect' )." ".doliprice($postadh->price)." ".__( 'yearly', 'doliconnect' ).")"; 
+    } else {
+      $doliuser .= " (".doliprice($postadh->price);
+      $doliuser .= " ".__( 'yearly', 'doliconnect' ).")";
+    } 
 
-$doliuser .= "</option>";
-}}
+  $doliuser .= "</option>";
+  }
+}
 $doliuser .= "</select><label for='typeid'><small><i class='fas fa-user-tag fa-fw'></i> ".__( 'Type', 'doliconnect')."</small></label></div></div></li><li class='list-group-item list-group-item-light list-group-item-action'>";
 }
 
@@ -1053,28 +1055,29 @@ if ( doliversion('15.0.0') ) {
 }
 
 if ( doliversion('15.0.0') ) {
-$staff = callDoliApi("GET", "/setup/dictionary/staff?sortfield=id&sortorder=ASC&limit=100&active=1", null, $delay);
-if ( isset($staff) ) { 
-$doliuser .= '<div class="col-md-6 col-lg-4"><div class="form-floating"><select class="form-select" id="'.$idobject.'[effectif_id]" name="'.$idobject.'[effectif_id]" aria-label="'.__( 'Staff', 'doliconnect').'"';
-if ($rights) {
-$doliuser .= ' required';
-} else {
-$doliuser .= ' disabled';
-}
-$doliuser .= '>';
-$doliuser .= "<option value='' disabled ";
-if ( (isset($object->effectif_id) && empty($object->effectif_id)) || $staff == 0) {
-$doliuser .= "selected ";}
-$doliuser .= ">".__( '- Select your staff -', 'doliconnect')."</option>";
-foreach ( $staff as $postv ) { 
-$doliuser .= "<option value='".$postv->id."' ";
-if ( isset($object->effectif_id) && $object->effectif_id == $postv->id && $object->effectif_id != null && $postv->id != '0' ) {
-$doliuser .= "selected ";
-} elseif ( $postv->code == '0' ) { $doliuser .= "disabled "; }
-$doliuser .= ">".$postv->libelle."</option>";
-}
-$doliuser .= '</select><label for="'.$idobject.'[effectif_id]"><i class="fas fa-building fa-fw"></i> '.__( 'Staff', 'doliconnect').'</label></div></div>';
-}
+  $staff = callDoliApi("GET", "/setup/dictionary/staff?sortfield=id&sortorder=ASC&limit=100&active=1", null, $delay);
+  if ( isset($staff) ) { 
+  $doliuser .= '<div class="col-md-6 col-lg-4"><div class="form-floating"><select class="form-select" id="'.$idobject.'[effectif_id]" name="'.$idobject.'[effectif_id]" aria-label="'.__( 'Staff', 'doliconnect').'"';
+  if ($rights) {
+  $doliuser .= ' required';
+  } else {
+  $doliuser .= ' disabled';
+  }
+  $doliuser .= '>';
+  $doliuser .= "<option value='' disabled ";
+  if ( (isset($object->effectif_id) && empty($object->effectif_id)) || $staff == 0) {
+    $doliuser .= "selected ";
+  }
+  $doliuser .= ">".__( '- Select your staff -', 'doliconnect')."</option>";
+  foreach ( $staff as $postv ) { 
+    $doliuser .= "<option value='".$postv->id."' ";
+    if ( isset($object->effectif_id) && $object->effectif_id == $postv->id && $object->effectif_id != null && $postv->id != '0' ) {
+      $doliuser .= "selected ";
+    } elseif ( $postv->code == '0' ) { $doliuser .= "disabled "; }
+    $doliuser .= ">".$postv->libelle."</option>";
+  }
+  $doliuser .= '</select><label for="'.$idobject.'[effectif_id]"><i class="fas fa-building fa-fw"></i> '.__( 'Staff', 'doliconnect').'</label></div></div>';
+  }
 }
 
 $doliuser .= '</div>';
@@ -1373,26 +1376,28 @@ $doliuser .= '</div></div>';
 $doliuser .= '</div></li>';
 
 if( !in_array($mode, array('donation')) ) {
-$doliuser .= doliExtrafields($object,$mode, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+  $doliuser .= doliExtrafields($object, $mode, $rights, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 }
 
 if ( in_array($mode, array('contact')) && doliversion('12.0.0') ) {
-$contact_types = callDoliApi("GET", "/setup/dictionary/contact_types?sortfield=code&sortorder=ASC&limit=100&active=1&lang=".doliUserLang($current_user)."&sqlfilters=(t.source:=:'external')and(t.element:=:'commande')", null, $delay);//%20OR%20(t.element:=:'propal')
-$doliuser .= "<li class='list-group-item list-group-item-light list-group-item-action'>";
-if ( !isset($contact_types->error ) && $contact_types != null ) {
-$typecontact = array();
-if ( isset($object->roles) && $object->roles != null ) {
-foreach ( $object->roles as $role ) {
-$typecontact[] .= $role->id; 
-}}
-foreach ( $contact_types as $contacttype ) {                                                          
-$doliuser .= "<div class='form-check'><input type='checkbox' class='form-check-input' id='".$idobject."[roles][".$contacttype->rowid."]' name='".$idobject."[roles][]' value='".$contacttype->rowid."' ";
-if ( isset($object->roles) && $object->roles != null && in_array($contacttype->rowid, $typecontact)) { $doliuser .= ' checked'; }
-if (!$rights) {
-$doliuser .= ' disabled';
-}
-$doliuser .= "><label class='form-check-label' for='".$idobject."[roles][".$contacttype->rowid."]'>".$contacttype->label.'</label></div>';
-}}
+  $contact_types = callDoliApi("GET", "/setup/dictionary/contact_types?sortfield=code&sortorder=ASC&limit=100&active=1&lang=".doliUserLang($current_user)."&sqlfilters=(t.source:=:'external')and(t.element:=:'commande')", null, $delay);//%20OR%20(t.element:=:'propal')
+  $doliuser .= "<li class='list-group-item list-group-item-light list-group-item-action'>";
+  if ( !isset($contact_types->error ) && $contact_types != null ) {
+  $typecontact = array();
+  if ( isset($object->roles) && $object->roles != null ) {
+    foreach ( $object->roles as $role ) {
+      $typecontact[] = $role->id; 
+    }
+  }
+  foreach ( $contact_types as $contacttype ) {                                                          
+    $doliuser .= "<div class='form-check'><input type='checkbox' class='form-check-input' id='".$idobject."[roles][".$contacttype->rowid."]' name='".$idobject."[roles][]' value='".$contacttype->rowid."' ";
+    if ( isset($object->roles) && $object->roles != null && in_array($contacttype->rowid, $typecontact)) { $doliuser .= ' checked'; }
+    if (!$rights) {
+      $doliuser .= ' disabled';
+    }
+    $doliuser .= "><label class='form-check-label' for='".$idobject."[roles][".$contacttype->rowid."]'>".$contacttype->label.'</label></div>';
+  }
+  }
 }
 
 if ( !in_array($mode, array('donation', 'member', 'linkthirdparty')) ) {
@@ -1418,39 +1423,37 @@ if ( !in_array($mode, array('donation', 'member', 'linkthirdparty')) ) {
 if (doliCheckModules('socialnetworks') && doliversion('11.0.0') ) { 
   $socialnetworks = callDoliApi("GET", "/setup/dictionary/socialnetworks?sortfield=rowid&sortorder=ASC&limit=100&active=1", null, $delay);
   if ( !isset($socialnetworks->error) && $socialnetworks != null ) { 
-  $doliuser .= "<li class='list-group-item list-group-item-light list-group-item-action'><div class='row g-2'>";
-  foreach ( $socialnetworks as $social ) { 
-    $code = $social->code;
-    $doliuser .= '<div class="col-12 col-sm-6 col-lg-4"><div class="form-floating"><input type="text" class="form-control form-control-sm" id="'.$idobject.'[socialnetworks]['.$social->code.']" name="'.$idobject.'[socialnetworks]['.$social->code.']" placeholder="'.$social->label.'" value="'.(isset($object->socialnetworks->$code) ? stripslashes(htmlspecialchars( $object->socialnetworks->$code, ENT_QUOTES)) : null).'" ';
-    if (!$rights) {
-      $doliuser .= ' disabled';
+    $doliuser .= "<li class='list-group-item list-group-item-light list-group-item-action'><div class='row g-2'>";
+    foreach ( $socialnetworks as $social ) { 
+      $code = $social->code;
+      $doliuser .= '<div class="col-12 col-sm-6 col-lg-4"><div class="form-floating"><input type="text" class="form-control form-control-sm" id="'.$idobject.'[socialnetworks]['.$social->code.']" name="'.$idobject.'[socialnetworks]['.$social->code.']" placeholder="'.$social->label.'" value="'.(isset($object->socialnetworks->$code) ? stripslashes(htmlspecialchars( $object->socialnetworks->$code, ENT_QUOTES)) : null).'" ';
+      if (!$rights) {
+        $doliuser .= ' disabled';
+      }
+      $doliuser .= '><label for="'.$idobject.'[socialnetworks]['.$social->code.']"><i class="fab fa-'.$social->code.' fa-fw"></i> '.$social->label.'</label></div></div>';
     }
-    $doliuser .= '><label for="'.$idobject.'[socialnetworks]['.$social->code.']"><i class="fab fa-'.$social->code.' fa-fw"></i> '.$social->label.'</label></div></div>';
+    $doliuser .= "</div></li>";
+  }
+} elseif ( !doliversion('11.0.0') ) { 
+  $doliuser .= "<li class='list-group-item list-group-item-light list-group-item-action'><div class='form-row'>";
+  if ( !empty(doliconst("SOCIALNETWORKS_FACEBOOK", esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))) ) {
+    $doliuser .= "<div class='col-12 col-md'><label for='inlineFormInputGroup'><small><i class='fab fa-facebook fa-fw'></i> Facebook</small></label>
+    <input type='text' name='".$idobject."[facebook]' class='form-control form-control-sm' id='inlineFormInputGroup' placeholder='".__( 'Username', 'doliconnect')."' value='".stripslashes(htmlspecialchars((isset($object->facebook) ? $object->facebook : null), ENT_QUOTES))."'></div>";
+  }
+  if ( !empty(doliconst("SOCIALNETWORKS_TWITTER",esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))) ) {
+    $doliuser .= "<div class='col-12 col-md'><label for='inlineFormInputGroup'><small><i class='fab fa-twitter fa-fw'></i> Twitter</small></label>
+    <input type='text' name='".$idobject."[twitter]' class='form-control form-control-sm' id='inlineFormInputGroup' placeholder='".__( 'Username', 'doliconnect')."' value='".stripslashes(htmlspecialchars((isset($object->twitter) ? $object->twitter : null), ENT_QUOTES))."'></div>";
+  }
+  if ( !empty(doliconst("SOCIALNETWORKS_SKYPE", esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))) ) {
+    $doliuser .= "<div class='col-12 col-md'><label for='inlineFormInputGroup'><small><i class='fab fa-skype fa-fw'></i> Skype</small></label>
+    <input type='text' name='".$idobject."[skype]' class='form-control form-control-sm' id='inlineFormInputGroup' placeholder='".__( 'Username', 'doliconnect')."' value='".stripslashes(htmlspecialchars((isset($object->skype) ? $object->skype : null), ENT_QUOTES))."'></div>";
+  }
+  if ( !empty(doliconst("SOCIALNETWORKS_LINKEDIN", esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))) ) {
+    $doliuser .= "<div class='col-12 col-md'><label for='inlineFormInputGroup'><small><i class='fab fa-linkedin-in fa-fw'></i> Linkedin</small></label>
+    <input type='text' name='".$idobject."[linkedin]' class='form-control form-control-sm' id='inlineFormInputGroup' placeholder='".__( 'Username', 'doliconnect')."' value='".stripslashes(htmlspecialchars((isset($object->linkedin) ? $object->linkedin : null), ENT_QUOTES))."'></div>";
   }
   $doliuser .= "</div></li>";
 }
-
-} elseif ( !doliversion('11.0.0') ) { 
-$doliuser .= "<li class='list-group-item list-group-item-light list-group-item-action'><div class='form-row'>";
-if ( !empty(doliconst("SOCIALNETWORKS_FACEBOOK", esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))) ) {
-$doliuser .= "<div class='col-12 col-md'><label for='inlineFormInputGroup'><small><i class='fab fa-facebook fa-fw'></i> Facebook</small></label>
-<input type='text' name='".$idobject."[facebook]' class='form-control form-control-sm' id='inlineFormInputGroup' placeholder='".__( 'Username', 'doliconnect')."' value='".stripslashes(htmlspecialchars((isset($object->facebook) ? $object->facebook : null), ENT_QUOTES))."'></div>";
-}
-if ( !empty(doliconst("SOCIALNETWORKS_TWITTER",esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))) ) {
-$doliuser .= "<div class='col-12 col-md'><label for='inlineFormInputGroup'><small><i class='fab fa-twitter fa-fw'></i> Twitter</small></label>
-<input type='text' name='".$idobject."[twitter]' class='form-control form-control-sm' id='inlineFormInputGroup' placeholder='".__( 'Username', 'doliconnect')."' value='".stripslashes(htmlspecialchars((isset($object->twitter) ? $object->twitter : null), ENT_QUOTES))."'></div>";
-}
-if ( !empty(doliconst("SOCIALNETWORKS_SKYPE", esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))) ) {
-$doliuser .= "<div class='col-12 col-md'><label for='inlineFormInputGroup'><small><i class='fab fa-skype fa-fw'></i> Skype</small></label>
-<input type='text' name='".$idobject."[skype]' class='form-control form-control-sm' id='inlineFormInputGroup' placeholder='".__( 'Username', 'doliconnect')."' value='".stripslashes(htmlspecialchars((isset($object->skype) ? $object->skype : null), ENT_QUOTES))."'></div>";
-}
-if ( !empty(doliconst("SOCIALNETWORKS_LINKEDIN", esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))) ) {
-$doliuser .= "<div class='col-12 col-md'><label for='inlineFormInputGroup'><small><i class='fab fa-linkedin-in fa-fw'></i> Linkedin</small></label>
-<input type='text' name='".$idobject."[linkedin]' class='form-control form-control-sm' id='inlineFormInputGroup' placeholder='".__( 'Username', 'doliconnect')."' value='".stripslashes(htmlspecialchars((isset($object->linkedin) ? $object->linkedin : null), ENT_QUOTES))."'></div>";
-}
-$doliuser .= "</div></li>";
-}
-
 }
 
 if ( in_array($mode, array('thirdparty','contact')) && doliversion('17.0.0') && doliCheckModules('mailing') ) {
@@ -1465,12 +1468,12 @@ if ( in_array($mode, array('thirdparty','contact')) && doliversion('17.0.0') && 
 }
 
 if ( function_exists('dolikiosk') && ! isset($object) && (! empty(dolikiosk()) && $mode == 'thirdparty') ) {
-$doliuser .= "<li class='list-group-item list-group-item-light list-group-item-action'><div class='form-row'><div class='col'><label for='pwd1'><small><i class='fas fa-key fa-fw'></i> ".__( 'Password', 'doliconnect')."</small></label>
-<input class='form-control' id='pwd1' type='password' name='pwd1' value ='' placeholder='".__( 'Choose your password', 'doliconnect')."' autocomplete='off' required>
-<small id='pwd1' class='form-text text-justify text-muted'>".__( 'Your password must be between 8 and 20 characters, including at least 1 digit, 1 letter, 1 uppercase.', 'doliconnect')."</small></div></div>
-<div class='form-row'><div class='col'><label for='pwd2'><small><i class='fas fa-key fa-fw'></i> ".__( 'Confirm your password', 'doliconnect')."</small></label>
-<input class='form-control' id='pwd2' type='password' name='pwd2' value ='' placeholder='".__( 'Confirm your password', 'doliconnect')."' autocomplete='off' required></div>";
-$doliuser .= "</div></li>";
+  $doliuser .= "<li class='list-group-item list-group-item-light list-group-item-action'><div class='form-row'><div class='col'><label for='pwd1'><small><i class='fas fa-key fa-fw'></i> ".__( 'Password', 'doliconnect')."</small></label>
+  <input class='form-control' id='pwd1' type='password' name='pwd1' value ='' placeholder='".__( 'Choose your password', 'doliconnect')."' autocomplete='off' required>
+  <small id='pwd1' class='form-text text-justify text-muted'>".__( 'Your password must be between 8 and 20 characters, including at least 1 digit, 1 letter, 1 uppercase.', 'doliconnect')."</small></div></div>
+  <div class='form-row'><div class='col'><label for='pwd2'><small><i class='fas fa-key fa-fw'></i> ".__( 'Confirm your password', 'doliconnect')."</small></label>
+  <input class='form-control' id='pwd2' type='password' name='pwd2' value ='' placeholder='".__( 'Confirm your password', 'doliconnect')."' autocomplete='off' required></div>";
+  $doliuser .= "</div></li>";
 }
 
 if ( !is_user_logged_in() ) {
@@ -1482,11 +1485,11 @@ if ( !is_user_logged_in() ) {
 if ( !is_user_logged_in() && in_array($mode, array('thirdparty','linkthirdparty')) ) {
 
 if( has_action('register_form') ) {
-if (!empty(do_action( 'register_form'))){
-$doliuser .= "<li class='list-group-item list-group-item-light list-group-item-action'>";
-$doliuser .= do_action( 'register_form');
-$doliuser .= "</li>";
-}
+  if (!empty(do_action( 'register_form'))){
+    $doliuser .= "<li class='list-group-item list-group-item-light list-group-item-action'>";
+    $doliuser .= do_action( 'register_form');
+    $doliuser .= "</li>";
+  }
 }
 
 //$doliuser .= "<li class='list-group-item list-group-item-light list-group-item-action'>";
