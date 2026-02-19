@@ -283,7 +283,7 @@ function dolicontactinfos_request(){
 			wp_send_json_success( $response );
 		} else {
 			$response = [
-				'message' => __( 'An error occured:', 'doliconnect').' '.$object->error->message,
+				'message' => dolialert('danger', __( 'An error occured:', 'doliconnect').' '.$object->error->message),
 				'captcha' => dolicaptcha('dolicontactinfos'),
 			];
 			wp_send_json_error( $response ); 
@@ -307,7 +307,7 @@ function dolicontactinfos_request(){
 			wp_send_json_success( $response );
 		} else {
 			$response = [
-				'message' => __( 'An error occured:', 'doliconnect').' '.$object->error->message,
+				'message' => dolialert('danger', __( 'An error occured:', 'doliconnect').' '.$object->error->message),
 				'captcha' => dolicaptcha('dolicontactinfos'),
 			];
 			wp_send_json_error( $response ); 
