@@ -13,11 +13,15 @@
 		jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function (e) { 
 			  $.post($form.attr("action"), $form.serialize(), function(response) {
 			if (response.success) {
-				console.log( "success update" + " - case: " + "dolicontactinfos" ); 
-				//success
+				//console.log( "success update" + " - case: " + "dolicontactinfos" ); 
+				if (document.getElementById("dolicontactinfos-alert") && response.data.hasOwnProperty("message")) {
+                	document.getElementById("dolicontactinfos-alert").innerHTML = response.data.message;      
+              	}
 			} else {
-				console.log( "error update" + " - case: " + "dolicontactinfos" + " - error: " + response.data.message );
-				//error
+				//console.log( "error update" + " - case: " + "dolicontactinfos" + " - error: " + response.data.message );
+				if (document.getElementById("dolicontactinfos-alert") && response.data.hasOwnProperty("message")) {
+                	document.getElementById("dolicontactinfos-alert").innerHTML = response.data.message;      
+              	}
 			}
 			$("#DoliconnectLoadingModal").modal("hide");
 			  }, "json");  
