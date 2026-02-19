@@ -1128,7 +1128,7 @@ if ($rights) {
 }
 $doliuser .= '><label for="'.$idobject.'[firstname]"><i class="fas fa-user fa-fw"></i> '.__( 'Firstname', 'doliconnect').'</label></div></div>';
 
-$doliuser .= '<div class="col-md-6 col-lg-5 col-xl-5"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[lastname]" name="'.$idobject.'[lastname]" placeholder="'.__( 'Firstname', 'doliconnect').'" value="'.(isset($object->lastname) ? $object->lastname : stripslashes(htmlspecialchars($current_user->user_lastname, ENT_QUOTES))).'"';
+$doliuser .= '<div class="col-md-6 col-lg-5 col-xl-5"><div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[lastname]" name="'.$idobject.'[lastname]" placeholder="'.__( 'Lastname', 'doliconnect').'" value="'.(isset($object->lastname) ? $object->lastname : stripslashes(htmlspecialchars($current_user->user_lastname, ENT_QUOTES))).'"';
 if ($rights) {
   $doliuser .= ' required';
 } else {
