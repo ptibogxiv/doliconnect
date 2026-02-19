@@ -12,9 +12,11 @@
 		var url = "'.esc_url(doliconnecturl('dolicart')).'";
 		jQuery("#DoliconnectLoadingModal").on("shown.bs.modal", function (e) { 
 			  $.post($form.attr("action"), $form.serialize(), function(response) {
-			if (response.success) { 
+			if (response.success) {
+				console.log( "success update" + " - case: " + "dolicontactinfos" ); 
 				//success
 			} else {
+				console.log( "error update" + " - case: " + "dolicontactinfos" + " - error: " + response.data.message );
 				//error
 			}
 			$("#DoliconnectLoadingModal").modal("hide");

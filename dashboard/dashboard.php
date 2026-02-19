@@ -272,59 +272,34 @@ global $current_user;
 
     $content = "<div id='dolicontactinfos-alert'></div>";
 
-    if ( !isset($contactfo->error) && isset($_GET['id']) && isset($_GET['id']) && isset($_GET['ref']) && ($thirdparty->id == $contactfo->socid) && ($_GET['ref'] == $contactfo->ref) && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doli-contacts-'.$contactfo->id.'-'.$contactfo->ref)) {
-        $content .= "<form action='".admin_url('admin-ajax.php')."' id='dolicontactinfos-form' method='post' class='was-validated' enctype='multipart/form-data'>";
+    $limit=12;
+    if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']); }  else { $page = 0; }
 
-        $content .= doliAjax('dolicontactinfos', null, 'update');
+    $request = "/contacts?sortfield=t.rowid&sortorder=DESC&limit=".$limit."&page=".$page."&thirdparty_ids=".$thirdparty->id."&pagination_data=true";                              
+    $object = callDoliApi("GET", $request, null, dolidelay('contact', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+    if ( doliversion('21.0.0') && isset($object->data) ) { $listcontact  = $object->data; } else { $listcontact  = $object; }
 
-        $content .= "<input type='hidden' name='contactid' value='".$contactfo->id."'>";
-
-        $content .= '<div class="card shadow-sm"><div class="card-header">'.__( 'Edit contact', 'doliconnect').'<a class="btn btn-sm btn-outline-secondary border border-0 float-end" href="'.esc_url( add_query_arg( 'module', 'contacts', doliconnecturl('doliaccount')) ).'"><i class="fa-solid fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div>';
-
-        $content .= doliuserform( $contactfo, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'contact', doliCheckRights('societe', 'contact', 'creer'));
-
-        $content .= "<div class='card-body'><div class='d-grid gap-2'><button class='btn btn-outline-secondary' type='submit' ";
-        if (!doliCheckRights('societe', 'contact', 'creer')) { $content .= 'disabled'; }
-        $content .= ">".__( 'Update', 'doliconnect')."</button></div></div>";
-        $content .= doliCardFooter($contactfo, 'contact', $request);
-        $content .= '</div></form>';
-    } else {
-        $limit=12;
-        if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']); }  else { $page = 0; }
-
-        $request = "/contacts?sortfield=t.rowid&sortorder=DESC&limit=".$limit."&page=".$page."&thirdparty_ids=".$thirdparty->id."&pagination_data=true";                              
-        $object = callDoliApi("GET", $request, null, dolidelay('contact', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-        if ( doliversion('21.0.0') && isset($object->data) ) { $listcontact  = $object->data; } else { $listcontact  = $object; }
-
-        $content .= '<div class="card shadow-sm"><div class="card-header">'.__( 'Manage address book', 'doliconnect').'</div><ul class="list-group list-group-flush">';
-        if ( doliCheckRights('societe', 'contact', 'creer') ) {
-            $content .= doliModalButton('contact', 'addcontact', '<center><i class="fas fa-plus-circle"></i> '.__( 'Create a contact', 'doliconnect').'</center>', 'button', 'list-group-item lh-condensed list-group-item-action list-group-item-primary');
-        }
-        if ( !isset($listcontact->error) && $listcontact != null ) {
-            foreach ($listcontact  as $postcontact) { 
-                $content .= doliModalButton('contact', 'editcontact'.$postcontact->id, '<div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">'.($postcontact->civility ? $postcontact->civility : $postcontact->civility_code).' '.$postcontact->firstname.' '.$postcontact->lastname.'</h5>
-                    <small class="text-body-secondary">3 days ago</small></div>
-                    <p class="mb-1">'.$postcontact->address.', '.$postcontact->zip.' '.$postcontact->town.'</p>
-                    <small class="text-body-secondary">'.$postcontact->email.'</small>', 'button', 'list-group-item lh-condensed list-group-item-action list-group-item-light', $postcontact->id);                                                                           
-                $nonce = wp_create_nonce( 'doli-contacts-'. $postcontact->id.'-'.$postcontact->ref);
-                $arr_params = array( 'id' => $postcontact->id, 'ref' => $postcontact->ref, 'security' => $nonce);  
-                $return = esc_url( add_query_arg( $arr_params, $url) );
-                                                                                                                                                                    
-                $content .= "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'>
-                <div><i class='fa fa-address-card fa-3x fa-fw'></i></div><div><h6 class='my-0'>".($postcontact->civility ? $postcontact->civility : $postcontact->civility_code)." ".$postcontact->firstname." ".$postcontact->lastname."</h6>
-                <small class='text-muted'>".$postcontact->poste."</small></div><span></span><span></span></a>";
-            }
-        } else {
-            $content .= "<li class='list-group-item list-group-item-light'><center>".__( 'No contact', 'doliconnect')."</center></li>";
-        }
-
-        $content .= "</ul><div class='card-body'>";
-        $content .= doliPagination($object, $url, $page);
-        $content .= "</div>";
-        $content .= doliCardFooter($object, 'contact');
-        $content .= "</div>";
+    $content .= '<div class="card shadow-sm"><div class="card-header">'.__( 'Manage address book', 'doliconnect').'</div><ul class="list-group list-group-flush">';
+    if ( doliCheckRights('societe', 'contact', 'creer') ) {
+        $content .= doliModalButton('contact', 'addcontact', '<center><i class="fas fa-plus-circle"></i> '.__( 'Create a contact', 'doliconnect').'</center>', 'button', 'list-group-item lh-condensed list-group-item-action list-group-item-primary');
     }
+    if ( !isset($listcontact->error) && $listcontact != null ) {
+        foreach ($listcontact  as $postcontact) { 
+            $content .= doliModalButton('contact', 'editcontact'.$postcontact->id, '<div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">'.($postcontact->civility ? $postcontact->civility : $postcontact->civility_code).' '.$postcontact->firstname.' '.$postcontact->lastname.'</h5>
+                <small class="text-body-secondary">3 days ago</small></div>
+                <p class="mb-1">'.$postcontact->address.', '.$postcontact->zip.' '.$postcontact->town.'</p>
+                <small class="text-body-secondary">'.$postcontact->email.'</small>', 'button', 'list-group-item lh-condensed list-group-item-action list-group-item-light', $postcontact->id);                                                                           
+        }
+    } else {
+        $content .= "<li class='list-group-item list-group-item-light'><center>".__( 'No contact', 'doliconnect')."</center></li>";
+    }
+
+    $content .= "</ul><div class='card-body'>";
+    $content .= doliPagination($object, $url, $page);
+    $content .= "</div>";
+    $content .= doliCardFooter($object, 'contact');
+     $content .= "</div>";
     return $content;
 }
 add_filter( 'user_doliconnect_contacts', 'contacts_module', 10, 2);
