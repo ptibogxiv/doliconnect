@@ -1,0 +1,20 @@
+sequence:
+  - repeat:
+      while:
+        - condition: state
+          entity_id: input_boolean.modeanim_urbans
+          state: "on"
+      sequence:
+        - service: light.turn_on
+          target: { entity_id: light.zone_1 }
+          data: { brightness_pct: 90, rgb_color: [34, 139, 34], transition: 3 }
+        - service: light.turn_on
+          target: { entity_id: light.zone_2 }
+          data: { brightness_pct: 90, rgb_color: [50, 205, 50], transition: 3 }
+        - service: light.turn_on
+          target: { entity_id: light.zone_3 }
+          data: { brightness_pct: 90, rgb_color: [107, 142, 35], transition: 3 }
+        - service: light.turn_on
+          target: { entity_id: light.zone_4 }
+          data: { brightness_pct: 85, rgb_color: [85, 107, 47], transition: 3 }
+        - delay: "00:00:04"

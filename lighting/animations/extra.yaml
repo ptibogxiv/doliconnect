@@ -1,0 +1,423 @@
+sequence:
+  - choose:
+      - conditions: "{{ extra_mode == 'hiver_fetes_fin_annee' }}"
+        sequence:
+            - repeat:
+                while:
+                  - condition: state
+                    entity_id: input_boolean.modeanim_ia
+                    state: "on"
+                sequence:
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_1 }
+                    data: { brightness_pct: 100, rgb_color: [180, 220, 255], transition: 3 }
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_2 }
+                    data: { brightness_pct: 100, rgb_color: [255, 215, 140], transition: 3 }
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_3 }
+                    data: { brightness_pct: 95, color_temp: 220, transition: 3 }
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_4 }
+                    data: { brightness_pct: 100, rgb_color: [255, 245, 210], transition: 3 }
+                  - delay: "00:00:05"
+          
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_1 }
+                    data: { brightness_pct: 100, rgb_color: [255, 215, 140], transition: 3 }
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_2 }
+                    data: { brightness_pct: 95, color_temp: 220, transition: 3 }
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_3 }
+                    data: { brightness_pct: 100, rgb_color: [255, 245, 210], transition: 3 }
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_4 }
+                    data: { brightness_pct: 100, rgb_color: [180, 220, 255], transition: 3 }
+                  - delay: "00:00:05"
+      - conditions: "{{ extra_mode == 'nouvelan' }}"
+        sequence:
+            - repeat:
+                while:
+                  - condition: state
+                    entity_id: input_boolean.modeanim_ia
+                    state: "on"
+                sequence:
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_1 }
+                    data: { brightness_pct: 100, rgb_color: [255, 215, 120], transition: 2 }
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_2 }
+                    data: { brightness_pct: 95, color_temp: 300, transition: 2 }
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_3 }
+                    data: { brightness_pct: 100, rgb_color: [255, 240, 200], transition: 2 }
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_4 }
+                    data: { brightness_pct: 100, rgb_color: [255, 180, 80], transition: 2 }
+                  - delay: "00:00:04"
+          
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_1 }
+                    data: { brightness_pct: 100, rgb_color: [255, 245, 210], transition: 2 }
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_2 }
+                    data: { brightness_pct: 100, rgb_color: [255, 215, 120], transition: 2 }
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_3 }
+                    data: { brightness_pct: 95, color_temp: 285, transition: 2 }
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_4 }
+                    data: { brightness_pct: 100, rgb_color: [255, 230, 170], transition: 2 }
+                  - delay: "00:00:04"
+      - conditions: "{{ extra_mode == 'saintvalentin' }}"
+        sequence:
+            - repeat:
+                while:
+                  - condition: state
+                    entity_id: input_boolean.modeanim_ia
+                    state: "on"
+                sequence:
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_1 }
+                    data: { brightness_pct: 100, rgb_color: [255, 105, 180], transition: 3 }
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_2 }
+                    data: { brightness_pct: 100, rgb_color: [255, 182, 193], transition: 3 }
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_3 }
+                    data: { brightness_pct: 100, rgb_color: [255, 20, 147], transition: 3 }
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_4 }
+                    data: { brightness_pct: 100, rgb_color: [255, 192, 203], transition: 3 }
+                  - delay: "00:00:05"
+          
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_1 }
+                    data: { brightness_pct: 100, rgb_color: [255, 182, 193], transition: 3 }
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_2 }
+                    data: { brightness_pct: 100, rgb_color: [255, 20, 147], transition: 3 }
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_3 }
+                    data: { brightness_pct: 100, rgb_color: [255, 192, 203], transition: 3 }
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_4 }
+                    data: { brightness_pct: 100, rgb_color: [255, 105, 180], transition: 3 }
+                  - delay: "00:00:05"
+      - conditions: "{{ extra_mode == 'journee_eau' }}"
+        sequence:
+            - repeat:
+                while:
+                  - condition: state
+                    entity_id: input_boolean.modeanim_ia
+                    state: "on"
+                sequence:
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_1 }
+                    data: { brightness_pct: 100, rgb_color: [0, 190, 255], transition: 3 }
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_2 }
+                    data: { brightness_pct: 100, rgb_color: [120, 220, 255], transition: 3 }
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_3 }
+                    data: { brightness_pct: 95, color_temp: 220, transition: 3 }
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_4 }
+                    data: { brightness_pct: 100, rgb_color: [0, 140, 240], transition: 3 }
+                  - delay: "00:00:05"
+          
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_1 }
+                    data: { brightness_pct: 100, rgb_color: [120, 220, 255], transition: 3 }
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_2 }
+                    data: { brightness_pct: 95, color_temp: 220, transition: 3 }
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_3 }
+                    data: { brightness_pct: 100, rgb_color: [0, 140, 240], transition: 3 }
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_4 }
+                    data: { brightness_pct: 100, rgb_color: [0, 190, 255], transition: 3 }
+                  - delay: "00:00:05"
+      - conditions: "{{ extra_mode == 'printemps' }}"
+        sequence:
+            - repeat:
+                while:
+                  - condition: state
+                    entity_id: input_boolean.modeanim_ia
+                    state: "on"
+                sequence:
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_1 }
+                    data: { brightness_pct: 100, rgb_color: [180, 255, 160], transition: 3 }
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_2 }
+                    data: { brightness_pct: 100, rgb_color: [255, 245, 170], transition: 3 }
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_3 }
+                    data: { brightness_pct: 95, color_temp: 285, transition: 3 }
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_4 }
+                    data: { brightness_pct: 100, rgb_color: [145, 230, 170], transition: 3 }
+                  - delay: "00:00:05"
+          
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_1 }
+                    data: { brightness_pct: 100, rgb_color: [145, 230, 170], transition: 3 }
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_2 }
+                    data: { brightness_pct: 100, rgb_color: [180, 255, 160], transition: 3 }
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_3 }
+                    data: { brightness_pct: 100, rgb_color: [255, 245, 170], transition: 3 }
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_4 }
+                    data: { brightness_pct: 95, color_temp: 285, transition: 3 }
+                  - delay: "00:00:05"
+      - conditions: "{{ extra_mode == 'journee_terre' }}"
+        sequence:
+            - repeat:
+                while:
+                  - condition: state
+                    entity_id: input_boolean.modeanim_ia
+                    state: "on"
+                sequence:
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_1 }
+                    data: { brightness_pct: 100, rgb_color: [40, 170, 90], transition: 3 }
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_2 }
+                    data: { brightness_pct: 100, rgb_color: [40, 120, 220], transition: 3 }
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_3 }
+                    data: { brightness_pct: 100, rgb_color: [100, 190, 130], transition: 3 }
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_4 }
+                    data: { brightness_pct: 90, color_temp: 300, transition: 3 }
+                  - delay: "00:00:05"
+          
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_1 }
+                    data: { brightness_pct: 100, rgb_color: [40, 120, 220], transition: 3 }
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_2 }
+                    data: { brightness_pct: 100, rgb_color: [100, 190, 130], transition: 3 }
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_3 }
+                    data: { brightness_pct: 90, color_temp: 300, transition: 3 }
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_4 }
+                    data: { brightness_pct: 100, rgb_color: [40, 170, 90], transition: 3 }
+                  - delay: "00:00:05"
+      - conditions: "{{ extra_mode == 'ete' }}"
+        sequence:
+            - repeat:
+                while:
+                  - condition: state
+                    entity_id: input_boolean.modeanim_ia
+                    state: "on"
+                sequence:
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_1 }
+                    data: { brightness_pct: 100, rgb_color: [255, 160, 90], transition: 3 }
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_2 }
+                    data: { brightness_pct: 100, rgb_color: [255, 210, 100], transition: 3 }
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_3 }
+                    data: { brightness_pct: 100, rgb_color: [0, 210, 200], transition: 3 }
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_4 }
+                    data: { brightness_pct: 100, rgb_color: [255, 120, 110], transition: 3 }
+                  - delay: "00:00:05"
+          
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_1 }
+                    data: { brightness_pct: 100, rgb_color: [0, 210, 200], transition: 3 }
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_2 }
+                    data: { brightness_pct: 100, rgb_color: [255, 120, 110], transition: 3 }
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_3 }
+                    data: { brightness_pct: 100, rgb_color: [255, 160, 90], transition: 3 }
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_4 }
+                    data: { brightness_pct: 100, rgb_color: [255, 210, 100], transition: 3 }
+                  - delay: "00:00:05"
+      - conditions: "{{ extra_mode == 'canada_day' }}"
+        sequence:
+            - repeat:
+                while:
+                  - condition: state
+                    entity_id: input_boolean.modeanim_ia
+                    state: "on"
+                sequence:
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_1 }
+                    data: { brightness_pct: 100, rgb_color: [220, 0, 0], transition: 2 }
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_2 }
+                    data: { brightness_pct: 100, color_temp: 250, transition: 2 }
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_3 }
+                    data: { brightness_pct: 100, rgb_color: [220, 0, 0], transition: 2 }
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_4 }
+                    data: { brightness_pct: 100, color_temp: 250, transition: 2 }
+                  - delay: "00:00:04"
+          
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_1 }
+                    data: { brightness_pct: 100, color_temp: 250, transition: 2 }
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_2 }
+                    data: { brightness_pct: 100, rgb_color: [220, 0, 0], transition: 2 }
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_3 }
+                    data: { brightness_pct: 100, color_temp: 250, transition: 2 }
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_4 }
+                    data: { brightness_pct: 100, rgb_color: [220, 0, 0], transition: 2 }
+                  - delay: "00:00:04"
+      - conditions: "{{ extra_mode == 'fete_nationale_belgique' }}"
+        sequence:
+            - repeat:
+                while:
+                  - condition: state
+                    entity_id: input_boolean.modeanim_ia
+                    state: "on"
+                sequence:
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_1 }
+                    data: { brightness_pct: 100, rgb_color: [20, 20, 20], transition: 2 }
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_2 }
+                    data: { brightness_pct: 100, rgb_color: [255, 215, 0], transition: 2 }
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_3 }
+                    data: { brightness_pct: 100, rgb_color: [220, 0, 0], transition: 2 }
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_4 }
+                    data: { brightness_pct: 100, rgb_color: [255, 215, 0], transition: 2 }
+                  - delay: "00:00:04"
+          
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_1 }
+                    data: { brightness_pct: 100, rgb_color: [255, 215, 0], transition: 2 }
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_2 }
+                    data: { brightness_pct: 100, rgb_color: [220, 0, 0], transition: 2 }
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_3 }
+                    data: { brightness_pct: 100, rgb_color: [20, 20, 20], transition: 2 }
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_4 }
+                    data: { brightness_pct: 100, rgb_color: [220, 0, 0], transition: 2 }
+                  - delay: "00:00:04"
+      - conditions: "{{ extra_mode == 'rentree' }}"
+        sequence:
+            - repeat:
+                while:
+                  - condition: state
+                    entity_id: input_boolean.modeanim_ia
+                    state: "on"
+                sequence:
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_1 }
+                    data: { brightness_pct: 100, color_temp: 240, transition: 3 }
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_2 }
+                    data: { brightness_pct: 100, rgb_color: [60, 130, 255], transition: 3 }
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_3 }
+                    data: { brightness_pct: 95, color_temp: 260, transition: 3 }
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_4 }
+                    data: { brightness_pct: 100, rgb_color: [100, 170, 255], transition: 3 }
+                  - delay: "00:00:05"
+          
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_1 }
+                    data: { brightness_pct: 100, rgb_color: [60, 130, 255], transition: 3 }
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_2 }
+                    data: { brightness_pct: 95, color_temp: 260, transition: 3 }
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_3 }
+                    data: { brightness_pct: 100, rgb_color: [100, 170, 255], transition: 3 }
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_4 }
+                    data: { brightness_pct: 100, color_temp: 240, transition: 3 }
+                  - delay: "00:00:05"
+      - conditions: "{{ extra_mode == 'automne' }}"
+        sequence:
+            - repeat:
+                while:
+                  - condition: state
+                    entity_id: input_boolean.modeanim_ia
+                    state: "on"
+                sequence:
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_1 }
+                    data: { brightness_pct: 100, rgb_color: [255, 140, 60], transition: 3 }
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_2 }
+                    data: { brightness_pct: 100, rgb_color: [200, 90, 40], transition: 3 }
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_3 }
+                    data: { brightness_pct: 90, color_temp: 390, transition: 3 }
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_4 }
+                    data: { brightness_pct: 100, rgb_color: [170, 110, 50], transition: 3 }
+                  - delay: "00:00:05"
+          
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_1 }
+                    data: { brightness_pct: 100, rgb_color: [170, 110, 50], transition: 3 }
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_2 }
+                    data: { brightness_pct: 100, rgb_color: [255, 140, 60], transition: 3 }
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_3 }
+                    data: { brightness_pct: 100, rgb_color: [200, 90, 40], transition: 3 }
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_4 }
+                    data: { brightness_pct: 90, color_temp: 390, transition: 3 }
+                  - delay: "00:00:05"
+      - conditions: "{{ extra_mode == 'movember' }}"
+        sequence:
+            - repeat:
+                while:
+                  - condition: state
+                    entity_id: input_boolean.modeanim_ia
+                    state: "on"
+                sequence:
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_1 }
+                    data: { brightness_pct: 90, rgb_color: [35, 70, 95], transition: 4 }
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_2 }
+                    data: { brightness_pct: 90, rgb_color: [85, 125, 145], transition: 4 }
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_3 }
+                    data: { brightness_pct: 85, color_temp: 360, transition: 4 }
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_4 }
+                    data: { brightness_pct: 90, rgb_color: [120, 90, 60], transition: 4 }
+                  - delay: "00:00:06"
+          
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_1 }
+                    data: { brightness_pct: 90, rgb_color: [85, 125, 145], transition: 4 }
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_2 }
+                    data: { brightness_pct: 85, color_temp: 360, transition: 4 }
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_3 }
+                    data: { brightness_pct: 90, rgb_color: [120, 90, 60], transition: 4 }
+                  - service: light.turn_on
+                    target: { entity_id: light.zone_4 }
+                    data: { brightness_pct: 90, rgb_color: [35, 70, 95], transition: 4 }
+                  - delay: "00:00:06"
+    default: []

@@ -1,0 +1,5 @@
+colors:
+  ice_blue: [0, 128, 255]
+  light_ice: [173, 216, 230]
+  cyan: [0, 255, 255]
+  cold_white_ct: 200

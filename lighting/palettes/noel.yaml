@@ -1,0 +1,6 @@
+colors:
+  red:        [255, 0, 0]
+  green:      [0, 255, 0]
+  gold:       [255, 180, 40]
+  warm_white:
+    color_temp: 350

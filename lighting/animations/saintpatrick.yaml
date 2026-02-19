@@ -1,0 +1,27 @@
+- repeat:
+    while:
+      - condition: state
+        entity_id: input_boolean.modeanim_ia
+        state: "on"
+    sequence:
+      - service: light.turn_on
+        target: { entity_id: light.zone_1 }
+        data: { brightness_pct: 100, rgb_color: [0, 100, 0], transition: 2 }
+      - service: light.turn_on
+        target: { entity_id: light.zone_2 }
+        data: { brightness_pct: 100, rgb_color: [50, 205, 50], transition: 2 }
+      - service: light.turn_on
+        target: { entity_id: light.zone_3 }
+        data: { brightness_pct: 100, rgb_color: [34, 139, 34], transition: 2 }
+      - service: light.turn_on
+        target: { entity_id: light.zone_4 }
+        data: { brightness_pct: 100, rgb_color: [0, 128, 0], transition: 2 }
+      - delay: "00:00:03"
+
+      - service: light.turn_on
+        target: { entity_id: light.zone_1 }
+        data: { brightness_pct: 100, rgb_color: [50, 205, 50], transition: 2 }
+      - service: light.turn_on
+        target: { entity_id: light.zone_4 }
+        data: { brightness_pct: 100, rgb_color: [34, 139, 34], transition: 2 }
+      - delay: "00:00:03"

@@ -1,0 +1,20 @@
+sequence:
+  - repeat:
+      while:
+        - condition: state
+          entity_id: input_boolean.modeanim_disco
+          state: "on"
+      sequence:
+        - service: light.turn_on
+          target: { entity_id: light.zone_1 }
+          data: { brightness_pct: 100, rgb_color: [255, 0, 255], transition: 1 }
+        - service: light.turn_on
+          target: { entity_id: light.zone_4 }
+          data: { brightness_pct: 100, rgb_color: [0, 255, 255], transition: 1 }
+        - service: light.turn_on
+          target: { entity_id: light.zone_3 }
+          data: { brightness_pct: 100, rgb_color: [255, 255, 0], transition: 1 }
+        - service: light.turn_on
+          target: { entity_id: light.zone_2 }
+          data: { brightness_pct: 100, rgb_color: [0, 255, 0], transition: 1 }
+        - delay: "00:00:01"

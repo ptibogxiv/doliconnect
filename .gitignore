@@ -1,0 +1,28 @@
+# macOS
+.DS_Store
+
+# Home Assistant runtime data
+*.db
+*.db-shm
+*.db-wal
+home-assistant.log
+home-assistant.log.*
+*.log
+*.fault
+
+# Sensitive files
+secrets.yaml
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Custom integrations (generated/vendor frontend assets)
+custom_components/
+
+# Temporary / local backups
+*.bak
+*.tmp
+
+# Optional HA internals (if present)
+.storage/

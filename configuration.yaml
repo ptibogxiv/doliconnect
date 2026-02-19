@@ -1,0 +1,247 @@
+default_config:
+
+homeassistant:
+  packages: !include_dir_named packages
+
+frontend:
+  themes: !include_dir_merge_named themes
+
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+
+http:
+  use_x_forwarded_for: true
+  trusted_proxies:
+    - 172.30.33.0/24
+
+# ====================================================================================
+# INPUT BOOLEAN
+# ====================================================================================
+input_boolean:
+  # Ambiances
+  mode_noel:
+    name: Noël (Ambiance)
+    icon: mdi:string-lights
+  mode_halloween:
+    name: Halloween (Ambiance)
+    icon: mdi:ghost
+  mode_octobrerose:
+    name: Octobre Rose (Ambiance)
+    icon: mdi:ribbon
+  mode_pride:
+    name: Pride (Ambiance)
+    icon: mdi:flag-variant
+  mode_urbans:
+    name: Urban's (Ambiance)
+    icon: mdi:leaf
+  mode_ice:
+    name: Ice (Ambiance)
+    icon: mdi:snowflake
+  mode_ia:
+    name: IA (Ambiance)
+    icon: mdi:brain
+
+  # Animations
+  modeanim_noel:
+    name: Noël (Animation)
+    icon: mdi:string-lights
+  modeanim_halloween:
+    name: Halloween (Animation)
+    icon: mdi:ghost
+  modeanim_octobrerose:
+    name: Octobre Rose (Animation)
+    icon: mdi:ribbon
+  modeanim_pride:
+    name: Pride (Animation)
+    icon: mdi:flag-variant
+  modeanim_urbans:
+    name: Urban's (Animation)
+    icon: mdi:leaf
+  modeanim_ice:
+    name: Ice (Animation)
+    icon: mdi:snowflake
+  modeanim_disco:
+    name: Disco (Animation)
+    icon: mdi:dance-ballroom
+  modeanim_ia:
+    name: IA (Animation)
+    icon: mdi:brain
+
+  # Boost
+  boost_manual_override:
+    name: Boost Manuel
+    icon: mdi:gesture-tap-button
+  boost_enabled:
+    name: Boost Planifié
+    icon: mdi:calendar-clock
+  boost_running:
+    name: Boost En Cours
+    icon: mdi:lightning-bolt
+
+  # Cycles Circadiens
+  cycle_circadien_master:
+    name: Mode Circadien Principal
+    icon: mdi:theme-light-dark
+
+# ====================================================================================
+# INPUT NUMBER
+# ====================================================================================
+input_number:
+  boost_duration_min:
+    name: Durée Boost
+    min: 1
+    max: 60
+    step: 1
+    initial: 20
+    unit_of_measurement: "min"
+    icon: mdi:timer
+  
+  boost_interval_sec:
+    name: Intervalle Boost
+    min: 1
+    max: 30
+    step: 1
+    initial: 8
+    unit_of_measurement: "s"
+    icon: mdi:sync
+
+# ====================================================================================
+# INPUT DATETIME
+# ====================================================================================
+input_datetime:
+  boost_time:
+    name: Heure Boost
+    has_date: false
+    has_time: true
+    initial: "07:00"
+
+# ====================================================================================
+# INPUT SELECT
+# ====================================================================================
+input_select:
+  boost_color:
+    name: Couleur Boost
+    options:
+      - Rouge
+      - Vert
+      - Bleu
+      - Jaune
+      - Violet
+      - Orange
+      - Blanc
+    initial: Rouge
+    icon: mdi:palette
+
+# ====================================================================================
+# GROUPS
+# ====================================================================================
+group:
+  modes_lumieres:
+    name: Modes lumières
+    entities:
+      - input_boolean.mode_noel
+      - input_boolean.mode_halloween
+      - input_boolean.mode_octobrerose
+      - input_boolean.mode_pride
+      - input_boolean.mode_urbans
+      - input_boolean.mode_ice
+      - input_boolean.mode_ia
+      - input_boolean.modeanim_noel
+      - input_boolean.modeanim_halloween
+      - input_boolean.modeanim_octobrerose
+      - input_boolean.modeanim_pride
+      - input_boolean.modeanim_urbans
+      - input_boolean.modeanim_ice
+      - input_boolean.modeanim_disco
+      - input_boolean.modeanim_ia
+
+# ====================================================================================
+# SENSORS TEMPLATE
+# ====================================================================================
+sensor:
+  - platform: template
+    sensors:
+      cycle_circadien_phase:
+        friendly_name: "Phase du cycle circadien"
+        value_template: >
+          {% set h = now().hour %}
+          {% if h >= 6 and h < 9 %}
+            Réveil progressif
+          {% elif h >= 9 and h < 12 %}
+            Matinée énergisante
+          {% elif h >= 12 and h < 14 %}
+            Midi dynamique
+          {% elif h >= 14 and h < 17 %}
+            Après-midi concentré
+          {% elif h >= 17 and h < 20 %}
+            Soirée transition
+          {% elif h >= 20 and h < 22 %}
+            Pré-sommeil
+          {% else %}
+            Nuit repos
+          {% endif %}
+      
+      cycle_temp_couleur_actuelle:
+        friendly_name: "Température couleur actuelle"
+        unit_of_measurement: "K"
+        value_template: >
+          {% set h = now().hour %}
+          {% if h >= 6 and h < 9 %}
+            3000
+          {% elif h >= 9 and h < 12 %}
+            4500
+          {% elif h >= 12 and h < 14 %}
+            5500
+          {% elif h >= 14 and h < 17 %}
+            5000
+          {% elif h >= 17 and h < 20 %}
+            3500
+          {% elif h >= 20 and h < 22 %}
+            2700
+          {% else %}
+            2200
+          {% endif %}
+      
+      cycle_luminosite_actuelle:
+        friendly_name: "Luminosité actuelle"
+        unit_of_measurement: "%"
+        value_template: >
+          {% set h = now().hour %}
+          {% if h >= 6 and h < 9 %}
+            50
+          {% elif h >= 9 and h < 12 %}
+            80
+          {% elif h >= 12 and h < 14 %}
+            100
+          {% elif h >= 14 and h < 17 %}
+            90
+          {% elif h >= 17 and h < 20 %}
+            60
+          {% elif h >= 20 and h < 22 %}
+            30
+          {% else %}
+            10
+          {% endif %}
+      
+      cycle_prochaine_transition:
+        friendly_name: "Prochaine transition"
+        value_template: >
+          {% set h = now().hour %}
+          {% if h < 6 %}
+            6h00 (Réveil)
+          {% elif h < 9 %}
+            9h00 (Matinée)
+          {% elif h < 12 %}
+            12h00 (Midi)
+          {% elif h < 14 %}
+            14h00 (Après-midi)
+          {% elif h < 17 %}
+            17h00 (Soirée)
+          {% elif h < 20 %}
+            20h00 (Pré-sommeil)
+          {% elif h < 22 %}
+            22h00 (Nuit)
+          {% else %}
+            6h00 (Réveil)
+          {% endif %}

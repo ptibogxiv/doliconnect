@@ -1,0 +1,67 @@
+sequence:
+  - repeat:
+      while:
+        - condition: template
+          value_template: >
+            {{ is_state('input_boolean.modeanim_ice', 'on') or
+               is_state('input_boolean.modeanim_ia', 'on') }}
+      sequence:
+        # ETAT A : diagonales (HG bleu / BG blanc) - (BD bleu / HD blanc)
+        - service: light.turn_on
+          target: { entity_id: light.zone_1 }
+          data: { brightness_pct: 90, rgb_color: [180, 220, 255], transition: 3 }
+        - service: light.turn_on
+          target: { entity_id: light.zone_2 }
+          data: { brightness_pct: 85, color_temp: 153, transition: 3 }
+        - service: light.turn_on
+          target: { entity_id: light.zone_3 }
+          data: { brightness_pct: 90, rgb_color: [180, 220, 255], transition: 3 }
+        - service: light.turn_on
+          target: { entity_id: light.zone_4 }
+          data: { brightness_pct: 85, color_temp: 153, transition: 3 }
+        - delay: "00:00:05"
+
+        # ETAT B : gauche bleu (haut+bas), droite blanc (haut+bas)
+        - service: light.turn_on
+          target: { entity_id: light.zone_1 }
+          data: { brightness_pct: 90, rgb_color: [180, 220, 255], transition: 3 }
+        - service: light.turn_on
+          target: { entity_id: light.zone_2 }
+          data: { brightness_pct: 90, rgb_color: [180, 220, 255], transition: 3 }
+        - service: light.turn_on
+          target: { entity_id: light.zone_4 }
+          data: { brightness_pct: 85, color_temp: 153, transition: 3 }
+        - service: light.turn_on
+          target: { entity_id: light.zone_3 }
+          data: { brightness_pct: 85, color_temp: 153, transition: 3 }
+        - delay: "00:00:05"
+
+        # ETAT C : diagonales inversées (HG blanc / BG bleu) - (BD blanc / HD bleu)
+        - service: light.turn_on
+          target: { entity_id: light.zone_1 }
+          data: { brightness_pct: 85, color_temp: 153, transition: 3 }
+        - service: light.turn_on
+          target: { entity_id: light.zone_2 }
+          data: { brightness_pct: 90, rgb_color: [180, 220, 255], transition: 3 }
+        - service: light.turn_on
+          target: { entity_id: light.zone_3 }
+          data: { brightness_pct: 85, color_temp: 153, transition: 3 }
+        - service: light.turn_on
+          target: { entity_id: light.zone_4 }
+          data: { brightness_pct: 90, rgb_color: [180, 220, 255], transition: 3 }
+        - delay: "00:00:05"
+
+        # ETAT D : gauche blanc (haut+bas), droite bleu (haut+bas)
+        - service: light.turn_on
+          target: { entity_id: light.zone_1 }
+          data: { brightness_pct: 85, color_temp: 153, transition: 3 }
+        - service: light.turn_on
+          target: { entity_id: light.zone_2 }
+          data: { brightness_pct: 85, color_temp: 153, transition: 3 }
+        - service: light.turn_on
+          target: { entity_id: light.zone_4 }
+          data: { brightness_pct: 90, rgb_color: [180, 220, 255], transition: 3 }
+        - service: light.turn_on
+          target: { entity_id: light.zone_3 }
+          data: { brightness_pct: 90, rgb_color: [180, 220, 255], transition: 3 }
+        - delay: "00:00:05"

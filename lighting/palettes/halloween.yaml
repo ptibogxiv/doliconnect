@@ -1,0 +1,6 @@
+colors:
+  orange:     [255, 128, 0]
+  purple:     [128, 0, 255]
+  blue:       [0, 0, 255]
+  dark_white:
+    color_temp: 350

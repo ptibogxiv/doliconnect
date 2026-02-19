@@ -1,0 +1,207 @@
+sequence:
+  - choose:
+      - conditions: "{{ extra_mode == 'hiver_fetes_fin_annee' }}"
+        sequence:
+            - service: light.turn_on
+              target: { entity_id: light.zone_1 }
+              data: { brightness_pct: 100, rgb_color: [180, 220, 255] }
+          
+            - service: light.turn_on
+              target: { entity_id: light.zone_2 }
+              data: { brightness_pct: 100, rgb_color: [255, 215, 140] }
+          
+            - service: light.turn_on
+              target: { entity_id: light.zone_3 }
+              data: { brightness_pct: 95, color_temp: 220 }
+          
+            - service: light.turn_on
+              target: { entity_id: light.zone_4 }
+              data: { brightness_pct: 100, rgb_color: [255, 245, 210] }
+      - conditions: "{{ extra_mode == 'nouvelan' }}"
+        sequence:
+            - service: light.turn_on
+              target: { entity_id: light.zone_1 }
+              data: { brightness_pct: 100, rgb_color: [255, 215, 120] }
+          
+            - service: light.turn_on
+              target: { entity_id: light.zone_2 }
+              data: { brightness_pct: 95, color_temp: 300 }
+          
+            - service: light.turn_on
+              target: { entity_id: light.zone_3 }
+              data: { brightness_pct: 100, rgb_color: [255, 240, 200] }
+          
+            - service: light.turn_on
+              target: { entity_id: light.zone_4 }
+              data: { brightness_pct: 100, rgb_color: [255, 180, 80] }
+      - conditions: "{{ extra_mode == 'saintvalentin' }}"
+        sequence:
+            - service: light.turn_on
+              target: { entity_id: light.zone_1 }
+              data: { brightness_pct: 100, rgb_color: [255, 105, 180] }
+          
+            - service: light.turn_on
+              target: { entity_id: light.zone_2 }
+              data: { brightness_pct: 100, rgb_color: [255, 182, 193] }
+          
+            - service: light.turn_on
+              target: { entity_id: light.zone_3 }
+              data: { brightness_pct: 100, rgb_color: [255, 20, 147] }
+          
+            - service: light.turn_on
+              target: { entity_id: light.zone_4 }
+              data: { brightness_pct: 100, rgb_color: [255, 192, 203] }
+      - conditions: "{{ extra_mode == 'journee_eau' }}"
+        sequence:
+            - service: light.turn_on
+              target: { entity_id: light.zone_1 }
+              data: { brightness_pct: 100, rgb_color: [0, 190, 255] }
+          
+            - service: light.turn_on
+              target: { entity_id: light.zone_2 }
+              data: { brightness_pct: 100, rgb_color: [120, 220, 255] }
+          
+            - service: light.turn_on
+              target: { entity_id: light.zone_3 }
+              data: { brightness_pct: 95, color_temp: 220 }
+          
+            - service: light.turn_on
+              target: { entity_id: light.zone_4 }
+              data: { brightness_pct: 100, rgb_color: [0, 140, 240] }
+      - conditions: "{{ extra_mode == 'printemps' }}"
+        sequence:
+            - service: light.turn_on
+              target: { entity_id: light.zone_1 }
+              data: { brightness_pct: 100, rgb_color: [180, 255, 160] }
+          
+            - service: light.turn_on
+              target: { entity_id: light.zone_2 }
+              data: { brightness_pct: 100, rgb_color: [255, 245, 170] }
+          
+            - service: light.turn_on
+              target: { entity_id: light.zone_3 }
+              data: { brightness_pct: 95, color_temp: 285 }
+          
+            - service: light.turn_on
+              target: { entity_id: light.zone_4 }
+              data: { brightness_pct: 100, rgb_color: [145, 230, 170] }
+      - conditions: "{{ extra_mode == 'journee_terre' }}"
+        sequence:
+            - service: light.turn_on
+              target: { entity_id: light.zone_1 }
+              data: { brightness_pct: 100, rgb_color: [40, 170, 90] }
+          
+            - service: light.turn_on
+              target: { entity_id: light.zone_2 }
+              data: { brightness_pct: 100, rgb_color: [40, 120, 220] }
+          
+            - service: light.turn_on
+              target: { entity_id: light.zone_3 }
+              data: { brightness_pct: 100, rgb_color: [100, 190, 130] }
+          
+            - service: light.turn_on
+              target: { entity_id: light.zone_4 }
+              data: { brightness_pct: 90, color_temp: 300 }
+      - conditions: "{{ extra_mode == 'ete' }}"
+        sequence:
+            - service: light.turn_on
+              target: { entity_id: light.zone_1 }
+              data: { brightness_pct: 100, rgb_color: [255, 160, 90] }
+          
+            - service: light.turn_on
+              target: { entity_id: light.zone_2 }
+              data: { brightness_pct: 100, rgb_color: [255, 210, 100] }
+          
+            - service: light.turn_on
+              target: { entity_id: light.zone_3 }
+              data: { brightness_pct: 100, rgb_color: [0, 210, 200] }
+          
+            - service: light.turn_on
+              target: { entity_id: light.zone_4 }
+              data: { brightness_pct: 100, rgb_color: [255, 120, 110] }
+      - conditions: "{{ extra_mode == 'canada_day' }}"
+        sequence:
+            - service: light.turn_on
+              target: { entity_id: light.zone_1 }
+              data: { brightness_pct: 100, rgb_color: [220, 0, 0] }
+          
+            - service: light.turn_on
+              target: { entity_id: light.zone_2 }
+              data: { brightness_pct: 100, color_temp: 250 }
+          
+            - service: light.turn_on
+              target: { entity_id: light.zone_3 }
+              data: { brightness_pct: 100, rgb_color: [220, 0, 0] }
+          
+            - service: light.turn_on
+              target: { entity_id: light.zone_4 }
+              data: { brightness_pct: 100, color_temp: 250 }
+      - conditions: "{{ extra_mode == 'fete_nationale_belgique' }}"
+        sequence:
+            - service: light.turn_on
+              target: { entity_id: light.zone_1 }
+              data: { brightness_pct: 100, rgb_color: [20, 20, 20] }
+          
+            - service: light.turn_on
+              target: { entity_id: light.zone_2 }
+              data: { brightness_pct: 100, rgb_color: [255, 215, 0] }
+          
+            - service: light.turn_on
+              target: { entity_id: light.zone_3 }
+              data: { brightness_pct: 100, rgb_color: [220, 0, 0] }
+          
+            - service: light.turn_on
+              target: { entity_id: light.zone_4 }
+              data: { brightness_pct: 100, rgb_color: [255, 215, 0] }
+      - conditions: "{{ extra_mode == 'rentree' }}"
+        sequence:
+            - service: light.turn_on
+              target: { entity_id: light.zone_1 }
+              data: { brightness_pct: 100, color_temp: 240 }
+          
+            - service: light.turn_on
+              target: { entity_id: light.zone_2 }
+              data: { brightness_pct: 100, rgb_color: [60, 130, 255] }
+          
+            - service: light.turn_on
+              target: { entity_id: light.zone_3 }
+              data: { brightness_pct: 95, color_temp: 260 }
+          
+            - service: light.turn_on
+              target: { entity_id: light.zone_4 }
+              data: { brightness_pct: 100, rgb_color: [100, 170, 255] }
+      - conditions: "{{ extra_mode == 'automne' }}"
+        sequence:
+            - service: light.turn_on
+              target: { entity_id: light.zone_1 }
+              data: { brightness_pct: 100, rgb_color: [255, 140, 60] }
+          
+            - service: light.turn_on
+              target: { entity_id: light.zone_2 }
+              data: { brightness_pct: 100, rgb_color: [200, 90, 40] }
+          
+            - service: light.turn_on
+              target: { entity_id: light.zone_3 }
+              data: { brightness_pct: 90, color_temp: 390 }
+          
+            - service: light.turn_on
+              target: { entity_id: light.zone_4 }
+              data: { brightness_pct: 100, rgb_color: [170, 110, 50] }
+      - conditions: "{{ extra_mode == 'movember' }}"
+        sequence:
+            - service: light.turn_on
+              target: { entity_id: light.zone_1 }
+              data: { brightness_pct: 90, rgb_color: [35, 70, 95] }
+          
+            - service: light.turn_on
+              target: { entity_id: light.zone_2 }
+              data: { brightness_pct: 90, rgb_color: [85, 125, 145] }
+          
+            - service: light.turn_on
+              target: { entity_id: light.zone_3 }
+              data: { brightness_pct: 85, color_temp: 360 }
+          
+            - service: light.turn_on
+              target: { entity_id: light.zone_4 }
+              data: { brightness_pct: 90, rgb_color: [120, 90, 60] }
+    default: []

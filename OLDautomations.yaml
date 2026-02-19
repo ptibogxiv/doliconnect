@@ -1,0 +1,414 @@
+- alias: Modes lumières - Sélection unique + couleurs
+  mode: single
+  trigger:
+    - platform: state
+      entity_id:
+        - input_boolean.mode_noel
+        - input_boolean.mode_halloween
+        - input_boolean.mode_octobrerose
+        - input_boolean.mode_pride
+        - input_boolean.mode_urbans
+        - input_boolean.mode_ice
+        - input_boolean.modeanim_noel
+        - input_boolean.modeanim_halloween
+        - input_boolean.modeanim_octobrerose
+        - input_boolean.modeanim_pride
+        - input_boolean.modeanim_urbans
+        - input_boolean.modeanim_ice
+      to: "on"
+
+  action:
+    # 1) Désactiver tous les autres modes (ambiances + animations)
+    - service: input_boolean.turn_off
+      data:
+        entity_id: >
+          {{ expand('group.modes_lumieres')
+             | map(attribute='entity_id')
+             | reject('eq', trigger.entity_id)
+             | list }}
+
+    # 2) Appliquer la couleur correspondant au mode activé
+    - choose:
+
+        # ───── Ambiances fixes ─────
+
+        # Noël → Multicolore fixe (Rouge / Vert / Or / Blanc chaud)
+        - conditions: "{{ trigger.entity_id == 'input_boolean.mode_noel' }}"
+          sequence:
+
+            # Groupe 1 → Rouge
+            - service: light.turn_on
+              target:
+                entity_id:
+                  - light.tzb210_1alquo2j_ts0505b
+                  - light.tzb210_1alquo2j_ts0505b_4
+                  - light.tzb210_1alquo2j_ts0505b_8
+                  - light.tzb210_1alquo2j_ts0505b_12
+              data:
+                brightness_pct: 100
+                rgb_color: [255, 0, 0]
+
+            # Groupe 2 → Vert
+            - service: light.turn_on
+              target:
+                entity_id:
+                  - light.tzb210_1alquo2j_ts0505b_2
+                  - light.tzb210_1alquo2j_ts0505b_6
+                  - light.tzb210_1alquo2j_ts0505b_10
+                  - light.tzb210_1alquo2j_ts0505b_14
+              data:
+                brightness_pct: 100
+                rgb_color: [0, 255, 0]
+
+            # Groupe 3 → Doré
+            - service: light.turn_on
+              target:
+                entity_id:
+                  - light.tzb210_1alquo2j_ts0505b_3
+                  - light.tzb210_1alquo2j_ts0505b_7
+                  - light.tzb210_1alquo2j_ts0505b_11
+              data:
+                brightness_pct: 100
+                rgb_color: [255, 180, 40]
+
+            # Groupe 4 → Blanc chaud
+            - service: light.turn_on
+              target:
+                entity_id:
+                  - light.tzb210_1alquo2j_ts0505b_5
+                  - light.tzb210_1alquo2j_ts0505b_9
+                  - light.tzb210_1alquo2j_ts0505b_13
+                  - light.ruban_led
+              data:
+                brightness_pct: 85
+                color_temp: 350
+
+        # Halloween → Orange
+        - conditions: "{{ trigger.entity_id == 'input_boolean.mode_halloween' }}"
+          sequence:
+            - service: light.turn_on
+              target:
+                entity_id:
+                  - light.tzb210_1alquo2j_ts0505b
+                  - light.tzb210_1alquo2j_ts0505b_2
+                  - light.tzb210_1alquo2j_ts0505b_3
+                  - light.tzb210_1alquo2j_ts0505b_4
+                  - light.tzb210_1alquo2j_ts0505b_5
+                  - light.tzb210_1alquo2j_ts0505b_6
+                  - light.tzb210_1alquo2j_ts0505b_7
+                  - light.tzb210_1alquo2j_ts0505b_8
+                  - light.tzb210_1alquo2j_ts0505b_9
+                  - light.tzb210_1alquo2j_ts0505b_10
+                  - light.tzb210_1alquo2j_ts0505b_11
+                  - light.tzb210_1alquo2j_ts0505b_12
+                  - light.tzb210_1alquo2j_ts0505b_13
+                  - light.tzb210_1alquo2j_ts0505b_14
+                  - light.ruban_led
+              data:
+                brightness_pct: 100
+                hs_color: [30, 100]
+
+        # Octobre Rose → Rose vif
+        - conditions: "{{ trigger.entity_id == 'input_boolean.mode_octobrerose' }}"
+          sequence:
+            - service: light.turn_on
+              target:
+                entity_id:
+                  - light.tzb210_1alquo2j_ts0505b
+                  - light.tzb210_1alquo2j_ts0505b_2
+                  - light.tzb210_1alquo2j_ts0505b_3
+                  - light.tzb210_1alquo2j_ts0505b_4
+                  - light.tzb210_1alquo2j_ts0505b_5
+                  - light.tzb210_1alquo2j_ts0505b_6
+                  - light.tzb210_1alquo2j_ts0505b_7
+                  - light.tzb210_1alquo2j_ts0505b_8
+                  - light.tzb210_1alquo2j_ts0505b_9
+                  - light.tzb210_1alquo2j_ts0505b_10
+                  - light.tzb210_1alquo2j_ts0505b_11
+                  - light.tzb210_1alquo2j_ts0505b_12
+                  - light.tzb210_1alquo2j_ts0505b_13
+                  - light.tzb210_1alquo2j_ts0505b_14
+                  - light.ruban_led
+              data:
+                brightness_pct: 100
+                rgb_color: [255, 105, 180]   # Rose vif
+
+        # Pride → Magenta
+        - conditions: "{{ trigger.entity_id == 'input_boolean.mode_pride' }}"
+          sequence:
+            - service: light.turn_on
+              target:
+                entity_id:
+                  - light.tzb210_1alquo2j_ts0505b
+                  - light.tzb210_1alquo2j_ts0505b_2
+                  - light.tzb210_1alquo2j_ts0505b_3
+                  - light.tzb210_1alquo2j_ts0505b_4
+                  - light.tzb210_1alquo2j_ts0505b_5
+                  - light.tzb210_1alquo2j_ts0505b_6
+                  - light.tzb210_1alquo2j_ts0505b_7
+                  - light.tzb210_1alquo2j_ts0505b_8
+                  - light.tzb210_1alquo2j_ts0505b_9
+                  - light.tzb210_1alquo2j_ts0505b_10
+                  - light.tzb210_1alquo2j_ts0505b_11
+                  - light.tzb210_1alquo2j_ts0505b_12
+                  - light.tzb210_1alquo2j_ts0505b_13
+                  - light.tzb210_1alquo2j_ts0505b_14
+                  - light.ruban_led
+              data:
+                brightness_pct: 100
+                rgb_color: [255, 0, 255]     # Magenta
+
+        # Urban's → Vert
+        - conditions: "{{ trigger.entity_id == 'input_boolean.mode_urbans' }}"
+          sequence:
+            - service: light.turn_on
+              target:
+                entity_id:
+                  - light.tzb210_1alquo2j_ts0505b
+                  - light.tzb210_1alquo2j_ts0505b_2
+                  - light.tzb210_1alquo2j_ts0505b_3
+                  - light.tzb210_1alquo2j_ts0505b_4
+                  - light.tzb210_1alquo2j_ts0505b_5
+                  - light.tzb210_1alquo2j_ts0505b_6
+                  - light.tzb210_1alquo2j_ts0505b_7
+                  - light.tzb210_1alquo2j_ts0505b_8
+                  - light.tzb210_1alquo2j_ts0505b_9
+                  - light.tzb210_1alquo2j_ts0505b_10
+                  - light.tzb210_1alquo2j_ts0505b_11
+                  - light.tzb210_1alquo2j_ts0505b_12
+                  - light.tzb210_1alquo2j_ts0505b_13
+                  - light.tzb210_1alquo2j_ts0505b_14
+                  - light.ruban_led
+              data:
+                brightness_pct: 100
+                hs_color: [120, 100]         # Vert
+
+        # Ice → Bleu glacé
+        - conditions: "{{ trigger.entity_id == 'input_boolean.mode_ice' }}"
+          sequence:
+            - service: light.turn_on
+              target:
+                entity_id:
+                  - light.tzb210_1alquo2j_ts0505b
+                  - light.tzb210_1alquo2j_ts0505b_2
+                  - light.tzb210_1alquo2j_ts0505b_3
+                  - light.tzb210_1alquo2j_ts0505b_4
+                  - light.tzb210_1alquo2j_ts0505b_5
+                  - light.tzb210_1alquo2j_ts0505b_6
+                  - light.tzb210_1alquo2j_ts0505b_7
+                  - light.tzb210_1alquo2j_ts0505b_8
+                  - light.tzb210_1alquo2j_ts0505b_9
+                  - light.tzb210_1alquo2j_ts0505b_10
+                  - light.tzb210_1alquo2j_ts0505b_11
+                  - light.tzb210_1alquo2j_ts0505b_12
+                  - light.tzb210_1alquo2j_ts0505b_13
+                  - light.tzb210_1alquo2j_ts0505b_14
+                  - light.ruban_led
+              data:
+                brightness_pct: 100
+                hs_color: [195, 100]        # Bleu glacé
+
+
+        # ───── Modes d’animation (couleurs distinctes) ─────
+
+        # Animation Noël → alternance vert / rouge
+        - conditions: "{{ trigger.entity_id == 'input_boolean.modeanim_noel' }}"
+          sequence:
+            - repeat:
+                while:
+                  - condition: state
+                    entity_id: input_boolean.modeanim_noel
+                    state: "on"
+                sequence:
+                  # Phase 1 : Groupe A en vert, Groupe B en rouge
+                  - service: light.turn_on
+                    target:
+                      entity_id:
+                        # Groupe A
+                        - light.tzb210_1alquo2j_ts0505b
+                        - light.tzb210_1alquo2j_ts0505b_2
+                        - light.tzb210_1alquo2j_ts0505b_4
+                        - light.tzb210_1alquo2j_ts0505b_6
+                        - light.tzb210_1alquo2j_ts0505b_8
+                        - light.tzb210_1alquo2j_ts0505b_10
+                        - light.tzb210_1alquo2j_ts0505b_12
+                        - light.tzb210_1alquo2j_ts0505b_14
+                    data:
+                      brightness_pct: 100
+                      rgb_color: [0, 255, 0]      # Vert
+
+                  - service: light.turn_on
+                    target:
+                      entity_id:
+                        # Groupe B
+                        - light.tzb210_1alquo2j_ts0505b_3
+                        - light.tzb210_1alquo2j_ts0505b_5
+                        - light.tzb210_1alquo2j_ts0505b_7
+                        - light.tzb210_1alquo2j_ts0505b_9
+                        - light.tzb210_1alquo2j_ts0505b_11
+                        - light.tzb210_1alquo2j_ts0505b_13
+                        - light.ruban_led
+                    data:
+                      brightness_pct: 100
+                      rgb_color: [255, 0, 0]      # Rouge
+
+                  - delay: "00:00:02"
+
+                  # Phase 2 : on inverse (Groupe A rouge, Groupe B vert)
+                  - service: light.turn_on
+                    target:
+                      entity_id:
+                        # Groupe A
+                        - light.tzb210_1alquo2j_ts0505b
+                        - light.tzb210_1alquo2j_ts0505b_2
+                        - light.tzb210_1alquo2j_ts0505b_4
+                        - light.tzb210_1alquo2j_ts0505b_6
+                        - light.tzb210_1alquo2j_ts0505b_8
+                        - light.tzb210_1alquo2j_ts0505b_10
+                        - light.tzb210_1alquo2j_ts0505b_12
+                        - light.tzb210_1alquo2j_ts0505b_14
+                    data:
+                      brightness_pct: 100
+                      rgb_color: [255, 0, 0]      # Rouge
+
+                  - service: light.turn_on
+                    target:
+                      entity_id:
+                        # Groupe B
+                        - light.tzb210_1alquo2j_ts0505b_3
+                        - light.tzb210_1alquo2j_ts0505b_5
+                        - light.tzb210_1alquo2j_ts0505b_7
+                        - light.tzb210_1alquo2j_ts0505b_9
+                        - light.tzb210_1alquo2j_ts0505b_11
+                        - light.tzb210_1alquo2j_ts0505b_13
+                        - light.ruban_led
+                    data:
+                      brightness_pct: 100
+                      rgb_color: [0, 255, 0]      # Vert
+
+                  - delay: "00:00:02"
+
+        # Animation Halloween → Violet
+        - conditions: "{{ trigger.entity_id == 'input_boolean.modeanim_halloween' }}"
+          sequence:
+            - service: light.turn_on
+              target:
+                entity_id:
+                  - light.tzb210_1alquo2j_ts0505b
+                  - light.tzb210_1alquo2j_ts0505b_2
+                  - light.tzb210_1alquo2j_ts0505b_3
+                  - light.tzb210_1alquo2j_ts0505b_4
+                  - light.tzb210_1alquo2j_ts0505b_5
+                  - light.tzb210_1alquo2j_ts0505b_6
+                  - light.tzb210_1alquo2j_ts0505b_7
+                  - light.tzb210_1alquo2j_ts0505b_8
+                  - light.tzb210_1alquo2j_ts0505b_9
+                  - light.tzb210_1alquo2j_ts0505b_10
+                  - light.tzb210_1alquo2j_ts0505b_11
+                  - light.tzb210_1alquo2j_ts0505b_12
+                  - light.tzb210_1alquo2j_ts0505b_13
+                  - light.tzb210_1alquo2j_ts0505b_14
+                  - light.ruban_led
+              data:
+                brightness_pct: 100
+                rgb_color: [128, 0, 255]    # Violet
+
+        # Animation Octobre Rose → Rose clair
+        - conditions: "{{ trigger.entity_id == 'input_boolean.modeanim_octobrerose' }}"
+          sequence:
+            - service: light.turn_on
+              target:
+                entity_id:
+                  - light.tzb210_1alquo2j_ts0505b
+                  - light.tzb210_1alquo2j_ts0505b_2
+                  - light.tzb210_1alquo2j_ts0505b_3
+                  - light.tzb210_1alquo2j_ts0505b_4
+                  - light.tzb210_1alquo2j_ts0505b_5
+                  - light.tzb210_1alquo2j_ts0505b_6
+                  - light.tzb210_1alquo2j_ts0505b_7
+                  - light.tzb210_1alquo2j_ts0505b_8
+                  - light.tzb210_1alquo2j_ts0505b_9
+                  - light.tzb210_1alquo2j_ts0505b_10
+                  - light.tzb210_1alquo2j_ts0505b_11
+                  - light.tzb210_1alquo2j_ts0505b_12
+                  - light.tzb210_1alquo2j_ts0505b_13
+                  - light.tzb210_1alquo2j_ts0505b_14
+                  - light.ruban_led
+              data:
+                brightness_pct: 100
+                rgb_color: [255, 182, 193]  # Rose clair
+
+        # Animation Pride → Bleu
+        - conditions: "{{ trigger.entity_id == 'input_boolean.modeanim_pride' }}"
+          sequence:
+            - service: light.turn_on
+              target:
+                entity_id:
+                  - light.tzb210_1alquo2j_ts0505b
+                  - light.tzb210_1alquo2j_ts0505b_2
+                  - light.tzb210_1alquo2j_ts0505b_3
+                  - light.tzb210_1alquo2j_ts0505b_4
+                  - light.tzb210_1alquo2j_ts0505b_5
+                  - light.tzb210_1alquo2j_ts0505b_6
+                  - light.tzb210_1alquo2j_ts0505b_7
+                  - light.tzb210_1alquo2j_ts0505b_8
+                  - light.tzb210_1alquo2j_ts0505b_9
+                  - light.tzb210_1alquo2j_ts0505b_10
+                  - light.tzb210_1alquo2j_ts0505b_11
+                  - light.tzb210_1alquo2j_ts0505b_12
+                  - light.tzb210_1alquo2j_ts0505b_13
+                  - light.tzb210_1alquo2j_ts0505b_14
+                  - light.ruban_led
+              data:
+                brightness_pct: 100
+                rgb_color: [0, 0, 255]      # Bleu vif
+
+        # Animation Urban's → Vert clair
+        - conditions: "{{ trigger.entity_id == 'input_boolean.modeanim_urbans' }}"
+          sequence:
+            - service: light.turn_on
+              target:
+                entity_id:
+                  - light.tzb210_1alquo2j_ts0505b
+                  - light.tzb210_1alquo2j_ts0505b_2
+                  - light.tzb210_1alquo2j_ts0505b_3
+                  - light.tzb210_1alquo2j_ts0505b_4
+                  - light.tzb210_1alquo2j_ts0505b_5
+                  - light.tzb210_1alquo2j_ts0505b_6
+                  - light.tzb210_1alquo2j_ts0505b_7
+                  - light.tzb210_1alquo2j_ts0505b_8
+                  - light.tzb210_1alquo2j_ts0505b_9
+                  - light.tzb210_1alquo2j_ts0505b_10
+                  - light.tzb210_1alquo2j_ts0505b_11
+                  - light.tzb210_1alquo2j_ts0505b_12
+                  - light.tzb210_1alquo2j_ts0505b_13
+                  - light.tzb210_1alquo2j_ts0505b_14
+                  - light.ruban_led
+              data:
+                brightness_pct: 100
+                rgb_color: [144, 238, 144]  # Vert clair
+
+        # Animation Ice → Bleu glacé clair
+        - conditions: "{{ trigger.entity_id == 'input_boolean.modeanim_ice' }}"
+          sequence:
+            - service: light.turn_on
+              target:
+                entity_id:
+                  - light.tzb210_1alquo2j_ts0505b
+                  - light.tzb210_1alquo2j_ts0505b_2
+                  - light.tzb210_1alquo2j_ts0505b_3
+                  - light.tzb210_1alquo2j_ts0505b_4
+                  - light.tzb210_1alquo2j_ts0505b_5
+                  - light.tzb210_1alquo2j_ts0505b_6
+                  - light.tzb210_1alquo2j_ts0505b_7
+                  - light.tzb210_1alquo2j_ts0505b_8
+                  - light.tzb210_1alquo2j_ts0505b_9
+                  - light.tzb210_1alquo2j_ts0505b_10
+                  - light.tzb210_1alquo2j_ts0505b_11
+                  - light.tzb210_1alquo2j_ts0505b_12
+                  - light.tzb210_1alquo2j_ts0505b_13
+                  - light.tzb210_1alquo2j_ts0505b_14
+                  - light.ruban_led
+              data:
+                brightness_pct: 100
+                rgb_color: [173, 216, 230]  # Bleu glacé clair

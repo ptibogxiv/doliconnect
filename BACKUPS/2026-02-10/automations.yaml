@@ -1,0 +1,1000 @@
+alias: Modes lumières - Sélection unique + couleurs
+description: Applique l'ambiance ou l'animation selon le mode activé ou l'IA (mois/jour).
+mode: parallel
+trigger:
+  - platform: state
+    entity_id:
+      - input_boolean.mode_noel
+      - input_boolean.mode_halloween
+      - input_boolean.mode_octobrerose
+      - input_boolean.mode_pride
+      - input_boolean.mode_urbans
+      - input_boolean.mode_ice
+      - input_boolean.modeanim_noel
+      - input_boolean.modeanim_halloween
+      - input_boolean.modeanim_octobrerose
+      - input_boolean.modeanim_pride
+      - input_boolean.modeanim_urbans
+      - input_boolean.modeanim_ice
+      - input_boolean.modeanim_disco
+      - input_boolean.mode_ia
+      - input_boolean.modeanim_ia
+    to: "on"
+
+action:
+  - choose:
+
+            # ------------------------------------------------------------------------------------
+      # 1. IA Animation : animation différente selon le mois/jour
+      # ------------------------------------------------------------------------------------
+      - conditions: "{{ trigger.entity_id == 'input_boolean.modeanim_ia' }}"
+        sequence:
+          - variables:
+              m: "{{ now().month }}"
+              d: "{{ now().day }}"
+
+          - repeat:
+              while:
+                - condition: state
+                  entity_id: input_boolean.modeanim_ia
+                  state: "on"
+              sequence:
+                - choose:
+
+                    # Fêtes spécifiques (Priorité la plus haute)
+                    # Saint-Patrick (17 mars)
+                    - conditions: "{{ m == 3 and d == 17 }}"
+                      sequence:
+                        - service: light.turn_on
+                          target: {entity_id: light.zone_1}
+                          data: {brightness_pct: 100, rgb_color: [0, 100, 0]}
+                        - service: light.turn_on
+                          target: {entity_id: light.zone_2}
+                          data: {brightness_pct: 100, rgb_color: [50, 205, 50]}
+                        - service: light.turn_on
+                          target: {entity_id: light.zone_3}
+                          data: {brightness_pct: 100, rgb_color: [34, 139, 34]}
+                        - service: light.turn_on
+                          target: {entity_id: light.zone_4}
+                          data: {brightness_pct: 90, color_temp: 350}
+                        - delay: "00:00:02"
+                        - service: light.turn_on
+                          target: {entity_id: light.zone_1}
+                          data: {brightness_pct: 100, rgb_color: [50, 205, 50]}
+                        - service: light.turn_on
+                          target: {entity_id: light.zone_2}
+                          data: {brightness_pct: 100, rgb_color: [34, 139, 34]}
+                        - service: light.turn_on
+                          target: {entity_id: light.zone_3}
+                          data: {brightness_pct: 90, color_temp: 350}
+                        - service: light.turn_on
+                          target: {entity_id: light.zone_4}
+                          data: {brightness_pct: 100, rgb_color: [0, 100, 0]}
+                        - delay: "00:00:02"
+
+                    # Fête Nationale Française (14 juillet)
+                    - conditions: "{{ m == 7 and d == 14 }}"
+                      sequence:
+                        - service: light.turn_on
+                          target: {entity_id: light.zone_1}
+                          data: {brightness_pct: 100, rgb_color: [0, 0, 255]}
+                        - service: light.turn_on
+                          target: {entity_id: light.zone_2}
+                          data: {brightness_pct: 100, color_temp: 250}
+                        - service: light.turn_on
+                          target: {entity_id: light.zone_3}
+                          data: {brightness_pct: 100, rgb_color: [255, 0, 0]}
+                        - service: light.turn_on
+                          target: {entity_id: light.zone_4}
+                          data: {brightness_pct: 100, rgb_color: [0, 0, 255]}
+                        - delay: "00:00:01"
+                        - service: light.turn_on
+                          target: {entity_id: light.zone_1}
+                          data: {brightness_pct: 100, color_temp: 250}
+                        - service: light.turn_on
+                          target: {entity_id: light.zone_2}
+                          data: {brightness_pct: 100, rgb_color: [255, 0, 0]}
+                        - service: light.turn_on
+                          target: {entity_id: light.zone_3}
+                          data: {brightness_pct: 100, rgb_color: [0, 0, 255]}
+                        - service: light.turn_on
+                          target: {entity_id: light.zone_4}
+                          data: {brightness_pct: 100, color_temp: 250}
+                        - delay: "00:00:01"
+
+                    # Fête Nationale Américaine (4 juillet)
+                    - conditions: "{{ m == 7 and d == 4 }}"
+                      sequence:
+                        - service: light.turn_on
+                          target: {entity_id: light.zone_1}
+                          data: {brightness_pct: 100, rgb_color: [255, 0, 0]}
+                        - service: light.turn_on
+                          target: {entity_id: light.zone_2}
+                          data: {brightness_pct: 100, color_temp: 250}
+                        - service: light.turn_on
+                          target: {entity_id: light.zone_3}
+                          data: {brightness_pct: 100, rgb_color: [0, 0, 255]}
+                        - service: light.turn_on
+                          target: {entity_id: light.zone_4}
+                          data: {brightness_pct: 100, rgb_color: [255, 0, 0]}
+                        - delay: "00:00:01"
+                        - service: light.turn_on
+                          target: {entity_id: light.zone_1}
+                          data: {brightness_pct: 100, color_temp: 250}
+                        - service: light.turn_on
+                          target: {entity_id: light.zone_2}
+                          data: {brightness_pct: 100, rgb_color: [0, 0, 255]}
+                        - service: light.turn_on
+                          target: {entity_id: light.zone_3}
+                          data: {brightness_pct: 100, rgb_color: [255, 0, 0]}
+                        - service: light.turn_on
+                          target: {entity_id: light.zone_4}
+                          data: {brightness_pct: 100, color_temp: 250}
+                        - delay: "00:00:01"
+
+                    # Décembre → animation Noël
+                    - conditions: "{{ m == 12 }}"
+                      sequence:
+                        - service: light.turn_on
+                          target: {entity_id: light.zone_1}
+                          data: {brightness_pct: 100, rgb_color: [255, 0, 0]}
+                        - service: light.turn_on
+                          target: {entity_id: light.zone_2}
+                          data: {brightness_pct: 100, rgb_color: [0, 255, 0]}
+                        - service: light.turn_on
+                          target: {entity_id: light.zone_3}
+                          data: {brightness_pct: 100, rgb_color: [255, 180, 40]}
+                        - service: light.turn_on
+                          target: {entity_id: light.zone_4}
+                          data: {brightness_pct: 90, color_temp: 350}
+                        - delay: "00:00:02"
+                        - service: light.turn_on
+                          target: {entity_id: light.zone_1}
+                          data: {brightness_pct: 100, rgb_color: [0, 255, 0]}
+                        - service: light.turn_on
+                          target: {entity_id: light.zone_2}
+                          data: {brightness_pct: 100, rgb_color: [255, 180, 40]}
+                        - service: light.turn_on
+                          target: {entity_id: light.zone_3}
+                          data: {brightness_pct: 90, color_temp: 350}
+                        - service: light.turn_on
+                          target: {entity_id: light.zone_4}
+                          data: {brightness_pct: 100, rgb_color: [255, 0, 0]}
+                        - delay: "00:00:02"
+
+                    # Novembre → animation Halloween
+                    - conditions: "{{ m == 11 }}"
+                      sequence:
+                        - service: light.turn_on
+                          target: {entity_id: light.zone_1}
+                          data: {brightness_pct: 100, rgb_color: [255, 128, 0]}
+                        - service: light.turn_on
+                          target: {entity_id: light.zone_2}
+                          data: {brightness_pct: 100, rgb_color: [128, 0, 255]}
+                        - service: light.turn_on
+                          target: {entity_id: light.zone_3}
+                          data: {brightness_pct: 100, rgb_color: [255, 0, 0]}
+                        - service: light.turn_on
+                          target: {entity_id: light.zone_4}
+                          data: {brightness_pct: 90, color_temp: 350}
+                        - delay: "00:00:02"
+                        - service: light.turn_on
+                          target: {entity_id: light.zone_1}
+                          data: {brightness_pct: 100, rgb_color: [128, 0, 255]}
+                        - service: light.turn_on
+                          target: {entity_id: light.zone_2}
+                          data: {brightness_pct: 100, rgb_color: [255, 0, 0]}
+                        - service: light.turn_on
+                          target: {entity_id: light.zone_3}
+                          data: {brightness_pct: 90, color_temp: 350}
+                        - service: light.turn_on
+                          target: {entity_id: light.zone_4}
+                          data: {brightness_pct: 100, rgb_color: [255, 128, 0]}
+                        - delay: "00:00:02"
+
+                    # Octobre → animation Octobre Rose
+                    - conditions: "{{ m == 10 }}"
+                      sequence:
+                        - service: light.turn_on
+                          target: {entity_id: light.zone_1}
+                          data: {brightness_pct: 100, rgb_color: [255, 105, 180]}
+                        - service: light.turn_on
+                          target: {entity_id: light.zone_2}
+                          data: {brightness_pct: 100, rgb_color: [255, 182, 193]}
+                        - service: light.turn_on
+                          target: {entity_id: light.zone_3}
+                          data: {brightness_pct: 100, rgb_color: [255, 0, 255]}
+                        - service: light.turn_on
+                          target: {entity_id: light.zone_4}
+                          data: {brightness_pct: 90, color_temp: 360}
+                        - delay: "00:00:02"
+                        - service: light.turn_on
+                          target: {entity_id: light.zone_1}
+                          data: {brightness_pct: 100, rgb_color: [255, 182, 193]}
+                        - service: light.turn_on
+                          target: {entity_id: light.zone_2}
+                          data: {brightness_pct: 100, rgb_color: [255, 0, 255]}
+                        - service: light.turn_on
+                          target: {entity_id: light.zone_3}
+                          data: {brightness_pct: 90, color_temp: 360}
+                        - service: light.turn_on
+                          target: {entity_id: light.zone_4}
+                          data: {brightness_pct: 100, rgb_color: [255, 105, 180]}
+                        - delay: "00:00:02"
+
+                    # Janvier → animation Ice
+                    - conditions: "{{ m == 1 }}"
+                      sequence:
+                        - service: light.turn_on
+                          target: {entity_id: light.zone_1}
+                          data: {brightness_pct: 100, rgb_color: [173, 216, 230]}
+                        - service: light.turn_on
+                          target: {entity_id: light.zone_2}
+                          data: {brightness_pct: 100, rgb_color: [0, 255, 255]}
+                        - service: light.turn_on
+                          target: {entity_id: light.zone_3}
+                          data: {brightness_pct: 100, rgb_color: [0, 128, 255]}
+                        - service: light.turn_on
+                          target: {entity_id: light.zone_4}
+                          data: {brightness_pct: 100, color_temp: 250}
+                        - delay: "00:00:02"
+                        - service: light.turn_on
+                          target: {entity_id: light.zone_1}
+                          data: {brightness_pct: 100, rgb_color: [0, 128, 255]}
+                        - service: light.turn_on
+                          target: {entity_id: light.zone_2}
+                          data: {brightness_pct: 100, color_temp: 250}
+                        - service: light.turn_on
+                          target: {entity_id: light.zone_3}
+                          data: {brightness_pct: 100, rgb_color: [173, 216, 230]}
+                        - service: light.turn_on
+                          target: {entity_id: light.zone_4}
+                          data: {brightness_pct: 100, rgb_color: [0, 255, 255]}
+                        - delay: "00:00:02"
+
+                    # Mai / Juillet / Septembre → animation Pride
+                    - conditions: "{{ m in [5, 7, 9] }}"
+                      sequence:
+                        - service: light.turn_on
+                          target: {entity_id: light.zone_1}
+                          data: {brightness_pct: 100, rgb_color: [255, 0, 0]}
+                        - service: light.turn_on
+                          target: {entity_id: light.zone_2}
+                          data: {brightness_pct: 100, rgb_color: [255, 255, 0]}
+                        - service: light.turn_on
+                          target: {entity_id: light.zone_3}
+                          data: {brightness_pct: 100, rgb_color: [0, 255, 0]}
+                        - service: light.turn_on
+                          target: {entity_id: light.zone_4}
+                          data: {brightness_pct: 100, rgb_color: [0, 0, 255]}
+                        - delay: "00:00:02"
+                        - service: light.turn_on
+                          target: {entity_id: light.zone_1}
+                          data: {brightness_pct: 100, rgb_color: [0, 255, 0]}
+                        - service: light.turn_on
+                          target: {entity_id: light.zone_2}
+                          data: {brightness_pct: 100, rgb_color: [0, 0, 255]}
+                        - service: light.turn_on
+                          target: {entity_id: light.zone_3}
+                          data: {brightness_pct: 100, rgb_color: [255, 0, 0]}
+                        - service: light.turn_on
+                          target: {entity_id: light.zone_4}
+                          data: {brightness_pct: 100, rgb_color: [255, 255, 0]}
+                        - delay: "00:00:02"
+
+                  default:
+                    - service: light.turn_on
+                      target: {entity_id: light.zone_1}
+                      data: {brightness_pct: 100, rgb_color: [0, 128, 0]}
+                    - service: light.turn_on
+                      target: {entity_id: light.zone_2}
+                      data: {brightness_pct: 100, rgb_color: [144, 238, 144]}
+                    - service: light.turn_on
+                      target: {entity_id: light.zone_3}
+                      data: {brightness_pct: 100, rgb_color: [0, 128, 128]}
+                    - service: light.turn_on
+                      target: {entity_id: light.zone_4}
+                      data: {brightness_pct: 90, color_temp: 350}
+                    - delay: "00:00:02"
+                    - service: light.turn_on
+                      target: {entity_id: light.zone_1}
+                      data: {brightness_pct: 100, rgb_color: [144, 238, 144]}
+                    - service: light.turn_on
+                      target: {entity_id: light.zone_2}
+                      data: {brightness_pct: 100, rgb_color: [0, 128, 128]}
+                    - service: light.turn_on
+                      target: {entity_id: light.zone_3}
+                      data: {brightness_pct: 90, color_temp: 350}
+                    - service: light.turn_on
+                      target: {entity_id: light.zone_4}
+                      data: {brightness_pct: 100, rgb_color: [0, 128, 0]}
+                    - delay: "00:00:02"
+
+
+      # ------------------------------------------------------------------------------------
+      # 2. GESTION DES MODES MANUELS EXISTANTS (Ambiance et Animation)
+      # ------------------------------------------------------------------------------------
+
+      # ───── Ambiances fixes (zones uniquement) ─────
+
+      # Noël
+      - conditions: "{{ trigger.entity_id == 'input_boolean.mode_noel' }}"
+        sequence:
+          - service: light.turn_on
+            target: { entity_id: light.zone_1 }
+            data:
+              brightness_pct: 100
+              rgb_color: [0, 255, 0]   # Vert
+
+          - service: light.turn_on
+            target: { entity_id: light.zone_4 }
+            data:
+              brightness_pct: 100
+              rgb_color: [0, 255, 0]   # Vert
+
+          - service: light.turn_on
+            target: { entity_id: light.zone_2 }
+            data:
+              brightness_pct: 100
+              rgb_color: [255, 0, 0]   # Rouge
+
+          - service: light.turn_on
+            target: { entity_id: light.zone_3 }
+            data:
+              brightness_pct: 100
+              rgb_color: [255, 0, 0]   # Rouge
+
+
+      # Halloween
+      - conditions: "{{ trigger.entity_id == 'input_boolean.mode_halloween' }}"
+        sequence:
+          - service: light.turn_on
+            target: { entity_id: light.zone_1 }   # haut gauche
+            data:
+              brightness_pct: 100
+              rgb_color: [255, 128, 0]   # Orange
+
+          - service: light.turn_on
+            target: { entity_id: light.zone_4 }   # haut droit
+            data:
+              brightness_pct: 100
+              rgb_color: [255, 128, 0]   # Orange
+
+          - service: light.turn_on
+            target: { entity_id: light.zone_2 }   # bas gauche
+            data:
+              brightness_pct: 100
+              rgb_color: [0, 0, 255]     # Bleu
+
+          - service: light.turn_on
+            target: { entity_id: light.zone_3 }   # bas droit
+            data:
+              brightness_pct: 100
+              rgb_color: [0, 0, 255]     # Bleu
+
+
+      # Octobre Rose
+      - conditions: "{{ trigger.entity_id == 'input_boolean.mode_octobrerose' }}"
+        sequence:
+          - service: light.turn_on
+            target: { entity_id: light.zone_1 }   # haut gauche
+            data:
+              brightness_pct: 100
+              rgb_color: [255, 105, 180]   # Rose vif (Hot Pink)
+
+          - service: light.turn_on
+            target: { entity_id: light.zone_4 }   # haut droit
+            data:
+              brightness_pct: 100
+              rgb_color: [255, 20, 147]    # Rose soutenu (Deep Pink)
+
+          - service: light.turn_on
+            target: { entity_id: light.zone_2 }   # bas gauche
+            data:
+              brightness_pct: 100
+              rgb_color: [255, 182, 193]   # Rose clair (Light Pink)
+
+          - service: light.turn_on
+            target: { entity_id: light.zone_3 }   # bas droit
+            data:
+              brightness_pct: 100
+              rgb_color: [255, 0, 255]     # Rose fuchsia
+
+      # Pride
+      - conditions: "{{ trigger.entity_id == 'input_boolean.mode_pride' }}"
+        sequence:
+          - service: light.turn_on
+            target: { entity_id: light.zone_1 }   # haut gauche
+            data:
+              brightness_pct: 100
+              rgb_color: [255, 0, 0]     # Rouge
+
+          - service: light.turn_on
+            target: { entity_id: light.zone_4 }   # haut droit
+            data:
+              brightness_pct: 100
+              rgb_color: [255, 165, 0]   # Orange
+
+          - service: light.turn_on
+            target: { entity_id: light.zone_2 }   # bas gauche
+            data:
+              brightness_pct: 100
+              rgb_color: [0, 255, 0]     # Vert
+
+          - service: light.turn_on
+            target: { entity_id: light.zone_3 }   # bas droit
+            data:
+              brightness_pct: 100
+              rgb_color: [0, 128, 255]   # Bleu
+
+
+      # Urban's
+      - conditions: "{{ trigger.entity_id == 'input_boolean.mode_urbans' }}"
+        sequence:
+          - service: light.turn_on
+            target: { entity_id: light.zone_1 }   # haut gauche
+            data:
+              brightness_pct: 100
+              rgb_color: [0, 100, 0]      # Vert forêt
+
+          - service: light.turn_on
+            target: { entity_id: light.zone_4 }   # haut droit
+            data:
+              brightness_pct: 100
+              rgb_color: [0, 128, 0]      # Vert classique
+
+          - service: light.turn_on
+            target: { entity_id: light.zone_2 }   # bas gauche
+            data:
+              brightness_pct: 100
+              rgb_color: [144, 238, 144]  # Vert clair (urban / végétal)
+
+          - service: light.turn_on
+            target: { entity_id: light.zone_3 }   # bas droit
+            data:
+              brightness_pct: 100
+              rgb_color: [0, 180, 120]    # Vert émeraude
+
+
+      # Ice
+      - conditions: "{{ trigger.entity_id == 'input_boolean.mode_ice' }}"
+        sequence:
+          - service: light.turn_on
+            target: { entity_id: light.zone_1 }   # haut gauche
+            data:
+              brightness_pct: 100
+              rgb_color: [0, 128, 255]   # Bleu glacé
+
+          - service: light.turn_on
+            target: { entity_id: light.zone_4 }   # haut droit
+            data:
+              brightness_pct: 100
+              rgb_color: [173, 216, 230] # Bleu clair glacé
+
+          - service: light.turn_on
+            target: { entity_id: light.zone_2 }   # bas gauche
+            data:
+              brightness_pct: 100
+              color_temp: 200           # Blanc très froid
+
+          - service: light.turn_on
+            target: { entity_id: light.zone_3 }   # bas droit
+            data:
+              brightness_pct: 100
+              color_temp: 200           # Blanc très froid
+
+
+
+      # ───── Modes d’animation (rotation des palettes) ─────
+
+      # Animation Noël
+      - conditions: "{{ trigger.entity_id == 'input_boolean.modeanim_noel' }}"
+        sequence:
+          - repeat:
+              while:
+                - condition: state
+                  entity_id: input_boolean.modeanim_noel
+                  state: "on"
+              sequence:
+                # ETAT A : diagonales (HG vert / BG rouge) - (BD vert / HD rouge)
+                - service: light.turn_on
+                  target: { entity_id: light.zone_1 }   # haut gauche
+                  data: { brightness_pct: 100, rgb_color: [0, 255, 0], transition: 3 }
+                - service: light.turn_on
+                  target: { entity_id: light.zone_2 }   # bas gauche
+                  data: { brightness_pct: 100, rgb_color: [255, 0, 0], transition: 3 }
+                - service: light.turn_on
+                  target: { entity_id: light.zone_3 }   # bas droit
+                  data: { brightness_pct: 100, rgb_color: [0, 255, 0], transition: 3 }
+                - service: light.turn_on
+                  target: { entity_id: light.zone_4 }   # haut droit
+                  data: { brightness_pct: 100, rgb_color: [255, 0, 0], transition: 3 }
+                - delay: "00:00:05"
+
+                # ETAT B : gauche rouge (haut+bas), droite vert (haut+bas)
+                - service: light.turn_on
+                  target: { entity_id: light.zone_1 }
+                  data: { brightness_pct: 100, rgb_color: [255, 0, 0], transition: 3 }
+                - service: light.turn_on
+                  target: { entity_id: light.zone_2 }
+                  data: { brightness_pct: 100, rgb_color: [255, 0, 0], transition: 3 }
+                - service: light.turn_on
+                  target: { entity_id: light.zone_4 }
+                  data: { brightness_pct: 100, rgb_color: [0, 255, 0], transition: 3 }
+                - service: light.turn_on
+                  target: { entity_id: light.zone_3 }
+                  data: { brightness_pct: 100, rgb_color: [0, 255, 0], transition: 3 }
+                - delay: "00:00:05"
+
+                # ETAT C : diagonales inversées (HG rouge / BG vert) - (BD rouge / HD vert)
+                - service: light.turn_on
+                  target: { entity_id: light.zone_1 }
+                  data: { brightness_pct: 100, rgb_color: [255, 0, 0], transition: 3 }
+                - service: light.turn_on
+                  target: { entity_id: light.zone_2 }
+                  data: { brightness_pct: 100, rgb_color: [0, 255, 0], transition: 3 }
+                - service: light.turn_on
+                  target: { entity_id: light.zone_3 }
+                  data: { brightness_pct: 100, rgb_color: [255, 0, 0], transition: 3 }
+                - service: light.turn_on
+                  target: { entity_id: light.zone_4 }
+                  data: { brightness_pct: 100, rgb_color: [0, 255, 0], transition: 3 }
+                - delay: "00:00:05"
+
+                # ETAT D : gauche vert (haut+bas), droite rouge (haut+bas)
+                - service: light.turn_on
+                  target: { entity_id: light.zone_1 }
+                  data: { brightness_pct: 100, rgb_color: [0, 255, 0], transition: 3 }
+                - service: light.turn_on
+                  target: { entity_id: light.zone_2 }
+                  data: { brightness_pct: 100, rgb_color: [0, 255, 0], transition: 3 }
+                - service: light.turn_on
+                  target: { entity_id: light.zone_4 }
+                  data: { brightness_pct: 100, rgb_color: [255, 0, 0], transition: 3 }
+                - service: light.turn_on
+                  target: { entity_id: light.zone_3 }
+                  data: { brightness_pct: 100, rgb_color: [255, 0, 0], transition: 3 }
+                - delay: "00:00:05"
+
+      # Animation Halloween
+      - conditions: "{{ trigger.entity_id == 'input_boolean.modeanim_halloween' }}"
+        sequence:
+          - repeat:
+              while:
+                - condition: state
+                  entity_id: input_boolean.modeanim_halloween
+                  state: "on"
+              sequence:
+                # Couleurs
+                # ORANGE = [255, 128, 0]
+                # BLEU   = [0, 0, 255]
+
+                # ETAT A : diagonales (HG orange / BG bleu) - (BD orange / HD bleu)
+                - service: light.turn_on
+                  target: { entity_id: light.zone_1 }   # haut gauche
+                  data: { brightness_pct: 100, rgb_color: [255, 128, 0], transition: 3 }
+                - service: light.turn_on
+                  target: { entity_id: light.zone_2 }   # bas gauche
+                  data: { brightness_pct: 100, rgb_color: [0, 0, 255], transition: 3 }
+                - service: light.turn_on
+                  target: { entity_id: light.zone_3 }   # bas droit
+                  data: { brightness_pct: 100, rgb_color: [255, 128, 0], transition: 3 }
+                - service: light.turn_on
+                  target: { entity_id: light.zone_4 }   # haut droit
+                  data: { brightness_pct: 100, rgb_color: [0, 0, 255], transition: 3 }
+                - delay: "00:00:05"
+
+                # ETAT B : gauche orange (haut+bas), droite bleu (haut+bas)
+                - service: light.turn_on
+                  target: { entity_id: light.zone_1 }
+                  data: { brightness_pct: 100, rgb_color: [255, 128, 0], transition: 3 }
+                - service: light.turn_on
+                  target: { entity_id: light.zone_2 }
+                  data: { brightness_pct: 100, rgb_color: [255, 128, 0], transition: 3 }
+                - service: light.turn_on
+                  target: { entity_id: light.zone_4 }
+                  data: { brightness_pct: 100, rgb_color: [0, 0, 255], transition: 3 }
+                - service: light.turn_on
+                  target: { entity_id: light.zone_3 }
+                  data: { brightness_pct: 100, rgb_color: [0, 0, 255], transition: 3 }
+                - delay: "00:00:05"
+
+                # ETAT C : diagonales inversées (HG bleu / BG orange) - (BD bleu / HD orange)
+                - service: light.turn_on
+                  target: { entity_id: light.zone_1 }
+                  data: { brightness_pct: 100, rgb_color: [0, 0, 255], transition: 3 }
+                - service: light.turn_on
+                  target: { entity_id: light.zone_2 }
+                  data: { brightness_pct: 100, rgb_color: [255, 128, 0], transition: 3 }
+                - service: light.turn_on
+                  target: { entity_id: light.zone_3 }
+                  data: { brightness_pct: 100, rgb_color: [0, 0, 255], transition: 3 }
+                - service: light.turn_on
+                  target: { entity_id: light.zone_4 }
+                  data: { brightness_pct: 100, rgb_color: [255, 128, 0], transition: 3 }
+                - delay: "00:00:05"
+
+                # ETAT D : gauche bleu (haut+bas), droite orange (haut+bas)
+                - service: light.turn_on
+                  target: { entity_id: light.zone_1 }
+                  data: { brightness_pct: 100, rgb_color: [0, 0, 255], transition: 3 }
+                - service: light.turn_on
+                  target: { entity_id: light.zone_2 }
+                  data: { brightness_pct: 100, rgb_color: [0, 0, 255], transition: 3 }
+                - service: light.turn_on
+                  target: { entity_id: light.zone_4 }
+                  data: { brightness_pct: 100, rgb_color: [255, 128, 0], transition: 3 }
+                - service: light.turn_on
+                  target: { entity_id: light.zone_3 }
+                  data: { brightness_pct: 100, rgb_color: [255, 128, 0], transition: 3 }
+                - delay: "00:00:05"
+
+      # Animation Octobre Rose
+      - conditions: "{{ trigger.entity_id == 'input_boolean.modeanim_octobrerose' }}"
+        sequence:
+          - repeat:
+              while:
+                - condition: state
+                  entity_id: input_boolean.modeanim_octobrerose
+                  state: "on"
+              sequence:
+                # Palette (4 nuances)
+                # A = Hot Pink      [255, 105, 180]
+                # B = Light Pink    [255, 182, 193]
+                # C = Deep Pink     [255, 20, 147]
+                # D = Pink          [255, 192, 203]
+
+                # ETAT 1
+                - service: light.turn_on
+                  target: { entity_id: light.zone_1 }
+                  data: { brightness_pct: 100, rgb_color: [255, 105, 180], transition: 3 }  # A
+                - service: light.turn_on
+                  target: { entity_id: light.zone_2 }
+                  data: { brightness_pct: 100, rgb_color: [255, 182, 193], transition: 3 }  # B
+                - service: light.turn_on
+                  target: { entity_id: light.zone_3 }
+                  data: { brightness_pct: 100, rgb_color: [255, 20, 147], transition: 3 }   # C
+                - service: light.turn_on
+                  target: { entity_id: light.zone_4 }
+                  data: { brightness_pct: 100, rgb_color: [255, 192, 203], transition: 3 }  # D
+                - delay: "00:00:05"
+
+                # ETAT 2 (rotation)
+                - service: light.turn_on
+                  target: { entity_id: light.zone_1 }
+                  data: { brightness_pct: 100, rgb_color: [255, 182, 193], transition: 3 }  # B
+                - service: light.turn_on
+                  target: { entity_id: light.zone_2 }
+                  data: { brightness_pct: 100, rgb_color: [255, 20, 147], transition: 3 }   # C
+                - service: light.turn_on
+                  target: { entity_id: light.zone_3 }
+                  data: { brightness_pct: 100, rgb_color: [255, 192, 203], transition: 3 }  # D
+                - service: light.turn_on
+                  target: { entity_id: light.zone_4 }
+                  data: { brightness_pct: 100, rgb_color: [255, 105, 180], transition: 3 }  # A
+                - delay: "00:00:05"
+
+                # ETAT 3 (rotation)
+                - service: light.turn_on
+                  target: { entity_id: light.zone_1 }
+                  data: { brightness_pct: 100, rgb_color: [255, 20, 147], transition: 3 }   # C
+                - service: light.turn_on
+                  target: { entity_id: light.zone_2 }
+                  data: { brightness_pct: 100, rgb_color: [255, 192, 203], transition: 3 }  # D
+                - service: light.turn_on
+                  target: { entity_id: light.zone_3 }
+                  data: { brightness_pct: 100, rgb_color: [255, 105, 180], transition: 3 }  # A
+                - service: light.turn_on
+                  target: { entity_id: light.zone_4 }
+                  data: { brightness_pct: 100, rgb_color: [255, 182, 193], transition: 3 }  # B
+                - delay: "00:00:05"
+
+                # ETAT 4 (rotation)
+                - service: light.turn_on
+                  target: { entity_id: light.zone_1 }
+                  data: { brightness_pct: 100, rgb_color: [255, 192, 203], transition: 3 }  # D
+                - service: light.turn_on
+                  target: { entity_id: light.zone_2 }
+                  data: { brightness_pct: 100, rgb_color: [255, 105, 180], transition: 3 }  # A
+                - service: light.turn_on
+                  target: { entity_id: light.zone_3 }
+                  data: { brightness_pct: 100, rgb_color: [255, 182, 193], transition: 3 }  # B
+                - service: light.turn_on
+                  target: { entity_id: light.zone_4 }
+                  data: { brightness_pct: 100, rgb_color: [255, 20, 147], transition: 3 }   # C
+                - delay: "00:00:05"
+
+
+      # Animation Pride
+      - conditions: "{{ trigger.entity_id == 'input_boolean.modeanim_pride' }}"
+        sequence:
+          - repeat:
+              while:
+                - condition: state
+                  entity_id: input_boolean.modeanim_pride
+                  state: "on"
+              sequence:
+                # Palette (4 couleurs)
+                # R = Rouge   [255, 0, 0]
+                # O = Orange  [255, 140, 0]
+                # V = Vert    [0, 128, 0]
+                # B = Bleu    [0, 0, 255]
+
+                # ETAT 1
+                - service: light.turn_on
+                  target: { entity_id: light.zone_1 }   # haut gauche
+                  data: { brightness_pct: 100, rgb_color: [255, 0, 0], transition: 2 }       # R
+                - service: light.turn_on
+                  target: { entity_id: light.zone_4 }   # haut droit
+                  data: { brightness_pct: 100, rgb_color: [255, 140, 0], transition: 2 }     # O
+                - service: light.turn_on
+                  target: { entity_id: light.zone_3 }   # bas droit
+                  data: { brightness_pct: 100, rgb_color: [0, 128, 0], transition: 2 }       # V
+                - service: light.turn_on
+                  target: { entity_id: light.zone_2 }   # bas gauche
+                  data: { brightness_pct: 100, rgb_color: [0, 0, 255], transition: 2 }       # B
+                - delay: "00:00:03"
+
+                # ETAT 2 (rotation)
+                - service: light.turn_on
+                  target: { entity_id: light.zone_1 }
+                  data: { brightness_pct: 100, rgb_color: [0, 0, 255], transition: 2 }       # B
+                - service: light.turn_on
+                  target: { entity_id: light.zone_4 }
+                  data: { brightness_pct: 100, rgb_color: [255, 0, 0], transition: 2 }       # R
+                - service: light.turn_on
+                  target: { entity_id: light.zone_3 }
+                  data: { brightness_pct: 100, rgb_color: [255, 140, 0], transition: 2 }     # O
+                - service: light.turn_on
+                  target: { entity_id: light.zone_2 }
+                  data: { brightness_pct: 100, rgb_color: [0, 128, 0], transition: 2 }       # V
+                - delay: "00:00:03"
+
+                # ETAT 3 (rotation)
+                - service: light.turn_on
+                  target: { entity_id: light.zone_1 }
+                  data: { brightness_pct: 100, rgb_color: [0, 128, 0], transition: 2 }       # V
+                - service: light.turn_on
+                  target: { entity_id: light.zone_4 }
+                  data: { brightness_pct: 100, rgb_color: [0, 0, 255], transition: 2 }       # B
+                - service: light.turn_on
+                  target: { entity_id: light.zone_3 }
+                  data: { brightness_pct: 100, rgb_color: [255, 0, 0], transition: 2 }       # R
+                - service: light.turn_on
+                  target: { entity_id: light.zone_2 }
+                  data: { brightness_pct: 100, rgb_color: [255, 140, 0], transition: 2 }     # O
+                - delay: "00:00:03"
+
+                # ETAT 4 (rotation)
+                - service: light.turn_on
+                  target: { entity_id: light.zone_1 }
+                  data: { brightness_pct: 100, rgb_color: [255, 140, 0], transition: 2 }     # O
+                - service: light.turn_on
+                  target: { entity_id: light.zone_4 }
+                  data: { brightness_pct: 100, rgb_color: [0, 128, 0], transition: 2 }       # V
+                - service: light.turn_on
+                  target: { entity_id: light.zone_3 }
+                  data: { brightness_pct: 100, rgb_color: [0, 0, 255], transition: 2 }       # B
+                - service: light.turn_on
+                  target: { entity_id: light.zone_2 }
+                  data: { brightness_pct: 100, rgb_color: [255, 0, 0], transition: 2 }       # R
+                - delay: "00:00:03"
+
+
+
+      # Animation Urban’s
+      - conditions: "{{ trigger.entity_id == 'input_boolean.modeanim_urbans' }}"
+        sequence:
+          - repeat:
+              while:
+                - condition: state
+                  entity_id: input_boolean.modeanim_urbans
+                  state: "on"
+              sequence:
+                # Palette (4 nuances de vert)
+                # A = Vert forêt        [34, 139, 34]
+                # B = Vert vif          [50, 205, 50]
+                # C = Vert olive        [107, 142, 35]
+                # D = Vert sombre urbain[85, 107, 47]
+
+                # ETAT 1
+                - service: light.turn_on
+                  target: { entity_id: light.zone_1 }
+                  data: { brightness_pct: 90, rgb_color: [34, 139, 34], transition: 3 }   # A
+                - service: light.turn_on
+                  target: { entity_id: light.zone_2 }
+                  data: { brightness_pct: 90, rgb_color: [50, 205, 50], transition: 3 }   # B
+                - service: light.turn_on
+                  target: { entity_id: light.zone_3 }
+                  data: { brightness_pct: 90, rgb_color: [107, 142, 35], transition: 3 }  # C
+                - service: light.turn_on
+                  target: { entity_id: light.zone_4 }
+                  data: { brightness_pct: 85, rgb_color: [85, 107, 47], transition: 3 }   # D
+                - delay: "00:00:04"
+
+                # ETAT 2 (rotation)
+                - service: light.turn_on
+                  target: { entity_id: light.zone_1 }
+                  data: { brightness_pct: 90, rgb_color: [50, 205, 50], transition: 3 }   # B
+                - service: light.turn_on
+                  target: { entity_id: light.zone_2 }
+                  data: { brightness_pct: 90, rgb_color: [107, 142, 35], transition: 3 }  # C
+                - service: light.turn_on
+                  target: { entity_id: light.zone_3 }
+                  data: { brightness_pct: 90, rgb_color: [85, 107, 47], transition: 3 }   # D
+                - service: light.turn_on
+                  target: { entity_id: light.zone_4 }
+                  data: { brightness_pct: 85, rgb_color: [34, 139, 34], transition: 3 }   # A
+                - delay: "00:00:04"
+
+                # ETAT 3 (rotation)
+                - service: light.turn_on
+                  target: { entity_id: light.zone_1 }
+                  data: { brightness_pct: 90, rgb_color: [107, 142, 35], transition: 3 }  # C
+                - service: light.turn_on
+                  target: { entity_id: light.zone_2 }
+                  data: { brightness_pct: 90, rgb_color: [85, 107, 47], transition: 3 }   # D
+                - service: light.turn_on
+                  target: { entity_id: light.zone_3 }
+                  data: { brightness_pct: 90, rgb_color: [34, 139, 34], transition: 3 }   # A
+                - service: light.turn_on
+                  target: { entity_id: light.zone_4 }
+                  data: { brightness_pct: 85, rgb_color: [50, 205, 50], transition: 3 }   # B
+                - delay: "00:00:04"
+
+                # ETAT 4 (rotation)
+                - service: light.turn_on
+                  target: { entity_id: light.zone_1 }
+                  data: { brightness_pct: 90, rgb_color: [85, 107, 47], transition: 3 }   # D
+                - service: light.turn_on
+                  target: { entity_id: light.zone_2 }
+                  data: { brightness_pct: 90, rgb_color: [34, 139, 34], transition: 3 }   # A
+                - service: light.turn_on
+                  target: { entity_id: light.zone_3 }
+                  data: { brightness_pct: 90, rgb_color: [50, 205, 50], transition: 3 }   # B
+                - service: light.turn_on
+                  target: { entity_id: light.zone_4 }
+                  data: { brightness_pct: 85, rgb_color: [107, 142, 35], transition: 3 }  # C
+                - delay: "00:00:04"
+
+
+      # Animation Ice
+      - conditions: "{{ trigger.entity_id == 'input_boolean.modeanim_ice' }}"
+        sequence:
+          - repeat:
+              while:
+                - condition: state
+                  entity_id: input_boolean.modeanim_ice
+                  state: "on"
+              sequence:
+                # ETAT A : diagonales (HG bleu / BG blanc) - (BD bleu / HD blanc)
+                - service: light.turn_on
+                  target: { entity_id: light.zone_1 }   # haut gauche
+                  data: { brightness_pct: 90, rgb_color: [180, 220, 255], transition: 3 }
+                - service: light.turn_on
+                  target: { entity_id: light.zone_2 }   # bas gauche
+                  data: { brightness_pct: 85, color_temp: 153, transition: 3 }
+                - service: light.turn_on
+                  target: { entity_id: light.zone_3 }   # bas droit
+                  data: { brightness_pct: 90, rgb_color: [180, 220, 255], transition: 3 }
+                - service: light.turn_on
+                  target: { entity_id: light.zone_4 }   # haut droit
+                  data: { brightness_pct: 85, color_temp: 153, transition: 3 }
+                - delay: "00:00:05"
+
+                # ETAT B : gauche bleu (haut+bas), droite blanc (haut+bas)
+                - service: light.turn_on
+                  target: { entity_id: light.zone_1 }
+                  data: { brightness_pct: 90, rgb_color: [180, 220, 255], transition: 3 }
+                - service: light.turn_on
+                  target: { entity_id: light.zone_2 }
+                  data: { brightness_pct: 90, rgb_color: [180, 220, 255], transition: 3 }
+                - service: light.turn_on
+                  target: { entity_id: light.zone_4 }
+                  data: { brightness_pct: 85, color_temp: 153, transition: 3 }
+                - service: light.turn_on
+                  target: { entity_id: light.zone_3 }
+                  data: { brightness_pct: 85, color_temp: 153, transition: 3 }
+                - delay: "00:00:05"
+
+                # ETAT C : diagonales inversées (HG blanc / BG bleu) - (BD blanc / HD bleu)
+                - service: light.turn_on
+                  target: { entity_id: light.zone_1 }
+                  data: { brightness_pct: 85, color_temp: 153, transition: 3 }
+                - service: light.turn_on
+                  target: { entity_id: light.zone_2 }
+                  data: { brightness_pct: 90, rgb_color: [180, 220, 255], transition: 3 }
+                - service: light.turn_on
+                  target: { entity_id: light.zone_3 }
+                  data: { brightness_pct: 85, color_temp: 153, transition: 3 }
+                - service: light.turn_on
+                  target: { entity_id: light.zone_4 }
+                  data: { brightness_pct: 90, rgb_color: [180, 220, 255], transition: 3 }
+                - delay: "00:00:05"
+
+                # ETAT D : gauche blanc (haut+bas), droite bleu (haut+bas)
+                - service: light.turn_on
+                  target: { entity_id: light.zone_1 }
+                  data: { brightness_pct: 85, color_temp: 153, transition: 3 }
+                - service: light.turn_on
+                  target: { entity_id: light.zone_2 }
+                  data: { brightness_pct: 85, color_temp: 153, transition: 3 }
+                - service: light.turn_on
+                  target: { entity_id: light.zone_4 }
+                  data: { brightness_pct: 90, rgb_color: [180, 220, 255], transition: 3 }
+                - service: light.turn_on
+                  target: { entity_id: light.zone_3 }
+                  data: { brightness_pct: 90, rgb_color: [180, 220, 255], transition: 3 }
+                - delay: "00:00:05"
+
+
+
+      # Animation Disco
+      - conditions: "{{ trigger.entity_id == 'input_boolean.modeanim_disco' }}"
+        sequence:
+          - repeat:
+              while:
+                - condition: state
+                  entity_id: input_boolean.modeanim_disco
+                  state: "on"
+              sequence:
+                # ETAT 1
+                - service: light.turn_on
+                  target: { entity_id: light.zone_1 }
+                  data: { brightness_pct: 100, rgb_color: [255, 0, 255], transition: 1 }  # Magenta
+                - service: light.turn_on
+                  target: { entity_id: light.zone_4 }
+                  data: { brightness_pct: 100, rgb_color: [0, 255, 255], transition: 1 }  # Cyan
+                - service: light.turn_on
+                  target: { entity_id: light.zone_3 }
+                  data: { brightness_pct: 100, rgb_color: [255, 255, 0], transition: 1 }  # Jaune
+                - service: light.turn_on
+                  target: { entity_id: light.zone_2 }
+                  data: { brightness_pct: 100, rgb_color: [0, 255, 0], transition: 1 }    # Vert
+                - delay: "00:00:01"
+
+                # ETAT 2 (rotation)
+                - service: light.turn_on
+                  target: { entity_id: light.zone_1 }
+                  data: { brightness_pct: 100, rgb_color: [0, 255, 0], transition: 1 }
+                - service: light.turn_on
+                  target: { entity_id: light.zone_4 }
+                  data: { brightness_pct: 100, rgb_color: [255, 0, 255], transition: 1 }
+                - service: light.turn_on
+                  target: { entity_id: light.zone_3 }
+                  data: { brightness_pct: 100, rgb_color: [0, 255, 255], transition: 1 }
+                - service: light.turn_on
+                  target: { entity_id: light.zone_2 }
+                  data: { brightness_pct: 100, rgb_color: [255, 255, 0], transition: 1 }
+                - delay: "00:00:01"
+
+                # ETAT 3 (rotation)
+                - service: light.turn_on
+                  target: { entity_id: light.zone_1 }
+                  data: { brightness_pct: 100, rgb_color: [255, 255, 0], transition: 1 }
+                - service: light.turn_on
+                  target: { entity_id: light.zone_4 }
+                  data: { brightness_pct: 100, rgb_color: [0, 255, 0], transition: 1 }
+                - service: light.turn_on
+                  target: { entity_id: light.zone_3 }
+                  data: { brightness_pct: 100, rgb_color: [255, 0, 255], transition: 1 }
+                - service: light.turn_on
+                  target: { entity_id: light.zone_2 }
+                  data: { brightness_pct: 100, rgb_color: [0, 255, 255], transition: 1 }
+                - delay: "00:00:01"
+
+                # ETAT 4 (rotation)
+                - service: light.turn_on
+                  target: { entity_id: light.zone_1 }
+                  data: { brightness_pct: 100, rgb_color: [0, 255, 255], transition: 1 }
+                - service: light.turn_on
+                  target: { entity_id: light.zone_4 }
+                  data: { brightness_pct: 100, rgb_color: [255, 255, 0], transition: 1 }
+                - service: light.turn_on
+                  target: { entity_id: light.zone_3 }
+                  data: { brightness_pct: 100, rgb_color: [0, 255, 0], transition: 1 }
+                - service: light.turn_on
+                  target: { entity_id: light.zone_2 }
+                  data: { brightness_pct: 100, rgb_color: [255, 0, 255], transition: 1 }
+                - delay: "00:00:01"
+

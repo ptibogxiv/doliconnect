@@ -1,0 +1,16 @@
+sequence:
+  - service: light.turn_on
+    target: { entity_id: light.zone_1 }
+    data: { brightness_pct: 100, rgb_color: [255, 105, 180] }
+
+  - service: light.turn_on
+    target: { entity_id: light.zone_4 }
+    data: { brightness_pct: 100, rgb_color: [255, 20, 147] }
+
+  - service: light.turn_on
+    target: { entity_id: light.zone_2 }
+    data: { brightness_pct: 100, rgb_color: [255, 182, 193] }
+
+  - service: light.turn_on
+    target: { entity_id: light.zone_3 }
+    data: { brightness_pct: 100, rgb_color: [255, 0, 255] }

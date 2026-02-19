@@ -1,0 +1,41 @@
+input_boolean:
+  boost_enabled:
+    name: Boost - Actif
+    icon: mdi:rocket-launch
+    
+  boost_running:
+    name: Boost - En cours
+    icon: mdi:progress-clock
+
+input_select:
+  boost_color:
+    name: Boost - Couleur
+    options: [Rouge, Bleu, Vert, Rose, Violet, Orange]
+    icon: mdi:palette
+
+input_datetime:
+  boost_time:
+    name: Boost - Heure
+    has_date: false
+    has_time: true
+
+input_number:
+  boost_duration_min:
+    name: Boost - Durée (minutes)
+    min: 1
+    max: 60
+    step: 1
+    mode: slider
+    unit_of_measurement: min
+  boost_interval_sec:
+    name: Boost - Intervalle (secondes)
+    min: 2
+    max: 30
+    step: 1
+    mode: slider
+    unit_of_measurement: s
+
+input_text:
+  boost_previous_mode:
+    name: Boost - Mode précédent (tech)
+    max: 255

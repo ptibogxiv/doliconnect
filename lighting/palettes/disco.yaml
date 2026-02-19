@@ -1,0 +1,5 @@
+colors:
+  magenta: [255, 0, 255]
+  cyan:    [0, 255, 255]
+  yellow:  [255, 255, 0]
+  green:   [0, 255, 0]

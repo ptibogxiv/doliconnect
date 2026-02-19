@@ -1,0 +1,32 @@
+set_mode_lumieres:
+  alias: "Modes lumières - Sélection exclusive"
+  mode: single
+  fields:
+    mode_id:
+      description: "Nom du mode à activer (input_boolean.*)"
+      example: "input_boolean.mode_noel"
+  sequence:
+    # 1) Tout couper (ambiances + animations + IA)
+    - service: input_boolean.turn_off
+      data:
+        entity_id:
+          - input_boolean.mode_noel
+          - input_boolean.mode_halloween
+          - input_boolean.mode_octobrerose
+          - input_boolean.mode_pride
+          - input_boolean.mode_urbans
+          - input_boolean.mode_ice
+          - input_boolean.mode_ia
+          - input_boolean.modeanim_noel
+          - input_boolean.modeanim_halloween
+          - input_boolean.modeanim_octobrerose
+          - input_boolean.modeanim_pride
+          - input_boolean.modeanim_urbans
+          - input_boolean.modeanim_ice
+          - input_boolean.modeanim_disco
+          - input_boolean.modeanim_ia
+
+    # 2) Activer UNIQUEMENT celui demandé
+    - service: input_boolean.turn_on
+      data:
+        entity_id: "{{ mode_id }}"

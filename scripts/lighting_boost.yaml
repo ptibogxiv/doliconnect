@@ -1,0 +1,134 @@
+lighting_boost_run:
+  alias: "Boost - Clignoter puis restaurer"
+  mode: single
+  sequence:
+    # Evite double lancement
+    - condition: state
+      entity_id: input_boolean.boost_running
+      state: "off"
+
+    - service: input_boolean.turn_on
+      target:
+        entity_id: input_boolean.boost_running
+
+    # 1) Détecter le mode actif avant boost (ambiance/anim/ia…)
+    - variables:
+        modes_list:
+          - input_boolean.modeanim_noel
+          - input_boolean.modeanim_halloween
+          - input_boolean.modeanim_octobrerose
+          - input_boolean.modeanim_pride
+          - input_boolean.modeanim_urbans
+          - input_boolean.modeanim_ice
+          - input_boolean.modeanim_disco
+          - input_boolean.modeanim_ia
+          - input_boolean.mode_noel
+          - input_boolean.mode_halloween
+          - input_boolean.mode_octobrerose
+          - input_boolean.mode_pride
+          - input_boolean.mode_urbans
+          - input_boolean.mode_ice
+          - input_boolean.mode_ia
+
+        prev_mode: >-
+          {% set found = namespace(v='') %}
+          {% for e in modes_list %}
+            {% if is_state(e, 'on') and found.v == '' %}
+              {% set found.v = e %}
+            {% endif %}
+          {% endfor %}
+          {{ found.v }}
+
+    - service: input_text.set_value
+      target:
+        entity_id: input_text.boost_previous_mode
+      data:
+        value: "{{ prev_mode }}"
+
+    # 2) Stopper les modes pendant le boost (pour éviter conflits/boucles)
+    - service: input_boolean.turn_off
+      target:
+        entity_id:
+          - input_boolean.mode_noel
+          - input_boolean.mode_halloween
+          - input_boolean.mode_octobrerose
+          - input_boolean.mode_pride
+          - input_boolean.mode_urbans
+          - input_boolean.mode_ice
+          - input_boolean.mode_ia
+          - input_boolean.modeanim_noel
+          - input_boolean.modeanim_halloween
+          - input_boolean.modeanim_octobrerose
+          - input_boolean.modeanim_pride
+          - input_boolean.modeanim_urbans
+          - input_boolean.modeanim_ice
+          - input_boolean.modeanim_disco
+          - input_boolean.modeanim_ia
+
+    # 3) Paramètres boost
+    - variables:
+        duration_min: "{{ states('input_number.boost_duration_min') | int(10) }}"
+        interval_sec: "{{ states('input_number.boost_interval_sec') | int(5) }}"
+        red_sec: "{{ (interval_sec * 0.75) | round(2) }}"
+        white_sec: "{{ (interval_sec * 0.25) | round(2) }}"
+        transition_sec: 0.4
+
+        rgb_red: [255, 0, 0]
+        rgb_white: [255, 255, 255]
+
+        rgb_boost: >-
+          {% set c = states('input_select.boost_color') %}
+          {% if c == 'Rouge' %}[255,0,0]
+          {% elif c == 'Bleu' %}[0,0,255]
+          {% elif c == 'Vert' %}[0,255,0]
+          {% elif c == 'Rose' %}[255,20,147]
+          {% elif c == 'Violet' %}[128,0,255]
+          {% elif c == 'Orange' %}[255,128,0]
+          {% else %}[255,0,0]
+          {% endif %}
+
+        loops: "{{ ((duration_min * 60) / interval_sec) | int }}"
+
+        lights_target:
+          - light.zone_1
+          - light.zone_2
+          - light.zone_3
+          - light.zone_4
+
+    # 4) Boucle clignotement : 75% couleur, 25% blanc (avec fade)
+    - repeat:
+        count: "{{ loops }}"
+        sequence:
+          - service: light.turn_on
+            target:
+              entity_id: "{{ lights_target }}"
+            data:
+              brightness_pct: 100
+              rgb_color: "{{ rgb_boost }}"
+              transition: "{{ transition_sec }}"
+          - delay:
+              seconds: "{{ red_sec }}"
+
+          - service: light.turn_on
+            target:
+              entity_id: "{{ lights_target }}"
+            data:
+              brightness_pct: 100
+              rgb_color: "{{ rgb_white }}"
+              transition: "{{ transition_sec }}"
+          - delay:
+              seconds: "{{ white_sec }}"
+
+    # 5) Restauration du mode précédent (si on en avait un)
+    - variables:
+        restore_mode: "{{ states('input_text.boost_previous_mode') }}"
+    - choose:
+        - conditions: "{{ restore_mode is string and restore_mode | length > 0 }}"
+          sequence:
+            - service: input_boolean.turn_on
+              target:
+                entity_id: "{{ restore_mode }}"
+
+    - service: input_boolean.turn_off
+      target:
+        entity_id: input_boolean.boost_running
