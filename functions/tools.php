@@ -1163,7 +1163,7 @@ $doliuser .= 'required';
 $doliuser .= '>
 <label for="user_nicename"><i class="fas fa-user-secret fa-fw"></i> '.__( 'Display name', 'doliconnect').'</label></div>';  
 } else {
-$doliuser .= '<div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[poste]" name="'.$idobject.'[poste]" placeholder="Director" value="'.stripslashes(htmlspecialchars(isset($object->poste) ? $object->poste : null, ENT_QUOTES)).'" autocomplete="off" ';
+$doliuser .= '<div class="form-floating"><input type="text" class="form-control" id="'.$idobject.'[poste]" name="'.$idobject.'[poste]" placeholder="Director" value="'.stripslashes(htmlspecialchars(isset($object->poste) ? $object->poste : '', ENT_QUOTES)).'" autocomplete="off" ';
 if ($rights) {
 $doliuser .= 'required';
 } else {
