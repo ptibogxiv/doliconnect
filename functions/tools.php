@@ -909,7 +909,7 @@ global $current_user;
 if ( is_object($object) && $object->id > 0 ) {
   $idobject = $mode."[".$object->id."]";
 } else { 
-  $idobject = $mode;
+  $idobject = $mode."[".doliConnect('thirdparty', $current_user)->id."]";
 }
 
 $company = callDoliApi("GET", "/setup/company", null, dolidelay('constante'));

@@ -1222,15 +1222,17 @@ global $current_user;
 			$modal['header'] = __( 'Edit contact', 'doliconnect');
 			$object = callDoliApi("GET", "/contacts/".trim($_POST['value1'])."?includecount=1&includeroles=1", null, dolidelay('contact', true));
 			$case = 'update';
+			$contactid = $object->id;
 		} else {
 			$modal['header'] = __( "Create contact", 'doliconnect');
 			$object = null;
 			$case = 'create';
+			$contactid = doliConnect('thirdparty', $current_user)->id;
 		}
 		$modal['body'] = '<form id="dolicontactinfos-form" action="'.admin_url('admin-ajax.php').'" method="post" class="was-validated" enctype="multipart/form-data">';
 		$modal['body'] .= '<input type="hidden" name="action" value="dolicontactinfos_request"><input type="hidden" name="case" value="'.$case.'">';
 		$modal['body'] .= '<input type="hidden" name="dolicontactinfos-nonce" value="'.wp_create_nonce( 'dolicontactinfos').'">';
-		$modal['body'] .= '<input type="hidden" name="contactid" value="'.trim($_POST['value1']).'">';
+		$modal['body'] .= '<input type="hidden" name="contactid" value="'.$contactid.'">';
 		$modal['body'] .= '<input type="hidden" name="modalid" value="'.trim($_POST['id']).'">';
 		$modal['body'] .= doliuserform( $object, dolidelay('constante', true, true), 'contact', doliCheckRights('societe', 'contact', 'creer'));
 		$modal['body'] .= '<div class="d-grid gap-2"><button class="btn btn-danger" type="submit">'.__( 'Submit', 'doliconnect').'</button></div></form>';
