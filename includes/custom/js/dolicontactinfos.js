@@ -2,7 +2,6 @@
 	'use strict';
 
 	$(document).ready(function() {
-	console.log( "success js" + " - case: " + "dolicontactinfos" );
 	$("#dolicontactinfos-form").on("submit", function(e) { 
 		e.preventDefault();
 		e.stopPropagation(); 
