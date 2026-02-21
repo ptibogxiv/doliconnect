@@ -271,29 +271,12 @@ if ( empty(doliconst('MAIN_DISABLE_CONTACTS_TAB')) && doliCheckRights('societe',
 
         $content .= '<div class="card shadow-sm"><div class="card-header">'.__( 'Manage address book', 'doliconnect').'</div><ul class="list-group list-group-flush" id="dolicontact-list">';
         
-        $request = "/contacts?sortfield=t.rowid&sortorder=DESC&limit=".$limit."&page=".$page."&thirdparty_ids=".$thirdparty->id."&pagination_data=true";                              
-        $object = callDoliApi("GET", $request, null, dolidelay('contact', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-        if ( doliversion('21.0.0') && isset($object->data) ) { $listcontact  = $object->data; } else { $listcontact  = $object; }
-        
-        if ( doliCheckRights('societe', 'contact', 'creer') ) {
-            $content .= doliModalButton('contact', 'addcontact', '<center><i class="fas fa-plus-circle"></i> '.__( 'Create a contact', 'doliconnect').'</center>', 'button', 'list-group-item lh-condensed list-group-item-action list-group-item-primary');
-        }
-        if ( !isset($listcontact->error) && $listcontact != null ) {
-            foreach ($listcontact  as $postcontact) { 
-                $content .= doliModalButton('contact', 'editcontact'.$postcontact->id, '<div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">'.($postcontact->civility ? $postcontact->civility : $postcontact->civility_code).' '.$postcontact->firstname.' '.$postcontact->lastname.'</h5>
-                    <small class="text-body-secondary">3 days ago</small></div>
-                    <p class="mb-1">'.$postcontact->address.', '.$postcontact->zip.' '.$postcontact->town.'</p>
-                    <small class="text-body-secondary">'.$postcontact->email.'</small>', 'button', 'list-group-item lh-condensed list-group-item-action list-group-item-light', $postcontact->id);                                                                           
-            }
-        } else {
-            $content .= "<li class='list-group-item list-group-item-light'><center>".__( 'No contact', 'doliconnect')."</center></li>";
-        }
+        $content .= doliContactList($thirdparty, $limit, $page, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 
         $content .= "</ul><div class='card-body'>";
-        $content .= doliPagination($object, $url, $page);
+        //$content .= doliPagination($object, $url, $page);
         $content .= "</div>";
-        $content .= doliCardFooter($object, 'contact');
+        //$content .= doliCardFooter($object, 'contact');
         $content .= "</div>";
         return $content;
     }

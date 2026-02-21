@@ -762,6 +762,28 @@ function doliSelectForm($name, $request, $selectlang = '- Select -', $valuelang 
 return $doliSelect;
 }
 
+function doliContactList($thirdparty, $limit, $page, $refresh) {
+        $request = "/contacts?sortfield=t.rowid&sortorder=DESC&limit=".$limit."&page=0&thirdparty_ids=".$thirdparty->id."&pagination_data=true";                              
+        $object = callDoliApi("GET", $request, null, dolidelay('contact', $refresh));
+        if ( doliversion('21.0.0') && isset($object->data) ) { $listcontact  = $object->data; } else { $listcontact  = $object; }
+        $content = '';
+        if ( doliCheckRights('societe', 'contact', 'creer') ) {
+            $content .= doliModalButton('contact', 'addcontact', '<center><i class="fas fa-plus-circle"></i> '.__( 'Create a contact', 'doliconnect').'</center>', 'button', 'list-group-item lh-condensed list-group-item-action list-group-item-primary');
+        }
+        if ( !isset($listcontact->error) && $listcontact != null ) {
+            foreach ($listcontact  as $postcontact) { 
+                $content .= doliModalButton('contact', 'editcontact'.$postcontact->id, '<div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">'.($postcontact->civility ? $postcontact->civility : $postcontact->civility_code).' '.$postcontact->firstname.' '.$postcontact->lastname.'</h5>
+                    <small class="text-body-secondary">3 days ago</small></div>
+                    <p class="mb-1">'.$postcontact->address.', '.$postcontact->zip.' '.$postcontact->town.'</p>
+                    <small class="text-body-secondary">'.$postcontact->email.'</small>', 'button', 'list-group-item lh-condensed list-group-item-action list-group-item-light', $postcontact->id);                                                                           
+            }
+        } else {
+            $content .= "<li class='list-group-item list-group-item-light'><center>".__( 'No contact', 'doliconnect')."</center></li>";
+        }
+return $content;
+}
+
 function doliFaqForm($category, $refresh = null) {
 global $current_user; 
   $requestf = "/knowledgemanagement/knowledgerecords?sortfield=t.rowid&sortorder=ASC&limit=100&sqlfilters=(t.fk_c_ticket_category:=:'".$category."')and(t.status:=:'1')and((t.lang:=:'0')%20or%20(t.lang:=:'".doliUserLang($current_user)."'))";  
@@ -3353,6 +3375,51 @@ global $current_user;
 	}
 }
 
+function doliAjax($id, $url = null, $case = null){
+  $ajax = "<input type='hidden' name='action' value='".$id."_request'>";
+  if (!empty($case)) $ajax.= "<input type='hidden' name='case' value='".$case."'>";
+  $ajax.= wp_nonce_field( $id, $id.'-nonce' );
+  $ajax.= '<script type="text/javascript">';
+  $ajax.= '(function ($) {
+    $(document).ready(function () {
+      $("#'.$id.'-form").on("submit", function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (document.getElementById("'.$id.'-button")) {
+          document.getElementById("'.$id.'-button").disabled = true;
+        }
+        $("#DoliconnectLoadingModal").modal("show");
+        var $form = $(this);
+        var url = "'.$url.'";
+        $("#DoliconnectLoadingModal").on("shown.bs.modal", function (e) { 
+          $.post($form.attr("action"), $form.serialize(), function(response) {
+            $(window).scrollTop(0); 
+            if (response.success) {
+              if (document.getElementById("'.$id.'-alert") && response.data.hasOwnProperty("message")) {
+                document.getElementById("'.$id.'-alert").innerHTML = response.data.message;      
+              }
+              if (!!url) document.location = url;
+            } else {
+              if (document.getElementById("'.$id.'-alert") && response.data.hasOwnProperty("message")) {
+                document.getElementById("'.$id.'-alert").innerHTML = response.data.message;      
+              }
+            }
+            if (document.getElementById("'.$id.'-captcha") && response.data.hasOwnProperty("captcha")) {
+              document.getElementById("'.$id.'-captcha").innerHTML = response.data.captcha;      
+            }
+            $("#DoliconnectLoadingModal").modal("hide");
+            if (document.getElementById("'.$id.'-button")) {
+              document.getElementById("'.$id.'-button").disabled = false;
+            }
+          }, "json");  
+        });
+      });
+    });
+  })(jQuery);';
+  $ajax.= '</script>';
+return $ajax;
+}
+
 function doliModalTemplate($id, $header, $body, $footer, $size = null, $headercss = null, $bodycss = null, $footercss = null, $formurl = null) {
   $modal = '<div id="doliModal'.$id.'" class="modal fade" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" style="display: none">
   <div class="modal-dialog '.$size.' ';
@@ -3375,7 +3442,11 @@ function doliModalButton($case, $id, $title, $type = 'button', $class = 'btn btn
   } else {
     $redirect_to=get_permalink();
   }
-  $button = '<'.$type.' id="'.$id.'" class="'.$class.'" type="button">';
+  $button = "<".$type." id='".$id."' class='".$class."' type='button' onclick='doliJavaButtonAction(\"".$case."\", \"".$id."\", \"".$value1."\", \"".$value2."\", \"".$redirect_to."\");'>";
+  $button .= $title."</".$type.">";
+  return $button;
+}
+  /*
   $button .= '<script type="text/javascript">';
   $button .= '(function ($) {
     $(document).ready(function () {
@@ -3424,58 +3495,50 @@ function doliModalButton($case, $id, $title, $type = 'button', $class = 'btn btn
     });
   })(jQuery);';
   $button .= '</script>';
-  $button .= $title.'</'.$type.'>';
-  return $button;
-}
-
-function doliAjax($id, $url = null, $case = null){
-  $ajax = "<input type='hidden' name='action' value='".$id."_request'>";
-  if (!empty($case)) $ajax.= "<input type='hidden' name='case' value='".$case."'>";
-  $ajax.= wp_nonce_field( $id, $id.'-nonce' );
-  $ajax.= '<script type="text/javascript">';
-  $ajax.= '(function ($) {
-    $(document).ready(function () {
-      $("#'.$id.'-form").on("submit", function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        if (document.getElementById("'.$id.'-button")) {
-          document.getElementById("'.$id.'-button").disabled = true;
-        }
-        $("#DoliconnectLoadingModal").modal("show");
-        var $form = $(this);
-        var url = "'.$url.'";
-        $("#DoliconnectLoadingModal").on("shown.bs.modal", function (e) { 
-          $.post($form.attr("action"), $form.serialize(), function(response) {
-            $(window).scrollTop(0); 
-            if (response.success) {
-              if (document.getElementById("'.$id.'-alert") && response.data.hasOwnProperty("message")) {
-                document.getElementById("'.$id.'-alert").innerHTML = response.data.message;      
-              }
-              if (!!url) document.location = url;
-            } else {
-              if (document.getElementById("'.$id.'-alert") && response.data.hasOwnProperty("message")) {
-                document.getElementById("'.$id.'-alert").innerHTML = response.data.message;      
-              }
-            }
-            if (document.getElementById("'.$id.'-captcha") && response.data.hasOwnProperty("captcha")) {
-              document.getElementById("'.$id.'-captcha").innerHTML = response.data.captcha;      
-            }
-            $("#DoliconnectLoadingModal").modal("hide");
-            if (document.getElementById("'.$id.'-button")) {
-              document.getElementById("'.$id.'-button").disabled = false;
-            }
-          }, "json");  
-        });
-      });
-    });
-  })(jQuery);';
-  $ajax.= '</script>';
-return $ajax;
-}
+*/
 
 function doliModalDiv() {
   print '<div id="doliModalDiv"></div>';
   print '<script type="text/javascript">';
+ print 'function doliJavaButtonAction(acase, id, value1, value2, redirect_to) {
+          (function ($) {
+            $(document).ready(function () {
+              console.log( acase + " - " + id );
+              $.ajax({
+                url:"'.admin_url('admin-ajax.php').'",
+                type:"POST",
+                cache:false,
+                data: {
+                  "action": "dolimodal_request",
+                  "dolimodal-nonce": "'.wp_create_nonce( 'dolimodal-nonce').'",
+                  "case": acase,
+                  "id": id,
+                  "value1": value1,
+                  "value2": value2,
+                  "redirect_to": redirect_to,
+                },
+              }).done(function(response) {
+                if (response.success) { 
+                  console.log( "success opening modal " + acase );
+                  if (document.getElementById("doliModalDiv") && response.data.hasOwnProperty("modal")) {
+                    document.getElementById("doliModalDiv").innerHTML = response.data.modal; 
+                    $("#doliModal"+id).modal("show");     
+                  }
+                } else {
+                  console.log( "error opening modal " + acase );
+                  if (document.getElementById("doliModalDiv") && response.data.hasOwnProperty("modal")) {
+                    document.getElementById("doliModalDiv").innerHTML = response.data.modal; 
+                    $("#doliModal"+id).modal("show");     
+                  }
+                }
+                $("#doliModal" + id).on("hidden.bs.modal", function () {
+                  $("#doliModal" + id).modal("dispose");
+                  document.getElementById("doliModalDiv").innerHTML = "";
+                });
+              });
+            })
+          })(jQuery);
+        }';
   print 'function doliJavaCartAction(form, id, lineid, qty, productarray, acase) {
           (function ($) {
             $(document).ready(function () {
