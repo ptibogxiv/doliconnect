@@ -3457,7 +3457,7 @@ function doliModalButton($case, $id, $title, $type = 'button', $class = 'btn btn
 
 function doliModalDiv() {
   print '<div id="doliModalDiv"></div>';
-  print '<script type="text/javascript">';
+  print '<script id="doliconnect-js" type="text/javascript">';
  print 'function doliJavaButtonAction(acase, id, value1, value2, redirect_to) {
           (function ($) {
             $(document).ready(function () {
