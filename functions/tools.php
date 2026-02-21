@@ -3420,17 +3420,25 @@ function doliAjax($id, $url = null, $case = null){
 return $ajax;
 }
 
-function doliModalTemplate($id, $header, $body, $footer, $size = null, $headercss = null, $bodycss = null, $footercss = null, $formurl = null) {
+function doliModalTemplate($id, $header, $body, $footer, $size = null, $headercss = null, $bodycss = null, $footercss = null, $formurl = null, $formname = null) {
   $modal = '<div id="doliModal'.$id.'" class="modal fade" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" style="display: none">
   <div class="modal-dialog '.$size.' ';
-  if (!str_contains($id, 'login'))$modal .= 'modal-fullscreen-md-down ';
-  $modal .= 'modal-dialog-centered modal-dialog-scrollable" role="document"><div class="modal-content">';
-  if (!empty($formurl)) $modal .= '<form id="loginmodal-form" name="loginmodal-form" action="'.$formurl.'" method="post" class="was-validated">';
+  if (!str_contains($id, 'login')) $modal .= 'modal-fullscreen-md-down ';
+  $modal .= 'modal-dialog-centered modal-dialog-scrollable" role="document">';
+  if (!empty($formurl) && !empty($formname)) { 
+    $modal .= '<form id="'.$formname.'-form" name="'.$formname.'-form" class="modal-content was-validated" action="'.$formurl.'" method="post" enctype="multipart/form-data">';
+  } else {
+    $modal .= '<div class="modal-content">';
+  }
   if (!empty($header)) $modal .= '<div class="modal-header"><h5 class="modal-title '.$headercss.'">'.$header.'</h5><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div>';
   if (!empty($body)) $modal .= '<div class="modal-body '.$bodycss.'">'.$body.'</div>';
   if (!empty($footer)) $modal .= '<div class="modal-footer '.$footercss.'">'.$footer.'</div>';
-  if (!empty($formurl)) $modal .= '</form>';
-  $modal .= '</div></div></div>';
+  if (!empty($formurl) && !empty($formname)) { 
+    $modal .= '</form>';
+  } else {
+    $modal .= '</div>';
+  }
+  $modal .= '</div></div>';
   return $modal;
 }
 
@@ -3445,7 +3453,7 @@ function doliModalButton($case, $id, $title, $type = 'button', $class = 'btn btn
   $button = "<".$type." id='".$id."' class='".$class."' type='button' onclick='doliJavaButtonAction(\"".$case."\", \"".$id."\", \"".$value1."\", \"".$value2."\", \"".$redirect_to."\");'>";
   $button .= $title."</".$type.">";
   return $button;
-}
+}       
 
 function doliModalDiv() {
   print '<div id="doliModalDiv"></div>';
