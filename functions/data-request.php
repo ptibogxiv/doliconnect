@@ -1231,7 +1231,7 @@ global $current_user;
 			$case = 'create';
 			$contactid = doliConnect('thirdparty', $current_user)->id;
 		}
-		$modal['body'] .= '<input type="hidden" name="action" value="dolicontactinfos_request"><input type="hidden" name="case" value="'.$case.'">';
+		$modal['body'] = '<input type="hidden" name="action" value="dolicontactinfos_request"><input type="hidden" name="case" value="'.$case.'">';
 		$modal['body'] .= '<input type="hidden" name="dolicontactinfos-nonce" value="'.wp_create_nonce( 'dolicontactinfos').'">';
 		$modal['body'] .= '<input type="hidden" name="contactid" value="'.$contactid.'">';
 		$modal['body'] .= '<input type="hidden" name="modalid" value="'.trim($_POST['id']).'">';
@@ -1249,13 +1249,12 @@ global $current_user;
 			$modal['header'] = __( 'New linked member', 'doliconnect');
 			$object = null;
 		}
-		$modal['body'] = '<form id="linkedmember-form" action="'.admin_url('admin-ajax.php').'" method="post" class="was-validated" enctype="multipart/form-data">';
-		$modal['body'] .= '<input type="hidden" name="action" value="dolimember_request"><input type="hidden" name="case" value="update">';
+		$modal['body'] = '<input type="hidden" name="action" value="dolimember_request"><input type="hidden" name="case" value="update">';
 		$modal['body'] .= '<input type="hidden" name="memberid" value="'.trim($_POST['value1']).'"><input type="hidden" name="dolimember-nonce" value="'.wp_create_nonce( 'dolimember').'">';
 		$modal['body'] .= doliuserform( $object, dolidelay('constante', true, true), 'member', doliCheckRights('adherent', 'creer'));	
-		$modal['footer'] = '<button class="btn btn-danger" type="submit">'.__( 'Submit', 'doliconnect').'</button></form>';
+		$modal['footer'] = '<button class="btn btn-danger" type="submit">'.__( 'Submit', 'doliconnect').'</button>';
 		$response['js'] = plugins_url( 'doliconnect/includes/custom/js/editlinkedmember.js');
-		$response['modal'] = doliModalTemplate($_POST['id'], $modal['header'], $modal['body'], $modal['footer'], 'modal-lg', null, 'p-0');
+		$response['modal'] = doliModalTemplate($_POST['id'], $modal['header'], $modal['body'], $modal['footer'], 'modal-lg', null, 'p-0', null, admin_url('admin-ajax.php'), 'linkedmember');
 		wp_send_json_success($response);
 		die();
 	} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "doliDownload" ) {
