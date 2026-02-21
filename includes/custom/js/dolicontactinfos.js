@@ -1,20 +1,20 @@
 ( function( $ ) {
 	'use strict';
 
-	jQuery(document).ready(function() {
+	$(document).ready(function() {
 	console.log( "success js" + " - case: " + "dolicontactinfos" );
-	jQuery("#dolicontactinfos-form").on("submit", function(e) { 
+	$("#dolicontactinfos-form").on("submit", function(e) { 
 		e.preventDefault();
 		e.stopPropagation(); 
-		jQuery("#DoliconnectLoadingModal").modal("show");
+		$("#DoliconnectLoadingModal").modal("show");
 		var $form = $(this);
 		var modalId = $form.find('input[name="modalid"]').val();
 		console.log("dolicontactinfos form id: " + modalId);
 		if (modalId) {
-			jQuery("#doliModal" + modalId).modal("hide");
+			$("#doliModal" + modalId).modal("hide");
 		}
-		jQuery("#DoliconnectLoadingModal").one("shown.bs.modal", function (e) { 
-			jQuery.post($form.attr("action"), $form.serialize(), function(response) {
+		$("#DoliconnectLoadingModal").one("shown.bs.modal", function (e) { 
+			$.post($form.attr("action"), $form.serialize(), function(response) {
 				if (response.success) {
 					if (document.getElementById("dolicontactinfos-alert") && response.data.hasOwnProperty("message")) {
 						document.getElementById("dolicontactinfos-alert").innerHTML = response.data.message;      
@@ -27,7 +27,7 @@
 						document.getElementById("dolicontactinfos-alert").innerHTML = response.data.message;      
 					}
 				}
-				jQuery("#DoliconnectLoadingModal").modal("hide");
+				$("#DoliconnectLoadingModal").modal("hide");
 			}, "json");  
 		});
 	  });

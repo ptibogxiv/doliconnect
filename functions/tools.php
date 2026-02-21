@@ -3518,14 +3518,23 @@ function doliModalDiv() {
                   "redirect_to": redirect_to,
                 },
               }).done(function(response) {
-                if (response.success) { 
-                  console.log( "success opening modal " + acase );
+                if (response.success) {
+                  if (response.data.js) {
+                    $.getScript( response.data.js ).done(function( script, textStatus ) {
+                      console.log( "success loading js" + " - case: " + acase );
+                    })
+                    .fail(function( jqxhr, settings, exception ) {
+                      console.log( "error loading js" + " - case: " + acase );
+                    });
+                  } 
+                  
                   if (document.getElementById("doliModalDiv") && response.data.hasOwnProperty("modal")) {
+                    console.log( "success opening modal" + " - case: " + acase );
                     document.getElementById("doliModalDiv").innerHTML = response.data.modal; 
                     $("#doliModal"+id).modal("show");     
                   }
                 } else {
-                  console.log( "error opening modal " + acase );
+                  console.log( "error opening modal" + " - case: " + acase );
                   if (document.getElementById("doliModalDiv") && response.data.hasOwnProperty("modal")) {
                     document.getElementById("doliModalDiv").innerHTML = response.data.modal; 
                     $("#doliModal"+id).modal("show");     
