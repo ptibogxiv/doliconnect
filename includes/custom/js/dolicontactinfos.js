@@ -19,6 +19,9 @@
 					if (document.getElementById("dolicontactinfos-alert") && response.data.hasOwnProperty("message")) {
 						document.getElementById("dolicontactinfos-alert").innerHTML = response.data.message;      
 					}
+					if (document.getElementById("dolicontact-list") && response.data.hasOwnProperty("list")) {
+						document.getElementById("dolicontact-list").innerHTML = response.data.list;  
+					}
 				} else {
 					if (document.getElementById("dolicontactinfos-alert") && response.data.hasOwnProperty("message")) {
 						document.getElementById("dolicontactinfos-alert").innerHTML = response.data.message;      
