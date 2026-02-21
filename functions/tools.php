@@ -627,8 +627,8 @@ function doliUserLang($user, $type = 'locale') {
   return $lang;
 }
 
-function doliExtrafields($object, $type, $rights, $delay) {
-  $extrafields = callDoliApi("GET", "/setup/extrafields?sortfield=t.pos&sortorder=ASC&elementtype=".$type, null, dolidelay($delay));
+function doliExtrafields($object, $type, $rights, $refresh) {
+  $extrafields = callDoliApi("GET", "/setup/extrafields?sortfield=t.pos&sortorder=ASC&elementtype=".$type, null, dolidelay('constante', $refresh));
   if ( !isset($extrafields->error) && $extrafields != null ) {
     if ( is_object($object) && $object->id > 0 ) {
       $idobject = $type."[".$object->id."]";
