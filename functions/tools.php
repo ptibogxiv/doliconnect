@@ -3446,56 +3446,6 @@ function doliModalButton($case, $id, $title, $type = 'button', $class = 'btn btn
   $button .= $title."</".$type.">";
   return $button;
 }
-  /*
-  $button .= '<script type="text/javascript">';
-  $button .= '(function ($) {
-    $(document).ready(function () {
-      document.querySelector("#'.$id.'").addEventListener("click", function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-            $.ajax({
-              url :"'.admin_url('admin-ajax.php').'",
-              type:"POST",
-              cache:false,
-              data: {
-                "action": "dolimodal_request",
-                "dolimodal-nonce": "'.wp_create_nonce( 'dolimodal-nonce').'",
-                "case": "'.$case.'",
-                "id": "'.$id.'",
-                "value1": "'.$value1.'",
-                "value2": "'.$value2.'",
-                "redirect_to": "'.$redirect_to.'",
-            },
-          }).done(function(response) {
-              if (response.success) { 
-                if (response.data.js) {
-                  $.getScript( response.data.js ).done(function( script, textStatus ) {
-                    console.log( "success loading modal" + " - case: " + "'.$id.'" );
-                  })
-                  .fail(function( jqxhr, settings, exception ) {
-                    console.log( "error loading modal" + " - case: " + "'.$id.'" );
-                  });
-                }
-                if (document.getElementById("doliModalDiv") && response.data.hasOwnProperty("modal")) {
-                  document.getElementById("doliModalDiv").innerHTML = response.data.modal; 
-                  $("#doliModal'.$id.'").modal("show");     
-                }
-              } else {
-                if (document.getElementById("doliModalDiv") && response.data.hasOwnProperty("modal")) {
-                  document.getElementById("doliModalDiv").innerHTML = response.data.modal;
-                  $("#doliModal'.$id.'").modal("show");         
-                }
-              }
-            $("#doliModal'.$id.'").on("hidden.bs.modal", function () {
-              $("#doliModal'.$id.'").modal("dispose");
-              document.getElementById("doliModalDiv").innerHTML = "";
-            });
-        }, false);          
-      });
-    });
-  })(jQuery);';
-  $button .= '</script>';
-*/
 
 function doliModalDiv() {
   print '<div id="doliModalDiv"></div>';
