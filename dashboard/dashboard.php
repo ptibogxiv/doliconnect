@@ -269,11 +269,12 @@ if ( empty(doliconst('MAIN_DISABLE_CONTACTS_TAB')) && doliCheckRights('societe',
         $limit=12;
         if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']); }  else { $page = 0; }
 
+        $content .= '<div class="card shadow-sm"><div class="card-header">'.__( 'Manage address book', 'doliconnect').'</div><ul class="list-group list-group-flush" id="dolicontact-list">';
+        
         $request = "/contacts?sortfield=t.rowid&sortorder=DESC&limit=".$limit."&page=".$page."&thirdparty_ids=".$thirdparty->id."&pagination_data=true";                              
         $object = callDoliApi("GET", $request, null, dolidelay('contact', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
         if ( doliversion('21.0.0') && isset($object->data) ) { $listcontact  = $object->data; } else { $listcontact  = $object; }
-
-        $content .= '<div class="card shadow-sm"><div class="card-header">'.__( 'Manage address book', 'doliconnect').'</div><ul class="list-group list-group-flush" id="dolicontact-list">';
+        
         if ( doliCheckRights('societe', 'contact', 'creer') ) {
             $content .= doliModalButton('contact', 'addcontact', '<center><i class="fas fa-plus-circle"></i> '.__( 'Create a contact', 'doliconnect').'</center>', 'button', 'list-group-item lh-condensed list-group-item-action list-group-item-primary');
         }
