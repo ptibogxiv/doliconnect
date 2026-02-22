@@ -1539,17 +1539,6 @@ $loading .= '<h4>'.__( 'Loading', 'doliconnect').'</h4></div></center><br><br><b
 return $loading;
 }
 
-function doliModalLoading() {
-  doliconnect_enqueues();
-  print '<div id="DoliconnectLoadingModal" class="modal fade bd-example-modal" tabindex="-1" aria-labelledby="myLargeModalLabel" aria-hidden="true" data-bs-show="true" data-bs-backdrop="static" data-keyboard="false">
-  <div class="modal-dialog modal-fullscreen modal-dialog-centered">
-  <div class="text-center text-light w-100">
-  <div class="spinner-border" role="status"></div>
-  <h4>'.__( 'Processing', 'doliconnect').'</h4>
-  </div></div></div>';
-}
-add_action( 'wp_footer', 'doliModalLoading');
-
 function dolibug($msg = null, $request = null) {
   //header('Refresh: 180; URL='.esc_url(get_permalink()).'');
   $bug = '<div id="dolibug" ><br><br><br><br><center><div class="align-middle"><i class="fas fa-bug fa-7x fa-fw"></i><h4>';
@@ -3455,8 +3444,15 @@ function doliModalButton($case, $id, $title, $type = 'button', $class = 'btn btn
   return $button;
 }       
 
-function doliModalDiv() {
+function doliModalDiv() {  
+  doliconnect_enqueues();
   print '<div id="doliModalDiv"></div>';
+  print '<div id="DoliconnectLoadingModal" class="modal fade bd-example-modal" tabindex="-1" aria-labelledby="myLargeModalLabel" aria-hidden="true" data-bs-show="true" data-bs-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-fullscreen modal-dialog-centered">
+  <div class="text-center text-light w-100">
+  <div class="spinner-border" role="status"></div>
+  <h4>'.__( 'Processing', 'doliconnect').'</h4>
+  </div></div></div>';
   print '<script id="doliconnect-js" type="text/javascript">';
   print 'function doliJavaButtonAction(acase, id, value1, value2, redirect_to) {
           (function ($) {
