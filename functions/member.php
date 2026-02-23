@@ -23,8 +23,12 @@ $data = array();
     $action='POST';
   } 
   $thirdparty = doliConnect('thirdparty', $current_user);
-  list($year, $month, $day) = explode("-", $current_user->billing_birth);
-  $birth = mktime(0, 0, 0, $month, $day, $year);
+  if (isset($current_user->billing_birth) && !empty($current_user->billing_birth)) {
+    list($year, $month, $day) = explode("-", $current_user->billing_birth);
+    $birth = mktime(0, 0, 0, $month, $day, $year);
+  } else {
+    $birth = null;
+  }
 
   if ($action=='POST') {  
   $data = [
