@@ -1223,20 +1223,22 @@ global $current_user;
 		if (isset($_POST['value1']) && !empty($_POST['value1'])) {
 			$modal['header'] = __( 'Edit contact', 'doliconnect');
 			$object = callDoliApi("GET", "/contacts/".trim($_POST['value1'])."?includecount=1&includeroles=1", null, dolidelay('contact', true));
-			$case = 'update';
 			$contactid = $object->id;
 		} else {
 			$modal['header'] = __( "Create contact", 'doliconnect');
 			$object = null;
-			$case = 'create';
 			$contactid = doliConnect('thirdparty', $current_user)->id;
 		}
-		$modal['body'] = '<input type="hidden" name="action" value="dolicontactinfos_request"><input type="hidden" name="case" value="'.$case.'">';
+		$modal['body'] = '<input type="hidden" name="action" value="dolicontactinfos_request">';
 		$modal['body'] .= '<input type="hidden" name="dolicontactinfos-nonce" value="'.wp_create_nonce( 'dolicontactinfos').'">';
 		$modal['body'] .= '<input type="hidden" name="contactid" value="'.$contactid.'">';
 		$modal['body'] .= '<input type="hidden" name="modalid" value="'.trim($_POST['id']).'">';
 		$modal['body'] .= doliuserform( $object, dolidelay('constante', true, true), 'contact', doliCheckRights('societe', 'contact', 'creer'));
-		$modal['footer'] = '<button name="case" class="btn btn-outline-secondary" value="delete" type="submit">'.__( 'Delete', 'doliconnect').'</button><button name="case" class="btn btn-outline-secondary" value="update" type="submit">'.__( 'Update', 'doliconnect').'</button>';
+		if (isset($_POST['value1']) && !empty($_POST['value1'])) {
+			$modal['footer'] = '<button name="case" class="btn btn-outline-secondary" type="button" onclick="doliModalAction(\'delete\')">'.__( 'Delete', 'doliconnect').'</button><button name="case" class="btn btn-outline-secondary" type="button" onclick="doliModalAction(\'update\')">'.__( 'Update', 'doliconnect').'</button>';
+		} else {
+			$modal['footer'] = '<button name="case" class="btn btn-outline-secondary" type="button" onclick="doliModalAction(\'create\')">'.__( 'Create', 'doliconnect').'</button>';
+		}
 		$response['js'] = plugins_url( 'doliconnect/includes/custom/js/dolicontactinfos.js');
 		$response['modal'] = doliModalTemplate($_POST['id'], $modal['header'], $modal['body'], $modal['footer'], 'modal-lg', null, 'p-0', null, admin_url('admin-ajax.php'), 'dolicontactinfos');
 		wp_send_json_success($response);
