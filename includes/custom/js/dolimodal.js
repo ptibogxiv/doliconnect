@@ -1,4 +1,4 @@
-function doliModalAction(form, action) {
+function doliModalAction(form, action, url) {
     ( function( $ ) {
 		'use strict';
         $(document).ready(function () {			
@@ -11,7 +11,7 @@ function doliModalAction(form, action) {
 			}
 			$("#DoliconnectLoadingModal").one("shown.bs.modal", function (e) { 
 				$.ajax({
-					url: "https://demo.ptibogxiv.net/wp-admin/admin-ajax.php",
+					url: url,
 					type: "POST",
 					cache: false,
 					data: $form.serialize(),
