@@ -3480,8 +3480,7 @@ function doliModalDiv() {
                     .fail(function( jqxhr, settings, exception ) {
                       console.log( "error loading js" + " - case: " + acase );
                     });
-                  } 
-                  
+                  }
                   if (document.getElementById("doliModalDiv") && response.data.hasOwnProperty("modal")) {
                     console.log( "success opening modal" + " - case: " + acase );
                     document.getElementById("doliModalDiv").innerHTML = response.data.modal; 

@@ -1235,9 +1235,9 @@ global $current_user;
 		$modal['body'] .= '<input type="hidden" name="modalid" value="'.trim($_POST['id']).'">';
 		$modal['body'] .= doliuserform( $object, dolidelay('constante', true, true), 'contact', doliCheckRights('societe', 'contact', 'creer'));
 		if (isset($_POST['value1']) && !empty($_POST['value1'])) {
-			$modal['footer'] = '<button name="case" class="btn btn-outline-secondary" type="button" onclick="doliModalAction(\'delete\')">'.__( 'Delete', 'doliconnect').'</button><button name="case" class="btn btn-outline-secondary" type="button" onclick="doliModalAction(\'update\')">'.__( 'Update', 'doliconnect').'</button>';
+			$modal['footer'] = '<button name="case" class="btn btn-outline-secondary" type="button" onclick="doliModalAction(this.form, \'delete\')">'.__( 'Delete', 'doliconnect').'</button><button name="case" class="btn btn-outline-secondary" type="button" onclick="doliModalAction(this.form, \'update\')">'.__( 'Update', 'doliconnect').'</button>';
 		} else {
-			$modal['footer'] = '<button name="case" class="btn btn-outline-secondary" type="button" onclick="doliModalAction(\'create\')">'.__( 'Create', 'doliconnect').'</button>';
+			$modal['footer'] = '<button name="case" class="btn btn-outline-secondary" type="button" onclick="doliModalAction(this.form, \'create\')">'.__( 'Create', 'doliconnect').'</button>';
 		}
 		$response['js'] = plugins_url( 'doliconnect/includes/custom/js/dolicontactinfos.js');
 		$response['modal'] = doliModalTemplate($_POST['id'], $modal['header'], $modal['body'], $modal['footer'], 'modal-lg', null, 'p-0', null, admin_url('admin-ajax.php'), 'dolicontactinfos');
@@ -1286,7 +1286,7 @@ global $current_user;
 		}      
 		$modal['body'] .= '</ul></div><div id="loadingSelectLang" style="display:none"><br><br><br><center><div class="align-middle"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div><h4>'.__('Loading', 'doliconnect').'</h4></div></center><br><br><br></div>';	
 		$modal['footer'] = null;
-		$response['js'] = plugins_url( 'doliconnect/includes/custom/js/doliselectlang.js');
+		$response['js'] = null;
 		$response['modal'] = doliModalTemplate(sanitize_text_field($_POST['id']), $modal['header'], $modal['body'], $modal['footer']);
 		wp_send_json_success($response);
 		die();
