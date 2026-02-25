@@ -1257,7 +1257,7 @@ global $current_user;
 		if (isset($_POST['value1']) && !empty($_POST['value1'])) {
 			$modal['footer'] = '<button name="case" class="btn btn-outline-secondary" type="button" onclick="doliModalAction(this.form, \'delete\', \''.admin_url('admin-ajax.php').'\')">'.__( 'Delete', 'doliconnect').'</button><button name="case" class="btn btn-outline-secondary" type="button" onclick="doliModalAction(this.form, \'update\', \''.admin_url('admin-ajax.php').'\')">'.__( 'Update', 'doliconnect').'</button>';
 		} else {
-			$modal['footer'] = '<button name="case" class="btn btn-outline-secondary" type="button" onclick="doliModalAction(this.form, \'create\',)">'.__( 'Create', 'doliconnect').'</button>';
+			$modal['footer'] = '<button name="case" class="btn btn-outline-secondary" type="button" onclick="doliModalAction(this.form, \'create\', \''.admin_url('admin-ajax.php').'\')">'.__( 'Create', 'doliconnect').'</button>';
 		}
 		$response['js'] = plugins_url( 'doliconnect/includes/custom/js/dolimodal.js');
 		$response['modal'] = doliModalTemplate($_POST['id'], $modal['header'], $modal['body'], $modal['footer'], 'modal-lg', null, 'p-0', null, admin_url('admin-ajax.php'), 'dolicontactinfos');
