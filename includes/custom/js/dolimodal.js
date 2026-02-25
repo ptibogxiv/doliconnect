@@ -1,8 +1,7 @@
 function doliModalAction(form, action) {
     ( function( $ ) {
 		'use strict';
-        $(document).ready(function () {
-			console.log("test : " + action);			
+        $(document).ready(function () {			
 			$("#DoliconnectLoadingModal").modal("show");
 			var $form = $(form);
 			$form.append('<input type="hidden" name="case" value="' + action + '">');

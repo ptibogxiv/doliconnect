@@ -3482,12 +3482,12 @@ function doliModalDiv() {
                     });
                   }
                   if (document.getElementById("doliModalDiv") && response.data.hasOwnProperty("modal")) {
-                    console.log( "success opening modal" + " - case: " + acase );
+                    console.log( "success loading modal" + " - case: " + acase );
                     document.getElementById("doliModalDiv").innerHTML = response.data.modal; 
                     $("#doliModal"+id).modal("show");     
                   }
                 } else {
-                  console.log( "error opening modal" + " - case: " + acase );
+                  console.log( "error loading modal" + " - case: " + acase );
                   if (document.getElementById("doliModalDiv") && response.data.hasOwnProperty("modal")) {
                     document.getElementById("doliModalDiv").innerHTML = response.data.modal; 
                     $("#doliModal"+id).modal("show");     
