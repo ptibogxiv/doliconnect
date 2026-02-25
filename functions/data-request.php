@@ -313,6 +313,26 @@ function dolicontactinfos_request(){
 			wp_send_json_error( $response ); 
 		}
 		die();
+	} elseif ( isset($_POST['dolicontactinfos-nonce']) && wp_verify_nonce( trim($_POST['dolicontactinfos-nonce']), 'dolicontactinfos') && isset($_POST['case']) && $_POST['case'] == "delete" ) {
+		$contact = $_POST['contact'][''.$thirdparty->id.''];
+		$contact = dolisanitize($contact);
+
+		$object = callDoliApi("DELETE", "/contacts/".$_POST["contactid"], $contact, 0);
+		
+		if (!isset($object->error)) { 
+			$response = [
+				'message' => dolialert('success', __( 'Your informations have been deleted.', 'doliconnect')),
+				'list' => doliContactList($thirdparty, 12, 1, true),
+			];
+			wp_send_json_success( $response );
+		} else {
+			$response = [
+				'message' => dolialert('danger', __( 'An error occured:', 'doliconnect').' '.$object->error->message),
+				'list' => doliContactList($thirdparty, 12, 1, true),
+			];
+			wp_send_json_error( $response ); 
+		}
+		die();
 	} else {
 		$response = [
 			'message' => dolialert('danger', __( 'A security error occured', 'doliconnect')),
