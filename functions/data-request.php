@@ -1239,7 +1239,7 @@ global $current_user;
 		} else {
 			$modal['footer'] = '<button name="case" class="btn btn-outline-secondary" type="button" onclick="doliModalAction(this.form, \'create\')">'.__( 'Create', 'doliconnect').'</button>';
 		}
-		$response['js'] = plugins_url( 'doliconnect/includes/custom/js/dolicontactinfos.js');
+		$response['js'] = plugins_url( 'doliconnect/includes/custom/js/dolimodal.js');
 		$response['modal'] = doliModalTemplate($_POST['id'], $modal['header'], $modal['body'], $modal['footer'], 'modal-lg', null, 'p-0', null, admin_url('admin-ajax.php'), 'dolicontactinfos');
 		wp_send_json_success($response);
 		die();

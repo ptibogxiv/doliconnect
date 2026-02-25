@@ -1,21 +1,22 @@
-( function( $ ) {
-	'use strict';
-
-	$(document).ready(function() {
-		$("#dolicontactinfos-form").on("submit", function(event) { 
-			event.preventDefault();
-			event.stopPropagation(); 
+function doliModalAction(form, action) {
+    ( function( $ ) {
+		'use strict';
+        $(document).ready(function () {
+			console.log("test : " + action);			
 			$("#DoliconnectLoadingModal").modal("show");
-			var $form = $(this);
+			var $form = $(form);
+			$form.append('<input type="hidden" name="case" value="' + action + '">');
 			var modalId = $form.find('input[name="modalid"]').val();
-			console.log("dolicontactinfos form id: " + modalId);
-			var modalId2 = $form.find('button[name="case"]').val();
-			console.log("dolicontactinfos form id: " + modalId2);
 			if (modalId) {
 				$("#doliModal" + modalId).modal("hide");
 			}
 			$("#DoliconnectLoadingModal").one("shown.bs.modal", function (e) { 
-				$.post($form.attr("action"), $form.serialize(), function(response) {
+				$.ajax({
+					url: "https://demo.ptibogxiv.net/wp-admin/admin-ajax.php",
+					type: "POST",
+					cache: false,
+					data: $form.serialize(),
+				}).done(function(response) {
 					if (response.success) {
 						if (document.getElementById("dolicontactinfos-alert") && response.data.hasOwnProperty("message")) {
 							document.getElementById("dolicontactinfos-alert").innerHTML = response.data.message;      
@@ -29,8 +30,8 @@
 						}
 					}
 					$("#DoliconnectLoadingModal").modal("hide");
-				}, "json");  
-			});
-		});
-	});
-})( jQuery );
+				});
+			});	
+		})
+    })(jQuery);
+}
