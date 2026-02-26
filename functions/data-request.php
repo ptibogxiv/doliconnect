@@ -264,7 +264,7 @@ add_action('wp_ajax_dolicontactinfos_request', 'dolicontactinfos_request');
 function dolicontactinfos_request(){
 	global $current_user;
 	$thirdparty = doliConnect('thirdparty', $current_user);
-	if ( isset($_POST['dolicontactinfos-nonce']) && wp_verify_nonce( trim($_POST['dolicontactinfos-nonce']), 'dolicontactinfos') && isset($_POST['case']) && $_POST['case'] == "update" ) {
+	if ( check_ajax_referer('dolicontactinfos-nonce', 'dolicontactinfos-nonce') && isset($_POST['case']) && $_POST['case'] == "update" ) {
 		$contact = $_POST['contact'][''.$_POST['contactid'].''];
 		$contact = dolisanitize($contact);
 		if (empty($contact['no_email'])) {
@@ -288,7 +288,7 @@ function dolicontactinfos_request(){
 			wp_send_json_error( $response ); 
 		}
 		die();
-	} elseif ( isset($_POST['dolicontactinfos-nonce']) && wp_verify_nonce( trim($_POST['dolicontactinfos-nonce']), 'dolicontactinfos') && isset($_POST['case']) && $_POST['case'] == "create" ) {
+	} elseif ( check_ajax_referer('dolicontactinfos-nonce', 'dolicontactinfos-nonce') && isset($_POST['case']) && $_POST['case'] == "create" ) {
 		$contact = $_POST['contact'][''.$thirdparty->id.''];
 		$contact = dolisanitize($contact);
 		$contact['socid'] = $thirdparty->id;
@@ -313,7 +313,7 @@ function dolicontactinfos_request(){
 			wp_send_json_error( $response ); 
 		}
 		die();
-	} elseif ( isset($_POST['dolicontactinfos-nonce']) && wp_verify_nonce( trim($_POST['dolicontactinfos-nonce']), 'dolicontactinfos') && isset($_POST['case']) && $_POST['case'] == "delete" ) {
+	} elseif ( check_ajax_referer('dolicontactinfos-nonce', 'dolicontactinfos-nonce') && isset($_POST['case']) && $_POST['case'] == "delete" ) {
 		$contact = $_POST['contact'][''.$thirdparty->id.''];
 		$contact = dolisanitize($contact);
 
@@ -1100,7 +1100,7 @@ global $current_user;
 
 	$response = array();
 	$modal = array();	
-	if ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "legacy" ) {
+	if ( check_ajax_referer('dolimodal-nonce', 'dolimodal-nonce') && isset($_POST['case']) && $_POST['case'] == "legacy" ) {
 		$modal['header'] = __('Legal notice', 'doliconnect');
 		$company = callDoliApi("GET", "/setup/company", null, dolidelay('constante'));
 		$modal['body'] = '<p><strong>'.__('Editor', 'doliconnect').'</strong><br>';
@@ -1126,7 +1126,7 @@ global $current_user;
 		$response['modal'] = doliModalTemplate($_POST['id'], $modal['header'], $modal['body'], $modal['footer']);
 		wp_send_json_success($response);	
 		die();
-	} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "login" ) {
+	} elseif ( check_ajax_referer('dolimodal-nonce', 'dolimodal-nonce') && isset($_POST['case']) && $_POST['case'] == "login" ) {
 		$modal['header'] = __( 'Welcome', 'doliconnect');
 		$modal['body'] = null;
 		if (!empty(get_option('doliaccountinfo'))) $modal['body'] .= '<b>'.get_option('doliaccountinfo').'</b>';
@@ -1179,7 +1179,7 @@ global $current_user;
 		$response['modal'] = doliModalTemplate($_POST['id'], $modal['header'], $modal['body'], $modal['footer'], null, null, null, 'flex-nowrap p-0', $login_url);
 		wp_send_json_success($response);	
 		die();
-	} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "editmembership" ) {
+	} elseif ( check_ajax_referer('dolimodal-nonce', 'dolimodal-nonce') && isset($_POST['case']) && $_POST['case'] == "editmembership" ) {
 		$adherent = doliConnect('member', $current_user);
 		if (isset($adherent->id) && $adherent->id > 0) { 
 			$member_id = "member_id=".$adherent->id;
@@ -1199,7 +1199,7 @@ global $current_user;
 		$response['modal'] = doliModalTemplate(sanitize_text_field($_POST['id']), $modal['header'], $modal['body'], $modal['footer'], 'modal-lg', null, 'p-0');
 		wp_send_json_success($response);
 		die();
-	} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "resiliatemembership" ) {
+	} elseif ( check_ajax_referer('dolimodal-nonce', 'dolimodal-nonce') && isset($_POST['case']) && $_POST['case'] == "resiliatemembership" ) {
 		$modal['header'] = __( 'Resiliate', 'doliconnect');
 		$modal['body'] = null;	
 		$modal['footer'] = "<form id='subscription-form' action='".esc_url( add_query_arg( 'module', 'members', doliconnecturl('doliaccount')) )."' method='post'><input type='hidden' name='update_membership' value='2'><div class='d-grid gap-2'><button class='btn btn-danger' type='submit'>".__( 'Resiliate', 'doliconnect')."</button></div></form>";
@@ -1207,39 +1207,7 @@ global $current_user;
 		$response['modal'] = doliModalTemplate(sanitize_text_field($_POST['id']), $modal['header'], $modal['body'], $modal['footer']);
 		wp_send_json_success($response);
 		die();
-	/*} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "renewmembership" ) {
-		if (isset($_POST['value1']) && !empty($_POST['value1']) && isset($_POST['value2']) && empty($_POST['value2'])) {
-			$adherent = callDoliApi("GET", "/members/".trim($_POST['value1']), null, dolidelay('member'));
-	  	} elseif ( isset($_POST['value1']) && !empty($_POST['value1']) && isset($_POST['value2']) && !empty($_POST['value2']) ) {
-		$adherent = callDoliApi("GET", "/members/".trim($_POST['value2']), null, dolidelay('member'));
-  		} else {
-			$adherent = (object) 0;
-			$adherent->typeid = 0;
-			$adherent->id = 0;
-		}
-		$request= "/adherentsplus/type/".$adherent->typeid;
-		$adherenttype = callDoliApi("GET", $request, null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-		if ( !doliversion('14.0.0') || !isset($adherenttype->amount)) {
-			$adherenttype->amount = $adherenttype->price;
-		}
-		$modal['header'] = __( 'Renew membership', 'doliconnect');
-		$modal['body'] = '<h6>'.__( 'This membership', 'doliconnect').'</h6>
-		'.__( 'Price:', 'doliconnect').' '.doliprice($adherenttype->price_prorata).'<br>
-		'.__( 'From', 'doliconnect').' '.wp_date('d/m/Y', $adherenttype->date_begin).' '.__( 'until', 'doliconnect').' '.wp_date('d/m/Y', $adherenttype->date_end).'
-		<hr>
-		<h6>'.__( 'Next membership', 'doliconnect').'</h6>
-		'.__( 'Price:', 'doliconnect').' '.doliprice($adherenttype->amount).'<br>
-		'.__( 'From', 'doliconnect').' '.wp_date('d/m/Y', $adherenttype->date_nextbegin).' '.__( 'until', 'doliconnect').' '.wp_date('d/m/Y', $adherenttype->date_nextend);	
-		$modal['footer'] = '<form id="subscribe-form" action="'.admin_url('admin-ajax.php').'" method="post">';
-		$modal['footer'] .= '<input type="hidden" name="action" value="dolimember_request"><input type="hidden" name="case" value="subscription"><input type="hidden" name="dolimember-nonce" value="'.wp_create_nonce( 'dolimember-nonce').'">';
-		$modal['footer'] .= '<input type="hidden" name="update_membership" value="renew"><input type="hidden" name="memberid" value="'.$adherent->id.'">';
-		$modal['footer'] .= '<div class="d-grid gap-2"><button class="btn btn-danger" type="submit">'.__( 'Add to basket', 'doliconnect').'</button></div></form>';
-		$response['js'] = plugins_url( 'doliconnect/includes/custom/js/renewmembership.js');
-		$response['modal'] = doliModalTemplate($_POST['id'], $modal['header'], $modal['body'], $modal['footer']);
-		wp_send_json_success($response);
-		die();
-		*/
-	} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "contact" ) {
+	} elseif ( check_ajax_referer('dolimodal-nonce', 'dolimodal-nonce') && isset($_POST['case']) && $_POST['case'] == "contact" ) {
 		if (isset($_POST['value1']) && !empty($_POST['value1'])) {
 			$modal['header'] = __( 'Edit contact', 'doliconnect');
 			$object = callDoliApi("GET", "/contacts/".trim($_POST['value1'])."?includecount=1&includeroles=1", null, dolidelay('contact', true));
@@ -1263,7 +1231,7 @@ global $current_user;
 		$response['modal'] = doliModalTemplate($_POST['id'], $modal['header'], $modal['body'], $modal['footer'], 'modal-lg', null, 'p-0', null, admin_url('admin-ajax.php'), 'dolicontactinfos');
 		wp_send_json_success($response);
 		die();
-	} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "linkedmember" ) {
+	} elseif ( check_ajax_referer('dolimodal-nonce', 'dolimodal-nonce') && isset($_POST['case']) && $_POST['case'] == "linkedmember" ) {
 		if (isset($_POST['value1']) && !empty($_POST['value1'])) {
 			$modal['header'] = __( 'Edit member', 'doliconnect');
 			$object = callDoliApi("GET", "/members/".trim($_POST['value1']), null, dolidelay('member'));
@@ -1279,7 +1247,7 @@ global $current_user;
 		$response['modal'] = doliModalTemplate($_POST['id'], $modal['header'], $modal['body'], $modal['footer'], 'modal-lg', null, 'p-0', null, admin_url('admin-ajax.php'), 'linkedmember');
 		wp_send_json_success($response);
 		die();
-	} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "doliDownload" ) {
+	} elseif ( check_ajax_referer('dolimodal-nonce', 'dolimodal-nonce') && isset($_POST['case']) && $_POST['case'] == "doliDownload" ) {
 		$data = "data:application/pdf;base64,".$_POST['value2'];
 		$modal['header'] = __( 'Download', 'doliconnect');
 		$modal['body'] = null;
@@ -1288,7 +1256,7 @@ global $current_user;
 		$response['modal'] = doliModalTemplate(sanitize_text_field($_POST['id']), $modal['header'], $modal['body'], $modal['footer'], 'modal-lg', null, 'p-0');
 		wp_send_json_success($response);
 		die();
-	} elseif ( wp_verify_nonce( trim($_POST['dolimodal-nonce']), 'dolimodal-nonce' ) && isset($_POST['case']) && $_POST['case'] == "doliSelectlang" ) {
+	} elseif ( check_ajax_referer('dolimodal-nonce', 'dolimodal-nonce') && isset($_POST['case']) && $_POST['case'] == "doliSelectlang" ) {
 		$modal['header'] = __('Choose your language', 'doliconnect');
 		$modal['body'] = '<div class="card" id="doliSelectlang-form"><ul class="list-group list-group-flush">';
 		$translations = doliListLang( array( 'post_id' => $_POST['value1'], 'raw' => 1 ) );
