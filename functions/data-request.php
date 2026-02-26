@@ -264,7 +264,7 @@ add_action('wp_ajax_dolicontactinfos_request', 'dolicontactinfos_request');
 function dolicontactinfos_request(){
 	global $current_user;
 	$thirdparty = doliConnect('thirdparty', $current_user);
-	if ( check_ajax_referer('dolicontactinfos-nonce', 'dolicontactinfos-nonce') && isset($_POST['case']) && $_POST['case'] == "update" ) {
+	if ( check_ajax_referer('dolicontactinfos', 'dolicontactinfos-nonce') && isset($_POST['case']) && $_POST['case'] == "update" ) {
 		$contact = $_POST['contact'][''.$_POST['contactid'].''];
 		$contact = dolisanitize($contact);
 		if (empty($contact['no_email'])) {
@@ -288,7 +288,7 @@ function dolicontactinfos_request(){
 			wp_send_json_error( $response ); 
 		}
 		die();
-	} elseif ( check_ajax_referer('dolicontactinfos-nonce', 'dolicontactinfos-nonce') && isset($_POST['case']) && $_POST['case'] == "create" ) {
+	} elseif ( check_ajax_referer('dolicontactinfos', 'dolicontactinfos-nonce') && isset($_POST['case']) && $_POST['case'] == "create" ) {
 		$contact = $_POST['contact'][''.$thirdparty->id.''];
 		$contact = dolisanitize($contact);
 		$contact['socid'] = $thirdparty->id;
@@ -313,7 +313,7 @@ function dolicontactinfos_request(){
 			wp_send_json_error( $response ); 
 		}
 		die();
-	} elseif ( check_ajax_referer('dolicontactinfos-nonce', 'dolicontactinfos-nonce') && isset($_POST['case']) && $_POST['case'] == "delete" ) {
+	} elseif ( check_ajax_referer('dolicontactinfos', 'dolicontactinfos-nonce') && isset($_POST['case']) && $_POST['case'] == "delete" ) {
 		$contact = $_POST['contact'][''.$thirdparty->id.''];
 		$contact = dolisanitize($contact);
 
