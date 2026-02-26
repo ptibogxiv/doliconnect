@@ -1,9 +1,16 @@
 function doliModalAction(form, action, url) {
     ( function( $ ) {
 		'use strict';
-        $(document).ready(function () {			
-			$("#DoliconnectLoadingModal").modal("show");
+		$(document).ready(function () {
 			var $form = $(form);
+			// Bloquer l'AJAX si le formulaire n'est pas valide
+			if (!form.checkValidity()) {
+				try { form.reportValidity(); } catch (e) { }
+				var $firstInvalid = $form.find(':invalid').first();
+				if ($firstInvalid.length) { $firstInvalid.focus(); }
+				return;
+			}
+			$("#DoliconnectLoadingModal").modal("show");
 			$form.append('<input type="hidden" name="case" value="' + action + '">');
 			var modalId = $form.find('input[name="modalid"]').val();
 			if (modalId) {
