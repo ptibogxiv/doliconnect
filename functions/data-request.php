@@ -1218,6 +1218,12 @@ global $current_user;
 				];
 				wp_send_json_error( $response ); 
 				die();
+			} elseif (isset($object->socid) && $object->socid != doliConnect('thirdparty', $current_user)->id) {
+				$response = [
+					'message' => dolialert('danger', __( 'You are not allowed to edit this contact.', 'doliconnect')),
+				];
+				wp_send_json_error( $response ); 
+				die();
 			}
 		} else {
 			$modal['header'] = __( "Create contact", 'doliconnect');
