@@ -1212,6 +1212,13 @@ global $current_user;
 			$modal['header'] = __( 'Edit contact', 'doliconnect');
 			$object = callDoliApi("GET", "/contacts/".trim($_POST['value1'])."?includecount=1&includeroles=1", null, dolidelay('contact', true));
 			$contactid = $object->id;
+			if (isset($object->error)) {
+				$response = [
+					'message' => dolialert('danger', __( 'An error occured:', 'doliconnect').' '.$object->error->message),
+				];
+				wp_send_json_error( $response ); 
+				die();
+			}
 		} else {
 			$modal['header'] = __( "Create contact", 'doliconnect');
 			$object = null;
