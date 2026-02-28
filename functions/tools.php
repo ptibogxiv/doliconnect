@@ -627,7 +627,7 @@ function doliUserLang($user, $type = 'locale') {
   return $lang;
 }
 
-function doliExtrafields($object, $type, $rights, $refresh) {
+function doliExtrafields($object, $type, $rights, $refresh = false) {
   $extrafields = callDoliApi("GET", "/setup/extrafields?sortfield=t.pos&sortorder=ASC&elementtype=".$type, null, dolidelay('constante', $refresh));
   if ( !isset($extrafields->error) && $extrafields != null ) {
     if ( is_object($object) && $object->id > 0 ) {
@@ -762,7 +762,7 @@ function doliSelectForm($name, $request, $selectlang = '- Select -', $valuelang 
 return $doliSelect;
 }
 
-function doliContactList($thirdparty, $limit, $page, $refresh) {
+function doliContactList($thirdparty, $limit, $page, $refresh = false) {
         $request = "/contacts?sortfield=t.rowid&sortorder=DESC&limit=".$limit."&page=0&thirdparty_ids=".$thirdparty->id."&pagination_data=true";                              
         $object = callDoliApi("GET", $request, null, dolidelay('contact', $refresh));
         if ( doliversion('21.0.0') && isset($object->data) ) { $listcontact  = $object->data; } else { $listcontact  = $object; }
