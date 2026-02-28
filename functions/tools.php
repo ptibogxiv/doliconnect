@@ -1868,23 +1868,6 @@ $loader .= '</script>';
 return $loader;
 }
 
-function dolimodalloaderscript($idform) {
-print '<script type="text/javascript">';
-?>
-var form = document.getElementById('<?php print $idform; ?>');
-form.addEventListener('submit', function(event) { 
-jQuery(window).scrollTop(0);
-jQuery('#Close<?php print $idform; ?>').hide(); 
-jQuery('#Footer<?php print $idform; ?>').hide();
-jQuery('#<?php print $idform; ?>').hide(); 
-jQuery('#doliloading-<?php print $idform; ?>').show(); 
-console.log("submit");
-form.submit();
-});
-<?php
-print '</script>';
-}
-
 function doliUserCard($id, $refresh = null) {
   $request = "/users/".$id;
   $user = callDoliApi("GET", $request, null, dolidelay('thirdparty', $refresh)); 
@@ -3487,11 +3470,8 @@ function doliModalDiv() {
                     $("#doliModal"+id).modal("show");     
                   }
                 } else {
-                  console.log( "error loading modal" + " - case: " + acase );
-                  if (document.getElementById("doliModalDiv") && response.data.hasOwnProperty("modal")) {
-                    document.getElementById("doliModalDiv").innerHTML = response.data.modal; 
-                    $("#doliModal"+id).modal("show");     
-                  }
+                  console.log( "error loading modal" + " - case: " + acase + " - error: " + response.data);
+                  document.getElementById("doliModalDiv").innerHTML = "";
                 }
                 $("#doliModal" + id).on("hidden.bs.modal", function () {
                   $("#doliModal" + id).modal("dispose");
