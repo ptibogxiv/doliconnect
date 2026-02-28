@@ -1207,6 +1207,27 @@ global $current_user;
 		$response['modal'] = doliModalTemplate(sanitize_text_field($_POST['id']), $modal['header'], $modal['body'], $modal['footer']);
 		wp_send_json_success($response);
 		die();
+	} elseif ( check_ajax_referer('dolimodal-nonce', 'dolimodal-nonce') && isset($_POST['case']) && $_POST['case'] == "thirdparty" ) {
+		$modal['header'] = __( 'Edit my informations', 'doliconnect');
+		$object = doliConnect('thirdparty', $current_user, false, true);
+		$contactid = $object->id;
+		if (isset($object->error)) {
+			$response = [
+				'message' => dolialert('danger', __( 'An error occured:', 'doliconnect').' '.$object->error->message),
+			];
+			wp_send_json_error( $response ); 
+			die();
+		}
+		$modal['body'] = '<input type="hidden" name="action" value="doliuserinfos_request">';
+		$modal['body'] .= '<input type="hidden" name="doliuserinfos-nonce" value="'.wp_create_nonce( 'doliuserinfos').'">';
+		$modal['body'] .= '<input type="hidden" name="contactid" value="'.$contactid.'">';
+		$modal['body'] .= '<input type="hidden" name="modalid" value="'.trim($_POST['id']).'">';
+		$modal['body'] .= doliuserform( $object, dolidelay('constante', true, true), 'thirdparty', doliCheckRights('societe', 'creer'));
+		$modal['footer'] = '<button name="case" class="btn btn-outline-secondary" type="button" onclick="doliModalAction(this.form, \'update\', \''.admin_url('admin-ajax.php').'\')">'.__( 'Update', 'doliconnect').'</button>';
+		$response['js'] = plugins_url( 'doliconnect/includes/custom/js/dolimodal.js');
+		$response['modal'] = doliModalTemplate($_POST['id'], $modal['header'], $modal['body'], $modal['footer'], 'modal-lg', null, 'p-0', null, admin_url('admin-ajax.php'), 'dolicontactinfos');
+		wp_send_json_success($response);
+		die();
 	} elseif ( check_ajax_referer('dolimodal-nonce', 'dolimodal-nonce') && isset($_POST['case']) && $_POST['case'] == "contact" ) {
 		if (isset($_POST['value1']) && !empty($_POST['value1'])) {
 			$modal['header'] = __( 'Edit contact', 'doliconnect');
