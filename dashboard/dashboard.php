@@ -26,7 +26,7 @@ function informations_module($content, $url) {
 
     $content = "<div id='doliuserinfos-alert'></div><form action='".admin_url('admin-ajax.php')."' id='doliuserinfos-form' method='post' class='was-validated' enctype='multipart/form-data'>";
     if (!empty(get_option('doliconnectbeta')) ) {
-    $content .= doliModalButton('thirdparty', 'editthirdparty', 'test bouton', 'button', 'list-group-item lh-condensed list-group-item-action list-group-item-light', $thirdparty->id);
+        $content .= doliModalButton('thirdparty', 'editthirdparty', 'test bouton', 'button', 'list-group-item lh-condensed list-group-item-action list-group-item-light', $thirdparty->id);
     }
     $content .= doliAjax('doliuserinfos', $return, 'update');
 
@@ -264,7 +264,7 @@ if ( empty(doliconst('MAIN_DISABLE_CONTACTS_TAB')) && doliCheckRights('societe',
     function contacts_module($content, $url){
     global $current_user;
 
-        $thirdparty = doliConnect('thirdparty', $current_user, false, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+        $thirdparty = doliConnect('thirdparty', $current_user);
 
         $content = "<div id='dolicontactinfos-alert'></div>";
 
@@ -273,7 +273,7 @@ if ( empty(doliconst('MAIN_DISABLE_CONTACTS_TAB')) && doliCheckRights('societe',
 
         $content .= '<div class="card shadow-sm"><div class="card-header">'.__( 'Manage address book', 'doliconnect').'</div><ul class="list-group list-group-flush" id="dolicontact-list">';
         
-        $content .= doliContactList($thirdparty, $limit, $page, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+        $content .= doliContactList($thirdparty, $limit, $page, false);
 
         $content .= "</ul><div class='card-body'>";
         //$content .= doliPagination($object, $url, $page);
@@ -350,7 +350,25 @@ function paymentmethods_menu( $menu, $arg ) {
 add_filter( 'user_doliconnect_menu', 'paymentmethods_menu', 50, 2);
 
 function paymentmethods_module( $content, $url ) {
-    return doliconnect_paymentmethods(null, null, $url, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+global $current_user;
+    if (current_user_can('administrator') && !empty(get_option('doliconnectbeta')) ) { 
+        $content = '<div class="card shadow-sm"><div class="card-header">'.__( 'Manage payment methods', 'doliconnect').'</div><ul class="list-group list-group-flush">';
+        $thirdparty = doliConnect('thirdparty', $current_user);
+        $credit = $thirdparty->absolute_discount + $thirdparty->absolute_creditnote;
+        $content .= doliModalButton('gateway', 'discount', '<div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">'.__( 'Available credit', 'doliconnect').' : '.doliprice($credit).'</h5>
+                    <small class="text-body-secondary">x</small></div>
+                    <p class="mb-1">x</p>
+                    <small class="text-body-secondary">x</small>', 'button', 'list-group-item lh-condensed list-group-item-action list-group-item-light');
+        $content .= "</ul><div class='card-body'>";
+        //$content .= doliPagination($object, $url, $page);
+        $content .= "</div>";
+        //$content .= doliCardFooter($object, 'proposal');
+        $content .= "</div>";
+        return $content;
+    } else {
+        return doliconnect_paymentmethods(null, null, $url, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+    }
 }
 add_filter( 'user_doliconnect_paymentmethods', 'paymentmethods_module', 10, 2);
 
@@ -366,7 +384,7 @@ function proposals_menu( $menu, $arg ) {
 }
 add_filter( 'customer_doliconnect_menu', 'proposals_menu', 10, 2);
 
-function proposals_module( $content,$url ) {
+function proposals_module( $content, $url ) {
 global $current_user;
 
     if ( isset($_GET['id']) && $_GET['id'] > 0 ) {
