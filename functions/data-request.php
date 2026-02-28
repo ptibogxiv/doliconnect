@@ -1285,7 +1285,7 @@ global $current_user;
 		$data = "data:application/pdf;base64,".$_POST['value2'];
 		$modal['header'] = __( 'Download', 'doliconnect');
 		$modal['body'] = null;
-		$modal['footer'] = null;
+		$modal['footer'] = '<button class="btn btn-outline-secondary" type="submit">'.__( 'Download', 'doliconnect').'</button>';
 		$response['js'] = null;
 		$response['modal'] = doliModalTemplate(sanitize_text_field($_POST['id']), $modal['header'], $modal['body'], $modal['footer'], 'modal-lg', null, 'p-0');
 		wp_send_json_success($response);
