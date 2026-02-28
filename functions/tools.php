@@ -3440,7 +3440,7 @@ function doliModalDiv() {
   print 'function doliJavaButtonAction(acase, id, value1, value2, redirect_to) {
           (function ($) {
             $(document).ready(function () {
-              console.log( acase + " - " + id );
+              console.log("dolimodal " + acase + " - " + id );
               $.ajax({
                 url:"'.admin_url('admin-ajax.php').'",
                 type:"POST",
