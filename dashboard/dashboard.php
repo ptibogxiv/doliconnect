@@ -357,9 +357,43 @@ global $current_user;
         $credit = $thirdparty->absolute_discount + $thirdparty->absolute_creditnote;
         $content .= doliModalButton('gateway', 'discount', '<div class="d-flex w-100 justify-content-between">
                     <h5 class="mb-1">'.__( 'Available credit', 'doliconnect').' : '.doliprice($credit).'</h5>
-                    <small class="text-body-secondary">x</small></div>
+                    <small class="text-body-secondary"></small></div>
                     <p class="mb-1">x</p>
                     <small class="text-body-secondary">x</small>', 'button', 'list-group-item lh-condensed list-group-item-action list-group-item-light');
+        if ( doliCheckModules('doliconnector') ) {
+            $request = "/doliconnector/".$thirdparty->id."/paymentmethods";
+            $listpaymentmethods = callDoliApi("GET", $request, null, dolidelay('paymentmethods'));
+            if ( isset($listpaymentmethods->payment_methods) && $listpaymentmethods->payment_methods != null ) {
+                foreach ( $listpaymentmethods->payment_methods as $method ) { 
+                    if ( $method->type == 'sepa_debit' || $method->type == 'PRE' || $method->type == 'VIR' ) {
+                        $name = __( 'Account', 'doliconnect')." ".$method->reference;
+                    } else {
+                        $name = __( 'Card', 'doliconnect').' '.$method->reference;
+                        if (isset($method->country)) {
+                            $name .= ' - <span class="fi fi-'.strtolower($method->country).'"></span>';
+                        }
+                    }
+                    if (isset($method->expiration) && !empty($method->expiration)) {
+                        $expiration = __( 'Expiration:', 'doliconnect');
+                        $expdate =  explode("/", $method->expiration);
+                        $timestamp = mktime(0, 0, 0, (int) $expdate['1'], 0, (int) $expdate['0']);
+                        $expiration .= " ".wp_date( 'F Y', $timestamp, false); 
+                    } else {
+                        $expiration = null;
+                    }
+                    if ( $method->default_source && empty($thirdparty->mode_reglement_id) && !in_array($method->type, array('PRE','VIR')) || (!empty($method->default_source) && !empty($thirdparty->mode_reglement_id) && $thirdparty->mode_reglement_id == $mode_reglement_code[0]->id ) ) { 
+                        $default = " <i class='fas fa-star fa-fw' style='color:Gold'></i>";
+                    } else {
+                        $default = null;
+                    }
+                    $content .= doliModalButton('gateway', 'discount', '<div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">'.$name.'</h5>
+                    <small class="text-body-secondary">'.$default.'</small></div>
+                    <p class="mb-1">'.$method->holder.'</p>
+                    <small class="text-body-secondary">'.$expiration.'</small>', 'button', 'list-group-item lh-condensed list-group-item-action list-group-item-light');
+                }
+            }
+        }
         $content .= "</ul><div class='card-body'>";
         //$content .= doliPagination($object, $url, $page);
         $content .= "</div>";
