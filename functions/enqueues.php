@@ -11,6 +11,16 @@ function enqueue_scripts_doli_gdrf_public() {
 	wp_localize_script( 'gdrf-public-scripts', 'gdrf_localize', $translations );
 }
 
+add_action( 'wp_enqueue_scripts', 'enqueue_scripts_dolimodal' );
+function enqueue_scripts_dolimodal() {
+	wp_register_script( 'dolimodal', plugins_url( 'doliconnect/includes/custom/js/dolimodal.js'), array( 'jquery' ), '', true );
+	$translations = array(
+		'dolimodal_ajax_url' => esc_url( admin_url( 'admin-ajax.php' ) ),
+		'dolimodal_nonce' => wp_create_nonce( 'dolimodal-nonce'),
+	);
+	wp_localize_script( 'dolimodal', 'dolimodal_localize', $translations );
+}
+
 function doliconnect_enqueues() { 
 	if ( empty(get_theme_mod( 'ptibogxivtheme_css')) || get_theme_mod( 'ptibogxivtheme_css') == 'css' ) {
 		$css = 'bootstrap/css';
