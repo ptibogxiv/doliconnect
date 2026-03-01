@@ -1,43 +1,44 @@
-function doliModalAction(form, action, url) {
-    ( function( $ ) {
-		'use strict';
-		$(document).ready(function () {
-			var $form = $(form);
-			// Bloquer l'AJAX si le formulaire n'est pas valide
-			if (!form.checkValidity()) {
-				try { form.reportValidity(); } catch (e) { }
-				var $firstInvalid = $form.find(':invalid').first();
-				if ($firstInvalid.length) { $firstInvalid.focus(); }
-				return;
-			}
-			$("#DoliconnectLoadingModal").modal("show");
-			$form.append('<input type="hidden" name="case" value="' + action + '">');
-			var modalId = $form.find('input[name="modalid"]').val();
-			if (modalId) {
-				$("#doliModal" + modalId).modal("hide");
-			}
-			$("#DoliconnectLoadingModal").one("shown.bs.modal", function (e) { 
-				$.ajax({
-					url: url,
-					type: "POST",
-					cache: false,
-					data: $form.serialize(),
-				}).done(function(response) {
-					if (response.success) {
-						if (document.getElementById("dolicontactinfos-alert") && response.data.hasOwnProperty("message")) {
-							document.getElementById("dolicontactinfos-alert").innerHTML = response.data.message;      
-						}
-						if (document.getElementById("dolicontact-list") && response.data.hasOwnProperty("list")) {
-							document.getElementById("dolicontact-list").innerHTML = response.data.list;  
-						}
-					} else {
-						if (document.getElementById("dolicontactinfos-alert") && response.data.hasOwnProperty("message")) {
-							document.getElementById("dolicontactinfos-alert").innerHTML = response.data.message;      
-						}
+function doliJavaButtonAction(acase, id, value1, value2, redirect_to) {
+    (function ($) {
+        $(document).ready(function () {
+			console.log("dolimodal " + acase + " - " + id );
+			$.ajax({
+				url: dolimodal_localize.dolimodal_ajax_url,
+				type: "POST",
+				cache: false,
+				data: {
+					"action": "dolimodal_request",
+					"dolimodal-nonce": dolimodal_localize.dolimodal_nonce,
+					"case": acase,
+					"id": id,
+					"value1": value1,
+					"value2": value2,
+					"redirect_to": redirect_to,
+				},
+			}).done(function(response) {
+				if (response.success) {
+					if (response.data.js) {
+						$.getScript( response.data.js ).done(function( script, textStatus ) {
+							console.log( "success loading js" + " - case: " + acase );
+						})
+						.fail(function( jqxhr, settings, exception ) {
+							console.log( "error loading js" + " - case: " + acase );
+						});
 					}
-					$("#DoliconnectLoadingModal").modal("hide");
+					if (document.getElementById("doliModalDiv") && response.data.hasOwnProperty("modal")) {
+						console.log( "success loading modal" + " - case: " + acase );
+						document.getElementById("doliModalDiv").innerHTML = response.data.modal; 
+						$("#doliModal"+id).modal("show");     
+					}
+				} else {
+					console.log( "error loading modal" + " - case: " + acase + " - error: " + response.data);
+					document.getElementById("doliModalDiv").innerHTML = "";
+				}
+				$("#doliModal" + id).on("hidden.bs.modal", function () {
+					$("#doliModal" + id).modal("dispose");
+					document.getElementById("doliModalDiv").innerHTML = "";
 				});
-			});	
-		})
+			});
+        })
     })(jQuery);
 }
