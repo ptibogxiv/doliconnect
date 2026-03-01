@@ -107,8 +107,8 @@ function doliuserinfos_request(){
 		
 		do_action('wp_dolibarr_sync', $thirdparty);
 		$response = [
-		'message' => dolialert('success', __( 'Your informations have been updated.', 'doliconnect')),
-		'captcha' => dolicaptcha('doliuserinfos'),
+			'message' => dolialert('success', __( 'Your informations have been updated.', 'doliconnect')),
+			'captcha' => dolicaptcha('doliuserinfos'),
 		];
 		$thirdparty = doliConnect('thirdparty', $current_user, false, true);
 		wp_send_json_success( $response );
@@ -204,9 +204,9 @@ function doliuserinfos_request(){
 			$body .= "<br><br>".sprintf(__("Your %s's team", 'doliconnect'), $sitename)."<br>".get_option('siteurl');
 			
 			if ( has_filter( 'doliconnect_templatesignupemail') ) {
-			if (!empty(apply_filters( 'doliconnect_templatesignupemail', $sitename, $url))){
-			$body = apply_filters( 'doliconnect_templatesignupemail', $sitename, $url);
-			}
+				if (!empty(apply_filters( 'doliconnect_templatesignupemail', $sitename, $url))){
+					$body = apply_filters( 'doliconnect_templatesignupemail', $sitename, $url);
+				}
 			}
 			
 			$headers = array('Content-Type: text/html; charset=UTF-8'); 
@@ -219,38 +219,38 @@ function doliuserinfos_request(){
 				wp_set_auth_cookie( $ID, false);
 				do_action( 'wp_login', $user->user_login, $user);
 				$response = [
-				'message' => dolialert('success', __( "Your account has been created. Now, you are connected", 'doliconnect')),
-				'captcha' => dolicaptcha('doliuserinfos'),
+					'message' => dolialert('success', __( "Your account has been created. Now, you are connected", 'doliconnect')),
+					'captcha' => dolicaptcha('doliuserinfos'),
 				];
 				$thirdparty = doliConnect('thirdparty', $user, false, true);
 				wp_send_json_success( $response );	
 				die();		   	 
 			} elseif ( !is_wp_error( $emailSent )) {
 				$response = [
-				'message' => dolialert('success', __( "Your account has been created and an account activation link has been sent by email. Don't forget to look at your unwanted emails if you can't find our message.", 'doliconnect')),
-				'captcha' => dolicaptcha('doliuserinfos'),
+					'message' => dolialert('success', __( "Your account has been created and an account activation link has been sent by email. Don't forget to look at your unwanted emails if you can't find our message.", 'doliconnect')),
+					'captcha' => dolicaptcha('doliuserinfos'),
 				];
 				wp_send_json_success( $response );
 			} else {
 				$response = [
-				'message' => dolialert('danger', __( 'Your account has been created but sending an activation link by email fails. Please contact us.', 'doliconnect')),
-				'captcha' => dolicaptcha('doliuserinfos'),
+					'message' => dolialert('danger', __( 'Your account has been created but sending an activation link by email fails. Please contact us.', 'doliconnect')),
+					'captcha' => dolicaptcha('doliuserinfos'),
 				];
 				wp_send_json_error( $response ); 
 				die();
 			}
 		} else {
 			$response = [
-			'message' => dolialert('danger', join( '<br />', $UserError )),
-			'captcha' => dolicaptcha('doliuserinfos'),
+				'message' => dolialert('danger', join( '<br />', $UserError )),
+				'captcha' => dolicaptcha('doliuserinfos'),
 			];
 			wp_send_json_error( $response );
 			die();
 		}
 	} else {
 		$response = [
-		'message' => dolialert('danger', __( 'A security error occured', 'doliconnect')),
-		'captcha' => dolicaptcha('doliuserinfos'),
+			'message' => dolialert('danger', __( 'A security error occured', 'doliconnect')),
+			'captcha' => dolicaptcha('doliuserinfos'),
 		];
 		wp_send_json_error( $response ); 
 	}
