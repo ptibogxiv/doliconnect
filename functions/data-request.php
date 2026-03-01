@@ -1237,8 +1237,8 @@ global $current_user;
 		$modal['body'] .= '<input type="hidden" name="contactid" value="'.$contactid.'">';
 		$modal['body'] .= '<input type="hidden" name="modalid" value="'.trim($_POST['id']).'">';
 		$modal['body'] .= trim($_POST['id']);
-		$modal['footer'] = '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>';
-		$response['js'] = plugins_url( 'doliconnect/includes/custom/js/dolimodal.js');
+		$modal['footer'] = '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button><button name="case" class="btn btn-outline-secondary" type="button" onclick="doliModalAction(this.form, \'delete\', \''.admin_url('admin-ajax.php').'\')">'.__( 'Delete', 'doliconnect').'</button>';
+		$response['js'] = plugins_url( 'doliconnect/includes/custom/js/dolimodalaction.js');
 		$response['modal'] = doliModalTemplate($_POST['id'], $modal['header'], $modal['body'], $modal['footer'], 'modal-lg', null, 'p-0', null, admin_url('admin-ajax.php'), 'dolicontactinfos');
 		wp_send_json_success($response);
 		die();
@@ -1298,7 +1298,20 @@ global $current_user;
 	} elseif ( check_ajax_referer('dolimodal-nonce', 'dolimodal-nonce') && isset($_POST['case']) && $_POST['case'] == "doliDownload" ) {
 		$data = "data:application/pdf;base64,".$_POST['value2'];
 		$modal['header'] = __( 'Download', 'doliconnect');
-		$modal['body'] = null;
+		$modal['body'] = '<div id="pdf-viewer" style="width: 100%; height: 500px;"></div><script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script><script>
+			pdfjsLib.getDocument("'.$data.'").promise.then(pdf => {
+				pdf.getPage(1).then(page => {
+					const canvas = document.createElement("canvas");
+					const viewport = page.getViewport({ scale: 1.5 });
+					canvas.width = viewport.width;
+					canvas.height = viewport.height;
+					const context = canvas.getContext("2d");
+					page.render({ canvasContext: context, viewport: viewport }).promise.then(() => {
+						document.getElementById("pdf-viewer").appendChild(canvas);
+					});
+				});
+			});
+		</script>';
 		$modal['footer'] = '<button class="btn btn-outline-secondary" type="submit">'.__( 'Download', 'doliconnect').'</button>';
 		$response['js'] = null;
 		$response['modal'] = doliModalTemplate(sanitize_text_field($_POST['id']), $modal['header'], $modal['body'], $modal['footer'], 'modal-lg', null, 'p-0');
