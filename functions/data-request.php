@@ -273,7 +273,6 @@ function dolicontactinfos_request(){
 			$contact['no_email'] = false;
 		}
 		$object = callDoliApi("PUT", "/contacts/".$_POST["contactid"]."?includecount=1&includeroles=1", $contact, 0);
-		
 		if (!isset($object->error)) { 
 			$response = [
 				'message' => dolialert('success', __( 'Your informations have been updated.', 'doliconnect')),
@@ -298,7 +297,6 @@ function dolicontactinfos_request(){
 			$contact['no_email'] = false;
 		}
 		$object = callDoliApi("POST", "/contacts", $contact, 0);
-		
 		if (!isset($object->error)) { 
 			$response = [
 				'message' => dolialert('success', __( 'Your informations have been added.', 'doliconnect')),
