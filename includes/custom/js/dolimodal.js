@@ -1,4 +1,4 @@
-function doliJavaButtonAction(acase, id, value1, value2, redirect_to) {
+function doliModalButton(acase, id, value1, value2, redirect_to) {
     (function ($) {
         $(document).ready(function () {
 			console.log("dolimodal " + acase + " - " + id );

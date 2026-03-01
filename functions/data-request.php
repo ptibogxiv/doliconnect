@@ -1217,7 +1217,7 @@ global $current_user;
 		$modal['body'] .= '<input type="hidden" name="modalid" value="'.trim($_POST['id']).'">';
 		$modal['body'] .= doliuserform( $object, dolidelay('constante', true, true), 'thirdparty', doliCheckRights('societe', 'creer'));
 		$modal['footer'] = '<button name="case" class="btn btn-outline-secondary" type="button" onclick="doliModalAction(this.form, \'update\', \''.admin_url('admin-ajax.php').'\')">'.__( 'Update', 'doliconnect').'</button>';
-		$response['js'] = plugins_url( 'doliconnect/includes/custom/js/dolimodal.js');
+		$response['js'] = plugins_url( 'doliconnect/includes/custom/js/dolimodalaction.js');
 		$response['modal'] = doliModalTemplate($_POST['id'], $modal['header'], $modal['body'], $modal['footer'], 'modal-lg', null, 'p-0', null, admin_url('admin-ajax.php'), 'dolicontactinfos');
 		wp_send_json_success($response);
 		die();
@@ -1275,7 +1275,7 @@ global $current_user;
 		} else {
 			$modal['footer'] = '<button name="case" class="btn btn-outline-secondary" type="button" onclick="doliModalAction(this.form, \'create\', \''.admin_url('admin-ajax.php').'\')">'.__( 'Create', 'doliconnect').'</button>';
 		}
-		$response['js'] = plugins_url( 'doliconnect/includes/custom/js/dolimodal.js');
+		$response['js'] = plugins_url( 'doliconnect/includes/custom/js/dolimodalaction.js');
 		$response['modal'] = doliModalTemplate($_POST['id'], $modal['header'], $modal['body'], $modal['footer'], 'modal-lg', null, 'p-0', null, admin_url('admin-ajax.php'), 'dolicontactinfos');
 		wp_send_json_success($response);
 		die();
