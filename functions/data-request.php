@@ -1237,6 +1237,11 @@ global $current_user;
 		$modal['body'] .= '<input type="hidden" name="contactid" value="'.$contactid.'">';
 		$modal['body'] .= '<input type="hidden" name="modalid" value="'.trim($_POST['id']).'">';
 		$modal['body'] .= trim($_POST['id']);
+		if (trim($_POST['id']) == 'stripe') {
+			$request = "/doliconnector/".$object->id."/paymentmethods";
+			$object2 = callDoliApi("GET", $request."/".trim($_POST['value1']), null, dolidelay('thirdparty', true));
+			//$modal['body'] .= var_dump($object2);
+		}
 		$modal['footer'] = '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button><button name="case" class="btn btn-outline-secondary" type="button" onclick="doliModalAction(this.form, \'delete\', \''.admin_url('admin-ajax.php').'\')">'.__( 'Delete', 'doliconnect').'</button>';
 		$response['js'] = plugins_url( 'doliconnect/includes/custom/js/dolimodalaction.js');
 		$response['modal'] = doliModalTemplate($_POST['id'], $modal['header'], $modal['body'], $modal['footer'], 'modal-lg', null, 'p-0', null, admin_url('admin-ajax.php'), 'dolicontactinfos');
