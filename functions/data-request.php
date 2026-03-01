@@ -1291,7 +1291,7 @@ global $current_user;
 		$modal['body'] .= '<input type="hidden" name="memberid" value="'.trim($_POST['value1']).'"><input type="hidden" name="dolimember-nonce" value="'.wp_create_nonce( 'dolimember').'">';
 		$modal['body'] .= doliuserform( $object, dolidelay('constante', true, true), 'member', doliCheckRights('adherent', 'creer'));	
 		$modal['footer'] = '<button class="btn btn-outline-secondary" type="submit">'.__( 'Submit', 'doliconnect').'</button>';
-		$response['js'] = plugins_url( 'doliconnect/includes/custom/js/editlinkedmember.js');
+		$response['js'] = plugins_url( 'doliconnect/includes/custom/js/dolimodalaction.js');
 		$response['modal'] = doliModalTemplate($_POST['id'], $modal['header'], $modal['body'], $modal['footer'], 'modal-lg', null, 'p-0', null, admin_url('admin-ajax.php'), 'linkedmember');
 		wp_send_json_success($response);
 		die();
