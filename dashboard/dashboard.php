@@ -390,7 +390,7 @@ global $current_user;
                     <h5 class="mb-1">'.$name.'</h5>
                     <small class="text-body-secondary">'.$default.'</small></div>
                     <p class="mb-1">'.$method->holder.'</p>
-                    <small class="text-body-secondary">'.$expiration.'</small>', 'button', 'list-group-item lh-condensed list-group-item-action list-group-item-light');
+                    <small class="text-body-secondary">'.$expiration.'</small>', 'button', 'list-group-item lh-condensed list-group-item-action list-group-item-light', $method->id);
                 }
             }
         }
