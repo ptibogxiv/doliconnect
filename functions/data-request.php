@@ -732,55 +732,51 @@ global $current_user;
 	$thirdparty = doliConnect('thirdparty', $current_user);
 	$request = "/doliconnector/".$thirdparty->id."/paymentmethods"; 
 
-if ( wp_verify_nonce( trim($_POST['dolipaymentmethod-nonce']), 'dolipaymentmethod-nonce') && isset($_POST['case']) && $_POST['case'] == "default" ) {
-
-$data = [
-'default' => 1
-];
-$object = callDoliApi("PUT", $request."/".sanitize_text_field($_POST['payment_method']), $data, dolidelay( 0, true));
-
-if (!isset($object->error)) {  
-	$gateway = callDoliApi("GET", $request, null, dolidelay('paymentmethods', true));
-	wp_send_json_success( dolialert('success', __( 'You changed your default payment method', 'doliconnect')));
-} else {
-	wp_send_json_error( __( 'An error occured:', 'doliconnect').' '.$object->error->message); 
-}
-
-} elseif ( wp_verify_nonce( trim($_POST['dolipaymentmethod-nonce']), 'dolipaymentmethod-nonce') && isset($_POST['case']) && $_POST['case'] == "delete" ) {
-
-$object = callDoliApi("DELETE", $request."/".sanitize_text_field($_POST['payment_method']), null, dolidelay( 0, true));
-
-if (!isset($object->error)) {
-	$gateway = callDoliApi("GET", $request, null, dolidelay('paymentmethods', true));
-	wp_send_json_success( dolialert('success', __( 'You deleted a payment method', 'doliconnect')));
-} else {
-	wp_send_json_error( __( 'An error occured:', 'doliconnect').' '.$object->error->message); 
-}
-
-} elseif ( wp_verify_nonce( trim($_POST['dolipaymentmethod-nonce']), 'dolipaymentmethod-nonce') && isset($_POST['case']) && $_POST['case'] == "create" ) {
-
-if ($_POST['default'] == 2) { 
-	$default = 1;
-} else {
-	$default = 0;
-}
-
-$data = [
-'default' => $default,
-];
-
-$object = callDoliApi("POST", $request."/".sanitize_text_field($_POST['payment_method']), $data, dolidelay( 0, true));
-
-if (!isset($object->error)) { 
-	$gateway = callDoliApi("GET", $request, null, dolidelay('paymentmethods', true));
-	wp_send_json_success( dolialert('success', __( 'You added a new payment method', 'doliconnect')));
-} else {
-	wp_send_json_error( __( 'An error occured:', 'doliconnect').' '.$object->error->message); 
-}
-
-} else {
-	wp_send_json_error( __( 'A security error occured', 'doliconnect')); 
-}
+	if ( wp_verify_nonce( trim($_POST['dolipaymentmethod-nonce']), 'dolipaymentmethod-nonce') && isset($_POST['case']) && $_POST['case'] == "default" ) {
+		$data = [
+			'default' => 1
+		];
+		$object = callDoliApi("PUT", $request."/".sanitize_text_field($_POST['payment_method']), $data, dolidelay( 0, true));
+		if (!isset($object->error)) {  
+			$gateway = callDoliApi("GET", $request, null, dolidelay('paymentmethods', true));
+			wp_send_json_success( dolialert('success', __( 'You changed your default payment method', 'doliconnect')));
+			die();
+		} else {
+			wp_send_json_error( __( 'An error occured:', 'doliconnect').' '.$object->error->message); 
+			die();
+		}
+	} elseif ( wp_verify_nonce( trim($_POST['dolipaymentmethod-nonce']), 'dolipaymentmethod-nonce') && isset($_POST['case']) && $_POST['case'] == "delete" ) {
+		$object = callDoliApi("DELETE", $request."/".sanitize_text_field($_POST['payment_method']), null, dolidelay( 0, true));
+		if (!isset($object->error)) {
+			$gateway = callDoliApi("GET", $request, null, dolidelay('paymentmethods', true));
+			wp_send_json_success( dolialert('success', __( 'You deleted a payment method', 'doliconnect')));
+			die();
+		} else {
+			wp_send_json_error( __( 'An error occured:', 'doliconnect').' '.$object->error->message); 
+			die();
+		}
+	} elseif ( wp_verify_nonce( trim($_POST['dolipaymentmethod-nonce']), 'dolipaymentmethod-nonce') && isset($_POST['case']) && $_POST['case'] == "create" ) {
+		if ($_POST['default'] == 2) { 
+			$default = 1;
+		} else {
+			$default = 0;
+		}
+		$data = [
+		'default' => $default,
+		];
+		$object = callDoliApi("POST", $request."/".sanitize_text_field($_POST['payment_method']), $data, dolidelay( 0, true));
+		if (!isset($object->error)) { 
+			$gateway = callDoliApi("GET", $request, null, dolidelay('paymentmethods', true));
+			wp_send_json_success( dolialert('success', __( 'You added a new payment method', 'doliconnect')));
+			die();
+		} else {
+			wp_send_json_error( __( 'An error occured:', 'doliconnect').' '.$object->error->message); 
+			die();
+		}
+	} else {
+		wp_send_json_error( __( 'A security error occured', 'doliconnect')); 
+		die();
+	}
 }
 
 //*****************************************************************************************
@@ -1073,7 +1069,6 @@ if ( isset($_POST['dolimember-nonce']) && wp_verify_nonce( trim($_POST['dolimemb
 		} else {
 			$member['no_email'] = false;
 		}
-		
 		if (isset($_POST['memberid']) && trim($_POST['memberid']) > 0) { 
 			$object = callDoliApi("PUT", "/members/".trim($_POST['memberid']), $member, 0);
 		}
