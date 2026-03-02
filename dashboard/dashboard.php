@@ -25,7 +25,7 @@ function informations_module($content, $url) {
     $request = "/thirdparties/".$thirdparty->id;
 
     $content = "<div id='doliuserinfos-alert'></div><form action='".admin_url('admin-ajax.php')."' id='doliuserinfos-form' method='post' class='was-validated' enctype='multipart/form-data'>";
-    if (!empty(get_option('doliconnectbeta')) ) {
+    if (current_user_can('administrator') && !empty(get_option('doliconnectbeta')) ) { 
         $content .= doliModalButton('thirdparty', 'editthirdparty', 'test bouton', 'button', 'list-group-item lh-condensed list-group-item-action list-group-item-light', $thirdparty->id);
     }
     $content .= doliAjax('doliuserinfos', $return, 'update');
