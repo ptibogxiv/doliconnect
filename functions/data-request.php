@@ -479,7 +479,7 @@ function dolicontact_request(){
 			$subject = "[".get_bloginfo( 'name' )."]";
 			if (isset($_POST['ticket_type'])) $subject .= " ".$_POST['ticket_type'];
 			$body = "Nom: $name <br>Email: $email <br>Message: $comments";
-			$headers = array("Content-Type: text/html; charset=UTF-8","From: ".$name." <".$email.">","Cc: ".$name." <".$email.">"); 
+			$headers = array("Content-Type: text/html; charset=UTF-8","From: ".$name." <".$email.">","Reply-To: ".$name." <".$email.">"); 
 			$emailSent = wp_mail($emailTo, $subject, $body, $headers);
 
 		if ( !is_wp_error( $emailSent )) {
