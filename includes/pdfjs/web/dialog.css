@@ -1,0 +1,392 @@
+/* Copyright 2022 Mozilla Foundation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+.dialog {
+  --dialog-bg-color: light-dark(white, #1c1b22);
+  --dialog-border-color: light-dark(white, #1c1b22);
+  --dialog-shadow: 0 2px 14px 0 light-dark(rgb(58 57 68 / 0.2), #15141a);
+  --text-primary-color: light-dark(#15141a, #fbfbfe);
+  --text-secondary-color: light-dark(#5b5b66, #cfcfd8);
+  --hover-filter: brightness(0.9);
+  --link-fg-color: light-dark(#0060df, #0df);
+  --link-hover-fg-color: light-dark(#0250bb, #80ebff);
+  --separator-color: light-dark(#f0f0f4, #52525e);
+
+  --textarea-border-color: #8f8f9d;
+  --textarea-bg-color: light-dark(white, #42414d);
+  --textarea-fg-color: var(--text-secondary-color);
+
+  --radio-bg-color: light-dark(#f0f0f4, #2b2a33);
+  --radio-checked-bg-color: light-dark(#fbfbfe, #15141a);
+  --radio-border-color: #8f8f9d;
+  --radio-checked-border-color: light-dark(#0060df, #0df);
+
+  --button-secondary-bg-color: light-dark(
+    rgb(21 20 26 / 0.07),
+    rgb(251 251 254 / 0.07)
+  );
+  --button-secondary-fg-color: var(--text-primary-color);
+  --button-secondary-border-color: var(--button-secondary-bg-color);
+  --button-secondary-active-bg-color: light-dark(
+    rgb(21 20 26 / 0.21),
+    rgb(251 251 254 / 0.21)
+  );
+  --button-secondary-active-fg-color: var(--button-secondary-fg-color);
+  --button-secondary-active-border-color: var(--button-secondary-bg-color);
+  --button-secondary-hover-bg-color: light-dark(
+    rgb(21 20 26 / 0.14),
+    rgb(251 251 254 / 0.14)
+  );
+  --button-secondary-hover-fg-color: var(--button-secondary-fg-color);
+  --button-secondary-hover-border-color: var(--button-secondary-hover-bg-color);
+  --button-secondary-disabled-bg-color: var(--button-secondary-bg-color);
+  --button-secondary-disabled-border-color: var(
+    --button-secondary-border-color
+  );
+  --button-secondary-disabled-fg-color: var(--button-secondary-fg-color);
+
+  --button-primary-bg-color: light-dark(#0060df, #0df);
+  --button-primary-fg-color: light-dark(#fbfbfe, #15141a);
+  --button-primary-border-color: var(--button-primary-bg-color);
+  --button-primary-active-bg-color: light-dark(#054096, #aaf2ff);
+  --button-primary-active-fg-color: var(--button-primary-fg-color);
+  --button-primary-active-border-color: var(--button-primary-active-bg-color);
+  --button-primary-hover-bg-color: light-dark(#0250bb, #80ebff);
+  --button-primary-hover-fg-color: var(--button-primary-fg-color);
+  --button-primary-hover-border-color: var(--button-primary-hover-bg-color);
+  --button-primary-disabled-bg-color: var(--button-primary-bg-color);
+  --button-primary-disabled-border-color: var(--button-primary-border-color);
+  --button-primary-disabled-fg-color: var(--button-primary-fg-color);
+  --button-disabled-opacity: 0.4;
+
+  --input-text-bg-color: light-dark(white, #42414d);
+  --input-text-fg-color: var(--text-primary-color);
+
+  @media (prefers-color-scheme: dark) {
+    --hover-filter: brightness(1.4);
+    --button-disabled-opacity: 0.6;
+  }
+
+  @media screen and (forced-colors: active) {
+    --dialog-bg-color: Canvas;
+    --dialog-border-color: CanvasText;
+    --dialog-shadow: none;
+    --text-primary-color: CanvasText;
+    --text-secondary-color: CanvasText;
+    --hover-filter: none;
+    --link-fg-color: LinkText;
+    --link-hover-fg-color: LinkText;
+    --separator-color: CanvasText;
+
+    --textarea-border-color: ButtonBorder;
+    --textarea-bg-color: Field;
+    --textarea-fg-color: ButtonText;
+
+    --radio-bg-color: ButtonFace;
+    --radio-checked-bg-color: ButtonFace;
+    --radio-border-color: ButtonText;
+    --radio-checked-border-color: ButtonText;
+
+    --button-secondary-bg-color: ButtonFace;
+    --button-secondary-fg-color: ButtonText;
+    --button-secondary-border-color: ButtonText;
+    --button-secondary-active-bg-color: HighlightText;
+    --button-secondary-active-fg-color: SelectedItem;
+    --button-secondary-active-border-color: ButtonText;
+    --button-secondary-hover-bg-color: HighlightText;
+    --button-secondary-hover-fg-color: SelectedItem;
+    --button-secondary-hover-border-color: SelectedItem;
+    --button-secondary-disabled-fg-color: GrayText;
+    --button-secondary-disabled-border-color: GrayText;
+
+    --button-primary-bg-color: ButtonText;
+    --button-primary-fg-color: ButtonFace;
+    --button-primary-border-color: ButtonText;
+    --button-primary-active-bg-color: SelectedItem;
+    --button-primary-active-fg-color: HighlightText;
+    --button-primary-active-border-color: ButtonText;
+    --button-primary-hover-bg-color: SelectedItem;
+    --button-primary-hover-fg-color: HighlightText;
+    --button-primary-hover-border-color: SelectedItem;
+    --button-primary-disabled-bg-color: GrayText;
+    --button-primary-disabled-fg-color: ButtonFace;
+    --button-primary-disabled-border-color: GrayText;
+    --button-disabled-opacity: 1;
+
+    --input-text-bg-color: Field;
+    --input-text-fg-color: FieldText;
+  }
+
+  font: message-box;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 150%;
+  border-radius: 4px;
+  padding: 12px 16px;
+  border: 1px solid var(--dialog-border-color);
+  background: var(--dialog-bg-color);
+  color: var(--text-primary-color);
+  box-shadow: var(--dialog-shadow);
+
+  .mainContainer {
+    *:focus-visible {
+      outline: var(--focus-ring-outline);
+      outline-offset: 2px;
+    }
+
+    .title {
+      display: flex;
+      width: auto;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: flex-start;
+      gap: 12px;
+
+      > span {
+        font-size: 13px;
+        font-style: normal;
+        font-weight: 590;
+        line-height: 150%; /* 19.5px */
+      }
+    }
+
+    .dialogSeparator {
+      width: 100%;
+      height: 0;
+      margin-block: 4px;
+      border-top: 1px solid var(--separator-color);
+      border-bottom: none;
+    }
+
+    .dialogButtonsGroup {
+      display: flex;
+      gap: 12px;
+      align-self: flex-end;
+    }
+
+    .radio {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
+
+      > .radioButton {
+        display: flex;
+        gap: 8px;
+        align-self: stretch;
+        align-items: center;
+
+        input {
+          appearance: none;
+          box-sizing: border-box;
+          width: 16px;
+          height: 16px;
+          border-radius: 50%;
+          background-color: var(--radio-bg-color);
+          border: 1px solid var(--radio-border-color);
+
+          &:hover {
+            filter: var(--hover-filter);
+          }
+
+          &:checked {
+            background-color: var(--radio-checked-bg-color);
+            border: 4px solid var(--radio-checked-border-color);
+          }
+        }
+      }
+
+      > .radioLabel {
+        display: flex;
+        padding-inline-start: 24px;
+        align-items: flex-start;
+        gap: 10px;
+        align-self: stretch;
+
+        > span {
+          flex: 1 0 0;
+          font-size: 11px;
+          color: var(--text-secondary-color);
+        }
+      }
+    }
+
+    button:not(:is(.toggle-button, .closeButton, .clearInputButton)) {
+      border-radius: 4px;
+      border: 1px solid;
+      font: menu;
+      font-weight: 590;
+      font-size: 13px;
+      padding: 4px 16px;
+      width: auto;
+      height: 32px;
+
+      &:hover {
+        cursor: pointer;
+        filter: var(--hover-filter);
+      }
+
+      > span {
+        color: inherit;
+        font: inherit;
+      }
+
+      &.secondaryButton {
+        color: var(--button-secondary-fg-color);
+        background-color: var(--button-secondary-bg-color);
+        border-color: var(--button-secondary-border-color);
+
+        &:hover {
+          color: var(--button-secondary-hover-fg-color);
+          background-color: var(--button-secondary-hover-bg-color);
+          border-color: var(--button-secondary-hover-border-color);
+        }
+
+        &:active {
+          color: var(--button-secondary-active-fg-color);
+          background-color: var(--button-secondary-active-bg-color);
+          border-color: var(--button-secondary-active-border-color);
+        }
+
+        &:disabled {
+          background-color: var(--button-secondary-disabled-bg-color);
+          border-color: var(--button-secondary-disabled-border-color);
+          color: var(--button-secondary-disabled-fg-color);
+          opacity: var(--button-disabled-opacity);
+        }
+      }
+
+      &.primaryButton {
+        color: var(--button-primary-fg-color);
+        background-color: var(--button-primary-bg-color);
+        border-color: var(--button-primary-border-color);
+        opacity: 1;
+
+        &:hover {
+          color: var(--button-primary-hover-fg-color);
+          background-color: var(--button-primary-hover-bg-color);
+          border-color: var(--button-primary-hover-border-color);
+        }
+
+        &:active {
+          color: var(--button-primary-active-fg-color);
+          background-color: var(--button-primary-active-bg-color);
+          border-color: var(--button-primary-active-border-color);
+        }
+
+        &:disabled {
+          background-color: var(--button-primary-disabled-bg-color);
+          border-color: var(--button-primary-disabled-border-color);
+          color: var(--button-primary-disabled-fg-color);
+          opacity: var(--button-disabled-opacity);
+        }
+      }
+
+      &:disabled {
+        pointer-events: none;
+      }
+    }
+
+    a {
+      color: var(--link-fg-color);
+
+      &:hover {
+        color: var(--link-hover-fg-color);
+      }
+    }
+
+    textarea {
+      font: inherit;
+      padding: 8px;
+      resize: none;
+      margin: 0;
+      box-sizing: border-box;
+      border-radius: 4px;
+      border: 1px solid var(--textarea-border-color);
+      background: var(--textarea-bg-color);
+      color: var(--textarea-fg-color);
+
+      &:focus {
+        outline-offset: 0;
+        border-color: transparent;
+      }
+
+      &:disabled {
+        pointer-events: none;
+        opacity: 0.4;
+      }
+    }
+
+    input[type="text"] {
+      background-color: var(--input-text-bg-color);
+      color: var(--input-text-fg-color);
+    }
+
+    .messageBar {
+      --message-bar-bg-color: light-dark(#ffebcd, #5a3100);
+      --message-bar-fg-color: light-dark(#15141a, #fbfbfe);
+      --message-bar-border-color: light-dark(
+        rgb(0 0 0 / 0.08),
+        rgb(255 255 255 / 0.08)
+      );
+      --message-bar-icon: url(images/messageBar_warning.svg);
+      --message-bar-icon-color: light-dark(#cd411e, #e49c49);
+
+      @media screen and (forced-colors: active) {
+        --message-bar-bg-color: HighlightText;
+        --message-bar-fg-color: CanvasText;
+        --message-bar-border-color: CanvasText;
+        --message-bar-icon-color: CanvasText;
+      }
+
+      align-self: stretch;
+
+      > div {
+        &::before,
+        > div {
+          margin-block: 4px;
+        }
+
+        > div {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 8px;
+          flex: 1 0 0;
+
+          .title {
+            font-size: 13px;
+            font-weight: 590;
+          }
+
+          .description {
+            font-size: 13px;
+          }
+        }
+      }
+    }
+
+    .toggler {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      align-self: stretch;
+
+      > .togglerLabel {
+        user-select: none;
+      }
+    }
+  }
+}
