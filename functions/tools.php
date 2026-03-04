@@ -640,9 +640,6 @@ function doliExtrafields($object, $type, $rights, $refresh = false) {
       $i = 0;
       foreach ($id as $extra => $field) {
         if (isset($field->list) && $field->list > 0 && isset($field->type) && $field->type == 'select') {
-          if ($i > 0) {
-            //$form .= '<br>';
-          }
           $form .= '<div class="form-floating mb-3"><select class="form-select" id="'.$idobject.'[array_options]['.$extra.']" name="'.$idobject.'[array_options]['.$extra.']" aria-label="Default select example"';
           if (isset($field->required) && !empty($field->required)) {
             $form .= ' required';
@@ -660,9 +657,6 @@ function doliExtrafields($object, $type, $rights, $refresh = false) {
           $form .= '</div>';
           $i++;
         } elseif (isset($field->list) && $field->list > 0 && isset($field->type) && $field->type == 'text') {
-          if ($i > 0) {
-            //$form .= '<br>';
-          }
           $form .= '<div class="form-floating mb-3"><textarea class="form-control" id="'.$idobject.'[array_options]['.$extra.']" name="'.$idobject.'[array_options]['.$extra.']" aria-label="Default select example"';
           if (isset($field->required) && !empty($field->required)) {
             $form .= ' required';
