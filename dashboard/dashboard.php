@@ -25,17 +25,15 @@ function informations_module($content, $url) {
     $request = "/thirdparties/".$thirdparty->id;
 
     $content = "<div id='doliuserinfos-alert'></div><form action='".admin_url('admin-ajax.php')."' id='doliuserinfos-form' method='post' class='was-validated' enctype='multipart/form-data'>";
-    if (current_user_can('administrator') && !empty(get_option('doliconnectbeta')) ) { 
-        $content .= doliModalButton('thirdparty', 'editthirdparty', 'test bouton', 'button', 'list-group-item lh-condensed list-group-item-action list-group-item-light', $thirdparty->id);
-    }
-    $content .= doliAjax('doliuserinfos', $return, 'update');
 
     $content .= '<div class="card shadow-sm"><div class="card-header">'.__( 'Edit my informations', 'doliconnect').'</div>';
     $content .= doliuserform( $thirdparty, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'thirdparty', doliCheckRights('societe', 'creer'));
 
-    $content .= "<div class='card-body'><div class='d-grid gap-2'><button id='doliuserinfos-button' class='btn btn-outline-secondary' type='submit' ";
-    if (!doliCheckRights('societe', 'creer')) { $content .= 'disabled'; }
-    $content .= ">".__( 'Update', 'doliconnect')."</button></div></div>";
+    $content .= "<div class='card-body'><div class='d-grid gap-2'>";
+    if (doliCheckRights('societe', 'creer')) { 
+        $content .= doliModalButton('thirdparty', 'editthirdparty', __( 'Update', 'doliconnect'), 'button', 'btn btn-outline-secondary', $thirdparty->id);
+    }
+    $content .= "</div></div>";
     $content .= doliCardFooter($thirdparty, 'thirdparty');
     $content .= '</div></form>';
     return $content;
