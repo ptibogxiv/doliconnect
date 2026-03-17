@@ -16,6 +16,7 @@
 import { stringToPDFString, stripPath, warn } from "../shared/util.js";
 import { BaseStream } from "./base_stream.js";
 import { Dict } from "./primitives.js";
+import * as path from "path";
 
 function pickPlatformItem(dict) {
   if (dict instanceof Dict) {
@@ -62,12 +63,11 @@ class FileSpec {
   get filename() {
     const item = pickPlatformItem(this.root);
     if (item && typeof item === "string") {
-      // NOTE: The following replacement order is INTENTIONAL, regardless of
-      //       what some static code analysers (e.g. CodeQL) may claim.
-      return stringToPDFString(item, /* keepEscapeSequence = */ true)
-        .replaceAll("\\\\", "\\")
-        .replaceAll("\\/", "/")
-        .replaceAll("\\", "/");
+      // Normalize path separators using Node's path utilities to avoid
+      // manually unescaping backslashes, which can lead to double-unescaping.
+      return path.normalize(
+        stringToPDFString(item, /* keepEscapeSequence = */ true)
+      );
     }
     return "";
   }
