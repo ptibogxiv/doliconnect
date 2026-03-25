@@ -413,7 +413,7 @@ global $current_user;
             }
             $content .=  "</div>";
           }
-          if ( get_option('doliloginmodal') == '1' ) {
+          if ( get_option('doliloginmodal') == '999' && !empty(get_option('doliconnectbeta')) ) {
             $content .=  '<ul class="list-group list-group-flush"><li class="list-group-item"><center><i class="fas fa-user-lock fa-fw fa-10x"></i>';
             //$content .=  "<h2>".__( 'Restricted area', 'doliconnect')."</h2></center>";
             $content .=  "</center></li></lu><div class='card-body'>";
