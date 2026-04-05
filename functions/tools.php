@@ -976,7 +976,7 @@ if (in_array($mode, array('thirdparty')) ) {
     $doliuser .= '</select>';
   }
   $doliuser .= '<select class="form-select" id="morphy" name="'.$idobject.'[morphy]" ';
-  if (empty($current_user->billing_type)) {
+  if (empty($current_user->billing_type) && empty($_GET["morphy"])) {
     $doliuser .= ' required';
   } else {
     $doliuser .= ' disabled';
