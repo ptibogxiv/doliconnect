@@ -765,6 +765,22 @@ function doliSelectForm($name, $request, $selectlang = '- Select -', $valuelang 
 return $doliSelect;
 }
 
+function doliThirdparty($thirdparty, $refresh = false) {
+        $content = '';
+        if ( !isset($listcontact->error) && $listcontact != null ) {
+            foreach ($listcontact  as $postcontact) { 
+                $content .= doliModalButton('contact', 'editcontact'.$postcontact->id, '<div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">'.($postcontact->civility ? $postcontact->civility : $postcontact->civility_code).' '.$postcontact->firstname.' '.$postcontact->lastname.'</h5>
+                    <small class="text-body-secondary">'.$postcontact->poste.'</small></div>
+                    <p class="mb-1">'.$postcontact->address.', '.$postcontact->zip.' '.$postcontact->town.'</p>
+                    <small class="text-body-secondary">'.$postcontact->email.'</small>', 'button', 'list-group-item lh-condensed list-group-item-action list-group-item-light', $postcontact->id);                                                                           
+            }
+        } else {
+            $content .= "<li class='list-group-item list-group-item-light'><center>".__( 'No contact', 'doliconnect')."</center></li>";
+        }
+return $content;
+}
+
 function doliContactList($thirdparty, $limit, $page, $refresh = false) {
         $request = "/contacts?sortfield=t.rowid&sortorder=DESC&limit=".$limit."&page=0&thirdparty_ids=".$thirdparty->id."&pagination_data=true";                              
         $object = callDoliApi("GET", $request, null, dolidelay('contact', $refresh));

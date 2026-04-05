@@ -27,13 +27,12 @@ function informations_module($content, $url) {
     $content = "<div id='doliuserinfos-alert'></div><form action='".admin_url('admin-ajax.php')."' id='doliuserinfos-form' method='post' class='was-validated' enctype='multipart/form-data'>";
 
     $content .= '<div class="card shadow-sm"><div class="card-header">'.__( 'Edit my informations', 'doliconnect').'</div>';
-    $content .= doliuserform( $thirdparty, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'thirdparty', doliCheckRights('societe', 'creer'));
-
-    $content .= "<div class='card-body'><div class='d-grid gap-2'>";
+    $content .= doliuserform( $thirdparty, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'thirdparty', false);
     if (doliCheckRights('societe', 'creer')) { 
+        $content .= "<div class='card-body'><div class='d-grid gap-2'>";
         $content .= doliModalButton('thirdparty', 'editthirdparty', __( 'Update', 'doliconnect'), 'button', 'btn btn-outline-secondary', $thirdparty->id);
+        $content .= "</div></div>";
     }
-    $content .= "</div></div>";
     $content .= doliCardFooter($thirdparty, 'thirdparty');
     $content .= '</div></form>';
     return $content;
