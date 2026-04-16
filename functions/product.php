@@ -622,7 +622,7 @@ global $current_user;
     $order = doliConnect('order', $current_user, false, true);
   }
   if (isset($thirdparty->tva_assuj) && empty($thirdparty->tva_assuj)) {
-    if (isset($product->tva_tx))  $product->tva_tx = 0;
+    if (isset($product->tva_tx)) $product->tva_tx = 0;
   }
   if ( doliCheckModules('adherent') && $product->id == doliconst("ADHERENT_PRODUCT_ID_FOR_SUBSCRIPTIONS") && !empty(doliconst("FACTURE_TVAOPTION")) && !empty(doliconst("ADHERENT_VAT_FOR_SUBSCRIPTIONS"))) {
     $price_base_type = 'TTC';
