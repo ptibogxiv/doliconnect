@@ -64,6 +64,39 @@ if ( ! defined( 'ABSPATH' ) ) {
     return $use_block_editor;
 }, 10, 2);
 
+add_action('save_post_doliproduct', 'doliproduct_update_action', 10, 3);
+
+function doliproduct_update_action($post_ID, $post, $update) {
+    // Avoid running during autosave or revisions
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+        return;
+    }
+    if (wp_is_post_revision($post_ID)) {
+        return;
+    }
+    if (!current_user_can('edit_post', $post_ID)) {
+        return;
+    }
+
+    // Only run on updates, not on first creation
+    if ($update) {
+        // Your custom logic here
+        error_log("doliproduct Type '{$post->post_type}' with ID {$post_ID} was updated.");
+        
+        // Example: Send an email
+        update_post_meta($post_ID, 'doliproduct_productid', sanitize_text_field($_POST['doliproduct_productid']));
+    
+        $uln = [
+          'label' => $post->post_title,
+          'description' => $post->post_content,
+          'url' => $post->guid,
+          //'array_options' => $array_options
+	      ];                  
+        $updateproduct = callDoliApi("PUT", "/products/".sanitize_text_field($_POST['doliproduct_productid']), $uln, 0);
+        
+    }
+}
+
   add_action( 'init', 'doliproduct_taxonomies', 0 );  
     function doliproduct_taxonomies() { 
       $taxonomy_slug = get_post_field( 'post_name', get_option('dolishop') ).'/'.__( 'category', 'doliconnect' );  
@@ -102,13 +135,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 add_action('doliproduct_category_edit_form_fields', 'doliproduct_category_add_custom_field');
 add_action('doliproduct_category_add_form_fields', 'doliproduct_category_add_custom_field');
-
-function doliproduct_category_save_custom_field($term_id) {
-    if (isset($_POST['doliproduct_category_id'])) {
-        update_term_meta($term_id, 'doliproduct_category_id', sanitize_text_field($_POST['doliproduct_category_id']));
-    }
-}
-add_action('edited_doliproduct_category', 'doliproduct_category_save_custom_field');
 
   // Ajout d'un champ personnalisé au type de post doliproduct
   function doliproduct_add_custom_meta_box() {
