@@ -81,7 +81,7 @@ function doliuserinfos_request(){
 	global $current_user;
 	$ID = $current_user->ID;
 	
-	if ( isset($_POST['doliuserinfos-nonce']) && wp_verify_nonce( trim($_POST['doliuserinfos-nonce']), 'doliuserinfos') && isset($_POST['case']) && $_POST['case'] == "update" ) {
+	if ( isset($_POST['doliuserinfos-nonce']) && wp_verify_nonce( trim($_POST['doliuserinfos-nonce']), 'doliuserinfos') && isset($_POST['case']) && $_POST['case'] == "updateThirdparty" ) {
 
 		$thirdparty=$_POST['thirdparty'][''.doliConnect('thirdparty', $current_user)->id.''];
 		$thirdparty = dolisanitize($thirdparty);
@@ -1216,13 +1216,13 @@ global $current_user;
 		$modal['body'] .= '<input type="hidden" name="contactid" value="'.$contactid.'">';
 		$modal['body'] .= '<input type="hidden" name="modalid" value="'.trim($_POST['id']).'">';
 		$modal['body'] .= doliuserform( $object, dolidelay('constante', true, true), 'thirdparty', doliCheckRights('societe', 'creer'));
-		$modal['footer'] = '<button name="case" class="btn btn-outline-secondary" type="button" onclick="doliModalAction(this.form, \'update\', \''.admin_url('admin-ajax.php').'\')">'.__( 'Update', 'doliconnect').'</button>';
+		$modal['footer'] = '<button name="case" class="btn btn-outline-secondary" type="button" onclick="doliModalAction(this.form, \'updateThirdparty\', \''.admin_url('admin-ajax.php').'\')">'.__( 'Update', 'doliconnect').'</button>';
 		$response['js'] = plugins_url( 'doliconnect/includes/custom/js/dolimodalaction.js');
 		$response['modal'] = doliModalTemplate($_POST['id'], $modal['header'], $modal['body'], $modal['footer'], 'modal-lg', null, 'p-0', null, admin_url('admin-ajax.php'), 'dolicontactinfos');
 		wp_send_json_success($response);
 		die();
 	} elseif ( check_ajax_referer('dolimodal-nonce', 'dolimodal-nonce') && isset($_POST['case']) && $_POST['case'] == "gateway" ) {
-		$modal['header'] = __( 'Edit my informations', 'doliconnect');
+		$modal['header'] = __( 'Edit my payment method', 'doliconnect');
 		$object = doliConnect('thirdparty', $current_user, false, true);
 		$contactid = $object->id;
 		if (isset($object->error)) {
@@ -1240,7 +1240,7 @@ global $current_user;
 		if (trim($_POST['id']) == 'stripe') {
 			$request = "/doliconnector/".$object->id."/paymentmethods";
 			$object2 = callDoliApi("GET", $request."/".trim($_POST['value1']), null, dolidelay('thirdparty', true));
-			//$modal['body'] .= var_dump($object2);
+			$modal['body'] .= trim($_POST['value1']).$object2->type;//var_dump($object2);
 		}
 		$modal['footer'] = '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button><button name="case" class="btn btn-outline-secondary" type="button" onclick="doliModalAction(this.form, \'delete\', \''.admin_url('admin-ajax.php').'\')">'.__( 'Delete', 'doliconnect').'</button>';
 		$response['js'] = plugins_url( 'doliconnect/includes/custom/js/dolimodalaction.js');
