@@ -8,20 +8,9 @@
  * @package OPB
  */
 
-// Exit if accessed directly.
-// if ( ! defined( 'ABSPATH' ) ) {
-// 	exit;
-// }
-
-/**
- * Enqueue the block's assets for the editor.
- *
- * `wp-blocks`: Includes block type registration and related functions.
- * `wp-element`: Includes the WordPress Element abstraction for describing the structure of your blocks.
- * `wp-i18n`: To internationalize the block's text.
- *
- * @since 1.0.0
- */
+if ( ! defined( 'ABSPATH' ) ) {
+    exit;
+}
 
 function doliconnect_register_membership_blocks() {
     register_block_type(
