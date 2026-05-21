@@ -253,7 +253,6 @@ function getDoliProductUrl($productid, $refresh = false) {
 
   $query = new WP_Query($args);
 
-  // Vérifier si un post correspondant a été trouvé
   if ($query->have_posts()) {
     if (!empty($refresh)) {
       $categories =  callDoliApi("GET", "/categories/object/product/".$product->id."?sortfield=s.rowid&sortorder=ASC", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
