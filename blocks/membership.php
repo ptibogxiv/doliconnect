@@ -46,7 +46,7 @@ function doliconnect_register_membership_blocks() {
             'render_callback' => function ( $attributes ) {
                 global $current_user;
                 doliconnect_enqueues();
-                $html = "";
+                
                 $adherent = doliConnect('member', $current_user, false);
 
                 if (isset($adherent->id) && $adherent->id > 0) {
@@ -62,9 +62,10 @@ function doliconnect_register_membership_blocks() {
                 }
                 $request = "/adherentsplus/type?sortfield=t.libelle&sortorder=ASC&".$member_id.$morphy;
                 $typeadhesion = callDoliApi("GET", $request, null, dolidelay('member'));
-
+                
+                $html .= '<div class="card"><div class="card-header">'.sprintf( __( 'Membership %s', 'doliconnect' ), esc_html( $typeadhesion[0]->season )).'</div>';
+                
                 if ( !isset($typeadhesion->error) ) {
-                    $html .= '<div class="card"><div class="card-header">'.__( 'Prices', 'doliconnect').' '.$typeadhesion[0]->season.'</div>';
                     $html .= dolimembertypelist($typeadhesion, $adherent);
                     $html .= '<div class="card-body"><small>'.__( 'Note: the admins reserve the right to change your membership in relation to your personal situation. A validation of the membership may be necessary depending on the cases.', 'doliconnect').'</small></div>';
                 }
