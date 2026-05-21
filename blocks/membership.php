@@ -73,12 +73,6 @@ function doliconnect_register_membership_blocks() {
                 $html .= doliCardFooter($typeadhesion , 'member', $request);
                 $html .= "</div>";
                 return $html;
-                //return sprintf(
-                //    __( '<p>%s: %d items (%s)</p>', 'myplugin' ),
-                //    esc_html( $attributes['title'] ),
-                //    $attributes['count'],
-                //    $attributes['size']
-                //);
             },
             'supports'        => array(
                 'autoRegister' => true,
