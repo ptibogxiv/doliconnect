@@ -1,12 +1,4 @@
 <?php
-/**
- * BLOCK: admin
- *
- * Gutenberg Custom admin Block assets.
- *
- * @since   1.0.0
- * @package OPB
- */
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
