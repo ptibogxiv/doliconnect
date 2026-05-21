@@ -176,7 +176,7 @@ add_action('save_post', 'doliproduct_save_meta_box');
           $custom_field_value = get_post_meta( $post->ID, 'doliproduct_productid', true );
           $custom_message = '';//<div>' . sprintf( __( 'This is a doliproduct post. Item N°: %s', 'doliconnect' ), esc_html( $custom_field_value ) ) . '</div>';
           $request = "/products/".esc_attr($custom_field_value)."?includesubproducts=true&includetrans=true";
-      $product = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+          $product = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
           $custom_message .= apply_filters( 'doliproductcard', $product);
           return $custom_message . $content;
@@ -230,98 +230,96 @@ function themesdna_add_custom_post_types_to_search( $query ) {
 add_action( 'pre_get_posts', 'themesdna_add_custom_post_types_to_search' );
 
 function getDoliProductUrl($productid, $refresh = false) {
-    // Vérifier que l'ID du produit est valide
-    if (empty($productid)) {
-        return 'Invalid product ID';
-    }
-    $product = callDoliApi("GET", "/products/".$productid."?includesubproducts=true&includetrans=true", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-    if (!isset($product->id) || empty($product->id)) {
-      return 'Title and Product ID are required';
-    }
+  // Vérifier que l'ID du produit est valide
+  if (empty($productid)) {
+    return 'Invalid product ID';
+  }
+  $product = callDoliApi("GET", "/products/".$productid."?includesubproducts=true&includetrans=true", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+  if (!isset($product->id) || empty($product->id)) {
+    return 'Title and Product ID are required';
+  }
 
-    $args = array(
-        'post_type'  => 'doliproduct',
-        'meta_query' => array(
-            array(
-                'key'     => 'doliproduct_productid',
-                'value'   => sanitize_text_field($productid),
-                'compare' => '='
-            )
-        ),
-        'posts_per_page' => 1
-    );
+  $args = array(
+      'post_type'  => 'doliproduct',
+      'meta_query' => array(
+        array(
+          'key'     => 'doliproduct_productid',
+          'value'   => sanitize_text_field($productid),
+          'compare' => '='
+        )
+      ),
+    'posts_per_page' => 1
+  );
 
-    $query = new WP_Query($args);
+  $query = new WP_Query($args);
 
-    // Vérifier si un post correspondant a été trouvé
-    if ($query->have_posts()) {
-if (!empty($refresh)) {
-    $categories =  callDoliApi("GET", "/categories/object/product/".$product->id."?sortfield=s.rowid&sortorder=ASC", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+  // Vérifier si un post correspondant a été trouvé
+  if ($query->have_posts()) {
+    if (!empty($refresh)) {
+      $categories =  callDoliApi("GET", "/categories/object/product/".$product->id."?sortfield=s.rowid&sortorder=ASC", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
       // Ajouter les catégories de produits au post
       if (isset($categories) && !empty($categories)) {
-          $category_ids = array();
-          foreach ($categories as $category) {
-              $term = getDoliProductCategory($category);
-              if ($term) {
-                  $category_ids[] = $term;
-              }
+        $category_ids = array();
+        foreach ($categories as $category) {
+          $term = getDoliProductCategory($category);
+          if ($term) {
+            $category_ids[] = $term;
           }
+        }
         if (!empty($category_ids)) {
           wp_set_post_terms($query->posts[0]->ID, $category_ids, 'doliproduct_category');
         }
       }
-}         
+    }         
 
-      $url = get_permalink($query->posts[0]->ID);
-      wp_reset_postdata(); // Réinitialiser la requête globale
-      return $url;
-    } else {
+    $url = get_permalink($query->posts[0]->ID);
+    wp_reset_postdata(); // Réinitialiser la requête globale
+    return $url;
+  } else {
     // Si aucun post n'a été trouvé, créer un nouveau post doliproduct
     $product = callDoliApi("GET", "/products/".$productid."?includesubproducts=true&includetrans=true", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
     if (!isset($product->id) || empty($product->id)) {
       return 'Title and Product ID are required';
     }
       
-      $title = doliproduct($product, 'label');
-      $content = doliproduct($product, 'description');
+    $title = doliproduct($product, 'label');
+    $content = doliproduct($product, 'description');
 
-      // Préparer les données du post
-      $post_data = array(
-          'post_title'   => sanitize_text_field($title),
-          'post_content' => wp_kses_post($content),
-          'post_status'  => 'publish',
-          'post_type'    => 'doliproduct',
-          'meta_input'   => array(
-              'doliproduct_productid' => sanitize_text_field($productid),
-          ),
-      );
+    $post_data = array(
+      'post_title'   => sanitize_text_field($title),
+      'post_content' => wp_kses_post($content),
+      'post_status'  => 'publish',
+      'post_type'    => 'doliproduct',
+      'meta_input'   => array(
+        'doliproduct_productid' => sanitize_text_field($productid),
+      ),
+    );
 
-      // Insérer le post dans la base de données
-      $post_id = wp_insert_post($post_data);
+    $post_id = wp_insert_post($post_data);
 
-      if (is_wp_error($post_id)) {
-          return 'Error creating post: ' . $post_id->get_error_message();
-      }
+    if (is_wp_error($post_id)) {
+      return 'Error creating post: ' . $post_id->get_error_message();
+    }
 
-      $url = get_permalink($post_id);
-      if (!empty($refresh)) {
-    $categories =  callDoliApi("GET", "/categories/object/product/".$product->id."?sortfield=s.rowid&sortorder=ASC", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+    $url = get_permalink($post_id);
+    if (!empty($refresh)) {
+      $categories =  callDoliApi("GET", "/categories/object/product/".$product->id."?sortfield=s.rowid&sortorder=ASC", null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
       // Ajouter les catégories de produits au post
       if (isset($categories) && !empty($categories)) {
-          $category_ids = array();
-          foreach ($categories as $category) {
-              $term = getDoliProductCategory($category);
-              if ($term) {
-                  $category_ids[] = $term;
-              }
+        $category_ids = array();
+        foreach ($categories as $category) {
+          $term = getDoliProductCategory($category);
+          if ($term) {
+            $category_ids[] = $term;
           }
+        }
         if (!empty($category_ids)) {
           wp_set_post_terms($post_id, $category_ids, 'doliproduct_category');
         }
       }
-}  
-      wp_reset_postdata(); // Réinitialiser la requête globale
-      return $url;
+    }  
+    wp_reset_postdata(); // Réinitialiser la requête globale
+    return $url;
   }
 
   return 'No URL found';
