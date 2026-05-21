@@ -23,7 +23,55 @@
  * @since 1.0.0
  */
 
+function doliconnect_register_membership_blocks() {
+    register_block_type(
+        'doliconnect/membership-block',
+        array(
+            'title'          => __( 'Membership', 'doliconnect'),
+			'description'	 => __( 'A block for displaying membership.', 'doliconnect'),
+			'icon'			 => 'tickets-alt',
+			'category'		 => 'widgets',
+            'attributes'      => array(
+                'title'   => array(
+                    'label'   => __( 'Title', 'myplugin' ),
+                    'type'    => 'string',
+                    'default' => 'Hello World',
+                ),
+                'count'   => array(
+                    'label'   => __( 'Count', 'myplugin' ),
+                    'type'    => 'integer',
+                    'default' => 5,
+                ),
+                'enabled' => array(
+                    'label'   => __( 'Enabled?', 'myplugin' ),
+                    'type'    => 'boolean',
+                    'default' => true,
+                ),
+                'size'    => array(
+                    'label'   => __( 'Size', 'myplugin' ),
+                    'type'    => 'string',
+                    'enum'    => array( 'small', 'medium', 'large' ),
+                    'default' => 'medium',
+                ),
+            ),
+            'render_callback' => function ( $attributes ) {
+                return sprintf(
+                    __( '<p>%s: %d items (%s)</p>', 'myplugin' ),
+                    esc_html( $attributes['title'] ),
+                    $attributes['count'],
+                    $attributes['size']
+                );
+            },
+            'supports'        => array(
+                'autoRegister' => true,
+            ),
+        )
+    );
+}
 
+add_action( 'init', 'doliconnect_register_membership_blocks' );
+
+/*
 function doliconnect_membership_block() {
 
 	// Scripts.
@@ -82,3 +130,4 @@ return $html;
 
 // Hook: Editor assets.
 add_action( 'init', 'doliconnect_membership_block' );
+*/
