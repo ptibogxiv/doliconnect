@@ -65,7 +65,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 }, 10, 2);
 
 add_action('save_post_doliproduct', 'doliproduct_update_action', 10, 3);
-
 function doliproduct_update_action($post_ID, $post, $update) {
     // Avoid running during autosave or revisions
     if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
@@ -357,6 +356,7 @@ function getDoliProductCategory($category) {
       return 'Error: ' . $result->get_error_message();
     } else {
       update_term_meta($result['term_id'], 'doliproduct_category_id', sanitize_text_field($category->id));
+      
       return $result['term_id'];
     }
   }
