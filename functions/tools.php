@@ -83,6 +83,7 @@ function doliConnect($fonction, $current_user = null, $boolean = false, $refresh
           $thirdparty = callDoliApi("GET", "/thirdparties/email/".$current_user->user_email, null, dolidelay('doliconnector', true));
         }
         $rdr = [
+          'login' => $current_user->user_login,
           'key_account'  => $current_user->ID,
           'site' => 'wordpress',
           'status' => 1
