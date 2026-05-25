@@ -45,6 +45,7 @@ require_once plugin_dir_path(__FILE__).'/functions/data-request.php';
 require_once plugin_dir_path(__FILE__).'/functions/tools.php';
 require_once plugin_dir_path(__FILE__).'/functions/widgets.php';
 require_once plugin_dir_path(__FILE__).'/functions/cron.php';
+require_once plugin_dir_path(__FILE__).'/functions/api.php';
 require_once plugin_dir_path(__FILE__).'/dashboard/templates.php';
 require_once plugin_dir_path(__FILE__).'/dashboard/dashboard.php';
 if ( doliCheckModules('product') || doliCheckModules('service') ) {
