@@ -268,7 +268,7 @@ function getDoliProductUrl($productid, $refresh = false) {
           wp_set_post_terms($query->posts[0]->ID, $category_ids, 'doliproduct_category');
         }
       }
-    }         
+    }     
 
     $url = get_permalink($query->posts[0]->ID);
     wp_reset_postdata(); // Réinitialiser la requête globale
