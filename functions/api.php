@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 add_action( 'rest_api_init', 'doliconnect_register_rest_routes' );
 
 function doliconnect_register_rest_routes() {
-    $namespace = 'doliconnect/v1';
+    $namespace = 'wp/v2/doliconnect';
 
     register_rest_route(
         $namespace,
