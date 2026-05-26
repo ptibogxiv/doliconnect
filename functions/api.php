@@ -249,8 +249,8 @@ function doliconnect_rest_update_product( $request ) {
         'ID' => $post_id,
     );
 
-    if ( isset( $body['title'] ) ) {
-        $post_data['post_title'] = sanitize_text_field( $body['title'] );
+    if ( isset( $body['label'] ) ) {
+        $post_data['post_title'] = sanitize_text_field( $body['label'] );
     }
 
     if ( isset( $body['description'] ) ) {
@@ -272,7 +272,8 @@ function doliconnect_rest_update_product( $request ) {
         );
     }
 
-    // Update custom meta fields
+    // Update custom meta fields TO DO 
+    /*
     if ( isset( $body['meta'] ) && is_array( $body['meta'] ) ) {
         foreach ( $body['meta'] as $meta_key => $meta_value ) {
             $safe_key = sanitize_text_field( $meta_key );
@@ -280,6 +281,7 @@ function doliconnect_rest_update_product( $request ) {
             update_post_meta( $post_id, $safe_key, $safe_value );
         }
     }
+    */
 
     // Return updated post
     $updated_post = get_post( $post_id );
