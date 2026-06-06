@@ -2,9 +2,9 @@
 
 Contributors: ptibogxiv, audrasjb
 Tags: erp, crm, ecommerce, dolibarr, GDPR
-Requires at least: 6.0
-Tested up to: 7.1
-Stable tag: 10.0.42
+Requires at least: 6.5
+Tested up to: 7.0
+Stable tag: 10.0.43
 Requires PHP: 8.2
 License: GPL v3 or later
 Donate link: https://ptibogxiv.eu

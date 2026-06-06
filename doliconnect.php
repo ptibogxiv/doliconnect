@@ -3,7 +3,7 @@
  * Plugin Name: Doliconnect
  * Plugin URI: https://ptibogxiv.eu
  * Description: Connect your Dolibarr (ERP/CRM) to Wordpress. 
- * Version: 10.0.42
+ * Version: 10.0.43
  * Author: ptibogxiv
  * Author URI: https://ptibogxiv.eu
  * Network: true
@@ -37,17 +37,7 @@ function doliconnect_textdomain() {
 
 define('DOLIBARR_MINIMUM_VERSION', '19.0.0');
 define('DOLIBARR_LEGAL_VERSION', '23.0.3');
-/*
-function custom_action_function() {
-    $sitename = get_option('blogname');
-    $siteurl = get_option('siteurl');
-    $subject = "[$sitename] updater plugin";
-    $body = __( 'It appears that you have just logged on to our site the following IP address:', 'doliconnect')."<br /><br />".$_SERVER['REMOTE_ADDR']."<br /><br />".__( 'If you have not made this action, please change your password immediately.', 'doliconnect')."<br /><br />".sprintf(__('Your %s\'s team', 'doliconnect'), $sitename)."<br />$siteurl";				
-    $headers = array('Content-Type: text/html; charset=UTF-8');
-    $mail =  wp_mail('support@ptibogxiv.eu', $subject, $body, $headers);
-}
-add_action('upserv_get_package_info', 'custom_action_function');
-*/
+
 // ********************************************************
 
 require_once plugin_dir_path(__FILE__).'/functions/enqueues.php';
