@@ -3,7 +3,7 @@
  * Plugin Name: Doliconnect
  * Plugin URI: https://ptibogxiv.eu
  * Description: Connect your Dolibarr (ERP/CRM) to Wordpress. 
- * Version: 10.0.40
+ * Version: 10.0.41
  * Author: ptibogxiv
  * Author URI: https://ptibogxiv.eu
  * Network: true
@@ -37,7 +37,17 @@ function doliconnect_textdomain() {
 
 define('DOLIBARR_MINIMUM_VERSION', '19.0.0');
 define('DOLIBARR_LEGAL_VERSION', '23.0.3');
-
+/*
+function custom_action_function() {
+    $sitename = get_option('blogname');
+    $siteurl = get_option('siteurl');
+    $subject = "[$sitename] updater plugin";
+    $body = __( 'It appears that you have just logged on to our site the following IP address:', 'doliconnect')."<br /><br />".$_SERVER['REMOTE_ADDR']."<br /><br />".__( 'If you have not made this action, please change your password immediately.', 'doliconnect')."<br /><br />".sprintf(__('Your %s\'s team', 'doliconnect'), $sitename)."<br />$siteurl";				
+    $headers = array('Content-Type: text/html; charset=UTF-8');
+    $mail =  wp_mail('support@ptibogxiv.eu', $subject, $body, $headers);
+}
+add_action('upserv_get_package_info', 'custom_action_function');
+*/
 // ********************************************************
 
 require_once plugin_dir_path(__FILE__).'/functions/enqueues.php';
@@ -180,43 +190,6 @@ define( 'DONOTCACHEPAGE', 1);
 define( 'DONOTCACHEPAGE', 1);
 }
 }
-// ********************************************************
-/*
-function json_basic_auth_handler( $user ) {
-	global $wp_json_basic_auth_error;
-	$wp_json_basic_auth_error = null;
-
-	if ( ! empty( $user ) ) {
-		return $user;
-	}
-
-	if ( !isset( $_SERVER['PHP_AUTH_USER'] ) ) {
-		return $user;
-	}
-	$username = $_SERVER['PHP_AUTH_USER'];
-	$password = $_SERVER['PHP_AUTH_PW'];
-
-	remove_filter( 'determine_current_user', 'json_basic_auth_handler', 20 );
-	$user = wp_authenticate( $username, $password );
-	add_filter( 'determine_current_user', 'json_basic_auth_handler', 20 );
-	if ( is_wp_error( $user ) ) {
-		$wp_json_basic_auth_error = $user;
-		return null;
-	}
-	$wp_json_basic_auth_error = true;
-	return $user->ID;
-}
-add_filter( 'determine_current_user', 'json_basic_auth_handler', 20 );
-function json_basic_auth_error( $error ) {
-	// Passthrough other errors
-	if ( ! empty( $error ) ) {
-		return $error;
-	}
-	global $wp_json_basic_auth_error;
-	return $wp_json_basic_auth_error;
-}
-add_filter( 'rest_authentication_errors', 'json_basic_auth_error' );
-*/
 // ********************************************************
 // Add the Dolibarr API call function
 // This function is used to call the Dolibarr API with the specified method, link,
