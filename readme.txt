@@ -4,8 +4,8 @@ Contributors: ptibogxiv, audrasjb
 Tags: erp, crm, ecommerce, dolibarr, GDPR
 Requires at least: 6.5
 Tested up to: 7.0
-Stable tag: 10.0.43
-Requires PHP: 8.2
+Stable tag: 10.1.0
+Requires PHP: 8.3
 License: GPL v3 or later
 Donate link: https://ptibogxiv.eu
 
@@ -72,6 +72,12 @@ We would like to thank this contributors and plugins:
 [gdpr-data-request-form](https://wordpress.org/plugins/gdpr-data-request-form/ "gdpr-data-request-form")
 
 == Changelog ==
+   = 10.x.y =
+* better UX/UI
+* upgrade Dolibarr version
+* fix php bugs & error
+* rebuid and more powerful plugin
+
    = 9.6.x =
 * better UX/UI
 * upgrade Dolibarr version
