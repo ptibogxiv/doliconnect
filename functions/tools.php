@@ -1445,7 +1445,7 @@ if ( in_array($mode, array('contact')) && doliversion('12.0.0') ) {
 if ( !in_array($mode, array('donation', 'member', 'linkthirdparty')) ) {
   $doliuser .= "<li class='list-group-item list-group-item-light list-group-item-action'>";
   if ( !in_array($mode, array('member', 'contact', 'linkthirdparty')) ) {
-    $doliuser .= '<div class="form-floating mb-2"><input type="url" class="form-control" id="'.$idobject.'[url]" name="'.$idobject.'[url]" placeholder="www.example.com" value="'.stripslashes(htmlspecialchars((isset($object->url) ? $object->url : null), ENT_QUOTES)).'" ';
+    $doliuser .= '<div class="form-floating mb-2"><input type="url" class="form-control" id="'.$idobject.'[url]" name="'.$idobject.'[url]" placeholder="www.example.com" value="'.(isset($object->url) ? stripslashes(htmlspecialchars($object->url, ENT_QUOTES)) : null).'" ';
     if (!$rights) {
       $doliuser .= ' disabled';
     }
