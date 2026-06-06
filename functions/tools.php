@@ -44,7 +44,7 @@ if ( doliversion($version) ) {
 
 //add_action( 'init', 'doliConnect', 10, 2);
 //add_action( 'admin_init', 'doliConnect', 5, 2); 
-function doliConnect($fonction, $current_user = null, $boolean = false, $refresh = false) {
+function doliConnect($fonction, $current_user = null, $boolean = false, $refresh = false, $entity = null) {
   if ( empty($current_user) ) {
     global $current_user;  
   }
@@ -104,7 +104,7 @@ function doliConnect($fonction, $current_user = null, $boolean = false, $refresh
       $return = callDoliApi("GET", "/members/".$id, null, dolidelay('doliconnector', $refresh));
     }
   } elseif ($fonction == 'user' && isset($current_user->user_email) && !empty($current_user->user_email)) {
-    $return = callDoliApi("GET", "/users/email/".$current_user->user_email, null, dolidelay('doliconnector', $refresh));
+    $return = callDoliApi("GET", "/users/email/".$current_user->user_email, null, dolidelay('doliconnector', $refresh), $entity);
   } elseif ($fonction == 'order' && isset($current_user->ID) && !empty($current_user->ID)) {
     if ( doliversion('21.0.0') ) {
       $thirdparty = callDoliApi("GET", "/thirdparties/accounts/wordpress/".$current_user->ID, null, dolidelay('doliconnector', $refresh));
