@@ -76,6 +76,7 @@ We would like to thank this contributors and plugins:
 * better UX/UI
 * upgrade Dolibarr version
 * fix php bugs & error
+* please note that a bug can block updating. You need to rollback or desinstall this plugin before a new install
 * rebuid and more powerful plugin
 
    = 9.6.x =
