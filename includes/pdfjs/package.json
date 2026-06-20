@@ -2,7 +2,7 @@
   "name": "pdf.js",
   "type": "module",
   "devDependencies": {
-    "@babel/core": "^7.29.0",
+    "@babel/core": "^7.29.6",
     "@babel/preset-env": "^7.29.0",
     "@babel/runtime": "^7.28.6",
     "@csstools/postcss-light-dark-function": "^3.0.0",
