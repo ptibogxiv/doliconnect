@@ -1006,7 +1006,7 @@ if (in_array($mode, array('thirdparty')) ) {
   }
 }
 
-if ( !is_multisite() && doliCheckModules('multicompany') && in_array($mode, array('thirdparty')) ) {
+if ( !is_multisite() && doliCheckModules('multicompany') && in_array($mode, array('thirdparty', 'member')) ) {
   $doliuser .= '<li class="list-group-item list-group-item-light list-group-item-action"><div class="col-12 col-md"><div class="form-floating" id="entity_form">';
   $doliuser .= doliSelectForm("entity", "/multicompany?sortfield=t.rowid&sortorder=ASC", __( '- Select your entity -', 'doliconnect'), __( 'Entity', 'doliconnect'), isset($object->entity) ? $object->entity : null, $idobject, $rights, $delay, 'id');
   $doliuser .= '</div></div></li>';
