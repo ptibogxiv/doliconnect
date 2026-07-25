@@ -148,7 +148,6 @@ function doliCheckModules($module, $refresh = false) {
   }
   return $return;
 }
-add_action( 'admin_init', 'doliCheckModules', 5, 1); 
 
   function doliLockPost_meta_box() {
       add_meta_box(
@@ -311,14 +310,15 @@ function doliversion($version) {
   $ret = false;
   if (!empty(get_site_option('dolibarr_public_url')) && !empty(get_site_option('dolibarr_private_key'))) {
     $dolibarr = callDoliApi("GET", "/status", null, dolidelay('dolibarr'));
-    if ( is_object($dolibarr) && isset($dolibarr->success) && isset($dolibarr->success->dolibarr_version)) $versiondoli = explode("-", $dolibarr->success->dolibarr_version);
-    if ( is_object($dolibarr) && isset($versiondoli) && version_compare($versiondoli[0], $version) >= 0 ) {
-      $ret = $versiondoli[0];
+    if ( is_object($dolibarr) && isset($dolibarr->success) && isset($dolibarr->success->dolibarr_version)) {
+      $versiondoli = explode("-", $dolibarr->success->dolibarr_version);
+      if ( isset($versiondoli[0]) && version_compare($versiondoli[0], $version) >= 0 ) {
+        $ret = $versiondoli[0];
+      }
     }
   }
   return $ret;
 }
-add_action( 'admin_init', 'doliversion', 5, 1); 
 
 function doliPG($pg = 0) {
   if ( isset($pg) && is_numeric(esc_attr($pg)) && esc_attr($pg) > 0 ) { $page = esc_attr($pg); }  else { $page = 0; }
@@ -767,19 +767,11 @@ return $doliSelect;
 }
 
 function doliThirdparty($thirdparty, $refresh = false) {
-        $content = '';
-        if ( !isset($listcontact->error) && $listcontact != null ) {
-            foreach ($listcontact  as $postcontact) { 
-                $content .= doliModalButton('contact', 'editcontact'.$postcontact->id, '<div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">'.($postcontact->civility ? $postcontact->civility : $postcontact->civility_code).' '.$postcontact->firstname.' '.$postcontact->lastname.'</h5>
-                    <small class="text-body-secondary">'.$postcontact->poste.'</small></div>
-                    <p class="mb-1">'.$postcontact->address.', '.$postcontact->zip.' '.$postcontact->town.'</p>
-                    <small class="text-body-secondary">'.$postcontact->email.'</small>', 'button', 'list-group-item lh-condensed list-group-item-action list-group-item-light', $postcontact->id);                                                                           
-            }
-        } else {
-            $content .= "<li class='list-group-item list-group-item-light'><center>".__( 'No contact', 'doliconnect')."</center></li>";
-        }
-return $content;
+    if ( empty( $thirdparty ) || empty( $thirdparty->id ) ) {
+        return "<li class='list-group-item list-group-item-light'><center>" . __( 'No contact', 'doliconnect' ) . "</center></li>";
+    }
+
+    return doliContactList( $thirdparty, 100, 0, $refresh );
 }
 
 function doliContactList($thirdparty, $limit, $page, $refresh = false) {
