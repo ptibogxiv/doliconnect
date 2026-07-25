@@ -9,11 +9,11 @@ Requires PHP: 8.2
 License: GPL v3 or later
 Donate link: https://ptibogxiv.eu
 
-This plugin will interface your Dolibarr within a customer interface in WordPress
+This plugin interfaces your Dolibarr installation with a customer interface in WordPress.
 
 == Description ==
 
-Use this plugin to greatly improve relations with yours customers. No Woocommerce or another e-shop need!
+Use this plugin to greatly improve relations with your customers. No WooCommerce or other e-shop is needed!
 
 If you like the plugin, feel free to rate it (on the right side of this page)!
 
@@ -24,23 +24,23 @@ You can test it live on [https://ptibogxiv.dev](https://ptibogxiv.dev)
 1. Download the plugin via WordPress.org
 2. Upload the ZIP file through the 'Plugins > Add New > Upload' screen in your WordPress dashboard
 3. Activate the plugin through the 'Plugins' menu in WordPress
-4. Navigate to "Doliconnect", follow the instructions and complete settings.
+4. Navigate to "Doliconnect", follow the instructions, and complete the settings.
 
 Dolibarr configuration steps:
 
 1. Activate the REST API for Dolibarr: go to menu _Home > Setup > Modules/Applications_ and activate the _API/Web services (REST server)_.
-2. Generate and copy a specific user API key with full/admin rights: go to menu _Home > Users & groups_, select your admin user in the list. Once on the User card, click the _Modify_ button and generate and copy the _Key for API_ (see screenshot). Click the _Save_ button.
-3. Your dolibarr needs to have the Doliconnector module which can be freely downloaded on Dolistore or Github [Github](https://github.com/ptibogxiv/doliconnector/releases)
+2. Generate and copy a specific user API key with full/admin rights: go to menu _Home > Users & groups_, select your admin user in the list, click _Modify_, generate and copy the _Key for API_ (see screenshot), then click _Save_.
+3. Your Dolibarr installation needs the Doliconnector module, which can be freely downloaded from Dolistore or GitHub: [GitHub](https://github.com/ptibogxiv/doliconnector/releases)
 
 WordPress configuration steps:
 1. Go to WordPress Admin > Settings > Doliconnect
-2. BE CAREFUL, in multisite blog, there is a netword settings page too for keys and general settings!
+2. BE CAREFUL: in a multisite blog, there is also a network settings page for keys and general settings!
 
 == Frequently Asked Questions ==
 
-1. From Dolibarr 13.X, Doliconnect supports rights of Dolibarr for view/edit/delete datas via WordPress.
-2. Using old and unupdated Dolibarr can do some mistakes or less functionnality. Please check compatibility!
-3. Always delete WordPress transients after changing settings in Dolibarr. All datas are saved with transients in WordPress 
+1. From Dolibarr 13.x, Doliconnect supports Dolibarr permissions for viewing, editing, and deleting data via WordPress.
+2. Using an old or outdated Dolibarr version may cause errors or reduced functionality. Please check compatibility!
+3. Always delete WordPress transients after changing settings in Dolibarr. All data are cached using transients in WordPress.
 
 = Dolibarr compatibility =
 
@@ -55,469 +55,466 @@ Doliconnect v3.x -> Dolibarr 10.x
 
 = REST API compatibility =
 
-In some cases, REST API with Dolibarr need some extra settings to work. Please read this
+In some cases, the REST API with Dolibarr needs extra settings to work. Please read this:
 https://github.com/Dolibarr/dolibarr/pull/12089
 
 == Screenshots ==
 
 1. Shortcode integration.
 2. Front-end form feature.
-3. Front-end form request succeed.
+3. Front-end form request success.
 4. Confirmation email sent to the user/visitor.
 
 == Credits ==
 
-We would like to thank this contributors and plugins:
+We would like to thank these contributors and plugins:
 
 [gdpr-data-request-form](https://wordpress.org/plugins/gdpr-data-request-form/ "gdpr-data-request-form")
 
 == Changelog ==
    = 10.x.y =
-* better UX/UI
-* upgrade Dolibarr version
-* fix php bugs & error
-* please note that a bug can block updating. You need to rollback or desinstall this plugin before a new install
-* rebuid and more powerful plugin
+* Better UX/UI
+* Upgrade Dolibarr version
+* Fix PHP bugs and errors
+* Please note that a bug can block updating. You need to rollback or uninstall this plugin before a new install
+* Rebuild and more powerful plugin
 
    = 9.6.x =
-* better UX/UI
-* upgrade Dolibarr version
-* fix php bugs & error
+* Better UX/UI
+* Upgrade Dolibarr version
+* Fix PHP bugs and errors
 
    = 9.5.x =
-* better UX/UI
-* upgrade Dolibarr version
-* more customization with child theme template
-* fix php bugs & error
+* Better UX/UI
+* Upgrade Dolibarr version
+* More customization with child theme template
+* Fix PHP bugs and errors
 
    = 9.4.x =
-* better UX/UI
-* fix vulnerability
-* upgrade library
-* step for more wordpress legacy template with doliconnect
-* fix php bugs & error
+* Better UX/UI
+* Fix vulnerability
+* Upgrade library
+* Step for more WordPress legacy template with Doliconnect
+* Fix PHP bugs and errors
 
    = 9.3.x =
-* better UX/UI
-* upgrade library
-* less dependance of doliconnector module
-* first beta step for more wordpress legacy template with doliconnect
-* fix php bugs & error
+* Better UX/UI
+* Upgrade library
+* Less dependence on the Doliconnector module
+* First beta step for more WordPress legacy templates with Doliconnect
+* Fix PHP bugs and errors
 
    = 9.2.x =
-* better UX/UI
-* upgrade library
-* less dependance of doliconnector module
-* fix php bugs & error
+* Better UX/UI
+* Upgrade library
+* Less dependence on the Doliconnector module
+* Fix PHP bugs and errors
 
    = 9.1.x =
-* better UX/UI
-* better support of related products
-* fix php bugs & error
+* Better UX/UI
+* Better support for related products
+* Fix PHP bugs and errors
 
    = 9.0.x =
-* better UX/UI
-* fix php bugs & error
+* Better UX/UI
+* Fix PHP bugs and errors
 
    = 8.11.x =
-* better UX/UI
-* better shop with negative price
-* fix php bugs & error
+* Better UX/UI
+* Better shop with negative price
+* Fix PHP bugs and errors
 
    = 8.10.x =
-* better UX/UI
-* better support agenda event
-* better cart
-* better shop
-* better transient
-* better captcha
-* better multilang with polylang & wpml
-* fix php bugs & error
+* Better UX/UI
+* Better support for agenda events
+* Better cart
+* Better shop
+* Better transients
+* Better captcha
+* Better multilingual support with Polylang & WPML
+* Fix PHP bugs and errors
 
    = 8.9.x =
-* better UX/UI
-* better support agenda event
-* better membership susbcription
-* fix php bugs & error
+* Better UX/UI
+* Better support for agenda events
+* Better membership subscription
+* Fix PHP bugs and errors
 
    = 8.8.x =
-* better UX/UI
-* support agenda event
-* better admin & multilang
-* fix php bugs & error
+* Better UX/UI
+* Support agenda events
+* Better admin and multilingual support
+* Fix PHP bugs and errors
 
    = 8.7.x =
-* better UX/UI
-* fix php bugs & error
+* Better UX/UI
+* Fix PHP bugs and errors
 
    = 8.6.x =
-* support of exepnse report
-* fix php bugs & error
+* Support of expense report
+* Fix PHP bugs and errors
 
    = 8.5.x =
-* better account and support of doloibarr v20 & v21
-* fix php bugs & error
+* Better account and support of Dolibarr v20 & v21
+* Fix PHP bugs and errors
 
    = 8.4.x =
-* better cart/wishlist button and debug
-* fix php bugs & error
+* Better cart/wishlist button and debug
+* Fix PHP bugs and errors
 
    = 8.3.x =
-* better cart/wishlist button and debug
-* fix php bugs & error
+* Better cart/wishlist button and debug
+* Fix PHP bugs and errors
 
    = 8.2.x =
-* better eshop
-* fix php bugs & error
+* Better e-shop
+* Fix PHP bugs and errors
 
    = 8.1.x =
 * New pagination with new Dolibarr API
-* fix php bugs & error
+* Fix PHP bugs and errors
 
    = 8.0.x =
-* upgrade bootstrap 5.3.3
-* fix php bugs & error
-* support dolibarr v19 & 20
+* Upgrade Bootstrap 5.3.3
+* Fix PHP bugs and errors
+* Support Dolibarr v19 & v20
 
   = 7.8.x =
-* fix php error
-* upgrade libraries
-* support related product
+* Fix PHP errors
+* Upgrade libraries
+* Support related products
 
    = 7.7.x =
-* fix php error
-* wishlist and memberlinked functionnalities
+* Fix PHP errors
+* Wishlist and member-linked functionalities
 
    = 7.6.x =
-* better eshop and modal info
+* Better e-shop and modal info
 
    = 7.5.x =
-* better eshop
+* Better e-shop
 
    = 7.4.0 =
-* better eshop
+* Better e-shop
 
    = 7.3.0 =
-* bugs and fixes for php 8
-* better eshop
+* Bugs and fixes for PHP 8
+* Better e-shop
 
    = 7.2.x =
-* bugs and fixes
-* better online shop
-* upgrade bootstrap
+* Bugs and fixes
+* Better online shop
+* Upgrade Bootstrap
 
    = 7.0.x =
-* bugs and fixes
-* better fix password changes and sync with Dolibarr
-* use dolibarr's password rules
+* Bugs and fixes
+* Better password change fixes and sync with Dolibarr
+* Use Dolibarr password rules
 
    = 6.9.0 =
-* bugs and fixes
-* fix password changes and sync with Dolibarr
-* use dolibarr's password rules
+* Bugs and fixes
+* Fix password changes and sync with Dolibarr
+* Use Dolibarr password rules
 
    = 6.8.x =
-* bugs and fixes
-* better and more ajax form
-* better captcha
+* Bugs and fixes
+* Better and more AJAX forms
+* Better captcha
 
    = 6.7.x =
-* fix password changes
-* compatibility with php 8 and dolibarr 16/17
-* update libraries
+* Fix password changes
+* Compatibility with PHP 8 and Dolibarr 16/17
+* Update libraries
 
    = 6.6.3 =
-* bugs and fixes
-* fix php errors
+* Bugs and fixes
+* Fix PHP errors
 
    = 6.6.2 =
-* bugs and fixes
+* Bugs and fixes
 
    = 6.6.1 =
-* bugs and fixes
+* Bugs and fixes
 
    = 6.6.0 =
-* bugs and fixes
-* upgrade libraries
-* better stock management
+* Bugs and fixes
+* Upgrade libraries
+* Better stock management
 
    = 6.5.4 =
-* bugs and fixes
-* fix forget password form
+* Bugs and fixes
+* Fix forgot password form
 
    = 6.5.3 =
-* bugs and fixes
+* Bugs and fixes
 
    = 6.5.2 =
-* bugs and fixes
-* fix translation
+* Bugs and fixes
+* Fix translation
 
    = 6.5.1 =
-* bugs and fixes for payment
+* Bugs and fixes for payment
 
    = 6.5.0 =
-* bugs and fixes
-* new price code
-* better Ajax
+* Bugs and fixes
+* New price code
+* Better AJAX
 
    = 6.4.0 =
-* bugs and fixes
-* fix php and apache error
+* Bugs and fixes
+* Fix PHP and Apache errors
 
    = 6.3.1 =
-* bugs and fixes
+* Bugs and fixes
 
    = 6.3.0 =
-* support of dolibarr v15.0.1
-* bugfixs
+* Support for Dolibarr v15.0.1
+* Bugfixes
 
    = 6.2.1 =
-* better support of dolibarr v15
+* Better support for Dolibarr v15
 
    = 6.2.0 =
-* better support of dolibarr v15
-* bugs and fixes
-Fix php8 bugs
+* Better support for Dolibarr v15
+* Bugs and fixes
+* Fix PHP 8 bugs
 
    = 6.1.2 =
-* better support of dolibarr v15
-* bugs and fixes
+* Better support for Dolibarr v15
+* Bugs and fixes
 
    = 6.1.1 =
-* better support of dolibarr v15
-* bugs and fixes
-* more Ajax form
+* Better support for Dolibarr v15
+* Bugs and fixes
+* More AJAX forms
 
    = 6.1.0 =
-* better support of dolibarr v15
-* bugs and fixes
-* more Ajax form
-* more of new captcha on forms
+* Better support for Dolibarr v15
+* Bugs and fixes
+* More AJAX forms
+* More new captcha on forms
 
    = 6.0.2 =
-* bugs and fixes
-* new captcha on forgot password page
+* Bugs and fixes
+* New captcha on forgot password page
 
    = 6.0.1 =
-* bugs and fixes
+* Bugs and fixes
 
    = 6.0.0 =
-* support dolibarr 15
-* new captcha
-* bugs and fixes
+* Support Dolibarr 15
+* New captcha
+* Bugs and fixes
 
    = 5.6.6 =
-* support dolibarr 14.0.4
+* Support Dolibarr 14.0.4
 
    = 5.6.5 =
-* upgrade flat icon
-* debug template
+* Upgrade flat icon
+* Debug template
 
    = 5.6.4 =
-* upgrade bootstrap to 5.1.2
+* Upgrade Bootstrap to 5.1.2
 
    = 5.6.2 =
-* fix for login/logout url with secupress
-* better membership module
+* Fix login/logout URL with SecuPress
+* Better membership module
 
    = 5.6.1 =
-* fix for login/logout url
+* Fix login/logout URL
 
    = 5.6.0 =
-* support Dolibarr's rights. Be carefull of your correct rights !
-* better support of alternatives name or URL for wp-login.php
+* Support Dolibarr rights. Be careful to set the correct rights!
+* Better support for alternative names or URLs for wp-login.php
 
    = 5.5.3 =
-* bugfix membership and php 8 error
+* Fix membership and PHP 8 errors
 
    = 5.5.2 =
-* bugfix membership and php 8 error
+* Fix membership and PHP 8 errors
 
    = 5.5.1 =
-* cart with ajax and offcanvas
+* Cart with AJAX and offcanvas
 
    = 5.5.0 =
-* upgrade bootstrap
-* ajax for membership
-
+* Upgrade Bootstrap
+* AJAX for membership
 
    = 5.4.2 =
-* fix & bugfixes membership
+* Fixes and bugfixes for membership
 
    = 5.4.1 =
-* fix & bugfixes
+* Fixes and bugfixes
 
    = 5.4.0 =
-* fix & bugfixes
-* fix languages
-* upgrade bootstrap
-
+* Fixes and bugfixes
+* Fix languages
+* Upgrade Bootstrap
 
    = 5.3.3 =
-* fix & bugfixes
-* fix languages
-* upgrade bootstrap
+* Fixes and bugfixes
+* Fix languages
+* Upgrade Bootstrap
 
    = 5.3.2 =
-* fix & bugfixes
+* Fixes and bugfixes
 
    = 5.3.1 =
-* support dolibarr 13.0.2
+* Support Dolibarr 13.0.2
 
    = 5.3.0 =
-* optimization & fix
-* add constante 
+* Optimization and fixes
+* Add constant
 
    = 5.2.7 =
-* better home/return button
+* Better home/return button
 
    = 5.2.6 =
-* fix avatar form
+* Fix avatar form
 
    = 5.2.5 =
-* fix payment method list
+* Fix payment method list
 
    = 5.2.4 =
-* fix membership
+* Fix membership
 
    = 5.2.3 =
-* fix membership
+* Fix membership
 
    = 5.2.2 =
-* fix membership
+* Fix membership
 
    = 5.2.1 =
-* fix download pdf if in other entity
+* Fix PDF download if in another entity
 
    = 5.2.0 =
-* enable mangement of membership in free version
-* todo: more ajax forms
+* Enable management of membership in the free version
+* Todo: more AJAX forms
 
    = 5.1.0 =
-* new public release with boostrap 5 and support of dolibarr 13
-* Please not end of support of DoliconnectPRO, all functionnality will be open in free version.
+* New public release with Bootstrap 5 and support for Dolibarr 13
+* Please note the end of support for DoliconnectPRO; all functionality will be open in the free version.
 
    = 5.0.6 =
-* fix & bugfixes
- 
+* Fixes and bugfixes
+
    = 5.0.5 =
-* fix & bugfixes
-* protect contact form
- 
-   = 5.0.4 =
-* fix & bugfixes
-* block using internet explorer
+* Fixes and bugfixes
+* Protect contact form
 
    = 5.0.4 =
-* fix & bugfixes
-* new shipping api
-* 
+* Fixes and bugfixes
+* Block using Internet Explorer
+
+   = 5.0.4 =
+* Fixes and bugfixes
+* New shipping API
+
    = 5.0.3 =
-* fix & bugfixes
+* Fixes and bugfixes
 
    = 5.0.2 =
-* upgrade bootswatch to 4.6.0
-* fix template and form
+* Upgrade Bootswatch to 4.6.0
+* Fix template and form
 
   = 5.0.1 =
-* fix critical bug
+* Fix critical bug
 
   = 5.0.0 =
-* compatibility avec dolibarr 13
-* new workflow
-* support of boostrap 5
-* better code
-* lots of bugfixes
+* Compatibility with Dolibarr 13
+* New workflow
+* Support Bootstrap 5
+* Better code
+* Lots of bugfixes
 
   = 4.11.4 =
-* better search
+* Better search
 
   = 4.11.3 =
-* upgrade bootswatch
+* Upgrade Bootswatch
 
   = 4.11.2 =
-* fix add to cart button
+* Fix add to cart button
 
   = 4.11.0 =
-* new: add option for displaying invoices in menu
+* New: add option for displaying invoices in menu
 
   = 4.10.0 =
-* better product search
+* Better product search
 
   = 4.9.3 =
-* fix product block
+* Fix product block
 
   = 4.9.2 =
-* fix add to cart ajax
+* Fix add to cart AJAX
 
   = 4.9.1 =
-* fix add to cart ajax
+* Fix add to cart AJAX
 
   = 4.9.0 =
-* better stock
-* upgrade hybridauth
+* Better stock
+* Upgrade Hybridauth
 
   = 4.8.3 =
-* add option to disable fontawesome enqueue
+* Add option to disable FontAwesome enqueue
 
   = 4.8.2 =
-* fix ajax
+* Fix AJAX
 
   = 4.8.1 =
-* fix cart
+* Fix cart
 
   = 4.8.0 =
-* fix contact address
-* better code compatibility other other module
+* Fix contact address
+* Better code compatibility with other modules
 
   = 4.7.1 =
-* fix cron
+* Fix cron
 
   = 4.7.0 =
-* introduce cron for better transient with soft ou full refresh (can need huge server)
-* fix special characters in form
-* minor bugfixes
+* Introduce cron for better transient refresh with soft or full refresh (may need a powerful server)
+* Fix special characters in form
+* Minor bugfixes
 
   = 4.6.1 =
-* fix real stock display
+* Fix real stock display
 
   = 4.6.0 =
-* beta version with lot of ajax and new feature
-* lots of debug and fix
-* support of dolibarr 12
+* Beta version with lots of AJAX and new features
+* Lots of debug and fixes
+* Support Dolibarr 12
 
-== Changelog ==
   = 4.5.1 =
-* beta version with lot of ajax and new feature
-* support of dolibarr 12
+* Beta version with lots of AJAX and new features
+* Support Dolibarr 12
 
   = 4.5.0 =
-* beta version with lot of ajax and new feature
-* support of dolibarr 12
+* Beta version with lots of AJAX and new features
+* Support Dolibarr 12
 
   = 4.4.5 =
-* fix pagination
-* add filter mydoliconnectuserform'
-* better footer on eshop
+* Fix pagination
+* Add filter mydoliconnectuserform
+* Better footer on e-shop
 
   = 4.4.4 =
-* fix php errors
-* add pagination on list
+* Fix PHP errors
+* Add pagination on list
 
   = 4.4.3 =
-* fix stock
-* dolibarr v11.0.3
+* Fix stock
+* Dolibarr v11.0.3
 
   = 4.4.2 =
-* fix & clean code
+* Fix and clean code
 
   = 4.4.1 =
-* fix sale service with ajax
+* Fix sale service with AJAX
 
   = 4.4.0 =
-* better forms with ajax
-* better online shop
-* lot of fixes & clean code
+* Better forms with AJAX
+* Better online shop
+* Lots of fixes and clean code
 
   = 4.3.4 =
 * better restricted mode with default role
