@@ -199,89 +199,76 @@ define( 'DONOTCACHEPAGE', 1);
 // @version 9.2.3
 // ********************************************************
 
-add_action( 'admin_init', 'callDoliApi', 5, 5); 
 function callDoliApi($method = null, $link = null, $body = null, $delay = HOUR_IN_SECONDS, $entity = null) {
-    //echo $link;
-    $headers = array(
-         'DOLAPIKEY' => get_site_option('dolibarr_private_key'),
-         'DOLAPIENTITY' => dolibarr_entity($entity),
-    );
-    
-    $url=get_site_option('dolibarr_public_url').'/api/index.php'.$link;
-    if (!empty($link)) $link = substr($link, 0, 172);
-    if ( !empty(get_site_option('dolibarr_public_url')) && !empty(get_site_option('dolibarr_private_key')) ) {
-        if ( !empty( $link ) && ( false === get_transient( $link ) || $method!='GET' || $delay <= 0 ) ) {
-            $args = array(
-                'timeout' => '10',
-                'redirection' => '5',
-                'method' => $method,
-                'sslverify' => true,
-                'headers' => $headers
-            ); 
-
-            if ( $method == 'POST' ) {
-                $args['body'] = $body;
-                delete_transient( $link );  
-                $request = wp_remote_post( esc_url_raw($url), $args );
-            } elseif ( $method == 'PUT' ) {
-                $args['body'] = $body;
-                delete_transient( $link ); 
-                $request = wp_remote_request( esc_url_raw($url), $args );
-            } elseif ( $method == 'DELETE' ) { 
-                $request = wp_remote_request( esc_url_raw($url), $args );
-            } else {
-                $request = wp_remote_get( esc_url_raw($url), $args );
-            }
-
-            $http_code = wp_remote_retrieve_response_code( $request );
-            $transient = wp_remote_retrieve_body( $request );
-            $transient = json_decode( $transient, true);
-            $transient = json_encode( $transient, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
-            //$transient = wp_unslash( $request );JSON_UNESCAPED_SLASHES | 
-            if (str_contains($link, '/documents')) $transient = stripslashes( $transient);
-            
-
-            if (true === WP_DEBUG) {
-                if (is_array($request) || is_object($request)) {
-                    error_log(print_r( json_decode( $transient ), true));
-                } else {
-                    error_log(json_decode( $transient));
-                }
-            }
-
-            if ( $method == 'DELETE' ) {
-                delete_transient( $link ); 
-            } elseif ( $delay <= 0 || ! in_array( $http_code,array('200', '404') ) ) {
-                delete_transient( $link );
-                if (! in_array($http_code,array('200', '400', '404', '600')) ) {
-                    if ( !defined("DOLIBUG") ) {
-                        define('DOLIBUG', $http_code);
-                    }
-                } elseif ( $delay != 0 ) {
-                    $delay = abs(intval($delay));
-                    set_transient($link, $transient, $delay);
-                } else {
-                    if ( !defined("DOLIBUG") ) {
-                        define('DOLIBUG', 1);
-                    }
-                }
-            } else {
-                $delay = abs(intval($delay));
-                set_transient($link, $transient, $delay);
-            }
-            $return = json_decode( $transient );
-            if (is_object($return)) $return->request = $link;
-            return $return;
-        } else {
-            $return = json_decode( get_transient( $link ));
-            if (is_object($return)) $return->request = $link;
-            return $return;   
+    if ( empty($method) || empty($link) || empty(get_site_option('dolibarr_public_url')) || empty(get_site_option('dolibarr_private_key')) ) {
+        if ( ! defined( 'DOLIBUG' ) ) {
+            define( 'DOLIBUG', 1 );
         }
-    } else {
-        if ( !defined("DOLIBUG") ) {
-            define('DOLIBUG', 1);
+        return null;
+    }
+
+    $method = strtoupper( $method );
+    $url = rtrim( get_site_option( 'dolibarr_public_url' ), '/' ) . '/api/index.php' . $link;
+    $cache_key = 'doliconnect_api_' . md5( $method . '|' . $url . '|' . maybe_serialize( $body ) . '|' . dolibarr_entity( $entity ) );
+
+    if ( 'GET' === $method && $delay > 0 ) {
+        $cached = get_transient( $cache_key );
+        if ( false !== $cached ) {
+            if ( is_object( $cached ) ) {
+                $cached->request = $link;
+            }
+            return $cached;
         }
     }
+
+    $args = array(
+        'timeout'     => 10,
+        'redirection' => 5,
+        'method'      => $method,
+        'sslverify'   => true,
+        'headers'     => array(
+            'DOLAPIKEY'    => get_site_option( 'dolibarr_private_key' ),
+            'DOLAPIENTITY' => dolibarr_entity( $entity ),
+        ),
+    );
+
+    if ( in_array( $method, array( 'POST', 'PUT', 'DELETE', 'PATCH' ), true ) && null !== $body ) {
+        $args['body'] = $body;
+    }
+
+    $request = wp_remote_request( esc_url_raw( $url ), $args );
+    if ( is_wp_error( $request ) ) {
+        if ( ! defined( 'DOLIBUG' ) ) {
+            define( 'DOLIBUG', 1 );
+        }
+        return null;
+    }
+
+    $http_code = wp_remote_retrieve_response_code( $request );
+    $response_body = wp_remote_retrieve_body( $request );
+    $response = null;
+
+    if ( '' !== trim( $response_body ) ) {
+        $response = json_decode( $response_body );
+        if ( JSON_ERROR_NONE !== json_last_error() && WP_DEBUG ) {
+            error_log( sprintf( 'Doliconnect API JSON error: %s | request: %s', json_last_error_msg(), $url ) );
+        }
+    }
+
+    if ( 'DELETE' === $method || $delay <= 0 || ! in_array( $http_code, array( 200, 404 ), true ) ) {
+        delete_transient( $cache_key );
+        if ( ! in_array( $http_code, array( 200, 400, 404, 600 ), true ) && ! defined( 'DOLIBUG' ) ) {
+            define( 'DOLIBUG', $http_code );
+        }
+    } elseif ( 'GET' === $method ) {
+        set_transient( $cache_key, $response, absint( $delay ) );
+    }
+
+    if ( is_object( $response ) ) {
+        $response->request = $link;
+    }
+
+    return $response;
 }
 // ********************************************************
 add_action( 'init', 'dolibarr', 10);
@@ -366,72 +353,94 @@ function doliconnect_pll_custom_flag( $flag, $code ) {
 // ********************************************************
 add_filter( 'get_avatar' , 'doliconnect_custom_avatar' , 1 , 5 );
 function doliconnect_custom_avatar( $avatar, $id_or_email, $size, $default, $alt ) {
-global $wpdb;    
+    global $wpdb;
     $user = false;
-if (get_site_option('doliconnect_mode')=='one' && is_multisite() ) {
-switch_to_blog(1);
-}      
+    $switched_blog = false;
+
+    if ( get_site_option( 'doliconnect_mode' ) === 'one' && is_multisite() ) {
+        switch_to_blog( 1 );
+        $switched_blog = true;
+    }
+
     if ( is_numeric( $id_or_email ) ) {
-
         $id = (int) $id_or_email;
-        $user = get_user_by( 'id' , $id );
-
+        $user = get_user_by( 'id', $id );
     } elseif ( is_object( $id_or_email ) ) {
-
         if ( ! empty( $id_or_email->user_id ) ) {
             $id = (int) $id_or_email->user_id;
-            $user = get_user_by( 'id' , $id );
+            $user = get_user_by( 'id', $id );
         }
-
     } else {
-        $user = get_user_by( 'email', $id_or_email );	
+        $user = get_user_by( 'email', $id_or_email );
     }
 
     if ( $user && is_object( $user ) ) {
-
-$avatar = 'YOUR_NEW_IMAGE_URL';
-
-if ($size=='96') {
-$taille=" class='card-img-top' ";
-} else {
-$taille=" class='rounded-circle border border-white' height='{$size}' width='{$size}' ";   
-}
-$entity = get_current_blog_id();
-$table_prefix = $wpdb->get_blog_prefix( $entity ); 
-$nam=$table_prefix."member_photo";
-if (isset($user->$nam) && NULL != $user->$nam) {
-$upload_dir = wp_upload_dir(); 
-$filename=$upload_dir['baseurl']."/doliconnect/".$user->data->ID."/".$user->$nam;
-$avatar = "<img src='$filename' ".$taille." alt='avatar-".$user->data->ID."'>";
-} else { 
-$avatar = "<img src='" . plugins_url( 'images/default.jpg', __FILE__ ) . "' ".$taille."  alt='avatar-default'>";
-}               
-} elseif ( !is_user_logged_in() && !empty(get_option('doliconnectrestrict')) ) {
-$taille=" class='card-img' ";
-    $custom_logo_id = get_theme_mod( 'custom_logo' );
-    if ( $custom_logo_id ) {
-        $custom_logo_attr = array(
-            'class' => 'card-img',
-        );
-
-        $image_alt = get_post_meta( $custom_logo_id, '_wp_attachment_image_alt', true );
-        if ( empty( $image_alt ) ) {
-            $custom_logo_attr['alt'] = get_bloginfo( 'name', 'display' );
+        if ( $size == 96 || $size === '96' ) {
+            $taille = " class='card-img-top' ";
+        } else {
+            $taille = sprintf( ' class="%s" height="%d" width="%d" ', esc_attr( 'rounded-circle border border-white' ), absint( $size ), absint( $size ) );
         }
- 
-        $avatar = wp_get_attachment_image( $custom_logo_id, 'medium_large', false, $custom_logo_attr );
-    } elseif ( is_customize_preview() ) {
-        $avatar = "<img src='" . plugins_url( 'images/default.jpg', __FILE__ ) . "' ".$taille."  alt='avatar-default'>";
+
+        $entity = get_current_blog_id();
+        $table_prefix = $wpdb->get_blog_prefix( $entity );
+        $nam = $table_prefix . 'member_photo';
+
+        if ( isset( $user->$nam ) && null !== $user->$nam ) {
+            $upload_dir = wp_upload_dir();
+            $filename = trailingslashit( $upload_dir['baseurl'] ) . 'doliconnect/' . $user->data->ID . '/' . $user->$nam;
+            $avatar   = sprintf(
+                '<img src="%s"%s alt="%s">',
+                esc_url( $filename ),
+                $taille,
+                esc_attr( 'avatar-' . $user->data->ID )
+            );
+        } else {
+            $avatar = sprintf(
+                '<img src="%s"%s alt="%s">',
+                esc_url( plugins_url( 'images/default.jpg', __FILE__ ) ),
+                $taille,
+                esc_attr( 'avatar-default' )
+            );
+        }
+    } elseif ( ! is_user_logged_in() && ! empty( get_option( 'doliconnectrestrict' ) ) ) {
+        $taille = " class='card-img' ";
+        $custom_logo_id = get_theme_mod( 'custom_logo' );
+        if ( $custom_logo_id ) {
+            $custom_logo_attr = array(
+                'class' => 'card-img',
+            );
+
+            $image_alt = get_post_meta( $custom_logo_id, '_wp_attachment_image_alt', true );
+            if ( empty( $image_alt ) ) {
+                $custom_logo_attr['alt'] = get_bloginfo( 'name', 'display' );
+            }
+
+            $avatar = wp_get_attachment_image( $custom_logo_id, 'medium_large', false, $custom_logo_attr );
+        } elseif ( is_customize_preview() ) {
+            $avatar = sprintf(
+                '<img src="%s"%s alt="%s">',
+                esc_url( plugins_url( 'images/default.jpg', __FILE__ ) ),
+                $taille,
+                esc_attr( 'avatar-default' )
+            );
+        }
+    } else {
+        $taille = " class='card-img' ";
+        $avatar = sprintf(
+            '<img src="%s"%s alt="%s">',
+            esc_url( plugins_url( 'images/default.jpg', __FILE__ ) ),
+            $taille,
+            esc_attr( 'avatar-default' )
+        );
     }
-} else {
-$taille=" class='card-img' ";
-$avatar = "<img src='" . plugins_url( 'images/default.jpg', __FILE__ ) . "' ".$taille."  alt='avatar-default'>";
+
+    if ( $switched_blog ) {
+        restore_current_blog();
+    }
+
+    return $avatar;
 }
-if ( get_site_option('doliconnect_mode')=='one' && is_multisite() ) {
-restore_current_blog();
-}
-return $avatar;
-}
+
 // ********************************************************
 add_action('wp_dolibarr_sync','update_synctodolibarr', 1, 2);
 function update_synctodolibarr($object, $user = null) {
