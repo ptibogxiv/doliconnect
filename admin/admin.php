@@ -43,11 +43,11 @@ function doliconnect_admin_page1() {
     );
     add_submenu_page(
         'doliconnect_settings',
-        __( 'Datas', 'doliconnect' ),
-        __( 'Datas', 'doliconnect' ),
+        __( 'Help', 'doliconnect' ),
+        __( 'Help', 'doliconnect' ),
         'manage_options',
-        'doliconnect_transients_page',
-        'doliconnect_transients_page'
+        'doliconnect_help',
+        'doliconnect_help'
     );
 }
 
@@ -107,9 +107,9 @@ if ( is_multisite() ) {
     add_action( 'admin_menu', 'doliconnect_admin_page4' );
 }
 
-function doliconnect_transients_page() {
+function doliconnect_help() {
     echo '<div class="wrap">';
-    echo '<h2>' . esc_html__( 'Datas', 'doliconnect' ) . '</h2>';
+    echo '<h2>' . esc_html__( 'Help', 'doliconnect' ) . '</h2>';
     echo '</div>';
 }
 
