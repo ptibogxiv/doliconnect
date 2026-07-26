@@ -29,12 +29,32 @@ add_submenu_page('doliconnect_network_page', "Management", "Management", 'manage
 }
 
 function doliconnect_admin_page3() {
-add_menu_page(__( 'Doliconnect settings', 'doliconnect' ),__( 'Doliconnect', 'Doliconnect' ), 'manage_options', 'ptibogxiv_management_page', 'ptibogxiv_management_page', plugins_url( 'doliconnect/images/icon_16.png' ));
-add_submenu_page(__( 'Doliconnect settings', 'doliconnect' ), "Management", "Management", 'manage_options', 'ptibogxiv_management_page', 'ptibogxiv_management_page');
+    add_menu_page(
+        __( 'Doliconnect settings', 'doliconnect' ),
+        __( 'Doliconnect', 'doliconnect' ),
+        'manage_options',
+        'ptibogxiv_management_page',
+        'ptibogxiv_management_page',
+        plugins_url( 'doliconnect/images/icon_16.png' )
+    );
+    add_submenu_page(
+        'ptibogxiv_management_page',
+        __( 'Management', 'doliconnect' ),
+        __( 'Management', 'doliconnect' ),
+        'manage_options',
+        'ptibogxiv_management_page',
+        'ptibogxiv_management_page'
+    );
 }
 
 function doliconnect_admin_page4() {
-    //add_users_page( 'doliboard', "Gestion des admins", 'manage_options', 'doliconnect_admin_page', 'doliconnect_admin_page');
+    add_users_page(
+        __( 'Gestion des admins', 'doliconnect' ),
+        __( 'Gestion des admins', 'doliconnect' ),
+        'manage_options',
+        'doliconnect_admin_page',
+        'doliconnect_admin_page'
+    );
 }
 
 if ( is_multisite() ) {
@@ -48,7 +68,8 @@ if ( is_multisite() ) {
 
 function doliconnect_transients_page() {
     echo '<div class="wrap">';
-    echo '<h2>'.__( 'Datas', 'doliconnect' ).'</h2>';
+    echo '<h2>' . esc_html__( 'Datas', 'doliconnect' ) . '</h2>';
+    echo '</div>';
 }
 
 function doliconnect_admin_page() {
@@ -264,8 +285,8 @@ $dolibarr = callDoliApi("GET", "/status", null, -5 * MINUTE_IN_SECONDS);
 <?php } ?>
             <tr>
                 <th style="width:150px;"><label for="doliconnect_cronjob_multisite"><?php _e('Cronjobs', 'doliconnect') ?></label></th>
-                <td ><select name="doliconnect_cronjob_multisite" type="checkbox" id="doliconnect_cronjob_multisite">
-                <option value="0" <?php selected('O', get_site_option('doliconnect_cronjob_multisite'));?>><?php _e('By blog', 'doliconnect') ?></option>
+                <td ><select name="doliconnect_cronjob_multisite" id="doliconnect_cronjob_multisite">
+                <option value="0" <?php selected('0', get_site_option('doliconnect_cronjob_multisite'));?>><?php _e('By blog', 'doliconnect') ?></option>
                 <option value="1" <?php selected('1', get_site_option('doliconnect_cronjob_multisite'));?>><?php _e('Soft refresh', 'doliconnect') ?></option>
                 <option value="2" <?php selected('2', get_site_option('doliconnect_cronjob_multisite'));?>><?php _e('Full refresh', 'doliconnect') ?></option>
                 </select>
@@ -330,96 +351,84 @@ $dolibarr = callDoliApi("GET", "/multicompany/".dolibarr_entity(), null, -5 * MI
 	<div class="inside">
 <?php                                                    
 
-if (isset($_REQUEST['doliconnect_settings'])) {   
-    if (isset($_POST['doliconnect_management_page_nonce']) && wp_verify_nonce($_POST['doliconnect_management_page_nonce'], 'doliconnect_management_page_nonce')) {
+if ( 'POST' === $_SERVER['REQUEST_METHOD'] && isset( $_POST['doliconnect_settings'] ) ) {
+    check_admin_referer( 'doliconnect_management_page_nonce', 'doliconnect_management_page_nonce' );
 
-         
-if (isset($_REQUEST['users_can_register']) && $_REQUEST['users_can_register']==1){
-update_option('users_can_register', sanitize_text_field($_REQUEST['users_can_register']));
-}else {
-delete_option('users_can_register');}
-if (isset($_REQUEST['dolicustsupp_can_register']) && $_REQUEST['dolicustsupp_can_register']==1){
-update_option('dolicustsupp_can_register', sanitize_text_field($_REQUEST['dolicustsupp_can_register']));
-}else {
-delete_option('dolicustsupp_can_register');}
-if (isset($_REQUEST['dolibarr_b2bmode']) && $_REQUEST['dolibarr_b2bmode']==1){
-update_option('dolibarr_b2bmode', sanitize_text_field($_REQUEST['dolibarr_b2bmode']));
-}else {
-delete_option('dolibarr_b2bmode');}
-if (isset($_REQUEST['doliconnectdisplayinvoice']) && $_REQUEST['doliconnectdisplayinvoice']==1){
-update_option('doliconnectdisplayinvoice', sanitize_text_field($_REQUEST['doliconnectdisplayinvoice']));
-}else {
-delete_option('doliconnectdisplayinvoice');}
-if (isset($_REQUEST['doliconnectbeta']) && $_REQUEST['doliconnectbeta']==1){
-update_option('doliconnectbeta', sanitize_text_field($_REQUEST['doliconnectbeta']));
-}else {
-delete_option('doliconnectbeta');}
-if (isset($_REQUEST['doliconnectfontawesome']) && $_REQUEST['doliconnectfontawesome']==1){
-update_option('doliconnectfontawesome', sanitize_text_field($_REQUEST['doliconnectfontawesome']));
-}else {
-delete_option('doliconnectfontawesome');}
-if (isset($_REQUEST['doliconnectrestrict']) && $_REQUEST['doliconnectrestrict']==1){
-update_option('doliconnectrestrict', sanitize_text_field($_REQUEST['doliconnectrestrict']));
-}else {
-delete_option('doliconnectrestrict');}
-if (isset($_REQUEST['dolicartproductgrid']) && $_REQUEST['dolicartproductgrid']==1){
-    update_option('dolicartproductgrid', sanitize_text_field($_REQUEST['dolicartproductgrid']));
-}else {
-    delete_option('dolicartproductgrid');
-}
-if (isset($_REQUEST['dolicartsuppliergrid']) && $_REQUEST['dolicartsuppliergrid']==1){
-    update_option('dolicartsuppliergrid', sanitize_text_field($_REQUEST['dolicartsuppliergrid']));
-}else {
-    delete_option('dolicartsuppliergrid');
-}
-if (isset($_REQUEST['doliconnect_facebook']) && $_REQUEST['doliconnect_facebook']>0){
-update_option('doliconnect_facebook', sanitize_text_field($_REQUEST['doliconnect_facebook']));
-}else {
-delete_option('doliconnect_facebook');} 
-if (isset($_REQUEST['doliconnect_google']) && $_REQUEST['doliconnect_google']>0){
-    update_option('doliconnect_google', sanitize_text_field($_REQUEST['doliconnect_google']));
-}else {
-    delete_option('doliconnect_google');
-}                                 
-            update_option('doliaccount', sanitize_text_field($_REQUEST['doliaccount']));  
-            if (isset($_REQUEST['doliDefaultclient'])) update_option('doliDefaultclient', sanitize_text_field($_REQUEST['doliDefaultclient']));
-            if (isset($_REQUEST['doliProductclient'])) update_option('doliProductclient', sanitize_text_field($_REQUEST['doliProductclient']));
-            update_option('doliaccountinfo', sanitize_text_field($_REQUEST['doliaccountinfo'])); 
-            update_option('doliconnect_disablepro', sanitize_text_field($_REQUEST['doliconnect_disablepro']));
-            if (isset($_REQUEST['doliconnect_cronjob'])) update_option('doliconnect_cronjob', sanitize_text_field($_REQUEST['doliconnect_cronjob']));
-            if (isset($_REQUEST['doliconnectrestrict_role'])) update_option('doliconnectrestrict_role', sanitize_text_field($_REQUEST['doliconnectrestrict_role']));
-            if (isset($_REQUEST['dolibarr_entity'])) update_option('dolibarr_entity', sanitize_text_field($_REQUEST['dolibarr_entity']));
-            update_option('dolicart', sanitize_text_field($_REQUEST['dolicart']));
-            update_option('dolitos', sanitize_text_field($_REQUEST['dolitos']));
-            update_option('dolidonation', sanitize_text_field($_REQUEST['dolidonation']));
-            update_option('doliagenda', sanitize_text_field($_REQUEST['doliagenda']));
-            if (isset($_REQUEST['doliclassifieds'])) update_option('doliclassifieds', sanitize_text_field($_REQUEST['doliclassifieds'])); 
-            update_option('doliconnect_ipkiosk', array_values(array_filter(array_map('trim', explode(PHP_EOL, $_REQUEST['doliconnect_ipkiosk'])))));             
-            update_option('wp_page_for_privacy_policy', sanitize_text_field($_REQUEST['wp_page_for_privacy_policy']));
-            update_option('dolishop', sanitize_text_field($_REQUEST['dolishop']));
-            update_option('dolifaq', sanitize_text_field($_REQUEST['dolifaq']));
-            update_option('dolishipping', sanitize_text_field($_REQUEST['dolishipping']));
-            update_option('dolicartnewlist', sanitize_text_field($_REQUEST['dolicartnewlist']));
-            update_option('dolicartlist', sanitize_text_field($_REQUEST['dolicartlist']));
-            update_option('dolisupplier', sanitize_text_field($_REQUEST['dolisupplier']));                                  
-            update_option('dolicontact', sanitize_text_field($_REQUEST['dolicontact']));          
-            update_option('doliconnect_facebook_key', sanitize_text_field($_REQUEST['doliconnect_facebook_key']));
-            update_option('doliconnect_facebook_secret', sanitize_text_field($_REQUEST['doliconnect_facebook_secret']));     
-            update_option('doliconnect_google_key', sanitize_text_field($_REQUEST['doliconnect_google_key']));
-            update_option('doliconnect_google_secret', sanitize_text_field($_REQUEST['doliconnect_google_secret']));
-            update_option('doliconnect_twitter_key', sanitize_text_field($_REQUEST['doliconnect_twitter_key']));
-            update_option('doliconnect_twitter_secret', sanitize_text_field($_REQUEST['doliconnect_twitter_secret']));     
-            update_option('doliconnect_linkedin_key', sanitize_text_field($_REQUEST['doliconnect_linkedin_key']));
-            update_option('doliconnect_linkedin_secret', sanitize_text_field($_REQUEST['doliconnect_linkedin_secret']));                          
-    
+    $post = wp_unslash( $_POST );
+
+    $checkbox_fields = array(
+        'users_can_register',
+        'dolicustsupp_can_register',
+        'dolibarr_b2bmode',
+        'doliconnectdisplayinvoice',
+        'doliconnectbeta',
+        'doliconnectfontawesome',
+        'doliconnectrestrict',
+        'dolicartproductgrid',
+        'dolicartsuppliergrid',
+        'doliconnect_facebook',
+        'doliconnect_google',
+        'doliconnect_twitter',
+        'doliconnect_linkedin',
+        'doliclassifieds',
+    );
+
+    foreach ( $checkbox_fields as $field ) {
+        if ( isset( $post[ $field ] ) && '1' === $post[ $field ] ) {
+            update_option( $field, '1' );
         } else {
-            // Nonce invalide, affichez un message d'erreur ou bloquez l'action
-            wp_die(__('Action forbidden', 'doliconnect'));
-        }  
-}   
-    ?>
-    <form action="" method="post">
-        <?php wp_nonce_field('doliconnect_management_page_nonce', 'doliconnect_management_page_nonce'); ?>
+            delete_option( $field );
+        }
+    }
+
+    $text_fields = array(
+        'doliaccount',
+        'doliDefaultclient',
+        'doliProductclient',
+        'doliaccountinfo',
+        'doliconnect_disablepro',
+        'doliconnect_cronjob',
+        'doliconnectrestrict_role',
+        'dolibarr_entity',
+        'dolicart',
+        'dolitos',
+        'dolidonation',
+        'doliagenda',
+        'wp_page_for_privacy_policy',
+        'dolishop',
+        'dolifaq',
+        'dolishipping',
+        'dolicartnewlist',
+        'dolicartlist',
+        'dolisupplier',
+        'dolicontact',
+        'doliconnect_facebook_key',
+        'doliconnect_facebook_secret',
+        'doliconnect_google_key',
+        'doliconnect_google_secret',
+        'doliconnect_twitter_key',
+        'doliconnect_twitter_secret',
+        'doliconnect_linkedin_key',
+        'doliconnect_linkedin_secret',
+    );
+
+    foreach ( $text_fields as $field ) {
+        if ( isset( $post[ $field ] ) ) {
+            update_option( $field, sanitize_text_field( $post[ $field ] ) );
+        }
+    }
+
+    if ( isset( $post['doliconnect_ipkiosk'] ) ) {
+        $ip_lines = array_filter( array_map( 'trim', explode( PHP_EOL, $post['doliconnect_ipkiosk'] ) ) );
+        $ip_lines = array_map( 'sanitize_text_field', $ip_lines );
+        update_option( 'doliconnect_ipkiosk', array_values( $ip_lines ) );
+    }
+
+    echo '<div id="message" class="updated notice is-dismissible"><p>' . esc_html__( 'Settings saved.', 'doliconnect' ) . '</p></div>';
+}
+?>
+    <form action="<?php echo esc_url( admin_url( 'admin.php?page=doliconnect_settings' ) ); ?>" method="post">
+        <?php wp_nonce_field( 'doliconnect_management_page_nonce', 'doliconnect_management_page_nonce' ); ?>
         <table class="form-table" width="100%">
             <tr>
                 <th style="width:150px;"><label for="doliconnectbeta"><?php _e('Beta mode', 'doliconnect') ?></label></th>
@@ -486,8 +495,8 @@ echo "<input id='dolibarr_entity'  name='dolibarr_entity' type='text' value='".(
             </tr>
             <tr>
                 <th style="width:150px;"><label for="doliconnect_disablepro"><?php _e('Personnal / Enterprise mode', 'doliconnect') ?></label></th>
-                <td ><select name="doliconnect_disablepro" type="checkbox" id="doliconnect_disablepro">
-                <option value="0" <?php selected('O', get_option('doliconnect_disablepro'));?>>Perso & Pro (<?php _e('by default', 'doliconnect') ?>)</option>
+                <td ><select name="doliconnect_disablepro" id="doliconnect_disablepro">
+                <option value="0" <?php selected('0', get_option('doliconnect_disablepro'));?>>Perso & Pro (<?php _e('by default', 'doliconnect') ?>)</option>
                 <option value="phy" <?php selected('phy', get_option('doliconnect_disablepro'));?>>Only Perso</option>
                 <option value="mor" <?php selected('mor', get_option('doliconnect_disablepro'));?>>Only PRO</option>
                 </select>
@@ -693,12 +702,12 @@ if (is_plugin_active( 'doliconnect-classifieds/doliconnect-classifieds.php' ) ) 
            wp_dropdown_pages($args); ?></td>
             </tr>
 <?php } ?> 
-            <tr><?php $cronjob = !empty(get_site_option('doliconnect_cronjob_multisite'))?get_site_option('doliconnect_cronjob_multisite'):get_option('doliconnect_cronjob'); ?>
+            <tr><?php $cronjob = ! empty( get_site_option( 'doliconnect_cronjob_multisite' ) ) ? get_site_option( 'doliconnect_cronjob_multisite' ) : get_option( 'doliconnect_cronjob' ); ?>
                 <th style="width:150px;"><label for="doliconnect_cronjob"><?php _e('Cronjobs', 'doliconnect') ?></label></th>
-                <td ><select name="doliconnect_cronjob" type="checkbox" id="doliconnect_cronjob" <?php if (!empty(get_site_option('doliconnect_cronjob_multisite'))) { ?> disabled <?php } ?>>
-                <option value="0" <?php selected('O', $cronjob);?>><?php _e('Disabled', 'doliconnect') ?></option>
-                <option value="1" <?php selected('1', $cronjob);?>><?php _e('Soft refresh', 'doliconnect') ?></option>
-                <option value="2" <?php selected('2', $cronjob);?>><?php _e('Full refresh', 'doliconnect') ?></option>
+                <td ><select name="doliconnect_cronjob" id="doliconnect_cronjob" <?php if ( ! empty( get_site_option( 'doliconnect_cronjob_multisite' ) ) ) { ?> disabled <?php } ?>>
+                <option value="0" <?php selected( '0', $cronjob );?>><?php _e('Disabled', 'doliconnect') ?></option>
+                <option value="1" <?php selected( '1', $cronjob );?>><?php _e('Soft refresh', 'doliconnect') ?></option>
+                <option value="2" <?php selected( '2', $cronjob );?>><?php _e('Full refresh', 'doliconnect') ?></option>
                 </select>
                 </td>
             </tr>
