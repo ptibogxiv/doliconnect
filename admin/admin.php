@@ -17,15 +17,56 @@ add_action( 'admin_notices', 'doliconnect_admin_notice_error');
 add_action( 'network_admin_notices', 'doliconnect_admin_notice_error');
 
 function doliconnect_admin_page1() {
-    add_menu_page(__( 'Settings', 'doliconnect' ), "Doliconnect", 'manage_options', 'doliconnect_settings', 'doliconnect_settings', plugins_url( 'doliconnect/images/icon_16.png' ));
-    add_submenu_page('doliconnect_settings', __( 'Settings', 'doliconnect' ), __( 'Settings', 'doliconnect' ), 'manage_options', 'doliconnect_settings', 'doliconnect_settings');
-    add_submenu_page('doliconnect_settings', __( 'Sync with Dolibarr', 'doliconnect' ), __( 'Sync with Dolibarr', 'doliconnect' ), 'manage_options', 'doliconnect_network_page', 'doliconnect_network_page');
-    add_submenu_page('doliconnect_settings', __( 'Datas', 'doliconnect' ), __( 'Datas', 'doliconnect' ), 'manage_options', 'doliconnect_transients_page', 'doliconnect_transients_page');
+    add_menu_page(
+        __( 'Settings', 'doliconnect' ),
+        __( 'Doliconnect', 'doliconnect' ),
+        'manage_options',
+        'doliconnect_settings',
+        'doliconnect_settings',
+        plugins_url( 'doliconnect/images/icon_16.png' )
+    );
+    add_submenu_page(
+        'doliconnect_settings',
+        __( 'Settings', 'doliconnect' ),
+        __( 'Settings', 'doliconnect' ),
+        'manage_options',
+        'doliconnect_settings',
+        'doliconnect_settings'
+    );
+    add_submenu_page(
+        'doliconnect_settings',
+        __( 'Sync with Dolibarr', 'doliconnect' ),
+        __( 'Sync with Dolibarr', 'doliconnect' ),
+        'manage_options',
+        'doliconnect_network_page',
+        'doliconnect_network_page'
+    );
+    add_submenu_page(
+        'doliconnect_settings',
+        __( 'Datas', 'doliconnect' ),
+        __( 'Datas', 'doliconnect' ),
+        'manage_options',
+        'doliconnect_transients_page',
+        'doliconnect_transients_page'
+    );
 }
 
 function doliconnect_admin_page2() {
-add_menu_page(__( 'Doliconnect', 'Doliconnect' ), __( 'Doliconnect', 'Doliconnect' ), 'manage_options', 'doliconnect_network_page', 'doliconnect_network_page', plugins_url( 'doliconnect/images/icon_16.png' ));
-add_submenu_page('doliconnect_network_page', "Management", "Management", 'manage_options', 'doliconnect_network_page', 'doliconnect_network_page');
+    add_menu_page(
+        __( 'Doliconnect', 'Doliconnect' ),
+        __( 'Doliconnect', 'Doliconnect' ),
+        'manage_options', 'doliconnect_network_page',
+        'doliconnect_network_page',
+        plugins_url( 'doliconnect/images/icon_16.png' )
+    );
+    add_submenu_page(
+        'doliconnect_network_page',
+        __( 'Management', 'doliconnect' ),
+        __( 'Management', 'doliconnect' ),
+        'manage_options',
+        'doliconnect_network_page',
+        'doliconnect_network_page'
+    );
 }
 
 function doliconnect_admin_page3() {
