@@ -17,10 +17,10 @@ add_action( 'admin_notices', 'doliconnect_admin_notice_error');
 add_action( 'network_admin_notices', 'doliconnect_admin_notice_error');
 
 function doliconnect_admin_page1() {
-add_menu_page(__( 'Settings', 'doliconnect' ), "Doliconnect", 'manage_options', 'ptibogxiv_management_page', 'ptibogxiv_management_page', plugins_url( 'doliconnect/images/icon_16.png' ));
-add_submenu_page('ptibogxiv_management_page', __( 'Settings', 'doliconnect' ), __( 'Settings', 'doliconnect' ), 'manage_options', 'ptibogxiv_management_page', 'ptibogxiv_management_page');
-add_submenu_page('ptibogxiv_management_page', __( 'Sync with Dolibarr', 'doliconnect' ), __( 'Sync with Dolibarr', 'doliconnect' ), 'manage_options', 'doliconnect_network_page', 'doliconnect_network_page');
-add_submenu_page('ptibogxiv_management_page', __( 'Datas', 'doliconnect' ), __( 'Datas', 'doliconnect' ), 'manage_options', 'doliconnect_transients_page', 'doliconnect_transients_page');
+    add_menu_page(__( 'Settings', 'doliconnect' ), "Doliconnect", 'manage_options', 'doliconnect_settings', 'doliconnect_settings', plugins_url( 'doliconnect/images/icon_16.png' ));
+    add_submenu_page('doliconnect_settings', __( 'Settings', 'doliconnect' ), __( 'Settings', 'doliconnect' ), 'manage_options', 'doliconnect_settings', 'doliconnect_settings');
+    add_submenu_page('doliconnect_settings', __( 'Sync with Dolibarr', 'doliconnect' ), __( 'Sync with Dolibarr', 'doliconnect' ), 'manage_options', 'doliconnect_network_page', 'doliconnect_network_page');
+    add_submenu_page('doliconnect_settings', __( 'Datas', 'doliconnect' ), __( 'Datas', 'doliconnect' ), 'manage_options', 'doliconnect_transients_page', 'doliconnect_transients_page');
 }
 
 function doliconnect_admin_page2() {
@@ -38,13 +38,12 @@ function doliconnect_admin_page4() {
 }
 
 if ( is_multisite() ) {
-add_action( 'network_admin_menu', 'doliconnect_admin_page2' );
-add_action( 'admin_menu', 'doliconnect_admin_page3' );
-add_action( 'admin_menu', 'doliconnect_admin_page4' );
-}
-else {
-add_action( 'admin_menu', 'doliconnect_admin_page1' );
-add_action( 'admin_menu', 'doliconnect_admin_page4' );
+    add_action( 'network_admin_menu', 'doliconnect_admin_page2' );
+    add_action( 'admin_menu', 'doliconnect_admin_page3' );
+    add_action( 'admin_menu', 'doliconnect_admin_page4' );
+} else {
+    add_action( 'admin_menu', 'doliconnect_admin_page1' );
+    add_action( 'admin_menu', 'doliconnect_admin_page4' );
 }
 
 function doliconnect_transients_page() {
@@ -222,8 +221,37 @@ $dolibarr = callDoliApi("GET", "/status", null, -5 * MINUTE_IN_SECONDS);
 }
 
 
-function ptibogxiv_management_page() {
-echo '<DIV class="wrap">';
+function doliconnect_settings() {
+    ?>
+<div class='wrap'>
+	<?php
+	$default_tab = 'tab1';
+	$tab = isset($_GET['tab']) ? $_GET['tab'] : $default_tab;
+	?>
+
+	<h2>Bienvenue dans les paramètres du plugin</h2>
+	<br>
+
+	<h2 class="nav-tab-wrapper">
+			<a href="?page=doliconnect-settings&tab=tab1" class="nav-tab nav-tab-active">Tab 1</a>
+			<a href="?page=doliconnect-settings&tab=tab2" class="nav-tab">Tab 2</a>
+	</h2>
+
+	<div class="tab-content">
+	
+			<?php switch($tab) :
+			case 'tab1':
+					echo 'je suis tab 1'; 
+					break;
+			case 'tab2':
+					echo 'Je suis tab 2';
+					break;
+			endswitch; ?>
+	</div>	
+</div>
+<?php
+
+echo '<div class="wrap">';
 echo '<h2>'.__( 'Doliconnect settings', 'doliconnect' ).'</h2>';
 
 $dolibarr = callDoliApi("GET", "/multicompany/".dolibarr_entity(), null, -5 * MINUTE_IN_SECONDS);
