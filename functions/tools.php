@@ -1984,13 +1984,9 @@ global $current_user;
       if ( doliconst('FRAIS_DE_PORT_ID_SERVICE_TO_USE') != $line->fk_product ) {
         $doliline .= "<p><small>";
         if ($line->product_type == 9) {
-            $doliline .= $line->description;
-        } elseif ( !doliconst('MAIN_GENERATE_DOCUMENTS_HIDE_REF') ) { $doliline .= "<i class='fas fa-toolbox fa-fw'></i> ".(!empty($product->ref)?$product->ref:'-'); }
-        if ($line->product_type == 9) {
-            $doliline .= '';
-        } elseif ( !empty($product->barcode) ) { 
-          if ( !doliconst('MAIN_GENERATE_DOCUMENTS_HIDE_REF') ) { $doliline .= " | "; }
-          $doliline .= "<i class='fas fa-barcode fa-fw'></i> ".$product->barcode; 
+          $doliline .= $line->description;
+        } else {
+          $doliline .= '';
         }
         $doliline .= "</small></p>";
         if (isset($dates)) $doliline .= '<p><small><i>'.$dates.'</i></small></p>';
