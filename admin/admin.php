@@ -357,7 +357,7 @@ function doliconnect_settings() {
 
 	<h2 class="nav-tab-wrapper">
 			<a href="?page=doliconnect_settings&tab=dolibarr" class="nav-tab <?php echo $tab === 'dolibarr' ? 'nav-tab-active' : ''; ?>">Dolibarr</a>
-			<a href="?page=doliconnect_settings&tab=tab2" class="nav-tab <?php echo $tab === 'tab2' ? 'nav-tab-active' : ''; ?>">Tab 2</a>
+			<a href="?page=doliconnect_settings&tab=general" class="nav-tab <?php echo $tab === 'general' ? 'nav-tab-active' : ''; ?>">General</a>
             <a href="?page=doliconnect_settings&tab=tab3" class="nav-tab <?php echo $tab === 'tab3' ? 'nav-tab-active' : ''; ?>">Tab 3</a>
             <a href="?page=doliconnect_settings&tab=tab4" class="nav-tab <?php echo $tab === 'tab4' ? 'nav-tab-active' : ''; ?>">Tab 4</a>
 	</h2>
