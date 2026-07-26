@@ -905,7 +905,7 @@ function doliOffcanvasCart($current_user, $object = null) {
     $offcanvas .= "<a type='button' class='btn btn-outline-secondary' href='#' type='submit' onclick='doliCartButton(\"updateCart\", 0, 0, 0, null, \"delete\");'>".__('Empty the basket', 'doliconnect').'</a>';
       $arr_params = array( 'checkout' => wp_create_nonce( 'dolicart-'. $object->id.'-'.$current_user->ID));  
       $return = esc_url( add_query_arg( $arr_params, doliconnecturl('dolicart')) );
-    $offcanvas .= '<a type="button" class="btn btn-primary" href="'.$return.'">'.__('Finaliser la commande', 'doliconnect').'</a>';
+    $offcanvas .= '<a type="button" class="btn btn-primary" href="'.$return.'">'.__('Order', 'doliconnect').'</a>';
     $offcanvas .= '</div>';
     $offcanvas .= '</div>';
   }
