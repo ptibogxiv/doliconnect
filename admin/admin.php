@@ -52,116 +52,177 @@ function doliconnect_transients_page() {
 }
 
 function doliconnect_admin_page() {
-echo '<div class="wrap">';
-echo '<h2>Gestion des admins</h2>';
-$result = count_users(); 
-echo 'There are ', $result['total_users'], ' total users';
+    if ( ! current_user_can( 'manage_options' ) ) {
+        return;
+    }
 
-if (isset($_REQUEST['doliboard'])) {
-foreach ( $_REQUEST['doliboard'] as $id => $value ) {
-echo " $id $value <br />";
-if ( $value == '0' ) { delete_user_meta($value,'doliboard_4');
-echo 'delete'; } else {
-update_user_meta($value,'doliboard_4', $i);}
-if ($_REQUEST['doliboard_title_'.$i]) { update_option('doliboard_title_'.$i, $_REQUEST['doliboard_title_'.$i]); } 
-if ($_REQUEST['doliboard_email_'.$i]) { update_option('doliboard_email_'.$i, $_REQUEST['doliboard_email_'.$i]); }
-}
-} 
+    echo '<div class="wrap">';
+    echo '<h2>' . esc_html__( 'Gestion des admins', 'doliconnect' ) . '</h2>';
+    $result = count_users();
+    echo '<p>' . esc_html__( 'There are', 'doliconnect' ) . ' ' . absint( $result['total_users'] ) . ' ' . esc_html__( 'total users', 'doliconnect' ) . '</p>';
 
-$total[]=0;
-foreach($result['avail_roles'] as $role => $count){
-if ($role == 'editor' OR $role == 'administrator') {$total[$role]=$count;}
-    echo ', ', $count, ' are ', $role, '';}
-echo "<form action='' method='post'>";
-for($i=1;$i<=array_sum($total);$i++){ 
-echo "<br />$i ";
+    if ( isset( $_POST['doliboard'] ) ) {
+        check_admin_referer( 'doliconnect_admin_page_nonce', 'doliconnect_admin_page_nonce' );
 
-$usera = reset(
- get_users(
-  array(
-   'meta_key' => 'doliboard_'.get_current_blog_id().'',
-   'meta_value' => ''.$i.'',
-   'number' => 1,
-   'count_total' => false
-  )
- )
-);
-if ( ! empty( $usera ) ) {
-$USERID[$i]=$usera->ID;
-} 
+        $doliboard = array_map( 'sanitize_text_field', wp_unslash( $_POST['doliboard'] ) );
 
-if ($i<=$total['administrator']){ echo "admin"; 
-echo "<SELECT name='doliboard[".$i."]'>";
-$args = array( 
-'blog_id'      => $GLOBALS['blog_id'],
-'role'         => 'administrator',
-'meta_key' => 'first_name',
-'orderby' => 'meta_value',
-'order'        => 'ASC',
-);
-}
-elseif ($i>$total['administrator']) { 
-    echo "editeur";
-    echo "<select name='doliboard[".$i."]'>";
-    $args = array( 
-    'blog_id'      => $GLOBALS['blog_id'],
-    'role'         => 'editor',
-    'meta_key' => 'first_name',
-    'orderby' => 'meta_value',
-    'order'        => 'ASC',
-    );
-}
-$user_query = new WP_User_Query( $args );
+        foreach ( $doliboard as $position => $user_id ) {
+            $position = absint( $position );
+            $user_id  = absint( $user_id );
 
-if ( ! empty( $user_query->results ) ) { 
-echo "<option value='0'>no one</option>";
-foreach ( $user_query->results as $user ) {
-echo "<option value='".$user->ID."' ";
-if ($USERID[$i]==$user->ID) {echo " selected";}
-echo ">" . esc_html( $user->user_firstname ) . ' ' . esc_html( $user->user_lastname ) . "</option>";
-}}
-echo "</select>";
+            $assigned_users = get_users(
+                array(
+                    'meta_key'    => 'doliboard_4',
+                    'meta_value'  => $position,
+                    'fields'      => 'ID',
+                    'number'      => -1,
+                    'count_total' => false,
+                )
+            );
 
-echo "<input type='text' id='doliboard_title_".$i."' name='doliboard_title_".$i."'  value='".get_option('doliboard_title_'.$i.'')."' placeholder='Fonction'> <input type='text' id='doliboard_email_".$i."' name='doliboard_email_".$i."' placeholder='Email de fonction' value='".get_option('doliboard_email_'.$i.'')."' >";
-}
-echo "<br /><br /><input type='submit' name='activate_license' value='Mettre a jour' class='button-primary' /></form>";
+            foreach ( $assigned_users as $assigned_user_id ) {
+                if ( $assigned_user_id !== $user_id ) {
+                    delete_user_meta( $assigned_user_id, 'doliboard_4' );
+                }
+            }
+
+            if ( $user_id > 0 ) {
+                update_user_meta( $user_id, 'doliboard_4', $position );
+            }
+
+            $title_key = 'doliboard_title_' . $position;
+            if ( isset( $_POST[ $title_key ] ) ) {
+                update_option( $title_key, sanitize_text_field( wp_unslash( $_POST[ $title_key ] ) ) );
+            }
+
+            $email_key = 'doliboard_email_' . $position;
+            if ( isset( $_POST[ $email_key ] ) ) {
+                update_option( $email_key, sanitize_text_field( wp_unslash( $_POST[ $email_key ] ) ) );
+            }
+        }
+
+        echo '<div id="message" class="updated notice is-dismissible"><p>' . esc_html__( 'Admin settings saved.', 'doliconnect' ) . '</p></div>';
+    }
+
+    $total = array( 'administrator' => 0, 'editor' => 0 );
+    foreach ( $result['avail_roles'] as $role => $count ) {
+        if ( in_array( $role, array( 'editor', 'administrator' ), true ) ) {
+            $total[ $role ] = absint( $count );
+        }
+        echo ', ' . absint( $count ) . ' ' . esc_html( $role );
+    }
+
+    echo '<form action="' . esc_url( admin_url( 'admin.php?page=doliconnect_admin_page' ) ) . '" method="post">';
+    wp_nonce_field( 'doliconnect_admin_page_nonce', 'doliconnect_admin_page_nonce' );
+
+    $max_position = array_sum( $total );
+    for ( $i = 1; $i <= $max_position; $i++ ) {
+        echo '<br />' . esc_html( $i ) . ' ';
+
+        $usera = reset(
+            get_users(
+                array(
+                    'meta_key'    => 'doliboard_' . get_current_blog_id(),
+                    'meta_value'  => strval( $i ),
+                    'number'      => 1,
+                    'count_total' => false,
+                )
+            )
+        );
+
+        if ( ! empty( $usera ) ) {
+            $USERID[ $i ] = absint( $usera->ID );
+        }
+
+        if ( $i <= $total['administrator'] ) {
+            echo esc_html__( 'admin', 'doliconnect' );
+            echo '<select name="doliboard[' . esc_attr( $i ) . ']">';
+            $args = array(
+                'blog_id'      => $GLOBALS['blog_id'],
+                'role'         => 'administrator',
+                'meta_key'     => 'first_name',
+                'orderby'      => 'meta_value',
+                'order'        => 'ASC',
+            );
+        } else {
+            echo esc_html__( 'editeur', 'doliconnect' );
+            echo '<select name="doliboard[' . esc_attr( $i ) . ']">';
+            $args = array(
+                'blog_id'      => $GLOBALS['blog_id'],
+                'role'         => 'editor',
+                'meta_key'     => 'first_name',
+                'orderby'      => 'meta_value',
+                'order'        => 'ASC',
+            );
+        }
+
+        $user_query = new WP_User_Query( $args );
+
+        if ( ! empty( $user_query->results ) ) {
+            echo '<option value="0">' . esc_html__( 'no one', 'doliconnect' ) . '</option>';
+            foreach ( $user_query->results as $user ) {
+                printf(
+                    '<option value="%d" %s>%s</option>',
+                    absint( $user->ID ),
+                    selected( isset( $USERID[ $i ] ) ? $USERID[ $i ] : 0, $user->ID, false ),
+                    esc_html( trim( $user->user_firstname . ' ' . $user->user_lastname ) )
+                );
+            }
+        }
+
+        echo '</select>';
+        echo '<input type="text" id="doliboard_title_' . esc_attr( $i ) . '" name="doliboard_title_' . esc_attr( $i ) . '" value="' . esc_attr( get_option( 'doliboard_title_' . $i ) ) . '" placeholder="' . esc_attr__( 'Fonction', 'doliconnect' ) . '" />';
+        echo '<input type="text" id="doliboard_email_' . esc_attr( $i ) . '" name="doliboard_email_' . esc_attr( $i ) . '" value="' . esc_attr( get_option( 'doliboard_email_' . $i ) ) . '" placeholder="' . esc_attr__( 'Email de fonction', 'doliconnect' ) . '" />';
+    }
+
+    echo '<br /><br /><input type="submit" name="activate_license" value="' . esc_attr__( 'Mettre à jour', 'doliconnect' ) . '" class="button-primary" />';
+    echo '</form>';
 }
 
 function doliconnect_network_page() {
-    echo '<div class="wrap">';
-    echo '<h2>'.__( 'Sync with Dolibarr', 'doliconnect' ).'</h2>';
+    if ( ! current_user_can( 'manage_options' ) ) {
+        return;
+    }
 
-/*** License activate button was clicked ***/
-    if (isset($_REQUEST['activate_license'])) {
-        if (isset($_POST['doliconnect_network_page_nonce']) && wp_verify_nonce($_POST['doliconnect_network_page_nonce'], 'doliconnect_network_page_nonce')) {
-            if (add_site_option('dolibarr_public_url', esc_url_raw($_REQUEST['dolibarr_public_url']))) {
-            } else {
-                update_site_option('dolibarr_public_url', esc_url_raw($_REQUEST['dolibarr_public_url']));
+    echo '<div class="wrap">';
+    echo '<h2>' . esc_html__( 'Sync with Dolibarr', 'doliconnect' ) . '</h2>';
+
+    if ( isset( $_POST['activate_license'] ) ) {
+        check_admin_referer( 'doliconnect_network_page_nonce', 'doliconnect_network_page_nonce' );
+
+        $dolibarr_public_url  = isset( $_POST['dolibarr_public_url'] ) ? esc_url_raw( wp_unslash( $_POST['dolibarr_public_url'] ) ) : '';
+        $dolibarr_private_key = isset( $_POST['dolibarr_private_key'] ) ? sanitize_text_field( wp_unslash( $_POST['dolibarr_private_key'] ) ) : '';
+        $dolibarr_entity      = isset( $_POST['dolibarr_entity'] ) ? sanitize_text_field( wp_unslash( $_POST['dolibarr_entity'] ) ) : '';
+        $cronjob_multisite    = isset( $_POST['doliconnect_cronjob_multisite'] ) ? sanitize_text_field( wp_unslash( $_POST['doliconnect_cronjob_multisite'] ) ) : '';
+
+        if ( '' !== $dolibarr_public_url ) {
+            if ( ! add_site_option( 'dolibarr_public_url', $dolibarr_public_url ) ) {
+                update_site_option( 'dolibarr_public_url', $dolibarr_public_url );
             }
-            if (add_site_option('dolibarr_private_key', sanitize_text_field($_REQUEST['dolibarr_private_key']))) {
-            } else {
-                update_site_option('dolibarr_private_key', sanitize_text_field($_REQUEST['dolibarr_private_key']));
-            }
-            if (isset($_REQUEST['dolibarr_entity'])) {
-                update_site_option('dolibarr_entity', sanitize_text_field($_REQUEST['dolibarr_entity']));
-            } else {
-                delete_site_option('dolibarr_entity');
-            }
-            if (isset($_REQUEST['doliconnect_cronjob_multisite'])) {
-                update_site_option('doliconnect_cronjob_multisite', sanitize_text_field($_REQUEST['doliconnect_cronjob_multisite']));
-            } else {
-                delete_site_option('doliconnect_cronjob_multisite');
-            }
-        } else {
-            // Nonce invalide, affichez un message d'erreur ou bloquez l'action
-            wp_die(__('Action forbidden', 'doliconnect'));
         }
-    } 
-    /*** End of license activation ***/
-    
-    /*** End of sample license deactivation ***/    
-		?>       
-<div id="generaladmin" class="postbox">
+
+        if ( '' !== $dolibarr_private_key ) {
+            if ( ! add_site_option( 'dolibarr_private_key', $dolibarr_private_key ) ) {
+                update_site_option( 'dolibarr_private_key', $dolibarr_private_key );
+            }
+        }
+
+        if ( '' !== $dolibarr_entity ) {
+            update_site_option( 'dolibarr_entity', $dolibarr_entity );
+        } else {
+            delete_site_option( 'dolibarr_entity' );
+        }
+
+        if ( '' !== $cronjob_multisite ) {
+            update_site_option( 'doliconnect_cronjob_multisite', $cronjob_multisite );
+        } else {
+            delete_site_option( 'doliconnect_cronjob_multisite' );
+        }
+
+        echo '<div id="message" class="updated notice is-dismissible"><p>' . esc_html__( 'Settings saved.', 'doliconnect' ) . '</p></div>';
+    }
+
+    ?>       
 <div class="inside">
 
 <?php
@@ -229,12 +290,14 @@ function doliconnect_settings() {
 	$tab = isset($_GET['tab']) ? $_GET['tab'] : $default_tab;
 	?>
 
-	<h2>Bienvenue dans les paramètres du plugin</h2>
+	<h2><?php _e( 'Settings of Doliconnect', 'doliconnect' ); ?></h2>
 	<br>
 
 	<h2 class="nav-tab-wrapper">
-			<a href="?page=doliconnect-settings&tab=tab1" class="nav-tab nav-tab-active">Tab 1</a>
-			<a href="?page=doliconnect-settings&tab=tab2" class="nav-tab">Tab 2</a>
+			<a href="?page=doliconnect_settings&tab=tab1" class="nav-tab nav-tab-active">Dolibarr</a>
+			<a href="?page=doliconnect_settings&tab=tab2" class="nav-tab">Tab 2</a>
+            <a href="?page=doliconnect_settings&tab=tab3" class="nav-tab">Tab 3</a>
+            <a href="?page=doliconnect_settings&tab=tab4" class="nav-tab">Tab 4</a>
 	</h2>
 
 	<div class="tab-content">
@@ -245,6 +308,12 @@ function doliconnect_settings() {
 					break;
 			case 'tab2':
 					echo 'Je suis tab 2';
+					break;
+			case 'tab3':
+					echo 'Je suis tab 3';
+					break;
+			case 'tab4':
+					echo 'Je suis tab 4';
 					break;
 			endswitch; ?>
 	</div>	
