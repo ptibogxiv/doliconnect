@@ -348,7 +348,7 @@ function doliconnect_settings() {
     ?>
 <div class='wrap'>
 	<?php
-	$default_tab = 'tab1';
+	$default_tab = 'dolibarr';
 	$tab = isset($_GET['tab']) ? $_GET['tab'] : $default_tab;
 	?>
 
@@ -356,10 +356,10 @@ function doliconnect_settings() {
 	<br>
 
 	<h2 class="nav-tab-wrapper">
-			<a href="?page=doliconnect_settings&tab=tab1" class="nav-tab nav-tab-active">Dolibarr</a>
-			<a href="?page=doliconnect_settings&tab=tab2" class="nav-tab">Tab 2</a>
-            <a href="?page=doliconnect_settings&tab=tab3" class="nav-tab">Tab 3</a>
-            <a href="?page=doliconnect_settings&tab=tab4" class="nav-tab">Tab 4</a>
+			<a href="?page=doliconnect_settings&tab=dolibarr" class="nav-tab <?php echo $tab === 'dolibarr' ? 'nav-tab-active' : ''; ?>">Dolibarr</a>
+			<a href="?page=doliconnect_settings&tab=tab2" class="nav-tab <?php echo $tab === 'tab2' ? 'nav-tab-active' : ''; ?>">Tab 2</a>
+            <a href="?page=doliconnect_settings&tab=tab3" class="nav-tab <?php echo $tab === 'tab3' ? 'nav-tab-active' : ''; ?>">Tab 3</a>
+            <a href="?page=doliconnect_settings&tab=tab4" class="nav-tab <?php echo $tab === 'tab4' ? 'nav-tab-active' : ''; ?>">Tab 4</a>
 	</h2>
 
 	<div class="tab-content">
