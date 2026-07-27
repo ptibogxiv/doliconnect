@@ -365,10 +365,10 @@ function doliconnect_settings() {
 	<div class="tab-content">
 	
 			<?php switch($tab) :
-			case 'tab1':
+			case 'dolibarr':
 					echo 'je suis tab 1'; 
 					break;
-			case 'tab2':
+			case 'general':
 					echo 'Je suis tab 2';
 					break;
 			case 'tab3':
