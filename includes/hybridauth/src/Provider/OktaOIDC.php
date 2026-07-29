@@ -14,21 +14,27 @@ use Hybridauth\Data;
 use Hybridauth\User;
 
 /**
- * Keycloak OpenId Connect provider adapter.
+ * Okta OpenId Connect provider adapter.
  *
  * Example:
- *         'Keycloak' => [
+ *         'OktaOIDC' => [
  *             'enabled' => true,
- *             'url' => 'https://your-keycloak', // depending on your setup you might need to add '/auth'
- *             'realm' => 'your-realm',
+ *             'domain' => 'yourself.okta.com',
+ *             'authorization_server' => 'default',
  *             'keys' => [
  *                 'id' => 'client-id',
  *                 'secret' => 'client-secret'
- *             ]
+ *             ],
+ *             'refresh_existing_users' => true,
+ *             'groups_key' => 'aclgroups',
+ *             'groups_to_profiles' => [
+ *                 'admin' => ['Administrator'],
+ *                 'poweruser' => ['Portal user', 'Portal power user'],
+ *             ],
  *         ]
  *
  */
-class Keycloak extends OAuth2
+class OktaOIDC extends OAuth2
 {
 
     /**
@@ -39,33 +45,19 @@ class Keycloak extends OAuth2
     /**
      * {@inheritdoc}
      */
-    protected $apiDocumentation = 'https://www.keycloak.org/docs/latest/securing_apps/#_oidc';
-
-    /**
-     * {@inheritdoc}
-     */
     protected function configure()
     {
         parent::configure();
 
-        if (!$this->config->exists('url')) {
-            throw new InvalidApplicationCredentialsException(
-                'You must define a provider url'
-            );
+        if (!$this->config->exists('domain')) {
+            throw new InvalidApplicationCredentialsException('You must define a domain');
         }
-        $url = $this->config->get('url');
+        $domain = $this->config->get('domain');
+        $authorizationServer = $this->config->exists('authorization_server') ? '/oauth2/' . $this->config->get('authorization_server') : '';
 
-        if (!$this->config->exists('realm')) {
-            throw new InvalidApplicationCredentialsException(
-                'You must define a realm'
-            );
-        }
-        $realm = $this->config->get('realm');
-
-        $this->apiBaseUrl = $url . '/realms/' . $realm . '/protocol/openid-connect/';
-
-        $this->authorizeUrl = $this->apiBaseUrl . 'auth';
-        $this->accessTokenUrl = $this->apiBaseUrl . 'token';
+        $this->apiBaseUrl = 'https://' . $domain . $authorizationServer;
+        $this->authorizeUrl = $this->apiBaseUrl . '/v1/authorize';
+        $this->accessTokenUrl = $this->apiBaseUrl . '/v1/token';
     }
 
     /**
@@ -88,11 +80,16 @@ class Keycloak extends OAuth2
      */
     public function getUserProfile()
     {
-        $response = $this->apiRequest('userinfo');
+        $response = $this->getStoredData('/v1/userinfo');
+        if (!$response) {
+            $response = $this->apiRequest('/v1/userinfo');
+            $this->storeData('/v1/userinfo', $response);
+        }
 
         $data = new Data\Collection($response);
 
         if (!$data->exists('sub')) {
+            $this->deleteStoredData('/v1/userinfo');
             throw new UnexpectedApiResponseException('Provider API returned an unexpected response.');
         }
 
@@ -105,10 +102,9 @@ class Keycloak extends OAuth2
         $userProfile->lastName = $data->get('family_name');
         $userProfile->emailVerified = $data->get('email_verified');
 
-        // Collect organization claim if provided in the IDToken
-        if ($data->exists('organization')) {
-            $kc_orgs = array_keys((array) $data->get('organization'));
-            $userProfile->data['organization'] = array_shift($kc_orgs); //Get the first key
+        $groupsKey = $this->config->get('groups_key') ?? 'groups';
+        if ($data->exists($groupsKey)) {
+            $userProfile->data['groups'] = $data->get($groupsKey);
         }
 
         return $userProfile;
