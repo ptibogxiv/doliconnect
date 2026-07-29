@@ -5,7 +5,7 @@ Tags: erp, crm, ecommerce, dolibarr, GDPR
 Requires at least: 6.5
 Tested up to: 7.1
 Stable tag: 10.4.1
-Requires PHP: 8.2
+Requires PHP: 8.1
 License: GPL v3 or later
 Donate link: https://ptibogxiv.eu
 
