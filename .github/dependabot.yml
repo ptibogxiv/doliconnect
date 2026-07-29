@@ -13,7 +13,3 @@ updates:
       # Allow production updates only (can do a AND, several entries are doing a OR)
       - dependency-type: "production"
       #- dependency-type: "direct"
-  - package-ecosystem: "pdfjs" # See documentation for possible values
-    directory: "/includes/" # Location of package manifests
-    schedule:
-      interval: "daily"
