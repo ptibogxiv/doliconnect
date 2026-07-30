@@ -38,7 +38,8 @@ function doliCartButton(form, id, lineid, qty, productarray, acase) {
                     document.getElementById("DoliWidgetCartItems").innerHTML = response.data.items;      
                   }
                   if (document.getElementById("offcanvasDoliCartLabel") && response.data.hasOwnProperty("dolicart")) {
-                    document.getElementById("offcanvasDoliCartLabel").innerHTML = response.data.dolicart;      
+                    document.getElementById("offcanvasDoliCartLabel").innerHTML = response.data.dolicart; 
+                    $("#offcanvasDoliCartLabel").offcanvas("show");       
                   }
                   if (document.getElementById("doliModalDiv") && response.data.hasOwnProperty("modal")) {
                     document.getElementById("doliModalDiv").innerHTML = response.data.modal; 
