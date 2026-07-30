@@ -3439,6 +3439,11 @@ function doliModalButton($case, $id, $title, $type = 'button', $class = 'btn btn
 function doliModalDiv() {  
   doliconnect_enqueues();
   print '<div id="doliModalDiv"></div>';
+  if ( !empty(doliconnectid('dolicart')) && doliCheckModules('commande') ) {
+    print '<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasDoliCartLabel" aria-labelledby="offcanvasDoliCartLabel">';
+    print doliOffcanvasCart( wp_get_current_user() );
+    print '</div>';
+  }
   print '<div id="DoliconnectLoadingModal" class="modal fade bd-example-modal" tabindex="-1" aria-labelledby="myLargeModalLabel" aria-hidden="true" data-bs-show="true" data-bs-backdrop="static" data-keyboard="false">
   <div class="modal-dialog modal-fullscreen modal-dialog-centered">
   <div class="text-center text-light w-100">
