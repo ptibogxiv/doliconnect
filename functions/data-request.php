@@ -836,7 +836,6 @@ global $current_user;
 				];
 				$object = doliConnect('order', $current_user);
 				$response['js'] = null;
-				$response['modal'] = doliModalTemplate('CartInfos', __( 'Cart', 'doliconnect'), doliline($object, false, false, false), doliCartButton($object), 'modal-lg');
 				delete_transient( $link );
 				wp_send_json_success($response);
 				die();
@@ -865,11 +864,7 @@ global $current_user;
 					];
 				if (doliCheckModules('relatedproducts') && doliCheckRelatedProducts($product->id)) { 
 					$response['modal'] = doliModalTemplate('CartInfos', __( 'Related products', 'doliconnect'), doliRelatedProducts($product->id, true), '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">'.__( "Close", "doliconnect").'</button>', 'modal-lg', null, 'p-0');
-				} else {
-					$object = doliConnect('order', $current_user);
-					$response['js'] = null;
-					$response['modal'] = doliModalTemplate('CartInfos', __( 'Cart', 'doliconnect'), doliline($object, false, false, false), doliCartButton($object), 'modal-lg');
-				} 
+				}
 				delete_transient( $link );
 				wp_send_json_success($response);
 				die();
