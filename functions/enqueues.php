@@ -54,8 +54,6 @@ function doliconnect_enqueues() {
   		wp_register_script( 'font-awesome', '//use.fontawesome.com/releases/v7.3.1/js/all.js', array(), '7.3.1', true );
 		wp_enqueue_script( 'font-awesome');
 	}
-	//wp_register_script( 'doliconnect-dolicart', plugins_url( 'doliconnect/includes/js/dolicart.js'), array( 'jquery' ), '', false );
-	//wp_enqueue_script( 'doliconnect-dolicart' );
   	wp_register_style( 'bootstrap-social', plugins_url( 'doliconnect/includes/custom/css/bootstrap-social.css' ), array(), $version );
 	wp_enqueue_style( 'bootstrap-social');
   	wp_register_style( 'flag-icons', plugins_url( 'doliconnect/includes/flag-icons/css/flag-icons.css' ), array(), '7.5.0' ); 
