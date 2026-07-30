@@ -893,7 +893,7 @@ function doliOffcanvasCart($current_user, $object = null) {
     $object = doliConnect('order', $current_user, false);
   }
   $offcanvas = '<div class="offcanvas-header">
-    <h5 class="offcanvas-title" id="offcanvasDoliCartLabel">'.__('Cart', 'doliconnect').' ('.doliconnect_countitems($object).' '.__('items', 'doliconnect').')</h5>
+    <h5 class="offcanvas-title" id="offcanvasDoliCartLabel">'.__('My cart', 'doliconnect').' ('.doliconnect_countitems($object).' '.__('items', 'doliconnect').')</h5>
     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>';
   $offcanvas .= '<div class="offcanvas-body">';
