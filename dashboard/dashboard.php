@@ -1913,7 +1913,7 @@ $content .= "<li class='list-group-item list-group-item-light list-group-item-ac
 if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $current_user->ID ) {
 $content .= " disabled";
 } elseif ( $current_user->loginmailalert == 'on' ) { $content .= " checked"; }        
-$content .= " onchange='submit()'><label class='form-check-label w-100' for='loginmailalert'> ".__( 'Receive a email notification at each connection', 'doliconnect')."</label>
+$content .= " onchange='submit()' switch><label class='form-check-label w-100' for='loginmailalert'> ".__( 'Receive a email notification at each connection', 'doliconnect')."</label>
 </div></li>";
 
 $privacy=$wpdb->prefix."doliprivacy";
