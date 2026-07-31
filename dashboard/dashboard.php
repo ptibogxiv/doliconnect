@@ -1926,6 +1926,10 @@ $content .= '<div class="form-floating">
 $content .= "</li>";
 }
 
+if ( is_plugin_active( 'secure-passkeys/secure-passkeys.php' ) ) {
+    $content .= do_shortcode('[secure_passkeys_register_form]');
+}
+
 if ( is_plugin_active( 'two-factor/two-factor.php' ) && current_user_can('administrator') && !empty(get_option('doliconnectbeta')) ) {
 $content .= '<li class="list-group-item list-group-item-light list-group-item-action">';
 require_once( ABSPATH . 'wp-content/plugins/two-factor/class-two-factor-core.php');
