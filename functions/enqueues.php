@@ -50,7 +50,7 @@ function doliconnect_enqueues() {
 	wp_register_script( 'bootstrap.bundle.min', plugins_url( 'doliconnect/includes/bootstrap/js/bootstrap.bundle.min.js' ), array( 'jquery' ), $version, true );
   	wp_enqueue_script( 'bootstrap.bundle.min');
 	wp_enqueue_script( 'jquery-masonry');
-	if (empty(get_option('doliconnectfontawesome'))) {
+	if (!wp_script_is('font-awesome', 'enqueued')){
   		wp_register_script( 'font-awesome', '//use.fontawesome.com/releases/v7.3.1/js/all.js', array(), '7.3.1', true );
 		wp_enqueue_script( 'font-awesome');
 	}

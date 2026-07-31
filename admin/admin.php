@@ -403,7 +403,6 @@ if ( 'POST' === $_SERVER['REQUEST_METHOD'] && isset( $_POST['doliconnect_setting
         'dolibarr_b2bmode',
         'doliconnectdisplayinvoice',
         'doliconnectbeta',
-        'doliconnectfontawesome',
         'doliconnectrestrict',
         'dolicartproductgrid',
         'dolicartsuppliergrid',
@@ -474,10 +473,6 @@ if ( 'POST' === $_SERVER['REQUEST_METHOD'] && isset( $_POST['doliconnect_setting
             <tr>
                 <th style="width:150px;"><label for="doliconnectbeta"><?php _e('Beta mode', 'doliconnect') ?></label></th>
                 <td ><input name="doliconnectbeta" type="checkbox" id="doliconnectbeta" value="1" <?php checked('1', get_option('doliconnectbeta')); ?> /> <?php _e('Active beta functions, can be unstable', 'doliconnect') ?></td>
-            </tr>
-            <tr>
-                <th style="width:150px;"><label for="doliconnectfontawesome"><?php _e('Disable enqueuing Font-awesome library', 'doliconnect') ?></label></th>
-                <td ><input name="doliconnectfontawesome" type="checkbox" id="doliconnectfontawesome" value="1" <?php checked('1', get_option('doliconnectfontawesome')); ?> /> <?php _e('Disable if your template already loads it', 'doliconnect') ?></td>
             </tr>
             <tr>
                 <th style="width:150px;"><label for="doliconnectbeta"><?php _e('Restricted mode', 'doliconnect') ?></label></th>
