@@ -1,7 +1,7 @@
 === Doliconnect ===
 
 Contributors: ptibogxiv, audrasjb
-Tags: erp, crm, ecommerce, dolibarr, GDPR
+Tags: erp, crm, dolibarr, connector
 Requires at least: 6.5
 Tested up to: 7.1
 Stable tag: 10.4.1
