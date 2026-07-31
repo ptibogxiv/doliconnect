@@ -58,6 +58,7 @@ require_once plugin_dir_path(__FILE__).'/admin/admin.php';
 require_once plugin_dir_path(__FILE__).'/blocks/index.php';
 
 //add_action( 'plugins_loaded', 'doliconnect_run66', 10, 0 );
+/*
 function doliconnect_run66() {
 	if ( file_exists( WP_CONTENT_DIR . '/maintenance.php' ) ) {
 		require_once WP_CONTENT_DIR . '/maintenance.php';
@@ -75,7 +76,51 @@ function doliconnect_run66() {
 		503
 	);
 }
+*/
 
+// ********************************************************
+/*
+ * Prepare futur with API connector
+ * 
+ * @since 10.0.4
+ */
+/*
+add_action( 'wp_connectors_init', function ( WP_Connector_Registry $registry ) {
+    ///if ( $registry->is_registered( 'dolibarr' ) ) {
+        //$connector = $registry->unregister( 'dolibarr' );
+        $connector['name'] = __( 'Dolibarr', 'doliconnect' );
+        $connector['description'] = __( 'Connect Wordpress with Dolibarr', 'doliconnect' );
+        $connector['type'] = 'erp_crm';
+        $connector['authentication'] = array(
+				'method'          => 'api_key',
+				'credentials_url' => '',
+				'setting_name'    => '',
+				'constant_name'   => '',
+			);
+        $connector['plugin'] = array(
+				'file'      => 'doliconnect/doliconnect.php',
+                'is_active' => function () {
+						return 5;
+					},
+			);
+         $connector['settings'] = array(
+                'api_key' => array(
+                    'label'       => __( 'API Key', 'doliconnect' ),
+                    'type'        => 'text',
+                    'description' => __( 'Enter your API key from My Custom API.', 'doliconnect' ),
+                    'required'    => true,
+                ),
+                'api_url' => array(
+                    'label'       => __( 'API URL', 'doliconnect' ),
+                    'type'        => 'url',
+                    'description' => __( 'Base URL of the API endpoint.', 'doliconnect' ),
+                    'required'    => true,
+                ),
+            );
+        $registry->register( 'dolibarr', $connector );
+    //}
+} );
+*/
 // ********************************************************
 
 add_filter( 'plugin_action_links_'.plugin_basename( __FILE__ ), 'doliconnect_settings_action_links', 10, 2 );
