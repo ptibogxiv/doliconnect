@@ -1904,7 +1904,7 @@ add_filter( 'settings_doliconnect_menu', 'settings_menu', 30, 2);
 function settings_module( $content,$url) {
 global $wpdb, $current_user;
 
-$content = '<div id="dolisettings-alert"></div><form id="dolisettings-form" method="post" class="was-validated" action="'.admin_url('admin-ajax.php').'">';
+$content = '<div id="dolisettings-alert"></div><form id="dolisettings-form" method="post" action="'.admin_url('admin-ajax.php').'">';
 
 $content .= doliAjax('dolisettings',  null, 'settings');
 
