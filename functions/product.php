@@ -443,7 +443,7 @@ global $current_user;
       $currency = strtoupper(doliconst("MAIN_MONNAIE"));
     }
     $fmt = numfmt_create( doliUserLang($current_user, 'locale'), NumberFormatter::CURRENCY );
-    return numfmt_format_currency($fmt, $montant, $currency);//.$decimal
+    return numfmt_format_currency($fmt, $montant, $currency).'<sup> '.$mode.'</sup>';
   }
 }
 
@@ -893,7 +893,7 @@ function doliOffcanvasCart($current_user, $object = null) {
     $object = doliConnect('order', $current_user, false);
   }
   $offcanvas = '<div class="offcanvas-header">
-    <h5 class="offcanvas-title" id="offcanvasDoliCartLabel">'.__('My cart', 'doliconnect').' ('.doliconnect_countitems($object).' '.__('items', 'doliconnect').')</h5>
+    <h5 class="offcanvas-title" id="offcanvasDoliCartLabel">'.sprintf(__( 'My cart (%s items)', 'doliconnect'), doliconnect_countitems($object)).'</h5>
     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>';
   $offcanvas .= '<div class="offcanvas-body">';
@@ -905,7 +905,7 @@ function doliOffcanvasCart($current_user, $object = null) {
     $offcanvas .= "<a type='button' class='btn btn-sm btn-outline-secondary' href='#' type='submit' onclick='doliCartButton(\"updateCart\", 0, 0, 0, null, \"delete\");'>".__('Empty the basket', 'doliconnect').'</a>';
       $arr_params = array( 'checkout' => wp_create_nonce( 'dolicart-'. $object->id.'-'.$current_user->ID));  
       $return = esc_url( add_query_arg( $arr_params, doliconnecturl('dolicart')) );
-    $offcanvas .= '<a type="button" class="btn btn-primary" href="'.$return.'">'.__('Order', 'doliconnect').' - '.doliprice($object, 'ttc', isset($object->multicurrency_code) ? $object->multicurrency_code : null).'</a>';
+    $offcanvas .= '<a type="button" class="btn btn-primary" href="'.$return.'">'.sprintf(__( ' Order - %s', 'doliconnect'), doliprice($object, 'ttc', isset($object->multicurrency_code) ? $object->multicurrency_code : null)).'</a>';
     $offcanvas .= '</div>';
     $offcanvas .= '</div>';
   }
