@@ -1961,11 +1961,6 @@ require_once( ABSPATH . 'wp-content/plugins/two-factor/class-two-factor-core.php
 $content .= "</li>";    
 }
 $content .= '</ul>';
-$content .= "<div class='card-body'><div class='d-grid gap-2'><button id='doliuserinfos-button' class='btn btn-outline-secondary' type='submit' ";
-if (!doliCheckRights('societe', 'creer')) { $content .= 'disabled'; }
-$content .= ">".__( 'Update', 'doliconnect')."</button></div>";
-$content .= '</form></div>';
-//$content .= doliCardFooter($request, 'expensereport', $expensereportfo);
 $content .= '</div>';
 
 if (current_user_can('administrator') && !empty(get_option('doliconnectbeta')) ) { 
