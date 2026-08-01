@@ -1960,6 +1960,7 @@ global $current_user;
         $product = callDoliApi("GET", "/products/".$line->fk_product."?includesubproducts=true&includetrans=true", null, dolidelay('product', $refresh));
         $mstock = doliProductStock($product, $refresh, true, $line->array_options);
       }
+      
       if ( isset($mstock) && $mstock['stock'] < 0 && is_page(doliconnectid('dolicart'))) {
         $doliline .= "<li class='list-group-item list-group-item-danger list-group-item-action'>";
         if (!defined('dolilockcart')) define('dolilockcart', '1'); 
@@ -1967,14 +1968,18 @@ global $current_user;
         $doliline .= "<li class='list-group-item list-group-item-warning list-group-item-action'>";
         if (!defined('dolilockcart')) define('dolilockcart', '1'); 
       } else {
-        $doliline .= "<li class='list-group-item list-group-item-light list-group-item-action'>";
+        $doliline .= "<li class='list-group-item list-group-item-light";
+        if ($context != 'dolioffcanvascart') $doliline .= " list-group-item-action";
+        $doliline .= "'>";
       }
+
       $dates = null;
       if ( isset($line->date_start) && $line->date_start != '' && isset($line->date_end) && $line->date_end != '' ) {
         $start = wp_date('d/m/Y', $line->date_start);
         $end = wp_date('d/m/Y', $line->date_end);
         $dates = " <i>(Du $start au $end)</i>";
       }
+
       $doliline .= '<div class="w-100 justify-content-between"><div class="row"><div class="d-none d-sm-block col-sm-2 col-lg-1"><center>';
       if ( doliCheckModules('fraisdeport') && doliconst('FRAIS_DE_PORT_ID_SERVICE_TO_USE') == $line->fk_product ) {
         $doliline .= '<i class="fas fa-shipping-fast fa-2x fa-fw"></i>';
