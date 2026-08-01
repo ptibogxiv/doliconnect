@@ -1391,19 +1391,9 @@ function expensereport_module( $content, $url ) {
         $content .= doliObjectStatus($expensereportfo, 'expensereport', 3);
 
         $content .= "</div></div></div><ul class='list-group list-group-flush'>";
-        if ( $expensereportfo->lines != null ) {
-            foreach ( $expensereportfo->lines as $line ) {
-            $content .= "<li class='list-group-item'>";     
-            $content .= '<div class="w-100 justify-content-between"><div class="row"><div class="col-8 col-md-10"> 
-            <h6 class="mb-1">'.'</h6>';
-            if (isset($line->comments)) $content .= '<p class="mb-1">'.$line->comments.'</p>';
-            $content .= '<small><i>('.wp_date("d/m/Y", $line->dates).')</i></small>'; 
-            $content .= '</div><div class="col-4 col-md-2 text-end"><h5 class="mb-1">'.doliprice($line, 'ttc', isset($line->multicurrency_code) ? $line->multicurrency_code : null).'</h5>';
-            $content .= '<h5 class="mb-1">x'.$line->qty.'</h5>'; 
-            $content .= "</div></div></li>";
-            }
-        }
-        $content .= dolitotal($expensereportfo);
+        
+        $content .= doliline($expensereportfo, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+        
         $content .= "</ul>";
         $content .= doliCardFooter($expensereportfo, 'expensereport');
         $content .= "</div>";
