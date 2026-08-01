@@ -15,6 +15,8 @@ This plugin interfaces your Dolibarr installation with a customer interface in W
 
 Use this plugin to greatly improve relations with your customers. No WooCommerce or other e-shop is needed!
 
+This module only support Dolibarr's internal plugins and options. For more support, you will need addons.
+
 If you like the plugin, feel free to rate it (on the right side of this page)!
 
 You can test it live on [https://ptibogxiv.dev](https://ptibogxiv.dev)
