@@ -2006,13 +2006,13 @@ global $current_user;
         $doliline .= "<b>".__( "Sorry, this product is not available with this quantity. Please, change it to finalize your order", 'doliconnect')."</b>";
       }
       $doliline .= '</div><div class="col d-none d-md-block col-md-3 text-end">';
-      if ( isset($object->statut) && empty($object->statut) && !is_page(doliconnectid('doliaccount')) && doliconst('FRAIS_DE_PORT_ID_SERVICE_TO_USE') != $line->fk_product  ) {
-        $doliline .= '<center>'.doliProductStock($product).'</center>';
-        if ( !empty($product->country_id) ) {  
-          $country = callDoliApi("GET", "/setup/dictionary/countries/".$product->country_id."?lang=".doliUserLang($current_user), null, dolidelay('constante'));
-          if (isset($product->country_code)) $doliline .= "<center><small><span class='fi fi-".strtolower($product->country_code)."'></span></small></center>"; 
-        }
-      }
+      //if ( isset($object->statut) && empty($object->statut) && !is_page(doliconnectid('doliaccount')) && doliconst('FRAIS_DE_PORT_ID_SERVICE_TO_USE') != $line->fk_product  ) {
+      //  $doliline .= '<center>'.doliProductStock($product).'</center>';
+      //  if ( !empty($product->country_id) ) {  
+      //    $country = callDoliApi("GET", "/setup/dictionary/countries/".$product->country_id."?lang=".doliUserLang($current_user), null, dolidelay('constante'));
+      //    if (isset($product->country_code)) $doliline .= "<center><small><span class='fi fi-".strtolower($product->country_code)."'></span></small></center>"; 
+      //  }
+      //}
       $doliline .= '</div><div class="col-4 col-sm-3 col-md-3 col-lg-3 text-end">';
       if (!empty($line->fk_parent_line) || (doliCheckModules('fraisdeport') && empty($line->fk_parent_line) && doliconst('FRAIS_DE_PORT_ID_SERVICE_TO_USE') == $line->fk_product)) {
         $doliline .= '<h6 class="mb-1">x'.$line->qty.'</h6>';
@@ -2046,11 +2046,7 @@ global $current_user;
     $doliline .= "<li class='list-group-item list-group-item-light'><br><br><br><br><br><center><h5>".__( 'Your basket is empty', 'doliconnect')."</h5></center>";
     if ( !is_user_logged_in() ) {
       $doliline .= '<center>'.__( 'If you already have an account,', 'doliconnect').' ';
-      if ( get_option('doliloginmodal') == '1' ) {
-        $doliline .= '<a href="#" data-bs-toggle="modal" data-bs-target="#DoliconnectLogin" data-dismiss="modal" title="'.__('sign in', 'doliconnect').'" role="button">'.__( 'sign in', 'doliconnect').'</a> ';
-      } else {
-        $doliline .= "<a href='".wp_login_url( doliconnecturl('dolicart') )."?redirect_to=".doliconnecturl('dolicart')."' title='".__('sign in', 'doliconnect')."'>".__( 'sign in', 'doliconnect').'</a> ';
-      }
+      $doliline .= "<a href='".wp_login_url( doliconnecturl('dolicart') )."?redirect_to=".doliconnecturl('dolicart')."' title='".__('sign in', 'doliconnect')."'>".__( 'sign in', 'doliconnect').'</a> ';
       $doliline .= __( 'to see your basket.', 'doliconnect').'</center>';
     }
     $doliline .= "<br><br><br><br><br></li>";
