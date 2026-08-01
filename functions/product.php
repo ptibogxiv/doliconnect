@@ -1,7 +1,7 @@
 <?php
-// Exit if accessed directly.
+
 if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+	exit; // Exit if accessed directly
 }
 
   function doliconnect_dolibarrproduct_init() {
