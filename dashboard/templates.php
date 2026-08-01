@@ -1,7 +1,7 @@
 <?php
-// Exit if accessed directly.
+
 if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+	exit; // Exit if accessed directly
 }
 
 function doliaccount_display($content, $controle = false) {
