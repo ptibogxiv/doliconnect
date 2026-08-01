@@ -457,7 +457,7 @@ global $current_user;
   if (empty($product->status)) {   
     $mstock['stock'] = 0;
   } elseif (!empty($product->type) && empty(doliconst('STOCK_SUPPORTS_SERVICES'))) {
-    $mstock['stock'] = 999999;
+    $mstock['stock'] = 999999999;
   } elseif (isset($stock->stock_warehouse) && !empty($stock->stock_warehouse) && !empty($warehouse) && $warehouse > 0) {
     if (isset($stock->stock_warehouse->$warehouse->real)) {
       $mstock['stock'] = min(array($stock->stock_reel,$stock->stock_warehouse->$warehouse->real,$stock->stock_theorique));
@@ -467,7 +467,7 @@ global $current_user;
   } elseif (isset($stock->stock_theorique) && isset($stock->stock_reel)) {
     $mstock['stock'] = min(array($stock->stock_theorique,$stock->stock_reel));
   } else {
-    $mstock['stock'] = 999999;
+    $mstock['stock'] = 999999999;
   }
   if (!empty(doliconst('PRODUCT_USE_CUSTOMER_PACKAGING')) && isset($product->packaging) && !empty($product->packaging)) {
     $mstock['step'] = $product->packaging;
