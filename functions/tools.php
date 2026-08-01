@@ -1934,12 +1934,6 @@ global $current_user;
   }
 }
 
-function dolitotal($object) { 
-  $total = "<li class='list-group-item list-group-item-primary'><b>".__( 'Total', 'doliconnect').": ".doliprice($object, 'ttc', isset($object->multicurrency_code) ? $object->multicurrency_code : null)."</b><br>";
-  $total .= "<small><b>(".__( 'of which VAT', 'doliconnect').": ".doliprice($object, 'tva', isset($object->multicurrency_code) ? $object->multicurrency_code : null).")</b></small></li>";
-  return $total;
-}
-
 function doliCartButton ($object) {
   $button = '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">'.__( "Continue shopping", "doliconnect").'</button>';
   if (isset($object->lines) && !empty($object->lines)) $button .= '<button type="button" class="btn btn-outline-secondary" onclick="doliJavaCartAction(\'update\', '.$object->id.', 0, 0, null, \'delete\');">'.__( 'Empty the basket', 'doliconnect').'</button> <a class="btn btn-primary" role="button" href="'.esc_url(doliconnecturl('dolicart')).'" >'.__( 'Finalize the order', 'doliconnect').'</a>';
@@ -2016,7 +2010,7 @@ global $current_user;
           if (isset($product->country_code)) $doliline .= "<center><small><span class='fi fi-".strtolower($product->country_code)."'></span></small></center>"; 
         }
       }
-      $doliline .= '</div><div class="col-4 col-sm-3 col-md-3 col-lg-3 text-end"><h6 class="mb-1">'.doliprice($line, (empty(get_option('dolibarr_b2bmode'))?'total_ttc':'total_ht'), isset($line->multicurrency_code) ? $line->multicurrency_code : null).'</h6>';
+      $doliline .= '</div><div class="col-4 col-sm-3 col-md-3 col-lg-3 text-end">';
       if (!empty($line->fk_parent_line) || (doliCheckModules('fraisdeport') && empty($line->fk_parent_line) && doliconst('FRAIS_DE_PORT_ID_SERVICE_TO_USE') == $line->fk_product)) {
         $doliline .= '<h6 class="mb-1">x'.$line->qty.'</h6>';
       } elseif ( isset($object->statut) && empty($object->statut) && !is_page(doliconnectid('doliaccount')) ) {
@@ -2026,7 +2020,9 @@ global $current_user;
         $doliline .= '<h6 class="mb-1">x'.$line->qty.'</h6>';
       }
       $doliline .= "</div><div>";
-      $doliline .= "<span class='float-start'><button class='btn btn-link btn-sm' name='delete' value='delete' type='submit' onclick='doliCartButton(\"updateLine\", ".$product->id.", ".$mstock['lineid'].", 0, ".json_encode($linearray_options, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES).", \"delete\");'>".__( 'Remove', 'doliconnect')."</button></span>";
+      if ( isset($object->statut) && empty($object->statut) ) {
+        $doliline .= "<span class='float-start'><button class='btn btn-link btn-sm' name='delete' value='delete' type='submit' onclick='doliCartButton(\"updateLine\", ".$product->id.", ".$mstock['lineid'].", 0, ".json_encode($linearray_options, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES).", \"delete\");'>".__( 'Delete', 'doliconnect')."</button></span>";
+      }
       $doliline .= "<span class='float-end'><b>".doliprice($line, (empty(get_option('dolibarr_b2bmode'))?'ttc':'ht'), isset($line->multicurrency_code) ? $line->multicurrency_code : null)."</b></span>";
       $doliline .= "<div></div></li>";
     }
