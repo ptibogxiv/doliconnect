@@ -945,7 +945,7 @@ function doliProductDisplayPrice($product, $price, $refresh = false) {
     $button .= "<a tabindex='0' id='popover-price-".$product->id."' class='btn btn-light position-relative top-0 end-0";
     if (!empty($price['discount'])) $button .= " text-danger";
     $button .= "' data-bs-container='body' data-bs-toggle='popover' data-bs-trigger='focus' title='".__( 'About price', 'doliconnect')."' data-bs-content='".$explication."'>";
-    $button .= doliprice(doliProducPriceTaxAssuj($price['ht3'], $price['ttc3'], $product->tva_tx), $currency);
+    $button .= doliprice(doliProducPriceTaxAssuj($price['ht3'], $price['ttc3'], $product->tva_tx), (empty(get_option('dolibarr_b2bmode'))?'ttc':'ht'), $currency);
     $date = new DateTime(); 
     $date->modify('NOW');
     if (!empty(get_option('dolicartnewlist')) && get_option('dolicartnewlist') != 'none') { 
@@ -963,7 +963,7 @@ function doliProductDisplayPrice($product, $price, $refresh = false) {
       $unit = callDoliApi("GET", "/setup/dictionary/units?sortfield=rowid&sortorder=ASC&limit=1&active=1&sqlfilters=(t.rowid:like:'".$product->net_measure_units."')", null, dolidelay('constante'));
       $button .= '<span class="position-absolute top-100 start-0 translate-middle badge rounded-pill bg-info"><small>'.doliprice( $price['refprice']/$product->net_measure, null, $currency).'/'.$unit[0]->short_label.'<span class="visually-hidden">net measure price</span></small></span>';
     }
-    if (!empty($price['discount'])) $button .= '<span class="position-absolute top-100 start-100 translate-middle badge bg-light text-dark"><small><s>'.doliprice(doliProducPriceTaxAssuj($price['ht'], $price['ttc'], $product->tva_tx), $currency).'</s><span class="visually-hidden">initial price</span></small></span>';
+    if (!empty($price['discount'])) $button .= '<span class="position-absolute top-100 start-100 translate-middle badge bg-light text-dark"><small><s>'.doliprice(doliProducPriceTaxAssuj($price['ht'], $price['ttc'], $product->tva_tx), (empty(get_option('dolibarr_b2bmode'))?'ttc':'ht'), $currency).'</s><span class="visually-hidden">initial price</span></small></span>';
     $button .= '</a><br><br>';
   }
   return $button;
