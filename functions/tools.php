@@ -3417,7 +3417,7 @@ return $ajax;
 }
 
 function doliModalTemplate($id, $header, $body, $footer, $size = null, $headercss = null, $bodycss = null, $footercss = null, $formurl = null, $formname = null) {
-  $modal = '<div id="doliModal'.$id.'" class="modal fade" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" style="display: none">
+  $modal = '<div id="doliModal'.$id.'" class="modal fade" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" style="display: none" arai-hidden="false">
   <div class="modal-dialog '.$size.' ';
   if (!str_contains($id, 'login')) $modal .= 'modal-fullscreen-md-down ';
   $modal .= 'modal-dialog-centered modal-dialog-scrollable" role="document">';
