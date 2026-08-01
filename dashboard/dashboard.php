@@ -1391,9 +1391,7 @@ function expensereport_module( $content, $url ) {
         $content .= doliObjectStatus($expensereportfo, 'expensereport', 3);
 
         $content .= "</div></div></div><ul class='list-group list-group-flush'>";
-        
-        $content .= doliline($expensereportfo, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
-        
+        $content .= doliline($expensereportfo, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), 'expensereport');
         $content .= "</ul>";
         $content .= doliCardFooter($expensereportfo, 'expensereport');
         $content .= "</div>";

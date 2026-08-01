@@ -1940,7 +1940,7 @@ function doliCartButton ($object) {
 return $button;
 }
 
-function doliline($object, $refresh = false, $refreshstock = false, $wishlist = true) {
+function doliline($object, $refresh = false, $context = null) {
 global $current_user;
   $doliline = null;
 
@@ -1957,8 +1957,7 @@ global $current_user;
       }
 
       if ( $line->fk_product > 0 ) {
-        if ($refresh || $refreshstock) $refreshstock = true;
-        $product = callDoliApi("GET", "/products/".$line->fk_product."?includesubproducts=true&includetrans=true", null, dolidelay('product', $refreshstock));
+        $product = callDoliApi("GET", "/products/".$line->fk_product."?includesubproducts=true&includetrans=true", null, dolidelay('product', $refresh));
         $mstock = doliProductStock($product, $refresh, true, $line->array_options);
       }
       if ( isset($mstock) && $mstock['stock'] < 0 && is_page(doliconnectid('dolicart'))) {
@@ -1978,7 +1977,7 @@ global $current_user;
         $dates = " <i>(Du $start au $end)</i>";
       }
       $doliline .= '<div class="w-100 justify-content-between"><div class="row"><div class="d-none d-sm-block col-sm-2 col-lg-1"><center>';
-      if ( doliCheckModules('fraisdeport') && doliconst('FRAIS_DE_PORT_ID_SERVICE_TO_USE', $refresh) == $line->fk_product ) {
+      if ( doliCheckModules('fraisdeport') && doliconst('FRAIS_DE_PORT_ID_SERVICE_TO_USE') == $line->fk_product ) {
         $doliline .= '<i class="fas fa-shipping-fast fa-2x fa-fw"></i>';
       } elseif ( $line->fk_product > 0 ) {
         $doliline .= doliconnect_image('product', $line->fk_product, array('limit'=>1, 'size'=>'50x50'), $refresh);
@@ -1993,7 +1992,7 @@ global $current_user;
         }
         $doliline .= "</small></p>";
         if (isset($dates)) $doliline .= '<p><small><i>'.$dates.'</i></small></p>';
-        if(!empty(doliconst('PRODUIT_DESC_IN_FORM', $refresh)) && !doliconst('MAIN_GENERATE_DOCUMENTS_HIDE_DESC', $refresh) ) { $doliline .= '<p class="mb-1"><small>'.doliproduct($line, 'product_desc').'</small></p>'; }
+        if(!empty(doliconst('PRODUIT_DESC_IN_FORM')) && !doliconst('MAIN_GENERATE_DOCUMENTS_HIDE_DESC') ) { $doliline .= '<p class="mb-1"><small>'.doliproduct($line, 'product_desc').'</small></p>'; }
       } elseif (doliconnectid('dolishipping')) {
         $doliline .= '<small><a href="'.doliconnecturl('dolishipping').'">'.esc_html__( 'Shipping informations', 'doliconnect').'</a></small>';
       }
@@ -2006,7 +2005,7 @@ global $current_user;
       if ( isset($object->statut) && empty($object->statut) && !is_page(doliconnectid('doliaccount')) && doliconst('FRAIS_DE_PORT_ID_SERVICE_TO_USE') != $line->fk_product  ) {
         $doliline .= '<center>'.doliProductStock($product).'</center>';
         if ( !empty($product->country_id) ) {  
-          $country = callDoliApi("GET", "/setup/dictionary/countries/".$product->country_id."?lang=".doliUserLang($current_user), null, dolidelay('constante', $refresh));
+          $country = callDoliApi("GET", "/setup/dictionary/countries/".$product->country_id."?lang=".doliUserLang($current_user), null, dolidelay('constante'));
           if (isset($product->country_code)) $doliline .= "<center><small><span class='fi fi-".strtolower($product->country_code)."'></span></small></center>"; 
         }
       }
@@ -2015,7 +2014,7 @@ global $current_user;
         $doliline .= '<h6 class="mb-1">x'.$line->qty.'</h6>';
       } elseif ( isset($object->statut) && empty($object->statut) && !is_page(doliconnectid('doliaccount')) ) {
         $price = doliProductPrice($product, null, $refresh);
-        $doliline .= doliProductCart($product, $price, $line, $refresh, $wishlist);
+        $doliline .= doliProductCart($product, $price, $line, $refresh, $context);
       } else {
         $doliline .= '<h6 class="mb-1">x'.$line->qty.'</h6>';
       }

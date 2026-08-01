@@ -894,7 +894,7 @@ function doliOffcanvasCart($current_user, $object = null) {
     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>';
   $offcanvas .= '<div class="offcanvas-body">';
-  $offcanvas .= doliline($object, null, false);
+  $offcanvas .= doliline($object, false, 'offcanvascart');
   $offcanvas .= '</div>';
   if ($object->id > 0 && isset($object->lines) && !empty($object->lines)) {
     $offcanvas .= '<div class="offcanvas-footer m-3">';

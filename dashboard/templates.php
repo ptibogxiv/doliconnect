@@ -1214,7 +1214,7 @@ if ( isset($object->id) && $object->id > 0 && isset($object->lines) && $object->
 
 $content .=  "<div class='card shadow-sm' id='cart-form'><div class='card-header'>".__( 'Cart', 'doliconnect')."</div><ul id='doliline' class='list-group list-group-flush'>";
 //$content .=  doliOffcanvasCart( $current_user, $object, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
-$content .=  doliline($object, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), false);
+$content .=  doliline($object, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), 'cart');
 
 if ( has_filter('mydoliconnectcartfilter') ) {
   $content .=  "<li class='list-group-item bg-light'>";
