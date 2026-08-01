@@ -799,7 +799,7 @@ function doliWishlist($thirdparty, $productid, $lineid, $refresh = false, $nohtm
   return $wish;
 }
 
-function doliProductCart($product, $price, $line = null, $refresh = null, $wishlist = true, $array_options = array()) {
+function doliProductCart($product, $price, $line = null, $refresh = null, $context = null, $array_options = array()) {
 global $current_user;
 
   if (is_object($line) && isset($line->array_options)) { 
@@ -817,7 +817,7 @@ global $current_user;
   if (empty($product->status)) {
     $button .= '<div class="btn-group" role="group" aria-label="Basic example">';
     $button .= '<input id="qty-prod-'.$product->id.'" type="text" class="form-control form-control-sm" value="'.__( 'Item not in sale', 'doliconnect').'" aria-label="'.__( 'Item not in sale', 'doliconnect').'" style="text-align:center;" disabled readonly>';
-    if ( !empty($wishlist) && doliCheckModules('wishlist')) {
+    if ( !empty($context) && doliCheckModules('wishlist')) {
       $button .= doliWishlist($thirdparty, $product->id, $mstock['lineid'], $refresh);
     }
     $button .= '</div>';
@@ -857,7 +857,7 @@ global $current_user;
       $button .= "' name='minus' value='minus' type='submit' onclick='doliCartButton(\"updateLine\", ".$product->id.", ".$mstock['lineid'].", document.getElementById(\"qty-prod-".$product->id."\").value, ".json_encode($linearray_options, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES).", \"minus\");'><i class='fa-solid fa-minus'></i></button>";
       $button .= "<input class='form-control form-control-sm btn-light border border-light-subtle' id='qty-prod-".$product->id."' type='tel' onchange='doliCartButton(\"updateLine\", ".$product->id.", ".$mstock['lineid'].", document.getElementById(\"qty-prod-".$product->id."\").value, ".json_encode($linearray_options, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES).", \"modify\");' placeholder='' aria-label='Quantity' value='".$mstock['qty']."' style='text-align:center;'>";
       $button .= "<button class='btn btn-sm btn-light border border-light-subtle' name='plus' value='plus' type='submit' onclick='doliCartButton(\"updateLine\", ".$product->id.", ".$mstock['lineid'].", document.getElementById(\"qty-prod-".$product->id."\").value, ".json_encode($linearray_options, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES).", \"plus\");'><i class='fa-solid fa-plus'></i></button>"; 
-      if ( !empty($wishlist) && doliCheckModules('wishlist')) {
+      if ( !empty($context) && doliCheckModules('wishlist')) {
         $button .= doliWishlist($thirdparty, $product->id, $mstock['lineid'], $refresh);
       } 
       $button .= '</div>';
