@@ -876,7 +876,7 @@ global $current_user;
   return $button;
 }
 
-function doliProducPriceTaxAssuj($price_ht, $price_ttc, $vat) {
+function doliProducPriceTaxAssuj( $price_ht, $price_ttc, $vat) {
   if (!empty(get_option('dolibarr_b2bmode')) || empty($vat)) {
     return $price_ht;
   } else {
@@ -884,7 +884,7 @@ function doliProducPriceTaxAssuj($price_ht, $price_ttc, $vat) {
   }
 }
 
-function doliOffcanvasCart($current_user, $object = null) {
+function doliOffcanvasCart( $current_user, $object = null) {
   if (empty($object)) {
     $object = doliConnect('order', $current_user, false);
   }
@@ -893,7 +893,7 @@ function doliOffcanvasCart($current_user, $object = null) {
     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>';
   $offcanvas .= '<div class="offcanvas-body">';
-  $offcanvas .= doliline($object, false, 'offcanvascart');
+  $offcanvas .= doliline($object, false, 'dolioffcanvascart');
   $offcanvas .= '</div>';
   if ($object->id > 0 && isset($object->lines) && !empty($object->lines)) {
     $offcanvas .= '<div class="offcanvas-footer m-3">';
@@ -908,7 +908,7 @@ function doliOffcanvasCart($current_user, $object = null) {
   return $offcanvas;
 }
 
-function doliProductDisplayPrice($product, $price, $refresh = false) {
+function doliProductDisplayPrice( $product, $price, $refresh = false) {
   global $current_user;
 
   $thirdparty = doliConnect('thirdparty', $current_user, false);
