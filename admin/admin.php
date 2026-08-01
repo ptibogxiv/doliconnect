@@ -74,17 +74,17 @@ function doliconnect_admin_page3() {
         __( 'Doliconnect settings', 'doliconnect' ),
         __( 'Doliconnect', 'doliconnect' ),
         'manage_options',
-        'ptibogxiv_management_page',
-        'ptibogxiv_management_page',
+        'doliconnect_settings',
+        'doliconnect_settings',
         plugins_url( 'doliconnect/images/icon_16.png' )
     );
     add_submenu_page(
-        'ptibogxiv_management_page',
+        'doliconnect_settings',
         __( 'Management', 'doliconnect' ),
         __( 'Management', 'doliconnect' ),
         'manage_options',
-        'ptibogxiv_management_page',
-        'ptibogxiv_management_page'
+        'doliconnect_settings',
+        'doliconnect_settings'
     );
 }
 
