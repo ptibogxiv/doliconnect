@@ -2026,9 +2026,11 @@ global $current_user;
       $doliline .= "<span class='float-end'><b>".doliprice($line, (empty(get_option('dolibarr_b2bmode'))?'ttc':'ht'), isset($line->multicurrency_code) ? $line->multicurrency_code : null)."</b></span>";
       $doliline .= "<div></div></li>";
     }
-    $doliline .= "<li class='list-group-item list-group-item-primary'><b>".__( 'Total', 'doliconnect').": ".doliprice($object, 'ttc', isset($object->multicurrency_code) ? $object->multicurrency_code : null)."</b><br>";
-    $doliline .= "<small><b>(".__( 'of which VAT', 'doliconnect').": ".doliprice($object, 'tva', isset($object->multicurrency_code) ? $object->multicurrency_code : null).")</b></small></li>";
-  } else {
+    if ( isset($object->statut) && !empty($object->statut) ) {
+      $doliline .= "<li class='list-group-item list-group-item-primary'><b>".__( 'Total', 'doliconnect').": ".doliprice($object, 'ttc', isset($object->multicurrency_code) ? $object->multicurrency_code : null)."</b><br>";
+      $doliline .= "<small><b>(".__( 'of which VAT', 'doliconnect').": ".doliprice($object, 'tva', isset($object->multicurrency_code) ? $object->multicurrency_code : null).")</b></small></li>";
+    }
+    } else {
     $doliline .= "<li class='list-group-item list-group-item-light'><br><br><br><br><br><center><h5>".__( 'Your basket is empty', 'doliconnect')."</h5></center>";
     if ( !is_user_logged_in() ) {
       $doliline .= '<center>'.__( 'If you already have an account,', 'doliconnect').' ';
