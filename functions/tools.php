@@ -1970,7 +1970,7 @@ global $current_user;
       if ( isset($mstock) && $mstock['stock'] < 0 && is_page(doliconnectid('dolicart'))) {
         $doliline .= "<li class='list-group-item list-group-item-danger list-group-item-action'>";
         if (!defined('dolilockcart')) define('dolilockcart', '1'); 
-      } elseif ( isset($mstock) &&$mstock['stock'] > 0 && $mstock['stock'] < $line->qty && is_page(doliconnectid('dolicart'))) {
+      } elseif ( isset($mstock) && $mstock['stock'] > 0 && $mstock['stock'] < $line->qty && is_page(doliconnectid('dolicart'))) {
         $doliline .= "<li class='list-group-item list-group-item-warning list-group-item-action'>";
         if (!defined('dolilockcart')) define('dolilockcart', '1'); 
       } else {
@@ -2025,9 +2025,10 @@ global $current_user;
       } else {
         $doliline .= '<h6 class="mb-1">x'.$line->qty.'</h6>';
       }
-      $doliline .= "<button class='btn btn-link btn-sm' name='delete' value='delete' type='submit' onclick='doliCartButton(\"updateLine\", ".$product->id.", ".$mstock['lineid'].", 0, ".json_encode($linearray_options, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES).", \"delete\");'>".__( 'Remove', 'doliconnect')."</button>";
-      
-      $doliline .= "</div></div></li>";
+      $doliline .= "</div><div>";
+      $doliline .= "<span class='float-start'><button class='btn btn-link btn-sm' name='delete' value='delete' type='submit' onclick='doliCartButton(\"updateLine\", ".$product->id.", ".$mstock['lineid'].", 0, ".json_encode($linearray_options, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES).", \"delete\");'>".__( 'Remove', 'doliconnect')."</button></span>";
+      $doliline .= "<span class='float-end'><b>".doliprice($line, (empty(get_option('dolibarr_b2bmode'))?'ttc':'ht'), isset($line->multicurrency_code) ? $line->multicurrency_code : null)."</b></span>";
+      $doliline .= "<div></div></li>";
     }
     $doliline .= "<li class='list-group-item list-group-item-primary'><b>".__( 'Total', 'doliconnect').": ".doliprice($object, 'ttc', isset($object->multicurrency_code) ? $object->multicurrency_code : null)."</b><br>";
     $doliline .= "<small><b>(".__( 'of which VAT', 'doliconnect').": ".doliprice($object, 'tva', isset($object->multicurrency_code) ? $object->multicurrency_code : null).")</b></small></li>";
