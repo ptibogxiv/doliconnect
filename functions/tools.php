@@ -1968,7 +1968,6 @@ global $current_user;
         if (!defined('dolilockcart')) define('dolilockcart', '1'); 
       } else {
         $doliline .= "<li class='list-group-item list-group-item-light list-group-item-action'>";
-        //define('dolilockcart', '0'); not to use
       }
       $dates = null;
       if ( isset($line->date_start) && $line->date_start != '' && isset($line->date_end) && $line->date_end != '' ) {
@@ -2013,14 +2012,23 @@ global $current_user;
       if (!empty($line->fk_parent_line) || (doliCheckModules('fraisdeport') && empty($line->fk_parent_line) && doliconst('FRAIS_DE_PORT_ID_SERVICE_TO_USE') == $line->fk_product)) {
         $doliline .= '<h6 class="mb-1">x'.$line->qty.'</h6>';
       } elseif ( isset($object->statut) && empty($object->statut) && !is_page(doliconnectid('doliaccount')) ) {
-        $price = doliProductPrice($product, null, $refresh);
-        $doliline .= doliProductCart($product, $price, $line, $refresh, $context);
+        //$price = doliProductPrice($product, null, $refresh);
+        //$doliline .= doliProductCart($product, $price, $line, $refresh, $context);
       } else {
         $doliline .= '<h6 class="mb-1">x'.$line->qty.'</h6>';
       }
       $doliline .= "</div><div>";
       if ( isset($object->statut) && empty($object->statut) ) {
-        $doliline .= "<span class='float-start'><button class='btn btn-link btn-sm' name='delete' value='delete' type='submit' onclick='doliCartButton(\"updateLine\", ".$product->id.", ".$mstock['lineid'].", 0, ".json_encode($linearray_options, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES).", \"delete\");'>".__( 'Delete', 'doliconnect')."</button></span>";
+        $doliline .= "<span class='float-start'>";
+        $doliline .= '<div class="input-group input-group-sm mb-3">
+        <label class="input-group-text border border-0 bg-white text-dark" for="inputGroupSelect01">'.__( 'Qty :', 'doliconnect').'</label>
+        <select class="form-selectform-select-sm border border-0 bg-white text-dark" id="inputGroupSelect01">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+        </select>';
+        $doliline .= "<button class='btn btn-link border border-0 bg-white text-dark' id='button-addon2' name='delete' value='delete' type='submit' onclick='doliCartButton(\"updateLine\", ".$product->id.", ".$mstock['lineid'].", 0, ".json_encode($linearray_options, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES).", \"delete\");'>".__( 'Delete', 'doliconnect')."</button></div>";
+        $doliline .= "</span>";
       }
       $doliline .= "<span class='float-end'><b>".doliprice($line, (empty(get_option('dolibarr_b2bmode'))?'ttc':'ht'), isset($line->multicurrency_code) ? $line->multicurrency_code : null)."</b></span>";
       $doliline .= "<div></div></li>";
