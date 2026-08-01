@@ -1968,7 +1968,7 @@ global $current_user;
         $doliline .= "<li class='list-group-item list-group-item-warning list-group-item-action'>";
         if (!defined('dolilockcart')) define('dolilockcart', '1'); 
       } else {
-        $doliline .= "<li class='list-group-item list-group-item-light";
+        $doliline .= "<li class='list-group-item";
         if ($context != 'dolioffcanvascart') $doliline .= " list-group-item-action";
         $doliline .= "'>";
       }
