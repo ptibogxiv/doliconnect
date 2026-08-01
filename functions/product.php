@@ -894,10 +894,10 @@ function doliOffcanvasCart( $current_user, $object = null) {
   if ($object->id > 0 && isset($object->lines) && !empty($object->lines)) {
     $offcanvas .= '<div class="offcanvas-footer m-3">';
     $offcanvas .= '<div class="d-grid gap-2">';
-    $offcanvas .= "<a type='button' class='btn btn-sm btn-outline-secondary' href='#' type='submit' onclick='doliCartButton(\"updateCart\", 0, 0, 0, null, \"delete\");'>".__('Empty the basket', 'doliconnect').'</a>';
+    $offcanvas .= "<a type='button' class='btn btn-outline-secondary btn-sm' href='#' type='submit' onclick='doliCartButton(\"updateCart\", 0, 0, 0, null, \"delete\");'>".__('Empty the basket', 'doliconnect').'</a>';
       $arr_params = array( 'checkout' => wp_create_nonce( 'dolicart-'. $object->id.'-'.$current_user->ID));  
       $return = esc_url( add_query_arg( $arr_params, doliconnecturl('dolicart')) );
-    $offcanvas .= '<a type="button" class="btn btn-primary" href="'.$return.'">'.sprintf(__( ' Order - %s', 'doliconnect'), doliprice($object, 'ttc', isset($object->multicurrency_code) ? $object->multicurrency_code : null)).'</a>';
+    $offcanvas .= '<a type="button" class="btn btn-primary btn-lg" href="'.$return.'">'.sprintf(__( ' Order - %s', 'doliconnect'), doliprice($object, 'ttc', isset($object->multicurrency_code) ? $object->multicurrency_code : null)).'</a>';
     $offcanvas .= '</div>';
     $offcanvas .= '</div>';
   }
