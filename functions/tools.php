@@ -2015,15 +2015,17 @@ global $current_user;
       if (!empty($line->fk_parent_line) || (doliCheckModules('fraisdeport') && empty($line->fk_parent_line) && doliconst('FRAIS_DE_PORT_ID_SERVICE_TO_USE') == $line->fk_product)) {
         $doliline .= '<h6 class="mb-1">x'.$line->qty.'</h6>';
       } elseif ( isset($object->statut) && empty($object->statut) && !is_page(doliconnectid('doliaccount')) ) {
-        //$price = doliProductPrice($product, null, $refresh);
+        //
         //$doliline .= doliProductCart($product, $price, $line, $refresh, $context);
       } else {
         $doliline .= '<h6 class="mb-1">x'.$line->qty.'</h6>';
       }
       $doliline .= "</div><div>";
       if ( isset($object->statut) && empty($object->statut) ) {
+        $price = doliProductPrice($product, null, $refresh);
+        $doliline .= doliProductCart($product, $price, $line, $refresh, $context, $linearray_options);
         $doliline .= "<span class='float-start'>";
-        $doliline .= '<div class="input-group input-group-sm mb-3">
+        $doliline .= '<div class="input-group input-group-sm mb-0">
         <label class="input-group-text border border-0 bg-white text-dark" for="inputGroupSelect01">'.__( 'Qty :', 'doliconnect').'</label>
         <select class="form-selectform-select-sm border border-0 bg-white text-dark" id="inputGroupSelect01">
           <option value="1">1</option>
@@ -3417,7 +3419,7 @@ return $ajax;
 }
 
 function doliModalTemplate($id, $header, $body, $footer, $size = null, $headercss = null, $bodycss = null, $footercss = null, $formurl = null, $formname = null) {
-  $modal = '<div id="doliModal'.$id.'" class="modal fade" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" style="display: none" arai-hidden="false">
+  $modal = '<div id="doliModal'.$id.'" class="modal fade" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" style="display: none" aria-labelledby="'.$id.'-label" aria-hidden="false">
   <div class="modal-dialog '.$size.' ';
   if (!str_contains($id, 'login')) $modal .= 'modal-fullscreen-md-down ';
   $modal .= 'modal-dialog-centered modal-dialog-scrollable" role="document">';
