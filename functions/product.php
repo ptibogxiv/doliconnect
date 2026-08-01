@@ -702,7 +702,7 @@ global $current_user;
     $response['line'] = $mstock['lineid'];
     if (empty($relatedproduct)) $response['newqty'] = $quantity;
     $response['total'] = doliprice($order, 'ttc', isset($order->multicurrency_code) ? $order->multicurrency_code : null);
-    $response['newwish'] = doliProductCart($product, $price, $mstock['line'], true, true, $array_options);
+    $response['doliproductbutton'] = doliProductCart($product, $price, $mstock['line'], true, true, $array_options);
     return $response;
   } elseif ( $order->id > 0 && $mstock['lineid'] > 0 ) {
     if ( $quantity < 1 ) {
@@ -716,7 +716,7 @@ global $current_user;
       $response['line'] = null;
       if (empty($relatedproduct)) $response['newqty'] = 0;
       $response['total'] = doliprice($order, 'ttc', isset($order->multicurrency_code) ? $order->multicurrency_code : null);
-      $response['newwish'] = doliProductCart($product, $price, $mstock['line'], true, true, $array_options);
+      $response['doliproductbutton'] = doliProductCart($product, $price, $mstock['line'], true, true, $array_options);
       return $response;
     } else {
       $uln = [
@@ -753,7 +753,7 @@ global $current_user;
       $response['dolicart'] = doliOffcanvasCart( $current_user );
       if (empty($relatedproduct)) $response['newqty'] = $quantity;
       $response['total'] = doliprice($order, 'ttc', isset($order->multicurrency_code) ? $order->multicurrency_code : null);
-			$response['newwish'] = doliProductCart($product, $price, $mstock['line'], true, true, $array_options);
+			$response['doliproductbutton'] = doliProductCart($product, $price, $mstock['line'], true, true, $array_options);
       return $response;
     }
   } elseif ( $order->id > 0 && is_null($mstock['lineid']) ) {
@@ -766,7 +766,7 @@ global $current_user;
     $response['dolicart'] = doliOffcanvasCart( $current_user );
     if (empty($relatedproduct)) $response['newqty'] = $quantity;
     $response['total'] = doliprice($order, 'ttc', isset($order->multicurrency_code) ? $order->multicurrency_code : null);
-    $response['newwish'] = doliProductCart($product, $price, $mstock['line'], true, true, $array_options);
+    $response['doliproductbutton'] = doliProductCart($product, $price, $mstock['line'], true, true, $array_options);
     return $response;
   } else {
     return false;
@@ -860,8 +860,7 @@ global $current_user;
       if ( !empty($wishlist) && doliCheckModules('wishlist')) {
         $button .= doliWishlist($thirdparty, $product->id, $mstock['lineid'], $refresh);
       } 
-        $button .= '</div>';
-        //$button .= '<div class="form-text" id="basic-addon4"><button type="button" class="btn btn-sm btn-link p-0">Supprimer cet article</button></div>';
+      $button .= '</div>';
 
       if (isset($mstock['step']) && $mstock['step']>1) $button .= '<div class="form-text" id="basic-addon4"><small>'.sprintf(__( 'Sold by %s', 'doliconnect'), $mstock['step']).'</small></div>';  
       $button .= '</div>';

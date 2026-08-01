@@ -25,8 +25,8 @@ function doliCartButton(form, id, lineid, qty, productarray, acase) {
                 },
               }).done(function(response) {
                 if (response.success) { 
-                  if (document.getElementById("doliform-product-" + id + "-" + lineid) && response.data.hasOwnProperty("newwish")) {
-                     document.getElementById("doliform-product-" + id + "-" + lineid).outerHTML = response.data.newwish;
+                  if (document.getElementById("doliform-product-" + id + "-" + lineid) && response.data.hasOwnProperty("doliproductbutton")) {
+                     document.getElementById("doliform-product-" + id + "-" + lineid).outerHTML = response.data.doliproductbutton;
                   }
                   if (document.getElementById("DoliHeaderCartItems") && response.data.hasOwnProperty("items")) {
                     document.getElementById("DoliHeaderCartItems").innerHTML = response.data.items;

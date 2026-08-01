@@ -805,7 +805,7 @@ global $current_user;
 					'lines' => $result['lines'],
 					'dolicart' => $result['dolicart'],
 					'total' => $result['total'],
-					'newwish' => $result['newwish'],
+					'doliproductbutton' => $result['doliproductbutton'],
 				];
 				delete_transient( $link );  
 				wp_send_json_success($response);	
@@ -832,7 +832,7 @@ global $current_user;
 					'lines' => $result['lines'],
 					'dolicart' => $result['dolicart'],
 					'total' => $result['total'],
-					'newwish' => $result['newwish'],
+					'doliproductbutton' => $result['doliproductbutton'],
 				];
 				$object = doliConnect('order', $current_user);
 				$response['js'] = null;
@@ -860,7 +860,7 @@ global $current_user;
 					'lines' => $result['lines'],
 					'dolicart' => $result['dolicart'],
 					'total' => $result['total'],
-					'newwish' => $result['newwish'],
+					'doliproductbutton' => $result['doliproductbutton'],
 					];
 				if (doliCheckModules('relatedproducts') && doliCheckRelatedProducts($product->id)) { 
 					$response['modal'] = doliModalTemplate('CartInfos', __( 'Related products', 'doliconnect'), doliRelatedProducts($product->id, true), '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">'.__( "Close", "doliconnect").'</button>', 'modal-lg', null, 'p-0');
@@ -880,12 +880,12 @@ global $current_user;
 					$addwish = callDoliApi("POST", "/wishlist", $data, 0);
 					$wish = doliWishlist($thirdparty->id, trim($_POST['id']), trim($_POST['lineid']), true, false);
 					$mstock = doliProductStock($product, true, true);
-					$response['newwish'] = doliProductCart($product, $price, $result['line'], true); 
+					$response['doliproductbutton'] = doliProductCart($product, $price, $result['line'], true); 
 				} elseif (!empty($wish)) {
 					$deletewish = callDoliApi("DELETE", "/wishlist/".$wish, null, 0);
 					$wish = doliWishlist($thirdparty->id, trim($_POST['id']), trim($_POST['lineid']), true, false);
 					$mstock = doliProductStock($product, true, true);
-					$response['newwish'] = doliProductCart($product, $price, $result['line'], true); 
+					$response['doliproductbutton'] = doliProductCart($product, $price, $result['line'], true); 
 				}
 				delete_transient( $link );
 				wp_send_json_success($response);			
