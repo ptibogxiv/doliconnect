@@ -1949,10 +1949,19 @@ return $button;
 function doliline($object, $refresh = false, $refreshstock = false, $wishlist = true) {
 global $current_user;
   $doliline = null;
-  //$doliline .= var_dump($object);
+
   $thirdparty = doliConnect('thirdparty', $current_user, false, $refresh);
   if ( isset($object) && is_object($object) && isset($object->lines) && $object->lines != null && ($thirdparty->id == $object->socid) ) {  
     foreach ( $object->lines as $line ) { 
+
+      if (is_object($line) && isset($line->array_options)) { 
+        $lineid = $line->id;
+        $linearray_options = (array) $line->array_options;
+      }  else {
+        $lineid = 0;
+        $linearray_options = $array_options;
+      }
+
       if ( $line->fk_product > 0 ) {
         if ($refresh || $refreshstock) $refreshstock = true;
         $product = callDoliApi("GET", "/products/".$line->fk_product."?includesubproducts=true&includetrans=true", null, dolidelay('product', $refreshstock));
@@ -2016,6 +2025,8 @@ global $current_user;
       } else {
         $doliline .= '<h6 class="mb-1">x'.$line->qty.'</h6>';
       }
+      $doliline .= "<button class='btn btn-link btn-sm' name='delete' value='delete' type='submit' onclick='doliCartButton(\"updateLine\", ".$product->id.", ".$mstock['lineid'].", 0, ".json_encode($linearray_options, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES).", \"delete\");'>".__( 'Remove', 'doliconnect')."</button>";
+      
       $doliline .= "</div></div></li>";
     }
     $doliline .= "<li class='list-group-item list-group-item-primary'><b>".__( 'Total', 'doliconnect').": ".doliprice($object, 'ttc', isset($object->multicurrency_code) ? $object->multicurrency_code : null)."</b><br>";
