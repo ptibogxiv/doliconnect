@@ -377,7 +377,6 @@ function doliconnector($current_user = null, $value = null, $refresh = false, $t
 }
 
 // ********************************************************
-
 /* Bloquer acces aux non-admins */
 add_action('init', 'doliconnect_block_dashboard');
 function doliconnect_block_dashboard() {
