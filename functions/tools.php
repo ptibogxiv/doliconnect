@@ -1942,8 +1942,12 @@ function doliline($object, $refresh = false, $context = null) {
 global $current_user;
   $doliline = null;
 
-  $thirdparty = doliConnect('thirdparty', $current_user, false, $refresh);
-  if ( isset($object) && is_object($object) && isset($object->lines) && $object->lines != null && ($thirdparty->id == $object->socid) ) {  
+  if (isset($object->socid)) {
+    $thirdparty = doliConnect('thirdparty', $current_user, false, $refresh);
+  } elseif (isset($object->fk_user_author)) {
+    $user = doliConnect('user', $current_user, false, $refresh);
+  }
+  if ( isset($object) && is_object($object) && isset($object->lines) && $object->lines != null && ((isset($object->socid) && $thirdparty->id == $object->socid) || (isset($object->fk_user_author) && $user->id == $object->fk_user_author) ) ) {  
     foreach ( $object->lines as $line ) { 
 
       if (is_object($line) && isset($line->array_options)) { 
