@@ -2056,19 +2056,7 @@ global $current_user;
         if ( isset($object->statut) && empty($object->statut) ) {
           $price = doliProductPrice($product, null, $refresh);
           $doliline .= doliProductCart($product, $price, $line, $refresh, $context, $linearray_options);
-          $doliline .= "<span class='float-start'>";
-          $doliline .= '<div class="input-group input-group-sm mb-0">
-          <label class="input-group-text border border-0 bg-white text-dark" for="inputGroupSelect01">'.__( 'Qty :', 'doliconnect').'</label>
-          <select class="form-selectform-select-sm border border-0 bg-white text-dark" id="inputGroupSelect01">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-          </select>';
-          $doliline .= "<button class='btn btn-link border border-0 bg-white text-dark' id='button-addon2' name='delete' value='delete' type='submit' onclick='doliCartButton(\"updateLine\", ".$product->id.", ".$mstock['lineid'].", 0, ".json_encode($linearray_options, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES).", \"delete\");'>".__( 'Delete', 'doliconnect')."</button></div>";
-          $doliline .= "</span>";
-        }      
-        $doliline .= "<span class='float-end'><b>".doliprice($line, (empty(get_option('dolibarr_b2bmode'))?'ttc':'ht'), isset($line->multicurrency_code) ? $line->multicurrency_code : null)."</b></span>";
-        $doliline .= "<div></div></li>";
+          $doliline .= "<div></div></li>";
       }
     }  
     if ( isset($object->statut) && !empty($object->statut) ) {
