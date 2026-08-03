@@ -1963,9 +1963,10 @@ global $current_user;
         $mstock = doliProductStock($product, $refresh, true, $line->array_options);
       }
       if ($context == 'dolioffcanvascart') {
-        $doliline .= '<li class="list-group-item list-group-item-action list-group-item-light d-flex justify-content-start w-100 align-items-center">
-            <svg class="p-2" aria-label="Placeholder: 75x75" class="bd-placeholder-img rounded me-3" height="75" width="75" preserveAspectRatio="xMidYMid slice" role="img" xmlns="http://www.w3.org/2000/svg"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect></svg>
-            <div class="w-75 align-self-stretch">';
+        $doliline .= '<li class="list-group-item list-group-item-action list-group-item-light d-flex justify-content-start w-100 align-items-center">';
+        // todo replace by doliPicture
+        $doliline .= '<svg class="p-2" aria-label="Placeholder: 75x75" class="bd-placeholder-img rounded me-3" height="75" width="75" preserveAspectRatio="xMidYMid slice" role="img" xmlns="http://www.w3.org/2000/svg"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect></svg>';
+        $doliline .= '<div class="w-75 align-self-stretch">';
         $doliline .= '<div class="align-items-start fw-bold">'.doliproduct($line, 'product_label').'</div>';
         $doliline .= '<div class="text-muted"><br></div>';
         $doliline .= '<div class="align-items-end text-muted">';
@@ -2006,13 +2007,15 @@ global $current_user;
           $dates = " <i>(Du $start au $end)</i>";
         }
 
-        $doliline .= '<div class="w-100 justify-content-between"><div class="row"><div class="d-none d-sm-block col-sm-2 col-lg-1"><center>';
-        if ( doliCheckModules('fraisdeport') && doliconst('FRAIS_DE_PORT_ID_SERVICE_TO_USE') == $line->fk_product ) {
-          $doliline .= '<i class="fas fa-shipping-fast fa-2x fa-fw"></i>';
-        } elseif ( $line->fk_product > 0 ) {
-          $doliline .= doliconnect_image('product', $line->fk_product, array('limit'=>1, 'size'=>'50x50'), $refresh);
-        }
-        $doliline .= '</center></div><div class="col-8 col-sm-7 col-md-5 col-lg-5"><h6 class="mb-1">'.doliproduct($line, 'product_label').'</h6>';
+        $doliline .= '<div class="w-100 justify-content-between"><div class="row"><div class="d-none d-sm-block col-sm-2 col-lg-2"><center>';
+        // todo replace by doliPicture
+        $doliline .= '<svg class="p-2" aria-label="Placeholder: 100x100" class="bd-placeholder-img rounded me-3" height="100" width="100" preserveAspectRatio="xMidYMid slice" role="img" xmlns="http://www.w3.org/2000/svg"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect></svg>';
+        //if ( doliCheckModules('fraisdeport') && doliconst('FRAIS_DE_PORT_ID_SERVICE_TO_USE') == $line->fk_product ) {
+        //  $doliline .= '<i class="fas fa-shipping-fast fa-2x fa-fw"></i>';
+        //} elseif ( $line->fk_product > 0 ) {
+        //  $doliline .= doliconnect_image('product', $line->fk_product, array('limit'=>1, 'size'=>'50x50'), $refresh);
+        //}
+        $doliline .= '</center></div><div class="col-8 col-sm-7 col-md-5 col-lg-4"><h6 class="mb-1">'.doliproduct($line, 'product_label').'</h6>';
         if ( doliconst('FRAIS_DE_PORT_ID_SERVICE_TO_USE') != $line->fk_product ) {
           $doliline .= "<p><small>";
           if ($line->product_type == 9) {
