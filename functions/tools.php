@@ -2010,7 +2010,7 @@ global $current_user;
 
         $doliline .= '<div class="w-100 justify-content-between"><div class="row"><div class="d-none d-sm-block col-sm-2 col-lg-2"><center>';
         // todo replace by doliPicture
-        $doliline .= '<svg class="p-2" aria-label="Placeholder: 100x100" class="bd-placeholder-img rounded me-3" height="100" width="100" preserveAspectRatio="xMidYMid slice" role="img" xmlns="http://www.w3.org/2000/svg"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect></svg>';
+        $doliline .= '<svg class="p-2" aria-label="Placeholder: 75x75" class="bd-placeholder-img rounded me-3" height="75" width="75" preserveAspectRatio="xMidYMid slice" role="img" xmlns="http://www.w3.org/2000/svg"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect></svg>';
         //if ( doliCheckModules('fraisdeport') && doliconst('FRAIS_DE_PORT_ID_SERVICE_TO_USE') == $line->fk_product ) {
         //  $doliline .= '<i class="fas fa-shipping-fast fa-2x fa-fw"></i>';
         //} elseif ( $line->fk_product > 0 ) {
