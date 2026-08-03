@@ -1962,91 +1962,116 @@ global $current_user;
         $product = callDoliApi("GET", "/products/".$line->fk_product."?includesubproducts=true&includetrans=true", null, dolidelay('product', $refresh));
         $mstock = doliProductStock($product, $refresh, true, $line->array_options);
       }
-      
-      if ( isset($mstock) && $mstock['stock'] < 0 && is_page(doliconnectid('dolicart'))) {
-        $doliline .= "<li class='list-group-item list-group-item-danger list-group-item-action'>";
-        if (!defined('dolilockcart')) define('dolilockcart', '1'); 
-      } elseif ( isset($mstock) && $mstock['stock'] > 0 && $mstock['stock'] < $line->qty && is_page(doliconnectid('dolicart'))) {
-        $doliline .= "<li class='list-group-item list-group-item-warning list-group-item-action'>";
-        if (!defined('dolilockcart')) define('dolilockcart', '1'); 
+      if ($context == 'dolioffcanvascart') {
+        $doliline .= '<li class="list-group-item list-group-item-action list-group-item-light d-flex justify-content-start w-100 align-items-center">
+            <svg class="p-2" aria-label="Placeholder: 75x75" class="bd-placeholder-img rounded me-3" height="75" width="75" preserveAspectRatio="xMidYMid slice" role="img" xmlns="http://www.w3.org/2000/svg"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect></svg>
+            <div class="w-75 align-self-stretch">';
+        $doliline .= '<div class="align-items-start fw-bold">'.doliproduct($line, 'product_label').'</div>';
+        $doliline .= '<div class="text-muted"><br></div>';
+        $doliline .= '<div class="align-items-end text-muted">';
+        $doliline .= '<span class="float-start">';
+        if ( isset($object->statut) && empty($object->statut) ) {
+          //$price = doliProductPrice($product, null, $refresh);
+          //$doliline .= doliProductCart($product, $price, $line, $refresh, $context, $linearray_options);
+          $doliline .= "<span class='float-start'>";
+          $doliline .= '<div class="input-group input-group-sm mb-0">
+          <label class="input-group-text border border-0 bg-transparent text-dark" for="inputGroupSelect01">'.__( 'Qty :', 'doliconnect').'</label>
+          <select class="form-selectform-select-sm border border-0 bg-transparent text-dark" id="inputGroupSelect01">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+          </select>';
+          $doliline .= "<button class='btn btn-link border border-0 bg-transparent text-dark' id='button-addon2' name='delete' value='delete' type='submit' onclick='doliCartButton(\"updateLine\", ".$product->id.", ".$mstock['lineid'].", 0, ".json_encode($linearray_options, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES).", \"delete\");'>".__( 'Delete', 'doliconnect')."</button></div>";
+          $doliline .= "</span>";
+        } 
+        $doliline .= '</small></span>';
+        $doliline .= "<span class='float-end fw-bold'>".doliprice($line, (empty(get_option('dolibarr_b2bmode'))?'ttc':'ht'), isset($line->multicurrency_code) ? $line->multicurrency_code : null)."</span>";
+        $doliline .= '</div></div></li>';
       } else {
-        $doliline .= "<li class='list-group-item";
-        if ($context != 'dolioffcanvascart') $doliline .= " list-group-item-action";
-        $doliline .= "'>";
-      }
-
-      $dates = null;
-      if ( isset($line->date_start) && $line->date_start != '' && isset($line->date_end) && $line->date_end != '' ) {
-        $start = wp_date('d/m/Y', $line->date_start);
-        $end = wp_date('d/m/Y', $line->date_end);
-        $dates = " <i>(Du $start au $end)</i>";
-      }
-
-      $doliline .= '<div class="w-100 justify-content-between"><div class="row"><div class="d-none d-sm-block col-sm-2 col-lg-1"><center>';
-      if ( doliCheckModules('fraisdeport') && doliconst('FRAIS_DE_PORT_ID_SERVICE_TO_USE') == $line->fk_product ) {
-        $doliline .= '<i class="fas fa-shipping-fast fa-2x fa-fw"></i>';
-      } elseif ( $line->fk_product > 0 ) {
-        $doliline .= doliconnect_image('product', $line->fk_product, array('limit'=>1, 'size'=>'50x50'), $refresh);
-      }
-      $doliline .= '</center></div><div class="col-8 col-sm-7 col-md-5 col-lg-5"><h6 class="mb-1">'.doliproduct($line, 'product_label').'</h6>';
-      if ( doliconst('FRAIS_DE_PORT_ID_SERVICE_TO_USE') != $line->fk_product ) {
-        $doliline .= "<p><small>";
-        if ($line->product_type == 9) {
-          $doliline .= $line->description;
+        if ( isset($mstock) && $mstock['stock'] < 0 && is_page(doliconnectid('dolicart'))) {
+          $doliline .= "<li class='list-group-item list-group-item-danger list-group-item-action'>";
+          if (!defined('dolilockcart')) define('dolilockcart', '1'); 
+        } elseif ( isset($mstock) && $mstock['stock'] > 0 && $mstock['stock'] < $line->qty && is_page(doliconnectid('dolicart'))) {
+          $doliline .= "<li class='list-group-item list-group-item-warning list-group-item-action'>";
+          if (!defined('dolilockcart')) define('dolilockcart', '1'); 
         } else {
-          $doliline .= '';
+          $doliline .= "<li class='list-group-item list-group-item-action list-group-item-light";
+          $doliline .= "'>";
         }
-        $doliline .= "</small></p>";
-        if (isset($dates)) $doliline .= '<p><small><i>'.$dates.'</i></small></p>';
-        if(!empty(doliconst('PRODUIT_DESC_IN_FORM')) && !doliconst('MAIN_GENERATE_DOCUMENTS_HIDE_DESC') ) { $doliline .= '<p class="mb-1"><small>'.doliproduct($line, 'product_desc').'</small></p>'; }
-      } elseif (doliconnectid('dolishipping')) {
-        $doliline .= '<small><a href="'.doliconnecturl('dolishipping').'">'.esc_html__( 'Shipping informations', 'doliconnect').'</a></small>';
+
+        $dates = null;
+        if ( isset($line->date_start) && $line->date_start != '' && isset($line->date_end) && $line->date_end != '' ) {
+          $start = wp_date('d/m/Y', $line->date_start);
+          $end = wp_date('d/m/Y', $line->date_end);
+          $dates = " <i>(Du $start au $end)</i>";
+        }
+
+        $doliline .= '<div class="w-100 justify-content-between"><div class="row"><div class="d-none d-sm-block col-sm-2 col-lg-1"><center>';
+        if ( doliCheckModules('fraisdeport') && doliconst('FRAIS_DE_PORT_ID_SERVICE_TO_USE') == $line->fk_product ) {
+          $doliline .= '<i class="fas fa-shipping-fast fa-2x fa-fw"></i>';
+        } elseif ( $line->fk_product > 0 ) {
+          $doliline .= doliconnect_image('product', $line->fk_product, array('limit'=>1, 'size'=>'50x50'), $refresh);
+        }
+        $doliline .= '</center></div><div class="col-8 col-sm-7 col-md-5 col-lg-5"><h6 class="mb-1">'.doliproduct($line, 'product_label').'</h6>';
+        if ( doliconst('FRAIS_DE_PORT_ID_SERVICE_TO_USE') != $line->fk_product ) {
+          $doliline .= "<p><small>";
+          if ($line->product_type == 9) {
+            $doliline .= $line->description;
+          } else {
+            $doliline .= '';
+          }
+          $doliline .= "</small></p>";
+          if (isset($dates)) $doliline .= '<p><small><i>'.$dates.'</i></small></p>';
+          if(!empty(doliconst('PRODUIT_DESC_IN_FORM')) && !doliconst('MAIN_GENERATE_DOCUMENTS_HIDE_DESC') ) { $doliline .= '<p class="mb-1"><small>'.doliproduct($line, 'product_desc').'</small></p>'; }
+        } elseif (doliconnectid('dolishipping')) {
+          $doliline .= '<small><a href="'.doliconnecturl('dolishipping').'">'.esc_html__( 'Shipping informations', 'doliconnect').'</a></small>';
+        }
+        if ( isset($mstock) && $mstock['stock'] < 0 && is_page(doliconnectid('dolicart'))) {
+          $doliline .= "<b>".__( "Sorry, this product is no longer available. Please, delete it to finalize your order", 'doliconnect')."</b>";
+        } elseif ( isset($mstock) && $mstock['stock'] > 0 && $mstock['stock'] < $line->qty && is_page(doliconnectid('dolicart'))) {
+          $doliline .= "<b>".__( "Sorry, this product is not available with this quantity. Please, change it to finalize your order", 'doliconnect')."</b>";
+        }
+        $doliline .= '</div><div class="col d-none d-md-block col-md-3 text-end">';
+        //if ( isset($object->statut) && empty($object->statut) && !is_page(doliconnectid('doliaccount')) && doliconst('FRAIS_DE_PORT_ID_SERVICE_TO_USE') != $line->fk_product  ) {
+        //  $doliline .= '<center>'.doliProductStock($product).'</center>';
+        //  if ( !empty($product->country_id) ) {  
+        //    $country = callDoliApi("GET", "/setup/dictionary/countries/".$product->country_id."?lang=".doliUserLang($current_user), null, dolidelay('constante'));
+        //    if (isset($product->country_code)) $doliline .= "<center><small><span class='fi fi-".strtolower($product->country_code)."'></span></small></center>"; 
+        //  }
+        //}
+        $doliline .= '</div><div class="col-4 col-sm-3 col-md-3 col-lg-3 text-end">';
+        if (!empty($line->fk_parent_line) || (doliCheckModules('fraisdeport') && empty($line->fk_parent_line) && doliconst('FRAIS_DE_PORT_ID_SERVICE_TO_USE') == $line->fk_product)) {
+          $doliline .= '<h6 class="mb-1">x'.$line->qty.'</h6>';
+        } elseif ( isset($object->statut) && empty($object->statut) && !is_page(doliconnectid('doliaccount')) ) {
+          //
+          //$doliline .= doliProductCart($product, $price, $line, $refresh, $context);
+        } else {
+          $doliline .= '<h6 class="mb-1">x'.$line->qty.'</h6>';
+        }
+        $doliline .= "</div><div>";
+        if ( isset($object->statut) && empty($object->statut) ) {
+          $price = doliProductPrice($product, null, $refresh);
+          $doliline .= doliProductCart($product, $price, $line, $refresh, $context, $linearray_options);
+          $doliline .= "<span class='float-start'>";
+          $doliline .= '<div class="input-group input-group-sm mb-0">
+          <label class="input-group-text border border-0 bg-white text-dark" for="inputGroupSelect01">'.__( 'Qty :', 'doliconnect').'</label>
+          <select class="form-selectform-select-sm border border-0 bg-white text-dark" id="inputGroupSelect01">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+          </select>';
+          $doliline .= "<button class='btn btn-link border border-0 bg-white text-dark' id='button-addon2' name='delete' value='delete' type='submit' onclick='doliCartButton(\"updateLine\", ".$product->id.", ".$mstock['lineid'].", 0, ".json_encode($linearray_options, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES).", \"delete\");'>".__( 'Delete', 'doliconnect')."</button></div>";
+          $doliline .= "</span>";
+        }      
+        $doliline .= "<span class='float-end'><b>".doliprice($line, (empty(get_option('dolibarr_b2bmode'))?'ttc':'ht'), isset($line->multicurrency_code) ? $line->multicurrency_code : null)."</b></span>";
+        $doliline .= "<div></div></li>";
       }
-      if ( isset($mstock) && $mstock['stock'] < 0 && is_page(doliconnectid('dolicart'))) {
-        $doliline .= "<b>".__( "Sorry, this product is no longer available. Please, delete it to finalize your order", 'doliconnect')."</b>";
-      } elseif ( isset($mstock) && $mstock['stock'] > 0 && $mstock['stock'] < $line->qty && is_page(doliconnectid('dolicart'))) {
-        $doliline .= "<b>".__( "Sorry, this product is not available with this quantity. Please, change it to finalize your order", 'doliconnect')."</b>";
-      }
-      $doliline .= '</div><div class="col d-none d-md-block col-md-3 text-end">';
-      //if ( isset($object->statut) && empty($object->statut) && !is_page(doliconnectid('doliaccount')) && doliconst('FRAIS_DE_PORT_ID_SERVICE_TO_USE') != $line->fk_product  ) {
-      //  $doliline .= '<center>'.doliProductStock($product).'</center>';
-      //  if ( !empty($product->country_id) ) {  
-      //    $country = callDoliApi("GET", "/setup/dictionary/countries/".$product->country_id."?lang=".doliUserLang($current_user), null, dolidelay('constante'));
-      //    if (isset($product->country_code)) $doliline .= "<center><small><span class='fi fi-".strtolower($product->country_code)."'></span></small></center>"; 
-      //  }
-      //}
-      $doliline .= '</div><div class="col-4 col-sm-3 col-md-3 col-lg-3 text-end">';
-      if (!empty($line->fk_parent_line) || (doliCheckModules('fraisdeport') && empty($line->fk_parent_line) && doliconst('FRAIS_DE_PORT_ID_SERVICE_TO_USE') == $line->fk_product)) {
-        $doliline .= '<h6 class="mb-1">x'.$line->qty.'</h6>';
-      } elseif ( isset($object->statut) && empty($object->statut) && !is_page(doliconnectid('doliaccount')) ) {
-        //
-        //$doliline .= doliProductCart($product, $price, $line, $refresh, $context);
-      } else {
-        $doliline .= '<h6 class="mb-1">x'.$line->qty.'</h6>';
-      }
-      $doliline .= "</div><div>";
-      if ( isset($object->statut) && empty($object->statut) ) {
-        $price = doliProductPrice($product, null, $refresh);
-        $doliline .= doliProductCart($product, $price, $line, $refresh, $context, $linearray_options);
-        $doliline .= "<span class='float-start'>";
-        $doliline .= '<div class="input-group input-group-sm mb-0">
-        <label class="input-group-text border border-0 bg-white text-dark" for="inputGroupSelect01">'.__( 'Qty :', 'doliconnect').'</label>
-        <select class="form-selectform-select-sm border border-0 bg-white text-dark" id="inputGroupSelect01">
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-        </select>';
-        $doliline .= "<button class='btn btn-link border border-0 bg-white text-dark' id='button-addon2' name='delete' value='delete' type='submit' onclick='doliCartButton(\"updateLine\", ".$product->id.", ".$mstock['lineid'].", 0, ".json_encode($linearray_options, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES).", \"delete\");'>".__( 'Delete', 'doliconnect')."</button></div>";
-        $doliline .= "</span>";
-      }
-      $doliline .= "<span class='float-end'><b>".doliprice($line, (empty(get_option('dolibarr_b2bmode'))?'ttc':'ht'), isset($line->multicurrency_code) ? $line->multicurrency_code : null)."</b></span>";
-      $doliline .= "<div></div></li>";
-    }
+    }  
     if ( isset($object->statut) && !empty($object->statut) ) {
       $doliline .= "<li class='list-group-item list-group-item-primary'><b>".__( 'Total', 'doliconnect').": ".doliprice($object, 'ttc', isset($object->multicurrency_code) ? $object->multicurrency_code : null)."</b><br>";
       $doliline .= "<small><b>(".__( 'of which VAT', 'doliconnect').": ".doliprice($object, 'tva', isset($object->multicurrency_code) ? $object->multicurrency_code : null).")</b></small></li>";
     }
-    } else {
+  } else {
     $doliline .= "<li class='list-group-item list-group-item-light'><br><br><br><br><br><center><h5>".__( 'Your basket is empty', 'doliconnect')."</h5></center>";
     if ( !is_user_logged_in() ) {
       $doliline .= '<center>'.__( 'If you already have an account,', 'doliconnect').' ';
@@ -2054,7 +2079,7 @@ global $current_user;
       $doliline .= __( 'to see your basket.', 'doliconnect').'</center>';
     }
     $doliline .= "<br><br><br><br><br></li>";
-  } 
+  }
   return $doliline;
 }
 
