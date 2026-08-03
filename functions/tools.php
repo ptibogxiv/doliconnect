@@ -2057,6 +2057,7 @@ global $current_user;
           $price = doliProductPrice($product, null, $refresh);
           $doliline .= doliProductCart($product, $price, $line, $refresh, $context, $linearray_options);
           $doliline .= "<div></div></li>";
+        }
       }
     }  
     if ( isset($object->statut) && !empty($object->statut) ) {
