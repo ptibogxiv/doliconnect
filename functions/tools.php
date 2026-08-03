@@ -1969,9 +1969,19 @@ global $current_user;
         // todo replace by doliPicture
         $doliline .= '<a href="'.$producturl.'" class="text-decoration-none"><svg class="p-2" aria-label="Placeholder: 80x80" class="bd-placeholder-img rounded me-3" height="80" width="80" preserveAspectRatio="xMidYMid slice" role="img" xmlns="http://www.w3.org/2000/svg"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect></svg></a>';
         $doliline .= '<div class="w-75 align-self-stretch position-relative">';
-        $doliline .= '<div class="align-items-start fw-bold"><a href="'.$producturl.'" class="text-decoration-none text-reset">'.substr(doliproduct($line, 'product_label'), 0, 25).'</a></div>';
-        $doliline .= '<small class="text-muted">01/01/00 au 31/12/99 - John Doe</small>';
-        $doliline .= '<div class="align-items-end text-muted">';
+        $doliline .= '<div class="align-items-start">';
+        $doliline .= '<span class="position-absolute top-0 start-0"><span class="fw-bold"><a href="'.$producturl.'" class="text-decoration-none text-reset">'.substr(doliproduct($line, 'product_label'), 0, 25).'</a></span>';
+        $doliline .= '<p class="align-self-center text-muted"><small>';
+        if ( isset($line->date_start) && $line->date_start != '' && isset($line->date_end) && $line->date_end != '' ) {
+          $start = wp_date('d/m/Y', $line->date_start);
+          $end = wp_date('d/m/Y', $line->date_end);
+          $doliline .= " <i>(Du $start au $end)</i>";
+        }
+        $doliline .= '</small></p>';
+        $doliline .= '</span>';
+        $doliline .= '<span class="position-absolute top-0 end-0"><i class="fa-solid fa-xmark"></i></span>';
+        $doliline .= '</div>';
+        $doliline .= '<div class="align-items-end">';
         if ( isset($object->statut) && empty($object->statut) ) {
           $doliline .= "<span class='position-absolute bottom-0 start-0'>";
           $price = doliProductPrice($product, null, $refresh);
