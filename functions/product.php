@@ -905,9 +905,9 @@ function doliOffcanvasCart( $current_user, $object = null) {
     <h5 class="offcanvas-title" id="offcanvasDoliCartLabel">'.sprintf(__( 'My cart (%s items)', 'doliconnect'), doliconnect_countitems($object)).'</h5>
     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>';
-  $offcanvas .= '<div class="offcanvas-body">';
+  $offcanvas .= '<div class="offcanvas-body"><ul class="list-group list-group-flush">';
   $offcanvas .= doliline($object, false, 'dolioffcanvascart');
-  $offcanvas .= '</div>';
+  $offcanvas .= '</ul></div>';
   if ($object->id > 0 && isset($object->lines) && !empty($object->lines)) {
     $offcanvas .= '<div class="offcanvas-footer m-3">';
     $offcanvas .= '<div class="d-grid gap-2">';
