@@ -3487,7 +3487,7 @@ function doliModalButton($case, $id, $title, $type = 'button', $class = 'btn btn
   return $button;
 }       
 
-function doliModalDiv() {  
+function doliConnectFooter() {  
   doliconnect_enqueues();
   print '<div id="doliModalDiv"></div>';
   if ( !empty(doliconnectid('dolicart')) && doliCheckModules('commande') ) {
@@ -3502,7 +3502,7 @@ function doliModalDiv() {
   <h4>'.__( 'Processing', 'doliconnect').'</h4>
   </div></div></div>';
 }
-add_action( 'wp_footer', 'doliModalDiv' );
+add_action( 'wp_footer', 'doliConnectFooter' );
 /**
  * Supprime tous les transients du site WordPress
  * 
