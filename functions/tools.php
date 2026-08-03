@@ -1968,16 +1968,17 @@ global $current_user;
         $doliline .= '<li class="list-group-item list-group-item-action list-group-item-light d-flex justify-content-start w-100 align-items-center">';
         // todo replace by doliPicture
         if (!empty($producturl)) $doliline .= '<a href="'.$producturl.'" class="text-decoration-none">';
-        $doliline .= '<svg class="p-2" aria-label="Placeholder: 80x80" class="bd-placeholder-img rounded me-3" height="80" width="80" preserveAspectRatio="xMidYMid slice" role="img" xmlns="http://www.w3.org/2000/svg"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect></svg>';
+        $doliline .= '<svg class="p-2" aria-label="Placeholder: 100x100" class="bd-placeholder-img rounded me-3" height="80" width="80" preserveAspectRatio="xMidYMid slice" role="img" xmlns="http://www.w3.org/2000/svg"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect></svg>';
         if (!empty($producturl)) $doliline .= '</a>';
         $doliline .= '<div class="w-75 align-self-stretch position-relative">';
         $doliline .= '<div class="align-items-start">';
-        $doliline .= '<span class="position-absolute top-0 start-0"><span class="fw-bold"><a href="'.$producturl.'" class="text-decoration-none text-reset">'.substr(doliproduct($line, 'product_label'), 0, 25).'</a></span>';
+        $doliline .= '<span class="position-absolute top-0 start-0">';
+        $doliline .= '<span class="fw-bold"><a href="'.$producturl.'" class="text-decoration-none text-reset">'.substr(doliproduct($line, 'product_label'), 0, 20).'</a></span>';
         $doliline .= '<p class="align-self-center text-muted"><small>';
         if ( isset($line->date_start) && $line->date_start != '' && isset($line->date_end) && $line->date_end != '' ) {
           $start = wp_date('d/m/Y', $line->date_start);
           $end = wp_date('d/m/Y', $line->date_end);
-          $doliline .= " <i>(Du $start au $end)</i>";
+          $doliline .= $start.' au '.$end;
         }
         $doliline .= '</small></p>';
         $doliline .= '</span>';
