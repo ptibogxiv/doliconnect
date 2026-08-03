@@ -827,8 +827,9 @@ global $current_user;
     }
     $button .= '</select>';
     // $button .= $mstock['m1'].'/'.$mstock['m2'].'/'.$mstock['stock'].'/'.$mstock['step'];
-    //$button .= "<button class='btn btn-link border border-0 bg-transparent text-dark' id='button-addon2' name='delete' value='delete' type='submit' onclick='doliCartButton(\"updateLine\", ".$product->id.", ".$mstock['lineid'].", 0, ".json_encode($linearray_options, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES).", \"delete\");'>".__( 'Delete', 'doliconnect')."</button>";
     $button .= '</div>';    
+  } elseif ($context =='dolioffcanvascart_delete' && !empty($lineid) && $lineid > 0) {
+    $button .= "<button class='btn btn-link border border-0 bg-transparent text-dark' id='button-addon2' name='delete' value='delete' type='submit' onclick='doliCartButton(\"updateLine\", ".$product->id.", ".$mstock['lineid'].", 0, ".json_encode($linearray_options, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES).", \"delete\");'><i class='fa-solid fa-xmark'></i></button>";
   } else {
     if (empty($product->status)) {
         $button .= '<div class="btn-group" role="group" aria-label="Basic example">';
