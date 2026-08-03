@@ -1969,7 +1969,7 @@ global $current_user;
         // todo replace by doliPicture
         $doliline .= '<a href="'.$producturl.'" class="text-decoration-none"><svg class="p-2" aria-label="Placeholder: 80x80" class="bd-placeholder-img rounded me-3" height="80" width="80" preserveAspectRatio="xMidYMid slice" role="img" xmlns="http://www.w3.org/2000/svg"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect></svg></a>';
         $doliline .= '<div class="w-75 align-self-stretch">';
-        $doliline .= '<div class="align-items-start fw-bold"><a href="'.$producturl.'" class="text-decoration-none text-reset">'.doliproduct($line, 'product_label').'</a></div>';
+        $doliline .= '<div class="align-items-start fw-bold"><a href="'.$producturl.'" class="text-decoration-none text-reset">'.substr(doliproduct($line, 'product_label'), 0, 25).'</a></div>';
         $doliline .= '<small class="text-muted">01/01/2000 au 31/12/2099 - John Doe</small>';
         $doliline .= '<div class="align-items-end text-muted">';
         if ( isset($object->statut) && empty($object->statut) ) {
