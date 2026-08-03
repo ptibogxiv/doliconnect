@@ -816,8 +816,8 @@ global $current_user;
   $button = '<div id="doliform-product-'.$product->id.'-'.$mstock['lineid'].'" name="doliform-product-'.$product->id.'" class="d-grid gap-2">';
   if ($context =='dolioffcanvascart' && !empty($lineid) && $lineid > 0) {
     $button .= '<div class="input-group input-group-sm mb-0">';
-    $button .= '<label class="input-group-text border border-0 bg-transparent text-dark" for="inputGroupSelect01">'.__( 'Qty :', 'doliconnect').'</label>';
-    $button .= '<select class="form-selectform-select-sm border border-0 bg-transparent text-dark" id="inputGroupSelect01">';
+    $button .= '<label class="input-group-text border border-0 bg-transparent text-dark" for="qty-prod-'.$product->id.'">'.__( 'Qty :', 'doliconnect').'</label>';
+    $button .= "<select class='form-select form-select-sm border border-0 bg-transparent text-dark' id='qty-prod-".$product->id."' onchange='doliCartButton(\"updateLine\", ".$product->id.", ".$mstock['lineid'].", document.getElementById(\"qty-prod-".$product->id."\").value, ".json_encode($linearray_options, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES).", \"modify\");'>";
     $loop = $mstock['m2']/$mstock['step'];
     for ($i = 1; $i <= $loop; $i++) {
       $qty = $i*$mstock['step'];
