@@ -1989,6 +1989,7 @@ global $current_user;
         $doliline .= "<span class='float-end fw-bold'>".doliprice($line, (empty(get_option('dolibarr_b2bmode'))?'ttc':'ht'), isset($line->multicurrency_code) ? $line->multicurrency_code : null)."</span>";
         $doliline .= '</div></div></li>';
       } else {
+        //todo better code more responsive and compliant with LTR RTL like offcanvascart
         if ( isset($mstock) && $mstock['stock'] < 0 && is_page(doliconnectid('dolicart'))) {
           $doliline .= "<li class='list-group-item list-group-item-danger list-group-item-action'>";
           if (!defined('dolilockcart')) define('dolilockcart', '1'); 
