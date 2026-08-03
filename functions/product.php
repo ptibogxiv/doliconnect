@@ -815,7 +815,7 @@ global $current_user;
   wp_enqueue_script( 'dolicart');
   $button = '<div id="doliform-product-'.$product->id.'-'.$mstock['lineid'].'" name="doliform-product-'.$product->id.'" class="d-grid gap-2">';
   if ($context =='dolioffcanvascart' && !empty($lineid) && $lineid > 0) {
-    $button .= '<div class="input-group input-group-sm mb-0">';
+    $button .= '<div class="input-group input-group-sm m-0 p-0">';
     $button .= '<label class="input-group-text border border-0 bg-transparent text-dark" for="qty-prod-'.$product->id.'">'.__( 'Qty :', 'doliconnect').'</label>';
     $button .= "<select class='form-select form-select-sm border border-0 bg-transparent text-dark' id='qty-prod-".$product->id."' onchange='doliCartButton(\"updateLine\", ".$product->id.", ".$mstock['lineid'].", document.getElementById(\"qty-prod-".$product->id."\").value, ".json_encode($linearray_options, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES).", \"modify\");'>";
     $loop = $mstock['m2']/$mstock['step'];
@@ -827,7 +827,8 @@ global $current_user;
     }
     $button .= '</select>';
     // $button .= $mstock['m1'].'/'.$mstock['m2'].'/'.$mstock['stock'].'/'.$mstock['step'];
-    $button .= "<button class='btn btn-link border border-0 bg-transparent text-dark' id='button-addon2' name='delete' value='delete' type='submit' onclick='doliCartButton(\"updateLine\", ".$product->id.", ".$mstock['lineid'].", 0, ".json_encode($linearray_options, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES).", \"delete\");'>".__( 'Delete', 'doliconnect')."</button></div>";    
+    //$button .= "<button class='btn btn-link border border-0 bg-transparent text-dark' id='button-addon2' name='delete' value='delete' type='submit' onclick='doliCartButton(\"updateLine\", ".$product->id.", ".$mstock['lineid'].", 0, ".json_encode($linearray_options, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES).", \"delete\");'>".__( 'Delete', 'doliconnect')."</button>";
+    $button .= '</div>';    
   } else {
     if (empty($product->status)) {
         $button .= '<div class="btn-group" role="group" aria-label="Basic example">';
