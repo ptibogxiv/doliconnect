@@ -1899,60 +1899,62 @@ $content .= doliAjax('dolisettings',  null, 'settings');
 $content .= '<div class="card shadow-sm"><div class="card-header">'.__( 'Settings & security', 'doliconnect').'</div><ul class="list-group list-group-flush">';
 $content .= "<li class='list-group-item list-group-item-light list-group-item-action'><div class='form-check form-switch'><input type='checkbox' class='form-check-input' name='loginmailalert' id='loginmailalert' ";
 if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $current_user->ID ) {
-$content .= " disabled";
-} elseif ( $current_user->loginmailalert == 'on' ) { $content .= " checked"; }        
+    $content .= " disabled";
+} elseif ( $current_user->loginmailalert == 'on' ) { 
+    $content .= " checked"; 
+    }        
 $content .= " onchange='submit()' switch><label class='form-check-label w-100' for='loginmailalert'> ".__( 'Receive a email notification at each connection', 'doliconnect')."</label>
 </div></li>";
 
-$privacy=$wpdb->prefix."doliprivacy";
-if ( $current_user->$privacy ) {
-$content .= "<li class='list-group-item list-group-item-light list-group-item-action'>";
-$content .= '<div class="form-floating">
-<input type="text" class="form-control" id="floatingInput" value="'.wp_date( get_option( 'date_format' ).' - '.get_option('time_format'), $current_user->$privacy, false).'" readonly>
-<label for="floatingInput">'.__( 'Privacy policy', 'doliconnect').'</label>
-</div>';
-$content .= "</li>";
-}
+    $privacy=$wpdb->prefix."doliprivacy";
+    if ( $current_user->$privacy ) {
+        $content .= "<li class='list-group-item list-group-item-light list-group-item-action'>";
+        $content .= '<div class="form-floating">
+        <input type="text" class="form-control" id="floatingInput" value="'.wp_date( get_option( 'date_format' ).' - '.get_option('time_format'), $current_user->$privacy, false).'" readonly>
+        <label for="floatingInput">'.__( 'Privacy policy', 'doliconnect').'</label>
+        </div>';
+        $content .= "</li>";
+    }
 
-if ( is_plugin_active( 'secure-passkeys/secure-passkeys.php' ) ) {
-    $content .= do_shortcode('[secure_passkeys_register_form]');
-}
+    if ( is_plugin_active( 'secure-passkeys/secure-passkeys.php' ) ) {
+        $content .= do_shortcode('[secure_passkeys_register_form]');
+    }
 
-if ( is_plugin_active( 'two-factor/two-factor.php' ) && current_user_can('administrator') && !empty(get_option('doliconnectbeta')) ) {
-$content .= '<li class="list-group-item list-group-item-light list-group-item-action">';
-require_once( ABSPATH . 'wp-content/plugins/two-factor/class-two-factor-core.php');
+    if ( is_plugin_active( 'two-factor/two-factor.php' ) && current_user_can('administrator') && !empty(get_option('doliconnectbeta')) ) {
+        $content .= '<li class="list-group-item list-group-item-light list-group-item-action">';
+        require_once( ABSPATH . 'wp-content/plugins/two-factor/class-two-factor-core.php');
+            ?>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th ><?php esc_html_e( 'Enabled',  'doliconnect'); ?></th>
+                                    <th ><?php esc_html_e( 'Primary',  'doliconnect'); ?></th>
+                                    <th ><?php esc_html_e( 'Description',  'doliconnect'); ?></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <?php foreach ( Two_Factor_Core::get_providers() as $class => $object ) : ?>
+                                <tr>
+                                    <td><input type="checkbox" class="" name="<?php echo esc_attr( Two_Factor_Core::ENABLED_PROVIDERS_USER_META_KEY ); ?>[]" value="<?php echo esc_attr( $class ); ?>" <?php //checked( in_array( $class, $providers ) ); ?> /></td>
+                                    <td><input type="radio" class="" name="<?php echo esc_attr( Two_Factor_Core::PROVIDER_USER_META_KEY ); ?>" value="<?php echo esc_attr( $class ); ?>" <?php //checked( $class, $primary_provider_key ); ?> /></td>
+                                    <td>
+                                        <?php $object->$content .=_label(); ?>
+                                        <?php do_action( 'two-factor-user-options-' . $class, $current_user ); ?>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                            </tbody>
+                        </table>
+        <?php
+        //do_action( 'show_user_security_settings', $current_user );
+        $content .= "</li>";    
+    }
 
-		?>
-					<table class="table">
-						<thead>
-							<tr>
-								<th ><?php esc_html_e( 'Enabled',  'doliconnect'); ?></th>
-								<th ><?php esc_html_e( 'Primary',  'doliconnect'); ?></th>
-								<th ><?php esc_html_e( 'Description',  'doliconnect'); ?></th>
-							</tr>
-						</thead>
-						<tbody>
-						<?php foreach ( Two_Factor_Core::get_providers() as $class => $object ) : ?>
-							<tr>
-								<td><input type="checkbox" class="" name="<?php echo esc_attr( Two_Factor_Core::ENABLED_PROVIDERS_USER_META_KEY ); ?>[]" value="<?php echo esc_attr( $class ); ?>" <?php //checked( in_array( $class, $providers ) ); ?> /></td>
-								<td><input type="radio" class="" name="<?php echo esc_attr( Two_Factor_Core::PROVIDER_USER_META_KEY ); ?>" value="<?php echo esc_attr( $class ); ?>" <?php //checked( $class, $primary_provider_key ); ?> /></td>
-								<td>
-									<?php $object->$content .=_label(); ?>
-									<?php do_action( 'two-factor-user-options-' . $class, $current_user ); ?>
-								</td>
-							</tr>
-						<?php endforeach; ?>
-						</tbody>
-					</table>
-		<?php
-		//do_action( 'show_user_security_settings', $current_user );
-$content .= "</li>";    
-}
-$content .= '</ul>';
-$content .= '<div class="card-footer">';
-$content .= 'notice info';
- $content .= '</div>';
-$content .= '</div>';
+    $content .= '</ul>';
+    //$content .= '<div class="card-footer">';
+    //$content .= 'notice info';
+    //$content .= '</div>';
+    $content .= '</div>';
 
 return $content;
 }
