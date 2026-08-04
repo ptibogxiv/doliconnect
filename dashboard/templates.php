@@ -240,7 +240,7 @@ global $current_user;
 
           } else {
             $content .=  '<div class="card shadow-sm"><div class="card-header">'.__( 'Create an account', 'doliconnect');
-            $content .=  '<a class="float-end text-decoration-none" href="'.esc_url( doliconnecturl('doliaccount') ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a>';  
+            //$content .=  '<a class="float-end text-decoration-none" href="'.esc_url( doliconnecturl('doliaccount') ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a>';  
             $content .=  '</div>';
 
             $content .=  '<div class="card-body"><div class="card-group">
