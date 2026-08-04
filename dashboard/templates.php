@@ -387,124 +387,13 @@ global $current_user;
 
           $content .=  "</form></div></div>";
         } else {
-          if (is_user_logged_in() && !is_user_member_of_blog( $current_user->ID, get_current_blog_id()) ) {
-            $content .=  dolialert('danger', __( 'This account is not allowed to connect this website.', 'doliconnect'));
-            // TODO logout script
-          } elseif ( isset($_GET["login"]) && $_GET["login"] == 'failed' ) { 
-            $content .=  dolialert('danger', __( 'There is no account for these login data or the email and/or the password are not correct.', 'doliconnect'));
-          }
-
-          if ( isset($_GET["action"]) && $_GET["action"] == 'lostpassword' ) {
-            if( isset($_GET["success"]) ) { 
-              $content .=  dolialert('success', __( 'Your password have been updated.', 'doliconnect'));
-            } elseif ( isset($_GET["error"]) && $_GET["error"] == 'expiredkey' ) { 
-              $content .=  dolialert('danger', __( 'The security key is expired!', 'doliconnect'));
-            } elseif ( isset($_GET["error"]) && $_GET["error"] == 'invalidkey' ) { 
-              $content .=  dolialert('danger', __( 'The security key is invalid!', 'doliconnect'));
-            }
-          }
-
-          $image_attributes = wp_get_attachment_image_src( get_theme_mod( 'custom_logo' ), 'full', false); 
-          if ( $image_attributes && !empty(get_option('doliconnectrestrict'))) {
-            $content .=  '<div class="card shadow-lg border-0" style="-webkit-backdrop-filter: blur(6px);backdrop-filter: blur(6px);background-color: rgba(255, 255, 255, 0.6);">';
-            $content .=  '<img src="'.$image_attributes[0].'" class="card-img-top" alt="..."/>';
-          } else { 
-            $content .=  "<div class='card shadow-sm'><div class='card-header'>";
-            if ( empty(get_option('doliconnectrestrict')) ) {
-              $content .=  "<h5 class='card-title'>".__( 'Welcome', 'doliconnect')."</h5>";
-            } else {
-              $content .=  "<h5 class='card-title'>".__( 'Access restricted to users', 'doliconnect')."</h5>";
-            }
-            $content .=  "</div>";
-          }
-          if ( get_option('doliloginmodal') == '999' && !empty(get_option('doliconnectbeta')) ) {
-            $content .=  '<ul class="list-group list-group-flush"><li class="list-group-item"><center><i class="fas fa-user-lock fa-fw fa-10x"></i>';
-            //$content .=  "<h2>".__( 'Restricted area', 'doliconnect')."</h2></center>";
-            $content .=  "</center></li></lu><div class='card-body'>";
-
-            $content .=  '<div class="btn-group w-100" role="group" aria-label="actions buttons">';
-            if ((!is_multisite() && get_option( 'users_can_register' )) || ((!is_multisite() && get_option( 'dolicustsupp_can_register' )) || ((get_option( 'dolicustsupp_can_register' ) || get_option('users_can_register') == '1') && (get_site_option( 'registration' ) == 'user' || get_site_option( 'registration' ) == 'all')))) {
-              $content .=  '<a href="'.wp_registration_url( get_permalink() ).'" id="login-'.current_time('timestamp').'" title="'.__('Signup', 'doliconnect').'" class="btn btn-secondary" role="button">'.__("You don't have an account", 'doliconnect').'</a>';
-            }
-            //$content .=  '<a href="#" id="login-'.current_time('timestamp').'" data-bs-target="#DoliconnectLogin"  data-bs-toggle="modal" data-bs-dismiss="modal" title="'.__('Sign in', 'doliconnect').'" class="btn btn-secondary" role="button">'.__('You have already an account', 'doliconnect').'</a>';
-            $content .=  doliModalButton('login', 'dolilogin', __('You have already an account', 'doliconnect'), 'button', 'btn btn-secondary'); 
-            $content .=  '</div>';
+          if (is_front_page()) {
+            $redirect_to=home_url();
           } else {
-
-            do_action( 'login_head');
-
-            if (!empty(get_option('doliaccountinfo'))) {
-              $content .=  "<div class='card-body'><b>".get_option('doliaccountinfo')."</b></div>";
-            }
-
-            if ( function_exists('socialconnect') ) {
-            $content .=  socialconnect(get_permalink());
-            }
-
-            if ( function_exists('secupress_get_module_option') && !empty(get_site_option('secupress_active_submodule_move-login')) && secupress_get_module_option('move-login_slug-login', '', 'users-login' ) ) {
-            $login_url = site_url()."/".secupress_get_module_option('move-login_slug-login', '', 'users-login'); 
-            } elseif (get_site_option('doliconnect_login')) {
-            $login_url = site_url()."/".get_site_option('doliconnect_login');
-            } else {
-            $login_url = site_url()."/wp-login.php"; }
-            if ( isset($_GET["redirect_to"])) { $redirect_to = sanitize_text_field($_GET["redirect_to"]); } else {
-              if ( function_exists('dolikiosk') && ! empty(dolikiosk()) ) {
-                $redirect_to = doliconnecturl('doliaccount');
-              } elseif (is_front_page()) {
-                $redirect_to = home_url();
-              } else {
-                $redirect_to = get_permalink();
-              }
-            }
-          
-            $content .=  "<form class='was-validated' id='doliconnect-loginform' action='".$login_url."' method='post'>";
-            $content .=  "<ul class='list-group list-group-flush'><li class='list-group-item'>";
-
-            $content .=  doliloaderscript('doliconnect-loginform'); 
-            if  ( defined("DOLICONNECT_DEMO") ) {
-              $content .=  "<p><i class='fas fa-info-circle fa-beat'></i> <b>".__( 'Demo mode is activated', 'doliconnect')."</b></p>";
-            } 
-            $content .=  '<div class="form-floating mb-3"><input type="email" class="form-control" id="user_login" name="log" placeholder="name@example.com" value="';
-            if ( defined("DOLICONNECT_DEMO") && defined("DOLICONNECT_DEMO_EMAIL") && !empty(constant("DOLICONNECT_DEMO_EMAIL")) ) {
-              $content .=  constant("DOLICONNECT_DEMO_EMAIL");
-            }
-            $content .=  '" required autofocus><label for="user_login"><i class="fas fa-at fa-fw"></i> '.__( 'Email', 'doliconnect-pro').'</label></div>';
-
-            $content .=  '<div class="form-floating mb-3"><input type="password" class="form-control" id="user_pass" name="pwd" placeholder="Password" value="';
-            if ( defined("DOLICONNECT_DEMO") && defined("DOLICONNECT_DEMO_PASSWORD") && !empty(constant("DOLICONNECT_DEMO_PASSWORD")) ) {
-              $content .=  constant("DOLICONNECT_DEMO_PASSWORD");
-            }
-            $content .=  '" required><label for="user_pass"><i class="fas fa-key fa-fw"></i> '.__( 'Password', 'doliconnect-pro').'</label></div>';
-
-            do_action( 'login_form' );
-
-            $content .=  '<div class="form-check float-start">
-              <input class="form-check-input" type="checkbox" name="rememberme" value="forever" id="rememberme" checked>
-              <label class="form-check-label" for="rememberme">'.__( 'Remember me', 'doliconnect').'</label>
-            </div>';
-
-            $content .=  "<a class='float-end' href='".wp_lostpassword_url(get_permalink())."' role='button' title='".__( 'Forgot password?', 'doliconnect')."'><small>".__( 'Forgot password?', 'doliconnect')."</small></a>"; 
-
-            $content .=  '</li></lu><div class="card-body flex-nowrap p-0">';
-
-            if ( get_site_option('doliconnect_mode') == 'one' && function_exists('switch_to_blog') ) {
-              switch_to_blog(1);
-            } 
-
-            if ((!is_multisite() && get_option( 'users_can_register' )) || ((!is_multisite() && get_option( 'dolicustsupp_can_register' )) || ((get_option( 'dolicustsupp_can_register' ) || get_option('users_can_register') == '1') && (get_site_option( 'registration' ) == 'user' || get_site_option( 'registration' ) == 'all')))) {
-              $content .=  "<a class='btn btn-lg btn-link fs-6 text-primary text-decoration-none col-6 m-0 rounded-0 border-end' href='".wp_registration_url(get_permalink())."' role='button' title='".__( 'Create an account', 'doliconnect')."'><small>".__( 'Create an account', 'doliconnect')."</small></a>";
-            }
-              
-            if (get_site_option('doliconnect_mode')=='one') {
-              restore_current_blog();
-            }
-
-            $content .=  '<input type="hidden" value="'.sanitize_text_field($redirect_to).'" name="redirect_to"><button class="btn btn-lg btn-link fs-6 text-primary text-decoration-none col-6 m-0 rounded-0" type="submit" value="submit"><strong>'.__( 'Sign in', 'doliconnect').'</strong></button>';
-
-            do_action( 'login_footer');
-
+            $redirect_to=get_permalink();
           }
-          $content .=  "</div></div></form>";
+          wp_safe_redirect(wp_login_url( $redirect_to ));
+          exit;
         }
       }
     return $content;
