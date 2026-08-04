@@ -203,76 +203,76 @@ global $current_user;
           }
           $content .=  "</div></div>";
         } elseif ( isset($_GET["action"]) && $_GET["action"] == 'register' && !is_user_logged_in() ) {
-          if ( is_multisite() && !get_option( 'users_can_register' ) && (get_site_option( 'registration' ) != 'user' or get_site_option( 'registration' ) != 'all') ) {
-            //wp_redirect(esc_url(doliconnecturl('doliaccount')));
-            //exit;
+          if ( is_multisite() && !get_option( 'users_can_register' ) && !users_can_register_signup_filter() ) {
+            wp_redirect(esc_url(doliconnecturl('doliaccount')));
+            exit;
           } elseif ( !get_option( 'users_can_register' ) ) {
-            //wp_redirect(esc_url(doliconnecturl('doliaccount')));
-            //exit;
-          }
-
-          if (isset($_GET["morphy"]) && (($_GET["morphy"] == 'mor' && (empty(get_option('doliconnect_disablepro')) || get_option('doliconnect_disablepro') == 'mor')) || ($_GET["morphy"] == 'phy' && (empty(get_option('doliconnect_disablepro')) || get_option('doliconnect_disablepro') == 'phy')))) {
-            $content .=  "<div id='doliuserinfos-alert'></div><form action='".admin_url('admin-ajax.php')."' id='doliuserinfos-form' method='post' class='was-validated' enctype='multipart/form-data'>";
-
-            $content .=  doliAjax('doliuserinfos', null, 'create');
-
-            $content .=  '<div class="card shadow-sm"><div class="card-header">';
-            if ($_GET["morphy"] == 'phy') {
-              $content .=  __( 'Create a personnal account', 'doliconnect');   
-            } elseif ($_GET["morphy"] == 'mor') {
-              $content .=  __( 'Create an enterprise account', 'doliconnect');    
-            }
-            $content .=  '<a class="float-end text-decoration-none" href="'.wp_registration_url(get_permalink()).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a>';  
-            $content .=  '</div>';
-
-            $content .=  doliuserform( null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'thirdparty', doliCheckRights('societe', 'creer'));
-
-            $content .=  "<div class='card-body'><div class='d-grid gap-2'><button class='btn btn-outline-secondary' type='submit'";
-            if ( get_option('users_can_register')=='1' && ( get_site_option( 'registration' ) == 'user' || get_site_option( 'registration' ) == 'all' ) || ( !is_multisite() && get_option( 'users_can_register' )) ) {
-              $content .=  "";
-            } else { 
-              $content .=  " aria-disabled='true'  disabled"; 
-            }
-            $content .=  ">".__( 'Create an account', 'doliconnect')."</button></form>";
-            $content .=  '</div></div></div></form>';
-
-            do_action( 'login_footer');
-
+            wp_redirect(esc_url(doliconnecturl('doliaccount')));
+            exit;
           } else {
-            $content .=  '<div class="card shadow-sm"><div class="card-header">'.__( 'Create an account', 'doliconnect');
-            //$content .=  '<a class="float-end text-decoration-none" href="'.esc_url( doliconnecturl('doliaccount') ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a>';  
-            $content .=  '</div>';
+            if (isset($_GET["morphy"]) && (($_GET["morphy"] == 'mor' && (empty(get_option('doliconnect_disablepro')) || get_option('doliconnect_disablepro') == 'mor')) || ($_GET["morphy"] == 'phy' && (empty(get_option('doliconnect_disablepro')) || get_option('doliconnect_disablepro') == 'phy')))) {
+              $content .=  "<div id='doliuserinfos-alert'></div><form action='".admin_url('admin-ajax.php')."' id='doliuserinfos-form' method='post' class='was-validated' enctype='multipart/form-data'>";
 
-            $content .=  '<div class="card-body"><div class="card-group">
-              <div class="card">
-                
-                <div class="card-body">
-                  <h5 class="card-title">'.__( 'Create a personnal account', 'doliconnect').'</h5>
-                  <p class="card-text"><small class="text-muted"></small></p>
-                  <div class="d-grid gap-2">';
-              if (get_option('doliconnect_disablepro') == 'mor') {
-                $content .=  '<a class="btn btn-outline-secondary disabled" href="'.wp_registration_url(get_permalink()).'&morphy=phy" role="button" title="'.__( 'Create a personnal account', 'doliconnect').'" aria-disabled="true">'.__( 'Create a personnal account', 'doliconnect').'</a>';
-              } else {
-                $content .=  '<a class="btn btn-outline-secondary" href="'.wp_registration_url(get_permalink()).'&morphy=phy" role="button" title="'.__( 'Create a personnal account', 'doliconnect').'">'.__( 'Create a personnal account', 'doliconnect').'</a>';    
+              $content .=  doliAjax('doliuserinfos', null, 'create');
+
+              $content .=  '<div class="card shadow-sm"><div class="card-header">';
+              if ($_GET["morphy"] == 'phy') {
+                $content .=  __( 'Create a personnal account', 'doliconnect');   
+              } elseif ($_GET["morphy"] == 'mor') {
+                $content .=  __( 'Create an enterprise account', 'doliconnect');    
               }
-                  $content .=  '</div>
+              $content .=  '<a class="float-end text-decoration-none" href="'.wp_registration_url(get_permalink()).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a>';  
+              $content .=  '</div>';
+
+              $content .=  doliuserform( null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'thirdparty', doliCheckRights('societe', 'creer'));
+
+              $content .=  "<div class='card-body'><div class='d-grid gap-2'><button class='btn btn-outline-secondary' type='submit'";
+              if ( get_option('users_can_register')=='1' && ( get_site_option( 'registration' ) == 'user' || get_site_option( 'registration' ) == 'all' ) || ( !is_multisite() && get_option( 'users_can_register' )) ) {
+                $content .=  "";
+              } else { 
+                $content .=  " aria-disabled='true'  disabled"; 
+              }
+              $content .=  ">".__( 'Create an account', 'doliconnect')."</button></form>";
+              $content .=  '</div></div></div></form>';
+
+              do_action( 'login_footer');
+
+            } else {
+              $content .=  '<div class="card shadow-sm"><div class="card-header">'.__( 'Create an account', 'doliconnect');
+              //$content .=  '<a class="float-end text-decoration-none" href="'.esc_url( doliconnecturl('doliaccount') ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a>';  
+              $content .=  '</div>';
+
+              $content .=  '<div class="card-body"><div class="card-group">
+                <div class="card">
+                  
+                  <div class="card-body">
+                    <h5 class="card-title">'.__( 'Create a personnal account', 'doliconnect').'</h5>
+                    <p class="card-text"><small class="text-muted"></small></p>
+                    <div class="d-grid gap-2">';
+                if (get_option('doliconnect_disablepro') == 'mor') {
+                  $content .=  '<a class="btn btn-outline-secondary disabled" href="'.wp_registration_url(get_permalink()).'&morphy=phy" role="button" title="'.__( 'Create a personnal account', 'doliconnect').'" aria-disabled="true">'.__( 'Create a personnal account', 'doliconnect').'</a>';
+                } else {
+                  $content .=  '<a class="btn btn-outline-secondary" href="'.wp_registration_url(get_permalink()).'&morphy=phy" role="button" title="'.__( 'Create a personnal account', 'doliconnect').'">'.__( 'Create a personnal account', 'doliconnect').'</a>';    
+                }
+                    $content .=  '</div>
+                  </div>
                 </div>
-              </div>
-              <div class="card">
-                
-                <div class="card-body">
-                  <h5 class="card-title">'.__( 'Create an enterprise account', 'doliconnect').'</h5>
-                  <p class="card-text"><small class="text-muted"></small></p>
-                  <div class="d-grid gap-2">';
-              if (get_option('doliconnect_disablepro') == 'phy') {
-                $content .=  '<a class="btn btn-outline-secondary disabled" href="'.wp_registration_url(get_permalink()).'&morphy=mor" role="button" title="'.__( 'Create an enterprise account', 'doliconnect').'" aria-disabled="true">'.__( 'Create a personnal account', 'doliconnect').'</a>';
-              } else {
-                $content .=  '<a class="btn btn-outline-secondary" href="'.wp_registration_url(get_permalink()).'&morphy=mor" role="button" title="'.__( 'Create an enterprise account', 'doliconnect').'">'.__( 'Create an enterprise account', 'doliconnect').'</a>';    
-              }
-                  $content .=  '</div>
-              </div>
-            </div>';
-            $content .=  '</div></div>';
+                <div class="card">
+                  
+                  <div class="card-body">
+                    <h5 class="card-title">'.__( 'Create an enterprise account', 'doliconnect').'</h5>
+                    <p class="card-text"><small class="text-muted"></small></p>
+                    <div class="d-grid gap-2">';
+                if (get_option('doliconnect_disablepro') == 'phy') {
+                  $content .=  '<a class="btn btn-outline-secondary disabled" href="'.wp_registration_url(get_permalink()).'&morphy=mor" role="button" title="'.__( 'Create an enterprise account', 'doliconnect').'" aria-disabled="true">'.__( 'Create a personnal account', 'doliconnect').'</a>';
+                } else {
+                  $content .=  '<a class="btn btn-outline-secondary" href="'.wp_registration_url(get_permalink()).'&morphy=mor" role="button" title="'.__( 'Create an enterprise account', 'doliconnect').'">'.__( 'Create an enterprise account', 'doliconnect').'</a>';    
+                }
+                    $content .=  '</div>
+                </div>
+              </div>';
+              $content .=  '</div></div>';
+            }
           }
         } elseif ( isset($_GET["action"]) && $_GET["action"] == 'rpw' ) {
           if ( function_exists('secupress_get_module_option') && !empty(get_site_option('secupress_active_submodule_move-login')) && secupress_get_module_option('move-login_slug-login', '', 'users-login' ) ) {
