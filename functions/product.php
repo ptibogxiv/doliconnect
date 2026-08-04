@@ -955,6 +955,7 @@ function doliProductDisplayPrice( $product, $price, $refresh = false) {
     if (isset($discountlabel) && !empty($discountlabel)) $explication .= $discountlabel;
     if ($price['ttc'] != $price['ttc3']) $explication .= sprintf(__( 'Discounted price: %s', 'doliconnect'), doliprice( doliProducPriceTaxAssuj($price['ht3'], $price['ttc3'], $product->tva_tx), $currency));
     $explication .= "</ul>";
+    $button .= '<div class="card"><div class="card-body">';
     $button .= "<a tabindex='0' id='popover-price-".$product->id."' class='btn btn-light position-relative top-0 end-0";
     if (!empty($price['discount'])) $button .= " text-danger";
     $button .= "' data-bs-container='body' data-bs-toggle='popover' data-bs-trigger='focus' title='".__( 'About price', 'doliconnect')."' data-bs-content=''>";//".$explication."
@@ -978,6 +979,7 @@ function doliProductDisplayPrice( $product, $price, $refresh = false) {
     }
     if (!empty($price['discount'])) $button .= '<span class="position-absolute top-100 start-100 translate-middle badge bg-light text-dark"><small><s>'.doliprice(doliProducPriceTaxAssuj($price['ht'], $price['ttc'], $product->tva_tx), (empty(get_option('dolibarr_b2bmode'))?'ttc':'ht'), $currency).'</s><span class="visually-hidden">initial price</span></small></span>';
     $button .= '</a>';
+    $button .= '</div></div>';
   }
   return $button;
 }
