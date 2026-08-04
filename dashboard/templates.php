@@ -370,7 +370,7 @@ global $current_user;
           $content .=  doliAjax('dolifpw');
           
           $content .=  '<div class="card shadow-sm"><div class="card-header">'.__( 'Forgot password?', 'doliconnect');
-          $content .=  '<a class="float-end text-decoration-none" href="'.esc_url( doliconnecturl('doliaccount') ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a>';  
+          //$content .=  '<a class="float-end text-decoration-none" href="'.esc_url( doliconnecturl('doliaccount') ).'"><i class="fas fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a>';  
           $content .=  '</div>';
           $content .=  "<ul class='list-group list-group-flush'><li class='list-group-item list-group-item-light list-group-item-action'>";
           $content .=  "<p class='text-justify'>".__( 'Please enter the email address by which you registered your account.', 'doliconnect')."</p>";
