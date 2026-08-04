@@ -949,15 +949,15 @@ function doliProductDisplayPrice( $product, $price, $refresh = false) {
   } else {
     $explication = doliProducPriceTaxAssuj(__( 'Displayed price is excluded VAT', 'doliconnect'), __( 'Displayed price is included VAT', 'doliconnect'), $product->tva_tx);
     $explication .= sprintf(__( 'VAT rate of %s', 'doliconnect'), $price['vat']);
-    //$explication .= "<ul>";
+    $explication .= "<ul>";
     $explication .= sprintf(__( 'Initial sale price: %s', 'doliconnect'), doliprice(doliProducPriceTaxAssuj($price['ht'], $price['ttc'], $product->tva_tx), $currency));
     if (isset($customer_discount) && !empty($customer_discount) && !empty($price['discount'])) $explication .= sprintf(__( 'Your customer discount is %s percent', 'doliconnect'), $customer_discount);
     if (isset($discountlabel) && !empty($discountlabel)) $explication .= $discountlabel;
     if ($price['ttc'] != $price['ttc3']) $explication .= sprintf(__( 'Discounted price: %s', 'doliconnect'), doliprice( doliProducPriceTaxAssuj($price['ht3'], $price['ttc3'], $product->tva_tx), $currency));
-    //$explication .= "</ul>";
+    $explication .= "</ul>";
     $button .= "<a tabindex='0' id='popover-price-".$product->id."' class='btn btn-light position-relative top-0 end-0";
     if (!empty($price['discount'])) $button .= " text-danger";
-    $button .= "' data-bs-container='body' data-bs-toggle='popover' data-bs-trigger='focus' title='".__( 'About price', 'doliconnect')."' data-bs-content='".$explication."'>";
+    $button .= "' data-bs-container='body' data-bs-toggle='popover' data-bs-trigger='focus' title='".__( 'About price', 'doliconnect')."' data-bs-content=''>";//".$explication."
     $button .= doliprice(doliProducPriceTaxAssuj($price['ht3'], $price['ttc3'], $product->tva_tx), (empty(get_option('dolibarr_b2bmode'))?'ttc':'ht'), $currency);
     $date = new DateTime(); 
     $date->modify('NOW');
@@ -977,7 +977,7 @@ function doliProductDisplayPrice( $product, $price, $refresh = false) {
       $button .= '<span class="position-absolute top-100 start-0 translate-middle badge rounded-pill bg-info"><small>'.doliprice( $price['refprice']/$product->net_measure, null, $currency).'/'.$unit[0]->short_label.'<span class="visually-hidden">net measure price</span></small></span>';
     }
     if (!empty($price['discount'])) $button .= '<span class="position-absolute top-100 start-100 translate-middle badge bg-light text-dark"><small><s>'.doliprice(doliProducPriceTaxAssuj($price['ht'], $price['ttc'], $product->tva_tx), (empty(get_option('dolibarr_b2bmode'))?'ttc':'ht'), $currency).'</s><span class="visually-hidden">initial price</span></small></span>';
-    $button .= '</a><br><br>';
+    $button .= '</a>';
   }
   return $button;
 }
