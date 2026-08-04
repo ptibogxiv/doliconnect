@@ -275,16 +275,9 @@ global $current_user;
             }
           }
         } elseif ( isset($_GET["action"]) && $_GET["action"] == 'rpw' ) {
-          if ( function_exists('secupress_get_module_option') && !empty(get_site_option('secupress_active_submodule_move-login')) && secupress_get_module_option('move-login_slug-login', '', 'users-login' ) ) {
-            $login_url = site_url()."/".secupress_get_module_option('move-login_slug-login', '', 'users-login'); 
-          } elseif (get_site_option('doliconnect_login')) {
-              $login_url = site_url()."/".get_site_option('doliconnect_login');
-          } else {
-            $login_url = site_url()."/wp-login.php"; 
-          }
           if (!$_GET["login"] || !$_GET["key"]) {
             ob_clean();
-            wp_redirect(wp_login_url( get_permalink() ));
+            wp_safe_redirect( wp_login_url( get_permalink() ) );
             exit;
           } else {   
             $user = check_password_reset_key( esc_attr($_GET["key"]), esc_attr($_GET["login"]) );
@@ -292,12 +285,12 @@ global $current_user;
               if ( $user && $user->get_error_code() === 'expired_key' ){
                 ob_clean();
                 $arr_params = array( 'action' => 'lostpassword', 'error' => 'expiredkey');  
-                wp_redirect(esc_url( add_query_arg( $arr_params, wp_login_url( get_permalink() )) ));
+                wp_safe_redirect(esc_url( add_query_arg( $arr_params, wp_login_url( get_permalink() )) ));
                 exit;
               } else {
                 ob_clean();
                 $arr_params = array( 'action' => 'lostpassword', 'error' => 'invalidkey');  
-                wp_redirect(esc_url( add_query_arg( $arr_params, wp_login_url( get_permalink() )) ));
+                wp_safe_redirect(esc_url( add_query_arg( $arr_params, wp_login_url( get_permalink() )) ));
                 exit;
               }
             } else {
