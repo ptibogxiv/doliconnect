@@ -202,7 +202,7 @@ global $current_user;
             //}
           }
           $content .=  "</div></div>";
-        } elseif ( isset($_GET["action"]) && $_GET["action"] == 'signup' && !is_user_logged_in() ) {
+        } elseif ( isset($_GET["action"]) && $_GET["action"] == 'register' && !is_user_logged_in() ) {
           if ( is_multisite() && !get_option( 'users_can_register' ) && (get_site_option( 'registration' ) != 'user' or get_site_option( 'registration' ) != 'all') ) {
             //wp_redirect(esc_url(doliconnecturl('doliaccount')));
             //exit;
