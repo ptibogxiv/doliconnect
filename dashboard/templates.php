@@ -388,9 +388,9 @@ global $current_user;
           $content .=  "</form></div></div>";
         } else {
           if (is_front_page()) {
-            $redirect_to=home_url();
+            $redirect_to = home_url();
           } else {
-            $redirect_to=get_permalink();
+            $redirect_to = get_permalink();
           }
           wp_safe_redirect(wp_login_url( $redirect_to ));
           exit;
