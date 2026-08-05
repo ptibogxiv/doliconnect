@@ -1990,9 +1990,9 @@ global $current_user;
           $doliline .= '</span>';
         }
         $doliline .= '</div>';
-        $doliline .= '<div class="align-items-end">';
+        $doliline .= '<div class="align-items-end align-self-stretch w-100">';
         if ( isset($object->statut) && empty($object->statut) ) {
-          $doliline .= '<span class="position-absolute bottom-0 start-0">';
+          $doliline .= '<span class="position-absolute bottom-0 start-0 w-50">';
           $price = doliProductPrice($product, null, $refresh);
           $doliline .= doliProductCart($product, $price, $line, $refresh, $context, $linearray_options);
           $doliline .= '</span>';
