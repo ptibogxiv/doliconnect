@@ -103,7 +103,8 @@ function doliConnect($fonction, $current_user = null, $boolean = false, $refresh
     }
   } elseif ($fonction == 'user' && isset($current_user->user_email) && !empty($current_user->user_email)) {
     $return = callDoliApi("GET", "/users/email/".$current_user->user_email, null, dolidelay('doliconnector', $refresh), $entity);
-  } elseif ($fonction == 'order' && isset($current_user->ID) && !empty($current_user->ID)) {
+    $return->dolibarr_url = get_site_option('dolibarr_public_url').'/?entity='.dolibarr_entity().'&username='.$current_user->user_email;
+    } elseif ($fonction == 'order' && isset($current_user->ID) && !empty($current_user->ID)) {
     if ( doliversion('21.0.0') ) {
       $thirdparty = callDoliApi("GET", "/thirdparties/accounts/wordpress/".$current_user->ID, null, dolidelay('doliconnector', $refresh));
     } else {
@@ -592,16 +593,14 @@ include( plugin_dir_path( __DIR__ ) . 'includes/hybridauth/src/config.php');
 $hybridauth = new Hybridauth\Hybridauth($config);
 $adapters = $hybridauth->getConnectedAdapters();
 
-foreach ($hybridauth->getProviders() as $name) {
-
-if (!isset($adapters[$name])) {
-$connect .= "<div class='d-grid gap-2'><a href='".doliconnecturl('doliaccount')."?provider=".$name."' onclick='loadingLoginModal()' role='button' class='btn btn-outline-dark' title='".__( 'Sign in with', 'doliconnect')." ".$name."'><b><i class='fab fa-".strtolower($name)." fa-lg float-start'></i> ".__( 'Sign in with', 'doliconnect')." ".$name."</b></a></div>";
-}
-}
-if (!empty($hybridauth->getProviders())) {
-$connect .= '<div><div style="display:inline-block;width:46%;float:left"><hr width="90%" /></div><div style="display:inline-block;width: 8%;text-align: center;vertical-align:90%"><small class="text-muted">'.__( 'or', 'doliconnect').'</small></div><div style="display:inline-block;width:46%;float:right" ><hr width="90%"/></div></div>';
-}
-
+  foreach ($hybridauth->getProviders() as $name) {
+    if (!isset($adapters[$name])) {
+      $connect .= "<div class='d-grid gap-2'><a href='".doliconnecturl('doliaccount')."?provider=".$name."' onclick='loadingLoginModal()' role='button' class='btn btn-outline-dark' title='".__( 'Sign in with', 'doliconnect')." ".$name."'><b><i class='fab fa-".strtolower($name)." fa-lg float-start'></i> ".__( 'Sign in with', 'doliconnect')." ".$name."</b></a></div>";
+    }
+  }
+  if (!empty($hybridauth->getProviders())) {
+    $connect .= '<div><div style="display:inline-block;width:46%;float:left"><hr width="90%" /></div><div style="display:inline-block;width: 8%;text-align: center;vertical-align:90%"><small class="text-muted">'.__( 'or', 'doliconnect').'</small></div><div style="display:inline-block;width:46%;float:right" ><hr width="90%"/></div></div>';
+  }
 return $connect;
 }
 
@@ -816,8 +815,7 @@ return $doliFaq;
 }
 
 function doliPasswordForm($user, $url, $return = null){
-  $doliuser = doliConnect('user', $user);
-  if (isset($doliuser->id)) $request = "/users/".$doliuser->id;
+  if ( isset(doliConnect('user', $user)->id) && doliConnect('user', $user)->id > 0 ) $request = "/users/".doliConnect('user', $user)->id;
   $doliPassword = "<div id='dolirpw-alert'></div><form id='dolirpw-form' method='post' class='was-validated' action='".admin_url('admin-ajax.php')."'>";
   if (isset($_GET["key"]) && isset($_GET["login"])) {
     $doliPassword .= "<input type='hidden' name='key' value='".esc_attr($_GET["key"])."'><input type='hidden' name='login' value='".esc_attr($_GET["login"])."'>";
@@ -825,7 +823,7 @@ function doliPasswordForm($user, $url, $return = null){
   $doliPassword .= doliAjax('dolirpw', $return);
   $doliPassword .= '<div class="card shadow-sm"><div class="card-header">'.__( 'Edit my password', 'doliconnect').'</div><ul class="list-group list-group-flush">';
 
-  if ( isset($doliuser->id) && $doliuser->id > '0' ) {
+  if ( isset(doliConnect('user', $user)->id) && doliConnect('user', $user)->id > 0 ) {
     $doliPassword .= '<li class="list-group-item list-group-item-light list-group-item-action"><i class="fas fa-info-circle fa-fw fa-3x fa-beat-fade float-start text-info"></i>'.__( 'Your password will be synchronized with your Dolibarr account', 'doliconnect').'</b></li>';
   } elseif  ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $user->ID ) {
     $doliPassword .= '<li class="list-group-item list-group-item-light list-group-item-action"><i class="fas fa-info-circle fa-fw fa-3x fa-beat-fade float-start text-info"></i>'.__( 'Password cannot be modified in demo mode', 'doliconnect').'</b></li>';
@@ -890,7 +888,7 @@ function doliPasswordForm($user, $url, $return = null){
   }
   $doliPassword .= '>'.__( 'Update', 'doliconnect').'</button></div></form>';
   $doliPassword .= "</div>";
-  $doliPassword .= doliCardFooter($doliuser, 'doliconnector');
+  $doliPassword .= doliCardFooter(doliConnect('user', $user), 'doliconnector');
   $doliPassword .= '</div>';
 return $doliPassword;
 }
@@ -1957,7 +1955,6 @@ global $current_user;
         $lineid = 0;
         $linearray_options = $array_options;
       }
-
       if ( $line->fk_product > 0 ) {
         $product = callDoliApi("GET", "/products/".$line->fk_product."?includesubproducts=true&includetrans=true", null, dolidelay('product', $refresh));
         $mstock = doliProductStock($product, $refresh, true, $line->array_options);
@@ -2079,7 +2076,7 @@ global $current_user;
     $doliline .= "<li class='list-group-item list-group-item-light'><br><br><br><br><br><center><h5>".__( 'Your basket is empty', 'doliconnect')."</h5></center>";
     if ( !is_user_logged_in() ) {
       $doliline .= '<center>'.__( 'If you already have an account,', 'doliconnect').' ';
-      $doliline .= "<a href='".wp_login_url( doliconnecturl('dolicart') )."?redirect_to=".doliconnecturl('dolicart')."' title='".__('sign in', 'doliconnect')."'>".__( 'sign in', 'doliconnect').'</a> ';
+      $doliline .= "<a href='".wp_login_url( get_permalink() )."' title='".__('sign in', 'doliconnect')."'>".__( 'sign in', 'doliconnect').'</a> ';
       $doliline .= __( 'to see your basket.', 'doliconnect').'</center>';
     }
     $doliline .= "<br><br><br><br><br></li>";
@@ -3503,17 +3500,8 @@ function doliConnectFooter() {
   </div></div></div>';
 }
 add_action( 'wp_footer', 'doliConnectFooter' );
-/**
- * Supprime tous les transients du site WordPress
- * 
- * @return int Nombre de transients supprimés
- */
-/**
- * Supprime tous les transients du site WordPress
- * 
- * @return int Nombre de transients supprimés
- */
 /*
+// Supprime tous les transients du site WordPress
 function doliconnect_delete_all_transients() {
 	global $wpdb;
 	
