@@ -454,6 +454,7 @@ global $current_user;
   $warehouse = doliconst('DOLICONNECT_ID_WAREHOUSE');
   $stock = callDoliApi("GET", "/products/".$product->id."/stock?selected_warehouse_id=".$warehouse, null, dolidelay('stock', $refresh));
   $mstock['orderid'] = $order->id;
+
   if (empty($product->status)) {   
     $mstock['stock'] = 0;
   } elseif (!empty($product->type) && empty(doliconst('STOCK_SUPPORTS_SERVICES'))) {
@@ -490,6 +491,7 @@ global $current_user;
       }
   }
   if (isset($array_options) && is_array($array_options)) $array_options = array_merge($array_options2, $array_options);
+  
   if (isset($fk_line->id) && !empty($fk_line->id)) {
     $linearray_options = (array) $fk_line->array_options;
     $mstock['qty'] = $fk_line->qty;
@@ -817,7 +819,7 @@ global $current_user;
   if ($context =='dolioffcanvascart' && !empty($lineid) && $lineid > 0) {
     $button .= '<div class="input-group input-group-sm m-0 p-0">';
     $button .= '<label class="input-group-text border border-0 bg-transparent text-dark" for="qty-prod-'.$product->id.'">'.__( 'Qty :', 'doliconnect').'</label>';
-    $button .= "<select class='form-select form-select-sm border border-0 bg-transparent text-dark' id='qty-prod-".$product->id."' onchange='doliCartButton(\"updateLine\", ".$product->id.", ".$mstock['lineid'].", document.getElementById(\"qty-prod-".$product->id."\").value, ".json_encode($linearray_options, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES).", \"modify\");'>";
+    $button .= "<select class='form-select form-select-sm border border-0 bg-transparent text-dark' id='qty-prod-".$product->id."' onchange='doliCartButton(\"updateLine\", ".$product->id.", ".$line->id.", document.getElementById(\"qty-prod-".$product->id."\").value, ".json_encode($linearray_options, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES).", \"modify\");'>";
     $loop = $mstock['m2']/$mstock['step'];
     for ($i = 1; $i <= $loop; $i++) {
       $qty = $i*$mstock['step'];
@@ -826,10 +828,10 @@ global $current_user;
       $button .= '>'.$qty.'</option>';
     }
     $button .= '</select>';
-    // $button .= $mstock['m1'].'/'.$mstock['m2'].'/'.$mstock['stock'].'/'.$mstock['step'];
+    //$button .= $mstock['m1'].'/'.$mstock['m2'].'/'.$mstock['stock'].'/'.$mstock['step'];
     $button .= '</div>';    
   } elseif ($context =='dolioffcanvascart_delete' && !empty($lineid) && $lineid > 0) {
-    $button .= "<button class='btn btn-link btn-sm m-0 p-0 border border-0 bg-transparent text-dark' id='button-addon2' name='delete' value='delete' type='submit' onclick='doliCartButton(\"updateLine\", ".$product->id.", ".$mstock['lineid'].", 0, ".json_encode($linearray_options, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES).", \"delete\");'><i class='fa-solid fa-xmark'></i></button>";
+    $button .= "<button class='btn btn-link btn-sm m-0 p-0 border border-0 bg-transparent text-dark' id='button-addon2' name='delete' value='delete' type='submit' onclick='doliCartButton(\"updateLine\", ".$product->id.", ".$line->id.", 0, ".json_encode($linearray_options, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES).", \"delete\");'><i class='fa-solid fa-xmark'></i></button>";
   } else {
     if (empty($product->status)) {
         $button .= '<div class="btn-group" role="group" aria-label="Basic example">';
