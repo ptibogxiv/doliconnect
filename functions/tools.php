@@ -397,6 +397,11 @@ function doliPagination($object, $url, $page = 0) {
   return $pagination;
 }
 
+function doliPicture() {
+  $picture = '<svg class="p-2" aria-label="Placeholder: 100x100" class="bd-placeholder-img rounded me-3" height="80" width="80" preserveAspectRatio="xMidYMid slice" role="img" xmlns="http://www.w3.org/2000/svg"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect></svg>';
+  return $picture;
+}
+
 function doliconnect_image($module, $id, $options = array(), $refresh = false) {
   if ( doliversion('22.0.0') && !empty(get_option('doliconnectbeta')) ) {
     $object = callDoliApi("GET", "/documents?modulepart=".$module."&id=".$id."&limit=100&content_type=image%2Fjpeg&pagination_data=true", null, dolidelay('document', $refresh));   
@@ -1963,9 +1968,8 @@ global $current_user;
       }
       if ($context == 'dolioffcanvascart') {
         $doliline .= '<li class="list-group-item list-group-item-action list-group-item-light d-flex justify-content-start w-100 align-items-center">';
-        // todo replace by doliPicture
         if (!empty($producturl)) $doliline .= '<a href="'.$producturl.'" class="text-decoration-none">';
-        $doliline .= '<svg class="p-2" aria-label="Placeholder: 100x100" class="bd-placeholder-img rounded me-3" height="80" width="80" preserveAspectRatio="xMidYMid slice" role="img" xmlns="http://www.w3.org/2000/svg"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect></svg>';
+        $doliline .= doliPicture();
         if (!empty($producturl)) $doliline .= '</a>';
         $doliline .= '<div class="w-75 align-self-stretch position-relative">';
         $doliline .= '<div class="align-items-start">';
@@ -2017,8 +2021,7 @@ global $current_user;
         }
 
         $doliline .= '<div class="w-100 justify-content-between"><div class="row"><div class="d-none d-sm-block col-sm-2 col-lg-2"><center>';
-        // todo replace by doliPicture
-        $doliline .= '<svg class="p-2" aria-label="Placeholder: 80x80" class="bd-placeholder-img rounded me-3" height="80" width="80" preserveAspectRatio="xMidYMid slice" role="img" xmlns="http://www.w3.org/2000/svg"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect></svg>';
+        $doliline .= doliPicture();
         //if ( doliCheckModules('fraisdeport') && doliconst('FRAIS_DE_PORT_ID_SERVICE_TO_USE') == $line->fk_product ) {
         //  $doliline .= '<i class="fas fa-shipping-fast fa-2x fa-fw"></i>';
         //} elseif ( $line->fk_product > 0 ) {
