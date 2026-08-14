@@ -872,7 +872,7 @@ global $current_user;
           }
           $button .= '</div>';
         } else {
-          $button .= '<div class="input-group btn-outline-secondary mb-3">';
+          $button .= '<div class="mb-3"><div class="input-group btn-outline-secondary">';
           if (!empty($mstock['qty'])) $button .= "<button class='btn btn-sm btn-dark border border-dark' name='delete' value='delete' type='submit' onclick='doliCartButton(\"updateLine\", ".$product->id.", ".$mstock['lineid'].", 0, ".json_encode($linearray_options, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES).", \"delete\");'><i class='fa-solid fa-trash-can'></i></button>";
           $button .= "<button class='btn btn-sm btn-light border border-light-subtle";
           if (empty($mstock['qty'])) $button .= " disabled";
@@ -881,9 +881,12 @@ global $current_user;
           $button .= "<button class='btn btn-sm btn-light border border-light-subtle' name='plus' value='plus' type='submit' onclick='doliCartButton(\"updateLine\", ".$product->id.", ".$mstock['lineid'].", document.getElementById(\"qty-prod-".$product->id."\").value, ".json_encode($linearray_options, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES).", \"plus\");'><i class='fa-solid fa-plus'></i></button>"; 
           if ( !empty($context) && doliCheckModules('wishlist')) {
             $button .= doliWishlist($thirdparty, $product->id, $mstock['lineid'], $refresh);
-          } 
+          }
           $button .= '</div>';
-          if (isset($mstock['step']) && $mstock['step']>1) $button .= '<div class="form-text" id="basic-addon4"><small>'.sprintf(__( 'Sold by %s', 'doliconnect'), $mstock['step']).'</small></div>';  
+          if (isset($mstock['step']) && $mstock['step']>1) {
+            $button .= '<div class="form-text" id="basic-addon4">'.sprintf(__( 'Sold by %s', 'doliconnect'), $mstock['step']).'</div>';
+          }
+          $button .= '</div>';
         } 
       } else {   
         $button .= "<a href='".wp_login_url( get_permalink() )."?redirect_to=".get_permalink()."' class='btn btn-sm btn-outline-secondary' type='button'>".__( 'Sign in', 'doliconnect').'</a>';
