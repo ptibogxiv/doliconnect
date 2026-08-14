@@ -882,10 +882,8 @@ global $current_user;
           if ( !empty($context) && doliCheckModules('wishlist')) {
             $button .= doliWishlist($thirdparty, $product->id, $mstock['lineid'], $refresh);
           } 
-          //$button .= '</div>';
-
-          if (isset($mstock['step']) && $mstock['step']>1) $button .= '<div class="form-text" id="basic-addon4"><small>'.sprintf(__( 'Sold by %s', 'doliconnect'), $mstock['step']).'</small></div>';  
           $button .= '</div>';
+          if (isset($mstock['step']) && $mstock['step']>1) $button .= '<div class="form-text" id="basic-addon4"><small>'.sprintf(__( 'Sold by %s', 'doliconnect'), $mstock['step']).'</small></div>';  
         } 
       } else {   
         $button .= "<a href='".wp_login_url( get_permalink() )."?redirect_to=".get_permalink()."' class='btn btn-sm btn-outline-secondary' type='button'>".__( 'Sign in', 'doliconnect').'</a>';
