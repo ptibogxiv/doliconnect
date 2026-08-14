@@ -1181,27 +1181,29 @@ if (isset($productid) && is_numeric($productid) && $productid > 0) {
   $list .= "<br>".doliProductStock($product);
   }
   if ( isset($product->country_id) && !empty($product->country_id) ) {  
-  if ( isset($product->country_id) && !empty($product->country_id) ) { 
-  $country = callDoliApi("GET", "/setup/dictionary/countries/".$product->country_id."?lang=".doliUserLang($current_user), null, dolidelay('constante'));
-  $list .= "<br><small><span class='fi fi-".strtolower($product->country_code)."'></span> ".$country->label;
+    if ( isset($product->country_id) && !empty($product->country_id) ) { 
+      $country = callDoliApi("GET", "/setup/dictionary/countries/".$product->country_id."?lang=".doliUserLang($current_user), null, dolidelay('constante'));
+      $list .= "<br><small><span class='fi fi-".strtolower($product->country_code)."'></span> ".$country->label;
+    }
+    if ( isset($product->state_id) && !empty($product->state_id) ) { 
+      $state = callDoliApi("GET", "/setup/dictionary/states/".$product->state_id."?lang=".doliUserLang($current_user), null, dolidelay('constante')); 
+      $list .= " - ".$state->name; 
+    } 
+    $list .= "</small>"; 
   }
-  if ( isset($product->state_id) && !empty($product->state_id) ) { 
-  $state = callDoliApi("GET", "/setup/dictionary/states/".$product->state_id."?lang=".doliUserLang($current_user), null, dolidelay('constante')); 
-  $list .= " - ".$state->name; } 
-  $list .= "</small>"; }
   if( has_filter('mydoliconnectproductdesc') ) {
-  $list .= apply_filters('mydoliconnectproductdesc', $product, 'list');
+    $list .= apply_filters('mydoliconnectproductdesc', $product, 'list');
   }
   $list .= '</p>';
   $list .= '<p>'.substr(doliproduct($product, 'description'), 0, 172).'... <a href="'.$producturl.'" class="stretched-link">['.__( 'Read more...', 'doliconnect').']</a></p>';
   $list .= '</div>';
 
   if ( ! empty(doliconnectid('dolicart')) ) { 
-  $list .= "<div class='col-12 col-md-4'><center>";
-  $price = doliProductPrice($product, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
-  $list .= doliProductDisplayPrice($product ,$price, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
-  $list .= doliProductCart($product, $price, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true, array(), $fk_parent_line);
-  $list .= "</center></div>";
+    $list .= "<div class='col-12 col-md-4'><center>";
+    $price = doliProductPrice($product, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+    $list .= doliProductDisplayPrice($product ,$price, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+    $list .= doliProductCart($product, $price, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true, array(), $fk_parent_line);
+    $list .= "</center></div>";
   }
   $list .= "</div></td></tr></table></li>";
 } else {
