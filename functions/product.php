@@ -1195,7 +1195,7 @@ if (isset($productid) && is_numeric($productid) && $productid > 0) {
     $list .= apply_filters('mydoliconnectproductdesc', $product, 'list');
   }
   $list .= '</p>';
-  $list .= '<p>'.substr(doliproduct($product, 'description'), 0, 172).'... <a href="'.$producturl.'" class="stretched-link">['.__( 'Read more...', 'doliconnect').']</a></p>';
+  $list .= '<p>'.substr(sanitize_text_field(doliproduct($product, 'description')), 0, 172).'... <a href="'.$producturl.'" class="stretched-link">['.__( 'Read more...', 'doliconnect').']</a></p>';
   $list .= '</div>';
 
   if ( ! empty(doliconnectid('dolicart')) ) { 
