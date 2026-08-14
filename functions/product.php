@@ -864,7 +864,7 @@ global $current_user;
           $adherent = doliConnect('member', $current_user, false, $refresh);
           $button .= '<div class="btn-group" role="group" aria-label="Basic example">';
           if (!empty($mstock['qty'])) {
-            $button .= "<button class='btn btn-sm btn-dark' name='delete' value='delete' type='submit' onclick='doliCartButton(\"updateLine\", ".$product->id.", ".$mstock['lineid'].", 0, ".json_encode($linearray_options, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES).", \"delete\");'><i class='fa-solid fa-trash-can'></i></button>";
+            $button .= "<button class='btn btn-sm btn-dark border border-dark' name='delete' value='delete' type='submit' onclick='doliCartButton(\"updateLine\", ".$product->id.", ".$mstock['lineid'].", 0, ".json_encode($linearray_options, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES).", \"delete\");'><i class='fa-solid fa-trash-can'></i></button>";
           } elseif (isset($adherent->status) && $adherent->status == '1') {
             $button .= "<button class='btn btn-sm btn-danger' name='plus' value='plus' type='submit' onclick='doliCartButton(\"updateLine\", ".$product->id.", ".$mstock['lineid'].", 1, ".json_encode($linearray_options, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES).", \"membership\");'>".__('Pay my subscription', 'doliconnect')."</button>";
           } else {
@@ -872,7 +872,7 @@ global $current_user;
           }
           $button .= '</div>';
         } else {
-          $button .= '<div class="mb-3"><div class="input-group btn-outline-secondary">';
+          $button .= '<div class="input-group btn-outline-secondary mb-3">';
           if (!empty($mstock['qty'])) $button .= "<button class='btn btn-sm btn-dark border border-dark' name='delete' value='delete' type='submit' onclick='doliCartButton(\"updateLine\", ".$product->id.", ".$mstock['lineid'].", 0, ".json_encode($linearray_options, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES).", \"delete\");'><i class='fa-solid fa-trash-can'></i></button>";
           $button .= "<button class='btn btn-sm btn-light border border-light-subtle";
           if (empty($mstock['qty'])) $button .= " disabled";
@@ -882,7 +882,7 @@ global $current_user;
           if ( !empty($context) && doliCheckModules('wishlist')) {
             $button .= doliWishlist($thirdparty, $product->id, $mstock['lineid'], $refresh);
           } 
-          $button .= '</div>';
+          //$button .= '</div>';
 
           if (isset($mstock['step']) && $mstock['step']>1) $button .= '<div class="form-text" id="basic-addon4"><small>'.sprintf(__( 'Sold by %s', 'doliconnect'), $mstock['step']).'</small></div>';  
           $button .= '</div>';
