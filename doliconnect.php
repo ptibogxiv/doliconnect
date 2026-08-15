@@ -254,7 +254,7 @@ function callDoliApi($method = null, $link = null, $body = null, $delay = HOUR_I
 
     $method = strtoupper( $method );
     $url = rtrim( get_site_option( 'dolibarr_public_url' ), '/' ) . '/api/index.php' . $link;
-    $cache_key = 'doliconnect_api_' . md5( $method . '|' . $url . '|' . maybe_serialize( $body ) . '|' . dolibarr_entity( $entity ) );
+    $cache_key = 'doliconnect_api_' . md5( $method . '|' . $url . '|' . dolibarr_entity( $entity ) );
 
     if ( 'GET' === $method && $delay > 0 ) {
         $cached = get_transient( $cache_key );
