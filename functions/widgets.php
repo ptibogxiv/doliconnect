@@ -134,7 +134,7 @@ $resultatsc = callDoliApi("GET", $request, null, dolidelay('category', esc_attr(
 if ( !isset($resultatsc->error) && $resultatsc != null ) {
 		print "<div class='list-group'>";
 		if (doliconst("CATEGORIE_RECURSIV_ADD", esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))) { 
-			print "<a href='".esc_url( add_query_arg( 'category', 'all', doliconnecturl('dolishop')) )."' class='list-group-item list-group-item-light list-group-item-action d-flex justify-content-between";
+			print "<a href='".esc_url( doliconnecturl('dolishop') )."' class='list-group-item list-group-item-light list-group-item-action d-flex justify-content-between";
 			if (is_page(doliconnectid('dolishop')) || (isset($_GET['category']) && $_GET['category'] == 'all')) { print " active"; }
 			if ( doliversion('19.0.0') ) { 
 				$requestp = "/products?sortfield=t.".$field."&sortorder=".$order."&limit=".$limit."&page=".$page."&category=".esc_attr($shop)."&ids_only=true&pagination_data=true&sqlfilters=(t.tosell:=:1)";
@@ -151,30 +151,6 @@ if ( !isset($resultatsc->error) && $resultatsc != null ) {
 			}
 			print "'>".__(  'All items', 'doliconnect')." <span class='badge bg-secondary rounded-pill'>".$count."</span></a>";
 		}
-
-	if (get_option('dolicartnewlist') != 'none') {
-		print "<a href='".esc_url( add_query_arg( 'category', 'new', doliconnecturl('dolishop')) )."' class='list-group-item list-group-item-light list-group-item-action d-flex justify-content-between";
-		if (isset($_GET['category']) && $_GET['category'] == 'new') { print " active"; }
-		$date = new DateTime(); 
-		$date->modify('NOW');
-		$duration = (!empty(get_option('dolicartnewlist'))?get_option('dolicartnewlist'):'month');
-		$date->modify('FIRST DAY OF LAST '.$duration.' MIDNIGHT');
-		$lastdate = $date->format('Y-m-d');
-		if ( doliversion('19.0.0') ) { 
-			$requestp = "/products?sortfield=t.".$field."&sortorder=".$order."&limit=".$limit."&page=".$page."&category=".esc_attr($shop)."&ids_only=true&pagination_data=true&sqlfilters=(t.datec%3A%3E%3D%3A'".$lastdate."')and(t.tosell:=:1)";
-			$listproduct = callDoliApi("GET", $requestp, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
-			$count = $listproduct->pagination->total;
-		} else { 
-			$requestp = "/products?sortfield=t.".$field."&sortorder=".$order."&limit=1000&category=".esc_attr($shop)."&ids_only=true&sqlfilters=(t.datec%3A%3E%3D%3A'".$lastdate."')and(t.tosell:=:1)";
-			$listproduct = callDoliApi("GET", $requestp, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-			if (empty($listproduct) || isset($listproduct->error)) {
-			$count = 0;
-			} else {
-			$count = count($listproduct);
-			}
-		}
-		print "'>".__(  'Novelties', 'doliconnect')." <span class='badge bg-secondary rounded-pill'>".$count."</span></a>";
-	}
 
 	if ( doliCheckModules('discountprice', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)) ) {
 		print "<a href='".esc_url( add_query_arg( 'category', 'discount', doliconnecturl('dolishop')) )."' class='list-group-item list-group-item-light list-group-item-action d-flex justify-content-between";

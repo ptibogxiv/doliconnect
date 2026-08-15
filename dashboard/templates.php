@@ -700,14 +700,6 @@ function dolishop_display($content) {
           }
           $request = "/products?sortfield=t.".$field."&sortorder=".$order."&limit=".$limit."&page=".$page."&ids_only=true&pagination_data=true&sqlfilters=".$sqlfilters."(t.tosell:=:1)";
           $object = callDoliApi("GET", $request, null, dolidelay('search', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-        } elseif (get_option('dolicartnewlist') != 'none' && isset($_GET['category']) && $_GET['category'] == 'new' && !isset($_GET['product'])) {
-          $date = new DateTime(); 
-          $date->modify('NOW');
-          $duration = (!empty(get_option('dolicartnewlist'))?get_option('dolicartnewlist'):'month');
-          $date->modify('FIRST DAY OF LAST '.$duration.' MIDNIGHT');
-          $lastdate = $date->format('Y-m-d');
-          $request = "/products?sortfield=t.".$field."&sortorder=".$order."&limit=".$limit."&page=".$page."&category=".esc_attr($shop)."&ids_only=true&pagination_data=true&sqlfilters=(t.datec%3A%3E%3D%3A'".$lastdate."')and(t.tosell:=:1)";
-          $object = callDoliApi("GET", $request, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
         } elseif ( doliCheckModules('discountprice') && isset($_GET['category']) && $_GET['category'] == 'discount' && !isset($_GET['product'])) { 
           $date = new DateTime(); 
           $date->modify('NOW');
@@ -737,9 +729,6 @@ function dolishop_display($content) {
         if ( !isset($_GET["category"]) || isset($_GET["category"]) && $_GET["category"] == 'all') {
           $content .=  __(  'All items', 'doliconnect');
           //$content .= f( _n( 'There is %s item', 'There are %s items', $count, 'doliconnect' ), number_format_i18n( $count ) );
-        } elseif (get_option('dolicartnewlist') != 'none' && isset($_GET['category']) && $_GET['category'] == 'new' && !isset($_GET['product'])) {  
-          $content .=  __(  'Novelties', 'doliconnect');
-          //$content .= f( _n( 'There is %s new item', 'There are %s new items', $count, 'doliconnect' ), number_format_i18n( $count ) );
         } elseif ( doliCheckModules('discountprice') && isset($_GET['category']) && $_GET['category'] == 'discount' && !isset($_GET['product'])) { 
           $content .=  __(  'Discounted items', 'doliconnect');
           //$content .= f( _n( 'There is %s discounted item', 'There are %s discounted items', $count, 'doliconnect' ), number_format_i18n( $count ) );
