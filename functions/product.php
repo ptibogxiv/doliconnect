@@ -44,7 +44,7 @@ if ( ! defined( 'ABSPATH' ) ) {
           'query_var'          => true,
           'rewrite'            => array( 'slug' => $post_slug ),
           'capability_type'    => 'page',
-          'has_archive'        => false,
+          'has_archive'        => true,
           'hierarchical'       => false,
           'menu_position'      => 80,
           'supports'           => array( 'title', 'author', 'editor', 'thumbnail'), //,'comments'
@@ -166,8 +166,8 @@ add_action('doliproduct_category_add_form_fields', 'doliproduct_category_add_cus
     if (isset($_POST['doliproduct_productid'])) {
         update_post_meta($post_id, 'doliproduct_productid', sanitize_text_field($_POST['doliproduct_productid']));
     }
-}
-add_action('save_post', 'doliproduct_save_meta_box');
+  }
+  add_action('save_post', 'doliproduct_save_meta_box');
 
   function doliproduct_conditional_display( $content) {
     global $post;
@@ -184,9 +184,9 @@ add_action('save_post', 'doliproduct_save_meta_box');
   }
   add_filter( 'the_content', 'doliproduct_conditional_display', 10);
 
-  add_filter( 'template_include', 'dolibarrproduct_page_template', 99 );
-  function dolibarrproduct_page_template( $template ) {
-      if ( get_query_var('post_type') == 'doliproduct'  ) {
+  //add_filter( 'template_include', 'doliproduct_list_template', 99 );
+  function doliproduct_list_template( $template ) {
+      if ( get_query_var('post_type') == 'doliproduct' ) {
           $file_name = 'page.php';
           if ( locate_template( $file_name ) ) {
               $template = locate_template( $file_name );
@@ -197,36 +197,42 @@ add_action('save_post', 'doliproduct_save_meta_box');
       return $template;
   }
 
-add_filter('single_template', 'my_custom_single_template');
-/**
- * Callback to change the single post template.
- *
- * @param string $single Path to the default single template.
- * @return string Path to the custom template.
- */
-function my_custom_single_template($single) {
-    // Check if we're viewing a specific post type
-    if ( is_singular( 'doliproduct' ) && in_the_loop() && is_main_query() ) {
-        // Path to your custom template file inside your theme
-        $custom_template = get_stylesheet_directory() . '/content-item.php';
+  /**
+   * Callback to change the single post template for doliproduct post type.
+   *
+   * @param string $single Path to the default single template.
+   * @return string Path to the custom template.
+   */
 
-        // If the file exists, use it
-        if (file_exists($custom_template)) {
-            return $custom_template;
-        }
-    }
-    // Fallback to the default template
-    return $single;
-}
+  function doliproduct_single_template($single) {
+      // Check if we're viewing a specific post type
+      if ( is_singular( 'doliproduct' ) && in_the_loop() && is_main_query() ) {
+          // Path to your custom template file inside your theme
+          $custom_template = get_stylesheet_directory() . '/content-item.php';
 
-function themesdna_add_custom_post_types_to_search( $query ) {
-    // Check if it's the main search query and not in the admin area
-    if ( $query->is_search() && $query->is_main_query() && !is_admin() ) {
-        // Include the 'recipes' post type in search results
-        $query->set( 'post_type', array( 'post', 'doliproduct' ) );
+          // If the file exists, use it
+          if (file_exists($custom_template)) {
+              return $custom_template;
+          }
+      }
+      // Fallback to the default template
+      return $single;
+  }
+  //add_filter('single_template', 'doliproduct_single_template');
+
+  /**
+   * Callback to add the custom post type to search results.
+   *
+   * @param WP_Query $query The current query object.
+   */
+  
+  function doliproduct_include_in_search_results( $query ) {
+    if ( $query->is_main_query() && $query->is_search() && ! is_admin() ) {
+        $query->set( 'post_type', array( 'post', 'page', 'doliproduct' ) );
     }
-}
-add_action( 'pre_get_posts', 'themesdna_add_custom_post_types_to_search' );
+  }
+  add_action( 'pre_get_posts', 'doliproduct_include_in_search_results' );
+
 
 function getDoliProductUrl($productid, $refresh = false) {
   // Vérifier que l'ID du produit est valide
