@@ -2066,7 +2066,7 @@ global $current_user;
         //  $doliline .= doliconnect_image('product', $line->fk_product, array('limit'=>1, 'size'=>'50x50'), $refresh);
         //}
         $doliline .= '</center></div><div class="col-8 col-sm-7 col-md-5 col-lg-4"><h6 class="mb-1">';
-        if (!empty($producturl)) $doliline .= '<a href="'.$producturl.'" class="text-decoration-none" title="'.substr(doliproduct($line, 'product_label'), 0, 20).'">';
+        if (!empty($producturl)) $doliline .= '<a href="'.$producturl.'" class="text-decoration-none text-reset" title="'.substr(doliproduct($line, 'product_label'), 0, 20).'">';
         $doliline .= doliproduct($line, 'product_label');
         if (!empty($producturl)) $doliline .= '</a>';
         $doliline .= '</h6>';
