@@ -2057,13 +2057,19 @@ global $current_user;
         }
 
         $doliline .= '<div class="w-100 justify-content-between"><div class="row"><div class="d-none d-sm-block col-sm-2 col-lg-2"><center>';
+        if (!empty($producturl)) $doliline .= '<a href="'.$producturl.'" class="text-decoration-none" title="'.substr(doliproduct($line, 'product_label'), 0, 20).'">';
         $doliline .= doliPicture(getDoliProductPostID($product->id, $refresh), 'bd-placeholder-img rounded me-3', 'doliproduct_thumbnail_square');
+        if (!empty($producturl)) $doliline .= '</a>';
         //if ( doliCheckModules('fraisdeport') && doliconst('FRAIS_DE_PORT_ID_SERVICE_TO_USE') == $line->fk_product ) {
         //  $doliline .= '<i class="fas fa-shipping-fast fa-2x fa-fw"></i>';
         //} elseif ( $line->fk_product > 0 ) {
         //  $doliline .= doliconnect_image('product', $line->fk_product, array('limit'=>1, 'size'=>'50x50'), $refresh);
         //}
-        $doliline .= '</center></div><div class="col-8 col-sm-7 col-md-5 col-lg-4"><h6 class="mb-1">'.doliproduct($line, 'product_label').'</h6>';
+        $doliline .= '</center></div><div class="col-8 col-sm-7 col-md-5 col-lg-4"><h6 class="mb-1">';
+        if (!empty($producturl)) $doliline .= '<a href="'.$producturl.'" class="text-decoration-none" title="'.substr(doliproduct($line, 'product_label'), 0, 20).'">';
+        $doliline .= doliproduct($line, 'product_label');
+        if (!empty($producturl)) $doliline .= '</a>';
+        $doliline .= '</h6>';
         if ( doliconst('FRAIS_DE_PORT_ID_SERVICE_TO_USE') != $line->fk_product ) {
           $doliline .= "<p><small>";
           if ($line->product_type == 9) {
