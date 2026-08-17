@@ -233,6 +233,13 @@ add_action('doliproduct_category_add_form_fields', 'doliproduct_category_add_cus
   }
   add_action( 'pre_get_posts', 'doliproduct_include_in_search_results' );
 
+  function doliconnect_setup_theme() {
+   add_theme_support( 'post-thumbnails' );
+   add_image_size( 'doliproduct_thumbnail_square', 80, 80, true );
+}
+
+add_action( 'after_setup_theme', 'doliconnect_setup_theme' );
+
 function getDoliProductPostID($productid, $refresh = false) {
   // Vérifier que l'ID du produit est valide
   if (empty($productid)) {
