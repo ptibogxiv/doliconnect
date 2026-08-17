@@ -399,9 +399,9 @@ function doliPagination($object, $url, $page = 0) {
 
 function doliPicture($post = null, $class = null, $size = null) {
   if ($post && has_post_thumbnail($post)) {
-    $picture = the_post_thumbnail($size, ['class' => $class, 'title' => get_the_title($post)]);
-  } else {
-    $size = wp_get_additional_image_sizes()[$size];
+    $picture = get_the_post_thumbnail($post, $size, ['class' => $class, 'title' => get_the_title($post)]);
+  } elseif ($post && $class && $size) {
+    $size = wp_get_registered_image_subsizes()[$size];
     $picture = '<svg aria-label="Generic image" class="'.$class.'" height="'.$size['height'].'" width="'.$size['width'].'" preserveAspectRatio="xMidYMid slice" role="img" xmlns="http://www.w3.org/2000/svg"><title>Generic image</title><rect width="100%" height="100%" fill="#868e96"></rect></svg>';
   }
   return $picture;
@@ -1969,12 +1969,12 @@ global $current_user;
         $product = callDoliApi("GET", "/products/".$line->fk_product."?includesubproducts=true&includetrans=true", null, dolidelay('product', $refresh));
         $mstock = doliProductStock($product, $refresh, true, $line->array_options);
         $arr_params = array( 'search' => isset($_GET['search'])?$_GET['search']:null, 'category' => isset($_GET['category'])?$_GET['category']:null, 'subcategory' => isset($_GET['subcategory'])?$_GET['subcategory']:null);
-        $producturl = esc_url( add_query_arg( $arr_params, getDoliProductUrl($product->id)) );
+        $producturl = esc_url( add_query_arg( $arr_params, getDoliProductUrl($product->id, $refresh)) );
       }
       if ($context == 'dolioffcanvascart') {
         $doliline .= '<li class="list-group-item list-group-item-action list-group-item-light d-flex justify-content-start w-100 align-items-center">';
         if (!empty($producturl)) $doliline .= '<a href="'.$producturl.'" class="text-decoration-none">';
-        $doliline .= doliPicture();
+        $doliline .= doliPicture(getDoliProductPostID($product->id, $refresh), 'bd-placeholder-img rounded me-3', 'thumbnail');
         if (!empty($producturl)) $doliline .= '</a>';
         $doliline .= '<div class="w-75 align-self-stretch position-relative">';
         $doliline .= '<div class="align-items-start">';
@@ -2026,7 +2026,7 @@ global $current_user;
         }
 
         $doliline .= '<div class="w-100 justify-content-between"><div class="row"><div class="d-none d-sm-block col-sm-2 col-lg-2"><center>';
-        $doliline .= doliPicture();
+        $doliline .= doliPicture(getDoliProductPostID($product->id, $refresh), null, 'post-thumbnail');
         //if ( doliCheckModules('fraisdeport') && doliconst('FRAIS_DE_PORT_ID_SERVICE_TO_USE') == $line->fk_product ) {
         //  $doliline .= '<i class="fas fa-shipping-fast fa-2x fa-fw"></i>';
         //} elseif ( $line->fk_product > 0 ) {
