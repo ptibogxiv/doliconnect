@@ -1176,7 +1176,7 @@ if (isset($productid) && is_numeric($productid) && $productid > 0) {
   $producturl = esc_url( add_query_arg( $arr_params, getDoliProductUrl($product->id)) );
 
   $list = "<li class='list-group-item list-group-item-light list-group-item-action' id='prod-li-".$product->id."'><table width='100%' style='border:0px'><tr><td width='20%' style='border:0px'><center>";
-  $list .= '<a href="'.$producturl.'" class="text-decoration-none">'.doliconnect_image('product', $product->id, array('limit'=>1, 'entity'=>$product->entity, 'size'=>'150x150'), esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)).'</a>';
+  $list .= '<a href="'.$producturl.'" class="text-decoration-none">'.doliPicture($post, 'card-img-start flex-auto d-none d-md-block rounded-start', 'doliproduct_thumbnail_square').'</a>';
   $list .= "</center></td>";
   $list .= '<td width="80%" style="border:0px"><a href="'.$producturl.'" class="text-body text-decoration-none"><b>'.doliproduct($product, 'label').'</b></a>';
   $list .= "<div class='row'><div class='col position-relative'><p><small>";
