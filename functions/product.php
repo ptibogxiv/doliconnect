@@ -1240,12 +1240,14 @@ global $current_user;
       }
       $card .= '</div><div class="card-body"><div class="row">';
       $card .= "<div class='col-12 d-block d-sm-block d-xs-block d-md-none'><center>";
-      $card .= doliconnect_image('product', $product->id, array('limit'=>1, 'entity'=>$product->entity, 'size'=>'200x200'), esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+      $card .= doliPicture(getDoliProductPostID($product->id), 'me-3', 'medium', true); 
+      //$card .= doliconnect_image('product', $product->id, array('limit'=>1, 'entity'=>$product->entity, 'size'=>'200x200'), esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
       $card .= "</center>";
       //$card .= wp_get_attachment_image( $attributes['mediaID'], "ptibogxiv_large", "", array( "class" => "img-fluid" ) );
       $card .= '</div>';
       $card .= '<div class="col-md-6 d-none d-md-block"><center>';
-      $card .= doliconnect_image('product', $product->id, array('limit'=>1, 'entity'=>$product->entity, 'size'=>'200x200'), esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+      $card .= doliPicture(getDoliProductPostID($product->id), 'me-3', 'medium', true); 
+      //$card .= doliconnect_image('product', $product->id, array('limit'=>1, 'entity'=>$product->entity, 'size'=>'200x200'), esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
       $card .= '</center>';
       //$card .= wp_get_attachment_image( $attributes['mediaID'], "ptibogxiv_square", "", array( "class" => "img-fluid" ) );
       $card .= '</div>';
