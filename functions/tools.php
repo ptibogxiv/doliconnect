@@ -397,8 +397,13 @@ function doliPagination($object, $url, $page = 0) {
   return $pagination;
 }
 
-function doliPicture() {
-  $picture = '<svg class="p-2" aria-label="Placeholder: 100x100" class="bd-placeholder-img rounded me-3" height="80" width="80" preserveAspectRatio="xMidYMid slice" role="img" xmlns="http://www.w3.org/2000/svg"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect></svg>';
+function doliPicture($post = null, $class = null, $size = null) {
+  if ($post && has_post_thumbnail($post)) {
+    $picture = the_post_thumbnail($size, ['class' => $class, 'title' => get_the_title($post)]);
+  } else {
+    $size = wp_get_additional_image_sizes()[$size];
+    $picture = '<svg aria-label="Generic image" class="'.$class.'" height="'.$size['height'].'" width="'.$size['width'].'" preserveAspectRatio="xMidYMid slice" role="img" xmlns="http://www.w3.org/2000/svg"><title>Generic image</title><rect width="100%" height="100%" fill="#868e96"></rect></svg>';
+  }
   return $picture;
 }
 
