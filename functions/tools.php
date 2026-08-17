@@ -397,14 +397,43 @@ function doliPagination($object, $url, $page = 0) {
   return $pagination;
 }
 
-function doliPicture($post = null, $class = null, $size = null) {
-  if ($post && has_post_thumbnail($post)) {
-    $picture = get_the_post_thumbnail($post, $size, ['class' => $class, 'title' => get_the_title($post)]);
-  } elseif ($class && $size) {
-    $size = wp_get_registered_image_subsizes()[$size];
-    $picture = '<svg aria-label="Generic image" class="'.$class.'" height="'.$size['height'].'" width="'.$size['width'].'" preserveAspectRatio="xMidYMid slice" role="img" xmlns="http://www.w3.org/2000/svg"><title>Generic image</title><rect width="100%" height="100%" fill="#868e96"></rect></svg>';
+function doliPicture($post = null, $class = null, $size = null, $carousel  = false) {
+  $picture = '';
+  if ($carousel) {
+    $images = get_attached_media( 'image', $post);
+    //$picture .= var_dump($images);
+    if (!empty($images)) {
+      $picture .= '<div id="carouselExample" class="carousel slide"><div class="carousel-inner">';
+      $i = 0;
+      foreach ($images as $image) {
+        $picture .= '<div class="carousel-item';
+        if (empty($i)) $picture .= ' active';
+        $picture .= '">';
+        $picture .= wp_get_attachment_image( $image->ID, $size, false, ['class' => 'd-block mx-auto', 'title' => get_the_title($post)]);
+        $picture .= '</div>';
+        $i++;
+      }
+      $picture .= '</div>';
+      $picture .= '<button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>';
+      $picture .= '<button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>';
+      $picture .= '</div>';
+    } else {
+      $size = wp_get_registered_image_subsizes()[$size];
+      $picture .= '<svg aria-label="Generic image" class="'.$class.'" height="'.$size['height'].'" width="'.$size['width'].'" preserveAspectRatio="xMidYMid slice" role="img" xmlns="http://www.w3.org/2000/svg"><title>Generic image</title><rect width="100%" height="100%" fill="#868e96"></rect></svg>';
+    }
   } else {
-    $picture = '';
+    if ($post && has_post_thumbnail($post)) {
+      $picture .= get_the_post_thumbnail($post, $size, ['class' => $class, 'title' => get_the_title($post)]);
+    } elseif ($class && $size) {
+      $size = wp_get_registered_image_subsizes()[$size];
+      $picture .= '<svg aria-label="Generic image" class="'.$class.'" height="'.$size['height'].'" width="'.$size['width'].'" preserveAspectRatio="xMidYMid slice" role="img" xmlns="http://www.w3.org/2000/svg"><title>Generic image</title><rect width="100%" height="100%" fill="#868e96"></rect></svg>';
+    }
   }
   return $picture;
 }
