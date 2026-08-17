@@ -807,7 +807,7 @@ function dolishop_display($content) {
   }
 }
 
-add_filter( 'the_content', 'dolishop_display');
+//add_filter( 'the_content', 'dolishop_display');
 
 //*****************************************************************************************
 
