@@ -1209,7 +1209,7 @@ if (isset($productid) && is_numeric($productid) && $productid > 0) {
   if ( ! empty(doliconnectid('dolicart')) ) { 
     $list .= "<div class='col-12 col-md-4'><center>";
     $price = doliProductPrice($product, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
-    $list .= doliProductDisplayPrice($product ,$price, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+    $list .= doliProductDisplayPrice( $product, $price, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
     $list .= doliProductCart($product, $price, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true, array(), $fk_parent_line);
     $list .= "</center></div>";
   }
