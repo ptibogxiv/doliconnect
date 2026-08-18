@@ -330,6 +330,12 @@ function getDoliProductUrl($productid, $refresh = false) {
   return get_permalink($post_ID);
 }
 
+function getDoliProductObject( $key, $post_id) {
+  $productid = get_post_custom_values( $key, $post_id);
+  $product = callDoliApi("GET", "/products/".$productid[0]."?includesubproducts=true&includetrans=true", null, dolidelay('product'));
+  return $product;
+}
+
 function getDoliProductCategory($category) {
   if (isset($category->id) && !empty($category->id)) {
   $args = array(
