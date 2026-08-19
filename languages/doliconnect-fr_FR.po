@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Doliconnect\n"
-"POT-Creation-Date: 2026-08-19 18:49+0200\n"
-"PO-Revision-Date: 2026-08-19 18:50+0200\n"
+"POT-Creation-Date: 2026-08-19 22:11+0200\n"
+"PO-Revision-Date: 2026-08-19 22:12+0200\n"
 "Last-Translator: \n"
 "Language-Team: www.ptibogxiv.net\n"
 "Language: fr_FR\n"
@@ -1856,11 +1856,20 @@ msgstr ""
 msgid "Some errors occurred:"
 msgstr "Quelques erreurs sont survenues :"
 
-#: functions/member.php:92 functions/product.php:453
-msgid "Free"
-msgstr "Offert"
+#: functions/member.php:97
+msgid "From"
+msgstr "Du"
 
-#: functions/member.php:104
+#: functions/member.php:97
+msgid "until"
+msgstr "jusqu’au"
+
+#: functions/member.php:109
+#, php-format
+msgid "From %s to %s"
+msgstr "De %s à %s"
+
+#: functions/member.php:116
 msgid "No available membership type"
 msgstr "Aucun type d’adhésion disponible"
 
@@ -2017,6 +2026,10 @@ msgstr "Numéro d'article"
 #: functions/product.php:154
 msgid "Enter value:"
 msgstr "Entrez la valeur :"
+
+#: functions/product.php:453
+msgid "Free"
+msgstr "Offert"
 
 #: functions/product.php:493
 msgid "Shipping"
