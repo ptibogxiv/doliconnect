@@ -2021,16 +2021,14 @@ global $current_user;
         $doliline .= '</span>';
         if ( isset($object->statut) && empty($object->statut) ) {
           $doliline .= '<span class="position-absolute top-0 end-0">';
-          $price = doliProductPrice($product, null, $refresh);
-          $doliline .= doliProductCart($product, $price, $line, $refresh, $context.'_delete', $linearray_options);
+          $doliline .= doliProductCart($product, $line, $refresh, $context.'_delete', $linearray_options);
           $doliline .= '</span>';
         }
         $doliline .= '</div>';
         $doliline .= '<div class="align-items-end align-self-stretch w-100">';
         if ( isset($object->statut) && empty($object->statut) ) {
           $doliline .= '<span class="position-absolute bottom-0 start-0 w-50">';
-          $price = doliProductPrice($product, null, $refresh);
-          $doliline .= doliProductCart($product, $price, $line, $refresh, $context, $linearray_options);
+          $doliline .= doliProductCart($product, $line, $refresh, $context, $linearray_options);
           $doliline .= '</span>';
         }
         $doliline .= "<span class='position-absolute bottom-0 end-0 fw-bold'>".doliprice($line, (empty(get_option('dolibarr_b2bmode'))?'ttc':'ht'), isset($line->multicurrency_code) ? $line->multicurrency_code : null)."</span>";
@@ -2107,8 +2105,7 @@ global $current_user;
         }
         $doliline .= "</div><div>";
         if ( isset($object->statut) && empty($object->statut) ) {
-          $price = doliProductPrice($product, null, $refresh);
-          $doliline .= doliProductCart($product, $price, $line, $refresh, $context, $linearray_options);
+          $doliline .= doliProductCart($product, $line, $refresh, $context, $linearray_options);
           $doliline .= "<div></div></li>";
         }
       }

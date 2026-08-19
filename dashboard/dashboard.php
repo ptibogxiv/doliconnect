@@ -1519,14 +1519,12 @@ if ( doliCheckModules('commande') && !empty($productadhesion) ) {
     if ( isset($adherent->status) && $adherent->status > 0) {
         $content .= '<div class="d-grid gap-2">';
         if  ($adherent->datefin == null ) {
-            $price = doliProductPrice($product, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)); 
-            $content .= doliProductCart($product, $price, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), false, array('options_member_beneficiary' => $adherent->id));
+            $content .= doliProductCart($product, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), false, array('options_member_beneficiary' => $adherent->id));
         } else {
             if ( $adherent->datefin+86400>$time) {
                 $content .= "<button class='btn btn-light btn-block' disabled>".sprintf(__('Renew from %s', 'doliconnect'), wp_date('d/m/Y', $adherent->datefin))."</button>";
-            } else { 
-                $price = doliProductPrice($product, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)); 
-                $content .= doliProductCart($product, $price, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), false, array('options_member_beneficiary' => $adherent->id));
+            } else {
+                $content .= doliProductCart($product, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), false, array('options_member_beneficiary' => $adherent->id));
             }
         }
         $content .= '</div>';

@@ -236,6 +236,7 @@ add_action('doliproduct_category_add_form_fields', 'doliproduct_category_add_cus
   function doliconnect_setup_theme() {
    add_theme_support( 'post-thumbnails' );
    add_image_size( 'doliproduct_thumbnail_square', 80, 80, true );
+   add_image_size( 'ptibogxiv_small', 200, 250, true );
   }
   add_action( 'after_setup_theme', 'doliconnect_setup_theme' );
 
@@ -717,7 +718,7 @@ global $current_user;
     $response['line'] = $mstock['lineid'];
     if (empty($relatedproduct)) $response['newqty'] = $quantity;
     $response['total'] = doliprice($order, 'ttc', isset($order->multicurrency_code) ? $order->multicurrency_code : null);
-    $response['doliproductbutton'] = doliProductCart($product, $price, $mstock['line'], true, true, $array_options);
+    $response['doliproductbutton'] = doliProductCart($product, $mstock['line'], true, true, $array_options);
     return $response;
   } elseif ( $order->id > 0 && $mstock['lineid'] > 0 ) {
     if ( $quantity < 1 ) {
@@ -731,7 +732,7 @@ global $current_user;
       $response['line'] = null;
       if (empty($relatedproduct)) $response['newqty'] = 0;
       $response['total'] = doliprice($order, 'ttc', isset($order->multicurrency_code) ? $order->multicurrency_code : null);
-      $response['doliproductbutton'] = doliProductCart($product, $price, $mstock['line'], true, true, $array_options);
+      $response['doliproductbutton'] = doliProductCart($product, $mstock['line'], true, true, $array_options);
       return $response;
     } else {
       $uln = [
@@ -768,7 +769,7 @@ global $current_user;
       $response['dolicart'] = doliOffcanvasCart( $current_user );
       if (empty($relatedproduct)) $response['newqty'] = $quantity;
       $response['total'] = doliprice($order, 'ttc', isset($order->multicurrency_code) ? $order->multicurrency_code : null);
-			$response['doliproductbutton'] = doliProductCart($product, $price, $mstock['line'], true, true, $array_options);
+			$response['doliproductbutton'] = doliProductCart($product, $mstock['line'], true, true, $array_options);
       return $response;
     }
   } elseif ( $order->id > 0 && is_null($mstock['lineid']) ) {
@@ -781,7 +782,7 @@ global $current_user;
     $response['dolicart'] = doliOffcanvasCart( $current_user );
     if (empty($relatedproduct)) $response['newqty'] = $quantity;
     $response['total'] = doliprice($order, 'ttc', isset($order->multicurrency_code) ? $order->multicurrency_code : null);
-    $response['doliproductbutton'] = doliProductCart($product, $price, $mstock['line'], true, true, $array_options);
+    $response['doliproductbutton'] = doliProductCart($product, $mstock['line'], true, true, $array_options);
     return $response;
   } else {
     return false;
@@ -814,7 +815,7 @@ function doliWishlist($thirdparty, $productid, $lineid, $refresh = false, $nohtm
   return $wish;
 }
 
-function doliProductCart($product, $price, $line = null, $refresh = null, $context = null, $array_options = array()) {
+function doliProductCart($product, $line = null, $refresh = null, $context = null, $array_options = array()) {
 global $current_user;
 
   if (is_object($line) && isset($line->array_options)) { 
@@ -826,6 +827,7 @@ global $current_user;
   }
   $thirdparty = doliConnect('thirdparty', $current_user, false, $refresh);
   $mstock = doliProductStock($product, $refresh, true, $linearray_options, $line);
+  $price = doliProductPrice($product, isset($line->qty) ? $line->qty : null, $refresh);
   //var_dump($mstock);
   wp_enqueue_script( 'dolicart');
   $button = '<div id="doliform-product-'.$product->id.'-'.$mstock['lineid'].'" name="doliform-product-'.$product->id.'" class="d-grid gap-2">';
@@ -1216,7 +1218,7 @@ if (isset($productid) && is_numeric($productid) && $productid > 0) {
     $list .= "<div class='col-12 col-md-4'><center>";
     $price = doliProductPrice($product, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
     $list .= doliProductDisplayPrice( $product, $price, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
-    $list .= doliProductCart($product, $price, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true, array(), $fk_parent_line);
+    $list .= doliProductCart($product, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true, array(), $fk_parent_line);
     $list .= "</center></div>";
   }
   $list .= "</div></td></tr></table></li>";
@@ -1286,7 +1288,7 @@ global $current_user;
         $card .= '<br><br>';
         $price = doliProductPrice($product, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
         $card .= doliProductDisplayPrice($product, $price, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
-        $card .= doliProductCart($product, $price, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+        $card .= doliProductCart($product, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
         $card .= '</div>';
       }
       $card .= '</div><div class="col-12"><h6>'.__( 'Description', 'doliconnect' ).'</h6><p>'.doliproduct($product, 'description').'</p>';
