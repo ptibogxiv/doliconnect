@@ -55,12 +55,7 @@ $data = array();
   } else {
     $data['typeid'] = $type;
     $member = doliConnect('member', $current_user, false, true);
-    //if (doliCheckModules('adherentsplus') && isset($member->id) && !empty($member->id)) {
-       //$member = callDoliApi("PUT", "/adherentsplus/".$member->id, $data, 0); 
-    //} else {
-      $member = callDoliApi("PUT", "/members/".$member->id, $data, 0); 
-      //print var_dump($member);
-    //}
+    $member = callDoliApi("PUT", "/members/".$member->id, $data, 0); 
   }
   return $member;
 }
