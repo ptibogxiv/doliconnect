@@ -548,9 +548,10 @@ function doliconnect_plugin_activation($network_wide){
             restore_current_blog();
         }
         return;
-    }
-    if( ! wp_next_scheduled( 'doliconnect_cron_hook' ) ) {
-        wp_schedule_event( current_time( 'timestamp', 1), 'fifteen_minutes', 'doliconnect_cron_hook' );
+    } else {
+        if( ! wp_next_scheduled( 'doliconnect_cron_hook' ) ) {
+            wp_schedule_event( current_time( 'timestamp', 1), 'fifteen_minutes', 'doliconnect_cron_hook' );
+        }
     }
 }
 
@@ -566,8 +567,9 @@ function doliconnect_plugin_desactivation($network_wide){
             restore_current_blog();
         }
         return;
+    } else {
+        wp_clear_scheduled_hook( 'doliconnect_cron_hook' );
     }
-    wp_clear_scheduled_hook( 'doliconnect_cron_hook' );
 }
 // ********************************************************
 if (get_option('doliaccount')) {
