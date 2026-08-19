@@ -1464,10 +1464,10 @@ global $current_user;
 
     $content = '<div class="card shadow-sm"><div class="card-header">'.__( 'Manage my subscription', 'doliconnect').'</div><div class="card-body">';
 
-if ( isset($adherent->id) && $adherent->id > 0 && !empty($adherent->typeid) ) { 
-$request= "/adherentsplus/type/".$adherent->typeid;
-$adherenttype = callDoliApi("GET", $request, null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-}
+    if ( isset($adherent->id) && $adherent->id > 0 && !empty($adherent->typeid) ) { 
+        $request= "/members/types/".$adherent->typeid;
+        $adherenttype = callDoliApi("GET", $request, null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+    }
 
 $content .= "<div class='row'><div class='col-12 col-md-5 border-end'>";
 $content .="<b>".__( 'Status', 'doliconnect').":</b> ";
