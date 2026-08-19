@@ -52,7 +52,7 @@ function doliconnect_register_membership_blocks() {
                 } else {
                     $morphy = '';
                 }
-                $request = "/adherentsplus/type?sortfield=t.libelle&sortorder=ASC&".$member_id.$morphy;
+                $request = "/members/types?sortfield=t.libelle&sortorder=ASC&".$member_id.$morphy;
                 $typeadhesion = callDoliApi("GET", $request, null, dolidelay('member'));
                 
                 $html = '<div class="card"><div class="card-header">'.sprintf( __( 'Membership %s', 'doliconnect' ), esc_html( $typeadhesion[0]->season )).'</div>';
