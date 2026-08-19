@@ -1170,7 +1170,7 @@ global $current_user;
 	} elseif ( check_ajax_referer('dolimodal-nonce', 'dolimodal-nonce') && isset($_POST['case']) && $_POST['case'] == "editmembership" ) {
 		$adherent = doliConnect('member', $current_user);
 		if (isset($adherent->id) && $adherent->id > 0) { 
-			$member_id = "member_id=".$adherent->id;
+			$member_id = "&member_id=".$adherent->id;
 		} else {
 			$member_id = '';
 		}
@@ -1179,8 +1179,8 @@ global $current_user;
 		} else {
 			$morphy = '';	
 		}
-		$typeadhesion = callDoliApi("GET", "/adherentsplus/type?sortfield=t.libelle&sortorder=ASC&".$member_id.$morphy, null, dolidelay('member'));
-		$modal['header'] = __( 'Prices', 'doliconnect').' '.$typeadhesion[0]->season;
+		$typeadhesion = callDoliApi("GET", "/members/types?sortfield=t.rowid&sortorder=ASC&limit=100&pagination_data=true".$member_id.$morphy, null, dolidelay('member'));
+		$modal['header'] = __( "Manage my membership's type", "doliconnect");
 		$modal['body'] = dolimembertypelist($typeadhesion, $adherent);	
 		$modal['footer'] = __( 'Note: the admins reserve the right to change your membership in relation to your personal situation. A validation of the membership may be necessary depending on the cases.', 'doliconnect');
 		$response['js'] = null;
