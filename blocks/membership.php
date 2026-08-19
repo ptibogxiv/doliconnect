@@ -55,7 +55,7 @@ function doliconnect_register_membership_blocks() {
                 $request = "/members/types?sortfield=t.libelle&sortorder=ASC&".$member_id.$morphy;
                 $typeadhesion = callDoliApi("GET", $request, null, dolidelay('member'));
                 
-                $html = '<div class="card"><div class="card-header">'.sprintf( __( 'Membership %s', 'doliconnect' ), esc_html( $typeadhesion[0]->season )).'</div>';
+                $html = '<div class="card"><div class="card-header">'.sprintf( __( 'Membership %s', 'doliconnect' ), esc_html( isset($typeadhesion[0]->season) ? $typeadhesion[0]->season : '' )).'</div>';
                 
                 if ( !isset($typeadhesion->error) ) {
                     $html .= dolimembertypelist($typeadhesion, $adherent);
