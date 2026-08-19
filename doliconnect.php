@@ -542,6 +542,7 @@ function doliconnect_plugin_activation($network_wide){
         foreach($site_ids as $site_id){
             //Perform something on all sites within the network
             switch_to_blog($site_id);
+            //flush_rewrite_rules();
             if( ! wp_next_scheduled( 'doliconnect_cron_hook' ) ) {
             wp_schedule_event( current_time( 'timestamp', 1), 'fifteen_minutes', 'doliconnect_cron_hook' );
             }
@@ -549,6 +550,7 @@ function doliconnect_plugin_activation($network_wide){
         }
         return;
     } else {
+        //flush_rewrite_rules();
         if( ! wp_next_scheduled( 'doliconnect_cron_hook' ) ) {
             wp_schedule_event( current_time( 'timestamp', 1), 'fifteen_minutes', 'doliconnect_cron_hook' );
         }
