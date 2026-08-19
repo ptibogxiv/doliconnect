@@ -1057,7 +1057,7 @@ if ( !is_user_logged_in() && in_array($mode, array('linkthirdparty')) ) {
 
 if ( in_array($mode, array('member')) ) {
 $doliuser .= "<div class='form-row'><div class='form-floating'><select class='form-select' id='typeid'  name='".$idobject."[typeid]' required>";
-$typeadhesion = callDoliApi("GET", "/adherentsplus/type?sortfield=t.libelle&sortorder=ASC&sqlfilters=(t.morphy:=:'')or(t.morphy:is:null)or(t.morphy:=:'".$object->morphy."')", null, $delay);
+$typeadhesion = callDoliApi("GET", "/members/types?sortfield=t.libelle&sortorder=ASC&sqlfilters=(t.morphy:=:'')or(t.morphy:is:null)or(t.morphy:=:'".$object->morphy."')", null, $delay);
 //print $typeadhesion;
 $doliuser .= "<option value='' disabled ";
 if ( empty($object->typeid) ) {
