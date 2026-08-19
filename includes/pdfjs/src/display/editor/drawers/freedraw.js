@@ -13,8 +13,8 @@
  * limitations under the License.
  */
 
+import { BBOX_INIT, Util } from "../../../shared/util.js";
 import { Outline } from "./outline.js";
-import { Util } from "../../../shared/util.js";
 
 class FreeDrawOutliner {
   #box;
@@ -588,22 +588,14 @@ class FreeDrawOutline extends Outline {
           lastPointX = ltrCallback(lastPointX, x);
         }
       } else {
-        bezierBbox[0] = bezierBbox[1] = Infinity;
-        bezierBbox[2] = bezierBbox[3] = -Infinity;
+        bezierBbox.set(BBOX_INIT, 0);
         Util.bezierBoundingBox(
           lastX,
           lastY,
           ...outline.slice(i, i + 6),
           bezierBbox
         );
-
-        Util.rectBoundingBox(
-          bezierBbox[0],
-          bezierBbox[1],
-          bezierBbox[2],
-          bezierBbox[3],
-          minMax
-        );
+        Util.rectBoundingBox(...bezierBbox, minMax);
 
         if (firstPointY > bezierBbox[1]) {
           firstPointX = bezierBbox[0];

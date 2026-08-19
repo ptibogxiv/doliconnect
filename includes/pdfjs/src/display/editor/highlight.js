@@ -94,10 +94,10 @@ class HighlightEditor extends AnnotationEditor {
       this,
       "_keyboardManager",
       new KeyboardManager([
-        [["ArrowLeft", "mac+ArrowLeft"], proto._moveCaret, { args: [0] }],
-        [["ArrowRight", "mac+ArrowRight"], proto._moveCaret, { args: [1] }],
-        [["ArrowUp", "mac+ArrowUp"], proto._moveCaret, { args: [2] }],
-        [["ArrowDown", "mac+ArrowDown"], proto._moveCaret, { args: [3] }],
+        [["ArrowLeft"], proto._moveCaret, { args: [0] }],
+        [["ArrowRight"], proto._moveCaret, { args: [1] }],
+        [["ArrowUp"], proto._moveCaret, { args: [2] }],
+        [["ArrowDown"], proto._moveCaret, { args: [3] }],
       ])
     );
   }
@@ -128,7 +128,7 @@ class HighlightEditor extends AnnotationEditor {
     }
 
     if (!this.annotationElementId) {
-      this._uiManager.a11yAlert("pdfjs-editor-highlight-added-alert");
+      this._uiManager.a11yAlert(AnnotationEditor._l10nAlert.highlight);
     }
   }
 
@@ -959,7 +959,7 @@ class HighlightEditor extends AnnotationEditor {
       };
     }
 
-    const { color, quadPoints, inkLists, opacity } = data;
+    const { color, quadPoints, inkLists, outlines, opacity } = data;
     const editor = await super.deserialize(data, parent, uiManager);
 
     editor.color = Util.makeHexColor(...color);
@@ -988,9 +988,9 @@ class HighlightEditor extends AnnotationEditor {
       editor.#createOutlines();
       editor.#addToDrawLayer();
       editor.rotate(editor.rotation);
-    } else if (inkLists) {
+    } else if (inkLists || outlines) {
       editor.#isFreeHighlight = true;
-      const points = inkLists[0];
+      const points = (inkLists || outlines.points)[0];
       const point = {
         x: points[0] - pageX,
         y: pageHeight - (points[1] - pageY),

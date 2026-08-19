@@ -112,9 +112,8 @@ class MathMLSanitizer {
       this,
       "sanitizer",
       FeatureTest.isSanitizerSupported
-        ? // eslint-disable-next-line no-undef
-          new Sanitizer({
-            elements: [...MathMLElements].map(name => ({
+        ? new Sanitizer({
+            elements: Array.from(MathMLElements.keys(), name => ({
               name,
               namespace: MathMLNamespace,
             })),
@@ -350,12 +349,25 @@ class StructTreeLayerBuilder {
     }
   }
 
+  #collectIds(node, ids) {
+    if (!node) {
+      return;
+    }
+    if ("id" in node) {
+      ids.push(node.id);
+    }
+    for (const kid of node.children || []) {
+      this.#collectIds(kid, ids);
+    }
+  }
+
   #walk(node, parentNodes = []) {
     if (!node) {
       return null;
     }
 
     let element;
+    let visitChildren = true;
     if ("role" in node) {
       const { role } = node;
       if (MathMLElements.has(role)) {
@@ -389,18 +401,14 @@ class StructTreeLayerBuilder {
       }
       if (role === "Formula") {
         if (node.mathML && MathMLSanitizer.sanitizer) {
+          visitChildren = false;
           element.setHTML(node.mathML, {
             sanitizer: MathMLSanitizer.sanitizer,
           });
           // Hide all the corresponding content elements in the text layer in
           // order to avoid screen readers reading both the MathML and the
           // text content.
-          for (const { id } of node.children || []) {
-            if (!id) {
-              continue;
-            }
-            (this.#elementsToHideInTextLayer ||= []).push(id);
-          }
+          this.#collectIds(node, (this.#elementsToHideInTextLayer ||= []));
           // For now, we don't want to keep the alt text if there's valid
           // MathML (see https://github.com/w3c/mathml-aam/issues/37).
           // TODO: Revisit this decision in the future.
@@ -426,7 +434,7 @@ class StructTreeLayerBuilder {
         // Often there is only one content node so just set the values on the
         // parent node to avoid creating an extra span.
         this.#setAttributes(node.children[0], element);
-      } else {
+      } else if (visitChildren) {
         parentNodes.push(node);
         for (const kid of node.children) {
           element.append(this.#walk(kid, parentNodes));

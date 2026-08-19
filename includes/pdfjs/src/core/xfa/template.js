@@ -102,13 +102,12 @@ import {
   getStringOption,
   HTMLResult,
 } from "./utils.js";
-import { Util, warn } from "../../shared/util.js";
+import { SVG_NS, Util, warn } from "../../shared/util.js";
 import { getMetrics } from "./fonts.js";
 import { recoverJsURL } from "../core_utils.js";
 import { searchNode } from "./som.js";
 
 const TEMPLATE_NS_ID = NamespaceIds.template.id;
-const SVG_NS = "http://www.w3.org/2000/svg";
 
 // In case of lr-tb (and rl-tb) layouts, we try:
 //  - to put the container at the end of a line
@@ -3001,7 +3000,7 @@ class Field extends XFAObject {
     }
 
     if (!this.ui.imageEdit && ui.children?.[0] && this.h) {
-      borderDims = borderDims || getBorderDims(this.ui[$getExtra]());
+      borderDims ||= getBorderDims(this.ui[$getExtra]());
 
       let captionHeight = 0;
       if (this.caption && ["top", "bottom"].includes(this.caption.placement)) {
@@ -6132,7 +6131,7 @@ class Variables extends XFAObject {
 
 class TemplateNamespace {
   static [$buildXFAObject](name, attributes) {
-    if (TemplateNamespace.hasOwnProperty(name)) {
+    if (Object.hasOwn(TemplateNamespace, name)) {
       const node = TemplateNamespace[name](attributes);
       node[$setSetAttributes](attributes);
       return node;

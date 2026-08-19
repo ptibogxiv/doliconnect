@@ -13,8 +13,8 @@
  * limitations under the License.
  */
 
+import { FeatureTest, RenderingCancelledException } from "pdfjs-lib";
 import { RenderableView, RenderingStates } from "./renderable_view.js";
-import { RenderingCancelledException } from "pdfjs-lib";
 
 class BasePDFPageView extends RenderableView {
   #loadingId = null;
@@ -36,9 +36,15 @@ class BasePDFPageView extends RenderableView {
 
   enableOptimizedPartialRendering = false;
 
+  enableSelectionRendering = true;
+
+  imagesRightClickMinSize = -1;
+
   eventBus = null;
 
   id = null;
+
+  imageCoordinates = null;
 
   pageColors = null;
 
@@ -54,6 +60,10 @@ class BasePDFPageView extends RenderableView {
     this.renderingQueue = options.renderingQueue;
     this.enableOptimizedPartialRendering =
       options.enableOptimizedPartialRendering ?? false;
+    this.enableSelectionRendering =
+      options.enableSelectionRendering !== false &&
+      FeatureTest.isBackdropFilterSupported;
+    this.imagesRightClickMinSize = options.imagesRightClickMinSize ?? -1;
     this.minDurationToUpdateCanvas = options.minDurationToUpdateCanvas ?? 500;
   }
 
@@ -231,6 +241,9 @@ class BasePDFPageView extends RenderableView {
         this.renderTask = null;
         if (this.enableOptimizedPartialRendering) {
           this.recordedBBoxes ??= renderTask.recordedBBoxes;
+        }
+        if (this.imagesRightClickMinSize !== -1) {
+          this.imageCoordinates ??= this.pdfPage.imageCoordinates;
         }
       }
     }

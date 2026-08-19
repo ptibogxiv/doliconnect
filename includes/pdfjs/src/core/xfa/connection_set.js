@@ -144,7 +144,7 @@ class XsdConnection extends XFAObject {
 
 class ConnectionSetNamespace {
   static [$buildXFAObject](name, attributes) {
-    if (ConnectionSetNamespace.hasOwnProperty(name)) {
+    if (Object.hasOwn(ConnectionSetNamespace, name)) {
       return ConnectionSetNamespace[name](attributes);
     }
     return undefined;

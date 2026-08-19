@@ -96,7 +96,7 @@ limitations under the License.
     chrome.storage.local.get(localStorage, items => {
       Object.assign(localStorage, items);
 
-      var lastTime = parseInt(localStorage.telemetryLastTime) || 0;
+      var lastTime = parseInt(localStorage.telemetryLastTime, 10) || 0;
       var wasUpdated = didUpdateSinceLastCheck();
       if (!wasUpdated && Date.now() - lastTime < MINIMUM_TIME_BETWEEN_PING) {
         return;
@@ -150,7 +150,7 @@ limitations under the License.
    */
   function didUpdateSinceLastCheck() {
     var chromeVersion = /Chrome\/(\d+)\./.exec(navigator.userAgent);
-    chromeVersion = chromeVersion && chromeVersion[1];
+    chromeVersion &&= chromeVersion[1];
     if (!chromeVersion || localStorage.telemetryLastVersion === chromeVersion) {
       return false;
     }

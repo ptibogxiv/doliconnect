@@ -46,20 +46,11 @@ class Stream extends BaseStream {
   }
 
   getBytes(length) {
-    const bytes = this.bytes;
     const pos = this.pos;
-    const strEnd = this.end;
+    const endPos = !length ? this.end : Math.min(pos + length, this.end);
 
-    if (!length) {
-      this.pos = strEnd;
-      return bytes.subarray(pos, strEnd);
-    }
-    let end = pos + length;
-    if (end > strEnd) {
-      end = strEnd;
-    }
-    this.pos = end;
-    return bytes.subarray(pos, end);
+    this.pos = endPos;
+    return this.bytes.subarray(pos, endPos);
   }
 
   getByteRange(begin, end) {
@@ -88,15 +79,15 @@ class Stream extends BaseStream {
     return new Stream(
       this.bytes.buffer,
       this.start,
-      this.end - this.start,
-      this.dict.clone()
+      this.length,
+      this.dict?.clone()
     );
   }
 }
 
 class StringStream extends Stream {
-  constructor(str) {
-    super(stringToBytes(str));
+  constructor(str, dict = null) {
+    super(stringToBytes(str), NaN, NaN, dict);
   }
 }
 

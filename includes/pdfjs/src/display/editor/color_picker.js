@@ -13,9 +13,14 @@
  * limitations under the License.
  */
 
-import { AnnotationEditorParamsType, shadow } from "../../shared/util.js";
+import {
+  AnnotationEditorParamsType,
+  FeatureTest,
+  shadow,
+  Util,
+} from "../../shared/util.js";
+import { getRGBA, noContextMenu } from "../display_utils.js";
 import { KeyboardManager } from "./tools.js";
-import { noContextMenu } from "../display_utils.js";
 
 /**
  * ColorPicker class provides a color picker for the annotation editor.
@@ -50,21 +55,12 @@ class ColorPicker {
       this,
       "_keyboardManager",
       new KeyboardManager([
-        [
-          ["Escape", "mac+Escape"],
-          ColorPicker.prototype._hideDropdownFromKeyboard,
-        ],
-        [[" ", "mac+ "], ColorPicker.prototype._colorSelectFromKeyboard],
-        [
-          ["ArrowDown", "ArrowRight", "mac+ArrowDown", "mac+ArrowRight"],
-          ColorPicker.prototype._moveToNext,
-        ],
-        [
-          ["ArrowUp", "ArrowLeft", "mac+ArrowUp", "mac+ArrowLeft"],
-          ColorPicker.prototype._moveToPrevious,
-        ],
-        [["Home", "mac+Home"], ColorPicker.prototype._moveToBeginning],
-        [["End", "mac+End"], ColorPicker.prototype._moveToEnd],
+        [["Escape"], ColorPicker.prototype._hideDropdownFromKeyboard],
+        [["Space"], ColorPicker.prototype._colorSelectFromKeyboard],
+        [["ArrowDown", "ArrowRight"], ColorPicker.prototype._moveToNext],
+        [["ArrowUp", "ArrowLeft"], ColorPicker.prototype._moveToPrevious],
+        [["Home"], ColorPicker.prototype._moveToBeginning],
+        [["End"], ColorPicker.prototype._moveToEnd],
       ])
     );
   }
@@ -314,6 +310,8 @@ class ColorPicker {
 class BasicColorPicker {
   #input = null;
 
+  #hasAlpha = false;
+
   #editor = null;
 
   #uiManager = null;
@@ -334,17 +332,50 @@ class BasicColorPicker {
     if (this.#input) {
       return this.#input;
     }
-    const { editorType, colorType, color } = this.#editor;
+    const {
+      editorType,
+      colorType,
+      colorAndOpacityType,
+      opacityType,
+      color,
+      opacity,
+    } = this.#editor;
+    const hasAlpha = (this.#hasAlpha =
+      FeatureTest.isAlphaColorInputSupported && opacityType !== undefined);
     const input = (this.#input = document.createElement("input"));
     input.type = "color";
-    input.value = color || "#000000";
+    if (hasAlpha) {
+      input.setAttribute("alpha", "");
+      const alphaHex = Util.hexNums[Math.round((opacity ?? 1) * 255)];
+      input.value = (color || "#000000") + alphaHex;
+    } else {
+      input.value = color || "#000000";
+    }
     input.className = "basicColorPicker";
     input.tabIndex = 0;
     input.setAttribute("data-l10n-id", BasicColorPicker.#l10nColor[editorType]);
     input.addEventListener(
       "input",
       () => {
-        this.#uiManager.updateParams(colorType, input.value);
+        if (hasAlpha) {
+          const rgba = getRGBA(input.value);
+          if (!rgba) {
+            return;
+          }
+          const [r, g, b, op] = rgba;
+          const hex = Util.makeHexColor(r, g, b);
+          if (colorAndOpacityType !== undefined) {
+            this.#uiManager.updateParams(colorAndOpacityType, {
+              color: hex,
+              opacity: op,
+            });
+          } else {
+            this.#uiManager.updateParams(colorType, hex);
+            this.#uiManager.updateParams(opacityType, op);
+          }
+        } else {
+          this.#uiManager.updateParams(colorType, input.value);
+        }
       },
       { signal: this.#uiManager._signal }
     );
@@ -355,7 +386,22 @@ class BasicColorPicker {
     if (!this.#input) {
       return;
     }
-    this.#input.value = value;
+    if (this.#hasAlpha) {
+      // Reconstruct #RRGGBBAA using the editor's current opacity.
+      const alphaHex = Util.hexNums[Math.round(this.#editor.opacity * 255)];
+      this.#input.value = value + alphaHex;
+    } else {
+      this.#input.value = value;
+    }
+  }
+
+  updateOpacity(value) {
+    if (!this.#input || !this.#hasAlpha) {
+      return;
+    }
+    // Reconstruct #RRGGBBAA using the editor's current color.
+    const alphaHex = Util.hexNums[Math.round(value * 255)];
+    this.#input.value = this.#editor.color + alphaHex;
   }
 
   destroy() {

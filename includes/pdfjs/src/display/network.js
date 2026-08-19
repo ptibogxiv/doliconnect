@@ -140,7 +140,7 @@ class PDFNetworkStream extends BasePDFStream {
     const chunk = getArrayBuffer(xhr.response);
     if (xhrStatus === PARTIAL_CONTENT_RESPONSE) {
       const rangeHeader = xhr.getResponseHeader("Content-Range");
-      if (/bytes (\d+)-(\d+)\/(\d+)/.test(rangeHeader)) {
+      if (/bytes \d+-\d+\/\d+/.test(rangeHeader)) {
         pendingRequest.onDone(chunk);
       } else {
         warn(`Missing or invalid "Content-Range" header.`);
@@ -187,9 +187,6 @@ class PDFNetworkStreamReader extends BasePDFStreamReader {
 
   constructor(stream) {
     super(stream);
-    const { length } = stream._source;
-
-    this._contentLength = length;
     // Note that `XMLHttpRequest` doesn't support streaming, and range requests
     // will be enabled (if supported) in `this.#onHeadersReceived` below.
 
@@ -222,19 +219,15 @@ class PDFNetworkStreamReader extends BasePDFStreamReader {
         : []
     );
 
-    const { allowRangeRequests, suggestedLength } =
+    const { contentLength, isRangeSupported } =
       validateRangeRequestCapabilities({
         responseHeaders,
         isHttp: stream.isHttp,
         rangeChunkSize,
         disableRange,
       });
-
-    if (allowRangeRequests) {
-      this._isRangeSupported = true;
-    }
-    // Setting right content length.
-    this._contentLength = suggestedLength || this._contentLength;
+    this._contentLength = contentLength;
+    this._isRangeSupported = isRangeSupported;
 
     this._filename = extractFilenameFromHeader(responseHeaders);
 

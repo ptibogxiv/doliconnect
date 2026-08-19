@@ -13,7 +13,8 @@
  * limitations under the License.
  */
 
-import { MathClamp, shadow } from "../../shared/util.js";
+import { MathClamp } from "../../shared/math_clamp.js";
+import { shadow } from "../../shared/util.js";
 
 const dimConverters = {
   pt: x => x,

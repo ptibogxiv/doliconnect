@@ -100,14 +100,10 @@ class AnnotationStorage {
       this.resetModified();
     }
 
-    if (typeof this.onAnnotationEditor === "function") {
-      for (const value of this.#storage.values()) {
-        if (value instanceof AnnotationEditor) {
-          return;
-        }
-      }
-      this.onAnnotationEditor(null);
+    if (this.#storage.values().some(v => v instanceof AnnotationEditor)) {
+      return;
     }
+    this.onAnnotationEditor?.(null);
   }
 
   /**
@@ -135,9 +131,7 @@ class AnnotationStorage {
 
     if (value instanceof AnnotationEditor) {
       (this.#editorsMap ||= new Map()).set(value.annotationElementId, value);
-      if (typeof this.onAnnotationEditor === "function") {
-        this.onAnnotationEditor(value.constructor._type);
-      }
+      this.onAnnotationEditor?.(value.constructor._type);
     }
   }
 
@@ -157,18 +151,14 @@ class AnnotationStorage {
   #setModified() {
     if (!this.#modified) {
       this.#modified = true;
-      if (typeof this.onSetModified === "function") {
-        this.onSetModified();
-      }
+      this.onSetModified?.();
     }
   }
 
   resetModified() {
     if (this.#modified) {
       this.#modified = false;
-      if (typeof this.onResetModified === "function") {
-        this.onResetModified();
-      }
+      this.onResetModified?.();
     }
   }
 
@@ -251,9 +241,10 @@ class AnnotationStorage {
         continue;
       }
       const { type } = editorStats;
-      if (!typeToEditor.has(type)) {
-        typeToEditor.set(type, Object.getPrototypeOf(value).constructor);
-      }
+      typeToEditor.getOrInsertComputed(
+        type,
+        () => Object.getPrototypeOf(value).constructor
+      );
       stats ||= Object.create(null);
       const map = (stats[type] ||= new Map());
       for (const [key, val] of Object.entries(editorStats)) {
@@ -313,9 +304,15 @@ class AnnotationStorage {
         ids.push(value.annotationElementId);
       }
     }
+    let hash = "";
+    if (ids.length) {
+      const h = new MurmurHash3_64();
+      h.update(ids.join(","));
+      hash = h.hexdigest();
+    }
     return (this.#modifiedIds = {
       ids: new Set(ids),
-      hash: ids.join(","),
+      hash,
     });
   }
 

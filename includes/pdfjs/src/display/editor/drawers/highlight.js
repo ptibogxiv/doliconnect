@@ -13,9 +13,9 @@
  * limitations under the License.
  */
 
+import { BBOX_INIT, Util } from "../../../shared/util.js";
 import { FreeDrawOutline, FreeDrawOutliner } from "./freedraw.js";
 import { Outline } from "./outline.js";
-import { Util } from "../../../shared/util.js";
 
 class HighlightOutliner {
   #box;
@@ -41,7 +41,7 @@ class HighlightOutliner {
    *   the last point of the boxes.
    */
   constructor(boxes, borderWidth = 0, innerMargin = 0, isLTR = true) {
-    const minMax = [Infinity, Infinity, -Infinity, -Infinity];
+    const minMax = BBOX_INIT.slice();
 
     // We round the coordinates to slightly reduce the number of edges in the
     // final outlines.
@@ -342,10 +342,6 @@ class HighlightOutline extends Outline {
 
   get box() {
     return this.#box;
-  }
-
-  get classNamesForOutlining() {
-    return ["highlightOutline"];
   }
 }
 

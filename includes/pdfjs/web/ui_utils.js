@@ -13,13 +13,11 @@
  * limitations under the License.
  */
 
-import { MathClamp } from "pdfjs-lib";
-
 const DEFAULT_SCALE_VALUE = "auto";
 const DEFAULT_SCALE = 1.0;
 const DEFAULT_SCALE_DELTA = 1.1;
 const MIN_SCALE = 0.1;
-const MAX_SCALE = 10.0;
+const MAX_SCALE = 25.0;
 const UNKNOWN_SCALE = 0;
 const MAX_AUTO_SCALE = 1.25;
 const SCROLLBAR_PADDING = 40;
@@ -78,11 +76,8 @@ const AutoPrintRegExp = /\bprint\s*\(/;
  *   specifying the offset from the top left edge.
  * @param {number} [spot.left]
  * @param {number} [spot.top]
- * @param {boolean} [scrollMatches] - When scrolling search results into view,
- *   ignore elements that either: Contains marked content identifiers,
- *   or have the CSS-rule `overflow: hidden;` set. The default value is `false`.
  */
-function scrollIntoView(element, spot, scrollMatches = false) {
+function scrollIntoView(element, spot) {
   // Assuming offsetParent is available (it's not available when viewer is in
   // hidden iframe or object). We have to scroll: if the offsetParent is not set
   // producing the error. See also animationStarted.
@@ -94,11 +89,8 @@ function scrollIntoView(element, spot, scrollMatches = false) {
   let offsetY = element.offsetTop + element.clientTop;
   let offsetX = element.offsetLeft + element.clientLeft;
   while (
-    (parent.clientHeight === parent.scrollHeight &&
-      parent.clientWidth === parent.scrollWidth) ||
-    (scrollMatches &&
-      (parent.classList.contains("markedContent") ||
-        getComputedStyle(parent).overflow === "hidden"))
+    parent.clientHeight === parent.scrollHeight &&
+    parent.clientWidth === parent.scrollWidth
   ) {
     offsetY += parent.offsetTop;
     offsetX += parent.offsetLeft;
@@ -113,17 +105,7 @@ function scrollIntoView(element, spot, scrollMatches = false) {
       offsetY += spot.top;
     }
     if (spot.left !== undefined) {
-      if (scrollMatches) {
-        const elementWidth = element.getBoundingClientRect().width;
-        const padding = MathClamp(
-          (parent.clientWidth - elementWidth) / 2,
-          20,
-          400
-        );
-        offsetX += spot.left - padding;
-      } else {
-        offsetX += spot.left;
-      }
+      offsetX += spot.left;
       parent.scrollLeft = offsetX;
     }
   }
@@ -193,6 +175,7 @@ function parseQueryString(query) {
   return params;
 }
 
+// eslint-disable-next-line no-control-regex
 const InvisibleCharsRegExp = /[\x00-\x1F]/g;
 
 /**
@@ -284,14 +267,11 @@ function approximateFraction(x) {
       b = q;
     }
   }
-  let result;
   // Select closest of the neighbours to x.
   if (x_ - a / b < c / d - x_) {
-    result = x_ === x ? [a, b] : [b, a];
-  } else {
-    result = x_ === x ? [c, d] : [d, c];
+    return x_ === x ? [a, b] : [b, a];
   }
-  return result;
+  return x_ === x ? [c, d] : [d, c];
 }
 
 /**

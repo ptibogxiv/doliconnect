@@ -25,11 +25,17 @@ class BaseStream {
     }
   }
 
+  /**
+   * @returns {number}
+   */
   // eslint-disable-next-line getter-return
   get length() {
     unreachable("Abstract getter `length` accessed");
   }
 
+  /**
+   * @returns {boolean}
+   */
   // eslint-disable-next-line getter-return
   get isEmpty() {
     unreachable("Abstract getter `isEmpty` accessed");
@@ -43,6 +49,10 @@ class BaseStream {
     unreachable("Abstract method `getByte` called");
   }
 
+  /**
+   * @param {number | undefined} [length]
+   * @returns {Uint8Array}
+   */
   getBytes(length) {
     unreachable("Abstract method `getBytes` called");
   }
@@ -133,6 +143,10 @@ class BaseStream {
 
   makeSubStream(start, length, dict = null) {
     unreachable("Abstract method `makeSubStream` called");
+  }
+
+  clone() {
+    unreachable("Abstract method `clone` called");
   }
 
   /**

@@ -16,13 +16,14 @@
 import {
   AnnotationPrefix,
   makeArr,
-  stringToPDFString,
   stringToUTF8String,
   warn,
 } from "../shared/util.js";
-import { Dict, isName, Name, Ref, RefSetCache } from "./primitives.js";
-import { lookupNormalRect, stringToAsciiOrUTF16BE } from "./core_utils.js";
+import { Dict, isDict, isName, Name, Ref, RefSetCache } from "./primitives.js";
+import { lookupNormalRect, MissingDataException } from "./core_utils.js";
+import { stringToAsciiOrUTF16BE, stringToPDFString } from "./string_utils.js";
 import { BaseStream } from "./base_stream.js";
+import { FileSpec } from "./file_spec.js";
 import { NumberTree } from "./name_number_tree.js";
 
 const MAX_DEPTH = 40;
@@ -36,14 +37,31 @@ const StructElementType = {
 };
 
 class StructTreeRoot {
+  kidRefToPosition = undefined;
+
+  parentTree = null;
+
+  roleMap = new Map();
+
+  structParentIds = null;
+
   constructor(xref, rootDict, rootRef) {
     this.xref = xref;
     this.dict = rootDict;
     this.ref = rootRef instanceof Ref ? rootRef : null;
-    this.roleMap = new Map();
-    this.structParentIds = null;
-    this.kidRefToPosition = undefined;
-    this.parentTree = null;
+
+    const roleMap = rootDict.get("RoleMap");
+    if (roleMap instanceof Dict) {
+      for (const [key, value] of roleMap) {
+        if (value instanceof Name) {
+          this.roleMap.set(key, value.name);
+        }
+      }
+    }
+    const parentTree = rootDict.getRaw("ParentTree");
+    if (parentTree) {
+      this.parentTree = new NumberTree(parentTree, xref);
+    }
   }
 
   getKidPosition(kidRef) {
@@ -70,42 +88,16 @@ class StructTreeRoot {
       : -1;
   }
 
-  init() {
-    this.readRoleMap();
-    const parentTree = this.dict.get("ParentTree");
-    if (!parentTree) {
-      return;
-    }
-    this.parentTree = new NumberTree(parentTree, this.xref);
-  }
-
   #addIdToPage(pageRef, id, type) {
     if (!(pageRef instanceof Ref) || id < 0) {
       return;
     }
     this.structParentIds ||= new RefSetCache();
-    let ids = this.structParentIds.get(pageRef);
-    if (!ids) {
-      ids = [];
-      this.structParentIds.put(pageRef, ids);
-    }
-    ids.push([id, type]);
+    this.structParentIds.getOrPutComputed(pageRef, makeArr).push([id, type]);
   }
 
   addAnnotationIdToPage(pageRef, id) {
     this.#addIdToPage(pageRef, id, StructElementType.ANNOTATION);
-  }
-
-  readRoleMap() {
-    const roleMapDict = this.dict.get("RoleMap");
-    if (!(roleMapDict instanceof Dict)) {
-      return;
-    }
-    for (const [key, value] of roleMapDict) {
-      if (value instanceof Name) {
-        this.roleMap.set(key, value.name);
-      }
-    }
   }
 
   static async canCreateStructureTree({
@@ -540,11 +532,9 @@ class StructTreeRoot {
       return;
     }
 
-    let cachedParentDict = cache.get(parentRef);
-    if (!cachedParentDict) {
-      cachedParentDict = parentDict.clone();
-      cache.put(parentRef, cachedParentDict);
-    }
+    const cachedParentDict = cache.getOrPutComputed(parentRef, () =>
+      parentDict.clone()
+    );
     const parentKidsRaw = cachedParentDict.getRaw("K");
     let cachedParentKids =
       parentKidsRaw instanceof Ref ? cache.get(parentKidsRaw) : null;
@@ -594,27 +584,18 @@ class StructElementNode {
     }
     for (let af of AFs) {
       af = this.xref.fetchIfRef(af);
-      if (!(af instanceof Dict)) {
+      if (
+        !isDict(af, "Filespec") ||
+        !isName(af.get("AFRelationship"), "Supplement")
+      ) {
         continue;
       }
-      if (!isName(af.get("Type"), "Filespec")) {
-        continue;
-      }
-      if (!isName(af.get("AFRelationship"), "Supplement")) {
-        continue;
-      }
-      const ef = af.get("EF");
-      if (!(ef instanceof Dict)) {
-        continue;
-      }
-      const fileStream = ef.get("UF") || ef.get("F");
-      if (!(fileStream instanceof BaseStream)) {
-        continue;
-      }
-      if (!isName(fileStream.dict.get("Type"), "EmbeddedFile")) {
-        continue;
-      }
-      if (!isName(fileStream.dict.get("Subtype"), "application/mathml+xml")) {
+      const fileStream = FileSpec.pickPlatformItem(af.get("EF"));
+      if (
+        !(fileStream instanceof BaseStream) ||
+        !isDict(fileStream.dict, "EmbeddedFile") ||
+        !isName(fileStream.dict.get("Subtype"), "application/mathml+xml")
+      ) {
         continue;
       }
       // The default encoding for xml files is UTF-8.
@@ -912,9 +893,16 @@ class StructTreePage {
         obj.alt = stringToPDFString(alt);
       }
       if (obj.role === "Formula") {
-        const { mathML } = node;
-        if (mathML) {
-          obj.mathML = mathML;
+        try {
+          const { mathML } = node;
+          if (mathML) {
+            obj.mathML = mathML;
+          }
+        } catch (ex) {
+          if (ex instanceof MissingDataException) {
+            throw ex;
+          }
+          warn(`Ignoring mathML: "${ex}".`);
         }
       }
 

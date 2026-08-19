@@ -168,7 +168,7 @@ function renderEnumPref(shortDescription, prefName) {
   var select = wrapper.querySelector("select");
   select.onchange = function () {
     var pref = {};
-    pref[prefName] = parseInt(this.value);
+    pref[prefName] = parseInt(this.value, 10);
     storageArea.set(pref);
   };
   wrapper.querySelector("span").textContent = shortDescription;
@@ -192,7 +192,7 @@ function renderDefaultZoomValue(shortDescription) {
   document.getElementById("settings-boxes").append(wrapper);
 
   function renderPreference(value) {
-    value = value || "auto";
+    value ||= "auto";
     select.value = value;
     var customOption = select.querySelector("option.custom-zoom");
     if (select.selectedIndex === -1 && value) {

@@ -239,7 +239,7 @@ class TypeFaces extends XFAObject {
 
 class LocaleSetNamespace {
   static [$buildXFAObject](name, attributes) {
-    if (LocaleSetNamespace.hasOwnProperty(name)) {
+    if (Object.hasOwn(LocaleSetNamespace, name)) {
       return LocaleSetNamespace[name](attributes);
     }
     return undefined;

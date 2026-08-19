@@ -39,16 +39,39 @@ class Preferences extends BasePreferences {
 }
 
 class ExternalServices extends BaseExternalServices {
+  constructor() {
+    super();
+
+    if (typeof PDFJSDev === "undefined" || PDFJSDev.test("TESTING")) {
+      // For testing purposes.
+      Object.defineProperty(this, "reportText", {
+        value: data => {
+          window._reportTextData = data;
+        },
+      });
+    }
+  }
+
   async createL10n() {
     return new GenericL10n(AppOptions.get("localeProperties")?.lang);
   }
 
   createScripting() {
-    return new GenericScripting(AppOptions.get("sandboxBundleSrc"));
+    return new GenericScripting(
+      AppOptions.get("sandboxBundleSrc"),
+      AppOptions.get("wasmUrl")
+    );
   }
 
   createSignatureStorage(eventBus, signal) {
     return new SignatureStorage(eventBus, signal);
+  }
+
+  createSignatureVerifier() {
+    if (typeof PDFJSDev === "undefined" || PDFJSDev.test("TESTING")) {
+      return new FakeSignatureVerifier();
+    }
+    return null;
   }
 }
 
@@ -148,6 +171,35 @@ if (typeof PDFJSDev === "undefined" || PDFJSDev.test("TESTING")) {
 
     toggleService(_name, enabled) {
       this.enableGuessAltText = enabled;
+    }
+  };
+
+  // eslint-disable-next-line no-var
+  var FakeSignatureVerifier = class {
+    async verify(signature) {
+      if (signature.signatureType === null) {
+        return {
+          status: "unknown",
+          errorCode: "SUBFILTER_NOT_SUPPORTED",
+          message: signature.subFilter,
+          certificate: null,
+          documentModifiedAfterSigning: !signature.coversWholeDocument,
+          modificationsAfterSignature: signature.modificationsAfterSignature,
+        };
+      }
+
+      return {
+        status: "unknown",
+        errorCode: "EMPTY_RESPONSE",
+        message: null,
+        certificate: null,
+        documentModifiedAfterSigning: !signature.coversWholeDocument,
+        modificationsAfterSignature: signature.modificationsAfterSignature,
+      };
+    }
+
+    async viewCertificate(certificate) {
+      return false;
     }
   };
 }

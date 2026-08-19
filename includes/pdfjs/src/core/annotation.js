@@ -19,12 +19,13 @@ import {
   AnnotationEditorType,
   AnnotationFieldFlag,
   AnnotationFlag,
+  AnnotationRenditionOperation,
   AnnotationReplyType,
   AnnotationType,
   assert,
   BASELINE_FACTOR,
-  FeatureTest,
-  getModificationDate,
+  BBOX_INIT,
+  F32_BBOX_INIT,
   info,
   isArrayEqual,
   LINE_DESCENT_FACTOR,
@@ -32,7 +33,6 @@ import {
   OPS,
   RenderingIntentFlag,
   shadow,
-  stringToPDFString,
   unreachable,
   Util,
   warn,
@@ -41,6 +41,7 @@ import {
   collectActions,
   escapeString,
   getInheritableProperty,
+  getModificationDate,
   getParentToUpdate,
   getRotationMatrix,
   IDENTITY_MATRIX,
@@ -48,11 +49,10 @@ import {
   lookupMatrix,
   lookupNormalRect,
   lookupRect,
+  MissingDataException,
   numberToString,
   RESOURCES_KEYS_OPERATOR_LIST,
   RESOURCES_KEYS_TEXT_CONTENT,
-  stringToAsciiOrUTF16BE,
-  stringToUTF16String,
 } from "./core_utils.js";
 import {
   createDefaultAppearance,
@@ -63,15 +63,23 @@ import {
 } from "./default_appearance.js";
 import { DateFormats, TimeFormats } from "../shared/scripting_utils.js";
 import { Dict, isName, isRefsEqual, Name, Ref, RefSet } from "./primitives.js";
-import { Stream, StringStream } from "./stream.js";
+import {
+  stringToAsciiOrUTF16BE,
+  stringToPDFString,
+  stringToUTF16String,
+} from "./string_utils.js";
 import { BaseStream } from "./base_stream.js";
 import { bidi } from "./bidi.js";
 import { Catalog } from "./catalog.js";
 import { ColorSpaceUtils } from "./colorspace_utils.js";
+import { createImage } from "./editor/pdf_images.js";
 import { FileSpec } from "./file_spec.js";
+import { getSoundFormat } from "./sound.js";
 import { JpegStream } from "./jpeg_stream.js";
 import { ObjectLoader } from "./object_loader.js";
 import { OperatorList } from "./operator_list.js";
+import { parseMarkedContentProps } from "./evaluator_utils.js";
+import { StringStream } from "./stream.js";
 import { XFAFactory } from "./xfa/factory.js";
 
 class AnnotationFactory {
@@ -97,6 +105,7 @@ class AnnotationFactory {
         globalColorSpaceCache,
       ]) => ({
         pdfManager,
+        catalog: pdfManager.pdfDocument.catalog,
         acroForm: acroForm instanceof Dict ? acroForm : Dict.empty,
         xfaDatasets,
         structTreeRoot,
@@ -277,6 +286,15 @@ class AnnotationFactory {
       case "FileAttachment":
         return new FileAttachmentAnnotation(parameters);
 
+      case "RichMedia":
+        return new RichMediaAnnotation(parameters);
+
+      case "Screen":
+        return new ScreenAnnotation(parameters);
+
+      case "Sound":
+        return new SoundAnnotation(parameters);
+
       default:
         if (!collectFields) {
           if (!subtype) {
@@ -301,10 +319,7 @@ class AnnotationFactory {
       const pageRef = annotDict.getRaw("P");
       if (pageRef instanceof Ref) {
         try {
-          const pageIndex = await pdfManager.ensureCatalog("getPageIndex", [
-            pageRef,
-          ]);
-          return pageIndex;
+          return await pdfManager.ensureCatalog("getPageIndex", [pageRef]);
         } catch (ex) {
           info(`_getPageIndex -- not a valid page reference: "${ex}".`);
         }
@@ -346,7 +361,7 @@ class AnnotationFactory {
         continue;
       }
       imagePromises ||= new Map();
-      imagePromises.set(bitmapId, StampAnnotation.createImage(bitmap, xref));
+      imagePromises.set(bitmapId, createImage(bitmap, xref));
     }
 
     return imagePromises;
@@ -354,12 +369,12 @@ class AnnotationFactory {
 
   static async saveNewAnnotations(
     evaluator,
+    xref,
     task,
     annotations,
     imagePromises,
     changes
   ) {
-    const xref = evaluator.xref;
     let baseFontRef;
     const promises = [];
     const { isOffscreenCanvasSupported } = evaluator.options;
@@ -422,7 +437,10 @@ class AnnotationFactory {
             changes.put(imageRef, {
               data: imageStream,
             });
-            image.imageStream = image.smaskStream = null;
+            image.imageStream = null;
+            image.imageRenderStream = null;
+            image.smaskStream = null;
+            image.smaskRenderStream = null;
           }
           promises.push(
             StampAnnotation.createNewAnnotation(xref, annotation, changes, {
@@ -517,12 +535,23 @@ class AnnotationFactory {
             ? await imagePromises?.get(annotation.bitmapId)
             : null;
           if (image?.imageStream) {
-            const { imageStream, smaskStream } = image;
-            if (smaskStream) {
-              imageStream.dict.set("SMask", smaskStream);
+            const {
+              imageStream,
+              imageRenderStream,
+              smaskStream,
+              smaskRenderStream,
+            } = image;
+            const imageRef =
+              imageRenderStream ||
+              new JpegStream(imageStream, imageStream.length);
+            if (smaskStream || smaskRenderStream) {
+              imageRef.dict.set("SMask", smaskRenderStream || smaskStream);
             }
-            image.imageRef = new JpegStream(imageStream, imageStream.length);
-            image.imageStream = image.smaskStream = null;
+            image.imageRef = imageRef;
+            image.imageStream = null;
+            image.imageRenderStream = null;
+            image.smaskStream = null;
+            image.smaskRenderStream = null;
           }
           promises.push(
             StampAnnotation.createNewPrintAnnotation(
@@ -637,7 +666,7 @@ function getQuadPoints(dict, rect) {
 
 function getTransformMatrix(rect, bbox, matrix) {
   // 12.5.5: Algorithm: Appearance streams
-  const minMax = new Float32Array([Infinity, Infinity, -Infinity, -Infinity]);
+  const minMax = F32_BBOX_INIT.slice();
   Util.axialAlignedBoundingBox(bbox, matrix, minMax);
   const [minX, minY, maxX, maxY] = minMax;
   if (minX === maxX || minY === maxY) {
@@ -659,6 +688,10 @@ function getTransformMatrix(rect, bbox, matrix) {
 }
 
 class Annotation {
+  appearance = null;
+
+  _oc = undefined;
+
   constructor(params) {
     const { annotationGlobals, dict, orphanFields, ref, subtype, xref } =
       params;
@@ -675,7 +708,7 @@ class Annotation {
     this.setColor(dict.getArray("C"));
     this.setBorderStyle(dict);
     this.setAppearance(dict);
-    this.setOptionalContent(dict);
+    this.#setOptionalContent(xref, dict);
 
     const MK = dict.get("MK");
     this.setBorderAndBackgroundColors(MK);
@@ -706,6 +739,7 @@ class Annotation {
       hasAppearance: !!this.appearance,
       id: params.id,
       modificationDate: this.modificationDate,
+      oc: this._oc,
       rect: this.rectangle,
       subtype,
       hasOwnCanvas: false,
@@ -757,6 +791,14 @@ class Annotation {
       params.evaluatorOptions.isOffscreenCanvasSupported;
     this._fallbackFontDict = null;
     this._needAppearances = false;
+  }
+
+  _getOperatorListNoAppearance() {
+    return {
+      opList: new OperatorList(),
+      separateForm: false,
+      separateCanvas: false,
+    };
   }
 
   /**
@@ -1104,14 +1146,18 @@ class Annotation {
       }
     } else if (borderStyle.has("Border")) {
       const array = borderStyle.getArray("Border");
-      if (Array.isArray(array) && array.length >= 3) {
-        this.borderStyle.setHorizontalCornerRadius(array[0]);
-        this.borderStyle.setVerticalCornerRadius(array[1]);
-        this.borderStyle.setWidth(array[2], this.rectangle);
+      if (Array.isArray(array)) {
+        if (array.length >= 3) {
+          this.borderStyle.setHorizontalCornerRadius(array[0]);
+          this.borderStyle.setVerticalCornerRadius(array[1]);
+          this.borderStyle.setWidth(array[2], this.rectangle);
 
-        if (array.length === 4) {
-          // Dash array available
-          this.borderStyle.setDashArray(array[3], /* forceStyle = */ true);
+          if (array.length === 4) {
+            // Dash array available
+            this.borderStyle.setDashArray(array[3], /* forceStyle = */ true);
+          }
+        } else if (array.length === 0) {
+          this.borderStyle.setWidth(0);
         }
       }
     } else {
@@ -1132,8 +1178,6 @@ class Annotation {
    * @param {Dict} dict - The annotation's data dictionary
    */
   setAppearance(dict) {
-    this.appearance = null;
-
     const appearanceStates = dict.get("AP");
     if (!(appearanceStates instanceof Dict)) {
       return;
@@ -1152,7 +1196,7 @@ class Annotation {
     // In case the normal appearance is a dictionary, the `AS` entry provides
     // the key of the stream in this dictionary.
     const as = dict.get("AS");
-    if (!(as instanceof Name) || !normalAppearanceState.has(as.name)) {
+    if (!(as instanceof Name)) {
       return;
     }
     const appearance = normalAppearanceState.get(as.name);
@@ -1161,14 +1205,20 @@ class Annotation {
     }
   }
 
-  setOptionalContent(dict) {
-    this.oc = null;
-
-    const oc = dict.get("OC");
-    if (oc instanceof Name) {
-      warn("setOptionalContent: Support for /Name-entry is not implemented.");
-    } else if (oc instanceof Dict) {
-      this.oc = oc;
+  #setOptionalContent(xref, dict) {
+    if (dict.has("OC")) {
+      try {
+        this._oc = parseMarkedContentProps(
+          xref,
+          dict.get("OC"),
+          /* resources = */ null
+        );
+      } catch (ex) {
+        if (ex instanceof MissingDataException) {
+          throw ex;
+        }
+        warn(`#setOptionalContent: ${ex}`);
+      }
     }
   }
 
@@ -1180,31 +1230,34 @@ class Annotation {
     return resources;
   }
 
+  // Whether the annotation should only be rendered on its own canvas when
+  // interactive forms are enabled. This is the case for checkbox/radio button
+  // widgets, whose checked/unchecked appearances are toggled in forms mode;
+  // other annotations (e.g. push buttons) keep their own canvas in any display
+  // mode.
+  get _ownCanvasRequiresForms() {
+    return false;
+  }
+
   async getOperatorList(evaluator, task, intent, annotationStorage) {
     const { hasOwnCanvas, id, rect } = this.data;
     let appearance = this.appearance;
     const isUsingOwnCanvas = !!(
-      hasOwnCanvas && intent & RenderingIntentFlag.DISPLAY
+      hasOwnCanvas &&
+      intent & RenderingIntentFlag.DISPLAY &&
+      (!this._ownCanvasRequiresForms ||
+        intent & RenderingIntentFlag.ANNOTATIONS_FORMS)
     );
     if (isUsingOwnCanvas && (this.width === 0 || this.height === 0)) {
       // Empty annotation, don't draw anything.
       this.data.hasOwnCanvas = false;
-      return {
-        opList: new OperatorList(),
-        separateForm: false,
-        separateCanvas: false,
-      };
+      return this._getOperatorListNoAppearance();
     }
     if (!appearance) {
       if (!isUsingOwnCanvas) {
-        return {
-          opList: new OperatorList(),
-          separateForm: false,
-          separateCanvas: false,
-        };
+        return this._getOperatorListNoAppearance();
       }
-      appearance = new StringStream("");
-      appearance.dict = new Dict();
+      appearance = new StringStream("", new Dict());
     }
 
     const appearanceDict = appearance.dict;
@@ -1212,7 +1265,12 @@ class Annotation {
       RESOURCES_KEYS_OPERATOR_LIST,
       appearance
     );
-    const bbox = lookupRect(appearanceDict.getArray("BBox"), [0, 0, 1, 1]);
+    const bbox = lookupRect(appearanceDict.getArray("BBox"), [
+      0,
+      0,
+      this.width,
+      this.height,
+    ]);
     const matrix = lookupMatrix(
       appearanceDict.getArray("Matrix"),
       IDENTITY_MATRIX
@@ -1221,13 +1279,7 @@ class Annotation {
 
     const opList = new OperatorList();
 
-    let optionalContent;
-    if (this.oc) {
-      optionalContent = await evaluator.parseMarkedContentProps(
-        this.oc,
-        /* resources = */ null
-      );
-    }
+    const optionalContent = this._oc;
     if (optionalContent !== undefined) {
       opList.addOp(OPS.beginMarkedContentProps, ["OC", optionalContent]);
     }
@@ -1280,6 +1332,8 @@ class Annotation {
 
     const text = [];
     const buffer = [];
+    let firstPositionX = Infinity;
+    let firstPositionY = Infinity;
     let firstPosition = null;
     const sink = {
       desiredSize: Math.Infinity,
@@ -1290,7 +1344,8 @@ class Annotation {
           if (item.str === undefined) {
             continue;
           }
-          firstPosition ||= item.transform.slice(-2);
+          firstPositionX = Math.min(firstPositionX, item.transform[4]);
+          firstPositionY = Math.min(firstPositionY, item.transform[5]);
           buffer.push(item.str);
           if (item.hasEOL) {
             text.push(buffer.join("").trimEnd());
@@ -1310,6 +1365,10 @@ class Annotation {
       viewBox,
     });
     this.reset();
+
+    if (firstPositionX !== Infinity) {
+      firstPosition = [firstPositionX, firstPositionY];
+    }
 
     if (buffer.length) {
       text.push(buffer.join("").trimEnd());
@@ -1449,6 +1508,25 @@ class Annotation {
       }
     }
     return fieldName.join(".");
+  }
+
+  /**
+   * Encode the embedded content's reference in the id so it can be
+   * re-fetched from the xref on demand (see `Catalog.attachmentContent`)
+   * instead of being cached where `cleanup` would wipe it. The file-spec is
+   * usually indirect; when it's inline its embedded-file stream still isn't
+   * (streams are always indirect), so fall back to that ref.
+   */
+  _getAttachmentId(fsDict, fsRef, annotationGlobals, isSound = false) {
+    if (!(fsDict instanceof Dict)) {
+      return undefined;
+    }
+    if (!(fsRef instanceof Ref)) {
+      fsRef = FileSpec.pickPlatformItem(fsDict.get("EF"), /* raw = */ true);
+    }
+    return fsRef instanceof Ref
+      ? annotationGlobals.catalog.getAttachmentIdForAnnotation(fsRef, isSound)
+      : undefined;
   }
 
   get width() {
@@ -1720,7 +1798,7 @@ class MarkupAnnotation extends Annotation {
     fillAlpha,
     pointsCallback,
   }) {
-    const bbox = (this.data.rect = [Infinity, Infinity, -Infinity, -Infinity]);
+    const bbox = (this.data.rect = BBOX_INIT.slice());
 
     const buffer = ["q"];
     if (extra) {
@@ -1759,8 +1837,10 @@ class MarkupAnnotation extends Annotation {
     const appearanceStreamDict = new Dict(xref);
     appearanceStreamDict.setIfName("Subtype", "Form");
 
-    const appearanceStream = new StringStream(buffer.join(" "));
-    appearanceStream.dict = appearanceStreamDict;
+    const appearanceStream = new StringStream(
+      buffer.join(" "),
+      appearanceStreamDict
+    );
     formDict.set("Fm0", appearanceStream);
 
     const gsDict = new Dict(xref);
@@ -1781,8 +1861,7 @@ class MarkupAnnotation extends Annotation {
     appearanceDict.set("Resources", resources);
     appearanceDict.set("BBox", bbox);
 
-    this.appearance = new StringStream("/GS0 gs /Fm0 Do");
-    this.appearance.dict = appearanceDict;
+    this.appearance = new StringStream("/GS0 gs /Fm0 Do", appearanceDict);
 
     // This method is only called if there is no appearance for the annotation,
     // so `this.appearance` is not pushed yet in the `Annotation` constructor.
@@ -1964,11 +2043,12 @@ class WidgetAnnotation extends Annotation {
    */
   _decodeFormValue(formValue) {
     if (Array.isArray(formValue)) {
-      return formValue
-        .filter(item => typeof item === "string")
-        .map(item => stringToPDFString(item));
+      const arr = formValue
+        .map(item => this._decodeFormValue(item))
+        .filter(item => item !== null);
+      return arr.length > 0 ? arr : null;
     } else if (formValue instanceof Name) {
-      return stringToPDFString(formValue.name);
+      return formValue.name;
     } else if (typeof formValue === "string") {
       return stringToPDFString(formValue);
     }
@@ -2064,11 +2144,9 @@ class WidgetAnnotation extends Annotation {
       !this.data.noHTML &&
       !this.data.hasOwnCanvas
     ) {
-      return {
-        opList: new OperatorList(),
-        separateForm: true,
-        separateCanvas: false,
-      };
+      const list = this._getOperatorListNoAppearance();
+      list.separateForm = true;
+      return list;
     }
 
     if (!this._hasText) {
@@ -2101,13 +2179,7 @@ class WidgetAnnotation extends Annotation {
     const bbox = [0, 0, this.width, this.height];
     const transform = getTransformMatrix(this.data.rect, bbox, matrix);
 
-    let optionalContent;
-    if (this.oc) {
-      optionalContent = await evaluator.parseMarkedContentProps(
-        this.oc,
-        /* resources = */ null
-      );
-    }
+    const optionalContent = this._oc;
     if (optionalContent !== undefined) {
       opList.addOp(OPS.beginMarkedContentProps, ["OC", optionalContent]);
     }
@@ -2228,9 +2300,9 @@ class WidgetAnnotation extends Annotation {
     }
 
     const dict = new Dict(xref);
-    for (const key of originalDict.getKeys()) {
+    for (const [key, rawVal] of originalDict.getRawEntries()) {
       if (key !== "AP") {
-        dict.set(key, originalDict.getRaw(key));
+        dict.set(key, rawVal);
       }
     }
     if (flags !== undefined) {
@@ -2274,9 +2346,8 @@ class WidgetAnnotation extends Annotation {
       dict.set("AP", AP);
       AP.set("N", newRef);
 
-      const resources = this._getSaveFieldResources(xref);
-      const appearanceStream = new StringStream(appearance);
-      const appearanceDict = (appearanceStream.dict = new Dict(xref));
+      const resources = this._getSaveFieldResources(xref),
+        appearanceDict = new Dict(xref);
       appearanceDict.setIfName("Subtype", "Form");
       appearanceDict.set("Resources", resources);
       const bbox =
@@ -2284,6 +2355,8 @@ class WidgetAnnotation extends Annotation {
           ? [0, 0, this.width, this.height]
           : [0, 0, this.height, this.width];
       appearanceDict.set("BBox", bbox);
+
+      const appearanceStream = new StringStream(appearance, appearanceDict);
 
       const rotationMatrix = this.getRotationMatrix(annotationStorage);
       if (rotationMatrix !== IDENTITY_MATRIX) {
@@ -2442,8 +2515,8 @@ class WidgetAnnotation extends Annotation {
 
       if (this._fieldResources.mergedResources.has("Font")) {
         const oldFont = this._fieldResources.mergedResources.get("Font");
-        for (const key of newFont.getKeys()) {
-          oldFont.set(key, newFont.getRaw(key));
+        for (const [key, rawVal] of newFont.getRawEntries()) {
+          oldFont.set(key, rawVal);
         }
       } else {
         this._fieldResources.mergedResources.set("Font", newFont);
@@ -2536,10 +2609,8 @@ class WidgetAnnotation extends Annotation {
         fontSize,
         totalWidth,
         totalHeight,
-        defaultHPadding,
-        defaultVPadding,
-        descent,
-        lineHeight,
+        alignment,
+        bidi(lines[0]).dir === "rtl",
         annotationStorage
       );
     }
@@ -2899,28 +2970,54 @@ class TextWidgetAnnotation extends WidgetAnnotation {
     fontSize,
     width,
     height,
-    hPadding,
-    vPadding,
-    descent,
-    lineHeight,
+    alignment,
+    isRTL,
     annotationStorage
   ) {
     const combWidth = width / this.data.maxLen;
     // Empty or it has a trailing whitespace.
     const colors = this.getBorderAndBackgroundAppearances(annotationStorage);
 
-    const buf = [];
-    const positions = font.getCharPositions(text);
-    for (const [start, end] of positions) {
-      buf.push(`(${escapeString(text.substring(start, end))}) Tj`);
+    const cells = font.getCharPositions(text).map(([start, end]) => {
+      const glyph = text.substring(start, end);
+      return { glyph, width: this._getTextWidth(glyph, font) * fontSize };
+    });
+    if (isRTL) {
+      cells.reverse();
     }
 
-    const renderedComb = buf.join(` ${numberToString(combWidth)} 0 Td `);
+    const textWidth = combWidth * cells.length;
+    let hShift = 0;
+    if (alignment === 1) {
+      hShift += Math.floor((width - textWidth) / (2 * combWidth)) * combWidth;
+    } else if (alignment === 2) {
+      hShift += width - textWidth;
+    }
+
+    const buf = [];
+    let previousWidth = 0;
+    for (let i = 0, ii = cells.length; i < ii; i++) {
+      const { glyph, width: glyphWidth } = cells[i];
+      const shift =
+        i === 0
+          ? (combWidth - glyphWidth) / 2
+          : combWidth + (previousWidth - glyphWidth) / 2;
+      buf.push(`${numberToString(shift)} 0 Td (${escapeString(glyph)}) Tj`);
+      previousWidth = glyphWidth;
+    }
+    const renderedComb = buf.join(" ");
+
+    // Vertically center the glyphs within the field: comb fields are mostly
+    // filled with uppercase letters and/or digits, hence we use the cap height
+    // (with a fallback on the ascent or the font size) to center them.
+    const vShift =
+      (height - (font.capHeight || font.ascent || 1) * fontSize) / 2;
+
     return (
       `/Tx BMC q ${colors}BT ` +
       defaultAppearance +
-      ` 1 0 0 1 ${numberToString(hPadding)} ${numberToString(
-        vPadding + descent
+      ` 1 0 0 1 ${numberToString(hShift)} ${numberToString(
+        vShift
       )} Tm ${renderedComb}` +
       " ET Q EMC"
     );
@@ -3035,7 +3132,7 @@ class TextWidgetAnnotation extends WidgetAnnotation {
     }
 
     if (startChunk < line.length) {
-      chunks.push(line.substring(startChunk, line.length));
+      chunks.push(line.substring(startChunk));
     }
 
     return chunks;
@@ -3102,18 +3199,56 @@ class ButtonWidgetAnnotation extends WidgetAnnotation {
     this.data.radioButton = isRadio && !isPushButton;
     this.data.pushButton = isPushButton;
     this.data.isTooltipOnly = false;
+    this.data.hasOwnCanvas = true;
+    this.data.noHTML = false;
 
     if (this.data.checkBox) {
       this._processCheckBox(params);
     } else if (this.data.radioButton) {
       this._processRadioButton(params);
     } else if (this.data.pushButton) {
-      this.data.hasOwnCanvas = true;
-      this.data.noHTML = false;
       this._processPushButton(params);
     } else {
       warn("Invalid field flags for button widget annotation");
     }
+  }
+
+  get _ownCanvasRequiresForms() {
+    return this.data.checkBox || this.data.radioButton;
+  }
+
+  #getOperatorListForAppearance(
+    evaluator,
+    task,
+    intent,
+    annotationStorage,
+    rotation,
+    appearance
+  ) {
+    if (!appearance) {
+      return this._getOperatorListNoAppearance();
+    }
+
+    const savedAppearance = this.appearance;
+    const savedMatrix = lookupMatrix(
+      appearance.dict.getArray("Matrix"),
+      IDENTITY_MATRIX
+    );
+
+    if (rotation) {
+      appearance.dict.set("Matrix", this.getRotationMatrix(annotationStorage));
+    }
+
+    this.appearance = appearance;
+    const operatorList = super.getOperatorList(
+      evaluator,
+      task,
+      intent,
+      annotationStorage
+    );
+    this.appearance = savedAppearance;
+    appearance.dict.set("Matrix", savedMatrix);
+    return operatorList;
   }
 
   async getOperatorList(evaluator, task, intent, annotationStorage) {
@@ -3125,6 +3260,45 @@ class ButtonWidgetAnnotation extends WidgetAnnotation {
         false, // we use normalAppearance to render the button
         annotationStorage
       );
+    }
+
+    if (
+      intent & RenderingIntentFlag.DISPLAY &&
+      intent & RenderingIntentFlag.ANNOTATIONS_FORMS &&
+      (this.data.checkBox || this.data.radioButton)
+    ) {
+      // Tag the dedicated canvas with the state it represents. The appearance
+      // may start with other operators (e.g. an optional content marked-content
+      // sequence), so target the `beginAnnotation` operator directly rather
+      // than assuming it's the first one.
+      const setCanvasName = (operatorList, name) => {
+        const index = operatorList.fnArray.indexOf(OPS.beginAnnotation);
+        if (index !== -1) {
+          operatorList.argsArray[index].push(name);
+        }
+      };
+      const checked = await this.#getOperatorListForAppearance(
+        evaluator,
+        task,
+        intent,
+        annotationStorage,
+        null,
+        this.checkedAppearance
+      );
+      setCanvasName(checked.opList, "checked");
+      const unchecked = await this.#getOperatorListForAppearance(
+        evaluator,
+        task,
+        intent,
+        annotationStorage,
+        null,
+        this.uncheckedAppearance
+      );
+      setCanvasName(unchecked.opList, "unchecked");
+      checked.opList.addOpList(unchecked.opList);
+      checked.separateForm ||= unchecked.separateForm;
+      checked.separateCanvas ||= unchecked.separateCanvas;
+      return checked;
     }
 
     let value = null;
@@ -3141,49 +3315,20 @@ class ButtonWidgetAnnotation extends WidgetAnnotation {
       return super.getOperatorList(evaluator, task, intent, annotationStorage);
     }
 
-    if (value === null || value === undefined) {
-      // There is no default appearance so use the one derived
-      // from the field value.
-      value = this.data.checkBox
-        ? this.data.fieldValue === this.data.exportValue
-        : this.data.fieldValue === this.data.buttonValue;
-    }
+    // There is no default appearance, `value === null || value === undefined`,
+    // so use the one derived from the field value.
+    value ??= this.data.checkBox
+      ? this.data.fieldValue === this.data.exportValue
+      : this.data.fieldValue === this.data.buttonValue;
 
-    const appearance = value
-      ? this.checkedAppearance
-      : this.uncheckedAppearance;
-    if (appearance) {
-      const savedAppearance = this.appearance;
-      const savedMatrix = lookupMatrix(
-        appearance.dict.getArray("Matrix"),
-        IDENTITY_MATRIX
-      );
-
-      if (rotation) {
-        appearance.dict.set(
-          "Matrix",
-          this.getRotationMatrix(annotationStorage)
-        );
-      }
-
-      this.appearance = appearance;
-      const operatorList = super.getOperatorList(
-        evaluator,
-        task,
-        intent,
-        annotationStorage
-      );
-      this.appearance = savedAppearance;
-      appearance.dict.set("Matrix", savedMatrix);
-      return operatorList;
-    }
-
-    // No appearance
-    return {
-      opList: new OperatorList(),
-      separateForm: false,
-      separateCanvas: false,
-    };
+    return this.#getOperatorListForAppearance(
+      evaluator,
+      task,
+      intent,
+      annotationStorage,
+      rotation,
+      value ? this.checkedAppearance : this.uncheckedAppearance
+    );
   }
 
   async save(evaluator, task, annotationStorage, changes) {
@@ -3235,7 +3380,7 @@ class ButtonWidgetAnnotation extends WidgetAnnotation {
       value: value ? this.data.exportValue : "",
     };
 
-    const name = Name.get(value ? this.data.exportValue : "Off");
+    const name = Name.get(value ? this._onStateName : "Off");
     this.setValue(dict, name, evaluator.xref, changes);
 
     dict.set("AS", name);
@@ -3295,7 +3440,7 @@ class ButtonWidgetAnnotation extends WidgetAnnotation {
       value: value ? this.data.buttonValue : "",
     };
 
-    const name = Name.get(value ? this.data.buttonValue : "Off");
+    const name = Name.get(value ? this._onStateName : "Off");
     if (value) {
       this.setValue(dict, name, evaluator.xref, changes);
     }
@@ -3369,21 +3514,119 @@ class ButtonWidgetAnnotation extends WidgetAnnotation {
 
     appearanceStreamDict.set("Resources", resources);
 
-    this.checkedAppearance = new StringStream(appearance);
-    this.checkedAppearance.dict = appearanceStreamDict;
+    this.checkedAppearance = new StringStream(appearance, appearanceStreamDict);
 
     this._streams.push(this.checkedAppearance);
   }
 
-  _processCheckBox(params) {
-    const customAppearance = params.dict.get("AP");
-    if (!(customAppearance instanceof Dict)) {
-      return;
+  _getOnStateName(dict) {
+    const appearanceStates = dict.get("AP");
+    if (!(appearanceStates instanceof Dict)) {
+      return null;
+    }
+    const normalAppearance = appearanceStates.get("N");
+    if (!(normalAppearance instanceof Dict)) {
+      return null;
+    }
+    for (const key of normalAppearance.getKeys()) {
+      if (key !== "Off") {
+        return key;
+      }
+    }
+    return null;
+  }
+
+  _getExportValueForOptIndex(index, opt, xref) {
+    if (Number.isInteger(index) && index >= 0 && index < opt.length) {
+      const value = this._decodeFormValue(xref.fetchIfRef(opt[index]));
+      if (typeof value === "string") {
+        return value;
+      }
+    }
+    return null;
+  }
+
+  _getOptInfo(dict, onState, opt, xref) {
+    if (!Array.isArray(opt)) {
+      return null;
+    }
+    const stateToIndex = new Map();
+    let currentIndex = null;
+
+    const fieldParent = dict.get("Parent");
+    const kids = fieldParent instanceof Dict ? fieldParent.get("Kids") : null;
+    if (Array.isArray(kids)) {
+      for (let i = 0, ii = Math.min(kids.length, opt.length); i < ii; i++) {
+        const kid = kids[i];
+        if (kid instanceof Ref && isRefsEqual(kid, this.ref)) {
+          currentIndex = i;
+        }
+
+        const kidDict = xref.fetchIfRef(kid);
+        if (!(kidDict instanceof Dict)) {
+          continue;
+        }
+        if (kidDict === dict) {
+          currentIndex = i;
+        }
+
+        const kidOnState = this._getOnStateName(kidDict);
+        if (typeof kidOnState === "string" && !stateToIndex.has(kidOnState)) {
+          stateToIndex.set(kidOnState, i);
+        }
+      }
+    } else if (opt.length === 1 && typeof onState === "string") {
+      // A single widget is sometimes used as its own field dictionary.
+      currentIndex = 0;
+      stateToIndex.set(onState, 0);
     }
 
-    const normalAppearance = customAppearance.get("N");
+    return { currentIndex, opt, stateToIndex };
+  }
+
+  // The appearance state is a Name; its real export value can be overridden by
+  // the "Opt" array, whose entries are ordered like the field's "Kids".
+  _getExportValue(state, optInfo, xref) {
+    if (!optInfo || typeof state !== "string" || state === "Off") {
+      return state;
+    }
+
+    if (state === this._onStateName) {
+      const exportValue = this._getExportValueForOptIndex(
+        optInfo.currentIndex,
+        optInfo.opt,
+        xref
+      );
+      if (exportValue !== null) {
+        return exportValue;
+      }
+    }
+
+    if (optInfo.stateToIndex.has(state)) {
+      const exportValue = this._getExportValueForOptIndex(
+        optInfo.stateToIndex.get(state),
+        optInfo.opt,
+        xref
+      );
+      if (exportValue !== null) {
+        return exportValue;
+      }
+    }
+
+    const index = parseInt(state, 10);
+    if (Number.isInteger(index) && String(index) === state) {
+      return this._getExportValueForOptIndex(index, optInfo.opt, xref) || state;
+    }
+    return state;
+  }
+
+  _processCheckBox(params) {
+    const customAppearance = params.dict.get("AP");
+    let normalAppearance =
+      customAppearance instanceof Dict ? customAppearance.get("N") : null;
     if (!(normalAppearance instanceof Dict)) {
-      return;
+      // Synthesize a default appearance below when the field defines none.
+      normalAppearance = null;
     }
 
     // See https://bugzilla.mozilla.org/show_bug.cgi?id=1722036.
@@ -3398,7 +3641,10 @@ class ButtonWidgetAnnotation extends WidgetAnnotation {
         ? this.data.fieldValue
         : "Yes";
 
-    const exportValues = this._decodeFormValue(normalAppearance.getKeys());
+    // Don't decode the keys which are names.
+    const exportValues = normalAppearance
+      ? [...normalAppearance.getKeys()]
+      : [];
     if (exportValues.length === 0) {
       exportValues.push("Off", yes);
     } else if (exportValues.length === 1) {
@@ -3416,18 +3662,36 @@ class ButtonWidgetAnnotation extends WidgetAnnotation {
       exportValues.push("Off", otherYes);
     }
 
+    const onState = exportValues[1];
+    this._onStateName = onState;
+
+    const opt = getInheritableProperty({ dict: params.dict, key: "Opt" });
+    const optInfo = this._getOptInfo(params.dict, onState, opt, params.xref);
+    this.data.exportValue = this._getExportValue(onState, optInfo, params.xref);
+
     // Don't use a "V" entry pointing to a non-existent appearance state,
     // see e.g. bug1720411.pdf where it's an *empty* Name-instance.
-    if (!exportValues.includes(this.data.fieldValue)) {
+    if (
+      !exportValues.includes(this.data.fieldValue) &&
+      this.data.fieldValue !== this.data.exportValue
+    ) {
       this.data.fieldValue = "Off";
     }
+    this.data.fieldValue = this._getExportValue(
+      this.data.fieldValue,
+      optInfo,
+      params.xref
+    );
+    this.data.defaultFieldValue = this._getExportValue(
+      this.data.defaultFieldValue,
+      optInfo,
+      params.xref
+    );
 
-    this.data.exportValue = exportValues[1];
-
-    const checkedAppearance = normalAppearance.get(this.data.exportValue);
+    const checkedAppearance = normalAppearance?.get(onState);
     this.checkedAppearance =
       checkedAppearance instanceof BaseStream ? checkedAppearance : null;
-    const uncheckedAppearance = normalAppearance.get("Off");
+    const uncheckedAppearance = normalAppearance?.get("Off");
     this.uncheckedAppearance =
       uncheckedAppearance instanceof BaseStream ? uncheckedAppearance : null;
 
@@ -3468,14 +3732,30 @@ class ButtonWidgetAnnotation extends WidgetAnnotation {
     if (!(normalAppearance instanceof Dict)) {
       return;
     }
+    let onState = null;
     for (const key of normalAppearance.getKeys()) {
       if (key !== "Off") {
-        this.data.buttonValue = this._decodeFormValue(key);
+        onState = key;
         break;
       }
     }
+    this._onStateName = onState;
 
-    const checkedAppearance = normalAppearance.get(this.data.buttonValue);
+    const opt = getInheritableProperty({ dict: params.dict, key: "Opt" });
+    const optInfo = this._getOptInfo(params.dict, onState, opt, params.xref);
+    this.data.buttonValue = this._getExportValue(onState, optInfo, params.xref);
+    this.data.fieldValue = this._getExportValue(
+      this.data.fieldValue,
+      optInfo,
+      params.xref
+    );
+    this.data.defaultFieldValue = this._getExportValue(
+      this.data.defaultFieldValue,
+      optInfo,
+      params.xref
+    );
+
+    const checkedAppearance = normalAppearance.get(onState);
     this.checkedAppearance =
       checkedAppearance instanceof BaseStream ? checkedAppearance : null;
     const uncheckedAppearance = normalAppearance.get("Off");
@@ -3824,6 +4104,8 @@ class ChoiceWidgetAnnotation extends WidgetAnnotation {
 }
 
 class SignatureWidgetAnnotation extends WidgetAnnotation {
+  _hasValueFromXFA = false;
+
   constructor(params) {
     super(params);
 
@@ -4003,14 +4285,13 @@ class FreeTextAnnotation extends MarkupAnnotation {
     // We want to be able to add mouse listeners to the annotation.
     this.data.noHTML = false;
 
-    const { annotationGlobals, evaluatorOptions, xref } = params;
+    const { annotationGlobals, xref } = params;
     this.setDefaultAppearance(params);
     this._hasAppearance = !!this.appearance;
 
     if (this._hasAppearance) {
       const { fontColor, fontSize } = parseAppearanceStream(
         this.appearance,
-        evaluatorOptions,
         xref,
         annotationGlobals.globalColorSpaceCache
       );
@@ -4155,10 +4436,7 @@ class FreeTextAnnotation extends MarkupAnnotation {
       totalWidth = Math.max(totalWidth, lineWidth);
     }
 
-    let hscale = 1;
-    if (totalWidth > w) {
-      hscale = w / totalWidth;
-    }
+    const hscale = totalWidth > w ? w / totalWidth : 1;
     let vscale = 1;
     const lineHeight = LINE_FACTOR * fontSize;
     const lineAscent = (LINE_FACTOR - LINE_DESCENT_FACTOR) * fontSize;
@@ -4220,10 +4498,7 @@ class FreeTextAnnotation extends MarkupAnnotation {
     appearanceStreamDict.set("Resources", resources);
     appearanceStreamDict.set("Matrix", [1, 0, 0, 1, -rect[0], -rect[1]]);
 
-    const ap = new StringStream(appearance);
-    ap.dict = appearanceStreamDict;
-
-    return ap;
+    return new StringStream(appearance, appearanceStreamDict);
   }
 }
 
@@ -4438,9 +4713,7 @@ class PolylineAnnotation extends MarkupAnnotation {
       const strokeAlpha = dict.get("CA");
 
       let fillColor = getRgbColor(dict.getArray("IC"), null);
-      if (fillColor) {
-        fillColor = getPdfColorArray(fillColor);
-      }
+      fillColor &&= getPdfColorArray(fillColor);
 
       let operator;
       if (fillColor) {
@@ -4460,7 +4733,7 @@ class PolylineAnnotation extends MarkupAnnotation {
 
       // If the /Rect-entry is empty/wrong, create a fallback rectangle so that
       // we get similar rendering/highlighting behaviour as in Adobe Reader.
-      const bbox = [Infinity, Infinity, -Infinity, -Infinity];
+      const bbox = BBOX_INIT.slice();
       for (let i = 0, ii = vertices.length; i < ii; i += 2) {
         Util.rectBoundingBox(
           vertices[i] - borderAdjust,
@@ -4518,19 +4791,19 @@ class InkAnnotation extends MarkupAnnotation {
     if (!Array.isArray(rawInkLists)) {
       return;
     }
-    for (let i = 0, ii = rawInkLists.length; i < ii; ++i) {
+    for (const rawInkList of rawInkLists) {
       // The raw ink lists array contains arrays of numbers representing
       // the alternating horizontal and vertical coordinates, respectively,
       // of each vertex. Convert this to an array of objects with x and y
       // coordinates.
-      if (!Array.isArray(rawInkLists[i])) {
+      if (!Array.isArray(rawInkList)) {
         continue;
       }
-      const inkList = new Float32Array(rawInkLists[i].length);
+      const inkList = new Float32Array(rawInkList.length);
       this.data.inkLists.push(inkList);
-      for (let j = 0, jj = rawInkLists[i].length; j < jj; j += 2) {
-        const x = xref.fetchIfRef(rawInkLists[i][j]),
-          y = xref.fetchIfRef(rawInkLists[i][j + 1]);
+      for (let j = 0, jj = rawInkList.length; j < jj; j += 2) {
+        const x = xref.fetchIfRef(rawInkList[j]),
+          y = xref.fetchIfRef(rawInkList[j + 1]);
         if (typeof x === "number" && typeof y === "number") {
           inkList[j] = x;
           inkList[j + 1] = y;
@@ -4548,7 +4821,7 @@ class InkAnnotation extends MarkupAnnotation {
 
       // If the /Rect-entry is empty/wrong, create a fallback rectangle so that
       // we get similar rendering/highlighting behaviour as in Adobe Reader.
-      const bbox = [Infinity, Infinity, -Infinity, -Infinity];
+      const bbox = BBOX_INIT.slice();
       for (const inkList of this.data.inkLists) {
         for (let i = 0, ii = inkList.length; i < ii; i += 2) {
           Util.rectBoundingBox(
@@ -4712,10 +4985,7 @@ class InkAnnotation extends MarkupAnnotation {
       appearanceStreamDict.set("Resources", resources);
     }
 
-    const ap = new StringStream(appearance);
-    ap.dict = appearanceStreamDict;
-
-    return ap;
+    return new StringStream(appearance, appearanceStreamDict);
   }
 
   static async createNewAppearanceStreamForHighlight(annotation, xref, params) {
@@ -4773,10 +5043,7 @@ class InkAnnotation extends MarkupAnnotation {
       r0.setIfName("Type", "ExtGState");
     }
 
-    const ap = new StringStream(appearance);
-    ap.dict = appearanceStreamDict;
-
-    return ap;
+    return new StringStream(appearance, appearanceStreamDict);
   }
 }
 
@@ -4792,16 +5059,7 @@ class HighlightAnnotation extends MarkupAnnotation {
 
     const quadPoints = (this.data.quadPoints = getQuadPoints(dict, null));
     if (quadPoints) {
-      const resources = this.appearance?.dict.get("Resources");
-
-      if (!this.appearance || !resources?.has("ExtGState")) {
-        if (this.appearance) {
-          // Workaround for cases where there's no /ExtGState-entry directly
-          // available, e.g. when the appearance stream contains a /XObject of
-          // the /Form-type, since that causes the highlighting to completely
-          // obscure the PDF content below it (fixes issue13242.pdf).
-          warn("HighlightAnnotation - ignoring built-in appearance stream.");
-        }
+      if (!this.appearance) {
         // Default color is yellow in Acrobat Reader
         const fillColor = getPdfColorArray(this.color, [1, 1, 0]);
         const fillAlpha = dict.get("CA");
@@ -4916,10 +5174,7 @@ class HighlightAnnotation extends MarkupAnnotation {
       r0.setIfName("Type", "ExtGState");
     }
 
-    const ap = new StringStream(appearance);
-    ap.dict = appearanceStreamDict;
-
-    return ap;
+    return new StringStream(appearance, appearanceStreamDict);
   }
 }
 
@@ -5078,82 +5333,6 @@ class StampAnnotation extends MarkupAnnotation {
     return !modifiedIds?.has(this.data.id);
   }
 
-  static async createImage(bitmap, xref) {
-    // TODO: when printing, we could have a specific internal colorspace
-    // (e.g. something like DeviceRGBA) in order avoid any conversion (i.e. no
-    // jpeg, no rgba to rgb conversion, etc...)
-
-    const { width, height } = bitmap;
-    const canvas = new OffscreenCanvas(width, height);
-    const ctx = canvas.getContext("2d", { alpha: true });
-
-    // Draw the image and get the data in order to extract the transparency.
-    ctx.drawImage(bitmap, 0, 0);
-    const data = ctx.getImageData(0, 0, width, height).data;
-    const buf32 = new Uint32Array(data.buffer);
-    const hasAlpha = buf32.some(
-      FeatureTest.isLittleEndian
-        ? x => x >>> 24 !== 0xff
-        : x => (x & 0xff) !== 0xff
-    );
-
-    if (hasAlpha) {
-      // Redraw the image on a white background in order to remove the thin gray
-      // line which can appear when exporting to jpeg.
-      ctx.fillStyle = "white";
-      ctx.fillRect(0, 0, width, height);
-      ctx.drawImage(bitmap, 0, 0);
-    }
-
-    const jpegBufferPromise = canvas
-      .convertToBlob({ type: "image/jpeg", quality: 1 })
-      .then(blob => blob.arrayBuffer());
-
-    const xobjectName = Name.get("XObject");
-    const imageName = Name.get("Image");
-    const image = new Dict(xref);
-    image.set("Type", xobjectName);
-    image.set("Subtype", imageName);
-    image.set("BitsPerComponent", 8);
-    image.setIfName("ColorSpace", "DeviceRGB");
-    image.setIfName("Filter", "DCTDecode");
-    image.set("BBox", [0, 0, width, height]);
-    image.set("Width", width);
-    image.set("Height", height);
-
-    let smaskStream = null;
-    if (hasAlpha) {
-      const alphaBuffer = new Uint8Array(buf32.length);
-      if (FeatureTest.isLittleEndian) {
-        for (let i = 0, ii = buf32.length; i < ii; i++) {
-          alphaBuffer[i] = buf32[i] >>> 24;
-        }
-      } else {
-        for (let i = 0, ii = buf32.length; i < ii; i++) {
-          alphaBuffer[i] = buf32[i] & 0xff;
-        }
-      }
-
-      const smask = new Dict(xref);
-      smask.set("Type", xobjectName);
-      smask.set("Subtype", imageName);
-      smask.set("BitsPerComponent", 8);
-      smask.setIfName("ColorSpace", "DeviceGray");
-      smask.set("Width", width);
-      smask.set("Height", height);
-
-      smaskStream = new Stream(alphaBuffer, 0, 0, smask);
-    }
-    const imageStream = new Stream(await jpegBufferPromise, 0, 0, image);
-
-    return {
-      imageStream,
-      smaskStream,
-      width,
-      height,
-    };
-  }
-
   static createNewDict(annotation, xref, { apRef, ap }) {
     const { date, oldAnnotation, rect, rotation, user } = annotation;
     const stamp = oldAnnotation || new Dict(xref);
@@ -5222,10 +5401,7 @@ class StampAnnotation extends MarkupAnnotation {
     appearanceStreamDict.set("BBox", rect);
     appearanceStreamDict.set("Length", appearance.length);
 
-    const ap = new StringStream(appearance);
-    ap.dict = appearanceStreamDict;
-
-    return ap;
+    return new StringStream(appearance, appearanceStreamDict);
   }
 
   static async createNewAppearanceStream(annotation, xref, params) {
@@ -5257,10 +5433,7 @@ class StampAnnotation extends MarkupAnnotation {
       appearanceStreamDict.set("Matrix", matrix);
     }
 
-    const ap = new StringStream(appearance);
-    ap.dict = appearanceStreamDict;
-
-    return ap;
+    return new StringStream(appearance, appearanceStreamDict);
   }
 }
 
@@ -5268,12 +5441,17 @@ class FileAttachmentAnnotation extends MarkupAnnotation {
   constructor(params) {
     super(params);
 
-    const { dict } = params;
-    const file = new FileSpec(dict.get("FS"));
+    const { annotationGlobals, dict } = params;
+    const fsDict = dict.get("FS");
 
     this.data.hasOwnCanvas = this.data.noRotate;
     this.data.noHTML = false;
-    this.data.file = file.serializable;
+    this.data.fileId = this._getAttachmentId(
+      fsDict,
+      dict.getRaw("FS"),
+      annotationGlobals
+    );
+    this.data.file = new FileSpec(fsDict).serializable;
 
     const name = dict.get("Name");
     this.data.name =
@@ -5284,6 +5462,419 @@ class FileAttachmentAnnotation extends MarkupAnnotation {
       typeof fillAlpha === "number" && fillAlpha >= 0 && fillAlpha <= 1
         ? fillAlpha
         : null;
+  }
+}
+
+/**
+ * Shared base for annotations that play an embedded audio/video clip:
+ * `RichMedia` (via `RichMediaContent`) and `Screen` (via a rendition action).
+ * Both resolve a single embedded media file and expose it identically through
+ * `data.richMedia`, so the display layer can render them with one element.
+ */
+class MediaAnnotation extends Annotation {
+  // The MIME types we can build a `<video>`/`<audio>` element for.
+  static #MEDIA_MIME_TYPE_RE = /^(?:video|audio)\//;
+
+  constructor(params) {
+    super(params);
+
+    // No HTML element until a playable asset is found below by the subclass.
+    this.data.noHTML = true;
+  }
+
+  /**
+   * Expose a resolved embedded media asset as `data.richMedia`.
+   *
+   * @param {Object} asset
+   * @param {Ref | null} asset.assetRef
+   *   Reference to the file-spec dictionary (or, for an inline file-spec, the
+   *   embedded-file stream); used to lazily fetch the bytes on the main thread.
+   * @param {Dict} asset.assetDict
+   *   The file-spec (or stream) dictionary, used to locate the embedded file
+   *   when `assetRef` isn't itself a reference.
+   * @param {string} asset.filename
+   * @param {string} asset.contentType
+   * @param {boolean} [asset.wrapSound]
+   *   When set, the embedded bytes are raw PDF sound samples that the catalog
+   *   wraps in a WAV container when fetched (see `soundStreamToWav`).
+   * @param {Object} annotationGlobals
+   */
+  _setMediaData(
+    { assetRef, assetDict, filename, contentType, wrapSound = false },
+    annotationGlobals
+  ) {
+    this.data.noHTML = false;
+    this.data.richMedia = {
+      fileId: this._getAttachmentId(
+        assetDict,
+        assetRef,
+        annotationGlobals,
+        wrapSound
+      ),
+      filename,
+      contentType,
+    };
+  }
+
+  /**
+   * Determine the MIME type used to build the `<video>`/`<audio>` element.
+   *
+   * When the media dictionary provides an explicit type (e.g. a MediaClip
+   * `/CT`), it's honored if it names an audio/video type. Otherwise, per the
+   * spec (ISO 32000-2, 7.11.4) an embedded file stream declares its MIME type
+   * through its own `/Subtype`, with characters not allowed in a name
+   * hex-escaped (e.g. `/video#2Fmp4` -> `video/mp4`). We trust that when it
+   * names an audio/video type, and otherwise fall back to mapping the filename
+   * extension. Returns `null` when the asset isn't a recognized audio/video
+   * type (e.g. Flash `.swf` or 3D models), so we don't build a player that
+   * can't play anything.
+   *
+   * @param {Dict} assetDict
+   * @param {string} filename
+   * @param {string | null} [contentType]
+   * @returns {string | null}
+   */
+  static _getContentType(assetDict, filename, contentType = null) {
+    if (
+      typeof contentType === "string" &&
+      MediaAnnotation.#MEDIA_MIME_TYPE_RE.test(contentType)
+    ) {
+      return contentType;
+    }
+
+    // The embedded file stream is keyed like a file-spec platform item.
+    const stream = FileSpec.pickPlatformItem(assetDict.get("EF"));
+    const subtype =
+      stream instanceof BaseStream ? stream.dict?.get("Subtype") : null;
+    if (
+      subtype instanceof Name &&
+      MediaAnnotation.#MEDIA_MIME_TYPE_RE.test(subtype.name)
+    ) {
+      return subtype.name;
+    }
+
+    const ext = filename.split(".").at(-1)?.toLowerCase();
+    switch (ext) {
+      case "mp4":
+      case "m4v":
+        return "video/mp4";
+      case "webm":
+        return "video/webm";
+      case "ogv":
+        return "video/ogg";
+      case "mov":
+        return "video/quicktime";
+      case "mp3":
+        return "audio/mpeg";
+      case "m4a":
+        return "audio/mp4";
+      case "wav":
+        return "audio/wav";
+      case "oga":
+      case "ogg":
+        return "audio/ogg";
+      default:
+        return null;
+    }
+  }
+}
+
+class RichMediaAnnotation extends MediaAnnotation {
+  constructor(params) {
+    super(params);
+
+    const { dict, xref, annotationGlobals } = params;
+
+    const content = dict.get("RichMediaContent");
+    if (!(content instanceof Dict)) {
+      return;
+    }
+
+    const asset = RichMediaAnnotation.#findAsset(content, xref);
+    if (!asset) {
+      warn("RichMedia annotation has no playable asset.");
+      return;
+    }
+    this._setMediaData(asset, annotationGlobals);
+  }
+
+  /**
+   * Locate the primary playable embedded media asset.
+   *
+   * Per the spec (ISO 32000-2, 13.7), the asset to play is selected through
+   * `Configurations -> Instances -> Asset`. We pick the first instance with a
+   * natively playable asset rather than honoring the default configuration
+   * indicated by `RichMediaSettings`/activation; this keeps selection simple
+   * and matches the common single-configuration case. The `/Assets` name tree
+   * merely enumerates every embedded file; we don't use it as a fallback, since
+   * Acrobat itself won't play media that's only reachable that way. Flash
+   * instances are skipped, since they can't be played natively.
+   *
+   * @returns {{
+   *   assetRef: Ref | null,
+   *   assetDict: Dict,
+   *   filename: string,
+   *   contentType: string,
+   * } | null}
+   */
+  static #findAsset(content, xref) {
+    const configurations = content.get("Configurations");
+    if (!Array.isArray(configurations)) {
+      return null;
+    }
+    for (const configRef of configurations) {
+      const config = xref.fetchIfRef(configRef);
+      if (!(config instanceof Dict)) {
+        continue;
+      }
+      const instances = config.get("Instances");
+      if (!Array.isArray(instances)) {
+        continue;
+      }
+      for (const instanceRef of instances) {
+        const instance = xref.fetchIfRef(instanceRef);
+        if (!(instance instanceof Dict)) {
+          continue;
+        }
+        // Skip Flash instances: it's obsolete.
+        if (isName(instance.get("Subtype"), "Flash")) {
+          // Flash has been supported (see PDF 1.7 Extension Level 3).
+          continue;
+        }
+        const rawAsset = instance.getRaw("Asset");
+        const asset = xref.fetchIfRef(rawAsset);
+        if (!(asset instanceof Dict)) {
+          continue;
+        }
+        // Skip assets that only reference an external file we can't read.
+        if (!FileSpec.hasEmbeddedFile(asset)) {
+          continue;
+        }
+        const { filename } = new FileSpec(asset).serializable;
+        const contentType = MediaAnnotation._getContentType(asset, filename);
+        if (!contentType) {
+          continue;
+        }
+        return {
+          assetRef: rawAsset instanceof Ref ? rawAsset : null,
+          assetDict: asset,
+          filename,
+          contentType,
+        };
+      }
+    }
+
+    return null;
+  }
+}
+
+class ScreenAnnotation extends MediaAnnotation {
+  constructor(params) {
+    super(params);
+
+    const { dict, xref, annotationGlobals } = params;
+    const asset = ScreenAnnotation.#findAsset(dict, xref);
+    if (!asset) {
+      // Not every Screen annotation plays embedded media (e.g. a URL stream or
+      // a /Movie); such ones simply render their appearance, so don't warn.
+      return;
+    }
+    this._setMediaData(asset, annotationGlobals);
+  }
+
+  /**
+   * Locate the embedded media played by the annotation's rendition action.
+   *
+   * Per the spec (ISO 32000-1, 12.6.4.13 and 13.2) the chain is:
+   *   Screen `/A` (or `/AA`) rendition action -> `/R` rendition (`/MR`)
+   *   -> `/C` media clip (`/MCD`) -> `/D` file-spec -> `/EF` embedded file.
+   * Selector renditions (`/SR`) are unwrapped to their first playable media
+   * rendition. This mirrors `RichMediaAnnotation`, which also targets the
+   * common single embedded-media case.
+   *
+   * @returns {{
+   *   assetRef: Ref | null,
+   *   assetDict: Dict,
+   *   filename: string,
+   *   contentType: string,
+   * } | null}
+   */
+  static #findAsset(dict, xref) {
+    for (const action of this.#renditionActions(dict)) {
+      const asset = this.#findRenditionAsset(
+        action.get("R"),
+        xref,
+        new RefSet()
+      );
+      if (asset) {
+        return asset;
+      }
+    }
+    return null;
+  }
+
+  static *#renditionActions(dict) {
+    // The rendition action may be the activation action (/A) or one of the
+    // additional actions (/AA), e.g. page-open.
+    const action = dict.get("A");
+    if (
+      action instanceof Dict &&
+      isName(action.get("S"), "Rendition") &&
+      this.#isPlayAction(action)
+    ) {
+      yield action;
+    }
+    const additionalActions = dict.get("AA");
+    if (additionalActions instanceof Dict) {
+      for (const [, aa] of additionalActions) {
+        if (
+          aa instanceof Dict &&
+          isName(aa.get("S"), "Rendition") &&
+          this.#isPlayAction(aa)
+        ) {
+          yield aa;
+        }
+      }
+    }
+  }
+
+  static #isPlayAction(action) {
+    // Rendition action /OP (ISO 32000-1, Table 214): PLAY_OR_RESUME and PLAY
+    // play; STOP/PAUSE/RESUME don't start playback. When absent, the action is
+    // JS-driven (/JS), which we can't run, so assume play.
+    const operation = action.get("OP");
+    return (
+      operation === undefined ||
+      operation === AnnotationRenditionOperation.PLAY_OR_RESUME ||
+      operation === AnnotationRenditionOperation.PLAY
+    );
+  }
+
+  static #findRenditionAsset(rendition, xref, seen) {
+    if (!(rendition instanceof Dict)) {
+      return null;
+    }
+    const subtype = rendition.get("S");
+    if (isName(subtype, "MR")) {
+      return this.#findClipAsset(rendition.get("C"), xref);
+    }
+    if (isName(subtype, "SR")) {
+      // A selector rendition lists candidate renditions; play the first that
+      // resolves to embedded media.
+      const renditions = rendition.get("R");
+      if (Array.isArray(renditions)) {
+        for (const ref of renditions) {
+          // Guard against renditions referencing each other in a cycle.
+          if (ref instanceof Ref) {
+            if (seen.has(ref)) {
+              continue;
+            }
+            seen.put(ref);
+          }
+          const asset = this.#findRenditionAsset(
+            xref.fetchIfRef(ref),
+            xref,
+            seen
+          );
+          if (asset) {
+            return asset;
+          }
+        }
+      }
+    }
+    return null;
+  }
+
+  static #findClipAsset(clip, xref) {
+    if (!(clip instanceof Dict) || !isName(clip.get("S"), "MCD")) {
+      return null;
+    }
+    const rawData = clip.getRaw("D");
+    const data = xref.fetchIfRef(rawData);
+    const contentTypeHint = clip.get("CT");
+    let explicitType =
+      typeof contentTypeHint === "string" ? contentTypeHint : null;
+
+    let assetDict, filename;
+    if (data instanceof BaseStream) {
+      // `/D` is the embedded media stream directly.
+      assetDict = data.dict;
+      // `/N` is a human-readable label, not a filename, so it's an unreliable
+      // source for a file extension. When `/CT` is absent, prefer the stream's
+      // own `/Subtype` if it declares a media MIME type (as embedded-file
+      // streams do); `_getContentType` ignores a non-media value.
+      const name = clip.get("N");
+      filename = typeof name === "string" ? stringToPDFString(name) : "";
+      if (!explicitType) {
+        const subtype = data.dict.get("Subtype");
+        if (subtype instanceof Name) {
+          explicitType = subtype.name;
+        }
+      }
+    } else if (data instanceof Dict) {
+      // `/D` is a file specification; require a readable embedded file.
+      if (!FileSpec.hasEmbeddedFile(data)) {
+        return null;
+      }
+      assetDict = data;
+      ({ filename } = new FileSpec(data).serializable);
+    } else {
+      return null;
+    }
+
+    const contentType = MediaAnnotation._getContentType(
+      assetDict,
+      filename,
+      explicitType
+    );
+    if (!contentType) {
+      return null;
+    }
+    return {
+      assetRef: rawData instanceof Ref ? rawData : null,
+      assetDict,
+      filename,
+      contentType,
+    };
+  }
+}
+
+class SoundAnnotation extends MediaAnnotation {
+  constructor(params) {
+    super(params);
+
+    const { dict, xref, annotationGlobals } = params;
+    const soundRef = dict.getRaw("Sound");
+    if (!(soundRef instanceof Ref)) {
+      return;
+    }
+    let sound;
+    try {
+      sound = xref.fetch(soundRef);
+    } catch (ex) {
+      if (ex instanceof MissingDataException) {
+        throw ex;
+      }
+      // A corrupt sound stream: fall back to rendering the appearance.
+      warn(`SoundAnnotation: "${ex}".`);
+      return;
+    }
+    if (!(sound instanceof BaseStream) || !getSoundFormat(sound.dict)) {
+      // No embedded samples, or an encoding we can't turn into a playable WAV
+      // (compressed, or an unusual bit depth); just render the appearance.
+      return;
+    }
+
+    this._setMediaData(
+      {
+        assetRef: soundRef,
+        assetDict: sound.dict,
+        filename: "sound.wav",
+        contentType: "audio/wav",
+        wrapSound: true,
+      },
+      annotationGlobals
+    );
   }
 }
 

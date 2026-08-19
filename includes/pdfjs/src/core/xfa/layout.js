@@ -21,7 +21,7 @@ import {
   $isSplittable,
   $isThereMoreWidth,
 } from "./symbol_utils.js";
-import { MathClamp } from "../../shared/util.js";
+import { MathClamp } from "../../shared/math_clamp.js";
 import { measureToString } from "./html_utils.js";
 
 // Subform and ExclGroup have a layout so they share these functions.

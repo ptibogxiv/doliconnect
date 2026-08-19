@@ -97,7 +97,7 @@ class Builder {
       this._addNamespacePrefix(prefixes);
     }
 
-    if (attributes.hasOwnProperty($nsAttributes)) {
+    if (Object.hasOwn(attributes, $nsAttributes)) {
       // Only support xfa-data namespace.
       const dataTemplate = NamespaceSetUp.datasets;
       const nsAttrs = attributes[$nsAttributes];

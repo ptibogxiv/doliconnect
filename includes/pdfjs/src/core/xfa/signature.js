@@ -26,7 +26,7 @@ class Signature extends XFAObject {
 
 class SignatureNamespace {
   static [$buildXFAObject](name, attributes) {
-    if (SignatureNamespace.hasOwnProperty(name)) {
+    if (Object.hasOwn(SignatureNamespace, name)) {
       return SignatureNamespace[name](attributes);
     }
     return undefined;

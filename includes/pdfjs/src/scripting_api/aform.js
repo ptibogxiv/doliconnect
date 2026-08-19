@@ -15,6 +15,7 @@
 
 import { DateFormats, TimeFormats } from "../shared/scripting_utils.js";
 import { GlobalConstants } from "./constants.js";
+import { MathClamp } from "../shared/math_clamp.js";
 
 class AForm {
   constructor(document, app, util, color) {
@@ -25,8 +26,9 @@ class AForm {
 
     // The e-mail address regex below originates from:
     // https://html.spec.whatwg.org/multipage/input.html#valid-e-mail-address
+    // eslint-disable-next-line regexp/use-ignore-case
     this._emailRegex = new RegExp(
-      "^[a-zA-Z0-9.!#$%&'*+\\/=?^_`{|}~-]+" +
+      "^[\\w.!#$%&'*+/=?^`{|}~-]+" +
         "@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?" +
         "(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"
     );
@@ -139,7 +141,7 @@ class AForm {
     }
 
     // sepStyle is an integer in [0;4]
-    sepStyle = Math.min(Math.max(0, Math.floor(sepStyle)), 4);
+    sepStyle = MathClamp(Math.floor(sepStyle), 0, 4);
 
     buf.push("%,", sepStyle, ".", nDec.toString(), "f");
 
@@ -183,12 +185,12 @@ class AForm {
       // comma sep
       pattern = event.willCommit
         ? /^[+-]?(\d+(,\d*)?|,\d+)$/
-        : /^[+-]?\d*,?\d*$/;
+        : /^[+-]?\d*(?:,\d*)?$/;
     } else {
       // dot sep
       pattern = event.willCommit
         ? /^[+-]?(\d+(\.\d*)?|\.\d+)$/
-        : /^[+-]?\d*\.?\d*$/;
+        : /^[+-]?\d*(?:\.\d*)?$/;
     }
 
     if (!pattern.test(value)) {
@@ -226,7 +228,7 @@ class AForm {
     nDec = Math.floor(nDec);
 
     // sepStyle is an integer in [0;4]
-    sepStyle = Math.min(Math.max(0, Math.floor(sepStyle)), 4);
+    sepStyle = MathClamp(Math.floor(sepStyle), 0, 4);
 
     let value = this.AFMakeNumber(event.value);
     if (value === null) {
@@ -368,8 +370,8 @@ class AForm {
 
   AFSimple_Calculate(cFunction, cFields) {
     const actions = {
-      AVG: args => args.reduce((acc, value) => acc + value, 0) / args.length,
-      SUM: args => args.reduce((acc, value) => acc + value, 0),
+      AVG: args => Math.sumPrecise(args) / args.length,
+      SUM: args => Math.sumPrecise(args),
       PRD: args => args.reduce((acc, value) => acc * value, 1),
       MIN: args => Math.min(...args),
       MAX: args => Math.max(...args),
@@ -570,7 +572,7 @@ class AForm {
       event.rc = true;
     }
 
-    const re = /([-()]|\s)+/g;
+    const re = /[-()\s]+/g;
     value = value.replaceAll(re, "");
     for (const format of formats) {
       this.#AFSpecial_KeystrokeEx_helper(

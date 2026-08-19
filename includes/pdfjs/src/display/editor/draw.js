@@ -97,6 +97,11 @@ class DrawingEditor extends AnnotationEditor {
     super.onUpdatedColor();
   }
 
+  /** @inheritdoc */
+  onUpdatedOpacity() {
+    this._colorPicker?.updateOpacity?.(this.opacity);
+  }
+
   _addOutlines(params) {
     if (params.drawOutlines) {
       this.#createDrawOutlines(params);
@@ -108,7 +113,7 @@ class DrawingEditor extends AnnotationEditor {
     this.#drawOutlines = drawOutlines;
     this._drawingOptions ||= drawingOptions;
     if (!this.annotationElementId) {
-      this._uiManager.a11yAlert(`pdfjs-editor-${this.editorType}-added-alert`);
+      this._uiManager.a11yAlert(AnnotationEditor._l10nAlert[this.editorType]);
     }
 
     if (drawId >= 0) {
@@ -243,6 +248,8 @@ class DrawingEditor extends AnnotationEditor {
       );
       if (type === this.colorType) {
         this.onUpdatedColor();
+      } else if (type === this.opacityType) {
+        this.onUpdatedOpacity();
       }
     };
     this.addCommands({
@@ -251,6 +258,38 @@ class DrawingEditor extends AnnotationEditor {
       post: this._uiManager.updateUI.bind(this._uiManager, this),
       mustExec: true,
       type,
+      overwriteIfSameType: true,
+      keepUndo: true,
+    });
+  }
+
+  /**
+   * Update color and opacity atomically as one undoable command.
+   */
+  _updateColorAndOpacity(color, opacity) {
+    const colorName = this.constructor.typesMap.get(this.colorType);
+    const opacityName = this.constructor.typesMap.get(this.opacityType);
+    const options = this._drawingOptions;
+    const savedColor = options[colorName];
+    const savedOpacity = options[opacityName];
+    const setter = (c, op) => {
+      options.updateProperty(colorName, c);
+      options.updateProperty(opacityName, op);
+      this.#drawOutlines.updateProperty(colorName, c);
+      this.#drawOutlines.updateProperty(opacityName, op);
+      this.parent?.drawLayer.updateProperties(
+        this._drawId,
+        options.toSVGProperties()
+      );
+      this.onUpdatedColor();
+      this.onUpdatedOpacity();
+    };
+    this.addCommands({
+      cmd: setter.bind(this, color, opacity),
+      undo: setter.bind(this, savedColor, savedOpacity),
+      post: this._uiManager.updateUI.bind(this._uiManager, this),
+      mustExec: true,
+      type: AnnotationEditorParamsType.INK_COLOR_AND_OPACITY,
       overwriteIfSameType: true,
       keepUndo: true,
     });

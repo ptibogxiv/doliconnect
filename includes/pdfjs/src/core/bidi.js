@@ -15,6 +15,9 @@
 
 import { warn } from "../shared/util.js";
 
+// Implements a subset of the Unicode Bidirectional Algorithm (UBA).
+// Specification: https://www.unicode.org/reports/tr9/tr9-48.html
+
 // Character types for symbols from 0000 to 00FF.
 // Source: ftp://ftp.unicode.org/Public/UNIDATA/UnicodeData.txt
 // prettier-ignore
@@ -297,25 +300,42 @@ function bidi(str, startLevel = -1, vertical = false) {
    text if the text on both sides has the same direction. European and Arabic
    numbers are treated as though they were R. Start-of-level-run (sor) and
    end-of-level-run (eor) are used at level run boundaries.
+   See https://www.unicode.org/reports/tr9/tr9-48.html#N1
    */
   for (i = 0; i < strLength; ++i) {
     if (types[i] === "ON") {
       const end = findUnequal(types, i + 1, "ON");
+
+      // Scan left past non-strong types to find the nearest strong context
+      // (L, R, EN, or AN), falling back to sor at the level-run boundary.
       let before = sor;
-      if (i > 0) {
-        before = types[i - 1];
+      for (let j = i - 1; j >= 0; j--) {
+        const tt = types[j];
+        if (tt === "L") {
+          before = "L";
+          break;
+        }
+        if (tt === "R" || tt === "EN" || tt === "AN") {
+          before = "R";
+          break;
+        }
       }
 
+      // Scan right past non-strong types to find the nearest strong context,
+      // falling back to eor at the level-run boundary.
       let after = eor;
-      if (end + 1 < strLength) {
-        after = types[end + 1];
+      for (let j = end; j < strLength; j++) {
+        const tt = types[j];
+        if (tt === "L") {
+          after = "L";
+          break;
+        }
+        if (tt === "R" || tt === "EN" || tt === "AN") {
+          after = "R";
+          break;
+        }
       }
-      if (before !== "L") {
-        before = "R";
-      }
-      if (after !== "L") {
-        after = "R";
-      }
+
       if (before === after) {
         types.fill(before, i, end);
       }

@@ -285,6 +285,7 @@
     pointer-events: auto;
     box-sizing: content-box;
     padding: var(--editor-toolbar-padding);
+    user-select: none;
 
     position: absolute;
     inset-inline-end: 0;
@@ -1084,11 +1085,13 @@
 
   &::-moz-color-swatch {
     border-radius: 100%;
+    margin: 0;
   }
 
   /*#if !MOZCENTRAL*/
   &::-webkit-color-swatch {
     border-radius: 100%;
+    margin: 0;
   }
   /*#endif*/
 }

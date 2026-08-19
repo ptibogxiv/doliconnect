@@ -13,7 +13,6 @@
  * limitations under the License.
  */
 
-import ModuleLoader from "../external/quickjs/quickjs-eval.js";
 import { SandboxSupportBase } from "./pdf.sandbox.external.js";
 
 class SandboxSupport extends SandboxSupportBase {
@@ -136,8 +135,12 @@ class Sandbox {
   }
 }
 
-function QuickJSSandbox() {
-  return ModuleLoader().then(module => new Sandbox(window, module));
+async function QuickJSSandbox(wasmUrl = "../web/wasm/") {
+  const { default: ModuleLoader } = await __raw_import__(
+    `${wasmUrl}quickjs-eval.js`
+  );
+  const module = await ModuleLoader();
+  return new Sandbox(window, module);
 }
 
 globalThis.pdfjsSandbox = {

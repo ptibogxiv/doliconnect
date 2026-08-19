@@ -56,20 +56,19 @@ class PDFDataTransportStream extends BasePDFStream {
     }
     this._progressiveDone = progressiveDone;
 
-    pdfDataRangeTransport.addRangeListener((begin, chunk) => {
-      this.#onReceiveData(begin, chunk);
-    });
-
-    pdfDataRangeTransport.addProgressiveReadListener(chunk => {
-      this.#onReceiveData(/* begin = */ undefined, chunk);
-    });
-
-    pdfDataRangeTransport.addProgressiveDoneListener(() => {
-      this._fullReader?.progressiveDone();
-      this._progressiveDone = true;
-    });
-
-    pdfDataRangeTransport.transportReady();
+    const listener = args => {
+      switch (args.type) {
+        case "range":
+        case "progressiveRead":
+          this.#onReceiveData(args.begin, args.chunk);
+          break;
+        case "progressiveDone":
+          this._fullReader?.progressiveDone();
+          this._progressiveDone = true;
+          break;
+      }
+    };
+    pdfDataRangeTransport.transportReady(listener);
   }
 
   #onReceiveData(begin, chunk) {

@@ -171,7 +171,7 @@ class XFAObject {
 
   [$onChildCheck](child) {
     return (
-      this.hasOwnProperty(child[$nodeName]) &&
+      Object.hasOwn(this, child[$nodeName]) &&
       child[$namespaceId] === this[$namespaceId]
     );
   }
@@ -240,7 +240,7 @@ class XFAObject {
   }
 
   [$hasSettableValue]() {
-    return this.hasOwnProperty("value");
+    return Object.hasOwn(this, "value");
   }
 
   [$setValue](_) {}
@@ -447,7 +447,10 @@ class XFAObject {
   [_getUnsetAttributes](protoAttributes) {
     const allAttr = this[_attributeNames];
     const setAttr = this[_setAttributes];
-    return [...protoAttributes].filter(x => allAttr.has(x) && !setAttr.has(x));
+    return protoAttributes
+      .keys()
+      .filter(x => allAttr.has(x) && !setAttr.has(x))
+      .toArray();
   }
 
   /**
@@ -518,9 +521,7 @@ class XFAObject {
         true /* = dotDotAllowed */,
         false /* = useCache */
       );
-      if (proto) {
-        proto = proto[0];
-      }
+      proto &&= proto[0];
     }
 
     if (!proto) {
@@ -817,7 +818,7 @@ class XmlObject extends XFAObject {
       for (const [attrName, value] of Object.entries(attributes)) {
         map.set(attrName, new XFAAttribute(this, attrName, value));
       }
-      if (attributes.hasOwnProperty($nsAttributes)) {
+      if (Object.hasOwn(attributes, $nsAttributes)) {
         // XFA attributes.
         const dataNode = attributes[$nsAttributes].xfa.dataNode;
         if (dataNode !== undefined) {

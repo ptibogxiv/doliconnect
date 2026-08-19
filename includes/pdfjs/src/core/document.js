@@ -21,12 +21,10 @@ import {
   InvalidPDFException,
   isArrayEqual,
   makeArr,
-  objectSize,
   PageActionEventType,
   RenderingIntentFlag,
   shadow,
   stringToBytes,
-  stringToPDFString,
   stringToUTF8String,
   unreachable,
   Util,
@@ -60,6 +58,7 @@ import {
   RefSet,
   RefSetCache,
 } from "./primitives.js";
+import { FunctionType, PDFFunctionFactory } from "./function.js";
 import { getXfaFontDict, getXfaFontName } from "./xfa_fonts.js";
 import { NullStream, Stream } from "./stream.js";
 import { BaseStream } from "./base_stream.js";
@@ -69,19 +68,21 @@ import { clearGlobalCaches } from "./cleanup_helper.js";
 import { DatasetReader } from "./dataset_reader.js";
 import { Intersector } from "./intersector.js";
 import { Linearization } from "./parser.js";
+import { LocalColorSpaceCache } from "./image_utils.js";
 import { ObjectLoader } from "./object_loader.js";
 import { OperatorList } from "./operator_list.js";
 import { PartialEvaluator } from "./evaluator.js";
+import { PDFImage } from "./image.js";
 import { StreamsSequenceStream } from "./decode_stream.js";
+import { stringToPDFString } from "./string_utils.js";
 import { StructTreePage } from "./struct_tree.js";
 import { XFAFactory } from "./xfa/factory.js";
 import { XRef } from "./xref.js";
 
 const LETTER_SIZE_MEDIABOX = [0, 0, 612, 792];
+const SIGNATURE_TAIL_CHUNK_SIZE = 65536;
 
 class Page {
-  #areAnnotationsCached = false;
-
   #resourcesPromise = null;
 
   constructor({
@@ -146,6 +147,10 @@ class Page {
       systemFontCache: this.systemFontCache,
       options: this.evaluatorOptions,
     });
+  }
+
+  createAnnotationEvaluator(handler) {
+    return this.#createPartialEvaluator(handler);
   }
 
   #getInheritableProperty(key, getArray = false) {
@@ -383,6 +388,7 @@ class Page {
     );
     const newData = await AnnotationFactory.saveNewAnnotations(
       partialEvaluator,
+      this.xref,
       task,
       annotations,
       imagePromises,
@@ -712,8 +718,7 @@ class Page {
         "_parseStructTree",
         [structTreeRoot]
       );
-      const data = await this.pdfManager.ensure(structTree, "serializable");
-      return data;
+      return await this.pdfManager.ensure(structTree, "serializable");
     } catch (ex) {
       warn(`getStructTree: "${ex}".`);
       return null;
@@ -784,8 +789,6 @@ class Page {
           includeMarkedContent: false,
           disableNormalization: false,
           sink: null,
-          viewBox: this.view,
-          lang: null,
           intersector,
         }).then(() => {
           intersector.setText();
@@ -866,8 +869,6 @@ class Page {
         return sortedAnnotations;
       });
 
-    this.#areAnnotationsCached = true;
-
     return shadow(this, "_parsedAnnotations", promise);
   }
 
@@ -889,7 +890,7 @@ class Page {
   ) {
     const { pageIndex } = this;
 
-    if (this.#areAnnotationsCached) {
+    if (Object.hasOwn(this, "_parsedAnnotations")) {
       const cachedAnnotations = await this._parsedAnnotations;
       for (const { data } of cachedAnnotations) {
         if (!types || types.has(data.annotationType)) {
@@ -901,6 +902,8 @@ class Page {
     }
 
     const annots = await this.pdfManager.ensure(this, "annotations");
+    let partialEvaluator;
+
     for (const annotationRef of annots) {
       promises.push(
         AnnotationFactory.create(
@@ -919,7 +922,8 @@ class Page {
             }
             annotation.data.pageIndex = pageIndex;
             if (annotation.hasTextContent && annotation.viewable) {
-              const partialEvaluator = this.#createPartialEvaluator(handler);
+              partialEvaluator ??= this.#createPartialEvaluator(handler);
+
               await annotation.extractTextContent(partialEvaluator, task, [
                 -Infinity,
                 -Infinity,
@@ -999,6 +1003,12 @@ function find(stream, signature, limit = 1024, backwards = false) {
  */
 class PDFDocument {
   #pagePromises = new Map();
+
+  // Map<id, {byteRange: number[4], pkcs7: Uint8Array}> — populated by the
+  // `signatures` getter, consumed by `getSignatureData`. We deliberately
+  // keep the signed byte spans out of the metadata array and only slice
+  // them out of the stream when the viewer actually asks to verify.
+  #signatureData = null;
 
   #version = null;
 
@@ -1184,7 +1194,10 @@ class PDFDocument {
           recursionDepth
         );
       }
-      const isSignature = isName(field.get("FT"), "Sig");
+      const isSignature = isName(
+        getInheritableProperty({ dict: field, key: "FT" }),
+        "Sig"
+      );
       const rectangle = field.get("Rect");
       const isInvisible =
         Array.isArray(rectangle) && rectangle.every(value => value === 0);
@@ -1269,13 +1282,13 @@ class PDFDocument {
     if (!streams) {
       return null;
     }
-    const data = Object.create(null);
+    const data = new Map();
     for (const [key, stream] of streams) {
       if (!stream) {
         continue;
       }
       try {
-        data[key] = stringToUTF8String(stream.getString());
+        data.set(key, stringToUTF8String(stream.getString()));
       } catch {
         warn("XFA - Invalid utf-8 string.");
         return null;
@@ -1385,7 +1398,7 @@ class PDFDocument {
       }
       let fontFamily = descriptor.get("FontFamily");
       // For example, "Wingdings 3" is not a valid font name in the css specs.
-      fontFamily = fontFamily.replaceAll(/[ ]+(\d)/g, "$1");
+      fontFamily = fontFamily.replaceAll(/ +(\d)/g, "$1");
       const fontWeight = descriptor.get("FontWeight");
 
       // Angle is expressed in degrees counterclockwise in PDF
@@ -1867,12 +1880,15 @@ class PDFDocument {
       name = name === "" ? partName : `${name}.${partName}`;
     } else {
       let obj = field;
+      // The `Parent` chain can be cyclic, hence the local `RefSet`.
+      const walkedRefs = new RefSet();
       while (true) {
         obj = obj.getRaw("Parent") || parentRef;
         if (obj instanceof Ref) {
-          if (visitedRefs.has(obj)) {
+          if (visitedRefs.has(obj) || walkedRefs.has(obj)) {
             break;
           }
+          walkedRefs.put(obj);
           obj = await xref.fetchAsync(obj);
         }
         if (!(obj instanceof Dict)) {
@@ -1975,12 +1991,264 @@ class PDFDocument {
         await Promise.all(allPromises);
 
         return {
-          allFields: objectSize(allFields) > 0 ? allFields : null,
+          allFields: Object.keys(allFields).length ? allFields : null,
           orphanFields,
         };
       });
 
     return shadow(this, "fieldObjects", promise);
+  }
+
+  async #collectSignatureFields(fields, out, visitedRefs) {
+    if (!Array.isArray(fields)) {
+      return;
+    }
+    for (const fieldRef of fields) {
+      if (fieldRef instanceof Ref) {
+        if (visitedRefs.has(fieldRef)) {
+          continue;
+        }
+        visitedRefs.put(fieldRef);
+      }
+      const field = await this.xref.fetchIfRefAsync(fieldRef);
+      if (!(field instanceof Dict)) {
+        continue;
+      }
+      if (isName(await field.getAsync("FT"), "Sig")) {
+        const sigDict = await field.getAsync("V");
+        if (sigDict instanceof Dict) {
+          const parsed = await this.#parseSignatureDict(
+            field,
+            sigDict,
+            fieldRef
+          );
+          if (parsed) {
+            out.push(parsed);
+          }
+        }
+      }
+      if (field.has("Kids")) {
+        // A terminal field can have Widget annotations as children, so its
+        // own signature must be collected before walking the field tree.
+        await this.#collectSignatureFields(
+          await field.getAsync("Kids"),
+          out,
+          visitedRefs
+        );
+      }
+    }
+  }
+
+  async #getByteRange(begin, end) {
+    try {
+      return this.stream.getByteRange(begin, end);
+    } catch (ex) {
+      if (!(ex instanceof MissingDataException)) {
+        throw ex;
+      }
+      await this.pdfManager.requestRange(begin, end);
+      return this.#getByteRange(begin, end);
+    }
+  }
+
+  async #coversWholeDocument(signedEnd, modificationsAfterSignature) {
+    if (modificationsAfterSignature > 0) {
+      return false;
+    }
+
+    const fileLength = this.stream.end;
+    for (
+      let begin = signedEnd;
+      begin < fileLength;
+      begin += SIGNATURE_TAIL_CHUNK_SIZE
+    ) {
+      const end = Math.min(begin + SIGNATURE_TAIL_CHUNK_SIZE, fileLength);
+      const tail = await this.#getByteRange(begin, end);
+
+      for (const byte of tail) {
+        if (
+          byte !== 0x00 && // null
+          byte !== 0x09 && // horizontal tab
+          byte !== 0x0a && // line feed
+          byte !== 0x0c && // form feed
+          byte !== 0x0d && // carriage return
+          byte !== 0x20 // space
+        ) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
+  async #parseSignatureDict(field, sigDict, fieldRef) {
+    const byteRange = await sigDict.getAsync("ByteRange");
+    if (
+      !Array.isArray(byteRange) ||
+      byteRange.length !== 4 ||
+      byteRange.some(n => !Number.isInteger(n) || n < 0)
+    ) {
+      return null;
+    }
+    // Slice the two ByteRange byte spans out of the underlying PDF stream.
+    // ByteRange = [a, b, c, d] means signed bytes are [a..a+b] and [c..c+d];
+    // the gap covers the /Contents hex blob itself.
+    const [a, b, c, d] = byteRange;
+    // `/ByteRange` offsets are absolute, so compare against `stream.end`
+    // (raw buffer end), not `stream.length` (post-`moveStart` payload).
+    const fileLength = this.stream.end || 0;
+    // Reject signatures whose /ByteRange is structurally implausible: it
+    // must start at the file head, define a non-empty first span, leave
+    // room for the /Contents blob between the two spans, and fit within
+    // the file. Without this a crafted PDF can claim to cover the whole
+    // document while only signing a small prologue.
+    if (
+      a !== 0 ||
+      b <= 0 ||
+      a + b > c ||
+      c + d > fileLength ||
+      fileLength === 0
+    ) {
+      return null;
+    }
+
+    const contents = await sigDict.getAsync("Contents");
+    if (typeof contents !== "string" || contents.length === 0) {
+      return null;
+    }
+
+    const [
+      filterName,
+      subFilterName,
+      t,
+      name,
+      reason,
+      location,
+      contactInfo,
+      m,
+    ] = await Promise.all([
+      sigDict.getAsync("Filter"),
+      sigDict.getAsync("SubFilter"),
+      field.getAsync("T"),
+      sigDict.getAsync("Name"),
+      sigDict.getAsync("Reason"),
+      sigDict.getAsync("Location"),
+      sigDict.getAsync("ContactInfo"),
+      sigDict.getAsync("M"),
+    ]);
+
+    const filter = filterName instanceof Name ? filterName.name : null,
+      subFilter = subFilterName instanceof Name ? subFilterName.name : null;
+
+    let signatureType = null;
+    if (subFilter === "adbe.pkcs7.detached") {
+      signatureType = 0;
+    } else if (subFilter === "adbe.pkcs7.sha1") {
+      signatureType = 1;
+    }
+    const refKey = fieldRef instanceof Ref ? fieldRef.toString() : "inline";
+
+    return {
+      id: `${refKey}:${a}-${b}-${c}-${d}`,
+      fieldName: typeof t === "string" ? stringToPDFString(t) : "",
+      signerName: typeof name === "string" ? stringToPDFString(name) : null,
+      reason: typeof reason === "string" ? stringToPDFString(reason) : null,
+      location:
+        typeof location === "string" ? stringToPDFString(location) : null,
+      contactInfo:
+        typeof contactInfo === "string" ? stringToPDFString(contactInfo) : null,
+      signingTime: typeof m === "string" ? m : null,
+      filter,
+      subFilter,
+      signatureType,
+      byteRange,
+      pkcs7: stringToBytes(contents),
+      revisionIndex: 0,
+      parentId: null,
+    };
+  }
+
+  get signatures() {
+    const promise = this.pdfManager
+      .ensureDoc("formInfo")
+      .then(async formInfo => {
+        if (!formInfo.hasSignatures || !formInfo.hasFields) {
+          return null;
+        }
+        const annotationGlobals = await this.annotationGlobals;
+        if (!annotationGlobals) {
+          return null;
+        }
+        const fields = annotationGlobals.acroForm.get("Fields");
+
+        const collected = [];
+        await this.#collectSignatureFields(fields, collected, new RefSet());
+
+        await Promise.all(
+          collected.map(async signature => {
+            const signedEnd = signature.byteRange[2] + signature.byteRange[3];
+            signature.modificationsAfterSignature =
+              this.xref.countUpdatesAfter(signedEnd);
+            signature.coversWholeDocument = await this.#coversWholeDocument(
+              signedEnd,
+              signature.modificationsAfterSignature
+            );
+          })
+        );
+
+        // Group sub-signatures by ByteRange containment: outer revision is
+        // the largest covering signature (largest c + d). Sort descending,
+        // then point each later signature at the smallest enclosing parent
+        // that came before it.
+        collected.sort(
+          (a, b) =>
+            b.byteRange[2] + b.byteRange[3] - (a.byteRange[2] + a.byteRange[3])
+        );
+        for (let i = 0, ii = collected.length; i < ii; i++) {
+          const sig = collected[i];
+          sig.revisionIndex = i;
+          for (let j = i - 1; j >= 0; j--) {
+            const candidate = collected[j];
+            if (
+              candidate.byteRange[2] + candidate.byteRange[3] >
+              sig.byteRange[2] + sig.byteRange[3]
+            ) {
+              sig.parentId = candidate.id;
+              break;
+            }
+          }
+        }
+        // Keep the PKCS#7 blob and byte-range information worker-side so the
+        // metadata array stays small. The viewer fetches the signed bytes on
+        // demand via `getSignatureData(id)`, one signature at a time, only
+        // when verification is about to run.
+        const signatureData = new Map();
+        const metadata = collected.map(sig => {
+          const { pkcs7, ...rest } = sig;
+          signatureData.set(sig.id, { byteRange: sig.byteRange, pkcs7 });
+          return rest;
+        });
+        this.#signatureData = signatureData;
+        return metadata.length ? metadata : null;
+      });
+
+    return shadow(this, "signatures", promise);
+  }
+
+  async getSignatureData(id) {
+    // Ensure parsing is finished and `#signatureData` is populated.
+    await this.signatures;
+    const signature = this.#signatureData?.get(id);
+    if (!signature) {
+      return null;
+    }
+    const { byteRange, pkcs7 } = signature;
+    const [a, b, c, d] = byteRange;
+    const data = await Promise.all([
+      this.#getByteRange(a, a + b),
+      this.#getByteRange(c, c + d),
+    ]);
+    return { data, pkcs7 };
   }
 
   get hasJSActions() {
@@ -2030,6 +2298,121 @@ class PDFDocument {
       AnnotationFactory.createGlobals(this.pdfManager)
     );
   }
+
+  async toJSObject(value, firstCall = true) {
+    if (
+      typeof PDFJSDev !== "undefined" &&
+      !PDFJSDev.test("TESTING || INTERNAL_VIEWER")
+    ) {
+      throw new Error("Not implemented: toJSObject");
+    }
+    const { InternalViewerUtils } =
+      typeof PDFJSDev === "undefined"
+        ? await import("./internal_viewer_utils.js")
+        : await __eager_import__("./internal_viewer_utils.js");
+
+    if (value === null && firstCall) {
+      return this.toJSObject(this.xref.trailer, false);
+    }
+    if (value instanceof Dict) {
+      const obj = Object.create(null);
+      const isPage = isName(value.get("Type"), "Page");
+      for (const [key, val] of value.getRawEntries()) {
+        obj[key] =
+          isPage && key === "Contents"
+            ? InternalViewerUtils.getContentTokens(val, this.xref)
+            : await this.toJSObject(val, false);
+      }
+      return obj;
+    }
+    if (Array.isArray(value)) {
+      return Promise.all(value.map(v => this.toJSObject(v, false)));
+    }
+    if (value instanceof Ref) {
+      if (firstCall) {
+        return this.toJSObject(this.xref.fetch(value), false);
+      }
+      const result = Object.create(null);
+      result.num = value.num;
+      result.gen = value.gen;
+      return result;
+    }
+    if (value instanceof BaseStream) {
+      const { dict } = value;
+      const obj = Object.create(null);
+      obj.dict = await this.toJSObject(dict, false);
+
+      if (isName(dict.get("Subtype"), "Image")) {
+        const isImageMask = dict.get("ImageMask") === true;
+        if (isImageMask) {
+          dict.set("ImageMask", false);
+          dict.set("IM", false);
+          value.numComps = value.bitsPerComponent = 1;
+        }
+        try {
+          const imageObj = await PDFImage.buildImage({
+            xref: this.xref,
+            res: Dict.empty,
+            image: value,
+            pdfFunctionFactory: new PDFFunctionFactory({ xref: this.xref }),
+            globalColorSpaceCache: this.catalog.globalColorSpaceCache,
+            localColorSpaceCache: new LocalColorSpaceCache(),
+          });
+          const imgData = await imageObj.createImageData(
+            /* forceRGBA = */ true,
+            /* isOffscreenCanvasSupported = */ false
+          );
+          obj.imageData = {
+            width: imgData.width,
+            height: imgData.height,
+            kind: imgData.kind,
+            data: imgData.data,
+          };
+          return obj;
+        } catch {
+          // Fall through to regular byte stream if image decoding fails.
+        }
+        if (isImageMask) {
+          dict.set("ImageMask", true);
+          delete value.numComps;
+          delete value.bitsPerComponent;
+        }
+      }
+
+      if (isName(dict.get("Subtype"), "Form")) {
+        obj.bytes = value.getString();
+        value.reset();
+        const { instructions, cmdNames } =
+          InternalViewerUtils.groupIntoInstructions(
+            InternalViewerUtils.tokenizeStream(value, this.xref)
+          );
+        obj.contentStream = true;
+        obj.instructions = instructions;
+        obj.cmdNames = cmdNames;
+        return obj;
+      }
+
+      if (dict.get("FunctionType") === FunctionType.POSTSCRIPT_CALCULATOR) {
+        const source = value.getString();
+        value.reset();
+        const domain = dict.get("Domain") ?? [];
+        const range = dict.get("Range") ?? [];
+        obj.psFunction = true;
+        obj.source = source;
+        obj.psLines = InternalViewerUtils.tokenizePSSource(source);
+        obj.jsCode = InternalViewerUtils.postScriptToJSCode(
+          source,
+          domain,
+          range
+        );
+        return obj;
+      }
+
+      obj.bytes = value.getString();
+      return obj;
+    }
+    return value;
+  }
 }
 
-export { Page, PDFDocument };
+export { LETTER_SIZE_MEDIABOX, Page, PDFDocument };

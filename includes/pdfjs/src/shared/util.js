@@ -25,6 +25,9 @@ const isNodeJS =
   !process.versions.nw &&
   !(process.versions.electron && process.type && process.type !== "browser");
 
+const BBOX_INIT = [Infinity, Infinity, -Infinity, -Infinity];
+const F32_BBOX_INIT = new Float32Array(BBOX_INIT);
+
 const FONT_IDENTITY_MATRIX = [0.001, 0, 0, 0.001, 0, 0];
 
 // Represent the percentage of the height of a single-line field over
@@ -32,6 +35,8 @@ const FONT_IDENTITY_MATRIX = [0.001, 0, 0, 0.001, 0, 0];
 const LINE_FACTOR = 1.35;
 const LINE_DESCENT_FACTOR = 0.35;
 const BASELINE_FACTOR = LINE_DESCENT_FACTOR / LINE_FACTOR;
+
+const SVG_NS = "http://www.w3.org/2000/svg";
 
 /**
  * Refer to the `WorkerTransport.getRenderingIntent`-method in the API, to see
@@ -66,6 +71,7 @@ const AnnotationMode = {
   ENABLE_STORAGE: 3,
 };
 
+const AnnotationPrefix = "pdfjs_internal_id_";
 const AnnotationEditorPrefix = "pdfjs_internal_editor_";
 
 const AnnotationEditorType = {
@@ -89,6 +95,7 @@ const AnnotationEditorParamsType = {
   INK_COLOR: 21,
   INK_THICKNESS: 22,
   INK_OPACITY: 23,
+  INK_COLOR_AND_OPACITY: 24,
   HIGHLIGHT_COLOR: 31,
   HIGHLIGHT_THICKNESS: 32,
   HIGHLIGHT_FREE: 33,
@@ -160,11 +167,22 @@ const AnnotationType = {
   WATERMARK: 24,
   THREED: 25,
   REDACT: 26,
+  RICHMEDIA: 27,
 };
 
 const AnnotationReplyType = {
   GROUP: "Group",
   REPLY: "R",
+};
+
+// Rendition action operations from Table 214, Section 12.6.4.13 of the PDF
+// specification (ISO 32000-1).
+const AnnotationRenditionOperation = {
+  PLAY_OR_RESUME: 0,
+  STOP: 1,
+  PAUSE: 2,
+  RESUME: 3,
+  PLAY: 4,
 };
 
 const AnnotationFlag = {
@@ -393,6 +411,10 @@ function warn(msg) {
   }
 }
 
+/**
+ * @param {string} msg
+ * @returns {never}
+ */
 function unreachable(msg) {
   throw new Error(msg);
 }
@@ -593,50 +615,13 @@ function stringToBytes(str) {
   return bytes;
 }
 
-function string32(value) {
-  if (typeof PDFJSDev === "undefined" || PDFJSDev.test("TESTING")) {
-    assert(
-      typeof value === "number" && Math.abs(value) < 2 ** 32,
-      `string32: Unexpected input "${value}".`
-    );
-  }
-  return String.fromCharCode(
-    (value >> 24) & 0xff,
-    (value >> 16) & 0xff,
-    (value >> 8) & 0xff,
-    value & 0xff
-  );
-}
-
-function objectSize(obj) {
-  return Object.keys(obj).length;
-}
-
-// Checks the endianness of the platform.
-function isLittleEndian() {
-  const buffer8 = new Uint8Array(4);
-  buffer8[0] = 1;
-  const view32 = new Uint32Array(buffer8.buffer, 0, 1);
-  return view32[0] === 1;
-}
-
-// Checks if it's possible to eval JS expressions.
-function isEvalSupported() {
-  try {
-    new Function(""); // eslint-disable-line no-new, no-new-func
-    return true;
-  } catch {
-    return false;
-  }
-}
-
 class FeatureTest {
   static get isLittleEndian() {
-    return shadow(this, "isLittleEndian", isLittleEndian());
-  }
+    const buffer8 = new Uint8Array(4);
+    buffer8[0] = 1;
+    const view32 = new Uint32Array(buffer8.buffer, 0, 1);
 
-  static get isEvalSupported() {
-    return shadow(this, "isEvalSupported", isEvalSupported());
+    return shadow(this, "isLittleEndian", view32[0] === 1);
   }
 
   static get isOffscreenCanvasSupported() {
@@ -667,7 +652,6 @@ class FeatureTest {
     return shadow(
       this,
       "isSanitizerSupported",
-      // eslint-disable-next-line no-undef
       typeof Sanitizer !== "undefined"
     );
   }
@@ -686,77 +670,64 @@ class FeatureTest {
     });
   }
 
-  static get isCSSRoundSupported() {
+  static get isCanvasFilterSupported() {
+    let ctx;
+    if (this.isOffscreenCanvasSupported) {
+      ctx = new OffscreenCanvas(1, 1).getContext("2d");
+    } else if (
+      (typeof PDFJSDev === "undefined" || !PDFJSDev.test("WORKER_THREAD")) &&
+      typeof document !== "undefined"
+    ) {
+      ctx = document.createElement("canvas").getContext("2d");
+    }
+    // Spec-compliant Canvas2D defaults `ctx.filter` to "none". On
+    // browsers without filter support (Safari) the property is absent
+    // until you assign to it, after which it behaves like an ordinary
+    // JS property and stores whatever string you set without applying
+    // it. Probing the default lets us detect the difference reliably.
+    return shadow(this, "isCanvasFilterSupported", ctx?.filter !== undefined);
+  }
+
+  static get isAlphaColorInputSupported() {
+    if (
+      (typeof PDFJSDev !== "undefined" && PDFJSDev.test("WORKER_THREAD")) ||
+      typeof document === "undefined"
+    ) {
+      return shadow(this, "isAlphaColorInputSupported", false);
+    }
+    const input = document.createElement("input");
+    input.type = "color";
+    input.setAttribute("alpha", "");
+    input.value = "#ff000080";
+    // If alpha is supported the color picker retains the alpha channel, so
+    // the value won't be a plain opaque color (7-char #rrggbb).
     return shadow(
       this,
-      "isCSSRoundSupported",
-      globalThis.CSS?.supports?.("width: round(1.5px, 1px)")
+      "isAlphaColorInputSupported",
+      input.value !== "#ff0000"
+    );
+  }
+
+  static get isBackdropFilterSupported() {
+    return shadow(
+      this,
+      "isBackdropFilterSupported",
+      typeof CSS !== "undefined" && CSS.supports("backdrop-filter", "blur(1px)")
     );
   }
 }
 
-const hexNumbers = Array.from(Array(256).keys(), n =>
-  n.toString(16).padStart(2, "0")
-);
-
 class Util {
+  static get hexNums() {
+    return shadow(
+      this,
+      "hexNums",
+      Array.from(Array(256).keys(), n => n.toString(16).padStart(2, "0"))
+    );
+  }
+
   static makeHexColor(r, g, b) {
-    return `#${hexNumbers[r]}${hexNumbers[g]}${hexNumbers[b]}`;
-  }
-
-  static domMatrixToTransform(dm) {
-    return [dm.a, dm.b, dm.c, dm.d, dm.e, dm.f];
-  }
-
-  // Apply a scaling matrix to some min/max values.
-  // If a scaling factor is negative then min and max must be
-  // swapped.
-  static scaleMinMax(transform, minMax) {
-    let temp;
-    if (transform[0]) {
-      if (transform[0] < 0) {
-        temp = minMax[0];
-        minMax[0] = minMax[2];
-        minMax[2] = temp;
-      }
-      minMax[0] *= transform[0];
-      minMax[2] *= transform[0];
-
-      if (transform[3] < 0) {
-        temp = minMax[1];
-        minMax[1] = minMax[3];
-        minMax[3] = temp;
-      }
-      minMax[1] *= transform[3];
-      minMax[3] *= transform[3];
-    } else {
-      temp = minMax[0];
-      minMax[0] = minMax[1];
-      minMax[1] = temp;
-      temp = minMax[2];
-      minMax[2] = minMax[3];
-      minMax[3] = temp;
-
-      if (transform[1] < 0) {
-        temp = minMax[1];
-        minMax[1] = minMax[3];
-        minMax[3] = temp;
-      }
-      minMax[1] *= transform[1];
-      minMax[3] *= transform[1];
-
-      if (transform[2] < 0) {
-        temp = minMax[0];
-        minMax[0] = minMax[2];
-        minMax[2] = temp;
-      }
-      minMax[0] *= transform[2];
-      minMax[2] *= transform[2];
-    }
-    minMax[0] += transform[4];
-    minMax[1] += transform[5];
-    minMax[2] += transform[4];
-    minMax[3] += transform[5];
+    return `#${this.hexNums[r]}${this.hexNums[g]}${this.hexNums[b]}`;
   }
 
   // Concatenates two transformation matrices together and returns the result.
@@ -1056,67 +1027,6 @@ class Util {
   }
 }
 
-const PDFStringTranslateTable = [
-  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0x2d8,
-  0x2c7, 0x2c6, 0x2d9, 0x2dd, 0x2db, 0x2da, 0x2dc, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-  0, 0, 0, 0, 0, 0, 0, 0, 0x2022, 0x2020, 0x2021, 0x2026, 0x2014, 0x2013, 0x192,
-  0x2044, 0x2039, 0x203a, 0x2212, 0x2030, 0x201e, 0x201c, 0x201d, 0x2018,
-  0x2019, 0x201a, 0x2122, 0xfb01, 0xfb02, 0x141, 0x152, 0x160, 0x178, 0x17d,
-  0x131, 0x142, 0x153, 0x161, 0x17e, 0, 0x20ac,
-];
-
-function stringToPDFString(str, keepEscapeSequence = false) {
-  // See section 7.9.2.2 Text String Type.
-  // The string can contain some language codes bracketed with 0x1b,
-  // so we must remove them.
-  if (str[0] >= "\xEF") {
-    let encoding;
-    if (str[0] === "\xFE" && str[1] === "\xFF") {
-      encoding = "utf-16be";
-      if (str.length % 2 === 1) {
-        str = str.slice(0, -1);
-      }
-    } else if (str[0] === "\xFF" && str[1] === "\xFE") {
-      encoding = "utf-16le";
-      if (str.length % 2 === 1) {
-        str = str.slice(0, -1);
-      }
-    } else if (str[0] === "\xEF" && str[1] === "\xBB" && str[2] === "\xBF") {
-      encoding = "utf-8";
-    }
-
-    if (encoding) {
-      try {
-        const decoder = new TextDecoder(encoding, { fatal: true });
-        const buffer = stringToBytes(str);
-        const decoded = decoder.decode(buffer);
-        if (keepEscapeSequence || !decoded.includes("\x1b")) {
-          return decoded;
-        }
-        return decoded.replaceAll(/\x1b[^\x1b]*(?:\x1b|$)/g, "");
-      } catch (ex) {
-        warn(`stringToPDFString: "${ex}".`);
-      }
-    }
-  }
-  // ISO Latin 1
-  const strBuf = [];
-  for (let i = 0, ii = str.length; i < ii; i++) {
-    const charCode = str.charCodeAt(i);
-    if (!keepEscapeSequence && charCode === 0x1b) {
-      // eslint-disable-next-line no-empty
-      while (++i < ii && str.charCodeAt(i) !== 0x1b) {}
-      continue;
-    }
-    const code = PDFStringTranslateTable[charCode];
-    strBuf.push(code ? String.fromCharCode(code) : str.charAt(i));
-  }
-  return strBuf.join("");
-}
-
 function stringToUTF8String(str) {
   return decodeURIComponent(escape(str));
 }
@@ -1137,22 +1047,6 @@ function isArrayEqual(arr1, arr2) {
   return true;
 }
 
-function getModificationDate(date = new Date()) {
-  if (!(date instanceof Date)) {
-    date = new Date(date);
-  }
-  const buffer = [
-    date.getUTCFullYear().toString(),
-    (date.getUTCMonth() + 1).toString().padStart(2, "0"),
-    date.getUTCDate().toString().padStart(2, "0"),
-    date.getUTCHours().toString().padStart(2, "0"),
-    date.getUTCMinutes().toString().padStart(2, "0"),
-    date.getUTCSeconds().toString().padStart(2, "0"),
-  ];
-
-  return buffer.join("");
-}
-
 let NormalizeRegex = null;
 let NormalizationMap = null;
 function normalizeUnicode(str) {
@@ -1164,7 +1058,7 @@ function normalizeUnicode(str) {
     //    required.
     // It appears that most the chars here contain some ligatures.
     NormalizeRegex =
-      /([\u00a0\u00b5\u037e\u0eb3\u2000-\u200a\u202f\u2126\ufb00-\ufb04\ufb06\ufb20-\ufb36\ufb38-\ufb3c\ufb3e\ufb40-\ufb41\ufb43-\ufb44\ufb46-\ufba1\ufba4-\ufba9\ufbae-\ufbb1\ufbd3-\ufbdc\ufbde-\ufbe7\ufbea-\ufbf8\ufbfc-\ufbfd\ufc00-\ufc5d\ufc64-\ufcf1\ufcf5-\ufd3d\ufd88\ufdf4\ufdfa-\ufdfb\ufe71\ufe77\ufe79\ufe7b\ufe7d]+)|(\ufb05+)/gu;
+      /([\u00a0\u00b5\u037e\u0eb3\u2000-\u200a\u202f\u2126\ufb00-\ufb04\ufb06\ufb20-\ufb36\ufb38-\ufb3c\ufb3e\ufb40\ufb41\ufb43\ufb44\ufb46-\ufba1\ufba4-\ufba9\ufbae-\ufbb1\ufbd3-\ufbdc\ufbde-\ufbe7\ufbea-\ufbf8\ufbfc\ufbfd\ufc00-\ufc5d\ufc64-\ufcf1\ufcf5-\ufd3d\ufd88\ufdf4\ufdfa\ufdfb\ufe71\ufe77\ufe79\ufe7b\ufe7d]+)|(\ufb05+)/gu;
     NormalizationMap = new Map([["ﬅ", "ſt"]]);
   }
   return str.replaceAll(NormalizeRegex, (_, p1, p2) =>
@@ -1183,8 +1077,6 @@ function getUuid() {
   crypto.getRandomValues(buf);
   return bytesToString(buf);
 }
-
-const AnnotationPrefix = "pdfjs_internal_id_";
 
 function _isValidExplicitDest(validRef, validName, dest) {
   if (!Array.isArray(dest) || dest.length < 2) {
@@ -1239,23 +1131,16 @@ function _isValidExplicitDest(validRef, validName, dest) {
 const makeArr = () => [];
 const makeMap = () => new Map();
 const makeObj = () => Object.create(null);
+const makeSet = () => new Set();
 
-// TODO: Replace all occurrences of this function with `Math.clamp` once
-//       https://github.com/tc39/proposal-math-clamp/ is generally available.
-function MathClamp(v, min, max) {
-  return Math.min(Math.max(v, min), max);
-}
-
-// TODO: Remove this once `Math.sumPrecise` is generally available.
+// See https://developer.mozilla.org/en-US/docs/Web/API/Blob/bytes#browser_compatibility
 if (
-  (typeof PDFJSDev === "undefined" ||
-    PDFJSDev.test("SKIP_BABEL && !MOZCENTRAL")) &&
-  typeof Math.sumPrecise !== "function"
+  typeof PDFJSDev !== "undefined" &&
+  !PDFJSDev.test("SKIP_BABEL") &&
+  typeof Blob.prototype.bytes !== "function"
 ) {
-  // Note that this isn't a "proper" polyfill, but since we're only using it to
-  // replace `Array.prototype.reduce()` invocations it should be fine.
-  Math.sumPrecise = function (numbers) {
-    return numbers.reduce((a, b) => a + b, 0);
+  Blob.prototype.bytes = async function () {
+    return new Uint8Array(await this.arrayBuffer());
   };
 }
 
@@ -1270,35 +1155,11 @@ if (
   };
 }
 
-// TODO: Remove this once Safari 17.4 is the lowest supported version.
-if (
-  typeof PDFJSDev !== "undefined" &&
-  !PDFJSDev.test("SKIP_BABEL") &&
-  typeof AbortSignal.any !== "function"
-) {
-  AbortSignal.any = function (iterable) {
-    const ac = new AbortController();
-    const { signal } = ac;
-
-    // Return immediately if any of the signals are already aborted.
-    for (const s of iterable) {
-      if (s.aborted) {
-        ac.abort(s.reason);
-        return signal;
-      }
-    }
-    // Register "abort" listeners for all signals.
-    for (const s of iterable) {
-      s.addEventListener(
-        "abort",
-        () => {
-          ac.abort(s.reason);
-        },
-        { signal } // Automatically remove the listener.
-      );
-    }
-
-    return signal;
+// TODO: Remove this once `Iterator.prototype.join` is generally available.
+if (typeof Iterator.prototype.join !== "function") {
+  // eslint-disable-next-line no-extend-native
+  Iterator.prototype.join = function (separator) {
+    return [...this].join(separator);
   };
 }
 
@@ -1314,22 +1175,23 @@ export {
   AnnotationFlag,
   AnnotationMode,
   AnnotationPrefix,
+  AnnotationRenditionOperation,
   AnnotationReplyType,
   AnnotationType,
   assert,
   BaseException,
   BASELINE_FACTOR,
+  BBOX_INIT,
   bytesToString,
   createValidAbsoluteUrl,
   DocumentActionEventType,
   DrawOPS,
+  F32_BBOX_INIT,
   FeatureTest,
   FONT_IDENTITY_MATRIX,
   FormatError,
-  getModificationDate,
   getUuid,
   getVerbosityLevel,
-  hexNumbers,
   ImageKind,
   info,
   InvalidPDFException,
@@ -1340,10 +1202,9 @@ export {
   makeArr,
   makeMap,
   makeObj,
-  MathClamp,
+  makeSet,
   MeshFigureType,
   normalizeUnicode,
-  objectSize,
   OPS,
   PageActionEventType,
   PasswordException,
@@ -1353,11 +1214,10 @@ export {
   ResponseException,
   setVerbosityLevel,
   shadow,
-  string32,
   stringToBytes,
-  stringToPDFString,
   stringToUTF8String,
   stripPath,
+  SVG_NS,
   TextRenderingMode,
   UnknownErrorException,
   unreachable,

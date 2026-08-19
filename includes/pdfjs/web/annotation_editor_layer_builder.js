@@ -15,7 +15,7 @@
 
 /** @typedef {import("../src/display/api").PDFPageProxy} PDFPageProxy */
 // eslint-disable-next-line max-len
-/** @typedef {import("../src/display/display_utils").PageViewport} PageViewport */
+/** @typedef {import("../src/display/page_viewport").PageViewport} PageViewport */
 // eslint-disable-next-line max-len
 /** @typedef {import("../src/display/editor/tools.js").AnnotationEditorUIManager} AnnotationEditorUIManager */
 // eslint-disable-next-line max-len
@@ -39,7 +39,6 @@ import { GenericL10n } from "web-null_l10n";
  * @property {TextLayer} [textLayer]
  * @property {DrawLayer} [drawLayer]
  * @property {function} [onAppend]
- * @property {AnnotationEditorLayer} [clonedFrom]
  */
 
 /**
@@ -61,8 +60,6 @@ class AnnotationEditorLayerBuilder {
 
   #uiManager;
 
-  #clonedFrom = null;
-
   /**
    * @param {AnnotationEditorLayerBuilderOptions} options
    */
@@ -82,7 +79,6 @@ class AnnotationEditorLayerBuilder {
     this.#drawLayer = options.drawLayer || null;
     this.#onAppend = options.onAppend || null;
     this.#structTreeLayer = options.structTreeLayer || null;
-    this.#clonedFrom = options.clonedFrom || null;
   }
 
   updatePageIndex(newPageIndex) {
@@ -130,11 +126,6 @@ class AnnotationEditorLayerBuilder {
       drawLayer: this.#drawLayer,
     });
 
-    this.annotationEditorLayer.setClonedFrom(
-      this.#clonedFrom?.annotationEditorLayer
-    );
-    this.#clonedFrom = null;
-
     const parameters = {
       viewport: clonedViewport,
       div,
@@ -142,7 +133,7 @@ class AnnotationEditorLayerBuilder {
       intent,
     };
 
-    this.annotationEditorLayer.render(parameters);
+    await this.annotationEditorLayer.render(parameters);
     this.show();
   }
 

@@ -13,6 +13,10 @@
  * limitations under the License.
  */
 
+/**
+ * @import {BaseStream} from "./base_stream.js";
+ */
+
 import {
   bytesToString,
   FormatError,
@@ -26,10 +30,25 @@ import {
   warn,
 } from "../shared/util.js";
 import { calculateSHA384, calculateSHA512 } from "./calculate_sha_other.js";
-import { Dict, isName, Name } from "./primitives.js";
+import { Dict, isDict, isName, Name } from "./primitives.js";
 import { calculateMD5 } from "./calculate_md5.js";
 import { calculateSHA256 } from "./calculate_sha256.js";
 import { DecryptStream } from "./decrypt_stream.js";
+import { saslPrep } from "./sasl_prep.js";
+
+/**
+ * @typedef {typeof AES128Cipher | typeof AES256Cipher | typeof ARCFourCipher
+ * | typeof NullCipher} CipherConstructors
+ */
+
+/**
+ * @callback ResolveCipher
+ *   Find the appropriate cipher class based on the filter name.
+ * @param {Name | null} [filterName]
+ *   Name.
+ * @returns {CipherConstructors}
+ *   Cipher constructor.
+ */
 
 class ARCFourCipher {
   a = 0;
@@ -737,13 +756,53 @@ class PDF20 extends PDFBase {
 }
 
 class CipherTransform {
-  constructor(stringCipherConstructor, streamCipherConstructor) {
-    this.StringCipherConstructor = stringCipherConstructor;
-    this.StreamCipherConstructor = streamCipherConstructor;
+  /** @type {Map<string, CipherConstructors>} */
+  #cipherCache = new Map();
+
+  /** @type {Name | null} */
+  embeddedFilterName = null;
+
+  /**
+   * @param {ResolveCipher} resolveCipher
+   *   Resolve a cipher constructor from a crypt filter name.
+   * @param {Name | null} [stringFilterName]
+   *   Default crypt filter for strings.
+   * @param {Name | null} [streamFilterName]
+   *   Default crypt filter for streams.
+   */
+  constructor(resolveCipher, stringFilterName = null, streamFilterName = null) {
+    this.resolveCipher = resolveCipher;
+    this.streamFilterName = streamFilterName;
+    this.stringFilterName = stringFilterName;
   }
 
-  createStream(stream, length) {
-    const cipher = new this.StreamCipherConstructor();
+  /**
+   * @param {Name | null} [filterName]
+   *   Crypt filter name.
+   * @returns {CipherConstructors}
+   *   Cipher constructor.
+   */
+  #getCipher(filterName = null) {
+    const key = filterName instanceof Name ? filterName.name : "__default__";
+
+    return this.#cipherCache.getOrInsertComputed(key, () =>
+      this.resolveCipher(filterName)
+    );
+  }
+
+  /**
+   * @param {BaseStream} stream
+   * @param {number | null} length
+   * @param {Name | null} [cryptFilterName]
+   * @returns {DecryptStream}
+   */
+  createStream(stream, length, cryptFilterName = null) {
+    const defaultFilterName =
+      this.embeddedFilterName && isDict(stream.dict, "EmbeddedFile")
+        ? this.embeddedFilterName
+        : this.streamFilterName;
+    const Cipher = this.#getCipher(cryptFilterName || defaultFilterName);
+    const cipher = new Cipher();
     return new DecryptStream(
       stream,
       length,
@@ -754,14 +813,16 @@ class CipherTransform {
   }
 
   decryptString(s) {
-    const cipher = new this.StringCipherConstructor();
+    const Cipher = this.#getCipher(this.stringFilterName);
+    const cipher = new Cipher();
     let data = stringToBytes(s);
     data = cipher.decryptBlock(data, true);
     return bytesToString(data);
   }
 
   encryptString(s) {
-    const cipher = new this.StringCipherConstructor();
+    const Cipher = this.#getCipher(this.stringFilterName);
+    const cipher = new Cipher();
     if (cipher instanceof AESBaseCipher) {
       // Append some chars equal to "16 - (M mod 16)"
       // where M is the string length (see section 7.6.2 in PDF specification)
@@ -793,7 +854,18 @@ class CipherTransform {
   }
 }
 
+function utf8PasswordToBytes(password) {
+  try {
+    password = utf8StringToString(password);
+  } catch {
+    warn("CipherTransformFactory: Unable to convert UTF8 encoded password.");
+  }
+  return stringToBytes(password);
+}
+
 class CipherTransformFactory {
+  #fileId;
+
   static get _defaultPasswordBytes() {
     return shadow(
       this,
@@ -986,41 +1058,6 @@ class CipherTransformFactory {
     return hash.subarray(0, Math.min(n + 5, 16));
   }
 
-  #buildCipherConstructor(cf, name, num, gen, key) {
-    if (!(name instanceof Name)) {
-      throw new FormatError("Invalid crypt filter name.");
-    }
-    const self = this;
-    const cryptFilter = cf.get(name.name);
-    const cfm = cryptFilter?.get("CFM");
-
-    if (!cfm || cfm.name === "None") {
-      return function () {
-        return new NullCipher();
-      };
-    }
-    if (cfm.name === "V2") {
-      return function () {
-        return new ARCFourCipher(
-          self.#buildObjectKey(num, gen, key, /* isAes = */ false)
-        );
-      };
-    }
-    if (cfm.name === "AESV2") {
-      return function () {
-        return new AES128Cipher(
-          self.#buildObjectKey(num, gen, key, /* isAes = */ true)
-        );
-      };
-    }
-    if (cfm.name === "AESV3") {
-      return function () {
-        return new AES256Cipher(key);
-      };
-    }
-    throw new FormatError("Unknown crypto method");
-  }
-
   constructor(dict, fileId, password) {
     const filter = dict.get("Filter");
     if (!isName(filter, "Standard")) {
@@ -1028,6 +1065,7 @@ class CipherTransformFactory {
     }
     this.filterName = filter.name;
     this.dict = dict;
+    this.#fileId = fileId;
     const algorithm = dict.get("V");
     if (
       !Number.isInteger(algorithm) ||
@@ -1063,6 +1101,29 @@ class CipherTransformFactory {
       throw new FormatError("invalid key length");
     }
 
+    let cf = null;
+    let stmf = Name.get("Identity");
+    let strf = Name.get("Identity");
+    let eff = stmf;
+
+    if (algorithm >= 4) {
+      cf = dict.get("CF");
+      if (cf instanceof Dict) {
+        // The 'CF' dictionary itself should not be encrypted, and by setting
+        // `suppressEncryption` we can prevent an infinite loop inside of
+        // `XRef_fetchUncompressed` if the dictionary contains indirect
+        // objects (fixes issue7665.pdf).
+        cf.suppressEncryption = true;
+      }
+      stmf = dict.get("StmF") || Name.get("Identity");
+      strf = dict.get("StrF") || Name.get("Identity");
+      eff = dict.get("EFF") || stmf;
+    }
+    this.cf = cf;
+    this.stmf = stmf;
+    this.strf = strf;
+    this.eff = eff;
+
     const ownerBytes = stringToBytes(dict.get("O")),
       userBytes = stringToBytes(dict.get("U"));
     // prepare keys
@@ -1077,18 +1138,19 @@ class CipherTransformFactory {
     this.encryptMetadata = encryptMetadata;
 
     const fileIdBytes = stringToBytes(fileId);
-    let passwordBytes;
+    let passwordBytes, rawPasswordBytes;
     if (password) {
       if (revision === 6) {
-        try {
-          password = utf8StringToString(password);
-        } catch {
-          warn(
-            "CipherTransformFactory: Unable to convert UTF8 encoded password."
-          );
+        const preppedPassword = saslPrep(password);
+        passwordBytes = utf8PasswordToBytes(preppedPassword);
+        if (preppedPassword !== password) {
+          rawPasswordBytes = utf8PasswordToBytes(password);
         }
+      } else if (algorithm === 5) {
+        passwordBytes = utf8PasswordToBytes(password);
+      } else {
+        passwordBytes = stringToBytes(password);
       }
-      passwordBytes = stringToBytes(password);
     }
 
     let encryptionKey;
@@ -1112,23 +1174,45 @@ class CipherTransformFactory {
       const ownerEncryption = stringToBytes(dict.get("OE"));
       const userEncryption = stringToBytes(dict.get("UE"));
       const perms = stringToBytes(dict.get("Perms"));
-      encryptionKey = this.#createEncryptionKey20(
-        revision,
-        passwordBytes,
-        ownerPassword,
-        ownerValidationSalt,
-        ownerKeySalt,
-        uBytes,
-        userPassword,
-        userValidationSalt,
-        userKeySalt,
-        ownerEncryption,
-        userEncryption,
-        perms
-      );
+      for (const candidate of rawPasswordBytes
+        ? [passwordBytes, rawPasswordBytes]
+        : [passwordBytes]) {
+        encryptionKey = this.#createEncryptionKey20(
+          revision,
+          candidate,
+          ownerPassword,
+          ownerValidationSalt,
+          ownerKeySalt,
+          uBytes,
+          userPassword,
+          userValidationSalt,
+          userKeySalt,
+          ownerEncryption,
+          userEncryption,
+          perms
+        );
+        if (encryptionKey) {
+          break;
+        }
+      }
     }
     if (!encryptionKey) {
       if (!password) {
+        if (
+          this.algorithm >= 4 &&
+          isName(this.stmf, "Identity") &&
+          isName(this.strf, "Identity")
+        ) {
+          const effCF = this.cf?.get(this.eff.name);
+          const authEvent = effCF?.get("AuthEvent");
+
+          if (isName(authEvent, "EFOpen")) {
+            // For EFOpen with Identity as default stream/string filters, defer
+            // password prompting until an EmbeddedFile stream is actually read.
+            this.encryptionKey = null;
+            return;
+          }
+        }
         throw new PasswordException(
           "No password given",
           PasswordResponses.NEED_PASSWORD
@@ -1168,53 +1252,100 @@ class CipherTransformFactory {
     } else {
       this.encryptionKey = encryptionKey;
     }
-
-    if (algorithm >= 4) {
-      const cf = dict.get("CF");
-      if (cf instanceof Dict) {
-        // The 'CF' dictionary itself should not be encrypted, and by setting
-        // `suppressEncryption` we can prevent an infinite loop inside of
-        // `XRef_fetchUncompressed` if the dictionary contains indirect
-        // objects (fixes issue7665.pdf).
-        cf.suppressEncryption = true;
-      }
-      this.cf = cf;
-      this.stmf = dict.get("StmF") || Name.get("Identity");
-      this.strf = dict.get("StrF") || Name.get("Identity");
-      this.eff = dict.get("EFF") || this.stmf;
-    }
   }
 
+  /**
+   * Set password.
+   *
+   * @param {string} password
+   *   New password.
+   * @returns {undefined}
+   *   Nothing.
+   */
+  setPassword(password) {
+    const transform = new CipherTransformFactory(
+      this.dict,
+      this.#fileId,
+      password
+    );
+    this.encryptionKey = transform.encryptionKey;
+  }
+
+  /**
+   * @param {number} num
+   *   Object number.
+   * @param {number} gen
+   *   Generation number.
+   * @returns {CipherTransform}
+   *   Cipher transform.
+   */
   createCipherTransform(num, gen) {
     if (this.algorithm === 4 || this.algorithm === 5) {
-      return new CipherTransform(
-        this.#buildCipherConstructor(
-          this.cf,
-          this.strf,
-          num,
-          gen,
-          this.encryptionKey
-        ),
-        this.#buildCipherConstructor(
-          this.cf,
-          this.stmf,
-          num,
-          gen,
-          this.encryptionKey
-        )
+      /** @type {ResolveCipher} */
+      const resolveCipher = filterName => {
+        if (!(filterName instanceof Name)) {
+          throw new FormatError("Invalid crypt filter name.");
+        }
+        const cryptFilter = this.cf.get(filterName.name);
+        const cfm = cryptFilter?.get("CFM");
+
+        if (!cfm || cfm.name === "None") {
+          return NullCipher;
+        }
+        if (!this.encryptionKey) {
+          throw new PasswordException(
+            "No password given",
+            PasswordResponses.NEED_PASSWORD
+          );
+        }
+        if (this.algorithm === 5 || cfm.name === "AESV3") {
+          // V=5 always uses 256-bit AES with the file encryption key, even
+          // when a producer wrongly sets the crypt filter's CFM to AESV2
+          // (bug 2046659).
+          return AES256Cipher.bind(null, this.encryptionKey);
+        }
+        if (cfm.name === "V2") {
+          return ARCFourCipher.bind(
+            null,
+            this.#buildObjectKey(
+              num,
+              gen,
+              this.encryptionKey,
+              /* isAes = */ false
+            )
+          );
+        }
+        if (cfm.name === "AESV2") {
+          return AES128Cipher.bind(
+            null,
+            this.#buildObjectKey(
+              num,
+              gen,
+              this.encryptionKey,
+              /* isAes = */ true
+            )
+          );
+        }
+        throw new FormatError("Unknown crypto method");
+      };
+
+      const transform = new CipherTransform(
+        resolveCipher,
+        this.strf,
+        this.stmf
       );
+      transform.embeddedFilterName = this.eff;
+      return transform;
     }
+
     // algorithms 1 and 2
-    const key = this.#buildObjectKey(
-      num,
-      gen,
-      this.encryptionKey,
-      /* isAes = */ false
-    );
-    const cipherConstructor = function () {
-      return new ARCFourCipher(key);
-    };
-    return new CipherTransform(cipherConstructor, cipherConstructor);
+    /** @type {ResolveCipher} */
+    const resolveCipher = () =>
+      ARCFourCipher.bind(
+        null,
+        this.#buildObjectKey(num, gen, this.encryptionKey, /* isAes = */ false)
+      );
+    return new CipherTransform(resolveCipher);
   }
 }
 
@@ -1222,6 +1353,7 @@ export {
   AES128Cipher,
   AES256Cipher,
   ARCFourCipher,
+  CipherTransform,
   CipherTransformFactory,
   PDF17,
   PDF20,

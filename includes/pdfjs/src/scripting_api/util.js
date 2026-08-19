@@ -12,6 +12,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/* eslint-disable radix */
 
 import { PDFObject } from "./pdf_object.js";
 
@@ -61,6 +62,7 @@ class Util extends PDFObject {
       throw new TypeError("First argument of printf must be a string");
     }
 
+    // eslint-disable-next-line regexp/no-misleading-capturing-group
     const pattern = /%(,[0-4])?([+ 0#]+)?(\d+)?(\.\d+)?(.)/g;
     const PLUS = 1;
     const SPACE = 2;
@@ -117,9 +119,7 @@ class Util extends PDFObject {
         }
         cFlags = flags;
 
-        if (nWidth) {
-          nWidth = parseInt(nWidth);
-        }
+        nWidth &&= parseInt(nWidth);
 
         let intPart = Math.trunc(arg);
 
@@ -134,9 +134,7 @@ class Util extends PDFObject {
           return hex;
         }
 
-        if (nPrecision) {
-          nPrecision = parseInt(nPrecision.substring(1));
-        }
+        nPrecision &&= parseInt(nPrecision.substring(1));
 
         nDecSep = nDecSep ? nDecSep.substring(1) : "0";
         const separators = {
@@ -604,7 +602,11 @@ class Util extends PDFObject {
         function (match, patternElement) {
           const { pattern, action } = handlers[patternElement];
           actions.push(action);
-          return pattern;
+          // If the format is "Hm", then /\d{1,2}\d{1,2}/ is ambiguous so we use
+          // a lookahead to ensure that we match the longest possible sequence.
+          return pattern.includes(",")
+            ? `(?=${pattern})\\${actions.length}`
+            : pattern;
         }
       );
 

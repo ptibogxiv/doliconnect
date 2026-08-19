@@ -199,6 +199,39 @@ class InkEditor extends DrawingEditor {
     return AnnotationEditorParamsType.INK_COLOR;
   }
 
+  get colorAndOpacityType() {
+    return AnnotationEditorParamsType.INK_COLOR_AND_OPACITY;
+  }
+
+  get opacityType() {
+    return AnnotationEditorParamsType.INK_OPACITY;
+  }
+
+  /** @inheritdoc */
+  updateParams(type, value) {
+    if (type === AnnotationEditorParamsType.INK_COLOR_AND_OPACITY) {
+      this._updateColorAndOpacity(value.color, value.opacity);
+      return;
+    }
+    super.updateParams(type, value);
+  }
+
+  /** @inheritdoc */
+  static updateDefaultParams(type, value) {
+    if (type === AnnotationEditorParamsType.INK_COLOR_AND_OPACITY) {
+      super.updateDefaultParams(
+        AnnotationEditorParamsType.INK_COLOR,
+        value.color
+      );
+      super.updateDefaultParams(
+        AnnotationEditorParamsType.INK_OPACITY,
+        value.opacity
+      );
+      return;
+    }
+    super.updateDefaultParams(type, value);
+  }
+
   get color() {
     return this._drawingOptions.stroke;
   }

@@ -23,7 +23,9 @@ import {
   AnnotationEditorType,
   FeatureTest,
   getUuid,
+  makeArr,
   shadow,
+  SVG_NS,
   Util,
   warn,
 } from "../../shared/util.js";
@@ -35,6 +37,7 @@ import {
   stopEvent,
 } from "../display_utils.js";
 import { FloatingToolbar } from "./toolbar.js";
+import { internalOpt } from "../../shared/internal_evt.js";
 
 function bindEvents(obj, element, names) {
   for (const name of names) {
@@ -131,9 +134,6 @@ class IdManager {
 
   constructor() {
     if (typeof PDFJSDev !== "undefined" && PDFJSDev.test("TESTING")) {
-      Object.defineProperty(this, "reset", {
-        value: () => (this.#id = 0),
-      });
       Object.defineProperty(this, "getNextId", {
         value: () => this.#id,
       });
@@ -170,7 +170,7 @@ class ImageManager {
     // The "workaround" is to append "svgView(preserveAspectRatio(none))" to the
     // url, but according to comment #15, it seems that it leads to unexpected
     // behavior in Safari.
-    const svg = `data:image/svg+xml;charset=UTF-8,<svg viewBox="0 0 1 1" width="1" height="1" xmlns="http://www.w3.org/2000/svg"><rect width="1" height="1" style="fill:red;"/></svg>`;
+    const svg = `data:image/svg+xml;charset=UTF-8,<svg viewBox="0 0 1 1" width="1" height="1" xmlns="${SVG_NS}"><rect width="1" height="1" style="fill:red;"/></svg>`;
     const canvas = new OffscreenCanvas(1, 3);
     const ctx = canvas.getContext("2d", { willReadFrequently: true });
     const image = new Image();
@@ -510,56 +510,102 @@ class CommandManager {
  * non-mac OSes.
  */
 class KeyboardManager {
+  static ALT = 0x1;
+
+  static CTRL = 0x2;
+
+  static META = 0x4;
+
+  static SHIFT = 0x8;
+
   /**
    * Create a new keyboard manager class.
    * @param {Array<Array>} callbacks - an array containing an array of shortcuts
-   * and a callback to call.
-   * A shortcut is a string like `ctrl+c` or `mac+ctrl+c` for mac OS.
+   * and a callback to call. If the array contains no `mac+`-prefixed entry,
+   * every shortcut applies on all platforms. As soon as it contains at least
+   * one `mac+` entry, the `mac+` ones become the macOS-only set and the bare
+   * entries apply only on non-Mac.
    */
   constructor(callbacks) {
-    this.buffer = [];
     this.callbacks = new Map();
-    this.allKeys = new Set();
 
     const { isMac } = FeatureTest.platform;
     for (const [keys, callback, options = {}] of callbacks) {
+      const hasMacOverride = keys.some(k => k.startsWith("mac+"));
       for (const key of keys) {
-        const isMacKey = key.startsWith("mac+");
-        if (isMac && isMacKey) {
-          this.callbacks.set(key.slice(4), { callback, options });
-          this.allKeys.add(key.split("+").at(-1));
-        } else if (!isMac && !isMacKey) {
-          this.callbacks.set(key, { callback, options });
-          this.allKeys.add(key.split("+").at(-1));
+        let shortcut = key;
+        if (hasMacOverride) {
+          const isMacKey = key.startsWith("mac+");
+          if (isMac !== isMacKey) {
+            continue;
+          }
+          if (isMacKey) {
+            shortcut = key.slice(4);
+          }
         }
+        const [keyName, modifiers] = KeyboardManager.#parseShortcut(shortcut);
+        if (keyName === null) {
+          continue;
+        }
+        this.callbacks
+          .getOrInsertComputed(keyName, makeArr)
+          .push({ callback, options, modifiers });
       }
     }
   }
 
   /**
-   * Serialize an event into a string in order to match a
-   * potential key for a callback.
-   * @param {KeyboardEvent} event
-   * @returns {string}
+   * Parse a shortcut string like "ctrl+shift+a" into a `[key, modifiers]`
+   * pair. Modifier names are case-insensitive and may appear in any order;
+   * the key part is matched against `event.key` so `Space` is normalized to
+   * `" "` but other names like `ArrowLeft`, `Enter`, `Backspace`, and
+   * single-letter keys (`a`, `Z`) are preserved.
+   * @param {string} value
+   * @returns {[string|null, number]}
    */
-  #serialize(event) {
-    if (event.altKey) {
-      this.buffer.push("alt");
+  static #parseShortcut(value) {
+    let keyPart = null;
+    let modifiers = 0;
+    for (let part of value.split("+")) {
+      part = part.trim();
+      if (!part) {
+        continue;
+      }
+      const upper = part.toUpperCase();
+      const modifier = KeyboardManager[upper];
+      if (modifier) {
+        modifiers |= modifier;
+        continue;
+      }
+      if (keyPart !== null) {
+        warn(`KeyboardManager: multiple keys in shortcut "${value}"`);
+        break;
+      }
+      keyPart = upper === "SPACE" ? " " : part;
     }
-    if (event.ctrlKey) {
-      this.buffer.push("ctrl");
+    if (keyPart === null) {
+      warn(`KeyboardManager: no key found in shortcut "${value}"`);
     }
-    if (event.metaKey) {
-      this.buffer.push("meta");
-    }
-    if (event.shiftKey) {
-      this.buffer.push("shift");
-    }
-    this.buffer.push(event.key);
-    const str = this.buffer.join("+");
-    this.buffer.length = 0;
+    return [keyPart, modifiers];
+  }
 
-    return str;
+  /**
+   * Translate `event.code` (a layout-independent physical key identifier) to
+   * the equivalent `event.key` value on a US layout, so a Ctrl+A shortcut
+   * still fires when the user is on a layout where the "A" key produces a
+   * non-Latin character.
+   * @param {string} code
+   * @returns {string|null}
+   */
+  static #codeToKey(code) {
+    // KeyA..KeyZ -> a..z, Digit0..Digit9 / Numpad0..Numpad9 -> 0..9.
+    // Codes like NumpadEnter are intentionally skipped — their event.key
+    // already matches the corresponding non-numpad key.
+    const match = /^(?:Key([A-Z])|(?:Digit|Numpad)(\d))$/.exec(code);
+    if (!match) {
+      return null;
+    }
+    return match[1]?.toLowerCase() ?? match[2];
   }
 
   /**
@@ -570,13 +616,38 @@ class KeyboardManager {
    * @returns
    */
   exec(self, event) {
-    if (!this.allKeys.has(event.key)) {
-      return;
+    let shortcuts = this.callbacks.get(event.key);
+    if (!shortcuts) {
+      // Layout-independent fallback: on a Cyrillic layout the physical "A"
+      // key reports event.key="ф" but event.code="KeyA". This must be skipped
+      // when event.key is already a Latin letter, otherwise on AZERTY (where
+      // the "A" key has event.key="a" but event.code="KeyQ") ctrl+A would
+      // wrongly trigger ctrl+Q.
+      if (/^[a-z]$/i.test(event.key)) {
+        return;
+      }
+      const fallback = KeyboardManager.#codeToKey(event.code);
+      if (fallback === null || fallback === event.key) {
+        return;
+      }
+      shortcuts = this.callbacks.get(fallback);
+      if (!shortcuts) {
+        return;
+      }
     }
-    const info = this.callbacks.get(this.#serialize(event));
+
+    const eventModifiers =
+      (event.altKey ? KeyboardManager.ALT : 0) |
+      (event.ctrlKey ? KeyboardManager.CTRL : 0) |
+      (event.metaKey ? KeyboardManager.META : 0) |
+      (event.shiftKey ? KeyboardManager.SHIFT : 0);
+    const info = shortcuts.find(
+      shortcut => shortcut.modifiers === eventModifiers
+    );
     if (!info) {
       return;
     }
+
     const {
       callback,
       options: { bubbles = false, args = [], checker = null },
@@ -674,6 +745,8 @@ class AnnotationEditorUIManager {
   #allEditors = new Map();
 
   #allLayers = new Map();
+
+  #savedAllLayers = null;
 
   #altTextManager = null;
 
@@ -840,7 +913,7 @@ class AnnotationEditorUIManager {
           { checker: textInputChecker },
         ],
         [
-          ["Enter", "mac+Enter"],
+          ["Enter"],
           proto.addNewEditorFromKeyboard,
           {
             // Those shortcuts can be used in the toolbar for some other actions
@@ -853,7 +926,7 @@ class AnnotationEditorUIManager {
           },
         ],
         [
-          [" ", "mac+ "],
+          ["Space"],
           proto.addNewEditorFromKeyboard,
           {
             // Those shortcuts can be used in the toolbar for some other actions
@@ -864,9 +937,9 @@ class AnnotationEditorUIManager {
               self.#container.contains(document.activeElement),
           },
         ],
-        [["Escape", "mac+Escape"], proto.unselectAll],
+        [["Escape"], proto.unselectAll],
         [
-          ["ArrowLeft", "mac+ArrowLeft"],
+          ["ArrowLeft"],
           proto.translateSelectedEditors,
           { args: [-small, 0], checker: arrowChecker },
         ],
@@ -876,7 +949,7 @@ class AnnotationEditorUIManager {
           { args: [-big, 0], checker: arrowChecker },
         ],
         [
-          ["ArrowRight", "mac+ArrowRight"],
+          ["ArrowRight"],
           proto.translateSelectedEditors,
           { args: [small, 0], checker: arrowChecker },
         ],
@@ -886,7 +959,7 @@ class AnnotationEditorUIManager {
           { args: [big, 0], checker: arrowChecker },
         ],
         [
-          ["ArrowUp", "mac+ArrowUp"],
+          ["ArrowUp"],
           proto.translateSelectedEditors,
           { args: [0, -small], checker: arrowChecker },
         ],
@@ -896,7 +969,7 @@ class AnnotationEditorUIManager {
           { args: [0, -big], checker: arrowChecker },
         ],
         [
-          ["ArrowDown", "mac+ArrowDown"],
+          ["ArrowDown"],
           proto.translateSelectedEditors,
           { args: [0, small], checker: arrowChecker },
         ],
@@ -936,17 +1009,21 @@ class AnnotationEditorUIManager {
     this.#signatureManager = signatureManager;
     this.#pdfDocument = pdfDocument;
     this._eventBus = eventBus;
-    eventBus._on("editingaction", this.onEditingAction.bind(this), { signal });
-    eventBus._on("pagechanging", this.onPageChanging.bind(this), { signal });
-    eventBus._on("scalechanging", this.onScaleChanging.bind(this), { signal });
-    eventBus._on("rotationchanging", this.onRotationChanging.bind(this), {
-      signal,
-    });
-    eventBus._on("setpreference", this.onSetPreference.bind(this), { signal });
-    eventBus._on(
+
+    const evtOpts = { signal, ...internalOpt };
+    eventBus.on("editingaction", this.onEditingAction.bind(this), evtOpts);
+    eventBus.on("pagechanging", this.onPageChanging.bind(this), evtOpts);
+    eventBus.on("scalechanging", this.onScaleChanging.bind(this), evtOpts);
+    eventBus.on(
+      "rotationchanging",
+      this.onRotationChanging.bind(this),
+      evtOpts
+    );
+    eventBus.on("setpreference", this.onSetPreference.bind(this), evtOpts);
+    eventBus.on(
       "switchannotationeditorparams",
       evt => this.updateParams(evt.type, evt.value),
-      { signal }
+      evtOpts
     );
     window.addEventListener(
       "pointerdown",
@@ -962,7 +1039,7 @@ class AnnotationEditorUIManager {
       },
       { capture: true, signal }
     );
-    window.addEventListener("beforeunload", this.#beforeUnload.bind(this), {
+    window.addEventListener("beforeunload", this.endCurrentEditing.bind(this), {
       capture: true,
       signal,
     });
@@ -987,13 +1064,6 @@ class AnnotationEditorUIManager {
     commentManager?.setSidebarUiManager(this);
 
     if (typeof PDFJSDev !== "undefined" && PDFJSDev.test("TESTING")) {
-      Object.defineProperty(this, "reset", {
-        value: () => {
-          this.selectAll();
-          this.delete();
-          this.#idManager.reset();
-        },
-      });
       Object.defineProperty(this, "getNextEditorId", {
         value: () => this.#idManager.getNextId(),
       });
@@ -1219,11 +1289,11 @@ class AnnotationEditorUIManager {
     const { resolve, promise } = Promise.withResolvers();
     const onEditorsRendered = evt => {
       if (evt.pageNumber === pageNumber) {
-        this._eventBus._off("editorsrendered", onEditorsRendered);
+        this._eventBus.off("editorsrendered", onEditorsRendered);
         resolve();
       }
     };
-    this._eventBus.on("editorsrendered", onEditorsRendered);
+    this._eventBus.on("editorsrendered", onEditorsRendered, internalOpt);
     await promise;
   }
 
@@ -1240,6 +1310,7 @@ class AnnotationEditorUIManager {
     this._eventBus.on("annotationeditormodechanged", callback, {
       once: true,
       signal: this._signal,
+      ...internalOpt,
     });
     this._eventBus.dispatch("showannotationeditorui", {
       source: this,
@@ -1391,7 +1462,7 @@ class AnnotationEditorUIManager {
     this.highlightSelection(methodOfCreation, /* comment */ true);
   }
 
-  #beforeUnload(e) {
+  endCurrentEditing() {
     this.commitOrRemove();
     this.currentLayer?.endDrawingSession(/* isAborted = */ false);
   }
@@ -1841,6 +1912,66 @@ class AnnotationEditorUIManager {
     }
   }
 
+  updatePageIndex(oldPageIndex, newPageIndex) {
+    for (const editor of this.getEditors(oldPageIndex)) {
+      editor.pageIndex = newPageIndex;
+    }
+    const layer = this.#savedAllLayers.get(oldPageIndex);
+    if (layer) {
+      layer.pageIndex = newPageIndex;
+      this.#allLayers.set(newPageIndex, layer);
+      if (this.#isEnabled) {
+        layer.enable();
+      } else {
+        layer.disable();
+      }
+    }
+  }
+
+  startUpdatePages() {
+    this.#savedAllLayers = new Map(this.#allLayers);
+    this.#allLayers.clear();
+  }
+
+  endUpdatePages() {
+    this.#savedAllLayers = null;
+  }
+
+  clonePage(pageIndex, newPageIndex) {
+    for (const editor of this.getEditors(pageIndex)) {
+      const serialized = editor.serialize(
+        editor.mode !== AnnotationEditorType.HIGHLIGHT
+      );
+      if (!serialized) {
+        continue;
+      }
+      serialized.pageIndex = newPageIndex;
+      serialized.id = this.getId();
+      serialized.isClone = true;
+      delete serialized.popupRef;
+      this.#annotationStorage.setValue(serialized.id, serialized);
+    }
+  }
+
+  findClonesForPage(layer) {
+    const promises = [];
+    const { pageIndex } = layer;
+    for (const [id, editor] of this.#annotationStorage) {
+      if (editor.pageIndex === pageIndex && editor.isClone) {
+        this.#annotationStorage.remove(id);
+        promises.push(
+          layer.deserialize(editor).then(deserializedEditor => {
+            if (deserializedEditor) {
+              deserializedEditor.isClone = true;
+              layer.addOrRebuild(deserializedEditor);
+            }
+          })
+        );
+      }
+    }
+    return Promise.all(promises);
+  }
+
   /**
    * Update the different possible states of this manager, e.g. is there
    * something to undo, redo, ...
@@ -1852,7 +1983,7 @@ class AnnotationEditorUIManager {
     );
 
     if (hasChanged) {
-      this._eventBus.dispatch("annotationeditorstateschanged", {
+      this._eventBus.dispatch("editingstateschanged", {
         source: this,
         details: Object.assign(this.#previousStates, details),
       });
@@ -2393,6 +2524,7 @@ class AnnotationEditorUIManager {
         ed.unselect();
       }
     }
+    this.#commentManager?.destroyPopup();
     this.#selectedEditors.clear();
 
     this.#selectedEditors.add(editor);
@@ -2401,14 +2533,6 @@ class AnnotationEditorUIManager {
     this.#dispatchUpdateStates({
       hasSelectedEditor: true,
     });
-  }
-
-  /**
-   * Check if the editor is selected.
-   * @param {AnnotationEditor} editor
-   */
-  isSelected(editor) {
-    return this.#selectedEditors.has(editor);
   }
 
   get firstSelectedEditor() {
@@ -2582,6 +2706,8 @@ class AnnotationEditorUIManager {
     if (this.#currentDrawingSession?.commitOrRemove()) {
       return;
     }
+
+    this.#commentManager?.destroyPopup();
 
     if (!this.hasSelection) {
       return;

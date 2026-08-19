@@ -67,11 +67,27 @@ async function writeStream(stream, buffer, transform) {
     : filter;
   const isFilterZeroFlateDecode = isName(filterZero, "FlateDecode");
 
+  // These filters already compress the data, so we shouldn't try to compress it
+  // again.
+  const isFilterZeroImageDecode =
+    isName(filterZero, "DCTDecode") ||
+    isName(filterZero, "JPXDecode") ||
+    isName(filterZero, "JBIG2Decode") ||
+    isName(filterZero, "CCITTFaxDecode") ||
+    isName(filterZero, "LZWDecode");
+  const isFilterZeroCompressedObject =
+    isFilterZeroFlateDecode ||
+    isFilterZeroImageDecode ||
+    isName(filterZero, "BrotliDecode");
+
   // If the string is too small there is no real benefit in compressing it.
   // The number 256 is arbitrary, but it should be reasonable.
   const MIN_LENGTH_FOR_COMPRESSING = 256;
 
-  if (bytes.length >= MIN_LENGTH_FOR_COMPRESSING && !isFilterZeroFlateDecode) {
+  if (
+    !isFilterZeroCompressedObject &&
+    bytes.length >= MIN_LENGTH_FOR_COMPRESSING
+  ) {
     try {
       const cs = new CompressionStream("deflate");
       const writer = cs.writable.getWriter();
@@ -85,8 +101,7 @@ async function writeStream(stream, buffer, transform) {
         .catch(() => {});
 
       // Response::text doesn't return the correct data.
-      const buf = await new Response(cs.readable).arrayBuffer();
-      bytes = new Uint8Array(buf);
+      bytes = await new Response(cs.readable).bytes();
 
       let newFilter, newParams;
       if (!filter) {
@@ -150,7 +165,9 @@ async function writeValue(value, buffer, transform) {
     // matrices (e.g. [0.000008 0 0 0.000008 0 0]).
     // The numbers must be "rounded" only when pdf.js is producing them and the
     // current transformation matrix is well known.
-    buffer.push(value.toString());
+    // toFixed(10) avoids scientific notation and rounds; the replace removes
+    // trailing zeros (and a trailing dot for integers).
+    buffer.push(value.toFixed(10).replace(/\.?0+$/, ""));
   } else if (typeof value === "boolean") {
     buffer.push(value.toString());
   } else if (value instanceof Dict) {
@@ -207,7 +224,7 @@ function writeXFADataForAcroform(str, changes) {
       continue;
     }
     const { path, value } = xfa;
-    if (!path) {
+    if (!path || value === null) {
       continue;
     }
     const nodePath = parseXFAPath(path);
@@ -274,8 +291,7 @@ function updateXFA({ xfaData, xfaDatasetsRef, changes, xref }) {
     const datasets = xref.fetchIfRef(xfaDatasetsRef);
     xfaData = writeXFADataForAcroform(datasets.getString(), changes);
   }
-  const xfaDataStream = new StringStream(xfaData);
-  xfaDataStream.dict = new Dict(xref);
+  const xfaDataStream = new StringStream(xfaData, new Dict(xref));
   xfaDataStream.dict.setIfName("Type", "EmbeddedFile");
 
   changes.put(xfaDatasetsRef, {

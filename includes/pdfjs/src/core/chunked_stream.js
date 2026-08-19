@@ -14,7 +14,8 @@
  */
 
 import { arrayBuffersToBytes, MissingDataException } from "./core_utils.js";
-import { assert, MathClamp } from "../shared/util.js";
+import { assert } from "../shared/util.js";
+import { MathClamp } from "../shared/math_clamp.js";
 import { Stream } from "./stream.js";
 
 class ChunkedStream extends Stream {
@@ -181,27 +182,14 @@ class ChunkedStream extends Stream {
   }
 
   getBytes(length) {
-    const bytes = this.bytes;
     const pos = this.pos;
-    const strEnd = this.end;
+    const endPos = !length ? this.end : Math.min(pos + length, this.end);
 
-    if (!length) {
-      if (strEnd > this.progressiveDataLength) {
-        this.ensureRange(pos, strEnd);
-      }
-      return bytes.subarray(pos, strEnd);
+    if (endPos > this.progressiveDataLength) {
+      this.ensureRange(pos, endPos);
     }
-
-    let end = pos + length;
-    if (end > strEnd) {
-      end = strEnd;
-    }
-    if (end > this.progressiveDataLength) {
-      this.ensureRange(pos, end);
-    }
-
-    this.pos = end;
-    return bytes.subarray(pos, end);
+    this.pos = endPos;
+    return this.bytes.subarray(pos, endPos);
   }
 
   getByteRange(begin, end) {
@@ -272,13 +260,13 @@ class ChunkedStream extends Stream {
 }
 
 class ChunkedStreamManager {
-  aborted = false;
+  #aborted = false;
 
   currRequestId = 0;
 
   _chunksNeededByRequest = new Map();
 
-  _loadedStreamCapability = Promise.withResolvers();
+  #loadedStreamCapability = Promise.withResolvers();
 
   _promisesByRequest = new Map();
 
@@ -300,7 +288,7 @@ class ChunkedStreamManager {
     while (true) {
       const { value, done } = await rangeReader.read();
 
-      if (this.aborted) {
+      if (this.#aborted) {
         chunks = null;
         return; // Ignoring any data after abort.
       }
@@ -335,7 +323,7 @@ class ChunkedStreamManager {
       const missingChunks = this.stream.getMissingChunks();
       this._requestChunks(missingChunks);
     }
-    return this._loadedStreamCapability.promise;
+    return this.#loadedStreamCapability.promise;
   }
 
   _requestChunks(chunks) {
@@ -358,13 +346,13 @@ class ChunkedStreamManager {
 
     const chunksToRequest = [];
     for (const chunk of chunksNeeded) {
-      let requestIds = this._requestsByChunk.get(chunk);
-      if (!requestIds) {
-        requestIds = [];
-        this._requestsByChunk.set(chunk, requestIds);
-
-        chunksToRequest.push(chunk);
-      }
+      const requestIds = this._requestsByChunk.getOrInsertComputed(
+        chunk,
+        () => {
+          chunksToRequest.push(chunk);
+          return [];
+        }
+      );
       requestIds.push(requestId);
     }
 
@@ -381,7 +369,7 @@ class ChunkedStreamManager {
     }
 
     return capability.promise.catch(reason => {
-      if (this.aborted) {
+      if (this.#aborted) {
         return; // Ignoring any pending requests after abort.
       }
       throw reason;
@@ -471,7 +459,7 @@ class ChunkedStreamManager {
     }
 
     if (stream.isDataLoaded) {
-      this._loadedStreamCapability.resolve(stream);
+      this.#loadedStreamCapability.resolve(stream);
     }
 
     const loadedRequests = [];
@@ -532,10 +520,6 @@ class ChunkedStreamManager {
     });
   }
 
-  onError(err) {
-    this._loadedStreamCapability.reject(err);
-  }
-
   getBeginChunk(begin) {
     return Math.floor(begin / this.chunkSize);
   }
@@ -545,12 +529,13 @@ class ChunkedStreamManager {
   }
 
   abort(reason) {
-    this.aborted = true;
+    this.#aborted = true;
     this.pdfStream?.cancelAllRequests(reason);
 
     for (const capability of this._promisesByRequest.values()) {
       capability.reject(reason);
     }
+    this.#loadedStreamCapability.reject(reason);
   }
 }
 

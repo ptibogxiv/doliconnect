@@ -17,6 +17,7 @@ import {
   bytesToString,
   FormatError,
   info,
+  isArrayEqual,
   shadow,
   stringToBytes,
   Util,
@@ -28,10 +29,25 @@ import {
   ISOAdobeCharset,
 } from "./charsets.js";
 import { ExpertEncoding, StandardEncoding } from "./encodings.js";
-import { readInt16 } from "./core_utils.js";
+import { DataBuilder } from "./data_builder.js";
+import { MathClamp } from "../shared/math_clamp.js";
 
 // Maximum subroutine call depth of type 2 charstrings. Matches OTS.
 const MAX_SUBR_NESTING = 10;
+
+function looksLikeUnsigned16BitNegative(coord) {
+  return coord > 0x7fff && coord <= 0xffff;
+}
+
+function recoverSigned16BitBBox(bbox, onlyLowerLeft = false) {
+  return Util.normalizeRect(
+    bbox.map((coord, i) =>
+      (!onlyLowerLeft || i < 2) && looksLikeUnsigned16BitNegative(coord)
+        ? coord - 0x10000
+        : coord
+    )
+  );
+}
 
 /**
  * The CFF class takes a Type1 file and wrap it into a
@@ -107,6 +123,11 @@ const CFFStandardStrings = [
 ];
 
 const NUM_STANDARD_CFF_STRINGS = 391;
+
+const DEFAULT_BLUE_SCALE = 0.039625;
+const DEFAULT_BLUE_SHIFT = 7;
+const DEFAULT_BLUE_FUZZ = 1;
+const DEFAULT_EXPANSION_FACTOR = 0.06;
 
 const CharstringValidationData = [
   /*  0 */ null,
@@ -228,7 +249,7 @@ class CFFParser {
 
   parse() {
     const properties = this.properties;
-    const cff = new CFF();
+    const cff = new CFF(this.bytes.length);
     this.cff = cff;
 
     // The first five sections must be in order, all the others are reached
@@ -262,8 +283,39 @@ class CFFParser {
       properties.fontMatrix = fontMatrix;
     }
 
-    const fontBBox = topDict.getByName("FontBBox");
-    if (fontBBox) {
+    let fontBBox = topDict.getByName("FontBBox");
+    const descriptorBBox = properties.bbox?.some(coord => coord !== 0)
+      ? recoverSigned16BitBBox(properties.bbox)
+      : null;
+    const cffBBoxHasUnsignedLowerLeft = fontBBox
+      ?.slice(0, 2)
+      .some(looksLikeUnsigned16BitNegative);
+    const cffBBoxHasUnsignedCoords = fontBBox?.some(
+      looksLikeUnsigned16BitNegative
+    );
+    if (fontBBox?.every(coord => coord === 0) && descriptorBBox) {
+      // The CFF FontBBox is empty, hence fall back to the FontDescriptor bbox.
+      fontBBox = descriptorBBox;
+      topDict.setByName("FontBBox", fontBBox);
+    } else if (cffBBoxHasUnsignedCoords) {
+      const recoveredFontBBox = recoverSigned16BitBBox(fontBBox);
+      const descriptorCorroborates =
+        descriptorBBox &&
+        properties.bbox.some(coord => coord < 0) &&
+        !properties.bbox.some(looksLikeUnsigned16BitNegative) &&
+        isArrayEqual(recoveredFontBBox, descriptorBBox);
+
+      if (descriptorCorroborates || cffBBoxHasUnsignedLowerLeft) {
+        // Some Ghostscript-generated CFF fonts encode negative lower-left
+        // coordinates as unsigned 16-bit values. Preserve large upper-right
+        // coordinates unless the descriptor independently confirms the repair.
+        fontBBox = descriptorCorroborates
+          ? recoveredFontBBox
+          : recoverSigned16BitBBox(fontBBox, /* onlyLowerLeft = */ true);
+        topDict.setByName("FontBBox", fontBBox);
+      }
+    }
+    if (fontBBox?.some(coord => coord !== 0)) {
       // adjusting ascent/descent
       properties.ascent = Math.max(fontBBox[3], fontBBox[1]);
       properties.descent = Math.min(fontBBox[1], fontBBox[3]);
@@ -355,6 +407,7 @@ class CFFParser {
   }
 
   parseDict(dict) {
+    const view = new DataView(dict.buffer, dict.byteOffset, dict.bytesLength);
     let pos = 0;
 
     function parseOperand() {
@@ -362,14 +415,12 @@ class CFFParser {
       if (value === 30) {
         return parseFloatOperand();
       } else if (value === 28) {
-        value = readInt16(dict, pos);
+        value = view.getInt16(pos);
         pos += 2;
         return value;
       } else if (value === 29) {
-        value = dict[pos++];
-        value = (value << 8) | dict[pos++];
-        value = (value << 8) | dict[pos++];
-        value = (value << 8) | dict[pos++];
+        value = view.getInt32(pos);
+        pos += 4;
         return value;
       } else if (value >= 32 && value <= 246) {
         return value - 139;
@@ -378,7 +429,7 @@ class CFFParser {
       } else if (value >= 251 && value <= 254) {
         return -((value - 251) * 256) - dict[pos++] - 108;
       }
-      warn('CFFParser_parseDict: "' + value + '" is a reserved command.');
+      warn(`CFFParser.parseDict: "${value}" is a reserved command.`);
       return NaN;
     }
 
@@ -489,12 +540,13 @@ class CFFParser {
     if (!data || state.callDepth > MAX_SUBR_NESTING) {
       return false;
     }
+    const view = new DataView(data.buffer, data.byteOffset, data.bytesLength);
     let stackSize = state.stackSize;
     const stack = state.stack;
 
     let length = data.length;
 
-    for (let j = 0; j < length; ) {
+    for (let j = 0; j < length;) {
       const value = data[j++];
       let validationCommand = null;
       if (value === 12) {
@@ -513,7 +565,7 @@ class CFFParser {
         }
       } else if (value === 28) {
         // number (16 bit)
-        stack[stackSize] = readInt16(data, j);
+        stack[stackSize] = view.getInt16(j);
         j += 2;
         stackSize++;
       } else if (value === 14) {
@@ -539,12 +591,7 @@ class CFFParser {
         stackSize++;
       } else if (value === 255) {
         // number (32 bit)
-        stack[stackSize] =
-          ((data[j] << 24) |
-            (data[j + 1] << 16) |
-            (data[j + 2] << 8) |
-            data[j + 3]) /
-          65536;
+        stack[stackSize] = view.getInt32(j) / 65536;
         j += 4;
         stackSize++;
       } else if (value === 19 || value === 20) {
@@ -728,14 +775,12 @@ class CFFParser {
       } else if (localSubrIndex) {
         localSubrToUse = localSubrIndex;
       }
-      if (valid) {
-        valid = this.parseCharString(
-          state,
-          charstring,
-          localSubrToUse,
-          globalSubrIndex
-        );
-      }
+      valid &&= this.parseCharString(
+        state,
+        charstring,
+        localSubrToUse,
+        globalSubrIndex
+      );
       if (state.width !== null) {
         const nominalWidth = privateDictToUse.getByName("nominalWidthX");
         widths[i] = nominalWidth + state.width;
@@ -779,6 +824,12 @@ class CFFParser {
       this.emptyPrivateDictionary(parentDict);
       return;
     }
+    // The Private DICT extends past the end of the font data, which means
+    // the embedded font is truncated; abort so the caller can substitute a
+    // system font instead of rendering blank glyphs (issue 7625).
+    if (offset + size > this.bytes.length) {
+      throw new FormatError("CFF Private DICT extends past end of font");
+    }
 
     const privateDictEnd = offset + size;
     const dictData = this.bytes.subarray(offset, privateDictEnd);
@@ -790,10 +841,78 @@ class CFFParser {
     );
     parentDict.privateDict = privateDict;
 
-    if (privateDict.getByName("ExpansionFactor") === 0) {
+    const blueScale = privateDict.getByName("BlueScale");
+    const blueShift = privateDict.getByName("BlueShift");
+    const blueFuzz = privateDict.getByName("BlueFuzz");
+    const expansionFactor = privateDict.getByName("ExpansionFactor");
+    if (
+      blueScale === 0 &&
+      blueShift === 0 &&
+      blueFuzz === 0 &&
+      expansionFactor === 0
+    ) {
+      // Ghostscript can fail to initialize Private DICT defaults before
+      // writing them, which leaves omitted blue zone values as explicit
+      // zeroes. This has been seen in FDArray entries.
+      privateDict.setByName("BlueScale", DEFAULT_BLUE_SCALE);
+      privateDict.setByName("BlueShift", DEFAULT_BLUE_SHIFT);
+      privateDict.setByName("BlueFuzz", DEFAULT_BLUE_FUZZ);
+    }
+
+    if (expansionFactor === 0) {
       // Firefox doesn't render correctly such a font on Windows (see issue
       // 15289), hence we just reset it to its default value.
-      privateDict.setByName("ExpansionFactor", 0.06);
+      privateDict.setByName("ExpansionFactor", DEFAULT_EXPANSION_FACTOR);
+    }
+    if (blueScale > 0) {
+      // Adobe's font validator (AFDKO, see `absfont.cpp`) flags BlueScale as
+      // out-of-range when `BlueScale * maxZoneHeight` is below 0.5 or above 1.
+      // The Type 2 hinting engine in coretype/FreeType disables the lower
+      // clamp at render time because library fonts with small zones and a
+      // default BlueScale (0.039625) trip the threshold even though they
+      // render correctly. To avoid changing those fonts here, only apply
+      // the lower clamp when BlueScale is also smaller than the default,
+      // i.e. when the font genuinely deviates from the standard value.
+      // The upper clamp matches what FreeType already enforces (psblues.c)
+      // and is safe to apply unconditionally.
+      let maxZoneHeight = 0;
+      for (const zones of [
+        privateDict.getByName("BlueValues"),
+        privateDict.getByName("OtherBlues"),
+      ]) {
+        if (!zones) {
+          continue;
+        }
+        // BlueValues/OtherBlues are stored as deltas where the odd-indexed
+        // entries are the heights of each zone.
+        for (let i = 1; i < zones.length; i += 2) {
+          if (zones[i] > maxZoneHeight) {
+            maxZoneHeight = zones[i];
+          }
+        }
+      }
+      if (maxZoneHeight > 0) {
+        // The lower bound of AFDKO's valid window is `0.5 / maxZoneHeight`.
+        // When that bound is itself above the default BlueScale the font simply
+        // has small zones (e.g. Eurostile LT Std, or the SofiaPro fonts shipped
+        // with a near-default 0.037): even the default 0.039625 would be
+        // flagged as out-of-range, so this is the rendered intent and forcing
+        // BlueScale up only misaligns/collapses overshooting glyphs (notably
+        // with macOS's Core Text rasterizer). Only apply the lower clamp when
+        // its target does not exceed the default.
+        // Round the bound in order to avoid too long operand (issue 21466).
+        const PRECISION = 1e5;
+        const lowerBound = 0.5 / maxZoneHeight;
+        const minBlueScale =
+          lowerBound <= DEFAULT_BLUE_SCALE
+            ? Math.ceil(lowerBound * PRECISION) / PRECISION
+            : -Infinity;
+        const maxBlueScale = Math.floor(PRECISION / maxZoneHeight) / PRECISION;
+        const clamped = MathClamp(blueScale, minBlueScale, maxBlueScale);
+        if (clamped !== blueScale) {
+          privateDict.setByName("BlueScale", clamped);
+        }
+      }
     }
 
     // Parse the Subrs index also since it's relative to the private dict.
@@ -832,8 +951,7 @@ class CFFParser {
       );
     }
 
-    const bytes = this.bytes;
-    const start = pos;
+    const { bytes } = this;
     const format = bytes[pos++];
     const charset = [cid ? 0 : ".notdef"];
     let id, count, i;
@@ -869,11 +987,8 @@ class CFFParser {
       default:
         throw new FormatError("Unknown charset format");
     }
-    // Raw won't be needed if we actually compile the charset.
-    const end = pos;
-    const raw = bytes.subarray(start, end);
 
-    return new CFFCharset(false, format, charset, raw);
+    return new CFFCharset(false, format, charset);
   }
 
   parseEncoding(pos, properties, strings, charset) {
@@ -1016,6 +1131,10 @@ class CFF {
   isCIDFont = false;
 
   charStringCount = 0;
+
+  constructor(rawFileLength = 0) {
+    this.rawFileLength = rawFileLength;
+  }
 
   duplicateFirstGlyph() {
     // Browsers will not display a glyph at position 0. Typically glyph 0 is
@@ -1252,16 +1371,16 @@ const CFFPrivateDictLayout = [
   [7, "OtherBlues", "delta", null],
   [8, "FamilyBlues", "delta", null],
   [9, "FamilyOtherBlues", "delta", null],
-  [[12, 9], "BlueScale", "num", 0.039625],
-  [[12, 10], "BlueShift", "num", 7],
-  [[12, 11], "BlueFuzz", "num", 1],
+  [[12, 9], "BlueScale", "num", DEFAULT_BLUE_SCALE],
+  [[12, 10], "BlueShift", "num", DEFAULT_BLUE_SHIFT],
+  [[12, 11], "BlueFuzz", "num", DEFAULT_BLUE_FUZZ],
   [10, "StdHW", "num", null],
   [11, "StdVW", "num", null],
   [[12, 12], "StemSnapH", "delta", null],
   [[12, 13], "StemSnapV", "delta", null],
   [[12, 14], "ForceBold", "num", 0],
   [[12, 17], "LanguageGroup", "num", 0],
-  [[12, 18], "ExpansionFactor", "num", 0.06],
+  [[12, 18], "ExpansionFactor", "num", DEFAULT_EXPANSION_FACTOR],
   [[12, 19], "initialRandomSeed", "num", 0],
   [20, "defaultWidthX", "num", 0],
   [21, "nominalWidthX", "num", 0],
@@ -1286,11 +1405,10 @@ const CFFCharsetPredefinedTypes = {
 };
 
 class CFFCharset {
-  constructor(predefined, format, charset, raw) {
+  constructor(predefined, format, charset) {
     this.predefined = predefined;
     this.format = format;
     this.charset = charset;
-    this.raw = raw;
   }
 }
 
@@ -1380,28 +1498,14 @@ class CFFCompiler {
 
   compile() {
     const cff = this.cff;
-    const output = {
-      data: [],
-      length: 0,
-      add(data) {
-        try {
-          // It's possible to exceed the call stack maximum size when trying
-          // to push too much elements.
-          // In case of failure, we fallback to the `concat` method.
-          this.data.push(...data);
-        } catch {
-          this.data = this.data.concat(data);
-        }
-        this.length = this.data.length;
-      },
-    };
+    const output = new DataBuilder({ minLength: cff.rawFileLength });
 
     // Compile the five entries that must be in order.
     const header = this.compileHeader(cff.header);
-    output.add(header);
+    output.setArray(header);
 
     const nameIndex = this.compileNameIndex(cff.names);
-    output.add(nameIndex);
+    output.setArray(nameIndex);
 
     if (cff.isCIDFont) {
       // The spec is unclear on how font matrices should relate to each other
@@ -1441,14 +1545,14 @@ class CFFCompiler {
       output.length,
       cff.isCIDFont
     );
-    output.add(compiled.output);
+    output.setArray(compiled.output);
     const topDictTracker = compiled.trackers[0];
 
     const stringIndex = this.compileStringIndex(cff.strings.strings);
-    output.add(stringIndex);
+    output.setArray(stringIndex);
 
     const globalSubrIndex = this.compileIndex(cff.globalSubrIndex);
-    output.add(globalSubrIndex);
+    output.setArray(globalSubrIndex);
 
     // Now start on the other entries that have no specific order.
     if (cff.encoding && cff.topDict.hasName("Encoding")) {
@@ -1461,7 +1565,7 @@ class CFFCompiler {
       } else {
         const encoding = this.compileEncoding(cff.encoding);
         topDictTracker.setEntryLocation("Encoding", [output.length], output);
-        output.add(encoding);
+        output.setArray(encoding);
       }
     }
     const charset = this.compileCharset(
@@ -1471,23 +1575,23 @@ class CFFCompiler {
       cff.isCIDFont
     );
     topDictTracker.setEntryLocation("charset", [output.length], output);
-    output.add(charset);
+    output.setArray(charset);
 
     const charStrings = this.compileCharStrings(cff.charStrings);
     topDictTracker.setEntryLocation("CharStrings", [output.length], output);
-    output.add(charStrings);
+    output.setArray(charStrings);
 
     if (cff.isCIDFont) {
       // For some reason FDSelect must be in front of FDArray on windows. OSX
       // and linux don't seem to care.
       topDictTracker.setEntryLocation("FDSelect", [output.length], output);
       const fdSelect = this.compileFDSelect(cff.fdSelect);
-      output.add(fdSelect);
+      output.setArray(fdSelect);
       // It is unclear if the sub font dictionary can have CID related
       // dictionary keys, but the sanitizer doesn't like them so remove them.
       compiled = this.compileTopDicts(cff.fdArray, output.length, true);
       topDictTracker.setEntryLocation("FDArray", [output.length], output);
-      output.add(compiled.output);
+      output.setArray(compiled.output);
       const fontDictTrackers = compiled.trackers;
 
       this.compilePrivateDicts(cff.fdArray, fontDictTrackers, output);
@@ -1497,7 +1601,7 @@ class CFFCompiler {
 
     // If the font data ends with INDEX whose object data is zero-length,
     // the sanitizer will bail out. Add a dummy byte to avoid that.
-    output.add([0]);
+    output.setArray([0]);
 
     return output.data;
   }
@@ -1665,7 +1769,7 @@ class CFFCompiler {
         [privateDictData.length, outputLength],
         output
       );
-      output.add(privateDictData);
+      output.setArray(privateDictData);
 
       if (privateDict.subrsIndex && privateDict.hasName("Subrs")) {
         const subrs = this.compileIndex(privateDict.subrsIndex);
@@ -1674,7 +1778,7 @@ class CFFCompiler {
           [privateDictData.length],
           output
         );
-        output.add(subrs);
+        output.setArray(subrs);
       }
     }
   }
@@ -1781,7 +1885,7 @@ class CFFCompiler {
     } else {
       const length = 1 + numGlyphsLessNotDef * 2;
       out = new Uint8Array(length);
-      out[0] = 0; // format 0
+      // format 0, skip redundant `out[0] = 0;` assignment.
       let charsetIndex = 0;
       const numCharsets = charset.charset.length;
       let warned = false;
@@ -1802,11 +1906,11 @@ class CFFCompiler {
         out[i + 1] = sid & 0xff;
       }
     }
-    return this.compileTypedArray(out);
+    return out;
   }
 
   compileEncoding(encoding) {
-    return this.compileTypedArray(encoding.raw);
+    return encoding.raw;
   }
 
   compileFDSelect(fdSelect) {
@@ -1816,9 +1920,7 @@ class CFFCompiler {
       case 0:
         out = new Uint8Array(1 + fdSelect.fdSelect.length);
         out[0] = format;
-        for (i = 0; i < fdSelect.fdSelect.length; i++) {
-          out[i + 1] = fdSelect.fdSelect[i];
-        }
+        out.set(fdSelect.fdSelect, 1);
         break;
       case 3:
         const start = 0;
@@ -1847,11 +1949,7 @@ class CFFCompiler {
         out = new Uint8Array(ranges);
         break;
     }
-    return this.compileTypedArray(out);
-  }
-
-  compileTypedArray(data) {
-    return Array.from(data);
+    return out;
   }
 
   compileIndex(index, trackers = []) {
@@ -1861,10 +1959,8 @@ class CFFCompiler {
 
     // If there is no object, just create an index.
     if (count === 0) {
-      return [0, 0];
+      return new Uint8Array(2);
     }
-
-    const data = [(count >> 8) & 0xff, count & 0xff];
 
     let lastOffset = 1,
       i;
@@ -1883,29 +1979,32 @@ class CFFCompiler {
       offsetSize = 4;
     }
 
+    const data = new Uint8Array(2 + offsetSize * (count + 1) + lastOffset);
+    let pos = 0;
+
+    data[pos++] = (count >> 8) & 0xff;
+    data[pos++] = count & 0xff;
+
     // Next byte contains the offset size use to reference object in the file
-    data.push(offsetSize);
+    data[pos++] = offsetSize;
 
     // Add another offset after this one because we need a new offset
     let relativeOffset = 1;
     for (i = 0; i < count + 1; i++) {
       if (offsetSize === 1) {
-        data.push(relativeOffset & 0xff);
+        data[pos++] = relativeOffset & 0xff;
       } else if (offsetSize === 2) {
-        data.push((relativeOffset >> 8) & 0xff, relativeOffset & 0xff);
+        data[pos++] = (relativeOffset >> 8) & 0xff;
+        data[pos++] = relativeOffset & 0xff;
       } else if (offsetSize === 3) {
-        data.push(
-          (relativeOffset >> 16) & 0xff,
-          (relativeOffset >> 8) & 0xff,
-          relativeOffset & 0xff
-        );
+        data[pos++] = (relativeOffset >> 16) & 0xff;
+        data[pos++] = (relativeOffset >> 8) & 0xff;
+        data[pos++] = relativeOffset & 0xff;
       } else {
-        data.push(
-          (relativeOffset >>> 24) & 0xff,
-          (relativeOffset >> 16) & 0xff,
-          (relativeOffset >> 8) & 0xff,
-          relativeOffset & 0xff
-        );
+        data[pos++] = (relativeOffset >>> 24) & 0xff;
+        data[pos++] = (relativeOffset >> 16) & 0xff;
+        data[pos++] = (relativeOffset >> 8) & 0xff;
+        data[pos++] = relativeOffset & 0xff;
       }
 
       if (objects[i]) {
@@ -1915,10 +2014,10 @@ class CFFCompiler {
 
     for (i = 0; i < count; i++) {
       // Notify the tracker where the object will be offset in the data.
-      if (trackers[i]) {
-        trackers[i].offset(data.length);
-      }
-      data.push(...objects[i]);
+      trackers[i]?.offset(pos);
+
+      data.set(objects[i], pos);
+      pos += objects[i].length;
     }
     return data;
   }

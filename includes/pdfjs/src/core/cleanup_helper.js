@@ -16,16 +16,16 @@
 import { clearPatternCaches } from "./pattern.js";
 import { clearPrimitiveCaches } from "./primitives.js";
 import { clearUnicodeCaches } from "./unicode.js";
-import { JpxImage } from "./jpx.js";
+import { WasmImage } from "./wasm_image.js";
 
 function clearGlobalCaches() {
   clearPatternCaches();
   clearPrimitiveCaches();
   clearUnicodeCaches();
 
-  // Remove the global `JpxImage` instance, since it may hold a reference to
-  // the WebAssembly module.
-  JpxImage.cleanup();
+  // Remove the global `WasmImage` instances,
+  // since they may hold references to the WebAssembly modules.
+  WasmImage.cleanup();
 }
 
 export { clearGlobalCaches };

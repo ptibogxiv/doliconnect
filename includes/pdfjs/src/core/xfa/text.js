@@ -110,9 +110,7 @@ class FontSelector {
       "size",
       "letterSpacing",
     ]) {
-      if (!xfaFont[name]) {
-        xfaFont[name] = lastFont.xfaFont[name];
-      }
+      xfaFont[name] ||= lastFont.xfaFont[name];
     }
 
     for (const name of ["top", "bottom", "left", "right"]) {
@@ -127,9 +125,7 @@ class FontSelector {
       lineHeight || lastFont.lineHeight,
       this.fontFinder
     );
-    if (!fontInfo.pdfFont) {
-      fontInfo.pdfFont = lastFont.pdfFont;
-    }
+    fontInfo.pdfFont ||= lastFont.pdfFont;
 
     this.stack.push(fontInfo);
   }

@@ -383,7 +383,7 @@ function toStyle(node, ...names) {
     if (value === null) {
       continue;
     }
-    if (converters.hasOwnProperty(name)) {
+    if (Object.hasOwn(converters, name)) {
       converters[name](node, style);
       continue;
     }

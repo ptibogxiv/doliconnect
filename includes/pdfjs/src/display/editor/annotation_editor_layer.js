@@ -15,7 +15,7 @@
 
 // eslint-disable-next-line max-len
 /** @typedef {import("./tools.js").AnnotationEditorUIManager} AnnotationEditorUIManager */
-/** @typedef {import("../display_utils.js").PageViewport} PageViewport */
+/** @typedef {import("../page_viewport.js").PageViewport} PageViewport */
 // eslint-disable-next-line max-len
 /** @typedef {import("../../../web/text_accessibility.js").TextAccessibilityManager} TextAccessibilityManager */
 // eslint-disable-next-line max-len
@@ -30,11 +30,11 @@ import {
   AnnotationEditorType,
   FeatureTest,
 } from "../../shared/util.js";
+import { setLayerDimensions, stopEvent } from "../display_utils.js";
 import { AnnotationEditor } from "./editor.js";
 import { FreeTextEditor } from "./freetext.js";
 import { HighlightEditor } from "./highlight.js";
 import { InkEditor } from "./ink.js";
-import { setLayerDimensions } from "../display_utils.js";
 import { SignatureEditor } from "./signature.js";
 import { StampEditor } from "./stamp.js";
 
@@ -142,47 +142,6 @@ class AnnotationEditorLayer {
     this._structTree = structTreeLayer;
 
     this.#uiManager.addLayer(this);
-  }
-
-  updatePageIndex(newPageIndex) {
-    for (const editor of this.#allEditorsIterator) {
-      editor.updatePageIndex(newPageIndex);
-    }
-
-    this.pageIndex = newPageIndex;
-    this.#uiManager.addLayer(this);
-  }
-
-  /**
-   * Clones all annotation editors from another layer into this layer.
-   * This is typically used when duplicating a page - the editors from the
-   * source page are serialized and then deserialized into the new page's layer.
-   *
-   * @param {AnnotationEditorLayer} clonedFrom - The source annotation editor
-   *   layer to clone editors from. If null or undefined, no action is taken.
-   * @returns {Promise<void>} A promise that resolves when all editors have been
-   *   cloned and added to this layer.
-   */
-  async setClonedFrom(clonedFrom) {
-    if (!clonedFrom) {
-      return;
-    }
-    const promises = [];
-    for (const editor of clonedFrom.#allEditorsIterator) {
-      const serialized = editor.serialize(/* isForCopying = */ true);
-      if (!serialized) {
-        continue;
-      }
-      serialized.isCopy = false;
-      promises.push(
-        this.deserialize(serialized).then(deserialized => {
-          if (deserialized) {
-            this.addOrRebuild(deserialized);
-          }
-        })
-      );
-    }
-    await Promise.all(promises);
   }
 
   get isEmpty() {
@@ -385,8 +344,7 @@ class AnnotationEditorLayer {
           }
           const editor = this.#editors.get(id);
           if (editor?.annotationElementId === null) {
-            e.stopPropagation();
-            e.preventDefault();
+            stopEvent(e);
             editor.dblclick(e);
           }
         },
@@ -416,8 +374,7 @@ class AnnotationEditorLayer {
       }
 
       // Show the annotations that were hidden in enable().
-      const editables = annotationLayer.getEditableAnnotations();
-      for (const editable of editables) {
+      for (const editable of annotationLayer.getEditableAnnotations()) {
         const { id } = editable.data;
         if (this.#uiManager.isDeletedAnnotationElement(id)) {
           editable.updateEdited({ deleted: true });
@@ -508,7 +465,9 @@ class AnnotationEditorLayer {
     if (
       target === this.#textLayer.div ||
       ((target.getAttribute("role") === "img" ||
-        target.classList.contains("endOfContent")) &&
+        target.classList.contains("endOfContent") ||
+        target.classList.contains("textLayerImages") ||
+        target.classList.contains("textLayerImagePlaceholder")) &&
         this.#textLayer.div.contains(target))
     ) {
       const { isMac } = FeatureTest.platform;
@@ -714,14 +673,6 @@ class AnnotationEditorLayer {
     return null;
   }
 
-  /**
-   * Get an id for an editor.
-   * @returns {string}
-   */
-  getNextId() {
-    return this.#uiManager.getId();
-  }
-
   get #currentEditorType() {
     return AnnotationEditorLayer.#editorTypes.get(this.#uiManager.getMode());
   }
@@ -754,7 +705,7 @@ class AnnotationEditorLayer {
     await this.#uiManager.updateMode(options.mode);
 
     const { offsetX, offsetY } = this.#getCenterPoint();
-    const id = this.getNextId();
+    const id = this.#uiManager.getId();
     const editor = this.#createNewEditor({
       parent: this,
       id,
@@ -790,7 +741,7 @@ class AnnotationEditorLayer {
    * @returns {AnnotationEditor}
    */
   createAndAddNewEditor(event, isCentered, data = {}) {
-    const id = this.getNextId();
+    const id = this.#uiManager.getId();
     const editor = this.#createNewEditor({
       parent: this,
       id,
@@ -901,6 +852,7 @@ class AnnotationEditorLayer {
     const currentMode = this.#uiManager.getMode();
     if (
       currentMode === AnnotationEditorType.STAMP ||
+      currentMode === AnnotationEditorType.POPUP ||
       currentMode === AnnotationEditorType.SIGNATURE
     ) {
       this.#uiManager.unselectAll();
@@ -1073,13 +1025,17 @@ class AnnotationEditorLayer {
    * Render the main editor.
    * @param {RenderEditorLayerOptions} parameters
    */
-  render({ viewport }) {
+  async render({ viewport }) {
     this.viewport = viewport;
     setLayerDimensions(this.div, viewport);
     for (const editor of this.#uiManager.getEditors(this.pageIndex)) {
       this.add(editor);
       editor.rebuild();
     }
+
+    await this.#uiManager.findClonesForPage(this);
+    this.div.hidden = this.isEmpty;
+
     // We're maybe rendering a layer which was invisible when we started to edit
     // so we must set the different callbacks for it.
     this.updateMode();

@@ -15,6 +15,7 @@
 
 import { BaseStream } from "./base_stream.js";
 import { Stream } from "./stream.js";
+import { unreachable } from "../shared/util.js";
 
 // Lots of DecodeStreams are created whose buffers are never used.  For these
 // we share a single empty buffer. This is (a) space-efficient and (b) avoids
@@ -24,21 +25,30 @@ const emptyBuffer = new Uint8Array(0);
 
 // Super class for the decoding streams.
 class DecodeStream extends BaseStream {
+  buffer = emptyBuffer;
+
+  bufferLength = 0;
+
+  eof = false;
+
+  minBufferLength = 512;
+
+  pos = 0;
+
   constructor(maybeMinBufferLength) {
     super();
     this._rawMinBufferLength = maybeMinBufferLength || 0;
 
-    this.pos = 0;
-    this.bufferLength = 0;
-    this.eof = false;
-    this.buffer = emptyBuffer;
-    this.minBufferLength = 512;
     if (maybeMinBufferLength) {
       // Compute the first power of two that is as big as maybeMinBufferLength.
       while (this.minBufferLength < maybeMinBufferLength) {
         this.minBufferLength *= 2;
       }
     }
+  }
+
+  readBlock() {
+    unreachable("Abstract method `readBlock` called");
   }
 
   get isEmpty() {
@@ -168,21 +178,16 @@ class DecodeStream extends BaseStream {
     return new Stream(this.buffer, start, length, dict);
   }
 
-  getBaseStreams() {
-    return this.stream ? this.stream.getBaseStreams() : null;
-  }
-
   clone() {
     // Make sure it has been fully read.
     while (!this.eof) {
       this.readBlock();
     }
-    return new Stream(
-      this.buffer,
-      this.start,
-      this.end - this.start,
-      this.dict.clone()
-    );
+    return new Stream(this.buffer, 0, this.bufferLength, this.dict?.clone());
+  }
+
+  getBaseStreams() {
+    return this.stream ? this.stream.getBaseStreams() : null;
   }
 }
 

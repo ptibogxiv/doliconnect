@@ -1,0 +1,102 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page
+   /Parent 2 0 R
+   /MediaBox [0 0 600 800]
+   /Resources <<
+     /Pattern << /P1 5 0 R /P2 6 0 R /P3 7 0 R /P4 8 0 R /P5 9 0 R >>
+     /ColorSpace << /Cs [/Pattern] /Cs2 [/Pattern /DeviceRGB] >>
+   >>
+   /Contents 4 0 R
+>>
+endobj
+4 0 obj
+<<  /Length 637 >>
+stream
+1 g
+0 0 600 800 re f
+q /Cs cs /P1 scn 20 600 150 150 re f Q
+q /Cs cs /P2 scn 220 600 150 150 re f Q
+q /Cs cs /P3 scn 420 600 150 150 re f Q
+q /Cs cs /P1 scn 250 460 30 30 re f Q
+q 250 460 30 30 re W n /Cs cs /P1 scn 220 400 150 150 re f Q
+q /Cs cs /P4 scn 420 400 150 150 re f Q
+q /Cs cs /P4 scn 20 250 30 30 re f Q
+q /Cs cs /P1 scn 1 0 0 1 250 200 cm 0.5 0 0 0.5 0 0 cm 0 0 60 60 re f Q
+q /Cs2 cs 0.8 0.2 0.2 /P5 scn 420 200 150 150 re f Q
+0 G 0.5 w
+20 600 150 150 re S
+220 600 150 150 re S
+420 600 150 150 re S
+20 400 150 150 re S
+220 400 150 150 re S
+420 400 150 150 re S
+20 200 150 150 re S
+220 200 150 150 re S
+420 200 150 150 re S
+
+endstream
+endobj
+5 0 obj
+<< /Type /Pattern /PatternType 1 /PaintType 1 /TilingType 1 /BBox [0 0 50 50] /XStep 50 /YStep 50 /Resources << >> /Length 30 >>
+stream
+0.2 0.4 0.8 rg
+5 5 40 40 re f
+
+endstream
+endobj
+6 0 obj
+<< /Type /Pattern /PatternType 1 /PaintType 1 /TilingType 1 /BBox [0 0 20 20] /XStep 50 /YStep 50 /Resources << >> /Length 30 >>
+stream
+0.9 0.5 0.1 rg
+0 0 20 20 re f
+
+endstream
+endobj
+7 0 obj
+<< /Type /Pattern /PatternType 1 /PaintType 1 /TilingType 1 /BBox [0 0 70 70] /XStep 50 /YStep 50 /Resources << >> /Length 30 >>
+stream
+0.1 0.7 0.2 rg
+0 0 70 70 re f
+
+endstream
+endobj
+8 0 obj
+<< /Type /Pattern /PatternType 1 /PaintType 1 /TilingType 1 /BBox [0 0 50 50] /XStep 50 /YStep 50 /Matrix [0.866025 0.5 -0.5 0.866025 0 0] /Resources << >> /Length 30 >>
+stream
+0.7 0.1 0.7 rg
+5 5 40 40 re f
+
+endstream
+endobj
+9 0 obj
+<< /Type /Pattern /PatternType 1 /PaintType 2 /TilingType 1 /BBox [0 0 30 30] /XStep 30 /YStep 30 /Resources << >> /Length 31 >>
+stream
+0 0 10 30 re f
+20 0 10 30 re f
+
+endstream
+endobj
+xref
+0 10
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000369 00000 n 
+0000001058 00000 n 
+0000001250 00000 n 
+0000001442 00000 n 
+0000001634 00000 n 
+0000001867 00000 n 
+trailer
+<< /Size 10 /Root 1 0 R >>
+startxref
+2060
+%%EOF

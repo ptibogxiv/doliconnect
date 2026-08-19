@@ -13,6 +13,7 @@
  * limitations under the License.
  */
 
+import { bytesToString, FormatError, warn } from "../shared/util.js";
 import {
   CFF,
   CFFCharset,
@@ -24,7 +25,6 @@ import {
   CFFStrings,
   CFFTopDict,
 } from "./cff_parser.js";
-import { FormatError, warn } from "../shared/util.js";
 import { SEAC_ANALYSIS_ENABLED, type1FontGlyphMapping } from "./fonts_utils.js";
 import { isWhiteSpace } from "./core_utils.js";
 import { Stream } from "./stream.js";
@@ -149,54 +149,30 @@ function getEexecBlock(stream, suggestedLength) {
   };
 }
 
+// Detects the CID-keyed Type 1 format (Adobe TechNote 5014, CIDFontType 0).
+// Caller must additionally check `properties.composite`, since only composite
+// fonts are wrapped as CIDFontType0 in PDF.
+function isCidKeyedType1File(file) {
+  const sample = file.peekBytes(2048);
+  if (sample.length < 2 || sample[0] !== 0x25 || sample[1] !== 0x21) {
+    return false;
+  }
+  const text = bytesToString(sample);
+  return text.includes("Resource-CIDFont") || /\/CIDFontType\s+0\b/.test(text);
+}
+
 /**
  * Type1Font is also a CIDFontType0.
  */
 class Type1Font {
+  #rawFileLength;
+
   constructor(name, file, properties) {
-    // Some bad generators embed pfb file as is, we have to strip 6-byte header.
-    // Also, length1 and length2 might be off by 6 bytes as well.
-    // http://www.math.ubc.ca/~cass/piscript/type1.pdf
-    const PFB_HEADER_SIZE = 6;
-    let headerBlockLength = properties.length1;
-    let eexecBlockLength = properties.length2;
-    let pfbHeader = file.peekBytes(PFB_HEADER_SIZE);
-    const pfbHeaderPresent = pfbHeader[0] === 0x80 && pfbHeader[1] === 0x01;
-    if (pfbHeaderPresent) {
-      file.skip(PFB_HEADER_SIZE);
-      headerBlockLength =
-        (pfbHeader[5] << 24) |
-        (pfbHeader[4] << 16) |
-        (pfbHeader[3] << 8) |
-        pfbHeader[2];
+    let data;
+    if (properties.composite && isCidKeyedType1File(file)) {
+      data = this.#parseCidKeyedType1(file, properties);
     }
-
-    // Get the data block containing glyphs and subrs information
-    const headerBlock = getHeaderBlock(file, headerBlockLength);
-    const headerBlockParser = new Type1Parser(
-      headerBlock.stream,
-      false,
-      SEAC_ANALYSIS_ENABLED
-    );
-    headerBlockParser.extractFontHeader(properties);
-
-    if (pfbHeaderPresent) {
-      pfbHeader = file.getBytes(PFB_HEADER_SIZE);
-      eexecBlockLength =
-        (pfbHeader[5] << 24) |
-        (pfbHeader[4] << 16) |
-        (pfbHeader[3] << 8) |
-        pfbHeader[2];
-    }
-
-    // Decrypt the data blocks and retrieve it's content
-    const eexecBlock = getEexecBlock(file, eexecBlockLength);
-    const eexecBlockParser = new Type1Parser(
-      eexecBlock.stream,
-      true,
-      SEAC_ANALYSIS_ENABLED
-    );
-    const data = eexecBlockParser.extractFontProgram(properties);
+    data ||= this.#parseType1(file, properties);
     for (const key in data.properties) {
       properties[key] = data.properties[key];
     }
@@ -214,6 +190,67 @@ class Type1Font {
       properties
     );
     this.seacs = this.getSeacs(data.charstrings);
+  }
+
+  #parseType1(file, properties) {
+    // Some bad generators embed pfb file as is, we have to strip 6-byte header.
+    // Also, length1 and length2 might be off by 6 bytes as well.
+    // http://www.math.ubc.ca/~cass/piscript/type1.pdf
+    const PFB_HEADER_SIZE = 6;
+    let headerBlockLength = properties.length1;
+    let eexecBlockLength = properties.length2;
+    let pfbHeader = file.peekBytes(PFB_HEADER_SIZE);
+    const pfbHeaderPresent = pfbHeader[0] === 0x80 && pfbHeader[1] === 0x01;
+    if (pfbHeaderPresent) {
+      file.skip(PFB_HEADER_SIZE);
+      headerBlockLength =
+        (pfbHeader[5] << 24) |
+        (pfbHeader[4] << 16) |
+        (pfbHeader[3] << 8) |
+        pfbHeader[2];
+    }
+
+    const headerBlock = getHeaderBlock(file, headerBlockLength);
+    const headerBlockParser = new Type1Parser(
+      headerBlock.stream,
+      false,
+      SEAC_ANALYSIS_ENABLED
+    );
+    headerBlockParser.extractFontHeader(properties);
+
+    if (pfbHeaderPresent) {
+      pfbHeader = file.getBytes(PFB_HEADER_SIZE);
+      eexecBlockLength =
+        (pfbHeader[5] << 24) |
+        (pfbHeader[4] << 16) |
+        (pfbHeader[3] << 8) |
+        pfbHeader[2];
+    }
+
+    const eexecBlock = getEexecBlock(file, eexecBlockLength);
+    const eexecBlockParser = new Type1Parser(
+      eexecBlock.stream,
+      true,
+      SEAC_ANALYSIS_ENABLED
+    );
+    const data = eexecBlockParser.extractFontProgram(properties);
+    this.#rawFileLength = headerBlock.length + eexecBlock.length;
+    return data;
+  }
+
+  #parseCidKeyedType1(file, properties) {
+    const fileStart = file.pos;
+    const length = file.end - fileStart;
+    const parser = new Type1Parser(file, false, SEAC_ANALYSIS_ENABLED);
+    const data = parser.extractCidKeyedFontProgram(properties);
+    if (!data) {
+      // Reset the stream so the regular Type 1 path can re-try.
+      file.pos = fileStart;
+      warn("Type1Font: unable to parse CID-keyed Type 1 font.");
+      return null;
+    }
+    this.#rawFileLength = length;
+    return data;
   }
 
   get numGlyphs() {
@@ -323,7 +360,7 @@ class Type1Font {
   }
 
   wrap(name, glyphs, charstrings, subrs, properties) {
-    const cff = new CFF();
+    const cff = new CFF(this.#rawFileLength);
     cff.header = new CFFHeader(1, 0, 4, 4);
 
     cff.names = [name];
@@ -356,9 +393,8 @@ class Type1Font {
 
     const count = glyphs.length;
     const charsetArray = [".notdef"];
-    let i, ii;
-    for (i = 0; i < count; i++) {
-      const glyphName = charstrings[i].glyphName;
+    for (let i = 0; i < count; i++) {
+      const { glyphName } = charstrings[i];
       const index = CFFStandardStrings.indexOf(glyphName);
       if (index === -1) {
         strings.add(glyphName);
@@ -369,7 +405,7 @@ class Type1Font {
 
     const charStringsIndex = new CFFIndex();
     charStringsIndex.add([0x8b, 0x0e]); // .notdef
-    for (i = 0; i < count; i++) {
+    for (let i = 0; i < count; i++) {
       charStringsIndex.add(glyphs[i]);
     }
     cff.charStrings = charStringsIndex;
@@ -392,12 +428,11 @@ class Type1Font {
       "StdHW",
       "StdVW",
     ];
-    for (i = 0, ii = fields.length; i < ii; i++) {
-      const field = fields[i];
-      if (!(field in properties.privateData)) {
+    for (const field of fields) {
+      if (!properties.privateData.has(field)) {
         continue;
       }
-      const value = properties.privateData[field];
+      const value = properties.privateData.get(field);
       if (Array.isArray(value)) {
         // All of the private dictionary array data in CFF must be stored as
         // "delta-encoded" numbers.
@@ -410,8 +445,8 @@ class Type1Font {
     cff.topDict.privateDict = privateDict;
 
     const subrIndex = new CFFIndex();
-    for (i = 0, ii = subrs.length; i < ii; i++) {
-      subrIndex.add(subrs[i]);
+    for (const subr of subrs) {
+      subrIndex.add(subr);
     }
     privateDict.subrsIndex = subrIndex;
 

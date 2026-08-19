@@ -22,6 +22,7 @@ import {
   toggleExpandedBtn,
   toggleSelectedBtn,
 } from "./ui_utils.js";
+import { internalOpt } from "./internal_evt.js";
 import { Menu } from "./menu.js";
 import { Sidebar } from "./sidebar.js";
 
@@ -89,7 +90,7 @@ class ViewsManager extends Sidebar {
       outlinesView,
       attachmentsView,
       layersView,
-      viewsManagerAddFileButton,
+      viewsManagerAddFile: { button: viewsManagerAddFileButton },
       viewsManagerCurrentOutlineButton,
       viewsManagerSelectorButton,
       viewsManagerSelectorOptions,
@@ -98,6 +99,9 @@ class ViewsManager extends Sidebar {
     },
     eventBus,
     l10n,
+    enableMerge = false,
+    enableSplitMerge = false,
+    globalAbortSignal,
   }) {
     super(
       {
@@ -106,7 +110,8 @@ class ViewsManager extends Sidebar {
         toggleButton,
       },
       l10n.getDirection() === "ltr",
-      /* isResizerOnTheLeft = */ false
+      /* isResizerOnTheLeft = */ false,
+      globalAbortSignal
     );
     this.isOpen = false;
     this.active = SidebarView.THUMBS;
@@ -142,6 +147,15 @@ class ViewsManager extends Sidebar {
 
     this.eventBus = eventBus;
 
+    if (!enableSplitMerge) {
+      viewsManagerStatus.hidden = true;
+    }
+    this._enableSplitMerge = enableSplitMerge;
+    this._enableMerge = enableMerge;
+    if (!enableMerge) {
+      viewsManagerAddFileButton.hidden = true;
+    }
+
     this.menu = new Menu(
       viewsManagerSelectorOptions,
       viewsManagerSelectorButton,
@@ -150,11 +164,11 @@ class ViewsManager extends Sidebar {
 
     ViewsManager.#l10nDescription ||= Object.freeze({
       pagesTitle: "pdfjs-views-manager-pages-title",
-      outlinesTitle: "pdfjs-views-manager-outlines-title",
+      outlinesTitle: "pdfjs-views-manager-outlines-title1",
       attachmentsTitle: "pdfjs-views-manager-attachments-title",
-      layersTitle: "pdfjs-views-manager-layers-title",
+      layersTitle: "pdfjs-views-manager-layers-title1",
       notificationButton: "pdfjs-toggle-views-manager-notification-button",
-      toggleButton: "pdfjs-toggle-views-manager-button",
+      toggleButton: "pdfjs-toggle-views-manager-button1",
     });
 
     this.#addEventListeners();
@@ -252,8 +266,10 @@ class ViewsManager extends Sidebar {
         return;
     }
 
-    this.viewsManagerStatus.hidden = view !== SidebarView.THUMBS;
-    this.viewsManagerAddFileButton.hidden = view !== SidebarView.THUMBS;
+    this.viewsManagerStatus.hidden =
+      !this._enableSplitMerge || view !== SidebarView.THUMBS;
+    this.viewsManagerAddFileButton.hidden =
+      !this._enableMerge || view !== SidebarView.THUMBS;
     this.viewsManagerCurrentOutlineButton.hidden = view !== SidebarView.OUTLINE;
     this.viewsManagerHeaderLabel.setAttribute(
       "data-l10n-id",
@@ -414,6 +430,16 @@ class ViewsManager extends Sidebar {
       });
     }
 
+    this.viewsManagerHeaderLabel.addEventListener("dblclick", e => {
+      if (this.active === SidebarView.OUTLINE) {
+        eventBus.dispatch("toggleoutlinetree", { source: this });
+        return;
+      }
+      if (this.active === SidebarView.LAYERS) {
+        eventBus.dispatch("resetlayers", { source: this });
+      }
+    });
+
     // Buttons for switching views.
     this.thumbnailButton.addEventListener("click", () => {
       this.switchView(SidebarView.THUMBS);
@@ -422,9 +448,6 @@ class ViewsManager extends Sidebar {
     this.outlineButton.addEventListener("click", () => {
       this.switchView(SidebarView.OUTLINE);
     });
-    this.outlineButton.addEventListener("dblclick", () => {
-      eventBus.dispatch("toggleoutlinetree", { source: this });
-    });
 
     this.attachmentsButton.addEventListener("click", () => {
       this.switchView(SidebarView.ATTACHMENTS);
@@ -432,9 +455,6 @@ class ViewsManager extends Sidebar {
 
     this.layersButton.addEventListener("click", () => {
       this.switchView(SidebarView.LAYERS);
-    });
-    this.layersButton.addEventListener("dblclick", () => {
-      eventBus.dispatch("resetlayers", { source: this });
     });
 
     // Buttons for view-specific options.
@@ -455,38 +475,54 @@ class ViewsManager extends Sidebar {
       }
     };
 
-    eventBus._on("outlineloaded", evt => {
-      onTreeLoaded(evt.outlineCount, this.outlineButton, SidebarView.OUTLINE);
+    eventBus.on(
+      "outlineloaded",
+      evt => {
+        onTreeLoaded(evt.outlineCount, this.outlineButton, SidebarView.OUTLINE);
 
-      evt.currentOutlineItemPromise.then(enabled => {
-        if (!this.isInitialViewSet) {
-          return;
-        }
-        this.viewsManagerCurrentOutlineButton.disabled = !enabled;
-      });
-    });
+        evt.currentOutlineItemPromise.then(enabled => {
+          if (!this.isInitialViewSet) {
+            return;
+          }
+          this.viewsManagerCurrentOutlineButton.disabled = !enabled;
+        });
+      },
+      internalOpt
+    );
 
-    eventBus._on("attachmentsloaded", evt => {
-      onTreeLoaded(
-        evt.attachmentsCount,
-        this.attachmentsButton,
-        SidebarView.ATTACHMENTS
-      );
-    });
+    eventBus.on(
+      "attachmentsloaded",
+      evt => {
+        onTreeLoaded(
+          evt.attachmentsCount,
+          this.attachmentsButton,
+          SidebarView.ATTACHMENTS
+        );
+      },
+      internalOpt
+    );
 
-    eventBus._on("layersloaded", evt => {
-      onTreeLoaded(evt.layersCount, this.layersButton, SidebarView.LAYERS);
-    });
+    eventBus.on(
+      "layersloaded",
+      evt => {
+        onTreeLoaded(evt.layersCount, this.layersButton, SidebarView.LAYERS);
+      },
+      internalOpt
+    );
 
     // Update the thumbnailViewer, if visible, when exiting presentation mode.
-    eventBus._on("presentationmodechanged", evt => {
-      if (
-        evt.state === PresentationModeState.NORMAL &&
-        this.visibleView === SidebarView.THUMBS
-      ) {
-        this.onUpdateThumbnails();
-      }
-    });
+    eventBus.on(
+      "presentationmodechanged",
+      evt => {
+        if (
+          evt.state === PresentationModeState.NORMAL &&
+          this.visibleView === SidebarView.THUMBS
+        ) {
+          this.onUpdateThumbnails();
+        }
+      },
+      internalOpt
+    );
   }
 
   onStartResizing() {

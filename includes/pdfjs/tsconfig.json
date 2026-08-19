@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "rootDir": ".",
     "target": "ES2022",
     "allowJs": true,
     "declaration": true,
@@ -7,17 +8,11 @@
     "emitDeclarationOnly": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "paths": {
       "pdfjs-lib": ["./src/pdf"],
-      "display-cmap_reader_factory": ["./src/display/cmap_reader_factory"],
-      "display-standard_fontdata_factory": [
-        "./src/display/standard_fontdata_factory"
-      ],
-      "display-wasm_factory": ["./src/display/wasm_factory"],
-      "display-fetch_stream": ["./src/display/fetch_stream"],
-      "display-network": ["./src/display/network"],
-      "display-node_stream": ["./src/display/node_stream"],
+      "display-binary_data_factory": ["./src/display/binary_data_factory"],
+      "display-network_stream": ["./src/display/network_stream.js"],
       "display-node_utils": ["./src/display/node_utils"],
       "fluent-bundle": ["./node_modules/@fluent/bundle/esm/index.js"],
       "fluent-dom": ["./node_modules/@fluent/dom/esm/index.js"],

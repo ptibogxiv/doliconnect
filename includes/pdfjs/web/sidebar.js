@@ -54,7 +54,12 @@ class Sidebar {
    * @param {boolean} ltr
    * @param {boolean} isResizerOnTheLeft
    */
-  constructor({ sidebar, resizer, toggleButton }, ltr, isResizerOnTheLeft) {
+  constructor(
+    { sidebar, resizer, toggleButton },
+    ltr,
+    isResizerOnTheLeft,
+    globalAbortSignal
+  ) {
     this._sidebar = sidebar;
     this.#coefficient = ltr === isResizerOnTheLeft ? -1 : 1;
     this.#resizer = resizer;
@@ -74,6 +79,9 @@ class Sidebar {
     toggleButton.addEventListener("click", this.toggle.bind(this));
     this._isOpen = false;
     sidebar.hidden = true;
+    globalAbortSignal?.addEventListener("abort", this.destroy.bind(this), {
+      once: true,
+    });
 
     this.#resizeObserver = new ResizeObserver(
       ([

@@ -18,7 +18,6 @@ import {
   FeatureTest,
   isNodeJS,
   shadow,
-  string32,
   unreachable,
   warn,
 } from "../shared/util.js";
@@ -26,6 +25,8 @@ import { makePathFromDrawOPS } from "./display_utils.js";
 
 class FontLoader {
   #systemFonts = new Set();
+
+  #styleSheet = null;
 
   constructor({
     ownerDocument = globalThis.document,
@@ -56,14 +57,38 @@ class FontLoader {
   }
 
   insertRule(rule) {
+    const styleSheet = this.#getStyleSheet();
+    styleSheet.insertRule(rule, styleSheet.cssRules.length);
+  }
+
+  #getStyleSheet() {
+    if (this.#styleSheet) {
+      return this.#styleSheet;
+    }
+
+    // Constructable stylesheets aren't blocked by CSP inline-style checks.
+    // Use the constructor from the document's own window, since
+    // `this._document` may belong to a different window (e.g. a print iframe)
+    // and a constructable stylesheet can only be adopted by the document it was
+    // created for.
+    const StyleSheet =
+      this._document.defaultView?.CSSStyleSheet || globalThis.CSSStyleSheet;
+    if (!this.styleElement && StyleSheet) {
+      const { adoptedStyleSheets } = this._document;
+      if (adoptedStyleSheets) {
+        const styleSheet = new StyleSheet();
+        adoptedStyleSheets.push(styleSheet);
+        return (this.#styleSheet = styleSheet);
+      }
+    }
+
     if (!this.styleElement) {
       this.styleElement = this._document.createElement("style");
       this._document.documentElement
         .getElementsByTagName("head")[0]
         .append(this.styleElement);
     }
-    const styleSheet = this.styleElement.sheet;
-    styleSheet.insertRule(rule, styleSheet.cssRules.length);
+    return (this.#styleSheet = this.styleElement.sheet);
   }
 
   clear() {
@@ -72,6 +97,16 @@ class FontLoader {
     }
     this.nativeFontFaces.clear();
     this.#systemFonts.clear();
+
+    if (this.#styleSheet) {
+      const { adoptedStyleSheets } = this._document;
+      if (adoptedStyleSheets?.includes(this.#styleSheet)) {
+        this._document.adoptedStyleSheets = adoptedStyleSheets.filter(
+          styleSheet => styleSheet !== this.#styleSheet
+        );
+      }
+      this.#styleSheet = null;
+    }
 
     if (this.styleElement) {
       // Note: ChildNode.remove doesn't throw if the parentNode is undefined.
@@ -270,6 +305,14 @@ class FontLoader {
         (data.charCodeAt(offset + 3) & 0xff)
       );
     }
+    function string32(value) {
+      return String.fromCharCode(
+        (value >> 24) & 0xff,
+        (value >> 16) & 0xff,
+        (value >> 8) & 0xff,
+        value & 0xff
+      );
+    }
     function spliceString(s, offset, remove, insert) {
       const chunk1 = s.substring(0, offset);
       const chunk2 = s.substring(offset + remove);
@@ -355,25 +398,29 @@ class FontLoader {
 }
 
 class FontFaceObject {
+  compiledGlyphs = Object.create(null);
+
   #fontData;
 
-  constructor(translatedData, inspectFont = null, extra, charProcOperatorList) {
-    this.compiledGlyphs = Object.create(null);
-    this.#fontData = translatedData;
+  constructor(translatedData, inspectFont = null, charProcOperatorList, extra) {
     if (typeof PDFJSDev === "undefined" || PDFJSDev.test("TESTING")) {
-      if (typeof this.disableFontFace !== "boolean") {
-        unreachable("disableFontFace must be available.");
-      }
-      if (typeof this.fontExtraProperties !== "boolean") {
-        unreachable("fontExtraProperties must be available.");
-      }
+      assert(
+        typeof translatedData.disableFontFace === "boolean",
+        "disableFontFace must be available."
+      );
+      assert(
+        typeof translatedData.fontExtraProperties === "boolean",
+        "fontExtraProperties must be available."
+      );
     }
+    this.#fontData = translatedData;
     this._inspectFont = inspectFont;
-    if (extra) {
-      Object.assign(this, extra);
-    }
+
     if (charProcOperatorList) {
       this.charProcOperatorList = charProcOperatorList;
+    }
+    if (extra) {
+      Object.assign(this, extra);
     }
   }
 
@@ -453,7 +500,7 @@ class FontFaceObject {
   }
 
   get disableFontFace() {
-    return this.#fontData.disableFontFace ?? false;
+    return this.#fontData.disableFontFace;
   }
 
   set disableFontFace(value) {
@@ -461,7 +508,7 @@ class FontFaceObject {
   }
 
   get fontExtraProperties() {
-    return this.#fontData.fontExtraProperties ?? false;
+    return this.#fontData.fontExtraProperties;
   }
 
   get isInvalidPDFjsFont() {
@@ -502,10 +549,6 @@ class FontFaceObject {
 
   get bbox() {
     return this.#fontData.bbox;
-  }
-
-  set bbox(bbox) {
-    shadow(this, "bbox", bbox);
   }
 
   get fontMatrix() {

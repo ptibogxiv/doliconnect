@@ -13,43 +13,16 @@
  * limitations under the License.
  */
 
-import { readUint32 } from "./core_utils.js";
-import { string32 } from "../shared/util.js";
-
-function writeInt16(dest, offset, num) {
-  dest[offset] = (num >> 8) & 0xff;
-  dest[offset + 1] = num & 0xff;
-}
-
-function writeInt32(dest, offset, num) {
-  dest[offset] = (num >> 24) & 0xff;
-  dest[offset + 1] = (num >> 16) & 0xff;
-  dest[offset + 2] = (num >> 8) & 0xff;
-  dest[offset + 3] = num & 0xff;
-}
-
-function writeData(dest, offset, data) {
-  if (data instanceof Uint8Array) {
-    dest.set(data, offset);
-  } else if (typeof data === "string") {
-    for (let i = 0, ii = data.length; i < ii; i++) {
-      dest[offset++] = data.charCodeAt(i) & 0xff;
-    }
-  } else {
-    // treating everything else as array
-    for (const num of data) {
-      dest[offset++] = num & 0xff;
-    }
-  }
-}
+import { stringToBytes } from "../shared/util.js";
 
 const OTF_HEADER_SIZE = 12;
 const OTF_TABLE_ENTRY_SIZE = 16;
 
 class OpenTypeFileBuilder {
+  #tables = new Map();
+
   constructor(sfnt) {
     this.sfnt = sfnt;
-    this.tables = Object.create(null);
   }
 
   static getSearchParams(entriesCount, entrySize) {
@@ -71,83 +44,78 @@ class OpenTypeFileBuilder {
     let sfnt = this.sfnt;
 
     // Tables needs to be written by ascendant alphabetic order
-    const tables = this.tables;
-    const tablesNames = Object.keys(tables);
-    tablesNames.sort();
+    const tables = this.#tables;
+    const tablesNames = [...tables.keys()].sort();
     const numTables = tablesNames.length;
 
-    let i, j, jj, table, tableName;
     // layout the tables data
     let offset = OTF_HEADER_SIZE + numTables * OTF_TABLE_ENTRY_SIZE;
     const tableOffsets = [offset];
-    for (i = 0; i < numTables; i++) {
-      table = tables[tablesNames[i]];
+    for (let i = 0; i < numTables; i++) {
+      const table = tables.get(tablesNames[i]);
       const paddedLength = ((table.length + 3) & ~3) >>> 0;
       offset += paddedLength;
       tableOffsets.push(offset);
     }
 
-    const file = new Uint8Array(offset);
+    const file = new Uint8Array(offset),
+      view = new DataView(file.buffer);
     // write the table data first (mostly for checksum)
-    for (i = 0; i < numTables; i++) {
-      table = tables[tablesNames[i]];
-      writeData(file, tableOffsets[i], table);
+    for (let i = 0; i < numTables; i++) {
+      const table = tables.get(tablesNames[i]);
+      file.set(table, tableOffsets[i]);
     }
 
     // sfnt version (4 bytes)
     if (sfnt === "true") {
       // Windows hates the Mac TrueType sfnt version number
-      sfnt = string32(0x00010000);
+      sfnt = "\x00\x01\x00\x00";
     }
-    file[0] = sfnt.charCodeAt(0) & 0xff;
-    file[1] = sfnt.charCodeAt(1) & 0xff;
-    file[2] = sfnt.charCodeAt(2) & 0xff;
-    file[3] = sfnt.charCodeAt(3) & 0xff;
+    file.set(stringToBytes(sfnt), 0);
 
     // numTables (2 bytes)
-    writeInt16(file, 4, numTables);
+    view.setInt16(4, numTables);
 
     const searchParams = OpenTypeFileBuilder.getSearchParams(numTables, 16);
 
     // searchRange (2 bytes)
-    writeInt16(file, 6, searchParams.range);
+    view.setInt16(6, searchParams.range);
     // entrySelector (2 bytes)
-    writeInt16(file, 8, searchParams.entry);
+    view.setInt16(8, searchParams.entry);
     // rangeShift (2 bytes)
-    writeInt16(file, 10, searchParams.rangeShift);
+    view.setInt16(10, searchParams.rangeShift);
 
     offset = OTF_HEADER_SIZE;
     // writing table entries
-    for (i = 0; i < numTables; i++) {
-      tableName = tablesNames[i];
-      file[offset] = tableName.charCodeAt(0) & 0xff;
-      file[offset + 1] = tableName.charCodeAt(1) & 0xff;
-      file[offset + 2] = tableName.charCodeAt(2) & 0xff;
-      file[offset + 3] = tableName.charCodeAt(3) & 0xff;
+    for (let i = 0; i < numTables; i++) {
+      const tableName = tablesNames[i];
+      file.set(stringToBytes(tableName), offset);
 
       // checksum
       let checksum = 0;
-      for (j = tableOffsets[i], jj = tableOffsets[i + 1]; j < jj; j += 4) {
-        const quad = readUint32(file, j);
+      for (let j = tableOffsets[i], jj = tableOffsets[i + 1]; j < jj; j += 4) {
+        const quad = view.getUint32(j);
         checksum = (checksum + quad) >>> 0;
       }
-      writeInt32(file, offset + 4, checksum);
+      view.setInt32(offset + 4, checksum);
 
       // offset
-      writeInt32(file, offset + 8, tableOffsets[i]);
+      view.setInt32(offset + 8, tableOffsets[i]);
       // length
-      writeInt32(file, offset + 12, tables[tableName].length);
+      view.setInt32(offset + 12, tables.get(tableName).length);
 
       offset += OTF_TABLE_ENTRY_SIZE;
     }
+
+    this.#tables.clear();
     return file;
   }
 
   addTable(tag, data) {
-    if (tag in this.tables) {
-      throw new Error("Table " + tag + " already exists");
+    if (this.#tables.has(tag)) {
+      throw new Error(`Table ${tag} already exists`);
     }
-    this.tables[tag] = data;
+    this.#tables.set(tag, data);
   }
 }
 

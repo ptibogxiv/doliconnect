@@ -22,13 +22,18 @@ import {
 } from "../shared/util.js";
 import { ChunkedStreamManager } from "./chunked_stream.js";
 import { ImageResizer } from "./image_resizer.js";
-import { JBig2CCITTFaxWasmImage } from "./jbig2_ccittFax_wasm.js";
 import { JpegStream } from "./jpeg_stream.js";
-import { JpxImage } from "./jpx.js";
 import { MissingDataException } from "./core_utils.js";
 import { OperatorList } from "./operator_list.js";
+import { Pattern } from "./pattern.js";
 import { PDFDocument } from "./document.js";
+import { PDFFunctionFactory } from "./function.js";
 import { Stream } from "./stream.js";
+import { WasmImage } from "./wasm_image.js";
+
+/**
+ * @typedef { LocalPdfManager | NetworkPdfManager } PdfManager
+ */
 
 function parseDocBaseUrl(url) {
   if (url) {
@@ -71,6 +76,7 @@ class BasePdfManager {
       FeatureTest.isOffscreenCanvasSupported;
     evaluatorOptions.isImageDecoderSupported &&=
       FeatureTest.isImageDecoderSupported;
+
     this.evaluatorOptions = Object.freeze(evaluatorOptions);
 
     // Initialize image-options once per document.
@@ -79,10 +85,11 @@ class BasePdfManager {
     OperatorList.setOptions(evaluatorOptions);
 
     const options = { ...evaluatorOptions, handler };
-    JpxImage.setOptions(options);
     IccColorSpace.setOptions(options);
     CmykICCBasedCS.setOptions(options);
-    JBig2CCITTFaxWasmImage.setOptions(options);
+    PDFFunctionFactory.setOptions(options);
+    Pattern.setOptions(options);
+    WasmImage.setOptions(options);
   }
 
   get docId() {
@@ -107,6 +114,19 @@ class BasePdfManager {
 
   ensureCatalog(prop, args) {
     return this.ensure(this.pdfDocument.catalog, prop, args);
+  }
+
+  async initDocument(recoveryMode) {
+    await this.ensureDoc("checkHeader");
+    await this.ensureDoc("parseStartXRef");
+    await this.ensureDoc("parse", [recoveryMode]);
+
+    // Check that at least the first page can be successfully loaded,
+    // since otherwise the XRef table is definitely not valid.
+    await this.ensureDoc("checkFirstPage", [recoveryMode]);
+    // Check that the last page can be successfully loaded, to ensure that
+    // `numPages` is correct, and fallback to walking the entire /Pages-tree.
+    await this.ensureDoc("checkLastPage", [recoveryMode]);
   }
 
   getPage(pageIndex) {
@@ -137,8 +157,17 @@ class BasePdfManager {
     unreachable("Abstract method `sendProgressiveData` called");
   }
 
+  /**
+   * Set password.
+   *
+   * @param {string} password
+   *   New password.
+   * @returns {undefined}
+   *   Nothing.
+   */
   updatePassword(password) {
     this._password = password;
+    this.pdfDocument.xref.encrypt?.setPassword(password);
   }
 
   terminate(reason) {
@@ -191,7 +220,7 @@ class NetworkPdfManager extends BasePdfManager {
     try {
       const value = obj[prop];
       if (typeof value === "function") {
-        return value.apply(obj, args);
+        return await value.apply(obj, args);
       }
       return value;
     } catch (ex) {

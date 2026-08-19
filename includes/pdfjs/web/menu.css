@@ -35,6 +35,7 @@ button.hasPopupMenu {
     transparent 79%
   );
   --menuitem-text-active-fg: var(--menu-text-color);
+  --menuitem-active-border-color: var(--menuitem-border-color);
   --menuitem-focus-bg: color-mix(
     in srgb,
     var(--menu-text-color),
@@ -52,6 +53,7 @@ button.hasPopupMenu {
   --menuitem-border-radius: 8px;
   --menu-backdrop-filter: none;
   --menu-text-color: light-dark(#15141a, #fbfbfe);
+  --menu-text-disabled-color: var(--menu-text-color);
   --menuitem-text-hover-fg: var(--menu-text-color);
   --menuitem-hover-bg: color-mix(
     in srgb,
@@ -59,6 +61,7 @@ button.hasPopupMenu {
     transparent 86%
   );
   --menuitem-hover-background-blend-mode: normal;
+  --disabled-opacity: 0.62;
 
   @media screen and (forced-colors: active) {
     --menu-bg: Canvas;
@@ -66,14 +69,18 @@ button.hasPopupMenu {
     --menu-box-shadow: none;
     --menu-backdrop-filter: none;
     --menu-text-color: ButtonText;
+    --menu-text-disabled-color: GrayText;
     --menu-border-color: CanvasText;
     --menuitem-border-color: none;
     --menuitem-hover-bg: SelectedItemText;
     --menuitem-text-hover-fg: SelectedItem;
     --menuitem-active-bg: SelectedItemText;
+    --menuitem-active-border-color: ButtonText;
     --menuitem-text-active-fg: SelectedItem;
+    --menuitem-focus-bg: ButtonFace;
     --menuitem-focus-outline-color: CanvasText;
     --menuitem-focus-border-color: none;
+    --disabled-opacity: 1;
   }
 
   display: flex;
@@ -98,12 +105,12 @@ button.hasPopupMenu {
     --menu-mark-icon-size: 16px;
   }
 
-  > li {
+  > button {
     display: flex;
     align-items: center;
-    list-style: none;
+    position: relative;
     width: 100%;
-    height: 24px;
+    height: 26px;
     padding-inline: calc(var(--menu-mark-icon-size) + var(--menuitem-gap))
       var(--menuitem-gap);
     gap: var(--menuitem-gap);
@@ -112,7 +119,7 @@ button.hasPopupMenu {
     border: 1px solid var(--menuitem-border-color);
     background: transparent;
 
-    &:has(button.selected)::before {
+    &.selected::after {
       content: "";
       display: inline-block;
       width: 11px;
@@ -122,84 +129,88 @@ button.hasPopupMenu {
       mask-image: var(--menuitem-checkmark-icon);
       background-color: var(--menu-text-color);
       position: absolute;
-      margin-inline-start: -16px;
+      inset-inline-start: var(--menuitem-gap);
+      top: 50%;
+      transform: translateY(-50%);
     }
 
-    &:has(button:disabled) {
-      opacity: 0.62;
-      pointer-events: none;
-    }
+    &:disabled {
+      opacity: var(--disabled-opacity);
 
-    &:hover {
-      background: var(--menuitem-hover-bg);
-      background-blend-mode: var(--menuitem-hover-background-blend-mode);
-      > button {
-        &:not(.noIcon)::before {
-          background-color: var(--menuitem-text-hover-fg);
-        }
-        > span {
-          color: var(--menuitem-text-hover-fg);
-        }
+      &.selected::after {
+        background-color: var(--menu-text-disabled-color);
       }
-      &:has(button.selected)::before {
-        background-color: var(--menuitem-text-hover-fg);
-      }
-    }
-
-    &:active {
-      background-color: var(--menuitem-active-bg);
-      > button > span {
-        color: var(--menuitem-text-active-fg);
-      }
-    }
-
-    &:has(> button:focus-visible) {
-      border-color: var(--menuitem-focus-border-color);
-      background-color: var(--menuitem-focus-bg);
-      outline: 2px solid var(--menuitem-focus-outline-color);
-      outline-offset: 2px;
-    }
-
-    > button {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      width: 100%;
-      height: auto;
-      padding: var(--menuitem-gap);
-      gap: var(--menuitem-gap);
-      background: transparent;
-      border: none;
 
       &:not(.noIcon)::before {
-        display: inline-block;
-        width: var(--menu-icon-size);
-        height: var(--menu-icon-size);
-        content: "";
-        mask-size: cover;
-        mask-position: center;
-        background-color: var(--menu-text-color);
-      }
-
-      &:focus-visible {
-        outline: none;
+        background-color: var(--menu-text-disabled-color);
       }
 
       > span {
-        display: inline-block;
-        width: max-content;
-        height: auto;
-        text-align: start;
-        color: var(--menu-text-color);
-        user-select: none;
-        padding-inline-start: 6px;
-
-        font: menu;
-        font-size: 13px;
-        font-style: normal;
-        font-weight: 510;
-        line-height: normal;
+        color: var(--menu-text-disabled-color);
       }
+    }
+
+    &:not(:disabled) {
+      &:hover {
+        background: var(--menuitem-hover-bg);
+        background-blend-mode: var(--menuitem-hover-background-blend-mode);
+
+        &:not(.noIcon)::before {
+          background-color: var(--menuitem-text-hover-fg);
+        }
+
+        > span {
+          color: var(--menuitem-text-hover-fg);
+        }
+
+        &.selected::after {
+          background-color: var(--menuitem-text-hover-fg);
+        }
+      }
+
+      &:active {
+        background-color: var(--menuitem-active-bg);
+        border-color: var(--menuitem-active-border-color);
+
+        > span {
+          color: var(--menuitem-text-active-fg);
+        }
+      }
+
+      &:focus-visible {
+        border-color: var(--menuitem-focus-border-color);
+        background-color: var(--menuitem-focus-bg);
+        outline: 2px solid var(--menuitem-focus-outline-color);
+        outline-offset: 2px;
+      }
+    }
+
+    &:not(.noIcon)::before {
+      display: inline-block;
+      width: var(--menu-icon-size);
+      height: var(--menu-icon-size);
+      content: "";
+      mask-size: cover;
+      mask-position: center;
+      background-color: var(--menu-text-color);
+    }
+
+    > span {
+      display: flex;
+      align-items: center;
+      align-self: stretch;
+      width: 100%;
+      min-width: max-content;
+      text-align: start;
+      color: var(--menu-text-color);
+      user-select: none;
+      padding-inline-start: 6px;
+
+      font: menu;
+      font-size: 13px;
+      font-style: normal;
+      font-weight: 510;
+      line-height: normal;
     }
   }
 }

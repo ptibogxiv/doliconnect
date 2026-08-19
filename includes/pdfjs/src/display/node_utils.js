@@ -15,11 +15,9 @@
 /* globals process */
 
 import { isNodeJS, warn } from "../shared/util.js";
+import { BaseBinaryDataFactory } from "./binary_data_factory.js";
 import { BaseCanvasFactory } from "./canvas_factory.js";
-import { BaseCMapReaderFactory } from "./cmap_reader_factory.js";
 import { BaseFilterFactory } from "./filter_factory.js";
-import { BaseStandardFontDataFactory } from "./standard_fontdata_factory.js";
-import { BaseWasmFactory } from "./wasm_factory.js";
 
 if (typeof PDFJSDev !== "undefined" && PDFJSDev.test("MOZCENTRAL")) {
   throw new Error(
@@ -53,13 +51,6 @@ if (isNodeJS) {
         warn("Cannot polyfill `DOMMatrix`, rendering may be broken.");
       }
     }
-    if (!globalThis.ImageData) {
-      if (canvas?.ImageData) {
-        globalThis.ImageData = canvas.ImageData;
-      } else {
-        warn("Cannot polyfill `ImageData`, rendering may be broken.");
-      }
-    }
     if (!globalThis.Path2D) {
       if (canvas?.Path2D) {
         globalThis.Path2D = canvas.Path2D;
@@ -78,8 +69,8 @@ if (isNodeJS) {
 }
 
 async function fetchData(url) {
-  const fs = process.getBuiltinModule("fs");
-  const data = await fs.promises.readFile(url);
+  const fs = process.getBuiltinModule("fs/promises");
+  const data = await fs.readFile(url);
   return new Uint8Array(data);
 }
 
@@ -98,38 +89,18 @@ class NodeCanvasFactory extends BaseCanvasFactory {
   }
 }
 
-class NodeCMapReaderFactory extends BaseCMapReaderFactory {
+class NodeBinaryDataFactory extends BaseBinaryDataFactory {
   /**
    * @ignore
    */
-  async _fetch(url) {
-    return fetchData(url);
-  }
-}
-
-class NodeStandardFontDataFactory extends BaseStandardFontDataFactory {
-  /**
-   * @ignore
-   */
-  async _fetch(url) {
-    return fetchData(url);
-  }
-}
-
-class NodeWasmFactory extends BaseWasmFactory {
-  /**
-   * @ignore
-   */
-  async _fetch(url) {
+  async _fetch(url, kind) {
     return fetchData(url);
   }
 }
 
 export {
   fetchData,
+  NodeBinaryDataFactory,
   NodeCanvasFactory,
-  NodeCMapReaderFactory,
   NodeFilterFactory,
-  NodeStandardFontDataFactory,
-  NodeWasmFactory,
 };

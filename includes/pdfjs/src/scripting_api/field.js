@@ -77,7 +77,7 @@ class Field extends PDFObject {
     this._fillColor = data.fillColor || ["T"];
     this._isChoice = Array.isArray(data.items);
     this._items = data.items || [];
-    this._hasValue = data.hasOwnProperty("value");
+    this._hasValue = Object.hasOwn(data, "value");
     this._page = data.page || 0;
     this._strokeColor = data.strokeColor || ["G", 0];
     this._textColor = data.textColor || ["G", 0];
@@ -334,17 +334,11 @@ class Field extends PDFObject {
   }
 
   buttonGetCaption(nFace = 0) {
-    if (this._buttonCaption) {
-      return this._buttonCaption[nFace];
-    }
-    return "";
+    return this._buttonCaption ? this._buttonCaption[nFace] : "";
   }
 
   buttonGetIcon(nFace = 0) {
-    if (this._buttonIcon) {
-      return this._buttonIcon[nFace];
-    }
-    return null;
+    return this._buttonIcon ? this._buttonIcon[nFace] : null;
   }
 
   buttonImportIcon(cPath = null, nPave = 0) {
@@ -352,9 +346,7 @@ class Field extends PDFObject {
   }
 
   buttonSetCaption(cCaption, nFace = 0) {
-    if (!this._buttonCaption) {
-      this._buttonCaption = ["", "", ""];
-    }
+    this._buttonCaption ??= ["", "", ""];
     this._buttonCaption[nFace] = cCaption;
     // TODO: send to the annotation layer
     // Right now the button is drawn on the canvas using its appearance so
@@ -363,9 +355,7 @@ class Field extends PDFObject {
   }
 
   buttonSetIcon(oIcon, nFace = 0) {
-    if (!this._buttonIcon) {
-      this._buttonIcon = [null, null, null];
-    }
+    this._buttonIcon ??= [null, null, null];
     this._buttonIcon[nFace] = oIcon;
   }
 

@@ -113,16 +113,9 @@ function preprocess(inFilename, outFilename, defines) {
     const realPath = fs.realpathSync(inFilename);
     const dir = path.dirname(realPath);
     try {
-      let fullpath;
-      if (file.indexOf("$ROOT/") === 0) {
-        fullpath = path.join(
-          __dirname,
-          "../..",
-          file.substring("$ROOT/".length)
-        );
-      } else {
-        fullpath = path.join(dir, file);
-      }
+      const fullpath = file.startsWith("$ROOT/")
+        ? path.join(__dirname, "../..", file.substring("$ROOT/".length))
+        : path.join(dir, file);
       preprocess(fullpath, writeLine, defines);
     } catch (e) {
       if (e.code === "ENOENT") {
@@ -132,7 +125,7 @@ function preprocess(inFilename, outFilename, defines) {
     }
   }
   function expand(line) {
-    line = line.replaceAll(/__[\w]+__/g, function (variable) {
+    line = line.replaceAll(/__\w+__/g, function (variable) {
       variable = variable.substring(2, variable.length - 2);
       if (variable in defines) {
         return defines[variable];
@@ -158,6 +151,7 @@ function preprocess(inFilename, outFilename, defines) {
   let state = STATE_NONE;
   const stack = [];
   const control =
+    // eslint-disable-next-line regexp/no-super-linear-backtracking
     /^(?:\/\/|\s*\/\*|\s*<!--)\s*#(if|elif|else|endif|expand|include|error)\b(?:\s+(.*?)(?:\*\/|-->)?$)?/;
 
   while ((line = readLine()) !== null) {

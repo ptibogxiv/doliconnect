@@ -18,30 +18,24 @@ import { DecodeStream } from "./decode_stream.js";
 const chunkSize = 512;
 
 class DecryptStream extends DecodeStream {
+  #nextChunk = null;
+
   constructor(str, maybeLength, decrypt) {
     super(maybeLength);
 
     this.stream = str;
     this.dict = str.dict;
     this.decrypt = decrypt;
-    this.nextChunk = null;
-    this.initialized = false;
   }
 
   readBlock() {
-    let chunk;
-    if (this.initialized) {
-      chunk = this.nextChunk;
-    } else {
-      chunk = this.stream.getBytes(chunkSize);
-      this.initialized = true;
-    }
+    let chunk = this.#nextChunk ?? this.stream.getBytes(chunkSize);
     if (!chunk?.length) {
       this.eof = true;
       return;
     }
-    this.nextChunk = this.stream.getBytes(chunkSize);
-    const hasMoreData = this.nextChunk?.length > 0;
+    this.#nextChunk = this.stream.getBytes(chunkSize);
+    const hasMoreData = this.#nextChunk?.length > 0;
 
     const decrypt = this.decrypt;
     chunk = decrypt(chunk, !hasMoreData);

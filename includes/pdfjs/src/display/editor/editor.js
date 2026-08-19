@@ -22,16 +22,12 @@ import {
   ColorManager,
   KeyboardManager,
 } from "./tools.js";
-import {
-  FeatureTest,
-  MathClamp,
-  shadow,
-  unreachable,
-} from "../../shared/util.js";
+import { FeatureTest, shadow, unreachable } from "../../shared/util.js";
 import { noContextMenu, stopEvent } from "../display_utils.js";
 import { AltText } from "./alt_text.js";
 import { Comment } from "./comment.js";
 import { EditorToolbar } from "./toolbar.js";
+import { MathClamp } from "../../shared/math_clamp.js";
 import { TouchManager } from "../touch_manager.js";
 
 /**
@@ -113,6 +109,8 @@ class AnnotationEditor {
 
   static _l10n = null;
 
+  static _l10nAlert = null;
+
   static _l10nResizer = null;
 
   #isDraggable = false;
@@ -139,26 +137,23 @@ class AnnotationEditor {
       this,
       "_resizerKeyboardManager",
       new KeyboardManager([
-        [["ArrowLeft", "mac+ArrowLeft"], resize, { args: [-small, 0] }],
+        [["ArrowLeft"], resize, { args: [-small, 0] }],
         [
           ["ctrl+ArrowLeft", "mac+shift+ArrowLeft"],
           resize,
           { args: [-big, 0] },
         ],
-        [["ArrowRight", "mac+ArrowRight"], resize, { args: [small, 0] }],
+        [["ArrowRight"], resize, { args: [small, 0] }],
         [
           ["ctrl+ArrowRight", "mac+shift+ArrowRight"],
           resize,
           { args: [big, 0] },
         ],
-        [["ArrowUp", "mac+ArrowUp"], resize, { args: [0, -small] }],
+        [["ArrowUp"], resize, { args: [0, -small] }],
         [["ctrl+ArrowUp", "mac+shift+ArrowUp"], resize, { args: [0, -big] }],
-        [["ArrowDown", "mac+ArrowDown"], resize, { args: [0, small] }],
+        [["ArrowDown"], resize, { args: [0, small] }],
         [["ctrl+ArrowDown", "mac+shift+ArrowDown"], resize, { args: [0, big] }],
-        [
-          ["Escape", "mac+Escape"],
-          AnnotationEditor.prototype._stopResizingWithKeyboard,
-        ],
+        [["Escape"], AnnotationEditor.prototype._stopResizingWithKeyboard],
       ])
     );
   }
@@ -235,7 +230,7 @@ class AnnotationEditor {
 
   static deleteAnnotationElement(editor) {
     const fakeEditor = new FakeEditor({
-      id: editor.parent.getNextId(),
+      id: editor._uiManager.getId(),
       parent: editor.parent,
       uiManager: editor._uiManager,
     });
@@ -251,7 +246,15 @@ class AnnotationEditor {
   static initialize(l10n, _uiManager) {
     AnnotationEditor._l10n ??= l10n;
 
-    AnnotationEditor._l10nResizer ||= Object.freeze({
+    AnnotationEditor._l10nAlert ??= Object.freeze({
+      highlight: "pdfjs-editor-highlight-added-alert",
+      freetext: "pdfjs-editor-freetext-added-alert",
+      ink: "pdfjs-editor-ink-added-alert",
+      stamp: "pdfjs-editor-stamp-added-alert",
+      signature: "pdfjs-editor-signature-added-alert",
+    });
+
+    AnnotationEditor._l10nResizer ??= Object.freeze({
       topLeft: "pdfjs-editor-resizer-top-left",
       topMiddle: "pdfjs-editor-resizer-top-middle",
       topRight: "pdfjs-editor-resizer-top-right",
@@ -480,6 +483,10 @@ class AnnotationEditor {
   }
 
   _moveAfterPaste(baseX, baseY) {
+    if (this.isClone) {
+      delete this.isClone;
+      return;
+    }
     const [parentWidth, parentHeight] = this.parentDimensions;
     this.setAt(
       baseX * parentWidth,
@@ -1862,7 +1869,7 @@ class AnnotationEditor {
   static async deserialize(data, parent, uiManager) {
     const editor = new this.prototype.constructor({
       parent,
-      id: parent.getNextId(),
+      id: uiManager.getId(),
       uiManager,
       annotationElementId: data.annotationElementId,
       creationDate: data.creationDate,

@@ -13,7 +13,8 @@
  * limitations under the License.
  */
 
-import { MathClamp, Util } from "../../../shared/util.js";
+import { F32_BBOX_INIT, Util } from "../../../shared/util.js";
+import { MathClamp } from "../../../shared/math_clamp.js";
 import { Outline } from "./outline.js";
 
 class InkDrawOutliner {
@@ -71,7 +72,7 @@ class InkDrawOutliner {
   }
 
   isEmpty() {
-    return !this.#lines || this.#lines.length === 0;
+    return !this.#lines?.length;
   }
 
   isCancellable() {
@@ -586,12 +587,7 @@ class InkDrawOutline extends Outline {
   }
 
   #computeBbox() {
-    const bbox = (this.#bbox = new Float32Array([
-      Infinity,
-      Infinity,
-      -Infinity,
-      -Infinity,
-    ]));
+    const bbox = (this.#bbox = F32_BBOX_INIT.slice());
 
     for (const { line } of this.#lines) {
       if (line.length <= 12) {

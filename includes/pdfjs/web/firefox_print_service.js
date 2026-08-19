@@ -23,6 +23,7 @@ import {
   BasePrintServiceFactory,
   getXfaHtmlForPrinting,
 } from "./print_utils.js";
+import { AppOptions } from "./app_options.js";
 
 // Creates a placeholder with div and canvas with right size for the page.
 function composePage(
@@ -31,6 +32,7 @@ function composePage(
   size,
   printContainer,
   printResolution,
+  shouldPostMessageAfterPrintCallback,
   optionalContentConfigPromise,
   printAnnotationStoragePromise
 ) {
@@ -94,6 +96,9 @@ function composePage(
             currentRenderTask = null;
           }
           obj.done();
+          if (shouldPostMessageAfterPrintCallback) {
+            window.postMessage("ready", "*");
+          }
         },
         function (reason) {
           if (!(reason instanceof RenderingCancelledException)) {
@@ -111,6 +116,9 @@ function composePage(
             obj.abort();
           } else {
             obj.done();
+          }
+          if (shouldPostMessageAfterPrintCallback) {
+            window.postMessage("error", "*");
           }
         }
       );
@@ -162,15 +170,18 @@ class FirefoxPrintService {
     // Insert a @page + size rule to make sure that the page size is correctly
     // set. Note that we assume that all pages have the same size, because
     // variable-size pages are scaled down to the initial page size in Firefox.
-    this.pageStyleSheet = document.createElement("style");
-    this.pageStyleSheet.textContent = `@page { size: ${width}pt ${height}pt;}`;
-    body.append(this.pageStyleSheet);
+    this.pageStyleSheet = new CSSStyleSheet();
+    this.pageStyleSheet.replaceSync(`@page { size: ${width}pt ${height}pt;}`);
+    document.adoptedStyleSheets.push(this.pageStyleSheet);
 
     if (pdfDocument.isPureXfa) {
       getXfaHtmlForPrinting(printContainer, pdfDocument);
       return;
     }
 
+    const shouldPostMessageAfterPrintCallback = AppOptions.get(
+      "postMessageAfterPrintCallback"
+    );
     for (let i = 0, ii = pagesOverview.length; i < ii; ++i) {
       composePage(
         pdfDocument,
@@ -178,6 +189,7 @@ class FirefoxPrintService {
         pagesOverview[i],
         printContainer,
         _printResolution,
+        shouldPostMessageAfterPrintCallback,
         _optionalContentConfigPromise,
         _printAnnotationStoragePromise
       );
@@ -191,7 +203,9 @@ class FirefoxPrintService {
     body.removeAttribute("data-pdfjsprinting");
 
     if (this.pageStyleSheet) {
-      this.pageStyleSheet.remove();
+      document.adoptedStyleSheets = document.adoptedStyleSheets.filter(
+        styleSheet => styleSheet !== this.pageStyleSheet
+      );
       this.pageStyleSheet = null;
     }
   }

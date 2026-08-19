@@ -13,45 +13,45 @@
  * limitations under the License.
  */
 
+import { internalOpt } from "./internal_evt.js";
+
 /**
  * This class manages the interaction of extracting the text content of the page
  * and passing it back to the external service.
  */
 class PdfTextExtractor {
-  /** @type {PDFViewer} */
-  #pdfViewer;
-
+  /** @type {BaseExternalServices} */
   #externalServices;
 
-  /**
-   * @type {?Promise<string>}
-   */
+  /** @type {?Promise<string>} */
   #textPromise;
 
-  #pendingRequests = new Set();
+  #capability = Promise.withResolvers();
 
-  constructor(externalServices) {
+  constructor(externalServices, pdfViewer, eventBus) {
     this.#externalServices = externalServices;
+
+    eventBus.on(
+      "pagesinit",
+      () => {
+        this.#capability.resolve(pdfViewer);
+      },
+      internalOpt
+    );
+    eventBus.on(
+      "pagesdestroy",
+      () => {
+        this.#capability.reject(new Error("pagesdestroy"));
+        this.#textPromise = null;
+
+        this.#capability = Promise.withResolvers();
+      },
+      internalOpt
+    );
 
     window.addEventListener("requestTextContent", ({ detail }) => {
       this.extractTextContent(detail.requestId);
     });
-  }
-
-  /**
-   * The PDF viewer is required to get the page text.
-   *
-   * @param {PDFViewer | null}
-   */
-  setViewer(pdfViewer) {
-    this.#pdfViewer = pdfViewer;
-    if (this.#pdfViewer && this.#pendingRequests.size) {
-      // Handle any pending requests that came in while things were loading.
-      for (const pendingRequest of this.#pendingRequests) {
-        this.extractTextContent(pendingRequest);
-      }
-      this.#pendingRequests.clear();
-    }
   }
 
   /**
@@ -60,13 +60,10 @@ class PdfTextExtractor {
    * @param {number} requestId
    */
   async extractTextContent(requestId) {
-    if (!this.#pdfViewer) {
-      this.#pendingRequests.add(requestId);
-      return;
-    }
-
     if (!this.#textPromise) {
-      const textPromise = (this.#textPromise = this.#pdfViewer.getAllText());
+      const textPromise = (this.#textPromise = this.#capability.promise.then(
+        pdfViewer => pdfViewer.getAllText()
+      ));
 
       // After the text resolves, cache the text for a little bit in case
       // multiple consumers call it.

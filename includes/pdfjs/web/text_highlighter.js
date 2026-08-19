@@ -13,6 +13,8 @@
  * limitations under the License.
  */
 
+import { internalOpt } from "./internal_evt.js";
+
 /** @typedef {import("./event_utils").EventBus} EventBus */
 // eslint-disable-next-line max-len
 /** @typedef {import("./pdf_find_controller").PDFFindController} PDFFindController */
@@ -29,7 +31,7 @@
  * either the text layer or XFA layer depending on the type of document.
  */
 class TextHighlighter {
-  #eventAbortController = null;
+  #eventAC = null;
 
   /**
    * @param {TextHighlighterOptions} options
@@ -71,17 +73,17 @@ class TextHighlighter {
     }
     this.enabled = true;
 
-    if (!this.#eventAbortController) {
-      this.#eventAbortController = new AbortController();
+    if (!this.#eventAC) {
+      this.#eventAC = new AbortController();
 
-      this.eventBus._on(
+      this.eventBus.on(
         "updatetextlayermatches",
         evt => {
           if (evt.pageIndex === this.pageIdx || evt.pageIndex === -1) {
             this._updateMatches();
           }
         },
-        { signal: this.#eventAbortController.signal }
+        { signal: this.#eventAC.signal, ...internalOpt }
       );
     }
     this._updateMatches();
@@ -93,8 +95,8 @@ class TextHighlighter {
     }
     this.enabled = false;
 
-    this.#eventAbortController?.abort();
-    this.#eventAbortController = null;
+    this.#eventAC?.abort();
+    this.#eventAC = null;
 
     this._updateMatches(/* reset = */ true);
   }
@@ -195,11 +197,9 @@ class TextHighlighter {
         div.append(span);
 
         if (className.includes("selected")) {
-          const { left } = span.getClientRects()[0];
-          const parentLeft = div.getBoundingClientRect().left;
-          return left - parentLeft;
+          return span;
         }
-        return 0;
+        return null;
       }
 
       div.append(node);
@@ -233,7 +233,7 @@ class TextHighlighter {
       const end = match.end;
       const isSelected = isSelectedPage && i === selectedMatchIdx;
       const highlightSuffix = isSelected ? " selected" : "";
-      let selectedLeft = 0;
+      let selectedSpan = null;
 
       // Match inside new div.
       if (!prevEnd || begin.divIdx !== prevEnd.divIdx) {
@@ -248,14 +248,14 @@ class TextHighlighter {
       }
 
       if (begin.divIdx === end.divIdx) {
-        selectedLeft = appendTextToDiv(
+        selectedSpan = appendTextToDiv(
           begin.divIdx,
           begin.offset,
           end.offset,
           "highlight" + highlightSuffix
         );
       } else {
-        selectedLeft = appendTextToDiv(
+        selectedSpan = appendTextToDiv(
           begin.divIdx,
           begin.offset,
           infinity.offset,
@@ -271,8 +271,7 @@ class TextHighlighter {
       if (isSelected) {
         // Attempt to scroll the selected match into view.
         findController.scrollMatchIntoView({
-          element: textDivs[begin.divIdx],
-          selectedLeft,
+          element: selectedSpan,
           pageIndex: pageIdx,
           matchIndex: selectedMatchIdx,
         });

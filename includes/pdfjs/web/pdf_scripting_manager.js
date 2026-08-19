@@ -16,6 +16,7 @@
 /** @typedef {import("./event_utils").EventBus} EventBus */
 
 import { apiPageLayoutToViewerModes } from "./ui_utils.js";
+import { internalOpt } from "./internal_evt.js";
 import { RenderingStates } from "./renderable_view.js";
 import { shadow } from "pdfjs-lib";
 
@@ -38,11 +39,13 @@ class PDFScriptingManager {
 
   #docProperties = null;
 
-  #eventAbortController = null;
+  #eventAC = null;
 
   #eventBus = null;
 
   #externalServices = null;
+
+  #objectIds = null;
 
   #pdfDocument = null;
 
@@ -103,6 +106,18 @@ class PDFScriptingManager {
     if (pdfDocument !== this.#pdfDocument) {
       return; // The document was closed while the data resolved.
     }
+
+    // Collect the ids of every field annotation, so that any sandbox message
+    // targeting an unknown id can be ignored.
+    if (objects) {
+      this.#objectIds = new Set();
+      for (const fields of Object.values(objects)) {
+        for (const { id } of fields) {
+          this.#objectIds.add(id);
+        }
+      }
+    }
+
     try {
       this.#scripting = this.#initScripting();
     } catch (error) {
@@ -113,27 +128,27 @@ class PDFScriptingManager {
     }
     const eventBus = this.#eventBus;
 
-    this.#eventAbortController = new AbortController();
-    const { signal } = this.#eventAbortController;
+    this.#eventAC = new AbortController();
+    const evtOpts = { signal: this.#eventAC.signal, ...internalOpt };
 
-    eventBus._on(
+    eventBus.on(
       "updatefromsandbox",
       event => {
         if (event?.source === window) {
           this.#updateFromSandbox(event.detail);
         }
       },
-      { signal }
+      evtOpts
     );
-    eventBus._on(
+    eventBus.on(
       "dispatcheventinsandbox",
       event => {
         this.#scripting?.dispatchEventInSandbox(event.detail);
       },
-      { signal }
+      evtOpts
     );
 
-    eventBus._on(
+    eventBus.on(
       "pagechanging",
       ({ pageNumber, previous }) => {
         if (pageNumber === previous) {
@@ -142,9 +157,9 @@ class PDFScriptingManager {
         this.#dispatchPageClose(previous);
         this.#dispatchPageOpen(pageNumber);
       },
-      { signal }
+      evtOpts
     );
-    eventBus._on(
+    eventBus.on(
       "pagerendered",
       ({ pageNumber }) => {
         if (!this._pageOpenPending.has(pageNumber)) {
@@ -155,9 +170,9 @@ class PDFScriptingManager {
         }
         this.#dispatchPageOpen(pageNumber);
       },
-      { signal }
+      evtOpts
     );
-    eventBus._on(
+    eventBus.on(
       "pagesdestroy",
       async () => {
         await this.#dispatchPageClose(this.#pdfViewer.currentPageNumber);
@@ -169,7 +184,7 @@ class PDFScriptingManager {
 
         this.#closeCapability?.resolve();
       },
-      { signal }
+      evtOpts
     );
 
     try {
@@ -367,6 +382,9 @@ class PDFScriptingManager {
 
     const ids = siblings ? [id, ...siblings] : [id];
     for (const elementId of ids) {
+      if (!this.#objectIds?.has(elementId)) {
+        continue;
+      }
       const element = document.querySelector(
         `[data-element-id="${elementId}"]`
       );
@@ -455,6 +473,8 @@ class PDFScriptingManager {
   }
 
   async #destroyScripting() {
+    this.#objectIds = null;
+
     if (!this.#scripting) {
       this.#pdfDocument = null;
 
@@ -482,8 +502,8 @@ class PDFScriptingManager {
     this.#willPrintCapability?.reject(new Error("Scripting destroyed."));
     this.#willPrintCapability = null;
 
-    this.#eventAbortController?.abort();
-    this.#eventAbortController = null;
+    this.#eventAC?.abort();
+    this.#eventAC = null;
 
     this._pageOpenPending.clear();
     this._visitedPages.clear();

@@ -1,11 +1,13 @@
 import globals from "globals";
 
-import import_ from "eslint-plugin-import";
+import import_ from "eslint-plugin-import-x";
 import jasmine from "eslint-plugin-jasmine";
 import json from "@eslint/json";
 import noUnsanitized from "eslint-plugin-no-unsanitized";
 import perfectionist from "eslint-plugin-perfectionist";
+import preferMathClamp from "./external/eslint_plugins/prefer-math-clamp.mjs";
 import prettierRecommended from "eslint-plugin-prettier/recommended";
+import regexpPlugin from "eslint-plugin-regexp";
 import unicorn from "eslint-plugin-unicorn";
 
 const jsFiles = folder => {
@@ -45,6 +47,7 @@ export default [
       "web/locale/",
       "web/wasm/",
       "**/*~/",
+      ".{claude,codex,cursor}/",
     ],
   },
 
@@ -53,6 +56,14 @@ export default [
   \* ======================================================================== */
 
   prettierRecommended,
+  {
+    files: jsFiles("."),
+    plugins: regexpPlugin.configs["flat/recommended"].plugins,
+    rules: {
+      ...regexpPlugin.configs["flat/recommended"].rules,
+      "regexp/no-legacy-features": "off",
+    },
+  },
   {
     files: ["**/*.json", "**/.*.json"],
     language: "json/json",
@@ -69,11 +80,16 @@ export default [
     files: jsFiles("."),
 
     plugins: {
-      import: import_.flatConfigs.recommended.plugins.import,
+      import: import_.flatConfigs.recommended.plugins["import-x"],
       json,
       "no-unsanitized": noUnsanitized,
       perfectionist,
+      "prefer-math-clamp": preferMathClamp,
       unicorn,
+    },
+
+    settings: {
+      "import-x/resolver-next": [import_.createNodeResolver()],
     },
 
     languageOptions: {
@@ -81,6 +97,7 @@ export default [
         ...globals.worker,
         PDFJSDev: "readonly",
         __raw_import__: "readonly",
+        __eager_import__: "readonly",
       },
 
       ecmaVersion: 2025,
@@ -161,6 +178,11 @@ export default [
       "unicorn/prefer-dom-node-remove": "error",
       "unicorn/prefer-import-meta-properties": "error",
       "unicorn/prefer-includes": "error",
+      "unicorn/logical-assignment-operators": [
+        "error",
+        "always",
+        { enforceForIfStatements: true },
+      ],
       "unicorn/prefer-logical-operator-over-ternary": "error",
       "unicorn/prefer-modern-dom-apis": "error",
       "unicorn/prefer-modern-math-apis": "error",
@@ -172,6 +194,8 @@ export default [
       "unicorn/prefer-string-starts-ends-with": "error",
       "unicorn/prefer-ternary": ["error", "only-single-line"],
       "unicorn/throw-new-error": "error",
+
+      "prefer-math-clamp/prefer-math-clamp": "error",
 
       // Possible errors
       "for-direction": "error",
@@ -256,8 +280,10 @@ export default [
       "no-useless-concat": "error",
       "no-useless-escape": "error",
       "no-useless-return": "error",
+      "prefer-object-has-own": "error",
       "prefer-promise-reject-errors": "error",
       "prefer-spread": "error",
+      radix: "error",
       "wrap-iife": ["error", "any"],
       yoda: ["error", "never", { exceptRange: true }],
 
@@ -291,6 +317,11 @@ export default [
           selector:
             "BinaryExpression[operator='instanceof'][right.name='Object']",
           message: "Use `typeof` rather than `instanceof Object`.",
+        },
+        {
+          selector: "MemberExpression[property.name='hasOwnProperty']",
+          message:
+            "Use `Object.hasOwn` rather than `Object.prototype.hasOwnProperty`.",
         },
         {
           selector: "CallExpression[callee.name='assert'][arguments.length!=2]",
@@ -479,7 +510,7 @@ export default [
                                 Other
   \* ======================================================================== */
   {
-    files: ["gulpfile.mjs", "check_l10n.mjs"],
+    files: ["gulpfile.mjs"],
     languageOptions: { globals: globals.node },
   },
 ];

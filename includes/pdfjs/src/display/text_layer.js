@@ -13,8 +13,9 @@
  * limitations under the License.
  */
 
-/** @typedef {import("./display_utils").PageViewport} PageViewport */
+/** @typedef {import("./page_viewport").PageViewport} PageViewport */
 /** @typedef {import("./api").TextContent} TextContent */
+/** @typedef {import("./text_layer_images").TextLayerImages} TextLayerImages */
 
 import {
   AbortException,
@@ -34,6 +35,8 @@ import { OutputScale, setLayerDimensions } from "./display_utils.js";
  *   runs.
  * @property {PageViewport} viewport - The target viewport to properly layout
  *   the text runs.
+ * @property {TextLayerImages} [images] - An optional TextLayerImages instance
+ *  that handles right clicking on images.
  */
 
 /**
@@ -55,6 +58,8 @@ class TextLayer {
   #disableProcessItems = false;
 
   #fontInspectorEnabled = !!globalThis.FontInspector?.enabled;
+
+  #imagesHandler = null;
 
   #lang = null;
 
@@ -97,7 +102,7 @@ class TextLayer {
   /**
    * @param {TextLayerParameters} options
    */
-  constructor({ textContentSource, container, viewport }) {
+  constructor({ textContentSource, images, container, viewport }) {
     if (textContentSource instanceof ReadableStream) {
       this.#textContentSource = textContentSource;
     } else if (
@@ -114,6 +119,8 @@ class TextLayer {
       throw new Error('No "textContentSource" parameter specified.');
     }
     this.#container = this.#rootContainer = container;
+
+    this.#imagesHandler = images;
 
     this.#scale = viewport.scale * OutputScale.pixelRatio;
     this.#rotation = viewport.rotation;
@@ -181,6 +188,10 @@ class TextLayer {
    * @returns {Promise}
    */
   render() {
+    if (this.#imagesHandler) {
+      this.#container.append(this.#imagesHandler.render());
+    }
+
     const pump = () => {
       this.#reader.read().then(({ value, done }) => {
         if (done) {
@@ -292,7 +303,7 @@ class TextLayer {
           this.#container = document.createElement("span");
           this.#container.classList.add("markedContent");
           if (item.id) {
-            this.#container.setAttribute("id", `${item.id}`);
+            this.#container.setAttribute("id", item.id);
           }
           if (item.tag === "Artifact") {
             this.#container.ariaHidden = true;
@@ -461,7 +472,9 @@ class TextLayer {
       // their replacements when they aren't embedded) and then we can use an
       // OffscreenCanvas.
       const canvas = document.createElement("canvas");
-      canvas.className = "hiddenCanvasElement";
+      canvas.style.cssText =
+        "position:absolute;top:0;left:0;width:0;height:0;display:none;" +
+        "letter-spacing:normal;word-spacing:normal";
       canvas.lang = lang;
       document.body.append(canvas);
       ctx = canvas.getContext("2d", {

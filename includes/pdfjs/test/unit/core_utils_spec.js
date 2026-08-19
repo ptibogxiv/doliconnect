@@ -1,0 +1,600 @@
+/* Copyright 2019 Mozilla Foundation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import {
+  arrayBuffersToBytes,
+  deepCompare,
+  encodeToXmlString,
+  escapePDFName,
+  escapeString,
+  getInheritableProperty,
+  getModificationDate,
+  getRotationMatrix,
+  getSizeInBytes,
+  isWhiteSpace,
+  numberToString,
+  parseXFAPath,
+  recoverJsURL,
+  toRomanNumerals,
+  validateCSSFont,
+} from "../../src/core/core_utils.js";
+import {
+  clearPrimitiveCaches,
+  Dict,
+  Name,
+  Ref,
+} from "../../src/core/primitives.js";
+import { XRefMock } from "./test_utils.js";
+
+describe("core_utils", function () {
+  describe("arrayBuffersToBytes", function () {
+    it("handles zero ArrayBuffers", function () {
+      const bytes = arrayBuffersToBytes([]);
+
+      expect(bytes).toEqual(new Uint8Array(0));
+    });
+
+    it("handles one ArrayBuffer", function () {
+      const buffer = new Uint8Array([1, 2, 3]).buffer;
+      const bytes = arrayBuffersToBytes([buffer]);
+
+      expect(bytes).toEqual(new Uint8Array([1, 2, 3]));
+      // Ensure that the fast-path works correctly.
+      expect(bytes.buffer).toBe(buffer);
+    });
+
+    it("handles multiple ArrayBuffers", function () {
+      const buffer1 = new Uint8Array([1, 2, 3]).buffer,
+        buffer2 = new Uint8Array(0).buffer,
+        buffer3 = new Uint8Array([4, 5]).buffer;
+      const bytes = arrayBuffersToBytes([buffer1, buffer2, buffer3]);
+
+      expect(bytes).toEqual(new Uint8Array([1, 2, 3, 4, 5]));
+    });
+  });
+
+  describe("getInheritableProperty", function () {
+    it("handles non-dictionary arguments", function () {
+      expect(getInheritableProperty({ dict: null, key: "foo" })).toEqual(
+        undefined
+      );
+      expect(getInheritableProperty({ dict: undefined, key: "foo" })).toEqual(
+        undefined
+      );
+    });
+
+    it("handles dictionaries that do not contain the property", function () {
+      // Empty dictionary.
+      const emptyDict = new Dict();
+      expect(getInheritableProperty({ dict: emptyDict, key: "foo" })).toEqual(
+        undefined
+      );
+
+      // Filled dictionary with a different property.
+      const filledDict = new Dict();
+      filledDict.set("bar", "baz");
+      expect(getInheritableProperty({ dict: filledDict, key: "foo" })).toEqual(
+        undefined
+      );
+    });
+
+    it("fetches the property if it is not inherited", function () {
+      const ref = Ref.get(10, 0);
+      const xref = new XRefMock([{ ref, data: "quux" }]);
+      const dict = new Dict(xref);
+
+      // Regular values should be fetched.
+      dict.set("foo", "bar");
+      expect(getInheritableProperty({ dict, key: "foo" })).toEqual("bar");
+
+      // Array value should be fetched (with references resolved).
+      dict.set("baz", ["qux", ref]);
+      expect(
+        getInheritableProperty({ dict, key: "baz", getArray: true })
+      ).toEqual(["qux", "quux"]);
+    });
+
+    it("fetches the property if it is inherited and present on one level", function () {
+      const ref = Ref.get(10, 0);
+      const xref = new XRefMock([{ ref, data: "quux" }]);
+      const firstDict = new Dict(xref);
+      const secondDict = new Dict(xref);
+      firstDict.set("Parent", secondDict);
+
+      // Regular values should be fetched.
+      secondDict.set("foo", "bar");
+      expect(getInheritableProperty({ dict: firstDict, key: "foo" })).toEqual(
+        "bar"
+      );
+
+      // Array value should be fetched (with references resolved).
+      secondDict.set("baz", ["qux", ref]);
+      expect(
+        getInheritableProperty({ dict: firstDict, key: "baz", getArray: true })
+      ).toEqual(["qux", "quux"]);
+    });
+
+    it("fetches the property if it is inherited and present on multiple levels", function () {
+      const ref = Ref.get(10, 0);
+      const xref = new XRefMock([{ ref, data: "quux" }]);
+      const firstDict = new Dict(xref);
+      const secondDict = new Dict(xref);
+      firstDict.set("Parent", secondDict);
+
+      // Regular values should be fetched.
+      firstDict.set("foo", "bar1");
+      secondDict.set("foo", "bar2");
+      expect(getInheritableProperty({ dict: firstDict, key: "foo" })).toEqual(
+        "bar1"
+      );
+      expect(
+        getInheritableProperty({
+          dict: firstDict,
+          key: "foo",
+          getArray: false,
+          stopWhenFound: false,
+        })
+      ).toEqual(["bar1", "bar2"]);
+
+      // Array value should be fetched (with references resolved).
+      firstDict.set("baz", ["qux1", ref]);
+      secondDict.set("baz", ["qux2", ref]);
+      expect(
+        getInheritableProperty({
+          dict: firstDict,
+          key: "baz",
+          getArray: true,
+          stopWhenFound: false,
+        })
+      ).toEqual([
+        ["qux1", "quux"],
+        ["qux2", "quux"],
+      ]);
+    });
+  });
+
+  describe("toRomanNumerals", function () {
+    it("handles invalid arguments", function () {
+      for (const input of ["foo", -1, 0]) {
+        expect(function () {
+          toRomanNumerals(input);
+        }).toThrowError("The number should be a positive integer.");
+      }
+    });
+
+    it("converts numbers to uppercase Roman numerals", function () {
+      expect(toRomanNumerals(1)).toEqual("I");
+      expect(toRomanNumerals(6)).toEqual("VI");
+      expect(toRomanNumerals(7)).toEqual("VII");
+      expect(toRomanNumerals(8)).toEqual("VIII");
+      expect(toRomanNumerals(10)).toEqual("X");
+      expect(toRomanNumerals(40)).toEqual("XL");
+      expect(toRomanNumerals(100)).toEqual("C");
+      expect(toRomanNumerals(500)).toEqual("D");
+      expect(toRomanNumerals(1000)).toEqual("M");
+      expect(toRomanNumerals(2019)).toEqual("MMXIX");
+    });
+
+    it("converts numbers to lowercase Roman numerals", function () {
+      expect(toRomanNumerals(1, /* lowercase = */ true)).toEqual("i");
+      expect(toRomanNumerals(6, /* lowercase = */ true)).toEqual("vi");
+      expect(toRomanNumerals(7, /* lowercase = */ true)).toEqual("vii");
+      expect(toRomanNumerals(8, /* lowercase = */ true)).toEqual("viii");
+      expect(toRomanNumerals(10, /* lowercase = */ true)).toEqual("x");
+      expect(toRomanNumerals(40, /* lowercase = */ true)).toEqual("xl");
+      expect(toRomanNumerals(100, /* lowercase = */ true)).toEqual("c");
+      expect(toRomanNumerals(500, /* lowercase = */ true)).toEqual("d");
+      expect(toRomanNumerals(1000, /* lowercase = */ true)).toEqual("m");
+      expect(toRomanNumerals(2019, /* lowercase = */ true)).toEqual("mmxix");
+    });
+  });
+
+  describe("numberToString", function () {
+    it("should stringify integers", function () {
+      expect(numberToString(1)).toEqual("1");
+      expect(numberToString(0)).toEqual("0");
+      expect(numberToString(-1)).toEqual("-1");
+    });
+
+    it("should stringify floats", function () {
+      expect(numberToString(1.0)).toEqual("1");
+      expect(numberToString(1.2)).toEqual("1.2");
+      expect(numberToString(1.23)).toEqual("1.23");
+      expect(numberToString(1.234)).toEqual("1.23");
+    });
+  });
+
+  describe("isWhiteSpace", function () {
+    it("handles space characters", function () {
+      expect(isWhiteSpace(0x20)).toBeTrue();
+      expect(isWhiteSpace(0x09)).toBeTrue();
+      expect(isWhiteSpace(0x0d)).toBeTrue();
+      expect(isWhiteSpace(0x0a)).toBeTrue();
+    });
+
+    it("handles non-space characters", function () {
+      expect(isWhiteSpace(0x0b)).toBeFalse();
+      expect(isWhiteSpace(null)).toBeFalse();
+      expect(isWhiteSpace(undefined)).toBeFalse();
+    });
+  });
+
+  describe("parseXFAPath", function () {
+    it("should get a correctly parsed path", function () {
+      const path = "foo.bar[12].oof[3].rab.FOO[123].BAR[456]";
+      expect(parseXFAPath(path)).toEqual([
+        { name: "foo", pos: 0 },
+        { name: "bar", pos: 12 },
+        { name: "oof", pos: 3 },
+        { name: "rab", pos: 0 },
+        { name: "FOO", pos: 123 },
+        { name: "BAR", pos: 456 },
+      ]);
+    });
+  });
+
+  describe("recoverJsURL", function () {
+    it("should get valid URLs without `newWindow` property", function () {
+      const inputs = [
+        "window.open('https://test.local')",
+        "window.open('https://test.local', true)",
+        "app.launchURL('https://test.local')",
+        "app.launchURL('https://test.local', false)",
+        "xfa.host.gotoURL('https://test.local')",
+        "xfa.host.gotoURL('https://test.local', true)",
+      ];
+
+      for (const input of inputs) {
+        expect(recoverJsURL(input)).toEqual({
+          url: "https://test.local",
+          newWindow: false,
+        });
+      }
+    });
+
+    it("should get valid URLs with `newWindow` property", function () {
+      const input = "app.launchURL('https://test.local', true)";
+      expect(recoverJsURL(input)).toEqual({
+        url: "https://test.local",
+        newWindow: true,
+      });
+    });
+
+    it("should not get invalid URLs", function () {
+      const input = "navigateToUrl('https://test.local')";
+      expect(recoverJsURL(input)).toBeNull();
+    });
+  });
+
+  describe("escapePDFName", function () {
+    it("should escape PDF name", function () {
+      expect(escapePDFName("hello")).toEqual("hello");
+      expect(escapePDFName("\xfehello")).toEqual("#fehello");
+      expect(escapePDFName("he\xfell\xffo")).toEqual("he#fell#ffo");
+      expect(escapePDFName("\xfehe\xfell\xffo\xff")).toEqual(
+        "#fehe#fell#ffo#ff"
+      );
+      expect(escapePDFName("#h#e#l#l#o")).toEqual("#23h#23e#23l#23l#23o");
+      expect(escapePDFName("#()<>[]{}/%")).toEqual(
+        "#23#28#29#3c#3e#5b#5d#7b#7d#2f#25"
+      );
+    });
+
+    it("should escape control characters using two hexadecimal digits", function () {
+      expect(escapePDFName("\x00\x09\x0a\x1f")).toEqual("#00#09#0a#1f");
+      expect(escapePDFName("a\tb")).toEqual("a#09b");
+    });
+  });
+
+  describe("escapeString", function () {
+    it("should escape (, ), \\n, \\r, and \\", function () {
+      expect(escapeString("((a\\a))\n(b(b\\b)\rb)")).toEqual(
+        "\\(\\(a\\\\a\\)\\)\\n\\(b\\(b\\\\b\\)\\rb\\)"
+      );
+    });
+  });
+
+  describe("encodeToXmlString", function () {
+    it("should get a correctly encoded string with some entities", function () {
+      const str = "\"\u0397ell😂' & <W😂rld>";
+      expect(encodeToXmlString(str)).toEqual(
+        "&quot;&#x397;ell&#x1F602;&apos; &amp; &lt;W&#x1F602;rld&gt;"
+      );
+    });
+
+    it("should get a correctly encoded basic ascii string", function () {
+      const str = "hello world";
+      expect(encodeToXmlString(str)).toEqual(str);
+    });
+
+    it("should keep the character after U+FFFE or U+FFFF", function () {
+      expect(encodeToXmlString("￿A")).toEqual("&#xFFFF;A");
+      expect(encodeToXmlString("￾B")).toEqual("&#xFFFE;B");
+    });
+  });
+
+  describe("validateCSSFont", function () {
+    it("Check font family", function () {
+      const cssFontInfo = {
+        fontFamily: `"blah blah " blah blah"`,
+        fontWeight: 0,
+        italicAngle: 0,
+      };
+
+      expect(validateCSSFont(cssFontInfo)).toBeFalse();
+
+      cssFontInfo.fontFamily = `"blah blah \\" blah blah"`;
+      expect(validateCSSFont(cssFontInfo)).toBeTrue();
+
+      cssFontInfo.fontFamily = `'blah blah ' blah blah'`;
+      expect(validateCSSFont(cssFontInfo)).toBeFalse();
+
+      cssFontInfo.fontFamily = `'blah blah \\' blah blah'`;
+      expect(validateCSSFont(cssFontInfo)).toBeTrue();
+
+      cssFontInfo.fontFamily = `"blah blah `;
+      expect(validateCSSFont(cssFontInfo)).toBeFalse();
+
+      cssFontInfo.fontFamily = `blah blah"`;
+      expect(validateCSSFont(cssFontInfo)).toBeFalse();
+
+      cssFontInfo.fontFamily = `'blah blah `;
+      expect(validateCSSFont(cssFontInfo)).toBeFalse();
+
+      cssFontInfo.fontFamily = `blah blah'`;
+      expect(validateCSSFont(cssFontInfo)).toBeFalse();
+
+      cssFontInfo.fontFamily = "blah blah blah";
+      expect(validateCSSFont(cssFontInfo)).toBeTrue();
+
+      cssFontInfo.fontFamily = "blah 0blah blah";
+      expect(validateCSSFont(cssFontInfo)).toBeFalse();
+
+      cssFontInfo.fontFamily = "blah blah -0blah";
+      expect(validateCSSFont(cssFontInfo)).toBeFalse();
+
+      cssFontInfo.fontFamily = "blah blah --blah";
+      expect(validateCSSFont(cssFontInfo)).toBeFalse();
+
+      cssFontInfo.fontFamily = "blah blah -blah";
+      expect(validateCSSFont(cssFontInfo)).toBeTrue();
+
+      cssFontInfo.fontFamily = "blah fdqAJqjHJK23kl23__--Kj blah";
+      expect(validateCSSFont(cssFontInfo)).toBeTrue();
+
+      cssFontInfo.fontFamily = "blah fdqAJqjH$JK23kl23__--Kj blah";
+      expect(validateCSSFont(cssFontInfo)).toBeFalse();
+    });
+
+    it("Check font weight", function () {
+      const cssFontInfo = {
+        fontFamily: "blah",
+        fontWeight: 100,
+        italicAngle: 0,
+      };
+
+      validateCSSFont(cssFontInfo);
+      expect(cssFontInfo.fontWeight).toEqual("100");
+
+      cssFontInfo.fontWeight = "700";
+      validateCSSFont(cssFontInfo);
+      expect(cssFontInfo.fontWeight).toEqual("700");
+
+      cssFontInfo.fontWeight = "normal";
+      validateCSSFont(cssFontInfo);
+      expect(cssFontInfo.fontWeight).toEqual("normal");
+
+      cssFontInfo.fontWeight = 314;
+      validateCSSFont(cssFontInfo);
+      expect(cssFontInfo.fontWeight).toEqual("400");
+    });
+
+    it("Check italic angle", function () {
+      const cssFontInfo = {
+        fontFamily: "blah",
+        fontWeight: 100,
+        italicAngle: 10,
+      };
+      validateCSSFont(cssFontInfo);
+      expect(cssFontInfo.italicAngle).toEqual("10");
+
+      cssFontInfo.italicAngle = -123;
+      validateCSSFont(cssFontInfo);
+      expect(cssFontInfo.italicAngle).toEqual("14");
+
+      cssFontInfo.italicAngle = "91";
+      validateCSSFont(cssFontInfo);
+      expect(cssFontInfo.italicAngle).toEqual("14");
+
+      cssFontInfo.italicAngle = 2.718;
+      validateCSSFont(cssFontInfo);
+      expect(cssFontInfo.italicAngle).toEqual("2.718");
+    });
+  });
+
+  describe("deepCompare", function () {
+    it("should return true for the same reference", function () {
+      const dict = new Dict();
+      expect(deepCompare(dict, dict)).toBeTrue();
+      const arr = [1, 2, 3];
+      expect(deepCompare(arr, arr)).toBeTrue();
+    });
+
+    it("should return true for identical primitive values", function () {
+      expect(deepCompare(1, 1)).toBeTrue();
+      expect(deepCompare("hello", "hello")).toBeTrue();
+      expect(deepCompare(null, null)).toBeTrue();
+    });
+
+    it("should return false for different primitive values", function () {
+      expect(deepCompare(1, 2)).toBeFalse();
+      expect(deepCompare("hello", "world")).toBeFalse();
+    });
+
+    it("should return true for two equal empty Dicts", function () {
+      expect(deepCompare(new Dict(), new Dict())).toBeTrue();
+    });
+
+    it("should return false for Dicts with different sizes", function () {
+      const a = new Dict();
+      a.set("key", 1);
+      expect(deepCompare(a, new Dict())).toBeFalse();
+    });
+
+    it("should return true for Dicts with same Ref values", function () {
+      const ref = Ref.get(10, 0);
+      const a = new Dict();
+      a.set("Foo", ref);
+      const b = new Dict();
+      b.set("Foo", ref);
+      expect(deepCompare(a, b)).toBeTrue();
+    });
+
+    it("should return true for Dicts with same Ref values, after clearing cached Refs", function () {
+      const refA = Ref.get(10, 0);
+      clearPrimitiveCaches();
+      const refB = Ref.get(10, 0);
+      // Ensure that Ref-objects are not identical, after clearing the cache.
+      expect(refA).not.toBe(refB);
+
+      const a = new Dict();
+      a.set("Foo", refA);
+      const b = new Dict();
+      b.set("Foo", refB);
+      expect(deepCompare(a, b)).toBeTrue();
+    });
+
+    it("should return false for Dicts with different Ref values", function () {
+      const a = new Dict();
+      a.set("Foo", Ref.get(10, 0));
+      const b = new Dict();
+      b.set("Foo", Ref.get(20, 0));
+      expect(deepCompare(a, b)).toBeFalse();
+    });
+
+    it("should return false for Dicts with different numeric values", function () {
+      const a = new Dict();
+      a.set("Foo", 1);
+      const b = new Dict();
+      b.set("Foo", 2);
+      expect(deepCompare(a, b)).toBeFalse();
+    });
+
+    it("should return true for equal nested Dicts", function () {
+      const inner1 = new Dict();
+      inner1.set("Bar", Ref.get(5, 0));
+      const outer1 = new Dict();
+      outer1.set("Foo", inner1);
+
+      const inner2 = new Dict();
+      inner2.set("Bar", Ref.get(5, 0));
+      const outer2 = new Dict();
+      outer2.set("Foo", inner2);
+
+      expect(deepCompare(outer1, outer2)).toBeTrue();
+    });
+
+    it("should return false for Dicts with the same key but different nested Dicts", function () {
+      const inner1 = new Dict();
+      inner1.set("Bar", Ref.get(5, 0));
+      const outer1 = new Dict();
+      outer1.set("Foo", inner1);
+
+      const inner2 = new Dict();
+      inner2.set("Bar", Ref.get(99, 0));
+      const outer2 = new Dict();
+      outer2.set("Foo", inner2);
+
+      expect(deepCompare(outer1, outer2)).toBeFalse();
+    });
+
+    it("should return true for equal arrays", function () {
+      const ref = Ref.get(1, 0);
+      expect(deepCompare([ref, ref], [ref, ref])).toBeTrue();
+    });
+
+    it("should return false for arrays with different lengths", function () {
+      const ref = Ref.get(1, 0);
+      expect(deepCompare([ref, ref], [ref])).toBeFalse();
+    });
+
+    it("should return false for arrays with different values", function () {
+      expect(deepCompare([Ref.get(1, 0)], [Ref.get(2, 0)])).toBeFalse();
+    });
+
+    it("should return true for equal Names", function () {
+      const name1 = Name.get("name"),
+        name2 = Name.get("name");
+      expect(name1).toBe(name2); // Names are cached.
+
+      expect(deepCompare(name1, name2)).toBeTrue();
+    });
+
+    it("should return false for different Names", function () {
+      const name1 = Name.get("name"),
+        name2 = Name.get("otherName");
+      expect(deepCompare(name1, name2)).toBeFalse();
+    });
+
+    it("should return true for equal Names, after clearing cached Names", function () {
+      const name1 = Name.get("name");
+      clearPrimitiveCaches();
+      const name2 = Name.get("name");
+      // Ensure that Name-objects are not identical, after clearing the cache.
+      expect(name1).not.toBe(name2);
+
+      expect(deepCompare(name1, name2)).toBeTrue();
+    });
+  });
+
+  describe("getModificationDate", function () {
+    it("should get a correctly formatted date", function () {
+      const date = new Date(Date.UTC(3141, 5, 9, 2, 6, 53));
+      expect(getModificationDate(date)).toEqual("31410609020653");
+      expect(getModificationDate(date.toString())).toEqual("31410609020653");
+    });
+  });
+
+  describe("getRotationMatrix", function () {
+    it("should get a rotation matrix for valid rotation values", function () {
+      expect(getRotationMatrix(90, 10, 20)).toEqual([0, 1, -1, 0, 10, 0]);
+      expect(getRotationMatrix(180, 10, 20)).toEqual([-1, 0, 0, -1, 10, 20]);
+      expect(getRotationMatrix(270, 10, 20)).toEqual([0, -1, 1, 0, 0, 20]);
+    });
+
+    it("throws an exception for invalid rotation values", function () {
+      expect(() => getRotationMatrix(42, 10, 20)).toThrowError(
+        "Invalid rotation"
+      );
+    });
+  });
+
+  describe("getSizeInBytes", function () {
+    it("should get the size in bytes to use to represent a positive integer", function () {
+      expect(getSizeInBytes(0)).toEqual(0);
+      for (let i = 1; i <= 0xff; i++) {
+        expect(getSizeInBytes(i)).toEqual(1);
+      }
+
+      for (let i = 0x100; i <= 0xffff; i += 0x100) {
+        expect(getSizeInBytes(i)).toEqual(2);
+      }
+
+      for (let i = 0x10000; i <= 0xffffff; i += 0x10000) {
+        expect(getSizeInBytes(i)).toEqual(3);
+      }
+    });
+  });
+});

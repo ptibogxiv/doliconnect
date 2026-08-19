@@ -29,20 +29,12 @@ if (typeof PDFJSDev !== "undefined" && PDFJSDev.test("MOZCENTRAL")) {
   );
 }
 
-function getReadableStream(readStream) {
+function getReadableStream(url, opts = null) {
+  const fs = process.getBuiltinModule("fs");
   const { Readable } = process.getBuiltinModule("stream");
 
-  if (typeof Readable.toWeb === "function") {
-    // See https://nodejs.org/api/stream.html#streamreadabletowebstreamreadable-options
-    return Readable.toWeb(readStream);
-  }
-  // Fallback to support Node.js versions older than `24.0.0` and `22.17.0`.
-  const require = process
-    .getBuiltinModule("module")
-    .createRequire(import.meta.url);
-
-  const polyfill = require("node-readable-to-web-readable-stream");
-  return polyfill.makeDefaultReadableStreamFromNodeReadable(readStream);
+  const readStream = fs.createReadStream(url, opts);
+  return Readable.toWeb(readStream);
 }
 
 class PDFNodeStream extends BasePDFStream {
@@ -62,30 +54,21 @@ class PDFNodeStreamReader extends BasePDFStreamReader {
 
   constructor(stream) {
     super(stream);
-    const { disableRange, disableStream, length, rangeChunkSize, url } =
-      stream._source;
+    const { disableRange, disableStream, rangeChunkSize, url } = stream._source;
 
-    this._contentLength = length;
     this._isStreamingSupported = !disableStream;
-    this._isRangeSupported = !disableRange;
 
-    const fs = process.getBuiltinModule("fs");
-    fs.promises
-      .lstat(url)
+    const fs = process.getBuiltinModule("fs/promises");
+    fs.lstat(url)
       .then(stat => {
-        const readStream = fs.createReadStream(url);
-        const readableStream = getReadableStream(readStream);
-
+        const readableStream = getReadableStream(url);
         this._reader = readableStream.getReader();
 
         const { size } = stat;
-        if (size <= 2 * rangeChunkSize) {
-          // The file size is smaller than the size of two chunks, so it doesn't
-          // make any sense to abort the request and retry with a range request.
-          this._isRangeSupported = false;
-        }
-        // Setting right content length.
         this._contentLength = size;
+        // When the file size is smaller than the size of two chunks, it doesn't
+        // make any sense to abort the request and retry with a range request.
+        this._isRangeSupported = !disableRange && size > 2 * rangeChunkSize;
 
         // We need to stop reading when range is supported and streaming is
         // disabled.
@@ -129,14 +112,11 @@ class PDFNodeStreamRangeReader extends BasePDFStreamRangeReader {
     super(stream, begin, end);
     const { url } = stream._source;
 
-    const fs = process.getBuiltinModule("fs");
     try {
-      const readStream = fs.createReadStream(url, {
+      const readableStream = getReadableStream(url, {
         start: begin,
         end: end - 1,
       });
-      const readableStream = getReadableStream(readStream);
-
       this._reader = readableStream.getReader();
 
       this._readCapability.resolve();

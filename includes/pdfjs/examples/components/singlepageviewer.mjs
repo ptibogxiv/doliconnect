@@ -40,6 +40,8 @@ const SANDBOX_BUNDLE_SRC = new URL(
   window.location
 );
 
+const WASM_URL = "../../node_modules/pdfjs-dist/build/wasm/";
+
 const container = document.getElementById("viewerContainer");
 
 const eventBus = new pdfjsViewer.EventBus();
@@ -59,6 +61,7 @@ const pdfFindController = new pdfjsViewer.PDFFindController({
 const pdfScriptingManager = new pdfjsViewer.PDFScriptingManager({
   eventBus,
   sandboxBundleSrc: SANDBOX_BUNDLE_SRC,
+  wasmUrl: WASM_URL,
 });
 
 const pdfSinglePageViewer = new pdfjsViewer.PDFSinglePageViewer({

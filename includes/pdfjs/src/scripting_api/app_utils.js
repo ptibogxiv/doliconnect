@@ -26,8 +26,15 @@ function serializeError(error) {
   return { command: "error", value };
 }
 
+// Helpers for simple `Map.prototype.getOrInsertComputed()` invocations,
+// to avoid duplicate function creation.
+const makeArr = () => [];
+const makeMap = () => new Map();
+
 export {
   FORMS_VERSION,
+  makeArr,
+  makeMap,
   serializeError,
   USERACTIVATION_CALLBACKID,
   USERACTIVATION_MAXTIME_VALIDITY,

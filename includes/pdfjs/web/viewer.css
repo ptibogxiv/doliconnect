@@ -14,6 +14,7 @@
  */
 
 @import url(pdf_viewer.css);
+@import url(digital_signature_properties.css);
 
 :root {
   --dir-factor: 1;
@@ -83,6 +84,9 @@
   --toolbarButton-editorInk-icon: url(images/toolbarButton-editorInk.svg);
   --toolbarButton-editorStamp-icon: url(images/toolbarButton-editorStamp.svg);
   --toolbarButton-editorSignature-icon: url(images/toolbarButton-editorSignature.svg);
+  --toolbarButton-signaturePropertiesVerified-icon: url(images/toolbarButton-signaturePropertiesVerified.svg);
+  --toolbarButton-signaturePropertiesError-icon: url(images/toolbarButton-signaturePropertiesError.svg);
+  --signatureProperties-rowCheck-icon: url(images/signature-properties-row-check.svg);
   --toolbarButton-menuArrow-icon: url(images/toolbarButton-menuArrow.svg);
   --toolbarButton-viewsManagerToggle-icon: url(images/toolbarButton-viewsManagerToggle.svg);
   --toolbarButton-secondaryToolbarToggle-icon: url(images/toolbarButton-secondaryToolbarToggle.svg);
@@ -236,7 +240,8 @@ body {
   user-select: none;
 }
 
-.pdfPresentationMode:fullscreen section:not([data-internal-link]) {
+.pdfPresentationMode:fullscreen
+  section:not([data-internal-link], .mediaAnnotation) {
   pointer-events: none;
 }
 
@@ -286,6 +291,22 @@ body {
   transition-duration: var(--sidebar-transition-duration);
   transition-timing-function: var(--sidebar-transition-timing-function);
 }
+
+/*#if MOZCENTRAL*/
+#viewerContainer:not(.pdfPresentationMode) {
+  inset-block-start: calc(var(--toolbar-height) + var(--pfn-bar-height, 0px));
+}
+
+#outerContainer #toolbarContainer #loadingBar {
+  top: calc(var(--toolbar-height) + var(--pfn-bar-height, 0px));
+}
+
+#viewsManager {
+  inset-block-start: calc(
+    100% + var(--pfn-bar-height, 0px) + var(--sidebar-block-padding)
+  );
+}
+/*#endif*/
 
 #sidebarContainer :is(input, button, select) {
   font: message-box;
@@ -712,6 +733,25 @@ dialog :link {
 #documentPropertiesDialog .buttonRow {
   margin-top: 10px;
 }
+
+/*#if !MOZCENTRAL*/
+#printServiceDialog {
+  min-width: 200px;
+}
+/*#endif*/
+
+/*#if CHROME*/
+#chrome-pdfjs-logo-bg {
+  display: block;
+  padding-left: 60px;
+  min-height: 48px;
+  background-size: 48px;
+  background-repeat: no-repeat;
+  font-size: 14px;
+  line-height: 1.8em;
+  word-break: break-all;
+}
+/*#endif*/
 
 .grab-to-pan-grab {
   cursor: grab !important;

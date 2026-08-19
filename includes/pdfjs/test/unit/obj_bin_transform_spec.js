@@ -1,0 +1,447 @@
+/* Copyright 2025 Mozilla Foundation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import {
+  compileCssFontInfo,
+  compileFontInfo,
+  compileFontPathInfo,
+  compilePatternInfo,
+  compileSystemFontInfo,
+} from "../../src/core/obj_bin_transform_core.js";
+import {
+  CssFontInfo,
+  FontInfo,
+  FontPathInfo,
+  PatternInfo,
+  SystemFontInfo,
+} from "../../src/display/obj_bin_transform_display.js";
+import { FeatureTest } from "../../src/shared/util.js";
+
+describe("obj_bin_transform", function () {
+  describe("Font data", function () {
+    const cssFontInfo = {
+      fontFamily: "Sample Family",
+      fontWeight: "not a number",
+      italicAngle: "angle",
+      uselessProp: "doesn't matter",
+    };
+
+    const systemFontInfo = {
+      guessFallback: false,
+      css: "some string",
+      loadedName: "another string",
+      baseFontName: "base name",
+      src: "source",
+      style: {
+        style: "normal",
+        weight: "400",
+        uselessProp: "doesn't matter",
+      },
+      uselessProp: "doesn't matter",
+    };
+
+    const fontInfo = {
+      black: true,
+      bold: true,
+      disableFontFace: true,
+      fontExtraProperties: true,
+      isInvalidPDFjsFont: true,
+      isType3Font: true,
+      italic: true,
+      missingFile: true,
+      remeasure: true,
+      vertical: true,
+      ascent: 1,
+      defaultWidth: 1,
+      descent: 1,
+      bbox: [1, 1, 1, 1],
+      fontMatrix: [1, 1, 1, 1, 1, 1],
+      defaultVMetrics: [1, 1, 1],
+      fallbackName: "string",
+      loadedName: "string",
+      mimetype: "string",
+      name: "string",
+      data: new Uint8Array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]),
+      uselessProp: "something",
+    };
+
+    describe("font data serialization and deserialization", function () {
+      describe("CssFontInfo", function () {
+        it("must roundtrip correctly for CssFontInfo", function () {
+          const encoder = new TextEncoder();
+          let sizeEstimate = 0;
+          for (const string of ["Sample Family", "not a number", "angle"]) {
+            sizeEstimate += 4 + encoder.encode(string).length;
+          }
+          const buffer = compileCssFontInfo(cssFontInfo);
+          expect(buffer.byteLength).toEqual(sizeEstimate);
+          const deserialized = new CssFontInfo(buffer);
+          expect(deserialized.fontFamily).toEqual("Sample Family");
+          expect(deserialized.fontWeight).toEqual("not a number");
+          expect(deserialized.italicAngle).toEqual("angle");
+          expect(deserialized.uselessProp).toBeUndefined();
+        });
+      });
+
+      describe("SystemFontInfo", function () {
+        it("must roundtrip correctly for SystemFontInfo", function () {
+          const encoder = new TextEncoder();
+          let sizeEstimate = 1 + 4;
+          for (const string of [
+            "some string",
+            "another string",
+            "base name",
+            "source",
+            "normal",
+            "400",
+          ]) {
+            sizeEstimate += 4 + encoder.encode(string).length;
+          }
+          const buffer = compileSystemFontInfo(systemFontInfo);
+          expect(buffer.byteLength).toEqual(sizeEstimate);
+          const deserialized = new SystemFontInfo(buffer);
+          expect(deserialized.guessFallback).toBeFalse();
+          expect(deserialized.css).toEqual("some string");
+          expect(deserialized.loadedName).toEqual("another string");
+          expect(deserialized.baseFontName).toEqual("base name");
+          expect(deserialized.src).toEqual("source");
+          expect(deserialized.style.style).toEqual("normal");
+          expect(deserialized.style.weight).toEqual("400");
+          expect(deserialized.style.uselessProp).toBeUndefined();
+          expect(deserialized.uselessProp).toBeUndefined();
+        });
+      });
+
+      describe("FontInfo", function () {
+        it("must roundtrip correctly for FontInfo", function () {
+          let sizeEstimate = 92; // fixed offset until the strings
+          const encoder = new TextEncoder();
+          sizeEstimate += 4 + 4 * (4 + encoder.encode("string").length);
+          sizeEstimate += 4 + 4; // cssFontInfo and systemFontInfo
+          sizeEstimate += 4 + fontInfo.data.length;
+          const buffer = compileFontInfo(fontInfo);
+          expect(buffer.byteLength).toEqual(sizeEstimate);
+          const deserialized = new FontInfo({ buffer });
+          expect(deserialized.black).toBeTrue();
+          expect(deserialized.bold).toBeTrue();
+          expect(deserialized.disableFontFace).toBeTrue();
+          expect(deserialized.fontExtraProperties).toBeTrue();
+          expect(deserialized.isInvalidPDFjsFont).toBeTrue();
+          expect(deserialized.isType3Font).toBeTrue();
+          expect(deserialized.italic).toBeTrue();
+          expect(deserialized.missingFile).toBeTrue();
+          expect(deserialized.remeasure).toBeTrue();
+          expect(deserialized.vertical).toBeTrue();
+          expect(deserialized.ascent).toEqual(1);
+          expect(deserialized.defaultWidth).toEqual(1);
+          expect(deserialized.descent).toEqual(1);
+          expect(deserialized.bbox).toEqual([1, 1, 1, 1]);
+          expect(deserialized.fontMatrix).toEqual([1, 1, 1, 1, 1, 1]);
+          expect(deserialized.defaultVMetrics).toEqual([1, 1, 1]);
+          expect(deserialized.fallbackName).toEqual("string");
+          expect(deserialized.loadedName).toEqual("string");
+          expect(deserialized.mimetype).toEqual("string");
+          expect(deserialized.name).toEqual("string");
+          expect(Array.from(deserialized.data)).toEqual([
+            1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+          ]);
+          expect(deserialized.uselessProp).toBeUndefined();
+          expect(deserialized.cssFontInfo).toBeNull();
+          expect(deserialized.systemFontInfo).toBeNull();
+        });
+
+        it("nesting should work as expected", function () {
+          const buffer = compileFontInfo({
+            ...fontInfo,
+            cssFontInfo,
+            systemFontInfo,
+          });
+          const deserialized = new FontInfo({ buffer });
+          expect(deserialized.cssFontInfo.fontWeight).toEqual("not a number");
+          expect(deserialized.systemFontInfo.src).toEqual("source");
+        });
+      });
+    });
+  });
+
+  describe("Pattern data", function () {
+    const axialPatternIR = [
+      "RadialAxial",
+      "axial",
+      [0, 0, 100, 50],
+      [
+        [0, "#ff0000"],
+        [0.5, "#00ff00"],
+        [1, "#0000ff"],
+      ],
+      [10, 20],
+      [90, 40],
+      null,
+      null,
+    ];
+
+    const radialPatternIR = [
+      "RadialAxial",
+      "radial",
+      [5, 5, 95, 45],
+      [
+        [0, "#ffff00"],
+        [0.3, "#ff00ff"],
+        [0.7, "#00ffff"],
+        [1, "#ffffff"],
+      ],
+      [25, 25],
+      [75, 35],
+      5,
+      25,
+    ];
+
+    // Vertices are pre-expanded in the new IR format: posData/colData contain
+    // one entry per vertex (no indexing), and ir[4] is the vertex count.
+    const meshPatternIR = [
+      "Mesh",
+      4,
+      new Float32Array([
+        0, 0, 50, 0, 100, 0, 0, 50, 50, 50, 100, 50, 0, 100, 50, 100, 100, 100,
+      ]),
+      new Uint8Array([
+        255, 0, 0, 0, 0, 255, 0, 0, 0, 0, 255, 0, 255, 255, 0, 0, 128, 128, 128,
+        0, 255, 0, 255, 0, 0, 255, 255, 0, 255, 128, 0, 0, 128, 0, 128, 0,
+      ]),
+      9, // vertexCount (3 triangles × 3 vertices)
+      [0, 0, 100, 100],
+      [0, 0, 100, 100],
+      [128, 128, 128],
+    ];
+
+    describe("Pattern serialization and deserialization", function () {
+      it("must serialize and deserialize axial gradients correctly", function () {
+        const buffer = compilePatternInfo(axialPatternIR);
+        expect(buffer).toBeInstanceOf(ArrayBuffer);
+        expect(buffer.byteLength).toBeGreaterThan(0);
+
+        const patternInfo = new PatternInfo(buffer);
+        const reconstructedIR = patternInfo.getIR();
+
+        expect(reconstructedIR[0]).toEqual("RadialAxial");
+        expect(reconstructedIR[1]).toEqual("axial");
+        expect(reconstructedIR[2]).toEqual([0, 0, 100, 50]);
+        expect(reconstructedIR[3]).toEqual([
+          [0, "#ff0000"],
+          [0.5, "#00ff00"],
+          [1, "#0000ff"],
+        ]);
+        expect(reconstructedIR[4]).toEqual([10, 20]);
+        expect(reconstructedIR[5]).toEqual([90, 40]);
+        expect(reconstructedIR[6]).toBeNull();
+        expect(reconstructedIR[7]).toBeNull();
+      });
+
+      it("must serialize and deserialize radial gradients correctly", function () {
+        const buffer = compilePatternInfo(radialPatternIR);
+        expect(buffer).toBeInstanceOf(ArrayBuffer);
+        expect(buffer.byteLength).toBeGreaterThan(0);
+
+        const patternInfo = new PatternInfo(buffer);
+        const reconstructedIR = patternInfo.getIR();
+
+        expect(reconstructedIR[0]).toEqual("RadialAxial");
+        expect(reconstructedIR[1]).toEqual("radial");
+        expect(reconstructedIR[2]).toEqual([5, 5, 95, 45]);
+        expect(reconstructedIR[3]).toEqual([
+          [0, "#ffff00"],
+          jasmine.objectContaining([jasmine.any(Number), "#ff00ff"]),
+          jasmine.objectContaining([jasmine.any(Number), "#00ffff"]),
+          [1, "#ffffff"],
+        ]);
+        expect(reconstructedIR[4]).toEqual([25, 25]);
+        expect(reconstructedIR[5]).toEqual([75, 35]);
+        expect(reconstructedIR[6]).toEqual(5);
+        expect(reconstructedIR[7]).toEqual(25);
+      });
+
+      it("must serialize and deserialize mesh patterns with figures correctly", function () {
+        const buffer = compilePatternInfo(meshPatternIR);
+        expect(buffer).toBeInstanceOf(ArrayBuffer);
+        expect(buffer.byteLength).toBeGreaterThan(0);
+
+        const patternInfo = new PatternInfo(buffer);
+        const reconstructedIR = patternInfo.getIR();
+
+        expect(reconstructedIR[0]).toEqual("Mesh");
+        expect(reconstructedIR[1]).toEqual(4);
+
+        expect(reconstructedIR[2]).toBeInstanceOf(Float32Array);
+        expect(Array.from(reconstructedIR[2])).toEqual(
+          Array.from(meshPatternIR[2])
+        );
+
+        expect(reconstructedIR[3]).toBeInstanceOf(Uint8Array);
+        expect(Array.from(reconstructedIR[3])).toEqual(
+          Array.from(meshPatternIR[3])
+        );
+        expect(reconstructedIR[4]).toEqual(9); // vertexCount
+
+        expect(reconstructedIR[5]).toEqual([0, 0, 100, 100]);
+        expect(reconstructedIR[6]).toEqual([0, 0, 100, 100]);
+        expect(reconstructedIR[7]).toBeInstanceOf(Uint8Array);
+        expect(Array.from(reconstructedIR[7])).toEqual([128, 128, 128]);
+      });
+
+      it("must handle mesh patterns with no vertices", function () {
+        const noVerticesIR = [
+          "Mesh",
+          4,
+          new Float32Array([0, 0, 10, 10]),
+          new Uint8Array([255, 0, 0, 0]),
+          2, // vertexCount
+          [0, 0, 10, 10],
+          [0, 0, 10, 10],
+          null,
+        ];
+
+        const buffer = compilePatternInfo(noVerticesIR);
+        const patternInfo = new PatternInfo(buffer);
+        const reconstructedIR = patternInfo.getIR();
+
+        expect(reconstructedIR[4]).toEqual(2); // vertexCount
+        expect(reconstructedIR[7]).toBeNull(); // background should be null
+      });
+
+      it("must preserve vertex data integrity across serialization", function () {
+        const buffer = compilePatternInfo(meshPatternIR);
+        const patternInfo = new PatternInfo(buffer);
+        const reconstructedIR = patternInfo.getIR();
+
+        // Verify posData and colData are preserved exactly
+        expect(Array.from(reconstructedIR[2])).toEqual(
+          Array.from(meshPatternIR[2])
+        );
+        expect(Array.from(reconstructedIR[3])).toEqual(
+          Array.from(meshPatternIR[3])
+        );
+      });
+
+      it("must calculate correct buffer sizes for different pattern types", function () {
+        const axialBuffer = compilePatternInfo(axialPatternIR);
+        const radialBuffer = compilePatternInfo(radialPatternIR);
+        const meshBuffer = compilePatternInfo(meshPatternIR);
+
+        expect(axialBuffer.byteLength).toBeLessThan(radialBuffer.byteLength);
+        expect(meshBuffer.byteLength).toBeGreaterThan(axialBuffer.byteLength);
+        expect(meshBuffer.byteLength).toBeGreaterThan(radialBuffer.byteLength);
+      });
+
+      it("must round-trip mesh pattern posData and colData correctly", function () {
+        const customMeshIR = [
+          "Mesh",
+          6,
+          new Float32Array([0, 0, 10, 10]),
+          new Uint8Array([255, 128, 64, 0]),
+          2, // vertexCount
+          [0, 0, 10, 10],
+          null,
+          null,
+        ];
+
+        const buffer = compilePatternInfo(customMeshIR);
+        const patternInfo = new PatternInfo(buffer);
+        const reconstructedIR = patternInfo.getIR();
+
+        expect(reconstructedIR[4]).toEqual(2); // vertexCount
+        expect(Array.from(reconstructedIR[2])).toEqual([0, 0, 10, 10]);
+        expect(Array.from(reconstructedIR[3])).toEqual([255, 128, 64, 0]);
+      });
+
+      it("must handle mesh patterns with different background values", function () {
+        const meshWithBgIR = [
+          "Mesh",
+          4,
+          new Float32Array([0, 0, 10, 10]),
+          new Uint8Array([255, 0, 0, 0]),
+          2, // vertexCount
+          [0, 0, 10, 10],
+          [0, 0, 10, 10],
+          new Uint8Array([255, 128, 64]),
+        ];
+
+        const buffer = compilePatternInfo(meshWithBgIR);
+        const patternInfo = new PatternInfo(buffer);
+        const reconstructedIR = patternInfo.getIR();
+
+        expect(reconstructedIR[7]).toBeInstanceOf(Uint8Array);
+        expect(Array.from(reconstructedIR[7])).toEqual([255, 128, 64]);
+        const meshNoBgIR = [
+          "Mesh",
+          5,
+          new Float32Array([0, 0, 5, 5]),
+          new Uint8Array([0, 255, 0, 0]),
+          2, // vertexCount
+          [0, 0, 5, 5],
+          null,
+          null,
+        ];
+
+        const buffer2 = compilePatternInfo(meshNoBgIR);
+        const patternInfo2 = new PatternInfo(buffer2);
+        const reconstructedIR2 = patternInfo2.getIR();
+
+        expect(reconstructedIR2[7]).toBeNull();
+      });
+
+      it("must calculate bounds correctly from coordinates", function () {
+        const customMeshIR = [
+          "Mesh",
+          4,
+          new Float32Array([-10, -5, 20, 15, 0, 30]),
+          new Uint8Array([255, 0, 0, 0, 0, 255, 0, 0, 0, 0, 255, 0]),
+          3, // vertexCount
+          null,
+          null,
+          null,
+        ];
+
+        const buffer = compilePatternInfo(customMeshIR);
+        const patternInfo = new PatternInfo(buffer);
+        const reconstructedIR = patternInfo.getIR();
+
+        expect(reconstructedIR[5]).toEqual([-10, -5, 20, 30]);
+        expect(reconstructedIR[7]).toBeNull();
+      });
+    });
+  });
+
+  describe("FontPath data", function () {
+    const path = FeatureTest.isFloat16ArraySupported
+      ? new Float16Array([
+          0.214, 0.27, 0.23, 0.33, 0.248, 0.395, 0.265, 0.471, 0.281, 0.54,
+          0.285, 0.54, 0.302, 0.472, 0.32, 0.395, 0.338, 0.33, 0.353, 0.27,
+          0.214, 0.27, 0.423, 0, 0.579, 0, 0.375, 0.652, 0.198, 0.652, -0.006,
+          0, 0.144, 0, 0.184, 0.155, 0.383, 0.155,
+        ])
+      : new Float32Array([
+          0.214, 0.27, 0.23, 0.33, 0.248, 0.395, 0.265, 0.471, 0.281, 0.54,
+          0.285, 0.54, 0.302, 0.472, 0.32, 0.395, 0.338, 0.33, 0.353, 0.27,
+          0.214, 0.27, 0.423, 0, 0.579, 0, 0.375, 0.652, 0.198, 0.652, -0.006,
+          0, 0.144, 0, 0.184, 0.155, 0.383, 0.155,
+        ]);
+
+    it("should create a FontPathInfo instance from an array of path commands", function () {
+      const buffer = compileFontPathInfo(path);
+      const fontPathInfo = new FontPathInfo(buffer);
+      expect(fontPathInfo.path).toEqual(path);
+    });
+  });
+});

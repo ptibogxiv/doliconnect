@@ -28,11 +28,12 @@ class CFFFont {
     this.seacs = this.cff.seacs;
     try {
       this.data = compiler.compile();
-    } catch {
-      warn("Failed to compile font " + properties.loadedName);
+    } catch (ex) {
+      warn(`Failed to compile font "${properties.loadedName}": "${ex}".`);
       // There may have just been an issue with the compiler, set the data
       // anyway and hope the font loaded.
-      this.data = file;
+      file.reset();
+      this.data = file.getBytes();
     }
     this._createBuiltInEncoding();
   }
