@@ -319,11 +319,6 @@ function doliversion($version) {
   return $ret;
 }
 
-function doliPG($pg = 0) {
-  if ( isset($pg) && is_numeric(esc_attr($pg)) && esc_attr($pg) > 0 ) { $page = esc_attr($pg); }  else { $page = 0; }
-  return $page;
-}
-
 function doliObjectInfos($object) {
   $info = '';
   if (isset($object->title) && !empty($object->title)) $info .= "<b>".__( 'Title', 'doliconnect').":</b> ".$object->title."<br>";
@@ -336,6 +331,11 @@ function doliObjectInfos($object) {
   if (isset($object->shipping_method_id) && !empty($object->shipping_method_id)) $info .= "<b>".__( 'Shipment method', 'doliconnect').":</b> ".doliShipmentMethods($object->shipping_method_id)."<br>";
 
 return $info;
+}
+
+function doliPG($pg = 0) {
+  if ( isset($pg) && is_numeric(esc_attr($pg)) && esc_attr($pg) > 0 ) { $page = esc_attr($pg-1); } else { $page = 0; }
+  return $page;
 }
 
 function doliPagination($object, $url, $page = 0) {
@@ -1786,7 +1786,7 @@ function doliObjectStatus($object, $type, $mode = 0) {
       $status = __( 'closed', 'doliconnect'); 
       $avancement=100; 
     } elseif ( $object->status == 1 ) { 
-      $status = __( 'vprocessing', 'doliconnect'); 
+      $status = __( 'open', 'doliconnect'); 
       $avancement=50; 
     } else { 
       $status = __( 'draft', 'doliconnect');
