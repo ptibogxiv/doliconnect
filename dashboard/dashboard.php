@@ -1198,7 +1198,7 @@ if ( doliCheckModules('eventorganization') && doliCheckRights('projet', 'lire') 
     function eventorganization_menu( $menu, $arg ) {
         $menu .= "<a href='".esc_url( add_query_arg( 'module', 'eventorganization', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
         if ( $arg == 'eventorganization' ) { $menu .= " active"; }
-        $menu .= "'>".__( 'My projects tracking', 'doliconnect')."</a>";
+        $menu .= "'>".__( 'My eventattend tracking', 'doliconnect')."</a>";
         return $menu;
     }
     add_filter( 'customer_doliconnect_menu', 'eventorganization_menu', 70, 2);
@@ -1264,11 +1264,11 @@ if ( doliCheckModules('eventorganization') && doliCheckRights('projet', 'lire') 
         } else {
             $limit=12;
             $page = doliPG(isset($_GET['pg'])?$_GET['pg']:null);
-            $request = "/projects?sortfield=t.rowid&sortorder=DESC&limit=".$limit."&page=".$page."&thirdparty_ids=".$thirdparty->id."&pagination_data=true";                                
+            $request = "/eventattendees?sortfield=t.rowid&sortorder=ASC&limit=".$limit."&page=".$page."&sqlfilters=(t.fk_soc%3A%3D%3A'".$thirdparty->id."')&pagination_data=true";                                
             $object = callDoliApi("GET", $request, null, dolidelay('project', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
             if ( doliversion('21.0.0') && isset($object->data) ) { $listproject = $object->data; } else { $listproject = $object; }
 
-            $content = '<div class="card shadow-sm"><div class="card-header">'.__( 'My projects tracking', 'doliconnect').' ('.(isset($object->pagination->total)?$object->pagination->total:'x').')</div><ul class="list-group list-group-flush">';
+            $content = '<div class="card shadow-sm"><div class="card-header">'.__( 'My eventattend tracking', 'doliconnect').' ('.(isset($object->pagination->total)?$object->pagination->total:'x').')</div><ul class="list-group list-group-flush">';
 
             if ( !isset($listproject->error) && $listproject != null ) {
                 foreach ($listproject  as $postproject) {                                                                              
