@@ -2010,7 +2010,7 @@ global $current_user;
       if ($context == 'dolioffcanvascart') {
         $doliline .= '<li class="list-group-item list-group-item-action list-group-item-light d-flex justify-content-start w-100 align-items-center">';
         if (!empty($producturl)) $doliline .= '<a href="'.$producturl.'" class="text-decoration-none" title="'.substr(doliproduct($line, 'product_label'), 0, 20).'">';
-        $doliline .= doliPicture(getDoliProductPostID($product->id, $refresh), 'bd-placeholder-img rounded me-3', 'doliproduct_thumbnail_square');
+        $doliline .= doliPicture(getDoliProductPostID($line->fk_product, $refresh), 'bd-placeholder-img rounded me-3', 'doliproduct_thumbnail_square');
         if (!empty($producturl)) $doliline .= '</a>';
         $doliline .= '<div class="w-75 align-self-stretch position-relative">';
         $doliline .= '<div class="align-items-start">';
@@ -2061,7 +2061,7 @@ global $current_user;
 
         $doliline .= '<div class="w-100 justify-content-between"><div class="row"><div class="d-none d-sm-block col-sm-2 col-lg-2"><center>';
         if (!empty($producturl)) $doliline .= '<a href="'.$producturl.'" class="text-decoration-none" title="'.substr(doliproduct($line, 'product_label'), 0, 20).'">';
-        $doliline .= doliPicture(getDoliProductPostID($product->id, $refresh), 'bd-placeholder-img rounded me-3', 'doliproduct_thumbnail_square');
+        $doliline .= doliPicture(getDoliProductPostID($line->fk_product, $refresh), 'bd-placeholder-img rounded me-3', 'doliproduct_thumbnail_square');
         if (!empty($producturl)) $doliline .= '</a>';
         //if ( doliCheckModules('fraisdeport') && doliconst('FRAIS_DE_PORT_ID_SERVICE_TO_USE') == $line->fk_product ) {
         //  $doliline .= '<i class="fas fa-shipping-fast fa-2x fa-fw"></i>';
