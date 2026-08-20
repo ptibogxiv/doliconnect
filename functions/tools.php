@@ -1786,10 +1786,18 @@ function doliObjectStatus($object, $type, $mode = 0) {
       $status = __( 'closed', 'doliconnect'); 
       $avancement=100; 
     } elseif ( $object->status == 1 ) { 
-      $status = __( 'validated', 'doliconnect'); 
+      $status = __( 'vprocessing', 'doliconnect'); 
       $avancement=50; 
     } else { 
       $status = __( 'draft', 'doliconnect');
+      $avancement=50; 
+    }
+  } elseif ($type == 'task') {
+    if ( $object->status == 1 ) { 
+      $status = __( 'done', 'doliconnect'); 
+      $avancement=50; 
+    } else { 
+      $status = __( 'to do', 'doliconnect');
       $avancement=50; 
     }
   } elseif ($type == 'donation') {

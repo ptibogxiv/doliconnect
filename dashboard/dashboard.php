@@ -1124,8 +1124,10 @@ if ( doliCheckModules('projet') && doliCheckRights('projet', 'lire') ) {
                 $tasks = callDoliApi("GET", "/projects/".$projectfo->id."/tasks", null, dolidelay('project', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
                 if ( !isset($tasks->error) && $tasks != null ) {
                     foreach ($tasks as $task) {
-                    // Process each task
-                    $content .= '<li class="list-group-item list-group-item-light list-group-item-action"><i class="fa-solid fa-list-check"></i> task '.$task->label.'</li>';
+                        // Process each task
+                        $content .= "<a href='#' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'><div><i class='fa-solid fa-list-check fa-3x fa-fw'></i></div><div><h6 class='my-0'>".$task->label."</h6><small class='text-muted'>".wp_date('d/m/Y', $task->date_creation)."</small></div><span></span><span>";
+                        $content .= doliObjectStatus($task, 'task', 2);
+                        $content .= "</span></a>";
                     }
                 } else {
                     $content .= '<li class="list-group-item list-group-item-light"><center>'.__( 'No tasks available', 'doliconnect').'</center></li>';
