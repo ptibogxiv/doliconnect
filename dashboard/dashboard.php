@@ -1194,6 +1194,109 @@ if ( doliCheckModules('projet') && doliCheckRights('projet', 'lire') ) {
 
 //*****************************************************************************************
 
+if ( doliCheckModules('eventorganization') && doliCheckRights('projet', 'lire') ) {
+    function eventorganization_menu( $menu, $arg ) {
+        $menu .= "<a href='".esc_url( add_query_arg( 'module', 'eventorganization', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
+        if ( $arg == 'eventorganization' ) { $menu .= " active"; }
+        $menu .= "'>".__( 'My projects tracking', 'doliconnect')."</a>";
+        return $menu;
+    }
+    add_filter( 'customer_doliconnect_menu', 'eventorganization_menu', 70, 2);
+
+    function eventorganization_module( $content, $url ) {
+    global $current_user;
+
+        if ( isset($_GET['id']) && $_GET['id'] > 0 ) {  
+            $request = "/projects/".esc_attr($_GET['id'])."?contact_list=0";
+            $projectfo = callDoliApi("GET", $request, null, dolidelay('project', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+        }
+        $thirdparty = doliConnect('thirdparty', $current_user, false, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+
+        if ( !isset($projectfo->error) && isset($_GET['id']) && isset($_GET['id']) && isset($_GET['ref']) && ($thirdparty->id == $projectfo->socid) && ($_GET['ref'] == $projectfo->ref) && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doli-projects-'.$projectfo->id.'-'.$projectfo->ref)) {
+            $content = '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Project %s', 'doliconnect'), $projectfo->ref).'<a class="btn btn-sm btn-outline-secondary border border-0 float-end" href="'.esc_url( add_query_arg( 'module', 'projects', doliconnecturl('doliaccount')) ).'"><i class="fa-solid fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-5">';
+            $content .= doliObjectInfos($projectfo);
+            $content .= "</div><div class='col-md-7'>";
+            $content .= doliObjectStatus($projectfo, 'project', 1);
+            $content .= "</div>";
+
+            $content .= "</div><br>";
+
+            $content .= doliObjectStatus($projectfo, 'project', 3);
+            $content .= "</div><ul class='list-group list-group-flush'>";
+            if ($projectfo->usage_task) {
+                $tasks = callDoliApi("GET", "/projects/".$projectfo->id."/tasks", null, dolidelay('project', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+                if ( !isset($tasks->error) && $tasks != null ) {
+                    foreach ($tasks as $task) {
+                        // Process each task
+                        $content .= "<a href='#' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'><div><i class='fa-solid fa-list-check fa-3x fa-fw'></i></div><div><h6 class='my-0'>".$task->label."</h6><small class='text-muted'>".wp_date('d/m/Y', $task->date_creation)."</small></div><span></span><span>";
+                        $content .= doliObjectStatus($task, 'task', 2);
+                        $content .= "</span></a>";
+                    }
+                } else {
+                    $content .= '<li class="list-group-item list-group-item-light"><center>'.__( 'No tasks available', 'doliconnect').'</center></li>';
+                }
+            }
+            //$content .= "</ul><ul class='list-group list-group-flush'>";
+            if ( $projectfo->last_main_doc != null ) {
+                $doc = array_reverse( explode("/", $projectfo->last_main_doc) );      
+                $document = dolidocdownload($doc[2], $doc[1], $doc[0], __( 'Summary', 'doliconnect'), true, $projectfo->entity);
+            } 
+                
+            $fruits[$projectfo->date_creation.'p'] = array(
+            "timestamp" => $projectfo->date_creation,
+            "type" => __( 'contract', 'doliconnect'),  
+            "label" => $projectfo->ref,
+            "document" => "",
+            "description" => null,
+            );
+
+            sort($fruits, SORT_NUMERIC | SORT_FLAG_CASE);
+            foreach ( $fruits as $key => $val ) {
+                $content .= "<li class='list-group-item'><div class='row'><div class='col-6 col-md-3'>" . wp_date('d/m/Y H:i', $val['timestamp']) . "</div><div class='col-6 col-md-2'>" . $val['type'] . "</div>";
+                $content .= "<div class='col-md-7'><h6>" . $val['label'] . "</h6>" . $val['description'] ."" . $val['document'] ."</div></div></li>";
+            } 
+
+            //var_dump($fruits);
+            $content .= '</ul>';
+            $content .= doliCardFooter($projectfo, 'project');
+            $content .= '</div>';
+
+        } else {
+            $limit=12;
+            $page = doliPG(isset($_GET['pg'])?$_GET['pg']:null);
+            $request = "/projects?sortfield=t.rowid&sortorder=DESC&limit=".$limit."&page=".$page."&thirdparty_ids=".$thirdparty->id."&pagination_data=true";                                
+            $object = callDoliApi("GET", $request, null, dolidelay('project', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+            if ( doliversion('21.0.0') && isset($object->data) ) { $listproject = $object->data; } else { $listproject = $object; }
+
+            $content = '<div class="card shadow-sm"><div class="card-header">'.__( 'My projects tracking', 'doliconnect').' ('.(isset($object->pagination->total)?$object->pagination->total:'x').')</div><ul class="list-group list-group-flush">';
+
+            if ( !isset($listproject->error) && $listproject != null ) {
+                foreach ($listproject  as $postproject) {                                                                              
+                    $nonce = wp_create_nonce( 'doli-projects-'. $postproject->id.'-'.$postproject->ref);
+                    $arr_params = array( 'id' => $postproject->id, 'ref' => $postproject->ref, 'security' => $nonce);  
+                    $return = esc_url( add_query_arg( $arr_params, $url) );
+                                                                                                                                                                        
+                    $content .= "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'><div><i class='fa-solid fa-diagram-project fa-3x fa-fw'></i></div><div><h6 class='my-0'>".$postproject->ref."</h6><small class='text-muted'>".wp_date('d/m/Y', $postproject->date_creation)."</small></div><span></span><span>";
+                    $content .= doliObjectStatus($postproject, 'project', 2);
+                    $content .= "</span></a>";
+                }
+            } else {
+                $content .= "<li class='list-group-item list-group-item-light'><center>".__( 'No project', 'doliconnect')."</center></li>";
+            }
+
+            $content .= "</ul><div class='card-body'>";
+            $content .= doliPagination($object, $url, $page);
+            $content .= "</div>";
+            $content .= doliCardFooter($object, 'project');
+            $content .= "</div>";
+        }
+        return $content;
+    }
+    add_filter( 'customer_doliconnect_eventorganization', 'eventorganization_module', 10, 2);
+}
+
+//*****************************************************************************************
+
 if ( doliCheckModules('don') ) {
     function donations_menu( $menu, $arg ) {
         $menu .= "<a href='".esc_url( add_query_arg( 'module', 'donations', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
@@ -1201,7 +1304,7 @@ if ( doliCheckModules('don') ) {
         $menu .= "'>".__( 'Donations tracking', 'doliconnect')."</a>";
         return $menu;
     }
-    add_filter( 'customer_doliconnect_menu', 'donations_menu', 60, 2);
+    add_filter( 'customer_doliconnect_menu', 'donations_menu', 70, 2);
 
     function donations_module( $content, $url ) {
     global $current_user;
