@@ -1092,15 +1092,15 @@ if ( doliCheckModules('contrat') && doliCheckRights('contrat', 'lire') ) {
 //*****************************************************************************************
 
 if ( doliCheckModules('projet') && doliCheckRights('projet', 'lire') ) {
-    function projet_menu( $menu, $arg ) {
-        $menu .= "<a href='".esc_url( add_query_arg( 'module', 'projet', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
-        if ( $arg == 'projet' ) { $menu .= " active"; }
+    function projects_menu( $menu, $arg ) {
+        $menu .= "<a href='".esc_url( add_query_arg( 'module', 'projects', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
+        if ( $arg == 'projects' ) { $menu .= " active"; }
         $menu .= "'>".__( 'My projects tracking', 'doliconnect')."</a>";
         return $menu;
     }
-    add_filter( 'customer_doliconnect_menu', 'projet_menu', 50, 2);
+    add_filter( 'customer_doliconnect_menu', 'projects_menu', 50, 2);
 
-    function projet_module( $content, $url ) {
+    function projects_module( $content, $url ) {
     global $current_user;
 
         if ( isset($_GET['id']) && $_GET['id'] > 0 ) {  
@@ -1189,7 +1189,7 @@ if ( doliCheckModules('projet') && doliCheckRights('projet', 'lire') ) {
         }
         return $content;
     }
-    add_filter( 'customer_doliconnect_projet', 'projet_module', 10, 2);
+    add_filter( 'customer_doliconnect_projects', 'projects_module', 10, 2);
 }
 
 //*****************************************************************************************
