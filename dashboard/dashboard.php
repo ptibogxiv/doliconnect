@@ -1105,7 +1105,7 @@ if ( doliCheckModules('projet') && doliCheckRights('projet', 'lire') ) {
 
         if ( isset($_GET['id']) && $_GET['id'] > 0 ) {  
             $request = "/projects/".esc_attr($_GET['id'])."?contact_list=0";
-            $projectfo = callDoliApi("GET", $request, null, dolidelay('contract', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+            $projectfo = callDoliApi("GET", $request, null, dolidelay('project', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
         }
         $thirdparty = doliConnect('thirdparty', $current_user, false, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 
@@ -1120,7 +1120,13 @@ if ( doliCheckModules('projet') && doliCheckRights('projet', 'lire') ) {
 
             $content .= doliObjectStatus($projectfo, 'project', 3);
             $content .= "</div><ul class='list-group list-group-flush'>";
-
+            if ($projectfo->usage_task) {
+                $tasks = callDoliApi("GET", "/projects/".$projectfo->id."/tasks", null, dolidelay('project', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
+                foreach ($tasks as $task) {
+                    // Process each task
+                }
+            }
+            $content .= "</ul><ul class='list-group list-group-flush'>";
             if ( $projectfo->last_main_doc != null ) {
                 $doc = array_reverse( explode("/", $projectfo->last_main_doc) );      
                 $document = dolidocdownload($doc[2], $doc[1], $doc[0], __( 'Summary', 'doliconnect'), true, $projectfo->entity);
