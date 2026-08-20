@@ -1133,11 +1133,12 @@ if ( doliCheckModules('projet') && doliCheckRights('projet', 'lire') ) {
     <h2 class="accordion-header">
       <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
         <div><i class="fa-solid fa-list-check fa-3x fa-fw"></i></div>
-        <div><h6 class="my-0">'.$task->label.'</h6><small class="text-muted">'.wp_date('d/m/Y', $task->date_creation).'</small></div>
-      </button>
+        <div><h6 class="my-0">'.$task->label.'</h6><small class="text-muted">'.wp_date('d/m/Y', $task->date_creation).'</small></div>';
+        $content .= '<span class="float-end">'.doliObjectStatus($task, 'task', 2).'</span>';
+      $content .= '</button>
     </h2>
     <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-      <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the first item’s accordion body.</div>
+      <div class="accordion-body">'.$task->description.'</div>
     </div>';
                     }
                      $content .= '</div>';
