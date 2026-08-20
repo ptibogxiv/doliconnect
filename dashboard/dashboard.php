@@ -1123,38 +1123,29 @@ if ( doliCheckModules('projet') && doliCheckRights('projet', 'lire') ) {
             if ($projectfo->usage_task) {
                 $tasks = callDoliApi("GET", "/projects/".$projectfo->id."/tasks", null, dolidelay('project', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
                 if ( !isset($tasks->error) && $tasks != null ) {
+                    $content .= '<div class="accordion accordion-flush" id="accordionFlushExample">';
                     foreach ($tasks as $task) {
                         // Process each task
-                        $content .= "<a href='#' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'><div><i class='fa-solid fa-list-check fa-3x fa-fw'></i></div><div><h6 class='my-0'>".$task->label."</h6><small class='text-muted'>".wp_date('d/m/Y', $task->date_creation)."</small></div><span></span><span>";
-                        $content .= doliObjectStatus($task, 'task', 2);
-                        $content .= "</span></a>";
+                        //$content .= "<a href='#' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'><div><i class='fa-solid fa-list-check fa-3x fa-fw'></i></div><div><h6 class='my-0'>".$task->label."</h6><small class='text-muted'>".wp_date('d/m/Y', $task->date_creation)."</small></div><span></span><span>";
+                        //$content .= doliObjectStatus($task, 'task', 2);
+                        //$content .= "</span></a>";
+                        $content .= '<div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+        <div><i class="fa-solid fa-list-check fa-3x fa-fw"></i></div>
+        <div><h6 class="my-0">'.$task->label.'</h6><small class="text-muted">'.wp_date('d/m/Y', $task->date_creation).'</small></div>
+      </button>
+    </h2>
+    <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+      <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the first item’s accordion body.</div>
+    </div>';
                     }
+                     $content .= '</div>';
                 } else {
                     $content .= '<li class="list-group-item list-group-item-light"><center>'.__( 'No tasks available', 'doliconnect').'</center></li>';
                 }
             }
-            //$content .= "</ul><ul class='list-group list-group-flush'>";
-            if ( $projectfo->last_main_doc != null ) {
-                $doc = array_reverse( explode("/", $projectfo->last_main_doc) );      
-                $document = dolidocdownload($doc[2], $doc[1], $doc[0], __( 'Summary', 'doliconnect'), true, $projectfo->entity);
-            } 
-                
-            $fruits[$projectfo->date_creation.'p'] = array(
-            "timestamp" => $projectfo->date_creation,
-            "type" => __( 'contract', 'doliconnect'),  
-            "label" => $projectfo->ref,
-            "document" => "",
-            "description" => null,
-            );
-
-            sort($fruits, SORT_NUMERIC | SORT_FLAG_CASE);
-            foreach ( $fruits as $key => $val ) {
-                $content .= "<li class='list-group-item'><div class='row'><div class='col-6 col-md-3'>" . wp_date('d/m/Y H:i', $val['timestamp']) . "</div><div class='col-6 col-md-2'>" . $val['type'] . "</div>";
-                $content .= "<div class='col-md-7'><h6>" . $val['label'] . "</h6>" . $val['description'] ."" . $val['document'] ."</div></div></li>";
-            } 
-
-            //var_dump($fruits);
-            $content .= '</ul>';
+            $content .= "</ul>";
             $content .= doliCardFooter($projectfo, 'project');
             $content .= '</div>';
 
