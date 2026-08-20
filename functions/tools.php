@@ -1782,7 +1782,7 @@ function doliObjectStatus($object, $type, $mode = 0) {
   } elseif ($type == 'project') {
     if ( $object->status == 2 ) { 
       $status = __( 'closed', 'doliconnect'); 
-      $avancement=50; 
+      $avancement=100; 
     } elseif ( $object->status == 1 ) { 
       $status = __( 'validated', 'doliconnect'); 
       $avancement=50; 
