@@ -326,7 +326,7 @@ function doliPG($pg = 0) {
 
 function doliObjectInfos($object) {
   $info = '';
-  if (isset($object->title) && !empty($object->title)) $info .= "<b>".__( 'Label', 'doliconnect').":</b> ".$object->title."<br>";
+  if (isset($object->title) && !empty($object->title)) $info .= "<b>".__( 'Title', 'doliconnect').":</b> ".$object->title."<br>";
   if (isset($object->date_creation) && !empty($object->date_creation)) $info .= "<b>".__( 'Date of creation', 'doliconnect').":</b> ".wp_date('d/m/Y', $object->date_creation)."<br>";
   if (isset($object->fin_validite) && !empty($object->fin_validite)) $info .= "<b>".__( 'Date of end of validity', 'doliconnect').":</b> ".wp_date('d/m/Y', $object->fin_validite)."<br>";
   if (isset($object->date_validation) && !empty($object->date_validation)) $info .= "<b>".__( 'Date of validation', 'doliconnect')." : </b> ".wp_date('d/m/Y', $object->date_validation)."<br>";
