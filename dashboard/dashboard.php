@@ -1122,11 +1122,15 @@ if ( doliCheckModules('projet') && doliCheckRights('projet', 'lire') ) {
             $content .= "</div><ul class='list-group list-group-flush'>";
             if ($projectfo->usage_task) {
                 $tasks = callDoliApi("GET", "/projects/".$projectfo->id."/tasks", null, dolidelay('project', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-                foreach ($tasks as $task) {
+                if ( !isset($tasks->error) && $tasks != null ) {
+                    foreach ($tasks as $task) {
                     // Process each task
+                    }
+                } else {
+                    $content .= "<li class='list-group-item list-group-item-light'><center>".__( 'No tasks available', 'doliconnect')."</center></li>";
                 }
             }
-            $content .= "</ul><ul class='list-group list-group-flush'>";
+            //$content .= "</ul><ul class='list-group list-group-flush'>";
             if ( $projectfo->last_main_doc != null ) {
                 $doc = array_reverse( explode("/", $projectfo->last_main_doc) );      
                 $document = dolidocdownload($doc[2], $doc[1], $doc[0], __( 'Summary', 'doliconnect'), true, $projectfo->entity);
