@@ -1125,9 +1125,10 @@ if ( doliCheckModules('projet') && doliCheckRights('projet', 'lire') ) {
                 if ( !isset($tasks->error) && $tasks != null ) {
                     foreach ($tasks as $task) {
                     // Process each task
+                    $content .= '<li class="list-group-item list-group-item-light list-group-item-action"><i class="fa-solid fa-list-check"></i> task '.$task->label.'</li>';
                     }
                 } else {
-                    $content .= "<li class='list-group-item list-group-item-light'><center>".__( 'No tasks available', 'doliconnect')."</center></li>";
+                    $content .= '<li class="list-group-item list-group-item-light"><center>'.__( 'No tasks available', 'doliconnect').'</center></li>';
                 }
             }
             //$content .= "</ul><ul class='list-group list-group-flush'>";
