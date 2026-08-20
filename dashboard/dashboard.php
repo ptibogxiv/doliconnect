@@ -1147,7 +1147,7 @@ if ( doliCheckModules('projet') && doliCheckRights('projet', 'lire') ) {
                 }
             }
             $content .= "</ul>";
-            $content .= doliCardFooter($projectfo, 'project');
+            $content .= doliCardFooter($projectfo, 'project', $request);
             $content .= '</div>';
 
         } else {
