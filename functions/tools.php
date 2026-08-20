@@ -1793,10 +1793,10 @@ function doliObjectStatus($object, $type, $mode = 0) {
       $avancement=50; 
     }
   } elseif ($type == 'task') {
-    if ( $object->status == 1 ) { 
+    if ( $object->status == 3 ) { 
       $status = __( 'done', 'doliconnect'); 
       $avancement=50; 
-    } else { 
+    } elseif ( $object->status == 1 ) {  { 
       $status = __( 'to do', 'doliconnect');
       $avancement=50; 
     }
