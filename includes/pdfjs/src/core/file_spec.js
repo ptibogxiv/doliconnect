@@ -55,12 +55,15 @@ class FileSpec {
   get filename() {
     const item = FileSpec.pickPlatformItem(this.root);
     if (item && typeof item === "string") {
-      // NOTE: The following replacement order is INTENTIONAL, regardless of
-      //       what some static code analysers (e.g. CodeQL) may claim.
-      return stringToPDFString(item, /* keepEscapeSequence = */ true)
-        .replaceAll("\\\\", "\\")
-        .replaceAll("\\/", "/")
-        .replaceAll("\\", "/");
+      return stringToPDFString(item, /* keepEscapeSequence = */ true).replace(
+        /\\\\|\\\/|\\/g,
+        match => {
+          if (match === "\\\\") {
+            return "\\";
+          }
+          return "/";
+        }
+      );
     }
     return "";
   }
