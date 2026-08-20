@@ -1165,7 +1165,7 @@ if ( doliCheckModules('projet') && doliCheckRights('projet', 'lire') ) {
             $object = callDoliApi("GET", $request, null, dolidelay('project', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
             if ( doliversion('21.0.0') && isset($object->data) ) { $listproject = $object->data; } else { $listproject = $object; }
 
-            $content = '<div class="card shadow-sm"><div class="card-header">'.__( 'My projects tracking', 'doliconnect').' ('.(isset($object->pagination->total)?$object->pagination->total:'x').')</div><ul class="list-group list-group-flush">';
+            $content = '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'My projects tracking (%s)', 'doliconnect'), (isset($object->pagination->total)?$object->pagination->total:'x')).'</div><ul class="list-group list-group-flush">';
 
             if ( !isset($listproject->error) && $listproject != null ) {
                 foreach ($listproject  as $postproject) {                                                                              
@@ -1268,7 +1268,7 @@ if ( doliCheckModules('eventorganization') && doliCheckRights('projet', 'lire') 
             $object = callDoliApi("GET", $request, null, dolidelay('project', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
             if ( doliversion('21.0.0') && isset($object->data) ) { $listproject = $object->data; } else { $listproject = $object; }
 
-            $content = '<div class="card shadow-sm"><div class="card-header">'.__( 'My eventattend tracking', 'doliconnect').' ('.(isset($object->pagination->total)?$object->pagination->total:'x').')</div><ul class="list-group list-group-flush">';
+            $content = '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'My eventattend tracking (%s)', 'doliconnect'), (isset($object->pagination->total)?$object->pagination->total:'x')).'</div><ul class="list-group list-group-flush">';
 
             if ( !isset($listproject->error) && $listproject != null ) {
                 foreach ($listproject  as $postproject) {                                                                              
