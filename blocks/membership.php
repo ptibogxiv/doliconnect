@@ -42,7 +42,7 @@ function doliconnect_register_membership_blocks() {
                 $adherent = doliConnect('member', $current_user, false);
 
                 if (isset($adherent->id) && $adherent->id > 0) {
-                    $member_id = "member_id=".$adherent->id;
+                    $member_id = "&member_id=".$adherent->id;
                 } else {
                     $member_id = '';
                 }
@@ -52,10 +52,10 @@ function doliconnect_register_membership_blocks() {
                 } else {
                     $morphy = '';
                 }
-                $request = "/members/types?sortfield=t.libelle&sortorder=ASC&".$member_id.$morphy;
+                $request = "/members/types?sortfield=t.rowid&sortorder=ASC&limit=100&pagination_data=true".$member_id.$morphy;
                 $typeadhesion = callDoliApi("GET", $request, null, dolidelay('member'));
                 
-                $html = '<div class="card"><div class="card-header">'.sprintf( __( 'Membership %s', 'doliconnect' ), esc_html( isset($typeadhesion[0]->season) ? $typeadhesion[0]->season : '' )).'</div>';
+                $html = '<div class="card"><div class="card-header">'.sprintf( __( 'Membership %s', 'doliconnect' ), '' ).'</div>';
                 
                 if ( !isset($typeadhesion->error) ) {
                     $html .= dolimembertypelist($typeadhesion, $adherent);
