@@ -827,7 +827,7 @@ global $current_user;
   }
   $thirdparty = doliConnect('thirdparty', $current_user, false, $refresh);
   $mstock = doliProductStock($product, $refresh, true, $linearray_options, $line);
-  $price = doliProductPrice($product, isset($line->qty) ? $line->qty : null, $refresh);
+  $price = doliProductPrice($product, isset($line->qty) ? $line->qty : 1, $refresh);
   //var_dump($mstock);
   wp_enqueue_script( 'dolicart');
   $button = '<div id="doliform-product-'.$product->id.'-'.$mstock['lineid'].'" name="doliform-product-'.$product->id.'" class="d-grid gap-2">';
