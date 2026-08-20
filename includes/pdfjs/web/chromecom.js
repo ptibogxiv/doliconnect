@@ -271,7 +271,7 @@ let port;
 // 3. Background -> page: Send latest referer and save to history.
 // 4. Page: Invoke callback.
 function setReferer(url, callback) {
-  dnrRequestId ??= crypto.getRandomValues(new Uint32Array(1))[0] % 0x80000000;
+  dnrRequestId ??= crypto.getRandomValues(new Uint32Array(1))[0] & 0x7fffffff;
   // The background page will accept the port, and keep adding the Referer
   // request header to requests to |url| until the port is disconnected.
   port ??= chrome.runtime.connect({ name: "chromecom-referrer" });
