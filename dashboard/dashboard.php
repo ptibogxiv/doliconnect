@@ -1496,7 +1496,7 @@ if ( doliCheckModules('expensereport') && doliversion('19.0.0') && doliCheckRigh
             $content .= "</ul>";
             $content .= doliCardFooter($expensereportfo, 'expensereport');
             $content .= "</div>";
-        } elseif (isset(doliConnect('user')->id)) {
+        } else {
             $limit=12;
             $page = doliPG(isset($_GET['pg'])?$_GET['pg']:null);
             if ( isset($_GET['field']) ) { $field = esc_attr($_GET['field']); } else { $field = 'label'; }
@@ -1505,7 +1505,7 @@ if ( doliCheckModules('expensereport') && doliversion('19.0.0') && doliCheckRigh
             $object = callDoliApi("GET", $request, null, dolidelay('expensereport', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
             if ( doliversion('21.0.0') && isset($object->data) ) { $listexpensereport = $object->data; } else { $listexpensereport = $object; }
             $content = '<div class="card shadow-sm"><div class="card-header">'.__( 'List of expense reports', 'doliconnect').' ('.(isset($object->pagination->total)?$object->pagination->total:'x').')</div><ul class="list-group list-group-flush">';
-            if ( doliCheckRights('expensereport', 'creer') && !empty(get_option('doliconnectbeta'))) {
+            if ( doliCheckRights('expensereport', 'creer') && isset(doliConnect('user')->id) && !empty(get_option('doliconnectbeta'))) {
                 $content .= '<a href="" class="list-group-item lh-condensed list-group-item-action list-group-item-primary" disabled><center><i class="fa-solid fa-plus-circle"></i> '.__( 'Create an expense report', 'doliconnect').'</center></a>';  
             }
             if ( !isset( $listexpensereport->error ) && $listexpensereport != null && !empty(doliConnect('user'))) {
