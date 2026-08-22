@@ -272,10 +272,9 @@ if ( empty(doliconst('MAIN_DISABLE_CONTACTS_TAB')) && doliCheckRights('societe',
         
         $content .= doliContactList($thirdparty, $limit, $page, false);
 
-        $content .= "</ul><div class='card-body'>";
+        $content .= "</ul><div class='card-footer'>";
         //$content .= doliPagination($object, $url, $page);
         $content .= "</div>";
-        //$content .= doliCardFooter($object, 'contact');
         $content .= "</div>";
         return $content;
     }
@@ -320,11 +319,9 @@ global $current_user;
     } else {
         $content .= "<li class='list-group-item list-group-item-light'><center>".__( 'No proposal', 'doliconnect')."</center></li>";
     }
-
-    $content .= "</ul><div class='card-body'>";
+    $content .= "</ul><div class='card-footer'>";
     $content .= doliPagination($object, $url, $page);
     $content .= "</div>";
-    $content .= doliCardFooter($object, 'thirdparty', $request);
     $content .= "</div>";
     return $content;
 }
@@ -484,10 +481,9 @@ $content .= '</div>';
         } else {
             $content .= "<li class='list-group-item list-group-item-light'><center>".__( 'No proposal', 'doliconnect')."</center></li>";
         }
-        $content .= "</ul><div class='card-body'>";
+        $content .= "</ul><div class='card-footer'>";
         $content .= doliPagination($object, $url, $page);
         $content .= "</div>";
-        $content .= doliCardFooter($object, 'proposal');
         $content .= "</div>";
     }
     return $content;
@@ -749,10 +745,9 @@ $fruits[$ship->date_creation] = array(
         } else {
             $content .= "<li class='list-group-item list-group-item-light'><center>".__( 'No order', 'doliconnect')."</center></li>";
         }
-        $content .= "</ul><div class='card-body'>";
+        $content .= "</ul><div class='card-footer'>";
         $content .= doliPagination($object, $url, $page);
         $content .= "</div>";
-        $content .= doliCardFooter($object, 'order');
         $content .= "</div>";
     }
     return $content;
@@ -984,11 +979,9 @@ $content .= '</div>';
         } else {
             $content .= "<li class='list-group-item list-group-item-light'><center>".__( 'No invoice', 'doliconnect')."</center></li>";
         }
-
-        $content .= "</ul><div class='card-body'>";
+        $content .= "</ul><div class='card-footer'>";
         $content .= doliPagination($object, $url, $page);
         $content .= "</div>";
-        $content .= doliCardFooter($object, 'invoice');
         $content .= "</div>";
     }
     return $content;
@@ -1077,11 +1070,9 @@ if ( doliCheckModules('contrat') && doliCheckRights('contrat', 'lire') ) {
             } else {
                 $content .= "<li class='list-group-item list-group-item-light'><center>".__( 'No contract', 'doliconnect')."</center></li>";
             }
-
-            $content .= "</ul><div class='card-body'>";
+            $content .= "</ul><div class='card-footer'>";
             $content .= doliPagination($object, $url, $page);
             $content .= "</div>";
-            $content .= doliCardFooter($object, 'contract');
             $content .= "</div>";
         }
         return $content;
@@ -1172,11 +1163,9 @@ if ( doliCheckModules('projet') && doliCheckRights('projet', 'lire') ) {
             } else {
                 $content .= "<li class='list-group-item list-group-item-light'><center>".__( 'No project', 'doliconnect')."</center></li>";
             }
-
-            $content .= "</ul><div class='card-body'>";
+            $content .= "</ul><div class='card-footer'>";
             $content .= doliPagination($object, $url, $page);
             $content .= "</div>";
-            $content .= doliCardFooter($object, 'project');
             $content .= "</div>";
         }
         return $content;
@@ -1275,11 +1264,9 @@ if ( doliCheckModules('eventorganization') && doliCheckRights('projet', 'lire') 
             } else {
                 $content .= "<li class='list-group-item list-group-item-light'><center>".__( 'No project', 'doliconnect')."</center></li>";
             }
-
-            $content .= "</ul><div class='card-body'>";
+            $content .= "</ul><div class='card-footer'>";
             $content .= doliPagination($object, $url, $page);
             $content .= "</div>";
-            $content .= doliCardFooter($object, 'project');
             $content .= "</div>";
         }
         return $content;
@@ -1371,12 +1358,10 @@ if ( doliCheckModules('don') ) {
             } else{
                 $content .= "<li class='list-group-item list-group-item-light'><center>".__( 'No donation', 'doliconnect')."</center></li>";
             }
-
-                $content .= "</ul><div class='card-body'>";
-                $content .= doliPagination($object, $url, $page);
-                $content .= "</div>";
-                $content .= doliCardFooter($object, 'donation');
-                $content .= "</div>";
+            $content .= "</ul><div class='card-footer'>";
+            $content .= doliPagination($object, $url, $page);
+            $content .= "</div>";
+            $content .= "</div>";
             }
             return $content;
         }
@@ -1446,11 +1431,9 @@ if ( doliCheckModules('recruitment') && doliversion('19.0.0') && !empty(get_opti
             } else{
                 $content .= "<li class='list-group-item list-group-item-light'><center>".__( 'No jobposition', 'doliconnect')."</center></li>";
             }
-
-            $content .= "</ul><div class='card-body'>";
+            $content .= "</ul><div class='card-footer'>";
             $content .= doliPagination($object, $url, $page);
             $content .= "</div>";
-            $content .= doliCardFooter($object, 'recruitment');
             $content .= "</div>";
         }
 
@@ -1520,10 +1503,9 @@ if ( doliCheckModules('expensereport') && doliversion('19.0.0') && doliCheckRigh
             } else{
                 $content .= "<li class='list-group-item list-group-item-light'><center>".__( 'No expense report', 'doliconnect')."</center></li>";
             }
-            $content .= "</ul><div class='card-body'>";
+            $content .= "</ul><div class='card-footer'>";
             $content .= doliPagination($object, $url, $page);
             $content .= "</div>";
-            $content .= doliCardFooter($object, 'expensereport');
             $content .= "</div>";
         }
     return $content;
