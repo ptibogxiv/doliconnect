@@ -1946,11 +1946,10 @@ if ( doliCheckModules('ticket') ) {
             } else {
                 $content .= "<li class='list-group-item list-group-item-light'><center>".__( 'No ticket', 'doliconnect')."</center></li>";
             }
-            $content .= '</ul><div class="card-body">';
+            $content .= "</ul><div class='card-footer'>";
             $content .= doliPagination($object, $url, $page);
-            $content .= '</div>';
-            $content .= doliCardFooter($object, 'ticket');
-            $content .= '</div>';
+            $content .= "</div>";
+            $content .= "</div>";
         }
     return $content;
     }
