@@ -1683,15 +1683,14 @@ if ( doliCheckModules('adherent') && doliCheckRights('adherent', 'lire') ) {
         } else { 
             $content .= "<li class='list-group-item list-group-item-light'><center>".__( 'No subscription', 'doliconnect')."</center></li>";
         }
-        $content .= '</ul><div class="card-body">';
-        $content .= doliPagination($object, $url, $page);
-        $content .= '</div>';
-        } else { 
-            $content .= "<ul class='list-group list-group-flush'>";
-            $content .= "<li class='list-group-item list-group-item-light'><center>".__( 'No subscription', 'doliconnect')."</center></li>";
-            $content .= '</ul>';
-        }
-    $content .= doliCardFooter($adherent, 'member');
+            $content .= "</ul><div class='card-footer'>";
+            $content .= doliPagination($object, $url, $page);
+            $content .= "</div>";
+    } else { 
+        $content .= "<ul class='list-group list-group-flush'>";
+        $content .= "<li class='list-group-item list-group-item-light'><center>".__( 'No subscription', 'doliconnect')."</center></li>";
+        $content .= '</ul>';
+    }
     $content .= '</div>';
     return $content;
     }
