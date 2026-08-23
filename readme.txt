@@ -80,6 +80,7 @@ We would like to thank these contributors and plugins:
 * Fix PHP bugs and errors
 * Please note that a bug can block updating. You need to rollback or uninstall this plugin before a new install
 * Rebuild and more powerful plugin
+* More compliant with native wordpress function
 
    = 9.6.x =
 * Better UX/UI
