@@ -92,6 +92,27 @@ function doliConnect($fonction, $current_user = null, $boolean = false, $refresh
       $return = $thirdparty;
     } else { 
       $id = doliconnector($current_user, 'fk_soc', $refresh);
+      if (is_user_logged_in() && empty($id)) {
+        if ( $current_user->billing_type == 'mor' ) { 
+          if (!empty($current_user->billing_company)) { 
+            $name = $current_user->billing_company; 
+          } else { $name = $current_user->user_login; }
+        } else {
+          if (!empty($current_user->user_firstname) && !empty($current_user->user_lastname)) { 
+            $name = $current_user->user_firstname." ".$current_user->user_lastname;
+            } else { 
+              $name = $current_user->user_login;
+            }
+        } 
+        $client = (!empty(get_option('doliDefaultclient'))?get_option('doliDefaultclient'):1);
+        $rdr = [
+            'name'  => $name,
+            'email' => $current_user->user_email,
+            'client' => $client,
+            'status' => 1,
+          ];
+        $dolibarr = callDoliApi("POST", "/doliconnector/".$user, $rdr, dolidelay('doliconnector'));
+      }
       $return = callDoliApi("GET", "/thirdparties/".$id, null, dolidelay('doliconnector', $refresh));
     }
   } elseif ($fonction == 'member' && isset($current_user->ID) && !empty($current_user->ID)) {
