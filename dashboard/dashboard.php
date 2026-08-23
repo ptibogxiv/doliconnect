@@ -1654,6 +1654,8 @@ if ( doliCheckModules('adherent') && doliCheckRights('adherent', 'lire') ) {
     if( has_action('mydoliconnectmemberform') ) {
         $content .= do_action('mydoliconnectmemberform', $adherent);
     }
+    //$content .= doliExtrafields($adherent, 'adherent', true, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+
     $content .= "</div>";
 
     $limit=12;
