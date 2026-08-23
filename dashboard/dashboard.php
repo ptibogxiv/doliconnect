@@ -1656,10 +1656,10 @@ if ( doliCheckModules('adherent') && doliCheckRights('adherent', 'lire') ) {
     }
     $content .= "</div>";
 
+    $limit=12;
+    $page = doliPG(isset($_GET['pg'])?$_GET['pg']:null);
     if ( isset($adherent->id) && doliCheckRights('adherent', 'cotisation', 'lire') ) {
         $content .= "<ul class='list-group list-group-flush'>";
-        $limit=12;
-        $page = doliPG(isset($_GET['pg'])?$_GET['pg']:null);
         if ($adherent->id > 0) {
             $object = callDoliApi("GET", "/subscriptions?sortfield=dateadh&sortorder=DESC&limit=".$limit."&page=".$page."&pagination_data=true&sqlfilters=t.fk_adherent:=:".$adherent->id, null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
             if ( doliversion('21.0.0') && isset($object->data) ) { $listcotisation = $object->data; } else { $listcotisation = $object; }
@@ -1683,15 +1683,15 @@ if ( doliCheckModules('adherent') && doliCheckRights('adherent', 'lire') ) {
         } else { 
             $content .= "<li class='list-group-item list-group-item-light'><center>".__( 'No subscription', 'doliconnect')."</center></li>";
         }
-            $content .= "</ul><div class='card-footer'>";
-            $content .= doliPagination($object, $url, $page);
-            $content .= "</div>";
     } else { 
+        $object = $obj = (object) array();
         $content .= "<ul class='list-group list-group-flush'>";
         $content .= "<li class='list-group-item list-group-item-light'><center>".__( 'No subscription', 'doliconnect')."</center></li>";
         $content .= '</ul>';
     }
-    $content .= '</div>';
+    $content .= "</ul><div class='card-footer'>";
+    $content .= doliPagination($object, $url, $page);
+    $content .= "</div>";
     return $content;
     }
     add_filter( 'member_doliconnect_members', 'members_module', 10, 2);

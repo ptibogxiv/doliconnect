@@ -52,7 +52,7 @@ $data = array();
     $newmember = callDoliApi("POST", "/members", $data, 0);
     //print var_dump($newmember);
     $member = callDoliApi("GET", "/members/".$newmember, null, dolidelay('member', true));
-  } else {
+  } elseif (isset($member->id) && !empty($member->id)) {
     $data['typeid'] = $type;
     $member = doliConnect('member', $current_user, false, true);
     $member = callDoliApi("PUT", "/members/".$member->id, $data, 0); 

@@ -365,8 +365,10 @@ function doliPagination($object, $url, $page = 0) {
   } else {
     if (empty($object) || isset($object->error)) {
       $count = 0;
-    } else { 
+    } elseif (is_array($object)) { 
       $count = count($object);
+    } else {
+      $count = 0;
     }
     $limit = 8;
     $pagination = "<nav aria-label='Page navigation example'><ul class='pagination pagination-sm'>";
