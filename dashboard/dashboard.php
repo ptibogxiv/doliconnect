@@ -269,11 +269,13 @@ if ( empty(doliconst('MAIN_DISABLE_CONTACTS_TAB')) && doliCheckRights('societe',
         if ( isset($_GET['pg']) && is_numeric(esc_attr($_GET['pg'])) && esc_attr($_GET['pg']) > 0 ) { $page = esc_attr($_GET['pg']); }  else { $page = 0; }
 
         $content .= '<div class="card shadow-sm"><div class="card-header">'.__( 'Manage address book', 'doliconnect').'</div><ul class="list-group list-group-flush" id="dolicontact-list">';
-        
+        $request = "/contacts?sortfield=t.rowid&sortorder=DESC&limit=".$limit."&page=0&thirdparty_ids=".$thirdparty->id."&pagination_data=true";                              
+        $object = callDoliApi("GET", $request, null, dolidelay('contact'));
+
         $content .= doliContactList($thirdparty, $limit, $page, false);
 
         $content .= "</ul><div class='card-footer'>";
-        //$content .= doliPagination($object, $url, $page);
+        $content .= doliPagination($object, $url, $page);
         $content .= "</div>";
         $content .= "</div>";
         return $content;
