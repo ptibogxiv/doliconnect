@@ -1,20 +1,21 @@
-name: New WordPress.org release
-
+name: Deploy to WordPress.org
 on:
-  release:
-    types: [published]
-
+  push:
+    tags:
+    - "*"
 jobs:
   tag:
-    name: New release
+    name: New tag
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
-      - name: WordPress Plugin Deploy
-        uses: Pierre-Lannoy/wordpress-actions/dotorg-plugin-deploy@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SLUG: doliconnect
-          NAME: Doliconnect
-          SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
-          SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+    - uses: actions/checkout@master
+    - name: Build # Remove or modify this step as needed
+      run: |
+        npm install
+        npm run build
+    - name: WordPress Plugin Deploy
+      uses: 10up/action-wordpress-plugin-deploy@stable
+      env:
+        SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
+        SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+        SLUG: doliconnect
