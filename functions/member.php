@@ -82,7 +82,9 @@ function dolimembertypelist($typeadhesion, $adherent = null) {
         $list .= doliproduct($postadh, 'label');
         if (! empty ($postadh->duration_value)) $list .= " - ".doliduration($postadh);
         $list .= '</h5>';
-        $list .= '<small class="text-body-secondary">button here</small></div>';
+        $list .= '<small class="text-body-secondary">';
+        $list .= '<form id="subscription-form" action="'.esc_url( add_query_arg( 'module', 'members', doliconnecturl('doliaccount')) ).'" method="post"><input type="hidden" name="update_membership" value="4"><input type="hidden" name="typeadherent" value="'.$postadh->id.'"><div class="d-grid gap-2"><button class="btn btn-primary btn-block" type="submit">'.__( 'Update', 'doliconnect').'</button></div></form>';
+        $list .= '</small></div>';
         $list .= '<p class="mb-1">'.sprintf( __( 'From %s to %s', 'doliconnect' ), wp_date('d/m/Y', $postadh->date_begin), wp_date('d/m/Y', $postadh->date_end) ).'</p>';
         $list .= '<small class="text-body-secondary">';
         if (isset($postadh->description) && !empty($postadh->description)) $list .= doliproduct($postadh, 'description');
