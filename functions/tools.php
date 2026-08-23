@@ -148,64 +148,65 @@ function doliCheckModules($module, $refresh = false) {
   return $return;
 }
 
-  function doliLockPost_meta_box() {
-      add_meta_box(
-          'doliLock_meta_box_callback',
-          __('Restricted access', 'doliconnect'),
-          'doliLock_meta_box_callback',
-          'post',
-          'side',
-          'default'
-      );
-  }
-  add_action('add_meta_boxes', 'doliLockPost_meta_box');
-  function doliLockPage_meta_box() {
-      add_meta_box(
-          'doliLock_meta_box_callback',
-          __('Restricted access', 'doliconnect'),
-          'doliLock_meta_box_callback',
-          'page',
-          'side',
-          'default'
-      );
-  }
-  add_action('add_meta_boxes', 'doliLockPage_meta_box');
+function doliLockPost_meta_box() {
+  add_meta_box(
+    'doliLock_meta_box_callback',
+    __('Restricted access', 'doliconnect'),
+    'doliLock_meta_box_callback',
+    'post',
+    'side',
+    'default'
+  );
+}
+add_action('add_meta_boxes', 'doliLockPost_meta_box');
 
-  function doliLock_meta_box_callback($post) {
-    $dropdown_value = get_post_meta($post->ID, '_doliLock_dropdown_field', true);
-    echo '<label for="doliLock_dropdown_field">' . __('Select an option:', 'doliconnect') . '</label>';
-    echo '<select id="doliLock_dropdown_field" name="doliLock_dropdown_field">';
-    echo '<option value=""' . selected($dropdown_value, '', false) . '>Free access</option>';
-    echo '<option value="user"' . selected($dropdown_value, 'user', false) . '>User only</option>';
-    echo '<option value="member"' . selected($dropdown_value, 'member', false) . '>Member only</option>';
-    echo '</select>';
-  }
+function doliLockPage_meta_box() {
+  add_meta_box(
+    'doliLock_meta_box_callback',
+    __('Restricted access', 'doliconnect'),
+    'doliLock_meta_box_callback',
+    'page',
+    'side',
+    'default'
+  );
+}
+add_action('add_meta_boxes', 'doliLockPage_meta_box');
 
-  function doliLock_meta_box_save($post_id) {
-      // Vérifier les autorisations et la validité
-      if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
-          return;
-      }
-      if (!current_user_can('edit_post', $post_id)) {
-          return;
-      }
-      if (isset($_POST['doliLock_dropdown_field'])) {
-          update_post_meta($post_id, '_doliLock_dropdown_field', sanitize_text_field($_POST['doliLock_dropdown_field']));
-      }
-  }
-  add_action('save_post', 'doliLock_meta_box_save');
+function doliLock_meta_box_callback($post) {
+  $dropdown_value = get_post_meta($post->ID, '_doliLock_dropdown_field', true);
+  echo '<label for="doliLock_dropdown_field">' . __('Select an option:', 'doliconnect') . '</label>';
+  echo '<select id="doliLock_dropdown_field" name="doliLock_dropdown_field">';
+  echo '<option value=""' . selected($dropdown_value, '', false) . '>Free access</option>';
+  echo '<option value="user"' . selected($dropdown_value, 'user', false) . '>User only</option>';
+  echo '<option value="member"' . selected($dropdown_value, 'member', false) . '>Member only</option>';
+  echo '</select>';
+}
 
-    function doliLock_display( $content) {
-    global $post;
-    $dropdown_value = get_post_meta($post->ID, '_doliLock_dropdown_field', true);
-      if ( (is_singular( 'post' ) || is_singular( 'page' ) ) && in_the_loop() && is_main_query() && !empty($dropdown_value) ) {
-          $custom_field_value = get_post_meta( $post->ID, '_doliproduct_productid', true );
-          $custom_message = '<div class="doliproduct-message">' . sprintf( __( 'This is a doliproduct post. Item N°: %s', 'doliconnect' ), esc_html( $custom_field_value ) ) . '</div>';
-          return $custom_message;
-      }
-      return $content;
+function doliLock_meta_box_save($post_id) {
+  // Vérifier les autorisations et la validité
+  if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+    return;
   }
-  add_filter( 'the_content', 'doliLock_display', 10);
+  if (!current_user_can('edit_post', $post_id)) {
+    return;
+  }
+  if (isset($_POST['doliLock_dropdown_field'])) {
+    update_post_meta($post_id, '_doliLock_dropdown_field', sanitize_text_field($_POST['doliLock_dropdown_field']));
+  }
+}
+add_action('save_post', 'doliLock_meta_box_save');
+
+function doliLock_display( $content) {
+global $post;
+  $dropdown_value = get_post_meta($post->ID, '_doliLock_dropdown_field', true);
+  if ( (is_singular( 'post' ) || is_singular( 'page' ) ) && in_the_loop() && is_main_query() && !empty($dropdown_value) ) {
+    $custom_field_value = get_post_meta( $post->ID, '_doliproduct_productid', true );
+    $custom_message = '<div class="doliproduct-message">' . sprintf( __( 'This is a doliproduct post. Item N°: %s', 'doliconnect' ), esc_html( $custom_field_value ) ) . '</div>';
+    return $custom_message;
+  }
+return $content;
+}
+add_filter( 'the_content', 'doliLock_display', 10);
 
 function consecutiveDoliIterationSameCharacter($password, $NbRepeat = null) {
 		if (empty($NbRepeat)) {
@@ -316,7 +317,7 @@ function doliversion($version) {
       }
     }
   }
-  return $ret;
+return $ret;
 }
 
 function doliObjectInfos($object) {
@@ -329,13 +330,12 @@ function doliObjectInfos($object) {
   if (isset($object->mode_reglement_code) && !empty($object->mode_reglement_code) && isset($mode_reglement[0]->label)) $info .= "<b>".__( 'Payment method', 'doliconnect').":</b> ".$mode_reglement[0]->label."<br>";
   if (isset($object->cond_reglement_id) && !empty($object->cond_reglement_id)) $info .= "<b>".__( 'Payment term', 'doliconnect').":</b> ".dolipaymentterm($object->cond_reglement_id)."<br>";
   if (isset($object->shipping_method_id) && !empty($object->shipping_method_id)) $info .= "<b>".__( 'Shipment method', 'doliconnect').":</b> ".doliShipmentMethods($object->shipping_method_id)."<br>";
-
 return $info;
 }
 
 function doliPG($pg = 0) {
   if ( isset($pg) && is_numeric(esc_attr($pg)) && esc_attr($pg) > 0 ) { $page = esc_attr($pg-1); } else { $page = 0; }
-  return $page;
+return $page;
 }
 
 function doliPagination($object, $url, $page = 0) {
@@ -398,7 +398,7 @@ function doliPagination($object, $url, $page = 0) {
     }
     $pagination .= "</ul></nav>";
   }
-  return $pagination;
+return $pagination;
 }
 
 function doliPicture($post = null, $class = null, $size = null, $carousel  = false) {
