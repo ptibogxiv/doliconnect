@@ -1256,7 +1256,7 @@ $doliuser .= '<div class="col-md"><div class="form-floating"><input type="email"
 if ( !$rights || (defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $current_user->ID && is_user_logged_in() && in_array($mode, array('thirdparty'))) || (defined("DOLICONNECT_SELECTEDEMAIL") && is_array(constant("DOLICONNECT_SELECTEDEMAIL")) && is_user_logged_in())) {
   $doliuser .= ' disabled';
 } else {
-$doliuser .= 'required';
+  $doliuser .= 'required';
 }
 $doliuser .= '><label for="'.$idobject.'[email]"><i class="fas fa-at fa-fw"></i> '.__( 'Email', 'doliconnect').'</label>';
 if (defined("DOLICONNECT_SELECTEDEMAIL") && is_array(constant("DOLICONNECT_SELECTEDEMAIL")) && !is_user_logged_in()) {
@@ -1264,9 +1264,10 @@ $doliuser .= '<small><i class="fas fa-info-circle"></i> Only emails from these d
 $array = constant("DOLICONNECT_SELECTEDEMAIL");
 $i = 0;
 foreach($array as $val) { 
-if (!empty($i)) $doliuser .= ',';
-$doliuser .= ' @'.$val; 
-$i++; }
+  if (!empty($i)) $doliuser .= ',';
+  $doliuser .= ' @'.$val; 
+  $i++;
+}
 $doliuser .= '</small>';
 }
 $doliuser .= '</div></div>';
