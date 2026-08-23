@@ -112,6 +112,7 @@ function doliConnect($fonction, $current_user = null, $boolean = false, $refresh
             'status' => 1,
           ];
         $dolibarr = callDoliApi("POST", "/doliconnector/".$user, $rdr, dolidelay('doliconnector'));
+        $id = $dolibarr->fk_soc;
       }
       $return = callDoliApi("GET", "/thirdparties/".$id, null, dolidelay('doliconnector', $refresh));
     }
