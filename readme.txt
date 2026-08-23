@@ -9,7 +9,7 @@ Requires PHP: 8.1
 License: GPL v3 or later
 Donate link: https://ptibogxiv.eu
 
-This plugin interfaces your Dolibarr installation with a customer interface in WordPress.
+This plugin interfaces your Dolibarr with your WordPress.
 
 == Description ==
 
