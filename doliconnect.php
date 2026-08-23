@@ -315,39 +315,7 @@ function callDoliApi($method = null, $link = null, $body = null, $delay = HOUR_I
 
     return $response;
 }
-// ********************************************************
-add_action( 'init', 'dolibarr', 10);
-function dolibarr() {
-global $current_user;  
 
-    if ( is_user_logged_in() && !doliversion('21.0.0')) { 
-        $user=get_current_user_id(); 
-        $dolibarr = callDoliApi("GET", "/doliconnector/".$user, null, dolidelay('doliconnector', false));
-
-        if ( defined("DOLIBUG") || !is_object($dolibarr) ) {
-
-        } else {  
-            if ( empty($dolibarr->fk_soc) ) {
-                if ( $current_user->billing_type == 'mor' ) { 
-                if (!empty($current_user->billing_company)) { $name = $current_user->billing_company; }
-                else { $name = $current_user->user_login; }
-                } else {
-                if (!empty($current_user->user_firstname) && !empty($current_user->user_lastname)) { $name = $current_user->user_firstname." ".$current_user->user_lastname; }
-                else { $name = $current_user->user_login; }
-                } 
-                $client = (!empty(get_option('doliDefaultclient'))?get_option('doliDefaultclient'):1);
-                $rdr = [
-                    'name'  => $name,
-                    'email' => $current_user->user_email,
-                    'client' => $client,
-                    'status' => 1,
-                    ];
-                $dolibarr = callDoliApi("POST", "/doliconnector/".$user, $rdr, dolidelay('doliconnector'));
-            } else {   
-            }
-        } 
-    }
-}
 // ********************************************************
 
 function doliconnector($current_user = null, $value = null, $refresh = false, $thirdparty = null) {
