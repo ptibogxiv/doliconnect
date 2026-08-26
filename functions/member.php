@@ -55,7 +55,6 @@ $data = array();
     'array_options' => $thirdparty->array_options,
 	];
     $newmember = callDoliApi("POST", "/members", $data, 0);
-    //print var_dump($newmember);
     $member = callDoliApi("GET", "/members/".$newmember, null, dolidelay('member', true));
   }
   return $member;
