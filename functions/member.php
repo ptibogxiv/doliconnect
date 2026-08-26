@@ -30,7 +30,12 @@ $data = array();
     $birth = null;
   }
 
-  if ($action=='POST') {  
+  $adherent = doliConnect('member', $current_user);
+
+  if (isset($member->id) && !empty($member->id)) {
+    $data['typeid'] = $type;
+    $member = callDoliApi("PUT", "/members/".$member->id, $data, 0); 
+  } else {  
   $data = [
     'login' => $current_user->user_login,
     'company'  => $current_user->billing_company,
@@ -52,10 +57,6 @@ $data = array();
     $newmember = callDoliApi("POST", "/members", $data, 0);
     //print var_dump($newmember);
     $member = callDoliApi("GET", "/members/".$newmember, null, dolidelay('member', true));
-  } elseif (isset($member->id) && !empty($member->id)) {
-    $data['typeid'] = $type;
-    $member = doliConnect('member', $current_user, false, true);
-    $member = callDoliApi("PUT", "/members/".$member->id, $data, 0); 
   }
   return $member;
 }
