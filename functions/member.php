@@ -85,7 +85,20 @@ function dolimembertypelist($typeadhesion, $adherent = null) {
         $list .= '<small class="text-body-secondary">';
         $list .= '<form id="subscription-form" action="'.esc_url( add_query_arg( 'module', 'members', doliconnecturl('doliaccount')) ).'" method="post"><input type="hidden" name="update_membership" value="4"><input type="hidden" name="typeadherent" value="'.$postadh->id.'"><div class="d-grid gap-2"><button class="btn btn-primary btn-block" type="submit">'.__( 'Update', 'doliconnect').'</button></div></form>';
         $list .= '</small></div>';
-        $list .= '<p class="mb-1">'.sprintf( __( 'From %s to %s', 'doliconnect' ), wp_date('d/m/Y', $postadh->date_begin), wp_date('d/m/Y', $postadh->date_end) ).'</p>';
+        $date = new DateTime();
+        $date->modify('NOW');
+        $start = wp_date('d/m/Y', $date->getTimestamp());
+        if ($postadh->duration_unit == 'd') { 
+          $date->modify('+'.$postadh->duration_value.' DAY');
+        } elseif ($postadh->duration_unit == 'w') { 
+          $date->modify('+'.$postadh->duration_value.' WEEK');
+        } elseif ($postadh->duration_unit == 'm') {
+          $date->modify('+'.$postadh->duration_value.' MONTH');
+        } else {
+          $date->modify('+'.$postadh->duration_value.' YEAR');
+        }
+        $end = wp_date('d/m/Y', $date->getTimestamp());
+        $list .= '<p class="mb-1">'.sprintf( __( 'From %s to %s', 'doliconnect' ), $start, $end).'</p>';
         $list .= '<small class="text-body-secondary">';
         if (isset($postadh->description) && !empty($postadh->description)) $list .= doliproduct($postadh, 'description');
         $list .= '</small></li>';
