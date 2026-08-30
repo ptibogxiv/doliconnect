@@ -87,7 +87,7 @@ function dolimembertypelist($typeadhesion, $adherent = null) {
         $list .= '</small></div>';
         $date = new DateTime();
         $date->modify('NOW');
-        $start = wp_date('d/m/Y', $date->getTimestamp());
+        $start = wp_date( get_option( 'date_format' ), $date->getTimestamp());
         if ($postadh->duration_unit == 'd') { 
           $date->modify('+'.$postadh->duration_value.' DAY');
         } elseif ($postadh->duration_unit == 'w') { 
@@ -97,7 +97,7 @@ function dolimembertypelist($typeadhesion, $adherent = null) {
         } else {
           $date->modify('+'.$postadh->duration_value.' YEAR');
         }
-        $end = wp_date('d/m/Y', $date->getTimestamp());
+        $end = wp_date( get_option( 'date_format' ), $date->getTimestamp());
         $list .= '<p class="mb-1">'.sprintf( __( 'From %s to %s', 'doliconnect' ), $start, $end).'</p>';
         $list .= '<small class="text-body-secondary">';
         if (isset($postadh->description) && !empty($postadh->description)) $list .= doliproduct($postadh, 'description');
