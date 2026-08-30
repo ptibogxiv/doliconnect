@@ -30,7 +30,7 @@ $data = array();
     $birth = null;
   }
 
-  $adherent = doliConnect('member', $current_user);
+  $member = doliConnect('member', $current_user);
 
   if (isset($member->id) && !empty($member->id)) {
     $data['typeid'] = $type;
