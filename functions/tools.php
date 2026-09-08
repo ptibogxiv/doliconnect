@@ -1426,7 +1426,7 @@ $doliuser .= '<li class="list-group-item list-group-item-light list-group-item-a
 if ( !empty(doliListLang(array( 'raw' => 1 ))) ) {
   $doliuser .= '<select class="form-select" id="'.$idobject.'[default_lang]" name="'.$idobject.'[default_lang]" aria-label="'.__( 'Default language', 'doliconnect').'"';
   if ($rights) {
-    $doliuser .= ' required';
+    $doliuser .= ' ';
   } else {
     $doliuser .= ' disabled';
   }
