@@ -1309,7 +1309,7 @@ $doliuser .= "<li class='list-group-item list-group-item-light list-group-item-a
 
 $doliuser .= '<div class="form-floating mb-2"><textarea class="form-control" placeholder="'.__( 'Address', 'doliconnect').'"  name="'.$idobject.'[address]" id="'.$idobject.'[address]" style="height: 100px" ';
 if ($rights) {
-$doliuser .= 'required';
+  $doliuser .= 'required';
 } else {
   $doliuser .= ' disabled';
 }
@@ -1423,10 +1423,12 @@ $doliuser .= "</div></li>";
 $doliuser .= '<li class="list-group-item list-group-item-light list-group-item-action"><div class="row g-2"><div class="col"><div class="form-floating">';
 if ( !empty(doliListLang(array( 'raw' => 1 ))) ) {
   $doliuser .= '<select class="form-select" id="'.$idobject.'[default_lang]" name="'.$idobject.'[default_lang]" aria-label="'.__( 'Default language', 'doliconnect').'"';
-    if (!$rights) {
-      $doliuser .= ' disabled';
-    }
-    $doliuser .= '>';
+  if ($rights) {
+    $doliuser .= ' required';
+  } else {
+    $doliuser .= ' disabled';
+  }
+  $doliuser .= '>';
   $doliuser .= "<option value=''>".__( 'Default / Browser language', 'doliconnect')."</option>";
   $translations = doliListLang( array( 'raw' => 1 ) );
   foreach ($translations as $key => $value) {
@@ -1436,8 +1438,13 @@ if ( !empty(doliListLang(array( 'raw' => 1 ))) ) {
   }
   $doliuser .= '</select><label for="'.$idobject.'[default_lang]">'.__( 'Default language', 'doliconnect').'</label>';
 } else {
-  $doliuser .= '<input type="text" class="form-control" id="'.$idobject.'[default_lang]" value="'.__( 'Default / Browser language', 'doliconnect').'" readonly>
-  <label for="'.$idobject.'[default_lang]">'.__( 'Default / Browser language', 'doliconnect').'</label>';
+  $doliuser .= '<input type="text" class="form-control" id="'.$idobject.'[default_lang]" value="'.__( 'Default / Browser language', 'doliconnect').'" ';
+  if ($rights) {
+    $doliuser .= ' readonly';
+  } else {
+    $doliuser .= ' disabled';
+  } 
+  $doliuser .= '><label for="'.$idobject.'[default_lang]">'.__( 'Default / Browser language', 'doliconnect').'</label>';
 }
 $doliuser .= '</div></div>';
 
