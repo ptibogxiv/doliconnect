@@ -83,7 +83,7 @@ function doliuserinfos_request(){
 	
 	if ( isset($_POST['doliuserinfos-nonce']) && wp_verify_nonce( trim($_POST['doliuserinfos-nonce']), 'doliuserinfos') && isset($_POST['case']) && $_POST['case'] == "updateThirdparty" ) {
 
-		$thirdparty=$_POST['thirdparty'][''.doliConnect('thirdparty', $current_user)->id.''];
+		$thirdparty = $_POST['thirdparty'][''.doliConnect('thirdparty', $current_user)->id.''];
 		$thirdparty = dolisanitize($thirdparty);
 		if (empty($thirdparty['no_email'])) {
 			$thirdparty['no_email'] = true;
@@ -114,7 +114,7 @@ function doliuserinfos_request(){
 		wp_send_json_success( $response );
 	} elseif ( isset($_POST['doliuserinfos-nonce']) && wp_verify_nonce( trim($_POST['doliuserinfos-nonce']), 'doliuserinfos') && isset($_POST['case']) && $_POST['case'] == "create" ) {
 
-		$thirdparty=$_POST['thirdparty'];
+		$thirdparty = $_POST['thirdparty'][''.doliConnect('thirdparty', $current_user)->id.''];
 		$thirdparty = dolisanitize($thirdparty);
 		if (empty($thirdparty['no_email'])) {
 			$thirdparty['no_email'] = true;
