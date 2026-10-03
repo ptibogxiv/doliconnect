@@ -3,8 +3,8 @@
 Contributors: ptibogxiv, audrasjb
 Tags: erp, crm, dolibarr, connector
 Requires at least: 6.5
-Tested up to: 7.1
-Stable tag: 10.7.6
+Tested up to: 7.2
+Stable tag: 10.7.7
 Requires PHP: 8.1
 License: GPL v3 or later
 Donate link: https://ptibogxiv.eu
