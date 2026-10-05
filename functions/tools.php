@@ -159,16 +159,19 @@ function doliCheckModules($module, $refresh = false) {
     if ($module == 'invoice') { $module = 'facture'; }
     if ($module == 'project') { $module = 'projet'; }
   }
-  if ( !doliversion('13.0.0') ) {
-    if ( doliconst('MAIN_MODULE_'.strtoupper ($module), $refresh) ) {
-      $return = true;
-    }
-  } else {
+  if ( doliversion('13.0.0') ) {
     $list = callDoliApi("GET", "/setup/modules", null, dolidelay('dolibarr', $refresh));
     if (is_array($list) && in_array($module, $list)) {
       $return = true;
     }
-  }
+    if (isset($list->$module) && $list->$module == $module) {
+      $return = true;
+    }
+  } else {
+    if ( doliconst('MAIN_MODULE_'.strtoupper ($module), $refresh) ) {
+      $return = true;
+    }
+  } 
   return $return;
 }
 
