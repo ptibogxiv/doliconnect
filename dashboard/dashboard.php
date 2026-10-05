@@ -1536,7 +1536,7 @@ if ( doliCheckModules('adherent') && doliCheckRights('adherent', 'lire') ) {
         $productadhesion = doliconst("ADHERENT_PRODUCT_ID_FOR_SUBSCRIPTIONS");
         $requestp = "/products/".$productadhesion."?includesubproducts=true&includetrans=true";
         $product = callDoliApi("GET", $requestp, null, dolidelay('product', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
-        $price = doliProductPrice($product, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
+        //$price = doliProductPrice($product, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 
         if ( isset($_POST["update_membership"]) && function_exists('doliconnect_membership') ) {
             $typeadherent = isset($_POST["typeadherent"]) ? $_POST["typeadherent"] : null;
