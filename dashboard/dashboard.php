@@ -1802,7 +1802,7 @@ if ( doliCheckModules('ticket') ) {
 
     } elseif ( isset($_GET['action']) && $_GET['action'] == 'create' ) {
 
-    $content .= '<div id="doliticket-alert"></div><form id="doliticket-form" method="post" class="was-validated" action="'.admin_url('admin-ajax.php').'">';
+    $content = '<div id="doliticket-alert"></div><form id="doliticket-form" method="post" class="was-validated" action="'.admin_url('admin-ajax.php').'">';
 
     $content .= doliAjax('doliticket', $url, 'create');
 
