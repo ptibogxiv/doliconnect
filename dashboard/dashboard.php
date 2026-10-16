@@ -5,7 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function informations_menu( $menu, $arg) {
-    $menu .= "<a href='".esc_url( add_query_arg( 'module', 'informations', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
+    $menu .= "<a href='".esc_url( add_query_arg( 'module', 'informations', doliconnecturl('doliaccount')) )."' class='list-group-item bg-1 list-group-item-action";
     if ($arg == 'informations') { $menu .= " active";}
     $menu .= "'>".__( 'Edit my informations', 'doliconnect')."</a>";
     return $menu;
@@ -24,13 +24,13 @@ function informations_module($content, $url) {
     $thirdparty = doliConnect('thirdparty', $current_user, false, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
     $request = "/thirdparties/".$thirdparty->id;
 
-    $content = "<div id='doliuserinfos-alert'></div><form action='".admin_url('admin-ajax.php')."' id='doliuserinfos-form' method='post' class='was-validated' enctype='multipart/form-data'>";
+    $content = "<div id='doliuserinfos-alert'></div><form action='".admin_url('admin-ajax.php')."' id='doliuserinfos-form' method='post' data-bs-validate enctype='multipart/form-data'>";
 
     $content .= '<div class="card shadow-sm"><div class="card-header">'.__( 'Edit my informations', 'doliconnect').'</div>';
     $content .= doliuserform( $thirdparty, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), true), 'thirdparty', false);
     if (doliCheckRights('societe', 'creer')) { 
-        $content .= "<div class='card-body'><div class='d-grid gap-2'>";
-        $content .= doliModalButton('thirdparty', 'editthirdparty', __( 'Update', 'doliconnect'), 'button', 'btn btn-outline-secondary', $thirdparty->id);
+        $content .= "<div class='card-body'><div class='d-grid gap-3'>";
+        $content .= doliModalButton('thirdparty', 'editthirdparty', __( 'Update', 'doliconnect'), 'button', 'btn-outline theme-secondary', $thirdparty->id);
         $content .= "</div></div>";
     }
     $content .= doliCardFooter($thirdparty, 'thirdparty');
@@ -42,7 +42,7 @@ add_filter( 'user_doliconnect_informations', 'informations_module', 10, 2);
 //*****************************************************************************************
 
 function password_menu( $menu, $arg){
-    $menu .= "<a href='".esc_url( add_query_arg( 'module', 'password', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
+    $menu .= "<a href='".esc_url( add_query_arg( 'module', 'password', doliconnecturl('doliaccount')) )."' class='list-group-item bg-1 list-group-item-action";
     if ($arg == 'password') { $menu .= " active";}
     $menu .= "'>".__( 'Edit my password', 'doliconnect')."</a>";
     return $menu;
@@ -222,25 +222,25 @@ $content .= dolialert ('warning', "Votre photo n'a pu être chargée. Elle doit 
 $content .= dolialert ('success', __( 'Your informations have been updated.', 'doliconnect'));
 }
 
-$content .= "<form action='".$url."' id='doliconnect-avatarform' method='post' class='was-validated' enctype='multipart/form-data'><input type='hidden' name='case' value='updateavatar'>";
+$content .= "<form action='".$url."' id='doliconnect-avatarform' method='post' data-bs-validate enctype='multipart/form-data'><input type='hidden' name='case' value='updateavatar'>";
 
 $content .='<div class="card shadow-sm"><div class="card-header">'.__( 'Edit my avatar', 'doliconnect').'</div>';
 $content .='<ul class="list-group list-group-flush"><li class="list-group-item">';
 
-$content .='<div class="mb-2"><div class="input-group mb-2"><div class="input-group-text">
-<input id="doliavatar" name="doliavatar" value="1" class="form-check-input mt-0" type="radio" aria-label="Radio button for following text input" checked>
+$content .='<div class="mb-3"><div class="input-group mb-3"><div class="input-group-text">
+<input id="doliavatar" name="doliavatar" value="1" class="radio" type="radio" aria-label="Radio button for following text input" checked>
 </div>
 <input type="file" id="inputavatar" name="inputavatar" accept="image/*" class="form-control" id="inputGroupFile03" aria-describedby="doliavatarHelp" aria-label="Upload">
 </div><div id="doliavatarHelp" class="form-text">'.__( 'Your avatar must be a .jpg/.jpeg file, <10Mo and 350x350pixels minimum.', 'doliconnect').'</div></div>';
 
 $content .='<div class="input-group"><div class="input-group-text">
-<input id="doliavatar" name="doliavatar" value="0" class="form-check-input mt-0" type="radio" aria-label="Radio button for following text input">
+<input id="doliavatar" name="doliavatar" value="0" class="radio" type="radio" aria-label="Radio button for following text input">
 </div>
 <input type="text" class="form-control" aria-label="Text input with radio button" value="'.__( 'Delete your picture', 'doliconnect').'" readonly>
 </div>';
 
 $content .='</li>';
-$content .="</ul><div class='card-body'><input type='hidden' name='userid' value='$ID'><div class='d-grid gap-2'><button class='btn btn-outline-secondary' type='submit'>".__( 'Update', 'doliconnect')."</button></div></div>";
+$content .="</ul><div class='card-body'><input type='hidden' name='userid' value='$ID'><div class='d-grid gap-3'><button class='btn-outline theme-secondary' type='submit'>".__( 'Update', 'doliconnect')."</button></div></div>";
 if (isset($request) && isset($thirdparty)) $content .= doliCardFooter($request, 'thirdparty', $thirdparty);
 $content .='</div></form>';
 return $content;
@@ -251,7 +251,7 @@ add_filter( 'user_doliconnect_avatars', 'avatars_module', 10, 2);
 
 if ( empty(doliconst('MAIN_DISABLE_CONTACTS_TAB')) && doliCheckRights('societe', 'contact', 'lire') ) {
     function contacts_menu( $menu, $arg) {
-        $menu .= "<a href='".esc_url( add_query_arg( 'module', 'contacts', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
+        $menu .= "<a href='".esc_url( add_query_arg( 'module', 'contacts', doliconnecturl('doliaccount')) )."' class='list-group-item bg-1 list-group-item-action";
         if ( $arg == 'contacts' ) { $menu .= " active"; }
         $menu .= "'>".__( 'Manage address book', 'doliconnect')."</a>";
         return $menu;
@@ -288,7 +288,7 @@ if ( empty(doliconst('MAIN_DISABLE_CONTACTS_TAB')) && doliCheckRights('societe',
 if ( doliversion('20.0.0') && doliCheckModules('notification') && !empty(get_option('doliconnectbeta')) ) {
 
 function notifications_menu( $menu, $arg ) {
-    $menu .= "<a href='".esc_url( add_query_arg( 'module', 'notifications', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
+    $menu .= "<a href='".esc_url( add_query_arg( 'module', 'notifications', doliconnecturl('doliaccount')) )."' class='list-group-item bg-1 list-group-item-action";
     if ($arg == 'notifications') { $menu .= " active";}
     $menu .= "'>".__( 'Manage notifications', 'doliconnect')."</a>";
     return $menu;
@@ -315,11 +315,11 @@ global $current_user;
             $request = "/contacts/".esc_attr($postnotif->contact_id)."?includecount=1&includeroles=1";
             $contactfo = callDoliApi("GET", $request, null, dolidelay('contact', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null))); 
             $unit = callDoliApi("GET", "/setup/actiontriggers?sortfield=t.rowid&sortorder=ASC&limit=100&lang=fr_fr&sqlfilters=(t.rowid:=:'".$postnotif->event."')", null, dolidelay('constante'));           
-            $content .= "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'><div><i class='fa-solid fa-bell fa-3x fa-fw'></i></div><div><h6 class='my-0'>".$unit[0]->label."</h6><small class='text-muted'><span>".$postnotif->type."</span></small></div><span>".($contactfo->civility ? $contactfo->civility : $contactfo->civility_code)." ".$contactfo->firstname." ".$contactfo->lastname."<br>".$contactfo->email."</span>";
+            $content .= "<a href='$return' class='list-group-item d-flex justify-content-between lh-sm bg-1 list-group-item-action'><div><i class='fa-solid fa-bell fa-3x fa-fw'></i></div><div><h6 class='my-0'>".$unit[0]->label."</h6><small class='fg-secondary'><span>".$postnotif->type."</span></small></div><span>".($contactfo->civility ? $contactfo->civility : $contactfo->civility_code)." ".$contactfo->firstname." ".$contactfo->lastname."<br>".$contactfo->email."</span>";
             $content .= "</a>";
         }
     } else {
-        $content .= "<li class='list-group-item list-group-item-light'><center>".__( 'No proposal', 'doliconnect')."</center></li>";
+        $content .= "<li class='list-group-item bg-1'><center>".__( 'No proposal', 'doliconnect')."</center></li>";
     }
     $content .= "</ul><div class='card-footer'>";
     $content .= doliPagination($object, $url, $page);
@@ -338,7 +338,7 @@ function dolipaymentmodes_lock() {
 }
 
 function paymentmethods_menu( $menu, $arg ) {
-    $menu .= "<a href='".esc_url( add_query_arg( 'module', 'paymentmethods', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
+    $menu .= "<a href='".esc_url( add_query_arg( 'module', 'paymentmethods', doliconnecturl('doliaccount')) )."' class='list-group-item bg-1 list-group-item-action";
     if ($arg == 'paymentmethods') { $menu .= " active";}
     $menu .= "'>".__( 'Manage payment methods', 'doliconnect')."</a>";
     return $menu;
@@ -353,9 +353,9 @@ global $current_user;
         $credit = $thirdparty->absolute_discount + $thirdparty->absolute_creditnote;
         $content .= doliModalButton('gateway', 'discount', '<div class="d-flex w-100 justify-content-between">
                     <h5 class="mb-1">'.__( 'Available credit', 'doliconnect').' : '.doliprice($credit).'</h5>
-                    <small class="text-body-secondary"></small></div>
+                    <small class="fg-2"></small></div>
                     <p class="mb-1">x</p>
-                    <small class="text-body-secondary">x</small>', 'button', 'list-group-item lh-condensed list-group-item-action list-group-item-light');
+                    <small class="fg-2">x</small>', 'button', 'list-group-item lh-sm list-group-item-action bg-1');
         if ( doliCheckModules('doliconnector') ) {
             $request = "/doliconnector/".$thirdparty->id."/paymentmethods";
             $listpaymentmethods = callDoliApi("GET", $request, null, dolidelay('paymentmethods'));
@@ -384,9 +384,9 @@ global $current_user;
                     }
                     $content .= doliModalButton('gateway', 'stripe', '<div class="d-flex w-100 justify-content-between">
                     <h5 class="mb-1">'.$name.'</h5>
-                    <small class="text-body-secondary">'.$default.'</small></div>
+                    <small class="fg-2">'.$default.'</small></div>
                     <p class="mb-1">'.$method->holder.'</p>
-                    <small class="text-body-secondary">'.$expiration.'</small>', 'button', 'list-group-item lh-condensed list-group-item-action list-group-item-light', $method->id);
+                    <small class="fg-2">'.$expiration.'</small>', 'button', 'list-group-item lh-sm list-group-item-action bg-1', $method->id);
                 }
             }
         }
@@ -407,7 +407,7 @@ add_filter( 'user_doliconnect_paymentmethods', 'paymentmethods_module', 10, 2);
 if ( doliCheckModules('propal') && doliCheckRights('propal', 'lire') ) {
 
 function proposals_menu( $menu, $arg ) {
-    $menu .= "<a href='".esc_url( add_query_arg( 'module', 'proposals', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
+    $menu .= "<a href='".esc_url( add_query_arg( 'module', 'proposals', doliconnecturl('doliaccount')) )."' class='list-group-item bg-1 list-group-item-action";
     if ( $arg == 'proposals' ) { $menu .= " active";}
     $menu .= "'>".__( 'Proposals tracking', 'doliconnect')."</a>";
     return $menu;
@@ -424,9 +424,9 @@ global $current_user;
     $thirdparty = doliConnect('thirdparty', $current_user, false, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 
 if ( !isset($proposalfo->error) && isset($_GET['id']) && isset($_GET['ref']) && ( $thirdparty->id == $proposalfo->socid ) && ( $_GET['ref'] == $proposalfo->ref ) && $proposalfo->statut != 0 && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doli-proposals-'.$proposalfo->id.'-'.$proposalfo->ref)) {
-$content = '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Proposal %s', 'doliconnect'), $proposalfo->ref).'<a class="btn btn-sm btn-outline-secondary border border-0 float-end" href="'.esc_url( add_query_arg( 'module', 'proposals', doliconnecturl('doliaccount')) ).'"><i class="fa-solid fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-5">';
+$content = '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Proposal %s', 'doliconnect'), $proposalfo->ref).'<a class="btn-sm btn-outline theme-secondary border border-0 float-end" href="'.esc_url( add_query_arg( 'module', 'proposals', doliconnecturl('doliaccount')) ).'"><i class="fa-solid fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="md:col-5">';
 $content .= doliObjectInfos($proposalfo);
-$content .= "</div><div class='col-md-7'>";
+$content .= "</div><div class='md:col-7'>";
 $content .= doliObjectStatus($proposalfo, 'proposal', 1);
 $content .= "</div>";
 
@@ -453,8 +453,8 @@ $fruits[$proposalfo->date_creation.'p'] = array(
 
 sort($fruits, SORT_NUMERIC | SORT_FLAG_CASE);
 foreach ( $fruits as $key => $val ) {
-$content .= "<li class='list-group-item'><div class='row'><div class='col-6 col-md-3'>" . wp_date('d/m/Y H:i', $val['timestamp']) . "</div><div class='col-6 col-md-2'>" . $val['type'] . "</div>";
-$content .= "<div class='col-md-7'><h6>" . $val['label'] . "</h6>" . $val['description'] ."" . $val['document'] ."</div></div></li>";
+$content .= "<li class='list-group-item'><div class='row'><div class='col-6 md:col-3'>" . wp_date('d/m/Y H:i', $val['timestamp']) . "</div><div class='col-6 md:col-2'>" . $val['type'] . "</div>";
+$content .= "<div class='md:col-7'><h6>" . $val['label'] . "</h6>" . $val['description'] ."" . $val['document'] ."</div></div></li>";
 } 
 //var_dump($fruits);
 $content .= '</ul>';
@@ -476,12 +476,12 @@ $content .= '</div>';
                 $arr_params = array( 'id' => $postproposal->id, 'ref' => $postproposal->ref, 'security' => $nonce);  
                 $return = esc_url( add_query_arg( $arr_params, $url) );
                                 
-                $content .= "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'><div><i class='fa fa-file-signature fa-3x fa-fw'></i></div><div><h6 class='my-0'>".$postproposal->ref."</h6><small class='text-muted'>".wp_date('d/m/Y', $postproposal->date_creation)."</small></div><span>".doliprice($postproposal, 'ttc', isset($postproposal->multicurrency_code) ? $postproposal->multicurrency_code : null)."</span><span>";
+                $content .= "<a href='$return' class='list-group-item d-flex justify-content-between lh-sm bg-1 list-group-item-action'><div><i class='fa fa-file-signature fa-3x fa-fw'></i></div><div><h6 class='my-0'>".$postproposal->ref."</h6><small class='fg-secondary'>".wp_date('d/m/Y', $postproposal->date_creation)."</small></div><span>".doliprice($postproposal, 'ttc', isset($postproposal->multicurrency_code) ? $postproposal->multicurrency_code : null)."</span><span>";
                 $content .= doliObjectStatus($postproposal, 'proposal', 2);
                 $content .= "</span></a>";
             }
         } else {
-            $content .= "<li class='list-group-item list-group-item-light'><center>".__( 'No proposal', 'doliconnect')."</center></li>";
+            $content .= "<li class='list-group-item bg-1'><center>".__( 'No proposal', 'doliconnect')."</center></li>";
         }
         $content .= "</ul><div class='card-footer'>";
         $content .= doliPagination($object, $url, $page);
@@ -499,7 +499,7 @@ add_filter( 'customer_doliconnect_proposals', 'proposals_module', 10, 2);
 if ( doliCheckModules('commande') && doliCheckRights('commande', 'lire') ) {
 
 function orders_menu( $menu, $arg ) {
-    $menu .= "<a href='".esc_url( add_query_arg( 'module', 'orders', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
+    $menu .= "<a href='".esc_url( add_query_arg( 'module', 'orders', doliconnecturl('doliaccount')) )."' class='list-group-item bg-1 list-group-item-action";
     if ( $arg == 'orders' ) { $menu .= " active"; }
     $menu .= "'>".__( 'Orders tracking', 'doliconnect')."</a>";
     return $menu;
@@ -517,9 +517,9 @@ global $current_user;
 
 if ( !isset($orderfo->error) && isset($_GET['id']) && isset($_GET['ref']) && ($thirdparty->id == $orderfo->socid ) && ($_GET['ref'] == $orderfo->ref) && $orderfo->statut != 0 && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doli-orders-'.$orderfo->id.'-'.$orderfo->ref)) {
 
-$content = '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Order %s', 'doliconnect'), $orderfo->ref).'<a class="btn btn-sm btn-outline-secondary border border-0 float-end" href="'.esc_url( add_query_arg( 'module', 'orders', doliconnecturl('doliaccount')) ).'"><i class="fa-solid fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-5">';
+$content = '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Order %s', 'doliconnect'), $orderfo->ref).'<a class="btn-sm btn-outline theme-secondary border border-0 float-end" href="'.esc_url( add_query_arg( 'module', 'orders', doliconnecturl('doliaccount')) ).'"><i class="fa-solid fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="md:col-5">';
 $content .= doliObjectInfos($orderfo);
-$content .= "</div><div class='col-md-7'>";
+$content .= "</div><div class='md:col-7'>";
 $content .= doliObjectStatus($orderfo, 'order', 1);
 $content .= "</div>";
 
@@ -531,28 +531,28 @@ if ( $orderfo->billed != 1 && $orderfo->statut > 0 ) {
 
     $listpaymentmethods = callDoliApi("GET", "/doliconnector/".$thirdparty->id."/paymentmethods?type=order&rowid=".$orderfo->id, null, dolidelay('paymentmethods', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
-    $content .= "<div class='col'><div class='card bg-light' style='border:0'><div class='card-body'><p align='justify'>".sprintf( __( 'Please send your cheque in the amount of <b>%1$s</b> with reference <b>%2$s</b> to <b>%3$s</b> at the following address', 'doliconnect'), doliprice($orderfo, 'ttc', isset($orderfo->multicurrency_code) ? $orderfo->multicurrency_code : null), $orderfo->ref, $listpaymentmethods->CHQ->proprio).":</p>";                                                                                                                                                                                                                                                                                                                                      
+    $content .= "<div class='col'><div class='card bg-1' style='border:0'><div class='card-body'><p align='justify'>".sprintf( __( 'Please send your cheque in the amount of <b>%1$s</b> with reference <b>%2$s</b> to <b>%3$s</b> at the following address', 'doliconnect'), doliprice($orderfo, 'ttc', isset($orderfo->multicurrency_code) ? $orderfo->multicurrency_code : null), $orderfo->ref, $listpaymentmethods->CHQ->proprio).":</p>";                                                                                                                                                                                                                                                                                                                                      
     $content .= "<p><b>".$listpaymentmethods->CHQ->owner_address."</b></p>";
-    //$content .= "<button class='btn btn-link btn-sm' onclick='ValidDoliCart(\"".wp_create_nonce( 'valid_dolicart-'.$orderfo->id )."\")' id='button-source-payment'><small><span class='fa-solid fa-sync-alt'></span> ".__( 'Change your payment mode', 'doliconnect')."</small></button>";
+    //$content .= "<button class='btn-link btn-sm' onclick='ValidDoliCart(\"".wp_create_nonce( 'valid_dolicart-'.$orderfo->id )."\")' id='button-source-payment'><small><span class='fa-solid fa-sync-alt'></span> ".__( 'Change your payment mode', 'doliconnect')."</small></button>";
     $content .= "</div></div></div>";
     } elseif ( $orderfo->mode_reglement_code == 'VIR' ) { 
 
     $listpaymentmethods = callDoliApi("GET", "/doliconnector/".$thirdparty->id."/paymentmethods", null, dolidelay('paymentmethods', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
-    $content .= "<div class='col'><div class='card bg-light' style='border:0'><div class='card-body'><p align='justify'>".sprintf( __( 'Please send your transfert in the amount of <b>%1$s</b> with reference <b>%2$s</b> at the following account', 'doliconnect'), doliprice($orderfo, 'ttc', isset($orderfo->multicurrency_code) ? $orderfo->multicurrency_code : null), $orderfo->ref ).":";
+    $content .= "<div class='col'><div class='card bg-1' style='border:0'><div class='card-body'><p align='justify'>".sprintf( __( 'Please send your transfert in the amount of <b>%1$s</b> with reference <b>%2$s</b> at the following account', 'doliconnect'), doliprice($orderfo, 'ttc', isset($orderfo->multicurrency_code) ? $orderfo->multicurrency_code : null), $orderfo->ref ).":";
     if (isset($listpaymentmethods->VIR->bank)) $content .= "<br><b>".__( 'Bank', 'doliconnect').": ".$listpaymentmethods->VIR->bank."</b>";
     if (isset($listpaymentmethods->VIR->iban)) $content .=  "<br><b>IBAN: ".$listpaymentmethods->VIR->iban."</b></p>";
     if (isset($listpaymentmethods->VIR->bic) && ! empty($listpaymentmethods->VIR->bic) ) { $content .= "<br><b>BIC/SWIFT : ".$listpaymentmethods->VIR->bic."</b>";}
-    //$content .= "<button class='btn btn-link btn-sm' onclick='ValidDoliCart(\"".wp_create_nonce( 'valid_dolicart-'.$orderfo->id )."\")' id='button-source-payment'><small><span class='fa-solid fa-sync-alt'></span> ".__( 'Change your payment mode', 'doliconnect')."</small></button>";
+    //$content .= "<button class='btn-link btn-sm' onclick='ValidDoliCart(\"".wp_create_nonce( 'valid_dolicart-'.$orderfo->id )."\")' id='button-source-payment'><small><span class='fa-solid fa-sync-alt'></span> ".__( 'Change your payment mode', 'doliconnect')."</small></button>";
     $content .= "</div></div></div>";
     } elseif ( $orderfo->mode_reglement_code == 'PRE' ) { 
 
     } else {
-    //$content .= "<button type='button' onclick='ValidDoliCart(\"".wp_create_nonce( 'valid_dolicart-'.$orderfo->id )."\")' id='button-source-payment' class='btn btn-warning btn-block' ><span class='fa fa-credit-card'></span> ".__( 'Pay', 'doliconnect')."</button>";
+    //$content .= "<button type='button' onclick='ValidDoliCart(\"".wp_create_nonce( 'valid_dolicart-'.$orderfo->id )."\")' id='button-source-payment' class='btn-solid theme-warning w-100' ><span class='fa fa-credit-card'></span> ".__( 'Pay', 'doliconnect')."</button>";
     }
     $content .= '<script type="text/javascript">';
     $content .= "function ValidDoliCart(nonce) {
-    jQuery('#DoliconnectLoadingModal').modal('show');
+    doliconnectShowDialog('DoliconnectLoadingModal');
     var form = document.createElement('form');
     form.setAttribute('action', '".$return."');
     form.setAttribute('method', 'post');
@@ -581,14 +581,14 @@ if (!empty($orderfo->contacts_ids) && is_array($orderfo->contacts_ids)) {
     }
     }
 
-    $content .= "<div class='card bg-light' style='border:0'><div class='card-body'><h6>".__( 'Billing address', 'doliconnect')."</h6><small class='text-muted'>";
+    $content .= "<div class='card bg-1' style='border:0'><div class='card-body'><h6>".__( 'Billing address', 'doliconnect')."</h6><small class='fg-secondary'>";
     if (isset($billingcard) && !empty($billingcard)) {
     $content .= $billingcard;
     } else {
     $content .= doliaddress($thirdparty, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
     }
     $content .= "</small></div></div>";
-    $content .= "<div class='card bg-light' style='border:0'><div class='card-body'><h6>".__( 'Shipping address', 'doliconnect')."</h6><small class='text-muted'>";
+    $content .= "<div class='card bg-1' style='border:0'><div class='card-body'><h6>".__( 'Shipping address', 'doliconnect')."</h6><small class='fg-secondary'>";
     if (isset($shippingcard) && !empty($shippingcard)) {
     $content .= $shippingcard;
     } else {
@@ -596,7 +596,7 @@ if (!empty($orderfo->contacts_ids) && is_array($orderfo->contacts_ids)) {
     }
     $content .= "</small></div></div>";
 } else {
-    $content .= "<div class='card bg-light' style='border:0'><div class='card-body'><h6>".__( 'Billing and shipping address', 'doliconnect')."</h6><small class='text-muted'>";
+    $content .= "<div class='card bg-1' style='border:0'><div class='card-body'><h6>".__( 'Billing and shipping address', 'doliconnect')."</h6><small class='fg-secondary'>";
     $content .= doliaddress($thirdparty, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
     $content .= "</small></div></div>";
 }
@@ -654,11 +654,11 @@ $document_invoice = dolidocdownload('invoice', $invoice->ref, $invoice->ref.'.pd
 
 if ( $invoice->paye != 1 && $invoice->remaintopay != 0 && function_exists('dolipaymentmodes') ) {
 
-$payment_invoice = "<a href='".doliconnecturl('dolicart')."?pay&module=invoices&id=".$invoice->id."&ref=".$invoice->ref."' id='button-source-payment' class='btn btn-warning btn-block' role='button'><span class='fa fa-credit-card'></span> ".__( 'Pay', 'doliconnect')."</a><br>";
+$payment_invoice = "<a href='".doliconnecturl('dolicart')."?pay&module=invoices&id=".$invoice->id."&ref=".$invoice->ref."' id='button-source-payment' class='btn-solid theme-warning w-100' role='button'><span class='fa fa-credit-card'></span> ".__( 'Pay', 'doliconnect')."</a><br>";
 
 } elseif ( $invoice->paye != 1 && $invoice->remaintopay != 0 &&  isset($orderfo->public_payment_url) && !empty($orderfo->public_payment_url) ) {
 
-$payment_invoice = "<a href='".$orderfo->public_payment_url."' id='button-source-payment' class='btn btn-warning btn-block' role='button'><span class='fa fa-credit-card'></span> ".__( 'Pay', 'doliconnect')."</a><br>";
+$payment_invoice = "<a href='".$orderfo->public_payment_url."' id='button-source-payment' class='btn-solid theme-warning w-100' role='button'><span class='fa fa-credit-card'></span> ".__( 'Pay', 'doliconnect')."</a><br>";
 
 } else {
 $payment_invoice = null;
@@ -718,8 +718,8 @@ $fruits[$ship->date_creation] = array(
 
     sort($fruits, SORT_NUMERIC | SORT_FLAG_CASE);
     foreach ( $fruits as $key => $val ) {
-        $content .= "<li class='list-group-item'><div class='row'><div class='col-6 col-md-3'>" . wp_date('d/m/Y H:i', $val['timestamp']) . "</div><div class='col-6 col-md-2'>" . $val['type'] . "</div>";
-        $content .= "<div class='col-md-7'><h6>".$val['label']."</h6>" . $val['description'] ."" . $val['document'] ."</div></div></li>";
+        $content .= "<li class='list-group-item'><div class='row'><div class='col-6 md:col-3'>" . wp_date('d/m/Y H:i', $val['timestamp']) . "</div><div class='col-6 md:col-2'>" . $val['type'] . "</div>";
+        $content .= "<div class='md:col-7'><h6>".$val['label']."</h6>" . $val['description'] ."" . $val['document'] ."</div></div></li>";
     } 
     //var_dump($fruits);
     $content .= '</ul>';
@@ -740,12 +740,12 @@ $fruits[$ship->date_creation] = array(
                 $arr_params = array( 'id' => $postorder->id, 'ref' => $postorder->ref, 'security' => $nonce);  
                 $return = esc_url( add_query_arg( $arr_params, $url) );
                                                                                                                                                                     
-                $content .= "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'><div><i class='fa fa-file-invoice fa-3x fa-fw'></i></div><div><h6 class='my-0'>".$postorder->ref."</h6><small class='text-muted'>".wp_date('d/m/Y', $postorder->date_commande)."</small></div><span>".doliprice($postorder, 'ttc', isset($postorder->multicurrency_code) ? $postorder->multicurrency_code : null)."</span><span>";
+                $content .= "<a href='$return' class='list-group-item d-flex justify-content-between lh-sm bg-1 list-group-item-action'><div><i class='fa fa-file-invoice fa-3x fa-fw'></i></div><div><h6 class='my-0'>".$postorder->ref."</h6><small class='fg-secondary'>".wp_date('d/m/Y', $postorder->date_commande)."</small></div><span>".doliprice($postorder, 'ttc', isset($postorder->multicurrency_code) ? $postorder->multicurrency_code : null)."</span><span>";
                 $content .= doliObjectStatus($postorder, 'order', 2);
                 $content .= "</span></a>";
             }
         } else {
-            $content .= "<li class='list-group-item list-group-item-light'><center>".__( 'No order', 'doliconnect')."</center></li>";
+            $content .= "<li class='list-group-item bg-1'><center>".__( 'No order', 'doliconnect')."</center></li>";
         }
         $content .= "</ul><div class='card-footer'>";
         $content .= doliPagination($object, $url, $page);
@@ -764,7 +764,7 @@ if ( doliCheckModules('facture') && get_option('doliconnectdisplayinvoice') && d
     add_action( 'customer_doliconnect_invoices', 'invoices_module');
 
 function invoices_menu( $menu, $arg ) {
-    $menu .= "<a href='".esc_url( add_query_arg( 'module', 'invoices', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
+    $menu .= "<a href='".esc_url( add_query_arg( 'module', 'invoices', doliconnecturl('doliaccount')) )."' class='list-group-item bg-1 list-group-item-action";
     if ( $arg == 'invoices' ) { $menu .= " active"; }
     $menu .= "'>".__( 'Invoices tracking', 'doliconnect')."</a>";
     return $menu;
@@ -782,9 +782,9 @@ global $current_user;
 
 if ( !isset($orderfo->error) && isset($_GET['id']) && isset($_GET['ref']) && ($thirdparty->id == $invoicefo->socid ) && ($_GET['ref'] == $invoicefo->ref) && $invoicefo->statut != 0 && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doli-invoices-'.$invoicefo->id.'-'.$invoicefo->ref)) {
 
-$content = '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Invoice %s', 'doliconnect'), $invoicefo->ref).'<a class="btn btn-sm btn-outline-secondary border border-0 float-end" href="'.esc_url( add_query_arg( 'module', 'invoices', doliconnecturl('doliaccount')) ).'"><i class="fa-solid fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-5">';
+$content = '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Invoice %s', 'doliconnect'), $invoicefo->ref).'<a class="btn-sm btn-outline theme-secondary border border-0 float-end" href="'.esc_url( add_query_arg( 'module', 'invoices', doliconnecturl('doliaccount')) ).'"><i class="fa-solid fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="md:col-5">';
 $content .= doliObjectInfos($invoicefo);
-$content .= "</div><div class='col-md-7'>";
+$content .= "</div><div class='md:col-7'>";
 $content .= doliObjectStatus($invoicefo, 'invoice', 1);
 $content .= "</div>";
  
@@ -796,28 +796,28 @@ if ( $invoicefo->mode_reglement_code == 'CHQ' ) {
 
 $listpaymentmethods = callDoliApi("GET", "/doliconnector/".$thirdparty->id."/paymentmethods?type=order&rowid=".$invoicefo->id, null, dolidelay('paymentmethods', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
-$content .= "<div class='col'><div class='card bg-light' style='border:0'><div class='card-body'><p align='justify'>".sprintf( __( 'Please send your cheque in the amount of <b>%1$s</b> with reference <b>%2$s</b> to <b>%3$s</b> at the following address', 'doliconnect'), doliprice($invoicefo, 'ttc', isset($invoicefo->multicurrency_code) ? $invoicefo->multicurrency_code : null), $invoicefo->ref, $listpaymentmethods->CHQ->proprio).":</p>";                                                                                                                                                                                                                                                                                                                                      
+$content .= "<div class='col'><div class='card bg-1' style='border:0'><div class='card-body'><p align='justify'>".sprintf( __( 'Please send your cheque in the amount of <b>%1$s</b> with reference <b>%2$s</b> to <b>%3$s</b> at the following address', 'doliconnect'), doliprice($invoicefo, 'ttc', isset($invoicefo->multicurrency_code) ? $invoicefo->multicurrency_code : null), $invoicefo->ref, $listpaymentmethods->CHQ->proprio).":</p>";                                                                                                                                                                                                                                                                                                                                      
 $content .= "<p><b>".$listpaymentmethods->CHQ->owner_address."</b></p>";
-//$content .= "<button class='btn btn-link btn-sm' onclick='ValidDoliCart(\"".wp_create_nonce( 'valid_dolicart-'.$invoicefo->id )."\")' id='button-source-payment'><small><span class='fa-solid fa-sync-alt'></span> ".__( 'Change your payment mode', 'doliconnect')."</small></button>";
+//$content .= "<button class='btn-link btn-sm' onclick='ValidDoliCart(\"".wp_create_nonce( 'valid_dolicart-'.$invoicefo->id )."\")' id='button-source-payment'><small><span class='fa-solid fa-sync-alt'></span> ".__( 'Change your payment mode', 'doliconnect')."</small></button>";
 $content .= "</div></div></div>";
 } elseif ( $invoicefo->mode_reglement_code == 'VIR' ) { 
 
 $listpaymentmethods = callDoliApi("GET", "/doliconnector/".$thirdparty->id."/paymentmethods", null, dolidelay('paymentmethods', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
 
-$content .= "<div class='col'><div class='card bg-light' style='border:0'><div class='card-body'><p align='justify'>".sprintf( __( 'Please send your transfert in the amount of <b>%1$s</b> with reference <b>%2$s</b> at the following account', 'doliconnect'), doliprice($invoicefo, 'ttc', isset($invoicefo->multicurrency_code) ? $invoicefo->multicurrency_code : null), $invoicefo->ref ).":";
+$content .= "<div class='col'><div class='card bg-1' style='border:0'><div class='card-body'><p align='justify'>".sprintf( __( 'Please send your transfert in the amount of <b>%1$s</b> with reference <b>%2$s</b> at the following account', 'doliconnect'), doliprice($invoicefo, 'ttc', isset($invoicefo->multicurrency_code) ? $invoicefo->multicurrency_code : null), $invoicefo->ref ).":";
 $content .= "<br><b>".__( 'Bank', 'doliconnect').": ".$listpaymentmethods->VIR->bank."</b>";
 $content .= "<br><b>IBAN: ".$listpaymentmethods->VIR->iban."</b></p>";
 if ( ! empty($listpaymentmethods->VIR->bic) ) { $content .= "<br><b>BIC/SWIFT : ".$listpaymentmethods->VIR->bic."</b>";}
-//$content .= "<button class='btn btn-link btn-sm' onclick='ValidDoliCart(\"".wp_create_nonce( 'valid_dolicart-'.$invoicefo->id )."\")' id='button-source-payment'><small><span class='fa-solid fa-sync-alt'></span> ".__( 'Change your payment mode', 'doliconnect')."</small></button>";
+//$content .= "<button class='btn-link btn-sm' onclick='ValidDoliCart(\"".wp_create_nonce( 'valid_dolicart-'.$invoicefo->id )."\")' id='button-source-payment'><small><span class='fa-solid fa-sync-alt'></span> ".__( 'Change your payment mode', 'doliconnect')."</small></button>";
 $content .= "</div></div></div>";
 } elseif ( $invoicefo->mode_reglement_code == 'PRE' ) { 
 
 } else {
-//$content .= "<button type='button' onclick='ValidDoliCart(\"".wp_create_nonce( 'valid_dolicart-'.$invoicefo->id )."\")' id='button-source-payment' class='btn btn-warning btn-block' ><span class='fa fa-credit-card'></span> ".__( 'Pay', 'doliconnect')."</button>";
+//$content .= "<button type='button' onclick='ValidDoliCart(\"".wp_create_nonce( 'valid_dolicart-'.$invoicefo->id )."\")' id='button-source-payment' class='btn-solid theme-warning w-100' ><span class='fa fa-credit-card'></span> ".__( 'Pay', 'doliconnect')."</button>";
 }
 $content .= '<script type="text/javascript">';
 $content .= "function ValidDoliCart(nonce) {
-jQuery('#DoliconnectLoadingModal').modal('show');
+doliconnectShowDialog('DoliconnectLoadingModal');
 var form = document.createElement('form');
 form.setAttribute('action', '".$return."');
 form.setAttribute('method', 'post');
@@ -846,14 +846,14 @@ if ('SHIPPING' == $contact->code) {
 $shippingcard = dolicontact($contact->id, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 }
 }
-$content .= "<div class='card bg-light' style='border:0'><div class='card-body'><h6>".__( 'Billing address', 'doliconnect')."</h6><small class='text-muted'>";
+$content .= "<div class='card bg-1' style='border:0'><div class='card-body'><h6>".__( 'Billing address', 'doliconnect')."</h6><small class='fg-secondary'>";
 if (isset($billingcard) && !empty($billingcard)) {
 $content .= $billingcard;
 } else {
 $content .= doliaddress($thirdparty, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 }
 $content .= "</small></div></div>";
-$content .= "<div class='card bg-light' style='border:0'><div class='card-body'><h6>".__( 'Shipping address', 'doliconnect')."</h6><small class='text-muted'>";
+$content .= "<div class='card bg-1' style='border:0'><div class='card-body'><h6>".__( 'Shipping address', 'doliconnect')."</h6><small class='fg-secondary'>";
 if (isset($shippingcard) && !empty($shippingcard)) {
 $content .= $shippingcard;
 } else {
@@ -861,7 +861,7 @@ $content .= doliaddress($thirdparty, esc_attr(isset($_GET["refresh"]) ? $_GET["r
 }
 $content .= "</small></div></div>";
 } else {
-$content .= "<div class='card bg-light' style='border:0'><div class='card-body'><h6>".__( 'Billing and shipping address', 'doliconnect')."</h6><small class='text-muted'>";
+$content .= "<div class='card bg-1' style='border:0'><div class='card-body'><h6>".__( 'Billing and shipping address', 'doliconnect')."</h6><small class='fg-secondary'>";
 $content .= doliaddress($thirdparty, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 $content .= "</small></div></div>";
 }
@@ -919,11 +919,11 @@ $document_invoice = dolidocdownload('invoice', $invoice->ref, $invoice->ref.'.pd
 
 if ( $invoice->paye != 1 && $invoice->remaintopay != 0 && function_exists('dolipaymentmodes') ) {
 
-$payment_invoice = "<a href='".doliconnecturl('dolicart')."?pay&module=invoices&id=".$invoice->id."&ref=".$invoice->ref."' id='button-source-payment' class='btn btn-warning btn-block' role='button'><span class='fa fa-credit-card'></span> ".__( 'Pay', 'doliconnect')."</a><br>";
+$payment_invoice = "<a href='".doliconnecturl('dolicart')."?pay&module=invoices&id=".$invoice->id."&ref=".$invoice->ref."' id='button-source-payment' class='btn-solid theme-warning w-100' role='button'><span class='fa fa-credit-card'></span> ".__( 'Pay', 'doliconnect')."</a><br>";
 
 } elseif ( $invoice->paye != 1 && $invoice->remaintopay != 0 &&  isset($invoicefo->public_payment_url) && !empty($invoicefo->public_payment_url) ) {
 
-$payment_invoice = "<a href='".$invoicefo->public_payment_url."' id='button-source-payment' class='btn btn-warning btn-block' role='button'><span class='fa fa-credit-card'></span> ".__( 'Pay', 'doliconnect')."</a><br>";
+$payment_invoice = "<a href='".$invoicefo->public_payment_url."' id='button-source-payment' class='btn-solid theme-warning w-100' role='button'><span class='fa fa-credit-card'></span> ".__( 'Pay', 'doliconnect')."</a><br>";
 
 } else {
 $payment_invoice = null;
@@ -941,8 +941,8 @@ $fruits[$invoice->date_creation.'i'] = array(
 
 sort($fruits, SORT_NUMERIC | SORT_FLAG_CASE);
 foreach ( $fruits as $key => $val ) {
-$content .= "<li class='list-group-item'><div class='row'><div class='col-6 col-md-3'>" . wp_date('d/m/Y H:i', $val['timestamp']) . "</div><div class='col-6 col-md-2'>" . $val['type'] . "</div>";
-$content .= "<div class='col-md-7'><h6>".$val['label']."</h6>" . $val['description'] ."" . $val['document'] ."</div></div></li>";
+$content .= "<li class='list-group-item'><div class='row'><div class='col-6 md:col-3'>" . wp_date('d/m/Y H:i', $val['timestamp']) . "</div><div class='col-6 md:col-2'>" . $val['type'] . "</div>";
+$content .= "<div class='md:col-7'><h6>".$val['label']."</h6>" . $val['description'] ."" . $val['document'] ."</div></div></li>";
 } 
 //var_dump($fruits);
 $content .= '</ul>';
@@ -964,22 +964,22 @@ $content .= '</div>';
                 $arr_params = array( 'id' => $postinvoice->id, 'ref' => $postinvoice->ref, 'security' => $nonce);  
                 $return = esc_url( add_query_arg( $arr_params, $url) );
                                                                                                                                                                     
-                $content .= "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'><div><i class='fa fa-file-invoice fa-3x fa-fw'></i></div><div><h6 class='my-0'>".$postinvoice->ref."</h6><small class='text-muted'>".wp_date('d/m/Y', $postinvoice->date_creation)."</small></div><span>".doliprice($postinvoice, 'ttc', isset($postinvoice->multicurrency_code) ? $postinvoice->multicurrency_code : null)."</span><span>";
-                if ( $postinvoice->statut > 0 ) { $content .= "<span class='fa-solid fa-check-circle fa-fw text-success'></span> ";
-                if ( $postinvoice->paye == 1 ) { $content .= "<span class='fa-solid fa-money-bill-alt fa-fw text-success'></span> "; 
-                if ( $postinvoice->statut > 1 ) { $content .= "<span class='fa-solid fa-dolly fa-fw text-success'></span> "; }
-                else { $content .= "<span class='fa-solid fa-dolly fa-fw text-warning'></span> "; }
+                $content .= "<a href='$return' class='list-group-item d-flex justify-content-between lh-sm bg-1 list-group-item-action'><div><i class='fa fa-file-invoice fa-3x fa-fw'></i></div><div><h6 class='my-0'>".$postinvoice->ref."</h6><small class='fg-secondary'>".wp_date('d/m/Y', $postinvoice->date_creation)."</small></div><span>".doliprice($postinvoice, 'ttc', isset($postinvoice->multicurrency_code) ? $postinvoice->multicurrency_code : null)."</span><span>";
+                if ( $postinvoice->statut > 0 ) { $content .= "<span class='fa-solid fa-check-circle fa-fw fg-success'></span> ";
+                if ( $postinvoice->paye == 1 ) { $content .= "<span class='fa-solid fa-money-bill-alt fa-fw fg-success'></span> "; 
+                if ( $postinvoice->statut > 1 ) { $content .= "<span class='fa-solid fa-dolly fa-fw fg-success'></span> "; }
+                else { $content .= "<span class='fa-solid fa-dolly fa-fw fg-warning'></span> "; }
                 }
-                else { $content .= "<span class='fa-solid fa-money-bill-alt fa-fw text-warning'></span> "; 
-                if ( $postinvoice->statut > 1 ) { $content .= "<span class='fa-solid fa-dolly fa-fw text-success'></span> "; }
-                else { $content .= "<span class='fa-solid fa-dolly fa-fw text-danger'></span> "; }
+                else { $content .= "<span class='fa-solid fa-money-bill-alt fa-fw fg-warning'></span> "; 
+                if ( $postinvoice->statut > 1 ) { $content .= "<span class='fa-solid fa-dolly fa-fw fg-success'></span> "; }
+                else { $content .= "<span class='fa-solid fa-dolly fa-fw fg-danger'></span> "; }
                 }}
-                elseif ( $postinvoice->statut == 0 ) { $content .= "<span class='fa-solid fa-check-circle fa-fw text-warning'></span> <span class='fa-solid fa-money-bill-alt fa-fw text-danger'></span> <span class='fa-solid fa-dolly fa-fw text-danger'></span>"; }
-                elseif ( $postinvoice->statut == -1 ) { $content .= "<span class='fa-solid fa-check-circle fa-fw text-secondary'></span> <span class='fa-solid fa-money-bill-alt fa-fw text-secondary'></span> <span class='fa-solid fa-dolly fa-fw text-secondary'></span>"; }
+                elseif ( $postinvoice->statut == 0 ) { $content .= "<span class='fa-solid fa-check-circle fa-fw fg-warning'></span> <span class='fa-solid fa-money-bill-alt fa-fw fg-danger'></span> <span class='fa-solid fa-dolly fa-fw fg-danger'></span>"; }
+                elseif ( $postinvoice->statut == -1 ) { $content .= "<span class='fa-solid fa-check-circle fa-fw fg-secondary'></span> <span class='fa-solid fa-money-bill-alt fa-fw fg-secondary'></span> <span class='fa-solid fa-dolly fa-fw fg-secondary'></span>"; }
                 $content .= "</span></a>";
             }
         } else {
-            $content .= "<li class='list-group-item list-group-item-light'><center>".__( 'No invoice', 'doliconnect')."</center></li>";
+            $content .= "<li class='list-group-item bg-1'><center>".__( 'No invoice', 'doliconnect')."</center></li>";
         }
         $content .= "</ul><div class='card-footer'>";
         $content .= doliPagination($object, $url, $page);
@@ -996,7 +996,7 @@ add_filter( 'customer_doliconnect_invoices', 'invoices_module', 10, 2);
 
 if ( doliCheckModules('contrat') && doliCheckRights('contrat', 'lire') ) {
     function contracts_menu( $menu, $arg ) {
-        $menu .= "<a href='".esc_url( add_query_arg( 'module', 'contracts', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
+        $menu .= "<a href='".esc_url( add_query_arg( 'module', 'contracts', doliconnecturl('doliaccount')) )."' class='list-group-item bg-1 list-group-item-action";
         if ( $arg == 'contracts' ) { $menu .= " active"; }
         $menu .= "'>".__( 'Contracts tracking', 'doliconnect')."</a>";
         return $menu;
@@ -1013,9 +1013,9 @@ if ( doliCheckModules('contrat') && doliCheckRights('contrat', 'lire') ) {
         $thirdparty = doliConnect('thirdparty', $current_user, false, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 
         if ( !isset($contractfo->error) && isset($_GET['id']) && isset($_GET['id']) && isset($_GET['ref']) && ($thirdparty->id == $contractfo->socid) && ($_GET['ref'] == $contractfo->ref) && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doli-contracts-'.$contractfo->id.'-'.$contractfo->ref)) {
-            $content = '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Contract %s', 'doliconnect'), $contractfo->ref).'<a class="btn btn-sm btn-outline-secondary border border-0 float-end" href="'.esc_url( add_query_arg( 'module', 'contracts', doliconnecturl('doliaccount')) ).'"><i class="fa-solid fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-5">';
+            $content = '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Contract %s', 'doliconnect'), $contractfo->ref).'<a class="btn-sm btn-outline theme-secondary border border-0 float-end" href="'.esc_url( add_query_arg( 'module', 'contracts', doliconnecturl('doliaccount')) ).'"><i class="fa-solid fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="md:col-5">';
             $content .= doliObjectInfos($contractfo);
-            $content .= "</div><div class='col-md-7'>";
+            $content .= "</div><div class='md:col-7'>";
             $content .= doliObjectStatus($contractfo, 'contract', 1);
             $content .= "</div>";
 
@@ -1042,8 +1042,8 @@ if ( doliCheckModules('contrat') && doliCheckRights('contrat', 'lire') ) {
 
             sort($fruits, SORT_NUMERIC | SORT_FLAG_CASE);
             foreach ( $fruits as $key => $val ) {
-            $content .= "<li class='list-group-item'><div class='row'><div class='col-6 col-md-3'>" . wp_date('d/m/Y H:i', $val['timestamp']) . "</div><div class='col-6 col-md-2'>" . $val['type'] . "</div>";
-            $content .= "<div class='col-md-7'><h6>" . $val['label'] . "</h6>" . $val['description'] ."" . $val['document'] ."</div></div></li>";
+            $content .= "<li class='list-group-item'><div class='row'><div class='col-6 md:col-3'>" . wp_date('d/m/Y H:i', $val['timestamp']) . "</div><div class='col-6 md:col-2'>" . $val['type'] . "</div>";
+            $content .= "<div class='md:col-7'><h6>" . $val['label'] . "</h6>" . $val['description'] ."" . $val['document'] ."</div></div></li>";
             } 
 
             //var_dump($fruits);
@@ -1065,12 +1065,12 @@ if ( doliCheckModules('contrat') && doliCheckRights('contrat', 'lire') ) {
                     $arr_params = array( 'id' => $postcontract->id, 'ref' => $postcontract->ref, 'security' => $nonce);  
                     $return = esc_url( add_query_arg( $arr_params, $url) );
                                                                                                                                                                         
-                    $content .= "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'><div><i class='fa-solid fa-suitcase fa-3x fa-fw'></i></div><div><h6 class='my-0'>".$postcontract->ref."</h6><small class='text-muted'>".wp_date('d/m/Y', $postcontract->date_creation)."</small></div><span>".doliprice($postcontract, 'ttc', isset($postcontract->multicurrency_code) ? $postcontract->multicurrency_code : null)."</span><span>";
+                    $content .= "<a href='$return' class='list-group-item d-flex justify-content-between lh-sm bg-1 list-group-item-action'><div><i class='fa-solid fa-suitcase fa-3x fa-fw'></i></div><div><h6 class='my-0'>".$postcontract->ref."</h6><small class='fg-secondary'>".wp_date('d/m/Y', $postcontract->date_creation)."</small></div><span>".doliprice($postcontract, 'ttc', isset($postcontract->multicurrency_code) ? $postcontract->multicurrency_code : null)."</span><span>";
                     $content .= doliObjectStatus($postcontract, 'contract', 2);
                     $content .= "</span></a>";
                 }
             } else {
-                $content .= "<li class='list-group-item list-group-item-light'><center>".__( 'No contract', 'doliconnect')."</center></li>";
+                $content .= "<li class='list-group-item bg-1'><center>".__( 'No contract', 'doliconnect')."</center></li>";
             }
             $content .= "</ul><div class='card-footer'>";
             $content .= doliPagination($object, $url, $page);
@@ -1086,7 +1086,7 @@ if ( doliCheckModules('contrat') && doliCheckRights('contrat', 'lire') ) {
 
 if ( doliCheckModules('projet') && doliCheckRights('projet', 'lire') ) {
     function projects_menu( $menu, $arg ) {
-        $menu .= "<a href='".esc_url( add_query_arg( 'module', 'projects', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
+        $menu .= "<a href='".esc_url( add_query_arg( 'module', 'projects', doliconnecturl('doliaccount')) )."' class='list-group-item bg-1 list-group-item-action";
         if ( $arg == 'projects' ) { $menu .= " active"; }
         $menu .= "'>".__( 'My projects tracking', 'doliconnect')."</a>";
         return $menu;
@@ -1103,9 +1103,9 @@ if ( doliCheckModules('projet') && doliCheckRights('projet', 'lire') ) {
         $thirdparty = doliConnect('thirdparty', $current_user, false, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 
         if ( !isset($projectfo->error) && isset($_GET['id']) && isset($_GET['id']) && isset($_GET['ref']) && ($thirdparty->id == $projectfo->socid) && ($_GET['ref'] == $projectfo->ref) && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doli-projects-'.$projectfo->id.'-'.$projectfo->ref)) {
-            $content = '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Project %s', 'doliconnect'), $projectfo->ref).'<a class="btn btn-sm btn-outline-secondary border border-0 float-end" href="'.esc_url( add_query_arg( 'module', 'projects', doliconnecturl('doliaccount')) ).'"><i class="fa-solid fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-5">';
+            $content = '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Project %s', 'doliconnect'), $projectfo->ref).'<a class="btn-sm btn-outline theme-secondary border border-0 float-end" href="'.esc_url( add_query_arg( 'module', 'projects', doliconnecturl('doliaccount')) ).'"><i class="fa-solid fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="md:col-5">';
             $content .= doliObjectInfos($projectfo);
-            $content .= "</div><div class='col-md-7'>";
+            $content .= "</div><div class='md:col-7'>";
             $content .= doliObjectStatus($projectfo, 'project', 1);
             $content .= "</div>";
 
@@ -1116,27 +1116,22 @@ if ( doliCheckModules('projet') && doliCheckRights('projet', 'lire') ) {
             if ($projectfo->usage_task) {
                 $tasks = callDoliApi("GET", "/projects/".$projectfo->id."/tasks", null, dolidelay('project', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
                 if ( !isset($tasks->error) && $tasks != null ) {
-                    $content .= '<div class="accordion accordion-flush" id="accordionFlushExample">';
+                    $content .= '<div class="accordion">';
                     foreach ($tasks as $task) {
                         // Process each task
-                        //$content .= "<a href='#' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'><div><i class='fa-solid fa-list-check fa-3x fa-fw'></i></div><div><h6 class='my-0'>".$task->label."</h6><small class='text-muted'>".wp_date('d/m/Y', $task->date_creation)."</small></div><span></span><span>";
+                        //$content .= "<a href='#' class='list-group-item d-flex justify-content-between lh-sm bg-1 list-group-item-action'><div><i class='fa-solid fa-list-check fa-3x fa-fw'></i></div><div><h6 class='my-0'>".$task->label."</h6><small class='fg-secondary'>".wp_date('d/m/Y', $task->date_creation)."</small></div><span></span><span>";
                         //$content .= doliObjectStatus($task, 'task', 2);
                         //$content .= "</span></a>";
-                        $content .= '<div class="accordion-item">
-    <h2 class="accordion-header">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                                $content .= '<details class="accordion-item" name="projectTasks">
+            <summary class="accordion-header">
         <div><i class="fa-solid fa-list-check fa-3x fa-fw"></i></div>
-        <div><h6 class="my-0">'.$task->label.'</h6><small class="text-muted">'.wp_date('d/m/Y', $task->date_creation).'</small></div>';
+        <div><h6 class="my-0">'.$task->label.'</h6><small class="fg-secondary">'.wp_date('d/m/Y', $task->date_creation).'</small></div>';
         $content .= '<span class="float-end">'.doliObjectStatus($task, 'task', 2).'</span>';
-      $content .= '</button>
-    </h2>
-    <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-      <div class="accordion-body">'.$task->description.'</div>
-    </div>';
+            $content .= doliAccordionIcon().'</summary><div class="accordion-body">'.$task->description.'</div></details>';
                     }
                      $content .= '</div>';
                 } else {
-                    $content .= '<li class="list-group-item list-group-item-light"><center>'.__( 'No tasks available', 'doliconnect').'</center></li>';
+                    $content .= '<li class="list-group-item bg-1"><center>'.__( 'No tasks available', 'doliconnect').'</center></li>';
                 }
             }
             $content .= "</ul>";
@@ -1158,12 +1153,12 @@ if ( doliCheckModules('projet') && doliCheckRights('projet', 'lire') ) {
                     $arr_params = array( 'id' => $postproject->id, 'ref' => $postproject->ref, 'security' => $nonce);  
                     $return = esc_url( add_query_arg( $arr_params, $url) );
                                                                                                                                                                         
-                    $content .= "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'><div><i class='fa-solid fa-diagram-project fa-3x fa-fw'></i></div><div><h6 class='my-0'>".$postproject->ref."</h6><small class='text-muted'>".wp_date('d/m/Y', $postproject->date_creation)."</small></div><span></span><span>";
+                    $content .= "<a href='$return' class='list-group-item d-flex justify-content-between lh-sm bg-1 list-group-item-action'><div><i class='fa-solid fa-diagram-project fa-3x fa-fw'></i></div><div><h6 class='my-0'>".$postproject->ref."</h6><small class='fg-secondary'>".wp_date('d/m/Y', $postproject->date_creation)."</small></div><span></span><span>";
                     $content .= doliObjectStatus($postproject, 'project', 2);
                     $content .= "</span></a>";
                 }
             } else {
-                $content .= "<li class='list-group-item list-group-item-light'><center>".__( 'No project', 'doliconnect')."</center></li>";
+                $content .= "<li class='list-group-item bg-1'><center>".__( 'No project', 'doliconnect')."</center></li>";
             }
             $content .= "</ul><div class='card-footer'>";
             $content .= doliPagination($object, $url, $page);
@@ -1179,7 +1174,7 @@ if ( doliCheckModules('projet') && doliCheckRights('projet', 'lire') ) {
 
 if ( doliCheckModules('eventorganization') && doliCheckRights('projet', 'lire') ) {
     function eventorganization_menu( $menu, $arg ) {
-        $menu .= "<a href='".esc_url( add_query_arg( 'module', 'eventorganization', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
+        $menu .= "<a href='".esc_url( add_query_arg( 'module', 'eventorganization', doliconnecturl('doliaccount')) )."' class='list-group-item bg-1 list-group-item-action";
         if ( $arg == 'eventorganization' ) { $menu .= " active"; }
         $menu .= "'>".__( 'My eventattend tracking', 'doliconnect')."</a>";
         return $menu;
@@ -1196,9 +1191,9 @@ if ( doliCheckModules('eventorganization') && doliCheckRights('projet', 'lire') 
         $thirdparty = doliConnect('thirdparty', $current_user, false, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 
         if ( !isset($projectfo->error) && isset($_GET['id']) && isset($_GET['id']) && isset($_GET['ref']) && ($thirdparty->id == $projectfo->socid) && ($_GET['ref'] == $projectfo->ref) && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doli-projects-'.$projectfo->id.'-'.$projectfo->ref)) {
-            $content = '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Project %s', 'doliconnect'), $projectfo->ref).'<a class="btn btn-sm btn-outline-secondary border border-0 float-end" href="'.esc_url( add_query_arg( 'module', 'projects', doliconnecturl('doliaccount')) ).'"><i class="fa-solid fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-5">';
+            $content = '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Project %s', 'doliconnect'), $projectfo->ref).'<a class="btn-sm btn-outline theme-secondary border border-0 float-end" href="'.esc_url( add_query_arg( 'module', 'projects', doliconnecturl('doliaccount')) ).'"><i class="fa-solid fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="md:col-5">';
             $content .= doliObjectInfos($projectfo);
-            $content .= "</div><div class='col-md-7'>";
+            $content .= "</div><div class='md:col-7'>";
             $content .= doliObjectStatus($projectfo, 'project', 1);
             $content .= "</div>";
 
@@ -1211,12 +1206,12 @@ if ( doliCheckModules('eventorganization') && doliCheckRights('projet', 'lire') 
                 if ( !isset($tasks->error) && $tasks != null ) {
                     foreach ($tasks as $task) {
                         // Process each task
-                        $content .= "<a href='#' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'><div><i class='fa-solid fa-list-check fa-3x fa-fw'></i></div><div><h6 class='my-0'>".$task->label."</h6><small class='text-muted'>".wp_date('d/m/Y', $task->date_creation)."</small></div><span></span><span>";
+                        $content .= "<a href='#' class='list-group-item d-flex justify-content-between lh-sm bg-1 list-group-item-action'><div><i class='fa-solid fa-list-check fa-3x fa-fw'></i></div><div><h6 class='my-0'>".$task->label."</h6><small class='fg-secondary'>".wp_date('d/m/Y', $task->date_creation)."</small></div><span></span><span>";
                         $content .= doliObjectStatus($task, 'task', 2);
                         $content .= "</span></a>";
                     }
                 } else {
-                    $content .= '<li class="list-group-item list-group-item-light"><center>'.__( 'No tasks available', 'doliconnect').'</center></li>';
+                    $content .= '<li class="list-group-item bg-1"><center>'.__( 'No tasks available', 'doliconnect').'</center></li>';
                 }
             }
             //$content .= "</ul><ul class='list-group list-group-flush'>";
@@ -1235,8 +1230,8 @@ if ( doliCheckModules('eventorganization') && doliCheckRights('projet', 'lire') 
 
             sort($fruits, SORT_NUMERIC | SORT_FLAG_CASE);
             foreach ( $fruits as $key => $val ) {
-                $content .= "<li class='list-group-item'><div class='row'><div class='col-6 col-md-3'>" . wp_date('d/m/Y H:i', $val['timestamp']) . "</div><div class='col-6 col-md-2'>" . $val['type'] . "</div>";
-                $content .= "<div class='col-md-7'><h6>" . $val['label'] . "</h6>" . $val['description'] ."" . $val['document'] ."</div></div></li>";
+                $content .= "<li class='list-group-item'><div class='row'><div class='col-6 md:col-3'>" . wp_date('d/m/Y H:i', $val['timestamp']) . "</div><div class='col-6 md:col-2'>" . $val['type'] . "</div>";
+                $content .= "<div class='md:col-7'><h6>" . $val['label'] . "</h6>" . $val['description'] ."" . $val['document'] ."</div></div></li>";
             } 
 
             //var_dump($fruits);
@@ -1259,12 +1254,12 @@ if ( doliCheckModules('eventorganization') && doliCheckRights('projet', 'lire') 
                     $arr_params = array( 'id' => $postproject->id, 'ref' => $postproject->ref, 'security' => $nonce);  
                     $return = esc_url( add_query_arg( $arr_params, $url) );
                                                                                                                                                                         
-                    $content .= "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'><div><i class='fa-solid fa-diagram-project fa-3x fa-fw'></i></div><div><h6 class='my-0'>".$postproject->ref."</h6><small class='text-muted'>".wp_date('d/m/Y', $postproject->date_creation)."</small></div><span></span><span>";
+                    $content .= "<a href='$return' class='list-group-item d-flex justify-content-between lh-sm bg-1 list-group-item-action'><div><i class='fa-solid fa-diagram-project fa-3x fa-fw'></i></div><div><h6 class='my-0'>".$postproject->ref."</h6><small class='fg-secondary'>".wp_date('d/m/Y', $postproject->date_creation)."</small></div><span></span><span>";
                     $content .= doliObjectStatus($postproject, 'project', 2);
                     $content .= "</span></a>";
                 }
             } else {
-                $content .= "<li class='list-group-item list-group-item-light'><center>".__( 'No project', 'doliconnect')."</center></li>";
+                $content .= "<li class='list-group-item bg-1'><center>".__( 'No project', 'doliconnect')."</center></li>";
             }
             $content .= "</ul><div class='card-footer'>";
             $content .= doliPagination($object, $url, $page);
@@ -1280,7 +1275,7 @@ if ( doliCheckModules('eventorganization') && doliCheckRights('projet', 'lire') 
 
 if ( doliCheckModules('don') ) {
     function donations_menu( $menu, $arg ) {
-        $menu .= "<a href='".esc_url( add_query_arg( 'module', 'donations', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
+        $menu .= "<a href='".esc_url( add_query_arg( 'module', 'donations', doliconnecturl('doliaccount')) )."' class='list-group-item bg-1 list-group-item-action";
         if ($arg=='donations') { $menu .= " active";}
         $menu .= "'>".__( 'Donations tracking', 'doliconnect')."</a>";
         return $menu;
@@ -1299,9 +1294,9 @@ if ( doliCheckModules('don') ) {
         $thirdparty = doliConnect('thirdparty', $current_user, false, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
 
         if ( !isset($donationfo->error) && isset($_GET['id']) && isset($_GET['ref']) && ($thirdparty->id == $donationfo->socid ) && ($_GET['ref'] == $donationfo->ref) && $donationfo->statut != 0 ) {
-            $content = '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Donation %s', 'doliconnect'), $donationfo->ref).'<a class="btn btn-sm btn-outline-secondary border border-0 float-end" href="'.esc_url( add_query_arg( 'module', 'donations', doliconnecturl('doliaccount')) ).'"><i class="fa-solid fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-5">';
+            $content = '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Donation %s', 'doliconnect'), $donationfo->ref).'<a class="btn-sm btn-outline theme-secondary border border-0 float-end" href="'.esc_url( add_query_arg( 'module', 'donations', doliconnecturl('doliaccount')) ).'"><i class="fa-solid fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="md:col-5">';
             $content .= doliObjectInfos($donationfo);
-            $content .= "</div><div class='col-md-7'>";
+            $content .= "</div><div class='md:col-7'>";
             $content .= doliObjectStatus($donationfo, 'donation', 1);
             $content .= "</div>";
 
@@ -1320,11 +1315,11 @@ if ( doliCheckModules('don') ) {
             $dates =" <i>(Du $start au $end)</i>";
             }
 
-            $content .= '<div class="w-100 justify-content-between"><div class="row"><div class="col-8 col-md-10"> 
+            $content .= '<div class="w-100 justify-content-between"><div class="row"><div class="col-8 md:col-10"> 
             <h6 class="mb-1">'.$line->libelle.'</h6>
             <p class="mb-1">'.$line->description.'</p>
             <small>'.$dates.'</small>'; 
-            $content .= '</div><div class="col-4 col-md-2 text-end"><h5 class="mb-1">'.doliprice($line, 'ttc', isset($line->multicurrency_code) ? $line->multicurrency_code : null).'</h5>';
+            $content .= '</div><div class="col-4 md:col-2 text-end"><h5 class="mb-1">'.doliprice($line, 'ttc', isset($line->multicurrency_code) ? $line->multicurrency_code : null).'</h5>';
             $content .= '<h5 class="mb-1">x'.$line->qty.'</h5>'; 
             $content .= "</div></div></li>";
             }
@@ -1345,7 +1340,7 @@ if ( doliCheckModules('don') ) {
 
             $content = '<div class="card shadow-sm"><div class="card-header">'.__( 'Donations tracking', 'doliconnect').' ('.(isset($object->pagination->total)?$object->pagination->total:'x').')</div><ul class="list-group list-group-flush">'; 
             if ( !empty(doliconnectid('dolidonation'))) {
-            $content .= '<a href="'.doliconnecturl('dolidonation').'" class="list-group-item lh-condensed list-group-item-action list-group-item-primary "><center><i class="fa-solid fa-plus-circle"></i> '.__( 'Donate', 'doliconnect').'</center></a>';  
+            $content .= '<a href="'.doliconnecturl('dolidonation').'" class="list-group-item lh-sm list-group-item-action theme-primary "><center><i class="fa-solid fa-plus-circle"></i> '.__( 'Donate', 'doliconnect').'</center></a>';  
             }
 
             if ( !isset( $listdonation->error ) && $listdonation != null ) {
@@ -1353,12 +1348,12 @@ if ( doliCheckModules('don') ) {
                     $arr_params = array( 'id' => $postdonation->id, 'ref' => $postdonation->ref);  
                     $return = esc_url( add_query_arg( $arr_params, $url) );
                             
-                    $content .= "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'><div><i class='fa fa-donate fa-3x fa-fw'></i></div><div><h6 class='my-0'>".$postdonation->ref."</h6><small class='text-muted'>".wp_date('d/m/Y', $postdonation->date_creation)."</small></div><span>".doliprice($postdonation, 'amount', isset($postdonation->multicurrency_code) ? $postdonation->multicurrency_code : null)."</span><span>";
+                    $content .= "<a href='$return' class='list-group-item d-flex justify-content-between lh-sm bg-1 list-group-item-action'><div><i class='fa fa-donate fa-3x fa-fw'></i></div><div><h6 class='my-0'>".$postdonation->ref."</h6><small class='fg-secondary'>".wp_date('d/m/Y', $postdonation->date_creation)."</small></div><span>".doliprice($postdonation, 'amount', isset($postdonation->multicurrency_code) ? $postdonation->multicurrency_code : null)."</span><span>";
                     $content .= doliObjectStatus($postdonation, 'donation', 2);
                     $content .= "</span></a>";
                 }
             } else{
-                $content .= "<li class='list-group-item list-group-item-light'><center>".__( 'No donation', 'doliconnect')."</center></li>";
+                $content .= "<li class='list-group-item bg-1'><center>".__( 'No donation', 'doliconnect')."</center></li>";
             }
             $content .= "</ul><div class='card-footer'>";
             $content .= doliPagination($object, $url, $page);
@@ -1374,7 +1369,7 @@ if ( doliCheckModules('don') ) {
 
 if ( doliCheckModules('recruitment') && doliversion('19.0.0') && !empty(get_option('doliconnectbeta')) ) {
     function recruitment_menu( $menu, $arg ) {
-        $menu .= "<a href='".esc_url( add_query_arg( 'module', 'recruitment', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
+        $menu .= "<a href='".esc_url( add_query_arg( 'module', 'recruitment', doliconnecturl('doliaccount')) )."' class='list-group-item bg-1 list-group-item-action";
         if ($arg=='recruitment') { $menu .= " active";}
         $menu .= "'>".__( 'List of jobpositions', 'doliconnect')."</a>";
         return $menu;
@@ -1393,12 +1388,12 @@ if ( doliCheckModules('recruitment') && doliversion('19.0.0') && !empty(get_opti
         $thirdparty = doliConnect('thirdparty', $current_user, false, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
         
         if ( !isset($donationfo->error) && isset($_GET['id']) && isset($_GET['ref']) && ($thirdparty->id == $donationfo->fk_soc ) && ($_GET['ref'] == $donationfo->ref) && $donationfo->status != 0 ) {
-            $content ='<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Job position %s', 'doliconnect'), $donationfo->ref).'<a class="btn btn-sm btn-outline-secondary border border-0 float-end" href="'.esc_url( add_query_arg( 'module', 'recruitment', doliconnecturl('doliaccount')) ).'"><i class="fa-solid fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-5">';
+            $content ='<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Job position %s', 'doliconnect'), $donationfo->ref).'<a class="btn-sm btn-outline theme-secondary border border-0 float-end" href="'.esc_url( add_query_arg( 'module', 'recruitment', doliconnecturl('doliaccount')) ).'"><i class="fa-solid fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="md:col-5">';
             $datecreation =  wp_date('d/m/Y', $donationfo->date_creation);
             $content .="<b>".__( 'Date of creation', 'doliconnect').":</b> $datecreation<br>";
             $content .= "<b>".__( 'Payment method', 'doliconnect').":</b>";
             
-            $content .= "<br></div><div class='col-md-7'>";
+            $content .= "<br></div><div class='md:col-7'>";
             $content .= doliObjectStatus($donationfo, 'recruitmentjobposition', 1);
             $content .= "</div>";
             
@@ -1420,18 +1415,18 @@ if ( doliCheckModules('recruitment') && doliversion('19.0.0') && !empty(get_opti
             
             $content = '<div class="card shadow-sm"><div class="card-header">'.__( 'List of jobpositions', 'doliconnect').' ('.(isset($object->pagination->total)?$object->pagination->total:'x').')</div><ul class="list-group list-group-flush">';
             if ( doliCheckRights('recruitment', 'recruitmentjobposition', 'write') && !empty(get_option('doliconnectbeta'))) {
-                $content .= '<a href="" class="list-group-item lh-condensed list-group-item-action list-group-item-primary" disabled><center><i class="fa-solid fa-plus-circle"></i> '.__( 'Create a job position', 'doliconnect').'</center></a>';  
+                $content .= '<a href="" class="list-group-item lh-sm list-group-item-action theme-primary" disabled><center><i class="fa-solid fa-plus-circle"></i> '.__( 'Create a job position', 'doliconnect').'</center></a>';  
             }
             if ( !isset( $listjobposition->error ) && $listjobposition != null ) {
                 foreach ( $listjobposition as $postjobposition ) { 
                     $arr_params = array( 'id' => $postjobposition->id, 'ref' => $postjobposition->ref);  
                     $return = esc_url( add_query_arg( $arr_params, $url) );              
-                    $content .=  "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'><div><i class='fa-solid fa-id-card-clip fa-3x fa-fw'></i></div><div><h6 class='my-0'>".$postjobposition->ref."</h6><small class='text-muted'>".wp_date('d/m/Y', $postjobposition->date_creation)."</small></div><span></span><span>";
+                    $content .=  "<a href='$return' class='list-group-item d-flex justify-content-between lh-sm bg-1 list-group-item-action'><div><i class='fa-solid fa-id-card-clip fa-3x fa-fw'></i></div><div><h6 class='my-0'>".$postjobposition->ref."</h6><small class='fg-secondary'>".wp_date('d/m/Y', $postjobposition->date_creation)."</small></div><span></span><span>";
                     $content .= doliObjectStatus($postjobposition, 'recruitmentjobposition', 2);
                     $content .= "</span></a>";
                 }
             } else{
-                $content .= "<li class='list-group-item list-group-item-light'><center>".__( 'No jobposition', 'doliconnect')."</center></li>";
+                $content .= "<li class='list-group-item bg-1'><center>".__( 'No jobposition', 'doliconnect')."</center></li>";
             }
             $content .= "</ul><div class='card-footer'>";
             $content .= doliPagination($object, $url, $page);
@@ -1448,7 +1443,7 @@ if ( doliCheckModules('recruitment') && doliversion('19.0.0') && !empty(get_opti
 
 if ( doliCheckModules('expensereport') && doliversion('19.0.0') && doliCheckRights('expensereport', 'lire') ) {
     function expensereport_menu( $menu, $arg ) {
-        $menu .= "<a href='".esc_url( add_query_arg( 'module', 'expensereport', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
+        $menu .= "<a href='".esc_url( add_query_arg( 'module', 'expensereport', doliconnecturl('doliaccount')) )."' class='list-group-item bg-1 list-group-item-action";
         if ($arg=='expensereport') { $menu .= " active";}
         $menu .= "'>".__( 'List of expense reports', 'doliconnect')."</a>";
         return $menu;
@@ -1464,12 +1459,12 @@ if ( doliCheckModules('expensereport') && doliversion('19.0.0') && doliCheckRigh
         }
         
         if ( !isset($expensereportfo->error) && isset($_GET['id']) && isset($_GET['ref']) && (doliConnect('user')->id == $expensereportfo->fk_user_author ) && ($_GET['ref'] == $expensereportfo->ref) && $expensereportfo->status != 0 && isset($_GET['security']) && wp_verify_nonce( $_GET['security'], 'doli-expensereports-'.$expensereportfo->id.'-'.$expensereportfo->ref)) {
-            $content = '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Expense report %s', 'doliconnect'), $expensereportfo->ref).'<a class="btn btn-sm btn-outline-secondary border border-0 float-end" href="'.esc_url( add_query_arg( 'module', 'expensereport', doliconnecturl('doliaccount')) ).'"><i class="fa-solid fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-5">';
+            $content = '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Expense report %s', 'doliconnect'), $expensereportfo->ref).'<a class="btn-sm btn-outline theme-secondary border border-0 float-end" href="'.esc_url( add_query_arg( 'module', 'expensereport', doliconnecturl('doliaccount')) ).'"><i class="fa-solid fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="md:col-5">';
             $content .= "<b>".__( 'Period', 'doliconnect').":</b> ".wp_date('d/m/Y', $expensereportfo->date_debut)." au ".wp_date('d/m/Y', $expensereportfo->date_fin)."<br>";
             $content .= "<b>".__( 'Date of submition', 'doliconnect').":</b> ".wp_date('d/m/Y', $expensereportfo->date_validation)."<br>";
             $content .= "<b>".__( 'Date of approbation', 'doliconnect').":</b> ".wp_date('d/m/Y', $expensereportfo->date_approbation)."<br>";
             $content .= "<b>".__( 'Approbator', 'doliconnect').":</b> ".$expensereportfo->user_validator_infos."<br>";
-            $content .= "<br></div><div class='col-md-7'>";
+            $content .= "<br></div><div class='md:col-7'>";
             $content .= doliObjectStatus($expensereportfo, 'expensereport', 1);
             $content .= "</div>";
             
@@ -1491,19 +1486,19 @@ if ( doliCheckModules('expensereport') && doliversion('19.0.0') && doliCheckRigh
             if ( doliversion('21.0.0') && isset($object->data) ) { $listexpensereport = $object->data; } else { $listexpensereport = $object; }
             $content = '<div class="card shadow-sm"><div class="card-header">'.__( 'List of expense reports', 'doliconnect').' ('.(isset($object->pagination->total)?$object->pagination->total:'x').')</div><ul class="list-group list-group-flush">';
             if ( doliCheckRights('expensereport', 'creer') && isset(doliConnect('user')->id) && !empty(get_option('doliconnectbeta'))) {
-                $content .= '<a href="" class="list-group-item lh-condensed list-group-item-action list-group-item-primary" disabled><center><i class="fa-solid fa-plus-circle"></i> '.__( 'Create an expense report', 'doliconnect').'</center></a>';  
+                $content .= '<a href="" class="list-group-item lh-sm list-group-item-action theme-primary" disabled><center><i class="fa-solid fa-plus-circle"></i> '.__( 'Create an expense report', 'doliconnect').'</center></a>';  
             }
             if ( !isset( $listexpensereport->error ) && $listexpensereport != null && !empty(doliConnect('user'))) {
                 foreach ( $listexpensereport as $postexpensereport ) { 
                     $nonce = wp_create_nonce( 'doli-expensereports-'. $postexpensereport->id.'-'.$postexpensereport->ref);
                     $arr_params = array( 'id' => $postexpensereport->id, 'ref' => $postexpensereport->ref, 'security' => $nonce);  
                     $return = esc_url( add_query_arg( $arr_params, $url) );          
-                    $content .= "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'><div><i class='fa-solid fa-wallet fa-3x fa-fw'></i></div><div><h6 class='my-0'>".$postexpensereport->ref."</h6><small class='text-muted'>".wp_date('d/m/Y', $postexpensereport->date_debut)." au ".wp_date('d/m/Y', $postexpensereport->date_fin)."</small></div><span></span><span>";
+                    $content .= "<a href='$return' class='list-group-item d-flex justify-content-between lh-sm bg-1 list-group-item-action'><div><i class='fa-solid fa-wallet fa-3x fa-fw'></i></div><div><h6 class='my-0'>".$postexpensereport->ref."</h6><small class='fg-secondary'>".wp_date('d/m/Y', $postexpensereport->date_debut)." au ".wp_date('d/m/Y', $postexpensereport->date_fin)."</small></div><span></span><span>";
                     $content .= doliObjectStatus($postexpensereport, 'expensereport', 2);
                     $content .= "</span></a>";
                 }
             } else{
-                $content .= "<li class='list-group-item list-group-item-light'><center>".__( 'No expense report', 'doliconnect')."</center></li>";
+                $content .= "<li class='list-group-item bg-1'><center>".__( 'No expense report', 'doliconnect')."</center></li>";
             }
             $content .= "</ul><div class='card-footer'>";
             $content .= doliPagination($object, $url, $page);
@@ -1519,7 +1514,7 @@ if ( doliCheckModules('expensereport') && doliversion('19.0.0') && doliCheckRigh
 
 if ( doliCheckModules('adherent') && doliCheckRights('adherent', 'lire') ) {
     function members_menu( $menu, $arg ) {
-        $menu .= "<a href='".esc_url( add_query_arg( 'module', 'members', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
+        $menu .= "<a href='".esc_url( add_query_arg( 'module', 'members', doliconnecturl('doliaccount')) )."' class='list-group-item bg-1 list-group-item-action";
         if ($arg=='members') { $menu .= " active";}
         $menu .= "'>".__( 'Manage my subscription', 'doliconnect')."</a>";
         return $menu;
@@ -1553,7 +1548,7 @@ if ( doliCheckModules('adherent') && doliCheckRights('adherent', 'lire') ) {
             $adherenttype = callDoliApi("GET", $request, null, dolidelay('member', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
         }
 
-    $content .= "<div class='row'><div class='col-12 col-md-5 border-end'>";
+    $content .= "<div class='row'><div class='col-12 md:col-5 border-end'>";
     $content .="<b>".__( 'Status', 'doliconnect').":</b> ";
     if ( isset($adherent->status) && $adherent->status > 0) {
         if  ($adherent->datefin == null ) {
@@ -1566,13 +1561,13 @@ if ( doliCheckModules('adherent') && doliCheckRights('adherent', 'lire') ) {
             }
         }
     } elseif ( isset($adherent->status) && empty($adherent->status) ) {
-        $content .=  "<span class='badge rounded-pill bg-dark'>".__( 'Terminated', 'doliconnect')."</span>";
+        $content .=  "<span class='badge rounded-pill bg-black'>".__( 'Terminated', 'doliconnect')."</span>";
     } elseif ( isset($adherent->status) && $adherent->status == '-1' ) {
         $content .= "<span class='badge rounded-pill bg-warning'>".__( 'Waiting validation', 'doliconnect')."</span>";
     } elseif ( isset($adherent->status) && $adherent->status == '-2' ) {
-        $content .= "<span class='badge rounded-pill bg-dark'>".__( 'Excluded', 'doliconnect')."</span>";
+        $content .= "<span class='badge rounded-pill bg-black'>".__( 'Excluded', 'doliconnect')."</span>";
     } else { 
-        $content .=  "<span class='badge rounded-pill bg-dark'>".__( 'No membership', 'doliconnect')."</span>"; 
+        $content .=  "<span class='badge rounded-pill bg-black'>".__( 'No membership', 'doliconnect')."</span>"; 
     }
     $content .= "<br><b>".__( 'Reference', 'doliconnect').":</b> ";
     if ( isset($adherent->ref) ) { 
@@ -1597,16 +1592,16 @@ if ( doliCheckModules('adherent') && doliCheckRights('adherent', 'lire') ) {
         $content .= "$datefin";
     }
 
-    $content .= "</div><div class='col-12 col-md-7'>";
+    $content .= "</div><div class='col-12 md:col-7'>";
 
     if ( doliCheckModules('commande') && !empty($productadhesion) ) {
         if ( isset($adherent->status) && $adherent->status > 0) {
-            $content .= '<div class="d-grid gap-2">';
+            $content .= '<div class="d-grid gap-3">';
             if  ($adherent->datefin == null ) {
                 $content .= doliProductCart($product, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), false, array('options_member_beneficiary' => $adherent->id));
             } else {
                 if ( $adherent->datefin+86400>$time) {
-                    $content .= "<button class='btn btn-light btn-block' disabled>".sprintf(__('Renew from %s', 'doliconnect'), wp_date('d/m/Y', $adherent->datefin))."</button>";
+                    $content .= "<button class='btn-subtle theme-secondary w-100' disabled>".sprintf(__('Renew from %s', 'doliconnect'), wp_date('d/m/Y', $adherent->datefin))."</button>";
                 } else {
                     $content .= doliProductCart($product, null, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null), false, array('options_member_beneficiary' => $adherent->id));
                 }
@@ -1629,7 +1624,7 @@ if ( doliCheckModules('adherent') && doliCheckRights('adherent', 'lire') ) {
             $content .= '</div>';
         }
     }
-    $content .= '<br><div class="d-grid gap-2">';
+    $content .= '<br><div class="d-grid gap-3">';
     if ( ! empty($adherent) && $adherent->statut != '-2' ) {
         $content .= '<div class="btn-group" role="group" aria-label="Update membership">';
         if (empty($adherent->statut)) { 
@@ -1637,16 +1632,16 @@ if ( doliCheckModules('adherent') && doliCheckRights('adherent', 'lire') ) {
         } else {
             $title = __( 'Update', 'doliconnect');
         }
-        $content .= doliModalButton('editmembership', 'editmembership', $title, 'button', 'btn btn-outline-secondary'); 
+        $content .= doliModalButton('editmembership', 'editmembership', $title, 'button', 'btn-outline theme-secondary'); 
         if ( $adherent->statut != '0' ) {
-            $content .= doliModalButton('resiliatemembership', 'resiliatemembership', __( 'Resiliate', 'doliconnect'), 'button', 'btn btn-outline-secondary'); 
+            $content .= doliModalButton('resiliatemembership', 'resiliatemembership', __( 'Resiliate', 'doliconnect'), 'button', 'btn-outline theme-secondary'); 
         }
         $content .= '</div>';
     } elseif ( empty($thirdparty->address) || empty($thirdparty->zip) || empty($thirdparty->town) || empty($thirdparty->country_id) || empty($current_user->billing_type) || empty($current_user->billing_birth) || empty($current_user->user_firstname) || empty($current_user->user_lastname) || empty($current_user->user_email)) {
-        $content .= "Pour adhérer, tous les champs doivent être renseignés dans vos <a href='".esc_url( get_permalink(get_option('doliaccount')))."?module=informations&return=".$url."' class='alert-link'>".__( 'Personal informations', 'doliconnect')."</a></div><div class='col-sm-6 col-md-7'>";
+        $content .= "Pour adhérer, tous les champs doivent être renseignés dans vos <a href='".esc_url( get_permalink(get_option('doliaccount')))."?module=informations&return=".$url."' class='alert-link'>".__( 'Personal informations', 'doliconnect')."</a></div><div class='sm:col-6 md:col-7'>";
     } else {
-        $content .= '<div class="d-grid gap-2">';
-        $content .= doliModalButton('editmembership', 'editmembership', __('Become a member', 'doliconnect'), 'button' , 'btn btn-outline-secondary btn-block');
+        $content .= '<div class="d-grid gap-3">';
+        $content .= doliModalButton('editmembership', 'editmembership', __('Become a member', 'doliconnect'), 'button' , 'btn-outline theme-secondary w-100');
         $content .= '</div>';
     }
     $content .= '</div>';
@@ -1685,12 +1680,12 @@ if ( doliCheckModules('adherent') && doliCheckRights('adherent', 'lire') ) {
                 $content .= "</td><td class='text-end'><b>".doliprice($cotisation->amount)."</b></td></tr></table><span></span></li>";
             }
         } else { 
-            $content .= "<li class='list-group-item list-group-item-light'><center>".__( 'No subscription', 'doliconnect')."</center></li>";
+            $content .= "<li class='list-group-item bg-1'><center>".__( 'No subscription', 'doliconnect')."</center></li>";
         }
     } else { 
         $object = $obj = (object) array();
         $content .= "<ul class='list-group list-group-flush'>";
-        $content .= "<li class='list-group-item list-group-item-light'><center>".__( 'No subscription', 'doliconnect')."</center></li>";
+        $content .= "<li class='list-group-item bg-1'><center>".__( 'No subscription', 'doliconnect')."</center></li>";
         $content .= '</ul>';
     }
     $content .= "</ul><div class='card-footer'>";
@@ -1704,7 +1699,7 @@ if ( doliCheckModules('adherent') && doliCheckRights('adherent', 'lire') ) {
 //*****************************************************************************************
 
 function representatives_menu( $menu, $arg ) {
-    $menu .= "<a href='".esc_url( add_query_arg( 'module', 'representatives', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
+    $menu .= "<a href='".esc_url( add_query_arg( 'module', 'representatives', doliconnecturl('doliaccount')) )."' class='list-group-item bg-1 list-group-item-action";
     if ( $arg == 'representatives' ) { $menu .= " active"; }
     $menu .= "'>".__( 'My sales representatives', 'doliconnect')."</a>";
     return $menu;
@@ -1721,13 +1716,13 @@ global $current_user;
     $representatives = callDoliApi("GET", $request, null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
  
     if ( !isset( $representatives->error ) && $representatives != null ) {
-        $content .= '<div class="card-body"><div class="row row-cols-1 row-cols-md-2 g-4">';
+        $content .= '<div class="card-body"><div class="row row-cols-1 md:row-cols-2 g-7">';
         foreach ( $representatives as $representative ) { 
             $content .= doliUserCard($representative, esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null));
         }
         $content .= '</div></div>';
     } else {
-        $content .= "<ul class='list-group list-group-flush'><li class='list-group-item list-group-item-light'><center>".__( 'No sales representative', 'doliconnect')."</center></li></ul>";
+        $content .= "<ul class='list-group list-group-flush'><li class='list-group-item bg-1'><center>".__( 'No sales representative', 'doliconnect')."</center></li></ul>";
     }
     $content .= doliCardFooter($representatives, 'thirdparty');
     $content .= '</div>';
@@ -1739,7 +1734,7 @@ add_filter( 'settings_doliconnect_representatives', 'representatives_module', 10
 
 if ( doliCheckModules('ticket') ) {
     function tickets_menu( $menu, $arg ) {
-        $menu .= "<a href='".esc_url( add_query_arg( 'module', 'tickets', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
+        $menu .= "<a href='".esc_url( add_query_arg( 'module', 'tickets', doliconnecturl('doliaccount')) )."' class='list-group-item bg-1 list-group-item-action";
         if ( $arg == 'tickets' ) { $menu .= " active"; }
         $menu .= "'>".__( 'My support tickets', 'doliconnect')."</a>";
         return $menu;
@@ -1759,12 +1754,12 @@ if ( doliCheckModules('ticket') ) {
 
     if ( isset($_GET['id']) && isset($_GET['ref']) && ( $thirdparty->id == $ticketfo->socid ) && ($_GET['ref'] == $ticketfo->ref ) ) {
 
-    $content = '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Ticket %s', 'doliconnect'), $ticketfo->ref).'<a class="btn btn-sm btn-outline-secondary border border-0 float-end" href="'.esc_url( add_query_arg( 'module', 'tickets', doliconnecturl('doliaccount')) ).'"><i class="fa-solid fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="col-md-5">';
+    $content = '<div class="card shadow-sm"><div class="card-header">'.sprintf(__( 'Ticket %s', 'doliconnect'), $ticketfo->ref).'<a class="btn-sm btn-outline theme-secondary border border-0 float-end" href="'.esc_url( add_query_arg( 'module', 'tickets', doliconnecturl('doliaccount')) ).'"><i class="fa-solid fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><div class="card-body"><div class="row"><div class="md:col-5">';
     $dateticket =  wp_date('d/m/Y', $ticketfo->datec);
     $content .= "<b>".__( 'Date of creation', 'doliconnect').": </b> $dateticket<br>";
     $content .= "<b>".__( 'Type and category', 'doliconnect').": </b> ".__($ticketfo->type_label, 'doliconnect').", ".__($ticketfo->category_label, 'doliconnect')."<br>";
     $content .= "<b>".__( 'Severity', 'doliconnect').": </b> ".__($ticketfo->severity_label, 'doliconnect')."<br>";
-    $content .= "</div><div class='col-md-7'>";
+    $content .= "</div><div class='md:col-7'>";
 
     $content .= doliObjectStatus($ticketfo, 'ticket', 1);
 
@@ -1772,9 +1767,9 @@ if ( doliCheckModules('ticket') ) {
 
     $content .= doliObjectStatus($ticketfo, 'ticket', 3);
     $content .=  "</div><ul class='list-group list-group-flush'>
-    <li class='list-group-item list-group-item-light list-group-item-action'><h5 class='mb-1'>".__( 'Subject', 'doliconnect').": ".$ticketfo->subject."</h5>
+    <li class='list-group-item bg-1 list-group-item-action'><h5 class='mb-1'>".__( 'Subject', 'doliconnect').": ".$ticketfo->subject."</h5>
     <p class='mb-1'>".__( 'Initial message', 'doliconnect').": ".$ticketfo->message."</p></li>";
-    $content .= "<li class='list-group-item list-group-item-light list-group-item-action'>";
+    $content .= "<li class='list-group-item bg-1 list-group-item-action'>";
     if (empty($ticketfo->fk_statut)) {
         $content .=  dolialert('info', __( 'You will be able to post a message after we have read your ticket', 'doliconnect'));
     } elseif ($ticketfo->fk_statut >= '8') {
@@ -1782,18 +1777,18 @@ if ( doliCheckModules('ticket') ) {
     } elseif ( $ticketfo->fk_statut < '8' && $ticketfo->fk_statut > '0' ) {
         $arr_params = array( 'id' => $ticketfo->id, 'ref' => $ticketfo->ref);  
         $return = esc_url( add_query_arg( $arr_params, $url) );
-        $content .= '<div id="doliticket-alert"></div><form id="doliticket-form" method="post" class="was-validated" action="'.admin_url('admin-ajax.php').'">';
+        $content .= '<div id="doliticket-alert"></div><form id="doliticket-form" method="post" data-bs-validate action="'.admin_url('admin-ajax.php').'">';
         $content .= doliAjax('doliticket', $return, 'newMessage');
-        $content .= '<div class="form-floating mb-2"><textarea class="form-control" name="ticket_newmessage" id="ticket_newmessage" placeholder="Leave a comment here" style="height: 200px" required></textarea>
+        $content .= '<div class="form-floating mb-5"><textarea class="form-control" name="ticket_newmessage" id="ticket_newmessage" placeholder="Leave a comment here" style="height: 200px" required></textarea>
         <label for="ticket_newmessage"><i class="fa-solid fa-comment"></i> '.__( 'Message', 'doliconnect').'</label></div>';
-        $content .= '<div class="d-grid gap-2"><input type="hidden" name="id" value="'.$ticketfo->id.'"><input type="hidden" name="track_id" value="'.$ticketfo->track_id.'"><button class="btn btn-outline-secondary" type="submit">'.__( 'Answer', 'doliconnect').'</button></form></div>';
+        $content .= '<div class="d-grid gap-3"><input type="hidden" name="id" value="'.$ticketfo->id.'"><input type="hidden" name="track_id" value="'.$ticketfo->track_id.'"><button class="btn-outline theme-secondary" type="submit">'.__( 'Answer', 'doliconnect').'</button></form></div>';
     }
     $content .= '</li>';
 
     if ( isset($ticketfo->messages) ) {
         foreach ( $ticketfo->messages as $msg ) {
             $datemsg =  wp_date('d/m/Y - H:i', $msg->datec);  
-            $content .=  "<li class='list-group-item list-group-item-light list-group-item-action'><b>$datemsg $msg->fk_user_action_string</b><br>$msg->message</li>";
+            $content .=  "<li class='list-group-item bg-1 list-group-item-action'><b>$datemsg $msg->fk_user_action_string</b><br>$msg->message</li>";
         }
     } 
     $content .= '</ul>';
@@ -1802,18 +1797,18 @@ if ( doliCheckModules('ticket') ) {
 
     } elseif ( isset($_GET['action']) && $_GET['action'] == 'create' ) {
 
-    $content = '<div id="doliticket-alert"></div><form id="doliticket-form" method="post" class="was-validated" action="'.admin_url('admin-ajax.php').'">';
+    $content = '<div id="doliticket-alert"></div><form id="doliticket-form" method="post" data-bs-validate action="'.admin_url('admin-ajax.php').'">';
 
     $content .= doliAjax('doliticket', $url, 'create');
 
-    $content .= '<div class="card shadow-sm"><div class="card-header">'.__( 'Create ticket', 'doliconnect').'<a class="btn btn-sm btn-outline-secondary border border-0 float-end" href="'.esc_url( add_query_arg( 'module', 'tickets', doliconnecturl('doliaccount')) ).'"><i class="fa-solid fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><ul class="list-group list-group-flush">';
-    $content .= "<li class='list-group-item list-group-item-light list-group-item-action'>";
+    $content .= '<div class="card shadow-sm"><div class="card-header">'.__( 'Create ticket', 'doliconnect').'<a class="btn-sm btn-outline theme-secondary border border-0 float-end" href="'.esc_url( add_query_arg( 'module', 'tickets', doliconnecturl('doliaccount')) ).'"><i class="fa-solid fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><ul class="list-group list-group-flush">';
+    $content .= "<li class='list-group-item bg-1 list-group-item-action'>";
 
-    $content .= '<div class="row mb-2 g-2"><div class="col-md">';
+    $content .= '<div class="row mb-5 g-3"><div class="md:col">';
 
     $type = callDoliApi("GET", "/setup/dictionary/ticket_types?sortfield=pos&sortorder=ASC&limit=100&lang=".doliUserLang($current_user), null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
     if ( isset($type) ) { 
-    $content .=  '<div class="form-floating"><select class="form-select" id="ticket_type"  name="ticket_type" aria-label="'.__( 'Type', 'doliconnect').'" required>';
+    $content .=  '<div class="form-floating"><select class="form-control" id="ticket_type"  name="ticket_type" aria-label="'.__( 'Type', 'doliconnect').'" required>';
     if ( count($type) > 1 ) {
     $content .= "<option value='' disabled selected >".__( '- Select -', 'doliconnect')."</option>";
     }
@@ -1828,11 +1823,11 @@ if ( doliCheckModules('ticket') ) {
     $content .= '</select><label for="ticket_type">'.__( 'Type', 'doliconnect').'</label></div>';
     }
 
-    $content .= '</div><div class="col-md">';
+    $content .= '</div><div class="md:col">';
 
     $cat = callDoliApi("GET", "/setup/dictionary/ticket_categories?sortfield=pos&sortorder=ASC&limit=100&lang=".doliUserLang($current_user), null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
     if ( isset($cat) ) { 
-    $content .= '<div class="form-floating"><select class="form-select" id="ticket_category"  name="ticket_category" aria-label="'.__( 'Category', 'doliconnect').'" required>';
+    $content .= '<div class="form-floating"><select class="form-control" id="ticket_category"  name="ticket_category" aria-label="'.__( 'Category', 'doliconnect').'" required>';
     if ( count($cat) > 1 ) {
     $content .= "<option value='' disabled selected >".__( '- Select -', 'doliconnect')."</option>";
     }
@@ -1848,11 +1843,11 @@ if ( doliCheckModules('ticket') ) {
     $content .= '</select><label for="ticket_category">'.__( 'Category', 'doliconnect').'</label></div>';
     } 
 
-    $content .= '</div><div class="col-md">';
+    $content .= '</div><div class="md:col">';
 
     $severity = callDoliApi("GET", "/setup/dictionary/ticket_severities?sortfield=pos&sortorder=ASC&limit=100&lang=".doliUserLang($current_user), null, dolidelay('constante', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));
     if ( isset($severity) ) { 
-    $content .= '<div class="form-floating"><select class="form-select" id="ticket_severity"  name="ticket_severity" aria-label="'.__( 'Severity', 'doliconnect').'" required>';
+    $content .= '<div class="form-floating"><select class="form-control" id="ticket_severity"  name="ticket_severity" aria-label="'.__( 'Severity', 'doliconnect').'" required>';
     if ( count($severity) > 1 ) {
     $content .= "<option value='' disabled selected >".__( '- Select -', 'doliconnect')."</option>";
     }
@@ -1870,7 +1865,7 @@ if ( doliCheckModules('ticket') ) {
     if ( doliversion('11.0.0') ) {
     $representatives = callDoliApi("GET", "/thirdparties/".$thirdparty->id."/representatives?mode=0", null, dolidelay('thirdparty', esc_attr(isset($_GET["refresh"]) ? $_GET["refresh"] : null)));  
     if ( !isset($representatives->error) && $representatives != null ) {
-    $content .= '<div class="form-floating"><select class="form-select" id="fk_user_assign"  name="fk_user_assign" aria-label="'.__( 'Sales representative', 'doliconnect').'" required>';
+    $content .= '<div class="form-floating"><select class="form-control" id="fk_user_assign"  name="fk_user_assign" aria-label="'.__( 'Sales representative', 'doliconnect').'" required>';
     if ( count($representatives) > 1 ) {
     $content .= "<option value='' disabled selected >".__( '- Select -', 'doliconnect')."</option>";
     }
@@ -1884,7 +1879,7 @@ if ( doliCheckModules('ticket') ) {
     }
 
     if (!empty(doliconnectid('dolifaq'))) {
-        $content .= '</li><li class="list-group-item list-group-item-light list-group-item-action">';
+        $content .= '</li><li class="list-group-item bg-1 list-group-item-action">';
         $content .= doliFaqForm($categoryId);
         $content .= '<script type="text/javascript">';
         $content .= '(function ($) {
@@ -1912,19 +1907,19 @@ if ( doliCheckModules('ticket') ) {
         $content .=  '</script>';
     }
 
-    $content .= '</li><li class="list-group-item list-group-item-light list-group-item-action">';
+    $content .= '</li><li class="list-group-item bg-1 list-group-item-action">';
 
-    $content .= '<div class="form-floating mb-2"><input type="text" class="form-control" id="ticket_subject" name="ticket_subject" value="" placeholder="subject" required>
+    $content .= '<div class="form-floating mb-5"><input type="text" class="form-control" id="ticket_subject" name="ticket_subject" value="" placeholder="subject" required>
     <label for="ticket_subject"><i class="fa-solid fa-envelope-open-text"></i> '.__( 'Subject', 'doliconnect').'</label></div>';
     $content .= '<div class="form-floating"><textarea class="form-control" name="ticket_message" id="ticket_message" placeholder="Leave a comment here" style="height: 200px" required></textarea>
     <label for="ticket_message"><i class="fa-solid fa-comment"></i> '.__( 'Message', 'doliconnect').'</label></div>';
 
-    $content .= '</li><li class="list-group-item list-group-item-light list-group-item-action">';
+    $content .= '</li><li class="list-group-item bg-1 list-group-item-action">';
 
     $content .= dolicaptcha('doliticket');
 
     $content .= '</li></ul>';
-    $content .=  "<div class='card-body'><div class='d-grid gap-2'><button type='submit' class='btn btn-outline-secondary'>".__( 'Send', 'doliconnect')."</button></div></div>";
+    $content .=  "<div class='card-body'><div class='d-grid gap-3'><button type='submit' class='btn-outline theme-secondary'>".__( 'Send', 'doliconnect')."</button></div></div>";
 
     $content .= '</div></form>';
         } else {
@@ -1936,19 +1931,19 @@ if ( doliCheckModules('ticket') ) {
 
             $content = '<div class="card shadow-sm"><div class="card-header">'.__( 'My support tickets', 'doliconnect').' ('.(isset($object->pagination->total)?$object->pagination->total:'x').')</div><ul class="list-group list-group-flush">';  
             //if ( doliCheckRights('expensereport', 'creer') ) {
-                $content .= '<a href="'.esc_url( add_query_arg( 'action', 'create', $url) ).'" class="list-group-item lh-condensed list-group-item-action list-group-item-primary" disabled><center><i class="fa-solid fa-plus-circle"></i> '.__( 'Create a ticket', 'doliconnect').'</center></a>';  
+                $content .= '<a href="'.esc_url( add_query_arg( 'action', 'create', $url) ).'" class="list-group-item lh-sm list-group-item-action theme-primary" disabled><center><i class="fa-solid fa-plus-circle"></i> '.__( 'Create a ticket', 'doliconnect').'</center></a>';  
             //}
             if ( !isset($listticket->error) && $listticket != null ) {
                 foreach ($listticket as $postticket) {                                                                                 
                     $arr_params = array( 'id' => $postticket->id, 'ref' => $postticket->ref);  
                     $return = esc_url( add_query_arg( $arr_params, $url) );
 
-                    $content .= "<a href='$return' class='list-group-item d-flex justify-content-between lh-condensed list-group-item-light list-group-item-action'><div><i class='fa-solid fa-question-circle fa-3x fa-fw'></i></div><div><h6 class='my-0'>$postticket->subject</h6><small class='text-muted'>".wp_date('d/m/Y', $postticket->datec)."</small></div><span class='text-center'>".__($postticket->type_label, 'doliconnect')."<br/>".__($postticket->category_label, 'doliconnect')."</span><span>";
+                    $content .= "<a href='$return' class='list-group-item d-flex justify-content-between lh-sm bg-1 list-group-item-action'><div><i class='fa-solid fa-question-circle fa-3x fa-fw'></i></div><div><h6 class='my-0'>$postticket->subject</h6><small class='fg-secondary'>".wp_date('d/m/Y', $postticket->datec)."</small></div><span class='text-center'>".__($postticket->type_label, 'doliconnect')."<br/>".__($postticket->category_label, 'doliconnect')."</span><span>";
                     $content .= doliObjectStatus($postticket, 'ticket', 2);
                     $content .= "</span></a>";
                 }
             } else {
-                $content .= "<li class='list-group-item list-group-item-light'><center>".__( 'No ticket', 'doliconnect')."</center></li>";
+                $content .= "<li class='list-group-item bg-1'><center>".__( 'No ticket', 'doliconnect')."</center></li>";
             }
             $content .= "</ul><div class='card-footer'>";
             $content .= doliPagination($object, $url, $page);
@@ -1963,7 +1958,7 @@ if ( doliCheckModules('ticket') ) {
 //*****************************************************************************************
 
 function settings_menu( $menu, $arg) {
-    $menu .= "<a href='".esc_url( add_query_arg( 'module', 'settings', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
+    $menu .= "<a href='".esc_url( add_query_arg( 'module', 'settings', doliconnecturl('doliaccount')) )."' class='list-group-item bg-1 list-group-item-action";
     if ($arg=='settings') { $menu .= " active"; }
     $menu .= "'>".__( 'Safety and appearance', 'doliconnect')."</a>";
     return $menu;
@@ -1978,18 +1973,18 @@ $content = '<div id="dolisettings-alert"></div><form id="dolisettings-form" meth
 $content .= doliAjax('dolisettings',  null, 'settings');
 
 $content .= '<div class="card shadow-sm"><div class="card-header">'.__( 'Settings & security', 'doliconnect').'</div><ul class="list-group list-group-flush">';
-$content .= "<li class='list-group-item list-group-item-light list-group-item-action'><div class='form-check form-switch'><input type='checkbox' class='form-check-input' name='loginmailalert' id='loginmailalert' ";
+$content .= "<li class='list-group-item bg-1 list-group-item-action'><div class='form-field'><div class='switch'><input type='checkbox' name='loginmailalert' id='loginmailalert' ";
 if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $current_user->ID ) {
     $content .= " disabled";
 } elseif ( $current_user->loginmailalert == 'on' ) { 
     $content .= " checked"; 
     }        
-$content .= " onchange='submit()' switch><label class='form-check-label w-100' for='loginmailalert'> ".__( 'Receive a email notification at each connection', 'doliconnect')."</label>
+$content .= " onchange='submit()'></div><label class='w-100' for='loginmailalert'> ".__( 'Receive a email notification at each connection', 'doliconnect')."</label>
 </div></li>";
 
     $privacy=$wpdb->prefix."doliprivacy";
     if ( $current_user->$privacy ) {
-        $content .= "<li class='list-group-item list-group-item-light list-group-item-action'>";
+        $content .= "<li class='list-group-item bg-1 list-group-item-action'>";
         $content .= '<div class="form-floating">
         <input type="text" class="form-control" id="floatingInput" value="'.wp_date( get_option( 'date_format' ).' - '.get_option('time_format'), $current_user->$privacy, false).'" readonly>
         <label for="floatingInput">'.__( 'Privacy policy', 'doliconnect').'</label>
@@ -2002,7 +1997,7 @@ $content .= " onchange='submit()' switch><label class='form-check-label w-100' f
     }
 
     if ( is_plugin_active( 'two-factor/two-factor.php' ) && current_user_can('administrator') && !empty(get_option('doliconnectbeta')) ) {
-        $content .= '<li class="list-group-item list-group-item-light list-group-item-action">';
+        $content .= '<li class="list-group-item bg-1 list-group-item-action">';
         require_once( ABSPATH . 'wp-content/plugins/two-factor/class-two-factor-core.php');
             ?>
                         <table class="table">
@@ -2044,7 +2039,7 @@ add_filter( 'settings_doliconnect_settings', 'settings_module', 30, 2);
 //*****************************************************************************************
 
 function gdpr_menu( $menu, $arg) {
-    $menu .= "<a href='".esc_url( add_query_arg( 'module', 'gdpr', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-light list-group-item-action";
+    $menu .= "<a href='".esc_url( add_query_arg( 'module', 'gdpr', doliconnecturl('doliaccount')) )."' class='list-group-item bg-1 list-group-item-action";
     if ($arg=='gdpr') { $menu .= " active";}
     $menu .= "'>".__( 'Privacy', 'doliconnect')."</a>";
     return $menu;
