@@ -15,7 +15,7 @@ global $current_user;
 
       $content .=  "<div class='row'>";
       if ( empty(get_option('doliconnectrestrict')) || is_user_logged_in() ) {
-        $content .=  "<div class='col-xs-12 col-sm-12 col-md-3'><div class='row'><div class='col-3 col-xs-4 col-sm-4 col-md-12 col-xl-12'><div class='card shadow-sm' style='width: 100%'>";
+        $content .=  "<div class='xs:col-12 sm:col-12 md:col-3'><div class='row'><div class='col-3 xs:col-4 sm:col-4 md:col-12 xl:col-12'><div class='card shadow-sm' style='width: 100%'>";
         $content .=  get_avatar($ID);
 
         if ( !defined("DOLIBUG") && is_user_logged_in() && is_user_member_of_blog( $current_user->ID, get_current_blog_id())) {
@@ -30,9 +30,9 @@ global $current_user;
         $content .=  '</ul>';
 
         $content .=  '</div><br></div>';
-        $content .=  "<div class='col-9 col-xs-8 col-sm-8 col-md-12 col-xl-12'>";
+        $content .=  "<div class='col-9 xs:col-8 sm:col-8 md:col-12 xl:col-12'>";
       } else {
-        $content .=  "<div class='col-md-6 offset-md-3'>";
+        $content .=  "<div class='md:col-6 offset-md-3'>";
       }
       if ( is_user_logged_in() && is_user_member_of_blog( $current_user->ID, get_current_blog_id())) {
 
@@ -41,7 +41,7 @@ global $current_user;
 
         if ( isset($thirdparty->status) && $thirdparty->status != '1' ) {
           $content .=  "</div></div></div>";
-          $content .=  "<div class='col-xs-12 col-sm-12 col-md-9'><div class='card shadow-sm'><div class='card-body'>";
+          $content .=  "<div class='xs:col-12 sm:col-12 md:col-9'><div class='card shadow-sm'><div class='card-body'>";
           $content .=  '<br><br><br><br><br><center><div class="align-middle"><i class="fas fa-bug fa-3x fa-fw"></i><h4>'.__( 'This account is closed. Please contact us for reopen it.', 'doliconnect').'</h4></div></center><br><br><br><br><br>';
           $content .=  "</div></div></div></div>";
         } else { 
@@ -53,7 +53,7 @@ global $current_user;
                 $content .= "</div><br>";
               }
               $content .=  "</div></div></div>";
-              $content .=  "<div class='col-xs-12 col-sm-12 col-md-9'>";
+              $content .=  "<div class='xs:col-12 sm:col-12 md:col-9'>";
               $content .= apply_filters('user_doliconnect_'.esc_attr($_GET['module']), $content, esc_url( add_query_arg( 'module', esc_attr($_GET['module']), doliconnecturl('doliaccount')) ) ); 
             } elseif ( has_filter('customer_doliconnect_'.esc_attr($_GET['module'])) && isset($thirdparty->client) && !empty($thirdparty->client)) {
               if ( has_filter('customer_doliconnect_menu') ) {
@@ -62,7 +62,7 @@ global $current_user;
                 $content .=  "</div><br>";
               }
               $content .=  "</div></div></div>";
-              $content .=  "<div class='col-xs-12 col-sm-12 col-md-9'>";
+              $content .=  "<div class='xs:col-12 sm:col-12 md:col-9'>";
               $content .= apply_filters( 'customer_doliconnect_'.esc_attr($_GET['module']), $content, esc_url( add_query_arg( 'module', esc_attr($_GET['module']), doliconnecturl('doliaccount')) ) ); 
             } elseif ( has_filter('member_doliconnect_'.esc_attr($_GET['module'])) ) {
               if ( has_filter('member_doliconnect_menu') ) {
@@ -71,7 +71,7 @@ global $current_user;
                 $content .=  "</div><br>";
               }
               $content .=  "</div></div></div>";
-              $content .=  "<div class='col-xs-12 col-sm-12 col-md-9'>";
+              $content .=  "<div class='xs:col-12 sm:col-12 md:col-9'>";
               $content .= apply_filters('member_doliconnect_'.esc_attr($_GET['module']), $content, esc_url( add_query_arg( 'module', esc_attr($_GET['module']), doliconnecturl('doliaccount')) ) ); 
             } elseif ( has_filter('supplier_doliconnect_'.esc_attr($_GET['module'])) && isset($thirdparty->fournisseur) && !empty($thirdparty->fournisseur)) {
               if ( has_filter('supplier_doliconnect_menu') ) {
@@ -80,7 +80,7 @@ global $current_user;
                 $content .=  "</div><br>";
               }
               $content .=  "</div></div></div>";
-              $content .=  "<div class='col-xs-12 col-sm-12 col-md-9'>";
+              $content .=  "<div class='xs:col-12 sm:col-12 md:col-9'>";
               $content .= apply_filters('supplier_doliconnect_'.esc_attr($_GET['module']), $content, esc_url( add_query_arg( 'module', esc_attr($_GET['module']), doliconnecturl('doliaccount')) ) ); 
             } elseif ( has_filter('grh_doliconnect_'.esc_attr($_GET['module'])) ) {
               if ( has_filter('grh_doliconnect_menu') ) {
@@ -89,7 +89,7 @@ global $current_user;
                 $content .=  "</div><br>";
               }
               $content .=  "</div></div></div>";
-              $content .=  "<div class='col-xs-12 col-sm-12 col-md-9'>";
+              $content .=  "<div class='xs:col-12 sm:col-12 md:col-9'>";
               $content .= apply_filters('grh_doliconnect_'.esc_attr($_GET['module']), $content, esc_url( add_query_arg( 'module', esc_attr($_GET['module']), doliconnecturl('doliaccount')) ) ); 
             } elseif ( has_filter('settings_doliconnect_'.esc_attr($_GET['module'])) ) {
               if ( has_filter('settings_doliconnect_menu') ) {
@@ -98,7 +98,7 @@ global $current_user;
                 $content .=  "</div><br>";
               }
               $content .=  "</div></div></div>";
-              $content .=  "<div class='col-xs-12 col-sm-12 col-md-9'>";
+              $content .=  "<div class='xs:col-12 sm:col-12 md:col-9'>";
               $content .= apply_filters('settings_doliconnect_'.esc_attr($_GET['module']), $content, esc_url( add_query_arg( 'module', esc_attr($_GET['module']), doliconnecturl('doliaccount')) ) ); 
             } else {
               wp_redirect( esc_url(doliconnecturl('doliaccount')) );
@@ -107,7 +107,7 @@ global $current_user;
             $content .=  "</div>";
           } elseif ( isset($_GET["action"]) && $_GET["action"] == 'confirmaction' ) {
             $content .=  "<p class='font-weight-light' align='justify'><h5>".sprintf(__('Hello %s', 'doliconnect'), $current_user->first_name)."</h5><small class='text-muted'>".__( 'Manage your account, your informations, orders and much more via this secure client area.', 'doliconnect')."</small></p></div></div></div>";
-            $content .=  "<div class='col-xs-12 col-sm-12 col-md-9'>";
+            $content .=  "<div class='xs:col-12 sm:col-12 md:col-9'>";
             $content .=  "<div class='card shadow-sm'><div class='card-body'>";
             if ( ! isset( $_GET['request_id'] ) ) {
               $content .=  __( 'Missing request ID.');
@@ -128,7 +128,7 @@ global $current_user;
             $content .=  "</div></div></div>";
           } else {
             $content .=  "<p class='font-weight-light' align='justify'><h5>".sprintf(__('Hello %s', 'doliconnect'), $current_user->first_name)."</h5><small class='text-muted'>".__( 'Manage your account, your informations, orders and much more via this secure client area.', 'doliconnect')."</small></p></div></div></div>";
-            $content .=  "<div class='col-xs-12 col-sm-12 col-md-9'>";
+            $content .=  "<div class='xs:col-12 sm:col-12 md:col-9'>";
 
             if ( has_filter('user_doliconnect_menu') ) {
               $content .=  '<div class="card shadow-sm"><div class="card-header">'.sprintf(__('%s My profil', 'doliconnect'), '<i class="fa-solid fa-user"></i>').'</div><ul class="list-group list-group-flush">';
@@ -158,12 +158,8 @@ global $current_user;
             if ( has_filter('settings_doliconnect_menu') ) {
               $content .=  '<div class="card shadow-sm"><div class="card-header">'.sprintf(__('%s My settings & contacts', 'doliconnect'), '<i class="fa-solid fa-user-gear"></i>').'</div><ul class="list-group list-group-flush">';
               $content .=  apply_filters('settings_doliconnect_menu', null, null);
-              $content .=  "</ul></div><br>";
+              $content .=  "</ul></div>";
             }
-            $content .=  '<div class="card shadow-sm"><ul class="list-group list-group-flush">';
-            $content .=  "<a href='".wp_logout_url( home_url() )."' class='list-group-item list-group-item-light list-group-item-action";
-            $content .=  "'>".__( 'Sign out', 'doliconnect')."</a>";
-            $content .=  "</ul></div>";
             $content .=  "</div>";
           }
           $content .=  "</div>";
@@ -171,9 +167,9 @@ global $current_user;
       } else { 
         $content .=  "</div></div></div>";
         if ( empty(get_option('doliconnectrestrict')) ) {
-          $content .=  "<div class='col-xs-12 col-sm-12 col-md-9'>";
+          $content .=  "<div class='xs:col-12 sm:col-12 md:col-9'>";
         } else {
-          $content .=  "<div class='col-md-6 offset-md-3'>";
+          $content .=  "<div class='md:col-6 md:offset-md-3'>";
         }
 
         if (dolicheckie($_SERVER['HTTP_USER_AGENT'])) {
