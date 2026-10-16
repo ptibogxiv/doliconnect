@@ -5,7 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function informations_menu( $menu, $arg) {
-    $menu .= "<a href='".esc_url( add_query_arg( 'module', 'informations', doliconnecturl('doliaccount')) )."' class='list-group-item bg-1 list-group-item-action";
+    $menu .= "<a href='".esc_url( add_query_arg( 'module', 'informations', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-action";
     if ($arg == 'informations') { $menu .= " active";}
     $menu .= "'>".__( 'Edit my informations', 'doliconnect')."</a>";
     return $menu;
@@ -42,7 +42,7 @@ add_filter( 'user_doliconnect_informations', 'informations_module', 10, 2);
 //*****************************************************************************************
 
 function password_menu( $menu, $arg){
-    $menu .= "<a href='".esc_url( add_query_arg( 'module', 'password', doliconnecturl('doliaccount')) )."' class='list-group-item bg-1 list-group-item-action";
+    $menu .= "<a href='".esc_url( add_query_arg( 'module', 'password', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-action";
     if ($arg == 'password') { $menu .= " active";}
     $menu .= "'>".__( 'Edit my password', 'doliconnect')."</a>";
     return $menu;
@@ -251,7 +251,7 @@ add_filter( 'user_doliconnect_avatars', 'avatars_module', 10, 2);
 
 if ( empty(doliconst('MAIN_DISABLE_CONTACTS_TAB')) && doliCheckRights('societe', 'contact', 'lire') ) {
     function contacts_menu( $menu, $arg) {
-        $menu .= "<a href='".esc_url( add_query_arg( 'module', 'contacts', doliconnecturl('doliaccount')) )."' class='list-group-item bg-1 list-group-item-action";
+        $menu .= "<a href='".esc_url( add_query_arg( 'module', 'contacts', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-action";
         if ( $arg == 'contacts' ) { $menu .= " active"; }
         $menu .= "'>".__( 'Manage address book', 'doliconnect')."</a>";
         return $menu;
@@ -288,7 +288,7 @@ if ( empty(doliconst('MAIN_DISABLE_CONTACTS_TAB')) && doliCheckRights('societe',
 if ( doliversion('20.0.0') && doliCheckModules('notification') && !empty(get_option('doliconnectbeta')) ) {
 
 function notifications_menu( $menu, $arg ) {
-    $menu .= "<a href='".esc_url( add_query_arg( 'module', 'notifications', doliconnecturl('doliaccount')) )."' class='list-group-item bg-1 list-group-item-action";
+    $menu .= "<a href='".esc_url( add_query_arg( 'module', 'notifications', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-action";
     if ($arg == 'notifications') { $menu .= " active";}
     $menu .= "'>".__( 'Manage notifications', 'doliconnect')."</a>";
     return $menu;
@@ -338,7 +338,7 @@ function dolipaymentmodes_lock() {
 }
 
 function paymentmethods_menu( $menu, $arg ) {
-    $menu .= "<a href='".esc_url( add_query_arg( 'module', 'paymentmethods', doliconnecturl('doliaccount')) )."' class='list-group-item bg-1 list-group-item-action";
+    $menu .= "<a href='".esc_url( add_query_arg( 'module', 'paymentmethods', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-action";
     if ($arg == 'paymentmethods') { $menu .= " active";}
     $menu .= "'>".__( 'Manage payment methods', 'doliconnect')."</a>";
     return $menu;
@@ -407,7 +407,7 @@ add_filter( 'user_doliconnect_paymentmethods', 'paymentmethods_module', 10, 2);
 if ( doliCheckModules('propal') && doliCheckRights('propal', 'lire') ) {
 
 function proposals_menu( $menu, $arg ) {
-    $menu .= "<a href='".esc_url( add_query_arg( 'module', 'proposals', doliconnecturl('doliaccount')) )."' class='list-group-item bg-1 list-group-item-action";
+    $menu .= "<a href='".esc_url( add_query_arg( 'module', 'proposals', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-action";
     if ( $arg == 'proposals' ) { $menu .= " active";}
     $menu .= "'>".__( 'Proposals tracking', 'doliconnect')."</a>";
     return $menu;
@@ -499,7 +499,7 @@ add_filter( 'customer_doliconnect_proposals', 'proposals_module', 10, 2);
 if ( doliCheckModules('commande') && doliCheckRights('commande', 'lire') ) {
 
 function orders_menu( $menu, $arg ) {
-    $menu .= "<a href='".esc_url( add_query_arg( 'module', 'orders', doliconnecturl('doliaccount')) )."' class='list-group-item bg-1 list-group-item-action";
+    $menu .= "<a href='".esc_url( add_query_arg( 'module', 'orders', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-action";
     if ( $arg == 'orders' ) { $menu .= " active"; }
     $menu .= "'>".__( 'Orders tracking', 'doliconnect')."</a>";
     return $menu;
@@ -764,7 +764,7 @@ if ( doliCheckModules('facture') && get_option('doliconnectdisplayinvoice') && d
     add_action( 'customer_doliconnect_invoices', 'invoices_module');
 
 function invoices_menu( $menu, $arg ) {
-    $menu .= "<a href='".esc_url( add_query_arg( 'module', 'invoices', doliconnecturl('doliaccount')) )."' class='list-group-item bg-1 list-group-item-action";
+    $menu .= "<a href='".esc_url( add_query_arg( 'module', 'invoices', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-action";
     if ( $arg == 'invoices' ) { $menu .= " active"; }
     $menu .= "'>".__( 'Invoices tracking', 'doliconnect')."</a>";
     return $menu;
@@ -996,7 +996,7 @@ add_filter( 'customer_doliconnect_invoices', 'invoices_module', 10, 2);
 
 if ( doliCheckModules('contrat') && doliCheckRights('contrat', 'lire') ) {
     function contracts_menu( $menu, $arg ) {
-        $menu .= "<a href='".esc_url( add_query_arg( 'module', 'contracts', doliconnecturl('doliaccount')) )."' class='list-group-item bg-1 list-group-item-action";
+        $menu .= "<a href='".esc_url( add_query_arg( 'module', 'contracts', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-action";
         if ( $arg == 'contracts' ) { $menu .= " active"; }
         $menu .= "'>".__( 'Contracts tracking', 'doliconnect')."</a>";
         return $menu;
@@ -1086,7 +1086,7 @@ if ( doliCheckModules('contrat') && doliCheckRights('contrat', 'lire') ) {
 
 if ( doliCheckModules('projet') && doliCheckRights('projet', 'lire') ) {
     function projects_menu( $menu, $arg ) {
-        $menu .= "<a href='".esc_url( add_query_arg( 'module', 'projects', doliconnecturl('doliaccount')) )."' class='list-group-item bg-1 list-group-item-action";
+        $menu .= "<a href='".esc_url( add_query_arg( 'module', 'projects', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-action";
         if ( $arg == 'projects' ) { $menu .= " active"; }
         $menu .= "'>".__( 'My projects tracking', 'doliconnect')."</a>";
         return $menu;
@@ -1174,7 +1174,7 @@ if ( doliCheckModules('projet') && doliCheckRights('projet', 'lire') ) {
 
 if ( doliCheckModules('eventorganization') && doliCheckRights('projet', 'lire') ) {
     function eventorganization_menu( $menu, $arg ) {
-        $menu .= "<a href='".esc_url( add_query_arg( 'module', 'eventorganization', doliconnecturl('doliaccount')) )."' class='list-group-item bg-1 list-group-item-action";
+        $menu .= "<a href='".esc_url( add_query_arg( 'module', 'eventorganization', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-action";
         if ( $arg == 'eventorganization' ) { $menu .= " active"; }
         $menu .= "'>".__( 'My eventattend tracking', 'doliconnect')."</a>";
         return $menu;
@@ -1275,7 +1275,7 @@ if ( doliCheckModules('eventorganization') && doliCheckRights('projet', 'lire') 
 
 if ( doliCheckModules('don') ) {
     function donations_menu( $menu, $arg ) {
-        $menu .= "<a href='".esc_url( add_query_arg( 'module', 'donations', doliconnecturl('doliaccount')) )."' class='list-group-item bg-1 list-group-item-action";
+        $menu .= "<a href='".esc_url( add_query_arg( 'module', 'donations', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-action";
         if ($arg=='donations') { $menu .= " active";}
         $menu .= "'>".__( 'Donations tracking', 'doliconnect')."</a>";
         return $menu;
@@ -1369,7 +1369,7 @@ if ( doliCheckModules('don') ) {
 
 if ( doliCheckModules('recruitment') && doliversion('19.0.0') && !empty(get_option('doliconnectbeta')) ) {
     function recruitment_menu( $menu, $arg ) {
-        $menu .= "<a href='".esc_url( add_query_arg( 'module', 'recruitment', doliconnecturl('doliaccount')) )."' class='list-group-item bg-1 list-group-item-action";
+        $menu .= "<a href='".esc_url( add_query_arg( 'module', 'recruitment', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-action";
         if ($arg=='recruitment') { $menu .= " active";}
         $menu .= "'>".__( 'List of jobpositions', 'doliconnect')."</a>";
         return $menu;
@@ -1443,7 +1443,7 @@ if ( doliCheckModules('recruitment') && doliversion('19.0.0') && !empty(get_opti
 
 if ( doliCheckModules('expensereport') && doliversion('19.0.0') && doliCheckRights('expensereport', 'lire') ) {
     function expensereport_menu( $menu, $arg ) {
-        $menu .= "<a href='".esc_url( add_query_arg( 'module', 'expensereport', doliconnecturl('doliaccount')) )."' class='list-group-item bg-1 list-group-item-action";
+        $menu .= "<a href='".esc_url( add_query_arg( 'module', 'expensereport', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-action";
         if ($arg=='expensereport') { $menu .= " active";}
         $menu .= "'>".__( 'List of expense reports', 'doliconnect')."</a>";
         return $menu;
@@ -1514,7 +1514,7 @@ if ( doliCheckModules('expensereport') && doliversion('19.0.0') && doliCheckRigh
 
 if ( doliCheckModules('adherent') && doliCheckRights('adherent', 'lire') ) {
     function members_menu( $menu, $arg ) {
-        $menu .= "<a href='".esc_url( add_query_arg( 'module', 'members', doliconnecturl('doliaccount')) )."' class='list-group-item bg-1 list-group-item-action";
+        $menu .= "<a href='".esc_url( add_query_arg( 'module', 'members', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-action";
         if ($arg=='members') { $menu .= " active";}
         $menu .= "'>".__( 'Manage my subscription', 'doliconnect')."</a>";
         return $menu;
@@ -1699,7 +1699,7 @@ if ( doliCheckModules('adherent') && doliCheckRights('adherent', 'lire') ) {
 //*****************************************************************************************
 
 function representatives_menu( $menu, $arg ) {
-    $menu .= "<a href='".esc_url( add_query_arg( 'module', 'representatives', doliconnecturl('doliaccount')) )."' class='list-group-item bg-1 list-group-item-action";
+    $menu .= "<a href='".esc_url( add_query_arg( 'module', 'representatives', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-action";
     if ( $arg == 'representatives' ) { $menu .= " active"; }
     $menu .= "'>".__( 'My sales representatives', 'doliconnect')."</a>";
     return $menu;
@@ -1734,7 +1734,7 @@ add_filter( 'settings_doliconnect_representatives', 'representatives_module', 10
 
 if ( doliCheckModules('ticket') ) {
     function tickets_menu( $menu, $arg ) {
-        $menu .= "<a href='".esc_url( add_query_arg( 'module', 'tickets', doliconnecturl('doliaccount')) )."' class='list-group-item bg-1 list-group-item-action";
+        $menu .= "<a href='".esc_url( add_query_arg( 'module', 'tickets', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-action";
         if ( $arg == 'tickets' ) { $menu .= " active"; }
         $menu .= "'>".__( 'My support tickets', 'doliconnect')."</a>";
         return $menu;
@@ -1767,9 +1767,9 @@ if ( doliCheckModules('ticket') ) {
 
     $content .= doliObjectStatus($ticketfo, 'ticket', 3);
     $content .=  "</div><ul class='list-group list-group-flush'>
-    <li class='list-group-item bg-1 list-group-item-action'><h5 class='mb-1'>".__( 'Subject', 'doliconnect').": ".$ticketfo->subject."</h5>
+    <li class='list-group-item list-group-item-action'><h5 class='mb-1'>".__( 'Subject', 'doliconnect').": ".$ticketfo->subject."</h5>
     <p class='mb-1'>".__( 'Initial message', 'doliconnect').": ".$ticketfo->message."</p></li>";
-    $content .= "<li class='list-group-item bg-1 list-group-item-action'>";
+    $content .= "<li class='list-group-item list-group-item-action'>";
     if (empty($ticketfo->fk_statut)) {
         $content .=  dolialert('info', __( 'You will be able to post a message after we have read your ticket', 'doliconnect'));
     } elseif ($ticketfo->fk_statut >= '8') {
@@ -1788,7 +1788,7 @@ if ( doliCheckModules('ticket') ) {
     if ( isset($ticketfo->messages) ) {
         foreach ( $ticketfo->messages as $msg ) {
             $datemsg =  wp_date('d/m/Y - H:i', $msg->datec);  
-            $content .=  "<li class='list-group-item bg-1 list-group-item-action'><b>$datemsg $msg->fk_user_action_string</b><br>$msg->message</li>";
+            $content .=  "<li class='list-group-item list-group-item-action'><b>$datemsg $msg->fk_user_action_string</b><br>$msg->message</li>";
         }
     } 
     $content .= '</ul>';
@@ -1802,7 +1802,7 @@ if ( doliCheckModules('ticket') ) {
     $content .= doliAjax('doliticket', $url, 'create');
 
     $content .= '<div class="card shadow-sm"><div class="card-header">'.__( 'Create ticket', 'doliconnect').'<a class="btn-sm btn-outline theme-secondary border border-0 float-end" href="'.esc_url( add_query_arg( 'module', 'tickets', doliconnecturl('doliaccount')) ).'"><i class="fa-solid fa-arrow-left"></i> '.__( 'Back', 'doliconnect').'</a></div><ul class="list-group list-group-flush">';
-    $content .= "<li class='list-group-item bg-1 list-group-item-action'>";
+    $content .= "<li class='list-group-item list-group-item-action'>";
 
     $content .= '<div class="row mb-5 g-3"><div class="md:col">';
 
@@ -1879,7 +1879,7 @@ if ( doliCheckModules('ticket') ) {
     }
 
     if (!empty(doliconnectid('dolifaq'))) {
-        $content .= '</li><li class="list-group-item bg-1 list-group-item-action">';
+        $content .= '</li><li class="list-group-item list-group-item-action">';
         $content .= doliFaqForm($categoryId);
         $content .= '<script type="text/javascript">';
         $content .= '(function ($) {
@@ -1907,14 +1907,14 @@ if ( doliCheckModules('ticket') ) {
         $content .=  '</script>';
     }
 
-    $content .= '</li><li class="list-group-item bg-1 list-group-item-action">';
+    $content .= '</li><li class="list-group-item list-group-item-action">';
 
     $content .= '<div class="form-floating mb-5"><input type="text" class="form-control" id="ticket_subject" name="ticket_subject" value="" placeholder="subject" required>
     <label for="ticket_subject"><i class="fa-solid fa-envelope-open-text"></i> '.__( 'Subject', 'doliconnect').'</label></div>';
     $content .= '<div class="form-floating"><textarea class="form-control" name="ticket_message" id="ticket_message" placeholder="Leave a comment here" style="height: 200px" required></textarea>
     <label for="ticket_message"><i class="fa-solid fa-comment"></i> '.__( 'Message', 'doliconnect').'</label></div>';
 
-    $content .= '</li><li class="list-group-item bg-1 list-group-item-action">';
+    $content .= '</li><li class="list-group-item list-group-item-action">';
 
     $content .= dolicaptcha('doliticket');
 
@@ -1958,7 +1958,7 @@ if ( doliCheckModules('ticket') ) {
 //*****************************************************************************************
 
 function settings_menu( $menu, $arg) {
-    $menu .= "<a href='".esc_url( add_query_arg( 'module', 'settings', doliconnecturl('doliaccount')) )."' class='list-group-item bg-1 list-group-item-action";
+    $menu .= "<a href='".esc_url( add_query_arg( 'module', 'settings', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-action";
     if ($arg=='settings') { $menu .= " active"; }
     $menu .= "'>".__( 'Safety and appearance', 'doliconnect')."</a>";
     return $menu;
@@ -1973,7 +1973,7 @@ $content = '<div id="dolisettings-alert"></div><form id="dolisettings-form" meth
 $content .= doliAjax('dolisettings',  null, 'settings');
 
 $content .= '<div class="card shadow-sm"><div class="card-header">'.__( 'Settings & security', 'doliconnect').'</div><ul class="list-group list-group-flush">';
-$content .= "<li class='list-group-item bg-1 list-group-item-action'><div class='form-field'><div class='switch'><input type='checkbox' name='loginmailalert' id='loginmailalert' ";
+$content .= "<li class='list-group-item list-group-item-action'><div class='form-field'><div class='switch'><input type='checkbox' name='loginmailalert' id='loginmailalert' ";
 if ( defined("DOLICONNECT_DEMO") && ''.constant("DOLICONNECT_DEMO").'' == $current_user->ID ) {
     $content .= " disabled";
 } elseif ( $current_user->loginmailalert == 'on' ) { 
@@ -1984,7 +1984,7 @@ $content .= " onchange='submit()'></div><label class='w-100' for='loginmailalert
 
     $privacy=$wpdb->prefix."doliprivacy";
     if ( $current_user->$privacy ) {
-        $content .= "<li class='list-group-item bg-1 list-group-item-action'>";
+        $content .= "<li class='list-group-item list-group-item-action'>";
         $content .= '<div class="form-floating">
         <input type="text" class="form-control" id="floatingInput" value="'.wp_date( get_option( 'date_format' ).' - '.get_option('time_format'), $current_user->$privacy, false).'" readonly>
         <label for="floatingInput">'.__( 'Privacy policy', 'doliconnect').'</label>
@@ -1997,7 +1997,7 @@ $content .= " onchange='submit()'></div><label class='w-100' for='loginmailalert
     }
 
     if ( is_plugin_active( 'two-factor/two-factor.php' ) && current_user_can('administrator') && !empty(get_option('doliconnectbeta')) ) {
-        $content .= '<li class="list-group-item bg-1 list-group-item-action">';
+        $content .= '<li class="list-group-item list-group-item-action">';
         require_once( ABSPATH . 'wp-content/plugins/two-factor/class-two-factor-core.php');
             ?>
                         <table class="table">
@@ -2039,7 +2039,7 @@ add_filter( 'settings_doliconnect_settings', 'settings_module', 30, 2);
 //*****************************************************************************************
 
 function gdpr_menu( $menu, $arg) {
-    $menu .= "<a href='".esc_url( add_query_arg( 'module', 'gdpr', doliconnecturl('doliaccount')) )."' class='list-group-item bg-1 list-group-item-action";
+    $menu .= "<a href='".esc_url( add_query_arg( 'module', 'gdpr', doliconnecturl('doliaccount')) )."' class='list-group-item list-group-item-action";
     if ($arg=='gdpr') { $menu .= " active";}
     $menu .= "'>".__( 'Privacy', 'doliconnect')."</a>";
     return $menu;
