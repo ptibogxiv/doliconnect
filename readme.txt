@@ -4,12 +4,16 @@ Contributors: ptibogxiv, audrasjb
 Tags: erp, crm, dolibarr, connector
 Requires at least: 6.5
 Tested up to: 7.2
-Stable tag: 10.7.9
+Stable tag: 10.8.0
 Requires PHP: 8.1
 License: GPL v3 or later
 Donate link: https://ptibogxiv.eu
 
 This plugin interfaces your Dolibarr with your WordPress.
+
+== Front-end requirements ==
+
+The front end uses Bootstrap 6.0.0-alpha.1, which is a prerelease. Its documented browser floor is Chrome/Edge 130, Firefox 132, and Safari 18 on macOS and iOS. Bootstrap 5 Bootswatch schemes are no longer loaded.
 
 == Description ==
 
