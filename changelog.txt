@@ -1,2 +1,7 @@
+10.8.0 (11 October 2026)
+- Migrate frontend assets and components to Bootstrap 6.0.0-alpha.1 (ES modules).
+- Replace modal and offcanvas flows with Dialog and Drawer, and migrate responsive utilities and form markup.
+- Drop the runtime selection of Bootstrap 5 Bootswatch styles.
+
 1.0.0 (1 January 2017)
 - first version
