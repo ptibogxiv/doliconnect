@@ -27,17 +27,24 @@ function doliModalButton(acase, id, value1, value2, redirect_to) {
 					}
 					if (document.getElementById("doliModalDiv") && response.data.hasOwnProperty("modal")) {
 						console.log( "success loading modal" + " - case: " + acase );
-						document.getElementById("doliModalDiv").innerHTML = response.data.modal; 
-						$("#doliModal"+id).modal("show");     
+						const modalContainer = document.getElementById("doliModalDiv");
+						modalContainer.innerHTML = response.data.modal;
+						const dialog = document.getElementById("doliModal" + id);
+						if (dialog && typeof dialog.showModal === "function") {
+							dialog.addEventListener("close", function () {
+								modalContainer.innerHTML = "";
+							}, { once: true });
+							dialog.showModal();
+							console.log( "ok loading dialog" + " - case: " + acase );
+						} else {
+							console.error( "error opening dialog" + " - case: " + acase );
+						}
 					}
 				} else {
 					console.log( "error loading modal" + " - case: " + acase + " - error: " + response.data);
-					document.getElementById("doliModalDiv").innerHTML = "";
+					const modalContainer = document.getElementById("doliModalDiv");
+					if (modalContainer) modalContainer.innerHTML = "";
 				}
-				$("#doliModal" + id).on("hidden.bs.modal", function () {
-					$("#doliModal" + id).modal("dispose");
-					document.getElementById("doliModalDiv").innerHTML = "";
-				});
 			});
         })
     })(jQuery);
