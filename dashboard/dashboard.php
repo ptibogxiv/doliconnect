@@ -278,6 +278,7 @@ if ( empty(doliconst('MAIN_DISABLE_CONTACTS_TAB')) && doliCheckRights('societe',
         $content .= doliPagination($object, $url, $page);
         $content .= "</div>";
         $content .= "</div>";
+        
         return $content;
     }
     add_filter( 'user_doliconnect_contacts', 'contacts_module', 10, 2);
