@@ -3,7 +3,7 @@
  * Plugin Name: Doliconnect
  * Plugin URI: https://ptibogxiv.eu
  * Description: Connect your Dolibarr (ERP/CRM) to Wordpress. 
- * Version: 10.7.9
+ * Version: 10.8.0
  * Author: ptibogxiv
  * Author URI: https://ptibogxiv.eu
  * Network: true
@@ -388,9 +388,9 @@ function doliconnect_custom_avatar( $avatar, $id_or_email, $size, $default, $alt
 
     if ( $user && is_object( $user ) ) {
         if ( $size == 96 || $size === '96' ) {
-            $taille = " class='card-img-top' ";
+            $taille = " class='avatar-img' ";
         } else {
-            $taille = sprintf( ' class="%s" height="%d" width="%d" ', esc_attr( 'rounded-circle border border-white' ), absint( $size ), absint( $size ) );
+            $taille = sprintf( ' class="%s" height="%d" width="%d" ', esc_attr( 'avatar-img' ), absint( $size ), absint( $size ) );
         }
 
         $entity = get_current_blog_id();
