@@ -1184,7 +1184,7 @@ global $current_user;
 		$modal['body'] = dolimembertypelist($typeadhesion, $adherent);	
 		$modal['footer'] = __( 'Note: the admins reserve the right to change your membership in relation to your personal situation. A validation of the membership may be necessary depending on the cases.', 'doliconnect');
 		$response['js'] = null;
-		$response['modal'] = doliModalTemplate(sanitize_text_field($_POST['id']), $modal['header'], $modal['body'], $modal['footer'], 'modal-lg', null, 'p-0');
+		$response['modal'] = doliModalTemplate(sanitize_text_field($_POST['id']), $modal['header'], $modal['body'], $modal['footer'], 'dialog-lg', null, 'p-0');
 		wp_send_json_success($response);
 		die();
 	} elseif ( check_ajax_referer('dolimodal-nonce', 'dolimodal-nonce') && isset($_POST['case']) && $_POST['case'] == "resiliatemembership" ) {
@@ -1213,7 +1213,7 @@ global $current_user;
 		$modal['body'] .= doliuserform( $object, dolidelay('constante', true, true), 'thirdparty', doliCheckRights('societe', 'creer'));
 		$modal['footer'] = '<button name="case" class="btn btn-outline-secondary" type="button" onclick="doliModalAction(this.form, \'updateThirdparty\', \''.admin_url('admin-ajax.php').'\')">'.__( 'Update', 'doliconnect').'</button>';
 		$response['js'] = plugins_url( 'doliconnect/includes/custom/js/dolimodalaction.js');
-		$response['modal'] = doliModalTemplate($_POST['id'], $modal['header'], $modal['body'], $modal['footer'], 'modal-lg', null, 'p-0', null, admin_url('admin-ajax.php'), 'dolicontactinfos');
+		$response['modal'] = doliModalTemplate($_POST['id'], $modal['header'], $modal['body'], $modal['footer'], 'dialog-lg', null, 'p-0', null, admin_url('admin-ajax.php'), 'dolicontactinfos');
 		wp_send_json_success($response);
 		die();
 	} elseif ( check_ajax_referer('dolimodal-nonce', 'dolimodal-nonce') && isset($_POST['case']) && $_POST['case'] == "gateway" ) {
@@ -1239,7 +1239,7 @@ global $current_user;
 		}
 		$modal['footer'] = '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button><button name="case" class="btn btn-outline-secondary" type="button" onclick="doliModalAction(this.form, \'deleteGateway\', \''.admin_url('admin-ajax.php').'\')">'.__( 'Delete', 'doliconnect').'</button>';
 		$response['js'] = plugins_url( 'doliconnect/includes/custom/js/dolimodalaction.js');
-		$response['modal'] = doliModalTemplate($_POST['id'], $modal['header'], $modal['body'], $modal['footer'], 'modal-lg', null, 'p-0', null, admin_url('admin-ajax.php'), 'dolicontactinfos');
+		$response['modal'] = doliModalTemplate($_POST['id'], $modal['header'], $modal['body'], $modal['footer'], 'dialog-lg', null, 'p-0', null, admin_url('admin-ajax.php'), 'dolicontactinfos');
 		wp_send_json_success($response);
 		die();
 	} elseif ( check_ajax_referer('dolimodal-nonce', 'dolimodal-nonce') && isset($_POST['case']) && $_POST['case'] == "contact" ) {
@@ -1276,7 +1276,7 @@ global $current_user;
 			$modal['footer'] = '<button name="case" class="btn btn-outline-secondary" type="button" onclick="doliModalAction(this.form, \'create\', \''.admin_url('admin-ajax.php').'\')">'.__( 'Create', 'doliconnect').'</button>';
 		}
 		$response['js'] = plugins_url( 'doliconnect/includes/custom/js/dolimodalaction.js');
-		$response['modal'] = doliModalTemplate($_POST['id'], $modal['header'], $modal['body'], $modal['footer'], 'modal-lg', null, 'p-0', null, admin_url('admin-ajax.php'), 'dolicontactinfos');
+		$response['modal'] = doliModalTemplate($_POST['id'], $modal['header'], $modal['body'], $modal['footer'], 'dialog-lg', null, 'p-0', null, admin_url('admin-ajax.php'), 'dolicontactinfos');
 		wp_send_json_success($response);
 		die();
 	} elseif ( check_ajax_referer('dolimodal-nonce', 'dolimodal-nonce') && isset($_POST['case']) && $_POST['case'] == "linkedmember" ) {
@@ -1292,7 +1292,7 @@ global $current_user;
 		$modal['body'] .= doliuserform( $object, dolidelay('constante', true, true), 'member', doliCheckRights('adherent', 'creer'));	
 		$modal['footer'] = '<button class="btn btn-outline-secondary" type="submit">'.__( 'Submit', 'doliconnect').'</button>';
 		$response['js'] = plugins_url( 'doliconnect/includes/custom/js/dolimodalaction.js');
-		$response['modal'] = doliModalTemplate($_POST['id'], $modal['header'], $modal['body'], $modal['footer'], 'modal-lg', null, 'p-0', null, admin_url('admin-ajax.php'), 'linkedmember');
+		$response['modal'] = doliModalTemplate($_POST['id'], $modal['header'], $modal['body'], $modal['footer'], 'dialog-lg', null, 'p-0', null, admin_url('admin-ajax.php'), 'linkedmember');
 		wp_send_json_success($response);
 		die();
 	} elseif ( check_ajax_referer('dolimodal-nonce', 'dolimodal-nonce') && isset($_POST['case']) && $_POST['case'] == "doliDownload" ) {
@@ -1314,7 +1314,7 @@ global $current_user;
 		</script>';
 		$modal['footer'] = '<button class="btn btn-outline-secondary" type="submit">'.__( 'Download', 'doliconnect').'</button>';
 		$response['js'] = null;
-		$response['modal'] = doliModalTemplate(sanitize_text_field($_POST['id']), $modal['header'], $modal['body'], $modal['footer'], 'modal-lg', null, 'p-0');
+		$response['modal'] = doliModalTemplate(sanitize_text_field($_POST['id']), $modal['header'], $modal['body'], $modal['footer'], 'dialog-lg', null, 'p-0');
 		wp_send_json_success($response);
 		die();
 	} elseif ( check_ajax_referer('dolimodal-nonce', 'dolimodal-nonce') && isset($_POST['case']) && $_POST['case'] == "doliSelectlang" ) {
