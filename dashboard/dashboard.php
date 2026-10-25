@@ -1553,22 +1553,22 @@ if ( doliCheckModules('adherent') && doliCheckRights('adherent', 'lire') ) {
     $content .="<b>".__( 'Status', 'doliconnect').":</b> ";
     if ( isset($adherent->status) && $adherent->status > 0) {
         if  ($adherent->datefin == null ) {
-            $content .=  "<span class='badge rounded-pill bg-danger'>".__( 'Waiting payment', 'doliconnect')."</span>";
+            $content .=  "<span class='badge rounded-pill theme-danger'>".__( 'Waiting payment', 'doliconnect')."</span>";
         } else {
             if ( $adherent->datefin+86400>$time) {
-                $content .=  "<span class='badge rounded-pill bg-success'>".__( 'Active', 'doliconnect')."</span>";
+                $content .=  "<span class='badge rounded-pill theme-success'>".__( 'Active', 'doliconnect')."</span>";
             } else { 
-                $content .=  "<span class='badge rounded-pill bg-danger'>".__( 'Waiting payment', 'doliconnect')."</span>";
+                $content .=  "<span class='badge rounded-pill theme-danger'>".__( 'Waiting payment', 'doliconnect')."</span>";
             }
         }
     } elseif ( isset($adherent->status) && empty($adherent->status) ) {
-        $content .=  "<span class='badge rounded-pill bg-black'>".__( 'Terminated', 'doliconnect')."</span>";
+        $content .=  "<span class='badge rounded-pill theme-dark'>".__( 'Terminated', 'doliconnect')."</span>";
     } elseif ( isset($adherent->status) && $adherent->status == '-1' ) {
-        $content .= "<span class='badge rounded-pill bg-warning'>".__( 'Waiting validation', 'doliconnect')."</span>";
+        $content .= "<span class='badge rounded-pill theme-warning'>".__( 'Waiting validation', 'doliconnect')."</span>";
     } elseif ( isset($adherent->status) && $adherent->status == '-2' ) {
-        $content .= "<span class='badge rounded-pill bg-black'>".__( 'Excluded', 'doliconnect')."</span>";
+        $content .= "<span class='badge rounded-pill theme-dark'>".__( 'Excluded', 'doliconnect')."</span>";
     } else { 
-        $content .=  "<span class='badge rounded-pill bg-black'>".__( 'No membership', 'doliconnect')."</span>"; 
+        $content .=  "<span class='badge rounded-pill theme-dark'>".__( 'No membership', 'doliconnect')."</span>"; 
     }
     $content .= "<br><b>".__( 'Reference', 'doliconnect').":</b> ";
     if ( isset($adherent->ref) ) { 
