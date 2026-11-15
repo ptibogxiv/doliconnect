@@ -4,7 +4,6 @@ function doliCartButton(form, id, lineid, qty, productarray, acase) {
               var DisplayCart = 0;
               if (document.getElementById("doliModalCartInfos")) {
                 document.getElementById("doliModalDiv").innerHTML = ""; 
-                $("#doliModalCartInfos").modal("handleUpdate"); 
                 DisplayCart = 1;  
               }
               console.log( form + acase );
@@ -39,22 +38,24 @@ function doliCartButton(form, id, lineid, qty, productarray, acase) {
                   }
                   if (document.getElementById("offcanvasDoliCartLabel") && response.data.hasOwnProperty("dolicart")) {
                     document.getElementById("offcanvasDoliCartLabel").innerHTML = response.data.dolicart; 
-                    $("#offcanvasDoliCartLabel").offcanvas("show");       
+                    window.doliconnectShowDrawer("offcanvasDoliCartLabel");
                   }
                   if (document.getElementById("doliModalDiv") && response.data.hasOwnProperty("modal")) {
                     document.getElementById("doliModalDiv").innerHTML = response.data.modal; 
-                    $("#doliModalCartInfos").modal("toggle");     
+                    window.doliconnectToggleDialog("doliModalCartInfos");
                   } 
                 } else {
                   if (document.getElementById("doliModalDiv") && response.data.hasOwnProperty("modal")) {
                     document.getElementById("doliModalDiv").innerHTML = response.data.modal; 
-                    $("#doliModalCartInfos").modal("toggle");     
+                    window.doliconnectToggleDialog("doliModalCartInfos");
                   }
                 }
-                $("#doliModalCartInfos").on("hidden.bs.modal", function () {
-                  $("#doliModalCartInfos").modal("dispose");
+				const dialog = document.getElementById("doliModalCartInfos");
+				if (dialog) {
+					dialog.addEventListener("hidden.bs.dialog", function () {
                   document.getElementById("doliModalDiv").innerHTML = "";
-                });
+					}, { once: true });
+				}
               });
             })
           })(jQuery);
